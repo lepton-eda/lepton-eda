@@ -16,7 +16,8 @@
 <<s_hierarchy.c : s_hierarchy_down_schematic_multiple()>>
 <<s_hierarchy.c : s_hierarchy_down_symbol()>>
 <<s_hierarchy.c : s_hierarchy_up()>>
-<<s_hierarchy.c : s_hierarch_traverse()>>
+<<s_hierarchy.c : s_hierarchy_traversepages()>>
+<<s_hierarchy.c : s_hierarchy_print_page()>>
 <<s_hierarchy.c : s_hierarchy_find_prev_page()>>
 <<s_hierarchy.c : s_hierarchy_find_next_page()>>
 <<s_hierarchy.c : s_hierarchy_find_page()>>
@@ -85,6 +86,13 @@ static int page_control_counter=0;
 @section Function @code{s_hierarchy_down_schematic_single()}
 
 @defun s_hierarchy_down_schematic_single w_current filename parent page_control flag
+This function searches the associated source file refered by the
+[[filename]] and loads it.  If the [[flag]] is set to
+[[HIERARCHY_NORMAL_LOAD]] and the page is allready in the list of
+pages it will return the [[pid]] of that page.  If the [[flag]] is set
+to [[HIERARCHY_FORCE_LOAD]] then this function will load the page
+again with a new page id. The second case is mainly used by gnetlist
+where pushed down schematics MUST be uniq.
 @end defun
 
 <<s_hierarchy.c : s_hierarchy_down_schematic_single()>>=
@@ -99,6 +107,8 @@ s_hierarchy_down_schematic_single(TOPLEVEL *w_current, const gchar *filename,
                                   PAGE *parent, int page_control, int flag) 
 {
   gchar *string;
+  PAGE *found;
+  PAGE *forbear;
 
   string = s_slib_search_single(filename);
   if (string == NULL) {
@@ -108,9 +118,20 @@ s_hierarchy_down_schematic_single(TOPLEVEL *w_current, const gchar *filename,
   switch (flag) {
     case HIERARCHY_NORMAL_LOAD:
     {
-      PAGE *found = s_page_search (w_current, string);
+      found = s_page_search (w_current, string);
       
       if (found) {
+	/* check whether this page is in the parents list */
+	for (forbear = parent; 
+	     forbear != NULL && found->pid != forbear->pid && forbear->up >= 0;
+	     forbear = s_page_search_pid(w_current, forbear->up))
+	  ; /* void */
+
+	if (found->pid == forbear->pid) {
+	  s_log_message("hierarchy loop detected while visiting page:\n"
+			"  \"%s\"\n",found->page_filename);
+	  return -1;  /* error signal */
+	}
         s_page_goto (w_current, found);
         if (page_control != 0) {
           found->page_control = page_control;
@@ -257,7 +278,6 @@ s_hierarchy_down_symbol (TOPLEVEL *w_current,
 
 }
 
-
 @ %def s_hierarchy_down_symbol
 
 
@@ -287,24 +307,121 @@ s_hierarchy_up(TOPLEVEL *w_current, int pid)
   }
 }
 
-
 @ %def s_hierarchy_up
 
 
-@section Function @code{s_hierarch_traverse()}
+@section Function @code{s_hierarchy_traversepages()}
+@defun s_hierarchy_traversepages TOPLEVEL* flags
+This function traverses the hierarchy tree of pages and returns a flat
+list of pages that are below the current page. There are two
+[[flags]]: [[HIERARCHY_NODUPS]]: returns a list without duplicate pages 
+[[HIERARCHY_POSTORDER]]: traverses the hierarchy tree and
+returns a postorder list instead of preorder.
 
-@defun s_hierarch_traverse 
+It returns a GList of PAGES*. The caller has to free the GList.
 @end defun
 
-<<s_hierarchy.c : s_hierarch_traverse()>>=
-void
-s_hierarch_traverse(void) 
+<<s_hierarchy.c : s_hierarchy_traversepages()>>=
+GList *
+s_hierarchy_traversepages(TOPLEVEL *w_current,
+			  gint flags)
 {
+  PAGE *p_current;
+  OBJECT *o_current;
+  char *filename = NULL;
+  gint page_control = 0;
+  static GList *pages = NULL;
+  
+  /* init static variables the first time*/
+  if (!(flags & HIERARCHY_INNERLOOP)) {
+    pages = NULL;
+  }
 
+  p_current = w_current->page_current;
+
+  /* preorder traversing */
+  if (!(flags & HIERARCHY_POSTORDER)) {
+    /* check whether we already visited this page */
+    if ((flags & HIERARCHY_NODUPS)
+	&& (g_list_find(pages, p_current) != NULL)) {
+      return pages;  /* drop the page subtree */
+      }
+    pages = g_list_append(pages, p_current);
+  }
+
+  /* walk throught the page objects and search for underlaying schematics */
+  for (o_current = p_current->object_head;
+       o_current != NULL ;
+       o_current = o_current->next) {
+
+    /* only complex things like symbols can contain attributes */
+    if (o_current->type == OBJ_COMPLEX) {
+      filename = o_attrib_search_name_single_count(o_current,
+						   "source", 0);
+      
+      /* if above is NULL, then look inside symbol */
+      if (filename == NULL) {
+	filename = o_attrib_search_name(o_current->
+				      complex->prim_objs, "source", 0);
+      }
+
+      if (filename != NULL) {
+	/* we got a schematic source attribute 
+	   lets load the page and dive into it */
+	page_control =s_hierarchy_down_schematic_single(w_current,
+							filename,
+							p_current,
+							0,
+							HIERARCHY_NORMAL_LOAD);
+	if (page_control != -1) {
+	  /* call the recursive function */
+	  s_hierarchy_traversepages(w_current,
+				    flags | HIERARCHY_INNERLOOP);
+	  s_hierarchy_up(w_current, w_current->page_current->up);
+	}
+	else {
+	  s_log_message("ERROR in s_hierarchy_traverse: "
+			"schematic not found: %s\n", 
+			filename);
+	}
+	
+	g_free(filename);
+	filename = NULL;
+      }
+    }
+  }
+
+  /* postorder traversing */
+  if (flags & HIERARCHY_POSTORDER) {
+    /* check whether we already visited this page */
+    if ((flags & HIERARCHY_NODUPS)
+	&& (g_list_find(pages, p_current) != NULL)) {
+      return pages;  /* don't append it */
+    }
+    pages = g_list_append(pages, p_current);
+  }
+
+  return pages;
 }
 
+@ %def s_hierarchy_traversepages
 
-@ %def s_hierarch_traverse
+
+@section Function @code{s_hierarchy_print_page()}
+@defun s_hierarchy_print_page PAGE* data*
+Test function which only prints the name of a page and it's number.
+@end defun
+
+<<s_hierarchy.c : s_hierarchy_print_page()>>=
+gint
+s_hierarchy_print_page(PAGE *p_current, void * data)
+{
+  printf("pagefilename: %s pageid: %d\n", 
+         p_current->page_filename, p_current->pid);
+  return 0;
+}
+
+@ %def s_hierarchy_print_page
 
 
 @section Function @code{s_hierarchy_find_prev_page()}

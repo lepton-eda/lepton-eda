@@ -1,3 +1,15 @@
+2006-06-16 Werner Hoch <werner.ho@gmx.de
+	* noweb/f_basic.nw: fixed noweb chunk error
+
+	* noweb/s_page.nw: added function to find a page by it's id
+
+	* noweb/s_hierarchy.nw: added s_hierarchy_traversepages(), it
+	  returns a list of pages either in preorder order
+	  s_hierarchy_print_page(): test function used for traversing
+	  in s_hierarchy_down_schematic_single(): added page loop detector.
+
+	* include/defines.h: added some flags for s_hierarchy*
+	
 2006-06-02  Mike Jarabek  <mjarabek@istop.com>
 
 	* noweb/f_print.nw: Added code to check flag for vector vs. PS

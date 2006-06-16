@@ -541,7 +541,8 @@ int s_hierarchy_down_schematic_single(TOPLEVEL *w_current, const gchar *filename
 void s_hierarchy_down_schematic_multiple (TOPLEVEL *w_current, const gchar *filename, PAGE *parent);
 void s_hierarchy_down_symbol (TOPLEVEL *w_current, const gchar *filename, PAGE *parent);
 void s_hierarchy_up(TOPLEVEL *w_current, int pid);
-void s_hierarch_traverse(void);
+GList* s_hierarchy_traversepages(TOPLEVEL *w_current, gint flags);
+gint s_hierarchy_print_page(PAGE *p_current, void * data);
 PAGE *s_hierarchy_find_prev_page(PAGE *p_start, int page_control);
 PAGE *s_hierarchy_find_next_page(PAGE *p_start, int page_control);
 PAGE *s_hierarchy_find_page(PAGE *p_start, int pid);
@@ -566,6 +567,7 @@ void s_page_init_list (TOPLEVEL *toplevel);
 void s_page_delete_list(TOPLEVEL *toplevel);
 void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new);
 PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename);
+PAGE* s_page_search_pid(TOPLEVEL * toplevel, gint page_id);
 gint s_page_search_row(TOPLEVEL *toplevel, PAGE *p_findme);
 void s_page_print_all (TOPLEVEL *toplevel);
 gint s_page_save_all (TOPLEVEL *toplevel);

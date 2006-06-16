@@ -448,7 +448,7 @@ char* f_normalize_filename(const gchar *filename)
 
 @ %def f_normalize_filename
 
-@section Function @code{f_normalize_filename()}
+@section Function @code{f_follow_symlinks()}
 
 @defun f_follow_symlinks filename error
 Does readlink() recursively until we find a real filename.

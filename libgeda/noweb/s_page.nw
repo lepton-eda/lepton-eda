@@ -21,6 +21,7 @@
 
 <<s_page.c : s_page_goto()>>
 <<s_page.c : s_page_search()>>
+<<s_page.c : s_page_search_pid()>>
 <<s_page.c : s_page_search_row()>>
 <<s_page.c : s_page_print_all()>>
 <<s_page.c : s_page_save_all()>>
@@ -455,6 +456,29 @@ s_page_search (TOPLEVEL *toplevel, const gchar *filename)
 
 
 @ %def s_page_search
+
+@section Function @code{s_page_search_pid()}
+@defun s_page_search_pid TOPLEVEL* page_id
+This function tries to find a page refered by its [[page_id]]. It returns
+a pointer to the found page, [[NULL]] if no page is found.
+@end defun
+<<s_page.c : s_page_search_pid()>>=
+PAGE*
+s_page_search_pid(TOPLEVEL * toplevel, gint page_id) 
+{
+  PAGE* p_current;
+
+  for (p_current = toplevel->page_head;
+       p_current != NULL;
+       p_current = p_current->next) {
+    if (p_current->pid == page_id)
+      return p_current;
+  }
+
+  return NULL;
+}
+
+@ %def s_page_search_pid
 
 
 @section Function @code{s_page_search_row()}

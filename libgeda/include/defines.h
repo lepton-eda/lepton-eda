@@ -266,6 +266,11 @@
 #define HIERARCHY_NORMAL_LOAD   0
 #define HIERARCHY_FORCE_LOAD    1
 
+/* hierarchy traversing flags */
+#define HIERARCHY_NODUPS (1<<0)
+#define HIERARCHY_POSTORDER (1<<1)
+#define HIERARCHY_INNERLOOP (1<<7)
+
 /* selection types */
 /* used in o_select_object */
 #define SINGLE                  0
