@@ -1,3 +1,8 @@
+2006-07-03  Mike Jarabek  <mjarabek@istop.com>
+
+	* noweb/o_arc_basic.nw, noweb/o_circle_basic.nw, noweb/s_cue.nw:
+	  Removing of references to `mils' function in PS output.
+
 2006-06-16 Werner Hoch <werner.ho@gmx.de
 	* noweb/f_basic.nw: fixed noweb chunk error
 

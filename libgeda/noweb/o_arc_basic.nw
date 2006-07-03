@@ -1456,6 +1456,7 @@ A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya
 
 <<o_arc_print_phantom() : printing a dot>>=
   /* PB : problem corrected : diameter of printed dots */
+/*
   fprintf(fp, "newpath\n");
   fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
   if (arc_width <= 1) {
@@ -1465,6 +1466,7 @@ A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya
   }
   fprintf(fp, "0 360 arc\n");
   fprintf(fp, "fill\n");
+*/
   /* PB : end */
 
 @ 
@@ -1491,6 +1493,8 @@ o_arc_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     printf("got null in o_arc_print\n");
     return;
   }
+
+
 
   fprintf(fp, "gsave\n");
   if (w_current->print_color) {
@@ -1537,8 +1541,8 @@ o_arc_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		
 
   fprintf(fp, "newpath\n");
-  fprintf(fp, "%d mils %d mils\n", x-origin_x, y-origin_y);
-  fprintf(fp, "%d mils\n", radius);
+  fprintf(fp, "%d %d\n", x-origin_x, y-origin_y);
+  fprintf(fp, "%d\n", radius);
   fprintf(fp, "%d %d arc\n", start_angle, end_angle);
   fprintf(fp, "stroke\n");
   fprintf(fp, "grestore\n");

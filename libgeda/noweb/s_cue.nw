@@ -134,8 +134,8 @@ void s_cue_postscript_fillcircle(TOPLEVEL * w_current, FILE * fp,
   }
 
   fprintf(fp, "newpath\n");
-  fprintf(fp, "%d mils %d mils\n", x, y);
-  fprintf(fp, "%d mils\n", offset2 / 2);
+  fprintf(fp, "%d %d\n", x, y);
+  fprintf(fp, "%d\n", offset2 / 2);
   fprintf(fp, "0 360 arc\n");
   fprintf(fp, "fill\n");
 }

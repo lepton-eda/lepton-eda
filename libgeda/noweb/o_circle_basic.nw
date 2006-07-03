@@ -1429,20 +1429,15 @@ o_circle_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     return;
   }
 
-  fprintf(fp, "gsave\n");
-  if (w_current->print_color) {
-    f_print_set_color(fp, o_current->color);
-  }
+  o_arc_print_solid(w_current, fp,
+                    o_current->circle->center_x, 
+		    o_current->circle->center_y,
+		    o_current->circle->radius,
+                    0, FULL_CIRCLE / 64,
+                    o_current->color),
+                    o_current->line_width, -1, -1,
+                    origin_x, origin_y);
 
-  f_print_set_line_width(fp, o_current->line_width);
-
-  fprintf(fp, "newpath\n");
-  fprintf(fp, "%d mils %d mils\n", o_current->circle->center_x-origin_x, 
-          o_current->circle->center_y-origin_y);
-  fprintf(fp, "%d mils\n", o_current->circle->radius);
-  fprintf(fp, "0 360 arc\n");
-  fprintf(fp, "stroke\n");
-  fprintf(fp, "grestore\n");
 }
 
 @ %def o_circle_print_old
