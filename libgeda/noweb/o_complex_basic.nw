@@ -421,6 +421,8 @@ o_complex_is_eligible_attribute (TOPLEVEL *w_current, OBJECT *object,
 {
   char *name = NULL;
   char *value = NULL;
+  char *padded_name = NULL;
+  int promotableAttribute = FALSE;
   char *ptr;
 
   if (object->type != OBJ_TEXT || object->attribute || object->attached_to)
@@ -447,12 +449,19 @@ o_complex_is_eligible_attribute (TOPLEVEL *w_current, OBJECT *object,
   {
     if (o_attrib_get_name_value(object->text->string, &name, &value))
     {
-      if (strstr(w_current->always_promote_attributes, name))
+      padded_name = g_strdup_printf(" %s ", name);
+      if (strstr(w_current->always_promote_attributes, padded_name))
       {
 	/* Yes the name of the attribute was in the always promote */
         /* attributes list */
-        return TRUE;
+        promotableAttribute = TRUE;
       }
+      
+      g_free(padded_name);
+      if (name) g_free(name);
+      if (value) g_free(value);
+      if (promotableAttribute)
+	return TRUE;
     }
   }
 

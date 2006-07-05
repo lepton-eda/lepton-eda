@@ -1070,7 +1070,8 @@ g_rc_always_promote_attributes(SCM scmsymname)
   if (default_always_promote_attributes) {
     free (default_always_promote_attributes);
   }
-  default_always_promote_attributes = g_strdup (SCM_STRING_CHARS (scmsymname));
+  default_always_promote_attributes = 
+    g_strdup_printf(" %s ", SCM_STRING_CHARS (scmsymname));
 
   return SCM_BOOL_T;
 }

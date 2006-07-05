@@ -1,9 +1,18 @@
+2006-07-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* libgeda.pc.in: Fixed incorrect order of macros.  Discovered by
+	reading USENET's FreeBSD commit logs. :-)
+
+	* noweb/g_rc.nw, o_complex_basic.nw: Minor bug fix to properly 
+	promotion code to properly promote only specified changes.  
+
 2006-07-03  Mike Jarabek  <mjarabek@istop.com>
 
 	* noweb/o_arc_basic.nw, noweb/o_circle_basic.nw, noweb/s_cue.nw:
 	  Removing of references to `mils' function in PS output.
 
 2006-06-16 Werner Hoch <werner.ho@gmx.de
+
 	* noweb/f_basic.nw: fixed noweb chunk error
 
 	* noweb/s_page.nw: added function to find a page by it's id
