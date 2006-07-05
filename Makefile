@@ -117,57 +117,22 @@ notarget:
 ##----------------------------------------------------------------------
 
 # This installs libgeda and symbols and just builds gschem and gnetlist
-all: libgeda symbols gschem gnetlist gattrib gsymcheck geda utils docs examples
+all: libgeda symbols gschem gnetlist gattrib gsymcheck utils docs examples
 
 # This builds and installs all of gEDA/gaf
 install: symbols_install libgeda_install gschem_install gnetlist_install \
 	 gattrib_install gsymcheck_install \
-	 geda_install utils_install docs_install examples_install
+	 utils_install docs_install examples_install
 
 # This uninstalls all of gEDA/gaf
 uninstall: utils_uninstall gsymcheck_uninstall gattrib_uninstall \
 	   gnetlist_uninstall gschem_uninstall symbols_uninstall \
-	   libgeda_uninstall geda_uninstall docs_uninstall examples_uninstall
-
-# It runs X installation using setup files from:
-# 1) CVS directory
-# 2) local tgz archive
-# 3) downloaded archive (not yet fully functional)
-# 4) current directory (not yet fully functional)
-# Files necessary to start setup: geda-setup, setup.sh, setup.cfg
-xinstall:
-	( \
-		if test -x $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh; then \
-			echo "Using CVS version of setup.sh ..."; \
-			cp $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh . ; \
-		elif test -f $(DIR_PREFIX)setup$(CD_VERSION).tar.gz; then \
-			echo "Using distributed version of setup.sh (from existing $(DIR_PREFIX)setup$(CD_VERSION).tar.gz) ..."; \
-			tar -xzf $(DIR_PREFIX)setup$(CD_VERSION).tar.gz $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh ; \
-			cp $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh . ; \
-			rm -Rf $(DIR_PREFIX)setup$(CD_VERSION) ; \
-		else \
-			echo "Trying to download $(DIR_PREFIX)setup$(CD_VERSION).tar.gz ..." ; \
-			wget -c -t0 ftp://ftp.seul.org/pub/geda/devel/${VERSION}/${DIR_PREFIX}setup${CD_VERSION}.tar.gz >/dev/null 2>/dev/null ; \
-			if test -f $(DIR_PREFIX)setup$(CD_VERSION).tar.gz; then \
-				echo "Using distributed version of setup.sh (from downloaded $(DIR_PREFIX)setup$(CD_VERSION).tar.gz)..."; \
-				tar -xzf $(DIR_PREFIX)setup$(CD_VERSION).tar.gz $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh ; \
-				cp $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh . ; \
-				rm -Rf $(DIR_PREFIX)setup$(CD_VERSION) ; \
-			elif test -x setup.sh; then \
-				echo "Using setup.sh existing in current directory ..."; \
-			else \
-				echo "ERROR ! Cannot find setup.sh, installation cannnot be continued !" >&2 ; \
-				exit 0 ; \
-			fi ; \
-		fi ; \
-	)
-	./setup.sh ${VERSION} ${DIR_PREFIX} ${CD_VERSION}
+	   libgeda_uninstall docs_uninstall examples_uninstall
 
 # This target assumes you have all .tar.gz files present in your local directory.
 # It opens them up using tar -zxvf.  Afterwards you can do
 #  "make install" to install your gEDA distribution.
-open: geda_tarball \
-      docs_tarball \
+open: docs_tarball \
       examples_tarball \
       gattrib_tarball \
       gnetlist_tarball \
@@ -179,27 +144,27 @@ open: geda_tarball \
 
 # This does a maintainer-clean removes EVERYTHING that's config/built
 maint: libgeda_maint symbols_maint gschem_maint gnetlist_maint gattrib_maint \
-       gsymcheck_maint utils_maint geda_maint docs_maint \
+       gsymcheck_maint utils_maint docs_maint \
        examples_maint
 
 # This does a plain clean 
 clean: libgeda_clean symbols_clean gschem_clean gnetlist_clean gattrib_clean \
-       gsymcheck_clean utils_clean geda_clean docs_clean \
+       gsymcheck_clean utils_clean docs_clean \
        examples_clean
 
 # This does a dist clean 
 distclean: libgeda_distclean symbols_distclean gschem_distclean \
 	   gnetlist_distclean gattrib_distclean gsymcheck_distclean \
-	   utils_distclean geda_distclean docs_distclean examples_distclean
+	   utils_distclean docs_distclean examples_distclean
 
 # This just does the appropriate ./configure --prefix=...
 config: libgeda_config symbols_config gschem_config gnetlist_config \
-	gattrib_config gsymcheck_config utils_config geda_config docs_config \
+	gattrib_config gsymcheck_config utils_config docs_config \
         examples_config
 
 # This recreates all ./configure scripts and Makefile.in files
 reconfig: libgeda_reconfig symbols_reconfig gschem_reconfig gnetlist_reconfig \
-	  gattrib_reconfig gsymcheck_reconfig utils_reconfig geda_reconfig \
+	  gattrib_reconfig gsymcheck_reconfig utils_reconfig \
 	  docs_reconfig examples_reconfig
 
 # This creates all *.c files from *.nw files
@@ -209,12 +174,12 @@ src: libgeda_src gschem_src
 # for distribution (removes dependency checking)
 distconfig: libgeda_distconfig symbols_distconfig gschem_distconfig \
             gnetlist_distconfig gattrib_distconfig gsymcheck_distconfig \
-	    utils_distconfig geda_distconfig docs_distconfig \
+	    utils_distconfig docs_distconfig \
 	    examples_distconfig
 
 dist: libgeda_dist symbols_dist gschem_dist \
       gnetlist_dist gattrib_dist gsymcheck_dist utils_dist \
-      geda_dist docs_dist examples_dist
+      docs_dist examples_dist
 	mv -f libgeda/libgeda*.tar.gz .
 	mv -f symbols/geda-symbols*.tar.gz .
 	mv -f gschem/geda-gschem*.tar.gz .
@@ -222,13 +187,12 @@ dist: libgeda_dist symbols_dist gschem_dist \
 	mv -f gattrib/geda-gattrib*.tar.gz .
 	mv -f gsymcheck/geda-gsymcheck*.tar.gz .
 	mv -f utils/geda-utils*.tar.gz .
-	mv -f geda/geda-*.tar.gz .
 	mv -f docs/geda-docs*.tar.gz .
 	mv -f examples/geda-examples*.tar.gz .
 
 distcheck: libgeda_distcheck symbols_distcheck gschem_distcheck \
            gnetlist_distcheck gattrib_distcheck gsymcheck_distcheck \
-	   utils_distcheck geda_distcheck docs_distcheck examples_distcheck 
+	   utils_distcheck docs_distcheck examples_distcheck 
 	mv -f libgeda/libgeda*.tar.gz .
 	mv -f symbols/symbols*.tar.gz .
 	mv -f gschem/geda-gschem*.tar.gz .
@@ -236,12 +200,10 @@ distcheck: libgeda_distcheck symbols_distcheck gschem_distcheck \
 	mv -f gnetlist/geda-gattrib*.tar.gz .
 	mv -f gsymcheck/geda-gsymcheck*.tar.gz .
 	mv -f utils/geda-utils*.tar.gz .
-	mv -f geda/geda-*.tar.gz .
 	mv -f docs/geda-docs*.tar.gz .
 	mv -f examples/geda-examples*.tar.gz .
 
 # This recreates all ./configure scripts and Makefile.in files
-# TODO: added geda
 proto: libgeda_proto gschem_proto gnetlist_proto gattrib_proto gsymcheck_proto
 
 ############################################################################
