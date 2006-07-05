@@ -1,0 +1,7 @@
+/*! \mainpage libgEDA - The GPL Electronic Design Automation core library.
+\image html logo.png
+\section geda-intro gEDA Introduction
+    \htmlinclude what-is-geda.html
+\section libgeda-intro libgEDA Introduction
+    \htmlinclude what-is-libgeda.html
+*/

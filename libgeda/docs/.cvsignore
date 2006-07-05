@@ -3,3 +3,5 @@ Makefile
 *.texi
 libgedadoc.info
 libgedadoc.info-*
+latex
+html

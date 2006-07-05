@@ -5,14 +5,10 @@
 # level Makefile.
 AUTOMAKE_OPTIONS = foreign
 
-NOTANGLE=       @NOTANGLE@
-NOTANGLEROOT=	@NOTANGLEROOT@
-NOTANGLEFLAGS=  @NOTANGLEFLAGS@
-
 INDENTBIN=      @INDENT@
 INDENTFLAG=     -kr -i2
 
-VPATH = ../noweb:../include:src
+VPATH = ../include:src
 
 if CCISGCC
 AM_CFLAGS = -Wall
@@ -21,38 +17,25 @@ endif
 # Build a libtool library, libhello.la for installation in libdir.
 lib_LTLIBRARIES = libgeda.la
 
-BUILT_SOURCES = \
-	a_basic.nw f_basic.nw f_print.nw f_image.nw g_basic.nw m_basic.nw \
-	o_arc_basic.nw o_attrib.nw o_basic.nw o_box_basic.nw \
-	o_circle_basic.nw o_complex_basic.nw o_line_basic.nw o_list.nw \
-	o_net_basic.nw o_selection.nw o_bus_basic.nw o_text_basic.nw \
-	o_pin_basic.nw o_image.nw u_basic.nw s_attrib.nw s_basic.nw \
-	s_clib.nw s_encoding.nw s_hierarchy.nw s_papersizes.nw s_stretch.nw \
-	s_log.nw \
-	s_page.nw s_slib.nw s_color.nw s_undo.nw s_conn.nw \
-	s_cue.nw s_tile.nw s_menu.nw s_toplevel.nw g_smob.nw libgeda.nw \
-	g_register.nw g_rc.nw i_vars.nw o_picture.nw gdk-pixbuf-hacks.nw
-
-libgeda_la_SOURCES = $(BUILT_SOURCES:.nw=.c)
+libgeda_la_SOURCES = \
+	a_basic.c f_basic.c f_print.c f_image.c g_basic.c m_basic.c \
+	o_arc_basic.c o_attrib.c o_basic.c o_box_basic.c \
+	o_circle_basic.c o_complex_basic.c o_line_basic.c o_list.c \
+	o_net_basic.c o_selection.c o_bus_basic.c o_text_basic.c \
+	o_pin_basic.c o_image.c u_basic.c s_attrib.c s_basic.c \
+	s_clib.c s_encoding.c s_hierarchy.c s_papersizes.c s_stretch.c \
+	s_log.c \
+	s_page.c s_slib.c s_color.c s_undo.c s_conn.c \
+	s_cue.c s_tile.c s_menu.c s_toplevel.c g_smob.c libgeda.c \
+	g_register.c g_rc.c i_vars.c o_picture.c gdk-pixbuf-hacks.c
 
 INCLUDES = -I$(top_srcdir)/include @LIBGEDA_CFLAGS@
 libgeda_la_LDFLAGS = @LIBTOOL_FLAGS@ @LIBGEDA_LDFLAGS@
 
-
 EXTRA_DIST = create_proto 
-
-TEXIFILES = $(BUILT_SOURCES:.nw=.texi)
 
 src: $(libgeda_la_SOURCES)
 	@echo Finished building the C source
-
-SUFFIXES = .nw
-
-.nw.c:
-	$(NOTANGLE) $(NOTANGLEFLAGS) $(NOTANGLEROOT)'$@ : *' $< > ../src/$@.tmp
-	mv -f ../src/$@.tmp ../src/$@
-#       $(INDENTBIN) $(INDENTFLAG) ../src/$@
-	rm -f ../src/$@~
 
 CPROTO =	cproto
 CPROTOCFLAGS = 	$(INCLUDES) -I. -I.. -I../include
@@ -69,8 +52,7 @@ MOSTLYCLEANFILES = *.log core FILE *~ prototype.bak
 CLEANFILES = *.log core FILE *~ prototype.bak
 DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = *.log core FILE *~ prototype.bak prototype.h \
-			Makefile.in configure \
-			*.c
+			Makefile.in configure
 
 # Unfortunately, in order to test libtool thoroughly, we need access
 # to its private directory.

@@ -1,5 +1,56 @@
 2006-07-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
+	* Integrated noweb removal patch by Jason Childs.  Changed default
+	target in docs/Makefile.am to not build the docs by default; this
+	is to speed up the build. 
+
+	* src/o_arc_basic.c, src/o_circle_basic.c, src/s_cue.c:
+	Merged changes from the .nw files to the c files that Mike made
+	related to removing mils from PS output.
+
+	* src/g_rc.c, o_complex_basic.c: Merged changes from the .nw files
+	to the .c files that I made just recently.
+
+	* noweb/*.nw, Makefile.am: Removed all files 
+
+2006-07-04 Jason Childs <oblivian@users.sourceforge.net>
+
+ 	* noweb/a_basic.nw, noweb/f_basic.nw, noweb/f_image.nw,
+ 	  noweb/f_print.nw, noweb/g_basic.nw, noweb/g_rc.nw,
+ 	  noweb/g_register.nw, noweb/g_smob.nw, noweb/gdk-pixbuf-hacks.nw,
+ 	  noweb/i_vars.nw, noweb/libgeda.nw, noweb/m_basic.nw,
+ 	  noweb/o_arc_basic.nw, noweb/o_attrib.nw, noweb/o_basic.nw,
+ 	  noweb/o_box_basic.nw, noweb/o_bus_basic.nw, noweb/o_circle_basic.nw,
+ 	  noweb/o_complex_basic.nw, noweb/o_image.nw, noweb/o_line_basic.nw,
+ 	  noweb/o_list.nw, noweb/o_net_basic.nw, noweb/o_picture.nw,
+ 	  noweb/o_pin_basic.nw, noweb/o_selection.nw, noweb/o_text_basic.nw,
+ 	  noweb/s_attrib.nw, noweb/s_basic.nw, noweb/s_clib.nw,
+ 	  noweb/s_color.nw, noweb/s_conn.nw, noweb/s_cue.nw,
+ 	  noweb/s_encoding.nw, noweb/s_hierarchy.nw, noweb/s_log.nw,
+ 	  noweb/s_menu.nw, noweb/s_page.nw, noweb/s_papersizes.nw,
+ 	  noweb/s_slib.nw, noweb/s_stretch.nw, noweb/s_tile.nw,
+ 	  noweb/s_toplevel.nw, noweb/s_undo.nw, noweb/u_basic.nw:
+ 	Ported as real c source code file in the src directory.
+ 	Deleted after porting all noweb comments into doxygen format
+ 	in respective c source files.
+ 	
+ 	* noweb: Removed subdirectory.
+ 	
+ 	* src/Makefile.am: Updated to build from c source instead of noweb.
+ 	Fixed distclean setup to not remove c source files.
+
+ 	* docs/Makefile.am: Added support for Doxygen html and LaTex
+ 	
+ 	documents. Fixed distclean setup to not remove required Doxygen html
+ 	files, and to remove html and latex subdirectories on clean.
+ 	
+ 	* Makefile.am: Removed noweb as a buildable subdirectory.
+ 	
+ 	* configure.ac: Removed checks for noweb and texi2html.
+ 	Added check for Doxygen.
+
+2006-07-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
 	* libgeda.pc.in: Fixed incorrect order of macros.  Discovered by
 	reading USENET's FreeBSD commit logs. :-)
 
@@ -10,6 +61,7 @@
 
 	* noweb/o_arc_basic.nw, noweb/o_circle_basic.nw, noweb/s_cue.nw:
 	  Removing of references to `mils' function in PS output.
+
 
 2006-06-16 Werner Hoch <werner.ho@gmx.de
 

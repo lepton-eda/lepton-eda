@@ -1,5 +1,5 @@
 
-SUBDIRS = src include noweb scripts docs share
+SUBDIRS = src include scripts docs share
 
 EXTRA_DIST = HACKING BUGS autogen.sh
 

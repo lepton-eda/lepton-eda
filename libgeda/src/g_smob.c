@@ -1,0 +1,412 @@
+/* gEDA - GPL Electronic Design Automation
+ * libgeda - gEDA's library
+ * Copyright (C) 1998-2000 Ales V. Hvezda
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ */
+#include <config.h>
+
+#include <math.h>
+#include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
+#include <gtk/gtk.h>
+#include <libguile.h>
+
+#include "defines.h"
+#include "struct.h"
+#include "globals.h"
+
+#include "../include/prototype.h"
+
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
+static long attrib_smob_tag; /*! Attribute SMOB tag */
+static long object_smob_tag; /*! Object SMOB tag */
+
+/*! \brief Free attribute smob memory.
+ *  \par Function Description
+ *  Free the memory allocated by the attribute smob and return its size.
+ *
+ *  \param [in] attrib_smob  The attribute smob to free.
+ *  \return Size of attribute smob.
+ */
+static scm_sizet g_free_attrib_smob(SCM attrib_smob)
+{
+  struct st_attrib_smob *attribute = 
+  (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+  scm_sizet size = sizeof(struct st_attrib_smob);
+
+  free(attribute);
+  return size;
+}
+
+/*! \brief Prints attribute smob to port.
+ *  \par Function Description
+ *  This function prints the given attribute smob to the port.
+ *  It just prints a string showing it is an attribute and its string.
+ *
+ *  \param [in] attrib_smob  The attribute smob.
+ *  \param [in] port         The port to print to.
+ *  \param [in] pstate       Unused.
+ *  \return non-zero means success.
+ */
+static int g_print_attrib_smob(SCM attrib_smob, SCM port,
+			       scm_print_state *pstate)
+{
+  struct st_attrib_smob *attribute = 
+  (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+
+  if (attribute &&
+      attribute->attribute &&
+      attribute->attribute->object &&
+      attribute->attribute->object->text &&
+      attribute->attribute->object->text->string ) {
+    scm_puts("#<attribute ", port);
+    scm_display (scm_makfrom0str (attribute->attribute->object->text->string),
+                 port);
+    scm_puts(">", port);
+  }
+	
+  /* non-zero means success */
+  return 1;
+}
+
+
+/*! \brief Creates a name-value smob
+ *  \par Function Description
+ *  This function Creates and returns a new attribute smob,
+ *  based on the given TOPLEVEL curr_w and attribute curr_attr.
+ *
+ *  \param [in] curr_w     The current TOPLEVEL object.
+ *  \param [in] curr_attr  The current attribute.
+ *  \return SCM
+ */
+SCM g_make_attrib_smob(TOPLEVEL *curr_w, ATTRIB *curr_attr)
+{
+  struct st_attrib_smob *smob_attribute;
+
+  smob_attribute = (struct st_attrib_smob *)
+    			scm_must_malloc(sizeof(struct st_attrib_smob),
+					"attribute");
+
+  smob_attribute->world     = curr_w;
+  smob_attribute->attribute = curr_attr;
+
+  /* Assumes Guile version >= 1.3.2 */
+  SCM_RETURN_NEWSMOB(attrib_smob_tag, smob_attribute);
+}
+
+/*! \brief Get name and value of attribute.
+ *  \par Function Description
+ *  Returns a list with the name and value of the given attribute smob
+ *  
+ *  \param [in] attrib_smob  The attribute smob to get name and value from.
+ *  \return A list containing the name and value of the attribute.
+ */
+SCM g_get_attrib_name_value(SCM attrib_smob)
+{
+  struct st_attrib_smob *attribute;
+  char *name = NULL;
+  char *value = NULL;
+  SCM returned = SCM_EOL;
+
+  SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
+               ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
+               attrib_smob, SCM_ARG1, "get-attribute-name-value");
+
+  attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+
+  if (attribute &&
+      attribute->attribute &&
+      attribute->attribute->object &&
+      attribute->attribute->object->text->string ) {
+    o_attrib_get_name_value(attribute->attribute->object->text->string, 
+                            &name, &value );
+    returned = scm_cons (scm_makfrom0str (name),
+                         scm_makfrom0str (value));
+    if (name) free(name);
+    if (value) free(value);
+  }
+
+  return returned;
+}
+
+/*! \brief Set the attribute value.
+ *  \par Function Description
+ *  This function puts the attribute smob name into a new_string and
+ *  the new scm_value (attribute=value format). It also returns the
+ *  TOPLEVEL and OBJECT pointers.
+ *
+ *  \param [in]     attrib_smob  The attribute to update.
+ *  \param [in]     scm_value    The new value of the attribute.
+ *  \param [in,out] world        The TOPLEVEL object.
+ *  \param [in,out] o_attrib     Pointer to the updated attribute smob.
+ *  \param [in]     new_string   Returns the attribute=value format string for the
+ *                               updated attribute.
+ *  \return Always SCM_UNDEFINED
+ */
+SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value, 
+				TOPLEVEL **world, OBJECT **o_attrib,
+				char *new_string[])
+{
+  struct st_attrib_smob *attribute;
+  char *name = NULL;
+  char *value = NULL;
+  char *old_value = NULL;
+
+  SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
+               ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
+               attrib_smob, SCM_ARG1, "set-attribute-value!");
+  SCM_ASSERT ( SCM_NIMP(scm_value) && SCM_STRINGP(scm_value),
+               scm_value, SCM_ARG2, "set-attribute-value!");
+
+  attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+  value = SCM_STRING_CHARS (scm_value);
+
+  if (attribute &&
+      attribute->attribute &&
+      attribute->attribute->object &&
+      attribute->attribute->object->text &&
+      attribute->attribute->object->text->string ) {
+
+    o_attrib_get_name_value(attribute->attribute->object->text->string, 
+                            &name, &old_value );
+
+    *new_string = g_strconcat (name, "=", value, NULL);
+		
+    *world = attribute->world;
+    *o_attrib = attribute->attribute->object;
+
+    if (name) free(name);
+    if (old_value) free(old_value);
+  }
+
+  return SCM_UNDEFINED;
+}
+
+/*! \brief Initialize the framework to support an attribute smob.
+ *  \par Function Description
+ *  Initialize the framework to support an attribute smob.
+ *
+ */
+void g_init_attrib_smob(void)
+{
+
+  attrib_smob_tag = scm_make_smob_type("attribute",
+				       sizeof (struct st_attrib_smob));
+  scm_set_smob_mark(attrib_smob_tag, 0);
+  scm_set_smob_free(attrib_smob_tag, g_free_attrib_smob);
+  scm_set_smob_print(attrib_smob_tag, g_print_attrib_smob);
+
+  scm_c_define_gsubr("get-attribute-name-value", 1, 0, 0,
+		     g_get_attrib_name_value);
+
+  return;
+}
+
+/*! \brief Free object smob memory.
+ *  \par Function Description
+ *  Free the memory allocated by the object smob and return its size.
+ *
+ *  \param [in] object_smob  The object smob to free.
+ *  \return Size of object smob.
+ */
+static scm_sizet g_free_object_smob(SCM object_smob)
+{
+  struct st_object_smob *object = 
+  (struct st_object_smob *)SCM_CDR(object_smob);
+  scm_sizet size = sizeof(struct st_object_smob);
+
+  free(object);
+  return size;
+}
+
+/*! \brief Prints object smob to port.
+ *  \par Function Description
+ *  This function prints the given object smob to the port.
+ *  It just prints a string showing it is an object and the object name.
+ *
+ *  \param [in] object_smob  The object smob.
+ *  \param [in] port         The port to print to.
+ *  \param [in] pstate       Unused.
+ *  \return non-zero means success.
+ */
+static int g_print_object_smob(SCM object_smob, SCM port,
+			       scm_print_state *pstate)
+{
+  struct st_object_smob *object = 
+  (struct st_object_smob *)SCM_CDR(object_smob);
+
+  if (object &&
+      object->object &&
+      object->object->name) {
+    scm_puts("#<object ", port);
+    scm_display (scm_makfrom0str (object->object->name),
+                 port);
+    scm_puts(">", port);
+  }
+	
+  /* non-zero means success */
+  return 1;
+}
+
+/*! \brief Creates a object smob
+ *  \par Function Description
+ *  This function creates and returns a new object smob,
+ *  from the given TOPLEVEL curr_w and object pointers.
+ *
+ *  \param [in] curr_w  The current TOPLEVEL object.
+ *  \param [in] object  The current object.
+ *  \return SCM
+ */
+SCM g_make_object_smob(TOPLEVEL *curr_w, OBJECT *object)
+{
+  struct st_object_smob *smob_object;
+
+  smob_object = (struct st_object_smob *)
+    scm_must_malloc(sizeof(struct st_object_smob), "object");
+
+  smob_object->world  = curr_w;
+  smob_object->object = object;
+
+  /* Assumes Guile version >= 1.3.2 */
+  SCM_RETURN_NEWSMOB(object_smob_tag, smob_object);
+}
+
+/*! \brief Get all object attributes in a list.
+ *  \par Function Description
+ *  This function returns a list with all the attributes of a given object smob.
+ *
+ *  \param [in] object_smob  The object smob to get attributes from.
+ *  \return A list of attributes associated with this object smob.
+ */
+SCM g_get_object_attributes(SCM object_smob)
+{
+  TOPLEVEL *w_current;
+  struct st_object_smob *object;
+  SCM returned = SCM_EOL;
+
+  SCM_ASSERT ( SCM_NIMP(object_smob) && 
+               ((long) SCM_CAR(object_smob) == object_smob_tag),
+               object_smob, SCM_ARG1, "get-object-attributes");
+
+  object = (struct st_object_smob *)SCM_CDR(object_smob);
+
+  if (object &&
+      object->object) {
+    ATTRIB *pointer;
+    
+    pointer = object->object->attribs;
+    w_current = object->world;
+    while (pointer != NULL) {
+      if (pointer->object &&
+	  pointer->object->text) {
+	returned = scm_cons (g_make_attrib_smob (w_current, pointer), returned);
+      }
+      pointer = pointer->next;
+    }     
+  }
+
+  return returned;
+}
+
+/*! \brief Initialize the framework to support an object smob.
+ *  \par Function Description
+ *  Initialize the framework to support an object smob.
+ *
+ */
+void g_init_object_smob(void)
+{
+
+  object_smob_tag = scm_make_smob_type("object", sizeof (struct st_object_smob));
+  scm_set_smob_mark(object_smob_tag, 0);
+  scm_set_smob_free(object_smob_tag, g_free_object_smob);
+  scm_set_smob_print(object_smob_tag, g_print_object_smob);
+
+  scm_c_define_gsubr("get-object-attributes", 1, 0, 0, g_get_object_attributes);
+
+  return;
+}
+
+#if 0
+/*! \brief Gets the OBJECT data from the object smob.
+ *  \par Function Description
+ *  Get the OBJECT data from the object smob.
+ *
+ *  \param [in] object_smob  The object smob to get the OBJECT data from.
+ *  \return The OBJECT data.
+ *  \deprecated
+ *  \todo check and remove?
+ */
+OBJECT *g_get_object_from_object_smob(SCM object_smob)
+{
+  
+  SCM_ASSERT ( SCM_NIMP(object_smob) && 
+               (SCM_CAR(object_smob) == object_smob_tag),
+               object_smob, SCM_ARG1, "get_object_from_object_smob");
+  return ((OBJECT *) (((struct st_object_smob *)SCM_CDR(object_smob))->object));
+}
+
+/*! \brief Get the TOPLEVEL data from the object smob.
+ *  \par Function Description
+ *  Get the TOPLEVEL data from the object smob.
+ *
+ *  \param [in] object_smob  The object smob to get the TOPLEVEL data from.
+ *  \return The TOPLEVEL data.
+ *  \deprecated
+ *  \todo check and remove?
+ */
+TOPLEVEL *g_get_toplevel_from_object_smob(SCM object_smob)
+{
+  
+  SCM_ASSERT ( SCM_NIMP(object_smob) && 
+               (SCM_CAR(object_smob) == object_smob_tag),
+               object_smob, SCM_ARG1, "get_toplevel_from_object_smob");
+  return ((TOPLEVEL *) (((struct st_object_smob *)SCM_CDR(object_smob))->world));
+}
+#endif
+
+/*! \brief Get the TOPLEVEL and OBJECT data from an object smob.
+ *  \par Function Description
+ *  Get the TOPLEVEL and OBJECT data from an object smob.
+ *
+ *  \param [in]  object_smob  The object smob to get data from.
+ *  \param [out] toplevel     The TOPLEVEL to write data to.
+ *  \param [out] object       The OBJECT to write data to.
+ *  \return TRUE on success, FALSE otherwise
+ */
+gboolean g_get_data_from_object_smob(SCM object_smob, TOPLEVEL **toplevel, 
+				     OBJECT **object)
+{
+  
+  if ( (!SCM_NIMP(object_smob)) || 
+       ((long) SCM_CAR(object_smob) != object_smob_tag) ) {
+    return(FALSE);
+  }
+  if (toplevel != NULL) {
+    *toplevel = (TOPLEVEL *) 
+    (((struct st_object_smob *)SCM_CDR(object_smob))->world);
+  }
+  if (object != NULL) {
+    *object = (OBJECT *) 
+    (((struct st_object_smob *)SCM_CDR(object_smob))->object);
+  }
+  return (TRUE);
+}

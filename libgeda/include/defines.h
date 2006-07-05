@@ -369,7 +369,7 @@
 #define M_PI  3.14159265358979323846
 #endif
 
-
+/* Logs a normal message. */
 /* inspired of GLib's g_message() (gmessages.h) - LGPL */
 #ifdef G_HAVE_ISO_VARARGS
 #define s_log_message(...)  g_log (G_LOG_DOMAIN,         \
