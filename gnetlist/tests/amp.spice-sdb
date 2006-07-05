@@ -27,4 +27,4 @@ RC2 10 7 6.8K
 VIN 1 0 AC 1MV
 RC1 10 4 12K  
 RL 9 0 10K  
-.END
+.end

@@ -3,6 +3,9 @@
 	* tests/multiequal.spice-sdb: Updated golden file to take into
 	account case change of .end
 
+	* tests/amp.spice-sdb, tests/darlington.spice-sdb: Updated golden
+	file to take into account case change of .end
+
 2006-04-22 Carlos Nieves Onega <cnieves@iespana.es>
 	
 	* include/globals.h, include/prototype.h, src/g_netlist.c, 
