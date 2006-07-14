@@ -1,4 +1,4 @@
-v 20031231 1
+v 20060123 1
 P 200 0 200 200 1 0 0
 {
 T 400 0 5 10 0 0 0 0 1
@@ -10,6 +10,10 @@ L 50 200 350 200 3 0 0 0 -1 -1
 T 200 250 9 10 1 0 0 3 1
 NC
 T 400 500 8 10 0 0 0 0 1
-net=NoConnection:1
+value=NoConnection
 T 0 600 8 10 0 0 0 0 1
 documentation=nc.pdf
+T 400 700 8 10 0 0 0 0 1
+device=DRC_Directive
+T 400 900 8 10 0 0 0 0 1
+graphical=1

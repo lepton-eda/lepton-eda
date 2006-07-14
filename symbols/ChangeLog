@@ -1,3 +1,11 @@
+2006-07-14 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* misc/nc-*.sym: Added graphical=1, device=DRC_Directive, 
+	  value=NoConnection attributes to the NC symbols.
+	  This change, and the directives support included into gnetlist,
+	  fixed bug #1442910 and allows to use the nc-* symbols without
+	  shorting the nets to a new NoConnection net.
+	
 2006-05-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* system-gafrc.in: Added default setting for always-promote-attributes

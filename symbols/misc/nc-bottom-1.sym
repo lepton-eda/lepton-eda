@@ -1,4 +1,4 @@
-v 20031231 1
+v 20060123 1
 P 200 400 200 200 1 0 0
 {
 T 500 100 5 10 0 0 0 0 1
@@ -9,7 +9,11 @@ pinnumber=1
 L 350 200 50 200 3 0 0 0 -1 -1
 T 200 150 9 10 1 0 180 3 1
 NC
-T -200 600 8 10 0 0 0 0 1
-net=NoConnection:1
 T 0 600 8 10 0 0 0 0 1
+value=NoConnection
+T 0 800 8 10 0 0 0 0 1
 documentation=nc.pdf
+T 0 1000 8 10 0 0 0 0 1
+device=DRC_Directive
+T 0 1200 8 10 0 0 0 0 1
+graphical=1
