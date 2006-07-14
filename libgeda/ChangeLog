@@ -1,3 +1,9 @@
+2006-07-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* libgeda.pc.in: Re-Fixed incorrect order of macros.  Reverted back
+	to the previous order, since the new order is clearly wrong on other
+	platforms than FreeBSD.  
+
 2006-07-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* Integrated noweb removal patch by Jason Childs.  Changed default
