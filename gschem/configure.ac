@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT
-AC_CONFIG_SRCDIR([noweb/gschem.nw])
+AC_CONFIG_SRCDIR([src/gschem.c])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-gschem
@@ -47,7 +47,6 @@ AC_CANONICAL_HOST
 
 # Figure out if we are building on win32 and what environment.
 case $host_os in
-  *cygwin*  ) AC_MSG_ERROR([Building gEDA/gaf under cygwin is not supported]) ;;
   *mingw32* ) echo "Configuring for mingw"; MINGW=yes ;;
 esac
 
@@ -305,105 +304,25 @@ fi
 ############################################################################
 
 ############################################################################
-# Check for notangle, noweave, texi2html, indent start
+# Check for doxygen, indent start
 # 
+# Doxygen is a utility for generating html and latex documentation
+# from c source code files.
 
-# Tangling is required if there is no C source files in the src/ 
-# directory. Therefore they need to be extracted from the documented
-# sources in noweb/ either with notangle or notangle_guile.
-#
-# notangle is the utility that comes with the noweb package.
-# notangle_guile is a script that act the same as notangle
-# but only require a guile interpreter with built-in module regex
-# and getopt-long
+# search for Doxygen
+AC_PATH_PROG(DOXYGEN, doxygen, no, ${PATH})
 
-# search for notangle
-AC_PATH_PROG(NOTANGLE, notangle, no, ${PATH})
-cfiles=`\ls -1 src/libgeda.c 2> /dev/null`
-exit_status=$?
-
-if test "$NOTANGLE" = "no" -a "$exit_status" != "0"; then
-
-   # notangle not found, and no C sources in src 
-   # need notangle_guile
-   echo "** Cannot find notangle (part of noweb) : using notangle_guile instead **"
-	
-   # find the guile interpreter
-   AC_PATH_PROG(GUILEINTERP, guile, no, ${PATH})
-   if test "$GUILEINTERP" = "no"; then
-      AC_MSG_ERROR([guile interpreter is required])
-   fi
-  
-   # check (ice-9 getopt-long) module in guile
-   AC_MSG_CHECKING([for getopt-long module in guile])
-   guilegetopt=`$GUILEINTERP -c  '(use-modules (ice-9 getopt-long))' 2> /dev/null`
-   exit_status=$?
-   if test "$exit_status" = "1"; then
-      AC_MSG_RESULT([no])
-      echo "no support for getopt-long module in guile interpreter"
-      AC_MSG_ERROR([this module is required by notangle_guile but is not available in the interpreter])
-   fi
-   AC_MSG_RESULT([yes])
- 
-   # check (ice-9 regex) module in guile
-   AC_MSG_CHECKING([for regex module in guile])
-   guileregex=`$GUILEINTERP -c  '(use-modules (ice-9 regex))' 2> /dev/null`
-   exit_status=$?
-   if test ! "$exit_status" = "0"; then
-      AC_MSG_RESULT([no])
-      echo "no support for regex module in guile interpreter"
-      AC_MSG_ERROR([this module is required by notangle_guile but is not available in the interpreter])
-   fi
-   AC_MSG_RESULT([yes])
-
-   # set NOTANGLE and NOTANGLEROOT to use notangle_guile
-   # as the result of the previous tests
-   #  - NOTANGLE is the relative pathname to script from the source dir
-   #  - NOTANGLEROOT is the option to give the root code chunk name
-   #  - NOTANGLEFLAGS are other flags to notangle_guile
-   NOTANGLE="../scripts/notangle_guile"
-   NOTANGLEROOT="--rootname="
-   NOTANGLEFLAGS=""
-
-   echo "--            notangle_guile should work fine on this system           --"
-
-else
-
-   # NOTANGLE has been set by AC_PATH_PROG above
-   NOTANGLEROOT="-R"
-   NOTANGLEFLAGS="-L"
-
-fi
-
-# Weaving is extracting the documentation from the noweb files.
-# The noweb package provides noweave to weave these files.
-# 
-# The documentation is here written in Texinfo. A backend is 
-# provided in scripts to format the code chunks in Texinfo.
-#
-# The noweave program is therefore required to produce the 
-# documentation but building documentation is optionnal.
-#
-
-# search for noweave
-AC_PATH_PROG(NOWEAVE, noweave, no, ${PATH})
-# search for AWK
-#  the noweb texinfo backend is based on awk. If awk is not available,
-#  the backend will not work, and therefore it disables the 
-#  documentation creation.
-AC_PROG_AWK
-
-if test "$NOWEAVE" = "no" -o "$AWK" = "no"; then 
-   # noweave is not available on the system
-   echo "** Cannot find noweave (part of noweb)! **"
+if test "$DOXYGEN" = "no"; then 
+   # doxygen is not available on the system
+   echo "** Cannot find Doxygen! **"
    echo "**   Documentation creation disabled    **"
-   NOWEAVE=echo
+   DOXYGEN=echo
 
    # prevent from weaving the nw files
    # but does not prevent from processing gschemdoc
    builddoc=false
 else 
-   # noweave is available on the system.
+   # doxygen is available on the system.
    # now checking if the tools for Texinfo files processing
    # is installed.
    # The docs can be either processed to produce dvi, html or info
@@ -411,23 +330,13 @@ else
    # Note : these tests on makeinfo and texi2dvi are no more 
    #        needed as automake makes them for us
 
-   # enable the weaving of the nw files to get documentation
+   # enable the creation of html and latex documents.
    builddoc=true
 fi
 
 # depending on variable builddoc, weaving is performed or not
 # using conditionnal in docs/Makefile.in
 AM_CONDITIONAL(BUILDDOC, test x$builddoc = xtrue)
-
-# search for texi2html
-# it looks like automake does not take care of html doc creation
-AC_PATH_PROG(TEXI2HTML, texi2html, no, ${PATH})
-
-if test "$TEXI2HTML" = "no"; then 
-   echo "**   Cannot find texi2html     **"
-   echo "** HTML file creation disabled **"
-   TEXI2HTML=echo
-fi
 
 # search for indent
 AC_PATH_PROG(INDENT, indent, no, ${PATH})
@@ -449,7 +358,7 @@ if test "$INDENT" = "no" -o "$indentversion"x = x; then
 fi
 
 # 
-# Check for notangle, noweave, texi2html, indent end
+# Check for doxygen, indent end
 #########################################################################
 
 #########################################################################
@@ -629,14 +538,9 @@ AC_CONFIG_FILES([Makefile
 		examples/Makefile
 		docs/Makefile
 		lib/Makefile
-		noweb/Makefile
 		tests/Makefile
-		lib/system-gschemrc
-		scripts/geda_totexi
-		scripts/notangle_guile ])
+		lib/system-gschemrc ])
 
-AC_CONFIG_COMMANDS([geda_totexi-chmod],[[chmod +x scripts/geda_totexi]],[[]])
-AC_CONFIG_COMMANDS([notangle_guile-chmod],[[chmod +x scripts/notangle_guile]],[[]])
 
 AC_OUTPUT
 

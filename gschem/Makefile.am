@@ -1,5 +1,4 @@
-
-SUBDIRS = include lib intl src m4 po scheme bitmap scripts examples noweb \
+SUBDIRS = include lib intl src m4 po scheme bitmap scripts examples \
           tests docs 
 
 EXTRA_DIST = VOCABULARY BUGS autogen.sh
