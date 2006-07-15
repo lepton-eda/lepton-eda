@@ -300,7 +300,7 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
     if (filetype != NULL)
       g_free(filetype);
     if (pixbuf != NULL)
-	  g_free(pixbuf); 
+      g_object_unref(pixbuf); 
   }
   else {
     fprintf(stderr, "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n");
@@ -701,10 +701,10 @@ GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
   }
 
   if (toplevel.window != NULL) {
-    g_free(toplevel.window);
+    g_object_ref(toplevel.window);
   }
   if (toplevel.backingstore != NULL) {
-    g_free(toplevel.backingstore);
+    g_object_ref(toplevel.backingstore);
   }
 
   return(pixbuf);

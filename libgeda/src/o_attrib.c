@@ -919,9 +919,9 @@ int o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
 
   if ( (*(equal_ptr + 1) == ' ') || (*(equal_ptr - 1) == ' ') ) {
      /* sometimes you have text with an ='s in it, it shouldn't be */
+     /* treated like an attribute */
 
 #if DEBUG 
-    /* treated like an attribute */
     s_log_message("Found attrib/text with spaces beside the ='s [%s]\n", 
 	          string);
     s_log_message("You can ignore the above message if the text is not intended to be an attribute\n");
@@ -1716,7 +1716,6 @@ char *o_attrib_search_special(OBJECT *o_current)
   return(NULL);
 }
 
-#line 1849 "../noweb/o_attrib.nw"
 /*! \brief Search for first occurance of a named attribute.
  *  \par Function Description
  *  Search for first occurance of a named attribute.

@@ -434,9 +434,9 @@ void s_delete(TOPLEVEL *w_current, OBJECT *o_current)
       /*	printf("sdeleting picture\n");*/
 #ifndef HAS_GTK12
       if (o_current->picture->original_picture)
-	g_free(o_current->picture->original_picture);
+	g_object_unref(o_current->picture->original_picture);
       if (o_current->picture->displayed_picture)
-	g_free(o_current->picture->displayed_picture);
+	g_object_unref(o_current->picture->displayed_picture);
 #endif
       if (o_current->picture->filename)
 	g_free(o_current->picture->filename);

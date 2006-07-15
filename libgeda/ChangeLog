@@ -12,6 +12,18 @@
 	strdup calls to use g_free, g_?alloc, and g_strdup.  This is the
 	first phase in fixing the slice crash under glib 2.10.x.
 
+	* src/libgeda.c: Clarified putenv/free comment
+
+	* src/o_attrib.c, src/o_complex_basic.c src/o_text_basic.c: 
+	Removed some residual noweb #lines and comments
+
+	* src/s_conn.c: Finally figured out that setting a freed object's
+	data field was causing lots of trouble for glib's slice allocator.
+
+	* src/s_basic.c src/o_picture.c: Changed all g_free() calls on
+	all pixbufs to be g_object_unref.  This was causing crashes with
+	glib 2.10.x.
+
 2006-07-13 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* libgeda.pc.in: Re-Fixed incorrect order of macros.  Reverted back

@@ -58,7 +58,7 @@ void libgeda_init(void)
   if (geda_data == NULL) {
     new_data = g_strdup_printf("GEDADATA=%s", GEDADATADIR);
     putenv(new_data);
-    /*free(new_data); putenv takes over the memory? */
+    /*free(new_data); putenv takes over the memory on some OSes, do not free */
 
     /* We'll use this someday. . . . . */
     /* g_setenv ("GEDADATA", GEDADATADIR, FALSE); */ /* requires glib-2.4.* */

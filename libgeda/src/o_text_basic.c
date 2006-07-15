@@ -45,7 +45,6 @@
 #include <dmalloc.h>
 #endif
 
-#line 117 "../noweb/o_text_basic.nw"
 #define WINONLY	1
 #define BACKING 2
 

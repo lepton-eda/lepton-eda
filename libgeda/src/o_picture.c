@@ -345,7 +345,7 @@ void o_picture_set_pixbuf(TOPLEVEL *w_current,
   }
 
   if (w_current->current_pixbuf != NULL) {
-    g_free(w_current->current_pixbuf);
+    g_object_unref(w_current->current_pixbuf);
     w_current->current_pixbuf=NULL;
   }
 
@@ -439,7 +439,7 @@ OBJECT *o_picture_add(TOPLEVEL *w_current, OBJECT *object_list,
   */
   /*
     if (w_current->current_pixbuf != NULL) {
-      g_free (w_current->current_pixbuf);
+      g_object_unref(w_current->current_pixbuf);
     }
     w_current->current_pixbuf = NULL;
     w_current->pixbuf_wh_ratio = 0;

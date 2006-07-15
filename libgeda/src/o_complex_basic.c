@@ -1612,7 +1612,11 @@ OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin)
   return(NULL);
 }
 
-#line 1849 "../noweb/o_complex_basic.nw"
+/*! \brief
+ *  \par Function Description
+ *
+ */
+/* pass in top level object */
 void
 o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object) 
 {

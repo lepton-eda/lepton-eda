@@ -472,7 +472,7 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
    */
 
   if (o_current->picture->displayed_picture != NULL) {
-    g_free(o_current->picture->displayed_picture);
+    g_object_unref(o_current->picture->displayed_picture);
     o_current->picture->displayed_picture = NULL;
   }
   /* If it's not drawing using the background color then draw the image */
@@ -490,7 +490,7 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
     temp_pixbuf2 = gdk_pixbuf_mirror_flip(temp_pixbuf1,
 					  o_current->picture->mirrored, FALSE);
-    g_free(temp_pixbuf1);
+    g_object_unref(temp_pixbuf1);
 
     if (temp_pixbuf2 == NULL) {
       fprintf(stderr, "Couldn't get enough memory for mirroring the picture\n");
@@ -504,7 +504,7 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
                             abs(o_current->picture->screen_lower_y - 
                                 o_current->picture->screen_upper_y), 
                             GDK_INTERP_BILINEAR);
-    g_free(temp_pixbuf2);
+    g_object_unref(temp_pixbuf2);
 
     if (o_current->picture->displayed_picture == NULL) {
       fprintf(stderr, "Couldn't get enough memory for scaling the picture\n");
@@ -813,7 +813,7 @@ void picture_change_selection_ok (GtkWidget *widget, TOPLEVEL *w_current)
 
 	/* Change picture attributes */
 	if (object->picture->original_picture != NULL) {
-	  g_free(object->picture->original_picture);
+	  g_object_unref(object->picture->original_picture);
 	  object->picture->original_picture=NULL;
 	}
 	
@@ -842,7 +842,7 @@ void picture_change_selection_ok (GtkWidget *widget, TOPLEVEL *w_current)
   }
   
   g_free ((char *) selected_filename);
-  g_free(pixbuf);
+  g_object_unref(pixbuf);
   w_current->page_current->CHANGED=1;
 
   i_allow_expose();
