@@ -15,6 +15,8 @@
         on all pixbuf objects to be g_object_unref.  This was causing
         crashes with glib 2.10.x.
 
+	* src/x_image.c: Oops, g_object_unref, not g_object_ref
+
 2006-07-13 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* Applied and commited Jason Childs' noweb removal patch and added

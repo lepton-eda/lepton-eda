@@ -701,10 +701,10 @@ GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
   }
 
   if (toplevel.window != NULL) {
-    g_object_ref(toplevel.window);
+    g_object_unref(toplevel.window);
   }
   if (toplevel.backingstore != NULL) {
-    g_object_ref(toplevel.backingstore);
+    g_object_unref(toplevel.backingstore);
   }
 
   return(pixbuf);
