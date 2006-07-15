@@ -107,7 +107,7 @@ void o_undo_savestate(TOPLEVEL *w_current, int flag)
     /* 32 is? for max length of pid and index */
  
 
-    filename = malloc(sizeof(char)*(strlen("/gschem.save_.sch")+
+    filename = g_malloc(sizeof(char)*(strlen("/gschem.save_.sch")+
 	              strlen(TMP)+32));
 
     sprintf(filename, "%s%cgschem.save%d_%d.sch", TMP, G_DIR_SEPARATOR,
@@ -177,7 +177,7 @@ void o_undo_savestate(TOPLEVEL *w_current, int flag)
 #endif
 
   if (filename) {	
-    free(filename);
+    g_free(filename);
   }
 	
   /* Now go through and see if we need to free/remove some undo levels */ 
@@ -210,7 +210,7 @@ void o_undo_savestate(TOPLEVEL *w_current, int flag)
         printf("Freeing: %s\n", u_current->filename);
 #endif
         unlink(u_current->filename);
-        free(u_current->filename);	
+        g_free(u_current->filename);	
       }	
 			
       if (u_current->object_head) {
@@ -223,7 +223,7 @@ void o_undo_savestate(TOPLEVEL *w_current, int flag)
 
       u_current->next = NULL;
       u_current->prev = NULL;
-      free(u_current);
+      g_free(u_current);
 			
       u_current = u_current_next;
       levels--;
@@ -424,7 +424,7 @@ void o_undo_callback(TOPLEVEL *w_current, int type)
   do_logging = save_logging;
 
   /* set filename right */
-  free(w_current->page_current->page_filename);
+  g_free(w_current->page_current->page_filename);
   w_current->page_current->page_filename = save_filename;
 
   /* final redraw */
@@ -506,11 +506,11 @@ void o_undo_cleanup(void)
     filename = g_strdup_printf("%s%cgschem.save%d_%d.sch", TMP, G_DIR_SEPARATOR,
 			       prog_pid, i);
     unlink(filename);
-    free(filename);
+    g_free(filename);
   }
 
   if (freeTMP) {
-    free(TMP);
+    g_free(TMP);
     TMP = NULL;
   }
 }

@@ -122,7 +122,7 @@ static const char *i_status_string(TOPLEVEL *w_current)
       return _("Pan Mode");
     case STARTPASTE:
     case ENDPASTE:
-      if (buf) free(buf);
+      if (buf) g_free(buf);
       buf = g_strdup_printf(_("Paste %d Mode"), w_current->buffer_number+1);
       return buf;
     case STARTDRAWNET:
@@ -188,27 +188,27 @@ void i_show_state(TOPLEVEL *w_current, const char *message)
   if ( message != NULL) {
     if ( message && message[0] ) {
       buf = g_strdup_printf("%s - ", message);
-      if (aux) free(aux);
+      if (aux) g_free(aux);
       aux = buf;
     }
   }
 
   if ( !w_current->snap ) {
     buf = g_strdup_printf("%s%s - ", buf, _("Snap Off"));
-    if (aux) free(aux);
+    if (aux) g_free(aux);
     aux = buf;
   }
 
   if ( w_current->show_hidden_text ) {
     buf = g_strdup_printf("%s%s - ", buf, _("Show Hidden"));
-    if (aux) free(aux);
+    if (aux) g_free(aux);
     aux = buf;
   }
 
   if (buf != NULL) {
     if (strlen(buf) > 0) {
       buf = g_strdup_printf("%s%s", buf, state_string);
-      if (aux) free(aux);
+      if (aux) g_free(aux);
       aux = buf;
       what_to_say = buf;
     } else {
@@ -220,7 +220,7 @@ void i_show_state(TOPLEVEL *w_current, const char *message)
   }
 
   i_update_status(w_current, what_to_say);
-  if (buf != NULL) free(buf);
+  if (buf != NULL) g_free(buf);
 }
 
 /*! \todo Finish function documentation!!!
@@ -315,7 +315,7 @@ void i_update_middle_button(TOPLEVEL *w_current,
     gtk_label_set(GTK_LABEL(w_current->middle_label),
                   temp_string);
     w_current->last_callback = func_ptr;
-    free(temp_string);
+    g_free(temp_string);
     break;
 
   }

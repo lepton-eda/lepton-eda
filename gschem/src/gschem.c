@@ -201,7 +201,7 @@ void main_prog(void *closure, int argc, char *argv[])
     fprintf(stderr,
             _("Failed to read init scm file [%s]\n"), input_str);
   }
-  free(input_str);
+  g_free(input_str);
 
   /* At end, complete set up of window. */
   colormap = gdk_colormap_get_system ();
@@ -235,7 +235,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
     if (first_page) {
       if (w_current->page_current->page_filename) {
-        free(w_current->page_current->page_filename);
+        g_free(w_current->page_current->page_filename);
       }
 
       /* Page structure has already been created...
@@ -292,11 +292,11 @@ void main_prog(void *closure, int argc, char *argv[])
     i++;
   }
 
-  free(cwd);	
+  free(cwd); /* allocated from getcwd, should be regular free */
 
   if (argv[argv_index] == NULL) {
     if (w_current->page_current->page_filename) {
-      free(w_current->page_current->page_filename);
+      g_free(w_current->page_current->page_filename);
     }
 
     w_current->cwd = g_get_current_dir ();
@@ -305,7 +305,7 @@ void main_prog(void *closure, int argc, char *argv[])
 #endif
 
     w_current->page_current->page_filename =
-      malloc(sizeof(char) * (
+      g_malloc(sizeof(char) * (
                              strlen(w_current->cwd) +
                              strlen(w_current->untitled_name) +
                              strlen("/_##########.sch") +

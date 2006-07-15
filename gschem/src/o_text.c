@@ -639,13 +639,13 @@ void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size,
         /* only change text string if there is only ONE text object selected */
         if (numselect == 1 && string) {
           if (object->text->string) {
-            free(object->text->string);
+            g_free(object->text->string);
           }
           /* Kazu <kazu@seul.org> on August 5, 1999 - I am not
              sure if strlen(string) == len. If so, activate the
              second part of this "if".*/
 #if 1
-          object->text->string = malloc(sizeof(char) * len + 1);
+          object->text->string = g_malloc(sizeof(char) * len + 1);
           strcpy(object->text->string, string);
 #else
           object->text->string = g_strdup (string);
@@ -698,7 +698,7 @@ void o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string,
 
   /* second change the real object */
   if (object->text->string) {
-    free(object->text->string);
+    g_free(object->text->string);
   }
 
   object->text->string = g_strdup (string);

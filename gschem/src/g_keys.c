@@ -96,8 +96,8 @@ void g_keys_execute(int state, int keyval)
   printf("_%s_\n", guile_string);
 #endif
   scm_c_eval_string (guile_string);
-  free(guile_string);
-  free(modifier);
+  g_free(guile_string);
+  g_free(modifier);
 
 #if 0 /* playing with thi's guile stuff */
   gh_eval_str("(display (reverse last-command-sequence))");

@@ -263,7 +263,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
   gtk_grab_remove(w_current->aewindow);
   gtk_widget_destroy(w_current->aewindow);
   w_current->aewindow = NULL;
-  free(newtext);
+  g_free(newtext);
 }
 
 /*! \todo Finish function documentation!!!
@@ -672,8 +672,8 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     gtk_widget_grab_focus(attrib_combo_entry);
   }
 
-  if (name) free(name);
-  if (val) free(val);
+  if (name) g_free(name);
+  if (val) g_free(val);
 
 }
 /***************** End of Attrib Edit dialog box **********************/

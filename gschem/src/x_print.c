@@ -112,7 +112,7 @@ static GtkWidget *create_menu_orient (TOPLEVEL *w_current)
 
   buf = g_strdup_printf(_("Landscape"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
@@ -123,7 +123,7 @@ static GtkWidget *create_menu_orient (TOPLEVEL *w_current)
 
   buf = g_strdup_printf(_("Portrait"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
@@ -161,7 +161,7 @@ static GtkWidget *create_menu_type (TOPLEVEL *w_current)
 
   buf = g_strdup_printf(_("Extents with margins"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
@@ -171,7 +171,7 @@ static GtkWidget *create_menu_type (TOPLEVEL *w_current)
 
   buf = g_strdup_printf(_("Extents no margins"));
   menuitem = gtk_radio_menu_item_new_with_label(group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(menuitem));
   gtk_menu_append(GTK_MENU(menu), menuitem);
   gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
@@ -180,7 +180,7 @@ static GtkWidget *create_menu_type (TOPLEVEL *w_current)
 
   buf = g_strdup_printf(_("Current Window"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect(GTK_OBJECT (menuitem), "activate",

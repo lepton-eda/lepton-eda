@@ -291,7 +291,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
     o_cue_draw_list(w_current, connected_objects);
     g_list_free(connected_objects);
 
-    free(include_filename);
+    g_free(include_filename);
 
     if (w_current->actionfeedback_mode == OUTLINE) {
 #if 0
@@ -382,7 +382,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
   if (w_current->embed_complex) {
     char* new_basename;
 
-    free(o_current->complex_clib);
+    g_free(o_current->complex_clib);
 
     o_current->complex_clib = g_strdup ("EMBEDDED");
 
@@ -390,11 +390,11 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
                                 o_current->complex_basename,
                                 NULL);
 
-    free(o_current->complex_basename);
+    g_free(o_current->complex_basename);
 
     o_current->complex_basename = g_strdup (new_basename);
 
-    free(new_basename);
+    g_free(new_basename);
   }
 
   /* check for nulls in all this hack */

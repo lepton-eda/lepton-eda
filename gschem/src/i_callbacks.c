@@ -80,7 +80,7 @@ static char *fnameext_remove(const char *fname)
     fname_new = g_strdup (p);
   } else {
     len = (p - fname); /*  + 1; this extra was causing grief */
-    fname_new = (char *) malloc(sizeof(char) * (len + 1));
+    fname_new = (char *) g_malloc(sizeof(char) * (len + 1));
     if(fname_new == NULL) {
       return NULL;
     }
@@ -462,7 +462,7 @@ DEFINE_I_CALLBACK(file_print)
 
   /* add ".ps" tp the base filename */
   ps_filename = fnameext_add(base, ".ps");
-  free(base);
+  g_free(base);
 
   if (output_filename) {
     x_print_setup(w_current, output_filename);
@@ -471,7 +471,7 @@ DEFINE_I_CALLBACK(file_print)
   }
 
   if (ps_filename) {
-    free(ps_filename);
+    g_free(ps_filename);
   }
 }
 
@@ -515,7 +515,7 @@ DEFINE_I_CALLBACK(file_write_png)
 
   /* add ".png" tp the base filename */
   img_filename = fnameext_add(base, ".png");
-  free(base);
+  g_free(base);
 
   if (output_filename) {
     x_image_setup(w_current, output_filename);
@@ -524,7 +524,7 @@ DEFINE_I_CALLBACK(file_write_png)
   }
 
   if (img_filename) {
-    free(img_filename);
+    g_free(img_filename);
   }
 }
 
@@ -3043,17 +3043,17 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
             loaded_flag = TRUE;
           }
 
-          free(current_filename);
+          g_free(current_filename);
           pcount++;
           current_filename = u_basic_breakup_string(attrib, ',', pcount);
         }
 
         if (attrib) {
-          free(attrib);
+          g_free(attrib);
         }
 
         if (current_filename) {
-          free(current_filename);
+          g_free(current_filename);
         }
 
         count++;
@@ -3140,7 +3140,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
       o_redraw_all(w_current);
       x_pagesel_update (w_current);
       i_update_menus(w_current);
-      free(filename);
+      g_free(filename);
     }
   }
 }
@@ -3211,9 +3211,9 @@ DEFINE_I_CALLBACK(hierarchy_documentation)
 			object->complex_basename,
 			object->complex_clib);
 
-      if (attrib_doc) free(attrib_doc);
-      if (attrib_device) free(attrib_device);
-      if (attrib_value) free(attrib_value);
+      if (attrib_doc) g_free(attrib_doc);
+      if (attrib_device) g_free(attrib_device);
+      if (attrib_value) g_free(attrib_value);
     }
   }
 }

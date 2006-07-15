@@ -70,7 +70,7 @@ void o_slot_start(TOPLEVEL *w_current, OBJECT *list)
 #endif
       slot_edit_dialog(w_current,
                        slot_text_object->text->string);
-      free(slot_value);
+      g_free(slot_value);
     } else {
       /* we didn't find an attached slot=? attribute */
 
@@ -80,7 +80,7 @@ void o_slot_start(TOPLEVEL *w_current, OBJECT *list)
 
       if (default_slot_value) {
 				/* two is for null and equals sign */
-        slot_value = (char *) malloc(sizeof(char)*(
+        slot_value = (char *) g_malloc(sizeof(char)*(
                                                    strlen("slot")+
                                                    strlen(default_slot_value)+
                                                    2));
@@ -98,8 +98,8 @@ void o_slot_start(TOPLEVEL *w_current, OBJECT *list)
 #endif
 
       slot_edit_dialog(w_current, slot_value);
-      free(slot_value);
-      free(default_slot_value);
+      g_free(slot_value);
+      g_free(default_slot_value);
     }
   }
 }
@@ -138,13 +138,13 @@ void o_slot_end(TOPLEVEL *w_current, char *string, int len)
       s_log_message(_("numslots attribute missing\n"));
       s_log_message(
                     _("Slotting not allowed for this component\n"));
-      if (name) free(name);
-      if (value) free(value);
+      if (name) g_free(name);
+      if (value) g_free(value);
       return;
     }
 
     numslots = atoi(numslots_value);
-    free(numslots_value);
+    g_free(numslots_value);
 
     new_slot_number = atoi(value);
 
@@ -154,8 +154,8 @@ void o_slot_end(TOPLEVEL *w_current, char *string, int len)
 
     if (new_slot_number > numslots || new_slot_number <=0 ) {
       s_log_message(_("New slot number out of range\n"));
-      if (name) free(name);
-      if (value) free(value);
+      if (name) g_free(name);
+      if (value) g_free(value);
       return;
     }
 
@@ -165,7 +165,7 @@ void o_slot_end(TOPLEVEL *w_current, char *string, int len)
 
     if (slot_value) {
       if (slot_text_object->text->string) {
-        free(slot_text_object->text->string);
+        g_free(slot_text_object->text->string);
       }
 
       slot_text_object->text->string = g_strdup (string);
@@ -186,7 +186,7 @@ void o_slot_end(TOPLEVEL *w_current, char *string, int len)
         o_redraw_single(w_current,temp);
       }
 
-      free(slot_value);
+      g_free(slot_value);
 
     } else {
       /* here you need to do the add the slot
@@ -233,14 +233,14 @@ void o_slot_end(TOPLEVEL *w_current, char *string, int len)
 
     w_current->page_current->CHANGED = 1;
     o_undo_savestate(w_current, UNDO_ALL);
-    if (name) free(name);
-    if (value) free(value);
+    if (name) g_free(name);
+    if (value) g_free(value);
 
   } else {
     fprintf(stderr,
             _("uggg! you tried to slot edit something that doesn't exist!\n"));
-    if (name) free(name);
-    if (value) free(value);
+    if (name) g_free(name);
+    if (value) g_free(value);
     exit(-1);
   }
 }

@@ -133,7 +133,7 @@ static void x_pagesel_callback_response (GtkDialog *dialog,
 }
 
 enum {
-  PROP_TOPLEVEL=1,
+  PROP_TOPLEVEL=1
 };
 
 enum {
@@ -232,11 +232,11 @@ pagesel_callback_popup_ ## name (GtkMenuItem *menuitem,           \
   i_callback_ ## action (PAGESEL (user_data)->toplevel, 0, NULL); \
 }
 
-DEFINE_POPUP_CALLBACK (new_page,     file_new);
-DEFINE_POPUP_CALLBACK (open_page,    file_open);
-DEFINE_POPUP_CALLBACK (save_page,    file_save);
-DEFINE_POPUP_CALLBACK (close_page,   page_close);
-DEFINE_POPUP_CALLBACK (discard_page, page_discard);
+DEFINE_POPUP_CALLBACK (new_page,     file_new)
+DEFINE_POPUP_CALLBACK (open_page,    file_open)
+DEFINE_POPUP_CALLBACK (save_page,    file_save)
+DEFINE_POPUP_CALLBACK (close_page,   page_close)
+DEFINE_POPUP_CALLBACK (discard_page, page_discard)
 
 
 /*! \brief Popup context-sensitive menu.

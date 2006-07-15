@@ -99,7 +99,7 @@ SCM g_set_attrib_value_x(SCM attrib_smob, SCM scm_value)
 
   o_text_change(world, o_attrib, new_string, o_attrib->visibility, o_attrib->show_name_value);
 
-  free(new_string);
+  g_free(new_string);
 
   return returned;
 }
@@ -396,7 +396,7 @@ SCM g_get_object_bounds (SCM object_smob, SCM scm_inc_attribs)
 	      object_smob, SCM_ARG1, "get-object-bounds");
 
   if (!include_attribs) {
-    new_object = (OBJECT *) malloc(sizeof(OBJECT));
+    new_object = (OBJECT *) g_malloc(sizeof(OBJECT));
     memcpy (new_object, object, sizeof(OBJECT));
     new_object->attribs = NULL;
     new_object->next = NULL;

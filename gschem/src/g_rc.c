@@ -200,75 +200,75 @@ DEFINE_G_RC_COLOR(g_rc_override_pin_color,
 
 DEFINE_G_RC_COLOR(g_rc_attribute_color,
 		  "attribute-color",
-		  default_attribute_color);
+		  default_attribute_color)
 
 DEFINE_G_RC_COLOR(g_rc_detachedattr_color,
 		  "detached-attribute-color",
-		  default_detachattr_color);
+		  default_detachattr_color)
 
 DEFINE_G_RC_COLOR(g_rc_text_color,
 		  "text-color",
-		  default_text_color);
+		  default_text_color)
 
 DEFINE_G_RC_COLOR(g_rc_net_color,
 		  "net-color",
-		  default_net_color);
+		  default_net_color)
 
 DEFINE_G_RC_COLOR(g_rc_bus_color,
 		  "bus-color",
-		  default_bus_color);
+		  default_bus_color)
 
 DEFINE_G_RC_COLOR(g_rc_pin_color,
 		  "pin-color",
-		  default_pin_color);
+		  default_pin_color)
 
 DEFINE_G_RC_COLOR(g_rc_graphic_color,
 		  "graphic-color",
-		  default_graphic_color);
+		  default_graphic_color)
 
 DEFINE_G_RC_COLOR(g_rc_grid_color,
 		  "grid-color",
-		  default_grid_color);
+		  default_grid_color)
 
 DEFINE_G_RC_COLOR(g_rc_background_color,
 		  "background-color",
-		  default_background_color);
+		  default_background_color)
 
 DEFINE_G_RC_COLOR(g_rc_select_color,
 		  "select-color",
-		  default_select_color);
+		  default_select_color)
 
 DEFINE_G_RC_COLOR(g_rc_boundingbox_color,
 		  "boundingbox-color",
-		  default_bb_color);
+		  default_bb_color)
 
 DEFINE_G_RC_COLOR(g_rc_zoom_box_color,
 		  "zoom-box-color",
-		  default_zoom_box_color);
+		  default_zoom_box_color)
 
 DEFINE_G_RC_COLOR(g_rc_net_endpoint_color,
 		  "net-endpoint-color",
-		  default_net_endpoint_color);
+		  default_net_endpoint_color)
 
 DEFINE_G_RC_COLOR(g_rc_logic_bubble_color,
 		  "logic-bubble-color",
-		  default_logic_bubble_color);
+		  default_logic_bubble_color)
 
 DEFINE_G_RC_COLOR(g_rc_lock_color,
 		  "lock-color",
-		  default_lock_color);
+		  default_lock_color)
 
 DEFINE_G_RC_COLOR(g_rc_output_color_background,
 		  "output-color-background",
-		  default_print_color_background);
+		  default_print_color_background)
 
 DEFINE_G_RC_COLOR(g_rc_stroke_color,
 		  "stroke-color",
-		  default_stroke_color);
+		  default_stroke_color)
 
 DEFINE_G_RC_COLOR(g_rc_freestyle_color,
 		  "freestyle-color",
-		  default_dummy);
+		  default_dummy)
 
 #if 0
 /*! \deprecated Currently unused.

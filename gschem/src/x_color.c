@@ -49,7 +49,7 @@ void x_color_allocate_all(void)
   for (i = 0; i < MAX_COLORS; i++) {
     if (colors[i].color_name) {
       colors[i].gtk_color = (GdkColor *) 
-        malloc(sizeof(GdkColor));
+        g_malloc(sizeof(GdkColor));
 
       error = gdk_color_parse(colors[i].color_name, 
                               colors[i].gtk_color);
@@ -86,7 +86,7 @@ void x_color_allocate_all(void)
 
     if (colors[i].outline_color_name) {
       colors[i].gtk_outline_color = (GdkColor *) 
-        malloc(sizeof(GdkColor));
+        g_malloc(sizeof(GdkColor));
 
       error = gdk_color_parse(colors[i].outline_color_name, 
                               colors[i].gtk_outline_color);

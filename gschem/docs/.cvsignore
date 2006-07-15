@@ -4,3 +4,5 @@ Makefile.in
 gschemdoc.info
 gschemdoc.info-*
 gschem.html
+latex
+html

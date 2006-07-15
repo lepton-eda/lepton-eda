@@ -20,7 +20,7 @@
 
 
 typedef enum {
-  LOG_RESPONSE_CLOSE  = 1,
+  LOG_RESPONSE_CLOSE  = 1
 } LogResponseType;
 
 

@@ -370,7 +370,7 @@ static GtkWidget *create_menu_alignment (TOPLEVEL *w_current)
 
   buf = g_strdup_printf( _("Lower Left"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "0");
@@ -381,7 +381,7 @@ static GtkWidget *create_menu_alignment (TOPLEVEL *w_current)
 
   buf = g_strdup_printf( _("Middle Left"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "1");
@@ -392,7 +392,7 @@ static GtkWidget *create_menu_alignment (TOPLEVEL *w_current)
 
   buf = g_strdup_printf( _("Upper Left"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "2");
@@ -403,7 +403,7 @@ static GtkWidget *create_menu_alignment (TOPLEVEL *w_current)
 
   buf = g_strdup_printf( _("Lower Middle"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "3");
@@ -414,7 +414,7 @@ static GtkWidget *create_menu_alignment (TOPLEVEL *w_current)
 
   buf = g_strdup_printf( _("Middle Middle"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "4");
@@ -425,7 +425,7 @@ static GtkWidget *create_menu_alignment (TOPLEVEL *w_current)
 
   buf = g_strdup_printf( _("Upper Middle"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "5");
@@ -436,7 +436,7 @@ static GtkWidget *create_menu_alignment (TOPLEVEL *w_current)
 
   buf = g_strdup_printf( _("Lower Right"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "6");
@@ -447,7 +447,7 @@ static GtkWidget *create_menu_alignment (TOPLEVEL *w_current)
 
   buf = g_strdup_printf( _("Middle Right"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "7");
@@ -458,7 +458,7 @@ static GtkWidget *create_menu_alignment (TOPLEVEL *w_current)
 
   buf = g_strdup_printf( _("Upper Right"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "8");
@@ -752,7 +752,7 @@ void text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     text_size_string = g_strdup_printf("%d", text_size);
     gtk_entry_set_text(GTK_ENTRY(w_current->tsentry),
                        text_size_string);
-    free(text_size_string);
+    g_free(text_size_string);
 
     gtk_grab_add (w_current->tewindow);
   }
@@ -1004,7 +1004,7 @@ void line_type_dialog (TOPLEVEL *w_current, GList *objects)
   gchar *width_str, *space_str, *length_str;
   gint type;
 
-  line_type_data = (struct line_type_data*) malloc (
+  line_type_data = (struct line_type_data*) g_malloc (
     sizeof (struct line_type_data));
 
   dialog = x_create_dialog_box(&vbox, &action_area);
@@ -1423,7 +1423,7 @@ void fill_type_dialog(TOPLEVEL *w_current, GList *objects)
   gchar *width_str, *angle1_str, *pitch1_str, *angle2_str, *pitch2_str;
   gint type;
 
-  fill_type_data = (struct fill_type_data*) malloc (
+  fill_type_data = (struct fill_type_data*) g_malloc (
     sizeof (struct fill_type_data));
 
   dialog = x_create_dialog_box (&vbox, &action_area);
@@ -2240,7 +2240,7 @@ void text_size_dialog (TOPLEVEL *w_current)
     gtk_entry_select_region(GTK_ENTRY(w_current->tsentry), 0, len);
     gtk_widget_show (w_current->tswindow);
     gtk_grab_add(w_current->tswindow);
-    free(string);
+    g_free(string);
   }
 }
 
@@ -2398,7 +2398,7 @@ void snap_size_dialog (TOPLEVEL *w_current)
     gtk_entry_select_region(GTK_ENTRY(w_current->tsentry), 0, len);
     gtk_widget_show (w_current->tswindow);
     gtk_grab_add (w_current->tswindow);
-    free(string);
+    g_free(string);
   }
 }
 
@@ -2643,7 +2643,7 @@ void about_dialog (TOPLEVEL *w_current)
 
     string = g_strdup_printf( _("gEDA : GPL Electronic Design Automation"));
     label = gtk_label_new (string);
-    free(string);
+    g_free(string);
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 5);
@@ -2651,7 +2651,7 @@ void about_dialog (TOPLEVEL *w_current)
 
     string = g_strdup_printf(_("gschem version %s"), VERSION);
     label = gtk_label_new (string);
-    free(string);
+    g_free(string);
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 5);
@@ -2659,7 +2659,7 @@ void about_dialog (TOPLEVEL *w_current)
 
     string = g_strdup_printf( _("Written by:\nAles V. Hvezda\nahvezda@geda.seul.org\nAnd many others (See AUTHORS file)"));
     label = gtk_label_new (string);
-    free(string);
+    g_free(string);
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 5);
@@ -2729,13 +2729,13 @@ void coord_display_update(TOPLEVEL *w_current, int x, int y)
 
   string = g_strdup_printf("(%d, %d)", x, y);
   gtk_label_set_text(GTK_LABEL(w_current->coord_screen), string );
-  free(string);
+  g_free(string);
 
   SCREENtoWORLD(w_current, x, y, &world_x, &world_y);
 
   string = g_strdup_printf("(%d, %d)", world_x, world_y);
   gtk_label_set_text(GTK_LABEL(w_current->coord_world), string );
-  free(string);
+  g_free(string);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2960,7 +2960,7 @@ static GtkWidget *create_color_menu (TOPLEVEL * w_current, int * select_index)
       fprintf(stderr, "no object selected - WHEE!\n");
     }else{
       select_col = object->saved_color;
-      //fprintf(stderr, "setting object color %d\n", select_col);
+      /* fprintf(stderr, "setting object color %d\n", select_col); */
     }
   }else /*fprintf(stderr, "no object selected\n")*/;
 
@@ -2971,13 +2971,13 @@ static GtkWidget *create_color_menu (TOPLEVEL * w_current, int * select_index)
       menu_string = g_strdup_printf("%d | %s | %s", index, 
 				    temp,
 				    buf);
-      free(temp);
+      g_free(temp);
       temp = NULL;
       g_free(buf);
       buf = NULL;
       menuitem = gtk_radio_menu_item_new_with_label (group, 
                                                      menu_string);
-      free(menu_string);
+      g_free(menu_string);
       menu_string = NULL;
       
       group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(
@@ -3001,13 +3001,13 @@ static GtkWidget *create_color_menu (TOPLEVEL * w_current, int * select_index)
 	/* set the default to the current color */
         if (index == global_window_current->edit_color) {
           gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
-          //fprintf(stderr, "checking item %d\n", index);
+          /*fprintf(stderr, "checking item %d\n", index); */
 	  *select_index = item_index;
         }
       }else{
         if (index == select_col){
           gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
-          //fprintf(stderr, "checking selected item %d\n", index);
+          /* fprintf(stderr, "checking selected item %d\n", index); */
 	  *select_index = item_index;
         }
       } 
@@ -3225,7 +3225,7 @@ void x_dialog_hotkeys_free_all(void)
 
   for (i = 0 ; i < hotkey_counter; i++) {
     if (hotkey_strings[i]) {
-      free(hotkey_strings[i]);
+      g_free(hotkey_strings[i]);
     }
   }
 }
@@ -3243,7 +3243,7 @@ void x_dialog_hotkeys_fill(char *string)
     return;
   }	
 
-  hotkey_strings[hotkey_counter] = (char *) malloc(sizeof(char)*(
+  hotkey_strings[hotkey_counter] = (char *) g_malloc(sizeof(char)*(
                                                                  strlen(string)+1));
   ;
   strcpy(hotkey_strings[hotkey_counter], string);
@@ -4551,7 +4551,7 @@ void major_changed_dialog(TOPLEVEL* w_current)
         refdes_string = g_strdup (value);
       } else {
         tmp = g_strconcat (refdes_string, "\n", value, NULL);
-        free(refdes_string);
+        g_free(refdes_string);
         refdes_string = tmp;
       }
       
@@ -4561,7 +4561,7 @@ void major_changed_dialog(TOPLEVEL* w_current)
     tmp = g_strconcat (refdes_string, 
                        "\n\nBe sure to verify each of these symbols!", 
                        NULL);
-    free(refdes_string);
+    g_free(refdes_string);
     refdes_string = tmp;
 
 #ifdef HAS_GTK22
@@ -4582,12 +4582,12 @@ void major_changed_dialog(TOPLEVEL* w_current)
       "\n  Major symbol changes detected in refdes:  \n\n", 
       refdes_string, 
       NULL);
-    free(refdes_string);
+    g_free(refdes_string);
     refdes_string = tmp;
     quick_message_dialog(refdes_string);
 #endif
 
-    if (refdes_string) free(refdes_string);
+    if (refdes_string) g_free(refdes_string);
   }
 }
 

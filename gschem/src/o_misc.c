@@ -577,7 +577,7 @@ void o_embed(TOPLEVEL *w_current, OBJECT *o_current)
   {
     /* change the clib of complex to "EMBEDDED" */
     if (o_current->complex_clib) {
-      free (o_current->complex_clib);
+      g_free (o_current->complex_clib);
     }
     o_current->complex_clib = g_strdup ("EMBEDDED");
 
@@ -585,7 +585,7 @@ void o_embed(TOPLEVEL *w_current, OBJECT *o_current)
     new_basename = g_strconcat ("EMBEDDED",
                                 o_current->complex_basename,
                                 NULL);
-    free (o_current->complex_basename);
+    g_free (o_current->complex_basename);
     o_current->complex_basename = new_basename;
 
     s_log_message (_("Component [%s] has been embedded\n"),
@@ -638,11 +638,11 @@ void o_unembed(TOPLEVEL *w_current, OBJECT *o_current)
       
     } else {
       /* set the object new basename */
-      free (o_current->complex_basename);
+      g_free (o_current->complex_basename);
       o_current->complex_basename = new_basename;
 
       /* set the object new clib */
-      free (o_current->complex_clib);
+      g_free (o_current->complex_clib);
       if (g_slist_next (clibs)) {
         s_log_message (_("More than one component found with name [%s]\n"),
                        new_basename);
@@ -1359,7 +1359,7 @@ void autonumber_text(TOPLEVEL * w_current, char *stext, GSList **used,
 
   for (item=o_list; item != NULL; item=g_slist_next(item)) {
     o_current= item->data;
-    free(o_current->text->string);
+    g_free(o_current->text->string);
 
     while (*used != NULL && *currentnumber > GPOINTER_TO_INT((*used)->data)) {
       *used=(*used)->next;
@@ -1377,9 +1377,9 @@ void autonumber_text(TOPLEVEL * w_current, char *stext, GSList **used,
     ss = g_strdup_printf("%s%d", stext, (*currentnumber)++);
     /*            printf("%s\n", ss); */
     o_current->text->string =
-      (char *) malloc(sizeof(char) * (strlen(ss) + 1));
+      (char *) g_malloc(sizeof(char) * (strlen(ss) + 1));
     strcpy(o_current->text->string, ss);
-    free(ss);
+    g_free(ss);
     o_text_erase(w_current, o_current);
     o_text_recreate(w_current, o_current);
     o_text_draw(w_current, o_current);

@@ -95,7 +95,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
   SCM scm_index;
   SCM scm_keys;
   char *menu_name;
-  char **raw_menu_name = malloc (sizeof(char *));
+  char **raw_menu_name = g_malloc (sizeof(char *));
   char *menu_item_name;
   char *raw_menu_item_name;
   char *menu_item_func;
@@ -178,9 +178,9 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
       } else { 
         buf = g_strdup_printf("(find-key '%s)", menu_item_hotkey_func);
         scm_keys = scm_c_eval_string (buf);
-	free(buf);
+	g_free(buf);
         if (scm_keys == SCM_BOOL_F) {
-          menu_item_keys = malloc(sizeof(char)*2);
+          menu_item_keys = g_malloc(sizeof(char)*2);
           menu_item_keys[0] = ' ';
           menu_item_keys[1] = '\0';
         } else {
@@ -211,7 +211,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
            pad = 1;
 	} 
 
-        spaces = malloc(sizeof(char)*(pad+1));
+        spaces = g_malloc(sizeof(char)*(pad+1));
         memset(spaces, ' ', pad);
         spaces[pad] = '\0';
         buf = g_strdup_printf("%s%s%s", menu_item_name, spaces, menu_item_keys);
@@ -222,14 +222,14 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
 #endif
       
         menu_item = gtk_menu_item_new_with_label(buf);
-	free(buf);
+	g_free(buf);
         gtk_menu_append(GTK_MENU(menu), menu_item);
         gtk_signal_connect_object(GTK_OBJECT(menu_item), "activate",
                                   GTK_SIGNAL_FUNC(g_menu_execute),
                                   (gpointer) g_strdup (menu_item_func));
         /* The g_strdup is a memory leak, but this is okay. I think. */
-        free(spaces);
-        free(menu_item_keys);
+        g_free(spaces);
+        g_free(menu_item_keys);
       }
       
       gtk_widget_show(menu_item);
@@ -238,7 +238,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
       /* This string should NOT be internationalized */
       buf = g_strdup_printf("%s/%s", *raw_menu_name, raw_menu_item_name);
       gtk_object_set_data(GTK_OBJECT(menu_bar), buf, menu_item);
-      free(buf);
+      g_free(buf);
       
     }
     
@@ -255,7 +255,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
     gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), root_menu);
   }
   
-  free(raw_menu_name);
+  g_free(raw_menu_name);
   *menubar = menu_bar;
 }
 

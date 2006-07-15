@@ -224,7 +224,7 @@ void x_draw_tiles(TOPLEVEL *w_current)
                      screen_x+10, screen_y+10, 
                      tempstring,
                      strlen(tempstring));
-      free(tempstring);
+      g_free(tempstring);
     }
   }
 

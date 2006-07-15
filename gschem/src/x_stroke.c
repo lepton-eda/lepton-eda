@@ -47,7 +47,7 @@ void x_stroke_add_point(TOPLEVEL *w_current, int x, int y)
 {
   STROKE_POINT *new_point;
 
-  new_point = (STROKE_POINT *) malloc (sizeof(STROKE_POINT));
+  new_point = (STROKE_POINT *) g_malloc(sizeof(STROKE_POINT));
 
   new_point->x = x;
   new_point->y = y;
@@ -101,7 +101,7 @@ void x_stroke_erase_all(TOPLEVEL *w_current)
 
     temp = stroke_points;
     stroke_points = stroke_points->next;
-    free (temp);
+    g_free(temp);
   }
 
   stroke_points = NULL;
@@ -123,7 +123,7 @@ void x_stroke_free_all(void)
 
     temp = stroke_points;
     stroke_points = stroke_points->next;
-    free (temp);
+    g_free(temp);
   }
 
   stroke_points = NULL;

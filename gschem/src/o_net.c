@@ -117,7 +117,7 @@ void o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
                    tempstring,
                    strlen(tempstring));
     gdk_font_unref(font);
-    free(tempstring);
+    g_free(tempstring);
 #endif
   }
 
