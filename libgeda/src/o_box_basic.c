@@ -104,7 +104,7 @@ OBJECT *o_box_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->type  = type;
   new_node->color = color;
 
-  box = (BOX *) malloc(sizeof(BOX));
+  box = (BOX *) g_malloc(sizeof(BOX));
   new_node->box   = box;
 
   /* describe the box with its upper left and lower right corner */

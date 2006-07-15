@@ -136,7 +136,7 @@ int f_print_header(TOPLEVEL *w_current, FILE *fp,
   
   /* Allocate a buffer to use during copy */
 #define PROLOG_BUFFER_SIZE 8192
-  buf = malloc(PROLOG_BUFFER_SIZE);
+  buf = g_malloc(PROLOG_BUFFER_SIZE);
   if(buf == NULL) {
     s_log_message("Unable to allocate %d bytes in f_print_header()\n"
 		  "Giving up on printing.\n",PROLOG_BUFFER_SIZE);
@@ -148,7 +148,7 @@ int f_print_header(TOPLEVEL *w_current, FILE *fp,
     s_log_message("Unable to open the prolog file `%s' for reading "
 		  "in f_print_header()\n"
 		  "Giving up on printing\n", w_current->postscript_prolog);
-    free(buf);  /* If we got to here, the buffer was allocated. */
+    g_free(buf);  /* If we got to here, the buffer was allocated. */
     return 0;
   }
   /* Loop while reading file into buffer and dump it
@@ -164,7 +164,7 @@ int f_print_header(TOPLEVEL *w_current, FILE *fp,
     s_log_message("Error during reading of the prolog file `%s' "
 		  "in f_print_header()\n"
 		  "Giving up on printing\n", w_current->postscript_prolog);
-    free(buf);  /* If we got to here, the buffer was allocated. */
+    g_free(buf);  /* If we got to here, the buffer was allocated. */
     return 0;
   }
 
@@ -172,10 +172,10 @@ int f_print_header(TOPLEVEL *w_current, FILE *fp,
     s_log_message("Error during writing of the output postscript file "
 		  "in f_print_header()\n"
 		  "Giving up on printing\n");
-    free(buf);  /* If we got to here, the buffer was allocated. */
+    g_free(buf);  /* If we got to here, the buffer was allocated. */
     return 0;
   }
-  free(buf);  /* If we got to here, the buffer was allocated. */
+  g_free(buf);  /* If we got to here, the buffer was allocated. */
 
   fprintf(fp,"%%%%EndProlog\n"
 	  "%%%%Page: 1 1\n");     /* Just name it `page 1' for now */

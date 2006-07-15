@@ -433,15 +433,15 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
   new_node = s_basic_init_object("complex");
   new_node->type = type;
 
-  new_node->complex_basename = strdup(basename);
+  new_node->complex_basename = g_strdup(basename);
   if (clib)
-    new_node->complex_clib = strdup(clib);
+    new_node->complex_clib = g_strdup(clib);
   else
     new_node->complex_clib = NULL;
 
   new_node->color = color;
 	
-  new_node->complex = (COMPLEX *) malloc(sizeof(COMPLEX));
+  new_node->complex = (COMPLEX *) g_malloc(sizeof(COMPLEX));
 	
   new_node->complex->angle = angle;
   new_node->complex->mirror = mirror;
@@ -530,7 +530,7 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
                            y + NOT_FOUND_TEXT_Y, LOWER_LEFT, 0, 
                            not_found_text, 8,
                            VISIBLE, SHOW_NAME_VALUE);
-    free(not_found_text);
+    g_free(not_found_text);
 
     /* figure out where to put the hazard triangle */
     world_get_text_bounds(w_current, prim_objs,
@@ -650,7 +650,7 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
     }
   }
 
-  free(filename);
+  g_free(filename);
   return(object_list);
 }
 
@@ -668,7 +668,7 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list,
   new_node = s_basic_init_object("complex");
   new_node->type = type;
 
-  new_node->complex = (COMPLEX *) malloc(sizeof(COMPLEX));
+  new_node->complex = (COMPLEX *) g_malloc(sizeof(COMPLEX));
   new_node->complex->x = x;
   new_node->complex->y = y;
   WORLDtoSCREEN(w_current, x, y, 
@@ -678,9 +678,9 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->complex->angle = angle;
   new_node->complex->mirror = 0;
 	
-  new_node->complex_basename = strdup(basename);
+  new_node->complex_basename = g_strdup(basename);
   if (clib)
-    new_node->complex_clib = strdup(clib);
+    new_node->complex_clib = g_strdup(clib);
   else
     new_node->complex_clib = NULL;
 
@@ -866,18 +866,18 @@ void o_complex_set_filename(TOPLEVEL *w_current, char *clib, char *basename)
   }
 
   if (w_current->internal_basename) {
-    free(w_current->internal_basename);
+    g_free(w_current->internal_basename);
   }
 
   if (w_current->internal_clib) {
-    free(w_current->internal_clib);
+    g_free(w_current->internal_clib);
   }
 
   len = strlen(basename);
-  w_current->internal_basename = (char *) malloc(sizeof(char)*len+1);
+  w_current->internal_basename = (char *) g_malloc(sizeof(char)*len+1);
 
   len = strlen(clib) + 1;	
-  w_current->internal_clib = (char *) malloc(sizeof(char)*len+1);
+  w_current->internal_clib = (char *) g_malloc(sizeof(char)*len+1);
 
   strcpy(w_current->internal_basename, basename);	
   strcpy(w_current->internal_clib, clib);	
@@ -890,11 +890,11 @@ void o_complex_set_filename(TOPLEVEL *w_current, char *clib, char *basename)
 void o_complex_free_filename(TOPLEVEL *w_current)
 {
   if (w_current->internal_basename) {
-    free(w_current->internal_basename);
+    g_free(w_current->internal_basename);
   }
 
   if (w_current->internal_clib) {
-    free(w_current->internal_clib);
+    g_free(w_current->internal_clib);
   }
 }
 
@@ -1788,7 +1788,7 @@ o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object)
   /* if inside_value and outside_value match, then symbol versions are okay */
 
 done:
-  if (inside) free(inside);
-  if (outside) free(outside);
-  if (refdes) free(refdes);
+  if (inside) g_free(inside);
+  if (outside) g_free(outside);
+  if (refdes) g_free(refdes);
 }

@@ -70,7 +70,8 @@ int s_attrib_add_entry(char *new_attrib)
     return(-1); 
   }
 	
-  attrib[attrib_index].attrib_name = (char *) malloc(sizeof(char)*strlen(new_attrib)+1);
+  attrib[attrib_index].attrib_name = (char *) 
+    g_malloc(sizeof(char)*strlen(new_attrib)+1);
 
   strcpy(attrib[attrib_index].attrib_name, new_attrib);
 
@@ -118,14 +119,14 @@ int s_attrib_uniq(char *name)
  */
 void s_attrib_free()
 {
-	int i;
+  int i;
 
-	for (i = 0; i < attrib_index; i++) {
-		if (attrib[i].attrib_name)
-               		free(attrib[i].attrib_name);
-	}
+  for (i = 0; i < attrib_index; i++) {
+     if (attrib[i].attrib_name)
+        g_free(attrib[i].attrib_name);
+  }
 
-	attrib_index=0;
+  attrib_index=0;
 }
 
 /*! \todo Finish function documentation!!!

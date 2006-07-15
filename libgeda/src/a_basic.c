@@ -133,7 +133,7 @@ void o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
 
 	/* output the line */
         fprintf(fp, "%s\n", out);
-	free(out);
+	g_free(out);
 
         /* save those attributes */
         if (o_current->attribs != NULL) {
@@ -266,7 +266,7 @@ int o_save(TOPLEVEL *w_current, const char *filename)
 				/* output the line */
         if (!already_wrote) {
           fprintf(fp, "%s\n", out);
-	  free(out);
+	  g_free(out);
         } else {
           already_wrote=0;
         }

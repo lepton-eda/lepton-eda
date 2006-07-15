@@ -152,7 +152,7 @@ OBJECT *s_basic_init_object( char *name )
 {
   OBJECT *new_node;
 
-  new_node = (OBJECT *) malloc(sizeof(OBJECT));	
+  new_node = (OBJECT *) g_malloc(sizeof(OBJECT));	
 
   if (new_node == NULL) {
     fprintf(stderr, "Could not perform malloc; something is broken or increase your process limits\n");
@@ -165,7 +165,7 @@ OBJECT *s_basic_init_object( char *name )
 
   /* Setup the name */
   /*! \todo get rid of magic number 16 that's the size of new_node->sid, */
-  new_node->name = (char *) malloc(sizeof(char)*(strlen(name)+16));
+  new_node->name = (char *) g_malloc(sizeof(char)*(strlen(name)+16));
   sprintf(new_node->name, "%s.%d", name, new_node->sid);
 
   /* Setup the bounding box */
@@ -403,7 +403,7 @@ void s_delete(TOPLEVEL *w_current, OBJECT *o_current)
 
     if (o_current->line) {
       /*	printf("sdeleting line\n");*/
-      free(o_current->line);
+      g_free(o_current->line);
 
       /* yes this object might be in the tile system */
       s_tile_remove_object_all(w_current,
@@ -414,19 +414,19 @@ void s_delete(TOPLEVEL *w_current, OBJECT *o_current)
 
     if (o_current->circle) {
       /*	printf("sdeleting circle\n");*/
-      free(o_current->circle);
+      g_free(o_current->circle);
     }
     o_current->circle = NULL;
 
     if (o_current->arc) {
       /*	printf("sdeleting arc\n");*/
-      free(o_current->arc);
+      g_free(o_current->arc);
     }
     o_current->arc = NULL;
 
     if (o_current->box) {
       /*	printf("sdeleting box\n");*/
-      free(o_current->box);
+      g_free(o_current->box);
     }
     o_current->box = NULL;
 
@@ -434,20 +434,20 @@ void s_delete(TOPLEVEL *w_current, OBJECT *o_current)
       /*	printf("sdeleting picture\n");*/
 #ifndef HAS_GTK12
       if (o_current->picture->original_picture)
-	free(o_current->picture->original_picture);
+	g_free(o_current->picture->original_picture);
       if (o_current->picture->displayed_picture)
-	free(o_current->picture->displayed_picture);
+	g_free(o_current->picture->displayed_picture);
 #endif
       if (o_current->picture->filename)
-	free(o_current->picture->filename);
-      free(o_current->picture);
+	g_free(o_current->picture->filename);
+      g_free(o_current->picture);
     }
     o_current->picture = NULL;
 
     if (o_current->text) {
       if (o_current->text->string) {
 				/*printf("sdeleting text->string\n");*/
-        free(o_current->text->string); 
+        g_free(o_current->text->string); 
       }
       o_current->text->string = NULL;
 
@@ -459,26 +459,26 @@ void s_delete(TOPLEVEL *w_current, OBJECT *o_current)
       o_current->text->prim_objs = NULL;
 
       /*	printf("sdeleting text\n");*/
-      free(o_current->text);
+      g_free(o_current->text);
     }
     o_current->text = NULL;
 
     if (o_current->name) {
       /*	printf("sdeleting name\n");*/
-      free(o_current->name);
+      g_free(o_current->name);
     }
     o_current->name = NULL;
 
 
     if (o_current->complex_basename) {
       /*	printf("sdeleting complex_basename\n");*/
-      free(o_current->complex_basename); 
+      g_free(o_current->complex_basename); 
     }
     o_current->complex_basename = NULL;
 
     if (o_current->complex_clib) {
       /*	printf("sdeleting complex_clib\n");*/
-      free(o_current->complex_clib); 
+      g_free(o_current->complex_clib); 
     }
     o_current->complex_clib = NULL;
 
@@ -491,7 +491,7 @@ void s_delete(TOPLEVEL *w_current, OBJECT *o_current)
       }
       o_current->complex->prim_objs = NULL;
 
-      free(o_current->complex);
+      g_free(o_current->complex);
       o_current->complex = NULL;
     }
 
@@ -501,7 +501,7 @@ void s_delete(TOPLEVEL *w_current, OBJECT *o_current)
     o_current->attribs = NULL;
 
 
-    free(o_current);	/* assuming it is not null */
+    g_free(o_current);	/* assuming it is not null */
 
     o_current=NULL;		/* misc clean up */
   }
@@ -738,7 +738,7 @@ char *remove_string(char *string, int start, int end)
 
   len = strlen(string);
 
-  return_string = (char *) malloc(sizeof(char)*(len+1));
+  return_string = (char *) g_malloc(sizeof(char)*(len+1));
 
   j = 0;
   for (i = 0 ; i < len; i++) {
@@ -753,7 +753,7 @@ char *remove_string(char *string, int start, int end)
   return_string[j] = '\0';
 
   /* free original string */
-  free(string);
+  g_free(string);
 
   return(return_string);
 }
@@ -789,7 +789,7 @@ char *insert_string(char *string, int start, char *insert_string)
   insert_len = strlen(insert_string);
   total_len = len+insert_len;
 
-  new_string = (char *) malloc(sizeof(char)*(total_len+1));
+  new_string = (char *) g_malloc(sizeof(char)*(total_len+1));
 
   i = 0;
   while (i < total_len) {
@@ -808,7 +808,7 @@ char *insert_string(char *string, int start, char *insert_string)
   new_string[i] = '\0';
 
   /* now free the original string */
-  free(string);
+  g_free(string);
 
   return(new_string);
 }

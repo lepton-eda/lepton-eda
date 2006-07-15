@@ -93,7 +93,7 @@ STRETCH *s_stretch_new_head(void)
 {
   STRETCH *s_new;
 
-  s_new = (STRETCH *) malloc(sizeof(STRETCH));
+  s_new = (STRETCH *) g_malloc(sizeof(STRETCH));
 
   s_new->object = NULL;
   s_new->connection = NULL;
@@ -112,7 +112,7 @@ STRETCH *s_stretch_new_head(void)
  */
 void s_stretch_destroy_head(STRETCH *s_head)
 {
-  free(s_head);
+  g_free(s_head);
 }
 
 /*! \todo Finish function documentation!!!
@@ -142,7 +142,7 @@ STRETCH *s_stretch_add(STRETCH *head, OBJECT *object,
   }
   /*printf("Adding: %s\n", object->name);*/
 
-  s_new = (STRETCH *) malloc(sizeof(STRETCH));
+  s_new = (STRETCH *) g_malloc(sizeof(STRETCH));
   s_new->object = object;
   s_new->connection = connection;
   s_new->whichone = whichone;
@@ -196,7 +196,7 @@ void s_stretch_remove(STRETCH *head, OBJECT *object)
       s_current->connection = NULL;
       s_current->whichone = -1;
 
-      free(s_current);
+      g_free(s_current);
       return;
     }
     s_current = s_current->next;
@@ -224,7 +224,7 @@ void s_stretch_remove_most(TOPLEVEL *w_current, STRETCH *head)
       s_current->connection = NULL;
       s_current->whichone = -1;
 	
-      free(s_current);
+      g_free(s_current);
       s_current = s_prev;
     } else {
       break;
@@ -288,7 +288,7 @@ void s_stretch_destroy_all(STRETCH *head)
     s_current->connection = NULL;
     s_current->whichone = -1;
 
-    free(s_current);
+    g_free(s_current);
     s_current = s_prev;
   }
 }

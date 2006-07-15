@@ -160,10 +160,10 @@ gint g_rc_parse_system_rc(TOPLEVEL *w_current, const gchar *rcname)
                              rcname);  
   found_rc = g_rc_parse_general(w_current, filename, ok_msg, err_msg);
 
-  g_free (ok_msg);
-  g_free (err_msg);  
-  g_free (tmp);
-  free(filename);
+  g_free(ok_msg);
+  g_free(err_msg);  
+  g_free(tmp);
+  g_free(filename);
 
   return found_rc;
 }
@@ -205,10 +205,10 @@ gint g_rc_parse_home_rc(TOPLEVEL *w_current, const gchar *rcname)
                              rcname);  
   found_rc = g_rc_parse_general(w_current, filename, ok_msg, err_msg);
   
-  g_free (ok_msg);
-  g_free (err_msg);
-  g_free (tmp);
-  free(filename);
+  g_free(ok_msg);
+  g_free(err_msg);
+  g_free(tmp);
+  g_free(filename);
 
   return found_rc;
 }
@@ -241,10 +241,10 @@ gint g_rc_parse_local_rc(TOPLEVEL *w_current, const gchar *rcname)
                              rcname);  
   found_rc = g_rc_parse_general(w_current, filename, ok_msg, err_msg);
 
-  g_free (ok_msg);
-  g_free (err_msg);
-  g_free (tmp);
-  free(filename);
+  g_free(ok_msg);
+  g_free(err_msg);
+  g_free(tmp);
+  g_free(filename);
 
   return found_rc;
 }
@@ -278,7 +278,7 @@ gint g_rc_parse_specified_rc(TOPLEVEL *w_current, const gchar *rcname)
   
   g_free(ok_msg);
   g_free(err_msg);
-  free(filename);
+  g_free(filename);
 
   return found_rc;
 }
@@ -310,7 +310,7 @@ void g_rc_parse(TOPLEVEL *w_current,
   /*  g_setenv ("GEDADATARC", rc_path, TRUE); */  /*requires glib 2.4.x*/
   geda_rcdata = g_strdup_printf("GEDADATARC=%s", rc_path);
   putenv(geda_rcdata);
-  free (rc_path);
+  g_free(rc_path);
   
   /* visit rc files in order */
   /* Changed by SDB 1.2.2005 in response to Peter Kaiser's bug report.
@@ -360,7 +360,7 @@ SCM g_rc_component_library(SCM path)
     fprintf(stderr,
             "Invalid path [%s] passed to component-library\n",
             string);
-    free (string);
+    g_free(string);
     return SCM_BOOL_F;
   }
 
@@ -374,12 +374,12 @@ SCM g_rc_component_library(SCM path)
 #endif
     temp = g_strconcat (cwd, G_DIR_SEPARATOR_S, string, NULL);
     s_clib_add_directory (temp);
-    g_free (temp);
-    g_free (cwd);
+    g_free(temp);
+    g_free(cwd);
   }
 
   if (string) {
-    free(string);
+    g_free(string);
   }
 
   return SCM_BOOL_T;
@@ -410,7 +410,7 @@ SCM g_rc_component_library_search(SCM path)
     fprintf (stderr,
              "Invalid path [%s] passed to component-library-search\n",
              string);
-    free (string);
+    g_free(string);
     return SCM_BOOL_F;
   }
 
@@ -419,7 +419,7 @@ SCM g_rc_component_library_search(SCM path)
     fprintf (stderr,
              "Invalid path [%s] passed to component-library-search\n",
              string);
-    free (string);
+    g_free(string);
     return SCM_BOOL_F;
   }
 
@@ -448,16 +448,16 @@ SCM g_rc_component_library_search(SCM path)
                               fullpath,
                               NULL);
           s_clib_add_directory (temp);
-          g_free (temp);
-          g_free (cwd);
+          g_free(temp);
+          g_free(cwd);
         }
       }
-      g_free (fullpath);
+      g_free(fullpath);
     }
   }
 
   if (string) {
-    free(string);
+    g_free(string);
   }
 
   return SCM_BOOL_T;
@@ -486,7 +486,7 @@ SCM g_rc_source_library(SCM path)
     fprintf (stderr,
              "Invalid path [%s] passed to source-library\n",
              string);
-    free (string);
+    g_free(string);
     return SCM_BOOL_F;
   }
 
@@ -503,12 +503,12 @@ SCM g_rc_source_library(SCM path)
                         string,
                         NULL);
     s_slib_add_entry (temp);
-    g_free (temp);
-    g_free (cwd);
+    g_free(temp);
+    g_free(cwd);
   }
   
   if (string) {
-    free (string);
+    g_free(string);
   }
   
   return SCM_BOOL_T;
@@ -539,7 +539,7 @@ SCM g_rc_source_library_search(SCM path)
     fprintf (stderr,
              "Invalid path [%s] passed to source-library-search\n",
              string);
-    free (string);
+    g_free(string);
     return SCM_BOOL_F;
   }
 
@@ -549,7 +549,7 @@ SCM g_rc_source_library_search(SCM path)
              "Invalid path [%s] passed to source-library-search\n",
              string);
     if (string) {
-      free (string);
+      g_free(string);
     }
     return SCM_BOOL_F;
   }
@@ -580,17 +580,17 @@ SCM g_rc_source_library_search(SCM path)
                                 fullpath,
                                 NULL);
             s_slib_add_entry (temp);
-            g_free (temp);
-            g_free (cwd);
+            g_free(temp);
+            g_free(cwd);
           }
         }
       }
-      g_free (fullpath);
+      g_free(fullpath);
     }
   }
 
   if (string) {
-    free (string);
+    g_free(string);
   }
 
   return SCM_BOOL_T;
@@ -651,7 +651,7 @@ SCM g_rc_default_series_name(SCM name)
               SCM_ARG1, "default-series-name");
 
   if (default_series_name) {
-    free (default_series_name);
+    g_free(default_series_name);
   }
 
   default_series_name = g_strdup (SCM_STRING_CHARS (name));
@@ -672,7 +672,7 @@ SCM g_rc_untitled_name(SCM name)
               SCM_ARG1, "untitled-name");
 
   if (default_untitled_name) {
-    free (default_untitled_name);
+    g_free(default_untitled_name);
   }
 
   default_untitled_name = g_strdup (SCM_STRING_CHARS (name));
@@ -704,13 +704,13 @@ SCM g_rc_font_directory(SCM path)
              "Invalid path [%s] passed to font-directory\n",
              string);
     if (string) {
-      free (string);
+      g_free(string);
     }
     return SCM_BOOL_F;
   }
 
   if (default_font_directory) {
-    free (default_font_directory);
+    g_free(default_font_directory);
   }
   default_font_directory = string;
 
@@ -741,13 +741,13 @@ SCM g_rc_scheme_directory(SCM path)
              "Invalid path [%s] passed to scheme-directory\n",
              string);
     if (string) {
-      free (string);
+      g_free(string);
     }
     return SCM_BOOL_F;
   }
 
   if (default_scheme_directory) {
-    free (default_scheme_directory);
+    g_free(default_scheme_directory);
   }
   default_scheme_directory = string;
 
@@ -778,13 +778,13 @@ SCM g_rc_bitmap_directory(SCM path)
              "Invalid path [%s] passed to bitmap-directory\n",
              string);
     if (string) {
-      free (string);
+      g_free(string);
     }
     return SCM_BOOL_F;
   }
 
   if (default_bitmap_directory) {
-    free (default_bitmap_directory);
+    g_free(default_bitmap_directory);
   }
   default_bitmap_directory = string;
 
@@ -804,7 +804,7 @@ SCM g_rc_bus_ripper_symname(SCM scmsymname)
               SCM_ARG1, "bus-ripper-symname");
 
   if (default_bus_ripper_symname) {
-    free (default_bus_ripper_symname);
+    g_free(default_bus_ripper_symname);
   }
   default_bus_ripper_symname = g_strdup (SCM_STRING_CHARS (scmsymname));
 
@@ -826,7 +826,7 @@ SCM g_rc_postscript_prolog(SCM scmsymname)
               SCM_ARG1, "postsript-prolog");
 
   if (default_postscript_prolog) {
-    free (default_postscript_prolog);
+    g_free(default_postscript_prolog);
   }
 
   string = g_strdup (SCM_STRING_CHARS (scmsymname));
@@ -920,7 +920,7 @@ SCM g_rc_always_promote_attributes(SCM scmsymname)
               SCM_ARG1, "always-promote-attributes");
 
   if (default_always_promote_attributes) {
-    free (default_always_promote_attributes);
+    g_free(default_always_promote_attributes);
   }
   default_always_promote_attributes = 
     g_strdup_printf(" %s ", SCM_STRING_CHARS (scmsymname));

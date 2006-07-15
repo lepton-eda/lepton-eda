@@ -180,7 +180,7 @@ int g_read_file(const gchar *filename)
 
 	scm_close_port(port);
 	
-	free(full_filename);
+	g_free(full_filename);
 
 	return (eval_result == SCM_BOOL_T);
 }

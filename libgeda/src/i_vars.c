@@ -39,7 +39,7 @@
 /*! \def INIT_STR(w, name, str) */
 #define INIT_STR(w, name, str) {                                        \
         if ((w)->name) {                                                \
-                free((w)->name);                                        \
+                g_free((w)->name);                                      \
         }                                                               \
         (w)->name = g_strdup(((default_ ## name) != NULL) ?             \
                              (default_ ## name) : (str));               \
@@ -120,12 +120,12 @@ void i_vars_setnames(TOPLEVEL *w_current)
  */
 void i_vars_freenames()
 {
-  free(default_series_name);
-  free(default_untitled_name);
-  free(default_font_directory);
-  free(default_scheme_directory);
-  free(default_bitmap_directory);
-  free(default_bus_ripper_symname);
-  free(default_postscript_prolog);
-  free(default_always_promote_attributes);
+  g_free(default_series_name);
+  g_free(default_untitled_name);
+  g_free(default_font_directory);
+  g_free(default_scheme_directory);
+  g_free(default_bitmap_directory);
+  g_free(default_bus_ripper_symname);
+  g_free(default_postscript_prolog);
+  g_free(default_always_promote_attributes);
 }

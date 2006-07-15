@@ -106,7 +106,7 @@ TILE_LOC *s_tile_new_loc(int i, int j)
 {
   TILE_LOC *tile_loc;
 
-  tile_loc = (TILE_LOC *) malloc(sizeof(TILE_LOC));
+  tile_loc = (TILE_LOC *) g_malloc(sizeof(TILE_LOC));
 
   tile_loc->i = i;
   tile_loc->j = j;
@@ -381,7 +381,7 @@ void s_tile_remove_object_all(TOPLEVEL * w_current, PAGE *p_current,
     i = tl_current->i;
     j = tl_current->j;
 
-    free(tl_current);
+    g_free(tl_current);
 
     t_current = &p_current->world_tiles[i][j];
     t_current->objects = g_list_remove(t_current->objects, object);

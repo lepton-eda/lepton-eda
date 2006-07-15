@@ -53,7 +53,7 @@ static scm_sizet g_free_attrib_smob(SCM attrib_smob)
   (struct st_attrib_smob *)SCM_CDR(attrib_smob);
   scm_sizet size = sizeof(struct st_attrib_smob);
 
-  free(attribute);
+  free(attribute); /* this should stay as free (allocated from guile) */
   return size;
 }
 
@@ -141,8 +141,8 @@ SCM g_get_attrib_name_value(SCM attrib_smob)
                             &name, &value );
     returned = scm_cons (scm_makfrom0str (name),
                          scm_makfrom0str (value));
-    if (name) free(name);
-    if (value) free(value);
+    if (name) g_free(name);
+    if (value) g_free(value);
   }
 
   return returned;
@@ -194,8 +194,8 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
     *world = attribute->world;
     *o_attrib = attribute->attribute->object;
 
-    if (name) free(name);
-    if (old_value) free(old_value);
+    if (name) g_free(name);
+    if (old_value) g_free(old_value);
   }
 
   return SCM_UNDEFINED;
@@ -234,7 +234,7 @@ static scm_sizet g_free_object_smob(SCM object_smob)
   (struct st_object_smob *)SCM_CDR(object_smob);
   scm_sizet size = sizeof(struct st_object_smob);
 
-  free(object);
+  free(object); /* this should stay as free (allocated from guile) */
   return size;
 }
 

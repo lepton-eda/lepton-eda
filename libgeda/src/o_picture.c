@@ -194,7 +194,7 @@ OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
     }
 
     if (pixdata_serialized_data != NULL) {
-      free (pixdata_serialized_data);
+      g_free (pixdata_serialized_data);
     }
     if (encoded_picture != NULL) {
       g_string_free (encoded_picture, TRUE);
@@ -216,7 +216,7 @@ OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
       fprintf(stderr, "Error loading picture from file: %s.\n", temp_filename);
       s_log_message( "Error loading picture from file: %s.\n", temp_filename);
     }      
-    free (temp_filename);
+    g_free (temp_filename);
   }
   
   /* create and add the picture to the list */
@@ -228,11 +228,11 @@ OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
 					 x1, y1+height, x1+width, y1, 
 					 angle, mirrored, embedded);
   if (object_list->picture->filename) {
-    free(object_list->picture->filename);
+    g_free(object_list->picture->filename);
   }
   object_list->picture->filename = g_strdup(filename);
   
-  free (filename);
+  g_free (filename);
   return(object_list);
 }
 
@@ -316,10 +316,10 @@ char *o_picture_save(OBJECT *object)
 			  object->picture->filename);
   }
   if (encoded_picture != NULL) {
-    free(encoded_picture);
+    g_free(encoded_picture);
   }
   if (pixdata_serialized_data != NULL) {
-    free(pixdata_serialized_data);
+    g_free(pixdata_serialized_data);
   }
 
   return(out);
@@ -345,12 +345,12 @@ void o_picture_set_pixbuf(TOPLEVEL *w_current,
   }
 
   if (w_current->current_pixbuf != NULL) {
-    free(w_current->current_pixbuf);
+    g_free(w_current->current_pixbuf);
     w_current->current_pixbuf=NULL;
   }
 
   if (w_current->pixbuf_filename != NULL) {
-    free(w_current->pixbuf_filename);
+    g_free(w_current->pixbuf_filename);
     w_current->pixbuf_filename=NULL;
   }
 
@@ -408,7 +408,7 @@ OBJECT *o_picture_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node        = s_basic_init_object("picture");
   new_node->type  = type;
   
-  picture = (PICTURE *) malloc(sizeof(PICTURE));
+  picture = (PICTURE *) g_malloc(sizeof(PICTURE));
   new_node->picture   = picture;
   
   /* describe the picture with its upper left and lower right corner */
@@ -439,7 +439,7 @@ OBJECT *o_picture_add(TOPLEVEL *w_current, OBJECT *object_list,
   */
   /*
     if (w_current->current_pixbuf != NULL) {
-      free (w_current->current_pixbuf);
+      g_free (w_current->current_pixbuf);
     }
     w_current->current_pixbuf = NULL;
     w_current->pixbuf_wh_ratio = 0;

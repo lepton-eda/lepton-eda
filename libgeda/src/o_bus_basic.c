@@ -113,7 +113,7 @@ OBJECT *o_bus_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->type = type;
   new_node->color = color;
 
-  new_node->line = (LINE *) malloc(sizeof(LINE));
+  new_node->line = (LINE *) g_malloc(sizeof(LINE));
   /* check for null */	
 
   new_node->line->x[0] = x1;

@@ -56,7 +56,7 @@ CONN *s_conn_return_new(OBJECT * other_object, int type, int x, int y,
 {
   CONN *new_conn;
 
-  new_conn = (CONN *) malloc(sizeof(CONN));
+  new_conn = (CONN *) g_malloc(sizeof(CONN));
 
 #if DEBUG
   printf("** creating: %s %d %d\n", other_object->name, x, y);
@@ -125,7 +125,7 @@ int s_conn_remove_other(TOPLEVEL * w_current, OBJECT * other_object,
 #endif
 
 	    c_current->data = NULL;
-	    free(conn);
+	    g_free(conn);
 
 #if 0 /* this does not work right */
             if (other_object->type == OBJ_BUS &&
@@ -177,13 +177,14 @@ void s_conn_remove(TOPLEVEL * w_current, OBJECT * to_remove)
            conn->y);
 #endif
     c_current->data = NULL;
-    free(conn);
+    g_free(conn);
     c_current = c_current->next;
   }
 
 #if DEBUG
   printf("length: %d\n", g_list_length(to_remove->conn_list));
 #endif
+
   g_list_free(to_remove->conn_list);
   to_remove->conn_list = NULL; /*! \todo Memory leak? TODO hack */
 
@@ -391,7 +392,7 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
               object->conn_list =
                 g_list_append(object->conn_list, new_conn);
             } else {
-              free(new_conn);
+              g_free(new_conn);
             }
 
             new_conn = s_conn_return_new(object, CONN_ENDPOINT,
@@ -404,7 +405,7 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
                 g_list_append(other_object->conn_list,
                               new_conn);
             } else {
-              free(new_conn);
+              g_free(new_conn);
             }
 
 #if DEBUG
@@ -487,7 +488,7 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
               object->conn_list =
                 g_list_append(object->conn_list, new_conn);
             } else {
-              free(new_conn);
+              g_free(new_conn);
             }
 
             new_conn = s_conn_return_new(object, CONN_ENDPOINT,
@@ -500,7 +501,7 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
                 g_list_append(other_object->conn_list,
                               new_conn);
             } else {
-              free(new_conn);
+              g_free(new_conn);
             }
 
 #if DEBUG
@@ -568,7 +569,7 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
               object->conn_list =
                 g_list_append(object->conn_list, new_conn);
             } else {
-              free(new_conn);
+              g_free(new_conn);
             }
 
             /* Next do the current object and put it into the other */
@@ -583,7 +584,7 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
                 g_list_append(other_object->conn_list,
                               new_conn);
             } else {
-              free(new_conn);
+              g_free(new_conn);
             }
 
           }
@@ -653,7 +654,7 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
               object->conn_list =
                 g_list_append(object->conn_list, new_conn);
             } else {
-              free(new_conn);
+              g_free(new_conn);
             }
 
             /* Next do the current object and put it into the other */
@@ -668,7 +669,7 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
                 g_list_append(other_object->conn_list,
                               new_conn);
             } else {
-              free(new_conn);
+              g_free(new_conn);
             }
 
           }

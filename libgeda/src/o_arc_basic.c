@@ -83,7 +83,7 @@ OBJECT *o_arc_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->type = type;
   new_node->color = color;
 
-  new_node->arc = (ARC *) malloc(sizeof(ARC));
+  new_node->arc = (ARC *) g_malloc(sizeof(ARC));
 
   /*! \note
    *  The ARC structure is initialized with the parameters.

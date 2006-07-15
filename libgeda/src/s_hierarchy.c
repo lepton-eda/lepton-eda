@@ -169,7 +169,7 @@ void s_hierarchy_down_schematic_multiple (TOPLEVEL *w_current,
       w_current->page_current = found;
       s_page_goto(w_current, found);
       if (string) 
-        free(string);
+        g_free(string);
       return;
     }
 
@@ -191,7 +191,7 @@ void s_hierarchy_down_schematic_multiple (TOPLEVEL *w_current,
     /* w_current->page_current->down = NULL; not needed */
 
     if (string) 
-      free(string);
+      g_free(string);
 
     string = s_slib_search(filename, SLIB_SEARCH_NEXT);
   }

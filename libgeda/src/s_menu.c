@@ -132,16 +132,16 @@ void s_menu_print()
  */
 void s_menu_free()
 {
-	int i;
+  int i;
 
-	for (i = 0; i < menu_index; i++) {
-		if (menu[i].menu_name) {
-                        free(menu[i].menu_name);
-			menu[i].menu_name = NULL;
-		}		
-	}
+  for (i = 0; i < menu_index; i++) {
+    if (menu[i].menu_name) {
+      g_free(menu[i].menu_name);
+      menu[i].menu_name = NULL;
+    }		
+  }
 
-	menu_index=0;
+  menu_index=0;
 }
 
 /*! \todo Finish function documentation!!!

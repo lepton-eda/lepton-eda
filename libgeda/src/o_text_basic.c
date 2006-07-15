@@ -897,7 +897,7 @@ OBJECT *o_text_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node = s_basic_init_object("text");
   new_node->type = type;
 
-  text = (TEXT *) malloc(sizeof(TEXT));
+  text = (TEXT *) g_malloc(sizeof(TEXT));
 
   text->string = g_strdup (string);
   text->length = strlen(string);
@@ -998,9 +998,9 @@ OBJECT *o_text_add(TOPLEVEL *w_current, OBJECT *object_list,
   object_list->right = right;
   object_list->bottom = bottom;
 
-  if (name) free(name);
-  if (value) free(value);
-  if (output_string) free(output_string);
+  if (name) g_free(name);
+  if (value) g_free(value);
+  if (output_string) g_free(output_string);
   return(object_list);
 }
 
@@ -1359,9 +1359,9 @@ void o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   w_current->page_current->object_parent = temp_parent;
-  if (name) free(name);
-  if (value) free(value);
-  if (output_string) free(output_string);
+  if (name) g_free(name);
+  if (value) g_free(value);
+  if (output_string) g_free(output_string);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1515,7 +1515,7 @@ void o_text_print_text_width(FILE *fp, char *output_string)
     if (single_len > max_len)
     {
       max_len = strlen(single_line);
-      if (max_length_line) free(max_length_line);
+      if (max_length_line) g_free(max_length_line);
       max_length_line = g_strdup (single_line);
     }
   }
@@ -1535,8 +1535,8 @@ void o_text_print_text_width(FILE *fp, char *output_string)
   /* .95 is a fudge factor */
   fprintf(fp, ") stringwidth pop\n");
 
-  if (single_line) free(single_line);
-  if (max_length_line) free(max_length_line);
+  if (single_line) g_free(single_line);
+  if (max_length_line) g_free(max_length_line);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1720,9 +1720,9 @@ void o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   fprintf(fp,"] %d %d %d %f text\n",angle,x,y,font_size);
 
   
-  if (output_string) free(output_string);
-  if (name) free(name);
-  if (value) free(value);
+  if (output_string) g_free(output_string);
+  if (name) g_free(name);
+  if (value) g_free(value);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2026,9 +2026,9 @@ void o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
   o_text_translate_world(w_current, x-object->text->x, y-object->text->y, object);
 
   o_text_recreate(w_current, object);
-  if (output_string) free(output_string);
-  if (name) free(name);
-  if (value) free(value);
+  if (output_string) g_free(output_string);
+  if (name) g_free(name);
+  if (value) g_free(value);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2230,9 +2230,9 @@ void o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
   /* don't know if this is needed ?*/	
   /* o_text_translate_world(w_current, x-object->text->x, y-object->text->y, object);*/
   o_text_recreate(w_current, object);
-  if (output_string) free(output_string);
-  if (name) free(name);
-  if (value) free(value);
+  if (output_string) g_free(output_string);
+  if (name) g_free(name);
+  if (value) g_free(value);
 }
 #endif
 

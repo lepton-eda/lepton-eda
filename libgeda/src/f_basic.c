@@ -88,7 +88,7 @@ int f_open(TOPLEVEL *w_current, char *filename)
 
   /* write full, absolute filename into page_current->page_filename */
   if (w_current->page_current->page_filename) {
-    free(w_current->page_current->page_filename);
+    g_free(w_current->page_current->page_filename);
   }
   w_current->page_current->page_filename = g_strdup(full_filename);
 
@@ -212,8 +212,8 @@ int f_open(TOPLEVEL *w_current, char *filename)
     w_current->page_current->CHANGED=1;
   }
 
-  free(full_filename);
-  free(full_rcfilename);
+  g_free(full_filename);
+  g_free(full_rcfilename);
 
   /* If this was a preview window, reset the directory to the 
    * value it had when f_open was called.  Also get rid of component
@@ -221,7 +221,7 @@ int f_open(TOPLEVEL *w_current, char *filename)
    * is actually selected, they will be re-read later. */
   if (w_current->wid == -1) {
     chdir(saved_cwd);
-    free(saved_cwd);
+    g_free(saved_cwd);
   }
 
   if (!opened) {

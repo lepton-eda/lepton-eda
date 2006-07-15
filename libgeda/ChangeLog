@@ -1,3 +1,17 @@
+2006-07-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/a_basic.c, src/f_basic.c, src/f_print.c, src/g_basic.c,
+	src/g_rc.c, src/g_smob.c, src/i_vars.c, src/o_arc_basic.c,
+	src/o_attrib.c, src/o_box_basic.c, src/o_bus_basic.c, 
+	src/o_circle_basic.c, src/o_complex_basic.c, src/o_line_basic.c,
+	src/o_net_basic.c, src/o_picture.c, src/o_pin_basic.c, 
+	src/o_selection.c, src/o_text_basic.c, src/s_attrib.c, src/s_basic.c,
+	src/s_color.c, src/s_conn.c, src/s_hierarchy.c, src/s_menu.c,
+	src/s_papersizes.c, src/s_slib.c, src/s_stretch.c, src/s_tile.c,
+	src/s_undo.c, src/u_basic.c: Converted all free, ?alloc, and 
+	strdup calls to use g_free, g_?alloc, and g_strdup.  This is the
+	first phase in fixing the slice crash under glib 2.10.x.
+
 2006-07-13 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* libgeda.pc.in: Re-Fixed incorrect order of macros.  Reverted back

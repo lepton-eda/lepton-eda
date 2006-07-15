@@ -100,7 +100,7 @@ OBJECT *o_circle_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->type   = type;
   new_node->color  = color;
   
-  new_node->circle = (CIRCLE *) malloc(sizeof(CIRCLE));
+  new_node->circle = (CIRCLE *) g_malloc(sizeof(CIRCLE));
   
   /* describe the circle with its center and radius */
   new_node->circle->center_x = x;

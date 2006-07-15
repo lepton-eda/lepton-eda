@@ -80,7 +80,8 @@ int s_slib_add_entry(char *new_path)
     return(-1); 
   }
 
-  slib[slib_index].dir_name = (char *) malloc(sizeof(char)*strlen(new_path)+1);
+  slib[slib_index].dir_name = 
+    (char *) g_malloc(sizeof(char)*strlen(new_path)+1);
 
   strcpy(slib[slib_index].dir_name, new_path);
 
@@ -144,7 +145,7 @@ char *s_slib_search_dirs(const char *basename)
       /* Do a substring comp for a match */
       if (strstr(dptr->d_name, basename) != NULL)  {
         len = strlen(slib[i].dir_name);				
-        slib_path = (char *) malloc(sizeof(char)*len+1);
+        slib_path = (char *) g_malloc(sizeof(char)*len+1);
         strcpy(slib_path, slib[i].dir_name);
 	
         if (ptr) {
@@ -197,11 +198,11 @@ char *s_slib_search_lowlevel(const char *basename)
 	
     /* The 2 is for NULL char and the slash inbetween the two */
     /* strings */	
-    full_path = (char *) malloc(sizeof(char)*(len+2));
+    full_path = (char *) g_malloc(sizeof(char)*(len+2));
 
     sprintf(full_path, "%s%c%s", slib_path, G_DIR_SEPARATOR, basename);
 		
-    free(slib_path);
+    g_free(slib_path);
 
     return(full_path);
   } else {
@@ -244,7 +245,7 @@ char *s_slib_getbasename(const char *rawname)
 
   len = strlen(rawname)+1;
 
-  return_filename = (char *) malloc(sizeof(char)*len);
+  return_filename = (char *) g_malloc(sizeof(char)*len);
 
   i = 0;
   /* first get everything up to the leading dot */
@@ -360,13 +361,13 @@ char *s_slib_search(const char *filename, int flag)
       number_suffix = g_strdup_printf("_%d.sch", count); 
       len2 = strlen(number_suffix);
       new_filename = (char *) 
-        malloc (sizeof(char)*(len+len2+1));
+        g_malloc (sizeof(char)*(len+len2+1));
 
       sprintf(new_filename, "%s%s", processed_name, number_suffix);
       string = s_slib_search_lowlevel(new_filename);
 
-      free(new_filename);
-      free(number_suffix);
+      g_free(new_filename);
+      g_free(number_suffix);
       break;
 
     case(SLIB_SEARCH_DONE):
@@ -376,7 +377,7 @@ char *s_slib_search(const char *filename, int flag)
   }
 
   if (processed_name)
-  free(processed_name);
+    g_free(processed_name);
 
   /* don't forget to free this string */
   return(string);
@@ -417,7 +418,7 @@ void s_slib_free()
 
   for (i = 0; i < slib_index; i++) {
     if (slib[i].dir_name)
-      free(slib[i].dir_name);
+      g_free(slib[i].dir_name);
   }
 
   slib_index=0;
@@ -447,9 +448,9 @@ void s_slib_init()
 char *s_slib_getdir(int index)
 {
   if (slib[index].dir_name != NULL)
-  return(slib[index].dir_name);
+    return(slib[index].dir_name);
   else 
-  return(NULL);
+    return(NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -496,7 +497,7 @@ char *s_slib_getfiles(char *directory, int flag)
 
       for (j = 0 ; j < count ;j++) {
         if (whole_dir[j]) 
-          free(whole_dir[j]);
+          g_free(whole_dir[j]);
       }
       count = current = 0 ;
 
@@ -514,7 +515,7 @@ char *s_slib_getfiles(char *directory, int flag)
 
       for (j = 0 ; j < count ;j++) {
         if (whole_dir[j]) 
-          free(whole_dir[j]);
+          g_free(whole_dir[j]);
       }
       count = current = 0 ;
 
@@ -549,9 +550,8 @@ char *s_slib_getfiles(char *directory, int flag)
           if (count < 256) {
 
             whole_dir[count] = (char *)
-              malloc(sizeof(char)*len+1);
-            strcpy(whole_dir[count], 
-                   dptr->d_name);
+              g_malloc(sizeof(char)*len+1);
+            strcpy(whole_dir[count], dptr->d_name);
             count++;
           } else {
             fprintf(stderr, 

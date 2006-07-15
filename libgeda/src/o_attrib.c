@@ -80,7 +80,7 @@ void o_attrib_update_urefBM (TOPLEVEL *w_current, OBJECT *o_current)
     return;
 
   len=strlen(o_current->text->string);
-  uref=malloc(len+10);
+  uref=g_malloc(len+10);
   strcpy(uref,o_current->text->string);
 
   while (o_current->text->string[len-1]<='9' && 
@@ -93,7 +93,7 @@ void o_attrib_update_urefBM (TOPLEVEL *w_current, OBJECT *o_current)
       ++index_list_len;
   }
 
-  index_list=calloc(index_list_len,1);
+  index_list=calloc(index_list_len,1); /* convert to g_new maybe... */
   name_conflict=0;
 
   for (obj=list_head->next;obj;obj=obj->next) {
@@ -112,12 +112,12 @@ void o_attrib_update_urefBM (TOPLEVEL *w_current, OBJECT *o_current)
   if (name_conflict) {
     for (i=0;index_list[i];++i);
     sprintf(uref+len,"%d", i);
-    free(o_current->text->string);
+    g_free(o_current->text->string);
     o_current->text->string=uref;
     o_text_recreate(w_current, o_current);
   }
 
-  free(index_list);
+  g_free(index_list);
 }
 
 /*! \brief Search for an item in an attribute list.
@@ -184,7 +184,7 @@ ATTRIB *add_attrib_head(OBJECT *parent)
 {
   ATTRIB *head = NULL;
 
-  head = (ATTRIB *) malloc(sizeof(ATTRIB));
+  head = (ATTRIB *) g_malloc(sizeof(ATTRIB));
   head->next = NULL;
 
   /* highly experimental hack */
@@ -220,7 +220,7 @@ ATTRIB *o_attrib_add(TOPLEVEL *w_current, ATTRIB *list_head, OBJECT *item)
   end = o_attrib_return_tail(list_head);
 
   /* create an new st_attrib object */
-  new = (ATTRIB *) malloc(sizeof(ATTRIB));
+  new = (ATTRIB *) g_malloc(sizeof(ATTRIB));
 
   /* fill item with correct data (mainly item) */
   new->next = NULL;
@@ -297,7 +297,7 @@ void o_attrib_free(TOPLEVEL *w_current, ATTRIB *current)
     /* \todo were do we detach the object->attached_to? above */
     current->object=NULL;
 
-    free(current);
+    g_free(current);
 
   }
 }
@@ -580,7 +580,7 @@ void o_attrib_delete(ATTRIB *a_current)
     }
     a_current->object = NULL;
 
-    free(a_current);
+    g_free(a_current);
   }
 }
 
@@ -863,7 +863,7 @@ void o_save_attribs(FILE *fp, ATTRIB *attribs)
       }
       /* output the line */
       fprintf(fp, "%s\n", out);
-      free(out);
+      g_free(out);
     }
     a_current = a_current->next;
   } 
@@ -965,8 +965,8 @@ int o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
 
   /* no = found */
   if (!attribute_found) {
-    free(*name_ptr); *name_ptr = NULL; 
-    free(*value_ptr); *value_ptr = NULL;
+    g_free(*name_ptr); *name_ptr = NULL; 
+    g_free(*value_ptr); *value_ptr = NULL;
     return(FALSE);
   }
 
@@ -987,8 +987,8 @@ int o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
   if (*value_ptr && (*value_ptr)[0] == '\0') {
     s_log_message("Found an improper attribute: _%s_\n", string);
 #if 0 /* for now leak this memory till this is verified correct everywhere */
-    free(*name_ptr); *name_ptr = NULL;
-    free(*value_ptr); *value_ptr = NULL;
+    g_free(*name_ptr); *name_ptr = NULL;
+    g_free(*value_ptr); *value_ptr = NULL;
 #endif
     return(FALSE);
   } else {
@@ -1006,7 +1006,7 @@ int o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
 void o_attrib_free_current(TOPLEVEL *w_current)
 {
   if (w_current->current_attribute) {
-    free(w_current->current_attribute);
+    g_free(w_current->current_attribute);
   }
   w_current->current_attribute=NULL;
 }
@@ -1064,14 +1064,13 @@ void o_attrib_set_string(TOPLEVEL *w_current, char *string)
   }
 
   if (w_current->current_attribute != NULL) {
-    free(w_current->current_attribute);
+    g_free(w_current->current_attribute);
     w_current->current_attribute=NULL;
   }
 
   len = strlen(string);
 
-  w_current->current_attribute = (char *) 
-  malloc(sizeof(char)*len+1);
+  w_current->current_attribute = (char *) g_malloc(sizeof(char)*len+1);
 
   strcpy(w_current->current_attribute,string);
 	
@@ -1126,7 +1125,7 @@ ATTRIB *o_attrib_copy_all(TOPLEVEL *w_current, OBJECT *attached_to,
 
   while (a_current != NULL) {
 	
-    a_new = (ATTRIB *) malloc(sizeof(ATTRIB));
+    a_new = (ATTRIB *) g_malloc(sizeof(ATTRIB));
 	
     /* in the case of the head attrib node, object points to 
      * the parent which the attributes are attached to */	
@@ -1298,15 +1297,15 @@ char *o_attrib_search_name(OBJECT *list, char *name, int counter)
                   internal_counter++;	
                 } else {
                   return_string = (char *) 
-                    malloc(sizeof(char)*strlen(found_value)+1);
+                    g_malloc(sizeof(char)*strlen(found_value)+1);
                   strcpy(return_string, found_value);
-		  if (found_name) free(found_name);
-		  if (found_value) free(found_value);
+		  if (found_name) g_free(found_name);
+		  if (found_value) g_free(found_value);
                   return(return_string);
                 }
               }
-	      if (found_name) { free(found_name); found_name = NULL; }
-	      if (found_value) { free(found_value); found_value = NULL; }
+	      if (found_name) { g_free(found_name); found_name = NULL; }
+	      if (found_value) { g_free(found_value); found_value = NULL; }
             }	
 
 #if DEBUG 
@@ -1323,8 +1322,8 @@ char *o_attrib_search_name(OBJECT *list, char *name, int counter)
     /* search for attributes outside */
 
     if (o_current->type == OBJ_TEXT) {
-      if (found_name) free(found_name);
-      if (found_value) free(found_value);
+      if (found_name) g_free(found_name);
+      if (found_value) g_free(found_value);
       val = o_attrib_get_name_value(o_current->text->string, 
                                     &found_name, &found_value);
       if (val) {
@@ -1333,25 +1332,23 @@ char *o_attrib_search_name(OBJECT *list, char *name, int counter)
             internal_counter++;	
           } else {
             return_string = (char *) 
-              malloc(
-                     sizeof(char)*
-                     strlen(found_value)+1);
+              g_malloc(sizeof(char)* strlen(found_value)+1);
             strcpy(return_string, found_value);
-	    if (found_name) free(found_name);
-	    if (found_value) free(found_value);
+	    if (found_name) g_free(found_name);
+	    if (found_value) g_free(found_value);
             return(return_string);
           }
         }
-	if (found_name) { free(found_name); found_name = NULL; }
-	if (found_value) { free(found_value); found_value = NULL; }
+	if (found_name) { g_free(found_name); found_name = NULL; }
+	if (found_value) { g_free(found_value); found_value = NULL; }
       }	
     }
 
     o_current=o_current->next;
   }
 	
-  if (found_name) free(found_name);
-  if (found_value) free(found_value);
+  if (found_name) g_free(found_name);
+  if (found_value) g_free(found_value);
   return (NULL);
 } 
 
@@ -1446,16 +1443,16 @@ char *o_attrib_search_string_partial(OBJECT *object, char *search_for,
                                       &found_name, &found_value);
         if (val) {
           return_string = g_strdup(found_value);
-	  if (found_name) free(found_name);
-	  if (found_value) free(found_value);
+	  if (found_name) g_free(found_name);
+	  if (found_value) g_free(found_value);
 	  return(return_string);
         }
       }
     }
   }	
 	
-  if (found_name) free(found_name);
-  if (found_value) free(found_value);
+  if (found_name) g_free(found_name);
+  if (found_value) g_free(found_value);
   return (NULL);
 } 
 
@@ -1539,14 +1536,14 @@ OBJECT *o_attrib_search_attrib_value(ATTRIB *list, char *value, char *name,
               internal_counter++;	
             } else {
               if (strstr(found_name, name)) {
-		if (found_name) free(found_name);
-		if (found_value) free(found_value);
+		if (found_name) g_free(found_name);
+		if (found_value) g_free(found_value);
                 return(found);
               }
             }
           }
-	  if (found_name) { free(found_name); found_name = NULL; }
-	  if (found_value) { free(found_value); found_value = NULL; }
+	  if (found_name) { g_free(found_name); found_name = NULL; }
+	  if (found_value) { g_free(found_value); found_value = NULL; }
         }	
 
       }
@@ -1554,8 +1551,8 @@ OBJECT *o_attrib_search_attrib_value(ATTRIB *list, char *value, char *name,
     a_current=a_current->next;
   }
 
-  if (found_name) free(found_name);
-  if (found_value) free(found_value);
+  if (found_name) g_free(found_name);
+  if (found_value) g_free(found_value);
   return (NULL);
 } 
 
@@ -1604,24 +1601,23 @@ o_attrib_search_attrib_name(ATTRIB *list, char *name, int counter)
               internal_counter++;	
             } else {
               return_string = (char *) 
-                malloc(sizeof(char)*
-                       strlen(found_value)+1);
+                g_malloc(sizeof(char)* strlen(found_value)+1);
               strcpy(return_string, found_value);
-	      if (found_name) free(found_name);
-	      if (found_value) free(found_value);
+	      if (found_name) g_free(found_name);
+	      if (found_value) g_free(found_value);
               return(return_string);
             }
           }
-	  if (found_name) { free(found_name); found_name = NULL; }
-	  if (found_value) { free(found_value); found_value = NULL; }
+	  if (found_name) { g_free(found_name); found_name = NULL; }
+	  if (found_value) { g_free(found_value); found_value = NULL; }
         }	
       }
     }
     a_current=a_current->next;
   }
 
-  if (found_name) free(found_name);
-  if (found_value) free(found_value);
+  if (found_name) g_free(found_name);
+  if (found_value) g_free(found_value);
   return (NULL);
 } 
 
@@ -1667,24 +1663,23 @@ char *o_attrib_search_toplevel(OBJECT *list, char *name, int counter)
             internal_counter++;	
           } else {
             return_string = (char *) 
-              malloc(sizeof(char)*
-                     strlen(found_value)+1);
+              g_malloc(sizeof(char)* strlen(found_value)+1);
             strcpy(return_string, found_value);
-	    if (found_name) free(found_name);
-	    if (found_value) free(found_value);
+	    if (found_name) g_free(found_name);
+	    if (found_value) g_free(found_value);
             return(return_string);
           }
         }
-	if (found_name) { free(found_name); found_name = NULL; }
-	if (found_value) { free(found_value); found_value = NULL; }
+	if (found_name) { g_free(found_name); found_name = NULL; }
+	if (found_value) { g_free(found_value); found_value = NULL; }
       }	
     }
 
     o_current=o_current->next;
   }
 	
-  if (found_name) free(found_name);
-  if (found_value) free(found_value);
+  if (found_name) g_free(found_name);
+  if (found_value) g_free(found_value);
   return (NULL);
 } 
 
@@ -1764,18 +1759,17 @@ char *o_attrib_search_name_single(OBJECT *object, char *name,
           if (val) {
             if (strcmp(name, found_name) == 0) {
               return_string = (char *) 
-                malloc(sizeof(char)*
-                       strlen(found_value)+1);
+                g_malloc(sizeof(char)* strlen(found_value)+1);
               strcpy(return_string, found_value);
               if (return_found) {
                 *return_found = found;
               }
-	      if (found_name) free(found_name);
-	      if (found_value) free(found_value);
+	      if (found_name) g_free(found_name);
+	      if (found_value) g_free(found_value);
               return(return_string);
             }
-	    if (found_name) { free(found_name); found_name = NULL; }
-	    if (found_value) { free(found_value); found_value = NULL; }
+	    if (found_name) { g_free(found_name); found_name = NULL; }
+	    if (found_value) { g_free(found_value); found_value = NULL; }
           }
 
 #if DEBUG
@@ -1791,26 +1785,25 @@ char *o_attrib_search_name_single(OBJECT *object, char *name,
   /* search for attributes outside */
 
   if (o_current->type == OBJ_TEXT) {
-    if (found_name) free(found_name);
-    if (found_value) free(found_value);
+    if (found_name) g_free(found_name);
+    if (found_value) g_free(found_value);
     val = o_attrib_get_name_value(o_current->text->string, 
                                   &found_name, &found_value);
 
     if (val) {
       if (strcmp(name, found_name) == 0) {
         return_string = (char *) 
-          malloc(sizeof(char)*
-                 strlen(found_value)+1);
+          g_malloc(sizeof(char)* strlen(found_value)+1);
         strcpy(return_string, found_value);
         if (return_found) {
           *return_found = found;
         }
-	if (found_name) free(found_name);
-	if (found_value) free(found_value);
+	if (found_name) g_free(found_name);
+	if (found_value) g_free(found_value);
         return(return_string);
       }
-      if (found_name) { free(found_name); found_name = NULL; }
-      if (found_value) { free(found_value); found_value = NULL; }
+      if (found_name) { g_free(found_name); found_name = NULL; }
+      if (found_value) { g_free(found_value); found_value = NULL; }
     }	
   }
 
@@ -1818,8 +1811,8 @@ char *o_attrib_search_name_single(OBJECT *object, char *name,
     *return_found = NULL;
   }
   
-  if (found_name) free(found_name);
-  if (found_value) free(found_value);
+  if (found_name) g_free(found_name);
+  if (found_value) g_free(found_value);
   return (NULL);
 } 
 
@@ -1873,16 +1866,15 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name,
                 internal_counter++;
               } else {
                 return_string = (char *) 
-                  malloc(sizeof(char)*
-                         strlen(found_value)+1);
+                  g_malloc(sizeof(char)* strlen(found_value)+1);
                 strcpy(return_string, found_value);
-		if (found_name) free(found_name);
-		if (found_value) free(found_value);
+		if (found_name) g_free(found_name);
+		if (found_value) g_free(found_value);
                 return(return_string);
               }
             }
-            if (found_name) { free(found_name); found_name = NULL; }
-            if (found_value) { free(found_value); found_value = NULL; }
+            if (found_name) { g_free(found_name); found_name = NULL; }
+            if (found_value) { g_free(found_value); found_value = NULL; }
           }
 
 #if DEBUG 
@@ -1899,8 +1891,8 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name,
   /* search for attributes outside */
 
   if (o_current->type == OBJ_TEXT) {
-    if (found_name) free(found_name);
-    if (found_value) free(found_value);
+    if (found_name) g_free(found_name);
+    if (found_value) g_free(found_value);
     val = o_attrib_get_name_value(o_current->text->string, 
                                   &found_name, &found_value);
 
@@ -1910,21 +1902,20 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name,
           internal_counter++;
         } else {
           return_string = (char *) 
-            malloc(sizeof(char)*
-                   strlen(found_value)+1);
+            g_malloc(sizeof(char)* strlen(found_value)+1);
           strcpy(return_string, found_value);
-	  if (found_name) free(found_name);
-	  if (found_value) free(found_value);
+	  if (found_name) g_free(found_name);
+	  if (found_value) g_free(found_value);
           return(return_string);
         }
       }
-      if (found_name) { free(found_name); found_name = NULL; }
-      if (found_value) { free(found_value); found_value = NULL; }
+      if (found_name) { g_free(found_name); found_name = NULL; }
+      if (found_value) { g_free(found_value); found_value = NULL; }
     }
   }	
   
-  if (found_name) free(found_name);
-  if (found_value) free(found_value);
+  if (found_name) g_free(found_name);
+  if (found_value) g_free(found_value);
   return (NULL);
 } 
 
@@ -2025,11 +2016,11 @@ OBJECT *o_attrib_search_pinseq(OBJECT *list, int pin_number)
   char *search_for;
 
   /* The 9 is the number of digits plus null */
-  search_for = (char *) malloc(sizeof(char)*(strlen("pinseq=")+9));
+  search_for = (char *) g_malloc(sizeof(char)*(strlen("pinseq=")+9));
   sprintf(search_for, "pinseq=%d", pin_number);
 
   pinseq_text_object = o_attrib_search_string_list(list, search_for);
-  free(search_for);
+  g_free(search_for);
   
   if (pinseq_text_object && pinseq_text_object->attached_to) {
     return(o_attrib_return_parent(pinseq_text_object->attached_to));
@@ -2056,7 +2047,7 @@ char *o_attrib_search_slotdef(OBJECT *object, int slotnumber)
   OBJECT *o_current;
 
   /* The 9 is the number of digits plus null */
-  search_for = (char *) malloc(sizeof(char)*(strlen("slotdef=:")+9));
+  search_for = (char *) g_malloc(sizeof(char)*(strlen("slotdef=:")+9));
 
   sprintf(search_for, "slotdef=%d:", slotnumber);
 
@@ -2068,7 +2059,7 @@ char *o_attrib_search_slotdef(OBJECT *object, int slotnumber)
     }
     o_current = o_current->next; 
   }
-  free(search_for);
+  g_free(search_for);
   
   if (return_value) {
     return(return_value);
@@ -2145,7 +2136,7 @@ void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
     return;
   } 
   slot = atoi(string);
-  free(string);
+  g_free(string);
   
   slotdef = o_attrib_search_slotdef(o_current, slot);
   
@@ -2187,12 +2178,12 @@ void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
   
       if (string && o_pinnum_object && o_pinnum_object->type == OBJ_TEXT &&
           o_pinnum_object->text->string) {
-        free(string);
-        free(o_pinnum_object->text->string);
+        g_free(string);
+        g_free(o_pinnum_object->text->string);
 
         /* 9 is the size of one number plus null character */
         o_pinnum_object->text->string = (char *)
-          malloc(sizeof(char)*(strlen("pinnumber=")+strlen(current_pin)+9));
+          g_malloc(sizeof(char)*(strlen("pinnumber=")+strlen(current_pin)+9));
 
         /* removed _int from current_pin */
         sprintf(o_pinnum_object->text->string, "pinnumber=%s", current_pin);
@@ -2208,7 +2199,7 @@ void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
     current_pin = strtok(NULL, DELIMITERS);
   } 
   
-  free(slotdef);
+  g_free(slotdef);
 }
 
 /*! \brief Copy attributes from OBJECT to OBJECT.
@@ -2244,7 +2235,7 @@ void o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target)
     return;
   } 
   slot = atoi(string);
-  free(string);
+  g_free(string);
   
   slotdef = o_attrib_search_slotdef(o_current, slot);
  
@@ -2287,12 +2278,12 @@ void o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target)
       if (string && o_pinnum_object && o_pinnum_object->type == OBJ_TEXT &&
           o_pinnum_object->text->string) {
 
-        free(string);
-        free(o_pinnum_object->text->string);
+        g_free(string);
+        g_free(o_pinnum_object->text->string);
 
         /* 9 is the size of one number plus null character */
         o_pinnum_object->text->string = (char *)
-          malloc(sizeof(char)*(strlen("pinnumber=")+strlen(current_pin)+9));
+          g_malloc(sizeof(char)*(strlen("pinnumber=")+strlen(current_pin)+9));
 
         /* removed _int from current_pin */
         sprintf(o_pinnum_object->text->string, "pinnumber=%s", current_pin);
@@ -2308,7 +2299,7 @@ void o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target)
     current_pin = strtok(NULL, DELIMITERS);
   } 
   
-  free(slotdef);
+  g_free(slotdef);
 }
 
 /*! \brief Get the number of TOPLEVEL attributes in all loaded pages.
@@ -2339,7 +2330,7 @@ int o_attrib_count_toplevel(TOPLEVEL *w_current, char *name)
     while(string) {
       printf("inside\n");
       ret_value++;
-      free(string);
+      g_free(string);
       string=NULL;
       counter++;
 
@@ -2436,7 +2427,7 @@ OBJECT ** o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object)
     a_current = a_current->next;
   }
 
-  found_objects = (OBJECT **) malloc(sizeof(OBJECT *)*(num_attribs+1));
+  found_objects = (OBJECT **) g_malloc(sizeof(OBJECT *)*(num_attribs+1));
 
   /* now actually fill the array of objects */
   a_current = object->attribs->next;	
@@ -2488,5 +2479,5 @@ void o_attrib_free_returned(OBJECT **found_objects)
     i++;	
   }
 
-  free(found_objects);
+  g_free(found_objects);
 }

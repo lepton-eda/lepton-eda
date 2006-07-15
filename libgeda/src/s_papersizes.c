@@ -73,7 +73,8 @@ int s_papersizes_add_entry(char *new_papersize, int width, int height)
     return(-1); 
   }
 	
-  papersizes[papersizes_index].papersize_name = (char *) malloc(sizeof(char)*strlen(new_papersize)+1);
+  papersizes[papersizes_index].papersize_name = 
+    (char *) g_malloc(sizeof(char)*strlen(new_papersize)+1);
 
   strcpy(papersizes[papersizes_index].papersize_name, new_papersize);
 
@@ -123,14 +124,14 @@ int s_papersizes_uniq(char *name)
  */
 void s_papersizes_free()
 {
-	int i;
+  int i;
 
-	for (i = 0; i < papersizes_index; i++) {
-		if (papersizes[i].papersize_name)
-               		free(papersizes[i].papersize_name);
-	}
+  for (i = 0; i < papersizes_index; i++) {
+    if (papersizes[i].papersize_name)
+      g_free(papersizes[i].papersize_name);
+  }
 
-	papersizes_index=0;
+  papersizes_index=0;
 }
 
 /*! \todo Finish function documentation!!!

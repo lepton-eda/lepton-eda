@@ -62,14 +62,14 @@ char *u_basic_breakup_string(char *string, char delimiter, int count)
   }
 
   /* Allocate space for temp string storage (+1 for null character) */ 
-  return_value = malloc(sizeof(char)*(strlen(string) + 1));
+  return_value = g_malloc(sizeof(char)*(strlen(string) + 1));
 
   while(!done) {
 
     /* oops, ran out of string before we found what we were */
     /* looking for */
     if (i > strlen(string)) {
-      free(return_value);
+      g_free(return_value);
       return(NULL);
     }
 

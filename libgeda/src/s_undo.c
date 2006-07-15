@@ -93,7 +93,7 @@ UNDO *s_undo_new_head(void)
 {
   UNDO *u_new;
 
-  u_new = (UNDO *) malloc(sizeof(UNDO));
+  u_new = (UNDO *) g_malloc(sizeof(UNDO));
   u_new->type = -1;
   u_new->filename = NULL;
   u_new->object_head = NULL;
@@ -115,7 +115,7 @@ UNDO *s_undo_new_head(void)
  */
 void s_undo_destroy_head(UNDO *u_head)
 {
-  free(u_head);
+  g_free(u_head);
 }
 
 /*! \todo Finish function documentation!!!
@@ -130,7 +130,7 @@ UNDO *s_undo_add(UNDO *head, int type, char *filename, OBJECT *object_head,
   UNDO *tail;
   UNDO *u_new;
 
-  u_new = (UNDO *) malloc(sizeof(UNDO));
+  u_new = (UNDO *) g_malloc(sizeof(UNDO));
 
   u_new->filename = g_strdup (filename);
 	
@@ -210,7 +210,7 @@ void s_undo_destroy_all(TOPLEVEL *w_current, UNDO *head)
 
   while (u_current != NULL) {
     u_prev = u_current->prev;	
-    if (u_current->filename) free(u_current->filename);
+    if (u_current->filename) g_free(u_current->filename);
 		
     if (u_current->object_head) {
       w_current->REMOVING_SEL = 1;
@@ -220,7 +220,7 @@ void s_undo_destroy_all(TOPLEVEL *w_current, UNDO *head)
       u_current->object_head = NULL;
     }
 
-    free(u_current);
+    g_free(u_current);
     u_current = u_prev;
   }
 }
@@ -254,7 +254,7 @@ void s_undo_remove(TOPLEVEL *w_current, UNDO *head, UNDO *u_tos)
         u_current->prev = NULL;
 
       if (u_current->filename) {
-        free(u_current->filename);	
+        g_free(u_current->filename);	
       }
 
       if (u_current->object_head) {
@@ -265,7 +265,7 @@ void s_undo_remove(TOPLEVEL *w_current, UNDO *head, UNDO *u_tos)
         u_current->object_head = NULL;
       }
 
-      free(u_current);
+      g_free(u_current);
       return;
     }
     u_current = u_current->next;
@@ -289,7 +289,7 @@ void s_undo_remove_rest(TOPLEVEL *w_current, UNDO *head)
 
     if (u_current->filename) {
       unlink(u_current->filename);
-      free(u_current->filename);
+      g_free(u_current->filename);
     }
 
     if (u_current->object_head) {
@@ -300,7 +300,7 @@ void s_undo_remove_rest(TOPLEVEL *w_current, UNDO *head)
       u_current->object_head = NULL;
     }
 
-    free(u_current);
+    g_free(u_current);
     u_current = u_next;
   }
 }

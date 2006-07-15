@@ -112,7 +112,7 @@ OBJECT *o_pin_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->type = type;
   new_node->color = color;
 
-  new_node->line = (LINE *) malloc(sizeof(LINE));
+  new_node->line = (LINE *) g_malloc(sizeof(LINE));
 
   new_node->line->x[0] = x1;
   new_node->line->y[0] = y1;

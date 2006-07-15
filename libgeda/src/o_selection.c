@@ -93,7 +93,7 @@ SELECTION *o_selection_new_head(void)
 {
   SELECTION *s_new;
 
-  s_new = (SELECTION *) malloc(sizeof(SELECTION));
+  s_new = (SELECTION *) g_malloc(sizeof(SELECTION));
   s_new->selected_object = NULL;
   s_new->prev = NULL;
   s_new->next = NULL;
@@ -108,7 +108,7 @@ SELECTION *o_selection_new_head(void)
  */
 void o_selection_destroy_head(SELECTION *s_head)
 {
-  free(s_head);
+  g_free(s_head);
 }
 
 /*! \todo Finish function documentation!!!
@@ -122,7 +122,7 @@ SELECTION *o_selection_add(SELECTION *head, OBJECT *o_selected)
   SELECTION *tail;
   SELECTION *s_new;
 	
-  s_new = (SELECTION *) malloc(sizeof(SELECTION));
+  s_new = (SELECTION *) g_malloc(sizeof(SELECTION));
 
   if (o_selected != NULL) {
     s_new->selected_object = o_selected;
@@ -178,7 +178,7 @@ void o_selection_remove(SELECTION *head, OBJECT *o_selected)
       o_selection_unselect(s_current->selected_object);
 
       s_current->selected_object = NULL;
-      free(s_current);
+      g_free(s_current);
       return;
     }
     s_current = s_current->next;
@@ -208,7 +208,7 @@ void o_selection_remove_most(TOPLEVEL *w_current, SELECTION *head)
                       s_current->selected_object);
 	
       s_current->selected_object = NULL;
-      free(s_current);
+      g_free(s_current);
       s_current = s_prev;
     } else {
       break;
@@ -258,7 +258,7 @@ void o_selection_destroy_all(SELECTION *head)
   while (s_current != NULL) {
     s_prev = s_current->prev;	
     s_current->selected_object = NULL;
-    free(s_current);
+    g_free(s_current);
     s_current = s_prev;
   }
 }
