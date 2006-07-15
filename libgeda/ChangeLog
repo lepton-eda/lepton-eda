@@ -24,6 +24,9 @@
 	all pixbufs to be g_object_unref.  This was causing crashes with
 	glib 2.10.x.
 
+	* src/o_attrib.c: Added todo to an if statement that causes an
+	invalid read
+
 2006-07-13 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* libgeda.pc.in: Re-Fixed incorrect order of macros.  Reverted back

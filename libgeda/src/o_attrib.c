@@ -917,6 +917,10 @@ int o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
     return(FALSE);
   }
 
+
+  /*! \todo Technically this isn't a correct if statement.  This if will 
+   * cause an invalid read for strings:  =name and value= 
+   */
   if ( (*(equal_ptr + 1) == ' ') || (*(equal_ptr - 1) == ' ') ) {
      /* sometimes you have text with an ='s in it, it shouldn't be */
      /* treated like an attribute */
