@@ -124,7 +124,11 @@ int s_conn_remove_other(TOPLEVEL * w_current, OBJECT * other_object,
 		   conn->x, conn->y);
 #endif
 
-	    c_current->data = NULL;
+	    /* Do not write modify c_current like this, since this will cause 
+	    /* very nasty data corruption and upset glib's memory slice */
+	    /* allocator. */
+	    /* c_current->data = NULL;   Do not comment in */
+
 	    g_free(conn);
 
 #if 0 /* this does not work right */
