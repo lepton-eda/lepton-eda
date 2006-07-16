@@ -1,3 +1,7 @@
+2006-07-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gschlas.c: Added comment on free of cwd
+
 2006-06-14 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* man/grenum.1, src/grenum.c, src/grenum.h: Checked in latest

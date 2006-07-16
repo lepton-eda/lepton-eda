@@ -145,7 +145,7 @@ main_prog(void *closure, int argc, char *argv[])
     usage(argv[0]);
   }
 
-  free(cwd);
+  free(cwd); /* allocated by getcwd, should stay as free */
 
   logging_dest=STDOUT_TTY;
 
