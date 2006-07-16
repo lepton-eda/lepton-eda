@@ -73,7 +73,7 @@ C 63300 58900 1 270 0 capacitor-2.sym
 T 63800 58500 5 10 1 1 0 0
 refdes=C1
 T 63800 58300 5 10 1 1 0 0
-=2200uF
+value=2200uF
 }
 C 68400 58100 1 90 0 resistor-1.sym
 {

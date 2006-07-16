@@ -121,7 +121,7 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 		    fprintf(stderr,
 			    "Found a cpinlist head with a netname! [%s]\n",
 			    old_cpin->nets->net_name);
-		    free(old_cpin->nets->net_name);
+		    g_free(old_cpin->nets->net_name);
 		}
 
 
@@ -130,7 +130,7 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 						 hierarchy_tag);
 		old_cpin->nets->net_name_has_priority = TRUE;
 		connected_to =
-		    (char *) malloc(sizeof(char) *
+		    (char *) g_malloc(sizeof(char) *
 				    (strlen
 				     (netlist->component_uref) +
 				     strlen(current_pin) + 2));
@@ -138,7 +138,7 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 			netlist->component_uref, current_pin);
 		old_cpin->nets->connected_to = g_strdup (connected_to);
 		old_cpin->nets->nid = o_current->sid;
-		free(connected_to);
+		g_free(connected_to);
 	    } else {
 
 
@@ -156,7 +156,7 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 						 hierarchy_tag);
 
 		connected_to =
-		    (char *) malloc(sizeof(char) *
+		    (char *) g_malloc(sizeof(char) *
 				    (strlen
 				     (netlist->component_uref) +
 				     strlen(current_pin) + 2));
@@ -171,7 +171,7 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 		       hierarchy_tag);
 #endif
 
-		free(connected_to);
+		g_free(connected_to);
 	    }
 
 	} else {		/* no uref, means this is a special component */
@@ -180,7 +180,7 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 	current_pin = strtok(NULL, DELIMITERS);
     }
 
-    free(net_name);
+    g_free(net_name);
 }
 
 
@@ -203,7 +203,7 @@ s_netattrib_handle(TOPLEVEL * pr_current, OBJECT * o_current,
 	if (value) {
 	    s_netattrib_create_pins(pr_current, o_current, netlist, value,
 				    hierarchy_tag);
-	    free(value);
+	    g_free(value);
 	}
 	counter++;
 	value = o_attrib_search_name(o_current->complex->prim_objs,
@@ -215,7 +215,7 @@ s_netattrib_handle(TOPLEVEL * pr_current, OBJECT * o_current,
 
 
     if (value) {
-	free(value);
+	g_free(value);
     }
 
 
@@ -226,7 +226,7 @@ s_netattrib_handle(TOPLEVEL * pr_current, OBJECT * o_current,
 	if (value) {
 	    s_netattrib_create_pins(pr_current, o_current, netlist, value,
 				    hierarchy_tag);
-	    free(value);
+	    g_free(value);
 	}
 	counter++;
 	value =
@@ -234,7 +234,7 @@ s_netattrib_handle(TOPLEVEL * pr_current, OBJECT * o_current,
     }
 
     if (value) {
-	free(value);
+	g_free(value);
     }
 }
 
@@ -285,7 +285,7 @@ char *s_netattrib_net_search(OBJECT * o_current, char *wanted_pin)
 		current_pin = strtok(NULL, DELIMITERS);
 	    }
 
-	    free(value);
+	    g_free(value);
 	}
 	counter++;
 	value = o_attrib_search_name(o_current->complex->prim_objs,
@@ -294,7 +294,7 @@ char *s_netattrib_net_search(OBJECT * o_current, char *wanted_pin)
 
 
     if (value) {
-	free(value);
+	g_free(value);
     }
 
 
@@ -324,7 +324,7 @@ char *s_netattrib_net_search(OBJECT * o_current, char *wanted_pin)
 		    printf("found net_name: _%s_\n", net_name);
 #endif
 		    if (return_value) {
-			free(return_value);
+			g_free(return_value);
 			return_value = NULL;
 		    }
 
@@ -333,7 +333,7 @@ char *s_netattrib_net_search(OBJECT * o_current, char *wanted_pin)
 		current_pin = strtok(NULL, DELIMITERS);
 	    }
 
-	    free(value);
+	    g_free(value);
 	}
 	counter++;
 	value =
@@ -341,7 +341,7 @@ char *s_netattrib_net_search(OBJECT * o_current, char *wanted_pin)
     }
 
     if (value) {
-	free(value);
+	g_free(value);
     }
 
     if (return_value) {

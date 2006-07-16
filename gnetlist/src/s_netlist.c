@@ -78,7 +78,7 @@ NETLIST *s_netlist_add(NETLIST * ptr)
 {
     NETLIST *new_node;
 
-    new_node = (NETLIST *) malloc(sizeof(NETLIST));
+    new_node = (NETLIST *) g_malloc(sizeof(NETLIST));
 
     /* setup node information */
     new_node->nlid = 0;
@@ -166,7 +166,7 @@ void s_netlist_post_process(TOPLEVEL * pr_current, NETLIST * head)
 		if (pl_current->plid != -1 && pl_current->nets) {
 
 		    if (pl_current->net_name) {
-			free(pl_current->net_name);
+			g_free(pl_current->net_name);
 		    }
 
 		    verbose_print("n");
@@ -253,7 +253,7 @@ void s_netlist_name_named_nets (TOPLEVEL *pr_current,
 	  n_current = pl_current->nets;
 	  while (n_current != NULL) {
 	    if (n_current->net_name) {
-	      free (n_current->net_name);
+	      g_free (n_current->net_name);
 	    }	    
 	    n_current->net_name = s_netlist_netname_of_netid(pr_current,
 							     named_netlist,

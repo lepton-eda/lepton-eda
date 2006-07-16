@@ -281,11 +281,11 @@ SCM g_get_all_connections(SCM scm_netname)
 			if (n_current->connected_to) {
 
 			    pairlist = SCM_EOL;
-			    pin = (char *) malloc(sizeof(char) *
+			    pin = (char *) g_malloc(sizeof(char) *
 						  strlen(n_current->
 							 connected_to));
 			    uref =
-				(char *) malloc(sizeof(char) *
+				(char *) g_malloc(sizeof(char) *
 						strlen(n_current->
 						       connected_to));
 
@@ -303,8 +303,8 @@ SCM g_get_all_connections(SCM scm_netname)
 				connlist = scm_cons (pairlist, connlist);
 			    }
 
-			    free(uref);
-			    free(pin);
+			    g_free(uref);
+			    g_free(pin);
 			}
 			n_current = n_current->next;
 		    }
@@ -373,12 +373,12 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
 				if (n_current->connected_to) {
 
 				    pairlist = SCM_EOL;
-				    pin = (char *) malloc(sizeof(char) *
+				    pin = (char *) g_malloc(sizeof(char) *
 							  strlen
 							  (n_current->
 							   connected_to));
 				    uref =
-					(char *) malloc(sizeof(char) *
+					(char *) g_malloc(sizeof(char) *
 							strlen(n_current->
 							       connected_to));
 
@@ -391,8 +391,8 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
 
 				    pinslist = scm_cons (pairlist, pinslist);
 
-				    free(uref);
-				    free(pin);
+				    g_free(uref);
+				    g_free(pin);
 				}
 				n_current = n_current->next;
 			    }
@@ -624,7 +624,7 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
     scm_return_value = scm_makfrom0str ("unknown");
   }
 
-  free(pinseq_attrib);
+  g_free(pinseq_attrib);
 
   return (scm_return_value);
 }
@@ -728,7 +728,7 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
 
     if (return_value) {
       scm_return_value = scm_makfrom0str (return_value);
-      free(return_value);
+      g_free(return_value);
     } else {
       scm_return_value = scm_makfrom0str ("not found");
     }
@@ -802,10 +802,10 @@ SCM g_get_slots(SCM scm_uref)
 		  slot_tmp=g_strdup("1");
 		}
 		slot = g_strconcat ("#d", slot_tmp, NULL);
-		  free (slot_tmp);
+		  g_free (slot_tmp);
 		  slot_number = scm_string_to_number(scm_makfrom0str (slot),
                                              SCM_MAKINUM(10));
-		  free (slot);
+		  g_free (slot);
 		  if (slot_number != SCM_BOOL_F) {
 		    slots_list = scm_cons (slot_number, slots_list);
 		  }
@@ -867,10 +867,10 @@ SCM g_get_unique_slots(SCM scm_uref)
 		  slot_tmp=g_strdup("1");
 		}
 		slot = g_strconcat ("#d", slot_tmp, NULL);
-		free (slot_tmp);
+		g_free (slot_tmp);
 		slot_number = scm_string_to_number(scm_makfrom0str (slot),
                                            SCM_MAKINUM(10));
-		free (slot);
+		g_free (slot);
 		if (slot_number != SCM_BOOL_F) {
 		  if (scm_member(slot_number, slots_list) ==  SCM_BOOL_F) {
 		    slots_list = scm_cons (slot_number, slots_list);

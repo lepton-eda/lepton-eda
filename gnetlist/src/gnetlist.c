@@ -64,7 +64,7 @@ void main_prog(void *closure, int argc, char *argv[])
   
     /* set default output filename */
     output_filename =
-	(char *) malloc(sizeof(char) * (strlen("output.net") + 1));
+	(char *) g_malloc(sizeof(char) * (strlen("output.net") + 1));
     strcpy(output_filename, "output.net");
 
 
@@ -203,7 +203,7 @@ void main_prog(void *closure, int argc, char *argv[])
     /* Change back to the directory where we started AGAIN.  This is done */
     /* because the s_traverse functions can change the Current Working Directory. */
     chdir(cwd);
-    free(cwd);
+    free(cwd); /* allocated by getcwd, so this should stay as free() */
 
 /* don't need either of these */
 /*	gh_eval_str ("(primitive-load-path \"ice-9/boot-9.scm\")");*/

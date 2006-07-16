@@ -81,19 +81,19 @@ void s_rename_destroy_all(void)
         {
             if (temp->src) 
             {
-                free(temp->src);
+                g_free(temp->src);
             }
             if (temp->dest) 
 	    {
-                free(temp->dest);
+                g_free(temp->dest);
             }
 	    to_free = temp;
 	    temp = temp->next;
-	    free(to_free);
+	    g_free(to_free);
         }
 	to_free = first_set;
 	first_set = first_set->next_set;
-	free(to_free);
+	g_free(to_free);
     }
     last_set = NULL;
 }
@@ -102,7 +102,7 @@ void s_rename_next_set(void)
 {
     SET * new_set;
     
-    new_set = malloc(sizeof(SET));
+    new_set = g_malloc(sizeof(SET));
     if (new_set == NULL) 
     {
         fprintf(stderr,"Unable to create a new rename set.\n");
@@ -193,13 +193,13 @@ void s_rename_add(char *src, char *dest)
                 printf("Found dest [%s] in src [%s] and that had a dest as: [%s]\nSo you want rename [%s] to [%s]\n",
                        dest, temp->src, temp->dest, src, temp->dest);
 #endif
-                new_rename = malloc(sizeof(RENAME));
+                new_rename = g_malloc(sizeof(RENAME));
 		if (new_rename)
 		{
 		     new_rename->next = NULL;
-                     new_rename->src = (char *) malloc(sizeof(char) * (strlen(src) + 1));
+                     new_rename->src = (char *) g_malloc(sizeof(char) * (strlen(src) + 1));
                      strcpy(new_rename->src, src);
-                     new_rename->dest = (char *) malloc(sizeof(char) * (strlen(temp->dest) + 1));
+                     new_rename->dest = (char *) g_malloc(sizeof(char) * (strlen(temp->dest) + 1));
                      strcpy(new_rename->dest, temp->dest);
 		     /* If the rename pair was found then a set already exists, so there's no need the check it */
 		     if (last_set->first_rename == NULL)
@@ -224,20 +224,20 @@ void s_rename_add(char *src, char *dest)
         /* Check for a valid set */
 	if (first_set == NULL)
 	{
-	    new_set = malloc(sizeof(SET));
+	    new_set = g_malloc(sizeof(SET));
 	    if (new_set)
 	    {
 	        memset(new_set,0,sizeof(SET));
 		first_set = last_set = new_set;
 	    }
 	}    
-        new_rename = malloc(sizeof(RENAME));
+        new_rename = g_malloc(sizeof(RENAME));
         if (new_rename)
 	{
 	     new_rename->next = NULL;
-             new_rename->src = (char *) malloc(sizeof(char) * (strlen(src) + 1));
+             new_rename->src = (char *) g_malloc(sizeof(char) * (strlen(src) + 1));
              strcpy(new_rename->src, src);
-             new_rename->dest = (char *) malloc(sizeof(char) * (strlen(dest) + 1));
+             new_rename->dest = (char *) g_malloc(sizeof(char) * (strlen(dest) + 1));
              strcpy(new_rename->dest, dest);
 	     if (last_set->first_rename == NULL)
 	     {
@@ -270,7 +270,7 @@ void s_rename_all_lowlevel(NETLIST * netlist_head, char *src, char *dest)
 		{
                     if (strcmp(pl_current->net_name, src) == 0) 
 		    {
-                        pl_current->net_name = malloc(sizeof(char) * (strlen(dest) + 1));
+                        pl_current->net_name = g_malloc(sizeof(char) * (strlen(dest) + 1));
                         strcpy(pl_current->net_name, dest);
                     }
                 }

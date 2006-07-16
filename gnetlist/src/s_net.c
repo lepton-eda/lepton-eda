@@ -83,7 +83,7 @@ NET *s_net_add(NET * ptr)
 {
     NET *new_node;
 
-    new_node = (NET *) malloc(sizeof(NET));
+    new_node = (NET *) g_malloc(sizeof(NET));
 
     /* setup node information */
     new_node->net_name = NULL;
@@ -185,19 +185,19 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
     uref = s_hierarchy_create_uref(pr_current, temp_uref, hierarchy_tag);
 
     if (uref && pinnum) {
-	string = (char *) malloc(sizeof(char) *
+	string = (char *) g_malloc(sizeof(char) *
 				 strlen(uref) + strlen(pinnum) +
 				 strlen("  ") + 1);
 
 	sprintf(string, "%s %s", uref, pinnum);
     } else {
 	if (pinnum) {
-	    string = (char *) malloc(sizeof(char) *
+	    string = (char *) g_malloc(sizeof(char) *
 				     strlen(pinnum) +
 				     strlen("POWER") + strlen("  ") + 1);
 	    sprintf(string, "POWER %s", pinnum);
 	} else {
-	    string = (char *) malloc(sizeof(char) *
+	    string = (char *) g_malloc(sizeof(char) *
 				     strlen("U?") + strlen("?") +
 				     strlen("  ") + 1 + hierarchy_tag_len);
 
@@ -206,7 +206,7 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
 		    s_hierarchy_create_uref(pr_current, "U?",
 					    hierarchy_tag);
 		sprintf(string, "%s ?", misc);
-		free(misc);
+		g_free(misc);
 	    } else {
 		sprintf(string, "U? ?");
 	    }
@@ -216,13 +216,13 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
     }
 
     if (pinnum)
-	free(pinnum);
+	g_free(pinnum);
 
     if (uref)
-	free(uref);
+	g_free(uref);
 
     if (temp_uref)
-	free(temp_uref);
+	g_free(temp_uref);
 
     return (string);
 }
@@ -433,7 +433,7 @@ char *s_net_name(TOPLEVEL * pr_current, NETLIST * netlist_head,
     if (net_head->nid == -1 && net_head->prev == NULL
 	&& net_head->next == NULL) {
 	string =
-	    (char *) malloc(sizeof(char) * (strlen("unconnected_pin-")) +
+	    (char *) g_malloc(sizeof(char) * (strlen("unconnected_pin-")) +
 			    10);
 
 	sprintf(string, "unconnected_pin-%d", 
@@ -455,19 +455,19 @@ char *s_net_name(TOPLEVEL * pr_current, NETLIST * netlist_head,
 
 	if (netlist_mode == SPICE) {
 	    string =
-		(char *) malloc(sizeof(char) * (strlen("99999") + 10));
+		(char *) g_malloc(sizeof(char) * (strlen("99999") + 10));
 	    sprintf(string, "%d", unnamed_net_counter++);
 
 	    return (string);
 	} else {
 	    string =
-		(char *) malloc(sizeof(char) *
+		(char *) g_malloc(sizeof(char) *
 				(strlen(pr_current->unnamed_netname) + 10 +
 				 hierarchy_tag_len));
 
 	    if (hierarchy_tag) {
 		temp =
-		    (char *) malloc(sizeof(char) * (strlen("99999") + 10));
+		    (char *) g_malloc(sizeof(char) * (strlen("99999") + 10));
 		sprintf(temp, "%s%d", pr_current->unnamed_netname, 
 		        unnamed_net_counter++);
 
@@ -475,7 +475,7 @@ char *s_net_name(TOPLEVEL * pr_current, NETLIST * netlist_head,
 		    s_hierarchy_create_netname(pr_current, temp,
 					       hierarchy_tag);
 		strcpy(string, misc);
-		free(misc);
+		g_free(misc);
 	    } else {
 		sprintf(string, "%s%d", pr_current->unnamed_netname, 
 			unnamed_net_counter++);

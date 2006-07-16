@@ -78,7 +78,7 @@ CPINLIST *s_cpinlist_add(CPINLIST * ptr)
 {
     CPINLIST *new_node;
 
-    new_node = (CPINLIST *) malloc(sizeof(CPINLIST));
+    new_node = (CPINLIST *) g_malloc(sizeof(CPINLIST));
 
     /* setup node information */
     new_node->plid = 0;

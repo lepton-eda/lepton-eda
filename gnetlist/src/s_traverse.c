@@ -135,7 +135,7 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
       if (temp) {
         /* traverse graphical elements, but adding them to the
 	   graphical netlist */
-        free(temp);
+        g_free(temp);
 	
 	netlist = s_netlist_return_tail(graphical_netlist_head);
 	is_graphical = TRUE;
@@ -171,7 +171,7 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
       }
       
       if (temp_uref) {
-	free(temp_uref);
+	g_free(temp_uref);
       }
 
       netlist->object_ptr = o_current;
@@ -192,7 +192,7 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
 		  "Could not find refdes on component and could not find any special attributes!\n");
 	  
 	  netlist->component_uref =
-	    (char *) malloc(sizeof(char) * strlen("U?") +
+	    (char *) g_malloc(sizeof(char) * strlen("U?") +
 			    1);
 	  strcpy(netlist->component_uref, "U?");
 	} else {
@@ -202,7 +202,7 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
 #endif
 	  /* it's a power or some other special symbol */
 	  netlist->component_uref = NULL;
-	  free(temp);
+	  g_free(temp);
 	}
 	
       }
@@ -310,7 +310,7 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
                                            connected_to,
                                            hierarchy_tag);
               nets->net_name_has_priority = TRUE;
-              free(nets->connected_to);
+              g_free(nets->connected_to);
               nets->connected_to = NULL;
             }
 #if DEBUG
@@ -394,7 +394,7 @@ NET *s_traverse_net(TOPLEVEL * pr_current, OBJECT * previous_object,
       new_net->net_name =
         s_hierarchy_create_netname(pr_current, temp,
                                    hierarchy_tag);
-      free(temp);
+      g_free(temp);
     } else { 
 
       /* search for the old label= attribute */
@@ -404,7 +404,7 @@ NET *s_traverse_net(TOPLEVEL * pr_current, OBJECT * previous_object,
         new_net->net_name =
           s_hierarchy_create_netname(pr_current, temp,
                                      hierarchy_tag);
-        free(temp);
+        g_free(temp);
       }
     }
   }
@@ -437,7 +437,7 @@ NET *s_traverse_net(TOPLEVEL * pr_current, OBJECT * previous_object,
                                    nets->connected_to,
                                    hierarchy_tag);
       nets->net_name_has_priority = TRUE;
-      free(nets->connected_to);
+      g_free(nets->connected_to);
       nets->connected_to = NULL;
     }
 #if DEBUG

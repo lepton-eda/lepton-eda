@@ -6,6 +6,15 @@
 	* tests/amp.spice-sdb, tests/darlington.spice-sdb: Updated golden
 	file to take into account case change of .end
 
+	* tests/powersupply.sch, powersupply.allegro, powersupply.protelII
+	powersupply.tango: Fixed invalid attribute in schematic and updated
+	some golden regression files.
+
+	* src/g_netlist.c, src/g_rc.c, src/gnetlist.c, src/i_vars.c,
+	src/parsecmd.c, src/s_cpinlist.c, src/s_hierarchy.c, src/s_net.c,
+	src/s_netattrib.c, src/s_netlist.c, src/s_rename.c, src/s_traverse.c,
+	src/vams_misc.c: Converted all malloc/free calls to g_malloc/g_free
+
 2006-04-22 Carlos Nieves Onega <cnieves@iespana.es>
 	
 	* include/globals.h, include/prototype.h, src/g_netlist.c, 

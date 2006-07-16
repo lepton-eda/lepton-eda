@@ -108,17 +108,17 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 
 	    pr_current->page_current = p_current;
 
-	    free(current_filename);
+	    g_free(current_filename);
 	    pcount++;
 	    current_filename = u_basic_breakup_string(attrib, ',', pcount);
 	}
 
 	if (attrib) {
-	    free(attrib);
+	    g_free(attrib);
 	}
 
 	if (current_filename) {
-	    free(current_filename);
+	    g_free(current_filename);
 	}
 
 	count++;
@@ -299,7 +299,7 @@ void s_hierarchy_remove_urefconn(NETLIST * head, char *uref_disable)
 			       n_current->connected_to);
 #endif
 			/* can't do frees, since some names are links */
-/* 		free(n_current->connected_to);*/
+/* 		g_free(n_current->connected_to);*/
 			n_current->connected_to = NULL;
 		    }
 		}
@@ -530,7 +530,7 @@ s_hierarchy_remove_uref_mangling(TOPLEVEL * pr_current, NETLIST * head)
 	    new_uref =
 		s_hierarchy_return_baseuref(pr_current,
 					    nl_current->component_uref);
-	    free(nl_current->component_uref);
+	    g_free(nl_current->component_uref);
 	    nl_current->component_uref = new_uref;
 	}
 
@@ -548,7 +548,7 @@ s_hierarchy_remove_uref_mangling(TOPLEVEL * pr_current, NETLIST * head)
 		    new_connected_to =
 			g_strdup(n_current->connected_to);
 		    sprintf(new_connected_to, "%s %s", new_uref, pin);
-		    free(n_current->connected_to);
+		    g_free(n_current->connected_to);
 		    n_current->connected_to = new_connected_to;
 		}
 		n_current = n_current->next;
@@ -599,7 +599,7 @@ char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
 
 	cptr = uref;
 
-	return_value = (char *) malloc(sizeof(char) * (strlen(uref)));
+	return_value = (char *) g_malloc(sizeof(char) * (strlen(uref)));
 	i = 0;
 	while (cptr != end_of_base) {
 	    return_value[i] = *cptr;

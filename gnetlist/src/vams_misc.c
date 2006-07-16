@@ -66,8 +66,8 @@ vams_get_attribs_list(OBJECT *object, SCM *list, OBJECT **return_found)
                                   *list);	
 		      }	
 		   
-		   if (found_name) free(found_name); 
-		   if (found_value) free(found_value); 
+		   if (found_name) g_free(found_name); 
+		   if (found_value) g_free(found_value); 
 #if DEBUG 
 		    printf("0 _%s_\n", found->text->string);
 		    printf("1 _%s_\n", found_name);
