@@ -1,3 +1,8 @@
+2006-07-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gsymcheck.c, src/s_check.c, src/s_symstruct.c: Changed all
+	malloc/free calls to g_malloc/g_free to be consistent with libgeda
+
 2006-04-09 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/gsymcheck.c: Enable logging when the filename specified couldn't

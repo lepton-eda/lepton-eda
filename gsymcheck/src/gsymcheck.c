@@ -137,7 +137,7 @@ main_prog(void *closure, int argc, char *argv[])
         s_log_message("gsymcheck: Could not load [%s]\n", 
                       pr_current->page_current->page_filename);
         s_log_message("Exiting...\n");
-        exit(2); // error 
+        exit(2); /* error */
       }
     }
     i++;
@@ -149,7 +149,7 @@ main_prog(void *closure, int argc, char *argv[])
     usage(argv[0]);
   }
 
-  free(cwd);
+  free(cwd); /* allocated with getcwd, should stay as free */
 
   logging_dest=STDOUT_TTY;
 

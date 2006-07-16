@@ -36,7 +36,7 @@ s_symstruct_init(void)
 {
   SYMCHECK *s_symcheck;
 	
-  s_symcheck = (SYMCHECK *) malloc(sizeof(SYMCHECK));
+  s_symcheck = (SYMCHECK *) g_malloc(sizeof(SYMCHECK));
 
   s_symcheck->info_messages = NULL;
   s_symcheck->warning_messages = NULL;
@@ -97,7 +97,7 @@ s_symstruct_print(SYMCHECK *s_current)
       /* printf("found info: %s\n", msg); */
       if (msg) { 
         s_log_message("Info: %s", msg);
-        free(msg);
+        g_free(msg);
       }
 
       list = list->next;
@@ -112,7 +112,7 @@ s_symstruct_print(SYMCHECK *s_current)
       /* printf("found warning: %s\n", msg); */
       if (msg) { 
         s_log_message("Warning: %s", msg);
-        free(msg);
+        g_free(msg);
       }
 
       list = list->next;
@@ -127,7 +127,7 @@ s_symstruct_print(SYMCHECK *s_current)
       /* printf("found error: %s\n", msg); */
       if (msg && verbose_mode) { 
         s_log_message("ERROR: %s", msg);
-        free(msg);
+        g_free(msg);
       }
 
       list = list->next;
@@ -141,9 +141,9 @@ s_symstruct_free(SYMCHECK *s_current)
   if (s_current) {
 
     if (s_current->device_attribute) {
-      free(s_current->device_attribute);
+      g_free(s_current->device_attribute);
     }
 
-    free(s_current);
+    g_free(s_current);
   }
 }

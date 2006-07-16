@@ -180,7 +180,7 @@ s_check_graphical(OBJECT *o_current, SYMCHECK *s_current)
 
   if (temp) {
     s_current->graphical_symbol=TRUE;
-    free(temp);
+    g_free(temp);
   }
 }
 
@@ -203,7 +203,7 @@ s_check_device(OBJECT *o_current, SYMCHECK *s_current)
     /* found device= attribute */
     s_current->missing_device_attrib=FALSE;
     s_current->device_attribute =
-      (char *) malloc(sizeof(char)*(strlen(temp)+1));
+      (char *) g_malloc(sizeof(char)*(strlen(temp)+1));
     strcpy(s_current->device_attribute, temp);
     message = g_strdup_printf ("Found device=%s\n", temp);
     s_current->info_messages = g_list_append(s_current->info_messages,
@@ -225,7 +225,7 @@ s_check_device(OBJECT *o_current, SYMCHECK *s_current)
   } 
 
   if (temp) 
-    free(temp);
+    g_free(temp);
 }
 
 
@@ -293,7 +293,7 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
           s_current->error_count++;
         }
 
-        free(string);
+        g_free(string);
         
         /* this is the first attribute found */
         if (!found_first) {
@@ -301,7 +301,7 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
           found_first=TRUE;
         } else {
           if (number)
-            free(number);
+            g_free(number);
         }
         
         counter++;
@@ -352,7 +352,7 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
   ptr1 = found_numbers;
   while (ptr1)
   {
-    free(ptr1->data);
+    g_free(ptr1->data);
     ptr1 = ptr1->next;
   }
   g_list_free(found_numbers);
@@ -397,7 +397,7 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
                                               message);
       s_current->error_count++;
     
-      free(net);
+      g_free(net);
       counter++;
       continue;
     }
@@ -405,7 +405,7 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
     j = 0;
     do {
       if (number) {
-        free(number);
+        g_free(number);
         number = NULL;
       }
         
@@ -436,11 +436,11 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
     } while (number);
 
     if (number)
-      free(number);
+      g_free(number);
 
 
-    free(net);
-    free(netpins);
+    g_free(net);
+    g_free(netpins);
     
     counter++;
   }
@@ -487,7 +487,7 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
         }
         
         number = g_strdup (string);
-        free(string);
+        g_free(string);
 
         if (strcmp(number, "0") == 0) {
           message = g_strdup ("Found pinnumber=0 attribute\n");
@@ -502,7 +502,7 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
           found_first=TRUE;
         } else {
           if (number)
-            free(number);
+            g_free(number);
 	}
         
         counter++;
@@ -555,7 +555,7 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
   ptr1 = found_numbers;
   while (ptr1)
   {
-    free(ptr1->data);
+    g_free(ptr1->data);
     ptr1 = ptr1->next;
   }
   g_list_free(found_numbers);
@@ -599,7 +599,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
 
   s_current->numslots=atoi(value);
   sprintf(numslots_str, "%d", s_current->numslots);
-  free(value);
+  g_free(value);
 
   message = g_strdup_printf ("Found numslots=%s attribute\n", numslots_str);
   s_current->info_messages = g_list_append(s_current->info_messages,
@@ -645,7 +645,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
                                                 message);
       s_current->error_count++;
       s_current->slotting_errors++;
-      free(slotdef);
+      g_free(slotdef);
       return;
     }
 
@@ -659,7 +659,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     }
   
     slot = atoi(slotnum);
-    free(slotnum);
+    g_free(slotnum);
 
     /* make sure that the slot # is less than the number of slots */
     if (slot > s_current->numslots) {
@@ -684,7 +684,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
                                                 message);
       s_current->error_count++;
       s_current->slotting_errors++;
-      free(slotdef);
+      g_free(slotdef);
       return;
     }
     pins++;  /* get past that : */
@@ -696,7 +696,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
                                                 message);
       s_current->error_count++;
       s_current->slotting_errors++;
-      free(slotdef);
+      g_free(slotdef);
       return;
     }
 
@@ -708,14 +708,14 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
                                                 message);
       s_current->error_count++;
       s_current->slotting_errors++;
-      free(slotdef);
+      g_free(slotdef);
       return;
     }
 
     j = 0;
     do {
       if (temp) {
-        free(temp);
+        g_free(temp);
         temp = NULL;
       }
         
@@ -740,7 +740,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
 	    			                  message);
         s_current->error_count++;
         s_current->slotting_errors++;
-        free(temp);
+        g_free(temp);
         temp = NULL;
         break;
       }
@@ -758,9 +758,9 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     } while (temp);
 
     if (temp)
-      free(temp);
+      g_free(temp);
 
-    free(slotdef);
+    g_free(slotdef);
    
     i++;
     slotdef = o_attrib_search_name(object_head, "slotdef", i);
@@ -1109,7 +1109,7 @@ s_check_missing_attribute(OBJECT *object, char *attribute, SYMCHECK *s_current)
       found_first=TRUE;
     }
 
-    free(string);
+    g_free(string);
 
     counter++;
     string = o_attrib_search_name_single_count(object, attribute,
@@ -1299,10 +1299,10 @@ void s_check_pintype(OBJECT *object_head, SYMCHECK *s_current)
 /*           s_current->error_count++; */
 /*         } */
 
-        free(string);
+        g_free(string);
         
 	if (pintype)
-	  free(pintype);
+	  g_free(pintype);
         
         counter++;
         string = o_attrib_search_name_single_count(o_current, "pintype",
