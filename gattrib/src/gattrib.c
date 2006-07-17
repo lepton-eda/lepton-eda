@@ -257,7 +257,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
     i++;
     g_free(filename);
   }  /* while(argv[i])  */
-  free(cwd);
+  g_free(cwd); /* cwd is allocated with g_strdup so, g_free is correct */
 
 
   /* ---------- Now complete read-in of project  ---------- */

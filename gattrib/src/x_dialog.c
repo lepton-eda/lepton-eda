@@ -212,7 +212,7 @@ void x_dialog_newattrib_ok_callback(GtkWidget *buttonok,
     printf("In x_dialog_newattrib_ok_callback, about to add new attrib = %s\n", entry_text);
 #endif
     s_toplevel_add_new_attrib(entry_text);
-    free(entry_text);
+    g_free(entry_text);
   }
 
   x_dialog_close_window(window);
@@ -730,7 +730,7 @@ void x_dialog_unimplemented_feature()
   /* Now create text string to place in vbox area */
   string = g_strdup_printf("Unimplemented Feature!\n\n");
   label = gtk_label_new(string);
-  free(string);
+  g_free(string);
   gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 5);
   gtk_widget_show(label);
   
@@ -750,7 +750,7 @@ void x_dialog_unimplemented_feature()
 
 
   label = gtk_label_new(string);
-  free(string);
+  g_free(string);
   gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 5);
   gtk_widget_show(label);
   
@@ -842,19 +842,19 @@ void x_dialog_about_dialog()
   /* Now create text string to place in vbox area */
   string = g_strdup_printf("gEDA : GPL Electronic Design Automation");
   label = gtk_label_new(string);
-  free(string);
+  g_free(string);
   gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 5);
   gtk_widget_show(label);
   
   string = g_strdup_printf("This is gattrib -- gEDA's attribute editor");
   label = gtk_label_new(string);
-  free(string);
+  g_free(string);
   gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 5);
   gtk_widget_show(label);
   
   string = g_strdup_printf("Gattrib version: %s", VERSION);
   label = gtk_label_new(string);
-  free(string);
+  g_free(string);
   gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 5);
   gtk_widget_show(label);
   
@@ -866,7 +866,7 @@ void x_dialog_about_dialog()
   string =
     g_strdup_printf("%sand gtkextra, as well as support from the gEDA community.", string);
   label = gtk_label_new(string);
-  free(string);
+  g_free(string);
   gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 5);
   gtk_widget_show(label);
   

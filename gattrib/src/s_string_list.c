@@ -51,7 +51,7 @@
 STRING_LIST *s_string_list_new() {
   STRING_LIST *local_string_list;
   
-  local_string_list = malloc(sizeof(STRING_LIST));
+  local_string_list = g_malloc(sizeof(STRING_LIST));
   local_string_list->data = NULL;
   local_string_list->next = NULL;
   local_string_list->prev = NULL;
@@ -81,7 +81,7 @@ STRING_LIST *s_string_list_duplicate_string_list(STRING_LIST *old_string_list) {
   while (local_string_list != NULL) {
     data = g_strdup(local_string_list->data);
     s_string_list_add_item(new_string_list, &count, data);
-    free(data);
+    g_free(data);
     local_string_list = local_string_list->next;
   }
 
@@ -132,10 +132,10 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
     trial_item = (gchar *) g_strdup(list->data);        
     if (strcmp(trial_item, item) == 0) {
       /* Found item already in list.  Just return. */
-      free(trial_item);
+      g_free(trial_item);
       return;
     }
-    free(trial_item);
+    g_free(trial_item);
     prev = list;
     list = list->next;
   }
@@ -143,7 +143,7 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
   /* If we are here, it's 'cause we didn't find the item pre-existing in the list. */
   /* In this case, we insert it. */
 
-  local_list = (STRING_LIST *) malloc(sizeof(STRING_LIST));  /* allocate space for this list entry */
+  local_list = (STRING_LIST *) g_malloc(sizeof(STRING_LIST));  /* allocate space for this list entry */
   local_list->data = (gchar *) g_strdup(item);   /* copy data into list */
   local_list->next = NULL;
   local_list->prev = prev;  /* point this item to last entry in old list */
@@ -204,7 +204,7 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
 	/* at list's beginning */
 	next_item->prev = NULL;
 	(*list) = next_item;         /* also need to fix pointer to list head */
-	/*  free(list);  */
+	/*  g_free(list);  */
       } else {
 	/* normal case of element in middle of list */
 	prev_item->next = next_item;
@@ -214,20 +214,20 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
 #ifdef DEBUG
     printf("In s_string_list_delete_item, now free list_item\n");
 #endif
-      free(list_item);  /* free current list item */
+      g_free(list_item);  /* free current list item */
       (*count)--;       /* decrement count */
       /* Do we need to re-number the list? */
 
 #ifdef DEBUG
     printf("In s_string_list_delete_item, now free trial_item\n");
 #endif
-      free(trial_item); /* free trial item before returning */
+      g_free(trial_item); /* free trial item before returning */
 #ifdef DEBUG
     printf("In s_string_list_delete_item, returning . . . .\n");
 #endif
       return;
     }
-    free(trial_item);
+    g_free(trial_item);
     list_item = list_item->next;
   }
 
@@ -260,10 +260,10 @@ int s_string_list_in_list(STRING_LIST *list, char *item) {
     trial_item = (gchar *) g_strdup(list->data);        
     if (strcmp(trial_item, item) == 0) {
       /* Found item already in list.  return 1. */
-      free(trial_item);
+      g_free(trial_item);
       return 1;
     }
-    free(trial_item);
+    g_free(trial_item);
     list = list->next;
   }
 

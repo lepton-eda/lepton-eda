@@ -54,7 +54,7 @@ SHEET_DATA *s_sheet_data_new()
 {
   SHEET_DATA *new_sheet;
 
-  new_sheet = (SHEET_DATA *) malloc(sizeof(SHEET_DATA));
+  new_sheet = (SHEET_DATA *) g_malloc(sizeof(SHEET_DATA));
 
   /* We will malloc and fill out the comp table later. */
   new_sheet->component_table = NULL;
@@ -134,7 +134,7 @@ void s_sheet_data_add_master_comp_list_items(OBJECT *start_obj) {
 	  printf("       In s_sheet_add_master_comp_list, about to add to master list refdes = %s\n", temp_uref);
 #endif
 	  s_string_list_add_item(sheet_head->master_comp_list_head, &(sheet_head->comp_count), temp_uref);
-	  free(temp_uref);
+	  g_free(temp_uref);
 	}
 	
       } /*  if (o_current->type == OBJ_COMPLEX . . . . .) */
@@ -202,8 +202,8 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
 	      s_string_list_add_item(sheet_head->master_comp_attrib_list_head, 
 				     &(sheet_head->comp_attrib_count), attrib_name);
 	    }   /* if (strcmp(attrib_name, "refdes") != 0) */ 
-	    free(attrib_name);
-	    free(attrib_text);
+	    g_free(attrib_name);
+	    g_free(attrib_text);
 	  }
 	  a_current = a_current->next;
 	}   /*  while  */
@@ -304,7 +304,7 @@ void s_sheet_data_add_master_pin_list_items(OBJECT *start_obj) {
 		fprintf(stderr, ". . . . refdes = %s.\n", temp_uref);
 #endif
 	      }
-	      free(temp_pinnumber);
+	      g_free(temp_pinnumber);
 	      
 	    }
 	    o_lower_current = o_lower_current->next;
@@ -316,7 +316,7 @@ void s_sheet_data_add_master_pin_list_items(OBJECT *start_obj) {
 	  fprintf(stderr, ". . . . complex_basename = %s.\n", o_current->complex_basename);
 #endif
 	}
-	free(temp_uref);
+	g_free(temp_uref);
 
       }  /*  if (o_current->type == OBJ_COMPLEX)  */
       o_current = o_current->next;  
@@ -399,9 +399,9 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
 		    s_string_list_add_item(sheet_head->master_pin_attrib_list_head, 
 					   &(sheet_head->pin_attrib_count), attrib_name);
 		  }   /* if (strcmp(attrib_name, "pinnumber") != 0) */ 
-		  if (attrib_value != NULL) free(attrib_value);
-		  free(attrib_name);
-		  free(attrib_text);
+		  if (attrib_value != NULL) g_free(attrib_value);
+		  g_free(attrib_name);
+		  g_free(attrib_text);
 		}
 		pin_attrib = pin_attrib->next;
 	      }   /*   while (pin_attrib != NULL)  */
@@ -409,7 +409,7 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
 	    o_lower_current = o_lower_current->next;
 	  }   /*  while (o_lower_current != NULL)   */
 
-	  free(temp_uref);
+	  g_free(temp_uref);
 	}  /*  if (temp_uref != NULL )  */
 	
       }  /* if (o_current->type == OBJ_COMPLEX)  */

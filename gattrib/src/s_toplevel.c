@@ -389,7 +389,7 @@ void s_toplevel_delete_attrib_col() {
 			      &(sheet_head->comp_attrib_count), 
 			      attrib_name);
     s_string_list_sort_master_comp_attrib_list(); /* this renumbers list also */
-    free(attrib_name);
+    g_free(attrib_name);
     
 #ifdef DEBUG
     printf("In s_toplevel_delete_attrib_col, just updated comp_attrib string list.\n");
@@ -515,7 +515,7 @@ s_toplevel_sheetdata_to_toplevel(OBJECT *start_obj)
 	s_toplevel_update_component_attribs_in_toplevel(o_current, 
 							new_comp_attrib_pair_list);
 
-	free(temp_uref);
+	g_free(temp_uref);
       } else {
 #ifdef DEBUG
 	printf("In s_toplevel_sheetdata_to_toplevel, found complex with no refdes. name = %s\n", 
@@ -569,7 +569,7 @@ s_toplevel_sheetdata_to_toplevel(OBJECT *start_obj)
 	}    
       }     /* if(temp_uref  */
       
-      free(temp_uref);
+      g_free(temp_uref);
     }
     
     o_current = o_current->next;
@@ -623,13 +623,13 @@ STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes)
     if ( ((sheet_head->component_table)[row][i]).attrib_value ) {
       new_attrib_value = g_strdup( ((sheet_head->component_table)[row][i]).attrib_value );
       name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-      free(new_attrib_value);      
+      g_free(new_attrib_value);      
     } else {
       name_value_pair = g_strconcat(new_attrib_name, "=", NULL);  /* empty attrib */
     }
     s_string_list_add_item(new_attrib_list, &count, name_value_pair);  /* add name=value to new list */
-    free(new_attrib_name);
-    free(name_value_pair);
+    g_free(new_attrib_name);
+    g_free(name_value_pair);
 
     /* Sanity check */
     if (count != i+1) {
@@ -718,8 +718,8 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 	   (s_attrib_name_in_list(new_comp_attrib_list, old_attrib_name) == FALSE) ) {
 	s_string_list_add_item(complete_comp_attrib_list, &count, old_name_value_pair);
       }
-      free(old_name_value_pair);
-      free(old_attrib_name);
+      g_free(old_name_value_pair);
+      g_free(old_attrib_name);
     }
     a_current = a_current->next;
   }  /* while (a_current != NULL) */
@@ -778,7 +778,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   col = s_table_get_index(sheet_head->master_comp_attrib_list_head, new_attrib_name);
   visibility = sheet_head->component_table[row][col].visibility;
   show_name_value = sheet_head->component_table[row][col].show_name_value;
-  free(refdes);
+  g_free(refdes);
 
 
     /* -------  Four cases to consider: Case 1 ----- */
@@ -833,16 +833,16 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 
     /* free everything and iterate */
     if (new_attrib_name != NULL) {
-      free(new_attrib_name);  /* Be careful, this can be NULL */
+      g_free(new_attrib_name);  /* Be careful, this can be NULL */
     }
     if (new_attrib_value != NULL) {
-      free(new_attrib_value);  /* Be careful, this can be NULL */
+      g_free(new_attrib_value);  /* Be careful, this can be NULL */
     }
     if (old_attrib_name != NULL) {
-      free(old_attrib_name);  /* Be careful, this can be NULL */
+      g_free(old_attrib_name);  /* Be careful, this can be NULL */
     }
     if (old_attrib_value != NULL) {
-      free(old_attrib_value);  /* Be careful, this can be NULL */
+      g_free(old_attrib_value);  /* Be careful, this can be NULL */
     }
     local_list = local_list->next;
   }   /*   while (local_list != NULL)  */
@@ -933,13 +933,13 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
     if ( ((sheet_head->pin_table)[row][i]).attrib_value ) {
       new_attrib_value = g_strdup( ((sheet_head->pin_table)[row][i]).attrib_value );
       name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-      free(new_attrib_value);      
+      g_free(new_attrib_value);      
     } else {
       name_value_pair = g_strconcat(new_attrib_name, "=", NULL);  /* empty attrib */
     }
     s_string_list_add_item(new_attrib_list, &count, name_value_pair);  /* add name=value to new list */
-    free(new_attrib_name);
-    free(name_value_pair);
+    g_free(new_attrib_name);
+    g_free(name_value_pair);
 
     /* Sanity check */
     if (count != i+1) {
@@ -996,7 +996,7 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
     new_attrib_name = u_basic_breakup_string(new_name_value_pair, '=', 0);
     new_attrib_value = u_basic_breakup_string(new_name_value_pair, '=', 1);
     if (strlen(new_attrib_value) == 0) {
-      free(new_attrib_value);   /* I wonder if I should check for non-NULL first?  */
+      g_free(new_attrib_value);   /* I wonder if I should check for non-NULL first?  */
       new_attrib_value = NULL;  /* u_basic_breakup_string doesn't return NULL for empty substring. */
     }
     old_attrib_value = o_attrib_search_name_single_count(o_pin, new_attrib_name, 0);
@@ -1045,13 +1045,13 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
     }
                                                                                                        
     /* free everything and iterate */
-    free(new_name_value_pair);
-    free(new_attrib_name);
+    g_free(new_name_value_pair);
+    g_free(new_attrib_name);
     if (new_attrib_value != NULL) {
-      free(new_attrib_value);  /* Be careful, this can be NULL */
+      g_free(new_attrib_value);  /* Be careful, this can be NULL */
     }
     if (old_attrib_value != NULL) {
-      free(old_attrib_value);  /* Be careful, this can be NULL */
+      g_free(old_attrib_value);  /* Be careful, this can be NULL */
     }
     local_list = local_list->next;
   }   /*   while (local_list != NULL)  */

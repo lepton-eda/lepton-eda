@@ -2833,7 +2833,7 @@ gtk_sheet_unrealize (GtkWidget * widget)
   gdk_window_destroy (sheet->row_title_window);
 
   if (sheet->pixmap){
-    g_free (sheet->pixmap);
+    g_object_unref (sheet->pixmap);
     sheet->pixmap = NULL;
   }
 

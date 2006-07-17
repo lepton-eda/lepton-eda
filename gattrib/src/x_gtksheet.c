@@ -84,7 +84,7 @@ x_gtksheet_init()
 
 #ifndef HAS_GTK22
   GtkSheetRange *Range;
-  Range = malloc(sizeof(GtkSheetRange));
+  Range = g_malloc(sizeof(GtkSheetRange));
 #endif
 
   /* ---  Create three new sheets.   were malloc'ed in x_window_init  --- */
@@ -185,7 +185,7 @@ x_gtksheet_init()
 
 #ifndef HAS_GTK22
   /*  Don't need this anymore  */
-  free(Range);
+  g_free(Range);
 #endif
 
 
@@ -285,7 +285,7 @@ x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
     
     gtk_sheet_row_button_add_label(sheet, j, text);
     gtk_sheet_row_button_justify(sheet, j, GTK_JUSTIFY_LEFT);
-    free(text);
+    g_free(text);
     string_list_item = string_list_item->next;
   }
 
@@ -315,7 +315,7 @@ x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
     gtk_sheet_column_button_add_label(sheet, j, text);
     gtk_sheet_column_button_justify(sheet, j, GTK_JUSTIFY_LEFT);
     /* need to resize the column width here . . . */
-    free(text);
+    g_free(text);
     string_list_item = string_list_item->next;
   }
   return;

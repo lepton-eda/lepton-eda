@@ -61,9 +61,9 @@ TABLE **s_table_new(int rows, int cols)
   int i, j;
 
   /* Here I am trying to create a 2 dimensional array of structs */
-  new_table = (TABLE **) malloc(rows*sizeof(TABLE *));
+  new_table = (TABLE **) g_malloc(rows*sizeof(TABLE *));
   for (i = 0; i < rows; i++) {
-    new_table[i] = (TABLE *) malloc(cols * sizeof(TABLE));
+    new_table[i] = (TABLE *) g_malloc(cols * sizeof(TABLE));
     /* Note that I should put some checks in here to verify that 
      * malloc worked correctly. */
   }
@@ -97,9 +97,9 @@ TABLE **s_table_resize(TABLE **table,
   s_table_destroy(**table, old_rows, old_cols);
 
   /* Here I am trying to create a 2 dimensional array of structs */
-  new_table = (TABLE **) malloc(new_rows*sizeof(TABLE *));
+  new_table = (TABLE **) g_malloc(new_rows*sizeof(TABLE *));
   for (i = 0; i < new_rows; i++) {
-    new_table[i] = (TABLE *) malloc(new_cols * sizeof(TABLE));
+    new_table[i] = (TABLE *) g_malloc(new_cols * sizeof(TABLE));
     /* Note that I should put some checks in here to verify that 
      * malloc worked correctly. */
   }
@@ -137,19 +137,19 @@ void s_table_destroy(TABLE **table, int row_count, int col_count)
   for (i = 0; i < row_count; i++) {
     for (j = 0; j < col_count; j++) {
       if ( (table[i][j]).attrib_value != NULL)
-	free( (table[i][j]).attrib_value );
+	g_free( (table[i][j]).attrib_value );
       if ( (table[i][j]).row_name != NULL)
-	free( (table[i][j]).row_name );
+	g_free( (table[i][j]).row_name );
       if ( (table[i][j]).col_name != NULL)
-	free( (table[i][j]).col_name );
+	g_free( (table[i][j]).col_name );
     }
   }
 
   for (i = 0; i < row_count; i++) {
-    free( table[i] );
+    g_free( table[i] );
   }
 
-  free(table);
+  g_free(table);
   table = NULL;
 
   return;
@@ -211,7 +211,7 @@ STRING_LIST *s_table_create_attrib_pair(gchar *row_name,
       attrib_value = (table[row][col]).attrib_value;
       name_value_pair = g_strconcat(attrib_name, "=", attrib_value, NULL);
       s_string_list_add_item(attrib_pair_list, &count, name_value_pair);
-      free(name_value_pair);
+      g_free(name_value_pair);
     }
   }
 
@@ -304,14 +304,14 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
               ((sheet_head->component_table)[row][col]).visibility = old_visibility;
               ((sheet_head->component_table)[row][col]).show_name_value = old_show_name_value;
             }
-            free(attrib_name);
-            free(attrib_text);
-            free(attrib_value);
+            g_free(attrib_name);
+            g_free(attrib_text);
+            g_free(attrib_value);
           }
           a_current = a_current->next;
            
         }  /* while (a_current != NULL) */
-        free(temp_uref);
+        g_free(temp_uref);
       }  /* if (temp_uref) */
     }    /* if (o_current->type == OBJ_COMPLEX)  */
  
@@ -380,14 +380,14 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
             ((sheet_head->net_table)[row][col]).col_name = g_strdup(attrib_name);
             ((sheet_head->net_table)[row][col]).attrib_value = g_strdup(attrib_value);
           }
-          free(attrib_name);
-          free(attrib_text);
-          free(attrib_value);
+          g_free(attrib_name);
+          g_free(attrib_text);
+          g_free(attrib_value);
         }
         a_current = a_current->next;
  
       }  /* while (a_current != NULL) */
-      free(temp_netname);
+      g_free(temp_netname);
  
     }    /*--- if (o_current->type == OBJ_NET)   ---*/
        
@@ -491,22 +491,22 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
 		  ((sheet_head->pin_table)[row][col]).col_name = g_strdup(attrib_name);
 		  ((sheet_head->pin_table)[row][col]).attrib_value = g_strdup(attrib_value);
 		}
-		free(attrib_name);
-		free(attrib_text);
-		free(attrib_value);
+		g_free(attrib_name);
+		g_free(attrib_text);
+		g_free(attrib_value);
 	      }
 	      pin_attrib = pin_attrib->next;
            
 	    }  /* while (pin_attrib != NULL) */
-	    free(pinnumber);
-	    free(row_label);
+	    g_free(pinnumber);
+	    g_free(row_label);
 	  }
 
 	  o_lower_current = o_lower_current->next;
 	}    /*  while (o_lower_current != NULL)  */
       }
 
-      free(temp_uref);
+      g_free(temp_uref);
     }
 
     o_current = o_current->next;  /* iterate to next object on page */
@@ -617,7 +617,7 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
 
 #if 0
       if (strlen(attrib_value) == 0) {
-	/* free(attrib_value);  */   /* sometimes we have spurious, zero length strings creep */
+	/* g_free(attrib_value);  */   /* sometimes we have spurious, zero length strings creep */
 	attrib_value = NULL;    /* into the GtkSheet                                     */
       }
 #endif
@@ -630,7 +630,7 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
 
       /* first handle attrib value in cell */
       if ( local_table[row][col].attrib_value != NULL) {
-	free( local_table[row][col].attrib_value );
+	g_free( local_table[row][col].attrib_value );
       }
       if (attrib_value != NULL) {
 	local_table[row][col].attrib_value = (gchar *) g_strdup(attrib_value);
@@ -640,7 +640,7 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
 
       /* next handle name of row (also held in TABLE cell) */
       if ( local_table[row][col].row_name != NULL) {
-	free( local_table[row][col].row_name );
+	g_free( local_table[row][col].row_name );
       }
       if (row_title != NULL) {
 	local_table[row][col].row_name = (gchar *) g_strdup(row_title);
@@ -650,7 +650,7 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
 
       /* finally handle name of col */
       if ( local_table[row][col].col_name != NULL) {
-	free( local_table[row][col].col_name );
+	g_free( local_table[row][col].col_name );
       }
       if (col_title != NULL) {
 	local_table[row][col].col_name = (gchar *) g_strdup(col_title);

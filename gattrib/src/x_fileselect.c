@@ -105,19 +105,19 @@ x_fileselect_destroy_window(GtkWidget * widget, FILEDIALOG * f_current)
   x_fileselect_free_list_buffers(f_current);
 
   if (f_current->directory) {
-    free(f_current->directory);
+    g_free(f_current->directory);
     f_current->directory = NULL;
   }
 
   if (f_current->filename) {
-    free(f_current->filename);
+    g_free(f_current->filename);
     f_current->filename = NULL;
   }
 
   gtk_grab_remove(f_current->xfwindow);
   f_current->toplevel = NULL;
   f_current->xfwindow = NULL;
-  free(f_current);   
+  g_free(f_current);   
   /* *window = NULL; */
   return;
 }
@@ -167,14 +167,14 @@ void x_fileselect_free_list_buffers(FILEDIALOG * f_current)
 
   for (i = MAX_FILES; i >= 0; i--) {
     if (f_current->file_entries[i])
-      free(f_current->file_entries[i]);
+      g_free(f_current->file_entries[i]);
 
     f_current->file_entries[i] = NULL;
   }
 
   for (i = MAX_DIRS; i >= 0; i--) {
     if (f_current->directory_entries[i])
-      free(f_current->directory_entries[i]);
+      g_free(f_current->directory_entries[i]);
 
     f_current->directory_entries[i] = NULL;
   }
@@ -192,12 +192,12 @@ void x_fileselect_update_dirfile(FILEDIALOG * f_current, char *filename)
   char *temp = NULL;
 
   if (f_current->filename) {
-    free(f_current->filename);
+    g_free(f_current->filename);
     f_current->filename = NULL;
   }
 
   if (f_current->directory) {
-    free(f_current->directory);
+    g_free(f_current->directory);
     f_current->directory = NULL;
   }
 
@@ -208,7 +208,7 @@ void x_fileselect_update_dirfile(FILEDIALOG * f_current, char *filename)
     f_current->directory = g_strdup(temp);
     f_current->filename = g_strdup(filename);
 
-    free(temp);
+    g_free(temp);
 #ifdef __MINGW32__
     if (u_basic_has_trailing(f_current->directory, G_DIR_SEPARATOR)) {
       temp = g_strconcat(f_current->directory,
@@ -228,7 +228,7 @@ void x_fileselect_update_dirfile(FILEDIALOG * f_current, char *filename)
     f_current->directory = g_strdup(temp);
 
     if (f_current->filename) {
-      free(f_current->filename);
+      g_free(f_current->filename);
       f_current->filename = NULL;
     }
 
@@ -236,7 +236,7 @@ void x_fileselect_update_dirfile(FILEDIALOG * f_current, char *filename)
 		       f_current->directory);
   }
 
-  free(temp);
+  g_free(temp);
 
 #if DEBUG
   printf("In x_fileselect_update_dirfile, directory: %s\n", f_current->directory);
@@ -257,14 +257,14 @@ x_fileselect_setup_list_buffers(FILEDIALOG * f_current,
 
   for (i = num_files+1; i >= 0; i--) {
     if (f_current->file_entries[i]) {
-      free(f_current->file_entries[i]);
+      g_free(f_current->file_entries[i]);
     }
     f_current->file_entries[i] = NULL;
   }
 
   for (i = num_directories+1; i >= 0; i--) {
     if (f_current->directory_entries[i]) {
-      free(f_current->directory_entries[i]);
+      g_free(f_current->directory_entries[i]);
     }
     f_current->directory_entries[i] = NULL;
   }
@@ -398,7 +398,7 @@ void x_fileselect_fill_lists(FILEDIALOG * f_current)
 	(strcmp(dirent_ptr->d_name, ".") != 0)) {
 
       f_current->directory_entries[dir_count] = (char *)
-	  malloc(sizeof(char) * (strlen(dirent_ptr->d_name) + 2));
+	  g_malloc(sizeof(char) * (strlen(dirent_ptr->d_name) + 2));
 
       sprintf(f_current->directory_entries[dir_count],
 	      "%s", dirent_ptr->d_name);
@@ -408,7 +408,7 @@ void x_fileselect_fill_lists(FILEDIALOG * f_current)
       if (x_fileselect_include_file(dirent_ptr->d_name,
 				    f_current->filter_type)) {
 	f_current->file_entries[file_count] = (char *)
-	    malloc(sizeof(char) * (strlen(dirent_ptr->d_name) + 1));
+	    g_malloc(sizeof(char) * (strlen(dirent_ptr->d_name) + 1));
 	strcpy(f_current->file_entries[file_count], dirent_ptr->d_name);
 	file_count++;
       }
@@ -486,7 +486,7 @@ void x_fileselect_fill_lists(FILEDIALOG * f_current)
       max_width = width;
     }
 
-    free(temp);
+    g_free(temp);
 #if DEBUG
     printf("In x_fileselect_fill_lists, directory: %s\n", f_current->directory_entries[i]);
 #endif
@@ -563,7 +563,7 @@ static GtkWidget *x_fileselect_filter_menu(FILEDIALOG * f_current)
 
   buf = g_strdup_printf("sch - Schematics");
   menuitem = gtk_radio_menu_item_new_with_label(group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(menuitem));
   gtk_menu_append(GTK_MENU(menu), menuitem);
   gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
@@ -572,7 +572,7 @@ static GtkWidget *x_fileselect_filter_menu(FILEDIALOG * f_current)
 
   buf = g_strdup_printf("* - All Files");
   menuitem = gtk_radio_menu_item_new_with_label(group, buf);
-  free(buf);
+  g_free(buf);
   group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(menuitem));
   gtk_menu_append(GTK_MENU(menu), menuitem);
   gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
@@ -659,7 +659,7 @@ void x_fileselect_saveas(GtkWidget * w, FILEDIALOG * f_current)
 
   if (string[len - 1] != G_DIR_SEPARATOR) {
     if (w_current->page_current->page_filename) {
-      free(w_current->page_current->page_filename);
+      g_free(w_current->page_current->page_filename);
     }
 
     w_current->page_current->page_filename = g_strdup(string);
@@ -803,9 +803,9 @@ void x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
 			 &filename);
 
       /* allocate space, then stick full, absolute filename into string */
-      string = malloc(strlen(f_current->directory) + strlen(filename) + 2);
+      string = g_malloc(strlen(f_current->directory) + strlen(filename) + 2);
       if (!string) {		/* sanity check . . . */
-	/* free(string); freeing a null pointer is bad. */
+	/* g_free(string); freeing a null pointer is bad. */
 	return;
       }
       /* string is full name of file. */
@@ -829,7 +829,7 @@ void x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
       } else {
 	return_code |= s_toplevel_read_page(string);
       }
-      free(string);
+      g_free(string);
       
       /* Now add all items found to the master lists */
       s_sheet_data_add_master_comp_list_items(pr_current->page_current->object_head); 
@@ -1033,18 +1033,18 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG * f_current,
   }
 
   if (f_current->filename) {
-    free(f_current->filename);
+    g_free(f_current->filename);
     f_current->filename = NULL;
   }
 
   if (f_current->directory) {
-    free(f_current->directory);
+    g_free(f_current->directory);
     f_current->directory = NULL;
   }
 
 #if 0
-  directory = (char *) malloc(sizeof(char) * (strlen(new_filename) + 1));
-  filename = (char *) malloc(sizeof(char) * (strlen(new_filename) + 1));
+  directory = (char *) g_malloc(sizeof(char) * (strlen(new_filename) + 1));
+  filename = (char *) g_malloc(sizeof(char) * (strlen(new_filename) + 1));
 
   ptr = new_filename;
   temp = strrchr(new_filename, G_DIR_SEPARATOR);
@@ -1081,12 +1081,12 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG * f_current,
 
   if (directory) {
     f_current->directory = g_strdup(directory);
-    free(directory);
+    g_free(directory);
   }
 
   if (filename) {
     f_current->filename = g_strdup(filename);
-    free(filename);
+    g_free(filename);
   }
 #ifdef __MINGW32__
   if (u_basic_has_trailing(f_current->directory, G_DIR_SEPARATOR)) {
@@ -1102,7 +1102,7 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG * f_current,
 #endif
   gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), temp);
 
-  free(temp);
+  g_free(temp);
 
 #if DEBUG
   printf("In x_fileselect_update_dirfile_saveas, f_current->directory = %s\n", f_current->directory);
@@ -1181,7 +1181,7 @@ void x_fileselect_setup(TOPLEVEL *pr_current, int filesel_type)
   /* Initialize filedialog object.  This object holds pointers
    * to all information in filedialog window, including pointers
    * to several widgets in the window. */
-  f_current = malloc(sizeof(FILEDIALOG));
+  f_current = g_malloc(sizeof(FILEDIALOG));
   /* (pr_current->fileselect)[0] = f_current; */ /* Keep a pointer to the file dialog in TOPLEVEL */
 
   f_current->xfwindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -1312,7 +1312,7 @@ void x_fileselect_setup(TOPLEVEL *pr_current, int filesel_type)
 
   gtk_widget_show(f_current->dir_list);
   gtk_widget_show(scrolled_win);
-  free(dir_title[0]);
+  g_free(dir_title[0]);
   
   /*  ----- Create the files clist -----  */
   file_title[0] = g_strdup("Files");
@@ -1345,7 +1345,7 @@ void x_fileselect_setup(TOPLEVEL *pr_current, int filesel_type)
 
   gtk_widget_show(f_current->file_list);
   gtk_widget_show(scrolled_win);
-  free(file_title[0]);
+  g_free(file_title[0]);
   
   /*  ----- Create the "Filename" text entry area -----  */
   label = gtk_label_new("Filename");

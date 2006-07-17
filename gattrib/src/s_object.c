@@ -155,19 +155,19 @@ void s_object_replace_attrib_in_object(OBJECT *o_current,
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
 	/* create attrib=value text string & stuff it back into pr_current */
 	new_attrib_text = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-	free(a_current->object->text->string);   /* remove old attrib string */
+	g_free(a_current->object->text->string);   /* remove old attrib string */
 	a_current->object->text->string = g_strdup(new_attrib_text);   /* insert new attrib string */
 	if (visibility != LEAVE_VISIBILITY_ALONE) 
 	  a_current->object->visibility = visibility;
 	if (show_name_value != LEAVE_NAME_VALUE_ALONE)
 	  a_current->object->show_name_value = show_name_value; 
-	free(new_attrib_text);
-	free(old_attrib_text);
-	free(old_attrib_name);
+	g_free(new_attrib_text);
+	g_free(old_attrib_text);
+	g_free(old_attrib_name);
 	return;     /* we are done -- leave. */
       } else {
-	free(old_attrib_text);
-	free(old_attrib_name);
+	g_free(old_attrib_text);
+	g_free(old_attrib_name);
       }  /* if (strcmp . . . . */
     } /* if (a_current . . . . */
   
@@ -213,12 +213,12 @@ void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name)
 	attribute_object = a_current->object;
 	s_object_delete_text_object_in_object(pr_current, attribute_object);
 
-	free(old_attrib_text);
-	free(old_attrib_name);
+	g_free(old_attrib_text);
+	g_free(old_attrib_name);
 	return;     /* we are done -- leave. */
       }
-    free(old_attrib_text);
-    free(old_attrib_name);
+    g_free(old_attrib_text);
+    g_free(old_attrib_name);
     }
     a_current = a_current->next;
   }

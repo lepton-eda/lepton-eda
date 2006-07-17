@@ -162,7 +162,7 @@ x_window_init()
   printf("In x_window_init, about to malloc space for sheets.\n");
 #endif
   for(i=0; i<NUM_SHEETS; i++){
-    sheets=(GtkSheet **)realloc(sheets, (i+1)*sizeof(GtkWidget *));
+    sheets=(GtkSheet **) g_realloc(sheets, (i+1)*sizeof(GtkWidget *));
   }
 
   /* -----  Finally show top level window to make everything appear  ----- */
@@ -309,7 +309,7 @@ x_window_add_items()
       if ( (sheet_head->component_table)[i][j].attrib_value ) { /* NULL = no entry */
 	text = (gchar *) g_strdup( (sheet_head->component_table)[i][j].attrib_value );
 	x_gtksheet_add_cell_item( GTK_SHEET(sheets[0]), i, j, (gchar *) text );
-	free(text);
+	g_free(text);
       }
     }
   }
@@ -328,7 +328,7 @@ x_window_add_items()
       if ( (sheet_head->net_table)[i][j].attrib_value ) { /* NULL = no entry */
 	text = (gchar *) g_strdup( (sheet_head->net_table)[i][j].attrib_value );
 	x_gtksheet_add_cell_item( GTK_SHEET(sheets[1]), i, j, (gchar *) text );
-	free(text);
+	g_free(text);
       }
     }
   }
@@ -349,7 +349,7 @@ x_window_add_items()
       if ( (sheet_head->pin_table)[i][j].attrib_value ) { /* NULL = no entry */
 	text = (gchar *) g_strdup( (sheet_head->pin_table)[i][j].attrib_value );
 	x_gtksheet_add_cell_item( GTK_SHEET(sheets[2]), i, j, (gchar *) text );
-	free(text);
+	g_free(text);
       }
     }
   }

@@ -81,12 +81,12 @@ void s_rename_destroy_all(void)
 	for (j = 0; j < MAX_RENAME; j++) {
 
 	    if (rename_pairs[i][j].src) {
-		free(rename_pairs[i][j].src);
+		g_free(rename_pairs[i][j].src);
 		rename_pairs[i][j].src = NULL;
 	    }
 
 	    if (rename_pairs[i][j].dest) {
-		free(rename_pairs[i][j].dest);
+		g_free(rename_pairs[i][j].dest);
 		rename_pairs[i][j].dest = NULL;
 	    }
 	}
@@ -183,10 +183,10 @@ void s_rename_add(char *src, char *dest)
 #endif
 
 		    rename_pairs[cur_set][rename_counter].src =
-			(char *) malloc(sizeof(char) * (strlen(src) + 1));
+			(char *) g_malloc(sizeof(char) * (strlen(src) + 1));
 		    strcpy(rename_pairs[cur_set][rename_counter].src, src);
 		    rename_pairs[cur_set][rename_counter].dest =
-			(char *) malloc(sizeof(char) *
+			(char *) g_malloc(sizeof(char) *
 					(strlen
 					 (rename_pairs[cur_set][i].dest) +
 					 1));
@@ -199,10 +199,10 @@ void s_rename_add(char *src, char *dest)
     } else {
 
 	rename_pairs[cur_set][rename_counter].src =
-	    (char *) malloc(sizeof(char) * (strlen(src) + 1));
+	    (char *) g_malloc(sizeof(char) * (strlen(src) + 1));
 	strcpy(rename_pairs[cur_set][rename_counter].src, src);
 	rename_pairs[cur_set][rename_counter].dest =
-	    (char *) malloc(sizeof(char) * (strlen(dest) + 1));
+	    (char *) g_malloc(sizeof(char) * (strlen(dest) + 1));
 	strcpy(rename_pairs[cur_set][rename_counter].dest, dest);
 	rename_counter++;
     }
@@ -233,10 +233,10 @@ void s_rename_all_lowlevel(NETLIST * netlist_head, char *src, char *dest)
 			/* this is a bad idea */
 			/* because inside nets-> */
 			/* there is another pointer */
-			/*free(pl_current->net_name); */
+			/*g_free(pl_current->net_name); */
 
 			pl_current->net_name =
-			    malloc(sizeof(char) * (strlen(dest) + 1));
+			    g_malloc(sizeof(char) * (strlen(dest) + 1));
 			strcpy(pl_current->net_name, dest);
 		    }
 		}
