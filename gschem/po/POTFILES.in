@@ -1,3 +1,4 @@
+src/rcstrings.c
 src/a_pan.c
 src/a_zoom.c
 src/g_funcs.c

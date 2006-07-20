@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it_IT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-19 21:51-0400\n"
+"POT-Creation-Date: 2006-07-19 22:09-0400\n"
 "PO-Revision-Date: 2006-01-18 00:31+0100\n"
 "Last-Translator: Michele Petrecca <michelinux@alice.it>\n"
 "Language-Team: ITALIANO\n"
@@ -18,6 +18,455 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
+
+#: src/rcstrings.c:2
+msgid "File"
+msgstr "File"
+
+#: src/rcstrings.c:3
+msgid "New Window"
+msgstr "Nuova Finestra"
+
+#: src/rcstrings.c:4 src/x_pagesel.c:262
+msgid "New Page"
+msgstr "Nuova Pagina"
+
+#: src/rcstrings.c:5 src/x_pagesel.c:263
+msgid "Open Page..."
+msgstr "Apri Pagina..."
+
+#: src/rcstrings.c:6 src/x_pagesel.c:266
+msgid "Close Page"
+msgstr "Chiudi Pagina"
+
+#: src/rcstrings.c:7
+msgid "Revert Page"
+msgstr "Centra la Pagina"
+
+#: src/rcstrings.c:8 src/x_pagesel.c:265
+msgid "Save Page"
+msgstr "Salva Pagina"
+
+#: src/rcstrings.c:9
+msgid "Save Page As..."
+msgstr "Salva Pagina Con Nome..."
+
+#: src/rcstrings.c:10
+msgid "Save All"
+msgstr "Salva Tutto"
+
+#: src/rcstrings.c:11 src/x_print.c:356
+msgid "Print..."
+msgstr "Stampa..."
+
+#: src/rcstrings.c:12
+msgid "Write PNG..."
+msgstr "Stampa File .PNG..."
+
+#: src/rcstrings.c:13
+msgid "Execute Script..."
+msgstr "Esegui Script..."
+
+#: src/rcstrings.c:14
+msgid "Close Window"
+msgstr "Chiudi Finestra"
+
+#: src/rcstrings.c:15
+msgid "Quit"
+msgstr "Esci"
+
+#: src/rcstrings.c:17 src/i_callbacks.c:838 src/x_window.c:665
+msgid "Edit"
+msgstr "Modifica"
+
+#: src/rcstrings.c:18 src/x_window.c:558
+msgid "Undo"
+msgstr "Annulla"
+
+#: src/rcstrings.c:19 src/x_window.c:571
+msgid "Redo"
+msgstr "Ripristina"
+
+#: src/rcstrings.c:20 src/i_basic.c:94 src/x_window.c:879
+msgid "Select Mode"
+msgstr "ModalitÃÂ  Selezione"
+
+#: src/rcstrings.c:21
+msgid "Edit..."
+msgstr "Edita..."
+
+#: src/rcstrings.c:22
+msgid "Edit Text..."
+msgstr "Edita il Testo..."
+
+#: src/rcstrings.c:23 src/i_basic.c:107
+msgid "Copy Mode"
+msgstr "ModalitÃÂ  Copia"
+
+#: src/rcstrings.c:24 src/i_basic.c:110
+msgid "Move Mode"
+msgstr "ModalitÃÂ  Spostamento"
+
+#: src/rcstrings.c:25 src/i_callbacks.c:814 src/x_attribedit.c:412
+#: src/x_multiattrib.c:1160 src/x_window.c:710
+msgid "Delete"
+msgstr "Cancella"
+
+#: src/rcstrings.c:26
+msgid "Rotate 90 Mode"
+msgstr "Ruota di 90 gradi"
+
+#: src/rcstrings.c:27 src/i_basic.c:114
+msgid "Mirror Mode"
+msgstr "ModalitÃÂ  Specchio"
+
+#: src/rcstrings.c:28
+msgid "Slot..."
+msgstr "Slot..."
+
+#: src/rcstrings.c:29
+msgid "Color..."
+msgstr "Colore..."
+
+#: src/rcstrings.c:30 src/i_callbacks.c:999
+msgid "Lock"
+msgstr "Blocca"
+
+#: src/rcstrings.c:31 src/i_callbacks.c:1017
+msgid "Unlock"
+msgstr "Sblocca"
+
+#: src/rcstrings.c:32
+msgid "Line Width & Type..."
+msgstr "Larghezza Linea & Tipo..."
+
+#: src/rcstrings.c:33
+msgid "Fill Type..."
+msgstr "Tipo Riempimento..."
+
+#: src/rcstrings.c:34
+msgid "Symbol Translate..."
+msgstr "Converti Simbolo..."
+
+#: src/rcstrings.c:35
+msgid "Embed Component/Picture"
+msgstr "Componente/Immagine fissato/a"
+
+#: src/rcstrings.c:36
+msgid "Unembed Component/Picture"
+msgstr "Componente/immagine non fissato/a"
+
+#: src/rcstrings.c:37
+msgid "Update Component"
+msgstr "Aggiorna Componente"
+
+#: src/rcstrings.c:38
+msgid "Show/Hide Inv Text"
+msgstr "Mostra/Nascondi Testo Invisibile"
+
+#: src/rcstrings.c:39
+msgid "Make Inv Text Vis"
+msgstr "Rendi Invisibile Testo Visibile"
+
+#: src/rcstrings.c:41
+msgid "Buffer"
+msgstr "Buffer"
+
+#: src/rcstrings.c:42
+msgid "Copy into 1"
+msgstr "Copia in 1"
+
+#: src/rcstrings.c:43
+msgid "Copy into 2"
+msgstr "Copia in 2"
+
+#: src/rcstrings.c:44
+msgid "Copy into 3"
+msgstr "Copia in 3"
+
+#: src/rcstrings.c:45
+msgid "Copy into 4"
+msgstr "Copia in 4"
+
+#: src/rcstrings.c:46
+msgid "Copy into 5"
+msgstr "Copia in 5"
+
+#: src/rcstrings.c:47
+msgid "Cut into 1"
+msgstr "Taglia in 1"
+
+#: src/rcstrings.c:48
+msgid "Cut into 2"
+msgstr "Taglia in 2"
+
+#: src/rcstrings.c:49
+msgid "Cut into 3"
+msgstr "Taglia in 3"
+
+#: src/rcstrings.c:50
+msgid "Cut into 4"
+msgstr "Taglia in 4"
+
+#: src/rcstrings.c:51
+msgid "Cut into 5"
+msgstr "Taglia in 5"
+
+#: src/rcstrings.c:52
+msgid "Paste from 1"
+msgstr "Incolla da 1"
+
+#: src/rcstrings.c:53
+msgid "Paste from 2"
+msgstr "Incolla da 2"
+
+#: src/rcstrings.c:54
+msgid "Paste from 3"
+msgstr "Incolla da 3"
+
+#: src/rcstrings.c:55
+msgid "Paste from 4"
+msgstr "Incolla da 4"
+
+#: src/rcstrings.c:56
+msgid "Paste from 5"
+msgstr "Incolla da 5"
+
+#: src/rcstrings.c:58
+msgid "View"
+msgstr "Vista"
+
+#: src/rcstrings.c:59
+msgid "Redraw"
+msgstr "Aggiorna"
+
+#: src/rcstrings.c:60 src/i_callbacks.c:1546 src/i_callbacks.c:1561
+msgid "Pan"
+msgstr "Pan"
+
+#: src/rcstrings.c:61 src/i_basic.c:118
+msgid "Zoom Box"
+msgstr "Ingrandisci Riquadro"
+
+#: src/rcstrings.c:62
+msgid "Zoom Extents"
+msgstr "Adatta alla pagina"
+
+#: src/rcstrings.c:63
+msgid "Zoom In"
+msgstr "Ingrandisci"
+
+#: src/rcstrings.c:64
+msgid "Zoom Out"
+msgstr "Riduci"
+
+#: src/rcstrings.c:65
+msgid "Zoom Full"
+msgstr "Riduci al Massimo"
+
+#: src/rcstrings.c:67
+msgid "Page"
+msgstr "Pagina"
+
+#: src/rcstrings.c:68
+msgid "Manager..."
+msgstr "Gestore..."
+
+#: src/rcstrings.c:69
+msgid "Next"
+msgstr "Successiva"
+
+#: src/rcstrings.c:70
+msgid "Previous"
+msgstr "Precedente"
+
+#: src/rcstrings.c:71 src/x_window.c:518
+msgid "New"
+msgstr "Nuovo"
+
+#: src/rcstrings.c:72
+msgid "Revert"
+msgstr "Riduce e Centra lo Schema"
+
+#: src/rcstrings.c:73 src/x_dialog.c:312 src/x_dialog.c:2669
+#: src/x_dialog.c:2808 src/x_dialog.c:3161 src/x_dialog.c:3338
+#: src/x_fileselect.c:2209 src/x_image.c:431
+msgid "Close"
+msgstr "Chiudi"
+
+#: src/rcstrings.c:74
+#, fuzzy
+msgid "Discard"
+msgstr "Abbandonare la pagina"
+
+#: src/rcstrings.c:76
+msgid "Add"
+msgstr "Aggiungi"
+
+#: src/rcstrings.c:77 src/rcstrings.c:121
+msgid "Component..."
+msgstr "Componente..."
+
+#: src/rcstrings.c:78 src/i_callbacks.c:2530 src/i_callbacks.c:2553
+msgid "Net"
+msgstr "Collegamento"
+
+#: src/rcstrings.c:79 src/i_callbacks.c:2598 src/i_callbacks.c:2622
+#: src/x_window.c:616
+msgid "Bus"
+msgstr "Bus"
+
+#: src/rcstrings.c:80
+msgid "Attribute..."
+msgstr "ProprietÃ Â ..."
+
+#: src/rcstrings.c:81
+msgid "Text..."
+msgstr "Testo..."
+
+#: src/rcstrings.c:82 src/i_callbacks.c:2704 src/i_callbacks.c:2724
+msgid "Line"
+msgstr "Linea"
+
+#: src/rcstrings.c:83 src/i_callbacks.c:2747 src/i_callbacks.c:2767
+msgid "Box"
+msgstr "Box"
+
+#: src/rcstrings.c:84 src/i_callbacks.c:2824 src/i_callbacks.c:2845
+msgid "Circle"
+msgstr "Cerchio"
+
+#: src/rcstrings.c:85 src/i_callbacks.c:2868 src/i_callbacks.c:2888
+msgid "Arc"
+msgstr "Arco"
+
+#: src/rcstrings.c:86 src/i_callbacks.c:2911 src/i_callbacks.c:2931
+msgid "Pin"
+msgstr "Pin"
+
+#: src/rcstrings.c:87
+msgid "Picture..."
+msgstr "Immagine..."
+
+#: src/rcstrings.c:89
+msgid "Hierarchy"
+msgstr "Gerarchia"
+
+#: src/rcstrings.c:90
+#, fuzzy
+msgid "Down Schematic"
+msgstr "Schematici"
+
+#: src/rcstrings.c:91
+#, fuzzy
+msgid "Down Symbol"
+msgstr "Simboli"
+
+#: src/rcstrings.c:92
+msgid "Up"
+msgstr "Sopra"
+
+#: src/rcstrings.c:93
+msgid "Documentation"
+msgstr "Documentazione"
+
+#: src/rcstrings.c:95 src/x_multiattrib.c:1299
+msgid "Attributes"
+msgstr "ProprietÃ Â "
+
+#: src/rcstrings.c:96 src/i_callbacks.c:3244
+msgid "Attach"
+msgstr "Collega"
+
+#: src/rcstrings.c:97 src/i_callbacks.c:3293
+msgid "Detach"
+msgstr "Scollega"
+
+#: src/rcstrings.c:98
+msgid "Show Value"
+msgstr "Mostra Valore"
+
+#: src/rcstrings.c:99
+msgid "Show Name"
+msgstr "Mostra Nome"
+
+#: src/rcstrings.c:100
+msgid "Show Both"
+msgstr "Mostra Entrambi"
+
+#: src/rcstrings.c:101
+msgid "Toggle Visibility"
+msgstr "Pulsante VisibilitÃ Â "
+
+#: src/rcstrings.c:102
+msgid "Find Specific Text..."
+msgstr "Trova Testo Specifico..."
+
+#: src/rcstrings.c:103
+msgid "Hide Specific Text..."
+msgstr "Nascondi Testo Specifico..."
+
+#: src/rcstrings.c:104
+msgid "Show Specific Text..."
+msgstr "Mostra Testo Specifico..."
+
+#: src/rcstrings.c:105
+#, fuzzy
+msgid "Autonumber Text..."
+msgstr "Aggiungi Testo..."
+
+#: src/rcstrings.c:107
+msgid "Options"
+msgstr "Opzioni"
+
+#: src/rcstrings.c:108
+msgid "Text Size..."
+msgstr "Ampiezza Testo..."
+
+#: src/rcstrings.c:109
+msgid "Toggle Grid On/Off"
+msgstr "Griglia Visibile/Non Visibile"
+
+#: src/rcstrings.c:110
+#, fuzzy
+msgid "Toggle Snap On/Off"
+msgstr "Griglia Visibile/Non Visibile"
+
+#: src/rcstrings.c:111
+msgid "Snap Grid Spacing..."
+msgstr "Ampiezza Griglia"
+
+#: src/rcstrings.c:112
+msgid "Toggle Outline/Box"
+msgstr ""
+
+#: src/rcstrings.c:113
+msgid "Toggle Net Rubberband"
+msgstr ""
+
+#: src/rcstrings.c:114
+msgid "Show Log Window..."
+msgstr "Mostra File Log Finestra..."
+
+#: src/rcstrings.c:115
+msgid "Show Coord Window..."
+msgstr "Mostra Coordinate Finestra..."
+
+#: src/rcstrings.c:117 src/x_menus.c:249
+msgid "Help"
+msgstr "Aiuto"
+
+#: src/rcstrings.c:118 src/x_dialog.c:2625
+msgid "About..."
+msgstr "Altro..."
+
+#: src/rcstrings.c:119
+msgid "Manual..."
+msgstr "Manuale..."
+
+#: src/rcstrings.c:120 src/x_dialog.c:3274
+msgid "Hotkeys..."
+msgstr "Hotkeys..."
 
 #: src/a_zoom.c:222
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -197,10 +646,6 @@ msgstr "Cartelle degli schemi non impostata!\n"
 msgid "Executing guile script [%s]\n"
 msgstr "Esecuzione dello script guile [%s]\n"
 
-#: src/i_basic.c:94 src/x_window.c:879
-msgid "Select Mode"
-msgstr "ModalitÃÂ  Selezione"
-
 #: src/i_basic.c:97
 msgid "Attribute Mode"
 msgstr "ModalitÃÂ  Caratteristiche"
@@ -213,25 +658,9 @@ msgstr "Scelta Componente"
 msgid "Text Mode"
 msgstr "ModalitÃÂ  Testo"
 
-#: src/i_basic.c:107
-msgid "Copy Mode"
-msgstr "ModalitÃÂ  Copia"
-
-#: src/i_basic.c:110
-msgid "Move Mode"
-msgstr "ModalitÃÂ  Spostamento"
-
 #: src/i_basic.c:112
 msgid "Rotate Mode"
 msgstr "ModalitÃÂ  Rotazione"
-
-#: src/i_basic.c:114
-msgid "Mirror Mode"
-msgstr "ModalitÃÂ  Specchio"
-
-#: src/i_basic.c:118
-msgid "Zoom Box"
-msgstr "Ingrandisci Riquadro"
 
 #: src/i_basic.c:122
 msgid "Pan Mode"
@@ -387,15 +816,6 @@ msgstr "Chiusura Finestra\n"
 msgid "Select objs first"
 msgstr "Seleziona prima un oggetto"
 
-#: src/i_callbacks.c:814 src/x_attribedit.c:412 src/x_multiattrib.c:1160
-#: src/x_window.c:710
-msgid "Delete"
-msgstr "Cancella"
-
-#: src/i_callbacks.c:838 src/x_window.c:665
-msgid "Edit"
-msgstr "Modifica"
-
 #: src/i_callbacks.c:854 src/x_dialog.c:615 src/x_dialog.c:620
 msgid "Edit Text"
 msgstr "Modifica Testo"
@@ -415,14 +835,6 @@ msgstr "Ruota"
 #: src/i_callbacks.c:955 src/i_callbacks.c:975 src/x_window.c:740
 msgid "Mirror"
 msgstr "Specchio"
-
-#: src/i_callbacks.c:999
-msgid "Lock"
-msgstr "Blocca"
-
-#: src/i_callbacks.c:1017
-msgid "Unlock"
-msgstr "Sblocca"
 
 #: src/i_callbacks.c:1035 src/x_dialog.c:2027
 msgid "Translate"
@@ -475,10 +887,6 @@ msgstr "Modifica il Tipo di Linea"
 #: src/i_callbacks.c:1362 src/x_dialog.c:1442
 msgid "Edit Fill Type"
 msgstr "Modifica il Tipo di Riempimento"
-
-#: src/i_callbacks.c:1546 src/i_callbacks.c:1561
-msgid "Pan"
-msgstr "Pan"
 
 #: src/i_callbacks.c:1595
 msgid "Update Cues"
@@ -577,34 +985,6 @@ msgstr "Componente"
 msgid "Attribute"
 msgstr "ProprietÃ Â "
 
-#: src/i_callbacks.c:2530 src/i_callbacks.c:2553
-msgid "Net"
-msgstr "Collegamento"
-
-#: src/i_callbacks.c:2598 src/i_callbacks.c:2622 src/x_window.c:616
-msgid "Bus"
-msgstr "Bus"
-
-#: src/i_callbacks.c:2704 src/i_callbacks.c:2724
-msgid "Line"
-msgstr "Linea"
-
-#: src/i_callbacks.c:2747 src/i_callbacks.c:2767
-msgid "Box"
-msgstr "Box"
-
-#: src/i_callbacks.c:2824 src/i_callbacks.c:2845
-msgid "Circle"
-msgstr "Cerchio"
-
-#: src/i_callbacks.c:2868 src/i_callbacks.c:2888
-msgid "Arc"
-msgstr "Arco"
-
-#: src/i_callbacks.c:2911 src/i_callbacks.c:2931
-msgid "Pin"
-msgstr "Pin"
-
 #: src/i_callbacks.c:2997
 #, c-format
 msgid "Searching for source [%s]\n"
@@ -620,14 +1000,6 @@ msgstr "Non Ã¨ stato possibile trovare il sorgente [%s]\n"
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Ricerca del simbolo [%s]\n"
-
-#: src/i_callbacks.c:3244
-msgid "Attach"
-msgstr "Collega"
-
-#: src/i_callbacks.c:3293
-msgid "Detach"
-msgstr "Scollega"
 
 #: src/i_callbacks.c:3333
 msgid "ShowN"
@@ -1122,12 +1494,6 @@ msgstr ""
 msgid "Apply"
 msgstr "Applica"
 
-#: src/x_dialog.c:312 src/x_dialog.c:2669 src/x_dialog.c:2808
-#: src/x_dialog.c:3161 src/x_dialog.c:3338 src/x_fileselect.c:2209
-#: src/x_image.c:431
-msgid "Close"
-msgstr "Chiudi"
-
 #: src/x_dialog.c:371
 msgid "Lower Left"
 msgstr ""
@@ -1316,10 +1682,6 @@ msgstr "Stringa eccessiva...!\n"
 msgid "Edit slot number"
 msgstr "Modifica numero slot"
 
-#: src/x_dialog.c:2625
-msgid "About..."
-msgstr "Altro..."
-
 #: src/x_dialog.c:2644
 msgid "gEDA : GPL Electronic Design Automation"
 msgstr "gEDA : GPL Electronic Design Automation"
@@ -1366,10 +1728,6 @@ msgstr "Modifica Colore"
 #, c-format
 msgid "Ran out of space in the hotkey buffer...\n"
 msgstr ""
-
-#: src/x_dialog.c:3274
-msgid "Hotkeys..."
-msgstr "Hotkeys..."
 
 #: src/x_dialog.c:3319
 msgid "Function : keystroke(s)"
@@ -1743,10 +2101,6 @@ msgstr ""
 msgid "/Up"
 msgstr "/Sopra"
 
-#: src/x_menus.c:249
-msgid "Help"
-msgstr "Aiuto"
-
 #: src/x_menus.c:354
 msgid "Tried to set the sensitivity on a non-existent menu item\n"
 msgstr "Provato a impostare la sensibilità  su un menù di voci non esistenti\n"
@@ -1780,10 +2134,6 @@ msgstr "Duplicare"
 msgid "Edit Attributes"
 msgstr "Modifica ProprietÃ Â "
 
-#: src/x_multiattrib.c:1299
-msgid "Attributes"
-msgstr "ProprietÃ Â "
-
 #: src/x_multiattrib.c:1356
 msgid "Name"
 msgstr "Nome"
@@ -1807,22 +2157,6 @@ msgstr "V"
 #: src/x_multiattrib.c:1464
 msgid "Add Attribute"
 msgstr "Aggiungi Attributo"
-
-#: src/x_pagesel.c:262
-msgid "New Page"
-msgstr "Nuova Pagina"
-
-#: src/x_pagesel.c:263
-msgid "Open Page..."
-msgstr "Apri Pagina..."
-
-#: src/x_pagesel.c:265
-msgid "Save Page"
-msgstr "Salva Pagina"
-
-#: src/x_pagesel.c:266
-msgid "Close Page"
-msgstr "Chiudi Pagina"
 
 #: src/x_pagesel.c:267
 msgid "Discard Page"
@@ -1875,10 +2209,6 @@ msgstr "Non Ã¨ possibile stampare lo schema corrente in [%s]\n"
 #, c-format
 msgid "Printed current schematic to [%s]\n"
 msgstr "Lo schema corrente Ã¨ stato stampato in [%s]\n"
-
-#: src/x_print.c:356
-msgid "Print..."
-msgstr "Stampa..."
 
 #: src/x_print.c:359
 msgid "Print"
@@ -1933,10 +2263,6 @@ msgstr "Non Ã¨ possibile allocare bounding_xor_gc\n"
 msgid "Couldn't allocate bus_gc\n"
 msgstr "Non Ã¨ possibile allocare bus_gc\n"
 
-#: src/x_window.c:518
-msgid "New"
-msgstr "Nuovo"
-
 #: src/x_window.c:519
 msgid "New file"
 msgstr "Nuovo file"
@@ -1953,17 +2279,9 @@ msgstr "Salva"
 msgid "Save file"
 msgstr "Salva file"
 
-#: src/x_window.c:558
-msgid "Undo"
-msgstr "Annulla"
-
 #: src/x_window.c:559
 msgid "Undo last operation"
 msgstr "Annulla l'ultima operazione"
-
-#: src/x_window.c:571
-msgid "Redo"
-msgstr "Ripristina"
 
 #: src/x_window.c:572
 msgid "Redo last undo"
@@ -2056,216 +2374,3 @@ msgstr "MenÃ¹/Cancella"
 #: src/x_window.c:864
 msgid "Pan/Cancel"
 msgstr ""
-
-#~ msgid "File"
-#~ msgstr "File"
-
-#~ msgid "New Window"
-#~ msgstr "Nuova Finestra"
-
-#~ msgid "Revert Page"
-#~ msgstr "Centra la Pagina"
-
-#~ msgid "Save Page As..."
-#~ msgstr "Salva Pagina Con Nome..."
-
-#~ msgid "Save All"
-#~ msgstr "Salva Tutto"
-
-#~ msgid "Write PNG..."
-#~ msgstr "Stampa File .PNG..."
-
-#~ msgid "Execute Script..."
-#~ msgstr "Esegui Script..."
-
-#~ msgid "Close Window"
-#~ msgstr "Chiudi Finestra"
-
-#~ msgid "Quit"
-#~ msgstr "Esci"
-
-#~ msgid "Edit..."
-#~ msgstr "Edita..."
-
-#~ msgid "Edit Text..."
-#~ msgstr "Edita il Testo..."
-
-#~ msgid "Rotate 90 Mode"
-#~ msgstr "Ruota di 90 gradi"
-
-#~ msgid "Slot..."
-#~ msgstr "Slot..."
-
-#~ msgid "Color..."
-#~ msgstr "Colore..."
-
-#~ msgid "Line Width & Type..."
-#~ msgstr "Larghezza Linea & Tipo..."
-
-#~ msgid "Fill Type..."
-#~ msgstr "Tipo Riempimento..."
-
-#~ msgid "Symbol Translate..."
-#~ msgstr "Converti Simbolo..."
-
-#~ msgid "Embed Component/Picture"
-#~ msgstr "Componente/Immagine fissato/a"
-
-#~ msgid "Unembed Component/Picture"
-#~ msgstr "Componente/immagine non fissato/a"
-
-#~ msgid "Update Component"
-#~ msgstr "Aggiorna Componente"
-
-#~ msgid "Show/Hide Inv Text"
-#~ msgstr "Mostra/Nascondi Testo Invisibile"
-
-#~ msgid "Make Inv Text Vis"
-#~ msgstr "Rendi Invisibile Testo Visibile"
-
-#~ msgid "Buffer"
-#~ msgstr "Buffer"
-
-#~ msgid "Copy into 1"
-#~ msgstr "Copia in 1"
-
-#~ msgid "Copy into 2"
-#~ msgstr "Copia in 2"
-
-#~ msgid "Copy into 3"
-#~ msgstr "Copia in 3"
-
-#~ msgid "Copy into 4"
-#~ msgstr "Copia in 4"
-
-#~ msgid "Copy into 5"
-#~ msgstr "Copia in 5"
-
-#~ msgid "Cut into 1"
-#~ msgstr "Taglia in 1"
-
-#~ msgid "Cut into 2"
-#~ msgstr "Taglia in 2"
-
-#~ msgid "Cut into 3"
-#~ msgstr "Taglia in 3"
-
-#~ msgid "Cut into 4"
-#~ msgstr "Taglia in 4"
-
-#~ msgid "Cut into 5"
-#~ msgstr "Taglia in 5"
-
-#~ msgid "Paste from 1"
-#~ msgstr "Incolla da 1"
-
-#~ msgid "Paste from 2"
-#~ msgstr "Incolla da 2"
-
-#~ msgid "Paste from 3"
-#~ msgstr "Incolla da 3"
-
-#~ msgid "Paste from 4"
-#~ msgstr "Incolla da 4"
-
-#~ msgid "Paste from 5"
-#~ msgstr "Incolla da 5"
-
-#~ msgid "View"
-#~ msgstr "Vista"
-
-#~ msgid "Redraw"
-#~ msgstr "Aggiorna"
-
-#~ msgid "Zoom Extents"
-#~ msgstr "Adatta alla pagina"
-
-#~ msgid "Zoom In"
-#~ msgstr "Ingrandisci"
-
-#~ msgid "Zoom Out"
-#~ msgstr "Riduci"
-
-#~ msgid "Zoom Full"
-#~ msgstr "Riduci al Massimo"
-
-#~ msgid "Page"
-#~ msgstr "Pagina"
-
-#~ msgid "Manager..."
-#~ msgstr "Gestore..."
-
-#~ msgid "Next"
-#~ msgstr "Successiva"
-
-#~ msgid "Previous"
-#~ msgstr "Precedente"
-
-#~ msgid "Revert"
-#~ msgstr "Riduce e Centra lo Schema"
-
-#~ msgid "Add"
-#~ msgstr "Aggiungi"
-
-#~ msgid "Component..."
-#~ msgstr "Componente..."
-
-#~ msgid "Attribute..."
-#~ msgstr "ProprietÃ Â ..."
-
-#~ msgid "Text..."
-#~ msgstr "Testo..."
-
-#~ msgid "Picture..."
-#~ msgstr "Immagine..."
-
-#~ msgid "Hierarchy"
-#~ msgstr "Gerarchia"
-
-#~ msgid "Up"
-#~ msgstr "Sopra"
-
-#~ msgid "Documentation"
-#~ msgstr "Documentazione"
-
-#~ msgid "Show Value"
-#~ msgstr "Mostra Valore"
-
-#~ msgid "Show Name"
-#~ msgstr "Mostra Nome"
-
-#~ msgid "Show Both"
-#~ msgstr "Mostra Entrambi"
-
-#~ msgid "Toggle Visibility"
-#~ msgstr "Pulsante VisibilitÃ Â "
-
-#~ msgid "Find Specific Text..."
-#~ msgstr "Trova Testo Specifico..."
-
-#~ msgid "Hide Specific Text..."
-#~ msgstr "Nascondi Testo Specifico..."
-
-#~ msgid "Show Specific Text..."
-#~ msgstr "Mostra Testo Specifico..."
-
-#~ msgid "Options"
-#~ msgstr "Opzioni"
-
-#~ msgid "Text Size..."
-#~ msgstr "Ampiezza Testo..."
-
-#~ msgid "Toggle Grid On/Off"
-#~ msgstr "Griglia Visibile/Non Visibile"
-
-#~ msgid "Snap Grid Spacing..."
-#~ msgstr "Ampiezza Griglia"
-
-#~ msgid "Show Log Window..."
-#~ msgstr "Mostra File Log Finestra..."
-
-#~ msgid "Show Coord Window..."
-#~ msgstr "Mostra Coordinate Finestra..."
-
-#~ msgid "Manual..."
-#~ msgstr "Manuale..."

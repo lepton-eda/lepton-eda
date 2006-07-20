@@ -8,13 +8,457 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-19 21:51-0400\n"
+"POT-Creation-Date: 2006-07-19 22:09-0400\n"
 "PO-Revision-Date: 2006-02-12 22:18+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: src/rcstrings.c:2
+msgid "File"
+msgstr "Archivo"
+
+#: src/rcstrings.c:3
+msgid "New Window"
+msgstr "Nueva ventana"
+
+#: src/rcstrings.c:4 src/x_pagesel.c:262
+msgid "New Page"
+msgstr "Nueva página"
+
+#: src/rcstrings.c:5 src/x_pagesel.c:263
+msgid "Open Page..."
+msgstr "Abrir página"
+
+#: src/rcstrings.c:6 src/x_pagesel.c:266
+msgid "Close Page"
+msgstr "Cerrar página"
+
+#: src/rcstrings.c:7
+msgid "Revert Page"
+msgstr "Recargar página"
+
+#: src/rcstrings.c:8 src/x_pagesel.c:265
+msgid "Save Page"
+msgstr "Guardar página"
+
+#: src/rcstrings.c:9
+msgid "Save Page As..."
+msgstr "Guardar página como..."
+
+#: src/rcstrings.c:10
+msgid "Save All"
+msgstr "Guardar todo"
+
+#: src/rcstrings.c:11 src/x_print.c:356
+msgid "Print..."
+msgstr "Imprimir..."
+
+#: src/rcstrings.c:12
+msgid "Write PNG..."
+msgstr "Guardar imagen PNG..."
+
+#: src/rcstrings.c:13
+msgid "Execute Script..."
+msgstr "Ejecutar subprograma..."
+
+#: src/rcstrings.c:14
+msgid "Close Window"
+msgstr "Cerrar ventana"
+
+#: src/rcstrings.c:15
+msgid "Quit"
+msgstr "Salir"
+
+#: src/rcstrings.c:17 src/i_callbacks.c:838 src/x_window.c:665
+msgid "Edit"
+msgstr "Editar"
+
+#: src/rcstrings.c:18 src/x_window.c:558
+msgid "Undo"
+msgstr "Deshacer"
+
+#: src/rcstrings.c:19 src/x_window.c:571
+msgid "Redo"
+msgstr "Rehacer"
+
+#: src/rcstrings.c:20 src/i_basic.c:94 src/x_window.c:879
+msgid "Select Mode"
+msgstr "Seleccionar"
+
+#: src/rcstrings.c:21
+msgid "Edit..."
+msgstr "Editar..."
+
+#: src/rcstrings.c:22
+msgid "Edit Text..."
+msgstr "Editar texto..."
+
+#: src/rcstrings.c:23 src/i_basic.c:107
+msgid "Copy Mode"
+msgstr "Copiar"
+
+#: src/rcstrings.c:24 src/i_basic.c:110
+msgid "Move Mode"
+msgstr "Mover"
+
+#: src/rcstrings.c:25 src/i_callbacks.c:814 src/x_attribedit.c:412
+#: src/x_multiattrib.c:1160 src/x_window.c:710
+msgid "Delete"
+msgstr "Borrar"
+
+#: src/rcstrings.c:26
+msgid "Rotate 90 Mode"
+msgstr "Rotar 90º"
+
+#: src/rcstrings.c:27 src/i_basic.c:114
+msgid "Mirror Mode"
+msgstr "Voltear"
+
+#: src/rcstrings.c:28
+msgid "Slot..."
+msgstr "Elemento..."
+
+#: src/rcstrings.c:29
+msgid "Color..."
+msgstr "Color..."
+
+#: src/rcstrings.c:30 src/i_callbacks.c:999
+msgid "Lock"
+msgstr "Fijar"
+
+#: src/rcstrings.c:31 src/i_callbacks.c:1017
+msgid "Unlock"
+msgstr "Desfijar"
+
+#: src/rcstrings.c:32
+msgid "Line Width & Type..."
+msgstr "Anchura y tipo de línea"
+
+#: src/rcstrings.c:33
+msgid "Fill Type..."
+msgstr "Tipo de relleno"
+
+#: src/rcstrings.c:34
+msgid "Symbol Translate..."
+msgstr "Mover símbolo..."
+
+#: src/rcstrings.c:35
+msgid "Embed Component/Picture"
+msgstr "Incrustar componente/imagen"
+
+#: src/rcstrings.c:36
+msgid "Unembed Component/Picture"
+msgstr "Desincrustar componente/imagen"
+
+#: src/rcstrings.c:37
+msgid "Update Component"
+msgstr "Actualizar componente"
+
+#: src/rcstrings.c:38
+msgid "Show/Hide Inv Text"
+msgstr "Mostrar/Ocultar texto oculto"
+
+#: src/rcstrings.c:39
+msgid "Make Inv Text Vis"
+msgstr "Hacer visible el texto oculto"
+
+#: src/rcstrings.c:41
+msgid "Buffer"
+msgstr "Memoria intermedia"
+
+#: src/rcstrings.c:42
+msgid "Copy into 1"
+msgstr "Copiar en memoria intermedia 1"
+
+#: src/rcstrings.c:43
+msgid "Copy into 2"
+msgstr "Copiar en memoria intermedia 2"
+
+#: src/rcstrings.c:44
+msgid "Copy into 3"
+msgstr "Copiar en memoria intermedia 3"
+
+#: src/rcstrings.c:45
+msgid "Copy into 4"
+msgstr "Copiar en memoria intermedia 4"
+
+#: src/rcstrings.c:46
+msgid "Copy into 5"
+msgstr "Copiar en memoria intermedia 5"
+
+#: src/rcstrings.c:47
+msgid "Cut into 1"
+msgstr "Cortar en memoria intermedia 1"
+
+#: src/rcstrings.c:48
+msgid "Cut into 2"
+msgstr "Cortar en memoria intermedia 2"
+
+#: src/rcstrings.c:49
+msgid "Cut into 3"
+msgstr "Cortar en memoria intermedia 3"
+
+#: src/rcstrings.c:50
+msgid "Cut into 4"
+msgstr "Cortar en memoria intermedia 4"
+
+#: src/rcstrings.c:51
+msgid "Cut into 5"
+msgstr "Cortar en memoria intermedia 5"
+
+#: src/rcstrings.c:52
+msgid "Paste from 1"
+msgstr "Pegar memoria intermedia 1"
+
+#: src/rcstrings.c:53
+msgid "Paste from 2"
+msgstr "Pegar memoria intermedia 2"
+
+#: src/rcstrings.c:54
+msgid "Paste from 3"
+msgstr "Pegar memoria intermedia 3"
+
+#: src/rcstrings.c:55
+msgid "Paste from 4"
+msgstr "Pegar memoria intermedia 4"
+
+#: src/rcstrings.c:56
+msgid "Paste from 5"
+msgstr "Pegar memoria intermedia 5"
+
+#: src/rcstrings.c:58
+msgid "View"
+msgstr "Ver"
+
+#: src/rcstrings.c:59
+msgid "Redraw"
+msgstr "Redibujar"
+
+#: src/rcstrings.c:60 src/i_callbacks.c:1546 src/i_callbacks.c:1561
+msgid "Pan"
+msgstr "Centrar respecto al cursor"
+
+#: src/rcstrings.c:61 src/i_basic.c:118
+msgid "Zoom Box"
+msgstr "Ampliar"
+
+#: src/rcstrings.c:62
+msgid "Zoom Extents"
+msgstr "Mostrar todo"
+
+#: src/rcstrings.c:63
+msgid "Zoom In"
+msgstr "Aumentar ampliación"
+
+#: src/rcstrings.c:64
+msgid "Zoom Out"
+msgstr "Disminuir ampliación"
+
+#: src/rcstrings.c:65
+msgid "Zoom Full"
+msgstr "Vista completa"
+
+#: src/rcstrings.c:67
+msgid "Page"
+msgstr "Página"
+
+#: src/rcstrings.c:68
+msgid "Manager..."
+msgstr "Administrador..."
+
+#: src/rcstrings.c:69
+msgid "Next"
+msgstr "Siguiente"
+
+#: src/rcstrings.c:70
+msgid "Previous"
+msgstr "Anterior"
+
+#: src/rcstrings.c:71 src/x_window.c:518
+msgid "New"
+msgstr "Nuevo"
+
+#: src/rcstrings.c:72
+msgid "Revert"
+msgstr "Recargar"
+
+#: src/rcstrings.c:73 src/x_dialog.c:312 src/x_dialog.c:2669
+#: src/x_dialog.c:2808 src/x_dialog.c:3161 src/x_dialog.c:3338
+#: src/x_fileselect.c:2209 src/x_image.c:431
+msgid "Close"
+msgstr "Cerrar"
+
+#: src/rcstrings.c:74
+msgid "Discard"
+msgstr "Descartar"
+
+#: src/rcstrings.c:76
+msgid "Add"
+msgstr "Añadir"
+
+#: src/rcstrings.c:77 src/rcstrings.c:121
+msgid "Component..."
+msgstr "Componente..."
+
+#: src/rcstrings.c:78 src/i_callbacks.c:2530 src/i_callbacks.c:2553
+msgid "Net"
+msgstr "Conexión"
+
+#: src/rcstrings.c:79 src/i_callbacks.c:2598 src/i_callbacks.c:2622
+#: src/x_window.c:616
+msgid "Bus"
+msgstr "Bus"
+
+#: src/rcstrings.c:80
+msgid "Attribute..."
+msgstr "Propiedad..."
+
+#: src/rcstrings.c:81
+msgid "Text..."
+msgstr "Texto..."
+
+#: src/rcstrings.c:82 src/i_callbacks.c:2704 src/i_callbacks.c:2724
+msgid "Line"
+msgstr "Línea"
+
+#: src/rcstrings.c:83 src/i_callbacks.c:2747 src/i_callbacks.c:2767
+msgid "Box"
+msgstr "Rectángulo"
+
+#: src/rcstrings.c:84 src/i_callbacks.c:2824 src/i_callbacks.c:2845
+msgid "Circle"
+msgstr "Círculo"
+
+#: src/rcstrings.c:85 src/i_callbacks.c:2868 src/i_callbacks.c:2888
+msgid "Arc"
+msgstr "Arco"
+
+#: src/rcstrings.c:86 src/i_callbacks.c:2911 src/i_callbacks.c:2931
+msgid "Pin"
+msgstr "Pin"
+
+#: src/rcstrings.c:87
+msgid "Picture..."
+msgstr "Imagen..."
+
+#: src/rcstrings.c:89
+msgid "Hierarchy"
+msgstr "Jerarquía"
+
+#: src/rcstrings.c:90
+msgid "Down Schematic"
+msgstr "Descender en esquema"
+
+#: src/rcstrings.c:91
+msgid "Down Symbol"
+msgstr "Descender en símbolo"
+
+#: src/rcstrings.c:92
+msgid "Up"
+msgstr "Arriba"
+
+#: src/rcstrings.c:93
+msgid "Documentation"
+msgstr "Documentación"
+
+#: src/rcstrings.c:95 src/x_multiattrib.c:1299
+msgid "Attributes"
+msgstr "Propiedades"
+
+#: src/rcstrings.c:96 src/i_callbacks.c:3244
+msgid "Attach"
+msgstr "Adjuntar"
+
+#: src/rcstrings.c:97 src/i_callbacks.c:3293
+msgid "Detach"
+msgstr "No adjuntar"
+
+#: src/rcstrings.c:98
+msgid "Show Value"
+msgstr "Mostrar valor"
+
+#: src/rcstrings.c:99
+msgid "Show Name"
+msgstr "Mostrar nombre"
+
+#: src/rcstrings.c:100
+msgid "Show Both"
+msgstr "Mostrar ambos"
+
+#: src/rcstrings.c:101
+msgid "Toggle Visibility"
+msgstr "Cambiar visibilidad"
+
+#: src/rcstrings.c:102
+msgid "Find Specific Text..."
+msgstr "Encontrar texto específico..."
+
+#: src/rcstrings.c:103
+msgid "Hide Specific Text..."
+msgstr "Ocultar texto específico..."
+
+#: src/rcstrings.c:104
+msgid "Show Specific Text..."
+msgstr "Mostrar texto específico..."
+
+#: src/rcstrings.c:105
+msgid "Autonumber Text..."
+msgstr "Autonumerar texto..."
+
+#: src/rcstrings.c:107
+msgid "Options"
+msgstr "Opciones"
+
+#: src/rcstrings.c:108
+msgid "Text Size..."
+msgstr "Tamaño de texto..."
+
+#: src/rcstrings.c:109
+msgid "Toggle Grid On/Off"
+msgstr "Act/Desact rejilla"
+
+#: src/rcstrings.c:110
+msgid "Toggle Snap On/Off"
+msgstr "Act/Desact ajuste a la rejilla"
+
+#: src/rcstrings.c:111
+msgid "Snap Grid Spacing..."
+msgstr "Espaciado de la rejilla..."
+
+#: src/rcstrings.c:112
+msgid "Toggle Outline/Box"
+msgstr "Cambiar Silueta/Rectángulo"
+
+#: src/rcstrings.c:113
+msgid "Toggle Net Rubberband"
+msgstr "Act/Desact conservar conexiones"
+
+#: src/rcstrings.c:114
+msgid "Show Log Window..."
+msgstr "Mostrar ventana de registro..."
+
+#: src/rcstrings.c:115
+msgid "Show Coord Window..."
+msgstr "Mostrar ventana de coordenadas..."
+
+#: src/rcstrings.c:117 src/x_menus.c:249
+msgid "Help"
+msgstr "Ayuda"
+
+#: src/rcstrings.c:118 src/x_dialog.c:2625
+msgid "About..."
+msgstr "Acerca de..."
+
+#: src/rcstrings.c:119
+msgid "Manual..."
+msgstr "Manual..."
+
+#: src/rcstrings.c:120 src/x_dialog.c:3274
+msgid "Hotkeys..."
+msgstr "Teclas rápidas..."
 
 #: src/a_zoom.c:222
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -204,10 +648,6 @@ msgstr "¡Directorio de Scheme no especificado!\n"
 msgid "Executing guile script [%s]\n"
 msgstr "Ejecutando programa de guile [%s]\n"
 
-#: src/i_basic.c:94 src/x_window.c:879
-msgid "Select Mode"
-msgstr "Seleccionar"
-
 #: src/i_basic.c:97
 msgid "Attribute Mode"
 msgstr "Modo Propiedades"
@@ -220,25 +660,9 @@ msgstr "Modo Componentes"
 msgid "Text Mode"
 msgstr "Modo Texto"
 
-#: src/i_basic.c:107
-msgid "Copy Mode"
-msgstr "Copiar"
-
-#: src/i_basic.c:110
-msgid "Move Mode"
-msgstr "Mover"
-
 #: src/i_basic.c:112
 msgid "Rotate Mode"
 msgstr "Rotar"
-
-#: src/i_basic.c:114
-msgid "Mirror Mode"
-msgstr "Voltear"
-
-#: src/i_basic.c:118
-msgid "Zoom Box"
-msgstr "Ampliar"
 
 #: src/i_basic.c:122
 msgid "Pan Mode"
@@ -394,15 +818,6 @@ msgstr "Cerrando ventana\n"
 msgid "Select objs first"
 msgstr "Antes seleccione objetos"
 
-#: src/i_callbacks.c:814 src/x_attribedit.c:412 src/x_multiattrib.c:1160
-#: src/x_window.c:710
-msgid "Delete"
-msgstr "Borrar"
-
-#: src/i_callbacks.c:838 src/x_window.c:665
-msgid "Edit"
-msgstr "Editar"
-
 #: src/i_callbacks.c:854 src/x_dialog.c:615 src/x_dialog.c:620
 msgid "Edit Text"
 msgstr "Editar texto"
@@ -422,14 +837,6 @@ msgstr "Rotar"
 #: src/i_callbacks.c:955 src/i_callbacks.c:975 src/x_window.c:740
 msgid "Mirror"
 msgstr "Voltear"
-
-#: src/i_callbacks.c:999
-msgid "Lock"
-msgstr "Fijar"
-
-#: src/i_callbacks.c:1017
-msgid "Unlock"
-msgstr "Desfijar"
 
 #: src/i_callbacks.c:1035 src/x_dialog.c:2027
 msgid "Translate"
@@ -485,10 +892,6 @@ msgstr "Editar tipo de línea"
 #: src/i_callbacks.c:1362 src/x_dialog.c:1442
 msgid "Edit Fill Type"
 msgstr "Editar tipo de relleno"
-
-#: src/i_callbacks.c:1546 src/i_callbacks.c:1561
-msgid "Pan"
-msgstr "Centrar respecto al cursor"
 
 #: src/i_callbacks.c:1595
 msgid "Update Cues"
@@ -587,34 +990,6 @@ msgstr "Componente"
 msgid "Attribute"
 msgstr "Propiedad"
 
-#: src/i_callbacks.c:2530 src/i_callbacks.c:2553
-msgid "Net"
-msgstr "Conexión"
-
-#: src/i_callbacks.c:2598 src/i_callbacks.c:2622 src/x_window.c:616
-msgid "Bus"
-msgstr "Bus"
-
-#: src/i_callbacks.c:2704 src/i_callbacks.c:2724
-msgid "Line"
-msgstr "Línea"
-
-#: src/i_callbacks.c:2747 src/i_callbacks.c:2767
-msgid "Box"
-msgstr "Rectángulo"
-
-#: src/i_callbacks.c:2824 src/i_callbacks.c:2845
-msgid "Circle"
-msgstr "Círculo"
-
-#: src/i_callbacks.c:2868 src/i_callbacks.c:2888
-msgid "Arc"
-msgstr "Arco"
-
-#: src/i_callbacks.c:2911 src/i_callbacks.c:2931
-msgid "Pin"
-msgstr "Pin"
-
 #: src/i_callbacks.c:2997
 #, c-format
 msgid "Searching for source [%s]\n"
@@ -630,14 +1005,6 @@ msgstr "No se ha podido encontrar la fuente [%s]\n"
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Buscando símbolo [%s]\n"
-
-#: src/i_callbacks.c:3244
-msgid "Attach"
-msgstr "Adjuntar"
-
-#: src/i_callbacks.c:3293
-msgid "Detach"
-msgstr "No adjuntar"
 
 #: src/i_callbacks.c:3333
 msgid "ShowN"
@@ -1156,12 +1523,6 @@ msgstr ""
 msgid "Apply"
 msgstr "Aplicar"
 
-#: src/x_dialog.c:312 src/x_dialog.c:2669 src/x_dialog.c:2808
-#: src/x_dialog.c:3161 src/x_dialog.c:3338 src/x_fileselect.c:2209
-#: src/x_image.c:431
-msgid "Close"
-msgstr "Cerrar"
-
 #: src/x_dialog.c:371
 msgid "Lower Left"
 msgstr "Abajo a la izquierda"
@@ -1352,10 +1713,6 @@ msgstr "Cadena muy larga... ¡a programar!\n"
 msgid "Edit slot number"
 msgstr "Editar número de elemento"
 
-#: src/x_dialog.c:2625
-msgid "About..."
-msgstr "Acerca de..."
-
 #: src/x_dialog.c:2644
 msgid "gEDA : GPL Electronic Design Automation"
 msgstr "gEDA: Automatización de Diseño Electrónico GPL"
@@ -1402,10 +1759,6 @@ msgstr "Editar color"
 #, c-format
 msgid "Ran out of space in the hotkey buffer...\n"
 msgstr "No hay más espacio para la memoria intermedia de teclas rápidas...\n"
-
-#: src/x_dialog.c:3274
-msgid "Hotkeys..."
-msgstr "Teclas rápidas..."
 
 #: src/x_dialog.c:3319
 msgid "Function : keystroke(s)"
@@ -1781,10 +2134,6 @@ msgstr "/Descender en símbolo"
 msgid "/Up"
 msgstr "/Arriba"
 
-#: src/x_menus.c:249
-msgid "Help"
-msgstr "Ayuda"
-
 #: src/x_menus.c:354
 msgid "Tried to set the sensitivity on a non-existent menu item\n"
 msgstr ""
@@ -1822,10 +2171,6 @@ msgstr "Duplicar"
 msgid "Edit Attributes"
 msgstr "Editar propiedades"
 
-#: src/x_multiattrib.c:1299
-msgid "Attributes"
-msgstr "Propiedades"
-
 #: src/x_multiattrib.c:1356
 msgid "Name"
 msgstr "Nombre"
@@ -1849,22 +2194,6 @@ msgstr "V"
 #: src/x_multiattrib.c:1464
 msgid "Add Attribute"
 msgstr "Añadir propiedad"
-
-#: src/x_pagesel.c:262
-msgid "New Page"
-msgstr "Nueva página"
-
-#: src/x_pagesel.c:263
-msgid "Open Page..."
-msgstr "Abrir página"
-
-#: src/x_pagesel.c:265
-msgid "Save Page"
-msgstr "Guardar página"
-
-#: src/x_pagesel.c:266
-msgid "Close Page"
-msgstr "Cerrar página"
 
 #: src/x_pagesel.c:267
 msgid "Discard Page"
@@ -1917,10 +2246,6 @@ msgstr "No se puede imprimir el esquema actual a [%s]\n"
 #, c-format
 msgid "Printed current schematic to [%s]\n"
 msgstr "Se ha imprimido el esquema actual a [%s]\n"
-
-#: src/x_print.c:356
-msgid "Print..."
-msgstr "Imprimir..."
 
 #: src/x_print.c:359
 msgid "Print"
@@ -1975,10 +2300,6 @@ msgstr "No se ha podido reservar memoria para la variable bounding_xor_gc\n"
 msgid "Couldn't allocate bus_gc\n"
 msgstr "No se ha podido reservar memoria para la variable bus_gc\n"
 
-#: src/x_window.c:518
-msgid "New"
-msgstr "Nuevo"
-
 #: src/x_window.c:519
 msgid "New file"
 msgstr "Nuevo archivo"
@@ -1995,17 +2316,9 @@ msgstr "Guardar"
 msgid "Save file"
 msgstr "Guardar archivo"
 
-#: src/x_window.c:558
-msgid "Undo"
-msgstr "Deshacer"
-
 #: src/x_window.c:559
 msgid "Undo last operation"
 msgstr "Deshacer última operación"
-
-#: src/x_window.c:571
-msgid "Redo"
-msgstr "Rehacer"
 
 #: src/x_window.c:572
 msgid "Redo last undo"
@@ -2099,240 +2412,6 @@ msgstr "Panorámica/Cancelar"
 #~ msgstr ""
 #~ "Se ha especificado un número no válido de líneas [%d] a la función output-"
 #~ "vector-threshold\n"
-
-#~ msgid "File"
-#~ msgstr "Archivo"
-
-#~ msgid "New Window"
-#~ msgstr "Nueva ventana"
-
-#~ msgid "Revert Page"
-#~ msgstr "Recargar página"
-
-#~ msgid "Save Page As..."
-#~ msgstr "Guardar página como..."
-
-#~ msgid "Save All"
-#~ msgstr "Guardar todo"
-
-#~ msgid "Write PNG..."
-#~ msgstr "Guardar imagen PNG..."
-
-#~ msgid "Execute Script..."
-#~ msgstr "Ejecutar subprograma..."
-
-#~ msgid "Close Window"
-#~ msgstr "Cerrar ventana"
-
-#~ msgid "Quit"
-#~ msgstr "Salir"
-
-#~ msgid "Edit..."
-#~ msgstr "Editar..."
-
-#~ msgid "Edit Text..."
-#~ msgstr "Editar texto..."
-
-#~ msgid "Rotate 90 Mode"
-#~ msgstr "Rotar 90º"
-
-#~ msgid "Slot..."
-#~ msgstr "Elemento..."
-
-#~ msgid "Color..."
-#~ msgstr "Color..."
-
-#~ msgid "Line Width & Type..."
-#~ msgstr "Anchura y tipo de línea"
-
-#~ msgid "Fill Type..."
-#~ msgstr "Tipo de relleno"
-
-#~ msgid "Symbol Translate..."
-#~ msgstr "Mover símbolo..."
-
-#~ msgid "Embed Component/Picture"
-#~ msgstr "Incrustar componente/imagen"
-
-#~ msgid "Unembed Component/Picture"
-#~ msgstr "Desincrustar componente/imagen"
-
-#~ msgid "Update Component"
-#~ msgstr "Actualizar componente"
-
-#~ msgid "Show/Hide Inv Text"
-#~ msgstr "Mostrar/Ocultar texto oculto"
-
-#~ msgid "Make Inv Text Vis"
-#~ msgstr "Hacer visible el texto oculto"
-
-#~ msgid "Buffer"
-#~ msgstr "Memoria intermedia"
-
-#~ msgid "Copy into 1"
-#~ msgstr "Copiar en memoria intermedia 1"
-
-#~ msgid "Copy into 2"
-#~ msgstr "Copiar en memoria intermedia 2"
-
-#~ msgid "Copy into 3"
-#~ msgstr "Copiar en memoria intermedia 3"
-
-#~ msgid "Copy into 4"
-#~ msgstr "Copiar en memoria intermedia 4"
-
-#~ msgid "Copy into 5"
-#~ msgstr "Copiar en memoria intermedia 5"
-
-#~ msgid "Cut into 1"
-#~ msgstr "Cortar en memoria intermedia 1"
-
-#~ msgid "Cut into 2"
-#~ msgstr "Cortar en memoria intermedia 2"
-
-#~ msgid "Cut into 3"
-#~ msgstr "Cortar en memoria intermedia 3"
-
-#~ msgid "Cut into 4"
-#~ msgstr "Cortar en memoria intermedia 4"
-
-#~ msgid "Cut into 5"
-#~ msgstr "Cortar en memoria intermedia 5"
-
-#~ msgid "Paste from 1"
-#~ msgstr "Pegar memoria intermedia 1"
-
-#~ msgid "Paste from 2"
-#~ msgstr "Pegar memoria intermedia 2"
-
-#~ msgid "Paste from 3"
-#~ msgstr "Pegar memoria intermedia 3"
-
-#~ msgid "Paste from 4"
-#~ msgstr "Pegar memoria intermedia 4"
-
-#~ msgid "Paste from 5"
-#~ msgstr "Pegar memoria intermedia 5"
-
-#~ msgid "View"
-#~ msgstr "Ver"
-
-#~ msgid "Redraw"
-#~ msgstr "Redibujar"
-
-#~ msgid "Zoom Extents"
-#~ msgstr "Mostrar todo"
-
-#~ msgid "Zoom In"
-#~ msgstr "Aumentar ampliación"
-
-#~ msgid "Zoom Out"
-#~ msgstr "Disminuir ampliación"
-
-#~ msgid "Zoom Full"
-#~ msgstr "Vista completa"
-
-#~ msgid "Page"
-#~ msgstr "Página"
-
-#~ msgid "Manager..."
-#~ msgstr "Administrador..."
-
-#~ msgid "Next"
-#~ msgstr "Siguiente"
-
-#~ msgid "Previous"
-#~ msgstr "Anterior"
-
-#~ msgid "Revert"
-#~ msgstr "Recargar"
-
-#~ msgid "Discard"
-#~ msgstr "Descartar"
-
-#~ msgid "Add"
-#~ msgstr "Añadir"
-
-#~ msgid "Component..."
-#~ msgstr "Componente..."
-
-#~ msgid "Attribute..."
-#~ msgstr "Propiedad..."
-
-#~ msgid "Text..."
-#~ msgstr "Texto..."
-
-#~ msgid "Picture..."
-#~ msgstr "Imagen..."
-
-#~ msgid "Hierarchy"
-#~ msgstr "Jerarquía"
-
-#~ msgid "Down Schematic"
-#~ msgstr "Descender en esquema"
-
-#~ msgid "Down Symbol"
-#~ msgstr "Descender en símbolo"
-
-#~ msgid "Up"
-#~ msgstr "Arriba"
-
-#~ msgid "Documentation"
-#~ msgstr "Documentación"
-
-#~ msgid "Show Value"
-#~ msgstr "Mostrar valor"
-
-#~ msgid "Show Name"
-#~ msgstr "Mostrar nombre"
-
-#~ msgid "Show Both"
-#~ msgstr "Mostrar ambos"
-
-#~ msgid "Toggle Visibility"
-#~ msgstr "Cambiar visibilidad"
-
-#~ msgid "Find Specific Text..."
-#~ msgstr "Encontrar texto específico..."
-
-#~ msgid "Hide Specific Text..."
-#~ msgstr "Ocultar texto específico..."
-
-#~ msgid "Show Specific Text..."
-#~ msgstr "Mostrar texto específico..."
-
-#~ msgid "Autonumber Text..."
-#~ msgstr "Autonumerar texto..."
-
-#~ msgid "Options"
-#~ msgstr "Opciones"
-
-#~ msgid "Text Size..."
-#~ msgstr "Tamaño de texto..."
-
-#~ msgid "Toggle Grid On/Off"
-#~ msgstr "Act/Desact rejilla"
-
-#~ msgid "Toggle Snap On/Off"
-#~ msgstr "Act/Desact ajuste a la rejilla"
-
-#~ msgid "Snap Grid Spacing..."
-#~ msgstr "Espaciado de la rejilla..."
-
-#~ msgid "Toggle Outline/Box"
-#~ msgstr "Cambiar Silueta/Rectángulo"
-
-#~ msgid "Toggle Net Rubberband"
-#~ msgstr "Act/Desact conservar conexiones"
-
-#~ msgid "Show Log Window..."
-#~ msgstr "Mostrar ventana de registro..."
-
-#~ msgid "Show Coord Window..."
-#~ msgstr "Mostrar ventana de coordenadas..."
-
-#~ msgid "Manual..."
-#~ msgstr "Manual..."
 
 #~ msgid "Comps"
 #~ msgstr "Componentes"

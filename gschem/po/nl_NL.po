@@ -7,13 +7,514 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-schem-CVS-2002-06-12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-19 21:51-0400\n"
+"POT-Creation-Date: 2006-07-19 22:09-0400\n"
 "PO-Revision-Date: 2002-09-06 20:11+CEST\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev@seul.org \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: src/rcstrings.c:2
+#, fuzzy
+msgid "File"
+msgstr "Bestand"
+
+#: src/rcstrings.c:3
+#, fuzzy
+msgid "New Window"
+msgstr "Nieuw venster\n"
+
+#: src/rcstrings.c:4 src/x_pagesel.c:262
+msgid "New Page"
+msgstr "Nieuw pagina"
+
+#: src/rcstrings.c:5 src/x_pagesel.c:263
+#, fuzzy
+msgid "Open Page..."
+msgstr "Open pagina..."
+
+#: src/rcstrings.c:6 src/x_pagesel.c:266
+msgid "Close Page"
+msgstr "Sluit pagina"
+
+#: src/rcstrings.c:7
+#, fuzzy
+msgid "Revert Page"
+msgstr "Terughalen pagina"
+
+#: src/rcstrings.c:8 src/x_pagesel.c:265
+msgid "Save Page"
+msgstr "Opslaan pagina"
+
+#: src/rcstrings.c:9
+#, fuzzy
+msgid "Save Page As..."
+msgstr "Opslaan Pagina Als..."
+
+#: src/rcstrings.c:10
+#, fuzzy
+msgid "Save All"
+msgstr "Alles Opslaan"
+
+#: src/rcstrings.c:11 src/x_print.c:356
+msgid "Print..."
+msgstr "Afdrukken..."
+
+#: src/rcstrings.c:12
+#, fuzzy
+msgid "Write PNG..."
+msgstr "Schrijf PNG..."
+
+#: src/rcstrings.c:13
+msgid "Execute Script..."
+msgstr "Uitvoeren Script..."
+
+#: src/rcstrings.c:14
+#, fuzzy
+msgid "Close Window"
+msgstr "Sluit venster"
+
+#: src/rcstrings.c:15
+msgid "Quit"
+msgstr "Afsluiten"
+
+#: src/rcstrings.c:17 src/i_callbacks.c:838 src/x_window.c:665
+msgid "Edit"
+msgstr "Bewerk"
+
+#: src/rcstrings.c:18 src/x_window.c:558
+msgid "Undo"
+msgstr "Ongedaan maken"
+
+#: src/rcstrings.c:19 src/x_window.c:571
+msgid "Redo"
+msgstr "Herstel"
+
+#: src/rcstrings.c:20 src/i_basic.c:94 src/x_window.c:879
+msgid "Select Mode"
+msgstr "Selectie Mode"
+
+#: src/rcstrings.c:21
+#, fuzzy
+msgid "Edit..."
+msgstr "Bewerk..."
+
+#: src/rcstrings.c:22
+#, fuzzy
+msgid "Edit Text..."
+msgstr "Bewerk Tekst..."
+
+#: src/rcstrings.c:23 src/i_basic.c:107
+msgid "Copy Mode"
+msgstr "Kopieer Mode"
+
+#: src/rcstrings.c:24 src/i_basic.c:110
+msgid "Move Mode"
+msgstr "Verplaats Mode"
+
+#: src/rcstrings.c:25 src/i_callbacks.c:814 src/x_attribedit.c:412
+#: src/x_multiattrib.c:1160 src/x_window.c:710
+msgid "Delete"
+msgstr "Verwijder"
+
+#: src/rcstrings.c:26
+#, fuzzy
+msgid "Rotate 90 Mode"
+msgstr "Rotatie 90 Mode"
+
+#: src/rcstrings.c:27 src/i_basic.c:114
+msgid "Mirror Mode"
+msgstr "Spiegel Mode"
+
+# fuzzy
+#: src/rcstrings.c:28
+#, fuzzy
+msgid "Slot..."
+msgstr "Slot..."
+
+#: src/rcstrings.c:29
+#, fuzzy
+msgid "Color..."
+msgstr "Kleur..."
+
+#: src/rcstrings.c:30 src/i_callbacks.c:999
+msgid "Lock"
+msgstr "Vergrendel"
+
+#: src/rcstrings.c:31 src/i_callbacks.c:1017
+msgid "Unlock"
+msgstr "Ontgrendel"
+
+#: src/rcstrings.c:32
+#, fuzzy
+msgid "Line Width & Type..."
+msgstr "Bewerk Lijn Dikte & type..."
+
+#: src/rcstrings.c:33
+#, fuzzy
+msgid "Fill Type..."
+msgstr "Arcering Type..."
+
+#: src/rcstrings.c:34
+#, fuzzy
+msgid "Symbol Translate..."
+msgstr "Verplaats Symbool..."
+
+#: src/rcstrings.c:35
+#, fuzzy
+msgid "Embed Component/Picture"
+msgstr "Component Insluiten"
+
+#: src/rcstrings.c:36
+#, fuzzy
+msgid "Unembed Component/Picture"
+msgstr "Component Uitsluiten"
+
+#: src/rcstrings.c:37
+#, fuzzy
+msgid "Update Component"
+msgstr "Hernieuw Component"
+
+#: src/rcstrings.c:38
+#, fuzzy
+msgid "Show/Hide Inv Text"
+msgstr "Zichtbaar/Verborgen Onzichtbare Tekst"
+
+#: src/rcstrings.c:39
+msgid "Make Inv Text Vis"
+msgstr "Maak Onzichtbare Tekst Zichtbaar"
+
+#: src/rcstrings.c:41
+msgid "Buffer"
+msgstr "Buffer"
+
+#: src/rcstrings.c:42
+#, fuzzy
+msgid "Copy into 1"
+msgstr "Kopieer naar 1"
+
+#: src/rcstrings.c:43
+#, fuzzy
+msgid "Copy into 2"
+msgstr "Kopieer naar 2"
+
+#: src/rcstrings.c:44
+#, fuzzy
+msgid "Copy into 3"
+msgstr "Kopieer naar 3"
+
+#: src/rcstrings.c:45
+#, fuzzy
+msgid "Copy into 4"
+msgstr "Kopieer naar 4"
+
+#: src/rcstrings.c:46
+#, fuzzy
+msgid "Copy into 5"
+msgstr "Kopieer naar 5"
+
+#: src/rcstrings.c:47
+#, fuzzy
+msgid "Cut into 1"
+msgstr "Knip naar 1"
+
+#: src/rcstrings.c:48
+#, fuzzy
+msgid "Cut into 2"
+msgstr "Knip naar 2"
+
+#: src/rcstrings.c:49
+#, fuzzy
+msgid "Cut into 3"
+msgstr "Knip naar 3"
+
+#: src/rcstrings.c:50
+#, fuzzy
+msgid "Cut into 4"
+msgstr "Knip naar 4"
+
+#: src/rcstrings.c:51
+#, fuzzy
+msgid "Cut into 5"
+msgstr "Knip naar 5"
+
+#: src/rcstrings.c:52
+#, fuzzy
+msgid "Paste from 1"
+msgstr "Plak vanuit 1"
+
+#: src/rcstrings.c:53
+#, fuzzy
+msgid "Paste from 2"
+msgstr "Plak vanuit 2"
+
+#: src/rcstrings.c:54
+#, fuzzy
+msgid "Paste from 3"
+msgstr "Plak vanuit 3"
+
+#: src/rcstrings.c:55
+#, fuzzy
+msgid "Paste from 4"
+msgstr "Plak vanuit 4"
+
+#: src/rcstrings.c:56
+#, fuzzy
+msgid "Paste from 5"
+msgstr "Plak vanuit 5"
+
+#: src/rcstrings.c:58
+msgid "View"
+msgstr "Toon"
+
+#: src/rcstrings.c:59
+#, fuzzy
+msgid "Redraw"
+msgstr "Overtekenen"
+
+#: src/rcstrings.c:60 src/i_callbacks.c:1546 src/i_callbacks.c:1561
+msgid "Pan"
+msgstr "Schuif"
+
+#: src/rcstrings.c:61 src/i_basic.c:118
+msgid "Zoom Box"
+msgstr "Vergroot Venster"
+
+#: src/rcstrings.c:62
+#, fuzzy
+msgid "Zoom Extents"
+msgstr "Toon Alles"
+
+#: src/rcstrings.c:63
+#, fuzzy
+msgid "Zoom In"
+msgstr "Vergroot"
+
+#: src/rcstrings.c:64
+#, fuzzy
+msgid "Zoom Out"
+msgstr "Verklein"
+
+#: src/rcstrings.c:65
+msgid "Zoom Full"
+msgstr "Toon Maximaal"
+
+#: src/rcstrings.c:67
+#, fuzzy
+msgid "Page"
+msgstr "Pagina"
+
+#: src/rcstrings.c:68
+#, fuzzy
+msgid "Manager..."
+msgstr "Manager..."
+
+#: src/rcstrings.c:69
+#, fuzzy
+msgid "Next"
+msgstr "Volgende"
+
+#: src/rcstrings.c:70
+#, fuzzy
+msgid "Previous"
+msgstr "Vorige"
+
+#: src/rcstrings.c:71 src/x_window.c:518
+msgid "New"
+msgstr "Nieuw"
+
+#: src/rcstrings.c:72
+#, fuzzy
+msgid "Revert"
+msgstr "Terughalen"
+
+#: src/rcstrings.c:73 src/x_dialog.c:312 src/x_dialog.c:2669
+#: src/x_dialog.c:2808 src/x_dialog.c:3161 src/x_dialog.c:3338
+#: src/x_fileselect.c:2209 src/x_image.c:431
+msgid "Close"
+msgstr "Sluit"
+
+#: src/rcstrings.c:74
+#, fuzzy
+msgid "Discard"
+msgstr "Wegdoen"
+
+#: src/rcstrings.c:76
+msgid "Add"
+msgstr "Toevoegen"
+
+#: src/rcstrings.c:77 src/rcstrings.c:121
+#, fuzzy
+msgid "Component..."
+msgstr "Component..."
+
+#: src/rcstrings.c:78 src/i_callbacks.c:2530 src/i_callbacks.c:2553
+msgid "Net"
+msgstr "Draad"
+
+#: src/rcstrings.c:79 src/i_callbacks.c:2598 src/i_callbacks.c:2622
+#: src/x_window.c:616
+msgid "Bus"
+msgstr "Bus"
+
+#: src/rcstrings.c:80
+#, fuzzy
+msgid "Attribute..."
+msgstr "Attribuut..."
+
+#: src/rcstrings.c:81
+#, fuzzy
+msgid "Text..."
+msgstr "Tekst..."
+
+#: src/rcstrings.c:82 src/i_callbacks.c:2704 src/i_callbacks.c:2724
+msgid "Line"
+msgstr "Lijn"
+
+#: src/rcstrings.c:83 src/i_callbacks.c:2747 src/i_callbacks.c:2767
+msgid "Box"
+msgstr "Rechthoek"
+
+#: src/rcstrings.c:84 src/i_callbacks.c:2824 src/i_callbacks.c:2845
+msgid "Circle"
+msgstr "Cirkel"
+
+#: src/rcstrings.c:85 src/i_callbacks.c:2868 src/i_callbacks.c:2888
+msgid "Arc"
+msgstr "Boog"
+
+#: src/rcstrings.c:86 src/i_callbacks.c:2911 src/i_callbacks.c:2931
+msgid "Pin"
+msgstr "Pin"
+
+#: src/rcstrings.c:87
+#, fuzzy
+msgid "Picture..."
+msgstr "Afbeelding"
+
+#: src/rcstrings.c:89
+msgid "Hierarchy"
+msgstr "Hierarchie"
+
+#: src/rcstrings.c:90
+msgid "Down Schematic"
+msgstr "Naar Schema"
+
+#: src/rcstrings.c:91
+msgid "Down Symbol"
+msgstr "Naar Symbool"
+
+#: src/rcstrings.c:92
+msgid "Up"
+msgstr "Omhoog"
+
+#: src/rcstrings.c:93
+#, fuzzy
+msgid "Documentation"
+msgstr "Documentatie"
+
+#: src/rcstrings.c:95 src/x_multiattrib.c:1299
+#, fuzzy
+msgid "Attributes"
+msgstr "Attributen"
+
+#: src/rcstrings.c:96 src/i_callbacks.c:3244
+msgid "Attach"
+msgstr "Vastmaken"
+
+#: src/rcstrings.c:97 src/i_callbacks.c:3293
+msgid "Detach"
+msgstr "Losmaken"
+
+#: src/rcstrings.c:98
+msgid "Show Value"
+msgstr "Toon Waarde"
+
+#: src/rcstrings.c:99
+msgid "Show Name"
+msgstr "Toon Naam"
+
+#: src/rcstrings.c:100
+msgid "Show Both"
+msgstr "Toon Beide"
+
+#: src/rcstrings.c:101
+#, fuzzy
+msgid "Toggle Visibility"
+msgstr "Schakel Zichtbaarheid"
+
+#: src/rcstrings.c:102
+msgid "Find Specific Text..."
+msgstr "Vind Specifieke Tekst..."
+
+#: src/rcstrings.c:103
+msgid "Hide Specific Text..."
+msgstr "Verberg Specifike Tekst..."
+
+#: src/rcstrings.c:104
+msgid "Show Specific Text..."
+msgstr "Toon Specifieke Tekst..."
+
+#: src/rcstrings.c:105
+#, fuzzy
+msgid "Autonumber Text..."
+msgstr "Automatisch Tekst Nummeren..."
+
+#: src/rcstrings.c:107
+#, fuzzy
+msgid "Options"
+msgstr "Akties"
+
+#: src/rcstrings.c:108
+#, fuzzy
+msgid "Text Size..."
+msgstr "Tekst Hoogte..."
+
+#: src/rcstrings.c:109
+msgid "Toggle Grid On/Off"
+msgstr "Schake Grid Aan/Uit"
+
+#: src/rcstrings.c:110
+msgid "Toggle Snap On/Off"
+msgstr "Schakel Snap Aan/Uit"
+
+#: src/rcstrings.c:111
+#, fuzzy
+msgid "Snap Grid Spacing..."
+msgstr "Snap Grid Afstand..."
+
+#: src/rcstrings.c:112
+msgid "Toggle Outline/Box"
+msgstr "Schakel Contour/Rechthoek"
+
+#: src/rcstrings.c:113
+msgid "Toggle Net Rubberband"
+msgstr "Schakel Draad Elastiekband"
+
+#: src/rcstrings.c:114
+msgid "Show Log Window..."
+msgstr "Toon Logboek venster..."
+
+#: src/rcstrings.c:115
+msgid "Show Coord Window..."
+msgstr "Toon Coordinaten venster..."
+
+#: src/rcstrings.c:117 src/x_menus.c:249
+msgid "Help"
+msgstr "Help"
+
+#: src/rcstrings.c:118 src/x_dialog.c:2625
+msgid "About..."
+msgstr "Omtrent..."
+
+#: src/rcstrings.c:119
+msgid "Manual..."
+msgstr "Handleiding..."
+
+#: src/rcstrings.c:120 src/x_dialog.c:3274
+msgid "Hotkeys..."
+msgstr "Snel-toets..."
 
 #: src/a_zoom.c:222
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -194,10 +695,6 @@ msgstr "Scheme map is NIET ingesteld!\n"
 msgid "Executing guile script [%s]\n"
 msgstr "Bezig met uitvoeren van guile script [%s]\n"
 
-#: src/i_basic.c:94 src/x_window.c:879
-msgid "Select Mode"
-msgstr "Selectie Mode"
-
 #: src/i_basic.c:97
 #, fuzzy
 msgid "Attribute Mode"
@@ -213,25 +710,9 @@ msgstr "Component Mode"
 msgid "Text Mode"
 msgstr "Tekst Mode"
 
-#: src/i_basic.c:107
-msgid "Copy Mode"
-msgstr "Kopieer Mode"
-
-#: src/i_basic.c:110
-msgid "Move Mode"
-msgstr "Verplaats Mode"
-
 #: src/i_basic.c:112
 msgid "Rotate Mode"
 msgstr "Rotatie Mode"
-
-#: src/i_basic.c:114
-msgid "Mirror Mode"
-msgstr "Spiegel Mode"
-
-#: src/i_basic.c:118
-msgid "Zoom Box"
-msgstr "Vergroot Venster"
 
 #: src/i_basic.c:122
 msgid "Pan Mode"
@@ -394,15 +875,6 @@ msgstr "Sluit Venster\n"
 msgid "Select objs first"
 msgstr "Selecteer voorwerpen eerst"
 
-#: src/i_callbacks.c:814 src/x_attribedit.c:412 src/x_multiattrib.c:1160
-#: src/x_window.c:710
-msgid "Delete"
-msgstr "Verwijder"
-
-#: src/i_callbacks.c:838 src/x_window.c:665
-msgid "Edit"
-msgstr "Bewerk"
-
 #: src/i_callbacks.c:854 src/x_dialog.c:615 src/x_dialog.c:620
 msgid "Edit Text"
 msgstr "Bewerk Tekst"
@@ -423,14 +895,6 @@ msgstr "Roteer"
 #: src/i_callbacks.c:955 src/i_callbacks.c:975 src/x_window.c:740
 msgid "Mirror"
 msgstr "Spiegel"
-
-#: src/i_callbacks.c:999
-msgid "Lock"
-msgstr "Vergrendel"
-
-#: src/i_callbacks.c:1017
-msgid "Unlock"
-msgstr "Ontgrendel"
 
 #: src/i_callbacks.c:1035 src/x_dialog.c:2027
 msgid "Translate"
@@ -484,10 +948,6 @@ msgstr "Bewerk Lijn Type"
 #: src/i_callbacks.c:1362 src/x_dialog.c:1442
 msgid "Edit Fill Type"
 msgstr "Bewerk Arcering Type"
-
-#: src/i_callbacks.c:1546 src/i_callbacks.c:1561
-msgid "Pan"
-msgstr "Schuif"
 
 #: src/i_callbacks.c:1595
 msgid "Update Cues"
@@ -587,34 +1047,6 @@ msgstr "Component"
 msgid "Attribute"
 msgstr "Attribuut"
 
-#: src/i_callbacks.c:2530 src/i_callbacks.c:2553
-msgid "Net"
-msgstr "Draad"
-
-#: src/i_callbacks.c:2598 src/i_callbacks.c:2622 src/x_window.c:616
-msgid "Bus"
-msgstr "Bus"
-
-#: src/i_callbacks.c:2704 src/i_callbacks.c:2724
-msgid "Line"
-msgstr "Lijn"
-
-#: src/i_callbacks.c:2747 src/i_callbacks.c:2767
-msgid "Box"
-msgstr "Rechthoek"
-
-#: src/i_callbacks.c:2824 src/i_callbacks.c:2845
-msgid "Circle"
-msgstr "Cirkel"
-
-#: src/i_callbacks.c:2868 src/i_callbacks.c:2888
-msgid "Arc"
-msgstr "Boog"
-
-#: src/i_callbacks.c:2911 src/i_callbacks.c:2931
-msgid "Pin"
-msgstr "Pin"
-
 #: src/i_callbacks.c:2997
 #, c-format
 msgid "Searching for source [%s]\n"
@@ -630,14 +1062,6 @@ msgstr "Kan bron [%s] niet vinden\n"
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Zoek naar symbool [%s]\n"
-
-#: src/i_callbacks.c:3244
-msgid "Attach"
-msgstr "Vastmaken"
-
-#: src/i_callbacks.c:3293
-msgid "Detach"
-msgstr "Losmaken"
 
 #: src/i_callbacks.c:3333
 msgid "ShowN"
@@ -1140,12 +1564,6 @@ msgstr ""
 msgid "Apply"
 msgstr "Toepassen"
 
-#: src/x_dialog.c:312 src/x_dialog.c:2669 src/x_dialog.c:2808
-#: src/x_dialog.c:3161 src/x_dialog.c:3338 src/x_fileselect.c:2209
-#: src/x_image.c:431
-msgid "Close"
-msgstr "Sluit"
-
 #: src/x_dialog.c:371
 #, fuzzy
 msgid "Lower Left"
@@ -1339,10 +1757,6 @@ msgstr "Tekst te lang... aanpassen!\n"
 msgid "Edit slot number"
 msgstr "Bewerk slot nummer"
 
-#: src/x_dialog.c:2625
-msgid "About..."
-msgstr "Omtrent..."
-
 #: src/x_dialog.c:2644
 msgid "gEDA : GPL Electronic Design Automation"
 msgstr "gEDA : GPL Elektronische Ontwerp Automatisering"
@@ -1390,10 +1804,6 @@ msgstr "Kleur Bewerken"
 #, c-format
 msgid "Ran out of space in the hotkey buffer...\n"
 msgstr "Tekort aan ruimte in de Snel-toets buffer...\n"
-
-#: src/x_dialog.c:3274
-msgid "Hotkeys..."
-msgstr "Snel-toets..."
 
 #: src/x_dialog.c:3319
 msgid "Function : keystroke(s)"
@@ -1798,10 +2208,6 @@ msgstr "Naar Symbool"
 msgid "/Up"
 msgstr "Omhoog"
 
-#: src/x_menus.c:249
-msgid "Help"
-msgstr "Help"
-
 #: src/x_menus.c:354
 msgid "Tried to set the sensitivity on a non-existent menu item\n"
 msgstr ""
@@ -1840,11 +2246,6 @@ msgstr ""
 msgid "Edit Attributes"
 msgstr "Berwerk Attribuut"
 
-#: src/x_multiattrib.c:1299
-#, fuzzy
-msgid "Attributes"
-msgstr "Attributen"
-
 #: src/x_multiattrib.c:1356
 msgid "Name"
 msgstr "Naam"
@@ -1869,23 +2270,6 @@ msgstr "V"
 #, fuzzy
 msgid "Add Attribute"
 msgstr "Plaats Attribuut"
-
-#: src/x_pagesel.c:262
-msgid "New Page"
-msgstr "Nieuw pagina"
-
-#: src/x_pagesel.c:263
-#, fuzzy
-msgid "Open Page..."
-msgstr "Open pagina..."
-
-#: src/x_pagesel.c:265
-msgid "Save Page"
-msgstr "Opslaan pagina"
-
-#: src/x_pagesel.c:266
-msgid "Close Page"
-msgstr "Sluit pagina"
 
 #: src/x_pagesel.c:267
 msgid "Discard Page"
@@ -1937,10 +2321,6 @@ msgstr "Kan huidige schema niet afdrukken op [%s]\n"
 #, c-format
 msgid "Printed current schematic to [%s]\n"
 msgstr "Huidig schema afgedrukt op [%s]\n"
-
-#: src/x_print.c:356
-msgid "Print..."
-msgstr "Afdrukken..."
 
 #: src/x_print.c:359
 msgid "Print"
@@ -1995,10 +2375,6 @@ msgstr "Kan bounding_xor_gc niet toewijzen\n"
 msgid "Couldn't allocate bus_gc\n"
 msgstr "Kan bus_gc niet toewijzen\n"
 
-#: src/x_window.c:518
-msgid "New"
-msgstr "Nieuw"
-
 #: src/x_window.c:519
 msgid "New file"
 msgstr "Nieuw bestand"
@@ -2015,17 +2391,9 @@ msgstr "Opslaan"
 msgid "Save file"
 msgstr "Opslaan bestand"
 
-#: src/x_window.c:558
-msgid "Undo"
-msgstr "Ongedaan maken"
-
 #: src/x_window.c:559
 msgid "Undo last operation"
 msgstr "Maak laatste bewerking ongedaan"
-
-#: src/x_window.c:571
-msgid "Redo"
-msgstr "Herstel"
 
 #: src/x_window.c:572
 msgid "Redo last undo"
@@ -2119,295 +2487,6 @@ msgstr "Schuif/Afbreken"
 #~ msgid "Invalid number of lines [%d] passed to output-vector-threshold\n"
 #~ msgstr ""
 #~ "Ongeldig aantal regels [%d] overgedragen naar output-vector-threshold.\n"
-
-#, fuzzy
-#~ msgid "File"
-#~ msgstr "Bestand"
-
-#, fuzzy
-#~ msgid "New Window"
-#~ msgstr "Nieuw venster\n"
-
-#, fuzzy
-#~ msgid "Revert Page"
-#~ msgstr "Terughalen pagina"
-
-#, fuzzy
-#~ msgid "Save Page As..."
-#~ msgstr "Opslaan Pagina Als..."
-
-#, fuzzy
-#~ msgid "Save All"
-#~ msgstr "Alles Opslaan"
-
-#, fuzzy
-#~ msgid "Write PNG..."
-#~ msgstr "Schrijf PNG..."
-
-#~ msgid "Execute Script..."
-#~ msgstr "Uitvoeren Script..."
-
-#, fuzzy
-#~ msgid "Close Window"
-#~ msgstr "Sluit venster"
-
-#~ msgid "Quit"
-#~ msgstr "Afsluiten"
-
-#, fuzzy
-#~ msgid "Edit..."
-#~ msgstr "Bewerk..."
-
-#, fuzzy
-#~ msgid "Edit Text..."
-#~ msgstr "Bewerk Tekst..."
-
-#, fuzzy
-#~ msgid "Rotate 90 Mode"
-#~ msgstr "Rotatie 90 Mode"
-
-# fuzzy
-#, fuzzy
-#~ msgid "Slot..."
-#~ msgstr "Slot..."
-
-#, fuzzy
-#~ msgid "Color..."
-#~ msgstr "Kleur..."
-
-#, fuzzy
-#~ msgid "Line Width & Type..."
-#~ msgstr "Bewerk Lijn Dikte & type..."
-
-#, fuzzy
-#~ msgid "Fill Type..."
-#~ msgstr "Arcering Type..."
-
-#, fuzzy
-#~ msgid "Symbol Translate..."
-#~ msgstr "Verplaats Symbool..."
-
-#, fuzzy
-#~ msgid "Embed Component/Picture"
-#~ msgstr "Component Insluiten"
-
-#, fuzzy
-#~ msgid "Unembed Component/Picture"
-#~ msgstr "Component Uitsluiten"
-
-#, fuzzy
-#~ msgid "Update Component"
-#~ msgstr "Hernieuw Component"
-
-#, fuzzy
-#~ msgid "Show/Hide Inv Text"
-#~ msgstr "Zichtbaar/Verborgen Onzichtbare Tekst"
-
-#~ msgid "Make Inv Text Vis"
-#~ msgstr "Maak Onzichtbare Tekst Zichtbaar"
-
-#~ msgid "Buffer"
-#~ msgstr "Buffer"
-
-#, fuzzy
-#~ msgid "Copy into 1"
-#~ msgstr "Kopieer naar 1"
-
-#, fuzzy
-#~ msgid "Copy into 2"
-#~ msgstr "Kopieer naar 2"
-
-#, fuzzy
-#~ msgid "Copy into 3"
-#~ msgstr "Kopieer naar 3"
-
-#, fuzzy
-#~ msgid "Copy into 4"
-#~ msgstr "Kopieer naar 4"
-
-#, fuzzy
-#~ msgid "Copy into 5"
-#~ msgstr "Kopieer naar 5"
-
-#, fuzzy
-#~ msgid "Cut into 1"
-#~ msgstr "Knip naar 1"
-
-#, fuzzy
-#~ msgid "Cut into 2"
-#~ msgstr "Knip naar 2"
-
-#, fuzzy
-#~ msgid "Cut into 3"
-#~ msgstr "Knip naar 3"
-
-#, fuzzy
-#~ msgid "Cut into 4"
-#~ msgstr "Knip naar 4"
-
-#, fuzzy
-#~ msgid "Cut into 5"
-#~ msgstr "Knip naar 5"
-
-#, fuzzy
-#~ msgid "Paste from 1"
-#~ msgstr "Plak vanuit 1"
-
-#, fuzzy
-#~ msgid "Paste from 2"
-#~ msgstr "Plak vanuit 2"
-
-#, fuzzy
-#~ msgid "Paste from 3"
-#~ msgstr "Plak vanuit 3"
-
-#, fuzzy
-#~ msgid "Paste from 4"
-#~ msgstr "Plak vanuit 4"
-
-#, fuzzy
-#~ msgid "Paste from 5"
-#~ msgstr "Plak vanuit 5"
-
-#~ msgid "View"
-#~ msgstr "Toon"
-
-#, fuzzy
-#~ msgid "Redraw"
-#~ msgstr "Overtekenen"
-
-#, fuzzy
-#~ msgid "Zoom Extents"
-#~ msgstr "Toon Alles"
-
-#, fuzzy
-#~ msgid "Zoom In"
-#~ msgstr "Vergroot"
-
-#, fuzzy
-#~ msgid "Zoom Out"
-#~ msgstr "Verklein"
-
-#~ msgid "Zoom Full"
-#~ msgstr "Toon Maximaal"
-
-#, fuzzy
-#~ msgid "Page"
-#~ msgstr "Pagina"
-
-#, fuzzy
-#~ msgid "Manager..."
-#~ msgstr "Manager..."
-
-#, fuzzy
-#~ msgid "Next"
-#~ msgstr "Volgende"
-
-#, fuzzy
-#~ msgid "Previous"
-#~ msgstr "Vorige"
-
-#, fuzzy
-#~ msgid "Revert"
-#~ msgstr "Terughalen"
-
-#, fuzzy
-#~ msgid "Discard"
-#~ msgstr "Wegdoen"
-
-#~ msgid "Add"
-#~ msgstr "Toevoegen"
-
-#, fuzzy
-#~ msgid "Component..."
-#~ msgstr "Component..."
-
-#, fuzzy
-#~ msgid "Attribute..."
-#~ msgstr "Attribuut..."
-
-#, fuzzy
-#~ msgid "Text..."
-#~ msgstr "Tekst..."
-
-#, fuzzy
-#~ msgid "Picture..."
-#~ msgstr "Afbeelding"
-
-#~ msgid "Hierarchy"
-#~ msgstr "Hierarchie"
-
-#~ msgid "Down Schematic"
-#~ msgstr "Naar Schema"
-
-#~ msgid "Down Symbol"
-#~ msgstr "Naar Symbool"
-
-#~ msgid "Up"
-#~ msgstr "Omhoog"
-
-#, fuzzy
-#~ msgid "Documentation"
-#~ msgstr "Documentatie"
-
-#~ msgid "Show Value"
-#~ msgstr "Toon Waarde"
-
-#~ msgid "Show Name"
-#~ msgstr "Toon Naam"
-
-#~ msgid "Show Both"
-#~ msgstr "Toon Beide"
-
-#, fuzzy
-#~ msgid "Toggle Visibility"
-#~ msgstr "Schakel Zichtbaarheid"
-
-#~ msgid "Find Specific Text..."
-#~ msgstr "Vind Specifieke Tekst..."
-
-#~ msgid "Hide Specific Text..."
-#~ msgstr "Verberg Specifike Tekst..."
-
-#~ msgid "Show Specific Text..."
-#~ msgstr "Toon Specifieke Tekst..."
-
-#, fuzzy
-#~ msgid "Autonumber Text..."
-#~ msgstr "Automatisch Tekst Nummeren..."
-
-#, fuzzy
-#~ msgid "Options"
-#~ msgstr "Akties"
-
-#, fuzzy
-#~ msgid "Text Size..."
-#~ msgstr "Tekst Hoogte..."
-
-#~ msgid "Toggle Grid On/Off"
-#~ msgstr "Schake Grid Aan/Uit"
-
-#~ msgid "Toggle Snap On/Off"
-#~ msgstr "Schakel Snap Aan/Uit"
-
-#, fuzzy
-#~ msgid "Snap Grid Spacing..."
-#~ msgstr "Snap Grid Afstand..."
-
-#~ msgid "Toggle Outline/Box"
-#~ msgstr "Schakel Contour/Rechthoek"
-
-#~ msgid "Toggle Net Rubberband"
-#~ msgstr "Schakel Draad Elastiekband"
-
-#~ msgid "Show Log Window..."
-#~ msgstr "Toon Logboek venster..."
-
-#~ msgid "Show Coord Window..."
-#~ msgstr "Toon Coordinaten venster..."
-
-#~ msgid "Manual..."
-#~ msgstr "Handleiding..."
 
 #, fuzzy
 #~ msgid "Comps"

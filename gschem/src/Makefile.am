@@ -36,7 +36,7 @@ localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 #man_MANS = gschem.1
-EXTRA_DIST = create_proto 
+EXTRA_DIST = create_proto rcstrings.c
 #gschem.1
 
 src: $(gschem_SOURCES)

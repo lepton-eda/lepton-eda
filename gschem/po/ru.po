@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-19 21:51-0400\n"
+"POT-Creation-Date: 2006-07-19 22:09-0400\n"
 "PO-Revision-Date: 2003-01-21 17:49+0200\n"
 "Last-Translator: Andy Shevchenko <andy@smile.org.ua>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -15,6 +15,454 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.0\n"
+
+#: src/rcstrings.c:2
+msgid "File"
+msgstr "Файл"
+
+#: src/rcstrings.c:3
+msgid "New Window"
+msgstr "Новое окно"
+
+#: src/rcstrings.c:4 src/x_pagesel.c:262
+msgid "New Page"
+msgstr "Новая страница"
+
+#: src/rcstrings.c:5 src/x_pagesel.c:263
+msgid "Open Page..."
+msgstr "Открыть страницу..."
+
+#: src/rcstrings.c:6 src/x_pagesel.c:266
+msgid "Close Page"
+msgstr "Закрыть страницу"
+
+#: src/rcstrings.c:7
+msgid "Revert Page"
+msgstr "Возвратить страницу"
+
+#: src/rcstrings.c:8 src/x_pagesel.c:265
+msgid "Save Page"
+msgstr "Сохранить страницу"
+
+#: src/rcstrings.c:9
+msgid "Save Page As..."
+msgstr "Сохранить страницу как..."
+
+#: src/rcstrings.c:10
+msgid "Save All"
+msgstr "Сохранить все"
+
+#: src/rcstrings.c:11 src/x_print.c:356
+msgid "Print..."
+msgstr "Печать..."
+
+#: src/rcstrings.c:12
+msgid "Write PNG..."
+msgstr "Записать PNG..."
+
+#: src/rcstrings.c:13
+msgid "Execute Script..."
+msgstr "Выполнить скрипт..."
+
+#: src/rcstrings.c:14
+msgid "Close Window"
+msgstr "Закрыть окно"
+
+#: src/rcstrings.c:15
+msgid "Quit"
+msgstr "Выйти"
+
+#: src/rcstrings.c:17 src/i_callbacks.c:838 src/x_window.c:665
+msgid "Edit"
+msgstr "Правка"
+
+#: src/rcstrings.c:18 src/x_window.c:558
+msgid "Undo"
+msgstr "Отменить действие"
+
+#: src/rcstrings.c:19 src/x_window.c:571
+msgid "Redo"
+msgstr "Повторить действие"
+
+#: src/rcstrings.c:20 src/i_basic.c:94 src/x_window.c:879
+msgid "Select Mode"
+msgstr "Режим выборки"
+
+#: src/rcstrings.c:21
+msgid "Edit..."
+msgstr "Правка..."
+
+#: src/rcstrings.c:22
+msgid "Edit Text..."
+msgstr "Правка текста..."
+
+#: src/rcstrings.c:23 src/i_basic.c:107
+msgid "Copy Mode"
+msgstr "Режим копирования"
+
+#: src/rcstrings.c:24 src/i_basic.c:110
+msgid "Move Mode"
+msgstr "Режим перемещения"
+
+#: src/rcstrings.c:25 src/i_callbacks.c:814 src/x_attribedit.c:412
+#: src/x_multiattrib.c:1160 src/x_window.c:710
+msgid "Delete"
+msgstr "Удалить"
+
+#: src/rcstrings.c:26
+msgid "Rotate 90 Mode"
+msgstr "Режим вращения на 90"
+
+#: src/rcstrings.c:27 src/i_basic.c:114
+msgid "Mirror Mode"
+msgstr "Режим зеркалирования"
+
+#: src/rcstrings.c:28
+msgid "Slot..."
+msgstr "Слот..."
+
+#: src/rcstrings.c:29
+msgid "Color..."
+msgstr "Цвет..."
+
+#: src/rcstrings.c:30 src/i_callbacks.c:999
+msgid "Lock"
+msgstr "Блокировать"
+
+#: src/rcstrings.c:31 src/i_callbacks.c:1017
+msgid "Unlock"
+msgstr "Разблокировать"
+
+#: src/rcstrings.c:32
+msgid "Line Width & Type..."
+msgstr "Тип и ширина линии..."
+
+#: src/rcstrings.c:33
+msgid "Fill Type..."
+msgstr "Тип заливки..."
+
+#: src/rcstrings.c:34
+msgid "Symbol Translate..."
+msgstr "Перевод символа..."
+
+#: src/rcstrings.c:35
+#, fuzzy
+msgid "Embed Component/Picture"
+msgstr "Внедрить компонент"
+
+#: src/rcstrings.c:36
+#, fuzzy
+msgid "Unembed Component/Picture"
+msgstr "Исключить компонент"
+
+#: src/rcstrings.c:37
+msgid "Update Component"
+msgstr "Обновить компонент"
+
+#: src/rcstrings.c:38
+msgid "Show/Hide Inv Text"
+msgstr "Показать/Скрыть невидимый текст"
+
+#: src/rcstrings.c:39
+msgid "Make Inv Text Vis"
+msgstr "Сделать невидимый текст видимым"
+
+#: src/rcstrings.c:41
+msgid "Buffer"
+msgstr "Буфер"
+
+#: src/rcstrings.c:42
+msgid "Copy into 1"
+msgstr "Копировать в 1"
+
+#: src/rcstrings.c:43
+msgid "Copy into 2"
+msgstr "Копировать в 2"
+
+#: src/rcstrings.c:44
+msgid "Copy into 3"
+msgstr "Копировать в 3"
+
+#: src/rcstrings.c:45
+msgid "Copy into 4"
+msgstr "Копировать в 4"
+
+#: src/rcstrings.c:46
+msgid "Copy into 5"
+msgstr "Копировать в 5"
+
+#: src/rcstrings.c:47
+msgid "Cut into 1"
+msgstr "Вырезать в 1"
+
+#: src/rcstrings.c:48
+msgid "Cut into 2"
+msgstr "Вырезать в 2"
+
+#: src/rcstrings.c:49
+msgid "Cut into 3"
+msgstr "Вырезать в 3"
+
+#: src/rcstrings.c:50
+msgid "Cut into 4"
+msgstr "Вырезать в 4"
+
+#: src/rcstrings.c:51
+msgid "Cut into 5"
+msgstr "Вырезать в 5"
+
+#: src/rcstrings.c:52
+msgid "Paste from 1"
+msgstr "Вставить из 1"
+
+#: src/rcstrings.c:53
+msgid "Paste from 2"
+msgstr "Вставить из 2"
+
+#: src/rcstrings.c:54
+msgid "Paste from 3"
+msgstr "Вставить из 3"
+
+#: src/rcstrings.c:55
+msgid "Paste from 4"
+msgstr "Вставить из 4"
+
+#: src/rcstrings.c:56
+msgid "Paste from 5"
+msgstr "Вставить из 5"
+
+#: src/rcstrings.c:58
+msgid "View"
+msgstr "Вид"
+
+#: src/rcstrings.c:59
+msgid "Redraw"
+msgstr "Перерисовать"
+
+#: src/rcstrings.c:60 src/i_callbacks.c:1546 src/i_callbacks.c:1561
+msgid "Pan"
+msgstr "Центрировать"
+
+#: src/rcstrings.c:61 src/i_basic.c:118
+msgid "Zoom Box"
+msgstr "Область для масштабирования"
+
+#: src/rcstrings.c:62
+msgid "Zoom Extents"
+msgstr "Масштаб на экран"
+
+#: src/rcstrings.c:63
+msgid "Zoom In"
+msgstr "Увеличить"
+
+#: src/rcstrings.c:64
+msgid "Zoom Out"
+msgstr "Уменьшить"
+
+#: src/rcstrings.c:65
+msgid "Zoom Full"
+msgstr "В натуральную величину"
+
+#: src/rcstrings.c:67
+msgid "Page"
+msgstr "Страница"
+
+#: src/rcstrings.c:68
+msgid "Manager..."
+msgstr "Менеджер..."
+
+#: src/rcstrings.c:69
+msgid "Next"
+msgstr "Следующая"
+
+#: src/rcstrings.c:70
+msgid "Previous"
+msgstr "Предыдущая"
+
+#: src/rcstrings.c:71 src/x_window.c:518
+msgid "New"
+msgstr "Новая"
+
+#: src/rcstrings.c:72
+msgid "Revert"
+msgstr "Возвратить"
+
+#: src/rcstrings.c:73 src/x_dialog.c:312 src/x_dialog.c:2669
+#: src/x_dialog.c:2808 src/x_dialog.c:3161 src/x_dialog.c:3338
+#: src/x_fileselect.c:2209 src/x_image.c:431
+msgid "Close"
+msgstr "Закрыть"
+
+#: src/rcstrings.c:74
+msgid "Discard"
+msgstr "Отвергнуть"
+
+#: src/rcstrings.c:76
+msgid "Add"
+msgstr "Добавить"
+
+#: src/rcstrings.c:77 src/rcstrings.c:121
+msgid "Component..."
+msgstr "Компонент..."
+
+#: src/rcstrings.c:78 src/i_callbacks.c:2530 src/i_callbacks.c:2553
+msgid "Net"
+msgstr "Проводник"
+
+#: src/rcstrings.c:79 src/i_callbacks.c:2598 src/i_callbacks.c:2622
+#: src/x_window.c:616
+msgid "Bus"
+msgstr "Шина"
+
+#: src/rcstrings.c:80
+msgid "Attribute..."
+msgstr "Атрибут..."
+
+#: src/rcstrings.c:81
+msgid "Text..."
+msgstr "Текст..."
+
+#: src/rcstrings.c:82 src/i_callbacks.c:2704 src/i_callbacks.c:2724
+msgid "Line"
+msgstr "Линия"
+
+#: src/rcstrings.c:83 src/i_callbacks.c:2747 src/i_callbacks.c:2767
+msgid "Box"
+msgstr "Прямоугольник"
+
+#: src/rcstrings.c:84 src/i_callbacks.c:2824 src/i_callbacks.c:2845
+msgid "Circle"
+msgstr "Окружность"
+
+#: src/rcstrings.c:85 src/i_callbacks.c:2868 src/i_callbacks.c:2888
+msgid "Arc"
+msgstr "Дуга"
+
+#: src/rcstrings.c:86 src/i_callbacks.c:2911 src/i_callbacks.c:2931
+msgid "Pin"
+msgstr "Контакт"
+
+#: src/rcstrings.c:87
+#, fuzzy
+msgid "Picture..."
+msgstr "Печать..."
+
+#: src/rcstrings.c:89
+msgid "Hierarchy"
+msgstr "Иерархия"
+
+#: src/rcstrings.c:90
+msgid "Down Schematic"
+msgstr "Вглубь схемы"
+
+#: src/rcstrings.c:91
+msgid "Down Symbol"
+msgstr "Вглубь символа"
+
+#: src/rcstrings.c:92
+msgid "Up"
+msgstr "Наверх"
+
+#: src/rcstrings.c:93
+msgid "Documentation"
+msgstr "Документация"
+
+#: src/rcstrings.c:95 src/x_multiattrib.c:1299
+msgid "Attributes"
+msgstr "Атрибуты"
+
+#: src/rcstrings.c:96 src/i_callbacks.c:3244
+msgid "Attach"
+msgstr "Прицепить"
+
+#: src/rcstrings.c:97 src/i_callbacks.c:3293
+msgid "Detach"
+msgstr "Отцепить"
+
+#: src/rcstrings.c:98
+msgid "Show Value"
+msgstr "Показать значение"
+
+#: src/rcstrings.c:99
+msgid "Show Name"
+msgstr "Показать имя"
+
+#: src/rcstrings.c:100
+msgid "Show Both"
+msgstr "Показать оба параметра"
+
+#: src/rcstrings.c:101
+msgid "Toggle Visibility"
+msgstr "Переключение видимости"
+
+#: src/rcstrings.c:102
+msgid "Find Specific Text..."
+msgstr "Найти определенный текст..."
+
+#: src/rcstrings.c:103
+msgid "Hide Specific Text..."
+msgstr "Скрыть определенный текст..."
+
+#: src/rcstrings.c:104
+msgid "Show Specific Text..."
+msgstr "Показать определенный текст..."
+
+#: src/rcstrings.c:105
+msgid "Autonumber Text..."
+msgstr "Автонумеровать текст..."
+
+#: src/rcstrings.c:107
+msgid "Options"
+msgstr "Настройки"
+
+#: src/rcstrings.c:108
+msgid "Text Size..."
+msgstr "Размер текста..."
+
+#: src/rcstrings.c:109
+msgid "Toggle Grid On/Off"
+msgstr "Переключить отображение сетки"
+
+#: src/rcstrings.c:110
+msgid "Toggle Snap On/Off"
+msgstr "Переключение привязки"
+
+#: src/rcstrings.c:111
+msgid "Snap Grid Spacing..."
+msgstr "Шаг сетки привязки..."
+
+#: src/rcstrings.c:112
+#, fuzzy
+msgid "Toggle Outline/Box"
+msgstr "Переключение внешний контур/бокс"
+
+#: src/rcstrings.c:113
+msgid "Toggle Net Rubberband"
+msgstr ""
+
+#: src/rcstrings.c:114
+msgid "Show Log Window..."
+msgstr "Показать окно протокола"
+
+#: src/rcstrings.c:115
+msgid "Show Coord Window..."
+msgstr "Показать окно координат"
+
+#: src/rcstrings.c:117 src/x_menus.c:249
+msgid "Help"
+msgstr "Помощь"
+
+#: src/rcstrings.c:118 src/x_dialog.c:2625
+msgid "About..."
+msgstr "О..."
+
+#: src/rcstrings.c:119
+msgid "Manual..."
+msgstr "Руководство..."
+
+#: src/rcstrings.c:120 src/x_dialog.c:3274
+msgid "Hotkeys..."
+msgstr "Горячие клавиши..."
 
 #: src/a_zoom.c:222
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -193,10 +641,6 @@ msgstr "Каталог схем НЕ установлен!\n"
 msgid "Executing guile script [%s]\n"
 msgstr "Запускается guile-скрипт [%s]\n"
 
-#: src/i_basic.c:94 src/x_window.c:879
-msgid "Select Mode"
-msgstr "Режим выборки"
-
 #: src/i_basic.c:97
 msgid "Attribute Mode"
 msgstr "Режим атрибутов"
@@ -209,25 +653,9 @@ msgstr "Режим компонентов"
 msgid "Text Mode"
 msgstr "Режим текста"
 
-#: src/i_basic.c:107
-msgid "Copy Mode"
-msgstr "Режим копирования"
-
-#: src/i_basic.c:110
-msgid "Move Mode"
-msgstr "Режим перемещения"
-
 #: src/i_basic.c:112
 msgid "Rotate Mode"
 msgstr "Режим вращения"
-
-#: src/i_basic.c:114
-msgid "Mirror Mode"
-msgstr "Режим зеркалирования"
-
-#: src/i_basic.c:118
-msgid "Zoom Box"
-msgstr "Область для масштабирования"
 
 #: src/i_basic.c:122
 msgid "Pan Mode"
@@ -383,15 +811,6 @@ msgstr "Закрытие окна\n"
 msgid "Select objs first"
 msgstr "Требуется выбор объектов"
 
-#: src/i_callbacks.c:814 src/x_attribedit.c:412 src/x_multiattrib.c:1160
-#: src/x_window.c:710
-msgid "Delete"
-msgstr "Удалить"
-
-#: src/i_callbacks.c:838 src/x_window.c:665
-msgid "Edit"
-msgstr "Правка"
-
 #: src/i_callbacks.c:854 src/x_dialog.c:615 src/x_dialog.c:620
 msgid "Edit Text"
 msgstr "Правка текста"
@@ -411,14 +830,6 @@ msgstr "Вращать"
 #: src/i_callbacks.c:955 src/i_callbacks.c:975 src/x_window.c:740
 msgid "Mirror"
 msgstr "Зеркалирование"
-
-#: src/i_callbacks.c:999
-msgid "Lock"
-msgstr "Блокировать"
-
-#: src/i_callbacks.c:1017
-msgid "Unlock"
-msgstr "Разблокировать"
 
 #: src/i_callbacks.c:1035 src/x_dialog.c:2027
 msgid "Translate"
@@ -471,10 +882,6 @@ msgstr "Правка типа линии"
 #: src/i_callbacks.c:1362 src/x_dialog.c:1442
 msgid "Edit Fill Type"
 msgstr "Правка типа заливки"
-
-#: src/i_callbacks.c:1546 src/i_callbacks.c:1561
-msgid "Pan"
-msgstr "Центрировать"
 
 #: src/i_callbacks.c:1595
 msgid "Update Cues"
@@ -574,34 +981,6 @@ msgstr "Компонент"
 msgid "Attribute"
 msgstr "Атрибуты"
 
-#: src/i_callbacks.c:2530 src/i_callbacks.c:2553
-msgid "Net"
-msgstr "Проводник"
-
-#: src/i_callbacks.c:2598 src/i_callbacks.c:2622 src/x_window.c:616
-msgid "Bus"
-msgstr "Шина"
-
-#: src/i_callbacks.c:2704 src/i_callbacks.c:2724
-msgid "Line"
-msgstr "Линия"
-
-#: src/i_callbacks.c:2747 src/i_callbacks.c:2767
-msgid "Box"
-msgstr "Прямоугольник"
-
-#: src/i_callbacks.c:2824 src/i_callbacks.c:2845
-msgid "Circle"
-msgstr "Окружность"
-
-#: src/i_callbacks.c:2868 src/i_callbacks.c:2888
-msgid "Arc"
-msgstr "Дуга"
-
-#: src/i_callbacks.c:2911 src/i_callbacks.c:2931
-msgid "Pin"
-msgstr "Контакт"
-
 #: src/i_callbacks.c:2997
 #, c-format
 msgid "Searching for source [%s]\n"
@@ -617,14 +996,6 @@ msgstr "Невозможно найти источник [%s]\n"
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Поиск символа [%s]\n"
-
-#: src/i_callbacks.c:3244
-msgid "Attach"
-msgstr "Прицепить"
-
-#: src/i_callbacks.c:3293
-msgid "Detach"
-msgstr "Отцепить"
 
 #: src/i_callbacks.c:3333
 msgid "ShowN"
@@ -1109,12 +1480,6 @@ msgstr ""
 msgid "Apply"
 msgstr "Применить"
 
-#: src/x_dialog.c:312 src/x_dialog.c:2669 src/x_dialog.c:2808
-#: src/x_dialog.c:3161 src/x_dialog.c:3338 src/x_fileselect.c:2209
-#: src/x_image.c:431
-msgid "Close"
-msgstr "Закрыть"
-
 #: src/x_dialog.c:371
 msgid "Lower Left"
 msgstr "Нижний левый"
@@ -1308,10 +1673,6 @@ msgstr "Слишком длинная строка... hack!\n"
 msgid "Edit slot number"
 msgstr "Правка номера слота"
 
-#: src/x_dialog.c:2625
-msgid "About..."
-msgstr "О..."
-
 #: src/x_dialog.c:2644
 msgid "gEDA : GPL Electronic Design Automation"
 msgstr ""
@@ -1360,10 +1721,6 @@ msgstr "Правка цвета"
 #, c-format
 msgid "Ran out of space in the hotkey buffer...\n"
 msgstr ""
-
-#: src/x_dialog.c:3274
-msgid "Hotkeys..."
-msgstr "Горячие клавиши..."
 
 #: src/x_dialog.c:3319
 #, fuzzy
@@ -1767,10 +2124,6 @@ msgstr "Вглубь символа"
 msgid "/Up"
 msgstr "Наверх"
 
-#: src/x_menus.c:249
-msgid "Help"
-msgstr "Помощь"
-
 #: src/x_menus.c:354
 msgid "Tried to set the sensitivity on a non-existent menu item\n"
 msgstr ""
@@ -1803,10 +2156,6 @@ msgstr ""
 msgid "Edit Attributes"
 msgstr "Редактировать атрибуты"
 
-#: src/x_multiattrib.c:1299
-msgid "Attributes"
-msgstr "Атрибуты"
-
 #: src/x_multiattrib.c:1356
 msgid "Name"
 msgstr "Имя"
@@ -1831,22 +2180,6 @@ msgstr ""
 #, fuzzy
 msgid "Add Attribute"
 msgstr "Добавить/Редактрировать атрибут"
-
-#: src/x_pagesel.c:262
-msgid "New Page"
-msgstr "Новая страница"
-
-#: src/x_pagesel.c:263
-msgid "Open Page..."
-msgstr "Открыть страницу..."
-
-#: src/x_pagesel.c:265
-msgid "Save Page"
-msgstr "Сохранить страницу"
-
-#: src/x_pagesel.c:266
-msgid "Close Page"
-msgstr "Закрыть страницу"
 
 #: src/x_pagesel.c:267
 msgid "Discard Page"
@@ -1898,10 +2231,6 @@ msgstr "Невозможно распечатать текущую схему н
 #, c-format
 msgid "Printed current schematic to [%s]\n"
 msgstr "Текущая схема распечатана на [%s]\n"
-
-#: src/x_print.c:356
-msgid "Print..."
-msgstr "Печать..."
 
 #: src/x_print.c:359
 msgid "Print"
@@ -1956,10 +2285,6 @@ msgstr "Невозможно назначить bounding_xor_gc\n"
 msgid "Couldn't allocate bus_gc\n"
 msgstr "Невозможно назначить bus_gc\n"
 
-#: src/x_window.c:518
-msgid "New"
-msgstr "Новая"
-
 #: src/x_window.c:519
 msgid "New file"
 msgstr "Новый файл"
@@ -1976,17 +2301,9 @@ msgstr "Сохранить"
 msgid "Save file"
 msgstr "Сохранить файл"
 
-#: src/x_window.c:558
-msgid "Undo"
-msgstr "Отменить действие"
-
 #: src/x_window.c:559
 msgid "Undo last operation"
 msgstr "Отменить последнее действие"
-
-#: src/x_window.c:571
-msgid "Redo"
-msgstr "Повторить действие"
 
 #: src/x_window.c:572
 msgid "Redo last undo"
@@ -2079,241 +2396,6 @@ msgstr "Центр/Отмена"
 #, fuzzy
 #~ msgid "Invalid number of lines [%d] passed to output-vector-threshold\n"
 #~ msgstr "Неверное количество уровней [%d] при обработке undo-levels\n"
-
-#~ msgid "File"
-#~ msgstr "Файл"
-
-#~ msgid "New Window"
-#~ msgstr "Новое окно"
-
-#~ msgid "Revert Page"
-#~ msgstr "Возвратить страницу"
-
-#~ msgid "Save Page As..."
-#~ msgstr "Сохранить страницу как..."
-
-#~ msgid "Save All"
-#~ msgstr "Сохранить все"
-
-#~ msgid "Write PNG..."
-#~ msgstr "Записать PNG..."
-
-#~ msgid "Execute Script..."
-#~ msgstr "Выполнить скрипт..."
-
-#~ msgid "Close Window"
-#~ msgstr "Закрыть окно"
-
-#~ msgid "Quit"
-#~ msgstr "Выйти"
-
-#~ msgid "Edit..."
-#~ msgstr "Правка..."
-
-#~ msgid "Edit Text..."
-#~ msgstr "Правка текста..."
-
-#~ msgid "Rotate 90 Mode"
-#~ msgstr "Режим вращения на 90"
-
-#~ msgid "Slot..."
-#~ msgstr "Слот..."
-
-#~ msgid "Color..."
-#~ msgstr "Цвет..."
-
-#~ msgid "Line Width & Type..."
-#~ msgstr "Тип и ширина линии..."
-
-#~ msgid "Fill Type..."
-#~ msgstr "Тип заливки..."
-
-#~ msgid "Symbol Translate..."
-#~ msgstr "Перевод символа..."
-
-#, fuzzy
-#~ msgid "Embed Component/Picture"
-#~ msgstr "Внедрить компонент"
-
-#, fuzzy
-#~ msgid "Unembed Component/Picture"
-#~ msgstr "Исключить компонент"
-
-#~ msgid "Update Component"
-#~ msgstr "Обновить компонент"
-
-#~ msgid "Show/Hide Inv Text"
-#~ msgstr "Показать/Скрыть невидимый текст"
-
-#~ msgid "Make Inv Text Vis"
-#~ msgstr "Сделать невидимый текст видимым"
-
-#~ msgid "Buffer"
-#~ msgstr "Буфер"
-
-#~ msgid "Copy into 1"
-#~ msgstr "Копировать в 1"
-
-#~ msgid "Copy into 2"
-#~ msgstr "Копировать в 2"
-
-#~ msgid "Copy into 3"
-#~ msgstr "Копировать в 3"
-
-#~ msgid "Copy into 4"
-#~ msgstr "Копировать в 4"
-
-#~ msgid "Copy into 5"
-#~ msgstr "Копировать в 5"
-
-#~ msgid "Cut into 1"
-#~ msgstr "Вырезать в 1"
-
-#~ msgid "Cut into 2"
-#~ msgstr "Вырезать в 2"
-
-#~ msgid "Cut into 3"
-#~ msgstr "Вырезать в 3"
-
-#~ msgid "Cut into 4"
-#~ msgstr "Вырезать в 4"
-
-#~ msgid "Cut into 5"
-#~ msgstr "Вырезать в 5"
-
-#~ msgid "Paste from 1"
-#~ msgstr "Вставить из 1"
-
-#~ msgid "Paste from 2"
-#~ msgstr "Вставить из 2"
-
-#~ msgid "Paste from 3"
-#~ msgstr "Вставить из 3"
-
-#~ msgid "Paste from 4"
-#~ msgstr "Вставить из 4"
-
-#~ msgid "Paste from 5"
-#~ msgstr "Вставить из 5"
-
-#~ msgid "View"
-#~ msgstr "Вид"
-
-#~ msgid "Redraw"
-#~ msgstr "Перерисовать"
-
-#~ msgid "Zoom Extents"
-#~ msgstr "Масштаб на экран"
-
-#~ msgid "Zoom In"
-#~ msgstr "Увеличить"
-
-#~ msgid "Zoom Out"
-#~ msgstr "Уменьшить"
-
-#~ msgid "Zoom Full"
-#~ msgstr "В натуральную величину"
-
-#~ msgid "Page"
-#~ msgstr "Страница"
-
-#~ msgid "Manager..."
-#~ msgstr "Менеджер..."
-
-#~ msgid "Next"
-#~ msgstr "Следующая"
-
-#~ msgid "Previous"
-#~ msgstr "Предыдущая"
-
-#~ msgid "Revert"
-#~ msgstr "Возвратить"
-
-#~ msgid "Discard"
-#~ msgstr "Отвергнуть"
-
-#~ msgid "Add"
-#~ msgstr "Добавить"
-
-#~ msgid "Component..."
-#~ msgstr "Компонент..."
-
-#~ msgid "Attribute..."
-#~ msgstr "Атрибут..."
-
-#~ msgid "Text..."
-#~ msgstr "Текст..."
-
-#, fuzzy
-#~ msgid "Picture..."
-#~ msgstr "Печать..."
-
-#~ msgid "Hierarchy"
-#~ msgstr "Иерархия"
-
-#~ msgid "Down Schematic"
-#~ msgstr "Вглубь схемы"
-
-#~ msgid "Down Symbol"
-#~ msgstr "Вглубь символа"
-
-#~ msgid "Up"
-#~ msgstr "Наверх"
-
-#~ msgid "Documentation"
-#~ msgstr "Документация"
-
-#~ msgid "Show Value"
-#~ msgstr "Показать значение"
-
-#~ msgid "Show Name"
-#~ msgstr "Показать имя"
-
-#~ msgid "Show Both"
-#~ msgstr "Показать оба параметра"
-
-#~ msgid "Toggle Visibility"
-#~ msgstr "Переключение видимости"
-
-#~ msgid "Find Specific Text..."
-#~ msgstr "Найти определенный текст..."
-
-#~ msgid "Hide Specific Text..."
-#~ msgstr "Скрыть определенный текст..."
-
-#~ msgid "Show Specific Text..."
-#~ msgstr "Показать определенный текст..."
-
-#~ msgid "Autonumber Text..."
-#~ msgstr "Автонумеровать текст..."
-
-#~ msgid "Options"
-#~ msgstr "Настройки"
-
-#~ msgid "Text Size..."
-#~ msgstr "Размер текста..."
-
-#~ msgid "Toggle Grid On/Off"
-#~ msgstr "Переключить отображение сетки"
-
-#~ msgid "Toggle Snap On/Off"
-#~ msgstr "Переключение привязки"
-
-#~ msgid "Snap Grid Spacing..."
-#~ msgstr "Шаг сетки привязки..."
-
-#, fuzzy
-#~ msgid "Toggle Outline/Box"
-#~ msgstr "Переключение внешний контур/бокс"
-
-#~ msgid "Show Log Window..."
-#~ msgstr "Показать окно протокола"
-
-#~ msgid "Show Coord Window..."
-#~ msgstr "Показать окно координат"
-
-#~ msgid "Manual..."
-#~ msgstr "Руководство..."
 
 #~ msgid "Comps"
 #~ msgstr "Компоненты"
