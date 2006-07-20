@@ -1,3 +1,10 @@
+2006-07-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* po/POTFILES.in: Updated files to get rid of old noweb references.
+
+	* po/*.po, po/gschem.pot: Updated files to take into account above
+	changes (via make dist).
+
 2006-07-15 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/x_log.h, src/g_hook.c, src/g_keys.c, src/g_rc.c, 
