@@ -34,7 +34,7 @@
 #include <dmalloc.h>
 #endif
 
-COLOR colors[MAX_COLORS];
+extern COLOR colors[MAX_COLORS];
 
 /*! \todo Finish function documentation!!!
  *  \brief

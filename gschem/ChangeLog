@@ -1,3 +1,7 @@
+2006-07-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/x_color.c: Added a missing extern keyword on colors structure
+
 2006-07-23  Mike Jarabek  <mjarabek@istop.com>
 
 	* examples/drawing_primitives.sch: Removed extra line from text in
