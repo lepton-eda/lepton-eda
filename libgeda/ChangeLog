@@ -1,3 +1,9 @@
+2006-07-23  Mike Jarabek  <mjarabek@istop.com>
+
+	* src/o_text_basic.c: Fixed 180 degree rotated text so that it
+	prints upside right unstead of upside down in the postscipt
+	back end.
+
 2006-07-15 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/a_basic.c, src/f_basic.c, src/f_print.c, src/g_basic.c,

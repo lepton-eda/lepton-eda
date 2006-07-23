@@ -1,3 +1,8 @@
+2006-07-23  Mike Jarabek  <mjarabek@istop.com>
+
+	* examples/drawing_primitives.sch: Removed extra line from text in
+	drawing primitives.
+
 2006-07-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* po/POTFILES.in: Updated files to get rid of old noweb references.

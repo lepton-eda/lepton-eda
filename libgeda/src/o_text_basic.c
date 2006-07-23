@@ -1615,6 +1615,7 @@ void o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		  int origin_x, int origin_y, 
 		  int unicode_count, gunichar *unicode_table)
 {
+  int alignment;
   char *centering_control = NULL;
   char *p,*s;
   char *output_string = NULL;
@@ -1622,6 +1623,7 @@ void o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   char *value = NULL;
   int x, y, angle, len, char_height;
   float font_size;
+
 
   if (!o_current->text->string) {
     return;
@@ -1666,9 +1668,45 @@ void o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     output_string = g_strdup(o_current->text->string);
   }
 
+  /* Apply alignment map to apply when text is 180 degrees rotated.
+   * We want the text on the printer to appear upside right, even
+   * though mathematically it aught to be upside down.  To make this
+   * work, we will reset the angle to 0, when it's equal to 180
+   * degrees, then apply a transformation to the origin location as if
+   * the text was rotated about that point.  E.g. if the text origin
+   * was at the lower left, and the text was rotated by 180 degrees,
+   * it would be as if the origin was at the upper right. The same
+   * reasoning has been applied to all 8 other text origins.
+   * MIDDLE_MIDDLE maps to itself.
+   */
+  alignment = o_current->text->alignment;
+  angle = o_current->text->angle;
+  if(angle == 180) {
+    angle = 0;        /* reset angle to 0 to make text upright */
+    switch(alignment) {
+    case(LOWER_LEFT):    alignment = UPPER_RIGHT;
+      break;
+    case(MIDDLE_LEFT):   alignment = MIDDLE_RIGHT;
+      break;
+    case(UPPER_LEFT):    alignment = LOWER_RIGHT;
+      break;
+    case(LOWER_MIDDLE):  alignment = UPPER_MIDDLE;
+      break;
+    case(MIDDLE_MIDDLE): alignment = MIDDLE_MIDDLE;
+      break;
+    case(UPPER_MIDDLE):  alignment = LOWER_MIDDLE;
+      break;
+    case(LOWER_RIGHT):   alignment = UPPER_LEFT;
+      break;
+    case(MIDDLE_RIGHT):  alignment = MIDDLE_LEFT;
+      break;
+    case(UPPER_RIGHT):   alignment = LOWER_LEFT;
+      break;
+    }
+  }
 
   /* Create an appropriate control string for the centering. */
-  switch(o_current->text->alignment) {
+  switch(alignment) {
                                        /* hcenter rjustify vcenter vjustify */
   case(LOWER_LEFT):    centering_control = "false false false false";
     break;
@@ -1714,7 +1752,6 @@ void o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   /* Collect pertinent info about the text location */
   x = o_current->text->x;
   y = o_current->text->y;
-  angle = o_current->text->angle; 
   font_size = (float) o_current->text->size/72.0*1000.0;
   fprintf(fp,"] %d %d %d %f text\n",angle,x,y,font_size);
 
