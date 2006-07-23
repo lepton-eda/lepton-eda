@@ -622,12 +622,13 @@
 ; middle-button string
 ;
 ; Controls if the middle mouse button draws strokes, repeats the last 
-; command, or does an action (move and copy (holding down the ALT key) 
-; are supported) on a single objects.
+; command, does an action (move and copy (holding down the ALT key) 
+; are supported) on a single objects, or if it does the mouse panning.
 ;
 (middle-button "action")
 ;(middle-button "stroke")
 ;(middle-button "repeat")
+;(middle-button "mousepan")
 
 ; third-button string
 ;

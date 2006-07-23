@@ -1,3 +1,8 @@
+2006-07-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/defines.h: Applied mouse pan patch by Peter Clifton. 
+	(Patch #1527361): Allow middle button panning in gschem
+
 2006-07-23  Mike Jarabek  <mjarabek@istop.com>
 
 	* src/o_text_basic.c: Fixed 180 degree rotated text so that it

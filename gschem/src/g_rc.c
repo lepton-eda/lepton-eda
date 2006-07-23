@@ -1035,11 +1035,12 @@ SCM g_rc_middle_button(SCM mode)
     {STROKE, "stroke"},
     {REPEAT, "repeat"},
     {ACTION, "action"},
+    {MID_MOUSEPAN_ENABLED, "mousepan"},
   };
 
   RETURN_G_RC_MODE("middle-button",
 		   default_middle_button,
-		   3);
+		   4);
 }
 
 /*! \todo Finish function documentation!!!

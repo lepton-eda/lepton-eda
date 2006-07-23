@@ -320,6 +320,7 @@
 #define STROKE			0
 #define REPEAT			1
 #define ACTION			2
+#define MID_MOUSEPAN_ENABLED	3
 
 /* for selected_from */
 #define DONTCARE		0

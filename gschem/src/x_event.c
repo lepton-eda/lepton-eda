@@ -567,6 +567,14 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       break;
 
 #endif
+      case(MID_MOUSEPAN_ENABLED):
+      w_current->event_state = MOUSEPAN; /* start */
+      w_current->inside_action = 1;
+      w_current->doing_pan = TRUE;
+      start_pan_x = (int) event->x;
+      start_pan_y = (int) event->y;
+      throttle=0;
+      break;      
     }
 
   } else if (event->button == 3) {
@@ -895,6 +903,18 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       }
       break;
 #endif
+      
+      case(MID_MOUSEPAN_ENABLED):
+      w_current->doing_pan=FALSE;
+      o_redraw_all_fast(w_current);
+      o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+      /* this needs to be REDONE */
+      /* if you mouse pan, you will be thrown out of the current mode. */
+      /* not good */
+      w_current->inside_action = 0;
+      i_set_state(w_current, SELECT);
+      i_update_toolbar(w_current);
+      break;
     }
 
   } else if (event->button == 3) {
@@ -971,7 +991,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     coord_display_update(w_current, mouse_x, mouse_y);
   }
 
-  if (w_current->third_button == MOUSEPAN_ENABLED) {
+  if (w_current->third_button == MOUSEPAN_ENABLED || w_current->middle_button == MID_MOUSEPAN_ENABLED) {
     if((w_current->event_state == MOUSEPAN) &&
        w_current->inside_action) {
          pdiff_x = mouse_x - start_pan_x;
