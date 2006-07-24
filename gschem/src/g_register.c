@@ -146,6 +146,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "grid-fixed-threshold",   	 1, 0, 0, g_rc_grid_fixed_threshold },
   { "output-vector-threshold",   1, 0, 0, g_rc_output_vector_threshold },
   { "add-attribute-offset",      1, 0, 0, g_rc_add_attribute_offset },
+  { "mousepan-gain",             1, 0, 0, g_rc_mousepan_gain },
 
   /* backup functions */
   { "auto-save-interval",        1, 0, 0, g_rc_auto_save_interval },

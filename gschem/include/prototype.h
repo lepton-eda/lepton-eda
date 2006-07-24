@@ -269,6 +269,7 @@ SCM g_rc_output_vector_threshold(SCM numlines);
 SCM g_rc_add_attribute_offset(SCM offset);
 SCM g_rc_auto_save_interval(SCM seconds);
 SCM g_rc_drag_can_move(SCM mode);
+SCM g_rc_mousepan_gain(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */

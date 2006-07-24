@@ -170,6 +170,17 @@
 (fast-mousepan "enabled")
 ;(fast-mousepan "disabled")
 
+; mousepan-gain integer
+;
+; Controls how much the display pans when using mousepan.  A larger value
+; provides greater pan distance when moving the mouse, while a smaller value
+; provides a smoother, but smaller pan distance when moving the mouse.
+(mousepan-gain 5)
+;(mousepan-gain 1)
+;(mousepan-gain 10)
+
+
+
 ; action-feedback-mode string
 ;
 ; Set the default action feedback mode (for copy/move/component place).

@@ -125,6 +125,7 @@ int   default_height = 600;
 int   default_text_display_zoomfactor = 30;
 
 int default_text_feedback = ONLY_WHEN_READABLE;
+int default_mousepan_gain = 5;
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -238,6 +239,8 @@ void i_vars_set(TOPLEVEL *w_current)
   w_current->add_attribute_offset  = default_add_attribute_offset;
 
   w_current->drag_can_move = default_drag_can_move;
+
+  w_current->mousepan_gain = default_mousepan_gain;
 
   w_current->auto_save_interval = default_auto_save_interval;
   if (w_current->auto_save_interval != 0) {

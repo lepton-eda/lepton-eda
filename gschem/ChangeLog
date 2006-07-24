@@ -4,6 +4,14 @@
 
         * include/defines.h: Applied mouse pan patch by Peter Clifton.
         (Patch #1527361): Allow middle button panning in gschem
+	Thanks for the patch Peter!
+
+	* include/i_vars.h, include/prototype.h, lib/system-gschemrc.in,
+	src/g_rc.c, src/g_register.c, src/i_vars.c, src/x_event.c:
+	Applied mouse gain patch by Peter Clifton.  Added (mousepan-gain #)
+	rc option to control this gain (default is still 5).
+	(Patch #1527363): Set mousepan "gain" to unity
+	Thanks for the patch Peter!
 
 2006-07-23  Mike Jarabek  <mjarabek@istop.com>
 

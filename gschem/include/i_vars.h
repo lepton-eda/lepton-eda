@@ -86,6 +86,6 @@ extern int default_grid_mode;
 extern int default_grid_fixed_threshold;
 extern int default_print_vector_threshold;
 extern int default_add_attribute_offset;
-
 extern int default_auto_save_interval;
 extern int default_drag_can_move;
+extern int default_mousepan_gain;

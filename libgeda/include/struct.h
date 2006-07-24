@@ -885,6 +885,8 @@ struct st_toplevel {
   /* List of attributes to always promote */
   char *always_promote_attributes;
 
+  /* Controls the gain of the mouse pan */
+  int mousepan_gain;
 
   /* gnetlist specific */
   int net_naming_priority;

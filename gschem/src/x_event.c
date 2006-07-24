@@ -1003,7 +1003,8 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 #endif
 
          if (!(throttle % 5)) {
-           a_pan_mouse(w_current, pdiff_x*5, pdiff_y*5);
+           a_pan_mouse(w_current, pdiff_x*w_current->mousepan_gain, 
+                       pdiff_y*w_current->mousepan_gain);
 
            start_pan_x = (int) event->x;
            start_pan_y = (int) event->y;
