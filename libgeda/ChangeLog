@@ -1,3 +1,9 @@
+2006-07-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_toplevel.c: Added initialization of missing variable 
+	(toplevel->prev).  This caused a rare segmentation fault 
+	(Bug#1528080)
+
 2006-07-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/defines.h: Applied mouse pan patch by Peter Clifton. 

@@ -60,6 +60,7 @@ void s_toplevel_init (void)
   toplevel_head = (TOPLEVEL*)g_new (TOPLEVEL, 1);
   toplevel_head->wid = -1;
   toplevel_head->next = NULL;  
+  toplevel_head->prev = NULL;
 }
 
 /*! \todo Finish function documentation!!!
