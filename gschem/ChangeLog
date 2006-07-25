@@ -1,3 +1,8 @@
+2006-07-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/x_window.c: Added pointer check to be pro-active.  Related to
+	(Bugs#1528080)
+
 2006-07-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_color.c: Added a missing extern keyword on colors structure
