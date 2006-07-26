@@ -439,6 +439,9 @@ SCM g_get_object_pins (SCM object_smob)
   SCM_ASSERT (g_get_data_from_object_smob (object_smob, &w_current, &object),
 	      object_smob, SCM_ARG1, "get-object-pins");
 
+  if (!object) {
+    return (returned);
+  }
   if (object->complex && object->complex->prim_objs) {
     prim_obj = object->complex->prim_objs;
     while (prim_obj != NULL) {

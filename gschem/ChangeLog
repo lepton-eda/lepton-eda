@@ -1,3 +1,9 @@
+2006-07-26 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/g_hook.c: Added pointer check. Fixes gschem crash when 
+	adding an attribute while some other attributes were selected.
+	Thanks to Levente Kovacs for reporting the bug and testing the patch.
+
 2006-07-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_window.c: Added pointer check to be pro-active.  Related to
