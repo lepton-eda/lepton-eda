@@ -866,6 +866,7 @@ void x_dialog_about_dialog()
   string =
     g_strdup_printf("%sand gtkextra, as well as support from the gEDA community.", string);
   label = gtk_label_new(string);
+
   g_free(string);
   gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 5);
   gtk_widget_show(label);
@@ -882,14 +883,6 @@ void x_dialog_about_dialog()
 		     GTK_SIGNAL_FUNC(x_dialog_about_close_callback), 
 		     GTK_WIDGET(about_window) );
 
-/* Remove bad size for widget */
-#if 0
-#ifdef HAS_GTK22
-  gtk_widget_set_size_request (GTK_WIDGET (buttonclose), 50, 30);
-#else
-  gtk_widget_set_usize (GTK_WIDGET (buttonclose), 50, 30);
-#endif
-#endif
 
   gtk_widget_show(buttonclose);
 
@@ -897,6 +890,188 @@ void x_dialog_about_dialog()
     gtk_widget_show(about_window);
   }
 }
+
+
+
+/* ========================================================= *
+ * Get name of file for export of CSV
+ * ========================================================= */
+/* --------------------------------------------------------- *
+ * This asks for the filename for the export file
+ * --------------------------------------------------------- */
+void x_dialog_export_file()
+{
+  GtkWidget *export_filename_window;
+  GtkWidget *label;
+  GtkWidget *buttoncancel = NULL;
+  GtkWidget *buttonok = NULL;
+  GtkWidget *vbox, *action_area;
+  GtkWidget *filename_entry;
+  gchar *string;
+
+#ifdef DEBUG
+    printf("In x_dialog_get_export_filename, creating windows.\n");
+#endif
+
+  /* Create window and set its properties */
+  export_filename_window = x_dialog_create_dialog_box(&vbox, &action_area);
+  gtk_window_position(GTK_WINDOW(export_filename_window),
+		      GTK_WIN_POS_MOUSE);
+#ifdef HAS_GTK22
+  gtk_widget_set_size_request (GTK_WIDGET(export_filename_window), 400, 150);  
+#else
+  gtk_widget_set_usize(GTK_WIDGET(export_filename_window), 400, 150);
+#endif
+  
+  gtk_window_set_title(GTK_WINDOW(export_filename_window), "Export filename?");
+  gtk_container_border_width(GTK_CONTAINER(export_filename_window), 5);
+  
+  gtk_signal_connect(GTK_OBJECT(export_filename_window),
+		     "destroy", GTK_SIGNAL_FUNC(x_dialog_export_file_close_callback),
+		     GTK_WIDGET(export_filename_window) );
+  
+  gtk_signal_connect(GTK_OBJECT(export_filename_window),
+		     "key_press_event", 
+		     GTK_SIGNAL_FUNC(x_dialog_export_file_keypress_callback),
+		     GTK_WIDGET(export_filename_window) );
+  gtk_window_set_modal(GTK_WINDOW(export_filename_window), TRUE);
+
+  /*  Create a text label for the dialog window */
+
+
+
+  string =
+    g_strdup_printf("Enter name for export file.\n");
+  string =
+    g_strdup_printf("%sDon't forget to include file suffix\n", string);
+  string = 
+    g_strdup_printf("%s(such as .csv).\n", string);
+
+  label = gtk_label_new(string);
+  gtk_label_set_justify(label, GTK_JUSTIFY_CENTER);
+
+  gtk_widget_show (label);
+  gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
+#ifdef HAS_GTK22
+  gtk_widget_set_size_request (label, 127, 50);
+#else
+  gtk_widget_set_usize (label, 127, 50);
+#endif
+
+
+  /*  Create the "filenname" text entry area */
+  filename_entry = gtk_entry_new_with_max_length(1024);
+  gtk_editable_select_region(GTK_EDITABLE(filename_entry), 0,
+                             -1);
+  gtk_box_pack_start(GTK_BOX(vbox), filename_entry, TRUE,
+                     TRUE, 5);
+#ifdef HAS_GTK22
+  gtk_widget_set_size_request (GTK_WIDGET (filename_entry), 400, 20);
+#else
+  gtk_widget_set_usize (GTK_WIDGET (filename_entry), 400, 20);
+#endif
+
+  gtk_object_set_data(GTK_OBJECT(export_filename_window), "filename_entry",
+                      filename_entry);  /* here we make the string "filename_entry" point
+				         * to the export_filename_entry widget.  
+				         * We'll use this later. */
+  gtk_widget_show(filename_entry);
+
+
+  /* Now create "OK" and "cancel" buttons */
+#ifdef HAS_GTK12
+  buttonok = gtk_button_new_with_label("OK");
+#else
+  buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
+  GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT); /* what does this do? */
+  gtk_box_pack_start(GTK_BOX(action_area), buttonok, FALSE, FALSE, 0);
+  gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
+		     GTK_SIGNAL_FUNC(x_dialog_export_file_ok_callback), 
+		     GTK_WIDGET(export_filename_window) );
+  gtk_widget_show(buttonok);
+
+
+#ifdef HAS_GTK12
+  buttoncancel = gtk_button_new_with_label("Cancel");
+#else
+  buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
+  gtk_box_pack_start(GTK_BOX(action_area), buttoncancel, FALSE, FALSE, 0);
+  gtk_signal_connect(GTK_OBJECT(buttoncancel), "clicked",
+		     GTK_SIGNAL_FUNC(x_dialog_export_file_close_callback), 
+		     GTK_WIDGET(export_filename_window) );
+  gtk_widget_show(buttoncancel);
+
+  if (!GTK_WIDGET_VISIBLE(export_filename_window)) {
+    gtk_widget_show(export_filename_window);
+  }
+  
+  return;
+}
+
+/* --------------------------------------------------------- *
+ * keypress event
+ * Note that I need to add an OK and Cancel button
+ * --------------------------------------------------------- */
+int x_dialog_export_file_keypress_callback(GtkWidget * widget, 
+					       GdkEventKey * event,
+					       GtkWidget *window)
+{
+  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+#ifdef DEBUG
+    printf("In x_dialog_export_file_keypress, trying to close window.\n");
+#endif
+    x_dialog_close_window(window);
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+
+/* --------------------------------------------------------- *
+ * OK button pressed -- First get text in entry box.  Then
+ * return it.
+ * --------------------------------------------------------- */
+void x_dialog_export_file_ok_callback(GtkWidget *buttonok, 
+				   GtkWidget *window)
+{
+  GtkEntry *entry;
+  gchar *entry_text;
+
+  /* Retreive pointer to filename_entry widget, then use it to get entered text. */
+  entry = gtk_object_get_data(GTK_OBJECT(window), "filename_entry");
+  entry_text = g_strdup( gtk_entry_get_text(GTK_ENTRY(entry)) );
+
+  /* Perhaps do some other checks . . . . */
+  if (entry_text != NULL) {
+#ifdef DEBUG
+    printf("In x_dialog_export_file_ok_callback, got filename = %s\n", entry_text);
+#endif
+    /*  XXXXX  Here's where I call the export fcn  */ 
+    f_export_components(entry_text);
+    g_free(entry_text);
+  }
+
+  x_dialog_close_window(window);
+  return;
+}
+
+
+/* --------------------------------------------------------- *
+ * close window
+ * --------------------------------------------------------- */
+void x_dialog_export_file_close_callback(GtkWidget *buttonclose, GtkWidget *window)
+{
+  x_dialog_close_window(window);
+}
+
+
+
+
+
+
 
 
 /* ========================================================= *

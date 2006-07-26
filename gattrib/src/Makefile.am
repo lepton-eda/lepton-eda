@@ -16,6 +16,7 @@ gattrib_SOURCES = \
 		globals.c \
 		listsort.c \
 		parsecmd.c \
+		f_export.c \
 		g_register.c \
 		g_rc.c \
 		i_vars.c \
@@ -41,6 +42,7 @@ gattrib_SOURCES = \
 		globals.c \
 		listsort.c \
 		parsecmd.c \
+		f_export.c \
 		g_register.c \
 		g_rc.c \
 		i_vars.c \

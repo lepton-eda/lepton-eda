@@ -109,6 +109,20 @@ static GtkItemFactoryEntry menu_items[] = {
     "<Separator>"
   },
 
+  { "/File/Export CSV",
+    NULL,
+    s_toplevel_menubar_file_export_csv,
+    0, 
+    NULL 
+  },
+
+  { "/File/sep1",    
+    NULL,    
+    NULL,
+    0, 
+    "<Separator>"
+  },
+
   { "/File/Quit",   
     "<control>Q", 
     gattrib_really_quit,

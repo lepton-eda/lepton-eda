@@ -293,9 +293,11 @@ gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
   for (i = 0 ; i < index ; i++) {
     if (local_item == NULL) {
       return NULL;
+    } else {
+      local_item = local_item->next;
     }
   }
-  return list->data;
+  return local_item->data;
 }
 
 

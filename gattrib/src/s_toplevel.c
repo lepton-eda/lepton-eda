@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * gattrib -- gEDA component and net attribute manipulation using spreadsheet.
- * Copyright (C) 2003 Stuart D. Brorson.
+ * Copyright (C) 2003 -- 2006 Stuart D. Brorson.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -206,6 +206,32 @@ void s_toplevel_menubar_file_save(TOPLEVEL *pr_current)
 
   sheet_head->CHANGED = FALSE;
 
+  return;
+}
+
+
+/*------------------------------------------------------------------
+ * This is called when the user wants to export csv
+ *------------------------------------------------------------------*/
+void s_toplevel_menubar_file_export_csv(TOPLEVEL *pr_current)
+{
+  gint cur_page;
+  gchar *filename;
+
+
+  /* first verify that we are on the correct page (components) */
+  cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
+
+  /* Check that we are on components page. */
+  if (cur_page == 0) {
+#ifdef DEBUG
+    printf("In s_toplevel_menubar_file_export_csv, about to export csv\n");
+#endif
+    x_dialog_export_file();
+  } else {
+    x_dialog_unimplemented_feature();  /* We only support export 
+                                          of components now */
+  }
   return;
 }
 

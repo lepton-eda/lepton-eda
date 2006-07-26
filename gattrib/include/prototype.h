@@ -20,6 +20,10 @@ int parse_commandline(int argc, char *argv[]);
 int cmp(STRING_LIST *a, STRING_LIST *b);
 STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double);
 
+/* ------------- f_export.c ------------- */
+void f_export_components(gchar *filename);
+
+
 /* ------------- g_register.c ------------- */
 void g_register_funcs(void);
 SCM g_quit(void);
@@ -88,6 +92,7 @@ void s_toplevel_update_page(OBJECT *start_obj);
 void s_toplevel_menubar_file_open(TOPLEVEL *pr_current);
 void s_toplevel_menubar_file_save(TOPLEVEL *pr_current);
 void s_toplevel_menubar_file_open(TOPLEVEL *pr_current);
+void s_toplevel_menubar_file_export_csv(TOPLEVEL *pr_current);
 void s_toplevel_menubar_edit_newattrib();
 void s_toplevel_add_new_attrib(gchar *new_attrib_name);
 void s_toplevel_menubar_edit_delattrib();
@@ -208,6 +213,16 @@ int x_dialog_about_keypress_callback(GtkWidget * widget, GdkEventKey * event,
 				     GtkWidget * window);
 void x_dialog_about_close_callback(GtkWidget * widget, GtkWidget *window);
 void x_dialog_about_dialog();
+
+void x_dialog_export_file();
+int x_dialog_export_file_keypress_callback(GtkWidget * widget, 
+					 GdkEventKey * event,
+					 GtkWidget *window);
+void x_dialog_export_file_close_callback(GtkWidget * widget, 
+				      GtkWidget *window);
+void x_dialog_export_file_ok_callback(GtkWidget * widget, 
+				      GtkWidget *window);
+
 
 GtkWidget *x_dialog_create_dialog_box(GtkWidget ** out_vbox,
 				      GtkWidget ** out_action_area);
