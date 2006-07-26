@@ -13,8 +13,8 @@ the columns.  It allows the user to add, modify, or delete component
 attributes outside of gschem, and then save the .sch files back
 out.  When it is completed, it will allow the user to edit attributes
 attached to components, nets, and pins.  (Currently, only component
-attribute editing is implemented; pin attributes are displayed only,
-and net attributes are TBD.) 
+attribute editing is implemented; pin and net attributes are displayed
+only.)
 
 Gattrib is useful in situations where you need to view, add, modify,
 or delete a number of attributes all at once.  It saves you the pain
@@ -26,10 +26,10 @@ so using gschem.  In this situation, you can run gattrib on your
 design files to attach the "footprint" attributes all at once using an
 easy-to-use spreadsheet. 
 
-WARNING NOTE:  Gattrib is currently PRE-ALPHA SOFTWARE!
-It has been tested on several designs, but is not garuanteed to work.
-It may even trash your design!  Therefore, if you wish to try gattrib
-out, please create a backup copy of your design before you run it!
+WARNING NOTE:  Gattrib has been tested on many designs, 
+but is not guaranteed to work.  It may even trash your design!
+Therefore, always keep a back-up copy of your design files.  Note that
+this is good advice when using any software on critical files. 
 
 ------------------------------------------------------------------
 USAGE
@@ -52,20 +52,22 @@ To edit your attributes, just edit the cells in the spreadsheet.
 To save your design, just select "save" from the command menu.  Note
 that no checks are currently done when you select save.  Be careful!
 
+You can also save out a csv (comma separated values) file, which can
+later be imported into e.g. oocalc.  This is useful for BOM
+management. 
+
 To quit, just select "quit" from the command menu.  Note that
 currently no checks thet you have saved your design are done when you
 quit.  
 
 If you want to add an entirely new attribute to your design (i.e. one
-which doesn't exist on any component), you must first attach at least
-one instance of that attribute to a component using gschem.  Then you
-can use gattrib to attach the attribute to the remaining components.
-(The reason for this is that gattrib creates its spreadsheet columns
-based upon all attributes it finds when reading in the design.
-Therefore, to create a column for a new attribute, you need to make
-sure that that new attribute pre-exists in the design.)  In the future,
-you will be able to add new attribute columns directly from gattrib,
-but this feature is currently unimplemented.
+which doesn't exist on any component), you can do this through "edit
+-> add new attribute column".  You can also delete an entire attribut
+column.
+
+You can set the visibility of any particular attribute, or an entire
+column of attributes through the "visibility" menu.  Just select the
+attribute or column first, then do "visibility -> <whatever>". 
 
 ------------------------------------------------------------------
 FEATURES
@@ -75,29 +77,30 @@ The following features are currently implemented:
 *  .sch file read in from command line.
 *  .sch file read in from menu.
 *  .sch file save out from menu.
+*  CSV (comma separated value) file save out from menu.
 *  Component attribute editing (of course).
+*  Net attribute viewing.
 *  Pin attribute viewing.
+*  Add/delete attribute columns.
+*  Changing visibility of attributes.
 *  Quit from menu.
 
 The following features are currently unimplemented, but will be
 incorporated at some future date:
 
-*  Throw up "Are you sure" dialog boxes upon selecting "save" and
-   "quit" from menu.
-*  Alphabetic sort of rows.  (Should happen automatically upon read-in
-   of design.)
+*  Throw up "Are you sure" dialog boxes upon selecting "save" from
+   menu. (Is this really necessary?)
 *  Editing of net attributes (important for setting routing
    attributes). 
-*  Adding/deleting attribute columns (to add/delete entire sets of
-   attributes from a design.)
 *  Search/replace of individual attributes.
 *  Search for component refdeses & netnames.
-*  Set/view component & net visibility (through options pull-down
-   menu).  Currently, visibility is "invisible", and both name & value
-   are displayed (if you turn on the visibility).
+*  Indicate component visibility by changing the color of the
+   attribute in each cell.  Example:  Invisible = light grey.
+   Name only = red. Value only = normal black.  Name & value = bold
+   face. 
 
-Note that if you select unimplemented features from the menu, nothing
-will happen.
+Note that if you select unimplemented features from the menu, you will
+get a warning window.
 
 ------------------------------------------------------------------
 INSTALLATION
@@ -111,8 +114,10 @@ cd geda-gattrib-20040806
 make
 make install
 
-Note that you may need to set some environment variables first.  If
-your compilation barfs, try setting these (for csh):
+Note that you may need to set some environment variables first.  Also
+remember to use a date code (20040806) corresponding to the current
+gattrib distribution .  If your compilation barfs, try setting these
+(for csh):   
 
 setenv LD_LIBRARY_PATH /usr/local/geda/lib:$LD_LIBRARY_PATH
 setenv PATH /usr/local/geda/bin:$PATH

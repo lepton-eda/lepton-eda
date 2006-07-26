@@ -1,7 +1,15 @@
+2006-07-25 Stuart Brorson <sdb@cloud9.net>
+	* src/f_export.c, src/x_dialog.c and others:  Implemented
+	ability to export CSV file of component sheet.
+
+	* ToDos, README:  Updated expository material to reflect current
+	state of project.
+	
 2006-07-15 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/gtksheet_2_2.c: Changed a g_free on a gdk_pixmap to 
-	g_object_unref to fix a valgrind error and the following output when	
+	g_object_unref to fix a valgrind error and the following 
+	output when	
 	exiting gattrib:  free(): invalid pointer 0x812a108!
 
 	* src/gattrib.c, src/gtksheet_2_2.c, src/s_object.c, 

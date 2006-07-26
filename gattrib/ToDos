@@ -1,6 +1,6 @@
 Gattrib todos.
 
-Last updated 7.13.2005 -- SDB
+Last updated 7.26.2006 -- SDB
 
 --------------------------------------------------------------------
 This is a running list of things left to be done with gattrib.  Items
@@ -19,7 +19,7 @@ already completed are marked with  #####.
    page1.sch, page2.sch -> page2.sch.)  Currently smashes all pages
    together.
 *  Find out why it leaves "xterm" on the command prompt when you
-   invoke the prog with no files on the cmd line.  
+   invoke the prog with no files on the cmd line.  This may be GTK bug.
 *  Change save menus to:  save project, save as, which cycles through
    pages and saves objects out on a page by page basis.
 *  Incorporate a "close" item on the menu to close out the current
@@ -59,7 +59,8 @@ already completed are marked with  #####.
    adjacent cells.  Maybe automatically size cell to fit text?  Problem is that
    "file" attributes can be very long.   
 *  Per Ales, use the gtksheet stuff as a library instead of a bunch of source
-   files.  Is this necessary?
+   files.  Is this necessary?  No.  I don't want to do this since a third-
+   party library can change, which makes support a PITA.
 *  User should be able to set attrib visibility.  How to implement & show?
 *  #####  Incorporate ability to add attrib columns.
 *  Refactor code so that it makes more sense architecturally.
@@ -70,3 +71,4 @@ already completed are marked with  #####.
 *  Change display of attrib text in each cell depending upon attrib
    visibility state.  Example:  Invisible = light grey.  Name only = red.
    Value only = normal.  Name & value = bold face.
+*  Make gattrib import csv.
