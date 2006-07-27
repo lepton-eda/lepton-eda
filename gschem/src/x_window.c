@@ -994,8 +994,8 @@ void x_window_close(TOPLEVEL *w_current)
   x_fileselect_free_list_buffers(&w_current->fileselect[FILESELECT]);
   x_fileselect_free_list_buffers(&w_current->fileselect[COMPSELECT]);
 
-  if (w_current->next == NULL && w_current->prev != NULL && 
-      w_current->prev->prev == NULL) {
+  g_assert(w_current->prev != NULL);
+  if (w_current->next == NULL && w_current->prev->prev == NULL) {
     /* no more window after this one, remember to quit */
     last_window = TRUE;
   }

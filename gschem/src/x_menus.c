@@ -102,7 +102,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
   char *menu_item_hotkey_func;
   char *menu_item_keys;
   char *spaces;
-  char *help_string;
+  const char *help_string;
   int i, j;
   int name_len, key_len, pad;
   int sum, diff, max_size, space_size;
@@ -264,6 +264,12 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
  *  \par Function Description
  *
  */
+static gchar* gettext_fn(const gchar *path,
+			 gpointer func_data __attribute__((unused)))
+{
+	return gettext(path);
+}
+
 GtkWidget *get_main_popup(TOPLEVEL *w_current)
 {
   static GtkItemFactory *item_factory;
@@ -281,7 +287,7 @@ GtkWidget *get_main_popup(TOPLEVEL *w_current)
   item_factory = gtk_item_factory_new(GTK_TYPE_MENU, "<popup>",
                                       accel_group);
   gtk_item_factory_set_translate_func (item_factory,
-                                       (GtkTranslateFunc)gettext,
+                                       gettext_fn,
                                        NULL, NULL);
   /* This function creates the pop-up menu itself & attaches it to the
      GtkItemFactory. Pass the item factory,

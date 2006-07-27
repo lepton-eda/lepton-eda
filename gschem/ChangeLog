@@ -1,3 +1,11 @@
+2006-07-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/x_window.c: Converted pro-active pointer check to a g_assert
+	(a good suggestion by Peter Clifton).
+
+	* src/x_menu.c: Applied patch by Gabriel Paubert to fix building
+	with --disable-nls.  Thanks!
+
 2006-07-26 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/g_hook.c: Added pointer check. Fixes gschem crash when 
