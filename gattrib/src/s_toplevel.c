@@ -1,3 +1,5 @@
+/* $Id$ */
+
 /* gEDA - GPL Electronic Design Automation
  * gattrib -- gEDA component and net attribute manipulation using spreadsheet.
  * Copyright (C) 2003 -- 2006 Stuart D. Brorson.
@@ -216,7 +218,6 @@ void s_toplevel_menubar_file_save(TOPLEVEL *pr_current)
 void s_toplevel_menubar_file_export_csv(TOPLEVEL *pr_current)
 {
   gint cur_page;
-  gchar *filename;
 
 
   /* first verify that we are on the correct page (components) */
