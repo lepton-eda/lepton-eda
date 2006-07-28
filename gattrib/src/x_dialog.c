@@ -1,3 +1,5 @@
+/* $Id$ */
+
 /* gEDA - GPL Electronic Design Automation
  * gattrib -- gEDA component and net attribute manipulation using spreadsheet.
  * Copyright (C) 2003 Stuart D. Brorson.
@@ -948,7 +950,7 @@ void x_dialog_export_file()
     g_strdup_printf("%s(such as .csv).\n", string);
 
   label = gtk_label_new(string);
-  gtk_label_set_justify(label, GTK_JUSTIFY_CENTER);
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
 
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
