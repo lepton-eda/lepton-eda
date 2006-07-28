@@ -1,3 +1,5 @@
+/* $Id$ */
+
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
  * Copyright (C) 1998-2000 Ales V. Hvezda
@@ -124,7 +126,7 @@ int s_conn_remove_other(TOPLEVEL * w_current, OBJECT * other_object,
 		   conn->x, conn->y);
 #endif
 
-	    /* Do not write modify c_current like this, since this will cause 
+	    /* Do not write modify c_current like this, since this will cause */
 	    /* very nasty data corruption and upset glib's memory slice */
 	    /* allocator. */
 	    /* c_current->data = NULL;   Do not comment in */
