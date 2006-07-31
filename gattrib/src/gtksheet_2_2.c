@@ -4234,7 +4234,8 @@ gtk_sheet_make_backing_pixmap (GtkSheet *sheet, guint width, guint height)
 			   &pixmap_width, &pixmap_height);
       if ((pixmap_width != width) || (pixmap_height != height))
 	{
-          g_free(sheet->pixmap);
+          gdk_pixmap_unref(sheet->pixmap); /* replaced by SDB on 7.31.2006 */
+          /* g_free(sheet->pixmap); */
 	  sheet->pixmap = gdk_pixmap_new (sheet->sheet_window,
 					       width, height,
 					       -1);

@@ -1,3 +1,6 @@
+2006-0731 SDB <sdb@cloud9.net>
+        * src/gtksheet_2_2.c: fixed bug in gtk_sheet_make_backing_pixmap.
+	
 2006-07-25 Stuart Brorson <sdb@cloud9.net>
 	* src/f_export.c, src/x_dialog.c and others:  Implemented
 	ability to export CSV file of component sheet.
