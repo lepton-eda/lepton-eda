@@ -784,6 +784,14 @@ do_attached_attribute(FILE *fp)
         sprintf(text, "pintype=tri");
 #endif
       }
+      else if (strcmp(value, "PWR") == 0)
+      {
+#ifdef HAVE_SNPRINTF
+        snprintf(text, MAX_TEXTLEN, "pintype=pwr");
+#else
+        sprintf(text, "pintype=pwr");
+#endif
+      }
       else
       {
         fprintf(stderr,"Error: Invalid or unknown pin type \"%s\" for record "

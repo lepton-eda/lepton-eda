@@ -1,3 +1,8 @@
+2006-08-02 Mike Jarabek  <mjarabek@istop.com>
+
+	* src/convert_sym.c: Added power pin handling patch from 
+	Patrick Doyle.
+
 2006-07-15 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/gschlas.c: Added comment on free of cwd
