@@ -1553,11 +1553,6 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
   exit_if_null(w_current);
   global_window_current = w_current;
 
-  /* You must have scrollbars enabled if you want to use the scroll wheel */
-  if (w_current->scrollbars_flag == FALSE) {
-    return 0;
-  }
-
   /* update the state of the modifiers */
   w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
   w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
@@ -1565,25 +1560,51 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
 
   switch (event->direction) {
   case(GDK_SCROLL_UP):
-    if (!w_current->CONTROLKEY)
+    if (!w_current->CONTROLKEY && !w_current->SHIFTKEY)
     {
+      /* turn the up/down scroll wheel into a zoom in / out */
+      /*! \todo Change "HOTKEY" TO new "MOUSE" specifier?
+       */
+      a_zoom(w_current, ZOOM_IN, HOTKEY, 0);
+      o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+    } else if ( !w_current->CONTROLKEY ) {
+      /* if the control key is not held down, scroll up / down */
+      /* You must have scrollbars enabled if you want to use the scroll wheel to pan */
+      if (w_current->scrollbars_flag == FALSE )
+        return 0;
       adj = gtk_range_get_adjustment(GTK_RANGE(w_current->v_scrollbar));
       gtk_adjustment_set_value(adj, adj->value - (adj->page_increment / 4));
     } else {
       /* if the control key is held down, then scroll left as well */
+      /* You must have scrollbars enabled if you want to use the scroll wheel to pan */
+      if (w_current->scrollbars_flag == FALSE )
+        return 0;
       adj = gtk_range_get_adjustment(GTK_RANGE(w_current->h_scrollbar));
       gtk_adjustment_set_value(adj, adj->value - (adj->page_increment / 4));
     }
     break;
 
   case(GDK_SCROLL_DOWN):
-    if (!w_current->CONTROLKEY)
+    if (!w_current->CONTROLKEY && !w_current->SHIFTKEY)
     {
+      /* turn the up/down scroll wheel into a zoom in / out */
+      /*! \todo Change "HOTKEY" TO new "MOUSE" specifier?
+       */
+      a_zoom(w_current, ZOOM_OUT, HOTKEY, 0);
+      o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+    } else if ( !w_current->CONTROLKEY ) {
+      /* if the control key is not held down, scroll up / down */
+      /* You must have scrollbars enabled if you want to use the scroll wheel to pan */
+      if (w_current->scrollbars_flag == FALSE )
+        return 0;
       adj = gtk_range_get_adjustment(GTK_RANGE(w_current->v_scrollbar));
       gtk_adjustment_set_value(adj, min(adj->value + (adj->page_increment / 4),
                                         adj->upper - adj->page_size));
     } else {
       /* if the control key is held down, then scroll right as well */
+      /* You must have scrollbars enabled if you want to use the scroll wheel to pan */
+      if (w_current->scrollbars_flag == FALSE )
+        return 0;
       adj = gtk_range_get_adjustment(GTK_RANGE(w_current->h_scrollbar));
       gtk_adjustment_set_value(adj, min(adj->value + (adj->page_increment / 4),
                                         adj->upper - adj->page_size));
@@ -1591,11 +1612,17 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
     break;
 
   case(GDK_SCROLL_LEFT):
+    /* You must have scrollbars enabled if you want to use the scroll wheel to pan */
+    if (w_current->scrollbars_flag == FALSE)
+      return 0;
     adj = gtk_range_get_adjustment(GTK_RANGE(w_current->h_scrollbar));
     gtk_adjustment_set_value(adj, adj->value - (adj->page_increment / 4));
     break;
 
   case(GDK_SCROLL_RIGHT):
+    /* You must have scrollbars enabled if you want to use the scroll wheel to pan */
+    if (w_current->scrollbars_flag == FALSE)
+      return 0;
     adj = gtk_range_get_adjustment(GTK_RANGE(w_current->h_scrollbar));
     gtk_adjustment_set_value(adj, min(adj->value + (adj->page_increment / 4),
                                       adj->upper - adj->page_size));

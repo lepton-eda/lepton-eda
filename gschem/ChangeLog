@@ -5,6 +5,16 @@
         This should be revisited later to fix the breakage this fix caused to
 	the transparent rotation when copying objects.
 
+	* src/x_preview.c: Applied Patch#1527418: Make preview-widget
+	resizable and respond to scroll events by Peter Clifton. 
+
+	* src/x_event.c: Applied Patch#1527383: Zoom using mouse
+	scroll-wheel by Peter Clifton.  Behavior of the mouse wheel with
+        modifiers:   
+       		NONE = zoom in / out    
+        	Shift = up / down    
+        	Control = left / right (as existing)
+
 2006-07-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_window.c: Converted pro-active pointer check to a g_assert

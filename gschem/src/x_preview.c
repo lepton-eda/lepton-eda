@@ -270,6 +270,7 @@ void x_preview_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current)
    * 1.3333333 is the desired aspect ratio!
    */
 
+  /* TODO: BUG: This call is deprecated, and should use gtk_widget_set_size_request() instead */
   gtk_drawing_area_size (GTK_DRAWING_AREA (w_current->drawing_area),
                          w_current->win_width,
                          w_current->win_height);
@@ -291,6 +292,11 @@ void x_preview_setup_rest (TOPLEVEL *preview)
   preview->window = preview->drawing_area->window;
   gtk_widget_grab_focus (preview->drawing_area);
 
+  preview->width  = preview->drawing_area->allocation.width;
+  preview->height = preview->drawing_area->allocation.height;
+  preview->win_width  = preview->width;
+  preview->win_height = preview->height;
+  
   preview->backingstore = gdk_pixmap_new (
     preview->window,
     preview->drawing_area->allocation.width,
@@ -306,6 +312,10 @@ void x_preview_setup_rest (TOPLEVEL *preview)
   /* i_vars_set will set auto_save_interval, so disable it 
      We don't want to autosave previews!! */
   preview->auto_save_interval = 0;
+
+  /* i_vars_set will set the scrollbars_flag to TRUE, so we need
+     to re-disable it. (Othewise scroll wheel events cause a crash) */
+  preview->scrollbars_flag = FALSE;
 
   /* be sure to turn off the grid */
   preview->grid = FALSE;
@@ -352,6 +362,8 @@ TOPLEVEL *x_preview_setup(GtkWidget *xfwindow, GtkWidget *drawbox)
     { "key_press_event",      G_CALLBACK (x_preview_key_press)       },
 #endif
     { "motion_notify_event",  G_CALLBACK (x_preview_motion)          },
+    { "configure_event",      G_CALLBACK (x_event_configure)         },
+    { "scroll_event",         G_CALLBACK (x_event_scroll)            },
     { NULL,                   NULL                                   }
   }, *tmp;
   TOPLEVEL *preview_toplevel;
@@ -362,6 +374,7 @@ TOPLEVEL *x_preview_setup(GtkWidget *xfwindow, GtkWidget *drawbox)
   preview_toplevel->init_top    = 0;
   preview_toplevel->init_right  = WIDTH_C;
   preview_toplevel->init_bottom = HEIGHT_C;
+  // TODO: BUG - Fixed preview size??
   preview_toplevel->width  = 160;
   preview_toplevel->height = 120;
   preview_toplevel->win_width  = preview_toplevel->width;
