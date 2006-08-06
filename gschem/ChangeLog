@@ -1,3 +1,10 @@
+2006-08-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/o_copy.c: Fixed the copying of nets, pins, and buses.  
+        Copy for these objects has been broken for a while now in CVS only.
+        This should be revisited later to fix the breakage this fix caused to
+	the transparent rotation when copying objects.
+
 2006-07-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_window.c: Converted pro-active pointer check to a g_assert

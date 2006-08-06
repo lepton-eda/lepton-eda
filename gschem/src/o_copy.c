@@ -38,9 +38,13 @@
 void o_copy_start(TOPLEVEL *w_current, int x, int y)
 {
   if (w_current->page_current->selection2_head->next != NULL) {
+
+  /* This is commented out since it breaks the copy of objects.  See below. */
+#if 0
     /* Save the current state. When rotating the selection when copying,
        we have to come back to here */
     o_undo_savestate(w_current, UNDO_ALL);
+#endif
 
     w_current->last_drawb_mode = -1;
     /* Shouldn't this set by the caller ? */
@@ -75,7 +79,7 @@ void o_copy_end(TOPLEVEL *w_current)
   int lx, ly;
   int sx, sy;
   int color;
-  int redraw_state;
+  /* int redraw_state;  not needed for now */
 
   object = o_select_return_first_object(w_current);
 
@@ -135,12 +139,9 @@ void o_copy_end(TOPLEVEL *w_current)
                          object);
         }
 
-        w_current->ADDING_SEL=1; 
         o_net_translate_world(w_current,
                               diff_x, diff_y,
                               new_object);
-        w_current->ADDING_SEL=0; 
-
 
         o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
@@ -169,11 +170,9 @@ void o_copy_end(TOPLEVEL *w_current)
                          object);
         }
 
-        w_current->ADDING_SEL=1; 
         o_pin_translate_world(w_current,
                               diff_x, diff_y,
                               new_object);
-        w_current->ADDING_SEL=0; 
         
         o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
@@ -201,11 +200,9 @@ void o_copy_end(TOPLEVEL *w_current)
                          object);
         }
 
-        w_current->ADDING_SEL=1; 
         o_bus_translate_world(w_current,
                               diff_x, diff_y,
                               new_object);
-        w_current->ADDING_SEL=0; 
         
         o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
@@ -242,12 +239,10 @@ void o_copy_end(TOPLEVEL *w_current)
                              object->complex->prim_objs);
         }
 
-        w_current->ADDING_SEL=1; 
         o_complex_world_translate_toplevel(w_current,
                                            diff_x,
                                            diff_y,
                                            new_object);
-        w_current->ADDING_SEL=0; 
 
         o_selection_add(temp_list, new_object);
 
@@ -464,12 +459,18 @@ void o_copy_end(TOPLEVEL *w_current)
     s_current = s_current->next;
   }
 
+  /* This is commented out since it breaks the copy of objects.  */
+  /* Required connection information is thrown away for some reason */
+  /* Of course, commenting this out, will probably break the rotation */
+  /* that this supported. */
+#if 0 
   /* Go back to the state before copying, to restore possible rotations
      of the selection */
   redraw_state = w_current->DONT_REDRAW;
   w_current->DONT_REDRAW = 0;
   o_undo_callback(w_current, UNDO_ACTION);
   w_current->DONT_REDRAW = redraw_state;
+#endif
 
   /* Add the new objects */
   w_current->page_current->object_tail = (OBJECT *)
