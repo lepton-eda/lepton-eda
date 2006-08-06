@@ -24,6 +24,11 @@
 	* src/*.c: Applied Patch#1533798: Remove pre-GTK2 code from geda
         by Peter Brett.
 
+	* src/x_window.c: Applied patch by Tomaz Solc to use stock gtk
+	icons and only fallback on the shipped icons if the stock ones
+	are not available.   Minor cleanup of the code afterwords. 
+ 	Removed obsolete code and functions.
+
 2006-07-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_window.c: Converted pro-active pointer check to a g_assert
