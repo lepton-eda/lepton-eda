@@ -1,3 +1,4 @@
+# translation of it_IT.po to
 # translation of it_IT.po to ITALIANO
 # translation of it_IT.po to Italiano
 # This file is distributed under the same license as the PACKAGE package.
@@ -11,13 +12,13 @@ msgstr ""
 "Project-Id-Version: it_IT\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-19 22:09-0400\n"
-"PO-Revision-Date: 2006-01-18 00:31+0100\n"
+"PO-Revision-Date: 2006-07-27 23:43+0200\n"
 "Last-Translator: Michele Petrecca <michelinux@alice.it>\n"
-"Language-Team: ITALIANO\n"
+"Language-Team:  <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.9.1\n"
+"X-Generator: KBabel 1.10.2\n"
 
 #: src/rcstrings.c:2
 msgid "File"
@@ -61,7 +62,7 @@ msgstr "Stampa..."
 
 #: src/rcstrings.c:12
 msgid "Write PNG..."
-msgstr "Stampa File .PNG..."
+msgstr "Stampa File .png..."
 
 #: src/rcstrings.c:13
 msgid "Execute Script..."
@@ -89,7 +90,7 @@ msgstr "Ripristina"
 
 #: src/rcstrings.c:20 src/i_basic.c:94 src/x_window.c:879
 msgid "Select Mode"
-msgstr "ModalitÃÂ  Selezione"
+msgstr "Modalità  Selezione"
 
 #: src/rcstrings.c:21
 msgid "Edit..."
@@ -101,11 +102,11 @@ msgstr "Edita il Testo..."
 
 #: src/rcstrings.c:23 src/i_basic.c:107
 msgid "Copy Mode"
-msgstr "ModalitÃÂ  Copia"
+msgstr "Modalità  Copia"
 
 #: src/rcstrings.c:24 src/i_basic.c:110
 msgid "Move Mode"
-msgstr "ModalitÃÂ  Spostamento"
+msgstr "Modalità  Spostamento"
 
 #: src/rcstrings.c:25 src/i_callbacks.c:814 src/x_attribedit.c:412
 #: src/x_multiattrib.c:1160 src/x_window.c:710
@@ -118,7 +119,7 @@ msgstr "Ruota di 90 gradi"
 
 #: src/rcstrings.c:27 src/i_basic.c:114
 msgid "Mirror Mode"
-msgstr "ModalitÃÂ  Specchio"
+msgstr "Modalità  Specchio"
 
 #: src/rcstrings.c:28
 msgid "Slot..."
@@ -295,9 +296,8 @@ msgid "Close"
 msgstr "Chiudi"
 
 #: src/rcstrings.c:74
-#, fuzzy
 msgid "Discard"
-msgstr "Abbandonare la pagina"
+msgstr "Annulla"
 
 #: src/rcstrings.c:76
 msgid "Add"
@@ -318,7 +318,7 @@ msgstr "Bus"
 
 #: src/rcstrings.c:80
 msgid "Attribute..."
-msgstr "ProprietÃ Â ..."
+msgstr "Caratteristica..."
 
 #: src/rcstrings.c:81
 msgid "Text..."
@@ -353,14 +353,12 @@ msgid "Hierarchy"
 msgstr "Gerarchia"
 
 #: src/rcstrings.c:90
-#, fuzzy
 msgid "Down Schematic"
-msgstr "Schematici"
+msgstr "Scarica Schematico"
 
 #: src/rcstrings.c:91
-#, fuzzy
 msgid "Down Symbol"
-msgstr "Simboli"
+msgstr "Scarica Simbolo"
 
 #: src/rcstrings.c:92
 msgid "Up"
@@ -372,7 +370,7 @@ msgstr "Documentazione"
 
 #: src/rcstrings.c:95 src/x_multiattrib.c:1299
 msgid "Attributes"
-msgstr "ProprietÃ Â "
+msgstr "Caratteristiche..."
 
 #: src/rcstrings.c:96 src/i_callbacks.c:3244
 msgid "Attach"
@@ -396,7 +394,7 @@ msgstr "Mostra Entrambi"
 
 #: src/rcstrings.c:101
 msgid "Toggle Visibility"
-msgstr "Pulsante VisibilitÃ Â "
+msgstr "Pulsante Visibilità"
 
 #: src/rcstrings.c:102
 msgid "Find Specific Text..."
@@ -411,9 +409,8 @@ msgid "Show Specific Text..."
 msgstr "Mostra Testo Specifico..."
 
 #: src/rcstrings.c:105
-#, fuzzy
 msgid "Autonumber Text..."
-msgstr "Aggiungi Testo..."
+msgstr ""
 
 #: src/rcstrings.c:107
 msgid "Options"
@@ -428,9 +425,8 @@ msgid "Toggle Grid On/Off"
 msgstr "Griglia Visibile/Non Visibile"
 
 #: src/rcstrings.c:110
-#, fuzzy
 msgid "Toggle Snap On/Off"
-msgstr "Griglia Visibile/Non Visibile"
+msgstr ""
 
 #: src/rcstrings.c:111
 msgid "Snap Grid Spacing..."
@@ -470,8 +466,7 @@ msgstr "Hotkeys..."
 
 #: src/a_zoom.c:222
 msgid "Zoom too small!  Cannot zoom further.\n"
-msgstr ""
-"Eccessiva riduzione dell'immagine!  Non è possibile ridurla ulteriormente.\n"
+msgstr "Eccessiva riduzione dell'immagine!  Non è possibile ridurla ulteriormente.\n"
 
 #: src/g_funcs.c:249
 #, c-format
@@ -496,11 +491,8 @@ msgstr ""
 
 #: src/g_rc.c:109
 #, c-format
-msgid ""
-"While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
-msgstr ""
-"Assicurati di avere sempre l'ultima versione del file rc perchÃ© gschem Ã¨ "
-"ancora in versione alfa.\n"
+msgid "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
+msgstr "Assicurati di avere sempre l'ultima versione del file rc; gschem si trova ancora in uno stato di sviluppo alfa.\n"
 
 #: src/g_rc.c:169
 #, c-format
@@ -530,7 +522,7 @@ msgstr "Grandezza [%d] passata alla dimensione del testo, non valida\n"
 #: src/g_rc.c:681
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
-msgstr "L'ampiezza [%d] passata alla snap size non Ã¨ corretta\n"
+msgstr "L'ampiezza [%d] assegnata alla snap size non è corretta\n"
 
 #: src/g_rc.c:755 src/g_rc.c:758
 #, c-format
@@ -548,7 +540,7 @@ msgstr ""
 #: src/g_rc.c:1230
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
-msgstr "Il numero di livelli [%d] passato ai livelli Cancella non Ã¨ valido\n"
+msgstr "Il numero di livelli [%d] assegnato ai livelli Cancella non è valido\n"
 
 #: src/g_rc.c:1455
 #, c-format
@@ -593,10 +585,9 @@ msgstr ""
 
 #: src/gschem.c:147 src/gschem.c:157
 #, c-format
-msgid ""
-"This is free software, and you are welcome to redistribute it under certain\n"
+msgid "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
-"Questo software Ã¨ rilasciato sotto licenza GPL e puÃ² essere ridistribuito "
+"Questo software è rilasciato sotto licenza GPL e può essere ridistribuito "
 "sotto determinate\n"
 
 #: src/gschem.c:149 src/gschem.c:159
@@ -609,7 +600,7 @@ msgstr "condizioni; per favore leggi il file COPYNG per ulteriori dettagli.\n"
 #: src/gschem.c:163
 #, c-format
 msgid "This is the MINGW32 port.\n"
-msgstr "Questo Ã¨ il port per MINGW32.\n"
+msgstr "Port per MINGW32.\n"
 
 #: src/gschem.c:167
 #, c-format
@@ -648,7 +639,7 @@ msgstr "Esecuzione dello script guile [%s]\n"
 
 #: src/i_basic.c:97
 msgid "Attribute Mode"
-msgstr "ModalitÃÂ  Caratteristiche"
+msgstr "Modalità Caratteristica"
 
 #: src/i_basic.c:100
 msgid "Component Mode"
@@ -656,11 +647,11 @@ msgstr "Scelta Componente"
 
 #: src/i_basic.c:104
 msgid "Text Mode"
-msgstr "ModalitÃÂ  Testo"
+msgstr "Modalità Testo"
 
 #: src/i_basic.c:112
 msgid "Rotate Mode"
-msgstr "ModalitÃÂ  Rotazione"
+msgstr "Modalità Rotazione"
 
 #: src/i_basic.c:122
 msgid "Pan Mode"
@@ -681,23 +672,23 @@ msgstr "Disegna Bus"
 
 #: src/i_basic.c:138
 msgid "Line Mode"
-msgstr "ModalitÃ  Linea"
+msgstr "Modalità Linea"
 
 #: src/i_basic.c:141
 msgid "Box Mode"
-msgstr "ModalitÃ  Riquadro"
+msgstr "Modalità Riquadro"
 
 #: src/i_basic.c:144
 msgid "Picture Mode"
-msgstr "ModalitÃ  Immagine"
+msgstr "Modalità Immagine"
 
 #: src/i_basic.c:147
 msgid "Circle Mode"
-msgstr "ModalitÃ  Cerchio"
+msgstr "Modalità Cerchio"
 
 #: src/i_basic.c:150
 msgid "Arc Mode"
-msgstr "ModalitÃ  Arco"
+msgstr "Modalità Arco"
 
 #: src/i_basic.c:153
 msgid "Pin Mode"
@@ -714,14 +705,12 @@ msgid "Move"
 msgstr "Sposta"
 
 #: src/i_basic.c:159 src/i_callbacks.c:735 src/i_callbacks.c:754
-#, fuzzy
 msgid "Multiple Copy"
-msgstr "Attacco Multiplo"
+msgstr "Copia Multipla"
 
 #: src/i_basic.c:162
-#, fuzzy
 msgid "Multiple Copy Mode"
-msgstr "ModalitÃÂ  Copia"
+msgstr "Modo di Copiatura Multiplo"
 
 #: src/i_basic.c:197
 msgid "Snap Off"
@@ -755,7 +744,7 @@ msgstr "Documentazione per [%s,%s,%s,%s]\n"
 #: src/i_callbacks.c:136
 #, c-format
 msgid "Could not fork\n"
-msgstr "Non Ã¨ possibile creare un nuovo processo\n"
+msgstr "Impossibile creare un nuovo processo\n"
 
 #: src/i_callbacks.c:146
 #, c-format
@@ -787,7 +776,7 @@ msgstr "Salvato"
 #: src/i_callbacks.c:365 src/x_fileselect.c:723
 #, c-format
 msgid "Could NOT save [%s]\n"
-msgstr "NON Ã¨ possibile salvare [%s]\n"
+msgstr "Impossibile salvare [%s]\n"
 
 #: src/i_callbacks.c:367 src/x_fileselect.c:724
 msgid "Error while trying to save"
@@ -804,9 +793,7 @@ msgstr "Salvato Tutto"
 #: src/i_callbacks.c:495 src/i_callbacks.c:498
 #, c-format
 msgid "libgdgeda not installed or disabled, so this feature is disabled\n"
-msgstr ""
-"libgdgeda Ã¨ non installata o disabilitata; cosÃ¬, questa caratteristica Ã¨ "
-"disabilitata\n"
+msgstr "La libreria libgdgeda sembra non essere installata oppure è disabilitata; di conseguenza questa caratteristica è disabilitata\n"
 
 #: src/i_callbacks.c:547
 msgid "Closing Window\n"
@@ -838,7 +825,7 @@ msgstr "Specchio"
 
 #: src/i_callbacks.c:1035 src/x_dialog.c:2027
 msgid "Translate"
-msgstr "Trasla"
+msgstr "Converti"
 
 #: src/i_callbacks.c:1038
 msgid "WARNING: Do not translate with snap off!\n"
@@ -850,15 +837,13 @@ msgstr ""
 
 #: src/i_callbacks.c:1046
 msgid "WARNING: Snap grid size is not equal to 100!\n"
-msgstr "ATTENZIONE: L'ampiezza snap grid non Ã¨ uguale a 100!\n"
+msgstr "ATTENZIONE: L'ampiezza non è uguale a 100!\n"
 
 #: src/i_callbacks.c:1048
 msgid ""
 "WARNING: If you are translating a symbol to the origin, the snap grid size "
 "should be set to 100\n"
-msgstr ""
-"ATTENZIONE: se stai convertendo un simbolo dalla sua origine, Ã¨ opportuno "
-"che l'ampiezza snap gride venga impostata a 100\n"
+msgstr "ATTENZIONE: se stai convertendo un simbolo dalla sua origine, è opportuno che l'ampiezza snap gride venga impostata a 100\n"
 
 #: src/i_callbacks.c:1068
 msgid "Embed"
@@ -983,7 +968,7 @@ msgstr "Componente"
 
 #: src/i_callbacks.c:2488 src/i_callbacks.c:2508
 msgid "Attribute"
-msgstr "ProprietÃ Â "
+msgstr "Caratteristica"
 
 #: src/i_callbacks.c:2997
 #, c-format
@@ -994,7 +979,7 @@ msgstr "Ricerca del sorgente [%s]\n"
 #: src/o_misc.c:1287
 #, c-format
 msgid "Cannot find source [%s]\n"
-msgstr "Non Ã¨ stato possibile trovare il sorgente [%s]\n"
+msgstr "Impossibile trovare il sorgente [%s]\n"
 
 #: src/i_callbacks.c:3130
 #, c-format
@@ -1020,7 +1005,7 @@ msgstr "Visibilità Strumenti"
 #: src/i_callbacks.c:3449
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
-msgstr "Spiacente, ma questa non Ã¨ una funzione del menÃ¹ opzioni\n"
+msgstr "Spiacente, ma questa non è una funzione del menù opzioni\n"
 
 #: src/i_callbacks.c:3499
 msgid "Action feedback mode set to OUTLINE\n"
@@ -1057,12 +1042,12 @@ msgstr "Rubber band ON\n"
 #: src/o_arc.c:141
 #, c-format
 msgid "Unknown end for arc (%d)\n"
-msgstr ""
+msgstr "Sconosciuta fine per l'arco (%d)\n"
 
 #: src/o_arc.c:182
 #, c-format
 msgid "Unknown type for arc !\n"
-msgstr ""
+msgstr "Tipo sconosciuto per l'arco!\n"
 
 #: src/o_attrib.c:107
 #, c-format
@@ -1082,17 +1067,17 @@ msgstr ""
 #: src/o_box.c:138
 #, c-format
 msgid "Unknown end for box (%d)\n"
-msgstr ""
+msgstr "Non corretta terminazione per il riquadro (%d)\n"
 
 #: src/o_box.c:178
 #, c-format
 msgid "Unknown type for box !\n"
-msgstr ""
+msgstr "Sconosciuto tipo per il riquadro!\n"
 
 #: src/o_box.c:270
 #, c-format
 msgid "Unknown type for box (fill)!\n"
-msgstr ""
+msgstr "Sconosciuto tipo per il riquadro (riempimento)!\n"
 
 #: src/o_buffer.c:41
 #, c-format
@@ -1127,17 +1112,17 @@ msgstr "selezionato un oggetto non esistente!\n"
 #: src/o_circle.c:133
 #, c-format
 msgid "Unknown end for circle\n"
-msgstr ""
+msgstr "Non corretta terminazione per il cerchio\n"
 
 #: src/o_circle.c:169
 #, c-format
 msgid "Unknown type for circle!\n"
-msgstr ""
+msgstr "Tipo sconosciuto per il cerchio!\n"
 
 #: src/o_circle.c:257
 #, c-format
 msgid "Unknown type for circle (fill)!\n"
-msgstr ""
+msgstr "Tipo sconosciuto per il cerchio (riempimento)!\n"
 
 #: src/o_complex.c:204
 #, c-format
@@ -1172,7 +1157,7 @@ msgstr "ERRORE: oggetto NULLO in o_delete_end!\n"
 #: src/o_line.c:117
 #, c-format
 msgid "Unknown end for line (%d)\n"
-msgstr ""
+msgstr "Non corretta terminazione per la linea (%d)\n"
 
 #: src/o_line.c:157
 #, c-format
@@ -1222,12 +1207,12 @@ msgstr "Più di un componente è stato trovato con il nome [%s]\n"
 #: src/o_misc.c:655
 #, c-format
 msgid "Component [%s] has been successfully unembedded\n"
-msgstr ""
+msgstr "Il componente [%s] è stato rimosso con successo\n"
 
 #: src/o_misc.c:670
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
-msgstr ""
+msgstr "La figura [%s] è stata rimossa\n"
 
 #: src/o_misc.c:706
 #, c-format
@@ -1253,17 +1238,17 @@ msgstr "Componente ancora fissato e/o non aggiornato\n"
 #: src/o_misc.c:1744
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
-msgstr ""
+msgstr "o_autosave_backups: Non è possibile ottenere il vero nome del file %s."
 
 #: src/o_misc.c:1788
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr "Non è possibile salvare il file di ripristino [%s]\n"
+msgstr ""
 
 #: src/o_misc.c:1806
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
-msgstr "Non è possibile salvare il file di ripristino [%s]\n"
+msgstr ""
 
 #: src/o_misc.c:1811
 #, c-format
@@ -1404,7 +1389,7 @@ msgstr "Cancella"
 
 #: src/x_attribedit.c:438
 msgid "Add/Edit Attribute"
-msgstr "Aggiungi/Modifica ProprietÃ Â "
+msgstr "Aggiungi/Modifica Caratteristica"
 
 #: src/x_attribedit.c:480 src/x_multiattrib.c:1526
 msgid "Visible"
@@ -1453,7 +1438,7 @@ msgstr "Sostituire"
 #: src/x_color.c:59 src/x_color.c:96
 #, c-format
 msgid "Could not find the color %s!\n"
-msgstr "Non Ã¨ possibile trovare il colore %s!\n"
+msgstr "Non è possibile trovare il colore %s!\n"
 
 #: src/x_color.c:62 src/x_color.c:99
 #, c-format
@@ -1463,12 +1448,12 @@ msgstr "Il colore predefinito Ã¨ il bianco\n"
 #: src/x_color.c:69 src/x_color.c:106
 #, c-format
 msgid "Ack! Cannot allocate white!\n"
-msgstr "Non Ã¨ possibile inserire il bianco!\n"
+msgstr "Non è possibile inserire il bianco!\n"
 
 #: src/x_color.c:80 src/x_color.c:128 src/x_window.c:204 src/x_window.c:213
 #, c-format
 msgid "Could not allocate the color %s!\n"
-msgstr "Non Ã¨ possibile inserire il colore %s!\n"
+msgstr "Non è possibile inserire il colore %s!\n"
 
 #: src/x_color.c:147 src/x_color.c:163
 #, c-format
@@ -1496,39 +1481,39 @@ msgstr "Applica"
 
 #: src/x_dialog.c:371
 msgid "Lower Left"
-msgstr ""
+msgstr "In basso a sinistra"
 
 #: src/x_dialog.c:382
 msgid "Middle Left"
-msgstr ""
+msgstr "Regione centrale a sinistra"
 
 #: src/x_dialog.c:393
 msgid "Upper Left"
-msgstr ""
+msgstr "In alto a sinistra"
 
 #: src/x_dialog.c:404
 msgid "Lower Middle"
-msgstr ""
+msgstr "Regione centrale in basso"
 
 #: src/x_dialog.c:415
 msgid "Middle Middle"
-msgstr ""
+msgstr "Centro della regione centrale"
 
 #: src/x_dialog.c:426
 msgid "Upper Middle"
-msgstr ""
+msgstr "Regione centrale in alto"
 
 #: src/x_dialog.c:437
 msgid "Lower Right"
-msgstr ""
+msgstr "In basso a destra"
 
 #: src/x_dialog.c:448
 msgid "Middle Right"
-msgstr ""
+msgstr "Zona centrale a destra"
 
 #: src/x_dialog.c:459
 msgid "Upper Right"
-msgstr ""
+msgstr "In alto a destra"
 
 #: src/x_dialog.c:657
 msgid "Edit Text Color"
@@ -1593,7 +1578,7 @@ msgstr "Spazio Linea Tratteggiata"
 
 #: src/x_dialog.c:1175
 msgid "Hollow"
-msgstr ""
+msgstr "Vuoto"
 
 #: src/x_dialog.c:1176
 msgid "Filled"
@@ -1781,7 +1766,7 @@ msgstr "Mostra il testo iniziando con:"
 #, c-format
 msgid "Warning: negative numbers not allowed in the autonumber_text dialog\n"
 msgstr ""
-"Attenzione: numeri negativi non sono permeesi nella finestra "
+"Attenzione: i numeri negativi non sono permessi nella finestra "
 "autonumber_text\n"
 
 #: src/x_dialog.c:4267
@@ -1838,7 +1823,7 @@ msgstr "successione file"
 
 #: src/x_dialog.c:4389
 msgid "top down"
-msgstr "su giÃ¹"
+msgstr "sopra sotto"
 
 #: src/x_dialog.c:4392
 msgid "left right"
@@ -1851,7 +1836,7 @@ msgstr "diagonale"
 #: src/x_fileselect.c:300
 #, c-format
 msgid "Agg, could not open directory: %s\n"
-msgstr "Non Ã¨ possibile aprire la cartella: %s\n"
+msgstr "Non è possibile aprire la cartella: %s\n"
 
 #: src/x_fileselect.c:327
 #, c-format
@@ -1987,13 +1972,12 @@ msgid "All files"
 msgstr "Tutti i File"
 
 #: src/x_fileselect.c:2387
-#, fuzzy
 msgid "Discard changes"
-msgstr "Abbandonare la pagina"
+msgstr "Annullare i cambi"
 
 #: src/x_image.c:291
 msgid "x_image_lowlevel: Unable to write PNG file.\n"
-msgstr ""
+msgstr "x_image_lowlevel: Incapace a realizzare il file in formato png.\n"
 
 #: src/x_image.c:295 src/x_image.c:326
 #, c-format
@@ -2115,8 +2099,7 @@ msgstr ""
 
 #: src/x_multiattrib.c:625
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
-"Attributi con il nome vuoto non sono permessi. Per favore inserisci un nome."
+msgstr "Attributi con il nome vuoto non sono permessi. Per favore inserisci un nome."
 
 #: src/x_multiattrib.c:1131
 msgid "Show Value only"
@@ -2132,7 +2115,7 @@ msgstr "Duplicare"
 
 #: src/x_multiattrib.c:1276
 msgid "Edit Attributes"
-msgstr "Modifica ProprietÃ Â "
+msgstr "Modifica Caratteristiche"
 
 #: src/x_multiattrib.c:1356
 msgid "Name"
@@ -2203,12 +2186,12 @@ msgstr "Finestra Corrente"
 #: src/x_print.c:274
 #, c-format
 msgid "Cannot print current schematic to [%s]\n"
-msgstr "Non Ã¨ possibile stampare lo schema corrente in [%s]\n"
+msgstr "Non è possibile stampare lo schema corrente in [%s]\n"
 
 #: src/x_print.c:276
 #, c-format
 msgid "Printed current schematic to [%s]\n"
-msgstr "Lo schema corrente Ã¨ stato stampato in [%s]\n"
+msgstr "Lo schema corrente è stato stampato in [%s]\n"
 
 #: src/x_print.c:359
 msgid "Print"
@@ -2241,27 +2224,27 @@ msgstr "bianco"
 #: src/x_window.c:247
 #, c-format
 msgid "Couldn't allocate gc\n"
-msgstr "Non Ã¨ possibile allocare gc\n"
+msgstr "Impossibile l'allocazione di gc\n"
 
 #: src/x_window.c:260
 #, c-format
 msgid "Couldn't allocate xor_gc\n"
-msgstr "Non Ã¨ possibile allocare xor_gc\n"
+msgstr "Impossibile l'allocazione di xor_gc\n"
 
 #: src/x_window.c:273
 #, c-format
 msgid "Couldn't allocate outline_xor_gc\n"
-msgstr "Non Ã¨ possibile allocare outline_xor_gc\n"
+msgstr "Impossibile l'allocazione di outline_xor_gc\n"
 
 #: src/x_window.c:289
 #, c-format
 msgid "Couldn't allocate bounding_xor_gc\n"
-msgstr "Non Ã¨ possibile allocare bounding_xor_gc\n"
+msgstr "Impossibile l'allocazione di bounding_xor_gc\n"
 
 #: src/x_window.c:296
 #, c-format
 msgid "Couldn't allocate bus_gc\n"
-msgstr "Non Ã¨ possibile allocare bus_gc\n"
+msgstr "Impossibile l'allocazione di bus_gc\n"
 
 #: src/x_window.c:519
 msgid "New file"
@@ -2333,31 +2316,31 @@ msgstr "Seleziona"
 
 #: src/x_window.c:649
 msgid "Select mode"
-msgstr "ModalitÃ  Seleziona"
+msgstr "Modalità Selezione"
 
 #: src/x_window.c:666
 msgid "Edit mode"
-msgstr "ModalitÃ  Testo"
+msgstr "Modalità Testo"
 
 #: src/x_window.c:681
 msgid "Move mode"
-msgstr "ModalitÃ  Sposta"
+msgstr "Modalità Sposta"
 
 #: src/x_window.c:696
 msgid "Copy mode"
-msgstr "ModalitÃ  Copia"
+msgstr "Modalità Copia"
 
 #: src/x_window.c:711
 msgid "Delete mode"
-msgstr "ModalitÃ  Cancella"
+msgstr "Modalità Cancella"
 
 #: src/x_window.c:726
 msgid "Rotate mode"
-msgstr "ModalitÃ  Ruota"
+msgstr "Modalità Ruota"
 
 #: src/x_window.c:741
 msgid "Mirror mode"
-msgstr "ModalitÃ  Specchio"
+msgstr "Modalità Specchio"
 
 #: src/x_window.c:832
 msgid "Pick"
@@ -2369,8 +2352,9 @@ msgstr "Ripeti/Niente"
 
 #: src/x_window.c:862
 msgid "Menu/Cancel"
-msgstr "MenÃ¹/Cancella"
+msgstr "Menù/Cancella"
 
 #: src/x_window.c:864
 msgid "Pan/Cancel"
 msgstr ""
+

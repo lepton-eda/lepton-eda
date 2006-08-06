@@ -33,6 +33,9 @@
 	Minor cleanup of the code afterwards (mainly to add the 
 	keyboardpan_gain to the toplevel as a proper rc variable)
 
+	* po/it_IT.po: Replaced Italian translation with updates from
+	Michele Petrecca.
+
 2006-07-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_window.c: Converted pro-active pointer check to a g_assert
