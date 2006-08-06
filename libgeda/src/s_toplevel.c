@@ -250,9 +250,8 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->pfswindow = NULL;
   toplevel->pcfswindow = NULL;
-#ifndef HAS_GTK12
+
   toplevel->current_pixbuf = NULL;
-#endif
   toplevel->pixbuf_filename = NULL;
   toplevel->pixbuf_wh_ratio = 0;
 

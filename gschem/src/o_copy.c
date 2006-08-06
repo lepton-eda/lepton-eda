@@ -303,7 +303,6 @@ void o_copy_end(TOPLEVEL *w_current)
         
         break;
 
-#ifndef HAS_GTK12
       case(OBJ_PICTURE):
         new_object = (OBJECT *) o_picture_copy(w_current,
 					       return_tail(new_objects_head),
@@ -326,7 +325,7 @@ void o_copy_end(TOPLEVEL *w_current)
         o_picture_draw(w_current, new_object);
         
         break;
-#endif
+
       case(OBJ_CIRCLE):
         new_object = (OBJECT *) o_circle_copy(w_current,
                                               return_tail(new_objects_head),

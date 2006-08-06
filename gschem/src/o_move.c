@@ -127,9 +127,7 @@ void o_move_end_lowlevel(TOPLEVEL * w_current, OBJECT * list, int type,
         break;
 
       case (OBJ_PICTURE):
-#ifndef HAS_GTK12
         o_picture_translate_world(w_current, diff_x, diff_y, object);
-#endif
         break;
 
       case (OBJ_CIRCLE):

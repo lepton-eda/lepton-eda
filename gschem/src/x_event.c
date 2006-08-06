@@ -271,23 +271,19 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(DRAWPICTURE):
-#ifndef HAS_GTK12
         o_picture_start(w_current,
                     (int) event->x,
                     (int) event->y);
         w_current->event_state = ENDPICTURE;
         w_current->inside_action = 1;
-#endif
         break;
 
       case(ENDPICTURE):
-#ifndef HAS_GTK12
         o_picture_end(w_current,
                   (int) event->x,
                   (int) event->y);
         w_current->inside_action = 0;
         w_current->event_state = DRAWPICTURE;
-#endif
         break;
 
       case(DRAWCIRCLE):
@@ -631,11 +627,9 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
         case(DRAWPICTURE):
         case(ENDPICTURE):
-#ifndef HAS_GTK12
         w_current->inside_action = 0;
 	i_set_state(w_current, DRAWPICTURE);
         o_picture_eraserubber(w_current);
-#endif
         break;
 
         case(DRAWCIRCLE):
@@ -1129,12 +1123,10 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     break;
 
     case(ENDPICTURE):
-#ifndef HAS_GTK12
     if (w_current->inside_action)
     o_picture_rubberbox( w_current,
                         (int) event->x,
                         (int) event->y);
-#endif
     break;
 
     case(ENDCIRCLE):
@@ -1538,7 +1530,6 @@ gint x_event_key_press (GtkWidget *widget, GdkEventKey *event,
   return(0);
 }
 
-#ifdef HAS_GTK22
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -1632,4 +1623,3 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
 
   return(0);
 }
-#endif

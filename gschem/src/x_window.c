@@ -359,9 +359,7 @@ void x_window_setup_draw_events(TOPLEVEL *w_current)
   struct event_reg_t main_window_events[] = {
     { "enter_notify_event",   G_CALLBACK(x_event_enter)           },
     { "key_press_event",      G_CALLBACK(x_event_key_press)       },
-#ifdef HAS_GTK22
     { "scroll_event",         G_CALLBACK(x_event_scroll)          },
-#endif
     { NULL,                   NULL                                } };
   struct event_reg_t *tmp;
 
@@ -404,11 +402,7 @@ static GtkWidget *x_window_new_pixmap(const char *filename,
   pixmap = gdk_pixmap_create_from_xpm (window, &mask,
                                        background,
                                        filename);
-#ifdef HAS_GTK22 
   wpixmap = gtk_image_new_from_pixmap (pixmap, mask);
-#else
-  wpixmap = gtk_pixmap_new (pixmap, mask);
-#endif
 
   return wpixmap;
 }
@@ -489,19 +483,9 @@ void x_window_create_main(TOPLEVEL *w_current)
   }
  
   if (w_current->toolbars) {
-#ifdef HAS_GTK22
 	toolbar = gtk_toolbar_new();
 	gtk_toolbar_set_orientation (GTK_TOOLBAR(toolbar), GTK_ORIENTATION_HORIZONTAL);
 	gtk_toolbar_set_style (GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
-#else
-  	toolbar = gtk_toolbar_new (GTK_ORIENTATION_HORIZONTAL, 
-				   GTK_TOOLBAR_ICONS);
-  	gtk_container_set_border_width (GTK_CONTAINER (toolbar), 5);
-  	gtk_toolbar_set_space_size (GTK_TOOLBAR (toolbar), 5);
-  	gtk_toolbar_set_button_relief (GTK_TOOLBAR (toolbar), GTK_RELIEF_NONE);
-  	gtk_toolbar_set_space_style (GTK_TOOLBAR (toolbar), 
-				     GTK_TOOLBAR_SPACE_LINE);
-#endif
 
   	if (w_current->handleboxes) {
   		gtk_container_add (GTK_CONTAINER (handlebox), toolbar);

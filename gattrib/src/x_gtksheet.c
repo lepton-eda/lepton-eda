@@ -37,23 +37,15 @@
 #include <gdk/gdkkeysyms.h>
 
 #include <glib.h>
-#ifdef HAS_GTK22
 #include <glib-object.h>
-#endif
 
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
 
 
-#ifdef HAS_GTK22
 #include "gtksheet_2_2.h"
 #include "gtkitementry_2_2.h"
-#else
-#include "gtksheet_1_2.h"
-#include "gtkitementry_1_2.h"
-#endif
-
 
 /*------------------------------------------------------------------
  * Gattrib specific includes
@@ -82,10 +74,6 @@ x_gtksheet_init()
                    "Nets",
                    "Pins"};
 
-#ifndef HAS_GTK22
-  GtkSheetRange *Range;
-  Range = g_malloc(sizeof(GtkSheetRange));
-#endif
 
   /* ---  Create three new sheets.   were malloc'ed in x_window_init  --- */
 
@@ -115,30 +103,14 @@ x_gtksheet_init()
     printf("In x_gtksheet_init, creating net sheet. . . .\n");
 #endif
     sheets[1] = (GtkSheet *) gtk_sheet_new(sheet_head->net_count, sheet_head->net_attrib_count, "Nets");
-#ifdef HAS_GTK22
     gtk_sheet_set_locked(GTK_SHEET(sheets[1]), TRUE);   /* disallow editing of attribs for now */
-#else
-    Range->row0 = 0;
-    Range->col0 = 0;
-    Range->rowi = sheet_head->net_count;
-    Range->coli = sheet_head->net_attrib_count;
-    gtk_sheet_range_set_editable(sheets[1], Range, FALSE);
-#endif
   } else {
     sheets[1] = (GtkSheet *) gtk_sheet_new(1, 1, "Nets");
     gtk_sheet_row_button_add_label(sheets[1], 0, "TBD");
     gtk_sheet_row_button_justify(sheets[1], 0, GTK_JUSTIFY_LEFT);
     gtk_sheet_column_button_add_label(sheets[1], 0, "TBD");
     gtk_sheet_column_button_justify(sheets[1], 0, GTK_JUSTIFY_LEFT);
-#ifdef HAS_GTK22
     gtk_sheet_set_locked(GTK_SHEET(sheets[1]), TRUE);   /* disallow editing of attribs for now */
-#else
-    Range->row0 = 0;
-    Range->col0 = 0;
-    Range->rowi = 0;
-    Range->coli = 0;
-    gtk_sheet_range_set_editable(sheets[1], Range, FALSE);
-#endif
 #ifdef DEBUG
     fflush(stderr);
     fflush(stdout);
@@ -155,26 +127,10 @@ x_gtksheet_init()
     printf("In x_gtksheet_init, creating pin sheet. . . .\n");
 #endif
     sheets[2] = (GtkSheet *) gtk_sheet_new(sheet_head->pin_count, sheet_head->pin_attrib_count, "Pins");
-#ifdef HAS_GTK22
     gtk_sheet_set_locked(GTK_SHEET(sheets[2]), TRUE);   /* disallow editing of attribs for now */
-#else
-    Range->row0 = 0;
-    Range->col0 = 0;
-    Range->rowi = sheet_head->pin_count;
-    Range->coli = sheet_head->pin_attrib_count;
-    gtk_sheet_range_set_editable(sheets[2], Range, FALSE);
-#endif
   } else {
     sheets[2] = (GtkSheet *) gtk_sheet_new(1, 1, "Pins");
-#ifdef HAS_GTK22
     gtk_sheet_set_locked(GTK_SHEET(sheets[2]), TRUE);    /* disallow editing of attribs for now */
-#else
-    Range->row0 = 0;
-    Range->col0 = 0;
-    Range->rowi = sheet_head->pin_count;
-    Range->coli = sheet_head->pin_attrib_count;
-    gtk_sheet_range_set_editable(sheets[2], Range, FALSE);
-#endif
 #ifdef DEBUG
     fflush(stderr);
   fflush(stdout);
@@ -182,11 +138,6 @@ x_gtksheet_init()
 #endif
   }
 
-
-#ifndef HAS_GTK22
-  /*  Don't need this anymore  */
-  g_free(Range);
-#endif
 
 
   /* --- Finally stick labels on the notebooks holding the two sheets. --- */
@@ -267,14 +218,10 @@ x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
 
   /* Get character width based upon "X", which is a large char.
    * font_combo is a global.  Where is it set?  */
-#ifdef HAS_GTK22
   if ( GTK_WIDGET(sheet)->style->private_font )
     char_width = gdk_char_width (GTK_WIDGET(sheet)->style->private_font, (gchar)'X'); 
   else
     char_width = 12;
-#else
-  char_width = gdk_char_width(GTK_WIDGET(sheet)->style->font, (gchar)'X');
-#endif
 
   string_list_item = list_head;
   for (j = 0; j < count; j++) {
@@ -397,11 +344,7 @@ format_text (GtkSheet *sheet, gchar *text, gint *justification, gchar *label)
 
   cell_width=sheet->column[sheet->active_cell.col].width;
 
-#ifdef HAS_GTK22
   char_width = gdk_char_width (GTK_WIDGET(sheet)->style->private_font,(gchar)'X');
-#else
-  char_width = gdk_char_width(GTK_WIDGET(sheet)->style->font, (gchar)'X');
-#endif
 
   space= (double)cell_width/(double)char_width;
 

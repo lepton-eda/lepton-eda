@@ -114,10 +114,9 @@ struct st_box {
 #define BOX_LOWER_LEFT 3
 
 struct st_picture {
-#ifndef HAS_GTK12
   GdkPixbuf *original_picture;
   GdkPixbuf *displayed_picture;
-#endif
+
   double ratio;
   char *filename;
   int angle;
@@ -468,9 +467,8 @@ struct st_toplevel {
 
 
   /* used by add picture dialog */
-#ifndef HAS_GTK12
   GdkPixbuf *current_pixbuf;
-#endif
+
   double pixbuf_wh_ratio;                  /* width/height ratio of the pixbuf */
   char *pixbuf_filename;
 

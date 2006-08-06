@@ -892,13 +892,7 @@ void o_save_attribs(FILE *fp, ATTRIB *attribs)
 int o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
 {
   char *equal_ptr;
-#ifdef HAS_GTK22
   char **str_array;
-#else
-  int attribute_found=FALSE;
-  int i, j;
-  char *name, *value;
-#endif
 
   if (name_ptr == NULL || value_ptr == NULL) {
     return(FALSE);
@@ -936,57 +930,11 @@ int o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
     return(FALSE);
   }
 
-#ifdef HAS_GTK22  
-
-  /* can't use g_strsplit under glib/gtk+ 1.2 since it splits strings */
-  /* incorrectly! */
   str_array = g_strsplit (string, "=", 2);
   
   *name_ptr = g_strdup(str_array[0]);
   *value_ptr = g_strdup(str_array[1]);
   g_strfreev(str_array);
-
-#else
-
-  /* larger than needed... but this is okay for now. */
-  *name_ptr  = g_strdup (string);
-  *value_ptr = g_strdup (string);
-
-  /* for convenience sake */
-  name = *name_ptr;
-  value = *value_ptr;
-
-  /* get the name */
-  i = 0;
-  while(string[i] != '\0' && !attribute_found) {
-    if (string[i] == '=') {
-      attribute_found = TRUE;
-    } else {
-      name[i] = string[i];
-      i++;
-    }
-  }
-
-  /* no = found */
-  if (!attribute_found) {
-    g_free(*name_ptr); *name_ptr = NULL; 
-    g_free(*value_ptr); *value_ptr = NULL;
-    return(FALSE);
-  }
-
-  name[i] = '\0';
-  i++; /* skip over the ='s */
-
-  j = 0;
-  while(string[i] != '\0') {
-    value[j] = string[i];
-    i++;
-    j++;
-  }
-
-  value[j] = '\0';
-
-#endif
   
   if (*value_ptr && (*value_ptr)[0] == '\0') {
     s_log_message("Found an improper attribute: _%s_\n", string);

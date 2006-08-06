@@ -35,9 +35,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include <glib.h>
-#ifdef HAS_GTK22
 #include <glib-object.h>
-#endif
 
 #include <sys/types.h>
 
@@ -61,13 +59,8 @@
 
 
 
-#ifdef HAS_GTK22
 #include "gtksheet_2_2.h"
 #include "gtkitementry_2_2.h"
-#else
-#include "gtksheet_1_2.h"
-#include "gtkitementry_1_2.h"
-#endif
 
 /*------------------------------------------------------------------
  * Gattrib specific includes

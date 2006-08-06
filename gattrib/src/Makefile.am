@@ -8,7 +8,6 @@ endif
 bin_PROGRAMS = gattrib
 
 ## don't forget all *.h files */
-if GTK22_SOURCE
 gattrib_SOURCES = \
 		gtksheet_2_2.c \
 		gtkextra-marshal.c \
@@ -35,33 +34,6 @@ gattrib_SOURCES = \
 		s_toplevel.c \
 		s_visibility.c \
 		gattrib.c 
-else
-gattrib_SOURCES = \
-		gtksheet_1_2.c \
-                gtkitementry_1_2.c \
-		globals.c \
-		listsort.c \
-		parsecmd.c \
-		f_export.c \
-		g_register.c \
-		g_rc.c \
-		i_vars.c \
-		i_basic.c \
-		x_window.c \
-		x_gtksheet.c \
-		x_dialog.c \
-		x_fileselect.c \
-		s_rename.c \
-		s_misc.c \
-		s_string_list.c \
-		s_sheet_data.c \
-		s_table.c \
-		s_object.c \
-		s_attrib.c \
-		s_toplevel.c \
-		s_visibility.c \
-		gattrib.c 
-endif
 
 
 INCLUDES = -I$(top_srcdir)/include @GATTRIB_CFLAGS@

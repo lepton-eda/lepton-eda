@@ -382,11 +382,6 @@ void s_toplevel_delete_attrib_col() {
   /*  Rebuild the gattrib-specific data structures  */
   switch (cur_page) {
 
-#ifdef HAS_GTK22  
-/* The above #ifdef is very heavy handed and was add by Ales to get gattrib
- * to build using gtk12.  gtk_sheet_column_button_get_label is not defined
- * in the gtksheet_1_2.c.  This should be fixed properly at some point. TBD
- */
   case 0:  /* component attribute  */
 
     /*  Eventually, I want to just resize the table after deleting the
@@ -432,7 +427,6 @@ void s_toplevel_delete_attrib_col() {
     printf("In s_toplevel_delete_attrib_col, just updated SHEET_DATA info.\n");
 #endif
     break;
-#endif
 
   case 1:  /* net attribute  */
     /* insert into net attribute list  */

@@ -47,9 +47,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include <glib.h>
-#ifdef HAS_GTK22
 #include <glib-object.h>
-#endif
 
 #ifdef HAVE_STRING_H
 #include <string.h>
@@ -377,9 +375,7 @@ int main(int argc, char *argv[])
   setlocale(LC_ALL, "");
   bindtextdomain(PACKAGE, LOCALEDIR);
   textdomain(PACKAGE);
-#ifdef HAS_GTK22
   bind_textdomain_codeset(PACKAGE, "UTF-8");
-#endif
 #endif
 
   /* disable the deprecated warnings in guile 1.6.3 */

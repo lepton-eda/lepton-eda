@@ -396,10 +396,8 @@ void i_callback_add_line(gpointer data, guint callback_action, GtkWidget *widget
 void i_callback_add_line_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_box(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_box_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
-#ifndef HAS_GTK12
 void i_callback_add_picture(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_picture_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
-#endif
 void i_callback_add_circle(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_circle_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_arc(gpointer data, guint callback_action, GtkWidget *widget);
@@ -574,33 +572,25 @@ gboolean o_find_selected_object(TOPLEVEL *w_current, int screen_x, int screen_y)
 OBJECT *o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone);
 OBJECT *o_grips_search_arc(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 OBJECT *o_grips_search_box(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
-#ifndef HAS_GTK12
 OBJECT *o_grips_search_picture(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
-#endif
 OBJECT *o_grips_search_circle(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 OBJECT *o_grips_search_line(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 int o_grips_start(TOPLEVEL *w_current, int x, int y);
 void o_grips_start_arc(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_start_box(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
-#ifndef HAS_GTK12
 void o_grips_start_picture(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
-#endif
 void o_grips_start_circle(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_start_line(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_motion(TOPLEVEL *w_current, int x, int y);
 void o_grips_motion_arc(TOPLEVEL *w_current, int x, int y, int whichone);
 void o_grips_motion_box(TOPLEVEL *w_current, int x, int y, int whichone);
-#ifndef HAS_GTK12
 void o_grips_motion_picture(TOPLEVEL *w_current, int x, int y, int whichone);
-#endif
 void o_grips_motion_circle(TOPLEVEL *w_current, int x, int y, int whichone);
 void o_grips_motion_line(TOPLEVEL *w_current, int x, int y, int whichone);
 void o_grips_end(TOPLEVEL *w_current);
 void o_grips_end_arc(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 void o_grips_end_box(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
-#ifndef HAS_GTK12
 void o_grips_end_picture(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
-#endif
 void o_grips_end_circle(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 void o_grips_end_line(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 int o_grips_size(TOPLEVEL *w_current);
@@ -668,14 +658,11 @@ void o_net_eraserubber(TOPLEVEL *w_current);
 void o_net_xorrubber(TOPLEVEL *w_current);
 int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj, GList *other_objects);
 /* o_picture.c */
-#ifndef HAS_GTK12
 void o_picture_start(TOPLEVEL *w_current, int x, int y);
 void o_picture_end(TOPLEVEL *w_current, int x, int y);
 void picture_selection_ok (GtkWidget *widget, TOPLEVEL *w_current);
 void picture_selection_cancel (GtkWidget *widget, TOPLEVEL *w_current);
-#endif
 void picture_selection_dialog (TOPLEVEL *w_current);
-#ifndef HAS_GTK12
 void o_picture_eraserubber(TOPLEVEL *w_current);
 void o_picture_rubberbox_xor(TOPLEVEL *w_current);
 void o_picture_rubberbox(TOPLEVEL *w_current, int x, int y);
@@ -686,7 +673,6 @@ void o_picture_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_picture_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);void picture_change_selection_cancel (GtkWidget *widget, TOPLEVEL *w_current);
 void picture_change_selection_ok (GtkWidget *widget, TOPLEVEL *w_current);
 void picture_change_filename_dialog (TOPLEVEL *w_current);
-#endif
 
 /* o_pin.c */
 void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current);
@@ -757,10 +743,8 @@ GdkColor *x_get_color(int color);
 GdkColor *x_get_darkcolor(int color);
 gchar *x_color_get_name(int index);
 /* x_dialog.c */
-#ifdef HAS_GTK22
 int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size);
 void select_all_text_in_textview(GtkTextView *textview);
-#endif
 void destroy_window(GtkWidget *widget, GtkWidget **window);
 int text_input_dialog_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 void text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current);
@@ -839,9 +823,6 @@ int autonumber_text_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_
 void autonumber_text_ok(GtkWidget *w, TOPLEVEL *w_current);
 void autonumber_text_done(GtkWidget *w, TOPLEVEL *w_current);
 void autonumber_text_dialog(TOPLEVEL *w_current);
-#ifdef HAS_GTK12
-void quick_message_dialog(char *message);
-#endif
 void major_changed_dialog(TOPLEVEL* w_current);
 /* x_event.c */
 gint x_event_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current);
@@ -854,9 +835,7 @@ void x_event_hschanged(GtkAdjustment *adj, TOPLEVEL *w_current);
 void x_event_vschanged(GtkAdjustment *adj, TOPLEVEL *w_current);
 gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event, TOPLEVEL *w_current);
 gint x_event_key_press(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
-#ifdef HAS_GTK22
 gint x_event_scroll(GtkWidget *widget, GdkEventScroll *event, TOPLEVEL *w_current);
-#endif
 /* x_fileselect.c */
 void x_fileselect_destroy_window(GtkWidget *widget, FILEDIALOG *f_current);
 int x_fileselect_keypress(GtkWidget *widget, GdkEventKey *event, FILEDIALOG *f_current);

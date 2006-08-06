@@ -81,11 +81,9 @@ void i_vars_setnames(TOPLEVEL *w_current);
 void i_vars_freenames();
 
 /* gdk-pixbuf-hacks.c */
-#ifndef HAS_GTK12
 GdkPixbuf *gdk_pixbuf_rotate (GdkPixbuf *pixbuf, guint angle);
 void gdk_pixbuf_add (GdkPixbuf *pixbuf, int offset_x, int offset_y, GdkPixbuf *pixbuf_to_add);
 GdkPixbuf *gdk_pixbuf_mirror_flip(GdkPixbuf *src, gint mirror, gint flip);
-#endif
 
 /* libgeda.c */
 void libgeda_init(void);
@@ -368,7 +366,6 @@ void o_net_consolidate(TOPLEVEL *w_current);
 void o_net_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 
 /* o_picture.c */
-#ifndef HAS_GTK12
 OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
             FILE *fp, unsigned int release_ver, unsigned int fileformat_ver);
 char *o_picture_save(OBJECT *object);
@@ -392,7 +389,6 @@ guint8 *o_picture_rgb_data(GdkPixbuf *image);
 guint8 *o_picture_mask_data(GdkPixbuf *image);
 void o_picture_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
 		     int origin_x, int origin_y);
-#endif
 
 /* o_pin_basic.c */
 void get_pin_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);

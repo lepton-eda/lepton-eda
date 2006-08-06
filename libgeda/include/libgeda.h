@@ -37,8 +37,6 @@
 #include <libgeda/i_vars.h>
 #include <libgeda/prototype.h>
 
-#ifndef HAS_GTK12
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#endif
 
 #endif

@@ -107,9 +107,7 @@ void main_prog(void *closure, int argc, char *argv[])
   /* setlocale for LC_NUMERIC (which is important for proper PS output. */
   /* This may look funny here, given we make a call to gtk_set_locale() */
   /* above.  I don't know yet, if this is really the right thing to do. */
-#ifdef HAS_GTK22
   gtk_disable_setlocale(); 
-#endif
 
 #endif
 
@@ -369,9 +367,7 @@ int main (int argc, char *argv[])
   setlocale(LC_NUMERIC, "POSIX");
   bindtextdomain(PACKAGE, LOCALEDIR);
   textdomain(PACKAGE);
-#ifdef HAS_GTK22
   bind_textdomain_codeset(PACKAGE, "UTF-8");
-#endif
 #endif
 
   /* disable the deprecated warnings in guile 1.6.3 */

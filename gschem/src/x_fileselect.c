@@ -447,13 +447,8 @@ void x_fileselect_fill_lists(FILEDIALOG *f_current)
     text[0] = temp; 
     gtk_clist_append (GTK_CLIST (f_current->dir_list), text);
 
-#ifdef HAS_GTK22
     width = gdk_string_width(gtk_style_get_font(f_current->dir_list->style),
                              f_current->directory_entries[i]);
-#else
-    width = gdk_string_width(f_current->dir_list->style->font,
-                             f_current->directory_entries[i]);
-#endif
 
     if (width > max_width) {
       gtk_clist_set_column_width(GTK_CLIST(f_current->
@@ -472,13 +467,8 @@ void x_fileselect_fill_lists(FILEDIALOG *f_current)
     text[0] = f_current->file_entries[i]; 
     gtk_clist_append (GTK_CLIST (f_current->file_list), text);
 
-#ifdef HAS_GTK22
     width = gdk_string_width(gtk_style_get_font(f_current->dir_list->style), 
                              f_current->file_entries[i]);
-#else
-    width = gdk_string_width(f_current->dir_list->style->font,
-                             f_current->file_entries[i]);
-#endif
 
     if (width > max_width) {
       gtk_clist_set_column_width(GTK_CLIST(f_current->
@@ -1285,13 +1275,8 @@ void x_fileselect_comp_fill_libs(TOPLEVEL *w_current, FILEDIALOG *f_current)
     
     gtk_clist_append (GTK_CLIST (f_current->dir_list), text);
 
-#ifdef HAS_GTK22
     width = gdk_string_width(gtk_style_get_font(f_current->dir_list->style), 
                              text[0]);
-#else
-    width = gdk_string_width(f_current->dir_list->style->font,
-                             text[0]);
-#endif
 
     if (width > max_width) {
       gtk_clist_set_column_width(GTK_CLIST(f_current->
@@ -1365,14 +1350,9 @@ void x_fileselect_comp_fill_components(FILEDIALOG *f_current, int row)
     /* add filename to the clist */
     gtk_clist_append (GTK_CLIST (f_current->file_list), text);
     
-#ifdef HAS_GTK22
     width = gdk_string_width (gtk_style_get_font (
                                 f_current->file_list->style),
                               (gchar*) filename->data);
-#else
-    width = gdk_string_width (f_current->file_list->style->font,
-                              (gchar*) filename->data);
-#endif
     if (width > max_width) {
       /* increase the width of the column */
       gtk_clist_set_column_width (GTK_CLIST (f_current->file_list),
@@ -2112,11 +2092,7 @@ void x_fileselect_setup_old (TOPLEVEL *w_current, int type, int filesel_type)
 
     /*  ----- Here we create the "open"/"save as"/"apply" buttons -----  */
     if (filesel_type == OPEN) {
-#ifdef HAS_GTK12
-      buttonapply = gtk_button_new_with_label (_("Open"));
-#else
       buttonapply = gtk_button_new_from_stock (GTK_STOCK_OPEN);
-#endif
       gtk_signal_connect(GTK_OBJECT(buttonapply),
                          /* Here we attach callback fileselect_open_file to
                             the "Open" button */
@@ -2129,21 +2105,13 @@ void x_fileselect_setup_old (TOPLEVEL *w_current, int type, int filesel_type)
                (filesel_type == SAVEAS_OPEN) ||
                (filesel_type == SAVEAS_CLOSE) ||
                (filesel_type == SAVEAS_NEW)) { 
-#ifdef HAS_GTK12
-      buttonapply = gtk_button_new_with_label (_("SaveAs"));
-#else
       buttonapply = gtk_button_new_from_stock (GTK_STOCK_SAVE_AS);
-#endif
       gtk_signal_connect(GTK_OBJECT(buttonapply),
                          "clicked",
                          GTK_SIGNAL_FUNC(x_fileselect_saveas),
                          f_current);
     } else if (type == COMPSELECT) {
-#ifdef HAS_GTK12
-      buttonapply = gtk_button_new_with_label (_("Apply"));
-#else
       buttonapply = gtk_button_new_from_stock (GTK_STOCK_APPLY);
-#endif
       gtk_signal_connect(GTK_OBJECT(buttonapply),
                          "clicked",
                          GTK_SIGNAL_FUNC(x_fileselect_comp_apply),
@@ -2160,12 +2128,7 @@ void x_fileselect_setup_old (TOPLEVEL *w_current, int type, int filesel_type)
     /*  ----- Here we create the "cancel"/"close" buttons -----  */
     if (type == FILESELECT) {
       if (filesel_type == OPEN) {
-#ifdef HAS_GTK12
-        buttonclose = gtk_button_new_with_label (
-                                                 _("Cancel"));
-#else
 	buttonclose = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-#endif
         GTK_WIDGET_SET_FLAGS(buttonclose, 
                              GTK_CAN_DEFAULT);
         gtk_box_pack_start(GTK_BOX(action_area),
@@ -2183,12 +2146,7 @@ void x_fileselect_setup_old (TOPLEVEL *w_current, int type, int filesel_type)
                  (filesel_type == SAVEAS_OPEN) ||
                  (filesel_type == SAVEAS_CLOSE) ||
                  (filesel_type == SAVEAS_NEW)) { 
-#ifdef HAS_GTK12
-        buttonclose = gtk_button_new_with_label (
-                                                 _("Cancel"));
-#else
 	buttonclose = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-#endif
         GTK_WIDGET_SET_FLAGS(buttonclose, 
                              GTK_CAN_DEFAULT);
         gtk_box_pack_start(GTK_BOX(action_area),
@@ -2205,11 +2163,7 @@ void x_fileselect_setup_old (TOPLEVEL *w_current, int type, int filesel_type)
         x_fileselect_fill_lists(f_current);
       }
     } else {
-#ifdef HAS_GTK12
-      buttonclose = gtk_button_new_with_label (_("Close"));
-#else
       buttonclose = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-#endif
       GTK_WIDGET_SET_FLAGS(buttonclose, GTK_CAN_DEFAULT);
       gtk_box_pack_start(GTK_BOX(action_area),
                          buttonclose, TRUE, TRUE, 0);

@@ -706,9 +706,7 @@ int o_erase_rubber(TOPLEVEL *w_current)
 
      case(DRAWPICTURE):
      case(ENDPICTURE):
-#ifndef HAS_GTK12
         o_picture_eraserubber(w_current);
-#endif
      break;
 
      case(DRAWCIRCLE):

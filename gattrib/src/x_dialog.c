@@ -37,9 +37,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include <glib.h>
-#ifdef HAS_GTK22
 #include <glib-object.h>
-#endif
 
 
 #ifdef HAVE_STRING_H
@@ -47,13 +45,8 @@
 #endif
 
 
-#ifdef HAS_GTK22
 #include "gtksheet_2_2.h"
 #include "gtkitementry_2_2.h"
-#else
-#include "gtksheet_1_2.h"
-#include "gtkitementry_1_2.h"
-#endif
 
 
 /*------------------------------------------------------------------
@@ -91,11 +84,7 @@ void x_dialog_newattrib_get_name()
   newattrib_window = x_dialog_create_dialog_box(&vbox, &action_area);
   gtk_window_position(GTK_WINDOW(newattrib_window),
 		      GTK_WIN_POS_MOUSE);
-#ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET(newattrib_window), 400, 150);  
-#else
-  gtk_widget_set_usize(GTK_WIDGET(newattrib_window), 400, 150);
-#endif
   
   gtk_window_set_title(GTK_WINDOW(newattrib_window), "Enter new attribute name");
   gtk_container_border_width(GTK_CONTAINER(newattrib_window), 5);
@@ -113,11 +102,7 @@ void x_dialog_newattrib_get_name()
   label = gtk_label_new (_("Enter new attribute name"));
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
-#ifdef HAS_GTK22
   gtk_widget_set_size_request (label, 127, 50);
-#else
-  gtk_widget_set_usize (label, 127, 50);
-#endif
 
 
   /*  Create the "attrib" text entry area */
@@ -126,11 +111,7 @@ void x_dialog_newattrib_get_name()
                              -1);
   gtk_box_pack_start(GTK_BOX(vbox), attrib_entry, TRUE,
                      TRUE, 5);
-#ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET (attrib_entry), 400, 20);
-#else
-  gtk_widget_set_usize (GTK_WIDGET (attrib_entry), 400, 20);
-#endif
 
   gtk_object_set_data(GTK_OBJECT(newattrib_window), "attrib_entry",
                       attrib_entry);  /* here we make the string "attrib_entry" point
@@ -139,11 +120,7 @@ void x_dialog_newattrib_get_name()
 
 
   /* Now create "OK" and "cancel" buttons */
-#ifdef HAS_GTK12
-  buttonok = gtk_button_new_with_label("OK");
-#else
   buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
-#endif
   GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT); /* what does this do? */
   gtk_box_pack_start(GTK_BOX(action_area), buttonok, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
@@ -152,11 +129,7 @@ void x_dialog_newattrib_get_name()
   gtk_widget_show(buttonok);
 
 
-#ifdef HAS_GTK12
-  buttoncancel = gtk_button_new_with_label("Cancel");
-#else
   buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-#endif
   gtk_box_pack_start(GTK_BOX(action_area), buttoncancel, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttoncancel), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_newattrib_close_callback), 
@@ -281,11 +254,7 @@ void x_dialog_delattrib_confirm()
   delattrib_window = x_dialog_create_dialog_box(&vbox, &action_area);
   gtk_window_position(GTK_WINDOW(delattrib_window),
 		      GTK_WIN_POS_MOUSE);
-#ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET(delattrib_window), 400, 150);  
-#else
-  gtk_widget_set_usize (GTK_WIDGET(delattrib_window), 400, 150);  
-#endif
 
   gtk_window_set_title(GTK_WINDOW(delattrib_window), "Are you sure?");
   gtk_container_border_width(GTK_CONTAINER(delattrib_window), 5);
@@ -303,19 +272,11 @@ void x_dialog_delattrib_confirm()
   label = gtk_label_new (_("Are you sure you want to delete this attribute?"));
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
-#ifdef HAS_GTK22
   gtk_widget_set_size_request (label, 127, 50);
-#else
-  gtk_widget_set_usize (label, 127, 50);
-#endif
 
 
   /* Now create "Yes" and "cancel" buttons */
-#ifdef HAS_GTK12
-  buttonyes = gtk_button_new_with_label("Yes");
-#else
   buttonyes = gtk_button_new_from_stock (GTK_STOCK_YES);
-#endif
   GTK_WIDGET_SET_FLAGS(buttonyes, GTK_CAN_DEFAULT); /* what does this do? */
   gtk_box_pack_start(GTK_BOX(action_area), buttonyes, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonyes), "clicked",
@@ -324,11 +285,7 @@ void x_dialog_delattrib_confirm()
   gtk_widget_show(buttonyes);
 
 
-#ifdef HAS_GTK12
-  buttoncancel = gtk_button_new_with_label("Cancel");
-#else
   buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-#endif
   gtk_box_pack_start(GTK_BOX(action_area), buttoncancel, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttoncancel), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_delattrib_close_callback), 
@@ -466,11 +423,7 @@ void x_dialog_missing_sym()
   gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
   /* Now create "Abort program" and "Continue" buttons */
-#ifdef HAS_GTK12
-  buttonabort = gtk_button_new_with_label("Quit");
-#else
   buttonabort = gtk_button_new_from_stock (GTK_STOCK_QUIT);
-#endif
   GTK_WIDGET_SET_FLAGS(buttonabort, GTK_CAN_DEFAULT); /* what does this do? */
   gtk_box_pack_start(GTK_BOX(action_area), buttonabort, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonabort), "clicked",
@@ -479,11 +432,7 @@ void x_dialog_missing_sym()
   gtk_widget_show(buttonabort);
 
 
-#ifdef HAS_GTK12
-  buttoncontinue = gtk_button_new_with_label("Forward");
-#else
   buttoncontinue = gtk_button_new_from_stock (GTK_STOCK_GO_FORWARD);
-#endif
   gtk_box_pack_start(GTK_BOX(action_area), buttoncontinue, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttoncontinue), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_missing_sym_continue_callback), 
@@ -608,11 +557,7 @@ void x_dialog_unsaved_data()
   gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
   /* Now create "Abort program" and "Continue" buttons */
-#ifdef HAS_GTK12
-  buttonabort = gtk_button_new_with_label("Stop");
-#else
   buttonabort = gtk_button_new_from_stock (GTK_STOCK_STOP);
-#endif
   GTK_WIDGET_SET_FLAGS(buttonabort, GTK_CAN_DEFAULT); /* what does this do? */
   gtk_box_pack_start(GTK_BOX(action_area), buttonabort, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonabort), "clicked",
@@ -621,11 +566,7 @@ void x_dialog_unsaved_data()
   gtk_widget_show(buttonabort);
 
 
-#ifdef HAS_GTK12
-  buttoncontinue = gtk_button_new_with_label("Quit");
-#else
   buttoncontinue = gtk_button_new_from_stock (GTK_STOCK_QUIT);
-#endif
   gtk_box_pack_start(GTK_BOX(action_area), buttoncontinue, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttoncontinue), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_unsaved_data_continue_callback), 
@@ -757,11 +698,7 @@ void x_dialog_unimplemented_feature()
   gtk_widget_show(label);
   
   /* Now create button to stick in action area */
-#ifdef HAS_GTK12
-  buttonclose = gtk_button_new_with_label("Close");
-#else
   buttonclose = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-#endif
   GTK_WIDGET_SET_FLAGS(buttonclose, GTK_CAN_DEFAULT);
   gtk_box_pack_start(GTK_BOX(action_area), buttonclose, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonclose), "clicked",
@@ -770,11 +707,7 @@ void x_dialog_unimplemented_feature()
 
 /* Remove bad size for widget */
 #if 0
-#ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET (buttonclose), 50, 30);
-#else
-  gtk_widget_set_usize (GTK_WIDGET (buttonclose), 50, 30);
-#endif
 #endif 
 
   gtk_widget_show(buttonclose);
@@ -874,11 +807,7 @@ void x_dialog_about_dialog()
   gtk_widget_show(label);
   
   /* Now create button to stick in action area */
-#ifdef HAS_GTK12
-  buttonclose = gtk_button_new_with_label("Close");
-#else
   buttonclose = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-#endif
   GTK_WIDGET_SET_FLAGS(buttonclose, GTK_CAN_DEFAULT);
   gtk_box_pack_start(GTK_BOX(action_area), buttonclose, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonclose), "clicked",
@@ -919,11 +848,7 @@ void x_dialog_export_file()
   export_filename_window = x_dialog_create_dialog_box(&vbox, &action_area);
   gtk_window_position(GTK_WINDOW(export_filename_window),
 		      GTK_WIN_POS_MOUSE);
-#ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET(export_filename_window), 400, 150);  
-#else
-  gtk_widget_set_usize(GTK_WIDGET(export_filename_window), 400, 150);
-#endif
   
   gtk_window_set_title(GTK_WINDOW(export_filename_window), "Export filename?");
   gtk_container_border_width(GTK_CONTAINER(export_filename_window), 5);
@@ -954,11 +879,7 @@ void x_dialog_export_file()
 
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
-#ifdef HAS_GTK22
   gtk_widget_set_size_request (label, 127, 50);
-#else
-  gtk_widget_set_usize (label, 127, 50);
-#endif
 
 
   /*  Create the "filenname" text entry area */
@@ -967,11 +888,7 @@ void x_dialog_export_file()
                              -1);
   gtk_box_pack_start(GTK_BOX(vbox), filename_entry, TRUE,
                      TRUE, 5);
-#ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET (filename_entry), 400, 20);
-#else
-  gtk_widget_set_usize (GTK_WIDGET (filename_entry), 400, 20);
-#endif
 
   gtk_object_set_data(GTK_OBJECT(export_filename_window), "filename_entry",
                       filename_entry);  /* here we make the string "filename_entry" point
@@ -981,11 +898,7 @@ void x_dialog_export_file()
 
 
   /* Now create "OK" and "cancel" buttons */
-#ifdef HAS_GTK12
-  buttonok = gtk_button_new_with_label("OK");
-#else
   buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
-#endif
   GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT); /* what does this do? */
   gtk_box_pack_start(GTK_BOX(action_area), buttonok, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
@@ -994,11 +907,7 @@ void x_dialog_export_file()
   gtk_widget_show(buttonok);
 
 
-#ifdef HAS_GTK12
-  buttoncancel = gtk_button_new_with_label("Cancel");
-#else
   buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-#endif
   gtk_box_pack_start(GTK_BOX(action_area), buttoncancel, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttoncancel), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_export_file_close_callback), 

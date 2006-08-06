@@ -21,6 +21,8 @@
 	* src/x_window.c: Applied Patch#1533822: gschem: Tidy up
 	gtk_widget_show calls by Peter Brett.
 
+	* src/*.c: Applied Patch#1533798: Remove pre-GTK2 code from geda
+        by Peter Brett.
 
 2006-07-26 Ales Hvezda   <ahvezda@geda.seul.org>
 

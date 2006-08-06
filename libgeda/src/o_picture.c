@@ -26,11 +26,11 @@
 
 #include <gtk/gtk.h>
 #include <guile/gh.h>
-#ifndef HAS_GTK12
+
 #include <gdk/gdk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gdk-pixbuf/gdk-pixdata.h>
-#endif
+
 
 #include "defines.h"
 #include "struct.h"
@@ -41,7 +41,6 @@
 
 #include "../include/prototype.h"
 
-#ifndef HAS_GTK12
 /*! \brief Create picture OBJECT from character string.
  *  \par Function Description
  *  This function will get the description of a picture from the character
@@ -146,13 +145,11 @@ OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
   pixbuf = NULL;
 
   if (embedded == 0) {
-#ifndef HAS_GTK12
     pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
     if (pixbuf == NULL) {
       fprintf(stderr, "Error loading picture from file: %s.\n", filename);
       s_log_message( "Error loading picture from file: %s.\n", filename);
     }
-#endif  
   }
   else {
     GString *encoded_picture=g_string_new("");
@@ -1157,5 +1154,4 @@ void o_picture_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 	
 }
-#endif
 

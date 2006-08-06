@@ -165,7 +165,6 @@ static void o_delete_box(TOPLEVEL *w_current, OBJECT *obj)
   (OBJECT *) return_tail(w_current->page_current->object_head);
 }
 
-#ifndef HAS_GTK12
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -181,7 +180,6 @@ static void o_delete_picture(TOPLEVEL *w_current, OBJECT *obj)
   w_current->page_current->object_tail =
   (OBJECT *) return_tail(w_current->page_current->object_head);
 }
-#endif
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -276,9 +274,7 @@ void o_delete(TOPLEVEL *w_current)
         break;
 
       case(OBJ_PICTURE):
-#ifndef HAS_GTK12
         o_delete_picture(w_current, object);
-#endif
         break;
 
       case(OBJ_CIRCLE):

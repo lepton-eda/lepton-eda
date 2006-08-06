@@ -358,11 +358,7 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     }
     s_current = s_current->next;
   }
-#ifdef HAS_GTK22
   aewindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-#else
-  aewindow = gtk_window_new (GTK_WINDOW_DIALOG);
-#endif
   gtk_object_set_data (GTK_OBJECT (aewindow), "aewindow", aewindow);
   gtk_window_set_title (GTK_WINDOW (aewindow), _("Single Attribute Editor"));
   gtk_window_set_position (GTK_WINDOW (aewindow), GTK_WIN_POS_MOUSE);
@@ -393,11 +389,7 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_box_pack_start (GTK_BOX (hbox1), hbuttonbox1, TRUE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (hbuttonbox1), 1);
 
-#ifdef HAS_GTK12
-  okbutton = gtk_button_new_with_label ("OK");
-#else
   okbutton = gtk_button_new_from_stock (GTK_STOCK_OK);
-#endif
   gtk_widget_ref (okbutton);
   gtk_object_set_data_full (GTK_OBJECT (aewindow), "okbutton", okbutton,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -408,11 +400,7 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_button_set_relief (GTK_BUTTON (okbutton), GTK_RELIEF_HALF);
 
   if (list) { /* gschem specific */
-#ifdef HAS_GTK12
-    deletebutton = gtk_button_new_with_label (_("Delete"));
-#else
     deletebutton = gtk_button_new_from_stock (GTK_STOCK_DELETE);
-#endif
     gtk_widget_ref (deletebutton);
     gtk_object_set_data_full (GTK_OBJECT (aewindow), "deletebutton", deletebutton,
                               (GtkDestroyNotify) gtk_widget_unref);
@@ -422,11 +410,7 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     GTK_WIDGET_SET_FLAGS (deletebutton, GTK_CAN_DEFAULT);
   }
 
-#ifdef HAS_GTK12
-  cancelbutton = gtk_button_new_with_label (_("Cancel"));
-#else
   cancelbutton = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-#endif
   gtk_widget_ref (cancelbutton);
   gtk_object_set_data_full (GTK_OBJECT (aewindow), "cancelbutton", cancelbutton,
                             (GtkDestroyNotify) gtk_widget_unref);

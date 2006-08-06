@@ -1843,14 +1843,11 @@ DEFINE_I_CALLBACK(page_revert)
   gchar *filename;
   int page_control;
   int up;
-#ifdef HAS_GTK22
   int response;
   GtkWidget* dialog;
-#endif
 
   exit_if_null(w_current);
 
-#ifdef HAS_GTK22
  dialog = gtk_message_dialog_new ((GtkWindow*) w_current->main_window,
                                   GTK_DIALOG_DESTROY_WITH_PARENT,
                                   GTK_MESSAGE_QUESTION,
@@ -1869,7 +1866,6 @@ DEFINE_I_CALLBACK(page_revert)
    /* just fall through */
    break;
  }
-#endif
 
   /* save this for later */
   filename = g_strdup (w_current->page_current->page_filename);

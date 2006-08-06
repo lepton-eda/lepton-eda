@@ -355,11 +355,7 @@ void x_print_setup (TOPLEVEL *w_current, char *filename)
     gtk_window_set_title(GTK_WINDOW(w_current->pwindow),
                          _("Print..."));
 
-#ifdef HAS_GTK12    
-    buttonprint = gtk_button_new_with_label (_("Print"));
-#else
     buttonprint = gtk_button_new_from_stock (GTK_STOCK_PRINT);
-#endif
     GTK_WIDGET_SET_FLAGS (buttonprint, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area),
                        buttonprint, TRUE, TRUE, 0);
@@ -368,11 +364,7 @@ void x_print_setup (TOPLEVEL *w_current, char *filename)
     gtk_widget_show (buttonprint);
     gtk_widget_grab_default (buttonprint);
 
-#ifdef HAS_GTK12
-    buttoncancel = gtk_button_new_with_label (_("Cancel"));
-#else
     buttoncancel = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
-#endif
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area),
                        buttoncancel, TRUE, TRUE, 0);

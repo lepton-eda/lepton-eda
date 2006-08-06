@@ -106,13 +106,8 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
   int i, j;
   int name_len, key_len, pad;
   int sum, diff, max_size, space_size;
-#ifdef HAS_GTK22
   PangoLayout *layout;
   int name_width, keys_width;
-#else
-  GtkStyle *style;
-  GdkFont *font=NULL;
-#endif 
 
   menu_bar = gtk_menu_bar_new ();
   for (i = 0 ; i < s_menu_return_num(); i++) {
@@ -129,20 +124,6 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
     gtk_menu_append(GTK_MENU(menu), menu_item);
     gtk_widget_show(menu_item);
 
-#ifdef HAS_GTK12
-    /* get info for style/font */
-    style = gtk_rc_get_style(w_current->main_window);
-    if (style) {
-       font = style->font;
-    } else {
-       font = GTK_WIDGET (w_current->main_window)->style->font;
-    }
-
-    space_size = gdk_string_width(font, " ");
-    max_size = gdk_string_width(font, "123456789012345678901234567890");
-
-#else
-
     layout = gtk_widget_create_pango_layout(menu, " ");
     pango_layout_get_pixel_size(layout, &space_size, NULL);
     g_object_unref(layout);
@@ -151,8 +132,6 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
 	                                    "123456789012345678901234567890");
     pango_layout_get_pixel_size(layout, &max_size, NULL);
     g_object_unref(layout);
-
-#endif
 
     scm_items_len = (int) scm_ilength (scm_items);
     for (j = 0 ; j < scm_items_len; j++) {
@@ -190,7 +169,6 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
         name_len = strlen(menu_item_name);
         key_len = strlen(menu_item_keys);
 
-#ifdef HAS_GTK22
         layout = gtk_widget_create_pango_layout(menu, menu_item_name);
         pango_layout_get_pixel_size(layout, &name_width, NULL);
         g_object_unref(layout);
@@ -200,10 +178,6 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
         g_object_unref(layout);
 
         sum = name_width + keys_width;
-#else
-        sum = gdk_string_width(font, menu_item_name) + 
-              gdk_string_width(font, menu_item_keys);
-#endif
 
 	diff = max_size - sum;
 	pad = diff/space_size;
@@ -297,11 +271,6 @@ GtkWidget *get_main_popup(TOPLEVEL *w_current)
      static var declared above.
   */
   gtk_item_factory_create_items(item_factory, npopup_items, popup_items, w_current);
-
-#ifdef HAS_GTK12
-  /* Attach the new accelerator group to the window. */
-  gtk_accel_group_attach (accel_group, GTK_OBJECT (w_current->main_window));
-#endif
 
   /* Finally, return the actual menu created by the item factory. */
   menu = (GtkWidget *) gtk_item_factory_get_widget(item_factory, "<popup>");

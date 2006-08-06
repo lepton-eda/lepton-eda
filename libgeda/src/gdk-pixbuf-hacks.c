@@ -21,11 +21,9 @@
 
 /* Taken from gtkam's sources */
 #include "config.h"
-#ifndef HAS_GTK12
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#endif
 
-#ifndef HAS_GTK12
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
 /*! \def COPY90 */
 #define COPY90                                                          \
         if ((r2 < h1) && (c2 < w1)) {                                   \
@@ -339,4 +337,3 @@ GdkPixbuf *gdk_pixbuf_mirror_flip(GdkPixbuf *src, gint mirror, gint flip)
 
 	return dest;
 }
-#endif

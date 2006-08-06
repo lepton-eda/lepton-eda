@@ -83,9 +83,7 @@ void get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
         break;
 
       case(OBJ_PICTURE):
-#ifndef HAS_GTK12
         get_picture_bounds(w_current, o_current->picture, &rleft, &rtop, &rright, &rbottom);
-#endif
         break;
 
       case(OBJ_CIRCLE):
@@ -177,9 +175,7 @@ void get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head,
         break;
 
       case(OBJ_PICTURE):
-#ifndef HAS_GTK12
         get_picture_bounds(w_current, o_current->picture, &rleft, &rtop, &rright, &rbottom);
-#endif
         break;
 
       case(OBJ_CIRCLE):
@@ -263,9 +259,7 @@ void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
         break;
 
       case(OBJ_PICTURE):
-#ifndef HAS_GTK12
         world_get_picture_bounds(w_current, o_current->picture, &rleft, &rtop, &rright, &rbottom);
-#endif
         break;
 
       case(OBJ_CIRCLE):
@@ -1479,9 +1473,7 @@ void o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx,
         break;
 
       case(OBJ_PICTURE):
-#ifndef HAS_GTK12
         o_picture_rotate_world(w_current, 0, 0, angle_change, o_current);
-#endif
         break;
 
       case(OBJ_CIRCLE):
@@ -1543,9 +1535,7 @@ void o_complex_mirror_lowlevel(TOPLEVEL *w_current,
         break;
 
       case(OBJ_PICTURE):
-#ifndef HAS_GTK12
         o_picture_mirror_world(w_current, 0, 0, o_current);
-#endif
         break;
 
       case(OBJ_CIRCLE):

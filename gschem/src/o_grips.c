@@ -121,11 +121,9 @@ OBJECT *o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone)
 		  
         case(OBJ_PICTURE):
           /* check the grips of the picture object */
-#ifndef HAS_GTK12
           found = o_grips_search_picture(w_current, object,
                                          x, y, size, whichone);
           if(found != NULL) return found;
-#endif
           break;
 		  
         case(OBJ_CIRCLE):
@@ -326,7 +324,6 @@ OBJECT *o_grips_search_box(TOPLEVEL *w_current, OBJECT *o_current,
   return NULL;
 }
 
-#ifndef HAS_GTK12
 /*! \brief Check if pointer is inside picture grip.
  *  \par Function Description
  *  This function checks if the pointer event occuring at (<B>x</B>,<B>y</B>)
@@ -405,7 +402,6 @@ OBJECT *o_grips_search_picture(TOPLEVEL *w_current, OBJECT *o_current,
 
   return NULL;
 }
-#endif
 
 /*! \brief Check if pointer is inside circle grip.
  *  \par Function Description
@@ -565,13 +561,11 @@ int o_grips_start(TOPLEVEL *w_current, int x, int y)
 				
       case(OBJ_PICTURE):
 	/* start the modification of a grip on a picture */
-#ifndef HAS_GTK12
         o_grips_start_picture(w_current, object, x, y, whichone);
 				
         whichone_changing = whichone;
         object_changing = object;
         return(TRUE);
-#endif
         break;
 				
       case(OBJ_CIRCLE):
@@ -786,7 +780,6 @@ void o_grips_start_box(TOPLEVEL *w_current, OBJECT *o_current,
 
 }
 
-#ifndef HAS_GTK12
 /*! \brief Initialize grip motion process for a picture.
  *  \par Function Description
  *  This function initializes the grip motion process for a picture.
@@ -854,7 +847,7 @@ void o_grips_start_picture(TOPLEVEL *w_current, OBJECT *o_current,
   o_picture_rubberbox_xor(w_current);
 
 }
-#endif
+
 /*! \brief Initialize grip motion process for a circle.
  *  \par Function Description
  *  This function initializes the grip motion process for a circle.
@@ -984,9 +977,7 @@ void o_grips_motion(TOPLEVEL *w_current, int x, int y)
 		
     case(OBJ_PICTURE):
     /* erase, update and draw a box */
-#ifndef HAS_GTK12
     o_grips_motion_picture(w_current, x, y, whichone_changing);
-#endif
     break;
 		
     case(OBJ_CIRCLE):
@@ -1063,7 +1054,6 @@ void o_grips_motion_box(TOPLEVEL *w_current, int x, int y, int whichone)
   o_box_rubberbox(w_current, x, y);
 }
 
-#ifndef HAS_GTK12
 /*! \brief Modify previously selected picture according to mouse position.
  *  \par Function Description
  *  This function is the refreshing part of the grip motion process. It is
@@ -1087,7 +1077,6 @@ void o_grips_motion_picture(TOPLEVEL *w_current, int x, int y, int whichone)
   /* erase, update and draw the temporary picture */
   o_picture_rubberbox(w_current, x, y);
 }
-#endif
 
 /*! \brief Modify previously selected circle according to mouse position.
  *  \par Function Description
@@ -1179,9 +1168,7 @@ void o_grips_end(TOPLEVEL *w_current)
 	  
     case(OBJ_PICTURE):
     /* modify a picture object */
-#ifndef HAS_GTK12
     o_grips_end_picture(w_current, object, whichone_changing);
-#endif
     break;
 	  
     case(OBJ_CIRCLE):
@@ -1543,7 +1530,6 @@ void o_grips_end_box(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
   o_redraw_single(w_current, o_current);
 }
 
-#ifndef HAS_GTK12
 /*! \todo Finish function documentation!!!
  *  \brief End process of modifying picture object with grip.
  *  \par Function Description
@@ -1596,7 +1582,6 @@ void o_grips_end_picture(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
   w_current->pixbuf_filename = NULL;
   w_current->pixbuf_wh_ratio = 0;
 }
-#endif
 
 /*! \brief End process of modifying circle object with grip.
  *  \par Function Description

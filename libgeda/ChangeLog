@@ -1,3 +1,8 @@
+2006-08-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/*.c: Applied Patch#1533798: Remove pre-GTK2 code from geda
+	by Peter Brett.
+
 2006-07-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/s_toplevel.c: Added initialization of missing variable 

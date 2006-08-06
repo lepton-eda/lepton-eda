@@ -123,9 +123,7 @@ void o_edit(TOPLEVEL *w_current, SELECTION *list)
     break;
 
     case(OBJ_PICTURE):
-#ifndef HAS_GTK12
     picture_change_filename_dialog(w_current);
-#endif
     break;
     case(OBJ_TEXT):
     if(strchr(o_current->text->string,'=')) {
@@ -449,7 +447,6 @@ void o_rotate_90(TOPLEVEL *w_current, SELECTION *list,
 
       case(OBJ_PICTURE):
 				/* erase the current selection */
-#ifndef HAS_GTK12
 	
 	if (!w_current->DONT_REDRAW) {
 	  o_picture_erase_grips(w_current, object);
@@ -462,7 +459,6 @@ void o_rotate_90(TOPLEVEL *w_current, SELECTION *list,
 	if (!w_current->DONT_REDRAW) {
 	  o_picture_draw(w_current, object);
 	}
-#endif
         break;
 
       case(OBJ_CIRCLE):
@@ -834,13 +830,11 @@ void o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
         break;
 
       case(OBJ_PICTURE):
-#ifndef HAS_GTK12
         o_picture_erase_grips(w_current, object);
         o_picture_erase(w_current, object);
         o_picture_mirror(w_current,
 			 centerx, centery, object);
         o_picture_draw(w_current, object);
-#endif
         break;
 
       case(OBJ_CIRCLE):

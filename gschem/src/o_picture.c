@@ -21,13 +21,9 @@
 #include <stdio.h>
 
 #include <libgeda/libgeda.h>
-#ifndef HAS_GTK12
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#endif
 #include "../include/globals.h"
 #include "../include/prototype.h"
-
-#ifndef HAS_GTK12
 
 /* This works, but using one macro inside of other doesn't */
 #define GET_PICTURE_WIDTH(w)			\
@@ -160,7 +156,6 @@ void o_picture_end(TOPLEVEL *w_current, int x, int y)
   o_undo_savestate(w_current, UNDO_ALL);
 
 }
-#endif
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -169,28 +164,6 @@ void o_picture_end(TOPLEVEL *w_current, int x, int y)
  */
 void picture_selection_dialog (TOPLEVEL *w_current)
 {
-#ifdef HAS_GTK12
-  GtkWidget *dialog, *label, *okay_button;
-  
-  /* Create the widgets */
-  
-  dialog = gtk_dialog_new();
-  label = gtk_label_new (_("Gschem doesn't support pictures if it has been compiled using GTK 1.2"));
-  okay_button = gtk_button_new_with_label(_("OK"));
-   
-  /* Ensure that the dialog box is destroyed when the user clicks ok. */
-  
-  gtk_signal_connect_object (GTK_OBJECT (okay_button), "clicked",
-			     GTK_SIGNAL_FUNC (gtk_widget_destroy), dialog);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->action_area),
-		     okay_button);
-  
-  /* Add the label, and show everything we've added to the dialog. */
-  
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox),
-		     label);
-  gtk_widget_show_all (dialog);
-#else
   GtkWidget *file_selector;
   
   /* Create the selector */
@@ -234,10 +207,8 @@ void picture_selection_dialog (TOPLEVEL *w_current)
   } else {
     gdk_window_raise(w_current->pfswindow->window);
   }
-#endif
 }
 
-#ifndef HAS_GTK12
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -903,4 +874,3 @@ void picture_change_filename_dialog (TOPLEVEL *w_current)
      gdk_window_raise(w_current->pcfswindow->window);
    }
 }
-#endif
