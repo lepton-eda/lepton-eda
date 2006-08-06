@@ -115,6 +115,10 @@ SCM g_keys_view_zoom_out_hotkey(void);
 SCM g_keys_view_zoom_box(void);
 SCM g_keys_view_zoom_box_hotkey(void);
 SCM g_keys_view_pan(void);
+SCM g_keys_view_pan_left(void);
+SCM g_keys_view_pan_right(void);
+SCM g_keys_view_pan_up(void);
+SCM g_keys_view_pan_down(void);
 SCM g_keys_view_pan_hotkey(void);
 SCM g_keys_view_update_cues(void);
 SCM g_keys_page_manager(void);
@@ -270,6 +274,7 @@ SCM g_rc_add_attribute_offset(SCM offset);
 SCM g_rc_auto_save_interval(SCM seconds);
 SCM g_rc_drag_can_move(SCM mode);
 SCM g_rc_mousepan_gain(SCM mode);
+SCM g_rc_keyboardpan_gain(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
@@ -350,6 +355,10 @@ void i_callback_view_zoom_out(gpointer data, guint callback_action, GtkWidget *w
 void i_callback_view_zoom_in_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_zoom_out_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_pan(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_view_pan_left(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_view_pan_right(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_view_pan_up(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_view_pan_down(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_pan_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_update_cues(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_manager(gpointer data, guint callback_action, GtkWidget *widget);

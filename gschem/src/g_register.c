@@ -147,6 +147,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "output-vector-threshold",   1, 0, 0, g_rc_output_vector_threshold },
   { "add-attribute-offset",      1, 0, 0, g_rc_add_attribute_offset },
   { "mousepan-gain",             1, 0, 0, g_rc_mousepan_gain },
+  { "keyboardpan-gain",          1, 0, 0, g_rc_keyboardpan_gain },
 
   /* backup functions */
   { "auto-save-interval",        1, 0, 0, g_rc_auto_save_interval },
@@ -245,6 +246,10 @@ static struct gsubr_t gschem_funcs[] = {
   { "view-zoom-box-hotkey",      0, 0, 0, g_keys_view_zoom_box_hotkey },
   { "view-pan",                  0, 0, 0, g_keys_view_pan },
   { "view-pan-hotkey",           0, 0, 0, g_keys_view_pan_hotkey },
+  { "view-pan-left",		 0, 0, 0, g_keys_view_pan_left },
+  { "view-pan-right",		 0, 0, 0, g_keys_view_pan_right },
+  { "view-pan-up",		 0, 0, 0, g_keys_view_pan_up },
+  { "view-pan-down",		 0, 0, 0, g_keys_view_pan_down },
   { "view-update-cues",          0, 0, 0, g_keys_view_update_cues },
   { "page-manager",              0, 0, 0, g_keys_page_manager },
   { "page-next",                 0, 0, 0, g_keys_page_next },

@@ -1687,3 +1687,26 @@ SCM g_rc_mousepan_gain(SCM gain)
 
   return SCM_BOOL_T;
 }
+
+/*! \brief Scheme function for setting the step for keyboard pan.
+ *
+ * Default setting is 20.
+ */
+SCM g_rc_keyboardpan_gain(SCM gain)
+{
+  int val;
+
+  SCM_ASSERT (SCM_INUMP (gain), gain, SCM_ARG1, "keyboardpan-gain");
+  
+  val = SCM_INUM (gain);
+
+  if (val <= 0) {
+    fprintf(stderr, _("Invalid gain [%d] passed to keyboardpan-gain\n"),
+            val);
+    val = 20; /* absolute default */
+  }
+
+  default_keyboardpan_gain = val;
+
+  return SCM_BOOL_T;
+}

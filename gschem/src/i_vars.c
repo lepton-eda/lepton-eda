@@ -126,6 +126,7 @@ int   default_text_display_zoomfactor = 30;
 
 int default_text_feedback = ONLY_WHEN_READABLE;
 int default_mousepan_gain = 5;
+int default_keyboardpan_gain = 20;
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -241,11 +242,13 @@ void i_vars_set(TOPLEVEL *w_current)
   w_current->drag_can_move = default_drag_can_move;
 
   w_current->mousepan_gain = default_mousepan_gain;
+  w_current->keyboardpan_gain = default_keyboardpan_gain;
 
   w_current->auto_save_interval = default_auto_save_interval;
   if (w_current->auto_save_interval != 0) {
-    w_current->auto_save_timeout = g_timeout_add(w_current->auto_save_interval*1000,
-						 (GSourceFunc) s_page_autosave,
-						 w_current);
+    w_current->auto_save_timeout = 
+        g_timeout_add(w_current->auto_save_interval*1000,
+		      (GSourceFunc) s_page_autosave,
+		      w_current);
   }
 }

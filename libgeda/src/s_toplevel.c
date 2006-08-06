@@ -411,6 +411,7 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->always_promote_attributes = NULL;
 
   toplevel->mousepan_gain = 5;
+  toplevel->keyboardpan_gain = 10;
 
   toplevel->net_naming_priority = 0;
   toplevel->hierarchy_traversal = 0;

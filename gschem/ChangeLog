@@ -29,6 +29,10 @@
 	are not available.   Minor cleanup of the code afterwords. 
  	Removed obsolete code and functions.
 
+	* src/*.c: Applied patch by Tomaz Solc to add cursor key panning.
+	Minor cleanup of the code afterwards (mainly to add the 
+	keyboardpan_gain to the toplevel as a proper rc variable)
+
 2006-07-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_window.c: Converted pro-active pointer check to a g_assert

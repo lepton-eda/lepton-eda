@@ -6,6 +6,9 @@
 	* src/a_basic.c: Applied Patch#1534089: libgeda: bugfix for
 	segfault when loading corrupted file by Tomaz Solc.
 
+	* include/struct.h, src/s_toplevel.c: Added keyboardpan_gain
+	variable to TOPLEVEL
+
 2006-07-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/s_toplevel.c: Added initialization of missing variable 

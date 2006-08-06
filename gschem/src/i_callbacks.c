@@ -1546,6 +1546,60 @@ DEFINE_I_CALLBACK(view_pan)
   i_update_middle_button(w_current, i_callback_view_pan, _("Pan"));
 }
 
+/*! \brief Scheme callback function that moves the viewport to the left.
+ *
+ * The distance can be set with "keyboardpan-gain" scheme callback.
+ */
+DEFINE_I_CALLBACK(view_pan_left)
+{
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+  exit_if_null(w_current);
+
+  a_pan_mouse(w_current, w_current->keyboardpan_gain, 0);
+}
+
+/*! \brief Scheme callback function that moves the viewport to the right.
+ *
+ * The distance can be set with "keyboardpan-gain" scheme callback.
+ */
+DEFINE_I_CALLBACK(view_pan_right)
+{
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+  exit_if_null(w_current);
+
+  /* yes, that's a negative sign there */
+  a_pan_mouse(w_current, -w_current->keyboardpan_gain, 0);
+}
+
+/*! \brief Scheme callback function that moves the viewport up.
+ *
+ * The distance can be set with "keyboardpan-gain" scheme callback.
+ */
+DEFINE_I_CALLBACK(view_pan_up)
+{
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+  exit_if_null(w_current);
+
+  a_pan_mouse(w_current, 0, w_current->keyboardpan_gain);
+}
+
+/*! \brief Scheme callback function that moves the viewport down.
+ *
+ * The distance can be set with "keyboardpan-gain" scheme callback.
+ */
+DEFINE_I_CALLBACK(view_pan_down)
+{
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+  exit_if_null(w_current);
+
+  /* yes, that's a negative sign there */
+  a_pan_mouse(w_current, 0, -w_current->keyboardpan_gain);
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

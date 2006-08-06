@@ -179,6 +179,16 @@
 ;(mousepan-gain 1)
 ;(mousepan-gain 10)
 
+; keyboardpan-gain integer
+;
+; Controls how much the display pans when using the keyboard cursors.  
+; A larger value provides greater pan distance when moving the mouse, 
+; while a smaller value provides a smoother, but smaller pan distance 
+; when moving the mouse.
+(keyboardpan-gain 20)
+;(keyboardpan-gain 10)
+;(keyboardpan-gain 1)
+;(keyboardpan-gain 5)
 
 
 ; action-feedback-mode string
@@ -1247,6 +1257,10 @@
     ("v" . view-keymap)
     ("w" . view-zoom-box-hotkey)
     ("x" . view-pan-hotkey)
+    ("Left" . view-pan-left)
+    ("Right" . view-pan-right)
+    ("Up" . view-pan-up)
+    ("Down" . view-pan-down)
     ("y" . buffer-keymap)
     ("z" . view-zoom-in-hotkey)
     ("period" . repeat-last-command)

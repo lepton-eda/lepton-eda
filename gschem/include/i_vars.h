@@ -89,3 +89,4 @@ extern int default_add_attribute_offset;
 extern int default_auto_save_interval;
 extern int default_drag_can_move;
 extern int default_mousepan_gain;
+extern int default_keyboardpan_gain;

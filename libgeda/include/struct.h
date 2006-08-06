@@ -886,6 +886,9 @@ struct st_toplevel {
   /* Controls the gain of the mouse pan */
   int mousepan_gain;
 
+  /* Controls the gain of the keyboard pan */
+  int keyboardpan_gain;
+
   /* gnetlist specific */
   int net_naming_priority;
   int hierarchy_traversal;
