@@ -36,6 +36,9 @@
 	* po/it_IT.po: Replaced Italian translation with updates from
 	Michele Petrecca.
 
+	* po/pt_BR.po: Replaced Portugese translation with updates from
+	Antonio Augusto Todo Bom Neto.
+
 2006-07-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_window.c: Converted pro-active pointer check to a g_assert

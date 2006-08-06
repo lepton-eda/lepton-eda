@@ -1,20 +1,21 @@
+# translation of pt_BR.po to
 # translation of pt_BR.po to Portugues Brasil
 # This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR Alexandre Pereira Nunes
-# Antonio Augusto Todo Bom Neto <antonio@projetos.etc.br>, 2003
+# Copyright (C) YEAR Alexandre Pereira Nunes.
+# Antonio Augusto Todo Bom Neto <antonio@projetos.etc.br>, 2003, 2006 - YEAR.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-19 22:09-0400\n"
-"PO-Revision-Date: 2003-04-21 02:59+0000\n"
-"Last-Translator: Antonio Augusto Todo Bom Neto <antonio@projetos.etc.br>\n"
-"Language-Team: geda em Portugues Brasil <geda-pt@seul.org>\n"
+"POT-Creation-Date: 2006-07-25 17:28-0300\n"
+"PO-Revision-Date: 2006-07-27 01:34-0300\n"
+"Last-Translator: \n"
+"Language-Team:  <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0.1\n"
+"X-Generator: KBabel 1.10.2\n"
 
 #: src/rcstrings.c:2
 msgid "File"
@@ -118,9 +119,8 @@ msgid "Mirror Mode"
 msgstr "Modo de espelho"
 
 #: src/rcstrings.c:28
-#, fuzzy
 msgid "Slot..."
-msgstr "Cor..."
+msgstr ""
 
 #: src/rcstrings.c:29
 msgid "Color..."
@@ -147,14 +147,12 @@ msgid "Symbol Translate..."
 msgstr "Transladar..."
 
 #: src/rcstrings.c:35
-#, fuzzy
 msgid "Embed Component/Picture"
-msgstr "Embutir Componente"
+msgstr "Embutir Componente/Imagem"
 
 #: src/rcstrings.c:36
-#, fuzzy
 msgid "Unembed Component/Picture"
-msgstr "Desembutir Componente"
+msgstr "Desembutir Componente/Imagem"
 
 #: src/rcstrings.c:37
 msgid "Update Component"
@@ -170,7 +168,7 @@ msgstr "Tornar todos textos visíveis"
 
 #: src/rcstrings.c:41
 msgid "Buffer"
-msgstr ""
+msgstr "Buffer"
 
 #: src/rcstrings.c:42
 msgid "Copy into 1"
@@ -242,7 +240,7 @@ msgstr "Redesenhar"
 
 #: src/rcstrings.c:60 src/i_callbacks.c:1546 src/i_callbacks.c:1561
 msgid "Pan"
-msgstr ""
+msgstr "Pan"
 
 #: src/rcstrings.c:61 src/i_basic.c:118
 msgid "Zoom Box"
@@ -270,7 +268,7 @@ msgstr "Página"
 
 #: src/rcstrings.c:68
 msgid "Manager..."
-msgstr "Gerenciador"
+msgstr "Gerenciador..."
 
 #: src/rcstrings.c:69
 msgid "Next"
@@ -344,9 +342,8 @@ msgid "Pin"
 msgstr "Pino"
 
 #: src/rcstrings.c:87
-#, fuzzy
 msgid "Picture..."
-msgstr "Imprimir..."
+msgstr "Imagem..."
 
 #: src/rcstrings.c:89
 msgid "Hierarchy"
@@ -446,7 +443,7 @@ msgstr "Exibir janela de Log"
 
 #: src/rcstrings.c:115
 msgid "Show Coord Window..."
-msgstr "Exibir janela de Coordenadas"
+msgstr "Exibir janela de Coord."
 
 #: src/rcstrings.c:117 src/x_menus.c:249
 msgid "Help"
@@ -489,8 +486,7 @@ msgstr ""
 
 #: src/g_rc.c:109
 #, c-format
-msgid ""
-"While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
+msgid "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
 msgstr ""
 "Enquanto o gschem for versão ALPHA, assegure que você tem a última versão de "
 "arquivo rc.\n"
@@ -541,37 +537,40 @@ msgstr ""
 "mas o gschem não está com suporte a strokes, recompile\n"
 "o gschem com a biblioteca LibStroke\n"
 
-#: src/g_rc.c:1230
+#: src/g_rc.c:1231
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
-msgstr ""
-"Número de níveis [%d] inválido para função desfaz passado para undo-level\n"
+msgstr "Número de níveis [%d] inválido para função desfaz passado para undo-level\n"
 
-#: src/g_rc.c:1455
+#: src/g_rc.c:1456
 #, fuzzy, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Tamanho [%d] inválido passado tamanho de grade\n"
 
-#: src/g_rc.c:1530
+#: src/g_rc.c:1531
 #, fuzzy, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
 msgstr "Tamanho [%d] inválido (text-size)\n"
 
-#: src/g_rc.c:1571
+#: src/g_rc.c:1572
 #, fuzzy, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
 msgstr "Tamanho [%d] inválido (text-size)\n"
 
-#: src/g_rc.c:1615
+#: src/g_rc.c:1616
 #, fuzzy, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "Tamanho [%d] inválido (text-size)\n"
 
-#: src/g_rc.c:1639
+#: src/g_rc.c:1640
 #, fuzzy, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
-msgstr ""
-"Número de níveis [%d] inválido para função desfaz passado para undo-level\n"
+msgstr "Número de níveis [%d] inválido para função desfaz passado para undo-level\n"
+
+#: src/g_rc.c:1681
+#, fuzzy, c-format
+msgid "Invalid gain [%d] passed to mousepan-gain\n"
+msgstr "Tamanho [%d] inválido passado tamanho de grade\n"
 
 #: src/gschem.c:143 src/gschem.c:153
 #, c-format
@@ -589,8 +588,7 @@ msgstr ""
 
 #: src/gschem.c:147 src/gschem.c:157
 #, c-format
-msgid ""
-"This is free software, and you are welcome to redistribute it under certain\n"
+msgid "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Este programa é um software livre, e você é convidado a redistribui-lo sob "
 "certas\n"
@@ -684,9 +682,8 @@ msgid "Box Mode"
 msgstr "Modo de Caixa"
 
 #: src/i_basic.c:144
-#, fuzzy
 msgid "Picture Mode"
-msgstr "Modo de Pino"
+msgstr "Modo Imagem"
 
 #: src/i_basic.c:147
 msgid "Circle Mode"
@@ -711,14 +708,12 @@ msgid "Move"
 msgstr "Mover"
 
 #: src/i_basic.c:159 src/i_callbacks.c:735 src/i_callbacks.c:754
-#, fuzzy
 msgid "Multiple Copy"
-msgstr "Anexar Multiplos"
+msgstr "Multipla Cópia"
 
 #: src/i_basic.c:162
-#, fuzzy
 msgid "Multiple Copy Mode"
-msgstr "Modo de Cópia"
+msgstr "Modo de Múltipla Cópia"
 
 #: src/i_basic.c:197
 msgid "Snap Off"
@@ -734,7 +729,7 @@ msgstr "Ação"
 
 #: src/i_basic.c:299 src/x_window.c:843
 msgid "Stroke"
-msgstr ""
+msgstr "Stroke"
 
 #: src/i_basic.c:306 src/x_window.c:845
 msgid "none"
@@ -764,7 +759,7 @@ msgid "Documentation commands not supported under MinGW.\n"
 msgstr ""
 
 #: src/i_callbacks.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "New page created [%s]\n"
 msgstr "Criada Nova Página [%s]\n"
 
@@ -819,7 +814,7 @@ msgstr "Editar Texto"
 
 #: src/i_callbacks.c:877
 msgid "Slot"
-msgstr ""
+msgstr "Slot"
 
 #: src/i_callbacks.c:894
 msgid "Color"
@@ -853,8 +848,7 @@ msgstr "ATENÇÃO: A grade de agarre não está em 100!\n"
 msgid ""
 "WARNING: If you are translating a symbol to the origin, the snap grid size "
 "should be set to 100\n"
-msgstr ""
-"ATENÇÃO: Se transladar um símbolo para origem, a grade deve estar em 100\n"
+msgstr "ATENÇÃO: Se transladar um símbolo para origem, a grade deve estar em 100\n"
 
 #: src/i_callbacks.c:1068
 msgid "Embed"
@@ -900,9 +894,8 @@ msgid "Closing [%s]\n"
 msgstr "Fechando [%s]\n"
 
 #: src/i_callbacks.c:1858
-#, fuzzy
 msgid "Really revert page?"
-msgstr "Reverter Página"
+msgstr "Reverter Página?"
 
 #: src/i_callbacks.c:1945 src/i_callbacks.c:1965 src/i_callbacks.c:1991
 #, c-format
@@ -1195,36 +1188,36 @@ msgid "ERROR: NULL object in o_rotate_90!\n"
 msgstr "ERRO: NENHUM objeto na rotação 90!\n"
 
 #: src/o_misc.c:591
-#, fuzzy, c-format
+#, c-format
 msgid "Component [%s] has been embedded\n"
-msgstr "O componente ainda está embutido\n"
+msgstr "Componente [%s] foi embutido\n"
 
 #: src/o_misc.c:604
-#, fuzzy, c-format
+#, c-format
 msgid "Picture [%s] has been embedded\n"
-msgstr "O componente ainda está embutido\n"
+msgstr "A imagem [%s] foi embutida\n"
 
 #: src/o_misc.c:636
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Could not find component [%s], while trying to unembed. Component is still "
 "embedded\n"
-msgstr "Componente [%s] não encontrado ao desembutir.\n"
+msgstr "Componente [%s] não encontrado ao desembutir. Componente permaneceu embutido\n"
 
 #: src/o_misc.c:647 src/o_misc.c:1614
 #, c-format
 msgid "More than one component found with name [%s]\n"
-msgstr ""
+msgstr "Mais de um componente encontrado com o nome [%s]\n"
 
 #: src/o_misc.c:655
-#, fuzzy, c-format
+#, c-format
 msgid "Component [%s] has been successfully unembedded\n"
-msgstr "O componente ainda está embutido\n"
+msgstr "Componente [%s] foi desembutido com sucesso\n"
 
 #: src/o_misc.c:670
-#, fuzzy, c-format
+#, c-format
 msgid "Picture [%s] has been unembedded\n"
-msgstr "O componente ainda está embutido\n"
+msgstr "Imagem [%s] foi desembutida com sucesso\n"
 
 #: src/o_misc.c:706
 #, c-format
@@ -1241,12 +1234,11 @@ msgstr "Texto oculto agora está invisível\n"
 
 #: src/o_misc.c:1609
 msgid "Could not unembedded component, could not find appropriate .sym file\n"
-msgstr ""
+msgstr "Impossivel desembutir componente, arquivo .sym apropriado não pode ser encontrado\n"
 
 #: src/o_misc.c:1610
-#, fuzzy
 msgid "Component still embedded and not updated\n"
-msgstr "O componente ainda está embutido\n"
+msgstr "O componente ainda está embutido e não atualizado\n"
 
 #: src/o_misc.c:1744
 #, c-format
@@ -1254,19 +1246,19 @@ msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 
 #: src/o_misc.c:1788
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr "NÃO foi possível salvar [%s] !\n"
+msgstr "NÃO foi possível deixar arquivo backup [%s] como leitura e gravação\n"
 
 #: src/o_misc.c:1806
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
-msgstr "NÃO foi possível salvar [%s] !\n"
+msgstr "NÃO foi possível deixar arquivo backup [%s] apenas leitura!\n"
 
 #: src/o_misc.c:1811
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT save backup file [%s]\n"
-msgstr "NÃO foi possível salvar [%s] !\n"
+msgstr "NÃO foi possível salvar  arquivo backup [%s] !\n"
 
 #: src/o_move.c:222
 #, c-format
@@ -1300,7 +1292,7 @@ msgstr "Não consigo encontrar %s em nenhuma biblioteca\n"
 
 #: src/o_picture.c:178
 msgid "Gschem doesn't support pictures if it has been compiled using GTK 1.2"
-msgstr ""
+msgstr "Gschem não suporta imagens se compilado para GTK 1.2"
 
 #: src/o_picture.c:179 src/x_dialog.c:704 src/x_dialog.c:1075
 #: src/x_dialog.c:1526 src/x_dialog.c:1735 src/x_dialog.c:1897
@@ -1312,16 +1304,16 @@ msgstr "OK"
 
 #: src/o_picture.c:201 src/o_picture.c:867
 msgid "Please select a picture file."
-msgstr ""
+msgstr "Selecione um arquivo de imagem."
 
 #: src/o_picture.c:270 src/o_picture.c:779
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to load picture: %s"
-msgstr "Falhou ao ler o arquivo scm [%s]\n"
+msgstr "Falhou ao ler imagem: %s"
 
 #: src/o_picture.c:289
 msgid "Picture"
-msgstr ""
+msgstr "Imagem"
 
 #: src/o_picture.c:805 src/x_attribedit.c:153
 #, c-format
@@ -1350,9 +1342,9 @@ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
 msgstr "Você tentou editar o slot de algo que não existe!\n"
 
 #: src/o_text.c:142
-#, fuzzy, c-format
+#, c-format
 msgid "Tried to render text with an invalid angle: %d\n"
-msgstr "Tentou ter cor inválida: %d\n"
+msgstr "Tentou rederizar texto com ângulo inválido: %d\n"
 
 #: src/o_undo.c:320
 msgid "Undo/Redo disabled in rc file\n"
@@ -1372,6 +1364,16 @@ msgid ""
 "  -h            Help; this message\n"
 "\n"
 msgstr ""
+"Uso: %s [OPTIONS] esquematico1 ... esquematicoN\n"
+"  -q            modo Quieto\n"
+"  -v            Modo Verbose\n"
+"  -r filename   Arquivo Rc\n"
+"  -s filename   Arquivo Script (guile)\n"
+"  -o filename   Arquivo de saída (impressão)\n"
+"  -p            Auto aloca janela\n"
+"  -t            Imprime informação de strokes\n"
+"  -h            Ajuda; esta mensagem\n"
+"\n"
 
 #: src/x_attribedit.c:138
 #, c-format
@@ -1518,9 +1520,8 @@ msgid "Upper Right"
 msgstr "Dir Alto"
 
 #: src/x_dialog.c:657
-#, fuzzy
 msgid "Edit Text Color"
-msgstr "Editar Texto"
+msgstr "Editar Cor de Texto"
 
 #: src/x_dialog.c:669
 msgid "Edit Text Size"
@@ -1557,7 +1558,7 @@ msgstr "Fantasma"
 #: src/x_dialog.c:1579 src/x_dialog.c:1580 src/x_dialog.c:1581
 #: src/x_dialog.c:1582 src/x_dialog.c:1583 src/x_dialog.c:1591
 msgid "*unchanged*"
-msgstr ""
+msgstr "*inalterado*"
 
 #: src/x_dialog.c:1023
 msgid "Edit Line Width & Type"
@@ -1616,7 +1617,6 @@ msgid "Pitch2"
 msgstr "Passo2"
 
 #: src/x_dialog.c:1718
-#, fuzzy
 msgid ""
 "There are unsaved schematics!\n"
 "\n"
@@ -1626,7 +1626,7 @@ msgstr ""
 "Existem arquivos não salvos!\n"
 "\n"
 "Você tem certeza?\n"
-"Um OK vai descartar TODAS as mudanças!"
+"Um OK vai descartar TODAS as alterações!"
 
 #: src/x_dialog.c:1860
 msgid "Arc Params"
@@ -1730,7 +1730,7 @@ msgstr "String geral"
 
 #: src/x_dialog.c:3674
 msgid "Enter new string."
-msgstr "Entre a string"
+msgstr "Insira nova string"
 
 #: src/x_dialog.c:3824
 msgid "Find text"
@@ -1778,79 +1778,69 @@ msgid "Autonumber text"
 msgstr "Autonumerar texto"
 
 #: src/x_dialog.c:4273
-#, fuzzy
 msgid "selection"
-msgstr "Selecionar"
+msgstr "Seleção"
 
 #: src/x_dialog.c:4282
-#, fuzzy
 msgid "search text"
-msgstr "Mostrar Texto"
+msgstr "Procurar texto"
 
 #: src/x_dialog.c:4310
 msgid "search focus"
-msgstr ""
+msgstr "foco de procura"
 
 #: src/x_dialog.c:4323
-#, fuzzy
 msgid "selected objects"
-msgstr "Selecionado um objeto inexistente!\n"
+msgstr "Objetos selecionados"
 
 #: src/x_dialog.c:4326
-#, fuzzy
 msgid "current sheet"
-msgstr "Testar folha"
+msgstr "Folha corrente"
 
 #: src/x_dialog.c:4329
 msgid "hierarchical sheets"
-msgstr ""
+msgstr "Folhas hierarquicas"
 
 #: src/x_dialog.c:4341
-#, fuzzy
 msgid "unnumbered"
-msgstr "Autonumerar texto"
+msgstr "Não numerado"
 
 #: src/x_dialog.c:4345
-#, fuzzy
 msgid "all"
-msgstr "Todos"
+msgstr "tudo"
 
 #: src/x_dialog.c:4354
-#, fuzzy
 msgid "options"
 msgstr "Opções"
 
 #: src/x_dialog.c:4361
-#, fuzzy
 msgid "start number"
-msgstr "Editar número de SLOT"
+msgstr "Número inicial"
 
 #: src/x_dialog.c:4374
 msgid "sort order"
-msgstr ""
+msgstr "Ordenação"
 
 #: src/x_dialog.c:4386
-#, fuzzy
 msgid "file order"
-msgstr "Modo de Círculo"
+msgstr "Ordena em arquivos"
 
 #: src/x_dialog.c:4389
 msgid "top down"
-msgstr ""
+msgstr "cima baixo"
 
 #: src/x_dialog.c:4392
-#, fuzzy
 msgid "left right"
-msgstr "Dir Centro"
+msgstr "Esq Dir"
 
 #: src/x_dialog.c:4395
 msgid "diagonal"
-msgstr ""
+msgstr "diagonal"
 
 #: src/x_fileselect.c:300
-#, fuzzy, c-format
+#, c-format
 msgid "Agg, could not open directory: %s\n"
-msgstr "Nâo pode abrir diretório %s\n"
+msgstr "Arg, Nâo pode abrir diretório %s\n"
 
 #: src/x_fileselect.c:327
 #, c-format
@@ -1902,7 +1892,7 @@ msgstr "Localizar em arquivos - Fim de lista"
 
 #: src/x_fileselect.c:1207
 msgid "Default behavior - reference component"
-msgstr "Uso normal, referenciar componente"
+msgstr "Uso normal - referenciar componente"
 
 #: src/x_fileselect.c:1218
 msgid "Embed component in schematic"
@@ -1970,19 +1960,16 @@ msgid "SaveAs"
 msgstr "Salvar Como"
 
 #: src/x_fileselect.c:2306
-#, fuzzy
 msgid "Schematics"
-msgstr "sch - Diagramas"
+msgstr "Diagramas"
 
 #: src/x_fileselect.c:2309
-#, fuzzy
 msgid "Symbols"
-msgstr "sym - Símbolos"
+msgstr "Símbolos"
 
 #: src/x_fileselect.c:2312
-#, fuzzy
 msgid "Schematics and symbols"
-msgstr "sym/sch - Símbolos e Diagramas"
+msgstr "Diagramas e Símbolos"
 
 #: src/x_fileselect.c:2316
 #, fuzzy
@@ -1990,9 +1977,8 @@ msgid "All files"
 msgstr "Todos arquivos"
 
 #: src/x_fileselect.c:2387
-#, fuzzy
 msgid "Discard changes"
-msgstr "Descartar Alterações?"
+msgstr "Descartar Alterações"
 
 #: src/x_image.c:291
 msgid "x_image_lowlevel: Unable to write PNG file.\n"
@@ -2034,92 +2020,75 @@ msgstr "Largura x Altura"
 
 #: src/x_log.c:229
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: src/x_menus.c:35
-#, fuzzy
 msgid "/Add Net"
-msgstr "Adicionar Texto..."
+msgstr "/Inserir Net"
 
 #: src/x_menus.c:36
-#, fuzzy
 msgid "/Add Attribute..."
-msgstr "Inserir/Editar Atributo"
+msgstr "/Inserir Atributo..."
 
 #: src/x_menus.c:37
-#, fuzzy
 msgid "/Add Component..."
-msgstr "Componente..."
+msgstr "/Inserir Componente..."
 
 #: src/x_menus.c:38
-#, fuzzy
 msgid "/Add Bus"
-msgstr "Adicionar Texto..."
+msgstr "/Inserir Bus"
 
 #: src/x_menus.c:39
-#, fuzzy
 msgid "/Add Text"
-msgstr "Adicionar Texto..."
+msgstr "/Inserir Texto"
 
 #: src/x_menus.c:41
-#, fuzzy
 msgid "/Zoom In"
-msgstr "Zoom maior"
+msgstr "/Zoom maior"
 
 #: src/x_menus.c:42
-#, fuzzy
 msgid "/Zoom Out"
-msgstr "Zoom menor"
+msgstr "/Zoom menor"
 
 #: src/x_menus.c:43
-#, fuzzy
 msgid "/Zoom Box"
-msgstr "Caixa de Zoom"
+msgstr "/Caixa de Zoom"
 
 #: src/x_menus.c:44
-#, fuzzy
 msgid "/Zoom Extents"
-msgstr "Zoom desenho"
+msgstr "/Zoom desenho"
 
 #: src/x_menus.c:46
-#, fuzzy
 msgid "/Select"
-msgstr "Selecionar"
+msgstr "/Selecionar"
 
 #: src/x_menus.c:47
-#, fuzzy
 msgid "/Edit..."
-msgstr "Editar..."
+msgstr "/Editar..."
 
 #: src/x_menus.c:48
-#, fuzzy
 msgid "/Copy"
-msgstr "Copiar"
+msgstr "/Copiar"
 
 #: src/x_menus.c:49
-#, fuzzy
 msgid "/Move"
-msgstr "Mover"
+msgstr "/Mover"
 
 #: src/x_menus.c:50
-#, fuzzy
 msgid "/Delete"
-msgstr "Apagar"
+msgstr "/Apagar"
 
 #: src/x_menus.c:53
-#, fuzzy
 msgid "/Down Schematic"
-msgstr "Descer ao Esquemático"
+msgstr "/Descer ao Esquemático"
 
 #: src/x_menus.c:54
-#, fuzzy
 msgid "/Down Symbol"
-msgstr "Descer ao Símbolo"
+msgstr "/Descer ao Símbolo"
 
 #: src/x_menus.c:55
-#, fuzzy
 msgid "/Up"
-msgstr "Subir"
+msgstr "/Subir"
 
 #: src/x_menus.c:354
 msgid "Tried to set the sensitivity on a non-existent menu item\n"
@@ -2135,7 +2104,7 @@ msgstr ""
 
 #: src/x_multiattrib.c:625
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
+msgstr "Atributos com nome vazio não permitidos. Defina um nome."
 
 #: src/x_multiattrib.c:1131
 msgid "Show Value only"
@@ -2147,7 +2116,7 @@ msgstr "Mostra apenas Nome"
 
 #: src/x_multiattrib.c:1159
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplicar"
 
 #: src/x_multiattrib.c:1276
 msgid "Edit Attributes"
@@ -2163,20 +2132,19 @@ msgstr "Valor"
 
 #: src/x_multiattrib.c:1403
 msgid "Vis?"
-msgstr ""
+msgstr "Vis?"
 
 #: src/x_multiattrib.c:1423
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: src/x_multiattrib.c:1443
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: src/x_multiattrib.c:1464
-#, fuzzy
 msgid "Add Attribute"
-msgstr "Inserir/Editar Atributo"
+msgstr "Inserir Atributo"
 
 #: src/x_pagesel.c:267
 msgid "Discard Page"
@@ -2187,13 +2155,12 @@ msgid "Page Manager"
 msgstr "Gerenciador de Páginas"
 
 #: src/x_pagesel.c:448
-#, fuzzy
 msgid "Changed"
-msgstr "Alterar"
+msgstr "Alterado"
 
 #: src/x_pagesel.c:468
 msgid "Right click on the filename for more options..."
-msgstr ""
+msgstr "Clique direito no arquivo para opções..."
 
 #: src/x_preview.c:127
 msgid "x_preview_update_gtk24: Can't get pixbuf from preview struct.\n"
@@ -2390,150 +2357,3 @@ msgstr "Menu/Cancelar"
 msgid "Pan/Cancel"
 msgstr "Pan/Cancelar"
 
-#, fuzzy
-#~ msgid "Invalid number of lines [%d] passed to output-vector-threshold\n"
-#~ msgstr ""
-#~ "Número de níveis [%d] inválido para função desfaz passado para undo-"
-#~ "level\n"
-
-#~ msgid "Both"
-#~ msgstr "Ambos"
-
-#, fuzzy
-#~ msgid "Image"
-#~ msgstr "Página"
-
-#~ msgid "Deattach"
-#~ msgstr "Desanexar"
-
-#~ msgid "%s requires a string as a parameter\n"
-#~ msgstr "%s requer uma string como parâmetro\n"
-
-#~ msgid "Invalid parameters to paper-sizes\n"
-#~ msgstr "Parametros inválidos para tamanho do paepl\n"
-
-#~ msgid "Cannot obtain the current directory!\n"
-#~ msgstr "Impossível determinar o diretório atual!\n"
-
-#~ msgid "Cannot get cwd!\n"
-#~ msgstr "Impossível determinar diretório corrente!\n"
-
-#~ msgid "ERROR: NULL object in o_embed!\n"
-#~ msgstr "ERRO: NENHUM objeto no embutir!\n"
-
-#~ msgid "Warning: two components with same refdes: %d\n"
-#~ msgstr "ATENÇÃO: dois componentes com mesmo refdes: %d\n"
-
-#~ msgid "Invalid space specified, setting to 100\n"
-#~ msgstr "Espaço inválido, ajustado para 100\n"
-
-#~ msgid "Invalid length specified, setting to 100\n"
-#~ msgstr "Comprimento inválido, ajustado para 100\n"
-
-#~ msgid "Autonumber text starting with:"
-#~ msgstr "Autonumerar texto iniciado com:"
-
-#~ msgid "Yes"
-#~ msgstr "Sim"
-
-#~ msgid "No"
-#~ msgstr "Não"
-
-#~ msgid "Add/Edit"
-#~ msgstr "Inserir/Editar"
-
-#~ msgid "Clear"
-#~ msgstr "Limpar"
-
-#~ msgid "Open Page"
-#~ msgstr "Abrir"
-
-#~ msgid "Update Manager"
-#~ msgstr "Atualizar"
-
-#~ msgid "Close Manager"
-#~ msgstr "Fechar Ger."
-
-#~ msgid "Read system-gschemrc file [%s]\n"
-#~ msgstr "Lido o arquivo system-gschemrc [%s]\n"
-
-#, fuzzy
-#~ msgid "Did not find required system-gschemrc file [%s]\n"
-#~ msgstr "Arquivo system-gschemrc [%s] não encontrado\n"
-
-#~ msgid "Read ~/.gEDA/gschemrc file [%s]\n"
-#~ msgstr "Lendo arquivo ~/.gEDA/gschemrc [%s]\n"
-
-#, fuzzy
-#~ msgid "Did not find optional ~/.gEDA/gschemrc file [%s]\n"
-#~ msgstr "Arquivo ~/.gEDA/gschemrc [%s] não encontrado\n"
-
-#~ msgid "Read local gschemrc file [%s]\n"
-#~ msgstr "Lendo arquivo local gschemrc [%s]\n"
-
-#, fuzzy
-#~ msgid "Did not find optional local gschemrc file [%s]\n"
-#~ msgstr "Arquivo local gschemrc [%s] não encontrado\n"
-
-#~ msgid "Read specified rc file [%s]\n"
-#~ msgstr "Lendo arquivo rc especificado [%s]\n"
-
-#~ msgid "Did not find specified gschemrc file [%s]\n"
-#~ msgstr "Arquivo especificado rc [%s] não encontrado\n"
-
-#~ msgid "Could not find any gschemrc file!\n"
-#~ msgstr "Nenhum arquivo gschmrc encontrado!\n"
-
-#~ msgid "Could not find a gschemrc file\n"
-#~ msgstr "Não encontrado um arquivo gschemrc\n"
-
-#~ msgid "Invalid path [%s] passed to component-library\n"
-#~ msgstr ""
-#~ "Caminho para biblioteca de componentes [%s] inválido (component-library)\n"
-
-#~ msgid "Invalid path [%s] passed to component-library-search\n"
-#~ msgstr ""
-#~ "Caminho para pesquisa de componentes [%s] inválido (component-library-"
-#~ "search)\n"
-
-#~ msgid "Invalid path [%s] passed to %s\n"
-#~ msgstr "Caminho [%s] inválido passado para %s\n"
-
-#~ msgid "Invalid path [%s] passed to source-library-search\n"
-#~ msgstr "Caminho [%s] inválido passado para source-library-search\n"
-
-#~ msgid "Invalid path [%s] passed to scheme-directory\n"
-#~ msgstr "Caminho inválido [%s] passado para scheme-directory\n"
-
-#~ msgid "Invalid path [%s] passed to bitmap-directory\n"
-#~ msgstr "Caminho [%s] inválido passado para bitmap-directory\n"
-
-#~ msgid "Invalid path [%s] passed to font-directory\n"
-#~ msgstr "Caminho [%s] inválido passado para font-directory\n"
-
-#~ msgid "Ok"
-#~ msgstr "OK"
-
-#~ msgid "Edit Component"
-#~ msgstr "Editar Componente"
-
-#~ msgid "Limits"
-#~ msgstr "Limites"
-
-#~ msgid "Saved - Select Mode"
-#~ msgstr "Salvo - Modo de Seleção"
-
-#~ msgid "Saved All - Select"
-#~ msgstr "Todos salvados - modo seleção"
-
-#~ msgid "Paste 1 Mode "
-#~ msgstr "Modo Colar de 1"
-
-#~ msgid "Paste 2 Mode "
-#~ msgstr "Modo Colar de 2"
-
-#~ msgid "Paste 3 Mode "
-#~ msgstr "Modo Colar de 3"
-
-#~ msgid "Paste 4 Mode "
-#~ msgstr "Modo Colar de 4"
