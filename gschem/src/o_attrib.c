@@ -426,8 +426,9 @@ OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current,
         world_y = o_current->text->y;
 			
         color = w_current->detachedattr_color;
-        o_current = NULL;	
-			
+
+	o_current = NULL;
+
 #if 0 /* don't error out, instead treat text like another OBJECT, but */
         /* don't attach it anywhere */
         /* s_log_message("Cannot attach attribute to text item\n");*/
@@ -483,7 +484,7 @@ OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current,
 
   /* Run the add attribute hook */
   if (scm_hook_empty_p(add_attribute_hook) == SCM_BOOL_F &&
-      object != NULL) {
+      o_current != NULL) {
 	scm_run_hook(add_attribute_hook,
 		     scm_cons(g_make_object_smob(w_current, 
 						 o_current),

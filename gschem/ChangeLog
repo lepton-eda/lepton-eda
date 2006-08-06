@@ -15,6 +15,9 @@
         	Shift = up / down    
         	Control = left / right (as existing)
 
+	* src/o_attrib.c: Applied Patch#1531802: Bugfix for segfault
+	when adding a global attribute by Tomaz Solc. 
+
 2006-07-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_window.c: Converted pro-active pointer check to a g_assert
