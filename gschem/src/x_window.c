@@ -93,7 +93,7 @@ void x_window_setup (TOPLEVEL *toplevel)
   toplevel->status_label = NULL;
   toplevel->middle_label = NULL;
   toplevel->filename_label = NULL;
-
+  
   toplevel->cswindow = NULL;
   toplevel->aswindow = NULL;
   toplevel->fowindow = NULL;
@@ -470,20 +470,17 @@ void x_window_create_main(TOPLEVEL *w_current)
   main_box = gtk_vbox_new(FALSE, 1);
   gtk_container_border_width(GTK_CONTAINER(main_box), 0);
   gtk_container_add(GTK_CONTAINER(w_current->main_window), main_box);
-  gtk_widget_show(main_box);
 
   get_main_menu(w_current, &menubar);
   if (w_current->handleboxes) {
   	handlebox = gtk_handle_box_new ();
   	gtk_box_pack_start(GTK_BOX(main_box), handlebox, FALSE, FALSE, 0);
-  	gtk_widget_show(handlebox);
   	gtk_container_add (GTK_CONTAINER (handlebox), menubar);
   } else {
   	gtk_box_pack_start(GTK_BOX(main_box), menubar, FALSE, FALSE, 0);
   }
 
   w_current->menubar = menubar;
-  gtk_widget_show(menubar);
   gtk_widget_realize (w_current->main_window);
 
   if (w_current->handleboxes && w_current->toolbars) {
@@ -752,12 +749,8 @@ void x_window_create_main(TOPLEVEL *w_current)
   	gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
   	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w_current->toolbar_select),
 			       TRUE);
-  	gtk_widget_show (toolbar);
   } 
 
-  if (w_current->handleboxes) {
-  	gtk_widget_show (handlebox);
-  }
 
   /*  Try to create popup menu (appears in right mouse button  */
   w_current->popup_menu = (GtkWidget *) get_main_popup(w_current);
@@ -765,7 +758,6 @@ void x_window_create_main(TOPLEVEL *w_current)
   drawbox = gtk_hbox_new(FALSE, 0);
   gtk_container_border_width(GTK_CONTAINER(drawbox), 0);
   gtk_container_add(GTK_CONTAINER(main_box), drawbox);
-  gtk_widget_show(drawbox);
 
   x_window_create_drawing(drawbox, w_current);
   x_window_setup_draw_events(w_current);
@@ -791,8 +783,6 @@ void x_window_create_main(TOPLEVEL *w_current)
                         GTK_SIGNAL_FUNC (x_event_vschanged),
                         w_current);
 
-    gtk_widget_show (w_current->v_scrollbar);
-
     w_current->h_adjustment = gtk_adjustment_new (0.0, 0.0,
                                                   w_current->init_right,
                                                   100.0, 100.0, 10.0);
@@ -810,33 +800,26 @@ void x_window_create_main(TOPLEVEL *w_current)
                         "value_changed",
                         GTK_SIGNAL_FUNC (x_event_hschanged),
                         w_current);
-
-    gtk_widget_show (w_current->h_scrollbar);
   }
 
   /* bottom box */
   bottom_box = gtk_hbox_new(FALSE, 0);
   gtk_container_border_width(GTK_CONTAINER(bottom_box), 1);
   gtk_box_pack_start (GTK_BOX (main_box), bottom_box, FALSE, FALSE, 0);
-  gtk_widget_show(bottom_box);
 
   /*	label = gtk_label_new ("Mouse buttons:");
         gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 10);
-        gtk_widget_show (label);
   */
 
   label = gtk_label_new (" ");
   gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 2);
-  gtk_widget_show (label);
 
   w_current->left_label = gtk_label_new (_("Pick"));
   gtk_box_pack_start (GTK_BOX (bottom_box), w_current->left_label,
                       FALSE, FALSE, 0);
-  gtk_widget_show (w_current->left_label);
 
   label = gtk_label_new ("|");
   gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 5);
-  gtk_widget_show (label);
 
   if (w_current->middle_button == STROKE) {
 #ifdef HAS_LIBSTROKE
@@ -852,11 +835,9 @@ void x_window_create_main(TOPLEVEL *w_current)
 
   gtk_box_pack_start (GTK_BOX (bottom_box), w_current->middle_label,
                       FALSE, FALSE, 0);
-  gtk_widget_show (w_current->middle_label);
 
   label = gtk_label_new ("|");
   gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 5);
-  gtk_widget_show (label);
 
   if (default_third_button == POPUP_ENABLED) {
     w_current->right_label = gtk_label_new (_("Menu/Cancel"));
@@ -865,23 +846,19 @@ void x_window_create_main(TOPLEVEL *w_current)
   }
   gtk_box_pack_start (GTK_BOX (bottom_box), w_current->right_label,
                       FALSE, FALSE, 0);
-  gtk_widget_show (w_current->right_label);
 
   label = gtk_label_new (" ");
   gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 5);
-  gtk_widget_show (label);
 
   w_current->filename_label = gtk_label_new (" ");
   gtk_box_pack_start (GTK_BOX (bottom_box), w_current->filename_label,
                       FALSE, FALSE, 10);
-  gtk_widget_show (w_current->filename_label);
 
   w_current->status_label = gtk_label_new (_("Select Mode"));
   gtk_box_pack_end (GTK_BOX (bottom_box), w_current->status_label, FALSE,
                     FALSE, 10);
-  gtk_widget_show (w_current->status_label);
 
-  gtk_widget_show(w_current->main_window);
+  gtk_widget_show_all (w_current->main_window);
 
   w_current->window = w_current->drawing_area->window;
 

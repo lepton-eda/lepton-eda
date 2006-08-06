@@ -18,6 +18,10 @@
 	* src/o_attrib.c: Applied Patch#1531802: Bugfix for segfault
 	when adding a global attribute by Tomaz Solc. 
 
+	* src/x_window.c: Applied Patch#1533822: gschem: Tidy up
+	gtk_widget_show calls by Peter Brett.
+
+
 2006-07-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_window.c: Converted pro-active pointer check to a g_assert
