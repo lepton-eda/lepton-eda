@@ -312,6 +312,8 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
   OBJECT* last_complex = NULL;
   int itemsread = 0;
 
+  int embedded_level = 0;
+
   /* fill version with default file format version (the current one) */
   current_fileformat_ver = FILEFORMAT_VERSION;
 
@@ -434,27 +436,43 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
         break;
 
       case(START_EMBEDDED): 
-        object_list_save = object_list;
-        object_list = object_list_save->complex->
-          prim_objs;
+        
+	if(object_list->type == OBJ_COMPLEX || 
+	   object_list->type == OBJ_PLACEHOLDER) {
+
+        	object_list_save = object_list;
+        	object_list = object_list_save->complex->prim_objs;
 				
-        temp_tail =
-          w_current->page_current->object_tail;
-        temp_parent =
-          w_current->page_current->object_parent;
-        w_current->page_current->object_parent = 
-          object_list;
-        break;
+        	temp_tail = w_current->page_current->object_tail;
+        	temp_parent = w_current->page_current->object_parent;
+        	w_current->page_current->object_parent = object_list;
+
+		embedded_level++;
+	} else {
+        	fprintf(stderr, "Read unexpected embedded "
+				"symbol start marker in [%s] :\n>>\n%s<<\n", 
+				filename, buf);
+	}
+       	break;
 
       case(END_EMBEDDED): 
-        object_list = object_list_save;
-	/* don't do this since objects are already
-	 * stored/read translated 
-         * o_complex_world_translate(w_current, object_list->x,
-         *                           object_list->y, object_list->complex);
-	 */
-        w_current->page_current->object_tail = temp_tail;
-        w_current->page_current->object_parent = temp_parent;
+      	if(embedded_level>0) {
+        	object_list = object_list_save;
+		/* don't do this since objects are already
+		 * stored/read translated 
+	         * o_complex_world_translate(w_current, object_list->x,
+                 *                   object_list->y, object_list->complex);
+		 */
+	        w_current->page_current->object_tail = temp_tail;
+	        w_current->page_current->object_parent = temp_parent;
+
+		embedded_level--;
+	} else {
+        	fprintf(stderr, "Read unexpected embedded "
+				"symbol end marker in [%s] :\n>>\n%s<<\n", 
+				filename, buf);
+	}
+	
         break;
 
       case(ENDATTACH_ATTR):
