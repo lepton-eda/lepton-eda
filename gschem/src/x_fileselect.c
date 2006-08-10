@@ -2229,7 +2229,6 @@ void x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 #if ((GTK_MAJOR_VERSION > 2) || \
      ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION >= 4)) )
 
-  GtkImage *preview_widget;
   gchar *title;
   FILEDIALOG *f_current;
   if (type < 0 || type > 2) {
