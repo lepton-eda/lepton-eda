@@ -1,4 +1,8 @@
 2006-08-12  SDB <sdb@cloud9.net>
+	* configure.ac, src/parsecmd.c:  Implemented getopt_long
+	for systems which have it.
+	
+2006-08-12  SDB <sdb@cloud9.net>
 	* include/prototype.h, include/x_menu.h,
 	src/s_visibility.c, src/x_fileselect.c, src/x_gtksheet.c,
 	src/x_window.c:  Made cell text different colors depending

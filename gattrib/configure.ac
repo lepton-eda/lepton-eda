@@ -155,14 +155,14 @@ AC_HEADER_SYS_WAIT
 AC_HEADER_DIRENT
 AC_CHECK_HEADERS(unistd.h string.h stdlib.h \
                  stdarg.h assert.h fcntl.h errno.h \
-		 dirent.h sys/param.h)
+		 dirent.h sys/param.h getopt.h)
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 
 # Checks for library functions.
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS(getcwd strstr vsnprintf snprintf)
+AC_CHECK_FUNCS(getcwd strstr vsnprintf snprintf getopt_long)
 
 
 AC_MSG_CHECKING([for optarg in unistd.h])
@@ -178,7 +178,7 @@ if test $optarg_found = yes; then
 fi
 
 # 
-# Checks for header files start
+# Checks for header files end
 #########################################################################
 
 #########################################################################
