@@ -596,24 +596,6 @@ void x_fileselect_saveas_close(GtkWidget * w, FILEDIALOG * f_current)
 {
   gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
 
-#if 0                           /* this isn't relavent anymore */
-  w_current = f_current->toplevel;
-
-  if (f_current->filesel_type == SAVEAS_QUIT) {
-    exit_dialog(w_current);
-  }
-
-  if (f_current->filesel_type == SAVEAS_OPEN) {
-    x_fileselect_setup(w_current, FILESELECT, SAVEAS_OPEN);
-  }
-
-  if (f_current->filesel_type == SAVEAS_NEW) {
-    w_current->page_current->CHANGED = 0;
-    i_callback_file_new(w_current, 0, NULL);
-  }
-#endif
-
-  /* do nothing if close is pressed for SAVEAS_CLOSE case */
   return;
 }
 
@@ -663,20 +645,6 @@ void x_fileselect_saveas(GtkWidget * w, FILEDIALOG * f_current)
 
     x_fileselect_close(NULL, f_current);
 
-#if 0
-    /* What do these do? */
-    if (f_current->filesel_type == SAVEAS_QUIT) {
-      x_window_close(w_current);
-    } else if (f_current->filesel_type == SAVEAS_OPEN) {
-      i_callback_file_open(w_current, 0, NULL);
-    } else if (f_current->filesel_type == SAVEAS_NEW) {
-      i_callback_file_new(w_current, 0, NULL);
-    } else if (f_current->filesel_type == SAVEAS_CLOSE) {
-      i_callback_page_close(w_current, 0, NULL);
-    }
-#endif
-
-    /* do nothing if SAVEAS_NONE */
   } else {
     s_log_message("Specify a Filename!\n");
   }
@@ -1000,10 +968,6 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG * f_current,
 				   char *new_filename)
 {
   char *temp = NULL;
-#if 0
-  char *ptr = NULL;
-  int i;
-#endif
   char *filename = NULL;
   char *directory = NULL;
 
@@ -1025,37 +989,11 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG * f_current,
     f_current->directory = NULL;
   }
 
-#if 0
-  directory = (char *) g_malloc(sizeof(char) * (strlen(new_filename) + 1));
-  filename = (char *) g_malloc(sizeof(char) * (strlen(new_filename) + 1));
+  /* I wonder if I should do some checking on the 
+   * filename to make sure it is sane?  */
+  directory = getcwd(NULL, 1024);
+  filename = g_strdup(new_filename);
 
-  ptr = new_filename;
-  temp = strrchr(new_filename, G_DIR_SEPARATOR);
-  if (temp) {
-    /* SDB asks: What is all this stuff for? */
-    i = 0;
-    while (ptr != temp && ptr[0] != '\0') {
-      directory[i] = *ptr;
-      ptr++;
-      i++;
-    }
-    directory[i] = '\0';
-    ptr++;			/* skip over last '/' */
-    i = 0;
-    while (ptr[0] != '\0') {
-      filename[i] = *ptr;
-      ptr++;
-      i++;
-    }
-    filename[i] = '\0';
-  } else {
-#endif
-    /* SDB says: This is what generally is run.  What is the above stuff for? */
-    directory = getcwd(NULL, 1024);
-    filename = g_strdup(new_filename);
-#if 0
-  }
-#endif
 
 #if DEBUG
     printf("In x_fileselect_update_dirfile_saveas, directory = %s\n", directory);

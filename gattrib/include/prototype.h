@@ -234,10 +234,12 @@ void x_gtksheet_init();
 void x_notebook_init();
 void x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
 void x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
-void x_gtksheet_add_cell_item(GtkSheet *sheet, int i, int j, char *text);
+void x_gtksheet_add_cell_item(GtkSheet *sheet, gint i, gint j, 
+			      char *text, gint visibility, gint show_name_value);
 int x_gtksheet_get_min_col(GtkSheet *sheet);
 int x_gtksheet_get_max_col(GtkSheet *sheet);
-
+void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col, 
+				    gint color_name);
 
 void format_text (GtkSheet *sheet, gchar *text, gint *justification, char *label);
 void alarm_change(GtkWidget *widget, gint row, gint col,

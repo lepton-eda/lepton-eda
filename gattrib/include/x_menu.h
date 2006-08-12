@@ -53,7 +53,7 @@
            "<LastBranch>"     -> create a right justified branch 
 */
 
-static GtkItemFactoryEntry menu_items[] = {
+GtkItemFactoryEntry menu_items[] = {
   /* ------- File menu ------- */
   { "/_File", 
     NULL,
@@ -174,25 +174,25 @@ static GtkItemFactoryEntry menu_items[] = {
   { "/Visibility/Set selected invisible",
     NULL,
     s_visibility_set_invisible,
-    0,
+    10,
     NULL
   },
   { "/Visibility/Set selected name visible only",
     NULL,
     s_visibility_set_name_only,
-    0,
+    11,
     NULL
   },
   { "/Visibility/Set selected value visible only",
     NULL,
     s_visibility_set_value_only,
-    0,
+    12,
     NULL
   },
   { "/Visibility/Set selected name and value visible",
     NULL,
     s_visibility_set_name_and_value,
-    0, 
+    13, 
     NULL
   },
   /* ------- Help menu ------- */

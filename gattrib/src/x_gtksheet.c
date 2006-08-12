@@ -55,6 +55,7 @@
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
 
+
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
@@ -179,6 +180,9 @@ x_gtksheet_init()
 
 
       /*  "changed" signal raised when user changes anything in entry cell  */
+      /*  Note that the entry cell is the text entry field at the top of the
+       *  sheet's working area (like in MS E*cel).   I have removed this from
+       *  gattrib, but leave the code in just in case I want to put it back.  */
       gtk_signal_connect(GTK_OBJECT(gtk_sheet_get_entry(GTK_SHEET(sheets[i]))),
 			   "changed", (GtkSignalFunc) show_entry, NULL);
       
@@ -273,18 +277,38 @@ x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
  * x_gtksheet_add_cell_item:  
  *------------------------------------------------------------------*/
 void
-x_gtksheet_add_cell_item(GtkSheet *sheet, int i, int j, gchar *text)
+x_gtksheet_add_cell_item(GtkSheet *sheet,gint i, gint j, 
+			 gchar *text, 
+			 gint visibility, 
+			 gint show_name_value)
 {
 
   /*  Should I do some sanity checking here?  */
 
   gtk_sheet_set_cell(sheet, i, j, GTK_JUSTIFY_LEFT, text);
+  if (visibility == INVISIBLE) {
+    x_gtksheet_set_cell_text_color(sheet, i, j, GREY);
+  } else {
+    switch(show_name_value) {
+
+    case(SHOW_NAME_VALUE):
+      	x_gtksheet_set_cell_text_color(sheet, i, j, BLUE);       
+	break;
+
+    case(SHOW_NAME):
+      	x_gtksheet_set_cell_text_color(sheet, i, j, RED);
+	break;
+
+    case(SHOW_VALUE):
+      	x_gtksheet_set_cell_text_color(sheet, i, j, BLACK);
+	break;
+    }
+  } /* if (visibility == INVISIBLE) */
+
+
 
   /* Need to find a way to ensure that the text in a cell is clipped.
    * Otherwise, long attribs overwrite adjacent cells.  */
-
-  /* gtk_sheet_set_cell_attributes(GtkSheet *sheet, gint row, gint col, GtkSheetCellAttr attributes) */
-
 
   return;
 }
@@ -314,6 +338,79 @@ int x_gtksheet_get_max_col(GtkSheet *sheet) {
     return -1;
   }
 }
+
+
+/*  -----------------------------------------------------------------  *
+ *  This fcn sets the color of a cell identified by row, col
+ *  -----------------------------------------------------------------  */
+void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col, 
+			       gint color_name)
+{
+  GtkSheetRange *range;	
+  GdkColormap *cmap;
+  GdkColor *color;
+
+  
+  /* First get the system color map and allocate the color */
+  
+  cmap = gdk_colormap_get_system ();
+  color = g_malloc(sizeof(GdkColor));
+  switch(color_name) {
+  case RED:
+    color->red = 0xffff;
+    color->green = 0x0;
+    color->blue = 0x0;
+  break; 
+
+  case BLUE:
+    color->red = 0x0;
+    color->green = 0x0;
+    color->blue = 0xffff;
+  break; 
+
+  case BLACK:
+    color->red = 0x0;
+    color->green = 0x0;
+    color->blue = 0x0;
+  break; 
+
+  case GREY:
+    color->red = 0x9999;
+    color->green = 0x9999;
+    color->blue = 0x9999;
+  break; 
+  }
+
+  if (!gdk_colormap_alloc_color (cmap, color, FALSE, FALSE)) {
+    g_error ("couldn't allocate color");
+    return;
+  }
+  /*   g_free(cmap); */
+  
+  /* XXXXX  Attempt to set cell color */
+  range = g_malloc(sizeof(GtkSheetRange));
+  if (range == NULL) {
+    g_error ("Can't malloc range");
+    return;
+  }
+  range->row0 = row;
+  range->rowi = row;
+  range->col0 = col;
+  range->coli = col;
+
+  /* Now set color */
+#ifdef DEBUG
+  printf("In x_gtksheet_set_cell_text_color, trying to set color.\n");
+#endif
+  gtk_sheet_range_set_foreground(sheet, range, color);
+#ifdef DEBUG
+  printf("In x_gtksheet_set_cell_text_color, done setting color.\n");
+#endif
+  g_free(color);
+  g_free(range);
+}
+
+
 
 
 /*  ==================== Private functions ===================  */
@@ -543,8 +640,10 @@ activate_sheet_entry(GtkWidget *widget, gpointer data)
 }
 
 /*  -----------------------------------------------------------------  *
- *  This fcn displays a text entry box.  It is not needed now, but
- *  may come in handy later.
+ *  This fcn displays a text entry box at the 
+ *  top of the working area.  It is removed since it 
+ *  is not needed now, but
+ *  may come in handy later. Therefore I keep the code around.
  *  -----------------------------------------------------------------  */
 void 
 show_entry(GtkWidget *widget, gpointer data)

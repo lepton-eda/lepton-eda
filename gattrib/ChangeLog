@@ -1,9 +1,15 @@
+2006-08-12  SDB <sdb@cloud9.net>
+	* include/prototype.h, include/x_menu.h,
+	src/s_visibility.c, src/x_fileselect.c, src/x_gtksheet.c,
+	src/x_window.c:  Made cell text different colors depending
+	upon attribute visibility.
+
 2006-08-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * src/*.c: Applied Patch#1533798: Remove pre-GTK2 code from geda
         by Peter Brett.
 
-2006-0731 SDB <sdb@cloud9.net>
+2006-07-31 SDB <sdb@cloud9.net>
         * src/gtksheet_2_2.c: fixed bug in gtk_sheet_make_backing_pixmap.
 	
 2006-07-25 Stuart Brorson <sdb@cloud9.net>

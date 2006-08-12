@@ -80,7 +80,11 @@
 
 
 /* ---------------------------------------------------------------------- *
- * s_visibility_set_invisible -- This sets the selected cells to INVISIBLE.
+ * s_visibility_set_invisible -- This sets the selected cells to 
+ * INVISIBLE.  
+ * This fcn is called from the menu, it assumes you have
+ * selected a range of cells which are carried in the global 
+ * variable "sheet".
  * ---------------------------------------------------------------------- */
 void s_visibility_set_invisible() {
   gint i, j;
@@ -103,17 +107,26 @@ void s_visibility_set_invisible() {
 #ifdef DEBUG
     printf("In s_visibility_set_invisible, range/col/row selected.\n");
 #endif
+
     row_start = sheet->range.row0;
     row_end = sheet->range.rowi;
     col_start = sheet->range.col0;
     col_end = sheet->range.coli;
     for (i=row_start; i<=row_end; i++) {
       for (j=col_start; j<=col_end; j++) {
+	/* first set cell in SHEET_DATA to invisible */
 	s_visibility_set_cell(cur_page, i, j, 
 			      INVISIBLE, 
 			      LEAVE_NAME_VALUE_ALONE);
+	/* Now set cell in gtksheet to desired color */
+	/* Color names are defined 
+	 * in libgeda/include/colors.h */
+	x_gtksheet_set_cell_text_color(sheet, i, j, GREY); 
+
       }
     }
+    /* Now return sheet to normal -- unselect range */
+    gtk_sheet_unselect_range (sheet);
     break;
 
   case GTK_SHEET_NORMAL:
@@ -125,6 +138,12 @@ void s_visibility_set_invisible() {
 			  sheet->active_cell.col, 
 			  INVISIBLE, 
 			  LEAVE_NAME_VALUE_ALONE);
+
+    x_gtksheet_set_cell_text_color(sheet, 
+				   sheet->active_cell.row, 
+				   sheet->active_cell.col, 
+				   GREY);
+
     break;
 
   }
@@ -134,6 +153,9 @@ void s_visibility_set_invisible() {
 
 /* ---------------------------------------------------------------------- *
  * s_visibility_set_name_only -- This sets the selected cells to NAME_ONLY.
+ * This fcn is invoked from the menu, it assumes you have
+ * selected a range of cells which are carried in the global 
+ * variable "sheet".
  * ---------------------------------------------------------------------- */
 void s_visibility_set_name_only() {
   gint i, j;
@@ -162,8 +184,15 @@ void s_visibility_set_name_only() {
     for (i=row_start; i<=row_end; i++) {
       for (j=col_start; j<=col_end; j++) {
 	s_visibility_set_cell(cur_page, i, j, VISIBLE, SHOW_NAME);
+	/* Color names are defined 
+	 * in libgeda/include/colors.h */
+	x_gtksheet_set_cell_text_color(sheet, i, j, RED); 
+
       }
     }
+    /* Now return sheet to normal -- unselect range */
+    gtk_sheet_unselect_range (sheet);
+
     break;
 
   case GTK_SHEET_NORMAL:
@@ -171,6 +200,11 @@ void s_visibility_set_name_only() {
 			  sheet->active_cell.row, 
 			  sheet->active_cell.col, 
 			  VISIBLE, SHOW_NAME);
+    x_gtksheet_set_cell_text_color(sheet, 
+				   sheet->active_cell.row, 
+				   sheet->active_cell.col, 
+				   RED);
+
     break;
 
   }
@@ -178,6 +212,9 @@ void s_visibility_set_name_only() {
 
 /* ---------------------------------------------------------------------- *
  * s_visibility_set_value_only -- This sets the selected cells to VALUE_ONLY.
+ * This fcn is invoked from the menu, it assumes you have
+ * selected a range of cells which are carried in the global 
+ * variable "sheet".
  * ---------------------------------------------------------------------- */
 void s_visibility_set_value_only() {
   gint i, j;
@@ -206,8 +243,15 @@ void s_visibility_set_value_only() {
     for (i=row_start; i<=row_end; i++) {
       for (j=col_start; j<=col_end; j++) {
 	s_visibility_set_cell(cur_page, i, j, VISIBLE, SHOW_VALUE);
+	/* Color names are defined 
+	 * in libgeda/include/colors.h */
+	x_gtksheet_set_cell_text_color(sheet, i, j, BLACK); 
+
       }
     }
+    /* Now return sheet to normal -- unselect range */
+    gtk_sheet_unselect_range (sheet);
+
     break;
 
   case GTK_SHEET_NORMAL:
@@ -218,13 +262,21 @@ void s_visibility_set_value_only() {
 			  sheet->active_cell.row, 
 			  sheet->active_cell.col, 
 			  VISIBLE, SHOW_VALUE);
+    x_gtksheet_set_cell_text_color(sheet, 
+				   sheet->active_cell.row, 
+				   sheet->active_cell.col, 
+				   BLACK);
     break;
 
   }
 }
 
 /* ---------------------------------------------------------------------- *
- * s_visibility_set_name_and_value -- This sets the selected cells to NAME_AND_VALUE
+ * s_visibility_set_name_and_value -- This sets the selected cells 
+ * to NAME_AND_VALUE
+ * This fcn is invoked from the menu, it assumes you have
+ * selected a range of cells which are carried in the global 
+ * variable "sheet".
  * ---------------------------------------------------------------------- */
 void s_visibility_set_name_and_value() {
   gint i, j;
@@ -250,8 +302,15 @@ void s_visibility_set_name_and_value() {
     for (i=row_start; i<=row_end; i++) {
       for (j=col_start; j<=col_end; j++) {
 	s_visibility_set_cell(cur_page, i, j, VISIBLE, SHOW_NAME_VALUE);
+	/* Color names are defined 
+	 * in libgeda/include/colors.h */
+	x_gtksheet_set_cell_text_color(sheet, i, j, BLUE); 
+
       }
     }
+    /* Now return sheet to normal -- unselect range */
+    gtk_sheet_unselect_range (sheet);
+
     break;
 
   case GTK_SHEET_NORMAL:
@@ -260,6 +319,11 @@ void s_visibility_set_name_and_value() {
 			  sheet->active_cell.col, 
 			  VISIBLE, 
 			  SHOW_NAME_VALUE);
+    x_gtksheet_set_cell_text_color(sheet, 
+				   sheet->active_cell.row, 
+				   sheet->active_cell.col, 
+				   BLUE);
+
     break;
 
   }

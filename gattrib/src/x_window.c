@@ -83,8 +83,6 @@ x_window_init()
   /* note that the graphical widgets themselves (window, main_vbox, menu_bar)
    * are globals defined in ../include/globals.h   On pr_current I 
    * attach pointers to some of them here for future reference.  */
-
-  /*    GdkFont *font;  */
   gint i;
 
   /* -----  First initialize stuff in the top-level window  ----- */  
@@ -191,6 +189,9 @@ x_window_create_menu(GtkWidget **menubar)
               the accelerator table while generating menus.
   */
 
+#ifdef DEBUG
+  printf("In x_window_create_menu, about to create new item factory\n");
+#endif
   item_factory = gtk_item_factory_new (GTK_TYPE_MENU_BAR, "<main>", 
                                        accel_group);
 
@@ -200,6 +201,7 @@ x_window_create_menu(GtkWidget **menubar)
   /* SDB notes: callback data is pr_current, which should hopefully have pointers
    * to any data required in the callback. */
   gtk_item_factory_create_items (item_factory, nmenu_items, menu_items, pr_current);
+
 
   /* Attach the new accelerator group to the window. */
   /* SDB says: Here's where it comes in handy to have attached a pointer to 
@@ -229,10 +231,11 @@ x_window_create_menu(GtkWidget **menubar)
 void
 x_window_add_items()
 {
-  int i, j;
-  int num_rows, num_cols;
+  gint i, j;
+  gint num_rows, num_cols;
   char *text;
-
+  gint visibility, show_name_value;
+  
 #ifdef DEBUG
   fflush(stderr);
   fflush(stdout);
@@ -242,17 +245,23 @@ x_window_add_items()
 
   /* Do these sanity check to prevent later segfaults */
   if (sheet_head->comp_count == 0) {
-    fprintf(stderr, "\n\nNo components found in entire design!  \nDo you have refdeses on your components?  \nExiting. . . .\n");
+    fprintf(stderr, "\n\nNo components found in entire design!\n");
+    fprintf(stderr, "Do you have refdeses on your components?  \n");
+    fprintf(stderr, "Exiting. . . .\n");
     exit(0);
   }
 
   if (sheet_head->comp_attrib_count == 0) {
-    fprintf(stderr, "\n\nNo configurable component attributes found in entire design!  \nPlease attach at least some attributes before running gattrib.  \nExiting. . . .\n");
+    fprintf(stderr, "\n\nNo configurable component attributes found in entire design!");
+    fprintf(stderr, "Please attach at least some attributes before running gattrib.\n");
+    fprintf(stderr, "Exiting. . . .\n");
     exit(0);
   }
 
   if (sheet_head->pin_count == 0) {
-    fprintf(stderr, "\n\nNo pins found on any components!  \nPlease check your design.  \nExiting. . . .\n");
+    fprintf(stderr, "\n\nNo pins found on any components!\n");
+    fprintf(stderr, "Please check your design.\n");
+    fprintf(stderr, "Exiting. . . .\n");
     exit(0);
   }
 
@@ -270,15 +279,19 @@ x_window_add_items()
   printf("In x_window_add_items, now load up the row and column labels.\n");
 #endif
   if (sheet_head->comp_count > 0 ) {
-    x_gtksheet_add_row_labels(GTK_SHEET(sheets[0]), sheet_head->comp_count, sheet_head->master_comp_list_head);
-    x_gtksheet_add_col_labels(GTK_SHEET(sheets[0]), sheet_head->comp_attrib_count, sheet_head->master_comp_attrib_list_head);
+    x_gtksheet_add_row_labels(GTK_SHEET(sheets[0]), 
+			      sheet_head->comp_count, sheet_head->master_comp_list_head);
+    x_gtksheet_add_col_labels(GTK_SHEET(sheets[0]), 
+			      sheet_head->comp_attrib_count, sheet_head->master_comp_attrib_list_head);
   }
 
 
   /* This is not ready.  I need to implement net attributes */
   if (sheet_head->net_count > 0 ) {
-    x_gtksheet_add_row_labels(GTK_SHEET(sheets[1]), sheet_head->net_count, sheet_head->master_net_list_head);
-    x_gtksheet_add_col_labels(GTK_SHEET(sheets[1]), sheet_head->net_attrib_count, sheet_head->master_net_attrib_list_head);
+    x_gtksheet_add_row_labels(GTK_SHEET(sheets[1]), 
+			      sheet_head->net_count, sheet_head->master_net_list_head);
+    x_gtksheet_add_col_labels(GTK_SHEET(sheets[1]), 
+			      sheet_head->net_attrib_count, sheet_head->master_net_attrib_list_head);
   } else {
     x_gtksheet_add_row_labels(GTK_SHEET(sheets[1]), 1, NULL);
     x_gtksheet_add_col_labels(GTK_SHEET(sheets[1]), 1, NULL);
@@ -286,8 +299,10 @@ x_window_add_items()
 
 
   if (sheet_head->pin_count > 0 ) {
-    x_gtksheet_add_row_labels(GTK_SHEET(sheets[2]), sheet_head->pin_count, sheet_head->master_pin_list_head);
-    x_gtksheet_add_col_labels(GTK_SHEET(sheets[2]), sheet_head->pin_attrib_count, sheet_head->master_pin_attrib_list_head);
+    x_gtksheet_add_row_labels(GTK_SHEET(sheets[2]), 
+			      sheet_head->pin_count, sheet_head->master_pin_list_head);
+    x_gtksheet_add_col_labels(GTK_SHEET(sheets[2]), 
+			      sheet_head->pin_attrib_count, sheet_head->master_pin_attrib_list_head);
   }
   
 
@@ -301,11 +316,15 @@ x_window_add_items()
     for (j = 0; j < num_cols; j++) {
       if ( (sheet_head->component_table)[i][j].attrib_value ) { /* NULL = no entry */
 	text = (gchar *) g_strdup( (sheet_head->component_table)[i][j].attrib_value );
-	x_gtksheet_add_cell_item( GTK_SHEET(sheets[0]), i, j, (gchar *) text );
+	visibility = (sheet_head->component_table)[i][j].visibility;
+	show_name_value = (sheet_head->component_table)[i][j].show_name_value;
+	x_gtksheet_add_cell_item( GTK_SHEET(sheets[0]), i, j, (gchar *) text, 
+				  visibility, show_name_value );
 	g_free(text);
       }
     }
   }
+  /* Do I really need these shows here? */
   gtk_widget_show( GTK_WIDGET(sheets[0]) );
   gtk_widget_show( GTK_WIDGET(scrolled_windows[0]) );
 
@@ -320,11 +339,15 @@ x_window_add_items()
     for (j = 0; j < num_cols; j++) {
       if ( (sheet_head->net_table)[i][j].attrib_value ) { /* NULL = no entry */
 	text = (gchar *) g_strdup( (sheet_head->net_table)[i][j].attrib_value );
-	x_gtksheet_add_cell_item( GTK_SHEET(sheets[1]), i, j, (gchar *) text );
+	visibility = (sheet_head->net_table)[i][j].visibility;
+	show_name_value = (sheet_head->component_table)[i][j].show_name_value;
+	x_gtksheet_add_cell_item( GTK_SHEET(sheets[1]), i, j, (gchar *) text,
+				  visibility, show_name_value );
 	g_free(text);
       }
     }
   }
+  /* Do I really need these shows here? */
   if (sheet_head->net_count > 0) {
     gtk_widget_show( GTK_WIDGET(sheets[1]) );
     gtk_widget_show( GTK_WIDGET(scrolled_windows[1]) );
@@ -341,11 +364,14 @@ x_window_add_items()
     for (j = 0; j < num_cols; j++) {
       if ( (sheet_head->pin_table)[i][j].attrib_value ) { /* NULL = no entry */
 	text = (gchar *) g_strdup( (sheet_head->pin_table)[i][j].attrib_value );
-	x_gtksheet_add_cell_item( GTK_SHEET(sheets[2]), i, j, (gchar *) text );
+	/* pins have no visibility attributes, must therefore provide default. */
+	x_gtksheet_add_cell_item( GTK_SHEET(sheets[2]), i, j, (gchar *) text, 
+				  VISIBLE, SHOW_VALUE );
 	g_free(text);
       }
     }
   }
+  /* Do I really need these shows here? */
   if (sheet_head->pin_count > 0) {
     gtk_widget_show( GTK_WIDGET(sheets[2]) );
     gtk_widget_show( GTK_WIDGET(scrolled_windows[2]) );
