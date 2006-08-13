@@ -79,11 +79,11 @@ void verbose_reset_index(void)
  * Gattrib specific utilities
  *------------------------------------------------------------------*/
 
-char *s_misc_remaining_string(char *string, char delimiter, int count)
+char *s_misc_remaining_string(gchar *string, gchar delimiter, gint count)
 {
-  int i;
-  char *remaining;
-  char *return_value;
+  gint i;
+  gchar *remaining;
+  gchar *return_value;
 
   /* find count'th delimiter */
   remaining = string;
@@ -104,7 +104,7 @@ char *s_misc_remaining_string(char *string, char delimiter, int count)
   }
 
   /* copy remainder into allocated return string */
-  return_value = strdup(remaining);
+  return_value = g_strdup(remaining);
 
   /* return string */
   return (return_value);

@@ -1015,9 +1015,11 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
   printf("        In s_toplevel_update_pin_attribs_in_toplevel, handling entry in master list %s .\n", new_name_value_pair);
 #endif
     new_attrib_name = u_basic_breakup_string(new_name_value_pair, '=', 0);
-    new_attrib_value = s_misc_remaining_string(new_name_value_pair, '=', 1);
+    new_attrib_value = u_basic_breakup_string(new_name_value_pair, '=', 1); /* don't use s_misc_remaining_string
+									     * since pinattribs are only foo=bar. */
     if (strlen(new_attrib_value) == 0) {
-      g_free(new_attrib_value);   /* I wonder if I should check for non-NULL first?  */
+      if (new_attrib_value != NULL)
+	g_free(new_attrib_value);   
       new_attrib_value = NULL;  /* s_misc_remaining_string doesn't return NULL for empty substring. */
     }
     old_attrib_value = o_attrib_search_name_single_count(o_pin, new_attrib_name, 0);
