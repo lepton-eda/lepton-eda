@@ -73,3 +73,39 @@ void verbose_reset_index(void)
 {
     char_index = 0;
 }
+
+
+/*------------------------------------------------------------------
+ * Gattrib specific utilities
+ *------------------------------------------------------------------*/
+
+char *s_misc_remaining_string(char *string, char delimiter, int count)
+{
+  int i;
+  char *remaining;
+  char *return_value;
+
+  /* find count'th delimiter */
+  remaining = string;
+  for (i = 0; i < count; i++) {
+    remaining = strchr(remaining, delimiter);
+    if (!remaining) {
+      return (NULL);
+    }
+    remaining++;
+  }
+
+  /* skip whitespace */
+  while (*remaining == ' ') {
+    remaining++;
+  }
+  if (!(*remaining)) {
+    return (NULL);
+  }
+
+  /* copy remainder into allocated return string */
+  return_value = strdup(remaining);
+
+  /* return string */
+  return (return_value);
+}

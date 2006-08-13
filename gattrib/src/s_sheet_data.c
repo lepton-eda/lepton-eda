@@ -385,7 +385,7 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
 		    && pin_attrib->object->text != NULL) {  /* found an attribute */
 		  attrib_text = g_strdup(pin_attrib->object->text->string);
 		  attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
-		  attrib_value = u_basic_breakup_string(attrib_text, '=', 1);
+		  attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
 		  if ( (strcmp(attrib_name, "pinnumber") != 0) 
 		       && (attrib_value != NULL) ) {  
 		    /* Don't include "pinnumber" because it is already in other master list.

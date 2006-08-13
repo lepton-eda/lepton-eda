@@ -1,4 +1,10 @@
 2006-08-12  SDB <sdb@cloud9.net>
+	* include/prototype.h, src/s_misc.c, src/s_sheet_data.c,
+	src/s_table.c, src/s_toplevel.c:  Applied patch from Jeff Mallatt
+	which implements ability to handle attrib strings with multiple
+	= signs. 
+
+2006-08-12  SDB <sdb@cloud9.net>
 	* configure.ac, src/parsecmd.c:  Implemented getopt_long
 	for systems which have it.
 	

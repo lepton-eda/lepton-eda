@@ -780,7 +780,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   /*  Next try to get this attrib from new_comp_attrib_list  */
   new_attrib_name = u_basic_breakup_string(local_list->data, '=', 0);      
   if (s_string_list_in_list(new_comp_attrib_list, local_list->data)) {
-    new_attrib_value = u_basic_breakup_string(local_list->data, '=', 1);      
+    new_attrib_value = s_misc_remaining_string(local_list->data, '=', 1);      
   } else {
     new_attrib_value = NULL;
   }
@@ -1015,10 +1015,10 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
   printf("        In s_toplevel_update_pin_attribs_in_toplevel, handling entry in master list %s .\n", new_name_value_pair);
 #endif
     new_attrib_name = u_basic_breakup_string(new_name_value_pair, '=', 0);
-    new_attrib_value = u_basic_breakup_string(new_name_value_pair, '=', 1);
+    new_attrib_value = s_misc_remaining_string(new_name_value_pair, '=', 1);
     if (strlen(new_attrib_value) == 0) {
       g_free(new_attrib_value);   /* I wonder if I should check for non-NULL first?  */
-      new_attrib_value = NULL;  /* u_basic_breakup_string doesn't return NULL for empty substring. */
+      new_attrib_value = NULL;  /* s_misc_remaining_string doesn't return NULL for empty substring. */
     }
     old_attrib_value = o_attrib_search_name_single_count(o_pin, new_attrib_name, 0);
                                                                                                        

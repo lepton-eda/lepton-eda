@@ -155,6 +155,7 @@ void s_rename_all(TOPLEVEL * pr_current, NETLIST * netlist_head);
 void verbose_print(char *string);
 void verbose_done(void);
 void verbose_reset_index(void);
+char *s_misc_remaining_string(char *string, char delimiter, int count);
 
 /* ------------- s_visibility.c ------------- */
 void s_visibility_set_invisible();
