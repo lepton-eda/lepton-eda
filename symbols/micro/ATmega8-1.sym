@@ -20,7 +20,7 @@ pinnumber=1
 T 2400 2250 5 8 0 1 0 2 1
 pinseq=1
 T 2250 2100 9 8 1 1 0 6 1
-pinlabel=(RESET) RC6
+pinlabel=(RESET) PC6
 T 2250 2100 5 8 0 1 0 8 1
 pintype=io
 }
