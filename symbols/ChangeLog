@@ -2,6 +2,8 @@
 
 	* micro/ATmega8-1.sym: Applied bug fix to pinlabel by Sascha Silbe 
 
+	* asic/*.sym: Added a bunch of symbols by Peter Kaiser
+
 2006-07-14 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* misc/nc-*.sym: Added graphical=1, device=DRC_Directive, 

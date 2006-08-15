@@ -897,6 +897,14 @@ Tomeu Capó		- For contributing the following symbol:
 
 				ADC0831-1.sym
 
+Peter Kaiser		- For contributing all the asic symbols include a
+			  few new ones:
+
+				asic-nhhv-1.sym asic-nhv-1.sym asic-nmmv-1.sym
+				asic-nmv-1.sym asic-phhv-1.sym asic-phv-1.sym
+				asic-pmmv-1.sym asic-pmv-1.sym
+
+
 
 The following people contributed symbols via the online symbol upload
 (E-mails purposefully truncated):
