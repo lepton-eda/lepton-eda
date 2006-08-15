@@ -91,7 +91,8 @@ AC_CONFIG_FILES([Makefile
 		 gsch2pcb_tutorial/images/Makefile 
 		 toplevel/Makefile 
 		 toplevel/gedadocs.html 
-                 templates/Makefile ])
+                 templates/Makefile 
+                 scripts/Makefile ])
 AC_OUTPUT
 
 expandedGEDADOCDIR=`eval "echo $GEDADOCDIR"`

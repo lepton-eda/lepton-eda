@@ -1,3 +1,9 @@
+2006-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* scripts/*, configure.ac, Makefile.am: Added scripts that
+	will be used in getting and cleaning up the the wiki documentation. 
+	wikifetch.sh was written by David Hart.  Thanks!
+
 2006-06-05 Werner Hoch <werner.ho@gmx.de>
 
 	* tragesym_tutorial/*: updated the complete tragesym tutorial
