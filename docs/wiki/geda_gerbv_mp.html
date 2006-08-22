@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>geda:gerbv_mp</title>
+  <meta name="generator" content="DokuWiki Release 2006-03-09" />
+  <link rel="start" href="http://geda.seul.org/wiki/" />
+  <link rel="contents" href="http://geda.seul.org/wiki/geda:gerbv_mp?do=index" title="" />
+  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:gerbv_mp?do=export_xhtml" />
+  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:gerbv_mp?do=export_raw" />
+  <meta name="date" content="2006-05-07T16:33:09-0400" />
+  <meta name="robots" content="index,follow" />
+  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
+  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+<h1><a name="gerbv_man-page" id="gerbv_man-page">gerbv man-page</a></h1>
+<div class="level1">
+<pre class="code">gerbv(1)			 cvs-20051023			      gerbv(1)
+
+
+
+NAME
+       gerbv - Gerber Viewer
+
+SYNOPSIS
+       gerbv [OPTIONS] [gerberfile[s]]
+
+DESCRIPTION
+       gerbv is a viewer for Gerber files. Gerber files is generated from dif-
+       ferent PCB CAD programs and are sent to subcontractors to actually make
+       the PCB. gerbv also supports Excellon/NC drill files.
+
+
+OPTIONS
+       Warning!	  On  some platforms, which hasnâ€™t long option available, only
+       short options are available.
+
+
+   gerbv Options
+       -V|--version Prints the version number of gerbv and exits.
+
+       -h|--help
+	      Prints a brief usage guide.
+
+       -l &lt;filename&gt;|--log=&lt;filename&gt;
+	      All error messages etc are stored in a file with filename &lt;file-
+	      name&gt;.
+
+       -t &lt;filename&gt;|--tools=&lt;filename&gt;
+	      Read Excellon tools from the file &lt;filename&gt;.
+
+       --geometry=&lt;width&gt;x&lt;height&gt;[&lt;+-&gt;x-position[&lt;+-&gt;y-position]]
+	      Sets  the	 the size of the window. X-position and y-position are
+	      currently ignored by gerbv.
+
+       -p &lt;project filename&gt;|--project=&lt;project filename&gt;
+	      Load a stored project. Please note that the project file must be
+	      stored in the same directory as the gerber files.
+
+
+   GTK Options
+       --gtk-module=MODULE Load an additional GTK module
+
+       --g-fatal-warnings
+	      Make all warnings fatal
+
+       --gtk-debug=FLAGS
+	      GTK debugging flags to set
+
+       --gtk-no-debug=FLAGS
+	      GTK debugging flags to unset
+
+       --gdk-debug=FLAGS
+	      GDK debugging flags to set
+
+       --gdk-no-debug=FLAGS
+	      GDK debugging flags to unset
+
+       --display=DISPLAY
+	      X display to use
+
+       --sync Make X call synchronous
+
+       --no-xshm
+	      Donâ€™t use X shared memory extension
+
+       --name=NAME
+	      Program name as used by the window manager
+
+       --class=CLASS
+	      Program class as used by the window manager
+
+
+GENERAL
+       When you start gerbv you can give the files to be loaded on the command
+       line, either as each file separated with a space or by using wildcards.
+
+       The user interface is graphical. Simply press left mouse button and the
+       image will pan as you move the mouse. To	 manipulate  a	layer,	right-
+       click on one of the rightmost buttons. That will bring up a pop-up menu
+       where you can select what you want to do with that  layer  (load	 file,
+       change color, etc).
+
+       If  you	hold the mouse button over one the rightmost button a tooltips
+       will show you the name of the file loaded on that layer.
+
+       Default of concurrently loaded files are 20 layers. You can change this
+       during configure with:
+
+	./configure with-maxfiles=&lt;number&gt;
+
+
+ACTIVATION AND DEACTIVATION OF LAYERS
+       You can load several files at one time. You can then turn displaying of
+       the layers on and off by clicking on one of the rightmost buttons.
+
+       You can also control this from the keyboard. Press Alt, enter the  num-
+       ber  on	the layer you want activate/deactivate on the numerical keypad
+       and then release the Alt key.
+
+
+ZOOMING
+       Zooming can be handled by  either  menu	choices,  keypressing,	middle
+       mouse  button  or scroll wheel. If you press Alt+I you will zoom in and
+       if you press Alt+O you will zoom out.If you press middle	 mouse	button
+       you  will  zoom out, and if you press Shift and middle mouse button you
+       will zoom in.  Scroll wheel works if you enabled that in your X	server
+       and mapped it to button 4 and 5. You can also zoom in by pressing z and
+       zoom out by pressing shift+z (ie Z). You can  make  the	image  fit  by
+       pressing f (there is also a menu alternativ for this).
+
+       You  can	 also  do  zooming by outline. Press right mouse button, draw,
+       release.	 The dashed line shows how the zooming will  be	 dependent  on
+       the resolution of the window. The non-dashed outline will show what you
+       actually selected. If you change your mind when started	to  mark  out-
+       line,  you  can	always	abort  by pressing escape. By holding down the
+       shift key when you press the right mouse button,	 you  will  select  an
+       area  where  the point you started at will be the center of your selec-
+       tion.
+
+
+MEASUREMENTS
+       You can do measurement on the image displayed. By pressing  shift,  the
+       cursor  changes	to a plus. By using left mouse button you can draw the
+       lines that you want to measure.	The result of the last measurement  is
+       also  displayed	on the statusbar.  All measurements are in the drawing
+       until you either zoom, pan or press the escape key.
+
+       The statusbar shows the current mouse position on the layer in the same
+       coordinates  as	in the file. Ie if you have (0,0) in the middle of the
+       image in the gerber files, the statusbar will show (0,0)	 at  the  same
+       place.
+
+
+SUPERIMPOSING
+       When  you  load	several	 Gerber files, you can display them &quot;on top of
+       each other&quot;, ie superimposing. The general way to display them are that
+       upper  layers  cover  the  layers  beneath,  which is called copy (GTK+
+       terms).
+
+       The other ways selectable  are  and,  or,  xor  and  invert.  They  map
+       directly	 to  corresponding functions in GTK. In GTK they are described
+       as: &quot;For colored images, only GDK_COPY, GDK_XOR and GDK_INVERT are gen-
+       erally useful. For bitmaps, GDK_AND and GDK_OR are also useful.&quot;
+
+
+PROJECTS
+       gerbv  can  also	 handle projects. A project consist of bunch of loaded
+       layers with their resp. color and the background color. The easiest way
+       to  create  a  project is to load all files you want into the layer you
+       want, set all the colors etc and do a &quot;Save Project As...&quot;.
+
+       You load a project either from the menu bar or by using the commandline
+       switches -p or --project.
+
+       Currently there is a limit in that the project file must be in the same
+       directory as the gerber files to be loaded.
+
+
+SCHEME
+       The project files are simple Scheme programs that is interpreted	 by  a
+       built  in  Scheme interpreter. The Scheme interpreter is TinyScheme and
+       needs a Scheme program called init.scm to initialize itself. The search
+       path	for	init.scm     is	    (in	    the	   following	order)
+       /usr/local/gEDA-20060124/share/gerbv/scheme/share/gerbv/scheme/,	   the
+       directory  with	the  executable gerbv, the directory gerbv was invoked
+       from   and   finally   according	  to	the    environment    variable
+       GERBV_SCHEMEINIT.
+
+
+TOOLS FILE
+       Not  every  Excellon  drill  file is self-sufficient. Some CADs produce
+       .drd files where tools are only referenced, but never defined (such  as
+       what diameter of the tool is.) Eagle CAD is one of such CADs, and there
+       are more since many board houses require Tools files.
+
+       A Tools file is a plain text file which you create in an	 editor.  Each
+       line  of	 the  file  describes  one tool (the name and the diameter, in
+       inches):
+
+	    T01 0.024
+	    T02 0.040
+	    ...
+
+       These are the same tools (T01 etc.) that are used in the Drill file.  A
+       standard	 practice with Eagle is to create an empty Tools file, run the
+       CAM processor, and the error report tells you which tools you &quot;forgot&quot;.
+       Then you put these tools into the file and rerun the CAM processor.
+
+       You  load  a tool file by using the commandline switches -t or --tools.
+       The file can have any name you wish, but Eagle expects the file type to
+       be &quot;.drl&quot;, so it makes sense to keep it this way. Some board houses are
+       still using CAM software from DOS era, so you  may  want	 to  excercise
+       caution before going beyond the 8.3 naming convention.
+
+       When gerbv reads the Tools file it also checks that there are no dupli-
+       cate definitions of tools. This does happen from time to	 time  as  you
+       edit  the file by hand, especially if you, during design, add or remove
+       parts from the board and then have to add  new  tools  into  the	 Tools
+       file.  The  duplicate  tools  are  a very serious error which will stop
+       (HOLD) your board until you fix the Tools file and maybe	 the  Excellon
+       file.  gerbv  will detect duplicate tools if they are present, and will
+       exit immediately to indicate such a fatal error in a very obvious  way.
+       A message will also be printed to standard error.
+
+       If your Excellon file does not contain tool definitions then gerbv will
+       preconfigure the tools by deriving the diameter of the drill  bit  from
+       the  tool  number. This is probably not what you want, and you will see
+       warnings printed on the console.
+
+
+ENVIRONMENT
+       GERBV_SCHEMEINIT
+	      Defines where the init.scm file is stored. Used by scheme inter-
+	      preter, which is used by the project reader.
+
+
+AUTHOR
+       Stefan Petersen (spetm at users.sourceforge.net): Overall hacker and project leader
+       Andreas Andersson (e92_aan at e.kth.se): Drill file support and general hacking
+       Anders Eriksson (aenfaldor at users.sourceforge.net) : X and GTK+ ideas and hacking
+
+
+COPYRIGHT
+       Copyright Â©  2001-2004 Stefan Petersen
+
+       This document can be freely redistributed according to the terms of the
+       GNU General Public License version 2.0
+
+
+
+Version				 Feb 8th, 2004			      gerbv(1)
+</pre>
+
+</div>
+</div>
+</body>
+</html>

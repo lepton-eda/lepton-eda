@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>geda:covered_mp</title>
+  <meta name="generator" content="DokuWiki Release 2006-03-09" />
+  <link rel="start" href="http://geda.seul.org/wiki/" />
+  <link rel="contents" href="http://geda.seul.org/wiki/geda:covered_mp?do=index" title="" />
+  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:covered_mp?do=export_xhtml" />
+  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:covered_mp?do=export_raw" />
+  <meta name="date" content="2006-05-07T17:50:40-0400" />
+  <meta name="robots" content="index,follow" />
+  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
+  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+<h1><a name="covered_man-page" id="covered_man-page">covered man-page</a></h1>
+<div class="level1">
+<pre class="code">Covered(1)			 Code Analysis			    Covered(1)
+
+
+
+NAME
+       Covered - Verilog Code Coverage Analyzer
+
+SYNTAX
+       covered [&lt;options&gt;] score [&lt;options&gt;]
+       covered	   [&lt;options&gt;]	   merge    [&lt;options&gt;]	   &lt;existing_database&gt;
+       &lt;database_to_merge&gt;
+       covered [&lt;options&gt;] report [&lt;options&gt;] &lt;database_file&gt;
+
+DESCRIPTION
+       Covered is a Verilog code coverage analysis tool that can be useful for
+       determining  how	 well  a  diagnostic test suite is covering the design
+       under test. Covered reads in the Verilog design files and a VCD or  LXT
+       formatted  dumpfile from a diagnostic run and generates a database file
+       called a Coverage Description Database (CDD) file, using the score com-
+       mand.   This  file  can	be  merged  with other CDD files from the same
+       design to create accummulated coverage, using the merge command.	  Once
+       a  CDD  file  is	 created, the user can use Covered to generate various
+       human-readable coverage reports in an ASCII format or use Coveredâ€™s GUI
+       to  interactively  look	at coverage results, using the report command.
+       Additionally, as part of Coveredâ€™s score command, race condition possi-
+       bilities	 are  found  in	 the  design  files and can be either ignored,
+       flagged as warnings or flagged as errors.  By  specifying  race	condi-
+       tions  as errors, Covered can also be used as a race condition checker.
+
+GLOBAL OPTIONS
+       These options are placed immediately after the keyword covered  in  the
+       command-line.   They can be used for any command (with the exception of
+       -v and -h) and have the same effect in each case.
+
+       -D     Debug.  Display information helpful for debugging tool problems.
+	      Note:   This  option is now only available when covered is built
+	      with the --enable-debug configuration option.
+
+       -h     Help.  Display this usage information.
+
+       -Q     Quiet mode.  Causes all output to be suppressed.
+
+       -v     Version.	Display current Covered version.
+
+COMMANDS
+       score  Parses Verilog files and VCD/LXT dumpfiles  to  create  database
+	      file used for merging and reporting.
+
+       merge  Merges two database files into one.
+
+       report Generates	 human-readable coverage reports from database file or
+	      starts the coverage report GUI.
+
+SCORE COMMAND
+       The following options are valid for the score command:
+
+       -D define_name
+	      Defines the specified name to 1.
+
+       -D define_name=value
+	      Defines the specified name to the specified value.
+
+       -e block_name
+	      Name of module, task, function or named begin/end block  to  not
+	      score.   Causes  all  subblocks  in  the Verilog tree under this
+	      block to also not be scored.
+
+       -ea    Excludes all always blocks from being considered for coverage.
+
+       -ec    Excludes all continuous assignments from	being  considered  for
+	      coverage.
+
+       -ei    Excludes	all initial blocks from being considered for coverage.
+
+       -F module_name=(in_expr,)out_expr
+	      Indicates to the parser where to find the FSM located in	module
+	      module_name  which  has an input state expression called in_expr
+	      and output state expression called out_expr.  If in_expr is  not
+	      specified,  out_expr  is used as both the input and output state
+	      expression.
+
+       -f filename
+	      Name of file containing additional arguments to parse.
+
+       -h     Displays this help information.
+
+       -I directory
+	      Directory to find included Verilog files.
+
+       -i instance_name
+	      Verilog hierarchical reference to the module that is at the  top
+	      of the tree to be scored.	 This option is necessary if module to
+	      verify coverage is not the top-level module in the  design.   If
+	      not specified, -t value is used.
+
+       -lxt filename
+	      Name  of LXT/LXT2 dumpfile to score design with.	If this or the
+	      -vcd option is not used, Covered will only create an initial CDD
+	      file from the design and will not attempt to score the design.
+
+       -o database
+	      Name of database to write coverage information to.  If not spec-
+	      ified, the output database filename will be &quot;cov.cdd&quot;.
+
+       -p filename
+	      Overrides default filename used to store intermediate preproces-
+	      sor output.
+
+       -P parameter_scope=value
+	      Performs a defparam on the specified parameter with value.
+
+       -r(S|W|E)
+	      Specifies	 action	 to  take  when	 race condition checking finds
+	      problems in design (-rS = Silent, -rW = Warning, -rE = Error).
+
+       -S     Outputs simulation statistics after  simulation  has  completed.
+	      This  information is currently only useful for the developers of
+	      Covered.
+
+       -t top-level module
+	      Specifies the module name of the top-most module	that  will  be
+	      measured.	  Note	that  this  module  does  not  need  to be the
+	      top-most module in the simulator.	 This field  is	 required  for
+	      all calls to the score command.
+
+       -ts number
+	      When  scoring occurs, this option allows the user to see how far
+	      the simulator has progressed by outputting the current  timestep
+	      to  standard  output.  The  value	 of  number specifies how many
+	      timesteps are allowed to be simulated before outputting the cur-
+	      rent timestep (results in less calls to output stream).
+
+       -T min|typ|max
+	      Specifies	 which	value to use when encountering a delay expres-
+	      sion in the form:	 min:typ:max.  If this option  is  not	speci-
+	      fied, â€™typâ€™ select is used by default.
+
+       -v filename
+	      Name of specific Verilog file to score.
+
+       -vcd filename
+	      Name  of VCD dumpfile to score design with.  If this or the -lxt
+	      option is not used, Covered will only create an initial CDD file
+	      from the design and will not attempt to score the design.
+
+       -y directory
+	      Directory to find unspecified Verilog files.
+
+       +libext+.extension(+.extension)*+
+	      Extensions of Verilog files to allow in scoring.
+
+MERGE COMMAND
+       The following options are valid for the merge command:
+
+       -h     Displays this help information.
+
+       -o filename
+	      File  to output new database to.	If this argument is not speci-
+	      fied, the existing_database is used as the output database name.
+
+REPORT COMMAND
+       The following options are valid with the report command:
+
+       -c     If  -v  is specified, displays covered line, toggle and combina-
+	      tional cases.  Default is to display uncovered information.
+
+       -d (s|d|v)
+	      Level of detail to provide in coverage report information	 (s  =
+	      summary, d = detailed, v = verbose).  Default is summary.
+
+       -h     Displays this help information.
+
+       -i     Provides coverage information for instances instead of module.
+
+       -m [l][t][c][f][r]
+	      Type(s) of metrics to report.  Default is ltcf.
+
+       -o filename
+	      File  to output report information to.  Default is standard out-
+	      put.
+
+       -v     Deprecated.  Replaced by â€™-d dâ€™ or â€™-d vâ€™.
+
+       -view  Starts the GUI interface for interactive coverage reporting.
+
+       -w (number)
+	      Specifies the maximum line width (in  characters)	 that  can  be
+	      used to output Verilog information.  If this option is not spec-
+	      ified, all Verilog code in the report will retain the same  for-
+	      matting  as was specified in the original Verilog code.  If this
+	      option is specified, Verilog code will be formatted  to  use  as
+	      much  of	the  current  line as possible, wrapping text when the
+	      line reaches the maximum line width.  The default	 maximum  line
+	      width  is	 115  characters  (this	 value is used if no number is
+	      specified with the -w option).  If a number  is  specified  with
+	      the -w option, this value is used for the maximum line width.
+
+AUTHORS
+       Trevor Williams &lt;trevorw@charter.net&gt;
+
+       Arpan Sen &lt;arpan_sen@yahoo.com&gt;
+
+SEE ALSO
+       For  more  information  on  how	to use the Covered code coverage tool,
+       please consult  the  on-line  Userâ€™s  Guide  at	http://covered.source-
+       forge.net/user/index.html.
+
+
+
+Trevor Williams		       covered-20060218			    Covered(1)</pre>
+
+</div>
+</div>
+</body>
+</html>

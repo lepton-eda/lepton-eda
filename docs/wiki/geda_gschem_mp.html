@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>geda:gschem_mp</title>
+  <meta name="generator" content="DokuWiki Release 2006-03-09" />
+  <link rel="start" href="http://geda.seul.org/wiki/" />
+  <link rel="contents" href="http://geda.seul.org/wiki/geda:gschem_mp?do=index" title="" />
+  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:gschem_mp?do=export_xhtml" />
+  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:gschem_mp?do=export_raw" />
+  <meta name="date" content="2006-04-20T03:14:56-0400" />
+  <meta name="robots" content="index,follow" />
+  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
+  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+<h1><a name="gschem_man-page" id="gschem_man-page">gschem man-page</a></h1>
+<div class="level1">
+<pre class="code">gschem(1)			   20031231			     gschem(1)
+
+
+
+NAME
+       gschem - gEDA/gaf Schematic Capture
+
+SYNOPSIS
+       gschem  [-q]  [-v] [-t] [-r rcfilename] [-s scriptfilename] [-o output-
+       filename] [-p] [schematic1 ... schematicN]
+
+DESCRIPTION
+       gschem is the schematic capture program which is part gEDA  (GPL	 Elec-
+       tronic  Design Automation) toolset.  This program is used to draw elec-
+       tronic schematics.  Schematics consist of standard symbols  (which  are
+       either  part of a standard library or created by the user) which repre-
+       sent the various gates  and  components.	  These	 components  are  then
+       interconnected  by  nets	 (wires).   Schematics	may  be	 printed  to a
+       PostScript file for printing or further conversion to other output for-
+       mats.
+
+       gschem is also the symbol creation editor.  All the standard methods of
+       creating schematics are used in the creation of symbols.	 There	are  a
+       few  special  rules when creating symbols, so please refer to the (non-
+       existant as of now) symbol creation document.
+
+       Please read the official documentation (very minimal at this point)  on
+       how  to use gschem, since this man page just describes the command line
+       arguments and a few examples on how to run gschem.
+
+
+OPTIONS
+       gschem accepts the following options:
+
+       -q      Quiet mode on.  This mode  turns	 off  all  warnings/notes/mes-
+	       sages. (optional)
+
+       -v      Verbose	mode on.  This mode gives as much feedback to the user
+	       as possible. (optional)
+
+       -t      Print out more information when using mouse strokes.  With this
+	       command	line  flag  and the middle button configured for mouse
+	       strokes, gschem will output the stroke sequence numbers as  the
+	       user executes strokes.  These numbers can be used to define new
+	       strokes in the system-gschemrc file.
+
+       -r filename
+	       Specify a rc filename.  Normally gschem searches for  the  sys-
+	       tem-gschemrc, then ~/.gEDA/gschemrc, and finally for a gschemrc
+	       in the current directory.  This	options	 allows	 the  user  to
+	       specify an additional rc file which is read after all the other
+	       rc files are read. (optional)
+
+       -s filename
+	       Specify a guile script to be executed at startup. (optional)
+
+       -o filename
+	       Specify a filename for postscript output.   This	 command  line
+	       argument	 is useful when running gschem from a shell script and
+	       with a guile script.  The filename can be changed  through  the
+	       print dialog box.
+
+       -p      Automatically  place  the  window, especially useful if running
+	       gschem from the command line and generating output.
+
+       schematic1 [... schematicN]
+	       Schematic file to be loaded.  Specifing	a  schematic  file  is
+	       optional.   If  multiple schematic files are specified they are
+	       read in sequentially and put on seperate pages.	It  is	impor-
+	       tant that the schematic(s) follow all the options (ie last).
+
+
+EXAMPLES
+       These  examples	assume that you have a schematic called stack_1.sch in
+       the current directory
+
+       To run gschem and then interact with the program:
+
+	    ./gschem
+
+       To run gschem in interactive mode but load a sample schematic:
+
+	    ./gschem adders_1.sch
+
+       To run gschem and load up all schematics in the current subdirectory:
+
+	    ./gschem *.sch
+
+
+ENVIRONMENT
+       No environment variables are used.
+
+
+AUTHOR
+       Ales Hvezda and many others
+
+
+SEE ALSO
+       gnetlist(1), gsymcheck(1)
+
+COPYRIGHT
+       Copyright ©  1999-2004 Ales Hvezda
+
+       This document can be freely redistributed according to the terms of the
+       GNU General Public License version 2.0
+
+
+
+
+Version			      December 31st, 2003		     gschem(1)</pre>
+
+</div>
+</div>
+</body>
+</html>

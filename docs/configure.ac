@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT
 
-VERSION=20060123
+VERSION=20060821
 PACKAGE=geda-docs
 echo Configuring $PACKAGE version $VERSION
 
@@ -73,25 +73,27 @@ expandgedadocdir=`echo $gedadocdir`
 GEDADOCDIR=$expandgedadocdir
 AC_SUBST(GEDADOCDIR)
 
+
+AC_DEFUN([GEDA_DECLARE_DOCS],
+ [
+        data$1=`find $srcdir/$1 -name \* -print | sed "s%\./wiki/%%" \
+				 | sed "s%\./wiki%%" \
+				 | grep -v Makefile | grep -v ChangeLog \
+                                 | grep -v CVS | grep -v "\\.cvsignore" \
+                                 | grep -v README \
+                                 | grep -v "\\~" | grep -v "\\.orig"`
+        data$1=`echo $data$1`
+        AC_SUBST(data$1)
+ ])
+
+GEDA_DECLARE_DOCS(wiki)
+
 AC_CONFIG_FILES([Makefile 
-	         attributes/Makefile 
-		 symbols/Makefile 
-	         fileformats/Makefile 
-                 hooks/Makefile 
-                 keymapping/Makefile 
-                 netattrib/Makefile 
-                 pads_backannotate/Makefile 
-                 cascade/Makefile 
-		 gschem/Makefile 
-		 gnetlist/Makefile 
-		 switcap/Makefile 
-		 spice-sdb/Makefile 
-		 tragesym_tutorial/Makefile 
-		 gsch2pcb_tutorial/Makefile 
-		 gsch2pcb_tutorial/images/Makefile 
 		 toplevel/Makefile 
 		 toplevel/gedadocs.html 
-                 templates/Makefile 
+                 gsch2pcb_tutorial/Makefile 
+		 gsch2pcb_tutorial/images/Makefile
+                 wiki/Makefile 
                  scripts/Makefile ])
 AC_OUTPUT
 

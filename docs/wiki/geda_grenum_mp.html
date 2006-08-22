@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>geda:grenum_mp</title>
+  <meta name="generator" content="DokuWiki Release 2006-03-09" />
+  <link rel="start" href="http://geda.seul.org/wiki/" />
+  <link rel="contents" href="http://geda.seul.org/wiki/geda:grenum_mp?do=index" title="" />
+  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:grenum_mp?do=export_xhtml" />
+  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:grenum_mp?do=export_raw" />
+  <meta name="date" content="2006-04-23T07:22:07-0400" />
+  <meta name="robots" content="index,follow" />
+  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
+  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+<h1><a name="grenum_man-page" id="grenum_man-page">grenum man-page</a></h1>
+<div class="level1">
+<pre class="code">grenum(1)							     grenum(1)
+
+
+
+NAME
+       grenum - An advanced refdes renumber utility
+
+
+SYNOPSIS
+       grenum  [-v|--version  -h|--help -p|--pagejump] infile1.sch infile2.sch
+       ...
+
+
+
+DESCRIPTION
+       The grenum program will	renumber  the  refdes  definitions  read  from
+       infile.
+
+
+OPTIONS
+       -p, --pagejump
+	      This  will  switch on the page jump mode. It means that refdesâ€™s
+	      from each inputfile gets renumbered from 100,200... etc.
+
+       -v, --version
+	      prints version information
+
+       -h, --help
+	      prints help message
+
+
+RETURN VALUE
+       grenum will return 0 if all files processed successfully, -1  if	 there
+       was  no	input file specified, -2 if I/O files canâ€™t be opened/written,
+       -3 if there is parse error in input file, -4 if	there  is  not	enough
+       memory to store refdes prefixes.
+
+BUGS
+       If you find one, please report it to:
+
+
+AUTHOR
+       Levente Kovacs
+
+       Levente.Kovacs@interware.hu
+
+
+SEE ALSO
+       gschem(1)
+
+
+
+								     grenum(1)
+</pre>
+
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>geda:faq-gsch2pcb</title>
+  <meta name="generator" content="DokuWiki Release 2006-03-09" />
+  <link rel="start" href="http://geda.seul.org/wiki/" />
+  <link rel="contents" href="http://geda.seul.org/wiki/geda:faq-gsch2pcb?do=index" title="" />
+  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:faq-gsch2pcb?do=export_xhtml" />
+  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:faq-gsch2pcb?do=export_raw" />
+  <meta name="date" content="2006-08-21T21:10:54-0400" />
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
+  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+</head>
+<body>
+<div class="dokuwiki export">
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#gsch2pcb" class="toc">gsch2pcb</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#where_is_the_gsch2pcb_tutorial" class="toc">Where is the gsch2pcb tutorial?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#where_can_i_download_gsch2pcb" class="toc">Where can I download gsch2pcb?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#gsch2pcb_can_t_find_some_of_my_footprints_or_errors_out._what_can_i_do_to_diagnose_my_problem" class="toc">gsch2pcb can't find some of my footprints, or errors out. What can I do to diagnose my problem?</a></span></div></li></ul>
+</li></ul>
+</div>
+</div>
+
+<h1><a name="gsch2pcb" id="gsch2pcb">gsch2pcb</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION [1-24] -->
+<h2><a name="where_is_the_gsch2pcb_tutorial" id="where_is_the_gsch2pcb_tutorial">Where is the gsch2pcb tutorial?</a></h2>
+<div class="level2">
+
+<p>
+Currently, the best information about this is contained in Bill Wilson’s <a href="http://geda.seul.org/docs/current/tutorials/gsch2pcb/tutorial.html" class="urlextern" title="http://geda.seul.org/docs/current/tutorials/gsch2pcb/tutorial.html"  rel="nofollow">outstanding tutorial</a>. <br/>
+ <span class="hilited">This page will grow later to contain answers to FAQs posted on the geda-user list.</span>
+</p>
+
+</div>
+<!-- SECTION [25-327] -->
+<h2><a name="where_can_i_download_gsch2pcb" id="where_can_i_download_gsch2pcb">Where can I download gsch2pcb?</a></h2>
+<div class="level2">
+
+<p>
+gsch2pcb is part of gEDA/gaf, in the utils. It is normally installed by default (along with everything else) if you install the entirety of gEDA/gaf. If you don’t have it installed on your machine for some reason you can either download the utils tarball from:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://geda.seul.org/download.html" class="urlextern" title="http://geda.seul.org/download.html"  rel="nofollow">http://geda.seul.org/download.html</a></div>
+</li>
+</ul>
+
+<p>
+ or grab it directly from <acronym title="Concurrent Versions System">CVS</acronym> at:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://cvs.seul.org/viewcvs/viewcvs.cgi/eda/geda/gaf/utils/src/" class="urlextern" title="http://cvs.seul.org/viewcvs/viewcvs.cgi/eda/geda/gaf/utils/src/"  rel="nofollow">http://cvs.seul.org/viewcvs/viewcvs.cgi/eda/geda/gaf/utils/src/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [328-783] -->
+<h2><a name="gsch2pcb_can_t_find_some_of_my_footprints_or_errors_out._what_can_i_do_to_diagnose_my_problem" id="gsch2pcb_can_t_find_some_of_my_footprints_or_errors_out._what_can_i_do_to_diagnose_my_problem">gsch2pcb can't find some of my footprints, or errors out. What can I do to diagnose my problem?</a></h2>
+<div class="level2">
+
+<p>
+Try running gsch2pcb in double verbose mode: “gsch2pcb -v -v”. This will produce lots of spew telling you where gsch2pcb is looking while it tries to find footprints. It will also tell you where it does find the footprints it uses. 
+</p>
+
+</div>
+<!-- SECTION [784-] --></div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>geda:todos</title>
+  <meta name="generator" content="DokuWiki Release 2006-03-09" />
+  <link rel="start" href="http://geda.seul.org/wiki/" />
+  <link rel="contents" href="http://geda.seul.org/wiki/geda:todos?do=index" title="" />
+  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:todos?do=export_xhtml" />
+  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:todos?do=export_raw" />
+  <meta name="date" content="2006-05-07T01:15:37-0400" />
+  <meta name="robots" content="index,follow" />
+  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
+  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+</head>
+<body>
+<div class="dokuwiki export">
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#todo" class="toc">ToDo</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#things_to_be_done_before_the_next_release" class="toc">Things to be done before the next release</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#longer_term_upgrades_desired_for_specific_tools" class="toc">Longer term upgrades desired for specific tools</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#ideas_for_new_tools_or_geda_suite-wide_enhancements" class="toc">Ideas for new tools or gEDA Suite-wide enhancements</a></span></div></li></ul>
+</li></ul>
+</div>
+</div>
+
+<h1><a name="todo" id="todo">ToDo</a></h1>
+<div class="level1">
+
+<p>
+These lists are meant to provide developers a reminder of undone projects. It is also a wish list capturing user’s desires for new features. New developers can also look here for projects which they might be interested in working on.
+</p>
+
+</div>
+<!-- SECTION [1-256] -->
+<h2><a name="things_to_be_done_before_the_next_release" id="things_to_be_done_before_the_next_release">Things to be done before the next release</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <strong>Gschem</strong>:</div>
+<ul>
+<li class="level2"><div class="li"> Fix postscript output.</div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [257-356] -->
+<h2><a name="longer_term_upgrades_desired_for_specific_tools" id="longer_term_upgrades_desired_for_specific_tools">Longer term upgrades desired for specific tools</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <strong>Libgeda</strong>:</div>
+<ul>
+<li class="level2"><div class="li"> Enable handling of .sch files with symbols having some (but not all) pins promoted onto the .sch file. This will enable pin-swapping via backannotation from PCB.</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>Gschem</strong>:</div>
+<ul>
+<li class="level2"><div class="li"> Enable hierarchical bus support.</div>
+</li>
+<li class="level2"><div class="li"> Make gschemrc variables settable from within gschem using a “settings” pull-down menu item (new).</div>
+</li>
+<li class="level2"><div class="li"> Make gschem start up with a reasonable zoom, not zoomed waaaaay out.</div>
+</li>
+<li class="level2"><div class="li"> Improve symbol library to handle very large symbol collections better</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>Gnetlist</strong>:</div>
+<ul>
+<li class="level2"><div class="li"> Enable <strong><code>–help</code></strong> flag. Do other gEDA/gaf programs recognize this flag?</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>Gattrib</strong>:</div>
+<ul>
+<li class="level2"><div class="li"> Make it export CSV to support BOM generation.</div>
+</li>
+<li class="level2"><div class="li"> Get printing working.</div>
+</li>
+<li class="level2"><div class="li"> Enable attachment of attributes to nets.</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>Garchive</strong>:</div>
+<ul>
+<li class="level2"><div class="li"> Incorporate guile so that it reads RC files using the same mechanism as the rest of gEDA/gaf.</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>CD Installer</strong>:</div>
+<ul>
+<li class="level2"><div class="li"> Change it so that the user is presented a pick-list at the beginning of the install, instead of blindly installing everything.</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>Refdes_renum</strong>:</div>
+<ul>
+<li class="level2"><div class="li"> Doesn’t currently work properly with slotted parts (it gives new refdes numbers to slotted parts). Fix it so it recognizes slotted parts and assigns refdes appropriately.</div>
+</li>
+<li class="level2"><div class="li"> Provide <strong><code>–gentle</code></strong> option, which doesn’t clobber (overwrite) any refdeses which are already assigned.</div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [357-1752] -->
+<h2><a name="ideas_for_new_tools_or_geda_suite-wide_enhancements" id="ideas_for_new_tools_or_geda_suite-wide_enhancements">Ideas for new tools or gEDA Suite-wide enhancements</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Develop scheme for backward annotation of changes from PCB to gschem. Requires modifications to libgeda to support, e.g. pin promotion from .sym file to .sch file (enabling pin swapping).</div>
+</li>
+<li class="level1"><div class="li"> Create a Gerber → .pcb conversion tool. Result is metal layer or footprint editable by PCB. This might be a <acronym title="Practical Extraction and Report Language">Perl</acronym> script.</div>
+</li>
+<li class="level1"><div class="li"> Implement lockfiles between gattrib and gschem.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [1753-] --></div>
+</body>
+</html>

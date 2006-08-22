@@ -1,0 +1,9 @@
+Makefile
+Makefile.in
+*.aux
+*.dvi
+*.log
+*.toc
+*.ps
+*.pdf
+*.out

@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>geda:gnetlist_ug</title>
+  <meta name="generator" content="DokuWiki Release 2006-03-09" />
+  <link rel="start" href="http://geda.seul.org/wiki/" />
+  <link rel="contents" href="http://geda.seul.org/wiki/geda:gnetlist_ug?do=index" title="" />
+  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:gnetlist_ug?do=export_xhtml" />
+  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:gnetlist_ug?do=export_raw" />
+  <meta name="date" content="2006-04-20T17:52:52-0400" />
+  <meta name="robots" content="index,follow" />
+  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
+  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+</head>
+<body>
+<div class="dokuwiki export">
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#geda_gnetlist_users_guide" class="toc">gEDA gnetlist Users Guide</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#introduction" class="toc">Introduction</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#overview" class="toc">Overview</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#installation" class="toc">Installation</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#running_gnetlist" class="toc">Running gnetlist</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#schematic_symbol_requirements" class="toc">Schematic / symbol requirements</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#symbol_requirements" class="toc">Symbol requirements</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#schematic_requirements" class="toc">Schematic requirements</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#random_notes" class="toc">Random notes</a></span></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><span class="li"><a href="#hierarchy_support" class="toc">Hierarchy Support</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#specific_backend_info" class="toc">Specific backend info</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#scheme_backend_api" class="toc">Scheme backend API</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#overview1" class="toc">Overview</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#entry_point" class="toc">Entry Point</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#initialization_of_the_backend" class="toc">Initialization of the Backend</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#net_name_and_reference_designator_aliasing" class="toc">Net Name and Reference Designator Aliasing</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#debugging_hints" class="toc">Debugging Hints</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+
+<h1><a name="geda_gnetlist_users_guide" id="geda_gnetlist_users_guide">gEDA gnetlist Users Guide</a></h1>
+<div class="level1">
+
+<p>
+by: Ales Hvezda
+</p>
+
+<p>
+This document is released under <a href="http://www.gnu.org/copyleft/fdl.html" class="urlextern" title="http://www.gnu.org/copyleft/fdl.html"  rel="nofollow">GFDL</a>
+</p>
+
+<p>
+September 21st, 2003
+</p>
+
+</div>
+<!-- SECTION [1-158] -->
+<h2><a name="introduction" id="introduction">Introduction</a></h2>
+<div class="level2">
+
+<p>
+This document describes how to use <strong>gnetlist</strong>. This document and <strong>gnetlist</strong> in general are pretty ALPHA, so keep that in mind as you use it to generate netlists. As all engineers know, it is very important that you do not blindly trust tools, assuming that they will always create correct output. <strong>gnetlist</strong> is certainly no exception to this rule. It is very important that you verify *every* netlists you create. As with most programs (including all the programs in gEDA), <strong>gnetlist</strong> comes with NO WARRANTY. Blah, I hate having to say that, but I&rsquo;m hoping that this warning will keep the user from assuming that <strong>gnetlist</strong> generates perfect netlists. Though if you find a bug, please let <strong>ahvezda@geda.seul.org</strong> know.<br/>
+ This document is very rough, so please e-mail all corrections to <strong>ahvezda@geda.seul.org</strong> or file a bug report on the gEDA homepage at <a href="http://www.geda.seul.org/" class="urlextern" title="http://www.geda.seul.org"  rel="nofollow">http://www.geda.seul.org</a>. Thanks!
+</p>
+
+</div>
+<!-- SECTION [159-1087] -->
+<h2><a name="overview" id="overview">Overview</a></h2>
+<div class="level2">
+
+<p>
+<strong>gnetlist</strong> is the gEDA netlister. It takes as input schematic files and produces a netlist. A netlist is a textual representation of a schematic. This textual representation has all of the connections between devices completely resolved. This means that all the connections associated with a net are grouped together. The netlister also handles hierarchies of schematics.<br/>
+ <strong>gnetlist</strong> has a very  exible architecture. The main program, which is written in C, reads in a schematic (using routines from libgeda) and creates an internal representation of the schematic data. This internal representation is then manipulated by a backend which is responsible for writing the various netlist formats. The backend for each netlist format is written in scheme (specifically Guile). This architecture not only allows for an infinite number of netlist formats, but also allows the netlister to generate other reports (like bill of material lists).<br/>
+ As of 20001006 <strong>gnetlist</strong> has scheme backends to support the following netlist formats:
+</p>
+<ol>
+<li class="level1"><div class="li"> PCB &amp; PCBboard - UNIX PCB netlist format.</div>
+</li>
+<li class="level1"><div class="li"> Allegro netlist format</div>
+</li>
+<li class="level1"><div class="li"> BAE netlist format</div>
+</li>
+<li class="level1"><div class="li"> BOM &amp; BOM2 - Bill of Material generators</div>
+</li>
+<li class="level1"><div class="li"> DRC - Start of a design rule checker</div>
+</li>
+<li class="level1"><div class="li"> gEDA - the native format of gEDA, mainly used for testing</div>
+</li>
+<li class="level1"><div class="li"> Gossip netlist format</div>
+</li>
+<li class="level1"><div class="li"> PADS netlist format</div>
+</li>
+<li class="level1"><div class="li"> ProtelII netlist format</div>
+</li>
+<li class="level1"><div class="li"> Spice compatible netlist format</div>
+</li>
+<li class="level1"><div class="li"> Tango netlist format</div>
+</li>
+<li class="level1"><div class="li"> Verilog code</div>
+</li>
+<li class="level1"><div class="li"> VHDL code</div>
+</li>
+<li class="level1"><div class="li"> VIPEC netlist format</div>
+</li>
+<li class="level1"><div class="li"> VAMS - VHDL-AMS netlist format</div>
+</li>
+</ol>
+
+<p>
+ This list is constantly growing. Several lacking features (as of 20001006) are: no support for buses, error detection and reporting is fairly limited, and ... (many more).
+</p>
+
+</div>
+<!-- SECTION [1088-2791] -->
+<h2><a name="installation" id="installation">Installation</a></h2>
+<div class="level2">
+
+<p>
+Hopefully by now you have already installed <strong>gnetlist</strong> on your machine. This document does not cover installation. You can verify the installation by running:
+</p>
+<pre class="code">libgeda-config --version
+gesym-config --version
+which gnetlist
+ldd `which gnetlist`</pre>
+
+<p>
+The first two should return the version of the installed tools (libgeda and the symbol library) and the next command should return the path to the <strong>gnetlist</strong> binary. The final command (only on Unix-like operating systems which include the ldd utility for listing dynamic dependencies of executable files or shared objects) will return which libraries are linked to <strong>gnetlist</strong>; all of the request libraries must be found for <strong>gnetlist</strong> to run. If these commands do not return the expected results, then most likely the gEDA tools are not installed properly. Please see the appropriate INSTALL docs (which came with the distribution) for more info on installing the gEDA tools.
+</p>
+
+</div>
+<!-- SECTION [2792-3759] -->
+<h2><a name="running_gnetlist" id="running_gnetlist">Running gnetlist</a></h2>
+<div class="level2">
+
+<p>
+It is very easy to run <strong>gnetlist</strong>. <strong>gnetlist</strong> is a pure command line interface so there is no pesky <acronym title="Graphical User Interface">GUI</acronym> to get in the way <img src="lib/images/smileys/icon_smile.gif" class="middle" alt=":-)" /> For a list of command line arguments please run <code>gnetlist -h</code>.<br/>
+ You need to specify the following two parameters to run gnetlists:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>-g pro</strong>c (this specifies which backend to run against the schematics)</div>
+</li>
+<li class="level1"><div class="li"> <strong>filename.sch</strong> (this specifies the schematic files)</div>
+</li>
+</ul>
+
+<p>
+ You can specify multiple schematics on the command line. The default filename for the generated netlist goes into &ldquo;<strong>output.net</strong>&rdquo; You can change this default location by using the <strong>-o filename</strong> option.<br/>
+ A few examples on running <strong>gnetlist</strong>: 
+</p>
+<pre class="code">gnetlist -g geda -o stack.net stack_1.sch</pre>
+
+<p>
+(output netlist (in <strong>stack.net</strong>) for <strong>stack_1.sch</strong> using the gEDA native format)
+</p>
+
+<p>
+There are also a few debugging flags. The first one is the <strong>-v</strong> flag which enables verbose mode. Verbose mode outputs a whole bunch of information on what <strong>gnetlist</strong> is doing as well a dump of the internal representation. The <strong>-i</strong> flag which puts <strong>gnetlist</strong> into a interactive mode is very useful in debugging scheme backends and typically is not used by the end user.<br/>
+ For a detailed list of command line arguments please see the <strong>gnetlist</strong> man page.
+</p>
+
+</div>
+<!-- SECTION [3760-5041] -->
+<h2><a name="schematic_symbol_requirements" id="schematic_symbol_requirements">Schematic / symbol requirements</a></h2>
+<div class="level2">
+
+<p>
+This section describes what schematics/symbols need to have to be usable with <strong>gnetlist</strong>. In order for <strong>gnetlist</strong> to work correctly, both the schematics and supporting symbols must be correct. Basically these requirements consist of attribute specification. Attributes are used through out the gEDA system to represent information. Attributes are the only way of adding information to components, nets, pins, etc... For more detailed information about the attributes mentioned in this document, please see the  <a href="geda_master_attributes_list.html" class="wikilink1" title="geda:master_attributes_list">Master Attributes List</a> document.
+</p>
+
+</div>
+<!-- SECTION [5042-5666] -->
+<h3><a name="symbol_requirements" id="symbol_requirements">Symbol requirements</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> All symbols must have a <code>device=</code> attribute.</div>
+</li>
+<li class="level1"><div class="li"> All pins must have the <code>pin#=#</code> attribute. This attribute will eventually change form, but for now it is required as <code>pin#=#</code></div>
+</li>
+<li class="level1"><div class="li"> All pin should also have a <code>pinlabel=</code> attribute.</div>
+</li>
+<li class="level1"><div class="li"> For symbols which are slotted you also need the <code>slot=</code> attribute, for each slot a <code>slot#=#</code> attribute, and the <code>numslots=#</code> attribute. Slotting will also change in the near future, but for now it should be specified as above.</div>
+</li>
+<li class="level1"><div class="li"> For any power/gnd/arbitrary you need to put <code>net=</code> attributes inside the symbol. See the netattrib.txt document for more info.</div>
+</li>
+<li class="level1"><div class="li"> You can supply default values for various parameters (this is dependent on which backend you use) by taking advantage of the attribute &ldquo;promotion&rdquo; mechanism. See below for more info as well as the gschem documentation.</div>
+</li>
+<li class="level1"><div class="li"> For symbols which you want the netlister to completely ignore use the <code>graphical=1</code> attribute</div>
+</li>
+<li class="level1"><div class="li"> For more tips on symbols, please see the <a href="http://geda.seul.org/wiki/geda:scg" class="wikilink1" title="geda:scg">Symbol Creation Guide</a>.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [5667-6712] -->
+<h3><a name="schematic_requirements" id="schematic_requirements">Schematic requirements</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Most importantly, every component you want to show up in a netlist must have a <code>refdes=</code> attribute. This is <strong>VERY</strong> important. <strong>gnetlist</strong> should warn you if you have a component which doesn&rsquo;t have a <code>refdes=</code>, but there have been bugs which do not cause this warning.</div>
+</li>
+<li class="level1"><div class="li"> You can label all nets using the <code>label=</code> attribute. You only need to attach this label to one net segment (of an electrically connected net) for all the net segments to inherit the label.</div>
+</li>
+<li class="level1"><div class="li"> You can have multiple schematics in a design (which is actually a confusing term since it means many different things to people). To use multiple schematics to create a single netlist, just specify them on the <strong>gnetlist</strong> command line.</div>
+</li>
+<li class="level1"><div class="li"> If you name nets the same, then these nets will be electrically connected. Same net names spawn all the specified schematics.</div>
+</li>
+<li class="level1"><div class="li"> There are quite a few issues that deal with hierarchy please see the hierarchy section below.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [6713-7689] -->
+<h3><a name="random_notes" id="random_notes">Random notes</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Attributes which are not attached to anything and are inside a symbol are &ldquo;promoted&rdquo; to the outside of the symbol when the symbol is placed inside a schematic (in gschem). These promoted attributes are always looked at/for first before going into the symbol. So, in other words, if there is an attribute with the same name is inside a symbol and attached to the outside of the instantiated component, then the outside attribute takes precedence.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [7690-8163] -->
+<h2><a name="hierarchy_support" id="hierarchy_support">Hierarchy Support</a></h2>
+<div class="level2">
+
+<p>
+TBA
+</p>
+
+</div>
+<!-- SECTION [8164-8198] -->
+<h2><a name="specific_backend_info" id="specific_backend_info">Specific backend info</a></h2>
+<div class="level2">
+
+<p>
+TBA
+</p>
+
+</div>
+<!-- SECTION [8199-8237] -->
+<h2><a name="scheme_backend_api" id="scheme_backend_api">Scheme backend API</a></h2>
+<div class="level2">
+
+<p>
+Please note that this section is still under construction. The information here should be correct, but it is not complete.
+</p>
+
+</div>
+<!-- SECTION [8238-8392] -->
+<h3><a name="overview1" id="overview1">Overview</a></h3>
+<div class="level3">
+
+<p>
+<strong>gnetlist</strong> operates by loading the schematic database from the .sch files, building an internal representation and then calling a function specific to the desired output netlist type which performs the actual netlisting. Each <strong>gnetlist</strong> backend is contained in a file called gnet-&lt;backend&gt;.scm. Where &lt;backend&gt; is the name of the particular backend. For example, gnet-switcap.scm contains the code used by &ldquo;gnetlist -g switcap&rdquo; and gnet-drc.scm contains the code used by &ldquo;gnetlist -g drc&rdquo;. The backends are written in the Scheme programming language. The particular implementation of scheme is guile which stands for GNU&rsquo;s Ubiquitous Intelligent Language for Extensions. More information about guile may be found at <a href="http://www.gnu.org/software/guile/guile.html" class="urlextern" title="http://www.gnu.org/software/guile/guile.html"  rel="nofollow">http://www.gnu.org/software/guile/guile.html</a>.
+</p>
+
+</div>
+<!-- SECTION [8393-9182] -->
+<h3><a name="entry_point" id="entry_point">Entry Point</a></h3>
+<div class="level3">
+
+<p>
+Each netlist backend is required to provide a function whose name matches the netlist type. For example, the switcap backend contained in gnet-switcap.scm must provide a function called &ldquo;switcap&rdquo;. That is the function which <strong>gnetlist</strong> will call to initiate the netlisting. The entry point function is given a single argument which is the filename for the output netlist. Typically the first thing a netlister does is to open the output file for writing.<br/>
+ The following excerpt from the switcap backend shows the start of the entry point function and shows the output file being opened. At the end of the function, the output file is closed. 
+</p>
+<pre class="code">;; ---------------------------------------
+;; Switcap netlist generation -- top level
+;; ---------------------------------------
+(define switcap
+  (lambda (output-filename)
+    (let ((port (open-output-file output-filename)))
+
+;; rest of netlisting goes here
+
+;; close the output file and return
+      (close-output-port port))))</pre>
+
+</div>
+<!-- SECTION [9183-10192] -->
+<h3><a name="initialization_of_the_backend" id="initialization_of_the_backend">Initialization of the Backend</a></h3>
+<div class="level3">
+
+<p>
+After opening the output netlist, any specific initializations which must be done for the particular netlist are done. In the switcap example, we must initialize a net name and reference designator (refdes) aliasing database. This is because switcap has more restrictive requirements on its net names than gschem does. In addition, the reference designators in a switcap netlist have special requirements. To deal with this situation, <strong>gnetlist</strong> provides some general purpose functions which rename nets and reference designators to comply with the target netlist requirements. More details on this later. For now, just note that the switcap backend uses the following code:
+</p>
+<pre class="code">;; initialize the net-name aliasing
+(gnetlist:build-net-aliases switcap:map-net-names
+    all-unique-nets)
+
+;; initialize the refdes aliasing
+(gnetlist:build-refdes-aliases switcap:map-refdes
+    packages)</pre>
+
+<p>
+The other initialization which is typically done, although not required by all netlist types, is to output some sort of header. This header may be explicitly contained in the entry point function or it may be contained in its own function for code clarity. In the switcap backend, the call is:
+</p>
+<pre class="code">(switcap:write-top-header port)</pre>
+
+<p>
+Note that the convention is for any backend specific functions to have their names prefixed by the backend name. For example all switcap specific functions begin with &ldquo;switcap:&rdquo;. Functions which are available to all backends and provided by <strong>gnetlist</strong> are prefixed by &ldquo;gnetlist:&rdquo;.<br/>
+ The definition of &ldquo;switcap:write-top-header&rdquo; is 
+</p>
+<pre class="code">;;
+;; Switcap netlist header
+;;
+(define switcap:write-top-header
+  (lambda (port)
+    (display
+      &quot;/* Switcap netlist produced by gnetlist (part of gEDA) */\n&quot;
+      port)
+    (display
+      &quot;/* See http://www.geda.seul.org for more information. */\n&quot;
+      port)
+    (display
+      &quot;/* Switcap backend written by Dan McMahill            */\n&quot;
+      port)
+    (display &quot;\n\n&quot; port)
+    )
+  )</pre>
+
+<p>
+The entry point function continues by calling functions for each section in the output netlist. The variable &ldquo;packages&rdquo; is predefined by <strong>gnetlist</strong> to be a list of all components in the design and &ldquo;all-unique-nets&rdquo; is a list of all the nets in the design. The various functions used by the backend for each section in the netlist will use these variables. For example, the main part of the switcap netlist which contains the components and their connectivity is written to the output file with 
+</p>
+<pre class="code">(switcap:write-netlist port packages)</pre>
+
+</div>
+<!-- SECTION [10193-12761] -->
+<h3><a name="net_name_and_reference_designator_aliasing" id="net_name_and_reference_designator_aliasing">Net Name and Reference Designator Aliasing</a></h3>
+<div class="level3">
+
+<p>
+It is common for a target netlist type to have a more restrictive requirement for the net names than gschem does. For example, there may be restrictions on length, allowed characters, or case. To address this issue, <strong>gnetlist</strong> provides a net name aliasing feature. To use this feature, the function &ldquo;gnetlist:build-netaliases&rdquo; is called as part of the initialization section of the entry point function.<br/>
+ For example in the switcap backend, 
+</p>
+<pre class="code">;; initialize the net-name aliasing
+(gnetlist:build-net-aliases switcap:map-net-names
+    all-unique-nets)</pre>
+
+<p>
+The function &ldquo;switcap:map-net-names&rdquo; is a backend specific (switcap in this case) function which accepts a gschem net name as an argument and returns a modified net name which meets the requirements for the output netlist format. In the case of switcap, the requirement is ground must be called &ldquo;0&rdquo;, nets may have no more than 7 characters, and the netlist is not case sensitive. 
+</p>
+<pre class="code">;; This procedure takes a net name as determined by
+;; gnetlist and modifies it to be a valid SWITCAP net name.
+;;
+(define switcap:map-net-names
+  (lambda (net-name)
+    (let ((rx (make-regexp &quot;^unnamed_net&quot;))
+          (net-alias net-name)
+          )
+      ;; XXX we should use a dynamic regexp based on the
+      ;; current value for the unnamed net base string.
+
+      (cond
+       ;; Change &quot;GND&quot; to &quot;0&quot;
+       ((string=? net-name &quot;GND&quot;) (set! net-alias &quot;0&quot;))
+       ;; remove the 'unnamed_net' part
+       ((regexp-exec rx net-name)
+           (set! net-alias (substring net-name 11)))
+       (else net-name)
+       )
+
+      ;; Truncate to 7 characters
+      (if (&gt; (string-length net-alias) 7)
+          (set! net-alias (substring net-alias 0 7))
+          )
+
+  ;; Convert to all upper case
+  (string-upcase net-alias)
+
+  )
+ )
+)</pre>
+
+<p>
+The function &ldquo;gnetlist:build-net-aliases&rdquo; creates a database which later on lets you look up the output net name from the gschem net name or the gschem net name from the output net name. In addition it does the very important task of ensuring that no shorts are created by modifying the net names. As an example suppose you had a net called &ldquo;MyNet&rdquo; and another called &ldquo;mynet&rdquo; in the schematic. Those are unique but after converting both to upper case they become a single net. &ldquo;gnetlist:build-net-aliases&rdquo; will detect this condition and issue an error and stop netlisting.<br/>
+ Now that the database has been initialized, the netlister simply uses 
+</p>
+<pre class="code">(gnetlist:alias-net somenet)</pre>
+
+<p>
+to retrive the netlist net name from the gschem net name.<br/>
+ A similar set of functions are provided for reference designator aliasing.
+</p>
+
+</div>
+<!-- SECTION [12762-15433] -->
+<h3><a name="debugging_hints" id="debugging_hints">Debugging Hints</a></h3>
+<div class="level3">
+
+<p>
+A useful debugging tool is to run <strong>gnetlist</strong> in interactive mode. This is done by using the &ldquo;-i&rdquo; option to <strong>gnetlist</strong>. This will give you a shell where you may enter scheme commands. This provides a simple way to examine various variables and try out various functions.<br/>
+ An example of running <strong>gnetlist</strong> in interactive mode is shown below. 
+</p>
+<pre class="code">% gnetlist -i ../../gnetlist/examples/switcap/*.sch
+gEDA/gnetlist version 20041228
+gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.
+This is free software, and you are welcome to redistribute it under certain
+conditions; please see the COPYING file for more details.
+
+Loading schematic [../../gnetlist/examples/switcap/analysis.sch]
+Loading schematic [../../gnetlist/examples/switcap/ckt.sch]
+Loading schematic [../../gnetlist/examples/switcap/clocks.sch]
+gnetlist&gt; all-unique-nets
+  (&quot;unnamed_net6&quot; &quot;unnamed_net5&quot; &quot;unnamed_net4&quot; &quot;OUT&quot; &quot;unnamed_net3&quot;
+   &quot;unnamed_net2&quot; &quot;unnamed_net1&quot; &quot;GND&quot;)
+  gnetlist&gt; packages
+  (&quot;TIMING&quot; &quot;CLK1&quot; &quot;S7&quot; &quot;S8&quot; &quot;S6&quot; &quot;S5&quot; &quot;C3&quot; &quot;S4&quot; &quot;C2&quot; &quot;C1&quot; &quot;E1&quot; &quot;S3&quot;
+   &quot;S1&quot; &quot;V1&quot; &quot;S2&quot; &quot;OPTIONS&quot; &quot;TITLE&quot; &quot;ANA1&quot;)
+  gnetlist&gt; (quit)
+  %</pre>
+
+</div>
+<!-- SECTION [15434-] --></div>
+</body>
+</html>

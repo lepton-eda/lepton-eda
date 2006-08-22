@@ -1,0 +1,442 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>geda:pcb-quick_reference</title>
+  <meta name="generator" content="DokuWiki Release 2006-03-09" />
+  <link rel="start" href="http://geda.seul.org/wiki/" />
+  <link rel="contents" href="http://geda.seul.org/wiki/geda:pcb-quick_reference?do=index" title="" />
+  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:pcb-quick_reference?do=export_xhtml" />
+  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:pcb-quick_reference?do=export_raw" />
+  <meta name="date" content="2006-05-08T16:35:30-0400" />
+  <meta name="robots" content="index,follow" />
+  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
+  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+</head>
+<body>
+<div class="dokuwiki export">
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#pcbquick_reference" class="toc">PCB: Quick Reference</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#key_mapping" class="toc">Key Mapping</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#pcb_keystrokes" class="toc">PCB Keystrokes</a></span></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><span class="li"><a href="#viewport_keystrokes" class="toc">Viewport Keystrokes</a></span></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><span class="li"><a href="#footprint_reference" class="toc">Footprint Reference</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#general_syntax" class="toc">General syntax</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#elements" class="toc">Elements</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#pads" class="toc">Pads</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#pins" class="toc">Pins</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#examples" class="toc">Examples</a></span></div></li></ul>
+</li></ul>
+</div>
+</div>
+
+<h1><a name="pcbquick_reference" id="pcbquick_reference">PCB: Quick Reference</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION [1-35] -->
+<h2><a name="key_mapping" id="key_mapping">Key Mapping</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION [36-59] -->
+<h3><a name="pcb_keystrokes" id="pcb_keystrokes">PCB Keystrokes</a></h3>
+<div class="level3">
+<table class="inline">
+	<tr>
+		<th class="centeralign">  KEY 	</th><th class="centeralign">  MNEMONIC  </th><th class="centeralign">  DESCRIPTION  </th>
+	</tr>
+	<tr>
+		<td class="centeralign">  space  </td><td class="centeralign">  select  </td><td class="leftalign">enter select mode  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  esc  </td><td class="centeralign">  panner  </td><td class="leftalign">enter panning mode  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  tab  </td><td class="centeralign">  flip view  </td><td class="leftalign">view: flip board  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-del  </td><td class="centeralign">  del-cu  </td><td class="leftalign">deletes electrically connected copper (including power and signal planes)  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  \  </td><td class="centeralign">  thin-draw on/off  </td><td class="leftalign">toggles thin draw mode  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-alt-a  </td><td class="centeralign">  unselect  </td><td class="leftalign">clear selection  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  b  </td><td class="centeralign">  to other side  </td><td class="leftalign">flip object to the other side of the board  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-b  </td><td class="centeralign">  flip view  </td><td class="leftalign">view: flip board  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  c  </td><td class="centeralign">  center  </td><td class="leftalign">view: center display at cursor position  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  ctrl-c  </td><td class="centeralign">  copy to buffer  </td><td class="leftalign">copy selection to buffer and unselect  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  d  </td><td class="centeralign">  display name  </td><td class="leftalign">display pin or pad name  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-d  </td><td class="centeralign">  pinout dialog  </td><td class="leftalign">open pinout window for element under mouse cursor  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  e  </td><td class="centeralign">  extinguish rats  </td><td class="leftalign">delete all rats  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-e  </td><td class="centeralign">  eliminate some rats  </td><td class="leftalign">delete selected rats  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  f  </td><td class="centeralign">  find connections  </td><td class="leftalign">highlight connections to object under mouse cursor  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-f  </td><td class="centeralign">  no find-connections  </td><td class="leftalign">un-highlight found connections  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  g  </td><td class="centeralign">  increase grid  </td><td class="leftalign">increment grid by configured grid increment  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-g  </td><td class="centeralign">  decrease grid  </td><td class="leftalign">decrement grid by configured grid increment  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  h  </td><td class="centeralign">  hide  </td><td class="leftalign">toggle the visiblity of the refdes or value attached to the current component  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  ctrl-h  </td><td class="centeralign">  holeplate  </td><td class="leftalign">toggle plating of a via. Used to produce non metalized mounting holes  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  k  </td><td class="centeralign">  klearance  </td><td class="leftalign">increment clearance (soldermask to copper edge)  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-k  </td><td class="centeralign">  klear (-)  </td><td class="leftalign">decrement clearance (soldermask to copper edge (NOTE: can go negative!))  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  m  </td><td class="centeralign">  move to layer  </td><td class="leftalign">move the object under the cursor to the current layer  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-m  </td><td class="centeralign">  move selection to layer  </td><td class="leftalign">move selected objects to the current working layer (see <a href="http://geda.seul.org/wiki/geda:pcb_tips#how_do_i_move_one_set_of_layer_tracks_to_another_layer" class="wikilink1" title="geda:pcb_tips">pcb tip</a>)  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  n  </td><td class="centeralign">  name  </td><td class="leftalign">show object refdes / pin number (depends on what’s selected)  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-p  </td><td class="centeralign">  polygon close  </td><td class="leftalign">connect the first point of a polygon with the last  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  q  </td><td class="centeralign">  square toggle  </td><td class="leftalign">toggle square/round corners on pads  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  ctrl-r  </td><td class="centeralign">  report  </td><td class="leftalign">show object report  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  s  </td><td class="centeralign">  size  </td><td class="leftalign">increment size  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-s  </td><td class="centeralign">  size (-)  </td><td class="leftalign">decrement size  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  alt-s  </td><td class="centeralign">  sizehole  </td><td class="leftalign">increase the hole size  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  alt-shift-s  </td><td class="centeralign">  sizehole (-)  </td><td class="leftalign">decrease the hole size  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  ctrl-s  </td><td class="centeralign">  sizehole  </td><td class="leftalign">increase the hole size  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  ctrl-shift-s  </td><td class="centeralign">  sizehole (-)  </td><td class="leftalign">decrease the hole size  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  v  </td><td class="centeralign">  view extents  </td><td class="leftalign">global view of working area  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  z  </td><td class="centeralign">  zoom  </td><td class="leftalign">view: zoom in  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-z  </td><td class="centeralign">  un-zoom  </td><td class="leftalign">view: zoom out  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  F1  </td><td class="rightalign">    </td><td class="leftalign">via	tool  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  F2  </td><td class="centeralign">  line  </td><td class="leftalign">tool  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  F3  </td><td class="centeralign">  arc  </td><td class="leftalign">tool  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  F4  </td><td class="centeralign">  text  </td><td class="leftalign">tool  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  F5  </td><td class="centeralign">  rectangle  </td><td class="leftalign">tool  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  F6  </td><td class="centeralign">  polygon  </td><td class="leftalign">tool  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  F7  </td><td class="rightalign">  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  F8  </td><td class="rightalign">  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  F9  </td><td class="centeralign">  rotate  </td><td class="leftalign">rotate mode  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  F10  </td><td class="centeralign">  file menu  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  F11  </td><td class="centeralign">  select  </td><td class="leftalign">enter select mode (same as [space])  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  F12  </td><td class="rightalign">  </td><td class="rightalign">  </td>
+	</tr>
+</table>
+<br />
+
+</div>
+<!-- SECTION [60-2923] -->
+<h2><a name="viewport_keystrokes" id="viewport_keystrokes">Viewport Keystrokes</a></h2>
+<div class="level2">
+<table class="inline">
+	<tr>
+		<th class="centeralign">  KEY  </th><th class="centeralign">  MNEMONIC  </th><th class="centeralign">  DESCRIPTION  </th>
+	</tr>
+	<tr>
+		<td class="centeralign">  esc  </td><td class="centeralign">  panner  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  v  </td><td class="centeralign">  view extents  </td><td>global view of working area</td>
+	</tr>
+	<tr>
+		<td class="centeralign">  c  </td><td class="centeralign">  center  </td><td>centers view on cursor</td>
+	</tr>
+	<tr>
+		<td class="centeralign">  z  </td><td class="centeralign">  zoom  </td><td>zoom in</td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-z  </td><td class="centeralign">  un-zoom  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  \  </td><td class="centeralign">  thin-draw on/off  </td><td>toggles thin draw mode</td>
+	</tr>
+	<tr>
+		<td class="centeralign">  tab  </td><td class="centeralign">  flip view  </td><td>flip board</td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-b  </td><td class="centeralign">  flip view  </td><td>flip board</td>
+	</tr>
+</table>
+<br />
+
+</div>
+<!-- SECTION [2924-3297] -->
+<h1><a name="footprint_reference" id="footprint_reference">Footprint Reference</a></h1>
+<div class="level1">
+
+<p>
+The Master document for footprint creation is the <a href="http://pcb.sourceforge.net/index.html#dir" class="urlextern" title="http://pcb.sourceforge.net/index.html#dir"  rel="nofollow">PCB Manual</a>. There is also Stuart Brorson’s <a href="http://www.brorson.com/gEDA/land_patterns_20050129.pdf" class="urlextern" title="http://www.brorson.com/gEDA/land_patterns_20050129.pdf"  rel="nofollow">Footprint Creation for the Open-Source Layout Program PCB</a>.
+</p>
+
+</div>
+<!-- SECTION [3298-3591] -->
+<h2><a name="general_syntax" id="general_syntax">General syntax</a></h2>
+<div class="level2">
+
+<p>
+A pcb footprint file may contain any of the following commands:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong><code>Element [element_flags, description, pcb-name, value, mark_x, mark_y, text_x, text_y, text_direction, text_scale, text_flags]</code></strong></div>
+</li>
+<li class="level1"><div class="li"> <strong><code>Pad [x1 y1 x2 y2 thickness clearance mask name pad_number flags]</code></strong></div>
+</li>
+<li class="level1"><div class="li"> <strong><code>Pin [x y thickness clearance mask drillholedia name number flags]</code></strong></div>
+</li>
+<li class="level1"><div class="li"> <strong><code>ElementArc [x y r1 r2 startangle sweepangle thickness]</code></strong></div>
+</li>
+<li class="level1"><div class="li"> <strong><code>ElementLine [x1 y1 x2 y2 thickness] –&gt; thickness != 1000 = 10 mils almost for all footprints</code></strong></div>
+</li>
+<li class="level1"><div class="li"> Comment lines start with the ‘<strong><code>#</code></strong>’-sign</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [3592-4204] -->
+<h2><a name="elements" id="elements">Elements</a></h2>
+<div class="level2">
+
+<p>
+<strong><code>Element [element_flags, description, pcb-name, value, mark_x, mark_y, text_x, text_y, text_direction, text_scale, text_flags]</code></strong> 
+</p>
+<table class="inline">
+	<tr>
+		<th class="centeralign">  item  </th><th class="centeralign">  allowed value  </th><th class="centeralign">  explanation  </th><th class="centeralign">  comment  </th>
+	</tr>
+	<tr>
+		<td class="centeralign">  element_flags  </td><td class="centeralign">  unsigned hex value  </td><td class="rightalign">  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  description  </td><td class="centeralign">  string  </td><td class="centeralign">  text description of footprint  </td><td class="leftalign">written by footprint author  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  pcb name  </td><td class="centeralign">  string  </td><td class="centeralign">  refdes used on this particular pcb  </td><td class="leftalign">xxx  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  value  </td><td class="centeralign">  string  </td><td class="centeralign">  value of component on this particular pcb layout  </td><td class="leftalign">xxx  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  mark_x  </td><td class="centeralign">  1/100th mils  </td><td class="rightalign">  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  mark_y  </td><td class="centeralign">  1/100th mils  </td><td class="rightalign">  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  text_x  </td><td class="centeralign">  1/100th mils  </td><td class="rightalign">  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  text_y  </td><td class="centeralign">  1/100th mils  </td><td class="rightalign">  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  text direction  </td><td class="centeralign">  decimal integer  </td><td class="centeralign">  0=horiz; 1=ccw90; 2=180; 3=cw90  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  text_scale  </td><td class="centeralign">  decimal integer  </td><td class="rightalign">  </td><td class="leftalign">usu. set 100  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  text_flags  </td><td class="centeralign">  unsigned hex  </td><td class="rightalign">  </td><td class="rightalign">  </td>
+	</tr>
+</table>
+<br />
+
+</div>
+<!-- SECTION [4205-5032] -->
+<h2><a name="pads" id="pads">Pads</a></h2>
+<div class="level2">
+
+<p>
+<strong><code>Pad[x1 y1 x2 y2 thickness clearance mask name pad_number flags]</code></strong> 
+</p>
+<table class="inline">
+	<tr>
+		<th class="centeralign">  Item  </th><th class="centeralign">  Allowed Value  </th><th class="centeralign">  Explanation  </th><th class="centeralign">  Comment  </th>
+	</tr>
+	<tr>
+		<td class="centeralign">  x1  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  x(1st point)  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  y1  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  y(1st point)  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  x2  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  x(2nd point)  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  y2  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  y(2nd point)  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  thickness  </td><td class="centeralign">  1/100 mils  </td><td class="centeralign">  width of metal surrounding line segment  </td><td class="leftalign">see Brorson .pdf  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  clearance  </td><td class="centeralign">  1/100 mils  </td><td class="centeralign">  distance to any other copper on any layer  </td><td class="leftalign">actually 1/2 of this number is used!  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  mask  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  width of mask relief  </td><td class="leftalign">actual width of the mask centered on pad copper  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  name  </td><td class="centeralign">  string  </td><td class="centeralign">  name of pad (arb. string)  </td><td class="leftalign">e.g. “pad_1” or “positive” or any other string  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  pad_number  </td><td class="centeralign">  string  </td><td class="centeralign">  pad #  </td><td class="leftalign">used for nets. it MUST be consistent with the definitions on the netlist.  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  flags  </td><td class="centeralign">  hex value  </td><td class="centeralign">  xxx  </td><td class="rightalign">  </td>
+	</tr>
+</table>
+<br />
+
+</div>
+<!-- SECTION [5033-5937] -->
+<h2><a name="pins" id="pins">Pins</a></h2>
+<div class="level2">
+
+<p>
+<strong><code>Pin[x y thickness clearance mask drillholedia name number flags]</code></strong> 
+</p>
+<table class="inline">
+	<tr>
+		<th class="centeralign">  Item  </th><th class="leftalign"> Allowed Value  </th><th class="centeralign">  Explanation  </th><th class="centeralign">  Comment  </th>
+	</tr>
+	<tr>
+		<td class="centeralign">  x  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  pin x coord.  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  y  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  pin y coord.  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  thickness  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  copper diameter  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  clearance  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  2*(cu to cu clearance)  </td><td class="leftalign">if you want a 10 mil clearance, put 2000 (20 mils) here  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  mask  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  diameter of mask aperture  </td><td class="leftalign">actual dia. of hole in mask  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  drillholedia  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  dia. of hole  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  name  </td><td class="centeralign">  string  </td><td class="centeralign">  arb. pin name  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  number  </td><td class="centeralign">  decimal integer  </td><td class="centeralign">  pin number used by nets/rats  </td><td class="rightalign">  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  flags  </td><td class="centeralign">  hex  </td><td class="centeralign">  xxx  </td><td class="rightalign">  </td>
+	</tr>
+</table>
+<br />
+
+</div>
+<!-- SECTION [5938-6636] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <strong><code>Pad[-24606 14760 -19538 14760 1181 2000 3181 “” “16” “square”]</code></strong></div>
+</li>
+<li class="level1"><div class="li"> <strong><code>Pad[-14760 19538 -14760 24606 1181 2000 3181 “” “17” “square,edge2”]</code></strong></div>
+</li>
+<li class="level1"><div class="li"> <strong><code>Pin[0 0 12000 2000 12500 6400 “” “1” 0×00000001]</code></strong></div>
+</li>
+<li class="level1"><div class="li"> <strong><code>ElementArc [0 0 6800 6800 0 360 1000]</code></strong></div>
+</li>
+<li class="level1"><div class="li"> <strong><code>ElementLine [-26696 -26696 26696 -26696 1000]</code></strong></div>
+</li>
+<li class="level1"><div class="li"> <strong><code># notes within PCB Footprints go after the pound sign</code></strong></div>
+</li>
+</ul>
+
+<p>
+ <span class="hilited">This page is new, it is not complete, post comments/additions to geda-user w/ title “PCB Quick Reference”. Remember, subscribe to geda-user before you post to the geda-user e-mail list.</span>
+</p>
+
+</div>
+<!-- SECTION [6637-] --></div>
+</body>
+</html>

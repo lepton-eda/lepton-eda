@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>geda:gtkwave_lxt2vcd_mp</title>
+  <meta name="generator" content="DokuWiki Release 2006-03-09" />
+  <link rel="start" href="http://geda.seul.org/wiki/" />
+  <link rel="contents" href="http://geda.seul.org/wiki/geda:gtkwave_lxt2vcd_mp?do=index" title="" />
+  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:gtkwave_lxt2vcd_mp?do=export_xhtml" />
+  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:gtkwave_lxt2vcd_mp?do=export_raw" />
+  <meta name="date" content="2006-05-07T17:15:23-0400" />
+  <meta name="robots" content="index,follow" />
+  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
+  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+<h1><a name="coverts_lxt2_files_to_vcd_lxt2vcd" id="coverts_lxt2_files_to_vcd_lxt2vcd">Coverts LXT2 files to VCD (lxt2vcd)</a></h1>
+<div class="level1">
+<pre class="code">LXT2VCD(1)		      Filetype Conversion		    LXT2VCD(1)
+
+
+
+NAME
+       lxt2vcd - Coverts LXT2 files to VCD
+
+SYNTAX
+       lxt2vcd &lt;filename&gt;
+
+DESCRIPTION
+       Converts	 LXT2  files to VCD files on stdout.  Note that &quot;regular&quot; LXT2
+       files will convert to VCD files with monotonically increasing time val-
+       ues.   LXT2  files which are dumped with the &quot;partial&quot; option (to speed
+       up access in wave viewers) will dump with monotonically increasing time
+       values  per  2k	block of nets.	This may be fixed in later versions of
+       lxt2vcd.
+
+EXAMPLES
+       To run this program the standard way type:
+
+       lxt2vcd filename.lxt
+	      The VCD conversion is emitted to stdout.
+
+LIMITATIONS
+       lxt2vcd does not re-create glitches as  these  are  coalesced  together
+       into one value change during the writing of the LXT2 file.
+
+
+AUTHORS
+       Anthony Bybell &lt;bybell@nc.rr.com&gt;
+
+SEE ALSO
+       vcd2lxt2(1) vcd2lxt(1) gtkwave(1)
+
+
+
+Anthony Bybell			    1.3.34			    LXT2VCD(1)</pre>
+
+</div>
+</div>
+</body>
+</html>
