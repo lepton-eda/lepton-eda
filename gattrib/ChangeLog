@@ -1,3 +1,9 @@
+2006-08-21   SDB <sdb@cloud9.net>
+
+        * include/prototype.h, src/s_table.c, src/s_toplevel.c: Fixed
+	bug in which adding a new attrib column would munge the 
+	visibility of existing attributes.
+
 2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * README: Updated the README a little to be ready for the next

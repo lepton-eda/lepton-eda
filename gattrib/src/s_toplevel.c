@@ -271,6 +271,7 @@ void s_toplevel_menubar_edit_newattrib()
  *------------------------------------------------------------------*/
 void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
   gint cur_page;  /* current page in notbook  */
+  gint old_comp_attrib_count;
 
   if (strcmp(new_attrib_name, "_cancel") == 0) {
     return;  /* user pressed cancel or closed window with no value in entry */
@@ -290,12 +291,14 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
      *  new attrib.  However, that is difficult.  Therefore, I will just
      *  destroy the old table and recreate it for now. */
 
+    /* 
     s_table_destroy(sheet_head->component_table, 
 		    sheet_head->comp_count, sheet_head->comp_attrib_count);
-
+    */
+    old_comp_attrib_count = sheet_head->comp_attrib_count;
 #ifdef DEBUG 
-    printf("In s_toplevel_menubar_edit_newattrib, before adding new comp attrib.\n");
-    printf("                           comp_attrib_count = %d\n", sheet_head->comp_attrib_count);
+    printf("In s_toplevel_add_new_attrib, before adding new comp attrib.\n");
+    printf("                           comp_attrib_count = %d\n", old_comp_attrib_count);
 #endif
 
     s_string_list_add_item(sheet_head->master_comp_attrib_list_head, 
@@ -304,13 +307,24 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
     s_string_list_sort_master_comp_attrib_list();
 
 #ifdef DEBUG
-    printf("In s_toplevel_menubar_edit_newattrib, just updated comp_attrib string list.\n");
+    printf("In s_toplevel_add_new_attrib, just updated comp_attrib string list.\n");
     printf("                             new comp_attrib_count = %d\n", sheet_head->comp_attrib_count);
 #endif
 
     /* Now create new table */
-    sheet_head->component_table = s_table_new(sheet_head->comp_count, 
+    /*     sheet_head->component_table = s_table_new(sheet_head->comp_count, 
 					      sheet_head->comp_attrib_count);
+    */
+
+    /* resize table to accomodate new attrib col */
+    sheet_head->component_table = 
+      s_table_resize(sheet_head->component_table, 
+		     sheet_head->comp_count, 
+		     old_comp_attrib_count, sheet_head->comp_attrib_count);
+
+#ifdef DEBUG
+    printf("In s_toplevel_add_new_attrib, just resized component table.\n");
+#endif
 
     /* Fill out new sheet with new stuff from gtksheet */
     gtk_sheet_insert_columns(GTK_SHEET(sheets[0]), sheet_head->comp_attrib_count, 1);
@@ -319,7 +333,7 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
 			      sheet_head->master_comp_attrib_list_head);
 
 #ifdef DEBUG
-    printf("In s_toplevel_menubar_edit_newattrib, just updated gtksheet.\n");
+    printf("In s_toplevel_add_new_attrib, just updated gtksheet.\n");
 #endif
 
     break;
@@ -707,7 +721,8 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   ATTRIB *a_current;
   int count = 0;  /* This is to fake out a fcn called later */
   gint row, col;
-  gint visibility, show_name_value;
+  gint visibility;
+  gint show_name_value;
 
 #if DEBUG
   printf("-----  Entering s_toplevel_update_component_attribs_in_toplevel.\n");
@@ -761,6 +776,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   while (local_list != NULL) {
 
 #if DEBUG
+    printf("\n\n");
   printf("        In s_toplevel_update_component_attribs_in_toplevel, handling entry in complete list %s .\n", 
 	 local_list->data);
 #endif
@@ -797,8 +813,13 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   refdes = g_strdup(s_attrib_get_refdes(o_current));
   row = s_table_get_index(sheet_head->master_comp_list_head, refdes);
   col = s_table_get_index(sheet_head->master_comp_attrib_list_head, new_attrib_name);
-  visibility = sheet_head->component_table[row][col].visibility;
-  show_name_value = sheet_head->component_table[row][col].show_name_value;
+  /* if attribute has been deleted from the sheet, here is where we detect that */
+  if ( (row == -1) || (col == -1) ) {
+    new_attrib_value = NULL;  /* attrib will be deleted below */
+  } else { /* we need a better place to get this info since the TABLE can be out of date */
+    visibility = sheet_head->component_table[row][col].visibility;
+    show_name_value = sheet_head->component_table[row][col].show_name_value;
+  }
   g_free(refdes);
 
 
@@ -806,8 +827,11 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
     if ( (old_attrib_value != NULL) && (new_attrib_value != NULL) && (strlen(new_attrib_value) != 0) ) {
       /* simply write new attrib into place of old one. */
 #if DEBUG
-      printf("     -- In s_toplevel_update_component_attribs_in_toplevel, about to replace old attrib with name= %s, value= %s\n",
-	     new_attrib_name, new_attrib_value);
+      printf("     -- In s_toplevel_update_component_attribs_in_toplevel,\n");
+      printf("               about to replace old attrib with name= %s, value= %s\n", 
+	                new_attrib_name, new_attrib_value);
+      printf("               visibility = %d, show_name_value = %d.\n",
+	     visibility, show_name_value);
 #endif
       s_object_replace_attrib_in_object(o_current, 
 					new_attrib_name, 

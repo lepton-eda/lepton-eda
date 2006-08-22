@@ -85,43 +85,40 @@ TABLE **s_table_new(int rows, int cols)
 
 }
 
-#if 0
+
 /*------------------------------------------------------------------
- * This fcn recreates the table with a new size
+ * This fcn recreates the table with a new size.  It can only increase
+ * the number of cols.  You can't increase the number of rows since
+ * gattrib doesn't allow you to input new components.  Decreasing the 
+ * number of cols is also TBD.
  *------------------------------------------------------------------*/
 TABLE **s_table_resize(TABLE **table, 
-		       int old_rows, int old_cols, int new_rows, int new_cols)
+		       int rows, int old_cols, int new_cols)
 {
   int i, j;
 
-  s_table_destroy(**table, old_rows, old_cols);
-
-  /* Here I am trying to create a 2 dimensional array of structs */
-  new_table = (TABLE **) g_malloc(new_rows*sizeof(TABLE *));
-  for (i = 0; i < new_rows; i++) {
-    new_table[i] = (TABLE *) g_malloc(new_cols * sizeof(TABLE));
-    /* Note that I should put some checks in here to verify that 
-     * malloc worked correctly. */
+  /* Here I am trying to resize the 2 dimensional array of structs */
+  for (i = 0; i < rows; i++) {
+    table[i] = (TABLE *) realloc(table[i], new_cols*sizeof(TABLE) );
+    if (table[i] == NULL) exit(-1);  /* die if failed to realloc new memory */
   }
 
-  /* Now pre-load the table with NULLs */
-  for (i = 0; i < new_rows; i++) {
-    for (j = 0; j < new_cols; j++) {
-      (new_table[i][j]).attrib_value = NULL;
-      (new_table[i][j]).row_name = NULL;
-      (new_table[i][j]).col_name = NULL;
-      (new_table[i][j]).row = i;
-      (new_table[i][j]).col = j;
-      (new_table[i][j]).visibility = VISIBLE;
-      (new_table[i][j]).show_name_value = SHOW_VALUE;
-      
+  /* Now pre-load new cols with NULLs */
+  for (i = 0; i < rows; i++) {
+    for (j = old_cols; j < new_cols; j++) {
+      (table[i][j]).attrib_value = NULL;
+      (table[i][j]).row_name = NULL;
+      (table[i][j]).col_name = NULL;
+      (table[i][j]).row = i;
+      (table[i][j]).col = j;
+      (table[i][j]).visibility = VISIBLE;
+      (table[i][j]).show_name_value = SHOW_VALUE;
     }
   }
 
-  return (new_table);
-
+  return table;
 }
-#endif
+
 
 /*------------------------------------------------------------------
  * This fcn destroys the old table.  Use it after reading in a new
@@ -179,7 +176,7 @@ int s_table_get_index(STRING_LIST *local_list, char *local_string) {
     count++;
     list_element = list_element->next;
   }
-  exit(-1);  /* return code when string is not in master_list  */
+  return(-1);  /* return code when string is not in master_list  */
 }
 
 
@@ -568,7 +565,8 @@ void s_table_gtksheet_to_all_tables() {
   local_gtk_sheet = sheets[2];
   master_row_list = sheet_head->master_pin_list_head;
   master_col_list = sheet_head->master_pin_attrib_list_head;
-  local_table = s_table_new(num_rows, num_cols);
+  /*  local_table = s_table_new(num_rows, num_cols);  */
+  local_table = sheet_head->pin_table;
 
   s_table_gtksheet_to_table(local_gtk_sheet, master_row_list, 
 		       master_col_list, local_table,
@@ -600,7 +598,7 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
   gchar *attrib_value;
 
 #ifdef DEBUG
-      printf("**********    Entering s_table_update_table     ******************\n");
+      printf("**********    Entering s_table_gtksheet_to_table     ******************\n");
 #endif
 
 
@@ -624,11 +622,14 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
 
 
 #ifdef DEBUG
-      printf("In s_table_update_table, found attrib_value = %s in cell row=%d, col=%d\n", 
+      printf("In s_table_gtksheet_to_table, found attrib_value = %s in cell row=%d, col=%d\n", 
 	     attrib_value, row, col);
 #endif
 
       /* first handle attrib value in cell */
+#ifdef DEBUG
+      printf("     Updating attrib_value %s\n", attrib_value);
+#endif
       if ( local_table[row][col].attrib_value != NULL) {
 	g_free( local_table[row][col].attrib_value );
       }
@@ -639,6 +640,9 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
       }
 
       /* next handle name of row (also held in TABLE cell) */
+#ifdef DEBUG
+      printf("     Updating row_name %s\n", row_title);
+#endif
       if ( local_table[row][col].row_name != NULL) {
 	g_free( local_table[row][col].row_name );
       }
@@ -649,6 +653,9 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
       }
 
       /* finally handle name of col */
+#ifdef DEBUG
+      printf("     Updating col_name %s\n", col_title);
+#endif
       if ( local_table[row][col].col_name != NULL) {
 	g_free( local_table[row][col].col_name );
       }

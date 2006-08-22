@@ -67,6 +67,8 @@ void s_string_list_sort_master_pin_attrib_list();
 
 /* ------------- s_table.c ------------- */
 TABLE **s_table_new(int rows, int cols);
+TABLE **s_table_resize(TABLE **table,
+                       int rows, int old_cols, int new_cols);
 void s_table_destroy(TABLE **table, int row_count, int col_count);
 int s_table_get_index(STRING_LIST *list, char *string);
 STRING_LIST *s_table_create_attrib_pair(gchar *row_name, 
