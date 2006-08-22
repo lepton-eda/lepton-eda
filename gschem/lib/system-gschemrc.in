@@ -646,10 +646,10 @@
 ; command, does an action (move and copy (holding down the ALT key) 
 ; are supported) on a single objects, or if it does the mouse panning.
 ;
-(middle-button "action")
+(middle-button "mousepan")
+;(middle-button "action")
 ;(middle-button "stroke")
 ;(middle-button "repeat")
-;(middle-button "mousepan")
 
 ; third-button string
 ;
@@ -901,14 +901,14 @@
 ; There are different hooks for situations like adding a new pin, rotating
 ; or mirroring an existing one, or adding a new attribute.
 ; The #t at the end means that function is appended to the end of the hook.
-(add-hook! add-component-object-hook (lambda (object)
-	(autoplace-object-attributes object)) #t)
-(add-hook! rotate-component-object-hook (lambda (object)
-	(autoplace-object-attributes object)) #t)
-(add-hook! mirror-component-object-hook (lambda (object)
-	(autoplace-object-attributes object)) #t)
-(add-hook! add-attribute-hook (lambda (object)
-	(autoplace-object-attributes object)) #t)
+;(add-hook! add-component-object-hook (lambda (object)
+;	(autoplace-object-attributes object)) #t)
+;(add-hook! rotate-component-object-hook (lambda (object)
+;	(autoplace-object-attributes object)) #t)
+;(add-hook! mirror-component-object-hook (lambda (object)
+;	(autoplace-object-attributes object)) #t)
+;(add-hook! add-attribute-hook (lambda (object)
+;	(autoplace-object-attributes object)) #t)
 
 
 ;

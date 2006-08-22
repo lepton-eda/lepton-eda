@@ -1,3 +1,13 @@
+2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * README: Updated the README a little to be ready for the next
+        release.
+
+2006-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version number to 20060821 in prep for the
+        next gEDA/gaf release.
+
 2006-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Bumped package version to 20060123

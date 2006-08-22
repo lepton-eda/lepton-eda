@@ -2192,6 +2192,7 @@ void x_fileselect_setup_old (TOPLEVEL *w_current, int type, int filesel_type)
 
     /* need to delay this till the drawing area is created and
      * is showing */
+    f_current->preview_control = FALSE;
     gtk_signal_connect (GTK_OBJECT(f_current->preview_checkbox), 
                         "toggled", GTK_SIGNAL_FUNC(x_fileselect_preview_checkbox),
                         f_current);

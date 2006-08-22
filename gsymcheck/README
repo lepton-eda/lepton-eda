@@ -4,7 +4,7 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-README for gsymcheck version 2006* 
+README for gsymcheck
 
 
 - Installation
@@ -28,6 +28,17 @@ README for gsymcheck version 2006*
 
 
 
+- gEDA Internet resources
+
+        Homepage: http://geda.seul.org
+
+        Mailing lists: http://geda.seul.org/mailinglist
+
+        For any questions related to gEDA/gaf, please subscribe and post
+        to the "geda-user" mailing list.
+
+
+
 - Notes
  
 	* For anybody developing guile scripts using guile 1.6.x really should
@@ -36,10 +47,4 @@ README for gsymcheck version 2006*
 	  guile deprecated function warnings by default.
 
 
-
-- Contact information  
-
-	Ales Hvezda 
-	E-mail: ahvezda@geda.seul.org
-	Web: http://www.geda.seul.org/
 

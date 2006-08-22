@@ -1,3 +1,13 @@
+2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * README: Updated the README a little to be ready for the next
+        release.
+
+2006-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version number to 20060821 in prep for the
+        next gEDA/gaf release.
+
 2006-08-02 Mike Jarabek  <mjarabek@istop.com>
 
 	* src/convert_sym.c: Added power pin handling patch from 

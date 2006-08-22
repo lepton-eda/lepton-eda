@@ -4,7 +4,7 @@ AC_CONFIG_SRCDIR([src/gsymcheck.c])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-gsymcheck
-VERSION=20060123
+VERSION=20060821
 echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake 

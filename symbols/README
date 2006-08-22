@@ -4,7 +4,7 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-README for symbols version 2006* 
+README for symbols 
 
 
 - Installation
@@ -35,33 +35,11 @@ README for symbols version 2006*
 
 - gEDA Internet resources
 
-	Homepage: http://www.geda.seul.org
+        Homepage: http://geda.seul.org
 
-	Mailing list:
-		To subscribe send an email to: majordomo@geda.seul.org  
-	 	with   subscribe geda-user   in the body.
-		
-		To unsubscribe send an email to: majordomo@geda.seul.org
-	 	with   unsubscribe geda-user   in the body.
+        Mailing lists: http://geda.seul.org/mailinglist
 
-		To send email to the list use the address:
+        For any questions related to gEDA/gaf, please subscribe and post
+        to the "geda-user" mailing list.
 
-			geda-user@geda.seul.org
-
-		Remember, geda-user@geda.seul.org is for the actual traffic.  
-		For administrative commands, use majordomo@geda.seul.org.
-
-		The mailing list archive is at:
-
-			http://www.geda.seul.org/mailinglist 
-
-	Many thanks to the SEUL project for hosting gEDA!
-
-
-
-- Contact information  
-
-	Ales Hvezda 
-	E-mail: ahvezda@geda.seul.org
-	Web: http://www.geda.seul.org/
 

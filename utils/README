@@ -3,7 +3,7 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-README for misc utilities versions 2006*
+README for utilities 
 
 
 - Installation
@@ -238,16 +238,13 @@ README for misc utilities versions 2006*
         garchive is Copyright 2003 by Stuart Brorson
 
 
-- Contact information  
 
-	Jerry O'Keefe (for mk_sym)
-	E-mail: jerryok@pacbell.net
+- gEDA Internet resources
 
-	Mike Jarabek (for smash_megafile, convert_sym.awk, convert_sym.c)
-	E-mail: mjarabek@istop.com
+        Homepage: http://geda.seul.org
 
-	Ales Hvezda 
-	E-mail: ahvezda@geda.seul.org
-	Web: http://www.geda.seul.org/
+        Mailing lists: http://geda.seul.org/mailinglist
 
+        For any questions related to gEDA/gaf, please subscribe and post
+        to the "geda-user" mailing list.
 

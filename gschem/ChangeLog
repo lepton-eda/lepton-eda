@@ -1,3 +1,25 @@
+2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * README: Updated the README a little to be ready for the next
+        release.
+
+	* src/x_fileselect.c: Initialize preview_control to make valgrind
+	happy.  Pointed out by Peter Clifton.
+
+2006-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version number to 20060821 in prep for the
+        next gEDA/gaf release.
+
+	* lib/system-gschemrc.in: Commented out the "Autoplace component
+	text attributes hooks" since they were causing some interesting
+	rendering/ghosting artifacts.  These need to be fixed before
+	these hooks can be commented in by default.
+
+	* lib/system-gschemrc.in: Changed the middle mouse button default
+	to be mousepan instead of action, since the first button now supports
+	that functionality by default.
+
 2006-08-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_fileselect.c: Applied trival patch by Peter Brett to remove
