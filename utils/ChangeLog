@@ -1,3 +1,12 @@
+2006-08-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/config.sh.in: Removed unused environment variables that
+	were causing a warning from configure: config.status: WARNING:
+	scripts/config.sh contains a reference to the variable `datarootdir'
+
+	* scripts/Makefile.am: Added $(srcdir) to gschemdoc.sh to make 
+	distcheck happy.  Also misc cleanup.
+
 2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * README: Updated the README a little to be ready for the next

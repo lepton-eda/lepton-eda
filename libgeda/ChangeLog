@@ -1,3 +1,11 @@
+2006-08-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * src/Makefile.am: Removed old VPATH, since it is no longer needed
+        and it is interfering with make distcheck
+
+	* share/Makefile.am: Added prolog.ps to EXTRA_DIST to make distcheck
+	happy (and it was missing from the dist in general).
+
 2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * README: Updated the README a little to be ready for the next

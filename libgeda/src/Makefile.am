@@ -5,11 +5,6 @@
 # level Makefile.
 AUTOMAKE_OPTIONS = foreign
 
-INDENTBIN=      @INDENT@
-INDENTFLAG=     -kr -i2
-
-VPATH = ../include:src
-
 if CCISGCC
 AM_CFLAGS = -Wall
 endif

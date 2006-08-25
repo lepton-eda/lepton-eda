@@ -3,7 +3,6 @@
 # directory are distributed by the demo_distfiles variable in the top
 # level Makefile.
 #
-VPATH = ../include:src
 
 bin_PROGRAMS = gschem
 

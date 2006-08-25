@@ -4,7 +4,7 @@ AC_CONFIG_SRCDIR([src/gnetlist.c])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-gnetlist
-VERSION=20060821
+VERSION=20060824
 echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake 

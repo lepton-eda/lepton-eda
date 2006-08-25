@@ -2,7 +2,7 @@
 AC_INIT(configure.ac)
 
 PACKAGE=geda
-VERSION=20060821
+VERSION=20060824
 echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake 

@@ -1,3 +1,8 @@
+2006-08-22 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* scheme/Makefile.am: Added a couple files to the distclean and
+	maintainerclean rules to make distcheck happy.
+
 2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * README: Updated the README a little to be ready for the next

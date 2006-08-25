@@ -1652,14 +1652,16 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
   while (a_current != NULL) {
     OBJECT *o_attrib;
     gchar *name, *value;
+    char *attrfound;
     g_assert (a_current->object->type == OBJ_TEXT);
     o_attrib_get_name_value (a_current->object->text->string,
                              &name, &value);
-        
-    if (o_attrib_search_name (o_current, name, 0) == NULL) {
+
+    attrfound = o_attrib_search_name_single(o_current, name, NULL); 
+    if (attrfound == NULL) {
       /* attribute with same name not found in old component: */
       /* add new attribute to old component */
-            
+
       /* make a copy of the attribute object */
       o_list_copy_to (w_current, o_current,
                       a_current->object, NORMAL_FLAG, &o_attrib);
@@ -1673,6 +1675,11 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
       o_redraw_single (w_current, o_attrib);
       /* note: this object is unselected (not added to selection). */
     }
+    else
+    {
+      g_free(attrfound);
+    }
+
 
     a_current = a_current->next;
   }
@@ -1683,7 +1690,7 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
   s_conn_update_complex (w_current, o_current->complex->prim_objs);
   o_selection_select (o_current, SELECT_COLOR);
   o_redraw_single (w_current, o_current);
-    
+
   if (is_embedded) {
     /* we previously allocated memory for basename and clib */
     g_free (basename);

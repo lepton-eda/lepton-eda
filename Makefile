@@ -109,7 +109,8 @@ notarget:
 ##     of each program in the configure.ac in each directory.  In principle,
 ##     you can check that "make dist" worked by doing:
 ##  5. make distcheck
-##     however, "make distcheck" is broken right now.
+##     "make distcheck" will create a set of tarballs and untar, configure,
+##     compile and run make check in each directory.
 ##
 ##  Note that you need to have the autotools installed; if you are not a
 ##  developer or you don't know what the autotools are, you probably 
@@ -194,10 +195,10 @@ distcheck: libgeda_distcheck symbols_distcheck gschem_distcheck \
            gnetlist_distcheck gattrib_distcheck gsymcheck_distcheck \
 	   utils_distcheck docs_distcheck examples_distcheck 
 	mv -f libgeda/libgeda*.tar.gz .
-	mv -f symbols/symbols*.tar.gz .
+	mv -f symbols/geda-symbols*.tar.gz .
 	mv -f gschem/geda-gschem*.tar.gz .
 	mv -f gnetlist/geda-gnetlist*.tar.gz .
-	mv -f gnetlist/geda-gattrib*.tar.gz .
+	mv -f gattrib/geda-gattrib*.tar.gz .
 	mv -f gsymcheck/geda-gsymcheck*.tar.gz .
 	mv -f utils/geda-utils*.tar.gz .
 	mv -f docs/geda-docs*.tar.gz .
@@ -243,7 +244,8 @@ symbols_distconfig:
 symbols_dist: 
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} dist )
 
-symbols_distcheck: 
+symbols_distcheck: $(DIR_PREFIX)symbols$(CD_VERSION)/configure \
+	           $(DIR_PREFIX)symbols$(CD_VERSION)/Makefile
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} distcheck )
 
 # gschem
@@ -277,7 +279,8 @@ gschem_distconfig:
 gschem_dist: 
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION); ${MAKE} dist )
 
-gschem_distcheck: 
+gschem_distcheck: $(DIR_PREFIX)gschem$(CD_VERSION)/configure \
+		  $(DIR_PREFIX)gschem$(CD_VERSION)/config.h
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION); ${MAKE} distcheck )
 
 gschem_maint: $(DIR_PREFIX)gschem$(CD_VERSION)/config.h 
@@ -332,7 +335,8 @@ gnetlist_distconfig:
 gnetlist_dist: 
 	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); ${MAKE} dist )
 
-gnetlist_distcheck: 
+gnetlist_distcheck: $(DIR_PREFIX)gnetlist$(CD_VERSION)/configure \
+		    $(DIR_PREFIX)gnetlist$(CD_VERSION)/config.h 
 	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); ${MAKE} distcheck )
 
 # gattrib
@@ -375,7 +379,8 @@ gattrib_distconfig:
 gattrib_dist: 
 	( cd $(DIR_PREFIX)gattrib$(CD_VERSION); ${MAKE} dist )
 
-gattrib_distcheck: 
+gattrib_distcheck: $(DIR_PREFIX)gattrib$(CD_VERSION)/configure \
+		   $(DIR_PREFIX)gattrib$(CD_VERSION)/config.h
 	( cd $(DIR_PREFIX)gattrib$(CD_VERSION); ${MAKE} distcheck )
 
 # gsymcheck
@@ -406,7 +411,8 @@ gsymcheck_distconfig:
 gsymcheck_dist: 
 	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); ${MAKE} dist )
 
-gsymcheck_distcheck: 
+gsymcheck_distcheck: $(DIR_PREFIX)gsymcheck$(CD_VERSION)/configure \
+		     $(DIR_PREFIX)gsymcheck$(CD_VERSION)/config.h
 	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); ${MAKE} distcheck )
 
 gsymcheck_maint: $(DIR_PREFIX)gsymcheck$(CD_VERSION)/config.h 
@@ -449,7 +455,8 @@ utils_distconfig:
 utils_dist: 
 	( cd $(DIR_PREFIX)utils$(CD_VERSION); ${MAKE} dist )
 
-utils_distcheck: 
+utils_distcheck: $(DIR_PREFIX)utils$(CD_VERSION)/configure \
+		 $(DIR_PREFIX)utils$(CD_VERSION)/config.h
 	( cd $(DIR_PREFIX)utils$(CD_VERSION); ${MAKE} distcheck )
 
 utils_maint: $(DIR_PREFIX)utils$(CD_VERSION)/config.h 
@@ -488,7 +495,8 @@ geda_distconfig:
 geda_dist: 
 	( cd geda$(CD_VERSION); ${MAKE} dist )
 
-geda_distcheck: 
+geda_distcheck: geda$(CD_VERSION)/configure \
+		geda$(CD_VERSION)/config.h
 	( cd geda$(CD_VERSION); ${MAKE} distcheck )
 
 geda_maint: geda$(CD_VERSION)/config.h 
@@ -529,7 +537,8 @@ setup_distconfig:
 setup_dist: 
 	( cd $(DIR_PREFIX)setup$(CD_VERSION); ${MAKE} dist )
 
-setup_distcheck: 
+setup_distcheck: $(DIR_PREFIX)setup$(CD_VERSION)/configure \
+		 $(DIR_PREFIX)setup$(CD_VERSION)/config.h 
 	( cd $(DIR_PREFIX)setup$(CD_VERSION); ${MAKE} distcheck )
 
 setup_maint: $(DIR_PREFIX)setup$(CD_VERSION)/config.h 
@@ -574,7 +583,8 @@ libgeda_distconfig:
 libgeda_dist: 
 	( cd libgeda$(CD_VERSION); ${MAKE} dist )
 
-libgeda_distcheck: 
+libgeda_distcheck: libgeda$(CD_VERSION)/configure \
+		   libgeda$(CD_VERSION)/config.h
 	( cd libgeda$(CD_VERSION); ${MAKE} distcheck )
 
 libgeda_uninstall: libgeda$(CD_VERSION)/config.h 
@@ -611,7 +621,8 @@ docs_distconfig:
 docs_dist: 
 	( cd $(DIR_PREFIX)docs$(CD_VERSION); ${MAKE} dist )
 
-docs_distcheck: 
+docs_distcheck: $(DIR_PREFIX)docs$(CD_VERSION)/configure \
+		$(DIR_PREFIX)docs$(CD_VERSION)/Makefile 
 	( cd $(DIR_PREFIX)docs$(CD_VERSION); ${MAKE} distcheck )
 
 docs_maint: $(DIR_PREFIX)docs$(CD_VERSION)/Makefile
@@ -647,7 +658,8 @@ examples_distconfig:
 examples_dist: 
 	( cd $(DIR_PREFIX)examples$(CD_VERSION); ${MAKE} dist )
 
-examples_distcheck: 
+examples_distcheck: $(DIR_PREFIX)examples$(CD_VERSION)/configure \
+		    $(DIR_PREFIX)examples$(CD_VERSION)/Makefile
 	( cd $(DIR_PREFIX)examples$(CD_VERSION); ${MAKE} distcheck )
 
 examples_maint: $(DIR_PREFIX)examples$(CD_VERSION)/Makefile

@@ -1,3 +1,23 @@
+2006-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* INSTALL: Updated install file a little (still somewhat dated)
+
+	* src/o_misc.c: Fixed o_update_component to actually work correctly.
+	All this time, it was just doing the wrong thing by search for
+	existing components in the wrong place.  Update Component still 
+	doesn't do the right thing for symversion, but that can be fixed 
+	later.
+
+	* examples/filter_1.sch: Updated all components to the latest version.
+
+	* examples/drawing_primitives.sch: Translated schematic a little so
+	it looks better on the screen.
+
+2006-08-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/Makefile.am: Removed old VPATH, since it is no longer needed
+	and it is interfering with make distcheck
+
 2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * README: Updated the README a little to be ready for the next
