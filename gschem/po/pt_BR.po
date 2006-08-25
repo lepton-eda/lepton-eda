@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-21 23:23-0400\n"
+"POT-Creation-Date: 2006-08-24 21:07-0400\n"
 "PO-Revision-Date: 2006-07-27 01:34-0300\n"
 "Last-Translator: \n"
 "Language-Team:  <pt@li.org>\n"
@@ -1249,22 +1249,22 @@ msgstr ""
 msgid "Component still embedded and not updated\n"
 msgstr "O componente ainda está embutido e não atualizado\n"
 
-#: src/o_misc.c:1738
+#: src/o_misc.c:1745
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 
-#: src/o_misc.c:1782
+#: src/o_misc.c:1789
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "NÃO foi possível deixar arquivo backup [%s] como leitura e gravação\n"
 
-#: src/o_misc.c:1800
+#: src/o_misc.c:1807
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "NÃO foi possível deixar arquivo backup [%s] apenas leitura!\n"
 
-#: src/o_misc.c:1805
+#: src/o_misc.c:1812
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "NÃO foi possível salvar  arquivo backup [%s] !\n"

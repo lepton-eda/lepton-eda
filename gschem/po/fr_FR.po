@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-21 23:23-0400\n"
+"POT-Creation-Date: 2006-08-24 21:07-0400\n"
 "PO-Revision-Date: 2006-01-12 20:02+0100\n"
 "Last-Translator: Patrick Bernaud <b-patrick@wanadoo.fr>\n"
 "Language-Team: French\n"
@@ -1250,23 +1250,23 @@ msgstr ""
 msgid "Component still embedded and not updated\n"
 msgstr "Composant toujours embarqué et non mis à jour\n"
 
-#: src/o_misc.c:1738
+#: src/o_misc.c:1745
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 "o_autosave_backups() : Impossible de récupérer le véritable nom du fichier %s"
 
-#: src/o_misc.c:1782
+#: src/o_misc.c:1789
 #, fuzzy, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "Échec lors de la création de la copie de sauvegarde [%s]\n"
 
-#: src/o_misc.c:1800
+#: src/o_misc.c:1807
 #, fuzzy, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "Échec lors de la création de la copie de sauvegarde [%s]\n"
 
-#: src/o_misc.c:1805
+#: src/o_misc.c:1812
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "Échec lors de la création de la copie de sauvegarde [%s]\n"

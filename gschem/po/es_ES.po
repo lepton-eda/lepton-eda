@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-21 23:23-0400\n"
+"POT-Creation-Date: 2006-08-24 21:07-0400\n"
 "PO-Revision-Date: 2006-02-12 22:18+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain\n"
@@ -1275,23 +1275,23 @@ msgstr ""
 msgid "Component still embedded and not updated\n"
 msgstr "El componente todavía está incrustado y no actualizado\n"
 
-#: src/o_misc.c:1738
+#: src/o_misc.c:1745
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 "o_autosave_backups: Imposible averiguar el nombre de fichero real de %s."
 
-#: src/o_misc.c:1782
+#: src/o_misc.c:1789
 #, fuzzy, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "NO se ha podido guardar la copia de seguridad [%s]\n"
 
-#: src/o_misc.c:1800
+#: src/o_misc.c:1807
 #, fuzzy, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "NO se ha podido guardar la copia de seguridad [%s]\n"
 
-#: src/o_misc.c:1805
+#: src/o_misc.c:1812
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "NO se ha podido guardar la copia de seguridad [%s]\n"

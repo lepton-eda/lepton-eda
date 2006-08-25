@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-schem-CVS-2002-06-12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-21 23:23-0400\n"
+"POT-Creation-Date: 2006-08-24 21:07-0400\n"
 "PO-Revision-Date: 2002-09-06 20:11+CEST\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev@seul.org \n"
@@ -1320,22 +1320,22 @@ msgstr "Kan component niet uitsluiten, kan juiste .sym file niet vinden\n"
 msgid "Component still embedded and not updated\n"
 msgstr "Component is nog steeds ingesloten en niet vernieuwd\n"
 
-#: src/o_misc.c:1738
+#: src/o_misc.c:1745
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 
-#: src/o_misc.c:1782
+#: src/o_misc.c:1789
 #, fuzzy, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "[%s] kan niet opgeslagen worden\n"
 
-#: src/o_misc.c:1800
+#: src/o_misc.c:1807
 #, fuzzy, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "[%s] kan niet opgeslagen worden\n"
 
-#: src/o_misc.c:1805
+#: src/o_misc.c:1812
 #, fuzzy, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "[%s] kan niet opgeslagen worden\n"
