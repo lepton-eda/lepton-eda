@@ -1,0 +1,9 @@
+
+
+docname=wiki
+docsdir = @GEDADOCDIR@/$(docname)/_media
+
+docs_DATA = geda_switcap_figure1.jpg geda_design_flow.jpg geda_faq_attrib.jpg geda_ambiguous1.png geda_terminal_screenshot_001.jpg geda_ambiguous1_fixed.png geda_gschem_workflow_01.jpg geda_nets.jpg geda_net.jpg geda_gschem_screenshot_001.jpg geda_status_screenshot.jpg geda_rf_cascade_figure1.jpg geda_switcap_figure2.jpg geda_switcap_figure3.jpg geda_switcap_figure4.jpg geda_fileformat_textgraphic.jpg geda_rf_cascade_figure2.jpg geda_coordinatespace.jpg 001geda_design_flow.jpg geda_geda_flow.png 001geda_ambiguous1_fixed.png 002geda_design_flow.jpg 001geda_faq_attrib.jpg 002geda_faq_attrib.jpg 001geda_ambiguous1.png 001geda_gschem_workflow_01.jpg 002geda_ambiguous1.png 002geda_ambiguous1_fixed.png 001geda_terminal_screenshot_001.jpg 002geda_gschem_workflow_01.jpg 002geda_status_screenshot.jpg 001geda_gschem_screenshot_001.jpg 002geda_terminal_screenshot_001.jpg 002geda_gschem_screenshot_001.jpg 002geda_nets.jpg 001geda_status_screenshot.jpg 001geda_nets.jpg 001geda_net.jpg 002geda_net.jpg 002geda_switcap_figure4.jpg 001geda_switcap_figure1.jpg 002geda_switcap_figure1.jpg 001geda_switcap_figure2.jpg 002geda_switcap_figure2.jpg 001geda_switcap_figure3.jpg 001geda_rf_cascade_figure1.jpg 001geda_switcap_figure4.jpg 002geda_switcap_figure3.jpg 002geda_rf_cascade_figure1.jpg 002geda_coordinatespace.jpg 001geda_rf_cascade_figure2.jpg 002geda_rf_cascade_figure2.jpg 001geda_coordinatespace.jpg 001geda_geda_flow.png 001geda_fileformat_textgraphic.jpg 002geda_fileformat_textgraphic.jpg 002geda_geda_flow.png 
+
+EXTRA_DIST = $(docs_DATA)
+

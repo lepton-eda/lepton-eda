@@ -1,3 +1,17 @@
+2006-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/populatemkfiles.sh: Added script to automatically go through
+	a directory tree and create Makefile.am files.
+
+	* wiki/*/Makefile.am: Added Makefile.am's to all wiki subdirs in
+	order to make distcheck work correctly.
+
+2006-08-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Removed the various doc program checks, since we are
+	no longer building the latex docs (the wiki snapshot is the official
+	documentation now).
+
 2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* README: Updated the README a little to be ready for the next

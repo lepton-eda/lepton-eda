@@ -1,48 +1,14 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT
 
-VERSION=20060821
+VERSION=20060824
 PACKAGE=geda-docs
 echo Configuring $PACKAGE version $VERSION
 
 # Init automake
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
 
-############################################################################
-# Check for various doc processing programs start
-# 
-
-# latex
-AC_PATH_PROG(LATEX, latex, no, ${PATH})
-if test $LATEX = "no"; then
-   echo "Cannot find latex -- documentation cannot be created"
-   echo "Install latex or install the prepared geda-docs package"
-fi
-
-AC_PATH_PROG(DVIPS, dvips, no, ${PATH})
-AC_PATH_PROG(DVI2PS, dvi2ps, no, ${PATH})
-
-if test $DVIPS = "no" -a $DVI2PS = "no"; then
-   echo "Cannot find dvips or dvi2ps -- documentation cannot be created" 
-   echo "Install dvips or dvi2ps or install the prepared geda-docs package"
-fi
-
-AC_PATH_PROG(LATEX2HTML, latex2html, no, ${PATH})
-if test $LATEX2HTML = "no"; then 
-   echo "Cannot find latex2html -- documentation cannot be created" 
-   echo "Install latex2html or install the prepared geda-docs package"
-fi
-
-AC_PATH_PROG(PS2PDF, ps2pdf, no, ${PATH})
-if test $PS2PDF = "no"; then 
-   echo "Cannot find pdf2ps -- documentation cannot be created" 
-   echo "Install pdf2ps or install the prepared geda-docs package"
-fi
-
-# 
-# Check for various doc processing programs end
-############################################################################
-
+# Check for programs.
 
 # Checks for libraries.
 
@@ -76,7 +42,10 @@ AC_SUBST(GEDADOCDIR)
 
 AC_DEFUN([GEDA_DECLARE_DOCS],
  [
-        data$1=`find $srcdir/$1 -name \* -print | sed "s%\./wiki/%%" \
+        data$1=`find $srcdir/$1 -name \* -print \
+				 | sed "s%\.\./wiki/%%" \
+				 | sed "s%\.\./wiki%%" \
+				 | sed "s%\./wiki/%%" \
 				 | sed "s%\./wiki%%" \
 				 | grep -v Makefile | grep -v ChangeLog \
                                  | grep -v CVS | grep -v "\\.cvsignore" \
@@ -93,8 +62,24 @@ AC_CONFIG_FILES([Makefile
 		 toplevel/gedadocs.html 
                  gsch2pcb_tutorial/Makefile 
 		 gsch2pcb_tutorial/images/Makefile
+                 scripts/Makefile 
                  wiki/Makefile 
-                 scripts/Makefile ])
+		 wiki/_detail/Makefile
+ 		 wiki/_media/Makefile
+		 wiki/lib/exe/Makefile
+		 wiki/lib/images/interwiki/Makefile
+		 wiki/lib/images/fileicons/Makefile
+		 wiki/lib/images/smileys/Makefile
+		 wiki/lib/images/Makefile
+		 wiki/lib/tpl/default/images/Makefile
+		 wiki/lib/tpl/default/Makefile
+		 wiki/lib/tpl/Makefile
+		 wiki/lib/plugins/note/images/Makefile
+		 wiki/lib/plugins/note/Makefile
+		 wiki/lib/plugins/definitionlist/images/Makefile
+		 wiki/lib/plugins/definitionlist/Makefile
+	 	 wiki/lib/plugins/Makefile
+		 wiki/lib/Makefile ])
 AC_OUTPUT
 
 expandedGEDADOCDIR=`eval "echo $GEDADOCDIR"`
