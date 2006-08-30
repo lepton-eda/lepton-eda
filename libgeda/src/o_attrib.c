@@ -1912,11 +1912,13 @@ char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found)
  */
 char *o_attrib_search_numslots(OBJECT *object, OBJECT **return_found)
 {
-  char *return_value;
+  char *return_value = NULL;
 
   /* search for numslots attribute buried inside the complex */
-  return_value = o_attrib_search_name(object->complex->prim_objs, 
-                                      "numslots", 0);
+  if (object->type == OBJ_COMPLEX) {
+    return_value = o_attrib_search_name(object->complex->prim_objs, 
+					"numslots", 0);
+  }
 
   if (return_value) {
     return(return_value);

@@ -1,3 +1,8 @@
+2006-08-30 Werner Hoch <werner.ho@gmx.de>
+
+	* src/o_attrib.c: fix for Bug#1547138: Segfault on adding 
+	  toplevel slot attribute to symbol
+
 2006-08-29 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/i_vars.h, include/prototype.h, include/struct.h,
