@@ -548,6 +548,13 @@
 (paper-sizes "A11 1.80 cm x 2.60 cm" 1.02 0.71)
 (paper-sizes "A12 1.30 cm x 1.80 cm" 0.71 0.51)
 
+; print-command string 
+;
+; The command to send data to in order to print to a printer.  On most
+; systems, this will be "lpr".
+;
+(print-command "lpr")
+
 ; output-text string
 ;
 ; Controls how text is rendered to postscript

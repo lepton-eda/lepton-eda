@@ -2,6 +2,17 @@
 
 	* lib/system-gschemrc.in: Fixed some typos in comments. 
 
+	* gschem/include/x_print.h, gschem/include/i_vars.h,
+ 	gschem/include/prototype.h, gschem/scripts/print.scm,
+ 	gschem/src/g_funcs.c, gschem/src/g_rc.c, gschem/src/g_register.c,
+ 	gschem/src/x_dialog.c, gschem/src/x_print.c, gschem/src/x_window.c:
+	Applied second part of patch by Peter Brett to add a new print
+	dialog to gschem.  Patch#1530417.  Unfortunately x_print.c was a 
+	completely by hand patch, so hopefully I got it right.  Reversed
+	the "Print" and "Cancel" buttons to follow application conventions.
+	Reversed "Save As" and "Cancel" buttons to follow application 
+	conventions.
+
 2006-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* INSTALL: Updated install file a little (still somewhat dated)

@@ -1,3 +1,10 @@
+2006-08-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/i_vars.h, include/prototype.h, include/struct.h,
+	src/f_print.c, src/i_vars.c, src/s_toplevel.c: Applied first
+	part of patch by Peter Brett to add a new print dialog to
+	gschem.  Patch#1530417.
+
 2006-08-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * src/Makefile.am: Removed old VPATH, since it is no longer needed

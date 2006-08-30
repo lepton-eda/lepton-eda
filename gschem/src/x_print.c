@@ -30,508 +30,681 @@
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/x_print.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
 
-static const gchar *list_item_data_key = "list_item_data";
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint print_landscape(GtkWidget *w, TOPLEVEL *w_current)
-{
-  w_current->print_orientation = LANDSCAPE;
-  return(0);
-}
+/* Private constants */
+enum type_indices
+  { EXTENTS_IDX = 0, EXTENTS_NOMARGINS_IDX, WINDOW_IDX, N_TYPE_IDX };
+enum orient_indices
+  { LANDSCAPE_IDX = 0, PORTRAIT_IDX, N_ORIENT_IDX };
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint print_portrait(GtkWidget *w, TOPLEVEL *w_current)
-{
-  w_current->print_orientation = PORTRAIT;
-  return(0);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint x_print_set_window(GtkWidget *w, TOPLEVEL *w_current)
-{
-  f_print_set_type(w_current, WINDOW);
-  return(0);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint x_print_set_extents(GtkWidget *w, TOPLEVEL *w_current )
-{
-  f_print_set_type(w_current, EXTENTS);
-  return(0);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint x_print_set_nomargins(GtkWidget *w, TOPLEVEL *w_current )
-{
-  f_print_set_type(w_current, EXTENTS_NOMARGINS);
-  return(0);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  this is from gtktest.c and only used in this file,
- *  there are other create_menus...
- */
-static GtkWidget *create_menu_orient (TOPLEVEL *w_current)
-{
-  GtkWidget *menu;
-  GtkWidget *menuitem;
-  GSList *group;
-  char *buf;
-
-  menu = gtk_menu_new ();
-  group = NULL;
-
-  buf = g_strdup_printf(_("Landscape"));
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
-                     (GtkSignalFunc) print_landscape,
-                     w_current);
-
-  gtk_widget_show (menuitem);
-
-  buf = g_strdup_printf(_("Portrait"));
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
-                     (GtkSignalFunc) print_portrait,
-                     w_current);
-  gtk_widget_show (menuitem);
-
-  if (w_current->print_orientation == PORTRAIT) {
-    gtk_menu_set_active(GTK_MENU (menu),1);
-    print_portrait (NULL, w_current);
-  } else {
-    print_landscape (NULL, w_current);
-  }
-
-  return menu;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  this is from gtktest.c and only used in this file,
- *  there are other create_menus...
- */
-static GtkWidget *create_menu_type (TOPLEVEL *w_current)
-{
-  GtkWidget *menu;
-  GtkWidget *menuitem;
-  GSList *group;
-  char *buf;
-
-  menu = gtk_menu_new ();
-  group = NULL;
-
-  buf = g_strdup_printf(_("Extents with margins"));
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
-                     (GtkSignalFunc) x_print_set_extents,
-                     w_current);
-  gtk_widget_show (menuitem);
-
-  buf = g_strdup_printf(_("Extents no margins"));
-  menuitem = gtk_radio_menu_item_new_with_label(group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(menuitem));
-  gtk_menu_append(GTK_MENU(menu), menuitem);
-  gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-                   (GtkSignalFunc) x_print_set_nomargins, w_current);
-  gtk_widget_show(menuitem);
-
-  buf = g_strdup_printf(_("Current Window"));
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
-                     (GtkSignalFunc) x_print_set_window,
-                     w_current);
-  gtk_widget_show (menuitem);
-
-  switch (w_current->print_output_type)
+enum
   {
-    case(EXTENTS):
-      gtk_menu_set_active(GTK_MENU (menu),0);
-      f_print_set_type(w_current, EXTENTS);
-      break;
+  PROP_FILENAME = 1,
+  PROP_COMMAND,
+  PROP_PAPERSIZE,
+  PROP_ORIENTATION,
+  PROP_TYPE,
+  PROP_USEFILE
+  };
 
-    case(EXTENTS_NOMARGINS):
-      gtk_menu_set_active(GTK_MENU (menu),1);
-      f_print_set_type(w_current, EXTENTS_NOMARGINS);
-      break;
+/* Private functions */
 
-    case(WINDOW):
-      gtk_menu_set_active(GTK_MENU (menu),2);
-      f_print_set_type(w_current, WINDOW);
-      break;
-  }
+static gboolean print_dialog_action_keypress (GtkWidget * widget,
+                                             GdkEventKey * event,
+                                             PrintDialog * dialog);
+static void print_dialog_action_radio_toggled (GtkWidget * w,
+                                              PrintDialog * dialog);
 
-  return menu;
-}
+static void print_dialog_init (PrintDialog * dialog);
+static void print_dialog_init_paper_combobox (PrintDialog * d);
+static void print_dialog_init_type_combobox (PrintDialog * d);
+static void print_dialog_init_orient_combobox (PrintDialog * d);
+static void print_dialog_set_property (GObject * object, guint property_id,
+                                      const GValue * value,
+                                      GParamSpec * pspec);
+static void print_dialog_get_property (GObject * object, guint property_id,
+                                      GValue * value, GParamSpec * pspec);
+static void print_dialog_class_init (PrintDialogClass * class);
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+
+
+/*!
+ *  \brief Callback function to show file chooser dialog
  *
+ *  \par Shows file chooser dialog for user to select PostScript file
+ *  to print to.
+ *  \par Private callback function, should not be called by any code
+ *  outside x_print.c
  */
-gint x_print_change_size (GtkWidget *gtklist, TOPLEVEL *w_current)
+static void
+print_dialog_action_choosefile (GtkWidget * w, PrintDialog * dialog)
 {
-  GList		*dlist;
-  GtkObject       *listitem;
-  gchar           *item_data_string;
+  GtkWidget *filechooser;
+  const gchar *filename;
+  const gchar *newfilename;
+  filechooser = gtk_file_chooser_dialog_new (_("Save PostScript As..."),
+					     GTK_WINDOW (dialog),
+					     GTK_FILE_CHOOSER_ACTION_SAVE,
+					     GTK_STOCK_SAVE_AS,
+					     GTK_RESPONSE_ACCEPT,
+					     GTK_STOCK_CANCEL,
+					     GTK_RESPONSE_CANCEL, NULL);
 
-  dlist = GTK_LIST(w_current->plib_list)->selection;
+  filename = gtk_entry_get_text (GTK_ENTRY (dialog->fnfield));
+  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (filechooser), filename);
 
-  if (!dlist) {
-    /* g_print("Selection cleared\n");*/
-    return(0);
-  }
 
-  listitem = GTK_OBJECT(dlist->data);
-  item_data_string=gtk_object_get_data(listitem, list_item_data_key);
-
-#if DEBUG
-  printf("paper_size string: %s\n", item_data_string);
-  len = strlen(item_data_string);
-  /* strcpy(current_attr_name, item_data_string);*/
-#endif
-
-  s_papersizes_get_size(item_data_string,
-                        &w_current->paper_width,
-                        &w_current->paper_height);
-
-#if 0
-  gtk_entry_set_text(GTK_ENTRY(w_current->asentry_name),
-                     item_data_string);
-  gtk_entry_select_region(GTK_ENTRY(w_current->asentry_name), 0, len);
-#endif
-
-  return(0);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint x_print_print(GtkWidget *w, TOPLEVEL *w_current)
-{
-  int status;
-  const char *filename =
-  gtk_entry_get_text(GTK_ENTRY(w_current->pfilename_entry));
-
-  if (filename[0] != '\0') {
-
-    /* de select everything first */
-    o_select_run_hooks(w_current, NULL, 2); 
-    o_selection_remove_most(w_current,
-                            w_current->page_current->
-                            selection2_head);
-
-    status = f_print(w_current, filename);
-
-    if (status) {
-      s_log_message(_("Cannot print current schematic to [%s]\n"), filename);
-    } else {
-      s_log_message(_("Printed current schematic to [%s]\n"), filename);
-    }
-  }
-
-  gtk_widget_destroy(w_current->pwindow);
-  w_current->pwindow = NULL;
-  return(0);
-}
-
-gint x_print_cancel(GtkWidget *w, TOPLEVEL *w_current)
-{
-#if 0
-  gtk_grab_remove(w_current->pwindow);
-#endif
-  gtk_widget_destroy(w_current->pwindow);
-  w_current->pwindow = NULL;
-  return(0);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-int x_print_keypress(GtkWidget * widget, GdkEventKey * event, 
-		     TOPLEVEL * w_current)
-{
-  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-    x_print_cancel(NULL, w_current);	
-    return TRUE;
-  }
-
-  return FALSE;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_print_setup (TOPLEVEL *w_current, char *filename)
-{
-  GtkWidget *label;
-  GtkWidget *separator;
-  GtkWidget *box;
-  GtkWidget *box2;
-  GtkWidget *buttonprint;
-  GtkWidget *buttoncancel;
-  GtkWidget *scrolled_win;
-  GtkWidget *list_item;
-  GtkWidget *optionmenu;
-  GtkWidget *orient_menu;
-  GtkWidget *type_menu;
-  GtkWidget *vbox, *action_area;
-  char *string = NULL;
-  int i;
-
-  /* freeze the window_current pointer so that it doesn't change */
-
-  if (!w_current->pwindow) {
-
-    w_current->pwindow = x_create_dialog_box(&vbox, &action_area); 
-    gtk_container_border_width(GTK_CONTAINER(w_current->pwindow), 5);
-
-    gtk_window_position(GTK_WINDOW (w_current->pwindow),
-                        GTK_WIN_POS_MOUSE);
-
-    gtk_signal_connect(GTK_OBJECT (w_current->pwindow),
-                       "destroy",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->pwindow);
-
-#if 0 /* this was causing the dialog box to not die */
-    gtk_signal_connect(GTK_OBJECT (w_current->pwindow),
-                       "delete_event",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->pwindow);
-#endif
-
-    gtk_window_set_title(GTK_WINDOW(w_current->pwindow),
-                         _("Print..."));
-
-    buttonprint = gtk_button_new_from_stock (GTK_STOCK_PRINT);
-    GTK_WIDGET_SET_FLAGS (buttonprint, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(GTK_BOX(action_area),
-                       buttonprint, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT(buttonprint), "clicked",
-                       GTK_SIGNAL_FUNC(x_print_print), w_current);
-    gtk_widget_show (buttonprint);
-    gtk_widget_grab_default (buttonprint);
-
-    buttoncancel = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
-    GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(GTK_BOX(action_area),
-                       buttoncancel, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT(buttoncancel),
-                       "clicked", GTK_SIGNAL_FUNC(x_print_cancel),
-                       w_current);
-    gtk_widget_show (buttoncancel);
-
-    label = gtk_label_new (_("Output paper size"));
-    gtk_misc_set_padding (GTK_MISC (label), 5, 5);
-    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 0);
-
-    gtk_widget_show (label);
-
-    scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-
-    gtk_scrolled_window_set_policy(
-                                   GTK_SCROLLED_WINDOW(scrolled_win),
-                                   GTK_POLICY_AUTOMATIC,
-                                   GTK_POLICY_AUTOMATIC);
-    gtk_box_pack_start(GTK_BOX(vbox), scrolled_win, TRUE, TRUE, 10);
-    gtk_widget_set_usize(GTK_WIDGET(scrolled_win), 150, 100);
-    gtk_widget_show (scrolled_win);
-    box2 = gtk_vbox_new (FALSE, 0);
-    gtk_scrolled_window_add_with_viewport(
-                                          GTK_SCROLLED_WINDOW (scrolled_win), box2);
-    gtk_widget_show(box2);
-
-    separator = gtk_hseparator_new ();
-    gtk_box_pack_start(GTK_BOX(vbox), separator, FALSE, TRUE, 0);
-    gtk_widget_show (separator);
-
-    w_current->plib_list = gtk_list_new ();
-
-    gtk_container_add(GTK_CONTAINER (box2), w_current->plib_list);
-    gtk_widget_show (w_current->plib_list);
-
-    i = 0;
-    string = (char *) s_papersizes_get(i);
-    while (string != NULL) {
-      GtkWidget *label = gtk_label_new(string);
-
-      gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
-
-      list_item = gtk_list_item_new();
-      gtk_container_add(GTK_CONTAINER(list_item), label);
-      gtk_widget_show(label);
-      gtk_container_add(GTK_CONTAINER(w_current->plib_list),
-                        list_item);
-      gtk_widget_show (list_item);
-      gtk_label_get(GTK_LABEL(label), &string);
-      gtk_object_set_data(GTK_OBJECT(list_item),
-                          list_item_data_key,
-                          string);
-      i++;
-      string = (char *) s_papersizes_get(i);
-    }
-
-    gtk_signal_connect(GTK_OBJECT(w_current->plib_list),
-                       "selection_changed",
-                       GTK_SIGNAL_FUNC(x_print_change_size),
-                       w_current);
-
-    box = gtk_hbox_new(FALSE, 0);
-    gtk_container_border_width(GTK_CONTAINER(box), 0);
-    gtk_box_pack_start(GTK_BOX(vbox), box, FALSE, TRUE, 5);
-    gtk_box_set_spacing(GTK_BOX(box), 10);
-    gtk_widget_show(box);
-
-    label = gtk_label_new (_("Filename"));
-    gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
-    gtk_misc_set_padding (GTK_MISC (label), 0, 0);
-    gtk_box_pack_start (GTK_BOX (box),
-                        label, FALSE, FALSE, 0);
-
-    gtk_widget_show (label);
-
-    w_current->pfilename_entry =
-      gtk_entry_new_with_max_length(200);
-    gtk_editable_select_region(
-                               GTK_EDITABLE(w_current->pfilename_entry), 0, -1);
-    gtk_box_pack_start(GTK_BOX (box),
-                       w_current->pfilename_entry, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT(w_current->pfilename_entry),
-                       "activate",
-                       GTK_SIGNAL_FUNC(x_print_print),
-                       w_current);
-    gtk_widget_show (w_current->pfilename_entry);
-
-    separator = gtk_hseparator_new ();
-    gtk_box_pack_start(GTK_BOX(vbox), separator, FALSE, TRUE, 0);
-    gtk_widget_show (separator);
-
-    label = gtk_label_new (_("Type"));
-    gtk_misc_set_padding (GTK_MISC (label), 5, 5);
-    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 0);
-    gtk_widget_show (label);
-    optionmenu = gtk_option_menu_new ();
-    type_menu = create_menu_type (w_current);
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu), 
-                             type_menu);
-    gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), 4);
-    gtk_box_pack_start(GTK_BOX(vbox), optionmenu, FALSE, TRUE, 0);
-    gtk_widget_show(optionmenu);
-
-    label = gtk_label_new (_("Orientation"));
-    gtk_misc_set_padding (GTK_MISC (label), 5, 5);
-    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 0);
-
-    gtk_widget_show (label);
-    optionmenu = gtk_option_menu_new ();
-    orient_menu = create_menu_orient (w_current);
-    gtk_option_menu_set_menu(GTK_OPTION_MENU (optionmenu), 
-                             orient_menu);
-    gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), 4);
-    gtk_box_pack_start(GTK_BOX(vbox), optionmenu, FALSE, TRUE, 0);
-    gtk_widget_show (optionmenu);
-
-    /* set some defaults */
-    switch (w_current->print_output_type)
+  if (gtk_dialog_run (GTK_DIALOG (filechooser)) == GTK_RESPONSE_ACCEPT)
     {
-      case(EXTENTS):
-        gtk_menu_set_active(GTK_MENU (type_menu),0);
-        f_print_set_type(w_current, EXTENTS);
-        break;
-        
-      case(EXTENTS_NOMARGINS):
-        gtk_menu_set_active(GTK_MENU (type_menu),1);
-        f_print_set_type(w_current, EXTENTS_NOMARGINS);
-        break;
-        
-      case(WINDOW):
-        gtk_menu_set_active(GTK_MENU (type_menu),2);
-        f_print_set_type(w_current, WINDOW);
-        break;
-    }
-    
-    if (w_current->print_orientation == PORTRAIT) {
-      gtk_menu_set_active(GTK_MENU (orient_menu),1);
-      print_portrait (NULL, w_current);
-    } else {
-      gtk_menu_set_active(GTK_MENU (orient_menu),0);
-      print_landscape (NULL, w_current);
+      newfilename =
+	gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (filechooser));
+      gtk_entry_set_text (GTK_ENTRY (dialog->fnfield), newfilename);
     }
 
-    gtk_signal_connect(GTK_OBJECT(w_current->pwindow), "key_press_event",
-                         (GtkSignalFunc) x_print_keypress, w_current);
-  }
+  gtk_widget_destroy (filechooser);
 
+}
 
+/*!
+ *  \brief Handle keypress events caught by the print dialog.
+  *
+ *  \par Private callback function, should not be called by any code
+ *  outside x_print.c
+ */
+static gboolean
+print_dialog_action_keypress (GtkWidget * widget, GdkEventKey * event,
+                              PrintDialog * dialog)
+{
+  if (widget == GTK_WIDGET (dialog))
+    {
+      
+      if (strcmp (gdk_keyval_name (event->keyval), "Escape") == 0)
+	{
+	  gtk_dialog_response (GTK_DIALOG (dialog),
+			       GTK_RESPONSE_REJECT);
+	  return TRUE;
+	}
+      if (strcmp (gdk_keyval_name (event->keyval), "Linefeed") == 0)
+	{
+	  gtk_dialog_response (GTK_DIALOG (dialog),
+			       GTK_RESPONSE_ACCEPT);
+	  return TRUE;
+	}
+    }
+  return FALSE;
   
-  if (!GTK_WIDGET_VISIBLE (w_current->pwindow)) {
-    gtk_entry_set_text(GTK_ENTRY(w_current->pfilename_entry),
-                       filename);
-#if 0
-    gtk_entry_select_region(GTK_ENTRY(w_current->pfilename_entry),
-                            0, strlen(filename));
-#endif
+}
 
-    gtk_widget_show (w_current->pwindow);
-    gdk_window_raise(w_current->pwindow->window);
-#if 0
-    gtk_grab_add (w_current->pwindow);
-#endif
-  } else {
-    /* window should already be mapped, otherwise this
-     * will core */
-    gdk_window_raise(w_current->pwindow->window);
-  }
+/*!
+ *  \brief Create, initialize and populate a combobox for selecting
+ *  what paper size to print to.
+ *  \par Private function, should not be
+ *  called by any code outside x_print.c
+ */
+static void
+print_dialog_init_paper_combobox (PrintDialog * d)
+{
+  GtkComboBox *combobox;
+  gchar *string;
+  gint i;
+
+  combobox = GTK_COMBO_BOX (gtk_combo_box_new_text ());
+  gtk_combo_box_set_active (combobox, -1);
+
+  /* Populate combo box with available paper sizes */
+  i = 0;
+  string = (gchar *) s_papersizes_get (i);
+  while (string != NULL)
+    {
+      gtk_combo_box_insert_text (GTK_COMBO_BOX (combobox), i, string);
+      
+      i++;
+      string = (gchar *) s_papersizes_get (i);
+    }
+
+  d->papercbox = combobox;
+}
+
+/*!
+ *  \brief Create, initialize and populate a combobox for selecting
+ *  the type of printout to produce.
+ *  \par Private function, should not be called by any code
+ *  outside x_print.c  
+ */
+static void
+print_dialog_init_type_combobox (PrintDialog * d)
+{
+  GtkWidget *combobox;
+  gchar *label;
+
+  combobox = gtk_combo_box_new_text ();
+
+  label = g_strdup_printf (_("Extents with margins"));
+  gtk_combo_box_insert_text (GTK_COMBO_BOX (combobox), EXTENTS_IDX, label);
+
+  label = g_strdup_printf (_("Extents no margins"));
+  gtk_combo_box_insert_text (GTK_COMBO_BOX (combobox), EXTENTS_NOMARGINS_IDX,
+			     label);
+
+  label = g_strdup_printf (_("Current Window"));
+  gtk_combo_box_insert_text (GTK_COMBO_BOX (combobox), WINDOW_IDX, label);
+
+  d->typecbox = GTK_COMBO_BOX (combobox);
+
+}
+
+/*!
+ *  \brief Create, initialize and populate a combobox for selecting
+ *  paper orientation.
+ *  \par Private function, should not be called by any code
+ *  outside x_print.c  
+ */
+static void
+print_dialog_init_orient_combobox (PrintDialog * d)
+{
+
+  GtkComboBox *combobox;
+  gchar *label;
+
+  combobox = GTK_COMBO_BOX (gtk_combo_box_new_text ());
+
+  label = g_strdup_printf (_("Landscape"));
+  gtk_combo_box_insert_text (GTK_COMBO_BOX (combobox), LANDSCAPE_IDX, label);
+
+  label = g_strdup_printf (_("Portrait"));
+  gtk_combo_box_insert_text (GTK_COMBO_BOX (combobox), PORTRAIT_IDX, label);
+
+  d->orientcbox = combobox;
+}
+
+/*!
+ *  \brief Handle the user clicking on radio buttons to select print
+ *  destination.
+ *
+ *  \par Private callback function, should not be called by any code
+ *  outside x_print.c
+ */
+static void
+print_dialog_action_radio_toggled (GtkWidget * w, PrintDialog * dialog)
+{
+  if (w == GTK_WIDGET (dialog->cmdradio))
+    {
+      gtk_widget_set_sensitive (GTK_WIDGET (dialog->cmdfield),
+                               gtk_toggle_button_get_active
+                               (GTK_TOGGLE_BUTTON (w)));
+    }
+  else if (w == GTK_WIDGET (dialog->fileradio))
+    {
+      gtk_widget_set_sensitive (GTK_WIDGET (dialog->fnfield),
+                               gtk_toggle_button_get_active
+                               (GTK_TOGGLE_BUTTON (w)));
+      gtk_widget_set_sensitive (GTK_WIDGET (dialog->saveasbutton),
+                               gtk_toggle_button_get_active
+                               (GTK_TOGGLE_BUTTON (w)));
+    }
+}
+
+
+/*! \todo Finish function documentation
+ *  \brief
+ *  \par Function Description
+ *
+ */
+static void
+print_dialog_init (PrintDialog * dialog)
+{
+  GtkWidget *box;
+  GtkWidget *frame;
+  GtkWidget *settingstable, *desttable;
+  GtkWidget *label;
+
+  /* Initialize properties */
+  g_object_set (G_OBJECT (dialog),
+		/* GtkWindow */
+		"title", _("Print..."),
+		"modal", TRUE, "destroy-with-parent", TRUE, NULL);
+
+  /* Connect key-press event */
+  g_signal_connect (dialog,
+		    "key_press_event",
+		    GTK_SIGNAL_FUNC (print_dialog_action_keypress), dialog);
+
+  /* Setup hbox for two main panes */
+  box = gtk_vbox_new (FALSE, 2);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
+
+  /* Upper frame */
+  frame = gtk_frame_new (_("Settings"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 3);
+  gtk_container_add (GTK_CONTAINER (box), frame);
+
+  /* Upper table with drop-down menus & labels 
+   * Left-hand column contains labels, right-hand contains comboboxes*/
+  settingstable = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (settingstable), 5);
+  gtk_table_set_row_spacings (GTK_TABLE (settingstable), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (settingstable), 5);
+  gtk_container_add (GTK_CONTAINER (frame), settingstable);
+
+  label = gtk_label_new (_("Output paper size"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
+  gtk_table_attach (GTK_TABLE (settingstable),
+		    label,
+		    0, 1, 0, 1, GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+
+  print_dialog_init_paper_combobox (dialog);
+  gtk_table_attach (GTK_TABLE (settingstable),
+		    GTK_WIDGET (dialog->papercbox),
+		    1, 2, 0, 1, GTK_FILL, 0, 0, 0);
+
+  label = gtk_label_new (_("Type"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
+  gtk_table_attach (GTK_TABLE (settingstable),
+		    label,
+		    0, 1, 1, 2, GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+
+  print_dialog_init_type_combobox (dialog);
+  gtk_table_attach (GTK_TABLE (settingstable),
+		    GTK_WIDGET (dialog->typecbox),
+		    1, 2, 1, 2, GTK_FILL, 0, 0, 0);
+
+  label = gtk_label_new (_("Orientation"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
+  gtk_table_attach (GTK_TABLE (settingstable),
+		    label,
+		    0, 1, 2, 3, GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+
+  print_dialog_init_orient_combobox (dialog);
+  gtk_table_attach (GTK_TABLE (settingstable),
+		    GTK_WIDGET (dialog->orientcbox),
+		    1, 2, 2, 3, GTK_FILL, 0, 0, 0);
+
+  /* Lower frame */
+  frame = gtk_frame_new (_("Destination"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 3);
+  gtk_container_add (GTK_CONTAINER (box), frame);
+
+  /* Table with destination selectors */
+  desttable = gtk_table_new (3, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (desttable), 5);
+  gtk_table_set_row_spacings (GTK_TABLE (desttable), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (desttable), 5);
+  gtk_container_add (GTK_CONTAINER (frame), desttable);
+
+  /* Widgets for printing to file */
+  dialog->fileradio =
+    GTK_RADIO_BUTTON (gtk_radio_button_new_with_label (NULL, _("File")));
+  gtk_table_attach (GTK_TABLE (desttable),
+		    GTK_WIDGET (dialog->fileradio),
+		    0, 1, 0, 1, GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+  g_signal_connect (dialog->fileradio,
+		    "toggled",
+		    GTK_SIGNAL_FUNC (print_dialog_action_radio_toggled),
+		    dialog);
+
+  dialog->fnfield = GTK_ENTRY (gtk_entry_new ());
+  gtk_table_attach (GTK_TABLE (desttable),
+		    GTK_WIDGET (dialog->fnfield),
+		    1, 2, 0, 1, GTK_EXPAND | GTK_FILL, 0, 0, 0);
+
+  dialog->saveasbutton =
+    GTK_BUTTON (gtk_button_new_from_stock (GTK_STOCK_SAVE_AS));
+  gtk_table_attach (GTK_TABLE (desttable),
+		    GTK_WIDGET (dialog->saveasbutton), 2, 3, 0, 1,
+		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
+  g_signal_connect (dialog->saveasbutton,
+		    "clicked",
+		    GTK_SIGNAL_FUNC (print_dialog_action_choosefile), dialog);
+
+  /* Widgets for printing to command */
+  dialog->cmdradio =
+    GTK_RADIO_BUTTON (gtk_radio_button_new_with_label_from_widget
+		      (dialog->fileradio, _("Command")));
+  gtk_table_attach (GTK_TABLE (desttable),
+		    GTK_WIDGET (dialog->cmdradio),
+		    0, 1, 1, 2, GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+  g_signal_connect (dialog->cmdradio,
+		    "toggled",
+		    GTK_SIGNAL_FUNC (print_dialog_action_radio_toggled),
+		    dialog);
+
+  dialog->cmdfield = GTK_ENTRY (gtk_entry_new ());
+  gtk_table_attach (GTK_TABLE (desttable), GTK_WIDGET (dialog->cmdfield),
+		    1, 3, 1, 2, GTK_EXPAND | GTK_FILL, 0, 0, 0);
+
+  /* Add "Cancel" and "Print" buttons */
+  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+			  GTK_STOCK_PRINT, GTK_RESPONSE_ACCEPT,
+			  GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
+			  NULL);
+
+  /* Set initial radiobutton selection */
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->cmdradio), TRUE);
+}
+
+/*! \todo Finish function documentation
+ *  \brief
+ *  \par Function Description
+ *
+ */
+static void
+print_dialog_set_property (GObject * object,
+                          guint property_id,
+                          const GValue * value, GParamSpec * pspec)
+{
+  PrintDialog *dialog = PRINT_DIALOG (object);
+  gboolean value_bool;
+
+  switch (property_id)
+    {
+    case PROP_FILENAME:
+      gtk_entry_set_text (dialog->fnfield,
+                         (char *) g_value_get_string (value));
+      break;
+
+    case PROP_COMMAND:
+      gtk_entry_set_text (dialog->cmdfield,
+                         (char *) g_value_get_string (value));
+      break;
+
+    case PROP_PAPERSIZE:
+      gtk_combo_box_set_active (dialog->papercbox,
+                               g_value_get_int (value));
+      break;
+
+    case PROP_ORIENTATION:
+      gtk_combo_box_set_active (dialog->orientcbox,
+                               g_value_get_int (value));
+      break;
+
+    case PROP_TYPE:
+      gtk_combo_box_set_active (dialog->typecbox,
+                               g_value_get_int (value));
+      break;
+
+    case PROP_USEFILE:
+      value_bool = g_value_get_boolean (value);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->fileradio),
+                                   value_bool);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->cmdradio),
+                                   !value_bool);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    }
+
+
+}
+
+/*! \todo Finish function documentation
+ *  \brief
+ *  \par Function Description
+ *
+ */
+print_dialog_get_property (GObject * object,
+                          guint property_id,
+                          GValue * value, GParamSpec * pspec)
+{
+  PrintDialog *dialog = PRINT_DIALOG (object);
+  gpointer value_pointer;
+  gint value_int = 0;
+  gboolean value_bool = 0;
+  gint cbox_active;
+  switch (property_id)
+    {
+    case PROP_FILENAME:
+      value_pointer =
+	(gpointer) gtk_entry_get_text (GTK_ENTRY (dialog->fnfield));
+      g_value_set_string (value, value_pointer);
+      break;
+ 
+    case PROP_COMMAND:
+      value_pointer = 
+	(gpointer) gtk_entry_get_text (GTK_ENTRY (dialog->cmdfield));
+      g_value_set_string (value, value_pointer);
+      break;
+ 
+    case PROP_PAPERSIZE:
+      g_value_set_int (value, gtk_combo_box_get_active (dialog->papercbox));
+      break;
+ 
+    case PROP_ORIENTATION:
+      cbox_active = gtk_combo_box_get_active (dialog->orientcbox);
+      switch (cbox_active)
+	{
+	case PORTRAIT_IDX:
+	  value_int = PORTRAIT;
+	  break;
+	case LANDSCAPE_IDX:
+	  value_int = LANDSCAPE;
+	  break;
+	}
+      g_value_set_int (value, value_int);
+      break;
+      
+    case PROP_TYPE:
+      cbox_active = gtk_combo_box_get_active (dialog->typecbox);
+      switch (cbox_active)
+	{
+	case EXTENTS_IDX:
+	  value_int = EXTENTS;
+	  break;
+	case EXTENTS_NOMARGINS_IDX:
+	  value_int = EXTENTS_NOMARGINS;
+	  break;
+	case WINDOW_IDX:
+	  value_int = WINDOW;
+	  break;
+	}
+      g_value_set_int (value, value_int);
+      break;
+ 
+    case PROP_USEFILE:
+      value_bool = 
+        gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->fileradio));
+      g_value_set_boolean (value, value_bool);
+      break;
+            
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    }
+} 
+
+/*! \todo Finish function documentation
+ *  \brief
+ *  \par Function Description
+ *  \bug Hardcoded 'magic' numbers in this function
+ *
+ */
+static void
+print_dialog_class_init (PrintDialogClass * class)
+{
+  GObjectClass *gobject_class = G_OBJECT_CLASS (class);
+
+  gobject_class->set_property = print_dialog_set_property;
+  gobject_class->get_property = print_dialog_get_property;
+
+  g_object_class_install_property (gobject_class, PROP_FILENAME,
+				   g_param_spec_string ("filename",
+							"", "", "",
+							 G_PARAM_READWRITE));
+
+  g_object_class_install_property (gobject_class, PROP_COMMAND,
+				   g_param_spec_string ("command",
+							"", "", "",
+							 G_PARAM_READWRITE));
+
+  g_object_class_install_property (gobject_class, PROP_PAPERSIZE,
+				   g_param_spec_int ("papersize",
+						     "", "", 0, 0, 0,
+						     G_PARAM_READWRITE 
+						     | G_PARAM_LAX_VALIDATION));
+
+  g_object_class_install_property (gobject_class, PROP_ORIENTATION,
+				   g_param_spec_int ("orientation",
+						     "", "", 0,
+						     N_ORIENT_IDX - 1,
+						     0,
+						     G_PARAM_READWRITE));
+
+  g_object_class_install_property (gobject_class, PROP_TYPE,
+				   g_param_spec_int ("type",
+						     "", "", 0,
+						     N_TYPE_IDX - 1,
+						     0,
+						     G_PARAM_READWRITE));
+
+  g_object_class_install_property (gobject_class, PROP_USEFILE,
+				   g_param_spec_boolean ("usefile",
+							 "", "", FALSE,
+							 G_PARAM_READWRITE));
+}
+
+/*! \todo Finish function documentation
+ *  \brief
+ *  \par Function Description
+ *
+ */
+GType
+print_dialog_get_type ()
+{
+  static GType print_dialog_type = 0;
+ 
+  if (!print_dialog_type)
+    {
+      static const GTypeInfo print_dialog_info = {
+	sizeof (PrintDialogClass),
+	NULL,			/* base_init */
+	NULL,			/* base_finalize */
+	(GClassInitFunc) print_dialog_class_init,
+	NULL,			/* class_finalize */
+	NULL,			/* class_data */
+	sizeof (PrintDialog),
+	0,			/* n_preallocs */
+	(GInstanceInitFunc) print_dialog_init,
+      };
+      print_dialog_type = g_type_register_static (GTK_TYPE_DIALOG,
+						  "PrintDialog",
+						  &print_dialog_info, 0);
+    }
+
+  return print_dialog_type;
+}
+
+/*! \todo Finish function documentation
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void
+x_print_setup (TOPLEVEL * w_current, char *filename)
+{
+  gchar * command = w_current->print_command;
+  gint orient = w_current->print_orientation;
+  gint type = w_current->print_output_type;
+  gint paperidx, x, y, result;
+  gchar *string, *destination;
+  gboolean usefile = FALSE;
+     
+  /* Work out current paper size by iterating through available paper
+   * sizes.  Set the default paper size as the active selection */
+
+  /* FIXME: ought to have a TOPLEVEL property containing
+   * default paper size name, this is somewhat hackish. No
+   * better way of doing it with current implementation of
+   * varying paper size though. */
+  paperidx = 0;
+  while (TRUE)
+    {
+      string = (gchar *) s_papersizes_get (paperidx);
+      s_papersizes_get_size (string, &x, &y);
+
+      if ((x == w_current->paper_width)
+	  && (y == w_current->paper_height))
+	{
+	  break;
+	}
+      if (string == NULL)
+	{
+	  paperidx = 0;
+	  break;
+	}
+      paperidx++;
+     }
+ 
+  /* Create a print dialog, find out whether the user clicks Print or
+     Cancel, and then print or return accordingly */
+  GtkDialog *dialog = GTK_DIALOG (g_object_new (TYPE_PRINT_DIALOG,
+						"command", command,
+						"filename", filename,
+						"papersize", paperidx,
+						"orientation", orient,
+						"type", type,
+						"usefile", usefile,
+						 NULL));
+  gtk_widget_show_all (GTK_WIDGET (dialog));
+  result = gtk_dialog_run (dialog);
+  
+  if (result == GTK_RESPONSE_ACCEPT)
+    {
+      /* Extract values from dialog and set the paper size */
+      g_object_get (dialog,
+		    "command", &command,
+		    "filename", &filename,
+		    "papersize", &paperidx,
+		    "orientation", &w_current->print_orientation,
+		    "type", &w_current->print_output_type,
+		    "usefile", &usefile,
+		    NULL);
+
+      s_papersizes_get_size (s_papersizes_get (paperidx),
+			     &w_current->paper_width,
+			     &w_current->paper_height);
+		
+      /* de select everything first */
+      o_select_run_hooks (w_current, NULL, 2);
+      o_selection_remove_most (w_current,
+			       w_current->page_current->selection2_head);
+
+      if (usefile && filename[0])
+	/* Print to file */
+	{
+	  destination = filename;
+	  result = f_print_file (w_current, filename);
+	}
+      else if (command[0])
+	/* Print to command */
+	{
+	  destination = command;
+	  result = f_print_command (w_current, command);
+	}
+      else
+	{
+	  s_log_message (_("No print destination specified\n"));
+	  return;
+	}
+
+      /* Check whether it worked */
+      if (result)
+	{
+	  s_log_message (_("Cannot print current schematic to [%s]\n"), 
+			 destination);
+	}
+      else
+	{
+	  s_log_message (_("Printed current schematic to [%s]\n"), 
+			 destination);
+	}
+    }
+   
+  /* We don't need the dialog any more */
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+
 }

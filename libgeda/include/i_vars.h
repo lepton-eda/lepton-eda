@@ -11,3 +11,5 @@ extern char *default_bus_ripper_symname;
 extern char *default_postscript_prolog;
 
 extern char *default_always_promote_attributes;
+
+extern char *default_print_command;

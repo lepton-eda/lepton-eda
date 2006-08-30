@@ -213,10 +213,6 @@ TOPLEVEL *s_toplevel_new (void)
 
 /*   toplevel->fileselect */
 
-  toplevel->pwindow = NULL;
-  toplevel->plib_list = NULL;
-  toplevel->pfilename_entry = NULL; 
-
   toplevel->iwindow = NULL;
   toplevel->ifilename_entry = NULL; 
 
@@ -472,6 +468,7 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
   g_free (toplevel->scheme_directory);
   g_free (toplevel->bitmap_directory);
   g_free (toplevel->bus_ripper_symname);
+  g_free (toplevel->print_command);
   
   /* free all fonts */
   /* if you close a window, then you free the font set... */

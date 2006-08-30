@@ -15,6 +15,7 @@ void a_zoom_box_rubberband(TOPLEVEL *w_current, int x, int y);
 void correct_aspect(TOPLEVEL *w_current);
 /* g_funcs.c */
 SCM g_funcs_print(SCM filename);
+SCM g_funcs_postscript(SCM filename);
 SCM g_funcs_image(SCM filename);
 SCM g_funcs_exit(void);
 SCM g_funcs_log(SCM msg);
@@ -275,6 +276,7 @@ SCM g_rc_auto_save_interval(SCM seconds);
 SCM g_rc_drag_can_move(SCM mode);
 SCM g_rc_mousepan_gain(SCM mode);
 SCM g_rc_keyboardpan_gain(SCM mode);
+SCM g_rc_print_command(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
@@ -932,15 +934,6 @@ void x_preview_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current);
 void x_preview_setup_rest(TOPLEVEL *preview);
 TOPLEVEL *x_preview_setup(GtkWidget *xfwindow, GtkWidget *drawbox);
 /* x_print.c */
-gint print_landscape(GtkWidget *w, TOPLEVEL *w_current);
-gint print_portrait(GtkWidget *w, TOPLEVEL *w_current);
-gint x_print_set_window(GtkWidget *w, TOPLEVEL *w_current);
-gint x_print_set_extents(GtkWidget *w, TOPLEVEL *w_current);
-gint x_print_set_nomargins(GtkWidget *w, TOPLEVEL *w_current);
-gint x_print_change_size(GtkWidget *gtklist, TOPLEVEL *w_current);
-gint x_print_print(GtkWidget *w, TOPLEVEL *w_current);
-gint x_print_cancel(GtkWidget *w, TOPLEVEL *w_current);
-int x_print_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 void x_print_setup(TOPLEVEL *w_current, char *filename);
 /* x_script.c */
 void script_selection_ok(GtkWidget *w, TOPLEVEL *w_current);

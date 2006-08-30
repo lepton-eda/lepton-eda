@@ -25,7 +25,9 @@ void f_print_set_color(FILE *fp, int color);
 int f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y);
 void f_print_footer(FILE *fp);
 void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head, int start_x, int start_y, float scale, int unicode_count, gunichar *unicode_table);
-int f_print(TOPLEVEL *w_current, const char *filename);
+int f_print_file (TOPLEVEL *w_current, const char *filename);
+int f_print_command (TOPLEVEL *w_current, const char *command);
+int f_print_stream(TOPLEVEL *w_current, FILE *fp);
 void f_print_set_type(TOPLEVEL *w_current, int type);
 int f_print_initialize_glyph_table(void);
 

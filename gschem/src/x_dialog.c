@@ -3252,9 +3252,6 @@ void x_dialog_raise_all(TOPLEVEL *w_current)
   }
 #endif
 
-  if(w_current->pwindow) {
-    gdk_window_raise(w_current->pwindow->window);
-  }
   if(w_current->iwindow) {
     gdk_window_raise(w_current->iwindow->window);
   }

@@ -57,6 +57,7 @@
 #define DEFAULT_BUS_RIPPER_SYMNAME "busripper-1.sym"
 #define DEFAULT_POSTSCRIPT_PROLOG  "prolog.ps"
 #define DEFAULT_ALWAYS_PROMOTE_ATTRIBUTES ""
+#define DEFAULT_PRINT_COMMAND "lpr"
 
 int   default_init_right = WIDTH_C;
 int   default_init_bottom = HEIGHT_C;
@@ -68,6 +69,7 @@ char *default_bitmap_directory = NULL;
 char *default_bus_ripper_symname = NULL;
 char *default_postscript_prolog = NULL;
 char *default_always_promote_attributes = NULL;
+char *default_print_command = NULL;
 
 /*! \brief Initialize variables in TOPLEVEL object
  *  \par Function Description
@@ -91,6 +93,7 @@ void i_vars_libgeda_set(TOPLEVEL *w_current)
   INIT_STR(w_current, bus_ripper_symname, DEFAULT_BUS_RIPPER_SYMNAME);
   INIT_STR(w_current, postscript_prolog,  DEFAULT_POSTSCRIPT_PROLOG);
   INIT_STR(w_current, always_promote_attributes, DEFAULT_ALWAYS_PROMOTE_ATTRIBUTES);
+  INIT_STR(w_current, print_command, DEFAULT_PRINT_COMMAND);
 
 }
 
@@ -111,6 +114,7 @@ void i_vars_setnames(TOPLEVEL *w_current)
   w_current->bitmap_directory   = g_strdup (DEFAULT_BITMAP_DIRECTORY);
   w_current->bus_ripper_symname = g_strdup (DEFAULT_BUS_RIPPER_SYMNAME);
   w_current->always_promote_attributes = g_strdup (DEFAULT_ALWAYS_PROMOTE_ATTRIBUTES);
+  w_current->print_command = g_strdup (DEFAULT_PRINT_COMMAND);
 }
 
 /*! \brief Free default names
@@ -128,4 +132,5 @@ void i_vars_freenames()
   g_free(default_bus_ripper_symname);
   g_free(default_postscript_prolog);
   g_free(default_always_promote_attributes);
+  g_free(default_print_command);
 }

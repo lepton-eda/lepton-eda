@@ -352,16 +352,73 @@ void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
   return;
 }
 
-/*! \brief Print the current TOPLEVEL object to a postscript document.
+/*! \brief Print the current TOPLEVEL object to a file as a postscript
+ *  document.  
+ *
  *  \par Function Description
  *
  *  \param [in] w_current  The TOPLEVEL object to print.
  *  \param [in] filename   The file name of the output postscript document.
  *  \return 0 on success, -1 on failure.
  */
-int f_print(TOPLEVEL *w_current, const char *filename)
+int f_print_file (TOPLEVEL *w_current, const char *filename)
 {
   FILE *fp;
+  int result;
+
+  /* dots are breaking my filename selection hack hack !!!! */
+  fp = fopen(filename, "wb"); /* Use "wb" for safety on e.g. Win32 */
+
+  /* check to see if it worked */ 
+  if (fp == NULL) {
+    s_log_message("Could not open [%s] for printing\n", filename);
+    return -1;
+  }
+
+  result = f_print_stream(w_current, fp);
+  fclose (fp);
+  return result;
+}
+
+/*! \brief Opens a pipe to the specified command and prints the
+ *  current TOPLEVEL object to the pipe as a postscript document.
+ *
+ *  \par Function Description
+ *
+ *  \param [in] w_current  The TOPLEVEL object to print.
+ *  \param [in] command    The command to print to.
+ *  \return 0 on success, -1 on failure.
+ */
+int f_print_command (TOPLEVEL *w_current, const char *command)
+{
+  FILE *fp;
+  int result;
+
+  fp = popen (command, "w");
+
+  /* check to see if it worked */ 
+  if (fp == NULL) 
+    {
+      s_log_message("Could not execute command [%s] for printing\n", command);
+      return -1;
+    }
+
+  result = f_print_stream (w_current, fp);
+  pclose (fp);
+  return result;
+}
+
+/*! \brief Print the current TOPLEVEL object to a stream as a
+ *  postscript document.  
+ *  \par Function Description
+ *
+ *  \param [in] w_current  The TOPLEVEL object to print.
+ *  \param [in] fp         A pointer to an open IO stream
+ *  \return 0 on success, -1 on failure.
+ */
+
+int f_print_stream(TOPLEVEL *w_current, FILE *fp)
+{
   int origin_x, origin_y, bottom, right;
   int margin_x, margin_y;
   int dx,dy;
@@ -378,16 +435,6 @@ int f_print(TOPLEVEL *w_current, const char *filename)
   unicode_count = f_print_get_unicode_chars(w_current,
 			 w_current->page_current->object_head, 
 			 0, unicode_table);
-
-
-  /* dots are breaking my filename selection hack hack !!!! */
-  fp = fopen(filename, "w");
-
-  /* check to see if it worked */ 
-  if (fp == NULL) {
-    s_log_message("Could not open [%s] for printing\n", filename);
-    return(-1);
-  }
 
   /*	printf("%d %d\n", w_current->paper_width, w_current->paper_height);*/
 
@@ -539,7 +586,6 @@ int f_print(TOPLEVEL *w_current, const char *filename)
 
   f_print_footer(fp);
 
-  fclose(fp);
   return(0);
 }
 

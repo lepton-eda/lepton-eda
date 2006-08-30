@@ -148,12 +148,14 @@ static struct gsubr_t gschem_funcs[] = {
   { "add-attribute-offset",      1, 0, 0, g_rc_add_attribute_offset },
   { "mousepan-gain",             1, 0, 0, g_rc_mousepan_gain },
   { "keyboardpan-gain",          1, 0, 0, g_rc_keyboardpan_gain },
+  { "print-command",             1, 0, 0, g_rc_print_command },
 
   /* backup functions */
   { "auto-save-interval",        1, 0, 0, g_rc_auto_save_interval },
 
   /* general guile functions */
   { "gschem-print",              1, 0, 0, g_funcs_print },
+  { "gschem-postscript",         1, 0, 0, g_funcs_postscript },
   { "gschem-image",              1, 0, 0, g_funcs_image },
   { "gschem-key-name",           1, 0, 0, g_funcs_key_name },
   { "gschem-key-value",          1, 0, 0, g_funcs_key_value },

@@ -16,6 +16,6 @@
 (gschem-use-rc-values)
 
 ; filename is specified on the command line
-(gschem-print "dummyfilename")
+(gschem-postscript "dummyfilename")
 
 (gschem-exit)

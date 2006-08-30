@@ -52,9 +52,28 @@ SCM g_funcs_print(SCM filename)
               SCM_ARG1, "gschem-print");
 
   if (output_filename) {
-    f_print (global_window_current, output_filename);
+    f_print_file (global_window_current, output_filename);
   } else  {
-    f_print (global_window_current, SCM_STRING_CHARS (filename));
+    f_print_file (global_window_current, SCM_STRING_CHARS (filename));
+  }
+  
+  return SCM_BOOL_T;
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+SCM g_funcs_postscript(SCM filename)
+{
+  SCM_ASSERT (SCM_NIMP (filename) && SCM_STRINGP (filename), filename,
+              SCM_ARG1, "gschem-postscript");
+
+  if (output_filename) {
+    f_print_file (global_window_current, output_filename);
+  } else  {
+    f_print_file (global_window_current, SCM_STRING_CHARS (filename));
   }
   
   return SCM_BOOL_T;

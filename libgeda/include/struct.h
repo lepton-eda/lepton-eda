@@ -616,10 +616,6 @@ struct st_toplevel {
   /* each of the different */
   /* members of this array are */
 
-  GtkWidget *pwindow;			/* printing dialog box */
-  GtkWidget *plib_list;			/* paper size box */
-  GtkWidget *pfilename_entry; 
-
   GtkWidget *iwindow;			/* image write dialog box */
   GtkWidget *ifilename_entry; 
 
@@ -888,6 +884,9 @@ struct st_toplevel {
 
   /* Controls the gain of the keyboard pan */
   int keyboardpan_gain;
+
+  /* The command to send postscript to when printing */
+  char *print_command;
 
   /* gnetlist specific */
   int net_naming_priority;

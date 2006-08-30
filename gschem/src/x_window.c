@@ -109,7 +109,6 @@ void x_window_setup (TOPLEVEL *toplevel)
   toplevel->trwindow = NULL;
   toplevel->tswindow = NULL;
   toplevel->pswindow = NULL;
-  toplevel->pwindow = NULL;
   toplevel->iwindow = NULL;
   toplevel->abwindow = NULL;
   toplevel->hkwindow = NULL;
@@ -796,9 +795,6 @@ void x_window_close(TOPLEVEL *w_current)
 
   if (w_current->iwindow)
   gtk_widget_destroy(w_current->iwindow);
-
-  if (w_current->pwindow)
-  gtk_widget_destroy(w_current->pwindow);
 
   if (w_current->hkwindow)
   gtk_widget_destroy(w_current->hkwindow);

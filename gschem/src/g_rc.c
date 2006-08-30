@@ -1710,3 +1710,25 @@ SCM g_rc_keyboardpan_gain(SCM gain)
 
   return SCM_BOOL_T;
 }
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+SCM g_rc_print_command(SCM scm_command)
+#define FUNC_NAME "print-command"
+{
+  char *command;
+
+  SCM_ASSERT (SCM_STRINGP (scm_command), scm_command,
+              SCM_ARG1, FUNC_NAME);
+  
+  command = SCM_STRING_CHARS (scm_command);
+
+  g_free (default_print_command);
+  default_print_command = g_strdup (command);
+
+  return SCM_BOOL_T;
+}
+#undef FUNC_NAME
