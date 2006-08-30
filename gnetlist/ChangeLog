@@ -1,3 +1,9 @@
+2006-08-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-gsch2pcb.scm.in: Applied patch by Jeff Mallatt to
+	fix gnet-gsch2pcb.scm fix m4 params bug/limit of 3.  Patch#1542726.
+	Thanks.
+
 2006-08-22 Ales Hvezda   <ahvezda@geda.seul.org>
 	
 	* scheme/Makefile.am: Added a couple files to the distclean and

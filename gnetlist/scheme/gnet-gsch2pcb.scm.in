@@ -85,6 +85,14 @@
         (cons (car the-list) (split-to-list (cdr the-list)))
         (list the-string))))
 
+;; Joins the elements of a list of strings into a single string,
+;; with each element prefixed by a given prefix string.
+(define (list-join-with-prefixes the-list prefix)
+  (if (null? the-list)
+      ""
+      (string-append prefix (car the-list)
+                     (list-join-with-prefixes (cdr the-list) prefix))))
+
 
 (define gsch2pcb:write-value-footprint
   (lambda (pipe ls)
@@ -97,37 +105,11 @@
 
                (display (string-append "PKG_" (car footprint)) pipe)
                (display (string-append "(`" (car footprint)) pipe)
-               (case (length footprint)
-                 ((1) #f)
-                 ((2) (display (string-append "-" (cadr footprint)) pipe))
-                 ((3) (display (string-append "-" (cadr footprint) 
-                                         "-" (caddr footprint)) pipe))
-;; Cases 4 & 5 are a kludge to help with spaces in file element names
-;; This makes up to 4 spaces possible and should be generalized
-                 ((4) (display (string-append "-" (cadr footprint) 
-                           "-" (caddr footprint) "-"
-                           (caddr (cdr footprint))) pipe))
-                 ((5) (display (string-append "-" (cadr footprint)
-                           "-" (caddr footprint)
-                           "-" (caddr (cdr footprint)) 
-                           "-" (caddr (cdr (cdr footprint)) )) pipe)))
+               (display (list-join-with-prefixes (cdr footprint) "-") pipe)
                (display (string-append "',`" refdes "',`") pipe)
 
                (display value pipe)
-               (case (length footprint)                   
-                 ((1) #f)  
-                 ((2) (display (string-append "',`" (cadr footprint)) pipe))
-                 ((3) (display (string-append "',`" (cadr footprint) 
-                                       "',`" (caddr footprint)) pipe))
-                 ((4) (display (string-append "',`" (cadr footprint) 
-                           "',`" (caddr footprint)
-                           "',`" (caddr (cdr footprint))) pipe))
-                 ((5) (display (string-append "," (cadr footprint)
-                           "',`" (caddr footprint)
-                           "',`" (caddr (cdr footprint)) 
-                           "',`" (caddr (cdr (cdr footprint)) )) pipe))
-                 (else (display
-                    (string-append "ERROR!, no footprint in device " refdes))))
+               (display (list-join-with-prefixes (cdr footprint) "',`") pipe)
                (display "')" pipe)
                (newline pipe)
                (gsch2pcb:write-value-footprint pipe (cdr ls))) )))
