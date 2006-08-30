@@ -181,10 +181,10 @@
 
 ; keyboardpan-gain integer
 ;
-; Controls how much the display pans when using the keyboard cursors.  
-; A larger value provides greater pan distance when moving the mouse, 
-; while a smaller value provides a smoother, but smaller pan distance 
-; when moving the mouse.
+; Controls how much the display pans when using the keyboard cursor keys.  
+; A larger value provides greater pan distance when pressing the cursor 
+; keys, while a smaller value provides a smoother, but smaller pan 
+; distance when moving the cursor keys.
 (keyboardpan-gain 20)
 ;(keyboardpan-gain 10)
 ;(keyboardpan-gain 1)

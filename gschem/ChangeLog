@@ -1,3 +1,7 @@
+2006-08-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gschemrc.in: Fixed some typos in comments. 
+
 2006-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* INSTALL: Updated install file a little (still somewhat dated)
