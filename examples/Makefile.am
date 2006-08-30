@@ -1,7 +1,11 @@
 
 SUBDIRS = gTAG lightning_detector RF_Amp TwoStageAmp
 
-EXTRA_DIST = autogen.sh
+exampledir = @GEDADOCDIR@/examples/
+
+example_DATA = README 
+
+EXTRA_DIST = autogen.sh $(example_DATA)
 
 distclean-local:
 	-rm -rf autom4te.cache

@@ -1,3 +1,9 @@
+2006-08-30 Werner Hoch	<werner.ho@gmx.de>
+
+	* configure.ac: fixed installation error. Install into docdir
+	
+	* */Makefile.am: changed for the installation
+
 2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * README: Updated the README a little to be ready for the next

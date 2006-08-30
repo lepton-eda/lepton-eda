@@ -1,6 +1,5 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT
-AC_CONFIG_SRCDIR([gTAG/gTAG.sch])
 
 PACKAGE=geda-examples
 VERSION=20060824
@@ -9,15 +8,24 @@ echo Configuring $PACKAGE version $VERSION
 # Initialize automake 
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
 
-# Initialize maintainer mode
-AM_MAINTAINER_MODE
 
-HOME=`echo $HOME`
-DATADIR=gEDA
-GEDADATADIR=$datadir/$DATADIR
+# Expand the prefix variable
+# I don't like the way this is done, but it works (I hope).
+if eval "test x$prefix = xNONE"; then
+ dprefix=$ac_default_prefix
+else
+ dprefix=$prefix
+fi
 
-AC_SUBST(VERSION)
-AC_SUBST(GEDADATADIR)
+gedadocdir=$dprefix/share/doc/geda-doc
+# --with-docdir : tells where to store documentation if not default
+AC_ARG_WITH(docdir,
+    [  --with-docdir      Where to store documentation if not default.],
+	gedadocdir=$withval)
+expandgedadocdir=`echo $gedadocdir`
+GEDADOCDIR=$expandgedadocdir
+AC_SUBST(GEDADOCDIR)
+
 
 AC_CONFIG_FILES([ 
         Makefile 

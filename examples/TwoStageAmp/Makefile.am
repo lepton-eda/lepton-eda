@@ -1,7 +1,11 @@
 
 SUBDIRS = sym
 
-EXTRA_DIST = Simulation.cmd TwoStageAmp.sch spice.netlist gafrc
+exampledir = @GEDADOCDIR@/examples/TwoStageAmp/
+
+example_DATA = Simulation.cmd TwoStageAmp.sch spice.netlist gafrc
+
+EXTRA_DIST = $(example_DATA)
 
 MOSTLYCLEANFILES = gschem.log *~
 CLEANFILES = gschem.log *~
