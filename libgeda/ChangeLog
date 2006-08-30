@@ -125,7 +125,6 @@
  	Fixed distclean setup to not remove c source files.
 
  	* docs/Makefile.am: Added support for Doxygen html and LaTex
- 	
  	documents. Fixed distclean setup to not remove required Doxygen html
  	files, and to remove html and latex subdirectories on clean.
  	
@@ -146,7 +145,6 @@
 
 	* noweb/o_arc_basic.nw, noweb/o_circle_basic.nw, noweb/s_cue.nw:
 	  Removing of references to `mils' function in PS output.
-
 
 2006-06-16 Werner Hoch <werner.ho@gmx.de
 
