@@ -39,9 +39,6 @@
 
 void gnetlist_quit(void)
 {
-#ifdef HAS_GTK12
-    GSList *aux;
-#endif
     s_clib_free();
     s_slib_free();
     s_rename_destroy_all();

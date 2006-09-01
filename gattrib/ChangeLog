@@ -1,3 +1,7 @@
+2006-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated gtk+ tests to look for 2.4.x or greater.
+
 2006-08-21   SDB <sdb@cloud9.net>
 
         * include/prototype.h, src/s_table.c, src/s_toplevel.c: Fixed

@@ -1,3 +1,7 @@
+2006-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated gtk+ tests to look for 2.4.x or greater.
+
 2006-08-30 Werner Hoch <werner.ho@gmx.de>
 
 	* src/o_attrib.c: fix for Bug#1547138: Segfault on adding 

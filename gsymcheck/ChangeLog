@@ -1,3 +1,7 @@
+2006-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated gtk+ tests to look for 2.4.x or greater.
+
 2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * README: Updated the README a little to be ready for the next

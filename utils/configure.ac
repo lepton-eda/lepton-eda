@@ -94,7 +94,7 @@ fi
 ############################################################################
 
 ############################################################################
-# Check for gtk+ 2.2 start
+# Check for gtk+ 2.4 start
 # 
 
 # Check for pkg-config
@@ -103,25 +103,25 @@ if test $PKG_CONFIG = no; then
    AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
 fi
 
-PKG_CHECK_MODULES(GTK22, gtk+-2.0 >= 2.2.0, GTK22="yes", no_GTK22="yes")
+PKG_CHECK_MODULES(GTK24, gtk+-2.0 >= 2.4.0, GTK24="yes", no_GTK24="yes")
 
 # This next bit of code figures out what gtk we need to use.
-if test "$GTK22" = "yes"
+if test "$GTK24" = "yes"
 then
 
-   AC_DEFINE(HAS_GTK22, 1, [If gtk+ 2.2.x has been installed, define this])
-   GTK_CFLAGS=$GTK22_CFLAGS
-   GTK_LIBS=$GTK22_LIBS
+   AC_DEFINE(HAS_GTK24, 1, [If gtk+ 2.4.x has been installed, define this])
+   GTK_CFLAGS=$GTK24_CFLAGS
+   GTK_LIBS=$GTK24_LIBS
    GTK_VERSION=`$PKG_CONFIG gtk+-2.0 --modversion`
 
    # Search for glib
-   PKG_CHECK_MODULES(GLIB22, glib-2.0 >= 2.2.0, GLIB22="yes", no_GLIB22="yes")
-   if test "$GLIB22" != "yes"
+   PKG_CHECK_MODULES(GLIB24, glib-2.0 >= 2.4.0, GLIB24="yes", no_GLIB24="yes")
+   if test "$GLIB24" != "yes"
    then
-       AC_MSG_ERROR([Cannot find glib 2.2.x, install it and rerun ./configure.])
+       AC_MSG_ERROR([Cannot find glib 2.4.x, install it and rerun ./configure.])
    fi
-   GLIB_CFLAGS=$GLIB22_CFLAGS
-   GLIB_LIBS=$GLIB22_LIBS
+   GLIB_CFLAGS=$GLIB24_CFLAGS
+   GLIB_LIBS=$GLIB24_LIBS
    GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
 
 else
@@ -130,15 +130,15 @@ fi
 
 if test "$GTK_VERSION" = ""
 then
-   AC_MSG_ERROR([Cannot find gtk+ 2.2.x or later, please install gtk+.])
+   AC_MSG_ERROR([Cannot find gtk+ 2.4.x or later, please install gtk+.])
 fi
 
 # 
-# Check for gtk+ 1.2 and 2.2 end
+# Check for gtk+ 2.4 end
 ############################################################################
 
 ############################################################################
-# Check for glib 1.2 and 2.2 start
+# Check for glib 2.4 start
 # 
 
 # Check for pkg-config
@@ -147,38 +147,29 @@ if test $PKG_CONFIG = no; then
    AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
 fi
 
-# Search for glib 2.2.x first (only if we are not forcing the glib to 1.2)
+# Search for glib 2.4.x first (only if we are not forcing the glib to 1.2)
 if test "$opt_gtkver" != "1.2"
 then
-   PKG_CHECK_MODULES(GLIB22, glib-2.0 >= 2.2.0, GLIB22="yes", no_GLIB22="yes")
+   PKG_CHECK_MODULES(GLIB24, glib-2.0 >= 2.4.0, GLIB24="yes", no_GLIB24="yes")
 fi
 
 # This next bit of code figures out what glib we need to use.
-if test "$GLIB22" = "yes" -a "$opt_gtkver" != "1.2"
+if test "$GLIB24" = "yes" -a "$opt_gtkver" != "1.2"
 then
-
-   GLIB_CFLAGS=$GLIB22_CFLAGS
-   GLIB_LIBS=$GLIB22_LIBS
+   GLIB_CFLAGS=$GLIB24_CFLAGS
+   GLIB_LIBS=$GLIB24_LIBS
    GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
-
 else
-
-   # Search for glib 1.2 now
-   PKG_CHECK_MODULES(GLIB12, glib >= 1.2.3, GLIB12="yes", no_GLIB12="yes")
-
-   GLIB_CFLAGS=$GLIB12_CFLAGS
-   GLIB_LIBS=$GLIB12_LIBS
-   GLIB_VERSION=`$PKG_CONFIG glib --modversion`
-
+   GLIB_VERSION=""
 fi
 
 if test "$GLIB_VERSION" = ""
 then
-   AC_MSG_ERROR([Cannot find glib 2.2.x or glib 1.2.x, install one of them.])
+   AC_MSG_ERROR([Cannot find glib 2.4.x, install one of them.])
 fi
 
 # 
-# Check for glib 1.2 and 2.2 end
+# Check for glib 2.4 end
 ############################################################################
 
 #########################################################################
