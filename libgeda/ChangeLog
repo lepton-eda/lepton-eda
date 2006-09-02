@@ -1,3 +1,8 @@
+2006-09-02  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/s_toplevel.c (s_toplevel_new): Added missing initialization
+	of TOPLEVEL print_command.
+
 2006-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated gtk+ tests to look for 2.4.x or greater.

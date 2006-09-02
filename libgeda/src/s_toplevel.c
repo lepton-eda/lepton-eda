@@ -409,6 +409,8 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->mousepan_gain = 5;
   toplevel->keyboardpan_gain = 10;
 
+  toplevel->print_command = NULL;
+
   toplevel->net_naming_priority = 0;
   toplevel->hierarchy_traversal = 0;
   toplevel->hierarchy_uref_mangle = 0;
