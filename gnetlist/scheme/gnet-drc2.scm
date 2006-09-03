@@ -694,7 +694,7 @@
 		   (display "': " port)
 		   (display (drc2:display-pins-of-type port type1 
 							 connections) port)
-		   (display (string-append "\n\tare connected by net '" netname))
+		   (display (string-append "\n\tare connected by net '" netname) port)
                    (display "'\n\tto pin(s) with pintype '" port)
 		   (display (drc2:get-full-name-of-pintype-by-number type2) port)
 		   (display "': " port)

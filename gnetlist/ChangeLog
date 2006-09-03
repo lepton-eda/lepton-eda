@@ -1,3 +1,9 @@
+2006-09-03 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-drc2.scm: Applied patch #1551415 from Tomas Solc.
+	  Some part of an error message was written in standard output 
+	  instead of the the output file. Thanks.
+	
 2006-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Updated gtk+ tests to look for 2.4.x or greater.
