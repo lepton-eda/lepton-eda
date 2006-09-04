@@ -1,3 +1,13 @@
+2006-09-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/i_vars.c: Removed code that sets up the autosave callback.
+	The callback was being registered for the preview toplevel as well
+	and that caused all sorts of problems.
+
+	* src/x_window.c: Added a call to s_page_autosave_init() right after
+	i_vars_set.  This is the only place we want the autosave callback
+	to be registered.
+
 2006-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated gtk+ tests to look for 2.4.x or greater.

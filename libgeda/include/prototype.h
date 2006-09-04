@@ -571,6 +571,7 @@ void s_page_print_all (TOPLEVEL *toplevel);
 gint s_page_save_all (TOPLEVEL *toplevel);
 gboolean s_page_check_changed (PAGE *head);
 void s_page_clear_changed (PAGE *head);
+void s_page_autosave_init(TOPLEVEL *toplevel);
 gint s_page_autosave (TOPLEVEL *w_current);
 
 /* s_papersizes.c */

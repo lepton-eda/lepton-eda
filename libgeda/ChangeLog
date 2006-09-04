@@ -1,3 +1,14 @@
+2006-09-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_toplevel.c: Added code to s_toplevel_delete 
+	to check for and remove a GSource before it is deleted.  Patch by
+	Patrick Bernaud.  Thanks!
+
+	* src/s_page.c: Added s_page_autosave_init to setup the autosave
+	callback (instead of doing it in i_vars_set) which was also
+	be set in the preview toplevel (having the callback there is
+	undesirable).
+
 2006-09-02  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/s_toplevel.c (s_toplevel_new): Added missing initialization

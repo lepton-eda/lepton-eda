@@ -525,6 +525,24 @@ void s_page_clear_changed (PAGE *head)
 
 }
 
+/*! \brief Autosave initialization function.
+ *  \par Function Description
+ *  This function sets up the autosave callback function.
+ *
+ *  \param [in] toplevel  The TOPLEVEL object.
+ */
+void s_page_autosave_init(TOPLEVEL *toplevel)
+{
+  if (toplevel->auto_save_interval != 0) {
+
+    /* 1000 converts seconds into milliseconds */
+    toplevel->auto_save_timeout = 
+      g_timeout_add(toplevel->auto_save_interval*1000,
+                    (GSourceFunc) s_page_autosave,
+                    toplevel);
+  }
+}
+
 /*! \brief Autosave callback function.
  *  \par Function Description
  *  This function is a callback of the glib g_timeout functions.

@@ -459,6 +459,12 @@ TOPLEVEL *s_toplevel_new (void)
  */
 void s_toplevel_delete (TOPLEVEL *toplevel)
 {
+  if (toplevel->auto_save_timeout != 0) {
+    gboolean ret;
+    ret = g_source_remove (toplevel->auto_save_timeout);
+    g_assert (ret);
+  }
+
   if (toplevel->wid == -1) {
     /* do no delete head */
     return;

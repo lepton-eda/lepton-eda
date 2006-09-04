@@ -245,10 +245,4 @@ void i_vars_set(TOPLEVEL *w_current)
   w_current->keyboardpan_gain = default_keyboardpan_gain;
 
   w_current->auto_save_interval = default_auto_save_interval;
-  if (w_current->auto_save_interval != 0) {
-    w_current->auto_save_timeout = 
-        g_timeout_add(w_current->auto_save_interval*1000,
-		      (GSourceFunc) s_page_autosave,
-		      w_current);
-  }
 }

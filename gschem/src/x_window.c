@@ -135,7 +135,10 @@ void x_window_setup (TOPLEVEL *toplevel)
   /* x_window_setup_rest() - END */
 
   /* immediately setup user params */
-  i_vars_set (toplevel);
+  i_vars_set(toplevel);
+
+  /* Initialize the autosave callback */
+  s_page_autosave_init(toplevel);
 
   /* make sure none of these events happen till we are done */
   toplevel->DONT_DRAW_CONN = 1;
