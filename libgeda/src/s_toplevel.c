@@ -426,6 +426,7 @@ TOPLEVEL *s_toplevel_new (void)
 
   /* Auto-save interval */
   toplevel->auto_save_interval = 0;
+  toplevel->auto_save_timeout = 0;
 
   /* set the rest of the variables */
   if (variable_set_func) {

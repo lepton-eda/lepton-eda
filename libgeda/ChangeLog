@@ -9,6 +9,10 @@
 	be set in the preview toplevel (having the callback there is
 	undesirable).
 
+	* src/s_toplevel.c: Added the init of auto_save_timeout in 
+	s_toplevel_new().  Pointed out by PeterC and this make valgrind
+	happy again.
+
 2006-09-02  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/s_toplevel.c (s_toplevel_new): Added missing initialization
