@@ -1,3 +1,20 @@
+2006-09-05 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/x_fileselect.c: Applied patch by Peter Clifton: Removed the
+	"discard changes" button from the file selection dialog.
+
+	* src/x_window.c: Applied patch by Peter Clifton: Removed key
+	press event from the main window and moved it to the drawing
+	area and set the mouse focus on the drawing area initially.
+
+	* src/x_fileselect.c: Applied patch by Peter Clifton: Fixed the
+	odd behavior that if the user pressed the ESCAPE key in the saveas
+	dialog box, subsequent attempts to open the dialog box will fail
+	with a critical gtk+ error message:
+		(gschem:4708): Gdk-CRITICAL **: gdk_window_raise: assertion 
+	 	`GDK_IS_WINDOW (window)' failed
+
+
 2006-09-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/i_vars.c: Removed code that sets up the autosave callback.

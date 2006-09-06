@@ -728,6 +728,7 @@ void x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
 
     /* do nothing if SAVEAS_NONE */
   } else {
+    x_fileselect_close (NULL, f_current);
     s_log_message(_("Specify a Filename!\n"));
   }
   if (string != NULL) {
@@ -2331,16 +2332,27 @@ void x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 						   
     } else if ( (filesel_type == SAVEAS) || (filesel_type == SAVEAS_CLOSE) ){
       title = g_strdup(_("Save As..."));
-      f_current->xfwindow = gtk_file_chooser_dialog_new (title, 
-							 GTK_WINDOW(w_current->main_window),
-							 GTK_FILE_CHOOSER_ACTION_SAVE,
-							 GTK_STOCK_SAVE_AS, 
-							 GTK_RESPONSE_ACCEPT,
-							 GTK_STOCK_CANCEL, 
-							 GTK_RESPONSE_CANCEL,
-							 _("Discard changes"),
-							 GTK_RESPONSE_REJECT,
-							 NULL);	     
+      if ( filesel_type == SAVEAS_CLOSE ) {
+        f_current->xfwindow = gtk_file_chooser_dialog_new (title, 
+  							 GTK_WINDOW(w_current->main_window),
+  							 GTK_FILE_CHOOSER_ACTION_SAVE,
+  							 GTK_STOCK_SAVE_AS, 
+  							 GTK_RESPONSE_ACCEPT,
+  							 GTK_STOCK_CANCEL, 
+  							 GTK_RESPONSE_CANCEL,
+  							 _("Discard changes"),
+  							 GTK_RESPONSE_REJECT,
+  							 NULL);
+      } else {
+        f_current->xfwindow = gtk_file_chooser_dialog_new (title, 
+  							 GTK_WINDOW(w_current->main_window),
+  							 GTK_FILE_CHOOSER_ACTION_SAVE,
+  							 GTK_STOCK_SAVE_AS, 
+  							 GTK_RESPONSE_ACCEPT,
+  							 GTK_STOCK_CANCEL, 
+  							 GTK_RESPONSE_CANCEL,
+  							 NULL);
+      }
       gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(f_current->xfwindow), 
 				  sch_filefilter);
       gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(f_current->xfwindow), 
@@ -2367,9 +2379,6 @@ void x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 	    g_free (filename);
 	  }
 	  break;
-        case GTK_RESPONSE_CANCEL:
-	  x_fileselect_close (NULL, f_current);
-	  break;
 	  
         case GTK_RESPONSE_REJECT:
 	  x_fileselect_close (NULL, f_current);
@@ -2378,6 +2387,14 @@ void x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 	  w_current->page_current->CHANGED = 0;
 	  i_callback_page_close (w_current, 0, NULL);
 	  break;
+
+          /* Catch any cancel, and any mechanisms which close the dialog, 
+           * e.g. "Escape" key which returns GTK_RESPONSE_DELETE_EVENT */
+        case GTK_RESPONSE_CANCEL:
+        case GTK_RESPONSE_DELETE_EVENT:
+        default:
+          x_fileselect_close (NULL, f_current);
+          break;
       }
 
       g_free (title);
