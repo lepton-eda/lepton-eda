@@ -175,8 +175,8 @@
 ; Controls how much the display pans when using mousepan.  A larger value
 ; provides greater pan distance when moving the mouse, while a smaller value
 ; provides a smoother, but smaller pan distance when moving the mouse.
-(mousepan-gain 5)
-;(mousepan-gain 1)
+(mousepan-gain 1)
+;(mousepan-gain 5)
 ;(mousepan-gain 10)
 
 ; keyboardpan-gain integer
@@ -798,7 +798,7 @@
 ; Comment in this scheme code if you want automatic numbering when
 ; placing new component and copying components
 ;
-;(load (string-append gedadatarc "/scheme/auto-uref.scm"))
+;(load (string-append gedadata "/scheme/auto-uref.scm"))
 ;(add-hook! add-component-hook auto-uref)
 ;(add-hook! copy-component-hook auto-uref)
 
@@ -888,7 +888,7 @@
 
 
 ; Comment in this to load the functions to place the attributes automatically.
-(load (string-append gedadatarc "/scheme/auto-place-attribs.scm"))
+(load (string-append gedadata "/scheme/auto-place-attribs.scm"))
 
 ; Autoplace pin text attributes hook. 
 ; Comment in these if you want the pin attributes to be automatically placed.
@@ -1500,5 +1500,5 @@
 ;; and there are known (and easy) ways to crash pcb and/or gschem with this code.
 ;; The short answer is neither program likes a pipe to break.
 ;;
-; (load (string-append gedadatarc "/scheme/pcb.scm"))
+; (load (string-append gedadata "/scheme/pcb.scm"))
 

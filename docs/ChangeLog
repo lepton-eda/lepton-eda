@@ -1,3 +1,7 @@
+2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated program version to 20060906.
+
 2006-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/populatemkfiles.sh: Added script to automatically go through

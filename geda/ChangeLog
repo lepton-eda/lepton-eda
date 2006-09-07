@@ -1,3 +1,7 @@
+2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated program version to 20060906.
+
 2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * README: Updated the README a little to be ready for the next

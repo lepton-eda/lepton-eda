@@ -1,3 +1,7 @@
+2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated program version to 20060906.
+
 2006-08-30 Werner Hoch	<werner.ho@gmx.de>
 
 	* configure.ac: fixed installation error. Install into docdir

@@ -1,3 +1,16 @@
+2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated program version to 20060906.
+
+	* lib/system-gschemrc.in: Applied patch for Bug#1552338: 
+	system-gschemrc gedadata/rc mismatch (filed by Charles Lepple).  
+	Also fixed a few other instances where the directory for the
+	scheme files were wrong.
+
+	* lib/system-gschemrc.in: Changed the mouse gain to be unity since
+	various people have mentioned that mouse pan doesn't feel right with
+	a large value.
+
 2006-09-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_fileselect.c: Applied patch by Peter Clifton: Removed the

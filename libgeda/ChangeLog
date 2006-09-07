@@ -1,3 +1,12 @@
+2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Updated program version to 20060906.
+
+	* share/Makefile.am: Changed the install directory of prolog.ps
+	to the DATA directory and not the RC directory since that is
+	where system-gafrc is looking for it.  This bug was found when
+	--with-rcdir was used.  This fix is related to Bug#1552338.
+
 2006-09-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/s_toplevel.c: Added code to s_toplevel_delete 
