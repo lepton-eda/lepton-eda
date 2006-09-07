@@ -29,6 +29,9 @@
 	discovered by make distcheck (have I mentioned how much I like 
 	make distcheck. :-)
 
+	* po/*.po: make dist(check) updated all po files in prep for the
+	new release (20060906).
+
 2006-09-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_fileselect.c: Applied patch by Peter Clifton: Removed the
