@@ -18,6 +18,9 @@
 	with this move it seems), however the focus on the toolbar seems
 	to move when you move the cursor keys (which is a little odd).
 
+	* po/it_IT.po: Updated to the last version provided by Michele 
+	Petrecca. Thanks.
+
 2006-09-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_fileselect.c: Applied patch by Peter Clifton: Removed the

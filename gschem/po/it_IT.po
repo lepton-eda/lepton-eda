@@ -12,9 +12,9 @@ msgstr ""
 "Project-Id-Version: it_IT\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-24 21:07-0400\n"
-"PO-Revision-Date: 2006-07-27 23:43+0200\n"
+"PO-Revision-Date: 2006-08-26 21:55+0200\n"
 "Last-Translator: Michele Petrecca <michelinux@alice.it>\n"
-"Language-Team:  <it@li.org>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -90,23 +90,23 @@ msgstr "Ripristina"
 
 #: src/rcstrings.c:20 src/i_basic.c:94 src/x_window.c:712
 msgid "Select Mode"
-msgstr "Modalità  Selezione"
+msgstr "Modalità Selezione"
 
 #: src/rcstrings.c:21
 msgid "Edit..."
-msgstr "Edita..."
+msgstr "Modifica..."
 
 #: src/rcstrings.c:22
 msgid "Edit Text..."
-msgstr "Edita il Testo..."
+msgstr "Modifica il Testo..."
 
 #: src/rcstrings.c:23 src/i_basic.c:107
 msgid "Copy Mode"
-msgstr "Modalità  Copia"
+msgstr "Modalità Copia"
 
 #: src/rcstrings.c:24 src/i_basic.c:110
 msgid "Move Mode"
-msgstr "Modalità  Spostamento"
+msgstr "Modalità Spostamento"
 
 #: src/rcstrings.c:25 src/i_callbacks.c:814 src/x_multiattrib.c:1160
 msgid "Delete"
@@ -118,7 +118,7 @@ msgstr "Ruota di 90 gradi"
 
 #: src/rcstrings.c:27 src/i_basic.c:114
 msgid "Mirror Mode"
-msgstr "Modalità  Specchio"
+msgstr "Modalità Specchio"
 
 #: src/rcstrings.c:28
 msgid "Slot..."
@@ -138,11 +138,11 @@ msgstr "Sblocca"
 
 #: src/rcstrings.c:32
 msgid "Line Width & Type..."
-msgstr "Larghezza Linea & Tipo..."
+msgstr "Tipo & Larghezza Linea..."
 
 #: src/rcstrings.c:33
 msgid "Fill Type..."
-msgstr "Tipo Riempimento..."
+msgstr "Riempimento..."
 
 #: src/rcstrings.c:34
 msgid "Symbol Translate..."
@@ -367,7 +367,7 @@ msgstr "Documentazione"
 
 #: src/rcstrings.c:95 src/x_multiattrib.c:1299
 msgid "Attributes"
-msgstr "Caratteristiche..."
+msgstr "Caratteristiche"
 
 #: src/rcstrings.c:96 src/i_callbacks.c:3294
 msgid "Attach"
@@ -419,7 +419,7 @@ msgstr "Ampiezza Testo..."
 
 #: src/rcstrings.c:109
 msgid "Toggle Grid On/Off"
-msgstr "Griglia Visibile/Non Visibile"
+msgstr "Modalità Griglia Visibile/Non Visibile"
 
 #: src/rcstrings.c:110
 msgid "Toggle Snap On/Off"
@@ -439,7 +439,7 @@ msgstr ""
 
 #: src/rcstrings.c:114
 msgid "Show Log Window..."
-msgstr "Mostra File Log Finestra..."
+msgstr "Mostra Finestra File di Log..."
 
 #: src/rcstrings.c:115
 msgid "Show Coord Window..."
@@ -463,15 +463,12 @@ msgstr "Hotkeys..."
 
 #: src/a_zoom.c:222
 msgid "Zoom too small!  Cannot zoom further.\n"
-msgstr ""
-"Eccessiva riduzione dell'immagine!  Non è possibile ridurla ulteriormente.\n"
+msgstr "Eccessiva riduzione dell'immagine!  Non è possibile ridurla ulteriormente.\n"
 
 #: src/g_funcs.c:249
 #, c-format
 msgid "Ack! something got fouled up with the keymappings!\n"
-msgstr ""
-"Attenzione: qualcosa non è andato per il verso giusto nella mappatura della "
-"tastiera!\n"
+msgstr "Attenzione: qualcosa non è andato per il verso giusto nella mappatura della tastiera!\n"
 
 #: src/g_hook.c:72
 #, c-format
@@ -489,8 +486,7 @@ msgstr ""
 
 #: src/g_rc.c:109
 #, c-format
-msgid ""
-"While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
+msgid "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
 msgstr ""
 "Assicurati di avere sempre l'ultima versione del file rc; gschem si trova "
 "ancora in uno stato di sviluppo alfa.\n"
@@ -498,12 +494,12 @@ msgstr ""
 #: src/g_rc.c:169
 #, c-format
 msgid "Invalid color [%s] passed to %s\n"
-msgstr "Colore non valido [%s] passato a %s\n"
+msgstr "Colore [%s] non valido passato a %s\n"
 
 #: src/g_rc.c:358
 #, c-format
 msgid "Invalid mode [%s] passed to %s\n"
-msgstr "Modo non valido [%s] passato a %s\n"
+msgstr "Modo [%s] non valido passato a %s\n"
 
 #: src/g_rc.c:519
 #, c-format
@@ -523,7 +519,7 @@ msgstr "Grandezza [%d] passata alla dimensione del testo, non valida\n"
 #: src/g_rc.c:681
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
-msgstr "L'ampiezza [%d] assegnata alla snap size non è corretta\n"
+msgstr "L'ampiezza [%d] , assegnata alla snap size, non è corretta\n"
 
 #: src/g_rc.c:755 src/g_rc.c:758
 #, c-format
@@ -568,17 +564,17 @@ msgstr ""
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr ""
 "Il numero di secondi indicati [%d] non è valido ai fini dell'intervallo di "
-"auto-save\n"
+"auto salvataggio\n"
 
 #: src/g_rc.c:1681
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
-msgstr "L'ampiezza [%d] assegnata alla snap size non è corretta\n"
+msgstr ""
 
 #: src/g_rc.c:1704
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
-msgstr "L'ampiezza [%d] assegnata alla snap size non è corretta\n"
+msgstr ""
 
 #: src/gschem.c:141 src/gschem.c:151
 #, c-format
@@ -590,14 +586,11 @@ msgstr "gEDA/gschem versione %s\n"
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
-msgstr ""
-"gEDA/gschem viene rilasciato SENZA GARANZIA ALCUNA A CAUSA DEL SUO SVILUPPO "
-"IN FASE ALFA; leggere il file COPYING per ulteriori informazioni.\n"
+msgstr "gEDA/gschem viene rilasciato SENZA GARANZIA ALCUNA A CAUSA DEL SUO SVILUPPO IN FASE ALFA; leggere il file COPYING per ulteriori informazioni.\n"
 
 #: src/gschem.c:145 src/gschem.c:155
 #, c-format
-msgid ""
-"This is free software, and you are welcome to redistribute it under certain\n"
+msgid "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Questo software è rilasciato sotto licenza GPL e può essere ridistribuito "
 "sotto determinate\n"
@@ -672,15 +665,15 @@ msgstr ""
 #: src/i_basic.c:126
 #, c-format
 msgid "Paste %d Mode"
-msgstr "Modalità %d Incolla"
+msgstr ""
 
 #: src/i_basic.c:131
 msgid "Net Mode"
-msgstr "Disegna Collegamenti"
+msgstr "Modalità Collegamento"
 
 #: src/i_basic.c:135
 msgid "Bus Mode"
-msgstr "Disegna Bus"
+msgstr "Modalità Bus"
 
 #: src/i_basic.c:138
 msgid "Line Mode"
@@ -720,7 +713,7 @@ msgstr "Copia Multipla"
 
 #: src/i_basic.c:162
 msgid "Multiple Copy Mode"
-msgstr "Modo di Copiatura Multiplo"
+msgstr "Modalità di Copiatura Multipla"
 
 #: src/i_basic.c:197
 msgid "Snap Off"
@@ -841,23 +834,21 @@ msgstr "Converti"
 
 #: src/i_callbacks.c:1038
 msgid "WARNING: Do not translate with snap off!\n"
-msgstr ""
+msgstr "ATTENZIONE: Non effettuare la conversione in modalità snap off!\n"
 
 #: src/i_callbacks.c:1039
 msgid "WARNING: Turning snap on and continuing with translate.\n"
-msgstr ""
+msgstr "ATTENZIONE: Sei in modalità snap off; passa prima in modalità snap on e poi continua con la conversione.\n"
 
 #: src/i_callbacks.c:1046
 msgid "WARNING: Snap grid size is not equal to 100!\n"
-msgstr "ATTENZIONE: L'ampiezza non è uguale a 100!\n"
+msgstr "ATTENZIONE: L'ampiezza snap gride non è uguale a 100!\n"
 
 #: src/i_callbacks.c:1048
 msgid ""
 "WARNING: If you are translating a symbol to the origin, the snap grid size "
 "should be set to 100\n"
-msgstr ""
-"ATTENZIONE: se stai convertendo un simbolo dalla sua origine, è opportuno "
-"che l'ampiezza snap gride venga impostata a 100\n"
+msgstr "ATTENZIONE: se stai convertendo un simbolo dalla sua origine, è opportuno che l'ampiezza snap gride venga impostata a 100\n"
 
 #: src/i_callbacks.c:1068
 msgid "Embed"
@@ -904,7 +895,7 @@ msgstr "Chiusura [%s]\n"
 
 #: src/i_callbacks.c:1909
 msgid "Really revert page?"
-msgstr "Vuoi veramente ritornare alla pagina indietro?"
+msgstr "Vuoi veramente ritornare alla pagina precedente?"
 
 #: src/i_callbacks.c:1995 src/i_callbacks.c:2015 src/i_callbacks.c:2041
 #, c-format
@@ -1056,7 +1047,7 @@ msgstr "Rubber band ON\n"
 #: src/o_arc.c:141
 #, c-format
 msgid "Unknown end for arc (%d)\n"
-msgstr "Sconosciuta fine per l'arco (%d)\n"
+msgstr "Non corretta terminazione per l'arco (%d)\n"
 
 #: src/o_arc.c:182
 #, c-format
@@ -1239,7 +1230,7 @@ msgstr "Il testo nascosto è ora visibile\n"
 
 #: src/o_misc.c:982
 msgid "Hidden text is now invisible\n"
-msgstr "Il testo nascosto è ora non visibile\n"
+msgstr "Il testo ora è non visibile\n"
 
 #: src/o_misc.c:1603
 msgid "Could not unembedded component, could not find appropriate .sym file\n"
@@ -1257,12 +1248,12 @@ msgstr "o_autosave_backups: Non è possibile ottenere il vero nome del file %s."
 #: src/o_misc.c:1789
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr ""
+msgstr "NOn è possibile impostare il precedente file di ripristino [%s] in lettura-scrittura\n"
 
 #: src/o_misc.c:1807
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
-msgstr ""
+msgstr "Non è possibile impostare il precedente file di ripristino [%s] in sola lettura\n"
 
 #: src/o_misc.c:1812
 #, c-format
@@ -1379,7 +1370,7 @@ msgstr ""
 
 #: src/x_attribedit.c:363
 msgid "Single Attribute Editor"
-msgstr ""
+msgstr "Editor Singola Caratteristica"
 
 #: src/x_attribedit.c:422
 msgid "Add/Edit Attribute"
@@ -1437,7 +1428,7 @@ msgstr "Non è possibile trovare il colore %s!\n"
 #: src/x_color.c:62 src/x_color.c:99
 #, c-format
 msgid "Defaulting color to white\n"
-msgstr "Il colore predefinito Ã¨ il bianco\n"
+msgstr "Colore predefinito; il bianco\n"
 
 #: src/x_color.c:69 src/x_color.c:106
 #, c-format
@@ -1548,7 +1539,7 @@ msgstr "*non cambiato*"
 
 #: src/x_dialog.c:958
 msgid "Edit Line Width & Type"
-msgstr "Modifica Larghezza Linea & Tipo"
+msgstr "Modifica Larghezza & Tipo di Linea"
 
 #: src/x_dialog.c:962 src/x_dialog.c:1387
 msgid "Line Width"
@@ -1832,7 +1823,7 @@ msgstr "Troppi file! Incrementa MAX_FILES\n"
 
 #: src/x_fileselect.c:555
 msgid "sch - Schematics"
-msgstr "sch - Schemi"
+msgstr "sch - Schematici"
 
 #: src/x_fileselect.c:565
 msgid "sym - Symbols "
@@ -1840,7 +1831,7 @@ msgstr "sym - Simboli "
 
 #: src/x_fileselect.c:575
 msgid "sym/sch - Schematics and Symbols"
-msgstr "sym/sch - Schemi e Simboli"
+msgstr "sym/sch - Schematici e Simboli"
 
 #: src/x_fileselect.c:585
 msgid "* - All Files"
@@ -1870,11 +1861,11 @@ msgstr "Ricerca nei File - Fine della lista"
 
 #: src/x_fileselect.c:1197
 msgid "Default behavior - reference component"
-msgstr ""
+msgstr "Comportamento predefinito - Consultazione componente"
 
 #: src/x_fileselect.c:1208
 msgid "Embed component in schematic"
-msgstr "Fissa il componenente nello schema"
+msgstr "Fissa il componente nello schema"
 
 #: src/x_fileselect.c:1218
 msgid "Include component as individual objects"
@@ -1965,7 +1956,7 @@ msgstr "Scritta immagine in bianco e nero per [%s] [%d x %d]\n"
 
 #: src/x_image.c:307
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"
-msgstr ""
+msgstr "x_image_lowlevel: incapace ad ottenere immagine pixbuf dalla finestra di gschem.\n"
 
 #: src/x_image.c:415
 msgid "Write Image..."
@@ -2029,7 +2020,7 @@ msgstr "/Seleziona"
 
 #: src/x_menus.c:47
 msgid "/Edit..."
-msgstr "/Edita..."
+msgstr "/Modifica..."
 
 #: src/x_menus.c:48
 msgid "/Copy"
@@ -2065,12 +2056,11 @@ msgstr "La voce Popup_menu_item_factory non esiste!\n"
 
 #: src/x_menus.c:366
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
-msgstr ""
+msgstr "Provato a impostare la sensibilità su una finestra di popup menu_itemi\n"
 
 #: src/x_multiattrib.c:625
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
-"Attributi con il nome vuoto non sono permessi. Per favore inserisci un nome."
+msgstr "Attributi con il nome vuoto non sono permessi. Per favore inserisci un nome."
 
 #: src/x_multiattrib.c:1131
 msgid "Show Value only"
@@ -2114,7 +2104,7 @@ msgstr "Aggiungi Attributo"
 
 #: src/x_pagesel.c:267
 msgid "Discard Page"
-msgstr "Abbandonare la pagina"
+msgstr "Abbandona la pagina"
 
 #: src/x_pagesel.c:376
 msgid "Page Manager"
@@ -2132,7 +2122,7 @@ msgstr ""
 
 #: src/x_preview.c:127
 msgid "x_preview_update_gtk24: Can't get pixbuf from preview struct.\n"
-msgstr ""
+msgstr "x_preview_update_gtk24: Non è possibile ottenere un'immagine pixbuf dalla precedente struttura.\n"
 
 #: src/x_print.c:113
 msgid "Landscape"
@@ -2303,51 +2293,5 @@ msgstr "Menù/Cancella"
 
 #: src/x_window.c:700
 msgid "Pan/Cancel"
-msgstr ""
+msgstr "Pan/Cancella"
 
-#~ msgid ""
-#~ "Gschem doesn't support pictures if it has been compiled using GTK 1.2"
-#~ msgstr ""
-#~ "Gschem non supporta le immagini se è stato compilato usando le GTK 1.2"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Cancel"
-#~ msgstr "Cancella"
-
-#~ msgid "Apply"
-#~ msgstr "Applica"
-
-#~ msgid "Find"
-#~ msgstr "Cerca"
-
-#~ msgid "Done"
-#~ msgstr "Fatto"
-
-#~ msgid "SaveAs"
-#~ msgstr "Salva con Nome"
-
-#~ msgid "Write"
-#~ msgstr "Scrivi"
-
-#~ msgid "Print"
-#~ msgstr "Stampa"
-
-#~ msgid "Edit mode"
-#~ msgstr "Modalità Testo"
-
-#~ msgid "Move mode"
-#~ msgstr "Modalità Sposta"
-
-#~ msgid "Copy mode"
-#~ msgstr "Modalità Copia"
-
-#~ msgid "Delete mode"
-#~ msgstr "Modalità Cancella"
-
-#~ msgid "Rotate mode"
-#~ msgstr "Modalità Ruota"
-
-#~ msgid "Mirror mode"
-#~ msgstr "Modalità Specchio"
