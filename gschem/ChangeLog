@@ -11,6 +11,13 @@
 	various people have mentioned that mouse pan doesn't feel right with
 	a large value.
 
+	* src/x_window.c: Had to put the keypress signal handler back on 
+	the main_window (instead of just the drawing_window), because the
+	up cursor key stopped working.  The original reason for this movement
+	was to fix Bug#1552778 and Bug#1553544 which are still fixed (even
+	with this move it seems), however the focus on the toolbar seems
+	to move when you move the cursor keys (which is a little odd).
+
 2006-09-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_fileselect.c: Applied patch by Peter Clifton: Removed the

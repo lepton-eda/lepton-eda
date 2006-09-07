@@ -359,11 +359,11 @@ void x_window_setup_draw_events(TOPLEVEL *w_current)
     { "button_release_event", G_CALLBACK(x_event_button_released) },
     { "motion_notify_event",  G_CALLBACK(x_event_motion)          },
     { "configure_event",      G_CALLBACK(x_event_configure)       },
-    { "key_press_event",      G_CALLBACK(x_event_key_press)       },
     { NULL,                   NULL                                } };
   struct event_reg_t main_window_events[] = {
     { "enter_notify_event",   G_CALLBACK(x_event_enter)           },
     { "scroll_event",         G_CALLBACK(x_event_scroll)          },
+    { "key_press_event",      G_CALLBACK(x_event_key_press)       },
     { NULL,                   NULL                                } };
   struct event_reg_t *tmp;
 
