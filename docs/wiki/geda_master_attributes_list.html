@@ -12,7 +12,7 @@
   <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
   <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:master_attributes_list?do=export_xhtml" />
   <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:master_attributes_list?do=export_raw" />
-  <meta name="date" content="2006-04-22T11:15:17-0400" />
+  <meta name="date" content="2006-08-29T00:05:36-0400" />
   <meta name="robots" content="index,follow" />
   <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
   <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
@@ -108,38 +108,38 @@ This document describes all the attributes used in in gEDA/gaf (<acronym title="
 
 <p>
 Attributes in the gEDA/gaf system are nothing more than text items which take on the form: <strong>name</strong>=value. Name can be anything just as long as it doesn&rsquo;t contain a equals sign. Value can also be anything just as long as it is something (vs nothing). <strong>name</strong>= (without a value part) is not a valid attribute. Also, there cannot be any spaces immediately before or after the equals sign.<br/>
- Attributes can be attached to some part of the symbol. If the attribute conveys information specific to an object, then the attribute should be attached directly to the object, otherwise the attribute should be free standing or  oating. Free standing attributes just exist in the symbol file as text items which take on the form <strong>name</strong>=value.
+ Attributes can be attached to some part of the symbol. If the attribute conveys information specific to an object, then the attribute should be attached directly to the object, otherwise the attribute should be free standing or  floating. Free standing attributes just exist in the symbol file as text items which take on the form <strong>name</strong>=value.
 </p>
 
 </div>
-<!-- SECTION [655-1423] -->
+<!-- SECTION [655-1425] -->
 <h2><a name="symbol_only_attributes" id="symbol_only_attributes">Symbol only Attributes</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION [1424-1458] -->
+<!-- SECTION [1426-1461] -->
 <h3><a name="device" id="device">device</a></h3>
 <div class="level3">
 
 <p>
 <strong>device</strong>= is the device name of the symbol and is required by gnetlist.<br/>
- <strong>device</strong>= should be placed somewhere in the symbol and made invisible. This is a free standing or  oating attribute. If the object is a graphic then <strong>device</strong>= should be set to none (<strong>device</strong>=none) and attach a <a href="#graphical" title="geda:master_attributes_list &crarr;" class="wikilink1">graphical</a>= attribute. Do not confuse this attribute with just having a text label which the device name. Do not put spaces into the device name; there are some programs which dislike spaces in the device specifier. Generally the device name is in all caps.<br/>
+ <strong>device</strong>= should be placed somewhere in the symbol and made invisible. This is a free standing or  floating attribute. If the object is a graphic then <strong>device</strong>= should be set to none (<strong>device</strong>=none) and attach a <a href="#graphical" title="geda:master_attributes_list &crarr;" class="wikilink1">graphical</a>= attribute. Do not confuse this attribute with just having a text label which the device name. Do not put spaces into the device name; there are some programs which dislike spaces in the device specifier. Generally the device name is in all caps.<br/>
  Examples: <code>device=7400 device=CONNECTOR 10 device=NPN TRANSISTOR</code>
 </p>
 
 </div>
-<!-- SECTION [1459-2100] -->
+<!-- SECTION [1462-2105] -->
 <h3><a name="graphical" id="graphical">graphical</a></h3>
 <div class="level3">
 
 <p>
 Symbols which have no electrical or circuit significance need a <strong>graphical</strong>=1 attribute. Symbols like titleboxes are purely graphical symbols. Any symbol which has <strong>graphical</strong>=1 is ignored by gnetlist.<br/>
- <strong>graphical</strong>=1 should exist somewhere in the symbol and made invisible. This is a free standing or  oating attribute. Don&rsquo;t forget to set <a href="#device" title="geda:master_attributes_list &crarr;" class="wikilink1">device</a>=none.<br/>
+ <strong>graphical</strong>=1 should exist somewhere in the symbol and made invisible. This is a free standing or  floating attribute. Don&rsquo;t forget to set <a href="#device" title="geda:master_attributes_list &crarr;" class="wikilink1">device</a>=none.<br/>
  Example: <code>graphical=1</code>
 </p>
 
 </div>
-<!-- SECTION [2101-2513] -->
+<!-- SECTION [2106-2520] -->
 <h3><a name="description" id="description">description</a></h3>
 <div class="level3">
 
@@ -149,7 +149,7 @@ The <strong>description</strong> attribute provides a simple one line descriptio
 </p>
 
 </div>
-<!-- SECTION [2514-2704] -->
+<!-- SECTION [2521-2711] -->
 <h3><a name="author" id="author">author</a></h3>
 <div class="level3">
 
@@ -159,7 +159,7 @@ The <strong>author</strong> attribute identifies the name of the author of this 
 </p>
 
 </div>
-<!-- SECTION [2705-3301] -->
+<!-- SECTION [2712-3308] -->
 <h3><a name="comment" id="comment">comment</a></h3>
 <div class="level3">
 
@@ -169,7 +169,7 @@ The <code>comment</code> attribute can contain anything. This attribute can conv
 </p>
 
 </div>
-<!-- SECTION [3302-3575] -->
+<!-- SECTION [3309-3582] -->
 <h3><a name="pinseq" id="pinseq">pinseq</a></h3>
 <div class="level3">
 
@@ -185,7 +185,7 @@ This attribute replaces the obsolete <strong>pin#</strong>=# attribute.
 </p>
 
 </div>
-<!-- SECTION [3576-4268] -->
+<!-- SECTION [3583-4275] -->
 <h3><a name="pinnumber" id="pinnumber">pinnumber</a></h3>
 <div class="level3">
 
@@ -201,7 +201,7 @@ This attribute replaces the obsolete pin#=# attribute.
 </p>
 
 </div>
-<!-- SECTION [4269-4691] -->
+<!-- SECTION [4276-4698] -->
 <h3><a name="pintype" id="pintype">pintype</a></h3>
 <div class="level3">
 
@@ -249,7 +249,7 @@ Each pin must have a <strong>pintype</strong>=value attribute attached to it and
 <br />
 
 </div>
-<!-- SECTION [4692-5210] -->
+<!-- SECTION [4699-5217] -->
 <h3><a name="pinlabel" id="pinlabel">pinlabel</a></h3>
 <div class="level3">
 
@@ -261,7 +261,7 @@ This attribute labels a pin object. This attribute is primarily used by gnetlist
 </p>
 
 </div>
-<!-- SECTION [5211-5544] -->
+<!-- SECTION [5218-5551] -->
 <h3><a name="numslots" id="numslots">numslots</a></h3>
 <div class="level3">
 
@@ -271,13 +271,13 @@ If a component has multiple slots in a physical package (such as a 7400 (NAND) w
 </p>
 
 </div>
-<!-- SECTION [5545-6008] -->
+<!-- SECTION [5552-6015] -->
 <h3><a name="slotdef" id="slotdef">slotdef</a></h3>
 <div class="level3">
 
 <p>
 If a component has multiple slots in a physical package then you must attach a <strong>slotdef</strong>=slotnumber:#,#,#... for every device inside the physical package.<br/>
- The slotnumber corresponds to the slot number. The colon after the slot number is required. For example, if a device has 4 slots then there would be <strong>slotdef</strong>=1:..., <strong>slotdef</strong>=2:..., <strong>slotdef</strong>=3:..., and slotdef=4:... attributes somewhere in the symbol and be made invisible. This is a free standing or  oating attribute.<br/>
+ The slotnumber corresponds to the slot number. The colon after the slot number is required. For example, if a device has 4 slots then there would be <strong>slotdef</strong>=1:..., <strong>slotdef</strong>=2:..., <strong>slotdef</strong>=3:..., and slotdef=4:... attributes somewhere in the symbol and be made invisible. This is a free standing or  floating attribute.<br/>
  The #&rsquo;s have a one-to-one correspondence to the <strong>pinseq</strong> attributes and specify which <strong>pinnumber</strong>=# is used during display (gschem) or netlisting (gnetlist).<br/>
  It is recommended that all symbols which have slots have a <a href="#slot" title="geda:master_attributes_list &crarr;" class="wikilink1">slot</a>=1 attribute attached in the same fashion as the <a href="#device" title="geda:master_attributes_list &crarr;" class="wikilink1">device</a>= attribute.<br/>
  See 7400-1.sym as a concrete example.<br/>
@@ -286,7 +286,7 @@ If a component has multiple slots in a physical package then you must attach a <
 </p>
 
 </div>
-<!-- SECTION [6009-6987] -->
+<!-- SECTION [6016-6996] -->
 <h3><a name="footprint" id="footprint">footprint</a></h3>
 <div class="level3">
 
@@ -298,7 +298,7 @@ If a component has multiple slots in a physical package then you must attach a <
 </p>
 
 </div>
-<!-- SECTION [6988-7946] -->
+<!-- SECTION [6997-7955] -->
 <h3><a name="documentation" id="documentation">documentation</a></h3>
 <div class="level3">
 
@@ -311,12 +311,12 @@ If a component has multiple slots in a physical package then you must attach a <
 </p>
 
 </div>
-<!-- SECTION [7947-8705] -->
+<!-- SECTION [7956-8714] -->
 <h2><a name="schematic_only_attributes" id="schematic_only_attributes">Schematic only Attributes</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION [8706-8743] -->
+<!-- SECTION [8715-8752] -->
 <h3><a name="netname" id="netname">netname</a></h3>
 <div class="level3">
 
@@ -327,7 +327,7 @@ This attribute should be attached to a net object to give it a name. Multiple ne
 </p>
 
 </div>
-<!-- SECTION [8744-9103] -->
+<!-- SECTION [8753-9112] -->
 <h3><a name="source" id="source">source</a></h3>
 <div class="level3">
 
@@ -338,12 +338,12 @@ The source= attribute is used to specify that a symbol has underlying schematics
 </p>
 
 </div>
-<!-- SECTION [9104-9725] -->
+<!-- SECTION [9113-9734] -->
 <h2><a name="symbol_and_schematic_attributes" id="symbol_and_schematic_attributes">Symbol and Schematic Attributes</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION [9726-9769] -->
+<!-- SECTION [9735-9778] -->
 <h3><a name="refdes" id="refdes">refdes</a></h3>
 <div class="level3">
 
@@ -354,7 +354,7 @@ This attribute is used to specify the reference designator to a particular insta
 </p>
 
 </div>
-<!-- SECTION [9770-10201] -->
+<!-- SECTION [9779-10210] -->
 <h3><a name="slot" id="slot">slot</a></h3>
 <div class="level3">
 
@@ -363,7 +363,7 @@ This attribute is used to specify a slot for a slotted component. It should be a
 </p>
 
 </div>
-<!-- SECTION [10202-10499] -->
+<!-- SECTION [10211-10508] -->
 <h3><a name="net" id="net">net</a></h3>
 <div class="level3">
 
@@ -372,7 +372,7 @@ The <strong>net</strong>= attribute is used to create power/ground and arbitrary
 </p>
 
 </div>
-<!-- SECTION [10500-10903] -->
+<!-- SECTION [10509-10912] -->
 <h3><a name="value" id="value">value</a></h3>
 <div class="level3">
 
@@ -383,7 +383,7 @@ Used mainly in the spice backend netlister to specify the value of the various e
 </p>
 
 </div>
-<!-- SECTION [10904-11119] -->
+<!-- SECTION [10913-11128] -->
 <h3><a name="symversion" id="symversion">symversion</a></h3>
 <div class="level3">
 
@@ -401,12 +401,12 @@ where major and minor are just plain integers (separated by a period). The major
 </p>
 
 </div>
-<!-- SECTION [11120-12988] -->
+<!-- SECTION [11129-12997] -->
 <h2><a name="obsolete_attributes" id="obsolete_attributes">Obsolete Attributes</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION [12989-13020] -->
+<!-- SECTION [12998-13029] -->
 <h3><a name="uref" id="uref">uref</a></h3>
 <div class="level3">
 
@@ -415,7 +415,7 @@ The uref= attribute is obsolete and cannot not be used. It was used to provide t
 </p>
 
 </div>
-<!-- SECTION [13021-13152] -->
+<!-- SECTION [13030-13161] -->
 <h3><a name="name" id="name">name</a></h3>
 <div class="level3">
 
@@ -424,7 +424,7 @@ The <strong>name</strong>= attribute should not be attached or appear in any sym
 </p>
 
 </div>
-<!-- SECTION [13153-13306] -->
+<!-- SECTION [13162-13315] -->
 <h3><a name="label" id="label">label</a></h3>
 <div class="level3">
 
@@ -433,7 +433,7 @@ The <strong>label</strong>= attribute is obsolete and cannot be used. It was use
 </p>
 
 </div>
-<!-- SECTION [13307-13522] -->
+<!-- SECTION [13316-13531] -->
 <h3><a name="pin" id="pin">pin#</a></h3>
 <div class="level3">
 
@@ -442,7 +442,7 @@ The <strong>pin#</strong>=# attribute is obsolete and cannot be used. It was use
 </p>
 
 </div>
-<!-- SECTION [13523-13731] -->
+<!-- SECTION [13532-13740] -->
 <h3><a name="slot1" id="slot1">slot#</a></h3>
 <div class="level3">
 
@@ -451,7 +451,7 @@ The <strong>slot#</strong>=# attribute is obsolete and cannot be used. It was us
 </p>
 
 </div>
-<!-- SECTION [13732-13917] -->
+<!-- SECTION [13741-13926] -->
 <h3><a name="type" id="type">type</a></h3>
 <div class="level3">
 
@@ -460,7 +460,7 @@ The <strong>type</strong>= attribute is obsolete and cannot be used. It was used
 </p>
 
 </div>
-<!-- SECTION [13918-14090] -->
+<!-- SECTION [13927-14099] -->
 <h3><a name="email" id="email">email</a></h3>
 <div class="level3">
 
@@ -469,7 +469,7 @@ The information in this attribute has been merged with <a href="#author" title="
 </p>
 
 </div>
-<!-- SECTION [14091-14175] -->
+<!-- SECTION [14100-14184] -->
 <h2><a name="document_revision_history" id="document_revision_history">Document Revision History</a></h2>
 <div class="level2">
 <table class="inline">
@@ -501,6 +501,6 @@ The information in this attribute has been merged with <a href="#author" title="
 <br />
 
 </div>
-<!-- SECTION [14176-] --></div>
+<!-- SECTION [14185-] --></div>
 </body>
 </html>

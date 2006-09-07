@@ -12,7 +12,7 @@
   <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
   <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:fc4?do=export_xhtml" />
   <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:fc4?do=export_raw" />
-  <meta name="date" content="2006-05-05T23:09:06-0400" />
+  <meta name="date" content="2006-08-28T07:34:11-0400" />
   <meta name="robots" content="index,follow" />
   <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
   <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
@@ -24,6 +24,7 @@
 <div id="toc__inside">
 
 <ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#installer_20060825_on_fedora_core_4_install_notes" class="toc">Installer 20060825 on Fedora Core 4 install notes</a></span></div></li>
 <li class="level1"><div class="li"><span class="li"><a href="#installer_2005080x_on_fedora_core_4_install_notes" class="toc">Installer 2005080X on Fedora Core 4 install notes</a></span></div>
 <ul class="toc">
 <li class="level2"><div class="li"><span class="li"><a href="#prerequisites" class="toc">Prerequisites:</a></span></div></li>
@@ -32,11 +33,36 @@
 </div>
 </div>
 
+<h1><a name="installer_20060825_on_fedora_core_4_install_notes" id="installer_20060825_on_fedora_core_4_install_notes">Installer 20060825 on Fedora Core 4 install notes</a></h1>
+<div class="level1">
+
+<p>
+The latest CD installer will work fine on Fedora Core 4.  All gEDA Suite programs now compile happily with gcc-4.X.  When you build your FC4 system, make sure you select &ldquo;devlopement worstation&rdquo; as your system type, and include as many -devel packages into the build as you can.  The following packages are particularly important:
+</p>
+<ul>
+<li class="level1"><div class="li"> gtk-devel</div>
+</li>
+<li class="level1"><div class="li"> gnome-devel</div>
+</li>
+<li class="level1"><div class="li"> guile-devel</div>
+</li>
+<li class="level1"><div class="li"> tcl-devel</div>
+</li>
+<li class="level1"><div class="li"> tk-devel</div>
+</li>
+</ul>
+
+<p>
+If you are missing most of these -devel packages, the installer will do the right thing, but it&rsquo;s better to pre-install them so the installer doesn&rsquo;t have to become root to do it.
+</p>
+
+</div>
+<!-- SECTION [1-650] -->
 <h1><a name="installer_2005080x_on_fedora_core_4_install_notes" id="installer_2005080x_on_fedora_core_4_install_notes">Installer 2005080X on Fedora Core 4 install notes</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [1-64] -->
+<!-- SECTION [651-714] -->
 <h2><a name="prerequisites" id="prerequisites">Prerequisites:</a></h2>
 <div class="level2">
 
@@ -69,7 +95,7 @@ Before installing the gEDA Suite on an FC4 system, you should set the CC environ
 </p>
 
 </div>
-<!-- SECTION [65-1201] -->
+<!-- SECTION [715-1851] -->
 <h2><a name="problems" id="problems">Problems:</a></h2>
 <div class="level2">
 
@@ -120,6 +146,6 @@ and then run the installer. Make sure you run the installer from the same window
 </p>
 
 </div>
-<!-- SECTION [1202-] --></div>
+<!-- SECTION [1852-] --></div>
 </body>
 </html>

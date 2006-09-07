@@ -12,7 +12,7 @@
   <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
   <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:file_format_spec?do=export_xhtml" />
   <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:file_format_spec?do=export_raw" />
-  <meta name="date" content="2006-08-21T21:18:08-0400" />
+  <meta name="date" content="2006-09-06T21:42:48-0400" />
   <meta name="robots" content="noindex,nofollow" />
   <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
   <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
@@ -195,7 +195,7 @@ Valid in: Schematic and Symbol files<br/>
 </li>
 <li class="level1"><div class="li"> fileformat version is just an integer with no minor number.</div>
 </li>
-<li class="level1"><div class="li"> Valid versions include: 19990601, 19990610, 19990705, 19990829, 19990919, 19991011, 20000220, 20000704, 20001006, 20001217, 20010304, 20010708, 20010722, 20020209, 20020414, 20020527, 20020825, 20021103, 20030223, 20030525, 20030901, 20040111, 20040710, 20041228, 20050313, 20050820, 20060123, 20060824</div>
+<li class="level1"><div class="li"> Valid versions include: 19990601, 19990610, 19990705, 19990829, 19990919, 19991011, 20000220, 20000704, 20001006, 20001217, 20010304, 20010708, 20010722, 20020209, 20020414, 20020527, 20020825, 20021103, 20030223, 20030525, 20030901, 20040111, 20040710, 20041228, 20050313, 20050820, 20060123, 20060824, 20060906</div>
 </li>
 <li class="level1"><div class="li"> <acronym title="Concurrent Versions System">CVS</acronym> or test versions (should not be used): 20030921, 20031004, 20031019, 20031231, 20050814</div>
 </li>
@@ -210,7 +210,7 @@ Valid in: Schematic and Symbol files<br/>
 <pre class="code">v 20040111 1</pre>
 
 </div>
-<!-- SECTION [3505-5249] -->
+<!-- SECTION [3505-5259] -->
 <h3><a name="line" id="line">line</a></h3>
 <div class="level3">
 
@@ -299,7 +299,7 @@ A line segment from (23000, 69000) to (28000, 69000) with color index 3, 40 mils
 </p>
 
 </div>
-<!-- SECTION [5250-6484] -->
+<!-- SECTION [5260-6494] -->
 <h3><a name="picture" id="picture">picture</a></h3>
 <div class="level3">
 
@@ -407,7 +407,7 @@ A picture object with the lower left corner at (16900, 35800). The width of the 
 </p>
 
 </div>
-<!-- SECTION [6485-9270] -->
+<!-- SECTION [6495-9280] -->
 <h3><a name="box" id="box">box</a></h3>
 <div class="level3">
 
@@ -537,7 +537,7 @@ A box with the lower left hand corner at (33000, 67300) and a width and height o
 </p>
 
 </div>
-<!-- SECTION [9271-11477] -->
+<!-- SECTION [9281-11487] -->
 <h3><a name="circle" id="circle">circle</a></h3>
 <div class="level3">
 
@@ -654,7 +654,7 @@ A circle with the center at (38000, 67000) and a radius of 900 mils, color index
 </p>
 
 </div>
-<!-- SECTION [11478-13603] -->
+<!-- SECTION [11488-13613] -->
 <h2><a name="arc" id="arc">arc</a></h2>
 <div class="level2">
 
@@ -751,7 +751,7 @@ dashlength dashspace</code></strong>
 </p>
 
 </div>
-<!-- SECTION [13604-15121] -->
+<!-- SECTION [13614-15131] -->
 <h3><a name="text" id="text">text</a></h3>
 <div class="level3">
 
@@ -882,7 +882,7 @@ This is a similar text object as the above example, however here there are five 
 </p>
 
 </div>
-<!-- SECTION [15122-17765] -->
+<!-- SECTION [15132-17775] -->
 <h3><a name="net" id="net">net</a></h3>
 <div class="level3">
 
@@ -932,7 +932,7 @@ A net segment from (12700, 29400) to (32900, 29400) with color index 4.
 </p>
 
 </div>
-<!-- SECTION [17766-18291] -->
+<!-- SECTION [17776-18301] -->
 <h3><a name="bus" id="bus">bus</a></h3>
 <div class="level3">
 
@@ -989,7 +989,7 @@ A bus segment from (27300, 37400) to (27300, 35300) with color index 3 and no ne
 </p>
 
 </div>
-<!-- SECTION [18292-19223] -->
+<!-- SECTION [18302-19233] -->
 <h3><a name="pin" id="pin">pin</a></h3>
 <div class="level3">
 
@@ -1057,7 +1057,7 @@ A pin from (0, 200) to (200, 200) with color index 1, a regular pin, and the fir
 </p>
 
 </div>
-<!-- SECTION [19224-20220] -->
+<!-- SECTION [19234-20230] -->
 <h3><a name="component" id="component">component</a></h3>
 <div class="level3">
 
@@ -1116,11 +1116,11 @@ Valid in: Schematic files ONLY<br/>
 <pre class="code">C 18600 19900 1 0 0 7400-1.sym</pre>
 
 <p>
-A component whos origin is at (18600,19900), is selectable, not rotated, not mirrored, and the basename of the component is 7400-1.sym.
+A component who&rsquo;s origin is at (18600,19900), is selectable, not rotated, not mirrored, and the basename of the component is 7400-1.sym.
 </p>
 
 </div>
-<!-- SECTION [20221-21223] -->
+<!-- SECTION [20231-21234] -->
 <h3><a name="font" id="font">font</a></h3>
 <div class="level3">
 
@@ -1164,7 +1164,7 @@ The above font definition is for the space character.
 </p>
 
 </div>
-<!-- SECTION [21224-21744] -->
+<!-- SECTION [21235-21755] -->
 <h2><a name="colors" id="colors">Colors</a></h2>
 <div class="level2">
 
@@ -1234,7 +1234,7 @@ In the gEDA/gaf schematic and symbol file format colors are specified via an int
 </p>
 
 </div>
-<!-- SECTION [21745-22622] -->
+<!-- SECTION [21756-22633] -->
 <h2><a name="attributes" id="attributes">Attributes</a></h2>
 <div class="level2">
 
@@ -1256,7 +1256,7 @@ The object is a pin which has an attribute pinnumber=3 and pinseq=3 (name=value)
 </p>
 
 </div>
-<!-- SECTION [22623-23598] -->
+<!-- SECTION [22634-23609] -->
 <h2><a name="embedded_components" id="embedded_components">Embedded Components</a></h2>
 <div class="level2">
 
@@ -1275,7 +1275,7 @@ In the example above, <strong>555-1.sym</strong> is the component. The EMBEDDED 
 </p>
 
 </div>
-<!-- SECTION [23599-24358] -->
+<!-- SECTION [23610-24369] -->
 <h2><a name="document_revision_history" id="document_revision_history">Document Revision History</a></h2>
 <div class="level2">
 <table class="inline">
@@ -1295,6 +1295,6 @@ In the example above, <strong>555-1.sym</strong> is the component. The EMBEDDED 
 <br />
 
 </div>
-<!-- SECTION [24359-] --></div>
+<!-- SECTION [24370-] --></div>
 </body>
 </html>

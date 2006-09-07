@@ -12,8 +12,8 @@
   <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
   <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:faq?do=export_xhtml" />
   <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:faq?do=export_raw" />
-  <meta name="date" content="2006-05-08T16:37:10-0400" />
-  <meta name="robots" content="index,follow" />
+  <meta name="date" content="2006-09-04T16:05:25-0400" />
+  <meta name="robots" content="noindex,nofollow" />
   <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
   <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
 </head>
@@ -96,7 +96,7 @@ gaf stands for “<em class="u">g</em>schem <em class="u">a</em>nd <em class="u"
 </p>
 
 <p>
-Even though gaf is very much a part of gEDA, the gEDA name does not necessarily only apply to gaf – tools gathered under the “gEDA” moniker include many other programs. Indeed, gEDA refers to <strong>any</strong> <acronym title="GNU General Public License">GPL</acronym>&lsquo;d EDA tool which decides to associate itself with the gEDA website/mailing list. Important examples of gEDA tools include the layout program <a href="geda_pcb.html" class="wikilink2" title="geda:pcb">PCB</a>, the Verilog complier <a href="http://www.icarus.com/eda/verilog/" class="urlextern" title="http://www.icarus.com/eda/verilog/"  rel="nofollow">Icarus Verilog</a>, the analog circuit simulator <a href="http://www.gnucap.org/" class="urlextern" title="http://www.gnucap.org/"  rel="nofollow">gnucap</a>, and the open-source SPICE simulator <a href="http://www.ngspice.org/" class="urlextern" title="http://www.ngspice.org/"  rel="nofollow">ngspice</a>. Many other gEDA programs also exist.
+Even though gaf is very much a part of gEDA, the gEDA name does not necessarily only apply to gaf – tools gathered under the “gEDA” moniker include many other programs. Indeed, gEDA refers to <strong>any</strong> <acronym title="GNU General Public License">GPL</acronym>&lsquo;d EDA tool which decides to associate itself with the gEDA website/mailing list. Important examples of gEDA tools include the layout program <a href="geda_pcb.html" class="wikilink2" title="geda:pcb">PCB</a>, the Verilog compiler <a href="http://www.icarus.com/eda/verilog/" class="urlextern" title="http://www.icarus.com/eda/verilog/"  rel="nofollow">Icarus Verilog</a>, the analog circuit simulator <a href="http://www.gnucap.org/" class="urlextern" title="http://www.gnucap.org/"  rel="nofollow">gnucap</a>, and the open-source SPICE simulator <a href="http://www.ngspice.org/" class="urlextern" title="http://www.ngspice.org/"  rel="nofollow">ngspice</a>. Many other gEDA programs also exist.
 </p>
 
 <p>
@@ -198,11 +198,11 @@ In this way the gEDA suite came together. It is not shared code, or a common use
 <div class="level2">
 
 <p>
-This is ultimately a matter of religion. I’ll summarize some of the pros and cons (as I see them) of each approach here. 
+This is ultimately a matter of religion. I’ll summarize some of the pros and cons (as I see them) of each approach here.
 </p>
 
 </div>
-<!-- SECTION [8347-8570] -->
+<!-- SECTION [8347-8571] -->
 <h3><a name="suite_confederacy_pros" id="suite_confederacy_pros">Suite (confederacy) pros:</a></h3>
 <div class="level3">
 <ul>
@@ -212,12 +212,12 @@ This is ultimately a matter of religion. I’ll summarize some of the pros and c
 </li>
 <li class="level1"><div class="li"> Usage of an applications suite can be automated using a Makefile, or even a <acronym title="Practical Extraction and Report Language">Perl</acronym> script. ASIC designers do this all the time with their design and synthesis tools. Some gEDA users have publically disclosed (on the e-mail list) that they do this too, and point to it as an important feature of the gEDA suite.</div>
 </li>
-<li class="level1"><div class="li"> Scalability: A monolithic application is almost always developed by a lone developer who has a single-minded vision for his program. This developer can enforce stylistic and UI standards throughout all his tools. The problem with this is that a single developer – even one who is uniquely gifted – can only write one (or a couple of) parts of an EDA application. Therefore, any open-source, monolithic EDA app will likely always be limited in scope &amp; features by the abilities of a single developer. (I would love to be proven wrong on this point. I welcome counter-examples, but none have come to my attention as of this writing.) On the other hand, a confederacy of developers working independently on their own apps – but meanwhile contributing to a greater whole – can create a very large and capable EDA enviornment indeed.</div>
+<li class="level1"><div class="li"> Scalability: A monolithic application is almost always developed by a lone developer who has a single-minded vision for his program. This developer can enforce stylistic and UI standards throughout all his tools. The problem with this is that a single developer – even one who is uniquely gifted – can only write one (or a couple of) parts of an EDA application. Therefore, any open-source, monolithic EDA app will likely always be limited in scope &amp; features by the abilities of a single developer. (I would love to be proven wrong on this point. I welcome counter-examples, but none have come to my attention as of this writing.) On the other hand, a confederacy of developers working independently on their own apps – but meanwhile contributing to a greater whole – can create a very large and capable EDA environment indeed.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [8571-11242] -->
+<!-- SECTION [8572-11243] -->
 <h3><a name="suite_confederacy_cons" id="suite_confederacy_cons">Suite (confederacy) cons:</a></h3>
 <div class="level3">
 <ul>
@@ -225,14 +225,14 @@ This is ultimately a matter of religion. I’ll summarize some of the pros and c
 </li>
 <li class="level1"><div class="li"> Different programs have different UI conventions (i.e. menu organization is different, keyboard or mouse bindings are different). This can be uncomfortable to those who aren’t familiar with the programs.</div>
 </li>
-<li class="level1"><div class="li"> Since no assumptions are made about the design flow, schematic symbols are necessarily <a href="http://geda.seul.org/wiki/geda:faq-gschem#what_s_this_business_about_heavy_vs._light_symbols" class="wikilink1" title="geda:faq-gschem">light</a>. This forces the user to spend more time attaching e.g. footprint attributes to his design. Moreover, the user must spend more time actually researching which footprints to use. However, a good suite (like the gEDA suite) will offer multiple methods to perform this task (e.g. gattrib, <acronym title="Practical Extraction and Report Language">Perl</acronym> scripts to populate footprints, etc.).</div>
+<li class="level1"><div class="li"> Since no assumptions are made about the design flow, schematic symbols are necessarily <a href="geda_faq-gschem.html" class="wikilink1" title="geda:faq-gschem">light</a>. This forces the user to spend more time attaching e.g. footprint attributes to his design. Moreover, the user must spend more time actually researching which footprints to use. However, a good suite (like the gEDA suite) will offer multiple methods to perform this task (e.g. gattrib, <acronym title="Practical Extraction and Report Language">Perl</acronym> scripts to populate footprints, etc.).</div>
 </li>
 <li class="level1"><div class="li"> Some developers are more energetic than others, or have more free time. Therefore, some programs in a suite will be more developed (and less buggy) than others. Unfortunately, a single buggy program in a suite can unfairly taint a new user’s perception of the entire suite.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [11243-12576] -->
+<!-- SECTION [11244-12577] -->
 <h3><a name="monolithic_application_pros" id="monolithic_application_pros">Monolithic application pros:</a></h3>
 <div class="level3">
 <ul>
@@ -243,7 +243,7 @@ This is ultimately a matter of religion. I’ll summarize some of the pros and c
 </ul>
 
 </div>
-<!-- SECTION [12577-12929] -->
+<!-- SECTION [12578-12930] -->
 <h3><a name="monolithic_application_cons" id="monolithic_application_cons">Monolithic application cons:</a></h3>
 <div class="level3">
 <ul>
@@ -256,7 +256,7 @@ This is ultimately a matter of religion. I’ll summarize some of the pros and c
 </ul>
 
 </div>
-<!-- SECTION [12930-14377] -->
+<!-- SECTION [12931-14378] -->
 <h2><a name="what_license_does_geda_use" id="what_license_does_geda_use">What license does gEDA use?</a></h2>
 <div class="level2">
 
@@ -281,7 +281,7 @@ Even though the focus of gEDA is GPLed software, other software licenses are mor
 </p>
 
 </div>
-<!-- SECTION [14378-15656] -->
+<!-- SECTION [14379-15657] -->
 <h2><a name="where_can_i_get_more_information_about_and_download_geda" id="where_can_i_get_more_information_about_and_download_geda">Where can I get more information about and download gEDA?</a></h2>
 <div class="level2">
 
@@ -306,7 +306,7 @@ Come to the Free EDA Users Group (Freedog) meeeting in Cambridge, MA. The meetin
 </p>
 
 </div>
-<!-- SECTION [15657-16857] -->
+<!-- SECTION [15658-16858] -->
 <h2><a name="okay_how_do_i_start_using_geda" id="okay_how_do_i_start_using_geda">Okay, how do I start using gEDA?</a></h2>
 <div class="level2">
 
@@ -319,6 +319,6 @@ Also be sure to check out the other <a href="http://geda.seul.org/docs" class="u
 </p>
 
 </div>
-<!-- SECTION [16858-] --></div>
+<!-- SECTION [16859-] --></div>
 </body>
 </html>

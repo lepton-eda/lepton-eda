@@ -2,6 +2,8 @@
 
         * configure.ac: Updated program version to 20060906.
 
+	* wiki/: Updated to the latest version from the gEDA wiki 
+
 2006-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/populatemkfiles.sh: Added script to automatically go through
