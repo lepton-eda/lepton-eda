@@ -7,6 +7,13 @@
 	where system-gafrc is looking for it.  This bug was found when
 	--with-rcdir was used.  This fix is related to Bug#1552338.
 
+	* include/defines.h: Added CUSTOM_VERSION string #define.  
+	Normally this #define defines an empty string, but for those 
+	people who need to spin a custom version of gEDA/gaf (of course,
+	following the licensing/distribution requirements of the GPL), they
+	can set this to a string which is appended to printfs/output/dialog 
+	boxes where VERSION is used.
+
 2006-09-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/s_toplevel.c: Added code to s_toplevel_delete 

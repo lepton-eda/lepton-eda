@@ -97,7 +97,7 @@ void main_prog(void *closure, int argc, char *argv[])
     s_log_init (logfile);
     g_free (logfile);
 
-    s_log_message("gEDA/gnetlist version %s\n", VERSION);
+    s_log_message("gEDA/gnetlist version %s%s\n", VERSION, CUSTOM_VERSION);
     s_log_message
 	("gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
     s_log_message
@@ -106,7 +106,7 @@ void main_prog(void *closure, int argc, char *argv[])
 	("conditions; please see the COPYING file for more details.\n\n");
 
     if (!quiet_mode) {
-	fprintf(stderr, "gEDA/gnetlist version %s\n", VERSION);
+	fprintf(stderr, "gEDA/gnetlist version %s%s\n", VERSION, CUSTOM_VERSION);
 	fprintf(stderr,
 		"gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
 	fprintf(stderr,

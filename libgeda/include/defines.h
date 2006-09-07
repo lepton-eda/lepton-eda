@@ -33,6 +33,13 @@
 /* 20030921 wasn't a real version, just a MinGW test version, but it is */
 /* out there */
 
+/* Set this empty string to something interesting if creating a custom */
+/* version of gEDA/gaf.  This string is prepended to all messages that */
+/* output the program's VERSION.  You would set this if you are creating a */
+/* specific custom version of gEDA/gaf.  For example if you set this string */
+/* to "-TEST", the resulting output would be 20060906-TEST. */
+#define CUSTOM_VERSION ""
+
 /* for color mechanism used in gschem */
 #define MAX_COLORS 25
 

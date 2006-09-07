@@ -2,6 +2,10 @@
 
         * configure.ac: Updated program version to 20060906.
 
+	* src/g_rc.c, src/gattrib.c src/x_dialog.c: Added CUSTOM_VERSION to
+	all printfs/output/dialog boxes where VERSION is used so that it is
+	easier to create custom version of gEDA/gaf.
+
 2006-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated gtk+ tests to look for 2.4.x or greater.

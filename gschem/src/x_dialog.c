@@ -2520,7 +2520,7 @@ void about_dialog (TOPLEVEL *w_current)
                        label, TRUE, TRUE, 5);
     gtk_widget_show (label);
 
-    string = g_strdup_printf(_("gschem version %s"), VERSION);
+    string = g_strdup_printf(_("gschem version %s%s"), VERSION, CUSTOM_VERSION);
     label = gtk_label_new (string);
     g_free(string);
     gtk_box_pack_start(
