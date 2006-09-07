@@ -34,7 +34,7 @@
 /* out there */
 
 /* Set this empty string to something interesting if creating a custom */
-/* version of gEDA/gaf.  This string is prepended to all messages that */
+/* version of gEDA/gaf.  This string is appended to all messages that */
 /* output the program's VERSION.  You would set this if you are creating a */
 /* specific custom version of gEDA/gaf.  For example if you set this string */
 /* to "-TEST", the resulting output would be 20060906-TEST. */
