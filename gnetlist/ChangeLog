@@ -1,3 +1,7 @@
+2006-09-07 SDB sdb@cloud9.net>
+	* scheme/gnet-gsch2pcb.scm.in:  Applied cursor patch
+	from Peter Clifton. 
+	
 2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated program version to 20060906.
