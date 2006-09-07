@@ -25,6 +25,10 @@
 	to all printfs/output/dialog boxes where VERSION is used so that
 	it is easier to create custom version of gEDA/gaf.
 
+	* include/Makefile.am: Oops, x_print.h wasn't added.  This was
+	discovered by make distcheck (have I mentioned how much I like 
+	make distcheck. :-)
+
 2006-09-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_fileselect.c: Applied patch by Peter Clifton: Removed the
