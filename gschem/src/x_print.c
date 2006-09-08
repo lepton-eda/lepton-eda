@@ -448,6 +448,7 @@ print_dialog_set_property (GObject * object,
  *  \par Function Description
  *
  */
+static void
 print_dialog_get_property (GObject * object,
                           guint property_id,
                           GValue * value, GParamSpec * pspec)

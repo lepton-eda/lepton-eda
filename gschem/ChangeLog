@@ -1,3 +1,8 @@
+2006-09-07 SDB  <sdb@cloud9.net>
+	* src/xprint.c: Added "static void" declaration to 
+	print_dialog_get_property to prevent compiler error
+	under older version of gcc. 
+	
 2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated program version to 20060906.
