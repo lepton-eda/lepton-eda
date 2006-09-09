@@ -42,7 +42,7 @@ SCM g_get_object_bounds (SCM object_smob, SCM scm_inc_attribs);
 SCM g_get_object_pins (SCM object_smob);
 /* g_keys.c */
 void set_window_current_key(TOPLEVEL *w_current);
-void g_keys_execute(int state, int keyval);
+int g_keys_execute(int state, int keyval);
 SCM g_keys_file_new(void);
 SCM g_keys_file_new_window(void);
 SCM g_keys_file_open(void);
@@ -845,7 +845,7 @@ void x_manual_resize(TOPLEVEL *w_current);
 void x_event_hschanged(GtkAdjustment *adj, TOPLEVEL *w_current);
 void x_event_vschanged(GtkAdjustment *adj, TOPLEVEL *w_current);
 gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event, TOPLEVEL *w_current);
-gint x_event_key_press(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
+gboolean x_event_key_press(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 gint x_event_scroll(GtkWidget *widget, GdkEventScroll *event, TOPLEVEL *w_current);
 /* x_fileselect.c */
 void x_fileselect_destroy_window(GtkWidget *widget, FILEDIALOG *f_current);

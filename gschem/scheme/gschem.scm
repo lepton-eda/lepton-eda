@@ -51,6 +51,7 @@
                 (set! current-keymap global-keymap)
                 ;(display "No keymap found")
                 ;(newline)
+                #f
                 )))))
 
 (define (perform-action action)

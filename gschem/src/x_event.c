@@ -1512,9 +1512,13 @@ gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
  *  \par Function Description
  *
  */
-gint x_event_key_press (GtkWidget *widget, GdkEventKey *event,
+gboolean x_event_key_press (GtkWidget *widget, GdkEventKey *event,
 			TOPLEVEL *w_current)
 {
+  int retval;
+  
+  retval = FALSE;
+  
   exit_if_null(w_current);
   global_window_current = w_current;
 
@@ -1524,10 +1528,10 @@ gint x_event_key_press (GtkWidget *widget, GdkEventKey *event,
 #if DEBUG
     printf("x_event_key_pressed: Pressed key %i.\n", event->keyval);
 #endif
-    g_keys_execute(event->state, event->keyval);
+    retval = g_keys_execute(event->state, event->keyval) ? TRUE : FALSE;
   }
 
-  return(0);
+  return retval;
 }
 
 

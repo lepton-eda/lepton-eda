@@ -1,4 +1,13 @@
+2006-09-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/prototype.h, scheme/gschem.scm, src/g_keys.c, src/x_event.c,
+	src/x_window.c: Applied another patch for Bug#1553544: "New pages
+	inadvertantly created when adding nets in gschem" from Peter Clifton
+	to address the focus problem with the first patch.  This one is 
+	much better and cleaner.
+
 2006-09-07 SDB  <sdb@cloud9.net>
+
 	* src/xprint.c: Added "static void" declaration to 
 	print_dialog_get_property to prevent compiler error
 	under older version of gcc. 

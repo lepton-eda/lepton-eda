@@ -57,26 +57,27 @@ void set_window_current_key(TOPLEVEL *w_current)
  *
  */
 /* for now this only supports single chars, not shift/alt/ctrl etc... */
-void g_keys_execute(int state, int keyval)
+int g_keys_execute(int state, int keyval)
 {
   char *guile_string = NULL;
   char *modifier = NULL;
+  SCM scm_retval;
 
   if (keyval == 0) {
-    return;
+    return 0;
   }
 
   /* don't pass the raw modifier key presses to the guile code */
   if (strstr(gdk_keyval_name(keyval), "Alt")) {
-    return;
+    return 0;
   }
 
   if (strstr(gdk_keyval_name(keyval), "Shift")) {
-    return;
+    return 0;
   }
 
   if (strstr(gdk_keyval_name(keyval), "Control")) {
-    return;
+    return 0;
   }
 
   if (state & GDK_SHIFT_MASK) {
@@ -95,7 +96,7 @@ void g_keys_execute(int state, int keyval)
 #if DEBUG 
   printf("_%s_\n", guile_string);
 #endif
-  scm_c_eval_string (guile_string);
+  scm_retval = scm_c_eval_string (guile_string);
   g_free(guile_string);
   g_free(modifier);
 
@@ -103,6 +104,8 @@ void g_keys_execute(int state, int keyval)
   gh_eval_str("(display (reverse last-command-sequence))");
   printf("\n");
 #endif
+
+  return (SCM_FALSEP (scm_retval)) ? 0 : 1;
 }
 
 /*! \brief
