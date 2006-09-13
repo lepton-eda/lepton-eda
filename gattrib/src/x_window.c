@@ -248,21 +248,21 @@ x_window_add_items()
     fprintf(stderr, "\n\nNo components found in entire design!\n");
     fprintf(stderr, "Do you have refdeses on your components?  \n");
     fprintf(stderr, "Exiting. . . .\n");
-    exit(0);
+    exit(-1);
   }
 
   if (sheet_head->comp_attrib_count == 0) {
     fprintf(stderr, "\n\nNo configurable component attributes found in entire design!");
     fprintf(stderr, "Please attach at least some attributes before running gattrib.\n");
     fprintf(stderr, "Exiting. . . .\n");
-    exit(0);
+    exit(-2);
   }
 
   if (sheet_head->pin_count == 0) {
     fprintf(stderr, "\n\nNo pins found on any components!\n");
     fprintf(stderr, "Please check your design.\n");
     fprintf(stderr, "Exiting. . . .\n");
-    exit(0);
+    exit(-3);
   }
 
 
