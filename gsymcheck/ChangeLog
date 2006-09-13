@@ -1,3 +1,9 @@
+2006-09-13 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/s_check.c: Applied patch #1558122 by Jeff Mallatt.
+	Adds newline that is missing from the "Found Pintype=..." 
+	message in s_check_pintype() in s_check.c. Thanks.
+	
 2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated program version to 20060906.

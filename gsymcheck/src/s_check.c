@@ -1265,7 +1265,7 @@ void s_check_pintype(OBJECT *object_head, SYMCHECK *s_current)
       while (string)
       {
         
-        message = g_strdup_printf("Found pintype=%s attribute", string);
+        message = g_strdup_printf("Found pintype=%s attribute\n", string);
         s_current->info_messages = g_list_append(s_current->info_messages,
 	 	    			         message);
 
