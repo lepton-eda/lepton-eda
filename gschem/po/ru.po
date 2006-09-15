@@ -1,20 +1,21 @@
 # translation of ru.po to Russian
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR Alexandre Pereira Nunes
-# Andy Shevchenko <andy@smile.org.ua>, 2003
 #
+# Andy Shevchenko <andy@smile.org.ua>, 2003, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-06 23:05-0400\n"
-"PO-Revision-Date: 2003-01-21 17:49+0200\n"
+"PO-Revision-Date: 2006-09-13 16:59+0300\n"
 "Last-Translator: Andy Shevchenko <andy@smile.org.ua>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/rcstrings.c:2 src/x_print.c:342
 msgid "File"
@@ -145,14 +146,12 @@ msgid "Symbol Translate..."
 msgstr "Перевод символа..."
 
 #: src/rcstrings.c:35
-#, fuzzy
 msgid "Embed Component/Picture"
-msgstr "Внедрить компонент"
+msgstr "Внедрить компонент/изображение"
 
 #: src/rcstrings.c:36
-#, fuzzy
 msgid "Unembed Component/Picture"
-msgstr "Исключить компонент"
+msgstr "Исключить компонент/изображение"
 
 #: src/rcstrings.c:37
 msgid "Update Component"
@@ -340,9 +339,8 @@ msgid "Pin"
 msgstr "Контакт"
 
 #: src/rcstrings.c:87
-#, fuzzy
 msgid "Picture..."
-msgstr "Печать..."
+msgstr "Изображение..."
 
 #: src/rcstrings.c:89
 msgid "Hierarchy"
@@ -429,9 +427,8 @@ msgid "Snap Grid Spacing..."
 msgstr "Шаг сетки привязки..."
 
 #: src/rcstrings.c:112
-#, fuzzy
 msgid "Toggle Outline/Box"
-msgstr "Переключение внешний контур/бокс"
+msgstr "Переключить внешний контур/бокс"
 
 #: src/rcstrings.c:113
 msgid "Toggle Net Rubberband"
@@ -476,18 +473,17 @@ msgid "Attribute failed ot find.\n"
 msgstr "Ошибка поиска атрибута.\n"
 
 #: src/g_rc.c:106
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Found a version [%s%s] gschemrc file:\n"
 "[%s]\n"
 msgstr ""
-"Найдена версия [%s] файла gschemrc:\n"
+"Найдена версия [%s%s] файла gschemrc:\n"
 "[%s]\n"
 
 #: src/g_rc.c:109
 #, c-format
-msgid ""
-"While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
+msgid "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
 msgstr ""
 "gschem находится в стадии ALPHA, проверьте наличие последней версии rc-"
 "файла.\n"
@@ -549,52 +545,50 @@ msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Неверный размер [%d] при обработке bus-ripper-size\n"
 
 #: src/g_rc.c:1531
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
-msgstr "Неверный размер [%d] при обработке text-size\n"
+msgstr "Неверный размер точки [%d] при обработке grid-dot-size\n"
 
 #: src/g_rc.c:1572
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
-msgstr "Неверный размер [%d] при обработке text-size\n"
+msgstr "Неверные отступы [%d] при обработке grid-fixed-threshold\n"
 
 #: src/g_rc.c:1616
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
-msgstr "Неверный размер [%d] при обработке text-size\n"
+msgstr "Неверное смещение [%d] при обработке add-attribute-offset\n"
 
 #: src/g_rc.c:1640
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
-msgstr "Неверное количество уровней [%d] при обработке undo-levels\n"
+msgstr "Неверное число секунд [%d] при обработке auto-save-interval\n"
 
 #: src/g_rc.c:1681
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
-msgstr "Неверный размер [%d] при обработке snap-size\n"
+msgstr "Неверное ускорение [%d] при обработке mousepan-gain\n"
 
 #: src/g_rc.c:1704
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
-msgstr "Неверный размер [%d] при обработке snap-size\n"
+msgstr "Неверное ускорение [%d] при обработке keyboardpan-gain\n"
 
 #: src/gschem.c:141 src/gschem.c:151
-#, fuzzy, c-format
+#, c-format
 msgid "gEDA/gschem version %s%s\n"
-msgstr "Версия gEDA/gschem %s\n"
+msgstr "Версия gEDA/gschem %s%s\n"
 
 #: src/gschem.c:143 src/gschem.c:153
 #, c-format
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
-msgstr ""
-"gEDA/gschem поставляется БЕЗ ГАРАНТИЙ; смотрите COPYING для подробностей.\n"
+msgstr "gEDA/gschem поставляется БЕЗ ГАРАНТИЙ; смотрите COPYING для подробностей.\n"
 
 #: src/gschem.c:145 src/gschem.c:155
 #, c-format
-msgid ""
-"This is free software, and you are welcome to redistribute it under certain\n"
+msgid "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Это свободное программное обеспечение, и его можно распространять при "
 "известных\n"
@@ -690,9 +684,8 @@ msgid "Box Mode"
 msgstr "Режим прямоугольника"
 
 #: src/i_basic.c:144
-#, fuzzy
 msgid "Picture Mode"
-msgstr "Режим контактов"
+msgstr "Режим изображения"
 
 #: src/i_basic.c:147
 msgid "Circle Mode"
@@ -715,14 +708,12 @@ msgid "Move"
 msgstr "Переместить"
 
 #: src/i_basic.c:159 src/i_callbacks.c:735 src/i_callbacks.c:754
-#, fuzzy
 msgid "Multiple Copy"
-msgstr "Множественное сцепление"
+msgstr "Множественное копирование"
 
 #: src/i_basic.c:162
-#, fuzzy
 msgid "Multiple Copy Mode"
-msgstr "Режим копирования"
+msgstr "Режим множественного копирования"
 
 #: src/i_basic.c:197
 msgid "Snap Off"
@@ -765,12 +756,12 @@ msgstr "Невозможно вызвать %s\n"
 
 #: src/i_callbacks.c:150
 msgid "Documentation commands not supported under MinGW.\n"
-msgstr ""
+msgstr "Команды документации не поддерживаются в MinGW.\n"
 
 #: src/i_callbacks.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "New page created [%s]\n"
-msgstr "Новая страница создана [%s]\n"
+msgstr "Создана новая страница [%s]\n"
 
 #: src/i_callbacks.c:264
 msgid "New Window created\n"
@@ -795,9 +786,8 @@ msgid "Error while trying to save"
 msgstr "Ошибка при попытке сохранения"
 
 #: src/i_callbacks.c:408
-#, fuzzy
 msgid "Failed to Save All"
-msgstr "Сохранить все"
+msgstr "Ошибка при сохранении всего"
 
 #: src/i_callbacks.c:410
 msgid "Saved All"
@@ -904,9 +894,8 @@ msgid "Closing [%s]\n"
 msgstr "Закрытие [%s]\n"
 
 #: src/i_callbacks.c:1909
-#, fuzzy
 msgid "Really revert page?"
-msgstr "Возвратить страницу"
+msgstr "Действительно возвратить страницу?"
 
 #: src/i_callbacks.c:1995 src/i_callbacks.c:2015 src/i_callbacks.c:2041
 #, c-format
@@ -1199,36 +1188,36 @@ msgid "ERROR: NULL object in o_rotate_90!\n"
 msgstr "Ошибка: объект NULL в o_rotate_90!\n"
 
 #: src/o_misc.c:587
-#, fuzzy, c-format
+#, c-format
 msgid "Component [%s] has been embedded\n"
-msgstr "Компонент все еще внедрен\n"
+msgstr "Компонент [%s] всё ещё внедрен\n"
 
 #: src/o_misc.c:600
-#, fuzzy, c-format
+#, c-format
 msgid "Picture [%s] has been embedded\n"
-msgstr "Компонент все еще внедрен\n"
+msgstr "Изображение [%s] всё ещё внедрено\n"
 
 #: src/o_misc.c:632
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Could not find component [%s], while trying to unembed. Component is still "
 "embedded\n"
-msgstr "Невозможно найти компонент [%s], во время попытки исключения.\n"
+msgstr "Невозможно найти компонент [%s], во время попытки исключения. Компонент всё ещё внедрён\n"
 
 #: src/o_misc.c:643 src/o_misc.c:1608
 #, c-format
 msgid "More than one component found with name [%s]\n"
-msgstr ""
+msgstr "Найдено более одного компонента с именем [%s]\n"
 
 #: src/o_misc.c:651
-#, fuzzy, c-format
+#, c-format
 msgid "Component [%s] has been successfully unembedded\n"
-msgstr "Компонент все еще внедрен\n"
+msgstr "Компонент [%s] успешно исключён\n"
 
 #: src/o_misc.c:666
-#, fuzzy, c-format
+#, c-format
 msgid "Picture [%s] has been unembedded\n"
-msgstr "Компонент все еще внедрен\n"
+msgstr "Изображение [%s] исключено\n"
 
 #: src/o_misc.c:702
 #, c-format
@@ -1245,32 +1234,31 @@ msgstr "Скрытый тескт сейчас невидим\n"
 
 #: src/o_misc.c:1603
 msgid "Could not unembedded component, could not find appropriate .sym file\n"
-msgstr ""
+msgstr "Невозможно исключить компонент, невозможно найти соответствующий .sym-файл\n"
 
 #: src/o_misc.c:1604
-#, fuzzy
 msgid "Component still embedded and not updated\n"
-msgstr "Компонент все еще внедрен\n"
+msgstr "Компонент всё ещё внедрен и не обновлён\n"
 
 #: src/o_misc.c:1745
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
-msgstr ""
+msgstr "o_autosave_backups: невозможно получить реально имя файла для %s."
 
 #: src/o_misc.c:1789
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr "Невозможно сохранить [%s]\n"
+msgstr "Невозможно установить режим чтения-записи для предыдущей резервной копии файла [%s]\n"
 
 #: src/o_misc.c:1807
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
-msgstr "Невозможно сохранить [%s]\n"
+msgstr "Невозможно установить режим только чтения для резервного файла [%s]\n"
 
 #: src/o_misc.c:1812
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT save backup file [%s]\n"
-msgstr "Невозможно сохранить [%s]\n"
+msgstr "Невозможно сохранить резервный файл [%s]\n"
 
 #: src/o_move.c:220
 #, c-format
@@ -1280,7 +1268,7 @@ msgstr "Ошибка: объект NULL в o_move_end!\n"
 #: src/o_move.c:334
 #, c-format
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
-msgstr ""
+msgstr "Ох! Попытка найти что-либо, но ничего не получается!\n"
 
 #: src/o_move.c:355
 #, c-format
@@ -1304,16 +1292,16 @@ msgstr "Невозможно найти %s ни в одной из библио�
 
 #: src/o_picture.c:174 src/o_picture.c:838
 msgid "Please select a picture file."
-msgstr ""
+msgstr "Пожалуйста, выберите файл изображения."
 
 #: src/o_picture.c:241 src/o_picture.c:750
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to load picture: %s"
-msgstr "Невозможно прочитать начальный scm-файл [%s]\n"
+msgstr "Невозможно загрзитать изображение: [%s]"
 
 #: src/o_picture.c:260
 msgid "Picture"
-msgstr ""
+msgstr "Изображение"
 
 #: src/o_picture.c:776 src/x_attribedit.c:153
 #, c-format
@@ -1342,9 +1330,9 @@ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
 msgstr "Вы пытаетесь править слот чего-то несуществующего!\n"
 
 #: src/o_text.c:142
-#, fuzzy, c-format
+#, c-format
 msgid "Tried to render text with an invalid angle: %d\n"
-msgstr "Попытка получения неверного цвета: %d\n"
+msgstr "Попытка получения текста с неверным углом: %d\n"
 
 #: src/o_undo.c:320
 msgid "Undo/Redo disabled in rc file\n"
@@ -1364,11 +1352,21 @@ msgid ""
 "  -h            Help; this message\n"
 "\n"
 msgstr ""
+"Использование: %s [ОПЦИИ] файл_схемы1 ... файл_схемыN\n"
+"  -q            Ничего не выводить\n"
+"  -v            Включить режим отладочных сообщений\n"
+"  -r ФАЙЛ       использовать в качестве конфигурационного файл ФАЙЛ\n"
+"  -s ФАЙЛ       Имя ФАЙЛа скрипта (guile)\n"
+"  -o ФАЙЛ       Имя выходного ФАЙЛа (для печати)\n"
+"  -p            Автоматически расположить окно\n"
+"  -t            Печатать штриховую информацию\n"
+"  -h            Помощь; это сообщение\n"
+"\n"
 
 #: src/x_attribedit.c:138
-#, fuzzy, c-format
+#, c-format
 msgid "Got invalid show option; defaulting to show both\n"
-msgstr "Получена неверная опция просмотра, выставляется показ"
+msgstr "Получена неверная опция просмотра, устанавливается просмотр обоих\n"
 
 #: src/x_attribedit.c:363
 msgid "Single Attribute Editor"
@@ -1498,9 +1496,8 @@ msgid "Upper Right"
 msgstr "Верхний правый"
 
 #: src/x_dialog.c:607
-#, fuzzy
 msgid "Edit Text Color"
-msgstr "Правка текста"
+msgstr "Правка цвета текста"
 
 #: src/x_dialog.c:619
 msgid "Edit Text Size"
@@ -1537,7 +1534,7 @@ msgstr "Искусственный"
 #: src/x_dialog.c:1498 src/x_dialog.c:1499 src/x_dialog.c:1500
 #: src/x_dialog.c:1501 src/x_dialog.c:1502 src/x_dialog.c:1510
 msgid "*unchanged*"
-msgstr ""
+msgstr "*неизменено*"
 
 #: src/x_dialog.c:958
 msgid "Edit Line Width & Type"
@@ -1564,9 +1561,8 @@ msgid "Hollow"
 msgstr "Вогнуть"
 
 #: src/x_dialog.c:1103
-#, fuzzy
 msgid "Filled"
-msgstr "Файл"
+msgstr "Заполнено"
 
 #: src/x_dialog.c:1104
 msgid "Mesh"
@@ -1597,14 +1593,13 @@ msgid "Pitch2"
 msgstr "Наклон2"
 
 #: src/x_dialog.c:1637
-#, fuzzy
 msgid ""
 "There are unsaved schematics!\n"
 "\n"
 "Are you sure?\n"
 "OK will discard ALL changes!"
 msgstr ""
-"Схема не сохранена!\n"
+"Схема не была сохранена!\n"
 "\n"
 "Вы уверены?\n"
 "ОК сбросит ВСЕ изменения!"
@@ -1656,13 +1651,12 @@ msgstr "Правка номера слота"
 
 #: src/x_dialog.c:2515
 msgid "gEDA : GPL Electronic Design Automation"
-msgstr ""
-"gEDA: Система Автоматизированного ПРоектирования электронных схем (GPL)"
+msgstr "gEDA: Система Автоматизированного ПРоектирования электронных схем (GPL)"
 
 #: src/x_dialog.c:2523
-#, fuzzy, c-format
+#, c-format
 msgid "gschem version %s%s"
-msgstr "версия gschem %s"
+msgstr "версия gschem %s%s"
 
 #: src/x_dialog.c:2531
 msgid ""
@@ -1701,12 +1695,11 @@ msgstr "Правка цвета"
 #: src/x_dialog.c:3097
 #, c-format
 msgid "Ran out of space in the hotkey buffer...\n"
-msgstr ""
+msgstr "Достигнуто переполнение буфера горячих клавиш...\n"
 
 #: src/x_dialog.c:3174
-#, fuzzy
 msgid "Function : keystroke(s)"
-msgstr "Функция : "
+msgstr "Функция : комбинация клавиш"
 
 #: src/x_dialog.c:3519
 msgid "Generic String"
@@ -1747,86 +1740,76 @@ msgstr "Показать текст, начинающийся с:"
 #: src/x_dialog.c:4011
 #, c-format
 msgid "Warning: negative numbers not allowed in the autonumber_text dialog\n"
-msgstr ""
+msgstr "Предупреждение: отрицательные значения не допускаются в диалоге autonumber_text\n"
 
 #: src/x_dialog.c:4095
 msgid "Autonumber text"
 msgstr "Автонумеровать текст"
 
 #: src/x_dialog.c:4101
-#, fuzzy
 msgid "selection"
-msgstr "Выбрать"
+msgstr "выбор"
 
 #: src/x_dialog.c:4110
-#, fuzzy
 msgid "search text"
-msgstr "Показать текст"
+msgstr "поиск текста"
 
 #: src/x_dialog.c:4138
 msgid "search focus"
-msgstr ""
+msgstr "поиск фокуса"
 
 #: src/x_dialog.c:4151
-#, fuzzy
 msgid "selected objects"
-msgstr "выбран несуществующий объект!\n"
+msgstr "выбраны объекты"
 
 #: src/x_dialog.c:4154
-#, fuzzy
 msgid "current sheet"
-msgstr "Тестовый лист"
+msgstr "текущий лист"
 
 #: src/x_dialog.c:4157
 msgid "hierarchical sheets"
-msgstr ""
+msgstr "иерархия листов"
 
 #: src/x_dialog.c:4169
-#, fuzzy
 msgid "unnumbered"
-msgstr "Автонумеровать текст"
+msgstr "не пронумеровано"
 
 #: src/x_dialog.c:4173
-#, fuzzy
 msgid "all"
-msgstr "Все"
+msgstr "все"
 
 #: src/x_dialog.c:4182
-#, fuzzy
 msgid "options"
-msgstr "Настройки"
+msgstr "опции"
 
 #: src/x_dialog.c:4189
-#, fuzzy
 msgid "start number"
-msgstr "Правка номера слота"
+msgstr "стартовый номер"
 
 #: src/x_dialog.c:4202
 msgid "sort order"
-msgstr ""
+msgstr "порядок сортировки"
 
 #: src/x_dialog.c:4214
-#, fuzzy
 msgid "file order"
-msgstr "Режим окружности"
+msgstr "порядок файлов"
 
 #: src/x_dialog.c:4217
 msgid "top down"
-msgstr ""
+msgstr "верх низ"
 
 #: src/x_dialog.c:4220
-#, fuzzy
 msgid "left right"
-msgstr "Средний правый"
+msgstr "левый правый"
 
 #: src/x_dialog.c:4223
 msgid "diagonal"
-msgstr ""
+msgstr "диагональный"
 
 #: src/x_fileselect.c:300
-#, fuzzy, c-format
+#, c-format
 msgid "Agg, could not open directory: %s\n"
-msgstr "Невозможно открыть каталог: %s\n"
+msgstr "Ах, невозможно открыть каталог: %s\n"
 
 #: src/x_fileselect.c:327
 #, c-format
@@ -1937,33 +1920,28 @@ msgid "Filename"
 msgstr "Имя файла"
 
 #: src/x_fileselect.c:2261
-#, fuzzy
 msgid "Schematics"
-msgstr "sch - схемы"
+msgstr "Схемы"
 
 #: src/x_fileselect.c:2264
-#, fuzzy
 msgid "Symbols"
-msgstr "sym - символы"
+msgstr "Символы"
 
 #: src/x_fileselect.c:2267
-#, fuzzy
 msgid "Schematics and symbols"
-msgstr "sym/sch - схемы и символы"
+msgstr "Схемы и символы"
 
 #: src/x_fileselect.c:2271
-#, fuzzy
 msgid "All files"
-msgstr "* - все файлы"
+msgstr "Все файлы"
 
 #: src/x_fileselect.c:2343
-#, fuzzy
 msgid "Discard changes"
-msgstr "Отвергнуть изменения?"
+msgstr "Отвергнуть изменения"
 
 #: src/x_image.c:291
 msgid "x_image_lowlevel: Unable to write PNG file.\n"
-msgstr ""
+msgstr "x_image_lowlevel: невозможно записать PNG-файл.\n"
 
 #: src/x_image.c:295 src/x_image.c:326
 #, c-format
@@ -1977,7 +1955,7 @@ msgstr "Записано черно-белое изображение в [%s] [%
 
 #: src/x_image.c:307
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"
-msgstr ""
+msgstr "x_image_lowlevel: невозможно получить буфер изображения из окна gschem.\n"
 
 #: src/x_image.c:415
 msgid "Write Image..."
@@ -2000,105 +1978,88 @@ msgid "Status"
 msgstr "Статус"
 
 #: src/x_menus.c:35
-#, fuzzy
 msgid "/Add Net"
-msgstr "Добавить текст..."
+msgstr "/Добавить соединение"
 
 #: src/x_menus.c:36
-#, fuzzy
 msgid "/Add Attribute..."
-msgstr "Добавить/Редактрировать атрибут"
+msgstr "/Добавить атрибут"
 
 #: src/x_menus.c:37
-#, fuzzy
 msgid "/Add Component..."
-msgstr "Компонент..."
+msgstr "/Добавить компонент..."
 
 #: src/x_menus.c:38
-#, fuzzy
 msgid "/Add Bus"
-msgstr "Добавить текст..."
+msgstr "/Добавить шину"
 
 #: src/x_menus.c:39
-#, fuzzy
 msgid "/Add Text"
-msgstr "Добавить текст..."
+msgstr "/Добавить текст"
 
 #: src/x_menus.c:41
-#, fuzzy
 msgid "/Zoom In"
-msgstr "Увеличить"
+msgstr "/Увеличить"
 
 #: src/x_menus.c:42
-#, fuzzy
 msgid "/Zoom Out"
-msgstr "Уменьшить"
+msgstr "/Уменьшить"
 
 #: src/x_menus.c:43
-#, fuzzy
 msgid "/Zoom Box"
-msgstr "Область для масштабирования"
+msgstr "/Область для масштабирования"
 
 #: src/x_menus.c:44
-#, fuzzy
 msgid "/Zoom Extents"
-msgstr "Масштаб на экран"
+msgstr "/Масштаб на экран"
 
 #: src/x_menus.c:46
-#, fuzzy
 msgid "/Select"
-msgstr "Выбрать"
+msgstr "/Выбрать"
 
 #: src/x_menus.c:47
-#, fuzzy
 msgid "/Edit..."
-msgstr "Правка..."
+msgstr "/Правка..."
 
 #: src/x_menus.c:48
-#, fuzzy
 msgid "/Copy"
-msgstr "Копировать"
+msgstr "/Копировать"
 
 #: src/x_menus.c:49
-#, fuzzy
 msgid "/Move"
-msgstr "Переместить"
+msgstr "/Переместить"
 
 #: src/x_menus.c:50
-#, fuzzy
 msgid "/Delete"
-msgstr "Удалить"
+msgstr "/Удалить"
 
 #: src/x_menus.c:53
-#, fuzzy
 msgid "/Down Schematic"
-msgstr "Вглубь схемы"
+msgstr "/Вглубь схемы"
 
 #: src/x_menus.c:54
-#, fuzzy
 msgid "/Down Symbol"
-msgstr "Вглубь символа"
+msgstr "/Вглубь символа"
 
 #: src/x_menus.c:55
-#, fuzzy
 msgid "/Up"
-msgstr "Наверх"
+msgstr "/Наверх"
 
 #: src/x_menus.c:329
 msgid "Tried to set the sensitivity on a non-existent menu item\n"
-msgstr ""
+msgstr "Попытка установки чувствительности для несуществующего пункта меню\n"
 
 #: src/x_menus.c:353
 msgid "Popup_menu_item_factory doesn't exist!\n"
-msgstr ""
+msgstr "Popup_menu_item_factory не существует!\n"
 
 #: src/x_menus.c:366
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
-msgstr ""
+msgstr "Попытка установки чувствительности для несуществующего выскакивающего menu_item\n"
 
 #: src/x_multiattrib.c:625
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
+msgstr "Атрибуты с пустым именем недопустимы. Пожалуйста, установите имя."
 
 #: src/x_multiattrib.c:1131
 msgid "Show Value only"
@@ -2110,7 +2071,7 @@ msgstr "Показать только имя"
 
 #: src/x_multiattrib.c:1159
 msgid "Duplicate"
-msgstr ""
+msgstr "Дублировать"
 
 #: src/x_multiattrib.c:1276
 msgid "Edit Attributes"
@@ -2137,9 +2098,8 @@ msgid "V"
 msgstr ""
 
 #: src/x_multiattrib.c:1464
-#, fuzzy
 msgid "Add Attribute"
-msgstr "Добавить/Редактрировать атрибут"
+msgstr "Добавить атрибут"
 
 #: src/x_pagesel.c:267
 msgid "Discard Page"
@@ -2150,30 +2110,28 @@ msgid "Page Manager"
 msgstr "Менеджер страниц"
 
 #: src/x_pagesel.c:448
-#, fuzzy
 msgid "Changed"
-msgstr "Изменить"
+msgstr "Изменено"
 
 #: src/x_pagesel.c:468
 msgid "Right click on the filename for more options..."
-msgstr ""
+msgstr "Щелкните правой кнопкой на имени файла для дополнительных опций..."
 
 #: src/x_preview.c:127
 msgid "x_preview_update_gtk24: Can't get pixbuf from preview struct.\n"
-msgstr ""
+msgstr "x_preview_update_gtk24: невозможно получить буфер изображения из предыдущей структуры.\n"
 
 #: src/x_print.c:91
-#, fuzzy
 msgid "Save PostScript As..."
-msgstr "Сохранить страницу как..."
+msgstr "Сохранить PostScript как..."
 
 #: src/x_print.c:188
 msgid "Extents with margins"
-msgstr ""
+msgstr "Расширить с полями"
 
 #: src/x_print.c:191
 msgid "Extents no margins"
-msgstr ""
+msgstr "Расширить без полей"
 
 #: src/x_print.c:195
 msgid "Current Window"
@@ -2189,7 +2147,7 @@ msgstr "Портрет"
 
 #: src/x_print.c:283
 msgid "Settings"
-msgstr ""
+msgstr "Установки"
 
 #: src/x_print.c:295
 msgid "Output paper size"
@@ -2204,17 +2162,16 @@ msgid "Orientation"
 msgstr "Ориентация"
 
 #: src/x_print.c:329
-#, fuzzy
 msgid "Destination"
-msgstr "Документация"
+msgstr "Назначение"
 
 #: src/x_print.c:368
 msgid "Command"
-msgstr ""
+msgstr "Команда"
 
 #: src/x_print.c:690
 msgid "No print destination specified\n"
-msgstr ""
+msgstr "Не указано назначение для печати\n"
 
 #: src/x_print.c:697
 #, c-format
@@ -2351,175 +2308,54 @@ msgstr "Меню/Отмена"
 msgid "Pan/Cancel"
 msgstr "Центр/Отмена"
 
-#~ msgid "OK"
-#~ msgstr "ОК"
+msgid "Image"
+msgstr "Изображение"
 
-#~ msgid "Cancel"
-#~ msgstr "Отмена"
+msgid "Comps"
+msgstr "Компоненты"
 
-#~ msgid "Apply"
-#~ msgstr "Применить"
+msgid "Both"
+msgstr "Оба"
 
-#~ msgid "Find"
-#~ msgstr "Поиск"
+msgid "OK"
+msgstr "ОК"
 
-#~ msgid "Done"
-#~ msgstr "Готово"
+msgid "Apply"
+msgstr "Применить"
 
-#~ msgid "SaveAs"
-#~ msgstr "Сохранить как"
+msgid "Cancel"
+msgstr "Отмена"
 
-#~ msgid "Write"
-#~ msgstr "Записать"
+msgid "Find"
+msgstr "Поиск"
 
-#~ msgid "Print"
-#~ msgstr "Печать"
+msgid "Done"
+msgstr "Готово"
 
-#~ msgid "Edit mode"
-#~ msgstr "Режим правки"
+msgid "SaveAs"
+msgstr "Сохранить как"
 
-#~ msgid "Move mode"
-#~ msgstr "Режим перемещения"
+msgid "Write"
+msgstr "Записать"
 
-#~ msgid "Copy mode"
-#~ msgstr "Режим копирования"
+msgid "Print"
+msgstr "Печать"
 
-#~ msgid "Delete mode"
-#~ msgstr "Режим удаления"
+msgid "Edit mode"
+msgstr "Режим правки"
 
-#~ msgid "Rotate mode"
-#~ msgstr "Режим вращения"
+msgid "Move mode"
+msgstr "Режим перемещения"
 
-#~ msgid "Mirror mode"
-#~ msgstr "Режим зеркалирования"
+msgid "Copy mode"
+msgstr "Режим копирования"
 
-#, fuzzy
-#~ msgid "Invalid number of lines [%d] passed to output-vector-threshold\n"
-#~ msgstr "Неверное количество уровней [%d] при обработке undo-levels\n"
+msgid "Delete mode"
+msgstr "Режим удаления"
 
-#~ msgid "Comps"
-#~ msgstr "Компоненты"
+msgid "Rotate mode"
+msgstr "Режим вращения"
 
-#~ msgid "Both"
-#~ msgstr "Оба"
+msgid "Mirror mode"
+msgstr "Режим зеркалирования"
 
-#, fuzzy
-#~ msgid "Image"
-#~ msgstr "Страница"
-
-#~ msgid "Deattach"
-#~ msgstr "Отцепить"
-
-#~ msgid "%s requires a string as a parameter\n"
-#~ msgstr "%s требует строку в качестве параметра\n"
-
-#~ msgid "Invalid parameters to paper-sizes\n"
-#~ msgstr "Неверные параметры в paper-sizes\n"
-
-#~ msgid "Cannot obtain the current directory!\n"
-#~ msgstr "Невозможно зайти в текущий каталог!\n"
-
-#~ msgid "Cannot get cwd!\n"
-#~ msgstr "Невозможно получить имя текущего каталога!\n"
-
-#~ msgid "ERROR: NULL object in o_embed!\n"
-#~ msgstr "Ошибка: объект NULL в o_embed!\n"
-
-#~ msgid "Warning: two components with same refdes: %d\n"
-#~ msgstr "Предупреждение: два компонента с одинаковым refdes: %d\n"
-
-#~ msgid "Got an unexpected NULL in o_update_component\n"
-#~ msgstr "Неожиданный NULL в o_update_component\n"
-
-#~ msgid "Invalid space specified, setting to 100\n"
-#~ msgstr "Определен неверный пробел, устанавливается в 100\n"
-
-#~ msgid "Invalid length specified, setting to 100\n"
-#~ msgstr "Определена неверная длина, устанавливается в 100\n"
-
-#~ msgid "Autonumber text starting with:"
-#~ msgstr "Автонумеровать текст, начинающийся с:"
-
-#~ msgid "Yes"
-#~ msgstr "Да"
-
-#~ msgid "No"
-#~ msgstr "Нет"
-
-#~ msgid "Add/Edit"
-#~ msgstr "Добавить/Редактировать"
-
-#~ msgid "Clear"
-#~ msgstr "Очистить"
-
-#~ msgid "Open Page"
-#~ msgstr "Открыть страницу"
-
-#~ msgid "Update Manager"
-#~ msgstr "Обновить менеджер"
-
-#~ msgid "Close Manager"
-#~ msgstr "Закрыть менеджер"
-
-#~ msgid "Read system-gschemrc file [%s]\n"
-#~ msgstr "Чтение файла system-gschemrc [%s]\n"
-
-#, fuzzy
-#~ msgid "Did not find required system-gschemrc file [%s]\n"
-#~ msgstr "Файл system-gschemrc не был найден [%s]\n"
-
-#~ msgid "Read ~/.gEDA/gschemrc file [%s]\n"
-#~ msgstr "Чтение файла ~/.gEDA/gschemrc [%s]\n"
-
-#, fuzzy
-#~ msgid "Did not find optional ~/.gEDA/gschemrc file [%s]\n"
-#~ msgstr "Файл ~/.gEDA/gschemrc не был найден [%s]\n"
-
-#~ msgid "Read local gschemrc file [%s]\n"
-#~ msgstr "Чтение локального файла gschemrc [%s]\n"
-
-#, fuzzy
-#~ msgid "Did not find optional local gschemrc file [%s]\n"
-#~ msgstr "Локальный файл gschemrc не был найден [%s]\n"
-
-#~ msgid "Read specified rc file [%s]\n"
-#~ msgstr "Чтение специального rc-файла [%s]\n"
-
-#~ msgid "Did not find specified gschemrc file [%s]\n"
-#~ msgstr "Особенный файл gschemrc не был найден [%s]\n"
-
-#~ msgid "Could not find any gschemrc file!\n"
-#~ msgstr "Невозможно найти ни одного файла gschemrc!\n"
-
-#~ msgid "Could not find a gschemrc file\n"
-#~ msgstr "Невозможно найти файл gschemrc\n"
-
-#~ msgid "Invalid path [%s] passed to component-library\n"
-#~ msgstr "Неверный путь [%s] при обработке component-library\n"
-
-#~ msgid "Invalid path [%s] passed to component-library-search\n"
-#~ msgstr "Неверный путь [%s] при обработке component-library-search\n"
-
-#~ msgid "Invalid path [%s] passed to %s\n"
-#~ msgstr "Неверный путь [%s] при обработке %s\n"
-
-#~ msgid "Invalid path [%s] passed to source-library-search\n"
-#~ msgstr "Неверный путь [%s] при обработке source-library-search\n"
-
-#~ msgid "Invalid path [%s] passed to scheme-directory\n"
-#~ msgstr "Неверный путь [%s] при обработке scheme-directory\n"
-
-#~ msgid "Invalid path [%s] passed to bitmap-directory\n"
-#~ msgstr "Неверный путь [%s] при обработке bitmap-directory\n"
-
-#~ msgid "Invalid path [%s] passed to font-directory\n"
-#~ msgstr "Неверный путь [%s] при обработке font-directory\n"
-
-#~ msgid "Ok"
-#~ msgstr "Ок"
-
-#~ msgid "Edit Component"
-#~ msgstr "Редактировать компонент"
-
-#~ msgid "Limits"
-#~ msgstr "Ограничители"
