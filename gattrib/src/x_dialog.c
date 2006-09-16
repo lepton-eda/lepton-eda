@@ -489,7 +489,7 @@ void x_dialog_missing_sym_abort_callback(GtkWidget *buttonyes,
 #ifdef DEBUG
   printf("In x_dialog_missing_sym_abort_callback, closing program\n");
 #endif
-  gattrib_quit();
+  gattrib_quit(0);
 }
 
 
@@ -610,7 +610,7 @@ void x_dialog_unsaved_data_continue_callback(GtkWidget *buttonclose,
   printf("In x_dialog_unsaved_data_continue_callback, continuing to quit\n");
 #endif
   x_dialog_close_window(window);
-  gattrib_quit();
+  gattrib_quit(0);
   return;
 }
 
@@ -637,7 +637,8 @@ void x_dialog_unsaved_data_abort_callback(GtkWidget *buttonyes,
 
 /* --------------------------------------------------------- *
  * This fcn informs the user that he has chosen an 
- * unimplemented feature.
+ * unimplemented feature.  It presents only an "OK" button
+ * to leave.
  * --------------------------------------------------------- */
 void x_dialog_unimplemented_feature()
 {
@@ -705,16 +706,70 @@ void x_dialog_unimplemented_feature()
 		     GTK_SIGNAL_FUNC(x_dialog_about_close_callback),  /* stealing "about" fcn */
 		     GTK_WIDGET(unimplemented_feature_window) );
 
-/* Remove bad size for widget */
-#if 0
-  gtk_widget_set_size_request (GTK_WIDGET (buttonclose), 50, 30);
-#endif 
-
   gtk_widget_show(buttonclose);
 
   if (!GTK_WIDGET_VISIBLE(unimplemented_feature_window)) {
     gtk_widget_show(unimplemented_feature_window);
   }
+}
+
+
+
+/* ========================================================= *
+ * Exit announcment callback
+ * ========================================================= */
+
+/* --------------------------------------------------------- *
+ * This fcn accepts a string and displays it.  It presents
+ * only an "OK" button to close the box and exit gattrib.
+ * --------------------------------------------------------- */
+void x_dialog_exit_announcement(gchar *string, gint return_code)
+{
+  GtkWidget *exit_announcement_window;
+  GtkWidget *label = NULL;
+  GtkWidget *buttonok = NULL;
+  GtkWidget *vbox, *action_area;
+
+  exit_announcement_window = x_dialog_create_dialog_box(&vbox, &action_area);
+
+  gtk_window_position(GTK_WINDOW(exit_announcement_window),
+		      GTK_WIN_POS_MOUSE);
+  
+  gtk_window_set_title(GTK_WINDOW(exit_announcement_window), 
+		       "Attention!");
+
+  gtk_container_border_width(GTK_CONTAINER(exit_announcement_window), 5);
+  
+  /* Stick calling string into label widget */
+  label = gtk_label_new(string);
+  gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 5);
+  gtk_widget_show(label);
+  
+  /* Now create OK button to stick in action area */
+  buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+  GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
+  gtk_box_pack_start(GTK_BOX(action_area), buttonok, FALSE, FALSE, 0);
+  gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
+		     GTK_SIGNAL_FUNC(x_dialog_exit_announcement_close_callback),
+		     return_code );
+  gtk_widget_show(buttonok);
+
+  /* set this to grab ability to override other windows */
+  gtk_window_set_modal(exit_announcement_window, TRUE);
+
+ /* show window */
+  if (!GTK_WIDGET_VISIBLE(exit_announcement_window)) {
+    gtk_widget_show(exit_announcement_window);
+  }
+}
+
+/* --------------------------------------------------------- *
+ * OK button pressed -- 
+ * --------------------------------------------------------- */
+void x_dialog_exit_announcement_close_callback(GtkWidget *buttonok, 
+				    gint return_code)
+{
+  gattrib_quit(return_code);
 }
 
 

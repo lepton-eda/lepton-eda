@@ -75,7 +75,7 @@ void gattrib_really_quit(void)
     printf("User is quitting without saving last changes.\n");
     x_dialog_unsaved_data();
   } else {
-    gattrib_quit();
+    gattrib_quit(0);
   }
 }
 
@@ -83,7 +83,7 @@ void gattrib_really_quit(void)
 /*------------------------------------------------------------------
  * gattrib_quit -- wrap up and quit fcn.
  *------------------------------------------------------------------*/
-void gattrib_quit(void)
+gint gattrib_quit(gint return_code)
 {
   /*   s_clib_cache_free(); */
   s_clib_free();
@@ -95,7 +95,7 @@ void gattrib_quit(void)
   printf("In gattrib_quit, calling gtk_main_quit()\n");
 #endif
   gtk_main_quit();
-  return;
+  exit(return_code);
 }
 
 
@@ -358,7 +358,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
   printf("In gattrib_main, we have exited gtk_main. \n");
 #endif  
 
-  return;
+  exit(0);
 }
 
 /*------------------------------------------------------------------
@@ -369,6 +369,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
  *------------------------------------------------------------------*/
 int main(int argc, char *argv[])
 {
+  gint return_code;
 
   /* This is i18n stuff */
 #if ENABLE_NLS
@@ -388,6 +389,5 @@ int main(int argc, char *argv[])
 #ifdef DEBUG
   printf("Now exiting main . . . Bye!\n");
 #endif
-  /* return 0 */
-  exit(0);
+  exit(0);   /* This is not real exit point.  Real exit is in gattrib_quit. */
 }

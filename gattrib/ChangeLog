@@ -1,3 +1,10 @@
+2006-09-15 Stuart Brorson   <sdb (AT) cloud9 (DOT) net>
+	* include/prototype.h, src/g_register.c, src/gattrib.c,
+	src/x_dialog.c, src/x_gtksheet.c, src/x_window.c:
+	Made gattrib throw up GUI window warning user of no
+	components or attributes per request of Peter Clifton.
+	Then program exits with non-zero return code.
+	
 2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated program version to 20060906.

@@ -69,7 +69,7 @@ SCM g_quit(void)
   printf("In g_quit, calling exit(0)\n");
 #endif
 
-  gattrib_quit(); 
-  exit(0);
+  gattrib_quit(0); 
+  /*  exit(0);  */  /* Necessary? */
 }
 

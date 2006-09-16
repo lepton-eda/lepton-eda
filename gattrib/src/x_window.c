@@ -108,9 +108,9 @@ x_window_init()
   printf("In x_window_init, about to connect delete and destroy signals to window.\n");
 #endif
   gtk_signal_connect (GTK_OBJECT (window), "delete_event",
-		      GTK_SIGNAL_FUNC (gattrib_quit), NULL);
+		      GTK_SIGNAL_FUNC (gattrib_quit), 0);
   gtk_signal_connect (GTK_OBJECT (window), "destroy",
-		      GTK_SIGNAL_FUNC (gattrib_quit), NULL);
+		      GTK_SIGNAL_FUNC (gattrib_quit), 0);
   
 
   /* -----  Now create main_vbox.  This is a container which organizes child  ----- */  
@@ -233,7 +233,7 @@ x_window_add_items()
 {
   gint i, j;
   gint num_rows, num_cols;
-  char *text;
+  gchar *text, *error_string;
   gint visibility, show_name_value;
   
 #ifdef DEBUG
@@ -242,32 +242,43 @@ x_window_add_items()
   printf("Entered x_window_add_items . . . . . ..\n");
 #endif
 
-
   /* Do these sanity check to prevent later segfaults */
   if (sheet_head->comp_count == 0) {
-    fprintf(stderr, "\n\nNo components found in entire design!\n");
-    fprintf(stderr, "Do you have refdeses on your components?  \n");
-    fprintf(stderr, "Exiting. . . .\n");
-    exit(-1);
+    error_string = g_strdup("\n\nNo components found in entire design!  ");
+    error_string = g_strconcat(error_string, 
+                            "Do you have refdeses on your components?  \n", NULL);
+    error_string = g_strconcat(error_string, 
+			    "Exiting. . . .\n");
+    fprintf(stderr, "%s", error_string);
+    x_dialog_exit_announcement(error_string, -1);
+    g_free(error_string);
+    gtk_main();
   }
 
   if (sheet_head->comp_attrib_count == 0) {
-    fprintf(stderr, "\n\nNo configurable component attributes found in entire design!");
-    fprintf(stderr, "Please attach at least some attributes before running gattrib.\n");
-    fprintf(stderr, "Exiting. . . .\n");
-    exit(-2);
+    error_string = g_strdup("\n\nNo configurable component attributes found in entire design!  ");
+    error_string = g_strconcat(error_string, 
+                            "Please attach at least some attributes before running gattrib.\n", NULL);
+    error_string = g_strconcat(error_string, "Exiting. . . .\n");
+    fprintf(stderr, "%s", error_string);
+    x_dialog_exit_announcement(error_string, -2);
+    g_free(error_string);
+    gtk_main();
   }
+
 
   if (sheet_head->pin_count == 0) {
-    fprintf(stderr, "\n\nNo pins found on any components!\n");
-    fprintf(stderr, "Please check your design.\n");
-    fprintf(stderr, "Exiting. . . .\n");
-    exit(-3);
+    error_string = g_strdup("\n\nNo pins found on any components!  ");
+    error_string = g_strconcat(error_string, "Please check your design.\n", NULL);
+    error_string = g_strconcat(error_string, "Exiting. . . .\n");
+    fprintf(stderr, "%s", error_string);
+    x_dialog_exit_announcement(error_string, -3);
+    g_free(error_string);
+    gtk_main();
   }
 
 
-
-  /* Since we have passed the sanity checking, initialize the gtksheet. */
+  /*  initialize the gtksheet. */
 #ifdef DEBUG
   printf("In x_window_add_items, about to call x_gtksheet_init.\n");
 #endif

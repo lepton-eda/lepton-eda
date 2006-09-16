@@ -91,8 +91,9 @@ x_gtksheet_init()
     fflush(stderr);
     fflush(stdout);
     printf("In x_gtksheet_init, no components in comp sheet.\n");
-    exit(-1);
 #endif
+    x_dialog_exit_announcement("No components found in design.  Please check your schematic and try again!\n", -1);
+    gtk_main();  /* Run gtk loop here since the next thing we do is quit. */ 
   }
   
 

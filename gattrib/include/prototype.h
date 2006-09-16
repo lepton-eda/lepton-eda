@@ -5,7 +5,7 @@
 
 /* ---------------- gattrib.c ---------------- */
 void gattrib_really_quit(void);
-void gattrib_quit(void);
+gint gattrib_quit(gint return_code);
 void gattrib_main(void *closure, int argc, char *argv[]);
 int main(int argc, char *argv[]);
 
@@ -211,6 +211,10 @@ void x_dialog_unsaved_data_abort_callback(GtkWidget *buttonyes,
 					GtkWidget *window);
 
 void x_dialog_unimplemented_feature();
+
+void x_dialog_exit_announcement(gchar *string, gint return_code);
+void x_dialog_exit_announcement_close_callback(GtkWidget *buttonok, 
+				   gint return_code);
 
 int x_dialog_about_keypress_callback(GtkWidget * widget, GdkEventKey * event,
 				     GtkWidget * window);
