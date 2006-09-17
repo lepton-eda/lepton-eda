@@ -61,6 +61,8 @@ struct st_symcheck {
   int numnetpins;
   /* number of slots */
   int numslots;  
+  /* number of distinct slot pins */
+  int numslotpins;
   
   /* total error counter */
   int error_count;

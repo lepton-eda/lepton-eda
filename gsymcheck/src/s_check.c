@@ -582,7 +582,15 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
   int i,j;
   char *message;
   char tempstr1[10];
-  
+  /*  pinlist will store the pin definitions for each slot */
+  /* example: pinlist[0] = 3,2,8,4,1 ; pinlist[1] = 5,6,8,4,7 */
+  char** pinlist = NULL;
+  int n,m;
+  char* pin;
+  char* cmp;
+  int match;
+  gboolean error_parsing = FALSE;
+
   /* look for numslots to see if this symbol has slotting info */
   value = o_attrib_search_name(object_head, "numslots", 0);
 
@@ -612,10 +620,13 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     return;
   }
   
+
+  pinlist = (char**)g_malloc0(sizeof(*pinlist) * s_current->numslots);
+
   i = 0;
   /* get the slotdef attribute */
   slotdef = o_attrib_search_name(object_head, "slotdef", 0);
-  while (slotdef != NULL)
+  while ((slotdef != NULL) && (!error_parsing))
   {
 
     if (i > s_current->numslots-1) {
@@ -645,8 +656,8 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
                                                 message);
       s_current->error_count++;
       s_current->slotting_errors++;
-      g_free(slotdef);
-      return;
+      error_parsing = TRUE;
+      continue;
     }
 
     if (strcmp(slotnum, "0") == 0) {
@@ -684,8 +695,8 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
                                                 message);
       s_current->error_count++;
       s_current->slotting_errors++;
-      g_free(slotdef);
-      return;
+      error_parsing = TRUE;
+      continue;
     }
     pins++;  /* get past that : */
     if (!pins) {
@@ -696,8 +707,8 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
                                                 message);
       s_current->error_count++;
       s_current->slotting_errors++;
-      g_free(slotdef);
-      return;
+      error_parsing = TRUE;
+      continue;
     }
 
     if (*pins == '\0') {
@@ -708,10 +719,23 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
                                                 message);
       s_current->error_count++;
       s_current->slotting_errors++;
-      g_free(slotdef);
-      return;
+      error_parsing = TRUE;
+      continue;
     }
 
+    if ((slot > 0) && (slot <= s_current->numslots)) {
+      if (pinlist[slot-1]) {
+        message = g_strdup_printf ("Duplicate slot number in slotdef=%s\n",
+				   slotdef);
+        s_current->error_messages = g_list_append(s_current->error_messages,
+	    			                  message);
+        s_current->error_count++;
+        s_current->slotting_errors++;
+      } else {
+	pinlist[slot-1] = g_strdup_printf(",%s,", pins);
+      }
+    }
+    
     j = 0;
     do {
       if (temp) {
@@ -761,12 +785,12 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
       g_free(temp);
 
     g_free(slotdef);
+    slotdef = NULL;
    
     i++;
     slotdef = o_attrib_search_name(object_head, "slotdef", i);
   }
 
-  
   if (!slotdef && i < s_current->numslots) {
     message = g_strdup_printf (
       "Missing slotdef= (there should be %s slotdef= attributes)\n",
@@ -775,8 +799,54 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
 			                      message);
     s_current->error_count++;
     s_current->slotting_errors++;
-    return;
+  } else {
+    /* Now compare each pin with the rest */
+    s_current->numslotpins = 0;
+    for (i = 0; i < s_current->numslots; i++) {
+      for (n = 1; n <= s_current->numpins; n++) {
+	/* Get the number of one pin */
+	pin = u_basic_breakup_string(pinlist[i], ',', n);
+	if (pin && *pin) {
+	  match = FALSE;
+	  for (j = i - 1; j >= 0 && !match; j--) {
+	    for (m = 1; m <= s_current->numpins && !match; m++) {
+	      /* Get the number of the other pin */
+	      cmp = u_basic_breakup_string(pinlist[j], ',', m);
+	      if (cmp && *cmp) {
+		match = (0 == strcmp (pin, cmp));
+		g_free(cmp);
+	      }
+	    }
+	  }
+	  if (!match) {
+	    /* If they don't match, then increase the number of pins */
+	    s_current->numslotpins++;
+	  }
+	  g_free(pin);
+	}
+      }
+    }
+    message = g_strdup_printf ("Found %d distinct pins in slots\n", 
+			       s_current->numslotpins);
+    s_current->info_messages = g_list_append(s_current->info_messages,
+					     message);
+    
   }
+  
+  if (slotdef) {
+    g_free(slotdef);
+  }
+  if (pinlist) {
+    /* Free the pinlist */
+    for (i = 0; i < s_current->numslots; i++) {
+      if (pinlist[i]) {
+	g_free(pinlist[i]);
+      }
+    }
+    g_free(pinlist);
+  }
+ 
+  return;
 }
 
 
@@ -1210,7 +1280,10 @@ s_check_totalpins(OBJECT *object_head, SYMCHECK *s_current)
   totalpins = s_current->numnetpins;
   
   if (s_current->numslots)
-    totalpins += s_current->numpins * s_current->numslots;
+    if (s_current->numslotpins)
+      totalpins += s_current->numslotpins;
+    else
+      totalpins += s_current->numpins * s_current->numslots;
   else
     totalpins += s_current->numpins;
   

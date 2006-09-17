@@ -1,3 +1,21 @@
+2006-09-17 Carlos Nieves Onega <cnieves@iespana.es>
+	
+	* include/struct.h, src/s_check.c, src/s_symstruct.c:
+	Applied patch #1558391 by Jeff Mallatt, slightly modified so
+	it doesn't use goto's. Thanks.
+	
+	Counts the number of distinct pinnumbers specified in
+	all slotdef= attributes. Uses that number, plus the
+	number of net= pins, to compare with the "footprint
+	size" when checking for that warning.
+
+	The code used to simply use numpins*numslots, which
+	doesn't account for the possibility of the same
+	pinnumber being used in more than one slotdef= attribute.
+
+	For an example of a symbol where this matters, see
+	'analog/dual-opamp-1.sym'.
+	
 2006-09-13 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/s_check.c: Applied patch #1558122 by Jeff Mallatt.
