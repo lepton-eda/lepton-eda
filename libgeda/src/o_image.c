@@ -23,8 +23,8 @@
 #include <gtk/gtk.h>
 #include <libguile.h>
 
-#ifdef HAS_LIBGDGEDA
-#include <gdgeda/gd.h>
+#ifdef HAS_LIBGD
+#include <gd.h>
 #endif
 
 #include "defines.h"
@@ -51,7 +51,7 @@ int image_cyan;
 int image_grey;
 #endif
 
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
 
 extern COLOR colors[MAX_COLORS];
 
@@ -148,7 +148,7 @@ int o_image_write(const char *filename)
  *  \par Function Description
  *
  */
-/* this can stay in even if libgdgeda doesn't exist */
+/* this can stay in even if libgd doesn't exist */
 int o_image_geda2gd_color(int color) 
 {
   int value;

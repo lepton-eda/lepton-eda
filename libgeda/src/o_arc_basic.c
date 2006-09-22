@@ -24,8 +24,8 @@
 #include <gtk/gtk.h>
 #include <libguile.h>
 
-#ifdef HAS_LIBGDGEDA
-#include <gdgeda/gd.h>
+#ifdef HAS_LIBGD
+#include <gd.h>
 #endif
 
 #include "defines.h"
@@ -1549,7 +1549,7 @@ void o_arc_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 /*! \brief Draw an arc in an image.
  *  \par Function Description
- *  This function draws an arc in an image with the libgdgeda function <B>gdImageArc()</B>.
+ *  This function draws an arc in an image with the libgd function <B>gdImageArc()</B>.
  *
  *  \param [in] w_current  The TOPLEVEL object.
  *  \param [in] o_current
@@ -1624,13 +1624,13 @@ o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
   x = o_current->arc->screen_x;
   y = o_current->arc->screen_y;
 	
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
 
   gdImageSetThickness(current_im_ptr, SCREENabs(w_current,
                                                 o_current->line_width));
 
   gdImageArc(current_im_ptr, 
-             x, y, width, height, start_angle, end_angle, color);
+	     x, y, width, height, start_angle, end_angle, color);
 #endif
 	
 }

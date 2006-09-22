@@ -24,10 +24,10 @@ AC_ARG_ENABLE(stroke,
 	 no_stroke=yes
         fi ])
 
-# --disable-gdgeda : turn off libgdgeda support
-AC_ARG_ENABLE(gdgeda,
-    [  --disable-gdgeda        Disable libgdgeda support (don't use libgdgeda at all)], [ if test $enableval = "no"; then
-	    no_gdgeda=yes
+# --disable-gd : turn off libgd support
+AC_ARG_ENABLE(gd,
+    [  --disable-gd        Disable libgd support (don't use libgd at all)], [ if test $enableval = "no"; then
+	    no_gd=yes
            fi ])
 
 # Change default location for rc files
@@ -234,27 +234,27 @@ fi
 ############################################################################
 
 ############################################################################
-# Check for libgdgeda start
+# Check for libgd start
 # Do some very simple tests, as we just need to know if libgeda was
-# built with libgdgeda support.
+# built with libgd support.
 #
 
-haslibgdgeda=`echo $LIBGEDA_LIBS | grep gdgeda`
-if test "$haslibgdgeda" != ""; then
-   # Check disable-gdgeda command line flag value
-   if test "$no_gdgeda" = "yes"; then
-      echo found libgdgeda, but disabling gdgeda support
-      LIBGDGEDA=no
+haslibgd=`echo $LIBGEDA_LIBS | grep gd`
+if test "$haslibgd" != ""; then
+   # Check disable-gd command line flag value
+   if test "$no_gd" = "yes"; then
+      echo found libgd, but disabling gd support
+      LIBGD=no
    else 
-      AC_DEFINE(HAS_LIBGDGEDA, 1, [Define if you have libgdgeda installed])
-      LIBGDGEDA=yes
+      AC_DEFINE(HAS_LIBGD, 1, [Define if you have libgd installed])
+      LIBGD=yes
    fi
 else
-      LIBGDGEDA=no
+      LIBGD=no
 fi
 
 # 
-# Check for libgdgeda end
+# Check for libgd end
 ############################################################################
 
 
@@ -555,7 +555,7 @@ AC_MSG_RESULT([
    GUILE library version:            $GUILE_VERSION
    libgeda library version:          $LIBGEDA_VERSION
    libstroke library:                $LIBSTROKE
-   libdgeda library:                 $LIBGDGEDA
+   libgd library:                    $LIBGD
    mingw build:                      $MINGW
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR

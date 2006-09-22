@@ -53,6 +53,9 @@ README for gschem
 	libgdgeda 2.0.15 [OPTIONAL] - if you want the ability to write png
 	images.  New versions of libgeda/gschem write png using internal code,
         so you will still be able to create png images without using libgdgeda.
+ 	Since 20060922, gd 2.0.x is used instead of libgdgeda, so libgdgeda 
+	is not needed anymore.
+
 	libgdgeda is based on gd 2.0.15  The homepage for gd 2.0.x is
 	http://www.boutell.com/gd  You can find libgdgeda on the gEDA
 	website: http://www.geda.seul.org/dist

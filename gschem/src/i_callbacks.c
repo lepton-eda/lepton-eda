@@ -489,13 +489,13 @@ DEFINE_I_CALLBACK(file_write_png)
   exit_if_null(w_current);
 
 #if 0
-#ifndef HAS_LIBGDGEDA
+#ifndef HAS_LIBGD
   /*! \todo integrate these to messages */
   fprintf(stderr,
-          _("libgdgeda not installed or disabled, "
+          _("libgd not installed or disabled, "
           "so this feature is disabled\n"));
   s_log_message(
-		_("libgdgeda not installed or disabled, "
+		_("libgd not installed or disabled, "
 		"so this feature is disabled\n"));
   return;
 #endif

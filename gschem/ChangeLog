@@ -1,3 +1,10 @@
+2006-09-22 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* README, configure.ac, src/i_callbacks.c, src/x_image.c:
+	  Use gd 2.0.x library instead of libgdgeda.
+	  libgdgeda is not used anymore. Work based on a patch by
+	  Wojciech Kazubski (patch #1479983).
+	
 2006-09-15 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* po/ru.po: Updated russian translation provided by Andy Shevchenko,

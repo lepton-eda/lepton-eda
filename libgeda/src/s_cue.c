@@ -96,7 +96,7 @@ void s_cue_postscript_fillcircle(TOPLEVEL * w_current, FILE * fp,
   fprintf(fp, "fill\n");
 }
 
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -265,7 +265,7 @@ void s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
         if (count < 1) {	/* Didn't find anything connected there */
           if (output_type == POSTSCRIPT) {
             s_cue_postscript_fillbox(w_current, fp, x, y);
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
           } else if (output_type == PNG) {
             s_cue_image_fillbox(w_current, object, x, y);
 #endif
@@ -279,7 +279,7 @@ void s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
             } else {
               s_cue_postscript_fillcircle(w_current, fp, x, y, TRUE);
             }
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
           } else if (output_type == PNG) {
             if (!bus_involved) {
               s_cue_image_fillcircle(w_current, x, y, FALSE);
@@ -299,7 +299,7 @@ void s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
         } else {
           s_cue_postscript_fillcircle(w_current, fp, x, y, TRUE);
         }
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
       } else if (output_type == PNG) {
         if (!bus_involved) {
           s_cue_image_fillcircle(w_current, x, y, FALSE);
@@ -348,7 +348,7 @@ void s_cue_output_lowlevel_midpoints(TOPLEVEL * w_current, OBJECT * object,
         
         if (output_type == POSTSCRIPT) {
           s_cue_postscript_fillcircle(w_current, fp, x, y, size_flag);
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
         } else if (output_type == PNG) {
           s_cue_image_fillcircle(w_current, x, y, size_flag);
 #endif

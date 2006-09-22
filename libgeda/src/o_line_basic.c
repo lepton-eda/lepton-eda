@@ -24,8 +24,8 @@
 #include <gtk/gtk.h>
 #include <libguile.h>
 
-#ifdef HAS_LIBGDGEDA
-#include <gdgeda/gd.h>
+#ifdef HAS_LIBGD
+#include <gd.h>
 #endif
 
 #include "defines.h"
@@ -1410,7 +1410,7 @@ void o_line_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 /*! \brief Draw a line in an image.
  *  \par Function Description
- *  This function draws a line in an image with the libgdgeda function
+ *  This function draws a line in an image with the libgd function
  *  #gdImageLine().
  *
  *  \param [in] w_current   The TOPLEVEL object.
@@ -1437,7 +1437,7 @@ void o_line_image_write(TOPLEVEL *w_current, OBJECT *o_current,
   }
 
   /* assumes screen coords are already calculated correctly */
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
 
   gdImageSetThickness(current_im_ptr, SCREENabs(w_current, 
 					        o_current->line_width));

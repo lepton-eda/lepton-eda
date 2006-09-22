@@ -24,8 +24,8 @@
 #include <gtk/gtk.h>
 #include <libguile.h>
 
-#ifdef HAS_LIBGDGEDA
-#include <gdgeda/gd.h>
+#ifdef HAS_LIBGD
+#include <gd.h>
 #endif
 
 #include "defines.h"
@@ -508,7 +508,7 @@ void o_pin_image_write(TOPLEVEL *w_current, OBJECT *o_current,
   }
 
   /* assumes screen coords are already calculated correctly */
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
 
   if (w_current->pin_style == THICK) {
     gdImageSetThickness(current_im_ptr, SCREENabs(w_current,

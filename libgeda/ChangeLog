@@ -1,3 +1,14 @@
+2006-09-22 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* README, configure.ac, include/globals.h, src/f_image.c,
+	  src/o_arc_basic.c, src/o_box_basic.c, src/o_bus_basic.c,
+	  src/o_circle_basic.c, src/o_image.c, src/o_line_basic.c,
+	  src/o_net_basic.c, src/o_pin_basic.c, src/s_color.c,
+	  src/s_cue.c: 
+	  Use gd 2.0.x library instead of libgdgeda.
+	  libgdgeda is not used anymore. Work based on a patch by
+	  Wojciech Kazubski (patch #1479983).
+	
 2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Updated program version to 20060906.

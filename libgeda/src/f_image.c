@@ -24,8 +24,8 @@
 #include <gtk/gtk.h>
 #include <libguile.h>
 
-#ifdef HAS_LIBGDGEDA
-#include <gdgeda/gd.h>
+#ifdef HAS_LIBGD
+#include <gd.h>
 #endif
 
 #include "defines.h"
@@ -40,7 +40,7 @@
 #include <dmalloc.h>
 #endif
 
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
 /*! \todo Finish function description!!!
  *  \brief
  *  \par Function Description
@@ -73,7 +73,6 @@ void f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
   while ( o_current != NULL ) {
 
     if (o_current->type != OBJ_HEAD) {
-
       switch (o_current->type) {
         case(OBJ_LINE):
           o_line_image_write(w_current, o_current,
@@ -179,7 +178,7 @@ void f_image_write(TOPLEVEL *w_current, const char *filename,
 		   int color_mode)
 {
 
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
   int origin_x, origin_y, bottom, right;
   float scale=0.0;
 
@@ -203,8 +202,8 @@ void f_image_write(TOPLEVEL *w_current, const char *filename,
   o_image_write(filename);
   o_image_close();
 #else
-  fprintf(stderr, "f_image_write: Called this function without libgdgeda support.\n");
-  s_log_message("f_image_write: Called this function without libgdgeda support.\n");
+  fprintf(stderr, "f_image_write: Called this function without libgd support.\n");
+  s_log_message("f_image_write: Called this function without libgd support.\n");
 #endif
 
 }

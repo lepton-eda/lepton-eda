@@ -56,10 +56,10 @@ extern int logging_dest;
 extern int image_black;
 extern int image_white;
 
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
 /* I hate to include an include inside an include (ha!) however, I don't */
 /* see an easy way to get this to build right */
-#include <gdgeda/gd.h>
+#include <gd.h>
 extern gdImagePtr current_im_ptr;
 #endif
 

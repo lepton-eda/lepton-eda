@@ -24,8 +24,8 @@
 #include <gtk/gtk.h>
 #include <libguile.h>
 
-#ifdef HAS_LIBGDGEDA
-#include <gdgeda/gd.h>
+#ifdef HAS_LIBGD
+#include <gd.h>
 #endif
 
 #include "defines.h"
@@ -540,7 +540,7 @@ void o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
   y2 = o_current->line->screen_y[1];
 
   /* assumes screen coords are already calculated correctly */
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
 
   if (w_current->net_style == THICK) {
     gdImageSetThickness(current_im_ptr, SCREENabs(w_current,

@@ -23,8 +23,8 @@
 #include <gtk/gtk.h>
 #include <libguile.h>
 
-#ifdef HAS_LIBGDGEDA
-#include <gdgeda/gd.h>
+#ifdef HAS_LIBGD
+#include <gd.h>
 #endif
 
 #include "defines.h"
@@ -1383,7 +1383,7 @@ void o_circle_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 /*! \brief Draw a circle in an image.
  *  \par Function Description
- *  This function draws a circle in an image with the libgdgeda function
+ *  This function draws a circle in an image with the libgd function
  *  #gdImageArc().
  *
  *  \param [in] w_current   The TOPLEVEL object.
@@ -1408,7 +1408,7 @@ void o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current,
     color = image_black;
   }
 
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
 
   gdImageSetThickness(current_im_ptr, SCREENabs(w_current,
                                                 o_current->line_width));

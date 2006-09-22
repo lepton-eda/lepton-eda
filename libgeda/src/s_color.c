@@ -179,7 +179,7 @@ void s_color_gdcolor_init(void)
 
     if (colors[i].image_red != -1 && colors[i].image_green != -1 &&
         colors[i].image_blue != -1) {
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
       colors[i].image_color = gdImageColorAllocate(
                                                    current_im_ptr, 
                                                    colors[i].image_red,

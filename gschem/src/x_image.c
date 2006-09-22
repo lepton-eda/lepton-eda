@@ -228,7 +228,7 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
   int save_height, save_width;
   int save_page_left, save_page_right, save_page_top, save_page_bottom;
   int page_width, page_height, page_center_left, page_center_top;
-#ifndef HAS_LIBGDGEDA
+#ifndef HAS_LIBGD
   GdkPixbuf *pixbuf;
   char *filetype;
 #endif
@@ -276,10 +276,11 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
                           selection2_head);
 		
 
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
   /* try to use recalc here */
   o_redraw_all(w_current);
 
+  printf("Calling f_image_write.\n");
   f_image_write(w_current, filename, width, height, 
                 w_current->image_color);
 #else
@@ -321,7 +322,7 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
   /* try to use recalc here... */
   o_redraw_all(w_current);
 
-#ifdef HAS_LIBGDGEDA
+#ifdef HAS_LIBGD
   if (w_current->image_color == TRUE) {
     s_log_message(_("Wrote color image to [%s] [%d x %d]\n"), filename, width, height);
   } else {
@@ -646,12 +647,12 @@ GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
   bottom = size_y;
   /* ------------------  Begin optional code ------------------------ */
   /* If the the code in this region is commented, the PNG returned will
-     be the same as the one returned using libgdgeda.
+     be the same as the one returned using libgd.
      I mean: there will be some border all around the schematic.
      This code is used to adjust the schematic to the border of the image */
 
   /* Do a zoom extents to get fit all the schematic in the window */
-  /* Commented so the image returned will be the same as with libgdgeda */  
+  /* Commented so the image returned will be the same as with libgd */  
   a_zoom_extents (&toplevel,
 		  toplevel.page_current->object_head,
 		  A_PAN_DONT_REDRAW);

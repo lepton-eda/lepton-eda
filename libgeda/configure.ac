@@ -21,9 +21,9 @@ AM_MAINTAINER_MODE
 #########################################################################
 # Command line flags start
 # 
-# --disable-gdgeda : turn off libgdgeda support
-AC_ARG_ENABLE(gdgeda, [  --disable-gdgeda        Disable libgdgeda support (don't use libgdgeda at all)], 
-  [ if test $enableval = "no"; then no_gdgeda=yes; fi ])
+# --disable-gd : turn off libgd support
+AC_ARG_ENABLE(gd, [  --disable-gd        Disable libgd support (don't use libgd at all)], 
+  [ if test $enableval = "no"; then no_gd=yes; fi ])
 
 # Change default location for rc files
 AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
@@ -146,41 +146,41 @@ AC_CHECK_LIB(dl, dlopen, DL_LIB="-ldl", DL_LIB="")
 ############################################################################
 
 ############################################################################
-# Check for libgdgeda start
+# Check for libgd start
 # 
-AC_PATH_PROG(LIBGDGEDACONFIG, libgdgeda-config, no, ${PATH})
+AC_PATH_PROG(LIBGDCONFIG, gdlib-config, no, ${PATH})
 
-if test "$LIBGDGEDACONFIG" = "no"
+if test "$LIBGDCONFIG" = "no"
 then
-   GDGEDA_CFLAGS=
-   GDGEDA_LIBS=
-   GDGEDA_VERSION=
-   GDGEDA="no"
+   GD_CFLAGS=
+   GD_LIBS=
+   GD_VERSION=
+   GD="no"
 else
-   if test "$no_gdgeda" = "yes" 
+   if test "$no_gd" = "yes" 
    then
-     echo found libgdgeda, but disabling gdgeda support.
-     GDGEDA_CFLAGS=
-     GDGEDA_LIBS=
-     GDGEDA_VERSION=
-     GDGEDA="no"
+     echo found gd, but disabling gd support.
+     GD_CFLAGS=
+     GD_LIBS=
+     GD_VERSION=
+     GD="no"
    else 
-     GDGEDA_CFLAGS=`$LIBGDGEDACONFIG --cflags`
-     GDGEDA_LIBS1=`$LIBGDGEDACONFIG --ldflags`
-     GDGEDA_LIBS2=`$LIBGDGEDACONFIG --libs`
-     GDGEDA_LIBS="$GDGEDA_LIBS1 $GDGEDA_LIBS2"
-     GDGEDA_VERSION=`$LIBGDGEDACONFIG --version`
-     GDGEDA="yes"
+     GD_CFLAGS=`$LIBGDCONFIG --cflags`
+     GD_LIBS1=`$LIBGDCONFIG --ldflags`
+     GD_LIBS2=`$LIBGDCONFIG --libs`
+     GD_LIBS="$GD_LIBS1 $GD_LIBS2"
+     GD_VERSION=`$LIBGDCONFIG --version`
+     GD="yes"
 
      # This is not really used to figure out paths, but just to make 
      # sure >= 2.0.15 is installed
-     PKG_CHECK_MODULES(libgdgeda, libgdgeda >= 2.0.15)
-     AC_DEFINE(HAS_LIBGDGEDA, 1, [If libgdgeda has been installed, define this])
+     # PKG_CHECK_MODULES(libgd, libgd >= 2.0.15)
+     AC_DEFINE(HAS_LIBGD, 1, [If gd has been installed, define this])
    fi
 fi
 
 # 
-# Check for libgdgeda end
+# Check for libgd end
 ############################################################################
 
 ############################################################################
@@ -491,8 +491,8 @@ AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
 
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
-LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GDGEDA_CFLAGS $GTK_CFLAGS $X_CFLAGS $GDK_PIXBUF_CFLAGS $GDK_CFLAGS"
-LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GDGEDA_LIBS $GLIB_LIBS $MINGW_LIBS $DMALLOC_LIBS $GDK_PIXBUF_LIBS $GDK_LIBS"
+LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GD_CFLAGS $GTK_CFLAGS $X_CFLAGS $GDK_PIXBUF_CFLAGS $GDK_CFLAGS"
+LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GD_LIBS $GLIB_LIBS $MINGW_LIBS $DMALLOC_LIBS $GDK_PIXBUF_LIBS $GDK_LIBS"
 LIBTOOL_FLAGS="-version-info $SHARED_LIBRARY_VERSION"
 
 # Makefile.in variable substitution
@@ -539,7 +539,7 @@ AC_MSG_RESULT([
    GLIB library version:             $GLIB_VERSION
    GTK+ library version:             $GTK_VERSION
    GUILE library version:            $GUILE_VERSION
-   libgdgeda (png output):           $GDGEDA $GDGEDA_VERSION
+   libgd (png output):               $GD $GD_VERSION
    mingw build:                      $MINGW
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR
