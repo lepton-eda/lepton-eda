@@ -432,7 +432,7 @@ struct st_filedialog {
   char *directory_entries[MAX_DIRS];
   char *file_entries[MAX_FILES];
 
-  TOPLEVEL *preview;
+  GtkWidget *preview;
   GtkWidget *preview_checkbox;
   int preview_control;
 
