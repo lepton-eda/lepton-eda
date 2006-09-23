@@ -117,10 +117,6 @@ void x_window_setup (TOPLEVEL *toplevel)
   toplevel->ltwindow = NULL;
   toplevel->ftwindow = NULL;
   toplevel->sewindow = NULL;
-  toplevel->fileselect[FILESELECT].xfwindow = NULL;
-  toplevel->fileselect[FILESELECT].directory = NULL;
-  toplevel->fileselect[FILESELECT].filename = NULL;
-  x_fileselect_init_list_buffers(&toplevel->fileselect[FILESELECT]);
   toplevel->fileselect[COMPSELECT].xfwindow = NULL;
   toplevel->fileselect[COMPSELECT].directory = NULL;
   toplevel->fileselect[COMPSELECT].filename = NULL;
@@ -816,15 +812,10 @@ void x_window_close(TOPLEVEL *w_current)
   if (w_current->sewindow)
   gtk_widget_destroy(w_current->sewindow);
 
-  if (w_current->fileselect[FILESELECT].xfwindow) {
-    gtk_widget_destroy(w_current->fileselect[FILESELECT].xfwindow);
-  }
-
   if (w_current->fileselect[COMPSELECT].xfwindow) {
     gtk_widget_destroy(w_current->fileselect[COMPSELECT].xfwindow);
   }
 
-  x_fileselect_free_list_buffers(&w_current->fileselect[FILESELECT]);
   x_compselect_free_list_buffers(&w_current->fileselect[COMPSELECT]);
 
   g_assert(w_current->prev != NULL);

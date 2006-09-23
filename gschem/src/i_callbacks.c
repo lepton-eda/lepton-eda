@@ -283,7 +283,7 @@ DEFINE_I_CALLBACK(file_open)
 
   exit_if_null(w_current);
 
-  x_fileselect_setup(w_current, FILESELECT, OPEN);
+  x_fileselect_open (w_current);
 
 #if 0 /* replaced by above */
   setup_open_file_selector(w_current);
@@ -344,7 +344,7 @@ DEFINE_I_CALLBACK(file_save)
    */
   if (strstr(w_current->page_current->page_filename,
              w_current->untitled_name)) {
-    x_fileselect_setup(w_current, FILESELECT, SAVEAS_NONE);
+    x_fileselect_save (w_current);
 #if 0 /* replaced with x_fileselect_setup */
     setup_saveas_file_selector(
                                w_current,
@@ -425,7 +425,7 @@ DEFINE_I_CALLBACK(file_save_as)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
-  x_fileselect_setup(w_current, FILESELECT, SAVEAS_NONE);
+  x_fileselect_save (w_current);
 
 #if 0 /* replaced with above */
   setup_saveas_file_selector(w_current,
@@ -1797,7 +1797,7 @@ DEFINE_I_CALLBACK(page_close)
   exit_if_null(w_current);
 
   if (w_current->page_current->CHANGED) {
-    x_fileselect_setup(w_current, FILESELECT, SAVEAS_CLOSE);
+    x_fileselect_save (w_current);
     return;
   }
 

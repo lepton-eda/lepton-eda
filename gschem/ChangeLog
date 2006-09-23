@@ -1,5 +1,12 @@
 2006-09-23  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* src/i_callbacks.c:
+	* src/x_window.c: Adapted for new file selection dialog.
+
+	* src/x_fileselect.c: Removed code for custom file selection
+	dialog: now uses only the GTK widget for file
+	selection and the new preview widget. Cleaned-up code.
+
 	* src/x_compselect.c, src/x_fileselect.c: Adapted for new preview.
 
 	* include/x_preview.h: New file for new preview widget.
