@@ -5,6 +5,7 @@
 noinst_HEADERS = \
 	globals.h i_vars.h prototype.h x_dialog.h x_event.h x_states.h \
 	gettext.h \
+	x_compselect.h \
 	x_log.h x_multiattrib.h x_pagesel.h x_print.h x_preview.h
 
 MOSTLYCLEANFILES = *.log core FILE *~

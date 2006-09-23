@@ -117,10 +117,6 @@ void x_window_setup (TOPLEVEL *toplevel)
   toplevel->ltwindow = NULL;
   toplevel->ftwindow = NULL;
   toplevel->sewindow = NULL;
-  toplevel->fileselect[COMPSELECT].xfwindow = NULL;
-  toplevel->fileselect[COMPSELECT].directory = NULL;
-  toplevel->fileselect[COMPSELECT].filename = NULL;
-  x_compselect_init_list_buffers(&toplevel->fileselect[COMPSELECT]);
 
   toplevel->coord_world = NULL;
   toplevel->coord_screen = NULL;
@@ -811,12 +807,6 @@ void x_window_close(TOPLEVEL *w_current)
 
   if (w_current->sewindow)
   gtk_widget_destroy(w_current->sewindow);
-
-  if (w_current->fileselect[COMPSELECT].xfwindow) {
-    gtk_widget_destroy(w_current->fileselect[COMPSELECT].xfwindow);
-  }
-
-  x_compselect_free_list_buffers(&w_current->fileselect[COMPSELECT]);
 
   g_assert(w_current->prev != NULL);
   if (w_current->next == NULL && w_current->prev->prev == NULL) {
