@@ -38,343 +38,297 @@
 #include <dmalloc.h>
 #endif
 
+#include "../include/x_preview.h"
+
+
 extern int mouse_x, mouse_y;
 
-/*! \todo Finish function documentation!!!
- *  \brief
+
+enum {
+  PROP_FILENAME=1,
+  PROP_ACTIVE,
+};
+
+static GObjectClass *preview_parent_class = NULL;
+
+
+static void preview_class_init (PreviewClass *class);
+static void preview_init       (Preview *preview);
+static void preview_set_property (GObject *object,
+                                  guint property_id,
+                                  const GValue *value,
+                                  GParamSpec *pspec);
+static void preview_get_property (GObject *object,
+                                  guint property_id,
+                                  GValue *value,
+                                  GParamSpec *pspec);
+static void preview_dispose (GObject *self);
+
+
+/*! \brief Completes initialitation of the widget after realization.
  *  \par Function Description
+ *  This function terminates the initialization of preview's toplevel
+ *  environment after the widget has been realized.
  *
+ *  It creates a preview page in the toplevel environment.
+ *
+ *  \param [in] widget    The preview widget.
+ *  \param [in] user_data Unused user data.
  */
-void x_preview_update(TOPLEVEL *preview,
-		      const gchar *directory, const gchar *filename) 
+static void
+preview_callback_realize (GtkWidget *widget,
+                          gpointer user_data)
 {
-  gchar *cwd, *temp;
-  PAGE *page;
+  Preview *preview = PREVIEW (widget);
+  TOPLEVEL *preview_toplevel = preview->preview_toplevel;
+  PAGE *preview_page;
 
-  /* Since f_open now changes the directory, we need to 
-   * use this to reset the cwd at end of fcn */
-  cwd = g_get_current_dir ();
+  preview_toplevel->window = preview_toplevel->drawing_area->window;
+  gtk_widget_grab_focus (preview_toplevel->drawing_area);
 
-#ifdef __MINGW32__
-  if (u_basic_has_trailing (directory, G_DIR_SEPARATOR)) {
-     temp = g_strconcat (directory, filename, NULL);
-  } else {
-#endif
-     temp = g_strconcat (directory, G_DIR_SEPARATOR_S, filename, NULL);
-#ifdef __MINGW32__
-  }
-#endif
-  s_page_delete (preview, preview->page_current);
+  preview_toplevel->backingstore = gdk_pixmap_new (
+    preview_toplevel->window,
+    preview_toplevel->drawing_area->allocation.width,
+    preview_toplevel->drawing_area->allocation.height, -1);
 
-  page = s_page_new (preview, temp);
-  s_page_goto (preview, page);
+  x_window_setup_gc (preview_toplevel);
 
-  /* open up file for preview */
-  f_open (preview, temp);
+  preview_page = s_page_new (preview_toplevel, "unknown");
+  s_page_goto (preview_toplevel, preview_page);
 
-  a_zoom_extents (preview,
-                  page->object_head,
-                  A_PAN_DONT_REDRAW);
+  i_vars_set (preview_toplevel);
 
-  o_redraw_all (preview);
+  /* be sure to turn off the grid */
+  preview_toplevel->grid = FALSE;
 
-  chdir (cwd); /* Go back to original directory */
-  g_free (cwd);
-  g_free (temp);
-  
+  /* preview_toplevel windows don't have toolbars */
+  preview_toplevel->handleboxes = FALSE; 
+  preview_toplevel->toolbars    = FALSE;
+
+  x_repaint_background(preview_toplevel);
+
+  preview_toplevel->DONT_RECALC = 0;
+  preview_toplevel->DONT_RESIZE = 0;
+  preview_toplevel->DONT_REDRAW = 0;
+
+  a_zoom_extents(preview_toplevel,
+                 preview_page->object_head,
+                 A_PAN_DONT_REDRAW);
+
+  o_redraw_all(preview_toplevel);
+
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Redraws the view when widget is exposed.
  *  \par Function Description
+ *  It redraws the preview pixmap every time the widget is exposed.
  *
+ *  \param [in] widget    The preview widget.
+ *  \param [in] event     The event structure.
+ *  \param [in] user_data Unused user data.
+ *  \returns FALSE to propagate the event further.
  */
-void x_preview_update_gtk24 (GtkFileChooser *file_chooser, gpointer data)
+static gboolean
+preview_callback_expose (GtkWidget *widget,
+                         GdkEventExpose *event,
+                         gpointer user_data)
 {
-#if ((GTK_MAJOR_VERSION > 2) || \
-     ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION >= 4)) )
-  FILEDIALOG *f_current;
-  char *filename = NULL;
-  GdkPixbuf *pixbuf;
-  gboolean have_preview=FALSE;
-
-  f_current =  (FILEDIALOG *) data;
-  printf("x_preview_update_gtk24: Getting filename.\n");
-  filename = gtk_file_chooser_get_preview_filename (file_chooser);
-  printf("x_preview_update_gtk24: Filename: %s.\n", filename);
-
-  /* If no file is selected, then don't set the preview and exit */
-  if (g_file_test (filename, G_FILE_TEST_IS_DIR)) {
-    gtk_file_chooser_set_preview_widget_active (file_chooser, have_preview);
-    return;
-  }
-
-  /* open up file for preview */
-  f_open (f_current->preview, filename);
-
-  pixbuf = x_image_get_pixbuf (f_current->preview);
-  have_preview = (pixbuf != NULL);
-  if (pixbuf != NULL) {
-    printf("x_preview_update_gtk24: setting pixbuf.\n");
-    gtk_image_set_from_pixbuf (GTK_IMAGE(gtk_file_chooser_get_preview_widget(file_chooser)),
-			       pixbuf);
-    if (pixbuf)
-      gdk_pixbuf_unref (pixbuf);
-  }
-  else {
-    fprintf (stderr, "x_preview_update_gtk24: Can't get pixbuf from preview struct.\n");
-    s_log_message(
-      _("x_preview_update_gtk24: Can't get pixbuf from preview struct.\n"));
-  }
-
-  g_free (filename);
-  
-  gtk_file_chooser_set_preview_widget_active (file_chooser, have_preview);
-#endif
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_preview_close (TOPLEVEL *w_current)
-{
-  o_attrib_free_current (w_current);
-  o_complex_free_filename (w_current);
-
-  if (w_current->backingstore) {
-    gdk_pixmap_unref (w_current->backingstore);
-  }
-
-  x_window_free_gc (w_current);
-  
-  s_toplevel_delete (w_current);  
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint x_preview_expose(GtkWidget *widget, GdkEventExpose *event,
-		      TOPLEVEL *w_current)
-{
-  exit_if_null(w_current);
-
-#if DEBUG
-  printf("yeah expose: %d %d\n", event->area.width, event->area.height);
-#endif
+  Preview *preview = PREVIEW (widget);
+  TOPLEVEL *preview_toplevel = preview->preview_toplevel;
 
   gdk_draw_pixmap(widget->window,
                   widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
-                  w_current->backingstore,
+                  preview_toplevel->backingstore,
                   event->area.x, event->area.y,
                   event->area.x, event->area.y,
                   event->area.width, event->area.height);
 
-  return(0);
+  return FALSE;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Handles the press on a mouse button.
  *  \par Function Description
+ *  It handles the user inputs.
  *
+ *  Three action are available: zoom in, pan and zoom out on preview display.
+ *
+ *  \param [in] widget    The preview widget.
+ *  \param [in] event     The event structure.
+ *  \param [in] user_data Unused user data.
+ *  \returns FALSE to propagate the event further.
  */
-gint x_preview_button_pressed(GtkWidget *widget, GdkEventButton *event,
-			      TOPLEVEL *w_current)
+static gboolean
+preview_callback_button_press (GtkWidget *widget,
+                               GdkEventButton *event,
+                               gpointer user_data)
 {
-  exit_if_null(w_current);
-
-  global_window_current = w_current;
-
-#if DEBUG
-  printf("preview pressed\n");
-#endif
-
-  if (event->button == 1) { 
-    i_callback_view_zoom_in_hotkey(w_current, 0, NULL);
-  } else if (event->button == 2) {
-    i_callback_view_pan_hotkey(w_current, 0, NULL);
-  } else if (event->button == 3) {
-    i_callback_view_zoom_out_hotkey(w_current, 0, NULL);
+  Preview *preview = PREVIEW (widget);
+  TOPLEVEL *preview_toplevel = preview->preview_toplevel;
+  
+  if (!preview->active || preview->filename == NULL) {
+    return TRUE;
   }
-  return(0);
+  
+  switch (event->button) {
+      case 1: /* left mouse button: zoom in */
+        a_zoom (preview_toplevel, ZOOM_IN, HOTKEY, 0);
+        o_redraw_all_fast (preview_toplevel);
+        break;
+      case 2: /* middle mouse button: pan */
+        a_pan (preview_toplevel, mouse_x, mouse_y);
+        break;
+      case 3: /* right mouse button: zoom out */
+        a_zoom (preview_toplevel, ZOOM_OUT, HOTKEY, 0);
+        o_redraw_all_fast (preview_toplevel);
+        break;
+  }
+  
+  return FALSE;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Handles the displacement of the pointer.
  *  \par Function Description
+ *  This function temporary saves the position of the mouse pointer
+ *  over the preview widget.
  *
+ *  This position can be later used when the user press a button of
+ *  the mouse (see <B>preview_callback_button_press()</B>).
+ *
+ *  \param [in] widget    The preview widget.
+ *  \param [in] event     The event structure.
+ *  \param [in] user_data Unused user data.
+ *  \returns FALSE to propagate the event further.
  */
-gint x_preview_motion(GtkWidget *widget, GdkEventMotion *event,
-		      TOPLEVEL *w_current)
+static gboolean
+preview_callback_motion_notify (GtkWidget *widget,
+                                GdkEventMotion *event,
+                                gpointer user_data)
 {
-  mouse_x = (int) event->x;
-  mouse_y = (int) event->y;
+  Preview *preview = PREVIEW (widget);
+  
+  if (!preview->active || preview->filename == NULL) {
+    return TRUE;
+  }
+  
+  mouse_x = (int)event->x;
+  mouse_y = (int)event->y;
 
-#if DEBUG
-  printf("preview motion\n");
-#endif
-  return(0);
+  return FALSE;
 }
 
-#if 0
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Updates the preview widget.
  *  \par Function Description
+ *  This function update the preview: if the preview is active and a
+ *  filename has been given, it opens the file and display
+ *  it. Otherwise it display a blank page.
  *
+ *  \param [in] preview The preview widget.
  */
-gint x_preview_button_released(GtkWidget *widget, GdkEventButton *event,
-			       TOPLEVEL *w_current)
+static void
+preview_update (Preview *preview)
 {
-  exit_if_null(w_current);
+  TOPLEVEL *preview_toplevel = preview->preview_toplevel;
 
-  global_window_current = w_current;
-  printf("preview released\n");
-}
-#endif
-
-#if 0
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint x_preview_key_press (GtkWidget *widget, GdkEventKey *event,
-			  TOPLEVEL *w_current)
-{
-  exit_if_null(w_current);
-  global_window_current = w_current;
-
-  if (event->keyval == 0) {
+  if (preview_toplevel->page_current == NULL) {
     return;
   }
-
-}
-#endif
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_preview_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current)
-{
-  /* drawing next */
-  w_current->drawing_area = gtk_drawing_area_new ();
-  /* Set the size here.  Be sure that it has an aspect ratio of 1.333
-   * We could calculate this based on root window size, but for now
-   * lets just set it to:
-   * Width = root_width*3/4   Height = Width/1.3333333333
-   * 1.3333333 is the desired aspect ratio!
-   */
-
-  /* TODO: BUG: This call is deprecated, and should use gtk_widget_set_size_request() instead */
-  gtk_drawing_area_size (GTK_DRAWING_AREA (w_current->drawing_area),
-                         w_current->win_width,
-                         w_current->win_height);
-
-  gtk_box_pack_start (GTK_BOX (drawbox), w_current->drawing_area,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (w_current->drawing_area);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_preview_setup_rest (TOPLEVEL *preview)
-{
-  PAGE *preview_page;
-
-  preview->window = preview->drawing_area->window;
-  gtk_widget_grab_focus (preview->drawing_area);
-
-  preview->width  = preview->drawing_area->allocation.width;
-  preview->height = preview->drawing_area->allocation.height;
-  preview->win_width  = preview->width;
-  preview->win_height = preview->height;
   
-  preview->backingstore = gdk_pixmap_new (
-    preview->window,
-    preview->drawing_area->allocation.width,
-    preview->drawing_area->allocation.height, -1);
+  /* delete old preview, create new page */
+  /* it would be better to just resets current page - Fix me */
+  s_page_delete (preview_toplevel, preview_toplevel->page_current);
+  s_page_goto (preview_toplevel, s_page_new (preview_toplevel, "preview"));
+  
+  if (preview->active && preview->filename != NULL) {
+    /* open up file in current page */
+    f_open (preview_toplevel, preview->filename);
+    /* test value returned by f_open... - Fix me */
+    /* we should display something if there an error occured - Fix me */
+  }
 
-  x_window_setup_gc (preview);
-
-  preview_page = s_page_new (preview, "unknown");
-  s_page_goto (preview, preview_page);
-
-  i_vars_set (preview);
-
-  /* i_vars_set will set auto_save_interval, so disable it 
-     We don't want to autosave previews!! */
-  preview->auto_save_interval = 0;
-
-  /* i_vars_set will set the scrollbars_flag to TRUE, so we need
-     to re-disable it. (Othewise scroll wheel events cause a crash) */
-  preview->scrollbars_flag = FALSE;
-
-  /* be sure to turn off the grid */
-  preview->grid = FALSE;
-
-  /* preview windows don't have toolbars */
-  preview->handleboxes = FALSE; 
-  preview->toolbars    = FALSE;
-
-  x_repaint_background(preview);
-	
-#if 0	
-  world_get_complex_bounds(preview, 
-                           preview_page->object_head, 
-                           &left, &top, &right, &bottom);
-  set_window(preview, preview->current_page, left, right, top, bottom);
-#endif
-
-  preview->DONT_RECALC = 0;
-  preview->DONT_RESIZE = 0;
-  preview->DONT_REDRAW = 0;
-
-  a_zoom_extents(preview,
-                 preview_page->object_head,
-                 A_PAN_DONT_REDRAW);
-
-  o_redraw_all(preview);
+  /* display current page (possibly empty) */
+  a_zoom_extents (preview_toplevel,
+                  preview_toplevel->page_current->object_head,
+                  A_PAN_DONT_REDRAW);
+  o_redraw_all (preview_toplevel);
+  
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-TOPLEVEL *x_preview_setup(GtkWidget *xfwindow, GtkWidget *drawbox) 
+GType
+preview_get_type ()
+{
+  static GType preview_type = 0;
+  
+  if (!preview_type) {
+    static const GTypeInfo preview_info = {
+      sizeof(PreviewClass),
+      NULL, /* base_init */
+      NULL, /* base_finalize */
+      (GClassInitFunc) preview_class_init,
+      NULL, /* class_finalize */
+      NULL, /* class_data */
+      sizeof(Preview),
+      0,    /* n_preallocs */
+      (GInstanceInitFunc) preview_init,
+    };
+                
+    preview_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
+                                           "Preview",
+                                           &preview_info, 0);
+  }
+  
+  return preview_type;
+}
+
+static void
+preview_class_init (PreviewClass *klass)
+{
+  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+
+  preview_parent_class = g_type_class_peek_parent (klass);
+  
+  gobject_class->set_property = preview_set_property;
+  gobject_class->get_property = preview_get_property;
+  gobject_class->dispose      = preview_dispose;
+
+  g_object_class_install_property (
+    gobject_class, PROP_FILENAME,
+    g_param_spec_string ("filename",
+                         "",
+                         "",
+                         NULL,
+                         G_PARAM_READWRITE));
+  g_object_class_install_property(
+    gobject_class, PROP_ACTIVE,
+    g_param_spec_boolean ("active",
+                          "",
+                          "",
+                          FALSE,
+                          G_PARAM_READWRITE));
+
+        
+}
+
+static void
+preview_init (Preview *preview)
 {
   struct event_reg_t {
     gchar *detailed_signal;
     void (*c_handler)(void);
   } drawing_area_events[] = {
-    { "expose_event",         G_CALLBACK (x_preview_expose)          },
-    { "button_press_event",   G_CALLBACK (x_preview_button_pressed)  },
-#if 0
-    { "button_release_event", G_CALLBACK (x_preview_button_released) },
-    { "key_press_event",      G_CALLBACK (x_preview_key_press)       },
-#endif
-    { "motion_notify_event",  G_CALLBACK (x_preview_motion)          },
-    { "configure_event",      G_CALLBACK (x_event_configure)         },
-    { "scroll_event",         G_CALLBACK (x_event_scroll)            },
-    { NULL,                   NULL                                   }
+    { "realize",              G_CALLBACK (preview_callback_realize)       },
+    { "expose_event",         G_CALLBACK (preview_callback_expose)        },
+    { "button_press_event",   G_CALLBACK (preview_callback_button_press)  },
+    { "motion_notify_event",  G_CALLBACK (preview_callback_motion_notify) },
+    { NULL,                   NULL                                        }
   }, *tmp;
   TOPLEVEL *preview_toplevel;
-
+  
   preview_toplevel = s_toplevel_new ();
 
   preview_toplevel->init_left   = 0;
   preview_toplevel->init_top    = 0;
   preview_toplevel->init_right  = WIDTH_C;
   preview_toplevel->init_bottom = HEIGHT_C;
-  // TODO: BUG - Fixed preview size??
   preview_toplevel->width  = 160;
   preview_toplevel->height = 120;
   preview_toplevel->win_width  = preview_toplevel->width;
@@ -382,17 +336,108 @@ TOPLEVEL *x_preview_setup(GtkWidget *xfwindow, GtkWidget *drawbox)
   /* be sure to turn off scrollbars */
   preview_toplevel->scrollbars_flag = FALSE;
 
-  x_preview_create_drawing (drawbox, preview_toplevel);
+  preview_toplevel->drawing_area = GTK_WIDGET (preview);
+  preview->preview_toplevel = preview_toplevel;
 
-  gtk_widget_set_events (preview_toplevel->drawing_area, 
+  g_object_set (GTK_WIDGET (preview),
+                "width-request",  preview_toplevel->width,
+                "height-request", preview_toplevel->height,
+                NULL);
+
+  preview->active   = FALSE;
+  preview->filename = NULL;  
+  
+  gtk_widget_set_events (GTK_WIDGET (preview), 
                          GDK_EXPOSURE_MASK | 
                          GDK_POINTER_MOTION_MASK |
                          GDK_BUTTON_PRESS_MASK);
   for (tmp = drawing_area_events; tmp->detailed_signal != NULL; tmp++) {
-    g_signal_connect (preview_toplevel->drawing_area,
+    g_signal_connect (preview,
                       tmp->detailed_signal,
                       tmp->c_handler,
-                      preview_toplevel);
+                      NULL);
   }
-  return preview_toplevel;
+  
 }
+
+static void
+preview_set_property (GObject *object,
+                      guint property_id,
+                      const GValue *value,
+                      GParamSpec *pspec)
+{
+  Preview *preview = PREVIEW (object);
+  TOPLEVEL *preview_toplevel = preview->preview_toplevel;
+
+  g_assert (preview_toplevel != NULL);
+  
+  switch(property_id) {
+      case PROP_FILENAME:
+        g_free (preview->filename);
+        preview->filename = g_strdup (g_value_get_string (value));
+        if (preview->active) preview_update (preview);
+        break;
+      case PROP_ACTIVE:
+        preview->active = g_value_get_boolean (value);
+        preview_update (preview);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+  }
+
+}
+
+static void
+preview_get_property (GObject *object,
+                      guint property_id,
+                      GValue *value,
+                      GParamSpec *pspec)
+{
+  Preview *preview = PREVIEW (object);
+  TOPLEVEL *preview_toplevel = preview->preview_toplevel;
+
+  switch(property_id) {
+      case PROP_FILENAME:
+        g_assert (preview_toplevel != NULL);
+        /* return the filename of the current page in toplevel */
+        g_value_set_string (value,
+                            preview_toplevel->page_current->page_filename);
+        break;
+      case PROP_ACTIVE:
+        g_value_set_boolean (value, preview->active);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+  }
+
+}
+
+static void
+preview_dispose (GObject *self)
+{
+  Preview *preview = PREVIEW (self);
+  TOPLEVEL *preview_toplevel = preview->preview_toplevel;
+
+  if (preview_toplevel != NULL) {
+    preview_toplevel->drawing_area = NULL;
+
+    o_attrib_free_current (preview_toplevel);
+    o_complex_free_filename (preview_toplevel);
+
+    if (preview_toplevel->backingstore) {
+      gdk_pixmap_unref (preview_toplevel->backingstore);
+    }
+
+    x_window_free_gc (preview_toplevel);
+    
+    s_toplevel_delete (preview_toplevel);
+
+    preview->preview_toplevel = NULL;
+  }
+    
+  G_OBJECT_CLASS (preview_parent_class)->dispose (self);
+  
+}
+
+
+

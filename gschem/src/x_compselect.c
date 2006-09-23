@@ -45,6 +45,8 @@
 #include <dmalloc.h>
 #endif
 
+#include "../include/x_preview.h"
+
 #define DIR_LIST_WIDTH   180
 #define DIR_LIST_HEIGHT  180
 #define FILE_LIST_WIDTH  180
@@ -74,7 +76,6 @@ x_compselect_destroy_window(GtkWidget *widget, FILEDIALOG *f_current)
     f_current->filename = NULL;
   }
 
-  x_preview_close(f_current->preview);
   gtk_grab_remove(f_current->xfwindow);
   f_current->toplevel = NULL;
   f_current->xfwindow = NULL;
@@ -529,10 +530,13 @@ x_compselect_comp_select (GtkWidget *widget, gint row, gint column,
   if (comp) {   
     strcpy(w_current->current_basename, comp);
 
-    if (f_current->preview_control && w_current->current_clib && comp) { 
-      x_preview_update(f_current->preview, 
-                       w_current->current_clib,
-                       comp);
+    if (w_current->current_clib && comp) {
+      gchar *filename = g_build_filename (w_current->current_clib,
+                                          comp, NULL);
+      g_object_set (f_current->preview,
+                    "filename", filename,
+                    NULL);
+      g_free (filename);
     }
 
     x_compselect_comp_update_current(f_current, 
@@ -819,14 +823,14 @@ x_compselect_preview_checkbox(GtkWidget *widget, FILEDIALOG *f_current)
 
   if (f_current->preview_control) {
     f_current->preview_control = FALSE;
-    x_repaint_background(f_current->preview);
+    g_object_set (f_current->preview,
+                  "active", FALSE,
+                  NULL);
   } else {
     f_current->preview_control = TRUE;
-
-    if (f_current->directory && f_current->filename) {
-       x_preview_update(f_current->preview, f_current->directory, 
-                     f_current->filename);
-    }
+    g_object_set (f_current->preview,
+                  "active", TRUE,
+                  NULL);
   }
   return(0);
 }
@@ -989,8 +993,11 @@ x_compselect_setup (TOPLEVEL *toplevel)
     free(file_title[0]);
 
     /*  ----- create the preview widget -----  */
-    f_current->preview = x_preview_setup(f_current->xfwindow, 
-                                         drawbox);
+    f_current->preview = g_object_new (TYPE_PREVIEW,
+                                       NULL);
+    gtk_widget_show (f_current->preview);
+    gtk_box_pack_start (GTK_BOX (drawbox), f_current->preview,
+                        FALSE, FALSE, 0);
 
     f_current->preview_checkbox = gtk_check_button_new_with_label(
                                                                   _("Preview"));
@@ -1077,7 +1084,6 @@ x_compselect_setup (TOPLEVEL *toplevel)
   if (!GTK_WIDGET_VISIBLE(f_current->xfwindow)) {
     gtk_widget_show(f_current->xfwindow);
     gdk_window_raise(f_current->xfwindow->window);
-    x_preview_setup_rest(f_current->preview);
 
     /* need to delay this till the drawing area is created and
      * is showing */

@@ -1,5 +1,12 @@
 2006-09-23  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* src/x_compselect.c, src/x_fileselect.c: Adapted for new preview.
+
+	* include/x_preview.h: New file for new preview widget.
+
+	* src/x_preview.c: Rewritten preview to make it a widget
+	extending a GtkDrawingArea.
+
 	* src/x_compselect.c: New source file for component selection
 	dialog.
 

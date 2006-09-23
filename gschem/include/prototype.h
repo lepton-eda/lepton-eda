@@ -930,18 +930,6 @@ void x_pagesel_close (TOPLEVEL *toplevel);
 void x_pagesel_update (TOPLEVEL *toplevel);
 GtkWidget *e_gtk_button_new_with_icon(const char *text, const char *stock);
 /* x_preview.c */
-void x_preview_update(TOPLEVEL *preview, const char *directory, const char *filename);
-#if ((GTK_MAJOR_VERSION > 2) || \
-     ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION >= 4)) )
-void x_preview_update_gtk24 (GtkFileChooser *file_chooser, gpointer data);
-#endif
-void x_preview_close(TOPLEVEL *w_current);
-gint x_preview_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current);
-gint x_preview_button_pressed(GtkWidget *widget, GdkEventButton *event, TOPLEVEL *w_current);
-gint x_preview_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current);
-void x_preview_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current);
-void x_preview_setup_rest(TOPLEVEL *preview);
-TOPLEVEL *x_preview_setup(GtkWidget *xfwindow, GtkWidget *drawbox);
 /* x_print.c */
 void x_print_setup(TOPLEVEL *w_current, char *filename);
 /* x_script.c */
