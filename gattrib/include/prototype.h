@@ -289,40 +289,8 @@ void do_show_column_titles(GtkWidget *widget);
 
 
 /* ------------- x_fileselect.c ------------- */
-void x_fileselect_destroy_window(GtkWidget * widget, FILEDIALOG * f_current);
-int x_fileselect_keypress(GtkWidget * widget, GdkEventKey * event,
-			  FILEDIALOG * f_current);
-void x_fileselect_init_list_buffers(FILEDIALOG * f_current);
-void x_fileselect_free_list_buffers(FILEDIALOG * f_current);
-void x_fileselect_update_dirfile(FILEDIALOG * f_current, char *filename);
-void x_fileselect_setup_list_buffers(FILEDIALOG * f_current,
-                                int num_files, int num_directories);
-int x_fileselect_include_file(char *filename, int filter_type);
-void x_fileselect_fill_lists(FILEDIALOG * f_current);
-gint x_fileselect_sch_files(GtkWidget * w, FILEDIALOG * f_current);
-gint x_fileselect_sym_files(GtkWidget * w, FILEDIALOG * f_current);
-gint x_fileselect_both_files(GtkWidget * w, FILEDIALOG * f_current);
-gint x_fileselect_all_files(GtkWidget * w, FILEDIALOG * f_current);
-/* static GtkWidget *x_fileselect_filter_menu(FILEDIALOG * f_current); */
-int
-x_fileselect_preview_checkbox(GtkWidget * widget, FILEDIALOG * f_current);
-void x_fileselect_saveas_close(GtkWidget * w, FILEDIALOG * f_current);
-void x_fileselect_saveas(GtkWidget * w, FILEDIALOG * f_current);
-void x_fileselect_change_dir(FILEDIALOG * f_current, char *new_directory);
-void x_fileselect_set_filename(TOPLEVEL * w_current, const char *string);
-void x_fileselect_open_file(GtkWidget * w, FILEDIALOG * f_current);
-void
-x_fileselect_dir_button(GtkWidget * widget, gint row, gint column,
-                        GdkEventButton * bevent, FILEDIALOG * f_current);
-void
-x_fileselect_file_button(GtkWidget * widget, gint row, gint column,
-                         GdkEventButton * bevent, FILEDIALOG * f_current);
-void
-x_fileselect_update_dirfile_saveas(FILEDIALOG * f_current,
-                                   char *new_filename);
-void x_fileselect_close(GtkWidget * w, FILEDIALOG * f_current);
-void x_fileselect_search(GtkWidget * w, FILEDIALOG * f_current);
-void x_fileselect_setup(TOPLEVEL *pr_current, int filesel_type);
+void x_fileselect_open (void);
+void x_fileselect_save (void);
 
 /* ------------- x_window.c ------------- */
 void x_window_init();

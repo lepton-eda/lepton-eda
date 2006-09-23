@@ -180,13 +180,11 @@ s_toplevel_gtksheet_to_toplevel()
  *------------------------------------------------------------------*/
 void s_toplevel_menubar_file_open(TOPLEVEL *pr_current)
 {
-  int filesel_type = OPEN;
-
 #ifdef DEBUG
   printf("In s_toplevel_menubar_file_open, about to create fileselect box\n");
 #endif
 
-  x_fileselect_setup(pr_current, filesel_type);
+  x_fileselect_open ();
   return;
 }
 

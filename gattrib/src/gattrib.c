@@ -329,7 +329,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
 #if DEBUG
     printf("In gattrib_main -- no files specified on command line.  Throw up filedialog.\n");
 #endif
-    x_fileselect_setup(pr_current, OPEN);
+    x_fileselect_open ();
 
     gtk_widget_show( GTK_WIDGET(notebook) );
     gtk_widget_show( GTK_WIDGET(window) );

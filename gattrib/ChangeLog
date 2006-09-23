@@ -1,3 +1,11 @@
+2006-09-23  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/gattrib.c, src/s_toplevel.c: Adapted for new file selection
+	dialog.
+
+	* src/x_fileselect.c: Rewrite of the file selection dialog with a
+	GtkFileChooser as in gschem.
+
 2006-09-15 Stuart Brorson   <sdb (AT) cloud9 (DOT) net>
 	* include/prototype.h, src/g_register.c, src/gattrib.c,
 	src/x_dialog.c, src/x_gtksheet.c, src/x_window.c:
