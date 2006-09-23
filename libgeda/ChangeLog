@@ -1,5 +1,10 @@
 2006-09-23  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* include/defines.h: 
+	* include/struct.h: Removed unused constants and structures
+	because of new file selection and component selection dialogs in
+	gschem.
+
 	* include/struct.h: Changed type of field 'preview' in
 	st_filedialog to GtkWidget*.
 

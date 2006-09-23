@@ -117,44 +117,6 @@
 #define FREE        1
 #define CONSTRAINED 2
 
-/* flags to setup_saveas_file_selector() */
-#define SAVEAS	0 /* next action after click is nothing */
-#define QUIT	1 /* next action after click is quit */
-#define OPEN	2 /* next action after click is open */
-#define NEW	3 /* next action after click is new */
-#define CLOSE	4 /* next action after click is close */
-
-/* for xfwindow array */
-#define FILESELECT	0
-#define COMPSELECT	1
-
-/* vvvvvvv this is a mess */
-
-/* flags to setup_saveas_file_selector() */
-#define SAVEAS	0 /* next action after click is nothing */
-#define QUIT	1 /* next action after click is quit */
-#define NEW	3 /* next action after click is new */
-#define CLOSE	4 /* next action after click is close */
-
-/* can be either OPEN or SAVEAS_* */
-#define OPEN	2 /* action is a open */
-
-/* flags to setup_saveas_file_selector() */
-#define NULL_ACTION	-1 /* used if action has nothing to do with save */
-#define SAVEAS_NONE	0 /* next action after click is nothing */
-#define SAVEAS_QUIT	1 /* next action after click is quit */
-#define SAVEAS_OPEN	2 /* next action after click is open */
-#define SAVEAS_NEW	3 /* next action after click is new */
-#define SAVEAS_CLOSE	4 /* next action after click is close */
-
-/* ^^^^^^^ this is a mess */
-
-/* for FILEDIALOG filter_type var */
-#define FILEDIALOG_SCH_ONLY	0
-#define FILEDIALOG_SYM_ONLY	1
-#define FILEDIALOG_SCH_SYM	2
-#define FILEDIALOG_ALL_FILES	3
-
 /* for attrib_edit_dialog invocation flag */
 #define FROM_MENU		0
 #define FROM_HOTKEY		1
