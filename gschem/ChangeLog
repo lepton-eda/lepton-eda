@@ -1,5 +1,8 @@
 2006-09-23  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* src/x_fileselect.c (x_fileselect_save): Modified to set filename
+	when saving a page.
+
 	* src/x_compselect.c: Changed dialog layout for a single
 	component selection tree with filtering capability.
 

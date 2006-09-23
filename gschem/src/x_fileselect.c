@@ -300,6 +300,9 @@ x_fileselect_save (TOPLEVEL *toplevel)
                 NULL);
   /* add file filters to dialog */
   x_fileselect_setup_filechooser_filters (GTK_FILE_CHOOSER (dialog));
+  /* set the current filename or directory name if new document */
+  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
+                                 toplevel->page_current->page_filename);
   gtk_widget_show (dialog);
   if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_ACCEPT) {
     gchar *filename =
