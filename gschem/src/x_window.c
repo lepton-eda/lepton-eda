@@ -124,7 +124,7 @@ void x_window_setup (TOPLEVEL *toplevel)
   toplevel->fileselect[COMPSELECT].xfwindow = NULL;
   toplevel->fileselect[COMPSELECT].directory = NULL;
   toplevel->fileselect[COMPSELECT].filename = NULL;
-  x_fileselect_init_list_buffers(&toplevel->fileselect[COMPSELECT]);
+  x_compselect_init_list_buffers(&toplevel->fileselect[COMPSELECT]);
 
   toplevel->coord_world = NULL;
   toplevel->coord_screen = NULL;
@@ -825,7 +825,7 @@ void x_window_close(TOPLEVEL *w_current)
   }
 
   x_fileselect_free_list_buffers(&w_current->fileselect[FILESELECT]);
-  x_fileselect_free_list_buffers(&w_current->fileselect[COMPSELECT]);
+  x_compselect_free_list_buffers(&w_current->fileselect[COMPSELECT]);
 
   g_assert(w_current->prev != NULL);
   if (w_current->next == NULL && w_current->prev->prev == NULL) {

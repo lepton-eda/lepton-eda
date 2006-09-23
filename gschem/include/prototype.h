@@ -847,6 +847,28 @@ void x_event_vschanged(GtkAdjustment *adj, TOPLEVEL *w_current);
 gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event, TOPLEVEL *w_current);
 gboolean x_event_key_press(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 gint x_event_scroll(GtkWidget *widget, GdkEventScroll *event, TOPLEVEL *w_current);
+/* x_compselect.c */
+void x_compselect_destroy_window(GtkWidget *widget, FILEDIALOG *f_current);
+int x_compselect_keypress(GtkWidget * widget, GdkEventKey *event, FILEDIALOG* f_current);
+void x_compselect_init_list_buffers(FILEDIALOG *f_current);
+void x_compselect_free_list_buffers(FILEDIALOG *f_current);
+gint default_components(GtkWidget *w, TOPLEVEL *w_current);
+gint embed_components(GtkWidget *w, TOPLEVEL *w_current);
+gint include_components(GtkWidget *w, TOPLEVEL *w_current);
+void x_compselect_comp_fill_libs(TOPLEVEL *w_current, FILEDIALOG *f_current);
+void x_compselect_comp_fill_components(FILEDIALOG *f_current, int row);
+void x_compselect_comp_update_current(FILEDIALOG *f_current, char *library, char *component);
+void x_compselect_change_clib(FILEDIALOG *f_current, char *new_clib, int row);
+void x_compselect_lib_select (GtkWidget *widget, gint row, gint column, GdkEventButton *bevent, FILEDIALOG *f_current);
+void x_compselect_comp_select (GtkWidget *widget, gint row, gint column, GdkEventButton *bevent, FILEDIALOG *f_current);
+void x_compselect_comp_apply(GtkWidget *w, FILEDIALOG *f_current);
+void x_compselect_comp_close (GtkWidget *w, FILEDIALOG *f_current);
+int x_compselect_search_library(FILEDIALOG *f_current, char *library, const char *string) ;
+void x_compselect_comp_search(GtkWidget *w, FILEDIALOG *f_current);
+void x_compselect_setup_list_buffers(FILEDIALOG *f_current, int num_files, int num_directories);
+int x_compselect_preview_checkbox(GtkWidget *widget, FILEDIALOG *f_current);
+void x_compselect_close (GtkWidget *w, FILEDIALOG *f_current);
+void x_compselect_setup (TOPLEVEL *toplevel);
 /* x_fileselect.c */
 void x_fileselect_destroy_window(GtkWidget *widget, FILEDIALOG *f_current);
 int x_fileselect_keypress(GtkWidget *widget, GdkEventKey *event, FILEDIALOG *f_current);
@@ -870,19 +892,6 @@ void x_fileselect_file_button(GtkWidget *widget, gint row, gint column, GdkEvent
 void x_fileselect_update_dirfile_saveas(FILEDIALOG *f_current, char *new_filename);
 void x_fileselect_close(GtkWidget *w, FILEDIALOG *f_current);
 void x_fileselect_search(GtkWidget *w, FILEDIALOG *f_current);
-gint default_components(GtkWidget *w, TOPLEVEL *w_current);
-gint embed_components(GtkWidget *w, TOPLEVEL *w_current);
-gint include_components(GtkWidget *w, TOPLEVEL *w_current);
-void x_fileselect_comp_fill_libs(TOPLEVEL *w_current, FILEDIALOG *f_current);
-void x_fileselect_comp_fill_components(FILEDIALOG *f_current, int row);
-void x_fileselect_comp_update_current(FILEDIALOG *f_current, char *library, char *component);
-void x_fileselect_change_clib(FILEDIALOG *f_current, char *new_clib, int row);
-void x_fileselect_lib_select(GtkWidget *widget, gint row, gint column, GdkEventButton *bevent, FILEDIALOG *f_current);
-void x_fileselect_comp_select(GtkWidget *widget, gint row, gint column, GdkEventButton *bevent, FILEDIALOG *f_current);
-void x_fileselect_comp_apply(GtkWidget *w, FILEDIALOG *f_current);
-void x_fileselect_comp_close(GtkWidget *w, FILEDIALOG *f_current);
-int x_fileselect_search_library(FILEDIALOG *f_current, char *library, const char *string);
-void x_fileselect_comp_search(GtkWidget *w, FILEDIALOG *f_current);
 void x_fileselect_setup(TOPLEVEL *w_current, int type, int filesel_type);
 int x_fileselect_load_backup(TOPLEVEL *toplevel, GString *message);
 /* x_grid.c */

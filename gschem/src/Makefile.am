@@ -20,7 +20,7 @@ gschem_SOURCES = \
 	x_basic.c x_dialog.c \
 	x_event.c x_grid.c x_log.c x_menus.c x_script.c \
 	x_pagesel.c x_print.c x_window.c x_stroke.c x_image.c x_color.c \
-	x_fileselect.c x_preview.c x_attribedit.c \
+	x_compselect.c x_fileselect.c x_preview.c x_attribedit.c \
 	x_multiattrib.c \
 	parsecmd.c o_cue.c
 

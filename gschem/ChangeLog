@@ -1,3 +1,11 @@
+2006-09-23  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/x_compselect.c: New source file for component selection
+	dialog.
+
+	* src/x_fileselect.c: Moved code of the component selection
+	dialog to x_compselect.nw.
+
 2006-09-22 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* README, configure.ac, src/i_callbacks.c, src/x_image.c:

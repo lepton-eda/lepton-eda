@@ -2492,7 +2492,7 @@ DEFINE_I_CALLBACK(add_component)
 
   exit_if_null(w_current);
 
-  x_fileselect_setup(w_current, COMPSELECT, -1);
+  x_compselect_setup(w_current);
 
 #if 0 /* replaced by above */
   setup_place_file_selector(w_current);
