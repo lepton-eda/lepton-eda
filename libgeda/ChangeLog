@@ -1,3 +1,8 @@
+2006-09-23  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/s_toplevel.c (s_toplevel_new): Added missing init of
+	rotated_inside.
+
 2006-09-22 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* README, configure.ac, include/globals.h, src/f_image.c,

@@ -107,6 +107,7 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->event_state = -1;
 
   toplevel->inside_action = 0;
+  toplevel->rotated_inside = 0;
 
   toplevel->init_left = 0;
   toplevel->init_top  = 0;
