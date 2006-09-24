@@ -245,11 +245,10 @@ if test "X$no_gd" != "Xyes"; then
 	AC_MSG_CHECKING([if libgeda was compiled with gdlib])
 	haslibgd=`$PKG_CONFIG --variable=LIBGEDA_HASGD libgeda`
 	if test "$haslibgd" != "yes"; then
-		AC_ERROR([You have requested that gdlib be
-used but libgeda was not compiled with libgd support.  You can
-either recompile libgeda with gdlib support or you can disable
-gdlib (which disables png export) with --disable-gd
-])
+		AC_MSG_WARN([libgeda was not built with libgd png support.
+gschem will use the builtin png support.  If you want libgd png support, you 
+must recompile libgeda with gdlib support.])
+		LIBGD=no
 	else
 		AC_MSG_RESULT([yes])
 		LIBGD=yes

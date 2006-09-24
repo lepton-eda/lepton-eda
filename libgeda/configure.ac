@@ -156,12 +156,17 @@ if test "X$no_gd" != "Xyes"  ; then
 	AC_PATH_PROG(LIBGDCONFIG, gdlib-config, no, ${PATH})
 
 	if test "$LIBGDCONFIG" = "no" ; then
-		AC_MSG_ERROR([Cannot find gdlib-config.
+		AC_MSG_WARN([Cannot find gdlib-config.
 Make sure it is installed and in your PATH.
-gdlib-config is part of the GD library available from www.boutell.com/gd.
-This is needed for png export.  If you wish to compile libgeda without
-png support then use --disable-gd.
+Libgeda will be built using the builtin png support.  gdlib-config is part 
+of the GD library available from www.boutell.com/gd.  This is needed for 
+png export using libgd, however png support is available without libgd. 
 ])
+		GD_CFLAGS=
+		GD_LIBS=
+		GD_VERSION=
+		GD="no"
+		LIBGEDA_HASGD=no
 
 	else
 		GD_CFLAGS=`$LIBGDCONFIG --cflags`
@@ -182,6 +187,7 @@ else
 	GD_LIBS=
 	GD_VERSION=
 	GD="no"
+	LIBGEDA_HASGD=no
 fi
 
 # 

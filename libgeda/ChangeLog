@@ -1,3 +1,8 @@
+2006-09-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Tweaked glib detection to not fail ./configure
+	when gdlib is not installed.  gdlib is an optional dependancy.
+
 2006-09-24 03:57  Dan McMahill <danmc>
 
 	* configure.ac, libgeda.pc.in: Improve gdlib detection.  Now
