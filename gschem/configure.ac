@@ -1,3 +1,5 @@
+# $Id$
+#
 # Process this file with autoconf to produce a configure script.
 AC_INIT
 AC_CONFIG_SRCDIR([src/gschem.c])
@@ -239,19 +241,23 @@ fi
 # built with libgd support.
 #
 
-haslibgd=`echo $LIBGEDA_LIBS | grep gd`
-if test "$haslibgd" != ""; then
-   # Check disable-gd command line flag value
-   if test "$no_gd" = "yes"; then
-      echo found libgd, but disabling gd support
-      LIBGD=no
-   else 
-      AC_DEFINE(HAS_LIBGD, 1, [Define if you have libgd installed])
-      LIBGD=yes
-   fi
+if test "X$no_gd" != "Xyes"; then
+	AC_MSG_CHECKING([if libgeda was compiled with gdlib])
+	haslibgd=`$PKG_CONFIG --variable=LIBGEDA_HASGD libgeda`
+	if test "$haslibgd" != "yes"; then
+		AC_ERROR([You have requested that gdlib be
+used but libgeda was not compiled with libgd support.  You can
+either recompile libgeda with gdlib support or you can disable
+gdlib (which disables png export) with --disable-gd
+])
+	else
+		AC_MSG_RESULT([yes])
+		LIBGD=yes
+	fi
 else
-      LIBGD=no
+	LIBGD=no
 fi
+
 
 # 
 # Check for libgd end

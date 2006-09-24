@@ -1,3 +1,5 @@
+# $Id$
+#
 # Process this file with autoconf to produce a configure script.
 AC_INIT
 AC_CONFIG_SRCDIR([include/libgeda.h])
@@ -148,35 +150,38 @@ AC_CHECK_LIB(dl, dlopen, DL_LIB="-ldl", DL_LIB="")
 ############################################################################
 # Check for libgd start
 # 
-AC_PATH_PROG(LIBGDCONFIG, gdlib-config, no, ${PATH})
+LIBGEDA_HASGD=no
+if test "X$no_gd" != "Xyes"  ; then
 
-if test "$LIBGDCONFIG" = "no"
-then
-   GD_CFLAGS=
-   GD_LIBS=
-   GD_VERSION=
-   GD="no"
+	AC_PATH_PROG(LIBGDCONFIG, gdlib-config, no, ${PATH})
+
+	if test "$LIBGDCONFIG" = "no" ; then
+		AC_MSG_ERROR([Cannot find gdlib-config.
+Make sure it is installed and in your PATH.
+gdlib-config is part of the GD library available from www.boutell.com/gd.
+This is needed for png export.  If you wish to compile libgeda without
+png support then use --disable-gd.
+])
+
+	else
+		GD_CFLAGS=`$LIBGDCONFIG --cflags`
+		GD_LIBS1=`$LIBGDCONFIG --ldflags`
+		GD_LIBS2=`$LIBGDCONFIG --libs`
+		GD_LIBS="$GD_LIBS1 $GD_LIBS2 -lgd"
+		GD_VERSION=`$LIBGDCONFIG --version`
+		GD="yes"
+		LIBGEDA_HASGD=yes
+
+		# This is not really used to figure out paths, but just to make 
+		# sure >= 2.0.15 is installed
+		# PKG_CHECK_MODULES(libgd, libgd >= 2.0.15)
+		AC_DEFINE(HAS_LIBGD, 1, [If gd has been installed, define this])
+	fi
 else
-   if test "$no_gd" = "yes" 
-   then
-     echo found gd, but disabling gd support.
-     GD_CFLAGS=
-     GD_LIBS=
-     GD_VERSION=
-     GD="no"
-   else 
-     GD_CFLAGS=`$LIBGDCONFIG --cflags`
-     GD_LIBS1=`$LIBGDCONFIG --ldflags`
-     GD_LIBS2=`$LIBGDCONFIG --libs`
-     GD_LIBS="$GD_LIBS1 $GD_LIBS2"
-     GD_VERSION=`$LIBGDCONFIG --version`
-     GD="yes"
-
-     # This is not really used to figure out paths, but just to make 
-     # sure >= 2.0.15 is installed
-     # PKG_CHECK_MODULES(libgd, libgd >= 2.0.15)
-     AC_DEFINE(HAS_LIBGD, 1, [If gd has been installed, define this])
-   fi
+	GD_CFLAGS=
+	GD_LIBS=
+	GD_VERSION=
+	GD="no"
 fi
 
 # 
@@ -511,6 +516,7 @@ AC_SUBST(GUILEINTERP)
 AC_SUBST(NOWEAVE)
 AC_SUBST(TEXI2HTML)
 AC_SUBST(INDENT)
+AC_SUBST(LIBGEDA_HASGD)
 
 # Create all the necessary derived files
 AC_CONFIG_FILES([Makefile

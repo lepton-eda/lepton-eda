@@ -3,6 +3,8 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
+LIBGEDA_HASGD=@LIBGEDA_HASGD@
+
 Name: libgeda
 Description: gEDA/gaf's core library 
 Requires: 
