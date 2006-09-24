@@ -1,5 +1,11 @@
 2006-09-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
+        * AUTHORS: Updated file pointing people at gschem's AUTHOR file 
+        as the complete list of authors.  Merged all listed files in this
+        file into gschem's file.
+
+2006-09-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
 	* configure.ac: Tweaked glib detection to not fail ./configure
 	when gdlib is not installed.  gdlib is an optional dependancy.
 

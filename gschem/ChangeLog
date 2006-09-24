@@ -1,5 +1,12 @@
 2006-09-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
+        * AUTHORS: Greatly simplified the file since the ChangeLog tracks
+	who has changed what.  Also added a few missing names that should
+	most certainly be in the list.  Also consolidated all AUTHOR files
+	for gEDA/gaf into this file.
+
+2006-09-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
         * configure.ac: Tweaked glib detection to not fail ./configure 
         when gdlib is not installed.  gdlib is an optional dependancy.
 

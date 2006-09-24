@@ -4,11 +4,9 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-examples AUTHORS
+AUTHORS
 
-Stefan Petersen 
-gTAG with suggestions from others.
+Please see the AUTHOR file in gschem for the list of authors and
+contributers to gEDA/gaf.
 
-Ales V. Hvezda
-Packaging and file maintenance.
 

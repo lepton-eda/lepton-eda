@@ -3,195 +3,78 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-gschem AUTHORS
+gEDA/gaf AUTHORS and contributors
 
-Ales V. Hvezda
-E-mail: ahvezda@geda.seul.org
-Web: http://www.geda.seul.org/
+Many thanks to the following individuals for their contributions:
 
-Kazu Hirata		- For doing significant code cleanup.  Greatly
-			  appreciated! (especially since some of the code
-			  is so gross)
-
-Michael Linnemann	- For proposing the multi hot key scheme which is
-			  currently in use
-
-Stefan Petersen		- For writing the actual guile code which implements
-			  the key remapping (worked almost out of the box!)
-			- Pointed out some obsolete stuff in the configure.in
-			- Bug fixes and improvements to gschem.scm
-			- Continued bug fixes and additions to gschem.scm
-			- list-keys.scm which prints out the keymap
-			- For writing a better scheme like way of handling
-			  strokes
-			- Cleanup of the configure mechanisms
-
-Thien-Thi Nguyen 	- Wrote a much better g_read_file()
-		     	- A configure.in which handles guile better then 
-			  my quick hack
-			- Help with the guile key remapping code 
-			- Bug fixes and improvements to gschem.scm
-
-Erick Britis Ortiz	- Provided a patch to fix the broken select box and  
-Jeff McNeal		  box object
-
-Jeff McNeal		- Provided a patch which adds the lowe level code to
-	                  implement transparent zoom/pan when drawing 
-			  nets/pins.
-
-Manu Rouat		- For pointing out my inconsistant license headers
-			  (which really need to be correct)
-			- Found incorrect path in gschemrc.in 
-			  (scheme-directory)
-			- Contributed a patch to make zoom limits have a 
-			  border (zoom limits looks much better now)
-			- For contributing a patch which makes building
-			  RPMs easier. (for libgeda/gschem/gnetlist/...)
-
-Roger Williams 		- For supplying a patch with provides variable snap
-			  grid spacing
-
-			  For contributing the agile-vfo-block_1.sch schematic
-
-			  For pointing out how to fix support for alphanumeric
-			  slotting (in libgeda)
-
-Mike Jarabek 		- For contributing code which displays grid points 
-			  at negative coordinates. 
-		
-			  Providing an updated test_verilog.sym
-
-Anatole Sokolov		- Pointed out a few bugs in o_erase_* (using a 
-			  constant instead of a variable)
-
-Egil Kvaleberg		- For providing a patch which gives gEDA gtk+ 1.1.x 
-			  compatibility (integrated by AVH)
-
-			  As well as a sample schematic (filter_1.sch)
-
-			  Also for providing numerous patches for various
-			  things (bugs, features etc...).
-	
-			  Wrote the "Hierarchy/Documentation, Help/Manual, 
-			  and Help/Component documentation searching from 
-			  within gschem" feature.
-
-			  Rewrote part of the event state / status message
-			  to implement the "Snap off" / "Show Hidden" feature.
-
-			  For providing code/patch to support bus rippers
-			  in gschem.  This patch was not directly applied, but
-			  served as inspiration on how to quickly implement
-			  bus ripper support in gschem.
-
-Thomas Dean		- Submitting a few useful patches for various
-			  things
-
-Reinhard Kotucha        - For suggesting the use of setlinecap in the 
-			  postscript output.  Output looks much better
-			  with some sort of cap style set.
-
-			  One of many who suggested rotation of component
-			  before it is placed	
-
-Matt Ettus		- For greatly rewritting the attribute edit
-		  	  attribute dialog box
-
-			  For writing the multi-add/edit attribute dialog box
-
-Martin Benes            - For contributing the attribute promotion code and
-                          a bunch of useful GUI bug fixes/patches.  Ales had
-                          to slighly modify a few (to make them configurable)
-
-			  For pointing out and providing misc bug fixes
-
-Patrick Bernaud		- For many primitive object code updates, bug
-			  fixes, and additions (line types and fill types)
-
-                          Adding grips to the arc object
-
-                          Many improvements to the primitive objects
-
-Werner Hoch		- For providing a patch to fix some long outstanding
-			  zooming / panning bugs
-
-			  More bug fixes to the panning / zoom code as well
-	 		  as some really important code cleanup.  Files 
-	 		  changed:
-				a_pan.c a_zoom.c i_callbacks.c x_grid.c
-				x_window.c x_event.c
-
-			  For doing the German strings translation as well
-			  as bug reports related to the i18n support.
-		       
-Chris Ellec		- For providing a patch that causes changes in the
-			  slot= attribute in the multi attrib dialog box
-			  (Add and Change) to take effect.
-			  For providing lots of feedback on various bugs
-
-                          For contributing various patches to add very useful
-                          functionality
-
-Eduard Moser 		- For contributing the guile and C code to generate
-Martin Lehmann		  netlists on the fly (at least for the vams backend)
-
-Rolf Fiedler            - For contributing patches and ideas for feature / UI
-                          improvements (patch: increase drawing window size)
-
-Bruno Schwander		- For suggestions and providing patches to improve
-			  the configure mechanism (Stefan applied the patches)
-                          
-Dave Lawrence		- For contributing the find-text, hide-text, show-text,
-			  and autonumber text code.
-
-			  For contributing the much needed improvements to the
-		 	  add attribute / edit attribute dialog box.  The
-			  ability to add an attribute to muliple objects 
-		 	  (all, components, or nets) and to replace existing
-			  attributes.
-
-Alexandre P. Nunes	- For contributing all the work to get gschem to use
-			  gettext (i18n).  Also for doing on the Portuguese
-			  translation.  Thank you. 
-
-			  For continuing to support the i18n work.
-
-Antonio A Todo Bom	- For also working and coordinating the gettext
-			  support. Thank you.
-
-			  For continuing to support the i18n work.
-
-MIYAMOTO Takanori	- For contributing the Japanese translation.
-
-Bert Timmerman		- For contributing the Dutch translation.
-
-Andy Shevchenko         - For contributing the Russian translation.
-
-Also thanks go to all the people on the geda-dev mailing list.  Many of
-the subscribers provided good suggestions which are greatly appreciated
-(and even implemented :-).  I'll be listing some of the contributers
-here once I get my act together.  Here's a start of a list of the many
-geda-dev contributers (in no particular order):
-
-Magnus Danielson
-Manu Rouat
-Stephen Tell
-Ron Van Dam 
-Erick Britis Ortiz
-Stefan Petersen
-Eric Busta
-Michael Linnemann
-Marius Vollmer 
-Børge Strand
-Andrew Dyer
-John White
-Hamish Moffatt
-Simon Peacock 
-Geoff Harland 
-James Swonger
-Roger Williams 
-Arnim Littek 
+Andrew Bardsley
 Nick Bastin
+Martin Benes
+Patrick Bernaud
+Antonio A Todo Bom
+Peter Brett 
+Stuart Brorson
+Eric Busta
+Peter Clifton
+Ron Van Dam
+Magnus Danielson
+Thomas Dean
+DJ Delorie
+Bryce Denney
+Andrew Dyer
+Chris Ellec
+Matt Ettus
+Rolf Fiedler 
+Geoff Harland
+Thomas Heidel
+Kazu Hirata		
+Werner Hoch
+Ales Hvezda
+Braddock Gaskill
+Bas Gieltjes
+Mike Jarabek
+Wojciech Kazubski
+Reinhard Kotucha
+Egil Kvaleberg
+Dave Lawrence
+Martin Lehmann
+Michael Linnemann
+Arnim Littek
+Ye Ma  
+Dan McMahill
+Jeff McNeal	
+Piotr Miarecki 
+Hamish Moffatt
+Eduard Moser
+Thien-Thi Nguyen
+Alexandre P. Nunes
+Jerry O'Keefe
+Carlos Nieves Onega
+Erick Britis Ortiz
+Simon Peacock
+Stefan Petersen
+Manu Rouat
+JM Routoure
+Bruno Schwander
+Andy Shevchenko
+Anatole Sokolov	
+Nuno Sucena
+Borge Strand
+James Swonger
+Miyamoto Takanori
+Stephen Tell
+Bert Timmerman
+Marius Vollmer 
+Rich Walker
+John White
+Roger Williams 
+Bill Wilson
 
-And anybody else who spoke up and let their opinion be heard.
+For specific contributions, please check out the appropriate ChangeLog
+for more details.
+
+Also thanks go to all the people on the geda-* mailing list.  Many of
+the subscribers provided good suggestions (as well as patches) that are
+greatly appreciated
+
 

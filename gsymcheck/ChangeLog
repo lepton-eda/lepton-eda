@@ -1,3 +1,9 @@
+2006-09-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * AUTHORS: Updated file pointing people at gschem's AUTHOR file 
+        as the complete list of authors.  Merged all listed files in this
+        file into gschem's file.
+
 2006-09-17 Carlos Nieves Onega <cnieves@iespana.es>
 	
 	* include/struct.h, src/s_check.c, src/s_symstruct.c:
