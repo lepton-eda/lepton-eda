@@ -1,3 +1,15 @@
+2006-09-24 03:57  Dan McMahill <danmc>
+
+	* configure.ac, libgeda.pc.in: Improve gdlib detection.  Now
+	  instead of just dropping gd support if gdlib is not found, have
+	  configure error out with a message that tells the user what needs
+	  to be fixed or what feature will be missing if --disable-gd is
+	  used.
+
+	  Also add a variable to libgeda.pc.in so pkg-config can determine
+	  if libgeda was compiled with gdlib support.  This makes
+	  determination of this by gschem more robust.
+
 2006-09-23  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* include/defines.h: 
