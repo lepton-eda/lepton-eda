@@ -1,3 +1,11 @@
+2006-09-26 Werner Hoch <werner.ho@gmx.de>
+	* 4000/4022-2.sym, connector/mains-entry-1.sym,
+	  maxim/max186-1.sym, memory/HM628511HC-SOJ36-1.sym,
+	  memory/am27S13D-1.sym, micro/ATmega16L-1.sym,
+	  micro/pic12F675-2.sym, pla/N82S100N-1.sym, xilinx/XC95108-PC84.sym,
+	  supervisor/adm707.sym, opto/hcpl-4534-1.sym: fixed offgrid pins 
+	  inside the symbols
+
 2006-09-24 Carlos Nieves Onega <cnieves@iespana.es
 
 	* linear/lm311-1.sym: Removed the GND false connection of the 
