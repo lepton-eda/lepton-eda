@@ -1,0 +1,70 @@
+gEDA / gaf - Cygwin
+
+GPL'd Suite of Electronic Design Automation tools
+
+This readme describes one way to build gEDA/gaf (gschem and friends) on
+the Windows operating system. It uses Cygwin as the layer between
+Windows and the *nix world (ie gcc, make, bash etc...).
+
+Instructions: 
+
+1) Download and run setup.exe from cygwin website:
+http://www.cygwin.com
+In the setup program, select the following packages:
+(Hint: press the "view" button once to arrange the list in
+alphabetical order)
+
+atk-devel
+file
+gcc
+gtk2-x11-devel
+guile-devel
+make
+pango-devel
+patchutils
+pcre-devel
+pcre-doc
+pkg-config
+xorg-x11-devel
+xorg-x11-fscl
+xterm
+
+2) Append these lines to your .bash_profile:
+
+# ---- Cut here ---- #
+export LD_LIBRARY_PATH=$HOME/geda/lib:$LD_LIBRARY_PATH
+export PATH=$HOME/geda/bin:$PATH
+export PKG_CONFIG_PATH=$HOME/geda/lib/pkgconfig:$PKG_CONFIG_PATH
+# ---- Cut here ---- #
+
+$ source .bash_profile
+
+3) Go to the gEDA sources page:
+http://www.geda.seul.org/sources.html
+From the gEDA/gaf group, download *only* the packages which have a date
+as its version (like 20060123). The necessary dependencies where already
+installed in step 1.
+
+4) Go to the download directory and type:
+$ make install
+( ...patience... )
+
+5) Now, to properly view the documentation from the help menu of gschem:
+
+Locate the executables of your browser and PDF reader and create links
+from /usr/bin. Examples:
+$ ln -s "c:\Program Files\Internet Explorer\iexplore.exe" /usr/bin/iexplore
+$ ln -s "c:\Program Files\Adobe\Acrobat 7.0\Reader\AcroRd32.exe" /usr/bin/acroread
+
+Try:
+$ iexplore
+( Microsoft Internet Explorer appears )
+$ acroread
+( Adobe Acrobat Reader appears )
+$ gschemdoc -m
+( gEDA/gaf documentation appears )
+
+6) Finally, before running gschem:
+$ startx
+
+Have fun!
