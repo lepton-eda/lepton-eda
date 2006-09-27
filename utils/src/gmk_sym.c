@@ -150,8 +150,11 @@ int make_box(int fldcnt,char *pFields[]);
 static char *strLabel(char *p, char *pTemp);
 void strtrail(char *wrk);
 int line_chk(char *pBuf);
-#ifndef __MINGW32__
-int stricmp(char *s, char *p);
+#if !defined(HAVE_STRCASECMP) && defined(HAVE_STRICMP) && !defined(stricmp)
+#define strcasecmp stricmp
+#endif
+#if !defined(HAVE_STRNCASECMP) && defined(HAVE_STRNICMP) && !defined(strnicmp)
+#define strncasecmp strnicmp
 #endif
 
 int pin_len=300;
@@ -470,32 +473,32 @@ int make_box(int fldcnt,char *pFields[])
      {
      name_size = GetStringDisplayLength(name,font_size);
      /* Vaild positions: tl,tc,tr, bl,bc,br cc */
-     if (!stricmp(name_pos,"tl"))
+     if (!strcasecmp(name_pos,"tl"))
         {
         pos_x = pin_0_x;
         pos_y = pin_0_y+50;
 	}
-     else if (!stricmp(name_pos,"tc"))
+     else if (!strcasecmp(name_pos,"tc"))
         {
         pos_x = pin_0_x+BoxWidth/2-name_size/2;
         pos_y = pin_0_y+50;
 	}
-     else if (!stricmp(name_pos,"tr"))
+     else if (!strcasecmp(name_pos,"tr"))
         {
         pos_x = pin_0_x+BoxWidth-name_size/2;
         pos_y = pin_0_y+50;
 	}
-     else if (!stricmp(name_pos,"bl"))
+     else if (!strcasecmp(name_pos,"bl"))
         {
         pos_x = pin_0_x;
         pos_y = pin_0_y-BoxHeight-175;
 	}
-     else if (!stricmp(name_pos,"bc"))
+     else if (!strcasecmp(name_pos,"bc"))
         {
         pos_x = pin_0_x+BoxWidth/2-name_size/2;
         pos_y = pin_0_y-BoxHeight-175;
 	}
-     else if (!stricmp(name_pos,"br"))
+     else if (!strcasecmp(name_pos,"br"))
         {
         pos_x = pin_0_x+BoxWidth-(name_size)/2;
         pos_y = pin_0_y-BoxHeight-175;
@@ -544,17 +547,17 @@ int make_pin(int fldcnt,char *pFields[]) {
   strncpy(pin_used[pin_counter++],pin,5);    /* save the current pin, the first 5 char */
   
   shape = LINE_SHAPE;
-  if (!stricmp(pFields[2],"dot"))     /* get shape */
+  if (!strcasecmp(pFields[2],"dot"))     /* get shape */
      shape = DOT_SHAPE;
-  if (!stricmp(pFields[2],"clock"))   /* get shape */
+  if (!strcasecmp(pFields[2],"clock"))   /* get shape */
      shape = CLOCK_SHAPE;
-  if (!stricmp(pFields[3],"L")) side = L_SIDE;
+  if (!strcasecmp(pFields[3],"L")) side = L_SIDE;
   else
-	if (!stricmp(pFields[3],"R")) side = R_SIDE;
+	if (!strcasecmp(pFields[3],"R")) side = R_SIDE;
 	else      
-	  if (!stricmp(pFields[3],"B")) side = B_SIDE;
+	  if (!strcasecmp(pFields[3],"B")) side = B_SIDE;
 	  else    
-		if (!stricmp(pFields[3],"T")) side = T_SIDE;
+		if (!strcasecmp(pFields[3],"T")) side = T_SIDE;
 		else {
 		   fprintf (stderr,"\nError, %s not a valid position, should be l,t,b or r.\n",pFields[3]);
 		   return -1;
@@ -565,25 +568,25 @@ int make_pin(int fldcnt,char *pFields[]) {
   type = NULL;
   if (pFields[5])
   {
-    if (!stricmp(pFields[5],"in"))
+    if (!strcasecmp(pFields[5],"in"))
         type = PINTYPE_IN;
-    else if ( !stricmp(pFields[5],"out"))
+    else if ( !strcasecmp(pFields[5],"out"))
         type = PINTYPE_OUT;
-    else if ( !stricmp(pFields[5],"io"))
+    else if ( !strcasecmp(pFields[5],"io"))
         type = PINTYPE_IO;
-    else if ( !stricmp(pFields[5],"oc"))
+    else if ( !strcasecmp(pFields[5],"oc"))
         type = PINTYPE_OC;
-    else if ( !stricmp(pFields[5],"oe"))
+    else if ( !strcasecmp(pFields[5],"oe"))
         type = PINTYPE_OE;
-    else if ( !stricmp(pFields[5],"pas"))
+    else if ( !strcasecmp(pFields[5],"pas"))
         type = PINTYPE_PAS;
-    else if ( !stricmp(pFields[5],"tp"))
+    else if ( !strcasecmp(pFields[5],"tp"))
         type = PINTYPE_TP;
-    else if ( !stricmp(pFields[5],"tri"))
+    else if ( !strcasecmp(pFields[5],"tri"))
         type = PINTYPE_TRI;
-    else if ( !stricmp(pFields[5],"clk"))
+    else if ( !strcasecmp(pFields[5],"clk"))
         type = PINTYPE_CLK;
-    else if ( !stricmp(pFields[5],"pwr"))
+    else if ( !strcasecmp(pFields[5],"pwr"))
         type = PINTYPE_PWR;
     else
       fprintf( stderr, "WARNING: Invalid pin type attribute for pin %s: %s\n", pin_name, pFields[5] );
@@ -672,18 +675,5 @@ int line_chk(char *pBuf)
       return -1;
   return 0;
 }
-
-/************************************************/
-/* Compare two string without regard for case   */
-/************************************************/
-#ifndef __MINGW32__
-int stricmp(char *s, char *p)
-{
-  for (; toupper(*s) == toupper(*p); s++, p++)
-    if (!(*s))
-      return 0;
-  return toupper(*s) - toupper(*p);
-}
-#endif
 
 

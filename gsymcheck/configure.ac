@@ -38,7 +38,6 @@ AC_CANONICAL_HOST
 
 # Figure out if we are building on win32 and what environment.
 case $host_os in
-  *cygwin*  ) AC_MSG_ERROR([Building gEDA/gaf under cygwin is not supported]) ;;
   *mingw32* ) echo "Configuring for mingw"; MINGW=yes ;;
 esac
 

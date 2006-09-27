@@ -1,3 +1,8 @@
+2006-09-27 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* configure.ac : Applied patch #1564796 by Cesar Strauss, 
+	enabling Cygwin's compilation. Thanks.
+	
 2006-09-26 Werner Hoch <werner.ho@gmx.de>
 	* 4000/4022-2.sym, connector/mains-entry-1.sym,
 	  maxim/max186-1.sym, memory/HM628511HC-SOJ36-1.sym,
@@ -6,7 +11,7 @@
 	  supervisor/adm707.sym, opto/hcpl-4534-1.sym: fixed offgrid pins 
 	  inside the symbols
 
-2006-09-24 Carlos Nieves Onega <cnieves@iespana.es
+2006-09-24 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* linear/lm311-1.sym: Removed the GND false connection of the 
 	symbol. That pin was not really connected to ground.

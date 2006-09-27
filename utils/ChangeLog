@@ -1,3 +1,14 @@
+2006-09-27 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* configure.ac : Applied patch #1564796 by Cesar Strauss, 
+	enabling Cygwin's compilation. Thanks.
+
+	* src/gmk_sym.c: Do not redefine stricmp. Work based on patch
+	#1564805 by Cesar Strauss and comments by Peter Brett. Thanks.
+	Use strcasecmp by default instead of stricmp. 
+	If strcasecmp is not available, but stricmp is, then define 
+	strcasecmp as stricmp.
+	
 2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated program version to 20060906.
