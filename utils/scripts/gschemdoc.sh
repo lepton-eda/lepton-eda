@@ -25,7 +25,7 @@
 #
 # these may be changed to suit local preferences
 #
-CANDIDATE_BROWSER="galeon mozilla phoenix netscape netscape-navigator opera firefox konqueror"
+CANDIDATE_BROWSER="galeon mozilla phoenix netscape netscape-navigator opera firefox konqueror iexplore"
 CANDIDATE_PDFREADER="xpdf acroread ggv gv"
 CANDIDATE_LOCATE="slocate locate"
 
@@ -39,11 +39,26 @@ symbolbase=`echo "$4" | sed s/-[0-9]\\.sym//`
 #
 view_file_if_pdf()
 {
-	if test -f "$1" && (file "$1" | grep -q "PDF") && test "${pdfreader}"!="no"; then
-		echo "Found ${pdfreader}"
-		echo "Using PDF viewer and file: $1"
-		${pdfreader} -- "$1"
-		exit
+	# If we are on Cygwin, translate the path
+	# so native applications can find the file
+	if test "${cygpath}" != "no" ; then
+		file=`cygpath -w $1`
+	else
+		file=$1
+	fi
+
+	if test -f "$1" && (file "$1" | grep -q "PDF") ; then
+		if test "${pdfreader}" != "no"; then
+			echo "Found ${pdfreader}"
+			echo "Using PDF viewer and file: $file"
+			# NOTE: Acrobat Reader on Windows does not seem to support
+			#       -- on the command line
+			${pdfreader} "$file"
+			exit
+		else
+			echo "Did not find a PDF viewer application."
+			exit
+		fi
 	fi
 }
 
@@ -52,12 +67,23 @@ view_file_if_pdf()
 #
 view_file_browser()
 {
+	# If we are on Cygwin, translate the path
+	# so native applications can find the file
+	if test "${cygpath}" != "no" ; then
+		file=`cygpath -w $1`
+	else
+		file=$1
+	fi
+	
 	if test "${browser}" != "no" ; then
 		echo "Found ${browser}"
-		echo "Using browser and file: $1"
+		echo "Using browser and file: $file"
 		# NOTE: Mozilla and Netscape does not seem to support
 		#       -- on the command line
-		${browser} "file:$1"
+		${browser} "file:$file"
+		exit
+	else
+		echo "Did not find a browser application."
 		exit
 	fi
 }
@@ -70,6 +96,9 @@ go_look_for()
 	if test "${browser}" != "no" ; then
 		echo "Go look for: $1"
 		${browser} "http://www.google.com/search?q=$1%20filetype:pdf"
+		exit
+	else
+		echo "Did not find a browser application."
 		exit
 	fi
 }
@@ -84,7 +113,7 @@ lookup_manual()
 	fi
 	if test "${locate}" != "no"; then
 		b=`${locate} -- "/$1"`
-		if test `echo "$b" | wc -l` -ge 1; then
+		if test `echo "$b" | wc -w` -ge 1; then
 			view_file_browser "`echo "$b" | head -n1`"
 		fi
 	fi
@@ -109,6 +138,9 @@ locate="no"
 for a in ${CANDIDATE_LOCATE}; do
 	b=`which $a 2>/dev/null` && locate=$b && break
 done
+
+cygpath="no"
+b=`which cygpath 2>/dev/null` && cygpath=$b
 
 #
 #  documentation case first
@@ -150,7 +182,7 @@ fi
 #
 if test "$1" != "" && test "${locate}" != "no"; then
 	b=`${locate} -- "/$1"`
-	if test `echo "$b" | wc -l` -ge 1; then
+	if test `echo "$b" | wc -w` -ge 1; then
 		n="`echo "$b" | head -n1`"
 		view_file_if_pdf "$n"
 		view_file_browser "$n"
@@ -215,7 +247,7 @@ fi
 #
 if test "${symbolbase}" != "" && test "${pdfreader}" != "no"; then
 	for s in .pdf .PDF; do
-		view_file_pdf "${DOCDIR}/${symbolbase}$s"
+		view_file_if_pdf "${DOCDIR}/${symbolbase}$s"
 	done
 fi
 

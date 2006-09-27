@@ -8,7 +8,29 @@
 	Use strcasecmp by default instead of stricmp. 
 	If strcasecmp is not available, but stricmp is, then define 
 	strcasecmp as stricmp.
-	
+
+	* scripts/gschemdoc.sh: Applied (partially) patch #1511658 by 
+	Cesar Strauss. The rest of the patch was already covered by
+	patches #1564796 and #1564805. Thanks.
+
+	Notes by Cesar:
+	" gschemdoc now uses the cygpath utility, if present, to
+	  filter the file paths before calling the viewer.
+
+	  Also, I added iexplore (Internet Explorer) to the
+	  browser list.
+
+	  As a bonus, I added some checks and error messages for
+	  the "Browser not found" and "PDF Reader not found"
+	  situations.
+
+	  There must exist, however, symbolic links to the
+	  browser and PDF reader in Cygwin's /usr/bin. This must
+	  be done manually by the user, for the moment.
+
+	  With this fix, gschem->Help->Manual and
+	  gschem->Help->Component now work in Cygwin."
+	  
 2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated program version to 20060906.
