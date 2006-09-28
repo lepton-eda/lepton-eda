@@ -277,6 +277,14 @@ void main_prog(void *closure, int argc, char *argv[])
                  filename);
         }
         
+	/* Run the new page hook */
+	if (scm_hook_empty_p(new_page_hook) == SCM_BOOL_F &&
+	    page != NULL) {
+	  scm_run_hook(new_page_hook,
+		       scm_cons(g_make_page_smob(w_current, page),
+				SCM_EOL));
+	}
+  
         f_open(w_current,
                w_current->page_current->page_filename);
         i_set_filename(w_current,

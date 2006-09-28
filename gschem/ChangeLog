@@ -1,3 +1,14 @@
+2006-09-28 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* include/globals.h, include/prototype.h, lib/system-gschemrc.in,
+	  src/g_hook.c, src/g_register.c, src/globals.c, src/gschem.c,
+	  src/i_callbacks.c, src/x_window.c:
+	  Added a new page hook, a new add-component function for scheme,
+	  and some lines in the system-gschemrc file (commented by default),
+	  so gschem can add automatically a symbol when creating a new page.
+	  Commenting out these lines can solven bug #1443806 (gschem 
+	  zoomed out way to much on startup).
+	
 2006-09-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * AUTHORS: Greatly simplified the file since the ChangeLog tracks

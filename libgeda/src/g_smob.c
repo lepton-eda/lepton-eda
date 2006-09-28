@@ -39,6 +39,7 @@
 
 static long attrib_smob_tag; /*! Attribute SMOB tag */
 static long object_smob_tag; /*! Object SMOB tag */
+static long page_smob_tag;   /*! Page SMOB tag */
 
 /*! \brief Free attribute smob memory.
  *  \par Function Description
@@ -410,3 +411,118 @@ gboolean g_get_data_from_object_smob(SCM object_smob, TOPLEVEL **toplevel,
   }
   return (TRUE);
 }
+
+/*! \brief Free page smob memory.
+ *  \par Function Description
+ *  Free the memory allocated by the page smob and return its size.
+ *
+ *  \param [in] page_smob  The page smob to free.
+ *  \return Size of page smob.
+ */
+static scm_sizet g_free_page_smob(SCM page_smob)
+{
+  struct st_page_smob *page = 
+  (struct st_page_smob *)SCM_CDR(page_smob);
+  scm_sizet size = sizeof(struct st_page_smob);
+
+  free(page); /* this should stay as free (allocated from guile) */
+  return size;
+}
+
+/*! \brief Prints page smob to port.
+ *  \par Function Description
+ *  This function prints the given page smob to the port.
+ *  It just prints a string showing it is a page and the page name.
+ *
+ *  \param [in] page_smob    The page smob.
+ *  \param [in] port         The port to print to.
+ *  \param [in] pstate       Unused.
+ *  \return non-zero means success.
+ */
+static int g_print_page_smob(SCM page_smob, SCM port,
+			       scm_print_state *pstate)
+{
+  struct st_page_smob *page = 
+  (struct st_page_smob *)SCM_CDR(page_smob);
+
+  if (page &&
+      page->page &&
+      page->page->page_filename) {
+    scm_puts("#<page ", port);
+    scm_display (scm_makfrom0str (page->page->page_filename),
+                 port);
+    scm_puts(">", port);
+  }
+	
+  /* non-zero means success */
+  return 1;
+}
+
+/*! \brief Initialize the framework to support a page smob.
+ *  \par Function Description
+ *  Initialize the framework to support a page smob.
+ *
+ */
+void g_init_page_smob(void)
+{
+
+  page_smob_tag = scm_make_smob_type("page",
+				       sizeof (struct st_page_smob));
+  scm_set_smob_mark(page_smob_tag, 0);
+  scm_set_smob_free(page_smob_tag, g_free_page_smob);
+  scm_set_smob_print(page_smob_tag, g_print_page_smob);
+
+  return;
+}
+
+/*! \brief Creates a page smob
+ *  \par Function Description
+ *  This function creates and returns a new page smob,
+ *  from the given TOPLEVEL curr_w and page pointers.
+ *
+ *  \param [in] curr_w  The current TOPLEVEL object.
+ *  \param [in] page    The page object.
+ *  \return SCM         The new page smob
+ */
+SCM g_make_page_smob(TOPLEVEL *curr_w, PAGE *page)
+{
+  struct st_page_smob *smob_page;
+
+  smob_page = (struct st_page_smob *)
+    scm_must_malloc(sizeof(struct st_page_smob), "page");
+
+  smob_page->world  = curr_w;
+  smob_page->page = page;
+
+  /* Assumes Guile version >= 1.3.2 */
+  SCM_RETURN_NEWSMOB(page_smob_tag, smob_page);
+}
+
+/*! \brief Get the TOPLEVEL and PAGE data from a page smob.
+ *  \par Function Description
+ *  Get the TOPLEVEL and OBJECT data from a page smob.
+ *
+ *  \param [in]  page_smob    The page smob to get data from.
+ *  \param [out] toplevel     The TOPLEVEL to write data to.
+ *  \param [out] page         The PAGE to write data to.
+ *  \return TRUE on success, FALSE otherwise
+ */
+gboolean g_get_data_from_page_smob(SCM page_smob, TOPLEVEL **toplevel, 
+				   PAGE **page)
+{
+  
+  if ( (!SCM_NIMP(page_smob)) || 
+       ((long) SCM_CAR(page_smob) != page_smob_tag) ) {
+    return(FALSE);
+  }
+  if (toplevel != NULL) {
+    *toplevel = (TOPLEVEL *) 
+    (((struct st_page_smob *)SCM_CDR(page_smob))->world);
+  }
+  if (page != NULL) {
+    *page = (PAGE *) 
+    (((struct st_page_smob *)SCM_CDR(page_smob))->page);
+  }
+  return (TRUE);
+}
+

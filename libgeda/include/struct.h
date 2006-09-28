@@ -963,4 +963,9 @@ struct st_object_smob {
   OBJECT   *object;
 };
 
+struct st_page_smob {
+  TOPLEVEL *world;   /* We need this when updating schematic */
+  PAGE   *page;
+};
+
 #endif

@@ -454,3 +454,83 @@ SCM g_get_object_pins (SCM object_smob)
   
   return (returned);
 }
+
+/*! \brief Add a component to the page.
+ *  \par Function Description
+ *  Adds a component <B>scm_comp_name</B> to the schematic, at 
+ *  position (<B>scm_x</B>, <B>scm_y</B>), with some properties set by 
+ *  the parameters:
+ *  \param [in] scm_x Coordinate X of the symbol.
+ *  \param [in] scm_y Coordinate Y of the symbol.
+ *  \param [in] angle Angle of rotation of the symbol. 
+ *  \param [in] selectable True if the symbol is selectable, false otherwise.
+ *  \param [in] mirror True if the symbol is mirrored, false otherwise.
+ *  \return TRUE if the component was added, FALSE otherwise.
+ *
+ */
+SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y, 
+		    SCM scm_angle, SCM scm_selectable, SCM scm_mirror)
+{
+  TOPLEVEL *w_current;
+  PAGE *page;
+  gboolean selectable, mirror;
+  gchar *comp_name, *clib;
+  int x, y, angle;
+  GSList *clibs = NULL;
+
+  /* Get w_current and o_current */
+  SCM_ASSERT (g_get_data_from_page_smob (page_smob, &w_current, &page),
+	      page_smob, SCM_ARG1, "add-component");
+  /* Check the arguments */
+  SCM_ASSERT (SCM_STRINGP(scm_comp_name), scm_comp_name,
+	      SCM_ARG2, "add-component");
+  SCM_ASSERT ( SCM_INUMP(scm_x), scm_x, 
+               SCM_ARG3, "add-component");
+  SCM_ASSERT ( SCM_INUMP(scm_y), scm_y, 
+               SCM_ARG4, "add-component");
+  SCM_ASSERT ( SCM_INUMP(scm_angle), scm_angle, 
+               SCM_ARG5, "add-component");
+  SCM_ASSERT ( scm_boolean_p(scm_selectable), scm_selectable,
+	       SCM_ARG6, "add-component");
+  SCM_ASSERT ( scm_boolean_p(scm_mirror), scm_mirror,
+	       SCM_ARG7, "add-component");
+
+  /* Get the parameters */
+  comp_name = SCM_STRING_CHARS(scm_comp_name);
+  x = SCM_INUM(scm_y);
+  y = SCM_INUM(scm_y);
+  angle = SCM_INUM(scm_angle);  
+  selectable = SCM_NFALSEP(scm_selectable);
+  mirror = SCM_NFALSEP(scm_mirror);
+
+  clibs = (GSList *) s_clib_search_basename (comp_name);
+  if (clibs == NULL) {
+    /* Component not found */
+    s_log_message ("add-component: Component with name [%s] not found.\n",
+		   comp_name);
+    return SCM_BOOL_F;    
+  } else {
+    if (g_slist_next (clibs)) {
+      s_log_message ("add-component: More than one component found with name [%s]\n",
+		     comp_name);
+      /* PB: for now, use the first directory in clibs */
+      /* PB: maybe open a dialog to select the right one? */
+    }
+    clib = (gchar*)clibs->data;
+
+    page->object_tail = o_complex_add(w_current, 
+				      page->object_head, 'C', 
+				      WHITE, 
+				      x, y, 
+				      angle, mirror,
+				      clib, comp_name, selectable, FALSE);
+
+    /* Now the new component should be added to the object's list and 
+       drawn in the screen */
+    o_redraw_single(w_current, page->object_tail);
+
+    return SCM_BOOL_T;        
+  }
+
+  return SCM_BOOL_F;    
+}

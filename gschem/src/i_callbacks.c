@@ -205,6 +205,14 @@ DEFINE_I_CALLBACK(file_new)
 
   s_log_message (_("New page created [%s]\n"),
                  toplevel->page_current->page_filename);
+
+  /* Run the new page hook */
+  if (scm_hook_empty_p(new_page_hook) == SCM_BOOL_F &&
+      page != NULL) {
+    scm_run_hook(new_page_hook,
+		 scm_cons(g_make_page_smob(toplevel, page),
+			  SCM_EOL));
+  }
   
   x_pagesel_update (toplevel);
   i_update_menus (toplevel);
@@ -213,6 +221,7 @@ DEFINE_I_CALLBACK(file_new)
   x_hscrollbar_update (toplevel);
   x_vscrollbar_update (toplevel);
   x_repaint_background (toplevel);
+  a_zoom_extents(toplevel, toplevel->page_current->object_head, 0);
   o_undo_savestate (toplevel, UNDO_ALL);
   
 }
@@ -1775,6 +1784,17 @@ DEFINE_I_CALLBACK(page_new)
 
   s_log_message(_("New Page created [%s]\n"),
                 toplevel->page_current->page_filename);
+  
+  /* Run the new page hook */
+  if (scm_hook_empty_p(new_page_hook) == SCM_BOOL_F &&
+      page != NULL) {
+    scm_run_hook(new_page_hook,
+		 scm_cons(g_make_page_smob(toplevel, page),
+			  SCM_EOL));
+  }
+  
+  /* Do a zoom extents */
+  a_zoom_extents(toplevel, toplevel->page_current->object_head, 0);
   
   x_pagesel_update (toplevel);
   i_update_menus (toplevel);

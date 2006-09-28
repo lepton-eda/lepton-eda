@@ -40,6 +40,8 @@ g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname, SCM scm_size,
 			     SCM scm_y);
 SCM g_get_object_bounds (SCM object_smob, SCM scm_inc_attribs);
 SCM g_get_object_pins (SCM object_smob);
+SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y, 
+		    SCM scm_angle, SCM scm_selectable, SCM scm_mirror);
 /* g_keys.c */
 void set_window_current_key(TOPLEVEL *w_current);
 int g_keys_execute(int state, int keyval);
