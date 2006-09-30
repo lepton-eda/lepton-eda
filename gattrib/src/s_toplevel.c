@@ -459,6 +459,8 @@ void s_toplevel_delete_attrib_col() {
   printf("In s_toplevel_delete_attrib_col, done deleting col in gtksheet.\n");
 #endif
   
+  sheet_head->CHANGED = TRUE;  /* Set changed flag so user is prompted when exiting */
+
   return;
 }
 

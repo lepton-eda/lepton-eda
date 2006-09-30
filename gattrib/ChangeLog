@@ -1,3 +1,7 @@
+2006-09-30 Stuart Brorson <sdb {AT} cloud9 {DOT} net>
+	* src/s_toplevel.c: Set CHANGED flag when deleting attrib
+	column so user is prompted when quitting before saving.
+	
 2006-09-27 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* configure.ac : Applied patch #1564796 by Cesar Strauss, 
