@@ -359,6 +359,7 @@ void x_window_setup_draw_events(TOPLEVEL *w_current)
   struct event_reg_t main_window_events[] = {
     { "enter_notify_event",   G_CALLBACK(x_event_enter)           },
     { "scroll_event",         G_CALLBACK(x_event_scroll)          },
+    { "window_state_event",   G_CALLBACK(x_event_window_state)    },
     { NULL,                   NULL                                } };
   struct event_reg_t *tmp;
 
@@ -370,6 +371,7 @@ void x_window_setup_draw_events(TOPLEVEL *w_current)
                          GDK_ENTER_NOTIFY_MASK |
                          GDK_KEY_PRESS_MASK |
                          GDK_BUTTON_RELEASE_MASK);
+
   for (tmp = drawing_area_events; tmp->detailed_signal != NULL; tmp++) {
     g_signal_connect (w_current->drawing_area,
                       tmp->detailed_signal,
@@ -382,8 +384,7 @@ void x_window_setup_draw_events(TOPLEVEL *w_current)
                       tmp->detailed_signal,
                       tmp->c_handler,
                       w_current);
-  }
-  
+  }			  
 }
 
 

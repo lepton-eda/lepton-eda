@@ -3,8 +3,9 @@
 	* lib/system-gschemrc.in: Changed the definition of the default
 	titleblock. Users can now easily override the default setting.
 
-	* src/x_print.c: Applied patch by Peter Brett (Patch#1567622):
-	Make print settings sticky for session.  Thanks!
+	* src/x_event.c, src/x_window.c:
+	Fix for bug #1527465. Do a zoom extents for all pages when the
+	main window is maximized.
 	
 2006-09-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
@@ -21,6 +22,9 @@
 	* lib/system-gschemrc.in: Commented in Carlos' new file-new hook
 	and change some of the defaults a little.  No matter what default
 	I pick will probably be wrong for somebody (sorry).
+
+	* src/x_print.c: Applied patch by Peter Brett (Patch#1567622):
+	Make print settings sticky for session.  Thanks!
 
 2006-09-30 Carlos Nieves Onega <cnieves@iespana.es>
 

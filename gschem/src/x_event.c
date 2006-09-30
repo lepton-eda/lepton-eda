@@ -1246,6 +1246,7 @@ gint x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
 {
   int new_height, new_width;
   double cx,cy;
+  PAGE *page_ptr, *page_current;
 
   exit_if_null(w_current);
   global_window_current = w_current;
@@ -1354,8 +1355,9 @@ gint x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
 		 w_current->page_current->right) /2;
   cy = (double) (w_current->page_current->top +
                  w_current->page_current->bottom) /2;	
+
+  /* This call is necessary. Otherwise the variables are not setup correctly */
   a_pan_general(w_current, cx, cy, 1.0, A_PAN_DONT_REDRAW);	
-	
 
   if (w_current->backingstore) {
     gdk_pixmap_unref(w_current->backingstore);
@@ -1365,6 +1367,31 @@ gint x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
                                            widget->allocation.width,
                                            widget->allocation.height,
                                            -1);
+
+  /* w_current->window_maximized is set by x_event_window_state, 
+     which is the handler of the window_state_event of the main_window.
+     That signal is issued when maximizing/iconifying the window */
+  if (w_current->window_maximized) { 
+    page_ptr = w_current->page_head;
+    /* Skip the page head */
+    if (page_ptr)
+      page_ptr = page_ptr->next;
+
+    /* Maximize all pages without redrawing them */    
+    page_current = w_current->page_current;
+    while (page_ptr) {
+      s_page_goto(w_current, page_ptr);
+      /* This call to a_pan_general is necessary. 
+	 Otherwise the variables are not setup correctly */
+      a_pan_general(w_current, cx, cy, 1.0, A_PAN_DONT_REDRAW);	
+  
+      a_zoom_extents(w_current, w_current->page_current->object_head, 
+		     A_PAN_DONT_REDRAW);      
+      page_ptr = page_ptr->next;
+    }
+    s_page_goto(w_current, page_current); /* Go to the original page */
+  }
+
   if (!w_current->DONT_REDRAW) {
     o_redraw_all_fast(w_current);
     x_scrollbars_update(w_current);
@@ -1627,3 +1654,33 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
 
   return(0);
 }
+
+/*! \brief Do a zoom extents whenever the window is maximized/minimized.
+ *  \par Function Description
+ *  This function was added so gschem could do a zoom extents whenever 
+ *  the window is maximized/minimized.
+ *  It seems that when this function gets executed, the new size has not 
+ *  been set, and there is no way to get it.
+ *  So this function just sets the window_maximized variable in the 
+ *  TOPLEVEL structure. 
+ *  Since a configure event is called when maximizing or minimizing,
+ *  x_event_configure will look for this variable and do the zoom extents.
+ * 
+ *  \param widget [in] the widget which received the signal.
+ *  \param event [in] the event structure.
+ *  \param w_current [in] the gschem's TOPLEVEL structure.
+ *  \return FALSE always. (TRUE to stop other handlers from being invoked 
+ *   for the event. FALSE to propagate the event further.)
+ */
+gint x_event_window_state(GtkWidget *widget, GdkEventWindowState *event,
+			  TOPLEVEL *w_current)
+{
+  if ( (event->new_window_state & event->changed_mask &
+      GDK_WINDOW_STATE_MAXIMIZED)  != 0)
+    w_current->window_maximized = TRUE;
+  else
+    w_current->window_maximized = FALSE;
+
+  return FALSE;
+}
+

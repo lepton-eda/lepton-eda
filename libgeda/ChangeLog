@@ -1,3 +1,8 @@
+2006-09-30 Carlos Nieves Onega <cnieves@iespana.es>
+	* include/struct.h, src/s_toplevel.c:
+	Added a new variable to track wether the main window is maximized
+	or not. This is part of the bug #1527465 fix.
+
 2006-09-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/a_basic.c: Fixed a memory leak in o_save when saving 
