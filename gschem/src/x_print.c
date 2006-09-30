@@ -36,13 +36,6 @@
 #include <dmalloc.h>
 #endif
 
-
-/* Private constants */
-enum type_indices
-  { EXTENTS_IDX = 0, EXTENTS_NOMARGINS_IDX, WINDOW_IDX, N_TYPE_IDX };
-enum orient_indices
-  { LANDSCAPE_IDX = 0, PORTRAIT_IDX, N_ORIENT_IDX };
-
 enum
   {
   PROP_FILENAME = 1,
@@ -68,8 +61,14 @@ static void print_dialog_init_orient_combobox (PrintDialog * d);
 static void print_dialog_set_property (GObject * object, guint property_id,
                                       const GValue * value,
                                       GParamSpec * pspec);
+static void print_dialog_set_property_comboboxes (PrintDialog *dialog,
+						  GtkComboBox *cbox,
+						  const GValue * value);
 static void print_dialog_get_property (GObject * object, guint property_id,
                                       GValue * value, GParamSpec * pspec);
+static void print_dialog_get_property_comboboxes (PrintDialog * dialog,
+						  GtkComboBox * cbox,
+						  GValue * value);
 static void print_dialog_class_init (PrintDialogClass * class);
 
 
@@ -180,20 +179,39 @@ print_dialog_init_paper_combobox (PrintDialog * d)
 static void
 print_dialog_init_type_combobox (PrintDialog * d)
 {
+  GtkListStore *model;
+  GtkTreeIter iter;
+  GtkCellRenderer *renderer;
+
   GtkWidget *combobox;
-  gchar *label;
+  
+  model = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
 
-  combobox = gtk_combo_box_new_text ();
+  gtk_list_store_append (model, &iter);
+  gtk_list_store_set (model, &iter, 
+		      0, _("Extents with margins"),
+		      1, EXTENTS,
+		      -1);
+  
+  gtk_list_store_append (model, &iter);
+  gtk_list_store_set (model, &iter,
+		      0, _("Extents no margins"),
+		      1, EXTENTS_NOMARGINS,
+		      -1);
+  
+  gtk_list_store_append (model, &iter);
+  gtk_list_store_set (model, &iter,
+		      0, _("Current Window"),
+		      1, WINDOW,
+		      -1);
 
-  label = g_strdup_printf (_("Extents with margins"));
-  gtk_combo_box_insert_text (GTK_COMBO_BOX (combobox), EXTENTS_IDX, label);
-
-  label = g_strdup_printf (_("Extents no margins"));
-  gtk_combo_box_insert_text (GTK_COMBO_BOX (combobox), EXTENTS_NOMARGINS_IDX,
-			     label);
-
-  label = g_strdup_printf (_("Current Window"));
-  gtk_combo_box_insert_text (GTK_COMBO_BOX (combobox), WINDOW_IDX, label);
+  combobox = gtk_combo_box_new_with_model (GTK_TREE_MODEL (model));
+  
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combobox),
+			      renderer, TRUE);
+  gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (combobox),
+				 renderer, "text", 0);
 
   d->typecbox = GTK_COMBO_BOX (combobox);
 
@@ -208,19 +226,35 @@ print_dialog_init_type_combobox (PrintDialog * d)
 static void
 print_dialog_init_orient_combobox (PrintDialog * d)
 {
+  GtkListStore *model;
+  GtkTreeIter iter;
+  GtkCellRenderer *renderer;
 
-  GtkComboBox *combobox;
-  gchar *label;
+  GtkWidget *combobox;
+  
+  model = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
 
-  combobox = GTK_COMBO_BOX (gtk_combo_box_new_text ());
+  gtk_list_store_append (model, &iter);
+  gtk_list_store_set (model, &iter, 
+		      0, _("Landscape"),
+		      1, LANDSCAPE,
+		      -1);
+  
+  gtk_list_store_append (model, &iter);
+  gtk_list_store_set (model, &iter,
+		      0, _("Portrait"),
+		      1, PORTRAIT,
+		      -1);
 
-  label = g_strdup_printf (_("Landscape"));
-  gtk_combo_box_insert_text (GTK_COMBO_BOX (combobox), LANDSCAPE_IDX, label);
+  combobox = gtk_combo_box_new_with_model (GTK_TREE_MODEL (model));
+  
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combobox),
+			      renderer, TRUE);
+  gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (combobox),
+				 renderer, "text", 0);
 
-  label = g_strdup_printf (_("Portrait"));
-  gtk_combo_box_insert_text (GTK_COMBO_BOX (combobox), PORTRAIT_IDX, label);
-
-  d->orientcbox = combobox;
+  d->orientcbox = GTK_COMBO_BOX (combobox);
 }
 
 /*!
@@ -399,48 +433,79 @@ print_dialog_set_property (GObject * object,
                           const GValue * value, GParamSpec * pspec)
 {
   PrintDialog *dialog = PRINT_DIALOG (object);
-  gboolean value_bool;
+  gboolean file_active = FALSE;
 
   switch (property_id)
     {
     case PROP_FILENAME:
       gtk_entry_set_text (dialog->fnfield,
                          (char *) g_value_get_string (value));
-      break;
+      return;
 
     case PROP_COMMAND:
       gtk_entry_set_text (dialog->cmdfield,
                          (char *) g_value_get_string (value));
-      break;
+      return;
 
     case PROP_PAPERSIZE:
       gtk_combo_box_set_active (dialog->papercbox,
                                g_value_get_int (value));
-      break;
+      return;
 
     case PROP_ORIENTATION:
-      gtk_combo_box_set_active (dialog->orientcbox,
-                               g_value_get_int (value));
-      break;
+      print_dialog_set_property_comboboxes (dialog, 
+					    dialog->orientcbox,
+					    value);
+      return;
 
     case PROP_TYPE:
-      gtk_combo_box_set_active (dialog->typecbox,
-                               g_value_get_int (value));
-      break;
+      print_dialog_set_property_comboboxes (dialog, 
+					    dialog->typecbox,
+					    value);
+      return;
 
     case PROP_USEFILE:
-      value_bool = g_value_get_boolean (value);
+      file_active = g_value_get_boolean (value);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->fileradio),
-                                   value_bool);
+                                   file_active);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->cmdradio),
-                                   !value_bool);
-      break;
+                                   !file_active);
+      return;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     }
+}
 
+/*! \todo Finish function documentation
+ *  \brief
+ *  \par Function Description
+ *
+ */
+static void
+print_dialog_set_property_comboboxes (PrintDialog * dialog,
+				      GtkComboBox * cbox,
+				      const GValue * value)
+{
+  GtkTreeIter iter;
+  GtkTreeModel *model;
 
+  model = gtk_combo_box_get_model (cbox);
+  gtk_tree_model_get_iter_first (model, &iter);
+
+  do {
+    GValue temp_value = {0, }; /* Make sure it's blank*/
+    gtk_tree_model_get_value (model, &iter, 1, &temp_value);
+
+    if (g_value_get_int (&temp_value) == g_value_get_int (value))
+      {
+	gtk_combo_box_set_active_iter (cbox, &iter);
+	return;
+      }
+
+  } while (gtk_tree_model_iter_next (model, &iter));
+
+  gtk_combo_box_set_active (cbox, 0);
 }
 
 /*! \todo Finish function documentation
@@ -454,69 +519,68 @@ print_dialog_get_property (GObject * object,
                           GValue * value, GParamSpec * pspec)
 {
   PrintDialog *dialog = PRINT_DIALOG (object);
-  gpointer value_pointer;
-  gint value_int = 0;
-  gboolean value_bool = 0;
-  gint cbox_active;
+  gboolean file_active = FALSE;
+
   switch (property_id)
     {
     case PROP_FILENAME:
-      value_pointer =
-	(gpointer) gtk_entry_get_text (GTK_ENTRY (dialog->fnfield));
-      g_value_set_string (value, value_pointer);
-      break;
+      g_value_set_string (value,
+			  gtk_entry_get_text (GTK_ENTRY (dialog->fnfield)));
+      return;
  
     case PROP_COMMAND:
-      value_pointer = 
-	(gpointer) gtk_entry_get_text (GTK_ENTRY (dialog->cmdfield));
-      g_value_set_string (value, value_pointer);
-      break;
+      g_value_set_string (value,
+			  gtk_entry_get_text (GTK_ENTRY (dialog->cmdfield)));
+      return;
  
     case PROP_PAPERSIZE:
       g_value_set_int (value, gtk_combo_box_get_active (dialog->papercbox));
-      break;
+      return;
  
     case PROP_ORIENTATION:
-      cbox_active = gtk_combo_box_get_active (dialog->orientcbox);
-      switch (cbox_active)
-	{
-	case PORTRAIT_IDX:
-	  value_int = PORTRAIT;
-	  break;
-	case LANDSCAPE_IDX:
-	  value_int = LANDSCAPE;
-	  break;
-	}
-      g_value_set_int (value, value_int);
-      break;
+      print_dialog_get_property_comboboxes (dialog,
+					    dialog->orientcbox,
+					    value);
+      return;
       
     case PROP_TYPE:
-      cbox_active = gtk_combo_box_get_active (dialog->typecbox);
-      switch (cbox_active)
-	{
-	case EXTENTS_IDX:
-	  value_int = EXTENTS;
-	  break;
-	case EXTENTS_NOMARGINS_IDX:
-	  value_int = EXTENTS_NOMARGINS;
-	  break;
-	case WINDOW_IDX:
-	  value_int = WINDOW;
-	  break;
-	}
-      g_value_set_int (value, value_int);
-      break;
+      print_dialog_get_property_comboboxes (dialog,
+					    dialog->typecbox,
+					    value);
+      return;
  
     case PROP_USEFILE:
-      value_bool = 
+      file_active = 
         gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->fileradio));
-      g_value_set_boolean (value, value_bool);
-      break;
+      g_value_set_boolean (value, file_active);
+      return;
             
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     }
 } 
+
+/*! \todo Finish function documentation
+ *  \brief
+ *  \par Function Description
+ *
+ */
+static void
+print_dialog_get_property_comboboxes (PrintDialog * dialog,
+				      GtkComboBox * cbox,
+				      GValue * value)
+{
+  GValue temp_value = {0, };
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+
+  model = gtk_combo_box_get_model (cbox);
+
+  gtk_combo_box_get_active_iter (cbox, &iter);
+  gtk_tree_model_get_value (model, &iter, 1, &temp_value);
+  g_value_copy (&temp_value, value);
+  g_value_unset (&temp_value);
+}
 
 /*! \todo Finish function documentation
  *  \brief
@@ -539,27 +603,22 @@ print_dialog_class_init (PrintDialogClass * class)
 
   g_object_class_install_property (gobject_class, PROP_COMMAND,
 				   g_param_spec_string ("command",
-							"", "", "",
+							"", "", "lpr",
 							 G_PARAM_READWRITE));
 
   g_object_class_install_property (gobject_class, PROP_PAPERSIZE,
 				   g_param_spec_int ("papersize",
-						     "", "", 0, 0, 0,
-						     G_PARAM_READWRITE 
-						     | G_PARAM_LAX_VALIDATION));
+						     "", "", 0, G_MAXINT, 0,
+						     G_PARAM_READWRITE));
 
   g_object_class_install_property (gobject_class, PROP_ORIENTATION,
 				   g_param_spec_int ("orientation",
-						     "", "", 0,
-						     N_ORIENT_IDX - 1,
-						     0,
+						     "", "", 0, G_MAXINT, 0,
 						     G_PARAM_READWRITE));
 
   g_object_class_install_property (gobject_class, PROP_TYPE,
 				   g_param_spec_int ("type",
-						     "", "", 0,
-						     N_TYPE_IDX - 1,
-						     0,
+						     "", "", 0, G_MAXINT, 0,
 						     G_PARAM_READWRITE));
 
   g_object_class_install_property (gobject_class, PROP_USEFILE,
@@ -681,10 +740,13 @@ x_print_setup (TOPLEVEL * w_current, char *filename)
 	  result = f_print_file (w_current, filename);
 	}
       else if (command[0])
-	/* Print to command */
+	/* Print to command and save command for later use. */
 	{
 	  destination = command;
 	  result = f_print_command (w_current, command);
+	  
+	  g_free (w_current->print_command);
+	  w_current->print_command = g_strdup (command);
 	}
       else
 	{

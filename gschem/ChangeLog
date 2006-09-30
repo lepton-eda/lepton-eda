@@ -2,6 +2,9 @@
 
 	* lib/system-gschemrc.in: Changed the definition of the default
 	titleblock. Users can now easily override the default setting.
+
+	* src/x_print.c: Applied patch by Peter Brett (Patch#1567622):
+	Make print settings sticky for session.  Thanks!
 	
 2006-09-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
