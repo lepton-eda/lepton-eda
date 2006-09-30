@@ -1,3 +1,8 @@
+2006-09-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/g_hook.c: Added code to g_add_component so that the 
+	component is added to the object list properly.
+
 2006-09-30 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* include/prototype.h, lib/system-gschemrc.in, src/g_hook.c, 
