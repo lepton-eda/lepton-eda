@@ -1,3 +1,11 @@
+2006-09-30 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* include/prototype.h, lib/system-gschemrc.in, src/g_hook.c, 
+	  src/g_register.c, src/gschem.c, src/x_window.c:
+	  Added a new scheme function to get the objects in a page.
+	  Improved the new-page-hook in system-gschemrc so it only adds
+	  the titleblock if the page has no objects.
+
 2006-09-28 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* include/globals.h, include/prototype.h, lib/system-gschemrc.in,

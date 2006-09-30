@@ -258,11 +258,6 @@ void main_prog(void *closure, int argc, char *argv[])
       i_set_filename(w_current,
                      w_current->page_current->page_filename);
 
-      a_zoom_extents(w_current,
-                     w_current->page_current->object_head,
-                     A_PAN_DONT_REDRAW);
-      o_undo_savestate(w_current, UNDO_ALL);
-
       first_page = 0;
     } else {
       /* Much simpler	*/
@@ -276,23 +271,11 @@ void main_prog(void *closure, int argc, char *argv[])
           printf(_("Loading schematic [%s]\n"), 
                  filename);
         }
-        
-	/* Run the new page hook */
-	if (scm_hook_empty_p(new_page_hook) == SCM_BOOL_F &&
-	    page != NULL) {
-	  scm_run_hook(new_page_hook,
-		       scm_cons(g_make_page_smob(w_current, page),
-				SCM_EOL));
-	}
-  
+
         f_open(w_current,
                w_current->page_current->page_filename);
         i_set_filename(w_current,
                        w_current->page_current->page_filename);
-        a_zoom_extents(w_current,
-                       w_current->page_current->object_head,
-                       A_PAN_DONT_REDRAW);
-        o_undo_savestate(w_current, UNDO_ALL);
       }
     }
     i++;
@@ -328,6 +311,21 @@ void main_prog(void *closure, int argc, char *argv[])
                    w_current->page_current->page_filename);
   }
 
+  /* Run the new page hook */
+  if (scm_hook_empty_p(new_page_hook) == SCM_BOOL_F &&
+      w_current->page_current != NULL) {
+    scm_run_hook(new_page_hook,
+		 scm_cons(g_make_page_smob(w_current, 
+					   w_current->page_current),
+			  SCM_EOL));
+  }
+
+  a_zoom_extents(w_current,
+		 w_current->page_current->object_head,
+		 A_PAN_DONT_REDRAW);
+  o_undo_savestate(w_current, UNDO_ALL);
+  
+  
   x_scrollbars_update(w_current);
   o_redraw_all_fast(w_current);
 

@@ -477,8 +477,9 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   gchar *comp_name, *clib;
   int x, y, angle;
   GSList *clibs = NULL;
+  OBJECT *new_object;
 
-  /* Get w_current and o_current */
+  /* Get w_current and the page */
   SCM_ASSERT (g_get_data_from_page_smob (page_smob, &w_current, &page),
 	      page_smob, SCM_ARG1, "add-component");
   /* Check the arguments */
@@ -518,19 +519,49 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
     }
     clib = (gchar*)clibs->data;
 
-    page->object_tail = o_complex_add(w_current, 
-				      page->object_head, 'C', 
-				      WHITE, 
-				      x, y, 
-				      angle, mirror,
-				      clib, comp_name, selectable, FALSE);
-
+    new_object = o_complex_add(w_current, 
+			       page->object_tail, 'C', 
+			       WHITE, 
+			       x, y, 
+			       angle, mirror,
+			       clib, comp_name, selectable, FALSE);
+    
     /* Now the new component should be added to the object's list and 
        drawn in the screen */
-    o_redraw_single(w_current, page->object_tail);
+    o_redraw_single(w_current, new_object);
 
     return SCM_BOOL_T;        
   }
 
   return SCM_BOOL_F;    
 }
+
+/*! \brief Return the objects in a page.
+ *  \par Function Description
+ *  Returns an object smob list with all the objects in the given page.
+ *  \param [in] page_smob Page to look at.
+ *  \return the object smob list with the objects in the page.
+ *
+ */
+SCM g_get_objects_in_page(SCM page_smob) {
+
+  TOPLEVEL *w_current;
+  PAGE *page;
+  OBJECT *object;
+  SCM return_list=SCM_EOL;
+
+  /* Get w_current and the page */
+  SCM_ASSERT (g_get_data_from_page_smob (page_smob, &w_current, &page),
+	      page_smob, SCM_ARG1, "add-component");
+
+  if (page && page->object_head && page->object_head->next) {
+    object = page->object_head->next;
+    while (object) {
+      return_list = scm_cons (g_make_object_smob(w_current, object),
+			      return_list);
+      object = object->next;
+    }
+  }
+
+  return return_list;
+} 

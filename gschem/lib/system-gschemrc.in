@@ -919,12 +919,13 @@
 
 ; Automatically place a titleblock (or other components) when creating
 ; a new page.
-; Comment in these lines if you want gschem to automatically place a symbol
-; when you create a new page.
+; Comment in these lines if you want gschem to automatically place a titleblock
+; when you create a new _empty_ page.
 ;(add-hook! new-page-hook (lambda (page)
-;;       Syntax             Symbol name     X    Y   angle selectable mirrored
-;	(add-component page "title-A4.sym" 1000 1000   0       #f          #f))
-;	 #t)
+;   (if (null? (get-objects-in-page page))
+;;      Syntax             Symbol name    X   Y    angle selectable mirrored
+;       (add-component page "title-A4.sym" 1000 1000   0       #f       #f)))
+;	   #t)
 
 ;
 ; End of hooks

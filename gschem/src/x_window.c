@@ -166,14 +166,6 @@ void x_window_setup (TOPLEVEL *toplevel)
   page = s_page_new (toplevel, "unknown");
   s_page_goto (toplevel, page);
 
-  /* Run the new page hook */
-  if (scm_hook_empty_p(new_page_hook) == SCM_BOOL_F &&
-      page != NULL) {
-    scm_run_hook(new_page_hook,
-		 scm_cons(g_make_page_smob(toplevel, page),
-			  SCM_EOL));
-  }
-
   /* Do a zoom extents */
   a_zoom_extents(toplevel, toplevel->page_current->object_head, 0);
   
