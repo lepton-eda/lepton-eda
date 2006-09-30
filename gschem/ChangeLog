@@ -3,7 +3,7 @@
 	* lib/system-gschemrc.in: Changed the definition of the default
 	titleblock. Users can now easily override the default setting.
 
-	* src/x_event.c, src/x_window.c:
+	* src/x_event.c, src/x_window.c, include/prototype.h:
 	Fix for bug #1527465. Do a zoom extents for all pages when the
 	main window is maximized.
 	
