@@ -1,3 +1,9 @@
+2006-09-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/a_basic.c: Fixed a memory leak in o_save when saving 
+	complex objects.  Not a large leak, but this function gets called
+	all the time when recording undo info.  Found using valgrind.
+
 2006-09-28 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* include/prototype.h, include/struct.h, src/g_smob.c:

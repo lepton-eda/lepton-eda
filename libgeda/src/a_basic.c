@@ -224,6 +224,7 @@ int o_save(TOPLEVEL *w_current, const char *filename)
             out = (char *) o_complex_save(o_current);
             fprintf(fp, "%s\n", out);
             already_wrote=1;
+	    g_free(out); /* need to free here because of the above flag */
             if (strncmp(o_current->complex_clib, "EMBEDDED", 8) == 0) {
               fprintf(fp, "[\n");
 								
