@@ -478,7 +478,10 @@ gint s_page_save_all (TOPLEVEL *toplevel)
   }
 
   /* restore current page */
-  s_page_goto (toplevel, p_save);
+  if (p_save != NULL) 
+  {
+     s_page_goto (toplevel, p_save);
+  }
 
   return status;
 }

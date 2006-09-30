@@ -4,6 +4,9 @@
 	complex objects.  Not a large leak, but this function gets called
 	all the time when recording undo info.  Found using valgrind.
 
+	* src/s_page.c: Added check to fix Bug#1562352 (Gattrib crashes
+	doing file-save when no files open)
+
 2006-09-28 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* include/prototype.h, include/struct.h, src/g_smob.c:
