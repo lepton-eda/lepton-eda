@@ -1,3 +1,8 @@
+2006-09-30 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* lib/system-gschemrc.in: Changed the definition of the default
+	titleblock. Users can now easily override the default setting.
+	
 2006-09-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/g_hook.c: Added code to g_add_component so that the 

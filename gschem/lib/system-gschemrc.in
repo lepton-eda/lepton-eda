@@ -921,10 +921,16 @@
 ; a new page.
 ; Comment in these lines if you want gschem to automatically place a titleblock
 ; when you create a new _empty_ page.
+; Users can customize the default titleblock by adding the following line
+; (without the semi-colons at the beginning) to the gschemrc file:
+;; (define default-titleblock "title-A4.sym")
+;; Change "title-A4.sym" by the name of your prefered titleblock!
+;
+(define default-titleblock "title-B.sym")
 (add-hook! new-page-hook (lambda (page)
    (if (null? (get-objects-in-page page))
-;      Syntax             Symbol name    X   Y    angle selectable mirrored
-       (add-component page "title-B.sym" 40000 40000   0       #f       #f)))
+;      Syntax             Symbol name        X   Y    angle selectable mirrored
+       (add-component page default-titleblock 40000 40000   0       #f       #f)))
 	   #t)
 
 ;
