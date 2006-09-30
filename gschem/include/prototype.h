@@ -850,6 +850,8 @@ void x_event_vschanged(GtkAdjustment *adj, TOPLEVEL *w_current);
 gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event, TOPLEVEL *w_current);
 gboolean x_event_key_press(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 gint x_event_scroll(GtkWidget *widget, GdkEventScroll *event, TOPLEVEL *w_current);
+gint x_event_window_state(GtkWidget *widget, GdkEventWindowState *event,
+			  TOPLEVEL *w_current);
 /* x_compselect.c */
 void x_compselect_open (TOPLEVEL *toplevel);
 void x_compselect_close (TOPLEVEL *toplevel);
