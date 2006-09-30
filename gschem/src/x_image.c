@@ -645,11 +645,13 @@ GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
   origin_x = origin_y = 0;
   right = size_x;
   bottom = size_y;
+
   /* ------------------  Begin optional code ------------------------ */
   /* If the the code in this region is commented, the PNG returned will
      be the same as the one returned using libgd.
      I mean: there will be some border all around the schematic.
      This code is used to adjust the schematic to the border of the image */
+#if 0
 
   /* Do a zoom extents to get fit all the schematic in the window */
   /* Commented so the image returned will be the same as with libgd */  
@@ -678,6 +680,7 @@ GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
 		       &origin_x, &origin_y, 
 		       &right, &bottom);
   }
+#endif
   /* ------------------  End optional code ------------------------ */
   
   o_redraw_all (&toplevel); 

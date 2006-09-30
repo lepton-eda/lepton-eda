@@ -6,6 +6,9 @@
 	* src/x_event.c, src/x_window.c, include/prototype.h:
 	Fix for bug #1527465. Do a zoom extents for all pages when the
 	main window is maximized.
+
+	* src/x_image.c: Added the border in the gdk-pixbuf's image output.
+	Fix bug #1565433.
 	
 2006-09-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
