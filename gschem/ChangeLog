@@ -3,6 +3,17 @@
 	* src/g_hook.c: Added code to g_add_component so that the 
 	component is added to the object list properly.
 
+	* src/g_hook.c: Commented out o_redraw_single call to minimize
+	flickering.  At some point a g_redraw_all should be added for
+	those users who want to use g_component_add from a script.
+
+	* i_callbacks.c: Removed unnecessary redraw and scrollbar calls 
+	when adding a new page to minimize flicker
+
+	* lib/system-gschemrc.in: Commented in Carlos' new file-new hook
+	and change some of the defaults a little.  No matter what default
+	I pick will probably be wrong for somebody (sorry).
+
 2006-09-30 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* include/prototype.h, lib/system-gschemrc.in, src/g_hook.c, 

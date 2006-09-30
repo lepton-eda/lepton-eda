@@ -218,9 +218,6 @@ DEFINE_I_CALLBACK(file_new)
   i_update_menus (toplevel);
   i_set_filename (toplevel, toplevel->page_current->page_filename);
   x_manual_resize (toplevel);
-  x_hscrollbar_update (toplevel);
-  x_vscrollbar_update (toplevel);
-  x_repaint_background (toplevel);
   a_zoom_extents(toplevel, toplevel->page_current->object_head, 0);
   o_undo_savestate (toplevel, UNDO_ALL);
   
