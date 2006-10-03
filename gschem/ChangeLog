@@ -1,3 +1,10 @@
+2006-10-03 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* lib/system-gschemrc.in, src/g_register.c: 
+	Changed the name of the new scheme function which adds a component
+	at a given location to add-component-at-xy. The former name
+	was already used.
+
 2006-09-30 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* lib/system-gschemrc.in: Changed the definition of the default

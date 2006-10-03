@@ -930,7 +930,7 @@
 (add-hook! new-page-hook (lambda (page)
    (if (null? (get-objects-in-page page))
 ;      Syntax             Symbol name        X   Y    angle selectable mirrored
-       (add-component page default-titleblock 40000 40000   0       #f       #f)))
+       (add-component-at-xy page default-titleblock 40000 40000   0       #f       #f)))
 	   #t)
 
 ;
