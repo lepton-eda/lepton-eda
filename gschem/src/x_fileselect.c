@@ -151,75 +151,6 @@ x_fileselect_add_preview (GtkFileChooser *filechooser)
   
 }
 
-/*! \brief Opens a file.
- *  \par Function Description
- *  This is an helper function for <B>x_fileselect_open()</B>. It
- *  opens a single file and creates a new page for it in the specified
- *  toplevel environnement if it does not already exists.
- *
- *  If the file is already loaded, it changes the toplevel
- *  environement's current page to the existing page. Otherwise the
- *  toplevel's current page is changed to be the newly created page.
- *
- *  It handles possible errors while reading file. It also updates the
- *  user interface.
- *
- *  \param [in] filename The name of the file to open.
- *  \param [in] toplevel The toplevel environment.
- */
-static void
-x_fileselect_open_file (gchar *filename, TOPLEVEL *toplevel)
-{
-  PAGE *page;
-
-  g_return_if_fail (filename != NULL);
-  g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (g_file_test (filename, G_FILE_TEST_EXISTS));
-
-  /* search in toplevel for a page with name filename */
-  page = s_page_search (toplevel, filename);
-  if (page == NULL) {
-    /* create a new page and make it the current page for toplevel */
-    s_page_goto (toplevel, s_page_new (toplevel, filename));
-
-    toplevel->DONT_REDRAW = 1;
-
-    /* open the file in current page */
-    f_open(toplevel, filename);
-    /* test value returned by f_open() */
-    /* TBD */
-
-    /* update GUI, redraw */
-    i_set_filename (toplevel, toplevel->page_current->page_filename);
-    x_repaint_background (toplevel);
-    x_manual_resize (toplevel);
-    a_zoom_extents (toplevel, 
-                    toplevel->page_current->object_head,
-                    A_PAN_DONT_REDRAW);
-    o_undo_savestate (toplevel, UNDO_ALL);
-    /* now update the scrollbars */
-    x_hscrollbar_update (toplevel);
-    x_vscrollbar_update (toplevel);
-    x_pagesel_update (toplevel);
-
-    toplevel->DONT_REDRAW = 0;
-
-    o_redraw_all(toplevel);
-
-  } else {
-    /* change to this page */
-    s_page_goto (toplevel, page);
-
-    /* update GUI and redraw */
-    x_pagesel_update (toplevel);
-    i_set_filename (toplevel, toplevel->page_current->page_filename);
-    x_scrollbars_update (toplevel);
-    o_redraw_all(toplevel);
-
-  }
-  
-}
-
 /*! \brief Opens a file chooser for opening one or more schematics.
  *  \par Function Description
  *  This function opens a file chooser dialog and wait for the user to
@@ -252,14 +183,14 @@ x_fileselect_open(TOPLEVEL *toplevel)
   x_fileselect_setup_filechooser_filters (GTK_FILE_CHOOSER (dialog));
   gtk_widget_show (dialog);
   if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_ACCEPT) {
-    GSList *filenames =
+    GSList *tmp, *filenames =
       gtk_file_chooser_get_filenames (GTK_FILE_CHOOSER (dialog));
 
-    /* open each file */
-    g_slist_foreach (filenames,
-                     (GFunc)x_fileselect_open_file,
-                     (gpointer)toplevel);
-    
+    /* open each file */ 
+    for (tmp = filenames; tmp != NULL;tmp = g_slist_next (tmp)) {
+      x_window_open_page (toplevel, (gchar*)tmp->data);
+    }
+   
     /* free the list of filenames */
     g_slist_foreach (filenames, (GFunc)g_free, NULL);
     g_slist_free (filenames);
@@ -309,32 +240,10 @@ x_fileselect_save (TOPLEVEL *toplevel)
       gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
     /* try saving current page of toplevel to file filename */
-    if (filename != NULL &&
-        f_save (toplevel, filename)) {
-      s_log_message (_("Saved As [%s]\n"), filename);
-
-      /* replace page filename with new one, do not free filename */
-      g_free (toplevel->page_current->page_filename);
-      toplevel->page_current->page_filename = filename;
-
-      /* reset the changed flag of current page*/
-      toplevel->page_current->CHANGED = 0;
-
-      i_set_filename (toplevel, toplevel->page_current->page_filename);
-
-      x_pagesel_update (toplevel);
-
-    } else {
-      /* report error in log and status bar */
-      s_log_message (_("Could NOT save [%s]\n"),
-                     toplevel->page_current->page_filename);
-
-      i_set_state_msg (toplevel, SELECT, _("Error while trying to save"));
-
-      i_update_toolbar (toplevel);
-
-      g_free (filename);
-
+    if (filename != NULL) {
+      x_window_save_page (toplevel,
+                          toplevel->page_current,
+                          filename);
     }
   }
   gtk_widget_destroy (dialog);

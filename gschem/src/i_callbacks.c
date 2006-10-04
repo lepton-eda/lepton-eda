@@ -182,43 +182,13 @@ DEFINE_I_CALLBACK(file_new)
 {
   TOPLEVEL *toplevel = (TOPLEVEL*)data;
   PAGE *page;
-  gchar *filename;
 
   exit_if_null (toplevel);
 
-  g_free (toplevel->cwd);
-  toplevel->cwd = g_get_current_dir ();
-#ifdef __MINGW32__
-  u_basic_strip_trailing(toplevel->cwd, G_DIR_SEPARATOR);
-#endif
-  filename = g_strdup_printf ("%s%c%s_%d.sch",
-                              toplevel->cwd,
-                              G_DIR_SEPARATOR,
-                              toplevel->series_name,
-                              ++toplevel->num_untitled);
-
   /* create a new page */
-  page = s_page_new (toplevel, filename);
-  /* change current page to page */
-  s_page_goto (toplevel, page);
-  g_free (filename);
-
-  s_log_message (_("New page created [%s]\n"),
-                 toplevel->page_current->page_filename);
-
-  /* Run the new page hook */
-  if (scm_hook_empty_p(new_page_hook) == SCM_BOOL_F &&
-      page != NULL) {
-    scm_run_hook(new_page_hook,
-		 scm_cons(g_make_page_smob(toplevel, page),
-			  SCM_EOL));
-  }
+  page = x_window_open_untitled_page (toplevel);
+  s_log_message (_("New page created [%s]\n"), page->page_filename);
   
-  x_pagesel_update (toplevel);
-  i_update_menus (toplevel);
-  i_set_filename (toplevel, toplevel->page_current->page_filename);
-  x_manual_resize (toplevel);
-  a_zoom_extents(toplevel, toplevel->page_current->object_head, 0);
   o_undo_savestate (toplevel, UNDO_ALL);
   
 }
@@ -248,28 +218,17 @@ void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
 DEFINE_I_CALLBACK(file_new_window)
 {
   TOPLEVEL *w_current;
+  PAGE *page;
        
   w_current = s_toplevel_new ();
   x_window_setup (w_current);
 
   exit_if_null(w_current);
 
-  g_free (w_current->cwd);
-  w_current->cwd = g_get_current_dir ();
-#ifdef __MINGW32__
-  u_basic_strip_trailing(w_current->cwd, G_DIR_SEPARATOR);
-#endif
-  g_free (w_current->page_current->page_filename);
-  w_current->page_current->page_filename = g_strdup_printf (
-    "%s%c%s_%d.sch",
-    w_current->cwd,
-    G_DIR_SEPARATOR,
-    w_current->series_name,
-    ++w_current->num_untitled);
-
   s_log_message(_("New Window created\n"));
-  i_set_filename(w_current, w_current->page_current->page_filename);
-  x_repaint_background(w_current);
+  
+  page = x_window_open_untitled_page (w_current);
+
 }
 
 /*! \todo Finish function documentation!!!
@@ -358,22 +317,9 @@ DEFINE_I_CALLBACK(file_save)
                                w_current->page_current->page_filename);
 #endif
   } else {
-
-    if (f_save(w_current, w_current->page_current->page_filename) ) {
-	    s_log_message(_("Saved [%s]\n"),w_current->page_current->page_filename);
-	    /* don't know if should be kept going to select mode... */
-	    w_current->page_current->CHANGED = 0;
-	    i_set_state_msg(w_current, SELECT, _("Saved"));
-	    i_update_toolbar(w_current);
-            i_update_menus(w_current);
-      x_pagesel_update (w_current);
-    } else {
-      	    s_log_message(_("Could NOT save [%s]\n"), w_current->page_current->page_filename);
-
-	    i_set_state_msg(w_current, SELECT, _("Error while trying to save"));
-	    i_update_toolbar(w_current);
-            i_update_menus(w_current);
-    } 
+    x_window_save_page (w_current,
+                        w_current->page_current,
+                        w_current->page_current->page_filename);
   }
 }
 
@@ -1758,45 +1704,12 @@ DEFINE_I_CALLBACK(page_new)
 {
   TOPLEVEL *toplevel = (TOPLEVEL*)data;
   PAGE *page;
-  gchar *filename;
 
   exit_if_null(toplevel);
 
-  g_free (toplevel->cwd);
-  toplevel->cwd = g_get_current_dir ();
-#ifdef __MINGW32__
-  u_basic_strip_trailing(toplevel->cwd, G_DIR_SEPARATOR);
-#endif
-  filename = g_strdup_printf ("%s%c%s_%d.sch",
-                              toplevel->cwd,
-                              G_DIR_SEPARATOR,
-                              toplevel->series_name,
-                              ++toplevel->num_untitled);
-
-  /* create the new page */
-  page = s_page_new (toplevel, filename);
-  /* change current page to page */
-  s_page_goto (toplevel, page);
-  g_free (filename);
-
-  s_log_message(_("New Page created [%s]\n"),
-                toplevel->page_current->page_filename);
-  
-  /* Run the new page hook */
-  if (scm_hook_empty_p(new_page_hook) == SCM_BOOL_F &&
-      page != NULL) {
-    scm_run_hook(new_page_hook,
-		 scm_cons(g_make_page_smob(toplevel, page),
-			  SCM_EOL));
-  }
-  
-  /* Do a zoom extents */
-  a_zoom_extents(toplevel, toplevel->page_current->object_head, 0);
-  
-  x_pagesel_update (toplevel);
-  i_update_menus (toplevel);
-  i_set_filename (toplevel, toplevel->page_current->page_filename);
-  o_redraw_all (toplevel);
+  /* create a new page */
+  page = x_window_open_untitled_page (toplevel);
+  s_log_message (_("New page created [%s]\n"), page->page_filename);
   
 }
 
@@ -1808,96 +1721,14 @@ DEFINE_I_CALLBACK(page_new)
 DEFINE_I_CALLBACK(page_close)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
-  PAGE *p_current;
-  PAGE *p_save;
 
   exit_if_null(w_current);
 
   if (w_current->page_current->CHANGED) {
-    x_fileselect_save (w_current);
-    return;
+    x_dialog_close_changed_page (w_current, w_current->page_current);
+  } else {
+    x_window_close_page (w_current, w_current->page_current);
   }
-
-  /* Can we go up in the hierarchy first? */
-  p_current = s_hierarchy_find_page(w_current->page_head, 
-                                    w_current->page_current->up);
-  if (p_current) {
-    s_log_message(_("Closing [%s]\n"),
-                  w_current->page_current->page_filename);
-    s_page_delete (w_current, w_current->page_current);
-
-    s_page_goto (w_current, p_current);
-
-    i_set_filename(w_current, w_current->page_current->page_filename);
-    x_scrollbars_update(w_current);
-    o_redraw_all(w_current);
-    x_pagesel_update (w_current);
-    i_update_menus(w_current);
-    return;
-  }
-
-  /* is there a page before current? */
-  if (w_current->page_current->prev &&
-      w_current->page_current->prev->pid != -1) {
-        /* yes, change to previous page */
-        p_current = w_current->page_current->prev;
-        s_log_message(_("Closing [%s]\n"),
-                      w_current->page_current->page_filename);
-        s_page_delete (w_current, w_current->page_current);
-        
-        s_page_goto (w_current, p_current);
-        
-        i_set_filename(w_current, w_current->page_current->page_filename);
-        x_scrollbars_update(w_current);
-        o_redraw_all(w_current);
-        x_pagesel_update (w_current);
-        i_update_menus(w_current);
-        return;
-      }
-
-  /* is there a page after current? */
-  if (w_current->page_current->next) {
-    /* yes, change to next page */
-    g_assert (w_current->page_current->next->pid != -1);
-    
-    p_current = w_current->page_current->next;
-    s_log_message(_("Closing [%s]\n"),
-                  w_current->page_current->page_filename);
-    s_page_delete (w_current, w_current->page_current);
-    
-    s_page_goto (w_current, p_current);
-    
-    i_set_filename(w_current, w_current->page_current->page_filename);
-    x_scrollbars_update(w_current);
-    o_redraw_all(w_current);
-    x_pagesel_update (w_current);
-    i_update_menus(w_current);
-    return;
-  }
-
-  /* finally go here if you can't delete the page */
-  /* because it's the last page being displayed */
-  /* s_log_message("Cannot close current page\n");*/
-  /* now the code creates a new page, and closes the old one */
-  p_save = w_current->page_current;
-  i_callback_page_new(w_current, 0, NULL);
-  w_current->page_current = p_save;	
-
-  g_assert (w_current->page_current->next != NULL);
-  g_assert (w_current->page_current->next->pid != -1);
-  
-  p_current = w_current->page_current->next;
-  s_log_message(_("Closing [%s]\n"),
-                w_current->page_current->page_filename);
-  s_page_delete (w_current, w_current->page_current);
-
-  s_page_goto (w_current, p_current);
-  
-  i_set_filename(w_current, w_current->page_current->page_filename);
-  x_scrollbars_update(w_current);
-  o_redraw_all(w_current);
-  x_pagesel_update (w_current);
-  i_update_menus(w_current);
 
 }
 
@@ -1981,91 +1812,10 @@ DEFINE_I_CALLBACK(page_revert)
 DEFINE_I_CALLBACK(page_discard)
 {
   TOPLEVEL *w_current = (TOPLEVEL*)data;
-  PAGE *p_current;
-  PAGE *p_save;
 
   exit_if_null(w_current);
 
-  /* Can we go up in the hierarchy first? */
-  p_current = s_hierarchy_find_page(w_current->page_head, 
-                                    w_current->page_current->up);
-  if (p_current) {
-    s_log_message(_("Closing [%s]\n"),
-                  w_current->page_current->page_filename);
-    s_page_delete (w_current, w_current->page_current);
-
-    s_page_goto (w_current, p_current);
-
-    i_set_filename(w_current, w_current->page_current->page_filename);
-    x_scrollbars_update(w_current);
-    o_redraw_all(w_current);
-    x_pagesel_update (w_current);
-    i_update_menus(w_current);
-    return;
-  }
-
-  /* is there a page before current? */
-  if (w_current->page_current->prev &&
-      w_current->page_current->prev->pid != -1) {
-        /* yes, change to previous page */
-        p_current = w_current->page_current->prev;
-        s_log_message(_("Discarding page [%s]\n"),
-                      w_current->page_current->page_filename);
-        s_page_delete (w_current, w_current->page_current);
-
-        s_page_goto (w_current, p_current);
-        
-        i_set_filename(w_current, w_current->page_current->page_filename);
-        x_scrollbars_update(w_current);
-        o_redraw_all(w_current);
-        x_pagesel_update (w_current);
-        i_update_menus(w_current);
-        return;
-      }
-
-  /* is there a page after current? */
-  if (w_current->page_current->next) {
-    /* yes, change to next page */
-    g_assert (w_current->page_current->next->pid != -1);
-
-    p_current = w_current->page_current->next;
-    s_log_message(_("Discarding page [%s]\n"),
-                  w_current->page_current->page_filename);
-    s_page_delete (w_current, w_current->page_current);
-
-    s_page_goto (w_current, p_current);
-    
-    i_set_filename(w_current, w_current->page_current->page_filename);
-    x_scrollbars_update(w_current);
-    o_redraw_all(w_current);
-    x_pagesel_update (w_current);
-    i_update_menus(w_current);
-    return;
-  }
-
-  /* finally go here if you can't delete the page */
-  /* because it's the last page being displayed */
-  /* s_log_message("Cannot close current page\n");*/
-  /* now the code creates a new page, and closes the old one */
-  p_save = w_current->page_current;
-  i_callback_page_new(w_current, 0, NULL);
-  w_current->page_current = p_save;	
-
-  g_assert (w_current->page_current->next != NULL);
-  g_assert (w_current->page_current->next->pid != -1);
-  
-  p_current = w_current->page_current->next;
-  s_log_message(_("Discarding page [%s]\n"),
-                w_current->page_current->page_filename);
-  s_page_delete (w_current, w_current->page_current);
-
-  s_page_goto (w_current, p_current);
-
-  i_set_filename(w_current, w_current->page_current->page_filename);
-  x_scrollbars_update(w_current);
-  o_redraw_all(w_current);
-  x_pagesel_update (w_current);
-  i_update_menus(w_current);
+  x_window_close_page (w_current, w_current->page_current);
   
 }
 

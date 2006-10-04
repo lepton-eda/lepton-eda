@@ -739,8 +739,9 @@ void x_window_close(TOPLEVEL *w_current)
 {
   gboolean last_window = FALSE;
 
-  if (s_page_check_changed(w_current->page_head)) {
-    exit_dialog(w_current);
+  /* last chance to save possible unsaved pages */
+  if (!x_dialog_close_window (w_current)) {
+    /* user somehow cancelled the close */
     return;
   }
 
@@ -909,5 +910,272 @@ TOPLEVEL *x_window_search_page_clist(GtkWidget *findme)
   return w_current;
 }
 
+/*! \brief Opens a new untitled page.
+ *  \par Function Description
+ *  This function creates an empty, untitled page in <B>toplevel</B>.
+ *
+ *  It returns a pointer on the new page.
+ *
+ *  The new page becomes the current page of <B>toplevel</B>.
+ *
+ *  The name of the untitled page is build from configuration data
+ *  ('untitled-name') and a counter for uniqueness.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \returns A pointer on the new page.
+ */
+PAGE*
+x_window_open_untitled_page (TOPLEVEL *toplevel)
+{
+  PAGE *page;
+  gchar *cwd, *tmp, *filename;
+ 
+  cwd = g_get_current_dir ();
+  tmp = g_strdup_printf ("%s_%d.sch",
+                         toplevel->untitled_name,
+                         toplevel->num_untitled++);
+  filename = g_build_filename (cwd, tmp, NULL);
+  g_free (cwd);
+  g_free (tmp);
+   
+  page = x_window_open_page (toplevel, filename);
+  
+  g_free (filename);
 
+  if (scm_hook_empty_p (new_page_hook) == SCM_BOOL_F) {
+    scm_run_hook (new_page_hook,
+                  scm_cons (g_make_page_smob (toplevel, page), SCM_EOL));
+  }
+  
+  a_zoom_extents(toplevel, page->object_head, 0);
+  
+  return page;
+}
 
+/*! \brief Opens a new page from a file.
+ *  \par Function Description
+ *  This function opens the file whose name is <B>filename</B> in a
+ *  new PAGE of <B>toplevel</B>.
+ *
+ *  If there is no page for <B>filename</B> in <B>toplevel</B>'s list
+ *  of pages, it creates a new PAGE, loads the file in it and returns
+ *  a pointer on the new page. Otherwise it returns a pointer on the
+ *  existing page.
+ *
+ *  The opened page becomes the current page of <B>toplevel</B>.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [in] filename The name of the file to open.
+ *  \returns A pointer on the new page.
+ */
+PAGE*
+x_window_open_page (TOPLEVEL *toplevel, const gchar *filename)
+{
+  PAGE *old_current, *page;
+
+  g_return_val_if_fail (toplevel != NULL, NULL);
+  g_return_val_if_fail (filename != NULL, NULL);
+  
+  /* save current page for restore after opening */
+  old_current = toplevel->page_current;
+
+  /* is file already loaded? */
+  page = s_page_search (toplevel, filename);
+  if (page == NULL) {
+    /* no, create a page and load file in it */
+    page = s_page_new (toplevel, filename);
+    s_page_goto (toplevel, page);
+    
+    if (!quiet_mode) {
+      printf(_("Loading schematic [%s]\n"), filename);
+    }
+
+    if (g_file_test (filename, G_FILE_TEST_EXISTS)) {
+      f_open (toplevel, (gchar *) filename);
+    }
+    
+    i_set_filename (toplevel, toplevel->page_current->page_filename);
+    a_zoom_extents (toplevel,
+                    toplevel->page_current->object_head,
+                    A_PAN_DONT_REDRAW);
+    o_undo_savestate (toplevel, UNDO_ALL);
+
+    x_pagesel_update (toplevel);
+    
+  }
+
+  /* display the page in window */
+  x_window_set_current_page (toplevel, page);
+  
+  return page;
+}
+
+/*! \brief Changes the current page.
+ *  \par Function Description
+ *  This function displays the specified page <B>page</B> in the
+ *  window attached to <B>toplevel</B>.
+ *
+ *  It changes the <B>toplevel</B>'s current page to <B>page</B>,
+ *  draws it and updates the user interface.
+ *
+ *  <B>page</B> has to be in the list of PAGEs attached to <B>toplevel</B>.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [in] page     The page to become current page.
+ */
+void
+x_window_set_current_page (TOPLEVEL *toplevel, PAGE *page)
+{
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (page != NULL);
+
+  s_page_goto (toplevel, page);
+
+  i_update_menus (toplevel);
+  i_set_filename (toplevel, page->page_filename);
+
+  x_pagesel_update (toplevel);
+  
+  x_repaint_background (toplevel);
+  x_manual_resize (toplevel);
+  x_hscrollbar_update (toplevel);
+  x_vscrollbar_update (toplevel);
+
+  toplevel->DONT_REDRAW = 0;
+  o_redraw_all (toplevel);
+  
+}
+
+/*! \brief Saves a page to a file.
+ *  \par Function Description
+ *  This function saves the page <B>page</B> to a file named
+ *  <B>filename</B>.
+ *
+ *  It returns the value returned by function <B>f_save()</B> trying
+ *  to save page <B>page</B> to file <B>filename</B> (1 on success, 0
+ *  on failure).
+ *
+ *  <B>page</B> may not be the current page of <B>toplevel</B>. The
+ *  current page of <B>toplevel</B> is not affected by this function.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [in] page     The page to save.
+ *  \param [in] filename The name of the file in which to save page.
+ *  \returns 1 on success, 0 otherwise.
+ */
+gint
+x_window_save_page (TOPLEVEL *toplevel, PAGE *page, const gchar *filename)
+{
+  PAGE *old_current;
+  const gchar *log_msg, *state_msg;
+  gint ret;
+
+  g_return_val_if_fail (toplevel != NULL, 0);
+  g_return_val_if_fail (page     != NULL, 0);
+  g_return_val_if_fail (filename != NULL, 0);
+  
+  /* save current page for restore after opening */
+  old_current = toplevel->page_current;
+
+  /* change to page */
+  s_page_goto (toplevel, page);
+  /* and try saving current page to filename */
+  ret = (gint)f_save (toplevel, filename);
+  if (ret != 1) {
+    /* an error occured when saving page to file */
+    log_msg   = _("Could NOT save page [%s]\n");
+    state_msg = _("Error while trying to save");
+    
+  } else {
+    /* successful save of page to file, update page... */
+    /* change page name if necessary and prepare log message */
+    if (g_ascii_strcasecmp (page->page_filename, filename) != 0) {
+      g_free (page->page_filename);
+      page->page_filename = g_strdup (filename);
+
+      log_msg = _("Saved as [%s]\n");
+    } else {
+      log_msg = _("Saved [%s]\n");
+    }
+    state_msg = _("Saved");
+      
+    /* reset page CHANGED flag */
+    page->CHANGED = 0;
+    
+  }
+
+  /* log status of operation */
+  s_log_message (log_msg, filename);
+  
+  /* update display and page manager */
+  i_set_state_msg  (toplevel, SELECT, state_msg);
+  i_set_filename   (toplevel, page->page_filename);
+  i_update_toolbar (toplevel);
+  i_update_menus   (toplevel);
+  x_pagesel_update (toplevel);
+
+  /* restore current page in toplevel */
+  s_page_goto (toplevel, old_current);
+
+  return ret;
+}
+
+/*! \brief Closes a page.
+ *  \par Function Description
+ *  This function closes the page <B>page</B> of toplevel
+ *  <B>toplevel</B>.
+ *
+ *  If necessary, the current page of <B>toplevel</B> is changed to
+ *  the next valid page or to a new untitled page.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [in] page     The page to close.
+ */
+void
+x_window_close_page (TOPLEVEL *toplevel, PAGE *page)
+{
+  PAGE *new_current = NULL;
+
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (page     != NULL);
+
+  g_assert (page->pid != -1);
+
+  if (page == toplevel->page_current) {
+    /* as it will delete current page, select new current page */
+    /* first look up in page hierarchy */
+    new_current = s_hierarchy_find_page (toplevel->page_head, page->up);
+    if (new_current == NULL) {
+      /* no up in hierarchy, choice is next, prev, new page */
+      if (page->prev && page->prev->pid != -1) {
+        new_current = page->prev;
+      } else if (page->next != NULL) {
+        new_current = page->next;
+      } else {
+        /* need to add a new untitled page */
+        new_current = NULL;
+      }
+    }
+    /* new_current will be the new current page at the end of the function */
+  }
+
+  s_log_message (page->CHANGED ?
+                 _("Discarding page [%s]\n") : _("Closing [%s]\n"),
+                 page->page_filename);
+  /* remove page from toplevel list of page and free */
+  s_page_delete (toplevel, page);
+
+  if (toplevel->page_current == NULL) {
+    /* page was the current page of toplevel, set new current */
+    if (new_current == NULL) {
+      /* empty page list in toplevel, create new page */
+      new_current = x_window_open_untitled_page (toplevel);
+    } else {
+      /* change to new_current and update display */
+      x_window_set_current_page (toplevel, new_current);
+    }    
+    g_assert (new_current != NULL);
+    
+  }
+
+}
