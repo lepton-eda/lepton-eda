@@ -66,6 +66,8 @@ struct _Compselect {
   GtkTreeView *treeview;
   Preview     *preview;
   GtkEntry    *entry_filter;
+  GtkButton   *button_clear;
+  guint        filter_timeout;
   GtkComboBox *combobox_behaviors;
 
 };

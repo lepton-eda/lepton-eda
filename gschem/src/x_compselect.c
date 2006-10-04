@@ -201,9 +201,12 @@ enum {
   PROP_BEHAVIOR,
 };
 
+static GObjectClass *compselect_parent_class = NULL;
+
 
 static void compselect_class_init (CompselectClass *class);
 static void compselect_init       (Compselect *compselect);
+static void compselect_finalize     (GObject *object);
 static void compselect_set_property (GObject *object,
                                      guint property_id,
                                      const GValue *value,
@@ -275,7 +278,7 @@ compselect_model_filter_visible_func (GtkTreeModel *model,
   g_assert (IS_COMPSELECT (data));
   
   text = gtk_entry_get_text (compselect->entry_filter);
-  if (text == NULL) {
+  if (g_ascii_strcasecmp (text, "") == 0) {
     return TRUE;
   }
 
@@ -364,28 +367,94 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
 
 }
 
-/*! \brief Handles changes in the filter entry.
+/*! \brief Requests re-evaluation of the filter.
  *  \par Function Description
- *  This is the callback function called every time the contents of
- *  the filter entry is modified.
+ *  This is the timeout function for the filtering of component in the
+ *  tree of the dialog.
  *
- *  If the entry is non-empty, it enables component filtering through
- *  <B>compselect_component_store_filter_func()</B> that uses the text
- *  from the entry.
+ *  The timeout this callback is attached to is removed after the
+ *  function.
  *
- *  Otherwise the filtering capability of the dialog is disabled.
+ *  \param [in] data The component selection dialog.
+ *  \returns FALSE to remove the timeout.
+ */
+static gboolean
+compselect_filter_timeout (gpointer data)
+{
+  Compselect *compselect = COMPSELECT (data);
+  GtkTreeModel *model;
+
+  /* resets the source id in compselect */
+  compselect->filter_timeout = 0;
+  
+  model = gtk_tree_view_get_model (compselect->treeview);
+
+ if (model != NULL) {
+    gtk_tree_model_filter_refilter ((GtkTreeModelFilter*)model);
+  }
+  
+  /* return FALSE to remove the source */
+  return FALSE;
+}
+
+/*! \brief Callback function for the changed signal of the filter entry.
+ *  \par Function Description
+ *  This function monitors changes in the entry filter of the dialog.
  *
- *  \param [in] entry     The filter text entry.
+ *  It specifically manages the sensitivity of the clear button of the
+ *  entry depending on its contents. It also requests an update of the
+ *  component list by re-evaluating filter at every changes.
+ *
+ *  \param [in] editable  The filter text entry.
  *  \param [in] user_data The component selection dialog.
  */
 static void
-compselect_callback_filter_entry_activate (GtkEntry *entry,
-                                           gpointer  user_data)
+compselect_callback_filter_entry_changed (GtkEditable *editable,
+                                          gpointer  user_data)
 {
   Compselect *compselect = COMPSELECT (user_data);
-  GtkTreeModel *model    = gtk_tree_view_get_model (compselect->treeview);
+  GtkWidget *button;
+  gboolean sensitive;
 
-  gtk_tree_model_filter_refilter ((GtkTreeModelFilter*)model);
+  /* turns button off if filter entry is empty */
+  /* turns it on otherwise */
+  button    = GTK_WIDGET (compselect->button_clear);
+  sensitive = 
+    (g_ascii_strcasecmp (gtk_entry_get_text (compselect->entry_filter),
+                         "") != 0);
+  if (GTK_WIDGET_IS_SENSITIVE (button) != sensitive) {
+    gtk_widget_set_sensitive (button, sensitive);
+  }
+
+  /* ask for an update of the component list */
+  /* re-evaluation of filter will occur in 300 ms unless entry */
+  /* has been modified again */
+  compselect->filter_timeout =
+    g_timeout_add (300,
+                   compselect_filter_timeout,
+                   compselect);
+ 
+}
+
+/*! \brief Handles a click on the clear button.
+ *  \par Function Description
+ *  This is the callback function called every time the user press the
+ *  clear button associated with the filter.
+ *
+ *  It resets the filter entry and request a re-evaluation of the
+ *  filter on the list of symbols to update display.
+ *
+ *  \param [in] editable  The filter text entry.
+ *  \param [in] user_data The component selection dialog.
+ */
+static void
+compselect_callback_filter_button_clicked (GtkButton *button,
+                                           gpointer   user_data)
+{
+  Compselect *compselect = COMPSELECT (user_data);
+
+  /* clears text in text entry for filter */
+  gtk_entry_set_text (compselect->entry_filter, "");
   
 }
 
@@ -508,6 +577,9 @@ compselect_class_init (CompselectClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
+  compselect_parent_class = g_type_class_peek_parent (klass);
+  
+  gobject_class->finalize     = compselect_finalize;
   gobject_class->set_property = compselect_set_property;
   gobject_class->get_property = compselect_get_property;
 
@@ -532,8 +604,9 @@ compselect_class_init (CompselectClass *klass)
 static void
 compselect_init (Compselect *compselect)
 {
-  GtkWidget *hbox, *vbox;
+  GtkWidget *hbox, *vbox, *filter_hbox;
   GtkWidget *scrolled_win, *treeview, *label, *entry, *preview, *combobox;
+  GtkWidget *button;
   GtkTreeModel *child_model, *model;
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
@@ -634,30 +707,65 @@ compselect_init (Compselect *compselect)
 
   
   /* -- filter area -- */
+  filter_hbox = GTK_WIDGET (g_object_new (GTK_TYPE_HBOX,
+                                          /* GtkBox */
+                                          "homogeneous", FALSE,
+                                          "spacing",     3,
+                                          NULL));
+
+  /* create the entry label */
   label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
                                     /* GtkMisc */
                                     "xalign", 0.0,
                                     /* GtkLabel */
                                     "label",  _("Filter:"),
                                     NULL));
-  /* add the search label to the vertical box */
-  gtk_box_pack_start (GTK_BOX (vbox), label,
+  /* add the search label to the filter area */
+  gtk_box_pack_start (GTK_BOX (filter_hbox), label,
                       FALSE, FALSE, 0);
-  /* create the text entry for search in component */
+  
+  /* create the text entry for filter in components */
   entry = GTK_WIDGET (g_object_new (GTK_TYPE_ENTRY,
                                     /* GtkEntry */
                                     "text", "",
                                     NULL));
   g_signal_connect (entry,
-                    "activate",
-                    G_CALLBACK (compselect_callback_filter_entry_activate),
+                    "changed",
+                    G_CALLBACK (compselect_callback_filter_entry_changed),
                     compselect);
-  /* add the search entry to the vertical box */
-  gtk_box_pack_start (GTK_BOX (vbox), entry,
+  /* add the filter entry to the filter area */
+  gtk_box_pack_start (GTK_BOX (filter_hbox), entry,
                       FALSE, FALSE, 0);
   /* set filter entry of compselect */
   compselect->entry_filter = GTK_ENTRY (entry);
+  /* and init the event source for component filter */
+  compselect->filter_timeout = 0;
 
+  /* create the erase button for filter entry */
+  button = GTK_WIDGET (g_object_new (GTK_TYPE_BUTTON,
+                                     /* GtkWidget */
+                                     "sensitive", FALSE,
+                                     /* GtkButton */
+                                     "relief",    GTK_RELIEF_NONE,
+                                     NULL));
+  gtk_container_add (GTK_CONTAINER (button),
+                     gtk_image_new_from_stock (GTK_STOCK_CLEAR,
+                                               GTK_ICON_SIZE_SMALL_TOOLBAR));
+  g_signal_connect (button,
+                    "clicked",
+                    G_CALLBACK (compselect_callback_filter_button_clicked),
+                    compselect);
+  /* add the clear button to the filter area */
+  gtk_box_pack_start (GTK_BOX (filter_hbox), button,
+                      FALSE, FALSE, 0);
+  /* set clear button of compselect */
+  compselect->button_clear = GTK_BUTTON (button);
+                                     
+  /* add the filter area to the vertical box */
+  gtk_box_pack_start (GTK_BOX (vbox), filter_hbox,
+                      FALSE, FALSE, 0);
+
+  
   /* include the vertical box in horizontal box */
   gtk_box_pack_start (GTK_BOX (hbox), vbox,
                       TRUE, TRUE, 0);
@@ -724,6 +832,19 @@ compselect_init (Compselect *compselect)
                           GTK_STOCK_APPLY, GTK_RESPONSE_APPLY,
                           NULL);
   
+}
+
+static void
+compselect_finalize (GObject *object)
+{
+  Compselect *compselect = COMPSELECT (object);
+
+  if (compselect->filter_timeout != 0) {
+    g_source_remove (compselect->filter_timeout);
+    compselect->filter_timeout = 0;
+  }
+  
+  G_OBJECT_CLASS (compselect_parent_class)->finalize (object);
 }
 
 static void

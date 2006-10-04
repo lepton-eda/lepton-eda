@@ -1,5 +1,10 @@
 2006-10-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* src/x_compselect.c, include/x_compselect.h: Added a button to 
+	clear the filter entry of the component selection dialog.
+	Modified to auto-update the component selection as user types in
+	filter entry.
+
 	* include/prototype.h, src/x_dialog.c: Deleted old exit_dialog.
 	Added new dialog for user confirmation before closing a page or a
 	window.
@@ -9,8 +14,6 @@
 
 	* src/x_window.c: Added new functions to open, close, save and
 	change page.
-
-2006-10-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/x_event.c (x_event_configure): Cleaned up.
 	Fixed Bug#1527465: fit page zooms when window is maximized.
