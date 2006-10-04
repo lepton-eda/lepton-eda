@@ -843,7 +843,7 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_curren
 gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event, TOPLEVEL *w_current);
 gint x_event_button_released(GtkWidget *widget, GdkEventButton *event, TOPLEVEL *w_current);
 gint x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current);
-gint x_event_configure(GtkWidget *widget, GdkEventConfigure *event, TOPLEVEL *w_current);
+gboolean x_event_configure (GtkWidget *widget, GdkEventConfigure *event, gpointer user_data);
 void x_manual_resize(TOPLEVEL *w_current);
 void x_event_hschanged(GtkAdjustment *adj, TOPLEVEL *w_current);
 void x_event_vschanged(GtkAdjustment *adj, TOPLEVEL *w_current);

@@ -1236,168 +1236,108 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
   return(0);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Updates the toplevel and display when drawing area is configured.
  *  \par Function Description
+ *  This is the callback function connected to the configure event of
+ *  the drawing area of the main window.
  *
+ *  It updates the size of the backingstore for the associated
+ *  toplevel structure (creates a new pixmap) and re-pans each of its
+ *  pages to keep their contents centered in the drawing area.
+ *
+ *  When the window is maximised, the zoom of every page is changed to
+ *  best fit the previously displayed area of the page in the new
+ *  area. Otherwise the current zoom level is left unchanged.
+ *
+ *  \param [in] widget    The drawing area which received the signal.
+ *  \param [in] event     The event structure of signal configure-event.
+ *  \param [in] user_data The toplevel environment as user data.
+ *  \returns FALSE to propagate the event further.
  */
-gint x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
-		       TOPLEVEL *w_current)
+gboolean
+x_event_configure (GtkWidget         *widget,
+                   GdkEventConfigure *event,
+                   gpointer           user_data)
 {
-  int new_height, new_width;
-  double cx,cy;
-  PAGE *page_ptr, *page_current;
+  TOPLEVEL *toplevel = (TOPLEVEL*)user_data;
+  PAGE *old_page_current, *p_current;
+  gint old_win_width, old_win_height, new_win_width, new_win_height;
+  gdouble relativ_zoom_factor = 1.0;
 
-  exit_if_null(w_current);
-  global_window_current = w_current;
+  g_assert (toplevel != NULL);
+  global_window_current = toplevel;
 
-  /* don't want to call this if the current page isn't setup yet */
-  if (w_current->page_current == NULL) {
- 	return 0;
+  if (toplevel->page_current == NULL) {
+    /* don't want to call this if the current page isn't setup yet */
+    return FALSE;
   }
-        
-  /* this callback is for drawing areas only! */
-  /* things like changing a label causes a resize */
-  /* this code is no longer needed.*/
-
-#if DEBUG
-  printf("RESIZE\n");
-#endif
-
-  /* get the new width/height */
-  new_width  = widget->allocation.width;
-  new_height = widget->allocation.height;
-
-  /* if it's equal to the current width/height don't do anything */
-  if (new_width == w_current->win_width &&
-      new_height == w_current->win_height) {
-    return(0);
-  }
-
-#if 0 /* my experiments with getting resize to work differently */
-  diff_width  = (new_width - w_current->win_width)*100;
-  diff_height = (new_height - w_current->win_height)*100;
-
-  printf("diff %d %d\n", diff_width, diff_height);
-
-  printf("world %d %d\n", SCREENabs(w_current, diff_width),
-         SCREENabs(w_current, diff_height));
-
-  w_current->page_current->right = w_current->page_current->right + diff_width;
-  w_current->page_current->bottom = w_current->page_current->bottom + diff_height;
-
-  diff_x =
-  w_current->page_current->right -
-  w_current->page_current->left;
-  diff_y =
-  w_current->page_current->bottom -
-  w_current->page_current->top;
-
-  new_aspect =
-  (float) fabs(w_current->page_current->right -
-               w_current->page_current->left) /
-  (float) fabs(w_current->page_current->bottom -
-               w_current->page_current->top);
-
-#if DEBUG
-  printf("wxh: %d %d\n", diff_x, diff_y);
-  printf("diff is: %f\n", fabs(new_aspect - coord_aspectratio));
-#endif
-
-  /* Make sure aspect ratio is correct */
-  if (fabs(new_aspect - w_current->page_current->coord_aspectratio)) {
-    if (new_aspect > w_current->page_current->coord_aspectratio) {
-#if DEBUG
-      printf("new larger then coord\n");
-      printf("implies that height is too large\n");
-#endif
-      w_current->page_current->bottom =
-        w_current->page_current->top +
-        (w_current->page_current->right -
-         w_current->page_current->left) /
-        w_current->page_current->coord_aspectratio;
-    } else {
-#if DEBUG
-      printf("new smaller then coord\n");
-      printf("implies that width is too small\n");
-#endif
-      w_current->page_current->right =
-        w_current->page_current->left +
-        (w_current->page_current->bottom -
-         w_current->page_current->top) *
-        w_current->page_current->coord_aspectratio;
-    }
-#if DEBUG
-    printf("invalid aspectratio corrected\n");
-#endif
-  }
-
-#endif
-
-  /* of the actual win window (drawing_area) */
-  w_current->win_width  = widget->allocation.width;
-  w_current->win_height = widget->allocation.height;
-
-  w_current->width  = w_current->win_width;
-  w_current->height = w_current->win_height;
-
-  /* need to do this every time you change width / height */
-  /* at the moment this set_w.. call is doing really nothing, because  ..->left...
-     aren't recalculated (hw) */
-  /*	set_window(w_current,
-        w_current->page_current->left,
-        w_current->page_current->right,
-        w_current->page_current->top,
-        w_current->page_current->bottom);
-  */	
-  /* doing this the aspectratio is kept when changing (hw)*/
-  cx = (double) (w_current->page_current->left +
-		 w_current->page_current->right) /2;
-  cy = (double) (w_current->page_current->top +
-                 w_current->page_current->bottom) /2;	
-
-  /* This call is necessary. Otherwise the variables are not setup correctly */
-  a_pan_general(w_current, cx, cy, 1.0, A_PAN_DONT_REDRAW);	
-
-  if (w_current->backingstore) {
-    gdk_pixmap_unref(w_current->backingstore);
-  }
-
-  w_current->backingstore = gdk_pixmap_new(widget->window,
-                                           widget->allocation.width,
-                                           widget->allocation.height,
-                                           -1);
-
-  /* w_current->window_maximized is set by x_event_window_state, 
-     which is the handler of the window_state_event of the main_window.
-     That signal is issued when maximizing/iconifying the window */
-  if (w_current->window_maximized) { 
-    page_ptr = w_current->page_head;
-    /* Skip the page head */
-    if (page_ptr)
-      page_ptr = page_ptr->next;
-
-    /* Maximize all pages without redrawing them */    
-    page_current = w_current->page_current;
-    while (page_ptr) {
-      s_page_goto(w_current, page_ptr);
-      /* This call to a_pan_general is necessary. 
-	 Otherwise the variables are not setup correctly */
-      a_pan_general(w_current, cx, cy, 1.0, A_PAN_DONT_REDRAW);	
   
-      a_zoom_extents(w_current, w_current->page_current->object_head, 
-		     A_PAN_DONT_REDRAW);      
-      page_ptr = page_ptr->next;
-    }
-    s_page_goto(w_current, page_current); /* Go to the original page */
+  old_win_width  = toplevel->win_width;
+  old_win_height = toplevel->win_height;
+  new_win_width  = event->width;
+  new_win_height = event->height;
+  
+  if (old_win_width  == new_win_width &&
+      old_win_height == new_win_height) {
+    /* the size of the drawing area has not changed */
+    /* nothing to do here */
+    return FALSE;
   }
 
-  if (!w_current->DONT_REDRAW) {
-    o_redraw_all_fast(w_current);
-    x_scrollbars_update(w_current);
+  /* update the backingstore of toplevel */
+  if (toplevel->backingstore != NULL) {
+    gdk_pixmap_unref (toplevel->backingstore);
+  }
+  toplevel->backingstore = gdk_pixmap_new (widget->window,
+                                           new_win_width,
+                                           new_win_height,
+                                           -1);
+  /* update the toplevel with new size of drawing area */
+  toplevel->win_width   = toplevel->width  = new_win_width;
+  toplevel->win_height  = toplevel->height = new_win_height;
+
+  
+  /* in the case the user has maximised the window (hence the */
+  /* configure event) fit the view by playing with zoom level */
+  if (gdk_window_get_state (
+        (gtk_widget_get_toplevel (
+          widget))->window) & GDK_WINDOW_STATE_MAXIMIZED) {
+    gdouble width_ratio, height_ratio;
+    
+    /* tweak relative_zoom to better fit page in maximized window */
+    width_ratio  = ((gdouble)new_win_width)  / ((gdouble)old_win_width);
+    height_ratio = ((gdouble)new_win_height) / ((gdouble)old_win_height);
+    /* keep smallest ratio as relative zoom factor when panning */
+    relativ_zoom_factor =
+      (width_ratio < height_ratio) ? width_ratio : height_ratio;
+  
   }
 
-  return(0);
+  /* save current page */
+  old_page_current = toplevel->page_current;
+  /* re-pan each page of the toplevel */
+  for (p_current = toplevel->page_head->next;
+       p_current != NULL;
+       p_current = p_current->next) {
+    gdouble cx, cy;
+    
+    /* doing this the aspectratio is kept when changing (hw)*/
+    cx = ((gdouble)(p_current->left + p_current->right))  / 2;
+    cy = ((gdouble)(p_current->top  + p_current->bottom)) / 2;
+    s_page_goto (toplevel, p_current);
+    a_pan_general (toplevel, cx, cy, relativ_zoom_factor, A_PAN_DONT_REDRAW);	
+    
+  }
+  /* restore current page to saved value */
+  s_page_goto (toplevel, old_page_current);
+
+  if (!toplevel->DONT_REDRAW) {
+    /* redraw the current page and update UI */
+    o_redraw_all_fast (toplevel);
+    x_scrollbars_update (toplevel);
+  }
+
+  return FALSE;
 }
 
 /*! \todo Finish function documentation!!!
@@ -1654,33 +1594,3 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
 
   return(0);
 }
-
-/*! \brief Do a zoom extents whenever the window is maximized/minimized.
- *  \par Function Description
- *  This function was added so gschem could do a zoom extents whenever 
- *  the window is maximized/minimized.
- *  It seems that when this function gets executed, the new size has not 
- *  been set, and there is no way to get it.
- *  So this function just sets the window_maximized variable in the 
- *  TOPLEVEL structure. 
- *  Since a configure event is called when maximizing or minimizing,
- *  x_event_configure will look for this variable and do the zoom extents.
- * 
- *  \param widget [in] the widget which received the signal.
- *  \param event [in] the event structure.
- *  \param w_current [in] the gschem's TOPLEVEL structure.
- *  \return FALSE always. (TRUE to stop other handlers from being invoked 
- *   for the event. FALSE to propagate the event further.)
- */
-gint x_event_window_state(GtkWidget *widget, GdkEventWindowState *event,
-			  TOPLEVEL *w_current)
-{
-  if ( (event->new_window_state & event->changed_mask &
-      GDK_WINDOW_STATE_MAXIMIZED)  != 0)
-    w_current->window_maximized = TRUE;
-  else
-    w_current->window_maximized = FALSE;
-
-  return FALSE;
-}
-

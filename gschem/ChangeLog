@@ -1,3 +1,8 @@
+2006-10-03  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/x_event.c (x_event_configure): Cleaned up.
+	Fixed Bug#1527465: fit page zooms when window is maximized.
+
 2006-10-03 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* lib/system-gschemrc.in, src/g_register.c: 

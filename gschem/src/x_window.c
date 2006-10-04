@@ -359,7 +359,6 @@ void x_window_setup_draw_events(TOPLEVEL *w_current)
   struct event_reg_t main_window_events[] = {
     { "enter_notify_event",   G_CALLBACK(x_event_enter)           },
     { "scroll_event",         G_CALLBACK(x_event_scroll)          },
-    { "window_state_event",   G_CALLBACK(x_event_window_state)    },
     { NULL,                   NULL                                } };
   struct event_reg_t *tmp;
 

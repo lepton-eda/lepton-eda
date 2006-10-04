@@ -422,12 +422,6 @@ struct st_toplevel {
   int loc_x, loc_y;
   int distance;
   
-  /* Variable to see if the window is maximized or not */
-  /* It seems that currently there is no way to know if a GtkWindow is 
-     maximized, so the app has to track the window_state_event signal
-     and toggle this variable. */
-  gboolean window_maximized;
-
   /* used by attribute dialog */
   /* also used by text add dialog */
   char *current_attribute;		

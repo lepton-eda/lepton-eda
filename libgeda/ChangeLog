@@ -1,4 +1,11 @@
+2006-10-04 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* include/struct.h, src/s_toplevel.c:
+	Removed the new variable to track wether the main window is maximized
+	or not. It's no more necessary due to the patch from Patrick Bernaud.
+
 2006-09-30 Carlos Nieves Onega <cnieves@iespana.es>
+
 	* include/struct.h, src/s_toplevel.c:
 	Added a new variable to track wether the main window is maximized
 	or not. This is part of the bug #1527465 fix.

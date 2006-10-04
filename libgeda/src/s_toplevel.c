@@ -88,8 +88,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->loc_y   = -1;
   toplevel->distance = -1;
   
-  toplevel->window_maximized = FALSE;
-
   toplevel->current_attribute = NULL;
 
   toplevel->current_visible = -1; /* not sure on these */
