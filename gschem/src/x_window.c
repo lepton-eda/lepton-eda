@@ -1036,12 +1036,13 @@ x_window_set_current_page (TOPLEVEL *toplevel, PAGE *page)
 
   x_pagesel_update (toplevel);
   
+  toplevel->DONT_REDRAW = 1;
   x_repaint_background (toplevel);
   x_manual_resize (toplevel);
   x_hscrollbar_update (toplevel);
   x_vscrollbar_update (toplevel);
-
   toplevel->DONT_REDRAW = 0;
+  
   o_redraw_all (toplevel);
   
 }
