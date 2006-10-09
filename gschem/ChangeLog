@@ -6713,3 +6713,18 @@ src/*.c: Removed all traces of the ADDING_SEL flag
 
 4/1/98	First Release to the public
 
+pre-release
+-------
+
+3/15/98  Intergrated gtk GUI into main window
+
+1/98    Work resumed at a almost continues pace
+          First, second, third GUI's were written in XForms (detached)
+          Fourth GUI was written in gtk (detached)
+
+8/97 to 1/98    Great pause in work
+
+7/28/97 First attempt with just an plain Xlib
+
+7/25/97 Start of development (at least that's the date on the first backup tar)
+
