@@ -214,7 +214,7 @@ void x_dialog_unimplemented_feature();
 
 void x_dialog_exit_announcement(gchar *string, gint return_code);
 void x_dialog_exit_announcement_close_callback(GtkWidget *buttonok, 
-				   gint return_code);
+				   gpointer return_code);
 
 int x_dialog_about_keypress_callback(GtkWidget * widget, GdkEventKey * event,
 				     GtkWidget * window);
