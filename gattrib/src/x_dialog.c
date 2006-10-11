@@ -751,11 +751,11 @@ void x_dialog_exit_announcement(gchar *string, gint return_code)
   gtk_box_pack_start(GTK_BOX(action_area), buttonok, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_exit_announcement_close_callback),
-		     return_code );
+		     (gpointer) return_code );
   gtk_widget_show(buttonok);
 
   /* set this to grab ability to override other windows */
-  gtk_window_set_modal(exit_announcement_window, TRUE);
+  gtk_window_set_modal (GTK_WINDOW (exit_announcement_window), TRUE);
 
  /* show window */
   if (!GTK_WIDGET_VISIBLE(exit_announcement_window)) {
@@ -767,9 +767,9 @@ void x_dialog_exit_announcement(gchar *string, gint return_code)
  * OK button pressed -- 
  * --------------------------------------------------------- */
 void x_dialog_exit_announcement_close_callback(GtkWidget *buttonok, 
-				    gint return_code)
+				    gpointer return_code)
 {
-  gattrib_quit(return_code);
+  gattrib_quit( (gint) return_code);
 }
 
 
