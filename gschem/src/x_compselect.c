@@ -50,6 +50,18 @@
 
 #include "../include/x_compselect.h"
 
+/*! \def COMPSELECT_FILTER_INTERVAL
+ *  \brief The time interval between request and actual filtering
+ *
+ *  This constant is the time-lag between user modifications in the
+ *  filter entry and the actual evaluation of the filter which
+ *  ultimately update the display. It helps reduce the frequency of
+ *  evaluation of the filter as user types.
+ *
+ *  Unit is milliseconds.
+ */
+#define COMPSELECT_FILTER_INTERVAL 300
+
 
 /*! \brief Process the response returned by the component selection dialog.
  *  \par Function Description
@@ -460,10 +472,10 @@ compselect_callback_filter_entry_changed (GtkEditable *editable,
   }
 
   /* ask for an update of the component list */
-  /* re-evaluation of filter will occur in 300 ms unless entry */
+  /* re-evaluation of filter will occur in _INTERVAL ms unless entry */
   /* has been modified again */
   compselect->filter_timeout =
-    g_timeout_add (300,
+    g_timeout_add (COMPSELECT_FILTER_INTERVAL,
                    compselect_filter_timeout,
                    compselect);
  
