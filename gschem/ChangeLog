@@ -4,6 +4,8 @@
 	(x_compselect_callback_response): Fixed wrong cast for dialog.
 	(COMPSELECT_FILTER_INTERVAL): Added new constant for the timeout
 	interval of the filter as suggested by Peter Clifton.
+	Fixed and improved code documentation as suggested by Peter
+	Clifton.
 
 2006-10-08 Ales Hvezda   <ahvezda@geda.seul.org>
 

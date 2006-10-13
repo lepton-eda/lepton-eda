@@ -349,7 +349,7 @@ compselect_callback_dialog_key_press_event (GtkWidget   *widget,
   return FALSE;
 }
 
-/*! \brief Handles changes in the filter entry.
+/*! \brief Handles changes in the treeview selection.
  *  \par Function Description
  *  This is the callback function that is called every time the user
  *  select a row in the component treeview of the dialog.
@@ -486,8 +486,8 @@ compselect_callback_filter_entry_changed (GtkEditable *editable,
  *  This is the callback function called every time the user press the
  *  clear button associated with the filter.
  *
- *  It resets the filter entry and request a re-evaluation of the
- *  filter on the list of symbols to update display.
+ *  It resets the filter entry, indirectly causing re-evaluation
+ *  of the filter on the list of symbols to update the display.
  *
  *  \param [in] editable  The filter text entry.
  *  \param [in] user_data The component selection dialog.
