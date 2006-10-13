@@ -37,6 +37,7 @@
 
 #include <libgeda/libgeda.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h> 
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
@@ -302,6 +303,38 @@ compselect_model_filter_visible_func (GtkTreeModel *model,
   }
 
   return ret;
+}
+
+/*! \brief Handles a key press on the dialog.
+ *  \par Function Description
+ *  This is the callback function that is connected to the key press
+ *  event of the dialog.
+ *
+ *  If the user pressed the Escape key, the close response is emitted
+ *  requesting the dialog to be deleted.
+ *
+ *  If any other key is pressed the event is further propagated.
+ *
+ *  \param [in] widget    The component selection dialog.
+ *  \param [in] event     The event structure for key pressed.
+ *  \param [in] user_data NULL.
+ *  \returns TRUE to stop other handlers from being invoked, FALSE
+ *           otherwise.
+ */
+static gboolean
+compselect_callback_dialog_key_press_event (GtkWidget   *widget,
+                                            GdkEventKey *event,
+                                            gpointer     user_data)
+{
+  switch (event->keyval) {
+      case GDK_Escape:
+        /* user pressed escape key, request close of the dialog */
+        gtk_dialog_response (GTK_DIALOG (widget), GTK_RESPONSE_CLOSE);
+        return TRUE;
+  }
+  
+  /* returns FALSE to propagate event further */
+  return FALSE;
 }
 
 /*! \brief Handles changes in the filter entry.
@@ -629,6 +662,11 @@ compselect_init (Compselect *compselect)
   g_object_set (GTK_DIALOG (compselect)->vbox,
                 "homogeneous", FALSE,
                 NULL);
+  /* connect dialog to key press event */
+  g_signal_connect (compselect,
+                    "key_press_event",
+                    G_CALLBACK (compselect_callback_dialog_key_press_event),
+                    NULL);
 
   
   /* horizontal box selection and preview */
