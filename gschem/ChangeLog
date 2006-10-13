@@ -1,6 +1,7 @@
 2006-10-13  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/x_compselect.c: Modified to close when Escape is pressed.
+	(x_compselect_callback_response): Fixed wrong cast for dialog.
 
 2006-10-08 Ales Hvezda   <ahvezda@geda.seul.org>
 

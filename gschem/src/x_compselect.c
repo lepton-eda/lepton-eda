@@ -68,7 +68,7 @@ x_compselect_callback_response (GtkDialog *dialog,
                                 gint arg1,
                                 gpointer user_data)
 {
-  Preview *preview = (Preview*)dialog;
+  Compselect *compselect = (Compselect*)dialog;
   TOPLEVEL *toplevel = (TOPLEVEL*)user_data;
 
   switch (arg1) {
@@ -76,7 +76,7 @@ x_compselect_callback_response (GtkDialog *dialog,
         gchar *filename, *directory, *component;
         CompselectBehavior behavior;
         
-        g_object_get (preview,
+        g_object_get (compselect,
                       "filename", &filename,
                       "behavior", &behavior,
                       NULL);
