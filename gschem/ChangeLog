@@ -1,3 +1,11 @@
+2006-10-16 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/gschem.c: Call the new page hook for each schematic
+	specified in the command line, instead of calling it for
+	only the latest.
+	This way all pages are zoomed extents when loaded.
+	Thanks to Peter Clifton for reporting the bug.
+
 2006-10-13  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/x_compselect.c: Modified to close when Escape is pressed.
