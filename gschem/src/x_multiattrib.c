@@ -247,6 +247,8 @@ static GtkCellEditable* cellrenderermultilinetext_start_editing(GtkCellRenderer 
 					* gtk_text_view_set_buffer() instead */
 				       /* "buffer",   textbuffer, */
                                        "editable", TRUE,
+                                       /* GtkWidget */
+                                       "height-request", cell_area->height,
                                        NULL));
   gtk_text_view_set_buffer (GTK_TEXT_VIEW (textview), textbuffer);
   g_object_set_data_full (G_OBJECT (textview),

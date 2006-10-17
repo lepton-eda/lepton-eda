@@ -1,3 +1,10 @@
+2006-10-17  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/x_multiattrib.c (cellrenderermultilinetext_start_editing):
+	Fixed renderer to vertically fill the area when editing data (it
+	was only displaying a line with GTK > 2.8). Bug reported by Peter
+	Clifton.
+
 2006-10-16 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/gschem.c: Call the new page hook for each schematic
