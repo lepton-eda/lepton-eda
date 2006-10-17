@@ -1,3 +1,8 @@
+2006-10-17  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/o_text_basic.c (o_text_create_string): Fixed overbar feature
+	to work with UTF-8 characters (Bug#1578416).
+
 2006-10-04 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* include/struct.h, src/s_toplevel.c:

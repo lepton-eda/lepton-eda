@@ -415,7 +415,7 @@ OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
   int last_char_width;
   gboolean overbar_started = FALSE;
   gchar *ptr;
-  gchar *aux_string;
+  gchar aux_string[7];
   OBJECT *o_font_set;
   gunichar c=0, previous_char = 0, next_char = 0;
   int escapes_counter = 0;
@@ -597,9 +597,12 @@ OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 	 next_char = g_utf8_get_char_validated(g_utf8_find_next_char (ptr, NULL),-1)) {
     /* Keep track of the previous character and its width.
        They will be used in the overbar and escape characters */
-    aux_string = g_strdup_printf("%c", previous_char);
+    /*   - build a char string out of the gunichar previous_char */
+    gint l = g_unichar_to_utf8 (previous_char, aux_string);
+    /*   - end the string */
+    aux_string[l] = '\0';
+    /*   - finally get the width of the previous character */
     last_char_width = o_text_width(w_current, aux_string, size/2);
-    g_free(aux_string);
 
     c = g_utf8_get_char_validated (ptr, -1);
 
