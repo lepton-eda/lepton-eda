@@ -48,7 +48,21 @@ foreach $filename (@ARGV) {
 
     if (-r "$filename.old") { 
         print "Found backup file: $filename.old.  Not gsymUpdating $filename\n";
-    } else {
+	next ;
+    }
+
+    if ( -d "$filename") { 
+        print "$filename is a directory not a file.  Not gsymUpdating $filename\n";
+	next ;
+    }
+
+    if (! -f "$filename") { 
+        print "File $filename does not exist.  Not gsymUpdating $filename\n";
+	next ;
+    }
+
+# FIXME -- we should probably do some sanity checking to see that $filename is
+# actually a symbol file.
 
         rename ($filename, "$filename.old");
         print "gsymUpdating: $filename (backup: $filename.old)\n";
@@ -146,7 +160,6 @@ foreach $filename (@ARGV) {
         @args = ("gschlas", "$filename");
         system(@args) == 0 || die "system @args failed: $?"
 
-    }
 }
 
 
