@@ -223,6 +223,17 @@ DEFINE_I_CALLBACK(file_new_window)
   w_current = s_toplevel_new ();
   x_window_setup (w_current);
 
+  /* x_window_setup creates a new page, so call the new page hook */
+  if (scm_hook_empty_p (new_page_hook) == SCM_BOOL_F) {
+    scm_run_hook (new_page_hook,
+                  scm_cons (g_make_page_smob (w_current, 
+					      w_current->page_current), 
+			    SCM_EOL));
+  }
+  
+  /* Do a zoom extents after calling the new page hook */
+  a_zoom_extents(w_current, w_current->page_current->object_head, 0);
+
   exit_if_null(w_current);
 
   s_log_message(_("New Window created\n"));

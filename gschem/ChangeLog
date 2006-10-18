@@ -1,5 +1,9 @@
 2006-10-18 Carlos Nieves Onega <cnieves@iespana.es>
 
+	* src/i_callbacks.c: call the new page hook in the file_new_window
+	callback, after the x_window_setup call (the latter creates a new 
+	page). Thanks to Peter Clifton for reporting the bug.
+	
 	* src/gschem.c: When modifying this file on 2006-10-16, the 
 	new page hook call was moved inside the parse arguments loop.
 	Therefore, the hook was not called if gschem was executed without
