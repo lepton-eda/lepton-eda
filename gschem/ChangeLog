@@ -1,5 +1,11 @@
 2006-10-18 Carlos Nieves Onega <cnieves@iespana.es>
 
+        * ChangeLog: Improved description of the "fit page when window is
+	maximized" patch on 2006-10-04, and added src/x_window.c: it was 
+	changed, but it was missing in the ChangeLog.
+	Also added a note in the entry for 2006-09-30 regarding this feature,
+	which relates to the entry in 2006-10-04.
+	
         * include/prototype.h: Removed the definition of x_event_window_state.
 	This function was added on 2006-09-30 when doing a zoom extents when
 	the user maximizes the gschem window. It was later removed on
@@ -63,8 +69,16 @@
 	* src/x_window.c: Added new functions to open, close, save and
 	change page.
 
-	* src/x_event.c (x_event_configure): Cleaned up.
+	* src/x_event.c (x_event_configure), src/x_window.c: Cleaned up.
 	Fixed Bug#1527465: fit page zooms when window is maximized.
+	
+	Comment by cnieves on 2006-10-18: This change removes the code added
+	on 2006-09-30, which tried to solve the same problem. Patrick found
+	a cleaner way to do it in x_event_configure, so x_event_window_state 
+	is no longer needed.
+	The x_window_state function is removed here, and its definition in
+	include/prototype.h was deleted on 2006-10-18. Thus, all code added
+	on 2006-09-30 regarding this feature is removed.
 
 2006-10-03 Carlos Nieves Onega <cnieves@iespana.es>
 
@@ -82,6 +96,10 @@
 	Fix for bug #1527465. Do a zoom extents for all pages when the
 	main window is maximized.
 
+	Comment by cnieves on 2006-10-18: This code was removed on 2006-10-04
+	when Patrick found a cleaner way to do this without 
+	x_event_window_state. Read the ChangeLog entry for the given date.
+	
 	* src/x_image.c: Added the border in the gdk-pixbuf's image output.
 	Fix bug #1565433.
 	
