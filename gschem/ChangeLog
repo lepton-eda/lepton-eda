@@ -1,5 +1,10 @@
 2006-10-18 Carlos Nieves Onega <cnieves@iespana.es>
 
+        * include/prototype.h: Removed the definition of x_event_window_state.
+	This function was added on 2006-09-30 when doing a zoom extents when
+	the user maximizes the gschem window. It was later removed on
+	2006-10-04 when Patrick found a new way to do it in x_event_configure.
+	
 	* src/i_callbacks.c: call the new page hook in the file_new_window
 	callback, after the x_window_setup call (the latter creates a new 
 	page). Thanks to Peter Clifton for reporting the bug.
