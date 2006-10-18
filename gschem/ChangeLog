@@ -1,3 +1,12 @@
+2006-10-18 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/gschem.c: When modifying this file on 2006-10-16, the 
+	new page hook call was moved inside the parse arguments loop.
+	Therefore, the hook was not called if gschem was executed without
+	arguments.
+	Call the hook after the loop again, but only if first_page is 1 
+	(i.e: if no page was loaded before).
+
 2006-10-17  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/x_multiattrib.c (cellrenderermultilinetext_start_editing):
