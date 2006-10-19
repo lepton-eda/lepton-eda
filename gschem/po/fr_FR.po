@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-19 09:35+0200\n"
-"PO-Revision-Date: 2006-01-12 20:02+0100\n"
+"PO-Revision-Date: 2006-10-19 10:02+0200\n"
 "Last-Translator: Patrick Bernaud <b-patrick@wanadoo.fr>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -102,9 +102,8 @@ msgid "Copy Mode"
 msgstr "Mode Copie"
 
 #: src/rcstrings.c:24 src/i_basic.c:162
-#, fuzzy
 msgid "Multiple Copy Mode"
-msgstr "Mode Copie"
+msgstr "Mode Copie Multiple"
 
 #: src/rcstrings.c:25 src/i_basic.c:110
 msgid "Move Mode"
@@ -478,12 +477,12 @@ msgid "Attribute failed ot find.\n"
 msgstr "Impossible de trouver l'attribut.\n"
 
 #: src/g_rc.c:106
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Found a version [%s%s] gschemrc file:\n"
 "[%s]\n"
 msgstr ""
-"Fichier gschemrc trouvé de version [%s] :\n"
+"Fichier gschemrc trouvé de version [%s%s] :\n"
 "[%s]\n"
 
 #: src/g_rc.c:109
@@ -569,19 +568,19 @@ msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr "Nombre de secondes [%d] passé  auto-save-interval invalide\n"
 
 #: src/g_rc.c:1681
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
-msgstr "Taille [%d] passée à snap-size invalide\n"
+msgstr "Gain [%d] passé à mousepan-gain invalide\n"
 
 #: src/g_rc.c:1704
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
-msgstr "Taille [%d] passée à snap-size invalide\n"
+msgstr "Gain [%d] passé à keyboardpan-gain invalide\n"
 
 #: src/gschem.c:141 src/gschem.c:151
-#, fuzzy, c-format
+#, c-format
 msgid "gEDA/gschem version %s%s\n"
-msgstr "gEDA/gschem version %s\n"
+msgstr "gEDA/gschem version %s%s\n"
 
 #: src/gschem.c:143 src/gschem.c:153
 #, c-format
@@ -714,9 +713,8 @@ msgid "Move"
 msgstr "Déplacer"
 
 #: src/i_basic.c:159 src/i_callbacks.c:698 src/i_callbacks.c:717
-#, fuzzy
 msgid "Multiple Copy"
-msgstr "Attachements Multiples"
+msgstr "Copie Multiple"
 
 #: src/i_basic.c:197
 msgid "Snap Off"
@@ -779,10 +777,10 @@ msgid "Saved All"
 msgstr "Toutes les pages enregistrées"
 
 #: src/i_callbacks.c:458 src/i_callbacks.c:461
-#, fuzzy, c-format
+#, c-format
 msgid "libgd not installed or disabled, so this feature is disabled\n"
 msgstr ""
-"libgdgeda n'est pas installée ou est désactivée, cette fonction est donc "
+"libgd n'est pas installée ou est désactivée, cette fonction est donc "
 "désactivée\n"
 
 #: src/i_callbacks.c:510
@@ -1223,14 +1221,17 @@ msgstr ""
 "o_autosave_backups() : Impossible de récupérer le véritable nom du fichier %s"
 
 #: src/o_misc.c:1789
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr "Échec lors de la création de la copie de sauvegarde [%s]\n"
+msgstr ""
+"Impossible de passer le fichier copie de sauvegarde [%s] en lecture/"
+"écriture\n"
 
 #: src/o_misc.c:1807
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
-msgstr "Échec lors de la création de la copie de sauvegarde [%s]\n"
+msgstr ""
+"Impossible de passer le fichier copie de sauvegarde [%s] en lecture seule\n"
 
 #: src/o_misc.c:1812
 #, c-format
@@ -1622,9 +1623,9 @@ msgid "gEDA : GPL Electronic Design Automation"
 msgstr "gEDA : GPL Electronic Design Automation"
 
 #: src/x_dialog.c:2388
-#, fuzzy, c-format
+#, c-format
 msgid "gschem version %s%s"
-msgstr "gschem version %s"
+msgstr "gschem version %s%s"
 
 #: src/x_dialog.c:2396
 msgid ""
@@ -1780,26 +1781,32 @@ msgstr "Nom"
 
 #: src/x_dialog.c:4569
 msgid "S_elect the schematics you want to save:"
-msgstr ""
+msgstr "_Sélectionnez les schémas que vous souhaitez enregistrer :"
 
 #: src/x_dialog.c:4663
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr ""
+"Voulez-vous enregistrer les modifications dans le schéma \"%s\" avant de le "
+"fermer ?"
 
 #: src/x_dialog.c:4669
 #, c-format
 msgid ""
 "There is %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
+"Il y a %d schémas avec des modifications non enregistrées. Voulez-vous "
+"enregistrer les modifications avant de fermer ?"
 
 #: src/x_dialog.c:4698
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
+"Si vous n'enregistrez pas, les modifications effectuées seront "
+"définitivement perdues."
 
 #: src/x_dialog.c:4718
 msgid "_Close without saving"
-msgstr ""
+msgstr "Fermer sans sa_uvegarder"
 
 #: src/x_fileselect.c:46
 msgid "Schematics"
@@ -1826,7 +1833,6 @@ msgid "Open..."
 msgstr "Ouvrir..."
 
 #: src/x_fileselect.c:220
-#, fuzzy
 msgid "Save as..."
 msgstr "Enregistrer sous..."
 
@@ -2012,9 +2018,8 @@ msgid "Right click on the filename for more options..."
 msgstr "Utilisez le clic droit sur le nom de fichier pour plus d'options..."
 
 #: src/x_print.c:90
-#, fuzzy
 msgid "Save PostScript As..."
-msgstr "Enregistrer la page sous..."
+msgstr "Enregistrer en PostScript sous..."
 
 #: src/x_print.c:192
 msgid "Extents with margins"
@@ -2038,7 +2043,7 @@ msgstr "Portrait"
 
 #: src/x_print.c:317
 msgid "Settings"
-msgstr ""
+msgstr "Configuration"
 
 #: src/x_print.c:329
 msgid "Output paper size"
@@ -2053,17 +2058,16 @@ msgid "Orientation"
 msgstr "Orientation"
 
 #: src/x_print.c:363
-#, fuzzy
 msgid "Destination"
-msgstr "Documentation"
+msgstr "Destination"
 
 #: src/x_print.c:402
 msgid "Command"
-msgstr ""
+msgstr "Commande"
 
 #: src/x_print.c:753
 msgid "No print destination specified\n"
-msgstr ""
+msgstr "Destination pour l'impression non spécifiée\n"
 
 #: src/x_print.c:760
 #, c-format
@@ -2201,16 +2205,16 @@ msgid "Pan/Cancel"
 msgstr "Panoramique/Annuler"
 
 #: src/x_window.c:1087
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT save page [%s]\n"
-msgstr "chec sauvegarde automatique de la page [%s]\n"
+msgstr "Échec sauvegarde de la page [%s]\n"
 
 #: src/x_window.c:1088
 msgid "Error while trying to save"
 msgstr "Erreur lors de la tentative de sauvegarde"
 
 #: src/x_window.c:1097
-#, fuzzy, c-format
+#, c-format
 msgid "Saved as [%s]\n"
 msgstr "Enregistré sous [%s]\n"
 
