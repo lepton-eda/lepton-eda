@@ -1,3 +1,8 @@
+2006-10-19  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/rcstrings.c: Rebuilt file from system-gschemrc for changes
+	in the application menus.
+
 2006-10-18 Carlos Nieves Onega <cnieves@iespana.es>
 
         * ChangeLog: Improved description of the "fit page when window is
