@@ -238,8 +238,8 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
       new = o_attrib_add_attrib(w_current, newtext, vis, show, object);
 
       invocation_flag =
-	(int) gtk_object_get_data(GTK_OBJECT(w_current->aewindow),
-				  "invocation_flag");
+	GPOINTER_TO_INT( gtk_object_get_data(GTK_OBJECT(w_current->aewindow),
+				  "invocation_flag") );
       
 #if DEBUG
       printf("invocation flag: %d\n", invocation_flag);
@@ -609,7 +609,7 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     gtk_entry_select_region(GTK_ENTRY(value_entry), 0, len);
   }
   gtk_object_set_data(GTK_OBJECT(aewindow), "invocation_flag",
-                      (gpointer) flag);
+                      GINT_TO_POINTER(flag));
   
   /* gschem specific */
   i = 0;
