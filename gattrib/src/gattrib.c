@@ -369,7 +369,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
  *------------------------------------------------------------------*/
 int main(int argc, char *argv[])
 {
-  gint return_code;
 
   /* This is i18n stuff */
 #if ENABLE_NLS
