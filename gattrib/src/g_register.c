@@ -71,5 +71,8 @@ SCM g_quit(void)
 
   gattrib_quit(0); 
   /*  exit(0);  */  /* Necessary? */
+
+  /* we don't really get here, but otherwise gcc complains */
+  return SCM_BOOL_F;
 }
 
