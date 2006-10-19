@@ -1,8 +1,4 @@
 Makefile
 Makefile.in
-*.texi
-gschemdoc.info
-gschemdoc.info-*
-gschem.html
 latex
 html

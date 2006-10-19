@@ -1,3 +1,18 @@
+2006-10-19  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* configure.ac: Cleaned up to remove remaining traces of noweb
+	days.
+
+	* noweb/.cvsignore: Removed file for directory to get pruned on
+	checkout.
+
+	* docs/libgedadoc.texi, docs/texinfo.tex: Removed unused files for
+	old noweb documentation.
+
+	* scripts/geda_totexi.in:
+	* scripts/notangle_guile.in:
+	* scripts/prepnoweb: Removed unused scripts for noweb.
+
 2006-10-17  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/o_text_basic.c (o_text_create_string): Fixed overbar feature

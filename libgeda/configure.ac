@@ -514,12 +514,7 @@ AC_SUBST(GEDADATADIR)
 AC_SUBST(GEDARCDIR)
 AC_SUBST(PATHSEP)
 AC_SUBST(OTHERPATHSEP)
-AC_SUBST(NOTANGLE)
-AC_SUBST(NOTANGLEROOT)
-AC_SUBST(NOTANGLEFLAGS)
 AC_SUBST(GUILEINTERP)
-AC_SUBST(NOWEAVE)
-AC_SUBST(TEXI2HTML)
 AC_SUBST(INDENT)
 AC_SUBST(LIBGEDA_HASGD)
 
@@ -530,14 +525,7 @@ AC_CONFIG_FILES([Makefile
                  include/Makefile
                  docs/Makefile
 	         libgeda.pc
-	         scripts/geda_totexi
-	         scripts/notangle_guile
 		 share/Makefile ])
-
-AC_CONFIG_COMMANDS([geda_totexi-chmod], 
-                   [[chmod +x scripts/geda_totexi]],[[]])
-AC_CONFIG_COMMANDS([notangle_guile-chmod],
-                   [[chmod +x scripts/notangle_guile]],[[]])
 
 AC_OUTPUT
 

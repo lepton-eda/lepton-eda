@@ -13,6 +13,5 @@ EXTRA_DIST = all74_1.sch all_1.sch buses.sch embedded_1.sch ext_chars.sch \
 
 MOSTLYCLEANFILES =	*.log *~
 CLEANFILES = 		*.log *~
-DISTCLEANFILES = 	*.log core FILE *~ prototype.bak \
-			geda_totexi notangle_guile.scm
+DISTCLEANFILES = 	*.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = 	*.log *~ Makefile.in configure

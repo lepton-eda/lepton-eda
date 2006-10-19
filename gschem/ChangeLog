@@ -1,5 +1,17 @@
 2006-10-19  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* configure.ac: Cleaned up to remove remaining traces of noweb
+	days.
+
+	* noweb/.cvsignore: Removed file for directory to get pruned on
+	checkout.
+
+	* docs/gschemdoc.texi, docs/texinfo.tex: Removed unused files for
+	old noweb documentation.
+
+	* scripts/geda_totexi.in:
+	* scripts/notangle_guile.in: Removed unused scripts for noweb.
+
 	* po/fr_FR.po: Updated the French translation.
 
 	* po/*: Updated and merged i18n files.
