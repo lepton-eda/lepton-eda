@@ -1,7 +1,7 @@
 # Spanish/Spain translation of gschem.
-# Copyright (C) 2005 Carlos Nieves Onega
+# Copyright (C) 2005-2006 Carlos Nieves Onega
 # This file is distributed under the same license as the gschem package.
-# Carlos Nieves Ónega <cnieves@iespana.es>, 2005.
+# Carlos Nieves Ónega <cnieves@iespana.es>, 2005-2006.
 # 
 # 
 msgid ""
@@ -9,12 +9,18 @@ msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-19 09:35+0200\n"
-"PO-Revision-Date: 2006-02-12 22:18+0100\n"
+"PO-Revision-Date: 2006-10-19 19:07+0200\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain\n"
+"MIME-Version: 1.0"
+"Content-Type: text/plain; charset=UTF-8"
+"Content-Transfer-Encoding: 8bit"
+"Plural-Forms: nplurals=2; plural=(n != 1);"
+"X-Generator: KBabel 1.0.2"
+">\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: src/rcstrings.c:2 src/x_print.c:376
 msgid "File"
@@ -101,9 +107,8 @@ msgid "Copy Mode"
 msgstr "Copiar"
 
 #: src/rcstrings.c:24 src/i_basic.c:162
-#, fuzzy
 msgid "Multiple Copy Mode"
-msgstr "Copiar"
+msgstr "Modo de copia múltiple"
 
 #: src/rcstrings.c:25 src/i_basic.c:110
 msgid "Move Mode"
@@ -477,12 +482,12 @@ msgid "Attribute failed ot find.\n"
 msgstr "Propiedad no encontrada.\n"
 
 #: src/g_rc.c:106
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Found a version [%s%s] gschemrc file:\n"
 "[%s]\n"
 msgstr ""
-"Encontrada una versión [%s] del fichero gschemrc:\n"
+"Encontrada una versión [%s%s] del fichero gschemrc:\n"
 "[%s]\n"
 
 #: src/g_rc.c:109
@@ -582,19 +587,19 @@ msgstr ""
 "save-interval\n"
 
 #: src/g_rc.c:1681
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
-msgstr "Se ha especificado un tamaño no válido [%d] a la función snap-size\n"
+msgstr "Se ha especificado un aumento no válido [%d] a la función mousepan-gain\n"
 
 #: src/g_rc.c:1704
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
-msgstr "Se ha especificado un tamaño no válido [%d] a la función snap-size\n"
+msgstr "Se ha especificado un aumento no válido [%d] a la función keyboardpan-gain\n"
 
 #: src/gschem.c:141 src/gschem.c:151
-#, fuzzy, c-format
+#, c-format
 msgid "gEDA/gschem version %s%s\n"
-msgstr "Versión de gEDA/gschem %s\n"
+msgstr "Versión de gEDA/gschem %s%s\n"
 
 #: src/gschem.c:143 src/gschem.c:153
 #, c-format
@@ -726,9 +731,8 @@ msgid "Move"
 msgstr "Mover"
 
 #: src/i_basic.c:159 src/i_callbacks.c:698 src/i_callbacks.c:717
-#, fuzzy
 msgid "Multiple Copy"
-msgstr "Asociado múltiple"
+msgstr "Copia múltiple"
 
 #: src/i_basic.c:197
 msgid "Snap Off"
@@ -791,11 +795,9 @@ msgid "Saved All"
 msgstr "Guardado todo"
 
 #: src/i_callbacks.c:458 src/i_callbacks.c:461
-#, fuzzy, c-format
+#, c-format
 msgid "libgd not installed or disabled, so this feature is disabled\n"
-msgstr ""
-"La librería libgdgeda no está instalada o ha sido deshabilitada, así que "
-"esta opción está deshabilitada\n"
+msgstr "La librería libgdgeda no está instalada o ha sido deshabilitada, así que esta opción está deshabilitada\n"
 
 #: src/i_callbacks.c:510
 msgid "Closing Window\n"
@@ -1248,14 +1250,14 @@ msgstr ""
 "o_autosave_backups: Imposible averiguar el nombre de fichero real de %s."
 
 #: src/o_misc.c:1789
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr "NO se ha podido guardar la copia de seguridad [%s]\n"
+msgstr "NO se han podido cambiar los permisos de la copia de seguridad anterior [%s] a lectura-escritura\n"
 
 #: src/o_misc.c:1807
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
-msgstr "NO se ha podido guardar la copia de seguridad [%s]\n"
+msgstr "NO se han podido cambiar los permisos de la copia de seguridad anterior [%s] a sólo lectura\n"
 
 #: src/o_misc.c:1812
 #, c-format
@@ -1653,9 +1655,9 @@ msgid "gEDA : GPL Electronic Design Automation"
 msgstr "gEDA: Automatización de Diseño Electrónico GPL"
 
 #: src/x_dialog.c:2388
-#, fuzzy, c-format
+#, c-format
 msgid "gschem version %s%s"
-msgstr "versión de gschem %s"
+msgstr "versión de gschem %s%s"
 
 #: src/x_dialog.c:2396
 msgid ""
@@ -1812,26 +1814,27 @@ msgstr "Nombre"
 
 #: src/x_dialog.c:4569
 msgid "S_elect the schematics you want to save:"
-msgstr ""
+msgstr "S_eleccione los esquemas que quiere guardar:"
 
 #: src/x_dialog.c:4663
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
-msgstr ""
+msgstr "¿Guardar cambios del esquema \"%s\" antes de salir?"
 
 #: src/x_dialog.c:4669
 #, c-format
 msgid ""
 "There is %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
+"Hay %d esquemas con cambios sin guardar. ¿Guardar cambios antes de salir?"
 
 #: src/x_dialog.c:4698
 msgid "If you don't save, all your changes will be permanently lost."
-msgstr ""
+msgstr "Si no los guarda, todos los cambios se perderán definitivamente."
 
 #: src/x_dialog.c:4718
 msgid "_Close without saving"
-msgstr ""
+msgstr "_Cerrar sin guardar"
 
 #: src/x_fileselect.c:46
 msgid "Schematics"
@@ -1858,7 +1861,6 @@ msgid "Open..."
 msgstr "Abrir..."
 
 #: src/x_fileselect.c:220
-#, fuzzy
 msgid "Save as..."
 msgstr "Guardar como..."
 
@@ -2046,9 +2048,8 @@ msgid "Right click on the filename for more options..."
 msgstr "Pulse con el botón derecho para ver más opciones..."
 
 #: src/x_print.c:90
-#, fuzzy
 msgid "Save PostScript As..."
-msgstr "Guardar página como..."
+msgstr "Guardar PostScript como..."
 
 #: src/x_print.c:192
 msgid "Extents with margins"
@@ -2072,7 +2073,7 @@ msgstr "Vertical"
 
 #: src/x_print.c:317
 msgid "Settings"
-msgstr ""
+msgstr "Opciones"
 
 #: src/x_print.c:329
 msgid "Output paper size"
@@ -2087,17 +2088,16 @@ msgid "Orientation"
 msgstr "Orientación"
 
 #: src/x_print.c:363
-#, fuzzy
 msgid "Destination"
-msgstr "Documentación"
+msgstr "Destino"
 
 #: src/x_print.c:402
 msgid "Command"
-msgstr ""
+msgstr "Comando"
 
 #: src/x_print.c:753
 msgid "No print destination specified\n"
-msgstr ""
+msgstr "No se ha especificado el destino de impresión\n"
 
 #: src/x_print.c:760
 #, c-format
@@ -2235,16 +2235,16 @@ msgid "Pan/Cancel"
 msgstr "Panorámica/Cancelar"
 
 #: src/x_window.c:1087
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT save page [%s]\n"
-msgstr "NO se ha podido guardar [%s]\n"
+msgstr "NO se ha podido guardar la página [%s]\n"
 
 #: src/x_window.c:1088
 msgid "Error while trying to save"
 msgstr "Error al intentar guardar"
 
 #: src/x_window.c:1097
-#, fuzzy, c-format
+#, c-format
 msgid "Saved as [%s]\n"
 msgstr "Guardado como [%s]\n"
 
@@ -2267,150 +2267,3 @@ msgstr "Descartando página [%s]\n"
 msgid "Closing [%s]\n"
 msgstr "Cerrando [%s]\n"
 
-#~ msgid "New Page created [%s]\n"
-#~ msgstr "Se ha creado una página nueva [%s]\n"
-
-#~ msgid ""
-#~ "There are unsaved schematics!\n"
-#~ "\n"
-#~ "Are you sure?\n"
-#~ "OK will discard ALL changes!"
-#~ msgstr ""
-#~ "¡Hay esquemas sin salvar!\n"
-#~ "\n"
-#~ "¿Está seguro?\n"
-#~ "¡Al \"Aceptar\" perderá todos los cambios!"
-
-#~ msgid "Agg, could not open directory: %s\n"
-#~ msgstr "¡Argg!, no se ha podido abrir la carpeta: %s\n"
-
-#~ msgid "Too many directories! Increase MAX_DIRS\n"
-#~ msgstr "¡Demasiadas carpetas! Aumentar la variable MAX_DIRS\n"
-
-#~ msgid "Too many files! Increase MAX_FILES\n"
-#~ msgstr "¡Demasiados archivos! Aumentar la variable MAX_FILES\n"
-
-#~ msgid "sch - Schematics"
-#~ msgstr "sch - Esquemas"
-
-#~ msgid "sym - Symbols "
-#~ msgstr "sym - Símbolos"
-
-#~ msgid "sym/sch - Schematics and Symbols"
-#~ msgstr "sym/sch - Esquemas y símbolos"
-
-#~ msgid "* - All Files"
-#~ msgstr "* - Todos los archivos"
-
-#~ msgid "x_fileselect_preview_checkbox: Oops got a null f_current!\n"
-#~ msgstr ""
-#~ "En la función x_fileselect_preview_checkbox: ¡se ha recibido el parámetro "
-#~ "f_current vacío (NULL)!\n"
-
-#~ msgid "Specify a Filename!\n"
-#~ msgstr "¡Hay que especificar un nombre de archivo!\n"
-
-#~ msgid "Search in Files"
-#~ msgstr "Buscar en los archivos"
-
-#~ msgid "Search in Files - End of list"
-#~ msgstr "Buscar en los archivos - Final de la lista"
-
-#~ msgid "Default behavior - reference component"
-#~ msgstr "Comportamiento por defecto - designar componente"
-
-#~ msgid "Embed component in schematic"
-#~ msgstr "Incrustar componente en el esquema"
-
-#~ msgid "Include component as individual objects"
-#~ msgstr "Incluir componentes como objetos individuales"
-
-#~ msgid "Search in Components"
-#~ msgstr "Buscar en los componentes"
-
-#~ msgid "Search in Components - Found library only"
-#~ msgstr "Buscar en los componentes - Sólo se ha encontrado una librería"
-
-#~ msgid "Search in Components - End of list"
-#~ msgstr "Buscar en los componentes - Final de la lista"
-
-#~ msgid "Select Component..."
-#~ msgstr "Seleccionar componente..."
-
-#~ msgid "Filter"
-#~ msgstr "Filtro"
-
-#~ msgid "Directories"
-#~ msgstr "Carpetas"
-
-#~ msgid "Libraries"
-#~ msgstr "Librerías"
-
-#~ msgid "Files"
-#~ msgstr "Archivos"
-
-#, fuzzy
-#~ msgid "Discard changes"
-#~ msgstr "Descartar página"
-
-#~ msgid "x_preview_update_gtk24: Can't get pixbuf from preview struct.\n"
-#~ msgstr ""
-#~ "x_preview_update_gtk24: Imposible obtener el pixbuf de la estructura "
-#~ "preview.\n"
-
-#~ msgid ""
-#~ "Gschem doesn't support pictures if it has been compiled using GTK 1.2"
-#~ msgstr "Gschem no soporta imágenes si se ha compilado usando GTK 1.2"
-
-#~ msgid "OK"
-#~ msgstr "Aceptar"
-
-#~ msgid "Cancel"
-#~ msgstr "Cancelar"
-
-#~ msgid "Apply"
-#~ msgstr "Aplicar"
-
-#~ msgid "Find"
-#~ msgstr "Encontrar"
-
-#~ msgid "Done"
-#~ msgstr "Hecho"
-
-#~ msgid "SaveAs"
-#~ msgstr "Guardar como"
-
-#~ msgid "Write"
-#~ msgstr "Guardar"
-
-#~ msgid "Print"
-#~ msgstr "Imprimir"
-
-#~ msgid "Edit mode"
-#~ msgstr "Edición"
-
-#~ msgid "Move mode"
-#~ msgstr "Mover"
-
-#~ msgid "Copy mode"
-#~ msgstr "Copiar"
-
-#~ msgid "Delete mode"
-#~ msgstr "Borrar"
-
-#~ msgid "Rotate mode"
-#~ msgstr "Rotar"
-
-#~ msgid "Mirror mode"
-#~ msgstr "Voltear"
-
-#~ msgid "Invalid number of lines [%d] passed to output-vector-threshold\n"
-#~ msgstr ""
-#~ "Se ha especificado un número no válido de líneas [%d] a la función output-"
-#~ "vector-threshold\n"
-
-#~ msgid "Comps"
-#~ msgstr "Componentes"
-
-#~ msgid "Both"
-#~ msgstr "Ambos"
