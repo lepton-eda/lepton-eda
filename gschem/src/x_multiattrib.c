@@ -594,6 +594,27 @@ static void multiattrib_column_set_data_show_value(GtkTreeViewColumn *tree_colum
   
 }
 
+/*! \brief Requests an update of the display of a row.
+ *  \par Function Description
+ *  This is an helper function to update the display of a row when
+ *  data for this row have been modified in the model.
+ *
+ *  It emits the 'row_changed' signal on the pointed row.
+ *
+ *  \param [in] model A GtkTreeModel.
+ *  \param [in] iter  A valid GtkTreeIter pointing to the changed row.
+ */
+static void
+update_row_display (GtkTreeModel *model, GtkTreeIter *iter)
+{
+  GtkTreePath *path;
+  
+  path = gtk_tree_model_get_path (model, iter);
+  gtk_tree_model_row_changed (model, path, iter);
+  gtk_tree_path_free (path);
+  
+}
+
 /*! \todo Finish function documentation
  *  \brief
  *  \par Function Description
@@ -660,7 +681,6 @@ static void multiattrib_callback_edited_value(GtkCellRendererText *cell_renderer
 {
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
-  GtkTreePath *path;
   GtkTreeIter iter;
   OBJECT *o_attrib;
   TOPLEVEL *toplevel;
@@ -669,9 +689,7 @@ static void multiattrib_callback_edited_value(GtkCellRendererText *cell_renderer
   model = gtk_tree_view_get_model (multiattrib->treeview);
   toplevel = multiattrib->toplevel;
 
-  path = gtk_tree_path_new_from_string (arg1);
-  
-  if (!gtk_tree_model_get_iter (model, &iter, path)) {
+  if (!gtk_tree_model_get_iter_from_string (model, &iter, arg1)) {
     return;
   }
 
@@ -687,13 +705,12 @@ static void multiattrib_callback_edited_value(GtkCellRendererText *cell_renderer
   o_text_change (toplevel, o_attrib,
                  newtext, o_attrib->visibility, o_attrib->show_name_value);
   
-  /* signals the modification of the row */
-  gtk_tree_model_row_changed (model, path, &iter);
+  /* request an update of display for this row */
+  update_row_display (model, &iter);
   
   g_free (name);
   g_free (value);
   g_free (newtext);
-  gtk_tree_path_free (path);
   
 }
 
@@ -733,6 +750,9 @@ static void multiattrib_callback_toggled_visible(GtkCellRendererToggle *cell_ren
   o_text_recreate (toplevel, o_attrib);
   o_text_draw (toplevel, o_attrib);
   o_undo_savestate (toplevel, UNDO_ALL);
+
+  /* request an update of display for this row */
+  update_row_display (model, &iter);
   
 }
 
@@ -779,6 +799,9 @@ static void multiattrib_callback_toggled_show_name(GtkCellRendererToggle *cell_r
   o_text_recreate (toplevel, o_attrib);
   o_text_draw (toplevel, o_attrib);
   o_undo_savestate (toplevel, UNDO_ALL);
+
+  /* request an update of display for this row */
+  update_row_display (model, &iter);
   
 }
 
@@ -826,6 +849,9 @@ static void multiattrib_callback_toggled_show_value(GtkCellRendererToggle *cell_
   o_text_draw (toplevel, o_attrib);
   o_undo_savestate (toplevel, UNDO_ALL);
   
+  /* request an update of display for this row */
+  update_row_display (model, &iter);
+
 }
 
 /*! \todo Finish function documentation

@@ -1,5 +1,9 @@
 2006-10-19  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* src/x_multiattrib.c: Fixed toggle renderers to update their
+	appearance when they are activated from keyboard. Bug reported by
+	Peter Clifton.
+
 	* configure.ac: Cleaned up to remove remaining traces of noweb
 	days.
 
