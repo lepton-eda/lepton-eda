@@ -1,3 +1,8 @@
+2006-10-20 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* po/es_ES.po: Fixed the header of the spanish translation.
+	Thanks to Werner Hoch for pointing it out.
+
 2006-10-19 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* po/es_ES.po: Updated spanish translation.
