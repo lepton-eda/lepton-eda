@@ -1,5 +1,7 @@
 2006-10-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* po/fr_FR.po: Updated the French translation.
+
 	* po/*: Updated and merged i18n files for new POTFILES.
 
 	* po/POTFILES.in: Added x_compselect.c to list.
