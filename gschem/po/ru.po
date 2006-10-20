@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-19 09:35+0200\n"
+"POT-Creation-Date: 2006-10-21 01:13+0200\n"
 "PO-Revision-Date: 2006-09-13 16:59+0300\n"
 "Last-Translator: Andy Shevchenko <andy@smile.org.ua>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -110,7 +110,7 @@ msgstr "Режим множественного копирования"
 msgid "Move Mode"
 msgstr "Режим перемещения"
 
-#: src/rcstrings.c:26 src/i_callbacks.c:777 src/x_multiattrib.c:1162
+#: src/rcstrings.c:26 src/i_callbacks.c:777 src/x_multiattrib.c:1188
 msgid "Delete"
 msgstr "Удалить"
 
@@ -367,7 +367,7 @@ msgstr "Наверх"
 msgid "Documentation"
 msgstr "Документация"
 
-#: src/rcstrings.c:96 src/x_multiattrib.c:1301
+#: src/rcstrings.c:96 src/x_multiattrib.c:1327
 msgid "Attributes"
 msgstr "Атрибуты"
 
@@ -1351,15 +1351,15 @@ msgstr "Редактор одного атрибута"
 msgid "Add/Edit Attribute"
 msgstr "Добавить/Редактрировать атрибут"
 
-#: src/x_attribedit.c:464 src/x_multiattrib.c:1528
+#: src/x_attribedit.c:464 src/x_multiattrib.c:1554
 msgid "Visible"
 msgstr "Видимый"
 
-#: src/x_attribedit.c:475 src/x_multiattrib.c:1500
+#: src/x_attribedit.c:475 src/x_multiattrib.c:1526
 msgid "Value:"
 msgstr "Значение:"
 
-#: src/x_attribedit.c:485 src/x_multiattrib.c:1481
+#: src/x_attribedit.c:485 src/x_multiattrib.c:1507
 msgid "Name:"
 msgstr "Имя:"
 
@@ -1371,7 +1371,7 @@ msgstr "Показать только значение"
 msgid "Show Name Only"
 msgstr "Показать только имя"
 
-#: src/x_attribedit.c:513 src/x_multiattrib.c:1131
+#: src/x_attribedit.c:513 src/x_multiattrib.c:1157
 msgid "Show Name & Value"
 msgstr "Показать имя и значение"
 
@@ -1383,7 +1383,7 @@ msgstr "Множественное сцепление"
 msgid "All"
 msgstr "Все"
 
-#: src/x_attribedit.c:546
+#: src/x_attribedit.c:546 src/x_compselect.c:741
 msgid "Components"
 msgstr "Компоненты"
 
@@ -1419,6 +1419,31 @@ msgstr "Невозможно назначить цвет %s!\n"
 #, c-format
 msgid "Tried to get an invalid color: %d\n"
 msgstr "Попытка получения неверного цвета: %d\n"
+
+#: src/x_compselect.c:581
+msgid "Default behavior - reference component"
+msgstr "Нормальное поведение - ссылка на компонент"
+
+#: src/x_compselect.c:584
+msgid "Embed component in schematic"
+msgstr "Внедрить компонент в схему"
+
+#: src/x_compselect.c:587
+msgid "Include component as individual objects"
+msgstr "Включить компонент как индивидуальный объект"
+
+#: src/x_compselect.c:666
+msgid "Select Component..."
+msgstr "Выбрать компонент..."
+
+#: src/x_compselect.c:771
+#, fuzzy
+msgid "Filter:"
+msgstr "Фильтр"
+
+#: src/x_compselect.c:835 src/x_fileselect.c:123
+msgid "Preview"
+msgstr "Предварительный просмотр"
 
 #: src/x_dialog.c:226
 msgid "Text Entry..."
@@ -1772,7 +1797,7 @@ msgstr "левый правый"
 msgid "diagonal"
 msgstr "диагональный"
 
-#: src/x_dialog.c:4547 src/x_multiattrib.c:1358
+#: src/x_dialog.c:4547 src/x_multiattrib.c:1384
 msgid "Name"
 msgstr "Имя"
 
@@ -1814,10 +1839,6 @@ msgstr "Схемы и символы"
 #: src/x_fileselect.c:62
 msgid "All files"
 msgstr "Все файлы"
-
-#: src/x_fileselect.c:123
-msgid "Preview"
-msgstr "Предварительный просмотр"
 
 #: src/x_fileselect.c:171
 msgid "Open..."
@@ -1953,43 +1974,43 @@ msgstr ""
 "Попытка установки чувствительности для несуществующего выскакивающего "
 "menu_item\n"
 
-#: src/x_multiattrib.c:627
+#: src/x_multiattrib.c:648
 msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr "Атрибуты с пустым именем недопустимы. Пожалуйста, установите имя."
 
-#: src/x_multiattrib.c:1133
+#: src/x_multiattrib.c:1159
 msgid "Show Value only"
 msgstr "Показать только значение"
 
-#: src/x_multiattrib.c:1135
+#: src/x_multiattrib.c:1161
 msgid "Show Name only"
 msgstr "Показать только имя"
 
-#: src/x_multiattrib.c:1161
+#: src/x_multiattrib.c:1187
 msgid "Duplicate"
 msgstr "Дублировать"
 
-#: src/x_multiattrib.c:1278
+#: src/x_multiattrib.c:1304
 msgid "Edit Attributes"
 msgstr "Редактировать атрибуты"
 
-#: src/x_multiattrib.c:1383
+#: src/x_multiattrib.c:1409
 msgid "Value"
 msgstr "Значение"
 
-#: src/x_multiattrib.c:1405
+#: src/x_multiattrib.c:1431
 msgid "Vis?"
 msgstr "Видим?"
 
-#: src/x_multiattrib.c:1425
+#: src/x_multiattrib.c:1451
 msgid "N"
 msgstr ""
 
-#: src/x_multiattrib.c:1445
+#: src/x_multiattrib.c:1471
 msgid "V"
 msgstr ""
 
-#: src/x_multiattrib.c:1466
+#: src/x_multiattrib.c:1492
 msgid "Add Attribute"
 msgstr "Добавить атрибут"
 
@@ -2276,15 +2297,6 @@ msgstr "Закрытие [%s]\n"
 #~ msgid "Search in Files - End of list"
 #~ msgstr "Поиск среди файлов - конец списка"
 
-#~ msgid "Default behavior - reference component"
-#~ msgstr "Нормальное поведение - ссылка на компонент"
-
-#~ msgid "Embed component in schematic"
-#~ msgstr "Внедрить компонент в схему"
-
-#~ msgid "Include component as individual objects"
-#~ msgstr "Включить компонент как индивидуальный объект"
-
 #~ msgid "Search in Components"
 #~ msgstr "Поиск среди компонентов"
 
@@ -2293,12 +2305,6 @@ msgstr "Закрытие [%s]\n"
 
 #~ msgid "Search in Components - End of list"
 #~ msgstr "Поиск среди компонентов - конец списка"
-
-#~ msgid "Select Component..."
-#~ msgstr "Выбрать компонент..."
-
-#~ msgid "Filter"
-#~ msgstr "Фильтр"
 
 #~ msgid "Directories"
 #~ msgstr "Каталоги"

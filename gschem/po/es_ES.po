@@ -8,15 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-19 09:35+0200\n"
+"POT-Creation-Date: 2006-10-21 01:13+0200\n"
 "PO-Revision-Date: 2006-10-19 19:07+0200\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);"
-"X-Generator: KBabel 1.0.2"
+"Plural-Forms: nplurals=2; plural=(n != 1);X-Generator: KBabel 1.0.2\n"
 
 #: src/rcstrings.c:2 src/x_print.c:376
 msgid "File"
@@ -110,7 +109,7 @@ msgstr "Modo de copia múltiple"
 msgid "Move Mode"
 msgstr "Mover"
 
-#: src/rcstrings.c:26 src/i_callbacks.c:777 src/x_multiattrib.c:1162
+#: src/rcstrings.c:26 src/i_callbacks.c:777 src/x_multiattrib.c:1188
 msgid "Delete"
 msgstr "Borrar"
 
@@ -367,7 +366,7 @@ msgstr "Arriba"
 msgid "Documentation"
 msgstr "Documentación"
 
-#: src/rcstrings.c:96 src/x_multiattrib.c:1301
+#: src/rcstrings.c:96 src/x_multiattrib.c:1327
 msgid "Attributes"
 msgstr "Propiedades"
 
@@ -585,12 +584,14 @@ msgstr ""
 #: src/g_rc.c:1681
 #, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
-msgstr "Se ha especificado un aumento no válido [%d] a la función mousepan-gain\n"
+msgstr ""
+"Se ha especificado un aumento no válido [%d] a la función mousepan-gain\n"
 
 #: src/g_rc.c:1704
 #, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
-msgstr "Se ha especificado un aumento no válido [%d] a la función keyboardpan-gain\n"
+msgstr ""
+"Se ha especificado un aumento no válido [%d] a la función keyboardpan-gain\n"
 
 #: src/gschem.c:141 src/gschem.c:151
 #, c-format
@@ -793,7 +794,9 @@ msgstr "Guardado todo"
 #: src/i_callbacks.c:458 src/i_callbacks.c:461
 #, c-format
 msgid "libgd not installed or disabled, so this feature is disabled\n"
-msgstr "La librería libgdgeda no está instalada o ha sido deshabilitada, así que esta opción está deshabilitada\n"
+msgstr ""
+"La librería libgdgeda no está instalada o ha sido deshabilitada, así que "
+"esta opción está deshabilitada\n"
 
 #: src/i_callbacks.c:510
 msgid "Closing Window\n"
@@ -1248,12 +1251,16 @@ msgstr ""
 #: src/o_misc.c:1789
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr "NO se han podido cambiar los permisos de la copia de seguridad anterior [%s] a lectura-escritura\n"
+msgstr ""
+"NO se han podido cambiar los permisos de la copia de seguridad anterior [%s] "
+"a lectura-escritura\n"
 
 #: src/o_misc.c:1807
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
-msgstr "NO se han podido cambiar los permisos de la copia de seguridad anterior [%s] a sólo lectura\n"
+msgstr ""
+"NO se han podido cambiar los permisos de la copia de seguridad anterior [%s] "
+"a sólo lectura\n"
 
 #: src/o_misc.c:1812
 #, c-format
@@ -1384,15 +1391,15 @@ msgstr "Editor de una única propiedad"
 msgid "Add/Edit Attribute"
 msgstr "Añadir/Editar propiedad"
 
-#: src/x_attribedit.c:464 src/x_multiattrib.c:1528
+#: src/x_attribedit.c:464 src/x_multiattrib.c:1554
 msgid "Visible"
 msgstr "Visible"
 
-#: src/x_attribedit.c:475 src/x_multiattrib.c:1500
+#: src/x_attribedit.c:475 src/x_multiattrib.c:1526
 msgid "Value:"
 msgstr "Valor:"
 
-#: src/x_attribedit.c:485 src/x_multiattrib.c:1481
+#: src/x_attribedit.c:485 src/x_multiattrib.c:1507
 msgid "Name:"
 msgstr "Nombre:"
 
@@ -1404,7 +1411,7 @@ msgstr "Mostrar sólo valor"
 msgid "Show Name Only"
 msgstr "Mostrar sólo nombre"
 
-#: src/x_attribedit.c:513 src/x_multiattrib.c:1131
+#: src/x_attribedit.c:513 src/x_multiattrib.c:1157
 msgid "Show Name & Value"
 msgstr "Mostrar nombre y valor"
 
@@ -1416,7 +1423,7 @@ msgstr "Asociado múltiple"
 msgid "All"
 msgstr "Todo"
 
-#: src/x_attribedit.c:546
+#: src/x_attribedit.c:546 src/x_compselect.c:741
 msgid "Components"
 msgstr "Componentes"
 
@@ -1452,6 +1459,31 @@ msgstr "¡No se puede reservar memoria para el color %s!\n"
 #, c-format
 msgid "Tried to get an invalid color: %d\n"
 msgstr "Se ha intentado obtener un color no válido: %d\n"
+
+#: src/x_compselect.c:581
+msgid "Default behavior - reference component"
+msgstr "Comportamiento por defecto - designar componente"
+
+#: src/x_compselect.c:584
+msgid "Embed component in schematic"
+msgstr "Incrustar componente en el esquema"
+
+#: src/x_compselect.c:587
+msgid "Include component as individual objects"
+msgstr "Incluir componentes como objetos individuales"
+
+#: src/x_compselect.c:666
+msgid "Select Component..."
+msgstr "Seleccionar componente..."
+
+#: src/x_compselect.c:771
+#, fuzzy
+msgid "Filter:"
+msgstr "Filtro"
+
+#: src/x_compselect.c:835 src/x_fileselect.c:123
+msgid "Preview"
+msgstr "Vista preliminar"
 
 #: src/x_dialog.c:226
 msgid "Text Entry..."
@@ -1804,7 +1836,7 @@ msgstr "de izquierda a derecha"
 msgid "diagonal"
 msgstr "diagonal"
 
-#: src/x_dialog.c:4547 src/x_multiattrib.c:1358
+#: src/x_dialog.c:4547 src/x_multiattrib.c:1384
 msgid "Name"
 msgstr "Nombre"
 
@@ -1847,10 +1879,6 @@ msgstr "Esquemas y símbolos"
 #: src/x_fileselect.c:62
 msgid "All files"
 msgstr "Todos los archivos"
-
-#: src/x_fileselect.c:123
-msgid "Preview"
-msgstr "Vista preliminar"
 
 #: src/x_fileselect.c:171
 msgid "Open..."
@@ -1986,44 +2014,44 @@ msgstr ""
 "Se ha intentado modificar la sensibilidad de una opción de menú que no "
 "existe\n"
 
-#: src/x_multiattrib.c:627
+#: src/x_multiattrib.c:648
 msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr ""
 "No se permiten las propiedades sin nombre. Por favor, introduzca un nombre."
 
-#: src/x_multiattrib.c:1133
+#: src/x_multiattrib.c:1159
 msgid "Show Value only"
 msgstr "Mostrar sólo valor"
 
-#: src/x_multiattrib.c:1135
+#: src/x_multiattrib.c:1161
 msgid "Show Name only"
 msgstr "Mostrar sólo nombre"
 
-#: src/x_multiattrib.c:1161
+#: src/x_multiattrib.c:1187
 msgid "Duplicate"
 msgstr "Duplicar"
 
-#: src/x_multiattrib.c:1278
+#: src/x_multiattrib.c:1304
 msgid "Edit Attributes"
 msgstr "Editar propiedades"
 
-#: src/x_multiattrib.c:1383
+#: src/x_multiattrib.c:1409
 msgid "Value"
 msgstr "Valor"
 
-#: src/x_multiattrib.c:1405
+#: src/x_multiattrib.c:1431
 msgid "Vis?"
 msgstr "Visible?"
 
-#: src/x_multiattrib.c:1425
+#: src/x_multiattrib.c:1451
 msgid "N"
 msgstr "N"
 
-#: src/x_multiattrib.c:1445
+#: src/x_multiattrib.c:1471
 msgid "V"
 msgstr "V"
 
-#: src/x_multiattrib.c:1466
+#: src/x_multiattrib.c:1492
 msgid "Add Attribute"
 msgstr "Añadir propiedad"
 
@@ -2262,4 +2290,3 @@ msgstr "Descartando página [%s]\n"
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "Cerrando [%s]\n"
-

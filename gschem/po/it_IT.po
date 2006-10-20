@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it_IT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-19 09:35+0200\n"
+"POT-Creation-Date: 2006-10-21 01:13+0200\n"
 "PO-Revision-Date: 2006-08-26 21:55+0200\n"
 "Last-Translator: Michele Petrecca <michelinux@alice.it>\n"
 "Language-Team: \n"
@@ -112,7 +112,7 @@ msgstr "Modalità di Copiatura Multipla"
 msgid "Move Mode"
 msgstr "Modalità Spostamento"
 
-#: src/rcstrings.c:26 src/i_callbacks.c:777 src/x_multiattrib.c:1162
+#: src/rcstrings.c:26 src/i_callbacks.c:777 src/x_multiattrib.c:1188
 msgid "Delete"
 msgstr "Cancella"
 
@@ -369,7 +369,7 @@ msgstr "Sopra"
 msgid "Documentation"
 msgstr "Documentazione"
 
-#: src/rcstrings.c:96 src/x_multiattrib.c:1301
+#: src/rcstrings.c:96 src/x_multiattrib.c:1327
 msgid "Attributes"
 msgstr "Caratteristiche"
 
@@ -1357,15 +1357,15 @@ msgstr "Editor Singola Caratteristica"
 msgid "Add/Edit Attribute"
 msgstr "Aggiungi/Modifica Caratteristica"
 
-#: src/x_attribedit.c:464 src/x_multiattrib.c:1528
+#: src/x_attribedit.c:464 src/x_multiattrib.c:1554
 msgid "Visible"
 msgstr "Visibile"
 
-#: src/x_attribedit.c:475 src/x_multiattrib.c:1500
+#: src/x_attribedit.c:475 src/x_multiattrib.c:1526
 msgid "Value:"
 msgstr "Valore:"
 
-#: src/x_attribedit.c:485 src/x_multiattrib.c:1481
+#: src/x_attribedit.c:485 src/x_multiattrib.c:1507
 msgid "Name:"
 msgstr "Nome:"
 
@@ -1377,7 +1377,7 @@ msgstr "Mostra Solo il Valore"
 msgid "Show Name Only"
 msgstr "Mostra Solo il Nome"
 
-#: src/x_attribedit.c:513 src/x_multiattrib.c:1131
+#: src/x_attribedit.c:513 src/x_multiattrib.c:1157
 msgid "Show Name & Value"
 msgstr "Mostra Nome & Valore"
 
@@ -1389,7 +1389,7 @@ msgstr "Attacco Multiplo"
 msgid "All"
 msgstr "Tutto"
 
-#: src/x_attribedit.c:546
+#: src/x_attribedit.c:546 src/x_compselect.c:741
 msgid "Components"
 msgstr "Componenti"
 
@@ -1425,6 +1425,31 @@ msgstr "Non è possibile inserire il colore %s!\n"
 #, c-format
 msgid "Tried to get an invalid color: %d\n"
 msgstr "Provato a ottenere un colore non valido: %d\n"
+
+#: src/x_compselect.c:581
+msgid "Default behavior - reference component"
+msgstr "Comportamento predefinito - Consultazione componente"
+
+#: src/x_compselect.c:584
+msgid "Embed component in schematic"
+msgstr "Fissa il componente nello schema"
+
+#: src/x_compselect.c:587
+msgid "Include component as individual objects"
+msgstr "Includi componente come oggetto individuale"
+
+#: src/x_compselect.c:666
+msgid "Select Component..."
+msgstr "Seleziona Componente..."
+
+#: src/x_compselect.c:771
+#, fuzzy
+msgid "Filter:"
+msgstr "Filtro"
+
+#: src/x_compselect.c:835 src/x_fileselect.c:123
+msgid "Preview"
+msgstr "Anteprima"
 
 #: src/x_dialog.c:226
 msgid "Text Entry..."
@@ -1775,7 +1800,7 @@ msgstr "sinistra destra"
 msgid "diagonal"
 msgstr "diagonale"
 
-#: src/x_dialog.c:4547 src/x_multiattrib.c:1358
+#: src/x_dialog.c:4547 src/x_multiattrib.c:1384
 msgid "Name"
 msgstr "Nome"
 
@@ -1817,10 +1842,6 @@ msgstr "Schematici e Simboli"
 #: src/x_fileselect.c:62
 msgid "All files"
 msgstr "Tutti i File"
-
-#: src/x_fileselect.c:123
-msgid "Preview"
-msgstr "Anteprima"
 
 #: src/x_fileselect.c:171
 msgid "Open..."
@@ -1956,44 +1977,44 @@ msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
 msgstr ""
 "Provato a impostare la sensibilità su una finestra di popup menu_itemi\n"
 
-#: src/x_multiattrib.c:627
+#: src/x_multiattrib.c:648
 msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr ""
 "Attributi con il nome vuoto non sono permessi. Per favore inserisci un nome."
 
-#: src/x_multiattrib.c:1133
+#: src/x_multiattrib.c:1159
 msgid "Show Value only"
 msgstr "Mostra solo il Valore"
 
-#: src/x_multiattrib.c:1135
+#: src/x_multiattrib.c:1161
 msgid "Show Name only"
 msgstr "Mostra solo il Nome"
 
-#: src/x_multiattrib.c:1161
+#: src/x_multiattrib.c:1187
 msgid "Duplicate"
 msgstr "Duplicare"
 
-#: src/x_multiattrib.c:1278
+#: src/x_multiattrib.c:1304
 msgid "Edit Attributes"
 msgstr "Modifica Caratteristiche"
 
-#: src/x_multiattrib.c:1383
+#: src/x_multiattrib.c:1409
 msgid "Value"
 msgstr "Valore"
 
-#: src/x_multiattrib.c:1405
+#: src/x_multiattrib.c:1431
 msgid "Vis?"
 msgstr "Vis?"
 
-#: src/x_multiattrib.c:1425
+#: src/x_multiattrib.c:1451
 msgid "N"
 msgstr "N"
 
-#: src/x_multiattrib.c:1445
+#: src/x_multiattrib.c:1471
 msgid "V"
 msgstr "V"
 
-#: src/x_multiattrib.c:1466
+#: src/x_multiattrib.c:1492
 msgid "Add Attribute"
 msgstr "Aggiungi Attributo"
 
@@ -2288,15 +2309,6 @@ msgstr "Chiusura [%s]\n"
 #~ msgid "Search in Files - End of list"
 #~ msgstr "Ricerca nei File - Fine della lista"
 
-#~ msgid "Default behavior - reference component"
-#~ msgstr "Comportamento predefinito - Consultazione componente"
-
-#~ msgid "Embed component in schematic"
-#~ msgstr "Fissa il componente nello schema"
-
-#~ msgid "Include component as individual objects"
-#~ msgstr "Includi componente come oggetto individuale"
-
 #~ msgid "Search in Components"
 #~ msgstr "Ricerca nei Componenti"
 
@@ -2305,12 +2317,6 @@ msgstr "Chiusura [%s]\n"
 
 #~ msgid "Search in Components - End of list"
 #~ msgstr "Ricerca nei Componenti - Fine della lista"
-
-#~ msgid "Select Component..."
-#~ msgstr "Seleziona Componente..."
-
-#~ msgid "Filter"
-#~ msgstr "Filtro"
 
 #~ msgid "Directories"
 #~ msgstr "Cartelle"

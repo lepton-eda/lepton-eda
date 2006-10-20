@@ -38,6 +38,7 @@ src/parsecmd.c
 src/x_attribedit.c
 src/x_basic.c
 src/x_color.c
+src/x_compselect.c
 src/x_dialog.c
 src/x_event.c
 src/x_fileselect.c
