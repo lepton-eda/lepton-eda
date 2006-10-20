@@ -1,3 +1,10 @@
+2006-10-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/i_callbacks.c (i_callback_close_wm): Modified prototype to
+	match the one expected by GTK and made it stop further propagation
+	of the signal to avoid closing the window when user cancels the
+	close order. Bug reported by Werner Hoch.
+
 2006-10-20 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* po/es_ES.po: Fixed the header of the spanish translation.

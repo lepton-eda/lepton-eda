@@ -444,7 +444,7 @@ void i_callback_help_about(gpointer data, guint callback_action, GtkWidget *widg
 void i_callback_help_manual(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_help_hotkeys(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_show_coord_window(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_close_wm(GtkWidget *widget, GdkEvent *event, gpointer data);
+gboolean i_callback_close_wm(GtkWidget *widget, GdkEvent *event, gpointer data);
 /* i_vars.c */
 void i_vars_set(TOPLEVEL *w_current);
 void i_vars_setnames(TOPLEVEL *w_current);

@@ -3584,7 +3584,7 @@ DEFINE_I_CALLBACK(preview)
  *  used when you click the close button on the window which sends a DELETE
  *  signal to the app
  */
-void i_callback_close_wm ( GtkWidget *widget, GdkEvent *event, 
+gboolean i_callback_close_wm ( GtkWidget *widget, GdkEvent *event, 
 	                   gpointer data ) 
 {
 
@@ -3592,4 +3592,11 @@ void i_callback_close_wm ( GtkWidget *widget, GdkEvent *event,
   exit_if_null(w_current);
 
   x_window_close(w_current);
+
+  /* stop further propagation of the delete_event signal for window: */
+  /*   - if user has cancelled the close the window should obvioulsy */
+  /*   not be destroyed */
+  /*   - otherwise window has already been destroyed, nothing more to */
+  /*   do */
+  return TRUE;
 }
