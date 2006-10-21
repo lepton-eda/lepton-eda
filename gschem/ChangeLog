@@ -1,5 +1,8 @@
 2006-10-21 Carlos Nieves Onega <cnieves@iespana.es>
 
+	* src/o_text.c: Added sanity checks in o_text_draw_lowlevel and
+	o_text_draw functions using GLib functions.
+	
 	* src/o_text.c: Removed sanity checks in o_text_draw_lowlevel and
 	o_text_draw functions added today.
 	
