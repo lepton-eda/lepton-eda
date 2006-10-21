@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-21 01:13+0200\n"
+"POT-Creation-Date: 2006-10-21 00:24-0400\n"
 "PO-Revision-Date: 2006-07-27 01:34-0300\n"
 "Last-Translator: \n"
 "Language-Team:  <pt@li.org>\n"
@@ -794,7 +794,7 @@ msgstr "Fechando Janela\n"
 msgid "Select objs first"
 msgstr "Selecione objetos antes"
 
-#: src/i_callbacks.c:817 src/x_dialog.c:574 src/x_dialog.c:579
+#: src/i_callbacks.c:817 src/x_dialog.c:575 src/x_dialog.c:580
 msgid "Edit Text"
 msgstr "Editar Texto"
 
@@ -814,7 +814,7 @@ msgstr "Rotacionar"
 msgid "Mirror"
 msgstr "Espelhar"
 
-#: src/i_callbacks.c:998 src/x_dialog.c:1795
+#: src/i_callbacks.c:998 src/x_dialog.c:1796
 msgid "Translate"
 msgstr "Transladar"
 
@@ -861,7 +861,7 @@ msgstr "Deixar Visível"
 msgid "Edit Line Type"
 msgstr "Editar Tipo de Linha"
 
-#: src/i_callbacks.c:1325 src/x_dialog.c:1369
+#: src/i_callbacks.c:1325 src/x_dialog.c:1370
 msgid "Edit Fill Type"
 msgstr "Editar Preenchimento"
 
@@ -1459,152 +1459,152 @@ msgstr ""
 "cursor na janela, clique para deixar o texto.\n"
 "Use botão do meio para rotacionar enquanto posiciona"
 
-#: src/x_dialog.c:338
+#: src/x_dialog.c:339
 msgid "Lower Left"
 msgstr "Esq Baixo"
 
-#: src/x_dialog.c:349
+#: src/x_dialog.c:350
 msgid "Middle Left"
 msgstr "Esq Centro"
 
-#: src/x_dialog.c:360
+#: src/x_dialog.c:361
 msgid "Upper Left"
 msgstr "Esq Alto"
 
-#: src/x_dialog.c:371
+#: src/x_dialog.c:372
 msgid "Lower Middle"
 msgstr "Centro Baixo"
 
-#: src/x_dialog.c:382
+#: src/x_dialog.c:383
 msgid "Middle Middle"
 msgstr "Centro Centro"
 
-#: src/x_dialog.c:393
+#: src/x_dialog.c:394
 msgid "Upper Middle"
 msgstr "Centro Alto"
 
-#: src/x_dialog.c:404
+#: src/x_dialog.c:405
 msgid "Lower Right"
 msgstr "Dir Baixo"
 
-#: src/x_dialog.c:415
+#: src/x_dialog.c:416
 msgid "Middle Right"
 msgstr "Dir Centro"
 
-#: src/x_dialog.c:426
+#: src/x_dialog.c:427
 msgid "Upper Right"
 msgstr "Dir Alto"
 
-#: src/x_dialog.c:607
+#: src/x_dialog.c:608
 msgid "Edit Text Color"
 msgstr "Editar Cor de Texto"
 
-#: src/x_dialog.c:619
+#: src/x_dialog.c:620
 msgid "Edit Text Size"
 msgstr "Editar Tamanho do Texto"
 
-#: src/x_dialog.c:635
+#: src/x_dialog.c:636
 msgid "Edit Text Alignment"
 msgstr "Editar Alinhamento do Texto"
 
-#: src/x_dialog.c:712
+#: src/x_dialog.c:713
 msgid "Solid"
 msgstr "Solido"
 
-#: src/x_dialog.c:713
+#: src/x_dialog.c:714
 msgid "Dotted"
 msgstr "Pontilhado"
 
-#: src/x_dialog.c:714
+#: src/x_dialog.c:715
 msgid "Dashed"
 msgstr "Tracejado"
 
-#: src/x_dialog.c:715
+#: src/x_dialog.c:716
 msgid "Center"
 msgstr "Centro"
 
-#: src/x_dialog.c:716
+#: src/x_dialog.c:717
 msgid "Phantom"
 msgstr "Fantasma"
 
-#: src/x_dialog.c:860 src/x_dialog.c:862 src/x_dialog.c:864
-#: src/x_dialog.c:1051 src/x_dialog.c:1052 src/x_dialog.c:1053
-#: src/x_dialog.c:1061 src/x_dialog.c:1264 src/x_dialog.c:1266
-#: src/x_dialog.c:1268 src/x_dialog.c:1270 src/x_dialog.c:1272
-#: src/x_dialog.c:1498 src/x_dialog.c:1499 src/x_dialog.c:1500
-#: src/x_dialog.c:1501 src/x_dialog.c:1502 src/x_dialog.c:1510
+#: src/x_dialog.c:861 src/x_dialog.c:863 src/x_dialog.c:865
+#: src/x_dialog.c:1052 src/x_dialog.c:1053 src/x_dialog.c:1054
+#: src/x_dialog.c:1062 src/x_dialog.c:1265 src/x_dialog.c:1267
+#: src/x_dialog.c:1269 src/x_dialog.c:1271 src/x_dialog.c:1273
+#: src/x_dialog.c:1499 src/x_dialog.c:1500 src/x_dialog.c:1501
+#: src/x_dialog.c:1502 src/x_dialog.c:1503 src/x_dialog.c:1511
 msgid "*unchanged*"
 msgstr "*inalterado*"
 
-#: src/x_dialog.c:958
+#: src/x_dialog.c:959
 msgid "Edit Line Width & Type"
 msgstr "Editar Largura e Tipo de Linha"
 
-#: src/x_dialog.c:962 src/x_dialog.c:1387
+#: src/x_dialog.c:963 src/x_dialog.c:1388
 msgid "Line Width"
 msgstr "Largura da Linha"
 
-#: src/x_dialog.c:976
+#: src/x_dialog.c:977
 msgid "Line Type"
 msgstr "Tipo da Linha"
 
-#: src/x_dialog.c:990
+#: src/x_dialog.c:991
 msgid "Line Dash Length"
 msgstr "Comprimento dos traços"
 
-#: src/x_dialog.c:1000
+#: src/x_dialog.c:1001
 msgid "Line Dash Space"
 msgstr "Comprimento dos espaços"
 
-#: src/x_dialog.c:1102
+#: src/x_dialog.c:1103
 msgid "Hollow"
 msgstr "Vazio"
 
-#: src/x_dialog.c:1103
+#: src/x_dialog.c:1104
 msgid "Filled"
 msgstr "Preenchida"
 
-#: src/x_dialog.c:1104
+#: src/x_dialog.c:1105
 msgid "Mesh"
 msgstr "Malha"
 
-#: src/x_dialog.c:1105
+#: src/x_dialog.c:1106
 msgid "Hatch"
 msgstr "Linhas"
 
-#: src/x_dialog.c:1373
+#: src/x_dialog.c:1374
 msgid "Fill Type"
 msgstr "Tipo de Preenchimento"
 
-#: src/x_dialog.c:1400
+#: src/x_dialog.c:1401
 msgid "Angle1"
 msgstr "Ângulo1"
 
-#: src/x_dialog.c:1413
+#: src/x_dialog.c:1414
 msgid "Pitch1"
 msgstr "Passo1"
 
-#: src/x_dialog.c:1426
+#: src/x_dialog.c:1427
 msgid "Angle2"
 msgstr "Ângulo2"
 
-#: src/x_dialog.c:1439
+#: src/x_dialog.c:1440
 msgid "Pitch2"
 msgstr "Passo2"
 
-#: src/x_dialog.c:1636
+#: src/x_dialog.c:1637
 msgid "Arc Params"
 msgstr "Parametros do Arco"
 
-#: src/x_dialog.c:1640
+#: src/x_dialog.c:1641
 msgid "Start Angle"
 msgstr "Ângulo Inicial"
 
-#: src/x_dialog.c:1655
+#: src/x_dialog.c:1656
 msgid "Degrees of Sweep"
 msgstr "Graus de comprimento"
 
-#: src/x_dialog.c:1799
+#: src/x_dialog.c:1800
 msgid ""
 "Offset to translate?\n"
 "(0 for origin)"
@@ -1612,19 +1612,19 @@ msgstr ""
 "Valor a transladar?\n"
 "(0 para origem)"
 
-#: src/x_dialog.c:1944
+#: src/x_dialog.c:1945
 msgid "Text Size"
 msgstr "Tamanho do Texto"
 
-#: src/x_dialog.c:1948
+#: src/x_dialog.c:1949
 msgid "Enter new text size"
 msgstr "Entre com novo tamanho de texto"
 
-#: src/x_dialog.c:2093
+#: src/x_dialog.c:2094
 msgid "Snap Grid"
 msgstr "Grade de agarre"
 
-#: src/x_dialog.c:2097
+#: src/x_dialog.c:2098
 msgid "Enter new snap grid spacing"
 msgstr "Entre com novo tamanho de grade"
 

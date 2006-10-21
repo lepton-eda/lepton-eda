@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-21 01:13+0200\n"
+"POT-Creation-Date: 2006-10-21 00:24-0400\n"
 "PO-Revision-Date: 2006-09-13 16:59+0300\n"
 "Last-Translator: Andy Shevchenko <andy@smile.org.ua>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -792,7 +792,7 @@ msgstr "Закрытие окна\n"
 msgid "Select objs first"
 msgstr "Требуется выбор объектов"
 
-#: src/i_callbacks.c:817 src/x_dialog.c:574 src/x_dialog.c:579
+#: src/i_callbacks.c:817 src/x_dialog.c:575 src/x_dialog.c:580
 msgid "Edit Text"
 msgstr "Правка текста"
 
@@ -812,7 +812,7 @@ msgstr "Вращать"
 msgid "Mirror"
 msgstr "Зеркалирование"
 
-#: src/i_callbacks.c:998 src/x_dialog.c:1795
+#: src/i_callbacks.c:998 src/x_dialog.c:1796
 msgid "Translate"
 msgstr "Перевод"
 
@@ -860,7 +860,7 @@ msgstr "Сделать видимым"
 msgid "Edit Line Type"
 msgstr "Правка типа линии"
 
-#: src/i_callbacks.c:1325 src/x_dialog.c:1369
+#: src/i_callbacks.c:1325 src/x_dialog.c:1370
 msgid "Edit Fill Type"
 msgstr "Правка типа заливки"
 
@@ -1459,152 +1459,152 @@ msgstr ""
 "переместите курсор в окно, щелкните для установки текста.\n"
 "Средняя кнопка предназначена для вращения во время установки."
 
-#: src/x_dialog.c:338
+#: src/x_dialog.c:339
 msgid "Lower Left"
 msgstr "Нижний левый"
 
-#: src/x_dialog.c:349
+#: src/x_dialog.c:350
 msgid "Middle Left"
 msgstr "Средний левый"
 
-#: src/x_dialog.c:360
+#: src/x_dialog.c:361
 msgid "Upper Left"
 msgstr "Верхний левый"
 
-#: src/x_dialog.c:371
+#: src/x_dialog.c:372
 msgid "Lower Middle"
 msgstr "Нижний средний"
 
-#: src/x_dialog.c:382
+#: src/x_dialog.c:383
 msgid "Middle Middle"
 msgstr "Средний средний"
 
-#: src/x_dialog.c:393
+#: src/x_dialog.c:394
 msgid "Upper Middle"
 msgstr "Верхний средний"
 
-#: src/x_dialog.c:404
+#: src/x_dialog.c:405
 msgid "Lower Right"
 msgstr "Нижний правый"
 
-#: src/x_dialog.c:415
+#: src/x_dialog.c:416
 msgid "Middle Right"
 msgstr "Средний правый"
 
-#: src/x_dialog.c:426
+#: src/x_dialog.c:427
 msgid "Upper Right"
 msgstr "Верхний правый"
 
-#: src/x_dialog.c:607
+#: src/x_dialog.c:608
 msgid "Edit Text Color"
 msgstr "Правка цвета текста"
 
-#: src/x_dialog.c:619
+#: src/x_dialog.c:620
 msgid "Edit Text Size"
 msgstr "Правка размера текста"
 
-#: src/x_dialog.c:635
+#: src/x_dialog.c:636
 msgid "Edit Text Alignment"
 msgstr "Правка выравнивания текста"
 
-#: src/x_dialog.c:712
+#: src/x_dialog.c:713
 msgid "Solid"
 msgstr "Сплошной"
 
-#: src/x_dialog.c:713
+#: src/x_dialog.c:714
 msgid "Dotted"
 msgstr "Пунктир с точкой"
 
-#: src/x_dialog.c:714
+#: src/x_dialog.c:715
 msgid "Dashed"
 msgstr "Пунктир с дефисом"
 
-#: src/x_dialog.c:715
+#: src/x_dialog.c:716
 msgid "Center"
 msgstr "Центрированный"
 
-#: src/x_dialog.c:716
+#: src/x_dialog.c:717
 msgid "Phantom"
 msgstr "Искусственный"
 
-#: src/x_dialog.c:860 src/x_dialog.c:862 src/x_dialog.c:864
-#: src/x_dialog.c:1051 src/x_dialog.c:1052 src/x_dialog.c:1053
-#: src/x_dialog.c:1061 src/x_dialog.c:1264 src/x_dialog.c:1266
-#: src/x_dialog.c:1268 src/x_dialog.c:1270 src/x_dialog.c:1272
-#: src/x_dialog.c:1498 src/x_dialog.c:1499 src/x_dialog.c:1500
-#: src/x_dialog.c:1501 src/x_dialog.c:1502 src/x_dialog.c:1510
+#: src/x_dialog.c:861 src/x_dialog.c:863 src/x_dialog.c:865
+#: src/x_dialog.c:1052 src/x_dialog.c:1053 src/x_dialog.c:1054
+#: src/x_dialog.c:1062 src/x_dialog.c:1265 src/x_dialog.c:1267
+#: src/x_dialog.c:1269 src/x_dialog.c:1271 src/x_dialog.c:1273
+#: src/x_dialog.c:1499 src/x_dialog.c:1500 src/x_dialog.c:1501
+#: src/x_dialog.c:1502 src/x_dialog.c:1503 src/x_dialog.c:1511
 msgid "*unchanged*"
 msgstr "*неизменено*"
 
-#: src/x_dialog.c:958
+#: src/x_dialog.c:959
 msgid "Edit Line Width & Type"
 msgstr "Правка ширины и типа линии"
 
-#: src/x_dialog.c:962 src/x_dialog.c:1387
+#: src/x_dialog.c:963 src/x_dialog.c:1388
 msgid "Line Width"
 msgstr "Ширина линии"
 
-#: src/x_dialog.c:976
+#: src/x_dialog.c:977
 msgid "Line Type"
 msgstr "Тип линии"
 
-#: src/x_dialog.c:990
+#: src/x_dialog.c:991
 msgid "Line Dash Length"
 msgstr "Длина дефиса линии"
 
-#: src/x_dialog.c:1000
+#: src/x_dialog.c:1001
 msgid "Line Dash Space"
 msgstr "Дефисный пробел линии"
 
-#: src/x_dialog.c:1102
+#: src/x_dialog.c:1103
 msgid "Hollow"
 msgstr "Вогнуть"
 
-#: src/x_dialog.c:1103
+#: src/x_dialog.c:1104
 msgid "Filled"
 msgstr "Заполнено"
 
-#: src/x_dialog.c:1104
+#: src/x_dialog.c:1105
 msgid "Mesh"
 msgstr "Ячейка"
 
-#: src/x_dialog.c:1105
+#: src/x_dialog.c:1106
 msgid "Hatch"
 msgstr "Штрих"
 
-#: src/x_dialog.c:1373
+#: src/x_dialog.c:1374
 msgid "Fill Type"
 msgstr "Тип заливки"
 
-#: src/x_dialog.c:1400
+#: src/x_dialog.c:1401
 msgid "Angle1"
 msgstr "Угол1"
 
-#: src/x_dialog.c:1413
+#: src/x_dialog.c:1414
 msgid "Pitch1"
 msgstr "Наклон1"
 
-#: src/x_dialog.c:1426
+#: src/x_dialog.c:1427
 msgid "Angle2"
 msgstr "Угол2"
 
-#: src/x_dialog.c:1439
+#: src/x_dialog.c:1440
 msgid "Pitch2"
 msgstr "Наклон2"
 
-#: src/x_dialog.c:1636
+#: src/x_dialog.c:1637
 msgid "Arc Params"
 msgstr "Параметры дуги"
 
-#: src/x_dialog.c:1640
+#: src/x_dialog.c:1641
 msgid "Start Angle"
 msgstr "Начало угла"
 
-#: src/x_dialog.c:1655
+#: src/x_dialog.c:1656
 msgid "Degrees of Sweep"
 msgstr "Угол развертки в градусах"
 
-#: src/x_dialog.c:1799
+#: src/x_dialog.c:1800
 msgid ""
 "Offset to translate?\n"
 "(0 for origin)"
@@ -1612,19 +1612,19 @@ msgstr ""
 "Смещение для перевода?\n"
 "(о для начала отсчета)"
 
-#: src/x_dialog.c:1944
+#: src/x_dialog.c:1945
 msgid "Text Size"
 msgstr "Размер текста"
 
-#: src/x_dialog.c:1948
+#: src/x_dialog.c:1949
 msgid "Enter new text size"
 msgstr "Введите новый размер текста"
 
-#: src/x_dialog.c:2093
+#: src/x_dialog.c:2094
 msgid "Snap Grid"
 msgstr "Сетка привязки"
 
-#: src/x_dialog.c:2097
+#: src/x_dialog.c:2098
 msgid "Enter new snap grid spacing"
 msgstr "Введите новый шаг сетки привязки"
 

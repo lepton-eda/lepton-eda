@@ -9,6 +9,8 @@
 	* lib/system-gschemrc.in: Rearranged the order of the attribute-name
 	entries and added some missing attributes.
 
+	* po/*.po, geda-gschem.pot: make distcheck updated all po/port files.
+
 2006-10-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* po/fr_FR.po: Updated the French translation.

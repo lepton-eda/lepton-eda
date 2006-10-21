@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-21 01:13+0200\n"
+"POT-Creation-Date: 2006-10-21 00:24-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -778,7 +778,7 @@ msgstr ""
 msgid "Select objs first"
 msgstr ""
 
-#: src/i_callbacks.c:817 src/x_dialog.c:574 src/x_dialog.c:579
+#: src/i_callbacks.c:817 src/x_dialog.c:575 src/x_dialog.c:580
 msgid "Edit Text"
 msgstr ""
 
@@ -798,7 +798,7 @@ msgstr ""
 msgid "Mirror"
 msgstr ""
 
-#: src/i_callbacks.c:998 src/x_dialog.c:1795
+#: src/i_callbacks.c:998 src/x_dialog.c:1796
 msgid "Translate"
 msgstr ""
 
@@ -844,7 +844,7 @@ msgstr ""
 msgid "Edit Line Type"
 msgstr ""
 
-#: src/i_callbacks.c:1325 src/x_dialog.c:1369
+#: src/i_callbacks.c:1325 src/x_dialog.c:1370
 msgid "Edit Fill Type"
 msgstr ""
 
@@ -1424,170 +1424,170 @@ msgid ""
 "Middle button to rotate while placing."
 msgstr ""
 
-#: src/x_dialog.c:338
+#: src/x_dialog.c:339
 msgid "Lower Left"
 msgstr ""
 
-#: src/x_dialog.c:349
+#: src/x_dialog.c:350
 msgid "Middle Left"
 msgstr ""
 
-#: src/x_dialog.c:360
+#: src/x_dialog.c:361
 msgid "Upper Left"
 msgstr ""
 
-#: src/x_dialog.c:371
+#: src/x_dialog.c:372
 msgid "Lower Middle"
 msgstr ""
 
-#: src/x_dialog.c:382
+#: src/x_dialog.c:383
 msgid "Middle Middle"
 msgstr ""
 
-#: src/x_dialog.c:393
+#: src/x_dialog.c:394
 msgid "Upper Middle"
 msgstr ""
 
-#: src/x_dialog.c:404
+#: src/x_dialog.c:405
 msgid "Lower Right"
 msgstr ""
 
-#: src/x_dialog.c:415
+#: src/x_dialog.c:416
 msgid "Middle Right"
 msgstr ""
 
-#: src/x_dialog.c:426
+#: src/x_dialog.c:427
 msgid "Upper Right"
 msgstr ""
 
-#: src/x_dialog.c:607
+#: src/x_dialog.c:608
 msgid "Edit Text Color"
 msgstr ""
 
-#: src/x_dialog.c:619
+#: src/x_dialog.c:620
 msgid "Edit Text Size"
 msgstr ""
 
-#: src/x_dialog.c:635
+#: src/x_dialog.c:636
 msgid "Edit Text Alignment"
 msgstr ""
 
-#: src/x_dialog.c:712
+#: src/x_dialog.c:713
 msgid "Solid"
 msgstr ""
 
-#: src/x_dialog.c:713
+#: src/x_dialog.c:714
 msgid "Dotted"
 msgstr ""
 
-#: src/x_dialog.c:714
+#: src/x_dialog.c:715
 msgid "Dashed"
 msgstr ""
 
-#: src/x_dialog.c:715
+#: src/x_dialog.c:716
 msgid "Center"
 msgstr ""
 
-#: src/x_dialog.c:716
+#: src/x_dialog.c:717
 msgid "Phantom"
 msgstr ""
 
-#: src/x_dialog.c:860 src/x_dialog.c:862 src/x_dialog.c:864
-#: src/x_dialog.c:1051 src/x_dialog.c:1052 src/x_dialog.c:1053
-#: src/x_dialog.c:1061 src/x_dialog.c:1264 src/x_dialog.c:1266
-#: src/x_dialog.c:1268 src/x_dialog.c:1270 src/x_dialog.c:1272
-#: src/x_dialog.c:1498 src/x_dialog.c:1499 src/x_dialog.c:1500
-#: src/x_dialog.c:1501 src/x_dialog.c:1502 src/x_dialog.c:1510
+#: src/x_dialog.c:861 src/x_dialog.c:863 src/x_dialog.c:865
+#: src/x_dialog.c:1052 src/x_dialog.c:1053 src/x_dialog.c:1054
+#: src/x_dialog.c:1062 src/x_dialog.c:1265 src/x_dialog.c:1267
+#: src/x_dialog.c:1269 src/x_dialog.c:1271 src/x_dialog.c:1273
+#: src/x_dialog.c:1499 src/x_dialog.c:1500 src/x_dialog.c:1501
+#: src/x_dialog.c:1502 src/x_dialog.c:1503 src/x_dialog.c:1511
 msgid "*unchanged*"
 msgstr ""
 
-#: src/x_dialog.c:958
+#: src/x_dialog.c:959
 msgid "Edit Line Width & Type"
 msgstr ""
 
-#: src/x_dialog.c:962 src/x_dialog.c:1387
+#: src/x_dialog.c:963 src/x_dialog.c:1388
 msgid "Line Width"
 msgstr ""
 
-#: src/x_dialog.c:976
+#: src/x_dialog.c:977
 msgid "Line Type"
 msgstr ""
 
-#: src/x_dialog.c:990
+#: src/x_dialog.c:991
 msgid "Line Dash Length"
 msgstr ""
 
-#: src/x_dialog.c:1000
+#: src/x_dialog.c:1001
 msgid "Line Dash Space"
 msgstr ""
 
-#: src/x_dialog.c:1102
+#: src/x_dialog.c:1103
 msgid "Hollow"
 msgstr ""
 
-#: src/x_dialog.c:1103
+#: src/x_dialog.c:1104
 msgid "Filled"
 msgstr ""
 
-#: src/x_dialog.c:1104
+#: src/x_dialog.c:1105
 msgid "Mesh"
 msgstr ""
 
-#: src/x_dialog.c:1105
+#: src/x_dialog.c:1106
 msgid "Hatch"
 msgstr ""
 
-#: src/x_dialog.c:1373
+#: src/x_dialog.c:1374
 msgid "Fill Type"
 msgstr ""
 
-#: src/x_dialog.c:1400
+#: src/x_dialog.c:1401
 msgid "Angle1"
 msgstr ""
 
-#: src/x_dialog.c:1413
+#: src/x_dialog.c:1414
 msgid "Pitch1"
 msgstr ""
 
-#: src/x_dialog.c:1426
+#: src/x_dialog.c:1427
 msgid "Angle2"
 msgstr ""
 
-#: src/x_dialog.c:1439
+#: src/x_dialog.c:1440
 msgid "Pitch2"
 msgstr ""
 
-#: src/x_dialog.c:1636
+#: src/x_dialog.c:1637
 msgid "Arc Params"
 msgstr ""
 
-#: src/x_dialog.c:1640
+#: src/x_dialog.c:1641
 msgid "Start Angle"
 msgstr ""
 
-#: src/x_dialog.c:1655
+#: src/x_dialog.c:1656
 msgid "Degrees of Sweep"
 msgstr ""
 
-#: src/x_dialog.c:1799
+#: src/x_dialog.c:1800
 msgid ""
 "Offset to translate?\n"
 "(0 for origin)"
 msgstr ""
 
-#: src/x_dialog.c:1944
+#: src/x_dialog.c:1945
 msgid "Text Size"
 msgstr ""
 
-#: src/x_dialog.c:1948
+#: src/x_dialog.c:1949
 msgid "Enter new text size"
 msgstr ""
 
-#: src/x_dialog.c:2093
+#: src/x_dialog.c:2094
 msgid "Snap Grid"
 msgstr ""
 
-#: src/x_dialog.c:2097
+#: src/x_dialog.c:2098
 msgid "Enter new snap grid spacing"
 msgstr ""
 
