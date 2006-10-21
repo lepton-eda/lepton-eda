@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>geda:ubuntu</title>
+  <meta name="generator" content="DokuWiki Release 2006-03-09" />
+  <link rel="start" href="http://geda.seul.org/wiki/" />
+  <link rel="contents" href="http://geda.seul.org/wiki/geda:ubuntu?do=index" title="" />
+  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:ubuntu?do=export_xhtml" />
+  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:ubuntu?do=export_raw" />
+  <meta name="date" content="2006-10-03T20:08:43-0400" />
+  <meta name="robots" content="index,follow" />
+  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
+  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+<p>
+ <strong>Ubuntu Install Notes</strong>
+</p>
+
+<p>
+Basic Stable Installation:  Use apt-get or synaptic to install a stable version from Debian repositories. (easy).  Alternately download a binary .deb from Debian (thanks to Hamish) and you can just sudo dpkg -i &lt;pcb-version.deb&gt;.
+</p>
+
+<p>
+Build Installation: Ubuntu doesn&rsquo;t include everything you need to compile software yourself.  You&rsquo;ll want to install the &lsquo;build-essential&rsquo; package using apt-get or synaptic to get the basic toolchain working on your machine.  (Things like GCC are not inc. in Ubuntu).  For a testing maturity level for PCB or geda, build-essential should be all you need.
+</p>
+
+<p>
+Be careful as synaptic can do extreme damage to your system.  Do be fooled into replacing libc6 because synaptic will want to remove all applications that depend on it &ndash; meaning your entire system.
+</p>
+
+<p>
+<acronym title="Concurrent Versions System">CVS</acronym> Installation: For the <acronym title="Concurrent Versions System">CVS</acronym> version of PCB under Edgy, your ./configure step will require running with switch &ndash;enable-maintainer-mode.  (more notes needed) 
+</p>
+</div>
+</body>
+</html>

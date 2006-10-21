@@ -2,6 +2,16 @@
 
 	* configure.ac: Bumped package version to 20061020.
 
+	* wiki/*: Updated tarball copy of the wiki from the geda.seul.org
+	wiki.  Lots of various updates (many thanks to various people)
+	and now the tragesym tutorial (Thanks Werner) is now part of
+	the official documentation.
+
+	* scripts/copywip.sh, wikicommit.sh: Added a new script that makes
+	it easier to update changed files when updating the wiki
+	documentation.  Tweak to wikicommit.sh to make it easier to verify
+	that it is doing the right thing.
+
 2006-09-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* AUTHORS: Updated file pointing people at gschem's AUTHOR file 

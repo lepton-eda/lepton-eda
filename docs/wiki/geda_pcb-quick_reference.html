@@ -12,8 +12,8 @@
   <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
   <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:pcb-quick_reference?do=export_xhtml" />
   <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:pcb-quick_reference?do=export_raw" />
-  <meta name="date" content="2006-09-06T15:43:12-0400" />
-  <meta name="robots" content="noindex,nofollow" />
+  <meta name="date" content="2006-09-21T19:02:07-0400" />
+  <meta name="robots" content="index,follow" />
   <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
   <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
 </head>
@@ -62,10 +62,13 @@
 		<th class="centeralign">  KEY		</th><th class="leftalign"> MNEMONIC	</th><th class="centeralign">  DESCRIPTION  </th>
 	</tr>
 	<tr>
-		<td class="centeralign">  space	</td><td class="leftalign"> select	</td><td class="leftalign"> enter select mode  </td>
+		<td class="centeralign">  esc		</td><td class="leftalign"> panner	</td><td> enter panning mode </td>
 	</tr>
 	<tr>
-		<td class="centeralign">  esc		</td><td class="leftalign"> panner	</td><td class="leftalign"> enter panning mode  </td>
+		<td class="centeralign">  insert	</td><td class="leftalign"> insert point	</td><td> enter insert point mode. Click and drag on track to insert a point </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  space	</td><td class="leftalign"> select	</td><td class="leftalign"> enter select mode  </td>
 	</tr>
 	<tr>
 		<td class="centeralign">  tab		</td><td class="leftalign"> flip view	</td><td class="leftalign"> view: flip board  </td>
@@ -128,6 +131,12 @@
 		<td class="centeralign">  shift-k  	</td><td class="leftalign"> klear (-)  	</td><td class="leftalign"> decrement clearance (soldermask to copper edge (NOTE: can go negative!))  </td>
 	</tr>
 	<tr>
+		<td class="centeralign">  l  		</td><td class="leftalign"> increase line	</td><td class="leftalign"> increment width of the line tool, adds to the settings of the current line style  </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-l  	</td><td class="leftalign"> decrease line	</td><td> reduce the current linewidth </td>
+	</tr>
+	<tr>
 		<td class="centeralign">  m  		</td><td class="leftalign"> move to layer	</td><td class="leftalign"> move the object under the cursor to the current layer  </td>
 	</tr>
 	<tr>
@@ -137,7 +146,16 @@
 		<td class="centeralign">  ctrl-m	</td><td class="leftalign"> move origin	</td><td> set the origin to the current position of the mouse pointer </td>
 	</tr>
 	<tr>
-		<td class="centeralign">  n		</td><td class="leftalign"> name		</td><td class="leftalign"> show object refdes / pin number (depends on what’s selected)  </td>
+		<td class="centeralign">  n		</td><td class="leftalign"> name		</td><td> show object refdes / pin number at mouse pointer </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-n	</td><td class="leftalign"> next		</td><td> Select the shortest unselected rat on the board </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  o		</td><td class="leftalign"> optimize rats	</td><td> optimize and redraw all rats </td>
+	</tr>
+	<tr>
+		<td class="centeralign">  shift-o	</td><td class="leftalign"> optimize some rats	</td><td> optimize and redraw selected nets only </td>
 	</tr>
 	<tr>
 		<td class="centeralign">  shift-p	</td><td class="leftalign"> polygon close	</td><td class="leftalign"> connect the first point of a polygon with the last  </td>
@@ -176,46 +194,46 @@
 		<td class="centeralign">  shift-z	</td><td class="leftalign"> un-zoom	</td><td class="leftalign"> view: zoom out  </td>
 	</tr>
 	<tr>
-		<td class="centeralign">  F1		</td><td class="leftalign"> via		</td><td> via tool </td>
+		<td class="centeralign">  F1		</td><td class="leftalign"> via		</td><td> enter via tool </td>
 	</tr>
 	<tr>
-		<td class="centeralign">  F2		</td><td class="leftalign"> line		</td><td class="leftalign"> line tool  </td>
+		<td class="centeralign">  F2		</td><td class="leftalign"> line		</td><td class="leftalign"> enter line tool  </td>
 	</tr>
 	<tr>
-		<td class="centeralign">  F3		</td><td class="leftalign"> arc		</td><td> arc tool </td>
+		<td class="centeralign">  F3		</td><td class="leftalign"> arc		</td><td> enter arc tool </td>
 	</tr>
 	<tr>
-		<td class="centeralign">  F4		</td><td class="leftalign"> text		</td><td> text tool </td>
+		<td class="centeralign">  F4		</td><td class="leftalign"> text		</td><td> enter text tool </td>
 	</tr>
 	<tr>
-		<td class="centeralign">  F5		</td><td class="leftalign"> rectangle	</td><td> rectangle tool</td>
+		<td class="centeralign">  F5		</td><td class="leftalign"> rectangle	</td><td> enter rectangle tool</td>
 	</tr>
 	<tr>
-		<td class="centeralign">  F6		</td><td class="leftalign"> polygon	</td><td> polygon tool </td>
+		<td class="centeralign">  F6		</td><td class="leftalign"> polygon	</td><td> enter polygon tool </td>
 	</tr>
 	<tr>
-		<td class="centeralign">  F7		</td><td class="leftalign"> buffer	</td><td> buffer mode </td>
+		<td class="centeralign">  F7		</td><td class="leftalign"> buffer	</td><td> enter buffer mode </td>
 	</tr>
 	<tr>
-		<td class="centeralign">  F8		</td><td class="leftalign"> delete	</td><td> remove mode </td>
+		<td class="centeralign">  F8		</td><td class="leftalign"> delete	</td><td> enter remove mode </td>
 	</tr>
 	<tr>
-		<td class="centeralign">  F9		</td><td class="leftalign"> rotate	</td><td class="leftalign"> rotate mode  </td>
+		<td class="centeralign">  F9		</td><td class="leftalign"> rotate	</td><td class="leftalign"> enter rotate mode  </td>
 	</tr>
 	<tr>
 		<td class="centeralign">  F10		</td><td class="leftalign"> file menu	</td><td> file menu </td>
 	</tr>
 	<tr>
-		<td class="centeralign">  F11		</td><td class="leftalign"> select	</td><td class="leftalign"> select mode (same as [space])  </td>
+		<td class="centeralign">  F11		</td><td class="leftalign"> select	</td><td class="leftalign"> enter select mode (same as [space])  </td>
 	</tr>
 	<tr>
-		<td class="centeralign">  F12		</td><td class="rightalign"> 		</td><td class="rightalign">  </td>
+		<td class="centeralign">  F12		</td><td class="leftalign"> lock		</td><td> enter lock mode </td>
 	</tr>
 </table>
 <br />
 
 </div>
-<!-- SECTION [61-3017] -->
+<!-- SECTION [61-3549] -->
 <h2><a name="viewport_keystrokes" id="viewport_keystrokes">Viewport Keystrokes</a></h2>
 <div class="level2">
 <table class="inline">
@@ -250,7 +268,7 @@
 <br />
 
 </div>
-<!-- SECTION [3018-3391] -->
+<!-- SECTION [3550-3923] -->
 <h1><a name="footprint_reference" id="footprint_reference">Footprint Reference</a></h1>
 <div class="level1">
 
@@ -259,7 +277,7 @@ The Master document for footprint creation is the <a href="http://pcb.sourceforg
 </p>
 
 </div>
-<!-- SECTION [3392-3685] -->
+<!-- SECTION [3924-4217] -->
 <h2><a name="general_syntax" id="general_syntax">General syntax</a></h2>
 <div class="level2">
 
@@ -282,7 +300,7 @@ A pcb footprint file may contain any of the following commands:
 </ul>
 
 </div>
-<!-- SECTION [3686-4298] -->
+<!-- SECTION [4218-4830] -->
 <h2><a name="elements" id="elements">Elements</a></h2>
 <div class="level2">
 
@@ -330,7 +348,7 @@ A pcb footprint file may contain any of the following commands:
 <br />
 
 </div>
-<!-- SECTION [4299-5126] -->
+<!-- SECTION [4831-5658] -->
 <h2><a name="pads" id="pads">Pads</a></h2>
 <div class="level2">
 
@@ -375,7 +393,7 @@ A pcb footprint file may contain any of the following commands:
 <br />
 
 </div>
-<!-- SECTION [5127-6031] -->
+<!-- SECTION [5659-6563] -->
 <h2><a name="pins" id="pins">Pins</a></h2>
 <div class="level2">
 
@@ -417,7 +435,7 @@ A pcb footprint file may contain any of the following commands:
 <br />
 
 </div>
-<!-- SECTION [6032-6730] -->
+<!-- SECTION [6564-7262] -->
 <h2><a name="examples" id="examples">Examples</a></h2>
 <div class="level2">
 <ul>
@@ -436,6 +454,6 @@ A pcb footprint file may contain any of the following commands:
 </ul>
 
 </div>
-<!-- SECTION [6731-] --></div>
+<!-- SECTION [7263-] --></div>
 </body>
 </html>

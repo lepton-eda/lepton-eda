@@ -12,8 +12,8 @@
   <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
   <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:faq-gschem?do=export_xhtml" />
   <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:faq-gschem?do=export_raw" />
-  <meta name="date" content="2006-08-12T12:22:50-0400" />
-  <meta name="robots" content="index,follow" />
+  <meta name="date" content="2006-10-19T11:52:57-0400" />
+  <meta name="robots" content="noindex,nofollow" />
   <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
   <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
 </head>
@@ -24,148 +24,56 @@
 <div id="toc__inside">
 
 <ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#gschem_installation_run-time_problems" class="toc">Gschem installation/run-time problems</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#gschem_segfaults_when_i_delete_components_on_fc5_and_other_linux_distributions_is_there_a_work-around" class="toc">Gschem segfaults when I delete components on FC5 (and other Linux distributions)! Is there a work-around?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#after_installation_gschem_does_not_work_what_could_be_wrong" class="toc">After installation gschem does not work!? What could be wrong?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#add_components_offers_no_symbols_what_can_i_do_about_it" class="toc">&quot;Add Components&quot; offers no symbols! What can I do about it?</a></span></div></li>
-</ul>
-</li>
 <li class="level1"><div class="li"><span class="li"><a href="#gschem_usage" class="toc">Gschem usage</a></span></div>
 <ul class="toc">
 <li class="level2"><div class="li"><span class="li"><a href="#how_do_i_move_a_component" class="toc">How do I move a component?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#how_do_i_change_the_size_of_the_text_on_a_symbol" class="toc">How do I change the size of the text on a symbol?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#is_there_an_explicit_no_connect_symbol_that_i_can_should_place_in_the_schematic_to_prevent_gnetlist_from_thinking_i_ve_forgotten_a_connection" class="toc">Is there an explicit &quot;no connect&quot; symbol that I can/should place in the schematic to prevent gnetlist from thinking I've forgotten a connection?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#how_do_i_print_schematics_from_the_command_line" class="toc">How do I print schematics from the command line?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#how_can_i_get_color_postscript_png_output" class="toc">How can I get color postscript/PNG output?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#how_can_i_get_black_and_white_postscript_png_output" class="toc">How can I get black and white postscript/PNG output?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#how_can_i_insert_schematics_into_my_latex_document" class="toc">How can I insert schematics into my LaTex document?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#how_can_i_split_postscript_output_over_multiple_pages" class="toc">How can I split postscript output over multiple pages?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#how_do_i_unlock_a_locked_component" class="toc">How do I unlock a locked component</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#how_can_i_get_refdes_automatically_numbered_when_i_draw_a_schematic" class="toc">How can I get refdes automatically numbered when I draw a schematic?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#what_is_a_bus_and_how_do_i_use_it" class="toc">What is a Bus and how do I use it?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#what_are_the_key_bindings_in_gschem" class="toc">What are the Key Bindings in gschem?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#what_are_the_mouse_bindings_in_gschem" class="toc">What are the mouse bindings in gschem?</a></span></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><span class="li"><a href="#gschem_symbols" class="toc">gschem symbols</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#what_s_this_business_about_heavy_vs._light_symbols" class="toc">What's this business about heavy vs. light symbols?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#i_am_using_a_symbol_out_of_the_library._how_come_it_s_not_aligned_to_the_grid" class="toc">I am using a symbol out of the library.  How come it's not aligned to the grid?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#is_there_an_explicit_no_connect_symbol_that_i_can_should_place_in_the_schematic_to_prevent_gnetlist_from_thinking_i_ve_forgotten_a_connection" class="toc">Is there an explicit &quot;no connect&quot; symbol that I can/should place in the schematic to prevent gnetlist from thinking I've forgotten a connection?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#how_do_i_promote_an_invisible_symbol_attribute_into_the_schematic" class="toc">How do I promote an invisible symbol attribute into the schematic?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#what_should_i_do_about_power_pins_on_my_symbolsmake_them_visible_explicit_or_invisible_implicit" class="toc">What should I do about power pins on my symbols: Make them visible (explicit) or invisible (implicit)?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#is_there_a_specification_or_manual_for_creating_gschem_symbols_where_is_it" class="toc">Is there a specification or manual for creating gschem symbols? Where is it?</a></span></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><span class="li"><a href="#gschem_configuration_customization" class="toc">Gschem configuration/customization</a></span></div>
 <ul class="toc">
 <li class="level2"><div class="li"><span class="li"><a href="#how_can_i_change_the_default_size_of_floating_text" class="toc">How can I change the default size of floating text?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#how_can_i_have_a_different_background_color_other_than_black" class="toc">How can I have a different background color other than black?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#how_can_i_get_refdes_automatically_numbered_when_i_draw_a_schematic" class="toc">How can I get refdes automatically numbered when I draw a schematic?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#what_are_the_mouse_bindings_in_gschem" class="toc">What are the mouse bindings in gschem?</a></span></div></li>
 </ul>
 </li>
-<li class="level1"><div class="li"><span class="li"><a href="#information_on_gschem_symbols" class="toc">Information on gschem symbols</a></span></div>
+<li class="level1"><div class="li"><span class="li"><a href="#printing_output" class="toc">Printing/Output</a></span></div>
 <ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#what_s_this_business_about_heavy_vs._light_symbols" class="toc">What's this business about heavy vs. light symbols?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#i_am_using_a_symbol_out_of_the_library._how_come_it_s_not_aligned_to_the_grid" class="toc">I am using a symbol out of the library.  How come it's not aligned to the grid?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#how_do_i_promote_an_invisible_symbol_attribute_into_the_schematic" class="toc">How do I promote an invisible symbol attribute into the schematic?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#what_should_i_do_about_power_pins_on_my_symbolsmake_them_visible_explicit_or_invisible_implicit" class="toc">What should I do about power pins on my symbols: Make them visible (explicit) or invisible (implicit)?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#is_there_a_specification_or_manual_for_creating_gschem_symbols_where_is_it" class="toc">Is there a specification or manual for creating gschem symbols? Where is it?</a></span></div></li></ul>
+<li class="level2"><div class="li"><span class="li"><a href="#how_do_i_print_schematics_from_the_command_line" class="toc">How do I print schematics from the command line?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#how_can_i_get_color_postscript_png_output" class="toc">How can I get color postscript/PNG output?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#how_can_i_get_black_and_white_postscript_png_output" class="toc">How can I get black and white postscript/PNG output?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#how_can_i_insert_schematics_into_my_latex_document" class="toc">How can I insert schematics into my LaTex document?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#how_can_i_split_postscript_output_over_multiple_pages" class="toc">How can I split postscript output over multiple pages?</a></span></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><span class="li"><a href="#gschem_installation_run-time_problems" class="toc">Gschem installation/run-time problems</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#gschem_segfaults_when_i_delete_components_on_fc5_and_other_linux_distributions_is_there_a_work-around" class="toc">Gschem segfaults when I delete components on FC5 (and other Linux distributions)! Is there a work-around?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#after_installation_gschem_does_not_work_what_could_be_wrong" class="toc">After installation gschem does not work!? What could be wrong?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#add_components_offers_no_symbols_what_can_i_do_about_it" class="toc">&quot;Add Components&quot; offers no symbols! What can I do about it?</a></span></div></li></ul>
 </li></ul>
 </div>
 </div>
 
-<h1><a name="gschem_installation_run-time_problems" id="gschem_installation_run-time_problems">Gschem installation/run-time problems</a></h1>
-<div class="level1">
-
-</div>
-<!-- SECTION [1-53] -->
-<h2><a name="gschem_segfaults_when_i_delete_components_on_fc5_and_other_linux_distributions_is_there_a_work-around" id="gschem_segfaults_when_i_delete_components_on_fc5_and_other_linux_distributions_is_there_a_work-around">Gschem segfaults when I delete components on FC5 (and other Linux distributions)! Is there a work-around?</a></h2>
-<div class="level2">
-
-<p>
-This bug seems to have appeared for users of Fedora Core 5 (and other linux distributions that use glib 2.10.x). The bug has been fixed by the developers and the bug fix will appear in the next version of gEDA/gaf. 
-</p>
-
-<p>
-In the mean time, you can work around this bug by setting the environment variable G_SLICE to “always-malloc”.  Specifically, before you run gschem, do this:
-</p>
-
-<p>
-bash: 
-</p>
-<pre class="code">export G_SLICE=always-malloc</pre>
-
-<p>
-csh: 
-</p>
-<pre class="code">setenv G_SLICE always-malloc</pre>
-
-</div>
-<!-- SECTION [54-648] -->
-<h2><a name="after_installation_gschem_does_not_work_what_could_be_wrong" id="after_installation_gschem_does_not_work_what_could_be_wrong">After installation gschem does not work!? What could be wrong?</a></h2>
-<div class="level2">
-
-<p>
-If you run gschem and you get a window without a menu bar, no colors, and the program terminates when you press a key with the following message: 
-</p>
-<pre class="code">ERROR: Unbound variable: current-keymap</pre>
-
-<p>
-Or you get errors like this: 
-</p>
-<pre class="code">Gtk-CRITICAL : file gtkpixmap.c: line 97 (gtk_pixmap_new): assertion `val != NULL’ failed.
-Gtk-CRITICAL : file gtkpixmap.c: line 97 (gtk_pixmap_new): assertion `val != NULL’ failed.
-Tried to get an invalid color: 0
-Tried to get an invalid color: 7
-Tried to get an invalid color: 0
-Tried to get an invalid color: 7</pre>
-
-<p>
-then gschem is not finding an rc file. There are two required rc files. The first is <strong><code>system-gschemrc</code></strong> and the second is <strong><code>system-commonrc</code></strong>.
-</p>
-<ul>
-<li class="level1"><div class="li"> The system-gschemrc rc file should be installed when you install gschem and typically resides in <strong><code>${prefix}/share/gEDA/system-gschemrc</code></strong>. <strong><code>${prefix}</code></strong> is where you installed gschem (usually <strong><code>/usr</code></strong> or <strong><code>/usr/local</code></strong> or <strong><code>$HOME/geda</code></strong>). This file can also be installed in /etc/gEDA (the .debs packages do this).</div>
-</li>
-<li class="level1"><div class="li"> The system-commonrc rc file should be installed when you install the symbol library for gEDA/gaf. It resides in <strong><code>${prefix}/share/gEDA/system-commonrc</code></strong>. This file can also be installed in <strong><code>/etc/gEDA</code></strong> (the .debs packages do this). This file is not loaded directly by gschem. It is loaded by a “(load ...)” in the system-gschemrc rc file.</div>
-</li>
-</ul>
-
-<p>
- Make sure these file are installed. The gschem.log file (which is created everytime you run gschem) holds valuable debugging information which should help in determining what is wrong. Check this file for where gschem is looking for the rc files.
-</p>
-
-<p>
-Also, some older releases of gEDA/gaf had some bugs when the rc files were installed in other locations (other that <strong><code>${prefix}/share/gEDA</code></strong>), so please upgrade to a more current release.
-</p>
-
-</div>
-<!-- SECTION [649-2572] -->
-<h2><a name="add_components_offers_no_symbols_what_can_i_do_about_it" id="add_components_offers_no_symbols_what_can_i_do_about_it">&quot;Add Components&quot; offers no symbols! What can I do about it?</a></h2>
-<div class="level2">
-
-<p>
-Make sure that at least one of your config files contains a valid path to a symbol library. At startup, gschem checks for the following config files (on a Debian system):
-</p>
-<ol>
-<li class="level1"><div class="li"> system gafrc file: <code>/etc/gEDA/system-gafrc</code></div>
-</li>
-<li class="level1"><div class="li"> user gafrc file: <code>~/.gEDA/gafrc</code></div>
-</li>
-<li class="level1"><div class="li"> local gafrc file: <code>$PWD/gafrc</code></div>
-</li>
-<li class="level1"><div class="li"> system gschemrc file: <code>/etc/gEDA/system-gschemrc</code></div>
-</li>
-<li class="level1"><div class="li"> user gschemrc file: <code>~/.gEDA/gschemrc</code></div>
-</li>
-<li class="level1"><div class="li"> local gschemrc file: <code>$PWD/gschemrc]</code></div>
-</li>
-</ol>
-
-<p>
-All of these config files may or may not append paths to the library search list. If a config file conatins the command 
-</p>
-<pre class="code">(reset-component-library)</pre>
-
-<p>
- the library search path will be emptied. Order is obviously important, as this command will erase any previously appended paths.  
-</p>
-
-</div>
-<!-- SECTION [2573-3377] -->
 <h1><a name="gschem_usage" id="gschem_usage">Gschem usage</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [3378-3405] -->
+<!-- SECTION [1-28] -->
 <h2><a name="how_do_i_move_a_component" id="how_do_i_move_a_component">How do I move a component?</a></h2>
 <div class="level2">
 
@@ -212,7 +120,7 @@ Three:
 </ol>
 
 </div>
-<!-- SECTION [3406-4580] -->
+<!-- SECTION [29-1203] -->
 <h2><a name="how_do_i_change_the_size_of_the_text_on_a_symbol" id="how_do_i_change_the_size_of_the_text_on_a_symbol">How do I change the size of the text on a symbol?</a></h2>
 <div class="level2">
 <ol>
@@ -241,128 +149,7 @@ Three:
 </p>
 
 </div>
-<!-- SECTION [4581-5371] -->
-<h2><a name="is_there_an_explicit_no_connect_symbol_that_i_can_should_place_in_the_schematic_to_prevent_gnetlist_from_thinking_i_ve_forgotten_a_connection" id="is_there_an_explicit_no_connect_symbol_that_i_can_should_place_in_the_schematic_to_prevent_gnetlist_from_thinking_i_ve_forgotten_a_connection">Is there an explicit &quot;no connect&quot; symbol that I can/should place in the schematic to prevent gnetlist from thinking I've forgotten a connection?</a></h2>
-<div class="level2">
-
-<p>
-Answer: misc → nc-left, nc-right, nc-top, nc-bottom.
-</p>
-
-<p>
-Caution: occassionally this may create a net called “no_connect” (or “NC??&rdquo;) which may lead to no-connect pins being connected together in gnetlist – which you probably _don’t_ want to happen.
-</p>
-
-</div>
-<!-- SECTION [5372-5788] -->
-<h2><a name="how_do_i_print_schematics_from_the_command_line" id="how_do_i_print_schematics_from_the_command_line">How do I print schematics from the command line?</a></h2>
-<div class="level2">
-
-<p>
-Running the script <strong><code>gschem-print.scm</code></strong> will create the Postscript file that is specified on the command line.
-</p>
-
-<p>
-The command line below creates a Postscript file from a schematic file (replace MY_SCH with the name of your schematic and GEDA_SCHEME_DIR with the name of the directory where your gEDA scheme files are installed): 
-</p>
-<pre class="code">gschem -p -oMY_SCH.ps -sGEDA_SCHEME_DIR/gschem-print.scm MY_SCH.sch</pre>
-
-<p>
-The BASH script below, which I name <strong><code>gschem-print</code></strong>, creates a Postscript file for each schematic file that is specified on the command line and then outputs each Postscript file to the default printer: 
-</p>
-<pre class="code">#!/bin/bash
-
-# gschem options
-# -oPS_FILENAME output to Postscript file PS_FILENAME
-# -sSCRIPT_FILENAME run script SCRIPT_FILENAME
-# -p autoplace windows
-
-for name in $*
-do
-base=”${name%.*}”
-gschem -p -o$base.ps -sGEDA_SCHEME_DIR/gschem-print.scm $base.sch
-lpr -P$PRINTER $base.ps
-done</pre>
-
-</div>
-<!-- SECTION [5789-6774] -->
-<h2><a name="how_can_i_get_color_postscript_png_output" id="how_can_i_get_color_postscript_png_output">How can I get color postscript/PNG output?</a></h2>
-<div class="level2">
-
-<p>
-Edit the <strong><code>system-gschemrc</code></strong> file or place the following into a <strong><code>gschemrc</code></strong> file (either <strong><code>~/.gEDA/gschemrc</code></strong> or a <strong><code>gschemrc</code></strong> file in the local directory where you invoke gschem): 
-</p>
-<pre class="code">(output-color &quot;enabled&quot;)      ; for color postscript output
-(image-color &quot;enabled&quot;)       ; for color PNG output (enabled by default)</pre>
-
-<p>
-To control the background of the PS output, change the following line in either gschem-darkbg (for the default black colored background) or gschem-lightbg (for the alternative light colored background): 
-</p>
-<pre class="code">(output-color-background 16 &quot;black&quot; &quot;null&quot; &quot;0 0 0&quot; 0 0 0)</pre>
-
-<p>
-The “0 0 0” is the RGB components (between 0..1) for the background color of the PS output.
-</p>
-
-<p>
-To control the background of the <acronym title="Portable Network Graphics">PNG</acronym> output, change the following line in either gschem-darkbg (for the default black colored background) or gschem-lightbg (for the alternative light colored background): 
-</p>
-<pre class="code">(background-color 0 &quot;grey94&quot; &quot;null&quot; &quot;1 1 1&quot; 255 255 255)</pre>
-
-<p>
-The 255 255 255 are the RGB components for the background color of the <acronym title="Portable Network Graphics">PNG</acronym> image.
-</p>
-
-</div>
-<!-- SECTION [6775-7906] -->
-<h2><a name="how_can_i_get_black_and_white_postscript_png_output" id="how_can_i_get_black_and_white_postscript_png_output">How can I get black and white postscript/PNG output?</a></h2>
-<div class="level2">
-
-<p>
-For black and white PS output, place the following into a gschemrc file: 
-</p>
-<pre class="code">(output-color &quot;disabled&quot;)      ; for monochrome postscript output</pre>
-
-<p>
-For black and white <acronym title="Portable Network Graphics">PNG</acronym> images, place the following into a gschemrc file: 
-</p>
-<pre class="code">(image-color &quot;disabled&quot;)       ; for monochromoe PNG output</pre>
-
-</div>
-<!-- SECTION [7907-8272] -->
-<h2><a name="how_can_i_insert_schematics_into_my_latex_document" id="how_can_i_insert_schematics_into_my_latex_document">How can I insert schematics into my LaTex document?</a></h2>
-<div class="level2">
-<ol>
-<li class="level1"><div class="li"> Print the schematic to a file. This will be generic postscript (*.ps).</div>
-</li>
-<li class="level1"><div class="li"> Convert the postscript file to epsi with the tool ps2epsi. This is a script from the ghostscript suite.</div>
-</li>
-<li class="level1"><div class="li"> Include usepackage{graphicx} to the preamble of your latex document. Use the comand includegraphics to place your schematic.</div>
-</li>
-</ol>
-
-<p>
- A simple example: 
-</p>
-<pre class="code">\documentclass{article}
-\usepackage{graphicx}
-\begin{document}
-  \begin{image}
-  \includegraphics[width=100mm]{ModulPID.epsi}
-  \end{image}
-\end{document}</pre>
-
-</div>
-<!-- SECTION [8273-8836] -->
-<h2><a name="how_can_i_split_postscript_output_over_multiple_pages" id="how_can_i_split_postscript_output_over_multiple_pages">How can I split postscript output over multiple pages?</a></h2>
-<div class="level2">
-
-<p>
-gschem does not provide this functionality internally, however there is a program called “poster” which does exactly this. It can be downloaded from either <a href="http://www.gnu.org/directory/poster.html" class="urlextern" title="http://www.gnu.org/directory/poster.html"  rel="nofollow">here</a> (GNU) or <a href="http://printing.kde.org/downloads/" class="urlextern" title="http://printing.kde.org/downloads/"  rel="nofollow">here</a> (KDE Print).
-</p>
-
-</div>
-<!-- SECTION [8837-9181] -->
+<!-- SECTION [1204-1994] -->
 <h2><a name="how_do_i_unlock_a_locked_component" id="how_do_i_unlock_a_locked_component">How do I unlock a locked component</a></h2>
 <div class="level2">
 
@@ -371,60 +158,7 @@ When a component is locked it is unselectable using the middle mouse button howe
 </p>
 
 </div>
-<!-- SECTION [9182-9591] -->
-<h1><a name="gschem_configuration_customization" id="gschem_configuration_customization">Gschem configuration/customization</a></h1>
-<div class="level1">
-
-<p>
-Gschem is configurable in more ways than can be describe here. Look at &ldquo;system-gschemrc&rdquo; for suggestions what else can be done.
-</p>
-
-</div>
-<!-- SECTION [9592-9769] -->
-<h2><a name="how_can_i_change_the_default_size_of_floating_text" id="how_can_i_change_the_default_size_of_floating_text">How can I change the default size of floating text?</a></h2>
-<div class="level2">
-
-<p>
-Put  
-</p>
-<pre class="code">(text-size 10)</pre>
-
-<p>
- into your gschemrc and replace &ldquo;10&rdquo; with your favorite size.
-</p>
-
-</div>
-<!-- SECTION [9770-9928] -->
-<h2><a name="how_can_i_have_a_different_background_color_other_than_black" id="how_can_i_have_a_different_background_color_other_than_black">How can I have a different background color other than black?</a></h2>
-<div class="level2">
-
-<p>
-Edit the system-gschemrc file and near the top you will find lines like: 
-</p>
-<pre class="code">; 
-; Start of color section
-; 
-; Load up a color scheme has a light (almost white) background
-; Comment out the first line and comment in the second line for a
-; dark (black) background.  The dark background is the original look.
-; 
-(load (string-append gedadatarc &quot;/gschem-darkbg&quot;)) ; dark background
-;(load (string-append gedadatarc &quot;/gschem-lightbg&quot;)) ; light background</pre>
-
-<p>
-Comment out the <strong><code>darkbg</code></strong> line (with a ;) and comment in the <strong><code>lightbg</code></strong> line. This will give you a light background instead of a black background. It also adjust all the other colors to be compatible with a light background.
-</p>
-
-<p>
-If you want more control over the colors, please edit <strong><code>${prefix}/share/gEDA/gschem-darkbg</code></strong> or <strong><code>${prefix}/share/gEDA/gschem-lightbg</code></strong> or create your own file and load it in the <strong><code>system-gschemrc</code></strong> file.
-</p>
-
-<p>
-<acronym title="In my humble opinion">IMHO</acronym>, a black background is easier on the eyes for long periods of time.
-</p>
-
-</div>
-<!-- SECTION [9929-10992] -->
+<!-- SECTION [1995-2404] -->
 <h2><a name="how_can_i_get_refdes_automatically_numbered_when_i_draw_a_schematic" id="how_can_i_get_refdes_automatically_numbered_when_i_draw_a_schematic">How can I get refdes automatically numbered when I draw a schematic?</a></h2>
 <div class="level2">
 
@@ -440,7 +174,25 @@ Please substitute $YOUR_INSTALL_PATH by the path where geda is installed.
 </p>
 
 </div>
-<!-- SECTION [10993-11636] -->
+<!-- SECTION [2405-3047] -->
+<h2><a name="what_is_a_bus_and_how_do_i_use_it" id="what_is_a_bus_and_how_do_i_use_it">What is a Bus and how do I use it?</a></h2>
+<div class="level2">
+
+<p>
+ A &lsquo;bus&rsquo; is purely decoration.  The netlister ignores it.  The netname= attribute does actual work of connecting points together&ndash;this is what gnetlist reads and transforms into your netlist.  It is not possible to connect to a discrete line or &lsquo;bit&rsquo; on a bus because, again, the bus is merely a graphical entity.
+</p>
+
+<p>
+Some users have found it helpful to organize their nets by incorporating a bus name into the net name.   For example &ldquo;net=busA:1&rdquo; may be added to each busripper to aid in sorting out the nets.
+</p>
+
+</div>
+<!-- SECTION [3048-3603] -->
+<h2><a name="what_are_the_key_bindings_in_gschem" id="what_are_the_key_bindings_in_gschem">What are the Key Bindings in gschem?</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION [3604-3653] -->
 <h2><a name="what_are_the_mouse_bindings_in_gschem" id="what_are_the_mouse_bindings_in_gschem">What are the mouse bindings in gschem?</a></h2>
 <div class="level2">
 
@@ -486,12 +238,12 @@ For more information on these options, please see the <strong><code>${install_pr
 </p>
 
 </div>
-<!-- SECTION [11637-12722] -->
-<h1><a name="information_on_gschem_symbols" id="information_on_gschem_symbols">Information on gschem symbols</a></h1>
+<!-- SECTION [3654-4739] -->
+<h1><a name="gschem_symbols" id="gschem_symbols">gschem symbols</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [12723-12767] -->
+<!-- SECTION [4740-4769] -->
 <h2><a name="what_s_this_business_about_heavy_vs._light_symbols" id="what_s_this_business_about_heavy_vs._light_symbols">What's this business about heavy vs. light symbols?</a></h2>
 <div class="level2">
 
@@ -500,7 +252,7 @@ This nomenclature arose from a discussion which frequently appears on the geda-u
 </p>
 
 <p>
-The debate between proponents of heavy and light symbols is very detailed and involved. In caricature, proponents of heavy symbols belive that they provide better integration between gschem and PCB since the important layout attributes (such as <a href="geda_pcb_tips.html" class="wikilink1" title="geda:pcb_tips">footprint name</a>) are already built into the symbol. This is considered a good thing for new users (noobs) who just want to design a simple board and don’t appreciate or don’t care about the zillions of variations that even a simple resistor might have (e.g. different footprint, TCR, precision, material composition, etc). Proponents of light symbols prefer to deal with attributes at the schematic level because they believe it to be more flexible. They are quick to point out that a library of heavy symbols will quickly grow into the thousands of parts with grotesquely long names trying to distinguish between the different variations of the part. They also point out that the utility �����gattrib” is the preferred tool for dealing with attributes at the schematic level (i.e. in the .sch file).
+The debate between proponents of heavy and light symbols is very detailed and involved. In caricature, proponents of heavy symbols belive that they provide better integration between gschem and PCB since the important layout attributes (such as <a href="http://geda.seul.org/wiki/geda:pcb_tips#i_want_to_use_pcb_to_do_layout._how_do_i_know_what_value_to_use_for_the_footprint_attribute" class="wikilink1" title="geda:pcb_tips">footprint name</a>) are already built into the symbol. This is considered a good thing for new users (noobs) who just want to design a simple board and don’t appreciate or don’t care about the zillions of variations that even a simple resistor might have (e.g. different footprint, TCR, precision, material composition, etc). Proponents of light symbols prefer to deal with attributes at the schematic level because they believe it to be more flexible. They are quick to point out that a library of heavy symbols will quickly grow into the thousands of parts with grotesquely long names trying to distinguish between the different variations of the part. They also point out that the utility &ldquo;gattrib” is the preferred tool for dealing with attributes at the schematic level (i.e. in the .sch file).
 </p>
 
 <p>
@@ -512,7 +264,7 @@ GEDA/gaf, as default configured, uses light symbols, although it can be configur
 </p>
 
 </div>
-<!-- SECTION [12768-14912] -->
+<!-- SECTION [4770-6900] -->
 <h2><a name="i_am_using_a_symbol_out_of_the_library._how_come_it_s_not_aligned_to_the_grid" id="i_am_using_a_symbol_out_of_the_library._how_come_it_s_not_aligned_to_the_grid">I am using a symbol out of the library.  How come it's not aligned to the grid?</a></h2>
 <div class="level2">
 
@@ -525,7 +277,24 @@ Yes, the gEDA docs suggest that you use a 100mil grid spacing.  But everybody li
 </p>
 
 </div>
-<!-- SECTION [14913-15690] -->
+<!-- SECTION [6901-7678] -->
+<h2><a name="is_there_an_explicit_no_connect_symbol_that_i_can_should_place_in_the_schematic_to_prevent_gnetlist_from_thinking_i_ve_forgotten_a_connection" id="is_there_an_explicit_no_connect_symbol_that_i_can_should_place_in_the_schematic_to_prevent_gnetlist_from_thinking_i_ve_forgotten_a_connection">Is there an explicit &quot;no connect&quot; symbol that I can/should place in the schematic to prevent gnetlist from thinking I've forgotten a connection?</a></h2>
+<div class="level2">
+
+<p>
+Answer: misc → nc-left, nc-right, nc-top, nc-bottom.
+</p>
+
+<p>
+Caution: occassionally this may create a net called “no_connect” (or “NC??&rdquo;) which may lead to no-connect pins being connected together in gnetlist – which you probably _don’t_ want to happen.
+</p>
+
+<p>
+If you want an entire symbol to be graphical (no elec. connections) , add a &ldquo;graphical=1&rdquo; attribute.  The netlister will ignore these symbols entirely.
+</p>
+
+</div>
+<!-- SECTION [7679-8248] -->
 <h2><a name="how_do_i_promote_an_invisible_symbol_attribute_into_the_schematic" id="how_do_i_promote_an_invisible_symbol_attribute_into_the_schematic">How do I promote an invisible symbol attribute into the schematic?</a></h2>
 <div class="level2">
 
@@ -546,7 +315,7 @@ and you will get all the attributes promoted. The “keep-invisible” keyword w
 </p>
 
 </div>
-<!-- SECTION [15691-16326] -->
+<!-- SECTION [8249-8884] -->
 <h2><a name="what_should_i_do_about_power_pins_on_my_symbolsmake_them_visible_explicit_or_invisible_implicit" id="what_should_i_do_about_power_pins_on_my_symbolsmake_them_visible_explicit_or_invisible_implicit">What should I do about power pins on my symbols: Make them visible (explicit) or invisible (implicit)?</a></h2>
 <div class="level2">
 
@@ -575,15 +344,279 @@ That said, it may still be usefull to detach the power pins from the functional 
 </p>
 
 </div>
-<!-- SECTION [16327-18584] -->
+<!-- SECTION [8885-11142] -->
 <h2><a name="is_there_a_specification_or_manual_for_creating_gschem_symbols_where_is_it" id="is_there_a_specification_or_manual_for_creating_gschem_symbols_where_is_it">Is there a specification or manual for creating gschem symbols? Where is it?</a></h2>
 <div class="level2">
 
 <p>
-Yes. It is the <a href="geda_scg.html" class="wikilink1" title="geda:scg">Symbol Creation Guide</a>. 
+Yes. It is the <a href="geda_scg.html" class="wikilink1" title="geda:scg">Symbol Creation Guide</a>.
 </p>
 
 </div>
-<!-- SECTION [18585-] --></div>
+<!-- SECTION [11143-11283] -->
+<h1><a name="gschem_configuration_customization" id="gschem_configuration_customization">Gschem configuration/customization</a></h1>
+<div class="level1">
+
+<p>
+Gschem is configurable in more ways than can be describe here. Look at &ldquo;system-gschemrc&rdquo; for suggestions what else can be done.
+</p>
+
+</div>
+<!-- SECTION [11284-11461] -->
+<h2><a name="how_can_i_change_the_default_size_of_floating_text" id="how_can_i_change_the_default_size_of_floating_text">How can I change the default size of floating text?</a></h2>
+<div class="level2">
+
+<p>
+Put  
+</p>
+<pre class="code">(text-size 10)</pre>
+
+<p>
+ into your gschemrc and replace &ldquo;10&rdquo; with your favorite size.
+</p>
+
+</div>
+<!-- SECTION [11462-11620] -->
+<h2><a name="how_can_i_have_a_different_background_color_other_than_black" id="how_can_i_have_a_different_background_color_other_than_black">How can I have a different background color other than black?</a></h2>
+<div class="level2">
+
+<p>
+Edit the system-gschemrc file and near the top you will find lines like: 
+</p>
+<pre class="code">; 
+; Start of color section
+; 
+; Load up a color scheme has a light (almost white) background
+; Comment out the first line and comment in the second line for a
+; dark (black) background.  The dark background is the original look.
+; 
+(load (string-append gedadatarc &quot;/gschem-darkbg&quot;)) ; dark background
+;(load (string-append gedadatarc &quot;/gschem-lightbg&quot;)) ; light background</pre>
+
+<p>
+Comment out the <strong><code>darkbg</code></strong> line (with a ;) and comment in the <strong><code>lightbg</code></strong> line. This will give you a light background instead of a black background. It also adjust all the other colors to be compatible with a light background.
+</p>
+
+<p>
+If you want more control over the colors, please edit <strong><code>${prefix}/share/gEDA/gschem-darkbg</code></strong> or <strong><code>${prefix}/share/gEDA/gschem-lightbg</code></strong> or create your own file and load it in the <strong><code>system-gschemrc</code></strong> file.
+</p>
+
+<p>
+A dark background is preferred by many users.
+</p>
+
+</div>
+<!-- SECTION [11621-12656] -->
+<h1><a name="printing_output" id="printing_output">Printing/Output</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION [12657-12686] -->
+<h2><a name="how_do_i_print_schematics_from_the_command_line" id="how_do_i_print_schematics_from_the_command_line">How do I print schematics from the command line?</a></h2>
+<div class="level2">
+
+<p>
+Running the script <strong><code>gschem-print.scm</code></strong> will create the Postscript file that is specified on the command line.
+</p>
+
+<p>
+The command line below creates a Postscript file from a schematic file (replace MY_SCH with the name of your schematic and GEDA_SCHEME_DIR with the name of the directory where your gEDA scheme files are installed): 
+</p>
+<pre class="code">gschem -p -oMY_SCH.ps -sGEDA_SCHEME_DIR/gschem-print.scm MY_SCH.sch</pre>
+
+<p>
+The BASH script below, which I name <strong><code>gschem-print</code></strong>, creates a Postscript file for each schematic file that is specified on the command line and then outputs each Postscript file to the default printer: 
+</p>
+<pre class="code">#!/bin/bash
+
+# gschem options
+# -oPS_FILENAME output to Postscript file PS_FILENAME
+# -sSCRIPT_FILENAME run script SCRIPT_FILENAME
+# -p autoplace windows
+
+for name in $*
+do
+base=”${name%.*}”
+gschem -p -o$base.ps -sGEDA_SCHEME_DIR/gschem-print.scm $base.sch
+lpr -P$PRINTER $base.ps
+done</pre>
+
+</div>
+<!-- SECTION [12687-13672] -->
+<h2><a name="how_can_i_get_color_postscript_png_output" id="how_can_i_get_color_postscript_png_output">How can I get color postscript/PNG output?</a></h2>
+<div class="level2">
+
+<p>
+Edit the <strong><code>system-gschemrc</code></strong> file or place the following into a <strong><code>gschemrc</code></strong> file (either <strong><code>~/.gEDA/gschemrc</code></strong> or a <strong><code>gschemrc</code></strong> file in the local directory where you invoke gschem): 
+</p>
+<pre class="code">(output-color &quot;enabled&quot;)      ; for color postscript output
+(image-color &quot;enabled&quot;)       ; for color PNG output (enabled by default)</pre>
+
+<p>
+To control the background of the PS output, change the following line in either gschem-darkbg (for the default black colored background) or gschem-lightbg (for the alternative light colored background): 
+</p>
+<pre class="code">(output-color-background 16 &quot;black&quot; &quot;null&quot; &quot;0 0 0&quot; 0 0 0)</pre>
+
+<p>
+The “0 0 0” is the RGB components (between 0..1) for the background color of the PS output.
+</p>
+
+<p>
+To control the background of the <acronym title="Portable Network Graphics">PNG</acronym> output, change the following line in either gschem-darkbg (for the default black colored background) or gschem-lightbg (for the alternative light colored background): 
+</p>
+<pre class="code">(background-color 0 &quot;grey94&quot; &quot;null&quot; &quot;1 1 1&quot; 255 255 255)</pre>
+
+<p>
+The 255 255 255 are the RGB components for the background color of the <acronym title="Portable Network Graphics">PNG</acronym> image.
+</p>
+
+</div>
+<!-- SECTION [13673-14804] -->
+<h2><a name="how_can_i_get_black_and_white_postscript_png_output" id="how_can_i_get_black_and_white_postscript_png_output">How can I get black and white postscript/PNG output?</a></h2>
+<div class="level2">
+
+<p>
+For black and white PS output, place the following into a gschemrc file: 
+</p>
+<pre class="code">(output-color &quot;disabled&quot;)      ; for monochrome postscript output</pre>
+
+<p>
+For black and white <acronym title="Portable Network Graphics">PNG</acronym> images, place the following into a gschemrc file: 
+</p>
+<pre class="code">(image-color &quot;disabled&quot;)       ; for monochromoe PNG output</pre>
+
+</div>
+<!-- SECTION [14805-15170] -->
+<h2><a name="how_can_i_insert_schematics_into_my_latex_document" id="how_can_i_insert_schematics_into_my_latex_document">How can I insert schematics into my LaTex document?</a></h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> Print the schematic to a file. This will be generic postscript (*.ps).</div>
+</li>
+<li class="level1"><div class="li"> Convert the postscript file to epsi with the tool ps2epsi. This is a script from the ghostscript suite.</div>
+</li>
+<li class="level1"><div class="li"> Include usepackage{graphicx} to the preamble of your latex document. Use the comand includegraphics to place your schematic.</div>
+</li>
+</ol>
+
+<p>
+ A simple example: 
+</p>
+<pre class="code">\documentclass{article}
+\usepackage{graphicx}
+\begin{document}
+  \begin{image}
+  \includegraphics[width=100mm]{ModulPID.epsi}
+  \end{image}
+\end{document}</pre>
+
+</div>
+<!-- SECTION [15171-15734] -->
+<h2><a name="how_can_i_split_postscript_output_over_multiple_pages" id="how_can_i_split_postscript_output_over_multiple_pages">How can I split postscript output over multiple pages?</a></h2>
+<div class="level2">
+
+<p>
+gschem does not provide this functionality internally, however there is a program called “poster” which does exactly this. It can be downloaded from either <a href="http://www.gnu.org/directory/poster.html" class="urlextern" title="http://www.gnu.org/directory/poster.html"  rel="nofollow">here</a> (GNU) or <a href="http://printing.kde.org/downloads/" class="urlextern" title="http://printing.kde.org/downloads/"  rel="nofollow">here</a> (KDE Print).
+</p>
+
+</div>
+<!-- SECTION [15735-16078] -->
+<h1><a name="gschem_installation_run-time_problems" id="gschem_installation_run-time_problems">Gschem installation/run-time problems</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION [16079-16131] -->
+<h2><a name="gschem_segfaults_when_i_delete_components_on_fc5_and_other_linux_distributions_is_there_a_work-around" id="gschem_segfaults_when_i_delete_components_on_fc5_and_other_linux_distributions_is_there_a_work-around">Gschem segfaults when I delete components on FC5 (and other Linux distributions)! Is there a work-around?</a></h2>
+<div class="level2">
+
+<p>
+This bug seems to have appeared for users of Fedora Core 5 (and other linux distributions that use glib 2.10.x). The bug has been fixed by the developers and the bug fix will appear in the next version of gEDA/gaf. 
+</p>
+
+<p>
+In the mean time, you can work around this bug by setting the environment variable G_SLICE to “always-malloc”.  Specifically, before you run gschem, do this:
+</p>
+
+<p>
+bash: 
+</p>
+<pre class="code">export G_SLICE=always-malloc</pre>
+
+<p>
+csh: 
+</p>
+<pre class="code">setenv G_SLICE always-malloc</pre>
+
+</div>
+<!-- SECTION [16132-16726] -->
+<h2><a name="after_installation_gschem_does_not_work_what_could_be_wrong" id="after_installation_gschem_does_not_work_what_could_be_wrong">After installation gschem does not work!? What could be wrong?</a></h2>
+<div class="level2">
+
+<p>
+If you run gschem and you get a window without a menu bar, no colors, and the program terminates when you press a key with the following message: 
+</p>
+<pre class="code">ERROR: Unbound variable: current-keymap</pre>
+
+<p>
+Or you get errors like this: 
+</p>
+<pre class="code">Gtk-CRITICAL : file gtkpixmap.c: line 97 (gtk_pixmap_new): assertion `val != NULL’ failed.
+Gtk-CRITICAL : file gtkpixmap.c: line 97 (gtk_pixmap_new): assertion `val != NULL’ failed.
+Tried to get an invalid color: 0
+Tried to get an invalid color: 7
+Tried to get an invalid color: 0
+Tried to get an invalid color: 7</pre>
+
+<p>
+then gschem is not finding an rc file. There are two required rc files. The first is <strong><code>system-gschemrc</code></strong> and the second is <strong><code>system-commonrc</code></strong>.
+</p>
+<ul>
+<li class="level1"><div class="li"> The system-gschemrc rc file should be installed when you install gschem and typically resides in <strong><code>${prefix}/share/gEDA/system-gschemrc</code></strong>. <strong><code>${prefix}</code></strong> is where you installed gschem (usually <strong><code>/usr</code></strong> or <strong><code>/usr/local</code></strong> or <strong><code>$HOME/geda</code></strong>). This file can also be installed in /etc/gEDA (the .debs packages do this).</div>
+</li>
+<li class="level1"><div class="li"> The system-commonrc rc file should be installed when you install the symbol library for gEDA/gaf. It resides in <strong><code>${prefix}/share/gEDA/system-commonrc</code></strong>. This file can also be installed in <strong><code>/etc/gEDA</code></strong> (the .debs packages do this). This file is not loaded directly by gschem. It is loaded by a “(load ...)” in the system-gschemrc rc file.</div>
+</li>
+</ul>
+
+<p>
+ Make sure these file are installed. The gschem.log file (which is created everytime you run gschem) holds valuable debugging information which should help in determining what is wrong. Check this file for where gschem is looking for the rc files.
+</p>
+
+<p>
+Also, some older releases of gEDA/gaf had some bugs when the rc files were installed in other locations (other that <strong><code>${prefix}/share/gEDA</code></strong>), so please upgrade to a more current release.
+</p>
+
+</div>
+<!-- SECTION [16727-18650] -->
+<h2><a name="add_components_offers_no_symbols_what_can_i_do_about_it" id="add_components_offers_no_symbols_what_can_i_do_about_it">&quot;Add Components&quot; offers no symbols! What can I do about it?</a></h2>
+<div class="level2">
+
+<p>
+Make sure that at least one of your config files contains a valid path to a symbol library. At startup, gschem checks for the following config files (on a Debian system):
+</p>
+<ol>
+<li class="level1"><div class="li"> system gafrc file: <code>/etc/gEDA/system-gafrc</code></div>
+</li>
+<li class="level1"><div class="li"> user gafrc file: <code>~/.gEDA/gafrc</code></div>
+</li>
+<li class="level1"><div class="li"> local gafrc file: <code>$PWD/gafrc</code></div>
+</li>
+<li class="level1"><div class="li"> system gschemrc file: <code>/etc/gEDA/system-gschemrc</code></div>
+</li>
+<li class="level1"><div class="li"> user gschemrc file: <code>~/.gEDA/gschemrc</code></div>
+</li>
+<li class="level1"><div class="li"> local gschemrc file: <code>$PWD/gschemrc]</code></div>
+</li>
+</ol>
+
+<p>
+All of these config files may or may not append paths to the library search list. If a config file conatins the command 
+</p>
+<pre class="code">(reset-component-library)</pre>
+
+<p>
+ the library search path will be emptied. Order is obviously important, as this command will erase any previously appended paths.   
+</p>
+
+</div>
+<!-- SECTION [18651-] --></div>
 </body>
 </html>

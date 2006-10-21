@@ -1,7 +1,8 @@
 ## $Id$
 ##
 
-EXTRA_DIST = postproc.sh wikifetch.sh wikicommit.sh populatemkfiles.sh 
+EXTRA_DIST = postproc.sh wikifetch.sh wikicommit.sh populatemkfiles.sh \
+             copywip.sh
 
 MOSTLYCLEANFILES =	*.log *~
 CLEANFILES = 		*.log *~

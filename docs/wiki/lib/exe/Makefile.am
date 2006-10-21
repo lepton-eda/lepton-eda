@@ -1,7 +1,7 @@
 
 
 docname=wiki
-docsdir = @GEDADOCDIR@/$(docname)/lib/exe
+docsdir = @GEDADOCDIR@/$(docname)/exe
 
 docs_DATA = 001css css 
 

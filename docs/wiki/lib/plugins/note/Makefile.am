@@ -1,7 +1,7 @@
 
 
 docname=wiki
-docsdir = @GEDADOCDIR@/$(docname)/lib/plugins/note
+docsdir = @GEDADOCDIR@/$(docname)/note
 
 SUBDIRS = images 
 

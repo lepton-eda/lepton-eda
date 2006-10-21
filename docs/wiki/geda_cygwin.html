@@ -12,8 +12,8 @@
   <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
   <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:cygwin?do=export_xhtml" />
   <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:cygwin?do=export_raw" />
-  <meta name="date" content="2006-06-27T09:50:25-0400" />
-  <meta name="robots" content="index,follow" />
+  <meta name="date" content="2006-10-20T21:08:19-0400" />
+  <meta name="robots" content="noindex,nofollow" />
   <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
   <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
 </head>
@@ -75,29 +75,25 @@ export PKG_CONFIG_PATH=$HOME/geda/lib/pkgconfig:$PKG_CONFIG_PATH</pre>
 </p>
 
 <p>
-From the gEDA/gaf group, download <strong>only</strong> the packages which have a date as its version (like 20060123). The necessary dependencies where already installed in step 1.
+From the gEDA/gaf group, download <strong>only</strong> the packages which have a date as its version. The necessary dependencies where already installed in step 1.
 </p>
 
 <p>
-4. Download  <a href="http://sourceforge.net/tracker/download.php?group_id=161080&atid=818428&file_id=182795&aid=1511658" class="urlextern" title="http://sourceforge.net/tracker/download.php?group_id=161080&amp;atid=818428&amp;file_id=182795&amp;aid=1511658"  rel="nofollow">cygwin.patch</a> in the same folder as the above.
-</p>
-
-<p>
-5. Go to the download directory and type:
+4. Go to the download directory and type:
 </p>
 <pre class="code">$ make open
-$ patch -p1 &lt; cygwin.patch
 $ make install
 ( ...patience... )</pre>
 
 <p>
- 6. Now, to properly view the documentation from the help menu of gschem:
+ 5. Now, to properly view the documentation from the help menu of gschem:
 </p>
 
 <p>
 Locate the executables of your browser and <acronym title="Portable Document Format">PDF</acronym> reader and create links from /usr/bin. Examples:
 </p>
 <pre class="code">$ ln -s &quot;c:\Program Files\Internet Explorer\iexplore.exe&quot; /usr/bin/iexplore
+$ ln -s &quot;c:\Program Files\Firefox\firefox.exe&quot; /usr/bin/firefox
 $ ln -s &quot;c:\Program Files\Adobe\Acrobat 7.0\Reader\AcroRd32.exe&quot; /usr/bin/acroread</pre>
 
 <p>
@@ -105,13 +101,15 @@ $ ln -s &quot;c:\Program Files\Adobe\Acrobat 7.0\Reader\AcroRd32.exe&quot; /usr/
 </p>
 <pre class="code">$ iexplore
 ( Microsoft Internet Explorer appears )
+$ firefox
+( Firefox appears - if installed )
 $ acroread
 ( Adobe Acrobat Reader appears )
 $ gschemdoc -m
-( gEDA/gaf documentation appears )</pre>
+( gEDA documentation appears )</pre>
 
 <p>
- 7. Finally, before running gschem:
+ 6. Finally, start the X server:
 </p>
 <pre class="code">$ startx</pre>
 

@@ -12,7 +12,7 @@
   <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
   <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:pcb_tips?do=export_xhtml" />
   <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:pcb_tips?do=export_raw" />
-  <meta name="date" content="2006-08-30T14:30:43-0400" />
+  <meta name="date" content="2006-10-12T20:13:10-0400" />
   <meta name="robots" content="index,follow" />
   <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
   <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
@@ -68,10 +68,12 @@
 <li class="level2"><div class="li"><span class="li"><a href="#how_do_i_change_the_size_of_my_tracks" class="toc">How do I change the size of my tracks?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#how_do_i_drive_a_via_to_connect_a_track_to_a_ground_plane_on_a_different_layer" class="toc">How do I drive a via to connect a track to a ground plane on a different layer?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#i_want_to_draw_a_track_between_two_segments_on_the_same_net_but_pcb_won_t_let_me_why" class="toc">I want to draw a track between two segments on the same net, but PCB won't let me! Why?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#how_can_i_set_color_and_thickness_of_the_rats_nests" class="toc">How can I set color and thickness of the rats nests?</a></span></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><span class="li"><a href="#beyond_tracks_and_footprints" class="toc">Beyond tracks and footprints</a></span></div>
 <ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#how_do_i_trace_a_drawing_a_print_or_another_pcb" class="toc">How do I trace a drawing, a print, or another PCB?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#i_can_t_copy_component_pads_in_a_layout._what_gives" class="toc">I can't copy component pads in a layout.  What gives?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#how_do_i_fill_areas_with_copper" class="toc">How do I fill areas with copper?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#the_polygons_are_shorting_my_tracks_what_can_i_do_about_it" class="toc">The polygons are shorting my tracks! What can I do about it?</a></span></div></li>
@@ -85,6 +87,7 @@
 <li class="level2"><div class="li"><span class="li"><a href="#can_pcb_be_used_to_make_single_layer_boards" class="toc">Can PCB be used to make single layer boards?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#what_resources_exist_to_process_pcb_files_using_scripts" class="toc">What resources exist to process PCB files using scripts?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#how_do_i_import_external_vector_graphics" class="toc">How do I import external vector graphics?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#how_do_i_attach_a_name_to_my_layout" class="toc">How Do I attach a name to my layout?</a></span></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><span class="li"><a href="#auto_router" class="toc">Auto Router</a></span></div>
@@ -115,7 +118,7 @@
 <div class="level2">
 
 <p>
-The <a href="http://pcb.sourceforge.net/manual.html" class="urlextern" title="http://pcb.sourceforge.net/manual.html"  rel="nofollow">pcb manual</a> contains a concise description of the user interface in the section “Getting Started”(<a href="http://pcb.sourceforge.net/pcb-20060422/pcb.html#Getting%20Started" class="urlextern" title="http://pcb.sourceforge.net/pcb-20060422/pcb.html#Getting%20Started"  rel="nofollow">version 20060422</a>)
+The <a href="http://pcb.sourceforge.net/manual.html" class="urlextern" title="http://pcb.sourceforge.net/manual.html"  rel="nofollow">pcb manual</a> contains a concise description of the user interface in the section “Getting Started”(<a href="http://pcb.sourceforge.net/pcb-20060822/pcb.html#Getting%20Started" class="urlextern" title="http://pcb.sourceforge.net/pcb-20060822/pcb.html#Getting%20Started"  rel="nofollow">version 20060822</a>)
 </p>
 
 </div>
@@ -183,7 +186,7 @@ Currently, the best place to get footprints (besides in the PCB distribution) is
 <div class="level2">
 
 <p>
-This question is a common one amongst new gEDA users. Indeed, helping newbies determine the appropriate footprint names lies at the core of the ongoing <a href="http://geda.seul.org/wiki/geda:faq-gschem#what_s_this_business_about_heavy_vs._light_symbols" class="wikilink1" title="geda:faq-gschem">light vs. heavy symbol</a> debate. In the current, light symbol gEDA/gaf distribution, you need to attach the footprint attribute at the schematic level (i.e. using either gschem or gattrib). The name of the footprint to use depends upon whether you are using the newlib or the M4 library (pcblib).
+This question is a common one amongst new gEDA users. Indeed, helping newbies determine the appropriate footprint names lies at the core of the ongoing <a href="geda_faq-gschem.html" class="wikilink1" title="geda:faq-gschem">light vs. heavy symbol</a> debate. In the current, light symbol gEDA/gaf distribution, you need to attach the footprint attribute at the schematic level (i.e. using either gschem or gattrib). The name of the footprint to use depends upon whether you are using the newlib or the M4 library (pcblib).
 </p>
 
 </div>
@@ -280,8 +283,12 @@ Everybody does this a little differently. Some people draw the footprint entirel
 Karel Kulhavy prefers to draw the footprint entirely using PCB, which might be the most non-threatening method for newbies to use. He maintains a <a href="http://ronja.twibright.com/guidelines/footprints.php" class="urlextern" title="http://ronja.twibright.com/guidelines/footprints.php"  rel="nofollow">HOWTO describing his footprint creation prodedure</a> on his Ronja website.
 </p>
 
+<p>
+If you want to edit the footprint files by hand, the <a href="http://www.brorson.com/gEDA/land_patterns_20050129.pdf" class="urlextern" title="http://www.brorson.com/gEDA/land_patterns_20050129.pdf"  rel="nofollow">manual on footprint creation</a> by Stephen Meier and Stuart Brorson supplies the details of the syntax. The document also gives advice on good design that applies to <acronym title="Graphical User Interface">GUI</acronym> footprint creation too. 
+</p>
+
 </div>
-<!-- SECTION [9566-10154] -->
+<!-- SECTION [9566-10459] -->
 <h2><a name="how_do_i_edit_change_an_existing_footprint" id="how_do_i_edit_change_an_existing_footprint">How do I edit/change an existing footprint?</a></h2>
 <div class="level2">
 <ol>
@@ -308,7 +315,7 @@ Karel Kulhavy prefers to draw the footprint entirely using PCB, which might be t
 </ol>
 
 </div>
-<!-- SECTION [10155-10480] -->
+<!-- SECTION [10460-10785] -->
 <h2><a name="how_do_i_add_a_footprint_library_to_pcb" id="how_do_i_add_a_footprint_library_to_pcb">How do I add a footprint library to PCB?</a></h2>
 <div class="level2">
 
@@ -319,7 +326,7 @@ Adding footprint libraries can be done from the <acronym title="Graphical User I
 </p>
 
 </div>
-<!-- SECTION [10481-10913] -->
+<!-- SECTION [10786-11218] -->
 <h2><a name="pcb_is_not_finding_my_footprints._why" id="pcb_is_not_finding_my_footprints._why">PCB is not finding my footprints. Why?</a></h2>
 <div class="level2">
 
@@ -328,12 +335,12 @@ The footprint path that PCB uses is defined using the <strong><code>Pcb.elementP
 </p>
 
 </div>
-<!-- SECTION [10914-11261] -->
+<!-- SECTION [11219-11566] -->
 <h2><a name="now_that_i_have_all_of_these_footprints_where_do_i_put_them" id="now_that_i_have_all_of_these_footprints_where_do_i_put_them">Now that I have all of these footprints where do I put them?</a></h2>
 <div class="level2">
 
 <p>
-I prefer to place all “production-ready” footprints in a single directory that is not in the gEDA/PCB install tree. When a new version of gEDA/PCB comes out I do not make any changes to project files or libraries. If there are newlib footprints in the PCB library that I want to use I copy them to the “production-ready” footprint directory.
+I prefer to place all “production-ready” footprints in a single directory that is not in the gEDA/PCB install tree. When a new version of gEDA/PCB comes out I do not make any changes to project files or libraries. If there are newlib footprints in the PCB library that I want to use I copy them to the �����production-ready” footprint directory.
 </p>
 
 <p>
@@ -343,16 +350,27 @@ Rather than change configuration files to get gsch2pcb to find the footprints I 
 <p>
 To use the <strong><code>sch2pcb</code></strong> script that is listed below replace the string <strong><code>FOOTPRINT_DIR</code></strong> with your footprint directory: 
 </p>
-<pre class="code">#!/bin/bash
-gsch2pcb �������������elements-dir FOOTPRINT_DIR $@</pre>
+<pre class="code">
+#!/bin/bash
+gsch2pcb --elements-dir FOOTPRINT_DIR $@
+</pre>
+
+<p>
+Or another user&rsquo;s version: 
+</p>
+<pre class="code">
+#!/bin/bash
+#this script was written by John Luciani
+gsch2pcb --elements-dir /home/user/pcb/footprints/user --use-files $@
+</pre>
 
 </div>
-<!-- SECTION [11262-12151] -->
+<!-- SECTION [11567-12599] -->
 <h1><a name="component_placement" id="component_placement">Component placement</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [12152-12186] -->
+<!-- SECTION [12600-12634] -->
 <h2><a name="how_do_i_rotate_a_selection_i.e._of_more_than_one_item" id="how_do_i_rotate_a_selection_i.e._of_more_than_one_item">How do I rotate a selection (i.e. of more than one item)?</a></h2>
 <div class="level2">
 <ol>
@@ -367,7 +385,7 @@ gsch2pcb �������������elements-dir FOOTPRINT_DIR $@</p
 </ol>
 
 </div>
-<!-- SECTION [12187-12446] -->
+<!-- SECTION [12635-12894] -->
 <h2><a name="how_do_i_change_the_size_of_a_graphical_object_such_as_text_silkscreen_lines_etc" id="how_do_i_change_the_size_of_a_graphical_object_such_as_text_silkscreen_lines_etc">How do I change the size of a graphical object (such as text, silkscreen lines, etc)?</a></h2>
 <div class="level2">
 <ul>
@@ -382,7 +400,7 @@ gsch2pcb �������������elements-dir FOOTPRINT_DIR $@</p
 </p>
 
 </div>
-<!-- SECTION [12447-12896] -->
+<!-- SECTION [12895-13344] -->
 <h2><a name="how_do_i_put_components_on_both_faces_in_pcb" id="how_do_i_put_components_on_both_faces_in_pcb">How do I put components on both faces in PCB?</a></h2>
 <div class="level2">
 
@@ -397,7 +415,7 @@ There are two ways to do it:
 </ul>
 
 </div>
-<!-- SECTION [12897-13365] -->
+<!-- SECTION [13345-13813] -->
 <h2><a name="how_do_i_set_the_origin_in_pcb" id="how_do_i_set_the_origin_in_pcb">How do I set the origin in pcb?</a></h2>
 <div class="level2">
 
@@ -406,7 +424,7 @@ The absolute origin is always in the upper left corner of the accessible area. T
 </p>
 
 </div>
-<!-- SECTION [13366-13980] -->
+<!-- SECTION [13814-14428] -->
 <h2><a name="how_do_i_measure_distances_and_dimensions_of_components" id="how_do_i_measure_distances_and_dimensions_of_components">How do I measure distances and dimensions of components?</a></h2>
 <div class="level2">
 
@@ -415,12 +433,12 @@ Use [<strong><code>ctrl-m</code></strong>] to set the origin and read the distan
 </p>
 
 </div>
-<!-- SECTION [13981-14360] -->
+<!-- SECTION [14429-14808] -->
 <h1><a name="routing" id="routing">Routing</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [14361-14382] -->
+<!-- SECTION [14809-14830] -->
 <h2><a name="how_do_i_route_a_connection_from_solder_to_component_side_and_back" id="how_do_i_route_a_connection_from_solder_to_component_side_and_back">How do I route a connection from solder to component side and back?</a></h2>
 <div class="level2">
 
@@ -429,28 +447,30 @@ While using the line tool, use the number keys on top of the keyboard to switch 
 </p>
 
 </div>
-<!-- SECTION [14383-14632] -->
+<!-- SECTION [14831-15080] -->
 <h2><a name="how_do_i_change_the_routing_style" id="how_do_i_change_the_routing_style">How do I change the routing style?</a></h2>
 <div class="level2">
 
 <p>
-There is a set of predefined sizes for routing. The sets bear suggestive names (Signal, Power, Fat and Skinny), but the actual value of the sizes can be configured to your needs. The line tool knows about different styles to deal with transversal connections:
+There is a set of predefined sizes for routing. The sets bear suggestive names (Signal, Power, Fat and Skinny). Hit the button “Route Style” to configure the sizes of the current set to your needs. The line tool knows about different modes to deal with transversal connections. The status line on the bottom of the page tells, which mode is in effect:
 </p>
 <ol>
 <li class="level1"><div class="li"> 45° plus vertical/horizontal (status line: “\_”)</div>
 </li>
 <li class="level1"><div class="li"> vertical plus 45° (status line: “_/”)</div>
 </li>
+<li class="level1"><div class="li"> either vertical or 45° (status line: “45”)</div>
+</li>
 <li class="level1"><div class="li"> arbitrary angle (status line: “all”)</div>
 </li>
 </ol>
 
 <p>
- The way to access these modes differs among the pcb <acronym title="Graphical User Interface">GUI</acronym> versions. The current GTK snapshot (v20050609) is hard wired to “_/” but can be temporarily turned to “\_” with the shift key. For arbitrary angles, choose “enable all line directions” in the setting menu.
+The way to access these modes differs among the <acronym title="Graphical User Interface">GUI</acronym> versions. The current GTK snapshot (v20060288) defaults to “_/” but can be temporarily turned to “\_” with the shift key. You can switch to 45° mode with the slash key “/”. For arbitrary angles, press the period key “.���, or choose “enable all line directions” in the setting menu.
 </p>
 
 </div>
-<!-- SECTION [14633-15365] -->
+<!-- SECTION [15081-16046] -->
 <h2><a name="i_got_stuck_how_do_i_go_back" id="i_got_stuck_how_do_i_go_back">I got stuck! How do I go back?</a></h2>
 <div class="level2">
 
@@ -459,7 +479,7 @@ The universal undo key [<strong><code>U</code></strong>] works even while in the
 </p>
 
 </div>
-<!-- SECTION [15366-15638] -->
+<!-- SECTION [16047-16319] -->
 <h2><a name="how_do_i_move_one_set_of_layer_tracks_to_another_layer" id="how_do_i_move_one_set_of_layer_tracks_to_another_layer">How do I move one set of layer tracks to another layer?</a></h2>
 <div class="level2">
 <ol>
@@ -472,7 +492,7 @@ The universal undo key [<strong><code>U</code></strong>] works even while in the
 </ol>
 
 </div>
-<!-- SECTION [15639-16075] -->
+<!-- SECTION [16320-16756] -->
 <h2><a name="how_do_i_change_the_soldermask_clearance_around_a_hole_via" id="how_do_i_change_the_soldermask_clearance_around_a_hole_via">How do I change the soldermask clearance around a hole/via?</a></h2>
 <div class="level2">
 
@@ -481,7 +501,7 @@ You can increase the soldermask clearance from any hole/via by positioning the c
 </p>
 
 </div>
-<!-- SECTION [16076-16351] -->
+<!-- SECTION [16757-17032] -->
 <h2><a name="how_do_i_change_the_size_of_my_tracks" id="how_do_i_change_the_size_of_my_tracks">How do I change the size of my tracks?</a></h2>
 <div class="level2">
 
@@ -498,7 +518,7 @@ There are a number of ways to change the size of already laid down tracks:
 </ol>
 
 </div>
-<!-- SECTION [16352-17289] -->
+<!-- SECTION [17033-17970] -->
 <h2><a name="how_do_i_drive_a_via_to_connect_a_track_to_a_ground_plane_on_a_different_layer" id="how_do_i_drive_a_via_to_connect_a_track_to_a_ground_plane_on_a_different_layer">How do I drive a via to connect a track to a ground plane on a different layer?</a></h2>
 <div class="level2">
 <ol>
@@ -521,7 +541,7 @@ There are a number of ways to change the size of already laid down tracks:
 </ol>
 
 </div>
-<!-- SECTION [17290-17775] -->
+<!-- SECTION [17971-18456] -->
 <h2><a name="i_want_to_draw_a_track_between_two_segments_on_the_same_net_but_pcb_won_t_let_me_why" id="i_want_to_draw_a_track_between_two_segments_on_the_same_net_but_pcb_won_t_let_me_why">I want to draw a track between two segments on the same net, but PCB won't let me! Why?</a></h2>
 <div class="level2">
 
@@ -540,12 +560,42 @@ You are likely drawing tracks with auto-DRC on. To connect the two segments, her
 </ul>
 
 </div>
-<!-- SECTION [17776-19094] -->
+<!-- SECTION [18457-19775] -->
+<h2><a name="how_can_i_set_color_and_thickness_of_the_rats_nests" id="how_can_i_set_color_and_thickness_of_the_rats_nests">How can I set color and thickness of the rats nests?</a></h2>
+<div class="level2">
+
+<p>
+You can set the color of the rats in <code>File - Prefernce - Colors - Main colors</code>
+</p>
+
+<p>
+There is currently no <acronym title="Graphical User Interface">GUI</acronym> way to set the rat width, but you can edit your <code>$HOME/.pcb/preference</code> file manually. Close all instances of pcb and look for the line that starts with <code>rat-thickness</code>.   
+</p>
+
+</div>
+<!-- SECTION [19776-20126] -->
 <h1><a name="beyond_tracks_and_footprints" id="beyond_tracks_and_footprints">Beyond tracks and footprints</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [19095-19137] -->
+<!-- SECTION [20127-20169] -->
+<h2><a name="how_do_i_trace_a_drawing_a_print_or_another_pcb" id="how_do_i_trace_a_drawing_a_print_or_another_pcb">How do I trace a drawing, a print, or another PCB?</a></h2>
+<div class="level2">
+
+<p>
+See the page <a href="http://www.delorie.com/pcb/bg-image.html" class="urlextern" title="http://www.delorie.com/pcb/bg-image.html"  rel="nofollow">http://www.delorie.com/pcb/bg-image.html</a> at DJ Delorie&rsquo;s PCB HID website.  
+</p>
+
+<p>
+This is a great way to trace hand-drawn artwork or another PCB, say one you made in software with a proprietary format, which you&rsquo;d now like to &lsquo;unlock&rsquo;.  Furthermore, you can use the background image as tool for making board revisions or redesigns.
+</p>
+
+<p>
+If you don&rsquo;t like to use PCB confined to the area of the board, i.e. if you want margins around your board, then add them in the GIMP.  I like to make a 1.00000 inch margin around the board.  When you set your PCB size in PCB, you&rsquo;ll want to add the margin area.  CTRL-M will help you verify the scaling.  Also, the time to correct distortions from your scanner, or from your drawing is before you load it, in the GIMP or the like.
+</p>
+
+</div>
+<!-- SECTION [20170-21010] -->
 <h2><a name="i_can_t_copy_component_pads_in_a_layout._what_gives" id="i_can_t_copy_component_pads_in_a_layout._what_gives">I can't copy component pads in a layout.  What gives?</a></h2>
 <div class="level2">
 
@@ -570,7 +620,7 @@ Then I go to paste the copied area... and all that moves are a couple of traces 
 </p>
 
 </div>
-<!-- SECTION [19138-19793] -->
+<!-- SECTION [21011-21666] -->
 <h2><a name="how_do_i_fill_areas_with_copper" id="how_do_i_fill_areas_with_copper">How do I fill areas with copper?</a></h2>
 <div class="level2">
 
@@ -579,7 +629,7 @@ Use rectangles and polygon planes. These items will always avoid vias, pads and 
 </p>
 
 </div>
-<!-- SECTION [19794-20041] -->
+<!-- SECTION [21667-21914] -->
 <h2><a name="the_polygons_are_shorting_my_tracks_what_can_i_do_about_it" id="the_polygons_are_shorting_my_tracks_what_can_i_do_about_it">The polygons are shorting my tracks! What can I do about it?</a></h2>
 <div class="level2">
 
@@ -588,7 +638,7 @@ You didn’t have “Enable_new_lines_clear_polygons” checked in the settings 
 </p>
 
 </div>
-<!-- SECTION [20042-20411] -->
+<!-- SECTION [21915-22284] -->
 <h2><a name="how_do_i_change_polygon_clearance" id="how_do_i_change_polygon_clearance">How do I change polygon clearance?</a></h2>
 <div class="level2">
 
@@ -601,7 +651,7 @@ The amount of the increment can be configured in the dialog File/Preference/Incr
 </p>
 
 </div>
-<!-- SECTION [20412-20912] -->
+<!-- SECTION [22285-22785] -->
 <h2><a name="how_do_i_hide_the_polygons_while_i_edit_the_layout" id="how_do_i_hide_the_polygons_while_i_edit_the_layout">How do I hide the polygons while I edit the layout?</a></h2>
 <div class="level2">
 
@@ -610,7 +660,7 @@ Put the polygons (and rectangles) on a separate layer. Use the preference to mak
 </p>
 
 </div>
-<!-- SECTION [20913-21321] -->
+<!-- SECTION [22786-23194] -->
 <h2><a name="how_do_i_edit_polygons" id="how_do_i_edit_polygons">How do I edit polygons?</a></h2>
 <div class="level2">
 
@@ -623,7 +673,7 @@ There are four basic ways to edit polygon outlines. You can move and delete vert
 </p>
 
 </div>
-<!-- SECTION [21322-22507] -->
+<!-- SECTION [23195-24380] -->
 <h2><a name="how_do_i_place_vias_that_connect_to_a_polygon_for_full_thermal_dissipation_or_full_shielding_integrity" id="how_do_i_place_vias_that_connect_to_a_polygon_for_full_thermal_dissipation_or_full_shielding_integrity">How do I place vias that connect to a polygon for full thermal dissipation or full shielding integrity?</a></h2>
 <div class="level2">
 
@@ -652,7 +702,7 @@ You can also add another polygon on-top of the polygon to which you want to conn
 </p>
 
 </div>
-<!-- SECTION [22508-24437] -->
+<!-- SECTION [24381-26310] -->
 <h2><a name="can_polygons_be_un-masked_can_a_polygon_be_made_bare-copper_with_no_solder_mask" id="can_polygons_be_un-masked_can_a_polygon_be_made_bare-copper_with_no_solder_mask">Can polygons be un-masked? (Can a polygon be made bare-copper with no solder mask?)</a></h2>
 <div class="level2">
 
@@ -661,7 +711,7 @@ Currently this is not possible in PCB. The usual workaround (for example if you 
 </p>
 
 </div>
-<!-- SECTION [24438-24995] -->
+<!-- SECTION [26311-26868] -->
 <h2><a name="how_do_i_place_mounting_holes" id="how_do_i_place_mounting_holes">How do I place mounting holes?</a></h2>
 <div class="level2">
 
@@ -682,7 +732,7 @@ For footprint examples see <a href="http://www.luciani.org/geda/pcb/pcb-footprin
 </p>
 
 </div>
-<!-- SECTION [24996-25660] -->
+<!-- SECTION [26869-27533] -->
 <h2><a name="why_is_it_possible_to_make_a_thermal_for_pin_but_not_for_a_pad" id="why_is_it_possible_to_make_a_thermal_for_pin_but_not_for_a_pad">Why is it possible to make a thermal for pin, but not for a pad?</a></h2>
 <div class="level2">
 
@@ -691,7 +741,7 @@ The reason is that pins usually have sufficient spacing that the plane surroundi
 </p>
 
 </div>
-<!-- SECTION [25661-26291] -->
+<!-- SECTION [27534-28164] -->
 <h2><a name="can_pcb_be_used_to_make_single_layer_boards" id="can_pcb_be_used_to_make_single_layer_boards">Can PCB be used to make single layer boards?</a></h2>
 <div class="level2">
 
@@ -710,7 +760,7 @@ Yes. Just plot your gerbers and toss any layers that are not needed. You can jus
 </p>
 
 </div>
-<!-- SECTION [26292-27089] -->
+<!-- SECTION [28165-28962] -->
 <h2><a name="what_resources_exist_to_process_pcb_files_using_scripts" id="what_resources_exist_to_process_pcb_files_using_scripts">What resources exist to process PCB files using scripts?</a></h2>
 <div class="level2">
 
@@ -727,7 +777,7 @@ One of PCB&rsquo;s great features is that it uses an easily understood <acronym 
 </ol>
 
 </div>
-<!-- SECTION [27090-28053] -->
+<!-- SECTION [28963-29926] -->
 <h2><a name="how_do_i_import_external_vector_graphics" id="how_do_i_import_external_vector_graphics">How do I import external vector graphics?</a></h2>
 <div class="level2">
 
@@ -740,12 +790,21 @@ Import of external vector graphics is usefull if an irregular shape of the pcb i
 </p>
 
 </div>
-<!-- SECTION [28054-29132] -->
+<!-- SECTION [29927-31005] -->
+<h2><a name="how_do_i_attach_a_name_to_my_layout" id="how_do_i_attach_a_name_to_my_layout">How Do I attach a name to my layout?</a></h2>
+<div class="level2">
+
+<p>
+You can set the name of the current pcb with <code>Menu Edit - Edit name of - layout</code>. This sets the title attribute of the layout. This attribute is used for the export actions. It does not interfere with the file name.   
+</p>
+
+</div>
+<!-- SECTION [31006-31276] -->
 <h1><a name="auto_router" id="auto_router">Auto Router</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [29133-29158] -->
+<!-- SECTION [31277-31302] -->
 <h2><a name="how_do_i_force_the_autorouter_to_only_put_traces_on_a_particular_layer" id="how_do_i_force_the_autorouter_to_only_put_traces_on_a_particular_layer">How do I force the autorouter to only put traces on a particular layer?</a></h2>
 <div class="level2">
 
@@ -754,7 +813,7 @@ Just unselect the layers you don’t want (usually green and blue) by clicking o
 </p>
 
 </div>
-<!-- SECTION [29159-29370] -->
+<!-- SECTION [31303-31514] -->
 <h2><a name="how_do_i_force_the_autorouter_to_route_only_within_my_pcb_outline" id="how_do_i_force_the_autorouter_to_route_only_within_my_pcb_outline">How do I force the autorouter to route only within my pcb outline?</a></h2>
 <div class="level2">
 
@@ -763,7 +822,7 @@ You can have the autorouter work only within a given area by drawing a copper po
 </p>
 
 </div>
-<!-- SECTION [29371-29802] -->
+<!-- SECTION [31515-31946] -->
 <h2><a name="how_do_i_route_power_and_ground_planes_with_the_autorouter" id="how_do_i_route_power_and_ground_planes_with_the_autorouter">How do I route power and ground planes with the autorouter?</a></h2>
 <div class="level2">
 
@@ -772,7 +831,7 @@ Connect the polygon that will become your power planes to a net and the autorout
 </p>
 
 </div>
-<!-- SECTION [29803-30084] -->
+<!-- SECTION [31947-32228] -->
 <h2><a name="the_layout_produced_by_the_autorouter_is_inefficient" id="the_layout_produced_by_the_autorouter_is_inefficient">The layout produced by the autorouter is inefficient!</a></h2>
 <div class="level2">
 
@@ -781,7 +840,7 @@ This is a technological limitation of the current auto router. It is gridless an
 </p>
 
 </div>
-<!-- SECTION [30085-30265] -->
+<!-- SECTION [32229-32409] -->
 <h2><a name="the_layout_produced_by_the_autorouter_is_ugly" id="the_layout_produced_by_the_autorouter_is_ugly">The layout produced by the autorouter is ugly!</a></h2>
 <div class="level2">
 
@@ -790,12 +849,12 @@ You are more than welcome to contribute a topological autorouter.
 </p>
 
 </div>
-<!-- SECTION [30266-30391] -->
+<!-- SECTION [32410-32535] -->
 <h1><a name="gerber_generation_and_file_i_o_issues" id="gerber_generation_and_file_i_o_issues">Gerber generation and file I/O issues</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [30392-30444] -->
+<!-- SECTION [32536-32588] -->
 <h2><a name="how_do_i_make_a_board_outline_to_go_with_my_gerbers_to_the_board_maker" id="how_do_i_make_a_board_outline_to_go_with_my_gerbers_to_the_board_maker">How do I make a board outline to go with my gerbers to the board maker?</a></h2>
 <div class="level2">
 
@@ -820,12 +879,16 @@ It’s also possible to edit the native .pcb file format of your layout. I usual
 )</pre>
 
 </div>
-<!-- SECTION [30445-31291] -->
+<!-- SECTION [32589-33435] -->
 <h2><a name="i_m_done_with_my_layout._how_should_i_check_my_design" id="i_m_done_with_my_layout._how_should_i_check_my_design">I'm done with my layout. How should I check my design?</a></h2>
 <div class="level2">
+<ul>
+<li class="level1"><div class="li"> Run a check of design rules either through the command interface (&rdquo;DRC()&rdquo;) or from the menu (Connects - Design Rule Checker). You can set the rules in the sizes section of the preference dialog. Results of the check are shown in the log window. </div>
+</li>
+</ul>
 
 <p>
-Besides running the DRC checker in PCB, it is essential to check your Gerber files. The gEDA Suite includes the program “gerbv” for this task. Here are some things to check/verify:
+Besides running the DRC checker, it is essential to check your Gerber files. The gEDA Suite includes the program “gerbv” for this task. Here are some things to check/verify:
 </p>
 <ul>
 <li class="level1"><div class="li"> Check that all trace widths are the correct size. Also make sure your trace widths and metal-metal separations are above the minimum specified by your PCB vendor.</div>
@@ -849,14 +912,14 @@ Besides running the DRC checker in PCB, it is essential to check your Gerber fil
 </ul>
 
 </div>
-<!-- SECTION [31292-33268] -->
+<!-- SECTION [33436-35655] -->
 <h1><a name="you_didn_t_answer_my_question._what_other_resources_exist_for_pcb_information" id="you_didn_t_answer_my_question._what_other_resources_exist_for_pcb_information">You didn't answer my question. What other resources exist for PCB information?</a></h1>
 <div class="level1">
 
 <p>
 <a href="http://www.luciani.org/geda/pcb/faq-pcb-footprint.html" class="urlextern" title="http://www.luciani.org/geda/pcb/faq-pcb-footprint.html"  rel="nofollow">http://www.luciani.org/geda/pcb/faq-pcb-footprint.html</a><br/>
  <a href="http://pcb.sourceforge.net/faq.html" class="urlextern" title="http://pcb.sourceforge.net/faq.html"  rel="nofollow">http://pcb.sourceforge.net/faq.html</a><br/>
- <a href="http://pcb.sourceforge.net/pcb-20060422/pcb.html#Top" class="urlextern" title="http://pcb.sourceforge.net/pcb-20060422/pcb.html#Top"  rel="nofollow">http://pcb.sourceforge.net/pcb-20060422/pcb.html#Top</a>
+ <a href="http://pcb.sourceforge.net/pcb-20060822/pcb.html#Top" class="urlextern" title="http://pcb.sourceforge.net/pcb-20060822/pcb.html#Top"  rel="nofollow">http://pcb.sourceforge.net/pcb-20060822/pcb.html#Top</a>
 </p>
 
 <p>
@@ -864,6 +927,6 @@ You can get fast responses from the geda-user email list. If you haven’t found
 </p>
 
 </div>
-<!-- SECTION [33269-] --></div>
+<!-- SECTION [35656-] --></div>
 </body>
 </html>
