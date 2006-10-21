@@ -43,7 +43,7 @@ void o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current)
   int left, right, top, bottom;
 
   if (!w_current->DONT_REDRAW) {
-    o_redraw(w_current, o_current->complex->prim_objs);
+    o_redraw(w_current, o_current->complex->prim_objs, TRUE);
   }
 
   get_complex_bounds(w_current, o_current->complex->prim_objs,
@@ -323,7 +323,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
                          rbottom - rtop);
     }
 
-    o_redraw(w_current, o_start);
+    o_redraw(w_current, o_start, TRUE);
     w_current->page_current->CHANGED = 1;
     o_undo_savestate(w_current, UNDO_ALL);
     i_update_menus(w_current);

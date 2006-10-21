@@ -285,7 +285,7 @@ void o_select_box_end(TOPLEVEL *w_current, int x, int y)
 
 #if 0
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head);
+    o_redraw(w_current, w_current->page_current->object_head, TRUE);
     return;
   }
 #endif
@@ -327,7 +327,7 @@ void o_select_box_rubberband(TOPLEVEL *w_current, int x, int y)
 
 #if 0
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head);
+    o_redraw(w_current, w_current->page_current->object_head, TRUE);
     return;
   }
 #endif

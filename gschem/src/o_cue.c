@@ -35,9 +35,10 @@
  *  \par Function Description
  *
  */
-void o_cue_redraw_all(TOPLEVEL *w_current, OBJECT *head)
+void o_cue_redraw_all(TOPLEVEL *w_current, OBJECT *head, gboolean draw_selected)
 {
   OBJECT *o_current;
+  int redraw_state = w_current->DONT_REDRAW;
 
   o_current = head;
   while(o_current != NULL) {
@@ -45,18 +46,32 @@ void o_cue_redraw_all(TOPLEVEL *w_current, OBJECT *head)
       case(OBJ_NET):
       case(OBJ_BUS):
       case(OBJ_PIN):
+	if (o_current->selected && !draw_selected) {
+	  w_current->DONT_REDRAW = 1 || redraw_state;
+	}
+	else {
+	  w_current->DONT_REDRAW = 0 || redraw_state;
+	}
         o_cue_draw_single(w_current, o_current);
         break;
 
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-        o_cue_redraw_all(w_current, o_current->complex->prim_objs);
+	if (o_current->selected && !draw_selected) {
+	  w_current->DONT_REDRAW = 1 || redraw_state;
+	}
+	else {
+	  w_current->DONT_REDRAW = 0 || redraw_state;
+	}
+        o_cue_redraw_all(w_current, o_current->complex->prim_objs, 
+			 draw_selected);
 	break;
 
     }
     
     o_current = o_current->next;
   }
+  w_current->DONT_REDRAW = redraw_state;
 }
 
 /*! \todo Finish function documentation!!!

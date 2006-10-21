@@ -1,5 +1,13 @@
 2006-10-21 Carlos Nieves Onega <cnieves@iespana.es>
 
+        * src/a_zoom.c, src/o_arc.c, src/o_basic.c, src/o_box.c,
+	  src/o_buffer.c, /src/o_bus.c, src/o_circle.c, src/o_complex.c,
+	  src/o_cue.c, src/o_grips.c, /src/o_line.c, src/o_net.c,
+	  src/o_picture.c, src/o_pin.c, src/o_select.c, src/o_text.c:
+	  Added a new parameter to o_redraw and o_cue_redraw_all, 
+	  to choose wether to draw the selected objects or not.
+	  Make o_redraw call o_redraw_all_fast, since they shared code.
+	
 	* src/o_arc.c, src/o_box.c, src/o_bus.c, src/o_circle.c,
 	  src/o_cue.c, src/o_grips.c, src/o_line.c, src/o_net.c,
 	  src/o_picture.c, src/o_pin.c, src/o_text.c:

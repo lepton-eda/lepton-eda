@@ -1,7 +1,8 @@
 /* $Id$ */
 
 /* a_pan.c */
-void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy, double relativ_zoom_factor, int flags);
+void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy, 
+		   double relativ_zoom_factor, int flags);
 void a_pan_calc(TOPLEVEL *w_current, int x, int y);
 void a_pan(TOPLEVEL *w_current, int x, int y);
 void a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y);
@@ -478,7 +479,7 @@ OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibili
 /* o_basic.c */
 void o_redraw_all(TOPLEVEL *w_current);
 void o_redraw_all_fast(TOPLEVEL *w_current);
-void o_redraw(TOPLEVEL *w_current, OBJECT *object_list);
+void o_redraw(TOPLEVEL *w_current, OBJECT *object_list, gboolean draw_selected);
 void o_unselect_all(TOPLEVEL *w_current);
 void o_draw_list(TOPLEVEL *w_current, GList *list);
 void o_draw_selected(TOPLEVEL *w_current);
@@ -561,7 +562,7 @@ OBJECT *o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int ce
 void o_copy_start(TOPLEVEL *w_current, int x, int y);
 void o_copy_end(TOPLEVEL *w_current);
 /* o_cue.c */
-void o_cue_redraw_all(TOPLEVEL *w_current, OBJECT *head);
+void o_cue_redraw_all(TOPLEVEL *w_current, OBJECT *head, gboolean draw_selected);
 void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone);
 void o_cue_erase_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone);
 void o_cue_draw_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object);

@@ -418,7 +418,7 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
   OBJECT *new_net = NULL;
   
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head);
+    o_redraw(w_current, w_current->page_current->object_head, TRUE);
     return(FALSE);
   }
 
@@ -657,7 +657,7 @@ void o_net_rubbernet(TOPLEVEL *w_current, int x, int y)
   int ortho;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head);
+    o_redraw(w_current, w_current->page_current->object_head, TRUE);
     return;
   }
 

@@ -51,33 +51,7 @@
  */
 void o_redraw_all(TOPLEVEL *w_current)
 {
-#if 0
-  struct timeval tv1;
-  struct timeval tv2;
-#endif
-
-  if (!w_current->DONT_REDRAW) {
-    x_repaint_background(w_current);
-  }
-
-#if 0
-  gettimeofday(&tv1, NULL);
-#endif
-
-  o_recalc(w_current, w_current->page_current->object_head);
-
-  if (!w_current->DONT_REDRAW) {
-    o_redraw(w_current, w_current->page_current->complex_place_head->next);
-    o_redraw(w_current, w_current->page_current->object_head);
-    o_cue_redraw_all(w_current,
-                     w_current->page_current->object_head);
-  }
-
-#if 0
-  gettimeofday(&tv2, NULL);
-  printf("secs: %d\n", tv2.tv_sec - tv1.tv_sec);
-  printf("usecs: %d\n\n", tv2.tv_usec - tv1.tv_usec);
-#endif
+  o_redraw_all_fast(w_current);
 
   if (w_current->inside_action) {
     switch(w_current->event_state) {
@@ -108,7 +82,7 @@ void o_redraw_all(TOPLEVEL *w_current)
         o_drawbounding(w_current, w_current->
                        page_current->
                        attrib_place_head->next,
-                       NULL,
+                       NULL, 
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
       case (GRIPS):
@@ -126,17 +100,22 @@ void o_redraw_all(TOPLEVEL *w_current)
 /* basically like above but doesn't do the o_conn_disconnect_update */
 void o_redraw_all_fast(TOPLEVEL *w_current)
 {
+  gboolean draw_selected = TRUE;
+
   if (!w_current->DONT_REDRAW) {
     x_repaint_background(w_current);
   }
 
   o_recalc(w_current, w_current->page_current->object_head);
+  /* Uncomment this when using the complex_place_list for moving and copying */
+  /*  o_recalc_glist(w_current, w_current->page_current->complex_place_list); */
 
-  if (!w_current->DONT_REDRAW) {
-    o_redraw(w_current, w_current->page_current->object_head);
-    o_cue_redraw_all(w_current,
-                     w_current->page_current->object_head);
-  }
+  draw_selected = !(w_current->inside_action &&
+		    ((w_current->event_state == MOVE) ||
+		     (w_current->event_state == ENDMOVE)));
+  o_redraw(w_current, w_current->page_current->object_head, draw_selected);
+  o_cue_redraw_all(w_current,
+		   w_current->page_current->object_head, draw_selected);
 }
 
 /*! \todo Finish function documentation!!!
@@ -144,13 +123,20 @@ void o_redraw_all_fast(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_redraw(TOPLEVEL *w_current, OBJECT *object_list)
+void o_redraw(TOPLEVEL *w_current, OBJECT *object_list, gboolean draw_selected)
 {
   OBJECT *o_current = object_list;
+  int redraw_state = w_current->DONT_REDRAW;
 
   while (o_current != NULL) {
     if ((o_current->draw_func != NULL) &&
         (o_current->type != OBJ_HEAD)) {
+      if (o_current->selected && !draw_selected) {
+	w_current->DONT_REDRAW = 1 || redraw_state;
+      }
+      else {
+	w_current->DONT_REDRAW = 0 || redraw_state;
+      }
       w_current->inside_redraw = 1;
       (*o_current->draw_func)(w_current, o_current);
       w_current->inside_redraw = 0;
@@ -158,6 +144,7 @@ void o_redraw(TOPLEVEL *w_current, OBJECT *object_list)
 
     o_current = o_current->next;
   }
+  w_current->DONT_REDRAW = redraw_state;
 }
 
 /*! \todo Finish function documentation!!!

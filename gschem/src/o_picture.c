@@ -94,7 +94,7 @@ void o_picture_end(TOPLEVEL *w_current, int x, int y)
   int picture_left, picture_top;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head);
+    o_redraw(w_current, w_current->page_current->object_head, TRUE);
     return;
   }
 
@@ -320,7 +320,7 @@ void o_picture_rubberbox(TOPLEVEL *w_current, int x, int y)
   printf("o_picture_rubberbox called\n");
 #endif
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head);
+    o_redraw(w_current, w_current->page_current->object_head, TRUE);
     return;
   }
 

@@ -953,14 +953,14 @@ void o_grips_motion(TOPLEVEL *w_current, int x, int y)
 {
 	
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head);
+    o_redraw(w_current, w_current->page_current->object_head, TRUE);
     return;
   }
 
   /* no object changing */
   if (object_changing == NULL) {
     /* stop grip process */
-    o_redraw(w_current, w_current->page_current->object_head);
+    o_redraw(w_current, w_current->page_current->object_head, TRUE);
     return;
   }
 	

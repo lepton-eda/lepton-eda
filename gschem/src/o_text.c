@@ -66,7 +66,7 @@ void o_text_draw_lowlevel(TOPLEVEL *w_current, OBJECT *o_current)
     o_text_recreate(w_current, o_current);
   }
   
-  o_redraw(w_current, o_current->text->prim_objs);
+  o_redraw(w_current, o_current->text->prim_objs, TRUE);
 
   get_complex_bounds(w_current, o_current->text->prim_objs,
                      &left, &top, &right, &bottom);

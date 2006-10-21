@@ -222,7 +222,7 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
     o_current = o_current->next;
   }
 
-  o_cue_redraw_all(w_current, o_saved->next);
+  o_cue_redraw_all(w_current, o_saved->next, TRUE);
   o_cue_undraw_list(w_current, connected_objects);
   o_cue_draw_list(w_current, connected_objects);
   g_list_free(connected_objects);
@@ -237,7 +237,7 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
                                                                      temp_list);
 
   w_current->page_current->CHANGED = 1;
-  o_redraw(w_current, o_saved->next); /* only redraw new objects */
+  o_redraw(w_current, o_saved->next, TRUE); /* only redraw new objects */
   o_undo_savestate(w_current, UNDO_ALL);
   i_update_menus(w_current);
 }

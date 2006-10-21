@@ -277,7 +277,7 @@ void a_zoom_box_end(TOPLEVEL *w_current, int x, int y)
   int box_left, box_top;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head);
+    o_redraw(w_current, w_current->page_current->object_head, TRUE);
     return;
   }
 
@@ -305,7 +305,7 @@ void a_zoom_box_rubberband(TOPLEVEL *w_current, int x, int y)
   int box_left, box_top;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head);
+    o_redraw(w_current, w_current->page_current->object_head, TRUE);
     return;
   }
 

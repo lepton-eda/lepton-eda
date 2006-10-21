@@ -362,7 +362,7 @@ int o_bus_end(TOPLEVEL *w_current, int x, int y)
   GList *other_objects = NULL;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head);
+    o_redraw(w_current, w_current->page_current->object_head, TRUE);
     return(FALSE);
   }
 
@@ -496,7 +496,7 @@ void o_bus_rubberbus(TOPLEVEL *w_current, int x, int y)
   int size;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head);
+    o_redraw(w_current, w_current->page_current->object_head, TRUE);
     return;
   }
 
