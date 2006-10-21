@@ -20,14 +20,11 @@
 
 ;;  PCB format
 
+(use-modules (ice-9 format))
+
+
 (define (PCB:display-connections nets)
-  (let ((k ""))
-    (for-each (lambda (in-string)
-                (set! k (string-append k in-string)))
-              (map (lambda (net)
-                     (string-append (car net) "-" (car (cdr net)) " "))
-                   nets))
-    (string-append k "\n")))
+  (apply format #f "~:@{~A-~A ~}\n" nets))
 
 
 ; This function is replaced with the above one. Due to non existent
