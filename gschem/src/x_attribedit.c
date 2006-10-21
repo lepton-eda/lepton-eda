@@ -389,16 +389,6 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_box_pack_start (GTK_BOX (hbox1), hbuttonbox1, TRUE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (hbuttonbox1), 1);
 
-  okbutton = gtk_button_new_from_stock (GTK_STOCK_OK);
-  gtk_widget_ref (okbutton);
-  gtk_object_set_data_full (GTK_OBJECT (aewindow), "okbutton", okbutton,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (okbutton);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox1), okbutton);
-  gtk_container_set_border_width (GTK_CONTAINER (okbutton), 3);
-  GTK_WIDGET_SET_FLAGS (okbutton, GTK_CAN_DEFAULT);
-  gtk_button_set_relief (GTK_BUTTON (okbutton), GTK_RELIEF_HALF);
-
   if (list) { /* gschem specific */
     deletebutton = gtk_button_new_from_stock (GTK_STOCK_DELETE);
     gtk_widget_ref (deletebutton);
@@ -419,6 +409,16 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_container_set_border_width (GTK_CONTAINER (cancelbutton), 3);
   GTK_WIDGET_SET_FLAGS (cancelbutton, GTK_CAN_DEFAULT);
 
+  okbutton = gtk_button_new_from_stock (GTK_STOCK_OK);
+  gtk_widget_ref (okbutton);
+  gtk_object_set_data_full (GTK_OBJECT (aewindow), "okbutton", okbutton,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (okbutton);
+  gtk_container_add (GTK_CONTAINER (hbuttonbox1), okbutton);
+  gtk_container_set_border_width (GTK_CONTAINER (okbutton), 3);
+  GTK_WIDGET_SET_FLAGS (okbutton, GTK_CAN_DEFAULT);
+  gtk_button_set_relief (GTK_BUTTON (okbutton), GTK_RELIEF_HALF);
+  
   frame1 = gtk_frame_new (_("Add/Edit Attribute"));
   gtk_widget_ref (frame1);
   gtk_object_set_data_full (GTK_OBJECT (aewindow), "frame1", frame1,

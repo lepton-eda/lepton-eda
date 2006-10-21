@@ -90,10 +90,10 @@ print_dialog_action_choosefile (GtkWidget * w, PrintDialog * dialog)
   filechooser = gtk_file_chooser_dialog_new (_("Save PostScript As..."),
 					     GTK_WINDOW (dialog),
 					     GTK_FILE_CHOOSER_ACTION_SAVE,
-					     GTK_STOCK_SAVE_AS,
-					     GTK_RESPONSE_ACCEPT,
 					     GTK_STOCK_CANCEL,
-					     GTK_RESPONSE_CANCEL, NULL);
+					     GTK_RESPONSE_CANCEL,
+					     GTK_STOCK_SAVE_AS,
+					     GTK_RESPONSE_ACCEPT, NULL);
 
   filename = gtk_entry_get_text (GTK_ENTRY (dialog->fnfield));
   gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (filechooser), filename);
@@ -414,8 +414,8 @@ print_dialog_init (PrintDialog * dialog)
 
   /* Add "Cancel" and "Print" buttons */
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-			  GTK_STOCK_PRINT, GTK_RESPONSE_ACCEPT,
 			  GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
+			  GTK_STOCK_PRINT, GTK_RESPONSE_ACCEPT,
 			  NULL);
 
   /* Set initial radiobutton selection */
