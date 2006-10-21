@@ -2,20 +2,20 @@
 # gEDA/gaf gschem german translation
 # Copyright (C) 2002 Werner Hoch
 # This file is distributed under the same license as the gEDA/gaf package.
-# Werner Hoch <werner.ho@gmx.de>, 2002, 2005, 2006.
 #
+# Werner Hoch <werner.ho@gmx.de>, 2002, 2005, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-21 00:24-0400\n"
-"PO-Revision-Date: 2006-01-13 18:44+0100\n"
+"PO-Revision-Date: 2006-10-21 08:40+0200\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10\n"
+"X-Generator: KBabel 1.11.2\n"
 
 #: src/rcstrings.c:2 src/x_print.c:376
 msgid "File"
@@ -102,9 +102,8 @@ msgid "Copy Mode"
 msgstr "Kopier Modus"
 
 #: src/rcstrings.c:24 src/i_basic.c:162
-#, fuzzy
 msgid "Multiple Copy Mode"
-msgstr "Kopier Modus"
+msgstr "Mehrfach Kopier Modus"
 
 #: src/rcstrings.c:25 src/i_basic.c:110
 msgid "Move Mode"
@@ -478,18 +477,17 @@ msgid "Attribute failed ot find.\n"
 msgstr "Attribut wurde nicht gefunden.\n"
 
 #: src/g_rc.c:106
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Found a version [%s%s] gschemrc file:\n"
 "[%s]\n"
 msgstr ""
-"Die Version der gschemrc Datei ist [%s].\n"
+"Die Version der gschemrc Datei ist [%s%s].\n"
 "Dateiname: [%s]\n"
 
 #: src/g_rc.c:109
 #, c-format
-msgid ""
-"While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
+msgid "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
 msgstr ""
 "Solange gschem im ALPHA-Stadium ist, sollte unbedingt die neueste rc Datei \n"
 "verwendet werden.\n"
@@ -560,8 +558,7 @@ msgstr "An \"grid-dot-size\" wurde eine falsche Punktgröße [%d] übergeben.\n"
 #: src/g_rc.c:1572
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
-msgstr ""
-"An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
+msgstr "An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
 
 #: src/g_rc.c:1616
 #, c-format
@@ -576,19 +573,19 @@ msgstr ""
 "übergeben\n"
 
 #: src/g_rc.c:1681
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
-msgstr "Eine ungültige Größe [%d] wurde an snap-size übergeben.\n"
+msgstr "Ein ungültiger Werte [%d] wurde an mousepan-gain übergeben.\n"
 
 #: src/g_rc.c:1704
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
-msgstr "Eine ungültige Größe [%d] wurde an snap-size übergeben.\n"
+msgstr "Ein ungültiger Wert [%d] wurde an keyboardpan-gain übergeben.\n"
 
 #: src/gschem.c:141 src/gschem.c:151
-#, fuzzy, c-format
+#, c-format
 msgid "gEDA/gschem version %s%s\n"
-msgstr "gEDA/gschem Version %s\n"
+msgstr "gEDA/gschem Version %s%s\n"
 
 #: src/gschem.c:143 src/gschem.c:153
 #, c-format
@@ -601,8 +598,7 @@ msgstr ""
 
 #: src/gschem.c:145 src/gschem.c:155
 #, c-format
-msgid ""
-"This is free software, and you are welcome to redistribute it under certain\n"
+msgid "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Dies ist Freie Software. Sie darf gerne weitergegeben werden. Bitte lies "
 "die\n"
@@ -722,9 +718,8 @@ msgid "Move"
 msgstr "Verschieben"
 
 #: src/i_basic.c:159 src/i_callbacks.c:698 src/i_callbacks.c:717
-#, fuzzy
 msgid "Multiple Copy"
-msgstr "Mehrfache Attribute"
+msgstr "Mehrfaches Kopieren"
 
 #: src/i_basic.c:197
 msgid "Snap Off"
@@ -787,10 +782,10 @@ msgid "Saved All"
 msgstr "Alles gespeichert"
 
 #: src/i_callbacks.c:458 src/i_callbacks.c:461
-#, fuzzy, c-format
+#, c-format
 msgid "libgd not installed or disabled, so this feature is disabled\n"
 msgstr ""
-"libgdgeda nicht installiert oder deaktiviert, folglich ist diese Funktion "
+"libgd nicht installiert oder deaktiviert, folglich ist diese Funktion "
 "deaktiviert\n"
 
 #: src/i_callbacks.c:510
@@ -827,8 +822,7 @@ msgstr "Verschieben nach"
 
 #: src/i_callbacks.c:1001
 msgid "WARNING: Do not translate with snap off!\n"
-msgstr ""
-"ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
+msgstr "ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
 
 #: src/i_callbacks.c:1002
 msgid "WARNING: Turning snap on and continuing with translate.\n"
@@ -1069,8 +1063,7 @@ msgstr "Undefinierter Typ für das Rechteck (Füllung)!\n"
 #: src/o_buffer.c:41
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_copy]\n"
-msgstr ""
-"Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
+msgstr "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
 
 #: src/o_buffer.c:79
 #, c-format
@@ -1087,14 +1080,12 @@ msgstr ""
 #: src/o_buffer.c:173
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
-msgstr ""
-"Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_paste_end]\n"
+msgstr "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_paste_end]\n"
 
 #: src/o_bus.c:217
 #, c-format
 msgid "Got an invalid which one in o_bus_draw_xor_single\n"
-msgstr ""
-"Ungültiger Wert in Variable whichone in der Funktion o_bus_draw_xor_single\n"
+msgstr "Ungültiger Wert in Variable whichone in der Funktion o_bus_draw_xor_single\n"
 
 #: src/o_bus.c:282 src/o_bus.c:316 src/o_net.c:329 src/o_net.c:363
 #, c-format
@@ -1119,8 +1110,7 @@ msgstr "Undefinierter Typ für einen Kreis (Füllung).\n"
 #: src/o_complex.c:204
 #, c-format
 msgid "Could not find complex in new componet placement!\n"
-msgstr ""
-"Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
+msgstr "Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
 
 #: src/o_complex.c:546
 #, c-format
@@ -1240,14 +1230,14 @@ msgstr ""
 "ermitteln."
 
 #: src/o_misc.c:1789
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr "Die Backup-Datei [%s] konnte nicht gespeichert werden.\n"
+msgstr "Die vorherige Backup-Datei [%s] konnte nicht auf read-write gesetzt werden.\n"
 
 #: src/o_misc.c:1807
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
-msgstr "Die Backup-Datei [%s] konnte nicht gespeichert werden.\n"
+msgstr "Die Backup-Datei [%s] konnte nicht auf readonly gesetzt werden.\n"
 
 #: src/o_misc.c:1812
 #, c-format
@@ -1274,8 +1264,7 @@ msgstr "Da ist ein Objekt in o_move_check_endpoint, welches keine Linie ist.\n"
 #: src/o_net.c:261
 #, c-format
 msgid "Got an invalid which one in o_net_draw_xor_single\n"
-msgstr ""
-"Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
+msgstr "Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
 
 #: src/o_net.c:929 src/o_net.c:966 src/o_net.c:1037 src/o_net.c:1073
 #, c-format
@@ -1331,8 +1320,7 @@ msgstr "Ups! Sie versuchen einen slot zu editieren, der nicht existiert.\n"
 #: src/o_text.c:142
 #, c-format
 msgid "Tried to render text with an invalid angle: %d\n"
-msgstr ""
-"Der Text kann nicht mit einem ungültigen Winkel gezeichnet werden: %d\n"
+msgstr "Der Text kann nicht mit einem ungültigen Winkel gezeichnet werden: %d\n"
 
 #: src/o_undo.c:320
 msgid "Undo/Redo disabled in rc file\n"
@@ -1462,9 +1450,8 @@ msgid "Select Component..."
 msgstr "Bauteil auswählen..."
 
 #: src/x_compselect.c:771
-#, fuzzy
 msgid "Filter:"
-msgstr "Filter"
+msgstr "Filter:"
 
 #: src/x_compselect.c:835 src/x_fileselect.c:123
 msgid "Preview"
@@ -1667,9 +1654,9 @@ msgid "gEDA : GPL Electronic Design Automation"
 msgstr "gEDA : GPL Electronic Design Automation"
 
 #: src/x_dialog.c:2388
-#, fuzzy, c-format
+#, c-format
 msgid "gschem version %s%s"
-msgstr "gschem Version %s"
+msgstr "gschem Version %s%s"
 
 #: src/x_dialog.c:2396
 msgid ""
@@ -1826,26 +1813,25 @@ msgstr "Name"
 
 #: src/x_dialog.c:4569
 msgid "S_elect the schematics you want to save:"
-msgstr ""
+msgstr "_Wählen Sie die zu speichernden Seiten:"
 
 #: src/x_dialog.c:4663
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
-msgstr ""
+msgstr "Sollen die Änderungen am Schaltplan \"%s\" vor dem Schließen gespeichert werden?"
 
 #: src/x_dialog.c:4669
 #, c-format
-msgid ""
-"There is %d schematics with unsaved changes. Save changes before closing?"
-msgstr ""
+msgid "There is %d schematics with unsaved changes. Save changes before closing?"
+msgstr "Es gibt %d ungesicherte Schaltpläne. Sollen die Änderungen vor dem Schließen gespeichert werden?"
 
 #: src/x_dialog.c:4698
 msgid "If you don't save, all your changes will be permanently lost."
-msgstr ""
+msgstr "Wenn Sie nicht speichern, werden Sie alle Änderungen verlieren."
 
 #: src/x_dialog.c:4718
 msgid "_Close without saving"
-msgstr ""
+msgstr "Schließen _ohne Speichern"
 
 #: src/x_fileselect.c:46
 msgid "Schematics"
@@ -1868,7 +1854,6 @@ msgid "Open..."
 msgstr "Öffnen..."
 
 #: src/x_fileselect.c:220
-#, fuzzy
 msgid "Save as..."
 msgstr "Speichern unter..."
 
@@ -2000,8 +1985,7 @@ msgstr ""
 
 #: src/x_multiattrib.c:648
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
-"Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
+msgstr "Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
 
 #: src/x_multiattrib.c:1159
 msgid "Show Value only"
@@ -2041,7 +2025,7 @@ msgstr "Attribut hinzufügen"
 
 #: src/x_pagesel.c:267
 msgid "Discard Page"
-msgstr "Seite Ablegen"
+msgstr "Seite ablegen"
 
 #: src/x_pagesel.c:376
 msgid "Page Manager"
@@ -2056,9 +2040,8 @@ msgid "Right click on the filename for more options..."
 msgstr "Rechtsklick auf den Dateinamen für mehr Optionen..."
 
 #: src/x_print.c:90
-#, fuzzy
 msgid "Save PostScript As..."
-msgstr "Speichern unter..."
+msgstr "PostScript speichern unter..."
 
 #: src/x_print.c:192
 msgid "Extents with margins"
@@ -2082,7 +2065,7 @@ msgstr "Hochformat"
 
 #: src/x_print.c:317
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #: src/x_print.c:329
 msgid "Output paper size"
@@ -2097,17 +2080,16 @@ msgid "Orientation"
 msgstr "Ausrichtung"
 
 #: src/x_print.c:363
-#, fuzzy
 msgid "Destination"
-msgstr "Dokumentation"
+msgstr "Ziel"
 
 #: src/x_print.c:402
 msgid "Command"
-msgstr ""
+msgstr "Befehl"
 
 #: src/x_print.c:753
 msgid "No print destination specified\n"
-msgstr ""
+msgstr "Das Ziel für den Ausdruck fehlt\n"
 
 #: src/x_print.c:760
 #, c-format
@@ -2245,16 +2227,16 @@ msgid "Pan/Cancel"
 msgstr "Ausschnitt/Cancel"
 
 #: src/x_window.c:1087
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT save page [%s]\n"
-msgstr "[%s] konnte nicht gespeichert werden.\n"
+msgstr "Die Seite [%s] konnte nicht gespeichert werden.\n"
 
 #: src/x_window.c:1088
 msgid "Error while trying to save"
 msgstr "Fehler während des Speicherns"
 
 #: src/x_window.c:1097
-#, fuzzy, c-format
+#, c-format
 msgid "Saved as [%s]\n"
 msgstr "Gespeichert unter [%s]\n"
 
@@ -2533,3 +2515,4 @@ msgstr "Schließe [%s]\n"
 #~ msgid "Invalid path [%s] passed to font-directory\n"
 #~ msgstr ""
 #~ "Ein ungültiges Verzeichnis [%s] wurde an font-directory übergeben.\n"
+
