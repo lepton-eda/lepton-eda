@@ -1,9 +1,9 @@
 
 
 docname=wiki
-docsdir = @GEDADOCDIR@/$(docname)/interwiki
+docsdir = @GEDADOCDIR@/$(docname)/lib/images/interwiki
 
-docs_DATA = wpde.gif doku.gif wp.gif wpmeta.gif amazon.gif sb.gif amazon.de.gif bug.gif amazon.uk.gif phpfn.gif meatball.gif coral.gif google.gif wiki.gif 
+docs_DATA = amazon.de.gif amazon.gif amazon.uk.gif bug.gif coral.gif doku.gif google.gif meatball.gif phpfn.gif sb.gif wiki.gif wp.gif wpde.gif wpmeta.gif 
 
 EXTRA_DIST = $(docs_DATA)
 

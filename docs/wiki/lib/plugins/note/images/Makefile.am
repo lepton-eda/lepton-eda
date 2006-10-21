@@ -1,9 +1,9 @@
 
 
 docname=wiki
-docsdir = @GEDADOCDIR@/$(docname)/images
+docsdir = @GEDADOCDIR@/$(docname)/lib/plugins/note/images
 
-docs_DATA = warning.png note.png important.png tip.png 
+docs_DATA = important.png note.png tip.png warning.png 
 
 EXTRA_DIST = $(docs_DATA)
 

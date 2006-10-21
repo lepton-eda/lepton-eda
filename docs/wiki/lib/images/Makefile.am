@@ -1,11 +1,11 @@
 
 
 docname=wiki
-docsdir = @GEDADOCDIR@/$(docname)/images
+docsdir = @GEDADOCDIR@/$(docname)/lib/images
 
-SUBDIRS = interwiki fileicons smileys 
+SUBDIRS = fileicons interwiki smileys 
 
-docs_DATA = interwiki.png success.png error.png info.png 
+docs_DATA = error.png info.png interwiki.png success.png 
 
 EXTRA_DIST = $(docs_DATA)
 

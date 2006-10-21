@@ -12,6 +12,11 @@
 	documentation.  Tweak to wikicommit.sh to make it easier to verify
 	that it is doing the right thing.
 
+	* wiki/*/Makefile.am: Fixed up various Makefiles that didn't quite
+	get created correctly because I didn't run the script in the right
+	directory and the script has some hardcoded directories that were
+	incorrect.  Need to fix that at some point.
+
 2006-09-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* AUTHORS: Updated file pointing people at gschem's AUTHOR file 

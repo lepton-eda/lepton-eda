@@ -1,7 +1,7 @@
 
 
 docname=wiki
-docsdir = @GEDADOCDIR@/$(docname)/smileys
+docsdir = @GEDADOCDIR@/$(docname)/lib/images/smileys
 
 docs_DATA = icon_smile.gif icon_wink.gif 
 

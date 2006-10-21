@@ -61,9 +61,9 @@ do_work()
 	echo "" >> Makefile.am
 }
 
-thisprogram=/home/ahvezda/1gaf/docs/scripts/populatemkfiles.sh
 pwd=`pwd`
-basedir=/home/ahvezda/1gaf/docs/wiki
+thisprogram=/home/ahvezda/2gaf/docs/scripts/populatemkfiles.sh
+basedir=/home/ahvezda/2gaf/docs/wiki
 
 subdir=`echo $pwd | awk -F$basedir '{print $2}'`
 
