@@ -1,3 +1,7 @@
+2006-10-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped package version to 20061020.
+
 2006-09-30 Stuart Brorson <sdb {AT} cloud9 {DOT} net>
 	* src/s_toplevel.c: Set CHANGED flag when deleting attrib
 	column so user is prompted when quitting before saving.

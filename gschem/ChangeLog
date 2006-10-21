@@ -4,6 +4,8 @@
 	by Patrick Bernaud to Change button order of dialogs to be more
 	standard on *nix desktops.
 
+        * configure.ac: Bumped package version to 20061020.
+
 2006-10-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* po/fr_FR.po: Updated the French translation.

@@ -5,7 +5,7 @@
 #
 # Change this to the real version of the distribution
 #
-VERSION=20060906
+VERSION=20061020
 
 # 
 # Use this when you are building the CVS version

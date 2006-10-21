@@ -1,3 +1,9 @@
+2006-10-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped package version to 20061020.
+	
+	* configure.ac: Bumped shared library version to 27:0:0
+
 2006-10-19  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* configure.ac: Cleaned up to remove remaining traces of noweb
