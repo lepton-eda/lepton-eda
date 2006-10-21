@@ -48,7 +48,8 @@ void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
   o_pin_recalc(w_current, o_current);
 
   /* reuse line's routine */
-  if (!o_line_visible(w_current, o_current->line, &x1, &y1, &x2, &y2)) {
+  if ( (w_current->DONT_REDRAW == 1) ||
+       (!o_line_visible(w_current, o_current->line, &x1, &y1, &x2, &y2)) ) {
     return;
   }
 
@@ -66,16 +67,20 @@ void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
   if (w_current->override_color != -1 ) {
     gdk_gc_set_foreground(w_current->gc,
 			  x_get_color(w_current->override_color));
-    gdk_draw_line(w_current->window, w_current->gc,
-                  x1, y1, x2, y2);
-    gdk_draw_line(w_current->backingstore, w_current->gc,
-                  x1, y1, x2, y2);
+    if (w_current->DONT_REDRAW == 0) {
+      gdk_draw_line(w_current->window, w_current->gc,
+		    x1, y1, x2, y2);
+      gdk_draw_line(w_current->backingstore, w_current->gc,
+		    x1, y1, x2, y2);
+    }
   } else {
-    gdk_gc_set_foreground(w_current->gc, x_get_color(o_current->color));
-    gdk_draw_line(w_current->window, w_current->gc,
-                  x1, y1, x2, y2);
-    gdk_draw_line(w_current->backingstore, w_current->gc,
-                  x1, y1, x2, y2);
+    if (w_current->DONT_REDRAW == 0) {
+      gdk_gc_set_foreground(w_current->gc, x_get_color(o_current->color));
+      gdk_draw_line(w_current->window, w_current->gc,
+		    x1, y1, x2, y2);
+      gdk_draw_line(w_current->backingstore, w_current->gc,
+		    x1, y1, x2, y2);
+    }
   }
 
   /* draw the cue directly */

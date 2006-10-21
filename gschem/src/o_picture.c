@@ -482,35 +482,39 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
       return;
     }
 
-    gdk_draw_pixbuf(w_current->window, w_current->gc,
-		    o_current->picture->displayed_picture, 
-		    0, 0, o_current->picture->screen_upper_x,
-		    o_current->picture->screen_upper_y, 
-		    -1, -1, GDK_RGB_DITHER_NONE, 0, 0);
-    gdk_draw_pixbuf(w_current->backingstore, w_current->gc,
-		    o_current->picture->displayed_picture, 
-		    0, 0, o_current->picture->screen_upper_x,
-		    o_current->picture->screen_upper_y, 
-		    -1, -1, GDK_RGB_DITHER_NONE, 0, 0);
+    if (w_current->DONT_REDRAW == 0) {
+      gdk_draw_pixbuf(w_current->window, w_current->gc,
+		      o_current->picture->displayed_picture, 
+		      0, 0, o_current->picture->screen_upper_x,
+		      o_current->picture->screen_upper_y, 
+		      -1, -1, GDK_RGB_DITHER_NONE, 0, 0);
+      gdk_draw_pixbuf(w_current->backingstore, w_current->gc,
+		      o_current->picture->displayed_picture, 
+		      0, 0, o_current->picture->screen_upper_x,
+		      o_current->picture->screen_upper_y, 
+		      -1, -1, GDK_RGB_DITHER_NONE, 0, 0);
+    }
   }
   else {
-    /* Erase the picture, drawing a rectangle with the background color */
-    gdk_gc_set_foreground(w_current->gc, 
-			  x_get_color(w_current->background_color));
-    gdk_draw_rectangle(w_current->window, w_current->gc, TRUE, 
-		       o_current->picture->screen_upper_x,
-		       o_current->picture->screen_upper_y,
-		       abs(o_current->picture->screen_lower_x -
-			   o_current->picture->screen_upper_x), 
-		       abs(o_current->picture->screen_lower_y - 
-			   o_current->picture->screen_upper_y));
-    gdk_draw_rectangle(w_current->backingstore, w_current->gc, TRUE, 
-		       o_current->picture->screen_upper_x,
-		       o_current->picture->screen_upper_y,
-		       abs(o_current->picture->screen_lower_x -
-			   o_current->picture->screen_upper_x), 
-		       abs(o_current->picture->screen_lower_y - 
-			   o_current->picture->screen_upper_y));
+    if (w_current->DONT_REDRAW == 0) {
+      /* Erase the picture, drawing a rectangle with the background color */
+      gdk_gc_set_foreground(w_current->gc, 
+			    x_get_color(w_current->background_color));
+      gdk_draw_rectangle(w_current->window, w_current->gc, TRUE, 
+			 o_current->picture->screen_upper_x,
+			 o_current->picture->screen_upper_y,
+			 abs(o_current->picture->screen_lower_x -
+			     o_current->picture->screen_upper_x), 
+			 abs(o_current->picture->screen_lower_y - 
+			     o_current->picture->screen_upper_y));
+      gdk_draw_rectangle(w_current->backingstore, w_current->gc, TRUE, 
+			 o_current->picture->screen_upper_x,
+			 o_current->picture->screen_upper_y,
+			 abs(o_current->picture->screen_lower_x -
+			     o_current->picture->screen_upper_x), 
+			 abs(o_current->picture->screen_lower_y - 
+			     o_current->picture->screen_upper_y));
+    }
   }
 
   /* Grip specific stuff */
@@ -518,10 +522,14 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
       if (!o_current->selected) {
 	/* object is no more selected, erase the grips */
 	o_current->draw_grips = FALSE;
-	o_picture_erase_grips(w_current, o_current); 
+	if (w_current->DONT_REDRAW == 0) {
+	  o_picture_erase_grips(w_current, o_current); 
+	}
       } else {
 	/* object is selected, draw the grips on the picture */
-	o_picture_draw_grips(w_current, o_current); 
+	if (w_current->DONT_REDRAW == 0) {
+	  o_picture_draw_grips(w_current, o_current); 
+	}
       }
   }
 }

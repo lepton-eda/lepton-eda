@@ -80,7 +80,8 @@ void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
   world_get_box_bounds(w_current, o_current->box,
                        &wleft, &wtop, &wright, &wbottom);
 	
-  if (!visible(w_current, wleft, wtop, wright, wbottom)) {
+  if ( (w_current->DONT_REDRAW == 1) ||
+       (!visible(w_current, wleft, wtop, wright, wbottom)) ) {
     return;
   }
 	

@@ -156,20 +156,22 @@ void o_text_draw_rectangle(TOPLEVEL *w_current, OBJECT *o_current)
 
   /* The right, bottom variables are really just the width and height and */
   /* not the "right" or "bottom". */
-  gdk_draw_rectangle(w_current->window,
-                     w_current->gc,
-                     FALSE,
-                     left, 
-                     top,
-                     right,
-                     bottom);
-  gdk_draw_rectangle(w_current->backingstore,
-                     w_current->gc,
-                     FALSE,
-                     left, 
-                     top,
-                     right,
-                     bottom);
+  if (w_current->DONT_REDRAW == 0) {
+    gdk_draw_rectangle(w_current->window,
+		       w_current->gc,
+		       FALSE,
+		       left, 
+		       top,
+		       right,
+		       bottom);
+    gdk_draw_rectangle(w_current->backingstore,
+		       w_current->gc,
+		       FALSE,
+		       left, 
+		       top,
+		       right,
+		       bottom);
+  }
 
 #if 0 /* in prep for future performance enhancement */
   right = right+left;
@@ -239,40 +241,41 @@ void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
       small_dist = SCREENabs(w_current, 20);
       screen_x1 = o_current->text->screen_x + offset;
       screen_y1 = o_current->text->screen_y + offset;
-      /* Top part of the I */
-      gdk_draw_line(w_current->window, w_current->gc,
-		    screen_x1,
-		    screen_y1,
-		    screen_x1+small_dist,
-		    screen_y1);
-      gdk_draw_line(w_current->backingstore, w_current->gc, 
-		    screen_x1,
-		    screen_y1,
-		    screen_x1+small_dist,
-		    screen_y1);
-      /* Middle part of the I */
-      gdk_draw_line(w_current->window, w_current->gc,
-		    screen_x1+small_dist/2,
-		    screen_y1,
-		    screen_x1+small_dist/2,
-		    screen_y1+small_dist);
-      gdk_draw_line(w_current->backingstore, w_current->gc, 
-		    screen_x1+small_dist/2,
-		    screen_y1,
-		    screen_x1+small_dist/2,
-		    screen_y1+small_dist);
-      /* Bottom part of the I */
-      gdk_draw_line(w_current->window, w_current->gc,
-		    screen_x1,
-		    screen_y1+small_dist,
-		    screen_x1+small_dist,
-		    screen_y1+small_dist);
-      gdk_draw_line(w_current->backingstore, w_current->gc, 
-		    screen_x1,
-		    screen_y1+small_dist,
-		    screen_x1+small_dist,
-		    screen_y1+small_dist);
-      
+      if (w_current->DONT_REDRAW == 0) {
+	/* Top part of the I */
+	gdk_draw_line(w_current->window, w_current->gc,
+		      screen_x1,
+		      screen_y1,
+		      screen_x1+small_dist,
+		      screen_y1);
+	gdk_draw_line(w_current->backingstore, w_current->gc, 
+		      screen_x1,
+		      screen_y1,
+		      screen_x1+small_dist,
+		      screen_y1);
+	/* Middle part of the I */
+	gdk_draw_line(w_current->window, w_current->gc,
+		      screen_x1+small_dist/2,
+		      screen_y1,
+		      screen_x1+small_dist/2,
+		      screen_y1+small_dist);
+	gdk_draw_line(w_current->backingstore, w_current->gc, 
+		      screen_x1+small_dist/2,
+		      screen_y1,
+		      screen_x1+small_dist/2,
+		      screen_y1+small_dist);
+	/* Bottom part of the I */
+	gdk_draw_line(w_current->window, w_current->gc,
+		      screen_x1,
+		      screen_y1+small_dist,
+		      screen_x1+small_dist,
+		      screen_y1+small_dist);
+	gdk_draw_line(w_current->backingstore, w_current->gc, 
+		      screen_x1,
+		      screen_y1+small_dist,
+		      screen_x1+small_dist,
+		      screen_y1+small_dist);
+      }	
     }
     
   } else {
@@ -308,27 +311,29 @@ void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
                           x_get_color(w_current->lock_color));
   }
 
-  gdk_draw_line(w_current->window, w_current->gc, 
-                screen_x1-small_dist, 
-                screen_y1+small_dist, 
-                screen_x1+small_dist, 
-                screen_y1-small_dist);
-  gdk_draw_line(w_current->backingstore, w_current->gc, 
-                screen_x1-small_dist, 
-                screen_y1+small_dist, 
-                screen_x1+small_dist, 
-                screen_y1-small_dist);
-
-  gdk_draw_line(w_current->window, w_current->gc, 
-                screen_x1+small_dist, 
-                screen_y1+small_dist, 
-                screen_x1-small_dist, 
-                screen_y1-small_dist);
-  gdk_draw_line(w_current->backingstore, w_current->gc, 
-                screen_x1+small_dist, 
-                screen_y1+small_dist, 
-                screen_x1-small_dist, 
-                screen_y1-small_dist);
+  if (w_current->DONT_REDRAW == 0) {
+    gdk_draw_line(w_current->window, w_current->gc, 
+		  screen_x1-small_dist, 
+		  screen_y1+small_dist, 
+		  screen_x1+small_dist, 
+		  screen_y1-small_dist);
+    gdk_draw_line(w_current->backingstore, w_current->gc, 
+		  screen_x1-small_dist, 
+		  screen_y1+small_dist, 
+		  screen_x1+small_dist, 
+		  screen_y1-small_dist);
+    
+    gdk_draw_line(w_current->window, w_current->gc, 
+		  screen_x1+small_dist, 
+		  screen_y1+small_dist, 
+		  screen_x1-small_dist, 
+		  screen_y1-small_dist);
+    gdk_draw_line(w_current->backingstore, w_current->gc, 
+		  screen_x1+small_dist, 
+		  screen_y1+small_dist, 
+		  screen_x1-small_dist, 
+		  screen_y1-small_dist);
+  }
 }
 
 /*! \todo Finish function documentation!!!

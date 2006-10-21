@@ -1775,12 +1775,14 @@ void o_grips_draw(TOPLEVEL *w_current, int x, int y)
    * A grip is a hollow square centered at (<B>x</B>,<B>y</B>) with a
    * width/height of <B>x2size</B>.
    */
-  /* draw the grip in window */
-  gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
-		     x - size, y - size, x2size, x2size);
-  /* draw the grip in backingstore */
-  gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
-		     x - size, y - size, x2size, x2size);
+  if (w_current->DONT_REDRAW == 0) {
+    /* draw the grip in window */
+    gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
+		       x - size, y - size, x2size, x2size);
+    /* draw the grip in backingstore */
+    gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
+		       x - size, y - size, x2size, x2size);
+  }
 }
 
 /*! \brief Erase grip centered at <B>x</B>,<B>y</B>

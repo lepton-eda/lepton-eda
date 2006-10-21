@@ -1,5 +1,10 @@
 2006-10-21 Carlos Nieves Onega <cnieves@iespana.es>
 
+	* src/o_arc.c, src/o_box.c, src/o_bus.c, src/o_circle.c,
+	  src/o_cue.c, src/o_grips.c, src/o_line.c, src/o_net.c,
+	  src/o_picture.c, src/o_pin.c, src/o_text.c:
+	  Don't draw objects if w_current->DONT_REDRAW is 1.
+	
 	* src/o_text.c: Added some sanity checks in o_text_draw_lowlevel and
 	o_text_draw functions. 
 	

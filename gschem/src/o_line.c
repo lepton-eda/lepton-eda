@@ -65,7 +65,8 @@ void o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
   /* goes before visible, clipfixme */
   o_line_recalc(w_current, o_current);
 	
-  if (!o_line_visible(w_current, o_current->line, &x1, &y1, &x2, &y2)) {
+  if ( (w_current->DONT_REDRAW == 1) ||
+       (!o_line_visible(w_current, o_current->line, &x1, &y1, &x2, &y2)) ) {
     return;
   }
 	

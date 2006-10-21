@@ -137,24 +137,26 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
   }
 
   WORLDtoSCREEN(w_current, x, y, &screen_x, &screen_y);
-
+  
   switch(type) {
     
     case(CONN_ENDPOINT):
       if (object->type == OBJ_NET) { /* only nets have these cues */
         if (count < 1) { /* Didn't find anything connected there */
-          gdk_draw_rectangle(w_current->window,
-                             w_current->gc, TRUE,
-                             screen_x - size,
-                             screen_y - size,
-                             x2size,
-                             x2size);
-          gdk_draw_rectangle(w_current->backingstore,
-                             w_current->gc, TRUE,
-                             screen_x - size,
-                             screen_y - size,
-                             x2size,
-                             x2size);
+	  if (w_current->DONT_REDRAW == 0) {
+	    gdk_draw_rectangle(w_current->window,
+			       w_current->gc, TRUE,
+			       screen_x - size,
+			       screen_y - size,
+			       x2size,
+			       x2size);
+	    gdk_draw_rectangle(w_current->backingstore,
+			       w_current->gc, TRUE,
+			       screen_x - size,
+			       screen_y - size,
+			       x2size,
+			       x2size);
+	  }
         
         } else if (count >= 2) {
           /* draw circle */
@@ -164,18 +166,18 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
           } else {
             size = SCREENabs(w_current, CUE_CIRCLE_LARGE_SIZE);
           }
-          
-          gdk_draw_arc(w_current->window, w_current->gc,
-                       TRUE,
+	  if (w_current->DONT_REDRAW == 0) {
+	    gdk_draw_arc(w_current->window, w_current->gc,
+			 TRUE,
+			 screen_x - size / 2,
+			 screen_y - size / 2,
+			 size, size, 0, FULL_CIRCLE);
+	    gdk_draw_arc(w_current->backingstore,
+			 w_current->gc, TRUE,
                        screen_x - size / 2,
-                       screen_y - size / 2,
-                       size, size, 0, FULL_CIRCLE);
-          gdk_draw_arc(w_current->backingstore,
-                       w_current->gc, TRUE,
-                       screen_x - size / 2,
-                       screen_y - size / 2,
-                       size, size, 0, FULL_CIRCLE);
-
+			 screen_y - size / 2,
+			 size, size, 0, FULL_CIRCLE);
+	  }
         }
       } else if (object->type == OBJ_PIN) {
         /* Didn't find anything connected there */
@@ -191,36 +193,38 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
                                        GDK_JOIN_MITER);
           }
 
-          if (object->line->y[whichone] == object->line->y[otherone]) {
-            /* horizontal line */
-            if (object->line->x[whichone] <= object->line->x[otherone]) {
-              gdk_draw_line(w_current->window, w_current->gc,
-                            screen_x, screen_y, screen_x + size, screen_y);
-              gdk_draw_line(w_current->backingstore, w_current->gc,
-                            screen_x, screen_y, screen_x + size, screen_y);
-            } else {
-              gdk_draw_line(w_current->window, w_current->gc,
-                            screen_x, screen_y, screen_x - size, screen_y);
-              gdk_draw_line(w_current->backingstore, w_current->gc,
-                            screen_x, screen_y, screen_x - size, screen_y);
-            }
-          } else if (object->line->x[0] == object->line->x[1]) {
-            /* vertical line */
-            if (object->line->y[whichone] <= object->line->y[otherone]) {
-              gdk_draw_line(w_current->window, w_current->gc,
-                            screen_x, screen_y, screen_x, screen_y - size);
-              gdk_draw_line(w_current->backingstore, w_current->gc,
-                            screen_x, screen_y, screen_x, screen_y - size);
-            } else {
-              gdk_draw_line(w_current->window, w_current->gc,
-                            screen_x, screen_y, screen_x, screen_y + size);
-              gdk_draw_line(w_current->backingstore, w_current->gc,
-                            screen_x, screen_y, screen_x, screen_y + size);
-            }
-          } else {
-            /* angled line */
-            /* not supporting rendering of que for angled pin for now. hack */
-          }
+	  if (w_current->DONT_REDRAW == 0) {
+	    if (object->line->y[whichone] == object->line->y[otherone]) {
+	      /* horizontal line */
+	      if (object->line->x[whichone] <= object->line->x[otherone]) {
+		gdk_draw_line(w_current->window, w_current->gc,
+			      screen_x, screen_y, screen_x + size, screen_y);
+		gdk_draw_line(w_current->backingstore, w_current->gc,
+			      screen_x, screen_y, screen_x + size, screen_y);
+	      } else {
+		gdk_draw_line(w_current->window, w_current->gc,
+			      screen_x, screen_y, screen_x - size, screen_y);
+		gdk_draw_line(w_current->backingstore, w_current->gc,
+			      screen_x, screen_y, screen_x - size, screen_y);
+	      }
+	    } else if (object->line->x[0] == object->line->x[1]) {
+	      /* vertical line */
+	      if (object->line->y[whichone] <= object->line->y[otherone]) {
+		gdk_draw_line(w_current->window, w_current->gc,
+			      screen_x, screen_y, screen_x, screen_y - size);
+		gdk_draw_line(w_current->backingstore, w_current->gc,
+			      screen_x, screen_y, screen_x, screen_y - size);
+	      } else {
+		gdk_draw_line(w_current->window, w_current->gc,
+			      screen_x, screen_y, screen_x, screen_y + size);
+		gdk_draw_line(w_current->backingstore, w_current->gc,
+			      screen_x, screen_y, screen_x, screen_y + size);
+	      }
+	    } else {
+	      /* angled line */
+	      /* not supporting rendering of que for angled pin for now. hack */
+	    }
+	  }
 
           if (w_current->pin_style == THICK ) {
             gdk_gc_set_line_attributes(w_current->gc, 0,
@@ -241,17 +245,18 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
         size = SCREENabs(w_current, CUE_CIRCLE_LARGE_SIZE);
       }
 
-      gdk_draw_arc(w_current->window, w_current->gc,
-                   TRUE,
-                   screen_x - size / 2,
-                   screen_y - size / 2,
-                   size, size, 0, FULL_CIRCLE);
-      gdk_draw_arc(w_current->backingstore,
-                   w_current->gc, TRUE,
-                   screen_x - size / 2,
-                   screen_y - size / 2,
-                   size, size, 0, FULL_CIRCLE);
-
+      if (w_current->DONT_REDRAW == 0) {
+	gdk_draw_arc(w_current->window, w_current->gc,
+		     TRUE,
+		     screen_x - size / 2,
+		     screen_y - size / 2,
+		     size, size, 0, FULL_CIRCLE);
+	gdk_draw_arc(w_current->backingstore,
+		     w_current->gc, TRUE,
+		     screen_x - size / 2,
+		     screen_y - size / 2,
+		     size, size, 0, FULL_CIRCLE);
+      }
       break;
 
       /* here is where you draw bus rippers */
@@ -284,18 +289,20 @@ void o_cue_erase_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
  
   WORLDtoSCREEN(w_current, x, y, &screen_x, &screen_y);
   
-  gdk_draw_rectangle(w_current->window,
-                     w_current->gc, TRUE,
-                     screen_x - size,
-                     screen_y - size,
-                     x2size,
-                     x2size);
-  gdk_draw_rectangle(w_current->backingstore,
-                     w_current->gc, TRUE,
-                     screen_x - size,
-                     screen_y - size,
-                     x2size,
-                     x2size);
+  if (w_current->DONT_REDRAW == 0) {
+    gdk_draw_rectangle(w_current->window,
+		       w_current->gc, TRUE,
+		       screen_x - size,
+		       screen_y - size,
+		       x2size,
+		       x2size);
+    gdk_draw_rectangle(w_current->backingstore,
+		       w_current->gc, TRUE,
+		       screen_x - size,
+		       screen_y - size,
+		       x2size,
+		       x2size);
+  }
 
 }
 
@@ -342,16 +349,18 @@ void o_cue_draw_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object)
           size = SCREENabs(w_current, CUE_CIRCLE_LARGE_SIZE);
         }
 
-        gdk_draw_arc(w_current->window, w_current->gc,
-                     TRUE,
-                     screen_x - size / 2,
-                     screen_y - size / 2,
-                     size, size, 0, FULL_CIRCLE);
-        gdk_draw_arc(w_current->backingstore,
-                     w_current->gc, TRUE,
-                     screen_x - size / 2,
-                     screen_y - size / 2,
-                     size, size, 0, FULL_CIRCLE);
+	if (w_current->DONT_REDRAW == 0) {
+	  gdk_draw_arc(w_current->window, w_current->gc,
+		       TRUE,
+		       screen_x - size / 2,
+		       screen_y - size / 2,
+		       size, size, 0, FULL_CIRCLE);
+	  gdk_draw_arc(w_current->backingstore,
+		       w_current->gc, TRUE,
+		       screen_x - size / 2,
+		       screen_y - size / 2,
+		       size, size, 0, FULL_CIRCLE);
+	}
         break;
     }
    
