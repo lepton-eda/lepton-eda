@@ -6,6 +6,9 @@
 
         * configure.ac: Bumped package version to 20061020.
 
+	* lib/system-gschemrc.in: Rearranged the order of the attribute-name
+	entries and added some missing attributes.
+
 2006-10-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* po/fr_FR.po: Updated the French translation.

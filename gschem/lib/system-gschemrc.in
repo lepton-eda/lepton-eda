@@ -954,27 +954,28 @@
 ; are displayed.
 ;
 (attribute-name "netname")
-(attribute-name "refdes")
-(attribute-name "slot")
+(attribute-name "footprint")
 (attribute-name "value")
+(attribute-name "refdes")
+(attribute-name "source")
+(attribute-name "model-name")
+(attribute-name "model")
 (attribute-name "net")
 (attribute-name "device")
 (attribute-name "pinnumber")
 (attribute-name "pinseq")
 (attribute-name "pintype")
 (attribute-name "pinlabel")
-(attribute-name "source")
 (attribute-name "numslots")
 (attribute-name "slot")
 (attribute-name "slotdef")
 (attribute-name "graphical")
-(attribute-name "footprint")
 (attribute-name "description")
 (attribute-name "documentation")
 (attribute-name "symversion")
 (attribute-name "comment")
+(attribute-name "author")
 (attribute-name "file")
-(attribute-name "model-name")
 
 ;
 ; End of path related keywords
