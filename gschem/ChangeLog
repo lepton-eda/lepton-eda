@@ -1,5 +1,8 @@
 2006-10-21 Carlos Nieves Onega <cnieves@iespana.es>
 
+	* src/o_text.c: Removed sanity checks in o_text_draw_lowlevel and
+	o_text_draw functions added today.
+	
         * src/a_zoom.c, src/o_arc.c, src/o_basic.c, src/o_box.c,
 	  src/o_buffer.c, /src/o_bus.c, src/o_circle.c, src/o_complex.c,
 	  src/o_cue.c, src/o_grips.c, /src/o_line.c, src/o_net.c,

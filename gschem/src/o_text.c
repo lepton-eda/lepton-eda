@@ -52,15 +52,6 @@ void o_text_draw_lowlevel(TOPLEVEL *w_current, OBJECT *o_current)
 {
   int left, right, top, bottom;
 
-  if (!o_current) {
-    fprintf(stderr, _("o_text_draw_lowlevel: Called with NULL object!\n"));
-    return;
-  }
-  if (!o_current->text) {
-    fprintf(stderr, _("o_text_draw_lowlevel: Called with object without object->text pointer!\n"));
-    return;
-  }
-
   if (o_current->visibility == INVISIBLE && w_current->show_hidden_text &&
       o_current->text->prim_objs == NULL) {
     o_text_recreate(w_current, o_current);
@@ -203,10 +194,6 @@ void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
   int small_dist, offset;
 
   if (o_current->visibility == INVISIBLE && !w_current->show_hidden_text) {
-    return;
-  }
-
-  if ((o_current->type != OBJ_TEXT) || (o_current->text == NULL)) {
     return;
   }
 
