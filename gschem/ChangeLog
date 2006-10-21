@@ -1,5 +1,8 @@
 2006-10-21 Carlos Nieves Onega <cnieves@iespana.es>
 
+        * src/o_basic.c: Removed comment referencing to o_recalc_glist, 
+	  which is not (yet) in CVS.
+	
 	* src/o_text.c: Added sanity checks in o_text_draw_lowlevel and
 	o_text_draw functions using GLib functions.
 	
