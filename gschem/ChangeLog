@@ -1,3 +1,8 @@
+2006-10-21 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/o_text.c: Added some sanity checks in o_text_draw_lowlevel and
+	o_text_draw functions. 
+	
 2006-10-21 Werner Hoch  <werner.ho@gmx.de>
 
 	* po/de_DE.po: Updated German translation
