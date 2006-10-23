@@ -7,7 +7,7 @@
 # 	- ghostscript (I use aladdin gs)
 #
 
-if [ "$1" == "" ] 
+if [ $# -ne 1 ]
 then
 	echo "usage: makeimages path_to_libary" 
 	exit 1
