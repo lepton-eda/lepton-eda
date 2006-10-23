@@ -1,3 +1,8 @@
+2006-10-23 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/o_text.c: Changed polarity of one of the sanity checks 
+	in the o_text_draw function added on 2006-10-21.
+	
 2006-10-21 Carlos Nieves Onega <cnieves@iespana.es>
 
         * src/o_basic.c: Removed comment referencing to o_recalc_glist, 

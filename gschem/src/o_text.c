@@ -197,7 +197,7 @@ void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
   int small_dist, offset;
 
   g_return_if_fail (o_current != NULL);
-  g_return_if_fail (o_current->type != OBJ_TEXT);
+  g_return_if_fail (o_current->type == OBJ_TEXT);
   g_return_if_fail (o_current->text != NULL);
 
   if (o_current->visibility == INVISIBLE && !w_current->show_hidden_text) {
