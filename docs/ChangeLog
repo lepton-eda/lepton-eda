@@ -5,6 +5,8 @@
 	tragesym_tutorial: Removed all obsolete documentation from CVS.
 	The wiki and the wiki snapshot is now the official documentation.
 
+	* attributes, cascade: Removed more obsolete documentation from CVS.
+
 2006-10-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Bumped package version to 20061020.
