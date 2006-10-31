@@ -228,6 +228,9 @@ sub parseRENAME {
   my @refs;
   @refs = split ' ',,$line;
 
+  $refs[0] =~ s/"//g; # "
+  $refs[1] =~ s/"//g; # "
+
   print "parseRENAME():  Scheduling rename of $refs[0] to $refs[1]\n" 
       if $verbose;
   $cmd_rename{$refs[0]} = $refs[1];
