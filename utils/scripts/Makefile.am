@@ -1,3 +1,5 @@
+## $Id$
+##
 ## Process this file with automake to produce Makefile.in
 
 bin_SCRIPTS = sarlacc_sym gschupdate gsymupdate gschemdoc refdes_renum \
@@ -5,7 +7,8 @@ bin_SCRIPTS = sarlacc_sym gschupdate gsymupdate gschemdoc refdes_renum \
 
 EXTRA_DIST = convert_sym.awk gpstoimage mk_char_tab.pl \
 	     sarlacc_sym gschupdate gsymupdate refdes_renum gsymfix.pl \
-	     config.sh.in gschemdoc.sh tragesym pads_backannotate garchive.py
+	     config.sh.in gschemdoc.sh tragesym pads_backannotate \
+	     pcb_backannotate garchive.py
 
 BUILT_SOURCES = config.sh
 
