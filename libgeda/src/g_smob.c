@@ -219,7 +219,51 @@ void g_init_attrib_smob(void)
   scm_c_define_gsubr("get-attribute-name-value", 1, 0, 0,
 		     g_get_attrib_name_value);
 
+  scm_c_define_gsubr ("get-attribute-bounds", 1, 0, 0, g_get_attrib_bounds);
+  
+
   return;
+}
+
+/*! \brief Get the bounds of an attribute.
+ *  \par Function Description
+ *  Get the bounds of an attribute.
+ *  I got top and bottom values reversed from world_get_complex_bounds,
+ *  so don\'t rely on the position in the list. 
+ *  \param[in] attrib_smob the attribute.
+ *  \return a list of the bounds of the <B>object smob</B>. 
+ *  The list has the format: ( (left right) (top bottom) )
+ */
+SCM g_get_attrib_bounds(SCM attrib_smob)
+{
+  TOPLEVEL *w_current;
+  struct st_attrib_smob *attribute;
+  SCM vertical = SCM_EOL;
+  SCM horizontal = SCM_EOL;
+  int left=0, right=0, bottom=0, top=0; 
+  SCM returned = SCM_EOL;
+
+  SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
+               ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
+               attrib_smob, SCM_ARG1, "get-attribute-bounds");
+  
+  attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+  w_current = attribute->world;
+
+  if (attribute &&
+      attribute->attribute &&
+      attribute->attribute->object &&
+      attribute->attribute->object->text->string ) {
+
+    world_get_text_bounds (w_current, attribute->attribute->object, 
+			   &left, &top, &right, &bottom);
+    
+    horizontal = scm_cons (SCM_MAKINUM(left), SCM_MAKINUM(right));
+    vertical = scm_cons (SCM_MAKINUM(top), SCM_MAKINUM(bottom));
+    returned = scm_cons (horizontal, vertical);
+  }
+
+  return returned;
 }
 
 /*! \brief Free object smob memory.
