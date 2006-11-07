@@ -1,3 +1,8 @@
+2006-11-07 Werner Hoch  <werner.ho@gmx.de>
+
+	* src/o_text.c, src/o_slot.c: fixed slot update errors
+	 (Bug #1589247)
+
 2006-10-23 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/o_text.c: Changed polarity of one of the sanity checks 

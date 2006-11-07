@@ -130,6 +130,13 @@ void o_slot_end(TOPLEVEL *w_current, char *string, int len)
 
   object = o_select_return_first_object(w_current);
 
+  /* get the parent object if the selection is only a text object */
+  if (object != NULL && object->type == OBJ_TEXT) {
+    if (object->attached_to != NULL) {
+      object=o_attrib_return_parent(object->attached_to);
+    }
+  }
+
   /* now find the slot attribute on the outside first */
   if (object != NULL) {
     numslots_value = o_attrib_search_numslots(object, NULL);

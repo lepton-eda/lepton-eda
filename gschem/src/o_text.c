@@ -653,15 +653,11 @@ void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size,
           if (object->text->string) {
             g_free(object->text->string);
           }
-          /* Kazu <kazu@seul.org> on August 5, 1999 - I am not
-             sure if strlen(string) == len. If so, activate the
-             second part of this "if".*/
-#if 1
-          object->text->string = g_malloc(sizeof(char) * len + 1);
-          strcpy(object->text->string, string);
-#else
           object->text->string = g_strdup (string);
-#endif
+	  /* handle slot= attribute, it's a special case */
+	  if (g_ascii_strncasecmp (string, "slot=", 5) == 0) {
+	    o_slot_end (w_current, string, strlen (string));
+	  }
         }
 
         object->text->size = text_size;
@@ -683,7 +679,6 @@ void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size,
   
   w_current->page_current->CHANGED = 1;
   o_undo_savestate(w_current, UNDO_ALL);
-
 }
 
 /*! \todo Finish function documentation!!!
