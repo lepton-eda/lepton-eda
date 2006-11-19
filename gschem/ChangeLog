@@ -1,8 +1,16 @@
+2006-11-19 Werner Hoch  <werner.ho@gmx.de>
+
+	* src/i_basic.c, src/x_grid.c, src/x_window.c: moved the 
+	  filename from the status bar to the window title.
+	  Show grid settings in the status bar.
+
+
 2006-11-13 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/x_compselect.c: Always update the complex place list.
 	  Before, the list wasn't updated if the user opens the file chooser
 	  and choose the same component and library than the last time.
+
 
 2006-11-07 Werner Hoch  <werner.ho@gmx.de>
 

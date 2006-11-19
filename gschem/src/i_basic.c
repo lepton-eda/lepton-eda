@@ -639,52 +639,72 @@ void i_update_cursor(TOPLEVEL *w_current)
 #endif
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Set filename as gschem  window title
  *  \par Function Description
- *
+ *  Set the window title using the gnome HID format style.
  */
-void i_set_filename(TOPLEVEL *w_current, const char *string)
+void i_set_filename(TOPLEVEL *w_current, const gchar *string)
 {
-  char trunc_string[41];
-  int len;
-  int i;
+  gchar *print_string=NULL;
+  gchar *filename=NULL;
+  int max_len = 70;
 
-  if (!w_current->filename_label) {
+  if (!w_current->main_window)
+    return;
+  if (string == NULL)
+    return;
+
+  filename = g_path_get_basename(string);
+  
+  print_string = g_strdup_printf("%s - gschem", filename);
+  
+  /* alternativ code with length limited pathname */
+/*  if (strlen(string) > max_len) {
+    print_string = g_strdup_printf("gschem: ...%s",
+				   &(string[strlen(string)-max_len]));
+  }
+  else {
+    print_string = g_strdup_printf("gschem: %s",string);
+  }
+*/
+
+  gtk_window_set_title(GTK_WINDOW(w_current->main_window),
+		       print_string);
+  
+  g_free(print_string);
+  g_free(filename);
+}
+
+/*! \brief Write the grid settings to the gschem status bar
+ *  \par Function Description
+ *  The function takes the current grid paramters of gschem and
+ *  prints it to the status bar.
+ *  The format is "Grid([SnapGridSize],[CurrentGridSize])"
+ */
+void i_set_grid(TOPLEVEL *w_current, int visible_grid) 
+{
+  gchar *print_string=NULL;
+  gchar *snap=NULL;
+  gchar *grid=NULL;
+
+  if (!w_current->grid_label) {
     return;
   }
+  
+  if (!w_current->snap)
+    snap = g_strdup(_("OFF"));
+  else
+    snap = g_strdup_printf("%d", w_current->snap_size);
 
-  if (string) {
-    len = strlen(string);
-    w_current->DONT_RESIZE = 1;
+  if (!w_current->grid)
+    grid = g_strdup(_("OFF"));
+  else
+    grid = g_strdup_printf("%d", visible_grid);
 
-    if (w_current->filename_label) {
-      if (len > 40) {
-
-        trunc_string[0] = '.';
-        trunc_string[1] = '.';
-        trunc_string[2] = '.';
-
-        trunc_string[40] = '\0';
-        for (i = 39 ; i > 2; i--) {
-          if (len >= 0) {
-            trunc_string[i] = string[len];
-          } else {
-            break;
-          }
-          len--;
-        }
-
-        gtk_label_set(GTK_LABEL(w_current->
-                                filename_label),
-                      trunc_string);
-
-      } else {
-
-        gtk_label_set(GTK_LABEL(w_current->
-                                filename_label),
-                      (char *) string);
-      }
-    }
-  }
+  print_string = g_strdup_printf(_("Grid(%s, %s)"), snap, grid);
+  gtk_label_set(GTK_LABEL(w_current->grid_label), print_string);
+  
+  g_free(print_string);
+  g_free(grid);
+  g_free(snap);
 }

@@ -299,7 +299,8 @@ void i_update_right_button(const char *string);
 void i_update_toolbar(TOPLEVEL *w_current);
 void i_update_menus(TOPLEVEL *w_current);
 void i_update_cursor(TOPLEVEL *w_current);
-void i_set_filename(TOPLEVEL *w_current, const char *string);
+void i_set_filename(TOPLEVEL *w_current, const gchar *string);
+void i_set_grid(TOPLEVEL *w_current, int visible_grid);
 /* i_callbacks.c */
 void i_callback_file_new(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_toolbar_file_new(GtkWidget *widget, gpointer data);

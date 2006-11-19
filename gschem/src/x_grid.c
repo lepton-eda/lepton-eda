@@ -50,6 +50,7 @@ void x_grid_draw(TOPLEVEL *w_current)
   int screen_incr = 0;
 
   if (!w_current->grid) {
+    i_set_grid(w_current, -1);
     return;
   }
 
@@ -79,6 +80,9 @@ void x_grid_draw(TOPLEVEL *w_current)
       return;
     }
   }
+  
+  /* update status bar */
+  i_set_grid(w_current, incr);
 
 #if DEBUG 
   printf("---------x_grid_draw\n incr: %d\n",incr);

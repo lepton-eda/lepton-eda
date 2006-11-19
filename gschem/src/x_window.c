@@ -92,7 +92,7 @@ void x_window_setup (TOPLEVEL *toplevel)
 
   toplevel->status_label = NULL;
   toplevel->middle_label = NULL;
-  toplevel->filename_label = NULL;
+  toplevel->grid_label = NULL;
   
   toplevel->cswindow = NULL;
   toplevel->aswindow = NULL;
@@ -704,8 +704,8 @@ void x_window_create_main(TOPLEVEL *w_current)
   label = gtk_label_new (" ");
   gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 5);
 
-  w_current->filename_label = gtk_label_new (" ");
-  gtk_box_pack_start (GTK_BOX (bottom_box), w_current->filename_label,
+  w_current->grid_label = gtk_label_new (" ");
+  gtk_box_pack_start (GTK_BOX (bottom_box), w_current->grid_label,
                       FALSE, FALSE, 10);
 
   w_current->status_label = gtk_label_new (_("Select Mode"));
