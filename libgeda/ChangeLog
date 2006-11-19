@@ -1,3 +1,10 @@
+2006-11-19 Werner Hoch <werner.ho@gmx.de>
+
+	* include/struct.h, src/s_toplevel.c: moved schematic title
+	  from the status bar to the window title. Added grid settings
+	  to the status bar:
+	  replaced toplevel->filename_label with toplevel->grid_label
+
 2006-11-01 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* include/prototype.h, src/g_smob.c: Added new "get-attribute-bounds"

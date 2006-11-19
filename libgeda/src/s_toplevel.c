@@ -183,7 +183,7 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->left_label   = NULL;
   toplevel->middle_label = NULL;
   toplevel->right_label  = NULL;
-  toplevel->filename_label = NULL;
+  toplevel->grid_label = NULL;
   toplevel->status_label = NULL;
 
   toplevel->toolbar_select = NULL;
