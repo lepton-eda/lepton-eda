@@ -1,3 +1,10 @@
+2006-11-21 Werner Hoch <werner.ho@gmx.de>
+
+	* include/struct.h, src/s_toplevel.c: readded toplevel->filename_label
+	  to the toplevel structure, it's still required by gattib.
+	  fixes Bug [#1600448]
+	
+
 2006-11-19 Werner Hoch <werner.ho@gmx.de>
 
 	* include/struct.h, src/s_toplevel.c: moved schematic title

@@ -539,6 +539,7 @@ struct st_toplevel {
   GtkWidget *left_label;
   GtkWidget *middle_label;
   GtkWidget *right_label;
+  GtkWidget *filename_label;
   GtkWidget *grid_label;
   GtkWidget *status_label;
 
