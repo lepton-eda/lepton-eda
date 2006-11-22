@@ -1,3 +1,9 @@
+2006-11-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Fixed libgeda detection/find error message when
+	the wrong libgeda version is found. (Bug reported by Karel Kulhavy;
+	thanks)
+
 2006-11-19 Werner Hoch  <werner.ho@gmx.de>
 
 	* src/i_basic.c, src/x_grid.c, src/x_window.c: moved the 
