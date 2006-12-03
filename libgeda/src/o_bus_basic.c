@@ -836,6 +836,8 @@ void o_bus_modify(TOPLEVEL *w_current, OBJECT *object,
   object->top = top;
   object->right = right;
   object->bottom = bottom;	
+
+  s_tile_update_object(w_current, object);
 }
 
 

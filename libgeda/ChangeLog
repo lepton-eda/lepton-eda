@@ -1,3 +1,10 @@
+2006-12-02 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/o_bus_basic.c: Added missing call to s_tile_update_object
+	for buses.  This missing call could cause buses to not have
+	correct connectivity when using grips.	Pointed out by and patch
+	by Peter Clifton.
+
 2006-11-21 Werner Hoch <werner.ho@gmx.de>
 
 	* include/struct.h, src/s_toplevel.c: readded toplevel->filename_label
