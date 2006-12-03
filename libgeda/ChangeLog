@@ -1,3 +1,14 @@
+2006-12-02  Mike Jarabek  <mike@laptop.istop.com>
+
+	* include/defines.h include/struct.h: Added
+	  toplevel->line_style'. This new entry is a flag to set whether
+	  or not lines are drawn really thin on the output postscript or
+	  will only be drawn to the width of pins or nets.
+
+	* src/o_arc_basic.c src/o_box_basic.c src/o_circle_basic.c
+	  libgeda/src/o_line_basic.c: Changes to the postscript output
+	  code to ensure that lines can't be drawn too thin.
+
 2006-12-02 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/o_bus_basic.c: Added missing call to s_tile_update_object

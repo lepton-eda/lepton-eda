@@ -81,6 +81,7 @@
 /* various thicknesses (in mils) */
 #define NET_WIDTH	10
 #define PIN_WIDTH	10
+#define LINE_WIDTH	10
 #define BUS_WIDTH	30
 
 /* various visual cue sizes (in mils) */

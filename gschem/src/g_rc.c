@@ -455,6 +455,23 @@ SCM g_rc_pin_style(SCM mode)
  *  \par Function Description
  *
  */
+SCM g_rc_line_style(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {THIN , "thin" },
+    {THICK, "thick"}
+  };
+
+  RETURN_G_RC_MODE("pin-style",
+		   default_line_style,
+		   2);
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
 SCM g_rc_action_feedback_mode(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

@@ -867,7 +867,14 @@ void o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   }
 #endif
   arc_width = o_current->line_width;	/* Added instead of above */
-  if (arc_width <= 2) arc_width = 2;
+  if(arc_width <=2) {
+    if(w_current->line_style == THICK) {
+      arc_width=LINE_WIDTH;
+    } else {
+      arc_width=2;
+    }
+  }
+
   length = o_current->line_length;
   space  = o_current->line_space;
 	

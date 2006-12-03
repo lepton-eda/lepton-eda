@@ -153,6 +153,15 @@
 ;(pin-style "thin")
 (pin-style "thick")
 
+; line-style string
+;
+; Set to thin if you want thin lines
+; Set to thick if you want thick lines.
+; This mode also determines what line style gets printed
+;
+;(line-style "thin")
+(line-style "thick")
+
 ; zoom-with-pan string
 ;
 ; Sets the zoom in and zoom out functions to pan the display and then zoom.

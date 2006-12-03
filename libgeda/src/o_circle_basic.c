@@ -830,7 +830,13 @@ void o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
    * in such a case.
    */
   circle_width = o_current->line_width;
-  if(circle_width <= 2) circle_width=2;
+  if(circle_width <=2) {
+    if(w_current->line_style == THICK) {
+      circle_width=LINE_WIDTH;
+    } else {
+      circle_width=2;
+    }
+  }
   length       = o_current->line_length;
   space        = o_current->line_space;
 

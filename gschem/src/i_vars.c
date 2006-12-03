@@ -46,6 +46,7 @@ int   default_pin_color = PIN_COLOR;
 int   default_pin_style = THICK;
 int   default_net_style = THICK;
 int   default_bus_style = THICK;
+int   default_line_style = THICK;
 int   default_grid_color = GRID_COLOR;
 int   default_background_color = BACKGROUND_COLOR;
 int   default_select_color = SELECT_COLOR;
@@ -176,6 +177,8 @@ void i_vars_set(TOPLEVEL *w_current)
   w_current->pin_color          = default_pin_color;
   w_current->pin_style          = default_pin_style;
   w_current->override_pin_color = default_override_pin_color;
+
+  w_current->line_style         = default_line_style;
 
   w_current->zoom_with_pan           = default_zoom_with_pan;
   w_current->actionfeedback_mode     = default_actionfeedback_mode;

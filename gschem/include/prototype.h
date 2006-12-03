@@ -211,6 +211,7 @@ SCM g_rc_net_midpoint_mode(SCM mode);
 SCM g_rc_net_style(SCM mode);
 SCM g_rc_bus_style(SCM mode);
 SCM g_rc_pin_style(SCM mode);
+SCM g_rc_line_style(SCM mode);
 SCM g_rc_action_feedback_mode(SCM mode);
 SCM g_rc_zoom_with_pan(SCM mode);
 SCM g_rc_text_feedback(SCM mode);

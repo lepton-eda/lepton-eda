@@ -80,6 +80,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "net-style",                 1, 0, 0, g_rc_net_style },
   { "bus-style",                 1, 0, 0, g_rc_bus_style },
   { "pin-style",                 1, 0, 0, g_rc_pin_style },
+  { "line-style",                1, 0, 0, g_rc_line_style },
   { "zoom-with-pan",             1, 0, 0, g_rc_zoom_with_pan },
   { "action-feedback-mode",      1, 0, 0, g_rc_action_feedback_mode },
   { "text-feedback",             1, 0, 0, g_rc_text_feedback },

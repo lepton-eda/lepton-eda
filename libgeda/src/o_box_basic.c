@@ -893,7 +893,14 @@ void o_box_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
    *  case.
    */
   line_width = o_current->line_width;
-  if(line_width <=2) line_width=2;
+  
+  if(line_width <=2) {
+    if(w_current->line_style == THICK) {
+      line_width=LINE_WIDTH;
+    } else {
+      line_width=2;
+    }
+  }
   length = o_current->line_length;
   space  = o_current->line_space;
 

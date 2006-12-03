@@ -658,6 +658,7 @@ struct st_toplevel {
   int pin_style;
   int net_style;
   int bus_style;
+  int line_style;
   int zoom_with_pan; 
 
   /* can be either OUTLINE or BOUNDINGBOX */
