@@ -239,7 +239,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
  *
  */
 static gchar* gettext_fn(const gchar *path,
-			 gpointer func_data __attribute__((unused)))
+			 gpointer func_data ATTRIBUTE_UNUSED)
 {
 	return gettext(path);
 }

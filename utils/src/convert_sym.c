@@ -50,11 +50,30 @@
 #include <dmalloc.h>
 #endif
 
-#if 0 /* removed by AVH just to make a -Wall -Werror happy */
-#ifndef lint
-static char vcid[] = "$Id$";
-#endif /* lint */
+/* __FUNCTION__ seems to be a gcc thing */
+#ifndef __GNUC__
+#define __FUNCTION1(a,b) a ":" #b
+#define __FUNCTION2(a,b) __FUNCTION1(a,b)
+#define __FUNCTION__ __FUNCTION2(__FILE__,__LINE__)
 #endif
+
+/*
+ * make it so we can use __attribute__((unused)) on gcc without
+ * breaking non-gcc
+ */
+#ifndef GCC_VERSION
+#define GCC_VERSION (__GNUC__ * 1000 + __GNUC_MINOR__)
+#endif /* GCC_VERSION */
+
+#if GCC_VERSION > 2007
+#define ATTRIBUTE_UNUSED __attribute__((unused))
+#else
+#define ATTRIBUTE_UNUSED
+#endif
+
+#ifndef lint
+static char vcid[] ATTRIBUTE_UNUSED = "$Id$";
+#endif /* lint */
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;

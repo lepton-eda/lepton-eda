@@ -46,6 +46,12 @@
 #define CYAN		6
 #define GREY		7
 
+/* __FUNCTION__ seems to be a gcc extension */
+#ifndef __GNUC__
+#define __FUNCTION1(a,b) a ":" #b
+#define __FUNCTION2(a,b) __FUNCTION1(a,b)
+#define __FUNCTION__ __FUNCTION2(__FILE__,__LINE__)
+#endif
 
 /* external prototypes */
 int GetStringDisplayLength(char *str,int font_size);  /* char_width.c */
