@@ -1,3 +1,8 @@
+2006-12-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_toplevel.c: Added missing init of toplevel->line_style
+	(all variables in the TOPLEVEL struct ure should be initalized).
+
 2006-12-02  Mike Jarabek  <mike@laptop.istop.com>
 
 	* include/defines.h include/struct.h: Added

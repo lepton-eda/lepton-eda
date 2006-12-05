@@ -293,6 +293,7 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->pin_style = 0;
   toplevel->net_style = 0;
   toplevel->bus_style = 0;
+  toplevel->line_style = 0;
   toplevel->zoom_with_pan = 0;
 
   toplevel->actionfeedback_mode = OUTLINE;
