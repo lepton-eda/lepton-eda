@@ -72,6 +72,7 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value, TOPLEVEL **world
 void g_init_attrib_smob(void);
 
 SCM g_get_attrib_bounds(SCM attrib_smob);
+SCM g_get_attrib_angle(SCM attrib_smob);
 SCM g_make_object_smob(TOPLEVEL *curr_w, OBJECT *object);
 SCM g_get_object_attributes(SCM object_smob);
 void g_init_object_smob(void);

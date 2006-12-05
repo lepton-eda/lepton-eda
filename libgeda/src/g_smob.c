@@ -220,6 +220,7 @@ void g_init_attrib_smob(void)
 		     g_get_attrib_name_value);
 
   scm_c_define_gsubr ("get-attribute-bounds", 1, 0, 0, g_get_attrib_bounds);
+  scm_c_define_gsubr ("get-attribute-angle", 1, 0, 0, g_get_attrib_angle);
   
 
   return;
@@ -231,7 +232,7 @@ void g_init_attrib_smob(void)
  *  I got top and bottom values reversed from world_get_complex_bounds,
  *  so don\'t rely on the position in the list. 
  *  \param[in] attrib_smob the attribute.
- *  \return a list of the bounds of the <B>object smob</B>. 
+ *  \return a list of the bounds of the <B>attrib smob</B>. 
  *  The list has the format: ( (left right) (top bottom) )
  */
 SCM g_get_attrib_bounds(SCM attrib_smob)
@@ -264,6 +265,33 @@ SCM g_get_attrib_bounds(SCM attrib_smob)
   }
 
   return returned;
+}
+
+/*! \brief Get the angle of an attribute.
+ *  \par Function Description
+ *  Get the angle of an attribute.
+ *  \param[in] attrib_smob the attribute.
+ *  \return the angle of the <B>attrib smob</B>. 
+ */
+SCM g_get_attrib_angle(SCM attrib_smob)
+{
+  TOPLEVEL *w_current;
+  struct st_attrib_smob *attribute;
+
+  SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
+               ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
+               attrib_smob, SCM_ARG1, "get-attribute-angle");
+  
+  attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+  w_current = attribute->world;
+
+  SCM_ASSERT ( attribute && 
+               attribute->attribute &&
+	       attribute->attribute->object &&
+	       attribute->attribute->object->text,
+               attrib_smob, SCM_ARG1, "get-attribute-angle");
+
+  return SCM_MAKINUM(attribute->attribute->object->text->angle);
 }
 
 /*! \brief Free object smob memory.
