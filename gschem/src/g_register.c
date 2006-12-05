@@ -335,7 +335,7 @@ void g_register_funcs (void)
   /* Hook stuff */
   scm_c_define_gsubr ("add-attribute-to-object", 5, 0, 0, g_add_attrib);
   scm_c_define_gsubr ("get-object-attributes", 1, 0, 0, g_get_object_attributes);
-  scm_c_define_gsubr ("get-object-bounds", 2, 0, 0, g_get_object_bounds);
+  scm_c_define_gsubr ("get-object-bounds", 3, 0, 0, g_get_object_bounds);
   scm_c_define_gsubr ("get-object-pins", 1, 0, 0, g_get_object_pins);
   scm_c_define_gsubr ("get-pin-ends", 1, 0, 0, g_get_pin_ends);
   scm_c_define_gsubr ("set-attribute-text-properties!", 7, 0, 0, g_set_attrib_text_properties);

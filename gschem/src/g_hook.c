@@ -376,43 +376,150 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
  *  I got top and bottom values reversed from world_get_complex_bounds,
  *  so don\'t rely on the position in the list. 
  */
-SCM g_get_object_bounds (SCM object_smob, SCM scm_inc_attribs)
+SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclude_object_type)
 {
+  void custom_world_get_complex_bounds (TOPLEVEL *w_current, OBJECT *o_current,
+                                        int *left, int *top, 
+                                        int *right, int *bottom,
+                                        GList *exclude_attrib_list,
+					GList *exclude_obj_type_list) {
+    OBJECT *obj_ptr = NULL;
+    ATTRIB *attr_ptr = NULL;
+    int rleft, rright, rbottom, rtop;
+    char *text_value; 
+    char *name_ptr, *value_ptr, aux_ptr[2];
+    gboolean include_text;
+
+    *left = rleft = w_current->init_right;
+    *top = rtop = w_current->init_bottom;;
+    *right = *bottom = rright = rbottom = 0;
+    
+    if (o_current->type == OBJ_PIN) {
+      attr_ptr = o_current->attribs;
+      if (attr_ptr)
+	obj_ptr = attr_ptr->object;
+      else 
+	obj_ptr = NULL;
+    } else {
+      obj_ptr = o_current;
+    }
+
+    while (obj_ptr != NULL) {
+      sprintf(aux_ptr, "%c", obj_ptr->type);
+      include_text = TRUE;
+
+      if (!g_list_find_custom(exclude_obj_type_list, aux_ptr, (GCompareFunc) &strcmp)) {
+	switch(obj_ptr->type) {
+          case (OBJ_PIN):
+	    world_get_single_object_bounds (w_current, obj_ptr,
+					    &rleft, &rtop, &rright, &rbottom);
+	    break;
+          case (OBJ_TEXT):
+	    if (obj_ptr->text && obj_ptr->text->string) {
+	      text_value = obj_ptr->text->string;
+	      if (o_attrib_get_name_value(text_value, &name_ptr, &value_ptr) &&
+		  g_list_find_custom(exclude_attrib_list, name_ptr, (GCompareFunc) &strcmp)) {
+		include_text = FALSE;
+	      }
+	      if (g_list_find_custom(exclude_attrib_list, "all", (GCompareFunc) &strcmp))
+		include_text = FALSE;
+	      if (include_text) {
+		world_get_single_object_bounds (w_current, obj_ptr, 
+						&rleft, &rtop, &rright, &rbottom);
+	      }
+	      g_free(name_ptr);
+	      g_free(value_ptr);
+	    }
+	    break;
+          case (OBJ_COMPLEX):
+          case (OBJ_PLACEHOLDER):
+	    custom_world_get_complex_bounds(w_current, 
+					    o_current->complex->prim_objs, 
+					    left, top, right, bottom,
+					    exclude_attrib_list,
+					    exclude_obj_type_list);          
+	    break;
+	    
+          default:
+	    world_get_single_object_bounds (w_current, obj_ptr, 
+					    &rleft, &rtop, &rright, &rbottom);
+	    break;
+	}
+      }
+      
+      if (rleft < *left) *left = rleft;
+      if (rtop < *top) *top = rtop;
+      if (rright > *right) *right = rright;
+      if (rbottom > *bottom) *bottom = rbottom;
+      
+      if (o_current->type == OBJ_PIN) {
+	attr_ptr = attr_ptr->next;
+	if (attr_ptr)
+	  obj_ptr = attr_ptr->object;
+	else
+	  obj_ptr = NULL;
+      }
+      else {
+	obj_ptr = obj_ptr->next;
+      }
+    }
+  }
+
   TOPLEVEL *w_current=NULL;
   OBJECT *object=NULL;
   int left=0, right=0, bottom=0, top=0; 
   SCM returned = SCM_EOL;
   SCM vertical = SCM_EOL;
   SCM horizontal = SCM_EOL;
-  OBJECT *new_object = NULL;
-  gboolean include_attribs;
+  GList *exclude_attrib_list = NULL, *exclude_obj_type_list = NULL;
+  gboolean exclude_all_attribs = FALSE;
+  int i;
 
-  SCM_ASSERT (scm_boolean_p(scm_inc_attribs), scm_inc_attribs,
-	      SCM_ARG2, "get-object-bounds");
-  include_attribs = SCM_NFALSEP(scm_inc_attribs);
+  SCM_ASSERT (scm_list_p(scm_exclude_attribs), scm_exclude_attribs, 
+ 	      SCM_ARG2, "get-object-bounds"); 
+  SCM_ASSERT (scm_list_p(scm_exclude_object_type), scm_exclude_object_type,
+	      SCM_ARG3, "get-object-bounds");
 
-  /* Get w_current and o_current */
-  SCM_ASSERT (g_get_data_from_object_smob (object_smob, &w_current, &object),
+  /* Build the exclude attrib list */
+  for (i=0; i <= SCM_INUM(scm_length(scm_exclude_attribs))-1; i++) {
+    SCM_ASSERT (SCM_STRINGP(scm_list_ref(scm_exclude_attribs, SCM_MAKINUM(i))), 
+		scm_exclude_attribs, 
+		SCM_ARG2, "get-object-bounds"); 
+    exclude_attrib_list = g_list_append(exclude_attrib_list, 
+					SCM_STRING_CHARS(scm_list_ref(scm_exclude_attribs,
+								      SCM_MAKINUM(i))));
+  }
+
+  /* Build the exclude object type list */
+  for (i=0; i <= SCM_INUM(scm_length(scm_exclude_object_type))-1; i++) {
+    SCM_ASSERT (SCM_STRINGP(scm_list_ref(scm_exclude_object_type, SCM_MAKINUM(i))), 
+		scm_exclude_object_type, 
+		SCM_ARG3, "get-object-bounds"); 
+    exclude_obj_type_list = g_list_append(exclude_obj_type_list, 
+					SCM_STRING_CHARS(scm_list_ref(scm_exclude_object_type,
+								      SCM_MAKINUM(i))));
+  }
+
+  /* Get w_current and o_current. */
+  g_get_data_from_object_smob (object_smob, &w_current, &object);
+  
+  SCM_ASSERT (w_current && object,
 	      object_smob, SCM_ARG1, "get-object-bounds");
 
-  if (!include_attribs) {
-    new_object = (OBJECT *) g_malloc(sizeof(OBJECT));
-    memcpy (new_object, object, sizeof(OBJECT));
-    new_object->attribs = NULL;
-    new_object->next = NULL;
-    new_object->prev = NULL;
-  }
-  else { 
-    new_object = object;
-  } 
-    
-  world_get_complex_bounds (w_current, new_object, 
-			    &left, &top, &right, &bottom);
+  if (g_list_find_custom(exclude_attrib_list, "all", (GCompareFunc) &strcmp))
+    exclude_all_attribs = TRUE;
+
+  custom_world_get_complex_bounds (w_current, object,
+				   &left, &top, 
+				   &right, &bottom, 
+				   exclude_attrib_list,
+				   exclude_obj_type_list);
   
-  if (!include_attribs) {
-    /* Free the newly created object */
-    g_free(new_object);
-  }
+  /* Free the exclude attrib_list. Don't free the nodes!! */
+  g_list_free(exclude_attrib_list);
+
+  /* Free the exclude attrib_list. Don't free the nodes!! */
+  g_list_free(exclude_obj_type_list);
   
   horizontal = scm_cons (SCM_MAKINUM(left), SCM_MAKINUM(right));
   vertical = scm_cons (SCM_MAKINUM(top), SCM_MAKINUM(bottom));
