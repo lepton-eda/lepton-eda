@@ -279,6 +279,9 @@ void o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, 
 /* o_complex_basic.c */
 void get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom);
 void get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head, int *left, int *top, int *right, int *bottom);
+void world_get_single_object_bounds(TOPLEVEL *w_current, OBJECT *o_current, 
+				    int *left, int *top, 
+				    int *right, int *bottom);
 void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom);
 OBJECT *add_head(void);
 int o_complex_is_eligible_attribute(TOPLEVEL *w_current, OBJECT *object, int promote_invisible);

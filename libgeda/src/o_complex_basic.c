@@ -220,9 +220,98 @@ void get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head,
 
 }
 
-/*! \brief
- *  \par Function Description
+/*! \brief Return the bounds of the given object.
+ *  \par Given an object, calcule the bounds coordinates.
+ *  \param [in] w_current The toplevel structure.
+ *  \param [in] o_current The object to look the bounds for.
+ *  \param [out] left   pointer to the left coordinate of the object.
+ *  \param [out] top    pointer to the top coordinate of the object.
+ *  \param [out] right  pointer to the right coordinate of the object.
+ *  \param [out] bottom pointer to the bottom coordinate of the object.
  *
+ */
+void world_get_single_object_bounds(TOPLEVEL *w_current, OBJECT *o_current, 
+				    int *left, int *top, 
+				    int *right, int *bottom)
+{
+  if (o_current != NULL ) {
+    switch(o_current->type) {
+      case(OBJ_LINE):
+        world_get_line_bounds(w_current, o_current->line, 
+			      left, top, right, bottom);
+        break;
+
+      case(OBJ_NET):
+        /* same as a line (diff name)*/
+        world_get_net_bounds(w_current, o_current->line, 
+			     left, top, right, bottom);
+        break;
+
+      case(OBJ_BUS):
+        /* same as a line (diff name)*/
+        world_get_bus_bounds(w_current, o_current->line, 
+			     left, top, right, bottom);
+        break;
+	
+	
+      case(OBJ_BOX):
+        world_get_box_bounds(w_current, o_current->box, 
+			     left, top, right, bottom);
+        break;
+
+      case(OBJ_PICTURE):
+        world_get_picture_bounds(w_current, o_current->picture, 
+				 left, top, right, bottom);
+        break;
+
+      case(OBJ_CIRCLE):
+        world_get_circle_bounds(w_current, o_current->circle, 
+				left, top, right, bottom);
+        break;
+
+      case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
+        /* recursive objects ?*/
+        world_get_complex_bounds(w_current, o_current->complex->prim_objs, 
+				 left, top, right, bottom);
+        break;
+
+      case(OBJ_TEXT):
+        /* only do bounding boxes for visible or doing show hidden text */
+        /* you might lose some attrs though */
+        if (o_current->visibility == VISIBLE ||
+            (o_current->visibility == INVISIBLE && 
+	     w_current->show_hidden_text)) {
+          world_get_text_bounds(w_current, o_current, 
+				left, top, right, bottom);
+        }
+        break;
+
+      case(OBJ_PIN):
+        world_get_pin_bounds(w_current, o_current->line, 
+			     left, top, right, bottom);
+        break;
+
+      case(OBJ_ARC):
+        world_get_arc_bounds(w_current, o_current, 
+			     left, top, right, bottom);
+        break;
+
+      default:
+        break;
+    }
+  }
+}
+
+
+/*! \brief Return the bounds of the given complex (or list of OBJECTs).
+ *  \par Given a complex (list of objects), calcule the bounds coordinates.
+ *  \param [in] w_current The toplevel structure.
+ *  \param [in] complex   The list of objects to look the bounds for.
+ *  \param [out] left   pointer to the left coordinate of the object.
+ *  \param [out] top    pointer to the top coordinate of the object.
+ *  \param [out] right  pointer to the right coordinate of the object.
+ *  \param [out] bottom pointer to the bottom coordinate of the object.
  */
 void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, 
 			      int *left, int *top, int *right, int *bottom)
@@ -238,67 +327,14 @@ void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
   o_current = complex;
 	
   while ( o_current != NULL ) {
-    switch(o_current->type) {
-      case(OBJ_LINE):
-        world_get_line_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_NET):
-        /* same as a line (diff name)*/
-        world_get_net_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_BUS):
-        /* same as a line (diff name)*/
-        world_get_bus_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
-        break;
-	
-	
-      case(OBJ_BOX):
-        world_get_box_bounds(w_current, o_current->box, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_PICTURE):
-        world_get_picture_bounds(w_current, o_current->picture, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_CIRCLE):
-        world_get_circle_bounds(w_current, o_current->circle, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_COMPLEX):
-      case(OBJ_PLACEHOLDER):
-        /* recursive objects ?*/
-        world_get_complex_bounds(w_current, o_current->complex->prim_objs, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_TEXT):
-        /* only do bounding boxes for visible or doing show hidden text */
-        /* you might lose some attrs though */
-        if (o_current->visibility == VISIBLE ||
-            (o_current->visibility == INVISIBLE && w_current->show_hidden_text)) {
-          world_get_text_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
-        }
-        break;
-
-      case(OBJ_PIN):
-        world_get_pin_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_ARC):
-        world_get_arc_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      default:
-        break;
-    }
+    world_get_single_object_bounds (w_current, o_current, 
+				    &rleft, &rtop, &rright, &rbottom);
 
     if (rleft < *left) *left = rleft;
     if (rtop < *top) *top = rtop;
     if (rright > *right) *right = rright;
     if (rbottom > *bottom) *bottom = rbottom;
 	
-
     o_current=o_current->next;
   }
 
