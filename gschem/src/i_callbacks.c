@@ -1859,6 +1859,7 @@ DEFINE_I_CALLBACK(buffer_copy1)
 
   i_update_middle_button(w_current, i_callback_buffer_copy1, _("Copy 1"));
   o_buffer_copy(w_current, 0);
+  i_update_menus(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1877,6 +1878,7 @@ DEFINE_I_CALLBACK(buffer_copy2)
 
   i_update_middle_button(w_current, i_callback_buffer_copy2, _("Copy 2"));
   o_buffer_copy(w_current, 1);
+  i_update_menus(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1895,6 +1897,7 @@ DEFINE_I_CALLBACK(buffer_copy3)
 
   i_update_middle_button(w_current, i_callback_buffer_copy3, _("Copy 3"));
   o_buffer_copy(w_current, 2);
+  i_update_menus(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1913,6 +1916,7 @@ DEFINE_I_CALLBACK(buffer_copy4)
 
   i_update_middle_button(w_current, i_callback_buffer_copy4, _("Copy 4"));
   o_buffer_copy(w_current, 3);
+  i_update_menus(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1931,6 +1935,7 @@ DEFINE_I_CALLBACK(buffer_copy5)
 
   i_update_middle_button(w_current, i_callback_buffer_copy5, _("Copy 5"));
   o_buffer_copy(w_current, 4);
+  i_update_menus(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1949,6 +1954,7 @@ DEFINE_I_CALLBACK(buffer_cut1)
 
   i_update_middle_button(w_current, i_callback_buffer_cut1, _("Cut 1"));
   o_buffer_cut(w_current, 0);
+  i_update_menus(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1967,6 +1973,7 @@ DEFINE_I_CALLBACK(buffer_cut2)
 
   i_update_middle_button(w_current, i_callback_buffer_cut2, _("Cut 2"));
   o_buffer_cut(w_current, 1);
+  i_update_menus(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1985,6 +1992,7 @@ DEFINE_I_CALLBACK(buffer_cut3)
 
   i_update_middle_button(w_current, i_callback_buffer_cut3, _("Cut 3"));
   o_buffer_cut(w_current, 2);
+  i_update_menus(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2003,6 +2011,7 @@ DEFINE_I_CALLBACK(buffer_cut4)
 
   i_update_middle_button(w_current, i_callback_buffer_cut4, _("Cut 4"));
   o_buffer_cut(w_current, 3);
+  i_update_menus(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2021,6 +2030,7 @@ DEFINE_I_CALLBACK(buffer_cut5)
 
   i_update_middle_button(w_current, i_callback_buffer_cut5, _("Cut 5"));
   o_buffer_cut(w_current, 4);
+  i_update_menus(w_current);
 }
 
 /*! \todo Finish function documentation!!!

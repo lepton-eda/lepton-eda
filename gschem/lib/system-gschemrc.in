@@ -1306,7 +1306,10 @@
     ("Shift H" . hierarchy-keymap)
     ("Shift U" . edit-undo)
     ("Shift R" . edit-redo)
-    ("Shift Z" . view-zoom-out-hotkey)))
+    ("Shift Z" . view-zoom-out-hotkey)
+    ("Control x" . buffer-cut1)
+    ("Control c" . buffer-copy1)
+    ("Control v" . buffer-paste1-hotkey)))
 
 ; finally set the keymap point to the newly created datastructure 
 (define current-keymap global-keymap)
@@ -1356,6 +1359,10 @@
            ("Redo"               edit-redo       	edit-redo)
 	   ("SEPARATOR"          no-action       	no-action)
            ("Select Mode"        edit-select     	edit-select)
+	   ("Cut Buffer"         buffer-cut1            buffer-cut1)
+           ("Copy Buffer"        buffer-copy1           buffer-copy1)
+           ("Paste Buffer"       buffer-paste1-hotkey   buffer-paste1-hotkey)
+	   ("SEPARATOR"          no-action       	no-action)
            ("Edit..."		 edit-edit       	edit-edit)
            ("Edit Text..."	 edit-text       	edit-text)
            ("Copy Mode"		 edit-copy       	edit-copy-hotkey)
@@ -1392,11 +1399,11 @@
 	   ("Cut into 3"	buffer-cut3       	buffer-cut3)
 	   ("Cut into 4"	buffer-cut4       	buffer-cut4)
 	   ("Cut into 5"	buffer-cut5       	buffer-cut5)
-	   ("Paste from 1"	buffer-paste1       	buffer-paste1-hotkey)
-	   ("Paste from 2"	buffer-paste2       	buffer-paste2-hotkey)
-	   ("Paste from 3"	buffer-paste3       	buffer-paste3-hotkey)
-	   ("Paste from 4"	buffer-paste4       	buffer-paste4-hotkey)
-	   ("Paste from 5"	buffer-paste5       	buffer-paste5-hotkey)))
+	   ("Paste from 1"	buffer-paste1-hotkey    buffer-paste1-hotkey)
+	   ("Paste from 2"	buffer-paste2-hotkey    buffer-paste2-hotkey)
+	   ("Paste from 3"	buffer-paste3-hotkey    buffer-paste3-hotkey)
+	   ("Paste from 4"	buffer-paste4-hotkey    buffer-paste4-hotkey)
+	   ("Paste from 5"	buffer-paste5-hotkey    buffer-paste5-hotkey)))
 
 (define view-menu-items 
 ;;

@@ -2903,8 +2903,8 @@ void color_edit_dialog (TOPLEVEL *w_current)
 
 /***************** Start of help/keymapping dialog box **************/
 
-/* limit this to 128 hotkeys */
-static char *hotkey_strings[128];
+#define MAX_HOTKEY_BUFFER  256
+static char *hotkey_strings[MAX_HOTKEY_BUFFER];
 static int hotkey_counter=0;
 
 /*! \todo Finish function documentation!!!
@@ -2958,7 +2958,7 @@ void x_dialog_hotkeys_free_all(void)
 void x_dialog_hotkeys_fill(char *string) 
 {
 
-  if (hotkey_counter > 127) {
+  if (hotkey_counter > MAX_HOTKEY_BUFFER-1) {
     printf(_("Ran out of space in the hotkey buffer...\n"));
     return;
   }	
