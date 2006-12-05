@@ -1,3 +1,7 @@
+2006-12-05 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/x_compselect.c: clib_directories is now a double linked list.
+
 2006-12-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* lib/system-gschemrc.in: Added Control-x, Control-c, Control-v

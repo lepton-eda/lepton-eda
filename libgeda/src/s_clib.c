@@ -54,7 +54,7 @@
 
 void s_clib_free (void);
 
-static GSList *clib_directories = NULL;
+static GList *clib_directories = NULL;
 
 static GHashTable *clib_cache = NULL;
 
@@ -85,7 +85,7 @@ static void clib_free_cache_entry (gpointer key, gpointer value,
   g_free (key);
   if (value != NULL) {
     /* value is a singly-linked list of strings */
-    g_slist_foreach (value, (GFunc)g_free, NULL);
+    g_list_foreach (value, (GFunc)g_free, NULL);
     g_slist_free ((GSList*)value);
   }
 }
@@ -97,8 +97,8 @@ static void clib_free_cache_entry (gpointer key, gpointer value,
 void s_clib_free (void)
 {
   if (clib_directories != NULL) {
-    g_slist_foreach (clib_directories, (GFunc)g_free, NULL);
-    g_slist_free (clib_directories);
+    g_list_foreach (clib_directories, (GFunc)g_free, NULL);
+    g_list_free (clib_directories);
     clib_directories = NULL;
   }
 
@@ -119,14 +119,14 @@ void s_clib_free (void)
 void s_clib_add_directory (const gchar *directory)
 {
   /* search for directory in clib_directories */
-  if (!g_slist_find_custom (clib_directories,
-                            directory,
-                            (GCompareFunc) g_strcasecmp))
+  if (!g_list_find_custom (clib_directories,
+			   directory,
+			   (GCompareFunc) g_strcasecmp))
   {
     /* directory not yet in the list of known directories */
     /* add directory to list */
-    clib_directories = g_slist_append (clib_directories,
-                                       g_strdup (directory));
+    clib_directories = g_list_append (clib_directories,
+				      g_strdup (directory));
   }
   
 }
@@ -141,7 +141,7 @@ void s_clib_add_directory (const gchar *directory)
  *  The returned value is owned by libgeda and must not be modified or freed.
  *
  */
-const GSList *s_clib_get_directories()
+const GList *s_clib_get_directories()
 {
   return clib_directories;
 }
@@ -162,9 +162,9 @@ GSList *s_clib_get_files (const gchar *directory, const gchar *filter)
   GSList *ret = NULL;
 
   /* check directory is in clib_directories */
-  if (g_slist_find_custom (clib_directories,
-                           directory,
-                           (GCompareFunc) g_strcasecmp) == NULL)
+  if (g_list_find_custom (clib_directories,
+			  directory,
+			  (GCompareFunc) g_strcasecmp) == NULL)
   {
     /* no, unknown directory: report an error */
     s_log_message ("Directory [%s] is not part of the component library\n",
@@ -218,7 +218,8 @@ GSList *s_clib_get_files (const gchar *directory, const gchar *filter)
  */
 const GSList *s_clib_search_basename(const gchar *basename)
 {
-  GSList *ret, *tmp;
+  GSList *ret; 
+  GList *tmp;
   
   /* first check if basename is in cache */
   ret = g_hash_table_lookup (clib_cache, basename);
@@ -228,7 +229,8 @@ const GSList *s_clib_search_basename(const gchar *basename)
   }
 
   /* looks like we have to search for basename in the library */
-  for (tmp = clib_directories; tmp != NULL; tmp = g_slist_next (tmp)) {
+  for (tmp = g_list_last(clib_directories); 
+       tmp != NULL; tmp = g_list_previous (tmp)) {
     gchar *dir_name  = (gchar*)tmp->data;
     gchar *file_name = g_strconcat (dir_name,
                                     G_DIR_SEPARATOR_S,

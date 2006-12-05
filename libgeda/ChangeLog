@@ -1,3 +1,9 @@
+2006-12-05 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* include/prototype.h, src/s_clib.c: Converted the clib_directories 
+	  list into a double linked list and reversed the search order
+	  (last added directories first).
+	
 2006-12-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/s_toplevel.c: Added missing init of toplevel->line_style

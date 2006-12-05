@@ -530,14 +530,14 @@ static GtkTreeModel*
 compselect_create_child_model (void)
 {
   GtkTreeStore *store;
-  const GSList *directories, *dir; 
+  const GList *directories, *dir; 
 
   store = (GtkTreeStore*)gtk_tree_store_new (1,
                                              G_TYPE_STRING);
   
   /* populate component store */
   directories = s_clib_get_directories ();
-  for (dir = directories; dir != NULL; dir = g_slist_next (dir)) {
+  for (dir = directories; dir != NULL; dir = g_list_next (dir)) {
     GtkTreeIter iter, iter2;
     GSList *components, *comp;
 

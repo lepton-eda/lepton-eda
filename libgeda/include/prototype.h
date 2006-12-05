@@ -497,7 +497,7 @@ char *expand_env_variables(char *string);
 void s_clib_init (void);
 void s_clib_free (void);
 void s_clib_add_directory (const gchar *directory);
-const GSList* s_clib_get_directories ();
+const GList* s_clib_get_directories ();
 GSList* s_clib_get_files (const gchar *directory, const gchar *filter);
 const GSList* s_clib_search_basename (const gchar *basename);
 
