@@ -6,7 +6,7 @@
 
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
-configure_script=configure.ac
+configure_script=configure.ac.in
 
 DIE=0
 
@@ -77,6 +77,14 @@ case $CC in
 xlc )
   am_opt=--include-deps;;
 esac
+
+# Create the configure.ac from the configure.ac.in file.  
+# The below line to get the gettext version isn't the most robust construct
+# because if gettext changes its version output format, this will break.
+installed_gettext_version=`gettext --version | grep gettext | awk '{print $4}'`
+cat $configure_script | \
+  sed "s/%INSTALLED_GETTEXT_VERSION%/$installed_gettext_version/" > configure.ac
+configure_script=configure.ac
 
 for coin in `find $srcdir -name $srcdir/CVS -prune -o -name $configure_script -print`
 do 

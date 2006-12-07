@@ -5,6 +5,7 @@ config.h.in
 config.log
 config.status
 configure
+configure.ac
 stamp-h1
 *.cache
 aclocal.m4

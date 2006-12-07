@@ -1,3 +1,16 @@
+2006-12-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* autogen.sh, Makefile.am, configure.ac, configure.ac.in: Changed
+	the configure.ac and autogen.sh files to dynamically figure out the
+	gettext version (instead of hard coding the version) when autogen.sh
+	is ran.  Hard coding 0.15 inside configure.ac broke everybody
+	who doesn't have gettext 0.15 installed.  The configure.ac file
+	is now generated from the configure.ac.in.  configure.ac was
+	removed from CVS at this point.
+
+	* .cvsignore: Added configure.ac into this file so that it is ignored
+ 	when doing cvs update.
+
 2006-12-05 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* lib/system_gschemrc.in, scheme/auto-place-attribs.scm:
