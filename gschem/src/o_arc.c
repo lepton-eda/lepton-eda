@@ -151,25 +151,25 @@ void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
   case TYPE_SOLID:
     length = -1;
     space = -1;
-    draw_func = (void *) o_arc_draw_solid;
+    draw_func = o_arc_draw_solid;
     break;
 			
   case TYPE_DOTTED:
     length = -1; /* AVH changed o_arc_draw_dotted to use */
     /* space parameter only */
-    draw_func = (void *) o_arc_draw_dotted;
+    draw_func = o_arc_draw_dotted;
     break;
 			
   case TYPE_DASHED:
-    draw_func = (void *) o_arc_draw_dashed;
+    draw_func = o_arc_draw_dashed;
     break;
 			
   case TYPE_CENTER:
-    draw_func = (void *) o_arc_draw_center;
+    draw_func = o_arc_draw_center;
     break;
 			
   case TYPE_PHANTOM:
-    draw_func = (void *) o_arc_draw_phantom;
+    draw_func = o_arc_draw_phantom;
     break;
 			
   case TYPE_ERASE:
@@ -179,13 +179,13 @@ void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
     length = -1;
     space = -1;
     arc_width = 0; /* just to be careful */
-    draw_func = (void *) o_arc_draw_solid;
+    draw_func = o_arc_draw_solid;
     fprintf(stderr, _("Unknown type for arc !\n"));
     break;
   }
 
   if((length == 0) || (space == 0))
-    draw_func = (void *) o_arc_draw_solid;
+    draw_func =  o_arc_draw_solid;
 
   (*draw_func)(w_current->window, w_current->gc, color,
                arc_end,

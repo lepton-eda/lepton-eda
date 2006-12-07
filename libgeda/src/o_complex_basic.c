@@ -482,11 +482,10 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
                 &new_node->complex->screen_x, 
                 &new_node->complex->screen_y);    
 
-  /*! \todo questionable caste? */
-  new_node->draw_func = (void *) complex_draw_func;  
+  new_node->draw_func = complex_draw_func;  
 
   if (selectable) { 
-    new_node->sel_func = (void *) select_func;
+    new_node->sel_func = select_func;
   } else {
     new_node->sel_func = NULL;
   }
@@ -716,12 +715,11 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list,
 
   new_node->color = color;
 
-  /*! \todo questionable cast */
-  new_node->draw_func = (void *) complex_draw_func;  
+  new_node->draw_func = complex_draw_func;  
 
   /* (for a title block) an object that isn't selectable */
   if (selectable) { 
-    new_node->sel_func = (void *) select_func;
+    new_node->sel_func = select_func;
   } else {
     new_node->sel_func = NULL;
   }

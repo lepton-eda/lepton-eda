@@ -180,10 +180,8 @@ OBJECT *o_net_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
   new_node->right = right;
   new_node->bottom = bottom;
 
-  /* \todo questionable cast */
-  new_node->draw_func = (void *) net_draw_func;
-  /* \todo questionable cast */
-  new_node->sel_func = (void *) select_func;
+  new_node->draw_func = net_draw_func;
+  new_node->sel_func = select_func;
 
   object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 

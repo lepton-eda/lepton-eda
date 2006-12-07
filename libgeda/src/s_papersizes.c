@@ -156,8 +156,6 @@ char *s_papersizes_get(int counter)
 {
   if (counter < papersizes_index) {
     return(papersizes[counter].papersize_name);
-  } else {
-    return(NULL);
   }
 
   return(NULL);

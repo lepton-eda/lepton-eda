@@ -128,24 +128,24 @@ void o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
     case TYPE_SOLID:
       length = -1;
       space = -1;
-      draw_func = (void *) o_line_draw_solid;
+      draw_func = o_line_draw_solid;
       break;
 			
     case TYPE_DOTTED:
       length = -1; /* in ..._draw_dotted, length is unused */
-      draw_func = (void *) o_line_draw_dotted;
+      draw_func = o_line_draw_dotted;
       break;
 			
     case TYPE_DASHED:
-      draw_func = (void *) o_line_draw_dashed;
+      draw_func = o_line_draw_dashed;
       break;
 			
     case TYPE_CENTER:
-      draw_func = (void *) o_line_draw_center;
+      draw_func = o_line_draw_center;
       break;
 			
     case TYPE_PHANTOM:
-      draw_func = (void *) o_line_draw_phantom;
+      draw_func = o_line_draw_phantom;
       break;
 			
     case TYPE_ERASE:
@@ -157,12 +157,12 @@ void o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
       line_width = 0; /* just to be careful */
       fprintf(stderr, _("Unknown type for line (%d) !\n"),
               o_current->line_type);
-      draw_func = (void *) o_line_draw_solid;
+      draw_func = o_line_draw_solid;
       break;
   }
 
   if((length == 0) || (space == 0))
-  draw_func = (void *) o_line_draw_solid;
+  draw_func = o_line_draw_solid;
 
   (*draw_func)(w_current->window, w_current->gc, color, line_end,
                x1, y1, x2, y2, line_width, length, space);

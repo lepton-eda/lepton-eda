@@ -912,10 +912,8 @@ OBJECT *o_text_add(TOPLEVEL *w_current, OBJECT *object_list,
 
   new_node->text = text;
 
-  /* \todo questionable cast */
-  new_node->draw_func = (void *) text_draw_func;  
-  /* \todo questionable cast */
-  new_node->sel_func = (void *) select_func;  
+  new_node->draw_func = text_draw_func;  
+  new_node->sel_func = select_func;  
 
   new_node->color = color;
   new_node->visibility = visibility; 

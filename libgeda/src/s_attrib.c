@@ -151,8 +151,6 @@ char *s_attrib_get(int counter)
 {
   if (counter < attrib_index) {
     return(attrib[counter].attrib_name);
-  } else {
-    return(NULL);
   }
 
   return(NULL);

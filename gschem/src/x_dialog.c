@@ -4727,7 +4727,7 @@ close_confirmation_dialog_constructor (GType type,
 	                    FALSE, FALSE, 0);
   
   return object;
-};
+}
 
 static void
 close_confirmation_dialog_set_property (GObject      *object,

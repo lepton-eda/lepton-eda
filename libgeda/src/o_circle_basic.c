@@ -113,10 +113,8 @@ OBJECT *o_circle_add(TOPLEVEL *w_current, OBJECT *object_list,
   o_set_fill_options(w_current, new_node,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
   
-  /* \todo questionable cast */
-  new_node->draw_func = (void *) circle_draw_func;  
-  /* \todo questionable cast */
-  new_node->sel_func = (void *) select_func;  
+  new_node->draw_func = circle_draw_func;  
+  new_node->sel_func = select_func;  
   
   /* compute the bounding box and screen coords */
   o_circle_recalc(w_current, new_node);
@@ -843,36 +841,36 @@ void o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   switch(o_current->line_type) {
     case(TYPE_SOLID):
       length = -1; space  = -1;
-      outl_func = (void *) o_circle_print_solid;
+      outl_func = o_circle_print_solid;
       break;
 
     case(TYPE_DOTTED):
       length = -1;
-      outl_func = (void *) o_circle_print_dotted;
+      outl_func = o_circle_print_dotted;
       break;
 
     case(TYPE_DASHED):
-      outl_func = (void *) o_circle_print_dashed;
+      outl_func = o_circle_print_dashed;
       break;
 
     case(TYPE_CENTER):
-      outl_func = (void *) o_circle_print_center;
+      outl_func = o_circle_print_center;
       break;
 
     case(TYPE_PHANTOM):
-      outl_func = (void *) o_circle_print_phantom;
+      outl_func = o_circle_print_phantom;
       break;
 
     case(TYPE_ERASE):
       /* Unused for now print it solid */
       length = -1; space  = -1;
-      outl_func = (void *) o_circle_print_solid;
+      outl_func = o_circle_print_solid;
       break;
   }
 
   if((length == 0) || (space == 0)) {
     length = -1; space  = -1;
-    outl_func = (void *) o_circle_print_solid;
+    outl_func = o_circle_print_solid;
   }
 
   (*outl_func)(w_current, fp,
@@ -905,16 +903,16 @@ void o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
         angle1 = -1; pitch1 = 1;
         angle2 = -1; pitch2 = 1;
         fill_width = -1;
-        fill_func = (void *) o_circle_print_filled;
+        fill_func = o_circle_print_filled;
         break;
 			
       case(FILLING_MESH):
-        fill_func = (void *) o_circle_print_mesh;
+        fill_func = o_circle_print_mesh;
         break;
 				
       case(FILLING_HATCH):
         angle2 = -1; pitch2 = 1;
-        fill_func = (void *) o_circle_print_hatch;
+        fill_func = o_circle_print_hatch;
         break;
 				
       case(FILLING_VOID):
@@ -922,7 +920,7 @@ void o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
         angle1 = -1; pitch1 = 1;
         angle2 = -1; pitch2 = 1;
         fill_width = -1;
-        fill_func = (void *) o_circle_print_filled;
+        fill_func = o_circle_print_filled;
         break;
         
       case(FILLING_HOLLOW):
@@ -933,7 +931,7 @@ void o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     if((pitch1 <= 0) || (pitch2 <= 0)) {
       angle1 = -1; pitch1 = 1;
       angle2 = -1; pitch2 = 1;
-      fill_func = (void *) o_circle_print_filled;
+      fill_func = o_circle_print_filled;
     }
 		
     (*fill_func)(w_current, fp,

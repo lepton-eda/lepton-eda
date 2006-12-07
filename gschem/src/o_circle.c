@@ -140,24 +140,24 @@ void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
     case TYPE_SOLID:
     length = -1;
     space = -1;
-    draw_func = (void *) o_arc_draw_solid;
+    draw_func = o_arc_draw_solid;
     break;
 			
     case TYPE_DOTTED:
     length = -1; /* ..._draw_dotted only space used */
-    draw_func = (void *) o_arc_draw_dotted;
+    draw_func = o_arc_draw_dotted;
     break;
 			
     case TYPE_DASHED:
-    draw_func = (void *) o_arc_draw_dashed;
+    draw_func = o_arc_draw_dashed;
     break;
 			
     case TYPE_CENTER:
-    draw_func = (void *) o_arc_draw_center;
+    draw_func = o_arc_draw_center;
     break;
 			
     case TYPE_PHANTOM:
-    draw_func = (void *) o_arc_draw_phantom;
+    draw_func = o_arc_draw_phantom;
     break;
 			
     case TYPE_ERASE:
@@ -168,12 +168,12 @@ void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
     space = -1;
     circle_width = 0; /* just to be careful */
     fprintf(stderr, _("Unknown type for circle!\n"));
-    draw_func = (void *) o_arc_draw_solid;			
+    draw_func = o_arc_draw_solid;			
     break;
   }
 
   if((length == 0) || (space == 0))
-  draw_func = (void *) o_arc_draw_solid;
+  draw_func = o_arc_draw_solid;
 	
   (*draw_func)(w_current->window, w_current->gc, color,
                circle_end,
@@ -231,35 +231,35 @@ void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
        * a test before the call. Simply putting a return here instead is not
        * possible as it would prevent any hollow circle from having its grips
        */
-      fill_func = (void *) o_circle_fill_hollow;
+      fill_func = o_circle_fill_hollow;
       break;
 		
     case FILLING_FILL:
       angle1 = -1; angle2 = -1;
       pitch1 = 1; pitch2 = 1;
-      fill_func = (void *) o_circle_fill_fill;
+      fill_func = o_circle_fill_fill;
       break;
 			
     case FILLING_MESH:
-      fill_func = (void *) o_circle_fill_mesh;
+      fill_func = o_circle_fill_mesh;
       break;
 
     case FILLING_HATCH:
       angle2 = -1;
       pitch2 = 1;
-      fill_func = (void *) o_circle_fill_hatch;
+      fill_func = o_circle_fill_hatch;
       break;
 			
     case FILLING_VOID:
     default:
       angle1 = -1; angle2 = -1;
       pitch1 = 1; pitch2 = 1;
-      fill_func = (void *) o_circle_fill_hollow;			
+      fill_func = o_circle_fill_hollow;			
       fprintf(stderr, _("Unknown type for circle (fill)!\n"));
   }
 
   if((pitch1 <= 0) || (pitch2 <= 0)) {
-    fill_func = (void *) o_circle_fill_fill;
+    fill_func = o_circle_fill_fill;
   }
 
   (*fill_func)(w_current->window, w_current->gc, color,

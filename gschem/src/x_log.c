@@ -82,7 +82,7 @@ void x_log_open ()
     log_message (LOG (log_dialog), contents);
     g_free (contents);
 
-    x_log_update_func = (void*)x_log_message;
+    x_log_update_func = x_log_message;
    
     if( auto_place_mode )
 	gtk_widget_set_uposition( log_dialog, 10, 10); 

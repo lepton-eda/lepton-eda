@@ -119,10 +119,8 @@ OBJECT *o_arc_add(TOPLEVEL *w_current, OBJECT *object_list,
 
   /* new_node->graphical = arc; eventually */
 	
-  /* \todo questionable cast */
-  new_node->draw_func = (void *) arc_draw_func;  
-  /* \todo questionable cast */
-  new_node->sel_func = (void *) select_func;
+  new_node->draw_func = arc_draw_func;  
+  new_node->sel_func = select_func;
 
   /* \note
    * The new object is linked to the object given in parameter object_list
@@ -881,36 +879,36 @@ void o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   switch(o_current->line_type) {
     case(TYPE_SOLID):
       length = -1; space = -1;
-      outl_func = (void *) o_arc_print_solid;
+      outl_func = o_arc_print_solid;
       break;
 			
     case(TYPE_DOTTED):
       length = -1;
-      outl_func = (void *) o_arc_print_dotted;
+      outl_func = o_arc_print_dotted;
       break;
 			
     case(TYPE_DASHED):
-      outl_func = (void *) o_arc_print_dashed;
+      outl_func = o_arc_print_dashed;
       break;
 			
     case(TYPE_CENTER):
-      outl_func = (void *) o_arc_print_center;
+      outl_func = o_arc_print_center;
       break;
 			
     case(TYPE_PHANTOM):
-      outl_func = (void *) o_arc_print_phantom;
+      outl_func = o_arc_print_phantom;
       break;
 			
     case(TYPE_ERASE):
       /* Unused for now, print it solid */
       length = -1; space = -1;
-      outl_func = (void *) o_arc_print_solid;
+      outl_func = o_arc_print_solid;
       break;
   }
 
   if((space == 0) || (length == 0)) {
     length = -1; space = -1;
-    outl_func = (void *) o_arc_print_solid;
+    outl_func = o_arc_print_solid;
   }
 
   (*outl_func)(w_current, fp,

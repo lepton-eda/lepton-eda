@@ -266,7 +266,7 @@ void i_update_left_button(const char *string)
  *
  */
 void i_update_middle_button(TOPLEVEL *w_current,
-			    void *func_ptr, const char *string)
+			    void (*func_ptr)(gpointer, guint, GtkWidget*), const char *string)
 {
   char *temp_string;
 

@@ -142,10 +142,8 @@ OBJECT *o_pin_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->right = right;
   new_node->bottom = bottom;	
 
-  /*! \todo questionable cast */
-  new_node->draw_func = (void *) pin_draw_func;  
-  /*! \todo questionable cast */
-  new_node->sel_func = (void *) select_func;  
+  new_node->draw_func = pin_draw_func;  
+  new_node->sel_func = select_func;  
 
   new_node->pin_type = pin_type;
   new_node->whichend = whichend;
