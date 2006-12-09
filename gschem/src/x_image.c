@@ -35,6 +35,9 @@
 #include <dmalloc.h>
 #endif
 
+#define GLADE_HOOKUP_OBJECT(component,widget,name) \
+  g_object_set_data_full (G_OBJECT (component), name, \
+    gtk_widget_ref (widget), (GDestroyNotify) gtk_widget_unref)
 
 /* static const   gchar   *list_item_data_key="list_item_data";	*/
 
@@ -339,15 +342,18 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
 gint x_image_write(GtkWidget *w, TOPLEVEL *w_current)
 {
   const char *filename=NULL;
+  GtkWidget *widget;
 
-  filename = gtk_entry_get_text(GTK_ENTRY(w_current->ifilename_entry));
+  widget = g_object_get_data (G_OBJECT (w_current->iwindow), "filename_entry");
+
+  filename = gtk_entry_get_text(GTK_ENTRY(widget));
   if (filename[0] != '\0') {
     x_image_lowlevel(w_current, filename);
   }
 
   gtk_widget_destroy(w_current->iwindow);
   w_current->iwindow=NULL;
-  return(0);
+  return 0;
 }
 
 /*! \todo Finish function documentation!!!
@@ -368,16 +374,58 @@ gint x_image_cancel(GtkWidget *w, TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-int x_image_keypress(GtkWidget * widget, GdkEventKey * event, 
-		     TOPLEVEL * w_current)
+void x_image_response(GtkWidget * widget, gint response, TOPLEVEL *w_current)
 {
-  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-    x_image_cancel(NULL, w_current);	
-    return TRUE;
+  switch(response) {
+  case GTK_RESPONSE_REJECT:
+  case GTK_RESPONSE_DELETE_EVENT:
+    x_image_cancel(widget, w_current);
+    break;
+  case GTK_RESPONSE_ACCEPT:
+    x_image_write(widget, w_current);
+    break;
+  default:
+    printf("x_image_response(): strange signal %d\n", response);
   }
-
-  return FALSE;
 }
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void x_image_select_filename(GtkWidget *w, GtkWidget *image_dialog)
+{
+  GtkWidget *widget;
+  GtkWidget *filechooser;
+  const gchar *filename;
+
+  filechooser = gtk_file_chooser_dialog_new (_("Select Image Filename..."),
+					     GTK_WINDOW (image_dialog),
+					     GTK_FILE_CHOOSER_ACTION_SAVE,
+					     GTK_STOCK_CANCEL,
+					     GTK_RESPONSE_CANCEL,
+					     GTK_STOCK_OK,
+					     GTK_RESPONSE_ACCEPT, NULL);
+
+  widget = g_object_get_data (G_OBJECT (image_dialog), "filename_entry");
+  filename = gtk_entry_get_text (GTK_ENTRY (widget));
+
+  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (filechooser), filename);
+
+  gtk_dialog_set_default_response(GTK_DIALOG(filechooser),
+				  GTK_RESPONSE_ACCEPT);
+
+  if (gtk_dialog_run (GTK_DIALOG (filechooser)) == GTK_RESPONSE_ACCEPT) {
+    filename =
+      gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (filechooser));
+    gtk_entry_set_text (GTK_ENTRY (widget), filename);
+   }
+
+  gtk_widget_destroy (filechooser);  
+}
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -387,146 +435,75 @@ int x_image_keypress(GtkWidget * widget, GdkEventKey * event,
 void x_image_setup (TOPLEVEL *w_current, char *filename)
 {
   GtkWidget *label;
-  GtkWidget *separator;
   GtkWidget *box;
-  GtkWidget *buttonwrite;
-  GtkWidget *buttoncancel;
+  GtkWidget *hbox;
   GtkWidget *optionmenu;
-  GtkWidget *vbox, *action_area;
+  GtkWidget *filename_entry;
+  GtkWidget *button;
 
-  /* freeze the window_current pointer so that it doesn't change */
-
+  /* only create the dialog if it's not there yet */
   if (!w_current->iwindow) {
 
-    w_current->iwindow = x_create_dialog_box(&vbox, &action_area); 
+    w_current->iwindow = gtk_dialog_new_with_buttons(_("Write Image..."),
+						     GTK_WINDOW(w_current->main_window),
+						     GTK_DIALOG_MODAL,
+						     GTK_STOCK_CANCEL,
+						     GTK_RESPONSE_REJECT,
+						     GTK_STOCK_OK,
+						     GTK_RESPONSE_ACCEPT,
+						     NULL);
+
+    gtk_dialog_set_default_response(GTK_DIALOG(w_current->iwindow),
+				    GTK_RESPONSE_ACCEPT);
 
     gtk_window_position (GTK_WINDOW (w_current->iwindow),
                          GTK_WIN_POS_MOUSE);
 
-    gtk_signal_connect (GTK_OBJECT (w_current->iwindow), "destroy",
-			GTK_SIGNAL_FUNC(destroy_window),
-			&w_current->iwindow);
+    gtk_signal_connect(GTK_OBJECT(w_current->iwindow), "response",
+		       GTK_SIGNAL_FUNC(x_image_response), w_current);
 
-#if 0 /* this was causing the dialog box to not die */
-    gtk_signal_connect (GTK_OBJECT (w_current->iwindow), "delete_event",
-			GTK_SIGNAL_FUNC(destroy_window),
-			&w_current->iwindow);
-#endif
+    box = GTK_DIALOG(w_current->iwindow)->vbox;
+    gtk_container_set_border_width(GTK_CONTAINER(w_current->iwindow),5);
+    gtk_box_set_spacing(GTK_BOX(box),5);
 
-    gtk_window_set_title (GTK_WINDOW (w_current->iwindow), _("Write Image..."));
-
-    buttonwrite = gtk_button_new_from_stock (GTK_STOCK_OK);
-    GTK_WIDGET_SET_FLAGS (buttonwrite, GTK_CAN_DEFAULT);
-    gtk_box_pack_start (GTK_BOX (action_area),
-			buttonwrite, TRUE, TRUE, 0);
-    gtk_signal_connect (GTK_OBJECT (buttonwrite), "clicked",
-			GTK_SIGNAL_FUNC(x_image_write), w_current);
-    gtk_widget_show (buttonwrite);
-    gtk_widget_grab_default (buttonwrite);
-
-    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-    GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
-    gtk_box_pack_start (GTK_BOX (action_area),
-			buttoncancel, TRUE, TRUE, 0);
-    gtk_signal_connect ( GTK_OBJECT(buttoncancel),
-                         "clicked", GTK_SIGNAL_FUNC(x_image_cancel),
-                         w_current);
-    gtk_widget_show (buttoncancel);
-
-#if 0
-    separator = gtk_hseparator_new ();
-    gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, TRUE, 0);
-    gtk_widget_show (separator);
-#endif
-
-    box = gtk_vbox_new(FALSE, 0);
-    gtk_container_border_width(GTK_CONTAINER(box), 5);
-    gtk_container_add(GTK_CONTAINER(vbox), box);
-    gtk_widget_show(box);
-
-#if 0
-    label = gtk_label_new (_("Width"));
+    label = gtk_label_new (_("Width x Height:"));
     gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
     gtk_misc_set_padding (GTK_MISC (label), 0, 0);
-    gtk_box_pack_start (GTK_BOX (box),
-                        label, FALSE, FALSE, 0);
-    gtk_widget_show (label);
-
-    w_current->iwidth_entry = gtk_entry_new_with_max_length (5);
-    gtk_editable_select_region (GTK_EDITABLE (w_current->iwidth_entry), 0, -1);
-    gtk_box_pack_start (GTK_BOX (box),
-                        w_current->iwidth_entry, TRUE, TRUE, 10);
-    /*
-      gtk_signal_connect(GTK_OBJECT(w_current->width_entry),
-      "activate",
-      GTK_SIGNAL_FUNC(x_image_write),
-      w_current);
-    */
-    gtk_widget_show (w_current->iwidth_entry);
-
-    label = gtk_label_new (_("Height"));
-    gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
-    gtk_misc_set_padding (GTK_MISC (label), 0, 0);
-    gtk_box_pack_start (GTK_BOX (box),
-                        label, FALSE, FALSE, 0);
-    gtk_widget_show (label);
-
-    w_current->iheight_entry = gtk_entry_new_with_max_length (5);
-    gtk_editable_select_region (GTK_EDITABLE (w_current->iheight_entry), 0, -1);
-    gtk_box_pack_start (GTK_BOX (box),
-                        w_current->iheight_entry, TRUE, TRUE, 10);
-    /*
-      gtk_signal_connect(GTK_OBJECT(w_current->height_entry),
-      "activate",
-      GTK_SIGNAL_FUNC(x_image_write),
-      w_current);
-    */
-    gtk_widget_show (w_current->iheight_entry);
-#endif
-    label = gtk_label_new (_("Width x Height"));
-    gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
-    gtk_misc_set_padding (GTK_MISC (label), 0, 0);
-    gtk_box_pack_start (GTK_BOX (box),
-                        label, FALSE, FALSE, 0);
-    gtk_widget_show (label);
+    gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
 
     optionmenu = gtk_option_menu_new ();
-    gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), create_menu_size (w_current));
+    gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), 
+			      create_menu_size (w_current));
     gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), 2);
     gtk_box_pack_start (GTK_BOX (box), optionmenu, TRUE, TRUE, 0);
-    gtk_widget_show (optionmenu);
 
-    label = gtk_label_new (_("Filename"));
+    label = gtk_label_new (_("Filename:"));
     gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
     gtk_misc_set_padding (GTK_MISC (label), 0, 0);
     gtk_box_pack_start (GTK_BOX (box),
                         label, FALSE, FALSE, 0);
-    gtk_widget_show (label);
 
-    w_current->ifilename_entry = gtk_entry_new_with_max_length (200);
-    gtk_editable_select_region (GTK_EDITABLE (w_current->ifilename_entry), 0, -1);
-    gtk_box_pack_start (GTK_BOX (box),
-                        w_current->ifilename_entry, TRUE, TRUE, 10);
-    gtk_signal_connect(GTK_OBJECT(w_current->ifilename_entry),
-                       "activate",
-                       GTK_SIGNAL_FUNC(x_image_write),
-                       w_current);
-    gtk_widget_show (w_current->ifilename_entry);
+    hbox = gtk_hbox_new(FALSE,10);
+    gtk_box_pack_start(GTK_BOX(box), hbox, FALSE, FALSE, 0);
+    filename_entry = gtk_entry_new_with_max_length (200);
+    gtk_editable_select_region (GTK_EDITABLE (filename_entry), 0, -1);
+    gtk_box_pack_start (GTK_BOX (hbox),
+                        filename_entry, TRUE, TRUE, 0);
 
-    separator = gtk_hseparator_new ();
-    gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, TRUE, 0);
-    gtk_widget_show (separator);
+    button = gtk_button_new_with_mnemonic(_("_Browse"));
+    gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
+    g_signal_connect(button, "clicked",
+		     GTK_SIGNAL_FUNC (x_image_select_filename),
+		     w_current->iwindow);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->iwindow), "key_press_event",
-                       (GtkSignalFunc) x_image_keypress, w_current);
+    GLADE_HOOKUP_OBJECT(w_current->iwindow,filename_entry,"filename_entry");
+
+    gtk_widget_show_all (box);
   }
  
   if (!GTK_WIDGET_VISIBLE (w_current->iwindow)) {
-    gtk_entry_set_text(GTK_ENTRY(w_current->ifilename_entry), filename);
-    /* gtk_entry_set_text(GTK_ENTRY(w_current->iwidth_entry), "800");
-       gtk_entry_set_text(GTK_ENTRY(w_current->iheight_entry), "600");*/
-
-    /*gtk_entry_select_region(GTK_ENTRY(w_current->ifilename_entry), 0, strlen(filename)); 	*/
+    filename_entry = g_object_get_data (G_OBJECT (w_current->iwindow), "filename_entry");
+    gtk_entry_set_text(GTK_ENTRY(filename_entry), filename);
     w_current->image_width = 800;
     w_current->image_height = 600;
     gtk_widget_show (w_current->iwindow);

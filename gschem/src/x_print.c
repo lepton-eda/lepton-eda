@@ -98,6 +98,8 @@ print_dialog_action_choosefile (GtkWidget * w, PrintDialog * dialog)
   filename = gtk_entry_get_text (GTK_ENTRY (dialog->fnfield));
   gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (filechooser), filename);
 
+  gtk_dialog_set_default_response(GTK_DIALOG(filechooser),
+				  GTK_RESPONSE_ACCEPT);
 
   if (gtk_dialog_run (GTK_DIALOG (filechooser)) == GTK_RESPONSE_ACCEPT)
     {
@@ -129,7 +131,7 @@ print_dialog_action_keypress (GtkWidget * widget, GdkEventKey * event,
 			       GTK_RESPONSE_REJECT);
 	  return TRUE;
 	}
-      if (strcmp (gdk_keyval_name (event->keyval), "Linefeed") == 0)
+      if (strcmp (gdk_keyval_name (event->keyval), "Return") == 0)
 	{
 	  gtk_dialog_response (GTK_DIALOG (dialog),
 			       GTK_RESPONSE_ACCEPT);
@@ -214,7 +216,6 @@ print_dialog_init_type_combobox (PrintDialog * d)
 				 renderer, "text", 0);
 
   d->typecbox = GTK_COMBO_BOX (combobox);
-
 }
 
 /*!
@@ -697,7 +698,7 @@ x_print_setup (TOPLEVEL * w_current, char *filename)
 	  break;
 	}
       paperidx++;
-     }
+    }
  
   /* Create a print dialog, find out whether the user clicks Print or
      Cancel, and then print or return accordingly */
@@ -710,6 +711,12 @@ x_print_setup (TOPLEVEL * w_current, char *filename)
 						"usefile", usefile,
 						 NULL));
   gtk_widget_show_all (GTK_WIDGET (dialog));
+
+  gtk_dialog_set_default_response(GTK_DIALOG(dialog),
+				  GTK_RESPONSE_ACCEPT);
+  gtk_window_set_transient_for(GTK_WINDOW(dialog),
+			       GTK_WINDOW(w_current->main_window));
+
   result = gtk_dialog_run (dialog);
   
   if (result == GTK_RESPONSE_ACCEPT)

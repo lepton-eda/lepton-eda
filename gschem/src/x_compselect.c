@@ -180,12 +180,14 @@ x_compselect_open (TOPLEVEL *toplevel)
                       G_CALLBACK (x_compselect_callback_response),
                       toplevel);
     
+    gtk_window_set_transient_for(GTK_WINDOW(toplevel->cswindow),
+				 GTK_WINDOW(toplevel->main_window));
+
     gtk_widget_show (toplevel->cswindow);
     
   } else {
     gdk_window_raise (toplevel->cswindow->window);
   }
-
 }
 
 /*! \brief Closes the component selection dialog.
@@ -436,7 +438,7 @@ compselect_filter_timeout (gpointer data)
  if (model != NULL) {
     gtk_tree_model_filter_refilter ((GtkTreeModelFilter*)model);
   }
-  
+
   /* return FALSE to remove the source */
   return FALSE;
 }

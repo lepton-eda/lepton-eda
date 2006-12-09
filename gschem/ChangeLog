@@ -1,3 +1,18 @@
+2006-12-09 Werner Hoch  <werner.ho@gmx.de>
+
+	* src/x_compselect.c: added transient_for flag to the dialog
+
+	* src/x_fileselect.c: set default response to OK
+
+	* src/x_print.c: set default response to print, added transient_for
+	  flag, fixed a keyval "Return" instead of "linefeed"
+
+	* src/x_image.c: use GtkDialog for the PNG export dialog.
+	  added a filechooser dialog, misc cosmetics.
+
+	* src/x_dialog.c: use GtkDialog for text property dialog.
+	  code cleanup and cosmetics
+
 2006-12-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* autogen.sh, Makefile.am, configure.ac, configure.ac.in: Changed

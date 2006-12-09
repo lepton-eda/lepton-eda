@@ -304,10 +304,12 @@ void text_input_dialog (TOPLEVEL *w_current)
 /***************** End of Text Input dialog box ***********************/
 
 /***************** Start of Text Edit dialog box **********************/
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief CAllback for a text aligment change
  *  \par Function Description
- *
+ *  This function stores a change of the text alignment in the
+ *  <b>TOPLEVEL</b> struct.
+ *  \todo Remove that function. Only the OK-Button should set any
+ *  properties in the TOPLEVEL struct.
  */
 gint change_alignment(GtkWidget *w, TOPLEVEL *w_current)
 {
@@ -318,13 +320,13 @@ gint change_alignment(GtkWidget *w, TOPLEVEL *w_current)
   /*w_current->page_current->CHANGED=1; I don't think this belongs */
   /* o_undo_savestate(w_current, UNDO_ALL); I don't think this belongs */
 	
-  return(0);
+  return 0;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Create the alignment menu for the text property dialog
  *  \par Function Description
- *
+ *  This function creates a GtkMenu with nine different alignment 
+ *  entries.
  */
 static GtkWidget *create_menu_alignment (TOPLEVEL *w_current)
 {
@@ -435,32 +437,17 @@ static GtkWidget *create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  return(menu);
+  return menu;
 }
 
 /* we reuse the color menu so we need to declare it */
 static GtkWidget *create_color_menu(TOPLEVEL * w_current, int * select_index);
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Apply the settings from the text property dialog
  *  \par Function Description
- *
- */
-int text_edit_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
-			      TOPLEVEL * w_current)
-{
-   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-	text_edit_dialog_cancel(NULL, w_current);	
- 	return TRUE;
-   }
-
-   return FALSE;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+ *  This function applies the user settings to the selected text objects
+ *  and closes the dialog
+ *  \todo Check why we have no color attribute in that dialog
  */
 void text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 {
@@ -472,17 +459,20 @@ void text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
   int num_selected;
   GtkTextBuffer *textbuffer;
   GtkTextIter start, end;
+  GtkWidget *widget;
 
   num_selected = o_selection_return_num(w_current->page_current->selection2_head);
 
   /* text string entry will only show up if one object is selected */
   if (num_selected == 1) {
-    textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(w_current->teentry));
+    widget = g_object_get_data (G_OBJECT (w_current->tewindow), "textentry");
+    textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(widget));
     gtk_text_buffer_get_bounds (textbuffer, &start, &end);
     text_string =  gtk_text_iter_get_text (&start, &end);
   } /* else the string will be null which is okay */
   
-  text_size_string = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
+  widget = g_object_get_data (G_OBJECT (w_current->tewindow), "sizeentry");
+  text_size_string = (char *) gtk_entry_get_text(GTK_ENTRY(widget));
 
   if (text_string) {
     len = strlen(text_string);
@@ -502,139 +492,150 @@ void text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 
   i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
-
-  gtk_grab_remove(w_current->tewindow);
   gtk_widget_destroy(w_current->tewindow);
   w_current->tewindow = NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! 
+ *  \brief Cancel function for the text property dialog
  *  \par Function Description
- *
+ *  Just close the dialog and clean up.
+ *  \todo join the function into text_edit_dialog_response()
  */
 void text_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
   i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
-  gtk_grab_remove(w_current->tewindow);
   gtk_widget_destroy(w_current->tewindow);
   w_current->tewindow = NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Response function for the text property dialog
  *  \par Function Description
- *
+ *  This function receives the user response of the text property dialog.
+ *  The response is either <b>OK</b> or <b>Cancel</b>
+ *  
+ */
+void text_edit_dialog_response(GtkWidget * widget, gint response, TOPLEVEL *w_current)
+{
+  switch(response) {
+  case GTK_RESPONSE_REJECT:
+  case GTK_RESPONSE_DELETE_EVENT:
+    text_edit_dialog_cancel(widget, w_current);
+    break;
+  case GTK_RESPONSE_ACCEPT:
+    text_edit_dialog_ok(widget, w_current);
+    break;
+  default:
+    printf("text_edit_dialog_response(): strange signal %d\n", response);
+  }
+}
+
+/*! \brief Create the edit text properties dialog
+ *  \par Function Description
+ *  This Function creates the dialog to edit text properties. 
+ *  \todo Check why there's no color in the calling parameters
  */
 void text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
 		       int text_alignment)
 {
   GtkWidget *label = NULL;
-  GtkWidget *buttonok     = NULL;
-  GtkWidget *buttoncancel = NULL;
-  GtkWidget *vbox, *action_area;
+  GtkWidget *vbox;
   GtkWidget *optionmenu = NULL;
   GtkWidget *align_menu = NULL;
   GtkWidget *viewport1 = NULL;
+  GtkWidget *textentry = NULL;
+  GtkWidget *sizeentry = NULL;
   GtkWidget *scrolled_window = NULL;
   GtkTextBuffer *textbuffer;
   char *text_size_string;
-  int len;
-  int num_selected;
+  int num_selected=0;
   int select_index=0;
 
-  num_selected = o_selection_return_num(w_current->page_current->selection2_head);
-  
   if (!w_current->tewindow) {
-    w_current->tewindow = x_create_dialog_box(&vbox, &action_area);
-    
-    gtk_window_set_default_size (GTK_WINDOW (w_current->tewindow), 250, 300);
+    w_current->tewindow = gtk_dialog_new_with_buttons(_("Edit Text Properties"),
+						      GTK_WINDOW(w_current->main_window),
+						      GTK_DIALOG_MODAL,
+						      GTK_STOCK_CANCEL,
+						      GTK_RESPONSE_REJECT,
+						      GTK_STOCK_OK,
+						      GTK_RESPONSE_ACCEPT,
+						      NULL);
+
+    gtk_dialog_set_default_response(GTK_DIALOG(w_current->tewindow),
+				    GTK_RESPONSE_ACCEPT);
+
+    gtk_signal_connect(GTK_OBJECT(w_current->tewindow), "response",
+		       GTK_SIGNAL_FUNC(text_edit_dialog_response), w_current);
 
     gtk_window_position(GTK_WINDOW (w_current->tewindow),
                         GTK_WIN_POS_MOUSE);
 
-    gtk_signal_connect(GTK_OBJECT (w_current->tewindow),
-                       "destroy",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->tewindow);
+    
+    vbox = GTK_DIALOG(w_current->tewindow)->vbox;
+    gtk_container_set_border_width(GTK_CONTAINER(w_current->tewindow),5);
+    gtk_box_set_spacing(GTK_BOX(vbox),5);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->tewindow),
-                     "key_press_event",
-                     (GtkSignalFunc) text_edit_dialog_keypress, w_current);
-
-
-#if 0 /* removed because it was causing the dialog box to not close */
-    gtk_signal_connect(GTK_OBJECT (w_current->tewindow),
-                       "delete_event",
-                       GTK_SIGNAL_FUNC(gtk_widget_destroyed),
-                       &w_current->tewindow);
-#endif
-
-    gtk_window_set_title(GTK_WINDOW (w_current->tewindow),
-                         _("Edit Text"));
-    gtk_container_border_width(
-                               GTK_CONTAINER(w_current->tewindow), 10);
-
+    /* add a text box if only one object is selected */
+    num_selected = o_selection_return_num(w_current->page_current->selection2_head);
     if (num_selected == 1) {
-      label = gtk_label_new (_("Edit Text"));
-      gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 3);
+      label = gtk_label_new (_("Text Content:"));
+      gtk_misc_set_alignment(GTK_MISC(label),0,0);
+      gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
       viewport1 = gtk_viewport_new (NULL, NULL);
       gtk_widget_show (viewport1);
+      gtk_widget_set_size_request(GTK_WIDGET(viewport1),-1,75);
 
       scrolled_window = gtk_scrolled_window_new(NULL, NULL);
       gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window),
 				     GTK_POLICY_AUTOMATIC, 
 				     GTK_POLICY_AUTOMATIC);
       gtk_container_add (GTK_CONTAINER (viewport1), scrolled_window);
-      gtk_box_pack_start( GTK_BOX(vbox), viewport1, TRUE, TRUE, 10);
+      gtk_box_pack_start( GTK_BOX(vbox), viewport1, TRUE, TRUE, 0);
       gtk_widget_show(scrolled_window);
       
-      w_current->teentry = gtk_text_view_new();
-      gtk_text_view_set_editable(GTK_TEXT_VIEW(w_current->teentry), TRUE);
-      select_all_text_in_textview(GTK_TEXT_VIEW(w_current->teentry));
+      textentry = gtk_text_view_new();
+      gtk_text_view_set_editable(GTK_TEXT_VIEW(textentry), TRUE);
+      select_all_text_in_textview(GTK_TEXT_VIEW(textentry));
 
       /*! \bug FIXME: Set tab's width in the textview widget. */
       /* See first the code in text_input_dialog and get it working before adding it here. */
 
-      gtk_container_add(GTK_CONTAINER(scrolled_window), w_current->teentry);
-
-      gtk_widget_show (w_current->teentry);
-      gtk_widget_grab_focus(w_current->teentry);
+      gtk_container_add(GTK_CONTAINER(scrolled_window), textentry);
+      gtk_widget_show (textentry);
+      gtk_widget_grab_focus(textentry);
+      GLADE_HOOKUP_OBJECT(w_current->tewindow, textentry,"textentry");
     }
 
-    label = gtk_label_new(_("Edit Text Color"));
-    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 0);
+    label = gtk_label_new(_("Text Color:"));
+    gtk_misc_set_alignment(GTK_MISC(label),0,0);
+    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
     gtk_widget_show(label);
     
     optionmenu = gtk_option_menu_new();
-    
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu), create_color_menu(w_current, &select_index));
+    gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu), 
+			     create_color_menu(w_current, &select_index));
     gtk_option_menu_set_history(GTK_OPTION_MENU(optionmenu), select_index);
 	
-    gtk_box_pack_start(GTK_BOX(vbox), optionmenu, FALSE, TRUE, 5);
+    gtk_box_pack_start(GTK_BOX(vbox), optionmenu, FALSE, TRUE, 0);
     gtk_widget_show(optionmenu);
 
-    label = gtk_label_new (_("Edit Text Size"));
-    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 0);
+    label = gtk_label_new (_("Text Size:"));
+    gtk_misc_set_alignment(GTK_MISC(label),0,0);
+    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
 
-    w_current->tsentry = gtk_entry_new_with_max_length (10);
-    gtk_editable_select_region(
-                               GTK_EDITABLE (w_current->tsentry), 0, -1);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       w_current->tsentry, FALSE, FALSE, 5);
-    gtk_signal_connect(GTK_OBJECT(w_current->tsentry), "activate",
-                       GTK_SIGNAL_FUNC(text_edit_dialog_ok),
-                       w_current);
-    gtk_widget_show (w_current->tsentry);
+    sizeentry = gtk_entry_new_with_max_length (10);
+    gtk_editable_select_region(GTK_EDITABLE (sizeentry), 0, -1);
+    gtk_box_pack_start(GTK_BOX(vbox),
+                       sizeentry, FALSE, FALSE, 5);
+    gtk_widget_show (sizeentry);
 
-		
-    label = gtk_label_new (_("Edit Text Alignment"));
-    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 5);
+    label = gtk_label_new (_("Text Alignment:"));
+    gtk_misc_set_alignment(GTK_MISC(label),0,0);
+    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
 
     optionmenu = gtk_option_menu_new ();
@@ -647,50 +648,28 @@ void text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(gtk_menu_get_active(GTK_MENU(align_menu))),
 				   TRUE);
 
+    GLADE_HOOKUP_OBJECT(w_current->tewindow, sizeentry,"sizeentry");
+
     gtk_box_pack_start(GTK_BOX(vbox), optionmenu, FALSE, TRUE, 0);
     gtk_widget_show(optionmenu);
-
-
-    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-    GTK_WIDGET_SET_FLAGS(buttoncancel, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(
-                       GTK_BOX(action_area),
-                       buttoncancel, TRUE, TRUE, 5);
-    gtk_signal_connect(GTK_OBJECT (buttoncancel), "clicked",
-                       GTK_SIGNAL_FUNC(text_edit_dialog_cancel),
-                       w_current);
-    gtk_widget_show(buttoncancel);
-
-    buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
-    GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(
-                       GTK_BOX(action_area),
-                       buttonok, TRUE, TRUE, 5);
-    gtk_signal_connect(GTK_OBJECT (buttonok), "clicked",
-                       GTK_SIGNAL_FUNC(text_edit_dialog_ok),
-                       w_current);
-    gtk_widget_show(buttonok);
-    gtk_widget_grab_default(buttonok);
-
   }
 
   if (!GTK_WIDGET_VISIBLE (w_current->tewindow)) {
     gtk_widget_show (w_current->tewindow);
     if (string != NULL) {
-      len = strlen(string);
       if (num_selected == 1) { /* only if one thing is selected */
-	textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(w_current->teentry));
+	textentry = g_object_get_data (G_OBJECT (w_current->tewindow), "textentry");
+	textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textentry));
 	gtk_text_buffer_set_text(GTK_TEXT_BUFFER(textbuffer), string, -1);
-	select_all_text_in_textview(GTK_TEXT_VIEW(w_current->teentry));
+	select_all_text_in_textview(GTK_TEXT_VIEW(textentry));
       }
     }
 
     text_size_string = g_strdup_printf("%d", text_size);
-    gtk_entry_set_text(GTK_ENTRY(w_current->tsentry),
+    sizeentry = g_object_get_data (G_OBJECT (w_current->tewindow), "sizeentry");
+    gtk_entry_set_text(GTK_ENTRY(sizeentry),
                        text_size_string);
     g_free(text_size_string);
-
-    gtk_grab_add (w_current->tewindow);
   }
 }
 
