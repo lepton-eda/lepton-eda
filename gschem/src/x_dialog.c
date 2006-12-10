@@ -42,6 +42,10 @@
   g_object_set_data_full (G_OBJECT (component), name, \
     gtk_widget_ref (widget), (GDestroyNotify) gtk_widget_unref)
 
+#define DIALOG_BORDER_SPACING 10
+#define DIALOG_ELEMENT_SPACING 10
+
+
 static GtkWidget* create_menu_linetype (TOPLEVEL *w_current);
 static gint line_type_dialog_linetype_change (GtkWidget *w, gpointer data);
 static int line_type_dialog_keypress (GtkWidget * widget, GdkEventKey * event, gpointer data);
@@ -2129,161 +2133,100 @@ void snap_size_dialog (TOPLEVEL *w_current)
 
 /***************** Start of slot edit dialog box *********************/
 
-/*! \todo Finish function documentation!!!
+/*! \todo response function for the slot edit dialog
  *  \brief
  *  \par Function Description
- *
+ *  The function takes the dialog entry and applies the new slot to the 
+ *  symbol.
  */
-int slot_edit_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
-			      TOPLEVEL * w_current)
+void slot_edit_dialog_response(GtkWidget *widget, gint response, TOPLEVEL *w_current)
 {
-   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-	slot_edit_dialog_cancel(NULL, w_current);	
-        return TRUE;
-   }
-
-   return FALSE;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void slot_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
-{
+  GtkWidget *textentry;
   int len;
-  char *string = NULL;
+  gchar *string = NULL;
 
-  string = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->seentry));
-
-  if (string[0] != '\0') {
+  switch (response) {
+  case GTK_RESPONSE_REJECT:
+  case GTK_RESPONSE_DELETE_EVENT:
+    /* void */
+    break;
+  case GTK_RESPONSE_ACCEPT:
+    textentry = g_object_get_data(G_OBJECT(w_current->sewindow),"textentry");
+    string = (gchar*) gtk_entry_get_text(GTK_ENTRY(textentry));
     len = strlen(string);
-
-#if DEBUG
-    printf("text was: _%s_ %d\n", string, len);
-#endif
-
-    if (len < 80) {
+    if (len != 0) {
       o_slot_end(w_current, string, len);
-    } else {
-      /*! \todo you should NOT have limits */
-      fprintf(stderr, _("String too long... hack!\n"));
     }
+    break;
+  default:
+    printf("slot_edit_dialog_response(): strange signal %d\n",response);
   }
-
   i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
-
-  gtk_grab_remove(w_current->sewindow);
   gtk_widget_destroy(w_current->sewindow);
   w_current->sewindow = NULL;
 }
+    
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Create the slot entry dialog
  *  \par Function Description
- *
- */
-void slot_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
-{
-  i_set_state(w_current, SELECT);
-  i_update_toolbar(w_current);
-  gtk_grab_remove(w_current->sewindow);
-  gtk_widget_destroy(w_current->sewindow);
-  w_current->sewindow = NULL;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+ *  This function creates the slot edit dialog.
  */
 void slot_edit_dialog (TOPLEVEL *w_current, char *string)
 {
   GtkWidget *label = NULL;
-  GtkWidget *buttonok = NULL;
-  GtkWidget *buttoncancel = NULL;
-  GtkWidget *vbox, *action_area;
-  int len;
+  GtkWidget *textentry;
+  GtkWidget *vbox;
 
   if (!w_current->sewindow) {
-    w_current->sewindow = x_create_dialog_box(&vbox, &action_area);
+    w_current->sewindow = gtk_dialog_new_with_buttons(_("Edit slot number"),
+						      GTK_WINDOW(w_current->main_window),
+						      GTK_DIALOG_MODAL,
+						      GTK_STOCK_CANCEL,
+						      GTK_RESPONSE_REJECT,
+						      GTK_STOCK_OK,
+						      GTK_RESPONSE_ACCEPT,
+						      NULL);
 
     gtk_window_position(GTK_WINDOW(w_current->sewindow),
                         GTK_WIN_POS_MOUSE);
 
-    gtk_signal_connect(GTK_OBJECT (w_current->sewindow),
-                       "destroy", GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->sewindow);
+    gtk_dialog_set_default_response (GTK_DIALOG (w_current->sewindow), 
+				     GTK_RESPONSE_ACCEPT);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->sewindow),
-                     "key_press_event",
-                     (GtkSignalFunc) slot_edit_dialog_keypress, w_current);
+    gtk_signal_connect(GTK_OBJECT(w_current->sewindow), "response",
+		       GTK_SIGNAL_FUNC(slot_edit_dialog_response),
+		       w_current);
 
-#if 0 /* removed because it was causing the dialog box to not close */
-    gtk_signal_connect(GTK_OBJECT (w_current->sewindow),
-                       "delete_event",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->sewindow);
-#endif
+    gtk_container_border_width(GTK_CONTAINER(w_current->sewindow), 
+			       DIALOG_BORDER_SPACING);
+    vbox = GTK_DIALOG(w_current->sewindow)->vbox;
+    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_ELEMENT_SPACING);
 
-    gtk_window_set_title(GTK_WINDOW (w_current->sewindow),
-                         _("Edit slot number"));
-    gtk_container_border_width(
-                               GTK_CONTAINER(w_current->sewindow), 10);
+    label = gtk_label_new (_("Edit slot number:"));
+    gtk_misc_set_alignment(GTK_MISC(label),0,0);
+    gtk_box_pack_start(GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
-    label = gtk_label_new (_("Edit slot number"));
-    gtk_box_pack_start(
-                       GTK_BOX (vbox),
-                       label, TRUE, TRUE, 0);
-    gtk_widget_show (label);
-
-    w_current->seentry = gtk_entry_new();
-    gtk_editable_select_region(
-                               GTK_EDITABLE (w_current->seentry), 0, -1);
+    textentry = gtk_entry_new();
     gtk_box_pack_start( GTK_BOX(vbox),
-                       w_current->seentry, TRUE, TRUE, 10);
+                       textentry, FALSE, FALSE, 0);
+    gtk_entry_set_max_length(GTK_ENTRY(textentry), 80);
+    gtk_entry_set_activates_default (GTK_ENTRY(textentry),TRUE);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->seentry), "activate",
-                       GTK_SIGNAL_FUNC(slot_edit_dialog_ok),
-                       w_current);
-    gtk_widget_show (w_current->seentry);
-    gtk_widget_grab_focus(w_current->seentry);
+    GLADE_HOOKUP_OBJECT(w_current->sewindow, textentry, "textentry");
+    gtk_widget_show_all (w_current->sewindow);
+  }
 
-    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-    GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
-    gtk_box_pack_start (GTK_BOX (action_area), buttoncancel, 
-                        TRUE, TRUE, 0);
-    gtk_signal_connect (GTK_OBJECT (buttoncancel), "clicked",
-                        GTK_SIGNAL_FUNC(slot_edit_dialog_cancel),
-                        w_current);
-    gtk_widget_show (buttoncancel);
-
-    buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
-    GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(
-                       GTK_BOX(action_area),
-                       buttonok, TRUE, TRUE, 0);
-    gtk_signal_connect (GTK_OBJECT (buttonok), "clicked",
-                        GTK_SIGNAL_FUNC(slot_edit_dialog_ok),
-                        w_current);
-    gtk_widget_show (buttonok);
-    gtk_widget_grab_default (buttonok);
-
+  if (string != NULL) {
+    textentry = g_object_get_data(G_OBJECT(w_current->sewindow),"textentry");
+    gtk_entry_set_text(GTK_ENTRY(textentry), string);
+    gtk_entry_select_region(GTK_ENTRY(textentry),
+			    strlen("slot="), strlen(string));
   }
 
   if (!GTK_WIDGET_VISIBLE (w_current->sewindow)) {
-    gtk_widget_show (w_current->sewindow);
-
-    if (string != NULL) {
-      len = strlen(string);
-      gtk_entry_set_text(GTK_ENTRY(w_current->seentry),
-                         string);
-      gtk_entry_select_region(GTK_ENTRY(w_current->seentry),
-                              strlen("slot="), len);
-    }
-    gtk_grab_add (w_current->sewindow);
+    gtk_widget_show_all (w_current->sewindow);
+    gtk_window_activate_focus (GTK_WINDOW(w_current->sewindow));
   }
 }
 
@@ -2294,7 +2237,6 @@ void slot_edit_dialog (TOPLEVEL *w_current, char *string)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
  */
 int about_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
 			  TOPLEVEL * w_current)
@@ -2722,42 +2664,12 @@ static GtkWidget *create_color_menu (TOPLEVEL * w_current, int * select_index)
       item_index++;
     }
   }
-  
-  
   return menu;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Apply a color change to selected objects
  *  \par Function Description
- *
- */
-int color_edit_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
-			       TOPLEVEL * w_current)
-{
-   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-	color_edit_dialog_close(NULL, w_current);	
-        return TRUE;
-   }
-
-   return FALSE;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void color_edit_dialog_close(GtkWidget *w, TOPLEVEL *w_current)
-{
-  gtk_widget_destroy(w_current->clwindow);
-  w_current->clwindow = NULL;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+ *  This function applies a color change to the currently selected objects.
  */
 void color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 {
@@ -2801,80 +2713,79 @@ void color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
   o_undo_savestate(w_current, UNDO_ALL);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief response function for the color edit dialog
  *  \par Function Description
- *
+ *  This function takes the user response from the color edit dialog
+ */
+void color_edit_dialog_response(GtkWidget *widget, gint response, TOPLEVEL *w_current)
+{
+  switch (response) {
+  case GTK_RESPONSE_REJECT:
+  case GTK_RESPONSE_DELETE_EVENT:
+    gtk_widget_destroy(w_current->clwindow);
+    w_current->clwindow = NULL;
+    break;
+  case GTK_RESPONSE_ACCEPT:
+    color_edit_dialog_apply(widget, w_current);
+    break;
+  default:
+    printf("ERROR: color_edit_dialog_response(): strange signal %d\n",response);
+  }
+}
+
+
+/*! \brief Create the color edit dialog
+ *  \par Function Description
+ *  This function creates the color edit dialog
  */
 void color_edit_dialog (TOPLEVEL *w_current)
 {
-  GtkWidget *buttonclose = NULL;
-  GtkWidget *buttonapply = NULL;
   GtkWidget *optionmenu;
-  GtkWidget *vbox, *action_area;
+  GtkWidget *label;
+  GtkWidget *vbox;
   int select_index = 0;
 
   if (!w_current->clwindow) {
-    w_current->clwindow = x_create_dialog_box(&vbox, &action_area);
+    w_current->clwindow = gtk_dialog_new_with_buttons(_("Color Edit"),
+						      GTK_WINDOW(w_current->main_window),
+						      0, /* nonmodal dialog */
+						      GTK_STOCK_CLOSE,
+						      GTK_RESPONSE_REJECT,
+						      GTK_STOCK_APPLY,
+						      GTK_RESPONSE_ACCEPT,
+						      NULL);
 
     gtk_window_position (GTK_WINDOW (w_current->clwindow),
                          GTK_WIN_POS_MOUSE);
 
-    gtk_window_set_title (GTK_WINDOW (w_current->clwindow),
-                          _("Color Edit"));
-    gtk_container_border_width(
-                               GTK_CONTAINER(w_current->clwindow), 5);
+    gtk_dialog_set_default_response (GTK_DIALOG (w_current->clwindow), 
+				     GTK_RESPONSE_ACCEPT);
 
-    gtk_signal_connect (GTK_OBJECT (w_current->clwindow),
-                        "destroy", GTK_SIGNAL_FUNC(destroy_window),
-                        &w_current->clwindow);
+    gtk_signal_connect(GTK_OBJECT(w_current->clwindow), "response",
+		       GTK_SIGNAL_FUNC(color_edit_dialog_response),
+		       w_current);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->clwindow),
-                     "key_press_event",
-                     (GtkSignalFunc) color_edit_dialog_keypress, w_current);
+    gtk_container_border_width(GTK_CONTAINER(w_current->clwindow), 
+			       DIALOG_BORDER_SPACING);
+    vbox = GTK_DIALOG(w_current->clwindow)->vbox;
+    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_ELEMENT_SPACING);
 
-#if 0 /* removed because it was causing the dialog box to not close */
-    gtk_signal_connect (GTK_OBJECT (w_current->clwindow),
-                        "delete_event",
-                        GTK_SIGNAL_FUNC(destroy_window),
-                        &w_current->clwindow);
-#endif
+    label = gtk_label_new(_("Object color:"));
+    gtk_misc_set_alignment(GTK_MISC(label),0,0);
+    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
     optionmenu = gtk_option_menu_new ();
     gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
                              create_color_menu (w_current, &select_index));
     gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), select_index);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       optionmenu, TRUE, TRUE, 0);
-    gtk_widget_show (optionmenu);
-
-    buttonclose = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-    gtk_box_pack_start(
-                       GTK_BOX(action_area),
-                       buttonclose, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT (buttonclose), "clicked",
-                       GTK_SIGNAL_FUNC(color_edit_dialog_close),
-                       w_current);
-    gtk_widget_show(buttonclose);
-
-    buttonapply = gtk_button_new_from_stock (GTK_STOCK_APPLY);
-    GTK_WIDGET_SET_FLAGS (buttonapply, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(
-                       GTK_BOX(action_area),
-                       buttonapply, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT (buttonapply), "clicked",
-                       GTK_SIGNAL_FUNC(color_edit_dialog_apply),
-                       w_current);
-    gtk_widget_show (buttonapply);
-    gtk_widget_grab_default(buttonapply);
-
+    gtk_box_pack_start(GTK_BOX(vbox),
+                       optionmenu, FALSE, FALSE, 0);
+    gtk_widget_show_all(w_current->clwindow);
   }
 
-  if (!GTK_WIDGET_VISIBLE(w_current->clwindow)) {
-    gtk_widget_show(w_current->clwindow);
-  } else {
-    gdk_window_raise(w_current->clwindow->window);
+  if (w_current->clwindow) {
+    gtk_widget_show_all(w_current->clwindow);
+    gtk_window_activate_focus(GTK_WINDOW(w_current->clwindow));
   }
 }
 
