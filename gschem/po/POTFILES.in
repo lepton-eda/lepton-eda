@@ -36,6 +36,7 @@ src/o_text.c
 src/o_undo.c
 src/parsecmd.c
 src/x_attribedit.c
+src/x_autonumber.c
 src/x_basic.c
 src/x_color.c
 src/x_compselect.c

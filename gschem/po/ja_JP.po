@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-21 00:24-0400\n"
+"POT-Creation-Date: 2006-11-24 21:25+0100\n"
 "PO-Revision-Date: 2002-10-05 20:00+0900\n"
 "Last-Translator: MIYAMOTO Takanori <pnms@jcom.home.ne.jp>\n"
 "Language-Team: japanese <ja@li.org>\n"
@@ -452,7 +452,7 @@ msgstr "座標ウィンドウ表示..."
 msgid "Help"
 msgstr "ヘルプ"
 
-#: src/rcstrings.c:119 src/x_dialog.c:2361
+#: src/rcstrings.c:119 src/x_dialog.c:2362
 msgid "About..."
 msgstr "gschemについて..."
 
@@ -460,7 +460,7 @@ msgstr "gschemについて..."
 msgid "Manual..."
 msgstr "マニュアル..."
 
-#: src/rcstrings.c:121 src/x_dialog.c:2994
+#: src/rcstrings.c:121 src/x_dialog.c:2995
 msgid "Hotkeys..."
 msgstr "ホットキー..."
 
@@ -955,8 +955,7 @@ msgstr "アトリビュート"
 msgid "Searching for source [%s]\n"
 msgstr "ソース検索中[%s]\n"
 
-#: src/i_callbacks.c:2858 src/i_callbacks.c:2861 src/o_misc.c:1278
-#: src/o_misc.c:1281
+#: src/i_callbacks.c:2858 src/i_callbacks.c:2861
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "ソースが見付かりません。[%s]\n"
@@ -1019,12 +1018,12 @@ msgstr "ラバーバンド・オフ\n"
 msgid "Rubber band ON\n"
 msgstr "ラバーバンド・オン\n"
 
-#: src/o_arc.c:141
+#: src/o_arc.c:142
 #, c-format
 msgid "Unknown end for arc (%d)\n"
 msgstr "不明な円弧の先端(%d)\n"
 
-#: src/o_arc.c:182
+#: src/o_arc.c:183
 #, c-format
 msgid "Unknown type for arc !\n"
 msgstr "不明な円弧の種類!\n"
@@ -1044,17 +1043,17 @@ msgstr ""
 msgid "ERROR! you can't get an attribute without an ='s\n"
 msgstr "エラー!アトリビュートには'='が必要です。\n"
 
-#: src/o_box.c:138
+#: src/o_box.c:139
 #, c-format
 msgid "Unknown end for box (%d)\n"
 msgstr "不明なボックスの先端(%d)\n"
 
-#: src/o_box.c:178
+#: src/o_box.c:179
 #, c-format
 msgid "Unknown type for box !\n"
 msgstr "不明なボックスの種類!\n"
 
-#: src/o_box.c:270
+#: src/o_box.c:271
 #, c-format
 msgid "Unknown type for box (fill)!\n"
 msgstr "不明なボックスの種類(塗りつぶし)!\n"
@@ -1079,27 +1078,27 @@ msgstr ""
 msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
 msgstr ""
 
-#: src/o_bus.c:217
+#: src/o_bus.c:218
 #, c-format
 msgid "Got an invalid which one in o_bus_draw_xor_single\n"
 msgstr ""
 
-#: src/o_bus.c:282 src/o_bus.c:316 src/o_net.c:329 src/o_net.c:363
+#: src/o_bus.c:283 src/o_bus.c:317 src/o_net.c:330 src/o_net.c:364
 #, c-format
 msgid "selected a nonexistant object!\n"
 msgstr "存在しないオブジェクトが選択されました!\n"
 
-#: src/o_circle.c:133
+#: src/o_circle.c:134
 #, c-format
 msgid "Unknown end for circle\n"
 msgstr "不明な円の先端\n"
 
-#: src/o_circle.c:169
+#: src/o_circle.c:170
 #, c-format
 msgid "Unknown type for circle!\n"
 msgstr "不明な円の種類!\n"
 
-#: src/o_circle.c:257
+#: src/o_circle.c:258
 #, c-format
 msgid "Unknown type for circle (fill)!\n"
 msgstr "不明な円の種類(塗りつぶし)!\n"
@@ -1134,104 +1133,104 @@ msgstr ""
 msgid "ERROR: NULL object in o_delete_end!\n"
 msgstr ""
 
-#: src/o_line.c:117
+#: src/o_line.c:118
 #, c-format
 msgid "Unknown end for line (%d)\n"
 msgstr "不明な線の先端(%d)\n"
 
-#: src/o_line.c:157
+#: src/o_line.c:158
 #, c-format
 msgid "Unknown type for line (%d) !\n"
 msgstr "不明な線の種類(%d)!\n"
 
-#: src/o_misc.c:83
+#: src/o_misc.c:68
 #, c-format
 msgid "Got an unexpected NULL in o_edit\n"
 msgstr ""
 
-#: src/o_misc.c:188
+#: src/o_misc.c:173
 msgid "Object alreadly locked\n"
 msgstr "このオブジェクトはすでにロックされています。\n"
 
-#: src/o_misc.c:226
+#: src/o_misc.c:211
 msgid "Object alreadly unlocked\n"
 msgstr "このオブジェクトはすでにロック解除されています。\n"
 
-#: src/o_misc.c:273 src/o_misc.c:522 src/o_misc.c:880
+#: src/o_misc.c:258 src/o_misc.c:507 src/o_misc.c:865
 #, c-format
 msgid "ERROR: NULL object in o_rotate_90!\n"
 msgstr ""
 
-#: src/o_misc.c:587
+#: src/o_misc.c:572
 #, fuzzy, c-format
 msgid "Component [%s] has been embedded\n"
 msgstr "この部品はすでに組み込まれています。\n"
 
-#: src/o_misc.c:600
+#: src/o_misc.c:585
 #, fuzzy, c-format
 msgid "Picture [%s] has been embedded\n"
 msgstr "この部品はすでに組み込まれています。\n"
 
-#: src/o_misc.c:632
+#: src/o_misc.c:617
 #, fuzzy, c-format
 msgid ""
 "Could not find component [%s], while trying to unembed. Component is still "
 "embedded\n"
 msgstr "部品[%s]が見付からないため、組み込みを解除できません。\n"
 
-#: src/o_misc.c:643 src/o_misc.c:1608
+#: src/o_misc.c:628 src/o_misc.c:1234
 #, c-format
 msgid "More than one component found with name [%s]\n"
 msgstr ""
 
-#: src/o_misc.c:651
+#: src/o_misc.c:636
 #, fuzzy, c-format
 msgid "Component [%s] has been successfully unembedded\n"
 msgstr "この部品はすでに組み込まれています。\n"
 
-#: src/o_misc.c:666
+#: src/o_misc.c:651
 #, fuzzy, c-format
 msgid "Picture [%s] has been unembedded\n"
 msgstr "この部品はすでに組み込まれています。\n"
 
-#: src/o_misc.c:702
+#: src/o_misc.c:687
 #, c-format
 msgid "ERROR: NULL object in o_mirror!\n"
 msgstr ""
 
-#: src/o_misc.c:980
+#: src/o_misc.c:965
 msgid "Hidden text is now visible\n"
 msgstr "隠しテキストが表示されました。\n"
 
-#: src/o_misc.c:982
+#: src/o_misc.c:967
 msgid "Hidden text is now invisible\n"
 msgstr "隠しテキストが非表示になりました。\n"
 
-#: src/o_misc.c:1603
+#: src/o_misc.c:1229
 msgid "Could not unembedded component, could not find appropriate .sym file\n"
 msgstr ""
 
-#: src/o_misc.c:1604
+#: src/o_misc.c:1230
 #, fuzzy
 msgid "Component still embedded and not updated\n"
 msgstr "この部品はすでに組み込まれています。\n"
 
-#: src/o_misc.c:1745
+#: src/o_misc.c:1371
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 
-#: src/o_misc.c:1789
+#: src/o_misc.c:1415
 #, fuzzy, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "保存できません。[%s]\n"
 
-#: src/o_misc.c:1807
+#: src/o_misc.c:1433
 #, fuzzy, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "保存できません。[%s]\n"
 
-#: src/o_misc.c:1812
+#: src/o_misc.c:1438
 #, fuzzy, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "保存できません。[%s]\n"
@@ -1251,26 +1250,26 @@ msgstr ""
 msgid "Got a non line object in o_move_check_endpoint\n"
 msgstr ""
 
-#: src/o_net.c:261
+#: src/o_net.c:262
 #, c-format
 msgid "Got an invalid which one in o_net_draw_xor_single\n"
 msgstr ""
 
-#: src/o_net.c:929 src/o_net.c:966 src/o_net.c:1037 src/o_net.c:1073
+#: src/o_net.c:930 src/o_net.c:967 src/o_net.c:1038 src/o_net.c:1074
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 
-#: src/o_net.c:1143
+#: src/o_net.c:1144
 #, c-format
 msgid "Could not find %s in any component-library\n"
 msgstr "無効なパス[%s]がcomponent-libraryに指定されました。\n"
 
-#: src/o_picture.c:174 src/o_picture.c:838
+#: src/o_picture.c:174 src/o_picture.c:846
 msgid "Please select a picture file."
 msgstr ""
 
-#: src/o_picture.c:241 src/o_picture.c:750
+#: src/o_picture.c:241 src/o_picture.c:758
 #, fuzzy, c-format
 msgid "Failed to load picture: %s"
 msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
@@ -1279,7 +1278,7 @@ msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
 msgid "Picture"
 msgstr ""
 
-#: src/o_picture.c:776 src/x_attribedit.c:153
+#: src/o_picture.c:784 src/x_attribedit.c:153
 #, c-format
 msgid "ERROR: NULL object!\n"
 msgstr ""
@@ -1300,12 +1299,12 @@ msgstr "この部品にスロットは許可されていません。\n"
 msgid "New slot number out of range\n"
 msgstr "スロット番号が範囲を越えています。\n"
 
-#: src/o_slot.c:241
+#: src/o_slot.c:240
 #, c-format
 msgid "uggg! you tried to slot edit something that doesn't exist!\n"
 msgstr "おっと! 存在しないスロットを編集しようとしました!\n"
 
-#: src/o_text.c:142
+#: src/o_text.c:145
 #, fuzzy, c-format
 msgid "Tried to render text with an invalid angle: %d\n"
 msgstr "無効な色の指定です。 : %d\n"
@@ -1385,6 +1384,114 @@ msgstr "ネット"
 #: src/x_attribedit.c:563
 msgid "Replace"
 msgstr "置換"
+
+#: src/x_autonumber.c:407
+msgid ""
+"slotted object without slot attribute may cause problems when autonumbering "
+"slots\n"
+msgstr ""
+
+#: src/x_autonumber.c:422
+#, c-format
+msgid ""
+"duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
+msgstr ""
+
+#: src/x_autonumber.c:670
+msgid "No searchstring given in autonumber text."
+msgstr ""
+
+#: src/x_autonumber.c:721
+msgid "No '*' or '?' given at the end of the autonumber text.\n"
+msgstr ""
+
+#: src/x_autonumber.c:850
+msgid "Diagonal"
+msgstr ""
+
+#: src/x_autonumber.c:851
+msgid "Top to bottom"
+msgstr ""
+
+#: src/x_autonumber.c:851
+msgid "Bottom to top"
+msgstr ""
+
+#: src/x_autonumber.c:852
+#, fuzzy
+msgid "Left to right"
+msgstr "中央 右"
+
+#: src/x_autonumber.c:852
+msgid "Right to left"
+msgstr ""
+
+#: src/x_autonumber.c:853
+#, fuzzy
+msgid "File order"
+msgstr "円モード"
+
+#: src/x_autonumber.c:1200
+msgid "Autonumber text"
+msgstr "オートナンバーテキスト"
+
+#: src/x_autonumber.c:1229
+msgid "Search for:"
+msgstr ""
+
+#: src/x_autonumber.c:1242
+#, fuzzy
+msgid "Autonumber text in:"
+msgstr "オートナンバーテキスト"
+
+#: src/x_autonumber.c:1249
+msgid "Skip numbers found in:"
+msgstr ""
+
+#: src/x_autonumber.c:1261 src/x_autonumber.c:1270
+#, fuzzy
+msgid "Selected objects"
+msgstr "存在しないオブジェクトが選択されました!\n"
+
+#: src/x_autonumber.c:1262 src/x_autonumber.c:1271
+#, fuzzy
+msgid "Current page"
+msgstr "テストシート"
+
+#: src/x_autonumber.c:1263 src/x_autonumber.c:1272
+#, fuzzy
+msgid "Whole hierarchy"
+msgstr "階層"
+
+#: src/x_autonumber.c:1274
+msgid "Overwrite existing numbers"
+msgstr ""
+
+#: src/x_autonumber.c:1278
+msgid "<b>Scope</b>"
+msgstr ""
+
+#: src/x_autonumber.c:1303
+#, fuzzy
+msgid "Starting number:"
+msgstr "スロット番号編集"
+
+#: src/x_autonumber.c:1310
+msgid "Sort order:"
+msgstr ""
+
+#: src/x_autonumber.c:1330
+msgid "Remove numbers"
+msgstr ""
+
+#: src/x_autonumber.c:1334
+msgid "Automatic slotting"
+msgstr ""
+
+#: src/x_autonumber.c:1338
+#, fuzzy
+msgid "<b>Options</b>"
+msgstr "オプション"
 
 #: src/x_color.c:59 src/x_color.c:96
 #, c-format
@@ -1621,25 +1728,25 @@ msgstr "スナップグリッド"
 msgid "Enter new snap grid spacing"
 msgstr "グリッドサイズを入力してください"
 
-#: src/x_dialog.c:2192
+#: src/x_dialog.c:2193
 #, c-format
 msgid "String too long... hack!\n"
 msgstr ""
 
-#: src/x_dialog.c:2253 src/x_dialog.c:2257
+#: src/x_dialog.c:2254 src/x_dialog.c:2258
 msgid "Edit slot number"
 msgstr "スロット番号編集"
 
-#: src/x_dialog.c:2380
+#: src/x_dialog.c:2381
 msgid "gEDA : GPL Electronic Design Automation"
 msgstr "gEDA : GPL Electronic Design Automation"
 
-#: src/x_dialog.c:2388
+#: src/x_dialog.c:2389
 #, fuzzy, c-format
 msgid "gschem version %s%s"
 msgstr "gschemバージョン%s"
 
-#: src/x_dialog.c:2396
+#: src/x_dialog.c:2397
 msgid ""
 "Written by:\n"
 "Ales V. Hvezda\n"
@@ -1651,175 +1758,96 @@ msgstr ""
 "ahvezda@geda.seul.org\n"
 "および大勢の人々(ファイルAUTHORS参照)"
 
-#: src/x_dialog.c:2490
+#: src/x_dialog.c:2491
 msgid "Coords"
 msgstr "座標"
 
-#: src/x_dialog.c:2514
+#: src/x_dialog.c:2515
 msgid "Screen"
 msgstr "スクリーン"
 
-#: src/x_dialog.c:2527
+#: src/x_dialog.c:2528
 msgid "World"
 msgstr "ワールド"
 
-#: src/x_dialog.c:2795
+#: src/x_dialog.c:2796
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr ""
 
-#: src/x_dialog.c:2845
+#: src/x_dialog.c:2846
 msgid "Color Edit"
 msgstr "色編集"
 
-#: src/x_dialog.c:2962
+#: src/x_dialog.c:2963
 #, c-format
 msgid "Ran out of space in the hotkey buffer...\n"
 msgstr "ホットキーバッファが溢れました...\n"
 
-#: src/x_dialog.c:3039
+#: src/x_dialog.c:3040
 msgid "Function : keystroke(s)"
 msgstr "関数 : キーストローク"
 
-#: src/x_dialog.c:3384
+#: src/x_dialog.c:3385
 msgid "Generic String"
 msgstr ""
 
-#: src/x_dialog.c:3387
+#: src/x_dialog.c:3388
 msgid "Enter new string."
 msgstr "文字列を入力してください"
 
-#: src/x_dialog.c:3533
+#: src/x_dialog.c:3534
 msgid "Find text"
 msgstr "テキスト検索"
 
-#: src/x_dialog.c:3537
+#: src/x_dialog.c:3538
 msgid "Text to find:"
 msgstr "検索テキスト"
 
-#: src/x_dialog.c:3550
+#: src/x_dialog.c:3551
 msgid "descend into hierarchy"
 msgstr "下の階層も検索"
 
-#: src/x_dialog.c:3669
+#: src/x_dialog.c:3670
 msgid "Hide text"
 msgstr "テキストを隠す"
 
-#: src/x_dialog.c:3672
+#: src/x_dialog.c:3673
 msgid "Hide text starting with:"
 msgstr "隠しテキスト"
 
-#: src/x_dialog.c:3789
+#: src/x_dialog.c:3790
 msgid "Show text"
 msgstr "テキスト表示"
 
-#: src/x_dialog.c:3792
+#: src/x_dialog.c:3793
 msgid "Show text starting with:"
 msgstr "テキスト"
 
-#: src/x_dialog.c:3876
-#, c-format
-msgid "Warning: negative numbers not allowed in the autonumber_text dialog\n"
-msgstr ""
-
-#: src/x_dialog.c:3960
-msgid "Autonumber text"
-msgstr "オートナンバーテキスト"
-
-#: src/x_dialog.c:3966
-#, fuzzy
-msgid "selection"
-msgstr "選択"
-
-#: src/x_dialog.c:3975
-#, fuzzy
-msgid "search text"
-msgstr "テキスト表示"
-
-#: src/x_dialog.c:4003
-msgid "search focus"
-msgstr ""
-
-#: src/x_dialog.c:4016
-#, fuzzy
-msgid "selected objects"
-msgstr "存在しないオブジェクトが選択されました!\n"
-
-#: src/x_dialog.c:4019
-#, fuzzy
-msgid "current sheet"
-msgstr "テストシート"
-
-#: src/x_dialog.c:4022
-msgid "hierarchical sheets"
-msgstr ""
-
-#: src/x_dialog.c:4034
-#, fuzzy
-msgid "unnumbered"
-msgstr "オートナンバーテキスト"
-
-#: src/x_dialog.c:4038
-#, fuzzy
-msgid "all"
-msgstr "すべて"
-
-#: src/x_dialog.c:4047
-#, fuzzy
-msgid "options"
-msgstr "オプション"
-
-#: src/x_dialog.c:4054
-#, fuzzy
-msgid "start number"
-msgstr "スロット番号編集"
-
-#: src/x_dialog.c:4067
-msgid "sort order"
-msgstr ""
-
-#: src/x_dialog.c:4079
-#, fuzzy
-msgid "file order"
-msgstr "円モード"
-
-#: src/x_dialog.c:4082
-msgid "top down"
-msgstr ""
-
-#: src/x_dialog.c:4085
-#, fuzzy
-msgid "left right"
-msgstr "中央 右"
-
-#: src/x_dialog.c:4088
-msgid "diagonal"
-msgstr ""
-
-#: src/x_dialog.c:4547 src/x_multiattrib.c:1384
+#: src/x_dialog.c:4250 src/x_multiattrib.c:1384
 msgid "Name"
 msgstr "名前"
 
-#: src/x_dialog.c:4569
+#: src/x_dialog.c:4272
 msgid "S_elect the schematics you want to save:"
 msgstr ""
 
-#: src/x_dialog.c:4663
+#: src/x_dialog.c:4366
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr ""
 
-#: src/x_dialog.c:4669
+#: src/x_dialog.c:4372
 #, c-format
 msgid ""
 "There is %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 
-#: src/x_dialog.c:4698
+#: src/x_dialog.c:4401
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
 
-#: src/x_dialog.c:4718
+#: src/x_dialog.c:4421
 msgid "_Close without saving"
 msgstr ""
 
@@ -2270,6 +2298,26 @@ msgstr "ページを破棄しています。[%s]\n"
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "閉じています。[%s]\n"
+
+#, fuzzy
+#~ msgid "selection"
+#~ msgstr "選択"
+
+#, fuzzy
+#~ msgid "search text"
+#~ msgstr "テキスト表示"
+
+#, fuzzy
+#~ msgid "unnumbered"
+#~ msgstr "オートナンバーテキスト"
+
+#, fuzzy
+#~ msgid "all"
+#~ msgstr "すべて"
+
+#, fuzzy
+#~ msgid "options"
+#~ msgstr "オプション"
 
 #~ msgid "New Page created [%s]\n"
 #~ msgstr "新規ページを作成しました。[%s]\n"

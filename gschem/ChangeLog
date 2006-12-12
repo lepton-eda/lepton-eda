@@ -1,3 +1,53 @@
+2006-12-12 Werner Hoch <werner.ho@gmx.de>
+
+	merged the autonumber branch back to trunk
+
+        2006-12-12 Werner Hoch <werner.ho@gmx.de>
+	sync autonumber branch with trunk
+
+	2006-11-28 Werner Hoch  <werner.ho@gmx.de>
+	* src/x_autonumber.c: visual improvements of the sortorder 
+	  combobox. Patch by Tomaz Solc, slightly changed.
+
+	2006-11-26 Werner Hoch  <werner.ho@gmx.de>
+	* src/x_autonumber.c: remove the slot attribute if remove numbers
+	  and slotting is active.
+	
+	2006-11-24 Werner Hoch  <werner.ho@gmx.de>
+	* src/x_autonumber.c: repaired keypress events, added gettext macros
+	  replaced the sortorder ratio buttons with a combo box. That shrinks
+	  the dialog a lot.
+
+	* po/POTFILES.in: added x_autonumber.c
+
+	* bitmap/gschem-fileorder.png: added an ugly dummy bitmap
+
+	2006-11-11 Werner Hoch  <werner.ho@gmx.de>
+	* src/x_autonumber.c: added used_slot database. This fixes a 
+	  problem with duplicate slotted objects.
+	  Removed keyboard accelerators (by Tomaz Solz #1589430)
+
+	2006-11-09 Werner Hoch  <werner.ho@gmx.de>
+	* src/x_autonumber.c:  (scope_skip == SCOPE_SELECTED) didn't work as 
+	  expected, fixed it.
+
+	2006-11-07 Werner Hoch  <werner.ho@gmx.de>
+	* src/o_slot.c, x_dialog.c: removed redundant o_undo_savestate() in 
+	  o_slot_end(). But it is required in the slot_edit_dialog_ok() 
+	  function. This repairs to many undo states when using the 
+	  autoslotting feature of the autonumber dialog.
+	
+	* src/x_autonumber.c:  Added improved autonumber dialog from 
+	  Tomaz Solz (#1589430)
+
+	2006-11-06 Werner Hoch  <werner.ho@gmx.de>
+
+	* src/o_misc.c, src/x_dialog.c, src/x_autonumber.c: moved all 
+	  autonumber related code to x_autonumber.c
+	  applied patch (#1589430) from Tomaz Solz
+
+	* bitmap/: added bitmaps for the autonumber dialog
+	
 2006-12-10 Werner Hoch  <werner.ho@gmx.de>
 
 	* src/x_dialog.c: use GtkDialog for color edit dialog, the 
@@ -121,6 +171,7 @@
 	* src/o_text.c, src/o_slot.c: fixed slot update errors
 	 (Bug #1589247)
 
+>>>>>>> 1.571
 2006-10-23 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/o_text.c: Changed polarity of one of the sanity checks 

@@ -21,6 +21,11 @@ gschem-net.xpm		Created by AVH, GPL
 gschem-select.xpm	Created by AVH, GPL 
 gschem-text.xpm		Created by AVH, GPL 
 
+gschem-bottom2top.png	Created by Tomaz Solc, GPL
+gschem-top2bottom.png	Created by Tomaz Solc, GPL
+gschem-left2right.png	Created by Tomaz Solc, GPL
+gschem-right2left.png	Created by Tomaz Solc, GPL
+gschem-diagonal.png	Created by Tomaz Solc, GPL
 
 This icon come from the GNOME project, and is released under the 
 Gnu General Public License, meaning that you can use them in free

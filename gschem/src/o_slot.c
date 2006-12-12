@@ -239,7 +239,6 @@ void o_slot_end(TOPLEVEL *w_current, char *string, int len)
     o_redraw_single(w_current,object);
 
     w_current->page_current->CHANGED = 1;
-    o_undo_savestate(w_current, UNDO_ALL);
     if (name) g_free(name);
     if (value) g_free(value);
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-21 00:24-0400\n"
+"POT-Creation-Date: 2006-11-24 21:25+0100\n"
 "PO-Revision-Date: 2006-10-21 01:19+0200\n"
 "Last-Translator: Patrick Bernaud <b-patrick@wanadoo.fr>\n"
 "Language-Team: French\n"
@@ -450,7 +450,7 @@ msgstr "Montrer la fenêtre de coordonnées..."
 msgid "Help"
 msgstr "Aide"
 
-#: src/rcstrings.c:119 src/x_dialog.c:2361
+#: src/rcstrings.c:119 src/x_dialog.c:2362
 msgid "About..."
 msgstr "À propos..."
 
@@ -458,7 +458,7 @@ msgstr "À propos..."
 msgid "Manual..."
 msgstr "Manuel..."
 
-#: src/rcstrings.c:121 src/x_dialog.c:2994
+#: src/rcstrings.c:121 src/x_dialog.c:2995
 msgid "Hotkeys..."
 msgstr "Raccourcis..."
 
@@ -949,8 +949,7 @@ msgstr "Attribut"
 msgid "Searching for source [%s]\n"
 msgstr "Recherche de source [%s]\n"
 
-#: src/i_callbacks.c:2858 src/i_callbacks.c:2861 src/o_misc.c:1278
-#: src/o_misc.c:1281
+#: src/i_callbacks.c:2858 src/i_callbacks.c:2861
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "Impossible de trouver source [%s]\n"
@@ -1013,12 +1012,12 @@ msgstr ""
 msgid "Rubber band ON\n"
 msgstr ""
 
-#: src/o_arc.c:141
+#: src/o_arc.c:142
 #, c-format
 msgid "Unknown end for arc (%d)\n"
 msgstr "Extrémité d'arc inconnue (%d)\n"
 
-#: src/o_arc.c:182
+#: src/o_arc.c:183
 #, c-format
 msgid "Unknown type for arc !\n"
 msgstr "Type pour arc inconnu !\n"
@@ -1038,17 +1037,17 @@ msgstr "object==NULL dans o_attrib_toggle_show_name_value()\n"
 msgid "ERROR! you can't get an attribute without an ='s\n"
 msgstr "ERREUR : un attribut doit comporter un caractère '='\n"
 
-#: src/o_box.c:138
+#: src/o_box.c:139
 #, c-format
 msgid "Unknown end for box (%d)\n"
 msgstr "Type d'extrémité de boîte inconnue (%d)\n"
 
-#: src/o_box.c:178
+#: src/o_box.c:179
 #, c-format
 msgid "Unknown type for box !\n"
 msgstr "Type de ligne inconnu pour boîte !\n"
 
-#: src/o_box.c:270
+#: src/o_box.c:271
 #, c-format
 msgid "Unknown type for box (fill)!\n"
 msgstr "Type de remplissage de boîte inconnu !\n"
@@ -1073,27 +1072,27 @@ msgstr "Valeur de buffer_number incorrecte [o_buffer_paste_start]\n"
 msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
 msgstr "Valeur de buffer_number incorrecte [o_buffer_paste_end]\n"
 
-#: src/o_bus.c:217
+#: src/o_bus.c:218
 #, c-format
 msgid "Got an invalid which one in o_bus_draw_xor_single\n"
 msgstr "Valeur de whichone incorrecte dans o_bus_draw_xor_single\n"
 
-#: src/o_bus.c:282 src/o_bus.c:316 src/o_net.c:329 src/o_net.c:363
+#: src/o_bus.c:283 src/o_bus.c:317 src/o_net.c:330 src/o_net.c:364
 #, c-format
 msgid "selected a nonexistant object!\n"
 msgstr "sélection d'un objet inexistant !\n"
 
-#: src/o_circle.c:133
+#: src/o_circle.c:134
 #, c-format
 msgid "Unknown end for circle\n"
 msgstr "Extrémité de cercle inconnue\n"
 
-#: src/o_circle.c:169
+#: src/o_circle.c:170
 #, c-format
 msgid "Unknown type for circle!\n"
 msgstr "Type de ligne pour cercle inconnu !\n"
 
-#: src/o_circle.c:257
+#: src/o_circle.c:258
 #, c-format
 msgid "Unknown type for circle (fill)!\n"
 msgstr "Type de remplissage pour cercle inconnu !\n"
@@ -1129,45 +1128,45 @@ msgstr "ERREUR : object==NULL dans o_copy_end !\n"
 msgid "ERROR: NULL object in o_delete_end!\n"
 msgstr "ERREUR : object==NULL dans o_delete_end !\n"
 
-#: src/o_line.c:117
+#: src/o_line.c:118
 #, c-format
 msgid "Unknown end for line (%d)\n"
 msgstr "Extrémité de ligne inconnue (%d)\n"
 
-#: src/o_line.c:157
+#: src/o_line.c:158
 #, c-format
 msgid "Unknown type for line (%d) !\n"
 msgstr "Type de ligne pour ligne inconnu (%d) !\n"
 
-#: src/o_misc.c:83
+#: src/o_misc.c:68
 #, c-format
 msgid "Got an unexpected NULL in o_edit\n"
 msgstr "o_current==NULL dans o_edit()\n"
 
-#: src/o_misc.c:188
+#: src/o_misc.c:173
 msgid "Object alreadly locked\n"
 msgstr "Objet déjà verrouillé\n"
 
-#: src/o_misc.c:226
+#: src/o_misc.c:211
 msgid "Object alreadly unlocked\n"
 msgstr "Objet déjà déverrouillé\n"
 
-#: src/o_misc.c:273 src/o_misc.c:522 src/o_misc.c:880
+#: src/o_misc.c:258 src/o_misc.c:507 src/o_misc.c:865
 #, c-format
 msgid "ERROR: NULL object in o_rotate_90!\n"
 msgstr "ERREUR : object==NULL dans o_rotate_90 !\n"
 
-#: src/o_misc.c:587
+#: src/o_misc.c:572
 #, c-format
 msgid "Component [%s] has been embedded\n"
 msgstr "Composant [%s] déjà embarqué\n"
 
-#: src/o_misc.c:600
+#: src/o_misc.c:585
 #, c-format
 msgid "Picture [%s] has been embedded\n"
 msgstr "Composant [%s] a été embarqué\n"
 
-#: src/o_misc.c:632
+#: src/o_misc.c:617
 #, c-format
 msgid ""
 "Could not find component [%s], while trying to unembed. Component is still "
@@ -1176,64 +1175,64 @@ msgstr ""
 "Impossible de trouver la définition du composant [%s] en essayant de le "
 "débarquer. Le composant est toujours embarqué\n"
 
-#: src/o_misc.c:643 src/o_misc.c:1608
+#: src/o_misc.c:628 src/o_misc.c:1234
 #, c-format
 msgid "More than one component found with name [%s]\n"
 msgstr "Plusieurs composants trouvés avec le même nom [%s]\n"
 
-#: src/o_misc.c:651
+#: src/o_misc.c:636
 #, c-format
 msgid "Component [%s] has been successfully unembedded\n"
 msgstr "Composant [%s] embarqué avec succès\n"
 
-#: src/o_misc.c:666
+#: src/o_misc.c:651
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
 msgstr "Image [%s] a été débarquée\n"
 
-#: src/o_misc.c:702
+#: src/o_misc.c:687
 #, c-format
 msgid "ERROR: NULL object in o_mirror!\n"
 msgstr "ERREUR : object==NULL dans o_mirror !\n"
 
-#: src/o_misc.c:980
+#: src/o_misc.c:965
 msgid "Hidden text is now visible\n"
 msgstr "Le texte normalement caché est maintenant visible\n"
 
-#: src/o_misc.c:982
+#: src/o_misc.c:967
 msgid "Hidden text is now invisible\n"
 msgstr "Le texte normalement caché est maintenant invisible\n"
 
-#: src/o_misc.c:1603
+#: src/o_misc.c:1229
 msgid "Could not unembedded component, could not find appropriate .sym file\n"
 msgstr ""
 "Impossible de débarquer le composant, fichier .sym correspondant "
 "introuvable\n"
 
-#: src/o_misc.c:1604
+#: src/o_misc.c:1230
 msgid "Component still embedded and not updated\n"
 msgstr "Composant toujours embarqué et non mis à jour\n"
 
-#: src/o_misc.c:1745
+#: src/o_misc.c:1371
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 "o_autosave_backups() : Impossible de récupérer le véritable nom du fichier %s"
 
-#: src/o_misc.c:1789
+#: src/o_misc.c:1415
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 "Impossible de passer le fichier copie de sauvegarde [%s] en lecture/"
 "écriture\n"
 
-#: src/o_misc.c:1807
+#: src/o_misc.c:1433
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr ""
 "Impossible de passer le fichier copie de sauvegarde [%s] en lecture seule\n"
 
-#: src/o_misc.c:1812
+#: src/o_misc.c:1438
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "Échec lors de la création de la copie de sauvegarde [%s]\n"
@@ -1253,27 +1252,27 @@ msgstr "Incapable de déterminer le whichone de l'object !\n"
 msgid "Got a non line object in o_move_check_endpoint\n"
 msgstr "L'objet passé n'est pas une ligne dans o_move_check_endpoint\n"
 
-#: src/o_net.c:261
+#: src/o_net.c:262
 #, c-format
 msgid "Got an invalid which one in o_net_draw_xor_single\n"
 msgstr "Valeur de whichone incorrecte dans o_net_draw_xor_single\n"
 
-#: src/o_net.c:929 src/o_net.c:966 src/o_net.c:1037 src/o_net.c:1073
+#: src/o_net.c:930 src/o_net.c:967 src/o_net.c:1038 src/o_net.c:1074
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 "Tentative d'ajout de plus de deux jonctions de bus. Erreur interne gschem.\n"
 
-#: src/o_net.c:1143
+#: src/o_net.c:1144
 #, c-format
 msgid "Could not find %s in any component-library\n"
 msgstr "Impossible de trouver %s dans toutes les bibliothèques de composants\n"
 
-#: src/o_picture.c:174 src/o_picture.c:838
+#: src/o_picture.c:174 src/o_picture.c:846
 msgid "Please select a picture file."
 msgstr "Sélectionner un fichier image."
 
-#: src/o_picture.c:241 src/o_picture.c:750
+#: src/o_picture.c:241 src/o_picture.c:758
 #, c-format
 msgid "Failed to load picture: %s"
 msgstr "Échec lors du chargement de l'image : %s"
@@ -1282,7 +1281,7 @@ msgstr "Échec lors du chargement de l'image : %s"
 msgid "Picture"
 msgstr "Image"
 
-#: src/o_picture.c:776 src/x_attribedit.c:153
+#: src/o_picture.c:784 src/x_attribedit.c:153
 #, c-format
 msgid "ERROR: NULL object!\n"
 msgstr "ERREUR : object==NULL !\n"
@@ -1303,12 +1302,12 @@ msgstr "Le slotting n'est pas supporté par ce composant\n"
 msgid "New slot number out of range\n"
 msgstr "Nouvelle valeur de slot hors plage\n"
 
-#: src/o_slot.c:241
+#: src/o_slot.c:240
 #, c-format
 msgid "uggg! you tried to slot edit something that doesn't exist!\n"
 msgstr "Tentative d'édition de slot sur un objet inexistant !\n"
 
-#: src/o_text.c:142
+#: src/o_text.c:145
 #, c-format
 msgid "Tried to render text with an invalid angle: %d\n"
 msgstr "Angle du texte invalide : %d\n"
@@ -1400,6 +1399,117 @@ msgstr "Pistes"
 #: src/x_attribedit.c:563
 msgid "Replace"
 msgstr "Remplacer"
+
+#: src/x_autonumber.c:407
+msgid ""
+"slotted object without slot attribute may cause problems when autonumbering "
+"slots\n"
+msgstr ""
+
+#: src/x_autonumber.c:422
+#, c-format
+msgid ""
+"duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
+msgstr ""
+
+#: src/x_autonumber.c:670
+msgid "No searchstring given in autonumber text."
+msgstr ""
+
+#: src/x_autonumber.c:721
+msgid "No '*' or '?' given at the end of the autonumber text.\n"
+msgstr ""
+
+#: src/x_autonumber.c:850
+#, fuzzy
+msgid "Diagonal"
+msgstr "en diagonal"
+
+#: src/x_autonumber.c:851
+msgid "Top to bottom"
+msgstr ""
+
+#: src/x_autonumber.c:851
+msgid "Bottom to top"
+msgstr ""
+
+#: src/x_autonumber.c:852
+#, fuzzy
+msgid "Left to right"
+msgstr "de gauche à droite"
+
+#: src/x_autonumber.c:852
+msgid "Right to left"
+msgstr ""
+
+#: src/x_autonumber.c:853
+#, fuzzy
+msgid "File order"
+msgstr "ordre des éléments dans le fichier"
+
+#: src/x_autonumber.c:1200
+msgid "Autonumber text"
+msgstr "Annotation automatique"
+
+#: src/x_autonumber.c:1229
+#, fuzzy
+msgid "Search for:"
+msgstr "Base de recherche :"
+
+#: src/x_autonumber.c:1242
+#, fuzzy
+msgid "Autonumber text in:"
+msgstr "Annotation automatique"
+
+#: src/x_autonumber.c:1249
+msgid "Skip numbers found in:"
+msgstr ""
+
+#: src/x_autonumber.c:1261 src/x_autonumber.c:1270
+#, fuzzy
+msgid "Selected objects"
+msgstr "objets sélectionnés"
+
+#: src/x_autonumber.c:1262 src/x_autonumber.c:1271
+#, fuzzy
+msgid "Current page"
+msgstr "page en cours"
+
+#: src/x_autonumber.c:1263 src/x_autonumber.c:1272
+#, fuzzy
+msgid "Whole hierarchy"
+msgstr "Hiérarchie"
+
+#: src/x_autonumber.c:1274
+msgid "Overwrite existing numbers"
+msgstr ""
+
+#: src/x_autonumber.c:1278
+msgid "<b>Scope</b>"
+msgstr ""
+
+#: src/x_autonumber.c:1303
+#, fuzzy
+msgid "Starting number:"
+msgstr "Indice de départ :"
+
+#: src/x_autonumber.c:1310
+#, fuzzy
+msgid "Sort order:"
+msgstr "Ordre :"
+
+#: src/x_autonumber.c:1330
+msgid "Remove numbers"
+msgstr ""
+
+#: src/x_autonumber.c:1334
+msgid "Automatic slotting"
+msgstr ""
+
+#: src/x_autonumber.c:1338
+#, fuzzy
+msgid "<b>Options</b>"
+msgstr "Options"
 
 #: src/x_color.c:59 src/x_color.c:96
 #, c-format
@@ -1633,25 +1743,25 @@ msgstr "Grille de snap"
 msgid "Enter new snap grid spacing"
 msgstr "Entrez le nouvel espacement de la grille de snap :"
 
-#: src/x_dialog.c:2192
+#: src/x_dialog.c:2193
 #, c-format
 msgid "String too long... hack!\n"
 msgstr "Chaîne de caractères trop longue... !\n"
 
-#: src/x_dialog.c:2253 src/x_dialog.c:2257
+#: src/x_dialog.c:2254 src/x_dialog.c:2258
 msgid "Edit slot number"
 msgstr "Numéro de slot"
 
-#: src/x_dialog.c:2380
+#: src/x_dialog.c:2381
 msgid "gEDA : GPL Electronic Design Automation"
 msgstr "gEDA : GPL Electronic Design Automation"
 
-#: src/x_dialog.c:2388
+#: src/x_dialog.c:2389
 #, c-format
 msgid "gschem version %s%s"
 msgstr "gschem version %s%s"
 
-#: src/x_dialog.c:2396
+#: src/x_dialog.c:2397
 msgid ""
 "Written by:\n"
 "Ales V. Hvezda\n"
@@ -1663,158 +1773,88 @@ msgstr ""
 "ahvezda@geda.seul.org\n"
 "Et bien d'autres (consultez le fichier AUTHORS)"
 
-#: src/x_dialog.c:2490
+#: src/x_dialog.c:2491
 msgid "Coords"
 msgstr "Coords"
 
-#: src/x_dialog.c:2514
+#: src/x_dialog.c:2515
 msgid "Screen"
 msgstr "Écran"
 
-#: src/x_dialog.c:2527
+#: src/x_dialog.c:2528
 msgid "World"
 msgstr "Monde"
 
-#: src/x_dialog.c:2795
+#: src/x_dialog.c:2796
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr "ERREUR : object==NULL dans color_edit_dialog_apply !\n"
 
-#: src/x_dialog.c:2845
+#: src/x_dialog.c:2846
 msgid "Color Edit"
 msgstr "Sélecteur de couleur"
 
-#: src/x_dialog.c:2962
+#: src/x_dialog.c:2963
 #, c-format
 msgid "Ran out of space in the hotkey buffer...\n"
 msgstr "Manque de place dans le tampon de raccourcis...\n"
 
-#: src/x_dialog.c:3039
+#: src/x_dialog.c:3040
 msgid "Function : keystroke(s)"
 msgstr "Action : raccourci(s)"
 
-#: src/x_dialog.c:3384
+#: src/x_dialog.c:3385
 msgid "Generic String"
 msgstr "Saisie de texte"
 
-#: src/x_dialog.c:3387
+#: src/x_dialog.c:3388
 msgid "Enter new string."
 msgstr "Entrez la nouvelle chaîne."
 
-#: src/x_dialog.c:3533
+#: src/x_dialog.c:3534
 msgid "Find text"
 msgstr "Recherche de texte"
 
-#: src/x_dialog.c:3537
+#: src/x_dialog.c:3538
 msgid "Text to find:"
 msgstr "Texte à rechercher :"
 
-#: src/x_dialog.c:3550
+#: src/x_dialog.c:3551
 msgid "descend into hierarchy"
 msgstr "descendre dans la hiérarchie"
 
-#: src/x_dialog.c:3669
+#: src/x_dialog.c:3670
 msgid "Hide text"
 msgstr "Cacher le texte"
 
-#: src/x_dialog.c:3672
+#: src/x_dialog.c:3673
 msgid "Hide text starting with:"
 msgstr "Cacher le texte commençant par :"
 
-#: src/x_dialog.c:3789
+#: src/x_dialog.c:3790
 msgid "Show text"
 msgstr "Montrer le texte"
 
-#: src/x_dialog.c:3792
+#: src/x_dialog.c:3793
 msgid "Show text starting with:"
 msgstr "Montrer le texte commençant par :"
 
-#: src/x_dialog.c:3876
-#, c-format
-msgid "Warning: negative numbers not allowed in the autonumber_text dialog\n"
-msgstr ""
-"Attention : valeurs négatives interdites dans la fenêtre autonumber_text\n"
-
-#: src/x_dialog.c:3960
-msgid "Autonumber text"
-msgstr "Annotation automatique"
-
-#: src/x_dialog.c:3966
-msgid "selection"
-msgstr "Sélection"
-
-#: src/x_dialog.c:3975
-msgid "search text"
-msgstr "Motif de recherche :"
-
-#: src/x_dialog.c:4003
-msgid "search focus"
-msgstr "Base de recherche :"
-
-#: src/x_dialog.c:4016
-msgid "selected objects"
-msgstr "objets sélectionnés"
-
-#: src/x_dialog.c:4019
-msgid "current sheet"
-msgstr "page en cours"
-
-#: src/x_dialog.c:4022
-msgid "hierarchical sheets"
-msgstr "hiérarchie de pages"
-
-#: src/x_dialog.c:4034
-msgid "unnumbered"
-msgstr "non numérotés"
-
-#: src/x_dialog.c:4038
-msgid "all"
-msgstr "tous"
-
-#: src/x_dialog.c:4047
-msgid "options"
-msgstr "Options"
-
-#: src/x_dialog.c:4054
-msgid "start number"
-msgstr "Indice de départ :"
-
-#: src/x_dialog.c:4067
-msgid "sort order"
-msgstr "Ordre :"
-
-#: src/x_dialog.c:4079
-msgid "file order"
-msgstr "ordre des éléments dans le fichier"
-
-#: src/x_dialog.c:4082
-msgid "top down"
-msgstr "du haut vers le bas"
-
-#: src/x_dialog.c:4085
-msgid "left right"
-msgstr "de gauche à droite"
-
-#: src/x_dialog.c:4088
-msgid "diagonal"
-msgstr "en diagonal"
-
-#: src/x_dialog.c:4547 src/x_multiattrib.c:1384
+#: src/x_dialog.c:4250 src/x_multiattrib.c:1384
 msgid "Name"
 msgstr "Nom"
 
-#: src/x_dialog.c:4569
+#: src/x_dialog.c:4272
 msgid "S_elect the schematics you want to save:"
 msgstr "_Sélectionnez les schémas que vous souhaitez enregistrer :"
 
-#: src/x_dialog.c:4663
+#: src/x_dialog.c:4366
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr ""
 "Voulez-vous enregistrer les modifications dans le schéma \"%s\" avant de le "
 "fermer ?"
 
-#: src/x_dialog.c:4669
+#: src/x_dialog.c:4372
 #, c-format
 msgid ""
 "There is %d schematics with unsaved changes. Save changes before closing?"
@@ -1822,13 +1862,13 @@ msgstr ""
 "Il y a %d schémas avec des modifications non enregistrées. Voulez-vous "
 "enregistrer les modifications avant de fermer ?"
 
-#: src/x_dialog.c:4698
+#: src/x_dialog.c:4401
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
 "Si vous n'enregistrez pas, les modifications effectuées seront "
 "définitivement perdues."
 
-#: src/x_dialog.c:4718
+#: src/x_dialog.c:4421
 msgid "_Close without saving"
 msgstr "Fermer sans sa_uvegarder"
 
@@ -2256,6 +2296,32 @@ msgstr "Abandonne page [%s]\n"
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "Ferme [%s]\n"
+
+#~ msgid ""
+#~ "Warning: negative numbers not allowed in the autonumber_text dialog\n"
+#~ msgstr ""
+#~ "Attention : valeurs négatives interdites dans la fenêtre autonumber_text\n"
+
+#~ msgid "selection"
+#~ msgstr "Sélection"
+
+#~ msgid "search text"
+#~ msgstr "Motif de recherche :"
+
+#~ msgid "hierarchical sheets"
+#~ msgstr "hiérarchie de pages"
+
+#~ msgid "unnumbered"
+#~ msgstr "non numérotés"
+
+#~ msgid "all"
+#~ msgstr "tous"
+
+#~ msgid "options"
+#~ msgstr "Options"
+
+#~ msgid "top down"
+#~ msgstr "du haut vers le bas"
 
 #~ msgid "Could NOT save [%s]\n"
 #~ msgstr "Échec de l'enregistrement de la page [%s]\n"

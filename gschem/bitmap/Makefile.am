@@ -8,8 +8,7 @@ bitmapdata_DATA = gschem-bus.xpm gschem-comp.xpm gschem-net.xpm \
 		  gschem-rotate.xpm gschem-mirror.xpm gschem-warning.png \
 		  gschem-bottom2top.png gschem-left2right.png \
 		  gschem-top2bottom.png gschem-diagonal.png \
-		  gschem-right2left.png
-
+		  gschem-right2left.png gschem-fileorder.png
 
 EXTRA_DIST = $(bitmapdata_DATA) README
 
