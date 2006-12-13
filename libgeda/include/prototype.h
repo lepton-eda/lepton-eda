@@ -75,6 +75,7 @@ SCM g_get_attrib_bounds(SCM attrib_smob);
 SCM g_get_attrib_angle(SCM attrib_smob);
 SCM g_make_object_smob(TOPLEVEL *curr_w, OBJECT *object);
 SCM g_get_object_attributes(SCM object_smob);
+SCM g_get_object_type(SCM object_smob);
 void g_init_object_smob(void);
 gboolean g_get_data_from_object_smob(SCM object_smob, TOPLEVEL **toplevel, 
 				     OBJECT **object);

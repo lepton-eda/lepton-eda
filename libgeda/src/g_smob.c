@@ -400,6 +400,38 @@ SCM g_get_object_attributes(SCM object_smob)
   return returned;
 }
 
+/*! \brief Get the object type.
+ *  \par Function Description
+ *  This function returns a string with the type of a given object smob.
+ *
+ *  \param [in] object_smob  The object smob to get the type from.
+ *  \return A string with the type of the given object. 
+ *   Actually it is the object->type character converted into a string.
+ */
+SCM g_get_object_type(SCM object_smob)
+{
+  struct st_object_smob *object_struct;
+  OBJECT *object;
+  SCM returned = SCM_EOL;
+  char type[2];
+
+  SCM_ASSERT ( SCM_NIMP(object_smob) && 
+               ((long) SCM_CAR(object_smob) == object_smob_tag),
+               object_smob, SCM_ARG1, "get-object-type");
+
+  object_struct = (struct st_object_smob *)SCM_CDR(object_smob);
+
+  g_assert (object_struct && object_struct->object);
+  
+  object = (OBJECT *) object_struct->object;
+  
+  sprintf(type, "%c", object->type);
+
+  returned = scm_makfrom0str(type);
+
+  return returned;
+}
+
 /*! \brief Initialize the framework to support an object smob.
  *  \par Function Description
  *  Initialize the framework to support an object smob.
@@ -414,6 +446,7 @@ void g_init_object_smob(void)
   scm_set_smob_print(object_smob_tag, g_print_object_smob);
 
   scm_c_define_gsubr("get-object-attributes", 1, 0, 0, g_get_object_attributes);
+  scm_c_define_gsubr("get-object-type", 1, 0, 0, g_get_object_type);
 
   return;
 }
