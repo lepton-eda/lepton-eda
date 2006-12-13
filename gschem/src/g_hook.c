@@ -149,10 +149,24 @@ SCM g_add_attrib(SCM object, SCM scm_attrib_name,
   vis = SCM_NFALSEP(scm_vis);
 
   for (i=0; i<=SCM_INUM(scm_length(scm_show))-1; i++) {
+    /* Check every element in the list. It should be a string! */
+    SCM_ASSERT(scm_list_ref(scm_show, SCM_MAKINUM(i)), 
+	       scm_show,
+	       SCM_ARG5, "add-attribute-to-object"); 
+    SCM_ASSERT(SCM_STRINGP(scm_list_ref(scm_show, SCM_MAKINUM(i))), 
+	       scm_show,
+	       SCM_ARG5, "add-attribute-to-object"); 
+    
     value = SCM_STRING_CHARS(scm_list_ref(scm_show, SCM_MAKINUM(i)));
+    
+    SCM_ASSERT(value, scm_show,
+	       SCM_ARG5, "add-attribute-to-object"); 
+
+    /* Only "name" or "value" strings are allowed */
     SCM_ASSERT(!((strcasecmp(value, "name") != 0) &&
 		 (strcasecmp(value, "value") != 0) ), scm_show,
-	       SCM_ARG5, "add-attribute-to-object"); 
+	       SCM_ARG5, "add-attribute-to-object");
+    
     /* show = 1 => show value; 
        show = 2 => show name; 
        show = 3 => show both */
