@@ -817,11 +817,11 @@
 ;   - Value of the attribute.
 ;   - Visibility: #t (visible) or #f (hidden).
 ;   - Show_list:  a list containing what to show, using 
-;                 elements like 'name' or 'value', or an empty list.
+;                 elements like "name" or "value", or an empty list.
 (define default-pin-attributes 
        '(("pintype"   "unknown" #f ())
-	 ("pinlabel"  "unknown" #t (value))
-	 ("pinnumber" "0"       #t (value))
+	 ("pinlabel"  "unknown" #t ("value"))
+	 ("pinnumber" "0"       #t ("value"))
 	 ("pinseq"    "0"       #f ())))
 
 (define default-position-of-text-attributes

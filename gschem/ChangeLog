@@ -1,3 +1,7 @@
+2006-12-13 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* lib/system-gschemrc.in: Fixed typo in the default pin attributes.
+
 2006-12-12 Werner Hoch <werner.ho@gmx.de>
 
 	merged the autonumber branch back to trunk
