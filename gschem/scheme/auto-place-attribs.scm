@@ -24,6 +24,23 @@
 
 ; Copyright (C) 2006 Carlos Nieves Onega
 
+; Define object types, as in libgeda/include/o_types.h
+; TODO: Do this inside libgeda?
+(define OBJ_LINE        "L")
+(define OBJ_BOX         "B")
+(define OBJ_PICTURE     "G")
+(define OBJ_CIRCLE      "V")
+(define OBJ_NET         "N")
+(define OBJ_BUS         "U")
+(define OBJ_COMPLEX     "C")
+(define OBJ_TEXT        "T")
+(define OBJ_PIN         "P")
+(define OBJ_ARC         "A")
+(define OBJ_ROUTE       "R")
+(define OBJ_THRU_HOLE   "H") 
+(define OBJ_PLACEHOLDER "X")
+
+
 ; Given a bound,  defined as a list of the form ( (x1 x2) (y1 y2) ) with:
 ;   - (x1, y1): bottom left corner.
 ;   - (x2, y2): upper right corner.
@@ -496,8 +513,13 @@
 (define (get-reference object position-string)
   (if (not (string-index position-string #\ )) 
       (error "get-reference : Wrong reference format"))
-  (let* ( ; Get the object bounds without attributes neither pins.
-	  (bounds (get-object-bounds object (list "all") (list "P")))
+  (let* ( (object-type (get-object-type object))
+	  ; Get the object bounds:
+          ;  - If it's a pin: including everything.
+          ;  - otherwise: without attributes neither pins.
+	  (bounds (if (string=? object-type OBJ_PIN)
+		      (get-object-bounds object (list "all") (list))
+		      (get-object-bounds object (list "all") (list OBJ_PIN))))
 	  (horiz-bounds (car bounds))
 	  (vertical-bounds (cdr bounds)) 
 	  (space-pos (string-index position-string #\ ))
@@ -637,9 +659,9 @@
 	    ; Calcule the y of the left bottom point of the text.
 	    (lb_y (if (string=? vertical-pos "Lower")
 		      y
-		      (if (string=? horiz-pos "Middle")
+		      (if (string=? vertical-pos "Middle")
 			  (- y (inexact->exact (/ y_size 2)))
-			  (if (string=? horiz-pos "Upper")
+			  (if (string=? vertical-pos "Upper")
 			      (- y y_size)
 			      (error (string-append 
 				      "calcule-new-attrib-bounds : Unknown reference (vertical): " 
