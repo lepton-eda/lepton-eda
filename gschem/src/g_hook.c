@@ -609,13 +609,13 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   SCM_ASSERT ( SCM_INUMP(scm_x), scm_x, 
                SCM_ARG3, "add-component");
   SCM_ASSERT ( SCM_INUMP(scm_y), scm_y, 
-               SCM_ARG4, "add-component");
+               SCM_ARG4, "add-component-at-xy");
   SCM_ASSERT ( SCM_INUMP(scm_angle), scm_angle, 
-               SCM_ARG5, "add-component");
+               SCM_ARG5, "add-component-at-xy");
   SCM_ASSERT ( scm_boolean_p(scm_selectable), scm_selectable,
-	       SCM_ARG6, "add-component");
+	       SCM_ARG6, "add-component-at-xy");
   SCM_ASSERT ( scm_boolean_p(scm_mirror), scm_mirror,
-	       SCM_ARG7, "add-component");
+	       SCM_ARG7, "add-component-at-xy");
 
   /* Get the parameters */
   comp_name = SCM_STRING_CHARS(scm_comp_name);
@@ -625,15 +625,22 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   selectable = SCM_NFALSEP(scm_selectable);
   mirror = SCM_NFALSEP(scm_mirror);
 
+  SCM_ASSERT (comp_name, scm_comp_name,
+	      SCM_ARG2, "add-component-at-xy");
+  
+  if (strcmp(comp_name, "") == 0) {
+    return SCM_BOOL_F;
+  }
+
   clibs = (GSList *) s_clib_search_basename (comp_name);
   if (clibs == NULL) {
     /* Component not found */
-    s_log_message ("add-component: Component with name [%s] not found.\n",
+    s_log_message ("add-component-at-xy: Component with name [%s] not found.\n",
 		   comp_name);
     return SCM_BOOL_F;    
   } else {
     if (g_slist_next (clibs)) {
-      s_log_message ("add-component: More than one component found with name [%s]\n",
+      s_log_message ("add-component-at-xy: More than one component found with name [%s]\n",
 		     comp_name);
       /* PB: for now, use the first directory in clibs */
       /* PB: maybe open a dialog to select the right one? */
