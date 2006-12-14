@@ -937,6 +937,10 @@
 ;; (define default-titleblock "title-A4.sym")
 ;; Change "title-A4.sym" by the name of your prefered titleblock!
 ;
+; If you don't want a titleblock to be added automatically, then add the 
+; following line to your gschemrc file (without the semicolon):
+;   (define default-titleblock "")
+;
 (define default-titleblock "title-B.sym")
 (add-hook! new-page-hook (lambda (page)
    (if (null? (get-objects-in-page page))

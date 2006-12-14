@@ -1,3 +1,8 @@
+2006-12-14 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* lib/system-gschemrc.in: Added comment about how to avoid gschem
+	  placing a titleblock automatically.
+
 2006-12-13 Carlos Nieves Onega <cnieves@iespana.es>
 
         * src/g_hook.c: Improved error detection in g_add_attrib.
