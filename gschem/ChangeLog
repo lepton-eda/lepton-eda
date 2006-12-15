@@ -1,3 +1,6 @@
+2006-12-15 Peter Clifton <pcjc2@cam.ac.uk>
+	* intl/.cvsignore: Remove whitespace after .c and .y exclusions
+
 2006-12-14 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/g_hook.c (g_add_component): Don't log message if a component 

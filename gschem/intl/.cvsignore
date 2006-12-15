@@ -2,9 +2,9 @@ ChangeLog
 Makefile
 Makefile.in
 VERSION
-*.c 
+*.c
 *.h
-*.y 
+*.y
 *.sin
 config.charset
 locale.alias
