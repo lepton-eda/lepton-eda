@@ -1,3 +1,8 @@
+2006-12-16 Werner Hoch <werner.ho@gmx.de>
+
+	 * include/struct.h: added widget pointers for the modal dialogs
+	   find text, show text, hide text
+
 2006-12-13 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* include/prototype.h, src/g_smob.c:
@@ -49,7 +54,6 @@
 	* include/struct.h, src/s_toplevel.c: readded toplevel->filename_label
 	  to the toplevel structure, it's still required by gattib.
 	  fixes Bug [#1600448]
-	
 
 2006-11-19 Werner Hoch <werner.ho@gmx.de>
 

@@ -597,6 +597,9 @@ struct st_toplevel {
   GtkWidget *trwindow;			/* translate */
   GtkWidget *trentry;
   GtkWidget *tswindow;			/* text size */
+  GtkWidget *tshowwindow;               /* text show window */
+  GtkWidget *thidewindow;               /* text hide window */    
+  GtkWidget *tfindwindow;               /* text find window */
   GtkWidget *tsentry;			/* used in edit/edit and */
   					/* Text size and the snap */
   					/* size dialog boxes */
