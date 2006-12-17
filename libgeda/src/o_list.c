@@ -253,10 +253,10 @@ OBJECT *o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head,
  *  \return OBJECT pointer.
  */
 OBJECT *o_list_copy_all_selection2(TOPLEVEL *w_current,
-				   SELECTION *src_list_head, 
+				   GList *src_list_head, 
 				   OBJECT *dest_list_head, int flag)
 {
-  SELECTION *src;
+  GList *src;
   OBJECT *object;
   OBJECT *dest;
   OBJECT *temp_parent=NULL;
@@ -283,7 +283,7 @@ OBJECT *o_list_copy_all_selection2(TOPLEVEL *w_current,
   /* first do all NON text items */
   while(src != NULL) {
 
-    object = src->selected_object;
+    object = (OBJECT *) src->data;
 
     /* unselect the object before the copy */
     o_selection_unselect(object);	
@@ -318,7 +318,7 @@ OBJECT *o_list_copy_all_selection2(TOPLEVEL *w_current,
   /* then do all text items */
   while(src != NULL) {
 
-    object = src->selected_object;
+    object = (OBJECT *) src->data;
 
     /* unselect the object before the copy */
     o_selection_unselect(object);	

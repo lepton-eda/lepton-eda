@@ -42,12 +42,16 @@ void o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
   int left, right, top, bottom;
 
+  g_return_if_fail (o_current != NULL); 
+  g_return_if_fail (o_current->complex != NULL);
+  g_return_if_fail (o_current->complex->prim_objs != NULL);
+
   if (!w_current->DONT_REDRAW) {
     o_redraw(w_current, o_current->complex->prim_objs, TRUE);
   }
 
-  get_complex_bounds(w_current, o_current->complex->prim_objs,
-                     &left, &top, &right, &bottom);
+  get_object_list_bounds(w_current, o_current->complex->prim_objs,
+			 &left, &top, &right, &bottom);
   o_current->left   = left;
   o_current->top    = top;
   o_current->right  = right;
@@ -154,13 +158,11 @@ void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 
   w_current->DONT_DRAW_CONN = 1;
   w_current->ADDING_SEL = 1; /* reuse this flag, rename later hack */
-  w_current->page_current->complex_place_tail =
-  (OBJECT *) o_complex_add(
-                           w_current,
-                           w_current->page_current->complex_place_head,
-                           OBJ_COMPLEX, WHITE, x, y, 0, 0,
-                           w_current->internal_clib,
-                           w_current->internal_basename, 1, TRUE);
+  o_complex_add(w_current, NULL,
+		&(w_current->page_current->complex_place_list),
+		OBJ_COMPLEX, WHITE, x, y, 0, 0,
+		w_current->internal_clib,
+		w_current->internal_basename, 1, TRUE);
   w_current->ADDING_SEL = 0;
   w_current->DONT_DRAW_CONN = 0;
 
@@ -172,8 +174,8 @@ void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
   }
 
   o_drawbounding(w_current, 
-                 w_current->page_current->complex_place_head->next,
                  NULL,
+                 w_current->page_current->complex_place_list,
                  x_get_darkcolor(w_current->bb_color), TRUE);
 }
 
@@ -185,19 +187,21 @@ void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 void o_complex_place_rotate(TOPLEVEL *w_current)
 {
   OBJECT *o_current;
+  GList *ptr;
   int screen_x_local = -1;
   int screen_y_local = -1;
   int new_angle;
 
-  o_current = w_current->page_current->complex_place_head->next;
-  while(o_current) {
+  ptr = w_current->page_current->complex_place_list;
+  while(ptr) {
+    o_current = (OBJECT *) ptr->data;
     switch(o_current->type) {	
       case(OBJ_COMPLEX):
         screen_x_local = o_current->complex->screen_x; 
         screen_y_local = o_current->complex->screen_y;
         break;
     }
-    o_current = o_current->next;
+    ptr = ptr->next;
   }
 
   if (screen_x_local == -1) {
@@ -205,8 +209,9 @@ void o_complex_place_rotate(TOPLEVEL *w_current)
     return;
   }
 
-  o_current = w_current->page_current->complex_place_head->next;
-  while(o_current) {
+  ptr = w_current->page_current->complex_place_list;
+  while(ptr) {
+    o_current = (OBJECT *) ptr->data;
     switch(o_current->type) {	
 
       case(OBJ_TEXT):
@@ -222,7 +227,7 @@ void o_complex_place_rotate(TOPLEVEL *w_current)
         break;
 
     }
-    o_current = o_current->next;
+    ptr = ptr->next;
   }
 
 }
@@ -298,20 +303,19 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
       printf("inside draw outline here\n");
 #endif
       /* erase outline */
-      o_complex_translate_display(
-                                  w_current,
-                                  diff_x, diff_y,
-                                  w_current->page_current->
-                                  complex_place_head->next);
+      
+      o_complex_translate_display_object_glist(w_current,
+					       diff_x, diff_y,
+					       w_current->page_current->
+					       complex_place_list); 
     } else {
 #if 0
       printf("inside draw bounding here\n");
 #endif
-      get_complex_bounds(
-                         w_current,
-                         w_current->page_current->
-                         complex_place_head->next,
-                         &rleft, &rtop, &rright, &rbottom);
+      get_object_glist_bounds(w_current,
+			      w_current->page_current->
+			      complex_place_list,
+			      &rleft, &rtop, &rright, &rbottom);
       gdk_gc_set_foreground(
                             w_current->gc,
                             x_get_color(w_current->background_color));
@@ -327,16 +331,15 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
     w_current->page_current->CHANGED = 1;
     o_undo_savestate(w_current, UNDO_ALL);
     i_update_menus(w_current);
-    o_list_delete_rest(w_current, w_current->page_current->
-                       complex_place_head);
+    s_delete_object_glist(w_current, w_current->page_current->
+			  complex_place_list);
     return;
   }
 
   o_temp = w_current->page_current->object_tail;
   w_current->page_current->object_tail =
-    o_complex_add(
-                  w_current,
-                  w_current->page_current->object_tail,
+    o_complex_add(w_current,
+                  w_current->page_current->object_tail, NULL,
                   OBJ_COMPLEX, WHITE, x, y, w_current->complex_rotate, 0,
                   w_current->internal_clib,
                   w_current->internal_basename, 1, TRUE);
@@ -361,7 +364,6 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
   }
 
   /* 1 should be define fix everywhere hack */
-	
   o_current = w_current->page_current->object_tail;
 
   if (scm_hook_empty_p(add_component_hook) == SCM_BOOL_F &&
@@ -403,19 +405,17 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
     printf("inside draw outline here\n");
 #endif
     /* erase outline */
-    o_complex_translate_display(
-                                w_current,
-                                diff_x, diff_y,
-                                w_current->page_current->complex_place_head->next);
+    o_complex_translate_display_object_glist(w_current,
+					     diff_x, diff_y,
+					     w_current->page_current->complex_place_list);
   } else {
 #if 0
     printf("inside draw bounding here\n");
 #endif
-    get_complex_bounds(
-                       w_current,
-                       w_current->page_current->complex_place_head->next,
-                       &rleft, &rtop,
-                       &rright, &rbottom);
+    get_object_glist_bounds(w_current,
+			    w_current->page_current->complex_place_list,
+			    &rleft, &rtop,
+			    &rright, &rbottom);
     gdk_gc_set_foreground(
                           w_current->gc,
                           x_get_color(w_current->background_color));
@@ -428,19 +428,20 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 
   /*! \todo redraw has to happen at the end of all this hack or
    * maybe not? */
-  o_list_delete_rest(w_current,
-                     w_current->page_current->complex_place_head);
+  g_list_free(w_current->page_current->complex_place_list);
+  w_current->page_current->complex_place_list = NULL;
 
   /* This doesn't allow anything else to be in the selection
    * list when you add a component */
 
-  o_selection_remove_most(w_current,
-                          w_current->page_current->selection2_head);
-  o_selection_add(w_current->page_current->selection2_head, 
-                  w_current->page_current->object_tail);
+  o_selection_unselect_list(w_current,
+			    &(w_current->page_current->selection_list));
+  w_current->page_current->selection_list = 
+    o_selection_add(w_current->page_current->selection_list, 
+		    w_current->page_current->object_tail);
   /* the o_redraw_selected is in x_events.c after this call
    * returns */
-  o_attrib_add_selected(w_current, w_current->page_current->selection2_head,
+  o_attrib_add_selected(w_current, &(w_current->page_current->selection_list),
                         w_current->page_current->object_tail);
 
   s_conn_update_complex(w_current, o_current->complex->prim_objs);
@@ -464,8 +465,8 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 void o_complex_rubbercomplex(TOPLEVEL *w_current)
 {
   o_drawbounding(w_current,
-                 w_current->page_current->complex_place_head->next,
                  NULL,
+                 w_current->page_current->complex_place_list,
                  x_get_darkcolor(w_current->bb_color), FALSE);
 }
 
@@ -474,12 +475,11 @@ void o_complex_rubbercomplex(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_complex_translate_display(TOPLEVEL *w_current,
-				 int x1, int y1, OBJECT *complex)
+void
+o_complex_translate_display_single_object(TOPLEVEL *w_current,
+					  int x1, int y1, OBJECT *o_current)
 {
-  OBJECT *o_current = complex;
-
-  while (o_current != NULL) {
+  if (o_current != NULL) {
     switch(o_current->type) {
       case(OBJ_LINE):
         o_line_draw_xor(w_current, x1, y1, o_current);
@@ -523,6 +523,41 @@ void o_complex_translate_display(TOPLEVEL *w_current,
         o_arc_draw_xor(w_current, x1, y1, o_current);
         break;
     }
+  }
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void
+o_complex_translate_display_object_glist(TOPLEVEL *w_current,
+			                 int x1, int y1, GList *object_list)
+{
+  GList *ptr = object_list;
+
+  while (ptr != NULL) {
+    o_complex_translate_display_single_object (w_current, x1, y1, 
+                                               (OBJECT *)ptr->data);
+    ptr = ptr->next;
+  }
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void
+o_complex_translate_display(TOPLEVEL *w_current,
+			    int x1, int y1, OBJECT *complex)
+{
+  OBJECT *o_current = complex;
+
+  while (o_current != NULL) {
+    o_complex_translate_display_single_object (w_current, x1, y1, o_current);
     o_current = o_current->next;
   }
 }
@@ -533,63 +568,20 @@ void o_complex_translate_display(TOPLEVEL *w_current,
  *
  */
 void o_complex_translate_display_selection(TOPLEVEL *w_current,
-					   int x1, int y1, SELECTION *head)
+					   int x1, int y1, GList *head)
 {
-  SELECTION *s_current = head;
+  GList *s_current = head;
   OBJECT *o_current;
 
   while (s_current != NULL) {
 
-    o_current = s_current->selected_object;
+    o_current = (OBJECT *) s_current->data;
 
     if (!o_current) {
       fprintf(stderr, _("Got NULL in o_complex_translate_display_selection\n"));
       exit(-1);
     }
-
-    switch(o_current->type) {
-      case(OBJ_LINE):
-        o_line_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_NET):
-        o_net_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_BUS):
-        o_bus_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_BOX):
-        o_box_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_PICTURE):
-        o_picture_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_CIRCLE):
-        o_circle_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_COMPLEX):
-      case(OBJ_PLACEHOLDER):
-        o_complex_draw_xor(w_current, x1, y1, 
-                           o_current->complex->prim_objs);
-        break;
-
-      case(OBJ_TEXT):
-        o_text_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_PIN):
-        o_pin_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_ARC):
-        o_arc_draw_xor(w_current, x1, y1, o_current);
-        break;
-    }
+    o_complex_translate_display_single_object (w_current, x1, y1, o_current);
     s_current = s_current->next;
   }
 }
@@ -629,11 +621,11 @@ void o_complex_translate_all(TOPLEVEL *w_current, int offset)
                  A_PAN_DONT_REDRAW);
   o_redraw_all(w_current);
 
-  get_complex_bounds(w_current, w_current->page_current->object_head,
-                     &rleft,
-                     &rtop,
-                     &rright,
-                     &rbottom);
+  get_object_list_bounds(w_current, w_current->page_current->object_head,
+			 &rleft,
+			 &rtop,
+			 &rright,
+			 &rbottom);
 
   /*! \todo do we want snap grid here? */
   SCREENtoWORLD(w_current,
@@ -700,7 +692,7 @@ void o_complex_translate_all(TOPLEVEL *w_current, int offset)
  *
  */
 void o_complex_translate_selection(TOPLEVEL *w_current, int dx, int dy, 
-				   SELECTION *head)
+				   GList *head)
 {
   if (head == NULL)  {
     printf(_("Got NULL in o_complex_translate_selection!\n"));
@@ -906,7 +898,7 @@ OBJECT *o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list,
 
 
   new_obj = o_complex_add(w_current,
-                          list, object->type,
+                          list, NULL, object->type,
                           color,
                           x, y,
                           object->complex->angle, 

@@ -424,8 +424,11 @@ void i_update_menus(TOPLEVEL *w_current)
    * Eventually what gets enabled/disabled
    * should be based on what is in the selection list 
    */
-  
-  if (o_selection_return_num(w_current->page_current->selection2_head)) {
+
+  g_assert(w_current != NULL);
+  g_assert(w_current->page_current != NULL);
+
+  if (w_current->page_current->selection_list != NULL) {
     /* since one or more things are selected, we set these TRUE */
     /* These strings should NOT be internationalized */
     x_menus_sensitivity(w_current, "Edit/Cut Buffer", TRUE);

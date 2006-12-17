@@ -47,14 +47,10 @@
  *  \par Function Description
  *
  */
-void o_edit(TOPLEVEL *w_current, SELECTION *list)
+void o_edit(TOPLEVEL *w_current, GList *list)
 {
   char *equal_ptr;
   OBJECT *o_current;
-#if 0 /* was HAS_LIBGTKEXTRA, no longer user */
-  SELECTION *s_current;
-  int object_count=0;
-#endif
   int num_lines = 0;
 
   if (list == NULL) {
@@ -63,37 +59,11 @@ void o_edit(TOPLEVEL *w_current, SELECTION *list)
     return;
   }
 
-  o_current = list->selected_object;	
+  o_current = (OBJECT *) list->data;	
   if (o_current == NULL) {
     fprintf(stderr, _("Got an unexpected NULL in o_edit\n"));
     exit(-1);
   }
-
-#if 0 /* was HAS_LIBGTKEXTRA, no longer used */
-  /* count up how many non-text objects exist in the selection */
-  /* list.  Why?  Because if there are multiple objects, invoke the */
-  /* multi_multi_edit dialog box */
-  s_current = list;
-  while (s_current != NULL) {
-    if (s_current->selected_object) {
-      if (s_current->selected_object->type != OBJ_TEXT) {
-        object_count++;	
-      }				
-    }
-    s_current=s_current->next;
-  }
-
-  /* now decide what we want to do, either single edit or */
-  /* multi multi edit */
-  if (object_count == 1 && o_current->type != OBJ_TEXT) {
-    x_multiattrib_open (w_current, o_current);
-    return;
-  } else if ( object_count > 1 ) {
-    x_multiattrib_open (w_current, o_current);
-    return;
-  }
-#endif
-
 
   /* for now deal with only the first item */
   switch(o_current->type) {
@@ -155,13 +125,13 @@ void o_edit(TOPLEVEL *w_current, SELECTION *list)
 void o_lock(TOPLEVEL *w_current)
 {
   OBJECT *object = NULL;
-  SELECTION *s_current = NULL;
+  GList *s_current = NULL;
 
   /* skip over head */
-  s_current = w_current->page_current->selection2_head->next;
+  s_current = w_current->page_current->selection_list;
 
   while(s_current != NULL) {
-    object = s_current->selected_object;
+    object = (OBJECT *) s_current->data;
     if (object) {
       /* check to see if locked_color is already being used */
       if (object->locked_color == -1) {
@@ -194,12 +164,12 @@ void o_lock(TOPLEVEL *w_current)
 void o_unlock(TOPLEVEL *w_current)
 {
   OBJECT *object = NULL;
-  SELECTION *s_current = NULL;
+  GList *s_current = NULL;
 
-  s_current = w_current->page_current->selection2_head->next;
+  s_current = w_current->page_current->selection_list;
 
   while(s_current != NULL) {
-    object = s_current->selected_object;
+    object = (OBJECT *) s_current->data;
     if (object) {
       /* only unlock if sel_func is not set to something */
       if (object->sel_func == NULL) {
@@ -232,11 +202,11 @@ void o_unlock(TOPLEVEL *w_current)
  *  \param [in] centerx    Center x coordinate of rotation.
  *  \param [in] centery    Center y coordinate of rotation.
  */
-void o_rotate_90(TOPLEVEL *w_current, SELECTION *list,
+void o_rotate_90(TOPLEVEL *w_current, GList *list,
 		 int centerx, int centery)
 {
   OBJECT *object;
-  SELECTION *s_current;
+  GList *s_current;
   int new_angle;
   GList *other_objects=NULL;
   GList *connected_objects=NULL;
@@ -252,7 +222,7 @@ void o_rotate_90(TOPLEVEL *w_current, SELECTION *list,
   s_current = list;
 
   while (s_current != NULL) {
-    object = s_current->selected_object;
+    object = (OBJECT *) s_current->data;
 
     if (!object) {
       fprintf(stderr, _("ERROR: NULL object in o_rotate_90!\n"));
@@ -501,7 +471,7 @@ void o_rotate_90(TOPLEVEL *w_current, SELECTION *list,
      an object and all its attributes (text) */
   s_current = list;
   while (s_current != NULL) {
-    object = s_current->selected_object;
+    object = (OBJECT *) s_current->data;
 
     if (!object) {
       fprintf(stderr, _("ERROR: NULL object in o_rotate_90!\n"));
@@ -663,10 +633,10 @@ void o_unembed(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  * 
  */
-void o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
+void o_mirror(TOPLEVEL *w_current, GList *list, int centerx, int centery)
 {
   OBJECT *object;
-  SELECTION *s_current;
+  GList *s_current;
   OBJECT *o_current = NULL;
   GList *other_objects=NULL;
   GList *connected_objects=NULL;
@@ -681,7 +651,7 @@ void o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 
   while (s_current != NULL) {
 
-    object = s_current->selected_object;
+    object = (OBJECT *) s_current->data;
 
     if (!object) {
       fprintf(stderr, _("ERROR: NULL object in o_mirror!\n"));
@@ -859,7 +829,7 @@ void o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
      an object and all its attributes (text) */
   s_current = list;
   while (s_current != NULL) {
-    object = s_current->selected_object;
+    object = (OBJECT *) s_current->data;
 
     if (!object) {
       fprintf(stderr, _("ERROR: NULL object in o_rotate_90!\n"));
@@ -1080,8 +1050,9 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
       if (strstr(o_current->text->string,stext)) {
 	/*            printf(_("Found %s\n"), stext);
 	   if (!o_current->selected&&(!descend)) {
-	   o_selection_add(w_current->page_current->selection2_head,
-	   o_current);
+	   w_current->page_current->selection_list = 
+	     o_selection_add(w_current->page_current->selection_list,
+	                     o_current);
 	   } */
 	if (!skiplast) {
 
@@ -1214,6 +1185,8 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
   gboolean is_embedded;
   gchar *basename, *clib;
 
+  g_return_if_fail (o_current != NULL);
+
   is_embedded = o_complex_is_embedded (o_current);
 
   /* identify symbol name */
@@ -1252,7 +1225,7 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
   /* build a temporary list and add a complex to this list */
   tmp_list = s_basic_init_object ("update component");
   new_complex = o_complex_add (w_current,
-                               tmp_list,
+                               tmp_list, NULL,
                                OBJ_COMPLEX,
                                WHITE,
                                o_current->complex->x,

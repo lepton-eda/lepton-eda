@@ -46,195 +46,35 @@
 #include <dmalloc.h>
 #endif
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+/*! \brief Selects the given object and adds it to the selection list
+ *  \par Selects the given object and does the needed work to make the
+ *  object visually selected.
+ *  \param [in] head Selection list
+ *  \param [in] o_selected Object to select.
+ *  \returns a pointer to the selection list, with the object added.
  */
-SELECTION *o_selection_return_tail(SELECTION *head)
+GList *o_selection_add(GList *head, OBJECT *o_selected)
 {
-  SELECTION *s_current=NULL;
-  SELECTION *ret_struct=NULL;
-
-  s_current = head;
-  while ( s_current != NULL ) { /* goto end of list */
-    ret_struct = s_current;
-    s_current = s_current->next;
-  }
-
-  return(ret_struct);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SELECTION *o_selection_return_head(SELECTION *tail)
-{
-  SELECTION *s_current=NULL;
-  SELECTION *ret_struct=NULL;
-
-  s_current = tail;
-  while ( s_current != NULL ) { /* goto end of list */
-    ret_struct = s_current;
-    s_current = s_current->prev;
-  }
-
-  return(ret_struct);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SELECTION *o_selection_new_head(void)
-{
-  SELECTION *s_new;
-
-  s_new = (SELECTION *) g_malloc(sizeof(SELECTION));
-  s_new->selected_object = NULL;
-  s_new->prev = NULL;
-  s_new->next = NULL;
-
-  return(s_new);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_selection_destroy_head(SELECTION *s_head)
-{
-  g_free(s_head);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* also does the needed work to make the object visually selected */
-SELECTION *o_selection_add(SELECTION *head, OBJECT *o_selected)
-{
-  SELECTION *tail;
-  SELECTION *s_new;
-	
-  s_new = (SELECTION *) g_malloc(sizeof(SELECTION));
-
-  if (o_selected != NULL) {
-    s_new->selected_object = o_selected;
-  } else {
-    fprintf(stderr, "Got NULL passed to o_selection_new\n");
-  }
-
   o_selection_select(o_selected, SELECT_COLOR);
-
-  if (head == NULL) {
-    s_new->prev = NULL; /* setup previous link */
-    s_new->next = NULL;
-    return(s_new);
-  } else {
-    tail = o_selection_return_tail(head);
-    s_new->prev = tail; /* setup previous link */
-    s_new->next = NULL;
-    tail->next = s_new;
-    return(tail->next);
-  }
+  return (g_list_append(head, o_selected));
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Prints the given selection list.
+ *  \par Prints the given selection list.
+ *  \param [in] head Selection list to print.
  *
  */
-/* it's okay to call this with an o_selected which is not necessarily */
-/* selected */
-void o_selection_remove(SELECTION *head, OBJECT *o_selected)
+void o_selection_print_all( GList *head )
 {
-  SELECTION *s_current;
-
-  if (o_selected == NULL) {
-    fprintf(stderr, "Got NULL for o_selected in o_selection_remove\n");
-    return;
-  }
-
-  s_current = head;	
-
-  while (s_current != NULL) {
-    if (s_current->selected_object == o_selected) {
-      if (s_current->next)
-        s_current->next->prev = s_current->prev;
-      else
-        s_current->next = NULL;
-
-      if (s_current->prev)
-        s_current->prev->next = s_current->next;
-      else
-        s_current->prev = NULL;
-
-      o_selection_unselect(s_current->selected_object);
-
-      s_current->selected_object = NULL;
-      g_free(s_current);
-      return;
-    }
-    s_current = s_current->next;
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* removes all but the head node */
-void o_selection_remove_most(TOPLEVEL *w_current, SELECTION *head)
-{
-  SELECTION *s_current;
-  SELECTION *s_prev;
-
-  s_current = o_selection_return_tail(head);
-
-  while (s_current != NULL) {
-    if (s_current->selected_object != NULL) {
-      s_prev = s_current->prev;	
-
-      o_selection_unselect(s_current->selected_object);
-
-      o_redraw_single(w_current,  
-                      s_current->selected_object);
-	
-      s_current->selected_object = NULL;
-      g_free(s_current);
-      s_current = s_prev;
-    } else {
-      break;
-    }
-  }
-
-  /* clear out any dangling pointers */
-  head->next=NULL;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_selection_print_all( SELECTION *head )
-{
-  SELECTION *s_current;
+  GList *s_current;
 
   s_current = head;
 
   printf("START printing selection ********************\n");
   while(s_current != NULL) {
-    if (s_current->selected_object) {
+    if (s_current->data) {
       printf("Selected object: %d\n", 
-             s_current->selected_object->sid);
+	     ( (OBJECT *) s_current->data)->sid);
     }
     s_current = s_current->next;
   }
@@ -243,32 +83,12 @@ void o_selection_print_all( SELECTION *head )
 
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+/*! \brief Selects the given object.
+ *  \par Sets the select flag, saves the color, and then selects the 
+ *  given object
+ *  \param [in] o_selected Object to select.
+ *  \param [in] color color of the selected object.
  */
-void o_selection_destroy_all(SELECTION *head) 
-{
-  SELECTION *s_current;
-  SELECTION *s_prev;
-
-  s_current = o_selection_return_tail(head);
-
-  while (s_current != NULL) {
-    s_prev = s_current->prev;	
-    s_current->selected_object = NULL;
-    g_free(s_current);
-    s_current = s_prev;
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* this sets the select flag, saves the color, and then sets the color */
 void o_selection_select(OBJECT *object, int color)
 {
   if (object->selected == TRUE) {
@@ -292,13 +112,12 @@ void o_selection_select(OBJECT *object, int color)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+/*! \brief Unselects the given object.
+ *  \par Unsets the select flag, restores the original color of the
+ *  given object.
+ *  This function should not be called by anybody outside of this file.
+ *  \param [in] object Object to unselect.
  */
-/* this unsets the select flag and restores the original color */
-/* this function should not be called by anybody outside of this file */
 void o_selection_unselect(OBJECT *object)
 {
   object->selected = FALSE;
@@ -307,81 +126,61 @@ void o_selection_unselect(OBJECT *object)
   /* grips are erase */
   object->color = object->saved_color;
   if (object->type == OBJ_COMPLEX || object->type == OBJ_PLACEHOLDER) { 
+    if (!object->complex) {
+      fprintf(stderr, "o_selection_unselect: Called with NULL object.\n");
+      return;
+    }
     o_complex_unset_color(object->complex->prim_objs);
   } else if (object->type == OBJ_TEXT) {
+    if (!object->text) {
+      fprintf(stderr, "o_selection_unselect: Called with NULL object.\n");
+      return;
+    }
     o_complex_unset_color(object->text->prim_objs);
   }
 
   object->saved_color = -1;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+/*! \brief Removes the given object from the selection list
+ *  \par Removes the given object from the selection list and does the 
+ *  needed work to make the object visually unselected.
+ *  It's ok to call this function with an object which is not necessarily
+ *  selected.
+ *  \param [in] head Pointer to the selection list
+ *  \param [in] o_selected Object to unselect and remove from the list.
  */
-OBJECT *o_selection_return_first_object(SELECTION *head) 
+void
+o_selection_remove(GList **head, OBJECT *o_selected)
 {
-  if (!head)
-  return(NULL);
+  if (o_selected == NULL) {
+    fprintf(stderr, "Got NULL for o_selected in o_selection_remove\n");
+    return;
+  }
 
-  if (!head->next)  
-  return(NULL);
-
-  if (!head->next->selected_object) 
-  return(NULL);
-
-  return(head->next->selected_object);
+  if (g_list_find(*head, o_selected) != NULL) {
+    o_selection_unselect(o_selected);
+    *head = g_list_remove(*head, o_selected);
+  }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+/*! \brief Unselects all the objects in the given list.
+ *  \par Unselects all objects in the given list, does the 
+ *  needed work to make the objects visually unselected, and redraw them.
+ *  \param [in] w_current TOPLEVEL struct.
+ *  \param [in] head Pointer to the selection list
  */
-/* Nth starts counting a ZERO */
-/* doesn't consider the head node an object */
-OBJECT *o_selection_return_nth_object(SELECTION *head, int count) 
+void
+o_selection_unselect_list(TOPLEVEL *w_current, GList **head)
 {
-  int internal_counter = 0;
-  SELECTION *s_current;
-
-  s_current = head->next;
-
-  while (s_current != NULL) {
-    if (internal_counter == count) {
-      if (s_current->selected_object) {
-        return(s_current->selected_object);
-      }
-    }
-    internal_counter++;
-
-    s_current = s_current->next;
-  }
-  return(NULL);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-int o_selection_return_num(SELECTION *head)
-{
-  int counter = 0;
-  SELECTION *s_current;
-
-  if (!head) {
-    return 0;
+  GList *list = *head;
+  
+  while (list != NULL) {
+    o_selection_unselect((OBJECT *) list->data);
+    o_redraw_single(w_current, (OBJECT *) list->data);
+   list = list->next;
   }
   
-  /* skip over head */
-  s_current = head->next;
-
-  while (s_current != NULL) {
-    counter++;
-    s_current = s_current->next;
-  }
-  
-  return(counter);
+  g_list_free(*head);
+  *head = NULL;  
 }

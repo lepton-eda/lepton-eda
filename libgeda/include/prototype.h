@@ -198,7 +198,9 @@ void o_attrib_free_returned(OBJECT **found_objects);
 /* o_basic.c */
 int inside_region(int left, int top, int right, int bottom, int x, int y);
 void o_redraw_single(TOPLEVEL *w_current, OBJECT *o_current);
-void o_recalc(TOPLEVEL *w_current, OBJECT *object_list);
+void o_recalc_single_object(TOPLEVEL *w_current, OBJECT *o_current);
+void o_recalc_object_list(TOPLEVEL *w_current, OBJECT *object_list);
+void o_recalc_object_glist(TOPLEVEL *w_current, GList *object_glist);
 void o_set_line_options(TOPLEVEL *w_current, OBJECT *o_current, OBJECT_END end, OBJECT_TYPE type, int width, int length, int space);
 void o_set_fill_options(TOPLEVEL *w_current, OBJECT *o_current, OBJECT_FILLING type, int width, int pitch1, int angle1, int pitch2, int angle2);
 void o_object_recalc(TOPLEVEL *w_current, OBJECT *o_current);
@@ -279,8 +281,14 @@ void o_circle_print_hatch(TOPLEVEL *w_current, FILE *fp, int x, int y, int radiu
 void o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
 
 /* o_complex_basic.c */
-void get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom);
-void get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head, int *left, int *top, int *right, int *bottom);
+void get_single_object_bounds(TOPLEVEL *w_current, OBJECT *complex, 
+			      int *rleft, int *rtop, 
+			      int *rright, int *rbottom);
+void get_object_list_bounds(TOPLEVEL *w_current, OBJECT *complex, 
+			    int *left, int *top, int *right, int *bottom);
+void get_object_glist_bounds(TOPLEVEL *w_current, GList *o_list, 
+			     int *left, int *top, 
+			     int *right, int *bottom);
 void world_get_single_object_bounds(TOPLEVEL *w_current, OBJECT *o_current, 
 				    int *left, int *top, 
 				    int *right, int *bottom);
@@ -288,7 +296,10 @@ void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, i
 OBJECT *add_head(void);
 int o_complex_is_eligible_attribute(TOPLEVEL *w_current, OBJECT *object, int promote_invisible);
 int o_complex_is_embedded(OBJECT *o_current);
-OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, int mirror, char *clib, char *basename, int selectable, int attribute_promotion);
+OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, 
+		      GList **object_glist, char type, int color, 
+		      int x, int y, int angle, int mirror, char *clib, 
+		      char *basename, int selectable, int attribute_promotion);
 OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, char *clib, char *basename, int selectable);
 void o_complex_recalc(TOPLEVEL *w_current, OBJECT *o_current);
 OBJECT *o_complex_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
@@ -349,7 +360,7 @@ double o_line_length(OBJECT *object);
 /* o_list.c */
 OBJECT *o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected, int flag, OBJECT **return_end);
 OBJECT *o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_head, int flag);
-OBJECT *o_list_copy_all_selection2(TOPLEVEL *w_current, SELECTION *src_list_head, OBJECT *dest_list_head, int flag);
+OBJECT *o_list_copy_all_selection2(TOPLEVEL *w_current, GList *src_list_head, OBJECT *dest_list_head, int flag);
 OBJECT *o_list_search(OBJECT *list, OBJECT *current);
 void o_list_delete(TOPLEVEL *w_current, OBJECT *list, OBJECT *delete);
 void o_list_delete_rest(TOPLEVEL *w_current, OBJECT *list);
@@ -422,20 +433,12 @@ void o_pin_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichon
 void o_pin_update_whichend(TOPLEVEL *w_current, OBJECT *object_list, int num_pins);
 
 /* o_selection.c */
-SELECTION *o_selection_return_tail(SELECTION *head);
-SELECTION *o_selection_return_head(SELECTION *tail);
-SELECTION *o_selection_new_head(void);
-void o_selection_destroy_head(SELECTION *s_head);
-SELECTION *o_selection_add(SELECTION *head, OBJECT *o_selected);
-void o_selection_remove(SELECTION *head, OBJECT *o_selected);
-void o_selection_remove_most(TOPLEVEL *w_current, SELECTION *head);
-void o_selection_print_all(SELECTION *head);
-void o_selection_destroy_all(SELECTION *head);
+GList *o_selection_add(GList *head, OBJECT *o_selected);
+void o_selection_print_all( GList *head );
 void o_selection_select(OBJECT *object, int color);
 void o_selection_unselect(OBJECT *object);
-OBJECT *o_selection_return_first_object(SELECTION *head);
-OBJECT *o_selection_return_nth_object(SELECTION *head, int count);
-int o_selection_return_num(SELECTION *head);
+void o_selection_remove(GList **head, OBJECT *o_selected);
+void o_selection_unselect_list(TOPLEVEL *w_current, GList **head);
 
 /* o_text_basic.c */
 void get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
@@ -486,8 +489,10 @@ OBJECT *s_basic_link_object(OBJECT *new_node, OBJECT *ptr);
 void print_struct_forw(OBJECT *ptr);
 void print_struct_back(OBJECT *ptr);
 void print_struct(OBJECT *ptr);
+void s_delete_object(TOPLEVEL *w_current, OBJECT *o_current);
 void s_delete(TOPLEVEL *w_current, OBJECT *o_current);
 void s_delete_list_fromstart(TOPLEVEL *w_current, OBJECT *start);
+void s_delete_object_glist(TOPLEVEL *w_current, GList *list);
 OBJECT *s_remove(TOPLEVEL *w_current, OBJECT *object);
 void string_toupper(char *in, char *out);
 void string_tolower(char *in, char *out);

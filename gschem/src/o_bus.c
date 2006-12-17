@@ -270,7 +270,7 @@ void o_bus_start(TOPLEVEL *w_current, int x, int y)
 
 #if 0 /* not ready for prime time use */
   /* new bus extenstion stuff */
-  o_current = w_current->page_current->selection_head->next;
+  o_current = w_current->page_current->selection_list;
   if (o_current != NULL && w_current->event_state == STARTDRAWNET) {
     if (o_current->type == OBJ_BUS) {
       if (o_current->line) {

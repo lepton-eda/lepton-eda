@@ -4,6 +4,10 @@
         the wrong libgeda version is found. (Bug reported by Karel Kulhavy;
         thanks)
 
+2006-10-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_object.c: Fixed compile error on glist_dev branch
+
 2006-10-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Bumped package version to 20061020.

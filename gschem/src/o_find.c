@@ -69,7 +69,6 @@ gboolean o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y,
 	return object_found;
       }
     }
-    
     o_current = o_current->next;
   } 
 
@@ -99,7 +98,7 @@ gboolean o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y,
  	object_found = TRUE;
         
         i_update_menus(w_current);
-        return object_found;
+	return object_found;
       }
     }
     o_current = o_current->next;
@@ -113,11 +112,11 @@ gboolean o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y,
   if (change_selection && (!w_current->SHIFTKEY)) {
 
 #if DEBUG
-    o_selection_print_all( w_current->page_current->selection2_head);
+    o_selection_print_all( w_current->page_current->selection_list);
 #endif
     o_select_run_hooks(w_current, NULL, 2); 
-    o_selection_remove_most(w_current, 
-                            w_current->page_current->selection2_head);
+    o_selection_unselect_list (w_current,
+			       &(w_current->page_current->selection_list));
   }
 
   i_update_menus(w_current);
@@ -134,15 +133,12 @@ gboolean o_find_selected_object(TOPLEVEL *w_current,
 				int screen_x, int screen_y)
 {
   OBJECT *o_current=NULL;
-  SELECTION *s_current;
+  GList *s_current;
 
-  g_assert (w_current->page_current->selection2_head != NULL);
-
-  /* Skip the head node */
-  s_current = w_current->page_current->selection2_head->next;
+  s_current = w_current->page_current->selection_list;
   /* do first search */
   while (s_current != NULL) {
-    o_current = s_current->selected_object;
+    o_current = (OBJECT *) s_current->data;
     if (inside_region(o_current->left, o_current->top,
                       o_current->right, o_current->bottom, 
                       screen_x, screen_y)) {

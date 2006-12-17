@@ -36,7 +36,7 @@
  */
 void o_move_start(TOPLEVEL * w_current, int x, int y)
 {
-  if (w_current->page_current->selection2_head->next != NULL) {
+  if (w_current->page_current->selection_list != NULL) {
 
     /* Save the current state. When rotating the selection when moving,
        we have to come back to here */
@@ -50,15 +50,16 @@ void o_move_start(TOPLEVEL * w_current, int x, int y)
     o_erase_selected(w_current);
     
     o_drawbounding(w_current, NULL,
-                   w_current->page_current->selection2_head->next,
+                   w_current->page_current->selection_list,
                    x_get_darkcolor(w_current->bb_color), TRUE);
 
     if (w_current->netconn_rubberband) {
       o_move_prep_rubberband(w_current);
       o_move_stretch_rubberband(w_current);
     }
-
-    w_current->inside_action = 1;
+    
+    o_select_move_to_place_list(w_current); 
+    w_current->inside_action = 1;    
   }
 }
 
@@ -165,7 +166,7 @@ void o_move_end_lowlevel(TOPLEVEL * w_current, OBJECT * list, int type,
  */
 void o_move_end(TOPLEVEL * w_current)
 {
-  SELECTION *s_current = NULL;
+  GList *s_current = NULL;
   OBJECT *object;
   int diff_x, diff_y;
   int screen_diff_x, screen_diff_y;
@@ -207,22 +208,23 @@ void o_move_end(TOPLEVEL * w_current)
 
   if (w_current->actionfeedback_mode == OUTLINE) {
     o_drawbounding(w_current, NULL,
-                   w_current->page_current->selection2_head->next,
+                   w_current->page_current->selection_list,
                    x_get_darkcolor(w_current->bb_color), TRUE);
   }
   
   /* skip over head node */
-  s_current = w_current->page_current->selection2_head->next;
+  s_current = w_current->page_current->selection_list;
 
   while (s_current != NULL) {
 
-    if (s_current->selected_object == NULL) {
+    object = (OBJECT *) s_current->data;
+
+    if (object == NULL) {
       fprintf(stderr, _("ERROR: NULL object in o_move_end!\n"));
       exit(-1);
     }
 
 
-    object = s_current->selected_object;
     switch (object->type) {
       case (OBJ_NET):
       case (OBJ_PIN):
@@ -264,8 +266,8 @@ void o_move_end(TOPLEVEL * w_current)
                             &other_objects, &connected_objects);
 
 
-        get_complex_bounds(w_current, object->complex->prim_objs,
-                           &left, &top, &right, &bottom);
+        get_object_list_bounds(w_current, object->complex->prim_objs,
+			       &left, &top, &right, &bottom);
 
         object->left = left;
         object->top = top;
@@ -284,7 +286,7 @@ void o_move_end(TOPLEVEL * w_current)
   /* erase the bounding box */
   if (w_current->actionfeedback_mode == BOUNDINGBOX) {
     o_drawbounding(w_current, NULL,
-                   w_current->page_current->selection2_head->next,
+                   w_current->page_current->selection_list,
                    x_get_darkcolor(w_current->bb_color), FALSE);
   }
 
@@ -313,6 +315,8 @@ void o_move_end(TOPLEVEL * w_current)
   g_list_free(rubbernet_other_objects);
   g_list_free(rubbernet_connected_objects);
 
+  g_list_free(w_current->page_current->complex_place_list);
+  w_current->page_current->complex_place_list = NULL;
 }
 
 /*! \todo Finish function documentation!!!
@@ -418,7 +422,7 @@ void o_move_check_endpoint(TOPLEVEL * w_current, OBJECT * object)
  */
 void o_move_prep_rubberband(TOPLEVEL * w_current)
 {
-  SELECTION *s_current;
+  GList *s_current;
   OBJECT *object;
   OBJECT *o_current;
 
@@ -433,10 +437,9 @@ void o_move_prep_rubberband(TOPLEVEL * w_current)
   printf("\n\n\n");
 #endif
 
-  /* skip over head */
-  s_current = w_current->page_current->selection2_head->next;
+  s_current = w_current->page_current->selection_list;
   while (s_current != NULL) {
-    object = s_current->selected_object;
+    object = (OBJECT *) s_current->data;
     if (object) {
       switch (object->type) {
         case (OBJ_NET):

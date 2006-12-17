@@ -737,8 +737,8 @@ x_print_setup (TOPLEVEL * w_current, char *filename)
 		
       /* de select everything first */
       o_select_run_hooks (w_current, NULL, 2);
-      o_selection_remove_most (w_current,
-			       w_current->page_current->selection2_head);
+      g_list_free(w_current->page_current->selection_list);
+      w_current->page_current->selection_list = NULL;
 
       if (usefile && filename[0])
 	/* Print to file */

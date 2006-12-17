@@ -88,15 +88,14 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
       case(ENDCOPY):
       case(ENDMCOPY):
         o_drawbounding(w_current, NULL,
-                       w_current->page_current->selection2_head->next,
+                       w_current->page_current->selection_list,
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
       case(DRAWCOMP):
       case(ENDCOMP):
       case(ENDPASTE):
- 	 o_drawbounding(w_current, 
-		       w_current->page_current->complex_place_head->next,
-                       NULL,
+	o_drawbounding(w_current, NULL,
+		       w_current->page_current->complex_place_list,
                        x_get_darkcolor(w_current->bb_color), FALSE); 
         break;
 
@@ -161,7 +160,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   printf("event state: %d \n", event->state);
   printf("w_current state: %d \n", w_current->event_state);
   printf("Selection is:\n");
-  o_selection_print_all( w_current->page_current->selection2_head);
+  o_selection_print_all( w_current->page_current->selection_list);
   printf("\n");
 #endif
 
@@ -169,8 +168,8 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       (w_current->event_state == STARTSELECT || 
        w_current->event_state == SELECT)) {
     o_find_object(w_current, (int) event->x, (int) event->y, TRUE);
-    if (w_current->page_current->selection2_head->next) {
-       o_edit(w_current, w_current->page_current->selection2_head->next);
+    if (w_current->page_current->selection_list) {
+       o_edit(w_current, w_current->page_current->selection_list);
        return(0);
     }
   }
@@ -433,7 +432,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 	w_current->DONT_REDRAW = 0;
         o_rotate_90(
                     w_current,
-                    w_current->page_current->selection2_head->next,
+                    w_current->page_current->selection_list,
                     (int) event->x, (int) event->y);
 	w_current->DONT_REDRAW = prev_state;
 
@@ -444,7 +443,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
       case(ENDMIRROR):
         o_mirror(w_current,
-                 w_current->page_current->selection2_head->next,
+                 w_current->page_current->selection_list,
                  (int) event->x, (int) event->y);
 
         w_current->inside_action = 0;
@@ -759,7 +758,6 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(STARTSELECT):
-
         /* first look for grips */
         if (!o_grips_start(
                            w_current, (int) event->x, (int) event->y)) {
@@ -782,9 +780,9 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
     if (w_current->inside_action) {
       if (w_current->event_state == ENDCOMP) {
         o_drawbounding(w_current,
-                       w_current->page_current->
-                       complex_place_head->next, 
-                       NULL, x_get_darkcolor(w_current->bb_color), TRUE);
+                       NULL,
+		       w_current->page_current->complex_place_list,
+		       x_get_darkcolor(w_current->bb_color), TRUE);
 
         w_current->complex_rotate = 
         (w_current->complex_rotate + 90) % 360;
@@ -792,15 +790,16 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 	o_complex_place_rotate(w_current);
 	  
         o_drawbounding(w_current,
-                       w_current->page_current->
-                       complex_place_head->next, 
-                       NULL, x_get_darkcolor(w_current->bb_color), TRUE);
+                       NULL,
+		       w_current->page_current->complex_place_list,
+		       x_get_darkcolor(w_current->bb_color), TRUE);
         return(0);
       } else if (w_current->event_state == ENDTEXT) {
         o_drawbounding(w_current,
                        w_current->page_current->
                        attrib_place_head->next, 
-                       NULL, x_get_darkcolor(w_current->bb_color), TRUE);
+                       NULL, 
+		       x_get_darkcolor(w_current->bb_color), TRUE);
 
         w_current->complex_rotate = 
         (w_current->complex_rotate + 90) % 360;
@@ -810,27 +809,27 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         o_drawbounding(w_current,
                        w_current->page_current->
                        attrib_place_head->next, 
-                       NULL, x_get_darkcolor(w_current->bb_color), TRUE);
+                       NULL, 
+		       x_get_darkcolor(w_current->bb_color), TRUE);
         return(0);
 
       }
       else if ((w_current->event_state == ENDMOVE) ||
 	       (w_current->event_state == ENDCOPY) ||
 	       (w_current->event_state == ENDMCOPY) ) {
-	g_assert (w_current->page_current->selection2_head != NULL);
 	prev_state = w_current->event_state;
-
+	
 	o_drawbounding(w_current, NULL,
-		       w_current->page_current->selection2_head->next,
+		       w_current->page_current->complex_place_list,
 		       x_get_darkcolor(w_current->bb_color), TRUE);
-
+	
 	/* Don't allow o_rotate_90 to erase the selection, neither to
 	   redraw the objects after rotating */
 	/* skip over head node */
 	redraw_state = w_current->DONT_REDRAW;
 	w_current->DONT_REDRAW = 1;
 
-	o_rotate_90(w_current, w_current->page_current->selection2_head->next,
+	o_rotate_90(w_current, w_current->page_current->complex_place_list,
 		    fix_x(w_current, w_current->start_x),
 		    fix_y(w_current, w_current->start_y));
 	w_current->DONT_REDRAW = redraw_state;
@@ -838,7 +837,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 	w_current->event_state = prev_state;
 
 	o_drawbounding(w_current, NULL,
-		       w_current->page_current->selection2_head->next,
+		       w_current->page_current->complex_place_list,
 		       x_get_darkcolor(w_current->bb_color), TRUE);
 	
         return(0);
@@ -1072,17 +1071,10 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
         o_move_stretch_rubberband(w_current);
       }
 
-      o_drawbounding(
-                     w_current, NULL,
-                     w_current->page_current->selection2_head->next,
-                     x_get_darkcolor(w_current->bb_color), FALSE);
+      o_complex_rubbercomplex(w_current);
       w_current->last_x = fix_x(w_current,  (int) event->x);
       w_current->last_y = fix_y(w_current,  (int) event->y);
-      o_drawbounding(
-                     w_current, NULL,
-                     w_current->page_current->selection2_head->next,
-                     x_get_darkcolor(w_current->bb_color), FALSE);
-
+      o_complex_rubbercomplex(w_current);
       if (w_current->netconn_rubberband) {
         o_move_stretch_rubberband(w_current);
       }
@@ -1095,15 +1087,13 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     case(ENDMCOPY):
     case(MCOPY):
     if (w_current->inside_action) {
-      o_drawbounding(
-                     w_current, NULL,
-                     w_current->page_current->selection2_head->next,
+      o_drawbounding(w_current, NULL,
+                     w_current->page_current->selection_list,
                      x_get_darkcolor(w_current->bb_color), FALSE);
       w_current->last_x = fix_x(w_current,  (int) event->x);
       w_current->last_y = fix_y(w_current,  (int) event->y);
-      o_drawbounding(
-                     w_current, NULL,
-                     w_current->page_current->selection2_head->next,
+      o_drawbounding(w_current, NULL,
+                     w_current->page_current->selection_list,
                      x_get_darkcolor(w_current->bb_color), FALSE);
     }
     break;

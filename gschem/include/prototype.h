@@ -471,9 +471,9 @@ void o_arc_rubberarc_xor(TOPLEVEL *w_current);
 void o_arc_draw_grips(TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
 /* o_attrib.c */
-void o_attrib_add_selected(TOPLEVEL *w_current, SELECTION *selection_list, OBJECT *selected);
-void o_attrib_toggle_visibility(TOPLEVEL *w_current, SELECTION *list);
-void o_attrib_toggle_show_name_value(TOPLEVEL *w_current, SELECTION *list, int new_show_name_value);
+void o_attrib_add_selected(TOPLEVEL *w_current, GList **selection_list, OBJECT *selected);
+void o_attrib_toggle_visibility(TOPLEVEL *w_current, GList *list);
+void o_attrib_toggle_show_name_value(TOPLEVEL *w_current, GList *list, int new_show_name_value);
 void o_attrib_start(TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_attrib_end(TOPLEVEL *w_current);
 void o_attrib_rubberattrib(TOPLEVEL *w_current);
@@ -487,8 +487,9 @@ void o_draw_list(TOPLEVEL *w_current, GList *list);
 void o_draw_selected(TOPLEVEL *w_current);
 void o_erase_selected(TOPLEVEL *w_current);
 void o_erase_single(TOPLEVEL *w_current, OBJECT *object);
-void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list, GdkColor *color, int firsttime);
-void o_erasebounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list);
+void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, 
+		    GList *o_glist, GdkColor *color, int firsttime);
+void o_erasebounding(TOPLEVEL *w_current, OBJECT *o_list, GList *s_list);
 int o_erase_rubber(TOPLEVEL *w_current);
 int o_redraw_cleanstates(TOPLEVEL *w_current);
 /* o_box.c */
@@ -552,11 +553,17 @@ void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_complex_place_rotate(TOPLEVEL *w_current);
 void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_complex_rubbercomplex(TOPLEVEL *w_current);
+void o_complex_translate_display_single_object(TOPLEVEL *w_current,
+					       int x1, int y1, 
+					       OBJECT *o_current);
+void o_complex_translate_display_object_glist(TOPLEVEL *w_current,
+					      int x1, int y1, 
+					      GList *object_list);
 void o_complex_translate_display(TOPLEVEL *w_current, int x1, int y1, OBJECT *complex);
-void o_complex_translate_display_selection(TOPLEVEL *w_current, int x1, int y1, SELECTION *head);
+void o_complex_translate_display_selection(TOPLEVEL *w_current, int x1, int y1, GList *head);
 void o_complex_translate2(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
 void o_complex_translate_all(TOPLEVEL *w_current, int offset);
-void o_complex_translate_selection(TOPLEVEL *w_current, int dx, int dy, SELECTION *head);
+void o_complex_translate_selection(TOPLEVEL *w_current, int dx, int dy, GList *head);
 void o_complex_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, int angle_change, OBJECT *object);
 int o_complex_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 OBJECT *o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery, OBJECT *object);
@@ -630,14 +637,14 @@ void o_line_rubberline_xor(TOPLEVEL *w_current);
 void o_line_draw_grips(TOPLEVEL *w_current, OBJECT *o_current);
 void o_line_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
 /* o_misc.c */
-void o_edit(TOPLEVEL *w_current, SELECTION *list);
+void o_edit(TOPLEVEL *w_current, GList *list);
 void o_lock(TOPLEVEL *w_current);
 void o_unlock(TOPLEVEL *w_current);
-void o_rotate_90(TOPLEVEL *w_current, SELECTION *list, 
+void o_rotate_90(TOPLEVEL *w_current, GList *list, 
 		 int centerx, int centery);
 void o_embed(TOPLEVEL *w_current, OBJECT *o_current);
 void o_unembed(TOPLEVEL *w_current, OBJECT *o_current);
-void o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery);
+void o_mirror(TOPLEVEL *w_current, GList *list, int centerx, int centery);
 void o_edit_show_hidden_lowlevel(TOPLEVEL *w_current, OBJECT *o_list);
 void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list);
 void o_edit_make_visible(TOPLEVEL *w_current, OBJECT *o_list);
@@ -702,6 +709,7 @@ void o_select_box_search(TOPLEVEL *w_current);
 OBJECT *o_select_return_first_object(TOPLEVEL *w_current);
 int o_select_selected(TOPLEVEL *w_current);
 void o_select_unselect_all(TOPLEVEL *w_current);
+void o_select_move_to_place_list(TOPLEVEL *w_current);
 /* o_slot.c */
 void o_slot_start(TOPLEVEL *w_current, OBJECT *list);
 void o_slot_end(TOPLEVEL *w_current, char *string, int len);

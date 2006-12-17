@@ -799,7 +799,7 @@ DEFINE_I_CALLBACK(edit_edit)
   exit_if_null(w_current);
 
   i_update_middle_button(w_current, i_callback_edit_edit, _("Edit"));
-  o_edit(w_current, w_current->page_current->selection2_head->next);
+  o_edit(w_current, w_current->page_current->selection_list);
 }
 
 /*! \todo Finish function documentation!!!
@@ -884,18 +884,19 @@ DEFINE_I_CALLBACK(edit_rotate_90)
 DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
-  SELECTION *s_current;
+  GList *object_list;
 
   exit_if_null(w_current);
   o_redraw_cleanstates(w_current);	
 
-  if (w_current->page_current->selection2_head) {
-    s_current = w_current->page_current->selection2_head->next;
+  object_list = w_current->page_current->selection_list;    
+
+  if (object_list) {
     i_update_middle_button(w_current,
                            i_callback_edit_rotate_90_hotkey, _("Rotate"));
     /* Allow o_rotate_90 to redraw the objects */
     w_current->DONT_REDRAW = 0;
-    o_rotate_90(w_current, s_current, mouse_x, mouse_y);
+    o_rotate_90(w_current, object_list, mouse_x, mouse_y);
   }
 
   w_current->event_state = SELECT;
@@ -926,19 +927,20 @@ DEFINE_I_CALLBACK(edit_mirror)
 DEFINE_I_CALLBACK(edit_mirror_hotkey)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
-  OBJECT *object;
+  GList *object_list;
 
   exit_if_null(w_current);
 
   o_redraw_cleanstates(w_current);	
-  object = o_select_return_first_object(w_current);
 
-  if (object) {
+  object_list = w_current->page_current->selection_list;    
+
+  if (object_list) {
     i_update_middle_button(w_current,
                            i_callback_edit_mirror_hotkey, _("Mirror"));
 
     o_mirror(w_current, 
-             w_current->page_current->selection2_head->next, 
+             object_list, 
              mouse_x, mouse_y);
   }
 
@@ -1025,6 +1027,7 @@ DEFINE_I_CALLBACK(edit_translate)
 DEFINE_I_CALLBACK(edit_embed)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
+  OBJECT *o_current;
 
   exit_if_null(w_current);
 
@@ -1032,14 +1035,15 @@ DEFINE_I_CALLBACK(edit_embed)
   /* anything selected ? */
   if (o_select_selected(w_current)) {
     /* yes, embed each selected component */
-    SELECTION *s_current =
-      w_current->page_current->selection2_head->next;
+    GList *s_current =
+      w_current->page_current->selection_list;
 
     while (s_current != NULL) {
-      g_assert (s_current->selected_object != NULL);
-      if ( (s_current->selected_object->type == OBJ_COMPLEX) ||
-	   (s_current->selected_object->type == OBJ_PICTURE) ) {
-        o_embed (w_current, s_current->selected_object);
+      o_current = (OBJECT *) s_current->data;
+      g_assert (o_current != NULL);
+      if ( (o_current->type == OBJ_COMPLEX) ||
+	   (o_current->type == OBJ_PICTURE) ) {
+        o_embed (w_current, o_current);
       }
       s_current = s_current->next;
     }
@@ -1061,6 +1065,7 @@ DEFINE_I_CALLBACK(edit_embed)
 DEFINE_I_CALLBACK(edit_unembed)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
+  OBJECT *o_current;
 
   exit_if_null(w_current);
 
@@ -1068,14 +1073,15 @@ DEFINE_I_CALLBACK(edit_unembed)
   /* anything selected ? */
   if (o_select_selected(w_current)) {
     /* yes, unembed each selected component */
-    SELECTION *s_current =
-      w_current->page_current->selection2_head->next;
+    GList *s_current =
+      w_current->page_current->selection_list;
 
     while (s_current != NULL) {
-      g_assert (s_current->selected_object != NULL);
-      if ( (s_current->selected_object->type == OBJ_COMPLEX) ||
-           (s_current->selected_object->type == OBJ_PICTURE) ) {
-        o_unembed (w_current, s_current->selected_object);
+      o_current = (OBJECT *) s_current->data;
+      g_assert (o_current != NULL);
+      if ( (o_current->type == OBJ_COMPLEX) ||
+           (o_current->type == OBJ_PICTURE) ) {
+        o_unembed (w_current, o_current);
       }
       s_current = s_current->next;
     }
@@ -1097,6 +1103,7 @@ DEFINE_I_CALLBACK(edit_unembed)
 DEFINE_I_CALLBACK(edit_update)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
+  OBJECT *o_current;
 
   exit_if_null(w_current);
 
@@ -1104,14 +1111,14 @@ DEFINE_I_CALLBACK(edit_update)
   /* anything selected ? */
   if (o_select_selected(w_current)) {
     /* yes, update each selected component */
-    SELECTION *s_current =
-      w_current->page_current->selection2_head->next;
+    GList *s_current =
+      w_current->page_current->selection_list;
 
     while (s_current != NULL) {
-      g_assert (s_current->selected_object != NULL);
-      if (s_current->selected_object->type == OBJ_COMPLEX) {
-        o_update_component (w_current,
-                            s_current->selected_object);
+      o_current = (OBJECT *) s_current->data;
+      g_assert (o_current != NULL);
+      if (o_current->type == OBJ_COMPLEX) {
+        o_update_component (w_current, o_current);
       }
       s_current = s_current->next;
     }
@@ -1259,13 +1266,13 @@ DEFINE_I_CALLBACK(edit_linetype)
 
   /* anything selected ? */
   if (o_select_selected(w_current)) {
-    SELECTION *s_current =
-      w_current->page_current->selection2_head->next;
+    GList *s_current =
+      w_current->page_current->selection_list;
     GList *objects = NULL;
 
     /* yes, build a list of relevant objects */
     while (s_current != NULL) {
-      OBJECT *o_current = s_current->selected_object;
+      OBJECT *o_current = (OBJECT *) s_current->data;
           
       if (o_current->type == OBJ_LINE   ||
           o_current->type == OBJ_BOX    ||
@@ -1302,13 +1309,13 @@ DEFINE_I_CALLBACK(edit_filltype)
 
   /* anything selected ? */
   if (o_select_selected(w_current)) {
-    SELECTION *s_current =
-      w_current->page_current->selection2_head->next;
+    GList *s_current =
+      w_current->page_current->selection_list;
     GList *objects = NULL;
 
     /* yes, build a list of relevant objects */
     while (s_current != NULL) {
-      OBJECT *o_current = s_current->selected_object;
+      OBJECT *o_current = (OBJECT *) s_current->data;
           
       if (o_current->type == OBJ_BOX ||
           o_current->type == OBJ_CIRCLE) {
@@ -1854,7 +1861,7 @@ DEFINE_I_CALLBACK(buffer_copy1)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection2_head->next == NULL)
+  if (w_current->page_current->selection_list == NULL)
   return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy1, _("Copy 1"));
@@ -1873,7 +1880,7 @@ DEFINE_I_CALLBACK(buffer_copy2)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection2_head->next == NULL)
+  if (w_current->page_current->selection_list == NULL)
   return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy2, _("Copy 2"));
@@ -1892,7 +1899,7 @@ DEFINE_I_CALLBACK(buffer_copy3)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection2_head->next == NULL)
+  if (w_current->page_current->selection_list == NULL)
   return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy3, _("Copy 3"));
@@ -1911,7 +1918,7 @@ DEFINE_I_CALLBACK(buffer_copy4)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection2_head->next == NULL)
+  if (w_current->page_current->selection_list == NULL)
   return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy4, _("Copy 4"));
@@ -1930,7 +1937,7 @@ DEFINE_I_CALLBACK(buffer_copy5)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection2_head->next == NULL)
+  if (w_current->page_current->selection_list == NULL)
   return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy5, _("Copy 5"));
@@ -1949,7 +1956,7 @@ DEFINE_I_CALLBACK(buffer_cut1)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection2_head->next == NULL)
+  if (w_current->page_current->selection_list == NULL)
   return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut1, _("Cut 1"));
@@ -1968,7 +1975,7 @@ DEFINE_I_CALLBACK(buffer_cut2)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection2_head->next == NULL)
+  if (w_current->page_current->selection_list == NULL)
   return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut2, _("Cut 2"));
@@ -1987,7 +1994,7 @@ DEFINE_I_CALLBACK(buffer_cut3)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection2_head->next == NULL)
+  if (w_current->page_current->selection_list == NULL)
   return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut3, _("Cut 3"));
@@ -2006,7 +2013,7 @@ DEFINE_I_CALLBACK(buffer_cut4)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection2_head->next == NULL)
+  if (w_current->page_current->selection_list == NULL)
   return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut4, _("Cut 4"));
@@ -2025,7 +2032,7 @@ DEFINE_I_CALLBACK(buffer_cut5)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection2_head->next == NULL)
+  if (w_current->page_current->selection_list == NULL)
   return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut5, _("Cut 5"));
@@ -3066,7 +3073,7 @@ DEFINE_I_CALLBACK(attributes_attach)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
   OBJECT *first_object;
-  SELECTION *s_current;
+  GList *s_current;
 
   exit_if_null(w_current);
 
@@ -3082,12 +3089,12 @@ DEFINE_I_CALLBACK(attributes_attach)
                          _("Attach"));
 
   /* skip over head */
-  s_current = w_current->page_current->selection2_head->next;
+  s_current = w_current->page_current->selection_list;
   if (!s_current) {
     return;
   }
 
-  first_object = s_current->selected_object; 
+  first_object = (OBJECT *) s_current->data; 
   if (!first_object) {
     return;	
   }
@@ -3095,10 +3102,10 @@ DEFINE_I_CALLBACK(attributes_attach)
   /* skip over first object */
   s_current = s_current->next;
   while (s_current != NULL) {
-    if (s_current->selected_object) {
+    if (s_current->data) {
       o_attrib_attach(w_current,
                       w_current->page_current->object_head,
-                      s_current->selected_object,
+                      (OBJECT *)s_current->data,
                       first_object);
       w_current->page_current->CHANGED=1;
     }
@@ -3115,7 +3122,7 @@ DEFINE_I_CALLBACK(attributes_attach)
 DEFINE_I_CALLBACK(attributes_detach)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
-  SELECTION *s_current;
+  GList *s_current;
   OBJECT *o_current;
 
   exit_if_null(w_current);
@@ -3131,9 +3138,9 @@ DEFINE_I_CALLBACK(attributes_detach)
                          _("Detach"));
 
   /* skip over head */
-  s_current = w_current->page_current->selection2_head->next;
+  s_current = w_current->page_current->selection_list;
   while (s_current != NULL) {
-    o_current = s_current->selected_object;
+    o_current = (OBJECT *) s_current->data;
     if (o_current) {
       if (o_current->attribs) {
         o_attrib_free_all(w_current, 
@@ -3173,7 +3180,7 @@ DEFINE_I_CALLBACK(attributes_show_name)
   if (object != NULL) {
     o_attrib_toggle_show_name_value(w_current, 
                                     w_current->page_current->
-                                    selection2_head->next,
+                                    selection_list,
                                     SHOW_NAME);
   }
 }
@@ -3204,7 +3211,7 @@ DEFINE_I_CALLBACK(attributes_show_value)
   if (object != NULL) {
     o_attrib_toggle_show_name_value(w_current, 
                                     w_current->page_current->
-                                    selection2_head->next,
+                                    selection_list,
                                     SHOW_VALUE);
   }
 }
@@ -3235,7 +3242,7 @@ DEFINE_I_CALLBACK(attributes_show_both)
   if (object != NULL) {
     o_attrib_toggle_show_name_value(w_current, 
                                     w_current->page_current->
-                                    selection2_head->next,
+                                    selection_list,
                                     SHOW_NAME_VALUE);
   }
 }
@@ -3267,7 +3274,7 @@ DEFINE_I_CALLBACK(attributes_visibility_toggle)
   if (object != NULL) {
     o_attrib_toggle_visibility(w_current, 
                                w_current->page_current->
-                               selection2_head->next);
+                               selection_list);
   }
 }
 
@@ -3505,8 +3512,21 @@ DEFINE_I_CALLBACK(cancel)
    * so lets be sure to clean up the complex_place_head
    * structure and also clean up the attrib_place_head.
    * remember these don't remove the head structure */
-  o_list_delete_rest(w_current,
-                     w_current->page_current->complex_place_head);
+
+  /* If it is a move command, then free the complex place list WITHOUT
+     freeing the individual objects. */
+  if ( (w_current->inside_action) && 
+       ((w_current->event_state == ENDCOPY) ||
+	(w_current->event_state == ENDMCOPY)) ) {
+	  s_delete_object_glist(w_current,
+				w_current->page_current->complex_place_list);  
+	  w_current->page_current->complex_place_list = NULL;
+	}
+  else {
+    g_list_free(w_current->page_current->complex_place_list);
+  }
+  w_current->page_current->complex_place_list = NULL;
+
   o_list_delete_rest(w_current,
                      w_current->page_current->attrib_place_head);
 

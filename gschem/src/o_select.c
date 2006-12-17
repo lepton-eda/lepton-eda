@@ -162,8 +162,8 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* result: remove all objects from selection */
           if (count == 0 && !CONTROLKEY) {
             o_select_run_hooks(w_current, NULL, 2);
-            o_selection_remove_most(w_current,
-                                    w_current->page_current->selection2_head);
+	    o_selection_unselect_list (w_current,
+				       &(w_current->page_current->selection_list));
           }
           break;
 
@@ -171,8 +171,9 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
 
       /* object not select, add it to the selection list */
       o_select_run_hooks(w_current, o_current, 1);
-      o_selection_add(w_current->page_current->selection2_head,
-                      o_current);
+      w_current->page_current->selection_list = 
+	o_selection_add(w_current->page_current->selection_list,
+			o_current);
 
       break;
 
@@ -187,8 +188,7 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* result: remove object from selection */
           if (type != MULTIPLE) {
             o_select_run_hooks(w_current, o_current, 0);
-            o_selection_remove(
-                               w_current->page_current->selection2_head,
+            o_selection_remove(&(w_current->page_current->selection_list),
                                o_current);
           }
 
@@ -203,13 +203,13 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* 2nd result: add object to selection */
           if (type == MULTIPLE && count == 0 && !CONTROLKEY) {
             o_select_run_hooks(w_current, NULL, 2);
-            o_selection_remove_most(w_current,
-                                    w_current->page_current->selection2_head);
+	    o_selection_unselect_list (w_current,
+				       &(w_current->page_current->selection_list));
 	    
 	    o_select_run_hooks(w_current, o_current, 1);
-            o_selection_add(
-                            w_current->page_current->selection2_head,
-                            o_current);
+            w_current->page_current->selection_list = 
+	      o_selection_add(w_current->page_current->selection_list,
+			      o_current);
           }	
 
           /* condition: doing single object add */
@@ -218,19 +218,18 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* 2nd result: add object to selection list */
           if (type == SINGLE && !CONTROLKEY) {
             o_select_run_hooks(w_current, NULL, 2);
-            o_selection_remove_most(w_current,
-                                    w_current->page_current->selection2_head);
+	    o_selection_unselect_list (w_current,
+				       &(w_current->page_current->selection_list));
 
             o_select_run_hooks (w_current, o_current, 1);
-            o_selection_add(
-                            w_current->page_current->selection2_head,
-                            o_current);
+            w_current->page_current->selection_list =
+	      o_selection_add(w_current->page_current->selection_list,
+			      o_current);
           }
 
           if (CONTROLKEY) {
             o_select_run_hooks(w_current, o_current, 0);
-            o_selection_remove(
-                               w_current->page_current->selection2_head,
+            o_selection_remove(&(w_current->page_current->selection_list),
                                o_current);
           }
 
@@ -240,7 +239,7 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
   }
 
   /* do the attributes */
-  o_attrib_add_selected(w_current, w_current->page_current->selection2_head,
+  o_attrib_add_selected(w_current, &(w_current->page_current->selection_list),
                         o_current);
 
   /* finally redraw object */
@@ -436,8 +435,8 @@ void o_select_box_search(TOPLEVEL *w_current)
   /* key was pressed */
   if (count == 0 && !SHIFTKEY)  {
     o_select_run_hooks(w_current, NULL, 2);
-    o_selection_remove_most(w_current,
-			    w_current->page_current->selection2_head);
+    o_selection_unselect_list (w_current,
+			       &(w_current->page_current->selection_list));
   }
   i_update_menus(w_current);
 }
@@ -446,8 +445,10 @@ void o_select_box_search(TOPLEVEL *w_current)
 /* This function always looks at the current page selection list */ 
 OBJECT *o_select_return_first_object(TOPLEVEL *w_current) 
 {
-  return(o_selection_return_first_object(w_current->page_current->
-                                         selection2_head));
+  if (! (w_current && w_current->page_current && w_current->page_current->selection_list))
+    return NULL;
+  else
+    return((OBJECT *) g_list_first(w_current->page_current->selection_list)->data);
 }
 
 /*! \todo Finish function documentation!!!
@@ -459,15 +460,8 @@ OBJECT *o_select_return_first_object(TOPLEVEL *w_current)
  */
 int o_select_selected(TOPLEVEL *w_current)
 {
-  SELECTION *head;
-
-  head = w_current->page_current->selection2_head;
-  if (head) {
-    if (head->next) {
-      if (head->next->selected_object) {
-        return(TRUE);
-      }
-    }
+  if (w_current->page_current->selection_list) {
+    return(TRUE);
   }
   return(FALSE);
 }
@@ -480,6 +474,33 @@ int o_select_selected(TOPLEVEL *w_current)
 void o_select_unselect_all(TOPLEVEL *w_current)
 {
   o_select_run_hooks(w_current, NULL, 2);
-  o_selection_remove_most(w_current, 
-                          w_current->page_current->selection2_head);
+  o_selection_unselect_list (w_current,
+			     &(w_current->page_current->selection_list));
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void
+o_select_move_to_place_list(TOPLEVEL *w_current)
+{
+  GList *selection;
+  OBJECT *o_current;
+  
+  selection= w_current->page_current->selection_list;
+
+  if (!selection) {
+    return;
+  }
+
+  while (selection) {
+    o_current = (OBJECT *) selection->data;
+    if (o_current) {
+      w_current->page_current->complex_place_list = g_list_append(w_current->page_current->complex_place_list,
+								  o_current);
+    }
+    selection = selection->next;
+  }
 }

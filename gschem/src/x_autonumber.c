@@ -582,7 +582,8 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
       if (slot_str != NULL && o_slot != NULL) {
 	g_free(slot_str);
 	/* delete the slot attribute */
-	o_selection_remove (autotext->toplevel->page_current->selection2_head, o_slot);
+	GList *selection = autotext->toplevel->page_current->selection_list;
+	o_selection_remove (&selection, o_slot);
 	o_delete_text (autotext->toplevel, o_slot);
 	/* redraw the slotted object. So that the pinnumbers appear as with slot=1 */
 	/* --> No: should be done by o_delete_text as several dialog use it. */

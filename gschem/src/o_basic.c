@@ -62,7 +62,7 @@ void o_redraw_all(TOPLEVEL *w_current)
       case(ENDCOPY):
       case(ENDMCOPY):
 	o_drawbounding(w_current, NULL,
-                       w_current->page_current->selection2_head->next,
+                       w_current->page_current->selection_list,
                        x_get_darkcolor(w_current->bb_color), FALSE);
 
         break;
@@ -70,8 +70,8 @@ void o_redraw_all(TOPLEVEL *w_current)
       case(DRAWCOMP):
       case(ENDCOMP):
         o_drawbounding(w_current, 
-		       w_current->page_current->complex_place_head->next,
                        NULL,
+		       w_current->page_current->complex_place_list,
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
 
@@ -106,7 +106,9 @@ void o_redraw_all_fast(TOPLEVEL *w_current)
     x_repaint_background(w_current);
   }
 
-  o_recalc(w_current, w_current->page_current->object_head);
+  o_recalc_object_list(w_current, w_current->page_current->object_head);
+  /* Uncomment this when using the complex_place_list for moving and copying */
+  /*  o_recalc_object_glist(w_current, w_current->page_current->complex_place_list); */
 
   draw_selected = !(w_current->inside_action &&
 		    ((w_current->event_state == MOVE) ||
@@ -154,8 +156,8 @@ void o_unselect_all(TOPLEVEL *w_current)
 {
   if (!w_current->SHIFTKEY) {
     o_select_run_hooks(w_current, NULL, 2);
-    o_selection_remove_most(w_current, w_current->page_current->
-                            selection2_head); 
+    o_selection_unselect_list(w_current,
+			      &(w_current->page_current->selection_list));
   }
 }
 
@@ -193,15 +195,15 @@ void o_draw_list(TOPLEVEL *w_current, GList* list)
  */
 void o_draw_selected(TOPLEVEL *w_current)
 {
-  SELECTION* s_current;
+  GList* s_current;
   OBJECT* o_current;
   if (w_current->inside_redraw) {
     return;
   }
 
-  s_current = w_current->page_current->selection2_head->next;
+  s_current = w_current->page_current->selection_list;
   while (s_current != NULL) {
-    o_current=s_current->selected_object;
+    o_current = (OBJECT *) s_current->data;
 
     if (o_current) {
       o_redraw_single(w_current, o_current);
@@ -219,15 +221,15 @@ void o_draw_selected(TOPLEVEL *w_current)
  */
 void o_erase_selected(TOPLEVEL *w_current)
 {
-  SELECTION* s_current;
+  GList* s_current;
   OBJECT* o_current;
   if (w_current->inside_redraw) {
     return;
   }
 
-  s_current = w_current->page_current->selection2_head->next;
+  s_current = w_current->page_current->selection_list;
   while (s_current != NULL) {
-    o_current=s_current->selected_object;
+    o_current = (OBJECT *) s_current->data;
 
     if (o_current) {
       o_cue_erase_single(w_current, o_current);
@@ -273,7 +275,7 @@ void o_erase_single(TOPLEVEL *w_current, OBJECT *object)
  */
 /* both outline and boundingbox work! */
 /* name is blah */
-void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list, 
+void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, GList *o_glist, 
 		    GdkColor *color, int firsttime)
 {
   int diff_x, diff_y;
@@ -283,7 +285,7 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
   /* you have to make these static... for the once mode */
   static int rleft, rtop, rbottom, rright;
 
-  if (!o_list && !s_list) {
+  if (!o_list && !o_glist) {
     return;
   }
 
@@ -304,29 +306,25 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
                                   diff_x,
                                   diff_y,
                                   o_list);
-    } else if (s_list) { 
-      o_complex_translate_display_selection(w_current,
-					    diff_x,
-					    diff_y,
-					    s_list);
+    } else if (o_glist) {
+      o_complex_translate_display_object_glist(w_current, diff_x, diff_y, o_glist);
     }
 
     gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
 
     if (o_list) {
-      get_complex_bounds(w_current, o_list,
-                         &rleft  ,
-                         &rtop   ,
-                         &rright ,
-                         &rbottom);
-    } else if (s_list) {
-      get_complex_bounds_selection(w_current, s_list,
-				   &rleft  ,
-				   &rtop   ,
-				   &rright ,
-				   &rbottom);
+      get_object_list_bounds(w_current, o_list,
+			     &rleft  ,
+			     &rtop   ,
+			     &rright ,
+			     &rbottom);
+    } else if (o_glist) {
+      get_object_glist_bounds(w_current, o_glist,
+			      &rleft  ,
+			      &rtop   ,
+			      &rright ,
+			      &rbottom);
     }
-
     gdk_draw_rectangle(w_current->window,
                        w_current->bounding_xor_gc, FALSE,
                        rleft + diff_x,
@@ -343,18 +341,18 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
 #endif
 
         if (o_list) {
-          get_complex_bounds(w_current, o_list,
-                             &rleft  ,
-                             &rtop   ,
-                             &rright ,
-                             &rbottom);
-        } else if (s_list) {
-          get_complex_bounds_selection(w_current, s_list,
-                                       &rleft  ,
-                                       &rtop   ,
-                                       &rright ,
-                                       &rbottom);
-        }
+          get_object_list_bounds(w_current, o_list,
+				 &rleft  ,
+				 &rtop   ,
+				 &rright ,
+				 &rbottom);
+        } else if (o_glist) {
+	  get_object_glist_bounds(w_current, o_glist,
+				  &rleft  ,
+				  &rtop   ,
+				  &rright ,
+				  &rbottom);
+	}
 
         diff_x = w_current->last_x - w_current->start_x;
         diff_y = w_current->last_y - w_current->start_y;
@@ -373,12 +371,11 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
                                       diff_x,
                                       diff_y,
                                       o_list);
-        } else if (s_list) { 
-          o_complex_translate_display_selection(w_current,
-                                                diff_x,
-                                                diff_y,
-                                                s_list);
-        }
+        } else if (o_glist) {
+	  o_complex_translate_display_object_glist(w_current, 
+						   diff_x, diff_y, o_glist);
+	}
+	
       }
 
   w_current->last_drawb_mode = w_current->actionfeedback_mode;
@@ -406,25 +403,24 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
                                     diff_x,
                                     diff_y,
                                     o_list);
-      } else if (s_list) { 
-        o_complex_translate_display_selection(w_current,
-                                              diff_x,
-                                              diff_y,
-                                              s_list);
+      } else if (o_glist) {
+	o_complex_translate_display_object_glist(w_current, 
+						 diff_x, diff_y, o_glist);
       }
+      
     } else {
       if (o_list) {
-        get_complex_bounds(w_current, o_list,
-                           &rleft  ,
-                           &rtop   ,
-                           &rright ,
-                           &rbottom);
-      } else if (s_list) {
-        get_complex_bounds_selection(w_current, s_list,
-                                     &rleft  ,
-                                     &rtop   ,
-                                     &rright ,
-                                     &rbottom);
+        get_object_list_bounds(w_current, o_list,
+			       &rleft  ,
+			       &rtop   ,
+			       &rright ,
+			       &rbottom);
+      } else if (o_glist) {
+	get_object_glist_bounds(w_current, o_glist,
+				&rleft  ,
+				&rtop   ,
+				&rright ,
+				&rbottom);
       }
 
       gdk_gc_set_foreground(w_current->bounding_xor_gc,
@@ -454,26 +450,26 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
                                     diff_x,
                                     diff_y,
                                     o_list);
-      } else if (s_list) { 
-        o_complex_translate_display_selection(w_current,
-                                              diff_x,
-                                              diff_y,
-                                              s_list);
+      } else if (o_glist) {
+	o_complex_translate_display_object_glist(w_current, 
+						 diff_x, diff_y, o_glist);
       }
+
     } else {
       if (o_list) {
-        get_complex_bounds(w_current, o_list,
-                           &rleft  ,
-                           &rtop   ,
-                           &rright ,
-                           &rbottom);
-      } else if (s_list) {
-        get_complex_bounds_selection(w_current, s_list,
-                                     &rleft  ,
-                                     &rtop   ,
-                                     &rright ,
-                                     &rbottom);
+        get_object_list_bounds(w_current, o_list,
+			       &rleft  ,
+			       &rtop   ,
+			       &rright ,
+			       &rbottom);
+      } else if (o_glist) {
+	get_object_glist_bounds(w_current, o_glist,
+				&rleft  ,
+				&rtop   ,
+				&rright ,
+				&rbottom);
       }
+      
       gdk_gc_set_foreground(w_current->bounding_xor_gc,
                             color);
       gdk_draw_rectangle(w_current->window,
@@ -512,32 +508,30 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
                                         diff_x,
                                         diff_y,
                                         o_list);
-          } else if (s_list) { 
-            o_complex_translate_display_selection(w_current,
-                                                  diff_x,
-                                                  diff_y,
-                                                  s_list);
-            o_complex_translate_display_selection(w_current,
-                                                  diff_x,
-                                                  diff_y,
-                                                  s_list);
-          }
+          } else if (o_glist) {
+	    o_complex_translate_display_object_glist(w_current, 
+						     diff_x, diff_y, o_glist);
+	    o_complex_translate_display_object_glist(w_current,
+						     diff_x, diff_y, o_glist);
+	  }
+	  
         } else {
           /*! \todo why are we doing this here...?
            * probably a reason */
           if (o_list) {
-            get_complex_bounds(w_current, o_list,
-                               &rleft  ,
-                               &rtop   ,
-                               &rright ,
-                               &rbottom);
-          } else if (s_list) {
-            get_complex_bounds_selection(w_current, s_list,
-                                         &rleft  ,
-                                         &rtop   ,
-                                         &rright ,
-                                         &rbottom);
-          }
+            get_object_list_bounds(w_current, o_list,
+				   &rleft  ,
+				   &rtop   ,
+				   &rright ,
+				   &rbottom);
+          } else if (o_glist) {
+	    get_object_glist_bounds(w_current, o_glist,
+				    &rleft  ,
+				    &rtop   ,
+				    &rright ,
+				    &rbottom);
+	  }
+
         }
         if (w_current->netconn_rubberband) {
           o_move_stretch_rubberband(w_current);
@@ -559,18 +553,19 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
 
     if (firsttime == TRUE) {
       if (o_list) {
-        get_complex_bounds(w_current, o_list,
-                           &rleft  ,
-                           &rtop   ,
-                           &rright ,
-                           &rbottom);
-      } else if (s_list) {
-        get_complex_bounds_selection(w_current, s_list,
-                                     &rleft  ,
-                                     &rtop   ,
-                                     &rright ,
-                                     &rbottom);
+        get_object_list_bounds(w_current, o_list,
+			       &rleft  ,
+			       &rtop   ,
+			       &rright ,
+			       &rbottom);
+      } else if (o_glist) {
+	get_object_glist_bounds(w_current, o_glist,
+				&rleft  ,
+				&rtop   ,
+				&rright ,
+				&rbottom);
       }
+      
       /*printf("once\n");*/
     
     }
@@ -595,9 +590,9 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
    */
   if (o_list) {
     o_complex_translate2(w_current, diff_x, diff_y, o_list);
-  } else if (s_list) {
-    o_complex_translate_selection(w_current, diff_x, diff_y, 
-                                  s_list);
+  } else if (o_glist) {
+    o_complex_translate_display_object_glist(w_current, 
+					     diff_x, diff_y, o_glist);
   }
 }
 
@@ -606,12 +601,12 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
  *  \par Function Description
  *
  */
-void o_erasebounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list)
+void o_erasebounding(TOPLEVEL *w_current, OBJECT *o_list, GList *s_list)
 {
   int diff_x, diff_y;
   int rleft, rtop, rright, rbottom;
 
-  if (o_list == NULL) {
+  if ( (o_list == NULL) && (s_list == NULL)) {
     /* this is an error condition */
     w_current->event_state = SELECT;
     w_current->inside_action = 0;
@@ -623,17 +618,17 @@ void o_erasebounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list)
   }
 
   if (o_list) {
-    get_complex_bounds(w_current, o_list,
-                       &rleft  ,
-                       &rtop   ,
-                       &rright ,
-                       &rbottom);
+    get_object_list_bounds(w_current, o_list,
+			   &rleft  ,
+			   &rtop   ,
+			   &rright ,
+			   &rbottom);
   } else if (s_list) {
-    get_complex_bounds_selection(w_current, s_list,
-                                 &rleft  ,
-                                 &rtop   ,
-                                 &rright ,
-                                 &rbottom);
+    get_object_glist_bounds(w_current, s_list,
+			    &rleft  ,
+			    &rtop   ,
+			    &rright ,
+			    &rbottom);
   }
 
   diff_x = w_current->last_x - w_current->start_x;
@@ -764,8 +759,11 @@ int o_redraw_cleanstates(TOPLEVEL *w_current)
        * so lets be sure to clean up the complex_place_head
        * structure and also clean up the attrib_place_head.
        * remember these don't remove the head structure */
-      o_list_delete_rest(w_current,
-			 w_current->page_current->complex_place_head);
+      /* The complex place is a reference to the real objects, so don't
+	 free the objects here */
+      g_list_free (w_current->page_current->complex_place_list);
+      w_current->page_current->complex_place_list = NULL;
+
       o_list_delete_rest(w_current,
 			 w_current->page_current->attrib_place_head);
  

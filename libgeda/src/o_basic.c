@@ -87,24 +87,18 @@ void o_redraw_single(TOPLEVEL *w_current, OBJECT *o_current)
   }
 }
 
-/*! \brief Recalculate position of all objects.
+/*! \brief Recalculate position of the given object.
  *  \par Function Description
- *  This function will take a list of objects and recalculate their
- *  positions on the screen.
+ *  This function will take an object and recalculate its
+ *  position on the screen.
  *
  *  \param [in]     w_current    The TOPLEVEL object.
- *  \param [in,out] object_list  OBJECT list to recalculate.
+ *  \param [in,out] o_current    OBJECT to recalculate.
  *
  */
-void o_recalc(TOPLEVEL *w_current, OBJECT *object_list)
+void o_recalc_single_object(TOPLEVEL *w_current, OBJECT *o_current)
 {
-  OBJECT *o_current;
-
-  if (object_list == NULL)
-  return;
-	
-  o_current = object_list;
-  while (o_current != NULL) {
+  if (o_current != NULL) {
     switch(o_current->type) {
 
       case(OBJ_LINE):
@@ -144,10 +138,54 @@ void o_recalc(TOPLEVEL *w_current, OBJECT *object_list)
         o_arc_recalc(w_current, o_current);
         break;
     }
+  }
+}
 
+/*! \brief Recalculate position of a list of objects.
+ *  \par Function Description
+ *  This function will take a list of objects and recalculate their
+ *  positions on the screen.
+ *
+ *  \param [in]     w_current    The TOPLEVEL object.
+ *  \param [in,out] object_list  OBJECT list to recalculate.
+ *
+ */
+void
+o_recalc_object_list(TOPLEVEL *w_current, OBJECT *object_list)
+{
+  OBJECT *o_current;
+
+  o_current = object_list;
+  while (o_current != NULL) {
+    o_recalc_single_object(w_current, o_current);
     o_current = o_current->next;
   }
 }
+ 
+/*! \brief Recalculate position of a list (GList) of objects.
+ *  \par Function Description
+ *  This function will take a list (GList) of objects and recalculate their
+ *  positions on the screen.
+ *
+ *  \param [in]     w_current    The TOPLEVEL object.
+ *  \param [in,out] object_glist  OBJECT list to recalculate.
+ *
+ */
+void
+o_recalc_object_glist(TOPLEVEL *w_current, GList *object_glist)
+{
+  GList *list = object_glist;
+  OBJECT *o_current;
+
+  while (list != NULL) {
+    o_current = (OBJECT *) list->data;
+    o_recalc_single_object(w_current, o_current);
+   list = list->next;
+  }
+}
+
+
+
 
 /*! \brief Set an #OBJECT's line options.
  *  \par Function Description

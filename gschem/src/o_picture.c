@@ -737,7 +737,7 @@ void picture_change_selection_ok (GtkWidget *widget, TOPLEVEL *w_current)
   const gchar *selected_filename;
   GdkPixbuf *pixbuf;
   GError *error;
-  SELECTION *list;  
+  GList *list;  
 
   selected_filename = (char *) g_strdup(gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_selector)));
 #if DEBUG
@@ -775,11 +775,11 @@ void picture_change_selection_ok (GtkWidget *widget, TOPLEVEL *w_current)
 
   w_current->inside_action = 0;
 
-  list = w_current->page_current->selection2_head->next;
+  list = w_current->page_current->selection_list;
   while (list != NULL) {
     OBJECT *object;
     
-    object = list->selected_object;
+    object = (OBJECT *) list->data;
     if (object == NULL) {
       fprintf(stderr, _("ERROR: NULL object!\n"));
       exit(-1);

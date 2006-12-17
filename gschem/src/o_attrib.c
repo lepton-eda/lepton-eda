@@ -51,10 +51,11 @@
  *
  *  \todo get a better name
  */
-void o_attrib_add_selected(TOPLEVEL *w_current, SELECTION* selection_list,
+void o_attrib_add_selected(TOPLEVEL *w_current, GList** selection_list_ptr,
 			   OBJECT *selected)
 {
   ATTRIB *a_current;
+  GList *selection_list = *selection_list_ptr;
 
   if (!selection_list) return;
 
@@ -69,10 +70,10 @@ void o_attrib_add_selected(TOPLEVEL *w_current, SELECTION* selection_list,
 
 				/* make sure object isn't selected already */
         if (a_current->object->saved_color == -1) {
-          o_selection_add(selection_list,
-                          /* w_current->page_current->
-                             selection2_head,*/
-                          a_current->object);
+          *selection_list_ptr = o_selection_add(selection_list,
+						/* w_current->page_current->
+						   selection2_head,*/
+						a_current->object);
           o_redraw_single(w_current, a_current->object);
         }
 
@@ -90,9 +91,9 @@ void o_attrib_add_selected(TOPLEVEL *w_current, SELECTION* selection_list,
  *  \par Function Description
  *
  */
-void o_attrib_toggle_visibility(TOPLEVEL *w_current, SELECTION *list)
+void o_attrib_toggle_visibility(TOPLEVEL *w_current, GList *list)
 {
-  SELECTION *s_current = NULL;
+  GList *s_current = NULL;
   OBJECT *object = NULL;
 
   if (list == NULL) {
@@ -102,7 +103,7 @@ void o_attrib_toggle_visibility(TOPLEVEL *w_current, SELECTION *list)
   s_current = list;
 
   while(s_current != NULL) {
-    object = s_current->selected_object;
+    object = (OBJECT *) s_current->data;
     if (object == NULL) {
       fprintf(stderr, _("Got NULL in o_attrib_toggle_visibility\n"));
       exit(-1);
@@ -154,9 +155,9 @@ void o_attrib_toggle_visibility(TOPLEVEL *w_current, SELECTION *list)
  *
  */
 void o_attrib_toggle_show_name_value(TOPLEVEL *w_current, 
-				     SELECTION *list, int new_show_name_value)
+				     GList *list, int new_show_name_value)
 {
-  SELECTION *s_current = NULL;
+  GList *s_current = NULL;
   OBJECT *object = NULL;
 
   if (list == NULL) {
@@ -166,7 +167,7 @@ void o_attrib_toggle_show_name_value(TOPLEVEL *w_current,
   s_current = list;
 
   while(s_current != NULL) {
-    object = s_current->selected_object;
+    object = (OBJECT *) s_current->data;
 
     if (object == NULL) {
       fprintf(stderr, _("Got NULL in o_attrib_toggle_show_name_value\n"));
@@ -334,7 +335,7 @@ void o_attrib_end(TOPLEVEL *w_current)
   /* here is where you attach the stuff */
   /* if an object is selected, else just place it */
   /* selection_head should never be null since it has a head struct */
-  object = o_select_return_first_object(w_current);
+  object = (OBJECT *) g_list_first (w_current->page_current->selection_list)->data;
   if (object != NULL) {
     /* should attribute be selected? probably */
     /* this is probably okay, NEWSEL, since tail is a single obj */
@@ -344,8 +345,9 @@ void o_attrib_end(TOPLEVEL *w_current)
                     object);
   }
 
-  o_selection_add(w_current->page_current->selection2_head,
-                  w_current->page_current->object_tail);
+  w_current->page_current->selection_list = 
+    o_selection_add(w_current->page_current->selection_list,
+		    w_current->page_current->object_tail);
   o_undo_savestate(w_current, UNDO_ALL);
 }
 
@@ -471,8 +473,9 @@ OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current,
                     o_current);
   }
 
-  o_selection_add(w_current->page_current->selection2_head,
-                  w_current->page_current->object_tail);
+  w_current->page_current->selection_list = 
+    o_selection_add(w_current->page_current->selection_list,
+		    w_current->page_current->object_tail);
 
   o_text_erase(w_current, w_current->page_current->object_tail); 
   o_text_draw(w_current, w_current->page_current->object_tail);

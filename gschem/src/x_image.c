@@ -274,9 +274,8 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
 
   /* de select everything first */
   o_select_run_hooks(w_current, NULL, 2); 
-  o_selection_remove_most(w_current,
-                          w_current->page_current->
-                          selection2_head);
+  o_selection_unselect_list(w_current,
+			    &(w_current->page_current->selection_list));
 		
 
 #ifdef HAS_LIBGD
@@ -652,10 +651,10 @@ GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
   /* If there are no objects, can't use zoom_extents */
   if (object_found) {
     o_redraw_all (&toplevel); 
-    get_complex_bounds(&toplevel, 
-		       toplevel.page_current->object_head, 
-		       &origin_x, &origin_y, 
-		       &right, &bottom);
+    get_object_list_bounds(&toplevel, 
+			   toplevel.page_current->object_head, 
+			   &origin_x, &origin_y, 
+			   &right, &bottom);
   }
 #endif
   /* ------------------  End optional code ------------------------ */

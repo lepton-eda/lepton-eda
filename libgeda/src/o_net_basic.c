@@ -917,17 +917,18 @@ int o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 
           changed++;
           if (other_object->selected == TRUE ) {
-            o_selection_remove(w_current->page_current->selection2_head, 
+            o_selection_remove(&(w_current->page_current->selection_list), 
                                other_object);
             reselect_new=TRUE;
           }
 
           if (reselect_new == TRUE) {
-            o_selection_remove(w_current->page_current->selection2_head, 
+            o_selection_remove(&(w_current->page_current->selection_list), 
                                object);
 
-            o_selection_add(w_current->page_current->selection2_head, 
-                            object);
+            w_current->page_current->selection_list = 
+	      o_selection_add(w_current->page_current->selection_list, 
+			      object);
           }
 				
           s_conn_remove(w_current, other_object);

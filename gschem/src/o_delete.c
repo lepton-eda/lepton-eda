@@ -232,7 +232,7 @@ static void o_delete_arc(TOPLEVEL *w_current, OBJECT *obj)
  */
 void o_delete(TOPLEVEL *w_current)
 {
-  SELECTION *s_current = NULL;
+  GList *s_current = NULL;
   OBJECT *object = NULL;
 
   object = o_select_return_first_object(w_current);
@@ -245,16 +245,12 @@ void o_delete(TOPLEVEL *w_current)
 
 
   /* skip over head node */
-  s_current = w_current->page_current->selection2_head->next;
+  s_current = w_current->page_current->selection_list;
 
   while(s_current != NULL) {
 
-    object = s_current->selected_object;
-    if (object == NULL) {
-      fprintf(stderr, 
-              _("ERROR: NULL object in o_delete_end!\n"));
-      exit(-1);
-    }
+    object = (OBJECT *) s_current->data;
+    g_assert (object != NULL);
 
     switch(object->type) {
       case(OBJ_LINE):
@@ -303,8 +299,10 @@ void o_delete(TOPLEVEL *w_current)
 
   w_current->inside_action = 0;
 
-  o_selection_destroy_all(w_current->page_current->selection2_head);
-  w_current->page_current->selection2_head = o_selection_new_head();
+  /* Objects have been deleted. Free the list, without freeing again 
+     the objects */
+  g_list_free(w_current->page_current->selection_list);
+  w_current->page_current->selection_list = NULL;
   w_current->page_current->CHANGED=1;
 
   /* no longer needed */

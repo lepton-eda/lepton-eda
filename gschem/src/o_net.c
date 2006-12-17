@@ -317,7 +317,7 @@ void o_net_start(TOPLEVEL *w_current, int x, int y)
 
 #if 0 /* not ready for prime time use */
   /* new net extenstion stuff */
-  o_current = w_current->page_current->selection_head->next;
+  o_current = (OBJECT *) w_current->page_current->selection_list->data;
   if (o_current != NULL && w_current->event_state == STARTDRAWNET) {
     if (o_current->type == OBJ_NET) {
       if (o_current->line) {
@@ -1133,6 +1133,7 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
           (OBJECT *) o_complex_add(
                                    w_current,
                                    w_current->page_current->object_tail,
+				   NULL,
                                    OBJ_COMPLEX, WHITE,
                                    rippers[i].x[0], rippers[i].y[0],
                                    complex_angle, 0,

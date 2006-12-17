@@ -648,7 +648,8 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
     clib = (gchar*)clibs->data;
 
     new_object = page->object_tail = o_complex_add(w_current, 
-			                           page->object_tail, 'C', 
+			                           page->object_tail, NULL, 
+						   'C', 
 			                           WHITE, 
 			                           x, y, 
 			                           angle, mirror,

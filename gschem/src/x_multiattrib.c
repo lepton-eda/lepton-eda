@@ -457,7 +457,7 @@ static void multiattrib_action_delete_attribute(TOPLEVEL *toplevel,
 						OBJECT *o_attrib) 
 {
   /* actually deletes the attribute */
-  o_selection_remove (toplevel->page_current->selection2_head, o_attrib);
+  o_selection_remove (&(toplevel->page_current->selection_list), o_attrib);
   o_delete_text (toplevel, o_attrib);
   toplevel->page_current->CHANGED=1;
   o_undo_savestate (toplevel, UNDO_ALL);

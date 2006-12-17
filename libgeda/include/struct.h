@@ -36,7 +36,6 @@ typedef struct st_object OBJECT;
 typedef struct st_page PAGE;
 typedef struct st_toplevel TOPLEVEL;
 typedef struct st_color COLOR;
-typedef struct st_selection SELECTION;
 typedef struct st_undo UNDO;
 typedef struct st_tile TILE;
 typedef struct st_tile_loc TILE_LOC;
@@ -293,13 +292,6 @@ struct st_bus_ripper
   int y[2];
 };
 
-struct st_selection {
-  OBJECT *selected_object;
-
-  SELECTION *prev;
-  SELECTION *next;
-};
-
 struct st_stretch
 {
   OBJECT *object;
@@ -350,10 +342,8 @@ struct st_page {
   OBJECT *object_head;
   OBJECT *object_tail;
   OBJECT *object_parent;
-  SELECTION *selection2_head; /* new selection mechanism */
-  SELECTION *selection2_tail; 
-  OBJECT *complex_place_head;  /* used to place complex's and text */
-  OBJECT *complex_place_tail; 
+  GList *selection_list; /* new selection mechanism */
+  GList *complex_place_list;
   OBJECT *attrib_place_head;
   OBJECT *attrib_place_tail; 
   OBJECT *object_lastplace;

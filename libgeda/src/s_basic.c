@@ -362,26 +362,10 @@ void print_struct(OBJECT *ptr)
  *  \par Function Description
  *
  */
-void s_delete(TOPLEVEL *w_current, OBJECT *o_current)
+void
+s_delete_object(TOPLEVEL *w_current, OBJECT *o_current)
 {
   if (o_current != NULL) {
-
-
-#if DEBUG
-    printf("sdel: %s\n", o_current->name);
-    printf("sdel: %d\n", o_current->sid);
-#endif
-
-    if (o_current->next) 
-    o_current->next->prev = o_current->prev;
-    else
-    o_current->next = NULL;
-
-    if (o_current->prev) 
-    o_current->prev->next = o_current->next;
-    else
-    o_current->prev = NULL;
-
     s_conn_remove(w_current, o_current);
 	
     /* second half of if is odd that we need it? hack */
@@ -512,6 +496,36 @@ void s_delete(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
+void
+s_delete(TOPLEVEL *w_current, OBJECT *o_current)
+{
+  if (o_current != NULL) {
+
+
+#if DEBUG
+    printf("sdel: %s\n", o_current->name);
+    printf("sdel: %d\n", o_current->sid);
+#endif
+
+    if (o_current->next) 
+    o_current->next->prev = o_current->prev;
+    else
+    o_current->next = NULL;
+
+    if (o_current->prev) 
+    o_current->prev->next = o_current->next;
+    else
+    o_current->prev = NULL;
+    
+    s_delete_object(w_current, o_current);
+  }
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
 /* deletes everything include the head */
 void s_delete_list_fromstart(TOPLEVEL *w_current, OBJECT *start)
 {
@@ -557,6 +571,30 @@ void s_delete_list_fromstart(OBJECT *start)
   s_delete(traverse);
 }
 #endif
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+/* deletes everything include the head */
+void
+s_delete_object_glist(TOPLEVEL *w_current, GList *list)
+{
+  OBJECT *o_current=NULL;
+  GList *ptr;
+
+  ptr = g_list_last(list);
+
+  /* do the delete backwards */
+  while(ptr != NULL) {
+    o_current = (OBJECT *) ptr->data;
+    s_delete_object(w_current, o_current);
+    ptr = ptr->prev;
+  }
+
+}
+
 
 /*! \todo Finish function documentation!!!
  *  \brief

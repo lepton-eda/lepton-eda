@@ -232,7 +232,7 @@ void o_slot_end(TOPLEVEL *w_current, char *string, int len)
     o_erase_selected(w_current);
 
     o_attrib_slot_copy(w_current, object,
-                       w_current->page_current->selection_head->next);
+                       w_current->page_current->selection_list);
     o_redraw_single(w_current,object);
 #endif
 

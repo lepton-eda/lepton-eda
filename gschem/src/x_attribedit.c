@@ -93,7 +93,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
   GtkWidget *overwritebutton;
   OBJECT *attribptr;
   OBJECT *object;
-  SELECTION *s_current = NULL;
+  GList *s_current = NULL;
   ATTRIB *a_current = NULL, *a_sav;
   int vis, show;
   int invocation_flag;
@@ -146,19 +146,19 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
     int world_x, world_y;
     OBJECT *new = NULL;
 
-    s_current = w_current->page_current->selection2_head->next;
+    s_current = w_current->page_current->selection_list;
     while (s_current != NULL) {
-      object = s_current->selected_object;
+      object = (OBJECT *)s_current->data;
       if (object == NULL) {
 	fprintf(stderr, _("ERROR: NULL object!\n"));
 	exit(-1);
       }
-      if (!s_current->selected_object->attached_to) {
+      if (!object->attached_to) {
 	nsel++;
       }
       s_current = s_current->next;
     }
-    s_current = w_current->page_current->selection2_head->next;
+    s_current = w_current->page_current->selection_list;
     if (nsel > 1) {
 
       addtoallbutton =
@@ -196,7 +196,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
       while (s_current != NULL) {
 	gboolean replaced;
 
-	object = s_current->selected_object;
+	object = (OBJECT *) s_current->data;
 	if (object && !object->attached_to && object->type != OBJ_TEXT ) {
 	  addmask = 4;
 	  if (object->type == OBJ_COMPLEX || object->type == OBJ_PLACEHOLDER) {
@@ -338,7 +338,7 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   GtkWidget *overwritebutton;
 
   /* gschem specific */
-  SELECTION *s_current = NULL;
+  GList *s_current = NULL;
   GList *combo_items = NULL;
   char* string = NULL;
   int nsel=0, i, len;
@@ -351,9 +351,9 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   return;
 
   /* gschem specific */
-  s_current = w_current->page_current->selection2_head->next;
+  s_current = w_current->page_current->selection_list;
   while (s_current != NULL) {
-    if (!s_current->selected_object->attached_to) {
+    if (!((OBJECT *) s_current->data)->attached_to) {
       nsel++;
     }
     s_current = s_current->next;

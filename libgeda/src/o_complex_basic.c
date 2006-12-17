@@ -43,12 +43,88 @@
 #include <dmalloc.h>
 #endif
 
-/*! \brief
- *  \par Function Description
+/*! \brief Return the bounds of the given object.
+ *  \par Given an object, calcule the bounds coordinates.
+ *  \param [in] w_current The toplevel structure.
+ *  \param [in] o_current The object to look the bounds for.
+ *  \param [out] rleft   pointer to the left coordinate of the object.
+ *  \param [out] rtop    pointer to the top coordinate of the object.
+ *  \param [out] rright  pointer to the right coordinate of the object.
+ *  \param [out] rbottom pointer to the bottom coordinate of the object.
  *
  */
-void get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, 
-			int *left, int *top, int *right, int *bottom)
+void get_single_object_bounds(TOPLEVEL *w_current, OBJECT *o_current, 
+			      int *rleft, int *rtop, int *rright, int *rbottom)
+{
+  if (o_current != NULL) {
+    switch(o_current->type) {
+      case(OBJ_LINE):
+        get_line_bounds(w_current, o_current->line, rleft, rtop, rright, rbottom);
+        break;
+
+      case(OBJ_NET):
+        /* same as a line (diff name)*/
+        get_net_bounds(w_current, o_current->line, rleft, rtop, rright, rbottom);
+        break;
+
+      case(OBJ_BUS):
+        /* same as a line (diff name)*/
+        get_bus_bounds(w_current, o_current->line, rleft, rtop, rright, rbottom);
+        break;
+	
+      case(OBJ_BOX):
+        get_box_bounds(w_current, o_current->box, rleft, rtop, rright, rbottom);
+        break;
+
+      case(OBJ_PICTURE):
+        get_picture_bounds(w_current, o_current->picture, rleft, rtop, rright, rbottom);
+        break;
+
+      case(OBJ_CIRCLE):
+        get_circle_bounds(w_current, o_current->circle, rleft, rtop, rright, rbottom);
+        break;
+
+      case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
+        /* recursive objects ?*/
+        get_object_list_bounds(w_current, o_current->complex->prim_objs, rleft, rtop, rright, rbottom);
+        break;
+
+      case(OBJ_TEXT):
+        /* only do bounding boxes for visible or doing show_hidden_text*/
+        /* you might lose some attrs though */
+        if (o_current->visibility == VISIBLE ||
+            (o_current->visibility == INVISIBLE && w_current->show_hidden_text)) {
+          get_text_bounds(w_current, o_current, rleft, rtop, rright, rbottom);
+        }
+        break;
+
+      case(OBJ_PIN):
+        get_pin_bounds(w_current, o_current->line, rleft, rtop, rright, rbottom);
+        break;
+
+      case(OBJ_ARC):
+        get_arc_bounds(w_current, o_current, rleft, rtop, rright, rbottom);
+        break;
+
+      default:
+        break;
+    }
+  }
+}
+
+/*! \brief Return the bounds of the given list of objects.
+ *  \par Given a list of objects, calcule the bounds coordinates.
+ *  \param [in] w_current The toplevel structure.
+ *  \param [in] complex   The list of objects to look the bounds for.
+ *  \param [out] left   pointer to the left coordinate of the object.
+ *  \param [out] top    pointer to the top coordinate of the object.
+ *  \param [out] right  pointer to the right coordinate of the object.
+ *  \param [out] bottom pointer to the bottom coordinate of the object.
+ */
+void
+get_object_list_bounds(TOPLEVEL *w_current, OBJECT *complex, 
+		       int *left, int *top, int *right, int *bottom)
 {
   OBJECT *o_current=NULL;
   int rleft, rtop, rright, rbottom;
@@ -59,64 +135,11 @@ void get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
   *bottom = rbottom = 0;
 	
 
-
   o_current = complex;
 	
   while ( o_current != NULL ) {
-    switch(o_current->type) {
-      case(OBJ_LINE):
-        get_line_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_NET):
-        /* same as a line (diff name)*/
-        get_net_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_BUS):
-        /* same as a line (diff name)*/
-        get_bus_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
-        break;
-	
-      case(OBJ_BOX):
-        get_box_bounds(w_current, o_current->box, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_PICTURE):
-        get_picture_bounds(w_current, o_current->picture, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_CIRCLE):
-        get_circle_bounds(w_current, o_current->circle, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_COMPLEX):
-      case(OBJ_PLACEHOLDER):
-        /* recursive objects ?*/
-        get_complex_bounds(w_current, o_current->complex->prim_objs, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_TEXT):
-        /* only do bounding boxes for visible or doing show_hidden_text*/
-        /* you might lose some attrs though */
-        if (o_current->visibility == VISIBLE ||
-            (o_current->visibility == INVISIBLE && w_current->show_hidden_text)) {
-          get_text_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
-        }
-        break;
-
-      case(OBJ_PIN):
-        get_pin_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_ARC):
-        get_arc_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      default:
-        break;
-    }
-
+    get_single_object_bounds(w_current, o_current, &rleft, &rtop, 
+			     &rright, &rbottom);
     if (rleft < *left) *left = rleft;
     if (rtop < *top) *top = rtop;
     if (rright > *right) *right = rright;
@@ -128,14 +151,19 @@ void get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
 
 }
 
-/*! \brief
- *  \par Function Description
- *
+/*! \brief Return the bounds of the given GList of objects.
+ *  \par Given a list of objects, calcule the bounds coordinates.
+ *  \param [in] w_current The toplevel structure.
+ *  \param [in] complex   The list of objects to look the bounds for.
+ *  \param [out] left   pointer to the left coordinate of the object.
+ *  \param [out] top    pointer to the top coordinate of the object.
+ *  \param [out] right  pointer to the right coordinate of the object.
+ *  \param [out] bottom pointer to the bottom coordinate of the object.
  */
-void get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head, 
-				  int *left, int *top, int *right, int *bottom)
+void get_object_glist_bounds(TOPLEVEL *w_current, GList *head, 
+			     int *left, int *top, int *right, int *bottom)
 {
-  SELECTION *s_current=NULL;
+  GList *s_current=NULL;
   OBJECT *o_current=NULL;
   int rleft, rtop, rright, rbottom;
 	
@@ -148,66 +176,12 @@ void get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head,
 	
   while ( s_current != NULL ) {
 
-    o_current = s_current->selected_object;
+    o_current = (OBJECT *) s_current->data;
 
-    if (!o_current) {
-      fprintf(stderr, "Got NULL in get_complex_bounds_selection\n");
-      exit(-1);
-    }
+    g_assert (o_current != NULL);
 
-    switch(o_current->type) {
-      case(OBJ_LINE):
-        get_line_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_NET):
-        /* same as a line (diff name)*/
-        get_net_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_BUS):
-        /* same as a line (diff name)*/
-        get_bus_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
-        break;
-	
-      case(OBJ_BOX):
-        get_box_bounds(w_current, o_current->box, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_PICTURE):
-        get_picture_bounds(w_current, o_current->picture, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_CIRCLE):
-        get_circle_bounds(w_current, o_current->circle, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_COMPLEX):
-      case(OBJ_PLACEHOLDER):
-        /* recursive objects ?*/
-        get_complex_bounds(w_current, o_current->complex->prim_objs, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_TEXT):
-        /* only do bounding boxes for visible or doing show hidden text */
-        /* you might lose some attrs though */
-        if (o_current->visibility == VISIBLE ||
-            (o_current->visibility == INVISIBLE && w_current->show_hidden_text)) {
-          get_text_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
-        }
-        break;
-
-      case(OBJ_PIN):
-        get_pin_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      case(OBJ_ARC):
-        get_arc_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
-        break;
-
-      default:
-        break;
-    }
+    get_single_object_bounds(w_current, o_current, &rleft, &rtop, 
+			     &rright, &rbottom);
 
     if (rleft < *left) *left = rleft;
     if (rtop < *top) *top = rtop;
@@ -372,6 +346,8 @@ int o_complex_is_eligible_attribute (TOPLEVEL *w_current, OBJECT *object,
   int promotableAttribute = FALSE;
   char *ptr;
 
+  g_return_val_if_fail(object != NULL, FALSE);
+
   if (object->type != OBJ_TEXT || object->attribute || object->attached_to)
   {
     return FALSE; /* not a text item or is already attached */
@@ -428,6 +404,8 @@ int o_complex_is_eligible_attribute (TOPLEVEL *w_current, OBJECT *object,
  */
 int o_complex_is_embedded(OBJECT *o_current)
 {
+  g_return_val_if_fail(o_current != NULL, 0);
+
   if(o_current->complex == NULL)
   return 0;
 
@@ -445,7 +423,8 @@ int o_complex_is_embedded(OBJECT *o_current)
  *  \par Function Description
  *
  */
-OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
+OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, 
+		      GList **object_glist, char type,
 		      int color, int x, int y, int angle,
 		      int mirror, char *clib,
 		      char *basename, int selectable,
@@ -457,8 +436,15 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
   OBJECT *temp_parent=NULL;
   int save_adding_sel = 0;
   int loaded_normally = FALSE;
-	
+  gboolean use_object_list;
   char *filename;
+  GList *glist_ptr;
+
+  if (object_list) {
+    use_object_list = TRUE;
+  } else {
+    use_object_list = FALSE;
+  }
 
   new_node = s_basic_init_object("complex");
   new_node->type = type;
@@ -634,9 +620,35 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
 
           /* Isolate tmp completely, now that it's removed from list */
           tmp->next=tmp->prev=NULL;
-		
-          object_list = (OBJECT *) s_basic_link_object(tmp, object_list);
-          o_attrib_attach (w_current, object_list, tmp, new_node);
+	  if (use_object_list) {
+	    object_list = (OBJECT *) s_basic_link_object(tmp, object_list);
+	    o_attrib_attach (w_current, object_list, tmp, new_node);
+	  }
+	  else {
+	    if (object_glist) {
+	      *object_glist = g_list_append (*object_glist, tmp);
+	      
+	      glist_ptr = *object_glist;
+	      while (glist_ptr) {
+		if (glist_ptr->prev == NULL) {
+		  ((OBJECT *) glist_ptr->data)->prev = NULL;
+		} else {
+		  ((OBJECT *) glist_ptr->data)->prev = glist_ptr->prev->data;
+		}
+		if (glist_ptr->next == NULL) {
+		  ((OBJECT *) glist_ptr->data)->next = NULL;
+		} else {
+		  ((OBJECT *) glist_ptr->data)->next = glist_ptr->next->data;
+		}
+		glist_ptr = glist_ptr->next;
+	      }
+	      
+	      o_attrib_attach (w_current, ((OBJECT *) g_list_last(*object_glist)->data), 
+			       tmp, new_node);
+	    } else {
+	      o_attrib_attach (w_current, NULL, tmp, new_node);
+	    }
+	  }
           o_text_translate_world(w_current, x, y, tmp);
 
         } else { /* not promoting now, but deal with floating attribs */
@@ -659,19 +671,45 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
   w_current->page_current->object_tail = temp_tail;
   w_current->page_current->object_parent = temp_parent;
 
-  object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
-  object_list->complex->prim_objs = prim_objs;
+  if (use_object_list) {
+    object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
+    object_list->complex->prim_objs = prim_objs;
+  }
+  else {
+    new_node->complex->prim_objs = prim_objs;
+    if (object_glist) {
+      *object_glist = g_list_append (*object_glist, new_node);
 
+      glist_ptr = *object_glist;
+      while (glist_ptr) {
+	if (glist_ptr->prev == NULL) {
+	  ((OBJECT *) glist_ptr->data)->prev = NULL;
+	} else {
+	  ((OBJECT *) glist_ptr->data)->prev = glist_ptr->prev->data;
+	}
+	if (glist_ptr->next == NULL) {
+	  ((OBJECT *) glist_ptr->data)->next = NULL;
+	} else {
+	  ((OBJECT *) glist_ptr->data)->next = glist_ptr->next->data;
+	}
+	glist_ptr = glist_ptr->next;
+      }
+      object_list = (OBJECT *) (g_list_last(*object_glist)->data);
+    } else {
+      object_list = new_node;
+    }
+    
+  }
 
   /* do not mirror/rotate/translate/connect the primitive objects if the
    * component was not loaded via o_read 
    */
   if (loaded_normally == TRUE) {
     if (mirror) {
-      o_complex_mirror_lowlevel(w_current, x, y, object_list);
+      o_complex_mirror_lowlevel(w_current, x, y, new_node);
     } 
-
-    o_complex_rotate_lowlevel(w_current, x, y, angle, angle, object_list); 
+    
+    o_complex_rotate_lowlevel(w_current, x, y, angle, angle, new_node); 
     o_complex_world_translate(w_current, x, y, prim_objs);
 
     if (!w_current->ADDING_SEL) {
@@ -750,7 +788,10 @@ void o_complex_recalc(TOPLEVEL *w_current, OBJECT *o_current)
   /* libhack */
   /* o_recalc(w_current, o_current->complex);*/
 
-  get_complex_bounds(w_current, o_current->complex->prim_objs, &left, &top, &right, &bottom);
+  if ((!o_current) || (o_current->type != OBJ_COMPLEX && o_current->type != OBJ_PLACEHOLDER))
+    return;
+
+  get_object_list_bounds(w_current, o_current->complex->prim_objs, &left, &top, &right, &bottom);
   o_current->left = left;
   o_current->top = top;
   o_current->right = right;
@@ -761,6 +802,7 @@ void o_complex_recalc(TOPLEVEL *w_current, OBJECT *o_current)
                 o_current->complex->y,
                 &o_current->complex->screen_x, 
                 &o_current->complex->screen_y);
+
 }
 
 /*! \brief
@@ -836,7 +878,7 @@ OBJECT *o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
       clib = (gchar*)clibs->data;
     }
     
-    object_list = o_complex_add(w_current, object_list, type, 
+    object_list = o_complex_add(w_current, object_list, NULL, type, 
 				WHITE, 
 				x1, y1, 
 				angle, mirror,
@@ -854,6 +896,8 @@ char *o_complex_save(OBJECT *object)
 {
   int selectable;
   char *buf = NULL;
+
+  g_return_val_if_fail (object != NULL, NULL);
 
   if (object->sel_func != NULL) 
   selectable = 1;
@@ -1049,6 +1093,10 @@ void o_complex_world_translate_toplevel(TOPLEVEL *w_current,
 {
   int left, right, top, bottom;
 
+  g_return_if_fail(object != NULL);
+  g_return_if_fail((object->type == OBJ_COMPLEX) ||
+		   (object->type == OBJ_PLACEHOLDER));
+
   object->complex->x = object->complex->x + x1;
   object->complex->y = object->complex->y + y1;
 
@@ -1060,8 +1108,8 @@ void o_complex_world_translate_toplevel(TOPLEVEL *w_current,
   o_complex_world_translate(w_current, x1, y1, 
                             object->complex->prim_objs);
 
-  get_complex_bounds(w_current, object->complex->prim_objs, 
-                     &left, &top, &right, &bottom);
+  get_object_list_bounds(w_current, object->complex->prim_objs, 
+			 &left, &top, &right, &bottom);
 	
   object->left = left;
   object->top = top;
@@ -1081,6 +1129,8 @@ OBJECT *o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail,
   int color;
   int selectable;
 
+  g_return_val_if_fail(o_current != NULL, NULL);
+
   if (o_current->saved_color == -1) {
     color = o_current->color;
   } else {
@@ -1093,7 +1143,7 @@ OBJECT *o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail,
     selectable = FALSE;	
   }
 
-  new_obj = o_complex_add(w_current, list_tail, o_current->type, color,
+  new_obj = o_complex_add(w_current, list_tail, NULL, o_current->type, color,
                           o_current->complex->x, o_current->complex->y, 
                           o_current->complex->angle, o_current->complex->mirror,
                           o_current->complex_clib, o_current->complex_basename, 
@@ -1134,6 +1184,8 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail,
   ATTRIB *a_current;
   int color;
   int selectable;
+
+  g_return_val_if_fail(o_current != NULL, NULL);
 
   if (o_current->saved_color == -1) {
     color = o_current->color;
@@ -1188,6 +1240,8 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail,
  */
 void o_complex_delete(TOPLEVEL *w_current, OBJECT *delete)
 {
+  g_return_if_fail(delete != NULL);
+
   /* first remove complex pointer */
   if (delete->complex) {
     if (delete->complex->prim_objs) {
@@ -1249,6 +1303,8 @@ void o_complex_set_color(OBJECT *prim_objs, int color)
  */
 void o_complex_set_color_single(OBJECT *o_current, int color)
 {
+  g_return_if_fail(o_current != NULL);
+
   switch(o_current->type) {
     case(OBJ_LINE):
     case(OBJ_NET):
@@ -1372,6 +1428,8 @@ void o_complex_unset_color(OBJECT *complex)
  */
 void o_complex_unset_color_single(OBJECT *o_current)
 {
+  g_return_if_fail(o_current != NULL);
+
   switch(o_current->type) {
     case(OBJ_LINE):
     case(OBJ_NET):
@@ -1485,6 +1543,12 @@ void o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx,
   printf("------- a %d ac %d\n", angle, angle_change);
 #endif
 
+  g_return_if_fail(object != NULL);
+  g_return_if_fail(((object->type == OBJ_COMPLEX) ||
+		    (object->type == OBJ_PLACEHOLDER)));
+  g_return_if_fail(object->complex != NULL);
+
+
   /* do individual complex objects */
   o_current = object->complex->prim_objs;
 
@@ -1546,6 +1610,11 @@ void o_complex_mirror_lowlevel(TOPLEVEL *w_current,
 			       OBJECT *object)
 {
   OBJECT *o_current=NULL;
+
+  g_return_if_fail(object != NULL);
+  g_return_if_fail(((object->type == OBJ_COMPLEX) ||
+		    (object->type == OBJ_PLACEHOLDER)));
+  g_return_if_fail(object->complex != NULL);
 
   /* do individual complex objects */
   o_current = object->complex->prim_objs;
@@ -1611,6 +1680,12 @@ OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin)
   OBJECT *o_current=NULL;
   OBJECT *found;
 
+  g_return_val_if_fail(object != NULL, NULL);
+  g_return_val_if_fail(((object->type == OBJ_COMPLEX) ||
+			(object->type == OBJ_PLACEHOLDER)) , NULL);
+  g_return_val_if_fail(object->complex != NULL, NULL);
+
+
   /* go inside complex objects */
   o_current = object->complex->prim_objs;
 
@@ -1655,10 +1730,10 @@ o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object)
   double inside_major, inside_minor;
   double outside_major, outside_minor;
   
-  if (object->type != OBJ_COMPLEX && object->type != OBJ_PLACEHOLDER)
-  {
-    return;
-  }
+  g_return_if_fail (object != NULL);
+  g_return_if_fail ((object->type == OBJ_COMPLEX || 
+		     object->type == OBJ_PLACEHOLDER));
+  g_return_if_fail (object->complex != NULL);
 
   /* first look on the inside for the symversion= attribute */
   inside = o_attrib_search_name(object->complex->prim_objs, "symversion", 0);

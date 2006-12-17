@@ -86,7 +86,7 @@ OBJECT *o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone)
 {
   OBJECT *object=NULL;
   OBJECT *found=NULL;
-  SELECTION *s_current;
+  GList *s_current;
   int size, x2size;
 	
   if (!whichone) {
@@ -99,12 +99,11 @@ OBJECT *o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone)
   x2size = size * 2;
 	
   /* skip over head */
-  s_current = w_current->page_current->selection2_head->next;
-  while (s_current) {
-    if (s_current->selected_object) {
-      object = s_current->selected_object;
+  s_current = w_current->page_current->selection_list;
+  while (s_current != NULL) {
+    object = (OBJECT *) s_current->data;
+    if (object) {
       switch(object->type) {
-				
         case(OBJ_ARC):
           /* check the grips of the arc object */
           found = o_grips_search_arc(w_current, object,

@@ -69,8 +69,8 @@ int tab_in_chars = 8;
 void get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current,
 		     int *left, int *top, int *right, int *bottom)
 {
-  get_complex_bounds(w_current, o_current->text->prim_objs, left, top,
-                     right, bottom);
+  get_object_list_bounds(w_current, o_current->text->prim_objs, left, top,
+			 right, bottom);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1017,8 +1017,8 @@ void o_text_recalc(TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  get_complex_bounds(w_current, o_current->text->prim_objs, 
-                     &left, &top, &right, &bottom);
+  get_object_list_bounds(w_current, o_current->text->prim_objs, 
+			 &left, &top, &right, &bottom);
   o_current->left = left;
   o_current->top = top;
   o_current->right = right;

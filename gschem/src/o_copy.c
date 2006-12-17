@@ -37,7 +37,7 @@
  */
 void o_copy_start(TOPLEVEL *w_current, int x, int y)
 {
-  if (w_current->page_current->selection2_head->next != NULL) {
+  if (w_current->page_current->selection_list != NULL) {
 
   /* This is commented out since it breaks the copy of objects.  See below. */
 #if 0
@@ -53,7 +53,7 @@ void o_copy_start(TOPLEVEL *w_current, int x, int y)
     w_current->last_x = w_current->start_x = fix_x(w_current, x);
     w_current->last_y = w_current->start_y = fix_y(w_current, y);
     o_drawbounding(w_current, NULL,
-                   w_current->page_current->selection2_head->next,
+                   w_current->page_current->selection_list,
                    x_get_darkcolor(w_current->bb_color), TRUE);
     w_current->inside_action = 1;
   }
@@ -66,8 +66,8 @@ void o_copy_start(TOPLEVEL *w_current, int x, int y)
  */
 void o_copy_end(TOPLEVEL *w_current)
 {
-  SELECTION *temp_list = NULL;
-  SELECTION *s_current = NULL;
+  GList *temp_list = NULL;
+  GList *s_current = NULL;
   GList *new_objects = NULL;
   GList *connected_objects=NULL;
   OBJECT *new_object = NULL;
@@ -108,18 +108,19 @@ void o_copy_end(TOPLEVEL *w_current)
   diff_y = ly - sy;
 
   /* skip over head node */
-  s_current = w_current->page_current->selection2_head->next;
-  temp_list = o_selection_new_head();
+  s_current = w_current->page_current->selection_list;
+  temp_list = NULL;
   new_objects_head = s_basic_init_object("object_head");
 
   while(s_current != NULL) {
 
-    if (s_current->selected_object == NULL) {
+    object = (OBJECT *) s_current->data;
+
+    if (object == NULL) {
       fprintf(stderr, _("ERROR: NULL object in o_copy_end!\n"));
       exit(-1);
     }
 
-    object = s_current->selected_object;
     switch(object->type) {
 
       case(OBJ_NET):
@@ -143,7 +144,7 @@ void o_copy_end(TOPLEVEL *w_current)
                               diff_x, diff_y,
                               new_object);
 
-        o_selection_add(temp_list, new_object);
+        temp_list = o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_net_draw(w_current, new_object);
 
@@ -174,7 +175,7 @@ void o_copy_end(TOPLEVEL *w_current)
                               diff_x, diff_y,
                               new_object);
         
-        o_selection_add(temp_list, new_object);
+        temp_list = o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_pin_draw(w_current, new_object);
         
@@ -204,7 +205,7 @@ void o_copy_end(TOPLEVEL *w_current)
                               diff_x, diff_y,
                               new_object);
         
-        o_selection_add(temp_list, new_object);
+        temp_list = o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_bus_draw(w_current, new_object);
         
@@ -244,7 +245,7 @@ void o_copy_end(TOPLEVEL *w_current)
                                            diff_y,
                                            new_object);
 
-        o_selection_add(temp_list, new_object);
+        temp_list = o_selection_add(temp_list, new_object);
 
 	/* NEWSEL: this needs to be fixed too */
 	/* this may not be needed anymore? */
@@ -275,7 +276,7 @@ void o_copy_end(TOPLEVEL *w_current)
                                new_object);
         w_current->ADDING_SEL=0; 
 
-        o_selection_add(temp_list, new_object);
+        temp_list = o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_line_draw(w_current, new_object);
         break;
@@ -297,7 +298,7 @@ void o_copy_end(TOPLEVEL *w_current)
                               new_object);
         w_current->ADDING_SEL=0; 
         
-        o_selection_add(temp_list, new_object);
+        temp_list = o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_box_draw(w_current, new_object);
         
@@ -320,7 +321,7 @@ void o_copy_end(TOPLEVEL *w_current)
 				  new_object);
         w_current->ADDING_SEL=0; 
         
-        o_selection_add(temp_list, new_object);
+        temp_list = o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_picture_draw(w_current, new_object);
         
@@ -344,7 +345,7 @@ void o_copy_end(TOPLEVEL *w_current)
                                  new_object);
         w_current->ADDING_SEL=0; 
 
-        o_selection_add(temp_list, new_object);
+        temp_list = o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_circle_draw(w_current, new_object);
         break;
@@ -367,7 +368,7 @@ void o_copy_end(TOPLEVEL *w_current)
                               new_object);
         w_current->ADDING_SEL=0; 
         
-        o_selection_add(temp_list, new_object);
+        temp_list = o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_arc_draw(w_current, new_object);
         break;
@@ -381,15 +382,16 @@ void o_copy_end(TOPLEVEL *w_current)
   }
 
   /* skip over head */
-  s_current = w_current->page_current->selection2_head->next;
+  s_current = w_current->page_current->selection_list;
   while(s_current != NULL) {
 
-    if (s_current->selected_object == NULL) {
+    object = (OBJECT *) s_current->data;
+
+    if (object == NULL) {
       fprintf(stderr, _("ERROR: NULL object in o_copy_end!\n"));
       exit(-1);
     }
 
-    object = s_current->selected_object;
     switch(object->type) {
 
       case(OBJ_TEXT):
@@ -440,7 +442,7 @@ void o_copy_end(TOPLEVEL *w_current)
           color = object->saved_color;
         }
 
-        o_selection_add(temp_list, new_object);
+        temp_list = o_selection_add(temp_list, new_object);
         new_object->saved_color = color;
         
 	/* signify that object is no longer an attribute */
@@ -506,19 +508,17 @@ void o_copy_end(TOPLEVEL *w_current)
   /* erase the bounding box */
   if (w_current->actionfeedback_mode == BOUNDINGBOX) {
     o_drawbounding(w_current, NULL,
-                   w_current->page_current->selection2_head->next,
+                   w_current->page_current->selection_list,
                    x_get_darkcolor(w_current->bb_color), TRUE);
   }
 
   o_select_run_hooks(w_current, NULL, 2); 
-  o_selection_remove_most(w_current,
-                          w_current->page_current->selection2_head);
-  o_selection_destroy_head(w_current->page_current->selection2_head);
-  w_current->page_current->selection2_head = temp_list;
-  w_current->page_current->selection2_tail = o_selection_return_tail(
-                                                                     temp_list);
+  o_selection_unselect_list(w_current, 
+			    &(w_current->page_current->selection_list));
+  w_current->page_current->selection_list = NULL;
+  w_current->page_current->selection_list = temp_list;
 #if DEBUG
-  o_selection_print_all(w_current->page_current->selection2_head);
+  o_selection_print_all(w_current->page_current->selection_list);
 #endif
 
   w_current->page_current->CHANGED = 1;
