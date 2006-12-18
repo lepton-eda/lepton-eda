@@ -363,6 +363,8 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_window_set_title (GTK_WINDOW (aewindow), _("Single Attribute Editor"));
   gtk_window_set_position (GTK_WINDOW (aewindow), GTK_WIN_POS_MOUSE);
   gtk_window_set_modal (GTK_WINDOW (aewindow), TRUE);
+  gtk_window_set_transient_for(GTK_WINDOW(aewindow),
+			       GTK_WINDOW(w_current->main_window));
 
   table1 = gtk_table_new (3, 1, FALSE);
   gtk_widget_ref (table1);

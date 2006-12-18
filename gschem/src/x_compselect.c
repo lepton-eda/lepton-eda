@@ -187,8 +187,10 @@ x_compselect_open (TOPLEVEL *toplevel)
     gtk_widget_show (toplevel->cswindow);
     
   } else {
-    gdk_window_raise (toplevel->cswindow->window);
+    gtk_window_present (GTK_WINDOW(toplevel->cswindow));
   }
+  gtk_editable_select_region(GTK_EDITABLE(COMPSELECT(toplevel->cswindow)->entry_filter), 0, -1);
+  gtk_widget_grab_focus (GTK_WIDGET(COMPSELECT(toplevel->cswindow)->entry_filter));
 }
 
 /*! \brief Closes the component selection dialog.

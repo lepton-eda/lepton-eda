@@ -1,3 +1,14 @@
+2006-12-18 Werner Hoch <werner.ho@gmx.de>
+
+	* src/o_picture.c: set transient_for flag for the dialogs
+	  add image and modify image.
+
+	* src/x_attribedit.c: set transient_for flag for the dialog
+
+	* src/x_compselect.c: set the widget focus to the filter entry
+	  present the window and select the filter text when reselecting
+	  the dialog with "i". (ideas from Peter Clifton)
+
 2006-12-17 Stuart Brorson <sdb@cloud9.net>
 	* src/x_autonumber.c: Replace GTK-26 ism with 2.4 fcns.  Thanks,
 	Werner, for the suggestion!

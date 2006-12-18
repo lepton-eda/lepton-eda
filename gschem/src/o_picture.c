@@ -178,6 +178,9 @@ void picture_selection_dialog (TOPLEVEL *w_current)
     gtk_window_position(GTK_WINDOW (w_current->pfswindow),
 			GTK_WIN_POS_NONE);
     
+    gtk_window_set_transient_for(GTK_WINDOW(file_selector),
+				 GTK_WINDOW(w_current->main_window));
+
     g_signal_connect (G_OBJECT (file_selector), "destroy",
 		      G_CALLBACK (picture_selection_cancel), w_current);
     
@@ -851,6 +854,9 @@ void picture_change_filename_dialog (TOPLEVEL *w_current)
      gtk_window_position(GTK_WINDOW(w_current->pcfswindow),
                          GTK_WIN_POS_NONE);
      
+     gtk_window_set_transient_for(GTK_WINDOW(file_selector),
+				  GTK_WINDOW(w_current->main_window));
+
      g_signal_connect (G_OBJECT(file_selector), "destroy",
 		       G_CALLBACK(picture_change_selection_cancel),
 		       w_current);
