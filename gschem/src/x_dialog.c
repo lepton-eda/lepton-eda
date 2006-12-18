@@ -42,9 +42,7 @@
   g_object_set_data_full (G_OBJECT (component), name, \
     gtk_widget_ref (widget), (GDestroyNotify) gtk_widget_unref)
 
-#define DIALOG_BORDER_SPACING 10
 #define DIALOG_ELEMENT_SPACING 10
-
 
 static GtkWidget* create_menu_linetype (TOPLEVEL *w_current);
 static gint line_type_dialog_linetype_change (GtkWidget *w, gpointer data);
@@ -90,26 +88,10 @@ void destroy_window(GtkWidget *widget, GtkWidget **window)
 }
 
 /***************** Start of Text Input dialog box *********************/
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-int text_input_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
-			       TOPLEVEL * w_current)
-{
-   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-	text_input_dialog_close(NULL, w_current);	
- 	return TRUE;
-   }
 
-   return FALSE;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief worker function for the text entry dialog
  *  \par Function Description
- *
+ *  This function applies the text from the text entry dialog.
  */
 void text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 {
@@ -145,92 +127,84 @@ void text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
         break;
     }
 
-    o_attrib_set_string(w_current, string);
-    w_current->page_current->CHANGED=1;
-    gtk_text_buffer_set_text(textbuffer, w_current->current_attribute, -1);
+    /* select the text, so you can continue immediatly writing the next text */
     select_all_text_in_textview(GTK_TEXT_VIEW(tientry));
     gtk_widget_grab_focus(tientry);
 
+    o_attrib_set_string(w_current, string);
+    w_current->page_current->CHANGED=1;
     w_current->event_state = DRAWTEXT;
     w_current->inside_action = 1;
   }
-
-#if 0
-  gtk_grab_remove(w_current->tiwindow);
-  gtk_widget_destroy(w_current->tiwindow);
-  w_current->tiwindow = NULL;
-#endif
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief response function for the text entry dialog
  *  \par Function Description
- *
+ *  Callback function for the text entry dialog.
  */
-void text_input_dialog_close(GtkWidget *w, TOPLEVEL *w_current)
+void text_input_dialog_response(GtkWidget * widget, gint response, TOPLEVEL *w_current)
 {
-  i_set_state(w_current, SELECT);
-  i_update_toolbar(w_current);
-#if 0
-  gtk_grab_remove(w_current->tiwindow);
-#endif
-  gtk_widget_destroy(w_current->tiwindow);
-  w_current->tiwindow=NULL;
+  switch(response) {
+  case GTK_RESPONSE_ACCEPT:
+    text_input_dialog_apply(widget, w_current);
+    break;
+  case GTK_RESPONSE_REJECT:
+  case GTK_RESPONSE_DELETE_EVENT:
+    i_set_state(w_current, SELECT);
+    i_update_toolbar(w_current);
+    gtk_widget_destroy(w_current->tiwindow);
+    w_current->tiwindow=NULL;
+    break;
+  default:
+    printf("text_edit_dialog_response(): strange signal %d\n", response);
+  }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+
+/*! \brief create or present the text entry dialog
  *  \par Function Description
- *
+ *  This function creates or raises the modal text entry dialog
  */
 void text_input_dialog (TOPLEVEL *w_current)
 {
   GtkWidget *label = NULL;
   GtkWidget *tientry = NULL;
-  GtkWidget *buttonok     = NULL;
-  GtkWidget *buttoncancel = NULL;
-  GtkWidget *vbox, *action_area;
+  GtkWidget *vbox;
   GtkWidget *viewport1 = NULL;
   GtkWidget *scrolled_window = NULL;
   PangoTabArray *tab_array;
   int real_tab_width;
 
-  if (!w_current->tiwindow) {
-    w_current->tiwindow = x_create_dialog_box(&vbox, &action_area);
-
-#if 0
-    gtk_window_position(GTK_WINDOW (w_current->tiwindow),
-                        GTK_WIN_POS_MOUSE);
-#endif
-
-    /*gtk_widget_set_usize(w_current->tiwindow, 400,130); no longer fixed size*/
+  if (!w_current->tiwindow) { /* dialog not created yet */
+    w_current->tiwindow = gtk_dialog_new_with_buttons(_("Text Entry..."),
+						      GTK_WINDOW(w_current->main_window),
+						      0, /* NON_MODAL */
+						      GTK_STOCK_CLOSE,
+						      GTK_RESPONSE_REJECT,
+						      GTK_STOCK_APPLY,
+						      GTK_RESPONSE_ACCEPT,
+						      NULL);
 
     gtk_window_position(GTK_WINDOW (w_current->tiwindow),
                         GTK_WIN_POS_NONE);
 
-    gtk_signal_connect(GTK_OBJECT (w_current->tiwindow),
-                       "destroy", GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->tiwindow);
+    gtk_signal_connect(GTK_OBJECT (w_current->tiwindow), "response", 
+		       GTK_SIGNAL_FUNC(text_input_dialog_response),
+                       w_current);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->tiwindow),
-                     "key_press_event",
-                     (GtkSignalFunc) text_input_dialog_keypress, w_current);
+    gtk_dialog_set_default_response(GTK_DIALOG(w_current->tiwindow),
+				    GTK_RESPONSE_ACCEPT);
 
-#if 0 /* removed because it was causing the dialog box to not close */
-    gtk_signal_connect(GTK_OBJECT (w_current->tiwindow),
-                       "delete_event",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->tiwindow);
-#endif
+    gtk_container_border_width(GTK_CONTAINER (w_current->tiwindow), 
+			       DIALOG_BORDER_SPACING);
+    vbox = GTK_DIALOG(w_current->tiwindow)->vbox;
+    gtk_box_set_spacing(GTK_BOX(vbox),DIALOG_V_SPACING);
 
-    gtk_window_set_title(GTK_WINDOW (w_current->tiwindow),
-                         _("Text Entry..."));
-    gtk_container_border_width(
-                               GTK_CONTAINER (w_current->tiwindow), 5);
-
-    label = gtk_label_new (_("Enter text, click apply,\nmove cursor into window, click to place text.\nMiddle button to rotate while placing."));
-    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 5);
-    gtk_widget_show (label);
+    label = gtk_label_new (_("Enter text, click apply,\n"
+			     "move cursor into window, click to place text.\n"
+			     "Middle button to rotate while placing."));
+    gtk_misc_set_alignment(GTK_MISC(label),0,0);
+    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
     viewport1 = gtk_viewport_new (NULL, NULL);
     gtk_widget_show (viewport1);
@@ -240,8 +214,7 @@ void text_input_dialog (TOPLEVEL *w_current)
 				   GTK_POLICY_AUTOMATIC, 
 				   GTK_POLICY_AUTOMATIC);
     gtk_container_add (GTK_CONTAINER (viewport1), scrolled_window);
-    gtk_box_pack_start( GTK_BOX(vbox), viewport1, TRUE, TRUE, 10);
-    gtk_widget_show(scrolled_window);
+    gtk_box_pack_start( GTK_BOX(vbox), viewport1, TRUE, TRUE, 0);
 
     tientry = gtk_text_view_new();
     gtk_text_view_set_editable(GTK_TEXT_VIEW(tientry), TRUE);
@@ -264,42 +237,19 @@ void text_input_dialog (TOPLEVEL *w_current)
     pango_tab_array_free (tab_array);
     gtk_container_add(GTK_CONTAINER(scrolled_window), tientry);
 
-    gtk_widget_show(tientry);
-    gtk_widget_grab_focus(tientry);
     gtk_object_set_data(GTK_OBJECT(w_current->tiwindow),
                         "tientry",tientry);
 
-    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-    GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(
-                       GTK_BOX(action_area),
-                       buttoncancel, TRUE, TRUE, 0);
-    gtk_signal_connect (GTK_OBJECT (buttoncancel), "clicked",
-                        GTK_SIGNAL_FUNC(text_input_dialog_close),
-                        w_current);
-    gtk_widget_show (buttoncancel);
-
-    buttonok = gtk_button_new_from_stock (GTK_STOCK_APPLY);
-    GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(
-                       GTK_BOX(action_area),
-                       buttonok, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT (buttonok), "clicked",
-                       GTK_SIGNAL_FUNC(text_input_dialog_apply),
-                       w_current);
-    gtk_widget_show (buttonok);
-    gtk_widget_grab_default (buttonok);
-    
+    gtk_widget_show_all (w_current->tiwindow);
   }
-
-  if (!GTK_WIDGET_VISIBLE (w_current->tiwindow)) {
-    gtk_widget_show (w_current->tiwindow);
-#if 0
-    gtk_grab_add (w_current->tiwindow);
-#endif
-  } else {
-    gdk_window_raise(w_current->tiwindow->window);
+  else { /* dialog already created */
+    gtk_window_present (GTK_WINDOW(w_current->tiwindow)); 
   }
+  
+  /* always select the text in the entry */
+  tientry = gtk_object_get_data(GTK_OBJECT(w_current->tiwindow),"tientry");
+  select_all_text_in_textview(GTK_TEXT_VIEW(tientry));
+  gtk_widget_grab_focus(tientry);
 }
 
 /***************** End of Text Input dialog box ***********************/
@@ -3578,22 +3528,18 @@ void show_text_dialog(TOPLEVEL * w_current)
 
 /*********** Start of some Gtk utils  *******/
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Selects all text in a TextView widget
  *  \par Function Description
- *
+ *  The function selects all the text in a TextView widget.
  */
 void select_all_text_in_textview(GtkTextView *textview) 
 {
   GtkTextBuffer *textbuffer;
   GtkTextIter start, end;
-  GtkTextMark *mark;
 	
   textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
   gtk_text_buffer_get_bounds (textbuffer, &start, &end);
-  gtk_text_buffer_place_cursor(textbuffer, &start);
-  mark = gtk_text_buffer_get_selection_bound(textbuffer);
-  gtk_text_buffer_move_mark(textbuffer, mark, &end);
+  gtk_text_buffer_select_range(textbuffer, &start, &end);
 }
 
 /*! \todo Finish function documentation!!!
