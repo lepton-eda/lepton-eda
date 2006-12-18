@@ -1,3 +1,7 @@
+2006-12-17 Stuart Brorson <sdb@cloud9.net>
+	* src/x_autonumber.c: Replace GTK-26 ism with 2.4 fcns.  Thanks,
+	Werner, for the suggestion!
+
 2006-12-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	Merged Carlos' glist work via Peter Brett's patch sets to the trunk

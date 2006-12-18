@@ -1080,7 +1080,8 @@ void autonumber_get_state(AUTONUMBER_TEXT *autotext)
 
   /* Search text history */
   widget = lookup_widget(autotext->dialog, "scope_text");
-  text=gtk_combo_box_get_active_text( GTK_COMBO_BOX(widget) );
+  widget = gtk_bin_get_child(GTK_BIN(widget));
+  text = g_strdup(gtk_entry_get_text( GTK_ENTRY(widget)));
 
   autotext->scope_text=autonumber_history_add(autotext->scope_text, text);
 
