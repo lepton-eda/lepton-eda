@@ -1,8 +1,12 @@
 2006-12-18 Werner Hoch <werner.ho@gmx.de>
 
+	* src/x_dialog.c: some more code refactoring in the dialogs
+	  edit filltype, edit linetype and edit text. Use the style constants
+	  from x_dialog.h
+	
 	* include/x_dialog.h: added constants for dialog layout style
 
-	* src/x_dialog.h: use GtkDialog for text entry dialog, some code 
+	* src/x_dialog.c: use GtkDialog for text entry dialog, some code 
 	  refactoring. Fixed a bug in select_all_text_in_textview() which
 	  toggled the selection instead of selecting it.
 	   
