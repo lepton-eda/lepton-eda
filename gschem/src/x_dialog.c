@@ -1397,156 +1397,112 @@ void fill_type_dialog(TOPLEVEL *w_current, GList *objects)
 
 /***************** Start of Arc dialog box ***************************/
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief response function for the arc angle dialog
  *  \par Function Description
- *
+ *  The response function of th arc angle dialog takes the content of 
+ *  the dialog and applies it on the current arc.
+ *  If the dialog is closed or canceled the function destroys the dialog.
  */
-int arc_angles_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
-	              TOPLEVEL * w_current)
+void arc_angle_dialog_response(GtkWidget *w, gint response,
+			       TOPLEVEL *w_current)
 {
-   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-	arc_angles_dialog_cancel(NULL, w_current);	
-        return TRUE;
-   }
-
-   return FALSE;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void arc_angles_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
-{
-  char *string_start = NULL;
-  char *string_sweep = NULL;
-
-  string_start = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->aaentry_start));
-  string_sweep = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->aaentry_sweep));
-
-  if ( (string_start[0] != '\0') && (string_sweep[0] != '\0') ) {
-    /*! \todo put error detection */
-    /* pb20011125 - o_arc_end4 accepts the final angles as param */
-    o_arc_end4(w_current, atoi(string_start), atoi(string_sweep));
+  GtkWidget *spinentry;
+  gint start_angle, sweep_angle;
+ 
+  switch (response) {
+  case GTK_RESPONSE_REJECT:
+  case GTK_RESPONSE_DELETE_EVENT:
+    /* void */
+    break;
+  case GTK_RESPONSE_ACCEPT:
+    spinentry = g_object_get_data(G_OBJECT(w_current->aawindow),"spin_start");
+    start_angle = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spinentry));
+    spinentry = g_object_get_data(G_OBJECT(w_current->aawindow),"spin_sweep");
+    sweep_angle = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spinentry));
+    
+    o_arc_end4(w_current, start_angle, sweep_angle);
+    break;
+  default:
+    printf("arc_angle_dialog_response(): strange signal %d\n",response);
   }
 
-  gtk_grab_remove(w_current->aawindow);
   gtk_widget_destroy(w_current->aawindow);
   w_current->aawindow = NULL;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void arc_angles_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
-{
-  gtk_grab_remove(w_current->aawindow);
-  gtk_widget_destroy(w_current->aawindow);
-  w_current->aawindow = NULL;
-
   w_current->event_state = DRAWARC;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Creates the arc angle dialog
  *  \par Function Description
- *
+ *  This function create the arc angle dialog. 
  */
 void arc_angle_dialog (TOPLEVEL *w_current)
 {
   GtkWidget *label = NULL;
-  GtkWidget *buttonok     = NULL;
-  GtkWidget *buttoncancel = NULL;
-  GtkWidget *vbox, *action_area;
+  GtkWidget *vbox;
+  GtkWidget *alignment, *table;
+  GtkWidget *spin_start, *spin_sweep;
 
   if (!w_current->aawindow) {
-    w_current->aawindow = x_create_dialog_box(&vbox, &action_area);
+    w_current->aawindow = gtk_dialog_new_with_buttons(_("Arc Params"),
+						      GTK_WINDOW(w_current->main_window),
+						      GTK_DIALOG_MODAL,
+						      GTK_STOCK_CANCEL,
+						      GTK_RESPONSE_REJECT,
+						      GTK_STOCK_OK,
+						      GTK_RESPONSE_ACCEPT,
+						      NULL);
 
     gtk_window_position(GTK_WINDOW(w_current->aawindow),
                         GTK_WIN_POS_MOUSE);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->aawindow),
-                       "destroy",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->aawindow);
+    gtk_signal_connect(GTK_OBJECT(w_current->aawindow), "response",
+                       GTK_SIGNAL_FUNC(arc_angle_dialog_response), w_current);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->aawindow),
-                     "key_press_event",
-                     (GtkSignalFunc) arc_angles_dialog_keypress, w_current);
+    gtk_dialog_set_default_response(GTK_DIALOG(w_current->aawindow),
+				    GTK_RESPONSE_ACCEPT);
 
-#if 0 /* removed because it was causing the dialog box to not close */
-    gtk_signal_connect(GTK_OBJECT(w_current->aawindow),
-                       "delete_event",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->aawindow);
-#endif
+    gtk_container_border_width(GTK_CONTAINER(w_current->aawindow), DIALOG_BORDER_SPACING);
+    vbox = GTK_DIALOG(w_current->aawindow)->vbox;
+    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
-    gtk_window_set_title(GTK_WINDOW(w_current->aawindow),
-                         _("Arc Params"));
-    gtk_container_border_width(GTK_CONTAINER(w_current->aawindow),
-                               10);
 
-    label = gtk_label_new (_("Start Angle"));
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       label, TRUE, TRUE, 0);
-    gtk_widget_show (label);
+    alignment = gtk_alignment_new(0,0,1,1);
+    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 
+                              0 /*DIALOG_INDENTATION */, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), alignment, FALSE, FALSE, 0);
 
-    w_current->aaentry_start = gtk_entry_new_with_max_length (4);
-    gtk_editable_select_region(
-                               GTK_EDITABLE(w_current->aaentry_start), 0, -1);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       w_current->aaentry_start, FALSE, FALSE, 5);
-    gtk_widget_show(w_current->aaentry_start);
-    gtk_widget_grab_focus(w_current->aaentry_start);
+    table = gtk_table_new (2, 2, FALSE);
+    gtk_table_set_row_spacings(GTK_TABLE(table), DIALOG_V_SPACING);
+    gtk_table_set_col_spacings(GTK_TABLE(table), DIALOG_H_SPACING);
+    gtk_container_add(GTK_CONTAINER(alignment), table);
 
-    label = gtk_label_new(_("Degrees of Sweep"));
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       label, TRUE, TRUE, 0);
-    gtk_widget_show(label);
+    label = gtk_label_new (_("Start Angle:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
+    gtk_table_attach(GTK_TABLE(table), label, 0,1,0,1, GTK_FILL,0,0,0);
 
-    w_current->aaentry_sweep = gtk_entry_new_with_max_length (4);
-    gtk_editable_select_region(
-                               GTK_EDITABLE(w_current->aaentry_sweep), 0, -1);
-    gtk_box_pack_start(GTK_BOX(vbox),
-                       w_current->aaentry_sweep, FALSE, FALSE, 5);
-    gtk_signal_connect(GTK_OBJECT(w_current->aaentry_sweep),
-                       "activate",
-                       GTK_SIGNAL_FUNC(arc_angles_dialog_ok),
-                       w_current);
-    gtk_widget_show(w_current->aaentry_sweep);
+    spin_start = gtk_spin_button_new_with_range(-360,360,1);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_start),0);
+    gtk_widget_grab_focus(spin_start);
+    gtk_entry_set_activates_default(GTK_ENTRY(spin_start), TRUE);
+    gtk_table_attach_defaults(GTK_TABLE(table), spin_start, 1,2,0,1);
 
-    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-    GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
-    gtk_box_pack_start (GTK_BOX (action_area),
-                        buttoncancel, TRUE, TRUE, 0);
-    gtk_signal_connect (GTK_OBJECT (buttoncancel), "clicked",
-                        GTK_SIGNAL_FUNC(arc_angles_dialog_cancel),
-                        w_current);
-    gtk_widget_show (buttoncancel);
+    label = gtk_label_new(_("Degrees of Sweep:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
+    gtk_table_attach(GTK_TABLE(table), label, 0,1,1,2, GTK_FILL,0,0,0);
 
-    buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
-    GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
-    gtk_box_pack_start (
-			GTK_BOX(action_area),
-			buttonok, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT (buttonok), "clicked",
-                       GTK_SIGNAL_FUNC(arc_angles_dialog_ok),
-                       w_current);
-    gtk_widget_show (buttonok);
-    gtk_widget_grab_default (buttonok);
+    spin_sweep = gtk_spin_button_new_with_range(-360,360,1);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_sweep), 90);
+    gtk_widget_grab_focus(spin_sweep);
+    gtk_entry_set_activates_default(GTK_ENTRY(spin_sweep), TRUE);
+    gtk_table_attach_defaults(GTK_TABLE(table), spin_sweep, 1,2,1,2);
 
+    GLADE_HOOKUP_OBJECT(w_current->aawindow, spin_start,"spin_start");
+    GLADE_HOOKUP_OBJECT(w_current->aawindow, spin_sweep,"spin_sweep");
+    gtk_widget_show_all (w_current->aawindow);
   }
 
-  if (!GTK_WIDGET_VISIBLE (w_current->aawindow)) {
-    gtk_widget_show (w_current->aawindow);
-    gtk_grab_add (w_current->aawindow);
+  else {  /* dialog already created */
+    gtk_window_present (GTK_WINDOW(w_current->aawindow));
   }
 }
 
@@ -1557,7 +1513,7 @@ void arc_angle_dialog (TOPLEVEL *w_current)
 /*! \brief response function for the translate dialog
  *  \par Function Description
  *  This function takes the user action and applies it.
- *  \todo improve put error detection
+ *  \todo improve error detection / use a spin button?
  */
 void translate_dialog_response(GtkWidget *widget, gint response,
 			       TOPLEVEL *w_current)
@@ -1616,12 +1572,13 @@ void translate_dialog (TOPLEVEL *w_current)
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->trwindow),
 				    GTK_RESPONSE_ACCEPT);
 
-    gtk_container_border_width(GTK_CONTAINER(w_current->trwindow), DIALOG_BORDER_SPACING);
+    gtk_container_border_width(GTK_CONTAINER(w_current->trwindow), 
+			       DIALOG_BORDER_SPACING);
     vbox = GTK_DIALOG(w_current->trwindow)->vbox;
-    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_ELEMENT_SPACING);
+    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
     label = gtk_label_new(_("Offset to translate?\n(0 for origin)"));
-    gtk_misc_set_padding(GTK_MISC (label), 10, 10);
+    gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
     
     textentry = gtk_entry_new_with_max_length (10);
@@ -1631,10 +1588,11 @@ void translate_dialog (TOPLEVEL *w_current)
     gtk_box_pack_start(GTK_BOX(vbox),textentry, FALSE, FALSE, 0);
 
     GLADE_HOOKUP_OBJECT(w_current->trwindow, textentry, "textentry");
+    gtk_widget_show_all (w_current->trwindow);
   }
 
-  if (!GTK_WIDGET_VISIBLE (w_current->trwindow)) {
-    gtk_widget_show_all (w_current->trwindow);
+  else  { /* dialog already created */
+    gtk_window_present(GTK_WINDOW(w_current->trwindow));
   }
 }
 
@@ -1642,301 +1600,193 @@ void translate_dialog (TOPLEVEL *w_current)
 
 /***************** Start of Text size dialog box *********************/
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief response function for the text size dialog
  *  \par Function Description
- *
+ *  This function takes the user input and applies it to gschem
  */
-int text_size_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
-			      TOPLEVEL * w_current)
+void text_size_dialog_response(GtkWidget *w, gint response, 
+			       TOPLEVEL *w_current)
 {
-   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-	text_size_dialog_cancel(NULL, w_current);	
-        return TRUE;
-   }
+  GtkWidget *spin_size;
+  gint size;
+  
+  switch (response) {
+  case GTK_RESPONSE_ACCEPT:
+    spin_size = g_object_get_data(G_OBJECT(w_current->tswindow),"spin_size");
+    size = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spin_size));
 
-   return FALSE;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void text_size_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
-{
-  char *string = NULL;
-  int size;
-
-  string = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
-
-  if ((string[0] != '\0')) {
-    size = atoi(string);
-    if (size) {
-      w_current->text_size = size;
-      w_current->page_current->CHANGED=1;
-      o_undo_savestate(w_current, UNDO_ALL);
-    }
+    w_current->text_size = size;
+    w_current->page_current->CHANGED=1;
+    o_undo_savestate(w_current, UNDO_ALL);
+    break;
+  case GTK_RESPONSE_REJECT:
+  case GTK_RESPONSE_DELETE_EVENT:
+    /* void */
+    break;
+  default:
+    printf("text_size_dialog_response(): strange signal %d\n",response);
   }
 
-  gtk_grab_remove(w_current->tswindow);
-  gtk_widget_destroy(w_current->tswindow);
-  w_current->tswindow = NULL;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void text_size_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
-{
+  /* clean up */
   i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
-  gtk_grab_remove(w_current->tswindow);
   gtk_widget_destroy(w_current->tswindow);
   w_current->tswindow = NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Create the text size dialog
  *  \par Function Description
- *
+ *  This function creates the text size dialog.
  */
 void text_size_dialog (TOPLEVEL *w_current)
 {
-  char *string;
-  int len;
   GtkWidget *label = NULL;
-  GtkWidget *buttonok = NULL;
-  GtkWidget *buttoncancel = NULL;
-  GtkWidget *vbox, *action_area;
+  GtkWidget *vbox;
+  GtkWidget *spin_size;
 
   if (!w_current->tswindow) {
-    w_current->tswindow = x_create_dialog_box(&vbox, &action_area);
+    w_current->tswindow = gtk_dialog_new_with_buttons(_("Text Size"),
+                                                      GTK_WINDOW(w_current->main_window),
+                                                      GTK_DIALOG_MODAL,
+                                                      GTK_STOCK_CANCEL,
+                                                      GTK_RESPONSE_REJECT,
+                                                      GTK_STOCK_OK,
+                                                      GTK_RESPONSE_ACCEPT,
+                                                      NULL);
 
     gtk_window_position(GTK_WINDOW(w_current->tswindow),
                         GTK_WIN_POS_MOUSE);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
-                       "destroy",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->tswindow);
-
-    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
-                     "key_press_event",
-                     (GtkSignalFunc) text_size_dialog_keypress, w_current);
-
-#if 0 /* removed because it was causing the dialog box to not close */
-    gtk_signal_connect(GTK_OBJECT (w_current->tswindow),
-                       "delete_event",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->tswindow);
-#endif
-
-    gtk_window_set_title(GTK_WINDOW (w_current->tswindow),
-                         _("Text Size"));
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow), "response",
+                       GTK_SIGNAL_FUNC(text_size_dialog_response),
+                       w_current);
+    gtk_dialog_set_default_response(GTK_DIALOG(w_current->tswindow),
+                                    GTK_RESPONSE_ACCEPT);
+    
     gtk_container_border_width(GTK_CONTAINER(w_current->tswindow),
-                               10);
+                               DIALOG_BORDER_SPACING);
+    vbox = GTK_DIALOG(w_current->tswindow)->vbox;
+    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
-    label = gtk_label_new (_("Enter new text size"));
-    gtk_misc_set_padding (GTK_MISC (label), 10, 10);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       label, TRUE, TRUE, 0);
-    gtk_widget_show (label);
+    label = gtk_label_new (_("Enter new text size:"));
+    gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 
-    w_current->tsentry = gtk_entry_new_with_max_length (10);
-    gtk_editable_select_region(
-                               GTK_EDITABLE(w_current->tsentry), 0, -1);
-    gtk_box_pack_start(GTK_BOX(vbox),
-                       w_current->tsentry, FALSE, FALSE, 5);
-    gtk_signal_connect(GTK_OBJECT(w_current->tsentry), "activate",
-                       GTK_SIGNAL_FUNC(text_size_dialog_ok),
-                       w_current);
-    gtk_widget_show (w_current->tsentry);
-    gtk_widget_grab_focus(w_current->tsentry);
+    spin_size = gtk_spin_button_new_with_range(2,10000,2);
+    gtk_editable_select_region( GTK_EDITABLE(spin_size), 0, -1);
+    gtk_box_pack_start(GTK_BOX(vbox), spin_size, FALSE, FALSE, 0);
+    gtk_entry_set_activates_default(GTK_ENTRY(spin_size), TRUE);
+    gtk_widget_grab_focus(spin_size);
 
-    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-    GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(
-                       GTK_BOX(action_area),
-                       buttoncancel, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT (buttoncancel), "clicked",
-                       GTK_SIGNAL_FUNC(text_size_dialog_cancel),
-                       w_current);
-    gtk_widget_show (buttoncancel);
-
-    buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
-    GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(
-                       GTK_BOX(action_area),
-                       buttonok, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT (buttonok), "clicked",
-                       GTK_SIGNAL_FUNC(text_size_dialog_ok),
-                       w_current);
-    gtk_widget_show (buttonok);
-    gtk_widget_grab_default (buttonok);
+    GLADE_HOOKUP_OBJECT(w_current->tswindow, spin_size, "spin_size");
+    gtk_widget_show_all(w_current->tswindow);
   }
 
-  if (!GTK_WIDGET_VISIBLE (w_current->tswindow)) {
-    string = g_strdup_printf("%d", w_current->text_size);
-    len = strlen(string);
-    gtk_entry_set_text(GTK_ENTRY(w_current->tsentry), string);
-    gtk_entry_select_region(GTK_ENTRY(w_current->tsentry), 0, len);
-    gtk_widget_show (w_current->tswindow);
-    gtk_grab_add(w_current->tswindow);
-    g_free(string);
+  else { /* dialog already created */
+    gtk_window_present(GTK_WINDOW(w_current->tswindow));
   }
+
+  /* always set the current text size to the dialog */
+  spin_size = g_object_get_data(G_OBJECT(w_current->tswindow),"spin_size");
+  gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_size), w_current->text_size);
+  gtk_editable_select_region(GTK_EDITABLE(spin_size), 0, -1);
 }
 
 /***************** End of Text size dialog box ***********************/
 
 /***************** Start of Snap size dialog box *********************/
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief response function for the snap size dialog
  *  \par Function Description
- *
+ *  This is the response function for the snap size dialog.
+ *  It sets the given snap size to gschem.
  */
-int snap_size_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
-			      TOPLEVEL * w_current)
+void snap_size_dialog_response(GtkWidget *w, gint response, 
+			       TOPLEVEL *w_current)
 {
-   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-	snap_size_dialog_cancel(NULL, w_current);	
-        return TRUE;
-   }
+  GtkWidget *spin_size;
+  gint size;
 
-   return FALSE;
-}
+  switch (response) {
+  case GTK_RESPONSE_ACCEPT:
+    spin_size = g_object_get_data(G_OBJECT(w_current->tswindow),"spin_size");
+    size = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spin_size));
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void snap_size_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
-{
-  char *string = NULL;
-  int size;
-
-  string = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
-
-  if ((string[0] != '\0')) {
-    size = atoi(string);
-    if (size) {
-      w_current->snap_size = size;
-    }
+    w_current->snap_size = size;
+    w_current->page_current->CHANGED=1;  /* maybe remove those two lines */
+    o_undo_savestate(w_current, UNDO_ALL);
+    break;
+  case GTK_RESPONSE_REJECT:
+  case GTK_RESPONSE_DELETE_EVENT:
+    /* void */
+    break;
+  default:
+    printf("snap_size_dialog_response(): strange signal %d\n",response);
   }
 
-  gtk_grab_remove(w_current->tswindow);
-  gtk_widget_destroy(w_current->tswindow);
-  w_current->tswindow = NULL;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void snap_size_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
-{
+  /* clean up */
   i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
-  gtk_grab_remove(w_current->tswindow);
   gtk_widget_destroy(w_current->tswindow);
   w_current->tswindow = NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Create the snap size dialog
  *  \par Function Description
- *
+ *  This function creates the snap size dialog.
  */
 void snap_size_dialog (TOPLEVEL *w_current)
 {
-  char *string;
-  int len;
   GtkWidget *label = NULL;
-  GtkWidget *buttonok     = NULL;
-  GtkWidget *buttoncancel = NULL;
-  GtkWidget *vbox, *action_area;
+  GtkWidget *vbox;
+  GtkWidget *spin_size;
 
   if (!w_current->tswindow) {
-    w_current->tswindow = x_create_dialog_box(&vbox, &action_area);
+    w_current->tswindow = gtk_dialog_new_with_buttons(_("Snap Size"),
+                                                      GTK_WINDOW(w_current->main_window),
+                                                      GTK_DIALOG_MODAL,
+                                                      GTK_STOCK_CANCEL,
+                                                      GTK_RESPONSE_REJECT,
+                                                      GTK_STOCK_OK,
+                                                      GTK_RESPONSE_ACCEPT,
+                                                      NULL);
 
-    gtk_window_position(GTK_WINDOW (w_current->tswindow),
+    gtk_window_position(GTK_WINDOW(w_current->tswindow),
                         GTK_WIN_POS_MOUSE);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->tswindow), "destroy",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->tswindow);
-
-    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
-                     "key_press_event",
-                     (GtkSignalFunc) snap_size_dialog_keypress, w_current);
-
-#if 0 /* removed because it was causing the dialog box to not close */
-    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
-                       "delete_event",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->tswindow);
-#endif
-
-    gtk_window_set_title(GTK_WINDOW (w_current->tswindow),
-                         _("Snap Grid"));
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow), "response",
+                       GTK_SIGNAL_FUNC(snap_size_dialog_response),
+                       w_current);
+    gtk_dialog_set_default_response(GTK_DIALOG(w_current->tswindow),
+                                    GTK_RESPONSE_ACCEPT);
+    
     gtk_container_border_width(GTK_CONTAINER(w_current->tswindow),
-                               10);
+                               DIALOG_BORDER_SPACING);
+    vbox = GTK_DIALOG(w_current->tswindow)->vbox;
+    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
-    label = gtk_label_new(_("Enter new snap grid spacing"));
-    gtk_misc_set_padding(GTK_MISC (label), 10, 10);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       label, TRUE, TRUE, 0);
-    gtk_widget_show(label);
+    label = gtk_label_new (_("Enter new snap grid spacing:"));
+    gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 
-    w_current->tsentry = gtk_entry_new_with_max_length (10);
-    gtk_editable_select_region(GTK_EDITABLE(w_current->tsentry),
-                               0, -1);
-    gtk_box_pack_start(GTK_BOX(vbox),
-                       w_current->tsentry, FALSE, FALSE, 5);
-    gtk_signal_connect(GTK_OBJECT(w_current->tsentry), "activate",
-                       GTK_SIGNAL_FUNC(snap_size_dialog_ok),
-                       w_current);
-    gtk_widget_show(w_current->tsentry);
-    gtk_widget_grab_focus(w_current->tsentry);
+    spin_size = gtk_spin_button_new_with_range(0,100000,5);
+    gtk_editable_select_region( GTK_EDITABLE(spin_size), 0, -1);
+    gtk_box_pack_start(GTK_BOX(vbox), spin_size, FALSE, FALSE, 0);
+    gtk_entry_set_activates_default(GTK_ENTRY(spin_size), TRUE);
+    gtk_widget_grab_focus(spin_size);
 
-    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-    GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(
-                       GTK_BOX(action_area),
-                       buttoncancel, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT (buttoncancel), "clicked",
-                       GTK_SIGNAL_FUNC(snap_size_dialog_cancel),
-                       w_current);
-    gtk_widget_show(buttoncancel);
-
-    buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
-    GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(
-                       GTK_BOX(action_area),
-                       buttonok, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT (buttonok), "clicked",
-                       GTK_SIGNAL_FUNC(snap_size_dialog_ok),
-                       w_current);
-    gtk_widget_show (buttonok);
-    gtk_widget_grab_default (buttonok);
+    GLADE_HOOKUP_OBJECT(w_current->tswindow, spin_size, "spin_size");
+    gtk_widget_show_all(w_current->tswindow);
   }
 
-  if (!GTK_WIDGET_VISIBLE (w_current->tswindow)) {
-    string = g_strdup_printf("%d", w_current->snap_size);
-    len = strlen(string);
-    gtk_entry_set_text(GTK_ENTRY(w_current->tsentry), string);
-    gtk_entry_select_region(GTK_ENTRY(w_current->tsentry), 0, len);
-    gtk_widget_show (w_current->tswindow);
-    gtk_grab_add (w_current->tswindow);
-    g_free(string);
+  else {  /* dialog already there */
+    gtk_window_present(GTK_WINDOW(w_current->tswindow));
   }
+
+  /* always set the current gschem value to the dialog entry */
+  spin_size = g_object_get_data(G_OBJECT(w_current->tswindow),"spin_size");
+  gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_size), w_current->snap_size);
+  gtk_editable_select_region(GTK_EDITABLE(spin_size), 0, -1);
 }
 
 /***************** End of Snap size dialog box ***********************/

@@ -1,3 +1,9 @@
+2006-12-19 Werner Hoch <werner.ho@gmx.de>
+
+	* src/x_dialog.c: cosmetics in the translate dialog
+	  use GtkDialog for the arc angle, the text size and the snap size
+	  dialog. Use GtkSpinButtons for the three dialogs.
+	
 2006-12-18 Werner Hoch <werner.ho@gmx.de>
 
 	* src/x_dialog.c: some more code refactoring in the dialogs
