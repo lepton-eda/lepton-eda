@@ -1534,7 +1534,7 @@ void translate_dialog_response(GtkWidget *widget, gint response,
     }
     break;
   default:
-    printf("slot_edit_dialog_response(): strange signal %d\n",response);
+    printf("translate_edit_dialog_response(): strange signal %d\n",response);
   }
 
   i_set_state(w_current, SELECT);
@@ -1793,8 +1793,7 @@ void snap_size_dialog (TOPLEVEL *w_current)
 
 /***************** Start of slot edit dialog box *********************/
 
-/*! \todo response function for the slot edit dialog
- *  \brief
+/*! \brief response function for the slot edit dialog
  *  \par Function Description
  *  The function takes the dialog entry and applies the new slot to the 
  *  symbol.
@@ -1861,7 +1860,7 @@ void slot_edit_dialog (TOPLEVEL *w_current, char *string)
     gtk_container_border_width(GTK_CONTAINER(w_current->sewindow), 
 			       DIALOG_BORDER_SPACING);
     vbox = GTK_DIALOG(w_current->sewindow)->vbox;
-    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_ELEMENT_SPACING);
+    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
     label = gtk_label_new (_("Edit slot number:"));
     gtk_misc_set_alignment(GTK_MISC(label),0,0);
@@ -1877,16 +1876,16 @@ void slot_edit_dialog (TOPLEVEL *w_current, char *string)
     gtk_widget_show_all (w_current->sewindow);
   }
 
+  else { /* dialog already created */
+    gtk_window_present (GTK_WINDOW(w_current->sewindow));
+  }
+
+  /* always set the current text and select the number of the slot */
   if (string != NULL) {
     textentry = g_object_get_data(G_OBJECT(w_current->sewindow),"textentry");
     gtk_entry_set_text(GTK_ENTRY(textentry), string);
     gtk_entry_select_region(GTK_ENTRY(textentry),
 			    strlen("slot="), strlen(string));
-  }
-
-  if (!GTK_WIDGET_VISIBLE (w_current->sewindow)) {
-    gtk_widget_show_all (w_current->sewindow);
-    gtk_window_activate_focus (GTK_WINDOW(w_current->sewindow));
   }
 }
 
@@ -1894,146 +1893,100 @@ void slot_edit_dialog (TOPLEVEL *w_current, char *string)
 
 /***************** Start of help/about dialog box ********************/
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Response function for the about dialog
  *  \par Function Description
+ *  This function destoys the about dialg.
  */
-int about_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
-			  TOPLEVEL * w_current)
+void about_dialog_response(GtkWidget *w, gint response, 
+			   TOPLEVEL *w_current)
 {
-   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-	about_dialog_close(NULL, w_current);	
-        return TRUE;
-   }
+  switch (response) {
+  case GTK_RESPONSE_REJECT:
+  case GTK_RESPONSE_DELETE_EVENT:
+    /* void */
+    break;
+  default:
+    printf("about_dialog_response(): strange signal %d\n",response);
+  }
 
-   return FALSE;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void about_dialog_close(GtkWidget *w, TOPLEVEL *w_current)
-{
   gtk_widget_destroy(w_current->abwindow);
   w_current->abwindow = NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Create the about dialog and show it
  *  \par Function Description
- *
+ *  This function creates the about dialog.
  */
 void about_dialog (TOPLEVEL *w_current)
 {
   GtkWidget *label = NULL;
-  GtkWidget *buttonclose = NULL;
-  GtkWidget *vbox, *action_area;
+  GtkWidget *vbox;
   char *string;
 
   if (!w_current->abwindow) {
-    w_current->abwindow = x_create_dialog_box(&vbox, &action_area);
+    w_current->abwindow = gtk_dialog_new_with_buttons(_("About..."),
+						      GTK_WINDOW(w_current->main_window),
+						      GTK_DIALOG_MODAL,
+						      GTK_STOCK_CLOSE,
+						      GTK_RESPONSE_REJECT,
+						      NULL);
 
     gtk_window_position (GTK_WINDOW (w_current->abwindow),
                          GTK_WIN_POS_MOUSE);
 
-    gtk_window_set_title (GTK_WINDOW (w_current->abwindow),
-                          _("About..."));
-    gtk_container_border_width (GTK_CONTAINER (
-                                               w_current->abwindow), 5);
+    gtk_signal_connect (GTK_OBJECT (w_current->abwindow), "response",
+                        GTK_SIGNAL_FUNC(about_dialog_response),
+                        w_current);
+    
+    gtk_container_border_width (GTK_CONTAINER(w_current->abwindow), 
+				DIALOG_BORDER_SPACING);
+    vbox = GTK_DIALOG(w_current->abwindow)->vbox;
+    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
-    gtk_signal_connect (GTK_OBJECT (w_current->abwindow),
-                        "destroy", GTK_SIGNAL_FUNC(destroy_window),
-                        &w_current->abwindow);
+    label = gtk_label_new ( _("<b>gEDA: GPL Electronic Design Automation</b>"));
+    gtk_label_set_use_markup (GTK_LABEL(label), TRUE);
+    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->abwindow),
-                     "key_press_event",
-                     (GtkSignalFunc) about_dialog_keypress, w_current);
-
-#if 0 /* removed because it was causing the dialog box to not close */
-    gtk_signal_connect (GTK_OBJECT (w_current->abwindow),
-                        "delete_event",
-                        GTK_SIGNAL_FUNC(destroy_window),
-                        &w_current->abwindow);
-#endif
-
-    string = g_strdup_printf( _("gEDA : GPL Electronic Design Automation"));
+    string = g_strdup_printf(_("<b>gschem version %s%s</b>"), VERSION, CUSTOM_VERSION);
     label = gtk_label_new (string);
+    gtk_label_set_use_markup (GTK_LABEL(label), TRUE);
     g_free(string);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       label, TRUE, TRUE, 5);
-    gtk_widget_show (label);
+    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 
-    string = g_strdup_printf(_("gschem version %s%s"), VERSION, CUSTOM_VERSION);
-    label = gtk_label_new (string);
-    g_free(string);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       label, TRUE, TRUE, 5);
-    gtk_widget_show (label);
+    label = gtk_label_new ( _("Written by:\n"
+			      "Ales V. Hvezda\n"
+			      "ahvezda@geda.seul.org\n"
+			      "And many others (See AUTHORS file)"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 
-    string = g_strdup_printf( _("Written by:\nAles V. Hvezda\nahvezda@geda.seul.org\nAnd many others (See AUTHORS file)"));
-    label = gtk_label_new (string);
-    g_free(string);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       label, TRUE, TRUE, 5);
-    gtk_widget_show (label);
-
-    buttonclose = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-    GTK_WIDGET_SET_FLAGS (buttonclose, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(
-                       GTK_BOX(action_area),
-                       buttonclose, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT (buttonclose), "clicked",
-                       GTK_SIGNAL_FUNC(about_dialog_close),
-                       w_current);
-    gtk_widget_show(buttonclose);
-
+    gtk_widget_show_all(w_current->abwindow);
   }
 
-  if (!GTK_WIDGET_VISIBLE(w_current->abwindow)) {
-    gtk_widget_show(w_current->abwindow);
+  else { /* dialog already created */
+    gtk_window_present(GTK_WINDOW(w_current->abwindow));
   }
 }
 
 /***************** End of help/about dialog box *********************/
 
 /***************** Start of coord dialog box ************************/
-
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Response function for the coord dialog
  *  \par Function Description
- *
+ *  This function destroys the coord dialog box and does some cleanup.
  */
-int coord_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
-			  TOPLEVEL * w_current)
-{
-   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-	coord_dialog_close(NULL, w_current);	
-        return TRUE;
-   }
-
-   return FALSE;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void coord_dialog_close(GtkWidget *w, TOPLEVEL *w_current)
+void coord_dialog_response(GtkWidget *w, gint response, TOPLEVEL *w_current)
 {
   gtk_widget_destroy(w_current->cowindow);
   w_current->cowindow = NULL;
+  w_current->coord_world = NULL;
+  w_current->coord_screen = NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Update the coordinates in the coord dialog box.
  *  \par Function Description
- *
+ *  This function takes the screen coordinates and prints the 
+ *  screen and the world coordinates in the coord dialog.
  */
 void coord_display_update(TOPLEVEL *w_current, int x, int y)
 {
@@ -2051,90 +2004,64 @@ void coord_display_update(TOPLEVEL *w_current, int x, int y)
   g_free(string);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Create the coord dialog
  *  \par Function Description
- *
+ *  This function creates the coord dialog box.
  */
 void coord_dialog (TOPLEVEL *w_current, int x, int y)
 {
-  GtkWidget *buttonclose = NULL;
   GtkWidget *frame;
-  GtkWidget *vbox2;
+  GtkWidget *vbox;
 
   if (!w_current->cowindow) {
-    w_current->cowindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    w_current->cowindow = gtk_dialog_new_with_buttons(_("Coords"),
+						      GTK_WINDOW(w_current->main_window),
+						      0, /* Not modal GTK_DIALOG_MODAL */
+						      GTK_STOCK_CLOSE,
+						      GTK_RESPONSE_REJECT,
+						      NULL);
+
     gtk_window_position (GTK_WINDOW (w_current->cowindow),
-                         GTK_WIN_POS_MOUSE);
+                         GTK_WIN_POS_NONE);
 
-    gtk_window_set_title (GTK_WINDOW (w_current->cowindow),
-                          _("Coords"));
-    gtk_container_border_width (GTK_CONTAINER (
-                                               w_current->cowindow), 5);
+    gtk_signal_connect (GTK_OBJECT (w_current->cowindow), "response",
+                        GTK_SIGNAL_FUNC(coord_dialog_response),
+                        w_current);
 
-    gtk_signal_connect (GTK_OBJECT (w_current->cowindow),
-                        "destroy", GTK_SIGNAL_FUNC(destroy_window),
-                        &w_current->cowindow);
+    gtk_container_border_width (GTK_CONTAINER(w_current->cowindow), 
+				DIALOG_BORDER_SPACING);
+    vbox = GTK_DIALOG(w_current->cowindow)->vbox;
+    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
-#if 0 /* removed because it was causing the dialog box to not close */
-    gtk_signal_connect (GTK_OBJECT (w_current->cowindow),
-                        "delete_event",
-                        GTK_SIGNAL_FUNC(destroy_window),
-                        &w_current->cowindow);
-#endif
-
-    gtk_signal_connect(GTK_OBJECT(w_current->cowindow),
-                     "key_press_event",
-                     (GtkSignalFunc) coord_dialog_keypress, w_current);
-
-
-    vbox2 = gtk_vbox_new (FALSE, 5);
-    gtk_container_add (GTK_CONTAINER (w_current->cowindow), vbox2);
-    gtk_widget_show(vbox2);
 
     frame = gtk_frame_new (_("Screen"));
-    w_current->coord_screen =
-      gtk_label_new("(########, ########)");
-    gtk_label_set_justify(
-                          GTK_LABEL(w_current->coord_screen), GTK_JUSTIFY_LEFT);
+    w_current->coord_screen = gtk_label_new("(########, ########)");
+    gtk_label_set_justify( GTK_LABEL(w_current->coord_screen), GTK_JUSTIFY_LEFT);
     gtk_misc_set_padding(GTK_MISC(w_current->coord_screen),
-                         10, 10);
+                         DIALOG_H_SPACING, DIALOG_V_SPACING);
     gtk_container_add(GTK_CONTAINER (frame),
                       w_current->coord_screen);
-    gtk_box_pack_start(GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
-    gtk_widget_show(w_current->coord_screen);
-    gtk_widget_show(frame);
+    gtk_box_pack_start(GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
     frame = gtk_frame_new (_("World"));
-    w_current->coord_world =
-      gtk_label_new ("(########, ########)");
-    gtk_misc_set_padding(GTK_MISC(w_current->coord_world), 10, 10);
+    w_current->coord_world = gtk_label_new ("(########, ########)");
+    gtk_misc_set_padding(GTK_MISC(w_current->coord_world),
+                         DIALOG_H_SPACING, DIALOG_V_SPACING);
     gtk_label_set_justify(GTK_LABEL(w_current->coord_world),
                           GTK_JUSTIFY_LEFT);
     gtk_container_add(GTK_CONTAINER (frame),
                       w_current->coord_world);
-    gtk_box_pack_start(GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
-    gtk_widget_show(w_current->coord_world);
-    gtk_widget_show(frame);
+    gtk_box_pack_start(GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-    buttonclose = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-    GTK_WIDGET_SET_FLAGS (buttonclose, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(GTK_BOX ( vbox2 ),
-                       buttonclose, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT (buttonclose), "clicked",
-                       GTK_SIGNAL_FUNC(coord_dialog_close),
-                       w_current);
-    gtk_widget_show(buttonclose);
-    gtk_widget_grab_default (buttonclose);
-
+    gtk_widget_show_all(w_current->cowindow);
   }
 
-  if (!GTK_WIDGET_VISIBLE (w_current->cowindow)) {
-    gtk_widget_show (w_current->cowindow);
-    coord_display_update(w_current, x, y);
-  } else {
-    gdk_window_raise(w_current->cowindow->window);
+  else { /* window already creatad  */
+    gtk_window_present(GTK_WINDOW(w_current->cowindow));
   }
+
+  /* always update the coords when the dialog is requested */
+  coord_display_update(w_current, x, y);
 }
 
 /***************** End of coord dialog box **************************/
