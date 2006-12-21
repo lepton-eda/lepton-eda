@@ -1,5 +1,9 @@
 2006-12-21 Peter Brett   <peter@peter-b.co.uk>
 
+	* src/o_copy.c, o_find.c, x_event.c: Update interface of
+	o_selection_print_all() to match other o_selection_*() functions. Pass the
+	GList by reference.
+
 	* src/o_misc.c: Remove use of o_selection_select() and
 	o_selection_unselect() (should only be used internally to libgeda).
 

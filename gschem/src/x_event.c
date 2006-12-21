@@ -160,7 +160,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   printf("event state: %d \n", event->state);
   printf("w_current state: %d \n", w_current->event_state);
   printf("Selection is:\n");
-  o_selection_print_all( w_current->page_current->selection_list);
+  o_selection_print_all(&(w_current->page_current->selection_list));
   printf("\n");
 #endif
 

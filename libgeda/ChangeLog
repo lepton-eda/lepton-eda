@@ -1,5 +1,9 @@
 2006-12-21 Peter Brett   <peter@peter-b.co.uk>
 
+	* include/prototype.h, src/o_selection.c: Update interface of
+	o_selection_print_all() to match other o_selection_*() functions. Pass 
+	the GList by reference.
+
 	* include/prototype.h: Comment o_selection_select() and
 	o_selection_unselect() as deprecated (should only be used internally to
 	libgeda).

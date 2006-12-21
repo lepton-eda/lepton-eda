@@ -60,14 +60,14 @@ void o_selection_add(GList **head, OBJECT *o_selected)
 
 /*! \brief Prints the given selection list.
  *  \par Prints the given selection list.
- *  \param [in] head Selection list to print.
+ *  \param [in] head Pointer to selection list to print.
  *
  */
-void o_selection_print_all( GList *head )
+void o_selection_print_all(const GList **head)
 {
   GList *s_current;
 
-  s_current = head;
+  s_current = *head;
 
   printf("START printing selection ********************\n");
   while(s_current != NULL) {

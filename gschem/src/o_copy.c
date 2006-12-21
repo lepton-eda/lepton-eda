@@ -517,9 +517,6 @@ void o_copy_end(TOPLEVEL *w_current)
 			    &(w_current->page_current->selection_list));
   w_current->page_current->selection_list = NULL;
   w_current->page_current->selection_list = temp_list;
-#if DEBUG
-  o_selection_print_all(w_current->page_current->selection_list);
-#endif
 
   w_current->page_current->CHANGED = 1;
 

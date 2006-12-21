@@ -434,7 +434,7 @@ void o_pin_update_whichend(TOPLEVEL *w_current, OBJECT *object_list, int num_pin
 
 /* o_selection.c */
 void o_selection_add(GList **head, OBJECT *o_selected);
-void o_selection_print_all( GList *head );
+void o_selection_print_all(const GList **head);
 void o_selection_select(OBJECT *object, int color); // DEPRECATED
 void o_selection_unselect(OBJECT *object);          // DEPRECATED
 void o_selection_remove(GList **head, OBJECT *o_selected);

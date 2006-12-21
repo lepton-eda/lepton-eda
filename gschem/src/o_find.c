@@ -111,9 +111,6 @@ gboolean o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y,
      the caller allows it */	
   if (change_selection && (!w_current->SHIFTKEY)) {
 
-#if DEBUG
-    o_selection_print_all( w_current->page_current->selection_list);
-#endif
     o_select_run_hooks(w_current, NULL, 2); 
     o_selection_unselect_list (w_current,
 			       &(w_current->page_current->selection_list));
