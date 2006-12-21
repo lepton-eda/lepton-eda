@@ -2160,12 +2160,10 @@ char *index2functionstring(int index)
   return(string);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Create a OptionMenu with the gschem colors.
  *  \par Function Description
- *
- *  \note
- *  This is from gtktest.c
+ *  This Function creates a GtkOptionMenu with the color list.
+ *  It selects the color of the first selected object.
  */
 static GtkWidget *create_color_menu (TOPLEVEL * w_current, int * select_index)
 {
@@ -2353,7 +2351,7 @@ void color_edit_dialog (TOPLEVEL *w_current)
     gtk_container_border_width(GTK_CONTAINER(w_current->clwindow), 
 			       DIALOG_BORDER_SPACING);
     vbox = GTK_DIALOG(w_current->clwindow)->vbox;
-    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_ELEMENT_SPACING);
+    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
     label = gtk_label_new(_("Object color:"));
     gtk_misc_set_alignment(GTK_MISC(label),0,0);
@@ -2368,9 +2366,8 @@ void color_edit_dialog (TOPLEVEL *w_current)
     gtk_widget_show_all(w_current->clwindow);
   }
 
-  if (w_current->clwindow) {
-    gtk_widget_show_all(w_current->clwindow);
-    gtk_window_activate_focus(GTK_WINDOW(w_current->clwindow));
+  else { /* dialog already created */
+    gtk_window_present(GTK_WINDOW(w_current->clwindow));
   }
 }
 
@@ -2378,173 +2375,167 @@ void color_edit_dialog (TOPLEVEL *w_current)
 
 /***************** Start of help/keymapping dialog box **************/
 
-#define MAX_HOTKEY_BUFFER  256
-static char *hotkey_strings[MAX_HOTKEY_BUFFER];
-static int hotkey_counter=0;
+static GList *hotkeys = NULL;
 
-/*! \todo Finish function documentation!!!
- *  \brief
+typedef struct _HOTKEY ST_HOTKEY;
+
+struct _HOTKEY {
+  gchar *name;
+  gchar *value;
+};
+
+
+/*! \brief Clear the hotkey list of the hotkeys dialog
  *  \par Function Description
- *
+ *  This function free's all elements allocated by the hotkey dialog
  */
-int x_dialog_hotkeys_keypress(GtkWidget * widget, GdkEventKey * event, 
-			      TOPLEVEL * w_current)
+void x_dialog_hotkeys_free_all(void)
 {
-   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-	x_dialog_hotkeys_close(NULL, w_current);	
-        return TRUE;
-   }
+  GList *item;
+  ST_HOTKEY *hotkey;
 
-   return FALSE;
+  for (item = hotkeys; item != NULL; item = g_list_next(item)) {
+    hotkey = item->data;
+    g_free(hotkey->name);
+    g_free(hotkey->value);
+    g_free(hotkey);
+  }
+  g_list_free(hotkeys);
+  hotkeys = NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Insert a hotkey string into the dialog hotkey list
  *  \par Function Description
- *
+ *  This function splits the given hotkey string and adds it to the hotkey
+ *  list.
+ *  \todo Change the function and its callers to f(char *name, char *value).
  */
-void x_dialog_hotkeys_close (GtkWidget *w, TOPLEVEL *w_current)
+void x_dialog_hotkeys_fill(char *string) 
 {
+  ST_HOTKEY *hotkey;
+  gchar **token;
+  
+  hotkey = g_new(ST_HOTKEY, 1);
+  token = g_strsplit(string, ":", 2);
+
+  if (token[0] != NULL) {
+    hotkey->name = g_strdup(token[0]);
+    if (token[1] != NULL) {
+      g_strstrip(token[1]);
+      hotkey->value = g_strdup(token[1]);
+      hotkeys = g_list_append(hotkeys, hotkey);
+    }
+    else {
+      g_free(hotkey->name);
+    }
+  }
+  g_strfreev(token);
+}
+
+/*! \brief Response function for the hotkey dialog
+ *  \par Function Description
+ *  This function destroys the hotkey dialog and does some cleanup.
+ */
+void x_dialog_hotkeys_response(GtkWidget *w, gint response, 
+			       TOPLEVEL *w_current)
+{
+  switch(response) {
+  case GTK_RESPONSE_REJECT:
+  case GTK_RESPONSE_DELETE_EVENT:
+    /* void */
+    break;
+  default:
+    printf("x_dialog_hotkeys_response(): strange signal %d\n", response);
+  }
+  /* clean up */
   gtk_widget_destroy(w_current->hkwindow);
   w_current->hkwindow = NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Creates the hotkeys dialog
  *  \par Function Description
- *
- */
-void x_dialog_hotkeys_free_all(void)
-{
-  int i;
-
-  for (i = 0 ; i < hotkey_counter; i++) {
-    if (hotkey_strings[i]) {
-      g_free(hotkey_strings[i]);
-    }
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_dialog_hotkeys_fill(char *string) 
-{
-
-  if (hotkey_counter > MAX_HOTKEY_BUFFER-1) {
-    printf(_("Ran out of space in the hotkey buffer...\n"));
-    return;
-  }	
-
-  hotkey_strings[hotkey_counter] = (char *) g_malloc(sizeof(char)*(
-                                                                 strlen(string)+1));
-  ;
-  strcpy(hotkey_strings[hotkey_counter], string);
-  hotkey_counter++;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+ *  This function creates the hotkey dialog and puts the list of hotkeys 
+ *  into it.
  */
 void x_dialog_hotkeys (TOPLEVEL *w_current)
 {
-  GtkWidget *buttonclose = NULL;
-  GtkWidget *vbox, *action_area, *scrolled_win, *list;
-  GtkWidget *item;
-  int i;
+  GtkWidget *vbox, *scrolled_win;
+  GtkListStore *store;
+  GtkWidget *treeview;
+  GtkTreeIter iter;
+  GtkCellRenderer *renderer;
+  GtkTreeViewColumn *column;
+  ST_HOTKEY *hotkey;
+  GList *item;
 
   if (!w_current->hkwindow) {
-
-
-    w_current->hkwindow = x_create_dialog_box(&vbox, &action_area);
+    w_current->hkwindow = gtk_dialog_new_with_buttons(_("Hotkeys"),
+                                                      GTK_WINDOW(w_current->main_window),
+                                                      0, /* not modal */
+                                                      GTK_STOCK_CLOSE,
+                                                      GTK_RESPONSE_REJECT,
+                                                      NULL);
 
     gtk_window_position (GTK_WINDOW (w_current->hkwindow),
-                         GTK_WIN_POS_MOUSE);
+                         GTK_WIN_POS_NONE);
 
-    gtk_window_set_title (GTK_WINDOW (w_current->hkwindow),
-                          _("Hotkeys..."));
-    gtk_container_border_width (GTK_CONTAINER (
-                                               w_current->hkwindow), 5);
+    gtk_signal_connect (GTK_OBJECT (w_current->hkwindow), "response", 
+			GTK_SIGNAL_FUNC(x_dialog_hotkeys_response),
+                        w_current);
+    
+    gtk_dialog_set_default_response(GTK_DIALOG(w_current->hkwindow),
+                                    GTK_RESPONSE_ACCEPT);
 
+    gtk_container_border_width (GTK_CONTAINER (w_current->hkwindow),
+				DIALOG_BORDER_SPACING);
     gtk_widget_set_usize(w_current->hkwindow, 300,300);
 
-    gtk_signal_connect (GTK_OBJECT (w_current->hkwindow),
-                        "destroy", GTK_SIGNAL_FUNC(destroy_window),
-                        &w_current->hkwindow);
-
-    gtk_signal_connect(GTK_OBJECT(w_current->hkwindow),
-                     "key_press_event",
-                     (GtkSignalFunc) x_dialog_hotkeys_keypress, w_current);
-
-#if 0 /* removed because it was causing the dialog box to not close */
-    gtk_signal_connect (GTK_OBJECT (w_current->hkwindow),
-                        "delete_event",
-                        GTK_SIGNAL_FUNC(destroy_window),
-                        &w_current->hkwindow);
-#endif
+    vbox = GTK_DIALOG(w_current->hkwindow)->vbox;
+    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
     scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-    gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 5);
-    gtk_widget_set_usize (scrolled_win, -1, 300);
     gtk_box_pack_start (GTK_BOX (vbox), scrolled_win, TRUE, TRUE, 0);
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
                                     GTK_POLICY_AUTOMATIC,
                                     GTK_POLICY_AUTOMATIC);
-    gtk_widget_show (scrolled_win);
 
-    list = gtk_list_new ();
-    gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_SINGLE);
-    gtk_scrolled_window_add_with_viewport
-      (GTK_SCROLLED_WINDOW (scrolled_win), list);
-    gtk_container_set_focus_vadjustment
-      (GTK_CONTAINER (list),
-       gtk_scrolled_window_get_vadjustment
-       (GTK_SCROLLED_WINDOW (scrolled_win)));
-    gtk_container_set_focus_hadjustment
-      (GTK_CONTAINER (list),
-       gtk_scrolled_window_get_hadjustment
-       (GTK_SCROLLED_WINDOW (scrolled_win)));
-    gtk_widget_show(list);
-
-    item = gtk_list_item_new_with_label (
-                                         _("Function : keystroke(s)"));
-    gtk_container_add (GTK_CONTAINER (list), item);
-    gtk_widget_show(item);
-
-    item = gtk_list_item_new_with_label (" ");
-    gtk_container_add (GTK_CONTAINER (list), item);
-    gtk_widget_show(item);
-
-    for (i = 0 ; i < hotkey_counter; i++) {
-
-      if (hotkey_strings[i]) {	
-        item = gtk_list_item_new_with_label (
-                                             hotkey_strings[i]);
-        gtk_container_add (GTK_CONTAINER (list), item);
-        gtk_widget_show(item);
-      }
+    /* the model */
+    store = gtk_list_store_new (2,G_TYPE_STRING, G_TYPE_STRING);
+    for (item=hotkeys; item != NULL; item =g_list_next(item)) {
+      hotkey = item->data;
+      gtk_list_store_append(store, &iter);
+      gtk_list_store_set(store, &iter,
+			 0, hotkey->name,
+			 1, hotkey->value,
+			 -1);
     }
 
-    buttonclose = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-    GTK_WIDGET_SET_FLAGS (buttonclose, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(
-                       GTK_BOX(action_area),
-                       buttonclose, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT (buttonclose), "clicked",
-                       GTK_SIGNAL_FUNC(x_dialog_hotkeys_close),
-                       w_current);
-    gtk_widget_show(buttonclose);
+    /* the tree view */
+    treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
+    gtk_container_add(GTK_CONTAINER(scrolled_win), treeview);
 
+    /* the columns */
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes ("Function",
+						       renderer,
+						       "text",
+						       0,
+						       NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW(treeview), column);
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes ("Keystroke(s)",
+						       renderer,
+						       "text",
+						       1,
+						       NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW(treeview), column);
+    
+    /* show all recursively */
+    gtk_widget_show_all(w_current->hkwindow);
   }
 
-  if (!GTK_WIDGET_VISIBLE(w_current->hkwindow)) {
-    gtk_widget_show(w_current->hkwindow);
-  } else {
-    gdk_window_raise(w_current->hkwindow->window);
+  else { /* dialog already created */
+    gtk_window_present(GTK_WINDOW(w_current->hkwindow));
   }
 }
 
