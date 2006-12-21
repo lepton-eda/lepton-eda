@@ -49,14 +49,13 @@
 /*! \brief Selects the given object and adds it to the selection list
  *  \par Selects the given object and does the needed work to make the
  *  object visually selected.
- *  \param [in] head Selection list
+ *  \param [in] head Pointer to the selection list
  *  \param [in] o_selected Object to select.
- *  \returns a pointer to the selection list, with the object added.
  */
-GList *o_selection_add(GList *head, OBJECT *o_selected)
+void o_selection_add(GList **head, OBJECT *o_selected)
 {
   o_selection_select(o_selected, SELECT_COLOR);
-  return (g_list_append(head, o_selected));
+  *head = g_list_append(*head, o_selected);
 }
 
 /*! \brief Prints the given selection list.

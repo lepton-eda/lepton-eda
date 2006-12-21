@@ -144,7 +144,7 @@ void o_copy_end(TOPLEVEL *w_current)
                               diff_x, diff_y,
                               new_object);
 
-        temp_list = o_selection_add(temp_list, new_object);
+        o_selection_add(&temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_net_draw(w_current, new_object);
 
@@ -175,7 +175,7 @@ void o_copy_end(TOPLEVEL *w_current)
                               diff_x, diff_y,
                               new_object);
         
-        temp_list = o_selection_add(temp_list, new_object);
+	o_selection_add(&temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_pin_draw(w_current, new_object);
         
@@ -205,7 +205,7 @@ void o_copy_end(TOPLEVEL *w_current)
                               diff_x, diff_y,
                               new_object);
         
-        temp_list = o_selection_add(temp_list, new_object);
+	o_selection_add(&temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_bus_draw(w_current, new_object);
         
@@ -245,7 +245,7 @@ void o_copy_end(TOPLEVEL *w_current)
                                            diff_y,
                                            new_object);
 
-        temp_list = o_selection_add(temp_list, new_object);
+        o_selection_add(&temp_list, new_object);
 
 	/* NEWSEL: this needs to be fixed too */
 	/* this may not be needed anymore? */
@@ -276,7 +276,7 @@ void o_copy_end(TOPLEVEL *w_current)
                                new_object);
         w_current->ADDING_SEL=0; 
 
-        temp_list = o_selection_add(temp_list, new_object);
+        o_selection_add(&temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_line_draw(w_current, new_object);
         break;
@@ -298,7 +298,7 @@ void o_copy_end(TOPLEVEL *w_current)
                               new_object);
         w_current->ADDING_SEL=0; 
         
-        temp_list = o_selection_add(temp_list, new_object);
+        o_selection_add(&temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_box_draw(w_current, new_object);
         
@@ -321,7 +321,7 @@ void o_copy_end(TOPLEVEL *w_current)
 				  new_object);
         w_current->ADDING_SEL=0; 
         
-        temp_list = o_selection_add(temp_list, new_object);
+        o_selection_add(&temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_picture_draw(w_current, new_object);
         
@@ -345,7 +345,7 @@ void o_copy_end(TOPLEVEL *w_current)
                                  new_object);
         w_current->ADDING_SEL=0; 
 
-        temp_list = o_selection_add(temp_list, new_object);
+        o_selection_add(&temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_circle_draw(w_current, new_object);
         break;
@@ -368,7 +368,7 @@ void o_copy_end(TOPLEVEL *w_current)
                               new_object);
         w_current->ADDING_SEL=0; 
         
-        temp_list = o_selection_add(temp_list, new_object);
+        o_selection_add(&temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_arc_draw(w_current, new_object);
         break;
@@ -442,7 +442,7 @@ void o_copy_end(TOPLEVEL *w_current)
           color = object->saved_color;
         }
 
-        temp_list = o_selection_add(temp_list, new_object);
+        o_selection_add(&temp_list, new_object);
         new_object->saved_color = color;
         
 	/* signify that object is no longer an attribute */

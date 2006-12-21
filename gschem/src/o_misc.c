@@ -1048,12 +1048,6 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
     if (o_current->type == OBJ_TEXT) {
      /* replaced strcmp with strstr to simplify the search */
       if (strstr(o_current->text->string,stext)) {
-	/*            printf(_("Found %s\n"), stext);
-	   if (!o_current->selected&&(!descend)) {
-	   w_current->page_current->selection_list = 
-	     o_selection_add(w_current->page_current->selection_list,
-	                     o_current);
-	   } */
 	if (!skiplast) {
 
 #if 0 /* replaced by code below by avh, might not quite be right though */

@@ -209,7 +209,7 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
 
   /* now add new objects to the selection list */
   while (o_current != NULL) {
-    temp_list = o_selection_add(temp_list, o_current);
+    o_selection_add(&temp_list, o_current);
     s_conn_update_object(w_current, o_current);
     if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
       connected_objects = s_conn_return_complex_others(

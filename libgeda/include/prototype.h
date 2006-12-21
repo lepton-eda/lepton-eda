@@ -433,7 +433,7 @@ void o_pin_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichon
 void o_pin_update_whichend(TOPLEVEL *w_current, OBJECT *object_list, int num_pins);
 
 /* o_selection.c */
-GList *o_selection_add(GList *head, OBJECT *o_selected);
+void o_selection_add(GList **head, OBJECT *o_selected);
 void o_selection_print_all( GList *head );
 void o_selection_select(OBJECT *object, int color);
 void o_selection_unselect(OBJECT *object);

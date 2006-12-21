@@ -55,9 +55,8 @@ void o_attrib_add_selected(TOPLEVEL *w_current, GList** selection_list_ptr,
 			   OBJECT *selected)
 {
   ATTRIB *a_current;
-  GList *selection_list = *selection_list_ptr;
 
-  if (!selection_list) return;
+  if (!(*selection_list_ptr)) return;
 
   /* deal with attributes here? */
   if (selected->attribs != NULL) {
@@ -70,10 +69,10 @@ void o_attrib_add_selected(TOPLEVEL *w_current, GList** selection_list_ptr,
 
 				/* make sure object isn't selected already */
         if (a_current->object->saved_color == -1) {
-          *selection_list_ptr = o_selection_add(selection_list,
-						/* w_current->page_current->
-						   selection2_head,*/
-						a_current->object);
+          o_selection_add(selection_list_ptr,
+			  /* w_current->page_current->
+			     selection2_head,*/
+			  a_current->object);
           o_redraw_single(w_current, a_current->object);
         }
 
@@ -345,9 +344,8 @@ void o_attrib_end(TOPLEVEL *w_current)
                     object);
   }
 
-  w_current->page_current->selection_list = 
-    o_selection_add(w_current->page_current->selection_list,
-		    w_current->page_current->object_tail);
+  o_selection_add(&(w_current->page_current->selection_list),
+		  w_current->page_current->object_tail);
   o_undo_savestate(w_current, UNDO_ALL);
 }
 
@@ -473,9 +471,8 @@ OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current,
                     o_current);
   }
 
-  w_current->page_current->selection_list = 
-    o_selection_add(w_current->page_current->selection_list,
-		    w_current->page_current->object_tail);
+  o_selection_add(&(w_current->page_current->selection_list),
+		  w_current->page_current->object_tail);
 
   o_text_erase(w_current, w_current->page_current->object_tail); 
   o_text_draw(w_current, w_current->page_current->object_tail);

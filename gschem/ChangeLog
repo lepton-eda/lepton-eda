@@ -1,3 +1,10 @@
+2006-12-21 Peter Brett   <peter@peter-b.co.uk>
+
+	* src/o_attrib.c, src/o_buffer.c, src/o_complex.c, src/o_copy.c,
+	src/o_misc.c, src/o_select.c, src/o_text.c: Update interface of
+	o_selection_add() to match o_selection_remove(). Pass the GList by
+	reference so head can be updated.
+
 2006-12-21 Werner Hoch <werner.ho@gmx.de>
 
 	* src/x_autonumber.c: fixed o_selection_remove call which caused 

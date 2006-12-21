@@ -436,8 +436,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 
   o_selection_unselect_list(w_current,
 			    &(w_current->page_current->selection_list));
-  w_current->page_current->selection_list = 
-    o_selection_add(w_current->page_current->selection_list, 
+  o_selection_add(&(w_current->page_current->selection_list), 
 		    w_current->page_current->object_tail);
   /* the o_redraw_selected is in x_events.c after this call
    * returns */
