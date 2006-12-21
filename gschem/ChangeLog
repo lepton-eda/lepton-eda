@@ -1,5 +1,8 @@
 2006-12-21 Werner Hoch <werner.ho@gmx.de>
 
+	* src/x_autonumber.c: fixed o_selection_remove call which caused 
+	  gschem to crash. suggestion by Ales, patch from Peter Brett.
+
 	* src/x_dialog.c: cosmetics in the color dialog,
 	  use GtkDialog for the hotkeys dialog, use a GList to store the
 	  hotkeys and a GtkTreeView to show them.

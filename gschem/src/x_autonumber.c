@@ -582,8 +582,8 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
       if (slot_str != NULL && o_slot != NULL) {
 	g_free(slot_str);
 	/* delete the slot attribute */
-	GList *selection = autotext->toplevel->page_current->selection_list;
-	o_selection_remove (&selection, o_slot);
+	o_selection_remove (&(autotext->toplevel->page_current->selection_list), 
+			    o_slot);
 	o_delete_text (autotext->toplevel, o_slot);
 	/* redraw the slotted object. So that the pinnumbers appear as with slot=1 */
 	/* --> No: should be done by o_delete_text as several dialog use it. */
@@ -689,7 +689,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
      in the searchtext list */
   
   if (strlen(scope_text) == 0) {
-    s_log_message(_("No searchstring given in autonumber text."));
+    s_log_message(_("No searchstring given in autonumber text.\n"));
     return; /* error */
   }
   else if (g_str_has_suffix(scope_text,"?") == TRUE) {
