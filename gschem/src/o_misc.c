@@ -1213,8 +1213,9 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
   o_erase_single (w_current, o_current);
   /* delete its connections */
   s_conn_remove_complex (w_current, o_current);
-  /* and unselect but keep it in the selection list */
-  o_selection_unselect (o_current);
+  /* and unselect it */
+  o_selection_remove (&(w_current->page_current->selection_list),
+		      o_current);
 
   /* build a temporary list and add a complex to this list */
   tmp_list = s_basic_init_object ("update component");
@@ -1281,7 +1282,8 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
   s_delete_list_fromstart (w_current, tmp_list);
   /* reconnect, re-select and redraw */
   s_conn_update_complex (w_current, o_current->complex->prim_objs);
-  o_selection_select (o_current, SELECT_COLOR);
+  o_selection_add (&(w_current->page_current->selection_list),
+		   o_current);
   o_redraw_single (w_current, o_current);
 
   if (is_embedded) {
