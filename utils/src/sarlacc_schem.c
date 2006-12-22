@@ -65,7 +65,7 @@ int CONV16(char *base,int offset)
 	int retval;
 	retval = ((base[offset+1] & 255) <<8) | (base[offset] & 255);
 	if(base[offset+1]&128)
-		retval = retval | (65535<<16);
+		retval = retval | (65535U << 16);
 	return retval;
 }
 
@@ -296,7 +296,7 @@ void parse_component(int fd1,int fd2)
     }
 
     cfp = fopen(full_filename, "r");
-    if (cfp > 0) {
+    if (cfp != NULL) {
 	/* "sarlacc_dim=" set by sarlacc_sym */
 	while (!feof(cfp)) {
 	  fgets(buff, 128, cfp);
