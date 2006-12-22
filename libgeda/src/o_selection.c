@@ -65,7 +65,7 @@ void o_selection_add(GList **head, OBJECT *o_selected)
  */
 void o_selection_print_all(const GList **head)
 {
-  GList *s_current;
+  const GList *s_current;
 
   s_current = *head;
 
