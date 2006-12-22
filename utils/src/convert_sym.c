@@ -50,13 +50,6 @@
 #include <dmalloc.h>
 #endif
 
-/* __FUNCTION__ seems to be a gcc thing */
-#ifndef __GNUC__
-#define __FUNCTION1(a,b) a ":" #b
-#define __FUNCTION2(a,b) __FUNCTION1(a,b)
-#define __FUNCTION__ __FUNCTION2(__FILE__,__LINE__)
-#endif
-
 /*
  * make it so we can use __attribute__((unused)) on gcc without
  * breaking non-gcc
@@ -415,7 +408,7 @@ main(int argc, char **argv)
   if(infile == NULL)
     {
       fprintf(stderr,"Error: Unable to open file `%s' in %s()\n",
-	      infileName,__FUNCTION__);
+	      infileName,__func__);
       return 1;
     }
 
@@ -564,7 +557,7 @@ do_bounding_box(FILE *fp)
   if(fscanf(fp,"%d %d %d %d\n", &minx, &miny, &maxx, &maxy) != 4)
     {
       fprintf(stderr,"Error: Invalid bounding box record #%d in %s()\n",
-	      records_processed, __FUNCTION__);
+	      records_processed, __func__);
       exit(1);
     }
 
@@ -611,7 +604,7 @@ do_unattached_attribute(FILE *fp)
     {
       fprintf(stderr,"Error: Invalid Unattached attribute record #%d "
 	      "in %s()\n",
-	      records_processed, __FUNCTION__);
+	      records_processed, __func__);
       exit(1);
     }
 
@@ -653,7 +646,7 @@ do_unattached_attribute(FILE *fp)
     default:
       fprintf(stderr,"Error: Invalid visibility value %d in "
 	      "viewlogic file at record #%d in function %s()\n",
-	      viewvis, records_processed, __FUNCTION__);
+	      viewvis, records_processed, __func__);
       return;
     }
 
@@ -695,7 +688,7 @@ do_attached_attribute(FILE *fp)
             &viewvis) != 6)
   {
     fprintf(stderr,"Error: Invalid attached attribute record #%d"
-            " in %s()\n", records_processed, __FUNCTION__);
+            " in %s()\n", records_processed, __func__);
     exit(1);
   }
 
@@ -736,7 +729,7 @@ do_attached_attribute(FILE *fp)
     default:
       fprintf(stderr,"Error: Invalid visibility value %d in "
 	      "viewlogic file at record #%d, in function %s()\n",
-	      viewvis, records_processed, __FUNCTION__);
+	      viewvis, records_processed, __func__);
       return;
   }
 
@@ -814,7 +807,7 @@ do_attached_attribute(FILE *fp)
       else
       {
         fprintf(stderr,"Error: Invalid or unknown pin type \"%s\" for record "
-	        "#%d in %s()\n", value, records_processed, __FUNCTION__);
+	        "#%d in %s()\n", value, records_processed, __func__);
         exit(1);
       }
 
@@ -909,7 +902,7 @@ do_text(FILE *fp)
 	    &origin) != 5)
     {
       fprintf(stderr,"Error: Invalid text record #%d in %s()\n",
-	      records_processed, __FUNCTION__);
+	      records_processed, __func__);
       exit(1);
     }
 
@@ -954,7 +947,7 @@ do_line(FILE *fp)
     {
       fprintf(stderr,"Error: Unable to read number of line pairs "
 	      "for record #%d, in %s()\n",
-	      records_processed, __FUNCTION__);
+	      records_processed, __func__);
       exit(1);
     }
 
@@ -965,7 +958,7 @@ do_line(FILE *fp)
 	{
 	  fprintf(stderr,"Error: unable to read %dth coodinate pair "
 		  "for record #%d, in %s()\n",
-		  i+1, records_processed, __FUNCTION__);
+		  i+1, records_processed, __func__);
 	  exit(1);
 	}
 	  
@@ -1014,7 +1007,7 @@ do_pin(FILE *fp)
 	    &pindir, &pinsense) != 6)
     {
       fprintf(stderr,"Error:Invalid pin record #%d in %s()\n",
-	      records_processed, __FUNCTION__);
+	      records_processed, __func__);
       exit(1);
     }
 	
@@ -1101,7 +1094,7 @@ do_pin(FILE *fp)
       /* Invalid pin direction */
       fprintf(stderr,"Error: Invalid pin direction %d in "
 	      "ViewLogic file at record #%d, in function %s()\n",
-	      pindir, records_processed, __FUNCTION__);
+	      pindir, records_processed, __func__);
       exit(1);
   }
 
@@ -1153,7 +1146,7 @@ do_box(FILE *fp)
   if(fscanf(fp, "%d %d %d %d\n", &x1, &y1, &x2, &y2) != 4)
     {
       fprintf(stderr, "Error: Invalid box record #%d in %s()\n",
-	      records_processed, __FUNCTION__);
+	      records_processed, __func__);
       exit(1);
     }
 
@@ -1190,7 +1183,7 @@ do_circle(FILE *fp)
   if(fscanf(fp,"%d %d %u\n",&x, &y, &radius) != 3)
     {
       fprintf(stderr,"Error: Invalid circle record #%d in %s()\n",
-	      records_processed, __FUNCTION__);
+	      records_processed, __func__);
       exit(1);
     }
   
@@ -1231,7 +1224,7 @@ do_arc(FILE *fp)
 	    &x1, &y1, &x2, &y2, &x3, &y3) != 6)
     {
       fprintf(stderr,"Error: Invalid arc record #%d, in %s()\n",
-	      records_processed, __FUNCTION__);
+	      records_processed, __func__);
       exit(1);
     }
       
@@ -1322,7 +1315,7 @@ do_label(FILE *fp)
             &global, &visibility, &overbar) != 8)
     {
       fprintf(stderr,"Error: Invalid label record #%d in %s()\n",
-	      records_processed, __FUNCTION__);
+	      records_processed, __func__);
       exit(1);
     }
 
@@ -1417,7 +1410,7 @@ do_net_node(FILE *fp)
     {
       fprintf(stderr,"Error: too many nodes on a net at record #%d, "
 	      "in %s(), try increasing\n"
-	      "\tMAX_NODES\n", records_processed, __FUNCTION__);
+	      "\tMAX_NODES\n", records_processed, __func__);
       exit(1); /* this is fatal */
     }
 
@@ -1425,7 +1418,7 @@ do_net_node(FILE *fp)
   if(fscanf(fp,"%d %d %d\n",&x, &y, &type) < 2)
     {
       fprintf(stderr,"Error: Invalid net node record #%d in %s()\n",
-	      records_processed, __FUNCTION__);
+	      records_processed, __func__);
       exit(1);
     }
 
@@ -1453,7 +1446,7 @@ do_net_segment(FILE *fp)
   if(fscanf(fp,"%u %u\n",&n1, &n2) != 2)
     {
       fprintf(stderr,"Error: Invalid net segment record #%d in %s()\n",
-	      records_processed, __FUNCTION__);
+	      records_processed, __func__);
       exit(1);
     }
       
@@ -1484,7 +1477,7 @@ do_net_segment_bus(FILE *fp)
   if(fscanf(fp,"%u %u\n",&n1, &n2) != 2)
     {
       fprintf(stderr,"Error: Invalid bus segment record #%d in %s()\n",
-	      records_processed, __FUNCTION__);
+	      records_processed, __func__);
       exit(1);
     }
 
@@ -1547,7 +1540,7 @@ do_instance(FILE *fp)
     fprintf(stderr,"Error: Invalid instance record #%d in %s()\n"
             "lib:'%s', name:'%s'\n"
             "extension:%d, x:%d, y:%d\n",
-            records_processed, __FUNCTION__, lib,name,extension, x, y);
+            records_processed, __func__, lib,name,extension, x, y);
     exit(1);
   }
       
@@ -1706,7 +1699,7 @@ text_object(int x, int y, unsigned int color, unsigned int size,
     default:
       fprintf(stderr,"Error: invalid show_name_value: %d at record #%d, "
 	      "in %s()\n",
-	      show_name_value, records_processed, __FUNCTION__);
+	      show_name_value, records_processed, __func__);
       return;
     }
 
@@ -1805,7 +1798,7 @@ attribute_object(int x, int y, unsigned int color, unsigned int  size,
 
 #ifdef DEBUG
       printf("Comparing `%s' to `%s' in %s()\n",tmpName,
-	     translations[i].origName,__FUNCTION__);
+	     translations[i].origName,__func__);
 #endif
 
       if(strcmp(tmpName,translations[i].origName) == 0) /* match? */
@@ -1833,7 +1826,7 @@ attribute_object(int x, int y, unsigned int color, unsigned int  size,
 	  default:
 	    fprintf(stderr,"Error: Unknown action code for attribute\n"
 		    "`%s=%s' at record #%d in %s()\n",
-		    tmpName,tmpValue,records_processed,__FUNCTION__);
+		    tmpName,tmpValue,records_processed,__func__);
 	    exit(1);
 	  }
     }
@@ -2070,7 +2063,7 @@ get_continued_string(char *buf, size_t buffer_size, FILE *fp)
   ungetc(c,fp);   /* push back last char, obviously wasn't a + */
 
 #ifdef DEBUG
-  printf("Buffer:'%s' in %s()\n",buf,__FUNCTION__);
+  printf("Buffer:'%s' in %s()\n",buf,__func__);
 #endif
 
   return 0;
@@ -2090,7 +2083,7 @@ int get_style(FILE *fp, unsigned int *colour,
       if(fscanf(fp,"%u %u %u\n", colour, &vdfillstyle, &vdlinestyle) != 3)
 	{
 	  fprintf(stderr,"Error: Invalid modifier record #%d in %s()\n",
-		  records_processed, __FUNCTION__);
+		  records_processed, __func__);
 	  exit(1);
 	}
 
@@ -2099,7 +2092,7 @@ int get_style(FILE *fp, unsigned int *colour,
 	{
 	  fprintf(stderr,"Error: Invalid colour number %u in record #%d, "
 		  "in %s()\n",
-		  *colour,records_processed, __FUNCTION__);
+		  *colour,records_processed, __func__);
 	  exit(1);
 	}
       *colour = colormap[*colour]; 
@@ -2109,7 +2102,7 @@ int get_style(FILE *fp, unsigned int *colour,
       {
         fprintf(stderr,"Warning: Invalid fill style %u in record #%d, "
                 "in %s().  Assuming \"Hollow\" fill style.\n",
-                vdfillstyle,records_processed, __FUNCTION__);
+                vdfillstyle,records_processed, __func__);
         vdfillstyle = 0;
       }
       memcpy(fillstyle, &fillmap[vdfillstyle], sizeof(struct FillStyle));
@@ -2119,7 +2112,7 @@ int get_style(FILE *fp, unsigned int *colour,
       {
         fprintf(stderr,"Warning: Invalid line style %u in record #%d, "
                 "in %s().  Assuming \"Solid\" line style.\n",
-                vdlinestyle,records_processed, __FUNCTION__);
+                vdlinestyle,records_processed, __func__);
         vdlinestyle = 0;
       }
       memcpy(linestyle, &linemap[vdlinestyle], sizeof(struct LineStyle));
