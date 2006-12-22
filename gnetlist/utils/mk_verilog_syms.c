@@ -46,13 +46,6 @@
 #define CYAN		6
 #define GREY		7
 
-/* __FUNCTION__ seems to be a gcc extension */
-#ifndef __GNUC__
-#define __FUNCTION1(a,b) a ":" #b
-#define __FUNCTION2(a,b) __FUNCTION1(a,b)
-#define __FUNCTION__ __FUNCTION2(__FILE__,__LINE__)
-#endif
-
 /* external prototypes */
 int GetStringDisplayLength(char *str,int font_size);  /* char_width.c */
 
@@ -121,7 +114,7 @@ main(int argc, char **argv)
 	if(fp == NULL)
 	  {
 	    fprintf(stderr,"Error: Unable to create file `%s' in %s()\n",
-		    name, __FUNCTION__);
+		    name, __func__);
 	    return 1;
 	  }
 
@@ -131,7 +124,7 @@ main(int argc, char **argv)
 	if(rc)
 	  {
 	    fprintf(stderr,"Error: Symbol creation failed in %s()\n",
-		    __FUNCTION__);
+		    __func__);
 	    return 1;
 	  }
 
@@ -172,7 +165,7 @@ MakeSymbol(FILE *fp, unsigned int pins, int inputBubbles, int outputBubbles,
   if(fp == NULL)
     {
       fprintf(stderr, "Error: NULL file pointer passed to %s()\n",
-	      __FUNCTION__);
+	      __func__);
       return 1;
     }
 
@@ -180,7 +173,7 @@ MakeSymbol(FILE *fp, unsigned int pins, int inputBubbles, int outputBubbles,
     {
       fprintf(stderr, "Error: NULL body drawing function pointer passed "
 	      "to %s()\n",
-	      __FUNCTION__);
+	      __func__);
       return 1;
     }
 
@@ -211,7 +204,7 @@ MakeSymbol(FILE *fp, unsigned int pins, int inputBubbles, int outputBubbles,
   if(rc)
     {
       fprintf(stderr, "Error: Body function failed in %s()\n",
-	      __FUNCTION__);
+	      __func__);
       return 1;
     }
 
@@ -221,7 +214,7 @@ MakeSymbol(FILE *fp, unsigned int pins, int inputBubbles, int outputBubbles,
     {
       fprintf(stderr, "Error: Pin drawing function failed in %s() "
 	      "for output pin\n",
-	      __FUNCTION__);
+	      __func__);
       return 1;
     }
   /* attach pin attribute */
@@ -229,7 +222,7 @@ MakeSymbol(FILE *fp, unsigned int pins, int inputBubbles, int outputBubbles,
   if(rc)
     {
       fprintf(stderr, "Error: Pin Attribute function failed for output pin "
-	      "in %s()\n",__FUNCTION__);
+	      "in %s()\n",__func__);
       return 1;
     }
 
@@ -245,7 +238,7 @@ MakeSymbol(FILE *fp, unsigned int pins, int inputBubbles, int outputBubbles,
 	{
 	  fprintf(stderr,"Error: Pin drawing function failed for pin %u "
 		  "in %s()\n",
-		  i, __FUNCTION__);
+		  i, __func__);
 	  return 1;
 	}
       /* output the attributes */
@@ -254,7 +247,7 @@ MakeSymbol(FILE *fp, unsigned int pins, int inputBubbles, int outputBubbles,
       if(rc)
 	{
 	  fprintf(stderr,"Error: Pin Attributes function failed for pin %u "
-		  "in %s()\n", i, __FUNCTION__);
+		  "in %s()\n", i, __func__);
 	  return 1;
 	}
 
@@ -283,7 +276,7 @@ AndBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour)
   if(fp == NULL)
     {
       fprintf(stderr, "Error: NULL file pointer passed to %s()\n",
-	      __FUNCTION__);
+	      __func__);
       return 1;
     }
 
@@ -312,7 +305,7 @@ int OrBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour)
   if(fp == NULL)
     {
       fprintf(stderr, "Error: NULL file pointer passed to %s()\n",
-	      __FUNCTION__);
+	      __func__);
       return 1;
     }
 
@@ -343,7 +336,7 @@ int XorBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour)
   if(fp == NULL)
     {
       fprintf(stderr, "Error: NULL file pointer passed to %s()\n",
-	      __FUNCTION__);
+	      __func__);
       return 1;
     }
 
@@ -382,7 +375,7 @@ WidenBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour)
   if(fp == NULL)
     {
       fprintf(stderr, "Error: NULL file pointer passed to %s()\n",
-	      __FUNCTION__);
+	      __func__);
       return 1;
     }
 
@@ -422,7 +415,7 @@ Pin(FILE *fp, int x1, int y1, int x2, int y2, int bubble)
   if(fp == NULL)
     {
       fprintf(stderr, "Error: NULL file pointer passed to %s()\n",
-	      __FUNCTION__);
+	      __func__);
       return 1;
     }
 
@@ -437,7 +430,7 @@ Pin(FILE *fp, int x1, int y1, int x2, int y2, int bubble)
       if(denom < 1e-6)
 	{
 	  fprintf(stderr, "Error: Length of pin too small in %s()\n",
-		  __FUNCTION__);
+		  __func__);
 	  return 1;
 	}
       
@@ -482,14 +475,14 @@ PinAttribute(FILE *fp, int x, int y, unsigned int n, char *value)
   if(fp == NULL)
     {
       fprintf(stderr, "Error: NULL file pointer passed to %s()\n",
-	      __FUNCTION__);
+	      __func__);
       return 1;
     }
   
   if(value == NULL)
     {
       fprintf(stderr, "Error: NULL value pointer passed to %s()\n",
-	      __FUNCTION__);
+	      __func__);
       return 1;
     }
 
