@@ -379,16 +379,24 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
   return SCM_BOOL_T;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Get the object bounds of the given object, excluding the object
+ *  types given as parameters.
  *  \par Function Description
+ *  Get the object bounds without considering the attributes in 
+ *  exclude_attrib_list, neither the object types included in 
+ *  exclude_obj_type_list
+ *  \param [in] w_current TOPLEVEL structure.
+ *  \param [in] o_current The object we want to know the bounds of.
+ *  \param [in] exclude_attrib_list A list with the attribute names we don't
+ *  want to include when calculing the bounds.
+ *  \param [in] exclude_obj_type_list A list with the object types we don't
+ *  want to include when calculing the bounds. 
+ *  The object types are those used in (OBJECT *)->type converted into strings.
+ *  \param [out] left Left bound of the object.
+ *  \param [out] top  Top bound of the object.
+ *  \param [out] right Right bound of the object.
+ *  \param [out] bottom  Bottom bound of the object.
  *
- */
-/*! \bug FIXME
- *  Returns a list of the bounds of the <B>object smob</B>. 
- *  The list has the format: ( (left right) (top bottom) )
- *  I got top and bottom values reversed from world_get_complex_bounds,
- *  so don\'t rely on the position in the list. 
  */
 static void custom_world_get_complex_bounds (TOPLEVEL *w_current, OBJECT *o_current,
                                         int *left, int *top, 
@@ -477,6 +485,23 @@ static void custom_world_get_complex_bounds (TOPLEVEL *w_current, OBJECT *o_curr
     }
   } 
 
+/*! \brief Get the object bounds of the given object, excluding the object
+ *  types or the attributes given as parameters.
+ *  \par Function Description
+ *  Get the object bounds without considering the attributes in 
+ *  scm_exclude_attribs, neither the object types included in 
+ *  scm_exclude_object_type
+ *  \param [in] object_smob The object we want to know the bounds of.
+ *  \param [in] exclude_attrib_list A list with the attribute names we don't
+ *  want to include when calculing the bounds.
+ *  \param [in] exclude_obj_type_list A list with the object types we don't
+ *  want to include when calculing the bounds. 
+ *  The object types are those used in (OBJECT *)->type converted into strings.
+ *  \return a list of the bounds of the <B>object smob</B>. 
+ *  The list has the format: ( (left right) (top bottom) )
+ *  I got top and bottom values reversed from world_get_complex_bounds,
+ *  so don\'t rely on the position in the list. 
+ */
 SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclude_object_type)
 {
 
@@ -603,12 +628,12 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 
   /* Get w_current and the page */
   SCM_ASSERT (g_get_data_from_page_smob (page_smob, &w_current, &page),
-	      page_smob, SCM_ARG1, "add-component");
+	      page_smob, SCM_ARG1, "add-component-at-xy");
   /* Check the arguments */
   SCM_ASSERT (SCM_STRINGP(scm_comp_name), scm_comp_name,
-	      SCM_ARG2, "add-component");
+	      SCM_ARG2, "add-component-at-xy");
   SCM_ASSERT ( SCM_INUMP(scm_x), scm_x, 
-               SCM_ARG3, "add-component");
+               SCM_ARG3, "add-component-at-xy");
   SCM_ASSERT ( SCM_INUMP(scm_y), scm_y, 
                SCM_ARG4, "add-component-at-xy");
   SCM_ASSERT ( SCM_INUMP(scm_angle), scm_angle, 

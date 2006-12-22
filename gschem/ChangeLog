@@ -1,3 +1,11 @@
+2006-12-22 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/g_hook.c: 
+	  -  Added some documentation to custom_world_get_complex_bounds and
+	     g_get_object_bounds.
+	  -  g_add_component: Changed the remaining scheme function's name
+	     left on 2006-12-14.
+
 2006-12-21 Peter Brett   <peter@peter-b.co.uk>
 
 	* src/o_copy.c, o_find.c, x_event.c: Update interface of
