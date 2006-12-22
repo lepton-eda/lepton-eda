@@ -390,9 +390,7 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
  *  I got top and bottom values reversed from world_get_complex_bounds,
  *  so don\'t rely on the position in the list. 
  */
-SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclude_object_type)
-{
-  void custom_world_get_complex_bounds (TOPLEVEL *w_current, OBJECT *o_current,
+static void custom_world_get_complex_bounds (TOPLEVEL *w_current, OBJECT *o_current,
                                         int *left, int *top, 
                                         int *right, int *bottom,
                                         GList *exclude_attrib_list,
@@ -477,7 +475,10 @@ SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclu
 	obj_ptr = obj_ptr->next;
       }
     }
-  }
+  } 
+
+SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclude_object_type)
+{
 
   TOPLEVEL *w_current=NULL;
   OBJECT *object=NULL;
