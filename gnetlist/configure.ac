@@ -68,6 +68,34 @@ AC_PROG_MAKE_SET
 AC_PATH_PROGS(AWK, nawk gawk mawk awk, )
 AC_PATH_PROGS(M4, gm4 m4, m4)
 
+##############################################################3
+# Test for __func__
+#
+
+AC_MSG_CHECKING([For a working C99 __func__])
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],
+        [[const char *foo = __func__;]])],
+   [ac_cv_cpp_func=yes],
+   [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],
+                [[const char *foo = __FUNCTION__;]])],
+                [ac_cv_cpp_func=__FUNCTION__],
+                [ac_cv_cpp_func="\"no\""])]
+)
+
+if test "X$ac_cv_cpp_func" = "X__FUNCTION__"; then
+        AC_MSG_RESULT([__FUNCTION__])
+elif test "x$ac_cv_cpp_func" = "xyes" ; then
+        AC_MSG_RESULT([__func__])
+else
+        AC_MSG_RESULT([no])
+fi
+if test "X$ac_cv_cpp_func" != "Xyes" ; then
+	AC_DEFINE_UNQUOTED([__func__], [$ac_cv_cpp_func], [Define to be a __func__ replacement])
+fi
+
+#
+##############################################################3
+
 #########################################################################
 # 
 # Misc win32 / mingw checks and variables start
