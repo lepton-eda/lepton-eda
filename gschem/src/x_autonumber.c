@@ -345,11 +345,11 @@ gint autonumber_match(AUTONUMBER_TEXT *autotext, OBJECT *o_current, gint *number
     isnumbered = 0;
   }
   else {
-    if (!isdigit(o_current->text->string[len])) /* has at least one digit */
+    if (!isdigit( (int) (o_current->text->string[len]) )) /* has at least one digit */
       return AUTONUMBER_IGNORE;
     
     for (i=len+1; o_current->text->string[i]; i++) /* and only digits */
-      if (!isdigit(o_current->text->string[i]))
+      if (!isdigit( (int) (o_current->text->string[i]) ))
 	return AUTONUMBER_IGNORE;
   }
   
@@ -716,7 +716,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 	      for (i = strlen(o_current->text->string)-1;
 		   (i >= strlen(searchtext))
 		     && (o_current->text->string[i] == '?'
-			 || isdigit(o_current->text->string[i]));
+			 || isdigit( (int) (o_current->text->string[i]) ));
 		   i--)
 		; /* void */
 		
