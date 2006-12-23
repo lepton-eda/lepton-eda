@@ -316,7 +316,7 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
 		    pr_current->page_current->object_tail, o_current);
   }
 
-  o_selection_add(pr_current->page_current->selection_list,
+  o_selection_add(&(pr_current->page_current->selection_list),
 		  pr_current->page_current->object_tail);
 
 

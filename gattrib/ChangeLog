@@ -1,3 +1,10 @@
+2006-12-23 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/s_object.c (s_object_attrib_add_attrib_in_object):
+	  Make o_selection_add call match the new selection interface.
+	  The first argument should be a pointer to the selection list.
+	  Thanks to Dan McMahill for reporting this.
+
 2006-11-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Fixed libgeda detection/find error message when
