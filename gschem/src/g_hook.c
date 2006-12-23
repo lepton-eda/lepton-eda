@@ -612,6 +612,9 @@ SCM g_get_object_pins (SCM object_smob)
  *  \param [in] angle Angle of rotation of the symbol. 
  *  \param [in] selectable True if the symbol is selectable, false otherwise.
  *  \param [in] mirror True if the symbol is mirrored, false otherwise.
+ *  If scm_comp_name is a scheme empty list, SCM_BOOL_F, or an empty 
+ *  string (""), then g_add_component returns SCM_BOOL_F without writing 
+ *  to the log.
  *  \return TRUE if the component was added, FALSE otherwise.
  *
  */
@@ -625,6 +628,12 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   int x, y, angle;
   GSList *clibs = NULL;
   OBJECT *new_object;
+
+  /* Return if scm_comp_name is NULL (an empty list) or scheme's FALSE */
+  if (SCM_NULLP(scm_comp_name) || 
+      (SCM_BOOLP(scm_comp_name) && !(SCM_NFALSEP(scm_comp_name))) ) {
+    return SCM_BOOL_F;
+  }
 
   /* Get w_current and the page */
   SCM_ASSERT (g_get_data_from_page_smob (page_smob, &w_current, &page),

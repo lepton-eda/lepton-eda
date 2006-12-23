@@ -1,5 +1,9 @@
 2006-12-23 Carlos Nieves Onega <cnieves@iespana.es>
 
+	* src/g_hook.c (g_add_component): Return if scm_comp_name is 
+	  an empty list (guile's NULL), or the scheme's boolean false.
+	  This was suggested by Peter TB Brett and Steve Tell.
+
 	* src/g_hook.c (g_add_component): 
 	  Changed the end of this function to avoid the "Statement not reached"
 	  compiler warning. Thanks to Dan McMahill for reporting this.
