@@ -664,38 +664,37 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
     s_log_message ("add-component-at-xy: Component with name [%s] not found.\n",
 		   comp_name);
     return SCM_BOOL_F;    
-  } else {
-    if (g_slist_next (clibs)) {
-      s_log_message ("add-component-at-xy: More than one component found with name [%s]\n",
-		     comp_name);
-      /* PB: for now, use the first directory in clibs */
-      /* PB: maybe open a dialog to select the right one? */
-    }
-    clib = (gchar*)clibs->data;
+  } 
 
-    new_object = page->object_tail = o_complex_add(w_current, 
-			                           page->object_tail, NULL, 
-						   'C', 
-			                           WHITE, 
-			                           x, y, 
-			                           angle, mirror,
-			                           clib, comp_name, 
-                                                   selectable, FALSE);
-  
-/* 
- * For now, do not redraw the newly added complex, since this might cause
- * flicker if you are zoom/panning right after this function executes 
- */
-#if 0 
-    /* Now the new component should be added to the object's list and 
-       drawn in the screen */
-    o_redraw_single(w_current, new_object);
-#endif
-
-    return SCM_BOOL_T;        
+  g_assert(clibs != NULL);
+  if (g_slist_next (clibs)) {
+    s_log_message ("add-component-at-xy: More than one component found with name [%s]\n",
+		   comp_name);
+    /* PB: for now, use the first directory in clibs */
+    /* PB: maybe open a dialog to select the right one? */
   }
-
-  return SCM_BOOL_F;    
+  clib = (gchar*)clibs->data;
+  
+  new_object = page->object_tail = o_complex_add(w_current, 
+						 page->object_tail, NULL, 
+						 'C', 
+						 WHITE, 
+						 x, y, 
+						 angle, mirror,
+						 clib, comp_name, 
+						 selectable, FALSE);
+  
+  /* 
+   * For now, do not redraw the newly added complex, since this might cause
+   * flicker if you are zoom/panning right after this function executes 
+   */
+#if 0 
+  /* Now the new component should be added to the object's list and 
+     drawn in the screen */
+  o_redraw_single(w_current, new_object);
+#endif
+  
+  return SCM_BOOL_T;        
 }
 
 /*! \brief Return the objects in a page.
