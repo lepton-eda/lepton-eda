@@ -83,6 +83,7 @@ SCM g_make_page_smob(TOPLEVEL *curr_w, PAGE *page);
 void g_init_page_smob(void);
 gboolean g_get_data_from_page_smob(SCM object_smob, TOPLEVEL **toplevel, 
 				   PAGE **object);
+SCM g_get_page_filename(SCM page_smob);
 
 /* i_vars.c */
 void i_vars_libgeda_set(TOPLEVEL *w_current);

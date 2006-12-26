@@ -577,6 +577,8 @@ void g_init_page_smob(void)
   scm_set_smob_free(page_smob_tag, g_free_page_smob);
   scm_set_smob_print(page_smob_tag, g_print_page_smob);
 
+  scm_c_define_gsubr ("get-page-filename", 1, 0, 0, g_get_page_filename);
+
   return;
 }
 
@@ -629,5 +631,30 @@ gboolean g_get_data_from_page_smob(SCM page_smob, TOPLEVEL **toplevel,
     (((struct st_page_smob *)SCM_CDR(page_smob))->page);
   }
   return (TRUE);
+}
+
+/*! \brief Get the page filename from a page smob.
+ *  \par Function Description
+ *  Get the page filename from a page smob.
+ *
+ *  \param [in]  page_smob    The page smob to get the filename from.
+ *  \return the page filename or SCM_EOL if there was some error.
+ */
+SCM g_get_page_filename(SCM page_smob)
+{
+  SCM returned = SCM_EOL;
+  PAGE *page;
+
+  SCM_ASSERT ( SCM_NIMP(page_smob) &&
+	       ((long) SCM_CAR(page_smob) == page_smob_tag),
+               page_smob, SCM_ARG1, "get-page-filename");
+
+  page = (PAGE *) 
+    (((struct st_page_smob *)SCM_CDR(page_smob))->page);
+
+  if (page->page_filename) 
+    returned = scm_makfrom0str (page->page_filename);
+
+  return (returned);
 }
 
