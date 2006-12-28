@@ -34,6 +34,7 @@
 #include "../include/i_vars.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/x_dialog.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -902,7 +903,7 @@ void autonumber_sortorder_create(TOPLEVEL *w_current, GtkWidget *sort_order)
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (sort_order),
 				  renderer, "text", 0, NULL);
   renderer = gtk_cell_renderer_pixbuf_new();
-  g_object_set(G_OBJECT(renderer), "xpad", 10, "ypad", 10, NULL);
+  g_object_set(G_OBJECT(renderer), "xpad", 5, "ypad", 5, NULL);
 
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (sort_order),
 			      renderer, FALSE);
@@ -1111,81 +1112,53 @@ void autonumber_get_state(AUTONUMBER_TEXT *autotext)
 
 /* ***** CALLBACKS (functions that get called directly from the GTK) ******* */
 
-/*! \brief OK Button callback of the autonumber text dialog
+/*! \brief response  callback for the autonumber text dialog
  *  \par Function Description
- *  This function applies the dialog settings to the schematics.
+ *  The function just closes the dialog if the close button is pressed or the 
+ *  user closes the dialog window.
+ *  Triggering the apply button will call the autonumber action functions.
  */
-void autonumber_text_ok(GtkWidget * w, AUTONUMBER_TEXT *autotext)
+void autonumber_text_response(GtkWidget * widget, gint response,
+			      AUTONUMBER_TEXT *autotext)
 {
-  autonumber_get_state(autotext);
-
-  autonumber_text_autonumber(autotext);
+  switch (response) {
+  case GTK_RESPONSE_ACCEPT:
+    autonumber_get_state(autotext);
+    if (autotext->removenum == TRUE && autotext->scope_overwrite == FALSE) {
+      /* temporarly set the overwrite flag */
+      autotext->scope_overwrite = TRUE;
+      autonumber_text_autonumber(autotext);
+      autotext->scope_overwrite = FALSE;
+    }
+    else {
+      autonumber_text_autonumber(autotext);
+    }
+    break;
+  case GTK_RESPONSE_REJECT:
+  case GTK_RESPONSE_DELETE_EVENT:
+    gtk_widget_destroy(autotext->dialog);
+    autotext->dialog = NULL;
+    break;
+  default:
+    printf("ERROR: autonumber_text_response(): strange signal %d\n",response);
+  }
 }
 
-/*! \brief Destroy callback function of the autonumber text dialog
- */
-void autonumber_text_destroy(GtkWidget * w, AUTONUMBER_TEXT *autotext)
-{
-  /* The usual behaviour is that dialog contents are not stored if
-   * the user pressed "cancel" */
-
-  /* autonumber_text_getdata(autotext); */
-
-  autotext->dialog = NULL;
-}
-
-/** @brief Close button callback function of the autonumber text dialog
- *
- *  Just destroys the dialog. The triggered destroy event will save the 
- *  dialog contents.
- */
-void autonumber_text_close(GtkWidget * w, AUTONUMBER_TEXT *autotext)
-{
-  gtk_widget_destroy(autotext->dialog);
-
-  /* the settings are stored by autonumber_text_destroy, 
-     called by the destroy event */
-}
-
-/*! \brief Keypress callback for the autonumber text dialog
- *  \par Function Description
- *  The function just closes the dialog if one presses the Escape key.
- *  The Return key applies the dialogs ok button function.
- */
-int autonumber_text_keypress(GtkWidget * widget, GdkEventKey * event, 
-			     AUTONUMBER_TEXT *autotext)
-{
-   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-     autonumber_text_close(NULL, autotext);
-     autonumber_text_destroy(NULL, autotext);	
-     return TRUE;
-   }
-   if (strcmp(gdk_keyval_name(event->keyval), "Return") == 0) {
-     autonumber_text_ok(NULL, autotext);	
-     return TRUE;
-   }
-   return FALSE;
-}
 
 /** @brief Callback that activates or deactivates "overwrite existing numbers" 
  * check box.
  *
  * This gets called each time "remove numbers" check box gets clicked.
  */
-void autonumber_removenum_toggled(GtkWidget * w, AUTONUMBER_TEXT *autotext)
+void autonumber_removenum_toggled(GtkWidget * opt_removenum, 
+				  AUTONUMBER_TEXT *autotext)
 {
   GtkWidget *scope_overwrite;
-  GtkWidget *opt_removenum;
 
   scope_overwrite=lookup_widget(autotext->dialog, "scope_overwrite");
-  opt_removenum=w;
 
+  /* toggle activity of scope overwrite with respect to removenum */
   if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(opt_removenum))) {
-    /* it does not make sense to have "remove numbers" enabled and
-     * "overwrite numbers" disabled */
-    gtk_toggle_button_set_active(
-				 GTK_TOGGLE_BUTTON(scope_overwrite),
-				 1);
     gtk_widget_set_sensitive(scope_overwrite, 0);
   } else {
     gtk_widget_set_sensitive(scope_overwrite, 1);
@@ -1213,7 +1186,6 @@ GtkWidget* autonumber_create_dialog(TOPLEVEL *w_current)
 {
   GtkWidget *autonumber_text;
   GtkWidget *vbox1;
-  GtkWidget *frame1;
   GtkWidget *alignment1;
   GtkWidget *vbox3;
   GtkWidget *table1;
@@ -1225,7 +1197,6 @@ GtkWidget* autonumber_create_dialog(TOPLEVEL *w_current)
   GtkWidget *scope_skip;
   GtkWidget *scope_overwrite;
   GtkWidget *label1;
-  GtkWidget *frame3;
   GtkWidget *alignment3;
   GtkWidget *vbox4;
   GtkWidget *table3;
@@ -1237,28 +1208,37 @@ GtkWidget* autonumber_create_dialog(TOPLEVEL *w_current)
   GtkWidget *opt_removenum;
   GtkWidget *opt_slotting;
   GtkWidget *label3;
-  GtkWidget *hbuttonbox1;
-  GtkWidget *button_close;
-  GtkWidget *button_ok;
 
-  autonumber_text = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title (GTK_WINDOW (autonumber_text), _("Autonumber text"));
-  gtk_window_set_resizable (GTK_WINDOW (autonumber_text), FALSE);
 
-  vbox1 = gtk_vbox_new (FALSE, 24);
-  gtk_widget_show (vbox1);
-  gtk_container_add (GTK_CONTAINER (autonumber_text), vbox1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox1), 12);
+  autonumber_text = gtk_dialog_new_with_buttons(_("Autonumber text"),
+						GTK_WINDOW(w_current->main_window),
+						0, /* not modal */
+						GTK_STOCK_CLOSE,
+						GTK_RESPONSE_REJECT,
+						GTK_STOCK_APPLY,
+						GTK_RESPONSE_ACCEPT,
+						NULL);
 
-  frame1 = gtk_frame_new (NULL);
-  gtk_widget_show (frame1);
-  gtk_box_pack_start (GTK_BOX (vbox1), frame1, TRUE, TRUE, 0);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame1), GTK_SHADOW_NONE);
+  gtk_window_position (GTK_WINDOW (autonumber_text),
+		       GTK_WIN_POS_MOUSE);
+  
+  gtk_container_border_width(GTK_CONTAINER(autonumber_text), 
+			     DIALOG_BORDER_SPACING);
+  vbox1 = GTK_DIALOG(autonumber_text)->vbox;
+  gtk_box_set_spacing(GTK_BOX(vbox1), DIALOG_V_SPACING);
 
-  alignment1 = gtk_alignment_new (0.5, 0.5, 1, 1);
+  /* scope section */
+  label1 = gtk_label_new (_("<b>Scope</b>"));
+  gtk_label_set_use_markup (GTK_LABEL (label1), TRUE);
+  gtk_misc_set_alignment (GTK_MISC(label1), 0, 0);
+  gtk_box_pack_start (GTK_BOX(vbox1), label1, TRUE, TRUE, 0);
+  gtk_widget_show (label1);
+
+  alignment1 = gtk_alignment_new (0, 0, 1, 1);
   gtk_widget_show (alignment1);
-  gtk_container_add (GTK_CONTAINER (frame1), alignment1);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment1), 0, 0, 24, 0);
+  gtk_box_pack_start (GTK_BOX (vbox1), alignment1, TRUE, TRUE, 0);
+  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment1), 
+			     0, 0, DIALOG_INDENTATION, 0);
 
   vbox3 = gtk_vbox_new (FALSE, 0);
   gtk_widget_show (vbox3);
@@ -1267,8 +1247,8 @@ GtkWidget* autonumber_create_dialog(TOPLEVEL *w_current)
   table1 = gtk_table_new (3, 2, FALSE);
   gtk_widget_show (table1);
   gtk_box_pack_start (GTK_BOX (vbox3), table1, TRUE, TRUE, 0);
-  gtk_table_set_row_spacings (GTK_TABLE (table1), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table1), 12);
+  gtk_table_set_row_spacings (GTK_TABLE (table1), DIALOG_V_SPACING);
+  gtk_table_set_col_spacings (GTK_TABLE (table1), DIALOG_H_SPACING);
 
   label4 = gtk_label_new (_("Search for:"));
   gtk_widget_show (label4);
@@ -1278,6 +1258,7 @@ GtkWidget* autonumber_create_dialog(TOPLEVEL *w_current)
   gtk_misc_set_alignment (GTK_MISC (label4), 0, 0.5);
 
   scope_text = gtk_combo_box_entry_new_text ();
+  gtk_entry_set_activates_default(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(scope_text))), TRUE);
   gtk_widget_show (scope_text);
   gtk_table_attach (GTK_TABLE (table1), scope_text, 1, 2, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
@@ -1319,20 +1300,18 @@ GtkWidget* autonumber_create_dialog(TOPLEVEL *w_current)
   gtk_widget_show (scope_overwrite);
   gtk_box_pack_start (GTK_BOX (vbox3), scope_overwrite, FALSE, FALSE, 6);
 
-  label1 = gtk_label_new (_("<b>Scope</b>"));
-  gtk_widget_show (label1);
-  gtk_frame_set_label_widget (GTK_FRAME (frame1), label1);
-  gtk_label_set_use_markup (GTK_LABEL (label1), TRUE);
+  /* Options section */
+  label3 = gtk_label_new (_("<b>Options</b>"));
+  gtk_label_set_use_markup (GTK_LABEL (label3), TRUE);
+  gtk_misc_set_alignment(GTK_MISC(label3), 0, 0);
+  gtk_widget_show (label3);
+  gtk_box_pack_start(GTK_BOX(vbox1), label3, TRUE, TRUE, 0);
 
-  frame3 = gtk_frame_new (NULL);
-  gtk_widget_show (frame3);
-  gtk_box_pack_start (GTK_BOX (vbox1), frame3, TRUE, TRUE, 0);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame3), GTK_SHADOW_NONE);
-
-  alignment3 = gtk_alignment_new (0.5, 0.5, 1, 1);
+  alignment3 = gtk_alignment_new (0, 0, 1, 1);
   gtk_widget_show (alignment3);
-  gtk_container_add (GTK_CONTAINER (frame3), alignment3);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment3), 0, 0, 24, 0);
+  gtk_box_pack_start(GTK_BOX(vbox1), alignment3, TRUE, TRUE, 0);
+  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment3), 
+			     0, 0, DIALOG_INDENTATION, 0);
 
   vbox4 = gtk_vbox_new (FALSE, 3);
   gtk_widget_show (vbox4);
@@ -1341,8 +1320,8 @@ GtkWidget* autonumber_create_dialog(TOPLEVEL *w_current)
   table3 = gtk_table_new (2, 2, FALSE);
   gtk_widget_show (table3);
   gtk_box_pack_start (GTK_BOX (vbox4), table3, TRUE, TRUE, 0);
-  gtk_table_set_row_spacings (GTK_TABLE (table3), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table3), 12);
+  gtk_table_set_row_spacings (GTK_TABLE (table3), DIALOG_V_SPACING);
+  gtk_table_set_col_spacings (GTK_TABLE (table3), DIALOG_H_SPACING);
 
   label12 = gtk_label_new (_("Starting number:"));
   gtk_widget_show (label12);
@@ -1360,6 +1339,7 @@ GtkWidget* autonumber_create_dialog(TOPLEVEL *w_current)
 
   opt_startnum_adj = gtk_adjustment_new (1, 0, 10000, 1, 10, 10);
   opt_startnum = gtk_spin_button_new (GTK_ADJUSTMENT (opt_startnum_adj), 1, 0);
+  gtk_entry_set_activates_default(GTK_ENTRY(opt_startnum), TRUE);
   gtk_widget_show (opt_startnum);
   gtk_table_attach (GTK_TABLE (table3), opt_startnum, 1, 2, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
@@ -1379,29 +1359,7 @@ GtkWidget* autonumber_create_dialog(TOPLEVEL *w_current)
   gtk_widget_show (opt_slotting);
   gtk_box_pack_start (GTK_BOX (vbox4), opt_slotting, FALSE, FALSE, 0);
 
-  label3 = gtk_label_new (_("<b>Options</b>"));
-  gtk_widget_show (label3);
-  gtk_frame_set_label_widget (GTK_FRAME (frame3), label3);
-  gtk_label_set_use_markup (GTK_LABEL (label3), TRUE);
-
-  hbuttonbox1 = gtk_hbutton_box_new ();
-  gtk_widget_show (hbuttonbox1);
-  gtk_box_pack_start (GTK_BOX (vbox1), hbuttonbox1, TRUE, TRUE, 0);
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox1), GTK_BUTTONBOX_END);
-  gtk_box_set_spacing (GTK_BOX (hbuttonbox1), 12);
-
-  button_close = gtk_button_new_from_stock ("gtk-close");
-  gtk_widget_show (button_close);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox1), button_close);
-  GTK_WIDGET_SET_FLAGS (button_close, GTK_CAN_DEFAULT);
-
-  button_ok = gtk_button_new_from_stock ("gtk-apply");
-  gtk_widget_show (button_ok);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox1), button_ok);
-  GTK_WIDGET_SET_FLAGS (button_ok, GTK_CAN_DEFAULT);
-
   /* Store pointers to all widgets, for use by lookup_widget(). */
-  GLADE_HOOKUP_OBJECT (autonumber_text, alignment1, "alignment1");
   GLADE_HOOKUP_OBJECT (autonumber_text, scope_text, "scope_text");
   GLADE_HOOKUP_OBJECT (autonumber_text, scope_number, "scope_number");
   GLADE_HOOKUP_OBJECT (autonumber_text, scope_skip, "scope_skip");
@@ -1410,8 +1368,6 @@ GtkWidget* autonumber_create_dialog(TOPLEVEL *w_current)
   GLADE_HOOKUP_OBJECT (autonumber_text, sort_order, "sort_order");
   GLADE_HOOKUP_OBJECT (autonumber_text, opt_removenum, "opt_removenum");
   GLADE_HOOKUP_OBJECT (autonumber_text, opt_slotting, "opt_slotting");
-  GLADE_HOOKUP_OBJECT (autonumber_text, button_close, "button_close");
-  GLADE_HOOKUP_OBJECT (autonumber_text, button_ok, "button_ok");
 
   return autonumber_text;
 }
@@ -1427,8 +1383,6 @@ void autonumber_text_dialog(TOPLEVEL *w_current)
 {
   static AUTONUMBER_TEXT *autotext = NULL;
 
-  GtkWidget *button_ok = NULL;
-  GtkWidget *button_close = NULL;
   GtkWidget *opt_removenum = NULL;
   GtkWidget *sort_order = NULL;
 
@@ -1445,36 +1399,21 @@ void autonumber_text_dialog(TOPLEVEL *w_current)
 
     autotext->dialog = autonumber_create_dialog(w_current);
 
-    button_ok = lookup_widget(autotext->dialog, "button_ok");
-    button_close = lookup_widget(autotext->dialog, "button_close");
     opt_removenum = lookup_widget(autotext->dialog, "opt_removenum");
     sort_order = lookup_widget(autotext->dialog, "sort_order");
 
     autonumber_sortorder_create(w_current, sort_order);
 
-    gtk_signal_connect(GTK_OBJECT(autotext->dialog),
-		       "destroy",
-		       GTK_SIGNAL_FUNC(autonumber_text_destroy),
-		       autotext);
+    gtk_dialog_set_default_response (GTK_DIALOG (autotext->dialog), 
+                                     GTK_RESPONSE_ACCEPT);
 
-    gtk_signal_connect(GTK_OBJECT(button_ok), 
-		       "clicked",
-		       GTK_SIGNAL_FUNC(autonumber_text_ok), 
-		       autotext);
-
-    gtk_signal_connect(GTK_OBJECT(button_close), 
-		       "clicked",
-		       GTK_SIGNAL_FUNC(autonumber_text_close), 
+    gtk_signal_connect(GTK_OBJECT(autotext->dialog), "response",
+		       GTK_SIGNAL_FUNC(autonumber_text_response),
 		       autotext);
 
     gtk_signal_connect(GTK_OBJECT(opt_removenum),
 		       "clicked",
 		       GTK_SIGNAL_FUNC(autonumber_removenum_toggled),
-		       autotext);
-
-    gtk_signal_connect(GTK_OBJECT(autotext->dialog),
-                       "key_press_event",
-                       GTK_SIGNAL_FUNC(autonumber_text_keypress), 
 		       autotext);
 
     autonumber_set_state(autotext);
