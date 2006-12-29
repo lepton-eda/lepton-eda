@@ -1,3 +1,8 @@
+2006-12-29 Werner Hoch <werner.ho@gmx.de>
+
+	* src/x_mulitattrib.c: added transient_for flag to the dialog.
+	  Suggested by Kurt Peters
+
 2006-12-28 Werner Hoch <werner.ho@gmx.de>
 
 	* src/x_image.c: replaced the browse button with an icon.

@@ -58,6 +58,10 @@ void x_multiattrib_open (TOPLEVEL *toplevel, OBJECT *object)
                                      "toplevel", toplevel,
                                      "object", object,
                                      NULL));
+
+  gtk_window_set_transient_for(GTK_WINDOW(dialog),
+			       GTK_WINDOW(toplevel->main_window));
+
   gtk_widget_show (dialog);
   switch (gtk_dialog_run ((GtkDialog*)dialog)) {
       case MULTIATTRIB_RESPONSE_CLOSE:
