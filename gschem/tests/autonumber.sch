@@ -1,4 +1,4 @@
-v 20060906 1
+v 20061020 1
 C 30400 57400 1 0 0 resistor-1.sym
 {
 T 30600 57700 5 10 1 1 0 0 1
@@ -936,3 +936,40 @@ C 54400 52700 1 90 1 busripper-1.sym
 T 54400 53100 5 8 0 0 0 6 1
 device=none
 }
+T 62500 59100 9 10 1 0 0 0 2
+Prefix Test:
+Check correct numbering if the searchstrings are party indentical
+T 63100 57800 9 10 1 0 0 0 1
+prefix=a?
+T 63100 57500 9 10 1 0 0 0 1
+prefix=a?
+T 63100 57200 9 10 1 0 0 0 1
+prefix=a?
+T 63100 56800 9 10 1 0 0 0 1
+prefix=abc?
+T 63100 56500 9 10 1 0 0 0 1
+prefix=abc?
+T 63100 56200 9 10 1 0 0 0 1
+prefix=abc?
+T 63100 55700 9 10 1 0 0 0 1
+prefix=ab?
+T 63100 55400 9 10 1 0 0 0 1
+prefix=ab?
+T 63100 55100 9 10 1 0 0 0 1
+prefix=ab?
+T 62500 52300 9 10 1 0 0 0 1
+prefix=ab44n?
+T 62500 52000 9 10 1 0 0 0 1
+prefix=ab44n?
+T 62500 51700 9 10 1 0 0 0 1
+prefix=ab44n?
+T 62500 51400 9 10 1 0 0 0 1
+prefix=ab44n?
+L 62600 57800 62600 55100 3 0 0 0 -1 -1
+L 62600 55100 62700 55400 3 0 0 0 -1 -1
+L 62600 55100 62500 55400 3 0 0 0 -1 -1
+T 62500 56000 9 10 1 0 90 0 1
+fileorder
+T 62500 53100 9 10 1 0 0 0 2
+Test:
+The prefix of the searchtext has numbers

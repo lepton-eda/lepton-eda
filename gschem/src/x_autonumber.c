@@ -344,6 +344,9 @@ gint autonumber_match(AUTONUMBER_TEXT *autotext, OBJECT *o_current, gint *number
   /* now look for the extension, either a number or the "?" */
   if (g_str_has_suffix (o_current->text->string,"?")) {
     isnumbered = 0;
+    /* There must not be any character between the "?" and the searchtext */
+    if (strlen(o_current->text->string) != len+1)
+      return AUTONUMBER_IGNORE;
   }
   else {
     if (!isdigit( (int) (o_current->text->string[len]) )) /* has at least one digit */
@@ -748,7 +751,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   /* Step3: iterate over the search items in the list */
   for (text_item=searchtext_list; text_item !=NULL; text_item=g_list_next(text_item)) {
     autotext->current_searchtext = text_item->data;
-    //    printf("autonumber_text2: searchtext %s\n", autotext->current_searchtext);
+    // printf("autonumber_text_autonumber: searchtext %s\n", autotext->current_searchtext);
     /* decide whether to renumber page by page or get a global used-list */
     if (autotext->scope_skip == SCOPE_HIERARCHY) {  /* whole hierarchy database */
       /* renumbering all means that no db is required */
