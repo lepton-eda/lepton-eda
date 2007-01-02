@@ -1,5 +1,8 @@
 2007-01-02 Werner Hoch <werner.ho@gmx.de>
 
+	* src/o_picture.c: picture_selection_dialog() replaced the
+          GtkFileSelection dialog with a GtkFileChooserDialog
+
 	* src/x_script.c: replaced the GtkFileSelection dialog with a
 	  GtkFileChooserDialog
 

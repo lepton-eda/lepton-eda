@@ -677,8 +677,6 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj, GList *other_obje
 /* o_picture.c */
 void o_picture_start(TOPLEVEL *w_current, int x, int y);
 void o_picture_end(TOPLEVEL *w_current, int x, int y);
-void picture_selection_ok (GtkWidget *widget, TOPLEVEL *w_current);
-void picture_selection_cancel (GtkWidget *widget, TOPLEVEL *w_current);
 void picture_selection_dialog (TOPLEVEL *w_current);
 void o_picture_eraserubber(TOPLEVEL *w_current);
 void o_picture_rubberbox_xor(TOPLEVEL *w_current);
