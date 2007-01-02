@@ -895,8 +895,6 @@ GtkWidget *e_gtk_button_new_with_icon(const char *text, const char *stock);
 /* x_print.c */
 void x_print_setup(TOPLEVEL *w_current, char *filename);
 /* x_script.c */
-void script_selection_ok(GtkWidget *w, TOPLEVEL *w_current);
-void script_selection_cancel(GtkWidget *w, TOPLEVEL *w_current);
 void setup_script_selector(TOPLEVEL *w_current);
 /* x_stroke.c */
 void x_stroke_add_point(TOPLEVEL *w_current, int x, int y);

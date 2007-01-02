@@ -36,92 +36,35 @@
 #include <dmalloc.h>
 #endif
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Select a script and execute it
  *  \par Function Description
- *
- */
-void script_selection_ok(GtkWidget *w, TOPLEVEL *w_current)
-{
-  int len;
-  const char *string;
-
-  /* who frees this? */
-  string = gtk_file_selection_get_filename(
-                                           GTK_FILE_SELECTION(w_current->sowindow));
-
-  if(string != NULL) {
-    len = strlen(string);
-
-    if (string[len - 1] != G_DIR_SEPARATOR) {
-      s_log_message(_("Executing guile script [%s]\n"), string);
-      g_read_file(string);
-    }
-  }
-  /* would like to move this earlier! */
-  gtk_grab_remove(w_current->sowindow);
-  gtk_widget_destroy(GTK_WIDGET (w_current->sowindow));
-  w_current->sowindow = NULL;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void script_selection_cancel (GtkWidget *w, TOPLEVEL *w_current)
-{
-  gtk_grab_remove(w_current->sowindow);
-  gtk_widget_destroy (GTK_WIDGET (w_current->sowindow));
-  w_current->sowindow = NULL;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+ *  This function opens a file selection dialog. The selected script 
+ *  is executed.
  */
 void setup_script_selector (TOPLEVEL *w_current)
 {
-  if (!w_current->sowindow) {
-    w_current->sowindow =
-    gtk_file_selection_new(_("Script Execute..."));
-    gtk_window_position(GTK_WINDOW(w_current->sowindow),
-                        GTK_WIN_POS_MOUSE);
-    /* added 4/6/98 */
-    gtk_file_selection_hide_fileop_buttons(
-                                           GTK_FILE_SELECTION(w_current->sowindow));
-    gtk_signal_connect(GTK_OBJECT (w_current->sowindow),
-                       "destroy",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->sowindow);
+  char *filename;
 
-#if 0 /* this was causing the dialog box to not die */
-    gtk_signal_connect(GTK_OBJECT(w_current->sowindow),
-                       "delete_event",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->sowindow);
-#endif
+  w_current->sowindow =
+    gtk_file_chooser_dialog_new (_("Execute Script..."),
+				 GTK_WINDOW(w_current->main_window),
+				 GTK_FILE_CHOOSER_ACTION_OPEN,
+				 GTK_STOCK_CANCEL, 
+				 GTK_RESPONSE_CANCEL,
+				 GTK_STOCK_EXECUTE, 
+				 GTK_RESPONSE_ACCEPT,
+				 NULL);
 
-    /*! \todo consistant function names for connect
-     * connect_object */
-    gtk_signal_connect (GTK_OBJECT (
-                                    GTK_FILE_SELECTION (w_current->sowindow)->ok_button),
-                        "clicked",
-                        GTK_SIGNAL_FUNC(script_selection_ok),
-                        w_current);
+  if (gtk_dialog_run (GTK_DIALOG (w_current->sowindow)) == GTK_RESPONSE_ACCEPT) {
+    filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w_current->sowindow));
 
-    gtk_signal_connect(GTK_OBJECT(
-                                  GTK_FILE_SELECTION(w_current->sowindow)->
-                                  cancel_button),
-                       "clicked",
-                       GTK_SIGNAL_FUNC(script_selection_cancel),
-                       w_current);
-
+    if (!(g_file_test(filename, G_FILE_TEST_IS_DIR))) {
+      s_log_message(_("Executing guile script [%s]\n"), filename);
+      g_read_file(filename);
+    }
+    g_free (filename);
   }
 
-  if (!GTK_WIDGET_VISIBLE (w_current->sowindow)) {
-    gtk_widget_show (w_current->sowindow);
-    gtk_grab_add (w_current->sowindow);
-  }
+  gtk_widget_destroy (GTK_WIDGET(w_current->sowindow));
+  w_current->sowindow = NULL;
 }
