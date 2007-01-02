@@ -1,3 +1,9 @@
+2007-01-02 Werner Hoch <werner.ho@gmx.de>
+
+	* src/x_log.c: insert text at the end of the buffer instead of cursor
+	  position. Replaced gtk_text_view_scroll_to_iter() with
+	  gtk_text_view_scroll_to_mark() which works more reliable.
+
 2006-12-31 Werner Hoch <werner.ho@gmx.de>
 
 	* src/x_autonumber.c: fixed a bug if one searchtext is a subset

@@ -157,15 +157,17 @@ void log_message (Log *log, const gchar *message)
 {
   GtkTextBuffer *buffer;
   GtkTextIter iter;
+  GtkTextMark *mark;
   
   g_return_if_fail (IS_LOG (log));
 
   buffer = gtk_text_view_get_buffer (log->textview);
-  gtk_text_buffer_insert_at_cursor (buffer, message, strlen (message));
-  
   gtk_text_buffer_get_end_iter (buffer, &iter);
-  gtk_text_view_scroll_to_iter (log->textview, &iter, 0, TRUE, 0, 1);
-  
+  gtk_text_buffer_insert(buffer, &iter, message, -1);
+
+  mark = gtk_text_buffer_create_mark(buffer, NULL, &iter, FALSE);
+  gtk_text_view_scroll_to_mark (log->textview, mark, 0, TRUE, 0, 1);
+  gtk_text_buffer_delete_mark (buffer, mark);
 }
 
 /*! \todo Finish function documentation!!!
