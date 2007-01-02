@@ -656,67 +656,20 @@ void o_picture_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
                      abs(screen_y2 - screen_y1));
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Replace all selected pictures with a new picture
  *  \par Function Description
- *
+ *  This function replaces all pictures in the current selection with a 
+ *  new image.
+ *   
+ *  \param [in] w_current  The TOPLEVEL object
+ *  \param [in] pixbuf     New GdkPixbuf object
+ *  \param [in] filename   The filename of the new picture
+ *  
  */
-void picture_change_selection_cancel (GtkWidget *widget, TOPLEVEL *w_current)
+void o_picture_exchange (TOPLEVEL *w_current, GdkPixbuf *pixbuf, 
+			 const gchar *filename)
 {
-  i_set_state(w_current, SELECT);
-  i_update_toolbar(w_current);
-  gtk_widget_destroy(w_current->pcfswindow);
-  w_current->pcfswindow=NULL;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void picture_change_selection_ok (GtkWidget *widget, TOPLEVEL *w_current)
-{
-  GtkWidget *file_selector = (GtkWidget *)w_current->pcfswindow;
-  const gchar *selected_filename;
-  GdkPixbuf *pixbuf;
-  GError *error;
   GList *list;  
-
-  selected_filename = (char *) g_strdup(gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_selector)));
-#if DEBUG
-  g_print ("Selected picture: %s\n", selected_filename);
-#endif   
-  picture_change_selection_cancel(widget, w_current);
-  
-  error = NULL;
-  pixbuf = gdk_pixbuf_new_from_file (selected_filename, &error);
-
-  if (!pixbuf) {
-    GtkWidget *dialog;
-    
-    dialog = gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
-                                     GTK_DIALOG_DESTROY_WITH_PARENT,
-                                     GTK_MESSAGE_ERROR,
-                                     GTK_BUTTONS_CLOSE,
-                                     _("Failed to load picture: %s"),
-                                     error->message);
-    g_error_free (error);
-     
-    g_signal_connect (dialog, "response",
-                      G_CALLBACK (gtk_widget_destroy), NULL);
-
-    gtk_widget_show (dialog);
-    return;
-  }
-#if DEBUG
-  printf("Picture loaded succesfully.\n");
-#endif
-
-  exit_if_null(w_current);
-
-  o_erase_rubber(w_current);
-
-  w_current->inside_action = 0;
 
   list = w_current->page_current->selection_list;
   while (list != NULL) {
@@ -751,80 +704,91 @@ void picture_change_selection_ok (GtkWidget *widget, TOPLEVEL *w_current)
 	  return;
 	}
 
-	object->picture->filename = (char *) g_strdup(selected_filename);
+	object->picture->filename = (char *) g_strdup(filename);
   
 	object->picture->ratio = gdk_pixbuf_get_width(pixbuf) / 
 	  gdk_pixbuf_get_height(pixbuf);
 	/* Draw new picture */
 	o_picture_draw(w_current, object);
-
       }
     }
     list = list->next;
   }
-  
-  g_free ((char *) selected_filename);
-  g_object_unref(pixbuf);
-  w_current->page_current->CHANGED=1;
-
-  i_allow_expose();
-   
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Create dialog to exchange picture objects
  *  \par Function Description
+ *  This function opens a file chooser and replaces all pictures of the selections
+ *  with the new picture.
  *
+ *  \todo Maybe merge this dialog function with picture_selection_dialog()
  */
 void picture_change_filename_dialog (TOPLEVEL *w_current)
 {
+  gchar *filename;
+  GdkPixbuf *pixbuf;
+  GError *error = NULL;
+  
+  w_current->pfswindow = gtk_file_chooser_dialog_new ("Select a picture file...",
+						      GTK_WINDOW(w_current->main_window),
+						      GTK_FILE_CHOOSER_ACTION_OPEN,
+						      GTK_STOCK_CANCEL, 
+						      GTK_RESPONSE_CANCEL,
+						      GTK_STOCK_OPEN, 
+						      GTK_RESPONSE_ACCEPT,
+						      NULL);
+  if (w_current->pixbuf_filename)
+    gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(w_current->pfswindow), 
+				  w_current->pixbuf_filename);
+    
+  if (gtk_dialog_run (GTK_DIALOG (w_current->pfswindow)) == GTK_RESPONSE_ACCEPT) {
 
-   GtkWidget *file_selector;
+    filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w_current->pfswindow));
+    gtk_widget_destroy(w_current->pfswindow);
+    w_current->pfswindow=NULL;
 
-   /* Create the selector */
-   if (!w_current->pcfswindow) {
+    pixbuf = gdk_pixbuf_new_from_file (filename, &error);
+    
+    if (!pixbuf) {
+      GtkWidget *dialog;
+      
+      dialog = gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
+				       GTK_DIALOG_DESTROY_WITH_PARENT,
+				       GTK_MESSAGE_ERROR,
+				       GTK_BUTTONS_CLOSE,
+				       _("Failed to load picture: %s"),
+				       error->message);
+      /* Wait for any user response */
+      gtk_dialog_run (GTK_DIALOG (dialog));
+      
+      g_error_free (error);
+      gtk_widget_destroy(dialog);
+    }
+    else {
 #if DEBUG
-     printf("Creating change picture file selection dialog\n");
+      printf("Picture loaded succesfully.\n");
 #endif
-     w_current->pcfswindow = gtk_file_selection_new (_("Please select a picture file."));
-     file_selector = w_current->pcfswindow;
-     if (w_current->pixbuf_filename)
-       gtk_file_selection_set_filename(GTK_FILE_SELECTION(file_selector),
-				       w_current->pixbuf_filename);
-     gtk_window_position(GTK_WINDOW(w_current->pcfswindow),
-                         GTK_WIN_POS_NONE);
-     
-     gtk_window_set_transient_for(GTK_WINDOW(file_selector),
-				  GTK_WINDOW(w_current->main_window));
 
-     g_signal_connect (G_OBJECT(file_selector), "destroy",
-		       G_CALLBACK(picture_change_selection_cancel),
-		       w_current);
-     
-     
-     g_signal_connect (GTK_OBJECT(GTK_FILE_SELECTION(file_selector)->ok_button),
-                       "clicked",
-                       G_CALLBACK(picture_change_selection_ok),
-                       w_current);
-   			   
-     /* 
-      * Ensure that the dialog box is destroyed when the user clicks the
-      * cancel button.
-      */
-     g_signal_connect (GTK_OBJECT(GTK_FILE_SELECTION(file_selector)->cancel_button),
-		       "clicked",
-		       G_CALLBACK (picture_change_selection_cancel),
-		       w_current); 
-   		       
-   }
+      o_erase_rubber(w_current);
+      w_current->inside_action = 0;
 
-   /* Display that dialog */
-   if (!GTK_WIDGET_VISIBLE (w_current->pcfswindow)) {
-     gtk_widget_show (w_current->pcfswindow);
-     #if 0
-     gtk_grab_add (w_current->pcfswindow);
-     #endif
-   } else {
-     gdk_window_raise(w_current->pcfswindow->window);
-   }
+      /* \FIXME Should we set the pixbuf buffer in TOPLEVEL to store 
+	 the current pixbuf? (Werner)
+	 o_picture_set_pixbuf(w_current, pixbuf, filename); */
+
+      o_picture_exchange(w_current, pixbuf, filename);
+
+      g_object_unref(pixbuf);
+      w_current->page_current->CHANGED=1;
+  
+      i_allow_expose();
+    }
+    g_free (filename);
+  }
+
+  i_update_toolbar(w_current);
+  if (w_current->pfswindow) {
+    gtk_widget_destroy(w_current->pfswindow);
+    w_current->pfswindow=NULL;
+  }
 }

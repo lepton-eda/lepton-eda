@@ -685,8 +685,8 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_picture_draw_grips(TOPLEVEL *w_current, OBJECT *o_current);
 void o_picture_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
 void o_picture_erase(TOPLEVEL *w_current, OBJECT *o_current);
-void o_picture_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);void picture_change_selection_cancel (GtkWidget *widget, TOPLEVEL *w_current);
-void picture_change_selection_ok (GtkWidget *widget, TOPLEVEL *w_current);
+void o_picture_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
+void o_picture_exchange(TOPLEVEL *w_current, GdkPixbuf *pixbuf, const gchar *filename);
 void picture_change_filename_dialog (TOPLEVEL *w_current);
 
 /* o_pin.c */
