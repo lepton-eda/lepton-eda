@@ -1,3 +1,12 @@
+2007-01-03 Werner Hoch <werner.ho@gmx.de>
+
+	* src/x_print.c: replaced saveas button with a fileopen icon,
+	  Changed labels and added colons, fixed widget packaging.
+
+	* bitmap/Makefile.am, bitmap/gschem-alignment*.png,
+	  bitmap/gschem-filltype*.png: new icons for filltype and text
+	  alignment.
+
 2007-01-02 Werner Hoch <werner.ho@gmx.de>
 
 	* src/o_picture.c: picture_change_selection_dialog() replaced

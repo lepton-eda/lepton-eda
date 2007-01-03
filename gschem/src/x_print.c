@@ -87,12 +87,12 @@ print_dialog_action_choosefile (GtkWidget * w, PrintDialog * dialog)
   GtkWidget *filechooser;
   const gchar *filename;
   const gchar *newfilename;
-  filechooser = gtk_file_chooser_dialog_new (_("Save PostScript As..."),
+  filechooser = gtk_file_chooser_dialog_new (_("Select PostScript Filename..."),
 					     GTK_WINDOW (dialog),
 					     GTK_FILE_CHOOSER_ACTION_SAVE,
 					     GTK_STOCK_CANCEL,
 					     GTK_RESPONSE_CANCEL,
-					     GTK_STOCK_SAVE_AS,
+					     GTK_STOCK_OK,
 					     GTK_RESPONSE_ACCEPT, NULL);
 
   filename = gtk_entry_get_text (GTK_ENTRY (dialog->fnfield));
@@ -327,7 +327,7 @@ print_dialog_init (PrintDialog * dialog)
   gtk_container_set_border_width (GTK_CONTAINER (settingstable), 5);
   gtk_container_add (GTK_CONTAINER (frame), settingstable);
 
-  label = gtk_label_new (_("Output paper size"));
+  label = gtk_label_new (_("Output paper size:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
   gtk_table_attach (GTK_TABLE (settingstable),
 		    label,
@@ -338,7 +338,7 @@ print_dialog_init (PrintDialog * dialog)
 		    GTK_WIDGET (dialog->papercbox),
 		    1, 2, 0, 1, GTK_FILL, 0, 0, 0);
 
-  label = gtk_label_new (_("Type"));
+  label = gtk_label_new (_("Type:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
   gtk_table_attach (GTK_TABLE (settingstable),
 		    label,
@@ -349,7 +349,7 @@ print_dialog_init (PrintDialog * dialog)
 		    GTK_WIDGET (dialog->typecbox),
 		    1, 2, 1, 2, GTK_FILL, 0, 0, 0);
 
-  label = gtk_label_new (_("Orientation"));
+  label = gtk_label_new (_("Orientation:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
   gtk_table_attach (GTK_TABLE (settingstable),
 		    label,
@@ -374,10 +374,10 @@ print_dialog_init (PrintDialog * dialog)
 
   /* Widgets for printing to file */
   dialog->fileradio =
-    GTK_RADIO_BUTTON (gtk_radio_button_new_with_label (NULL, _("File")));
+    GTK_RADIO_BUTTON (gtk_radio_button_new_with_label (NULL, _("File:")));
   gtk_table_attach (GTK_TABLE (desttable),
 		    GTK_WIDGET (dialog->fileradio),
-		    0, 1, 0, 1, GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+		    0, 1, 0, 1, GTK_FILL, GTK_EXPAND, 0, 0);
   g_signal_connect (dialog->fileradio,
 		    "toggled",
 		    GTK_SIGNAL_FUNC (print_dialog_action_radio_toggled),
@@ -388,11 +388,15 @@ print_dialog_init (PrintDialog * dialog)
 		    GTK_WIDGET (dialog->fnfield),
 		    1, 2, 0, 1, GTK_EXPAND | GTK_FILL, 0, 0, 0);
 
-  dialog->saveasbutton =
-    GTK_BUTTON (gtk_button_new_from_stock (GTK_STOCK_SAVE_AS));
+  dialog->saveasbutton = gtk_button_new();
+  gtk_container_add(GTK_CONTAINER(dialog->saveasbutton),
+		    gtk_image_new_from_stock(GTK_STOCK_OPEN,
+					     GTK_ICON_SIZE_SMALL_TOOLBAR));
+  gtk_button_set_relief(GTK_BUTTON(dialog->saveasbutton), GTK_RELIEF_NONE);
+
   gtk_table_attach (GTK_TABLE (desttable),
 		    GTK_WIDGET (dialog->saveasbutton), 2, 3, 0, 1,
-		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
+		    GTK_FILL, 0, 0, 0);
   g_signal_connect (dialog->saveasbutton,
 		    "clicked",
 		    GTK_SIGNAL_FUNC (print_dialog_action_choosefile), dialog);
@@ -400,10 +404,10 @@ print_dialog_init (PrintDialog * dialog)
   /* Widgets for printing to command */
   dialog->cmdradio =
     GTK_RADIO_BUTTON (gtk_radio_button_new_with_label_from_widget
-		      (dialog->fileradio, _("Command")));
+		      (dialog->fileradio, _("Command:")));
   gtk_table_attach (GTK_TABLE (desttable),
 		    GTK_WIDGET (dialog->cmdradio),
-		    0, 1, 1, 2, GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+		    0, 1, 1, 2,  GTK_FILL, GTK_EXPAND, 0, 0);
   g_signal_connect (dialog->cmdradio,
 		    "toggled",
 		    GTK_SIGNAL_FUNC (print_dialog_action_radio_toggled),
