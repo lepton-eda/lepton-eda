@@ -1,3 +1,10 @@
+2007-01-04 Werner Hoch <werner.ho@gmx.de>
+
+	* src/x_compselect.c: added expand property for the filter entry
+
+	* src/x_autonumber.c: set default the searchtext to the first history
+	  element, use SCOPE_PAGE as skip default value
+
 2007-01-03 Werner Hoch <werner.ho@gmx.de>
 
 	* src/x_print.c: replaced saveas button with a fileopen icon,

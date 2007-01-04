@@ -789,7 +789,7 @@ compselect_init (Compselect *compselect)
                     compselect);
   /* add the filter entry to the filter area */
   gtk_box_pack_start (GTK_BOX (filter_hbox), entry,
-                      FALSE, FALSE, 0);
+                      TRUE, TRUE, 0);
   /* set filter entry of compselect */
   compselect->entry_filter = GTK_ENTRY (entry);
   /* and init the event source for component filter */

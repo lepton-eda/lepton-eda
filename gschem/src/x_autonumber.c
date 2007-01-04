@@ -996,7 +996,7 @@ AUTONUMBER_TEXT *autonumber_init_state()
     t++;
   }
 
-  autotext->scope_skip = SCOPE_SELECTED;
+  autotext->scope_skip = SCOPE_PAGE;
   autotext->scope_number = SCOPE_SELECTED;
 
   autotext->scope_overwrite = 0;
@@ -1038,6 +1038,9 @@ void autonumber_set_state(AUTONUMBER_TEXT *autotext)
   for (el= autotext->scope_text; el != NULL; el=g_list_next(el)) {
     gtk_combo_box_append_text(GTK_COMBO_BOX(widget), el->data);
   }
+
+  widget = gtk_bin_get_child(GTK_BIN(widget));
+  gtk_entry_set_text(GTK_ENTRY(widget), g_list_first(autotext->scope_text)->data);
 
   widget = lookup_widget(autotext->dialog, "scope_skip");
   gtk_combo_box_set_active(GTK_COMBO_BOX(widget),
