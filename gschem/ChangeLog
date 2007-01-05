@@ -1,3 +1,9 @@
+2007-01-05 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* configure.ac.in: Applied patch from Peter Clifton, adding
+	  missing AC_DEFINE(HAS_LIBGD, 1,...) which is still required 
+	  to enable libgd support.
+	
 2007-01-04 Werner Hoch <werner.ho@gmx.de>
 
 	* src/x_compselect.c: added expand property for the filter entry

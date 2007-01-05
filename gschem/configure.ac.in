@@ -252,6 +252,7 @@ must recompile libgeda with gdlib support.])
 	else
 		AC_MSG_RESULT([yes])
 		LIBGD=yes
+		AC_DEFINE(HAS_LIBGD, 1, [If gd has been installed, define this])
 	fi
 else
 	LIBGD=no
