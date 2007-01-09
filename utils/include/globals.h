@@ -55,5 +55,7 @@ extern int verbose_mode;
 extern int interactive_mode;
 extern int quiet_mode;
 extern int netlist_mode;
+extern int embed_mode;
+extern int unembed_mode;
 extern char *output_filename;
 

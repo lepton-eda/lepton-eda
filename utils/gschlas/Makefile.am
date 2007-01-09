@@ -5,7 +5,7 @@ bin_PROGRAMS = gschlas
 # don't forget all *.h files */
 gschlas_SOURCES = \
 		i_vars.c g_rc.c g_register.c globals.c \
-		gschlas.c parsecmd.c 
+		gschlas.c s_util.c parsecmd.c 
 
 
 INCLUDES = @GSCHLAS_CFLAGS@ 

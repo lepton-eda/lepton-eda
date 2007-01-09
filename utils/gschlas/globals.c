@@ -77,5 +77,8 @@ o_select_dummy(TOPLEVEL * w_current, OBJECT * o_current,
 int verbose_mode=FALSE;
 int interactive_mode=FALSE;
 int quiet_mode=FALSE;
+int embed_mode=FALSE; 
+int unembed_mode=FALSE;
+
 
 

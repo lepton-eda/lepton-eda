@@ -1,3 +1,11 @@
+2007-01-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* gschlas/Makefile.am, gschlas/globals.c, gschlas/gschlas.c,
+	gschlas/parsecmd.c, gschlas/s_util.c, include/globals.h,
+	include/prototype.h: Added embed/unembed command line switched to
+	gschlas to support embedding/unembedding all components/pictures
+	in the specified schematics on the command line.
+
 2006-11-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Fixed libgeda detection/find error message when

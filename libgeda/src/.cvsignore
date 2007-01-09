@@ -1,4 +1,3 @@
-*.c
 *.lo
 .deps
 .libs

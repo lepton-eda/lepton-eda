@@ -155,6 +155,14 @@ main_prog(void *closure, int argc, char *argv[])
   
   if (!quiet_mode) s_log_message("\n");
 
+  if (embed_mode) {
+    s_util_embed(pr_current, TRUE);
+  }
+
+  if (unembed_mode) {
+    s_util_embed(pr_current, FALSE);
+  }	
+
   /* save all the opened files */
   s_page_save_all(pr_current);
 

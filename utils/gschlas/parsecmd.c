@@ -36,7 +36,7 @@
 #include <dmalloc.h>
 #endif
 
-#define OPTIONS "hqv"
+#define OPTIONS "hqveu"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -47,6 +47,8 @@ extern int optind;
 void usage(char *cmd)
 {
     printf("Usage: %s [OPTIONS] filename1 ... filenameN\n", cmd);
+    printf("  -e  		Embed all components/pictures\n");
+    printf("  -u  		Unembed all components/pictures\n");
     printf("  -q  		Quiet mode\n");
     printf("  -v  		Verbose mode on\n");
     printf("  -h  		This message\n");
@@ -69,6 +71,14 @@ int parse_commandline(int argc, char *argv[])
 	    quiet_mode = TRUE;
 	    break;
 
+	case 'e':
+	    embed_mode = TRUE;
+	    break;
+
+	case 'u':
+	    unembed_mode = TRUE;
+	    break;
+
 	case 'h':
 	    usage(argv[0]);
 	    break;
@@ -82,6 +92,13 @@ int parse_commandline(int argc, char *argv[])
 
     if (quiet_mode) {
 	verbose_mode = FALSE;
+    }
+
+    if (embed_mode && unembed_mode) {
+	fprintf(stderr, 
+	        "Cannot specify both -e and -u at the same time (ignoring both flags)\n");	
+	embed_mode = FALSE;
+	unembed_mode = FALSE;
     }
 
     return (optind);

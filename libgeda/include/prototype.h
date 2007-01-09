@@ -325,6 +325,10 @@ void o_complex_mirror_lowlevel(TOPLEVEL *w_current, int world_centerx, int world
 OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin);
 void o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object);
 
+/* o_embed.c */
+void o_embed(TOPLEVEL *w_current, OBJECT *o_current);
+void o_unembed(TOPLEVEL *w_current, OBJECT *o_current);
+
 /* o_image.c */
 void o_image_init(void);
 void o_image_create(int x, int y, int color_mode);

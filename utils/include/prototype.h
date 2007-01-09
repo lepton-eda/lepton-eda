@@ -16,3 +16,5 @@ void i_vars_setnames(TOPLEVEL *w_current);
 /* parsecmd.c */
 void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);
+/* s_util.c */
+void s_util_embed(TOPLEVEL *pr_current, int embed_mode);

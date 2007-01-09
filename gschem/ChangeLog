@@ -1,3 +1,10 @@
+2007-01-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/prototype.h, src/o_misc.c: Moved o_embed and o_unembed
+	into libgeda so that gschlas can also call these functions
+	(to add shell scriptable embed/unembed of all components/pictures 
+	functionality).
+
 2007-01-05 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* configure.ac.in: Applied patch from Peter Clifton, adding

@@ -642,8 +642,6 @@ void o_lock(TOPLEVEL *w_current);
 void o_unlock(TOPLEVEL *w_current);
 void o_rotate_90(TOPLEVEL *w_current, GList *list, 
 		 int centerx, int centery);
-void o_embed(TOPLEVEL *w_current, OBJECT *o_current);
-void o_unembed(TOPLEVEL *w_current, OBJECT *o_current);
 void o_mirror(TOPLEVEL *w_current, GList *list, int centerx, int centery);
 void o_edit_show_hidden_lowlevel(TOPLEVEL *w_current, OBJECT *o_list);
 void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list);
