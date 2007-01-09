@@ -1,3 +1,8 @@
+2007-01-07 Stuart Brorson <sdb@cloud9./net>
+	* scheme/gnet-spice-sdb.scm: Added SPICE-NPN and SPICE-PNP
+	to dispatch to cover cases where people had munged the transistor
+	symbols.
+	
 2006-11-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Fixed libgeda detection/find error message when
