@@ -1,3 +1,9 @@
+2007-01-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/o_misc.c: Applied patch by Peter Clifton to prevent a crash 
+	when updating embedded components.  Should not free strings that
+	are owned by libgeda.
+
 2007-01-08 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/prototype.h, src/o_misc.c: Moved o_embed and o_unembed

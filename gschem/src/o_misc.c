@@ -1173,9 +1173,9 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
   o_redraw_single (w_current, o_current);
 
   if (is_embedded) {
-    /* we previously allocated memory for basename and clib */
+    /* we previously allocated memory for basename */
     g_free (basename);
-    g_free (clib);
+    /* clib should not be freed here since it is owned by libgeda */
   }
     
   /* mark the page as modified */
