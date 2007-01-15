@@ -101,6 +101,8 @@
 ;;************  Program housekeeping, handling calling flags, etc.  ****************
 ;;**********************************************************************************
 
+(use-modules (ice-9 rdelim))
+
 ;;--------------------------------------------------------------------------------
 ;; spice-sdb:loop-through-files -- loops through the model-file list, and for each file
 ;;  name discovered in the list, it processes the file by invoking handle-spice-file.
@@ -710,12 +712,12 @@
      ;; one line model and model name exist
 	 ( (not (or (string=? model "unknown") (string=? model-name "unknown")))
 	   (debug-spew (string-append "found model and model-name for " package "\n"))
-	   (display (string-append ".MODEL " model-name " " type " \(" model "\)\n") port) )
+	   (display (string-append ".MODEL " model-name " " type " (" model ")\n") port) )
 
      ;; one line model and component value exist
 	 ( (not (or (string=? model "unknown") (string=? value "unknown")))
 	   (debug-spew (string-append "found model and value for " package "\n"))
-	   (display (string-append ".MODEL " model-name " " type " \(" value "\)\n") port) )
+	   (display (string-append ".MODEL " model-name " " type " (" value ")\n") port) )
 
      ;; model file and model name exist
 	 ( (not (or (string=? model-file "unknown") (string=? model-name "unknown")))
@@ -798,7 +800,7 @@
 	      (debug-spew "Model info not found in model file list, but model attribute exists.  Write out spice card and .model line..\n") 
 	      (spice-sdb:write-component-no-value package port)    
 	      (display (string-append model-name "\n" ) port)
-	      (display (string-append ".MODEL " model-name " " type " \(" model "\)\n") port)
+	      (display (string-append ".MODEL " model-name " " type " (" model ")\n") port)
 	    )
 	    (begin                                     ;; no model attribute either.  Just write out card.
 	      (debug-spew "Model info not found in model file list.  No model attribute either.  Just write what we know.\n")
@@ -888,7 +890,7 @@
 	      (debug-spew "Model info not found in model file list, but model attribute exists.  Write out spice card and .model line..\n") 
 	      (spice-sdb:write-component-no-value package port)    
 	      (display (string-append model-name "\n" ) port)
-	      (display (string-append ".MODEL " model-name " " type " \(" model "\)\n") port)
+	      (display (string-append ".MODEL " model-name " " type " (" model ")\n") port)
 	    )
 	    (begin                                     ;; no model attribute either.  Just write out card.
 	      (debug-spew "Model info not found in model file list.  No model attribute either.  Just write what we know.\n")
@@ -1433,7 +1435,7 @@
 	     ;; one model and model name exist
 	   ( (not (or (string=? model "unknown") (string=? model-name "unknown")))
 	     (debug-spew (string-append "found model and model-name for " package "\n"))
-	     (display (string-append ".MODEL " model-name " " type " \(" model "\)\n") port) )
+	     (display (string-append ".MODEL " model-name " " type " (" model ")\n") port) )
 
              ;; model file exists
 	   ( (not (or (string=? model-file "unknown") ))
