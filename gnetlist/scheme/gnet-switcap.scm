@@ -24,6 +24,8 @@
 ;; 'mcmahill at alum dot mit dotedu' who used the SPICE backend by
 ;; S. Gieltjes as a starting point.
 
+;; The following is needed to make guile 1.8.x happy.
+(use-modules (ice-9 rdelim))
 
 ;; ----------------------------------------------------------------------------
 ;; Utility functions used by this netlister

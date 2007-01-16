@@ -1,3 +1,8 @@
+2007-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-switcap.scm: Added added (use-modules (ice-9 rdelim)) 
+	to get read-line included and working.
+
 2007-01-15 Stuart Brorson <sdb@cloud9./net>
 	* scheme/gnet-spice-sdb.scm: Changed escaping for parens to fix 
 	guile-1.8 bug.  Also added (use-modules (ice-9 rdelim)) to enable 
