@@ -1582,46 +1582,27 @@ o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
     color = image_black;
   }
 
-  start_angle = o_current->arc->start_angle;
-  end_angle   = o_current->arc->end_angle;
+  // libgd angles are in opposite sense to gschem's internal angles
+  // Also, gschem's "end_angle" is actually the sweep of the arc, not absolute angle
 
-  if ( end_angle < 0) {
+  // Intialise {start|end}_angle to the start of gschem's sweep
+  start_angle = -o_current->arc->start_angle;
+  end_angle   = -o_current->arc->start_angle;
 
-    if (end_angle >= 180) {
-      start_angle = (start_angle - (end_angle)) % 360;
-    } else {
-      start_angle = (start_angle + (end_angle)) % 360;
-    }
+  // libgd always sweeps arcs clockwise so we either update
+  // the start_angle, or end_angle as appropriate
+  if ( o_current->arc->end_angle > 0 )
+    start_angle -= o_current->arc->end_angle;
+  else
+    end_angle -= o_current->arc->end_angle;
 
-    end_angle = abs(end_angle);
+  // Ensure each angle is within 0-359. Negative angles make libgd blow up.
+  start_angle = ( start_angle < 0 ) ? 360 - ( (-start_angle) % 360 ) : start_angle % 360;
+  end_angle =   ( end_angle   < 0 ) ? 360 - ( (-end_angle  ) % 360 ) : end_angle   % 360;
 
-  }
-
-  end_angle = start_angle + end_angle;
-
-
-
-#if DEBUG
-  printf("%d %d -- %d %d -- %d %d\n", 
-         o_current->arc->screen_x, o_current->arc->screen_y,
-         o_current->arc->screen_width-o_current->arc->screen_x,
-         o_current->arc->screen_height-o_current->arc->screen_y,
-         start_angle, end_angle);
-#endif
-
-  if (start_angle < end_angle) {
-
-    start_angle = start_angle + 360;
-  }
-
-#if DEBUG
-  printf("%d %d -- %d %d -- %d %d\n", 
-         o_current->arc->screen_x, o_current->arc->screen_y,
-         o_current->arc->screen_width-o_current->arc->screen_x,
-         o_current->arc->screen_height-o_current->arc->screen_y,
-         start_angle, end_angle);
-#endif
-
+  // libgd docs state that end angle should always be larger than start_angle
+  if (end_angle < start_angle)
+    end_angle += 360;
 
   width  = o_current->arc->screen_width;
   height = o_current->arc->screen_height;
