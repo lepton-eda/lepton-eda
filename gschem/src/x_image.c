@@ -283,7 +283,6 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
   /* try to use recalc here */
   o_redraw_all(w_current);
 
-  printf("Calling f_image_write.\n");
   f_image_write(w_current, filename, width, height, 
                 w_current->image_color);
 #else
