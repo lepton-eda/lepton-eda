@@ -27,6 +27,7 @@ libgeda_la_SOURCES = \
 
 INCLUDES = -I$(top_srcdir)/include @LIBGEDA_CFLAGS@
 libgeda_la_LDFLAGS = @LIBTOOL_FLAGS@ @LIBGEDA_LDFLAGS@
+LIBTOOL=@LIBTOOL@ --silent
 
 EXTRA_DIST = create_proto 
 

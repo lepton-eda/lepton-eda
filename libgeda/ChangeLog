@@ -3,6 +3,9 @@
 	* src/o_arc_basic.c: Applied patch by Peter Clifton to fix
 	the output of arcs when using libgd.
 
+	* src/Makefile.am: Applied patch by Peter Clifton to add --silent to
+	libtool.
+
 2007-01-08 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/prototype.h, src/Makefile.am, src/o_embed.c: Moved
