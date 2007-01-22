@@ -1,3 +1,8 @@
+2007-01-15 Stuart Brorson <sdb@cloud9./net>
+	
+	* scheme/gnet-bom.scm, scheme/gnet-bom2.scm: Added
+	(use-modules (ice-9 rdelim)) fix guile-1.8 problem.
+
 2007-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-switcap.scm: Added added (use-modules (ice-9 rdelim)) 
