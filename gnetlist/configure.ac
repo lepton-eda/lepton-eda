@@ -21,13 +21,35 @@ AM_MAINTAINER_MODE
 # Change default location for rc files
 AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
 
-# Change default location for pcb's m4 library directory
-AC_ARG_WITH(pcbm4dir,
-	[  --with-pcbm4dir=path     Change where the PCB m4 files are installed [[default=${datadir}/pcb/m4]]],
-        [PCBM4DIR=$withval],
-	[PCBM4DIR="${datadir}/pcb/m4"]
+AC_MSG_CHECKING([For the default pcb installation data directory])
+AC_ARG_WITH(pcb-datadir,
+	[  --with-pcb-datadir=path
+                          Change the default location for an installed pcb.  This is used
+                          to set the default search path for pcb newlib libraries.
+                          [[default=${datadir}]]],
+        [PCBDATADIR=$withval],
+        [PCBDATADIR="${datadir}"]
 )
+AC_MSG_RESULT([${PCBDATADIR}])
+AC_SUBST(PCBDATADIR)
+
+# Change default location for pcb's m4 library directory
+AC_MSG_CHECKING([For the default pcb m4 directory])
+AC_ARG_WITH(pcbm4dir,
+	[  --with-pcbm4dir=path     Change where the PCB m4 files are installed [[default=${PCBDATADIR}/pcb/m4]]],
+        [PCBM4DIR=$withval],
+	[PCBM4DIR="${PCBDATADIR}/pcb/m4"]
+)
+AC_MSG_RESULT([${PCBM4DIR}])
 AC_SUBST(PCBM4DIR)
+
+# Change default location for pcb's newlib library directory
+AC_ARG_WITH(pcb-newlib-path,
+	[  --with-pcb-newlib-path=path   Change the default search path for PCB newlib libraries [[default=${datadir}/pcb/pcblib-newlib:${datadir}/pcb/newlib:]]],
+        [PCBLIBPATH=$withval],
+	[PCBLIBPATH="${datadir}/pcb/pcblib-newlib:${datadir}/pcb/newlib"]
+)
+AC_SUBST(PCBLIBPATH)
 
 # Change default location for pcb's m4 site configuration directory
 AC_ARG_WITH(pcbconfdir,
@@ -376,6 +398,7 @@ AC_OUTPUT
 expandedGEDADATADIR=`eval "echo $GEDADATADIR"`
 expandedGEDARCDIR=`eval "echo $GEDARCDIR"`
 expandedGEDADOCDIR=`eval "echo $GEDADOCDIR"`
+expandedPCBM4DIR=`eval "echo $PCBM4DIR"`
 
 AC_MSG_RESULT([
 ** Configuration summary for $PACKAGE $VERSION:
@@ -386,6 +409,7 @@ AC_MSG_RESULT([
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR
    documentation directory:          $expandedGEDADOCDIR
+   default PCB m4 directory:         $expandedPCBM4DIR
    dmalloc debugging:                $with_dmalloc
    Electric Fence debugging:         $with_efence
 ])

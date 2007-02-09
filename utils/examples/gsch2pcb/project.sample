@@ -1,3 +1,5 @@
+# $Id$
+#
 #           Sample poject file for gsch2pcb versions >= 1.0
 #
 # A project file may be named anything that does not end in ".sch" and placed
@@ -32,10 +34,18 @@ output-name	foo
 #elements-dir  ~/gaf/pcb-elements
 #elements-dir  /usr/local/share/pcb/newlib
 
-# The default is to search for gschem footprints first in PCB m4 files and
-# if not found, then in PCB newlib style file element directories.  Uncomment
-# the use-files line to force using any found file elements even though a
-# m4 element may have been found first.
+# The default is to not invoke M4 for PCB footprints.  Starting with the
+# 20070208 snapshot of PCB, the footprints which were generated with m4
+# are available as newlib footprints.  If you wish to still invoke m4
+# (perhaps because you have extra footprints configured), then set
+# this variable.
+#
+use-m4
+
+# If "use-m4" is specified, the default is to search for gschem footprints
+# first in PCB m4 files and if not found, then in PCB newlib style file 
+# element directories.  Uncomment the use-files line to force using any
+# found file elements even though a m4 element may have been found first.
 #
 #use-files
 

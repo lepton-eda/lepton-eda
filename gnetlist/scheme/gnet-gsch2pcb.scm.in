@@ -1,3 +1,4 @@
+;;; -*-scheme-*-
 ;;; $Id$
 ;;;
 
@@ -101,16 +102,20 @@
         (let* ((refdes (car ls))
                (value (gnetlist:get-package-attribute refdes "value"))
                (footprint (split-to-list 
-                          (gnetlist:get-package-attribute refdes  "footprint") ) ) )
+                          (gnetlist:get-package-attribute refdes  "footprint") ) ) 
+	       (lquote (if gsch2pcb:use-m4 "`" ""))
+	       (rquote (if gsch2pcb:use-m4 "'" ""))
+
+	       )
 
                (display (string-append "PKG_" (car footprint)) pipe)
-               (display (string-append "(`" (car footprint)) pipe)
+               (display (string-append "(" lquote (car footprint)) pipe)
                (display (list-join-with-prefixes (cdr footprint) "-") pipe)
-               (display (string-append "',`" refdes "',`") pipe)
+               (display (string-append rquote "," lquote refdes rquote "," lquote ) pipe)
 
                (display value pipe)
-               (display (list-join-with-prefixes (cdr footprint) "',`") pipe)
-               (display "')" pipe)
+               (display (list-join-with-prefixes (cdr footprint) (string-append rquote "," lquote)) pipe)
+               (display (string-append rquote ")") pipe)
                (newline pipe)
                (gsch2pcb:write-value-footprint pipe (cdr ls))) )))
 
@@ -121,6 +126,7 @@
 (define m4-pcbdir "@pcbm4dir@")
 (define m4-pcbconfdir "@pcbconfdir@")
 (define m4-files "")
+(define gsch2pcb:use-m4 #f)
 
 ;; To emulate popen. Guileish again.
 ; Needed after guile ver. 1.3.2. To save 1.3a users, wrap it in.
@@ -130,19 +136,35 @@
 (define (gsch2pcb output-filename)
   (let ((port (open-output-file output-filename)))
     (gsch2pcb:write-top-header port)
-       (close-port port))
-  	;; pipe with the macro define in pcb program
-  	(let ((pipe (open-output-pipe (string-append
-			m4-command " -d -I. -I" m4-pcbdir " "
-			" -I " m4-pcbconfdir " -I$HOME/.pcb -I. "
-			m4-pcbdir "/common.m4 " m4-files " - >> "
-			output-filename))))
+    (close-port port)
+    )
 
+  ;; If we have defined gsch2pcb:use-m4 then run the footprints
+  ;; through the pcb m4 setup.  Otherwise skip m4 entirely
+ (if gsch2pcb:use-m4
+      ;; pipe with the macro define in pcb program
+      (let ((pipe (open-output-pipe (string-append
+				     m4-command " -d -I. -I" m4-pcbdir " "
+				     " -I " m4-pcbconfdir " -I$HOME/.pcb -I. "
+				     m4-pcbdir "/common.m4 " m4-files " - >> "
+				     output-filename)))
+	    )
+	
+	(display "Using the m4 processor for pcb footprints\n")
+	;; packages is a list with the different refdes value
+	(gsch2pcb:write-value-footprint pipe packages)
+	(close-pipe pipe)
+	)
+      
+      (let ((port  (open output-filename (logior O_WRONLY O_APPEND))))
+	(display "Skipping the m4 processor for pcb footprints\n")
+	(gsch2pcb:write-value-footprint port packages)
+	(close-port port)
+	)
+      )
 
-		;; packages is a list with the different refdes value
-		(gsch2pcb:write-value-footprint pipe packages)
-		(close-pipe pipe))
   (let ((port (open output-filename (logior O_WRONLY O_APPEND))))
     (gsch2pcb:write-bottom-footer port)
-       close-port port))
+    close-port port)
+  )
 

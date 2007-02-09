@@ -41,9 +41,11 @@
 #include <dmalloc.h>
 #endif
 
-#define	GSC2PCB_VERSION		"1.5"
+#define	GSC2PCB_VERSION		"1.6"
 
 #define	DEFAULT_PCB_INC		"pcb.inc"
+
+#define SEP_STRING 	"--------\n"
 
 typedef struct
 	{
@@ -88,6 +90,8 @@ static gchar	*m4_command,
 				*m4_files,
 				*m4_override_file;
 
+static gboolean use_m4 = FALSE;
+
 static gchar	*empty_footprint_name;
 
 static gint		verbose,
@@ -118,8 +122,6 @@ create_m4_override_file()
 	{
 	FILE	*f;
 
-	if (!m4_command && !m4_pcbdir && !m4_files)
-		return;
 	m4_override_file = "gnet-gsch2pcb-tmp.scm";
 	f = fopen(m4_override_file, "w");
 	if (!f)
@@ -133,6 +135,8 @@ create_m4_override_file()
 		fprintf(f, "(define m4-pcbdir \"%s\")\n", m4_pcbdir);
 	if (m4_files)
 		fprintf(f, "(define m4-files \"%s\")\n", m4_files);
+	fprintf(f, "(define gsch2pcb:use-m4 %s)\n", use_m4 == TRUE ? "#t" : "#f");
+
 	fclose(f);
 	if (verbose)
 		{
@@ -144,6 +148,7 @@ create_m4_override_file()
 			printf("    (define m4-pcbdir \"%s\")\n", m4_pcbdir);
 		if (m4_files)
 			printf("    (define m4-files \"%s\")\n", m4_files);
+		printf("    (define gsch2pcb:use-m4 %s)\n", use_m4 == TRUE ? "#t" : "#f");
 		}
 	}
 
@@ -179,7 +184,7 @@ run_gnetlist(gchar *pins_file, gchar *net_file, gchar *pcb_file, gchar *basename
 		command = g_strconcat(
 					gnetlist, " -g pcbpins -o ", pins_file, " ", args, NULL);
 		printf("Running command:\n\t%s\n", command);
-		printf("--------\n");
+		printf(SEP_STRING);
 		}
 	else
 		command = g_strconcat(
@@ -192,7 +197,7 @@ run_gnetlist(gchar *pins_file, gchar *net_file, gchar *pcb_file, gchar *basename
 		command = g_strconcat(
 					gnetlist, " -g PCB -o ", net_file, " ", args, NULL);
 		printf("Running command:\n\t%s\n", command);
-		printf("--------\n");
+		printf(SEP_STRING);
 		}
 	else
 		command = g_strconcat(
@@ -210,11 +215,11 @@ run_gnetlist(gchar *pins_file, gchar *net_file, gchar *pcb_file, gchar *basename
 	
 	if (verbose)
 		{
-		printf("--------\n");
+		printf(SEP_STRING);
 		command = g_strconcat(gnetlist, " -g gsch2pcb -o ", pcb_file, 
 				" ", args1, NULL);
 		printf("Running command:\n\t%s\n", command);
-		printf("--------\n");
+		printf(SEP_STRING);
 		}
 	else
 		command = g_strconcat(gnetlist, " -q -g gsch2pcb -o ", pcb_file, 
@@ -223,7 +228,7 @@ run_gnetlist(gchar *pins_file, gchar *net_file, gchar *pcb_file, gchar *basename
 	g_spawn_command_line_sync(command, NULL, NULL, NULL, NULL);
 
 	if (verbose)
-		printf("--------\n");
+		printf(SEP_STRING);
 
 	if (   stat(pcb_file, &st) != 0
 		|| mtime == st.st_mtime
@@ -250,11 +255,11 @@ run_gnetlist(gchar *pins_file, gchar *net_file, gchar *pcb_file, gchar *basename
 
 		if (verbose)
 			{
-			printf("--------\n");
+			printf(SEP_STRING);
 			command = g_strconcat(gnetlist, " -g ", s, out_file,
 							" ", args, NULL);
 			printf("Running command:\n\t%s\n", command);
-			printf("--------\n");
+			printf(SEP_STRING);
 			}
 		else
 			command = g_strconcat(gnetlist, " -q -g ", s, out_file,
@@ -264,7 +269,7 @@ run_gnetlist(gchar *pins_file, gchar *net_file, gchar *pcb_file, gchar *basename
 		g_free(command);
 		g_free(out_file);
 		if (verbose)
-			printf("--------\n");
+			printf(SEP_STRING);
 		}
 	}
 
@@ -564,25 +569,37 @@ find_element(gchar *dir_path, gchar *element)
 
 	if ((dir = g_dir_open(dir_path, 0, NULL)) == NULL)
 		{
-		s = g_strdup_printf("find_element can't open dir %s", dir_path);
+		s = g_strdup_printf("find_element can't open dir \"%s\"", dir_path);
 		perror(s);
 		g_free(s);
 		return NULL;
 		}
 	if (verbose > 1)
-			printf("\t  Searching: %s\n", dir_path);
+			printf("\t  Searching: \"%s\" for \"%s\"\n", dir_path, element);
 	while ((name = (gchar *) g_dir_read_name(dir)) != NULL)
 		{
 		path = g_strconcat(dir_path, "/", name, NULL);
 		found = NULL;
+
+		/* if we got a directory name, then recurse down into it */
 		if (g_file_test(path, G_FILE_TEST_IS_DIR))
 			found = find_element(path, element);
+
+		/* otherwise assume it is a file and see if it is the one we want */
 		else
 			{
 			if (verbose > 1)
 				printf("\t           : %s\t", name);
 			if (!strcmp(name, element))
 				found = g_strdup(path);
+			else
+			  {
+				gchar *tmps;
+				tmps = g_strconcat (element, ".fp", NULL);
+				if (!strcmp(name, tmps))
+					found = g_strdup(path);
+				g_free (tmps);
+			  }
 			if (verbose > 1)
 				printf("%s\n", found ? "Yes" : "No");
 			}
@@ -647,7 +664,7 @@ search_element_directories( PcbElement	*el)
 		{
 		dir_path = (gchar *) list->data;
 		if (verbose > 1)
-			printf("\tLooking in directory: %s\n", dir_path);
+			printf("\tLooking in directory: \"%s\"\n", dir_path);
 		path = find_element(dir_path, elname);
 		if (path)
 			{
@@ -1178,6 +1195,11 @@ parse_config(gchar *config, gchar *arg)
 		force_element_files = TRUE;
 		return 0;
 		}
+	if (!strcmp(config, "use-m4") || !strcmp(config, "f"))
+		{
+		use_m4 = TRUE;
+		return 0;
+		}
 	if (!strcmp(config, "elements-dir") || !strcmp(config, "d"))
 		{
 		if (verbose > 1)
@@ -1301,6 +1323,8 @@ static gchar *usage_string0 =
 "                         so you really shouldn't need this option.\n"
 "   -q, --quiet           Don't tell the user what to do next after running gsch2pcb.\n"
 "\n"
+"   -m, --use-m4          Use m4 when looking for footprints.  The default is to not\n"
+"                         run m4 at all.\n"
 "       --m4-file F.inc   Use m4 file F.inc in addition to the default m4\n"
 "                         files ./pcb.inc and ~/.pcb/pcb.inc.\n"
 "       --m4-pcbdir D     Use D as the PCB m4 files install directory\n"
@@ -1409,21 +1433,16 @@ main(gint argc, gchar **argv)
 	gint	i;
 	gboolean initial_pcb = TRUE;
 	gboolean created_pcb_file = TRUE;
+	char *path, *p;
 
 	if (argc < 2)
 		usage();
 
-	/* Default m4 dir was /usr/X11R6/lib/X11/pcb/m4, but in more recent
-	|  pcb versions it's under /usr/share or /usr/local/share
-	*/
-	if (g_file_test("/usr/local/share/pcb/m4", G_FILE_TEST_IS_DIR))
-		m4_pcbdir = g_strdup("/usr/local/share/pcb/m4");
-	else if (g_file_test("/usr/share/pcb/m4", G_FILE_TEST_IS_DIR))
-		m4_pcbdir = g_strdup("/usr/share/pcb/m4");
-	default_m4_pcbdir = g_strdup(m4_pcbdir ?
-		   m4_pcbdir
-		: "/usr/X11R6/lib/X11/pcb/m4" /* hardwired in gnet-gsch2pcb.scm */);
-
+	/* Use the default value passed in from the configure script instead
+  	 * of trying to hard code a value which is very likely wrong
+	 */
+	m4_pcbdir = g_strconcat( PCBDATADIR, "/pcb/m4", NULL );
+	default_m4_pcbdir = g_strdup(m4_pcbdir);
 
 	get_args(argc, argv);
 
@@ -1434,29 +1453,28 @@ main(gint argc, gchar **argv)
 		usage();
 
 
-	/* Hardwire in directories from Pcb.ad.  PCB as of 20031113 uses share
-	|  instead of lib.  Check for standard prefix dirs of /usr and /usr/local.
-	|  If PCB is installed elsewhere (eg. /opt) there will need to be a project
-	|  elements-dir line.
-	*/
+	/* Defaults for the search path if not configured in the project file */
 	if (g_file_test("packages", G_FILE_TEST_IS_DIR))
 		element_directory_list = g_list_append(element_directory_list,
 					"packages");
-	if (g_file_test("/usr/local/share/pcb/newlib", G_FILE_TEST_IS_DIR))
-		element_directory_list = g_list_append(element_directory_list,
-					"/usr/local/share/pcb/newlib");
-	if (g_file_test("/usr/share/pcb/newlib", G_FILE_TEST_IS_DIR))
-		element_directory_list = g_list_append(element_directory_list,
-					"/usr/share/pcb/newlib");
-	if (g_file_test("/usr/local/lib/pcb_lib", G_FILE_TEST_IS_DIR))	/* old */
-		element_directory_list = g_list_append(element_directory_list,
-					"/usr/local/lib/pcb_lib");
-	if (g_file_test("/usr/lib/pcb_lib", G_FILE_TEST_IS_DIR))		/* old */
-		element_directory_list = g_list_append(element_directory_list,
-					"/usr/lib/pcb_lib");
-	if (g_file_test("/usr/local/pcb_lib", G_FILE_TEST_IS_DIR))		/* old */
-		element_directory_list = g_list_append(element_directory_list,
-					"/usr/local/pcb_lib");
+
+#define PCB_PATH_DELIMETER ":"
+	if (verbose)
+		printf ("Processing PCBLIBPATH=\"%s\"\n", PCBLIBPATH);
+
+	path = g_strdup (PCBLIBPATH);
+	for (p = strtok (path, PCB_PATH_DELIMETER); p && *p;
+		p = strtok (NULL, PCB_PATH_DELIMETER))
+	  {
+		if (g_file_test(p, G_FILE_TEST_IS_DIR))
+		  {
+			if (verbose)
+				printf ("Adding %s to the newlib search path\n", p);
+			element_directory_list = g_list_append(element_directory_list,
+					g_strdup(p));
+		  }
+	  }
+	g_free (path);
 
 	pins_file_name = g_strconcat(basename, ".cmd", NULL);
 	net_file_name = g_strconcat(basename, ".net", NULL);

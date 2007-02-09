@@ -43,7 +43,7 @@ gnet-gsch2pcb.scm: $(srcdir)/gnet-gsch2pcb.scm.in
 		$(srcdir)/gnet-gsch2pcb.scm.in > $@
 
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~
+CLEANFILES = *.log *~ gnet-PCBboard.scm gnet-gsch2pcb.scm
 DISTCLEANFILES = *.log core FILE *~ prototype.bak \
 	         gnet-PCBboard.scm gnet-gsch2pcb.scm
 MAINTAINERCLEANFILES = *.log *~ Makefile.in configure \
