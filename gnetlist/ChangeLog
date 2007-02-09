@@ -1,3 +1,28 @@
+2007-02-08 19:24  Dan McMahill <danmc>
+
+	* configure.ac, scheme/Makefile.am, scheme/gnet-gsch2pcb.scm.in: 1)
+	   add a new option to gsch2pcb "use-m4" for the project file or
+	  "--use-m4" for the command line.  By default now, gsch2pcb will
+	  not try to run m4 at all.  If you want the old behaviour of
+	  running m4, you'll have to use this option.  It seems that this
+	  is what most users want (no m4 involved at run time).
+
+	  2) rather than hard coding a number of paths like /usr/X11R6/lib
+	  and /usr/local/share into the code for places to look for PCB
+	  footprints, use a single default directory which is based on
+	  ${datadir}.  If the user wants to, they can override that with
+	  --with-pcb-datadir=/opt/pcb-20070204/share for example.
+
+	  3)  when searching for newlib footprints with, for example, a
+	  name like footprint=MY1206, match either "MY1206" or "MY1206.fp"
+	  so we can start having extensions on footprint files without
+	  needing to explicitly add the ".fp" part in the footprint=
+	  attribute.  All of the footprints in the pcb distribution which
+	  came from the m4 libraries have .fp extensions now.
+
+	  4)  add some example schematic files in the gsch2pcb example
+	  directory
+
 2007-01-15 Stuart Brorson <sdb@cloud9./net>
 	
 	* scheme/gnet-bom.scm, scheme/gnet-bom2.scm: Added
