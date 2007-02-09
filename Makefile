@@ -28,7 +28,7 @@ prefix?=$(HOME)/geda
 # You can set any global options you want here to be passed to the 
 # individual ./configure scripts
 #
-opts=
+#opts=
 
 #
 # Set this to the shell that you want the various commands to run in.
