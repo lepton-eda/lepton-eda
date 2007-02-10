@@ -11,6 +11,9 @@
 	change "package" to "refdes" [ 1656822 ] BOM/BOM2 should use
 	refdes in title line
 
+	* tests/hierarchy/hierarchy.geda: Updated golden file due to ordering
+	of output changing. 
+
 2007-02-10 Carlos Nieves Onega <cnieves@iespana.es>
 
         * tests/drc2/Makefile.am:
