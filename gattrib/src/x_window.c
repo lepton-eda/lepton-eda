@@ -248,7 +248,7 @@ x_window_add_items()
     error_string = g_strconcat(error_string, 
                             "Do you have refdeses on your components?  \n", NULL);
     error_string = g_strconcat(error_string, 
-			    "Exiting. . . .\n");
+			    "Exiting. . . .\n", NULL);
     fprintf(stderr, "%s", error_string);
     x_dialog_exit_announcement(error_string, -1);
     g_free(error_string);
@@ -259,7 +259,7 @@ x_window_add_items()
     error_string = g_strdup("\n\nNo configurable component attributes found in entire design!  ");
     error_string = g_strconcat(error_string, 
                             "Please attach at least some attributes before running gattrib.\n", NULL);
-    error_string = g_strconcat(error_string, "Exiting. . . .\n");
+    error_string = g_strconcat(error_string, "Exiting. . . .\n", NULL);
     fprintf(stderr, "%s", error_string);
     x_dialog_exit_announcement(error_string, -2);
     g_free(error_string);
@@ -270,7 +270,7 @@ x_window_add_items()
   if (sheet_head->pin_count == 0) {
     error_string = g_strdup("\n\nNo pins found on any components!  ");
     error_string = g_strconcat(error_string, "Please check your design.\n", NULL);
-    error_string = g_strconcat(error_string, "Exiting. . . .\n");
+    error_string = g_strconcat(error_string, "Exiting. . . .\n", NULL);
     fprintf(stderr, "%s", error_string);
     x_dialog_exit_announcement(error_string, -3);
     g_free(error_string);

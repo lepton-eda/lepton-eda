@@ -3,6 +3,8 @@
 	* docs/gsymcheck.1: Fixed program name in the synopsis section.
 	  Thanks to Karel Kulhavy for reporting the bug.
 
+	* src/globals.c: Removed quit_func since it is completely unused.
+
 2006-11-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Fixed libgeda detection/find error message when

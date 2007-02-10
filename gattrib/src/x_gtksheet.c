@@ -651,7 +651,7 @@ show_entry(GtkWidget *widget, gpointer data)
 {
  gchar *text; 
  GtkSheet *sheet;
- GtkWidget *sheet_entry;
+ GtkWidget *sheet_entry = NULL;
  gint cur_page;
 
 #ifdef DEBUG

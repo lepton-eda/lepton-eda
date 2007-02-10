@@ -14,6 +14,8 @@
 	* tests/hierarchy/hierarchy.geda: Updated golden file due to ordering
 	of output changing. 
 
+	* src/globals.c: Removed quit_func since it is completely unused.
+
 2007-02-10 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* tests/Makefile.am, tests/drc2/Makefile.am, 

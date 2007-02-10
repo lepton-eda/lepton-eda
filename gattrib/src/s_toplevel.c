@@ -721,8 +721,8 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   ATTRIB *a_current;
   int count = 0;  /* This is to fake out a fcn called later */
   gint row, col;
-  gint visibility;
-  gint show_name_value;
+  gint visibility = 0;
+  gint show_name_value = 0;
 
 #if DEBUG
   printf("-----  Entering s_toplevel_update_component_attribs_in_toplevel.\n");

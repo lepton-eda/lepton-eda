@@ -61,7 +61,6 @@ void (*text_draw_func)() = NULL;
 void (*pin_draw_func)() = NULL;
 void (*select_func)() = s_toplevel_select_object;
 void (*x_log_update_func)() = NULL;
-void (*quit_func)() = gattrib_quit;
 void (*variable_set_func)() = i_vars_set;
 int (*load_newer_backup_func)() = NULL;
 

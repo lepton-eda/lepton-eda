@@ -3,6 +3,12 @@
 	* src/listsort.c, src/s_string_list.c: Applied patch by DJ:
 	[ 1637387 ] Enhance sort functions.  Thanks.
 
+	* gattrib/src/globals.c, gattrib/src/i_basic.c, 
+	gattrib/src/s_toplevel.c, gattrib/src/s_visibility.c, 
+	gattrib/src/x_gtksheet.c, gattrib/src/x_window.c: Fixed a few 
+	compiler warnings.  Removed quit_func since it is completely
+	unused.
+
 2006-12-23 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/s_object.c (s_object_attrib_add_attrib_in_object):

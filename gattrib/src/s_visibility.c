@@ -339,7 +339,7 @@ void s_visibility_set_name_and_value() {
 void s_visibility_set_cell(gint cur_page, gint row, gint col, 
 			   gint visibility, 
 			   gint show_name_value) {
-  TABLE **local_table;
+  TABLE **local_table = NULL;
 
 #ifdef DEBUG
     printf("In s_visibility_set_cell, setting row = %d, col = %d.\n", 

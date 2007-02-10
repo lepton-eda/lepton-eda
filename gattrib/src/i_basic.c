@@ -45,6 +45,7 @@
 /* ------------------------------------------------------------- *
  *
  * ------------------------------------------------------------- */
+#if 0 /* not used, but leaving it here in case we need it later */
 static void i_update_status(TOPLEVEL * w_current, const char *string)
 {
   if (!w_current->status_label) {
@@ -57,6 +58,7 @@ static void i_update_status(TOPLEVEL * w_current, const char *string)
     gtk_label_set(GTK_LABEL(w_current->status_label), (char *) string);
   }
 }
+#endif
 
 
 /* ------------------------------------------------------------- *

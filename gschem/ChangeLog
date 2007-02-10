@@ -3,6 +3,8 @@
 	* scheme/auto-place-attribs.scm: Check if the list is empty before
 	  calling to stable-sort. It is an error for guile versions >= 1.8.
 	  Thanks to DJ for reporting this.
+
+	* src/globals.c: Removed quit_func since it is completely unused.
 	
 2007-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
 

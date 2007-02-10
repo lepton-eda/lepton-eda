@@ -59,7 +59,6 @@ void (*text_draw_func)() = o_text_recalc;
 void (*pin_draw_func)() = o_pin_recalc;
 void (*select_func)() = o_select_dummy;
 void (*x_log_update_func)() = NULL;
-void (*quit_func)() = gschlas_quit;
 /* void (*variable_set_func)() = i_vars_set; */
 void (*variable_set_func)() = NULL;
 int (*load_newer_backup_func)()  = NULL;

@@ -9,6 +9,9 @@
 	* src/convert_sym.c: Applied patch by Hans N. [ 1581813 ] Patch
 	to ignore '|' tags.  Thanks!
 
+	* utils/gschlas/globals.c: Removed quit_func since it is
+	completely unused.
+
 2007-02-08 19:24  Dan McMahill <danmc>
 
 	* configure.ac, examples/gsch2pcb/Makefile.am,
