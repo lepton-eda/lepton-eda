@@ -1,5 +1,9 @@
 2006-02-10 Carlos Nieves Onega <cnieves@iespana.es>
 
+	* configure.ac, tests/Makefile.am, tests/drc2/Makefile.am,
+	  tests/drc2/*.sch, tests/drc2/*.drc2:
+	  Added new regression test suite for the drc2 backend.
+
 	* scheme/gnet-drc2.scm: Changed a (begin) to a (let ()) due to
 	  guile 1.8 problems. Thanks to Stuart Brorson por reporting, and
 	  Dean Ferreyra for pointing out the fix.

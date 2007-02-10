@@ -377,6 +377,7 @@ AC_CONFIG_FILES([Makefile
 		 examples/Makefile 
 		 tests/Makefile 
 		 tests/hierarchy/Makefile 
+		 tests/drc2/Makefile
 		 docs/Makefile 
 		 docs/vams/Makefile 
 		 examples/vams/Makefile 
