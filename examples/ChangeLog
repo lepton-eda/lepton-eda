@@ -1,5 +1,9 @@
+2007-2-10 Stuart Brorson <sdb@cloud9.net)
+	* RF_Amp/MSA-2643.sch: Removed source attribute from 
+	transistors since spice-sdb didn't like hierarchy.
+	
 2007-2-10 Stuart Brorson <sdb@cloud9.net>
-        * TwoStageAmp:  Various fixes to bit-rot problems.
+        * TwoStageAmp/:  Various fixes to bit-rot problems.
 
 2006-10-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
