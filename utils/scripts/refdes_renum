@@ -36,11 +36,14 @@ use POSIX;
 # don't allow -he to be interpreted as --help
 $Getopt::Long::autoabbrev=0;
 
+my $clear; # reset all refdes
+
 &GetOptions(("help" => \&usage, 
 	     "nocopy" => \$nocopy,
 	     "pgskip:i" => \$pgskip,
 	     "verbose" => \$verbose,
-	     "version" => \&version
+	     "version" => \&version,
+             "clear"   => \$clear,
 	     ));
 
 usage() if $Getopt::Long::error;
@@ -84,15 +87,19 @@ for($i=0; $i < $filecnt; $i++) {
     # is at work right now.
     $pre = $line;
     $pre =~ s/^refdes=//;
-    $pre =~ s/[0-9\?]*$//;
-    print "Refdes line \"$line\" has pre=\"$pre\"\n" if($verbose);
-
-    # if we're skipping numbers, then start at 100 for page 1
-    # and we'll jump to 200 for page 2, etc.
-    if( ! $devcnt{$pre} ) { $devcnt{$pre} = $pgskip ? ($i+1)*$pgskip : 0; }
-    $devcnt{$pre}++;
-    print "Renumbering $line to $pre$devcnt{$pre}\n" if($verbose);
-    print OUTNET "refdes=$pre$devcnt{$pre}\n";
+    $pre =~ s/([0-9\?])*$//;
+    my $suf = $1;
+    print "Refdes line \"$line\" has pre=\"$pre\"m suf=$suf\n" if($verbose);
+    if ($clear) {
+	print OUTNET "refdes=$pre?\n";
+    } else {
+	# if we're skipping numbers, then start at 100 for page 1
+	# and we'll jump to 200 for page 2, etc.
+        if( ! $devcnt{$pre} ) { $devcnt{$pre} = $pgskip ? ($i+1)*$pgskip : 0; }
+        $devcnt{$pre}++;
+        print "Renumbering $line to $pre$devcnt{$pre}\n" if($verbose);
+        print OUTNET "refdes=$pre$devcnt{$pre}\n";
+    }
   }
   close(NETLIST);
   close(OUTNET);
@@ -206,7 +213,10 @@ sub version {
 # Change Log
 #
 # $Log$
-# Revision 1.2  2005-12-21 00:09:56  danmc
+# Revision 1.3  2007-02-10 20:46:17  sdb
+# Added --clear option to clear refdeses.  (* jcl *)
+#
+# Revision 1.2  2005/12/21 00:09:56  danmc
 # - Fix a bug where when using the --pgskip option, components which were
 #   present on page n, but not on pages n+1 through n+j, and present again
 #   on page n+j+1 got numbered in a strange way.  For example, J101 on page
