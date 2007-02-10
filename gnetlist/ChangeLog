@@ -1,3 +1,9 @@
+2006-02-10 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-drc2.scm: Changed a (begin) to a (let ()) due to
+	  guile 1.8 problems. Thanks to Stuart Brorson por reporting, and
+	  Dean Ferreyra for pointing out the fix.
+
 2007-02-08 19:24  Dan McMahill <danmc>
 
 	* configure.ac, scheme/Makefile.am, scheme/gnet-gsch2pcb.scm.in: 1)

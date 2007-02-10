@@ -432,7 +432,7 @@
 		(slot_string (gnetlist:get-package-attribute uref "slot"))
 		(slot (string->number slot_string))
 		)
-	  (begin
+	  (let ()
 	    (define check-slots-loop
 	      (lambda (slots_list)
 		(if (not (null? slots_list))
