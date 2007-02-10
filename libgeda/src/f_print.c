@@ -232,7 +232,7 @@ void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
   }
 
   /* Apply a translation to move the origin to where we want it */
-  if (origin_x != 0 && origin_y != 0) {
+  if (origin_x != 0 || origin_y != 0) {
     fprintf(fp, "%d %d translate\n", -origin_x, -origin_y);
   } 
 
