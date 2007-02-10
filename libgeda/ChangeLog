@@ -8,6 +8,12 @@
 
 2007-02-10  Mike Jarabek  <mjarabek@sentex.ca>
 
+	* include/struct.h, src/o_text_basic.c, src/s_toplevel.c: Added
+	code to scale the output postscript font under user control.  This
+	is controlled via the postscript-font-scale rc keyword.
+
+2007-02-10  Mike Jarabek  <mjarabek@sentex.ca>
+
 	* src/f_print.c: Applied Wojciech Kazubski's patch for offset
 	printing orgins. Fixes bug #160757
 

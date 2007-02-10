@@ -32,6 +32,7 @@ int   default_graphic_color = GRAPHIC_COLOR;
 int   default_text_color = TEXT_COLOR;
 int   default_text_size = 10;
 int   default_text_caps = LOWER;
+float default_postscript_font_scale = 1.0;
 int   default_attribute_color = ATTRIBUTE_COLOR;
 int   default_detachattr_color = DETACHED_ATTRIBUTE_COLOR;
 int   default_net_color = NET_COLOR;
@@ -149,6 +150,7 @@ void i_vars_set(TOPLEVEL *w_current)
   w_current->text_color    = default_text_color;
   w_current->text_size     = default_text_size;
   w_current->text_caps     = default_text_caps;
+  w_current->postscript_font_scale = default_postscript_font_scale;
 
   w_current->attribute_color    = default_attribute_color;
   w_current->detachedattr_color = default_detachattr_color;

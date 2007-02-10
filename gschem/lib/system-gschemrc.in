@@ -576,6 +576,15 @@
 ;(output-text "vector")
 (output-text "ps")
 
+; postscript-font-scale real
+;
+; Sets a scaling factor for the text in the PostScript output.  This
+; can be used to make the output postscript font slightly larger to
+; more closely match the text in the printout to the size of the text
+; on the screen.
+;  The default value is 1.0.
+(postscript-font-scale 1.0)
+
 ; output-vector-threshold
 ;
 ; Controls the threshold (in text lines) where multi-line text objects

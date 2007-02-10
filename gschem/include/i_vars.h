@@ -3,6 +3,7 @@ extern int default_graphic_color;
 extern int default_text_color;
 extern int default_text_size;
 extern int default_text_caps;
+extern float default_postscript_font_scale;
 extern int default_attribute_color;
 extern int default_detachattr_color;
 extern int default_net_color;

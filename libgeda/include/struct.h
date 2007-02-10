@@ -705,6 +705,9 @@ struct st_toplevel {
   /* The name of the prolog file to paste into the Postscript output */
   char *postscript_prolog;
 
+  /* Use this as a scaling factor for the output font */
+  float postscript_font_scale;
+
   /* color of the stroke points */
   int stroke_color; 
 

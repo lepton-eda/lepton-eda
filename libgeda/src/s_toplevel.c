@@ -329,6 +329,7 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->setpagedevice_pagesize = FALSE;
 
   toplevel->postscript_prolog = NULL;
+  toplevel->postscript_font_scale = 1.0;
 
   toplevel->stroke_color = 0;
 

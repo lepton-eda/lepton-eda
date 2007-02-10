@@ -1753,7 +1753,8 @@ void o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   /* Collect pertinent info about the text location */
   x = o_current->text->x;
   y = o_current->text->y;
-  font_size = (float) o_current->text->size/72.0*1000.0;
+  font_size = (((float)(o_current->text->size))
+	       * w_current->postscript_font_scale / 72.0 * 1000.0);
   fprintf(fp,"] %d %d %d %f text\n",angle,x,y,font_size);
 
   

@@ -222,6 +222,7 @@ SCM g_rc_logging(SCM mode);
 SCM g_rc_embed_components(SCM mode);
 SCM g_rc_text_size(SCM size);
 SCM g_rc_text_caps_style(SCM mode);
+SCM g_rc_postscript_font_scale(SCM scale);
 SCM g_rc_snap_size(SCM size);
 SCM g_rc_logging_destination(SCM mode);
 SCM g_rc_default_series_name(SCM name);
