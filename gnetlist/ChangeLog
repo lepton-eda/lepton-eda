@@ -1,4 +1,4 @@
-2006-02-10 Carlos Nieves Onega <cnieves@iespana.es>
+2007-02-10 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* configure.ac, tests/Makefile.am, tests/drc2/Makefile.am,
 	  tests/drc2/*.sch, tests/drc2/*.drc2:
