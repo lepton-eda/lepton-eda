@@ -1,3 +1,9 @@
+2007-02-10 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/auto-place-attribs.scm: Check if the list is empty before
+	  calling to stable-sort. It is an error for guile versions >= 1.8.
+	  Thanks to DJ for reporting this.
+	
 2007-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_image.c: Removed unnecessary printf
