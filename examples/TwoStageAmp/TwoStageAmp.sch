@@ -1,4 +1,4 @@
-v 20031011 1
+v 20061020 1
 C 31900 49200 1 0 0 transistor.sym
 {
 T 32800 49700 5 10 1 1 0 0 1
@@ -114,21 +114,21 @@ refdes=A1
 T 27800 55800 5 10 1 1 0 0 1
 model-name=2N3904
 T 27000 55600 5 10 1 1 0 0 1
-file=/usr/local/geda/share/models/spice/bjt/2N3904.mod
+file=./models/2N3904.mod
 }
 C 26500 54600 1 0 0 spice-include-1.sym
 {
 T 26600 55000 5 10 1 1 0 0 1
 refdes=A2
 T 27000 54700 5 10 1 1 0 0 1
-file=/home/sdb/TwoStageAmp/Simulation.cmd
+file=Simulation.cmd
 }
 C 26500 53700 1 0 0 spice-directive-1.sym
 {
 T 26600 54100 5 10 1 1 0 0 1
 refdes=A3
 T 26600 53800 5 10 1 1 0 0 1
-value=.TEMP 0 25 100
+value=.options TEMP=25
 }
 N 27000 49700 28100 49700 4
 {
@@ -204,8 +204,6 @@ N 32500 49100 33500 49100 4
 T 32700 49200 5 10 1 1 0 0 1
 netname=Vem1
 }
-N 29200 49700 29200 50400 4
-N 30400 50400 30400 49700 4
 C 33300 53000 1 0 0 resistor-1.sym
 {
 T 33500 53300 5 10 1 1 0 0 1
@@ -251,5 +249,3 @@ value=2.2uF
 }
 N 35000 53100 34200 53100 4
 N 36600 53100 36600 54700 4
-N 34900 53100 34900 53800 4
-N 36000 53800 36000 53100 4
