@@ -7,6 +7,10 @@
 	* tests/.cvsignore: Added rule to ignore all the newly generated 
 	files.
 
+	* scheme/gnet-bom.scm, scheme/gnet-bom2.scm: Applied patch to
+	change "package" to "refdes" [ 1656822 ] BOM/BOM2 should use
+	refdes in title line
+
 2007-02-10 Carlos Nieves Onega <cnieves@iespana.es>
 
         * tests/drc2/Makefile.am:

@@ -39,7 +39,7 @@
 		      (current-output-port)
 		      (open-output-file output-filename)))
 	  (attriblist (bom2:parseconfig (open-input-file "attribs"))))
-      (bom2:printlist (cons 'package attriblist) port #\:)
+      (bom2:printlist (cons 'refdes attriblist) port #\:)
       (newline port)
       (bom2:printbom port (bom2:components packages attriblist))
       (close-output-port port))))
