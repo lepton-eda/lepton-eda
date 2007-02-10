@@ -56,6 +56,7 @@
 #endif
 
 #include <stdio.h>
+#include <ctype.h>
 
 #ifdef HAVE_STRING_H
 #include <string.h>
@@ -77,8 +78,36 @@
 /*----------------------------------------------------------------*
  * Comparison function -- compare values of string data.
  *----------------------------------------------------------------*/
-int cmp(STRING_LIST *a, STRING_LIST *b) {
-    return strcmp(a->data, b->data);
+int cmp(STRING_LIST *al, STRING_LIST *bl) {
+  char *a = al->data;
+  char *b = bl->data;
+
+  if (al->pos != bl->pos)
+    return al->pos - bl->pos;
+
+  while (*a && *b)
+    {
+      if (isdigit ((int) *a) && isdigit ((int) *b))
+	{
+	  int ia = atoi (a);
+	  int ib = atoi (b);
+	  if (ia != ib)
+	    return ia - ib;
+	  while (isdigit ((int) *a))
+	    a++;
+	  while (isdigit ((int) *b))
+	    b++;
+	}
+      else if (tolower (*a) != tolower (*b))
+	return tolower (*a) - tolower (*b);
+      a++;
+      b++;
+    }
+  if (*a)
+    return 1;
+  if (*b)
+    return -1;
+  return 0;
 }
 
 /*----------------------------------------------------------------*

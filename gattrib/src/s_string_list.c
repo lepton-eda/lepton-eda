@@ -310,10 +310,12 @@ gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
  *------------------------------------------------------------------*/
 void s_string_list_sort_master_comp_list() {
   int i = 0;
-  STRING_LIST *local_list;
+  STRING_LIST *local_list, *p;
 
   /* Here's where we do the sort.  The sort is done using a fcn found on the web. */
   local_list = sheet_head->master_comp_list_head;
+  for (p=local_list; p; p=p->next)
+    p->pos = 0;
   local_list = listsort(local_list, 0, 1);
 
   /* Do this after sorting is done.  This resets the order of the individual items
@@ -345,21 +347,49 @@ void s_string_list_sort_master_comp_list() {
  * Right now it does nothing other than fill in the "position"
  * and "length" variables.
  *------------------------------------------------------------------*/
+
+/* This list overrides the alphanumeric sort.  Attribs not found in
+   this list are sorted as if they had a value of DEFAULT_ATTRIB_POS
+   within this list, but alphanumerically relative to each other.  */
+static struct {
+  const char *attrib;
+  int pos;
+} certain_attribs[] = {
+  {"device", 1},
+  {"footprint", 2},
+  {"value", 3},
+  {"symversion", 200}
+};
+#define NUM_CERTAINS (sizeof(certain_attribs)/sizeof(certain_attribs[0]))
+#define DEFAULT_ATTRIB_POS 100
+
 void s_string_list_sort_master_comp_attrib_list() {
   int i = 0;
-  STRING_LIST *local_list;
+  STRING_LIST *local_list, *p;
 
   /* Here's where we do the sort */
+  local_list = sheet_head->master_comp_attrib_list_head;
 
   /*
    * Note that this sort is TBD -- it is more than just an alphabetic sort 'cause we want 
    * certain attribs to go first. 
    */
-  
+  for (p=local_list; p; p=p->next) {
+    int i;
+    p->pos = DEFAULT_ATTRIB_POS;
+    for (i=0; i<NUM_CERTAINS; i++)
+      if (strcmp (certain_attribs[i].attrib, p->data) == 0)
+	{
+	  p->pos = certain_attribs[i].pos;
+	  break;
+	}
+  }
+
+  local_list = listsort(local_list, 0, 1);
+  sheet_head->master_comp_attrib_list_head = local_list;
 
   /* Do this after sorting is done.  This resets the order of the individual items
    * in the list.  */
-  local_list = sheet_head->master_comp_attrib_list_head;
   while (local_list != NULL) {
     local_list->pos = i;
     i++;
@@ -423,10 +453,12 @@ void s_string_list_sort_master_net_attrib_list() {
  *------------------------------------------------------------------*/
 void s_string_list_sort_master_pin_list() {
   int i = 0;
-  STRING_LIST *local_list;
+  STRING_LIST *local_list, *p;
 
   /* Here's where we do the sort.  The sort is done using a fcn found on the web. */
   local_list = sheet_head->master_pin_list_head;
+  for (p=local_list; p; p=p->next)
+    p->pos = 0;
   local_list = listsort(local_list, 0, 1);
 
   /* Do this after sorting is done.  This resets the order of the individual items
