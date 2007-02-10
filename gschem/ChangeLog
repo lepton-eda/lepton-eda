@@ -7,6 +7,11 @@
 
 2007-02-10 Carlos Nieves Onega <cnieves@iespana.es>
 
+	* src/g_funcs.c: propagate f_print_file errors to scheme functions.
+
+	* src/x_print.c: Fixed compiler warning. Also added a popup message
+	  warning the user if the f_print_file function fails.
+
 	* scheme/auto-place-attribs.scm: Check if the list is empty before
 	  calling to stable-sort. It is an error for guile versions >= 1.8.
 	  Thanks to DJ for reporting this.

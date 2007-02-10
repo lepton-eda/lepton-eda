@@ -388,7 +388,7 @@ print_dialog_init (PrintDialog * dialog)
 		    GTK_WIDGET (dialog->fnfield),
 		    1, 2, 0, 1, GTK_EXPAND | GTK_FILL, 0, 0, 0);
 
-  dialog->saveasbutton = gtk_button_new();
+  dialog->saveasbutton = (GtkButton *) gtk_button_new();
   gtk_container_add(GTK_CONTAINER(dialog->saveasbutton),
 		    gtk_image_new_from_stock(GTK_STOCK_OPEN,
 					     GTK_ICON_SIZE_SMALL_TOOLBAR));
@@ -677,7 +677,8 @@ x_print_setup (TOPLEVEL * w_current, char *filename)
   gint paperidx, x, y, result;
   gchar *string, *destination;
   gboolean usefile = FALSE;
-     
+  GtkWidget *popup_message;
+
   /* Work out current paper size by iterating through available paper
    * sizes.  Set the default paper size as the active selection */
 
@@ -770,6 +771,17 @@ x_print_setup (TOPLEVEL * w_current, char *filename)
 	{
 	  s_log_message (_("Cannot print current schematic to [%s]\n"), 
 			 destination);
+
+	  /* Pop up a message warning the user */
+	  popup_message = 
+	    gtk_message_dialog_new (GTK_WINDOW(dialog),
+				    GTK_DIALOG_DESTROY_WITH_PARENT,
+				    GTK_MESSAGE_ERROR,
+				    GTK_BUTTONS_CLOSE,
+				    _("Error printing to file '%s'\n"
+				      "Check the log window for more information"),
+				    destination);
+	  gtk_dialog_run (GTK_DIALOG (popup_message));	  
 	}
       else
 	{

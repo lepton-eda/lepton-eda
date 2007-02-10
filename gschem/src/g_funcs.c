@@ -52,9 +52,11 @@ SCM g_funcs_print(SCM filename)
               SCM_ARG1, "gschem-print");
 
   if (output_filename) {
-    f_print_file (global_window_current, output_filename);
+    if (f_print_file (global_window_current, output_filename))
+      return SCM_BOOL_F;
   } else  {
-    f_print_file (global_window_current, SCM_STRING_CHARS (filename));
+    if (f_print_file (global_window_current, SCM_STRING_CHARS (filename)))
+      return SCM_BOOL_F;
   }
   
   return SCM_BOOL_T;
@@ -71,9 +73,11 @@ SCM g_funcs_postscript(SCM filename)
               SCM_ARG1, "gschem-postscript");
 
   if (output_filename) {
-    f_print_file (global_window_current, output_filename);
+    if (f_print_file (global_window_current, output_filename))
+      return SCM_BOOL_F;
   } else  {
-    f_print_file (global_window_current, SCM_STRING_CHARS (filename));
+    if (f_print_file (global_window_current, SCM_STRING_CHARS (filename)))
+      return SCM_BOOL_F;
   }
   
   return SCM_BOOL_T;
