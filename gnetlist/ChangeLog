@@ -16,6 +16,10 @@
 
 2007-02-10 Carlos Nieves Onega <cnieves@iespana.es>
 
+	* tests/Makefile.am, tests/drc2/Makefile.am, 
+	  tests/hierarchy/Makefile.am:
+	  When running "make check", run "make tests" too.
+
         * tests/drc2/Makefile.am:
 	  Added a pass/failed line after each test.
 

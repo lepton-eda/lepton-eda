@@ -34,6 +34,8 @@ EXTRA_DIST = duplicated-refdes.sch duplicated-refdes.drc2 \
 	     unused-slot.sch \
 	     unused-slot.drc2
 
+check_SCRIPTS = tests
+
 tests:
 # cleanup
 	rm -f new_*
