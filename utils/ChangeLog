@@ -17,6 +17,9 @@
 	Thanks!  Fixed some of the headers to be correct (copyright
 	in particular).
 
+	* man/grenum.1:  Updated the man page a little for bug: 
+	[ 1556064 ] man page version out of date
+
 2007-02-08 19:24  Dan McMahill <danmc>
 
 	* configure.ac, examples/gsch2pcb/Makefile.am,

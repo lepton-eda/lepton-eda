@@ -215,7 +215,7 @@ x_compselect_close (TOPLEVEL *toplevel)
 
 enum {
   PROP_FILENAME=1,
-  PROP_BEHAVIOR,
+  PROP_BEHAVIOR
 };
 
 static GObjectClass *compselect_parent_class = NULL;

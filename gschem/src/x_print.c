@@ -388,7 +388,7 @@ print_dialog_init (PrintDialog * dialog)
 		    GTK_WIDGET (dialog->fnfield),
 		    1, 2, 0, 1, GTK_EXPAND | GTK_FILL, 0, 0, 0);
 
-  dialog->saveasbutton = (GtkButton *) gtk_button_new();
+  dialog->saveasbutton = GTK_BUTTON(gtk_button_new());
   gtk_container_add(GTK_CONTAINER(dialog->saveasbutton),
 		    gtk_image_new_from_stock(GTK_STOCK_OPEN,
 					     GTK_ICON_SIZE_SMALL_TOOLBAR));
@@ -677,6 +677,7 @@ x_print_setup (TOPLEVEL * w_current, char *filename)
   gint paperidx, x, y, result;
   gchar *string, *destination;
   gboolean usefile = FALSE;
+  GtkDialog *dialog; 
   GtkWidget *popup_message;
 
   /* Work out current paper size by iterating through available paper
@@ -707,7 +708,7 @@ x_print_setup (TOPLEVEL * w_current, char *filename)
  
   /* Create a print dialog, find out whether the user clicks Print or
      Cancel, and then print or return accordingly */
-  GtkDialog *dialog = GTK_DIALOG (g_object_new (TYPE_PRINT_DIALOG,
+  dialog = GTK_DIALOG (g_object_new (TYPE_PRINT_DIALOG,
 						"command", command,
 						"filename", filename,
 						"papersize", paperidx,

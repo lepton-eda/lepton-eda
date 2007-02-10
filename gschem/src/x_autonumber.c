@@ -680,7 +680,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   /* Step1: get all pages of the hierarchy */
   pages = s_hierarchy_traversepages(w_current, HIERARCHY_NODUPS);
 
-  //  g_list_foreach(pages, (GFunc) s_hierarchy_print_page, NULL);
+  /*  g_list_foreach(pages, (GFunc) s_hierarchy_print_page, NULL); */
 
   /* Step2: if searchtext has an asterisk at the end we have to find
      all matching searchtextes. 
@@ -728,8 +728,8 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 	      if (g_list_find_custom(searchtext_list, new_searchtext,
 				     (GCompareFunc) strcmp) == NULL ) {
 		searchtext_list = g_list_append(searchtext_list, new_searchtext);
-		//printf("autonumber_text: text \"%s\", \"%s\"\n", 
-		//       o_current->text->string, new_searchtext);
+		/*printf("autonumber_text: text \"%s\", \"%s\"\n",  */
+		/*       o_current->text->string, new_searchtext);  */
 	      }
 	      else {
 		g_free(new_searchtext);
@@ -751,7 +751,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   /* Step3: iterate over the search items in the list */
   for (text_item=searchtext_list; text_item !=NULL; text_item=g_list_next(text_item)) {
     autotext->current_searchtext = text_item->data;
-    // printf("autonumber_text_autonumber: searchtext %s\n", autotext->current_searchtext);
+    /* printf("autonumber_text_autonumber: searchtext %s\n", autotext->current_searchtext); */
     /* decide whether to renumber page by page or get a global used-list */
     if (autotext->scope_skip == SCOPE_HIERARCHY) {  /* whole hierarchy database */
       /* renumbering all means that no db is required */

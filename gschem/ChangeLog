@@ -5,6 +5,15 @@
 	output postscript font under user control.  This is controlled via
 	the postscript-font-scale rc keyword.
 
+	* include/x_compselect.h, include/x_pagesel.h, src/o_bus.c,
+	src/o_grips.c, src/o_net.c, src/x_autonumber.c, src/x_compselect.c,
+	src/x_dialog.c, src/x_image.c, src/x_menus.c, src/x_preview.c,
+	src/x_print.c: Fixed a whole bunch of compiler warnings and work on
+	[ 1620806 ] various probably bugs and comments about them
+
+	* docs/gschem.1: Updated the man page a little for bug:
+	[ 1556064 ] man page version out of date
+
 2007-02-10 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/g_funcs.c: propagate f_print_file errors to scheme functions.

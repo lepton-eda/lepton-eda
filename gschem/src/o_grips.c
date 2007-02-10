@@ -1243,7 +1243,7 @@ void o_grips_end(TOPLEVEL *w_current)
           gdk_gc_set_line_attributes(w_current->gc, size, 
                                      GDK_LINE_SOLID,
                                      GDK_CAP_BUTT,
-                                     GDK_CAP_NOT_LAST);
+                                     GDK_JOIN_MITER);
         }
       
       gdk_gc_set_foreground(w_current->gc,

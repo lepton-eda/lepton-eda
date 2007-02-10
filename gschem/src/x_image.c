@@ -576,8 +576,6 @@ GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
   int origin_x, origin_y, bottom, right;
   int size_x, size_y, s_right, s_left, s_top,s_bottom;
   TOPLEVEL toplevel;
-  OBJECT *aux;
-  char object_found = 0;
 
   /* Do a copy of the toplevel struct and work with it */
   memcpy(&toplevel, w_current, sizeof(TOPLEVEL));

@@ -67,7 +67,7 @@ void o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
     gdk_gc_set_line_attributes(w_current->gc, size, GDK_LINE_SOLID,
                                GDK_CAP_BUTT,
-                               GDK_CAP_NOT_LAST);
+                               GDK_JOIN_MITER);
   }
 
   if (w_current->override_color != -1 ) {

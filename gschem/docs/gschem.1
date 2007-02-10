@@ -1,9 +1,9 @@
-.TH gschem 1 "December 31st, 2003" Version 20031231
+.TH gschem 1 "February 16th, 2007" Version 20070210
 .SH NAME
 gschem - gEDA/gaf Schematic Capture
 .SH SYNOPSIS
 .B gschem
-[-q] [-v] [-t] [-r rcfilename] [-s scriptfilename] [-o outputfilename] [-p] [schematic1 ... schematicN]
+[-q] [-v] [-t] [-r rcfilename] [-s scriptfilename] [-o outputfilename] [-p] [-h] [schematic1 ... schematicN]
 .SH DESCRIPTION
 .PP
 \fIgschem\fP is the schematic capture program which is part gEDA 
@@ -59,6 +59,9 @@ the print dialog box.
 Automatically place the window, especially useful if running gschem from the
 command line and generating output.
 .TP 8
+.B -h 
+Print out short command line help.
+.TP 8
 .B schematic1 [... schematicN]
 Schematic file to be loaded.  Specifing a schematic file is optional.  If
 multiple schematic files are specified they are read in sequentially and 
@@ -93,7 +96,7 @@ Ales Hvezda and many others
 .BR gsymcheck (1)
 .SH COPYRIGHT
 .nf
-Copyright \(co  1999-2004 Ales Hvezda
+Copyright \(co  1999-2007 Ales Hvezda
 
 This document can be freely redistributed according to the terms of the 
 GNU General Public License version 2.0

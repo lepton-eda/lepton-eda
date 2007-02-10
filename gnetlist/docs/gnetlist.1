@@ -1,9 +1,9 @@
-.TH gnetlist 1 "December 31st, 2003" Version 20031231
+.TH gnetlist 1 "February 16th, 2007" Version 20070210
 .SH NAME
 gnetlist - gEDA/gaf Netlist extraction/generation
 .SH SYNOPSIS
 .B gnetlist
-[-i] [-I] [-q] [-s] [-v] [-l schem_file] [-m schem_file ] [-g guile_procedure] [-c scheme_string ] [-o output_filename] schematic1 [... schematicN]
+[-e] [-i] [-I] [-q] [-s] [-v] [-l schem_file] [-m schem_file ] [ -O option ] [-h | --help] [-g guile_procedure] [-c scheme_string ] [-o output_filename] schematic1 [... schematicN]
 .SH DESCRIPTION
 .PP
 \fIgnetlist\fP is the netlist extraction/generation program which is part gEDA 
@@ -104,6 +104,12 @@ execute before any backend is loaded or any guile procedure (using -g flag)
 is executed.  This flag can be specified multiple times and can be used to 
 pass information to backends.
 .TP 8
+.B -e 
+Force embedding contents of .include file when using the spice-sdb backend.
+.TP 8
+.B -O string
+Pass the given option to the specified backend
+.TP 8
 .B -m scheme_file
 Specify a filename which contains scheme code to be loaded and
 execute after the backend is loaded but still before any guile procedure 
@@ -120,6 +126,9 @@ loaded or executed.
 .TP 8
 .B -I 
 Put .INCLUDE <filename> in output file instead of model file's contents.
+.TP 8
+.B -h 
+Print out short command line help.
 .TP 8
 .B -i 
 Interactive mode.  After the schematic is read in and parsed then go into 
@@ -190,7 +199,7 @@ Ales Hvezda and many others
 .BR gschem (1),
 .BR gsymcheck (1)
 .SH COPYRIGHT
-Copyright \(co  1999-2004 Ales Hvezda
+Copyright \(co  1999-2007 Ales Hvezda
 
 This document can be freely redistributed according to the terms of the 
 GNU General Public License version 2.0

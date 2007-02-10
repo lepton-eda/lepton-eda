@@ -46,7 +46,7 @@ extern int mouse_x, mouse_y;
 
 enum {
   PROP_FILENAME=1,
-  PROP_ACTIVE,
+  PROP_ACTIVE
 };
 
 static GObjectClass *preview_parent_class = NULL;

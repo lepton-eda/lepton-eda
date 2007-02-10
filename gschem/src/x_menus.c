@@ -102,7 +102,6 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
   char *menu_item_hotkey_func;
   char *menu_item_keys;
   char *spaces;
-  const char *help_string;
   int i, j;
   int name_len, key_len, pad;
   int sum, diff, max_size, space_size;

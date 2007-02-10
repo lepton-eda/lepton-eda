@@ -3339,7 +3339,7 @@ struct _CloseConfirmationDialogClass
 enum {
   PROP_UNSAVED_PAGE=1,
   PROP_UNSAVED_PAGES,
-  PROP_SELECTED_PAGES,
+  PROP_SELECTED_PAGES
 };
 
 enum {

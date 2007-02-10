@@ -16,6 +16,12 @@
 
 	* src/globals.c: Removed quit_func since it is completely unused.
 
+	* docs/gnetlist.1: Updated the man page a little for bug:
+	[ 1556064 ] man page version out of date
+
+	* tests/*.spice-sdb: Updated golden files to be current due to 
+	version number update.
+
 2007-02-10 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* tests/Makefile.am, tests/drc2/Makefile.am, 

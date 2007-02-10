@@ -1582,25 +1582,25 @@ o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
     color = image_black;
   }
 
-  // libgd angles are in opposite sense to gschem's internal angles
-  // Also, gschem's "end_angle" is actually the sweep of the arc, not absolute angle
+  /* libgd angles are in opposite sense to gschem's internal angles */
+  /* Also, gschem's "end_angle" is actually the sweep of the arc, not absolute angle */
 
-  // Intialise {start|end}_angle to the start of gschem's sweep
+  /* Intialise {start|end}_angle to the start of gschem's sweep */
   start_angle = -o_current->arc->start_angle;
   end_angle   = -o_current->arc->start_angle;
 
-  // libgd always sweeps arcs clockwise so we either update
-  // the start_angle, or end_angle as appropriate
+  /* libgd always sweeps arcs clockwise so we either update */
+  /* the start_angle, or end_angle as appropriate */
   if ( o_current->arc->end_angle > 0 )
     start_angle -= o_current->arc->end_angle;
   else
     end_angle -= o_current->arc->end_angle;
 
-  // Ensure each angle is within 0-359. Negative angles make libgd blow up.
+  /* Ensure each angle is within 0-359. Negative angles make libgd blow up. */
   start_angle = ( start_angle < 0 ) ? 360 - ( (-start_angle) % 360 ) : start_angle % 360;
   end_angle =   ( end_angle   < 0 ) ? 360 - ( (-end_angle  ) % 360 ) : end_angle   % 360;
 
-  // libgd docs state that end angle should always be larger than start_angle
+  /* libgd docs state that end angle should always be larger than start_angle */
   if (end_angle < start_angle)
     end_angle += 360;
 

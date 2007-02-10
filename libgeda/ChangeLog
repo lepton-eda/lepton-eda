@@ -2,6 +2,10 @@
 
 	* include/funcs.h: Removed quit_func since it is completely unused.
 
+	* include/prototype.h, src/f_basic.c, src/o_arc_basic.c: Fixed
+	a whole bunch of compiler warnings and work on [ 1620806 ]
+	various probably bugs and comments about them
+
 2007-02-10 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/f_print.c: Make f_print_header return an error return value

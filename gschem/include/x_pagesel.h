@@ -21,7 +21,7 @@
 
 typedef enum {
   PAGESEL_RESPONSE_CLOSE  = 1,
-  PAGESEL_RESPONSE_UPDATE = 2,
+  PAGESEL_RESPONSE_UPDATE = 2
 } PageselResponseType;
 
 
