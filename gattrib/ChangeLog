@@ -9,6 +9,8 @@
 	compiler warnings.  Removed quit_func since it is completely
 	unused.
 
+	* configure.ac: Bumped package version to 20070216.
+
 2006-12-23 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/s_object.c (s_object_attrib_add_attrib_in_object):
