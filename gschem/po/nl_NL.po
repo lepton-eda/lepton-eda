@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-schem-CVS-2002-06-12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-24 21:25+0100\n"
+"POT-Creation-Date: 2007-02-10 17:06-0500\n"
 "PO-Revision-Date: 2002-09-06 20:11+CEST\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev@seul.org \n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/rcstrings.c:2 src/x_print.c:376
+#: src/rcstrings.c:2
 #, fuzzy
 msgid "File"
 msgstr "Bestand"
@@ -57,7 +57,7 @@ msgstr "Opslaan Pagina Als..."
 msgid "Save All"
 msgstr "Alles Opslaan"
 
-#: src/rcstrings.c:11 src/x_print.c:304
+#: src/rcstrings.c:11 src/x_print.c:305
 msgid "Print..."
 msgstr "Afdrukken..."
 
@@ -66,7 +66,7 @@ msgstr "Afdrukken..."
 msgid "Write PNG..."
 msgstr "Schrijf PNG..."
 
-#: src/rcstrings.c:13
+#: src/rcstrings.c:13 src/x_script.c:49
 msgid "Execute Script..."
 msgstr "Uitvoeren Script..."
 
@@ -118,7 +118,7 @@ msgstr "Kopieer Mode"
 msgid "Move Mode"
 msgstr "Verplaats Mode"
 
-#: src/rcstrings.c:26 src/i_callbacks.c:777 src/x_multiattrib.c:1188
+#: src/rcstrings.c:26 src/i_callbacks.c:777 src/x_multiattrib.c:1192
 msgid "Delete"
 msgstr "Verwijder"
 
@@ -142,11 +142,11 @@ msgstr "Slot..."
 msgid "Color..."
 msgstr "Kleur..."
 
-#: src/rcstrings.c:31 src/i_callbacks.c:962
+#: src/rcstrings.c:31 src/i_callbacks.c:964
 msgid "Lock"
 msgstr "Vergrendel"
 
-#: src/rcstrings.c:32 src/i_callbacks.c:980
+#: src/rcstrings.c:32 src/i_callbacks.c:982
 msgid "Unlock"
 msgstr "Ontgrendel"
 
@@ -277,7 +277,7 @@ msgstr "Toon"
 msgid "Redraw"
 msgstr "Overtekenen"
 
-#: src/rcstrings.c:61 src/i_callbacks.c:1509 src/i_callbacks.c:1578
+#: src/rcstrings.c:61 src/i_callbacks.c:1516 src/i_callbacks.c:1585
 msgid "Pan"
 msgstr "Schuif"
 
@@ -351,11 +351,11 @@ msgstr "Toevoegen"
 msgid "Component..."
 msgstr "Component..."
 
-#: src/rcstrings.c:79 src/i_callbacks.c:2358 src/i_callbacks.c:2381
+#: src/rcstrings.c:79 src/i_callbacks.c:2375 src/i_callbacks.c:2398
 msgid "Net"
 msgstr "Draad"
 
-#: src/rcstrings.c:80 src/i_callbacks.c:2426 src/i_callbacks.c:2450
+#: src/rcstrings.c:80 src/i_callbacks.c:2443 src/i_callbacks.c:2467
 #: src/x_window.c:576
 msgid "Bus"
 msgstr "Bus"
@@ -370,23 +370,23 @@ msgstr "Attribuut..."
 msgid "Text..."
 msgstr "Tekst..."
 
-#: src/rcstrings.c:83 src/i_callbacks.c:2532 src/i_callbacks.c:2552
+#: src/rcstrings.c:83 src/i_callbacks.c:2549 src/i_callbacks.c:2569
 msgid "Line"
 msgstr "Lijn"
 
-#: src/rcstrings.c:84 src/i_callbacks.c:2575 src/i_callbacks.c:2595
+#: src/rcstrings.c:84 src/i_callbacks.c:2592 src/i_callbacks.c:2612
 msgid "Box"
 msgstr "Rechthoek"
 
-#: src/rcstrings.c:85 src/i_callbacks.c:2652 src/i_callbacks.c:2673
+#: src/rcstrings.c:85 src/i_callbacks.c:2669 src/i_callbacks.c:2690
 msgid "Circle"
 msgstr "Cirkel"
 
-#: src/rcstrings.c:86 src/i_callbacks.c:2696 src/i_callbacks.c:2716
+#: src/rcstrings.c:86 src/i_callbacks.c:2713 src/i_callbacks.c:2733
 msgid "Arc"
 msgstr "Boog"
 
-#: src/rcstrings.c:87 src/i_callbacks.c:2739 src/i_callbacks.c:2759
+#: src/rcstrings.c:87 src/i_callbacks.c:2756 src/i_callbacks.c:2776
 msgid "Pin"
 msgstr "Pin"
 
@@ -416,16 +416,16 @@ msgstr "Omhoog"
 msgid "Documentation"
 msgstr "Documentatie"
 
-#: src/rcstrings.c:96 src/x_multiattrib.c:1327
+#: src/rcstrings.c:96 src/x_multiattrib.c:1331
 #, fuzzy
 msgid "Attributes"
 msgstr "Attributen"
 
-#: src/rcstrings.c:97 src/i_callbacks.c:3072
+#: src/rcstrings.c:97 src/i_callbacks.c:3089
 msgid "Attach"
 msgstr "Vastmaken"
 
-#: src/rcstrings.c:98 src/i_callbacks.c:3121
+#: src/rcstrings.c:98 src/i_callbacks.c:3138
 msgid "Detach"
 msgstr "Losmaken"
 
@@ -502,11 +502,11 @@ msgstr "Toon Logboek venster..."
 msgid "Show Coord Window..."
 msgstr "Toon Coordinaten venster..."
 
-#: src/rcstrings.c:118 src/x_menus.c:223
+#: src/rcstrings.c:118
 msgid "Help"
 msgstr "Help"
 
-#: src/rcstrings.c:119 src/x_dialog.c:2362
+#: src/rcstrings.c:119 src/x_dialog.c:1925
 msgid "About..."
 msgstr "Omtrent..."
 
@@ -514,7 +514,7 @@ msgstr "Omtrent..."
 msgid "Manual..."
 msgstr "Handleiding..."
 
-#: src/rcstrings.c:121 src/x_dialog.c:2995
+#: src/rcstrings.c:121
 msgid "Hotkeys..."
 msgstr "Snel-toets..."
 
@@ -522,7 +522,7 @@ msgstr "Snel-toets..."
 msgid "Zoom too small!  Cannot zoom further.\n"
 msgstr "Vergroting te klein! Kan niet verder vergroten.\n"
 
-#: src/g_funcs.c:268
+#: src/g_funcs.c:272
 #, c-format
 msgid "Ack! something got fouled up with the keymappings!\n"
 msgstr "Jakkie! iets heeft een zooitje van de keymappings gemaakt!\n"
@@ -559,32 +559,37 @@ msgstr "Ongeldige kleur [%s] overgedragen aan %s\n"
 msgid "Invalid mode [%s] passed to %s\n"
 msgstr "Ongeldige mode [%s] overgedragen aan %s\n"
 
-#: src/g_rc.c:519
+#: src/g_rc.c:536
 #, c-format
 msgid "Invalid zoomfactor [%d] passed to %s\n"
 msgstr "Ongeldige vergrotingsfactor [%d] overgedragen aan %s\n"
 
-#: src/g_rc.c:557
+#: src/g_rc.c:574
 #, c-format
 msgid "Invalid mode [%s] passed to scrollbar-update\n"
 msgstr "Ongeldige mode [%s] overgedragen aan scrollbar-update\n"
 
-#: src/g_rc.c:638
+#: src/g_rc.c:655
 #, c-format
 msgid "Invalid size [%d] passed to text-size\n"
 msgstr "Ongeldige waarde [%d] overgedragen aan text-size\n"
 
-#: src/g_rc.c:681
+#: src/g_rc.c:682
+#, fuzzy, c-format
+msgid "Invalid size [%f] passed to postscript-font-scale\n"
+msgstr "Ongeldige waarde [%d] overgedragen aan text-size\n"
+
+#: src/g_rc.c:725
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "Ongeldige waarde [%d] overgedragen aan snap-size\n"
 
-#: src/g_rc.c:755 src/g_rc.c:758
+#: src/g_rc.c:799 src/g_rc.c:802
 #, c-format
 msgid "Duplicate stroke definition passed to stroke! [%s]\n"
 msgstr "Duplikaat stroke definitie overgedragen aan stroke! [%s]\n"
 
-#: src/g_rc.c:769
+#: src/g_rc.c:813
 #, c-format
 msgid ""
 "A stroke keyword has been found in an rc file, but gschem\n"
@@ -595,43 +600,43 @@ msgstr ""
 "maar gschem is gecompileerd om stroke te ondersteunen,\n"
 "kompileer gschem opnieuw met LibStroke\n"
 
-#: src/g_rc.c:1231
+#: src/g_rc.c:1275
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "Ongeldige num niveaus [%d] overgedragen naar undo-levels\n"
 
-#: src/g_rc.c:1456
+#: src/g_rc.c:1500
 #, fuzzy, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Ongeldige waarde [%d] overgedragen aan bus-ripper-size\n"
 
-#: src/g_rc.c:1531
+#: src/g_rc.c:1575
 #, fuzzy, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
 msgstr "Ongeldige waarde [%d] overgedragen aan grid-dot-size\n"
 
-#: src/g_rc.c:1572
+#: src/g_rc.c:1616
 #, fuzzy, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
 msgstr "Ongeldige waarde [%d] overgedragen aan grid-dot-size\n"
 
-#: src/g_rc.c:1616
+#: src/g_rc.c:1660
 #, fuzzy, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "Ongeldige waarde [%d] overgedragen aan text-size\n"
 
-#: src/g_rc.c:1640
+#: src/g_rc.c:1684
 #, fuzzy, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr ""
 "Ongeldig aantal regels [%d] overgedragen naar output-vector-threshold.\n"
 
-#: src/g_rc.c:1681
+#: src/g_rc.c:1725
 #, fuzzy, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr "Ongeldige waarde [%d] overgedragen aan snap-size\n"
 
-#: src/g_rc.c:1704
+#: src/g_rc.c:1748
 #, fuzzy, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr "Ongeldige waarde [%d] overgedragen aan snap-size\n"
@@ -702,7 +707,7 @@ msgstr "Bezig met laden van schema [%s]\n"
 msgid "Scheme directory NOT set!\n"
 msgstr "Scheme map is NIET ingesteld!\n"
 
-#: src/gschem.c:366 src/x_script.c:57
+#: src/gschem.c:366 src/x_script.c:62
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "Bezig met uitvoeren van guile script [%s]\n"
@@ -807,6 +812,15 @@ msgstr "geen"
 msgid "Repeat/"
 msgstr "Herhaal/"
 
+#: src/i_basic.c:738 src/i_basic.c:743
+msgid "OFF"
+msgstr ""
+
+#: src/i_basic.c:747
+#, c-format
+msgid "Grid(%s, %s)"
+msgstr ""
+
 #: src/i_callbacks.c:131
 #, c-format
 msgid "Documentation for [%s,%s,%s,%s]\n"
@@ -826,7 +840,7 @@ msgstr "Kan %s niet aanroepen\n"
 msgid "Documentation commands not supported under MinGW.\n"
 msgstr "Documentatie opdrachten niet ondersteund bij MinGW.\n"
 
-#: src/i_callbacks.c:190 src/i_callbacks.c:1723
+#: src/i_callbacks.c:190 src/i_callbacks.c:1730
 #, fuzzy, c-format
 msgid "New page created [%s]\n"
 msgstr "Nieuwe pagina gemaakt [%s]\n"
@@ -860,7 +874,7 @@ msgstr "Sluit Venster\n"
 msgid "Select objs first"
 msgstr "Selecteer voorwerpen eerst"
 
-#: src/i_callbacks.c:817 src/x_dialog.c:575 src/x_dialog.c:580
+#: src/i_callbacks.c:817
 msgid "Edit Text"
 msgstr "Bewerk Tekst"
 
@@ -873,31 +887,31 @@ msgstr "Slot"
 msgid "Color"
 msgstr "Kleur"
 
-#: src/i_callbacks.c:875 src/i_callbacks.c:895
+#: src/i_callbacks.c:875 src/i_callbacks.c:896
 msgid "Rotate"
 msgstr "Roteer"
 
-#: src/i_callbacks.c:918 src/i_callbacks.c:938
+#: src/i_callbacks.c:919 src/i_callbacks.c:940
 msgid "Mirror"
 msgstr "Spiegel"
 
-#: src/i_callbacks.c:998 src/x_dialog.c:1796
+#: src/i_callbacks.c:1000 src/x_dialog.c:1556
 msgid "Translate"
 msgstr "Verplaats"
 
-#: src/i_callbacks.c:1001
+#: src/i_callbacks.c:1003
 msgid "WARNING: Do not translate with snap off!\n"
 msgstr "ATTENTIE: Niet verplaatsen met snap uit!\n"
 
-#: src/i_callbacks.c:1002
+#: src/i_callbacks.c:1004
 msgid "WARNING: Turning snap on and continuing with translate.\n"
 msgstr "ATTENTIE: Zet snap aan en vervolg de verplaatsing.\n"
 
-#: src/i_callbacks.c:1009
+#: src/i_callbacks.c:1011
 msgid "WARNING: Snap grid size is not equal to 100!\n"
 msgstr "ATTENTIE: Snap grid waarde is niet gelijk aan 100!\n"
 
-#: src/i_callbacks.c:1011
+#: src/i_callbacks.c:1013
 msgid ""
 "WARNING: If you are translating a symbol to the origin, the snap grid size "
 "should be set to 100\n"
@@ -905,182 +919,182 @@ msgstr ""
 "ATTENTIE: Als je een symbool naar de oorsprong verschuift, dan moet de snap "
 "grip waarde op 100 gezet worden\n"
 
-#: src/i_callbacks.c:1031
+#: src/i_callbacks.c:1034
 msgid "Embed"
 msgstr "Insluiten"
 
-#: src/i_callbacks.c:1067
+#: src/i_callbacks.c:1072
 msgid "Unembed"
 msgstr "Uitsluiten"
 
-#: src/i_callbacks.c:1103
+#: src/i_callbacks.c:1110
 #, fuzzy
 msgid "Update"
 msgstr "Vernieuw"
 
-#: src/i_callbacks.c:1145
+#: src/i_callbacks.c:1152
 msgid "ShowHidden"
 msgstr "ZichtbaarVerborgen"
 
-#: src/i_callbacks.c:1168
+#: src/i_callbacks.c:1175
 msgid "MakeVisible"
 msgstr "MaakZichtbaar"
 
-#: src/i_callbacks.c:1284
+#: src/i_callbacks.c:1291
 msgid "Edit Line Type"
 msgstr "Bewerk Lijn Type"
 
-#: src/i_callbacks.c:1325 src/x_dialog.c:1370
+#: src/i_callbacks.c:1332 src/x_dialog.c:1231
 msgid "Edit Fill Type"
 msgstr "Bewerk Arcering Type"
 
-#: src/i_callbacks.c:1612
+#: src/i_callbacks.c:1619
 msgid "Update Cues"
 msgstr "Vernieuw aanwijzing"
 
-#: src/i_callbacks.c:1768
+#: src/i_callbacks.c:1775
 #, fuzzy
 msgid "Really revert page?"
 msgstr "Terughalen pagina"
 
-#: src/i_callbacks.c:1860
+#: src/i_callbacks.c:1867
 msgid "Copy 1"
 msgstr "Kopieer 1"
 
-#: src/i_callbacks.c:1878
+#: src/i_callbacks.c:1886
 msgid "Copy 2"
 msgstr "Kopieer 2"
 
-#: src/i_callbacks.c:1896
+#: src/i_callbacks.c:1905
 msgid "Copy 3"
 msgstr "Kopieer 3"
 
-#: src/i_callbacks.c:1914
+#: src/i_callbacks.c:1924
 msgid "Copy 4"
 msgstr "Kopieer 4"
 
-#: src/i_callbacks.c:1932
+#: src/i_callbacks.c:1943
 msgid "Copy 5"
 msgstr "Kopieer 5"
 
-#: src/i_callbacks.c:1950
+#: src/i_callbacks.c:1962
 msgid "Cut 1"
 msgstr "Knip 1"
 
-#: src/i_callbacks.c:1968
+#: src/i_callbacks.c:1981
 msgid "Cut 2"
 msgstr "Knip 2"
 
-#: src/i_callbacks.c:1986
+#: src/i_callbacks.c:2000
 msgid "Cut 3"
 msgstr "Knip 3"
 
-#: src/i_callbacks.c:2004
+#: src/i_callbacks.c:2019
 msgid "Cut 4"
 msgstr "Knip 4"
 
-#: src/i_callbacks.c:2022
+#: src/i_callbacks.c:2038
 msgid "Cut 5"
 msgstr "Knip 5"
 
-#: src/i_callbacks.c:2037
+#: src/i_callbacks.c:2054
 msgid "Paste 1"
 msgstr "Plak 1"
 
-#: src/i_callbacks.c:2046 src/i_callbacks.c:2070 src/i_callbacks.c:2094
-#: src/i_callbacks.c:2118 src/i_callbacks.c:2142
+#: src/i_callbacks.c:2063 src/i_callbacks.c:2087 src/i_callbacks.c:2111
+#: src/i_callbacks.c:2135 src/i_callbacks.c:2159
 msgid "Empty buffer"
 msgstr "Maak buffer leeg"
 
-#: src/i_callbacks.c:2061
+#: src/i_callbacks.c:2078
 msgid "Paste 2"
 msgstr "Plak 2"
 
-#: src/i_callbacks.c:2085
+#: src/i_callbacks.c:2102
 msgid "Paste 3"
 msgstr "Plak 3"
 
-#: src/i_callbacks.c:2109
+#: src/i_callbacks.c:2126
 msgid "Paste 4"
 msgstr "Plak 4"
 
-#: src/i_callbacks.c:2133
+#: src/i_callbacks.c:2150
 msgid "Paste 5"
 msgstr "Plak 5"
 
-#: src/i_callbacks.c:2279 src/x_window.c:556
+#: src/i_callbacks.c:2296 src/x_window.c:556
 msgid "Component"
 msgstr "Component"
 
-#: src/i_callbacks.c:2316 src/i_callbacks.c:2336
+#: src/i_callbacks.c:2333 src/i_callbacks.c:2353
 msgid "Attribute"
 msgstr "Attribuut"
 
-#: src/i_callbacks.c:2825
+#: src/i_callbacks.c:2842
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "Zoek naar bron [%s]\n"
 
-#: src/i_callbacks.c:2858 src/i_callbacks.c:2861
+#: src/i_callbacks.c:2875 src/i_callbacks.c:2878
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "Kan bron [%s] niet vinden\n"
 
-#: src/i_callbacks.c:2958
+#: src/i_callbacks.c:2975
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Zoek naar symbool [%s]\n"
 
-#: src/i_callbacks.c:3161
+#: src/i_callbacks.c:3178
 msgid "ShowN"
 msgstr "ToonN"
 
-#: src/i_callbacks.c:3192
+#: src/i_callbacks.c:3209
 msgid "ShowV"
 msgstr "ToonV"
 
-#: src/i_callbacks.c:3223
+#: src/i_callbacks.c:3240
 msgid "ShowB"
 msgstr "ToonB"
 
-#: src/i_callbacks.c:3255
+#: src/i_callbacks.c:3272
 msgid "VisToggle"
 msgstr "SchakelZichtbaarheid"
 
-#: src/i_callbacks.c:3277
+#: src/i_callbacks.c:3294
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Sorry, maar dit is een niet werkende menu optie\n"
 
-#: src/i_callbacks.c:3327
+#: src/i_callbacks.c:3344
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr "Aktie terugkoppel mode is ingesteld op OUTLINE\n"
 
-#: src/i_callbacks.c:3330
+#: src/i_callbacks.c:3347
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr "Aktie terugkoppel mode is ingesteld op BOUNDINGBOX.\n"
 
-#: src/i_callbacks.c:3347
+#: src/i_callbacks.c:3364
 msgid "Grid OFF\n"
 msgstr "Grid UIT\n"
 
-#: src/i_callbacks.c:3350
+#: src/i_callbacks.c:3367
 msgid "Grid ON\n"
 msgstr "Grid AAN\n"
 
-#: src/i_callbacks.c:3367
+#: src/i_callbacks.c:3384
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "Snap UIT (PAS OP!)\n"
 
-#: src/i_callbacks.c:3370
+#: src/i_callbacks.c:3387
 msgid "Snap ON\n"
 msgstr "Snap AAN\n"
 
-#: src/i_callbacks.c:3390
+#: src/i_callbacks.c:3407
 msgid "Rubber band OFF \n"
 msgstr "Elastiek band UIT\n"
 
-#: src/i_callbacks.c:3393
+#: src/i_callbacks.c:3410
 msgid "Rubber band ON\n"
 msgstr "Elastiek band AAN\n"
 
@@ -1169,35 +1183,30 @@ msgstr "Onbekend type voor cirkel!\n"
 msgid "Unknown type for circle (fill)!\n"
 msgstr "Onbekend type voor cirkel (arcering)!\n"
 
-#: src/o_complex.c:204
+#: src/o_complex.c:208
 #, fuzzy, c-format
 msgid "Could not find complex in new componet placement!\n"
 msgstr "Kan complex niet vinden bij het plaatsen van een nieuwe component\n"
 
-#: src/o_complex.c:546
+#: src/o_complex.c:580
 #, c-format
 msgid "Got NULL in o_complex_translate_display_selection\n"
 msgstr "Ontving NULL in o_complex_translate_display_selection\n"
 
-#: src/o_complex.c:656 src/o_complex.c:662
+#: src/o_complex.c:647 src/o_complex.c:653
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "Vertaal schema [%d %d]\n"
 
-#: src/o_complex.c:706
+#: src/o_complex.c:697
 #, c-format
 msgid "Got NULL in o_complex_translate_selection!\n"
 msgstr "Ontving NULL in o_complex_translate_selection\n"
 
-#: src/o_copy.c:118 src/o_copy.c:388
+#: src/o_copy.c:120 src/o_copy.c:391
 #, c-format
 msgid "ERROR: NULL object in o_copy_end!\n"
 msgstr "FOUT: NULL object in o_copy_end!\n"
-
-#: src/o_delete.c:255
-#, c-format
-msgid "ERROR: NULL object in o_delete_end!\n"
-msgstr "FOUT: NULL object in o_delete_end!\n"
 
 #: src/o_line.c:118
 #, c-format
@@ -1209,111 +1218,82 @@ msgstr "Onbekend einde voor lijn (%d)!\n"
 msgid "Unknown type for line (%d) !\n"
 msgstr "Onbekend type voor lijn (%d)!\n"
 
-#: src/o_misc.c:68
+#: src/o_misc.c:64
 #, c-format
 msgid "Got an unexpected NULL in o_edit\n"
 msgstr "Ontving een onverwachte NULL in o_edit\n"
 
-#: src/o_misc.c:173
+#: src/o_misc.c:143
 msgid "Object alreadly locked\n"
 msgstr "Object reeds vergrendeld\n"
 
-#: src/o_misc.c:211
+#: src/o_misc.c:181
 msgid "Object alreadly unlocked\n"
 msgstr "Object reeds ontgrendeld\n"
 
-#: src/o_misc.c:258 src/o_misc.c:507 src/o_misc.c:865
+#: src/o_misc.c:228 src/o_misc.c:477 src/o_misc.c:721
 #, c-format
 msgid "ERROR: NULL object in o_rotate_90!\n"
 msgstr "FOUT: NULL object in o_rotate 90!\n"
 
-#: src/o_misc.c:572
-#, fuzzy, c-format
-msgid "Component [%s] has been embedded\n"
-msgstr "Component [%s] is nog steeds ingesloten\n"
-
-#: src/o_misc.c:585
-#, fuzzy, c-format
-msgid "Picture [%s] has been embedded\n"
-msgstr "Component [%s] is nog steeds ingesloten\n"
-
-#: src/o_misc.c:617
-#, fuzzy, c-format
-msgid ""
-"Could not find component [%s], while trying to unembed. Component is still "
-"embedded\n"
-msgstr ""
-"Kan component [%s] niet vinden, tijdens een poging om uit te sluiten. "
-"Component is nog steeds ingesloten\n"
-
-#: src/o_misc.c:628 src/o_misc.c:1234
-#, c-format
-msgid "More than one component found with name [%s]\n"
-msgstr "Meer dan een component gevonden met de naam [%s]\n"
-
-#: src/o_misc.c:636
-#, fuzzy, c-format
-msgid "Component [%s] has been successfully unembedded\n"
-msgstr "Component [%s] is succesvol uitgesloten\n"
-
-#: src/o_misc.c:651
-#, fuzzy, c-format
-msgid "Picture [%s] has been unembedded\n"
-msgstr "Component [%s] is nog steeds ingesloten\n"
-
-#: src/o_misc.c:687
+#: src/o_misc.c:543
 #, c-format
 msgid "ERROR: NULL object in o_mirror!\n"
 msgstr "FOUT: NULL object in o_mirror!\n"
 
-#: src/o_misc.c:965
+#: src/o_misc.c:821
 msgid "Hidden text is now visible\n"
 msgstr "Verborgen tekst is nu zichtbaar\n"
 
-#: src/o_misc.c:967
+#: src/o_misc.c:823
 msgid "Hidden text is now invisible\n"
 msgstr "Verborgen tekst is nu onzichtbaar\n"
 
-#: src/o_misc.c:1229
+#: src/o_misc.c:1082
 msgid "Could not unembedded component, could not find appropriate .sym file\n"
 msgstr "Kan component niet uitsluiten, kan juiste .sym file niet vinden\n"
 
-#: src/o_misc.c:1230
+#: src/o_misc.c:1083
 #, fuzzy
 msgid "Component still embedded and not updated\n"
 msgstr "Component is nog steeds ingesloten en niet vernieuwd\n"
 
-#: src/o_misc.c:1371
+#: src/o_misc.c:1087
+#, c-format
+msgid "More than one component found with name [%s]\n"
+msgstr "Meer dan een component gevonden met de naam [%s]\n"
+
+#: src/o_misc.c:1226
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 
-#: src/o_misc.c:1415
+#: src/o_misc.c:1270
 #, fuzzy, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "[%s] kan niet opgeslagen worden\n"
 
-#: src/o_misc.c:1433
+#: src/o_misc.c:1288
 #, fuzzy, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "[%s] kan niet opgeslagen worden\n"
 
-#: src/o_misc.c:1438
+#: src/o_misc.c:1293
 #, fuzzy, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "[%s] kan niet opgeslagen worden\n"
 
-#: src/o_move.c:220
+#: src/o_move.c:223
 #, c-format
 msgid "ERROR: NULL object in o_move_end!\n"
 msgstr "FOUT: NULL object in o_move_end!\n"
 
-#: src/o_move.c:334
+#: src/o_move.c:338
 #, c-format
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
 msgstr "OH! probeerde er een te vinden, maar heb 'em niet gevonden!\n"
 
-#: src/o_move.c:355
+#: src/o_move.c:359
 #, c-format
 msgid "Got a non line object in o_move_check_endpoint\n"
 msgstr "Ontving een niet lijn object in o_move_check_endpoint\n"
@@ -1329,25 +1309,21 @@ msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 "Probeerde meer dan twee busrippers toe te voegen. Interne gschem fout.\n"
 
-#: src/o_net.c:1144
+#: src/o_net.c:1145
 #, fuzzy, c-format
 msgid "Could not find %s in any component-library\n"
 msgstr "Kan [%s] niet vinden in een van de component-library\n"
 
-#: src/o_picture.c:174 src/o_picture.c:846
-msgid "Please select a picture file."
-msgstr ""
-
-#: src/o_picture.c:241 src/o_picture.c:758
+#: src/o_picture.c:197 src/o_picture.c:759
 #, fuzzy, c-format
 msgid "Failed to load picture: %s"
 msgstr "Fout bij het lezen van het init scm bestand [%s]\n"
 
-#: src/o_picture.c:260
+#: src/o_picture.c:211
 msgid "Picture"
 msgstr "Afbeelding"
 
-#: src/o_picture.c:784 src/x_attribedit.c:153
+#: src/o_picture.c:680 src/x_attribedit.c:153
 #, fuzzy, c-format
 msgid "ERROR: NULL object!\n"
 msgstr "FOUT: NULL object!\n"
@@ -1356,19 +1332,19 @@ msgstr "FOUT: NULL object!\n"
 msgid "Slot attribute malformed\n"
 msgstr "Slot attribuut misvormd\n"
 
-#: src/o_slot.c:138
+#: src/o_slot.c:145
 msgid "numslots attribute missing\n"
 msgstr "numslots attribuut ontbreekt\n"
 
-#: src/o_slot.c:140
+#: src/o_slot.c:147
 msgid "Slotting not allowed for this component\n"
 msgstr "Slots niet toegestaan voor deze component\n"
 
-#: src/o_slot.c:156
+#: src/o_slot.c:163
 msgid "New slot number out of range\n"
 msgstr "Nieuw slotnummer overschrijdt de limiet\n"
 
-#: src/o_slot.c:240
+#: src/o_slot.c:247
 #, c-format
 msgid "uggg! you tried to slot edit something that doesn't exist!\n"
 msgstr "Hmmm, je probeerde een slot te bewerken op iets dat niet bestaat!\n"
@@ -1415,170 +1391,170 @@ msgstr "Kreeg ongeldige toon optie; standaardwaarde is toon beide\n"
 msgid "Single Attribute Editor"
 msgstr "Enkelvoudige Attribuur Bewerker"
 
-#: src/x_attribedit.c:422
+#: src/x_attribedit.c:424
 #, fuzzy
 msgid "Add/Edit Attribute"
 msgstr "Plaats/Bewerk Attribuut"
 
-#: src/x_attribedit.c:464 src/x_multiattrib.c:1554
+#: src/x_attribedit.c:466 src/x_multiattrib.c:1558
 msgid "Visible"
 msgstr "Zichtbaar"
 
-#: src/x_attribedit.c:475 src/x_multiattrib.c:1526
+#: src/x_attribedit.c:477 src/x_multiattrib.c:1530
 #, fuzzy
 msgid "Value:"
 msgstr "Waarde"
 
-#: src/x_attribedit.c:485 src/x_multiattrib.c:1507
+#: src/x_attribedit.c:487 src/x_multiattrib.c:1511
 #, fuzzy
 msgid "Name:"
 msgstr "Naam:"
 
-#: src/x_attribedit.c:507
+#: src/x_attribedit.c:509
 #, fuzzy
 msgid "Show Value Only"
 msgstr "Toon Alleen Waarde"
 
-#: src/x_attribedit.c:510
+#: src/x_attribedit.c:512
 #, fuzzy
 msgid "Show Name Only"
 msgstr "Toon Alleen Naam"
 
-#: src/x_attribedit.c:513 src/x_multiattrib.c:1157
+#: src/x_attribedit.c:515 src/x_multiattrib.c:1161
 #, fuzzy
 msgid "Show Name & Value"
 msgstr "Toon Naam & Waarde"
 
-#: src/x_attribedit.c:520
+#: src/x_attribedit.c:522
 msgid "Multiple Attach"
 msgstr "Meervoudig Toevoegen"
 
-#: src/x_attribedit.c:537
+#: src/x_attribedit.c:539
 msgid "All"
 msgstr "Alle"
 
-#: src/x_attribedit.c:546 src/x_compselect.c:741
+#: src/x_attribedit.c:548 src/x_compselect.c:745
 msgid "Components"
 msgstr "Componenten"
 
-#: src/x_attribedit.c:555 src/x_window.c:566
+#: src/x_attribedit.c:557 src/x_window.c:566
 msgid "Nets"
 msgstr "Draden"
 
-#: src/x_attribedit.c:563
+#: src/x_attribedit.c:565
 msgid "Replace"
 msgstr "Vervangen"
 
-#: src/x_autonumber.c:407
+#: src/x_autonumber.c:411
 msgid ""
 "slotted object without slot attribute may cause problems when autonumbering "
 "slots\n"
 msgstr ""
 
-#: src/x_autonumber.c:422
+#: src/x_autonumber.c:426
 #, c-format
 msgid ""
 "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
 msgstr ""
 
-#: src/x_autonumber.c:670
-msgid "No searchstring given in autonumber text."
+#: src/x_autonumber.c:696
+msgid "No searchstring given in autonumber text.\n"
 msgstr ""
 
-#: src/x_autonumber.c:721
+#: src/x_autonumber.c:747
 msgid "No '*' or '?' given at the end of the autonumber text.\n"
 msgstr ""
 
-#: src/x_autonumber.c:850
+#: src/x_autonumber.c:880
 #, fuzzy
 msgid "Diagonal"
 msgstr "diagonaal"
 
-#: src/x_autonumber.c:851
+#: src/x_autonumber.c:881
 msgid "Top to bottom"
 msgstr ""
 
-#: src/x_autonumber.c:851
+#: src/x_autonumber.c:881
 msgid "Bottom to top"
 msgstr ""
 
-#: src/x_autonumber.c:852
+#: src/x_autonumber.c:882
 #, fuzzy
 msgid "Left to right"
 msgstr "links rechts"
 
-#: src/x_autonumber.c:852
+#: src/x_autonumber.c:882
 msgid "Right to left"
 msgstr ""
 
-#: src/x_autonumber.c:853
+#: src/x_autonumber.c:883
 #, fuzzy
 msgid "File order"
 msgstr "bestand volgorde"
 
-#: src/x_autonumber.c:1200
+#: src/x_autonumber.c:1219
 msgid "Autonumber text"
 msgstr "Automatisch tekst nummeren"
 
-#: src/x_autonumber.c:1229
+#: src/x_autonumber.c:1237
+msgid "<b>Scope</b>"
+msgstr ""
+
+#: src/x_autonumber.c:1259
 #, fuzzy
 msgid "Search for:"
 msgstr "zoek instelling"
 
-#: src/x_autonumber.c:1242
+#: src/x_autonumber.c:1273
 #, fuzzy
 msgid "Autonumber text in:"
 msgstr "Automatisch tekst nummeren"
 
-#: src/x_autonumber.c:1249
+#: src/x_autonumber.c:1280
 msgid "Skip numbers found in:"
 msgstr ""
 
-#: src/x_autonumber.c:1261 src/x_autonumber.c:1270
+#: src/x_autonumber.c:1292 src/x_autonumber.c:1301
 #, fuzzy
 msgid "Selected objects"
 msgstr "geselecteerde objecten"
 
-#: src/x_autonumber.c:1262 src/x_autonumber.c:1271
+#: src/x_autonumber.c:1293 src/x_autonumber.c:1302
 #, fuzzy
 msgid "Current page"
 msgstr "huidig blad"
 
-#: src/x_autonumber.c:1263 src/x_autonumber.c:1272
+#: src/x_autonumber.c:1294 src/x_autonumber.c:1303
 #, fuzzy
 msgid "Whole hierarchy"
 msgstr "Hierarchie"
 
-#: src/x_autonumber.c:1274
+#: src/x_autonumber.c:1305
 msgid "Overwrite existing numbers"
 msgstr ""
 
-#: src/x_autonumber.c:1278
-msgid "<b>Scope</b>"
-msgstr ""
+#: src/x_autonumber.c:1310
+#, fuzzy
+msgid "<b>Options</b>"
+msgstr "Akties"
 
-#: src/x_autonumber.c:1303
+#: src/x_autonumber.c:1332
 #, fuzzy
 msgid "Starting number:"
 msgstr "start nummer"
 
-#: src/x_autonumber.c:1310
+#: src/x_autonumber.c:1339
 #, fuzzy
 msgid "Sort order:"
 msgstr "sorteer volgorde"
 
-#: src/x_autonumber.c:1330
+#: src/x_autonumber.c:1360
 msgid "Remove numbers"
 msgstr ""
 
-#: src/x_autonumber.c:1334
+#: src/x_autonumber.c:1364
 msgid "Automatic slotting"
 msgstr ""
-
-#: src/x_autonumber.c:1338
-#, fuzzy
-msgid "<b>Options</b>"
-msgstr "Akties"
 
 #: src/x_color.c:59 src/x_color.c:96
 #, c-format
@@ -1605,36 +1581,36 @@ msgstr "Kan de kleur %s niet toewijzen!\n"
 msgid "Tried to get an invalid color: %d\n"
 msgstr "Probeerde een ongeldige kleur te verkrijgen: %d\n"
 
-#: src/x_compselect.c:581
+#: src/x_compselect.c:585
 msgid "Default behavior - reference component"
 msgstr "Normaal gedrag - referentie component"
 
-#: src/x_compselect.c:584
+#: src/x_compselect.c:588
 msgid "Embed component in schematic"
 msgstr "Component insluiten in schema"
 
-#: src/x_compselect.c:587
+#: src/x_compselect.c:591
 msgid "Include component as individual objects"
 msgstr "Invoegen component als individuele objecten"
 
-#: src/x_compselect.c:666
+#: src/x_compselect.c:670
 msgid "Select Component..."
 msgstr "Selecteer Component..."
 
-#: src/x_compselect.c:771
+#: src/x_compselect.c:775
 #, fuzzy
 msgid "Filter:"
 msgstr "Filter"
 
-#: src/x_compselect.c:835 src/x_fileselect.c:123
+#: src/x_compselect.c:839 src/x_fileselect.c:123
 msgid "Preview"
 msgstr "Vooraf zien"
 
-#: src/x_dialog.c:226
+#: src/x_dialog.c:177
 msgid "Text Entry..."
 msgstr "Tekst Ingeven..."
 
-#: src/x_dialog.c:230
+#: src/x_dialog.c:201
 msgid ""
 "Enter text, click apply,\n"
 "move cursor into window, click to place text.\n"
@@ -1644,154 +1620,186 @@ msgstr ""
 "verplaats cursor in het venster, klik om tekst te plaatsen.\n"
 "Middelste muisknop gebruiken om te plaatsen"
 
-#: src/x_dialog.c:339
+#: src/x_dialog.c:290
 #, fuzzy
 msgid "Lower Left"
 msgstr "Boven Links"
 
-#: src/x_dialog.c:350
+#: src/x_dialog.c:301
 msgid "Middle Left"
 msgstr "Midden Links"
 
-#: src/x_dialog.c:361
+#: src/x_dialog.c:312
 msgid "Upper Left"
 msgstr "Boven Links"
 
-#: src/x_dialog.c:372
+#: src/x_dialog.c:323
 msgid "Lower Middle"
 msgstr "Onder Midden"
 
-#: src/x_dialog.c:383
+#: src/x_dialog.c:334
 msgid "Middle Middle"
 msgstr "Midden Midden"
 
-#: src/x_dialog.c:394
+#: src/x_dialog.c:345
 msgid "Upper Middle"
 msgstr "Boven Midden"
 
-#: src/x_dialog.c:405
+#: src/x_dialog.c:356
 msgid "Lower Right"
 msgstr "Onder Rechts"
 
-#: src/x_dialog.c:416
+#: src/x_dialog.c:367
 msgid "Middle Right"
 msgstr "Midden Rechts"
 
-#: src/x_dialog.c:427
+#: src/x_dialog.c:378
 msgid "Upper Right"
 msgstr "Boven Rechts"
 
-#: src/x_dialog.c:608
+#: src/x_dialog.c:493
 #, fuzzy
-msgid "Edit Text Color"
-msgstr "Bewerk Tekst"
-
-#: src/x_dialog.c:620
-msgid "Edit Text Size"
+msgid "Edit Text Properties"
 msgstr "Bewerk Tekst Hoogte"
 
-#: src/x_dialog.c:636
-msgid "Edit Text Alignment"
+#: src/x_dialog.c:520
+#, fuzzy
+msgid "<b>Text Content</b>"
+msgstr "Akties"
+
+#: src/x_dialog.c:552
+#, fuzzy
+msgid "<b>Text Properties</b>"
+msgstr "Akties"
+
+#: src/x_dialog.c:567
+#, fuzzy
+msgid "Color:"
+msgstr "Kleur"
+
+#: src/x_dialog.c:577
+msgid "Size:"
+msgstr ""
+
+#: src/x_dialog.c:586
+#, fuzzy
+msgid "Alignment:"
 msgstr "Bewerk Tekst Uitlijning"
 
-#: src/x_dialog.c:713
+#: src/x_dialog.c:640
 msgid "Solid"
 msgstr "Getrokken lijn"
 
-#: src/x_dialog.c:714
+#: src/x_dialog.c:641
 msgid "Dotted"
 msgstr "Gestippelde lijn"
 
-#: src/x_dialog.c:715
+#: src/x_dialog.c:642
 msgid "Dashed"
 msgstr "Gestreepte lijn"
 
-#: src/x_dialog.c:716
+#: src/x_dialog.c:643
 msgid "Center"
 msgstr "Hartlijn"
 
-#: src/x_dialog.c:717
+#: src/x_dialog.c:644
 msgid "Phantom"
 msgstr "Begrenzingslijn"
 
-#: src/x_dialog.c:861 src/x_dialog.c:863 src/x_dialog.c:865
-#: src/x_dialog.c:1052 src/x_dialog.c:1053 src/x_dialog.c:1054
-#: src/x_dialog.c:1062 src/x_dialog.c:1265 src/x_dialog.c:1267
-#: src/x_dialog.c:1269 src/x_dialog.c:1271 src/x_dialog.c:1273
-#: src/x_dialog.c:1499 src/x_dialog.c:1500 src/x_dialog.c:1501
-#: src/x_dialog.c:1502 src/x_dialog.c:1503 src/x_dialog.c:1511
+#: src/x_dialog.c:771 src/x_dialog.c:773 src/x_dialog.c:775 src/x_dialog.c:950
+#: src/x_dialog.c:951 src/x_dialog.c:952 src/x_dialog.c:960
+#: src/x_dialog.c:1144 src/x_dialog.c:1146 src/x_dialog.c:1148
+#: src/x_dialog.c:1150 src/x_dialog.c:1152 src/x_dialog.c:1349
+#: src/x_dialog.c:1350 src/x_dialog.c:1351 src/x_dialog.c:1352
+#: src/x_dialog.c:1353 src/x_dialog.c:1361
 msgid "*unchanged*"
 msgstr "*onveranderd"
 
-#: src/x_dialog.c:959
+#: src/x_dialog.c:851
 msgid "Edit Line Width & Type"
 msgstr "Bewerk Lijn Dikte & Type"
 
-#: src/x_dialog.c:963 src/x_dialog.c:1388
-msgid "Line Width"
-msgstr "Lijn Dikte"
+#: src/x_dialog.c:883
+#, fuzzy
+msgid "Width:"
+msgstr "Breedte"
 
-#: src/x_dialog.c:977
-msgid "Line Type"
-msgstr "Lijn Type"
+#: src/x_dialog.c:887 src/x_print.c:341
+#, fuzzy
+msgid "Type:"
+msgstr "Type"
 
-#: src/x_dialog.c:991
-msgid "Line Dash Length"
+#: src/x_dialog.c:891
+#, fuzzy
+msgid "Dash Length:"
 msgstr "Lijn Streep Lengte"
 
-#: src/x_dialog.c:1001
-msgid "Line Dash Space"
+#: src/x_dialog.c:895
+#, fuzzy
+msgid "Dash Space:"
 msgstr "Lijn Tussen Ruimte"
 
-#: src/x_dialog.c:1103
+#: src/x_dialog.c:1000
 msgid "Hollow"
 msgstr "Hol"
 
-#: src/x_dialog.c:1104
+#: src/x_dialog.c:1001
 msgid "Filled"
 msgstr "Gevuld"
 
-#: src/x_dialog.c:1105
+#: src/x_dialog.c:1002
 msgid "Mesh"
 msgstr "Maas"
 
-#: src/x_dialog.c:1106
+#: src/x_dialog.c:1003
 msgid "Hatch"
 msgstr "Arcering"
 
-#: src/x_dialog.c:1374
-msgid "Fill Type"
+#: src/x_dialog.c:1262
+#, fuzzy
+msgid "Fill Type:"
 msgstr "Arcering Type"
 
-#: src/x_dialog.c:1401
-msgid "Angle1"
+#: src/x_dialog.c:1266
+#, fuzzy
+msgid "Line Width:"
+msgstr "Lijn Dikte"
+
+#: src/x_dialog.c:1270
+#, fuzzy
+msgid "Angle 1:"
 msgstr "Hoek1"
 
-#: src/x_dialog.c:1414
-msgid "Pitch1"
+#: src/x_dialog.c:1274
+#, fuzzy
+msgid "Pitch 1:"
 msgstr "Steek1"
 
-#: src/x_dialog.c:1427
-msgid "Angle2"
+#: src/x_dialog.c:1278
+#, fuzzy
+msgid "Angle 2:"
 msgstr "Hoek2"
 
-#: src/x_dialog.c:1440
-msgid "Pitch2"
+#: src/x_dialog.c:1282
+#, fuzzy
+msgid "Pitch 2:"
 msgstr "Steek2"
 
-#: src/x_dialog.c:1637
+#: src/x_dialog.c:1444
 msgid "Arc Params"
 msgstr "Boog parameters"
 
-#: src/x_dialog.c:1641
-msgid "Start Angle"
+#: src/x_dialog.c:1477
+#, fuzzy
+msgid "Start Angle:"
 msgstr "Start Hoek"
 
-#: src/x_dialog.c:1656
-msgid "Degrees of Sweep"
+#: src/x_dialog.c:1487
+#, fuzzy
+msgid "Degrees of Sweep:"
 msgstr "Doorlopen Hoek"
 
-#: src/x_dialog.c:1800
+#: src/x_dialog.c:1578
 msgid ""
 "Offset to translate?\n"
 "(0 for origin)"
@@ -1799,41 +1807,45 @@ msgstr ""
 "OffSet van de verplaatsing?\n"
 "(0 voor oorsprong)"
 
-#: src/x_dialog.c:1945
+#: src/x_dialog.c:1646
 msgid "Text Size"
 msgstr "Tekst Hoogte"
 
-#: src/x_dialog.c:1949
-msgid "Enter new text size"
+#: src/x_dialog.c:1669
+#, fuzzy
+msgid "Enter new text size:"
 msgstr "Voer nieuwe tekst in"
 
-#: src/x_dialog.c:2094
-msgid "Snap Grid"
+#: src/x_dialog.c:1743
+#, fuzzy
+msgid "Snap Size"
 msgstr "Snap Grid"
 
-#: src/x_dialog.c:2098
-msgid "Enter new snap grid spacing"
+#: src/x_dialog.c:1766
+#, fuzzy
+msgid "Enter new snap grid spacing:"
 msgstr "Voer nieuwe snap grid waarde in"
 
-#: src/x_dialog.c:2193
-#, c-format
-msgid "String too long... hack!\n"
-msgstr "Tekst te lang... aanpassen!\n"
-
-#: src/x_dialog.c:2254 src/x_dialog.c:2258
+#: src/x_dialog.c:1839
 msgid "Edit slot number"
 msgstr "Bewerk slot nummer"
 
-#: src/x_dialog.c:2381
-msgid "gEDA : GPL Electronic Design Automation"
+#: src/x_dialog.c:1863
+#, fuzzy
+msgid "Edit slot number:"
+msgstr "Bewerk slot nummer"
+
+#: src/x_dialog.c:1944
+#, fuzzy
+msgid "<b>gEDA: GPL Electronic Design Automation</b>"
 msgstr "gEDA : GPL Elektronische Ontwerp Automatisering"
 
-#: src/x_dialog.c:2389
+#: src/x_dialog.c:1948
 #, fuzzy, c-format
-msgid "gschem version %s%s"
+msgid "<b>gschem version %s%s</b>"
 msgstr "gschem versie %s"
 
-#: src/x_dialog.c:2397
+#: src/x_dialog.c:1954
 #, fuzzy
 msgid ""
 "Written by:\n"
@@ -1846,96 +1858,99 @@ msgstr ""
 "ahvezda@geda.seul.org\n"
 "En vele anderen (zie het AUTHORS bestand)\n"
 
-#: src/x_dialog.c:2491
+#: src/x_dialog.c:2015
 msgid "Coords"
 msgstr "Coordinaten"
 
-#: src/x_dialog.c:2515
+#: src/x_dialog.c:2035
 msgid "Screen"
 msgstr "Scherm"
 
-#: src/x_dialog.c:2528
+#: src/x_dialog.c:2044
 msgid "World"
 msgstr "Wereld"
 
-#: src/x_dialog.c:2796
+#: src/x_dialog.c:2267
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr "FOUT: NULL object in color_edit_dialog_apply!\n"
 
-#: src/x_dialog.c:2846
+#: src/x_dialog.c:2330
 msgid "Color Edit"
 msgstr "Kleur Bewerken"
 
-#: src/x_dialog.c:2963
-#, c-format
-msgid "Ran out of space in the hotkey buffer...\n"
-msgstr "Tekort aan ruimte in de Snel-toets buffer...\n"
+#: src/x_dialog.c:2354
+msgid "Object color:"
+msgstr ""
 
-#: src/x_dialog.c:3040
-msgid "Function : keystroke(s)"
-msgstr "Funktie : toetsaanslag(s)"
+#: src/x_dialog.c:2470
+#, fuzzy
+msgid "Hotkeys"
+msgstr "Snel-toets..."
 
-#: src/x_dialog.c:3385
+#: src/x_dialog.c:2848
 msgid "Generic String"
 msgstr "Algemene Tekst"
 
-#: src/x_dialog.c:3388
+#: src/x_dialog.c:2851
 msgid "Enter new string."
 msgstr "Voer nieuwe tekst in."
 
-#: src/x_dialog.c:3534
-msgid "Find text"
+#: src/x_dialog.c:2958
+#, fuzzy
+msgid "Find Text"
 msgstr "Vind tekst"
 
-#: src/x_dialog.c:3538
+#: src/x_dialog.c:2982
 msgid "Text to find:"
 msgstr "Te vinden tekst:"
 
-#: src/x_dialog.c:3551
+#: src/x_dialog.c:2992
 msgid "descend into hierarchy"
 msgstr "afdalen in hierarchie"
 
-#: src/x_dialog.c:3670
-msgid "Hide text"
+#: src/x_dialog.c:3056
+#, fuzzy
+msgid "Hide Text"
 msgstr "Verberg tekst"
 
-#: src/x_dialog.c:3673
+#: src/x_dialog.c:3080
 msgid "Hide text starting with:"
 msgstr "Verberg tekst beginnend met:"
 
-#: src/x_dialog.c:3790
-msgid "Show text"
+#: src/x_dialog.c:3148
+#, fuzzy
+msgid "Show Text"
 msgstr "Toon tekst"
 
-#: src/x_dialog.c:3793
+#: src/x_dialog.c:3172
 msgid "Show text starting with:"
 msgstr "Toon tekst beginnend met:"
 
-#: src/x_dialog.c:4250 src/x_multiattrib.c:1384
+#: src/x_dialog.c:3617 src/x_multiattrib.c:1388
 msgid "Name"
 msgstr "Naam"
 
-#: src/x_dialog.c:4272
+#: src/x_dialog.c:3639
 msgid "S_elect the schematics you want to save:"
 msgstr ""
 
-#: src/x_dialog.c:4366
+#: src/x_dialog.c:3733
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr ""
 
-#: src/x_dialog.c:4372
+#: src/x_dialog.c:3739
 #, c-format
 msgid ""
 "There is %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 
-#: src/x_dialog.c:4401
+#: src/x_dialog.c:3768
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
 
-#: src/x_dialog.c:4421
+#: src/x_dialog.c:3788
 msgid "_Close without saving"
 msgstr ""
 
@@ -1968,45 +1983,44 @@ msgstr "Open..."
 msgid "Save as..."
 msgstr "Opslaan Als..."
 
-#: src/x_image.c:292
+#: src/x_image.c:294
 msgid "x_image_lowlevel: Unable to write PNG file.\n"
 msgstr ""
 
-#: src/x_image.c:296 src/x_image.c:327
+#: src/x_image.c:298 src/x_image.c:329
 #, c-format
 msgid "Wrote color image to [%s] [%d x %d]\n"
 msgstr "Schreef kleuren afbeelding naar [%s] [%d x %d]\n"
 
-#: src/x_image.c:298 src/x_image.c:329
+#: src/x_image.c:300 src/x_image.c:331
 #, c-format
 msgid "Wrote black and white image to [%s] [%d x %d]\n"
 msgstr "Schreef zwart/wit afbeelding naar [%s] [%d x %d]\n"
 
-#: src/x_image.c:308
+#: src/x_image.c:310
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"
 msgstr ""
 
-#: src/x_image.c:416
+#: src/x_image.c:402
+#, fuzzy
+msgid "Select Image Filename..."
+msgstr "Specificeer een Bestandsnaam!\n"
+
+#: src/x_image.c:445
 msgid "Write Image..."
 msgstr "Schrijf Afbeelding..."
 
-#: src/x_image.c:448
-msgid "Width"
-msgstr "Breedte"
-
-#: src/x_image.c:467
-msgid "Height"
-msgstr "Hoogte"
-
-#: src/x_image.c:486
-msgid "Width x Height"
+#: src/x_image.c:468
+#, fuzzy
+msgid "Width x Height:"
 msgstr "Breedte x Hoogte"
 
-#: src/x_image.c:499 src/x_pagesel.c:432
-msgid "Filename"
+#: src/x_image.c:479
+#, fuzzy
+msgid "Filename:"
 msgstr "Bestandsnaam"
 
-#: src/x_log.c:229
+#: src/x_log.c:231
 msgid "Status"
 msgstr "Status"
 
@@ -2095,61 +2109,61 @@ msgstr "Naar Symbool"
 msgid "/Up"
 msgstr "Omhoog"
 
-#: src/x_menus.c:329
+#: src/x_menus.c:326
 msgid "Tried to set the sensitivity on a non-existent menu item\n"
 msgstr ""
 "Probeerde de gevoeligheid in te stellen op een niet bestaand menu_item\n"
 
-#: src/x_menus.c:353
+#: src/x_menus.c:350
 msgid "Popup_menu_item_factory doesn't exist!\n"
 msgstr "Popup_menu_item_factory bestaat niet!\n"
 
-#: src/x_menus.c:366
+#: src/x_menus.c:363
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
 msgstr ""
 "Probeerde de gevoeligheid in te stellen op een niet bestaand popup "
 "menu_item\n"
 
-#: src/x_multiattrib.c:648
+#: src/x_multiattrib.c:652
 msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr "Attributen met een lege naam zijn niet toegestaan. Geef een naam."
 
-#: src/x_multiattrib.c:1159
+#: src/x_multiattrib.c:1163
 #, fuzzy
 msgid "Show Value only"
 msgstr "Toon alleen Waarde"
 
-#: src/x_multiattrib.c:1161
+#: src/x_multiattrib.c:1165
 #, fuzzy
 msgid "Show Name only"
 msgstr "Toon alleen Naam"
 
-#: src/x_multiattrib.c:1187
+#: src/x_multiattrib.c:1191
 msgid "Duplicate"
 msgstr ""
 
-#: src/x_multiattrib.c:1304
+#: src/x_multiattrib.c:1308
 #, fuzzy
 msgid "Edit Attributes"
 msgstr "Berwerk Attribuut"
 
-#: src/x_multiattrib.c:1409
+#: src/x_multiattrib.c:1413
 msgid "Value"
 msgstr "Waarde"
 
-#: src/x_multiattrib.c:1431
+#: src/x_multiattrib.c:1435
 msgid "Vis?"
 msgstr "Zichtbaar?"
 
-#: src/x_multiattrib.c:1451
+#: src/x_multiattrib.c:1455
 msgid "N"
 msgstr "N"
 
-#: src/x_multiattrib.c:1471
+#: src/x_multiattrib.c:1475
 msgid "V"
 msgstr "V"
 
-#: src/x_multiattrib.c:1492
+#: src/x_multiattrib.c:1496
 #, fuzzy
 msgid "Add Attribute"
 msgstr "Plaats Attribuut"
@@ -2162,6 +2176,10 @@ msgstr "pagina Wegdoen"
 msgid "Page Manager"
 msgstr "Pagina Manager"
 
+#: src/x_pagesel.c:432
+msgid "Filename"
+msgstr "Bestandsnaam"
+
 #: src/x_pagesel.c:448
 #, fuzzy
 msgid "Changed"
@@ -2173,71 +2191,77 @@ msgstr "Klik met rechts op de bestandnaam voor meer opties..."
 
 #: src/x_print.c:90
 #, fuzzy
-msgid "Save PostScript As..."
+msgid "Select PostScript Filename..."
 msgstr "Opslaan Pagina Als..."
 
-#: src/x_print.c:192
+#: src/x_print.c:194
 msgid "Extents with margins"
 msgstr "Alles met kantlijnen"
 
-#: src/x_print.c:198
+#: src/x_print.c:200
 msgid "Extents no margins"
 msgstr "Alles zonder kantlijnen"
 
-#: src/x_print.c:204
+#: src/x_print.c:206
 msgid "Current Window"
 msgstr "Huidige Venster"
 
-#: src/x_print.c:239
+#: src/x_print.c:240
 msgid "Landscape"
 msgstr "Liggend"
 
-#: src/x_print.c:245
+#: src/x_print.c:246
 msgid "Portrait"
 msgstr "Staand"
 
-#: src/x_print.c:317
+#: src/x_print.c:318
 msgid "Settings"
 msgstr ""
 
-#: src/x_print.c:329
-msgid "Output paper size"
+#: src/x_print.c:330
+#, fuzzy
+msgid "Output paper size:"
 msgstr "Uitvoer papier afmeting"
 
-#: src/x_print.c:340
-msgid "Type"
-msgstr "Type"
-
-#: src/x_print.c:351
-msgid "Orientation"
+#: src/x_print.c:352
+#, fuzzy
+msgid "Orientation:"
 msgstr "Orientatie"
 
-#: src/x_print.c:363
+#: src/x_print.c:364
 #, fuzzy
 msgid "Destination"
 msgstr "Documentatie"
 
-#: src/x_print.c:402
-msgid "Command"
+#: src/x_print.c:377
+#, fuzzy
+msgid "File:"
+msgstr "Bestand"
+
+#: src/x_print.c:407
+msgid "Command:"
 msgstr ""
 
-#: src/x_print.c:753
+#: src/x_print.c:766
 msgid "No print destination specified\n"
 msgstr ""
 
-#: src/x_print.c:760
+#: src/x_print.c:773
 #, c-format
 msgid "Cannot print current schematic to [%s]\n"
 msgstr "Kan huidige schema niet afdrukken op [%s]\n"
 
-#: src/x_print.c:765
+#: src/x_print.c:782
+#, c-format
+msgid ""
+"Error printing to file '%s'\n"
+"Check the log window for more information"
+msgstr ""
+
+#: src/x_print.c:789
 #, c-format
 msgid "Printed current schematic to [%s]\n"
 msgstr "Huidig schema afgedrukt op [%s]\n"
-
-#: src/x_script.c:88
-msgid "Script Execute..."
-msgstr "Uitvoering Script..."
 
 #: src/x_window.c:201
 msgid "black"
@@ -2395,6 +2419,55 @@ msgstr "Pagina [%s] wegdoen\n"
 msgid "Closing [%s]\n"
 msgstr "Sluiten [%s]\n"
 
+#~ msgid "ERROR: NULL object in o_delete_end!\n"
+#~ msgstr "FOUT: NULL object in o_delete_end!\n"
+
+#, fuzzy
+#~ msgid "Component [%s] has been embedded\n"
+#~ msgstr "Component [%s] is nog steeds ingesloten\n"
+
+#, fuzzy
+#~ msgid "Picture [%s] has been embedded\n"
+#~ msgstr "Component [%s] is nog steeds ingesloten\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Could not find component [%s], while trying to unembed. Component is "
+#~ "still embedded\n"
+#~ msgstr ""
+#~ "Kan component [%s] niet vinden, tijdens een poging om uit te sluiten. "
+#~ "Component is nog steeds ingesloten\n"
+
+#, fuzzy
+#~ msgid "Component [%s] has been successfully unembedded\n"
+#~ msgstr "Component [%s] is succesvol uitgesloten\n"
+
+#, fuzzy
+#~ msgid "Picture [%s] has been unembedded\n"
+#~ msgstr "Component [%s] is nog steeds ingesloten\n"
+
+#, fuzzy
+#~ msgid "Edit Text Color"
+#~ msgstr "Bewerk Tekst"
+
+#~ msgid "Line Type"
+#~ msgstr "Lijn Type"
+
+#~ msgid "String too long... hack!\n"
+#~ msgstr "Tekst te lang... aanpassen!\n"
+
+#~ msgid "Ran out of space in the hotkey buffer...\n"
+#~ msgstr "Tekort aan ruimte in de Snel-toets buffer...\n"
+
+#~ msgid "Function : keystroke(s)"
+#~ msgstr "Funktie : toetsaanslag(s)"
+
+#~ msgid "Height"
+#~ msgstr "Hoogte"
+
+#~ msgid "Script Execute..."
+#~ msgstr "Uitvoering Script..."
+
 #~ msgid ""
 #~ "Warning: negative numbers not allowed in the autonumber_text dialog\n"
 #~ msgstr ""
@@ -2466,9 +2539,6 @@ msgstr "Sluiten [%s]\n"
 
 #~ msgid "x_fileselect_preview_checkbox: Oops got a null f_current!\n"
 #~ msgstr "x_fileselect_preview_checkbox: Oops, ontving een null f_current!\n"
-
-#~ msgid "Specify a Filename!\n"
-#~ msgstr "Specificeer een Bestandsnaam!\n"
 
 #~ msgid "Search in Files"
 #~ msgstr "Zoek in Bestanden"
