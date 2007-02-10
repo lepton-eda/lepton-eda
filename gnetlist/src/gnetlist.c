@@ -21,12 +21,20 @@
 
 #include <stdio.h>
 #include <sys/param.h>
+#include <sys/types.h>
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+#ifdef HAVE_DIRENT_H
+#include <dirent.h>
+#endif
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
 
 #include <libgeda/libgeda.h>
 
@@ -37,6 +45,8 @@
 #include <dmalloc.h>
 #endif
 
+#define BACKEND_LIST_COLS	3
+
 void gnetlist_quit(void)
 {
     s_clib_free();
@@ -46,6 +56,53 @@ void gnetlist_quit(void)
     
     /* Free GSList *backend_params */
     g_slist_free (backend_params);
+}
+
+/** @brief Prints a list of all installed gnetlist backends to standard output.
+ *
+ * @param current Pointer to the toplevel struct.
+ */ 
+void gnetlist_backends(TOPLEVEL *current)
+{
+	DIR *schemedir;
+	struct dirent *entry;
+	char *filename;
+	int n;
+
+	schemedir=opendir(current->scheme_directory);
+	if(schemedir==NULL) {
+		fprintf(stderr, "\nERROR! Can't open directory %s: %s\n",
+					current->scheme_directory,
+					strerror(errno));
+		return;
+	}
+
+	printf("List of available backends:\n\n");
+
+	n=1;
+	while(1) {
+		entry=readdir(schemedir);
+		if(entry==NULL) break;
+
+		filename=strdup(entry->d_name);
+
+		if(g_str_has_prefix(filename, "gnet-")&&
+					g_str_has_suffix(filename, ".scm")) {
+
+			/* strip the suffix */
+			filename[strlen(filename)-4]='\0';
+			/* and skip the prefix */
+			printf("%-25s", &filename[5]);
+			if(n>=BACKEND_LIST_COLS) {
+				printf("\n");
+				n=0;
+			}
+			n++;
+		}
+
+		free(filename);
+	}
+	printf("\n");
 }
 
 void main_prog(void *closure, int argc, char *argv[])
@@ -138,6 +195,13 @@ void main_prog(void *closure, int argc, char *argv[])
     i_vars_set (pr_current);
 
     s_rename_init();
+
+    if(guile_proc!=NULL) {
+	if(!strcmp(guile_proc, "help")) {
+		gnetlist_backends(pr_current);
+		exit(0);
+    	}
+    }
 
     i = argv_index;
     while (argv[i] != NULL) {

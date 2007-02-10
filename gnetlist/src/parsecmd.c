@@ -72,7 +72,8 @@ void usage(char *cmd)
     printf("  -l filename       Load scheme file before loading backend\n");
     printf("  -m filename       Load scheme file after loading backend,\n");
     printf("                    but still before executing procedure\n");
-    printf("  -g proc           Scheme procedure to execute\n");
+    printf("  -g proc           Scheme procedure to execute.\n");
+    printf("                    Use '-g help' to list available backends.\n");
     printf("  -o filename       Output netlist filename\n");
     printf("  -c string         Execute string as a scheme script\n");
     printf("  -O option         Pass the given option to the backend\n");
