@@ -1586,7 +1586,7 @@ main(gint argc, gchar **argv)
 			printf("\nNext step:\n");
 			printf("1.  Run pcb on your file %s.\n", pcb_file_name);
 			printf("    You will find all your footprints in a bundle ready for you to place\n");
-			printf("    or disperse with \"File -> Disperse all elements\" in PCB\n\n");
+			printf("    or disperse with \"Select -> Disperse all elements\" in PCB.\n\n");
 			printf("2.  From within PCB, select \"File -> Load netlist file\" and select \n");
 			printf("    %s to load the netlist.\n\n", net_file_name);
 			printf("3.  From within PCB, enter\n\n");
