@@ -8,6 +8,11 @@ srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 configure_script=configure.ac
 
+# Automake required version
+AM_1=1  # Major number
+AM_2=6
+AM_3=0  # Minor number
+
 DIE=0
 
 (test -f $srcdir/$configure_script) || {
@@ -50,6 +55,42 @@ DIE=0
   DIE=1
   NO_AUTOMAKE=yes
 }
+
+# check automake version. Test came from gpsd version 2.34. cnieves 2007-02-10
+if [ -z "$NO_AUTOMAKE" ]; then
+  echo Checking automake version...
+  AM_VERSION=`automake --version | sed -n -e 's#[^0-9]* \([0-9]*\)\.\([0-9]*\)\.*\([0-9]*\).*$#\1 \2 \3#p'`
+  AM_V1=`echo $AM_VERSION | awk '{print $1}'`
+  AM_V2=`echo $AM_VERSION | awk '{print $2}'`
+  AM_V3=`echo $AM_VERSION | awk '{print $3}'`
+
+  if [ "$AM_1" -gt "$AM_V1" ]; then
+    AM_ERROR=1 
+  else
+    if [ "$AM_1" -eq "$AM_V1" ]; then
+      if [ "$AM_2" -gt "$AM_V2" ]; then
+	echo "version 2 of automake failed"
+        AM_ERROR=1 
+      else
+        if [ "$AM_2" -eq "$AM_V2" ]; then
+          if [ -n "$AM_V3" -a "$AM_3" -gt "$AM_V3" ]; then
+   	    echo "version 3 of automake failed"
+            AM_ERROR=1 
+          fi
+        fi
+      fi
+    fi
+  fi
+
+  if [ -n "$AM_ERROR" ]; then
+    echo
+    echo "**Error**: Found automake version $AM_V1.$AM_V2.$AM_V3"
+    echo "You must have \`automake' version $AM_1.$AM_2.$AM_3 or greater installed."
+    echo "You can get it from: ftp://ftp.gnu.org/pub/gnu/"
+    DIE=1
+  fi 
+fi
+
 
 
 # if no automake, don't bother testing for aclocal
