@@ -4,6 +4,11 @@
 
 2007-02-10 Carlos Nieves Onega <cnieves@iespana.es>
 
+	* src/f_print.c: Make f_print_header return an error return value
+	  if something goes wrong, and propagate it to the caller functions.
+	  Unlink the file created by f_print_file if there is an error in
+	  f_print_header.
+	
 	* autogen.sh: Added automake version number check.
 
 2007-02-10  Mike Jarabek  <mjarabek@sentex.ca>

@@ -91,7 +91,7 @@ void f_print_set_color(FILE *fp, int color)
  *  \param [in] fp            The postscript document to write to.
  *  \param [in] paper_size_x  The width of the document on paper in inches.
  *  \param [in] paper_size_y  The height of the document on paper in inches.
- *  \return 1 on success, 0 on failure.
+ *  \return 0 on success, -1 on failure.
  */
 int f_print_header(TOPLEVEL *w_current, FILE *fp, 
 		   int paper_size_x, int paper_size_y) 
@@ -140,7 +140,7 @@ int f_print_header(TOPLEVEL *w_current, FILE *fp,
   if(buf == NULL) {
     s_log_message("Unable to allocate %d bytes in f_print_header()\n"
 		  "Giving up on printing.\n",PROLOG_BUFFER_SIZE);
-    return 0;
+    return -1;
   }
   /* Open the prolog file */
   prolog = fopen(w_current->postscript_prolog,"r");
@@ -149,7 +149,7 @@ int f_print_header(TOPLEVEL *w_current, FILE *fp,
 		  "in f_print_header()\n"
 		  "Giving up on printing\n", w_current->postscript_prolog);
     g_free(buf);  /* If we got to here, the buffer was allocated. */
-    return 0;
+    return -1;
   }
   /* Loop while reading file into buffer and dump it
    * back out to the supplied file handle
@@ -165,7 +165,7 @@ int f_print_header(TOPLEVEL *w_current, FILE *fp,
 		  "in f_print_header()\n"
 		  "Giving up on printing\n", w_current->postscript_prolog);
     g_free(buf);  /* If we got to here, the buffer was allocated. */
-    return 0;
+    return -1;
   }
 
   if(ferror(fp)) {
@@ -173,7 +173,7 @@ int f_print_header(TOPLEVEL *w_current, FILE *fp,
 		  "in f_print_header()\n"
 		  "Giving up on printing\n");
     g_free(buf);  /* If we got to here, the buffer was allocated. */
-    return 0;
+    return -1;
   }
   g_free(buf);  /* If we got to here, the buffer was allocated. */
 
@@ -376,6 +376,11 @@ int f_print_file (TOPLEVEL *w_current, const char *filename)
   }
 
   result = f_print_stream(w_current, fp);
+  
+  if (result != 0) {
+    /* If there was an error in f_print_stream, then unlink the output file. */
+    unlink(filename);
+  }
   fclose (fp);
   return result;
 }
@@ -502,9 +507,13 @@ int f_print_stream(TOPLEVEL *w_current, FILE *fp)
 #endif  
 
   /* Output the header */
-  f_print_header(w_current, fp, 
-		 w_current->paper_width, 
-		 w_current->paper_height);
+  if (f_print_header(w_current, fp, 
+		     w_current->paper_width, 
+		     w_current->paper_height) != 0) {
+
+    /* There was an error in f_print_header */
+    return -1;
+  }
 
   /* Output font re-encoding */
   if (unicode_count) {
