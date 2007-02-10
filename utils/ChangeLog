@@ -3,6 +3,9 @@
 	* src/gsch2pcb.c: Applied patch by Jeff Mallatt to fix a typo 
 	in some helpful output for pcb's Disperse all elements. Thanks.
 
+	* scripts/gschemdoc.sh: Applied patch by Charles Lepple [ 1590587 ] 
+	gschemdoc additions for Mac OS X.  Thanks!
+
 2007-02-08 19:24  Dan McMahill <danmc>
 
 	* configure.ac, examples/gsch2pcb/Makefile.am,

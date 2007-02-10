@@ -29,6 +29,12 @@ CANDIDATE_BROWSER="galeon mozilla phoenix netscape netscape-navigator opera fire
 CANDIDATE_PDFREADER="xpdf acroread ggv gv"
 CANDIDATE_LOCATE="slocate locate"
 
+# For OS X, since Linux has 'open' with different semantics
+if [ "`uname -s`" = "Darwin" ]; then
+	CANDIDATE_BROWSER="open $CANDIDATE_BROWSER"
+	CANDIDATE_PDFREADER="open $CANDIDATE_PDFREADER"
+fi
+
 #
 #  make symbol filename into something more akin to a device name
 #
@@ -80,7 +86,7 @@ view_file_browser()
 		echo "Using browser and file: $file"
 		# NOTE: Mozilla and Netscape does not seem to support
 		#       -- on the command line
-		${browser} "file:$file"
+		${browser} "file://$file"
 		exit
 	else
 		echo "Did not find a browser application."
