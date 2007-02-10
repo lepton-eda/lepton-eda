@@ -514,7 +514,9 @@ convert_file(FILE *fp)
 	case 'X':  /* unconnected pin record */
 	  do_nop(fp);
 	  break;
-
+	case '|':  /* some kind of timestamp */
+	  do_nop(fp);
+	  break;
 	default: /* just read in the record and trash it */
 	  fgets(buf, MAX_TEXTLEN, fp);
 	  /* nuke trailing CR, if there */
