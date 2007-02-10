@@ -29,6 +29,7 @@ AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files 
 
 # Checks for programs.
 AC_PROG_CC
+AM_PROG_CC_C_O
 AM_CONDITIONAL(CCISGCC, test "$GCC" = "yes")
 AC_PROG_CPP
 AC_PROG_MAKE_SET
