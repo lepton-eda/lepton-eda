@@ -46,7 +46,10 @@ tests:
 	  test -f $$file_basename.drc2 && \
             diff $$file_basename.drc2 new_$$file_basename.drc2; \
           if [ $$? -ne 0 ]; then \
+	     echo "Test in $$file_basename.sch FAILED!!"; \
 	     break; \
+	  else \
+	     echo "Test in $$file_basename.sch PASSED."; \
 	  fi; \
 	done
 

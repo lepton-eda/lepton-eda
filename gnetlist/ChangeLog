@@ -9,6 +9,11 @@
 
 2007-02-10 Carlos Nieves Onega <cnieves@iespana.es>
 
+        * tests/drc2/Makefile.am:
+	  Added a pass/failed line after each test.
+
+	* tests/drc2/.cvsignore: Added this new file.
+	
 	* configure.ac, tests/Makefile.am, tests/drc2/Makefile.am,
 	  tests/drc2/*.sch, tests/drc2/*.drc2:
 	  Added new regression test suite for the drc2 backend.
