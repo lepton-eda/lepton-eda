@@ -16,6 +16,8 @@ AM_CONFIG_HEADER([config.h])
 # Initialize maintainer mode
 AM_MAINTAINER_MODE
 
+# Call this to make autoconf and friends happy
+AC_GNU_SOURCE
 
 #########################################################################
 # Command line flags start

@@ -5,6 +5,9 @@
 	  Thanks to DJ for reporting this.
 
 	* src/globals.c: Removed quit_func since it is completely unused.
+
+	* configure.ac.in: Added a call to AC_GNU_SOURCE to make autoconf
+	and friends complain less.
 	
 2007-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
