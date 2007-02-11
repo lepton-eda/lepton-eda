@@ -1,3 +1,7 @@
+2007-02-11 Stuart Brorson   <sdb@cloud9.net>
+	* scheme/gnet-spice-sdb.scm: Incorporated patch from Jeff Mallatt
+	enabling SPICE netlisting of slotted parts.
+	
 2007-02-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* docs/gnetlist.1, src/gnetlist.c, src/parsecmd.c: Applied patch by
