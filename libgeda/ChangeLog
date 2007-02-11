@@ -1,3 +1,7 @@
+2007-02-11 Werner Hoch <werner.ho@gmx.de>
+
+	* src/s_toplevel.c: added missing toplevel inits (tshowwindow, ...)
+
 2007-02-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/funcs.h: Removed quit_func since it is completely unused.
