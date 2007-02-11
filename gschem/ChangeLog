@@ -1,3 +1,7 @@
+2007-02-11 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* ChangeLog: added author entry for the commits Ales made yesterday.
+
 2007-02-11  Werner Hoch <werner.ho@gmx.de>
 
 	* po/de_DE.po: updated german translation
@@ -15,6 +19,8 @@
 	src/g_rc.c src/g_register.c src/i_vars.c: Added code to scale the
 	output postscript font under user control.  This is controlled via
 	the postscript-font-scale rc keyword.
+
+2007-02-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/x_compselect.h, include/x_pagesel.h, src/o_bus.c,
 	src/o_grips.c, src/o_net.c, src/x_autonumber.c, src/x_compselect.c,
@@ -37,6 +43,8 @@
 	* scheme/auto-place-attribs.scm: Check if the list is empty before
 	  calling to stable-sort. It is an error for guile versions >= 1.8.
 	  Thanks to DJ for reporting this.
+
+2007-02-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/globals.c: Removed quit_func since it is completely unused.
 
