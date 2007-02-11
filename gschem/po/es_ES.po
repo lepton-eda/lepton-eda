@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-10 17:06-0500\n"
+"POT-Creation-Date: 2007-02-11 08:44+0100\n"
 "PO-Revision-Date: 2006-10-19 19:07+0200\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain\n"
@@ -1293,7 +1293,7 @@ msgstr "Fallo al cargar la imagen: %s"
 msgid "Picture"
 msgstr "Imagen"
 
-#: src/o_picture.c:680 src/x_attribedit.c:153
+#: src/o_picture.c:680 src/x_attribedit.c:137
 #, c-format
 msgid "ERROR: NULL object!\n"
 msgstr "ERROR: ¡objeto vacío (NULL)!\n"
@@ -1352,63 +1352,70 @@ msgstr ""
 "  -h                Ayuda; éste mensaje\n"
 "\n"
 
-#: src/x_attribedit.c:138
+#: src/x_attribedit.c:122
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr ""
 "Se ha recibido una opción de mostrar no válida; mostrando ambos por defecto\n"
 
-#: src/x_attribedit.c:363
+#: src/x_attribedit.c:323
 msgid "Single Attribute Editor"
 msgstr "Editor de una única propiedad"
 
-#: src/x_attribedit.c:424
-msgid "Add/Edit Attribute"
-msgstr "Añadir/Editar propiedad"
+#: src/x_attribedit.c:346
+#, fuzzy
+msgid "<b>Edit Attribute</b>"
+msgstr "Editar propiedades"
 
-#: src/x_attribedit.c:466 src/x_multiattrib.c:1558
-msgid "Visible"
-msgstr "Visible"
+#: src/x_attribedit.c:348
+#, fuzzy
+msgid "<b>Add Attribute</b>"
+msgstr "Añadir propiedad"
 
-#: src/x_attribedit.c:477 src/x_multiattrib.c:1530
-msgid "Value:"
-msgstr "Valor:"
-
-#: src/x_attribedit.c:487 src/x_multiattrib.c:1511
+#: src/x_attribedit.c:364 src/x_multiattrib.c:1511
 msgid "Name:"
 msgstr "Nombre:"
 
-#: src/x_attribedit.c:509
+#: src/x_attribedit.c:380 src/x_multiattrib.c:1530
+msgid "Value:"
+msgstr "Valor:"
+
+#: src/x_attribedit.c:395 src/x_multiattrib.c:1558
+msgid "Visible"
+msgstr "Visible"
+
+#: src/x_attribedit.c:415
 msgid "Show Value Only"
 msgstr "Mostrar sólo valor"
 
-#: src/x_attribedit.c:512
+#: src/x_attribedit.c:417
 msgid "Show Name Only"
 msgstr "Mostrar sólo nombre"
 
-#: src/x_attribedit.c:515 src/x_multiattrib.c:1161
+#: src/x_attribedit.c:419 src/x_multiattrib.c:1161
 msgid "Show Name & Value"
 msgstr "Mostrar nombre y valor"
 
-#: src/x_attribedit.c:522
-msgid "Multiple Attach"
-msgstr "Asociado múltiple"
+#: src/x_attribedit.c:426
+#, fuzzy
+msgid "<b>Attach Options</b>"
+msgstr "Opciones"
 
-#: src/x_attribedit.c:539
+#: src/x_attribedit.c:441
 msgid "All"
 msgstr "Todo"
 
-#: src/x_attribedit.c:548 src/x_compselect.c:745
+#: src/x_attribedit.c:449 src/x_compselect.c:745
 msgid "Components"
 msgstr "Componentes"
 
-#: src/x_attribedit.c:557 src/x_window.c:566
+#: src/x_attribedit.c:457 src/x_window.c:566
 msgid "Nets"
 msgstr "Conexiones"
 
-#: src/x_attribedit.c:565
-msgid "Replace"
-msgstr "Reemplazar"
+#: src/x_attribedit.c:465
+msgid "Replace existing attributes"
+msgstr ""
 
 #: src/x_autonumber.c:411
 msgid ""
@@ -2356,6 +2363,15 @@ msgstr "Descartando página [%s]\n"
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "Cerrando [%s]\n"
+
+#~ msgid "Add/Edit Attribute"
+#~ msgstr "Añadir/Editar propiedad"
+
+#~ msgid "Multiple Attach"
+#~ msgstr "Asociado múltiple"
+
+#~ msgid "Replace"
+#~ msgstr "Reemplazar"
 
 #~ msgid "ERROR: NULL object in o_delete_end!\n"
 #~ msgstr "ERROR: en la función o_delete_end, ¡el objeto es NULL!\n"

@@ -2514,14 +2514,14 @@ void x_dialog_hotkeys (TOPLEVEL *w_current)
 
     /* the columns */
     renderer = gtk_cell_renderer_text_new ();
-    column = gtk_tree_view_column_new_with_attributes ("Function",
+    column = gtk_tree_view_column_new_with_attributes (_("Function"),
 						       renderer,
 						       "text",
 						       0,
 						       NULL);
     gtk_tree_view_append_column (GTK_TREE_VIEW(treeview), column);
     renderer = gtk_cell_renderer_text_new ();
-    column = gtk_tree_view_column_new_with_attributes ("Keystroke(s)",
+    column = gtk_tree_view_column_new_with_attributes (_("Keystroke(s)"),
 						       renderer,
 						       "text",
 						       1,

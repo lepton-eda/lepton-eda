@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-schem-CVS-2002-06-12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-10 17:06-0500\n"
+"POT-Creation-Date: 2007-02-11 08:44+0100\n"
 "PO-Revision-Date: 2002-09-06 20:11+CEST\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev@seul.org \n"
@@ -1323,7 +1323,7 @@ msgstr "Fout bij het lezen van het init scm bestand [%s]\n"
 msgid "Picture"
 msgstr "Afbeelding"
 
-#: src/o_picture.c:680 src/x_attribedit.c:153
+#: src/o_picture.c:680 src/x_attribedit.c:137
 #, fuzzy, c-format
 msgid "ERROR: NULL object!\n"
 msgstr "FOUT: NULL object!\n"
@@ -1382,68 +1382,74 @@ msgstr ""
 "  -h            Help; deze mededeling\n"
 "\n"
 
-#: src/x_attribedit.c:138
+#: src/x_attribedit.c:122
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr "Kreeg ongeldige toon optie; standaardwaarde is toon beide\n"
 
-#: src/x_attribedit.c:363
+#: src/x_attribedit.c:323
 msgid "Single Attribute Editor"
 msgstr "Enkelvoudige Attribuur Bewerker"
 
-#: src/x_attribedit.c:424
+#: src/x_attribedit.c:346
 #, fuzzy
-msgid "Add/Edit Attribute"
-msgstr "Plaats/Bewerk Attribuut"
+msgid "<b>Edit Attribute</b>"
+msgstr "Berwerk Attribuut"
 
-#: src/x_attribedit.c:466 src/x_multiattrib.c:1558
-msgid "Visible"
-msgstr "Zichtbaar"
-
-#: src/x_attribedit.c:477 src/x_multiattrib.c:1530
+#: src/x_attribedit.c:348
 #, fuzzy
-msgid "Value:"
-msgstr "Waarde"
+msgid "<b>Add Attribute</b>"
+msgstr "Plaats Attribuut"
 
-#: src/x_attribedit.c:487 src/x_multiattrib.c:1511
+#: src/x_attribedit.c:364 src/x_multiattrib.c:1511
 #, fuzzy
 msgid "Name:"
 msgstr "Naam:"
 
-#: src/x_attribedit.c:509
+#: src/x_attribedit.c:380 src/x_multiattrib.c:1530
+#, fuzzy
+msgid "Value:"
+msgstr "Waarde"
+
+#: src/x_attribedit.c:395 src/x_multiattrib.c:1558
+msgid "Visible"
+msgstr "Zichtbaar"
+
+#: src/x_attribedit.c:415
 #, fuzzy
 msgid "Show Value Only"
 msgstr "Toon Alleen Waarde"
 
-#: src/x_attribedit.c:512
+#: src/x_attribedit.c:417
 #, fuzzy
 msgid "Show Name Only"
 msgstr "Toon Alleen Naam"
 
-#: src/x_attribedit.c:515 src/x_multiattrib.c:1161
+#: src/x_attribedit.c:419 src/x_multiattrib.c:1161
 #, fuzzy
 msgid "Show Name & Value"
 msgstr "Toon Naam & Waarde"
 
-#: src/x_attribedit.c:522
-msgid "Multiple Attach"
-msgstr "Meervoudig Toevoegen"
+#: src/x_attribedit.c:426
+#, fuzzy
+msgid "<b>Attach Options</b>"
+msgstr "Akties"
 
-#: src/x_attribedit.c:539
+#: src/x_attribedit.c:441
 msgid "All"
 msgstr "Alle"
 
-#: src/x_attribedit.c:548 src/x_compselect.c:745
+#: src/x_attribedit.c:449 src/x_compselect.c:745
 msgid "Components"
 msgstr "Componenten"
 
-#: src/x_attribedit.c:557 src/x_window.c:566
+#: src/x_attribedit.c:457 src/x_window.c:566
 msgid "Nets"
 msgstr "Draden"
 
-#: src/x_attribedit.c:565
-msgid "Replace"
-msgstr "Vervangen"
+#: src/x_attribedit.c:465
+msgid "Replace existing attributes"
+msgstr ""
 
 #: src/x_autonumber.c:411
 msgid ""
@@ -2418,6 +2424,16 @@ msgstr "Pagina [%s] wegdoen\n"
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "Sluiten [%s]\n"
+
+#, fuzzy
+#~ msgid "Add/Edit Attribute"
+#~ msgstr "Plaats/Bewerk Attribuut"
+
+#~ msgid "Multiple Attach"
+#~ msgstr "Meervoudig Toevoegen"
+
+#~ msgid "Replace"
+#~ msgstr "Vervangen"
 
 #~ msgid "ERROR: NULL object in o_delete_end!\n"
 #~ msgstr "FOUT: NULL object in o_delete_end!\n"

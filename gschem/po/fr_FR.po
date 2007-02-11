@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-10 17:06-0500\n"
+"POT-Creation-Date: 2007-02-11 08:44+0100\n"
 "PO-Revision-Date: 2006-10-21 01:19+0200\n"
 "Last-Translator: Patrick Bernaud <b-patrick@wanadoo.fr>\n"
 "Language-Team: French\n"
@@ -1257,7 +1257,7 @@ msgstr "Échec lors du chargement de l'image : %s"
 msgid "Picture"
 msgstr "Image"
 
-#: src/o_picture.c:680 src/x_attribedit.c:153
+#: src/o_picture.c:680 src/x_attribedit.c:137
 #, c-format
 msgid "ERROR: NULL object!\n"
 msgstr "ERREUR : object==NULL !\n"
@@ -1317,64 +1317,71 @@ msgstr ""
 "  -h            Aide, affichage de ce message\n"
 "\n"
 
-#: src/x_attribedit.c:138
+#: src/x_attribedit.c:122
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr ""
 "Option d'affichage invalide ; changement pour affichage du nom et de la "
 "valeur\n"
 
-#: src/x_attribedit.c:363
+#: src/x_attribedit.c:323
 msgid "Single Attribute Editor"
 msgstr "Éditeur d'attribut"
 
-#: src/x_attribedit.c:424
-msgid "Add/Edit Attribute"
-msgstr "Ajouter/Éditer l'attribut"
+#: src/x_attribedit.c:346
+#, fuzzy
+msgid "<b>Edit Attribute</b>"
+msgstr "Éditer l'attribut"
 
-#: src/x_attribedit.c:466 src/x_multiattrib.c:1558
-msgid "Visible"
-msgstr "Visible"
+#: src/x_attribedit.c:348
+#, fuzzy
+msgid "<b>Add Attribute</b>"
+msgstr "Ajouter un attribut"
 
-#: src/x_attribedit.c:477 src/x_multiattrib.c:1530
-msgid "Value:"
-msgstr "Valeur :"
-
-#: src/x_attribedit.c:487 src/x_multiattrib.c:1511
+#: src/x_attribedit.c:364 src/x_multiattrib.c:1511
 msgid "Name:"
 msgstr "Nom :"
 
-#: src/x_attribedit.c:509
+#: src/x_attribedit.c:380 src/x_multiattrib.c:1530
+msgid "Value:"
+msgstr "Valeur :"
+
+#: src/x_attribedit.c:395 src/x_multiattrib.c:1558
+msgid "Visible"
+msgstr "Visible"
+
+#: src/x_attribedit.c:415
 msgid "Show Value Only"
 msgstr "Montrer seulement la valeur"
 
-#: src/x_attribedit.c:512
+#: src/x_attribedit.c:417
 msgid "Show Name Only"
 msgstr "Montrer seulement le nom"
 
-#: src/x_attribedit.c:515 src/x_multiattrib.c:1161
+#: src/x_attribedit.c:419 src/x_multiattrib.c:1161
 msgid "Show Name & Value"
 msgstr "Montrer le nom et la valeur"
 
-#: src/x_attribedit.c:522
-msgid "Multiple Attach"
-msgstr "Attachements Multiples"
+#: src/x_attribedit.c:426
+#, fuzzy
+msgid "<b>Attach Options</b>"
+msgstr "Options"
 
-#: src/x_attribedit.c:539
+#: src/x_attribedit.c:441
 msgid "All"
 msgstr "Tous"
 
-#: src/x_attribedit.c:548 src/x_compselect.c:745
+#: src/x_attribedit.c:449 src/x_compselect.c:745
 msgid "Components"
 msgstr "Composants"
 
-#: src/x_attribedit.c:557 src/x_window.c:566
+#: src/x_attribedit.c:457 src/x_window.c:566
 msgid "Nets"
 msgstr "Pistes"
 
-#: src/x_attribedit.c:565
-msgid "Replace"
-msgstr "Remplacer"
+#: src/x_attribedit.c:465
+msgid "Replace existing attributes"
+msgstr ""
 
 #: src/x_autonumber.c:411
 msgid ""
@@ -2324,6 +2331,15 @@ msgstr "Abandonne page [%s]\n"
 msgid "Closing [%s]\n"
 msgstr "Ferme [%s]\n"
 
+#~ msgid "Add/Edit Attribute"
+#~ msgstr "Ajouter/Éditer l'attribut"
+
+#~ msgid "Multiple Attach"
+#~ msgstr "Attachements Multiples"
+
+#~ msgid "Replace"
+#~ msgstr "Remplacer"
+
 #~ msgid "ERROR: NULL object in o_delete_end!\n"
 #~ msgstr "ERREUR : object==NULL dans o_delete_end !\n"
 
@@ -2530,9 +2546,6 @@ msgstr "Ferme [%s]\n"
 
 #~ msgid "Deattach"
 #~ msgstr "Détacher"
-
-#~ msgid "Edit Attribute"
-#~ msgstr "Éditer l'attribut"
 
 #~ msgid "Add new attribute..."
 #~ msgstr "Ajouter un nouvel attribut..."

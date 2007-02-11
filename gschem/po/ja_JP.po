@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-10 17:06-0500\n"
+"POT-Creation-Date: 2007-02-11 08:44+0100\n"
 "PO-Revision-Date: 2002-10-05 20:00+0900\n"
 "Last-Translator: MIYAMOTO Takanori <pnms@jcom.home.ne.jp>\n"
 "Language-Team: japanese <ja@li.org>\n"
@@ -1256,7 +1256,7 @@ msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
 msgid "Picture"
 msgstr ""
 
-#: src/o_picture.c:680 src/x_attribedit.c:153
+#: src/o_picture.c:680 src/x_attribedit.c:137
 #, c-format
 msgid "ERROR: NULL object!\n"
 msgstr ""
@@ -1306,62 +1306,69 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/x_attribedit.c:138
+#: src/x_attribedit.c:122
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr ""
 
-#: src/x_attribedit.c:363
+#: src/x_attribedit.c:323
 msgid "Single Attribute Editor"
 msgstr "シングルアトルビュートエディタ"
 
-#: src/x_attribedit.c:424
-msgid "Add/Edit Attribute"
+#: src/x_attribedit.c:346
+#, fuzzy
+msgid "<b>Edit Attribute</b>"
+msgstr "アトリビュート編集"
+
+#: src/x_attribedit.c:348
+#, fuzzy
+msgid "<b>Add Attribute</b>"
 msgstr "アトリビュート追加/編集"
 
-#: src/x_attribedit.c:466 src/x_multiattrib.c:1558
-msgid "Visible"
-msgstr "表示"
-
-#: src/x_attribedit.c:477 src/x_multiattrib.c:1530
-msgid "Value:"
-msgstr "値:"
-
-#: src/x_attribedit.c:487 src/x_multiattrib.c:1511
+#: src/x_attribedit.c:364 src/x_multiattrib.c:1511
 msgid "Name:"
 msgstr "名前:"
 
-#: src/x_attribedit.c:509
+#: src/x_attribedit.c:380 src/x_multiattrib.c:1530
+msgid "Value:"
+msgstr "値:"
+
+#: src/x_attribedit.c:395 src/x_multiattrib.c:1558
+msgid "Visible"
+msgstr "表示"
+
+#: src/x_attribedit.c:415
 msgid "Show Value Only"
 msgstr "値のみ表示"
 
-#: src/x_attribedit.c:512
+#: src/x_attribedit.c:417
 msgid "Show Name Only"
 msgstr "名前のみ表示"
 
-#: src/x_attribedit.c:515 src/x_multiattrib.c:1161
+#: src/x_attribedit.c:419 src/x_multiattrib.c:1161
 msgid "Show Name & Value"
 msgstr "名前と値を表示"
 
-#: src/x_attribedit.c:522
-msgid "Multiple Attach"
-msgstr "多重アタッチ"
+#: src/x_attribedit.c:426
+#, fuzzy
+msgid "<b>Attach Options</b>"
+msgstr "オプション"
 
-#: src/x_attribedit.c:539
+#: src/x_attribedit.c:441
 msgid "All"
 msgstr "すべて"
 
-#: src/x_attribedit.c:548 src/x_compselect.c:745
+#: src/x_attribedit.c:449 src/x_compselect.c:745
 msgid "Components"
 msgstr "部品"
 
-#: src/x_attribedit.c:557 src/x_window.c:566
+#: src/x_attribedit.c:457 src/x_window.c:566
 msgid "Nets"
 msgstr "ネット"
 
-#: src/x_attribedit.c:565
-msgid "Replace"
-msgstr "置換"
+#: src/x_attribedit.c:465
+msgid "Replace existing attributes"
+msgstr ""
 
 #: src/x_autonumber.c:411
 msgid ""
@@ -2324,6 +2331,15 @@ msgstr "ページを破棄しています。[%s]\n"
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "閉じています。[%s]\n"
+
+#~ msgid "Add/Edit Attribute"
+#~ msgstr "アトリビュート追加/編集"
+
+#~ msgid "Multiple Attach"
+#~ msgstr "多重アタッチ"
+
+#~ msgid "Replace"
+#~ msgstr "置換"
 
 #, fuzzy
 #~ msgid "Component [%s] has been embedded\n"

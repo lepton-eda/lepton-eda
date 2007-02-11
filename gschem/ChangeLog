@@ -1,5 +1,9 @@
 2007-02-11  Werner Hoch <werner.ho@gmx.de>
 
+	* po/de_DE.po: updated german translation
+
+	* po/*po: updated files to add the strings for the attribute editor
+
 	* include/prototypes.h: removed unused declarations
 
 	* src/x_attribedit.c: switched the single attribut editor to GtkDialog.
