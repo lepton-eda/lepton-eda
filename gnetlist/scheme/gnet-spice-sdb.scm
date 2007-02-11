@@ -385,10 +385,10 @@
 	    ;; (display "In get-file-type, first-char = .\n")  ;; DEBUG stuff
 	    (cond
 
-	      ((string-ci=? (string-pad-right file-line 7) ".subckt")  ;; found .subckt as first line.
+	      ((string-ci=? (gnetlist:safe-string-head file-line 7) ".subckt")  ;; found .subckt as first line.
 	       ".SUBCKT" )
 
-	      ((string-ci=? (string-pad-right file-line 6) ".model")   ;; found .model as first line.
+	      ((string-ci=? (gnetlist:safe-string-head file-line 6) ".model")   ;; found .model as first line.
 	       ".MODEL"  )
 	     
 	      (else "OTHER")   ;; first . spice card is neither .model nor .subckt

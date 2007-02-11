@@ -86,6 +86,16 @@
 )
 
 
+;;  This fcn returns the first len characters of the string str.  If
+;;  str has less than len characters, it returns the whole string
+;;  (but doesn't choke)
+(define safe-string-head
+  (lambda (str len)
+    (substring str 0 (min len (string-length str)))
+  )
+)
+
+
 ;; get all packages for a particular schematic page 
 ;; eventually placeholder will be either the hierarchical level or something 
 ;; of the sort
