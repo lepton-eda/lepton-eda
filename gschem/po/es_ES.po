@@ -1,7 +1,7 @@
 # Spanish/Spain translation of gschem.
 # Copyright (C) 2005-2006 Carlos Nieves Onega
 # This file is distributed under the same license as the gschem package.
-# Carlos Nieves Ónega <cnieves@iespana.es>, 2005-2006.
+# Carlos Nieves Ónega <cnieves@iespana.es>, 2005-2007.
 # 
 # 
 msgid ""
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-02-11 08:44+0100\n"
-"PO-Revision-Date: 2006-10-19 19:07+0200\n"
+"PO-Revision-Date: 2007-02-11 19:58+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain\n"
 "MIME-Version: 1.0\n"
@@ -521,9 +521,9 @@ msgid "Invalid size [%d] passed to text-size\n"
 msgstr "Se ha especificado un tamaño no válido [%d] a la función text-size\n"
 
 #: src/g_rc.c:682
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid size [%f] passed to postscript-font-scale\n"
-msgstr "Se ha especificado un tamaño no válido [%d] a la función text-size\n"
+msgstr "Se ha especificado un tamaño no válido [%f] a la función postscript-font-scale\n"
 
 #: src/g_rc.c:725
 #, c-format
@@ -762,12 +762,12 @@ msgstr "Repetir/"
 
 #: src/i_basic.c:738 src/i_basic.c:743
 msgid "OFF"
-msgstr ""
+msgstr "NO"
 
 #: src/i_basic.c:747
 #, c-format
 msgid "Grid(%s, %s)"
-msgstr ""
+msgstr "Rejilla(%s, %s)"
 
 #: src/i_callbacks.c:131
 #, c-format
@@ -1363,14 +1363,12 @@ msgid "Single Attribute Editor"
 msgstr "Editor de una única propiedad"
 
 #: src/x_attribedit.c:346
-#, fuzzy
 msgid "<b>Edit Attribute</b>"
-msgstr "Editar propiedades"
+msgstr "<b>Editar propiedades</b>"
 
 #: src/x_attribedit.c:348
-#, fuzzy
 msgid "<b>Add Attribute</b>"
-msgstr "Añadir propiedad"
+msgstr "<b>Añadir propiedad</b>"
 
 #: src/x_attribedit.c:364 src/x_multiattrib.c:1511
 msgid "Name:"
@@ -1397,9 +1395,8 @@ msgid "Show Name & Value"
 msgstr "Mostrar nombre y valor"
 
 #: src/x_attribedit.c:426
-#, fuzzy
 msgid "<b>Attach Options</b>"
-msgstr "Opciones"
+msgstr "<b>Opciones de asociación</b>"
 
 #: src/x_attribedit.c:441
 msgid "All"
@@ -1415,54 +1412,54 @@ msgstr "Conexiones"
 
 #: src/x_attribedit.c:465
 msgid "Replace existing attributes"
-msgstr ""
+msgstr "Reemplazar las propiedades existentes"
 
 #: src/x_autonumber.c:411
 msgid ""
 "slotted object without slot attribute may cause problems when autonumbering "
 "slots\n"
 msgstr ""
+"Un componente con varios elementos sin la propiedad 'slot' puede causar problemas al "
+"autonumerar los números de elemento\n"
 
 #: src/x_autonumber.c:426
 #, c-format
 msgid ""
 "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
 msgstr ""
+"La duplicidad de la propiedad 'slot' puede causar problemas: [nombre del símbolo=%s, número=%d, slot=%d]\n"
 
 #: src/x_autonumber.c:696
 msgid "No searchstring given in autonumber text.\n"
-msgstr ""
+msgstr "No se ha especificado una cadena de búsqueda para autonumerar texto.\n"
 
 #: src/x_autonumber.c:747
 msgid "No '*' or '?' given at the end of the autonumber text.\n"
-msgstr ""
+msgstr "No se ha especificado '*' o '?' al final del texto a autonumerar.\n"
 
 #: src/x_autonumber.c:880
-#, fuzzy
 msgid "Diagonal"
-msgstr "diagonal"
+msgstr "Diagonal"
 
 #: src/x_autonumber.c:881
 msgid "Top to bottom"
-msgstr ""
+msgstr "De arriba hacia abajo"
 
 #: src/x_autonumber.c:881
 msgid "Bottom to top"
-msgstr ""
+msgstr "De abajo hacia arriba"
 
 #: src/x_autonumber.c:882
-#, fuzzy
 msgid "Left to right"
-msgstr "de izquierda a derecha"
+msgstr "De izquierda hacia derecha"
 
 #: src/x_autonumber.c:882
 msgid "Right to left"
-msgstr ""
+msgstr "De derecha hacia izquierda"
 
 #: src/x_autonumber.c:883
-#, fuzzy
 msgid "File order"
-msgstr "Orden de archivos"
+msgstr "Orden de archivos:"
 
 #: src/x_autonumber.c:1219
 msgid "Autonumber text"
@@ -1470,63 +1467,55 @@ msgstr "Autoenumerar texto"
 
 #: src/x_autonumber.c:1237
 msgid "<b>Scope</b>"
-msgstr ""
+msgstr "<b>Ámbito</b>"
 
 #: src/x_autonumber.c:1259
-#, fuzzy
 msgid "Search for:"
-msgstr "Ámbito de búsqueda"
+msgstr "Buscar:"
 
 #: src/x_autonumber.c:1273
-#, fuzzy
 msgid "Autonumber text in:"
-msgstr "Autoenumerar texto"
+msgstr "Autoenumerar texto en:"
 
 #: src/x_autonumber.c:1280
 msgid "Skip numbers found in:"
-msgstr ""
+msgstr "Ignorar números encontrados en:"
 
 #: src/x_autonumber.c:1292 src/x_autonumber.c:1301
-#, fuzzy
 msgid "Selected objects"
-msgstr "objetos seleccionados"
+msgstr "Objetos seleccionados"
 
 #: src/x_autonumber.c:1293 src/x_autonumber.c:1302
-#, fuzzy
 msgid "Current page"
-msgstr "hoja actual"
+msgstr "Hoja actual"
 
 #: src/x_autonumber.c:1294 src/x_autonumber.c:1303
-#, fuzzy
 msgid "Whole hierarchy"
-msgstr "Jerarquía"
+msgstr "Jerarquía completa"
 
 #: src/x_autonumber.c:1305
 msgid "Overwrite existing numbers"
-msgstr ""
+msgstr "Sobreescribir los números existentes"
 
 #: src/x_autonumber.c:1310
-#, fuzzy
 msgid "<b>Options</b>"
-msgstr "Opciones"
+msgstr "<b>Opciones</b>"
 
 #: src/x_autonumber.c:1332
-#, fuzzy
 msgid "Starting number:"
-msgstr "Número inicial"
+msgstr "Número inicial:"
 
 #: src/x_autonumber.c:1339
-#, fuzzy
 msgid "Sort order:"
-msgstr "Método de ordenación"
+msgstr "Método de ordenación:"
 
 #: src/x_autonumber.c:1360
 msgid "Remove numbers"
-msgstr ""
+msgstr "Borrar los números"
 
 #: src/x_autonumber.c:1364
 msgid "Automatic slotting"
-msgstr ""
+msgstr "Asignar números de elemento automáticamente"
 
 #: src/x_color.c:59 src/x_color.c:96
 #, c-format
@@ -1570,9 +1559,8 @@ msgid "Select Component..."
 msgstr "Seleccionar componente..."
 
 #: src/x_compselect.c:775
-#, fuzzy
 msgid "Filter:"
-msgstr "Filtro"
+msgstr "Filtro:"
 
 #: src/x_compselect.c:839 src/x_fileselect.c:123
 msgid "Preview"
@@ -1630,33 +1618,28 @@ msgid "Upper Right"
 msgstr "Arriba a la derecha"
 
 #: src/x_dialog.c:493
-#, fuzzy
 msgid "Edit Text Properties"
-msgstr "Editar el tamaño del texto"
+msgstr "Editar las propiedades del texto"
 
 #: src/x_dialog.c:520
-#, fuzzy
 msgid "<b>Text Content</b>"
-msgstr "Opciones"
+msgstr "<b>Contenido del texto</b>"
 
 #: src/x_dialog.c:552
-#, fuzzy
 msgid "<b>Text Properties</b>"
-msgstr "Opciones"
+msgstr "<b>Propiedades del texto</b>"
 
 #: src/x_dialog.c:567
-#, fuzzy
 msgid "Color:"
-msgstr "Color"
+msgstr "Color:"
 
 #: src/x_dialog.c:577
 msgid "Size:"
-msgstr ""
+msgstr "Tamaño:"
 
 #: src/x_dialog.c:586
-#, fuzzy
 msgid "Alignment:"
-msgstr "Editar la alineación del texto"
+msgstr "Alineación:"
 
 #: src/x_dialog.c:640
 msgid "Solid"
@@ -1692,24 +1675,20 @@ msgid "Edit Line Width & Type"
 msgstr "Editar ancho y tipo de línea"
 
 #: src/x_dialog.c:883
-#, fuzzy
 msgid "Width:"
-msgstr "Ancho"
+msgstr "Ancho:"
 
 #: src/x_dialog.c:887 src/x_print.c:341
-#, fuzzy
 msgid "Type:"
-msgstr "Tipo"
+msgstr "Tipo:"
 
 #: src/x_dialog.c:891
-#, fuzzy
 msgid "Dash Length:"
-msgstr "Longitud de la línea en la discontinuidad"
+msgstr "Longitud de la línea en la discontinuidad:"
 
 #: src/x_dialog.c:895
-#, fuzzy
 msgid "Dash Space:"
-msgstr "Espaciado de la discontinuidad"
+msgstr "Espaciado de la discontinuidad:"
 
 #: src/x_dialog.c:1000
 msgid "Hollow"
@@ -1728,48 +1707,40 @@ msgid "Hatch"
 msgstr "Trama"
 
 #: src/x_dialog.c:1262
-#, fuzzy
 msgid "Fill Type:"
-msgstr "Tipo de relleno"
+msgstr "Tipo de relleno:"
 
 #: src/x_dialog.c:1266
-#, fuzzy
 msgid "Line Width:"
-msgstr "Ancho de línea"
+msgstr "Ancho de línea:"
 
 #: src/x_dialog.c:1270
-#, fuzzy
 msgid "Angle 1:"
-msgstr "Ángulo 1"
+msgstr "Ángulo 1:"
 
 #: src/x_dialog.c:1274
-#, fuzzy
 msgid "Pitch 1:"
-msgstr "Separación 1"
+msgstr "Separación 1:"
 
 #: src/x_dialog.c:1278
-#, fuzzy
 msgid "Angle 2:"
-msgstr "Ángulo 2"
+msgstr "Ángulo 2:"
 
 #: src/x_dialog.c:1282
-#, fuzzy
 msgid "Pitch 2:"
-msgstr "Separación 2"
+msgstr "Separación 2:"
 
 #: src/x_dialog.c:1444
 msgid "Arc Params"
 msgstr "Parámetros de arco"
 
 #: src/x_dialog.c:1477
-#, fuzzy
 msgid "Start Angle:"
-msgstr "Ángulo de comienzo"
+msgstr "Ángulo de comienzo:"
 
 #: src/x_dialog.c:1487
-#, fuzzy
 msgid "Degrees of Sweep:"
-msgstr "Grados de barrido"
+msgstr "Grados de barrido:"
 
 #: src/x_dialog.c:1578
 msgid ""
@@ -1784,38 +1755,33 @@ msgid "Text Size"
 msgstr "Tamaño de texto"
 
 #: src/x_dialog.c:1669
-#, fuzzy
 msgid "Enter new text size:"
-msgstr "Introduzca nuevo tamaño de texto"
+msgstr "Introduzca nuevo tamaño de texto:"
 
 #: src/x_dialog.c:1743
-#, fuzzy
 msgid "Snap Size"
-msgstr "Rejilla"
+msgstr "Tamaño de la rejilla"
 
 #: src/x_dialog.c:1766
-#, fuzzy
 msgid "Enter new snap grid spacing:"
-msgstr "Introduzca el nuevo espaciado de la rejilla"
+msgstr "Introduzca el nuevo espaciado de la rejilla:"
 
 #: src/x_dialog.c:1839
 msgid "Edit slot number"
 msgstr "Editar número de elemento"
 
 #: src/x_dialog.c:1863
-#, fuzzy
 msgid "Edit slot number:"
-msgstr "Editar número de elemento"
+msgstr "Editar número de elemento:"
 
 #: src/x_dialog.c:1944
-#, fuzzy
 msgid "<b>gEDA: GPL Electronic Design Automation</b>"
-msgstr "gEDA: Automatización de Diseño Electrónico GPL"
+msgstr "<b>gEDA: Automatización de Diseño Electrónico GPL</b>"
 
 #: src/x_dialog.c:1948
-#, fuzzy, c-format
+#, c-format
 msgid "<b>gschem version %s%s</b>"
-msgstr "versión de gschem %s%s"
+msgstr "<b>versión de gschem %s%s</b>"
 
 #: src/x_dialog.c:1954
 msgid ""
@@ -1852,12 +1818,11 @@ msgstr "Editar color"
 
 #: src/x_dialog.c:2354
 msgid "Object color:"
-msgstr ""
+msgstr "Color del componente:"
 
 #: src/x_dialog.c:2470
-#, fuzzy
 msgid "Hotkeys"
-msgstr "Teclas rápidas..."
+msgstr "Teclas rápidas"
 
 #: src/x_dialog.c:2848
 msgid "Generic String"
@@ -1868,9 +1833,8 @@ msgid "Enter new string."
 msgstr "Introduzca nueva cadena."
 
 #: src/x_dialog.c:2958
-#, fuzzy
 msgid "Find Text"
-msgstr "Encontrar texto"
+msgstr "Encontrar texto:"
 
 #: src/x_dialog.c:2982
 msgid "Text to find:"
@@ -1881,16 +1845,14 @@ msgid "descend into hierarchy"
 msgstr "Descender en la jerarquía"
 
 #: src/x_dialog.c:3056
-#, fuzzy
 msgid "Hide Text"
-msgstr "Ocultar texto"
+msgstr "Ocultar texto:"
 
 #: src/x_dialog.c:3080
 msgid "Hide text starting with:"
 msgstr "Ocultar texto que comienza por:"
 
 #: src/x_dialog.c:3148
-#, fuzzy
 msgid "Show Text"
 msgstr "Mostrar texto"
 
@@ -1969,23 +1931,20 @@ msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"
 msgstr "x_image_lowlevel: Imposible obtener pixbuf de la ventana de gschem.\n"
 
 #: src/x_image.c:402
-#, fuzzy
 msgid "Select Image Filename..."
-msgstr "Seleccionar componente..."
+msgstr "Seleccionar archivo de la imagen..."
 
 #: src/x_image.c:445
 msgid "Write Image..."
 msgstr "Guardar imagen..."
 
 #: src/x_image.c:468
-#, fuzzy
 msgid "Width x Height:"
-msgstr "Ancho x Altura"
+msgstr "Anchura x Altura:"
 
 #: src/x_image.c:479
-#, fuzzy
 msgid "Filename:"
-msgstr "Nombre de archivo"
+msgstr "Nombre de archivo:"
 
 #: src/x_log.c:231
 msgid "Status"
@@ -2137,9 +2096,8 @@ msgid "Right click on the filename for more options..."
 msgstr "Pulse con el botón derecho para ver más opciones..."
 
 #: src/x_print.c:90
-#, fuzzy
 msgid "Select PostScript Filename..."
-msgstr "Guardar PostScript como..."
+msgstr "Seleccionar archivo PostScript..."
 
 #: src/x_print.c:194
 msgid "Extents with margins"
@@ -2166,28 +2124,24 @@ msgid "Settings"
 msgstr "Opciones"
 
 #: src/x_print.c:330
-#, fuzzy
 msgid "Output paper size:"
-msgstr "Tamaño de papel"
+msgstr "Tamaño de papel:"
 
 #: src/x_print.c:352
-#, fuzzy
 msgid "Orientation:"
-msgstr "Orientación"
+msgstr "Orientación:"
 
 #: src/x_print.c:364
 msgid "Destination"
 msgstr "Destino"
 
 #: src/x_print.c:377
-#, fuzzy
 msgid "File:"
-msgstr "Archivo"
+msgstr "Archivo:"
 
 #: src/x_print.c:407
-#, fuzzy
 msgid "Command:"
-msgstr "Comando"
+msgstr "Comando:"
 
 #: src/x_print.c:766
 msgid "No print destination specified\n"
@@ -2204,6 +2158,8 @@ msgid ""
 "Error printing to file '%s'\n"
 "Check the log window for more information"
 msgstr ""
+"Error al imprimir al fichero '%s'\n"
+"Vea la ventana de registro para más información"
 
 #: src/x_print.c:789
 #, c-format
@@ -2364,85 +2320,3 @@ msgstr "Descartando página [%s]\n"
 msgid "Closing [%s]\n"
 msgstr "Cerrando [%s]\n"
 
-#~ msgid "Add/Edit Attribute"
-#~ msgstr "Añadir/Editar propiedad"
-
-#~ msgid "Multiple Attach"
-#~ msgstr "Asociado múltiple"
-
-#~ msgid "Replace"
-#~ msgstr "Reemplazar"
-
-#~ msgid "ERROR: NULL object in o_delete_end!\n"
-#~ msgstr "ERROR: en la función o_delete_end, ¡el objeto es NULL!\n"
-
-#~ msgid "Component [%s] has been embedded\n"
-#~ msgstr "Se ha incrustado el componente [%s]\n"
-
-#~ msgid "Picture [%s] has been embedded\n"
-#~ msgstr "Se ha incrustado la imagen [%s]\n"
-
-#~ msgid ""
-#~ "Could not find component [%s], while trying to unembed. Component is "
-#~ "still embedded\n"
-#~ msgstr ""
-#~ "No se ha podido encontrar el componente [%s] al intentar desincrustar. El "
-#~ "componente todavía está incrustado.\n"
-
-#~ msgid "Component [%s] has been successfully unembedded\n"
-#~ msgstr "El componente [%s] se ha desincrustado satisfactoriamente\n"
-
-#~ msgid "Picture [%s] has been unembedded\n"
-#~ msgstr "Se ha desincrustado la imagen [%s]\n"
-
-#~ msgid "Please select a picture file."
-#~ msgstr "Seleccione una imagen."
-
-#~ msgid "Edit Text Color"
-#~ msgstr "Editar color del texto"
-
-#~ msgid "Line Type"
-#~ msgstr "Tipo de línea"
-
-#~ msgid "String too long... hack!\n"
-#~ msgstr "Cadena muy larga... ¡a programar!\n"
-
-#~ msgid "Ran out of space in the hotkey buffer...\n"
-#~ msgstr ""
-#~ "No hay más espacio para la memoria intermedia de teclas rápidas...\n"
-
-#~ msgid "Function : keystroke(s)"
-#~ msgstr "Función : Tecla(s) rápida(s)"
-
-#~ msgid "Height"
-#~ msgstr "Altura"
-
-#~ msgid "Script Execute..."
-#~ msgstr "Ejecutar subprograma..."
-
-#~ msgid ""
-#~ "Warning: negative numbers not allowed in the autonumber_text dialog\n"
-#~ msgstr ""
-#~ "Advertencia: no se admiten números negativos en la ventana de "
-#~ "autonumeración de texto\n"
-
-#~ msgid "selection"
-#~ msgstr "Selección"
-
-#~ msgid "search text"
-#~ msgstr "Buscar texto"
-
-#~ msgid "hierarchical sheets"
-#~ msgstr "hojas jerárquicas"
-
-#~ msgid "unnumbered"
-#~ msgstr "sin numerar"
-
-#~ msgid "all"
-#~ msgstr "todo"
-
-#~ msgid "options"
-#~ msgstr "Opciones"
-
-#~ msgid "top down"
-#~ msgstr "de arriba a abajo"
