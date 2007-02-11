@@ -201,7 +201,7 @@ void s_toplevel_menubar_file_save(TOPLEVEL *pr_current)
   printf("In s_toplevel_menubar_file_save, about to save out the project\n");
 #endif
 
-  s_toplevel_gtksheet_to_toplevel();
+  s_toplevel_gtksheet_to_toplevel();  /* Dumps sheet data into TOPLEVEL */
   s_page_save_all(pr_current);  /* saves all pages in design */
 
   sheet_head->CHANGED = FALSE;
@@ -724,6 +724,8 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   gint visibility = 0;
   gint show_name_value = 0;
 
+  gint status;
+
 #if DEBUG
   printf("-----  Entering s_toplevel_update_component_attribs_in_toplevel.\n");
 #endif
@@ -746,16 +748,31 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 	&& a_current->object->text != NULL) {  /* found a name=value attribute pair. */
       /* may need to check more thoroughly here. . . . */
       old_name_value_pair = g_strdup(a_current->object->text->string);
+
+      /* Else clause is suggestion from Ales */
+#if 1
       old_attrib_name = u_basic_breakup_string(old_name_value_pair, '=', 0);
-      /* Don't put "refdes" or "slot" into list.  Don't put old name=value pair into list if a new
-       * one is already in there. */
       if ( (strcmp(old_attrib_name, "refdes") != 0) &&
 	   (strcmp(old_attrib_name, "slot") != 0) &&
 	   (s_attrib_name_in_list(new_comp_attrib_list, old_attrib_name) == FALSE) ) {
 	s_string_list_add_item(complete_comp_attrib_list, &count, old_name_value_pair);
       }
-      g_free(old_name_value_pair);
-      g_free(old_attrib_name);
+#else
+      status = o_attrib_get_name_value(old_name_value_pair, &old_attrib_name, &old_attrib_value);
+      if (status == 0) {
+        /* Don't put "refdes" or "slot" into list.  Don't put old name=value pair into list if a new
+         * one is already in there. */
+        if ( (strcmp(old_attrib_name, "refdes") != 0) &&
+	     (strcmp(old_attrib_name, "slot") != 0) &&
+	     (s_attrib_name_in_list(new_comp_attrib_list, old_attrib_name) == FALSE) ) {
+	  s_string_list_add_item(complete_comp_attrib_list, &count, old_name_value_pair);
+        }
+	if (old_attrib_name) g_free (old_attrib_name);
+	if (old_attrib_value) g_free (old_attrib_value);
+      }
+ #endif
+     g_free(old_name_value_pair);
+     g_free(old_attrib_name);
     }
     a_current = a_current->next;
   }  /* while (a_current != NULL) */
@@ -776,15 +793,16 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   while (local_list != NULL) {
 
 #if DEBUG
-    printf("\n\n");
+  printf("\n\n");
   printf("        In s_toplevel_update_component_attribs_in_toplevel, handling entry in complete list %s .\n", 
 	 local_list->data);
 #endif
 
   /*  Now get the old attrib name & value from complete_comp_attrib_list 
    *  and value from o_current  */
-  old_attrib_name = u_basic_breakup_string(local_list->data, '=', 0);
+  old_attrib_name = u_basic_breakup_string(local_list->data, '=', 0); 
   old_attrib_value = o_attrib_search_name_single_count(o_current, old_attrib_name, 0);
+
 #if DEBUG
   printf("        In s_toplevel_update_component_attribs_in_toplevel, old name = \"%s\" .\n", 
 	 old_attrib_name);
@@ -792,9 +810,8 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 	 old_attrib_value);
 #endif
 
-
   /*  Next try to get this attrib from new_comp_attrib_list  */
-  new_attrib_name = u_basic_breakup_string(local_list->data, '=', 0);      
+  new_attrib_name = u_basic_breakup_string(local_list->data, '=', 0);
   if (s_string_list_in_list(new_comp_attrib_list, local_list->data)) {
     new_attrib_value = s_misc_remaining_string(local_list->data, '=', 1);      
   } else {
@@ -1027,6 +1044,8 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
   char *new_attrib_value;
   char *old_attrib_value;
 
+  gint status;
+
 #if DEBUG
   printf("-----  Entering s_toplevel_update_pin_attribs_in_toplevel.\n");
 #endif
@@ -1038,15 +1057,16 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
 #if DEBUG
   printf("        In s_toplevel_update_pin_attribs_in_toplevel, handling entry in master list %s .\n", new_name_value_pair);
 #endif
-    new_attrib_name = u_basic_breakup_string(new_name_value_pair, '=', 0);
-    new_attrib_value = u_basic_breakup_string(new_name_value_pair, '=', 1); /* don't use s_misc_remaining_string
-									     * since pinattribs are only foo=bar. */
-    if (strlen(new_attrib_value) == 0) {
-      if (new_attrib_value != NULL)
-	g_free(new_attrib_value);   
-      new_attrib_value = NULL;  /* s_misc_remaining_string doesn't return NULL for empty substring. */
-    }
-    old_attrib_value = o_attrib_search_name_single_count(o_pin, new_attrib_name, 0);
+
+  new_attrib_name = u_basic_breakup_string(new_name_value_pair, '=', 0);
+  new_attrib_value = u_basic_breakup_string(new_name_value_pair, '=', 1);
+
+  if (strlen(new_attrib_value) == 0) {
+    if (new_attrib_value != NULL)
+      g_free(new_attrib_value);   
+    new_attrib_value = NULL;  /* s_misc_remaining_string doesn't return NULL for empty substring. */
+  }
+  old_attrib_value = o_attrib_search_name_single_count(o_pin, new_attrib_name, 0);
                                                                                                        
     /* -------  Four cases to consider: Case 1: old and new attribs exist ----- */
     if ( (old_attrib_value != NULL) && (new_attrib_value != NULL) && (strlen(new_attrib_value) != 0) ) {

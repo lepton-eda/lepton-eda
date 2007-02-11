@@ -1,3 +1,6 @@
+2007-2-11 Stuart Brorson <sdb@cloud9.net>
+	* src/s_toplevel.c: Fixed bug I introduced at code sprint.
+	
 2007-02-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/listsort.c, src/s_string_list.c: Applied patch by DJ:
