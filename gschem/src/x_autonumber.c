@@ -893,7 +893,7 @@ void autonumber_sortorder_create(TOPLEVEL *w_current, GtkWidget *sort_order)
     g_free(path);
     gtk_list_store_append(store, &iter);
     gtk_list_store_set(store, &iter, 
-		       0, names[i],
+		       0, _(names[i]),
 		       1, pixbuf,
 		       -1);
   }

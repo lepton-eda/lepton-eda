@@ -1,3 +1,7 @@
+2007-02-12  Werner Hoch <werner.ho@gmx.de>
+
+	* src/x_autonumber.c: added gettext makro _() for sort options
+	 
 2007-02-11 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* po/es_ES.po: Updated spanish translation.
