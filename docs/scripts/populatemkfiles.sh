@@ -62,8 +62,8 @@ do_work()
 }
 
 pwd=`pwd`
-thisprogram=/home/ahvezda/2gaf/docs/scripts/populatemkfiles.sh
-basedir=/home/ahvezda/2gaf/docs/wiki
+thisprogram=/home/ahvezda/1gaf/docs/scripts/populatemkfiles.sh
+basedir=/home/ahvezda/1gaf/docs/wiki
 
 subdir=`echo $pwd | awk -F$basedir '{print $2}'`
 

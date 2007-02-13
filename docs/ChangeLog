@@ -9,6 +9,8 @@
 	* scripts/copywip.sh: Added some incomplete logic to copy new content
 	from wip to wiki (only works on level 1 and level 2 directories)
 
+	* wiki/: Updated Makefile.am files with new content.  
+
 2007-02-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Bumped package version to 20070216.
