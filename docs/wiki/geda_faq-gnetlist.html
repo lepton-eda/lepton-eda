@@ -12,7 +12,7 @@
   <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
   <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:faq-gnetlist?do=export_xhtml" />
   <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:faq-gnetlist?do=export_raw" />
-  <meta name="date" content="2006-05-08T16:39:15-0400" />
+  <meta name="date" content="2007-01-15T08:19:25-0500" />
   <meta name="robots" content="index,follow" />
   <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
   <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
@@ -26,6 +26,7 @@
 <ul class="toc">
 <li class="level1"><div class="li"><span class="li"><a href="#gnetlist_build_run-time_problems" class="toc">Gnetlist build/run-time problems</a></span></div>
 <ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#i_get_a_parenthesis_mismatch_error_when_running_gnetlist._what_s_up" class="toc">I get a &quot;parenthesis mismatch&quot; error when running gnetlist.  What's up?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#the_gnetlist_bom_backend_does_not_work._what_is_wrong" class="toc">The gnetlist bom backend does not work. What is wrong?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#some_gnetlist_backends_overflow_the_stack._how_do_i_solve_this" class="toc">Some gnetlist backends overflow the stack. How do I solve this?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#gnetlist_has_created_a_netlist_with_duplicate_pins" class="toc">gnetlist has created a netlist with duplicate pins!?</a></span></div></li></ul>
@@ -37,7 +38,41 @@
 <div class="level1">
 
 </div>
-<!-- SECTION [1-47] -->
+<!-- SECTION [1-48] -->
+<h2><a name="i_get_a_parenthesis_mismatch_error_when_running_gnetlist._what_s_up" id="i_get_a_parenthesis_mismatch_error_when_running_gnetlist._what_s_up">I get a &quot;parenthesis mismatch&quot; error when running gnetlist.  What's up?</a></h2>
+<div class="level2">
+
+<p>
+ Starting with Fedorea Core 6 and SuSE 10.2, many users have reported an error which looks like this:
+</p>
+<pre class="code">
+$gnetlist -g spice-sdb -o TwoStageAmp.cir TwoStageAmp.sch
+Command line passed = gnetlist -g spice-sdb -o TwoStageAmp.cir TwoStageAmp.sch
+gEDA/gnetlist version 20061020
+gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.
+This is free software, and you are welcome to redistribute it under certain
+conditions; please see the COPYING file for more details.
+
+Remember to check that your schematic has no errors using the drc2 backend.
+You can do it running 'gnetlist -g drc2 your_schematic.sch -o drc_output.txt'
+and seeing the contents of the file drc_output.txt.
+
+Loading schematic [/home/nano/TwoStageAmp/TwoStageAmp.sch]
+Probably parenthesis mismatch in /usr/share/gEDA/scheme/gnet-spice-sdb.scm
+Most recently read form: (#@begin #&lt;unspecified&gt;)
+ERROR: Unbound variable: spice-sdb
+</pre>
+
+<p>
+Several gnetlist backends evince this problem, including spice-sdb and drc2.
+</p>
+
+<p>
+This is a bug in guile-1.8.X.  The gEDA developers are working on a fix.  Meanwhile, try to backrev your version of guile to 1.6.7, which is known to work flawlessly with gEDA.
+</p>
+
+</div>
+<!-- SECTION [49-1315] -->
 <h2><a name="the_gnetlist_bom_backend_does_not_work._what_is_wrong" id="the_gnetlist_bom_backend_does_not_work._what_is_wrong">The gnetlist bom backend does not work. What is wrong?</a></h2>
 <div class="level2">
 
@@ -60,7 +95,7 @@ value</font></pre>
 </p>
 
 </div>
-<!-- SECTION [48-576] -->
+<!-- SECTION [1316-1844] -->
 <h2><a name="some_gnetlist_backends_overflow_the_stack._how_do_i_solve_this" id="some_gnetlist_backends_overflow_the_stack._how_do_i_solve_this">Some gnetlist backends overflow the stack. How do I solve this?</a></h2>
 <div class="level2">
 
@@ -80,7 +115,7 @@ If this does not work, then edit the appropriate backend (usually named: gnet-ba
 </p>
 
 </div>
-<!-- SECTION [577-1382] -->
+<!-- SECTION [1845-2650] -->
 <h2><a name="gnetlist_has_created_a_netlist_with_duplicate_pins" id="gnetlist_has_created_a_netlist_with_duplicate_pins">gnetlist has created a netlist with duplicate pins!?</a></h2>
 <div class="level2">
 
@@ -107,6 +142,6 @@ The developers are debating whether or not this is a bug in gnetlist, but for no
 </p>
 
 </div>
-<!-- SECTION [1383-] --></div>
+<!-- SECTION [2651-] --></div>
 </body>
 </html>

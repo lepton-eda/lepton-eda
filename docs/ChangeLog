@@ -1,3 +1,8 @@
+2007-02-12 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* wiki/: Updated wiki snapshot from the live gEDA wiki.  Phase I 
+   	(only changed content; new content coming in next phase).
+
 2007-02-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Bumped package version to 20070216.

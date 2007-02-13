@@ -12,7 +12,7 @@
   <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
   <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:file_format_spec?do=export_xhtml" />
   <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:file_format_spec?do=export_raw" />
-  <meta name="date" content="2006-10-20T23:36:02-0400" />
+  <meta name="date" content="2007-02-12T20:40:36-0500" />
   <meta name="robots" content="noindex,nofollow" />
   <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
   <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
@@ -36,10 +36,7 @@
 <li class="level3"><div class="li"><span class="li"><a href="#picture" class="toc">picture</a></span></div></li>
 <li class="level3"><div class="li"><span class="li"><a href="#box" class="toc">box</a></span></div></li>
 <li class="level3"><div class="li"><span class="li"><a href="#circle" class="toc">circle</a></span></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><span class="li"><a href="#arc" class="toc">arc</a></span></div>
-<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#arc" class="toc">arc</a></span></div></li>
 <li class="level3"><div class="li"><span class="li"><a href="#text" class="toc">text</a></span></div></li>
 <li class="level3"><div class="li"><span class="li"><a href="#net" class="toc">net</a></span></div></li>
 <li class="level3"><div class="li"><span class="li"><a href="#bus" class="toc">bus</a></span></div></li>
@@ -195,7 +192,7 @@ Valid in: Schematic and Symbol files<br/>
 </li>
 <li class="level1"><div class="li"> fileformat version is just an integer with no minor number.</div>
 </li>
-<li class="level1"><div class="li"> Valid versions include: 19990601, 19990610, 19990705, 19990829, 19990919, 19991011, 20000220, 20000704, 20001006, 20001217, 20010304, 20010708, 20010722, 20020209, 20020414, 20020527, 20020825, 20021103, 20030223, 20030525, 20030901, 20040111, 20040710, 20041228, 20050313, 20050820, 20060123, 20060824, 20060906, 20061020</div>
+<li class="level1"><div class="li"> Valid versions include: 19990601, 19990610, 19990705, 19990829, 19990919, 19991011, 20000220, 20000704, 20001006, 20001217, 20010304, 20010708, 20010722, 20020209, 20020414, 20020527, 20020825, 20021103, 20030223, 20030525, 20030901, 20040111, 20040710, 20041228, 20050313, 20050820, 20060123, 20060824, 20060906, 20061020, 20070216</div>
 </li>
 <li class="level1"><div class="li"> <acronym title="Concurrent Versions System">CVS</acronym> or test versions (should not be used): 20030921, 20031004, 20031019, 20031231, 20050814</div>
 </li>
@@ -210,7 +207,7 @@ Valid in: Schematic and Symbol files<br/>
 <pre class="code">v 20040111 1</pre>
 
 </div>
-<!-- SECTION [3505-5269] -->
+<!-- SECTION [3505-5279] -->
 <h3><a name="line" id="line">line</a></h3>
 <div class="level3">
 
@@ -299,16 +296,19 @@ A line segment from (23000, 69000) to (28000, 69000) with color index 3, 40 mils
 </p>
 
 </div>
-<!-- SECTION [5270-6504] -->
+<!-- SECTION [5280-6514] -->
 <h3><a name="picture" id="picture">picture</a></h3>
 <div class="level3">
 
 <p>
 Valid in: Schematic and Symbol files<br/>
- <strong><code>type x1 y1 width height angle ratio mirrored embedded
-filename
-encoded picture data
-encoded picture end</code></strong> 
+ <strong><code>type x1 y1 width height angle ratio mirrored embedded<br/>
+
+filename<br/>
+
+[encoded picture data<br/>
+
+encoded picture end]</code></strong> 
 </p>
 <table class="inline">
 	<tr>
@@ -407,7 +407,7 @@ A picture object with the lower left corner at (16900, 35800). The width of the 
 </p>
 
 </div>
-<!-- SECTION [6505-9290] -->
+<!-- SECTION [6515-9308] -->
 <h3><a name="box" id="box">box</a></h3>
 <div class="level3">
 
@@ -537,7 +537,7 @@ A box with the lower left hand corner at (33000, 67300) and a width and height o
 </p>
 
 </div>
-<!-- SECTION [9291-11497] -->
+<!-- SECTION [9309-11515] -->
 <h3><a name="circle" id="circle">circle</a></h3>
 <div class="level3">
 
@@ -654,9 +654,9 @@ A circle with the center at (38000, 67000) and a radius of 900 mils, color index
 </p>
 
 </div>
-<!-- SECTION [11498-13623] -->
-<h2><a name="arc" id="arc">arc</a></h2>
-<div class="level2">
+<!-- SECTION [11516-13641] -->
+<h3><a name="arc" id="arc">arc</a></h3>
+<div class="level3">
 
 <p>
 Valid in: Schematic and Symbol files<br/>
@@ -751,17 +751,22 @@ dashlength dashspace</code></strong>
 </p>
 
 </div>
-<!-- SECTION [13624-15141] -->
+<!-- SECTION [13642-15157] -->
 <h3><a name="text" id="text">text</a></h3>
 <div class="level3">
 
 <p>
 Valid in: Schematic and Symbol files<br/>
- <strong><code>type x y color size visibility show name value angle alignment num lines
-string line 1
-string line 2
-string line 3
-...
+ <strong><code>type x y color size visibility show_name_value angle alignment num_lines<br/>
+
+string line 1<br/>
+
+string line 2<br/>
+
+string line 3<br/>
+
+...<br/>
+
 string line N</code></strong> 
 </p>
 <table class="inline">
@@ -824,7 +829,7 @@ string line N</code></strong>
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> The show name value is an enumerated type:</div>
+<li class="level1"><div class="li"> The show_name_value is an enumerated type:</div>
 <ul>
 <li class="level2"><div class="li"> SHOW NAME VALUE = 0 (show both name and value of an attribute)</div>
 </li>
@@ -834,7 +839,7 @@ string line N</code></strong>
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> The show name value field is only valid if the string is an attribute (string has to be in the form: name=value to be considered an attribute).</div>
+<li class="level1"><div class="li"> The show_name_value field is only valid if the string is an attribute (string has to be in the form: name=value to be considered an attribute).</div>
 </li>
 <li class="level1"><div class="li"> The angle of the text can only take on one of the following values: 0, 90, 180, 270. A value of 270 will always generate upright text.</div>
 </li>
@@ -882,7 +887,7 @@ This is a similar text object as the above example, however here there are five 
 </p>
 
 </div>
-<!-- SECTION [15142-17785] -->
+<!-- SECTION [15158-17811] -->
 <h3><a name="net" id="net">net</a></h3>
 <div class="level3">
 
@@ -895,7 +900,7 @@ Valid in: Schematic files ONLY<br/>
 		<th>Field</th><th>Type/unit</th><th>Description</th>
 	</tr>
 	<tr>
-		<td>type char N</td>
+		<td>type</td><td>char</td><td>N</td>
 	</tr>
 	<tr>
 		<td>x1</td><td>int/mils</td><td>First X coordinate</td>
@@ -932,7 +937,7 @@ A net segment from (12700, 29400) to (32900, 29400) with color index 4.
 </p>
 
 </div>
-<!-- SECTION [17786-18311] -->
+<!-- SECTION [17812-18337] -->
 <h3><a name="bus" id="bus">bus</a></h3>
 <div class="level3">
 
@@ -945,7 +950,7 @@ Valid in: Schematic files ONLY<br/>
 		<th>Field</th><th>Type/unit</th><th>Description</th>
 	</tr>
 	<tr>
-		<td>type char U</td>
+		<td>type</td><td>char</td><td>U</td>
 	</tr>
 	<tr>
 		<td>x1</td><td>int/mils</td><td>First X coordinate</td>
@@ -989,7 +994,7 @@ A bus segment from (27300, 37400) to (27300, 35300) with color index 3 and no ne
 </p>
 
 </div>
-<!-- SECTION [18312-19243] -->
+<!-- SECTION [18338-19269] -->
 <h3><a name="pin" id="pin">pin</a></h3>
 <div class="level3">
 
@@ -1057,7 +1062,7 @@ A pin from (0, 200) to (200, 200) with color index 1, a regular pin, and the fir
 </p>
 
 </div>
-<!-- SECTION [19244-20240] -->
+<!-- SECTION [19270-20266] -->
 <h3><a name="component" id="component">component</a></h3>
 <div class="level3">
 
@@ -1070,7 +1075,7 @@ Valid in: Schematic files ONLY<br/>
 		<th>Field</th><th>Type/unit</th><th>Description</th>
 	</tr>
 	<tr>
-		<td>type char C</td>
+		<td>type</td><td>char</td><td>C</td>
 	</tr>
 	<tr>
 		<td>x</td><td>int/mils</td><td>Origin X coordinate</td>
@@ -1120,7 +1125,7 @@ A component who&rsquo;s origin is at (18600,19900), is selectable, not rotated, 
 </p>
 
 </div>
-<!-- SECTION [20241-21244] -->
+<!-- SECTION [20267-21270] -->
 <h3><a name="font" id="font">font</a></h3>
 <div class="level3">
 
@@ -1164,7 +1169,7 @@ The above font definition is for the space character.
 </p>
 
 </div>
-<!-- SECTION [21245-21765] -->
+<!-- SECTION [21271-21791] -->
 <h2><a name="colors" id="colors">Colors</a></h2>
 <div class="level2">
 
@@ -1173,7 +1178,7 @@ In the gEDA/gaf schematic and symbol file format colors are specified via an int
 </p>
 <table class="inline">
 	<tr>
-		<th>Color</th><th>Index</th><th>Object type</th>
+		<th>Index</th><th>Object type</th>
 	</tr>
 	<tr>
 		<td>0</td><td>BACKGROUND_COLOR</td>
@@ -1234,29 +1239,29 @@ In the gEDA/gaf schematic and symbol file format colors are specified via an int
 </p>
 
 </div>
-<!-- SECTION [21766-22643] -->
+<!-- SECTION [21792-22663] -->
 <h2><a name="attributes" id="attributes">Attributes</a></h2>
 <div class="level2">
 
 <p>
-Attributes are enclosed in f g and can only be text. Attributes are text items which take on the form name=value. If it doesn&rsquo;t have name=value, it&rsquo;s not an attribute. Attributes are attached to the previous object. Here&rsquo;s an example: 
+Attributes are enclosed in braces {} and can only be text. Attributes are text items which take on the form name=value. If it doesn&rsquo;t have name=value, it&rsquo;s not an attribute. Attributes are attached to the previous object. Here&rsquo;s an example: 
 </p>
 <pre class="code">P 988 500 1300 500 1
-f
+{
 T 1000 570 5 8 1 1 0
 pinseq=3
 T 1000 550 5 8 1 1 0
 pinnumber=3
-g</pre>
+}</pre>
 
 <p>
-The object is a pin which has an attribute pinnumber=3 and pinseq=3 (name=value). You can have multiple text objects (both the T ... and text string are required) in between the f g. As of 20021103, you can only attached text items as attributes. Attaching other object types as attributes is unsupported.<br/>
+The object is a pin which has an attribute pinnumber=3 and pinseq=3 (name=value). You can have multiple text objects (both the T ... and text string are required) in between the braces {}. As of 20021103, you can only attached text items as attributes. Attaching other object types as attributes is unsupported.<br/>
  You can also have &ldquo;toplevel&rdquo; attributes. These attributes are not attached to any object, but instead are just text objects that take on the form name=value.<br/>
  These attributes are useful when you need to convey some info about a schematic page or symbol and need the netlister to have access to this info.
 </p>
 
 </div>
-<!-- SECTION [22644-23619] -->
+<!-- SECTION [22664-23651] -->
 <h2><a name="embedded_components" id="embedded_components">Embedded Components</a></h2>
 <div class="level2">
 
@@ -1275,7 +1280,7 @@ In the example above, <strong>555-1.sym</strong> is the component. The EMBEDDED 
 </p>
 
 </div>
-<!-- SECTION [23620-24379] -->
+<!-- SECTION [23652-24411] -->
 <h2><a name="document_revision_history" id="document_revision_history">Document Revision History</a></h2>
 <div class="level2">
 <table class="inline">
@@ -1295,6 +1300,6 @@ In the example above, <strong>555-1.sym</strong> is the component. The EMBEDDED 
 <br />
 
 </div>
-<!-- SECTION [24380-] --></div>
+<!-- SECTION [24412-] --></div>
 </body>
 </html>
