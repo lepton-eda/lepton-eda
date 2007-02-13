@@ -2,6 +2,12 @@
 
 	* wiki/: Updated wiki snapshot from the live gEDA wiki.  Phase I 
    	(only changed content; new content coming in next phase).
+	
+	* wiki/: Added new content. Phase II (only new content; all makefiles
+	still need to be updated; next phase).
+
+	* scripts/copywip.sh: Added some incomplete logic to copy new content
+	from wip to wiki (only works on level 1 and level 2 directories)
 
 2007-02-10 Ales Hvezda   <ahvezda@geda.seul.org>
 

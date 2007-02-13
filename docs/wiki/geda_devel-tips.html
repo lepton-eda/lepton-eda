@@ -1,0 +1,718 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>geda:devel-tips</title>
+  <meta name="generator" content="DokuWiki Release 2006-03-09" />
+  <link rel="start" href="http://geda.seul.org/wiki/" />
+  <link rel="contents" href="http://geda.seul.org/wiki/geda:devel-tips?do=index" title="" />
+  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:devel-tips?do=export_xhtml" />
+  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:devel-tips?do=export_raw" />
+  <meta name="date" content="2007-02-11T05:48:13-0500" />
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
+  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+</head>
+<body>
+<div class="dokuwiki export">
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#geda_developer_tips_tricks_and_hints" class="toc">gEDA Developer Tips, tricks and hints</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#how_to_branch_correctly_using_cvs" class="toc">How to branch correctly using CVS</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#doxygen_comments_and_styles" class="toc">Doxygen Comments and styles</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#dialogsdesign_and_behaviour" class="toc">Dialogs: Design and Behaviour</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#dialog_design" class="toc">Dialog Design</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#modal_or_nonmodal_dialogs" class="toc">Modal or Nonmodal dialogs</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#where_to_place_the_dialog" class="toc">Where to place the dialog</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#placing_dialogs_in_front_of_their_parent_window" class="toc">Placing dialogs in front of their parent window</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#dialog_design_of_the_current_dialogs" class="toc">Dialog design of the current dialogs</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#source_template_for_simple_dialogs" class="toc">Source template for simple dialogs</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#current_dialog_issues_in_gschem" class="toc">Current Dialog Issues in Gschem</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+
+<h1><a name="geda_developer_tips_tricks_and_hints" id="geda_developer_tips_tricks_and_hints">gEDA Developer Tips, tricks and hints</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION [1-53] -->
+<h2><a name="how_to_branch_correctly_using_cvs" id="how_to_branch_correctly_using_cvs">How to branch correctly using CVS</a></h2>
+<div class="level2">
+
+<p>
+ Here&rsquo;s a summary of what should happen with development on a branch that  is intended to later be merged to the trunk.  Suppose the branch is  called &ldquo;mine&rdquo;.
+</p>
+
+<p>
+1) tag the repository (trunk) to create a branch point tag: 
+</p>
+<pre class="code"> cvs tag mine-base </pre>
+
+<p>
+ 2) branch 
+</p>
+<pre class="code"> cvs tag -b -r mine-base mine</pre>
+
+<p>
+ What step #1 does is to keep track of where the &ldquo;mine&rdquo; branch started <br/>
+ from.  The &ldquo;-r mine-base&rdquo; in step #2 says to create the branch starting <br/>
+ from the tag &ldquo;mine-base&rdquo;.  It is important to do this because you need<br/>
+ to be able to know where each file is rooted (i.e., what version in the <br/>
+ trunk it is derived from).
+</p>
+
+<p>
+Usually, it is a good idea to periodically merge changes which have taken <br/>
+ place on the trunk to the branch. This will reduce the amount of work when <br/>
+ the work on the branch is ready to go back to the trunk.
+</p>
+
+<p>
+# go to where the trunk is checked out and update it  
+</p>
+<pre class="code"> cd /to/my/trunk/sources
+ cvs update -PdA</pre>
+
+<p>
+ # create a temporary tag in case someone commits stuff while you&rsquo;re<br/>
+  # in the middle of this procedure.  This keeps you from losing anything. 
+</p>
+<pre class="code"> cvs tag merge-mine</pre>
+
+<p>
+ # go to your branch source tree
+</p>
+<pre class="code"> 
+ cd /to/my/branch/sources
+ cvs update -Pd</pre>
+
+<p>
+ # the following says to apply the changes that have taken place on<br/>
+  # the trunk between the version tagged with &ldquo;mine-base&rdquo; and &ldquo;merge-mine&rdquo;<br/>
+  # to your branch source tree 
+</p>
+<pre class="code"> cvs update -j mine-base -j merge-mine -dP</pre>
+
+<p>
+ # if all goes well, you&rsquo;ll have no conflicts.  It is not uncommon <br/>
+ # for there to be some cases where you have to resolve conflicts by<br/>
+  # hand.  In this case the affected files will have a special comment<br/>
+  # showing what your file on the branch had and what the file tagged as<br/>
+  # merge-mine had.  You, as the programmer, have to figure out what is<br/>
+  # correct.  Once this is all done, proceed.<br/>
+ 
+</p>
+
+<p>
+# checkin with a message like &ldquo;sync with trunk&rdquo; or<br/>
+  # &ldquo;pull up revs #### from the trunk&rdquo; (if you were pulling up<br/>
+  # a specific change). 
+</p>
+<pre class="code"> cvs ci</pre>
+
+<p>
+ # Now we move the branch point tag to the temporary merge tag<br/>
+  # This is because we have changed what rev each file in the branch<br/>
+  # is based on in the trunk.  This is known as re-rooting. 
+</p>
+<pre class="code"> cvs tag -F -r merge-mine mine-base</pre>
+
+<p>
+ # now we don&rsquo;t need the temporary merge tag anymore so remove it 
+</p>
+<pre class="code"> cvs tag -d merge-mine</pre>
+
+<p>
+ When it is time to merge changes that have taken place on a branch back<br/>
+ to the trunk (usually marking the end of that branch), first do a final <br/>
+ trunk &rarr; branch merge as mentioned above. Then do a branch &rarr; trunk merge.
+</p>
+
+<p>
+Now for a branch to trunk merge you&rsquo;d do 
+</p>
+<pre class="code"> cd /to/my/trunk/sources
+ cvs update -PdA
+ cvs update -j mine-base -j mine -dP</pre>
+
+<p>
+ # resolve conflicts 
+</p>
+<pre class="code"> cvs ci
+ cvs tag -F mine-base</pre>
+
+<p>
+ This takes any changes between &ldquo;mine-base&rdquo; and &ldquo;mine&rdquo; and tries to apply <br/>
+ it to the trunk.  If it all goes cleanly, you just check it in otherwise you <br/>
+ have to resolve conflicts.  Then you move the branch point tag because the trunk<br/>
+ now reflects the lastest in the branch.
+</p>
+
+<p>
+The above was contributed by Dan McMahill
+</p>
+
+</div>
+<!-- SECTION [54-3116] -->
+<h2><a name="doxygen_comments_and_styles" id="doxygen_comments_and_styles">Doxygen Comments and styles</a></h2>
+<div class="level2">
+
+<p>
+ Any volunteer for writing some notes?
+</p>
+<ul>
+<li class="level1"><div class="li"> which keywords to use</div>
+</li>
+<li class="level1"><div class="li"> a template for a function</div>
+</li>
+<li class="level1"><div class="li"> a template for structs?</div>
+</li>
+<li class="level1"><div class="li"> bug, todo and fixme tags</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [3117-3310] -->
+<h2><a name="dialogsdesign_and_behaviour" id="dialogsdesign_and_behaviour">Dialogs: Design and Behaviour</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION [3311-3353] -->
+<h3><a name="dialog_design" id="dialog_design">Dialog Design</a></h3>
+<div class="level3">
+
+<p>
+There&rsquo;s a nice document from the gnome guys called <a href="http://developer.gnome.org/projects/gup/hig/2.0/" class="urlextern" title="http://developer.gnome.org/projects/gup/hig/2.0/"  rel="nofollow"> Gnome HIG</a>. There are several suggestions on how to design dialogs and how they should behave.
+</p>
+
+<p>
+<strong> The dialog design is mostly a matter of taste:</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> alignment of elements. See <a href="http://developer.gnome.org/projects/gup/hig/2.0/design-window.html" class="urlextern" title="http://developer.gnome.org/projects/gup/hig/2.0/design-window.html"  rel="nofollow"> Window Layout</a></div>
+</li>
+<li class="level1"><div class="li"> right alignment of dialog buttons</div>
+</li>
+<li class="level1"><div class="li"> some spacing around the dialog (but how much?)</div>
+</li>
+<li class="level1"><div class="li"> some spacing between the elements (vertical and horizontal)</div>
+</li>
+<li class="level1"><div class="li"> option groups with frames or indentation?</div>
+</li>
+<li class="level1"><div class="li"> frame labels or bold headlines?</div>
+</li>
+</ul>
+
+<p>
+ <strong>Misc:</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> with a <a href="http://www.chipx86.com/wiki/Libsexy#SexyIconEntry" class="urlextern" title="http://www.chipx86.com/wiki/Libsexy#SexyIconEntry"  rel="nofollow"> libsexy widget</a> it would be possible to place an icon inside the text entry this would be usefull for some dialogs: </div>
+<ul>
+<li class="level3"><div class="li"> the filter entry in the component select dialog</div>
+</li>
+<li class="level3"><div class="li"> the file select in the print dialog</div>
+</li>
+<li class="level3"><div class="li"> the file select in the export png dialog</div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [3354-4328] -->
+<h3><a name="modal_or_nonmodal_dialogs" id="modal_or_nonmodal_dialogs">Modal or Nonmodal dialogs</a></h3>
+<div class="level3">
+
+<p>
+A modal dialog is required whenever the main application provides data for the dialog. 
+</p>
+<pre class="code">Example: 
+  The dialog is called with a selection list and the dialog only should operate on this selection.</pre>
+
+<p>
+ A modal dialog is OK too, if the dialog is only called very seldom. The file open dialog could be nonmodal because it does not require any input from the application. 
+</p>
+
+<p>
+A modal dialog is not OK if there is a lot of user interaction with the dialog. The component selection is a good example.
+</p>
+
+</div>
+<!-- SECTION [4329-4859] -->
+<h3><a name="where_to_place_the_dialog" id="where_to_place_the_dialog">Where to place the dialog</a></h3>
+<div class="level3">
+
+<p>
+A dialog can be put on different places in on the screen. A list of possible places can be found in the <a href="http://developer.gnome.org/doc/API/2.0/gtk/gtk-Standard-Enumerations.html#GtkWindowPosition" class="urlextern" title="http://developer.gnome.org/doc/API/2.0/gtk/gtk-Standard-Enumerations.html#GtkWindowPosition"  rel="nofollow"> GtkReference</a>
+</p>
+
+<p>
+The current dialogs are placed either on the mouse position (GTK_WIN_POS_MOUSE) or at no preset position (GTK_WIN_POS_NONE). The Gnome HID does not say anything about that topic.
+</p>
+
+<p>
+The default setting is GTK_WIN_POS_NONE for GtkWindow see <a href="http://developer.gnome.org/doc/API/2.0/gtk/GtkWindow.html#GtkWindow--window-position" class="urlextern" title="http://developer.gnome.org/doc/API/2.0/gtk/GtkWindow.html#GtkWindow--window-position"  rel="nofollow"> GtkWindow</a>. The default for GtkDialog is GTK_WIN_POS_CENTER_ON_PARENT (<a href="http://cvs.gnome.org/viewcvs/gtk%2B/gtk/gtkdialog.c" class="urlextern" title="http://cvs.gnome.org/viewcvs/gtk%2B/gtk/gtkdialog.c"  rel="nofollow"> taken from the GtkDialog source</a>).
+</p>
+
+</div>
+<!-- SECTION [4860-5604] -->
+<h3><a name="placing_dialogs_in_front_of_their_parent_window" id="placing_dialogs_in_front_of_their_parent_window">Placing dialogs in front of their parent window</a></h3>
+<div class="level3">
+
+<p>
+Most of the dialogs are placed in front of their parent window using the transient_for property (see. <a href="http://developer.gnome.org/doc/API/2.0/gtk/GtkWindow.html#gtk-window-set-transient-for" class="urlextern" title="http://developer.gnome.org/doc/API/2.0/gtk/GtkWindow.html#gtk-window-set-transient-for"  rel="nofollow"> GtkReference</a>). This property should be set for all modal dialogs. 
+</p>
+
+<p>
+For nonmodal dialogs the setting of transient_for property is not obvious. While in gschem for example the coord dialog should stay above the parent window, the log window does not need to stay in front of it.
+</p>
+
+<p>
+<strong>Note:</strong> There is an older mechanism that keeps the the dialogs in front of gschem. If the <em>raise-dialog-boxes-on-expose</em> variable is set to <em>enable</em> in one of gschem&rsquo;s configuration files, it may cause problems with some window managers. If dialogs are flickering at 100% CPU load, then disable that setting. 
+</p>
+<pre class="code lisp"><span class="co1">; raise-dialog-boxes-on-expose string</span>
+<span class="co1">;</span>
+<span class="co1">; Controls if dialog boxes are raised whenever an expose event happens</span>
+<span class="co1">; Default is enabled</span>
+<span class="co1">;</span>
+<span class="co1">;(raise-dialog-boxes-on-expose &quot;enabled&quot;)</span>
+<span class="br0">&#40;</span>raise-dialog-boxes-on-expose <span class="st0">"disabled"</span><span class="br0">&#41;</span></pre>
+</div>
+<!-- SECTION [5605-6690] -->
+<h3><a name="dialog_design_of_the_current_dialogs" id="dialog_design_of_the_current_dialogs">Dialog design of the current dialogs</a></h3>
+<div class="level3">
+
+<p>
+<a href="_detail/devel_tips_dialog_picture.html" class="media" title="devel_tips:dialog_picture.png"><img src="_media/devel_tips_dialog_picture.png" class="media" alt="" /></a> 
+</p>
+<ul>
+<li class="level1"><div class="li"> There is some space around the whole dialog (<em>DIALOG_BORDER_SPACING</em>). </div>
+</li>
+<li class="level1"><div class="li"> Some indentation to show the topic group (<em>DIALOG_INDENTATION</em>) below it&rsquo;s bold headline.</div>
+</li>
+<li class="level1"><div class="li"> The vertikal and the horizontal separation is done with <em>DIALOG_H_SPACING</em> and <em>DIALOG_V_SPACING</em>.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [6691-7055] -->
+<h3><a name="source_template_for_simple_dialogs" id="source_template_for_simple_dialogs">Source template for simple dialogs</a></h3>
+<div class="level3">
+
+<p>
+This template is not intented to compile, but you can easily copy the code block that you need.
+</p>
+<pre class="code c"><span class="kw4">void</span> dialog <span class="br0">&#40;</span>TOPLEVEL *w_current<span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  GtkWidget *vbox, *label, *alignment, *table;
+  GtkWidget *dialog;
+&nbsp;
+  <span class="coMULTI">/* only create the dialog if it is not there yet. This usually is a
+     widget pointer in the w_current structure: 
+     dialog = w_current-&gt;tewindow */</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span>!dialog<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    dialog = gtk_dialog_new_with_buttons<span class="br0">&#40;</span>_<span class="br0">&#40;</span><span class="st0">"Dialog title"</span><span class="br0">&#41;</span>,
+					 <span class="coMULTI">/* the parent window or NULL */</span>
+					 GTK_WINDOW<span class="br0">&#40;</span>w_current-&gt;main_window<span class="br0">&#41;</span>, 
+					 <span class="coMULTI">/* dialog properties */</span>
+					 GTK_DIALOG_MODAL, <span class="coMULTI">/* 0 for nonmodal dialogs */</span>
+					 <span class="coMULTI">/* dialog buttons and response signals */</span>
+					 GTK_STOCK_CANCEL,
+					 GTK_RESPONSE_REJECT,
+					 GTK_STOCK_OK,
+					 GTK_RESPONSE_ACCEPT,
+					 <span class="kw2">NULL</span><span class="br0">&#41;</span>;
+&nbsp;
+    <span class="coMULTI">/* set default response signal. This is usually triggered by the 
+       &quot;Return&quot; key */</span>
+    gtk_dialog_set_default_response<span class="br0">&#40;</span>GTK_DIALOG<span class="br0">&#40;</span>dialog<span class="br0">&#41;</span>,
+				    GTK_RESPONSE_ACCEPT<span class="br0">&#41;</span>;
+&nbsp;
+    <span class="coMULTI">/* set the function for handling the button responses and dialog close 
+       for nonmodal dialogs you can use dialog_run() too.*/</span>
+    gtk_signal_connect<span class="br0">&#40;</span>GTK_OBJECT<span class="br0">&#40;</span>dialog<span class="br0">&#41;</span>, <span class="st0">"response"</span>,
+		       GTK_SIGNAL_FUNC<span class="br0">&#40;</span>dialog_response<span class="br0">&#41;</span>, w_current<span class="br0">&#41;</span>;
+&nbsp;
+    <span class="coMULTI">/* where to place the dialog: GTK_WIN_POS_MOUSE or GTK_WIN_POS_NONE */</span>
+    gtk_window_position<span class="br0">&#40;</span>GTK_WINDOW <span class="br0">&#40;</span>dialog<span class="br0">&#41;</span>, GTK_WIN_POS_MOUSE<span class="br0">&#41;</span>;
+&nbsp;
+    <span class="coMULTI">/* set the border spacing and the vbox spacing of the dialog */</span>
+    vbox = GTK_DIALOG<span class="br0">&#40;</span>dialog<span class="br0">&#41;</span>-&gt;vbox;
+    gtk_container_set_border_width<span class="br0">&#40;</span>GTK_CONTAINER<span class="br0">&#40;</span>dialog<span class="br0">&#41;</span>,DIALOG_BORDER_SPACING<span class="br0">&#41;</span>;
+    gtk_box_set_spacing<span class="br0">&#40;</span>GTK_BOX<span class="br0">&#40;</span>vbox<span class="br0">&#41;</span>, DIALOG_V_SPACING<span class="br0">&#41;</span>;
+&nbsp;
+    <span class="coMULTI">/* create a label (with markup) and pack it into the dialog box */</span>
+    label = gtk_label_new<span class="br0">&#40;</span>_<span class="br0">&#40;</span><span class="st0">"&lt;b&gt;Section label&lt;/b&gt;"</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+    gtk_label_set_use_markup<span class="br0">&#40;</span>GTK_LABEL<span class="br0">&#40;</span>label<span class="br0">&#41;</span>, <span class="kw2">TRUE</span><span class="br0">&#41;</span>;
+    gtk_misc_set_alignment<span class="br0">&#40;</span>GTK_MISC<span class="br0">&#40;</span>label<span class="br0">&#41;</span>,<span class="nu0">0</span>,<span class="nu0">0</span><span class="br0">&#41;</span>;
+    gtk_box_pack_start<span class="br0">&#40;</span>GTK_BOX<span class="br0">&#40;</span>vbox<span class="br0">&#41;</span>, label, <span class="kw2">FALSE</span>, <span class="kw2">FALSE</span>, <span class="nu0">0</span><span class="br0">&#41;</span>;
+&nbsp;
+    <span class="coMULTI">/* create a alignment container with the DIALOG_INDENTATION on the left */</span>
+    alignment = gtk_alignment_new<span class="br0">&#40;</span><span class="nu0">0</span>,<span class="nu0">0</span>,<span class="nu0">1</span>,<span class="nu0">1</span><span class="br0">&#41;</span>;
+    gtk_alignment_set_padding<span class="br0">&#40;</span>GTK_ALIGNMENT<span class="br0">&#40;</span>alignment<span class="br0">&#41;</span>, <span class="nu0">0</span>, <span class="nu0">0</span>, 
+			      DIALOG_INDENTATION, <span class="nu0">0</span><span class="br0">&#41;</span>;
+    gtk_box_pack_start<span class="br0">&#40;</span>GTK_BOX<span class="br0">&#40;</span>vbox<span class="br0">&#41;</span>, alignment, <span class="kw2">FALSE</span>, <span class="kw2">FALSE</span>, <span class="nu0">0</span><span class="br0">&#41;</span>;
+&nbsp;
+    <span class="coMULTI">/* a table can store several entries. It is stored in the aligment container.
+       Note: the vertical and horizontal cell spacings */</span>
+    table = gtk_table_new <span class="br0">&#40;</span><span class="nu0">3</span>, <span class="nu0">2</span>, <span class="kw2">FALSE</span><span class="br0">&#41;</span>;
+    gtk_table_set_row_spacings<span class="br0">&#40;</span>GTK_TABLE<span class="br0">&#40;</span>table<span class="br0">&#41;</span>, DIALOG_V_SPACING<span class="br0">&#41;</span>;
+    gtk_table_set_col_spacings<span class="br0">&#40;</span>GTK_TABLE<span class="br0">&#40;</span>table<span class="br0">&#41;</span>, DIALOG_H_SPACING<span class="br0">&#41;</span>;
+    gtk_container_add<span class="br0">&#40;</span>GTK_CONTAINER<span class="br0">&#40;</span>alignment<span class="br0">&#41;</span>, table<span class="br0">&#41;</span>;
+&nbsp;
+    <span class="coMULTI">/* a simple text label in one table cell with left alignment. 
+       Note: the GTK_FILL in the third line is required */</span>
+    label = gtk_label_new<span class="br0">&#40;</span>_<span class="br0">&#40;</span><span class="st0">"Text:"</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+    gtk_misc_set_alignment<span class="br0">&#40;</span>GTK_MISC<span class="br0">&#40;</span>label<span class="br0">&#41;</span>,<span class="nu0">0</span>,<span class="nu0">0</span><span class="br0">&#41;</span>;
+    gtk_table_attach<span class="br0">&#40;</span>GTK_TABLE<span class="br0">&#40;</span>table<span class="br0">&#41;</span>, label, <span class="nu0">0</span>,<span class="nu0">1</span>,<span class="nu0">0</span>,<span class="nu0">1</span>, GTK_FILL,<span class="nu0">0</span>,<span class="nu0">0</span>,<span class="nu0">0</span><span class="br0">&#41;</span>;
+    
+    <span class="coMULTI">/* a simple text entry completes the option row */</span>
+    textentry = gtk_entry_new_with_max_length <span class="br0">&#40;</span><span class="nu0">10</span><span class="br0">&#41;</span>;
+    gtk_table_attach_defaults<span class="br0">&#40;</span>GTK_TABLE<span class="br0">&#40;</span>table<span class="br0">&#41;</span>, textentry, <span class="nu0">1</span>,<span class="nu0">2</span>,<span class="nu0">0</span>,<span class="nu0">1</span><span class="br0">&#41;</span>;
+    gtk_entry_set_activates_default<span class="br0">&#40;</span>GTK_ENTRY<span class="br0">&#40;</span>textentry<span class="br0">&#41;</span>, <span class="kw2">TRUE</span><span class="br0">&#41;</span>;
+&nbsp;
+    <span class="coMULTI">/* ..... more table rows with options, or new sections */</span>
+&nbsp;
+    <span class="coMULTI">/* create references to all widgets that you need later */</span>
+    GLADE_HOOKUP_OBJECT<span class="br0">&#40;</span>dialog, sizeentry,<span class="st0">"textentry"</span><span class="br0">&#41;</span>;
+&nbsp;
+    <span class="coMULTI">/* show all widgets recursivly */</span>
+    gtk_widget_show_all<span class="br0">&#40;</span>dialog<span class="br0">&#41;</span>;
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="kw1">else</span> <span class="br0">&#123;</span> 
+    <span class="coMULTI">/* Dialog is already there. Present it to the user. 
+       This is only required if you have a nonmodal dialog */</span>
+    gtk_window_present<span class="br0">&#40;</span>GTK_WINDOW<span class="br0">&#40;</span>dialog<span class="br0">&#41;</span><span class="br0">&#41;</span>;
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="coMULTI">/* always set the current values to the dialog 
+     If you're placing that part at the end of the dialog function you can 
+     easily create dialogs that can be called, even if they are already open */</span>
+  textentry = g_object_get_data<span class="br0">&#40;</span>G_OBJECT<span class="br0">&#40;</span>dialog<span class="br0">&#41;</span>, <span class="st0">"textentry"</span><span class="br0">&#41;</span>;
+  gtk_entry_set_text<span class="br0">&#40;</span>GTK_ENTRY<span class="br0">&#40;</span>textentry<span class="br0">&#41;</span>, <span class="kw4">string</span><span class="br0">&#41;</span>;
+  <span class="coMULTI">/* select the text region that the user usually likes to overwrite */</span>
+  gtk_entry_select_region<span class="br0">&#40;</span>GTK_ENTRY<span class="br0">&#40;</span>textentry<span class="br0">&#41;</span>, <span class="nu0">0</span>, strlen<span class="br0">&#40;</span><span class="kw4">string</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+<span class="br0">&#125;</span></pre>
+<p>
+The response function for such a dialog may look like this: 
+</p>
+<pre class="code c"><span class="kw4">void</span> dialog_response<span class="br0">&#40;</span>GtkWidget *widget, gint response, TOPLEVEL *w_current<span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  <span class="kw1">switch</span> <span class="br0">&#40;</span>response<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">case</span> GTK_RESPONSE_ACCEPT:
+    <span class="coMULTI">/* apply the dialog settings:
+       just insert your code here if it is short
+       call an extra apply function if the required code is long */</span>
+    <span class="kw2">break</span>;
+  <span class="kw1">case</span> GTK_RESPONSE_REJECT:
+  <span class="kw1">case</span> GTK_RESPONSE_DELETE_EVENT:
+    <span class="coMULTI">/* for modal dialogs just do nothing,
+       for nonmodal dialogs, destroy the dialog and clean up */</span>
+    <span class="kw2">break</span>;
+  <span class="kw1">default</span>:
+    <span class="coMULTI">/* catch wrong signals signals (paranoid error checking ;-)) */</span>
+    <a href="http://www.opengroup.org/onlinepubs/009695399/functions/printf.html"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st0">"dialog_response(): strange signal %d<span class="es0">\n</span>"</span>, response<span class="br0">&#41;</span>;
+  <span class="br0">&#125;</span>
+&nbsp;
+  <span class="coMULTI">/* for nonmodal dialogs just do nothing,
+     for modal dialogs, always destroy the dialog and clean up */</span>
+<span class="br0">&#125;</span></pre>
+</div>
+<!-- SECTION [7056-11883] -->
+<h3><a name="current_dialog_issues_in_gschem" id="current_dialog_issues_in_gschem">Current Dialog Issues in Gschem</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> every dialog has it&rsquo;s own design</div>
+</li>
+<li class="level1"><div class="li"> dialog placement: mouse position or no predefined position?</div>
+</li>
+<li class="level1"><div class="li"> dialogs do not remember their last size, position and contents.</div>
+</li>
+<li class="level1"><div class="li"> missing keyboard shortcuts</div>
+</li>
+</ul>
+
+<p>
+   <strong>Here&rsquo;s a list of things that could be improved:</strong>
+</p>
+
+</div>
+
+<h5><a name="print_dialog" id="print_dialog">Print Dialog</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> change design?</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="write_image" id="write_image">Write Image</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> In the fileselect dialog the default filename is missing if the file does not exist</div>
+</li>
+<li class="level1"><div class="li"> Return key does not work in the filename entry</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="execute_script" id="execute_script">Execute Script</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> </div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="edit_text" id="edit_text">Edit Text</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> some missing keyboard shortcuts</div>
+</li>
+<li class="level1"><div class="li"> add *unmodified* tags if there are multiple selections</div>
+</li>
+<li class="level1"><div class="li"> maybe add some color pixbufs for the color</div>
+</li>
+<li class="level1"><div class="li"> maybe replace the text alignment with nine ratio buttons, toggle buttons with icons or ...</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="color_dialog" id="color_dialog">Color Dialog</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> maybe add some color pixbufs for the color</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="line_width_and_type" id="line_width_and_type">Line Width and Type</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> keyboard shortcuts missing</div>
+</li>
+<li class="level1"><div class="li"> icons for the line type</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="fill_type" id="fill_type">Fill Type</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> keyboard shortcuts missing</div>
+</li>
+<li class="level1"><div class="li"> icons in the fill type</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="translate_symbol" id="translate_symbol">Translate Symbol</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> </div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="page_manager" id="page_manager">Page Manager</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> wrong button order? Depends on whether you think the refresh button is the main action button or just an extra button.</div>
+</li>
+<li class="level1"><div class="li"> Maybe the &ldquo;Return&rdquo; key should trigger Refresh</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="component_selector" id="component_selector">Component Selector</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> strange edit widget when typing and the tree is selected (It&rsquo;s a search helper widget, disable it?!)</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="single_attribut_editor" id="single_attribut_editor">Single Attribut Editor</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> when multiple elements are selected and you call edit (ee) there are a few problems:</div>
+<ul>
+<li class="level3"><div class="li"> if the first object is text, then this dialog is opened (but with the wrong list parameter</div>
+</li>
+<li class="level3"><div class="li"> if the first object is complex then the multiple attribute editor is called</div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="multi_attribute_editor" id="multi_attribute_editor">Multi Attribute Editor</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> </div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="add_text" id="add_text">Add Text</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> </div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="arc_params" id="arc_params">Arc Params</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> add the diameter to the dialog, but select the start angle entry (increment = grid)</div>
+</li>
+<li class="level1"><div class="li"> let &ldquo;ee&rdquo; call that dialog if only a single arc is selected</div>
+</li>
+<li class="level1"><div class="li"> maybe add a section label</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="insert_picture" id="insert_picture">Insert Picture</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> </div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="picture_replace" id="picture_replace">Picture Replace</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> the new picture uses the aspect ratio of the old picture</div>
+</li>
+<li class="level1"><div class="li"> the dialog has lots in common with the Insert Picture dialog. They could use some code together</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="find_text" id="find_text">Find Text</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> manipulates the mouse pointer (maybe the zooming code is the culprit). Just press &ldquo;Return&rdquo; to trigger a FindNext</div>
+</li>
+<li class="level1"><div class="li"> if you select hierarchy and the found text is in a different schematic, then the filename in the title is not updated</div>
+</li>
+<li class="level1"><div class="li"> maybe add an option: &ldquo;Select all matching text objects&rdquo;, disable hierarchy for that feature!</div>
+</li>
+<li class="level1"><div class="li"> <img src="lib/images/smileys/fixme.gif" class="middle" alt="FIXME" /> gschem hangs if you use that dialog with hierarchical schematics that have dependancy loops (e.g. the autonumber test schematics)</div>
+</li>
+<li class="level1"><div class="li"> add an option &ldquo;search for visible text only&rdquo;</div>
+</li>
+<li class="level1"><div class="li"> maybe use regular expressions instead of the substring for the searchtext</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="hide_text" id="hide_text">Hide Text</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> use regular expressions instead of starting substring</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="show_text" id="show_text">Show Text</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> use regular expressions instead of starting substring</div>
+</li>
+<li class="level1"><div class="li"> Maybe merge that dialog together with the &ldquo;Hide Text&rdquo; dialog</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="autonumber_text" id="autonumber_text">Autonumber Text</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> Maybe disable the skip option if the renumber scope is &ldquo;selection&rdquo;. The other skip options (Page and Hierarchy) are really stupid.</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="text_size" id="text_size">Text Size</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> </div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="snap_grid_spacing" id="snap_grid_spacing">Snap Grid Spacing</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> </div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="coord_dialog" id="coord_dialog">Coord Dialog</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> maybe move the world coordinates to the main window status bar</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="about_dialog" id="about_dialog">About Dialog</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> </div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="hotkeys" id="hotkeys">Hotkeys</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> </div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION [11884-] --></div>
+</body>
+</html>
