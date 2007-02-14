@@ -90,7 +90,7 @@ static gchar	*m4_command,
 				*m4_files,
 				*m4_override_file;
 
-static gboolean use_m4 = FALSE;
+static gboolean use_m4 = TRUE;
 
 static gchar	*empty_footprint_name;
 
@@ -1195,9 +1195,9 @@ parse_config(gchar *config, gchar *arg)
 		force_element_files = TRUE;
 		return 0;
 		}
-	if (!strcmp(config, "use-m4") || !strcmp(config, "f"))
+	if (!strcmp(config, "skip-m4") || !strcmp(config, "s"))
 		{
-		use_m4 = TRUE;
+		use_m4 = FALSE;
 		return 0;
 		}
 	if (!strcmp(config, "elements-dir") || !strcmp(config, "d"))
@@ -1323,8 +1323,8 @@ static gchar *usage_string0 =
 "                         so you really shouldn't need this option.\n"
 "   -q, --quiet           Don't tell the user what to do next after running gsch2pcb.\n"
 "\n"
-"   -m, --use-m4          Use m4 when looking for footprints.  The default is to not\n"
-"                         run m4 at all.\n"
+"   -s, --skip-m4         Skip m4 when looking for footprints.  The default is to use\n"
+"                         m4 (which is what previous versions did).\n"
 "       --m4-file F.inc   Use m4 file F.inc in addition to the default m4\n"
 "                         files ./pcb.inc and ~/.pcb/pcb.inc.\n"
 "       --m4-pcbdir D     Use D as the PCB m4 files install directory\n"
