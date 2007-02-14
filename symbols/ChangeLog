@@ -1,3 +1,14 @@
+2007-02-14 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* system-gafrc.in, 
+	  font/o_-double-acute-accent.sym, font/O-double-acute-accent.sym
+	  font/u_-double-acute-accent.sym, font/U-double-acute-accent.sym:
+	  Added the four missing characters for the complete
+	  hungarian charset:
+	    - o and O with double acute accent, 
+	    - u and U with double acute accent. 
+	  They were contributed by Sztrikó János. Thanks.
+	
 2006-02-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Bumped package version to 20070216.

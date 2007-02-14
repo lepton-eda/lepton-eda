@@ -244,10 +244,14 @@
      ("Æ" . "AE-lig.sym")
      ;; O-umlaut finnish/swedish/german
      ("Ö" . "O-diaeresis.sym")
+     ;; O-double_acute_accent hungarian 
+     ("Ő" . "O-double-acute-accent.sym")
      ;; O-slash danish/norwegian
      ("Ø" . "O-slash.sym")
      ;; U-umlaut german
      ("Ü" . "U-diaeresis.sym")
+     ;; U-double_acute_accent hungarian 
+     ("Ű" . "U-double-acute-accent.sym")
      ;; a-umlaut finnish/swedish/german 
      ("ä" . "a_-diaeresis.sym")
      ;; a-ring finnish/swedish/danish/norwegian
@@ -256,10 +260,14 @@
      ("æ" . "ae_-lig.sym")
      ;; o-umlaut finnish/swedish/german 
      ("ö" . "o_-diaeresis.sym")
+     ;; o-double_acute_accent hungarian 
+     ("ő" . "o_-double-acute-accent.sym")
      ;; o-slash danish/norwegian 
      ("ø" . "o_-slash.sym")
      ;; u-umlaut german 
      ("ü" . "u_-diaeresis.sym")
+     ;; u-double_acute_accent hungarian 
+     ("ű" . "u_-double-acute-accent.sym")
      ;; a-acute_accent spanish 
      ("á" . "a_-acute-accent.sym")
      ;; e-acute_accent spanish
