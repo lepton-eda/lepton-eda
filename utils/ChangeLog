@@ -1,3 +1,12 @@
+2007-02-13 20:31  Dan McMahill <danmc>
+
+	* examples/gsch2pcb/project.sample, src/gsch2pcb.c: Following the
+	  principle of least suprise use "--skip-m4" for the command line
+	  and "skip-m4" for the project file that can be included to skip
+	  m4.  This way users don't have to do anything to keep the old
+	  behaviour.  This replaces the rather short lived (< 1 week)
+	  --use-m4.
+
 2007-02-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/gsch2pcb.c: Applied patch by Jeff Mallatt to fix a typo 
