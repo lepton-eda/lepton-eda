@@ -1,3 +1,7 @@
+2007-02-14 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* autogen.sh: Removed debug messages added on 2007-02-10.
+
 2007-02-11 Werner Hoch <werner.ho@gmx.de>
 
 	* src/s_toplevel.c: added missing toplevel inits (tshowwindow, ...)

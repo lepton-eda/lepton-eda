@@ -58,7 +58,6 @@ DIE=0
 
 # check automake version. Test came from gpsd version 2.34. cnieves 2007-02-10
 if [ -z "$NO_AUTOMAKE" ]; then
-  echo Checking automake version...
   AM_VERSION=`automake --version | sed -n -e 's#[^0-9]* \([0-9]*\)\.\([0-9]*\)\.*\([0-9]*\).*$#\1 \2 \3#p'`
   AM_V1=`echo $AM_VERSION | awk '{print $1}'`
   AM_V2=`echo $AM_VERSION | awk '{print $2}'`
@@ -69,12 +68,10 @@ if [ -z "$NO_AUTOMAKE" ]; then
   else
     if [ "$AM_1" -eq "$AM_V1" ]; then
       if [ "$AM_2" -gt "$AM_V2" ]; then
-	echo "version 2 of automake failed"
         AM_ERROR=1 
       else
         if [ "$AM_2" -eq "$AM_V2" ]; then
           if [ -n "$AM_V3" -a "$AM_3" -gt "$AM_V3" ]; then
-   	    echo "version 3 of automake failed"
             AM_ERROR=1 
           fi
         fi
