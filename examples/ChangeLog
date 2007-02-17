@@ -2,6 +2,11 @@
 
 	* configure.ac: Bumped package version to 20070216.
 
+	* RF_Amp/MSA-2643.sch, RF_Amp/Q1.sch, RF_Amp/Q2.sch,
+	TwoStageAmp/TwoStageAmp.sch, gTAG/gTAG-jtagio.sch, gTAG/gTAG-psu.sch,
+	gTAG/gTAG-ucont.sch, gTAG/gTAG.sch, lightning_detector/lightning.sch:
+	Updated schematics to get rid of symbol warnings.
+
 2007-2-10 Stuart Brorson <sdb@cloud9.net)
 	* RF_Amp/MSA-2643.sch: Removed source attribute from 
 	transistors since spice-sdb didn't like hierarchy.

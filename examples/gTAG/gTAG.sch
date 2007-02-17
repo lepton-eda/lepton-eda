@@ -1,4 +1,4 @@
-v 20031011 1
+v 20070216 1
 C 44300 51500 0 0 0 title-A2.sym
 N 52800 59800 54100 59800 4
 {
@@ -55,6 +55,8 @@ T 54400 60100 5 10 1 1 0 0 1
 refdes=S1
 T 54900 57800 5 10 1 1 0 0 1
 source=gTAG-ucont.sch
+T 55400 59200 5 10 0 1 0 0 1
+device=none
 }
 C 49900 58000 1 0 0 gTAG-jtagio.sym
 {
@@ -62,6 +64,8 @@ T 49900 60100 5 10 1 1 0 0 1
 refdes=S2
 T 50500 57800 5 10 1 1 0 0 1
 source=gTAG-jtagio.sch
+T 50500 59400 5 10 0 1 0 0 1
+device=none
 }
 C 58600 58000 1 0 0 gTAG-consio.sym
 {
@@ -69,6 +73,8 @@ T 58900 60100 5 10 1 1 0 0 1
 refdes=S3
 T 59600 57800 5 10 1 1 0 0 1
 source=gTAG-consio.sch
+T 59900 59400 5 10 0 1 0 0 1
+device=none
 }
 C 53900 61700 1 0 0 gTAG-psu.sym
 {
@@ -76,6 +82,8 @@ T 54200 63600 5 10 1 1 0 0 1
 refdes=S4
 T 54800 61500 5 10 1 1 0 0 1
 source=gTAG-psu.sch
+T 55000 63100 5 10 0 1 0 0 1
+device=none
 }
 T 62200 51600 9 10 1 0 0 0 1
 5
@@ -92,6 +100,10 @@ Stefan Petersen (spe@stacken.kth.se)
 T 64500 51900 9 10 1 0 0 0 1
 $Revision$
 C 44600 51700 1 0 0 copyleft.sym
+{
+T 46900 54900 5 10 0 0 0 0 1
+device=none
+}
 N 57300 59800 57400 59800 4
 N 57400 59800 57400 61900 4
 {

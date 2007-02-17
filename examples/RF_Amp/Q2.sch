@@ -1,4 +1,4 @@
-v 20031011 1
+v 20070216 1
 C 65400 52000 1 0 0 BJT_Model.sym
 {
 T 66300 52500 5 10 1 1 0 0 1
@@ -7,6 +7,8 @@ T 65400 52000 5 10 0 1 0 0 1
 model-name=BJTM1_Q2
 T 66200 52000 5 10 1 1 0 0 1
 file=model/BJTM1_Q2.mod
+T 66300 52700 5 10 0 0 0 0 1
+device=NPN_TRANSISTOR
 }
 C 63400 53800 1 0 0 diode-1.sym
 {
@@ -16,6 +18,8 @@ T 63400 53800 5 10 0 1 0 0 1
 model-name=DIODEM1_Q2
 T 62500 53600 5 10 1 1 0 0 1
 file=model/DiodeM1_Q2.mod
+T 63800 54400 5 10 0 0 0 0 1
+device=DIODE
 }
 C 64300 52000 1 270 0 diode-1.sym
 {
@@ -25,6 +29,8 @@ T 64300 52000 5 10 0 1 0 0 1
 model-name=DIODEM2_Q2
 T 63600 51000 5 10 1 1 0 0 1
 file=model/DiodeM2_Q2.mod
+T 64700 52600 5 10 0 0 0 0 1
+device=DIODE
 }
 C 63400 55100 1 0 0 capacitor-1.sym
 {
@@ -32,6 +38,10 @@ T 63600 55600 5 10 1 1 0 0 1
 refdes=Ccox
 T 63400 54900 5 10 1 1 0 0 1
 value=6.598e-14F
+T 63600 55800 5 10 0 0 0 0 1
+device=CAPACITOR
+T 63600 56000 5 10 0 0 0 0 1
+symversion=0.1
 }
 C 63200 50600 1 90 0 capacitor-1.sym
 {
@@ -39,6 +49,10 @@ T 62800 51400 5 10 1 1 180 0 1
 refdes=Ceox
 T 61900 50600 5 10 1 1 0 0 1
 value=2.417e-14F
+T 63400 51300 5 10 0 0 0 0 1
+device=CAPACITOR
+T 63400 51500 5 10 0 0 0 0 1
+symversion=0.1
 }
 C 61700 52400 1 0 0 resistor-1.sym
 {
@@ -48,6 +62,8 @@ T 62200 52700 5 10 1 1 0 0 1
 value=0.463
 T 61500 52200 5 10 1 1 0 0 1
 model=TC1=0.14e-2
+T 62000 52800 5 10 0 0 0 0 1
+device=RESISTOR
 }
 C 66100 55900 1 90 0 resistor-1.sym
 {
@@ -57,6 +73,8 @@ T 66300 56200 5 10 1 1 0 0 1
 value=1.716
 T 66200 55900 5 10 1 1 0 0 1
 model=TC1=0.113e-2
+T 66400 56300 5 10 0 0 0 0 1
+device=RESISTOR
 }
 C 66100 49800 1 90 0 resistor-1.sym
 {
@@ -64,6 +82,8 @@ T 66400 50600 5 10 1 1 180 0 1
 refdes=Re
 T 66100 49800 5 10 1 1 0 0 1
 value=0.443
+T 66400 50200 5 10 0 0 0 0 1
+device=RESISTOR
 }
 N 64500 52500 64500 52000 4
 N 63000 52500 63000 51500 4
@@ -86,16 +106,22 @@ C 66300 57200 1 90 0 spice-subcircuit-IO-1.sym
 {
 T 66050 58050 5 10 1 1 90 0 1
 refdes=P3
+T 67200 57600 5 10 0 1 0 0 1
+device=spice-IO
 }
 C 60500 52800 1 180 0 spice-subcircuit-IO-1.sym
 {
 T 59650 52550 5 10 1 1 180 0 1
 refdes=P2
+T 61400 53200 5 10 0 1 0 0 1
+device=spice-IO
 }
 C 65700 49200 1 270 0 spice-subcircuit-IO-1.sym
 {
 T 65950 48350 5 10 1 1 270 0 1
 refdes=P1
+T 66600 49600 5 10 0 1 0 0 1
+device=spice-IO
 }
 C 68100 55300 1 0 0 spice-subcircuit-LL-1.sym
 {
@@ -103,6 +129,8 @@ T 68200 55700 5 10 1 1 0 0 1
 refdes=A1
 T 68200 55400 5 10 1 1 0 0 1
 model-name=Q2_MSA26F
+T 68200 55600 5 10 0 1 0 0 1
+device=spice-subcircuit-LL
 }
 C 58500 47800 0 0 0 title-B.sym
 T 68700 48700 9 20 1 0 0 0 1
