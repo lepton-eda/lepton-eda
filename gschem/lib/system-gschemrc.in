@@ -280,10 +280,11 @@
 ; raise-dialog-boxes-on-expose string
 ;
 ; Controls if dialog boxes are raised whenever an expose event happens
-; Default is enabled
+; Default is disabled since gtk2 supposedly handles the raising of these
+; dialogs correctly now.
 ;
-(raise-dialog-boxes-on-expose "enabled")
-;(raise-dialog-boxes-on-expose "disabled")
+;(raise-dialog-boxes-on-expose "enabled")
+(raise-dialog-boxes-on-expose "disabled")
 
 ; object-clipping string
 ;
