@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it_IT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-11 08:44+0100\n"
+"POT-Creation-Date: 2007-02-16 21:48-0500\n"
 "PO-Revision-Date: 2006-08-26 21:55+0200\n"
 "Last-Translator: Michele Petrecca <michelinux@alice.it>\n"
 "Language-Team: \n"
@@ -244,7 +244,7 @@ msgstr "Vista"
 msgid "Redraw"
 msgstr "Aggiorna"
 
-#: src/rcstrings.c:61 src/i_callbacks.c:1516 src/i_callbacks.c:1585
+#: src/rcstrings.c:61 src/i_callbacks.c:1534 src/i_callbacks.c:1603
 msgid "Pan"
 msgstr "Pan"
 
@@ -308,11 +308,11 @@ msgstr "Aggiungi"
 msgid "Component..."
 msgstr "Componente..."
 
-#: src/rcstrings.c:79 src/i_callbacks.c:2375 src/i_callbacks.c:2398
+#: src/rcstrings.c:79 src/i_callbacks.c:2393 src/i_callbacks.c:2416
 msgid "Net"
 msgstr "Collegamento"
 
-#: src/rcstrings.c:80 src/i_callbacks.c:2443 src/i_callbacks.c:2467
+#: src/rcstrings.c:80 src/i_callbacks.c:2461 src/i_callbacks.c:2485
 #: src/x_window.c:576
 msgid "Bus"
 msgstr "Bus"
@@ -325,23 +325,23 @@ msgstr "Caratteristica..."
 msgid "Text..."
 msgstr "Testo..."
 
-#: src/rcstrings.c:83 src/i_callbacks.c:2549 src/i_callbacks.c:2569
+#: src/rcstrings.c:83 src/i_callbacks.c:2567 src/i_callbacks.c:2587
 msgid "Line"
 msgstr "Linea"
 
-#: src/rcstrings.c:84 src/i_callbacks.c:2592 src/i_callbacks.c:2612
+#: src/rcstrings.c:84 src/i_callbacks.c:2610 src/i_callbacks.c:2630
 msgid "Box"
 msgstr "Box"
 
-#: src/rcstrings.c:85 src/i_callbacks.c:2669 src/i_callbacks.c:2690
+#: src/rcstrings.c:85 src/i_callbacks.c:2687 src/i_callbacks.c:2708
 msgid "Circle"
 msgstr "Cerchio"
 
-#: src/rcstrings.c:86 src/i_callbacks.c:2713 src/i_callbacks.c:2733
+#: src/rcstrings.c:86 src/i_callbacks.c:2731 src/i_callbacks.c:2751
 msgid "Arc"
 msgstr "Arco"
 
-#: src/rcstrings.c:87 src/i_callbacks.c:2756 src/i_callbacks.c:2776
+#: src/rcstrings.c:87 src/i_callbacks.c:2774 src/i_callbacks.c:2794
 msgid "Pin"
 msgstr "Pin"
 
@@ -373,11 +373,11 @@ msgstr "Documentazione"
 msgid "Attributes"
 msgstr "Caratteristiche"
 
-#: src/rcstrings.c:97 src/i_callbacks.c:3089
+#: src/rcstrings.c:97 src/i_callbacks.c:3107
 msgid "Attach"
 msgstr "Collega"
 
-#: src/rcstrings.c:98 src/i_callbacks.c:3138
+#: src/rcstrings.c:98 src/i_callbacks.c:3156
 msgid "Detach"
 msgstr "Scollega"
 
@@ -779,7 +779,7 @@ msgstr "Non è possibile invocare %s\n"
 msgid "Documentation commands not supported under MinGW.\n"
 msgstr "Comandi documentazione non supportati sotto MinGW.\n"
 
-#: src/i_callbacks.c:190 src/i_callbacks.c:1730
+#: src/i_callbacks.c:190 src/i_callbacks.c:1748
 #, c-format
 msgid "New page created [%s]\n"
 msgstr "Nuova Pagina Creata [%s]\n"
@@ -865,172 +865,172 @@ msgstr "Posizionato"
 msgid "Unembed"
 msgstr "Non posizionato"
 
-#: src/i_callbacks.c:1110
+#: src/i_callbacks.c:1112
 msgid "Update"
 msgstr "Aggiorna"
 
-#: src/i_callbacks.c:1152
+#: src/i_callbacks.c:1170
 msgid "ShowHidden"
 msgstr "Mostra Nascosto"
 
-#: src/i_callbacks.c:1175
+#: src/i_callbacks.c:1193
 msgid "MakeVisible"
 msgstr "Rendi Visibile"
 
-#: src/i_callbacks.c:1291
+#: src/i_callbacks.c:1309
 msgid "Edit Line Type"
 msgstr "Modifica il Tipo di Linea"
 
-#: src/i_callbacks.c:1332 src/x_dialog.c:1231
+#: src/i_callbacks.c:1350 src/x_dialog.c:1231
 msgid "Edit Fill Type"
 msgstr "Modifica il Tipo di Riempimento"
 
-#: src/i_callbacks.c:1619
+#: src/i_callbacks.c:1637
 msgid "Update Cues"
 msgstr ""
 
-#: src/i_callbacks.c:1775
+#: src/i_callbacks.c:1793
 msgid "Really revert page?"
 msgstr "Vuoi veramente ritornare alla pagina precedente?"
 
-#: src/i_callbacks.c:1867
+#: src/i_callbacks.c:1885
 msgid "Copy 1"
 msgstr "Copia 1"
 
-#: src/i_callbacks.c:1886
+#: src/i_callbacks.c:1904
 msgid "Copy 2"
 msgstr "Copia 2"
 
-#: src/i_callbacks.c:1905
+#: src/i_callbacks.c:1923
 msgid "Copy 3"
 msgstr "Copia 3"
 
-#: src/i_callbacks.c:1924
+#: src/i_callbacks.c:1942
 msgid "Copy 4"
 msgstr "Copia 4"
 
-#: src/i_callbacks.c:1943
+#: src/i_callbacks.c:1961
 msgid "Copy 5"
 msgstr "Copia 5"
 
-#: src/i_callbacks.c:1962
+#: src/i_callbacks.c:1980
 msgid "Cut 1"
 msgstr "Taglia 1"
 
-#: src/i_callbacks.c:1981
+#: src/i_callbacks.c:1999
 msgid "Cut 2"
 msgstr "Taglia 2"
 
-#: src/i_callbacks.c:2000
+#: src/i_callbacks.c:2018
 msgid "Cut 3"
 msgstr "Taglia 3"
 
-#: src/i_callbacks.c:2019
+#: src/i_callbacks.c:2037
 msgid "Cut 4"
 msgstr "Taglia 4"
 
-#: src/i_callbacks.c:2038
+#: src/i_callbacks.c:2056
 msgid "Cut 5"
 msgstr "Taglia 5"
 
-#: src/i_callbacks.c:2054
+#: src/i_callbacks.c:2072
 msgid "Paste 1"
 msgstr "Incolla 1"
 
-#: src/i_callbacks.c:2063 src/i_callbacks.c:2087 src/i_callbacks.c:2111
-#: src/i_callbacks.c:2135 src/i_callbacks.c:2159
+#: src/i_callbacks.c:2081 src/i_callbacks.c:2105 src/i_callbacks.c:2129
+#: src/i_callbacks.c:2153 src/i_callbacks.c:2177
 msgid "Empty buffer"
 msgstr "Buffer vuoto"
 
-#: src/i_callbacks.c:2078
+#: src/i_callbacks.c:2096
 msgid "Paste 2"
 msgstr "Incolla 2"
 
-#: src/i_callbacks.c:2102
+#: src/i_callbacks.c:2120
 msgid "Paste 3"
 msgstr "Incolla 3"
 
-#: src/i_callbacks.c:2126
+#: src/i_callbacks.c:2144
 msgid "Paste 4"
 msgstr "Incolla 4"
 
-#: src/i_callbacks.c:2150
+#: src/i_callbacks.c:2168
 msgid "Paste 5"
 msgstr "Incolla 5"
 
-#: src/i_callbacks.c:2296 src/x_window.c:556
+#: src/i_callbacks.c:2314 src/x_window.c:556
 msgid "Component"
 msgstr "Componente"
 
-#: src/i_callbacks.c:2333 src/i_callbacks.c:2353
+#: src/i_callbacks.c:2351 src/i_callbacks.c:2371
 msgid "Attribute"
 msgstr "Caratteristica"
 
-#: src/i_callbacks.c:2842
+#: src/i_callbacks.c:2860
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "Ricerca del sorgente [%s]\n"
 
-#: src/i_callbacks.c:2875 src/i_callbacks.c:2878
+#: src/i_callbacks.c:2893 src/i_callbacks.c:2896
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "Impossibile trovare il sorgente [%s]\n"
 
-#: src/i_callbacks.c:2975
+#: src/i_callbacks.c:2993
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Ricerca del simbolo [%s]\n"
 
-#: src/i_callbacks.c:3178
+#: src/i_callbacks.c:3196
 msgid "ShowN"
 msgstr "MostraN"
 
-#: src/i_callbacks.c:3209
+#: src/i_callbacks.c:3227
 msgid "ShowV"
 msgstr "MostraV"
 
-#: src/i_callbacks.c:3240
+#: src/i_callbacks.c:3258
 msgid "ShowB"
 msgstr "MostraB"
 
-#: src/i_callbacks.c:3272
+#: src/i_callbacks.c:3290
 msgid "VisToggle"
 msgstr "Visibilità Strumenti"
 
-#: src/i_callbacks.c:3294
+#: src/i_callbacks.c:3312
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Spiacente, ma questa non è una funzione del menù opzioni\n"
 
-#: src/i_callbacks.c:3344
+#: src/i_callbacks.c:3362
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr ""
 
-#: src/i_callbacks.c:3347
+#: src/i_callbacks.c:3365
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr ""
 
-#: src/i_callbacks.c:3364
+#: src/i_callbacks.c:3382
 msgid "Grid OFF\n"
 msgstr "Griglia NON ATTIVA\n"
 
-#: src/i_callbacks.c:3367
+#: src/i_callbacks.c:3385
 msgid "Grid ON\n"
 msgstr "Griglia ATTIVA\n"
 
-#: src/i_callbacks.c:3384
+#: src/i_callbacks.c:3402
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "Snap OFF (ATTENZIONE!)\n"
 
-#: src/i_callbacks.c:3387
+#: src/i_callbacks.c:3405
 msgid "Snap ON\n"
 msgstr "Snap ON\n"
 
-#: src/i_callbacks.c:3407
+#: src/i_callbacks.c:3425
 msgid "Rubber band OFF \n"
 msgstr "Rubber band OFF \n"
 
-#: src/i_callbacks.c:3410
+#: src/i_callbacks.c:3428
 msgid "Rubber band ON\n"
 msgstr "Rubber band ON\n"
 
@@ -1820,6 +1820,15 @@ msgstr ""
 #, fuzzy
 msgid "Hotkeys"
 msgstr "Hotkeys..."
+
+#: src/x_dialog.c:2517
+#, fuzzy
+msgid "Function"
+msgstr "Azione"
+
+#: src/x_dialog.c:2524
+msgid "Keystroke(s)"
+msgstr ""
 
 #: src/x_dialog.c:2848
 msgid "Generic String"

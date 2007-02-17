@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-schem-CVS-2002-06-12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-11 08:44+0100\n"
+"POT-Creation-Date: 2007-02-16 21:48-0500\n"
 "PO-Revision-Date: 2007-02-11 15:32+CEST\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev@seul.org \n"
@@ -277,7 +277,7 @@ msgstr "Toon"
 msgid "Redraw"
 msgstr "Hertekenen"
 
-#: src/rcstrings.c:61 src/i_callbacks.c:1516 src/i_callbacks.c:1585
+#: src/rcstrings.c:61 src/i_callbacks.c:1534 src/i_callbacks.c:1603
 msgid "Pan"
 msgstr "Schuif"
 
@@ -351,11 +351,11 @@ msgstr "Toevoegen"
 msgid "Component..."
 msgstr "Component..."
 
-#: src/rcstrings.c:79 src/i_callbacks.c:2375 src/i_callbacks.c:2398
+#: src/rcstrings.c:79 src/i_callbacks.c:2393 src/i_callbacks.c:2416
 msgid "Net"
 msgstr "Draad"
 
-#: src/rcstrings.c:80 src/i_callbacks.c:2443 src/i_callbacks.c:2467
+#: src/rcstrings.c:80 src/i_callbacks.c:2461 src/i_callbacks.c:2485
 #: src/x_window.c:576
 msgid "Bus"
 msgstr "Bus"
@@ -370,23 +370,23 @@ msgstr "Attribuut..."
 msgid "Text..."
 msgstr "Tekst..."
 
-#: src/rcstrings.c:83 src/i_callbacks.c:2549 src/i_callbacks.c:2569
+#: src/rcstrings.c:83 src/i_callbacks.c:2567 src/i_callbacks.c:2587
 msgid "Line"
 msgstr "Lijn"
 
-#: src/rcstrings.c:84 src/i_callbacks.c:2592 src/i_callbacks.c:2612
+#: src/rcstrings.c:84 src/i_callbacks.c:2610 src/i_callbacks.c:2630
 msgid "Box"
 msgstr "Rechthoek"
 
-#: src/rcstrings.c:85 src/i_callbacks.c:2669 src/i_callbacks.c:2690
+#: src/rcstrings.c:85 src/i_callbacks.c:2687 src/i_callbacks.c:2708
 msgid "Circle"
 msgstr "Cirkel"
 
-#: src/rcstrings.c:86 src/i_callbacks.c:2713 src/i_callbacks.c:2733
+#: src/rcstrings.c:86 src/i_callbacks.c:2731 src/i_callbacks.c:2751
 msgid "Arc"
 msgstr "Boog"
 
-#: src/rcstrings.c:87 src/i_callbacks.c:2756 src/i_callbacks.c:2776
+#: src/rcstrings.c:87 src/i_callbacks.c:2774 src/i_callbacks.c:2794
 msgid "Pin"
 msgstr "Pin"
 
@@ -421,11 +421,11 @@ msgstr "Documentatie"
 msgid "Attributes"
 msgstr "Attributen"
 
-#: src/rcstrings.c:97 src/i_callbacks.c:3089
+#: src/rcstrings.c:97 src/i_callbacks.c:3107
 msgid "Attach"
 msgstr "Vastmaken"
 
-#: src/rcstrings.c:98 src/i_callbacks.c:3138
+#: src/rcstrings.c:98 src/i_callbacks.c:3156
 msgid "Detach"
 msgstr "Losmaken"
 
@@ -840,7 +840,7 @@ msgstr "Kan %s niet aanroepen\n"
 msgid "Documentation commands not supported under MinGW.\n"
 msgstr "Documentatie opdrachten niet ondersteund bij MinGW.\n"
 
-#: src/i_callbacks.c:190 src/i_callbacks.c:1730
+#: src/i_callbacks.c:190 src/i_callbacks.c:1748
 #, fuzzy, c-format
 msgid "New page created [%s]\n"
 msgstr "Nieuwe pagina gemaakt [%s]\n"
@@ -927,174 +927,174 @@ msgstr "Insluiten"
 msgid "Unembed"
 msgstr "Uitsluiten"
 
-#: src/i_callbacks.c:1110
+#: src/i_callbacks.c:1112
 #, fuzzy
 msgid "Update"
 msgstr "Vernieuw"
 
-#: src/i_callbacks.c:1152
+#: src/i_callbacks.c:1170
 msgid "ShowHidden"
 msgstr "ZichtbaarVerborgen"
 
-#: src/i_callbacks.c:1175
+#: src/i_callbacks.c:1193
 msgid "MakeVisible"
 msgstr "MaakZichtbaar"
 
-#: src/i_callbacks.c:1291
+#: src/i_callbacks.c:1309
 msgid "Edit Line Type"
 msgstr "Bewerk Lijn Type"
 
-#: src/i_callbacks.c:1332 src/x_dialog.c:1231
+#: src/i_callbacks.c:1350 src/x_dialog.c:1231
 msgid "Edit Fill Type"
 msgstr "Bewerk Arcering Type"
 
-#: src/i_callbacks.c:1619
+#: src/i_callbacks.c:1637
 msgid "Update Cues"
 msgstr "Vernieuw aanwijzing"
 
-#: src/i_callbacks.c:1775
+#: src/i_callbacks.c:1793
 #, fuzzy
 msgid "Really revert page?"
 msgstr "Echt Terughalen pagina?"
 
-#: src/i_callbacks.c:1867
+#: src/i_callbacks.c:1885
 msgid "Copy 1"
 msgstr "Kopieer 1"
 
-#: src/i_callbacks.c:1886
+#: src/i_callbacks.c:1904
 msgid "Copy 2"
 msgstr "Kopieer 2"
 
-#: src/i_callbacks.c:1905
+#: src/i_callbacks.c:1923
 msgid "Copy 3"
 msgstr "Kopieer 3"
 
-#: src/i_callbacks.c:1924
+#: src/i_callbacks.c:1942
 msgid "Copy 4"
 msgstr "Kopieer 4"
 
-#: src/i_callbacks.c:1943
+#: src/i_callbacks.c:1961
 msgid "Copy 5"
 msgstr "Kopieer 5"
 
-#: src/i_callbacks.c:1962
+#: src/i_callbacks.c:1980
 msgid "Cut 1"
 msgstr "Knip 1"
 
-#: src/i_callbacks.c:1981
+#: src/i_callbacks.c:1999
 msgid "Cut 2"
 msgstr "Knip 2"
 
-#: src/i_callbacks.c:2000
+#: src/i_callbacks.c:2018
 msgid "Cut 3"
 msgstr "Knip 3"
 
-#: src/i_callbacks.c:2019
+#: src/i_callbacks.c:2037
 msgid "Cut 4"
 msgstr "Knip 4"
 
-#: src/i_callbacks.c:2038
+#: src/i_callbacks.c:2056
 msgid "Cut 5"
 msgstr "Knip 5"
 
-#: src/i_callbacks.c:2054
+#: src/i_callbacks.c:2072
 msgid "Paste 1"
 msgstr "Plak 1"
 
-#: src/i_callbacks.c:2063 src/i_callbacks.c:2087 src/i_callbacks.c:2111
-#: src/i_callbacks.c:2135 src/i_callbacks.c:2159
+#: src/i_callbacks.c:2081 src/i_callbacks.c:2105 src/i_callbacks.c:2129
+#: src/i_callbacks.c:2153 src/i_callbacks.c:2177
 msgid "Empty buffer"
 msgstr "Maak buffer leeg"
 
-#: src/i_callbacks.c:2078
+#: src/i_callbacks.c:2096
 msgid "Paste 2"
 msgstr "Plak 2"
 
-#: src/i_callbacks.c:2102
+#: src/i_callbacks.c:2120
 msgid "Paste 3"
 msgstr "Plak 3"
 
-#: src/i_callbacks.c:2126
+#: src/i_callbacks.c:2144
 msgid "Paste 4"
 msgstr "Plak 4"
 
-#: src/i_callbacks.c:2150
+#: src/i_callbacks.c:2168
 msgid "Paste 5"
 msgstr "Plak 5"
 
-#: src/i_callbacks.c:2296 src/x_window.c:556
+#: src/i_callbacks.c:2314 src/x_window.c:556
 msgid "Component"
 msgstr "Component"
 
-#: src/i_callbacks.c:2333 src/i_callbacks.c:2353
+#: src/i_callbacks.c:2351 src/i_callbacks.c:2371
 msgid "Attribute"
 msgstr "Attribuut"
 
-#: src/i_callbacks.c:2842
+#: src/i_callbacks.c:2860
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "Zoek naar bron [%s]\n"
 
-#: src/i_callbacks.c:2875 src/i_callbacks.c:2878
+#: src/i_callbacks.c:2893 src/i_callbacks.c:2896
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "Kan bron [%s] niet vinden\n"
 
-#: src/i_callbacks.c:2975
+#: src/i_callbacks.c:2993
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Zoek naar symbool [%s]\n"
 
-#: src/i_callbacks.c:3178
+#: src/i_callbacks.c:3196
 msgid "ShowN"
 msgstr "ToonN"
 
-#: src/i_callbacks.c:3209
+#: src/i_callbacks.c:3227
 msgid "ShowV"
 msgstr "ToonV"
 
-#: src/i_callbacks.c:3240
+#: src/i_callbacks.c:3258
 msgid "ShowB"
 msgstr "ToonB"
 
-#: src/i_callbacks.c:3272
+#: src/i_callbacks.c:3290
 msgid "VisToggle"
 msgstr "SchakelZichtbaarheid"
 
-#: src/i_callbacks.c:3294
+#: src/i_callbacks.c:3312
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Sorry, maar dit is een niet werkende menu optie\n"
 
-#: src/i_callbacks.c:3344
+#: src/i_callbacks.c:3362
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr "Aktie terugkoppel mode is ingesteld op OUTLINE\n"
 
-#: src/i_callbacks.c:3347
+#: src/i_callbacks.c:3365
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr "Aktie terugkoppel mode is ingesteld op BOUNDINGBOX.\n"
 
-#: src/i_callbacks.c:3364
+#: src/i_callbacks.c:3382
 msgid "Grid OFF\n"
 msgstr "Grid UIT\n"
 
-#: src/i_callbacks.c:3367
+#: src/i_callbacks.c:3385
 msgid "Grid ON\n"
 msgstr "Grid AAN\n"
 
-#: src/i_callbacks.c:3384
+#: src/i_callbacks.c:3402
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "Snap UIT (PAS OP!)\n"
 
-#: src/i_callbacks.c:3387
+#: src/i_callbacks.c:3405
 msgid "Snap ON\n"
 msgstr "Snap AAN\n"
 
-#: src/i_callbacks.c:3407
+#: src/i_callbacks.c:3425
 msgid "Rubber band OFF \n"
 msgstr "Elastiek band UIT\n"
 
-#: src/i_callbacks.c:3410
+#: src/i_callbacks.c:3428
 msgid "Rubber band ON\n"
 msgstr "Elastiek band AAN\n"
 
@@ -1456,8 +1456,8 @@ msgid ""
 "slotted object without slot attribute may cause problems when autonumbering "
 "slots\n"
 msgstr ""
-"Geslotte objecten zonder slot attribuut kunnen een probleem geven bij het automatisch nummeren "
-"van slots\n"
+"Geslotte objecten zonder slot attribuut kunnen een probleem geven bij het "
+"automatisch nummeren van slots\n"
 
 #: src/x_autonumber.c:426
 #, c-format
@@ -1897,6 +1897,16 @@ msgstr "Objekt kleur:"
 msgid "Hotkeys"
 msgstr "Snel-toets..."
 
+#: src/x_dialog.c:2517
+#, fuzzy
+msgid "Function"
+msgstr "Aktie"
+
+#: src/x_dialog.c:2524
+#, fuzzy
+msgid "Keystroke(s)"
+msgstr "Funktie : toetsaanslag(s)"
+
 #: src/x_dialog.c:2848
 msgid "Generic String"
 msgstr "Algemene Tekst"
@@ -2131,7 +2141,8 @@ msgstr "Popup_menu_item_factory bestaat niet!\n"
 #: src/x_menus.c:363
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
 msgstr ""
-"Probeerde de gevoeligheid in te stellen op een niet bestaand popup menu_item\n"
+"Probeerde de gevoeligheid in te stellen op een niet bestaand popup "
+"menu_item\n"
 
 #: src/x_multiattrib.c:652
 msgid "Attributes with empty name are not allowed. Please set a name."
@@ -2480,9 +2491,6 @@ msgstr "Sluiten [%s]\n"
 #~ msgid "Ran out of space in the hotkey buffer...\n"
 #~ msgstr "Tekort aan ruimte in de Snel-toets buffer...\n"
 
-#~ msgid "Function : keystroke(s)"
-#~ msgstr "Funktie : toetsaanslag(s)"
-
 #~ msgid "Height"
 #~ msgstr "Hoogte"
 
@@ -2492,7 +2500,8 @@ msgstr "Sluiten [%s]\n"
 #~ msgid ""
 #~ "Warning: negative numbers not allowed in the autonumber_text dialog\n"
 #~ msgstr ""
-#~ "Waarschuwing: negatieve nummers niet toegestaan in de Autonumber_text dialoog\n"
+#~ "Waarschuwing: negatieve nummers niet toegestaan in de Autonumber_text "
+#~ "dialoog\n"
 
 #, fuzzy
 #~ msgid "selection"
@@ -2632,7 +2641,8 @@ msgstr "Sluiten [%s]\n"
 
 #, fuzzy
 #~ msgid "Invalid number of lines [%d] passed to output-vector-threshold\n"
-#~ msgstr "Ongeldig aantal regels [%d] overgedragen naar output-vector-threshold.\n"
+#~ msgstr ""
+#~ "Ongeldig aantal regels [%d] overgedragen naar output-vector-threshold.\n"
 
 #, fuzzy
 #~ msgid "Comps"

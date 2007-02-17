@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-11 08:44+0100\n"
+"POT-Creation-Date: 2007-02-16 21:48-0500\n"
 "PO-Revision-Date: 2007-02-11 09:41+0100\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -241,7 +241,7 @@ msgstr "Ansicht"
 msgid "Redraw"
 msgstr "Neu zeichnen"
 
-#: src/rcstrings.c:61 src/i_callbacks.c:1516 src/i_callbacks.c:1585
+#: src/rcstrings.c:61 src/i_callbacks.c:1534 src/i_callbacks.c:1603
 msgid "Pan"
 msgstr "Ausschnitt verschieben"
 
@@ -305,11 +305,11 @@ msgstr "Einfügen"
 msgid "Component..."
 msgstr "Bauteil..."
 
-#: src/rcstrings.c:79 src/i_callbacks.c:2375 src/i_callbacks.c:2398
+#: src/rcstrings.c:79 src/i_callbacks.c:2393 src/i_callbacks.c:2416
 msgid "Net"
 msgstr "Netz"
 
-#: src/rcstrings.c:80 src/i_callbacks.c:2443 src/i_callbacks.c:2467
+#: src/rcstrings.c:80 src/i_callbacks.c:2461 src/i_callbacks.c:2485
 #: src/x_window.c:576
 msgid "Bus"
 msgstr "Bus"
@@ -322,23 +322,23 @@ msgstr "Attribut..."
 msgid "Text..."
 msgstr "Text..."
 
-#: src/rcstrings.c:83 src/i_callbacks.c:2549 src/i_callbacks.c:2569
+#: src/rcstrings.c:83 src/i_callbacks.c:2567 src/i_callbacks.c:2587
 msgid "Line"
 msgstr "Linie"
 
-#: src/rcstrings.c:84 src/i_callbacks.c:2592 src/i_callbacks.c:2612
+#: src/rcstrings.c:84 src/i_callbacks.c:2610 src/i_callbacks.c:2630
 msgid "Box"
 msgstr "Rechteck"
 
-#: src/rcstrings.c:85 src/i_callbacks.c:2669 src/i_callbacks.c:2690
+#: src/rcstrings.c:85 src/i_callbacks.c:2687 src/i_callbacks.c:2708
 msgid "Circle"
 msgstr "Kreis"
 
-#: src/rcstrings.c:86 src/i_callbacks.c:2713 src/i_callbacks.c:2733
+#: src/rcstrings.c:86 src/i_callbacks.c:2731 src/i_callbacks.c:2751
 msgid "Arc"
 msgstr "Bogen"
 
-#: src/rcstrings.c:87 src/i_callbacks.c:2756 src/i_callbacks.c:2776
+#: src/rcstrings.c:87 src/i_callbacks.c:2774 src/i_callbacks.c:2794
 msgid "Pin"
 msgstr "Anschluß"
 
@@ -370,11 +370,11 @@ msgstr "Dokumentation"
 msgid "Attributes"
 msgstr "Attribut"
 
-#: src/rcstrings.c:97 src/i_callbacks.c:3089
+#: src/rcstrings.c:97 src/i_callbacks.c:3107
 msgid "Attach"
 msgstr "Anbringen"
 
-#: src/rcstrings.c:98 src/i_callbacks.c:3138
+#: src/rcstrings.c:98 src/i_callbacks.c:3156
 msgid "Detach"
 msgstr "Ablösen"
 
@@ -487,7 +487,8 @@ msgstr ""
 
 #: src/g_rc.c:109
 #, c-format
-msgid "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
+msgid ""
+"While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
 msgstr ""
 "Solange gschem im ALPHA-Stadium ist, sollte unbedingt die neueste rc Datei \n"
 "verwendet werden.\n"
@@ -563,7 +564,8 @@ msgstr "An \"grid-dot-size\" wurde eine falsche Punktgröße [%d] übergeben.\n"
 #: src/g_rc.c:1616
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
-msgstr "An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
+msgstr ""
+"An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
 
 #: src/g_rc.c:1660
 #, c-format
@@ -603,7 +605,8 @@ msgstr ""
 
 #: src/gschem.c:145 src/gschem.c:155
 #, c-format
-msgid "This is free software, and you are welcome to redistribute it under certain\n"
+msgid ""
+"This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Dies ist Freie Software. Sie darf gerne weitergegeben werden. Bitte lies "
 "die\n"
@@ -778,7 +781,7 @@ msgstr "Konnte %s nicht aufrufen\n"
 msgid "Documentation commands not supported under MinGW.\n"
 msgstr "Die Funktion \"Dokumentation\" wird unter MinGW nicht unterstützt.\n"
 
-#: src/i_callbacks.c:190 src/i_callbacks.c:1730
+#: src/i_callbacks.c:190 src/i_callbacks.c:1748
 #, c-format
 msgid "New page created [%s]\n"
 msgstr "Neue Seite erzeugt [%s]\n"
@@ -836,7 +839,8 @@ msgstr "Verschieben nach"
 
 #: src/i_callbacks.c:1003
 msgid "WARNING: Do not translate with snap off!\n"
-msgstr "ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
+msgstr ""
+"ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
 
 #: src/i_callbacks.c:1004
 msgid "WARNING: Turning snap on and continuing with translate.\n"
@@ -864,172 +868,172 @@ msgstr "Einbetten"
 msgid "Unembed"
 msgstr "Ausbetten"
 
-#: src/i_callbacks.c:1110
+#: src/i_callbacks.c:1112
 msgid "Update"
 msgstr "Aktualisieren"
 
-#: src/i_callbacks.c:1152
+#: src/i_callbacks.c:1170
 msgid "ShowHidden"
 msgstr "Zeige Unsichbares"
 
-#: src/i_callbacks.c:1175
+#: src/i_callbacks.c:1193
 msgid "MakeVisible"
 msgstr "Sichbar Machen"
 
-#: src/i_callbacks.c:1291
+#: src/i_callbacks.c:1309
 msgid "Edit Line Type"
 msgstr "Editiere Linienart"
 
-#: src/i_callbacks.c:1332 src/x_dialog.c:1231
+#: src/i_callbacks.c:1350 src/x_dialog.c:1231
 msgid "Edit Fill Type"
 msgstr "Editiere Füllmuster"
 
-#: src/i_callbacks.c:1619
+#: src/i_callbacks.c:1637
 msgid "Update Cues"
 msgstr "Ansicht aktualisieren (update cues)"
 
-#: src/i_callbacks.c:1775
+#: src/i_callbacks.c:1793
 msgid "Really revert page?"
 msgstr "Seite wirklich wiederherstellen?"
 
-#: src/i_callbacks.c:1867
+#: src/i_callbacks.c:1885
 msgid "Copy 1"
 msgstr "Kopie 1"
 
-#: src/i_callbacks.c:1886
+#: src/i_callbacks.c:1904
 msgid "Copy 2"
 msgstr "Kopie 2"
 
-#: src/i_callbacks.c:1905
+#: src/i_callbacks.c:1923
 msgid "Copy 3"
 msgstr "Kopie 3"
 
-#: src/i_callbacks.c:1924
+#: src/i_callbacks.c:1942
 msgid "Copy 4"
 msgstr "Kopie 4"
 
-#: src/i_callbacks.c:1943
+#: src/i_callbacks.c:1961
 msgid "Copy 5"
 msgstr "Kopie 5"
 
-#: src/i_callbacks.c:1962
+#: src/i_callbacks.c:1980
 msgid "Cut 1"
 msgstr "Ausschneiden 1"
 
-#: src/i_callbacks.c:1981
+#: src/i_callbacks.c:1999
 msgid "Cut 2"
 msgstr "Ausschneiden 2"
 
-#: src/i_callbacks.c:2000
+#: src/i_callbacks.c:2018
 msgid "Cut 3"
 msgstr "Ausschneiden 3"
 
-#: src/i_callbacks.c:2019
+#: src/i_callbacks.c:2037
 msgid "Cut 4"
 msgstr "Ausschneiden 4"
 
-#: src/i_callbacks.c:2038
+#: src/i_callbacks.c:2056
 msgid "Cut 5"
 msgstr "Ausschneiden 5"
 
-#: src/i_callbacks.c:2054
+#: src/i_callbacks.c:2072
 msgid "Paste 1"
 msgstr "Einfügen 1"
 
-#: src/i_callbacks.c:2063 src/i_callbacks.c:2087 src/i_callbacks.c:2111
-#: src/i_callbacks.c:2135 src/i_callbacks.c:2159
+#: src/i_callbacks.c:2081 src/i_callbacks.c:2105 src/i_callbacks.c:2129
+#: src/i_callbacks.c:2153 src/i_callbacks.c:2177
 msgid "Empty buffer"
 msgstr "Leerer Zwischenspeicher"
 
-#: src/i_callbacks.c:2078
+#: src/i_callbacks.c:2096
 msgid "Paste 2"
 msgstr "Einfügen 2"
 
-#: src/i_callbacks.c:2102
+#: src/i_callbacks.c:2120
 msgid "Paste 3"
 msgstr "Einfügen 3"
 
-#: src/i_callbacks.c:2126
+#: src/i_callbacks.c:2144
 msgid "Paste 4"
 msgstr "Einfügen 4"
 
-#: src/i_callbacks.c:2150
+#: src/i_callbacks.c:2168
 msgid "Paste 5"
 msgstr "Einfügen 5"
 
-#: src/i_callbacks.c:2296 src/x_window.c:556
+#: src/i_callbacks.c:2314 src/x_window.c:556
 msgid "Component"
 msgstr "Bauteil"
 
-#: src/i_callbacks.c:2333 src/i_callbacks.c:2353
+#: src/i_callbacks.c:2351 src/i_callbacks.c:2371
 msgid "Attribute"
 msgstr "Attribut"
 
-#: src/i_callbacks.c:2842
+#: src/i_callbacks.c:2860
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "Suche nach der Quelle [%s]\n"
 
-#: src/i_callbacks.c:2875 src/i_callbacks.c:2878
+#: src/i_callbacks.c:2893 src/i_callbacks.c:2896
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "Die Quelle [%s] konnte nicht gefunden werden.\n"
 
-#: src/i_callbacks.c:2975
+#: src/i_callbacks.c:2993
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Suche nach dem Symbol [%s]\n"
 
-#: src/i_callbacks.c:3178
+#: src/i_callbacks.c:3196
 msgid "ShowN"
 msgstr "ShowN"
 
-#: src/i_callbacks.c:3209
+#: src/i_callbacks.c:3227
 msgid "ShowV"
 msgstr "ShowV"
 
-#: src/i_callbacks.c:3240
+#: src/i_callbacks.c:3258
 msgid "ShowB"
 msgstr "ShowB"
 
-#: src/i_callbacks.c:3272
+#: src/i_callbacks.c:3290
 msgid "VisToggle"
 msgstr "VisToggle"
 
-#: src/i_callbacks.c:3294
+#: src/i_callbacks.c:3312
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Dieser Menupunkt funktioniert nicht. Sorry.\n"
 
-#: src/i_callbacks.c:3344
+#: src/i_callbacks.c:3362
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr "Aktions-Rückmelde-Modus wurde auf OUTLINE gesetzt.\n"
 
-#: src/i_callbacks.c:3347
+#: src/i_callbacks.c:3365
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr "Aktions-Rückmelde-Modus wurde auf BOUNDINGBOX gesetzt.\n"
 
-#: src/i_callbacks.c:3364
+#: src/i_callbacks.c:3382
 msgid "Grid OFF\n"
 msgstr "Raster AUS\n"
 
-#: src/i_callbacks.c:3367
+#: src/i_callbacks.c:3385
 msgid "Grid ON\n"
 msgstr "Raster EIN\n"
 
-#: src/i_callbacks.c:3384
+#: src/i_callbacks.c:3402
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "Freihandmodus (ACHTUNG! Ausrichten am Raster abgeschaltet)\n"
 
-#: src/i_callbacks.c:3387
+#: src/i_callbacks.c:3405
 msgid "Snap ON\n"
 msgstr "Am Raster ausrichten\n"
 
-#: src/i_callbacks.c:3407
+#: src/i_callbacks.c:3425
 msgid "Rubber band OFF \n"
 msgstr "Gummifäden AUS\n"
 
-#: src/i_callbacks.c:3410
+#: src/i_callbacks.c:3428
 msgid "Rubber band ON\n"
 msgstr "Gummifäden EIN\n"
 
@@ -1076,7 +1080,8 @@ msgstr "Undefinierter Typ für das Rechteck (Füllung)!\n"
 #: src/o_buffer.c:41
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_copy]\n"
-msgstr "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
+msgstr ""
+"Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
 
 #: src/o_buffer.c:79
 #, c-format
@@ -1093,12 +1098,14 @@ msgstr ""
 #: src/o_buffer.c:173
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
-msgstr "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_paste_end]\n"
+msgstr ""
+"Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_paste_end]\n"
 
 #: src/o_bus.c:218
 #, c-format
 msgid "Got an invalid which one in o_bus_draw_xor_single\n"
-msgstr "Ungültiger Wert in Variable whichone in der Funktion o_bus_draw_xor_single\n"
+msgstr ""
+"Ungültiger Wert in Variable whichone in der Funktion o_bus_draw_xor_single\n"
 
 #: src/o_bus.c:283 src/o_bus.c:317 src/o_net.c:330 src/o_net.c:364
 #, c-format
@@ -1123,7 +1130,8 @@ msgstr "Undefinierter Typ für einen Kreis (Füllung).\n"
 #: src/o_complex.c:208
 #, c-format
 msgid "Could not find complex in new componet placement!\n"
-msgstr "Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
+msgstr ""
+"Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
 
 #: src/o_complex.c:580
 #, c-format
@@ -1211,7 +1219,8 @@ msgstr ""
 #: src/o_misc.c:1270
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr "Die vorherige Backup-Datei [%s] konnte nicht auf read-write gesetzt werden.\n"
+msgstr ""
+"Die vorherige Backup-Datei [%s] konnte nicht auf read-write gesetzt werden.\n"
 
 #: src/o_misc.c:1288
 #, c-format
@@ -1243,7 +1252,8 @@ msgstr "Da ist ein Objekt in o_move_check_endpoint, welches keine Linie ist.\n"
 #: src/o_net.c:262
 #, c-format
 msgid "Got an invalid which one in o_net_draw_xor_single\n"
-msgstr "Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
+msgstr ""
+"Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
 
 #: src/o_net.c:930 src/o_net.c:967 src/o_net.c:1038 src/o_net.c:1074
 #, c-format
@@ -1295,7 +1305,8 @@ msgstr "Ups! Sie versuchen einen slot zu editieren, der nicht existiert.\n"
 #: src/o_text.c:145
 #, c-format
 msgid "Tried to render text with an invalid angle: %d\n"
-msgstr "Der Text kann nicht mit einem ungültigen Winkel gezeichnet werden: %d\n"
+msgstr ""
+"Der Text kann nicht mit einem ungültigen Winkel gezeichnet werden: %d\n"
 
 #: src/o_undo.c:320
 msgid "Undo/Redo disabled in rc file\n"
@@ -1391,12 +1402,17 @@ msgstr "Vorhandene Attribute ersetzen"
 msgid ""
 "slotted object without slot attribute may cause problems when autonumbering "
 "slots\n"
-msgstr "Objekte mit \"numslot\" Attribut und ohne \"slot\" Attribut können beim automatischen Nummerieren von Bauteilen Probleme verursachen.\n"
+msgstr ""
+"Objekte mit \"numslot\" Attribut und ohne \"slot\" Attribut können beim "
+"automatischen Nummerieren von Bauteilen Probleme verursachen.\n"
 
 #: src/x_autonumber.c:426
 #, c-format
-msgid "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
-msgstr "Doppelt vergebener slot kann Probleme verursachen: [Symbolname=%s, Number=%d, slot=%d]\n"
+msgid ""
+"duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
+msgstr ""
+"Doppelt vergebener slot kann Probleme verursachen: [Symbolname=%s, Number=%"
+"d, slot=%d]\n"
 
 #: src/x_autonumber.c:696
 msgid "No searchstring given in autonumber text.\n"
@@ -1792,6 +1808,16 @@ msgstr "Objekt Farbe:"
 msgid "Hotkeys"
 msgstr "Tastenkürzel"
 
+#: src/x_dialog.c:2517
+#, fuzzy
+msgid "Function"
+msgstr "Aktion"
+
+#: src/x_dialog.c:2524
+#, fuzzy
+msgid "Keystroke(s)"
+msgstr "Funktion : Tastenkürzel(s)"
+
 #: src/x_dialog.c:2848
 msgid "Generic String"
 msgstr "Allgemeiner Text"
@@ -1845,7 +1871,8 @@ msgstr ""
 
 #: src/x_dialog.c:3739
 #, c-format
-msgid "There is %d schematics with unsaved changes. Save changes before closing?"
+msgid ""
+"There is %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 "Es gibt %d ungesicherte Schaltpläne. Sollen die Änderungen vor dem Schließen "
 "gespeichert werden?"
@@ -2006,7 +2033,8 @@ msgstr ""
 
 #: src/x_multiattrib.c:652
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr "Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
+msgstr ""
+"Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
 
 #: src/x_multiattrib.c:1163
 msgid "Show Value only"
@@ -2335,9 +2363,6 @@ msgstr "Schließe [%s]\n"
 #~ msgid "Ran out of space in the hotkey buffer...\n"
 #~ msgstr "Der Speicherplatz des Puffers für Tastenkürzel ist ausgegangen...\n"
 
-#~ msgid "Function : keystroke(s)"
-#~ msgstr "Funktion : Tastenkürzel(s)"
-
 #~ msgid "Height"
 #~ msgstr "Höhe"
 
@@ -2624,4 +2649,3 @@ msgstr "Schließe [%s]\n"
 #~ msgid "Invalid path [%s] passed to font-directory\n"
 #~ msgstr ""
 #~ "Ein ungültiges Verzeichnis [%s] wurde an font-directory übergeben.\n"
-
