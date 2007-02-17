@@ -34,6 +34,9 @@ EXTRA_DIST = duplicated-refdes.sch duplicated-refdes.drc2 \
 	     unused-slot.sch \
 	     unused-slot.drc2
 
+
+# Temporarily disabled make check, since this is interfering with 
+# make distcheck
 check_SCRIPTS = tests
 
 tests:
