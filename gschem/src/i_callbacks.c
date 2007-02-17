@@ -1104,24 +1104,42 @@ DEFINE_I_CALLBACK(edit_update)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
   OBJECT *o_current;
+  GList* selection_copy;
+  GList* s_current;
 
   exit_if_null(w_current);
 
   i_update_middle_button(w_current, i_callback_edit_update, _("Update"));
   /* anything selected ? */
   if (o_select_selected(w_current)) {
-    /* yes, update each selected component */
-    GList *s_current =
-      w_current->page_current->selection_list;
 
+    /* yes, update each selected component, but operate from a copy of the */
+    /* selection list, since o_update_component will modify the selection */
+
+    /* After the following code executes, only OBJ_COMPLEX object will be */
+    /* left selected. */
+
+    /* g_list_copy does a shallow copy which is exactly what we need here */
+    selection_copy = g_list_copy(w_current->page_current->selection_list);
+    s_current = selection_copy;
     while (s_current != NULL) {
       o_current = (OBJECT *) s_current->data;
       g_assert (o_current != NULL);
       if (o_current->type == OBJ_COMPLEX) {
         o_update_component (w_current, o_current);
       }
+      else
+      {
+        /* object was not a OBJ_COMPLEX, so unselect it. */
+        o_selection_remove (&(w_current->page_current->selection_list),
+                            o_current);
+      }
       s_current = s_current->next;
     }
+    g_list_free(selection_copy);
+   
+    /* Make sure the display is up to date */
+    o_redraw_all(w_current);
   } else {
     /* nothing selected, go back to select state */
     o_redraw_cleanstates(w_current);	
