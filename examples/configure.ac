@@ -36,6 +36,7 @@ AC_CONFIG_FILES([
         RF_Amp/model/Makefile 
         RF_Amp/sym/Makefile 
         TwoStageAmp/Makefile 
+        TwoStageAmp/models/Makefile 
         TwoStageAmp/sym/Makefile ])
 
 AC_OUTPUT 

@@ -1,3 +1,8 @@
+2007-02-18 Stuart Brorson <sdb@cloud9.net>
+	* TwoStageAmp/models/Makefile.am, TwoStageAmp/Makefile.am,
+	TwoStageAmp/configure.ac:  Fixed automake stuff so the 2N3904
+	model would be installed.
+	
 2007-02-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Bumped package version to 20070216.
@@ -7,7 +12,7 @@
 	gTAG/gTAG-ucont.sch, gTAG/gTAG.sch, lightning_detector/lightning.sch:
 	Updated schematics to get rid of symbol warnings.
 
-2007-2-10 Stuart Brorson <sdb@cloud9.net)
+2007-2-10 Stuart Brorson <sdb@cloud9.net>
 	* RF_Amp/MSA-2643.sch: Removed source attribute from 
 	transistors since spice-sdb didn't like hierarchy.
 	

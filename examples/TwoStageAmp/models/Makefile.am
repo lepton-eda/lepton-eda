@@ -1,9 +1,7 @@
 
-SUBDIRS = sym models
+exampledir = @GEDADOCDIR@/examples/TwoStageAmp/models
 
-exampledir = @GEDADOCDIR@/examples/TwoStageAmp/
-
-example_DATA = Simulation.cmd TwoStageAmp.sch spice.netlist gafrc
+example_DATA = 2N3904.mod
 
 EXTRA_DIST = $(example_DATA)
 
