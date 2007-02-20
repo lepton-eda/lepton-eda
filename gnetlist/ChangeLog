@@ -1,3 +1,9 @@
+2007-02-20 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-allegro.scm: Fix bug #1663729.
+	  When writing the device files, check if 'devfiles' directory 
+	  exists and create it if needed.
+
 2007-02-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* tests/multiequal.spice-sdb: Updated golden file to be current.
