@@ -19,12 +19,15 @@
 #include <config.h>
 
 #include <stdio.h>
+#include <unistd.h>
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
+
+#include <glib.h>
 
 #include <libgeda/libgeda.h>
 
@@ -36,197 +39,260 @@
 #include <dmalloc.h>
 #endif
 
-#define GLADE_HOOKUP_OBJECT(component,widget,name) \
-  g_object_set_data_full (G_OBJECT (component), name, \
-    gtk_widget_ref (widget), (GDestroyNotify) gtk_widget_unref)
+#define X_IMAGE_DEFAULT_SIZE "800x600"
 
-/* static const   gchar   *list_item_data_key="list_item_data";	*/
+#ifndef HAS_LIBGD
+#define X_IMAGE_SIZE_MENU_NAME "image_size_menu"
+#define X_IMAGE_TYPE_MENU_NAME "image_type_menu"
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint image_320(GtkWidget *w, TOPLEVEL *w_current)
+#define X_IMAGE_DEFAULT_TYPE "PNG"
+#endif
+
+static char *x_image_sizes[] = {"320x240", "640x480", "800x600", "1200x768",
+                                "1280x960", "1600x1200", "3200x2400", NULL};
+
+#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
+/* gtk_combo_box_get_active_text was included in GTK 2.6, so we need to store
+   the different image type descriptions in a list. */
+GSList *image_type_descriptions = NULL;
+#endif
+
+
+#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
+static void free_image_type_descriptions_list ()
 {
-  w_current->image_width = 320;
-  w_current->image_height = 240;
-  return(0);
+  GSList *ptr;
+  
+  /* Free the data stored in each node */
+  ptr = image_type_descriptions;
+  while (ptr) {
+    g_free(ptr->data);
+    ptr->data = NULL;
+    ptr = g_slist_next(ptr);
+  }
+
+  /* Free the list */
+  if (!ptr)
+    g_slist_free(image_type_descriptions);
+  image_type_descriptions = NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint image_640(GtkWidget *w, TOPLEVEL *w_current)
-{
-  w_current->image_width = 640;
-  w_current->image_height = 480;
-  return(0);
-}
+#endif
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint image_800(GtkWidget *w, TOPLEVEL *w_current)
-{
-  w_current->image_width = 800;
-  w_current->image_height = 600;
-  return(0);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint image_1024(GtkWidget *w, TOPLEVEL *w_current)
-{
-  w_current->image_width = 1024;
-  w_current->image_height = 768;
-  return(0);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint image_1280(GtkWidget *w, TOPLEVEL *w_current)
-{
-  w_current->image_width = 1280;
-  w_current->image_height = 960;
-  return(0);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint image_1600(GtkWidget *w, TOPLEVEL *w_current)
-{
-  w_current->image_width = 1600;
-  w_current->image_height = 1200;
-  return(0);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint image_3200(GtkWidget *w, TOPLEVEL *w_current)
-{
-  w_current->image_width = 3200;
-  w_current->image_height = 2400;
-  return(0);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+/*! \brief Create the options of the image size combobox
+ *  \par This function adds the options of the image size to the given combobox.
+ *  \param combo [in] the combobox to add the options to.
+ *  \return nothing
  *  \note
- *  this is from gtktest.c and only used in this file,
- *  there are other create_menus...
+ *  This function is only used in this file, there are other create_menus...
  */
-static GtkWidget *create_menu_size(TOPLEVEL *w_current)
+static void create_size_menu (GtkComboBox *combo)
 {
-  GtkWidget *menu;
-  GtkWidget *menuitem;
-  GSList *group;
   char *buf;
+  char *default_size;
+  int i, default_index = 0;
 
-  menu = gtk_menu_new ();
-  group = NULL;
+  default_size = g_strdup_printf(X_IMAGE_DEFAULT_SIZE);
+  for (i=0; x_image_sizes[i] != NULL;i++) {
+    /* Create a new string and add it as an option*/
+    buf = g_strdup_printf(x_image_sizes[i]);
+    gtk_combo_box_append_text (GTK_COMBO_BOX (combo), buf);
 
-  buf = g_strdup_printf("320x240");
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-                      (GtkSignalFunc) image_320,
-                      w_current);
+    /* Compare with the default size, to get the default index */
+    if (strcasecmp(buf, default_size ) == 0) {
+      default_index = i;
+    }
+    g_free(buf);
+  }
+  g_free(default_size);
 
-  gtk_widget_show (menuitem);
+  /* Set the default menu */
+  gtk_combo_box_set_active(GTK_COMBO_BOX (combo), default_index);
 
-  buf = g_strdup_printf("640x480");
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-                      (GtkSignalFunc) image_640,
-                      w_current);
-
-  gtk_widget_show (menuitem);
-
-  buf = g_strdup_printf("800x600");
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-                      (GtkSignalFunc) image_800,
-                      w_current);
-  gtk_widget_show (menuitem);
-
-  buf = g_strdup_printf("1024x768");
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-                      (GtkSignalFunc) image_1024,
-                      w_current);
-  gtk_widget_show (menuitem);
-
-  buf = g_strdup_printf("1280x960");
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-                      (GtkSignalFunc) image_1280,
-                      w_current);
-  gtk_widget_show (menuitem);
-
-  buf = g_strdup_printf("1600x1200");
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-                      (GtkSignalFunc) image_1600,
-                      w_current);
-  gtk_widget_show (menuitem);
-
-  buf = g_strdup_printf("3200x2400");
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-                      (GtkSignalFunc) image_3200,
-                      w_current);
-  gtk_widget_show (menuitem);
-
-  gtk_menu_set_active(GTK_MENU (menu),2);
-
-  return menu;
+  return;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Create the options of the image type combobox
+ *  \par This function adds the options of the image type to the given combobox.
+ *  \param combo [in] the combobox to add the options to.
+ *  \return nothing
+ *  \note
+ *  This function is only used in this file, there are other create_menus...
+ */
+static void create_type_menu(GtkComboBox *combo)
+{
+#ifndef HAS_LIBGD
+  GSList *formats = gdk_pixbuf_get_formats ();
+  GSList *ptr;
+  char *buf;
+  int i=0, default_index=0;
+
+#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
+  /* If GTK < 2.6, free the descriptions list */
+  free_image_type_descriptions_list();
+#endif
+
+  ptr = formats;
+  while (ptr) {
+    if (gdk_pixbuf_format_is_writable (ptr->data)) {
+      /* Get the format description and add it to the menu */
+      buf = g_strdup_printf(gdk_pixbuf_format_get_description(ptr->data));
+      gtk_combo_box_append_text (GTK_COMBO_BOX (combo), buf);
+
+      /* If GTK < 2.6, then add it also to the descriptions list. */
+#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
+      image_type_descriptions = g_slist_append(image_type_descriptions,
+					       buf);
+#endif
+
+      /* Compare the name with "png" and store the index */
+      buf = g_strdup_printf(gdk_pixbuf_format_get_name(ptr->data));
+      if (strcasecmp(buf, X_IMAGE_DEFAULT_TYPE) == 0) {
+	default_index = i;
+      }
+      g_free(buf);
+    }
+    i++;
+    ptr = ptr->next;
+  }
+  g_slist_free (formats);
+  
+  /* Set the default menu */
+  gtk_combo_box_set_active(GTK_COMBO_BOX(combo), default_index);
+#else
+  gtk_combo_box_append_text(GTK_COMBO_BOX(combo), "PNG");
+
+  /* Set the default menu */
+  gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 0);
+#endif
+  return;
+}
+
+/*! \brief Given a gdk-pixbuf image type description, it returns the type, 
+ *  or extension of the image.
+ *  \par Return the gdk-pixbuf image type, or extension, which has the
+ *  given gdk-pixbuf description.
+ *  \param description The gdk-pixbuf image type description.
+ *  \return The gdk-pixbuf type, or extension, of the image.
+ *  \note This function is only used in this file.
+ */
+static char *x_image_get_type_from_description(char *description) {
+#ifndef HAS_LIBGD
+  gchar *descr = g_strdup_printf(description);
+  GSList *formats = gdk_pixbuf_get_formats ();
+  GSList *ptr;
+  gchar *ptr_descr;
+
+  ptr = formats;
+  while (ptr) {
+    ptr_descr = gdk_pixbuf_format_get_description (ptr->data);
+    if (strcasecmp(ptr_descr, descr) == 0) {
+      g_free(descr);
+      return(gdk_pixbuf_format_get_name(ptr->data));
+    }
+
+    ptr = ptr->next;
+  }
+  g_free (descr);
+  return NULL;  
+#else
+  /* When using libgd, there is only one supported type: PNG */
+  return(g_strdup("png"));
+#endif
+
+}
+
+/*! \brief Update the filename of a file dialog, when the image type has changed.
+ *  \par Given a combobox inside a file chooser dialog, this function updates
+ *  the filename displayed by the dialog, removing the current extension, and
+ *  adding the extension of the image type selected.
+ *  \param combo [in] A combobox inside a file chooser dialog, with gdk-pixbuf image type descriptions.
+ *  \param w_current [in] the TOPLEVEL structure.
+ *  \return nothing.
+ * 
+ */
+static void x_image_update_dialog_filename(GtkComboBox *combo, 
+					  TOPLEVEL *w_current) {
+
+  char* image_type_descr = NULL;
+  char *image_type = NULL;
+  char *old_image_filename = NULL;
+  char *file_basename = NULL;
+  char *file_name = NULL ;
+  char *new_image_filename = NULL;
+  GtkWidget *file_chooser;
+  
+  /* Get the current image type */
+#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
+  GSList *ptr;
+  /* If GTK < 2.6, get the description from the descriptions list */
+  ptr = g_slist_nth(image_type_descriptions,
+		   gtk_combo_box_get_active(GTK_COMBO_BOX(combo)));
+  image_type_descr = (char *) (ptr->data);
+#else
+  image_type_descr = gtk_combo_box_get_active_text(GTK_COMBO_BOX(combo));
+#endif
+  image_type = x_image_get_type_from_description(image_type_descr);
+
+  /* Get the parent dialog */
+  file_chooser = gtk_widget_get_ancestor(GTK_WIDGET(combo),
+					 GTK_TYPE_FILE_CHOOSER);
+
+  /* Get the previous file name. If none, revert to the page filename */
+  old_image_filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(file_chooser));
+  if (!old_image_filename) {
+    old_image_filename = w_current->page_current->page_filename;
+  }
+
+  /* Get the file name, without extension */
+  if (old_image_filename) {
+    file_basename = g_path_get_basename(old_image_filename);
+
+    if (g_strrstr(file_basename, ".") != NULL) {
+      file_name = g_strndup(file_basename, 
+			    g_strrstr(file_basename, ".") - file_basename);
+    }
+  }
+
+  /* Add the extension */
+  if (file_name) {
+    new_image_filename = g_strdup_printf("%s.%s", file_name, 
+					 image_type);
+  } else {
+    new_image_filename = g_strdup_printf("%s.%s", file_basename, 
+					 image_type);    
+  }
+
+  /* Set the new filename */
+  if (file_chooser) {
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(file_chooser),
+				      new_image_filename);
+  } else {
+    s_log_message("x_image_update_dialog_filename: No parent file chooser found!.\n");
+    fprintf(stderr, "x_image_update_dialog_filename: No parent file chooser found!.\n");
+  }
+
+  g_free(file_name);
+  g_free(file_basename);
+  g_free(new_image_filename);
+#ifdef HAS_LIBGD
+  g_free(image_type);
+#endif
+}
+
+/*! \brief Write the image file, with the desired options.
+ *  \par This function writes the image file, with the options set in the
+ *  dialog by the user.
+ *  \param w_current [in] the TOPLEVEL structure.
+ *  \param filename [in] the image filename.
+ *  \param desired_width [in] the image width chosen by the user.
+ *  \param desired_height [in] the image height chosen by the user.
+ *  \param filetype [in] image filetype.
+ *  \return nothing
  *
  */
-void x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
+void x_image_lowlevel(TOPLEVEL *w_current, const char* filename,
+		      int desired_width, int desired_height, char *filetype)
 {
   int width, height;
   int save_height, save_width;
@@ -234,12 +300,13 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
   int page_width, page_height, page_center_left, page_center_top;
 #ifndef HAS_LIBGD
   GdkPixbuf *pixbuf;
-  char *filetype;
+  GError *gerror = NULL;
+  GtkWidget *dialog;
 #endif
   float prop;
 
-  width = w_current->image_width;
-  height = w_current->image_height;
+  w_current->image_width = width = desired_width;
+  w_current->image_height = height = desired_height;
 
   save_width = w_current->width;
   save_height = w_current->height;
@@ -288,10 +355,29 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
 #else
   pixbuf = x_image_get_pixbuf(w_current);
   if (pixbuf != NULL) {
-    filetype = g_strdup("png");
-    if (!gdk_pixbuf_save(pixbuf, filename, filetype, NULL, NULL)) {
-      fprintf(stderr, "x_image_lowlevel: Unable to save PNG file  %s.\n", filename);
-      s_log_message(_("x_image_lowlevel: Unable to write PNG file.\n"));
+    if (!gdk_pixbuf_save(pixbuf, filename, filetype, &gerror, NULL)) {
+      fprintf(stderr, "x_image_lowlevel: Unable to save %s file  %s.\n", 
+	      filetype, filename);
+      fprintf(stderr, "%s\n", gerror->message);
+      s_log_message(_("x_image_lowlevel: Unable to write %s file %s.\n"),
+		    filetype, filename);
+      s_log_message(gerror->message);
+
+      /* Warn the user */
+      dialog = gtk_message_dialog_new (GTK_WINDOW(w_current->main_window),
+				       GTK_DIALOG_MODAL
+				       | GTK_DIALOG_DESTROY_WITH_PARENT,
+				       GTK_MESSAGE_ERROR,
+				       GTK_BUTTONS_OK,
+				       _("There was the following error when saving image with type %s to filename:\n%s\n\n%s.\n"),
+				       filetype, filename, gerror->message
+					 );
+      
+      gtk_dialog_run (GTK_DIALOG (dialog));
+      gtk_widget_destroy (dialog);
+
+      /* Unlink the output file */
+      unlink(filename);
     }
     else {
       if (w_current->image_color == TRUE) {
@@ -333,188 +419,146 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
 #endif
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+/*! \brief Display the image file selection dialog.
+ *  \par Display the image file selection dialog, allowing the user to
+ *  set several options, like image size and image type.
+ *  When the user hits "ok", then it writes the image file.
+ *  \param w_current [in] the TOPLEVEL structure.
+ *  \return nothing
  */
-gint x_image_write(GtkWidget *w, TOPLEVEL *w_current)
+void x_image_setup (TOPLEVEL *w_current)
 {
-  const char *filename=NULL;
-  GtkWidget *widget;
+  GtkWidget *dialog;
+  GtkWidget *vbox1;
+  GtkWidget *hbox;
+  GtkWidget *label1;
+  GtkWidget *size_combo;
+  GtkWidget *vbox2;
+  GtkWidget *label2;
+  GtkWidget *type_combo;
+#ifndef HAS_LIBGD
+  char *image_type_descr;
+#endif
+  char *filename;
+  char *image_size;
+  char *image_type;
+  int width, height;
 
-  widget = g_object_get_data (G_OBJECT (w_current->iwindow), "filename_entry");
+  hbox = gtk_hbox_new(FALSE, 0);
+  
+  /* Image size selection */
+  vbox1 = gtk_vbox_new(TRUE, 0);
+  label1 = gtk_label_new (_("Width x Height"));
+  gtk_widget_show (label1);
+  gtk_misc_set_alignment( GTK_MISC (label1), 0, 0);
+  gtk_misc_set_padding (GTK_MISC (label1), 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox1),
+		      label1, FALSE, FALSE, 0);
+  
+  size_combo =  gtk_combo_box_new_text ();
+  create_size_menu (GTK_COMBO_BOX(size_combo));
+  
+  gtk_widget_show (size_combo);
+  gtk_box_pack_start (GTK_BOX (vbox1), size_combo, TRUE, TRUE, 0);
+  gtk_widget_show(vbox1);
+  
+  /* Image type selection */
+  vbox2 = gtk_vbox_new(TRUE, 0);
+  label2 = gtk_label_new (_("Image type"));
+  gtk_widget_show (label2);
+  gtk_misc_set_alignment( GTK_MISC (label2), 0, 0);
+  gtk_misc_set_padding (GTK_MISC (label2), 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2),
+		      label2, FALSE, FALSE, 0);
+  
+  type_combo = gtk_combo_box_new_text ();
+  gtk_box_pack_start (GTK_BOX (vbox2), type_combo, TRUE, TRUE, 0);
+  create_type_menu (GTK_COMBO_BOX(type_combo));
+  
+  /* Connect the changed signal to the callback, so the filename
+     gets updated every time the image type is changed */
+  g_signal_connect (type_combo, "changed", 
+		    G_CALLBACK(x_image_update_dialog_filename),
+		    w_current);
 
-  filename = gtk_entry_get_text(GTK_ENTRY(widget));
-  if (filename[0] != '\0') {
-    x_image_lowlevel(w_current, filename);
-  }
+  gtk_widget_show (type_combo);
+  gtk_widget_show(vbox2);
+  
+  /* Create the dialog */
+  dialog = gtk_file_chooser_dialog_new (_("Write image..."),
+					GTK_WINDOW(w_current->main_window),
+					GTK_FILE_CHOOSER_ACTION_SAVE,
+					GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+					GTK_STOCK_SAVE,   GTK_RESPONSE_ACCEPT,
+					NULL);
+  
+  /* Add the extra widgets to the dialog*/
+  gtk_box_pack_start(GTK_BOX(hbox), vbox1, FALSE, FALSE, 10);
+  gtk_box_pack_start(GTK_BOX(hbox), vbox2, FALSE, FALSE, 10);
 
-  gtk_widget_destroy(w_current->iwindow);
-  w_current->iwindow=NULL;
-  return 0;
-}
+  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER(dialog), hbox);
+  
+  g_object_set (dialog,
+		/* GtkFileChooser */
+		"select-multiple", FALSE,
+#if ((GTK_MAJOR_VERSION > 2) || ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION >=8)))
+		/* only in GTK 2.8 */
+                "do-overwrite-confirmation", TRUE,
+#endif
+		  NULL);
+  
+  /* Update the filename */
+  x_image_update_dialog_filename(GTK_COMBO_BOX(type_combo), w_current);  
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint x_image_cancel(GtkWidget *w, TOPLEVEL *w_current)
-{
-  /* gtk_grab_remove(w_current->iwindow);*/
-  gtk_widget_destroy(w_current->iwindow);
-  w_current->iwindow=NULL;
-  return(0);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_image_response(GtkWidget * widget, gint response, TOPLEVEL *w_current)
-{
-  switch(response) {
-  case GTK_RESPONSE_REJECT:
-  case GTK_RESPONSE_DELETE_EVENT:
-    x_image_cancel(widget, w_current);
-    break;
-  case GTK_RESPONSE_ACCEPT:
-    x_image_write(widget, w_current);
-    break;
-  default:
-    printf("x_image_response(): strange signal %d\n", response);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_image_select_filename(GtkWidget *w, GtkWidget *image_dialog)
-{
-  GtkWidget *widget;
-  GtkWidget *filechooser;
-  const gchar *filename;
-
-  filechooser = gtk_file_chooser_dialog_new (_("Select Image Filename..."),
-					     GTK_WINDOW (image_dialog),
-					     GTK_FILE_CHOOSER_ACTION_SAVE,
-					     GTK_STOCK_CANCEL,
-					     GTK_RESPONSE_CANCEL,
-					     GTK_STOCK_OK,
-					     GTK_RESPONSE_ACCEPT, NULL);
-
-  widget = g_object_get_data (G_OBJECT (image_dialog), "filename_entry");
-  filename = gtk_entry_get_text (GTK_ENTRY (widget));
-
-  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (filechooser), filename);
-
-  gtk_dialog_set_default_response(GTK_DIALOG(filechooser),
+  gtk_dialog_set_default_response(GTK_DIALOG(dialog),
 				  GTK_RESPONSE_ACCEPT);
 
-  if (gtk_dialog_run (GTK_DIALOG (filechooser)) == GTK_RESPONSE_ACCEPT) {
-    filename =
-      gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (filechooser));
-    gtk_entry_set_text (GTK_ENTRY (widget), filename);
-   }
+  gtk_window_position (GTK_WINDOW (dialog),
+		       GTK_WIN_POS_MOUSE);
 
-  gtk_widget_destroy (filechooser);  
-}
+  gtk_container_set_border_width(GTK_CONTAINER(dialog),
+				 DIALOG_BORDER_SPACING);
+  gtk_box_set_spacing(GTK_BOX(GTK_DIALOG(dialog)->vbox), 
+		      DIALOG_V_SPACING);
 
+  gtk_widget_show (dialog);
+  
+  if (gtk_dialog_run((GTK_DIALOG(dialog))) == GTK_RESPONSE_ACCEPT) {    
+#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
+    image_size = 
+      x_image_sizes[gtk_combo_box_get_active(GTK_COMBO_BOX(size_combo))];
+#else
+    image_size = gtk_combo_box_get_active_text(GTK_COMBO_BOX(size_combo));
+#endif
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_image_setup (TOPLEVEL *w_current, char *filename)
-{
-  GtkWidget *label;
-  GtkWidget *box;
-  GtkWidget *hbox;
-  GtkWidget *optionmenu;
-  GtkWidget *filename_entry;
-  GtkWidget *button;
+#ifndef HAS_LIBGD
+#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
+  GSList *ptr;
+  /* If GTK < 2.6, get the description from the descriptions list */
+  ptr = g_slist_nth(image_type_descriptions,
+		   gtk_combo_box_get_active(GTK_COMBO_BOX(type_combo)));
+  image_type_descr = (char *) (ptr->data);
+#else
+    image_type_descr = gtk_combo_box_get_active_text(GTK_COMBO_BOX(type_combo));
+#endif
 
-  /* only create the dialog if it's not there yet */
-  if (!w_current->iwindow) {
+    image_type = x_image_get_type_from_description(image_type_descr);
+#else
+    /* Image type not used when using libgd */
+    image_type = NULL;
+#endif
+    sscanf(image_size, "%ix%i", &width, &height);
+    filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
 
-    w_current->iwindow = gtk_dialog_new_with_buttons(_("Write Image..."),
-						     GTK_WINDOW(w_current->main_window),
-						     GTK_DIALOG_MODAL,
-						     GTK_STOCK_CANCEL,
-						     GTK_RESPONSE_REJECT,
-						     GTK_STOCK_OK,
-						     GTK_RESPONSE_ACCEPT,
-						     NULL);
-
-    gtk_dialog_set_default_response(GTK_DIALOG(w_current->iwindow),
-				    GTK_RESPONSE_ACCEPT);
-
-    gtk_window_position (GTK_WINDOW (w_current->iwindow),
-                         GTK_WIN_POS_MOUSE);
-
-    gtk_signal_connect(GTK_OBJECT(w_current->iwindow), "response",
-		       GTK_SIGNAL_FUNC(x_image_response), w_current);
-
-    box = GTK_DIALOG(w_current->iwindow)->vbox;
-    gtk_container_set_border_width(GTK_CONTAINER(w_current->iwindow),
-				   DIALOG_BORDER_SPACING);
-    gtk_box_set_spacing(GTK_BOX(box), DIALOG_V_SPACING);
-
-    label = gtk_label_new (_("Width x Height:"));
-    gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
-    gtk_misc_set_padding (GTK_MISC (label), 0, 0);
-    gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-
-    optionmenu = gtk_option_menu_new ();
-    gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), 
-			      create_menu_size (w_current));
-    gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), 2);
-    gtk_box_pack_start (GTK_BOX (box), optionmenu, FALSE, FALSE, 0);
-
-    label = gtk_label_new (_("Filename:"));
-    gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
-    gtk_misc_set_padding (GTK_MISC (label), 0, 0);
-    gtk_box_pack_start (GTK_BOX (box),
-                        label, FALSE, FALSE, 0);
-
-    hbox = gtk_hbox_new(FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(box), hbox, FALSE, FALSE, 0);
-    filename_entry = gtk_entry_new_with_max_length (200);
-    gtk_editable_select_region (GTK_EDITABLE (filename_entry), 0, -1);
-    gtk_box_pack_start (GTK_BOX (hbox),
-                        filename_entry, TRUE, TRUE, 0);
-
-    button = gtk_button_new();
-    gtk_container_add(GTK_CONTAINER(button),
-		      gtk_image_new_from_stock(GTK_STOCK_OPEN,
-					       GTK_ICON_SIZE_SMALL_TOOLBAR));
-    gtk_button_set_relief(GTK_BUTTON(button), GTK_RELIEF_NONE);
-
-    gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
-    g_signal_connect(button, "clicked",
-		     GTK_SIGNAL_FUNC (x_image_select_filename),
-		     w_current->iwindow);
-
-    GLADE_HOOKUP_OBJECT(w_current->iwindow,filename_entry,"filename_entry");
-
-    gtk_widget_show_all (w_current->iwindow);
+    x_image_lowlevel(w_current, filename, width, height, image_type);
   }
- 
-  else { /* dialog already created */
-    gtk_window_present(GTK_WINDOW(w_current->iwindow));
-  }
+  
+#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
+  /* If GTK < 2.6, free the descriptions list */
+  free_image_type_descriptions_list();
+#endif
 
-  /* always set the data entries in the dialog */
-  filename_entry = g_object_get_data (G_OBJECT (w_current->iwindow), 
-				      "filename_entry");
-  gtk_entry_set_text(GTK_ENTRY(filename_entry), filename);
-  w_current->image_width = 800;
-  w_current->image_height = 600;
+  gtk_widget_destroy (dialog);
 }
 
 /*! \todo Finish function documentation!!!

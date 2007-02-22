@@ -824,18 +824,9 @@ int x_fileselect_load_backup(TOPLEVEL *toplevel, GString *message);
 void x_grid_draw(TOPLEVEL *w_current);
 void x_draw_tiles(TOPLEVEL *w_current);
 /* x_image.c */
-gint image_320(GtkWidget *w, TOPLEVEL *w_current);
-gint image_640(GtkWidget *w, TOPLEVEL *w_current);
-gint image_800(GtkWidget *w, TOPLEVEL *w_current);
-gint image_1024(GtkWidget *w, TOPLEVEL *w_current);
-gint image_1280(GtkWidget *w, TOPLEVEL *w_current);
-gint image_1600(GtkWidget *w, TOPLEVEL *w_current);
-gint image_3200(GtkWidget *w, TOPLEVEL *w_current);
-void x_image_lowlevel(TOPLEVEL *w_current, const char* filename);
-gint x_image_write(GtkWidget *w, TOPLEVEL *w_current);
-gint x_image_cancel(GtkWidget *w, TOPLEVEL *w_current);
-int x_image_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
-void x_image_setup(TOPLEVEL *w_current, char *filename);
+void x_image_lowlevel(TOPLEVEL *w_current, const char* filename,
+		      int desired_width, int desired_height, char *filetype);
+void x_image_setup(TOPLEVEL *w_current);
 GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current);
 /* x_log.c */
 void x_log_open ();

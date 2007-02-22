@@ -446,49 +446,10 @@ DEFINE_I_CALLBACK(file_print)
 DEFINE_I_CALLBACK(file_write_png)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
-  char *base=NULL;
-  char *img_filename=NULL;
 
   exit_if_null(w_current);
 
-#if 0
-#ifndef HAS_LIBGD
-  /*! \todo integrate these to messages */
-  fprintf(stderr,
-          _("libgd not installed or disabled, "
-          "so this feature is disabled\n"));
-  s_log_message(
-		_("libgd not installed or disabled, "
-		"so this feature is disabled\n"));
-  return;
-#endif
-#endif
-  /* get the base file name */
-  if (strcmp(fnameext_get(w_current->page_current->page_filename),
-             ".sch") == 0) {
-    /* the filename ends with .sch */
-    base = fnameext_remove(w_current->page_current->page_filename);
-  } else {
-    /* the filename does not end with .sch */
-    base = g_strdup (w_current->page_current->page_filename);
-  }
-  if(base == NULL) {
-    /*! \todo do something */
-  }
-
-  /* add ".png" tp the base filename */
-  img_filename = fnameext_add(base, ".png");
-  g_free(base);
-
-  if (output_filename) {
-    x_image_setup(w_current, output_filename);
-  } else {
-    x_image_setup(w_current, img_filename);
-  }
-
-  if (img_filename) {
-    g_free(img_filename);
-  }
+  x_image_setup(w_current);
 }
 
 /*! \todo Finish function documentation!!!

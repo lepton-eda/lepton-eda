@@ -1,3 +1,13 @@
+2007-02-22 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* include/prototype.h, src/g_funcs.c, src/i_callbacks.c, 
+	  src/x_image.c:
+	  Changed the export image dialog by a new one using a GTK
+	  file chooser dialog with image size and image type drop-down 
+	  lists.
+	  If compiled without libgd support (therefore using libgdk-pixbuf),
+	  gschem will support several image types (like PNG, JPEG and ICO).
+
 2007-02-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* po/nl_NL.po: Updated Dutch translation from Bert Timmerman. Thanks.

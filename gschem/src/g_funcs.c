@@ -94,9 +94,15 @@ SCM g_funcs_image(SCM filename)
               SCM_ARG1, "gschem-image");
 
   if (output_filename) {
-    x_image_lowlevel (global_window_current, output_filename);
+    x_image_lowlevel (global_window_current, output_filename,
+		      global_window_current->image_width,
+		      global_window_current->image_height,
+		      "png");
   } else  {
-    x_image_lowlevel (global_window_current, SCM_STRING_CHARS (filename));
+    x_image_lowlevel (global_window_current, SCM_STRING_CHARS (filename),
+		      global_window_current->image_width,
+		      global_window_current->image_height,
+		      "png");
   }
   
   return SCM_BOOL_T;
