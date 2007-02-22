@@ -1,5 +1,9 @@
 2007-02-22 Carlos Nieves Onega <cnieves@iespana.es>
 
+	* lib/system-gschemrc.in : Changed the title of the save image 
+	  dialog from "Write PNG..." to "Write image...", since gschem can
+	  now support more types than PNG.
+
 	* include/prototype.h, src/g_funcs.c, src/i_callbacks.c, 
 	  src/x_image.c:
 	  Changed the export image dialog by a new one using a GTK

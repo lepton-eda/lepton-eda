@@ -1377,7 +1377,7 @@
 	   ("Save Page As..." 	file-save-as 		file-save-as)
 	   ("Save All" 		file-save-all 		file-save-all)
 	   ("Print..." 		file-print 		file-print)
-	   ("Write PNG..." 	file-image 		file-image)
+	   ("Write image..." 	file-image 		file-image)
 	   ("SEPARATOR"         no-action 		no-action)
 	   ("Execute Script..." file-script 		file-script)
 	   ("SEPARATOR"         no-action 		no-action)
