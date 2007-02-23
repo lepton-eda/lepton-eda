@@ -1285,6 +1285,8 @@
     ("s" . options-snap)
     ("r" . options-rubberband)
     ("Shift S" . options-snap-size)
+    ("e" . options-scale-up-snap-size)
+    ("d" . options-scale-down-snap-size)
     ("l" . options-show-log-window)
     ("c" . options-show-coord-window)))
 
@@ -1517,6 +1519,10 @@
 	   ("Toggle Grid On/Off" options-grid       	options-grid)
 	   ("Toggle Snap On/Off" options-snap       	options-snap)
 	   ("Snap Grid Spacing..." options-snap-size   	options-snap-size)
+    	   ("Scale up Grid Spacing" options-scale-up-snap-size 
+						    options-scale-up-snap-size)
+    	   ("Scale down Grid Spacing" options-scale-down-snap-size
+						  options-scale-down-snap-size)
 	   ("Toggle Outline/Box"   options-action-feedback   	
 				   options-action-feedback)
 	   ("Toggle Net Rubberband" options-rubberband   options-rubberband)

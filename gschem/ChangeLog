@@ -1,5 +1,10 @@
 2007-02-23 Carlos Nieves Onega <cnieves@iespana.es>
 
+	* include/prototype.h, lib/system-gschemrc.in, src/g_keys.c,
+	  src/g_register.c, src/i_callbacks.c:
+	  Added two new hotkeys to increase and decrease the snap grid size.
+	  Feature Request #1443637. Thanks to KaiMartin for the suggestion.
+	
 	* src/x_image.c: Free the GError after using it, and don't unlink
 	  the image file in case of errors. It's not always safe. 
 	  For example: if the operation was not allowed due to permissions, 

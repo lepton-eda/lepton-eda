@@ -296,6 +296,8 @@ static struct gsubr_t gschem_funcs[] = {
   { "attributes-visibility-toggle", 0, 0, 0, g_keys_attributes_visibility_toggle },
   { "options-text-size",         0, 0, 0, g_keys_options_text_size },
   { "options-snap-size",         0, 0, 0, g_keys_options_snap_size },
+  { "options-scale-up-snap-size",  0, 0, 0, g_keys_options_scale_up_snap_size },
+  { "options-scale-down-snap-size",0, 0, 0, g_keys_options_scale_down_snap_size },
   { "options-action-feedback",   0, 0, 0, g_keys_options_afeedback },
   { "options-grid",              0, 0, 0, g_keys_options_grid },
   { "options-snap",              0, 0, 0, g_keys_options_snap },

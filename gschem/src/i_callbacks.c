@@ -3304,6 +3304,44 @@ DEFINE_I_CALLBACK(options_snap_size)
   snap_size_dialog(w_current);
 }
 
+/*! \brief Multiply by two the snap grid size.
+ *  \par Function Description
+ *  Callback function for the scale-up snap grid size hotkey.
+ *  Multiply by two the snap grid size.
+ */
+DEFINE_I_CALLBACK(options_scale_up_snap_size)
+{
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+  exit_if_null(w_current);
+
+  w_current->snap_size *= 2;
+  w_current->page_current->CHANGED=1;  /* maybe remove those two lines */
+  o_undo_savestate(w_current, UNDO_ALL);
+
+  o_redraw_all(w_current);
+}
+
+/*! \brief Divide by two the snap grid size.
+ *  \par Function Description
+ *  Callback function for the scale-down snap grid size hotkey.
+ *  Divide by two the snap grid size (if it's and even number).
+ */
+DEFINE_I_CALLBACK(options_scale_down_snap_size)
+{
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+  exit_if_null(w_current);
+
+  if (w_current->snap_size % 2 == 0)
+    w_current->snap_size /= 2;
+  w_current->page_current->CHANGED=1;  /* maybe remove those two lines */
+  o_undo_savestate(w_current, UNDO_ALL);
+
+  o_redraw_all(w_current);
+
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
