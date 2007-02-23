@@ -1,3 +1,10 @@
+2007-02-23 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/x_image.c: Free the GError after using it, and don't unlink
+	  the image file in case of errors. It's not always safe. 
+	  For example: if the operation was not allowed due to permissions, 
+	  the _previous existing_ file will be removed.
+
 2007-02-22 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* lib/system-gschemrc.in : Changed the title of the save image 

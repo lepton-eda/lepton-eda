@@ -376,8 +376,15 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename,
       gtk_dialog_run (GTK_DIALOG (dialog));
       gtk_widget_destroy (dialog);
 
+      /* Free the gerror */
+      g_error_free(gerror); 
+      gerror = NULL;
+
       /* Unlink the output file */
-      unlink(filename);
+      /* It's not safe to unlink the file if there was an error.
+	 For example: if the operation was not allowed due to permissions, 
+	 the _previous existing_ file will be removed */
+      /* unlink(filename); */
     }
     else {
       if (w_current->image_color == TRUE) {
