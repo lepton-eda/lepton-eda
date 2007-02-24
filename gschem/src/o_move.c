@@ -76,7 +76,6 @@ void o_move_start(TOPLEVEL * w_current, int x, int y)
  */
 void o_move_end_lowlevel(TOPLEVEL * w_current, OBJECT * list, int type,
 			 int diff_x, int diff_y,
-			 int screen_diff_x, int screen_diff_y,
 			 GList** other_objects, GList** connected_objects)
 {
   OBJECT *o_current;
@@ -169,7 +168,6 @@ void o_move_end(TOPLEVEL * w_current)
   GList *s_current = NULL;
   OBJECT *object;
   int diff_x, diff_y;
-  int screen_diff_x, screen_diff_y;
   int lx, ly;
   int sx, sy;
   int left, top, right, bottom;
@@ -188,13 +186,15 @@ void o_move_end(TOPLEVEL * w_current)
     return;
   }
 
-  screen_diff_x = w_current->last_x - w_current->start_x;
-  screen_diff_y = w_current->last_y - w_current->start_y;
 
   SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y,
                 &lx, &ly);
   SCREENtoWORLD(w_current, w_current->start_x, w_current->start_y,
                 &sx, &sy);
+  lx = snap_grid(w_current, lx);
+  ly = snap_grid(w_current, ly);
+  sx = snap_grid(w_current, sx);
+  sy = snap_grid(w_current, sy);
 
   diff_x = lx - sx;
   diff_y = ly - sy;
@@ -236,7 +236,6 @@ void o_move_end(TOPLEVEL * w_current)
       case (OBJ_ARC):
       case (OBJ_TEXT):
         o_move_end_lowlevel(w_current, object, SINGLE, diff_x, diff_y,
-                            screen_diff_x, screen_diff_y,
                             &other_objects, &connected_objects);
         break;
 
@@ -262,7 +261,6 @@ void o_move_end(TOPLEVEL * w_current)
 
         o_move_end_lowlevel(w_current, object->complex->prim_objs,
                             COMPLEX, diff_x, diff_y,
-                            screen_diff_x, screen_diff_y,
                             &other_objects, &connected_objects);
 
 

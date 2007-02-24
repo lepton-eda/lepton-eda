@@ -397,41 +397,6 @@ char *o_arc_save(OBJECT *object)
   return(buf);
 }
 
-
-/*! \brief
- *  \par Function Description
- *  This function translates the arc described in the <B>object</B>
- *  pointed structure by <B>dx</B> horizontally and <B>dy</B> vertically.
- *  <B>dx</B> and <B>dy</B> are in screen unit.
- *
- *  The translation vector is converted in world unit. The translation
- *  is made with <B>o_arc_translate_world()</B> that also updates the
- *  screen coordinates and the bounding box.
- *
- *  \param [in] w_current  The TOPLEVEL object.
- *  \param [in] dx         
- *  \param [in] dy         
- *  \param [in] object
- */
-void o_arc_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
-{
-  int world_dx, world_dy;
-  
-  if (object == NULL) {
-    return;
-  }
-
-  /* convert the translation vector in world unit */
-  world_dx = SCREENabs(w_current, dx);
-  world_dy = SCREENabs(w_current, dy);
-  
-  /* translate the arc */
-  o_arc_translate_world(w_current, world_dx, world_dy, object);
-
-  /* screen coords and boundings are updated by _translate_world() */
-	
-}
-
 /*! \brief
  *  \par Function Description
  *  This function applies a translation of (<B>dx</B>,<B>dy</B>)
@@ -457,43 +422,6 @@ void o_arc_translate_world(TOPLEVEL *w_current, int dx, int dy,
   /* Recalculate screen coords from new world coords */
   o_arc_recalc(w_current, object);
 }
-
-/*! \brief
- *  \par Function Description
- *  This function applies a rotation of center (<B>centerx</B>,<B>centery</B>)
- *  and angle <B>angle</B> to the arc object <B>*object</B>.
- *  The coordinates of the rotation center are in screen units.
- *  The angle is in degree.
- *
- *  The rotation is made with th <B>o_arc_rotate_world()</B> function
- *  that perform a rotation of <B>angle</B> and center
- *  (<B>world_centerx</B>,<B>world_centery</B>) in world unit.
- *
- *  \param [in] w_current  The TOPLEVEL object.
- *  \param [in] centerx
- *  \param [in] centery
- *  \param [in] angle
- *  \param [in] object
- */
-void o_arc_rotate(TOPLEVEL *w_current,
-		  int centerx, int centery, int angle,
-		  OBJECT *object)
-{
-  int world_centerx, world_centery;
-
-  /* convert the center of rotation to world unit */
-  SCREENtoWORLD(w_current,
-				centerx, centery,
-                &world_centerx, &world_centery);
-
-  /* rotate the arc */
-  o_arc_rotate_world(w_current,
-					 world_centerx, world_centery, angle,
-					 object);
-
-  /* screen coords and boundings are updated by _rotate_world() */
-  
-}                                   
 
 /*! \brief
  *  \par Function Description
@@ -550,42 +478,6 @@ void o_arc_rotate_world(TOPLEVEL *w_current,
   
 }                                   
 
-/*! \brief
- *  \par Function Description
- *  This function mirrors the screen coordinates of an arc.
- *  The symetry axis is given by the vertical line going
- *  through the point (<B>centerx</B>,<B>centery</B>).
- *  
- *  <B>centerx</B> and <B>centery</B> are in screen unit.
- *
- *  The arc is translated in order to put the point (<B>centerx</B>,<B>centery</B>)
- *  on the origin. The center of the arc is then mirrored. The start angle of
- *  the arc and the sweep of the arc are also mirrored.
- * 
- *  The arc is finally back translated to its previous location on the page.
- *
- *  \param [in] w_current  The TOPLEVEL object.
- *  \param [in] centerx
- *  \param [in] centery
- *  \param [in] object
- */
-void o_arc_mirror(TOPLEVEL *w_current,
-		  int centerx, int centery,
-		  OBJECT *object)
-{
-  int world_centerx, world_centery;
-
-  /* convert mirror origin in world unit */
-  SCREENtoWORLD(w_current, centerx, centery,
-                &world_centerx, &world_centery);
-
-  /* mirror the arc */
-  o_arc_mirror_world(w_current, world_centerx, world_centery, object);
-
-  /* screen coords and boundings are updated by _rotate_world() */
-  
-}
-
 /*! \brief Mirror the WORLD coordinates of an ARC.
  *  \par Function Description
  *  This function mirrors the world coordinates of an arc.
@@ -637,8 +529,7 @@ void o_arc_mirror_world(TOPLEVEL *w_current,
  *  pointed structure.
  *  It also recalculates the <B>OBJECT</B> specific fields and the bounding box of the arc.
  *  
- *  The <B>OBJECT</B> specific fields are handled by the function <B>o_object_recalc()</B>
- *  whereas bounding box - in screen units - is recalculated with the <B>get_arc_bounds()</B> function.
+ *  The bounding box - in screen units - is recalculated with the <B>get_arc_bounds()</B> function.
  *
  *  \param [in] w_current  The TOPLEVEL object.
  *  \param [in] o_current
@@ -667,9 +558,6 @@ void o_arc_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 
   o_current->arc->screen_width  = screen_x2 - screen_x1; /* width */
   o_current->arc->screen_height = screen_y2 - screen_y1; /* height */
-
-  /* recalculates the line type information in o_current */
-  o_object_recalc(w_current, o_current);
 
   /* recalculates the bounding box */
   get_arc_bounds(w_current, o_current, &left, &top, &right, &bottom);

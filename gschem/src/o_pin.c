@@ -132,6 +132,7 @@ void o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
   int size;
   int color;
+  int sx[2], sy[2];
 
   if (o_current->line == NULL) {
     return;
@@ -153,11 +154,12 @@ void o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
                                GDK_JOIN_MITER);
   }
 
+  WORLDtoSCREEN( w_current, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
+  WORLDtoSCREEN( w_current, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
+
   gdk_draw_line(w_current->window, w_current->xor_gc,
-                o_current->line->screen_x[0]+dx,
-                o_current->line->screen_y[0]+dy,
-                o_current->line->screen_x[1]+dx,
-                o_current->line->screen_y[1]+dy);
+                sx[0]+dx, sy[0]+dy,
+                sx[1]+dx, sy[1]+dy);
 
   if (w_current->pin_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,

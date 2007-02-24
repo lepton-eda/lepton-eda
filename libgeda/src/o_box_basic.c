@@ -480,33 +480,6 @@ char *o_box_save(OBJECT *object)
   return(buf);
 }
 
-/*! \brief Translate a BOX position by a delta.
- *  \par Function Description
- *  This function applies a translation of (<B>dx</B>,<B>dy</B>) to the box
- *  described by <B>*object</B>. <B>dx</B> and <B>dy</B> are in screen unit.
- *
- *  \param [in]     w_current   The TOPLEVEL object.
- *  \param [in]     dx          x distance to move.
- *  \param [in]     dy          y distance to move.
- *  \param [in,out] object      BOX OBJECT to translate.
- */
-void o_box_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
-{
-  int world_dx, world_dy;
-
-  if (object == NULL) printf("bt NO!\n");
-
-  /* convert the translation vector in world unit */
-  world_dx = SCREENabs(w_current, dx);
-  world_dy = SCREENabs(w_current, dy);
-
-  /* translate the box */
-  o_box_translate_world(w_current, world_dx, world_dy, object);
-
-  /* screen coords and boundings are updated by _translate_world */
-  
-}
-
 /*! \brief Translate a BOX position in WORLD coordinates by a delta.
  *  \par Function Description
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the box
@@ -529,51 +502,6 @@ void o_box_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
 
   /* recalc the screen coords and the bounding box */
   o_box_recalc(w_current, object);
-}
-
-/*! \brief Rotate a BOX OBJECT.
- *  \par Function Description
- *  This function applies a rotation of center (<B>centerx</B>, <B>centery</B>) and
- *  angle <B>angle</B> to the box object <B>*object</B>.
- *  The coordinates of the rotation center are in screen units. 
- *  <B>angle</B> must be a 90 degree multiple. If not, no rotation is applied.
- *
- *  The rotation is made with the #o_box_rotate_world() function that
- *  perform a rotation of angle <B>angle</B> and center (<B>world_centerx</B>,
- *  <B>world_centery</B>) in world unit.
- *
- *  \param [in]     w_current  The TOPLEVEL object.
- *  \param [in]     centerx    Rotation center x coordinate in SCREEN units.
- *  \param [in]     centery    Rotation center y coordinate in SCREEN units.
- *  \param [in]     angle      Rotation angle in degrees (unused).
- *  \param [in,out] object     BOX OBJECT to rotate.
- *
- *  \note
- *  takes in screen coordinates for the centerx,y, and then does the rotate 
- *  in world space
- *  also ignores angle argument... for now, rotate only in 90 degree 
- *  increments
- *  fixed to 90 degrees... it's *not* general now
- */
-void o_box_rotate(TOPLEVEL *w_current,
-		  int centerx, int centery, int angle,
-		  OBJECT *object)
-{
-  int world_centerx, world_centery;
-
-  /* convert the center of rotation to world unit */
-  SCREENtoWORLD(w_current,
-				centerx, centery, 
-                &world_centerx, &world_centery);  
-
-  /* rotate the box */
-  /* the check of the rotation angle is in o_box_rotate_world() */
-  o_box_rotate_world(w_current,
-					 world_centerx, world_centery, angle,
-					 object);
-
-  /* screen coords and boundings are updated by _rotate_world() */
-  
 }
 
 /*! \brief Rotate BOX OBJECT using WORLD coordinates. 
@@ -642,40 +570,6 @@ void o_box_rotate_world(TOPLEVEL *w_current,
   o_box_recalc(w_current, object);
 }
 
-/*! \brief Mirror a BOX.
- *  \par Function Description
- *  This function mirrors the box from the point (<B>centerx</B>,<B>centery</B>) in
- *  screen unit.
- *
- *  The origin of the mirror in screen unit is converted in world unit. The
- *  box is mirrored with the function #o_box_mirror_world() for which the
- *  origin of the mirror must be given in world unit.
- *
- *  \param [in]     w_current  The TOPLEVEL object.
- *  \param [in]     centerx    Origin x coordinate in WORLD units.
- *  \param [in]     centery    Origin y coordinate in WORLD units.
- *  \param [in,out] object     BOX OBJECT to mirror.
- */
-void o_box_mirror(TOPLEVEL *w_current,
-		  int centerx, int centery,
-		  OBJECT *object)
-{
-  int world_centerx, world_centery;
-
-  /* convert the origin of mirror */
-  SCREENtoWORLD(w_current, centerx, centery, 
-                &world_centerx,
-                &world_centery);  
-
-  /* apply the mirror in world coords */
-  o_box_mirror_world(w_current,
-		     world_centerx, world_centery,
-		     object);
-  
-  /* screen coords and boundings are updated by _mirror_world() */
-  
-}
-
 /*! \brief Mirror BOX using WORLD coordinates.
  *  \par Function Description
  *  This function mirrors the box from the point
@@ -730,8 +624,7 @@ void o_box_mirror_world(TOPLEVEL *w_current,
  *  This function recalculates the screen coords of the <B>o_current</B> pointed
  *  box object from its world coords.
  *
- *  The box coordinates and its bounding are recalculated as well as the
- *  OBJECT specific fields (line width, filling ...).
+ *  The box coordinates and its bounding are recalculated
  *
  *  \param [in] w_current      The TOPLEVEL object.
  *  \param [in,out] o_current  BOX OBJECT to be recalculated.
@@ -766,9 +659,6 @@ void o_box_recalc(TOPLEVEL *w_current, OBJECT *o_current)
   o_current->top    = top;
   o_current->right  = right;
   o_current->bottom = bottom;
-  
-  /* recalc OBJECT specific parameters */
-  o_object_recalc(w_current, o_current);
 }
 
 /*! \brief Get BOX bounding rectangle.

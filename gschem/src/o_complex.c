@@ -188,8 +188,8 @@ void o_complex_place_rotate(TOPLEVEL *w_current)
 {
   OBJECT *o_current;
   GList *ptr;
-  int screen_x_local = -1;
-  int screen_y_local = -1;
+  int x_local = -1;
+  int y_local = -1;
   int new_angle;
 
   ptr = w_current->page_current->complex_place_list;
@@ -197,14 +197,14 @@ void o_complex_place_rotate(TOPLEVEL *w_current)
     o_current = (OBJECT *) ptr->data;
     switch(o_current->type) {	
       case(OBJ_COMPLEX):
-        screen_x_local = o_current->complex->screen_x; 
-        screen_y_local = o_current->complex->screen_y;
+        x_local = o_current->complex->x; 
+        y_local = o_current->complex->y;
         break;
     }
     ptr = ptr->next;
   }
 
-  if (screen_x_local == -1) {
+  if (x_local == -1) {
     printf(_("Could not find complex in new componet placement!\n"));
     return;
   }
@@ -216,14 +216,14 @@ void o_complex_place_rotate(TOPLEVEL *w_current)
 
       case(OBJ_TEXT):
         new_angle = (o_current->text->angle + 90) % 360;
-        o_text_rotate(w_current, screen_x_local, screen_y_local,
-                      new_angle, 90, o_current);
+        o_text_rotate_world(w_current, x_local, y_local,
+                            new_angle, 90, o_current);
         break;
 
       case(OBJ_COMPLEX):
         new_angle = (o_current->complex->angle + 90) % 360;
-        o_complex_rotate(w_current, screen_x_local, screen_y_local,
-                         new_angle, 90, o_current);
+        o_complex_rotate_world(w_current, x_local, y_local,
+                               new_angle, 90, o_current);
         break;
 
     }
@@ -253,11 +253,8 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
   diff_y = w_current->last_y - w_current->start_y;
 
   SCREENtoWORLD(w_current, screen_x, screen_y, &x, &y);
-
-#if 0
   x = snap_grid(w_current, x);
   y = snap_grid(w_current, y);
-#endif
 
 #if DEBUG
   printf("place_basename: %s\n",internal_basename);
@@ -353,9 +350,9 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
         for (i = 0; i < temp; i++) {
           new_angle = (o_temp->
                        text->angle + 90) % 360;
-          o_text_rotate(w_current, 
-                        screen_x, screen_y,
-                        new_angle, 90, o_temp);
+          o_text_rotate_world(w_current, 
+                              x, y,
+                              new_angle, 90, o_temp);
         }
         break;
     }
@@ -706,26 +703,19 @@ void o_complex_translate_selection(TOPLEVEL *w_current, int dx, int dy,
  *  \par Function Description
  *
  */
-void o_complex_rotate(TOPLEVEL *w_current, int centerx, int centery,
-		      int angle, int angle_change, OBJECT *object)
+void o_complex_rotate_world(TOPLEVEL *w_current, int centerx, int centery,
+		            int angle, int angle_change, OBJECT *object)
 {
   int x, y;
   int newx, newy;
-  int world_centerx, world_centery;
 
-  SCREENtoWORLD(w_current,
-                centerx,
-                centery,
-                &world_centerx,
-                &world_centery);
-
-  x = object->complex->x + (-world_centerx);
-  y = object->complex->y + (-world_centery);
+  x = object->complex->x + (-centerx);
+  y = object->complex->y + (-centery);
 
   rotate_point_90(x, y, 90, &newx, &newy);
 
-  x = newx + (world_centerx);
-  y = newy + (world_centery);
+  x = newx + (centerx);
+  y = newy + (centery);
 
   o_complex_world_translate_toplevel(w_current,
                                      -object->complex->x, 
@@ -750,20 +740,13 @@ void o_complex_rotate(TOPLEVEL *w_current, int centerx, int centery,
  *  \par Function Description
  *
  */
-int o_complex_mirror(TOPLEVEL *w_current, int centerx, int centery,
+int o_complex_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery,
 		     OBJECT *object)
 {
   int x, y;
   int newx, newy;
   int origx, origy;
-  int world_centerx, world_centery;
   int change = 0;
-
-  SCREENtoWORLD(w_current,
-                centerx,
-                centery,
-                &world_centerx,
-                &world_centery);
 
   origx = object->complex->x;
   origy = object->complex->y;
@@ -824,106 +807,4 @@ int o_complex_mirror(TOPLEVEL *w_current, int centerx, int centery,
   object->complex->y = y;
 #endif
   return(change);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  this is a special mirror which doesn't mirror the object in memory,
- *  but read the new "correctly mirrored/rotated" object from disk
- *  \todo yes this is aweful, and I will eventually fix it, but for now
- *        it has to do hack
- */
-OBJECT *o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list,
-			  int centerx, int centery,
-			  OBJECT *object)
-{
-  OBJECT *new_obj = NULL;
-  int x, y;
-  int newx, newy;
-  int origx, origy;
-  int world_centerx, world_centery;
-  int change=0;
-  int color;
-
-  SCREENtoWORLD(w_current,
-                centerx,
-                centery,
-                &world_centerx,
-                &world_centery);
-
-  origx = object->complex->x;
-  origy = object->complex->y;
-
-  x = object->complex->x + (-world_centerx);
-  y = object->complex->y + (-world_centery);
-
-  newx = -x;
-  newy = y;
-
-  x = newx + (world_centerx);
-  y = newy + (world_centery);
-
-  switch(object->complex->angle) {
-    case(90):
-      object->complex->angle = 270;
-#if 0
-      o_text_change_angle(w_current, object->complex->prim_objs,
-                          object->complex->angle);
-#endif
-      change = 1;
-      break;
-
-    case(270):
-      object->complex->angle = 90;
-#if 0
-      o_text_change_angle(w_current, object->complex->prim_objs,
-                          object->complex->angle);
-#endif
-      change=1;
-      break;
-
-  }
-
-  object->complex->mirror = !object->complex->mirror;
-
-  if (object->saved_color == -1) {
-    color = object->color;
-  } else {
-    color = object->saved_color;
-  }
-
-
-  new_obj = o_complex_add(w_current,
-                          list, NULL, object->type,
-                          color,
-                          x, y,
-                          object->complex->angle, 
-                          object->complex->mirror,
-                          object->complex_clib, object->complex_basename,
-                          1, FALSE);
-
-  /*! \todo fix up name sometime ... */
-  new_obj->sid = object->sid;
-
-  new_obj->attribs = o_attrib_copy_all(
-                                       w_current, new_obj, object->attribs);
-
-  o_attrib_slot_update(w_current, new_obj);
-
-  o_complex_delete(w_current, object);
-
-  /* need to do the following, because delete severs links */
-  o_attrib_reattach(new_obj->attribs);
-  o_attrib_set_color(w_current, new_obj->attribs);
-
-
-#if 0
-  w_current->page_current->object_tail = (OBJECT *)
-  return_tail(w_current->page_current->object_head);
-#endif
-
-  return(new_obj);
 }

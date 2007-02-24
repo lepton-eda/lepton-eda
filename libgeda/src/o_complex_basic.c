@@ -974,40 +974,6 @@ void o_complex_free_filename(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-/* now I think it works fine */
-/* no there is a bug with snap locking.  Basically if you don't snap/lock in */
-/* PCtoW, then this doesn't work... :(  I don't know why yet */
-void o_complex_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
-{
-  int x, y;
-  int prevx, prevy;
-
-  if (object == NULL) {
-    printf("cmpt NO!\n");
-    return;
-  }
-
-  object->complex->screen_x = object->complex->screen_x + dx;
-  object->complex->screen_y = object->complex->screen_y + dy;
-
-
-  /* this fixing makes me nervious hack */
-  SCREENtoWORLD(w_current, object->complex->screen_x,
-                object->complex->screen_y, &x, &y);
-
-  prevx = object->complex->x;
-  prevy = object->complex->y;
-  object->complex->x = snap_grid(w_current, x);
-  object->complex->y = snap_grid(w_current, y);
-
-  o_complex_world_translate(w_current, x - prevx,y - prevy, 
-                            object->complex->prim_objs);
-}
-
-/*! \brief
- *  \par Function Description
- *
- */
 /* this needs work remove display stuff */
 /* libhack */
 /* and recalc stuff */

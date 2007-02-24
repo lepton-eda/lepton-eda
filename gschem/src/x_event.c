@@ -151,6 +151,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 			    TOPLEVEL *w_current)
 {
   int prev_state; 
+  int w_x, w_y;
 
   exit_if_null(w_current);
   global_window_current = w_current;
@@ -430,10 +431,18 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       case(ENDROTATEP):
 	prev_state = w_current->DONT_REDRAW;
 	w_current->DONT_REDRAW = 0;
-        o_rotate_90(
+        
+        SCREENtoWORLD( w_current,
+  	       (int) event->x,
+  	       (int) event->y,
+               &w_x, &w_y );
+        w_x = snap_grid(w_current, w_x);
+        w_y = snap_grid(w_current, w_y);
+
+        o_rotate_90_world(
                     w_current,
                     w_current->page_current->selection_list,
-                    (int) event->x, (int) event->y);
+                    w_x, w_y);
 	w_current->DONT_REDRAW = prev_state;
 
         w_current->inside_action = 0;
@@ -442,9 +451,15 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ENDMIRROR):
-        o_mirror(w_current,
+        SCREENtoWORLD( w_current,
+  	       (int) event->x,
+  	       (int) event->y,
+               &w_x, &w_y );
+        o_mirror_world(w_current,
                  w_current->page_current->selection_list,
-                 (int) event->x, (int) event->y);
+                 w_x, w_y);
+        w_x = snap_grid(w_current, w_x);
+        w_y = snap_grid(w_current, w_y);
 
         w_current->inside_action = 0;
 	i_set_state(w_current, SELECT);
@@ -665,6 +680,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 {
   int prev_state;
   int redraw_state;
+  int w_x, w_y;
 
   exit_if_null(w_current);
   global_window_current = w_current;
@@ -828,10 +844,12 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 	/* skip over head node */
 	redraw_state = w_current->DONT_REDRAW;
 	w_current->DONT_REDRAW = 1;
-
-	o_rotate_90(w_current, w_current->page_current->complex_place_list,
-		    fix_x(w_current, w_current->start_x),
-		    fix_y(w_current, w_current->start_y));
+        SCREENtoWORLD( w_current,
+                       w_current->start_x, w_current->start_y,
+                       &w_x, &w_y );
+        w_x = snap_grid(w_current, w_x);
+        w_y = snap_grid(w_current, w_y);
+	o_rotate_90_world(w_current, w_current->page_current->complex_place_list, w_x, w_y );
 	w_current->DONT_REDRAW = redraw_state;
 	w_current->rotated_inside ++;	
 	w_current->event_state = prev_state;

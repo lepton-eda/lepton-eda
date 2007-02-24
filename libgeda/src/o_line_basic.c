@@ -391,44 +391,6 @@ char *o_line_save(OBJECT *object)
 
   return(buf);
 }
-      
-/*! \brief Translate a line position by a delta.
- *  \par Function Description
- *  This function applies a translation of (<B>dx</B>,<B>dy</B>) to the
- *  line described by <B>*object</B>. <B>dx</B> and <B>dy</B> are in
- *  screen unit.
- *
- *  \param [in]     w_current   The TOPLEVEL object.
- *  \param [in]     dx          x distance to move.
- *  \param [in]     dy          y distance to move.
- *  \param [in,out] object      Line OBJECT to translate.
- */
-void o_line_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
-{
-  int x, y;
-
-  if (object == NULL) printf("lt NO!\n");
-
-  /* Do screen coords */
-  object->line->screen_x[0] = object->line->screen_x[0] + dx;
-  object->line->screen_y[0] = object->line->screen_y[0] + dy;
-  object->line->screen_x[1] = object->line->screen_x[1] + dx;
-  object->line->screen_y[1] = object->line->screen_y[1] + dy;
-  
-  /* do we want snap grid here? hack */
-  SCREENtoWORLD(w_current,
-		object->line->screen_x[0], object->line->screen_y[0], 
-		&x, &y);  
-  object->line->x[0] = snap_grid(w_current, x);
-  object->line->y[0] = snap_grid(w_current, y);
-  
-  SCREENtoWORLD(w_current,
-		object->line->screen_x[1], object->line->screen_y[1], 
-		&x, &y);  
-  object->line->x[1] = snap_grid(w_current, x);
-  object->line->y[1] = snap_grid(w_current, y);
-  
-}
 
 /*! \brief Translate a line position in WORLD coordinates by a delta.
  *  \par Function Description
@@ -478,47 +440,6 @@ void o_line_translate_world(TOPLEVEL *w_current,
   object->right  = right;
   object->bottom = bottom;
     
-}
-
-/*! \brief Rotate a line OBJECT.
- *  \par Function Description
- *  This function applies a rotation of center (<B>centerx</B>,<B>centery</B>)
- *  and angle <B>angle</B> to the line object <B>*object</B>.
- *  The coordinates of the rotation center are in screen units.
- *  <B>angle</B> mst be a 90 degree multiple. If not, no rotation is applied.
- *
- *  The rotation is made by the #o_line_rotate_world() function
- *  that perform a rotation of angle <B>angle</B> and center
- *  (<B>world_centerx</B>,<B>world_centery</B>) in world unit.
- *
- *  \param [in]     w_current  The TOPLEVEL object.
- *  \param [in]     centerx    Rotation center x coordinate in SCREEN units.
- *  \param [in]     centery    Rotation center y coordinate in SCREEN units.
- *  \param [in]     angle      Rotation angle in degrees (unused).
- *  \param [in,out] object     Line OBJECT to rotate.
- *
- *  \note
- *  takes in screen coordinates for the centerx,y, and then does the rotate 
- *  in world space
- *  also ignores angle argument... for now, rotate only in 90 degree 
- *  increments
- */
-void o_line_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
-		   OBJECT *object)
-{
-  int world_centerx, world_centery;
-
-  /* convert the center of rotation to world unit */
-  SCREENtoWORLD(w_current, centerx, centery, 
-                &world_centerx,
-                &world_centery);  
-
-  /* rotate the line */
-  /* the check on the rotation angle is in o_line_rotate_world() */
-  o_line_rotate_world(w_current,
-					  world_centerx, world_centery, angle,
-					  object);
-  
 }
 
 /*! \brief Rotate Line OBJECT using WORLD coordinates. 
@@ -576,38 +497,6 @@ void o_line_rotate_world(TOPLEVEL *w_current,
   
 }
 
-/*! \brief Mirror a Line.
- *  \par Function Description
- *  This function mirrors the line from the point
- *  (<B>centerx</B>,<B>centery</B>) in screen unit.
- *
- *  The origin of the mirror in screen unit is converted in world unit.
- *  The line is mirrored with the function #o_line_mirror_world()
- *  for which the origin of the mirror must be given in world unit.
- *
- *  \param [in]     w_current  The TOPLEVEL object.
- *  \param [in]     centerx    Origin x coordinate in WORLD units.
- *  \param [in]     centery    Origin y coordinate in WORLD units.
- *  \param [in,out] object     Line OBJECT to mirror.
- */
-void o_line_mirror(TOPLEVEL *w_current,
-		   int centerx, int centery,
-		   OBJECT *object)
-{
-  int world_centerx, world_centery;
-
-  /* convert the origin of mirror */
-  SCREENtoWORLD(w_current, centerx, centery, 
-                &world_centerx,
-                &world_centery);  
-
-  /* apply the mirror in world coords */
-  o_line_mirror_world(w_current,
-					  world_centerx, world_centery,
-					  object);
-  
-}
-
 /*! \brief Mirror a line using WORLD coordinates.
  *  \par Function Description
  *  This function mirrors the line from the point
@@ -642,7 +531,6 @@ void o_line_mirror_world(TOPLEVEL *w_current, int world_centerx,
  *  pointed line object from its world coords.
  *
  *  The line ends coordinates and its bounding box are recalculated
- *  as well as the OBJECT specific fields (line width, filling ...).
  *
  *  \param [in] w_current      The TOPLEVEL object.
  *  \param [in,out] o_current  Line OBJECT to be recalculated.
@@ -678,9 +566,6 @@ void o_line_recalc(TOPLEVEL *w_current, OBJECT *o_current)
   o_current->top    = top;
   o_current->right  = right;
   o_current->bottom = bottom;
-  
-  /* recalc OBJECT specific parameters */
-  o_object_recalc(w_current, o_current);
   
 }
 

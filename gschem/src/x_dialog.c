@@ -763,7 +763,6 @@ static void line_type_dialog_ok(GtkWidget *w, gpointer data)
                         width,
                         length,
                         space);
-    o_object_recalc (toplevel, o_current);
     o_redraw_single (toplevel, o_current);
       
   } else {
@@ -791,7 +790,6 @@ static void line_type_dialog_ok(GtkWidget *w, gpointer data)
                           width  == -1 ? o_current->line_width  : width,
                           length == -1 ? o_current->line_length : length,
                           space  == -1 ? o_current->line_space  : space);
-      o_object_recalc (toplevel, o_current);
       o_redraw_single (toplevel, o_current);
           
       object = object->next;
@@ -1136,7 +1134,6 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
                        type, width,
                        pitch1, angle1,
                        pitch2, angle2);
-    o_object_recalc (toplevel, o_current);
     o_redraw_single (toplevel, o_current);
       
   } else {
@@ -1169,7 +1166,6 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
                           angle1 == -1 ? o_current->fill_angle1 : angle1,
                           pitch2 == -1 ? o_current->fill_pitch2 : pitch2,
                           angle2 == -1 ? o_current->fill_angle2 : angle2);
-      o_object_recalc (toplevel, o_current);
       o_redraw_single (toplevel, o_current);
           
       object = object->next;
@@ -2001,6 +1997,9 @@ void coord_display_update(TOPLEVEL *w_current, int x, int y)
   g_free(string);
 
   SCREENtoWORLD(w_current, x, y, &world_x, &world_y);
+  /* TODO: Do we want to snap the coordinate display? */
+  world_x = snap_grid(w_current, world_x);
+  world_y = snap_grid(w_current, world_y);
 
   string = g_strdup_printf("(%d, %d)", world_x, world_y);
   gtk_label_set_text(GTK_LABEL(w_current->coord_world), string );

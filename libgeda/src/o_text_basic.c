@@ -1830,37 +1830,6 @@ void o_text_rotate_world(TOPLEVEL *w_current,
   o_text_recreate(w_current, object);
 }
 
-void o_text_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
-		   int angle_change, OBJECT *object)
-{
-  int newx, newy;
-  int origx, origy;
-  int world_centerx, world_centery;
-  int x, y;
-	
-  SCREENtoWORLD(w_current, centerx, centery,
-                &world_centerx,
-                &world_centery);
-	
-
-  origx = object->text->x;
-  origy = object->text->y;
-
-  object->text->angle = angle;
-
-  x = origx + (-world_centerx);
-  y = origy + (-world_centery);
-	
-  rotate_point_90(x, y, angle_change, &newx, &newy);
-
-  x = newx + (world_centerx);
-  y = newy + (world_centery);
-	
-  o_text_translate_world(w_current, x-object->text->x, y-object->text->y, object);
-
-  o_text_recreate(w_current, object);
-}
-
 #if 0 /* code which is no longer needed, replaced by new functions below */
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -2453,19 +2422,3 @@ void o_text_mirror_world(TOPLEVEL *w_current,
   o_text_recreate(w_current, object);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_text_mirror(TOPLEVEL *w_current,
-		   int centerx, int centery, OBJECT *object)
-{
-  int world_centerx, world_centery;
-
-  SCREENtoWORLD(w_current, centerx, centery,
-                &world_centerx,
-                &world_centery);
-
-  o_text_mirror_world(w_current, world_centerx, world_centery, object);
-}

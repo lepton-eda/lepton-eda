@@ -51,6 +51,7 @@
 void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
   int wleft, wright, wtop, wbottom; /* world bounds */
+  int s_x, s_y;
   int radius;
   int circle_width, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
@@ -100,7 +101,7 @@ void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
     color = x_get_color(o_current->color);
   }
 
-  radius = o_current->circle->screen_radius;
+  radius = SCREENabs( w_current, o_current->circle->radius );
 
   /*
    * The values describing the line type are extracted from the
@@ -118,14 +119,13 @@ void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
    * to an endless loop in function called after. If such a case is encountered
    * the circle is drawn as a solid circle independently of its initial type.
    */
-  if(o_current->screen_line_width > 0) {
-    circle_width = o_current->screen_line_width;
-  } else {
+  circle_width = SCREENabs( w_current, o_current->line_width );
+  if(circle_width <= 0) {
     circle_width = 1;
   }
 
-  length = o_current->screen_line_length;
-  space = o_current->screen_line_space;
+  length = SCREENabs( w_current, o_current->line_length );
+  space = SCREENabs( w_current, o_current->line_space );
 
   switch(o_current->line_end) {
     case END_NONE:   circle_end = GDK_CAP_BUTT;       break;
@@ -174,18 +174,19 @@ void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
   if((length == 0) || (space == 0))
   draw_func = o_arc_draw_solid;
+
+  WORLDtoSCREEN( w_current, o_current->circle->center_x, o_current->circle->center_y,
+                 &s_x, &s_y );
 	
   (*draw_func)(w_current->window, w_current->gc, color,
                circle_end,
-               o_current->circle->screen_x,
-               o_current->circle->screen_y,
+               s_x, s_y,
                radius,
                0, FULL_CIRCLE / 64,
                circle_width, length, space);
   (*draw_func)(w_current->backingstore, w_current->gc, color,
                circle_end,
-               o_current->circle->screen_x,
-               o_current->circle->screen_y,
+               s_x, s_y,
                radius,
                0, FULL_CIRCLE / 64,
                circle_width, length, space);
@@ -211,16 +212,15 @@ void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
    * distinct. If such a case is encountered the circle is filled hollow
    * (e.q. not filled).
    */
-  if(o_current->screen_fill_width > 0) {
-    fill_width = o_current->screen_fill_width;
-  } else {
+  fill_width = SCREENabs( w_current, o_current->fill_width );
+  if( fill_width <= 0) {
     fill_width = 1;
   }
 	
   angle1 = o_current->fill_angle1;
-  pitch1 = o_current->screen_fill_pitch1;
+  pitch1 = SCREENabs( w_current, o_current->fill_pitch1 );
   angle2 = o_current->fill_angle2;
-  pitch2 = o_current->screen_fill_pitch2;
+  pitch2 = SCREENabs( w_current, o_current->fill_pitch2 );
 	
   switch(o_current->fill_type) {
     case FILLING_HOLLOW:
@@ -263,13 +263,11 @@ void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   (*fill_func)(w_current->window, w_current->gc, color,
-               o_current->circle->screen_x,
-               o_current->circle->screen_y,
+               s_x, s_y,
                radius,
                fill_width, angle1, pitch1, angle2, pitch2);
   (*fill_func)(w_current->backingstore, w_current->gc, color,
-               o_current->circle->screen_x,
-               o_current->circle->screen_y,
+               s_x, s_y,
                radius,
                fill_width, angle1, pitch1, angle2, pitch2);
 
@@ -567,11 +565,13 @@ void o_circle_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
   }
 
   /* radius of the circle */
-  radius = o_current->circle->screen_radius;
+  radius = SCREENabs( w_current, o_current->circle->radius );
   /* upper left corner of the square the circle is inscribed in */
   /* gdk coords system */
-  x = o_current->circle->screen_x - o_current->circle->screen_radius;
-  y = o_current->circle->screen_y - o_current->circle->screen_radius;
+  WORLDtoSCREEN( w_current,
+                 o_current->circle->center_x - o_current->circle->radius,
+                 o_current->circle->center_y + o_current->circle->radius,
+                 &x, &y );
   
   /* translate the upper left corner */
   x = x + dx;
@@ -801,8 +801,10 @@ void o_circle_draw_grips(TOPLEVEL *w_current, OBJECT *o_current)
 	  return;
 
   /* coords of the lower right corner of the square */
-  x = o_current->circle->screen_x + o_current->circle->screen_radius;
-  y = o_current->circle->screen_y + o_current->circle->screen_radius;
+  WORLDtoSCREEN( w_current,
+                 o_current->circle->center_x + o_current->circle->radius,
+                 o_current->circle->center_y - o_current->circle->radius,
+                 &x, &y );
   
   /* grip on lower right corner of the square */
   o_grips_draw(w_current, x, y);
@@ -827,8 +829,10 @@ void o_circle_erase_grips(TOPLEVEL *w_current, OBJECT *o_current)
 	  return;
 
   /* coords of the lower right corner of square */
-  x = o_current->circle->screen_x + o_current->circle->screen_radius;
-  y = o_current->circle->screen_y + o_current->circle->screen_radius;
+  WORLDtoSCREEN( w_current,
+                 o_current->circle->center_x + o_current->circle->radius,
+                 o_current->circle->center_y - o_current->circle->radius,
+                 &x, &y );
   
   /* grip on lower right corner of the square */
   o_grips_erase(w_current, x, y);

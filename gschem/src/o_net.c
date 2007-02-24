@@ -176,6 +176,7 @@ void o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
   int size;
   int color;
+  int sx[2], sy[2];
 
   if (o_current->line == NULL) {
     return;
@@ -198,11 +199,13 @@ void o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
                                GDK_JOIN_MITER);
   }
 
+  WORLDtoSCREEN( w_current, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
+  WORLDtoSCREEN( w_current, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
+
   gdk_draw_line(w_current->window, w_current->outline_xor_gc,
-                o_current->line->screen_x[0]+dx,
-                o_current->line->screen_y[0]+dy,
-                o_current->line->screen_x[1]+dx,
-                o_current->line->screen_y[1]+dy);
+                sx[0]+dx, sy[0]+dy,
+                sx[1]+dx, sy[1]+dy);
+
 
   /* backing store ? not approriate here */
 
@@ -224,6 +227,7 @@ void o_net_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone,
 {
   int color;
   int dx1 = -1, dx2 = -1, dy1 = -1,dy2 = -1;
+  int sx[2], sy[2];
 
   if (o_current->line == NULL) {
     return;
@@ -262,11 +266,12 @@ void o_net_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone,
     fprintf(stderr, _("Got an invalid which one in o_net_draw_xor_single\n"));
   }
 
-  gdk_draw_line(w_current->window, w_current->outline_xor_gc,
-                o_current->line->screen_x[0]+dx1,
-                o_current->line->screen_y[0]+dy1,
-                o_current->line->screen_x[1]+dx2,
-                o_current->line->screen_y[1]+dy2);
+  WORLDtoSCREEN( w_current, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
+  WORLDtoSCREEN( w_current, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
+
+   gdk_draw_line(w_current->window, w_current->outline_xor_gc,
+                sx[0]+dx1, sy[0]+dy1,
+                sx[1]+dx2, sy[1]+dy2);
 
   /* backing store ? not approriate here */
 
@@ -411,6 +416,7 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
   int size;
   int primary_zero_length, secondary_zero_length;
   int found_primary_connection = FALSE;
+  int sx[2], sy[2];
 
   /*int temp_x, temp_y;*/
   /* OBJECT *o_current;*/
@@ -541,14 +547,17 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
       printf("primary:\n"); 
       s_conn_print(new_net->conn_list);
 #endif
+  
+      WORLDtoSCREEN( w_current, new_net->line->x[0], new_net->line->y[0], &sx[0], &sy[0] );
+      WORLDtoSCREEN( w_current, new_net->line->x[1], new_net->line->y[1], &sx[1], &sy[1] );
 
       gdk_gc_set_foreground(w_current->gc, x_get_color(color));
       gdk_draw_line(w_current->window, w_current->gc,
-		    new_net->line->screen_x[0], new_net->line->screen_y[0],
-		    new_net->line->screen_x[1], new_net->line->screen_y[1]);
+                    sx[0], sy[0],
+                    sx[1], sy[1]);
       gdk_draw_line(w_current->backingstore, w_current->gc,
-		    new_net->line->screen_x[0], new_net->line->screen_y[0],
-		    new_net->line->screen_x[1], new_net->line->screen_y[1]);
+                    sx[0], sy[0],
+                    sx[1], sy[1]);
 
       if (w_current->net_style == THICK) {
 	  gdk_gc_set_line_attributes(w_current->gc, 0,
@@ -602,14 +611,17 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
       s_conn_print(new_net->conn_list);
 #endif
 
+      WORLDtoSCREEN( w_current, new_net->line->x[0], new_net->line->y[0], &sx[0], &sy[0] );
+      WORLDtoSCREEN( w_current, new_net->line->x[1], new_net->line->y[1], &sx[1], &sy[1] );
+
       gdk_gc_set_foreground(w_current->gc, x_get_color(color));
       gdk_draw_line(w_current->window, w_current->gc,
-		    new_net->line->screen_x[0], new_net->line->screen_y[0],
-		    new_net->line->screen_x[1], new_net->line->screen_y[1]);
+                    sx[0], sy[0],
+                    sx[1], sy[1]);
       gdk_draw_line(w_current->backingstore, w_current->gc,
-		    new_net->line->screen_x[0], new_net->line->screen_y[0],
-		    new_net->line->screen_x[1], new_net->line->screen_y[1]);
-
+                    sx[0], sy[0],
+                    sx[1], sy[1]);
+      
       if (w_current->net_style == THICK) {
 	  gdk_gc_set_line_attributes(w_current->gc, 0,
 				     GDK_LINE_SOLID,

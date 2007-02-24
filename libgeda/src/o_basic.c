@@ -51,17 +51,17 @@
  *  This function takes a rectangular region and a point.  It will check
  *  if the point is located in the region or not.
  *
- *  \param [in] left    Left coordinate of the region.
- *  \param [in] top     Top coordinate of the region.
- *  \param [in] right   Right coordinate of the region.
- *  \param [in] bottom  Bottom coordinate of the region.
+ *  \param [in] xmin    Smaller x coordinate of the region.
+ *  \param [in] ymin    Smaller y coordinate of the region.
+ *  \param [in] xmax    Larger x coordinate of the region.
+ *  \param [in] ymax    Larger y coordinate of the region.
  *  \param [in] x       x coordinate of the point to check.
  *  \param [in] y       y coordinate of the point to check.
  *  \return 1 if the point is inside the region, 0 otherwise.
  */
-int inside_region(int left, int top, int right, int bottom, int x, int y)
+int inside_region(int xmin, int ymin, int xmax, int ymax, int x, int y)
 {
-  return ((x >= left && x <= right && y >= top && y <= bottom) ? 1 : 0);
+  return ((x >= xmin && x <= xmax && y >= ymin && y <= ymax) ? 1 : 0);
 }
 
 /*! \brief Redraw an object on the screen.
@@ -279,39 +279,3 @@ void o_set_fill_options(TOPLEVEL *w_current, OBJECT *o_current,
   o_current->fill_angle2 = angle2;
 	
 }
-
-/*! \brief Recalculate a single OBJECT in screen coordinates.
- *  \par Function Description
- *  This function takes an OBJECT and converts it to SCREEN coordinates.
- *
- *  \param [in]     w_current  The TOPLEVEL object.
- *  \param [in,out] o_current  OBJECT to recalculate.
- *
- */
-void o_object_recalc(TOPLEVEL *w_current, OBJECT *o_current) 
-{
-  int width, length, space, pitch;
-	
-  if(o_current == NULL) {
-    return;
-  }
-
-  width = SCREENabs(w_current, o_current->line_width);
-  o_current->screen_line_width = width;
-
-  length = SCREENabs(w_current, o_current->line_length);
-  o_current->screen_line_length = length;
-
-  space = SCREENabs(w_current, o_current->line_space);
-  o_current->screen_line_space = space;
-
-  width = SCREENabs(w_current, o_current->fill_width);
-  o_current->screen_fill_width = width;
-  pitch = SCREENabs(w_current, o_current->fill_pitch1);
-  o_current->screen_fill_pitch1 = pitch;
-  pitch = SCREENabs(w_current, o_current->fill_pitch2);
-  o_current->screen_fill_pitch2 = pitch;
-
-}
-
-

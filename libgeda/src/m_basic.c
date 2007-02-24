@@ -232,19 +232,8 @@ void WORLDtoSCREEN(TOPLEVEL *w_current, int x, int y, int *mil_x, int *mil_y)
  */
 void SCREENtoWORLD(TOPLEVEL *w_current, int mx, int my, int *x, int *y)      
 {
-  if (w_current->snap) { 
-    *x = snap_grid(w_current, mil_x(w_current, mx));
-    *y = snap_grid(w_current, mil_y(w_current, my));
-  } else {
-    *x = mil_x(w_current, mx);
-    *y = mil_y(w_current, my);
-  }
-
-#if 0
   *x = mil_x(w_current, mx);
   *y = mil_y(w_current, my);
-#endif
-
 }
 
 /*! \brief Find the closest grid coordinate.

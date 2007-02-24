@@ -388,6 +388,7 @@ void o_select_box_search(TOPLEVEL *w_current)
   OBJECT *o_current=NULL;
   int count = 0; /* object count */
   int SHIFTKEY = w_current->SHIFTKEY;
+  int w_start_x, w_start_y, w_last_x, w_last_y;
 	
   int tmp;
 	
@@ -402,6 +403,9 @@ void o_select_box_search(TOPLEVEL *w_current)
     w_current->last_y = w_current->start_y;
     w_current->start_y = tmp;
   }
+
+  SCREENtoWORLD( w_current, w_current->start_x, w_current->start_y, &w_start_x, &w_start_y );
+  SCREENtoWORLD( w_current, w_current->last_x, w_current->last_y, &w_last_x, &w_last_y );
 
   o_current = w_current->page_current->object_head;
 

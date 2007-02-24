@@ -459,8 +459,7 @@ OBJECT *o_picture_add(TOPLEVEL *w_current, OBJECT *object_list,
  *  This function recalculates the screen coords of the <B>o_current</B>
  *  parameter picture object from its world coords.
  *
- *  The picture coordinates and its bounding are recalculated as well
- *  as the #OBJECT specific fields (line width, filling ...).
+ *  The picture coordinates and its bounding are recalculated
  *
  *  \param [in] w_current      The TOPLEVEL object.
  *  \param [in,out] o_current  Picture OBJECT to be recalculated.
@@ -497,9 +496,6 @@ void o_picture_recalc(TOPLEVEL *w_current, OBJECT *o_current)
   o_current->right  = right;
   o_current->bottom = bottom;
   
-  /* recalc OBJECT specific parameters */
-  o_object_recalc(w_current, o_current);
-
 }
 
 /*! \brief Get picture bounding rectangle.
@@ -649,51 +645,6 @@ void o_picture_modify(TOPLEVEL *w_current, OBJECT *object,
   o_picture_recalc(w_current, object);
 }
 
-/*! \brief Rotate a picture OBJECT.
- *  \par Function Description
- *  This function applies a rotation of center (<B>centerx</B>, <B>centery</B>)
- *  and angle <B>angle</B> to the picture object <B>*object</B>.
- *  The coordinates of the rotation center are in screen units. 
- *  <B>angle</B> must be a 90 degree multiple. If not, no rotation is applied.
- *
- *  The rotation is made with the #o_picture_rotate_world() function
- *  that perform a rotation of angle <B>angle</B> and center
- *  (<B>world_centerx</B>, <B>world_centery</B>) in world unit.
- *
- *  \param [in]     w_current  The TOPLEVEL object.
- *  \param [in]     centerx    Rotation center x coordinate in SCREEN units.
- *  \param [in]     centery    Rotation center y coordinate in SCREEN units.
- *  \param [in]     angle      Rotation angle in degrees (unused).
- *  \param [in,out] object     Picture OBJECT to rotate.
- *
- *  \note
- *  takes in screen coordinates for the centerx,y, and then does the rotate 
- *  in world space
- *  also ignores angle argument... for now, rotate only in 90 degree 
- *  increments
- *  fixed to 90 degrees... it's *not* general now
- */
-void o_picture_rotate(TOPLEVEL *w_current,
-		      int centerx, int centery, int angle,
-		      OBJECT *object)
-{
-  int world_centerx, world_centery;
-
-  /* convert the center of rotation to world unit */
-  SCREENtoWORLD(w_current,
-				centerx, centery, 
-                &world_centerx, &world_centery);  
-
-  /* rotate the picture */
-  /* the check of the rotation angle is in o_picture_rotate_world() */
-  o_picture_rotate_world(w_current,
-					 world_centerx, world_centery, angle,
-					 object);
-
-  /* screen coords and boundings are updated by _rotate_world() */
-  
-}
-
 /*! \brief Rotate picture OBJECT using WORLD coordinates.
  *  \par Function Description 
  *  This function rotates the picture described by <B>*object</B> around
@@ -760,40 +711,6 @@ void o_picture_rotate_world(TOPLEVEL *w_current,
 	
 }
 
-/*! \brief Mirror a picture.
- *  \par Function Description
- *  This function mirrors the picture from the point
- *  (<B>centerx</B>,<B>centery</B>) in screen unit.
- *
- *  The origin of the mirror in screen unit is converted in world unit.
- *  The picture is mirrored with the function #o_picture_mirror_world()
- *  for which the origin of the mirror must be given in world unit.
- *
- *  \param [in]     w_current  The TOPLEVEL object.
- *  \param [in]     centerx    Origin x coordinate in WORLD units.
- *  \param [in]     centery    Origin y coordinate in WORLD units.
- *  \param [in,out] object     Picture OBJECT to mirror.
- */
-void o_picture_mirror(TOPLEVEL *w_current,
-		      int centerx, int centery,
-		      OBJECT *object)
-{
-  int world_centerx, world_centery;
-
-  /* convert the origin of mirror */
-  SCREENtoWORLD(w_current, centerx, centery, 
-                &world_centerx,
-                &world_centery);  
-
-  /* apply the mirror in world coords */
-  o_picture_mirror_world(w_current,
-			 world_centerx, world_centery,
-			 object);
-
-  /* screen coords and boundings are updated by _mirror_world() */
-  
-}
-
 /*! \brief Mirror a picture using WORLD coordinates.
  *  \par Function Description
  *  This function mirrors the picture from the point
@@ -844,36 +761,6 @@ void o_picture_mirror_world(TOPLEVEL *w_current,
 
   /* recalc boundings and screen coords */
   o_picture_recalc(w_current, object);
-  
-}
-
-/*! \brief Translate a picture position by a delta.
- *  \par Function Description
- *  This function applies a translation of (<B>dx</B>,<B>dy</B>) to the picture
- *  described by <B>*object</B>. <B>dx</B> and <B>dy</B> are in screen units.
- *
- *  The translation vector is converted in world unit. The translation is 
- *  made with #o_picture_translate_world().
- *
- *  \param [in]     w_current   The TOPLEVEL object.
- *  \param [in]     dx          x distance to move.
- *  \param [in]     dy          y distance to move.
- *  \param [in,out] object      Picture OBJECT to translate.
- */
-void o_picture_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
-{
-  int world_dx, world_dy;
-
-  if (object == NULL) printf("bt NO!\n");
-
-  /* convert the translation vector in world unit */
-  world_dx = SCREENabs(w_current, dx);
-  world_dy = SCREENabs(w_current, dy);
-
-  /* translate the picture */
-  o_picture_translate_world(w_current, world_dx, world_dy, object);
-
-  /* screen coords and boundings are updated by _translate_world */
   
 }
 

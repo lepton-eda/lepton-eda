@@ -230,6 +230,8 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
 #endif
       if (invocation_flag == FROM_HOTKEY) {
 	SCREENtoWORLD(w_current, mouse_x, mouse_y, &world_x, &world_y);
+        world_x = snap_grid(w_current, world_x);
+        world_y = snap_grid(w_current, world_y);
 	new->text->x = world_x;
 	new->text->y = world_y;
 	o_text_erase(w_current, new);

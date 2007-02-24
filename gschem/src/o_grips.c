@@ -66,7 +66,7 @@ static OBJECT *object_changing;
  *  inside a grip of one of the selected object on the current sheet.
  *  The selected object are in a list starting at
  *  <B>w_current->page_current->selection2_head</B>.
- *  The <B>x</B> and <B>y</B> parameters are in screen units.
+ *  The <B>x</B> and <B>y</B> parameters are in world units.
  *  If the point is inside one grip, a pointer on the object it belongs to is
  *  returned and <B>*whichone</B> is set according to the position of the grip
  *  on the object.
@@ -77,17 +77,18 @@ static OBJECT *object_changing;
  *  appropriate function.
  *
  *  \param [in]  w_current  The TOPLEVEL object.
- *  \param [in]  x          Current x coordinate of pointer in screen units.
- *  \param [in]  y          Current y coordinate of pointer in screen units.
+ *  \param [in]  x          Current x coordinate of pointer in world units.
+ *  \param [in]  y          Current y coordinate of pointer in world units.
  *  \param [out] whichone   Which grip point is selected.
  *  \return Pointer to OBJECT the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone)
+OBJECT *o_grips_search_world(TOPLEVEL *w_current, int x, int y, int *whichone)
 {
   OBJECT *object=NULL;
   OBJECT *found=NULL;
   GList *s_current;
   int size, x2size;
+  int w_size;
 	
   if (!whichone) {
     return(NULL);
@@ -97,6 +98,8 @@ OBJECT *o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone)
   size = o_grips_size(w_current);
   /* size is half the width of a grip, x2size is full width */
   x2size = size * 2;
+
+  w_size = WORLDabs( w_current, size );
 	
   /* skip over head */
   s_current = w_current->page_current->selection_list;
@@ -106,29 +109,29 @@ OBJECT *o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone)
       switch(object->type) {
         case(OBJ_ARC):
           /* check the grips of the arc object */
-          found = o_grips_search_arc(w_current, object,
-                                     x, y, size, whichone);
+          found = o_grips_search_arc_world(w_current, object,
+                                           x, y, w_size, whichone);
           if(found != NULL) return found;
           break;
 				
         case(OBJ_BOX):
           /* check the grips of the box object */
-          found = o_grips_search_box(w_current, object,
-                                     x, y, size, whichone);
+          found = o_grips_search_box_world(w_current, object,
+                                           x, y, w_size, whichone);
           if(found != NULL) return found;
           break;
 		  
         case(OBJ_PICTURE):
           /* check the grips of the picture object */
-          found = o_grips_search_picture(w_current, object,
-                                         x, y, size, whichone);
+          found = o_grips_search_picture_world(w_current, object,
+                                               x, y, w_size, whichone);
           if(found != NULL) return found;
           break;
 		  
         case(OBJ_CIRCLE):
           /* check the grips of the circle object */
-          found = o_grips_search_circle(w_current, object,
-                                        x, y, size, whichone);
+          found = o_grips_search_circle_world(w_current, object,
+                                              x, y, w_size, whichone);
           if(found != NULL) return found;
           break;
 			
@@ -138,8 +141,8 @@ OBJECT *o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone)
         case(OBJ_BUS):
           /* check the grips of the line object */
           /* the function is the same for line, pin, net, bus */
-          found = o_grips_search_line(w_current, object,
-                                      x, y, size, whichone);
+          found = o_grips_search_line_world(w_current, object,
+                                            x, y, w_size, whichone);
           if(found != NULL) return found;
           break;
 
@@ -180,30 +183,30 @@ OBJECT *o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone)
  *                  <B>whichone</B> pointed integer is set to <B>ARC_END_ANGLE</B>.
  *  </DL>
  *
- *  The <B>x</B> and <B>y</B> parameters are in screen units.
+ *  The <B>x</B> and <B>y</B> parameters are in world units.
  *
  *  The <B>size</B> parameter is the width (and height) of the square
- *  representing a grip in screen unit.
+ *  representing a grip in world units.
  *
  *  \param [in]  w_current  The TOPLEVEL object.
  *  \param [in]  o_current  Arc OBJECT to check.
- *  \param [in]  x          Current x coordinate of pointer in screen units.
- *  \param [in]  y          Current y coordinate of pointer in screen units.
- *  \param [in]  size       Half the width of the grip square in screen units.
+ *  \param [in]  x          Current x coordinate of pointer in world units.
+ *  \param [in]  y          Current y coordinate of pointer in world units.
+ *  \param [in]  size       Half the width of the grip square in world units.
  *  \param [out] whichone   Which grip point is selected.
  *  \return Pointer to OBJECT the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_arc(TOPLEVEL *w_current, OBJECT *o_current,
+OBJECT *o_grips_search_arc_world(TOPLEVEL *w_current, OBJECT *o_current,
 			   int x, int y, int size, int *whichone)
 {
   int centerx, centery, radius, start_angle, end_angle;
-  int left, top, right, bottom;
+  int xmin, ymin, xmax, ymax;
   int x2size;
   double tmp;
 
-  centerx     = o_current->arc->screen_x;
-  centery     = o_current->arc->screen_y;
-  radius      = o_current->arc->screen_width / 2;
+  centerx     = o_current->arc->x;
+  centery     = o_current->arc->y;
+  radius      = o_current->arc->width / 2;
   start_angle = o_current->arc->start_angle;
   end_angle   = o_current->arc->end_angle;
 
@@ -211,33 +214,33 @@ OBJECT *o_grips_search_arc(TOPLEVEL *w_current, OBJECT *o_current,
   x2size = 2 * size;
 
   /* check the grip on the center of the arc */
-  left   = centerx - size;
-  top    = centery - size;
-  right  = left + x2size;
-  bottom = top  + x2size;
-  if (inside_region(left, top, right, bottom, x, y)) {
+  xmin = centerx - size;
+  ymin = centery - size;
+  xmax = xmin + x2size;
+  ymax = ymin + x2size;
+  if (inside_region(xmin, ymin, xmax, ymax, x, y)) {
     *whichone = ARC_RADIUS;
     return(o_current);
   }
 
   /* check the grip at the start angle of the arc */
   tmp = ((double) start_angle) * M_PI / 180;
-  left   = centerx + radius * cos(tmp) - size;
-  top    = centery - radius * sin(tmp) - size;
-  right  = left + x2size;
-  bottom = top  + x2size;
-  if (inside_region(left, top, right, bottom, x, y)) {
+  xmin = centerx + radius * cos(tmp) - size;
+  ymin = centery + radius * sin(tmp) - size;
+  xmax = xmin + x2size;
+  ymax = ymin + x2size;
+  if (inside_region(xmin, ymin, xmax, ymax, x, y)) {
     *whichone = ARC_START_ANGLE;
     return(o_current);
   }
 
   /* check the grip at the end angle of the arc */
   tmp = ((double) start_angle + end_angle) * M_PI / 180;
-  left   = centerx + radius * cos(tmp) - size;
-  top    = centery - radius * sin(tmp) - size;
-  right  = left + x2size;
-  bottom = top  + x2size;
-  if (inside_region(left, top, right, bottom, x, y)) {
+  xmin = centerx + radius * cos(tmp) - size;
+  ymin = centery + radius * sin(tmp) - size;
+  xmax = xmin + x2size;
+  ymax = ymin + x2size;
+  if (inside_region(xmin, ymin, xmax, ymax, x, y)) {
     *whichone = ARC_END_ANGLE;
     return(o_current);
   }
@@ -258,64 +261,64 @@ OBJECT *o_grips_search_arc(TOPLEVEL *w_current, OBJECT *o_current,
  *  identifiers of each corner are <B>BOX_UPPER_LEFT</B>,
  *  <B>BOX_UPPER_RIGHT</B>, <B>BOX_LOWER_LEFT</B> and <B>BOX_LOWER_RIGHT</B>.
  *
- *  The <B>x</B> and <B>y</B> parameters are in screen units.
+ *  The <B>x</B> and <B>y</B> parameters are in world units.
  *
  *  The <B>size</B> parameter is half the width (and half the height) of
- *  the square representing a grip in screen unit.
+ *  the square representing a grip in world units.
  *
  *  \param [in]  w_current  The TOPLEVEL object.
  *  \param [in]  o_current  Box OBJECT to check.
- *  \param [in]  x          Current x coordinate of pointer in screen units.
- *  \param [in]  y          Current y coordinate of pointer in screen units.
- *  \param [in]  size       Half the width of the grip square in screen units.
+ *  \param [in]  x          Current x coordinate of pointer in world units.
+ *  \param [in]  y          Current y coordinate of pointer in world units.
+ *  \param [in]  size       Half the width of the grip square in world units.
  *  \param [out] whichone   Which grip point is selected.
  *  \return Pointer to OBJECT the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_box(TOPLEVEL *w_current, OBJECT *o_current,
+OBJECT *o_grips_search_box_world(TOPLEVEL *w_current, OBJECT *o_current,
 			   int x, int y, int size, int *whichone)
 {
-  int left, right, top, bottom;
+  int xmin, ymin, xmax, ymax;
   int x2size;
 
   /* width/height of the grip */
   x2size = 2 * size;
 
   /* inside upper left grip ? */
-  left   = o_current->box->screen_upper_x - size;
-  top    = o_current->box->screen_upper_y - size;
-  right  = left + x2size;
-  bottom = top  + x2size;
-  if (inside_region(left, top, right, bottom, x, y)) {
+  xmin = o_current->box->upper_x - size;
+  ymin = o_current->box->upper_y - size;
+  xmax = xmin + x2size;
+  ymax = ymin + x2size;
+  if (inside_region(xmin, ymin, xmax, ymax, x, y)) {
     *whichone = BOX_UPPER_LEFT;
     return(o_current);
   }
 
   /* inside lower right grip ? */
-  left   = o_current->box->screen_lower_x - size;
-  top    = o_current->box->screen_lower_y - size;
-  right  = left + x2size;
-  bottom = top  + x2size;
-  if (inside_region(left, top, right, bottom, x, y)) {
+  xmin = o_current->box->lower_x - size;
+  ymin = o_current->box->lower_y - size;
+  xmax = xmin + x2size;
+  ymax = ymin + x2size;
+  if (inside_region(xmin, ymin, xmax, ymax, x, y)) {
     *whichone = BOX_LOWER_RIGHT;
     return(o_current);
   }
 
   /* inside upper right grip ? */
-  left   = o_current->box->screen_lower_x - size;
-  top    = o_current->box->screen_upper_y - size;
-  right  = left + x2size;
-  bottom = top  + x2size;
-  if (inside_region(left, top, right, bottom, x, y)) {
+  xmin = o_current->box->lower_x - size;
+  ymin = o_current->box->upper_y - size;
+  xmax = xmin + x2size;
+  ymax = ymin + x2size;
+  if (inside_region(xmin, ymin, xmax, ymax, x, y)) {
     *whichone = BOX_UPPER_RIGHT;
     return(o_current);
   }
 
   /* inside lower left grip ? */
-  left   = o_current->box->screen_upper_x - size;
-  top    = o_current->box->screen_lower_y - size;
-  right  = left + x2size;
-  bottom = top  + x2size;
-  if (inside_region(left, top, right, bottom, x, y)) {
+  xmin = o_current->box->upper_x - size;
+  ymin = o_current->box->lower_y - size;
+  xmax = xmin + x2size;
+  ymax = ymin + x2size;
+  if (inside_region(xmin, ymin, xmax, ymax, x, y)) {
     *whichone = BOX_LOWER_LEFT;
     return(o_current);
   }
@@ -337,64 +340,64 @@ OBJECT *o_grips_search_box(TOPLEVEL *w_current, OBJECT *o_current,
  *  #PICTURE_UPPER_RIGHT, #PICTURE_LOWER_LEFT and
  *  #PICTURE_LOWER_RIGHT.
  *
- *  The <B>x</B> and <B>y</B> parameters are in screen units.
+ *  The <B>x</B> and <B>y</B> parameters are in world units.
  *
  *  The <B>size</B> parameter is half the width (and half the height) of the
- *  square representing a grip in screen unit.
+ *  square representing a grip in world units.
  *
  *  \param [in]  w_current  The TOPLEVEL object.
  *  \param [in]  o_current  Picture OBJECT to check.
- *  \param [in]  x          Current x coordinate of pointer in screen units.
- *  \param [in]  y          Current y coordinate of pointer in screen units.
- *  \param [in]  size       Half the width of the grip square in screen units.
+ *  \param [in]  x          Current x coordinate of pointer in world units.
+ *  \param [in]  y          Current y coordinate of pointer in world units.
+ *  \param [in]  size       Half the width of the grip square in world units.
  *  \param [out] whichone   Which grip point is selected.
  *  \return Pointer to OBJECT the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_picture(TOPLEVEL *w_current, OBJECT *o_current,
+OBJECT *o_grips_search_picture_world(TOPLEVEL *w_current, OBJECT *o_current,
 			       int x, int y, int size, int *whichone)
 {
-  int left, right, top, bottom;
+  int xmin, xmax, ymin, ymax;
   int x2size;
 
   /* width/height of the grip */
   x2size = 2 * size;
 
   /* inside upper left grip ? */
-  left   = o_current->picture->screen_upper_x - size;
-  top    = o_current->picture->screen_upper_y - size;
-  right  = left + x2size;
-  bottom = top  + x2size;
-  if (inside_region(left, top, right, bottom, x, y)) {
+  xmin = o_current->picture->upper_x - size;
+  ymin = o_current->picture->upper_y - size;
+  xmax = xmin + x2size;
+  ymax = ymin + x2size;
+  if (inside_region(xmin, ymin, xmax, ymax, x, y)) {
     *whichone = PICTURE_UPPER_LEFT;
     return(o_current);
   }
 
   /* inside lower right grip ? */
-  left   = o_current->picture->screen_lower_x - size;
-  top    = o_current->picture->screen_lower_y - size;
-  right  = left + x2size;
-  bottom = top  + x2size;
-  if (inside_region(left, top, right, bottom, x, y)) {
+  xmin = o_current->picture->lower_x - size;
+  ymin = o_current->picture->lower_y - size;
+  xmax = xmin + x2size;
+  ymax = ymin + x2size;
+  if (inside_region(xmin, ymin, xmax, ymax, x, y)) {
     *whichone = PICTURE_LOWER_RIGHT;
     return(o_current);
   }
 
   /* inside upper right grip ? */
-  left   = o_current->picture->screen_lower_x - size;
-  top    = o_current->picture->screen_upper_y - size;
-  right  = left + x2size;
-  bottom = top  + x2size;
-  if (inside_region(left, top, right, bottom, x, y)) {
+  xmin = o_current->picture->lower_x - size;
+  ymin = o_current->picture->upper_y - size;
+  xmax = xmin + x2size;
+  ymax = ymin + x2size;
+  if (inside_region(xmin, ymin, xmax, ymax, x, y)) {
     *whichone = PICTURE_UPPER_RIGHT;
     return(o_current);
   }
 
   /* inside lower left grip ? */
-  left   = o_current->picture->screen_upper_x - size;
-  top    = o_current->picture->screen_lower_y - size;
-  right  = left + x2size;
-  bottom = top  + x2size;
-  if (inside_region(left, top, right, bottom, x, y)) {
+  xmin = o_current->picture->upper_x - size;
+  ymin = o_current->picture->lower_y - size;
+  xmax = xmin + x2size;
+  ymax = ymin + x2size;
+  if (inside_region(xmin, ymin, xmax, ymax, x, y)) {
     *whichone = PICTURE_LOWER_LEFT;
     return(o_current);
   }
@@ -413,7 +416,7 @@ OBJECT *o_grips_search_picture(TOPLEVEL *w_current, OBJECT *o_current,
  *  If not, the function returns a <B>NULL</B> pointer and <B>*whichone</B>
  *  is unchanged.
  *
- *  The parameter <B>size</B> is half the size of the grip in screen units.
+ *  The parameter <B>size</B> is half the size of the grip in world units.
  *
  *  A circle has only one grip on the lower right corner of the box it
  *  is inscribed in. Moving this grip change the radius of the circle.
@@ -421,16 +424,16 @@ OBJECT *o_grips_search_picture(TOPLEVEL *w_current, OBJECT *o_current,
  *
  *  \param [in]  w_current  The TOPLEVEL object.
  *  \param [in]  o_current  Circle OBJECT to check.
- *  \param [in]  x          Current x coordinate of pointer in screen units.
- *  \param [in]  y          Current y coordinate of pointer in screen units.
- *  \param [in]  size       Half the width of the grip square in screen units.
+ *  \param [in]  x          Current x coordinate of pointer in world units.
+ *  \param [in]  y          Current y coordinate of pointer in world units.
+ *  \param [in]  size       Half the width of the grip square in world units.
  *  \param [out] whichone   Which grip point is selected.
  *  \return Pointer to OBJECT the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_circle(TOPLEVEL *w_current, OBJECT *o_current,
+OBJECT *o_grips_search_circle_world(TOPLEVEL *w_current, OBJECT *o_current,
 			      int x, int y, int size, int *whichone)
 {
-	int left, top, right, bottom;
+	int xmin, ymin, xmax, ymax;
 	int x1, y1;
 	int x2size;
 	
@@ -438,13 +441,13 @@ OBJECT *o_grips_search_circle(TOPLEVEL *w_current, OBJECT *o_current,
 	x2size = 2 * size;
 
         /* check the grip for radius */	
-	x1 = o_current->circle->screen_x + o_current->circle->screen_radius;
-	y1 = o_current->circle->screen_y + o_current->circle->screen_radius;
-	left   = x1 - size;
-	top    = y1 - size;
-	right  = left + x2size;
-	bottom = top  + x2size;
-	if (inside_region(left, top, right, bottom, x, y)) {
+	x1 = o_current->circle->center_x + o_current->circle->radius;
+	y1 = o_current->circle->center_y - o_current->circle->radius;
+	xmin = x1 - size;
+	ymin = y1 - size;
+	xmax = xmin + x2size;
+	ymax = ymin + x2size;
+	if (inside_region(xmin, ymin, xmax, ymax, x, y)) {
 		/* printf("found something 0!\n"); */
 		*whichone = CIRCLE_RADIUS;
 		return(o_current);
@@ -463,41 +466,41 @@ OBJECT *o_grips_search_circle(TOPLEVEL *w_current, OBJECT *o_current,
  *  returned and <B>*whichone</B> is set to the identifier of the grip. If not,
  *  the function returns <B>NULL</B> pointer and <B>*whichone</B> is unchanged.
  *
- *  The parameter <B>size</B> is half the size of the grip in screen units.
+ *  The parameter <B>size</B> is half the size of the grip in world units.
  *
  *  \param [in]  w_current  The TOPLEVEL object.
  *  \param [in]  o_current  Line OBJECT to check.
- *  \param [in]  x          Current x coordinate of pointer in screen units.
- *  \param [in]  y          Current y coordinate of pointer in screen units.
- *  \param [in]  size       Half the width of the grip square in screen units.
+ *  \param [in]  x          Current x coordinate of pointer in world units.
+ *  \param [in]  y          Current y coordinate of pointer in world units.
+ *  \param [in]  size       Half the width of the grip square in world units.
  *  \param [out] whichone   Which grip point is selected.
  *  \return Pointer to OBJECT the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_line(TOPLEVEL *w_current, OBJECT *o_current,
+OBJECT *o_grips_search_line_world(TOPLEVEL *w_current, OBJECT *o_current,
 			    int x, int y, int size, int *whichone)
 {
-	int left, top, right, bottom;
+	int xmin, ymin, xmax, ymax;
 	int x2size;
 
 	/* width/height of the grip */
 	x2size = 2 * size;
 
 	/* check the grip on the end of line 1 */
-	left = o_current->line->screen_x[LINE_END1] - size;
-	top  = o_current->line->screen_y[LINE_END1] - size;
-	right  = left + x2size;
-	bottom = top  + x2size;
-	if (inside_region(left, top, right, bottom, x, y)) {
+	xmin = o_current->line->x[LINE_END1] - size;
+	ymin = o_current->line->y[LINE_END1] - size;
+	xmax = xmin + x2size;
+	ymax = ymin + x2size;
+	if (inside_region(xmin, ymin, xmax, ymax, x, y)) {
 		*whichone = LINE_END1;
 		return(o_current);
 	}
 
 	/* check the grip on the end of line 2 */
-	left = o_current->line->screen_x[LINE_END2] - size;
-	top  = o_current->line->screen_y[LINE_END2] - size;
-	right  = left + x2size;
-	bottom = top  + x2size;
-	if (inside_region(left, top, right, bottom, x, y)) {
+	xmin = o_current->line->x[LINE_END2] - size;
+	ymin = o_current->line->y[LINE_END2] - size;
+	xmax = xmin + x2size;
+	ymax = ymin + x2size;
+	if (inside_region(xmin, ymin, xmax, ymax, x, y)) {
 		*whichone = LINE_END2;
 		return(o_current);
 	}
@@ -527,6 +530,7 @@ OBJECT *o_grips_search_line(TOPLEVEL *w_current, OBJECT *o_current,
  */
 int o_grips_start(TOPLEVEL *w_current, int x, int y)
 {
+  int w_x, w_y;
   OBJECT *object;
   int whichone;
 	
@@ -534,8 +538,10 @@ int o_grips_start(TOPLEVEL *w_current, int x, int y)
     return(FALSE);
   }
 
+  SCREENtoWORLD( w_current, x, y, &w_x, &w_y );
+
   /* search if there is a grip on a selected object at (x,y) */
-  object = o_grips_search(w_current, x, y, &whichone);
+  object = o_grips_search_world(w_current, w_x, w_y, &whichone);
   if (object) {
     /* there is one */
     /* depending on its type, start the modification process */
@@ -587,10 +593,10 @@ int o_grips_start(TOPLEVEL *w_current, int x, int y)
 
       case(OBJ_NET): 
         w_current->last_drawb_mode = -1;
-        w_current->last_x = object->line->screen_x[whichone];
-        w_current->last_y = object->line->screen_y[whichone];
-        w_current->start_x = object->line->screen_x[!whichone];
-        w_current->start_y = object->line->screen_y[!whichone];
+        WORLDtoSCREEN( w_current, object->line->x[whichone], object->line->y[whichone],
+                       &w_current->last_x, &w_current->last_y );
+        WORLDtoSCREEN( w_current, object->line->x[!whichone], object->line->y[!whichone],
+                       &w_current->start_x, &w_current->start_y );
 				
         o_net_erase(w_current, object);
         gdk_gc_set_foreground(w_current->xor_gc, 
@@ -611,10 +617,10 @@ int o_grips_start(TOPLEVEL *w_current, int x, int y)
       case(OBJ_PIN): 
 				
         w_current->last_drawb_mode = -1;
-        w_current->last_x = object->line->screen_x[whichone];
-        w_current->last_y = object->line->screen_y[whichone];
-        w_current->start_x = object->line->screen_x[!whichone];
-        w_current->start_y = object->line->screen_y[!whichone];
+        WORLDtoSCREEN( w_current, object->line->x[whichone], object->line->y[whichone],
+                       &w_current->last_x, &w_current->last_y );
+        WORLDtoSCREEN( w_current, object->line->x[!whichone], object->line->y[!whichone],
+                       &w_current->start_x, &w_current->start_y );
 				
         o_pin_erase(w_current, object);
         gdk_gc_set_foreground(w_current->xor_gc, 
@@ -632,10 +638,10 @@ int o_grips_start(TOPLEVEL *w_current, int x, int y)
 				
       case(OBJ_BUS): 
         w_current->last_drawb_mode = -1;
-        w_current->last_x = object->line->screen_x[whichone];
-        w_current->last_y = object->line->screen_y[whichone];
-        w_current->start_x = object->line->screen_x[!whichone];
-        w_current->start_y = object->line->screen_y[!whichone];
+        WORLDtoSCREEN( w_current, object->line->x[whichone], object->line->y[whichone],
+                       &w_current->last_x, &w_current->last_y );
+        WORLDtoSCREEN( w_current, object->line->x[!whichone], object->line->y[!whichone],
+                       &w_current->start_x, &w_current->start_y );
 				
         o_bus_erase(w_current, object);
         gdk_gc_set_foreground(w_current->xor_gc, 
@@ -701,10 +707,9 @@ void o_grips_start_arc(TOPLEVEL *w_current, OBJECT *o_current,
 
   /* describe the arc with TOPLEVEL variables */
   /* center */
-  w_current->start_x = o_current->arc->screen_x;
-  w_current->start_y = o_current->arc->screen_y;
+  WORLDtoSCREEN( w_current, o_current->arc->x, o_current->arc->y, &w_current->start_x, &w_current->start_y );
   /* radius */
-  w_current->distance = o_current->arc->screen_width / 2;
+  w_current->distance = SCREENabs( w_current, o_current->arc->width / 2 );
   /* angles */
   w_current->loc_x = o_current->arc->start_angle;
   w_current->loc_y = o_current->arc->end_angle;
@@ -747,28 +752,28 @@ void o_grips_start_box(TOPLEVEL *w_current, OBJECT *o_current,
   /* (start_x, start_y) is the opposite corner */
   switch(whichone) {
     case BOX_UPPER_LEFT: 
-      w_current->last_x  = o_current->box->screen_upper_x;
-      w_current->last_y  = o_current->box->screen_upper_y;
-      w_current->start_x = o_current->box->screen_lower_x;
-      w_current->start_y = o_current->box->screen_lower_y;
+      WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->upper_y,
+                     &w_current->last_x, &w_current->last_y );
+      WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->lower_y,
+                     &w_current->start_x, &w_current->start_y );
       break;
     case BOX_LOWER_RIGHT: 
-      w_current->last_x  = o_current->box->screen_lower_x;
-      w_current->last_y  = o_current->box->screen_lower_y;
-      w_current->start_x = o_current->box->screen_upper_x;
-      w_current->start_y = o_current->box->screen_upper_y;
+      WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->lower_y,
+                     &w_current->last_x, &w_current->last_y );
+      WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->upper_y,
+                     &w_current->start_x, &w_current->start_y );
       break;
     case BOX_UPPER_RIGHT: 
-      w_current->last_x  = o_current->box->screen_lower_x;
-      w_current->last_y  = o_current->box->screen_upper_y;
-      w_current->start_x = o_current->box->screen_upper_x;
-      w_current->start_y = o_current->box->screen_lower_y;
+      WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->upper_y,
+                     &w_current->last_x, &w_current->last_y );
+      WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->lower_y,
+                     &w_current->start_x, &w_current->start_y );
       break;
     case BOX_LOWER_LEFT: 
-      w_current->last_x  = o_current->box->screen_upper_x;
-      w_current->last_y  = o_current->box->screen_lower_y;
-      w_current->start_x = o_current->box->screen_lower_x;
-      w_current->start_y = o_current->box->screen_upper_y;
+      WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->lower_y,
+                     &w_current->last_x, &w_current->last_y );
+      WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->upper_y,
+                     &w_current->start_x, &w_current->start_y );
       break;
     default:
       return; /* error */
@@ -815,28 +820,28 @@ void o_grips_start_picture(TOPLEVEL *w_current, OBJECT *o_current,
   /* (start_x, start_y) is the opposite corner */
   switch(whichone) {
     case PICTURE_UPPER_LEFT: 
-      w_current->last_x  = o_current->picture->screen_upper_x;
-      w_current->last_y  = o_current->picture->screen_upper_y;
-      w_current->start_x = o_current->picture->screen_lower_x;
-      w_current->start_y = o_current->picture->screen_lower_y;
+      WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->upper_y,
+                     &w_current->last_x, &w_current->last_y );
+      WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->lower_y,
+                     &w_current->start_x, &w_current->start_y );
       break;
     case PICTURE_LOWER_RIGHT: 
-      w_current->last_x  = o_current->picture->screen_lower_x;
-      w_current->last_y  = o_current->picture->screen_lower_y;
-      w_current->start_x = o_current->picture->screen_upper_x;
-      w_current->start_y = o_current->picture->screen_upper_y;
+      WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->lower_y,
+                     &w_current->last_x, &w_current->last_y );
+      WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->upper_y,
+                     &w_current->start_x, &w_current->start_y );
       break;
     case PICTURE_UPPER_RIGHT: 
-      w_current->last_x  = o_current->picture->screen_lower_x;
-      w_current->last_y  = o_current->picture->screen_upper_y;
-      w_current->start_x = o_current->picture->screen_upper_x;
-      w_current->start_y = o_current->picture->screen_lower_y;
+      WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->upper_y,
+                     &w_current->last_x, &w_current->last_y );
+      WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->lower_y,
+                     &w_current->start_x, &w_current->start_y );
       break;
     case PICTURE_LOWER_LEFT: 
-      w_current->last_x  = o_current->picture->screen_upper_x;
-      w_current->last_y  = o_current->picture->screen_lower_y;
-      w_current->start_x = o_current->picture->screen_lower_x;
-      w_current->start_y = o_current->picture->screen_upper_y;
+      WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->lower_y,
+                     &w_current->last_x, &w_current->last_y );
+      WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->upper_y,
+                     &w_current->start_x, &w_current->start_y );
       break;
     default:
       return; /* error */
@@ -879,14 +884,13 @@ void o_grips_start_circle(TOPLEVEL *w_current, OBJECT *o_current,
   
   /* describe the circle with TOPLEVEL variables */
   /* (start_x, start_y) is the center of the circle */
-  w_current->start_x  = o_current->circle->screen_x;
-  w_current->start_y  = o_current->circle->screen_y;
+  WORLDtoSCREEN( w_current, o_current->circle->center_x, o_current->circle->center_y,
+                 &w_current->start_x, &w_current->start_y );
   /* (last_x,last_y)    is the point on circle on the right of center */
-  w_current->last_x   = o_current->circle->screen_x +
-                        o_current->circle->screen_radius;
-  w_current->last_y   = o_current->circle->screen_y;
+  WORLDtoSCREEN( w_current, o_current->circle->center_x + o_current->circle->radius, o_current->circle->center_y,
+                 &w_current->last_x, &w_current->last_y );
   /* distance           is the radius of the circle */
-  w_current->distance = o_current->circle->screen_radius;
+  w_current->distance = SCREENabs( w_current, o_current->circle->radius );
   
   /* draw the first temporary circle */
   o_circle_rubbercircle_xor(w_current);
@@ -922,10 +926,10 @@ void o_grips_start_line(TOPLEVEL *w_current, OBJECT *o_current,
   o_line_erase(w_current, o_current);
   
   /* describe the line with TOPLEVEL variables */
-  w_current->last_x  = o_current->line->screen_x[whichone];
-  w_current->last_y  = o_current->line->screen_y[whichone];
-  w_current->start_x = o_current->line->screen_x[!whichone];
-  w_current->start_y = o_current->line->screen_y[!whichone];
+  WORLDtoSCREEN( w_current, o_current->line->x[whichone], o_current->line->y[whichone],
+                 &w_current->last_x, &w_current->last_y );
+  WORLDtoSCREEN( w_current, o_current->line->x[!whichone], o_current->line->y[!whichone],
+                 &w_current->start_x, &w_current->start_y );
   
   /* draw the first temporary line */
   o_line_rubberline_xor(w_current);
@@ -1731,8 +1735,8 @@ int o_grips_size(TOPLEVEL *w_current)
  *  <B>x</B> and <B>y</B> are in screen unit.
  *
  *  \param [in] w_current  The TOPLEVEL object.
- *  \param [in] x          Center x coordinate for drawing grip.
- *  \param [in] y          Center y coordinate for drawing grip.
+ *  \param [in] x          Center x screen coordinate for drawing grip.
+ *  \param [in] y          Center y screen coordinate for drawing grip.
  */
 void o_grips_draw(TOPLEVEL *w_current, int x, int y)
 {
@@ -1793,8 +1797,8 @@ void o_grips_draw(TOPLEVEL *w_current, int x, int y)
  *  visible grip.
  *
  *  \param [in] w_current  The TOPLEVEL object.
- *  \param [in] x          Center x coordinate for drawing grip.
- *  \param [in] y          Center y coordinate for drawing grip.
+ *  \param [in] x          Center x screen coordinate for drawing grip.
+ *  \param [in] y          Center y screen coordinate for drawing grip.
  */
 void o_grips_erase(TOPLEVEL *w_current, int x, int y)
 {

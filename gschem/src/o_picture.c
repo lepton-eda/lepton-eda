@@ -342,6 +342,8 @@ void o_picture_rubberbox_xor(TOPLEVEL *w_current)
 void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
   int wleft, wright, wtop, wbottom; /* world bounds */
+  int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
+
   if (o_current->picture == NULL) {
     return;
   }
@@ -365,19 +367,19 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
   if (!visible(w_current, wleft, wtop, wright, wbottom)) {
     return;
   }
-	
+
+  WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->upper_y,
+                 &s_upper_x, &s_upper_y );
+  WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->lower_y,
+                 &s_lower_x, &s_lower_y );
+
 #if  DEBUG 
   printf("drawing picture\n\n");
   
   printf("drawing picture: %d %d %d %d\n",
-         o_current->picture->screen_upper_x,
-         o_current->picture->screen_upper_y,
-         o_current->picture->screen_upper_x +
-         abs(o_current->picture->screen_lower_x -
-             o_current->picture->screen_upper_x),
-         o_current->picture->screen_upper_y +
-         abs(o_current->picture->screen_lower_y -
-             o_current->picture->screen_upper_y));
+         s_upper_x, s_upper_y,
+         s_upper_x + abs(s_lower_x - s_upper_x),
+         s_upper_y + abs(s_lower_y - s_upper_y));
 #endif
 
   /*
@@ -413,10 +415,8 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
     o_current->picture->displayed_picture = 
     gdk_pixbuf_scale_simple(temp_pixbuf2, 
-                            abs(o_current->picture->screen_lower_x -
-                                o_current->picture->screen_upper_x), 
-                            abs(o_current->picture->screen_lower_y - 
-                                o_current->picture->screen_upper_y), 
+                            abs(s_lower_x - s_upper_x), 
+                            abs(s_lower_y - s_upper_y), 
                             GDK_INTERP_BILINEAR);
     g_object_unref(temp_pixbuf2);
 
@@ -428,13 +428,11 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
     if (w_current->DONT_REDRAW == 0) {
       gdk_draw_pixbuf(w_current->window, w_current->gc,
 		      o_current->picture->displayed_picture, 
-		      0, 0, o_current->picture->screen_upper_x,
-		      o_current->picture->screen_upper_y, 
+		      0, 0, s_upper_x, s_upper_y, 
 		      -1, -1, GDK_RGB_DITHER_NONE, 0, 0);
       gdk_draw_pixbuf(w_current->backingstore, w_current->gc,
 		      o_current->picture->displayed_picture, 
-		      0, 0, o_current->picture->screen_upper_x,
-		      o_current->picture->screen_upper_y, 
+		      0, 0, s_upper_x, s_upper_y, 
 		      -1, -1, GDK_RGB_DITHER_NONE, 0, 0);
     }
   }
@@ -444,19 +442,13 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
       gdk_gc_set_foreground(w_current->gc, 
 			    x_get_color(w_current->background_color));
       gdk_draw_rectangle(w_current->window, w_current->gc, TRUE, 
-			 o_current->picture->screen_upper_x,
-			 o_current->picture->screen_upper_y,
-			 abs(o_current->picture->screen_lower_x -
-			     o_current->picture->screen_upper_x), 
-			 abs(o_current->picture->screen_lower_y - 
-			     o_current->picture->screen_upper_y));
+			 s_upper_x, s_upper_y,
+			 abs(s_lower_x - s_upper_x), 
+			 abs(s_lower_y - s_upper_y));
       gdk_draw_rectangle(w_current->backingstore, w_current->gc, TRUE, 
-			 o_current->picture->screen_upper_x,
-			 o_current->picture->screen_upper_y,
-			 abs(o_current->picture->screen_lower_x -
-			     o_current->picture->screen_upper_x), 
-			 abs(o_current->picture->screen_lower_y - 
-			     o_current->picture->screen_upper_y));
+			 s_upper_x, s_upper_y,
+			 abs(s_lower_x -s_upper_x),
+			 abs(s_lower_y - s_upper_y));
     }
   }
 
@@ -487,47 +479,41 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
  */
 void o_picture_draw_grips(TOPLEVEL *w_current, OBJECT *o_current) 
 {
+  int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
+
 #if DEBUG
   printf("o_picture_draw_grips called\n");
 #endif
   if (w_current->draw_grips == FALSE)
 	  return;
 
+  WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->upper_y,
+                 &s_upper_x, &s_upper_y );
+  WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->lower_y,
+                 &s_lower_x, &s_lower_y );
+  
+
   /* grip on upper left corner (whichone = PICTURE_UPPER_LEFT) */
-  o_grips_draw(w_current,
-	       o_current->picture->screen_upper_x,
-	       o_current->picture->screen_upper_y);
+  o_grips_draw(w_current, s_upper_x, s_upper_y);
   
   /* grip on upper right corner (whichone = PICTURE_UPPER_RIGHT) */
-  o_grips_draw(w_current,
-	       o_current->picture->screen_lower_x,
-	       o_current->picture->screen_upper_y);
+  o_grips_draw(w_current, s_lower_x, s_upper_y);
   
   /* grip on lower left corner (whichone = PICTURE_LOWER_LEFT) */
-  o_grips_draw(w_current,
-	       o_current->picture->screen_upper_x,
-	       o_current->picture->screen_lower_y);
+  o_grips_draw(w_current, s_upper_x, s_lower_y);
   
   /* grip on lower right corner (whichone = PICTURE_LOWER_RIGHT) */
-  o_grips_draw(w_current,
-	       o_current->picture->screen_lower_x,
-	       o_current->picture->screen_lower_y);
+  o_grips_draw(w_current, s_lower_x, s_lower_y);
   
   /* Box surrounding the picture */
   gdk_draw_rectangle(w_current->window, w_current->gc, FALSE, 
-		     o_current->picture->screen_upper_x,
-		     o_current->picture->screen_upper_y,
-		     abs(o_current->picture->screen_upper_x -
-			 o_current->picture->screen_lower_x),
-		     abs(o_current->picture->screen_upper_y -
-			 o_current->picture->screen_lower_y));
+		     s_upper_x, s_upper_y,
+		     abs(s_upper_x - s_lower_x),
+		     abs(s_upper_y - s_lower_y));
   gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE, 
-		     o_current->picture->screen_upper_x,
-		     o_current->picture->screen_upper_y,
-		     abs(o_current->picture->screen_upper_x -
-			 o_current->picture->screen_lower_x),
-		     abs(o_current->picture->screen_upper_y -
-			 o_current->picture->screen_lower_y));
+		     s_upper_x, s_upper_y,
+		     abs(s_upper_x - s_lower_x),
+		     abs(s_upper_y - s_lower_y));
 }
 
 /*! \brief Erase grip marks from box.
@@ -540,47 +526,41 @@ void o_picture_draw_grips(TOPLEVEL *w_current, OBJECT *o_current)
  */
 void o_picture_erase_grips(TOPLEVEL *w_current, OBJECT *o_current) 
 {
+  int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
+
 #if DEBUG
   printf("o_picture_erase_grips called\n");
 #endif
   if (w_current->draw_grips == FALSE)
 	  return;
 
+  WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->upper_y,
+                 &s_upper_x, &s_upper_y );
+  WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->lower_y,
+                 &s_lower_x, &s_lower_y );
+  
   /* grip on upper left corner (whichone = PICTURE_UPPER_LEFT) */
-  o_grips_erase(w_current,
-		o_current->picture->screen_upper_x,
-		o_current->picture->screen_upper_y);
+  o_grips_erase(w_current, s_upper_x, s_upper_y);
   
   /* grip on upper right corner (whichone = PICTURE_UPPER_RIGHT) */
-  o_grips_erase(w_current,
-		o_current->picture->screen_lower_x,
-		o_current->picture->screen_upper_y);
+  o_grips_erase(w_current, s_lower_x, s_upper_y);
   
   /* grip on lower left corner (whichone = PICTURE_LOWER_LEFT) */
-  o_grips_erase(w_current,
-		o_current->picture->screen_upper_x,
-		o_current->picture->screen_lower_y);
+  o_grips_erase(w_current, s_upper_x, s_lower_y);
   
   /* grip on lower right corner (whichone = PICTURE_LOWER_RIGHT) */
-  o_grips_erase(w_current,
-		o_current->picture->screen_lower_x,
-		o_current->picture->screen_lower_y);
+  o_grips_erase(w_current, s_lower_x, s_lower_y);
   
   /* Box surrounding the picture */
   gdk_draw_rectangle(w_current->window, w_current->gc, FALSE, 
-		     o_current->picture->screen_upper_x,
-		     o_current->picture->screen_upper_y,
-		     abs(o_current->picture->screen_upper_x -
-			 o_current->picture->screen_lower_x),
-		     abs(o_current->picture->screen_upper_y -
-			 o_current->picture->screen_lower_y));
+		     s_upper_x, s_upper_y,
+		     abs(s_upper_x - s_lower_x),
+		     abs(s_upper_y - s_lower_y));
   gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE, 
-		     o_current->picture->screen_upper_x,
-		     o_current->picture->screen_upper_y,
-		     abs(o_current->picture->screen_upper_x -
-			 o_current->picture->screen_lower_x),
-		     abs(o_current->picture->screen_upper_y -
-			 o_current->picture->screen_lower_y));
+		     s_upper_x, s_upper_y,
+		     abs(s_upper_x - s_lower_x),
+		     abs(s_upper_y - s_lower_y));
+  
 }
 
 /*! \brief Erase a picture described by OBJECT.
@@ -634,11 +614,11 @@ void o_picture_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
     return;
   }
 
-  screen_x1 = o_current->picture->screen_upper_x;
-  screen_y1 = o_current->picture->screen_upper_y;
-  screen_x2 = o_current->picture->screen_lower_x;
-  screen_y2 = o_current->picture->screen_lower_y;
-
+  WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->upper_y,
+                 &screen_x1, &screen_y1 );
+  WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->lower_y,
+                 &screen_x2, &screen_y2 );
+  
   if (o_current->saved_color != -1) {
     color = o_current->saved_color;
   } else {

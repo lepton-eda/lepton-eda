@@ -1,3 +1,62 @@
+2007-02-24 Peter Clifton <pcjc2@cam.ac.uk>
+
+	Merge changes to date from noscreen branch.
+
+	2007-02-24 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* src/o_box.c: Remove a copy-paste error which added an extra arguemnt
+		  when calling (*fill_func). Result was drawing errors, and an infinite
+		  loop when mesh filling.
+
+	2007-02-12 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* src/x_dialog.c: Removed all calls to o_object_recalc() 
+		  now the data it calculates is no longer used.
+
+		* src/o_arc.c, src/o_box.c, src/o_bus.c, src/o_circle.c, 
+		  src/o_line.c, src/o_net.c, src/o_picture.c, src/o_pin.c, 
+		  src/o_select.c, src/o_text.c: Modified drawing routines 
+		  to calculate coordinates directly from object world coords.
+
+		* src/o_arc.c, src/o_box.c, src/o_circle.c, src/o_line.c,
+		  src/o_picture.c: Modified grip drawing / undrawing code
+		  to calculate coordinates directly from object world coords.
+
+		* include/prototype.h, src/o_grips.c: Changed to use world 
+		  coordinates internally for region checking.
+
+		* src/a_pan.c, src/i_callbacks.c, src/o_buffer.c, src/o_complex.c,
+		  src/o_copy.c, src/o_move.c, src/x_attribedit.c, src/x_dialog.c,
+		  src/x_event.c: Add manual grid-snapping after calls to
+		  SCREENtoWORLD() where grid snapping would be required.
+		  In preparation for removing grid snap from SCREENtoWORLD().
+
+		* src/x_event.c: Grid snap in x_event.c after converting to world
+		  coords, rather than before. (The computation for grid snapping in
+		  screen coords involves a conversion to world coords and back)
+
+	2006-12-27 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* include/prototype.h, src/o_move.c: Modify o_move_end_lowlevel() 
+		  to not require screen coordinates as a parameter (which were 
+		  unused). Alter usage in o_move_end() as appropriate.
+
+		* src/o_text.c: Modify o_text_place_rotate() to use world
+		  coordinates, and o_text_rotate_world internally.
+
+		* include/prototype.h, src/i_callbacks.c, src/o_complex.c,
+		  src/o_misc.c, src/x_event.c: Made o_complex_rotate().
+		  into o_complex_rotate_world(), made o_rotate_90() into
+		  o_rotate_90_world(), and converted usage as appropriate.
+
+		* include/prototype.h, src/o_complex.c: Remove unused
+		  function o_complex_mirror2()
+
+		* include/prototype.h, src/o_misc.c, src/o_complex.c,
+		  src/i_callbacks.c, src/x_event.c: Made o_complex_mirror() 
+		  into o_complex_mirror_world(), made o_mirror() into
+		  o_mirror_world(), and converted usage as appropriate.
+
 2007-02-24 Werner Hoch <werner.ho@gmx.de>
 
 	* x_dialog.c: removed unused functions generic_text_input*

@@ -108,20 +108,19 @@ void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
    * encountered the arc is drawn as a solid arc independently of its
    * initial type.
    */
-  x      = o_current->arc->screen_x;
-  y      = o_current->arc->screen_y;
-  radius = o_current->arc->screen_width / 2;
+  WORLDtoSCREEN( w_current, o_current->arc->x, o_current->arc->y, &x, &y );
+  radius = SCREENabs( w_current, o_current->arc->width / 2 );
   start_angle = o_current->arc->start_angle;
   end_angle   = o_current->arc->end_angle;
 
 #if DEBUG 
   printf("drawing arc x: %d y: %d sa: %d ea: %d width: %d height: %d\n",
-         o_current->arc->screen_x,
-         o_current->arc->screen_y, 
+         x,
+         y, 
          o_current->arc->start_angle, 
          o_current->arc->end_angle,
-         o_current->arc->screen_width, 
-         o_current->arc->screen_height);
+         radius, 
+         radius);
 #endif
 
   if (w_current->override_color != -1 )
@@ -129,9 +128,8 @@ void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
   else
     color = x_get_color(o_current->color);
 
-  if(o_current->screen_line_width > 0) {
-    arc_width = o_current->screen_line_width;
-  } else {
+  arc_width = SCREENabs( w_current, o_current->line_width );
+  if(arc_width <= 0) {
     arc_width = 1;
   }
 	
@@ -144,8 +142,8 @@ void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
     break;
   }
 
-  length = o_current->screen_line_length;
-  space = o_current->screen_line_space;
+  length = SCREENabs( w_current, o_current->line_length );
+  space = SCREENabs( w_current, o_current->line_space );
 	
   switch(o_current->line_type) {
   case TYPE_SOLID:
@@ -859,12 +857,13 @@ void o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
   }
 
   /* diameter */
-  width       = o_current->arc->screen_width;
+  width       = SCREENabs( w_current, o_current->arc->width );
   /* height MUST be equal to width, just another name for diameter */
-  height      = o_current->arc->screen_height;
+  height      = SCREENabs( w_current, o_current->arc->height );
   /* center */
-  x           = o_current->arc->screen_x - (width  / 2);
-  y           = o_current->arc->screen_y - (height / 2);
+  WORLDtoSCREEN( w_current, o_current->arc->x, o_current->arc->y, &x, &y );
+  x           -= (width  / 2);
+  y           -= (height / 2);
   /* start and end angles */
   start_angle = o_current->arc->start_angle;
   end_angle   = o_current->arc->end_angle;
@@ -1305,14 +1304,13 @@ void o_arc_draw_grips(TOPLEVEL *w_current, OBJECT *o_current)
    *   <DT>*</DT><DD>one at the end of the arc - at (<B>x2</B>,<B>y2</B>).
    */
 
-  x           = o_current->arc->screen_x;
-  y           = o_current->arc->screen_y;
-  radius      = o_current->arc->screen_width / 2;
+  WORLDtoSCREEN( w_current, o_current->arc->x, o_current->arc->y, &x, &y );
+  radius      = SCREENabs( w_current, o_current->arc->width / 2 );
   start_angle = o_current->arc->start_angle;
   end_angle   = o_current->arc->end_angle;
 
   x1 = x + radius * cos(((double) start_angle) * M_PI / 180);
-  y1 = y - radius * sin(((double) start_angle  ) * M_PI / 180);
+  y1 = y - radius * sin(((double) start_angle) * M_PI / 180);
   x2 = x + radius * cos(((double) (start_angle + end_angle)) * M_PI / 180);
   y2 = y - radius * sin(((double) (start_angle + end_angle)) * M_PI / 180);
 
@@ -1350,9 +1348,8 @@ void o_arc_erase_grips(TOPLEVEL *w_current, OBJECT *o_current)
    * and (<B>x2</B>,<B>y2</B>).
    */
 
-  x           = o_current->arc->screen_x;
-  y           = o_current->arc->screen_y;
-  radius      = o_current->arc->screen_width / 2;
+  WORLDtoSCREEN( w_current, o_current->arc->x, o_current->arc->y, &x, &y );
+  radius      = SCREENabs( w_current, o_current->arc->width / 2 );
   start_angle = o_current->arc->start_angle;
   end_angle   = o_current->arc->end_angle;
 

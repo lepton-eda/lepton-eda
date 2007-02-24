@@ -846,6 +846,7 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
   GList *object_list;
+  int w_x, w_y;
 
   exit_if_null(w_current);
   o_redraw_cleanstates(w_current);	
@@ -855,9 +856,13 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
   if (object_list) {
     i_update_middle_button(w_current,
                            i_callback_edit_rotate_90_hotkey, _("Rotate"));
-    /* Allow o_rotate_90 to redraw the objects */
+    /* Allow o_rotate_90_world to redraw the objects */
     w_current->DONT_REDRAW = 0;
-    o_rotate_90(w_current, object_list, mouse_x, mouse_y);
+    SCREENtoWORLD( w_current, mouse_x, mouse_y, &w_x, &w_y );
+    w_x = snap_grid(w_current, w_x);
+    w_y = snap_grid(w_current, w_y);
+
+    o_rotate_90_world(w_current, object_list, w_x, w_y);
   }
 
   w_current->event_state = SELECT;
@@ -889,6 +894,7 @@ DEFINE_I_CALLBACK(edit_mirror_hotkey)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
   GList *object_list;
+  int w_x, w_y;
 
   exit_if_null(w_current);
 
@@ -900,9 +906,13 @@ DEFINE_I_CALLBACK(edit_mirror_hotkey)
     i_update_middle_button(w_current,
                            i_callback_edit_mirror_hotkey, _("Mirror"));
 
-    o_mirror(w_current, 
-             object_list, 
-             mouse_x, mouse_y);
+    SCREENtoWORLD( w_current, mouse_x, mouse_y, &w_x, &w_y );
+    w_x = snap_grid(w_current, w_x);
+    w_y = snap_grid(w_current, w_y);
+
+    o_mirror_world(w_current, 
+                   object_list, 
+                   w_x, w_y);
   }
 
   w_current->event_state = SELECT;

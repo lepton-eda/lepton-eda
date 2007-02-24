@@ -132,6 +132,7 @@ void o_bus_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
   int size;
   int color;
+  int sx[2], sy[2];
 
   if (o_current->line == NULL) {
     return;
@@ -154,11 +155,12 @@ void o_bus_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
                                GDK_JOIN_MITER);
   }
 
+  WORLDtoSCREEN( w_current, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
+  WORLDtoSCREEN( w_current, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
+  
   gdk_draw_line(w_current->window, w_current->outline_xor_gc,
-                o_current->line->screen_x[0]+dx,
-                o_current->line->screen_y[0]+dy,
-                o_current->line->screen_x[1]+dx,
-                o_current->line->screen_y[1]+dy);
+                sx[0]+dx, sy[0]+dy,
+                sx[1]+dx, sy[1]+dy);
 
   /* backing store ? not approriate here */
 
@@ -180,6 +182,7 @@ void o_bus_draw_xor_single(TOPLEVEL *w_current,
 {
   int color;
   int dx1= - 1, dy1 = - 1, dx2 = -1, dy2 = -1;
+  int sx[2], sy[2];
 
   if (o_current->line == NULL) {
     return;
@@ -218,11 +221,12 @@ void o_bus_draw_xor_single(TOPLEVEL *w_current,
     fprintf(stderr, _("Got an invalid which one in o_bus_draw_xor_single\n"));
   }
 
+  WORLDtoSCREEN( w_current, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
+  WORLDtoSCREEN( w_current, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
+
   gdk_draw_line(w_current->window, w_current->outline_xor_gc,
-                o_current->line->screen_x[0]+dx1,
-                o_current->line->screen_y[0]+dy1,
-                o_current->line->screen_x[1]+dx2,
-                o_current->line->screen_y[1]+dy2);
+                sx[0]+dx1, sy[0]+dy1,
+                sx[1]+dx2, sy[1]+dy2);
 
   /* backing store ? not approriate here */
 

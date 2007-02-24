@@ -111,6 +111,8 @@ void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
     SCREENtoWORLD(w_current,
 		  w_current->start_x, w_current->start_y,
 		  &start_x, &start_y);
+    start_x = snap_grid(w_current, start_x);
+    start_y = snap_grid(w_current, start_y);
   }
 
   /* calculate the new visible area; adding 0.5 to round */

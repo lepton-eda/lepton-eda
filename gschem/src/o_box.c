@@ -55,6 +55,7 @@
 void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
   int wleft, wright, wtop, wbottom; /* world bounds */
+  int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
   int line_width, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
   GdkCapStyle box_end;
@@ -89,14 +90,14 @@ void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
   printf("drawing box\n\n");
 	
   printf("drawing box: %d %d %d %d\n",
-         o_current->box->screen_upper_x,
-         o_current->box->screen_upper_y,
-         o_current->box->screen_upper_x +
-         abs(o_current->box->screen_lower_x -
-             o_current->box->screen_upper_x),
-         o_current->box->screen_upper_y +
-         abs(o_current->box->screen_lower_y -
-             o_current->box->screen_upper_y));
+         o_current->box->upper_x,
+         o_current->box->upper_y,
+         o_current->box->upper_x +
+         abs(o_current->box->lower_x -
+             o_current->box->upper_x),
+         o_current->box->upper_y +
+         abs(o_current->box->lower_y -
+             o_current->box->upper_y));
 #endif
 
   /*
@@ -126,9 +127,8 @@ void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
    * encountered the box is drawn as a solid box independently of its
    * initial type.
    */
-  if(o_current->screen_line_width > 0) {
-    line_width = o_current->screen_line_width;
-  } else {
+  line_width = SCREENabs( w_current, o_current->line_width );
+  if(line_width <= 0) {
     line_width = 1;
   }
 
@@ -141,8 +141,8 @@ void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
     break;
   }
 	
-  length = o_current->screen_line_length;
-  space = o_current->screen_line_space;
+  length = SCREENabs( w_current, o_current->line_length );
+  space = SCREENabs( w_current, o_current->line_space );
 	
   switch(o_current->line_type) {
     case TYPE_SOLID:
@@ -182,24 +182,23 @@ void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
   if((length == 0) || (space == 0))
   draw_func = o_box_draw_solid;
+
+  WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->upper_y, 
+                 &s_upper_x, &s_upper_y );
+  WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->lower_y, 
+                 &s_lower_x, &s_lower_y );
 	
   (*draw_func)(w_current->window, w_current->gc, color, box_end,
                FALSE,
-               o_current->box->screen_upper_x,
-               o_current->box->screen_upper_y,
-               abs(o_current->box->screen_lower_x -
-                   o_current->box->screen_upper_x),
-               abs(o_current->box->screen_lower_y -
-                   o_current->box->screen_upper_y),
+               s_upper_x, s_upper_y,
+               abs(s_lower_x - s_upper_x),
+               abs(s_lower_y - s_upper_y),
                line_width, length, space);
   (*draw_func)(w_current->backingstore, w_current->gc, color, box_end,
                FALSE,
-               o_current->box->screen_upper_x,
-               o_current->box->screen_upper_y,
-               abs(o_current->box->screen_lower_x -
-                   o_current->box->screen_upper_x),
-               abs(o_current->box->screen_lower_y -
-                   o_current->box->screen_upper_y),
+               s_upper_x, s_upper_y,
+               abs(s_lower_x - s_upper_x),
+               abs(s_lower_y - s_upper_y),
                line_width, length, space);
 
   /*
@@ -224,16 +223,15 @@ void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
    * to be distinct. If such a case is encountered the circle is filled
    * hollow (e.q. not filled).
    */
-  if(o_current->screen_fill_width > 0) {
-    fill_width = o_current->screen_fill_width;
-  } else {
+  fill_width = SCREENabs( w_current, o_current->fill_width );
+  if(fill_width <= 0) {
     fill_width = 1;
   }
 	
   angle1 = o_current->fill_angle1;
-  pitch1 = o_current->screen_fill_pitch1;
+  pitch1 = SCREENabs( w_current, o_current->fill_pitch1 );
   angle2 = o_current->fill_angle2;
-  pitch2 = o_current->screen_fill_pitch2;
+  pitch2 = SCREENabs( w_current, o_current->fill_pitch2 );
 	
   switch(o_current->fill_type) {
     case FILLING_HOLLOW:
@@ -276,20 +274,14 @@ void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   (*fill_func)(w_current->window, w_current->gc, color,
-               o_current->box->screen_upper_x,
-               o_current->box->screen_upper_y,
-               abs(o_current->box->screen_lower_x -
-                   o_current->box->screen_upper_x),
-               abs(o_current->box->screen_lower_y -
-                   o_current->box->screen_upper_y),
+               s_upper_x, s_upper_y,
+               abs(s_lower_x - s_upper_x),
+               abs(s_lower_y - s_upper_y),
                fill_width, angle1, pitch1, angle2, pitch2);
   (*fill_func)(w_current->backingstore, w_current->gc, color,
-               o_current->box->screen_upper_x,
-               o_current->box->screen_upper_y,
-               abs(o_current->box->screen_lower_x -
-                   o_current->box->screen_upper_x),
-               abs(o_current->box->screen_lower_y -
-                   o_current->box->screen_upper_y),
+               s_upper_x, s_upper_y,
+               abs(s_lower_x - s_upper_x),
+               abs(s_lower_y - s_upper_y),
                fill_width, angle1, pitch1, angle2, pitch2);
 
   if ((o_current->draw_grips == TRUE) && (w_current->draw_grips == TRUE)) {
@@ -872,11 +864,11 @@ void o_box_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
     return;
   }
 
-  screen_x1 = o_current->box->screen_upper_x;
-  screen_y1 = o_current->box->screen_upper_y;
-  screen_x2 = o_current->box->screen_lower_x;
-  screen_y2 = o_current->box->screen_lower_y;
-
+  WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->upper_y, 
+                 &screen_x1, &screen_y1 );
+  WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->lower_y, 
+                 &screen_x2, &screen_y2 );
+	
   if (o_current->saved_color != -1) {
     color = o_current->saved_color;
   } else {
@@ -1092,28 +1084,27 @@ void o_box_rubberbox_xor(TOPLEVEL *w_current)
  */
 void o_box_draw_grips(TOPLEVEL *w_current, OBJECT *o_current) 
 {
+  int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
+
   if (w_current->draw_grips == FALSE)
 	  return;
+  
+  WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->upper_y, 
+                 &s_upper_x, &s_upper_y );
+  WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->lower_y, 
+                 &s_lower_x, &s_lower_y );
 
   /* grip on upper left corner (whichone = BOX_UPPER_LEFT) */
-  o_grips_draw(w_current,
-			   o_current->box->screen_upper_x,
-			   o_current->box->screen_upper_y);
+  o_grips_draw(w_current, s_upper_x, s_upper_y);
 
   /* grip on upper right corner (whichone = BOX_UPPER_RIGHT) */
-  o_grips_draw(w_current,
-			   o_current->box->screen_lower_x,
-			   o_current->box->screen_upper_y);
+  o_grips_draw(w_current, s_lower_x, s_upper_y);
   
   /* grip on lower left corner (whichone = BOX_LOWER_LEFT) */
-  o_grips_draw(w_current,
-			   o_current->box->screen_upper_x,
-			   o_current->box->screen_lower_y);
+  o_grips_draw(w_current, s_upper_x, s_lower_y);
 
   /* grip on lower right corner (whichone = BOX_LOWER_RIGHT) */
-  o_grips_draw(w_current,
-			   o_current->box->screen_lower_x,
-			   o_current->box->screen_lower_y);
+  o_grips_draw(w_current, s_lower_x, s_lower_y);
 
 }
 
@@ -1127,27 +1118,27 @@ void o_box_draw_grips(TOPLEVEL *w_current, OBJECT *o_current)
  */
 void o_box_erase_grips(TOPLEVEL *w_current, OBJECT *o_current) 
 {
+  int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
+
   if (w_current->draw_grips == FALSE)
 	  return;
+  
+  WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->upper_y, 
+                 &s_upper_x, &s_upper_y );
+  WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->lower_y, 
+                 &s_lower_x, &s_lower_y );
 
   /* grip on upper left corner (whichone = BOX_UPPER_LEFT) */
-  o_grips_erase(w_current,
-				o_current->box->screen_upper_x,
-				o_current->box->screen_upper_y);
+  o_grips_erase(w_current, s_upper_x, s_upper_y);
 
   /* grip on upper right corner (whichone = BOX_UPPER_RIGHT) */
-  o_grips_erase(w_current,
-				o_current->box->screen_lower_x,
-				o_current->box->screen_upper_y);
+  o_grips_erase(w_current, s_lower_x, s_upper_y);
   
   /* grip on lower left corner (whichone = BOX_LOWER_LEFT) */
-  o_grips_erase(w_current,
-				o_current->box->screen_upper_x,
-				o_current->box->screen_lower_y);
+  o_grips_erase(w_current, s_upper_x, s_lower_y);
 
   /* grip on lower right corner (whichone = BOX_LOWER_RIGHT) */
-  o_grips_erase(w_current,
-				o_current->box->screen_lower_x,
-				o_current->box->screen_lower_y);
-  
+  o_grips_erase(w_current, s_lower_x, s_lower_y);
+
 }
+

@@ -566,9 +566,8 @@ void o_complex_translate_display_selection(TOPLEVEL *w_current, int x1, int y1, 
 void o_complex_translate2(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
 void o_complex_translate_all(TOPLEVEL *w_current, int offset);
 void o_complex_translate_selection(TOPLEVEL *w_current, int dx, int dy, GList *head);
-void o_complex_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, int angle_change, OBJECT *object);
-int o_complex_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
-OBJECT *o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery, OBJECT *object);
+void o_complex_rotate_world(TOPLEVEL *w_current, int centerx, int centery, int angle, int angle_change, OBJECT *object);
+int o_complex_mirror_world(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 /* o_copy.c */
 void o_copy_start(TOPLEVEL *w_current, int x, int y);
 void o_copy_end(TOPLEVEL *w_current);
@@ -595,12 +594,12 @@ gboolean o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y,
 		       gboolean deselect_afterwards);
 gboolean o_find_selected_object(TOPLEVEL *w_current, int screen_x, int screen_y);
 /* o_grips.c */
-OBJECT *o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone);
-OBJECT *o_grips_search_arc(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
-OBJECT *o_grips_search_box(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
-OBJECT *o_grips_search_picture(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
-OBJECT *o_grips_search_circle(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
-OBJECT *o_grips_search_line(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
+OBJECT *o_grips_search_world(TOPLEVEL *w_current, int x, int y, int *whichone);
+OBJECT *o_grips_search_arc_world(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
+OBJECT *o_grips_search_box_world(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
+OBJECT *o_grips_search_picture_world(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
+OBJECT *o_grips_search_circle_world(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
+OBJECT *o_grips_search_line_world(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 int o_grips_start(TOPLEVEL *w_current, int x, int y);
 void o_grips_start_arc(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_start_box(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
@@ -642,9 +641,9 @@ void o_line_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
 void o_edit(TOPLEVEL *w_current, GList *list);
 void o_lock(TOPLEVEL *w_current);
 void o_unlock(TOPLEVEL *w_current);
-void o_rotate_90(TOPLEVEL *w_current, GList *list, 
+void o_rotate_90_world(TOPLEVEL *w_current, GList *list, 
 		 int centerx, int centery);
-void o_mirror(TOPLEVEL *w_current, GList *list, int centerx, int centery);
+void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery);
 void o_edit_show_hidden_lowlevel(TOPLEVEL *w_current, OBJECT *o_list);
 void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list);
 void o_edit_make_visible(TOPLEVEL *w_current, OBJECT *o_list);
@@ -655,7 +654,7 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current);
 void o_autosave_backups(TOPLEVEL *toplevel);
 /* o_move.c */
 void o_move_start(TOPLEVEL *w_current, int x, int y);
-void o_move_end_lowlevel(TOPLEVEL *w_current, OBJECT *list, int type, int diff_x, int diff_y, int screen_diff_x, int screen_diff_y, GList **other_objects, GList **connected_objects);
+void o_move_end_lowlevel(TOPLEVEL *w_current, OBJECT *list, int type, int diff_x, int diff_y, GList **other_objects, GList **connected_objects);
 void o_move_end(TOPLEVEL *w_current);
 int o_move_return_whichone(OBJECT *object, int x, int y);
 void o_move_check_endpoint(TOPLEVEL *w_current, OBJECT *object);

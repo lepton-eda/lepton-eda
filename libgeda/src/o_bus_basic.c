@@ -294,43 +294,6 @@ char *o_bus_save(OBJECT *object)
  * \par Function Description
  *
  */
-void o_bus_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
-{
-  int x, y;
-
-  if (object == NULL) printf("nt NO!\n");
-
-
-  /* Do world coords */
-  object->line->screen_x[0] = object->line->screen_x[0] + dx;
-  object->line->screen_y[0] = object->line->screen_y[0] + dy;
-  object->line->screen_x[1] = object->line->screen_x[1] + dx;
-  object->line->screen_y[1] = object->line->screen_y[1] + dy;
-
-  /* do we want snap grid here? */
-  SCREENtoWORLD(w_current, object->line->screen_x[0], 
-                object->line->screen_y[0], 
-                &x,
-                &y);  
-	
-  object->line->x[0] = snap_grid(w_current, x);
-  object->line->y[0] = snap_grid(w_current, y);
-	
-  SCREENtoWORLD(w_current, object->line->screen_x[1], 
-                object->line->screen_y[1], 
-                &x,
-                &y);  
-	
-  object->line->x[1] = snap_grid(w_current, x);
-  object->line->y[1] = snap_grid(w_current, y);
-
-  s_tile_update_object(w_current, object);
-}
-
-/* \brief
- * \par Function Description
- *
- */
 void o_bus_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
 {
   int screen_x1, screen_y1;
@@ -526,50 +489,6 @@ void o_bus_image_write(TOPLEVEL *w_current, OBJECT *o_current,
  * \par Function Description
  *
  */
-/* takes in screen coordinates for the centerx,y, and then does the rotate 
- * in world space */
-/* also ignores angle argument... for now, rotate only in 90 degree 
- * increments */
-/* fully functional */
-void o_bus_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
-		  OBJECT *object)
-{
-  int world_centerx, world_centery;
-  int newx, newy;
-
-  SCREENtoWORLD(w_current, centerx, centery, 
-                &world_centerx,
-                &world_centery);  
-
-  /* change the bus ripper orientation when the rotation is 90 degrees */
-  /* yes it's okay to use o_net_orientation */
-  if (o_net_orientation(object) == VERTICAL && angle == 90) {
-    object->bus_ripper_direction = -object->bus_ripper_direction;
-  }
-  
-  /* translate object to origin */
-  o_bus_translate_world(w_current, -world_centerx, -world_centery, object);
-
-  rotate_point_90(object->line->x[0], object->line->y[0], angle,
-                  &newx, &newy);
-
-  object->line->x[0] = newx;
-  object->line->y[0] = newy;
-
-  rotate_point_90(object->line->x[1], object->line->y[1], angle,
-                  &newx, &newy);
-
-  object->line->x[1] = newx;
-  object->line->y[1] = newy;
-
-  o_bus_translate_world(w_current, world_centerx, world_centery, object);
-
-}
-
-/* \brief
- * \par Function Description
- *
- */
 void o_bus_rotate_world(TOPLEVEL *w_current, 
 			int world_centerx, int world_centery, int angle,
 			OBJECT *object)
@@ -593,29 +512,6 @@ void o_bus_rotate_world(TOPLEVEL *w_current,
 
   object->line->x[1] = newx;
   object->line->y[1] = newy;
-
-  o_bus_translate_world(w_current, world_centerx, world_centery, object);
-}
-
-/* \brief
- * \par Function Description
- *
- */
-void o_bus_mirror(TOPLEVEL *w_current,
-		  int centerx, int centery, OBJECT *object)
-{
-  int world_centerx, world_centery;
-
-  SCREENtoWORLD(w_current, centerx, centery, 
-                &world_centerx,
-                &world_centery);  
-
-  /* translate object to origin */
-  o_bus_translate_world(w_current, -world_centerx, -world_centery, object);
-
-  object->line->x[0] = -object->line->x[0];
-
-  object->line->x[1] = -object->line->x[1];
 
   o_bus_translate_world(w_current, world_centerx, world_centery, object);
 }
