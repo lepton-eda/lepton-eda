@@ -1,5 +1,11 @@
 2007-02-24 Werner Hoch <werner.ho@gmx.de>
 
+	* x_dialog.c: removed unused functions generic_text_input*
+
+	* x_basic.c: removed unused dialog functions x_create_dialog_box*
+	
+2007-02-24 Werner Hoch <werner.ho@gmx.de>
+
 	* scheme/gschem.scm (dump-keymap): New procedure for
         g_keys_dump_keymap() replacing old fill-mapped-keys.
 

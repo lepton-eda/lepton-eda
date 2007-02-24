@@ -752,8 +752,6 @@ void x_hscrollbar_update(TOPLEVEL *w_current);
 void x_vscrollbar_set_ranges(TOPLEVEL *w_current);
 void x_vscrollbar_update(TOPLEVEL *w_current);
 void x_scrollbars_update(TOPLEVEL *w_current);
-GtkWidget *x_create_dialog_box(GtkWidget **out_vbox, GtkWidget **out_action_area);
-GtkWidget *x_create_dialog_box_horiz(GtkWidget **out_hbox, GtkWidget **out_action_area);
 void x_basic_warp_cursor(GtkWidget *widget, gint x, gint y, gboolean relative);
 /* x_color.c */
 void x_color_allocate_all(void);
@@ -792,8 +790,6 @@ void generic_msg_dialog(const char *);
 int generic_confirm_dialog(const char *);
 char * generic_filesel_dialog(const char *, const char *, gint);
 
-void generic_text_input_ok(GtkWidget *w, TOPLEVEL *w_current);
-void generic_text_input_dialog(TOPLEVEL *w_current);
 void find_text_dialog(TOPLEVEL *w_current);
 void hide_text_dialog(TOPLEVEL *w_current);
 void show_text_dialog(TOPLEVEL *w_current);
