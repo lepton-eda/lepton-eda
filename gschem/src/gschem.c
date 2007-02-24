@@ -59,7 +59,6 @@ void gschem_quit(void)
   s_attrib_free();
   s_papersizes_free();
   x_stroke_free_all();
-  x_dialog_hotkeys_free_all();
   s_color_destroy_all();
   o_undo_cleanup();
   /* s_stroke_free(); no longer needed */
@@ -206,9 +205,6 @@ void main_prog(void *closure, int argc, char *argv[])
   x_window_setup_colors();
 
   x_window_setup (w_current);
-
-  /* so we can call key funcs from guile */
-  set_window_current_key(w_current);
 
   /* o_text_init(); goes away */
   /* o_text_init(); Moved inside libgeda_init() */

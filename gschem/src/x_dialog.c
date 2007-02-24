@@ -2373,63 +2373,6 @@ void color_edit_dialog (TOPLEVEL *w_current)
 
 /***************** Start of help/keymapping dialog box **************/
 
-static GList *hotkeys = NULL;
-
-typedef struct _HOTKEY ST_HOTKEY;
-
-struct _HOTKEY {
-  gchar *name;
-  gchar *value;
-};
-
-
-/*! \brief Clear the hotkey list of the hotkeys dialog
- *  \par Function Description
- *  This function free's all elements allocated by the hotkey dialog
- */
-void x_dialog_hotkeys_free_all(void)
-{
-  GList *item;
-  ST_HOTKEY *hotkey;
-
-  for (item = hotkeys; item != NULL; item = g_list_next(item)) {
-    hotkey = item->data;
-    g_free(hotkey->name);
-    g_free(hotkey->value);
-    g_free(hotkey);
-  }
-  g_list_free(hotkeys);
-  hotkeys = NULL;
-}
-
-/*! \brief Insert a hotkey string into the dialog hotkey list
- *  \par Function Description
- *  This function splits the given hotkey string and adds it to the hotkey
- *  list.
- *  \todo Change the function and its callers to f(char *name, char *value).
- */
-void x_dialog_hotkeys_fill(char *string) 
-{
-  ST_HOTKEY *hotkey;
-  gchar **token;
-  
-  hotkey = g_new(ST_HOTKEY, 1);
-  token = g_strsplit(string, ":", 2);
-
-  if (token[0] != NULL) {
-    hotkey->name = g_strdup(token[0]);
-    if (token[1] != NULL) {
-      g_strstrip(token[1]);
-      hotkey->value = g_strdup(token[1]);
-      hotkeys = g_list_append(hotkeys, hotkey);
-    }
-    else {
-      g_free(hotkey->name);
-    }
-  }
-  g_strfreev(token);
-}
-
 /*! \brief Response function for the hotkey dialog
  *  \par Function Description
  *  This function destroys the hotkey dialog and does some cleanup.
@@ -2460,11 +2403,13 @@ void x_dialog_hotkeys (TOPLEVEL *w_current)
   GtkWidget *vbox, *scrolled_win;
   GtkListStore *store;
   GtkWidget *treeview;
-  GtkTreeIter iter;
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
-  ST_HOTKEY *hotkey;
-  GList *item;
+  GArray *keymap;
+  gint i;
+  struct keyseq_action_t {
+    gchar *keyseq, *action;
+  };
 
   if (!w_current->hkwindow) {
     w_current->hkwindow = gtk_dialog_new_with_buttons(_("Hotkeys"),
@@ -2499,14 +2444,30 @@ void x_dialog_hotkeys (TOPLEVEL *w_current)
 
     /* the model */
     store = gtk_list_store_new (2,G_TYPE_STRING, G_TYPE_STRING);
-    for (item=hotkeys; item != NULL; item =g_list_next(item)) {
-      hotkey = item->data;
-      gtk_list_store_append(store, &iter);
-      gtk_list_store_set(store, &iter,
-			 0, hotkey->name,
-			 1, hotkey->value,
-			 -1);
+
+    /* retrieve current keymap */
+    keymap = g_keys_dump_keymap ();
+    /* add each keymap entry to the list store of the dialog */
+    for (i = 0; i < keymap->len; i++) {
+      GtkTreeIter iter;
+      struct keyseq_action_t *keymap_entry;
+      
+      keymap_entry = &g_array_index (keymap, struct keyseq_action_t, i);
+      gtk_list_store_append (store, &iter);
+      gtk_list_store_set (store, &iter,
+                          0, keymap_entry->action,
+                          1, keymap_entry->keyseq,
+                          -1);
     }
+
+    /* finally free the array for keymap */
+    for (i = 0; i < keymap->len; i++) {
+      struct keyseq_action_t *keymap_entry;
+      keymap_entry = &g_array_index (keymap, struct keyseq_action_t, i);
+      g_free (keymap_entry->keyseq);
+      g_free (keymap_entry->action);
+    }
+    g_array_free (keymap, TRUE);
 
     /* the tree view */
     treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));

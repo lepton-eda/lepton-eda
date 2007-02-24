@@ -45,17 +45,6 @@
  *  \par Function Description
  *
  */
-void set_window_current_key(TOPLEVEL *w_current)
-{
-       /*window_current = w_current;*/
-       /* this function is now a nop, remove it */
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 /* for now this only supports single chars, not shift/alt/ctrl etc... */
 int g_keys_execute(int state, int keyval)
 {
@@ -106,6 +95,51 @@ int g_keys_execute(int state, int keyval)
 #endif
 
   return (SCM_FALSEP (scm_retval)) ? 0 : 1;
+}
+
+/*! \brief Exports the keymap in scheme to a GLib GArray.
+ *  \par Function Description
+ *  This function converts the list of key sequence/action pairs
+ *  returned by the scheme function \c dump-current-keymap into an
+ *  array of C structures.
+ *
+ *  The returned value must be freed by caller.
+ *
+ *  \return A GArray with keymap data.
+  */
+GArray*
+g_keys_dump_keymap (void)
+{
+  SCM dump_proc = scm_c_lookup ("dump-current-keymap");
+  SCM scm_ret;
+  GArray *ret = NULL;
+  struct keyseq_action_t {
+    gchar *keyseq, *action;
+  };
+
+  dump_proc = scm_variable_ref (dump_proc);
+  g_return_val_if_fail (SCM_NFALSEP (scm_procedure_p (dump_proc)), NULL);
+
+  scm_ret = scm_call_0 (dump_proc);
+  g_return_val_if_fail (SCM_CONSP (scm_ret), NULL);
+
+  ret = g_array_sized_new (FALSE,
+                           FALSE,
+                           sizeof (struct keyseq_action_t),
+                           (guint)scm_ilength (scm_ret));
+  for (; scm_ret != SCM_EOL; scm_ret = SCM_CDR (scm_ret)) {
+    SCM scm_keymap_entry = SCM_CAR (scm_ret);
+    struct keyseq_action_t keymap_entry;
+
+    g_return_val_if_fail (SCM_CONSP (scm_keymap_entry) &&
+                          SCM_SYMBOLP (SCM_CAR (scm_keymap_entry)) &&
+                          SCM_STRINGP (SCM_CDR (scm_keymap_entry)), ret);
+    keymap_entry.action = g_strdup (SCM_SYMBOL_CHARS (SCM_CAR (scm_keymap_entry)));
+    keymap_entry.keyseq = g_strdup (SCM_STRING_CHARS (SCM_CDR (scm_keymap_entry)));
+    ret = g_array_append_val (ret, keymap_entry);
+  }
+
+  return ret;
 }
 
 /*! \brief

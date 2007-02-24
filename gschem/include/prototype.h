@@ -24,9 +24,6 @@ SCM g_funcs_msg(SCM msg);
 SCM g_funcs_confirm(SCM msg);
 SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags);
 SCM g_funcs_use_rc_values(void);
-SCM g_funcs_key_name(SCM keystring);
-SCM g_funcs_key_value(SCM keystring);
-SCM g_funcs_key_done(void);
 SCM get_selected_component_attributes(TOPLEVEL *toplevel);
 SCM get_selected_filename(TOPLEVEL *toplevel);
 /* g_hook.c */
@@ -45,8 +42,8 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 		    SCM scm_angle, SCM scm_selectable, SCM scm_mirror);
 SCM g_get_objects_in_page(SCM page_smob);
 /* g_keys.c */
-void set_window_current_key(TOPLEVEL *w_current);
 int g_keys_execute(int state, int keyval);
+GArray *g_keys_dump_keymap (void);
 SCM g_keys_file_new(void);
 SCM g_keys_file_new_window(void);
 SCM g_keys_file_open(void);
@@ -788,8 +785,6 @@ int color_edit_dialog_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *
 void color_edit_dialog_close(GtkWidget *w, TOPLEVEL *w_current);
 void color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current);
 void color_edit_dialog(TOPLEVEL *w_current);
-void x_dialog_hotkeys_free_all(void);
-void x_dialog_hotkeys_fill(char *string);
 void x_dialog_hotkeys(TOPLEVEL *w_current);
 void x_dialog_raise_all(TOPLEVEL *w_current);
 

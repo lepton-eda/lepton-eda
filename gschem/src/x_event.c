@@ -1479,8 +1479,6 @@ gboolean x_event_key_press (GtkWidget *widget, GdkEventKey *event,
   exit_if_null(w_current);
   global_window_current = w_current;
 
-  set_window_current_key(w_current);
-
   if (event) {
 #if DEBUG
     printf("x_event_key_pressed: Pressed key %i.\n", event->keyval);
