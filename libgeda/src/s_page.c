@@ -399,26 +399,6 @@ PAGE *s_page_search_pid(TOPLEVEL * toplevel, gint page_id)
   return NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief 
- *  \par Function Description
- *
- */
-gint s_page_search_row(TOPLEVEL *toplevel, PAGE *p_findme)
-{
-  PAGE *p_current;
-
-  for (p_current = toplevel->page_head;
-       p_current != NULL;
-       p_current = p_current->next) {
-    if (p_current->clist_row == p_findme->clist_row) {
-      return p_current->clist_row;
-    }
-  }
-
-  return 0; /* can't find page... well just select row 0 */
-}
-
 /*! \brief Print full TOPLEVEL structure.
  *  \par Function Description
  *  This function prints the internal structure of <B>toplevel</B>'s

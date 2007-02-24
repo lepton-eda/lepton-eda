@@ -1,3 +1,9 @@
+2007-02-24 Werner Hoch <werner.ho@gmx.de>
+	
+	* include/struct.h, src/s_page.c, src/s_toplevel.c: Removed unused
+	fields in PAGE and TOPLEVEL as well as functions for old (GtkCList
+	based) page manager. (Patch written by Patrick Bernaud)
+
 2007-02-14 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* autogen.sh: Removed debug messages added on 2007-02-10.

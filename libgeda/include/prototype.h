@@ -586,7 +586,6 @@ void s_page_delete_list(TOPLEVEL *toplevel);
 void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new);
 PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename);
 PAGE* s_page_search_pid(TOPLEVEL * toplevel, gint page_id);
-gint s_page_search_row(TOPLEVEL *toplevel, PAGE *p_findme);
 void s_page_print_all (TOPLEVEL *toplevel);
 gint s_page_save_all (TOPLEVEL *toplevel);
 gboolean s_page_check_changed (PAGE *head);

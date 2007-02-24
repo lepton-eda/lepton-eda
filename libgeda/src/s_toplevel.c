@@ -219,8 +219,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->ifilename_entry = NULL; 
 
   toplevel->pswindow   = NULL;
-  toplevel->page_clist = NULL;
-  toplevel->clist_sig = 0;
 
   toplevel->tiwindow = NULL;
   toplevel->tewindow = NULL;

@@ -356,8 +356,6 @@ struct st_page {
   /*int zoom_factor; no longer used*/
   int left, right, top, bottom;		/* World coord limits */
   double coord_aspectratio;		/* Real worldcoords ratio (?) */
-  int clist_row;				/* used in page manager */
-  /* which row is the page in */
 
   float to_screen_x_constant;
   float to_screen_y_constant;
@@ -567,8 +565,6 @@ struct st_toplevel {
   GtkWidget *ifilename_entry; 
 
   GtkWidget *pswindow;			/* page select */
-  GtkWidget *page_clist;
-  int clist_sig;			/* used only in page manager */
 
   /* misc dialogs */
   GtkWidget *tiwindow;			/* text input */
