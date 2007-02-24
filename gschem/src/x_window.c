@@ -884,32 +884,6 @@ void x_window_close_all(TOPLEVEL *toplevel)
 
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *
- *  \todo GROSS! but this is required because clist widgets don't seem to
- *  allow you pass data to callback functions, so I need to get w_current
- *  by searching the entire window list for page_clist widget :(  If
- *  somebody knows a better way of doing this, please let me know!
- */
-TOPLEVEL *x_window_search_page_clist(GtkWidget *findme)
-{
-  TOPLEVEL *w_current;
-
-  /* find the toplevel head */
-  for (w_current = global_window_current;
-       w_current->prev != NULL;
-       w_current = w_current->prev);
-  /* now examine page_clist of each toplevel */
-  for (;
-       w_current != NULL && w_current->page_clist != findme;
-       w_current = w_current->next);
-  
-  return w_current;
-}
-
 /*! \brief Opens a new untitled page.
  *  \par Function Description
  *  This function creates an empty, untitled page in <B>toplevel</B>.

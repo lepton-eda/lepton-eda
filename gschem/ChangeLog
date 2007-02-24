@@ -1,3 +1,9 @@
+2007-02-24 Werner Hoch <werner.ho@gmx.de>
+
+	* src/x_window.c (x_window_search_page_clist(): Removed unused
+	  function (no more needed in page manager).
+	  (Patch written by Patrick Bernaud)
+
 2007-02-23 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* include/prototype.h, lib/system-gschemrc.in, src/g_keys.c,
