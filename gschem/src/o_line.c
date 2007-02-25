@@ -30,6 +30,11 @@
 #include <dmalloc.h>
 #endif
 
+typedef void (*DRAW_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
+                           GdkCapStyle cap,
+                           gint x1, gint y1, gint x2, gint y2,
+                           gint line_width, gint length, gint space );
+
 /*! \brief Draw a line on screen.
  *  \par Function Description
  *  This function is used to draw a line on screen. The line is described
@@ -49,7 +54,7 @@ void o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
   int line_width, length, space;
   GdkColor *color;
   GdkCapStyle line_end;
-  void (*draw_func)() = NULL;
+  DRAW_FUNC draw_func = NULL;
 	
   if (o_current->line == NULL) {
     return;

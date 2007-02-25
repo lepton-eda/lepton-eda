@@ -345,7 +345,7 @@ void x_window_setup_draw_events(TOPLEVEL *w_current)
 {
   struct event_reg_t {
     gchar *detailed_signal;
-    void (*c_handler)(void);
+    GCallback c_handler;
   };
 
   struct event_reg_t drawing_area_events[] = {

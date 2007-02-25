@@ -39,6 +39,16 @@
 #define GET_BOX_TOP(w)				\
 	min((w)->start_y, (w)->last_y);
 
+typedef void (*DRAW_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
+                           GdkCapStyle cap, gint filled,
+                           gint x, gint y, gint width, gint height,
+                           gint line_width, gint length, gint space );
+
+typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
+                           gint x, gint y, gint width, gint height,
+                           gint fill_width, gint angle1, gint pitch1,
+                           gint angle2, gint pitch2 );
+
 /*! \brief Draw a box on the screen.
  *  \par Function Description
  *  This function is used to draw a box on screen. The box is described in
@@ -60,8 +70,8 @@ void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
   int fill_width, angle1, pitch1, angle2, pitch2;
   GdkCapStyle box_end;
   GdkColor *color;
-  void (*draw_func)() = NULL;
-  void (*fill_func)();
+  DRAW_FUNC draw_func = NULL;
+  FILL_FUNC fill_func;
 
   if (o_current->box == NULL) {
     return;

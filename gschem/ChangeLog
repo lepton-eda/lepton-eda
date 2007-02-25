@@ -1,3 +1,10 @@
+2007-02-25 Peter Clifton <pcjc2@cam.ac.uk>
+
+	* src/o_arc.c, src/o_box.c, src/o_circle.c, src/o_line.c,
+	  src/x_multiattrib.c, src/x_pagesel.c, src/x_preview.c,
+	  src/x_window.c: Replaced loosely typed function pointers such as
+	  void (*draw_func)(); with more strongly typed pointers.
+
 2007-02-24 Peter Clifton <pcjc2@cam.ac.uk>
 
 	Merge changes to date from noscreen branch.

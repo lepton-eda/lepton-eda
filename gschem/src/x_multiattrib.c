@@ -1185,7 +1185,7 @@ static void multiattrib_popup_menu(Multiattrib *multiattrib,
   GtkWidget *menu;
   struct menuitem_t {
     gchar *label;
-    void (*callback)(void);
+    GCallback callback;
   };
   struct menuitem_t menuitems[] = {
     { N_("Duplicate"), G_CALLBACK (multiattrib_callback_popup_duplicate) },

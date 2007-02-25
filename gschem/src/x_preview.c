@@ -313,7 +313,7 @@ preview_init (Preview *preview)
 {
   struct event_reg_t {
     gchar *detailed_signal;
-    void (*c_handler)(void);
+    GCallback c_handler;
   } drawing_area_events[] = {
     { "realize",              G_CALLBACK (preview_callback_realize)       },
     { "expose_event",         G_CALLBACK (preview_callback_expose)        },

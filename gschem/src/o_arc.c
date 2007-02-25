@@ -36,6 +36,12 @@
 /*! \brief */
 #define GET_BOX_HEIGHT(w)			\
 	abs((w)->last_y - (w)->start_y)
+
+typedef void (*DRAW_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
+                           GdkCapStyle cap, gint x, gint y, gint radius,
+                           gint angle1, gint angle2,
+                           gint arc_width, gint length, gint space );
+
 /*! \brief
  *  \note pb20011011 - added this macro to compute distance
  */
@@ -62,7 +68,7 @@ void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
   int arc_width;
   GdkCapStyle arc_end;
   GdkColor *color;
-  void (*draw_func)() = NULL;
+  DRAW_FUNC draw_func = NULL;
   int length, space;
 
   if (o_current->arc == NULL) {

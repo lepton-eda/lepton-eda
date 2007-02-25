@@ -256,7 +256,7 @@ static void pagesel_popup_menu (Pagesel *pagesel,
   GtkWidget *menu;
   struct menuitem_t {
     gchar *label;
-    void (*callback)(void);
+    GCallback callback;
   };
   struct menuitem_t menuitems[] = {
     { N_("New Page"),     G_CALLBACK (pagesel_callback_popup_new_page)     },
