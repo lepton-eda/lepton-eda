@@ -1,3 +1,9 @@
+2007-03-31 Peter Clifton <pcjc2@cam.ac.uk>
+
+	* src/x_dialog.c: Fixed confirm save on page-close dialogs to correctly
+	  cancel, rather than assert if the dialog is closed with the ESCAPE
+	  key, or with the window-manager's destroy button.
+
 2007-02-25 Peter Clifton <pcjc2@cam.ac.uk>
 
 	* src/o_arc.c, src/o_box.c, src/o_circle.c, src/o_line.c,

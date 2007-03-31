@@ -3833,10 +3833,6 @@ x_dialog_close_changed_page (TOPLEVEL *toplevel, PAGE *page)
         x_window_close_page (toplevel, page);
         break;
         
-      case GTK_RESPONSE_CANCEL:
-        /* action selected: cancel */
-        /* nothing to do */
-        break;
 
       case GTK_RESPONSE_YES:
         /* action selected: save */
@@ -3850,9 +3846,15 @@ x_dialog_close_changed_page (TOPLEVEL *toplevel, PAGE *page)
         /* no, user has cancelled the save and page has changes */
         /* do not close page */
         break;
-        
+
+      case GTK_RESPONSE_CANCEL:
+        /* action selected: cancel */
+        /* fall through */
       default:
-        g_assert_not_reached ();
+        /* Hit when the user breaks out of the dialog with the escape key
+         * or otherwise destroys the dialog window without a proper response */
+        /* nothing to do */
+        break;
   }
   gtk_widget_destroy (dialog);
 
@@ -3907,12 +3909,6 @@ x_dialog_close_window (TOPLEVEL *toplevel)
         /* discard changes, ok to close window */
         ret = TRUE;
         break;
-        
-      case GTK_RESPONSE_CANCEL:
-        /* action selected: cancel */
-        /* do not close window */
-        ret = FALSE;
-        break;
 
       case GTK_RESPONSE_YES:
         /* action selected: save */
@@ -3925,7 +3921,7 @@ x_dialog_close_window (TOPLEVEL *toplevel)
              p_unsaved != NULL;
              p_unsaved = g_list_next (p_unsaved)) {
           p_current = (PAGE*)p_unsaved->data;
-          
+
           s_page_goto (toplevel, p_current);
           x_fileselect_save (toplevel);
           /* if user cancelled previous, do not close window */
@@ -3933,9 +3929,15 @@ x_dialog_close_window (TOPLEVEL *toplevel)
         }
         g_list_free (unsaved_pages);
         break;
-        
+
+      case GTK_RESPONSE_CANCEL:
+        /* action selected: cancel */
+        /* fall through */
       default:
-        g_assert_not_reached ();
+        /* Hit when the user breaks out of the dialog with the escape key
+         * or otherwise destroys the dialog window without a proper response */
+        ret = FALSE;
+        break;
   }
   gtk_widget_destroy (dialog);
 
