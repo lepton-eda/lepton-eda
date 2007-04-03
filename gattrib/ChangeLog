@@ -1,3 +1,8 @@
+2007-4-3  Stuart Brorson <sdb@cloud9.net>
+	* src/s_sheet_data.c, src/s_table.c, src/s_toplevel.c:
+	Temp fix for bug 1692431 -- don't put net= attribute into 
+	component attrib table.
+	
 2007-2-11 Stuart Brorson <sdb@cloud9.net>
 	* src/s_toplevel.c: Fixed bug I introduced at code sprint.
 	

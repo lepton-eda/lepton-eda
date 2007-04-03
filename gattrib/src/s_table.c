@@ -281,8 +281,10 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
 	    old_show_name_value = a_current->object->show_name_value;
 
 	    /* Don't include "refdes" or "slot" because they form the row name. */
-            if ( (strcmp(attrib_name, "refdes") != 0)
-		 && (strcmp(attrib_name, "slot") != 0) ) {
+	    /* Also don't include "net" per bug found by Steve W.  4.3.2007 -- SDB */
+            if ( (strcmp(attrib_name, "refdes") != 0) &&
+		 (strcmp(attrib_name, "net") != 0) &&
+		 (strcmp(attrib_name, "slot") != 0) ) {
                
               /* Get row and col where to put this attrib */
               row = s_table_get_index(sheet_head->master_comp_list_head, temp_uref);

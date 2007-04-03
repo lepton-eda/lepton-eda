@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * gattrib -- gEDA component and net attribute manipulation using spreadsheet.
- * Copyright (C) 2003 Stuart D. Brorson.
+ * Copyright (C) 2003 -- 2007 Stuart D. Brorson.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -133,7 +133,8 @@ void s_sheet_data_add_master_comp_list_items(OBJECT *start_obj) {
 #if DEBUG
 	  printf("       In s_sheet_add_master_comp_list, about to add to master list refdes = %s\n", temp_uref);
 #endif
-	  s_string_list_add_item(sheet_head->master_comp_list_head, &(sheet_head->comp_count), temp_uref);
+	  s_string_list_add_item(sheet_head->master_comp_list_head, 
+				  &(sheet_head->comp_count), temp_uref);
 	  g_free(temp_uref);
 	}
 	
@@ -194,8 +195,10 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
 	    attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
 
 	      /* Don't include "refdes" or "slot" because they form the row name */
-	    if ( (strcmp(attrib_name, "refdes") != 0) 
-		 && (strcmp(attrib_name, "slot") != 0) ) {  
+	      /* Also don't include "net" per bug found by Steve W. -- 4.3.2007, SDB */
+	    if ( (strcmp(attrib_name, "refdes") != 0) &&
+		 (strcmp(attrib_name, "net") != 0) &&
+		 (strcmp(attrib_name, "slot") != 0) ) {  
 #if DEBUG
 	      printf(" . . . from this component, about to add to master comp attrib list attrib = %s\n", attrib_name);
 #endif

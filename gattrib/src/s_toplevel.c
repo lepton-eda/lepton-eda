@@ -753,6 +753,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 #if 1
       old_attrib_name = u_basic_breakup_string(old_name_value_pair, '=', 0);
       if ( (strcmp(old_attrib_name, "refdes") != 0) &&
+	   (strcmp(old_attrib_name, "net") != 0) &&
 	   (strcmp(old_attrib_name, "slot") != 0) &&
 	   (s_attrib_name_in_list(new_comp_attrib_list, old_attrib_name) == FALSE) ) {
 	s_string_list_add_item(complete_comp_attrib_list, &count, old_name_value_pair);
@@ -763,6 +764,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
         /* Don't put "refdes" or "slot" into list.  Don't put old name=value pair into list if a new
          * one is already in there. */
         if ( (strcmp(old_attrib_name, "refdes") != 0) &&
+	     (strcmp(old_attrib_name, "net") != 0) &&
 	     (strcmp(old_attrib_name, "slot") != 0) &&
 	     (s_attrib_name_in_list(new_comp_attrib_list, old_attrib_name) == FALSE) ) {
 	  s_string_list_add_item(complete_comp_attrib_list, &count, old_name_value_pair);
