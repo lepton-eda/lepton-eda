@@ -93,3 +93,26 @@ void g_register_libgeda_funcs (void)
   }
   
 }
+
+
+/*! \brief Register some libgeda variables with scheme.
+ *  \par Function Description
+ *  Define some variables to be visible to Scheme.
+ */
+void g_register_libgeda_vars (void)
+{
+  scm_c_define("OBJ_LINE", SCM_MAKE_CHAR((unsigned char) OBJ_LINE));
+  scm_c_define("OBJ_BOX", SCM_MAKE_CHAR((unsigned char) OBJ_BOX));
+  scm_c_define("OBJ_PICTURE", SCM_MAKE_CHAR((unsigned char) OBJ_PICTURE));
+  scm_c_define("OBJ_CIRCLE", SCM_MAKE_CHAR((unsigned char) OBJ_CIRCLE));
+  scm_c_define("OBJ_NET", SCM_MAKE_CHAR((unsigned char) OBJ_NET));
+  scm_c_define("OBJ_BUS", SCM_MAKE_CHAR((unsigned char) OBJ_BUS));
+  scm_c_define("OBJ_COMPLEX", SCM_MAKE_CHAR((unsigned char) OBJ_COMPLEX));
+  scm_c_define("OBJ_TEXT", SCM_MAKE_CHAR((unsigned char) OBJ_TEXT));
+  scm_c_define("OBJ_PIN", SCM_MAKE_CHAR((unsigned char) OBJ_PIN));
+  scm_c_define("OBJ_ARC", SCM_MAKE_CHAR((unsigned char) OBJ_ARC));
+  scm_c_define("OBJ_ROUTE", SCM_MAKE_CHAR((unsigned char) OBJ_ROUTE));
+  scm_c_define("OBJ_THRU_HOLE", SCM_MAKE_CHAR((unsigned char) OBJ_THRU_HOLE));
+  scm_c_define("OBJ_PLACEHOLDER", SCM_MAKE_CHAR((unsigned char) OBJ_PLACEHOLDER));
+  
+}

@@ -74,6 +74,7 @@ void libgeda_init(void)
   o_text_init(); 
 
   g_register_libgeda_funcs();
+  g_register_libgeda_vars();
 }
 
 

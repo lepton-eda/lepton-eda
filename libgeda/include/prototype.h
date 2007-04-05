@@ -64,6 +64,7 @@ SCM g_rc_always_promote_attributes(SCM scmsymname);
 
 /* g_register.c */
 void g_register_libgeda_funcs(void);
+void g_register_libgeda_vars (void);
 
 /* g_smob.c */
 SCM g_make_attrib_smob(TOPLEVEL *curr_w, ATTRIB *curr_attr);
