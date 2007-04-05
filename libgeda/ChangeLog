@@ -1,3 +1,15 @@
+2007-04-05 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* include/prototype.h, src/g_smob.c: Added two new scheme functions:
+
+	    - g_calcule_new_attrib_bounds: calcule the new bounds of an 
+	      attribute with the given parameters, _without_ modifying the 
+	      attribute.
+
+	    - g_get_attrib_value_by_attrib_name: given an object and an 
+	      attribute name, this function returns a list with the values
+	      of the attributes with the given name in that object.
+
 2007-02-24 Peter Clifton <pcjc2@cam.ac.uk>
 
 	Merge changes to date from noscreen branch.

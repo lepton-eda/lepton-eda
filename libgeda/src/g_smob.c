@@ -202,6 +202,152 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
   return SCM_UNDEFINED;
 }
 
+/*! \brief Calcule the attribute bounds as it has the given properties.
+ *  \par Function Description
+ *  Given an attribute, and a new angle, position and alignment, 
+ *  this function calcules the bounds of the attribute with the new properties,
+ *  but without modifying the attribute.
+ *
+ *  \param [in]     attrib_smob     The attribute.
+ *  \param [in]     scm_alignment   The new alignment of the attribute.
+ *     String with the alignment of the text. Possible values are:
+ *       ""           : Keep the previous alignment.
+ *       "Lower Left"
+ *       "Middle Left"
+ *       "Upper Left"
+ *       "Lower Middle"
+ *       "Middle Middle"
+ *       "Upper Middle"
+ *       "Lower Right"
+ *       "Middle Right"
+ *       "Upper Right"
+ *  \param [in]     scm_angle       The new angle of the attribute, 
+ *                                  or -1 to keep the previous angle.
+ *  \param [in]     scm_x           The new x position of the attribute 
+ *                                  or -1 to keep the previous value.
+ *  \param [in]     scm_y           The new y position of the attribute 
+ *                                  or -1 to keep the prevous value.
+ *  \return A list of the form ( (x1 x2) (y1 y2) ) with:
+ *       (x1, y1): bottom left corner.
+ *       (x2, y2): upper right corner.
+ */
+SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
+				 SCM scm_angle, SCM scm_x, SCM scm_y) {
+
+  TOPLEVEL *w_current = NULL;
+  OBJECT *object = NULL;
+  struct st_attrib_smob *attribute;
+  char *alignment_string;
+  int alignment = -2;
+  int angle = 0;
+  int x = -1, y = -1;
+  int old_angle, old_x, old_y, old_alignment;
+  int left=0, right=0, top=0, bottom=0;
+  SCM vertical = SCM_EOL;
+  SCM horizontal = SCM_EOL;
+  SCM returned = SCM_EOL;
+
+  SCM_ASSERT (SCM_STRINGP(scm_alignment), scm_alignment,
+	      SCM_ARG2, "calcule-new-attrib-bounds");
+  SCM_ASSERT ( SCM_INUMP(scm_angle),
+               scm_angle, SCM_ARG3, "calcule-new-attrib-bounds");
+  SCM_ASSERT ( SCM_INUMP(scm_x),
+               scm_x, SCM_ARG4, "calcule-new-attrib-bounds");
+  SCM_ASSERT ( SCM_INUMP(scm_y),
+               scm_y, SCM_ARG5, "calcule-new-attrib-bounds");
+
+  angle = SCM_INUM(scm_angle);
+  x = SCM_INUM(scm_x);
+  y = SCM_INUM(scm_y);
+  
+  alignment_string = SCM_STRING_CHARS(scm_alignment);
+
+  if (strlen(alignment_string) == 0) {
+    alignment = -1;
+  }
+  if (strcmp(alignment_string, "Lower Left") == 0) {
+    alignment = 0;
+  }
+  if (strcmp(alignment_string, "Middle Left") == 0) {
+    alignment = 1;
+  }
+  if (strcmp(alignment_string, "Upper Left") == 0) {
+    alignment = 2;
+  }
+  if (strcmp(alignment_string, "Lower Middle") == 0) {
+    alignment = 3;
+  }
+  if (strcmp(alignment_string, "Middle Middle") == 0) {
+    alignment = 4;
+  }
+  if (strcmp(alignment_string, "Upper Middle") == 0) {
+    alignment = 5;
+  }
+  if (strcmp(alignment_string, "Lower Right") == 0) {
+    alignment = 6;
+  }
+  if (strcmp(alignment_string, "Middle Right") == 0) {
+    alignment = 7;
+  }
+  if (strcmp(alignment_string, "Upper Right") == 0) {
+    alignment = 8;
+  }
+  if (alignment == -2) {
+    /* Bad specified */
+    SCM_ASSERT (SCM_STRINGP(scm_alignment), scm_alignment,
+		SCM_ARG2, "calcule-new-attrib-bounds");
+  }
+
+  attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+  w_current = attribute->world;
+  
+  SCM_ASSERT ( attribute &&
+	       attribute->attribute &&
+	       attribute->attribute->object &&
+	       attribute->attribute->object->text &&
+	       attribute->attribute->object->text->string,
+	       attrib_smob, SCM_ARG1, "calcule-new-attrib-bounds");
+
+  object = (OBJECT *) attribute->attribute->object;
+  
+  /* Store the previous values */
+  old_alignment = object->text->alignment;
+  old_angle = object->text->angle;
+  old_x = object->text->x;
+  old_y = object->text->y;
+  
+  /* Set the new ones */
+  if (alignment != -1) 
+    object->text->alignment = alignment;
+  if (angle != -1)
+    object->text->angle = angle;
+  if (x != -1)
+    object->text->x = x;
+  if (y != -1)
+	object->text->y = y;
+  
+  o_text_recreate(w_current, object);
+
+  /* Get the new bounds */
+  world_get_text_bounds (w_current, object, 
+			 &left, &top, &right, &bottom);
+  
+  /* Restore the original attributes */
+  object->text->alignment = old_alignment;
+  object->text->angle = old_angle;
+  object->text->x = old_x;
+  object->text->y = old_y;
+  
+  o_text_recreate(w_current, object);
+
+  /* Construct the return value */
+  horizontal = scm_cons (SCM_MAKINUM(left), SCM_MAKINUM(right));
+  vertical = scm_cons (SCM_MAKINUM(top), SCM_MAKINUM(bottom));
+  returned = scm_cons (horizontal, vertical);
+
+  return returned;
+}
+
 /*! \brief Initialize the framework to support an attribute smob.
  *  \par Function Description
  *  Initialize the framework to support an attribute smob.
@@ -221,6 +367,8 @@ void g_init_attrib_smob(void)
 
   scm_c_define_gsubr ("get-attribute-bounds", 1, 0, 0, g_get_attrib_bounds);
   scm_c_define_gsubr ("get-attribute-angle", 1, 0, 0, g_get_attrib_angle);
+  scm_c_define_gsubr ("calcule-new-attrib-bounds", 5, 0, 0, 
+		      g_calcule_new_attrib_bounds);
   
 
   return;
@@ -400,6 +548,56 @@ SCM g_get_object_attributes(SCM object_smob)
   return returned;
 }
 
+/*! \brief Get the value(s) of the attributes with the given name in the 
+ *  given object.
+ *  \par Function Description
+ *  This function returns a list with all the attribute values, providing that
+ *  its attribute name is the given name, in a given object smob.
+ *
+ *  \param [in] object_smob  The object smob to get attributes from.
+ *  \param [in] attrib_name  The name of the attribute you want the value.
+ *  \return A list of attribute values.
+ */
+SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
+{
+  TOPLEVEL *w_current;
+  struct st_object_smob *object;
+  gchar *attrib_name=NULL;
+  SCM returned = SCM_EOL;
+  gchar *name=NULL, *value=NULL;
+
+  SCM_ASSERT ( SCM_NIMP(object_smob) && 
+               ((long) SCM_CAR(object_smob) == object_smob_tag),
+               object_smob, SCM_ARG1, "get-attrib-value-by-attrib-name");
+
+  SCM_ASSERT (SCM_STRINGP(scm_attrib_name), scm_attrib_name,
+	      SCM_ARG2, "get-attrib-value-by-attrib-name");
+
+  /* Get parameters */
+  object = (struct st_object_smob *)SCM_CDR(object_smob);
+  attrib_name = SCM_STRING_CHARS(scm_attrib_name);
+
+  if (object &&
+      object->object) {
+    ATTRIB *pointer;
+    
+    pointer = object->object->attribs;
+    w_current = object->world;
+    while (pointer != NULL) {
+      if (pointer->object &&
+	  pointer->object->text) {
+	o_attrib_get_name_value(pointer->object->text->string, 
+				&name, &value );
+	if (strcmp(name, attrib_name) == 0) 
+	  returned = scm_cons (scm_makfrom0str (value), returned);
+      }
+      pointer = pointer->next;
+    }     
+  }
+
+  return returned;
+}
+
 /*! \brief Get the object type.
  *  \par Function Description
  *  This function returns a string with the type of a given object smob.
@@ -446,6 +644,8 @@ void g_init_object_smob(void)
   scm_set_smob_print(object_smob_tag, g_print_object_smob);
 
   scm_c_define_gsubr("get-object-attributes", 1, 0, 0, g_get_object_attributes);
+  scm_c_define_gsubr("get-attrib-value-by-attrib-name", 2, 0, 0, 
+		     g_get_attrib_value_by_attrib_name);
   scm_c_define_gsubr("get-object-type", 1, 0, 0, g_get_object_type);
 
   return;

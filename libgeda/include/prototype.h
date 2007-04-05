@@ -69,12 +69,15 @@ void g_register_libgeda_funcs(void);
 SCM g_make_attrib_smob(TOPLEVEL *curr_w, ATTRIB *curr_attr);
 SCM g_get_attrib_name_value(SCM attrib_smob);
 SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value, TOPLEVEL **world, OBJECT **o_attrib, char *new_string[]);
+SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
+				 SCM scm_angle, SCM scm_x, SCM scm_y);
 void g_init_attrib_smob(void);
 
 SCM g_get_attrib_bounds(SCM attrib_smob);
 SCM g_get_attrib_angle(SCM attrib_smob);
 SCM g_make_object_smob(TOPLEVEL *curr_w, OBJECT *object);
 SCM g_get_object_attributes(SCM object_smob);
+SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name);
 SCM g_get_object_type(SCM object_smob);
 void g_init_object_smob(void);
 gboolean g_get_data_from_object_smob(SCM object_smob, TOPLEVEL **toplevel, 
