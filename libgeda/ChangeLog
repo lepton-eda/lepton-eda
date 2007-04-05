@@ -1,5 +1,8 @@
 2007-04-06 Carlos Nieves Onega <cnieves@iespana.es>
 
+	* src/g_smob.c: make g_get_object_type scheme function return 
+	  a character instead of a string.
+	
 	* include/o_types.h, include/prototype.h, src/g_register.c, 
 	  src/libgeda.c : 
 

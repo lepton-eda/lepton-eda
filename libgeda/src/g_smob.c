@@ -611,7 +611,6 @@ SCM g_get_object_type(SCM object_smob)
   struct st_object_smob *object_struct;
   OBJECT *object;
   SCM returned = SCM_EOL;
-  char type[2];
 
   SCM_ASSERT ( SCM_NIMP(object_smob) && 
                ((long) SCM_CAR(object_smob) == object_smob_tag),
@@ -623,9 +622,7 @@ SCM g_get_object_type(SCM object_smob)
   
   object = (OBJECT *) object_struct->object;
   
-  sprintf(type, "%c", object->type);
-
-  returned = scm_makfrom0str(type);
+  returned = SCM_MAKE_CHAR((unsigned char) object->type);
 
   return returned;
 }
