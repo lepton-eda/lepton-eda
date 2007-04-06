@@ -24,23 +24,6 @@
 
 ; Copyright (C) 2006 Carlos Nieves Onega
 
-; Define object types, as in libgeda/include/o_types.h
-; TODO: Do this inside libgeda?
-(define OBJ_LINE        "L")
-(define OBJ_BOX         "B")
-(define OBJ_PICTURE     "G")
-(define OBJ_CIRCLE      "V")
-(define OBJ_NET         "N")
-(define OBJ_BUS         "U")
-(define OBJ_COMPLEX     "C")
-(define OBJ_TEXT        "T")
-(define OBJ_PIN         "P")
-(define OBJ_ARC         "A")
-(define OBJ_ROUTE       "R")
-(define OBJ_THRU_HOLE   "H") 
-(define OBJ_PLACEHOLDER "X")
-
-
 ; Given a bound,  defined as a list of the form ( (x1 x2) (y1 y2) ) with:
 ;   - (x1, y1): bottom left corner.
 ;   - (x2, y2): upper right corner.
@@ -410,14 +393,28 @@
 				     (if (string-index move-direction #\>)
 					 (set! x_offset 
 					       (+ (- (get-point-of-bound 
+						      "max-x" 
+						      pins-bounds)
+						     (get-point-of-bound 
 						      "min-x" 
 						      new-attrib-bounds-adjusted)
-						     (get-point-of-bound 
-						      "max-x" 
-						      pins-bounds)) 
+						     ) 
 						  spacing))))
+
+				 ; If the offset is zero, there is probably
+				 ; an overlap with pin connections, so add
+				 ; one grid spacing to the offset.
+				 (if (eq? x_offset 0)
+				     (if (string-index move-direction #\<)
+					 (set! y_offset (- 0 
+							   autoplace-attributes-grid))
+					 (set! y_offset 
+					       autoplace-attributes-grid))
+				     )
+
 				 ; Snap the offset to the grid.
 				 (set! x_offset (snap-coord-to-grid x_offset))
+
 				 ; Loop again from the beginning
 				 (set! pin-directions-list-index -1)
 				 (set! pass 2)
@@ -457,16 +454,29 @@
 					 (if (string-index move-direction #\v)
 					     (set! y_offset 
 						   (+ y_offset 
-						      (+ (- (get-point-of-bound
+						      (- (- (get-point-of-bound
 							     "min-y" 
-							     new-attrib-bounds-adjusted)
+							     pins-bounds)
 							    (get-point-of-bound
 							     "max-y" 
-							     pins-bounds))
+							     new-attrib-bounds-adjusted))
 							 spacing)))))
+
+				     ; If the offset is zero, there is probably
+				     ; an overlap with pin connections, so add
+				     ; one grid spacing to the offset.
+				     (if (eq? y_offset 0)
+					 (if (string-index move-direction #\v)
+					     (set! y_offset (- 0 
+							       autoplace-attributes-grid))
+					     (set! y_offset 
+						   autoplace-attributes-grid))
+					     )
+				     
 				     ; Snap the offset to the grid.
 				     (set! y_offset 
 					   (snap-coord-to-grid y_offset))
+
 				     ; Loop again from the beginning
 				     (set! pin-directions-list-index -1)
 				     (set! pass 2)
@@ -521,9 +531,11 @@
 	  ; Get the object bounds:
           ;  - If it's a pin: including everything.
           ;  - otherwise: without attributes neither pins.
-	  (bounds (if (string=? object-type OBJ_PIN)
+	  (bounds (if (char=? object-type OBJ_PIN)
 		      (get-object-bounds object (list "all") (list))
-		      (get-object-bounds object (list "all") (list OBJ_PIN))))
+		      (get-object-bounds object (list "all") 
+					 (list (list->string (list OBJ_PIN)))))
+		  )
 	  (horiz-bounds (car bounds))
 	  (vertical-bounds (cdr bounds)) 
 	  (space-pos (string-index position-string #\ ))
@@ -551,7 +563,55 @@
 					    "get-reference : Unknown reference (vertical): " 
 					    vertical-string)))))) )
       (cons horiz-pos vertical-pos)))
-	 
+
+
+; Given a matching pattern and a list, return false if no member of the list
+; matches the pattern, or true if any does.
+(define (list-string-match matching-pattern attributes_list)
+  (if (null? attributes_list)
+      #f
+      (if (list? attributes_list)
+	  (if (string-match matching-pattern (car attributes_list))
+	      #t
+	      (list-string-match matching-pattern (cdr attributes_list)))
+	  (if (string-match matching-pattern attributes_list)
+	      #t
+	      #f)
+	  )))
+
+; Given an object and an attribute matching pattern, this function checks 
+; if the object attributes match the pattern.
+; The attributes_list has the form ( [attribute-name attribute-pattern]* )
+(define (check-object-attributes object attributes_list)
+  (if (null? attributes_list)
+      #t
+      (if (< (length attributes_list) 2)
+	  (error (string-append "check-object-attributes: Odd number in attributes list."))
+	  (let* ( (attribute-name (car attributes_list))
+		  (attribute-pattern (car (cdr attributes_list)))
+		  (attribute-values (if (string=? attribute-name
+ 						  "OBJ_TYPE")
+ 					(list 
+					 (list->string 
+					  (list (get-object-type object))))
+					(get-attrib-value-by-attrib-name 
+					 object attribute-name)))
+		   )
+	    (begin
+	      (if (null? attribute-values)
+		  #f
+		  (if (list-string-match attribute-pattern attribute-values)
+		      (check-object-attributes object 
+					       (cdr (cdr attributes_list)))
+		      #f
+		      )
+		  )
+	      )
+	    )
+	  )
+      )
+  )
+		 
     
 
 ; This function sets the default parameters of each attribute,
@@ -571,7 +631,10 @@
 	; Check if the attribute's name and direction matches.
 	(if (and (string=? attrib-name def-attrib-name)
 		 (string=? def-direction
-			   direction))
+			   direction)
+		 (check-object-attributes object 
+					  (list-ref default-def ; attrib match
+						    def-attrib-match)))
 	    (begin
 	      ; It matches, so change the text parameters
 	      (let* ( (ref (get-reference object (list-ref default-def 
@@ -587,13 +650,14 @@
 					  def-y-offset-pos)
 				(cdr ref)))
 		      (attrib-move-dir (list-ref default-def def-move-pos))
-		      (attrib-spacing (list-ref default-def def-spacing-pos))
+		      (attrib-spacing (abs (list-ref default-def 
+						     def-spacing-pos)))
  		      (new-attrib-bounds (calcule-new-attrib-bounds attribute
  								    new-alignment
  								    new-angle
  								    new-x
  								    new-y))
-		      (new-attrib-bounds-adjusted 
+		      (new-attrib-bounds-adjusted
 		       (adjust-pos-to-avoid-collision new-attrib-bounds 
 						      object 
 						      attrib-move-dir 
@@ -626,52 +690,6 @@
 			      (cdr defaults)) ; process the rest
 	))
   ) ; End of definition of set-default-position
-
-; Calcule the attribute bounds in the new position
-; Returns a list of the form ( (x1 x2) (y1 y2) ) with:
-;  - (x1, y1): bottom left corner.
-;  - (x2, y2): upper right corner.
-(define calcule-new-attrib-bounds 
-  (lambda (attribute alignment angle x y)
-    (let* ( (old-bounds (get-attribute-bounds attribute))
-	    (length (- (get-point-of-bound "max-x" old-bounds)
-		       (get-point-of-bound "min-x" old-bounds)))
-	    (height (- (get-point-of-bound "max-y" old-bounds)
-		       (get-point-of-bound "min-y" old-bounds)))
-	    (old-angle (get-attribute-angle attribute))			    
-	    (x_size (if (or (eq? (abs (- old-angle angle)) 0)
-			    (eq? (abs (- old-angle angle)) 180))
-			length
-			height))
-	    (y_size (if (or (eq? (abs (- old-angle angle)) 0)
-			    (eq? (abs (- old-angle angle)) 180))
-			height
-			length))
-	    (space-pos (string-index alignment #\space))
-	    (vertical-pos (substring alignment 0 space-pos))
-	    (horiz-pos (substring alignment (+ space-pos 1)))
-	    ; Calcule the x of the left bottom point of the text.
-	    (lb_x (if (string=? horiz-pos "Left")
-		      x
-		      (if (string=? horiz-pos "Middle")
-			  (- x (inexact->exact (/ x_size 2)))
-			  (if (string=? horiz-pos "Right")
-			      (- x x_size)
-			      (error (string-append 
-				      "calcule-new-attrib-bounds : Unknown reference (horizontal): " 
-					 horiz-pos))))))
-	    ; Calcule the y of the left bottom point of the text.
-	    (lb_y (if (string=? vertical-pos "Lower")
-		      y
-		      (if (string=? vertical-pos "Middle")
-			  (- y (inexact->exact (/ y_size 2)))
-			  (if (string=? vertical-pos "Upper")
-			      (- y y_size)
-			      (error (string-append 
-				      "calcule-new-attrib-bounds : Unknown reference (vertical): " 
-					 vertical-pos))))))
-	    )
-      (cons (cons lb_x (+ lb_x x_size)) (cons lb_y (+ lb_y y_size))))))
 
 ; This function processes the attribute list and calls
 ; set-default-position for each attribute
