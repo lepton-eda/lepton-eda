@@ -1,3 +1,8 @@
+2007-04-07 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/x_dialog.c: Redraw the schematic after changing the snap size.
+	  Thanks to Peter Clifton for reporting the bug. Closes bug #1657496.
+
 2007-04-06 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* lib/system-gschemrc.in, scheme/auto-place-attribs.scm:

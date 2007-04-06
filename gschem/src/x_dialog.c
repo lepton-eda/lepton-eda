@@ -1712,6 +1712,7 @@ void snap_size_dialog_response(GtkWidget *w, gint response,
     size = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spin_size));
 
     w_current->snap_size = size;
+    o_redraw_all(w_current);
     w_current->page_current->CHANGED=1;  /* maybe remove those two lines */
     o_undo_savestate(w_current, UNDO_ALL);
     break;
