@@ -315,7 +315,7 @@
      ("Ż" . "Z-dot.sym")
      ;; small mu character greek
      ("µ" . "mu_.sym")
-
+     ("Ω" . "Omega.sym")
      )))
 
 ;

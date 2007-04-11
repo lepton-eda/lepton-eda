@@ -1,3 +1,8 @@
+2007-04-10 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* system-gafrc.in, font/Omega.sym: Added upper case greek omega
+	character by Jens Persson.
+
 2007-02-15 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* system-gafrc.in, font/mu_.sym: Added the greek mu character.
