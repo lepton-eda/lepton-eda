@@ -32,6 +32,21 @@
 #include <dmalloc.h>
 #endif
 
+/* Private function declarations */
+static void custom_world_get_single_object_bounds 
+                                       (TOPLEVEL *w_current, OBJECT *o_current,
+                                        int *left, int *top, 
+                                        int *right, int *bottom,
+                                        GList *exclude_attrib_list,
+					GList *exclude_obj_type_list);
+
+static void custom_world_get_object_list_bounds 
+  (TOPLEVEL *w_current, OBJECT *o_current,
+   int *left, int *top, 
+   int *right, int *bottom,
+   GList *exclude_attrib_list,
+   GList *exclude_obj_type_list);
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -398,13 +413,13 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
  *  \param [out] bottom  Bottom bound of the object.
  *
  */
-static void custom_world_get_complex_bounds (TOPLEVEL *w_current, OBJECT *o_current,
+static void custom_world_get_single_object_bounds 
+                                       (TOPLEVEL *w_current, OBJECT *o_current,
                                         int *left, int *top, 
                                         int *right, int *bottom,
                                         GList *exclude_attrib_list,
 					GList *exclude_obj_type_list) {
     OBJECT *obj_ptr = NULL;
-    ATTRIB *attr_ptr = NULL;
     int rleft, rright, rbottom, rtop;
     char *text_value; 
     char *name_ptr, *value_ptr, aux_ptr[2];
@@ -414,21 +429,12 @@ static void custom_world_get_complex_bounds (TOPLEVEL *w_current, OBJECT *o_curr
     *top = rtop = w_current->init_bottom;;
     *right = *bottom = rright = rbottom = 0;
     
-    if (o_current->type == OBJ_PIN) {
-      attr_ptr = o_current->attribs;
-      if (attr_ptr)
-	obj_ptr = attr_ptr->object;
-      else 
-	obj_ptr = NULL;
-    } else {
       obj_ptr = o_current;
-    }
-
-    while (obj_ptr != NULL) {
       sprintf(aux_ptr, "%c", obj_ptr->type);
       include_text = TRUE;
+      if (!g_list_find_custom(exclude_obj_type_list, aux_ptr, 
+			      (GCompareFunc) &strcmp)) {
 
-      if (!g_list_find_custom(exclude_obj_type_list, aux_ptr, (GCompareFunc) &strcmp)) {
 	switch(obj_ptr->type) {
           case (OBJ_PIN):
 	    world_get_single_object_bounds (w_current, obj_ptr,
@@ -441,8 +447,10 @@ static void custom_world_get_complex_bounds (TOPLEVEL *w_current, OBJECT *o_curr
 		  g_list_find_custom(exclude_attrib_list, name_ptr, (GCompareFunc) &strcmp)) {
 		include_text = FALSE;
 	      }
-	      if (g_list_find_custom(exclude_attrib_list, "all", (GCompareFunc) &strcmp))
+	      if (g_list_find_custom(exclude_attrib_list, "all", 
+				     (GCompareFunc) &strcmp)) {
 		include_text = FALSE;
+	      }
 	      if (include_text) {
 		world_get_single_object_bounds (w_current, obj_ptr, 
 						&rleft, &rtop, &rright, &rbottom);
@@ -453,11 +461,11 @@ static void custom_world_get_complex_bounds (TOPLEVEL *w_current, OBJECT *o_curr
 	    break;
           case (OBJ_COMPLEX):
           case (OBJ_PLACEHOLDER):
-	    custom_world_get_complex_bounds(w_current, 
-					    o_current->complex->prim_objs, 
-					    left, top, right, bottom,
-					    exclude_attrib_list,
-					    exclude_obj_type_list);          
+	    custom_world_get_object_list_bounds(w_current, 
+						o_current->complex->prim_objs, 
+						left, top, right, bottom,
+						exclude_attrib_list,
+						exclude_obj_type_list);
 	    break;
 	    
           default:
@@ -465,25 +473,69 @@ static void custom_world_get_complex_bounds (TOPLEVEL *w_current, OBJECT *o_curr
 					    &rleft, &rtop, &rright, &rbottom);
 	    break;
 	}
-      }
-      
-      if (rleft < *left) *left = rleft;
-      if (rtop < *top) *top = rtop;
-      if (rright > *right) *right = rright;
-      if (rbottom > *bottom) *bottom = rbottom;
-      
-      if (o_current->type == OBJ_PIN) {
-	attr_ptr = attr_ptr->next;
-	if (attr_ptr)
-	  obj_ptr = attr_ptr->object;
-	else
-	  obj_ptr = NULL;
-      }
-      else {
-	obj_ptr = obj_ptr->next;
-      }
-    }
-  } 
+
+	if (rleft < *left) *left = rleft;
+	if (rtop < *top) *top = rtop;
+	if (rright > *right) *right = rright;
+	if (rbottom > *bottom) *bottom = rbottom;
+	
+	/* If it's a pin object, check the pin attributes */
+	if (obj_ptr->type == OBJ_PIN) {
+	  ATTRIB *a_current = obj_ptr->attribs;
+	  while (a_current) {
+	    g_assert(a_current->object);
+
+	    if (a_current->object->type == OBJ_TEXT) {
+	      custom_world_get_single_object_bounds(w_current, 
+						    a_current->object,
+						    &rleft, &rtop, 
+						    &rright, &rbottom,
+						    exclude_attrib_list,
+						    exclude_obj_type_list);
+	      if (rleft < *left) *left = rleft;
+	      if (rtop < *top) *top = rtop;
+	      if (rright > *right) *right = rright;
+	      if (rbottom > *bottom) *bottom = rbottom;
+	    }
+	    
+	    a_current = a_current->next;
+	  }
+	}
+      }      
+}
+
+static void custom_world_get_object_list_bounds 
+  (TOPLEVEL *w_current, OBJECT *o_current,
+   int *left, int *top, 
+   int *right, int *bottom,
+   GList *exclude_attrib_list,
+   GList *exclude_obj_type_list) {
+ 
+  OBJECT *obj_ptr=NULL;
+  int rleft, rtop, rright, rbottom;
+	
+  *left = rleft = 999999;
+  *top = rtop = 9999999;
+  *right = rright = 0;
+  *bottom = rbottom = 0;
+	
+
+  obj_ptr = o_current;
+	
+  while ( obj_ptr != NULL ) {
+    custom_world_get_single_object_bounds(w_current, obj_ptr, &rleft, &rtop, 
+					  &rright, &rbottom,
+					  exclude_attrib_list,
+					  exclude_obj_type_list);
+    if (rleft < *left) *left = rleft;
+    if (rtop < *top) *top = rtop;
+    if (rright > *right) *right = rright;
+    if (rbottom > *bottom) *bottom = rbottom;
+	
+
+    obj_ptr=obj_ptr->next;
+  }
+}
 
 /*! \brief Get the object bounds of the given object, excluding the object
  *  types or the attributes given as parameters.
@@ -549,11 +601,11 @@ SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclu
   if (g_list_find_custom(exclude_attrib_list, "all", (GCompareFunc) &strcmp))
     exclude_all_attribs = TRUE;
 
-  custom_world_get_complex_bounds (w_current, object,
-				   &left, &top, 
-				   &right, &bottom, 
-				   exclude_attrib_list,
-				   exclude_obj_type_list);
+  custom_world_get_single_object_bounds (w_current, object,
+					 &left, &top, 
+					 &right, &bottom, 
+					 exclude_attrib_list,
+					 exclude_obj_type_list);
   
   /* Free the exclude attrib_list. Don't free the nodes!! */
   g_list_free(exclude_attrib_list);
