@@ -1099,11 +1099,11 @@
 (add-hook! mirror-pin-hook (lambda (pin)
 	(autoplace-pin-attributes pin )) #t)
 
-; Autoplace component text attributes hook. 
+; Autoplace component/net/buses text attributes hook. 
 ; Comment in these if you want the component attributes to be 
 ; automatically placed.
 ; There are different hooks for situations like adding a new pin, rotating
-; or mirroring an existing one, or adding a new attribute.
+; or mirroring an existing one, adding a new attribute or a new component.
 ; The #t at the end means that function is appended to the end of the hook.
 ;(add-hook! add-component-object-hook (lambda (object)
 ;	(autoplace-object-attributes object)) #t)
@@ -1113,6 +1113,8 @@
 ;	(autoplace-object-attributes object)) #t)
 ;(add-hook! add-attribute-hook (lambda (object)
 ;	(autoplace-object-attributes object)) #t)
+;(add-hook! complex-place-list-changed-hook (lambda (object)
+;         (autoplace-object-attributes object)) #t)
 
 ; Automatically place a titleblock (or other components) when creating
 ; a new page.
