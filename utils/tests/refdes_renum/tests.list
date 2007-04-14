@@ -1,0 +1,28 @@
+# $Id$
+#
+#
+# Format:
+#
+# test_name | input files | extra flags to pass to refdes_renum | return code if non-zero expected
+#
+
+
+# -----------------------------------------
+# Single schematic page
+# -----------------------------------------
+
+
+single_renum | file1.sch |
+single_clear | file1.sch | --clear
+single_pgskip1 | file1.sch | --pgskip
+single_pgskip2 | file1.sch | --pgskip 10
+
+# check to see what happens if we have more elements of a given
+# prefix than the value we used for pgskip
+single_pgskip3 | more_than_10.sch | --pgskip 10 | 1
+
+multi_renum | file1.sch file2.sch file3.sch |
+multi_clear | file1.sch file2.sch file3.sch | --clear
+multi_pgskip1 | file1.sch file2.sch file3.sch | --pgskip
+multi_pgskip2 | file1.sch file2.sch file3.sch | --pgskip 10
+

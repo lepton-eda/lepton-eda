@@ -35,6 +35,9 @@ AC_PROG_CPP
 AC_PROG_MAKE_SET
 AM_PROG_LEX
 
+AC_PATH_PROG(PERL, perl, [notfound])
+AM_CONDITIONAL(MISSING_PERL, test x$PERL = xnotfound)
+
 ##############################################################3
 # Test for __func__
 #
@@ -415,7 +418,12 @@ AC_CONFIG_FILES([Makefile
                  lib/Makefile 
                  lib/system-gschlasrc 
                  gschlas/Makefile 
-                 src/Makefile ])
+                 src/Makefile
+                 tests/Makefile
+                 tests/refdes_renum/Makefile
+                 tests/refdes_renum/inputs/Makefile
+                 tests/refdes_renum/outputs/Makefile
+])
 
 AC_OUTPUT
 
