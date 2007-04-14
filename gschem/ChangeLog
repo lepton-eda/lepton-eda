@@ -1,5 +1,9 @@
 2007-04-14 Carlos Nieves Onega <cnieves@iespana.es>
 
+	* lib/system-gschemrc.in: 
+	    - Added default positions for device and netname attributes 
+	  in default-position-of-text-attributes,
+
 	* src/g_hook.c: Fixed custom_world_get_single_object_bounds,
 	  and custom_world_get_object_list_bounds, so they don't traverse
 	  the whole object list.

@@ -947,10 +947,16 @@
     "value"     "<"  (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
        0    -50       "Lower Middle"  "Upper Middle"   0      ""   0)
    (list 
+    "device"    "<"  (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
+       0    -50       "Lower Middle"  "Upper Middle"   0      ""   0)
+   (list 
     "refdes"    ">" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
        0     50       "Upper Middle"  "Lower Middle"   0      ""   0)
    (list 
     "value"     ">" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
+       0    -50       "Lower Middle"  "Upper Middle"   0      ""   0)
+   (list 
+    "device"    ">" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
        0    -50       "Lower Middle"  "Upper Middle"   0      ""   0)
    (list 
     "refdes"    "^" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
@@ -959,10 +965,16 @@
     "value"     "^" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
        0   -100       "Middle Left"   "Lower Right"    0      ""   0)
    (list 
+    "device"    "^" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
+       0   -100       "Middle Left"   "Lower Right"    0      ""   0)
+   (list 
     "refdes"    "v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
        0    100       "Middle Left"   "Lower Right"    0      ""   0)
    (list 
     "value"     "v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
+       0   -100       "Middle Left"   "Lower Right"    0      ""   0)
+   (list 
+    "device"    "v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
        0   -100       "Middle Left"   "Lower Right"    0      ""   0)
 	;   Two directions
    (list 
@@ -972,10 +984,16 @@
     "value"    "<>" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
        0    -50       "Lower Middle"  "Upper Middle"   0      ""   0)
    (list 
+    "device"   "<>" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
+       0    -50       "Lower Middle"  "Upper Middle"   0      ""   0)
+   (list 
     "refdes"   "^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
       50    100       "Middle Right"  "Lower Left"     0      ""   0)
    (list 
     "value"    "^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
+      50   -100       "Middle Right"  "Lower Left"     0      ""   0)
+   (list 
+    "device"   "^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
       50   -100       "Middle Right"  "Lower Left"     0      ""   0)
 	;   Three directions
    (list 
@@ -985,10 +1003,16 @@
     "value"   "<^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
      -50   -100       "Middle Left"   "Lower Right"    0      ""   0)
    (list 
+    "device"  "<^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
+     -50   -100       "Middle Left"   "Lower Right"    0      ""   0)
+   (list 
     "refdes"  ">^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
       50    100       "Middle Right"  "Lower Left"     0      ""   0)
    (list 
     "value"   ">^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
+      50   -100       "Middle Right"  "Lower Left"     0      ""   0)
+   (list 
+    "device"  ">^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
       50   -100       "Middle Right"  "Lower Left"     0      ""   0)
    (list 
     "refdes"  "<>v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
@@ -997,10 +1021,16 @@
     "value"   "<>v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
       50    -50       "Lower Middle"  "Upper Left"     0      ""   0)
    (list 
+    "device"  "<>v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
+      50    -50       "Lower Middle"  "Upper Left"     0      ""   0)
+   (list 
     "refdes"  "<>^" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
      -50     50       "Upper Middle"  "Lower Right"    0      ""   0)
    (list 
     "value"   "<>^" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
+      50     50       "Upper Middle"  "Lower Left"     0      ""   0)
+   (list 
+    "device"  "<>^" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
       50     50       "Upper Middle"  "Lower Left"     0      ""   0)
 	;   Four directions
    (list 
@@ -1009,6 +1039,26 @@
    (list 
     "value"  "<>^v"(list "OBJ_TYPE" (char2str OBJ_COMPLEX))
       50    -50      "Lower Right"   "Upper Right"    0      "v>" 50)
+   (list 
+    "device" "<>^v"(list "OBJ_TYPE" (char2str OBJ_COMPLEX))
+      50    -50      "Lower Right"   "Upper Right"    0      "v>" 50)
+   
+     ; Net attributes
+     ;   Two directions
+   (list 
+    "netname" "<>" (list "OBJ_TYPE" (char2str OBJ_NET))
+       0     50       "Upper Middle"  "Lower Middle"   0      ""   0)
+   (list 
+    "netname" "^v" (list "OBJ_TYPE" (char2str OBJ_NET))
+     -50      0       "Middle Middle" "Lower Middle"  90      ""   0)
+     ; Bus attributes
+     ;   Two directions
+   (list 
+    "netname" "<>" (list "OBJ_TYPE" (char2str OBJ_BUS))
+       0     50       "Upper Middle"  "Lower Middle"   0      ""   0)
+   (list 
+    "netname" "^v" (list "OBJ_TYPE" (char2str OBJ_BUS))
+     -50      0       "Middle Middle" "Lower Middle"  90      ""   0)
    ))
 
 ; Position of parameters inside default-position-of-text-attributes
