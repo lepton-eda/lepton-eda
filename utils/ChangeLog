@@ -1,3 +1,33 @@
+2007-04-13 23:18  Dan McMahill <danmc>
+
+	* Makefile.am, configure.ac, tests/Makefile.am,
+	  tests/refdes_renum/Makefile.am, tests/refdes_renum/README.txt,
+	  tests/refdes_renum/run_tests.sh, tests/refdes_renum/tests.list,
+	  tests/refdes_renum/inputs/Makefile.am,
+	  tests/refdes_renum/inputs/file1.sch,
+	  tests/refdes_renum/inputs/file2.sch,
+	  tests/refdes_renum/inputs/file3.sch,
+	  tests/refdes_renum/inputs/more_than_10.sch,
+	  tests/refdes_renum/outputs/Makefile.am,
+	  tests/refdes_renum/outputs/multi_clear:file1.sch,
+	  tests/refdes_renum/outputs/multi_clear:file2.sch,
+	  tests/refdes_renum/outputs/multi_clear:file3.sch,
+	  tests/refdes_renum/outputs/multi_pgskip1:file1.sch,
+	  tests/refdes_renum/outputs/multi_pgskip1:file2.sch,
+	  tests/refdes_renum/outputs/multi_pgskip1:file3.sch,
+	  tests/refdes_renum/outputs/multi_pgskip2:file1.sch,
+	  tests/refdes_renum/outputs/multi_pgskip2:file2.sch,
+	  tests/refdes_renum/outputs/multi_pgskip2:file3.sch,
+	  tests/refdes_renum/outputs/multi_renum:file1.sch,
+	  tests/refdes_renum/outputs/multi_renum:file2.sch,
+	  tests/refdes_renum/outputs/multi_renum:file3.sch,
+	  tests/refdes_renum/outputs/single_clear:file1.sch,
+	  tests/refdes_renum/outputs/single_pgskip1:file1.sch,
+	  tests/refdes_renum/outputs/single_pgskip2:file1.sch,
+	  tests/refdes_renum/outputs/single_pgskip3:more_than_10.sch,
+	  tests/refdes_renum/outputs/single_renum:file1.sch: add
+	  refdes_renum testsuite
+
 2007-02-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/Makefile.am: Fix to get make distcheck to pass.
