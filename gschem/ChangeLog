@@ -1,6 +1,8 @@
 2007-04-14 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* scheme/auto-place-attribs.scm:
+	    - Use ceiling instead of inexact->exact. 
+	      The latter doesn't round if the argument is 400.5 (example).
 	    - Added support for net and bus attributes.
 	    - In adjust_pos_to_avoid_collision, don't loop again if 
 	    the offset is changed, and fixed x_offset instead of y_offset 
