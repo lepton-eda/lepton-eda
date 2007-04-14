@@ -82,6 +82,7 @@ x_compselect_callback_response (GtkDialog *dialog,
 {
   Compselect *compselect = (Compselect*)dialog;
   TOPLEVEL *toplevel = (TOPLEVEL*)user_data;
+  GValue value = { 0, };
 
   switch (arg1) {
       case GTK_RESPONSE_APPLY: {
@@ -148,11 +149,33 @@ x_compselect_callback_response (GtkDialog *dialog,
 
         break;
       }
+      case GTK_RESPONSE_OK:
+	/* Response when clicking on the "hide" button */
+
+	/* If there is no component in the complex place list, set the current one */
+	if (toplevel->page_current->complex_place_list == NULL) {
+	  gtk_dialog_response (GTK_DIALOG (compselect), GTK_RESPONSE_APPLY);
+	}
+
+	/* Hide the component selector */
+	g_value_init (&value, G_TYPE_BOOLEAN);
+	g_value_set_boolean(&value, TRUE);
+	g_object_set_property (G_OBJECT(compselect), "hidden", &value);
+	break;
       case GTK_RESPONSE_CLOSE:
       case GTK_RESPONSE_DELETE_EVENT:
         g_assert (GTK_WIDGET (dialog) == toplevel->cswindow);
         gtk_widget_destroy (GTK_WIDGET (dialog));
         toplevel->cswindow = NULL;
+
+	/* Free the complex place list */
+	g_list_free(toplevel->page_current->complex_place_list);
+	toplevel->page_current->complex_place_list = NULL;
+	
+	/* return to the default state */
+	i_set_state(toplevel, SELECT);
+	i_update_toolbar(toplevel);
+  
         break;
       default:
         g_assert_not_reached ();
@@ -207,15 +230,15 @@ x_compselect_close (TOPLEVEL *toplevel)
     g_assert (IS_COMPSELECT (toplevel->cswindow));
     gtk_widget_destroy (toplevel->cswindow);
     toplevel->cswindow = NULL;
-  }
-  
+  }    
 }
 
 
 
 enum {
   PROP_FILENAME=1,
-  PROP_BEHAVIOR
+  PROP_BEHAVIOR,
+  PROP_HIDDEN
 };
 
 static GObjectClass *compselect_parent_class = NULL;
@@ -647,6 +670,13 @@ compselect_class_init (CompselectClass *klass)
                        COMPSELECT_TYPE_BEHAVIOR,
                        COMPSELECT_BEHAVIOR_REFERENCE,
                        G_PARAM_READWRITE));
+  g_object_class_install_property (
+    gobject_class, PROP_HIDDEN,
+    g_param_spec_boolean ("hidden",
+			  "",
+			  "",
+			  FALSE,
+			  G_PARAM_READWRITE));
   
 }
 
@@ -884,8 +914,11 @@ compselect_init (Compselect *compselect)
                           GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
                           /*  - update button */
                           GTK_STOCK_APPLY, GTK_RESPONSE_APPLY,
+			  GTK_STOCK_OK, GTK_RESPONSE_OK,
                           NULL);
-  
+
+  /* Initialize the hidden property */
+  compselect->hidden = FALSE;
 }
 
 static void
@@ -913,6 +946,13 @@ compselect_set_property (GObject *object,
     case PROP_BEHAVIOR:
       gtk_combo_box_set_active (compselect->combobox_behaviors,
                                 g_value_get_enum (value));
+      break;
+    case PROP_HIDDEN:
+      compselect->hidden = g_value_get_boolean(value);
+      if (compselect->hidden) 
+	gtk_widget_hide(GTK_WIDGET(compselect));
+      else
+	gtk_window_present (GTK_WINDOW(compselect));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -959,6 +999,9 @@ compselect_get_property (GObject *object,
         g_value_set_enum (value,
                           gtk_combo_box_get_active (
                             compselect->combobox_behaviors));
+        break;
+      case PROP_HIDDEN:
+	g_value_set_boolean(value, compselect->hidden);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

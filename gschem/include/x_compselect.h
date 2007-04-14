@@ -70,6 +70,7 @@ struct _Compselect {
   guint        filter_timeout;
   GtkComboBox *combobox_behaviors;
 
+  gboolean hidden;
 };
 
 

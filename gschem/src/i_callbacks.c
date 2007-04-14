@@ -3508,8 +3508,25 @@ DEFINE_I_CALLBACK(misc3)
 DEFINE_I_CALLBACK(cancel)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GValue value = { 0, };
 
   exit_if_null(w_current);
+
+  if (w_current->event_state == ENDCOMP &&
+      w_current->cswindow) {
+    /* user hit escape key when placing components */
+
+    /* delete the complex place list */
+    g_list_free(w_current->page_current->complex_place_list);
+    w_current->page_current->complex_place_list = NULL;
+    o_redraw_all(w_current); 
+
+    /* Present the component selector again */
+    g_value_init (&value, G_TYPE_BOOLEAN);
+    g_value_set_boolean (&value, FALSE);
+    g_object_set_property (G_OBJECT(w_current->cswindow), "hidden", &value);
+    return;
+  }
 
   if ( (w_current->inside_action) && 
        (w_current->rotated_inside != 0)) {
