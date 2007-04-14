@@ -3,7 +3,7 @@
 ## Process this file with automake to produce Makefile.in
 
 bin_SCRIPTS = sarlacc_sym gschupdate gsymupdate gschemdoc refdes_renum \
-	      tragesym pads_backannotate garchive gsymfix.pl \
+	      tragesym pads_backannotate pcb_backannotate garchive gsymfix.pl \
  	      gnet_hier_verilog.sh
 
 EXTRA_DIST = convert_sym.awk gpstoimage mk_char_tab.pl \
