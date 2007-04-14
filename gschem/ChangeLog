@@ -8,6 +8,7 @@
 	    the offset is changed, and fixed x_offset instead of y_offset 
 	    bug.
 	* lib/system-gschemrc.in: 
+	    - Added autoplacement grid.
 	    - Added complex list changed hook to the hooks to be enabled
 	      if the user wants attribute autoplacement.
 	

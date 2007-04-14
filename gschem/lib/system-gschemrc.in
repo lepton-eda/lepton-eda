@@ -838,7 +838,10 @@
 (define char2str 
   (lambda (char)
     (list->string (list char))))
-    
+
+; Attribute autoplacement grid 
+(define autoplace-attributes-grid 50)
+
 (define default-position-of-text-attributes
    ; Specifies the default position of text attributes.
    ; Each list entry is a list specifying the position of a text attribute.
