@@ -73,6 +73,7 @@ extern SCM add_component_hook;
 extern SCM add_component_object_hook;
 extern SCM mirror_component_object_hook;
 extern SCM rotate_component_object_hook;
+extern SCM complex_place_list_changed_hook;
 extern SCM copy_component_hook;
 extern SCM move_component_hook;
 extern SCM add_pin_hook;

@@ -804,6 +804,9 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         (w_current->complex_rotate + 90) % 360;
 
 	o_complex_place_rotate(w_current);
+
+	/* Run the complex place list changed hook */
+	o_complex_place_changed_run_hook (w_current);	
 	  
         o_drawbounding(w_current,
                        NULL,

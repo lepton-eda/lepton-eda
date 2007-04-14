@@ -81,6 +81,7 @@ SCM add_component_hook;
 SCM add_component_object_hook;
 SCM mirror_component_object_hook;
 SCM rotate_component_object_hook;
+SCM complex_place_list_changed_hook;
 SCM copy_component_hook;
 SCM move_component_hook;
 SCM add_pin_hook;

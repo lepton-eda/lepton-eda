@@ -552,6 +552,7 @@ void o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_complex_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_complex_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *complex);
 void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y);
+void o_complex_place_changed_run_hook(TOPLEVEL *w_current);
 void o_complex_place_rotate(TOPLEVEL *w_current);
 void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_complex_rubbercomplex(TOPLEVEL *w_current);

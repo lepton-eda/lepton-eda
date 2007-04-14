@@ -364,5 +364,6 @@ void g_register_funcs (void)
   rotate_pin_hook = scm_create_hook ("rotate-pin-hook", 1);
   add_attribute_hook = scm_create_hook ("add-attribute-hook", 1);
   new_page_hook = scm_create_hook ("new-page-hook", 1);
-
+  complex_place_list_changed_hook = 
+    scm_create_hook ("complex-place-list-changed-hook", 1);
 }

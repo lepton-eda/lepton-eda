@@ -1,3 +1,10 @@
+2007-04-14 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* include/globals.h, include/prototype.h, src/g_register.c, 
+	  src/globals.c, src/o_complex.c, src/x_event.c:
+	  Added complex place list changed hook.
+	  This is the list used when placing new components.
+	
 2007-04-07 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/x_dialog.c: Redraw the schematic after changing the snap size.

@@ -173,10 +173,39 @@ void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
     }
   }
 
+  /* Run the complex place list changed hook */
+  o_complex_place_changed_run_hook (w_current);
+
   o_drawbounding(w_current, 
                  NULL,
                  w_current->page_current->complex_place_list,
                  x_get_darkcolor(w_current->bb_color), TRUE);
+}
+
+/*! \brief Run the complex place list changed hook. 
+ *  \par Function Description
+ *  The complex place list is usually used when placing new components
+ *  in the schematic. This function should be called whenever that list
+ *  is modified.
+ *  \param [in] w_current TOPLEVEL structure.
+ *
+ */
+void o_complex_place_changed_run_hook(TOPLEVEL *w_current) {
+  GList *ptr = NULL;
+
+  /* Run the complex place list changed hook */
+  if (scm_hook_empty_p(complex_place_list_changed_hook) == SCM_BOOL_F &&
+      w_current->page_current->complex_place_list != NULL) {
+    ptr = w_current->page_current->complex_place_list;
+    while (ptr) {
+      scm_run_hook(complex_place_list_changed_hook, 
+		   scm_cons (g_make_object_smob
+			     (w_current, 
+			      (OBJECT *) ptr->data), SCM_EOL));
+      ptr = ptr->next;
+    }
+
+  }
 }
 
 /*! \todo Finish function documentation!!!
