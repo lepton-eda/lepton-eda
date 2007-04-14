@@ -72,6 +72,42 @@
 		    ">"
 		    "<"))))))
 
+; This function returns the net direction of the net object parameter.
+; It returns a string : 
+;   "^v": vertical net
+;   "<>": horizontal net
+(define get-net-connection-sides
+  (lambda (object)
+    (let ( (bounds (get-object-bounds object (list "all") (list)))
+	   )
+      (begin
+	(if (or (char=? (get-object-type object) OBJ_NET)
+		(char=? (get-object-type object) OBJ_BUS))
+	    (let ( ; Get the net bounds without the attribute
+		   (min-x (get-point-of-bound "min-x" bounds))
+		   (max-x (get-point-of-bound "max-x" bounds))
+		   (min-y (get-point-of-bound "min-y" bounds))
+		   (max-y (get-point-of-bound "max-y" bounds))
+		   )
+	      (if (eq? min-x max-x)
+		  ; If the x bounds are the same, this is a vertical segment.
+		  "^v"
+		  (if (eq? min-y max-y)
+		      ; If the y bounds are, this is a horizontal segment.
+		      "<>"
+		      ; X or Y bounds are not the same. We don't know.
+		      ""
+		      )
+		  )
+	      )
+	    ; This is not a OBJ_NET object. Return an empty list.
+	    (list)
+	    )
+	)
+      )
+    )
+  )
+
 ; This function returns a list with the end coordinate of the pins, 
 ; if they are in the desired side.
 ;   - desired_side: is a one character string: "^", "v", "<" or ">".
@@ -406,18 +442,14 @@
 				 ; one grid spacing to the offset.
 				 (if (eq? x_offset 0)
 				     (if (string-index move-direction #\<)
-					 (set! y_offset (- 0 
+					 (set! x_offset (- 0 
 							   autoplace-attributes-grid))
-					 (set! y_offset 
+					 (set! x_offset 
 					       autoplace-attributes-grid))
 				     )
 
 				 ; Snap the offset to the grid.
 				 (set! x_offset (snap-coord-to-grid x_offset))
-
-				 ; Loop again from the beginning
-				 (set! pin-directions-list-index -1)
-				 (set! pass 2)
 
 				 ; Set the new attrib bounds.
 				 (set! new-attrib-bounds-adjusted 
@@ -477,10 +509,6 @@
 				     (set! y_offset 
 					   (snap-coord-to-grid y_offset))
 
-				     ; Loop again from the beginning
-				     (set! pin-directions-list-index -1)
-				     (set! pass 2)
-				     
 				     ; Set the new attrib bounds.
 				     (set! new-attrib-bounds-adjusted
 					   (cons 
@@ -658,10 +686,10 @@
  								    new-x
  								    new-y))
 		      (new-attrib-bounds-adjusted
-		       (adjust-pos-to-avoid-collision new-attrib-bounds 
-						      object 
-						      attrib-move-dir 
-						      attrib-spacing))
+ 		       (adjust-pos-to-avoid-collision new-attrib-bounds 
+ 						      object 
+ 						      attrib-move-dir 
+ 						      attrib-spacing))
 		      (x_offset 
 		       (if (null? new-attrib-bounds-adjusted)
 			   0
@@ -742,7 +770,12 @@
 (define (autoplace-object-attributes object)
   (let* ((pin-list (get-object-pins object))
 	 (pin-directions (get-pin-directions pin-list))
-	 (connection-sides (get-connection-sides pin-directions))
+	 (connection-sides (if (or (char=? (get-object-type object) 
+				       OBJ_NET)
+				   (char=? (get-object-type object) 
+				       OBJ_BUS))
+			       (get-net-connection-sides object)
+			       (get-connection-sides pin-directions)))
 	 (attribute-list (get-object-attributes object)) )
     (autoplace-text object connection-sides attribute-list)))
 

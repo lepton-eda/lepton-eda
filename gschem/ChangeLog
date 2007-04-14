@@ -1,5 +1,10 @@
 2007-04-14 Carlos Nieves Onega <cnieves@iespana.es>
 
+	* scheme/auto-place-attribs.scm:
+	    - Added support for net and bus attributes.
+	    - In adjust_pos_to_avoid_collision, don't loop again if 
+	    the offset is changed, and fixed x_offset instead of y_offset 
+	    bug.
 	* lib/system-gschemrc.in: 
 	    - Added default positions for device and netname attributes 
 	  in default-position-of-text-attributes,
