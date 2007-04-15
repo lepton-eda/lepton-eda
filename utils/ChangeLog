@@ -1,4 +1,7 @@
 2007-04-14 Stuart Brorson <sdb (AT) cloud9 (DOT) net>
+	* Added a bunch of regression tests to the suite for refdes_renum.
+	
+2007-04-14 Stuart Brorson <sdb (AT) cloud9 (DOT) net>
 	* refdes_renum: modified refdes_renum to incorporate --gentle
 	flag which won't overwrite refdeses already numbered.
 

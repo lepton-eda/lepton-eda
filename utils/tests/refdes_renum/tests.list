@@ -19,10 +19,16 @@ single_pgskip2 | file1.sch | --pgskip 10
 
 # check to see what happens if we have more elements of a given
 # prefix than the value we used for pgskip
-single_pgskip3 | more_than_10.sch | --pgskip 10 | 1
+# Return code should be 3
+single_pgskip3 | more_than_10.sch | --pgskip 10 | 3
 
 multi_renum | file1.sch file2.sch file3.sch |
 multi_clear | file1.sch file2.sch file3.sch | --clear
 multi_pgskip1 | file1.sch file2.sch file3.sch | --pgskip
 multi_pgskip2 | file1.sch file2.sch file3.sch | --pgskip 10
 
+# Tests added by SDB to verify --gentle operation
+all_new_refdeses | allnew.sch | --gentle
+some_old_refdeses | someold1.sch | --gentle
+all_old_refdeses | allold.sch | --gentle
+some_new_pgskip | someold1.sch someold2.sch someold3.sch | --gentle --pgskip
