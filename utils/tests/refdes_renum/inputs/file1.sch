@@ -10,5 +10,5 @@ refdes=R3
 refdes=J?
 refdes=C?
 refdes=J?
-refdes=L17
+refdes=L2
 refdes=C1

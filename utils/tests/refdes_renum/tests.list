@@ -28,7 +28,12 @@ multi_pgskip1 | file1.sch file2.sch file3.sch | --pgskip
 multi_pgskip2 | file1.sch file2.sch file3.sch | --pgskip 10
 
 # Tests added by SDB to verify --gentle operation
-all_new_refdeses | allnew.sch | --gentle
-some_old_refdeses | someold1.sch | --gentle
-all_old_refdeses | allold.sch | --gentle
-some_new_pgskip | someold1.sch someold2.sch someold3.sch | --gentle --pgskip
+# Since --gentle is now default, I run these tests both ways.
+all_new_refdeses1 | allnew.sch | --gentle
+all_new_refdeses2 | allnew.sch |
+some_old_refdeses1 | someold1.sch | --gentle
+some_old_refdeses2 | someold1.sch |
+all_old_refdeses1 | allold.sch | --gentle
+all_old_refdeses2 | allold.sch |
+some_new_pgskip1 | someold1.sch someold2.sch someold3.sch | --gentle --pgskip
+some_new_pgskip2 | someold1.sch someold2.sch someold3.sch | --pgskip
