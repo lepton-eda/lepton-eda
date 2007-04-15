@@ -1,3 +1,7 @@
+2007-04-15 Stuart Brorson <sdb (AT) cloud9 (DOT) net>
+	* refdes_renum: Made --gentle default behavior of refdes_renum.
+	Modified test suite to account for this new behavior.
+	
 2007-04-14 Stuart Brorson <sdb (AT) cloud9 (DOT) net>
 	* Added a bunch of regression tests to the suite for refdes_renum.
 	

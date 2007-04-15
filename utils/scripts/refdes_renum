@@ -36,7 +36,7 @@ use POSIX;
 # don't allow -he to be interpreted as --help
 $Getopt::Long::autoabbrev=0;
 
-my $clear; # reset all refdes
+#  my $clear; # reset all refdes
 &GetOptions(("help" => \&usage, 
 	     "nocopy" => \$nocopy,
 	     "pgskip:100" => \$pgskip,
@@ -44,6 +44,7 @@ my $clear; # reset all refdes
 	     "version" => \&version,
              "clear"   => \$clear,
 	     "gentle" => \$gentle,
+	     "force" => \$force,
 	     ));
 
 usage() if $Getopt::Long::error;
@@ -56,6 +57,13 @@ if (defined($pgskip) && ($pgskip == 0)) {
     $pgskip = 100; 
 }
 
+
+# This makes --gentle the default behavior.  To 
+# force refdes renumbering, use --force.
+$gentle = 1;
+if ( defined($force) || defined($clear) ) {
+    undef($gentle);
+}
 
 # Print usage string in event user didn't call out any args
 usage() unless @ARGV;
@@ -323,9 +331,13 @@ sub usage {
   print "                with 201, etc  Specifying a value gives the step between pages.\n";
   print "                For example --pgskip 10 will start with 11, 21, 31, etc.\n";
   print "\n";
-  print "    --gentle    If given, this flag tells refdes_renum to leave any refdeses\n";
+  print "    --gentle    This flag tells refdes_renum to leave any refdeses\n";
   print "                alone if they already have numbers.  Use this option to number\n";
   print "                new components in a schematic which has already been numbered.\n";
+  print "                Note that --gentle is set by default!\n";
+  print "\n";
+  print "    --force     Set this flag to renumber all refdeses, whether they are already\n";
+  print "                numbered or not.\n";
   print "\n";
   print "    --verbose   Enables verbose output.\n";
   print "\n";
@@ -390,7 +402,15 @@ sub die_sdb {
 # Change Log
 #
 # $Log$
-# Revision 1.6  2007-04-15 00:42:22  sdb
+# Revision 1.7  2007-04-15 23:20:31  sdb
+# Made --gentle the default behavior of refdes_renum.
+#
+# Revision 1.7  2007/04/15 SDB
+# Made --gentle default behavior.  Now user must use --force
+# to get old behavior, which renumbers all refdeses whether
+# already numbered or not.
+#
+# Revision 1.6  2007/04/15 00:42:22  sdb
 # Added --gentle flag to refdes_renum, which won't renumber refdeses
 # which already have a number.
 #
