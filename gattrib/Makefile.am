@@ -1,7 +1,7 @@
 
 AM_CFLAGS = -g -O2 
 
-SUBDIRS = src include lib design
+SUBDIRS = src include lib design docs
 
 EXTRA_DIST = BUGS NOTES README README.gEDA \
 		ChangeLog AUTHORS COPYING INSTALL autogen.sh ToDos

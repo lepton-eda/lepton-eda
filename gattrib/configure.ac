@@ -22,6 +22,7 @@ AC_ARG_ENABLE(debug,
 [ AC_DEFINE(DEBUG, 1, DEBUG) ]
 )
 
+
 #########################################################################
 # Command line flags start
 # 
@@ -145,6 +146,66 @@ fi
 # 
 # Check for libgeda end
 ############################################################################
+
+############################################################################
+# Check for doxygen, indent start
+#
+
+# Doxygen is a utility for generating html and latex documentation
+# from c source code files.
+
+# search for Doxygen
+AC_PATH_PROG(DOXYGEN, doxygen, no, ${PATH})
+
+if test "$DOXYGEN" = "no"; then
+   # doxygen is not available on the system
+   echo "** Cannot find Doxygen! **"
+   echo "**   Documentation creation disabled    **"
+   DOXYGEN=echo
+
+   # prevent from creating html and latex documents.
+   # but does not prevent from processing gschemdoc
+   builddoc=false
+else
+   # doxygen is available on the system.
+   # now checking if the tools for Texinfo files processing
+   # is installed.
+   # The docs can be either processed to produce dvi, html or info
+   # with texi2dvi, texi2html or makeinfo respectively
+   # Note : these tests on makeinfo and texi2dvi are no more
+   #        needed as automake makes them for us
+
+   # enable the creation of html and latex documents.
+   builddoc=true
+fi
+
+# depending on variable builddoc, weaving is performed or not
+# using conditionnal in docs/Makefile.in
+AM_CONDITIONAL(BUILDDOC, test x$builddoc = xtrue)
+
+# search for indent
+AC_PATH_PROG(INDENT, indent, no, ${PATH})
+
+if ! test "$INDENT" = "no"; then
+   indentversion=`$INDENT --version | grep GNU`
+else
+   indentversion=
+fi
+
+if test "$INDENT" = "no" -o "$indentversion"x = x; then
+  AC_PATH_PROG(GINDENT, gindent, no, ${PATH})
+  if test "$GINDENT" = "no"; then
+    echo "** Cannot find GNU indent or gindent, C code formatting disabled **"
+    INDENT=echo
+  else
+    INDENT=$GINDENT
+  fi
+fi
+
+#
+# Check for doxygen, indent end
+#########################################################################
+
 
 #########################################################################
 # Checks for header files start
@@ -286,6 +347,7 @@ AC_SUBST(OTHERPATHSEP)
 AC_CONFIG_FILES([Makefile 
 		 src/Makefile
 		 lib/Makefile 
+		 docs/Makefile
 		 design/Makefile
 		 include/Makefile 
 		 lib/system-gattribrc

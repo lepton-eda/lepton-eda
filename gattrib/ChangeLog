@@ -1,3 +1,8 @@
+2007-4-15  Stuart Brorson <sdb (AT) cloud9 (DOT) net>
+	* Makefile.am, configure.ac, docs/*: Created new docs
+	directory, and set up framework to create doxygen generated
+	docs.
+	
 2007-4-3  Stuart Brorson <sdb@cloud9.net>
 	* src/s_sheet_data.c, src/s_table.c, src/s_toplevel.c:
 	Temp fix for bug 1692431 -- don't put net= attribute into 
