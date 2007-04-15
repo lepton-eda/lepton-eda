@@ -3,15 +3,25 @@
 #
 # Do NOT add RCS keywords in this file or they will break
 # the diff's which get run
-refdes=C5
-refdes=C3
+refdes=C1
+refdes=C2
+refdes=R1
 refdes=R2
 refdes=R3
-refdes=J3
-refdes=C7
-refdes=J4
-refdes=L2
-refdes=C1
-refdes=U6
-refdes=U7
-refdes=U8
+refdes=R4
+refdes=J1
+refdes=C3
+refdes=C4
+refdes=C5
+refdes=J2
+refdes=L1
+refdes=C6
+refdes=R5
+refdes=R6
+refdes=R7
+refdes=Q1
+refdes=U1
+refdes=Q2
+refdes=U2
+refdes=Q3
+refdes=U3
