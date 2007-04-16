@@ -378,11 +378,13 @@ void s_string_list_sort_master_comp_attrib_list() {
     int i;
     p->pos = DEFAULT_ATTRIB_POS;
     for (i=0; i<NUM_CERTAINS; i++)
-      if (strcmp (certain_attribs[i].attrib, p->data) == 0)
-	{
+      if (p->data != NULL) {
+        if (strcmp (certain_attribs[i].attrib, p->data) == 0)
+  	{
 	  p->pos = certain_attribs[i].pos;
 	  break;
 	}
+      }
   }
 
   local_list = listsort(local_list, 0, 1);

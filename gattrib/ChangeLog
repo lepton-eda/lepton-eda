@@ -1,3 +1,8 @@
+2007-04-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_string_list.c: Added missing test to prevent a seg fault
+	when loading up a schematic with missing attributes.
+
 2007-4-15  Stuart Brorson <sdb (AT) cloud9 (DOT) net>
 	* Makefile.am, configure.ac, docs/*: Created new docs
 	directory, and set up framework to create doxygen generated
