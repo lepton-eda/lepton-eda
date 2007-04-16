@@ -1132,6 +1132,11 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
                              &name, &value);
 
     attrfound = o_attrib_search_name_single(o_current, name, NULL); 
+
+    /* free these now since they are no longer being used */
+    if (name) { g_free(name); }
+    if (value) { g_free(value); }
+
     if (attrfound == NULL) {
       /* attribute with same name not found in old component: */
       /* add new attribute to old component */

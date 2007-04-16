@@ -1,3 +1,8 @@
+2007-04-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/o_misc.c: Fixed memory leak in the update component code
+	reported by valgrind.
+
 2007-04-14 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* include/x_compselect.h, src/i_callbacks.c, src/x_compselect.c:
