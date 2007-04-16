@@ -75,8 +75,7 @@ SCM g_rc_gattrib_version(SCM version)
 	    "but you have a version [%s] gattribrc file:\n[%s]\n",
 	    SCM_STRING_CHARS (version), rc_filename);
     fprintf(stderr,
-	    "While gattrib is in ALPHA, "
-	    "please be sure that you have the latest rc file.\n");
+	    "Please run a version of gattrib compatible with your gEDA installation.\n");
     return SCM_BOOL_F;
   }
   

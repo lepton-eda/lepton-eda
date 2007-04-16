@@ -1,3 +1,7 @@
+2007-4-15  Stuart Brorson <sdb (AT) cloud9 (DOT) net>
+	* src/*.c:  Added DOxygen style comment pragma to many (but not
+	all) .c files.  DOxygenating gattrib is an ongoing project.
+	
 2007-04-15 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/s_string_list.c: Added missing test to prevent a seg fault

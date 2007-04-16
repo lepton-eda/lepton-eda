@@ -45,8 +45,9 @@
 
 
 
-/*------------------------------------------------------------------
- * This returns a pointer to a new STRING_LIST object.
+/*------------------------------------------------------------------*/
+/*! \brief This returns a pointer to a new STRING_LIST object.
+ *
  *------------------------------------------------------------------*/
 STRING_LIST *s_string_list_new() {
   STRING_LIST *local_string_list;
@@ -61,9 +62,10 @@ STRING_LIST *s_string_list_new() {
 }
 
 
-/*------------------------------------------------------------------
- * This takes an old string list, duplicates it and returns a pointer
+/*------------------------------------------------------------------*/
+/*! \brief This takes an old string list, duplicates it and returns a pointer
  * to the new, duplicate list.
+ *
  *------------------------------------------------------------------*/
 STRING_LIST *s_string_list_duplicate_string_list(STRING_LIST *old_string_list) {
   STRING_LIST *new_string_list;
@@ -89,8 +91,9 @@ STRING_LIST *s_string_list_duplicate_string_list(STRING_LIST *old_string_list) {
 }
 
 
-/*------------------------------------------------------------------
- * This fcn inserts the item into a char* list.  It first cycles through the
+/*------------------------------------------------------------------*/
+/*! \brief This fcn inserts the item into a char* list.  
+ * It first cycles through the
  * list to make sure that there are no duplications. The list is assumed
  * to be a STRING_LIST:
  * struct STRING_LIST
@@ -100,6 +103,7 @@ STRING_LIST *s_string_list_duplicate_string_list(STRING_LIST *old_string_list) {
  *   STRING_LIST *next;
  *   STRING_LIST *prev;
  * };
+ *
  *------------------------------------------------------------------*/
 void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
 
@@ -156,10 +160,11 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
 }
 
 
-/*------------------------------------------------------------------
- * This fcn deletes an item in a STRING_LIST.
+/*------------------------------------------------------------------*/
+/*! \brief This fcn deletes an item in a STRING_LIST.
  * It takes args: list to to delete item, pointer to no of items in
  * list at end, and the item itself to remove.
+ *
  *------------------------------------------------------------------*/
 void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
 
@@ -240,9 +245,10 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
 }
 
 
-/*------------------------------------------------------------------
- * This fcn looks for item in the list.  It returns 1 if item is
+/*------------------------------------------------------------------*/
+/*! \brief This fcn looks for item in the list.  It returns 1 if item is
  * present, 0 if absent.
+ *
  *------------------------------------------------------------------*/
 int s_string_list_in_list(STRING_LIST *list, char *item) {
 
@@ -274,9 +280,10 @@ int s_string_list_in_list(STRING_LIST *list, char *item) {
 }
 
 
-/*------------------------------------------------------------------
- * This fcn returns the index'th item in the string list.
+/*------------------------------------------------------------------*/
+/*! \brief This fcn returns the index'th item in the string list.
  * It returns NULL if there is a problem
+ *
  *------------------------------------------------------------------*/
 gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index) 
 {
@@ -301,12 +308,14 @@ gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
 }
 
 
-/*------------------------------------------------------------------
- * This fcn takes the master comp list sheet_head->master_comp_list_head
+/*------------------------------------------------------------------*/
+/*! \brief This fcn takes the master comp list 
+ * sheet_head->master_comp_list_head
  * and sorts it in this order:
  * <all refdeses in alphabetical order>
  * Right now it does nothing other than fill in the "position"
  * and "length" variables.
+ *
  *------------------------------------------------------------------*/
 void s_string_list_sort_master_comp_list() {
   int i = 0;
@@ -340,12 +349,14 @@ void s_string_list_sort_master_comp_list() {
   return;
 }
 
-/*------------------------------------------------------------------
- * This fcn takes the master comp attrib list sheet_head->master_comp_attrib_list_head
+/*------------------------------------------------------------------*/
+/*! \brief This fcn takes the master comp attrib list 
+ * sheet_head->master_comp_attrib_list_head
  * and sorts it in this order:
  * <all refdeses in alphabetical order>
  * Right now it does nothing other than fill in the "position"
  * and "length" variables.
+ *
  *------------------------------------------------------------------*/
 
 /* This list overrides the alphanumeric sort.  Attribs not found in
@@ -401,10 +412,12 @@ void s_string_list_sort_master_comp_attrib_list() {
   return;
 }
 
-/*------------------------------------------------------------------
- * This fcn takes the master net list sheet_head->master_net_list_head
+/*------------------------------------------------------------------*/
+/*! \brief This fcn takes the master net list 
+ * sheet_head->master_net_list_head
  * and sorts it in this order:
  * <all nets in alphabetical order>
+ *
  *------------------------------------------------------------------*/
 void s_string_list_sort_master_net_list() {
   int i = 0;
@@ -423,10 +436,13 @@ void s_string_list_sort_master_net_list() {
   return;
 }
 
-/*------------------------------------------------------------------
- * This fcn takes the master net attrib list sheet_head->master_net_attrib_list_head
+/*------------------------------------------------------------------*/
+/*! \brief This fcn takes the master net attrib list 
+ * sheet_head->master_net_attrib_list_head
  * and sorts it in this order:
- * value, footprint, model-name, file, <all other attribs in alphabetical order>
+ * value, footprint, model-name, file, 
+ * <all other attribs in alphabetical order>
+ *
  *------------------------------------------------------------------*/
 void s_string_list_sort_master_net_attrib_list() {
   int i = 0;
@@ -446,12 +462,14 @@ void s_string_list_sort_master_net_attrib_list() {
 }
 
 
-/*------------------------------------------------------------------
- * This fcn takes the master pin list sheet_head->master_pin_list_head
+/*------------------------------------------------------------------*/
+/*! \brief This fcn takes the master pin list 
+ * sheet_head->master_pin_list_head
  * and sorts it in this order:
  * <all refdeses in alphabetical order>
  * Right now it does nothing other than fill in the "position"
  * and "length" variables.
+ *
  *------------------------------------------------------------------*/
 void s_string_list_sort_master_pin_list() {
   int i = 0;
@@ -485,12 +503,14 @@ void s_string_list_sort_master_pin_list() {
   return;
 }
 
-/*------------------------------------------------------------------
- * This fcn takes the master pin attrib list sheet_head->master_pin_attrib_list_head
+/*------------------------------------------------------------------*/
+/*! \brief This fcn takes the master pin attrib list 
+ * sheet_head->master_pin_attrib_list_head
  * and sorts it in this order:
  * <all pin attribs in alphabetical order>
  * Right now it does nothing other than fill in the "position"
  * and "length" variables.
+ *
  *------------------------------------------------------------------*/
 void s_string_list_sort_master_pin_attrib_list() {
   int i = 0;

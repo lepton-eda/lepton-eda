@@ -75,6 +75,7 @@ typedef enum {
  */
 static void   gtk_item_entry_class_init           (GtkItemEntryClass        *klass);
 static void   gtk_item_entry_init                 (GtkItemEntry         *entry);
+
 static void   gtk_item_entry_editable_init (GtkEditableClass *iface);
 
 /* GtkWidget methods
@@ -196,7 +197,12 @@ static void         get_widget_window_size             (GtkEntry       *entry,
 static GtkEntryClass *parent_class = NULL;
 
 /* ===============================  Fcns  ========================== */
-
+/* ----------------------------------------------------------------- */
+/*! \brief This function returns the type of the gtk_item entry widget.
+ *  It may be removed at some point since the GtkItemEntry isn't used
+ *  in gattrib.
+ *
+ * ----------------------------------------------------------------- */
 GtkType
 gtk_item_entry_get_type (void)
 {
@@ -235,6 +241,12 @@ gtk_item_entry_get_type (void)
   return item_entry_type;
 }
 
+/* ----------------------------------------------------------------- */
+/*! \brief This function initializes the GtkItemEntry.  It may be 
+ * removed at some future time since gattrib doesn't use a GtkItemEntry
+ * widget.
+ *
+ * ----------------------------------------------------------------- */
 static void
 gtk_item_entry_class_init (GtkItemEntryClass *class)
 {
@@ -275,6 +287,10 @@ gtk_item_entry_class_init (GtkItemEntryClass *class)
 							       G_PARAM_READABLE));
 }
 
+/* ----------------------------------------------------------------- */
+/*! \brief ?????
+ *
+ * ----------------------------------------------------------------- */
 static void
 gtk_item_entry_editable_init (GtkEditableClass *iface)
 {
@@ -286,6 +302,12 @@ gtk_item_entry_editable_init (GtkEditableClass *iface)
   iface->get_position = gtk_entry_get_position;
 }
 
+
+/* ----------------------------------------------------------------- */
+/*! \brief This function initializes the GtkItem, which is the individual
+ * box in the spreadsheet into which you type strings (I think).
+ *
+ * ----------------------------------------------------------------- */
 static void
 gtk_item_entry_init (GtkItemEntry *entry)
 {
@@ -323,6 +345,14 @@ gtk_item_entry_init (GtkItemEntry *entry)
 
 }
 
+/* ----------------------------------------------------------------- */
+/*! \brief This function realizes the GtkItem -- the individual
+ * box in the spreadsheet into which you type strings (I think).
+ * To realize a Gtk widget means that you create the resources 
+ * associated with a widget.  It is implicitly done when you show
+ * a widget.
+ *
+ * ----------------------------------------------------------------- */
 static void
 gtk_entry_realize (GtkWidget *widget)
 {
@@ -379,6 +409,11 @@ gtk_entry_realize (GtkWidget *widget)
   gtk_entry_adjust_scroll (entry);
 }
 
+/* ----------------------------------------------------------------- */
+/*! \brief Places the GtkEntry widget borders into *xborder and 
+ * *yborder.
+ *
+ * ----------------------------------------------------------------- */
 static void
 get_borders (GtkEntry *entry,
              gint     *xborder,
@@ -412,6 +447,10 @@ get_borders (GtkEntry *entry,
 
 }
 
+/* ----------------------------------------------------------------- */
+/*! \brief Tries to set the size of the GtkEntry widget.
+ *
+ * ----------------------------------------------------------------- */
 static void
 gtk_entry_size_request (GtkWidget      *widget,
 			GtkRequisition *requisition)
@@ -447,6 +486,12 @@ gtk_entry_size_request (GtkWidget      *widget,
   pango_font_metrics_unref (metrics);
 }
 
+/* ----------------------------------------------------------------- */
+/*! \brief Tries to return the size of the text area of a GtkEntry.
+ * Returns the x, y positions fo the border, and also returns the
+ * widget width and height.
+ *
+ * ----------------------------------------------------------------- */
 static void
 get_text_area_size (GtkEntry *entry,
                     gint     *x,
@@ -475,6 +520,12 @@ get_text_area_size (GtkEntry *entry,
     *height = requisition.height - yborder * 2;
 }
 
+/* ----------------------------------------------------------------- */
+/*! \brief Tries to return the size of the window area of a GtkEntry.
+ * Returns the x, y positions fo the border, and also returns the
+ * widget width and height.
+ *
+ * ----------------------------------------------------------------- */
 static void
 get_widget_window_size (GtkEntry *entry,
                         gint     *x,
@@ -510,6 +561,10 @@ get_widget_window_size (GtkEntry *entry,
     }
 }
 
+/* ----------------------------------------------------------------- */
+/*! \brief Tries to set the size of a GtkEntry
+ *
+ * ----------------------------------------------------------------- */
 static void
 gtk_entry_size_allocate (GtkWidget     *widget,
 			 GtkAllocation *allocation)
@@ -544,11 +599,19 @@ gtk_entry_size_allocate (GtkWidget     *widget,
     }
 }
 
+/* ----------------------------------------------------------------- */
+/*! \brief ?????
+ *
+ * ----------------------------------------------------------------- */
 static void
 gtk_entry_draw_frame (GtkWidget *widget)
 {
 }
 
+/* ----------------------------------------------------------------- */
+/*! \brief ???
+ *
+ * ----------------------------------------------------------------- */
 static gint
 gtk_entry_expose (GtkWidget      *widget,
 		  GdkEventExpose *event)
@@ -2209,18 +2272,16 @@ GtkWidget*
 gtk_item_entry_new (void)
 {
 
-#if 0
-  /*  old stuff removed by SDB  */
   GtkWidget *widget;
 
   widget = GTK_WIDGET (gtk_type_new (GTK_TYPE_ITEM_ENTRY));
   return widget;
-#endif 
 
   /* Copied from GtkEntry by SDB */
   return g_object_new (GTK_TYPE_ITEM_ENTRY, NULL);
 
 }
+
 
 GtkWidget*
 gtk_item_entry_new_with_max_length (gint max)
@@ -2232,6 +2293,7 @@ gtk_item_entry_new_with_max_length (gint max)
 
   return GTK_WIDGET (entry);
 }
+
 
 void
 gtk_item_entry_set_text (GtkItemEntry    *entry,
@@ -2265,6 +2327,8 @@ gtk_item_entry_set_text (GtkItemEntry    *entry,
   tmp_pos = 0;
   gtk_editable_insert_text (GTK_EDITABLE (entry), text, strlen (text), &tmp_pos);
 }
+
+
 
 /**
  * gtk_entry_get_layout_offsets:

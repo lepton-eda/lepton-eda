@@ -46,9 +46,11 @@
 #endif
 
 
-/*------------------------------------------------------------------
- * This fcn is the sheet_data creator.  It returns a pointer to 
+/*------------------------------------------------------------------*/
+/*! \brief This fcn is the sheet_data creator.  
+ * It returns a pointer to 
  * an initialized SHEET_DATA struct.
+ *
  *------------------------------------------------------------------*/
 SHEET_DATA *s_sheet_data_new()
 {
@@ -89,11 +91,14 @@ SHEET_DATA *s_sheet_data_new()
 
 
 
-/*------------------------------------------------------------------
- * This fcn adds to the master list of components refdeses by running
+/*------------------------------------------------------------------*/
+/*! \brief This fcn adds to the master list of 
+ * components refdeses by running
  * through the components and recording the comp refdeses
  * it discovers. Then it sorts them into alphabetical order.
- * Data struct being searched is: OBJECT->attribs(->next. . .)->object->text->string
+ * Data struct being searched is: 
+ * OBJECT->attribs(->next. . .)->object->text->string
+ * 
  *------------------------------------------------------------------*/
 void s_sheet_data_add_master_comp_list_items(OBJECT *start_obj) {
   char *temp_uref;
@@ -147,12 +152,14 @@ void s_sheet_data_add_master_comp_list_items(OBJECT *start_obj) {
 }
 
 
-/*------------------------------------------------------------------
- * This fcn adds to the master list of comp attribs by running
+/*------------------------------------------------------------------*/
+/*! \brief This fcn adds to the master list of comp attribs by running
  * through each component on the page and recording all attribs 
  * it discovers. Then it sorts them into an order used for the 
  * horiz listing of the attribs on the spreadsheet.
- * Data struct being searched is: sheet_head->component_list_head->attrib->name;
+ * Data struct being searched is: 
+ * sheet_head->component_list_head->attrib->name;
+ *
  *------------------------------------------------------------------*/
 void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
   char *attrib_text;
@@ -223,26 +230,33 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
 
 
 
-/*------------------------------------------------------------------
- * This fcn builds the master list of net names by running
+/*------------------------------------------------------------------*/
+/*! \brief This fcn builds the master list of net names by running
  * through the individual cells and recording the net refdeses
  * it discovers. 
+ * It's currently empty, waiting for implementation of net
+ * attributes.
+ *
  *------------------------------------------------------------------*/
 void s_sheet_data_add_master_net_list_items(OBJECT *start_obj) {
   return;
 }
 
 
-/*------------------------------------------------------------------
- * This fcn builds the master list of net attribs.
+/*------------------------------------------------------------------*/
+/*! \brief This fcn builds the master list of net attribs.
+ * It's currently empty, waiting for implementation of net
+ * attributes.
+ *
  *------------------------------------------------------------------*/
 void s_sheet_data_add_master_net_attrib_list_items(OBJECT *start_obj) {
   return;
 }
 
 
-/*------------------------------------------------------------------
- * This fcn builds the master list of pin names.  It writes the
+/*------------------------------------------------------------------*/
+/*! \brief This fcn builds the master 
+ * list of pin names.  It writes the
  * label refdes:pinnumber into the global master pin list.
  * Algorithm:
  * 1.  Loop on o_current looking for OBJ_COMPLEX
@@ -255,6 +269,7 @@ void s_sheet_data_add_master_net_attrib_list_items(OBJECT *start_obj) {
  *     the master pin list.
  * Since this fcn operates on the global sheet_data->master_pin_list, 
  * it doesn't return a value.
+ *
  *------------------------------------------------------------------*/
 void s_sheet_data_add_master_pin_list_items(OBJECT *start_obj) {
   char *temp_uref;
@@ -330,8 +345,9 @@ void s_sheet_data_add_master_pin_list_items(OBJECT *start_obj) {
 }
 
 
-/*------------------------------------------------------------------
- * This fcn builds the master list of pin attributes.  It writes 
+/*------------------------------------------------------------------*/
+/*! \brief This fcn builds the master 
+ * list of pin attributes.  It writes 
  * each attrib name into the master pin attrib list.
  * Algorithm:
  * 1.  Loop on o_current looking for OBJ_COMPLEX
@@ -342,6 +358,7 @@ void s_sheet_data_add_master_pin_list_items(OBJECT *start_obj) {
  * 6.  Loop on attribs looking for non-NULL text.
  * 7.  When we find a non-NULL text attrib, extract the attrib name
  *     and stick it in the master pin attrib list.
+ *
  *------------------------------------------------------------------*/
 void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
   char *temp_uref;
@@ -426,11 +443,12 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
 
 
 
-/*------------------------------------------------------------------
- * This fcn extracts the attribs from the gtksheet
+/*------------------------------------------------------------------*/
+/*! \brief This fcn extracts the attribs from the gtksheet
  * cells, and places them back into SHEET_DATA.  This is the
  * first step in saving out a project.  Right now I just invoke
  * s_table_gtksheet_to_table.  Do I need to do anything else here?
+ *
  *------------------------------------------------------------------*/
 void s_sheet_data_gtksheet_to_sheetdata() {
   s_table_gtksheet_to_all_tables();

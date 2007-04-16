@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * gattrib -- gEDA component and net attribute manipulation using spreadsheet.
- * Copyright (C) 2003 Stuart D. Brorson.
+ * Copyright (C) 2003-2007 Stuart D. Brorson.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,8 +36,8 @@
 #include <unistd.h>
 #endif
 
-/*------------------------------------------------------------------
- * Includes originally from testgtksheet -- stuff needed to deal with 
+/*------------------------------------------------------------------*/
+/* Includes originally from testgtksheet -- stuff needed to deal with 
  * spreadsheet widget.
  *------------------------------------------------------------------*/
 #include <stdio.h>
@@ -53,8 +53,8 @@
 #include <string.h>
 #endif
 
-/*------------------------------------------------------------------
- * Gattrib specific includes -- stuff dealing with gattrib data structs.
+/*------------------------------------------------------------------*/
+/* Gattrib specific includes -- stuff dealing with gattrib data structs.
  *------------------------------------------------------------------*/
 #include <libgeda/libgeda.h>       /* geda library fcns  */
 #include "../include/struct.h"     /* typdef and struct declarations */
@@ -65,9 +65,14 @@
 #include <dmalloc.h>
 #endif
 
-/*------------------------------------------------------------------
- * gattrib_really_quit callback -- called when user selects "quit"
- * from menubar.  Checks for unsaved changes.
+/*------------------------------------------------------------------*/
+/*! \brief gattrib_really_quit callback -- called when user 
+ *          selects "quit" from menubar.  Checks for unsaved 
+ *          changes.
+ *  \par
+ *  
+ *  \return Returns 0 to shell (successful quit).
+ *
  *------------------------------------------------------------------*/
 void gattrib_really_quit(void)
 {
@@ -80,8 +85,11 @@ void gattrib_really_quit(void)
 }
 
 
-/*------------------------------------------------------------------
- * gattrib_quit -- wrap up and quit fcn.
+/*------------------------------------------------------------------*/
+/*! \brief gattrib_quit -- wrap up and quit fcn. 
+ *
+ *  \par
+ *
  *------------------------------------------------------------------*/
 gint gattrib_quit(gint return_code)
 {
@@ -99,8 +107,11 @@ gint gattrib_quit(gint return_code)
 }
 
 
-/*------------------------------------------------------------------
- * gattrib_main -- main gattrib fcn.
+/*------------------------------------------------------------------*/
+/*! \brief gattrib_main -- main gattrib fcn. 
+ *
+ *  \par
+ *
  *------------------------------------------------------------------*/
 void gattrib_main(void *closure, int argc, char *argv[])
 {
@@ -362,10 +373,13 @@ void gattrib_main(void *closure, int argc, char *argv[])
 }
 
 /*------------------------------------------------------------------
- * main -- entry point to gattrib.  This is just a wrapper which 
+/*! \brief main -- entry point to gattrib.  This is just a wrapper which 
  * invokes the guile stuff, and points to the real main prog, 
  * gattrib_main.  Note that I still need some vestigal
  * guile stuff in order to read the rc files.
+ *
+ *  \par
+ *
  *------------------------------------------------------------------*/
 int main(int argc, char *argv[])
 {

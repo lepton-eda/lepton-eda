@@ -43,6 +43,12 @@
 
 
 /* ===================  Public Functions  ====================== */
+/* ------------------------------------------------------------- */
+/* \brief This function is invoked when the user selects file ->
+ * export from the pull-down menu.  It writes out a CSV file 
+ * of the design for external processing.
+ *
+ * ------------------------------------------------------------- */
 void f_export_components(gchar *filename)
 {
   gint cur_page;

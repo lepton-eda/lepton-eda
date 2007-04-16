@@ -51,8 +51,8 @@
                                                                                                            
 /* ===================  Public Functions  ====================== */
 
-/*------------------------------------------------------------------
- * This fcn adds a new attrib to o_current, when o_current is a
+/*------------------------------------------------------------------*/
+/*! \brief This fcn adds a new attrib to o_current, when o_current is a
  * component.  It does it in the following 
  * way:
  * 1. It creates an object -- "attrib_graphic" -- and fills it in.
@@ -60,6 +60,7 @@
  *    calls o_text_add to add pos info and name=value string 
  *    to attrib_graphic.
  * 3. It calls o_attrib_add to wrap attrib_graphic with (ATTRIB )
+ *
  *------------------------------------------------------------------ */
 void s_object_add_comp_attrib_to_object(OBJECT *o_current, 
 					char *new_attrib_name, 
@@ -83,8 +84,9 @@ void s_object_add_comp_attrib_to_object(OBJECT *o_current,
 }
 
 
-/*------------------------------------------------------------------*
- *  This needs to be filled in.
+/*------------------------------------------------------------------*/
+/*! /brief This needs to be filled in.
+ *
  *------------------------------------------------------------------*/
 void s_object_add_net_attrib_to_object(OBJECT *o_current, char *new_attrib_name, 
 				char *new_attrib_value)
@@ -93,8 +95,8 @@ void s_object_add_net_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
 }
 
 
-/*------------------------------------------------------------------
- * This fcn adds a new attrib to o_current, when o_current is a
+/*------------------------------------------------------------------*/
+/*! \brief This fcn adds a new attrib to o_current, when o_current is a
  * pin.  It does it in the following 
  * way:
  * 1. It creates an object -- "attrib_graphic" -- and fills it in.
@@ -104,6 +106,7 @@ void s_object_add_net_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
  * 3. It calls o_attrib_add to wrap attrib_graphic with (ATTRIB )
  * Question:  Do I really need separate fcns for comps, nets, and 
  * pins???
+ *
  *------------------------------------------------------------------ */
 void s_object_add_pin_attrib_to_object(OBJECT *o_current, char *new_attrib_name, 
 				char *new_attrib_value)
@@ -127,9 +130,10 @@ void s_object_add_pin_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
 
 
 
-/*------------------------------------------------------------------
- * This fcn finds the instance of attrib_name on o_current, and
+/*------------------------------------------------------------------*/
+/*! \brief This fcn finds the instance of attrib_name on o_current, and
  * replaces it's value wiht new_attrib_value.
+ *
  *------------------------------------------------------------------*/
 void s_object_replace_attrib_in_object(OBJECT *o_current, 
 				       char *new_attrib_name, 
@@ -183,8 +187,9 @@ void s_object_replace_attrib_in_object(OBJECT *o_current,
 }
 
 
-/*------------------------------------------------------------------
- * This fcn removes attrib from o_current.
+/*------------------------------------------------------------------*/
+/*! \brief This fcn removes attrib from o_current.
+ *
  *------------------------------------------------------------------*/
 void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name) 
 {
@@ -233,10 +238,11 @@ void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name)
 
 
 
-/*------------------------------------------------------------------
- * This fcn attaches the name=value pair to the OBJECT "object"  It 
+/*------------------------------------------------------------------*/
+/*! \brief This fcn attaches the name=value pair to the OBJECT "object"  It 
  * was stolen from gschem/src/o_attrib.c:o_attrib_add_attrib and
  * hacked for gattrib.  Does it need to return OBJECT?
+ *
  *------------------------------------------------------------------*/
 OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_string,
 			    int visibility, int show_name_value,
@@ -328,8 +334,8 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
 
 
  
-/*------------------------------------------------------------------
- * This fcn deletes the text object pointed to by text_object.  It
+/*------------------------------------------------------------------*/
+/*! \brief This fcn deletes the text object pointed to by text_object.  It
  * was shamelessly stolen from gschem/src/o_delete.c and hacked
  * for gattrib by SDB.
  *------------------------------------------------------------------*/
@@ -347,9 +353,11 @@ void s_object_delete_text_object_in_object(TOPLEVEL * pr_current, OBJECT * text_
 }
                                                                                                     
 
-/*------------------------------------------------------------------
- * This verifies that the object has a non-null symbol file.
- * It returns 0 = valid symbol file, 1 = no symbol file found.
+/*------------------------------------------------------------------*/
+/*! \brief This verifies that the object has a non-null symbol file.
+ *
+ * \returns It returns 0 = valid symbol file, 1 = no symbol file found.
+ *
  *------------------------------------------------------------------*/
 int s_object_has_sym_file(OBJECT *object)
 {

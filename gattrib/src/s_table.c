@@ -46,14 +46,15 @@
 
 /* ===================  Public Functions  ====================== */
 
-/*------------------------------------------------------------------
- * This fcn is the table creator.  It returns a pointer to 
+/*------------------------------------------------------------------*/
+/*! \brief This fcn is the table creator.  It returns a pointer to 
  * an initialized TABLE struct.  As calling args, it needs
  * the number of rows and cols to allocate.  The table is a
  * dynamically allocated 2D array of structs.  To access data in
  * a cell in the table, you reference (for example):
  * ((sheet_data->comp_table)[i][j]).attrib_value
  * (Parens used only for clarity.  It works without parens.)
+ *
  *------------------------------------------------------------------*/
 TABLE **s_table_new(int rows, int cols)
 {
@@ -86,11 +87,13 @@ TABLE **s_table_new(int rows, int cols)
 }
 
 
-/*------------------------------------------------------------------
- * This fcn recreates the table with a new size.  It can only increase
+/*------------------------------------------------------------------*/
+/*! \brief This fcn recreates the table with 
+ * a new size.  It can only increase
  * the number of cols.  You can't increase the number of rows since
  * gattrib doesn't allow you to input new components.  Decreasing the 
  * number of cols is also TBD.
+ * 
  *------------------------------------------------------------------*/
 TABLE **s_table_resize(TABLE **table, 
 		       int rows, int old_cols, int new_cols)
@@ -120,9 +123,11 @@ TABLE **s_table_resize(TABLE **table,
 }
 
 
-/*------------------------------------------------------------------
- * This fcn destroys the old table.  Use it after reading in a new
+/*------------------------------------------------------------------*/
+/*! \brief This fcn destroys the old table.  
+ * Use it after reading in a new
  * page to get rid of the old table before building a new one.
+ *
  *------------------------------------------------------------------*/
 void s_table_destroy(TABLE **table, int row_count, int col_count)
 {
@@ -154,10 +159,12 @@ void s_table_destroy(TABLE **table, int row_count, int col_count)
 
 
 
-/*------------------------------------------------------------------
- * This fcn returns the index number when given a STRING_LIST and a 
+/*------------------------------------------------------------------*/
+/*! \brief This fcn returns the index number 
+ * when given a STRING_LIST and a 
  * string to match.  It finds the index
  * number by iterating through the master  list.
+ *
  *------------------------------------------------------------------*/
 int s_table_get_index(STRING_LIST *local_list, char *local_string) {
   int count = 0;
@@ -181,12 +188,13 @@ int s_table_get_index(STRING_LIST *local_list, char *local_string) {
 
 
 
-/*------------------------------------------------------------------
- * This fcn takes a table, a row list, and a row name, 
+/*------------------------------------------------------------------*/
+/*! \brief This fcn takes a table, a row list, and a row name, 
  * and returns a list holding
  * name=value pairs for all attribs pertainent to that particular
  * row.
  * If the row holds no attribs, it just returns NULL.
+ *
  *------------------------------------------------------------------*/
 STRING_LIST *s_table_create_attrib_pair(gchar *row_name, 
 					TABLE **table, 
@@ -218,10 +226,12 @@ STRING_LIST *s_table_create_attrib_pair(gchar *row_name,
 
 
 
-/*------------------------------------------------------------------
- * This fcn iterates over adds all objects found on this page looking
+/*------------------------------------------------------------------*/
+/*! \brief This fcn iterates over adds all 
+ * objects found on this page looking
  * for components.  When it finds a component, it finds all component
  * attribs and sticks them in the TABLE.
+ *
  *------------------------------------------------------------------*/
 void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
   OBJECT *o_current;
@@ -323,10 +333,12 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
 }
  
 #if 0
-/*------------------------------------------------------------------
- * This fcn iterates over adds all items found on this page looking
+/*------------------------------------------------------------------*/
+/*! \brief This fcn iterates over adds all 
+ * items found on this page looking
  * for nets and adds them individually to the net table.  Looping over
  * objects occurs here.
+ *
  *------------------------------------------------------------------*/
 void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
   OBJECT *o_current;
@@ -406,10 +418,11 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
 #endif
 
 
-/*------------------------------------------------------------------
- * This fcn iterates over adds all items found on this page
+/*------------------------------------------------------------------*/
+/*! \brief This fcn iterates over adds all items found on this page
  * looking for pins.  WHen it finds a pin, it gathers all
  * pin attribs and sticks them into the pin table. 
+ *
  *------------------------------------------------------------------*/
 void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
   OBJECT *o_current;
@@ -516,10 +529,12 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
 }
 
 
-/*------------------------------------------------------------------
- * This fcn through the spreadsheet, extracts the attribs from
+/*------------------------------------------------------------------*/
+/*! \brief This fcn through the spreadsheet, 
+ * extracts the attribs from
  * the cells, and places them back into TABLE.  This is the
  * first step in saving out a project.
+ *
  *------------------------------------------------------------------*/
 void s_table_gtksheet_to_all_tables() {
 
@@ -579,11 +594,12 @@ void s_table_gtksheet_to_all_tables() {
 
 
 /* ===================  Private Functions  ====================== */
-/*------------------------------------------------------------------
- * This fcn does the actual heaving lifting of looping 
+/*------------------------------------------------------------------*/
+/*! \brief This fcn does the actual heaving lifting of looping 
  * through the spreadsheet, extracting the attribs from
  * the cells, and placing them back into TABLE.  This is the
  * first step in saving out a project.
+ *
  *------------------------------------------------------------------*/
 void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_row_list, 
 			 STRING_LIST *master_col_list, TABLE **local_table,

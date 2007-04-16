@@ -158,8 +158,10 @@ static inline guint DEFAULT_FONT_DESCENT(GtkWidget *widget)
   }
 }
 
-/* gives the top pixel of the given row in context of
- * the sheet's voffset */
+/*! \brief gives the top pixel of the given row in context of
+ * the sheet's voffset 
+ *
+ */
 static inline gint
 ROW_TOP_YPIXEL(GtkSheet *sheet, gint nrow)
 {
@@ -167,8 +169,10 @@ ROW_TOP_YPIXEL(GtkSheet *sheet, gint nrow)
 }
 
 
-/* returns the row index from a y pixel location in the 
- * context of the sheet's voffset */
+/*! \brief returns the row index from a y pixel location in the 
+ * context of the sheet's voffset 
+ *
+ */
 static inline gint 
 ROW_FROM_YPIXEL(GtkSheet *sheet, gint y)
 {
@@ -190,16 +194,20 @@ ROW_FROM_YPIXEL(GtkSheet *sheet, gint y)
 }
 
 
-/* gives the left pixel of the given column in context of
- * the sheet's hoffset */
+/*! \brief gives the left pixel of the given column in context of
+ * the sheet's hoffset 
+ *
+ */
 static inline gint
 COLUMN_LEFT_XPIXEL(GtkSheet *sheet, gint ncol)
 {
    return (sheet->hoffset + sheet->column[ncol].left_xpixel);
 }
 
-/* returns the column index from a x pixel location in the 
- * context of the sheet's hoffset */
+/*! \brief returns the column index from a x pixel location in the 
+ * context of the sheet's hoffset 
+ *
+ */
 static inline gint
 COLUMN_FROM_XPIXEL (GtkSheet * sheet,
 		    gint x)
@@ -221,7 +229,9 @@ COLUMN_FROM_XPIXEL (GtkSheet * sheet,
   return sheet->maxcol;
 }
 
-/* returns the total height of the sheet */
+/*! \brief returns the total height of the sheet 
+ *
+ */
 static inline gint SHEET_HEIGHT(GtkSheet *sheet)
 {
   gint i,cx;
@@ -235,7 +245,9 @@ static inline gint SHEET_HEIGHT(GtkSheet *sheet)
 }
 
 
-/* returns the total width of the sheet */
+/*! \brief returns the total width of the sheet 
+ *
+ */
 static inline gint SHEET_WIDTH(GtkSheet *sheet)
 {
   gint i,cx;
@@ -589,7 +601,9 @@ static void gtk_sheet_row_size_request          (GtkSheet *sheet,
 
 /* Signals */
 
-/*  Imported from gtkextra.c  by SDB 7.22.2004  */
+/* \brief Imported from gtkextra.c  by SDB 7.22.2004  
+ *
+ */
 void
 _gtkextra_signal_emit(GtkObject *object, guint signal_id, ...)
 {
@@ -4165,10 +4179,12 @@ gtk_sheet_show_active_cell(GtkSheet *sheet)
             gtk_entry_set_editable(GTK_ENTRY(sheet_entry), TRUE);
  }
 
+
  if(!GTK_IS_ITEM_ENTRY(sheet_entry))
     gtk_entry_set_text(GTK_ENTRY(sheet_entry), text);
  else
     gtk_item_entry_set_text(GTK_ITEM_ENTRY(sheet_entry), text, justification);
+
 
  gtk_sheet_entry_set_max_size(sheet);
  gtk_sheet_size_allocate_entry(sheet);
@@ -5570,6 +5586,7 @@ gtk_sheet_extend_selection(GtkSheet *sheet, gint row, gint column)
 
 }
 
+/* Removed by SDB while cleaning up key press behavior */
 #if 0
 static gint
 gtk_sheet_entry_key_press(GtkWidget *widget,
@@ -6274,6 +6291,7 @@ gtk_sheet_entry_set_max_size(GtkSheet *sheet)
 
  if(!GTK_IS_ITEM_ENTRY(sheet->sheet_entry) || gtk_sheet_clip_text(sheet)) return;
 
+
  justification = GTK_ITEM_ENTRY(sheet->sheet_entry)->justification;
 
  switch(justification){
@@ -6347,8 +6365,8 @@ create_sheet_entry(GtkSheet *sheet)
      entry = parent;
      found_entry = TRUE;
 
-   }             
-                                    
+   }
+
    if(!found_entry){
 
      g_warning ("Entry type must be GtkEntry subclass, using default");

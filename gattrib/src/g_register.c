@@ -47,10 +47,11 @@
 /* GtkWidget *w_main; */
 
 
-/* ---------------------------------------------------------------------- *
- * g_register_funcs -- this registers the Scheme functions required to use
+/* ---------------------------------------------------------------------- */
+/*! \brief This function registers the Scheme functions required to use
  * gattrib.  They are mostly unnecessary, except for reading in the gattribrc
  * file at the beginning of the prog which gives the library search paths.
+ *
  * ---------------------------------------------------------------------- */
 void g_register_funcs(void)
 {

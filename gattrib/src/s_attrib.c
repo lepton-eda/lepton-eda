@@ -38,9 +38,11 @@
 #endif
 
 
-/*------------------------------------------------------------------
- * This fcn is passed a STRING_LIST of name=value pairs, and a 
- * name.  It returns 1 (TRUE) if the name is in the STRING_LIST, otherwise
+/*------------------------------------------------------------------*/
+/*! \brief This fcn is passed a STRING_LIST of name=value pairs, and a 
+ * name.  
+ *
+ * \return It returns 1 (TRUE) if the name is in the STRING_LIST, otherwise
  * it returns 0 (FALSE).
  *------------------------------------------------------------------*/
 int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name)
@@ -60,9 +62,12 @@ int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name)
 }
 
 
-/*------------------------------------------------------------------
- * This fcn takes an object, finds its refdes and returns it.
- * If the component is slotted, it returns a refdes of the form 
+/*------------------------------------------------------------------*/
+/*! \brief This fcn takes an object, finds its refdes and returns it.
+ * 
+ * \return For normal components, it returns a (pointer to a) 
+ * string containing the
+ * refdes If the component is slotted, it returns a refdes of the form 
  * refdes.slot.  If no refdes is found, it returns NULL.
  *------------------------------------------------------------------*/
 char *s_attrib_get_refdes(OBJECT *object)
