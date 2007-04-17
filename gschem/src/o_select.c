@@ -414,17 +414,13 @@ void o_select_box_search(TOPLEVEL *w_current)
     if (o_current->type != OBJ_HEAD && 
         (o_current->visibility == VISIBLE ||
         (o_current->visibility == INVISIBLE && w_current->show_hidden_text))) {
-      if ( (o_current->left >= w_current->start_x && 
-            o_current->top >= w_current->start_y) &&
-           (o_current->left >= w_current->start_x && 
-            o_current->bottom <= w_current->last_y) &&
-           (o_current->right <= w_current->last_x && 
-            o_current->top >= w_current->start_y ) &&
-           (o_current->right <= w_current->last_x && 
-            o_current->bottom <= w_current->last_y) ) {
 
-        o_select_object(w_current, o_current, 	
-                        MULTIPLE, count);
+      if ( o_current->w_left   >= w_start_x &&
+           o_current->w_right  <= w_last_x  &&
+           o_current->w_top    >= w_last_y  &&
+           o_current->w_bottom <= w_start_y ) {
+
+        o_select_object(w_current, o_current, MULTIPLE, count);
         count++;
       }
     }
@@ -434,10 +430,10 @@ void o_select_box_search(TOPLEVEL *w_current)
   /* if there were no objects to be found in select box, count will be */
   /* zero, and you need to deselect anything remaining (unless the shift */
   /* key was pressed */
-  if (count == 0 && !SHIFTKEY)  {
+  if (count == 0 && !SHIFTKEY) {
     o_select_run_hooks(w_current, NULL, 2);
-    o_selection_unselect_list (w_current,
-			       &(w_current->page_current->selection_list));
+    o_selection_unselect_list( w_current,
+                               &(w_current->page_current->selection_list) );
   }
   i_update_menus(w_current);
 }

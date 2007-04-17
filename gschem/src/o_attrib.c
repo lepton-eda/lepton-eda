@@ -437,9 +437,9 @@ OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current,
         break;
     }
   } else {
-    world_get_complex_bounds(w_current, 
-                             w_current->page_current->object_head,
-                             &left, &top, &right, &bottom);
+    world_get_object_list_bounds(w_current,
+                                 w_current->page_current->object_head,
+                                 &left, &top, &right, &bottom);
 	
     /* this really is the lower left hand corner */	
     world_x = left; 

@@ -278,9 +278,9 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
       exit(-1);
     }
   } else {    /* This must be a floating attrib, but what is that !?!?!?!?!  */
-    world_get_complex_bounds(pr_current,
-			     pr_current->page_current->object_head,
-			     &left, &top, &right, &bottom);
+    world_get_object_list_bounds(pr_current,
+                                 pr_current->page_current->object_head,
+                                 &left, &top, &right, &bottom);
 
     /* this really is the lower left hand corner */
     world_x = left;

@@ -416,6 +416,8 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->print_command = NULL;
 
+  toplevel->select_slack_pixels = 4;
+
   toplevel->net_naming_priority = 0;
   toplevel->hierarchy_traversal = 0;
   toplevel->hierarchy_uref_mangle = 0;

@@ -62,18 +62,13 @@ void o_text_draw_lowlevel(TOPLEVEL *w_current, OBJECT *o_current)
   
   o_redraw(w_current, o_current->text->prim_objs, TRUE);
 
-  get_object_list_bounds(w_current, o_current->text->prim_objs,
+  world_get_object_list_bounds(w_current, o_current->text->prim_objs,
 			 &left, &top, &right, &bottom);
-  o_current->left   = left;
-  o_current->top    = top;
-  o_current->right  = right;
-  o_current->bottom = bottom;
+  o_current->w_left   = left;
+  o_current->w_top    = top;
+  o_current->w_right  = right;
+  o_current->w_bottom = bottom;
 
-  WORLDtoSCREEN(w_current,
-                o_current->text->x,
-                o_current->text->y,
-                &o_current->text->screen_x,
-                &o_current->text->screen_y);
 }
 
 /*! \todo Finish function documentation!!!
@@ -84,21 +79,19 @@ void o_text_draw_lowlevel(TOPLEVEL *w_current, OBJECT *o_current)
 void o_text_draw_rectangle(TOPLEVEL *w_current, OBJECT *o_current)
 {
   int left=0, right=0, top=0, bottom=0;
-  int screen_x1, screen_y1;
-  int width, height, dx=0, dy=0;
   GdkColor *color;
 
   if (o_current->visibility == INVISIBLE && w_current->show_hidden_text &&
       o_current->text->prim_objs == NULL) {
     o_text_recreate(w_current, o_current);
   }
-  
-  o_text_recalc(w_current, o_current);
 
   /* text is too small so go through and draw a rectangle in
      it's place */
-	
-  WORLDtoSCREEN( w_current, o_current->text->x, o_current->text->y, &screen_x1, &screen_y1 );
+
+  /* NOTE THAT THE TOP AND BOTTOM ARE REVERSED THROUGHT THE WHOLE OF GEDA FOR WORLD COORDS */
+  WORLDtoSCREEN( w_current, o_current->w_left, o_current->w_bottom, &left, &top );
+  WORLDtoSCREEN( w_current, o_current->w_right, o_current->w_top, &right, &bottom );
 
   if (w_current->override_color != -1 ) {  /* Override */
     color = x_get_color(w_current->override_color);
@@ -107,63 +100,21 @@ void o_text_draw_rectangle(TOPLEVEL *w_current, OBJECT *o_current)
   }
   gdk_gc_set_foreground(w_current->gc, color);
 
-
-  width = SCREENabs(w_current, o_current->text->displayed_width);
-  height = SCREENabs(w_current, o_current->text->displayed_height);
-      
-  switch(o_current->text->angle) {
-    case(0):
-      left = screen_x1+dx;
-      top = screen_y1+dy-height;
-      right = width;
-      bottom = height;
-      break;
-	
-    case(90):
-      left = screen_x1+dx-height;
-      top = screen_y1+dy-width;
-      right = height;
-      bottom = width;
-      break;
-	  
-    case(180):
-      left = screen_x1+dx-width;
-      top = screen_y1+dy;
-      right = width;
-      bottom = height;
-      break;
-	
-    case(270):
-      left = screen_x1+dx;
-      top = screen_y1+dy;
-      right = height;
-      bottom = width;
-      break;
-
-    default:
-      s_log_message(_("Tried to render text with an invalid angle: %d\n"),
-                    o_current->text->angle); 
-      return;
-      break;
-  }
-
-  /* The right, bottom variables are really just the width and height and */
-  /* not the "right" or "bottom". */
   if (w_current->DONT_REDRAW == 0) {
-    gdk_draw_rectangle(w_current->window,
-		       w_current->gc,
-		       FALSE,
-		       left, 
-		       top,
-		       right,
-		       bottom);
-    gdk_draw_rectangle(w_current->backingstore,
-		       w_current->gc,
-		       FALSE,
-		       left, 
-		       top,
-		       right,
-		       bottom);
+    gdk_draw_rectangle( w_current->window,
+                        w_current->gc,
+                        FALSE,
+                        left,
+                        top,
+                        right - left,
+                        bottom - top );
+    gdk_draw_rectangle( w_current->backingstore,
+                        w_current->gc,
+                        FALSE,
+                        left, 
+                        top,
+                        right - left,
+                        bottom - top );
   }
 
 #if 0 /* in prep for future performance enhancement */

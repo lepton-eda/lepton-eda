@@ -103,7 +103,7 @@ OBJECT *o_line_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->draw_func = line_draw_func;
   new_node->sel_func = select_func;  
   
-  /* compute bounding box and screen coords */
+  /* compute bounding box */
   o_line_recalc(w_current, new_node);
   
   object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
@@ -149,7 +149,7 @@ OBJECT *o_line_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
    * of the original line. The two lines have the sale line type and
    * filling options.
    *
-   * The coordinates and the values in screen unit are computed with
+   * The bounding box are computed with
    * #o_line_recalc().
    */
 
@@ -168,7 +168,7 @@ OBJECT *o_line_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 		     o_current->fill_pitch1, o_current->fill_angle1,
 		     o_current->fill_pitch2, o_current->fill_angle2);
   
-  /* calc the screen coords */
+  /* calc the bounding box */
   o_line_recalc(w_current, o_current);
   
   /* new_obj->attribute = 0;*/
@@ -231,7 +231,7 @@ void o_line_modify(TOPLEVEL *w_current, OBJECT *object,
 		return;
 	}
 	
-	/* recalculate the screen coords and the boundings */
+	/* recalculate the bounding box */
 	o_line_recalc(w_current, object);
 	
 }
@@ -405,40 +405,23 @@ char *o_line_save(OBJECT *object)
 void o_line_translate_world(TOPLEVEL *w_current,
 			    int x1, int y1, OBJECT *object)
 {
-  int screen_x1, screen_y1;
-  int screen_x2, screen_y2;	
   int left, right, top, bottom;
 
   if (object == NULL) printf("ltw NO!\n");
 
-  /* Do world coords */
+  /* Update world coords */
   object->line->x[0] = object->line->x[0] + x1;
   object->line->y[0] = object->line->y[0] + y1;
   object->line->x[1] = object->line->x[1] + x1;
   object->line->y[1] = object->line->y[1] + y1;
   
-  /* update screen coords */
-  WORLDtoSCREEN(w_current, object->line->x[0], 
-		object->line->y[0], 
-		&screen_x1,
-		&screen_y1);  
-  object->line->screen_x[0] = screen_x1;
-  object->line->screen_y[0] = screen_y1;
+  /* Update bounding box */
+  world_get_line_bounds(w_current, object, &left, &top, &right, &bottom);
   
-  WORLDtoSCREEN(w_current, object->line->x[1], 
-		object->line->y[1], 
-		&screen_x2,
-		&screen_y2);  
-  object->line->screen_x[1] = screen_x2;
-  object->line->screen_y[1] = screen_y2;
-  
-  /* update bounding box */
-  get_line_bounds(w_current, object->line, &left, &top, &right, &bottom);
-  
-  object->left   = left;
-  object->top    = top;
-  object->right  = right;
-  object->bottom = bottom;
+  object->w_left   = left;
+  object->w_top    = top;
+  object->w_right  = right;
+  object->w_bottom = bottom;
     
 }
 
@@ -527,86 +510,27 @@ void o_line_mirror_world(TOPLEVEL *w_current, int world_centerx,
 
 /*! \brief Recalculate line coordinates in SCREEN units.
  *  \par Function Description
- *  This function recalculate the screen coords of the <B>o_current</B>
- *  pointed line object from its world coords.
- *
- *  The line ends coordinates and its bounding box are recalculated
+ *  This function recalculate the bounding box of the <B>o_current</B>
  *
  *  \param [in] w_current      The TOPLEVEL object.
  *  \param [in,out] o_current  Line OBJECT to be recalculated.
  */
 void o_line_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 {
-  int screen_x1, screen_y1;
-  int screen_x2, screen_y2;
   int left, right, top, bottom;
 
   if (o_current->line == NULL) {
     return;
   }
-
-  /* update the screen coords of end 1 of the line */
-  WORLDtoSCREEN(w_current,
-		o_current->line->x[0], o_current->line->y[0], 
-		&screen_x1, &screen_y1);  
-  o_current->line->screen_x[0] = screen_x1;
-  o_current->line->screen_y[0] = screen_y1;
-  
-  /* update the screen coords of end 2 of the line */
-  WORLDtoSCREEN(w_current,
-		o_current->line->x[1], o_current->line->y[1], 
-		&screen_x2, &screen_y2);  
-  o_current->line->screen_x[1] = screen_x2;
-  o_current->line->screen_y[1] = screen_y2;
   
   /* update the bounding box - screen unit */
-  get_line_bounds(w_current, o_current->line, 
+  world_get_line_bounds(w_current, o_current, 
 		  &left, &top, &right, &bottom);
-  o_current->left   = left;
-  o_current->top    = top;
-  o_current->right  = right;
-  o_current->bottom = bottom;
+  o_current->w_left   = left;
+  o_current->w_top    = top;
+  o_current->w_right  = right;
+  o_current->w_bottom = bottom;
   
-}
-
-/*! \brief Get line bounding rectangle.
- *  \par Function Description 
- *  This function sets the <B>left</B>, <B>top</B>, <B>right</B> and
- *  <B>bottom</B> parameters to the boundings of the line object described
- *  by <B>*line</B> in screen units.
- *
- *  \param [in]  w_current  The TOPLEVEL object.
- *  \param [in]  line       line OBJECT to read coordinates from.
- *  \param [out] left       Left line coordinate in SCREEN units.
- *  \param [out] top        Top line coordinate in SCREEN units.
- *  \param [out] right      Right line coordinate in SCREEN units.
- *  \param [out] bottom     Bottom line coordinate in SCREEN units.
- */
-void get_line_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top,
-		     int *right, int *bottom)
-{
-  *left   = w_current->width;
-  *top    = w_current->height;
-  *right  = 0;
-  *bottom = 0;
-	
-  if (line->screen_x[0] < *left)   *left   = line->screen_x[0];
-  if (line->screen_x[0] > *right)  *right  = line->screen_x[0];
-  if (line->screen_y[0] < *top)    *top    = line->screen_y[0];
-  if (line->screen_y[0] > *bottom) *bottom = line->screen_y[0];
-
-  if (line->screen_x[1] < *left)   *left   = line->screen_x[1];
-  if (line->screen_x[1] > *right)  *right  = line->screen_x[1];
-  if (line->screen_y[1] < *top)    *top    = line->screen_y[1];
-  if (line->screen_y[1] > *bottom) *bottom = line->screen_y[1];
-
-  /* PB : bounding box has to take into account the width of the line */
-  /* PB : but line width is unknown here */
-	
-  *left   = *left   - 4;
-  *top    = *top    - 4;
-  *right  = *right  + 4;
-  *bottom = *bottom + 4;
 }
 
 /*! \brief Get line bounding rectangle in WORLD coordinates.
@@ -616,30 +540,29 @@ void get_line_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top,
  *  in <B>*line</B> in world units.
  *
  *  \param [in]  w_current  The TOPLEVEL object.
- *  \param [in]  line       Line OBJECT to read coordinates from.
+ *  \param [in]  OBJECT     Line OBJECT to read coordinates from.
  *  \param [out] left       Left line coordinate in WORLD units.
  *  \param [out] top        Top line coordinate in WORLD units.
  *  \param [out] right      Right line coordinate in WORLD units.
  *  \param [out] bottom     Bottom line coordinate in WORLD units.
  */
-void world_get_line_bounds(TOPLEVEL *w_current, LINE *line,
-			   int *left, int *top, int *right, int *bottom)
+void world_get_line_bounds(TOPLEVEL *w_current, OBJECT *object,
+                           int *left, int *top, int *right, int *bottom)
 {
-  *left   = w_current->init_right;
-  *top    = w_current->init_bottom;
-  *right  = 0;
-  *bottom = 0;
-	
-  if (line->x[0] < *left)   *left   = line->x[0];
-  if (line->x[0] > *right)  *right  = line->x[0];
-  if (line->y[0] < *top)    *top    = line->y[0];
-  if (line->y[0] > *bottom) *bottom = line->y[0];
+  int halfwidth;
 
-  if (line->x[1] < *left)   *left   = line->x[1];
-  if (line->x[1] > *right)  *right  = line->x[1];
-  if (line->y[1] < *top)    *top    = line->y[1];
-  if (line->y[1] > *bottom) *bottom = line->y[1];
-  
+  halfwidth = object->line_width / 2;
+
+  *left = min( object->line->x[0], object->line->x[1] );
+  *top = min( object->line->y[0], object->line->y[1] );
+  *right = max( object->line->x[0], object->line->x[1] );
+  *bottom = max( object->line->y[0], object->line->y[1] );
+
+  /* This isn't strictly correct, but a 1st order approximation */
+  *left   -= halfwidth;
+  *top    -= halfwidth;
+  *right  += halfwidth;
+  *bottom += halfwidth;
 }
 
 /*! \brief Print line to Postscript document.
@@ -1313,6 +1236,7 @@ void o_line_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 void o_line_image_write(TOPLEVEL *w_current, OBJECT *o_current, 
 			int origin_x, int origin_y, int color_mode)
 {
+  int x[2], y[2];
   int color;
 
   if (o_current == NULL) {
@@ -1326,17 +1250,23 @@ void o_line_image_write(TOPLEVEL *w_current, OBJECT *o_current,
     color = image_black;
   }
 
-  /* assumes screen coords are already calculated correctly */
 #ifdef HAS_LIBGD
+
+  WORLDtoSCREEN(w_current,
+                o_current->line->x[0],
+                o_current->line->y[0],
+                &x[0], &y[0]);
+  WORLDtoSCREEN(w_current,
+                o_current->line->x[1],
+                o_current->line->y[1],
+                &x[1], &y[1]);
 
   gdImageSetThickness(current_im_ptr, SCREENabs(w_current, 
 					        o_current->line_width));
 
   gdImageLine(current_im_ptr, 
-              o_current->line->screen_x[0],
-              o_current->line->screen_y[0],
-              o_current->line->screen_x[1],
-              o_current->line->screen_y[1], 
+              x[0], y[0],
+              x[1], y[1],
               color);
 #endif
 }
@@ -1360,7 +1290,7 @@ void o_line_scale_world(TOPLEVEL *w_current, int x_scale, int y_scale,
   object->line->x[1] = object->line->x[1] * x_scale;
   object->line->y[1] = object->line->y[1] * y_scale;
 
-  /* update screen coords */
+  /* update boundingbox */
   o_line_recalc(w_current, object);
   
 }
@@ -1377,7 +1307,7 @@ void o_line_scale_world(TOPLEVEL *w_current, int x_scale, int y_scale,
  *  \return int
  */
 int o_line_visible(TOPLEVEL *w_current, LINE *line, 
-		   int *x1, int *y1, int *x2, int *y2)
+                   int *x1, int *y1, int *x2, int *y2)
 {
   int visible=0;
 
@@ -1387,10 +1317,8 @@ int o_line_visible(TOPLEVEL *w_current, LINE *line,
     return(TRUE);
   }
 
-  *x1 = line->screen_x[0];
-  *y1 = line->screen_y[0];
-  *x2 = line->screen_x[1];
-  *y2 = line->screen_y[1];
+  WORLDtoSCREEN( w_current, line->x[0], line->y[0], x1, y1 );
+  WORLDtoSCREEN( w_current, line->x[1], line->y[1], x2, y2 );
 
   visible = SCREENclip_change(w_current, x1, y1, x2, y2);
 

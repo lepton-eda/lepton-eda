@@ -116,7 +116,7 @@ OBJECT *o_circle_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->draw_func = circle_draw_func;  
   new_node->sel_func = select_func;  
   
-  /* compute the bounding box and screen coords */
+  /* compute the bounding box coords */
   o_circle_recalc(w_current, new_node);
   
   /* add the object to the list */
@@ -165,7 +165,7 @@ OBJECT *o_circle_copy(TOPLEVEL *w_current, OBJECT *list_tail,
    * circle. The two circle have the same line type and the same filling
    * options.
    *
-   * The coordinates and the values in screen unit are computed with
+   * The bounding box coordinates are computed with
    * #o_circle_recalc().
    */
   /* modify */
@@ -211,8 +211,8 @@ OBJECT *o_circle_copy(TOPLEVEL *w_current, OBJECT *list_tail,
  *  If <B>whichone</B> is equal to <B>CIRCLE_RADIUS</B>, the radius is given by
  *  <B>x</B> - in world units. <B>y</B> is ignored.
  *
- *  The screen coords and the bounding box of the circle object are updated
- *  after the modification of its parameters.
+ *  The bounding box of the circle object is updated after the modification of its 
+ *  parameters.
  *
  *  \param [in]     w_current  The TOPLEVEL object.
  *  \param [in,out] object     Circle OBJECT to modify.
@@ -248,7 +248,7 @@ void o_circle_modify(TOPLEVEL *w_current, OBJECT *object,
       break;
   }
 
-  /* recalculate the screen coords and the boundings */
+  /* recalculate the boundings */
   o_circle_recalc(w_current, object);
   
 }
@@ -549,72 +549,20 @@ void o_circle_mirror_world(TOPLEVEL *w_current,
  */
 void o_circle_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 {
-  int screen_x1, screen_y1;
   int left, right, top, bottom;
 
   if (o_current->circle == NULL) {
     return;
   }
-
-#if DEBUG
-  printf("drawing circle\n");
-#endif
-
   
-  /* update the screen coords of the center of the circle */
-  WORLDtoSCREEN(w_current,
-		o_current->circle->center_x, o_current->circle->center_y, 
-		&screen_x1, &screen_y1);  
-  o_current->circle->screen_x = screen_x1;
-  o_current->circle->screen_y = screen_y1;
-
-  /* update the value of the radius in screen unit */
-  o_current->circle->screen_radius = SCREENabs(w_current, 
-					       o_current->circle->radius);
-
-  /* update the bounding box - screen unit */
-  get_circle_bounds(w_current, o_current->circle,
+  /* update the bounding box - world unit */
+  world_get_circle_bounds(w_current, o_current,
 		    &left, &top, &right, &bottom);
-  o_current->left   = left;
-  o_current->top    = top;
-  o_current->right  = right;
-  o_current->bottom = bottom;
+  o_current->w_left   = left;
+  o_current->w_top    = top;
+  o_current->w_right  = right;
+  o_current->w_bottom = bottom;
 
-}
-
-/*! \brief Get circle bounding rectangle.
- *  \par Function Description
- *  This function sets the <B>left</B>, <B>top</B>, <B>right</B>
- *  and <B>bottom</B> pointed variables to the boundings of the circle object
- *  described in <B>*circle</B> in screen unit.
- *
- *  The function finds the smallest rectangle that cover this circle.
- *
- *  \param [in]  w_current  The TOPLEVEL object.
- *  \param [in]  circle     Circle OBJECT to read coordinates from.
- *  \param [out] left       Left circle coordinate in SCREEN units.
- *  \param [out] top        Top circle coordinate in SCREEN units.
- *  \param [out] right      Right circle coordinate in SCREEN units.
- *  \param [out] bottom     Bottom circle coordinate in SCREEN units.
- */
-void get_circle_bounds(TOPLEVEL *w_current, CIRCLE *circle,
-		       int *left, int *top,
-		       int *right, int *bottom)
-{
-  *left   = circle->screen_x - circle->screen_radius;
-  *top    = circle->screen_y - circle->screen_radius;
-  *right  = circle->screen_x + circle->screen_radius;
-  *bottom = circle->screen_y + circle->screen_radius;
-  
-  /* PB : need to take into account the width of the line */
-  
-  /* out temp  
-   *left = *left - 4;
-   *top = *top - 4;
-   
-   *right = *right + 4;
-   *bottom = *bottom + 4;
-   */
 }
 
 /*! \brief Get circle bounding rectangle in WORLD coordinates.
@@ -624,43 +572,29 @@ void get_circle_bounds(TOPLEVEL *w_current, CIRCLE *circle,
  *  in world units.
  *
  *  \param [in]  w_current  The TOPLEVEL object.
- *  \param [in]  circle     Circle OBJECT to read coordinates from.
+ *  \param [in]  object     Circle OBJECT to read coordinates from.
  *  \param [out] left       Left circle coordinate in WORLD units.
  *  \param [out] top        Top circle coordinate in WORLD units.
  *  \param [out] right      Right circle coordinate in WORLD units.
  *  \param [out] bottom     Bottom circle coordinate in WORLD units.
  */
-void world_get_circle_bounds(TOPLEVEL *w_current, CIRCLE *circle, int *left,
-			     int *top, int *right, int *bottom)
+void world_get_circle_bounds(TOPLEVEL *w_current, OBJECT *object, int *left,
+                             int *top, int *right, int *bottom)
 {
+  int halfwidth;
 
-  *left   = w_current->init_right;
-  *top    = w_current->init_bottom;
-  *right  = 0;
-  *bottom = 0;
+  halfwidth = object->line_width / 2;
 
+  *left   = object->circle->center_x - object->circle->radius;
+  *top    = object->circle->center_y - object->circle->radius;
+  *right  = object->circle->center_x + object->circle->radius;
+  *bottom = object->circle->center_y + object->circle->radius;
 
-  *left   = circle->center_x - circle->radius;
-  *top    = circle->center_y - circle->radius;
-  *right  = circle->center_x + circle->radius;
-  *bottom = circle->center_y + circle->radius;
-
-  /*
-   *left = points->x1;
-   *top = points->y1;
-   *right = points->x1+(temp);
-   *bottom = points->y1-(temp); 
-   */
-
-  /* 
-   *left = min(circle->x1, circle->x1+temp);
-   *top = min(circle->y1, circle->y1-temp);
-   *right = max(circle->x1, circle->x1+temp);
-   *bottom = max(circle->y1, circle->y1-temp);*/
-
-#if DEBUG 
-  printf("circle: %d %d %d %d\n", *left, *top, *right, *bottom);
-#endif
+  /* This isn't strictly correct, but a 1st order approximation */
+  *left   -= halfwidth;
+  *top    -= halfwidth;
+  *right  += halfwidth;
+  *bottom += halfwidth;
 
 }
 
@@ -1294,6 +1228,8 @@ void o_circle_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 void o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 			  int origin_x, int origin_y, int color_mode)
 {
+  int diameter;
+  int s_x, s_y;
   int color;
 
   if (o_current == NULL) {
@@ -1309,14 +1245,19 @@ void o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 
 #ifdef HAS_LIBGD
 
+  diameter = SCREENabs(w_current, o_current->circle->radius)*2;
+  WORLDtoSCREEN(w_current,
+                o_current->circle->center_x,
+                o_current->circle->center_y,
+                &s_x, &s_y);
+
   gdImageSetThickness(current_im_ptr, SCREENabs(w_current,
                                                 o_current->line_width));
 
   gdImageArc(current_im_ptr, 
-             o_current->circle->screen_x, 
-             o_current->circle->screen_y,
-             SCREENabs(w_current, o_current->circle->radius)*2,
-             SCREENabs(w_current, o_current->circle->radius)*2,
+             s_x, s_y,
+             diameter,
+             diameter,
              0, 360, 
              color);
 #endif

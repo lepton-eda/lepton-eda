@@ -1226,7 +1226,6 @@ void o_grips_end(TOPLEVEL *w_current)
     o_net_modify(w_current, object, x, y, whichone_changing);
 
     s_conn_update_object(w_current, object);
-    o_net_recalc(w_current, object);
 	  
     /* get the other connected objects and redraw them */
     connected_objects = s_conn_return_others(connected_objects,

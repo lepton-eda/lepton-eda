@@ -121,9 +121,13 @@ void o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y,
     return;
   }
 
-  world_get_complex_bounds(w_current, object_buffer[buf_num], 
-                           &rleft, &rtop, 
-                           &rright, &rbottom);
+  if (!world_get_object_list_bounds(w_current, object_buffer[buf_num],
+                                    &rleft, &rtop,
+                                    &rright, &rbottom)) {
+    /* If the paste buffer doesn't have any objects
+     * to define its any bounds, we drop out here */
+    return;
+  }
 
   /* snap x and y to the grid, pointed out by Martin Benes */
   x = snap_grid(w_current, rleft);

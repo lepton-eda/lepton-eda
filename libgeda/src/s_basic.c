@@ -169,10 +169,10 @@ OBJECT *s_basic_init_object( char *name )
   sprintf(new_node->name, "%s.%d", name, new_node->sid);
 
   /* Setup the bounding box */
-  new_node->top = 999999;
-  new_node->left = 999999;
-  new_node->right = 0;
-  new_node->bottom = 0;
+  new_node->w_top = 0;
+  new_node->w_left = 0;
+  new_node->w_right = 0;
+  new_node->w_bottom = 0;
 
   /* Setup line/circle structs */
   new_node->line = NULL;
@@ -209,19 +209,13 @@ OBJECT *s_basic_init_object( char *name )
   new_node->line_end = END_NONE;
   new_node->line_type = TYPE_SOLID;
   new_node->line_width = 0;
-  new_node->screen_line_width = 0;
   new_node->line_space = 0;
-  new_node->screen_line_space = 0;
   new_node->line_length = 0;
-  new_node->screen_line_length = 0;
   new_node->fill_width = 0;
-  new_node->screen_fill_width = 0;
   new_node->fill_angle1 = 0;
   new_node->fill_angle2 = 0;
   new_node->fill_pitch1 = 0;
-  new_node->screen_fill_pitch1 = 0;
   new_node->fill_pitch2 = 0;
-  new_node->screen_fill_pitch2 = 0;
 	
   new_node->attribs = NULL;
   new_node->attached_to = NULL;

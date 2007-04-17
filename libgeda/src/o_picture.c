@@ -454,12 +454,10 @@ OBJECT *o_picture_add(TOPLEVEL *w_current, OBJECT *object_list,
   return(object_list);
 }
 
-/*! \brief Recalculate picture coordinates in SCREEN units.
+/*! \brief Recalculate picture bounding box.
  *  \par Function Description
- *  This function recalculates the screen coords of the <B>o_current</B>
- *  parameter picture object from its world coords.
- *
- *  The picture coordinates and its bounding are recalculated
+ *  This function recalculates the bounding box of the <B>o_current</B>
+ *  parameter picture object.
  *
  *  \param [in] w_current      The TOPLEVEL object.
  *  \param [in,out] o_current  Picture OBJECT to be recalculated.
@@ -467,58 +465,19 @@ OBJECT *o_picture_add(TOPLEVEL *w_current, OBJECT *object_list,
 void o_picture_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 {
   int left, top, right, bottom;
-  int screen_x1, screen_y1;
-  int screen_x2, screen_y2;
 
   if (o_current->picture == NULL) {
     return;
   }
 
-  /* update the screen coords of the upper left corner of the picture */
-  WORLDtoSCREEN(w_current,
-		o_current->picture->upper_x, o_current->picture->upper_y, 
-		&screen_x1, &screen_y1);  
-  o_current->picture->screen_upper_x = screen_x1;
-  o_current->picture->screen_upper_y = screen_y1;
-  
-  /* update the screen coords of the lower right corner of the picture */
-  WORLDtoSCREEN(w_current,
-		o_current->picture->lower_x, o_current->picture->lower_y, 
-		&screen_x2, &screen_y2);  
-  o_current->picture->screen_lower_x = screen_x2;
-  o_current->picture->screen_lower_y = screen_y2;
-  
-  /* update the bounding picture - screen unit */
-  get_picture_bounds(w_current, o_current->picture,
+  /* update the bounding picture - world units */
+  world_get_picture_bounds(w_current, o_current,
 		     &left, &top, &right, &bottom);
-  o_current->left   = left;
-  o_current->top    = top;
-  o_current->right  = right;
-  o_current->bottom = bottom;
+  o_current->w_left   = left;
+  o_current->w_top    = top;
+  o_current->w_right  = right;
+  o_current->w_bottom = bottom;
   
-}
-
-/*! \brief Get picture bounding rectangle.
- *  \par Function Description 
- *  This function sets the <B>left</B>, <B>top</B>, <B>right</B> and
- *  <B>bottom</B> parameters to the boundings of the picture object described
- *  in <B>*picture</B> in SCREEN units.
- *
- *  \param [in]  w_current  The TOPLEVEL object.
- *  \param [in]  picture    Picture OBJECT to read coordinates from.
- *  \param [out] left       Left picture coordinate in SCREEN units.
- *  \param [out] top        Top picture coordinate in SCREEN units.
- *  \param [out] right      Right pircture coordinate in SCREEN units.
- *  \param [out] bottom     Bottom picture coordinate in SCREEN units.
- */
-void get_picture_bounds(TOPLEVEL *w_current, PICTURE *picture,
-			int *left, int *top, int *right, int *bottom)
-{
-  *left   = picture->screen_upper_x;
-  *top    = picture->screen_upper_y;
-  *right  = picture->screen_lower_x;
-  *bottom = picture->screen_lower_y;
-
 }
 
 /*! \brief Get picture bounding rectangle in WORLD coordinates.
@@ -528,27 +487,20 @@ void get_picture_bounds(TOPLEVEL *w_current, PICTURE *picture,
  *  described in <B>*picture</B> in WORLD units.
  *
  *  \param [in]  w_current  The TOPLEVEL object.
- *  \param [in]  picture    Picture OBJECT to read coordinates from.
+ *  \param [in]  object     Picture OBJECT to read coordinates from.
  *  \param [out] left       Left picture coordinate in WORLD units.
  *  \param [out] top        Top picture coordinate in WORLD units.
  *  \param [out] right      Right picture coordinate in WORLD units.
  *  \param [out] bottom     Bottom picture coordinate in WORLD units.
  */
-void world_get_picture_bounds(TOPLEVEL *w_current, PICTURE *picture,
-			      int *left, int *top, int *right, int *bottom)
+void world_get_picture_bounds(TOPLEVEL *w_current, OBJECT *object,
+                              int *left, int *top, int *right, int *bottom)
 {
-	/* pb20011002 - why using min and max here and not above ? */
-	*left   = min(picture->upper_x, picture->lower_x);
-	*top    = min(picture->upper_y, picture->lower_y);
-	*right  = max(picture->upper_x, picture->lower_x);
-	*bottom = max(picture->upper_y, picture->lower_y);
-	
-	/* PB : same as above here for width of edges */	
+  *left   = min(object->picture->upper_x, object->picture->lower_x);
+  *top    = min(object->picture->upper_y, object->picture->lower_y);
+  *right  = max(object->picture->upper_x, object->picture->lower_x);
+  *bottom = max(object->picture->upper_y, object->picture->lower_y);
 
-#if DEBUG 
-	printf("picture: %d %d %d %d\n", *left, *top, *right, *bottom);
-#endif
-	
 }
                  
 /*! \brief Modify the description of a picture OBJECT.

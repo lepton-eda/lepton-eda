@@ -282,6 +282,7 @@ SCM g_rc_drag_can_move(SCM mode);
 SCM g_rc_mousepan_gain(SCM mode);
 SCM g_rc_keyboardpan_gain(SCM mode);
 SCM g_rc_print_command(SCM mode);
+SCM g_rc_select_slack_pixels(SCM pixels);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */

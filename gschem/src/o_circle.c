@@ -73,21 +73,12 @@ void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
   if (o_current->circle == NULL) {
     return;
   }
-	
-  /*
-   * The function now recalculates the OBJECT as a circle. It involves
-   * calculating every single dimensions according to the zoom factor,
-   * the position, @dots{}.
-   * It also recalculates the bounding box of the object and check whether
-   * this object is visible or not. If not there is no reason to draw it !
-   */
-  o_circle_recalc(w_current, o_current);
-	
+
   /*
    * Get read to check for visibility of this line by using it's
    * bounding box
    */
-  world_get_circle_bounds(w_current, o_current->circle,
+  world_get_circle_bounds(w_current, o_current,
                           &wleft, &wtop, &wright, &wbottom);
 	
   if ( (w_current->DONT_REDRAW == 1) || 

@@ -208,9 +208,6 @@ OBJECT *o_arc_copy(TOPLEVEL *w_current, OBJECT *list_tail,
  *  If <B>whichone</B> is equal to #ARC_END_ANGLE, the <B>x</B> parameter is the ending angle of the arc.
  *  <B>x</B> is in degrees. <B>y</B> is ignored.
  *
- *  The screen coordinates of the arc and its bounding box are computed again
- *  after the change in world coordinates.
- *
  *  \param [in]     w_current  The TOPLEVEL object.
  *  \param [in,out] object     
  *  \param [in]     x
@@ -529,110 +526,28 @@ void o_arc_mirror_world(TOPLEVEL *w_current,
  *  pointed structure.
  *  It also recalculates the <B>OBJECT</B> specific fields and the bounding box of the arc.
  *  
- *  The bounding box - in screen units - is recalculated with the <B>get_arc_bounds()</B> function.
+ *  The bounding box - in world units - is recalculated with the <B>world_get_arc_bounds()</B> function.
  *
  *  \param [in] w_current  The TOPLEVEL object.
  *  \param [in] o_current
  */
 void o_arc_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 {
-  int screen_x1, screen_y1, screen_x2, screen_y2;	
   int left, right, top, bottom;
 	
   if (o_current->arc == NULL) {
     return;
   }
 
-  /* update the screen_x and screen_y fields of the arc */
-  WORLDtoSCREEN(w_current, o_current->arc->x, o_current->arc->y, 
-                &screen_x1, &screen_y1);  
-
-  o_current->arc->screen_x = screen_x1; /* x coord */
-  o_current->arc->screen_y = screen_y1; /* y coord */
-
-  /* update the screen_width and screen_height fields of the arc */
-  WORLDtoSCREEN(w_current,
-                o_current->arc->x + o_current->arc->width,
-                o_current->arc->y - o_current->arc->height, 
-                &screen_x2, &screen_y2);  
-
-  o_current->arc->screen_width  = screen_x2 - screen_x1; /* width */
-  o_current->arc->screen_height = screen_y2 - screen_y1; /* height */
-
   /* recalculates the bounding box */
-  get_arc_bounds(w_current, o_current, &left, &top, &right, &bottom);
-  o_current->left   = left;
-  o_current->top    = top;
-  o_current->right  = right;
-  o_current->bottom = bottom;
+  world_get_arc_bounds(w_current, o_current, &left, &top, &right, &bottom);
+  o_current->w_left   = left;
+  o_current->w_top    = top;
+  o_current->w_right  = right;
+  o_current->w_bottom = bottom;
 
 }
 
-/*! \brief
- *  \par Function Description
- *  This function calculates the smallest rectangle the arc can be drawn into.
- *  The <B>OBJECT</B> pointed by object is assumed to be an arc.
- *  The <B>left</B>, <B>top</B>, <B>right</B> and <B>bottom</B> pointed integers define
- *  this rectangle at the end of the function. It is expressed in screen units.
- *
- *  The process is divided into two steps : the first step is to calculate the
- *  coordinates of the two ends of the arc and the coordinates of the center.
- *  They form a first rectangle but (depending on the start angle and the sweep
- *  of the arc) not the right.
- *
- *  \param [in]  w_current  The TOPLEVEL object.
- *  \param [in]  object
- *  \param [out] left
- *  \param [out] top
- *  \param [out] right
- *  \param [out] bottom
- */
-void get_arc_bounds(TOPLEVEL *w_current, OBJECT *object,
-		    int *left, int *top, int *right, int *bottom)
-{
-  int x1, y1, x2, y2, x3, y3;
-  int radius, start_angle, end_angle;
-  int i, angle;
-
-  radius      = object->arc->screen_width / 2;
-  start_angle = object->arc->start_angle % 360;
-  end_angle   = object->arc->end_angle   % 360;
-
-  x1 = object->arc->screen_x;
-  y1 = object->arc->screen_y;
-  x2 = x1 + radius * cos(start_angle * M_PI / 180);
-  y2 = y1 - radius * sin(start_angle * M_PI / 180);
-  x3 = x1 + radius * cos((start_angle + end_angle) * M_PI / 180);
-  y3 = y1 - radius * sin((start_angle + end_angle) * M_PI / 180);
-
-  *left   = (x1 < x2) ? ((x1 < x3) ? x1 : x3) : ((x2 < x3) ? x2 : x3);
-  *right  = (x1 > x2) ? ((x1 > x3) ? x1 : x3) : ((x2 > x3) ? x2 : x3);
-  *top    = (y1 < y2) ? ((y1 < y3) ? y1 : y3) : ((y2 < y3) ? y2 : y3);
-  *bottom = (y1 > y2) ? ((y1 > y3) ? y1 : y3) : ((y2 > y3) ? y2 : y3);
-
-  /*! \note
-   *  The previous rectangle is extended to the final one by checking
-   *  whether the arc is over a main axis (vertical or horizontal).
-   *  If so, the rectangle is extended in these directions.
-   */
-  angle = ((int) (start_angle / 90)) * 90;
-  for(i = 0; i < 4; i++) {
-    angle = angle + 90;
-    if(angle < start_angle + end_angle) {
-      if(angle % 360 == 0)   *right  = x1 + radius;
-      if(angle % 360 == 90)  *top    = y1 - radius;
-      if(angle % 360 == 180) *left   = x1 - radius;
-      if(angle % 360 == 270) *bottom = y1 + radius;
-    } else {
-      break;
-    }
-  }
-
-  /* PB : bounding box has to take into account the width of the line it is
-     composed with, ie adding/substracting half the width to this box */
-  /* PB : but width is unknown here */	
-   
-}
 
 /*! \brief
  *  \par Function Description
@@ -658,6 +573,9 @@ void world_get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left,
   int x1, y1, x2, y2, x3, y3;
   int radius, start_angle, end_angle;
   int i, angle;
+  int halfwidth;
+
+  halfwidth = object->line_width / 2;
 
   radius      = object->arc->width / 2;
   start_angle = object->arc->start_angle % 360;
@@ -672,8 +590,8 @@ void world_get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left,
 
   *left   = (x1 < x2) ? ((x1 < x3) ? x1 : x3) : ((x2 < x3) ? x2 : x3);
   *right  = (x1 > x2) ? ((x1 > x3) ? x1 : x3) : ((x2 > x3) ? x2 : x3);
-  *bottom = (y1 < y2) ? ((y1 < y3) ? y1 : y3) : ((y2 < y3) ? y2 : y3);
-  *top    = (y1 > y2) ? ((y1 > y3) ? y1 : y3) : ((y2 > y3) ? y2 : y3);
+  *bottom = (y1 > y2) ? ((y1 > y3) ? y1 : y3) : ((y2 > y3) ? y2 : y3);
+  *top    = (y1 < y2) ? ((y1 < y3) ? y1 : y3) : ((y2 < y3) ? y2 : y3);
 
   /*! \note
    *  The previous rectangle is extended to the final one
@@ -685,15 +603,20 @@ void world_get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left,
     angle = angle + 90;
     if(angle < start_angle + end_angle) {
       if(angle % 360 == 0)   *right  = x1 + radius;
-      if(angle % 360 == 90)  *top    = y1 + radius;
+      if(angle % 360 == 90)  *bottom = y1 + radius;
       if(angle % 360 == 180) *left   = x1 - radius;
-      if(angle % 360 == 270) *bottom = y1 - radius;
+      if(angle % 360 == 270) *top    = y1 - radius;
     } else {
       break;
     }
   }
 
-  /* PB : same problem as above */
+  /* This isn't strictly correct, but a 1st order approximation */
+  *left   -= halfwidth;
+  *top    -= halfwidth;
+  *right  += halfwidth;
+  *bottom += halfwidth;
+
 }
 
 
@@ -1492,12 +1415,10 @@ o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
   if (end_angle < start_angle)
     end_angle += 360;
 
-  width  = o_current->arc->screen_width;
-  height = o_current->arc->screen_height;
+  width = SCREENabs( w_current, o_current->arc->width);
+  height = SCREENabs( w_current, o_current->arc->height);
+  WORLDtoSCREEN( w_current, o_current->arc->x, o_current->arc->y, &x, &y );
 
-  x = o_current->arc->screen_x;
-  y = o_current->arc->screen_y;
-	
 #ifdef HAS_LIBGD
 
   gdImageSetThickness(current_im_ptr, SCREENabs(w_current,

@@ -1,3 +1,76 @@
+2007-04-17 Peter Clifton <pcjc2@cam.ac.uk>
+
+	Merge changes from noscreen branch
+
+	2007-04-12 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* src/g_hook.h: Fixed up documentation in to reflect the current code.
+		  Removed doc reference to world_get_complex_bounds(), which is not used.
+
+
+	2007-04-06 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* src/o_select.c: Fixed selection box testing which had some <= and =>
+		  tests reversed during screen->world coordinate switching. The swap
+		  was incorrect, as "top" and "bottom" should actually be named "y_min"
+		  and "y_max". The nameing is wrong in the world coordinate system.
+
+	2007-04-02 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* src/o_attrib.c, src/o_buffer.c: Fix for paste-buffer operation,
+		  and for placing top-level attributes. Calls to world_get_complex_bounds()
+		  were incorrect, and needed replacing with world_get_object_list_bounds().
+
+	2007-03-27 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* src/i_vars.c: Fixed copy-paste typo which over-wrote mousepan_gain
+		  instead of select_slack_pixels.
+
+	2007-03-26 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* src/o_text.c: Removed unused variables left in o_text_draw_rectangle()
+
+		* src/o_box.c, src/o_circle.c, src/o_picture.c: Pass OBJECT instead
+		  of derived type into world_get_..._bounds().
+
+		* include/i_vars.h, include/prototype.h, lib/system-gschemrc.in,
+		  src/g_rc.c, src/g_register.c, src/i_vars.c, src/o_find.c: Added
+		  rc option (select-slack-pixels #) to control how near an object
+		  we have to be in order to select it by clicking. Default is 4 pixels.
+
+	2007-03-24 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* src/o_text.c: Modified text o_text_draw_rectangle() to use the
+		  world bounds of the text, fixing the outline offset when the 
+		  text is aligned other than bottom, left.
+
+		* src/o_grips.c: Removed call to o_line_recalc() after o_net_modify()
+		  in o_grips_end() since the recalc is done inside o_net_modify().
+
+		* src/o_misc.c: Add call to o_complex_recalc() in o_update_component()
+		  to ensure bounds are correct after an embeded component is updated.
+
+	2007-02-25 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* src/o_arc.c, src/o_basic.c, src/o_box.c, src/o_bus.c,
+		  src/o_circle.c, src/o_complex.c, src/o_line.c, src/o_net.c,
+		  src/o_picture.c, src/o_pin.c, src/o_text.c: Remove calls
+		  to o_..._recalc() or equivelant from drawing routines.
+
+		* src/a_zoom.c: Changed call to world_get_complex_bounds() 
+		  to world_get_object_list_bounds(), and added logic to 
+		  stop the zoom-extents operation if the object list 
+		  evaluated has no bounds (e.g. object list just has hidden
+		  attributes).
+
+		* src/o_basic.c, src/o_complex.c, src/o_find.c,
+		  src/o_move.c, src/o_select.c, src/o_text.c:
+		  Switched over to caching world rather than screen coordinates
+
+		* src/g_hook.c: Removed conditional update of screen coords
+		  in g_set_attrib_text_properties, since o_text_recreate() 
+		  should be recalculating as necessary.
+
 2007-04-15 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/o_misc.c: Fixed memory leak in the update component code

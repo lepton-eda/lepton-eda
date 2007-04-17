@@ -187,10 +187,10 @@ void f_image_write(TOPLEVEL *w_current, const char *filename,
 
   /*	printf("%d %d\n", w_current->paper_width, w_current->paper_height);*/
 
-  world_get_complex_bounds(w_current, 
-                           w_current->page_current->object_head, 
-                           &origin_x, &origin_y, 
-                           &right, &bottom);
+  world_get_object_list_bounds(w_current,
+                               w_current->page_current->object_head,
+                               &origin_x, &origin_y,
+                               &right, &bottom);
 
   o_image_create(width, height, color_mode);
 

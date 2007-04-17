@@ -169,7 +169,7 @@ OBJECT *o_box_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
    * The dimensions of the new box are set with the ones of the original box.
    * The two boxes have the same line type and the same filling options.
    *
-   * The coordinates and the values in screen unit are computed with
+   * The coordinates and the values in world unit are computed with
    *  #o_box_recalc().
    */
 
@@ -279,7 +279,7 @@ void o_box_modify(TOPLEVEL *w_current, OBJECT *object,
 		object->box->lower_y = tmp;
 	}
 	
-	/* recalculate the screen coords and the boundings */
+	/* recalculate the world coords and the boundings */
 	o_box_recalc(w_current, object);
   
 }
@@ -566,7 +566,7 @@ void o_box_rotate_world(TOPLEVEL *w_current,
   object->box->lower_x += world_centerx;
   object->box->lower_y += world_centery;
   
-  /* recalc boundings and screen coords */
+  /* recalc boundings and world coords */
   o_box_recalc(w_current, object);
 }
 
@@ -614,17 +614,15 @@ void o_box_mirror_world(TOPLEVEL *w_current,
   object->box->lower_x += world_centerx;
   object->box->lower_y += world_centery;
 
-  /* recalc boundings and screen coords */
+  /* recalc boundings and world coords */
   o_box_recalc(w_current, object);
   
 }
 
-/*! \brief Recalculate BOX coordinates in SCREEN units.
+/*! \brief Recalculate BOX coordinates in WORLD units.
  *  \par Function Description
- *  This function recalculates the screen coords of the <B>o_current</B> pointed
- *  box object from its world coords.
- *
- *  The box coordinates and its bounding are recalculated
+ *  This function recalculates the box coordinates and its 
+ *  bounding are recalculated as well.
  *
  *  \param [in] w_current      The TOPLEVEL object.
  *  \param [in,out] o_current  BOX OBJECT to be recalculated.
@@ -632,63 +630,18 @@ void o_box_mirror_world(TOPLEVEL *w_current,
 void o_box_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 {
   int left, top, right, bottom;
-  int screen_x1, screen_y1;
-  int screen_x2, screen_y2;
 
   if (o_current->box == NULL) {
     return;
   }
 
-  /* update the screen coords of the upper left corner of the box */
-  WORLDtoSCREEN(w_current,
-		o_current->box->upper_x, o_current->box->upper_y, 
-		&screen_x1, &screen_y1);  
-  o_current->box->screen_upper_x = screen_x1;
-  o_current->box->screen_upper_y = screen_y1;
-
-  /* update the screen coords of the lower right corner of the box */
-  WORLDtoSCREEN(w_current,
-		o_current->box->lower_x, o_current->box->lower_y, 
-		&screen_x2, &screen_y2);  
-  o_current->box->screen_lower_x = screen_x2;
-  o_current->box->screen_lower_y = screen_y2;
-
-  /* update the bounding box - screen unit */
-  get_box_bounds(w_current, o_current->box, &left, &top, &right, &bottom);
-  o_current->left   = left;
-  o_current->top    = top;
-  o_current->right  = right;
-  o_current->bottom = bottom;
-}
-
-/*! \brief Get BOX bounding rectangle.
- *  \par Function Description
- *  This function sets the <B>left</B>, <B>top</B>, <B>right</B> and <B>bottom</B>
- *  parameters to the bounding rectangle of the box object described in
- *  <B>*box</B> in SCREEN units.
- *
- *  \param [in]  w_current  The TOPLEVEL object.
- *  \param [in]  box        BOX OBJECT to read coordinates from.
- *  \param [out] left       Left box coordinate in SCREEN units.
- *  \param [out] top        Top box coordinate in SCREEN units.
- *  \param [out] right      Right box coordinate in SCREEN units.
- *  \param [out] bottom     Bottom box coordinate in SCREEN units.
- */
-void get_box_bounds(TOPLEVEL *w_current, BOX *box,
-		    int *left, int *top, int *right, int *bottom)
-{
-  *left   = box->screen_upper_x;
-  *top    = box->screen_upper_y;
-  *right  = box->screen_lower_x;
-  *bottom = box->screen_lower_y;
-
-  /* PB : bounding box has to take into account the width of the line */
-  /* PB : but line width is unknown here */
-	
-  *left   = *left   - 4;
-  *top    = *top    - 4;
-  *right  = *right  + 4;
-  *bottom = *bottom + 4;
+  /* update the bounding box - world unit */
+  world_get_box_bounds(w_current, o_current, &left, &top, &right, &bottom);
+  o_current->w_left   = left;
+  o_current->w_top    = top;
+  o_current->w_right  = right;
+  o_current->w_bottom = bottom;
+  
 }
 
 /*! \brief Get BOX bounding rectangle in WORLD coordinates.
@@ -698,27 +651,29 @@ void get_box_bounds(TOPLEVEL *w_current, BOX *box,
  *  in world units.
  *
  *  \param [in]  w_current  The TOPLEVEL object.
- *  \param [in]  box        BOX OBJECT to read coordinates from.
+ *  \param [in]  object     BOX OBJECT to read coordinates from.
  *  \param [out] left       Left box coordinate in WORLD units.
  *  \param [out] top        Top box coordinate in WORLD units.
  *  \param [out] right      Right box coordinate in WORLD units.
  *  \param [out] bottom     Bottom box coordinate in WORLD units.
  */
-void world_get_box_bounds(TOPLEVEL *w_current, BOX *box,
-			  int *left, int *top, int *right, int *bottom)
+void world_get_box_bounds(TOPLEVEL *w_current, OBJECT *object,
+                          int *left, int *top, int *right, int *bottom)
 {
-  /* pb20011002 - why using min and max here and not above ? */
-  *left   = min(box->upper_x, box->lower_x);
-  *top    = min(box->upper_y, box->lower_y);
-  *right  = max(box->upper_x, box->lower_x);
-  *bottom = max(box->upper_y, box->lower_y);
-  
-  /* PB : same as above here for width of edges */	
+  int halfwidth;
 
-#if DEBUG 
-  printf("box: %d %d %d %d\n", *left, *top, *right, *bottom);
-#endif
-	
+  halfwidth = object->line_width / 2;
+
+  *left   = min(object->box->upper_x, object->box->lower_x);
+  *top    = min(object->box->upper_y, object->box->lower_y);
+  *right  = max(object->box->upper_x, object->box->lower_x);
+  *bottom = max(object->box->upper_y, object->box->lower_y);
+
+  /* This isn't strictly correct, but a 1st order approximation */
+  *left   -= halfwidth;
+  *top    -= halfwidth;
+  *right  += halfwidth;
+  *bottom += halfwidth;
 }
                  
 /*! \brief Print BOX to Postscript document.
@@ -1567,7 +1522,7 @@ void o_box_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 		       int origin_x, int origin_y, int color_mode)
 {
   int color;
-
+  int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
 
   if (o_current == NULL) {
     printf("got null in o_box_image_write\n");
@@ -1581,18 +1536,23 @@ void o_box_image_write(TOPLEVEL *w_current, OBJECT *o_current,
     color = image_black;
   }
 
-  /* assumes screen coords are already calculated correctly */
 #ifdef HAS_LIBGD
+
+  WORLDtoSCREEN(w_current, 
+                o_current->box->upper_x,
+                o_current->box->upper_y,
+                &s_upper_x, &s_upper_y);
+  WORLDtoSCREEN(w_current, 
+                o_current->box->lower_x,
+                o_current->box->lower_y,
+                &s_lower_x, &s_lower_y);
 
   gdImageSetThickness(current_im_ptr, SCREENabs(w_current,
                                                 o_current->line_width));
 
   gdImageRectangle(current_im_ptr, 
-                   o_current->box->screen_upper_x,
-                   o_current->box->screen_upper_y,
-                   o_current->box->screen_lower_x,
-                   o_current->box->screen_lower_y, 
+                   s_upper_x, s_upper_y,
+                   s_lower_x, s_lower_y,
                    color);
 #endif
-
 }

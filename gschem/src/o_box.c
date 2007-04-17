@@ -77,18 +77,9 @@ void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  /*
-   * The function now recalculates the OBJECT as a box. It involves
-   * calculating every single dimensions according to the zoom factor
-   * the position, @dots{}. It also recalculates the bounding box of the
-   * object and check whether this object is visible or not. If not there
-   * is no reason to draw it!
-   */
-  o_box_recalc(w_current, o_current);
-
 	/* Get read to check for visibility of this line by using it's
 	 * bounding box */
-  world_get_box_bounds(w_current, o_current->box,
+  world_get_box_bounds(w_current, o_current,
                        &wleft, &wtop, &wright, &wbottom);
 	
   if ( (w_current->DONT_REDRAW == 1) ||

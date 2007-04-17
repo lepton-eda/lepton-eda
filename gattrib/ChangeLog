@@ -1,5 +1,14 @@
 2007-04-17 Peter Clifton <pcjc2@cam.ac.uk>
 
+	Merge changes from noscreen branch
+
+	2007-04-12 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* src/o_attrib.c: Replace incorrect use of world_get_complex_bounds()
+		  with world_get_object_list_bounds().
+
+2007-04-17 Peter Clifton <pcjc2@cam.ac.uk>
+
 	* src/gtkitementry_2_2.c: Fixed code left accidentally when
 	  removing an obsolete #if 0'd out section.
 

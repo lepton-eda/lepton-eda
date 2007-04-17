@@ -72,8 +72,6 @@ struct st_line {
   int x[2];
   int y[2];
 
-  int screen_x[2];
-  int screen_y[2];
 };
 
 /* pb20011014 - name the grips */
@@ -82,11 +80,9 @@ struct st_line {
 
 struct st_arc {
   int x, y; /* world */
-  int screen_x, screen_y;
 
   int width;
   int height;
-  int screen_width, screen_height;
 
   int start_angle;
   int end_angle;
@@ -102,8 +98,6 @@ struct st_box {
   int upper_x, upper_y; /* world */	
   int lower_x, lower_y;
 
-  int screen_upper_x, screen_upper_y;
-  int screen_lower_x, screen_lower_y;
 };
 /* pb20011014 - name the grips */
 #define BOX_UPPER_LEFT 0
@@ -125,8 +119,6 @@ struct st_picture {
   int upper_x, upper_y; /* world */	
   int lower_x, lower_y;
 
-  int screen_upper_x, screen_upper_y;
-  int screen_lower_x, screen_lower_y;
 };
 
 #define PICTURE_UPPER_LEFT 0
@@ -137,7 +129,6 @@ struct st_picture {
 
 struct st_text {
   int x, y;		/* world origin */
-  int screen_x, screen_y;
 
   char *string;			/* text stuff */
   int length;
@@ -152,7 +143,6 @@ struct st_text {
 
 struct st_complex {
   int x, y;		/* world origin */
-  int screen_x, screen_y;
 
   int angle;				/* orientation, only multiples
                                          * of 90 degrees allowed */   
@@ -168,11 +158,8 @@ struct st_circle {
   int center_x, center_y; /* world */
   int radius;
 
-  int screen_x, screen_y;
 /* pb20011010 - removed : used only in o_circle_draw_xor() and
    meaning unclear */
-/*    int screen_left, screen_top; */
-  int screen_radius;
 };
 /* pb20011014 - name the grips */
 #define CIRCLE_CENTER 0
@@ -183,10 +170,10 @@ struct st_object {
   int sid;
   char *name;
 
-  int top;				/* Bounding box information */
-  int left;				/* in screen coords */
-  int right;
-  int bottom;
+  int w_top;				/* Bounding box information */
+  int w_left;				/* in world coords */
+  int w_right;
+  int w_bottom;
 
   COMPLEX *complex;
   LINE *line; 
@@ -207,14 +194,14 @@ struct st_object {
   /* PB : of these fields. If not, value must be ignored. */
   OBJECT_END line_end;
   OBJECT_TYPE line_type;
-  int line_width, screen_line_width;
-  int line_space, screen_line_space;
-  int line_length, screen_line_length;
+  int line_width;
+  int line_space;
+  int line_length;
 
   OBJECT_FILLING fill_type;
-  int fill_width, screen_fill_width;
-  int fill_angle1, fill_pitch1, screen_fill_pitch1;
-  int fill_angle2, fill_pitch2, screen_fill_pitch2;
+  int fill_width;
+  int fill_angle1, fill_pitch1;
+  int fill_angle2, fill_pitch2;
   /* PB : change end */	
 	
   int visited;		/* used in gnetlist for travesal purposes */
@@ -837,6 +824,9 @@ struct st_toplevel {
 
   /* The command to send postscript to when printing */
   char *print_command;
+
+  /* Number of pixels around an object we can still select it with */
+  int select_slack_pixels;
 
   /* gnetlist specific */
   int net_naming_priority;

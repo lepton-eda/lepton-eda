@@ -1776,3 +1776,27 @@ SCM g_rc_print_command(SCM scm_command)
   return SCM_BOOL_T;
 }
 #undef FUNC_NAME
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+SCM g_rc_select_slack_pixels(SCM pixels)
+{
+  int val;
+
+  SCM_ASSERT (SCM_INUMP (pixels), pixels, SCM_ARG1, "select-slack-pixels");
+  
+  val = SCM_INUM (pixels);
+
+  if (val <= 0) {
+    fprintf(stderr, _("Invalid number of pixels [%d] passed to select-slack-pixels\n"),
+            val);
+    val = 4; /* absolute default */
+  }
+
+  default_select_slack_pixels = val;
+
+  return SCM_BOOL_T;
+}

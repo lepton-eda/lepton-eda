@@ -60,16 +60,6 @@ void o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  /*
-   * The function now recalculates the OBJECT as a line. It involves
-   * calculating every single dimensions according to the zoom factor
-   * and position, @dots{}
-   * It also recalculates the bounding box of the object and check whether
-   *  this object is visible or not. If not there is no reason to draw it !
-   */
-  /* goes before visible, clipfixme */
-  o_line_recalc(w_current, o_current);
-	
   if ( (w_current->DONT_REDRAW == 1) ||
        (!o_line_visible(w_current, o_current->line, &x1, &y1, &x2, &y2)) ) {
     return;

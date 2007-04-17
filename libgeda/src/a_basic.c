@@ -467,6 +467,7 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 	        w_current->page_current->object_tail = temp_tail;
 	        w_current->page_current->object_parent = temp_parent;
 
+          o_complex_recalc( w_current, object_list );
 		embedded_level--;
 	} else {
         	fprintf(stderr, "Read unexpected embedded "

@@ -171,9 +171,11 @@ void a_zoom_extents(TOPLEVEL *w_current, OBJECT *o_current, int pan_flags)
     return;
   }
 
-  world_get_complex_bounds(w_current, o_current,
-                           &lleft, &ltop,
-                           &lright, &lbottom);
+  if ( !world_get_object_list_bounds(w_current, o_current,
+                                     &lleft, &ltop,
+                                     &lright, &lbottom)) {
+    return;
+  }
 
 #if DEBUG
   printf("in a_zoom_extents:  left: %d, right: %d, top: %d, bottom: %d\n",

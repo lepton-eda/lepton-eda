@@ -1165,6 +1165,10 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
     
   /* finally delete the temp list with the updated complex */
   s_delete_list_fromstart (w_current, tmp_list);
+
+  /* Recalculate the bounds of the object */
+  o_complex_recalc(w_current, o_current);
+
   /* reconnect, re-select and redraw */
   s_conn_update_complex (w_current, o_current->complex->prim_objs);
   o_selection_add (&(w_current->page_current->selection_list),

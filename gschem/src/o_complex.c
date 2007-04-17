@@ -40,8 +40,6 @@
  */
 void o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
-  int left, right, top, bottom;
-
   g_return_if_fail (o_current != NULL); 
   g_return_if_fail (o_current->complex != NULL);
   g_return_if_fail (o_current->complex->prim_objs != NULL);
@@ -49,19 +47,6 @@ void o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current)
   if (!w_current->DONT_REDRAW) {
     o_redraw(w_current, o_current->complex->prim_objs, TRUE);
   }
-
-  get_object_list_bounds(w_current, o_current->complex->prim_objs,
-			 &left, &top, &right, &bottom);
-  o_current->left   = left;
-  o_current->top    = top;
-  o_current->right  = right;
-  o_current->bottom = bottom;
-
-  WORLDtoSCREEN(w_current,
-                o_current->complex->x,
-                o_current->complex->y,
-                &o_current->complex->screen_x,
-                &o_current->complex->screen_y);
 }
 
 /*! \todo Finish function documentation!!!
@@ -271,6 +256,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
   int diff_x, diff_y;
   int x, y;
   int rleft, rtop, rbottom, rright;
+  int w_rleft, w_rtop, w_rbottom, w_rright;
   OBJECT *o_current;
   OBJECT *o_start;
   OBJECT *o_temp;
@@ -338,10 +324,14 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 #if 0
       printf("inside draw bounding here\n");
 #endif
-      get_object_glist_bounds(w_current,
+      world_get_object_glist_bounds(w_current,
 			      w_current->page_current->
 			      complex_place_list,
-			      &rleft, &rtop, &rright, &rbottom);
+			      &w_rleft, &w_rtop, &w_rright, &w_rbottom);
+
+      WORLDtoSCREEN( w_current, w_rleft, w_rtop, &rleft, &rtop );
+      WORLDtoSCREEN( w_current, w_rright, w_rbottom, &rright, &rbottom );
+
       gdk_gc_set_foreground(
                             w_current->gc,
                             x_get_color(w_current->background_color));
@@ -438,10 +428,14 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 #if 0
     printf("inside draw bounding here\n");
 #endif
-    get_object_glist_bounds(w_current,
-			    w_current->page_current->complex_place_list,
-			    &rleft, &rtop,
-			    &rright, &rbottom);
+    world_get_object_glist_bounds(w_current,
+                                  w_current->page_current->complex_place_list,
+                                  &w_rleft, &w_rtop,
+                                  &w_rright, &w_rbottom);
+    
+    WORLDtoSCREEN( w_current, w_rleft, w_rtop, &rleft, &rtop );
+    WORLDtoSCREEN( w_current, w_rright, w_rbottom, &rright, &rbottom );
+
     gdk_gc_set_foreground(
                           w_current->gc,
                           x_get_color(w_current->background_color));
@@ -637,7 +631,7 @@ void o_complex_translate2(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
  */
 void o_complex_translate_all(TOPLEVEL *w_current, int offset)
 {
-  int rleft, rtop, rright, rbottom;
+  int w_rleft, w_rtop, w_rright, w_rbottom;
   OBJECT *o_current;
   int x, y;
 
@@ -646,18 +640,15 @@ void o_complex_translate_all(TOPLEVEL *w_current, int offset)
                  A_PAN_DONT_REDRAW);
   o_redraw_all(w_current);
 
-  get_object_list_bounds(w_current, w_current->page_current->object_head,
-			 &rleft,
-			 &rtop,
-			 &rright,
-			 &rbottom);
+  world_get_object_list_bounds(w_current, w_current->page_current->object_head,
+                               &w_rleft,
+                               &w_rtop,
+                               &w_rright,
+                               &w_rbottom);
 
   /*! \todo do we want snap grid here? */
-  SCREENtoWORLD(w_current,
-                fix_x(w_current, rleft  ),
-                fix_y(w_current, rbottom),
-                &x,
-                &y);
+  x = snap_grid( w_current, w_rleft );
+  y = snap_grid( w_current, w_rbottom );
 
   o_current = w_current->page_current->object_head;
   while(o_current != NULL) {

@@ -47,53 +47,10 @@
  * \par Function Description
  *
  */
-void get_bus_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top,
-		    int *right, int *bottom)
-{
-  *left = w_current->width;
-  *top = w_current->height;
-  *right = 0;
-  *bottom = 0;
-
-  if (line->screen_x[0] < *left) *left = line->screen_x[0];
-  if (line->screen_x[0] > *right) *right = line->screen_x[0];
-  if (line->screen_y[0] < *top) *top = line->screen_y[0];
-  if (line->screen_y[0] > *bottom) *bottom = line->screen_y[0];
-
-  if (line->screen_x[1] < *left) *left = line->screen_x[1];
-  if (line->screen_x[1] > *right) *right = line->screen_x[1];
-  if (line->screen_y[1] < *top) *top = line->screen_y[1];
-  if (line->screen_y[1] > *bottom) *bottom = line->screen_y[1];
-
-  *left = *left - 4;
-  *top = *top - 4;
-
-  *right = *right + 4;
-  *bottom = *bottom + 4;
-}
-
-/* \brief
- * \par Function Description
- *
- */
-void world_get_bus_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top,
+void world_get_bus_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top,
 			  int *right, int *bottom)
 {
-  *left = w_current->init_right;
-  *top = w_current->init_bottom;
-  *right = 0;
-  *bottom = 0;
-
-  if (line->x[0] < *left) *left = line->x[0];
-  if (line->x[0] > *right) *right = line->x[0];
-  if (line->y[0] < *top) *top = line->y[0];
-  if (line->y[0] > *bottom) *bottom = line->y[0];
-
-  if (line->x[1] < *left) *left = line->x[1];
-  if (line->x[1] > *right) *right = line->x[1];
-  if (line->y[1] < *top) *top = line->y[1];
-  if (line->y[1] > *bottom) *bottom = line->y[1];
-
+  world_get_line_bounds( w_current, object, left, top, right, bottom );
 }
 
 /* \brief
@@ -105,7 +62,6 @@ OBJECT *o_bus_add(TOPLEVEL *w_current, OBJECT *object_list,
 		  int x1, int y1, int x2, int y2,
 		  int bus_ripper_direction)
 {
-  int screen_x, screen_y;
   int left, right, top, bottom;
   OBJECT *new_node;
 
@@ -120,31 +76,16 @@ OBJECT *o_bus_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->line->y[0] = y1;
   new_node->line->x[1] = x2;
   new_node->line->y[1] = y2;
-
-  WORLDtoSCREEN(w_current, 
-                new_node->line->x[0], new_node->line->y[0], 
-                &screen_x,
-                &screen_y);  
-	
-  new_node->line->screen_x[0] = screen_x;
-  new_node->line->screen_y[0] = screen_y;
-
-  WORLDtoSCREEN(w_current, 
-                new_node->line->x[1], new_node->line->y[1], 
-                &screen_x,
-                &screen_y);  
-
-  new_node->line->screen_x[1] = screen_x;
-  new_node->line->screen_y[1] = screen_y;
+  new_node->line_width = BUS_WIDTH;
 
   new_node->bus_ripper_direction = bus_ripper_direction;
 
-  get_bus_bounds(w_current, new_node->line, &left, &top, &right, &bottom);
+  world_get_bus_bounds(w_current, new_node, &left, &top, &right, &bottom);
 	
-  new_node->left = left;
-  new_node->top = top;
-  new_node->right = right;
-  new_node->bottom = bottom;	
+  new_node->w_left = left;
+  new_node->w_top = top;
+  new_node->w_right = right;
+  new_node->w_bottom = bottom;	
 
   new_node->draw_func = bus_draw_func;  
   new_node->sel_func = select_func;  
@@ -168,8 +109,6 @@ OBJECT *o_bus_add(TOPLEVEL *w_current, OBJECT *object_list,
  */
 void o_bus_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 {
-  int screen_x1, screen_y1;
-  int screen_x2, screen_y2;	
   int left, right, top, bottom;
 
   if (o_current == NULL) {
@@ -180,29 +119,12 @@ void o_bus_recalc(TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  WORLDtoSCREEN(w_current, o_current->line->x[0], 
-                o_current->line->y[0], 
-                &screen_x1,
-                &screen_y1);  
+  world_get_bus_bounds(w_current, o_current, &left, &top, &right, &bottom);
 
-  o_current->line->screen_x[0] = screen_x1;
-  o_current->line->screen_y[0] = screen_y1;
-
-  WORLDtoSCREEN(w_current, o_current->line->x[1], 
-                o_current->line->y[1], 
-                &screen_x2,
-                &screen_y2);  
-
-  o_current->line->screen_x[1] = screen_x2;
-  o_current->line->screen_y[1] = screen_y2;
-
-
-  get_bus_bounds(w_current, o_current->line, &left, &top, &right, &bottom);
-
-  o_current->left = left;
-  o_current->top = top;
-  o_current->right = right;
-  o_current->bottom = bottom;
+  o_current->w_left = left;
+  o_current->w_top = top;
+  o_current->w_right = right;
+  o_current->w_bottom = bottom;
 
 
 }
@@ -296,43 +218,24 @@ char *o_bus_save(OBJECT *object)
  */
 void o_bus_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
 {
-  int screen_x1, screen_y1;
-  int screen_x2, screen_y2;	
   int left, right, top, bottom;
 
   if (object == NULL) printf("btw NO!\n");
 
 
-  /* Do world coords */
+  /* Update world coords */
   object->line->x[0] = object->line->x[0] + x1;
   object->line->y[0] = object->line->y[0] + y1;
   object->line->x[1] = object->line->x[1] + x1;
   object->line->y[1] = object->line->y[1] + y1;
 
-  /* update screen coords */
-  WORLDtoSCREEN(w_current, object->line->x[0], 
-                object->line->y[0], 
-                &screen_x1,
-                &screen_y1);  
+  /* Update bounding box */
+  world_get_bus_bounds(w_current, object, &left, &top, &right, &bottom);
 
-  object->line->screen_x[0] = screen_x1;
-  object->line->screen_y[0] = screen_y1;
-
-  WORLDtoSCREEN(w_current, object->line->x[1], 
-                object->line->y[1], 
-                &screen_x2,
-                &screen_y2);  
-
-  object->line->screen_x[1] = screen_x2;
-  object->line->screen_y[1] = screen_y2;
-
-  /* update bounding box */
-  get_bus_bounds(w_current, object->line, &left, &top, &right, &bottom);
-
-  object->left = left;
-  object->top = top;
-  object->right = right;
-  object->bottom = bottom;
+  object->w_left = left;
+  object->w_top = top;
+  object->w_right = right;
+  object->w_bottom = bottom;
 
   s_tile_update_object(w_current, object);
 }
@@ -361,11 +264,6 @@ OBJECT *o_bus_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
                       o_current->line->x[0], o_current->line->y[0],
                       o_current->line->x[1], o_current->line->y[1],
                       o_current->bus_ripper_direction);
-
-  new_obj->line->screen_x[0] = o_current->line->screen_x[0];
-  new_obj->line->screen_y[0] = o_current->line->screen_y[0];
-  new_obj->line->screen_x[1] = o_current->line->screen_x[1];
-  new_obj->line->screen_y[1] = o_current->line->screen_y[1];
 
   new_obj->line->x[0] = o_current->line->x[0];
   new_obj->line->y[0] = o_current->line->y[0];
@@ -437,10 +335,7 @@ void o_bus_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 void o_bus_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 		       int origin_x, int origin_y, int color_mode)
 {
-  int offset, offset2;
-  int cross;
-  int x1, y1;
-  int x2, y2;
+  int x[2], y[2];
   int color;
 
   if (o_current == NULL) {
@@ -454,34 +349,22 @@ void o_bus_image_write(TOPLEVEL *w_current, OBJECT *o_current,
     color = image_black;
   }
 
-  offset = SCREENabs(w_current, BUS_WIDTH);
-
-  /* 
-     offset = 7 * (float) w_current->height/ (float) w_current->width;
-     offset2 = 7 * (float) w_current->height/ (float) w_current->width*2;  
-
-     printf("%f %d %d\n", (float) ( (float) w_current->height/ (float) w_current->width), 
-     offset, offset2);
-  */
-
-  offset2 = offset*2;
-
-  cross = offset;
-
-  x1 = o_current->line->screen_x[0];
-  y1 = o_current->line->screen_y[0];
-  x2 = o_current->line->screen_x[1];
-  y2 = o_current->line->screen_y[1];
-
-  /* assumes screen coords are already calculated correctly */
 #ifdef HAS_LIBGD
+
+  WORLDtoSCREEN(w_current,
+                o_current->line->x[0],
+                o_current->line->y[0],
+                &x[0], &y[0]);
+  WORLDtoSCREEN(w_current,
+                o_current->line->x[1],
+                o_current->line->y[1],
+                &x[1], &y[1]);
 
   gdImageSetThickness(current_im_ptr, SCREENabs(w_current, BUS_WIDTH));
 
-  gdImageLine(current_im_ptr, x1, y1, x2, y2, color);
+  gdImageLine(current_im_ptr, x[0], y[0], x[1], y[1], color);
 
 #endif
-
 }
 
 
@@ -710,26 +593,17 @@ void o_bus_consolidate(TOPLEVEL *w_current)
 void o_bus_modify(TOPLEVEL *w_current, OBJECT *object, 
 		  int x, int y, int whichone)
 {
-  int screen_x, screen_y;
   int left, right, top, bottom;
 
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
 
-  WORLDtoSCREEN(w_current, 
-                object->line->x[whichone], 
-                object->line->y[whichone], 
-                &screen_x, &screen_y);  
+  world_get_bus_bounds(w_current, object, &left, &top, &right, &bottom);
 	
-  object->line->screen_x[whichone] = screen_x;
-  object->line->screen_y[whichone] = screen_y;
-
-  get_bus_bounds(w_current, object->line, &left, &top, &right, &bottom);
-	
-  object->left = left;
-  object->top = top;
-  object->right = right;
-  object->bottom = bottom;	
+  object->w_left = left;
+  object->w_top = top;
+  object->w_right = right;
+  object->w_bottom = bottom;	
 
   s_tile_update_object(w_current, object);
 }

@@ -1,3 +1,97 @@
+2007-04-17 Peter Clifton <pcjc2@cam.ac.uk>
+
+	Merge changes from noscreen
+	
+	2007-16-06 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* src/o_text_basic.c: Use o_text_recalc() to update bounds, as we don't
+		  want to duplicate code. Fixes a bug where the bounds were reset manually
+		  even with invisible text (causing uninitialised values to be stored in
+		  for the object's bounds). Fixed o_text_recalc() to silently return
+		  (rather than write uninitialised values) if no bound was found for the
+		  text object's prim_objects.
+
+	2007-12-06 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* src/f_image.c, src/f_print.c, src/g_smob.c, src/o_complex_basic.c,
+		  src/o_pin_basic.c: Replace incorrect use of world_get_complex_bounds()
+		  with world_get_object_list_bounds(). Changed o_complex_recalc() to
+		  (correctly) use world_complex_get_bounds(). Fixed up documentation in
+		  g_smob.c to reflect the current bounds code.
+
+	2007-04-06 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* src/a_basic.c: Fix bounds for embedded objects as they are loaded from
+		  file. This places a call to o_complex_recalc() in o_read(), which is
+		  not great from an encapsulation point of view, but is the neatest solution
+		  with the current method of loading embedded objects.
+
+	2007-03-26 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* include/prototype.h, src/o_arc_basic.c, src/o_basic.c, src/o_box_basic.c,
+		  src/o_bus_basic.c, src/o_circle_basic.c, src/o_line_basic.c,
+		  src/o_net_basic.c, src/o_picture.c, src/o_pin_basic.c: Pass OBJECT instead
+		  of derived type into world_get_..._bounds(). Modifed objects to include
+		  the drawn line width when calculating bounds. Set OBJECT->line_width to
+		  {NET|BUS|PIN}_WIDTH as appropriate in o_{net|bus|pin}_add(). Replaced
+		  copied code in world_get_{net|pin|bus}_bounds() with calls to
+		  world_get_line_bounds(). Added call to o_recalc_single_object() in
+		  o_set_line_options() to keep line width up-to-date with editing.
+
+		* libgeda/include/struct.h, src/s_toplevel.c: Added variables
+		  to support (select-slack-pixels #) rc keyword.
+
+	2007-03-24 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* src/o_complex_basic.c: Convert world_get_complex_bounds() to
+		  be a wrapper around world_get_list_bounds(). Based upon a patch
+		  by Patrick Bernaud which did the same for get_complex_bounds().
+
+		* src/o_pin_basic.c: Re-write the bounds checking in o_pin_update_whichend()
+		  to be more robust
+
+		* src/o_complex_basic.c: Modify world_get_single_object_bounds() to
+		  use cached bounds where possible. Text objects are special-cased
+		  to determine if they are visible.
+
+		* src/o_complex_basic.c: Add call to o_complex_recalc() in o_complex_add()
+		  to cache bounds.
+
+	2007-02-25 Peter Clifton <pcjc2@cam.ac.uk>
+
+		* include/prototype.h, src/o_arc_basic.c, src/o_box_basic.c, 
+		  src/o_bus_basic.c, src/o_circle_basic.c, src/o_line_basic.c, 
+		  src/o_net_basic.c, src/o_picture.c, src/o_pin_basic.c,
+		  src/o_text_basic.c: Removed get_..._bounds() functions.
+
+		* include/prototype.h, src/o_arc_basic.c, src/o_box_basic.c,
+		  src/o_bus_basic.c, src/o_circle_basic.c, src/o_complex_basic.c,
+		  src/o_line_basic.c, src/o_net_basic.c, src/o_picture.c,
+		  src/o_pin_basic.c, src/o_text_basic.c: Switched over to
+		  caching world rather than screen coordinates
+
+		* include/struch.h, src/s_basic.c: Removed screen coordinates from
+		  object datastructures, and renamed variables storing cached
+		  bounds with prefix w_ to differentiate their world coord usage.
+		  Changed s_basic.c to initialise all these variables to zero.
+
+		* src/o_text_basic.c: Added call to o_text_recalc() to
+		  o_text_recreate(), since we should automatically keep
+		  all cached coordiantes up to date.
+
+		* src/o_arc_basic.c, src/o_box_basic.c, src/o_bus_basic.c,
+		  src/o_circle_basic.c, src/o_complex_basic.c, src/o_line_basic.c,
+		  src/o_net_basic.c, src/o_picture.c, src/o_pin_basic.c: Tidied
+		  world_get_..._bounds() functions to use simple min() max()
+		  implementations where appropriate. Fixed world_get_arc_bounds()
+		  to have same semantics as the other functions, IE. top and bottom
+		  swapped to give bottom > top numerically.
+
+		* src/o_arc_basic.c, src/o_box_basic.c, src/o_bus_basic.c,
+		  src/o_circle_basic.c, src/o_line_basic.c, src/o_net_basic.c,
+		  src/o_pin_basic.c: Modified PNG export routines to calculate
+		  coordinates directly from object world coords.
+
 2007-04-06 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/g_smob.c: make g_get_object_type scheme function return 

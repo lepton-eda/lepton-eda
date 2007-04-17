@@ -46,53 +46,10 @@
  *  \par Function Description
  *
  */
-void get_pin_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top,
-		    int *right, int *bottom)
-{
-  *left = w_current->width;
-  *top = w_current->height;
-  *right = 0;
-  *bottom = 0;
-
-  if (line->screen_x[0] < *left) *left = line->screen_x[0];
-  if (line->screen_x[0] > *right) *right = line->screen_x[0];
-  if (line->screen_y[0] < *top) *top = line->screen_y[0];
-  if (line->screen_y[0] > *bottom) *bottom = line->screen_y[0];
-
-  if (line->screen_x[1] < *left) *left = line->screen_x[1];
-  if (line->screen_x[1] > *right) *right = line->screen_x[1];
-  if (line->screen_y[1] < *top) *top = line->screen_y[1];
-  if (line->screen_y[1] > *bottom) *bottom = line->screen_y[1];
-
-  *left = *left - 4;
-  *top = *top - 4;
-
-  *right = *right + 4;
-  *bottom = *bottom + 4;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void world_get_pin_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top,
+void world_get_pin_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top,
 			  int *right, int *bottom)
 {
-  *left = w_current->init_right;
-  *top = w_current->init_bottom;
-  *right = 0;
-  *bottom = 0;
-
-  if (line->x[0] < *left) *left = line->x[0];
-  if (line->x[0] > *right) *right = line->x[0];
-  if (line->y[0] < *top) *top = line->y[0];
-  if (line->y[0] > *bottom) *bottom = line->y[0];
-
-  if (line->x[1] < *left) *left = line->x[1];
-  if (line->x[1] > *right) *right = line->x[1];
-  if (line->y[1] < *top) *top = line->y[1];
-  if (line->y[1] > *bottom) *bottom = line->y[1];
+  world_get_line_bounds( w_current, object, left, top, right, bottom );
 }
 
 /*! \todo Finish function documentation!!!
@@ -104,7 +61,6 @@ OBJECT *o_pin_add(TOPLEVEL *w_current, OBJECT *object_list,
 		  char type, int color,
 		  int x1, int y1, int x2, int y2, int pin_type, int whichend)
 {
-  int screen_x, screen_y;
   int left, right, top, bottom;
   OBJECT *new_node;
 
@@ -118,29 +74,14 @@ OBJECT *o_pin_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->line->y[0] = y1;
   new_node->line->x[1] = x2;
   new_node->line->y[1] = y2;
+  new_node->line_width = PIN_WIDTH;
 
-  WORLDtoSCREEN(w_current, 
-                new_node->line->x[0], new_node->line->y[0], 
-                &screen_x,
-                &screen_y);  
+  world_get_pin_bounds(w_current, new_node, &left, &top, &right, &bottom);
 	
-  new_node->line->screen_x[0] = screen_x;
-  new_node->line->screen_y[0] = screen_y;
-
-  WORLDtoSCREEN(w_current, 
-                new_node->line->x[1], new_node->line->y[1], 
-                &screen_x,
-                &screen_y);  
-
-  new_node->line->screen_x[1] = screen_x;
-  new_node->line->screen_y[1] = screen_y;
-
-  get_pin_bounds(w_current, new_node->line, &left, &top, &right, &bottom);
-	
-  new_node->left = left;
-  new_node->top = top;
-  new_node->right = right;
-  new_node->bottom = bottom;	
+  new_node->w_left = left;
+  new_node->w_top = top;
+  new_node->w_right = right;
+  new_node->w_bottom = bottom;	
 
   new_node->draw_func = pin_draw_func;  
   new_node->sel_func = select_func;  
@@ -182,37 +123,18 @@ OBJECT *o_pin_add(TOPLEVEL *w_current, OBJECT *object_list,
  */
 void o_pin_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 {
-  int screen_x1, screen_y1;
-  int screen_x2, screen_y2;	
   int left, right, top, bottom;
 
   if (o_current->line == NULL) {
     return;
   }
 
+  world_get_pin_bounds(w_current, o_current, &left, &top, &right, &bottom);
 
-  WORLDtoSCREEN(w_current, o_current->line->x[0], 
-                o_current->line->y[0], 
-                &screen_x1,
-                &screen_y1);  
-
-  o_current->line->screen_x[0] = screen_x1;
-  o_current->line->screen_y[0] = screen_y1;
-
-  WORLDtoSCREEN(w_current, o_current->line->x[1], 
-                o_current->line->y[1], 
-                &screen_x2,
-                &screen_y2);  
-
-  o_current->line->screen_x[1] = screen_x2;
-  o_current->line->screen_y[1] = screen_y2;
-
-  get_pin_bounds(w_current, o_current->line, &left, &top, &right, &bottom);
-
-  o_current->left = left;
-  o_current->top = top;
-  o_current->right = right;
-  o_current->bottom = bottom;
+  o_current->w_left = left;
+  o_current->w_top = top;
+  o_current->w_right = right;
+  o_current->w_bottom = bottom;
 
 }
 
@@ -320,43 +242,24 @@ char *o_pin_save(OBJECT *object)
  */
 void o_pin_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
 {
-  int screen_x1, screen_y1;
-  int screen_x2, screen_y2;	
   int left, right, top, bottom;
 
   if (object == NULL) printf("ptw NO!\n");
 
 
-  /* Do world coords */
+  /* Update world coords */
   object->line->x[0] = object->line->x[0] + x1;
   object->line->y[0] = object->line->y[0] + y1;
   object->line->x[1] = object->line->x[1] + x1;
   object->line->y[1] = object->line->y[1] + y1;
 
-  /* update screen coords */
-  WORLDtoSCREEN(w_current, object->line->x[0], 
-                object->line->y[0], 
-                &screen_x1,
-                &screen_y1);  
+  /* Update bounding box */
+  world_get_pin_bounds(w_current, object, &left, &top, &right, &bottom);
 
-  object->line->screen_x[0] = screen_x1;
-  object->line->screen_y[0] = screen_y1;
-
-  WORLDtoSCREEN(w_current, object->line->x[1], 
-                object->line->y[1], 
-                &screen_x2,
-                &screen_y2);  
-
-  object->line->screen_x[1] = screen_x2;
-  object->line->screen_y[1] = screen_y2;
-
-  /* update bounding box */
-  get_pin_bounds(w_current, object->line, &left, &top, &right, &bottom);
-
-  object->left = left;
-  object->top = top;
-  object->right = right;
-  object->bottom = bottom;
+  object->w_left = left;
+  object->w_top = top;
+  object->w_right = right;
+  object->w_bottom = bottom;
 
   s_tile_update_object(w_current, object);
 }
@@ -382,14 +285,6 @@ OBJECT *o_pin_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
                       o_current->line->x[0], o_current->line->y[0],
                       o_current->line->x[1], o_current->line->y[1],
                       o_current->pin_type, o_current->whichend);
-
-  /* why is this here ? */
-  /* because they all have it, and it is used during outline actions */
-  new_obj->line->screen_x[0] = o_current->line->screen_x[0];
-  new_obj->line->screen_y[0] = o_current->line->screen_y[0];
-  new_obj->line->screen_x[1] = o_current->line->screen_x[1];
-  new_obj->line->screen_y[1] = o_current->line->screen_y[1];
-
 
   new_obj->line->x[0] = o_current->line->x[0];
   new_obj->line->y[0] = o_current->line->y[0];
@@ -454,6 +349,7 @@ void o_pin_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 void o_pin_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 		       int origin_x, int origin_y, int color_mode)
 {
+  int x[2], y[2];
   int color;
 
   if (o_current == NULL) {
@@ -467,8 +363,15 @@ void o_pin_image_write(TOPLEVEL *w_current, OBJECT *o_current,
     color = image_black;
   }
 
-  /* assumes screen coords are already calculated correctly */
 #ifdef HAS_LIBGD
+  WORLDtoSCREEN(w_current,
+                o_current->line->x[0],
+                o_current->line->y[0],
+                &x[0], &y[0]);
+  WORLDtoSCREEN(w_current,
+                o_current->line->x[1],
+                o_current->line->y[1],
+                &x[1], &y[1]);
 
   if (w_current->pin_style == THICK) {
     gdImageSetThickness(current_im_ptr, SCREENabs(w_current,
@@ -478,10 +381,8 @@ void o_pin_image_write(TOPLEVEL *w_current, OBJECT *o_current,
   }
 
   gdImageLine(current_im_ptr,
-              o_current->line->screen_x[0],
-              o_current->line->screen_y[0],
-              o_current->line->screen_x[1],
-              o_current->line->screen_y[1],
+              x[0], y[0],
+              x[1], y[1],
               color);
 #endif
 }
@@ -544,26 +445,17 @@ void o_pin_mirror_world(TOPLEVEL *w_current,
 void o_pin_modify(TOPLEVEL *w_current, OBJECT *object, 
 		  int x, int y, int whichone)
 {
-  int screen_x, screen_y;
   int left, right, top, bottom;
 
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
 
-  WORLDtoSCREEN(w_current, 
-                object->line->x[whichone], 
-                object->line->y[whichone], 
-                &screen_x, &screen_y);  
+  world_get_pin_bounds(w_current, object, &left, &top, &right, &bottom);
 	
-  object->line->screen_x[whichone] = screen_x;
-  object->line->screen_y[whichone] = screen_y;
-
-  get_pin_bounds(w_current, object->line, &left, &top, &right, &bottom);
-	
-  object->left = left;
-  object->top = top;
-  object->right = right;
-  object->bottom = bottom;	
+  object->w_left = left;
+  object->w_top = top;
+  object->w_right = right;
+  object->w_bottom = bottom;	
 
   s_tile_update_object(w_current, object);
 }
@@ -583,34 +475,40 @@ void o_pin_update_whichend(TOPLEVEL *w_current,
   int min0, min1;
   int min0_whichend, min1_whichend;
   int rleft, rtop, rright, rbottom;
+  int found;
 
   if (object_list && num_pins) {
     if (num_pins == 1 || w_current->force_boundingbox) {
-      world_get_complex_bounds(w_current, object_list,
-                             &left, &top, &right, &bottom);
+      world_get_object_list_bounds(w_current, object_list,
+                                   &left, &top, &right, &bottom);
     } else {
-      left = rleft = w_current->init_right;
-      top = rtop = w_current->init_bottom;;
-      right = rright = 0;
-      bottom = rbottom = 0;
+      found = 0;
 
       /* only look at the pins to calculate bounds of the symbol */
       o_current = object_list;
       while (o_current != NULL) {
         if (o_current->type == OBJ_PIN) {
-          world_get_pin_bounds(w_current, o_current->line,
-                               &rleft, &rtop, &rright, &rbottom);
-        }
+          rleft = o_current->w_left;
+          rtop = o_current->w_top;
+          rright = o_current->w_right;
+          rbottom = o_current->w_bottom;
 
-        if (rleft < left) left = rleft;
-        if (rtop < top) top = rtop;
-        if (rright > right) right = rright;
-        if (rbottom > bottom) bottom = rbottom;
-      
+          if ( found ) {
+            left = min( left, rleft );
+            top = min( top, rtop );
+            right = max( right, rright );
+            bottom = max( bottom, rbottom );
+          } else {
+            left = rleft;
+            top = rtop;
+            right = rright;
+            bottom = rbottom;
+            found = 1;
+          }
+        }
         o_current=o_current->next;
       }
 
-      
     }
   } else {
     return;
@@ -618,6 +516,7 @@ void o_pin_update_whichend(TOPLEVEL *w_current,
 
   o_current = object_list;
   while (o_current != NULL) {
+    /* Determine which end of the pin is on or nearest the boundary */
     if (o_current->type == OBJ_PIN && o_current->whichend == -1) {
       if (o_current->line->y[0] == o_current->line->y[1]) {
         /* horizontal */

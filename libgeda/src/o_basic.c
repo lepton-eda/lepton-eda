@@ -243,6 +243,9 @@ void o_set_line_options(TOPLEVEL *w_current, OBJECT *o_current,
 
   o_current->line_length = length;
   o_current->line_space  = space;
+
+  /* Recalculate the object's bounding box */
+  o_recalc_single_object( w_current, o_current );
 }
 
 /*! \brief Set #OBJECT's fill options.

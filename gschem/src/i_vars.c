@@ -129,6 +129,7 @@ int   default_text_display_zoomfactor = 30;
 int default_text_feedback = ONLY_WHEN_READABLE;
 int default_mousepan_gain = 5;
 int default_keyboardpan_gain = 20;
+int default_select_slack_pixels = 4;
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -248,6 +249,8 @@ void i_vars_set(TOPLEVEL *w_current)
 
   w_current->mousepan_gain = default_mousepan_gain;
   w_current->keyboardpan_gain = default_keyboardpan_gain;
+
+  w_current->select_slack_pixels = default_select_slack_pixels;
 
   w_current->auto_save_interval = default_auto_save_interval;
 }

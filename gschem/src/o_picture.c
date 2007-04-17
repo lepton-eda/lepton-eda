@@ -348,20 +348,10 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  /*
-   * The function now recalculates the OBJECT as a picture. It involves
-   * calculating every single dimensions according to the zoom factor the
-   * position, @dots{}.
-   * It also recalculates the bounding picture of the object and check
-   * whether this object is visible or not. If not there is no reason to
-   * draw it !
-   */
-  o_picture_recalc(w_current, o_current);
-
   /* Get read to check for visibility of this line by using it's
    * bounding picture
    */
-  world_get_picture_bounds(w_current, o_current->picture,
+  world_get_picture_bounds(w_current, o_current,
                            &wleft, &wtop, &wright, &wbottom);
 	
   if (!visible(w_current, wleft, wtop, wright, wbottom)) {

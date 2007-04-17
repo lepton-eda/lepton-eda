@@ -254,23 +254,18 @@ void o_move_end(TOPLEVEL * w_current)
         object->complex->x = object->complex->x + diff_x;
         object->complex->y = object->complex->y + diff_y;
 
-        WORLDtoSCREEN(w_current, object->complex->x,
-                      object->complex->y,
-                      &object->complex->screen_x,
-                      &object->complex->screen_y);
-
         o_move_end_lowlevel(w_current, object->complex->prim_objs,
                             COMPLEX, diff_x, diff_y,
                             &other_objects, &connected_objects);
 
 
-        get_object_list_bounds(w_current, object->complex->prim_objs,
+        world_get_object_list_bounds(w_current, object->complex->prim_objs,
 			       &left, &top, &right, &bottom);
 
-        object->left = left;
-        object->top = top;
-        object->right = right;
-        object->bottom = bottom;
+        object->w_left = left;
+        object->w_top = top;
+        object->w_right = right;
+        object->w_bottom = bottom;
 
         break;
     }

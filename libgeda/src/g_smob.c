@@ -377,8 +377,10 @@ void g_init_attrib_smob(void)
 /*! \brief Get the bounds of an attribute.
  *  \par Function Description
  *  Get the bounds of an attribute.
- *  I got top and bottom values reversed from world_get_complex_bounds,
- *  so don\'t rely on the position in the list. 
+ *  WARNING: top and bottom are mis-named in world-coords,
+ *  top is the smallest "y" value, and bottom is the largest.
+ *  Be careful! This doesn't correspond to what you'd expect,
+ *  nor to the coordinate system who's origin is the bottom, left of the page.
  *  \param[in] attrib_smob the attribute.
  *  \return a list of the bounds of the <B>attrib smob</B>. 
  *  The list has the format: ( (left right) (top bottom) )
@@ -404,9 +406,9 @@ SCM g_get_attrib_bounds(SCM attrib_smob)
       attribute->attribute->object &&
       attribute->attribute->object->text->string ) {
 
-    world_get_text_bounds (w_current, attribute->attribute->object, 
-			   &left, &top, &right, &bottom);
-    
+    world_get_text_bounds (w_current, attribute->attribute->object,
+                           &left, &top, &right, &bottom);
+
     horizontal = scm_cons (SCM_MAKINUM(left), SCM_MAKINUM(right));
     vertical = scm_cons (SCM_MAKINUM(top), SCM_MAKINUM(bottom));
     returned = scm_cons (horizontal, vertical);

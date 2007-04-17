@@ -92,4 +92,5 @@ extern int default_auto_save_interval;
 extern int default_drag_can_move;
 extern int default_mousepan_gain;
 extern int default_keyboardpan_gain;
+extern int default_select_slack_pixels;
 

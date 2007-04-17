@@ -402,7 +402,13 @@ sub die_sdb {
 # Change Log
 #
 # $Log$
-# Revision 1.7  2007-04-15 23:20:31  sdb
+# Revision 1.8  2007-04-17 20:19:23  pcjc2
+# Merge changes from noscreen branch
+#
+# Revision 1.2.6.2  2007/04/17 16:19:01  pcjc2
+# Sync with trunk
+#
+# Revision 1.7  2007/04/15 23:20:31  sdb
 # Made --gentle the default behavior of refdes_renum.
 #
 # Revision 1.7  2007/04/15 SDB

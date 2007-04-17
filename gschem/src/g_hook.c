@@ -287,7 +287,6 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
   int alignment = -2;
   int rotation = 0;
   int x = -1, y = -1;
-  gboolean changed = FALSE;
 
   SCM_ASSERT (SCM_STRINGP(scm_colorname), scm_colorname,
 	      SCM_ARG2, "set-attribute-text-properties!");
@@ -364,26 +363,18 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
       o_text_erase(w_current, object);
       if (x != -1) {
 	object->text->x = x;
-	changed = TRUE;
       }
       if (y != -1) {
 	object->text->y = y;
-	changed = TRUE;
-      }
-      if (changed) {
-	WORLDtoSCREEN(w_current, x, y, &object->text->screen_x, &object->text->screen_y);
       }
       if (size != -1) {
 	object->text->size = size;
-	changed = TRUE;
       }
       if (alignment != -1) {
 	object->text->alignment = alignment;
-	changed = TRUE;
       }
       if (rotation != -1) {
 	object->text->angle = rotation;
-	changed = TRUE;
       }
       o_text_recreate(w_current, object);
       if (!w_current->DONT_REDRAW) {
@@ -551,8 +542,10 @@ static void custom_world_get_object_list_bounds
  *  The object types are those used in (OBJECT *)->type converted into strings.
  *  \return a list of the bounds of the <B>object smob</B>. 
  *  The list has the format: ( (left right) (top bottom) )
- *  I got top and bottom values reversed from world_get_complex_bounds,
- *  so don\'t rely on the position in the list. 
+ *  WARNING: top and bottom are mis-named in world-coords,
+ *  top is the smallest "y" value, and bottom is the largest.
+ *  Be careful! This doesn't correspond to what you'd expect,
+ *  nor to the coordinate system who's origin is the bottom, left of the page.
  */
 SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclude_object_type)
 {

@@ -443,10 +443,10 @@ int f_print_stream(TOPLEVEL *w_current, FILE *fp)
 
   /*	printf("%d %d\n", w_current->paper_width, w_current->paper_height);*/
 
-  world_get_complex_bounds(w_current, 
-                           w_current->page_current->object_head, 
-                           &origin_x, &origin_y, 
-                           &right, &bottom);
+  world_get_object_list_bounds(w_current,
+                               w_current->page_current->object_head,
+                               &origin_x, &origin_y,
+                               &right, &bottom);
 
   /* Calculate scale factor that will make the image fit on the page */
   dx = 0; dy = 0;
