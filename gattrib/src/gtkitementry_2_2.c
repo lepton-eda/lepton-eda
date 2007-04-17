@@ -2274,9 +2274,6 @@ gtk_item_entry_new (void)
 
   GtkWidget *widget;
 
-  widget = GTK_WIDGET (gtk_type_new (GTK_TYPE_ITEM_ENTRY));
-  return widget;
-
   /* Copied from GtkEntry by SDB */
   return g_object_new (GTK_TYPE_ITEM_ENTRY, NULL);
 

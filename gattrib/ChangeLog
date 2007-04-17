@@ -1,3 +1,8 @@
+2007-04-17 Peter Clifton <pcjc2@cam.ac.uk>
+
+	* src/gtkitementry_2_2.c: Fixed code left accidentally when
+	  removing an obsolete #if 0'd out section.
+
 2007-4-15  Stuart Brorson <sdb (AT) cloud9 (DOT) net>
 	* src/*.c:  Added DOxygen style comment pragma to many (but not
 	all) .c files.  DOxygenating gattrib is an ongoing project.
