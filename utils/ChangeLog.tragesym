@@ -1,3 +1,10 @@
+2007-04-17      Werner Hoch <werner.ho@gmx.de>
+
+	* script/tragesym: for large symbols put the attributs inside
+	  the symbol box. Add padding at the top and the bottom pins.
+	  removed o_vdist limitation. 
+          code mostly from Patch [#1662285] written by Aapo Tahkola 
+
 2006-05-17	Werner Hoch <werner.ho@gmx.de>
 	* scripts/tragesym: accept tab as option delimiter
 

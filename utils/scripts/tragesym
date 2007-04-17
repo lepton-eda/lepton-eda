@@ -3,7 +3,7 @@
 ############################################################################
 #    tragesym  - create gEDA symbols out of structured textfiles
 #    begin      : 2001-10-20
-#    copyright  : (C) 2001,2002,2003,2004,2006 by Werner Hoch
+#    copyright  : (C) 2001,2002,2003,2004,2006,2007 by Werner Hoch
 #    email      : werner.ho@gmx.de
 ############################################################################
 #                                                                          #
@@ -31,17 +31,17 @@
 import sys, string
 
 ##################### GLOBALS ############################################
-VERSION="0.0.9"
+VERSION="0.0.10"
 
 CHARHIGH=26
-preset_options = {"wordswap":"yes"
-                  ,"rotate_labels":"no"
-                  ,"sort_labels":"yes"
-                  ,"generate_pinseq":"yes"    
-                  ,"sym_width":"1400"
-                  ,"pinwidthvertikal":"400"
-                  ,"pinwidthvertical":"400"
-                  ,"pinwidthhorizontal":"400"}
+preset_options = {"wordswap":"yes",
+                  "rotate_labels":"no",
+                  "sort_labels":"yes",
+                  "generate_pinseq":"yes",
+                  "sym_width":"1400",
+                  "pinwidthvertikal":"400",
+                  "pinwidthvertical":"400",
+                  "pinwidthhorizontal":"400"}
 allowed_attr = ["version", "name", "device", "refdes", "footprint", "numslots",
                 "slot", "slotdef","description", "comment", "author",
                 "documentation","value"]
@@ -80,6 +80,10 @@ def parselabel(str):
         print '''to write a "\" use "\\"'''
         sys.exit()
     return textout
+
+## round *unsigned* integer x to closest r
+def round_closest(x,r):
+    return x-(x+r/2)%r+r/2
 
 ## returns the words in reverse order    
 def swapwords(str): 
@@ -282,10 +286,6 @@ def writesym(filename,options,attr,pins):
     	elif pin[P_POS] == "t": #right pin
     		numptop=numptop+1
 
-    # If there are pins on the top, then o_vdist should be 500 at least
-    if ( (numptop > 0) and (o_vdist < 500) ):
-	o_vdist = 500
-
     # Calculate the position of the pins in the left and right side.    
     plefty, prighty = 0, 0
     if numpleft >  numpright:
@@ -301,10 +301,14 @@ def writesym(filename,options,attr,pins):
 	bottomlefty += pinlength
 
     # Calculate the minimum symwidth and increase it if necessary
-    if numpbottom > numptop:
-	calculated_symwidth=(numpbottom-1)*o_hdist+2*o_hdist
-    else:
-	calculated_symwidth=(numptop-1)*o_hdist+2*o_hdist
+    calculated_top_symwidth=(numptop-1)*o_hdist+2*o_hdist
+    calculated_bottom_symwidth=(numpbottom-1)*o_hdist+2*o_hdist
+    
+    calcutated_symwidth = max(calculated_bottom_symwidth,
+                              calculated_top_symwidth)
+
+    if (numptop + numpbottom > 0):
+	print "note: use sym_width to adjust symbol width if texts overlap."
 
     if o_symwidth == 0:
 	o_symwidth = calculated_symwidth
@@ -322,7 +326,13 @@ def writesym(filename,options,attr,pins):
     ptopx, ptopy= bottomleftx + o_hdist, bottomlefty + high + pinlength
     pbottomx, pbottomy = bottomleftx + o_hdist, bottomlefty - pinlength   
 
+    # Lets add some pad if sym_width was defined
+    ptopx = ptopx + (o_symwidth - calculated_top_symwidth) / 2
+    pbottomx = pbottomx + (o_symwidth - calculated_bottom_symwidth) / 2
 
+    ptopx = round_closest(ptopx, 100)
+    pbottomx = round_closest(pbottomx, 100)
+    
     f = open(filename, "w")
 
 ### Draw the symbol version
@@ -468,7 +478,13 @@ def writesym(filename,options,attr,pins):
 
 ### draw the attributes
     urefx, urefy = bottomleftx+o_symwidth, bottomlefty + high + 100
-    namex, namey = bottomleftx, bottomlefty+high+100
+
+    # Center name if we have top/bottom pins
+    if numptop + numpbottom > 0:
+	namex, namey = (bottomleftx + o_symwidth) / 2, (bottomlefty + high) / 2 + 100
+    else:
+	namex, namey = bottomleftx, bottomlefty+high+100
+
     textx = namex
     texty = namey + 200
     if numptop > 0:
