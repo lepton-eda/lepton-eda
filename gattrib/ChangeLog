@@ -1,3 +1,7 @@
+2007-04-17 21:16  Dan McMahill <danmc>
+
+	* src/gattrib.c: remove /* within comment
+
 2007-04-17 Peter Clifton <pcjc2@cam.ac.uk>
 
 	Merge changes from noscreen branch
