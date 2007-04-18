@@ -373,7 +373,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
 }
 
 /*------------------------------------------------------------------
-/*! \brief main -- entry point to gattrib.  This is just a wrapper which 
+ *! \brief main -- entry point to gattrib.  This is just a wrapper which 
  * invokes the guile stuff, and points to the real main prog, 
  * gattrib_main.  Note that I still need some vestigal
  * guile stuff in order to read the rc files.
