@@ -163,7 +163,7 @@ for t in $all_tests ; do
     bad=0
     soso=0
     for f in ${files} ; do
-	ref=${GOLDEN_DIR}/${t}:${f}
+	ref=${GOLDEN_DIR}/${t}-${f}
 	out=${rundir}/${f}
 
 	if test "X$regen" = "Xyes" ; then
