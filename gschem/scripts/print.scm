@@ -7,10 +7,11 @@
 ;;
 ;; The schematic in "mysch.sch" will be printed to the file "mysch.ps"
 
-(output-orientation "portrait")
-(output-type "limits")
-(output-color "enabled")
-(output-text "ps")
+;; Uncomment these to override defaults when printing from the command line
+;(output-orientation "portrait")
+;(output-type "limits")
+;(output-color "enabled")
+;(output-text "ps")
 
 ; You need call this after you call any rc file function
 (gschem-use-rc-values)

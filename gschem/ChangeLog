@@ -1,3 +1,8 @@
+2007-04-21  Mike Jarabek  <mjarabek@sentex.ca>
+
+	* scripts/print.scm: Commented out first the four lines so that
+	  printing defaults don't get accidentally overridden.
+
 2007-04-21 Peter Brett <peter@peter-b.co.uk>
 
 	* lib/system-gschemrc.in: Change keystrokes for grid size change
