@@ -742,9 +742,8 @@ x_print_setup (TOPLEVEL * w_current, char *filename)
 			     &w_current->paper_height);
 		
       /* de select everything first */
-      o_select_run_hooks (w_current, NULL, 2);
-      g_list_free(w_current->page_current->selection_list);
-      w_current->page_current->selection_list = NULL;
+      o_selection_unselect_list( w_current,
+                                 &w_current->page_current->selection_list );
 
       if (usefile && filename[0])
 	/* Print to file */

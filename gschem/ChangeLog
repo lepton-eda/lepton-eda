@@ -1,3 +1,10 @@
+2007-04-21 Peter Clifton <pcjc2@cam.ac.uk>
+
+	* src/x_print.c: Fix color printing of selected object to use the
+	  correct, non-selected color for the output. This required replacing
+	  code which manually cleared the selection GList with a call to
+	  o_selection_unselect_list(), which takes care of the color change.
+
 2007-04-17 Peter Clifton <pcjc2@cam.ac.uk>
 
 	Merge changes from noscreen branch
