@@ -812,6 +812,10 @@ int clip_nochange(TOPLEVEL *w_current,int x1, int y1, int x2, int y2)
  *  \par Function Description
  *  This function checks if a given bounding box is visible on the screen.
  *
+ *  WARNING: top and bottom are mis-named in world-coords,
+ *  top is the smallest "y" value, and bottom is the largest.
+ *  Be careful! This doesn't correspond to what you'd expect.
+ *
  *  \param [in] w_current  The TOPLEVEL object.
  *  \param [in] wleft      Left coordinate of the bounding box.
  *  \param [in] wtop       Top coordinate of the bounding box.
@@ -871,17 +875,17 @@ int visible(TOPLEVEL *w_current, int wleft, int wtop, int wright, int wbottom)
   printf("%d %d %d\n", wtop, w_current->page_current->bottom, wbottom);
 #endif
 
-  /* now check to see if bounding box encompasses the entire viewport */
-  if (w_current->page_current->left >= wleft && 
-      w_current->page_current->left <= wright  &&
-      w_current->page_current->top <= wtop &&
-      w_current->page_current->top >= wbottom ) {
-    /*w_current->page_current->right >= wleft &&
-      w_current->page_current->right <= wright &&
-      w_current->page_current->bottom <= wtop &&
-      w_current->page_current->bottom >= wbottom ) {*/
+  /*
+   * now check to see if bounding box encompasses the entire viewport.
+   * We only need to test if one point on the screen clipping boundary
+   * is indide the bounding box of the object.
+   */
+  if (w_current->page_current->left >= wleft  &&
+      w_current->page_current->left <= wright &&
+      w_current->page_current->top >= wtop    &&
+      w_current->page_current->top <= wbottom ) {
     visible = 1;
-  } 
+  }
 
 #if DEBUG 
   printf("vis5 %d\n", visible);

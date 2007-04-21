@@ -1,5 +1,8 @@
 2007-04-21 Peter Clifton <pcjc2@cam.ac.uk>
 
+	* src/m_basic.c: Fix visibility test in visible(..) for the case when the
+	  object completely surrounds the screen clipping region.
+
 	* src/o_circle_basic.c: Tidy up dist() function in o_circle_basic.c
 	  to be much more readable.
 
