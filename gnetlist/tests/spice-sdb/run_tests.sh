@@ -73,11 +73,7 @@ here=`pwd`
 srcdir=${srcdir:-$here}
 srcdir=`cd $srcdir && pwd`
 
-top_srcdir=${top_srcdir:-$here/../..}
-top_srcdir=`cd $top_srcdir && pwd`
-
-# the perl program
-PERL=${PERL:-perl}
+GNETLIST=../../../src/gnetlist
 
 rundir=${here}/run
 
@@ -110,9 +106,9 @@ cat << EOF
 
 Starting tests in $here
 srcdir:     $srcdir
-top_srcdir: $top_srcdir
 INPUT_DIR:  ${INPUT_DIR}
 GOLDEN_DIR: ${GOLDEN_DIR}
+GNETLIST:   ${GNETLIST}
 all_tests:
 
 ${all_tests}
@@ -131,13 +127,13 @@ for t in $all_tests ; do
     schematics=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $2}'`
     auxfiles=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $3}'`
     args=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $4}'`
-    code=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $5}'`
-    echo Schematics to copy = $schematics
-    echo Args to copy = $args
-    echo Return codes to copy = $code
+    code=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $5}' | sed 's; ;;g'`
     if test "X$code" = "X" ; then
 	code=0
     fi
+    echo "Schematics to copy   = $schematics"
+    echo "Args to copy         = $args"
+    echo "Expected return code = \"$code\""
 
 
     tot=`expr $tot + 1`
@@ -155,21 +151,23 @@ for t in $all_tests ; do
     if test ! -z "$schematics" ; then
 	echo "Copying over schematics to run dir"
 	for f in $schematics ; do
-	    echo cp ${INPUT_DIR}/${f} ${rundir}/${f}
+	    echo "cp ${INPUT_DIR}/${f} ${rundir}/${f}"
 	    cp ${INPUT_DIR}/${f} ${rundir}/${f}
+	    chmod 644 ${rundir}/${f}
 	done
     fi
     if test ! -z "$auxfiles" ; then
 	echo "Copying over aux files to run dir"
 	for f in $auxfiles ; do
-	    echo cp ${INPUT_DIR}/${f} ${rundir}/${f}
+	    echo "cp ${INPUT_DIR}/${f} ${rundir}/${f}"
 	    cp ${INPUT_DIR}/${f} ${rundir}/${f}
+	    chmod 644 ${rundir}/${f}
 	done
     fi
-    
+
     # run gnetlist -g spice-sdb
-    echo "${top_srcdir}/src/gnetlist -g spice-sdb $args $schematics"
-    cd ${rundir} && ${top_srcdir}/src/gnetlist -g spice-sdb $args $schematics 
+    echo "${GNETLIST} -g spice-sdb $args $schematics"
+    cd ${rundir} && ${GNETLIST} -g spice-sdb $args $schematics 
     rc=$?
     if test $rc -ne $code ; then
 	echo "FAILED:  gnetlist -g spice-sdb returned $rc which did not match the expected $code"
@@ -190,19 +188,20 @@ for t in $all_tests ; do
 	echo "Regenerated ${ref}"
     elif test -f ${ref} ; then
 
-	# The -I "gnetlist -g" is in there to ignore the command line 
-	# output in the spice-sdb netlist.
-	if diff -I "gnetlist -g" -w ${ref} ${out} >/dev/null ; then
+	sed '/gnetlist -g/d' ${ref} > ${out}.tmp1
+	sed '/gnetlist -g/d' ${out} > ${out}.tmp2
+
+	if diff -w ${out}.tmp1 ${out}.tmp2 >/dev/null ; then
 	    echo "PASS"
 	else
 	    echo "FAILED:  See diff -w ${ref} ${out}"
 	    fail=`expr $fail + 1`
-	    bad=1
 	    good=0
+	    bad=1
 	fi
     else
 	echo "No reference file.  Skipping"
-	skip=`expr $skip + 1`
+	good=0
 	soso=1
     fi
 
@@ -230,3 +229,4 @@ if test $pass -ne $tot ; then
 fi
 
 exit $rc
+
