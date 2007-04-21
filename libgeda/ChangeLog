@@ -2,6 +2,7 @@
 
 	* src/o_bus_basic.c, src/o_circle_basic.c, src/o_line_basic.c,
 	  src/o_pin_basic.c: 
+	  - Put unused variables inside #ifdef HAS_LIBGD.
 	  - Reverted the patch below. Those variables are used when 
 	    compiling with libgd.
 	  - Removed unused variables.
