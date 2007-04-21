@@ -1,3 +1,9 @@
+2007-04-21 Peter Clifton <pcjc2@cam.ac.uk>
+
+	* src/o_arc.c: Fix for drawing a dotted arc / circle with
+	  angular dot spacing too small to render. Was a sign error
+	  in the alternative codepath for drawing these cases.
+
 2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
 	* lib/system-gschemrc.in: Apply patch from Peter Brett. Thanks!

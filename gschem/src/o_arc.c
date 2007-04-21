@@ -308,13 +308,14 @@ void o_arc_draw_dotted(GdkWindow *w, GdkGC *gc,
     angle1 = angle1 + angle2;
     angle2 = -angle2;
   }
-  da = (int) ((((double) space) * 180) / (M_PI * ((double) radius)));
 
-  /* If da or db too small for arc to be displayed as dotted,
+  da = space * 180 / (M_PI * radius);
+
+  /* If da is too small for arc to be displayed as dotted,
      draw a solid arc */
   if(da <= 0) {
     gdk_draw_arc(w, gc, FALSE,
-                 x + radius, y + radius, 2 * radius, 2 * radius,
+                 x - radius, y - radius, 2 * radius, 2 * radius,
                  angle1 * 64, angle2 * 64);
     return;
   }
@@ -405,8 +406,8 @@ void o_arc_draw_dashed(GdkWindow *w, GdkGC *gc,
     angle1 = angle1 + angle2;
     angle2 = -angle2;
   }
-  da = (int) ((length * 180) / (M_PI * ((double) radius)));
-  db = (int) ((space  * 180) / (M_PI * ((double) radius)));
+  da = length * 180 / (M_PI * radius);
+  db = space  * 180 / (M_PI * radius);
 
   /* If da or db too small for arc to be displayed as dotted,
      draw a solid arc */
@@ -512,8 +513,8 @@ void o_arc_draw_center(GdkWindow *w, GdkGC *gc,
     angle1 = angle1 + angle2;
     angle2 = -angle2;
   }
-  da = (int) ((length * 180) / (M_PI * ((double) radius)));
-  db = (int) ((space  * 180) / (M_PI * ((double) radius)));
+  da = length * 180 / (M_PI * radius);
+  db = space  * 180 / (M_PI * radius);
 
   /* If da or db too small to be displayed, draw an arc */
   if((da <= 0) || (db <= 0)) {
@@ -665,8 +666,8 @@ void o_arc_draw_phantom(GdkWindow *w, GdkGC *gc,
     angle1 = angle1 + angle2;
     angle2 = -angle2;
   }
-  da = (int) ((length * 180) / (M_PI * ((double) radius)));
-  db = (int) ((space  * 180) / (M_PI * ((double) radius)));
+  da = length * 180 / (M_PI * radius);
+  db = space  * 180 / (M_PI * radius);
 
   /* If da or db too small for arc to be displayed as dotted,
      draw a solid arc */
