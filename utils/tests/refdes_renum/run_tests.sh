@@ -144,6 +144,7 @@ for t in $all_tests ; do
     if test ! -z "$files" ; then
 	for f in $files ; do
 	    cp ${INPUT_DIR}/${f} ${rundir}
+	    chmod 644 ${rundir}/${f}
 	done
     fi
     
