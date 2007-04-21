@@ -1,5 +1,8 @@
 2007-04-21 Peter Clifton <pcjc2@cam.ac.uk>
 
+	* src/g_keys.c, src/x_print.c: Check return value of gdk_keyval_name() is
+	  non NULL before attempting to match against it. Fixes bug #1692634.
+
 	* configure.ac.in: Added explicit test for locale.h
 
 	* src/i_callbacks.c: Make test for revert page question more

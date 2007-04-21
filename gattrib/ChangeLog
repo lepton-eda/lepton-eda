@@ -1,3 +1,8 @@
+2007-04-21 Peter Clifton <pcjc2@cam.ac.uk>
+
+	* src/x_dialog.c: Check return value of gdk_keyval_name() is non
+	  NULL before attempting to match against it. Fixes bug #1692634.
+
 2007-4-21  Stuart Brorson <sdb (AT) cloud9 (DOT) net>
 	* src/x_window.c: Modify gattrib so it checks for design changes
 	before quitting if user hits delete button on window.  Closes bug

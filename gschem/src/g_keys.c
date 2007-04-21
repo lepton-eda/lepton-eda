@@ -50,22 +50,22 @@ int g_keys_execute(int state, int keyval)
 {
   char *guile_string = NULL;
   char *modifier = NULL;
+  char *key_name = NULL;
   SCM scm_retval;
 
   if (keyval == 0) {
     return 0;
   }
 
+  key_name = gdk_keyval_name(keyval);
+  if ( key_name == NULL ) {
+    return 0;
+  }
+
   /* don't pass the raw modifier key presses to the guile code */
-  if (strstr(gdk_keyval_name(keyval), "Alt")) {
-    return 0;
-  }
-
-  if (strstr(gdk_keyval_name(keyval), "Shift")) {
-    return 0;
-  }
-
-  if (strstr(gdk_keyval_name(keyval), "Control")) {
+  if (strstr(key_name, "Alt")    ||
+      strstr(key_name, "Shift")  ||
+      strstr(key_name, "Control") ) {
     return 0;
   }
 
@@ -80,7 +80,7 @@ int g_keys_execute(int state, int keyval)
   }
 
   guile_string = g_strdup_printf("(press-key %s%s\")",
-				 modifier, gdk_keyval_name (keyval));
+                                 modifier, key_name);
 
 #if DEBUG 
   printf("_%s_\n", guile_string);

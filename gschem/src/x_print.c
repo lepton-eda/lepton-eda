@@ -130,24 +130,28 @@ static gboolean
 print_dialog_action_keypress (GtkWidget * widget, GdkEventKey * event,
                               PrintDialog * dialog)
 {
+  char *key_name;
+
+  key_name = gdk_keyval_name (event->keyval);
+  if ( key_name == NULL ) return FALSE;
+
   if (widget == GTK_WIDGET (dialog))
     {
-      
-      if (strcmp (gdk_keyval_name (event->keyval), "Escape") == 0)
-	{
-	  gtk_dialog_response (GTK_DIALOG (dialog),
-			       GTK_RESPONSE_REJECT);
-	  return TRUE;
-	}
-      if (strcmp (gdk_keyval_name (event->keyval), "Return") == 0)
-	{
-	  gtk_dialog_response (GTK_DIALOG (dialog),
-			       GTK_RESPONSE_ACCEPT);
-	  return TRUE;
-	}
+      if (strcmp (key_name, "Escape") == 0)
+        {
+          gtk_dialog_response (GTK_DIALOG (dialog),
+                               GTK_RESPONSE_REJECT);
+          return TRUE;
+        }
+      if (strcmp (key_name, "Return") == 0)
+        {
+          gtk_dialog_response (GTK_DIALOG (dialog),
+                               GTK_RESPONSE_ACCEPT);
+          return TRUE;
+        }
     }
+
   return FALSE;
-  
 }
 
 /*!

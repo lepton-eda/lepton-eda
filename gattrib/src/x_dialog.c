@@ -155,7 +155,12 @@ void x_dialog_newattrib_get_name()
 int x_dialog_newattrib_keypress_callback(GtkWidget * widget, GdkEventKey * event,
 			    GtkWidget *window)
 {
-  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+  char *key_name;
+
+  key_name = gdk_keyval_name(event->keyval);
+  if ( key_name == NULL ) return FALSE;
+
+  if (strcmp(key_name, "Escape") == 0) {
 #ifdef DEBUG
     printf("In x_dialog_newattrib_keypress, trying to close window.\n");
 #endif
@@ -311,7 +316,12 @@ int x_dialog_delattrib_keypress_callback(GtkWidget * widget,
 					 GdkEventKey * event,
 					 GtkWidget *window)
 {
-  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+  char *key_name;
+
+  key_name = gdk_keyval_name(event->keyval);
+  if ( key_name == NULL ) return FALSE;
+
+  if (strcmp(key_name, "Escape") == 0) {
 #ifdef DEBUG
     printf("In x_dialog_delattrib_keypress, trying to close window.\n");
 #endif
@@ -784,7 +794,12 @@ void x_dialog_exit_announcement_close_callback(GtkWidget *buttonok,
 int x_dialog_about_keypress_callback(GtkWidget * widget, GdkEventKey * event,
 			    GtkWidget *window)
 {
-  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+  char *key_name;
+
+  key_name = gdk_keyval_name(event->keyval);
+  if ( key_name == NULL ) return FALSE;
+
+  if (strcmp(key_name, "Escape") == 0) {
 #ifdef DEBUG
     printf("In x_dialog_about_keypress_callback, trying to close window.\n");
 #endif
@@ -984,7 +999,12 @@ int x_dialog_export_file_keypress_callback(GtkWidget * widget,
 					       GdkEventKey * event,
 					       GtkWidget *window)
 {
-  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+  char *key_name;
+
+  key_name = gdk_keyval_name(event->keyval);
+  if ( key_name == NULL ) return FALSE;
+
+  if (strcmp(key_name, "Escape") == 0) {
 #ifdef DEBUG
     printf("In x_dialog_export_file_keypress, trying to close window.\n");
 #endif
