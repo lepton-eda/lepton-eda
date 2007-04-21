@@ -1768,6 +1768,7 @@ DEFINE_I_CALLBACK(page_revert)
  switch (response) 
  {
    case GTK_RESPONSE_NO:
+   case GTK_RESPONSE_DELETE_EVENT:
      return; /* don't continue */
    break; 
 

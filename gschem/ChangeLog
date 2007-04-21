@@ -7,7 +7,9 @@
 2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
 	* src/i_callbacks.c:
-	  Pop up a message if there is no component selected and the user
+	  - Do nothing if the user deletes the page revert question dialog.
+	
+	  - Pop up a message if there is no component selected and the user
 	  hits help->component documentation menu.
 	
 	* src/x_compselect.c: 
