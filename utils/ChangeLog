@@ -1,3 +1,16 @@
+2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) net>
+
+	* scripts/gschemdoc.sh: Apply patch from Peter Brett to 
+	allow gschemdoc to access wiki pages with -w .
+
+	The original patch initially tries to find a local export 
+	of the wiki; on failure, it falls back to the online wiki 
+	at the gEDA website.
+
+	Since the online wiki and the user's geda version may not 
+	be the same, I commented out the part to display the online
+	wiki if the file is not locally available. Thanks!
+	
 2007-04-15 Stuart Brorson <sdb (AT) cloud9 (DOT) net>
 	* refdes_renum: Made --gentle default behavior of refdes_renum.
 	Modified test suite to account for this new behavior.

@@ -14,10 +14,11 @@
 #    5: symbol directory (currently not used)
 #
 # alternative action:
-# present gschem user's manual
+# present gschem user's manual, or a specific wiki page
 #
 # options:
-#    "-m"       display user's manual instead
+#    "-m"              display user's manual instead
+#    "-w <path>"       display a wiki page
 #
 # deBUG:
 # echo "gschemdoc args are: <$0> <$1> <$2> <$3> <$4> <$5>"
@@ -128,6 +129,49 @@ lookup_manual()
 }
 
 #
+#  Display a wiki page
+#
+#  Tries a local page first; if it doesn't exist, falls back to wiki on gEDA 
+#  website.
+lookup_wiki()
+{
+    LOCALWIKIROOT="${DOCDIR}/wiki/"
+    LIVEWIKIROOT="http://geda.seul.org/wiki/"
+
+    # Munge wiki path to remove bad chars
+    LOCALNAME=$(echo "$1" | tr "?\!*:" "____")
+    if test -z "$LOCALNAME"; then
+	LOCALNAME="index"
+    fi
+    LOCALPATH="$LOCALWIKIROOT$LOCALNAME.html"
+
+    LIVEURL="$LIVEWIKIROOT$1"
+
+    if test -f "$LOCALPATH" ; then
+	view_file_browser $LOCALPATH
+	exit
+    fi
+
+    if test "${browser}" != "no" ; then
+	
+#       # Commented out, since the online wiki and the user version
+#       # may not be the same.
+#  
+# 	echo "Found ${browser}"
+# 	echo "Using browser and URL: $LIVEURL"
+# 	# NOTE: Mozilla and Netscape does not seem to support
+# 	#       -- on the command line
+# 	${browser} "$LIVEURL"
+	echo "Did not find the page in the local path."
+	exit
+    else
+	echo "Did not find a browser application."
+	exit
+    fi
+}
+
+
+#
 #  establish what software we have
 #
 browser="no"
@@ -154,6 +198,13 @@ b=`which cygpath 2>/dev/null` && cygpath=$b
 #
 if test "$1" = "-m"; then
 	lookup_manual "gedadocs.html"
+fi
+
+#
+#  try to load a specific wiki path
+#
+if test "$1" = "-w"; then
+        lookup_wiki "$2"
 fi
 
 #
