@@ -308,3 +308,59 @@ SCM get_selected_filename(TOPLEVEL *w_current)
 
   return(return_value);
 }
+
+/*! \brief Use gschemdoc to open a browser to a specific wiki page
+ *
+ * \param [in] wikiname the name of the wiki page
+ *
+ * \par Function Description
+ * Invokes gschemdoc with its -w switch to open a browser to the wiki
+ * page specified by wikiname.  If wikiname is empty or not a string, 
+ * will browse to the main wiki page.
+ */
+SCM g_funcs_browse_wiki(SCM wikiname)
+{
+  char *wikistr;
+  int pid;
+
+  /* Extract wiki name string from Scheme value structure.
+   * If not a string, use the empty string */
+  if (SCM_STRINGP (wikiname)) {
+    wikistr = SCM_STRING_CHARS(wikiname);
+  } else {
+    wikistr = "";
+  }
+
+  #ifndef __MINGW32__
+
+  pid = fork();
+
+  if (pid < 0) {
+    /* Fork failed. Still in parent process, so can use the log
+     * window */
+    s_log_message(_("Could not fork\n"));
+    return SCM_BOOL_F;
+  } else if (pid > 0) {
+    /* Parent process, we're finished here */
+    return SCM_BOOL_T;
+  }
+  
+  /* begin daughter process stuff */
+  
+  /* assume gschemdoc is part of path */
+  char *gschemdoc = "gschemdoc";
+  char *wikiarg = "-w";
+  
+  execlp(gschemdoc, gschemdoc, wikiarg, wikistr, NULL);
+
+  /* if we return, then nothing happened */
+  fprintf(stderr, _("Could not invoke %s\n"), gschemdoc);
+  _exit(0);
+
+  /* end daughter process stuff */
+
+#else /* __MINGW32__ */
+  s_log_message(_("Documentation commands not supported under MinGW.\n"));
+  return SCM_BOOL_F;
+#endif /* __MINGW32__ */
+}

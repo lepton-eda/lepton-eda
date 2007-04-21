@@ -167,6 +167,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "gschem-msg",                1, 0, 0, g_funcs_msg },
   { "gschem-confirm",            1, 0, 0, g_funcs_confirm },
   { "gschem-filesel",            2, 0, 1, g_funcs_filesel },
+  { "gschem-browse-wiki",        0, 1, 0, g_funcs_browse_wiki },
 
   /* keymapping callbacks */
   { "file-new-window",           0, 0, 0, g_keys_file_new_window },

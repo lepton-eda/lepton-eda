@@ -1,3 +1,16 @@
+2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
+
+	* include/prototype.h, src/g_funcs.h, src/g_register.c:
+	  Apply patch from Peter Brett, adding the gschem-browse-wiki 
+	  Scheme function. Thanks!
+
+	  This function allows Scheme code to open a browser to a wiki page
+	  by calling gschemdoc with its -w option.  
+
+	  This will facilitate adding more useful things to gschem's "Help"
+	  menu without needing a large number of callbacks to be added to 
+	  gschem.
+
 2007-04-21 Peter Clifton <pcjc2@cam.ac.uk>
 
 	* src/x_print.c: Fix color printing of selected object to use the

@@ -23,6 +23,7 @@ SCM g_funcs_log(SCM msg);
 SCM g_funcs_msg(SCM msg);
 SCM g_funcs_confirm(SCM msg);
 SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags);
+SCM g_funcs_browse_wiki(SCM wikiname);
 SCM g_funcs_use_rc_values(void);
 SCM get_selected_component_attributes(TOPLEVEL *toplevel);
 SCM get_selected_filename(TOPLEVEL *toplevel);
