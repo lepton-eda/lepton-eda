@@ -1,0 +1,22 @@
+# Format:
+#
+# test_name | input schematics | aux files (gafrc, symbols, etc) | \ 
+# extra flags to pass to gnetlist -g spice-sdb | \
+# return code if non-zero expected
+#
+
+
+# -----------------------------------------
+# Simple netlisting tests
+# -----------------------------------------
+
+# The two stage amp
+TwoStageAmp | TwoStageAmp.sch | Simulation.cmd gafrc models/2N3904.mod sym/transistor.sym | | 
+TwoStageAmp_Include | TwoStageAmp.sch | Simulation.cmd gafrc models/2N3904.mod sym/transistor.sym | -I
+TwoStageAmp_Sort | TwoStageAmp.sch | Simulation.cmd gafrc models/2N3904.mod sym/transistor.sym | -s
+
+# John Doty's test circuit
+JD | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | | 
+JD_Include | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -I
+JD_Sort | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -s
+
