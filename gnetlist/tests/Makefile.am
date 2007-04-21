@@ -2,105 +2,135 @@
 
 SUBDIRS = hierarchy drc2 spice-sdb
 
-EXTRA_DIST = 7447.vhdl README amp.spice darlington.spice netattrib.geda \
+EXTRA_DIST = runtest.sh \
+	     7447.vhdl README amp.spice darlington.spice netattrib.geda \
 	     netattrib.sch powersupply.PCB powersupply.allegro \
              powersupply.bae powersupply.geda powersupply.maxascii \
              powersupply.pads powersupply.protelII powersupply.sch \
              powersupply.tango singlenet.PCB singlenet.geda singlenet.pads \
-             singlenet.protel singlenet.sch stack.geda amp.spice-sdb \
+             singlenet.protelII singlenet.sch stack_1.geda amp.spice-sdb \
 	     darlington.spice-sdb skt.switcap test.ana multiequal.sch \
 	     multiequal.spice-sdb gnetlistrc.vhdl
 
-# Temporarily disabled make check, since this is interfering with 
-# make distcheck
-#check_SCRIPTS = tests
+check_SCRIPTS = tests
+
+BUILDDIR=$(top_builddir)/tests
+SRCDIR=$(srcdir)
 
 tests:
+
 # cleanup
-	rm -f new_*
-	rm -rf devfiles
-	mkdir devfiles
+	rm -f $(BUILDDIR)/new_*
+	rm -rf $(BUILDDIR)/devfiles
+	mkdir $(BUILDDIR)/devfiles
+
 # netattrib gEDA 
-	gnetlist -o new_netattrib.geda -g geda ./netattrib.sch
-	diff netattrib.geda new_netattrib.geda
+	$(SRCDIR)/runtest.sh $(SRCDIR)/netattrib.sch geda \
+		$(BUILDDIR) $(SRCDIR)
+
 # stack gEDA 
-	gnetlist -o new_stack.geda -g geda ../../gschem/examples/stack_1.sch
-	diff stack.geda new_stack.geda
+	$(SRCDIR)/runtest.sh $(SRCDIR)/../examples/stack_1.sch geda \
+		$(BUILDDIR) $(SRCDIR)
+
 # 7447 VHDL
-	cp -f ./gnetlistrc.vhdl ./gnetlistrc
-	gnetlist -o new_7447.vhdl -g vhdl ../examples/7447.sch
-	diff 7447.vhdl new_7447.vhdl
-	rm -f ./gnetlistrc
+	cp -f $(SRCDIR)/gnetlistrc.vhdl $(BUILDDIR)/gnetlistrc
+	$(SRCDIR)/runtest.sh $(SRCDIR)/../examples/7447.sch vhdl \
+		$(BUILDDIR) $(SRCDIR)
+	rm -f $(BUILDDIR)/gnetlistrc
+
 # singlenet gEDA 
-	gnetlist -o new_singlenet.geda -g geda ./singlenet.sch
-	diff singlenet.geda new_singlenet.geda
+	$(SRCDIR)/runtest.sh $(SRCDIR)/singlenet.sch geda \
+		$(BUILDDIR) $(SRCDIR)
+
 # singlenet PCB 
-	gnetlist -o new_singlenet.PCB -g PCB ./singlenet.sch
-	diff singlenet.PCB new_singlenet.PCB
+	$(SRCDIR)/runtest.sh $(SRCDIR)/singlenet.sch PCB \
+		$(BUILDDIR) $(SRCDIR)
+
 # singlenet PADS
-	gnetlist -o new_singlenet.pads -g pads ./singlenet.sch
-	diff singlenet.pads new_singlenet.pads
+	$(SRCDIR)/runtest.sh $(SRCDIR)/singlenet.sch pads \
+		$(BUILDDIR) $(SRCDIR)
+
 # singlenet protelII
-	gnetlist -o new_singlenet.protel -g protelII ./singlenet.sch
-	diff singlenet.protel new_singlenet.protel
+	$(SRCDIR)/runtest.sh $(SRCDIR)/singlenet.sch protelII \
+		$(BUILDDIR) $(SRCDIR)
+
 # powersupply PCB
-	gnetlist -o new_powersupply.PCB -g PCB ./powersupply.sch
-	diff powersupply.PCB new_powersupply.PCB
+	$(SRCDIR)/runtest.sh $(SRCDIR)/powersupply.sch PCB \
+		$(BUILDDIR) $(SRCDIR)
+
 # powersupply Allegro
-	gnetlist -o new_powersupply.allegro -g allegro ./powersupply.sch
-	diff powersupply.allegro new_powersupply.allegro
+	$(SRCDIR)/runtest.sh $(SRCDIR)/powersupply.sch allegro \
+		$(BUILDDIR) $(SRCDIR)
+
 # powersupply bae
-	gnetlist -o new_powersupply.bae -g bae ./powersupply.sch
-	diff powersupply.bae new_powersupply.bae
+	$(SRCDIR)/runtest.sh $(SRCDIR)/powersupply.sch bae \
+		$(BUILDDIR) $(SRCDIR)
+
 # powersupply gEDA
-	gnetlist -o new_powersupply.geda -g geda ./powersupply.sch
-	diff powersupply.geda new_powersupply.geda
+	$(SRCDIR)/runtest.sh $(SRCDIR)/powersupply.sch geda \
+		$(BUILDDIR) $(SRCDIR)
+
 # powersupply maxascii
-	gnetlist -o new_powersupply.maxascii -g maxascii ./powersupply.sch
-	diff powersupply.maxascii new_powersupply.maxascii
+	$(SRCDIR)/runtest.sh $(SRCDIR)/powersupply.sch maxascii \
+		$(BUILDDIR) $(SRCDIR)
+
 # powersupply pads
-	gnetlist -o new_powersupply.pads -g pads ./powersupply.sch
-	diff powersupply.pads new_powersupply.pads
+	$(SRCDIR)/runtest.sh $(SRCDIR)/powersupply.sch pads \
+		$(BUILDDIR) $(SRCDIR)
+
 # powersupply protelII
-	gnetlist -o new_powersupply.protelII -g protelII ./powersupply.sch
-	diff powersupply.protelII new_powersupply.protelII
+	$(SRCDIR)/runtest.sh $(SRCDIR)/powersupply.sch protelII \
+		$(BUILDDIR) $(SRCDIR)
+
 # powersupply tango
-	gnetlist -o new_powersupply.tango -g tango ./powersupply.sch
-	diff powersupply.tango new_powersupply.tango
-# switcap 
-	gnetlist -o new_skt.switcap -g switcap ../examples/switcap/ckt.sch \
-		../examples/switcap/clocks.sch ../examples/switcap/analysis.sch
-	diff skt.switcap new_skt.switcap
-	diff new_skt.switcap ../examples/switcap/example.scn
+	$(SRCDIR)/runtest.sh $(SRCDIR)/powersupply.sch tango \
+		$(BUILDDIR) $(SRCDIR)
+
 # multiple equals in attributes SPICE-SDB 
-	gnetlist -o new_multiequal.spice-sdb -g spice-sdb \
-		./multiequal.sch
-	diff multiequal.spice-sdb new_multiequal.spice-sdb
+	$(SRCDIR)/runtest.sh $(SRCDIR)/multiequal.sch spice-sdb \
+		$(BUILDDIR) $(SRCDIR) "-I gnetlist"
+
+# Cleanup
+	rm -f $(BUILDDIR)/new_*
+	rm -rf $(BUILDDIR)/devfiles
 
 
 # These tests are internal to Ales and will not work without the schematics
 # which I am unable to distribute (due to copyright laws).
 tests_ales:
+
 # cleanup
-	rm -f new_*
-	rm -rf devfiles
-	mkdir devfiles
+	rm -f $(BUILDDIR)/new_*
+	rm -rf $(BUILDDIR)/devfiles
+	mkdir $(BUILDDIR)/devfiles
+
 # amp SPICE 
-	gnetlist -o new_amp.spice -g spice \
-		/home/ahvezda/gEDA/alesch/amp.sch
-	diff amp.spice new_amp.spice
+	$(SRCDIR)/runtest.sh $(HOME)/gEDA/alesch/amp.sch spice \
+		$(BUILDDIR) $(SRCDIR)
+
 # darlington SPICE 
-	gnetlist -o new_darlington.spice -g spice \
-		/home/ahvezda/gEDA/alesch/darlington.sch
-	diff darlington.spice new_darlington.spice
+	$(SRCDIR)/runtest.sh $(HOME)/gEDA/alesch/darlington.sch spice \
+		$(BUILDDIR) $(SRCDIR)
+
 # amp SPICE SDB
-	gnetlist -o new_amp.spice-sdb -g spice-sdb \
-		/home/ahvezda/gEDA/alesch/amp.sch
-	diff amp.spice-sdb new_amp.spice-sdb
+	$(SRCDIR)/runtest.sh $(HOME)/gEDA/alesch/amp.sch spice-sdb \
+		$(BUILDDIR) $(SRCDIR) "-I gnetlist"
+
 # darlington SPICE SDB
-	gnetlist -o new_darlington.spice-sdb -g spice-sdb \
-		/home/ahvezda/gEDA/alesch/darlington.sch
-	diff darlington.spice-sdb new_darlington.spice-sdb
+	$(SRCDIR)/runtest.sh $(HOME)/gEDA/alesch/darlington.sch spice-sdb \
+		$(BUILDDIR) $(SRCDIR) "-I gnetlist"
+
+# switcap (does not work with make distcheck due to local test.ana file)
+	gnetlist -o $(BUILDDIR)/new_skt.switcap -g switcap \
+		$(SRCDIR)/../examples/switcap/ckt.sch \
+		$(SRCDIR)/../examples/switcap/clocks.sch \
+		$(SRCDIR)/../examples/switcap/analysis.sch
+	diff $(SRCDIR)/skt.switcap $(BUILDDIR)/new_skt.switcap
+	diff $(SRCDIR)/../examples/switcap/example.scn $(SRCDIR)/new_skt.switcap
+
+# cleanup
+	rm -f $(BUILDDIR)/new_*
+	rm -rf $(BUILDDIR)/devfiles
 
 MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~
 CLEANFILES = new_* core *.log FILE *.ps *~

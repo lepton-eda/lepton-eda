@@ -203,6 +203,23 @@ void main_prog(void *closure, int argc, char *argv[])
     	}
     }
 
+    /* Load the first set of scm files before we load any schematic files */
+    list_pnt = pre_backend_list;
+    while (list_pnt) {
+      if (g_read_file(list_pnt->data) != -1) {
+        s_log_message("Read scm file [%s]\n", 
+                      (char *) list_pnt->data);
+      } else {
+        s_log_message("Failed to read scm file [%s]\n", 
+                      (char *) list_pnt->data);
+        fprintf(stderr, "Failed to read scm file [%s]\n", 
+                (char *) list_pnt->data);
+      }
+      list_pnt = g_slist_next(list_pnt);
+    }
+    /* Free now the list of configuration files */
+    g_slist_free(pre_backend_list);
+
     i = argv_index;
     while (argv[i] != NULL) {
       gchar *filename; 
@@ -221,6 +238,7 @@ void main_prog(void *closure, int argc, char *argv[])
       }
 
       if (!quiet_mode) {
+        s_log_message ("Loading schematic [%s]\n", filename);
         printf ("Loading schematic [%s]\n", filename);
       }
 
@@ -279,22 +297,6 @@ void main_prog(void *closure, int argc, char *argv[])
 
 
 
-    /* Load the first set of scm files */
-    list_pnt = pre_backend_list;
-    while (list_pnt) {
-      if (g_read_file(list_pnt->data) != -1) {
-        s_log_message("Read scm file [%s]\n", 
-                      (char *) list_pnt->data);
-      } else {
-        s_log_message("Failed to read scm file [%s]\n", 
-                      (char *) list_pnt->data);
-        fprintf(stderr, "Failed to read scm file [%s]\n", 
-                (char *) list_pnt->data);
-      }
-      list_pnt = g_slist_next(list_pnt);
-    }
-    /* Free now the list of configuration files */
-    g_slist_free(pre_backend_list);
 
 
     if (guile_proc) {

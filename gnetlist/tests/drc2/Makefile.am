@@ -39,22 +39,27 @@ EXTRA_DIST = duplicated-refdes.sch duplicated-refdes.drc2 \
 # make distcheck
 check_SCRIPTS = tests
 
+BUILDDIR=$(top_builddir)/tests/drc2
+SRCDIR=$(srcdir)
+
 tests:
 # cleanup
-	rm -f new_*
+	rm -f $(BUILDDIR)/new_*
 
 # make the tests
-	for file in *.sch; do \
+	for file in $(SRCDIR)/*.sch; do \
 	  file_basename=`basename $$file .sch`; \
-	  echo Checking test in $$file_basename.sch; \
-	  gnetlist -g drc2 -o new_$$file_basename.drc2 $$file || true; \
-	  test -f $$file_basename.drc2 && \
-            diff $$file_basename.drc2 new_$$file_basename.drc2; \
+	  echo Checking test in $(SRCDIR)/$$file_basename.sch; \
+	  ( export TESTDIR=$(SRCDIR) ; \
+	    gnetlist -g drc2 -o $(BUILDDIR)/new_$$file_basename.drc2 \
+            $$file ); \
+          diff $(SRCDIR)/$$file_basename.drc2 \
+                 $(BUILDDIR)/new_$$file_basename.drc2; \
           if [ $$? -ne 0 ]; then \
-	     echo "Test in $$file_basename.sch FAILED!!"; \
-	     break; \
+	     echo "Test in $(SRCDIR)/$$file_basename.sch FAILED!!"; \
+	     exit 1; \
 	  else \
-	     echo "Test in $$file_basename.sch PASSED."; \
+	     echo "Test in $(SRCDIR)/$$file_basename.sch PASSED."; \
 	  fi; \
 	done
 

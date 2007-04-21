@@ -1,4 +1,22 @@
-2007-02-21 Stuart Brorson   <sdb@cloud9.net>
+2007-04-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Move the "-l" command line scheme loading code to
+	be *before* schematics are loaded (instead of after).
+
+	* examples/stack_1.sch, examples/Makefile.am: Added stack example 
+	schematic.
+
+	* tests/Makefile.am, tests/runtest.sh, tests/singlenet.protel,
+	tests/singlenet.protelII, tests/stack.geda, tests/stack_1.geda,
+	tests/drc2/Makefile.am, tests/hierarchy/Makefile.am,
+	tests/hierarchy/gnetlistrc, tests/hierarchy/gnetlistrc.hierarchy:
+	Fixed the gnetlist regressions tests to work with make distcheck.
+
+	* tests/spice-sdb/run_tests.sh: Added -I "gnetlist -g" to the 
+	golden file diff to ignore the embedded command line information
+	in the spice-sdb golden files.
+
+2007-04-21 Stuart Brorson   <sdb@cloud9.net>
 	* tests/spice-sdb/*  Added new spice-sdb test directory.  Then
 	created test environment similar to Dan's regression tests for
 	refdes_renum.

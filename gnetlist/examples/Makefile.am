@@ -2,7 +2,7 @@
 
 SUBDIRS = vams switcap
 
-EXTRA_DIST = 7447.sch test_verilog.sch 
+EXTRA_DIST = 7447.sch test_verilog.sch stack_1.sch
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
 CLEANFILES = core *.log FILE *.ps *~

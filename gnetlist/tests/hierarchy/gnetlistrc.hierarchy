@@ -1,5 +1,5 @@
-(source-library ".")
-(component-library ".")
+(source-library "${TESTDIR}")
+(component-library "${TESTDIR}")
 ;(net-naming-priority "label")
 
 ;(hierarchy-traversal "disabled")

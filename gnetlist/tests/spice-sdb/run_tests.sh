@@ -189,7 +189,10 @@ for t in $all_tests ; do
 	cp ${out} ${ref}
 	echo "Regenerated ${ref}"
     elif test -f ${ref} ; then
-	if diff -w ${ref} ${out} >/dev/null ; then
+
+	# The -I "gnetlist -g" is in there to ignore the command line 
+	# output in the spice-sdb netlist.
+	if diff -I "gnetlist -g" -w ${ref} ${out} >/dev/null ; then
 	    echo "PASS"
 	else
 	    echo "FAILED:  See diff -w ${ref} ${out}"
