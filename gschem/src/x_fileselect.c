@@ -245,6 +245,11 @@ x_fileselect_save (TOPLEVEL *toplevel)
 					  -1);
 #endif
 
+  /* set default response signal. This is usually triggered by the 
+     "Return" key */
+  gtk_dialog_set_default_response(GTK_DIALOG(dialog),
+				  GTK_RESPONSE_ACCEPT);
+
   g_object_set (dialog,
                 /* GtkFileChooser */
                 "select-multiple", FALSE,

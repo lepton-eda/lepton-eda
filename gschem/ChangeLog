@@ -10,6 +10,10 @@
 
 2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
+       * src/x_fileselect.c:
+	 Make "Save" the default response in the save page dialog.
+	 FR #1704919. Thanks to rikster for reporting this FR.
+	
        * src/x_dialog.c:
 	 Make "Save changes" the default response in the close page
 	 confirmation dialog.
