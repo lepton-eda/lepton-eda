@@ -6,6 +6,11 @@
 
 2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
+	* src/x_compselect.c: 
+	  Make the component selector filter case insensitive.
+	  Fixes bug #1673589. Thanks to Phil Endecott for reporting the
+	  bug.
+	
 	* lib/system-gschemrc.in: Apply patch from Peter Brett. Thanks!
 	  Rearrange gschem help menu & make it link to wiki pages.
 

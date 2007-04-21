@@ -312,6 +312,7 @@ compselect_model_filter_visible_func (GtkTreeModel *model,
 {
   Compselect *compselect = (Compselect*)data;
   gchar *compname;
+  gchar *compname_upper=NULL, *text_upper=NULL;
   const gchar *text;
   gboolean ret;
 
@@ -337,8 +338,14 @@ compselect_model_filter_visible_func (GtkTreeModel *model,
     gtk_tree_model_get (model, iter,
                         0, &compname,
                         -1);
-    ret = (strstr (compname, text) != NULL);
+    /* Do a case insensitive comparison, converting the strings 
+       to uppercase */
+    compname_upper = g_ascii_strup(compname, -1);
+    text_upper = g_ascii_strup(text, -1);
+    ret = (strstr (compname_upper, text_upper) != NULL);
     g_free (compname);
+    g_free(compname_upper);
+    g_free(text_upper);
   }
 
   return ret;
