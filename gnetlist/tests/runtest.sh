@@ -6,7 +6,8 @@ BUILDDIR=$3
 SRCDIR=$4
 EXTRADIFF=$5
 
-export TESTDIR=${BUILDDIR}
+TESTDIR=${BUILDDIR}
+export TESTDIR
 
 schbasename=`basename $INPUT .sch`
 
