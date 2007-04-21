@@ -383,6 +383,16 @@ static void pagesel_init (Pagesel *pagesel)
                 "has-separator",   TRUE,
                 NULL);
 
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(pagesel),
+					  GTK_RESPONSE_OK,
+					  GTK_RESPONSE_NO,
+					  GTK_RESPONSE_CANCEL,
+					  GTK_RESPONSE_HELP,
+					  -1);
+#endif
+
   /* create the model for the treeview */
   store = (GtkTreeModel*)gtk_tree_store_new (NUM_COLUMNS,
                                              G_TYPE_POINTER,  /* page */

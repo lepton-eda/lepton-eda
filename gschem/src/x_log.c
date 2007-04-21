@@ -64,6 +64,16 @@ void x_log_open ()
     log_dialog = GTK_WIDGET (g_object_new (TYPE_LOG,
                                            NULL));
 
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+    gtk_dialog_set_alternative_button_order(GTK_DIALOG(log_dialog),
+					    GTK_RESPONSE_OK,
+					    GTK_RESPONSE_NO,
+					    GTK_RESPONSE_CANCEL,
+					    GTK_RESPONSE_HELP,
+					    -1);
+#endif
+
     g_signal_connect (log_dialog,
                       "response",
                       G_CALLBACK (x_log_callback_response),
@@ -237,6 +247,16 @@ static void log_init (Log *log)
                 /* GtkDialog */
                 "has-separator",   TRUE,
                 NULL);
+
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(log),
+					  GTK_RESPONSE_OK,
+					  GTK_RESPONSE_NO,
+					  GTK_RESPONSE_CANCEL,
+					  GTK_RESPONSE_HELP,
+					  -1);
+#endif
 
   /* create a scrolled window for the textview */
   scrolled_win = GTK_WIDGET (

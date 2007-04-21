@@ -330,6 +330,15 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
 					 GTK_STOCK_OK,
 					 GTK_RESPONSE_APPLY,
 					 NULL);
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(aewindow),
+					  GTK_RESPONSE_OK,
+					  GTK_RESPONSE_NO,
+					  GTK_RESPONSE_CANCEL,
+					  GTK_RESPONSE_HELP,
+					  -1);
+#endif
 					 
   gtk_signal_connect(GTK_OBJECT(aewindow), "response",
 		     GTK_SIGNAL_FUNC(attribute_edit_dialog_response), w_current);

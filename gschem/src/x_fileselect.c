@@ -174,6 +174,17 @@ x_fileselect_open(TOPLEVEL *toplevel)
                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                         GTK_STOCK_OPEN,   GTK_RESPONSE_ACCEPT,
                                         NULL);
+
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
+					  GTK_RESPONSE_OK,
+					  GTK_RESPONSE_NO,
+					  GTK_RESPONSE_CANCEL,
+					  GTK_RESPONSE_HELP,
+					  -1);
+#endif
+
   x_fileselect_add_preview (GTK_FILE_CHOOSER (dialog));  
   g_object_set (dialog,
                 /* GtkFileChooser */
@@ -223,6 +234,17 @@ x_fileselect_save (TOPLEVEL *toplevel)
                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                         GTK_STOCK_SAVE,   GTK_RESPONSE_ACCEPT,
                                         NULL);
+
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
+					  GTK_RESPONSE_OK,
+					  GTK_RESPONSE_NO,
+					  GTK_RESPONSE_CANCEL,
+					  GTK_RESPONSE_HELP,
+					  -1);
+#endif
+
   g_object_set (dialog,
                 /* GtkFileChooser */
                 "select-multiple", FALSE,
@@ -273,6 +295,17 @@ int x_fileselect_load_backup(TOPLEVEL *toplevel, GString *message)
 			  GTK_MESSAGE_QUESTION,
 			  GTK_BUTTONS_YES_NO,
 			  message->str);
+
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
+					  GTK_RESPONSE_OK,
+					  GTK_RESPONSE_NO,
+					  GTK_RESPONSE_CANCEL,
+					  GTK_RESPONSE_HELP,
+					  -1);
+#endif
+
   gtk_widget_show (dialog);
   if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_YES) {
     gtk_widget_destroy(dialog);  

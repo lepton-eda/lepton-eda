@@ -10,6 +10,16 @@
 
 2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
+       * src/o_picture.c, src/x_attribedit.c, src/x_autonumber.c,
+	 src/x_compselect.c, src/x_dialog.c, src/x_fileselect.c,
+	 src/x_image.c, src/x_log.c, src/x_multiattrib.c,
+	 src/x_pagesel.c, src/x_print.c, src/x_script.c,
+	 src/i_callbacks.c:
+	 
+	 Set the alternative button order for gtk dialogs.
+	 This would allow to display the correct button order whatever
+	 system is running this app. Fix for bug #1553483.
+
 	* src/i_callbacks.c:
 	  - Do nothing if the user deletes the page revert question dialog.
 	

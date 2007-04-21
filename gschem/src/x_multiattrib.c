@@ -59,6 +59,16 @@ void x_multiattrib_open (TOPLEVEL *toplevel, OBJECT *object)
                                      "object", object,
                                      NULL));
 
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
+					  GTK_RESPONSE_OK,
+					  GTK_RESPONSE_NO,
+					  GTK_RESPONSE_CANCEL,
+					  GTK_RESPONSE_HELP,
+					  -1);
+#endif
+
   gtk_window_set_transient_for(GTK_WINDOW(dialog),
 			       GTK_WINDOW(toplevel->main_window));
 
@@ -650,6 +660,17 @@ static void multiattrib_callback_edited_name(GtkCellRendererText *cellrendererte
       GTK_MESSAGE_ERROR,
       GTK_BUTTONS_OK,
       _("Attributes with empty name are not allowed. Please set a name."));
+
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+    gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
+					    GTK_RESPONSE_OK,
+					    GTK_RESPONSE_NO,
+					    GTK_RESPONSE_CANCEL,
+					    GTK_RESPONSE_HELP,
+					    -1);
+#endif
+
     gtk_dialog_run (GTK_DIALOG (dialog));
     gtk_widget_destroy (dialog);
     return;
@@ -1315,6 +1336,16 @@ static void multiattrib_init(Multiattrib *multiattrib)
                 /* GtkDialog */
                 "has-separator",   TRUE,
                 NULL);
+
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(multiattrib),
+					  GTK_RESPONSE_OK,
+					  GTK_RESPONSE_NO,
+					  GTK_RESPONSE_CANCEL,
+					  GTK_RESPONSE_HELP,
+					  -1);
+#endif
 
   multiattrib->toplevel = NULL;
   multiattrib->object   = NULL;
