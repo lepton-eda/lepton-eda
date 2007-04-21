@@ -349,6 +349,7 @@ void o_pin_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 void o_pin_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 		       int origin_x, int origin_y, int color_mode)
 {
+  int x[2], y[2];
   int color;
 
   if (o_current == NULL) {
