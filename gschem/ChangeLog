@@ -1,5 +1,7 @@
 2007-04-21 Peter Clifton <pcjc2@cam.ac.uk>
 
+	* configure.ac.in: Added explicit test for locale.h
+
 	* src/i_callbacks.c: Make test for revert page question more
 	  succinct, testing for the absence of the "YES" response, rather
 	  than for the various ways the user might cancel the dialog.
