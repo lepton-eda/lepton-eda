@@ -1,3 +1,13 @@
+2007-04-21 Peter Brett <peter@peter-b.co.uk>
+
+	* lib/system-gschemrc.in: Change keystrokes for grid size change
+	shortcuts.
+
+	Incrementing/decrementing the grid size is something that users
+	are likely to do several times in quick succession.  As such, it
+	the keystroke should be a single key. This sets
+	increment/decrement to ']' and '[' respectively.
+	
 2007-04-21 Peter Clifton <pcjc2@cam.ac.uk>
 
 	* src/g_keys.c, src/x_print.c: Check return value of gdk_keyval_name() is

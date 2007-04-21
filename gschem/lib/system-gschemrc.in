@@ -1475,8 +1475,6 @@
     ("s" . options-snap)
     ("r" . options-rubberband)
     ("Shift S" . options-snap-size)
-    ("e" . options-scale-up-snap-size)
-    ("d" . options-scale-down-snap-size)
     ("l" . options-show-log-window)
     ("c" . options-show-coord-window)))
 
@@ -1507,6 +1505,8 @@
     ("m" . edit-move-hotkey)
     ("n" . add-net-hotkey)
     ("o" . options-keymap)
+    ("bracketright" . options-scale-up-snap-size)
+    ("bracketleft" . options-scale-down-snap-size)
     ("p" . page-keymap)
     ("q" . no-action)
     ("r" . view-redraw)
