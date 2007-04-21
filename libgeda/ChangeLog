@@ -1,3 +1,8 @@
+2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
+
+	* configure.ac: Don't enable libgd by default.
+	  This makes gdk-pixbuf the default library for png output.
+	
 2007-04-21 Peter Clifton <pcjc2@cam.ac.uk>
 
 	* src/m_basic.c: Fix visibility test in visible(..) for the case when the

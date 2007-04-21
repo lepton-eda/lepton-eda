@@ -23,9 +23,10 @@ AM_MAINTAINER_MODE
 #########################################################################
 # Command line flags start
 # 
-# --disable-gd : turn off libgd support
-AC_ARG_ENABLE(gd, [  --disable-gd        Disable libgd support (don't use libgd at all)], 
-  [ if test $enableval = "no"; then no_gd=yes; fi ])
+# --enable-gd : turn off libgd support
+no_gd="yes"
+AC_ARG_ENABLE(gd, [  --enable-gd         Enable libgd support (use libgd instead of gdk-pixbuf)], 
+  [ if test $enableval = "yes"; then no_gd=no; fi ])
 
 # Change default location for rc files
 AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
@@ -538,6 +539,7 @@ AC_MSG_RESULT([
    GLIB library version:             $GLIB_VERSION
    GTK+ library version:             $GTK_VERSION
    GUILE library version:            $GUILE_VERSION
+   GDK-PIXBUF (png output):          $GDK_PIXBUF_VERSION
    libgd (png output):               $GD $GD_VERSION
    mingw build:                      $MINGW
    data directory:                   $expandedGEDADATADIR
