@@ -5,6 +5,11 @@
 
 2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) net>
 
+	* configure.ac, scripts/Makefile.am, scripts/gschemdoc.sh, 
+	  scripts/config.sh.in: Applied patch by Peter Brett.
+	
+	  Moved gschemdoc from utils/scripts to gschem/scripts.
+
 	* scripts/gschemdoc.sh: Apply patch from Peter Brett to 
 	allow gschemdoc to access wiki pages with -w .
 

@@ -550,6 +550,7 @@ AC_CONFIG_FILES([Makefile
 		scheme/Makefile
 		bitmap/Makefile
 		scripts/Makefile
+		scripts/config.sh
 		examples/Makefile
 		docs/Makefile
 		lib/Makefile

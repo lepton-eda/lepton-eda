@@ -12,6 +12,12 @@
 
 2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
+       * configure.ac.in, scripts/Makefile.am, scripts/config.sh.in,
+	 scripts/gschemdoc.sh:
+
+	 Applied patch by Peter Brett. Moved gschemdoc from
+	 utils/scripts to gschem/scripts.
+	
        * lib/system-gschemrc.in: Use PgUp & PgDn to change pages in gschem.
 
 	 Applied patch from Peter Brett. Thanks!

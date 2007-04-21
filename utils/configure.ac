@@ -412,7 +412,6 @@ AC_CONFIG_FILES([Makefile
                  examples/gsch2pcb/Makefile 
                  include/Makefile 
                  scripts/Makefile 
-                 scripts/config.sh 
                  docs/Makefile 
                  man/Makefile 
                  lib/Makefile 
