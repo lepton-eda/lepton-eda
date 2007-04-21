@@ -4048,6 +4048,11 @@ x_dialog_close_changed_page (TOPLEVEL *toplevel, PAGE *page)
 					  -1);
 #endif
 
+  /* set default response signal. This is usually triggered by the 
+     "Return" key */
+  gtk_dialog_set_default_response(GTK_DIALOG(dialog),
+				  GTK_RESPONSE_YES);
+
   switch (gtk_dialog_run (GTK_DIALOG (dialog))) {
       case GTK_RESPONSE_NO:
         /* action selected: close without saving */

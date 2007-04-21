@@ -10,6 +10,10 @@
 
 2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
+       * src/x_dialog.c:
+	 Make "Save changes" the default response in the close page
+	 confirmation dialog.
+
        * src/o_picture.c, src/x_attribedit.c, src/x_autonumber.c,
 	 src/x_compselect.c, src/x_dialog.c, src/x_fileselect.c,
 	 src/x_image.c, src/x_log.c, src/x_multiattrib.c,
