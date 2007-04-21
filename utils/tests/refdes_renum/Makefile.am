@@ -3,7 +3,7 @@
 
 SUBDIRS= inputs outputs
 
-TESTS_ENVIRONMENT= PERL=${PERL}
+TESTS_ENVIRONMENT= PERL=${PERL} top_srcdir=${top_srcdir}
 
 RUN_TESTS= run_tests.sh
 
