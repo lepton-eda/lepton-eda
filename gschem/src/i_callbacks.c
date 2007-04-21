@@ -3049,6 +3049,9 @@ DEFINE_I_CALLBACK(hierarchy_documentation)
       if (attrib_device) g_free(attrib_device);
       if (attrib_value) g_free(attrib_value);
     }
+  } else {
+    generic_msg_dialog(_("This command retrieves the component documentation from the web, but there is no component selected"));
+
   }
 }
 

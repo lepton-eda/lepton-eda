@@ -6,6 +6,10 @@
 
 2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
+	* src/i_callbacks.c:
+	  Pop up a message if there is no component selected and the user
+	  hits help->component documentation menu.
+	
 	* src/x_compselect.c: 
 	  Make the component selector filter case insensitive.
 	  Fixes bug #1673589. Thanks to Phil Endecott for reporting the
