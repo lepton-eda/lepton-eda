@@ -6,7 +6,10 @@
 2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
 	* src/x_fileselect.c:
-	  Set the alternative button order for gtk dialogs.
+	 - Reverted the changes below. 
+	   gtk_dialog_set_alternative_button_order should have the same
+	   responses as the dialogs.
+	 - Set the alternative button order for gtk dialogs.
 	  This would allow to display the correct button order whatever
 	  system is running this app. Fix for bug #1553483.
 	
