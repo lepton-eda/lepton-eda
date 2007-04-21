@@ -175,16 +175,6 @@ void picture_selection_dialog (TOPLEVEL *w_current)
 						      GTK_STOCK_OPEN, 
 						      GTK_RESPONSE_ACCEPT,
 						      NULL);
-#if GTK_CHECK_VERSION (2,6,0)
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->pfswindow),
-					  GTK_RESPONSE_OK,
-					  GTK_RESPONSE_NO,
-					  GTK_RESPONSE_CANCEL,
-					  GTK_RESPONSE_HELP,
-					  -1);
-#endif
-
   if (w_current->pixbuf_filename)
     gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(w_current->pfswindow), 
 				  w_current->pixbuf_filename);
@@ -206,15 +196,6 @@ void picture_selection_dialog (TOPLEVEL *w_current)
 				       GTK_BUTTONS_CLOSE,
 				       _("Failed to load picture: %s"),
 				       error->message);
-#if GTK_CHECK_VERSION (2,6,0)
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-      gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-					      GTK_RESPONSE_OK,
-					      GTK_RESPONSE_NO,
-					      GTK_RESPONSE_CANCEL,
-					      GTK_RESPONSE_HELP,
-					      -1);
-#endif
       /* Wait for any user response */
       gtk_dialog_run (GTK_DIALOG (dialog));
       
@@ -726,17 +707,6 @@ void picture_change_filename_dialog (TOPLEVEL *w_current)
 						      GTK_STOCK_OPEN, 
 						      GTK_RESPONSE_ACCEPT,
 						      NULL);
-
-#if GTK_CHECK_VERSION (2,6,0)
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->pfswindow),
-					  GTK_RESPONSE_OK,
-					  GTK_RESPONSE_NO,
-					  GTK_RESPONSE_CANCEL,
-					  GTK_RESPONSE_HELP,
-					  -1);
-#endif
-
   if (w_current->pixbuf_filename)
     gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(w_current->pfswindow), 
 				  w_current->pixbuf_filename);
@@ -758,15 +728,6 @@ void picture_change_filename_dialog (TOPLEVEL *w_current)
 				       GTK_BUTTONS_CLOSE,
 				       _("Failed to load picture: %s"),
 				       error->message);
-#if GTK_CHECK_VERSION (2,6,0)
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-      gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-					      GTK_RESPONSE_OK,
-					      GTK_RESPONSE_NO,
-					      GTK_RESPONSE_CANCEL,
-					      GTK_RESPONSE_HELP,
-					      -1);
-#endif
       /* Wait for any user response */
       gtk_dialog_run (GTK_DIALOG (dialog));
       

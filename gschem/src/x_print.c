@@ -95,16 +95,6 @@ print_dialog_action_choosefile (GtkWidget * w, PrintDialog * dialog)
 					     GTK_STOCK_OK,
 					     GTK_RESPONSE_ACCEPT, NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(filechooser),
-					  GTK_RESPONSE_OK,
-					  GTK_RESPONSE_NO,
-					  GTK_RESPONSE_CANCEL,
-					  GTK_RESPONSE_HELP,
-					  -1);
-#endif
-
   filename = gtk_entry_get_text (GTK_ENTRY (dialog->fnfield));
   gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (filechooser), filename);
 
@@ -314,16 +304,6 @@ print_dialog_init (PrintDialog * dialog)
 		/* GtkWindow */
 		"title", _("Print..."),
 		"modal", TRUE, "destroy-with-parent", TRUE, NULL);
-
-#if GTK_CHECK_VERSION (2,6,0)
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-					  GTK_RESPONSE_OK,
-					  GTK_RESPONSE_NO,
-					  GTK_RESPONSE_CANCEL,
-					  GTK_RESPONSE_HELP,
-					  -1);
-#endif
 
   /* Connect key-press event */
   g_signal_connect (dialog,
@@ -736,16 +716,6 @@ x_print_setup (TOPLEVEL * w_current, char *filename)
 						"type", type,
 						"usefile", usefile,
 						 NULL));
-#if GTK_CHECK_VERSION (2,6,0)
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-					  GTK_RESPONSE_OK,
-					  GTK_RESPONSE_NO,
-					  GTK_RESPONSE_CANCEL,
-					  GTK_RESPONSE_HELP,
-					  -1);
-#endif
-
   gtk_widget_show_all (GTK_WIDGET (dialog));
 
   gtk_dialog_set_default_response(GTK_DIALOG(dialog),
@@ -811,16 +781,6 @@ x_print_setup (TOPLEVEL * w_current, char *filename)
 				    _("Error printing to file '%s'\n"
 				      "Check the log window for more information"),
 				    destination);
-#if GTK_CHECK_VERSION (2,6,0)
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-	  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-						  GTK_RESPONSE_OK,
-						  GTK_RESPONSE_NO,
-						  GTK_RESPONSE_CANCEL,
-						  GTK_RESPONSE_HELP,
-						  -1);
-#endif
-
 	  gtk_dialog_run (GTK_DIALOG (popup_message));	  
 	}
       else

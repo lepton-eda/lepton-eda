@@ -715,16 +715,6 @@ compselect_init (Compselect *compselect)
   g_object_set (GTK_DIALOG (compselect)->vbox,
                 "homogeneous", FALSE,
                 NULL);
-
-#if GTK_CHECK_VERSION (2,6,0)
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(compselect),
-					  GTK_RESPONSE_OK,
-					  GTK_RESPONSE_NO,
-					  GTK_RESPONSE_CANCEL,
-					  GTK_RESPONSE_HELP,
-					  -1);
-#endif
   /* connect dialog to key press event */
   g_signal_connect (compselect,
                     "key_press_event",

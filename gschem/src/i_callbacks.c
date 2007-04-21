@@ -1762,17 +1762,6 @@ DEFINE_I_CALLBACK(page_revert)
                                    GTK_MESSAGE_QUESTION,
                                    GTK_BUTTONS_YES_NO,
                                    _("Really revert page?"));
-
-#if GTK_CHECK_VERSION (2,6,0)
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-					  GTK_RESPONSE_OK,
-					  GTK_RESPONSE_NO,
-					  GTK_RESPONSE_CANCEL,
-					  GTK_RESPONSE_HELP,
-					  -1);
-#endif
-
   response = gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
 
