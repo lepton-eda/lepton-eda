@@ -1,5 +1,9 @@
 2007-04-21 Peter Clifton <pcjc2@cam.ac.uk>
 
+	* src/i_callbacks.c: Make test for revert page question more
+	  succinct, testing for the absence of the "YES" response, rather
+	  than for the various ways the user might cancel the dialog.
+
 	* src/o_arc.c: Fix for drawing a dotted arc / circle with
 	  angular dot spacing too small to render. Was a sign error
 	  in the alternative codepath for drawing these cases.

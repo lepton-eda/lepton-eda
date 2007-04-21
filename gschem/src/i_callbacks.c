@@ -1757,25 +1757,16 @@ DEFINE_I_CALLBACK(page_revert)
 
   exit_if_null(w_current);
 
- dialog = gtk_message_dialog_new ((GtkWindow*) w_current->main_window,
-                                  GTK_DIALOG_DESTROY_WITH_PARENT,
-                                  GTK_MESSAGE_QUESTION,
-                                  GTK_BUTTONS_YES_NO,
-                                  _("Really revert page?"));
- response = gtk_dialog_run (GTK_DIALOG (dialog));
- gtk_widget_destroy (dialog);
- 
- switch (response) 
- {
-   case GTK_RESPONSE_NO:
-   case GTK_RESPONSE_DELETE_EVENT:
-     return; /* don't continue */
-   break; 
+  dialog = gtk_message_dialog_new ((GtkWindow*) w_current->main_window,
+                                   GTK_DIALOG_DESTROY_WITH_PARENT,
+                                   GTK_MESSAGE_QUESTION,
+                                   GTK_BUTTONS_YES_NO,
+                                   _("Really revert page?"));
+  response = gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
 
-   case GTK_RESPONSE_YES:
-   /* just fall through */
-   break;
- }
+  if (response != GTK_RESPONSE_YES )
+    return;
 
   /* save this for later */
   filename = g_strdup (w_current->page_current->page_filename);
