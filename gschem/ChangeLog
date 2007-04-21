@@ -12,6 +12,14 @@
 
 2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
+       * lib/system-gschemrc.in: Use PgUp & PgDn to change pages in gschem.
+
+	 Applied patch from Peter Brett. Thanks!
+
+	 Not only is it more intuitive to use the page keys to swap
+	 between pages, but the current bindings ('<' & '>') don't
+	 work on German keyboards.
+	
        * src/x_fileselect.c:
 	 Make "Save" the default response in the save page dialog.
 	 FR #1704919. Thanks to rikster for reporting this FR.

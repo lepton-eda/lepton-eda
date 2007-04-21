@@ -1527,8 +1527,10 @@
     ("equal" . misc-misc2)
     ("Shift plus" . misc-misc3)
     ("Delete" . edit-delete)
-    ("Shift greater" . page-next)
-    ("Shift less" . page-prev)
+    ("Shift greater" . page-next) ; Deprecated; preserved for backward compat
+    ("Page_Down" . page-next)
+    ("Shift less" . page-prev) ; Deprecated; preserved for backward compat
+    ("Page_Up" . page-prev)
     ("Alt q" . file-quit)
     ("Shift H" . hierarchy-keymap)
     ("Shift U" . edit-undo)
