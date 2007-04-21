@@ -1484,6 +1484,8 @@
 (define help-keymap
   '(("a" . help-about)
     ("m" . help-manual)
+    ("f" . help-faq)
+    ("w" . help-wiki)
     ("h" . help-hotkeys)
     ("c" . hierarchy-documentation))) ; yes this is okay; reusing
 
@@ -1721,16 +1723,31 @@
 	   ("Show Coord Window..."   options-show-coord-window   
 				     options-show-coord-window)))
 
+; Set up some functions used to open help files for the help menu
+; 
+; Commented this out until the gsch2pcb tutorial gets into the wiki
+; and the UG wiki page is improved
+; (define (help-manual)
+;   (gschem-browse-wiki "geda:gschem_ug"))
+
+(define (help-faq)
+  (gschem-browse-wiki "geda:faq-gschem"))
+(define (help-wiki)
+  (gschem-browse-wiki))
 (define help-menu-items 
 ;;
 ;;          menu item name      menu action     	menu hotkey action
 ;;
-	'( ("About..."		help-about      	help-about)
-	   ("Manual..."         help-manual             help-manual)
-	   ("Hotkeys..."        help-hotkeys            help-hotkeys)
-	   ("Component..."      hierarchy-documentation
-						    hierarchy-documentation)))
-
+	'( 
+	   ("Manual"		help-manual             help-manual)
+	   ("FAQ"		help-faq		help-faq)
+	   ("gEDA Wiki"		help-wiki		help-wiki)
+	   ("Component Documentation"	hierarchy-documentation
+						hierarchy-documentation)
+	   ("SEPARATOR"		no-action		no-action)
+	   ("About gschem"	help-about		help-about)
+	   ("Hotkeys"		help-hotkeys		help-hotkeys)))
+	  
 ;
 ; Now actually add the menus.  The order here defines the order in which
 ; the menus appear in the top menu bar.

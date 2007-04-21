@@ -1,5 +1,16 @@
 2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
+	* lib/system-gschemrc.in: Apply patch from Peter Brett. Thanks!
+	  Rearrange gschem help menu & make it link to wiki pages.
+
+	  Rearrange the gschem help menu:
+	   - "Manual" now links directly to the gschem User Guide.
+	      (Note by cnieves: I commented this out until the gsch2pcb 
+	      tutorial gets into the wiki and the UG wiki page is improved).
+	   - "FAQ" now links directly to the gschem FAQ
+	   - Add menu item which links directly to the wiki root page
+	   - Rearrange "About" and "Hotkeys" to bottom of menu
+	  
 	* include/prototype.h, src/g_funcs.h, src/g_register.c:
 	  Apply patch from Peter Brett, adding the gschem-browse-wiki 
 	  Scheme function. Thanks!
