@@ -1224,6 +1224,13 @@ GtkWidget* autonumber_create_dialog(TOPLEVEL *w_current)
 						GTK_STOCK_APPLY,
 						GTK_RESPONSE_ACCEPT,
 						NULL);
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(autonumber_text),
+					  GTK_RESPONSE_ACCEPT,
+					  GTK_RESPONSE_REJECT,
+					  -1);
+#endif
 
   gtk_window_position (GTK_WINDOW (autonumber_text),
 		       GTK_WIN_POS_MOUSE);

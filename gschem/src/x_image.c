@@ -372,7 +372,7 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename,
 				       _("There was the following error when saving image with type %s to filename:\n%s\n\n%s.\n"),
 				       filetype, filename, gerror->message
 					 );
-      
+
       gtk_dialog_run (GTK_DIALOG (dialog));
       gtk_widget_destroy (dialog);
 
@@ -498,6 +498,14 @@ void x_image_setup (TOPLEVEL *w_current)
 					GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 					GTK_STOCK_SAVE,   GTK_RESPONSE_ACCEPT,
 					NULL);
+
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
+					  GTK_RESPONSE_ACCEPT,
+					  GTK_RESPONSE_CANCEL,
+					  -1);
+#endif
   
   /* Add the extra widgets to the dialog*/
   gtk_box_pack_start(GTK_BOX(hbox), vbox1, FALSE, FALSE, 10);

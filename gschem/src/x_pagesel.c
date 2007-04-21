@@ -478,6 +478,15 @@ static void pagesel_init (Pagesel *pagesel)
                           /*  - close button */
                           GTK_STOCK_CLOSE,   PAGESEL_RESPONSE_CLOSE,
                           NULL);
+
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(pagesel),
+					  PAGESEL_RESPONSE_UPDATE,
+					  PAGESEL_RESPONSE_CLOSE,
+					  -1);
+#endif
+
   
 }
 

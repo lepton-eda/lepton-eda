@@ -34,6 +34,9 @@
 	 src/x_pagesel.c, src/x_print.c, src/x_script.c,
 	 src/i_callbacks.c:
 
+	 - Set the alternative button order for gtk dialogs 
+	   (now with correct responses).
+	   
 	 - Reverted the changes below. 
 	   gtk_dialog_set_alternative_button_order should have the same
 	   responses as the dialogs.

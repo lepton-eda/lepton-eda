@@ -95,6 +95,14 @@ print_dialog_action_choosefile (GtkWidget * w, PrintDialog * dialog)
 					     GTK_STOCK_OK,
 					     GTK_RESPONSE_ACCEPT, NULL);
 
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(filechooser),
+					  GTK_RESPONSE_ACCEPT,
+					  GTK_RESPONSE_CANCEL,
+					  -1);
+#endif
+
   filename = gtk_entry_get_text (GTK_ENTRY (dialog->fnfield));
   gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (filechooser), filename);
 
@@ -422,6 +430,14 @@ print_dialog_init (PrintDialog * dialog)
 			  GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
 			  GTK_STOCK_PRINT, GTK_RESPONSE_ACCEPT,
 			  NULL);
+
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
+					  GTK_RESPONSE_ACCEPT,
+					  GTK_RESPONSE_REJECT,
+					  -1);
+#endif
 
   /* Set initial radiobutton selection */
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->cmdradio), TRUE);

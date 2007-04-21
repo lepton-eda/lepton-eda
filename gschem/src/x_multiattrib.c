@@ -650,6 +650,7 @@ static void multiattrib_callback_edited_name(GtkCellRendererText *cellrendererte
       GTK_MESSAGE_ERROR,
       GTK_BUTTONS_OK,
       _("Attributes with empty name are not allowed. Please set a name."));
+
     gtk_dialog_run (GTK_DIALOG (dialog));
     gtk_widget_destroy (dialog);
     return;
