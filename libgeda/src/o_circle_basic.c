@@ -47,17 +47,7 @@
  */
 int dist(int x1, int y1, int x2, int y2)
 {
-  int dx1, dy1;
-  int dx2, dy2;
-  int ret;
-
-  dx1 = x1;
-  dy1 = y1;
-  dx2 = x2;
-  dy2 = y2;
-
-  ret =  sqrt(pow(dx1-dx2,2)+pow(dy1-dy2,2)) ;
-  return( ret );
+  return sqrt(pow(x1-x2,2)+pow(y1-y2,2));
 }
 
 /*! \brief Create and add circle OBJECT to list.
