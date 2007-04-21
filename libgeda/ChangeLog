@@ -1,3 +1,8 @@
+2007-04-21  Mike Jarabek  <mjarabek@sentex.ca>
+
+	* src/f_print.c:
+	  - Added %%Orientation to DSC block in PS output, fixing SF#1680214.
+
 2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
 	* src/o_bus_basic.c, src/o_circle_basic.c, src/o_line_basic.c,

@@ -122,6 +122,7 @@ int f_print_header(TOPLEVEL *w_current, FILE *fp,
 	  "%%%%Title: %s\n"
 	  "%%%%Author: %s\n"
 	  "%%%%BoundingBox: %d %d %d %d\n"
+	  "%%%%Orientation: %s\n"
 	  "%%%%Pages: 1\n"
 	  "%%%%Endcomments\n"
 	  "%%%%BeginProlog\n",
@@ -129,7 +130,9 @@ int f_print_header(TOPLEVEL *w_current, FILE *fp,
 	  ctime(&current_time),
 	  w_current->page_current->page_filename,
 	  getlogin(),
-	  llx, lly, urx, ury
+	  llx, lly, urx, ury,
+	  ((w_current->print_orientation == LANDSCAPE) 
+	   ? "Landscape" : "Portrait")
 	  );
 
   /* Fetch and insert the Postscript prolog from disk here */
