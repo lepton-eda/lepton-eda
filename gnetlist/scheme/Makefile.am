@@ -18,7 +18,7 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-geda.scm \
 	   gnet-switcap.scm gnet-spice-sdb.scm gnet-drc2.scm \
 	   gnet-futurenet2.scm gnet-cascade.scm \
 	   gnet-redac.scm gnet-systemc.scm gnet-eagle.scm \
-	   gnet-pcbpins.scm
+	   gnet-pcbpins.scm gnet-calay.scm
 
 
 EXTRA_DIST = $(DIST_SCM) $(SCM_SRCS)
