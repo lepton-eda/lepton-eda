@@ -108,9 +108,9 @@ x_window_init()
   printf("In x_window_init, about to connect delete and destroy signals to window.\n");
 #endif
   gtk_signal_connect (GTK_OBJECT (window), "delete_event",
-		      GTK_SIGNAL_FUNC (gattrib_quit), 0);
+		      GTK_SIGNAL_FUNC (gattrib_really_quit), 0);
   gtk_signal_connect (GTK_OBJECT (window), "destroy",
-		      GTK_SIGNAL_FUNC (gattrib_quit), 0);
+		      GTK_SIGNAL_FUNC (gattrib_really_quit), 0);
   
 
   /* -----  Now create main_vbox.  This is a container which organizes child  ----- */  

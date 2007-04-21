@@ -1,3 +1,8 @@
+2007-4-21  Stuart Brorson <sdb (AT) cloud9 (DOT) net>
+	* src/x_window.c: Modify gattrib so it checks for design changes
+	before quitting if user hits delete button on window.  Closes bug
+	1704938 from Peter Brett.
+	
 2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
 	* src/x_fileselect.c:
