@@ -181,7 +181,7 @@ for t in $all_tests ; do
 	    fi
 	else
 	    echo "No reference file.  Skipping"
-	    skip=`expr $skip + 1`
+	    good=0
 	    soso=1
 	fi
     done
