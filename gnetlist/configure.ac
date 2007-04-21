@@ -378,6 +378,11 @@ AC_CONFIG_FILES([Makefile
 		 tests/Makefile 
 		 tests/hierarchy/Makefile 
 		 tests/drc2/Makefile
+		 tests/spice-sdb/Makefile
+		 tests/spice-sdb/inputs/Makefile
+		 tests/spice-sdb/inputs/sym/Makefile
+		 tests/spice-sdb/inputs/models/Makefile
+		 tests/spice-sdb/outputs/Makefile
 		 docs/Makefile 
 		 docs/vams/Makefile 
 		 examples/vams/Makefile 

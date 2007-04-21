@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = hierarchy drc2
+SUBDIRS = hierarchy drc2 spice-sdb
 
 EXTRA_DIST = 7447.vhdl README amp.spice darlington.spice netattrib.geda \
 	     netattrib.sch powersupply.PCB powersupply.allegro \
