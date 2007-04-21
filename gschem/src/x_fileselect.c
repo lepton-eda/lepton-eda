@@ -166,6 +166,7 @@ x_fileselect_add_preview (GtkFileChooser *filechooser)
 void
 x_fileselect_open(TOPLEVEL *toplevel)
 {
+  PAGE *page = NULL;
   GtkWidget *dialog;
 
   dialog = gtk_file_chooser_dialog_new (_("Open..."),
@@ -197,15 +198,18 @@ x_fileselect_open(TOPLEVEL *toplevel)
 
     /* open each file */ 
     for (tmp = filenames; tmp != NULL;tmp = g_slist_next (tmp)) {
-      x_window_open_page (toplevel, (gchar*)tmp->data);
+      page = x_window_open_page (toplevel, (gchar*)tmp->data);
     }
-   
+    /* Switch to the last page opened */
+    if ( page != NULL )
+      x_window_set_current_page (toplevel, page);
+
     /* free the list of filenames */
     g_slist_foreach (filenames, (GFunc)g_free, NULL);
     g_slist_free (filenames);
   }
   gtk_widget_destroy (dialog);
-  
+
 }
 
 /*! \brief Opens a file chooser for saving the current page.

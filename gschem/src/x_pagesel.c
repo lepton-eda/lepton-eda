@@ -187,6 +187,11 @@ static void pagesel_callback_selection_changed (GtkTreeSelection *selection,
   x_scrollbars_update (toplevel);
   o_redraw_all (toplevel);
 
+  /* We would like to use the following call, but since it calls 
+   * x_pagesel_update() it would cause an infinite loop.
+   */
+  /*  x_window_set_current_page (toplevel, page); */
+
 }
 
 /*! \todo Finish function documentation!!!

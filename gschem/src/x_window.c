@@ -38,8 +38,6 @@
  */
 void x_window_setup (TOPLEVEL *toplevel)
 {
-  PAGE *page;
-  
   /* x_window_setup_rest() - BEGIN */
   toplevel->num_untitled=0;
 
@@ -58,7 +56,7 @@ void x_window_setup (TOPLEVEL *toplevel)
   toplevel->grid = 1;
 
   toplevel->show_hidden_text = 0;
-  
+
   toplevel->complex_rotate = 0;
 
   toplevel->current_attribute = NULL;
@@ -93,7 +91,7 @@ void x_window_setup (TOPLEVEL *toplevel)
   toplevel->status_label = NULL;
   toplevel->middle_label = NULL;
   toplevel->grid_label = NULL;
-  
+
   toplevel->cswindow = NULL;
   toplevel->aswindow = NULL;
   toplevel->fowindow = NULL;
@@ -132,11 +130,10 @@ void x_window_setup (TOPLEVEL *toplevel)
   /* Initialize the autosave callback */
   s_page_autosave_init(toplevel);
 
-  /* make sure none of these events happen till we are done */
-  toplevel->DONT_DRAW_CONN = 1;
-  toplevel->DONT_RESIZE    = 1;
-  toplevel->DONT_EXPOSE    = 1;
-  toplevel->DONT_RECALC    = 1;
+  toplevel->DONT_DRAW_CONN = 0;
+  toplevel->DONT_RESIZE    = 0;
+  toplevel->DONT_EXPOSE    = 0;
+  toplevel->DONT_RECALC    = 0;
 
   /* X related stuff */
   toplevel->display_height = gdk_screen_height ();
@@ -159,31 +156,7 @@ void x_window_setup (TOPLEVEL *toplevel)
   /* x_window_setup_world() - END */
 
   /* X related stuff */
-  /* do X fill in first */
   x_window_create_main (toplevel);
-
-  /* Now create a blank page */
-  page = s_page_new (toplevel, "unknown");
-  s_page_goto (toplevel, page);
-
-  /* Do a zoom extents */
-  a_zoom_extents(toplevel, toplevel->page_current->object_head, 0);
-  
-  o_undo_savestate(toplevel, UNDO_ALL);
-  i_update_menus(toplevel);
-
-  /* now update the scrollbars */
-  toplevel->DONT_REDRAW = 1;
-  x_hscrollbar_update(toplevel);
-  x_vscrollbar_update(toplevel);
-  toplevel->DONT_REDRAW = 0;
-
-  /* renable the events */
-  toplevel->DONT_DRAW_CONN=0;
-  toplevel->DONT_RESIZE=0;
-  toplevel->DONT_EXPOSE=0;
-  toplevel->DONT_RECALC=0;
-
 }
 
 /*! \todo Finish function documentation!!!
@@ -903,26 +876,19 @@ x_window_open_untitled_page (TOPLEVEL *toplevel)
 {
   PAGE *page;
   gchar *cwd, *tmp, *filename;
- 
+
   cwd = g_get_current_dir ();
   tmp = g_strdup_printf ("%s_%d.sch",
                          toplevel->untitled_name,
-                         toplevel->num_untitled++);
+                         ++toplevel->num_untitled);
+
   filename = g_build_filename (cwd, tmp, NULL);
   g_free (cwd);
   g_free (tmp);
-   
+
   page = x_window_open_page (toplevel, filename);
-  
   g_free (filename);
 
-  if (scm_hook_empty_p (new_page_hook) == SCM_BOOL_F) {
-    scm_run_hook (new_page_hook,
-                  scm_cons (g_make_page_smob (toplevel, page), SCM_EOL));
-  }
-  
-  a_zoom_extents(toplevel, page->object_head, 0);
-  
   return page;
 }
 
@@ -949,38 +915,42 @@ x_window_open_page (TOPLEVEL *toplevel, const gchar *filename)
 
   g_return_val_if_fail (toplevel != NULL, NULL);
   g_return_val_if_fail (filename != NULL, NULL);
-  
-  /* save current page for restore after opening */
-  old_current = toplevel->page_current;
 
-  /* is file already loaded? */
+  /* Return existing page if it is already loaded */
   page = s_page_search (toplevel, filename);
-  if (page == NULL) {
-    /* no, create a page and load file in it */
-    page = s_page_new (toplevel, filename);
-    s_page_goto (toplevel, page);
-    
-    if (!quiet_mode) {
-      printf(_("Loading schematic [%s]\n"), filename);
-    }
+  if ( page != NULL )
+    return page;
 
-    if (g_file_test (filename, G_FILE_TEST_EXISTS)) {
-      f_open (toplevel, (gchar *) filename);
-    }
-    
-    i_set_filename (toplevel, toplevel->page_current->page_filename);
-    a_zoom_extents (toplevel,
-                    toplevel->page_current->object_head,
-                    A_PAN_DONT_REDRAW);
-    o_undo_savestate (toplevel, UNDO_ALL);
+  old_current = toplevel->page_current;
+  page = s_page_new (toplevel, filename);
+  s_page_goto (toplevel, page);
 
-    x_pagesel_update (toplevel);
-    
-  }
+  if (!quiet_mode)
+    printf(_("Loading schematic [%s]\n"), filename);
 
-  /* display the page in window */
-  x_window_set_current_page (toplevel, page);
-  
+  if (g_file_test (filename, G_FILE_TEST_EXISTS))
+    f_open (toplevel, (gchar *) filename);
+
+  if (scm_hook_empty_p (new_page_hook) == SCM_BOOL_F)
+    scm_run_hook (new_page_hook,
+                  scm_cons (g_make_page_smob (toplevel, page), SCM_EOL));
+
+  a_zoom_extents (toplevel,
+                  toplevel->page_current->object_head,
+                  A_PAN_DONT_REDRAW);
+
+  o_undo_savestate (toplevel, UNDO_ALL);
+
+  if ( old_current != NULL )
+    s_page_goto (toplevel, old_current);
+
+  /* This line is generally un-needed, however if some code
+   * wants to open a page, yet not bring it to the front, it is
+   * needed needed to add it into the page manager. Otherwise,
+   * it will get done in x_window_set_current_page(...)
+   */
+  x_pagesel_update (toplevel); /* ??? */
+
   return page;
 }
 
@@ -1009,16 +979,15 @@ x_window_set_current_page (TOPLEVEL *toplevel, PAGE *page)
   i_set_filename (toplevel, page->page_filename);
 
   x_pagesel_update (toplevel);
-  
+
   toplevel->DONT_REDRAW = 1;
   x_repaint_background (toplevel);
   x_manual_resize (toplevel);
   x_hscrollbar_update (toplevel);
   x_vscrollbar_update (toplevel);
   toplevel->DONT_REDRAW = 0;
-  
+
   o_redraw_all (toplevel);
-  
 }
 
 /*! \brief Saves a page to a file.
@@ -1048,7 +1017,7 @@ x_window_save_page (TOPLEVEL *toplevel, PAGE *page, const gchar *filename)
   g_return_val_if_fail (toplevel != NULL, 0);
   g_return_val_if_fail (page     != NULL, 0);
   g_return_val_if_fail (filename != NULL, 0);
-  
+
   /* save current page for restore after opening */
   old_current = toplevel->page_current;
 
@@ -1060,7 +1029,7 @@ x_window_save_page (TOPLEVEL *toplevel, PAGE *page, const gchar *filename)
     /* an error occured when saving page to file */
     log_msg   = _("Could NOT save page [%s]\n");
     state_msg = _("Error while trying to save");
-    
+
   } else {
     /* successful save of page to file, update page... */
     /* change page name if necessary and prepare log message */
@@ -1073,24 +1042,20 @@ x_window_save_page (TOPLEVEL *toplevel, PAGE *page, const gchar *filename)
       log_msg = _("Saved [%s]\n");
     }
     state_msg = _("Saved");
-      
+
     /* reset page CHANGED flag */
     page->CHANGED = 0;
-    
+
   }
 
   /* log status of operation */
   s_log_message (log_msg, filename);
-  
-  /* update display and page manager */
-  i_set_state_msg  (toplevel, SELECT, state_msg);
-  i_set_filename   (toplevel, page->page_filename);
-  i_update_toolbar (toplevel);
-  i_update_menus   (toplevel);
-  x_pagesel_update (toplevel);
 
-  /* restore current page in toplevel */
-  s_page_goto (toplevel, old_current);
+  /* update display and page manager */
+  x_window_set_current_page (toplevel, old_current);
+
+  i_set_state_msg  (toplevel, SELECT, state_msg);
+  i_update_toolbar (toplevel);
 
   return ret;
 }
@@ -1140,17 +1105,15 @@ x_window_close_page (TOPLEVEL *toplevel, PAGE *page)
   /* remove page from toplevel list of page and free */
   s_page_delete (toplevel, page);
 
+  /* Switch to a different page if we just removed the current */
   if (toplevel->page_current == NULL) {
-    /* page was the current page of toplevel, set new current */
-    if (new_current == NULL) {
-      /* empty page list in toplevel, create new page */
-      new_current = x_window_open_untitled_page (toplevel);
-    } else {
-      /* change to new_current and update display */
-      x_window_set_current_page (toplevel, new_current);
-    }    
-    g_assert (new_current != NULL);
-    
-  }
 
+    /* Create a new page if there wasn't another to switch to */
+    if (new_current == NULL) {
+      new_current = x_window_open_untitled_page (toplevel);
+    }
+
+    /* change to new_current and update display */
+    x_window_set_current_page (toplevel, new_current);
+  }
 }

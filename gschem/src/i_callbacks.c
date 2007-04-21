@@ -187,10 +187,8 @@ DEFINE_I_CALLBACK(file_new)
 
   /* create a new page */
   page = x_window_open_untitled_page (toplevel);
+  x_window_set_current_page (toplevel, page);
   s_log_message (_("New page created [%s]\n"), page->page_filename);
-  
-  o_undo_savestate (toplevel, UNDO_ALL);
-  
 }
 
 /*! \todo Finish function documentation!!!
@@ -217,29 +215,15 @@ void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(file_new_window)
 {
-  TOPLEVEL *w_current;
+  TOPLEVEL *toplevel;
   PAGE *page;
-       
-  w_current = s_toplevel_new ();
-  x_window_setup (w_current);
 
-  /* x_window_setup creates a new page, so call the new page hook */
-  if (scm_hook_empty_p (new_page_hook) == SCM_BOOL_F) {
-    scm_run_hook (new_page_hook,
-                  scm_cons (g_make_page_smob (w_current, 
-					      w_current->page_current), 
-			    SCM_EOL));
-  }
-  
-  /* Do a zoom extents after calling the new page hook */
-  a_zoom_extents(w_current, w_current->page_current->object_head, 0);
+  toplevel = s_toplevel_new ();
+  x_window_setup (toplevel);
 
-  exit_if_null(w_current);
-
-  s_log_message(_("New Window created\n"));
-  
-  page = x_window_open_untitled_page (w_current);
-
+  page = x_window_open_untitled_page (toplevel);
+  x_window_set_current_page (toplevel, page);
+  s_log_message (_("New Window created [%s]\n"), page->page_filename);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1409,7 +1393,7 @@ DEFINE_I_CALLBACK(view_zoom_box_hotkey)
 
   exit_if_null(w_current);
 
-  o_redraw_cleanstates(w_current);	
+  o_redraw_cleanstates(w_current);
   a_zoom_box_start(w_current, mouse_x, mouse_y);
 
   w_current->inside_action = 1;
@@ -1623,7 +1607,6 @@ DEFINE_I_CALLBACK(page_manager)
   exit_if_null(w_current);
 
   x_pagesel_open (w_current);
-  
 }
 
 /*! \todo Finish function documentation!!!
@@ -1644,8 +1627,7 @@ DEFINE_I_CALLBACK(page_next)
   }
 
   if (w_current->enforce_hierarchy) {
-    p_new = s_hierarchy_find_next_page(p_current, 
-                                       p_current->page_control);
+    p_new = s_hierarchy_find_next_page(p_current, p_current->page_control);
   } else {
     p_new = p_current->next;
   }
@@ -1654,14 +1636,7 @@ DEFINE_I_CALLBACK(page_next)
     return;
   }
 
-  s_page_goto (w_current, p_new);
-  
-  i_set_filename(w_current, w_current->page_current->page_filename);
-  x_scrollbars_update(w_current);
-  o_redraw_all(w_current);
-  x_pagesel_update (w_current);
-  i_update_menus(w_current);
-
+  x_window_set_current_page (w_current, p_new);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1682,8 +1657,7 @@ DEFINE_I_CALLBACK(page_prev)
   }
 
   if (w_current->enforce_hierarchy == TRUE) {
-    p_new = s_hierarchy_find_prev_page(p_current, 
-                                       p_current->page_control);
+    p_new = s_hierarchy_find_prev_page(p_current, p_current->page_control);
   } else {
     p_new = p_current->prev;
   }
@@ -1692,14 +1666,7 @@ DEFINE_I_CALLBACK(page_prev)
     return;
   }
 
-  s_page_goto (w_current, p_new);
-  
-  i_set_filename(w_current, w_current->page_current->page_filename);
-  x_scrollbars_update(w_current);
-  o_redraw_all(w_current);
-  x_pagesel_update (w_current);
-  i_update_menus(w_current);
-  
+  x_window_set_current_page (w_current, p_new);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1716,8 +1683,8 @@ DEFINE_I_CALLBACK(page_new)
 
   /* create a new page */
   page = x_window_open_untitled_page (toplevel);
+  x_window_set_current_page (toplevel, page);
   s_log_message (_("New page created [%s]\n"), page->page_filename);
-  
 }
 
 /*! \todo Finish function documentation!!!
@@ -1782,34 +1749,16 @@ DEFINE_I_CALLBACK(page_revert)
   page_control = w_current->page_current->page_control;
   up = w_current->page_current->up;
 
-  /* delete the page, create a new one and make it the new current */
+  /* delete the page, then re-open the file as a new page */
   s_page_delete (w_current, w_current->page_current);
-  page = s_page_new (w_current, filename);
-  s_page_goto (w_current, page);
-  g_free (filename);
 
-  /* now re open it */
-  f_open(w_current, w_current->page_current->page_filename);
-  i_set_filename(w_current, w_current->page_current->page_filename);
+  page = x_window_open_page (w_current, filename);
 
   /* make sure we maintain the hierarchy info */
-  w_current->page_current->page_control = page_control;
-  w_current->page_current->up = up;
+  page->page_control = page_control;
+  page->up = up;
 
-  x_repaint_background(w_current);
-  x_manual_resize(w_current);
-  a_zoom_extents(w_current, w_current->page_current->object_head,
-                A_PAN_DONT_REDRAW);
-  o_undo_savestate(w_current, UNDO_ALL);
-
-  /* now update the scrollbars */
-  x_hscrollbar_update(w_current);
-  x_vscrollbar_update(w_current);
-  x_pagesel_update (w_current);
-  i_update_menus(w_current);
-
-  o_redraw_all(w_current);
-  
+  x_window_set_current_page (w_current, page);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1824,7 +1773,6 @@ DEFINE_I_CALLBACK(page_discard)
   exit_if_null(w_current);
 
   x_window_close_page (w_current, w_current->page_current);
-  
 }
 
 /*! \todo Finish function documentation!!!
@@ -2796,148 +2744,104 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
   exit_if_null(w_current);
 
   object = o_select_return_first_object(w_current);
-  if (object != NULL) {
-    /* only allow going into symbols */
-    if (object->type == OBJ_COMPLEX) {
 
-      parent = w_current->page_current;
-      attrib = o_attrib_search_name_single_count(object,
-                                                 "source",
-                                                 count);
+  /* only allow going into symbols */
+  if (object == NULL || object->type != OBJ_COMPLEX)
+    return;
 
-      /* if above is null, then look inside symbol */
-      if (attrib == NULL) {
-        attrib = o_attrib_search_name(object->
-                                      complex->
-                                      prim_objs,
-                                      "source", 
-                                      count);
-        looking_inside = TRUE;
+  parent = w_current->page_current;
+  attrib = o_attrib_search_name_single_count(object, "source", count);
+
+  /* if above is null, then look inside symbol */
+  if (attrib == NULL) {
+    attrib = o_attrib_search_name(object->complex->prim_objs, "source", count);
+    looking_inside = TRUE;
 #if DEBUG
-        printf("going to look inside now\n");
+    printf("going to look inside now\n");
 #endif
+  }
+
+  while (attrib) {
+
+    /* look for source=filename,filename, ... */
+    pcount = 0;
+    current_filename = u_basic_breakup_string(attrib, ',', pcount);
+
+    /* loop over all filenames */
+    while(current_filename != NULL) {
+
+      s_log_message(_("Searching for source [%s]\n"), current_filename);
+      saved_page_control = page_control;
+      page_control =
+        s_hierarchy_down_schematic_single(w_current,
+                                          current_filename,
+                                          parent,
+                                          page_control,
+                                          HIERARCHY_NORMAL_LOAD);
+
+      /* s_hierarchy_down_schematic_single() will not zoom the loaded page */
+      if (page_control != -1) {
+        a_zoom_extents(w_current,
+                       w_current->page_current->object_head,
+                       A_PAN_DONT_REDRAW);
+        o_undo_savestate(w_current, UNDO_ALL);
       }
 
-      while (attrib) {
-
-				/* look for source=filename,filename, ... */
-        pcount = 0;
-        
-        current_filename = u_basic_breakup_string(attrib, ',', pcount);
-
-				/* loop over all filenames */
-        while(current_filename != NULL) {
-
-          s_log_message(
-                        _("Searching for source [%s]\n"), 
-                        current_filename);
-          saved_page_control = page_control;
-          page_control = 
-            s_hierarchy_down_schematic_single(
-                                              w_current, 
-                                              current_filename, 
-                                              parent,
-                                              page_control,
-                                              HIERARCHY_NORMAL_LOAD);
-
-          if (page_control != -1)  {
-            a_zoom_extents(w_current, 
-                          w_current->
-                          page_current->
-                          object_head,
-                          A_PAN_DONT_REDRAW);
-            o_undo_savestate(w_current, 
-                             UNDO_ALL);
-          }
-
-
-          /* save the first page */
-          if (!loaded_flag && 
-              page_control != -1 && 
-              page_control != 0) {
-            save_first_page = w_current->
-              page_current;
-          }
-
-          /* now do some error fixing */
-          if (page_control == -1) {
-            s_log_message(
-                          _("Cannot find source [%s]\n"), 
-                          current_filename);
-            fprintf(stderr, 
-                    _("Cannot find source [%s]\n"), 
-                    current_filename); 
-
-            /* restore this for the next */
-            /* page */
-            page_control = 
-              saved_page_control;
-          } else {
-            /* this only signifies that */
-            /* we tried */
-            loaded_flag = TRUE;
-          }
-
-          g_free(current_filename);
-          pcount++;
-          current_filename = u_basic_breakup_string(attrib, ',', pcount);
-        }
-
-        if (attrib) {
-          g_free(attrib);
-        }
-
-        if (current_filename) {
-          g_free(current_filename);
-        }
-
-        count++;
-
-				/* continue looking outside first */
-        if (!looking_inside) {
-          attrib = 
-            o_attrib_search_name_single_count(object, "source", count);
-        } 
-
-				/* okay we were looking outside and didn't */
-				/* find anything, so now we need to look */
-				/* inside the symbol */
-        if (!looking_inside && attrib == NULL && !loaded_flag ) {
-          looking_inside = TRUE;
-#if DEBUG
-          printf("switching to go to look inside\n");
-#endif
-        }
-
-        if (looking_inside) {
-#if DEBUG
-          printf("looking inside\n");
-#endif
-          attrib = o_attrib_search_name(
-                                        object->complex->
-                                        prim_objs,
-                                        "source",
-                                        count);
-        }
-      } 
-
-      if (loaded_flag) {
-	
-        if (save_first_page) {
-          w_current->page_current = 
-            save_first_page;
-        }
-        i_set_filename(w_current, w_current->
-                       page_current->page_filename);
-        a_zoom_extents(w_current, 
-                      w_current->page_current->object_head,
-                      A_PAN_DONT_REDRAW);
-        o_redraw_all(w_current);
-	x_scrollbars_update(w_current);
-        x_pagesel_update (w_current);
-        i_update_menus(w_current);
+      /* save the first page */
+      if ( !loaded_flag && page_control > 0 ) {
+        save_first_page = w_current->page_current;
       }
+
+      /* now do some error fixing */
+      if (page_control == -1) {
+        s_log_message(_("Cannot find source [%s]\n"), current_filename);
+        fprintf(stderr, _("Cannot find source [%s]\n"), current_filename);
+
+        /* restore this for the next page */
+        page_control = saved_page_control;
+      } else {
+        /* this only signifies that we tried */
+        loaded_flag = TRUE;
+      }
+
+      g_free(current_filename);
+      pcount++;
+      current_filename = u_basic_breakup_string(attrib, ',', pcount);
     }
+
+    if (attrib)           g_free(attrib);
+    if (current_filename) g_free(current_filename);
+
+    count++;
+
+    /* continue looking outside first */
+    if (!looking_inside) {
+      attrib = o_attrib_search_name_single_count(object, "source", count);
+    }
+
+    /* okay we were looking outside and didn't find anything,
+     * so now we need to look inside the symbol */
+    if (!looking_inside && attrib == NULL && !loaded_flag ) {
+      looking_inside = TRUE;
+#if DEBUG
+      printf("switching to go to look inside\n");
+#endif
+    }
+
+    if (looking_inside) {
+#if DEBUG
+      printf("looking inside\n");
+#endif
+      attrib = o_attrib_search_name(object->complex->prim_objs, "source", count);
+    }
+  }
+
+  if (loaded_flag) {
+
+    if (save_first_page) {
+      w_current->page_current = save_first_page;
+    }
+    x_window_set_current_page( w_current, w_current->page_current );
   }
 }
 
@@ -2959,23 +2863,18 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
     /* only allow going into symbols */
     if (object->type == OBJ_COMPLEX &&
         !o_complex_is_embedded (object)) {
-      filename = g_strconcat (object->complex_clib, 
+      filename = g_strconcat (object->complex_clib,
                               G_DIR_SEPARATOR_S,
                               object->complex_basename, NULL);
       s_log_message(_("Searching for symbol [%s]\n"), filename);
-      s_hierarchy_down_symbol(w_current, filename, 
-                              w_current->page_current);
-      i_set_filename(w_current,
-                     w_current->page_current->page_filename);
-      a_zoom_extents(w_current, 
-                    w_current->page_current->object_head,
-                    A_PAN_DONT_REDRAW);
-      x_scrollbars_update(w_current);
-      o_undo_savestate(w_current, UNDO_ALL);
-      o_redraw_all(w_current);
-      x_pagesel_update (w_current);
-      i_update_menus(w_current);
+      s_hierarchy_down_symbol(w_current, filename, w_current->page_current);
       g_free(filename);
+      /* s_hierarchy_down_symbol() will not zoom the loaded page */
+      a_zoom_extents(w_current,
+                     w_current->page_current->object_head,
+                     A_PAN_DONT_REDRAW);
+      o_undo_savestate(w_current, UNDO_ALL);
+      x_window_set_current_page(w_current, w_current->page_current);
     }
   }
 }
@@ -2988,15 +2887,11 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
 DEFINE_I_CALLBACK(hierarchy_up)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
-  
+
   exit_if_null(w_current);
-  
+
   s_hierarchy_up(w_current, w_current->page_current->up);
-  i_set_filename(w_current, w_current->page_current->page_filename);
-  x_scrollbars_update(w_current);
-  o_redraw_all(w_current);
-  x_pagesel_update (w_current);
-  i_update_menus(w_current);
+  x_window_set_current_page(w_current, w_current->page_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -3025,26 +2920,23 @@ DEFINE_I_CALLBACK(hierarchy_documentation)
       /* look for "documentation" first outside, then inside symbol */
       attrib_doc = o_attrib_search_name_single_count(object, "documentation", 0);
       if (!attrib_doc) {
-	attrib_doc = o_attrib_search_name(object->complex->prim_objs,
-								"documentation", 0);
+        attrib_doc = o_attrib_search_name(object->complex->prim_objs, "documentation", 0);
       }
       /* look for "device" */
       attrib_device = o_attrib_search_name_single_count(object, "device", 0);
       if (!attrib_device) {
-	attrib_device = o_attrib_search_name(object->complex->prim_objs,
-								"device", 0);
+        attrib_device = o_attrib_search_name(object->complex->prim_objs, "device", 0);
       }
       /* look for "value" */
       attrib_value = o_attrib_search_name_single_count(object, "value", 0);
       if (!attrib_value) {
-	attrib_value = o_attrib_search_name(object->complex->prim_objs,
-								"value", 0);
+        attrib_value = o_attrib_search_name(object->complex->prim_objs, "value", 0);
       }
       initiate_gschemdoc(attrib_doc,
-			attrib_device,
-			attrib_value,
-			object->complex_basename,
-			object->complex_clib);
+                         attrib_device,
+                         attrib_value,
+                         object->complex_basename,
+                         object->complex_clib);
 
       if (attrib_doc) g_free(attrib_doc);
       if (attrib_device) g_free(attrib_device);

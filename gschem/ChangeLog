@@ -1,5 +1,11 @@
 2007-04-21 Peter Clifton <pcjc2@cam.ac.uk>
 
+	* src/gschem.c, src/i_callbacks.c, src/x_fileselect.c, src/x_pagesel.c,
+	  src/x_window.c: Cleaned up and consolidated code which creates new pages.
+	  This makes the code cleaner and easier to read, and fixes bugs related to
+	  stray, "unknown" named pages being left when creating a new window.
+	  Fixes bug #1699970, with changes based upon patch #1704834.
+
 	* src/o_undo.c: Whitespace and readability fixes, removed some unused code.
 
 2007-04-21  Mike Jarabek  <mjarabek@sentex.ca>

@@ -203,13 +203,7 @@ void main_prog(void *closure, int argc, char *argv[])
   /* At end, complete set up of window. */
   colormap = gdk_colormap_get_system ();
   x_window_setup_colors();
-
   x_window_setup (w_current);
-
-  /* o_text_init(); goes away */
-  /* o_text_init(); Moved inside libgeda_init() */
-
-  x_repaint_background(w_current);
 
   i = argv_index;
   while (argv[i] != NULL) {
@@ -227,67 +221,15 @@ void main_prog(void *closure, int argc, char *argv[])
       filename = g_strconcat (cwd, G_DIR_SEPARATOR_S, argv[i], NULL);
     }
 
-    if (first_page) {
-      if (w_current->page_current->page_filename) {
-        g_free(w_current->page_current->page_filename);
-      }
-
-      /* Page structure has already been created...
-       * so, just set the filename and open the
-       * schematic for the first page */
-
-      /* always use absolute file names to eliminate confusion */
-      w_current->page_current->page_filename = filename;
-
-      /* 
-       * SDB notes:  at this point the filename might be unnormalized, like
-       * /path/to/foo/../bar/baz.sch.  Bad filenames will be normalized
-       * in f_open.  This works for Linux and MINGW32.
-       */
-
-      if (!quiet_mode) {
-        printf(_("Loading schematic [%s]\n"), filename);
-      }
-
-      (void)f_open(w_current,
-                   w_current->page_current->page_filename);
-      i_set_filename(w_current,
-                     w_current->page_current->page_filename);
-
+    if ( first_page )
       first_page = 0;
-    } else {
-      /* Much simpler	*/
 
-      /* create new page, and only load if page not loaded */
-      if (!s_page_search (w_current, filename)) {
-        PAGE *page = s_page_new (w_current, filename);
-        s_page_goto (w_current, page);
-        
-        if (!quiet_mode) {
-          printf(_("Loading schematic [%s]\n"), 
-                 filename);
-        }
-
-        f_open(w_current,
-               w_current->page_current->page_filename);
-        i_set_filename(w_current,
-                       w_current->page_current->page_filename);
-      }
-    }
-
-    /* Run the new page hook */
-    if (scm_hook_empty_p(new_page_hook) == SCM_BOOL_F &&
-	w_current->page_current != NULL) {
-      scm_run_hook(new_page_hook,
-		   scm_cons(g_make_page_smob(w_current, 
-					     w_current->page_current),
-			    SCM_EOL));
-    }
-    
-    /* Do a zoom extents for each page */
-    a_zoom_extents(w_current,
-		   w_current->page_current->object_head,
-		   A_PAN_DONT_REDRAW);
+    /*
+     * SDB notes:  at this point the filename might be unnormalized, like
+     * /path/to/foo/../bar/baz.sch.  Bad filenames will be normalized in
+     * f_open (called by x_window_open_page). This works for Linux and MINGW32.
+     */
+    x_window_open_page(w_current, filename);
 
     /* Go to the next argument */
     i++;
@@ -295,57 +237,15 @@ void main_prog(void *closure, int argc, char *argv[])
 
   free(cwd); /* allocated from getcwd, should be regular free */
 
-  if (argv[argv_index] == NULL) {
-    if (w_current->page_current->page_filename) {
-      g_free(w_current->page_current->page_filename);
-    }
-
-    w_current->cwd = g_get_current_dir ();
-#ifdef __MINGW32__
-    u_basic_strip_trailing(w_current->cwd, G_DIR_SEPARATOR);
-#endif
-
-    w_current->page_current->page_filename =
-      g_malloc(sizeof(char) * (
-                             strlen(w_current->cwd) +
-                             strlen(w_current->untitled_name) +
-                             strlen("/_##########.sch") +
-                             1));
-
-    w_current->num_untitled++;
-    sprintf(w_current->page_current->page_filename,
-            "%s%c%s_%d.sch",
-            w_current->cwd, G_DIR_SEPARATOR,
-            w_current->untitled_name,
-            w_current->num_untitled);
-
-    i_set_filename(w_current,
-                   w_current->page_current->page_filename);
+  /* If no page has been loaded (wasn't specified in the command line.) */
+  /* Then create an untitled page */
+  if ( first_page ) {
+    x_window_open_untitled_page( w_current );
   }
 
-  /* If no page has been loaded (wasn't specified in the command line. */
-  /* Then run the new page hook and do a zoom extents */
-  if (first_page) {
-    /* Run the new page hook */
-    if (scm_hook_empty_p(new_page_hook) == SCM_BOOL_F &&
-	w_current->page_current != NULL) {
-      scm_run_hook(new_page_hook,
-		   scm_cons(g_make_page_smob(w_current, 
-					     w_current->page_current),
-			    SCM_EOL));
-    }
-    
-    /* Do a zoom extents for this page */
-    a_zoom_extents(w_current,
-		   w_current->page_current->object_head,
-		   A_PAN_DONT_REDRAW);
-  }
+  /* Update the window to show the current page */
+  x_window_set_current_page( w_current, w_current->page_current );
 
-  o_undo_savestate(w_current, UNDO_ALL);
-  
-  
-  x_scrollbars_update(w_current);
-  o_redraw_all_fast(w_current);
 
 #if DEBUG
   scm_c_eval_string ("(display \"hello guile\n\")");
