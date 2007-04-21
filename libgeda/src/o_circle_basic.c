@@ -1218,8 +1218,6 @@ void o_circle_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 void o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 			  int origin_x, int origin_y, int color_mode)
 {
-  int diameter;
-  int s_x, s_y;
   int color;
 
   if (o_current == NULL) {

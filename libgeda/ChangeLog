@@ -1,5 +1,8 @@
 2007-04-21 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
+	* src/o_bus_basic.c, src/o_circle_basic.c, src/o_line_basic.c,
+	  src/o_pin_basic.c: Removed unused variables.
+
 	* configure.ac: Don't enable libgd by default.
 	  This makes gdk-pixbuf the default library for png output.
 	
