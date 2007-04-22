@@ -177,7 +177,6 @@ SCM g_keys_misc(void);
 SCM g_keys_misc2(void);
 SCM g_keys_misc3(void);
 SCM g_keys_help_about(void);
-SCM g_keys_help_manual(void);
 SCM g_keys_help_hotkeys(void);
 SCM g_keys_cancel(void);
 SCM g_get_selected_filename(void);

@@ -325,7 +325,6 @@ DEFINE_G_KEYS(misc2)
 DEFINE_G_KEYS(misc3)
 
 DEFINE_G_KEYS(help_about)
-DEFINE_G_KEYS(help_manual)
 DEFINE_G_KEYS(help_hotkeys)
 
 /* be sure that you don't use the widget parameter in this one, since it is

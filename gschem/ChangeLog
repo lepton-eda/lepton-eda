@@ -1,7 +1,19 @@
 2007-04-22 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
+	* include/prototype.h, src/g_keys.c, src/g_register.c,
+	  i_callbacks.c: Remove "help-manual" Guile callback.
+
+	  Apply patch by Peter Brett.
+
+	  The role of the "help-manual" Guile function exported by
+	  gschem has been superceded by the new "gschem-browse-wiki"
+	  function.  This patch removes "help-manual" from the C
+	  source code entirely; "help-manual" is now a Scheme function
+	  defined in "system-gschemrc".
+
+
 	* lib/system-gschemrc.in: Use gschem-browse-wiki also
-	  to open the manual. 
+	  when opening the manual. 
 
 	  Found a workaround to use gschem-browse-wiki if the user 
 	  wants to display the manual (the manual page is not in 

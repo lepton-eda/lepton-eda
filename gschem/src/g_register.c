@@ -304,7 +304,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "options-show-log-window",   0, 0, 0, g_keys_options_show_log_window },
   { "options-show-coord-window", 0, 0, 0, g_keys_options_show_coord_window },
   { "help-about",                0, 0, 0, g_keys_help_about },
-  { "help-manual",               0, 0, 0, g_keys_help_manual },
   { "help-hotkeys",              0, 0, 0, g_keys_help_hotkeys },
   { "help-component",            0, 0, 0, g_keys_hierarchy_documentation },
   { "misc-misc",                 0, 0, 0, g_keys_misc },

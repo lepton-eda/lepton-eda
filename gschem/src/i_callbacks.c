@@ -3495,16 +3495,6 @@ DEFINE_I_CALLBACK(help_about)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(help_manual)
-{
-  initiate_gschemdoc("-m", NULL, NULL, NULL, NULL);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 DEFINE_I_CALLBACK(help_hotkeys)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
