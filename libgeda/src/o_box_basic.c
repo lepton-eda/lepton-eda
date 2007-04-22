@@ -1521,8 +1521,10 @@ void o_box_print_old(TOPLEVEL *w_current, FILE *fp,
 void o_box_image_write(TOPLEVEL *w_current, OBJECT *o_current, 
 		       int origin_x, int origin_y, int color_mode)
 {
-  int color;
+#ifdef HAS_LIBGD
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
+#endif
+  int color;
 
   if (o_current == NULL) {
     printf("got null in o_box_image_write\n");
@@ -1554,5 +1556,6 @@ void o_box_image_write(TOPLEVEL *w_current, OBJECT *o_current,
                    s_upper_x, s_upper_y,
                    s_lower_x, s_lower_y,
                    color);
-#endif
+
+#endif /* HAS_GD */
 }

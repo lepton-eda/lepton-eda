@@ -1,3 +1,11 @@
+2007-04-22  Peter Brett <peter@peter-b.co.uk>
+	* src/o_box_basic.c: Fix some unused variable warnings in libgeda.
+	
+	  In a recent patch libgd was disabled by default (i.e.  HAS_LIBGD
+	  was unset by default).  This exposed some variable declarations
+	  which should have been #ifdefed out, but weren't.  Although most
+	  were later cleared up, some were missed.
+	
 2007-04-21  Mike Jarabek  <mjarabek@sentex.ca>
 
 	* src/f_print.c:
