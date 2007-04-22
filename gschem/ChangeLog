@@ -1,3 +1,12 @@
+2007-04-22 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
+
+	* lib/system-gschemrc.in: Use gschem-browse-wiki also
+	  to open the manual. 
+
+	  Found a workaround to use gschem-browse-wiki if the user 
+	  wants to display the manual (the manual page is not in 
+	  the wiki directory).
+
 2007-04-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* gschem/po/de_DE.po gschem/po/es_ES.po gschem/po/fr_FR.po

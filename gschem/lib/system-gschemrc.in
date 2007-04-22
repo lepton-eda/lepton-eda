@@ -1729,8 +1729,8 @@
 ; 
 ; Commented this out until the gsch2pcb tutorial gets into the wiki
 ; and the UG wiki page is improved
-; (define (help-manual)
-;   (gschem-browse-wiki "geda:gschem_ug"))
+(define (help-manual)
+  (gschem-browse-wiki "../gedadocs"))
 
 (define (help-faq)
   (gschem-browse-wiki "geda:faq-gschem"))
