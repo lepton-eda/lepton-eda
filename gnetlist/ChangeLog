@@ -19,6 +19,8 @@
 	* scheme/gnet-calay.scm: Added backed written by John Doty for
 	the Calay netlist. Thanks!
 
+	* tests/runtest.sh: Minor improvements in test running script.
+
 2007-04-21 Stuart Brorson   <sdb@cloud9.net>
 	* tests/spice-sdb/*  Added new spice-sdb test directory.  Then
 	created test environment similar to Dan's regression tests for
