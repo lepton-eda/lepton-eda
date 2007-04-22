@@ -1,12 +1,22 @@
+2007-04-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* gschem/po/de_DE.po gschem/po/es_ES.po gschem/po/fr_FR.po
+	gschem/po/geda-gschem.pot gschem/po/it_IT.po gschem/po/ja_JP.po
+	gschem/po/nl_NL.po gschem/po/pt_BR.po gschem/po/ru.po: Updated
+	all po and pot files (via make dist) in prep for a release
+	(a few weeks from now).
+
 2007-04-21 Peter Clifton <pcjc2@cam.ac.uk>
 
 	* src/gschem.c, src/i_callbacks.c, src/x_fileselect.c, src/x_pagesel.c,
-	  src/x_window.c: Cleaned up and consolidated code which creates new pages.
-	  This makes the code cleaner and easier to read, and fixes bugs related to
-	  stray, "unknown" named pages being left when creating a new window.
-	  Fixes bug #1699970, with changes based upon patch #1704834.
+	  src/x_window.c: Cleaned up and consolidated code which creates
+	  new pages.  This makes the code cleaner and easier to read,
+	  and fixes bugs related to stray, "unknown" named pages being
+	  left when creating a new window.  Fixes bug #1699970, with
+	  changes based upon patch #1704834.
 
-	* src/o_undo.c: Whitespace and readability fixes, removed some unused code.
+	* src/o_undo.c: Whitespace and readability fixes, removed some
+	  unused code.
 
 2007-04-21  Mike Jarabek  <mjarabek@sentex.ca>
 
@@ -25,8 +35,9 @@
 	
 2007-04-21 Peter Clifton <pcjc2@cam.ac.uk>
 
-	* src/g_keys.c, src/x_print.c: Check return value of gdk_keyval_name() is
-	  non NULL before attempting to match against it. Fixes bug #1692634.
+	* src/g_keys.c, src/x_print.c: Check return value of
+	  gdk_keyval_name() is non NULL before attempting to match
+	  against it. Fixes bug #1692634.
 
 	* configure.ac.in: Added explicit test for locale.h
 
@@ -125,51 +136,60 @@
 
 	2007-04-12 Peter Clifton <pcjc2@cam.ac.uk>
 
-		* src/g_hook.h: Fixed up documentation in to reflect the current code.
-		  Removed doc reference to world_get_complex_bounds(), which is not used.
-
+		* src/g_hook.h: Fixed up documentation in to reflect
+		  the current code.  Removed doc reference to
+		  world_get_complex_bounds(), which is not used.
 
 	2007-04-06 Peter Clifton <pcjc2@cam.ac.uk>
 
-		* src/o_select.c: Fixed selection box testing which had some <= and =>
-		  tests reversed during screen->world coordinate switching. The swap
-		  was incorrect, as "top" and "bottom" should actually be named "y_min"
-		  and "y_max". The nameing is wrong in the world coordinate system.
+		* src/o_select.c: Fixed selection box testing which had
+		  some <= and => tests reversed during screen->world
+		  coordinate switching. The swap was incorrect, as "top"
+		  and "bottom" should actually be named "y_min" and
+		  "y_max". The nameing is wrong in the world coordinate
+		  system.
 
 	2007-04-02 Peter Clifton <pcjc2@cam.ac.uk>
 
-		* src/o_attrib.c, src/o_buffer.c: Fix for paste-buffer operation,
-		  and for placing top-level attributes. Calls to world_get_complex_bounds()
-		  were incorrect, and needed replacing with world_get_object_list_bounds().
+		* src/o_attrib.c, src/o_buffer.c: Fix for paste-buffer
+		  operation, and for placing top-level attributes. Calls
+		  to world_get_complex_bounds() were incorrect, and
+		  needed replacing with world_get_object_list_bounds().
 
 	2007-03-27 Peter Clifton <pcjc2@cam.ac.uk>
 
-		* src/i_vars.c: Fixed copy-paste typo which over-wrote mousepan_gain
-		  instead of select_slack_pixels.
+		* src/i_vars.c: Fixed copy-paste typo which over-wrote
+		  mousepan_gain instead of select_slack_pixels.
 
 	2007-03-26 Peter Clifton <pcjc2@cam.ac.uk>
 
-		* src/o_text.c: Removed unused variables left in o_text_draw_rectangle()
+		* src/o_text.c: Removed unused variables left in
+		o_text_draw_rectangle()
 
-		* src/o_box.c, src/o_circle.c, src/o_picture.c: Pass OBJECT instead
-		  of derived type into world_get_..._bounds().
+		* src/o_box.c, src/o_circle.c, src/o_picture.c: Pass
+		  OBJECT instead of derived type into
+		  world_get_..._bounds().
 
-		* include/i_vars.h, include/prototype.h, lib/system-gschemrc.in,
-		  src/g_rc.c, src/g_register.c, src/i_vars.c, src/o_find.c: Added
-		  rc option (select-slack-pixels #) to control how near an object
-		  we have to be in order to select it by clicking. Default is 4 pixels.
+		* include/i_vars.h, include/prototype.h,
+		  lib/system-gschemrc.in, src/g_rc.c, src/g_register.c,
+		  src/i_vars.c, src/o_find.c: Added rc option
+		  (select-slack-pixels #) to control how near an object
+		  we have to be in order to select it by clicking. Default
+		  is 4 pixels.
 
 	2007-03-24 Peter Clifton <pcjc2@cam.ac.uk>
 
-		* src/o_text.c: Modified text o_text_draw_rectangle() to use the
-		  world bounds of the text, fixing the outline offset when the 
-		  text is aligned other than bottom, left.
+		* src/o_text.c: Modified text o_text_draw_rectangle()
+		  to use the world bounds of the text, fixing the outline
+		  offset when the text is aligned other than bottom, left.
 
-		* src/o_grips.c: Removed call to o_line_recalc() after o_net_modify()
-		  in o_grips_end() since the recalc is done inside o_net_modify().
+		* src/o_grips.c: Removed call to o_line_recalc() after
+		  o_net_modify() in o_grips_end() since the recalc is
+		  done inside o_net_modify().
 
-		* src/o_misc.c: Add call to o_complex_recalc() in o_update_component()
-		  to ensure bounds are correct after an embeded component is updated.
+		* src/o_misc.c: Add call to o_complex_recalc() in
+		  o_update_component() to ensure bounds are correct
+		  after an embeded component is updated.
 
 	2007-02-25 Peter Clifton <pcjc2@cam.ac.uk>
 
@@ -280,21 +300,24 @@
 		* include/prototype.h, src/o_grips.c: Changed to use world 
 		  coordinates internally for region checking.
 
-		* src/a_pan.c, src/i_callbacks.c, src/o_buffer.c, src/o_complex.c,
-		  src/o_copy.c, src/o_move.c, src/x_attribedit.c, src/x_dialog.c,
-		  src/x_event.c: Add manual grid-snapping after calls to
-		  SCREENtoWORLD() where grid snapping would be required.
-		  In preparation for removing grid snap from SCREENtoWORLD().
+		* src/a_pan.c, src/i_callbacks.c, src/o_buffer.c,
+		  src/o_complex.c, src/o_copy.c, src/o_move.c,
+		  src/x_attribedit.c, src/x_dialog.c, src/x_event.c:
+		  Add manual grid-snapping after calls to SCREENtoWORLD()
+		  where grid snapping would be required.  In preparation
+		  for removing grid snap from SCREENtoWORLD().
 
-		* src/x_event.c: Grid snap in x_event.c after converting to world
-		  coords, rather than before. (The computation for grid snapping in
-		  screen coords involves a conversion to world coords and back)
+		* src/x_event.c: Grid snap in x_event.c after converting
+		  to world coords, rather than before. (The computation
+		  for grid snapping in screen coords involves a conversion
+		  to world coords and back)
 
 	2006-12-27 Peter Clifton <pcjc2@cam.ac.uk>
 
-		* include/prototype.h, src/o_move.c: Modify o_move_end_lowlevel() 
-		  to not require screen coordinates as a parameter (which were 
-		  unused). Alter usage in o_move_end() as appropriate.
+		* include/prototype.h, src/o_move.c: Modify
+		  o_move_end_lowlevel() to not require screen coordinates
+		  as a parameter (which were unused). Alter usage in
+		  o_move_end() as appropriate.
 
 		* src/o_text.c: Modify o_text_place_rotate() to use world
 		  coordinates, and o_text_rotate_world internally.
