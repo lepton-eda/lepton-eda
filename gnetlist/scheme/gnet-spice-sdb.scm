@@ -51,7 +51,7 @@
 ;;               Added -I command line flag.
 ;;  10.14.2003 -- Bugfixes: Added empty-string? and hacked get-file-type to handle 
 ;;                case where a model file has an empty line before .SUBCKT or .MODEL.  
-;;                Also modified write-net-name-of-components to gracefully handle
+;;                Also modified write-net-names-on-component to gracefully handle
 ;;                case where not every pin has a pinseq attribute.  Now only outputs
 ;;                pins with valid pinseq attribute.
 ;;  12.25.2003 -- Bugfix:  Unswizzled emission of pins from user-defined .subckts.
@@ -584,7 +584,7 @@
           ;; implement the controlled current source
           ;; the user should create a refdes label beginning with a g
       (display (string-append package " ") port)
-      (spice-sdb:write-net-name-of-component package (length (gnetlist:get-pins package)) port)
+      (spice-sdb:write-net-names-on-component package (length (gnetlist:get-pins package)) port)
        (display  (string-append (spice-sdb:component-value package) "\n")  port)
           ;; implement the voltage measuring current source
           ;; imagine yourself copying the voltage of a voltage source with an internal
@@ -607,7 +607,7 @@
           ;; implement the controlled voltage source
           ;; the user should create a refdes label beginning with an e
       (display (string-append package " ") port)
-      (spice-sdb:write-net-name-of-component package (length (gnetlist:get-pins package)) port)
+      (spice-sdb:write-net-names-on-component package (length (gnetlist:get-pins package)) port)
       (display (string-append (gnetlist:get-package-attribute package "value") "\n" ) port)
           ;; implement the voltage measuring current source
           ;; imagine yourself copying the voltage of a voltage source with an internal
@@ -633,7 +633,7 @@
       (display "* begin nullor expansion, e<name>\n" port)
           ;; implement the controlled voltage source
       (display (string-append "E-" package " ") port)
-      (spice-sdb:write-net-name-of-component package (length (gnetlist:get-pins package)) port)
+      (spice-sdb:write-net-names-on-component package (length (gnetlist:get-pins package)) port)
       (display (string-append (gnetlist:get-package-attribute package "value") "\n" ) port)
           ;; implement the voltage measuring current source
           ;; imagine yourself copying the voltage of a voltage source with an internal
@@ -1298,27 +1298,30 @@
 )
 
 ;;--------------------------------------------------------------------
-;; Given a refdes, returns the device associated nets(s) ordered by their pin#,
-;; what when not defined?
-;;      N.b.: This does not recognize slotted components!
+;; Given a refdes and number of pins, this writes out the nets
+;; attached to the component's pins.  This is used to write out
+;; non-slotted parts.  Call it with a component refdes and the number 
+;; of pins left on this component to look at.
 ;;--------------------------------------------------------------------
-(define spice-sdb:write-net-name-of-component
-  (lambda (refdes number-of-pin port)
-    (if (> number-of-pin 0)
+(define spice-sdb:write-net-names-on-component
+  (lambda (refdes number-of-pins port)
+    (if (> number-of-pins 0)
       (begin
             ;; first find pin1 and then start writing the connected net name
-        (spice-sdb:write-net-name-of-component refdes (- number-of-pin 1) port)
+        (spice-sdb:write-net-names-on-component refdes (- number-of-pins 1) port)
             ;; generate a pin-name e.g. pin1, pin2, pin3 ...
-        (let* ((pin-name (number->string number-of-pin))
+        (let* ((pin-name (number->string number-of-pins))
 	       (pinnumber (gnetlist:get-attribute-by-pinseq refdes pin-name "pinnumber"))
+	       (pinseq (gnetlist:get-attribute-by-pinseq refdes pin-name "pinseq"))
 	       (netname (car (spice-sdb:get-net refdes pinnumber)) )
 	       )
 
 ;; -------  Super debug stuff  --------
-;;	  (display "In write-net-name-of-component. . . . \n")
-;;	  (display (string-append "     pin-name = " pin-name "\n"))
-;;	  (display (string-append "     pinnumber = " pinnumber "\n"))
-;;	  (display (string-append "     netname = " netname "\n"))
+	  (debug-spew "  In write-net-names-on-component. . . . \n")
+	  (debug-spew (string-append "     pin-name = " pin-name "\n"))
+	  (debug-spew (string-append "     pinnumber = " pinnumber "\n"))
+	  (debug-spew (string-append "     pinseq = " pinseq "\n"))
+	  (debug-spew (string-append "     netname = " netname "\n"))
 ;; ------------------------------ 
 
 	  (if (not (string=? netname "ERROR_INVALID_PIN"))
@@ -1327,6 +1330,132 @@
           )
         )  ;; let*
       )    ;; begin
+    )
+  )
+)
+
+;;--------------------------------------------------------------------
+;; Given a refdes and number of pins, this writes out the nets
+;; attached to the component's pins.  This is used to write out
+;; slotted parts.  Call it with a component refdes and the number 
+;; of pins left on this component to look at.
+;;--------------------------------------------------------------------
+(define spice-sdb:write-net-names-on-component-slotted
+  (lambda (refdes this-pin end-pin pins-per-slot port)
+    (if (>= this-pin end-pin)
+      (begin
+	;; recurse
+        (spice-sdb:write-net-names-on-component-slotted refdes (- this-pin 1) end-pin pins-per-slot port)
+	;; This is hack to deal with slotted pins.  Must modulo pin-name by 
+	;; slot count
+        (let* ((pin-name (number->string (modulo this-pin pins-per-slot) )) 
+	       (pinnumber (gnetlist:get-attribute-by-pinseq refdes pin-name "pinnumber"))
+	       (pinseq (gnetlist:get-attribute-by-pinseq refdes pin-name "pinseq"))
+	       (netname (car (spice-sdb:get-net refdes pinnumber)) )
+	       )
+
+;; -------  Super debug stuff  --------
+	  (debug-spew "  In write-net-names-on-component-slotted. . . . \n")
+	  (debug-spew (string-append "     this-pin = " (number->string this-pin) "\n"))
+	  (debug-spew (string-append "     end-pin = " (number->string end-pin) "\n"))
+	  (debug-spew (string-append "     pin-name = " pin-name "\n"))
+	  (debug-spew (string-append "     pinnumber = " pinnumber "\n"))
+	  (debug-spew (string-append "     pinseq = " pinseq "\n"))
+	  (debug-spew (string-append "     netname = " netname "\n"))
+;; ------------------------------ 
+
+	  (if (not (string=? netname "ERROR_INVALID_PIN"))
+             (display (string-append netname " ") port)     ;; write out attached net if OK.
+             (debug-spew (string-append "For " refdes ", found pin with no pinseq attribute.  Ignoring. . . .\n"))
+          )
+        )  ;; let*
+      )    ;; begin
+    )
+  )
+)
+
+
+;;-------------------------------------------------------------------
+;; Write out the nets attached to a slotted component.  Takes a list of
+;; (pin net) pairs as input.  "pin" is the pinnumber.
+;; The problem is that there is no good way in gnetlist.c to go from
+;; a pinseq to a net.  Also gnetlist.c doesn't support pinseqs of value
+;; higher than that in the first slot.
+;; To make this fcn work:
+;; 1.  Input arg is list of (pin net) pairs to write.
+;; 2.  Loop over pairs, extracting pin nos.  Create pinnumber list.
+;; 3.  For each pin no, determine its pinseq.  Create pinseq list having
+;;     same ordering as pinnumber list.
+;; 4.  Then loop over pinseq list, extract XXXXXXXXXXXX TBD
+;;-------------------------------------------------------------------
+;(define spice-sdb:write-nets-on-pins-of-slotted-component
+;  (lambda (pins-nets port)
+;    (if (pair? pins-nets)
+;	(begin
+;	  ;; recurse through pins-nets list
+;	  (spice-sdb:write-nets-on-pins-of-slotted-component (cdr pins-nets) port)
+;	  ;; write this pin's net name
+;	  (let* ((pinnumber (caar pins-nets))
+;		 (netname (if (string=? (cdar pins-nets) "GND") "0" (cdar pins-nets))) )
+;
+;; -------  Super debug stuff  --------
+;	    (debug-spew "In write-nets-on-pins-of-slotted-component. . . . \n")
+;	    (debug-spew (string-append "     pinnumber = " pinnumber "\n"))
+;	    (debug-spew (string-append "     netname = " netname "\n"))
+;; ------------------------------ 
+;
+;	    (display (string-append netname " ") port)     ;; write out attached net
+;	  )  ;; let*
+;	)    ;; begin
+;    )
+;  )
+;)
+
+
+
+;;-------------------------------------------------------------------
+;; Write the refdes -dot- slot (if not only slot), and the net names
+;; connected to pins in this slot.  No return, and no component value
+;; is written, or extra attribs.  Those are handled later.
+;; This fcn is called once for each slot in a component.
+;;-------------------------------------------------------------------
+(define spice-sdb:write-component-slotted-no-value
+  (lambda (package slot port)
+    (let ((numslots (gnetlist:get-package-attribute package "numslots"))
+	  (slot-count (length (gnetlist:get-unique-slots package)))
+	  (pin-count (length (gnetlist:get-pins package))) )
+      (if (or (string=? numslots "unknown") (string=? numslots "0"))
+	  (begin
+	    ;; non-slotted part.
+	    (display (string-append package " ") port)  ;; write component refdes
+	    (spice-sdb:write-net-names-on-component package pin-count port)
+	  )   ;; begin
+	  (let* ((pins-per-slot (/ pin-count slot-count))
+	    ;; slotted part
+	         ;; --- super debug --
+	         ;;(debug-spew (gnetlist:get-pins-nets package))
+		 ;(pins-nets 
+		 ;    (list-head (reverse (list-tail (reverse (gnetlist:get-pins-nets package))
+		 ;			            (* pins-per-slot (- slot 1)))
+                 ;               )
+		 ;               pins-per-slot)
+                 ;)  ; pins-nets
+		  (end-pos (+ (* pins-per-slot (- slot 1)) 1) )  ;; start high
+		  (beginning-pos  (* pins-per-slot slot))        ;; and count down.
+                 )
+;; -------  Super debug stuff for writing out slotted components  --------
+	    (debug-spew "In write-component-slotted-no-value. . . . \n")
+	    (debug-spew (string-append "     pins per slot = " (number->string pins-per-slot) "\n"))
+	    (debug-spew (string-append "     slot = " (number->string slot) "\n"))
+	    (debug-spew (string-append "     beginning-pos = " (number->string beginning-pos) "\n"))
+	    (debug-spew (string-append "     end-pos = " (number->string end-pos) "\n"))
+	    ;;(debug-spew (string-append "     pins-nets = " pins-nets "\n"))
+;; ------------------------------ 
+	    (format port "~a.~a " package slot)  ;; write component refdes -dot- slot
+	    ;(spice-sdb:write-nets-on-pins-of-slotted-component pins-nets port)
+	    (spice-sdb:write-net-names-on-component-slotted package beginning-pos end-pos pins-per-slot port)
+	  )  ;; let*
+      )  ;; if
     )
   )
 )
@@ -1552,63 +1681,6 @@
        )
       ) ;; end cond
      )  ;; end let
-  )
-)
-
-
-
-;;-------------------------------------------------------------------
-;; Write the refdes -dot- slot (if not only slot), the net name
-;; connected to pin# wihout the component value. No extra attributes.
-;; Note that no component value or any other attributes are written.
-;; Don't append carrage return either.
-;;-------------------------------------------------------------------
-(define spice-sdb:write-component-slotted-no-value
-  (lambda (package slot port)
-    (let ((numslots (gnetlist:get-package-attribute package "numslots"))
-	  (slot-count (length (gnetlist:get-unique-slots package)))
-	  (pin-count (length (gnetlist:get-pins package))) )
-      (if (or (string=? numslots "unknown") (string=? numslots "0"))
-	  (begin
-	    (display (string-append package " ") port)  ;; write component refdes
-	    (spice-sdb:write-net-name-of-component package pin-count port)
-	  )
-	  (let* ((pins-per-slot (/ pin-count slot-count))
-		 (pins-nets
-		  (list-head (list-tail (reverse (gnetlist:get-pins-nets package))
-					(* pins-per-slot (- slot 1)))
-			     pins-per-slot)) )
-	    (format port "~a.~a " package slot)  ;; write component refdes -dot- slot
-	    (spice-sdb:write-nets-of-pins-of-component pins-nets port)
-	  )
-      )
-    )
-  )
-)
-
-;;-------------------------------------------------------------------
-;; Write the net names of the pins of a component.
-;;-------------------------------------------------------------------
-(define spice-sdb:write-nets-of-pins-of-component
-  (lambda (pins-nets port)
-    (if (pair? pins-nets)
-	(begin
-	  ;; recurse through pins-nets list
-	  (spice-sdb:write-nets-of-pins-of-component (cdr pins-nets) port)
-	  ;; write this pin's net name
-	  (let* ((pinnumber (caar pins-nets))
-		 (netname (if (string=? (cdar pins-nets) "GND") "0" (cdar pins-nets))) )
-
-;; -------  Super debug stuff  --------
-;;	    (display "In write-nets-of-pins-of-component. . . . \n")
-;;	    (display (string-append "     pinnumber = " pinnumber "\n"))
-;;	    (display (string-append "     netname = " netname "\n"))
-;; ------------------------------ 
-
-	    (display (string-append netname " ") port)     ;; write out attached net
-	  )  ;; let*
-	)    ;; begin
-    )
   )
 )
 
