@@ -236,7 +236,10 @@ then
    PKG_CHECK_MODULES(GLIB24, glib-2.0 >= 2.4.0, GLIB24="yes", no_GLIB24="yes")
    if test "$GLIB24" != "yes"
    then
-       AC_MSG_ERROR([Cannot find glib 2.4.x, install it and rerun ./configure.])
+       AC_MSG_ERROR([Cannot find glib 2.4.x, install it and rerun ./configure.
+You may find the following error output (if any) useful:
+$GLIB24_PKG_ERRORS
+])
    fi
    GLIB_CFLAGS=$GLIB24_CFLAGS
    GLIB_LIBS=$GLIB24_LIBS
