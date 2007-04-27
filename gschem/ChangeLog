@@ -1,3 +1,7 @@
+2007-04-27 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
+
+	* po/es_ES.po: Updated spanish translation.
+	
 2007-04-22 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
 	* include/prototype.h, src/g_keys.c, src/g_register.c,

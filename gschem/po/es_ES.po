@@ -9,13 +9,13 @@ msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-21 22:17-0400\n"
-"PO-Revision-Date: 2007-02-11 19:58+0100\n"
+"PO-Revision-Date: 2007-04-27 19:30+0200\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);X-Generator: KBabel 1.0.2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);X-Generator: KBabel 1.0.2"
 
 #: src/rcstrings.c:2
 msgid "File"
@@ -610,11 +610,10 @@ msgstr ""
 "Se ha especificado un aumento no válido [%d] a la función keyboardpan-gain\n"
 
 #: src/g_rc.c:1794
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr ""
-"Se ha especificado un número de segundos no válido [%d] a la función auto-"
-"save-interval\n"
+"Se ha especificado un número de pixels no válido [%d] a la función select-slack-pixels\n"
 
 #: src/gschem.c:140 src/gschem.c:150
 #, c-format
@@ -793,9 +792,9 @@ msgid "New page created [%s]\n"
 msgstr "Se ha creado una página nueva [%s]\n"
 
 #: src/i_callbacks.c:226
-#, fuzzy, c-format
+#, c-format
 msgid "New Window created [%s]\n"
-msgstr "Se ha creado una nueva ventana\n"
+msgstr "Se ha creado una nueva ventana [%s]\n"
 
 #: src/i_callbacks.c:355
 msgid "Failed to Save All"
@@ -989,6 +988,7 @@ msgid ""
 "This command retrieves the component documentation from the web, but there "
 "is no component selected"
 msgstr ""
+"Este comando consigue la información del componente de internet, pero no hay ningún componente seleccionado"
 
 #: src/i_callbacks.c:3063
 msgid "ShowN"
@@ -1820,13 +1820,12 @@ msgid "Hotkeys"
 msgstr "Teclas rápidas"
 
 #: src/x_dialog.c:2564
-#, fuzzy
 msgid "Function"
-msgstr "Acción"
+msgstr "Función"
 
 #: src/x_dialog.c:2571
 msgid "Keystroke(s)"
-msgstr ""
+msgstr "Pulsación(es)"
 
 #: src/x_dialog.c:2925
 msgid "Find Text"
@@ -1909,9 +1908,9 @@ msgid "Save as..."
 msgstr "Guardar como..."
 
 #: src/x_image.c:362
-#, fuzzy, c-format
+#, c-format
 msgid "x_image_lowlevel: Unable to write %s file %s.\n"
-msgstr "x_image_lowlevel: Imposible escribir imagen PNG.\n"
+msgstr "x_image_lowlevel: Imposible escribir archivo %s: %s.\n"
 
 #: src/x_image.c:372
 #, c-format
@@ -1921,6 +1920,10 @@ msgid ""
 "\n"
 "%s.\n"
 msgstr ""
+"Se produjo el siguiente error al salvar la imagen con tipo %s al fichero:\n"
+"%s\n"
+"\n"
+"%s.\n"
 
 #: src/x_image.c:391 src/x_image.c:422
 #, c-format
@@ -1937,16 +1940,14 @@ msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"
 msgstr "x_image_lowlevel: Imposible obtener pixbuf de la ventana de gschem.\n"
 
 #: src/x_image.c:458
-#, fuzzy
 msgid "Width x Height"
-msgstr "Anchura x Altura:"
+msgstr "Anchura x Altura"
 
 #: src/x_image.c:474
 msgid "Image type"
-msgstr ""
+msgstr "Tipo de imagen"
 
 #: src/x_image.c:495
-#, fuzzy
 msgid "Write image..."
 msgstr "Guardar imagen..."
 
@@ -2329,25 +2330,3 @@ msgstr "Descartando página [%s]\n"
 msgid "Closing [%s]\n"
 msgstr "Cerrando [%s]\n"
 
-#~ msgid "Ack! something got fouled up with the keymappings!\n"
-#~ msgstr "¡Ups! ¡La asignación de teclas rápidas ha fallado!.\n"
-
-#~ msgid "libgd not installed or disabled, so this feature is disabled\n"
-#~ msgstr ""
-#~ "La librería libgdgeda no está instalada o ha sido deshabilitada, así que "
-#~ "esta opción está deshabilitada\n"
-
-#~ msgid "Tried to render text with an invalid angle: %d\n"
-#~ msgstr "Se ha intentado presentar un texto con un ángulo no válido: %d\n"
-
-#~ msgid "Generic String"
-#~ msgstr "Cadena genérica"
-
-#~ msgid "Enter new string."
-#~ msgstr "Introduzca nueva cadena."
-
-#~ msgid "Select Image Filename..."
-#~ msgstr "Seleccionar archivo de la imagen..."
-
-#~ msgid "Filename:"
-#~ msgstr "Nombre de archivo:"
