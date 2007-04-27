@@ -1,5 +1,7 @@
 2007-04-27 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
+	* src/x_image.c: Added sanity check.
+	
 	* po/es_ES.po: Updated spanish translation.
 	
 2007-04-22 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>

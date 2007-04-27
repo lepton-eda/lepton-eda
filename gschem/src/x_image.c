@@ -186,7 +186,7 @@ static char *x_image_get_type_from_description(char *description) {
   ptr = formats;
   while (ptr) {
     ptr_descr = gdk_pixbuf_format_get_description (ptr->data);
-    if (strcasecmp(ptr_descr, descr) == 0) {
+    if (ptr_descr && (strcasecmp(ptr_descr, descr) == 0)) {
       g_free(descr);
       return(gdk_pixbuf_format_get_name(ptr->data));
     }
