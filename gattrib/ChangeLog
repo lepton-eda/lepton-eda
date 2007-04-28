@@ -1,3 +1,12 @@
+2007-04-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/gettext.h, include/globals.h, include/Makefile.am,
+	src/x_dialog.c, src/x_fileselect.c: Removed gettext.h header file
+	and the few _( ) pairs to get rid of some warnings.  gattrib is
+	not i18n and should not be using gettext.h for now.
+
+	* src/s_toplevel.c: Removed some unused variable compiler warnings.
+
 2007-04-21 Peter Clifton <pcjc2@cam.ac.uk>
 
 	* src/x_dialog.c: Check return value of gdk_keyval_name() is non

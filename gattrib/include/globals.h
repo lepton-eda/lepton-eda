@@ -151,9 +151,6 @@ extern int logfile_fd;
 extern int do_logging;
 extern int logging_dest;
 
-/* Internationalization */
-#include "gettext.h"
-
 /* gattrib specific stuff */
 extern char *guile_proc;   /* Needed for read-in of rc files */
 

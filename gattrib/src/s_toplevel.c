@@ -724,8 +724,6 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   gint visibility = 0;
   gint show_name_value = 0;
 
-  gint status;
-
 #if DEBUG
   printf("-----  Entering s_toplevel_update_component_attribs_in_toplevel.\n");
 #endif
@@ -759,6 +757,8 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 	s_string_list_add_item(complete_comp_attrib_list, &count, old_name_value_pair);
       }
 #else
+      /* might now compile now, but this #if'd out branch isn't being built */
+      gint status;  
       status = o_attrib_get_name_value(old_name_value_pair, &old_attrib_name, &old_attrib_value);
       if (status == 0) {
         /* Don't put "refdes" or "slot" into list.  Don't put old name=value pair into list if a new
@@ -1045,8 +1045,6 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
   char *new_attrib_name;
   char *new_attrib_value;
   char *old_attrib_value;
-
-  gint status;
 
 #if DEBUG
   printf("-----  Entering s_toplevel_update_pin_attribs_in_toplevel.\n");

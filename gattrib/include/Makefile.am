@@ -3,7 +3,6 @@
 noinst_HEADERS = \
 	globals.h \
 	prototype.h \
-	gettext.h \
 	x_states.h \
 	gtksheet_2_2.h \
 	gtkitementry_2_2.h \

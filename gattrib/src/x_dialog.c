@@ -99,7 +99,7 @@ void x_dialog_newattrib_get_name()
   gtk_window_set_modal(GTK_WINDOW(newattrib_window), TRUE);
 
   /*  Create a text label for the dialog window */
-  label = gtk_label_new (_("Enter new attribute name"));
+  label = gtk_label_new ("Enter new attribute name");
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
   gtk_widget_set_size_request (label, 127, 50);
@@ -274,7 +274,7 @@ void x_dialog_delattrib_confirm()
   gtk_window_set_modal(GTK_WINDOW(delattrib_window), TRUE);
 
   /*  Create a text label for the dialog window */
-  label = gtk_label_new (_("Are you sure you want to delete this attribute?"));
+  label = gtk_label_new ("Are you sure you want to delete this attribute?");
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
   gtk_widget_set_size_request (label, 127, 50);
@@ -416,17 +416,17 @@ void x_dialog_missing_sym()
   
   /*  Create a text label for the dialog window */
   string =
-    g_strdup_printf(_("Warning!  One or more components have been found with missing symbol files!\n"));
+    g_strdup_printf("Warning!  One or more components have been found with missing symbol files!\n");
   string =
-    g_strdup_printf(_("%s\n"), string);
+    g_strdup_printf("%s\n", string);
   string =
-    g_strdup_printf(_("%sThis probably happened because gattrib couldn't find your component libraries,\n"), string);
+    g_strdup_printf("%sThis probably happened because gattrib couldn't find your component libraries,\n", string);
   string =
-    g_strdup_printf(_("%sperhaps because your gafrc or gattribrc files are misconfigured.\n"), string);
+    g_strdup_printf("%sperhaps because your gafrc or gattribrc files are misconfigured.\n", string);
   string =
-    g_strdup_printf(_("%sChose \"Quit\" to leave gattrib and fix the problem, or\n"), string);
+    g_strdup_printf("%sChose \"Quit\" to leave gattrib and fix the problem, or\n", string);
   string =
-    g_strdup_printf(_("%s\"Forward\" to continue working with gattrib.\n"), string);
+    g_strdup_printf("%s\"Forward\" to continue working with gattrib.\n", string);
 
   label = gtk_label_new(string);
   gtk_widget_show (label);
@@ -556,11 +556,11 @@ void x_dialog_unsaved_data()
 
   /*  Create a text label for the dialog window */
   string =
-    g_strdup_printf(_("Warning!  You have unsaved data in the spreadsheet!\n"));
+    g_strdup_printf("Warning!  You have unsaved data in the spreadsheet!\n");
   string =
-    g_strdup_printf(_("%sAre you sure you want to quit?  Click \"Quit\" to\n"), string);
+    g_strdup_printf("%sAre you sure you want to quit?  Click \"Quit\" to\n", string);
   string =
-    g_strdup_printf(_("%squit anyway, or \"Stop\" to go back and save you work.\n"), string);
+    g_strdup_printf("%squit anyway, or \"Stop\" to go back and save you work.\n", string);
 
   label = gtk_label_new(string);
   gtk_widget_show (label);

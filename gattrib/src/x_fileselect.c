@@ -137,23 +137,23 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
   
   /* file filter for schematic files (*.sch) */
   filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("Schematics"));
+  gtk_file_filter_set_name (filter, "Schematics");
   gtk_file_filter_add_pattern (filter, "*.sch");
   gtk_file_chooser_add_filter (filechooser, filter);
   /* file filter for symbol files (*.sym) */
   filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("Symbols"));
+  gtk_file_filter_set_name (filter, "Symbols");
   gtk_file_filter_add_pattern (filter, "*.sym");
   gtk_file_chooser_add_filter (filechooser, filter);
   /* file filter for both symbol and schematic files (*.sym+*.sch) */
   filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("Schematics and symbols"));
+  gtk_file_filter_set_name (filter, "Schematics and symbols");
   gtk_file_filter_add_pattern (filter, "*.sym");
   gtk_file_filter_add_pattern (filter, "*.sch");
   gtk_file_chooser_add_filter (filechooser, filter);
   /* file filter that match any file */
   filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("All files"));
+  gtk_file_filter_set_name (filter, "All files");
   gtk_file_filter_add_pattern (filter, "*");
   gtk_file_chooser_add_filter (filechooser, filter);
 
@@ -301,7 +301,7 @@ x_fileselect_open (void)
 {
   GtkWidget *dialog;
 
-  dialog = gtk_file_chooser_dialog_new (_("Open..."),
+  dialog = gtk_file_chooser_dialog_new ("Open...",
                                         GTK_WINDOW(window),
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -356,7 +356,7 @@ x_fileselect_save (void)
 {
   GtkWidget *dialog;
 
-  dialog = gtk_file_chooser_dialog_new (_("Save as..."),
+  dialog = gtk_file_chooser_dialog_new ("Save as...",
                                         GTK_WINDOW(window),
                                         GTK_FILE_CHOOSER_ACTION_SAVE,
                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -387,7 +387,7 @@ x_fileselect_save (void)
     /* try saving current page of toplevel to file filename */
     if (filename != NULL &&
         f_save (pr_current, filename)) {
-      s_log_message (_("Saved As [%s]\n"), filename);
+      s_log_message ("Saved As [%s]\n", filename);
 
       /* Update filename for "saveas" operation */
       x_fileselect_set_filename (pr_current, filename); 
@@ -401,7 +401,7 @@ x_fileselect_save (void)
 
     } else {
       /* report error in log and status bar */
-      s_log_message (_("Could NOT save [%s]\n"),
+      s_log_message ("Could NOT save [%s]\n",
                      pr_current->page_current->page_filename);
 
       g_free (filename);
