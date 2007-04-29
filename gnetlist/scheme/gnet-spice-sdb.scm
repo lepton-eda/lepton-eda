@@ -436,8 +436,21 @@
 ;;---------------------------------------------------------------
 (define spice-sdb:write-prefix
     (lambda (package prefix port)
-	(if (not (string=? (substring package 0 1) prefix))
-	    (display prefix port))))
+      (let ((different-prefix (not (string=? (substring package 0 1) prefix)) )
+            (nomunge (calling-flag? "nomunge_mode" (gnetlist:get-calling-flags)) )
+           )
+	(debug-spew (string-append "Checking prefix.  Package prefix =" (substring package 0 1) "\n"))
+	(debug-spew (string-append "                  correct prefix =" prefix "\n"))
+	(debug-spew "   nomunge mode = ")
+	(debug-spew nomunge)
+	(debug-spew (string-append "\n  different-prefix="))
+	(debug-spew different-prefix)
+	(debug-spew "\n")
+	(if (and different-prefix (not nomunge))
+	    (display prefix port) )
+      )
+    )
+)
 
 
 ;;---------------------------------------------------------------

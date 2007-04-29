@@ -60,6 +60,7 @@ extern int quiet_mode;
 extern int netlist_mode;
 extern int sort_mode;
 extern int embedd_mode;
+extern int nomunge_mode;
 extern char *output_filename;
 extern GSList *pre_backend_list;  /* before backend loaded */
 extern GSList *post_backend_list; /* after backend loaded, before execute */

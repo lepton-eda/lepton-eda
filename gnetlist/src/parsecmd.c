@@ -40,7 +40,7 @@
 #include <dmalloc.h>
 #endif
 
-#define OPTIONS "o:qieIhvsg:c:l:m:O:"
+#define OPTIONS "o:qieIhvsg:c:l:m:O:n"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -52,8 +52,12 @@ extern int optind;
 #ifdef HAVE_GETOPT_LONG
 struct option long_options[] =
 {
-  {"help", 0, 0, 0},
-  /* will add other args later */
+  {"help", 0, 0, 'h'},
+  {"nomunge", 0, 0, 'n'},
+  {"verbose", 0, 0, 'v'},
+  {"sort", 0, 0, 's'},
+  {"embedd", 0, 0, 'e'},
+  {"include", 0, 0, 'I'},
   {0, 0, 0, 0}
 };
 #endif
@@ -63,22 +67,23 @@ struct option long_options[] =
 void usage(char *cmd)
 {
     printf("Usage: %s [OPTIONS] filename1 ... filenameN\n", cmd);
-    printf("  -e                Force embedding contents of .include file\n");
-    printf("  -h --help         Print this help string\n");
-    printf("  -i                Interactive scheme mode\n");
-    printf("  -I                Put .INCLUDE <filename> in output file instead\n");
-    printf("                    of model file's contents\n");
-    printf("  -q                Quiet mode\n");
-    printf("  -l filename       Load scheme file before loading backend\n");
-    printf("  -m filename       Load scheme file after loading backend,\n");
-    printf("                    but still before executing procedure\n");
-    printf("  -g proc           Scheme procedure to execute.\n");
-    printf("                    Use '-g help' to list available backends.\n");
-    printf("  -o filename       Output netlist filename\n");
-    printf("  -c string         Execute string as a scheme script\n");
-    printf("  -O option         Pass the given option to the backend\n");
-    printf("  -v                Verbose mode on\n");
-    printf("  -s                Sort output netlist (for Gnucap)\n");
+    printf("  -e  --embedd       Force embedding contents of .include file (spice-sdb)\n");
+    printf("  -h  --help         Print this help string\n");
+    printf("  -i                 Interactive scheme mode\n");
+    printf("  -I  --include      Put .INCLUDE <filename> in output file instead\n");
+    printf("                     of model file's contents (spice-sdb)\n");
+    printf("  -q                 Quiet mode\n");
+    printf("  -l  filename       Load scheme file before loading backend\n");
+    printf("  -m  filename       Load scheme file after loading backend,\n");
+    printf("                     but still before executing procedure\n");
+    printf("  -n  --nomunge      Don't autocorrect refdeses (spice-sdb)\n");
+    printf("  -g  proc           Scheme procedure (netlister backend) to execute.\n");
+    printf("                     Use '-g help' to list available backends.\n");
+    printf("  -o  filename       Output netlist filename\n");
+    printf("  -c  string         Execute string as a scheme script\n");
+    printf("  -O  option         Pass the given option to the backend\n");
+    printf("  -v  --verbose      Verbose mode on\n");
+    printf("  -s  --sort         Sort output netlist (spice-sdb)\n");
     printf("\n");
     exit(0);
 }
@@ -122,9 +127,9 @@ int parse_commandline(int argc, char *argv[])
 
     /* Converted to getopt_long by SDB 3.3.2006 */
 #ifdef HAVE_GETOPT_LONG
-    int option_index = 0;
+    /* int option_index = 0; */
 
-    while ((ch = getopt_long(argc, argv, OPTIONS, long_options, &option_index)) != -1) {
+    while ((ch = getopt_long(argc, argv, OPTIONS, long_options, NULL /* &option_index */)) != -1) {
 #else
     while ((ch = getopt(argc, argv, OPTIONS)) != -1) {
 #endif
@@ -168,6 +173,11 @@ int parse_commandline(int argc, char *argv[])
 
         case 'm':        
            post_backend_list = g_slist_append(post_backend_list, optarg);
+           break;
+
+        case 'n':
+	   backend_params = g_slist_append(backend_params, "nomunge_mode");
+	   nomunge_mode = TRUE;
            break;
 
 	case 'o':
