@@ -86,6 +86,8 @@
 ;;                This fixes bug 1442912. Carlos Nieves Onega.
 ;;  2.10.2007 -- Various bugfixes.  Also incorporated slotted part
 ;;               netlist patch from Jeff Mallatt.  SDB.
+;;  4.28.2007 -- Fixed slotted part stuff so that it uses pinseq to emit pins.  SDB
+;;               
 ;;**********************************************************************************
 ;;
 ;;  Organization of gnet-spice-sdb.scm file:
@@ -1336,34 +1338,30 @@
 
 ;;--------------------------------------------------------------------
 ;; Given a refdes and number of pins, this writes out the nets
-;; attached to the component's pins.  This is used to write out
+;; attached to the component's pins.  This version is used to write out
 ;; slotted parts.  Call it with a component refdes and the number 
 ;; of pins left on this component to look at.
+;; New fcn cloned from write-net-names-on-component on 4.28.2007 -- SDB.
 ;;--------------------------------------------------------------------
 (define spice-sdb:write-net-names-on-component-slotted
   (lambda (refdes this-pin end-pin pins-per-slot port)
     (if (>= this-pin end-pin)
       (begin
-	;; recurse
+	;; recurse to implement loop over pins
         (spice-sdb:write-net-names-on-component-slotted refdes (- this-pin 1) end-pin pins-per-slot port)
-	;; This is hack to deal with slotted pins.  Must modulo pin-name by 
-	;; slot count
-        (let* ((pin-name (number->string (modulo this-pin pins-per-slot) )) 
+	;; This is hack to deal with slotted pins.
+        (let* ((pin-name (number->string this-pin)) 
 	       (pinnumber (gnetlist:get-attribute-by-pinseq refdes pin-name "pinnumber"))
-	       (pinseq (gnetlist:get-attribute-by-pinseq refdes pin-name "pinseq"))
 	       (netname (car (spice-sdb:get-net refdes pinnumber)) )
-	       )
-
+	      )
 ;; -------  Super debug stuff  --------
 	  (debug-spew "  In write-net-names-on-component-slotted. . . . \n")
 	  (debug-spew (string-append "     this-pin = " (number->string this-pin) "\n"))
 	  (debug-spew (string-append "     end-pin = " (number->string end-pin) "\n"))
 	  (debug-spew (string-append "     pin-name = " pin-name "\n"))
 	  (debug-spew (string-append "     pinnumber = " pinnumber "\n"))
-	  (debug-spew (string-append "     pinseq = " pinseq "\n"))
 	  (debug-spew (string-append "     netname = " netname "\n"))
 ;; ------------------------------ 
-
 	  (if (not (string=? netname "ERROR_INVALID_PIN"))
              (display (string-append netname " ") port)     ;; write out attached net if OK.
              (debug-spew (string-append "For " refdes ", found pin with no pinseq attribute.  Ignoring. . . .\n"))
@@ -1373,44 +1371,6 @@
     )
   )
 )
-
-
-;;-------------------------------------------------------------------
-;; Write out the nets attached to a slotted component.  Takes a list of
-;; (pin net) pairs as input.  "pin" is the pinnumber.
-;; The problem is that there is no good way in gnetlist.c to go from
-;; a pinseq to a net.  Also gnetlist.c doesn't support pinseqs of value
-;; higher than that in the first slot.
-;; To make this fcn work:
-;; 1.  Input arg is list of (pin net) pairs to write.
-;; 2.  Loop over pairs, extracting pin nos.  Create pinnumber list.
-;; 3.  For each pin no, determine its pinseq.  Create pinseq list having
-;;     same ordering as pinnumber list.
-;; 4.  Then loop over pinseq list, extract XXXXXXXXXXXX TBD
-;;-------------------------------------------------------------------
-;(define spice-sdb:write-nets-on-pins-of-slotted-component
-;  (lambda (pins-nets port)
-;    (if (pair? pins-nets)
-;	(begin
-;	  ;; recurse through pins-nets list
-;	  (spice-sdb:write-nets-on-pins-of-slotted-component (cdr pins-nets) port)
-;	  ;; write this pin's net name
-;	  (let* ((pinnumber (caar pins-nets))
-;		 (netname (if (string=? (cdar pins-nets) "GND") "0" (cdar pins-nets))) )
-;
-;; -------  Super debug stuff  --------
-;	    (debug-spew "In write-nets-on-pins-of-slotted-component. . . . \n")
-;	    (debug-spew (string-append "     pinnumber = " pinnumber "\n"))
-;	    (debug-spew (string-append "     netname = " netname "\n"))
-;; ------------------------------ 
-;
-;	    (display (string-append netname " ") port)     ;; write out attached net
-;	  )  ;; let*
-;	)    ;; begin
-;    )
-;  )
-;)
-
 
 
 ;;-------------------------------------------------------------------
@@ -1425,41 +1385,28 @@
 	  (slot-count (length (gnetlist:get-unique-slots package)))
 	  (pin-count (length (gnetlist:get-pins package))) )
       (if (or (string=? numslots "unknown") (string=? numslots "0"))
-	  (begin
-	    ;; non-slotted part.
+	  (begin	                                ;; non-slotted part.
 	    (display (string-append package " ") port)  ;; write component refdes
 	    (spice-sdb:write-net-names-on-component package pin-count port)
 	  )   ;; begin
-	  (let* ((pins-per-slot (/ pin-count slot-count))
-	    ;; slotted part
-	         ;; --- super debug --
-	         ;;(debug-spew (gnetlist:get-pins-nets package))
-		 ;(pins-nets 
-		 ;    (list-head (reverse (list-tail (reverse (gnetlist:get-pins-nets package))
-		 ;			            (* pins-per-slot (- slot 1)))
-                 ;               )
-		 ;               pins-per-slot)
-                 ;)  ; pins-nets
-		  (end-pos (+ (* pins-per-slot (- slot 1)) 1) )  ;; start high
-		  (beginning-pos  (* pins-per-slot slot))        ;; and count down.
-                 )
+	  (let* ((pins-per-slot (/ pin-count slot-count))       ;; slotted part
+	         (end-pos (+ (* pins-per-slot (- slot 1)) 1) )  ;; start high
+		 (beginning-pos  (* pins-per-slot slot))        ;; and count down.
+                )
 ;; -------  Super debug stuff for writing out slotted components  --------
 	    (debug-spew "In write-component-slotted-no-value. . . . \n")
 	    (debug-spew (string-append "     pins per slot = " (number->string pins-per-slot) "\n"))
 	    (debug-spew (string-append "     slot = " (number->string slot) "\n"))
 	    (debug-spew (string-append "     beginning-pos = " (number->string beginning-pos) "\n"))
 	    (debug-spew (string-append "     end-pos = " (number->string end-pos) "\n"))
-	    ;;(debug-spew (string-append "     pins-nets = " pins-nets "\n"))
 ;; ------------------------------ 
 	    (format port "~a.~a " package slot)  ;; write component refdes -dot- slot
-	    ;(spice-sdb:write-nets-on-pins-of-slotted-component pins-nets port)
 	    (spice-sdb:write-net-names-on-component-slotted package beginning-pos end-pos pins-per-slot port)
 	  )  ;; let*
       )  ;; if
     )
   )
 )
-
 
 
 ;;-----------------------------------------------------------
@@ -1886,7 +1833,7 @@
   (lambda (port)
     (display "*********************************************************\n" port)
     (display "* Spice file generated by gnetlist                      *\n" port)
-    (display "* spice-sdb version 2.10.2007 by SDB --                 *\n" port)
+    (display "* spice-sdb version 4.28.2007 by SDB --                 *\n" port)
     (display "* provides advanced spice netlisting capability.        *\n" port)
     (display "* Documentation at http://www.brorson.com/gEDA/SPICE/   *\n" port)
     (display "*********************************************************\n" port)
@@ -1900,7 +1847,7 @@
   (lambda (port)
     (display "*******************************\n" port)
     (display "* Begin .SUBCKT model         *\n" port)
-    (display "* spice-sdb ver 2.10.2007     *\n" port)
+    (display "* spice-sdb ver 4.28.2007     *\n" port)
     (display "*******************************\n" port)
   )
 )
@@ -1955,7 +1902,7 @@
 	   (model-name (spice-sdb:get-subcircuit-modelname schematic-type)) 
 	   (file-info-list (list))
 	  )
-      (display "Using SPICE backend by SDB -- Version of 2.10.2007\n")
+      (display "Using SPICE backend by SDB -- Version of 4.28.2007\n")
       (display (string-append "schematic-type = " schematic-type "\n"))
       ;; (display (string-append "model-name = " model-name "\n"))
 

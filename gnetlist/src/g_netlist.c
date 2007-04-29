@@ -565,7 +565,10 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   pinseq_attrib = g_strconcat ("pinseq=", pinseq, NULL);
 
 #if DEBUG
-  printf("wanted_pin_seq: %s\n", pinseq);
+  printf("gnetlist:g_netlist.c:g_get_attribute_by_pinseq -- \n");
+  printf("  wanted uref = %s\n", uref);
+  printf("  wanted_pin_seq = %s\n", pinseq);
+  printf("  wanted_attrib = %s\n", wanted_attrib);
 #endif
 
   /* here is where you make it multi page aware */
@@ -579,6 +582,8 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
       if (strcmp(nl_current->component_uref, uref) == 0) {
 
         /* first search outside the symbol */
+	/* This checks for attributes attached to this component */
+        /* at schematic level */
         o_text_object = o_attrib_search_string_single(nl_current->object_ptr,
                                                       pinseq_attrib);
         if (o_text_object && o_text_object->attached_to) {
@@ -593,9 +598,16 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
             }
           }
 
-        }
+        } else {
+#if DEBUG
+	  printf("gnetlist:g_netlist.c:g_get_attribute_by_pinseq -- ");
+          printf("can't find pinseq at schematic level\n");
+#endif
+	}
+
         
         /* now search inside the symbol */
+	/* This checks for attributes attached at the symbol level */
         o_text_object =
           o_attrib_search_string_list(nl_current->object_ptr->
                                       complex->prim_objs, pinseq_attrib);
@@ -610,9 +622,9 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
               break;
             }
           }
-        }
-        
-        break;
+        }         
+        /* Don't break until we search the whole netlist to handle slotted */
+        /* parts.   4.28.2007 -- SDB. */
       }
     }
     nl_current = nl_current->next;
@@ -623,6 +635,11 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   } else {
     scm_return_value = scm_makfrom0str ("unknown");
   }
+
+#if DEBUG
+  printf("gnetlist:g_netlist.c:g_get_attribute_by_pinseq -- ");
+  printf("return_value: %s\n", return_value);
+#endif
 
   g_free(pinseq_attrib);
 
@@ -736,7 +753,7 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
     return (scm_return_value);
 }
 
-#if 0				/* No longer needed, but the netlist_mode variable is still used */
+#if 0	      /* No longer needed, but the netlist_mode variable is still used */
 SCM g_set_netlist_mode(SCM mode)
 {
     char *string;

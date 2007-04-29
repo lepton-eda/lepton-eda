@@ -1,3 +1,9 @@
+2007-04-28 Stuart Brorson   <sdb@cloud9.net>
+	* src/g_netlist.c, scheme/gnet-spice-sdb.scm:  Fix spice-sdb's
+	treatment of slotted parts so it emits pins in pinseq order.
+	This required making mods to g_netlist.c, as well as several
+	fcns in libgeda.
+	
 2007-04-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/gnetlist.c: Move the "-l" command line scheme loading code to
