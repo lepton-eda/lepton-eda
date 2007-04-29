@@ -1,3 +1,9 @@
+2007-04-28  Stuart Brorson <sdb AT cloud9 DOT net>
+	* src/o_attrib.c, src/o_complex_basic.c, src/s_tile.c:
+	made changes to o_attrib_slot_update and
+	o_attrib_search_pinseq to enable searching slotted parts 
+	by pinseq.  Added o_complex_count_pins as part of project.
+	
 2007-04-22  Peter Brett <peter@peter-b.co.uk>
 	* src/o_box_basic.c: Fix some unused variable warnings in libgeda.
 	

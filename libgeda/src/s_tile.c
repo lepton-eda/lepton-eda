@@ -473,7 +473,7 @@ void s_tile_free_all(PAGE * p_current)
         fprintf(stderr, "Length: %d\n", g_list_length(t_current->objects));
 
 
-#if DEBUG          
+#if 0  /* was if DEBUG, but code won't compile.  Remove it? */
         printf("%s %d %d\n", p_current->page_filename, i, j);
         objects = t_current->objects;
         while(objects != NULL) {

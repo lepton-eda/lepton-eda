@@ -1564,6 +1564,46 @@ OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin)
   return(NULL);
 }
 
+/*! \brief Counts pins on complex object
+ *  \par Given a pointer to a complex object (sch level
+ *  component object), this fcn iterates through the prim_objs
+ *  list counting the number of pins it finds.
+ *
+ *  \param [in] pointer to complex object
+ *  \return integer number of pins counted.
+ */
+/* pass in top level object */
+int o_complex_count_pins(OBJECT *object) 
+{
+  OBJECT *o_current=NULL;
+  int pin_counter=0;
+
+  g_return_val_if_fail(object != NULL, 0);
+  g_return_val_if_fail(((object->type == OBJ_COMPLEX) ||
+			(object->type == OBJ_PLACEHOLDER)) , 0);
+  g_return_val_if_fail(object->complex != NULL, 0);
+
+
+  /* go inside complex object.  This means that we grab
+   * a pointer to the head of the prim_objs list.
+   * These are the graphical items stored in the lower-level
+   * file (usually, objects from the .sym file).
+   * Then iterate over this list looking for pins and
+   * counting them. */
+  o_current = object->complex->prim_objs;
+
+  while ( o_current != NULL ) {
+    switch(o_current->type) {
+      case(OBJ_PIN):
+
+	pin_counter++;
+        break;
+    }
+    o_current=o_current->next;
+  }
+  return(pin_counter);
+}
+
 /*! \brief
  *  \par Function Description
  *

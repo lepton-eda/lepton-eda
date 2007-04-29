@@ -1304,9 +1304,19 @@ char *o_attrib_search_name(OBJECT *list, char *name, int counter)
   return (NULL);
 } 
 
-/*! \brief Search list for text string.
+/*! \brief Search OBJECT list for text string.
  *  \par Function Description
- *  Search list for text string.
+ *  Given an OBJECT list (i.e. OBJECTs on schematic page or
+ *  inside symbol), search for the attribute called out in
+ *  "string".  It iterates over all objects in the OBJECT list
+ *  and dives into the attached ATTRIB list for 
+ *  each OBJECT if it finds one.
+ *  Inside the ATTRIB list it looks for an attached text 
+ *  attribute matching "string".  It returns the
+ *  pointer to the associated OBJECT if found.  If the attribute
+ *  string is not found in the ATTRIB list, then the fcn
+ *  looks on the OBJECT itself for the attribute.  Then it
+ *  iterates to the next OBJECT.
  *
  *  \warning
  *  The list is the top level list. Do not pass it an object_head list
@@ -1333,6 +1343,10 @@ OBJECT *o_attrib_search_string_list(OBJECT *list, char *string)
         found = a_current->object;
         if (found != NULL) {
           if (found->type == OBJ_TEXT) {
+#if DEBUG
+	    printf("libgeda:o_attrib.c:o_attrib_search_string_list --");
+	    printf("found OBJ_TEXT, string = %s\n", found->text->string);
+#endif 
             if (strcmp(string, found->text->string) == 0) {
               return(found);
             }
@@ -1412,26 +1426,59 @@ char *o_attrib_search_string_partial(OBJECT *object, char *search_for,
  *  \par Function Description
  *  This function will check if the text->string value of
  *  the passed OBJECT matches the <B>search_for</B> parameter.
- *
+ *  If not, it then searches the object's ATTRIB list (if 
+ *  it has one.)
+ *  Only this single OBJECT and its ATTRIB list is
+ *  checked, and other OBJECTs on the page are not checked.
  *  \param [in] object      The OBJECT to compare.
- *  \param [in] search_for  Character string to compare against.
+ *  \param [in] search_for  Character string to compare against.  
+ *  Usually name=value
  *  \return The OBJECT passed in <B>object</B> parameter, NULL otherwise.
  */
 OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for)
 {
   OBJECT *o_current;
+  OBJECT *found;
+  ATTRIB *a_current;
 
   o_current = object;
+
+#if DEBUG
+  printf("In libgeda:o_attrib.c:o_attrib_search_string_single\n");
+  printf("   Examining object->name = %s\n", object->name);
+#endif
 
   if (o_current == NULL) {
     return(NULL);
   }
 
+  /* First check to see if this OBJECT itself is the attribute we want */
   if (o_current->type == OBJ_TEXT) {
     if (strcmp(o_current->text->string, search_for) == 0) {
+#if DEBUG
+      printf("   This object is searched-for attribute\n");
+#endif
       return(o_current);
     }
-  }	
+  }
+
+  /* Next check to see if this OBJECT has an ATTRIB list we */
+  /* can search.  If not return NULL.  If so, search it. */
+  if (o_current->attribs == NULL) 
+    return(NULL);
+
+  a_current = o_current->attribs;
+  while(a_current != NULL) {
+    found = a_current->object;
+    if (found != NULL) {
+      if (found->type == OBJ_TEXT) {
+	if(strcmp(found->text->string, search_for) == 0) {
+	    return(found);
+        }
+      }
+    }
+    a_current=a_current->next;
+  }
 	
   return (NULL);
 } 
@@ -1957,7 +2004,9 @@ char *o_attrib_search_default_slot(OBJECT *object)
 
 /*! \brief Search pinseq attribute.
  *  \par Function Description
- *  Search pinseq attribute.
+ *  Given list of objects (generally a pin with attached attribs), 
+ *  and a pinnumber, 
+ *  search for and return pinseq= attrib (object).
  *
  *  \param [in] list        OBJECT list to search.
  *  \param [in] pin_number  pin number to search for.
@@ -1968,7 +2017,7 @@ OBJECT *o_attrib_search_pinseq(OBJECT *list, int pin_number)
   OBJECT *pinseq_text_object;
   char *search_for;
 
-  /* The 9 is the number of digits plus null */
+  /* The 9 is the number of allowed digits plus null */
   search_for = (char *) g_malloc(sizeof(char)*(strlen("pinseq=")+9));
   sprintf(search_for, "pinseq=%d", pin_number);
 
@@ -2061,26 +2110,37 @@ char *o_attrib_search_component(OBJECT *object, char *name)
 
 /*! \brief Update all slot attributes in an object.
  *  \par Function Description
- *  Update all slot attributes in an object.
+ *  Update pinnumber attributes in a graphic object.  
+ *  The interesting case is where the object is an
+ *  instantiation of a slotted part.  This means that 
+ *  o_attrib_slot_update iterates through all pins
+ *  found on object and sets the pinnumber= attrib
+ *  on each.  This doesn't matter for non-slotted
+ *  parts, but on slotted parts, this is what sets the 
+ *  pinnumber= attribute on slots 2, 3, 4....
  *
  *  \param [in]     w_current  The TOPLEVEL object.
  *  \param [in,out] object     The OBJECT to update.
  */
 void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
 {
-  OBJECT *o_current;
+  OBJECT *o_current;  /* o_current points to the sch level complex object */
   OBJECT *o_slot_attrib;
   OBJECT *o_pin_object;
   OBJECT *o_pinnum_object;
+  OBJECT *o_pinseq_object;
   char *string;
   char *slotdef;
   int slot;
-  int pin_counter;
-  char* current_pin;
-  char* cptr;
+  int pin_counter;    /* Internal pin counter private to this fcn. */
+  char *new_pinseq;   /* New pinseq = (slot*(number of pins -1) + pin_count */
+  int numpins;        /* Total number of pins on this slot */
+  char* current_pin;  /* text from slotdef= to be made into pinnumber= */
+  char* cptr;         /* char pointer pointing to pinnumbers in slotdef=#:#,#,# string */
 
   o_current = object;
-	
+  /* For this particular graphic object (component instantiation) */
+  /* get the slot number as a string */
   string = o_attrib_search_slot(o_current, &o_slot_attrib);
 	
   if (!string) {
@@ -2091,6 +2151,8 @@ void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
   slot = atoi(string);
   g_free(string);
   
+  /* OK, now that we have the slot number, use it to get the */
+  /* corresponding slotdef=#:#,#,# string.  */
   slotdef = o_attrib_search_slotdef(o_current, slot);
   
   if (!slotdef) {
@@ -2099,7 +2161,9 @@ void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
   }
 
   if (!strstr(slotdef, ":")) {
-    /*! \todo didn't proper slotdef=#:... TODO into log*/
+    /* Didn't find proper slotdef=#:... put warning into log */
+    s_log_message("Improper slotdef syntax: missing \":\".\n");
+    g_free(slotdef);    
     return;
   }
 
@@ -2114,24 +2178,27 @@ void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
 
   if (*cptr == '\0') {
     s_log_message("Did not find proper slotdef=#:#,#,#... attribute\n");
+    g_free(slotdef);    
     return;
   }
-  
-  pin_counter = 1;
-  current_pin = strtok(cptr, DELIMITERS);
-  while(current_pin != NULL) {
 
+  /* loop on all pins found in slotdef= attribute */
+  pin_counter = 1;  /* internal pin_counter */
+  /* get current pinnumber= from slotdef= attrib */
+  current_pin = strtok(cptr, DELIMITERS); 
+  while(current_pin != NULL) {
+    /* get pin on this component with pinseq == pin_counter */
     o_pin_object = o_attrib_search_pinseq(o_current->complex->prim_objs, 
                                           pin_counter);
 
     if (o_pin_object) {
-
+      /* Now rename pinnumber= attrib on this part with value found */
+      /* in slotdef attribute  */
       string = o_attrib_search_name_single(o_pin_object, "pinnumber",
                                            &o_pinnum_object);
   
       if (string && o_pinnum_object && o_pinnum_object->type == OBJ_TEXT &&
           o_pinnum_object->text->string) {
-        g_free(string);
         g_free(o_pinnum_object->text->string);
 
         /* 9 is the size of one number plus null character */
@@ -2142,6 +2209,55 @@ void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
         sprintf(o_pinnum_object->text->string, "pinnumber=%s", current_pin);
         
         o_text_recreate(w_current, o_pinnum_object);
+      }
+      if (string) {
+      	g_free(string);
+      }
+
+
+      /* Now update pinseq= attrib on this part. */
+      /* Algorithm:
+       * 1. Get pointer to pinseq= attrib (graphic object) on this part.
+       * 2. Verify it has a pinseq= string attached.
+       * 3. free pinseq string.
+       * 4. figure out how many pins are on this part.
+       * 5. Write new string pinseq=(slot * (number of pins-1)) + pin_counter
+       *    into pinseq= object.
+       */
+      string = o_attrib_search_name_single(o_pin_object, "pinseq",
+                                           &o_pinseq_object);
+  
+      if (string && o_pinseq_object && o_pinseq_object->type == OBJ_TEXT &&
+          o_pinseq_object->text->string) {
+	g_free(o_pinseq_object->text->string);  /* free old pinseq text */
+
+	/* I need to check that the return is non-zero! */
+	numpins = o_complex_count_pins(o_current);
+
+#if DEBUG
+	printf("libgeda:o_attrib.c:o_attrib_slot_update -- name = %s\n", o_current->name);
+	printf("                                           numpins = %d\n", numpins);
+#endif
+
+	/* Now put new pinseq attrib onto pin. */
+	new_pinseq = g_malloc(sizeof(char)*((numpins-1)*slot)+pin_counter);
+	sprintf(new_pinseq, "%d", numpins*(slot-1)+pin_counter);
+        /* Add 1 for EOL char */
+	o_pinseq_object->text->string = (char *)
+          g_malloc(sizeof(char)*(strlen("pinseq=") + 
+				 strlen(new_pinseq) +1 ));
+
+	sprintf(o_pinseq_object->text->string, "pinseq=%s", new_pinseq);
+	g_free(new_pinseq);
+#if DEBUG
+	printf("libgeda:o_attrib.c:o_attrib_slot_update -- ");
+	printf("new_pinseq attrib = %s \n", o_pinseq_object->text->string);
+#endif
+        
+        o_text_recreate(w_current, o_pinseq_object);
+      }
+      if (string) {
+      	g_free(string);
       }
       
       pin_counter++;
