@@ -1,8 +1,18 @@
+2007-04-28 (later) Stuart Brorson   <sdb@cloud9.net>
+	* include/globals.h, scheme/gnet-spice-sdb.scm,
+	src/globals.c, src/parsecmd.c  configure.ac: Add 
+	--nomunge flag to gnetlist, telling spice-sdb 
+	to not autocorrect incorrect device prefixes 
+	(handles complaint from John Doty).  Also 
+	upgraded handling of long opts.  Finally, updated 
+	spice-sdb test suite to check these new features.
+	
 2007-04-28 Stuart Brorson   <sdb@cloud9.net>
 	* src/g_netlist.c, scheme/gnet-spice-sdb.scm:  Fix spice-sdb's
 	treatment of slotted parts so it emits pins in pinseq order.
 	This required making mods to g_netlist.c, as well as several
-	fcns in libgeda.  Then updated spice-sdb test suite.
+	fcns in libgeda.  Then updated spice-sdb test suite.  This
+	closes bug 1680275.
 	
 2007-04-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
