@@ -2,7 +2,7 @@
 	* src/g_netlist.c, scheme/gnet-spice-sdb.scm:  Fix spice-sdb's
 	treatment of slotted parts so it emits pins in pinseq order.
 	This required making mods to g_netlist.c, as well as several
-	fcns in libgeda.
+	fcns in libgeda.  Then updated spice-sdb test suite.
 	
 2007-04-21 Ales Hvezda   <ahvezda@geda.seul.org>
 

@@ -20,3 +20,5 @@ JD | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | |
 JD_Include | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -I
 JD_Sort | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -s
 
+# Tests for slotted parts
+SlottedOpamps | SlottedOpamps.sch | gafrc sym/LM324_slotted-1.sym | |
