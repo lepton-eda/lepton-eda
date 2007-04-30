@@ -32,12 +32,6 @@ tests:
 	$(SRCDIR)/runtest.sh $(SRCDIR)/../examples/stack_1.sch geda \
 		$(BUILDDIR) $(SRCDIR)
 
-# 7447 VHDL
-	cp -f $(SRCDIR)/gnetlistrc.vhdl $(BUILDDIR)/gnetlistrc
-	$(SRCDIR)/runtest.sh $(SRCDIR)/../examples/7447.sch vhdl \
-		$(BUILDDIR) $(SRCDIR)
-	rm -f $(BUILDDIR)/gnetlistrc
-
 # singlenet gEDA 
 	$(SRCDIR)/runtest.sh $(SRCDIR)/singlenet.sch geda \
 		$(BUILDDIR) $(SRCDIR)
@@ -127,6 +121,12 @@ tests_ales:
 		$(SRCDIR)/../examples/switcap/analysis.sch
 	diff $(SRCDIR)/skt.switcap $(BUILDDIR)/new_skt.switcap
 	diff $(SRCDIR)/../examples/switcap/example.scn $(SRCDIR)/new_skt.switcap
+
+# 7447 VHDL
+	cp -f $(SRCDIR)/gnetlistrc.vhdl $(BUILDDIR)/gnetlistrc
+	$(SRCDIR)/runtest.sh $(SRCDIR)/../examples/7447.sch vhdl \
+		$(BUILDDIR) $(SRCDIR)
+	rm -f $(BUILDDIR)/gnetlistrc
 
 # cleanup
 	rm -f $(BUILDDIR)/new_*

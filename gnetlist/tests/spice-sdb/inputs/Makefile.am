@@ -4,5 +4,6 @@ EXTRA_DIST= \
      gafrc \
      LVDfoo.sch \
      Simulation.cmd \
-     TwoStageAmp.sch
+     TwoStageAmp.sch \
+     SlottedOpamps.sch
 

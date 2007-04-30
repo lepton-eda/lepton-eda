@@ -1,3 +1,13 @@
+2007-04-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/Makefile.am: Moved the VHDL regression test into my private
+	test target since it doesn't work for everybody (since some people
+	do not install into $HOME/geda).
+
+	* tests/spice-sdb/inputs/Makefile.am, 
+	tests/spice-sdb/inputs/sym/Makefile.am: Added missing test files 
+	to make distcheck happy again.
+
 2007-04-28 (later) Stuart Brorson   <sdb@cloud9.net>
 	* include/globals.h, scheme/gnet-spice-sdb.scm,
 	src/globals.c, src/parsecmd.c  configure.ac: Add 
