@@ -86,7 +86,7 @@ cat $configure_script | \
   sed "s/%INSTALLED_GETTEXT_VERSION%/$installed_gettext_version/" > configure.ac
 configure_script=configure.ac
 
-for coin in `find $srcdir -name $srcdir/CVS -prune -o -name $configure_script -print`
+for coin in $srcdir/$configure_script
 do 
   dr=`dirname $coin`
   if test -f $dr/NO-AUTO-GEN; then
