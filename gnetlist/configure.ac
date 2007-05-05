@@ -63,20 +63,19 @@ AC_SUBST(PCBCONFDIR)
 # Check for getopt_long
 dnl check GNU getopt() - thanks libcmml!
 HAVE_GETOPT_LONG="no"
+GETOPT_LONG_LIBS=""
 AC_CHECK_FUNC([getopt_long], [HAVE_GETOPT_LONG="yes"])
 if test "x$HAVE_GETOPT_LONG" != xyes ; then
-        AC_DEFINE(HAVE_GETOPT_LONG, [], [Define to 1 if you have the 'getopt_long' function])
-        GETOPT_LONG_LIBS=""
-        AC_SUBST(GETOPT_LONG_LIBS)
-else 
         dnl FreeBSD has a gnugetopt library
         AC_CHECK_LIB([gnugetopt], [getopt_long], [HAVE_GETOPT_LONG="yes"])
         if test "x$HAVE_GETOPT_LONG" = xyes ; then
-                AC_DEFINE(HAVE_GETOPT_LONG, [], [Define to 1 if you have the 'getopt_long' function])
                 GETOPT_LONG_LIBS="-lgnugetopt"
-                AC_SUBST(GETOPT_LONG_LIBS)
         fi
 fi
+if test "x$HAVE_GETOPT_LONG" = xyes ; then
+	AC_DEFINE(HAVE_GETOPT_LONG, [], [Define to 1 if you have the 'getopt_long' function])
+fi
+AC_SUBST(GETOPT_LONG_LIBS)
 
 
 # 
