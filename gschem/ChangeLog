@@ -1,3 +1,12 @@
+2007-05-05 Peter Brett <peter@peter-b.co.uk>
+
+	* include/prototype.h, lib/system-gschemrc.in, src/gschem.c,
+	  src/x_menus.c, src/x_window.c: Add "Recent Files" list to
+	  gschem.
+
+	  Applied patch #1706411 by Ivan Stankovic, which adds a list of
+	  recently-accessed files to gschem's File menu.
+	
 2007-04-27 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
 	* src/x_image.c: Added sanity check.

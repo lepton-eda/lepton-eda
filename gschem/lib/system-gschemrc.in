@@ -1574,6 +1574,8 @@
 	   ("Save All" 		file-save-all 		file-save-all)
 	   ("Print..." 		file-print 		file-print)
 	   ("Write image..." 	file-image 		file-image)
+;; The entry below will be removed from the menu if glib < 2.6 is detected
+	   ("Recent files"      no-action 		no-action)
 	   ("SEPARATOR"         no-action 		no-action)
 	   ("Execute Script..." file-script 		file-script)
 	   ("SEPARATOR"         no-action 		no-action)

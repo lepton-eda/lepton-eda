@@ -157,6 +157,8 @@ void x_window_setup (TOPLEVEL *toplevel)
 
   /* X related stuff */
   x_window_create_main (toplevel);
+
+  x_menu_attach_recent_files_submenu(toplevel);
 }
 
 /*! \todo Finish function documentation!!!
@@ -828,6 +830,7 @@ void x_window_close(TOPLEVEL *w_current)
 
   /* just closed last window, so quit */
   if (last_window) {
+    recent_files_save();
     gschem_quit();
   }
   
@@ -950,6 +953,7 @@ x_window_open_page (TOPLEVEL *toplevel, const gchar *filename)
    * it will get done in x_window_set_current_page(...)
    */
   x_pagesel_update (toplevel); /* ??? */
+  recent_files_add(filename);
 
   return page;
 }
@@ -1046,6 +1050,8 @@ x_window_save_page (TOPLEVEL *toplevel, PAGE *page, const gchar *filename)
     /* reset page CHANGED flag */
     page->CHANGED = 0;
 
+    /* update recent file list */
+    recent_files_add(filename);
   }
 
   /* log status of operation */

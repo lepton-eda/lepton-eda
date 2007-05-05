@@ -200,6 +200,10 @@ void main_prog(void *closure, int argc, char *argv[])
   }
   g_free(input_str);
 
+  /* Load recent files list. This must be done
+   * before calling x_window_setup(). */
+  recent_files_load();
+
   /* At end, complete set up of window. */
   colormap = gdk_colormap_get_system ();
   x_window_setup_colors();

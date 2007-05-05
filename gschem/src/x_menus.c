@@ -22,6 +22,7 @@
 #include <string.h>
 #endif
 
+#include <glib/gstdio.h>
 #include <libgeda/libgeda.h>
 
 #include "../include/globals.h"
@@ -363,3 +364,229 @@ void x_menus_popup_sensitivity (TOPLEVEL* w_current, const char *buf, int flag)
     s_log_message(_("Tried to set the sensitivity on a non-existent popup menu_item\n")); 
   }
 }
+
+#if !GLIB_CHECK_VERSION(2,6,0)
+
+/* disable recent files support */
+inline void x_menu_attach_recent_files_submenu(TOPLEVEL *w_current)
+{
+   GtkWidget *recent_menu_item;
+
+   recent_menu_item = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(
+            w_current->menubar), "File/Recent files");
+   gtk_widget_destroy(recent_menu_item);
+}
+
+inline void recent_files_load() { }
+inline void recent_files_save() { }
+inline void recent_files_add(const char *filename) { }
+
+#else
+
+/* The list of recently loaded files. */
+static GList *recent_files = NULL;
+
+#define RECENT_FILES_STORE ".gEDA/gschem-recent-files"
+
+static void recent_file_clicked(gpointer filename)
+{
+   PAGE *page;
+   TOPLEVEL *w;
+
+   w = s_toplevel_new();
+   x_window_setup(w);
+   page = x_window_open_page(w, (char *)filename);
+   x_window_set_current_page(w, page);
+   s_log_message (_("New Window created [%s]\n"), (char *)filename);
+}
+
+/*! \brief Attach a submenu with filenames to the 'Recent files'
+ *         menu item.
+ *
+ *  Called from x_window_setup().
+ */
+void x_menu_attach_recent_files_submenu(TOPLEVEL *w_current)
+{
+   gulong id;
+   GtkWidget *recent_menu_item, *recent_submenu;
+
+   recent_menu_item = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(
+            w_current->menubar), "File/Recent files");
+
+   /* disconnect all unblocked signals */
+   while(1) {
+      id = g_signal_handler_find(recent_menu_item, G_SIGNAL_MATCH_UNBLOCKED,
+            0, 0, NULL, NULL, NULL);
+      if(id == 0)
+         break;
+      gtk_signal_disconnect(recent_menu_item, id);
+   }
+
+   /* remove 'q' from the menu item string; there has to be a better way to 
+    * create a menu item without a hotkey being assigned to it automatically */
+   GtkWidget *label = gtk_bin_get_child(GTK_BIN(recent_menu_item));
+   gtk_label_set_text(GTK_LABEL(label), "Recent files");
+
+   recent_submenu = gtk_menu_new();
+   GList *p = recent_files;
+   while(p) {
+      GtkWidget *tmp = gtk_menu_item_new_with_label((gchar *)p->data);
+      gtk_signal_connect_object(GTK_OBJECT(tmp), "activate",
+            GTK_SIGNAL_FUNC (recent_file_clicked),
+            p->data);
+      gtk_menu_append(GTK_MENU(recent_submenu), tmp);
+      p = g_list_next(p);
+   }
+   gtk_widget_show_all(recent_submenu);
+   gtk_menu_item_set_submenu(GTK_MENU_ITEM(recent_menu_item), recent_submenu);
+}
+
+/*! \brief Add a filename to the list of recent files.
+ */
+void recent_files_add(const char *filename)
+{
+   gchar *basename;
+   GtkWidget *recent_menu_item, *recent_submenu;
+
+   basename = g_path_get_basename(filename);
+   if(strstr(basename, "untitled_") == basename) {
+      g_free(basename);
+      return;
+   }
+
+   g_free(basename);
+
+   /* check if it is a duplicate */
+   GList *p = recent_files;
+   while(p) {
+      if(strcmp((char *)p->data, filename) == 0 )
+         return;
+      p = g_list_next(p);
+   }
+
+   filename = g_strdup(filename);
+   recent_files = g_list_prepend(recent_files, (gpointer)filename);
+
+   /* walk through all toplevels and add the filename to the recent file submenu */
+   TOPLEVEL *w = global_window_current;
+   while(w->prev)
+      w = w->prev;
+
+   while(w) {
+      if(w->menubar == NULL) {
+         w = w->next;
+         continue;
+      }
+
+      recent_menu_item = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(
+               w->menubar), "File/Recent files");
+      recent_submenu = gtk_menu_item_get_submenu(GTK_MENU_ITEM(recent_menu_item));
+
+      GtkWidget *s = gtk_menu_item_new_with_label(filename);
+      gtk_widget_show(s);
+      gtk_menu_shell_prepend(GTK_MENU_SHELL(recent_submenu), s);
+      gtk_signal_connect_object(GTK_OBJECT(s), "activate",
+            GTK_SIGNAL_FUNC (recent_file_clicked),
+            (gpointer)filename);
+      w = w->next;
+   }
+}
+
+/*! \brief Make RECENT_FILES_STORE contain an empty file list.
+ */
+static void recent_files_create_empty()
+{
+   gchar *c;
+   const gchar * const tmp[] = { NULL };
+   GKeyFile *kf = g_key_file_new();
+   gchar *file = g_build_filename(g_get_home_dir(), RECENT_FILES_STORE, NULL);
+
+   g_key_file_set_string_list(kf, "Recent files", "Files", tmp, 0);
+   c = g_key_file_to_data(kf, NULL, NULL);
+   g_key_file_free(kf);
+
+   g_file_set_contents(file, c, -1, NULL);
+   g_free(c);
+   g_free(file);
+}
+
+/*! \brief Save the list of recent files to RECENT_FILES_STORE.
+ */
+void recent_files_save()
+{
+   gchar **files = NULL;
+   int num = 0;
+   gchar *c;
+   gchar *file = g_build_filename(g_get_home_dir(), RECENT_FILES_STORE, NULL);
+
+   GList *p = recent_files;
+   if(p == NULL) 
+      return;
+
+   while(p) {
+      files = g_realloc(files, (num + 1) * sizeof(gchar *));
+      files[num++] = (gchar *)p->data;
+      p = g_list_next(p);
+   }
+
+   GKeyFile *kf = g_key_file_new();
+
+   g_key_file_set_string_list(kf, "Recent files", "Files", 
+         (const gchar **)files, num);
+   c = g_key_file_to_data(kf, NULL, NULL);
+   g_file_set_contents(file, c, -1, NULL);
+
+   g_free(c);
+   g_free(file);
+   g_free(files);
+   g_key_file_free(kf);
+}
+
+/*! \brief Load the recent file list using data from
+ *         RECENT_FILES_STORE. 
+ *
+ *  Must be called before any other recent-files-related
+ *  functions.
+ */
+void recent_files_load()
+{
+   GKeyFile *kf = g_key_file_new();
+   gchar *file = g_build_filename(g_get_home_dir(), RECENT_FILES_STORE, NULL);
+
+   if(!g_file_test(file, G_FILE_TEST_EXISTS)) {
+      gchar *dir = g_build_filename(g_get_home_dir(), ".gEDA", NULL);
+      g_mkdir(dir, S_IRWXU | S_IRWXG);
+      g_free(dir);
+
+      recent_files_create_empty();
+   }
+
+   if(!g_key_file_load_from_file(kf, file, G_KEY_FILE_NONE, NULL)) {
+      /* error opening key file, create an empty one and try again */
+      recent_files_create_empty();
+      if(!g_key_file_load_from_file(kf, file, G_KEY_FILE_NONE, NULL))
+         return;
+   }
+
+   gsize len;
+   gchar **list = g_key_file_get_string_list(kf, "Recent files",
+         "Files", &len, NULL);
+
+   if(list == NULL) {
+      /* error reading key file, don't bother to correct;
+       * just overwrite it with an empty one */
+      recent_files_create_empty();
+      return;
+   }
+
+   while(len > 0) {
+      len--;
+      recent_files = g_list_prepend(recent_files, list[len]);
+   }
+
+   g_free(list);
+   g_free(file);
+   g_key_file_free(kf);
+}
+
+#endif /* GLIB_MINOR_VERSION < 6 */
