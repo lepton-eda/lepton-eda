@@ -16,17 +16,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
-#include <config.h>
+#include "config.h"
 
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
 
-#include <glib/gstdio.h>
+
 #include <libgeda/libgeda.h>
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
+
+#if GLIB_CHECK_VERSION(2,6,0)
+#include <glib/gstdio.h>
+#endif
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
