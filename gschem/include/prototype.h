@@ -838,6 +838,10 @@ void x_menu_attach_recent_files_submenu(TOPLEVEL *w_current);
 void recent_files_load();
 void recent_files_save();
 void recent_files_add(const char *filename);
+#if !GLIB_CHECK_VERSION(2,8,0)
+gboolean g_file_set_contents(const gchar *filename, const gchar *contents,
+      gssize length, GError **error);
+#endif
 /* x_multiattrib.c */
 void x_multiattrib_open (TOPLEVEL *toplevel, OBJECT *object);
 /* x_multimulti.c */
