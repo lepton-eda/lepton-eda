@@ -240,6 +240,8 @@ OBJECT *o_text_load_font(TOPLEVEL *w_current, gunichar needed_char)
 
   o_font_set->font_prim_objs = return_head(o_font_set->font_prim_objs);
 
+  if (temp_string) g_free(temp_string);
+
   return(o_font_set->font_prim_objs);
 }
 
