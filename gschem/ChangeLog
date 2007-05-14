@@ -3,6 +3,9 @@
 	* po/nl_NL.po: Copied in new updated Dutch translation from 
 	Bert Timmerman.  Thanks.
 
+	* po/it_IT.po: Copied in new updated Italian translation from
+	Michele Petrecca.  Thanks.
+
 2007-05-10 Peter Brett <peter@peter-b.co.uk>
 
 	* include/prototype.h, src/x_menus.c: Provide

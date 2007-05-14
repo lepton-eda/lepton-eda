@@ -1,24 +1,23 @@
-# translation of it_IT.po to
-# translation of it_IT.po to ITALIANO
 # translation of it_IT.po to Italiano
+# translation of it_IT.po to
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR Alexandre Pereira Nunes.
+#
 # Michele Petrecca <petrecca@interfree.it>, 2004.
 # Michele Petrecca <michelinux@alice.it>, 2005.
-# Michele Petrecca <michelinux@alice.it>, 2005, 2006.
-#
+# Michele Petrecca <michelinux@alice.it>, 2005, 2006, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: it_IT\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-21 22:17-0400\n"
-"PO-Revision-Date: 2006-08-26 21:55+0200\n"
+"PO-Revision-Date: 2007-05-03 21:37+0200\n"
 "Last-Translator: Michele Petrecca <michelinux@alice.it>\n"
-"Language-Team: \n"
+"Language-Team: Italiano\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.2\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: src/rcstrings.c:2
 msgid "File"
@@ -467,8 +466,7 @@ msgstr "Hotkeys..."
 
 #: src/a_zoom.c:224
 msgid "Zoom too small!  Cannot zoom further.\n"
-msgstr ""
-"Eccessiva riduzione dell'immagine!  Non è possibile ridurla ulteriormente.\n"
+msgstr "Eccessiva riduzione dell'immagine!  Non è possibile ridurla ulteriormente.\n"
 
 #: src/g_funcs.c:341 src/i_callbacks.c:136
 #, c-format
@@ -490,18 +488,17 @@ msgid "Attribute failed ot find.\n"
 msgstr ""
 
 #: src/g_rc.c:106
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Found a version [%s%s] gschemrc file:\n"
 "[%s]\n"
 msgstr ""
-"Trovata una versione [%s] del file gschemrc:\n"
+"Trovata la versione [%s%s] del file gschemrc:\n"
 "[%s]\n"
 
 #: src/g_rc.c:109
 #, c-format
-msgid ""
-"While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
+msgid "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
 msgstr ""
 "Assicurati di avere sempre l'ultima versione del file rc; gschem si trova "
 "ancora in uno stato di sviluppo alfa.\n"
@@ -532,9 +529,9 @@ msgid "Invalid size [%d] passed to text-size\n"
 msgstr "Grandezza [%d] passata alla dimensione del testo, non valida\n"
 
 #: src/g_rc.c:682
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid size [%f] passed to postscript-font-scale\n"
-msgstr "Grandezza [%d] passata alla dimensione del testo, non valida\n"
+msgstr "L'ampiezza [%f] passata al postscript-font-scale non è valida\n"
 
 #: src/g_rc.c:725
 #, c-format
@@ -567,7 +564,7 @@ msgstr ""
 #: src/g_rc.c:1575
 #, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
-msgstr ""
+msgstr "Il valore [%d] dell'ampiezza dei punti passata alla griglia non è valida\n"
 
 #: src/g_rc.c:1616
 #, c-format
@@ -597,33 +594,26 @@ msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr ""
 
 #: src/g_rc.c:1794
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
-msgstr ""
-"Il numero di secondi indicati [%d] non è valido ai fini dell'intervallo di "
-"auto salvataggio\n"
+msgstr "Il numero [%d] di pixel indicati non è valido\n"
 
 #: src/gschem.c:140 src/gschem.c:150
-#, fuzzy, c-format
+#, c-format
 msgid "gEDA/gschem version %s%s\n"
-msgstr "gEDA/gschem versione %s\n"
+msgstr "gEDA/gschem versione %s%s\n"
 
 #: src/gschem.c:142 src/gschem.c:152
 #, c-format
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
-msgstr ""
-"gEDA/gschem viene rilasciato SENZA GARANZIA ALCUNA A CAUSA DEL SUO SVILUPPO "
-"IN FASE ALFA; leggere il file COPYING per ulteriori informazioni.\n"
+msgstr "gEDA/gschem viene rilasciato SENZA GARANZIA ALCUNA A CAUSA DEL SUO SVILUPPO IN FASE ALFA; leggere il file COPYING per ulteriori informazioni.\n"
 
 #: src/gschem.c:144 src/gschem.c:154
 #, c-format
-msgid ""
-"This is free software, and you are welcome to redistribute it under certain\n"
-msgstr ""
-"Questo software è rilasciato sotto licenza GPL e può essere ridistribuito "
-"sotto determinate\n"
+msgid "This is free software, and you are welcome to redistribute it under certain\n"
+msgstr "Questo software è rilasciato sotto licenza GPL e può essere ridistribuito sotto determinate\n"
 
 #: src/gschem.c:146 src/gschem.c:156
 #, c-format
@@ -690,7 +680,7 @@ msgstr ""
 #: src/i_basic.c:126
 #, c-format
 msgid "Paste %d Mode"
-msgstr ""
+msgstr "Modalità %d Incolla"
 
 #: src/i_basic.c:131
 msgid "Net Mode"
@@ -762,12 +752,12 @@ msgstr "Ripeti/"
 
 #: src/i_basic.c:738 src/i_basic.c:743
 msgid "OFF"
-msgstr ""
+msgstr "OFF"
 
 #: src/i_basic.c:747
 #, c-format
 msgid "Grid(%s, %s)"
-msgstr ""
+msgstr "Griglia(%s, %s)"
 
 #: src/i_callbacks.c:131
 #, c-format
@@ -780,9 +770,9 @@ msgid "New page created [%s]\n"
 msgstr "Nuova Pagina Creata [%s]\n"
 
 #: src/i_callbacks.c:226
-#, fuzzy, c-format
+#, c-format
 msgid "New Window created [%s]\n"
-msgstr "Creata Nuova Finestra\n"
+msgstr "Creata Nuova Finestra [%s]\n"
 
 #: src/i_callbacks.c:355
 msgid "Failed to Save All"
@@ -974,7 +964,7 @@ msgstr "Ricerca del simbolo [%s]\n"
 msgid ""
 "This command retrieves the component documentation from the web, but there "
 "is no component selected"
-msgstr ""
+msgstr "Questo comando reperisce la documentazione del componente da Internet, ma non hai selezionato nessun componente da cercare."
 
 #: src/i_callbacks.c:3063
 msgid "ShowN"
@@ -1321,14 +1311,12 @@ msgid "Single Attribute Editor"
 msgstr "Editor Singola Caratteristica"
 
 #: src/x_attribedit.c:355
-#, fuzzy
 msgid "<b>Edit Attribute</b>"
-msgstr "Modifica Caratteristiche"
+msgstr "<b>Modifica Caratteristiche</b>"
 
 #: src/x_attribedit.c:357
-#, fuzzy
 msgid "<b>Add Attribute</b>"
-msgstr "Aggiungi Attributo"
+msgstr "<b>Aggiungi Caratteristiche</b>"
 
 #: src/x_attribedit.c:373 src/x_multiattrib.c:1512
 msgid "Name:"
@@ -1355,9 +1343,8 @@ msgid "Show Name & Value"
 msgstr "Mostra Nome & Valore"
 
 #: src/x_attribedit.c:435
-#, fuzzy
 msgid "<b>Attach Options</b>"
-msgstr "Opzioni"
+msgstr "<b>Aggiungi Opzioni</b>"
 
 #: src/x_attribedit.c:450
 msgid "All"
@@ -1373,7 +1360,7 @@ msgstr "Collegamenti"
 
 #: src/x_attribedit.c:474
 msgid "Replace existing attributes"
-msgstr ""
+msgstr "Ridefinisci le caratteristiche esistenti"
 
 #: src/x_autonumber.c:411
 msgid ""
@@ -1383,8 +1370,7 @@ msgstr ""
 
 #: src/x_autonumber.c:426
 #, c-format
-msgid ""
-"duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
+msgid "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
 msgstr ""
 
 #: src/x_autonumber.c:696
@@ -1396,31 +1382,28 @@ msgid "No '*' or '?' given at the end of the autonumber text.\n"
 msgstr ""
 
 #: src/x_autonumber.c:880
-#, fuzzy
 msgid "Diagonal"
-msgstr "diagonale"
+msgstr "Diagonale"
 
 #: src/x_autonumber.c:881
 msgid "Top to bottom"
-msgstr ""
+msgstr "Dall'alto verso il basso"
 
 #: src/x_autonumber.c:881
 msgid "Bottom to top"
-msgstr ""
+msgstr "Dal basso verso l'alto"
 
 #: src/x_autonumber.c:882
-#, fuzzy
 msgid "Left to right"
-msgstr "sinistra destra"
+msgstr "Da sinistra a destra"
 
 #: src/x_autonumber.c:882
 msgid "Right to left"
-msgstr ""
+msgstr "Da destra a sinistra"
 
 #: src/x_autonumber.c:883
-#, fuzzy
 msgid "File order"
-msgstr "successione file"
+msgstr "Sequenza dei file"
 
 #: src/x_autonumber.c:1219
 msgid "Autonumber text"
@@ -1428,11 +1411,11 @@ msgstr ""
 
 #: src/x_autonumber.c:1244
 msgid "<b>Scope</b>"
-msgstr ""
+msgstr "<b>Visibilità</b>"
 
 #: src/x_autonumber.c:1266
 msgid "Search for:"
-msgstr ""
+msgstr "Ricerca di:"
 
 #: src/x_autonumber.c:1280
 msgid "Autonumber text in:"
@@ -1443,33 +1426,28 @@ msgid "Skip numbers found in:"
 msgstr ""
 
 #: src/x_autonumber.c:1299 src/x_autonumber.c:1308
-#, fuzzy
 msgid "Selected objects"
-msgstr "oggetti selezionati"
+msgstr "Oggetti selezionati"
 
 #: src/x_autonumber.c:1300 src/x_autonumber.c:1309
-#, fuzzy
 msgid "Current page"
-msgstr "pagina corrente"
+msgstr "Pagina corrente"
 
 #: src/x_autonumber.c:1301 src/x_autonumber.c:1310
-#, fuzzy
 msgid "Whole hierarchy"
-msgstr "Gerarchia"
+msgstr "Intera gerarchia"
 
 #: src/x_autonumber.c:1312
 msgid "Overwrite existing numbers"
-msgstr ""
+msgstr "Sovrascrivi i numeri esistenti"
 
 #: src/x_autonumber.c:1317
-#, fuzzy
 msgid "<b>Options</b>"
-msgstr "Opzioni"
+msgstr "<b>Opzioni</b>"
 
 #: src/x_autonumber.c:1339
-#, fuzzy
 msgid "Starting number:"
-msgstr "numero iniziale"
+msgstr "Numero iniziale:"
 
 #: src/x_autonumber.c:1346
 msgid "Sort order:"
@@ -1477,7 +1455,7 @@ msgstr ""
 
 #: src/x_autonumber.c:1367
 msgid "Remove numbers"
-msgstr ""
+msgstr "Rimuovi numeri"
 
 #: src/x_autonumber.c:1371
 msgid "Automatic slotting"
@@ -1525,9 +1503,8 @@ msgid "Select Component..."
 msgstr "Seleziona Componente..."
 
 #: src/x_compselect.c:821
-#, fuzzy
 msgid "Filter:"
-msgstr "Filtro"
+msgstr "Filtro:"
 
 #: src/x_compselect.c:885 src/x_fileselect.c:123
 msgid "Preview"
@@ -1585,33 +1562,28 @@ msgid "Upper Right"
 msgstr "In alto a destra"
 
 #: src/x_dialog.c:506
-#, fuzzy
 msgid "Edit Text Properties"
-msgstr "Modifica Dimensione Testo"
+msgstr "Modifica proprietà del testo"
 
 #: src/x_dialog.c:541
-#, fuzzy
 msgid "<b>Text Content</b>"
-msgstr "Opzioni"
+msgstr ""
 
 #: src/x_dialog.c:573
-#, fuzzy
 msgid "<b>Text Properties</b>"
-msgstr "Opzioni"
+msgstr "<b>Proprietà del testo</b>"
 
 #: src/x_dialog.c:588
-#, fuzzy
 msgid "Color:"
-msgstr "Colore"
+msgstr "Colore:"
 
 #: src/x_dialog.c:598
 msgid "Size:"
-msgstr ""
+msgstr "Ampiezza:"
 
 #: src/x_dialog.c:607
-#, fuzzy
 msgid "Alignment:"
-msgstr "Modifica Allineamento Testo"
+msgstr "Allineamento:"
 
 #: src/x_dialog.c:661
 msgid "Solid"
@@ -1647,24 +1619,20 @@ msgid "Edit Line Width & Type"
 msgstr "Modifica Larghezza & Tipo di Linea"
 
 #: src/x_dialog.c:910
-#, fuzzy
 msgid "Width:"
-msgstr "Larghezza"
+msgstr "Larghezza:"
 
 #: src/x_dialog.c:914 src/x_print.c:353
-#, fuzzy
 msgid "Type:"
-msgstr "Tipo"
+msgstr "Tipo:"
 
 #: src/x_dialog.c:918
-#, fuzzy
 msgid "Dash Length:"
-msgstr "Lunghezza Linea Tratteggiata"
+msgstr "Lunghezza linea tratteggiata:"
 
 #: src/x_dialog.c:922
-#, fuzzy
 msgid "Dash Space:"
-msgstr "Spazio Linea Tratteggiata"
+msgstr "Spazio linea tratteggiata:"
 
 #: src/x_dialog.c:1027
 msgid "Hollow"
@@ -1683,48 +1651,40 @@ msgid "Hatch"
 msgstr "Tratteggio"
 
 #: src/x_dialog.c:1295
-#, fuzzy
 msgid "Fill Type:"
-msgstr "Tipo Riempimento"
+msgstr "Tipo di riempimento:"
 
 #: src/x_dialog.c:1299
-#, fuzzy
 msgid "Line Width:"
-msgstr "Larghezza Linea"
+msgstr "Larghezza linea:"
 
 #: src/x_dialog.c:1303
-#, fuzzy
 msgid "Angle 1:"
-msgstr "Angolo1"
+msgstr "Angolo 1:"
 
 #: src/x_dialog.c:1307
-#, fuzzy
 msgid "Pitch 1:"
-msgstr "Livello1"
+msgstr "Livello 1:"
 
 #: src/x_dialog.c:1311
-#, fuzzy
 msgid "Angle 2:"
-msgstr "Angolo2"
+msgstr "Angolo 2:"
 
 #: src/x_dialog.c:1315
-#, fuzzy
 msgid "Pitch 2:"
-msgstr "Livello2"
+msgstr "Livello 2:"
 
 #: src/x_dialog.c:1477
 msgid "Arc Params"
 msgstr "Parametri Arco"
 
 #: src/x_dialog.c:1518
-#, fuzzy
 msgid "Start Angle:"
-msgstr "Angolo di Attacco"
+msgstr "Angolo di Attacco:"
 
 #: src/x_dialog.c:1528
-#, fuzzy
 msgid "Degrees of Sweep:"
-msgstr "Gradi di Sviluppo dell'Arco"
+msgstr "Gradi di sviluppo dell'arco:"
 
 #: src/x_dialog.c:1628
 msgid ""
@@ -1737,37 +1697,33 @@ msgid "Text Size"
 msgstr "Dimensione Testo"
 
 #: src/x_dialog.c:1727
-#, fuzzy
 msgid "Enter new text size:"
-msgstr "Inserisci nuova dimensione del testo"
+msgstr "Inserisci nuova ampiezza del testo:"
 
 #: src/x_dialog.c:1802
 msgid "Snap Size"
 msgstr ""
 
 #: src/x_dialog.c:1833
-#, fuzzy
 msgid "Enter new snap grid spacing:"
-msgstr "Inserisci una nuova stringa."
+msgstr ""
 
 #: src/x_dialog.c:1906
 msgid "Edit slot number"
 msgstr "Modifica numero slot"
 
 #: src/x_dialog.c:1938
-#, fuzzy
 msgid "Edit slot number:"
-msgstr "Modifica numero slot"
+msgstr "Modifica numero slot:"
 
 #: src/x_dialog.c:2019
-#, fuzzy
 msgid "<b>gEDA: GPL Electronic Design Automation</b>"
-msgstr "gEDA : GPL Electronic Design Automation"
+msgstr "<b>gEDA: GPL Electronic Design Automation</b>"
 
 #: src/x_dialog.c:2023
-#, fuzzy, c-format
+#, c-format
 msgid "<b>gschem version %s%s</b>"
-msgstr "versione di gschem %s"
+msgstr "<b>versione di gschem %s%s</b>"
 
 #: src/x_dialog.c:2029
 msgid ""
@@ -1804,24 +1760,21 @@ msgstr "Modifica Colore"
 
 #: src/x_dialog.c:2440
 msgid "Object color:"
-msgstr ""
+msgstr "Colore dell'oggetto:"
 
 #: src/x_dialog.c:2501
-#, fuzzy
 msgid "Hotkeys"
-msgstr "Hotkeys..."
+msgstr "Hotkeys"
 
 #: src/x_dialog.c:2564
-#, fuzzy
 msgid "Function"
-msgstr "Azione"
+msgstr "Funzione"
 
 #: src/x_dialog.c:2571
 msgid "Keystroke(s)"
 msgstr ""
 
 #: src/x_dialog.c:2925
-#, fuzzy
 msgid "Find Text"
 msgstr "Trova testo"
 
@@ -1834,7 +1787,6 @@ msgid "descend into hierarchy"
 msgstr "discende nella gerarchia"
 
 #: src/x_dialog.c:3031
-#, fuzzy
 msgid "Hide Text"
 msgstr "Nascondi testo"
 
@@ -1843,7 +1795,6 @@ msgid "Hide text starting with:"
 msgstr "Nascondi il testo iniziando con:"
 
 #: src/x_dialog.c:3131
-#, fuzzy
 msgid "Show Text"
 msgstr "Mostra testo"
 
@@ -1857,26 +1808,25 @@ msgstr "Nome"
 
 #: src/x_dialog.c:3630
 msgid "S_elect the schematics you want to save:"
-msgstr ""
+msgstr "S_eleziona lo schematico che vuoi salvare:"
 
 #: src/x_dialog.c:3724
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
-msgstr ""
+msgstr "Salvare i cambi allo schematico \"%s\" prima di chiudere?"
 
 #: src/x_dialog.c:3730
 #, c-format
-msgid ""
-"There is %d schematics with unsaved changes. Save changes before closing?"
-msgstr ""
+msgid "There is %d schematics with unsaved changes. Save changes before closing?"
+msgstr "C'è lo schematico %d che presenta cambi non salvati. Salvare i cambi prima di chiudere?"
 
 #: src/x_dialog.c:3759
 msgid "If you don't save, all your changes will be permanently lost."
-msgstr ""
+msgstr "Se non effettui un salvataggio dei cambi, essi verranno definitivamente persi."
 
 #: src/x_dialog.c:3779
 msgid "_Close without saving"
-msgstr ""
+msgstr "_Chiudi senza salvare"
 
 #: src/x_fileselect.c:46
 msgid "Schematics"
@@ -1899,14 +1849,13 @@ msgid "Open..."
 msgstr "Apri..."
 
 #: src/x_fileselect.c:233
-#, fuzzy
 msgid "Save as..."
-msgstr "Salva con Nome..."
+msgstr "Salva con nome..."
 
 #: src/x_image.c:362
-#, fuzzy, c-format
+#, c-format
 msgid "x_image_lowlevel: Unable to write %s file %s.\n"
-msgstr "x_image_lowlevel: Incapace a realizzare il file in formato png.\n"
+msgstr ""
 
 #: src/x_image.c:372
 #, c-format
@@ -1934,18 +1883,16 @@ msgstr ""
 "gschem.\n"
 
 #: src/x_image.c:458
-#, fuzzy
 msgid "Width x Height"
 msgstr "Larghezza x Altezza"
 
 #: src/x_image.c:474
 msgid "Image type"
-msgstr ""
+msgstr "Tipo di immagine"
 
 #: src/x_image.c:495
-#, fuzzy
 msgid "Write image..."
-msgstr "Stampa Immagine..."
+msgstr "Scrivi immagine..."
 
 #: src/x_log.c:231
 msgid "Status"
@@ -2009,11 +1956,11 @@ msgstr "/Cancella"
 
 #: src/x_menus.c:53
 msgid "/Down Schematic"
-msgstr ""
+msgstr "/Rilascia schematico"
 
 #: src/x_menus.c:54
 msgid "/Down Symbol"
-msgstr ""
+msgstr "/Rilascia simbolo"
 
 #: src/x_menus.c:55
 msgid "/Up"
@@ -2029,13 +1976,11 @@ msgstr "La voce Popup_menu_item_factory non esiste!\n"
 
 #: src/x_menus.c:363
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
-msgstr ""
-"Provato a impostare la sensibilità su una finestra di popup menu_itemi\n"
+msgstr "Provato a impostare la sensibilità su una finestra di popup menu_itemi\n"
 
 #: src/x_multiattrib.c:652
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
-"Attributi con il nome vuoto non sono permessi. Per favore inserisci un nome."
+msgstr "Attributi con il nome vuoto non sono permessi. Per favore inserisci un nome."
 
 #: src/x_multiattrib.c:1164
 msgid "Show Value only"
@@ -2096,9 +2041,8 @@ msgstr ""
 "opzioni..."
 
 #: src/x_print.c:90
-#, fuzzy
 msgid "Select PostScript Filename..."
-msgstr "Salva Pagina Con Nome..."
+msgstr "Seleziona il nome del file Psotscript..."
 
 #: src/x_print.c:206
 msgid "Extents with margins"
@@ -2122,35 +2066,31 @@ msgstr "Portrait"
 
 #: src/x_print.c:330
 msgid "Settings"
-msgstr ""
+msgstr "Impostazioni"
 
 #: src/x_print.c:342
-#, fuzzy
 msgid "Output paper size:"
-msgstr "Formato carta"
+msgstr "Ampiezza del foglio:"
 
 #: src/x_print.c:364
-#, fuzzy
 msgid "Orientation:"
-msgstr "Orientazione"
+msgstr "Orientazione:"
 
 #: src/x_print.c:376
-#, fuzzy
 msgid "Destination"
-msgstr "Documentazione"
+msgstr "Destinazione"
 
 #: src/x_print.c:389
-#, fuzzy
 msgid "File:"
-msgstr "File"
+msgstr "File:"
 
 #: src/x_print.c:419
 msgid "Command:"
-msgstr ""
+msgstr "Comando:"
 
 #: src/x_print.c:785
 msgid "No print destination specified\n"
-msgstr ""
+msgstr "Non è stata specificata nessuna stampante\n"
 
 #: src/x_print.c:792
 #, c-format
@@ -2163,6 +2103,8 @@ msgid ""
 "Error printing to file '%s'\n"
 "Check the log window for more information"
 msgstr ""
+"Errore nella stampa del file '%s'\n"
+"Verifica la finestra di stato per maggiori informazioni"
 
 #: src/x_print.c:808
 #, c-format
@@ -2300,18 +2242,18 @@ msgid "Loading schematic [%s]\n"
 msgstr "Caricamento schema [%s]\n"
 
 #: src/x_window.c:1030
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT save page [%s]\n"
-msgstr "Impossibile salvare [%s]\n"
+msgstr "Non è possibile salvare la pagina [%s]\n"
 
 #: src/x_window.c:1031
 msgid "Error while trying to save"
 msgstr "Errore durante il salvataggio"
 
 #: src/x_window.c:1040
-#, fuzzy, c-format
+#, c-format
 msgid "Saved as [%s]\n"
-msgstr "Salvato Con il Nome [%s]\n"
+msgstr "Salvato con il nome [%s]\n"
 
 #: src/x_window.c:1042
 #, c-format
@@ -2332,166 +2274,3 @@ msgstr "Annulla pagina [%s]\n"
 msgid "Closing [%s]\n"
 msgstr "Chiusura [%s]\n"
 
-#~ msgid "Ack! something got fouled up with the keymappings!\n"
-#~ msgstr ""
-#~ "Attenzione: qualcosa non è andato per il verso giusto nella mappatura "
-#~ "della tastiera!\n"
-
-#, fuzzy
-#~ msgid "libgd not installed or disabled, so this feature is disabled\n"
-#~ msgstr ""
-#~ "La libreria libgdgeda sembra non essere installata oppure è disabilitata; "
-#~ "di conseguenza questa caratteristica è disabilitata\n"
-
-#~ msgid "Generic String"
-#~ msgstr "Stringa Generica"
-
-#~ msgid "Enter new string."
-#~ msgstr "Inserisci una nuova stringa."
-
-#, fuzzy
-#~ msgid "Select Image Filename..."
-#~ msgstr "Specifica un Nome del file!\n"
-
-#, fuzzy
-#~ msgid "Filename:"
-#~ msgstr "Nome file"
-
-#~ msgid "Add/Edit Attribute"
-#~ msgstr "Aggiungi/Modifica Caratteristica"
-
-#~ msgid "Multiple Attach"
-#~ msgstr "Attacco Multiplo"
-
-#~ msgid "Replace"
-#~ msgstr "Sostituire"
-
-#~ msgid "ERROR: NULL object in o_delete_end!\n"
-#~ msgstr "ERRORE: oggetto NULLO in o_delete_end!\n"
-
-#~ msgid "Component [%s] has been embedded\n"
-#~ msgstr "Il componente [%s] è stato fissato\n"
-
-#~ msgid "Picture [%s] has been embedded\n"
-#~ msgstr "L'immagine [%s] è stata fissata\n"
-
-#~ msgid "Component [%s] has been successfully unembedded\n"
-#~ msgstr "Il componente [%s] è stato rimosso con successo\n"
-
-#~ msgid "Picture [%s] has been unembedded\n"
-#~ msgstr "La figura [%s] è stata rimossa\n"
-
-#~ msgid "Please select a picture file."
-#~ msgstr "Per favore seleziona un'immagine."
-
-#~ msgid "Edit Text Color"
-#~ msgstr "Modifica il Colore del Testo"
-
-#~ msgid "Line Type"
-#~ msgstr "Tipo di Linea"
-
-#~ msgid "String too long... hack!\n"
-#~ msgstr "Stringa eccessiva...!\n"
-
-#~ msgid "Height"
-#~ msgstr "Altezza"
-
-#~ msgid "Script Execute..."
-#~ msgstr "Esecuzione Script..."
-
-#~ msgid ""
-#~ "Warning: negative numbers not allowed in the autonumber_text dialog\n"
-#~ msgstr ""
-#~ "Attenzione: i numeri negativi non sono permessi nella finestra "
-#~ "autonumber_text\n"
-
-#~ msgid "selection"
-#~ msgstr "selezione"
-
-#~ msgid "search text"
-#~ msgstr "cerca testo"
-
-#~ msgid "hierarchical sheets"
-#~ msgstr "fogli gerarchici"
-
-#~ msgid "unnumbered"
-#~ msgstr "non numerato"
-
-#~ msgid "all"
-#~ msgstr "tutto"
-
-#~ msgid "options"
-#~ msgstr "opzioni"
-
-#~ msgid "top down"
-#~ msgstr "sopra sotto"
-
-#~ msgid "New Page created [%s]\n"
-#~ msgstr "Creata Nuova Pagina [%s]\n"
-
-#~ msgid ""
-#~ "There are unsaved schematics!\n"
-#~ "\n"
-#~ "Are you sure?\n"
-#~ "OK will discard ALL changes!"
-#~ msgstr ""
-#~ "Ci sono schemi non salvati!\n"
-#~ "\n"
-#~ "Sei sicuro?\n"
-#~ "Cliccando su OK annullerai tutti i cambi!"
-
-#~ msgid "Agg, could not open directory: %s\n"
-#~ msgstr "Non è possibile aprire la cartella: %s\n"
-
-#~ msgid "Too many directories! Increase MAX_DIRS\n"
-#~ msgstr "Troppe cartelle! Incrementa MAX_DIRS\n"
-
-#~ msgid "Too many files! Increase MAX_FILES\n"
-#~ msgstr "Troppi file! Incrementa MAX_FILES\n"
-
-#~ msgid "sch - Schematics"
-#~ msgstr "sch - Schematici"
-
-#~ msgid "sym - Symbols "
-#~ msgstr "sym - Simboli "
-
-#~ msgid "sym/sch - Schematics and Symbols"
-#~ msgstr "sym/sch - Schematici e Simboli"
-
-#~ msgid "* - All Files"
-#~ msgstr "* - Tutti i File"
-
-#~ msgid "x_fileselect_preview_checkbox: Oops got a null f_current!\n"
-#~ msgstr "x_fileselect_preview_checkbox: Ottenuto un NULLO f_current!\n"
-
-#~ msgid "Search in Files"
-#~ msgstr "Ricerca nei File"
-
-#~ msgid "Search in Files - End of list"
-#~ msgstr "Ricerca nei File - Fine della lista"
-
-#~ msgid "Search in Components"
-#~ msgstr "Ricerca nei Componenti"
-
-#~ msgid "Search in Components - Found library only"
-#~ msgstr "Ricerca nei Componenti - Trovata solo la libreria"
-
-#~ msgid "Search in Components - End of list"
-#~ msgstr "Ricerca nei Componenti - Fine della lista"
-
-#~ msgid "Directories"
-#~ msgstr "Cartelle"
-
-#~ msgid "Libraries"
-#~ msgstr "Librerie"
-
-#~ msgid "Files"
-#~ msgstr "File"
-
-#~ msgid "Discard changes"
-#~ msgstr "Annullare i cambi"
-
-#~ msgid "x_preview_update_gtk24: Can't get pixbuf from preview struct.\n"
-#~ msgstr ""
-#~ "x_preview_update_gtk24: Non è possibile ottenere un'immagine pixbuf dalla "
-#~ "precedente struttura.\n"
