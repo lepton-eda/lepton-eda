@@ -1,3 +1,8 @@
+2007-05-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/Makefile.am, gnet-osmond.scm: Added new gnetlist backend
+	from John Doty. Thanks!
+
 2007-04-29 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* tests/Makefile.am: Moved the VHDL regression test into my private
