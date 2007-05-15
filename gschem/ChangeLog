@@ -1,3 +1,12 @@
+2007-05-15 Peter Clifton <pcjc2@cam.ac.uk>
+
+	* src/o_complex.c: Fixed offset in o_complex_translate_all to
+	  be relative to bottom left of world bounds. This bug appears
+	  to have crept in when switching to world coords, as the
+	  numerical sense of "top" and "bottom" are switched around.
+	  These variables eventually need renaming {x|y}_{min|max} to
+	  avoid further confusion.
+
 2007-05-14 Werner Hoch  <werner.ho@gmx.de>
 
 	*po/de_DE.po: updated german translation

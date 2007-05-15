@@ -648,7 +648,11 @@ void o_complex_translate_all(TOPLEVEL *w_current, int offset)
 
   /*! \todo do we want snap grid here? */
   x = snap_grid( w_current, w_rleft );
-  y = snap_grid( w_current, w_rbottom );
+  /* WARNING: w_rtop isn't the top of the bounds, it is the smaller
+   * y_coordinate, which represents in the bottom in world coords.
+   * These variables are as named from when screen-coords (which had 
+   * the correct sense) were in use . */
+  y = snap_grid( w_current, w_rtop );
 
   o_current = w_current->page_current->object_head;
   while(o_current != NULL) {
