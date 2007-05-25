@@ -1,3 +1,9 @@
+2007-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/postproc.sh, removedups.sh: Fixed/improved the wiki
+	scripts to work with the new wiki software.  Wrote a script to
+	remove duplicate images from the repository.
+
 2007-02-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* wiki/: Updated wiki snapshot from the live gEDA wiki.  Phase I 

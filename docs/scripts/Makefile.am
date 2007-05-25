@@ -2,7 +2,7 @@
 ##
 
 EXTRA_DIST = postproc.sh wikifetch.sh wikicommit.sh populatemkfiles.sh \
-             copywip.sh
+             copywip.sh removedups.sh
 
 MOSTLYCLEANFILES =	*.log *~
 CLEANFILES = 		*.log *~
