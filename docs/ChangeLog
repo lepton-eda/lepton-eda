@@ -9,6 +9,13 @@
 	* scripts/wikifetch.sh: Updated script to exclude an export directory
 	that caused an infinite download 
 
+	* _media/Makefile.am lib/Makefile.am lib/exe/Makefile.am
+	lib/images/fileicons/Makefile.am lib/images/interwiki/Makefile.am
+	lib/plugins/Makefile.am lib/plugins/definitionlist/Makefile.am
+	lib/plugins/note/Makefile.am lib/tpl/Makefile.am
+	lib/tpl/default/Makefile.am: Fixed up Makefiles to pick up any 
+	missed files.
+
 2007-02-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* wiki/: Updated wiki snapshot from the live gEDA wiki.  Phase I 
