@@ -1,5 +1,5 @@
 
-SUBDIRS = toplevel wiki gsch2pcb_tutorial scripts
+SUBDIRS = toplevel wiki scripts
 
 EXTRA_DIST = autogen.sh
 

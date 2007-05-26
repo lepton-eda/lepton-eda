@@ -60,8 +60,6 @@ GEDA_DECLARE_DOCS(wiki)
 AC_CONFIG_FILES([Makefile 
 		 toplevel/Makefile 
 		 toplevel/gedadocs.html 
-                 gsch2pcb_tutorial/Makefile 
-		 gsch2pcb_tutorial/images/Makefile
                  scripts/Makefile 
                  wiki/Makefile 
 		 wiki/_detail/Makefile

@@ -16,6 +16,9 @@
 	lib/tpl/default/Makefile.am: Fixed up Makefiles to pick up any 
 	missed files.
 
+	* gsch2pcb_tutorial/* configure.ac Makefile.am: Removed gsch2pcb
+	tutorial from CVS and install now that it is in the wiki.
+
 2007-02-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* wiki/: Updated wiki snapshot from the live gEDA wiki.  Phase I 
