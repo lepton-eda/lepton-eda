@@ -1,6 +1,13 @@
 2007-06-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
+	Backported the following fix by Peter Brett:
+	b0810d4d71e27bc32e0e0b1e903d230d97ca9ad6
+
+		* lib/system-gschemrc.in: Help menu updates.
+		Change help menu now that all documentation is in the wiki.
+
 	Backported the following fix by Carlos Nieves Onega:
+	251771e1f9acab07a3721d5828873464f56fa347
 
 		* scheme/gschem.c: Changed nil by #f.
 
