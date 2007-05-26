@@ -150,9 +150,10 @@ static void create_type_menu(GtkComboBox *combo)
       if (strcasecmp(buf, X_IMAGE_DEFAULT_TYPE) == 0) {
 	default_index = i;
       }
+      i++;  /* this is the count of items added to the combo box */
+	    /* not the total number of pixbuf formats */
       g_free(buf);
     }
-    i++;
     ptr = ptr->next;
   }
   g_slist_free (formats);

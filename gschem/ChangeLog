@@ -1,3 +1,8 @@
+2007-05-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/x_image.c: Applied fix for "Write image" seg fault found (and
+	fixed) by Robert Fitzsimons.  Thanks!
+
 2007-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20070526 in prep for the next
