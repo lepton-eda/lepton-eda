@@ -1,3 +1,9 @@
+2007-05-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/spice-sdb/Makefile.am: Oops, because of the below disable,
+	need to explicitly include run_tests.sh.  This needs to b undone 
+	once these tests pass make distcheck again.
+
 2007-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* tests/spice-sdb/Makefile.am: Disabled spice-sdb tests

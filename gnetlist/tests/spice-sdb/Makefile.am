@@ -11,5 +11,5 @@ TESTS_ENVIRONMENT= PERL=${PERL}
 
 #TESTS= ${RUN_TESTS}
 
-EXTRA_DIST= ${RUN_TESTS} tests.list
+EXTRA_DIST= run_tests.sh ${RUN_TESTS} tests.list 
 
