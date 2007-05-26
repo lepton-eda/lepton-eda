@@ -5,20 +5,25 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:icarus_opcodes</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:icarus_opcodes?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:icarus_opcodes?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:icarus_opcodes?do=export_raw" />
-  <meta name="date" content="2006-05-07T16:54:50-0400" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:24-0400" />
+<meta name="keywords" content="geda,icarus_opcodes" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:icarus_opcodes?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:icarus_opcodes" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:icarus_opcodes" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
+
+
 
 <h1><a name="executable_instruction_opcodes" id="executable_instruction_opcodes">Executable Instruction Opcodes</a></h1>
 <div class="level1">
@@ -191,7 +196,7 @@ The results of the comparison go into bits 4, 5, 6 and 7:
 The eeq bit is set to 1 if all the bits in the vectors are exactly the
 same, or 0 otherwise. The eq bit is true if the values are logically
 the same. That is, x and z are considered equal. In other words the eq
-bit is the same as ``=='' and the eeq bit ``===''.
+bit is the same as ``==&#039;&#039; and the eeq bit ``===&#039;&#039;.
 
 The lt bit is 1 if the left vector is less then the right vector, or 0
 if greater then or equal to the right vector. It is the equivalent of
@@ -219,8 +224,8 @@ bit gets the x value.
 These instructions are for implementing the casez and casex
 comparisons. These work similar to the %cmp/u instructions, except
 only an eq bit is calculated. These comparisons both treat z values in
-the left or right operand as don't care positions. The %cmp/x
-instruction will also treat x values in either operand as don't care.
+the left or right operand as don&#039;t care positions. The %cmp/x
+instruction will also treat x values in either operand as don&#039;t care.
 
 Only bit 4 is set by these instructions.
 
@@ -404,7 +409,7 @@ the memory word.
 * %load/nx &lt;bit&gt;, &lt;vpi-label&gt;, &lt;idx&gt;
 
 This instruction load a value from a .net object bit. Since .net
-objects don't really exist (they are only named indirection into the
+objects don&#039;t really exist (they are only named indirection into the
 netlist) this instruction indexes into the .net list of bits.
 
 * %load/v &lt;bit&gt;, &lt;functor-label&gt;, &lt;wid&gt;

@@ -5,35 +5,40 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:cygwin</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:cygwin?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:cygwin?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:cygwin?do=export_raw" />
-  <meta name="date" content="2006-10-20T21:08:19-0400" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:25-0400" />
+<meta name="keywords" content="geda,cygwin" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:cygwin?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:cygwin" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:cygwin" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
+
+
 
 <h1><a name="installing_geda_gaf_on_windows_-_the_cygwin_way" id="installing_geda_gaf_on_windows_-_the_cygwin_way">Installing gEDA/gaf on Windows - the Cygwin way</a></h1>
 <div class="level1">
 
 <p>
- This guide describes one way to build gEDA/gaf (gschem and friends) on the Windows operating system. It uses Cygwin as the layer between Windows and the *nix world (ie gcc, make, bash etc...).
+ This guide describes one way to build gEDA/gaf (gschem and friends) on the Windows operating system. It uses Cygwin as the layer between Windows and the *nix world (ie gcc, make, bash etc&hellip;).
 </p>
 
 </div>
-<!-- SECTION [1-257] -->
+<!-- SECTION "Installing gEDA/gaf on Windows - the Cygwin way" [1-257] -->
 <h2><a name="instructions" id="instructions">Instructions</a></h2>
 <div class="level2">
 
 <p>
- 1. Download and run setup.exe from cygwin website: <a href="http://www.cygwin.com/" class="urlextern" title="http://www.cygwin.com"  rel="nofollow">http://www.cygwin.com</a>.
+ <strong>1. Download and run setup.exe from cygwin website:</strong> <a href="http://www.cygwin.com/" class="urlextern" title="http://www.cygwin.com"  rel="nofollow">http://www.cygwin.com</a>.
 </p>
 
 <p>
@@ -41,7 +46,7 @@ In the package selection dialog, select the following packages:
 </p>
 
 <p>
-(Hint: press the &ldquo;view&rdquo; button once to arrange the list in alphabetical order) 
+(Hint: press the “view” button once to arrange the list in alphabetical order) 
 </p>
 <pre class="code">atk-devel
 file
@@ -59,7 +64,11 @@ xorg-x11-fscl
 xterm</pre>
 
 <p>
- 2. Append these lines to your .bash_profile: 
+ Take care that you select guile and guile-devel version 1.6.7. Version 1.8.1 doesn’t work. (Werner)
+</p>
+
+<p>
+<strong>2. Append these lines to your .bash_profile:</strong> 
 </p>
 <pre class="code">export LD_LIBRARY_PATH=$HOME/geda/lib:$LD_LIBRARY_PATH
 export PATH=$HOME/geda/bin:$PATH
@@ -71,7 +80,7 @@ export PKG_CONFIG_PATH=$HOME/geda/lib/pkgconfig:$PKG_CONFIG_PATH</pre>
 <pre class="code">$ source .bash_profile</pre>
 
 <p>
- 3. Go to the <a href="http://www.geda.seul.org/sources.html" class="urlextern" title="http://www.geda.seul.org/sources.html"  rel="nofollow">gEDA sources download page</a>.
+ <strong>3. Go to the <a href="http://www.geda.seul.org/sources.html" class="urlextern" title="http://www.geda.seul.org/sources.html"  rel="nofollow">gEDA sources download page</a>.</strong>
 </p>
 
 <p>
@@ -79,14 +88,14 @@ From the gEDA/gaf group, download <strong>only</strong> the packages which have 
 </p>
 
 <p>
-4. Go to the download directory and type:
+<strong>4. Go to the download directory and type:</strong>
 </p>
 <pre class="code">$ make open
 $ make install
 ( ...patience... )</pre>
 
 <p>
- 5. Now, to properly view the documentation from the help menu of gschem:
+ <strong>5. Now, to properly view the documentation from the help menu of gschem:</strong>
 </p>
 
 <p>
@@ -109,7 +118,7 @@ $ gschemdoc -m
 ( gEDA documentation appears )</pre>
 
 <p>
- 6. Finally, start the X server:
+ <strong>6. Finally, start the X server:</strong>
 </p>
 <pre class="code">$ startx</pre>
 
@@ -118,6 +127,6 @@ $ gschemdoc -m
 </p>
 
 </div>
-<!-- SECTION [258-] --></div>
+<!-- SECTION "Instructions" [258-] --></div>
 </body>
 </html>

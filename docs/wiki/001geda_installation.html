@@ -5,17 +5,20 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:installation.fr</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:installation.fr?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:installation.fr?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:installation.fr?do=export_raw" />
-  <meta name="date" content="2006-12-06T15:45:38-0500" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:25-0400" />
+<meta name="keywords" content="geda,installation.fr" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:installation.fr?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:installation.fr" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:installation.fr" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
@@ -24,14 +27,14 @@
 <div id="toc__inside">
 
 <ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#aide_a_l_installation" class="toc">Aide à l'installation</a></span></div>
+<li class="level1"><div class="li"><span class="li"><a href="#aide_a_l_installation" class="toc">Aide à l&#039;installation</a></span></div>
 <ul class="toc">
 <li class="level2"><div class="li"><span class="li"><a href="#comment_installer_la_suite_geda" class="toc">Comment installer la Suite gEDA?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#comment_desinstaller_la_suite_geda" class="toc">Comment désinstaller la Suite gEDA?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#pourquoi_voudrais-je_desinstaller_la_suite_geda" class="toc">Pourquoi voudrais-je désinstaller la Suite gEDA?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#aaaaargh_j_ai_mis_un_cd_dans_le_lecteur_je_l_ai_monte_mais_rien_ne_se_produit" class="toc">Aaaaargh! J'ai mis un CD dans le lecteur, je l'ai monté mais rien ne se produit!</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#aidez-moi_je_tente_une_installation_en_utilisant_le_cd_rom_mais_le_magicien_d_installation_m_indique_une_erreur" class="toc">Aidez-moi! Je tente une installation en utilisant le CD ROM mais le magicien d'installation m'indique une erreur!</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#waaaaa_l_installation_s_est_terminee_mais_j_ai_un_segfault_ou_autre_probleme_lorsque_je_lance_gschem_ou_gattrib_ou_gnetlist_ou" class="toc">Waaaaa! L'installation s'est terminée mais j'ai un segfault (ou autre problème) lorsque je lance gschem (ou gattrib ou gnetlist, ou. . . )!</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#aaaaargh_j_ai_mis_un_cd_dans_le_lecteur_je_l_ai_monte_mais_rien_ne_se_produit" class="toc">Aaaaargh! J&#039;ai mis un CD dans le lecteur, je l&#039;ai monté mais rien ne se produit!</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#aidez-moi_je_tente_une_installation_en_utilisant_le_cd_rom_mais_le_magicien_d_installation_m_indique_une_erreur" class="toc">Aidez-moi! Je tente une installation en utilisant le CD ROM mais le magicien d&#039;installation m&#039;indique une erreur!</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#waaaaa_l_installation_s_est_terminee_mais_j_ai_un_segfault_ou_autre_probleme_lorsque_je_lance_gschem_ou_gattrib_ou_gnetlist_ou" class="toc">Waaaaa! L&#039;installation s&#039;est terminée mais j&#039;ai un segfault (ou autre problème) lorsque je lance gschem (ou gattrib ou gnetlist, ou. . . )!</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#fedora_core_4_install_notes" class="toc">Fedora Core 4 install notes</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#fedora_core_3_install_notes" class="toc">Fedora Core 3 install notes</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#fedora_core_2_install_notes" class="toc">Fedora Core 2 install notes</a></span></div></li>
@@ -39,13 +42,15 @@
 <li class="level2"><div class="li"><span class="li"><a href="#suse_9.3_install_notes" class="toc">Suse 9.3 install notes</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#suse_10.0_install_notes" class="toc">Suse 10.0 install notes</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#suse_10.1_install_notes" class="toc">Suse 10.1 install notes</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#notes_d_installation_debian" class="toc">Notes d'installation Debian</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#notes_d_installation_debian" class="toc">Notes d&#039;installation Debian</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#windows_install_notes" class="toc">Windows install notes</a></span></div></li></ul>
 </li></ul>
 </div>
 </div>
 
-<h1><a name="aide_a_l_installation" id="aide_a_l_installation">Aide à l'installation</a></h1>
+
+
+<h1><a name="aide_a_l_installation" id="aide_a_l_installation">Aide à l&#039;installation</a></h1>
 <div class="level1">
 
 <p>
@@ -53,20 +58,20 @@ Cette section fournit quelques informations utiles aux personnes qui veulent ins
 </p>
 
 </div>
-<!-- SECTION [1-151] -->
+<!-- SECTION "Aide à l'installation" [1-151] -->
 <h2><a name="comment_installer_la_suite_geda" id="comment_installer_la_suite_geda">Comment installer la Suite gEDA?</a></h2>
 <div class="level2">
 
 <p>
-La manière la plus facile d&rsquo;installer la Suite gEDA est de graver le CDROM et de l&rsquo;utiliser. Les instructions sont dans le README disponible sur la <a href="http://geda.seul.org/download.html" class="urlextern" title="http://geda.seul.org/download.html"  rel="nofollow">page des téléchargements</a>.  <strong><em>Notez que l&rsquo;installateur du CD ROM suppose que vous êtes sur le bureau Gnome! La même chose est vraie pour les outils gEDA: Ils utilisent le jeu de widgets GTK qui soutend Gnome. Si vous êtes sous KDE, vous avez au moins besoin des bibliothèques Gnome d&rsquo;installées sur votre machine avant de tenter de lancer l&rsquo;installateur.</em></strong>
+La manière la plus facile d’installer la Suite gEDA est de graver le CDROM et de l’utiliser. Les instructions sont dans le README disponible sur la <a href="http://geda.seul.org/download.html" class="urlextern" title="http://geda.seul.org/download.html"  rel="nofollow">page des téléchargements</a>.  <strong><em>Notez que l’installateur du CD ROM suppose que vous êtes sur le bureau Gnome! La même chose est vraie pour les outils gEDA: Ils utilisent le jeu de widgets GTK qui soutend Gnome. Si vous êtes sous KDE, vous avez au moins besoin des bibliothèques Gnome d’installées sur votre machine avant de tenter de lancer l’installateur.</em></strong>
 </p>
 
 <p>
-Le CD de la Suite gEDA contient les tarballs de plus d&rsquo;une douzaine d&rsquo;applications populaires de gEDA. Il incorpore aussi un «·magicien·» graphique qui contrôle la configuration de votre système, vous pose quelques questions et surveille la compilation et l&rsquo;installation des différentes applications gEDA. Le magicien d&rsquo;installation automatise le processus normal “./configure &amp;&amp; make &amp;&amp; make install” utilisé pour construire les logiciels GNU depuis les sources. C&rsquo;est la raison pour laquelle il est plus ou moins indépendant de la plate-forme (tant que vous faites tourner Linux).
+Le CD de la Suite gEDA contient les tarballs de plus d’une douzaine d’applications populaires de gEDA. Il incorpore aussi un «·magicien·» graphique qui contrôle la configuration de votre système, vous pose quelques questions et surveille la compilation et l’installation des différentes applications gEDA. Le magicien d’installation automatise le processus normal “./configure &amp;&amp; make &amp;&amp; make install” utilisé pour construire les logiciels GNU depuis les sources. C’est la raison pour laquelle il est plus ou moins indépendant de la plate-forme (tant que vous faites tourner Linux).
 </p>
 
 <p>
-Dans l&rsquo;éventualité où le magicien d&rsquo;installation ne peut pas installer la Suite gEDA automatiquement, vous pouvez encore extraire les tarballs de source du CD et de les construire manuellement. Les instructions sont disponibles sur la page de téléchargement, de même que le fichier INSTALL sur le CD.
+Dans l’éventualité où le magicien d’installation ne peut pas installer la Suite gEDA automatiquement, vous pouvez encore extraire les tarballs de source du CD et de les construire manuellement. Les instructions sont disponibles sur la page de téléchargement, de même que le fichier INSTALL sur le CD.
 </p>
 
 <p>
@@ -74,58 +79,58 @@ De la même manière, des personnes ont créé des RPM RedHat, des Debs Debian e
 </p>
 
 <p>
-Au fait, c&rsquo;est toujours une bonne idée d&rsquo;installer gEDA dans son propre répertoire. De cette manière, lorsque vous voulez mettre à jour le paquet, vous avez juste besoin d&rsquo;effacer le répertoire et ré-installer. (Ce conseil est vrai pour toute grande suite d&rsquo;applications d&rsquo;unix.) Vous en avez plus ci-dessous.
+Au fait, c’est toujours une bonne idée d’installer gEDA dans son propre répertoire. De cette manière, lorsque vous voulez mettre à jour le paquet, vous avez juste besoin d’effacer le répertoire et ré-installer. (Ce conseil est vrai pour toute grande suite d’applications d’unix.) Vous en avez plus ci-dessous.
 </p>
 
 <p>
-Finalement, si ces instructions ne sont pas suffisantes, David Hart a placé un <a href="http://www.offramp.com/Lab-Install/doku.php?id=fc4#create_user_geda_account_and_install_geda_tool_suite" class="urlextern" title="http://www.offramp.com/Lab-Install/doku.php?id=fc4#create_user_geda_account_and_install_geda_tool_suite"  rel="nofollow">guide for configuring and installing gEDA</a> utile et détaillé (pour Fedora Core 4  mais qui aidera probablement aussi avec les autres distros), de même qu&rsquo;un <a href="http://www.offramp.com/Lab-Install/doku.php?id=fc4#geda_tutorial" class="urlextern" title="http://www.offramp.com/Lab-Install/doku.php?id=fc4#geda_tutorial"  rel="nofollow">tutoriel gEDA</a> pour les nouveaux utilisateurs.
+Finalement, si ces instructions ne sont pas suffisantes, David Hart a placé un <a href="http://www.offramp.com/Lab-Install/doku.php?id=fc4#create_user_geda_account_and_install_geda_tool_suite" class="urlextern" title="http://www.offramp.com/Lab-Install/doku.php?id=fc4#create_user_geda_account_and_install_geda_tool_suite"  rel="nofollow">guide for configuring and installing gEDA</a> utile et détaillé (pour Fedora Core 4  mais qui aidera probablement aussi avec les autres distros), de même qu’un <a href="http://www.offramp.com/Lab-Install/doku.php?id=fc4#geda_tutorial" class="urlextern" title="http://www.offramp.com/Lab-Install/doku.php?id=fc4#geda_tutorial"  rel="nofollow">tutoriel gEDA</a> pour les nouveaux utilisateurs.
 </p>
 
 </div>
-<!-- SECTION [152-2869] -->
+<!-- SECTION "Comment installer la Suite gEDA?" [152-2869] -->
 <h2><a name="comment_desinstaller_la_suite_geda" id="comment_desinstaller_la_suite_geda">Comment désinstaller la Suite gEDA?</a></h2>
 <div class="level2">
 
 <p>
-Au moment de l&rsquo;écriture de cet article, il n&rsquo;existe pas de méthode pour désinstaller la Suite gEDA. Contrairement à certain systèmes d&rsquo;exploitation commerciaux, Linux (et unix) n&rsquo;ont pas été conçus dans l&rsquo;idée de faciliter la gestion des paquets facilement et nous souffrons de cet héritage.
+Au moment de l’écriture de cet article, il n’existe pas de méthode pour désinstaller la Suite gEDA. Contrairement à certain systèmes d’exploitation commerciaux, Linux (et unix) n’ont pas été conçus dans l’idée de faciliter la gestion des paquets facilement et nous souffrons de cet héritage.
 </p>
 
 <p>
-C&rsquo;est la raison pour laquelle nous recommandons d&rsquo;installer la Suite gEDA dans son propre répertoire. Par exemple, l&rsquo;installateur CD placera les exécutables de la Suite dans <strong><code>${HOME}/geda-install</code></strong> par défaut. Alors, si vous avez besoin de désinstaller la Suite gEDA, vous pouvez juste effacer le répertoire complet.
+C’est la raison pour laquelle nous recommandons d’installer la Suite gEDA dans son propre répertoire. Par exemple, l’installateur CD placera les exécutables de la Suite dans <strong><code>${HOME}/geda-install</code></strong> par défaut. Alors, si vous avez besoin de désinstaller la Suite gEDA, vous pouvez juste effacer le répertoire complet.
 </p>
 
 <p>
-<span class="hilited">(D&rsquo;autres méthodes avancées pour installer/désinstaller les paquets sur Linux/unix existe aussi. Quelqu&rsquo;un pourrait-il écrire quelque chose sur le sujet?)</span>
+<span class="hilited">(D’autres méthodes avancées pour installer/désinstaller les paquets sur Linux/unix existe aussi. Quelqu’un pourrait-il écrire quelque chose sur le sujet?)</span>
 </p>
 
 </div>
-<!-- SECTION [2870-3713] -->
+<!-- SECTION "Comment désinstaller la Suite gEDA?" [2870-3713] -->
 <h2><a name="pourquoi_voudrais-je_desinstaller_la_suite_geda" id="pourquoi_voudrais-je_desinstaller_la_suite_geda">Pourquoi voudrais-je désinstaller la Suite gEDA?</a></h2>
 <div class="level2">
 
 <p>
-Différentes applications appartenant à gEDA/gaf utilisent la même bibliothèque partagée, libgeda.so. Les éléments dans la bibliothèque changent d&rsquo;une version gEDA à l&rsquo;autre. C&rsquo;est la raison pour laquelle les applications ne peuvent pas être liées à libgeda.so si leur code de version est différent.
+Différentes applications appartenant à gEDA/gaf utilisent la même bibliothèque partagée, libgeda.so. Les éléments dans la bibliothèque changent d’une version gEDA à l’autre. C’est la raison pour laquelle les applications ne peuvent pas être liées à libgeda.so si leur code de version est différent.
 </p>
 
 <p>
-Si vous avez besoin de mettre à jour une application de gEDA/gaf, vous devrez d&rsquo;abord désinstaller votre ancienne version puis intaller un tout nouveau jeu d&rsquo;applications, incluant la bibliothèque et tous les composants de gEDA/gaf.
+Si vous avez besoin de mettre à jour une application de gEDA/gaf, vous devrez d’abord désinstaller votre ancienne version puis intaller un tout nouveau jeu d’applications, incluant la bibliothèque et tous les composants de gEDA/gaf.
 </p>
 
 <p>
-Alternativement, vous pouvez installer le nouveau gEDA/gaf dans un nouveau répertoire et éditer alors vos variables d&rsquo;environnement <strong><code>${PATH}</code></strong>, <strong><code>${PKG_CONFIG_PATH}</code></strong>  puis <strong><code>${LD_LIBRARY_PATH}</code></strong> pour enlever l&rsquo;ancien répertoire et pointer vers le nouveau. Assurez-vous de le faire <strong>avant</strong> de tenter une nouvelle installation de gEDA/gaf.
+Alternativement, vous pouvez installer le nouveau gEDA/gaf dans un nouveau répertoire et éditer alors vos variables d’environnement <strong><code>${PATH}</code></strong>, <strong><code>${PKG_CONFIG_PATH}</code></strong>  puis <strong><code>${LD_LIBRARY_PATH}</code></strong> pour enlever l’ancien répertoire et pointer vers le nouveau. Assurez-vous de le faire <strong>avant</strong> de tenter une nouvelle installation de gEDA/gaf.
 </p>
 
 </div>
-<!-- SECTION [3714-4683] -->
-<h2><a name="aaaaargh_j_ai_mis_un_cd_dans_le_lecteur_je_l_ai_monte_mais_rien_ne_se_produit" id="aaaaargh_j_ai_mis_un_cd_dans_le_lecteur_je_l_ai_monte_mais_rien_ne_se_produit">Aaaaargh! J'ai mis un CD dans le lecteur, je l'ai monté mais rien ne se produit!</a></h2>
+<!-- SECTION "Pourquoi voudrais-je désinstaller la Suite gEDA?" [3714-4683] -->
+<h2><a name="aaaaargh_j_ai_mis_un_cd_dans_le_lecteur_je_l_ai_monte_mais_rien_ne_se_produit" id="aaaaargh_j_ai_mis_un_cd_dans_le_lecteur_je_l_ai_monte_mais_rien_ne_se_produit">Aaaaargh! J&#039;ai mis un CD dans le lecteur, je l&#039;ai monté mais rien ne se produit!</a></h2>
 <div class="level2">
 
 <p>
- D&rsquo;une manière surprenante, il y a encore des personnes qui copient simplement le fichier installateur .iso en utilisant «·cp·» vers un CD vierge et tentent ensuite de l&rsquo;utiliser tel quel. Cela ne marche pas. Vous avez besoin de «·graver·» un CD avec un .iso d&rsquo;une manière qui écrit le système de fichier complet directement sur le CDROM. La commande linux/unix pour ce faire est habituellement «·cdrecord·» ou, peut être, une interface graphique dérivée de cet utilitaire. Il ne suffit pas de juste «·cp·» le fichier .iso sur le CD vierge!
+ D’une manière surprenante, il y a encore des personnes qui copient simplement le fichier installateur .iso en utilisant «·cp·» vers un CD vierge et tentent ensuite de l’utiliser tel quel. Cela ne marche pas. Vous avez besoin de «·graver·» un CD avec un .iso d’une manière qui écrit le système de fichier complet directement sur le CDROM. La commande linux/unix pour ce faire est habituellement «·cdrecord·» ou, peut être, une interface graphique dérivée de cet utilitaire. Il ne suffit pas de juste «·cp·» le fichier .iso sur le CD vierge!
 </p>
 
 <p>
-De nombreuses distributions Linux récentes ne lanceront pas automatiquement les exécutables sur un média installé. C&rsquo;est une précaution de sécurité. Pour passer outre, vous avez besoin de monter un CD qui donne les permissions de lancer un exécutable. Par exemple, avec Gentoo et Debian, vous devez  monter le CD ROM de cette manière: 
+De nombreuses distributions Linux récentes ne lanceront pas automatiquement les exécutables sur un média installé. C’est une précaution de sécurité. Pour passer outre, vous avez besoin de monter un CD qui donne les permissions de lancer un exécutable. Par exemple, avec Gentoo et Debian, vous devez  monter le CD ROM de cette manière: 
 </p>
 <pre class="code">mount -o exec -t iso9660 /dev/cdrom /mnt/cdrom</pre>
 
@@ -134,63 +139,63 @@ Le drapeau précis ou le point de montage adéquat de votre distribution peut ê
 </p>
 
 <p>
-Après avoir monté le CD avec des permissions d&rsquo;exécution, vous pouvez alors lancer l&rsquo;installateur depuis la ligne de commande comme ceci·: 
+Après avoir monté le CD avec des permissions d’exécution, vous pouvez alors lancer l’installateur depuis la ligne de commande comme ceci·: 
 </p>
 <pre class="code">/mnt/cdrom/installer</pre>
 
 <p>
-À ce point, l&rsquo;interface graphique du magicien d&rsquo;installation devrait apparaître et vous pouvez entrer dans l&rsquo;installation. Si vous ne pouvez pas installer, veuillez tenter un «·ls·» sur le CD pour vérifier s&rsquo;il est lisible. C&rsquo;est à dire en faitant: 
+À ce point, l’interface graphique du magicien d’installation devrait apparaître et vous pouvez entrer dans l’installation. Si vous ne pouvez pas installer, veuillez tenter un «·ls·» sur le CD pour vérifier s’il est lisible. C’est à dire en faitant: 
 </p>
 <pre class="code">ls -l /mnt/cdrom/</pre>
 
 <p>
-Et assurez-vous d&rsquo;avoir une liste de répertoires plutôt d&rsquo;un message d&rsquo;erreur (ou rien du tout).
+Et assurez-vous d’avoir une liste de répertoires plutôt d’un message d’erreur (ou rien du tout).
 </p>
 
 </div>
-<!-- SECTION [4684-6523] -->
-<h2><a name="aidez-moi_je_tente_une_installation_en_utilisant_le_cd_rom_mais_le_magicien_d_installation_m_indique_une_erreur" id="aidez-moi_je_tente_une_installation_en_utilisant_le_cd_rom_mais_le_magicien_d_installation_m_indique_une_erreur">Aidez-moi! Je tente une installation en utilisant le CD ROM mais le magicien d'installation m'indique une erreur!</a></h2>
+<!-- SECTION "Aaaaargh! J'ai mis un CD dans le lecteur, je l'ai monté mais rien ne se produit!" [4684-6523] -->
+<h2><a name="aidez-moi_je_tente_une_installation_en_utilisant_le_cd_rom_mais_le_magicien_d_installation_m_indique_une_erreur" id="aidez-moi_je_tente_une_installation_en_utilisant_le_cd_rom_mais_le_magicien_d_installation_m_indique_une_erreur">Aidez-moi! Je tente une installation en utilisant le CD ROM mais le magicien d&#039;installation m&#039;indique une erreur!</a></h2>
 <div class="level2">
 
 <p>
- D&rsquo;abord, gardez en mémoire que l&rsquo;installateur du CD ROM ne fonctionne qu&rsquo;avec Linux. L&rsquo;installateur du CD ROM ne fonctionnera pas sur Sun, BSD ou Mac OSX et il ne fonctionnera certainement pas avec Windows.
+ D’abord, gardez en mémoire que l’installateur du CD ROM ne fonctionne qu’avec Linux. L’installateur du CD ROM ne fonctionnera pas sur Sun, BSD ou Mac OSX et il ne fonctionnera certainement pas avec Windows.
 </p>
 
 <p>
 Comme règle général, si vous avez des problèmes en installant gEDA depuis le CD, vous avez ici des éléments que vous pouvez tenter:
 </p>
 <ol>
-<li class="level1"><div class="li"> Si vous lancez l&rsquo;installateur avec le drapeau <strong><code>–log</code></strong>, il placera un fichier appelé Install.log dans votre répertoire local (depuis où vous avez lancé votre installateur). Ce fichier est un journal de toutes les commandes émises et toutes les réponses générées pendant le processus d&rsquo;installation. Il vous permet de sauvegarder les données affichées dans la fenêtre journal lors de l&rsquo;installation. Lancer l&rsquo;installateur avec <strong><code>–log</code></strong> est une bonne idée si vous avez des problèmes·; vous pouvez envoyer votre fichier Install.log à un expert qui pourra diagnostiquer votre problème. Vous en saurez plus après.</div>
+<li class="level1"><div class="li"> Si vous lancez l’installateur avec le drapeau <strong><code>–log</code></strong>, il placera un fichier appelé Install.log dans votre répertoire local (depuis où vous avez lancé votre installateur). Ce fichier est un journal de toutes les commandes émises et toutes les réponses générées pendant le processus d’installation. Il vous permet de sauvegarder les données affichées dans la fenêtre journal lors de l’installation. Lancer l’installateur avec <strong><code>–log</code></strong> est une bonne idée si vous avez des problèmes·; vous pouvez envoyer votre fichier Install.log à un expert qui pourra diagnostiquer votre problème. Vous en saurez plus après.</div>
 </li>
-<li class="level1"><div class="li"> Après avoir eu un problème, la première chose à faire est de regarder le wiki de gEDA. Il est plus que probable que quelqu&rsquo;un a déjà eu votre problème et l&rsquo;a rapporté et qu&rsquo;une solution a été trouvée et postée. Des distributions Linux différentes ont eu des problèmes différents dans le passé. En focntion de votre distribution, consultez les sections d&rsquo;aide ci-dessous.</div>
+<li class="level1"><div class="li"> Après avoir eu un problème, la première chose à faire est de regarder le wiki de gEDA. Il est plus que probable que quelqu’un a déjà eu votre problème et l’a rapporté et qu’une solution a été trouvée et postée. Des distributions Linux différentes ont eu des problèmes différents dans le passé. En focntion de votre distribution, consultez les sections d’aide ci-dessous.</div>
 </li>
-<li class="level1"><div class="li"> Si aucune mention de votre problème spécifique n&rsquo;a été posté sur le Wiki, tentez une recherche sur Google. LEs trucs et astuces de GEDA sont dans différents endroits sur la toile et Google peut les trouver pour vous. De même, la liste des geda-user est indexée continuellement par Google. Comme les gens postent fréquement des bogues et des correctifs, Google vous aidera à trouver ces rapports.</div>
+<li class="level1"><div class="li"> Si aucune mention de votre problème spécifique n’a été posté sur le Wiki, tentez une recherche sur Google. LEs trucs et astuces de GEDA sont dans différents endroits sur la toile et Google peut les trouver pour vous. De même, la liste des geda-user est indexée continuellement par Google. Comme les gens postent fréquement des bogues et des correctifs, Google vous aidera à trouver ces rapports.</div>
 </li>
-<li class="level1"><div class="li"> Ensuite, tentez de poster une question sur la liste des geda-user. Notez que vous devez d&rsquo;abord vous enregistrer. D&rsquo;autre peuvent avoir déjà développé une solution à votre problème. Quelques uns des experts hantent cette liste et peut offrir quelques sugestions d&rsquo;aide.</div>
+<li class="level1"><div class="li"> Ensuite, tentez de poster une question sur la liste des geda-user. Notez que vous devez d’abord vous enregistrer. D’autre peuvent avoir déjà développé une solution à votre problème. Quelques uns des experts hantent cette liste et peut offrir quelques sugestions d’aide.</div>
 </li>
 </ol>
 
 </div>
-<!-- SECTION [6524-8722] -->
-<h2><a name="waaaaa_l_installation_s_est_terminee_mais_j_ai_un_segfault_ou_autre_probleme_lorsque_je_lance_gschem_ou_gattrib_ou_gnetlist_ou" id="waaaaa_l_installation_s_est_terminee_mais_j_ai_un_segfault_ou_autre_probleme_lorsque_je_lance_gschem_ou_gattrib_ou_gnetlist_ou">Waaaaa! L'installation s'est terminée mais j'ai un segfault (ou autre problème) lorsque je lance gschem (ou gattrib ou gnetlist, ou. . . )!</a></h2>
+<!-- SECTION "Aidez-moi! Je tente une installation en utilisant le CD ROM mais le magicien d'installation m'indique une erreur!" [6524-8722] -->
+<h2><a name="waaaaa_l_installation_s_est_terminee_mais_j_ai_un_segfault_ou_autre_probleme_lorsque_je_lance_gschem_ou_gattrib_ou_gnetlist_ou" id="waaaaa_l_installation_s_est_terminee_mais_j_ai_un_segfault_ou_autre_probleme_lorsque_je_lance_gschem_ou_gattrib_ou_gnetlist_ou">Waaaaa! L&#039;installation s&#039;est terminée mais j&#039;ai un segfault (ou autre problème) lorsque je lance gschem (ou gattrib ou gnetlist, ou. . . )!</a></h2>
 <div class="level2">
 
 <p>
-Après que vous ayiez installé la Suite gEDA depuis le CD ROM, assurez-vous d&rsquo;avoir fait ce qui suit:
+Après que vous ayiez installé la Suite gEDA depuis le CD ROM, assurez-vous d’avoir fait ce qui suit:
 </p>
 <ol>
-<li class="level1"><div class="li"> Mettez votre <strong><code>${PATH}</code></strong> pour qu&rsquo;il pointe vers l&rsquo;endroit où vos nouveau exécutables gEDA sont placés (par exemple, <strong><code>/home/your-name/geda-install/bin</code></strong>). Assurez-vous que vous enlevez les pointeurs vers la anciennes versions de gEDA, s&rsquo;ils existent. Vous ne devez pas seulement mettre le <strong><code>${PATH}</code></strong> dans votre shell courant mais vous devriez alors mettre à jour vos scripts de config (i.e. .bashrc ou .cshrc)</div>
+<li class="level1"><div class="li"> Mettez votre <strong><code>${PATH}</code></strong> pour qu’il pointe vers l’endroit où vos nouveau exécutables gEDA sont placés (par exemple, <strong><code>/home/your-name/geda-install/bin</code></strong>). Assurez-vous que vous enlevez les pointeurs vers la anciennes versions de gEDA, s’ils existent. Vous ne devez pas seulement mettre le <strong><code>${PATH}</code></strong> dans votre shell courant mais vous devriez alors mettre à jour vos scripts de config (i.e. .bashrc ou .cshrc)</div>
 </li>
 <li class="level1"><div class="li"> Tapez «·rehash·» pour mettre à jour votre chemin de recherche des exécutables.</div>
 </li>
-<li class="level1"><div class="li"> Changez votre <strong><code>${LD_LIBRARY_PATH}</code></strong> pour qu&rsquo;il pointe sur l&rsquo;endroitoù sont vos nouveaux exécutables gEDA (par exemple, <strong><code>/home/your-name/geda-install/lib</code></strong>). Assurez-vous d&rsquo;enlever les pointeurs des anciennes versions de gEDA, si elles existent. Vous ne devez pas seulement mettre le <strong><code>${LD_LIBRARY_PATH}</code></strong> dans votre shell courant mais vous devriez alors mettre à jour vos scripts de config (i.e. .bashrc ou .cshrc)</div>
+<li class="level1"><div class="li"> Changez votre <strong><code>${LD_LIBRARY_PATH}</code></strong> pour qu’il pointe sur l’endroitoù sont vos nouveaux exécutables gEDA (par exemple, <strong><code>/home/your-name/geda-install/lib</code></strong>). Assurez-vous d’enlever les pointeurs des anciennes versions de gEDA, si elles existent. Vous ne devez pas seulement mettre le <strong><code>${LD_LIBRARY_PATH}</code></strong> dans votre shell courant mais vous devriez alors mettre à jour vos scripts de config (i.e. .bashrc ou .cshrc)</div>
 </li>
 <li class="level1"><div class="li"> LAncez «·su -c ldconfig·» pour indiquer au noyau où trouver votre nouvelle libgeda.so.</div>
 </li>
 </ol>
 
 </div>
-<!-- SECTION [8723-10033] -->
+<!-- SECTION "Waaaaa! L'installation s'est terminée mais j'ai un segfault (ou autre problème) lorsque je lance gschem (ou gattrib ou gnetlist, ou. . . )!" [8723-10033] -->
 <h2><a name="fedora_core_4_install_notes" id="fedora_core_4_install_notes">Fedora Core 4 install notes</a></h2>
 <div class="level2">
 
@@ -199,7 +204,7 @@ Après que vous ayiez installé la Suite gEDA depuis le CD ROM, assurez-vous d&r
 </p>
 
 </div>
-<!-- SECTION [10034-10112] -->
+<!-- SECTION "Fedora Core 4 install notes" [10034-10112] -->
 <h2><a name="fedora_core_3_install_notes" id="fedora_core_3_install_notes">Fedora Core 3 install notes</a></h2>
 <div class="level2">
 
@@ -208,7 +213,7 @@ Après que vous ayiez installé la Suite gEDA depuis le CD ROM, assurez-vous d&r
 </p>
 
 </div>
-<!-- SECTION [10113-10191] -->
+<!-- SECTION "Fedora Core 3 install notes" [10113-10191] -->
 <h2><a name="fedora_core_2_install_notes" id="fedora_core_2_install_notes">Fedora Core 2 install notes</a></h2>
 <div class="level2">
 
@@ -217,7 +222,7 @@ Après que vous ayiez installé la Suite gEDA depuis le CD ROM, assurez-vous d&r
 </p>
 
 </div>
-<!-- SECTION [10192-10270] -->
+<!-- SECTION "Fedora Core 2 install notes" [10192-10270] -->
 <h2><a name="fedora_core_1_install_notes" id="fedora_core_1_install_notes">Fedora Core 1 install notes</a></h2>
 <div class="level2">
 
@@ -226,7 +231,7 @@ Après que vous ayiez installé la Suite gEDA depuis le CD ROM, assurez-vous d&r
 </p>
 
 </div>
-<!-- SECTION [10271-10349] -->
+<!-- SECTION "Fedora Core 1 install notes" [10271-10349] -->
 <h2><a name="suse_9.3_install_notes" id="suse_9.3_install_notes">Suse 9.3 install notes</a></h2>
 <div class="level2">
 
@@ -235,7 +240,7 @@ Après que vous ayiez installé la Suite gEDA depuis le CD ROM, assurez-vous d&r
 </p>
 
 </div>
-<!-- SECTION [10350-10433] -->
+<!-- SECTION "Suse 9.3 install notes" [10350-10433] -->
 <h2><a name="suse_10.0_install_notes" id="suse_10.0_install_notes">Suse 10.0 install notes</a></h2>
 <div class="level2">
 
@@ -244,7 +249,7 @@ Après que vous ayiez installé la Suite gEDA depuis le CD ROM, assurez-vous d&r
 </p>
 
 </div>
-<!-- SECTION [10434-10520] -->
+<!-- SECTION "Suse 10.0 install notes" [10434-10520] -->
 <h2><a name="suse_10.1_install_notes" id="suse_10.1_install_notes">Suse 10.1 install notes</a></h2>
 <div class="level2">
 
@@ -253,16 +258,16 @@ Après que vous ayiez installé la Suite gEDA depuis le CD ROM, assurez-vous d&r
 </p>
 
 </div>
-<!-- SECTION [10521-10607] -->
-<h2><a name="notes_d_installation_debian" id="notes_d_installation_debian">Notes d'installation Debian</a></h2>
+<!-- SECTION "Suse 10.1 install notes" [10521-10607] -->
+<h2><a name="notes_d_installation_debian" id="notes_d_installation_debian">Notes d&#039;installation Debian</a></h2>
 <div class="level2">
 
 <p>
-Les <a href="001geda_debian.html" class="wikilink1" title="geda:debian.fr">notes d'installation Debian sont disponibles ici</a>
+Les <a href="001geda_debian.html" class="wikilink1" title="geda:debian.fr">notes d&#039;installation Debian sont disponibles ici</a>
 </p>
 
 </div>
-<!-- SECTION [10608-10720] -->
+<!-- SECTION "Notes d'installation Debian" [10608-10720] -->
 <h2><a name="windows_install_notes" id="windows_install_notes">Windows install notes</a></h2>
 <div class="level2">
 
@@ -271,6 +276,6 @@ Les <a href="001geda_debian.html" class="wikilink1" title="geda:debian.fr">notes
 </p>
 
 </div>
-<!-- SECTION [10721-] --></div>
+<!-- SECTION "Windows install notes" [10721-] --></div>
 </body>
 </html>

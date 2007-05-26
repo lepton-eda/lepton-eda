@@ -5,17 +5,20 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:file_format_spec</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:file_format_spec?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:file_format_spec?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:file_format_spec?do=export_raw" />
-  <meta name="date" content="2007-02-12T20:40:36-0500" />
-  <meta name="robots" content="noindex,nofollow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:25-0400" />
+<meta name="keywords" content="geda,file_format_spec" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:file_format_spec?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:file_format_spec" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:file_format_spec" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
@@ -53,6 +56,8 @@
 </div>
 </div>
 
+
+
 <h1><a name="geda_gaf_file_format_document" id="geda_gaf_file_format_document">gEDA/gaf File Format Document</a></h1>
 <div class="level1">
 
@@ -69,7 +74,7 @@ December 31st, 2003
 </p>
 
 </div>
-<!-- SECTION [1-187] -->
+<!-- SECTION "gEDA/gaf File Format Document" [1-187] -->
 <h2><a name="overview" id="overview">Overview</a></h2>
 <div class="level2">
 
@@ -80,7 +85,7 @@ This file is the official documentation for the file formats in gEDA/gaf (gschem
 </p>
 
 </div>
-<!-- SECTION [188-896] -->
+<!-- SECTION "Overview" [188-896] -->
 <h2><a name="coordinate_space" id="coordinate_space">Coordinate Space</a></h2>
 <div class="level2">
 
@@ -105,24 +110,23 @@ All coordinates are in mils (1/1000 or an inch). This is an arbitrary decision. 
 		<td><a href="_detail/geda_coordinatespace.html" class="media" title="geda:coordinatespace.jpg"><img src="_media/geda_coordinatespace.jpg" class="mediaright" title=":geda:coordinatespace.jpg " alt=":geda:coordinatespace.jpg " /></a></td>
 	</tr>
 </table>
-<br />
 
 <p>
  X axis increases going to the right. Y axis increase going up. Coordinate system is landscape and corresponds to a sheet of paper turned on its side.
 </p>
 
 </div>
-<!-- SECTION [897-1703] -->
+<!-- SECTION "Coordinate Space" [897-1703] -->
 <h2><a name="filenames" id="filenames">Filenames</a></h2>
 <div class="level2">
 
 <p>
-Symbols end in .sym. The only symbol filename convention that is used in gEDA/gaf is that if there are multiple instances of a symbol with the same name (like a 7400), then a -1, -2, -3, ... -N suffix is added to the end of the filename. Example: 7400-1.sym, 7400-2.sym, 7400-3.sym...<br/>
+Symbols end in .sym. The only symbol filename convention that is used in gEDA/gaf is that if there are multiple instances of a symbol with the same name (like a 7400), then a -1, -2, -3, &hellip; -N suffix is added to the end of the filename. Example: 7400-1.sym, 7400-2.sym, 7400-3.sym&hellip;<br/>
  Schematics end in .sch. There used to be a schematic filename convention (adding a -1 .. -N to the end of the basename), but this convention is now obsolete. Schematic filenames can be anything that makes sense to the creator.
 </p>
 
 </div>
-<!-- SECTION [1704-2240] -->
+<!-- SECTION "Filenames" [1704-2240] -->
 <h2><a name="object_types" id="object_types">Object types</a></h2>
 <div class="level2">
 
@@ -132,7 +136,7 @@ A schematic/symbol file for gEDA/gaf consists of:
 <ul>
 <li class="level1"><div class="li"> A version (v) as the first item in the file. This is required.</div>
 </li>
-<li class="level1"><div class="li"> Any number of objects and the correct data. Objects are specified by an &ldquo;object type&rdquo;</div>
+<li class="level1"><div class="li"> Any number of objects and the correct data. Objects are specified by an “object type”</div>
 </li>
 <li class="level1"><div class="li"> Most objects are a single line, however text objects are two lines long.</div>
 </li>
@@ -143,14 +147,14 @@ A schematic/symbol file for gEDA/gaf consists of:
 </ul>
 
 <p>
- The &ldquo;object type&rdquo; id is a single letter and this id must start in the first column. The object type id is case sensitive.<br/>
+ The “object type” id is a single letter and this id must start in the first column. The object type id is case sensitive.<br/>
  The schematic and symbol files share the same file layout. A symbol is nothing more than a collection of primitive objects (lines, boxes, circles, arcs, text, and pins). A schematic is a collection of symbols (components), nets, and buses.<br/>
  The following sections describe the specifics of each recognized object type. Each section has the name of the object, which file type (sch/sym) the object can appear in, the format of the data, a description of each individual field, details and caveats of the fields, and finally an example with description.<br/>
  For information on the color index (which is used in practically all objects), see the Color section.
 </p>
 
 </div>
-<!-- SECTION [2241-3504] -->
+<!-- SECTION "Object types" [2241-3504] -->
 <h3><a name="version" id="version">version</a></h3>
 <div class="level3">
 
@@ -172,9 +176,8 @@ Valid in: Schematic and Symbol files<br/>
 		<td>fileformat_version</td><td>int</td><td>gEDA/gaf file format version number</td>
 	</tr>
 </table>
-<br />
 <ul>
-<li class="level1"><div class="li"> The type is a lower case &ldquo;v&rdquo; (as in Victor).</div>
+<li class="level1"><div class="li"> The type is a lower case “v” (as in Victor).</div>
 </li>
 <li class="level1"><div class="li"> This object must be in every file used or created by the gEDA/gaf tools.</div>
 </li>
@@ -182,7 +185,7 @@ Valid in: Schematic and Symbol files<br/>
 </li>
 <li class="level1"><div class="li"> The version number is not an arbitrary timestamp. Do not make up a version number and expect the tools to behave properly.</div>
 </li>
-<li class="level1"><div class="li"> The &ldquo;version of gEDA/gaf that wrote this file&rdquo; was used in all versions of gEDA/gaf up to 20030921 as the file formats version. This field should no longer be used to determine the file format. It is used for information purposes only now.</div>
+<li class="level1"><div class="li"> The “version of gEDA/gaf that wrote this file” was used in all versions of gEDA/gaf up to 20030921 as the file formats version. This field should no longer be used to determine the file format. It is used for information purposes only now.</div>
 </li>
 <li class="level1"><div class="li"> Starting at and after gEDA/gaf version 20031004, the fileformat version field is used to determine the file format version. All file format code should key off of this field.</div>
 </li>
@@ -196,7 +199,7 @@ Valid in: Schematic and Symbol files<br/>
 </li>
 <li class="level1"><div class="li"> <acronym title="Concurrent Versions System">CVS</acronym> or test versions (should not be used): 20030921, 20031004, 20031019, 20031231, 20050814</div>
 </li>
-<li class="level1"><div class="li"> Keep in mind that each of the above listed versions might have had file format variations. This document only covers the last version&rsquo;s file format.</div>
+<li class="level1"><div class="li"> Keep in mind that each of the above listed versions might have had file format variations. This document only covers the last version’s file format.</div>
 </li>
 </ul>
 
@@ -207,7 +210,7 @@ Valid in: Schematic and Symbol files<br/>
 <pre class="code">v 20040111 1</pre>
 
 </div>
-<!-- SECTION [3505-5279] -->
+<!-- SECTION "version" [3505-5279] -->
 <h3><a name="line" id="line">line</a></h3>
 <div class="level3">
 
@@ -253,7 +256,6 @@ Valid in: Schematic and Symbol files<br/>
 		<td>dashspace</td><td>int</td><td>Space inbetween dashes</td>
 	</tr>
 </table>
-<br />
 <ul>
 <li class="level1"><div class="li"> The capstyle is an enumerated type:</div>
 <ul>
@@ -296,7 +298,7 @@ A line segment from (23000, 69000) to (28000, 69000) with color index 3, 40 mils
 </p>
 
 </div>
-<!-- SECTION [5280-6514] -->
+<!-- SECTION "line" [5280-6514] -->
 <h3><a name="picture" id="picture">picture</a></h3>
 <div class="level3">
 
@@ -348,7 +350,6 @@ encoded picture end]</code></strong>
 		<td>encoded picture end</td><td>string</td><td>A line containing only a dot character</td>
 	</tr>
 </table>
-<br />
 <ul>
 <li class="level1"><div class="li"> This object is a picture object. The first line contains all the picture parameters, and the second line is the path and filename of the picture. The filename is not used if the picture is embedded.</div>
 </li>
@@ -374,7 +375,7 @@ encoded picture end]</code></strong>
 <ul>
 <li class="level2"><div class="li"> encoded picture data: This is a multiple line field. The picture is serialized and then encoded using base64. This way the encoded data uses only printable characters. This field is the result of these two operations.</div>
 </li>
-<li class="level2"><div class="li"> encoded picture end : A line containing only a single dot &lsquo;.&rsquo; character marks the end of the encoded picture data.</div>
+<li class="level2"><div class="li"> encoded picture end : A line containing only a single dot &#039;.&#039; character marks the end of the encoded picture data.</div>
 </li>
 </ul>
 </li>
@@ -403,11 +404,11 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 A picture object with the lower left corner at (16900, 35800). The width of the image is 1400 mils, and its height is 2175 mils (i.e.: the ratio is 0.6353).<br/>
  The picture rotation is 0 degrees, it is not mirrored, and it is embedded.<br/>
  The picture path and filename is showed in the second line. Since this is an embedded picture, the filename and path are not used.<br/>
- The encoded picture data is only an example (it is not real data). The last line containing a single dot &lsquo;.&rsquo; character marks the end of the encoded picture data.
+ The encoded picture data is only an example (it is not real data). The last line containing a single dot &#039;.&#039; character marks the end of the encoded picture data.
 </p>
 
 </div>
-<!-- SECTION [6515-9308] -->
+<!-- SECTION "picture" [6515-9308] -->
 <h3><a name="box" id="box">box</a></h3>
 <div class="level3">
 
@@ -472,7 +473,6 @@ filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
 		<td>pitch2</td><td>int/mils</td><td>Second pitch/spacing of fill</td>
 	</tr>
 </table>
-<br />
 <ul>
 <li class="level1"><div class="li"> The capstyle is an enumerated type:</div>
 <ul>
@@ -537,7 +537,7 @@ A box with the lower left hand corner at (33000, 67300) and a width and height o
 </p>
 
 </div>
-<!-- SECTION [9309-11515] -->
+<!-- SECTION "box" [9309-11515] -->
 <h3><a name="circle" id="circle">circle</a></h3>
 <div class="level3">
 
@@ -599,7 +599,6 @@ filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
 		<td>pitch2</td><td>int/mils</td><td>Second pitch/spacing of fill</td>
 	</tr>
 </table>
-<br />
 <ul>
 <li class="level1"><div class="li"> The dashstyle is an enumerated type:</div>
 <ul>
@@ -654,7 +653,7 @@ A circle with the center at (38000, 67000) and a radius of 900 mils, color index
 </p>
 
 </div>
-<!-- SECTION [11516-13641] -->
+<!-- SECTION "circle" [11516-13641] -->
 <h3><a name="arc" id="arc">arc</a></h3>
 <div class="level3">
 
@@ -704,7 +703,6 @@ dashlength dashspace</code></strong>
 		<td>dashspace</td><td>int/mils</td><td>Space inbetween dashes</td>
 	</tr>
 </table>
-<br />
 <ul>
 <li class="level1"><div class="li"> The startangle can be negative, but not recommended.</div>
 </li>
@@ -751,7 +749,7 @@ dashlength dashspace</code></strong>
 </p>
 
 </div>
-<!-- SECTION [13642-15157] -->
+<!-- SECTION "arc" [13642-15157] -->
 <h3><a name="text" id="text">text</a></h3>
 <div class="level3">
 
@@ -765,7 +763,7 @@ string line 2<br/>
 
 string line 3<br/>
 
-...<br/>
+&hellip;<br/>
 
 string line N</code></strong> 
 </p>
@@ -804,14 +802,13 @@ string line N</code></strong>
 		<td>num_lines</td><td>int</td><td>Number of lines of text (1 based)</td>
 	</tr>
 	<tr>
-		<td>string line 1 ... N</td><td>string</td><td>The text strings, on a seperate line</td>
+		<td>string line 1 &hellip; N</td><td>string</td><td>The text strings, on a seperate line</td>
 	</tr>
 </table>
-<br />
 <ul>
 <li class="level1"><div class="li"> This object is a multi line object. The first line contains all the text parameters and the subsequent lines are the text strings.</div>
 </li>
-<li class="level1"><div class="li"> There must be exactly num lines of text following the T ... string.</div>
+<li class="level1"><div class="li"> There must be exactly num lines of text following the T &hellip; string.</div>
 </li>
 <li class="level1"><div class="li"> The maximum length of any single text string is 1024, however there is no limit to the number of text string lines.</div>
 </li>
@@ -858,7 +855,6 @@ string line N</code></strong>
 		<td> <a href="_detail/geda_fileformat_textgraphic.html" class="media" title="geda:fileformat_textgraphic.jpg"><img src="_media/geda_fileformat_textgraphic.jpg" class="media" title="fileformat_textgraphic.jpg" alt="fileformat_textgraphic.jpg" /></a> </td>
 	</tr>
 </table>
-<br />
 
 <p>
  Example:<br/>
@@ -887,7 +883,7 @@ This is a similar text object as the above example, however here there are five 
 </p>
 
 </div>
-<!-- SECTION [15158-17811] -->
+<!-- SECTION "text" [15158-17811] -->
 <h3><a name="net" id="net">net</a></h3>
 <div class="level3">
 
@@ -918,7 +914,6 @@ Valid in: Schematic files ONLY<br/>
 		<td>color</td><td>int</td><td>Color index</td>
 	</tr>
 </table>
-<br />
 <ul>
 <li class="level1"><div class="li"> Nets can only appear in schematic files.</div>
 </li>
@@ -937,7 +932,7 @@ A net segment from (12700, 29400) to (32900, 29400) with color index 4.
 </p>
 
 </div>
-<!-- SECTION [17812-18337] -->
+<!-- SECTION "net" [17812-18337] -->
 <h3><a name="bus" id="bus">bus</a></h3>
 <div class="level3">
 
@@ -971,7 +966,6 @@ Valid in: Schematic files ONLY<br/>
 		<td>ripperdir</td><td>int</td><td>Direction of bus rippers</td>
 	</tr>
 </table>
-<br />
 <ul>
 <li class="level1"><div class="li"> The ripperdir field for an brand new bus is 0.</div>
 </li>
@@ -994,7 +988,7 @@ A bus segment from (27300, 37400) to (27300, 35300) with color index 3 and no ne
 </p>
 
 </div>
-<!-- SECTION [18338-19269] -->
+<!-- SECTION "bus" [18338-19269] -->
 <h3><a name="pin" id="pin">pin</a></h3>
 <div class="level3">
 
@@ -1031,7 +1025,6 @@ Valid in: Symbol files ONLY<br/>
 		<td>whichend</td><td>int</td><td>Specifies the active end</td>
 	</tr>
 </table>
-<br />
 <ul>
 <li class="level1"><div class="li"> The pintype is an enumerated type:</div>
 <ul>
@@ -1062,7 +1055,7 @@ A pin from (0, 200) to (200, 200) with color index 1, a regular pin, and the fir
 </p>
 
 </div>
-<!-- SECTION [19270-20266] -->
+<!-- SECTION "pin" [19270-20266] -->
 <h3><a name="component" id="component">component</a></h3>
 <div class="level3">
 
@@ -1096,7 +1089,6 @@ Valid in: Schematic files ONLY<br/>
 		<td>basename</td><td>string</td><td>The filename of the component</td>
 	</tr>
 </table>
-<br />
 
 <p>
  The selectable field is either 1 for selectable or 0 if not selectable.
@@ -1121,11 +1113,11 @@ Valid in: Schematic files ONLY<br/>
 <pre class="code">C 18600 19900 1 0 0 7400-1.sym</pre>
 
 <p>
-A component who&rsquo;s origin is at (18600,19900), is selectable, not rotated, not mirrored, and the basename of the component is 7400-1.sym.
+A component who’s origin is at (18600,19900), is selectable, not rotated, not mirrored, and the basename of the component is 7400-1.sym.
 </p>
 
 </div>
-<!-- SECTION [20267-21270] -->
+<!-- SECTION "component" [20267-21270] -->
 <h3><a name="font" id="font">font</a></h3>
 <div class="level3">
 
@@ -1150,7 +1142,6 @@ Valid in: Special font files ONLY<br/>
 		<td>flag</td><td>int</td><td>Special space flag</td>
 	</tr>
 </table>
-<br />
 <ul>
 <li class="level1"><div class="li"> This is a special tag and should ONLY show up in font definition files.</div>
 </li>
@@ -1169,7 +1160,7 @@ The above font definition is for the space character.
 </p>
 
 </div>
-<!-- SECTION [21271-21791] -->
+<!-- SECTION "font" [21271-21791] -->
 <h2><a name="colors" id="colors">Colors</a></h2>
 <div class="level2">
 
@@ -1232,19 +1223,18 @@ In the gEDA/gaf schematic and symbol file format colors are specified via an int
 		<td>16</td><td>OUTPUT_BACKGROUND_COLOR</td>
 	</tr>
 </table>
-<br />
 
 <p>
  The actual color associated with the color index is defined on a per tool bases. Objects are typically assigned their corresponding color index, but it is permissible (sometimes) to assign other color index values to different object types.
 </p>
 
 </div>
-<!-- SECTION [21792-22663] -->
+<!-- SECTION "Colors" [21792-22663] -->
 <h2><a name="attributes" id="attributes">Attributes</a></h2>
 <div class="level2">
 
 <p>
-Attributes are enclosed in braces {} and can only be text. Attributes are text items which take on the form name=value. If it doesn&rsquo;t have name=value, it&rsquo;s not an attribute. Attributes are attached to the previous object. Here&rsquo;s an example: 
+Attributes are enclosed in braces {} and can only be text. Attributes are text items which take on the form name=value. If it doesn’t have name=value, it’s not an attribute. Attributes are attached to the previous object. Here’s an example: 
 </p>
 <pre class="code">P 988 500 1300 500 1
 {
@@ -1255,13 +1245,13 @@ pinnumber=3
 }</pre>
 
 <p>
-The object is a pin which has an attribute pinnumber=3 and pinseq=3 (name=value). You can have multiple text objects (both the T ... and text string are required) in between the braces {}. As of 20021103, you can only attached text items as attributes. Attaching other object types as attributes is unsupported.<br/>
- You can also have &ldquo;toplevel&rdquo; attributes. These attributes are not attached to any object, but instead are just text objects that take on the form name=value.<br/>
+The object is a pin which has an attribute pinnumber=3 and pinseq=3 (name=value). You can have multiple text objects (both the T &hellip; and text string are required) in between the braces {}. As of 20021103, you can only attached text items as attributes. Attaching other object types as attributes is unsupported.<br/>
+ You can also have “toplevel” attributes. These attributes are not attached to any object, but instead are just text objects that take on the form name=value.<br/>
  These attributes are useful when you need to convey some info about a schematic page or symbol and need the netlister to have access to this info.
 </p>
 
 </div>
-<!-- SECTION [22664-23651] -->
+<!-- SECTION "Attributes" [22664-23651] -->
 <h2><a name="embedded_components" id="embedded_components">Embedded Components</a></h2>
 <div class="level2">
 
@@ -1280,7 +1270,7 @@ In the example above, <strong>555-1.sym</strong> is the component. The EMBEDDED 
 </p>
 
 </div>
-<!-- SECTION [23652-24411] -->
+<!-- SECTION "Embedded Components" [23652-24411] -->
 <h2><a name="document_revision_history" id="document_revision_history">Document Revision History</a></h2>
 <div class="level2">
 <table class="inline">
@@ -1297,9 +1287,8 @@ In the example above, <strong>555-1.sym</strong> is the component. The EMBEDDED 
 		<td>October 19th, 2003</td><td>Added num lines text field.</td>
 	</tr>
 </table>
-<br />
 
 </div>
-<!-- SECTION [24412-] --></div>
+<!-- SECTION "Document Revision History" [24412-] --></div>
 </body>
 </html>

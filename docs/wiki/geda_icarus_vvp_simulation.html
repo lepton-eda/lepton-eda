@@ -5,20 +5,25 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:icarus_vvp_simulation</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:icarus_vvp_simulation?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:icarus_vvp_simulation?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:icarus_vvp_simulation?do=export_raw" />
-  <meta name="date" content="2006-05-07T16:59:15-0400" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:27-0400" />
+<meta name="keywords" content="geda,icarus_vvp_simulation" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:icarus_vvp_simulation?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:icarus_vvp_simulation" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:icarus_vvp_simulation" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
+
+
 
 <h1><a name="vvp_simulation_engine" id="vvp_simulation_engine">VVP Simulation Engine</a></h1>
 <div class="level1">
@@ -91,7 +96,7 @@ Labels and symbols consist of the characters:
 	0-9
 	.$_&lt;&gt;
 
-Labels and symbols may not start with a digit or a '.', so that they
+Labels and symbols may not start with a digit or a &#039;.&#039;, so that they
 are easily distinguished from keywords and numbers. A Label is a
 symbol that starts a statement. If a label is present in a statement,
 it must start in the first text column. This is how the lexical
@@ -145,7 +150,7 @@ The value, then, is appropriate for the data type. For example:
 
 FUNCTOR STATEMENTS:
 
-A functor statement is a statement that uses the ``.functor''
+A functor statement is a statement that uses the ``.functor&#039;&#039;
 opcode. Functors are the basic structural units of a simulation, and
 include a type (in the form of a truth table) and up to four inputs. A
 label is required for functors.
@@ -219,7 +224,7 @@ the row.
 
 Any input transition or the new state must match at most one row (or
 all matches must provide the same output state).  If no row matches,
-the output becomes 1'bx.
+the output becomes 1&#039;bx.
 
 The output state can be specified as &quot;0&quot;, &quot;1&quot;, or &quot;x&quot;.	Sequential
 UDPs may also have &quot;-&quot;: no change.
@@ -257,7 +262,7 @@ need an additional initialization value:
 
 &lt;init&gt; is the initial value for all instances of the UDP.  We do not
 provide initial values for individual instances.  &lt;init&gt; must be a
-number 0, 1, or 2 (for 1'bx).
+number 0, 1, or 2 (for 1&#039;bx).
 
 A UDP functor instance is created so:
 
@@ -353,7 +358,7 @@ calculating a canonical address from a multi-dimensional address.
 
 Three types of memory statement perform (1) creation of a memory, (2)
 connecting a read port to an existing memory, and (3) initializing the
-memory's contents.
+memory&#039;s contents.
 
        &lt;label&gt; .mem &quot;name&quot;, &lt;msb&gt;,&lt;lsb&gt;, &lt;last&gt;,&lt;first&gt; ... ;
 
@@ -417,7 +422,7 @@ bit location in the memory, via the commands:
 	%assign/m &lt;memid&gt;, &lt;delay&gt;, &lt;bit&gt; ;
 
 The memory bit is addressed by index register 3.  The value of
-register 3 is the index in the memory's bit space, where each data
+register 3 is the index in the memory&#039;s bit space, where each data
 word occupies a multiple of four bits.
 
 
@@ -516,7 +521,7 @@ listed in order LSB to MSB. The inputs themselves are also listed LSB
 to MSB, with the LSB vector input coming through port-0 of the real
 functor.
 
-The initial output value is (W+X+Y+Z) bits of 'bx. As input values are
+The initial output value is (W+X+Y+Z) bits of &#039;bx. As input values are
 propagated, the bits are placed in the correct place in the output
 vector value, and a new output value is propagated.
 
@@ -650,7 +655,7 @@ similar:
 Whereas the arithmetic statements generate an output the width of
 &lt;wid&gt;, the comparisons produce a single bit vector result. The plain
 versions do unsigned comparison, but the &quot;.s&quot; versions to signed
-comparisons. (Equality doesn't need to care about sign.)
+comparisons. (Equality doesn&#039;t need to care about sign.)
 
 
 STRUCTURAL SHIFTER STATEMENTS:
@@ -717,7 +722,7 @@ thread. Supported flags are:
 * Threads in general
 
 Thread statements create the initial threads of a design. These
-include the ``initial'' and ``always'' statements of the original
+include the ``initial&#039;&#039; and ``always&#039;&#039; statements of the original
 Verilog, and possibly some other synthetic threads for various
 purposes. It is also possible to create transient threads from
 behavioral code. These are needed to support such constructs as
@@ -765,7 +770,7 @@ from the bits.
 
 * Threads and scopes
 
-The Verilog ``disable'' statement deserves some special mention
+The Verilog ``disable&#039;&#039; statement deserves some special mention
 because of how it interacts with threads. In particular, threads
 throughout the design can affect (end) other threads in the design
 using the disable statement.
@@ -803,10 +808,10 @@ To implement the truth table, we need to assign 2-bit encodings for
 the 4-value signals. I choose, pseudo-randomly, the following
 encoding:
 
-	1'b0  : 00
-	1'b1  : 01
-	1'bx  : 10
-	1'bz  : 11
+	1&#039;b0  : 00
+	1&#039;b1  : 01
+	1&#039;bx  : 10
+	1&#039;bz  : 11
 
 The table is an array of 64 bytes, each byte holding 4 2-bit
 outputs. Construct a 6-bit byte address with inputs 1, 2 and 3 like
@@ -829,7 +834,7 @@ EXECUTABLE INSTRUCTIONS
 
 Threads run executable code, much like a processor executes machine
 code. VVP has a variety of opcodes for executable instructions. All of
-those instructions start with '%' and go into a single address
+those instructions start with &#039;%&#039; and go into a single address
 space. Labels attached to executable instructions get assigned the
 address of the instruction, and can be the target of %jmp instructions
 and starting points for threads.
@@ -857,7 +862,7 @@ it is connected to, and those functors in turn create new events if
 needed.
 
 Assignment events (the second of three types of events) are created
-by non-blocking assignments in behavioral code. When the ``&lt;='' is
+by non-blocking assignments in behavioral code. When the ``&lt;=&#039;&#039; is
 executed (a %assign in vvp) an assign event is created, which includes
 the vvp_ipoint_t pointer to the functor input to receive the value,
 as well as the value. These are distinct from propagation events because:
@@ -882,7 +887,7 @@ the right kind of code to cause things to happen in the design. If the
 event is a propagate or assignment event, the network of functors is
 tickled; if the event is a thread schedule, then a thread is run. The
 implementation of the event queue is not important, but currently is
-implemented as a ``skip list''. That is, it is a sorted singly linked
+implemented as a ``skip list&#039;&#039;. That is, it is a sorted singly linked
 list with skip pointers that skip over delta-time events.
 
 The functor net and the threads are distinct. They communicate through
@@ -970,12 +975,12 @@ becomes:
 
 * reg and other variables
 
-Reg and integer are cases of what Verilog calls ``variables.''
+Reg and integer are cases of what Verilog calls ``variables.&#039;&#039;
 Variables are, simply put, things that behavioral code can assign
-to. These are not the same as ``nets,'' which include wires and the
+to. These are not the same as ``nets,&#039;&#039; which include wires and the
 like.
 
-Each bit of a variable is created by a ``.var'' statement. For example:
+Each bit of a variable is created by a ``.var&#039;&#039; statement. For example:
 
 	reg a;
 
@@ -993,7 +998,7 @@ generate code for these is like so:
 	a  .event &quot;name&quot;;
 
 This creates a functor and makes it into a mode-2 functor. Then the
-trigger statement, &quot;-&gt; a&quot;, cause a ``%set a, 0;'' statement be
+trigger statement, &quot;-&gt; a&quot;, cause a ``%set a, 0;&#039;&#039; statement be
 generated. This is sufficient to trigger the event.
 
 /*

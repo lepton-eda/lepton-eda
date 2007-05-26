@@ -5,17 +5,20 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:na_howto</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:na_howto?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:na_howto?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:na_howto?do=export_raw" />
-  <meta name="date" content="2006-04-24T05:13:36-0400" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:25-0400" />
+<meta name="keywords" content="geda,na_howto" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:na_howto?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:na_howto" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:na_howto" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
@@ -35,6 +38,8 @@
 </li></ul>
 </div>
 </div>
+
+
 
 <h1><a name="net_attribute_mini-howto" id="net_attribute_mini-howto">net= attribute mini-HOWTO</a></h1>
 <div class="level1">
@@ -56,7 +61,7 @@ The information in this document is current as of 19991011.
 </p>
 
 </div>
-<!-- SECTION [1-216] -->
+<!-- SECTION "net= attribute mini-HOWTO" [1-216] -->
 <h2><a name="what_is_the_net_attribute_used_for" id="what_is_the_net_attribute_used_for">What is the net= attribute used for?</a></h2>
 <div class="level2">
 
@@ -66,7 +71,7 @@ The <strong><code>net=</code></strong> attribute is used to specify power, groun
 </p>
 
 </div>
-<!-- SECTION [217-1022] -->
+<!-- SECTION "What is the net= attribute used for?" [217-1022] -->
 <h2><a name="what_is_the_format_of_the_net_attribute" id="what_is_the_format_of_the_net_attribute">What is the format of the net= attribute?</a></h2>
 <div class="level2">
 
@@ -85,26 +90,25 @@ where:
 		<td> <strong><code>net=</code></strong> </td><td> The attribute name (always the same, lowercase) </td>
 	</tr>
 	<tr>
-		<td> signalname </td><td> The signal or net being defines (like +5V, GND, etc...) </td>
+		<td> signalname </td><td> The signal or net being defines (like +5V, GND, etc&hellip;) </td>
 	</tr>
 	<tr>
 		<td> pinname </td><td> The pin name (or number) which is assigned to this signal/net (or pin names/numbers) </td>
 	</tr>
 </table>
-<br />
 
 <p>
- The signalname cannot contain the &ldquo;:&rdquo; character (since it is a delimiter). The pinname is the pin name (A1, P2, D1, etc...) or pin number (1, 2, 5, 13, etc...). The pinname cannot contain the &ldquo;,&rdquo; character (since it is also a delimiter). pinnames are typically the same sort of numbers/names like the <code>pin#=#</code> attribute (if you are familiar with that attribute).<br/>
+ The signalname cannot contain the &quot;:&quot; character (since it is a delimiter). The pinname is the pin name (A1, P2, D1, etc&hellip;) or pin number (1, 2, 5, 13, etc&hellip;). The pinname cannot contain the &quot;,&quot; character (since it is also a delimiter). pinnames are typically the same sort of numbers/names like the <code>pin#=#</code> attribute (if you are familiar with that attribute).<br/>
  You can only have ONE signalname per <strong><code>net=</code></strong> attribute, but you can have as many pinnames/numbers as you want.
 </p>
 
 </div>
-<!-- SECTION [1023-2446] -->
+<!-- SECTION "What is the format of the net= attribute?" [1023-2446] -->
 <h2><a name="how_do_you_actually_use_the_net_attribute" id="how_do_you_actually_use_the_net_attribute">How do you actually use the net= attribute?</a></h2>
 <div class="level2">
 
 <p>
-You can place the <strong><code>net=</code></strong> attribute in several places. Here&rsquo;s the list so far:
+You can place the <strong><code>net=</code></strong> attribute in several places. Here’s the list so far:
 </p>
 <ul>
 <li class="level1"><div class="li"> Inside a symbol either as an attached attribute or an unattached attribute (toplevel attribute). Example which creates power/gnd nets: <strong><code>net=GND:7</code></strong> or <strong><code>net=+5V:14</code></strong></div>
@@ -114,18 +118,18 @@ You can place the <strong><code>net=</code></strong> attribute in several places
 <li class="level1"><div class="li"> Outside or inside a symbol to connect a net to a visible pin automatically. This is still untested and still might have some undesirable (negative) side effects. Use with caution.</div>
 </li>
 <li class="level1"><div class="li"> Attached to one of those special power/gnd symbol (like vcc/gnd/vdd) and you can change what that symbol represents. You could change the ground symbol to create a net called DIGITAL GND without editing the symbol (<strong><code>net=DIGITAL_GND:1</code></strong>).<br/>
- In the current symbol (19991011) library there are symbols named <strong>vdd-1.sym</strong>, <strong>vcc-1.sym</strong>, <strong>vee-1.sym</strong>, etc... which do not have a <strong><code>net=</code></strong> attribute inside, so you must attach the <strong><code>net=</code></strong> attribute yourself (in the schematic).<br/>
- There also symbols named 5V-minus-1.sym, 12V-plus-1.sym, 9V-plus-1.sym, etc... which have the appropriate <strong><code>net=</code></strong> attribute in them already (can be overridden though). You can use these symbol as examples of how to use the <strong><code>net=</code></strong> attribute.<br/>
+ In the current symbol (19991011) library there are symbols named <strong>vdd-1.sym</strong>, <strong>vcc-1.sym</strong>, <strong>vee-1.sym</strong>, etc&hellip; which do not have a <strong><code>net=</code></strong> attribute inside, so you must attach the <strong><code>net=</code></strong> attribute yourself (in the schematic).<br/>
+ There also symbols named 5V-minus-1.sym, 12V-plus-1.sym, 9V-plus-1.sym, etc&hellip; which have the appropriate <strong><code>net=</code></strong> attribute in them already (can be overridden though). You can use these symbol as examples of how to use the <strong><code>net=</code></strong> attribute.<br/>
 </div>
 </li>
 </ul>
 
 <p>
-You can have as many <strong><code>net=</code></strong> attributes as you want. Just remember that <strong><code>net=</code></strong> attributes attached to the outside of a symbol override any equivalent internal (inside the symbol) <strong><code>net=</code></strong> attributes. If you run into a case where this doesn&rsquo;t work, please let <strong>ahvezdaATgeda.seul.org</strong>. In fact, send any bug reports to that individual.
+You can have as many <strong><code>net=</code></strong> attributes as you want. Just remember that <strong><code>net=</code></strong> attributes attached to the outside of a symbol override any equivalent internal (inside the symbol) <strong><code>net=</code></strong> attributes. If you run into a case where this doesn’t work, please let <strong>ahvezdaATgeda.seul.org</strong>. In fact, send any bug reports to that individual.
 </p>
 
 </div>
-<!-- SECTION [2447-4387] -->
+<!-- SECTION "How do you actually use the net= attribute?" [2447-4387] -->
 <h2><a name="caveats_bugs" id="caveats_bugs">Caveats / Bugs</a></h2>
 <div class="level2">
 
@@ -135,7 +139,7 @@ The <strong><code>net=</code></strong> attribute/mechanism is fairly new, so the
 <ul>
 <li class="level1"><div class="li"> As of 19991011 almost all of the symbols in the standard library do not have the <strong><code>net=</code></strong> attribute or any other power/ground specifiers. Hopefully this will be updated sometime (any volunteers?).</div>
 </li>
-<li class="level1"><div class="li"> Attach a special power symbol (vcc/gnd) to a already named net will alias (rename) that net to the signalname specified in the <strong><code>net=</code></strong> attribute (in/attached to the vcc/gnd symbol). You can override this (so the reverse is true) by playing with the &ldquo;net-naming-priority&rdquo;. Be careful with this. There might be other &ldquo;aliasing&rdquo; issues which have not been identified yet.</div>
+<li class="level1"><div class="li"> Attach a special power symbol (vcc/gnd) to a already named net will alias (rename) that net to the signalname specified in the <strong><code>net=</code></strong> attribute (in/attached to the vcc/gnd symbol). You can override this (so the reverse is true) by playing with the “net-naming-priority”. Be careful with this. There might be other “aliasing” issues which have not been identified yet.</div>
 </li>
 <li class="level1"><div class="li"> Creating a <strong><code>net=</code></strong> attribute which associates a signal name with a pin which is already visible on the symbol, is probably a bad idea. This does work, but all the ramifications have not been explored yet.</div>
 </li>
@@ -144,12 +148,12 @@ The <strong><code>net=</code></strong> attribute/mechanism is fairly new, so the
 </ul>
 
 </div>
-<!-- SECTION [4388-5599] -->
+<!-- SECTION "Caveats / Bugs" [4388-5599] -->
 <h2><a name="example" id="example">Example</a></h2>
 <div class="level2">
 
 <p>
-Here&rsquo;s a schematic which uses standard symbols (note: the 7400 does not have the <strong><code>net=</code></strong> attribute inside yet). This schematic consists of a 7400 with the <strong><code>net=</code></strong> attributes attached for power and ground, One of the input pins grounded using a gnd symbol and the other at a logic one using the vcc symbol (with an attached <strong><code>net=</code></strong> attribute). One of the input net is named, but as you will see, the netname is replaced by the <strong><code>net=</code></strong> signal name (see above for more info on this). The output is pulled up with a pull up resistor which has power specified using the +5V symbol.<br/>
+Here’s a schematic which uses standard symbols (note: the 7400 does not have the <strong><code>net=</code></strong> attribute inside yet). This schematic consists of a 7400 with the <strong><code>net=</code></strong> attributes attached for power and ground, One of the input pins grounded using a gnd symbol and the other at a logic one using the vcc symbol (with an attached <strong><code>net=</code></strong> attribute). One of the input net is named, but as you will see, the netname is replaced by the <strong><code>net=</code></strong> signal name (see above for more info on this). The output is pulled up with a pull up resistor which has power specified using the +5V symbol.<br/>
  
 </p>
 <table class="inline">
@@ -157,7 +161,6 @@ Here&rsquo;s a schematic which uses standard symbols (note: the 7400 does not ha
 		<td> <a href="_detail/geda_net.html" class="media" title="geda:net.jpg"><img src="_media/geda_net.jpg" class="media" title="net.jpg" alt="net.jpg" /></a> </td>
 	</tr>
 </table>
-<br />
 <pre class="code">v 19991011
 C 38700 58100 1 0 0 7400-1.sym
 {
@@ -201,7 +204,7 @@ C 40400 59900 1 0 0 5V-plus-1.sym</pre>
 </p>
 <pre class="code">START header
 
-gEDA's netlist format
+gEDA&#039;s netlist format
 Created specifically for testing of gnetlist
 
 END header
@@ -232,15 +235,15 @@ Notice how NETLABEL was renamed (aliased to the +5V net).
 </p>
 
 </div>
-<!-- SECTION [5600-7377] -->
+<!-- SECTION "Example" [5600-7377] -->
 <h2><a name="final_notes" id="final_notes">Final notes</a></h2>
 <div class="level2">
 
 <p>
-Send all bugs to <strong>ahvezdaATgeda.seul.org</strong> or <strong>geda-devATgeda.seul.org</strong> (mailing list, please subscribe first). [I&rsquo;m sure there&rsquo;s more to say here] 
+Send all bugs to <strong>ahvezdaATgeda.seul.org</strong> or <strong>geda-devATgeda.seul.org</strong> (mailing list, please subscribe first). [I’m sure there’s more to say here] 
 </p>
 
 </div>
-<!-- SECTION [7378-] --></div>
+<!-- SECTION "Final notes" [7378-] --></div>
 </body>
 </html>

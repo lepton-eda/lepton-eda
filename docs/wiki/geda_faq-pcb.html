@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>geda:faq-pcb</title>
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-25T11:22:57-0400" />
+<meta name="keywords" content="geda,faq-pcb" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:faq-pcb?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:faq-pcb" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:faq-pcb" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+<h2><a name="pcb_faq" id="pcb_faq">pcb FAQ</a></h2>
+<div class="level2">
+
+</div>
+
+<h4><a name="what_is_pcb" id="what_is_pcb">What is pcb ?</a></h4>
+<div class="level4">
+
+<p>
+ “pcb” is software to help you draw (“lay out”) the wires for a custom “printed wire board” (“PCB”).
+</p>
+
+</div>
+
+<h4><a name="how_do_i_install_pcb" id="how_do_i_install_pcb">How do I install pcb ?</a></h4>
+<div class="level4">
+
+<p>
+ The recommended way to install pcb is to install the complete gaf package. See <a href="http://geda.seul.org/wiki/geda:installation" class="wikilink1" title="geda:installation">installation</a>.
+</p>
+
+</div>
+
+<h4><a name="is_it_true_that_pcb_is_limited_to_exactly_8_copper_layers_and_2_silkscreen_layers" id="is_it_true_that_pcb_is_limited_to_exactly_8_copper_layers_and_2_silkscreen_layers">Is it true that pcb is limited to exactly 8 copper layers and 2 silkscreen layers ?</a></h4>
+<div class="level4">
+
+<p>
+ No. “Out-of-the-box”, pcb supports 16 copper layers and &hellip;
+</p>
+
+</div>
+
+<h4><a name="is_it_true_that_pcb_has_no_concept_of_a_solder_mask_or_paste_mask_layer" id="is_it_true_that_pcb_has_no_concept_of_a_solder_mask_or_paste_mask_layer">Is it true that pcb has no concept of a &quot;solder mask&quot; or &quot;paste mask&quot; layer?</a></h4>
+<div class="level4">
+
+<p>
+ No.
+</p>
+
+</div>
+
+<h4><a name="is_it_true_that_pcb_has_no_way_to_make_a_mechanical_layer_to_show_the_physical_outline_of_the_board_and_its_dimensions" id="is_it_true_that_pcb_has_no_way_to_make_a_mechanical_layer_to_show_the_physical_outline_of_the_board_and_its_dimensions">Is it true that pcb has no way to make a &quot;mechanical layer&quot; to show the physical outline of the board and its dimensions ?</a></h4>
+<div class="level4">
+
+<p>
+ No.
+</p>
+
+</div>
+
+<h4><a name="how_do_i_design_a_pcb" id="how_do_i_design_a_pcb">How do I design a PCB ?</a></h4>
+<div class="level4">
+
+<p>
+ This is well beyond the scope of this <acronym title="Frequently Asked Questions">FAQ</acronym>. There are a few tips at
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://en.wikipedia.org/wiki/Printed_circuit_board" class="urlextern" title="http://en.wikipedia.org/wiki/Printed_circuit_board"  rel="nofollow">http://en.wikipedia.org/wiki/Printed_circuit_board</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://en.wikibooks.org/wiki/Practical_Electronics/PCB_Layout" class="urlextern" title="http://en.wikibooks.org/wiki/Practical_Electronics/PCB_Layout"  rel="nofollow">http://en.wikibooks.org/wiki/Practical_Electronics/PCB_Layout</a></div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="yes_but_how_do_i_design_a_pcb_with_pcb" id="yes_but_how_do_i_design_a_pcb_with_pcb">Yes, but how do I design a PCB with pcb ?</a></h4>
+<div class="level4">
+
+<p>
+ Generally, you start with a schematic, run gsch2pcb to generate the netlist. See <a href="http://geda.seul.org/wiki/geda:faq-gsch2pcb" class="wikilink1" title="geda:faq-gsch2pcb">faq-gsch2pcb</a>. Then you might go through the tutorial <a href="geda_gsch2pcb_tutorial.html" class="wikilink1" title="geda:gsch2pcb_tutorial">gsch2pcb_tutorial</a>
+</p>
+
+<p>
+Then you &hellip; Hey, did you know about the pcb manual, the <a href="geda_pcb_tips.html" class="wikilink1" title="geda:pcb_tips">pcb_tips</a>, and the <a href="geda_pcb-quick_reference.html" class="wikilink1" title="geda:pcb-quick_reference">pcb-quick_reference</a> ?
+</p>
+
+</div>
+
+<h4><a name="what_about_footprints" id="what_about_footprints">What about footprints ?</a></h4>
+<div class="level4">
+
+<p>
+ Yes. <a href="geda_pcb_footprints.html" class="wikilink1" title="geda:pcb_footprints">pcb_footprints</a>.
+</p>
+
+<p>
+There are also some unofficial gEDA footprints at Open Circuits <a href="http://opencircuits.com/PCB_Footprints" class="urlextern" title="http://opencircuits.com/PCB_Footprints"  rel="nofollow">http://opencircuits.com/PCB_Footprints</a> .
+</p>
+
+</div>
+<!-- SECTION "pcb FAQ" [2-] --></div>
+</body>
+</html>

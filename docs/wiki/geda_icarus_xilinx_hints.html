@@ -5,20 +5,25 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:icarus_xilinx_hints</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:icarus_xilinx_hints?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:icarus_xilinx_hints?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:icarus_xilinx_hints?do=export_raw" />
-  <meta name="date" content="2006-05-07T16:43:07-0400" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:27-0400" />
+<meta name="keywords" content="geda,icarus_xilinx_hints" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:icarus_xilinx_hints?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:icarus_xilinx_hints" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:icarus_xilinx_hints" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
+
+
 
 <h1><a name="xilinx_hints" id="xilinx_hints">Xilinx Hints</a></h1>
 <div class="level1">
@@ -29,9 +34,9 @@ setup, targeting a Spartan XCS10.
 
 Verilog:
 
-   Older versions of Icarus Verilog (like 19990814) couldn't synthesize
+   Older versions of Icarus Verilog (like 19990814) couldn&#039;t synthesize
    logic buried in procedural (flip-flop) assignment.  Newer versions
-   (like 20000120) don't have this limitation.
+   (like 20000120) don&#039;t have this limitation.
 
    Procedural assignments have to be given one at a time, to be
    &quot;found&quot; by xnfsyn.  Say
@@ -43,7 +48,7 @@ Verilog:
            Z = newZ;
        end
 
-   Steve's xnf.txt covers most buffer and pin constructs, but I had reason
+   Steve&#039;s xnf.txt covers most buffer and pin constructs, but I had reason
    to use a global clock net not connected to an input pin.  The standard
    Verilog for a buffer, combined with a declaration to turn that into a
    BUFG, is:
@@ -65,11 +70,11 @@ Generating .pcf files:
    puts in the XNF file.  Use xnf2pcf to extract this information to
    a .pcf file, which the Xilinx place-and-route software _will_ pay
    attention to.  Steve says he now makes that information available
-   in an NCF file, with -fncf=&lt;path&gt;, but I haven't tested that.
+   in an NCF file, with -fncf=&lt;path&gt;, but I haven&#039;t tested that.
 
 Running the Xilinx back end:
 
-   You can presumably use the GUI, but that doesn't fit in Makefiles :-).
+   You can presumably use the GUI, but that doesn&#039;t fit in Makefiles :-).
    Here is the command sequence in pseudo-shell-script:
       ngdbuild -p $part $1.xnf $1.ngd
       map -p $part -o map.ncd $1.ngd
@@ -88,7 +93,7 @@ Running the Xilinx back end:
    I had reason to run this remotely (and transparently within a Makefile)
    via ssh.  I use the gmake rule
 %.bit : %.xnf
-        ssh -x -a -o 'BatchMode yes' ${ALLIANCE_HOST} \
+        ssh -x -a -o &#039;BatchMode yes&#039; ${ALLIANCE_HOST} \
                remote_alliance ${REMOTE_DIR} $(basename $@) 2&gt;&amp;1 &lt; $&lt;
 	scp ${ALLIANCE_HOST}:${REMOTE_DIR}/$@ .
     and the remote_alliance script (on ${ALLIANCE_HOST})
@@ -100,7 +105,7 @@ xnf2pcf &lt;$2.xnf &gt;! $2.pcf
 
    There is now a &quot;Xilinx on Linux HOWTO&quot; at
          http://www.polybus.com/xilinx_on_linux.html
-   I haven't tried this yet, it looks interesting.
+   I haven&#039;t tried this yet, it looks interesting.
 
 Downloading:
 

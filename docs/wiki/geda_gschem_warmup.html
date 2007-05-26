@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>geda:gschem_warmup</title>
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:27-0400" />
+<meta name="keywords" content="geda,gschem_warmup" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:gschem_warmup?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:gschem_warmup" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:gschem_warmup" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+<h1><a name="gschem_warmup_for_beginners" id="gschem_warmup_for_beginners">gschem Warmup for Beginners</a></h1>
+<div class="level1">
+
+<p>
+ You need to become familiar with doing a few things in <em><strong>gschem</strong></em>, so just run <em><strong>gschem</strong></em> and start playing around:
+</p>
+
+<p>
+You get an initial blank page with a menus and a toolbar at the top. As you select operations from the menus, notice that there are usually keyboard shortcuts which can alternatively be used to access the menu functions.
+</p>
+
+<p>
+When drawing a schematic, It’s a good idea to always start by setting some schematic boundaries to draw within, so we will do this by adding a title-block. I find that using a B sized title-block lets my schematics print at a nice size on letter sized paper:  
+</p>
+<ul>
+<li class="level1"><div class="li"> Bring up the <strong>Select Component</strong> window by selecting from the menu <strong>Add&rarr;Component</strong> or hit keyboard shortcut <strong>i</strong>. Or you could click the add component icon on the toobar (<a href="_detail/geda_warmup_add_component.html" class="media" title="geda:warmup_add_component.png"><img src="_media/geda_warmup_add_component.png" class="media" alt="" /></a>).</div>
+</li>
+<li class="level1"><div class="li"> In the <strong>Libraries</strong> list, select <strong>title-block</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Under the <strong>Components list</strong>, select <strong>title-B.sym</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Move the mouse onto the <em><strong>gschem</strong></em> drawing area and place the title-block symbol by clicking the left mouse button. Then click the right mouse button to abort adding more title-block symbols.</div>
+</li>
+</ul>
+
+<p>
+ <a href="_detail/geda_warmup_gschem01.html" class="media" title="geda:warmup_gschem01.png"><img src="_media/geda_warmup_gschem01.png" class="media" alt="" /></a> 
+</p>
+<ul>
+<li class="level1"><div class="li"> With the mouse in the <em><strong>gschem</strong></em> drawing area, hit the keys <strong>ve</strong> (or select from menu <strong>View&rarr;Zoom Extents</strong>) to zoom the view to the title-block symbol extents.</div>
+</li>
+<li class="level1"><div class="li"> Back in the select components window, (bring it up again if you closed it), select the <strong>analog</strong> library and then select the component <strong>resistor-1.sym</strong> and place a couple of resistors on the schematic with the left mouse button. Notice that as you place each one it is a red color and that indicates it is selected.</div>
+</li>
+<li class="level1"><div class="li"> Zoom in (keyboard shortcut <strong>z</strong>) and zoom out (keyboard shortcut <strong>SHIFT z</strong>) in the area where you placed the resistors. If you get lost, zoom back to extents with <strong>ve</strong>. Notice that as you zoom in or out the viewable area centers around the mouse cursor.</div>
+</li>
+<li class="level1"><div class="li"> Alternate left clicking on both resistors to select them, but notice that if you don’t hit the resistor just right, the title-block is selected instead. We really don’t want to ever select the title-block again, so we can lock it to prevent its irritating selection: click so the title-block IS selected, then select <strong>Edit&rarr;Lock</strong>. Now it’s easier to select the resistors as we like.</div>
+</li>
+<li class="level1"><div class="li"> Move the resistors around with the middle mouse button.</div>
+</li>
+<li class="level1"><div class="li"> Select a resistor and then rotate with the <strong>er</strong> keys or the <strong>Edit&rarr;Rotate 90 Mode</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Move the resistors relatively close together and then zoom in on them.</div>
+</li>
+<li class="level1"><div class="li"> Place the mouse on one of the resistor pins and hit the <strong>n</strong> key to start adding a net. Move the mouse to a pin on the other resistor and left click to attach the net to the pin. Right click to abort adding this net but notice that if you left click again you will start adding another net.</div>
+</li>
+</ul>
+
+<p>
+ <a href="_detail/geda_warmup_gschem02.html" class="media" title="geda:warmup_gschem02.png"><img src="_media/geda_warmup_gschem02.png" class="media" alt="" /></a> 
+</p>
+<ul>
+<li class="level1"><div class="li"> Look at the toolbar and see that your mode has switched to adding nets. Before you can change resistor selections again, you will have to re-enter select mode with the <strong>s</strong> key or by clicking the select toolbar icon or by using the menu <strong>Edit&rarr;Select Mode</strong>. But if you try to move a resistor with the middle mouse button, you can do it and you will automatically re-enter select mode. You will have to play with doing things to get used to the <em><strong>gschem</strong></em> modes.</div>
+</li>
+<li class="level1"><div class="li"> If when you added the net between the resistors you get something that looks like this:</div>
+</li>
+</ul>
+
+<p>
+ <a href="_detail/geda_warmup_gschem03.html" class="media" title="geda:warmup_gschem03.png"><img src="_media/geda_warmup_gschem03.png" class="media" alt="" /></a>
+</p>
+
+<p>
+it means you missed the pin on the right resistor. Look closely and you’ll see the tip of the pin is red and you must start and stop nets with the mouse on this red spot to make a connection to the pin.
+</p>
+<ul>
+<li class="level1"><div class="li"> Select the net between the resistors and delete it with the <strong>Delete</strong> key.</div>
+</li>
+<li class="level1"><div class="li"> Select a resistor and hit the <strong>ee</strong> keys. This will pop up the attribute editing window for the resistor. Here you can change existing attribute values or add new attributes with values to the resistor. Practice well with adding attributes and changing attribute values because you will need to be very familiar with managing attributes when using <em><strong>gschem</strong></em>.</div>
+</li>
+</ul>
+
+<p>
+ Now go back to the tutorial and try working through the simple example there. If you encounter steps that aren’t clear, look through the <em><strong>gschem</strong></em> user documentation and attributes documentation on the <a href="geda_gschem_ug.html" class="wikilink1" title="geda:gschem_ug">gschem Documentation</a> page. 
+</p>
+<hr />
+
+<p>
+tutorial by Bill Wilson (bill&ndash;at&ndash;gkrellm.net)
+</p>
+
+</div>
+</div>
+</body>
+</html>

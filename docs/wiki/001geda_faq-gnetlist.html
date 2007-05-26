@@ -5,17 +5,20 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:faq-gnetlist.fr</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:faq-gnetlist.fr?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:faq-gnetlist.fr?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:faq-gnetlist.fr?do=export_raw" />
-  <meta name="date" content="2006-12-09T14:49:48-0500" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:26-0400" />
+<meta name="keywords" content="geda,faq-gnetlist.fr" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:faq-gnetlist.fr?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:faq-gnetlist.fr" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:faq-gnetlist.fr" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
@@ -24,21 +27,23 @@
 <div id="toc__inside">
 
 <ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#problemes_avec_gnetlist_lors_de_l_installation_execution" class="toc">Problèmes avec gnetlist lors de l'installation/exécution</a></span></div>
+<li class="level1"><div class="li"><span class="li"><a href="#problemes_avec_gnetlist_lors_de_l_installation_execution" class="toc">Problèmes avec gnetlist lors de l&#039;installation/exécution</a></span></div>
 <ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#la_bom_de_gnetlist_ne_fonctionne_pas._d_ou_vient_le_probleme" class="toc">la bom de gnetlist ne fonctionne pas. D'où vient le problème?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#la_bom_de_gnetlist_ne_fonctionne_pas._d_ou_vient_le_probleme" class="toc">la bom de gnetlist ne fonctionne pas. D&#039;où vient le problème?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#quelques_unes_des_commandes_de_gnetlist_debordent_la_pile._comment_je_resoud_ce_probleme" class="toc">Quelques unes des commandes de gnetlist débordent la pile. Comment je résoud ce problème?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#gnetlist_a_cree_une_netlist_qui_duplique_les_broches" class="toc">gnetlist a créé une netlist qui duplique les broches!?</a></span></div></li></ul>
 </li></ul>
 </div>
 </div>
 
-<h1><a name="problemes_avec_gnetlist_lors_de_l_installation_execution" id="problemes_avec_gnetlist_lors_de_l_installation_execution">Problèmes avec gnetlist lors de l'installation/exécution</a></h1>
+
+
+<h1><a name="problemes_avec_gnetlist_lors_de_l_installation_execution" id="problemes_avec_gnetlist_lors_de_l_installation_execution">Problèmes avec gnetlist lors de l&#039;installation/exécution</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [1-73] -->
-<h2><a name="la_bom_de_gnetlist_ne_fonctionne_pas._d_ou_vient_le_probleme" id="la_bom_de_gnetlist_ne_fonctionne_pas._d_ou_vient_le_probleme">la bom de gnetlist ne fonctionne pas. D'où vient le problème?</a></h2>
+<!-- SECTION "Problèmes avec gnetlist lors de l'installation/exécution" [1-73] -->
+<h2><a name="la_bom_de_gnetlist_ne_fonctionne_pas._d_ou_vient_le_probleme" id="la_bom_de_gnetlist_ne_fonctionne_pas._d_ou_vient_le_probleme">la bom de gnetlist ne fonctionne pas. D&#039;où vient le problème?</a></h2>
 <div class="level2">
 
 <p>
@@ -47,7 +52,7 @@ Si, lorsque vous lancez gnetlist comme ceci:
 <pre class="code">gnetlist -g bom filename.sch</pre>
 
 <p>
-gnetlist vous sort un message d&rsquo;erreur tel que: 
+gnetlist vous sort un message d’erreur tel que: 
 </p>
 <pre class="code">Loading schematic [filename.sch]
 ERROR: In procedure open-file:
@@ -60,7 +65,7 @@ value</font></pre>
 </p>
 
 </div>
-<!-- SECTION [74-654] -->
+<!-- SECTION "la bom de gnetlist ne fonctionne pas. D'où vient le problème?" [74-654] -->
 <h2><a name="quelques_unes_des_commandes_de_gnetlist_debordent_la_pile._comment_je_resoud_ce_probleme" id="quelques_unes_des_commandes_de_gnetlist_debordent_la_pile._comment_je_resoud_ce_probleme">Quelques unes des commandes de gnetlist débordent la pile. Comment je résoud ce problème?</a></h2>
 <div class="level2">
 
@@ -72,15 +77,15 @@ Si vous avez un message tel que:
 <p>
 lorsque vous faites passer des schémas de grande taille par une des commandes, ajoutez alors ce qui suit à <strong><code>~/.gEDA/gnetlistrc</code></strong> ou un <strong><code>gnetlistrc</code></strong> local (dans le répertoire de travail courant): 
 </p>
-<pre class="code">(debug-options (list 'stack 200000))
-(eval-options (list 'stack 200000))</pre>
+<pre class="code">(debug-options (list &#039;stack 200000))
+(eval-options (list &#039;stack 200000))</pre>
 
 <p>
-Si cela ne fonctionne pas, éditez alors la commande appropriée (habituellement appelée: gnet-backend_name.scm) et insérez les lignes précédentes en haut de ce fichier. Les commandes gnetlist peuvent être trouvées dans <strong><code>${prefix}/share/gEDA/scheme</code></strong>. Envoyez aussi un courriel à geda-dev rappelant aux développeurs de corriger ceci. Rappelez-vous que vous devez être inscrits sur geda-dev avant d&rsquo;y envoyer des courriels.
+Si cela ne fonctionne pas, éditez alors la commande appropriée (habituellement appelée: gnet-backend_name.scm) et insérez les lignes précédentes en haut de ce fichier. Les commandes gnetlist peuvent être trouvées dans <strong><code>${prefix}/share/gEDA/scheme</code></strong>. Envoyez aussi un courriel à geda-dev rappelant aux développeurs de corriger ceci. Rappelez-vous que vous devez être inscrits sur geda-dev avant d’y envoyer des courriels.
 </p>
 
 </div>
-<!-- SECTION [655-1562] -->
+<!-- SECTION "Quelques unes des commandes de gnetlist débordent la pile. Comment je résoud ce problème?" [655-1562] -->
 <h2><a name="gnetlist_a_cree_une_netlist_qui_duplique_les_broches" id="gnetlist_a_cree_une_netlist_qui_duplique_les_broches">gnetlist a créé une netlist qui duplique les broches!?</a></h2>
 <div class="level2">
 
@@ -91,7 +96,7 @@ Il y a eu au moins un rapport sur le message suivant venant de PCB après avoir 
 29: Error! Element C167 pin 2 appears multiple times in the netlist file.</pre>
 
 <p>
-Ce qui s&rsquo;est produit est que gnetlist (libgeda en fait) a créé deux nets au lieu d&rsquo;un seul. Ceci se produit lorsque vous dessinez deux nets l&rsquo;un sur l&rsquo;autre avec une broche connectant une intersection de deux nets se chevauchants. Notez que les nets chevauchés ne sont pas connectés ensemble. Un schéma pour la démonstration ressemble à ceci:
+Ce qui s’est produit est que gnetlist (libgeda en fait) a créé deux nets au lieu d’un seul. Ceci se produit lorsque vous dessinez deux nets l’un sur l’autre avec une broche connectant une intersection de deux nets se chevauchants. Notez que les nets chevauchés ne sont pas connectés ensemble. Un schéma pour la démonstration ressemble à ceci:
 </p>
 
 <p>
@@ -99,7 +104,7 @@ Ce qui s&rsquo;est produit est que gnetlist (libgeda en fait) a créé deux nets
 </p>
 
 <p>
-Les développeurs débattent pour savoir si c&rsquo;est un bogue ou non de gnetlist mais jusqu&rsquo;à maintenant, assurez-vous de vos connexions de nets, spécialement celles qui impliquent des broches connectant des milieu de nets, sont correctement dessinées. Vous avez ici la manière dont la connexion ci-dessus devrait être correctement dessinée pour que netlist fasse son travail proprement:
+Les développeurs débattent pour savoir si c’est un bogue ou non de gnetlist mais jusqu’à maintenant, assurez-vous de vos connexions de nets, spécialement celles qui impliquent des broches connectant des milieu de nets, sont correctement dessinées. Vous avez ici la manière dont la connexion ci-dessus devrait être correctement dessinée pour que netlist fasse son travail proprement:
 </p>
 
 <p>
@@ -107,6 +112,6 @@ Les développeurs débattent pour savoir si c&rsquo;est un bogue ou non de gnetl
 </p>
 
 </div>
-<!-- SECTION [1563-] --></div>
+<!-- SECTION "gnetlist a créé une netlist qui duplique les broches!?" [1563-] --></div>
 </body>
 </html>

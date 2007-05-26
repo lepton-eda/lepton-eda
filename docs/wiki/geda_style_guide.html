@@ -5,17 +5,20 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:style_guide</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:style_guide?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:style_guide?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:style_guide?do=export_raw" />
-  <meta name="date" content="2006-08-17T02:00:16-0400" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:25-0400" />
+<meta name="keywords" content="geda,style_guide" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:style_guide?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:style_guide" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:style_guide" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
@@ -35,31 +38,33 @@
 </div>
 </div>
 
+
+
 <h1><a name="style_guide" id="style_guide">Style Guide</a></h1>
 <div class="level1">
 
 <p>
 <span class="hilited">This is definitely a work in progress.</span><br/>
  All documentation is eventually going to be made available as both <acronym title="HyperText Markup Language">HTML</acronym> and <acronym title="Portable Document Format">PDF</acronym>.<br/>
- The problem is to convert the gEDA wiki&rsquo;s Dokuwiki-pages (i.e., <acronym title="Extensible HyperText Markup Language">XHTML</acronym>) into a format that can be converted into <acronym title="Portable Document Format">PDF</acronym>.<br/>
+ The problem is to convert the gEDA wiki’s Dokuwiki-pages (i.e., <acronym title="Extensible HyperText Markup Language">XHTML</acronym>) into a format that can be converted into <acronym title="Portable Document Format">PDF</acronym>.<br/>
  The ideal path would be to use the pavuk application to mine the gEDA wiki, converting the <acronym title="Extensible HyperText Markup Language">XHTML</acronym> wiki-pages into <acronym title="HyperText Markup Language">HTML</acronym> pages, and then use the HTMLDOC application to convert the <acronym title="HyperText Markup Language">HTML</acronym> pages to <acronym title="Portable Document Format">PDF</acronym>.<br/>
 
 </p>
 
 </div>
-<!-- SECTION [1-472] -->
+<!-- SECTION "Style Guide" [1-472] -->
 <h2><a name="downloading_installing_pavuk" id="downloading_installing_pavuk">Downloading/Installing pavuk</a></h2>
 <div class="level2">
 
 <p>
 pavuk is a function-testing, performance-measuring, site-mirroring, web spider that is widely portable and capable of using scenarios to process a wide range of web transactions, including ssl and forms.<br/>
  pavuk is hosted on SourceForge at <a href="http://sourceforge.net/projects/pavuk" class="urlextern" title="http://sourceforge.net/projects/pavuk"  rel="nofollow">http://sourceforge.net/projects/pavuk</a>. Simply check if your distribution already includes the latest version of pavuk (pavuk-0.9.34 used for the current wiki), and download/install if necessary.<br/>
- pavuk comes as an RPM, a tar-ball, and a compressed tar-ball. Don&rsquo;t install from the RPM, as this uses dated library dependencies and may not build on newer distributions.<br/>
+ pavuk comes as an RPM, a tar-ball, and a compressed tar-ball. Don’t install from the RPM, as this uses dated library dependencies and may not build on newer distributions.<br/>
  pavuk has both a command-line interface and a <acronym title="Graphical User Interface">GUI</acronym> interface.
 </p>
 
 </div>
-<!-- SECTION [473-1190] -->
+<!-- SECTION "Downloading/Installing pavuk" [473-1190] -->
 <h2><a name="downloading_installing_htmldoc" id="downloading_installing_htmldoc">Downloading/Installing HTMLDOC</a></h2>
 <div class="level2">
 
@@ -72,7 +77,7 @@ HTMLDOC converts <acronym title="HyperText Markup Language">HTML</acronym> files
 </p>
 
 </div>
-<!-- SECTION [1191-2172] -->
+<!-- SECTION "Downloading/Installing HTMLDOC" [1191-2172] -->
 <h2><a name="for_both_existing_and_new_documents" id="for_both_existing_and_new_documents">For both existing and new documents</a></h2>
 <div class="level2">
 
@@ -80,17 +85,17 @@ HTMLDOC converts <acronym title="HyperText Markup Language">HTML</acronym> files
 The following are meant to stimulate discussion on document style:
 </p>
 <ol>
-<li class="level1"><div class="li"> Consider that the document will be exported for inclusion on the &ldquo;gEDA Tools Suite CD-ROM&rdquo; as <acronym title="Extensible HyperText Markup Language">XHTML</acronym> and/or <acronym title="Portable Document Format">PDF</acronym>. Examples:</div>
+<li class="level1"><div class="li"> Consider that the document will be exported for inclusion on the “gEDA Tools Suite CD-ROM” as <acronym title="Extensible HyperText Markup Language">XHTML</acronym> and/or <acronym title="Portable Document Format">PDF</acronym>. Examples:</div>
 <ul>
-<li class="level2"><div class="li"> <a href="http://geda.seul.org/wiki/?do=export_raw" class="urlextern" title="http://geda.seul.org/wiki/?do=export_raw"  rel="nofollow">http://geda.seul.org/wiki/?do=export_raw</a> will generate the gEDA Project Wiki&rsquo;s start page as plain text. Simply use your browser to copy to a text file and include on the CD-ROM image.</div>
+<li class="level2"><div class="li"> <a href="http://geda.seul.org/wiki/?do=export_raw" class="urlextern" title="http://geda.seul.org/wiki/?do=export_raw"  rel="nofollow">http://geda.seul.org/wiki/?do=export_raw</a> will generate the gEDA Project Wiki’s start page as plain text. Simply use your browser to copy to a text file and include on the CD-ROM image.</div>
 </li>
-<li class="level2"><div class="li"> <a href="http://geda.seul.org/wiki/?do=export_xhtml" class="urlextern" title="http://geda.seul.org/wiki/?do=export_xhtml"  rel="nofollow">http://geda.seul.org/wiki/?do=export_xhtml</a> will generate the gEDA Project Wiki&rsquo;s start page as valid <acronym title="Extensible HyperText Markup Language">XHTML</acronym>. Simply use your browser to &ldquo;Save Page As...&rdquo;, and name the file {filename}.html. Note that the URLs in this file are NOT relative to this file, but are as they would be found on the gEDA Project Wiki.</div>
+<li class="level2"><div class="li"> <a href="http://geda.seul.org/wiki/?do=export_xhtml" class="urlextern" title="http://geda.seul.org/wiki/?do=export_xhtml"  rel="nofollow">http://geda.seul.org/wiki/?do=export_xhtml</a> will generate the gEDA Project Wiki’s start page as valid <acronym title="Extensible HyperText Markup Language">XHTML</acronym>. Simply use your browser to “Save Page As&hellip;”, and name the file {filename}.html. Note that the URLs in this file are NOT relative to this file, but are as they would be found on the gEDA Project Wiki.</div>
 </li>
-<li class="level2"><div class="li"> <a href="http://geda.seul.org/wiki/?do=export_xhtmlbody" class="urlextern" title="http://geda.seul.org/wiki/?do=export_xhtmlbody"  rel="nofollow">http://geda.seul.org/wiki/?do=export_xhtmlbody</a> will generate the gEDA Project Wiki&rsquo;s start page as valid rendered <acronym title="Extensible HyperText Markup Language">XHTML</acronym>. Simply use your browser to &ldquo;Save Page As...&rdquo;, and name the file {filename}.html. Note that the URLs in this file are NOT relative to this file, but are as they would be found on the gEDA Project Wiki.</div>
+<li class="level2"><div class="li"> <a href="http://geda.seul.org/wiki/?do=export_xhtmlbody" class="urlextern" title="http://geda.seul.org/wiki/?do=export_xhtmlbody"  rel="nofollow">http://geda.seul.org/wiki/?do=export_xhtmlbody</a> will generate the gEDA Project Wiki’s start page as valid rendered <acronym title="Extensible HyperText Markup Language">XHTML</acronym>. Simply use your browser to “Save Page As&hellip;”, and name the file {filename}.html. Note that the URLs in this file are NOT relative to this file, but are as they would be found on the gEDA Project Wiki.</div>
 </li>
-<li class="level2"><div class="li"> The following sequence of commands will retreive a gEDA Project Wiki page (for a list of the gEDA Project Wiki&rsquo;s pages, use the Index button at the bottom of the page) from the &ldquo;geda&rdquo; namespace (when new wiki-pages are created, we <em class="u">explicitly</em> create them in the &ldquo;geda&rdquo; namespace) and convert that page into a <acronym title="Portable Document Format">PDF</acronym> document:<br/>
+<li class="level2"><div class="li"> The following sequence of commands will retreive a gEDA Project Wiki page (for a list of the gEDA Project Wiki’s pages, use the Index button at the bottom of the page) from the “geda” namespace (when new wiki-pages are created, we <em class="u">explicitly</em> create them in the “geda” namespace) and convert that page into a <acronym title="Portable Document Format">PDF</acronym> document:<br/>
  <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">% wget --convert-links -O {page-name}.wget &quot;http://geda.seul.org/wiki/geda:{page-name}?do=export_html&quot;
-% sed -e 's/\&amp;amp;/\&amp;/g' {page-name}.wget &gt; {page-name}.sed
+% sed -e &#039;s/\&amp;amp;/\&amp;/g&#039; {page-name}.wget &gt; {page-name}.sed
 % iconv -f utf-8 -t iso-8859-1 {page-name}.sed &gt; {page-name}.iconv
 % htmldoc {page-name}.iconv -t pdf14 --webpage --no-title --linkstyle underline --size letter --left 1.00in \\
   --right 0.50in --top 0.50in --bottom 0.50in --header .t. --footer . --nup 1 --tocheader .t. --tocfooter ..i \\
@@ -99,7 +104,7 @@ The following are meant to stimulate discussion on document style:
   --links --no-embedfonts --pagemode document --pagelayout single --firstpage p1 --pageeffect none \\
   --pageduration 10 --effectduration 1.0 --no-encryption --permissions all --owner-password &quot;&quot;
   --user-password &quot;&quot; --browserwidth 680 -f {page-name}.pdf</font></pre> <br/>
- where <strong><code>{page-name}</code></strong> is the wiki&rsquo;s page name as seen in the upper-left corner of the wiki.</div>
+ where <strong><code>{page-name}</code></strong> is the wiki’s page name as seen in the upper-left corner of the wiki.</div>
 </li>
 </ul>
 </li>
@@ -109,11 +114,11 @@ The following are meant to stimulate discussion on document style:
  For example, you would replace {page-name} above with the following for the related wiki-page:
 </p>
 <ul>
-<li class="level1"><div class="li"> start &ndash; The wiki&rsquo;s main page, at <a href="http://geda.seul.org/wiki/" class="urlextern" title="http://geda.seul.org/wiki/"  rel="nofollow">http://geda.seul.org/wiki/</a>.</div>
+<li class="level1"><div class="li"> start &ndash; The wiki’s main page, at <a href="http://geda.seul.org/wiki/" class="urlextern" title="http://geda.seul.org/wiki/"  rel="nofollow">http://geda.seul.org/wiki/</a>.</div>
 </li>
 <li class="level1"><div class="li"> geda:style_guide &ndash; This wiki-page, at <a href="http://geda.seul.org/wiki/geda:style_guide" class="urlextern" title="http://geda.seul.org/wiki/geda:style_guide"  rel="nofollow">http://geda.seul.org/wiki/geda:style_guide</a>.</div>
 </li>
-<li class="level1"><div class="li"> geda:faq &ndash; The wiki&rsquo;s <acronym title="Frequently Asked Questions">FAQ</acronym> page, at <a href="http://geda.seul.org/wiki/geda:faq" class="urlextern" title="http://geda.seul.org/wiki/geda:faq"  rel="nofollow">http://geda.seul.org/wiki/geda:faq</a></div>
+<li class="level1"><div class="li"> geda:faq &ndash; The wiki’s <acronym title="Frequently Asked Questions">FAQ</acronym> page, at <a href="http://geda.seul.org/wiki/geda:faq" class="urlextern" title="http://geda.seul.org/wiki/geda:faq"  rel="nofollow">http://geda.seul.org/wiki/geda:faq</a></div>
 </li>
 </ul>
 
@@ -127,7 +132,7 @@ An example of the current (as of 08 May 2006) version of the Wiki, <a href="http
 </p>
 
 </div>
-<!-- SECTION [2173-5272] -->
+<!-- SECTION "For both existing and new documents" [2173-5272] -->
 <h2><a name="for_new_documents" id="for_new_documents">For new documents:</a></h2>
 <div class="level2">
 
@@ -135,16 +140,16 @@ An example of the current (as of 08 May 2006) version of the Wiki, <a href="http
 The following are meant to stimulate discussion on document style:
 </p>
 <ol>
-<li class="level1"><div class="li"> You must &ldquo;own&rdquo; all content in the document. If you do not &ldquo;own&rdquo; the content, you must get explicit permission from the &ldquo;owner&rdquo; to copy the content to the gEDA Project Wiki (see below). Documents on the gEDA Project Wiki should be stand-alone, in the event the source document web-site disappears.</div>
+<li class="level1"><div class="li"> You must “own” all content in the document. If you do not “own” the content, you must get explicit permission from the “owner” to copy the content to the gEDA Project Wiki (see below). Documents on the gEDA Project Wiki should be stand-alone, in the event the source document web-site disappears.</div>
 </li>
 <li class="level1"><div class="li"> <strong>All</strong> document contents are to be hosted on the gEDA Project Wiki. Images and other media files are to be uploaded to the wiki, and linked to. Do NOT link to external sites unless absolutely necessary.</div>
 </li>
-<li class="level1"><div class="li"> All documents are to be maintained in the &ldquo;geda&rdquo; <a href="http://wiki.splitbrain.org/wiki:namespaces" class="urlextern" title="http://wiki.splitbrain.org/wiki:namespaces"  rel="nofollow">namespace</a>. If your document would take advantage of a separate namespace, ask Ales if &ldquo;geda:sub-namespace&rdquo; is acceptable. This would be appropriate for very large documents with multiple chapters and lots of images. Such a namespace structure would allow the document to be &ldquo;broken&rdquo; into chapters for easier navigation by the user (see <a href="http://wiki.splitbrain.org/wiki:index" class="urlextern" title="http://wiki.splitbrain.org/wiki:index"  rel="nofollow">Index</a> for more details).</div>
+<li class="level1"><div class="li"> All documents are to be maintained in the “geda” <a href="http://wiki.splitbrain.org/wiki:namespaces" class="urlextern" title="http://wiki.splitbrain.org/wiki:namespaces"  rel="nofollow">namespace</a>. If your document would take advantage of a separate namespace, ask Ales if “geda:sub-namespace” is acceptable. This would be appropriate for very large documents with multiple chapters and lots of images. Such a namespace structure would allow the document to be “broken” into chapters for easier navigation by the user (see <a href="http://wiki.splitbrain.org/wiki:index" class="urlextern" title="http://wiki.splitbrain.org/wiki:index"  rel="nofollow">Index</a> for more details).</div>
 </li>
 </ol>
 
 </div>
-<!-- SECTION [5273-6383] -->
+<!-- SECTION "For new documents:" [5273-6383] -->
 <h2><a name="for_existing_documents" id="for_existing_documents">For existing documents:</a></h2>
 <div class="level2">
 
@@ -157,6 +162,6 @@ The following are meant to stimulate discussion on document style:
 </ol>
 
 </div>
-<!-- SECTION [6384-] --></div>
+<!-- SECTION "For existing documents:" [6384-] --></div>
 </body>
 </html>

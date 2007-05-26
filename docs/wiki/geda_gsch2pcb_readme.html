@@ -5,20 +5,25 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:gsch2pcb_readme</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:gsch2pcb_readme?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:gsch2pcb_readme?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:gsch2pcb_readme?do=export_raw" />
-  <meta name="date" content="2006-04-20T03:23:59-0400" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:24-0400" />
+<meta name="keywords" content="geda,gsch2pcb_readme" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:gsch2pcb_readme?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:gsch2pcb_readme" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:gsch2pcb_readme" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
+
+
 
 <h1><a name="gsch2pcb_gschem_to_pcb_readme" id="gsch2pcb_gschem_to_pcb_readme">gsch2pcb (gschem to PCB) README</a></h1>
 <div class="level1">
@@ -53,10 +58,10 @@ Typical usage
         menu entry is selected) empty (ie &quot;&quot;) so that gsch2pcb
         will not delete your element when you want it to be in the layout
         even though it is not in the schematic.  You can later edit the
-        layout-name to be some refdes value, but I'm not sure it makes sense
+        layout-name to be some refdes value, but I&#039;m not sure it makes sense
         to name a PCB element that is not referenced in the schematic.
 
-   Note: since once a layout element is named PCB won't let you reset it
+   Note: since once a layout element is named PCB won&#039;t let you reset it
    to an empty name, a sort of kludge is that setting the first character
    of the layout-name to a non-alphanumeric will protect the element from
    being deleted by gsch2pcb.
@@ -73,8 +78,8 @@ Typical usage
    use-files option).
    Make a project file if you wish.
 
-3) Run &quot;gsch2pcb foo.sch&quot; or &quot;gsch2pcb myproject&quot; if you've created the
-   myproject file.  If you didn't specify an output name, this will generate
+3) Run &quot;gsch2pcb foo.sch&quot; or &quot;gsch2pcb myproject&quot; if you&#039;ve created the
+   myproject file.  If you didn&#039;t specify an output name, this will generate
    a foo.pcb and a foo.net file.
    If you get errors about footprints not found, you need to create PCB
    elements for them and repeat this step until you get no errors.
@@ -91,14 +96,14 @@ Typical usage
      file foo.new.pcb.  If components were deleted, the elements for them
      will be removed from foo.pcb and the original foo.pcb will be renamed
      to a foo.pcb.bak sequence.
-   * If elements can't be found for new schematic footprints, then the
+   * If elements can&#039;t be found for new schematic footprints, then the
      unfound elements will be indicated with PKG_ lines in foo.new.pcb
      unless you run &quot;gsch2pcb --remove-unfound foo.sch&quot; which will omit
      the PKG_ lines so you can go ahead and load foo.new.pcb into PCB.
    * Note that If you have added elements to the .pcb layout which
      will not exist on the schematics (mounting holes, etc), make sure
       there is no &quot;name on PCB&quot; (the gschem refdes) for them or else gsch2pcb
-     will delete them when they don't match a schematic refdes and footprint.
+     will delete them when they don&#039;t match a schematic refdes and footprint.
      You could use the --preserve option to prevent deleting any elements at
      all, but this is really not the best way to use gsch2pcb.
 
@@ -122,8 +127,8 @@ Caveats
   on the PCB file schematics or else gsch2pcb will want to delete the
   m4 elements.
 
-* footprint information is saved into PCB element's Description fields,
-  so it's probably not a good idea to change element Description values
+* footprint information is saved into PCB element&#039;s Description fields,
+  so it&#039;s probably not a good idea to change element Description values
   in your layout while using gsch2pcb unless it is a protected element
   that has an empty layout-name.
 

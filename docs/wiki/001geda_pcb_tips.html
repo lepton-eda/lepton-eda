@@ -5,17 +5,20 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:pcb_tips.fr</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:pcb_tips.fr?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:pcb_tips.fr?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:pcb_tips.fr?do=export_raw" />
-  <meta name="date" content="2006-12-17T08:10:32-0500" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:26-0400" />
+<meta name="keywords" content="geda,pcb_tips.fr" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:pcb_tips.fr?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:pcb_tips.fr" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:pcb_tips.fr" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
@@ -26,16 +29,16 @@
 <ul class="toc">
 <li class="level1"><div class="li"><span class="li"><a href="#outils_pcb" class="toc">Outils PCB</a></span></div>
 <ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#ou_puis-je_lire_les_bases_sur_l_utilisation_de_pcb" class="toc">Où puis-je lire les bases sur l'utilisation de pcb?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#j_ai_trouve_un_bogue_que_puis-je_y_faire" class="toc">J'ai trouvé un bogue·! Que puis-je y faire·?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#ou_puis-je_lire_les_bases_sur_l_utilisation_de_pcb" class="toc">Où puis-je lire les bases sur l&#039;utilisation de pcb?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#j_ai_trouve_un_bogue_que_puis-je_y_faire" class="toc">J&#039;ai trouvé un bogue·! Que puis-je y faire·?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#comment_configurer_les_regles_du_fabricant_a_utiliser_i.e._diametres_de_percage_specification_des_largeurs_espacements_des_pistes" class="toc">Comment configurer les règles du fabricant à utiliser (i.e. diamètres de perçage, spécification des largeurs/espacements des pistes)?</a></span></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><span class="li"><a href="#a_propos_des_empreintes" class="toc">À propos des empreintes</a></span></div>
 <ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#comment_fonctionne_le_systeme_d_empreintes_de_pcb" class="toc">Comment fonctionne le système d'empreintes de PCB?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#comment_fonctionne_le_systeme_d_empreintes_de_pcb" class="toc">Comment fonctionne le système d&#039;empreintes de PCB?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#ou_puis-je_obtenir_des_empreintes_pre-dessinees_pour_pcb" class="toc">Où puis-je obtenir des empreintes pré-dessinées pour PCB?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#je_veux_utiliser_pcb_pour_faire_le_placement._comment_connaitre_la_valeur_a_utiliser_pour_l_attribut_d_empreinte" class="toc">Je veux utiliser PCB pour faire le placement. Comment connaitre la valeur à utiliser pour l'attribut d'empreinte?</a></span></div>
+<li class="level2"><div class="li"><span class="li"><a href="#je_veux_utiliser_pcb_pour_faire_le_placement._comment_connaitre_la_valeur_a_utiliser_pour_l_attribut_d_empreinte" class="toc">Je veux utiliser PCB pour faire le placement. Comment connaitre la valeur à utiliser pour l&#039;attribut d&#039;empreinte?</a></span></div>
 <ul class="toc">
 <li class="level3"><div class="li"><span class="li"><a href="#newlib" class="toc">Newlib</a></span></div></li>
 <li class="level3"><div class="li"><span class="li"><a href="#bibliotheque_m4" class="toc">Bibliothèque M4</a></span></div></li>
@@ -43,18 +46,18 @@
 </li>
 <li class="level2"><div class="li"><span class="li"><a href="#quelle_est_la_maniere_recommandee_pour_traiter_les_differentes_empreintes_pour_le_meme_type_de_composant" class="toc">Quelle est la manière recommandée pour traiter les différentes empreintes pour le même type de composant?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#comment_je_dessine_une_nouvelle_une_empreinte" class="toc">Comment je dessine une nouvelle une empreinte?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#comment_j_edite_change_une_empreinte_existante" class="toc">Comment j'édite/change une empreinte existante?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#comment_j_ajoute_une_bibliotheque_d_empreintes_a_pcb" class="toc">Comment j'ajoute une bibliothèque d'empreintes à PCB?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#comment_j_edite_change_une_empreinte_existante" class="toc">Comment j&#039;édite/change une empreinte existante?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#comment_j_ajoute_une_bibliotheque_d_empreintes_a_pcb" class="toc">Comment j&#039;ajoute une bibliothèque d&#039;empreintes à PCB?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#pcb_ne_trouve_par_mes_empreintes._pourquoi" class="toc">PCB ne trouve par mes empreintes. Pourquoi?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#maintenant_que_j_ai_toutes_ces_empreintes_ou_dois-je_les_placer" class="toc">Maintenant que j'ai toutes ces empreintes, où dois-je les placer?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#maintenant_que_j_ai_toutes_ces_empreintes_ou_dois-je_les_placer" class="toc">Maintenant que j&#039;ai toutes ces empreintes, où dois-je les placer?</a></span></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><span class="li"><a href="#placement_de_composants" class="toc">Placement de composants</a></span></div>
 <ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#comment_je_pivote_une_selection_i.e._pour_plus_d_un_element" class="toc">Comment je pivote une sélection (i.e. pour plus d'un élément)?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#comment_je_change_la_taille_de_l_objet_graphique_comme_du_texte_des_lignes_de_masque_texte_etc" class="toc">Comment je change la taille de l'objet graphique (comme du texte, des lignes de masque texte, etc)?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#comment_je_pivote_une_selection_i.e._pour_plus_d_un_element" class="toc">Comment je pivote une sélection (i.e. pour plus d&#039;un élément)?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#comment_je_change_la_taille_de_l_objet_graphique_comme_du_texte_des_lignes_de_masque_texte_etc" class="toc">Comment je change la taille de l&#039;objet graphique (comme du texte, des lignes de masque texte, etc)?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#comment_placer_les_composants_sur_les_deux_faces_de_pcb" class="toc">Comment placer les composants sur les deux faces de PCB?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#comment_je_place_l_origine_dans_pcb" class="toc">Comment je place l'origine dans pcb?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#comment_je_place_l_origine_dans_pcb" class="toc">Comment je place l&#039;origine dans pcb?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#comment_je_mesure_les_distances_et_les_dimensions_des_composants" class="toc">Comment je mesure les distances et les dimensions des composants?</a></span></div></li>
 </ul>
 </li>
@@ -62,14 +65,14 @@
 <ul class="toc">
 <li class="level2"><div class="li"><span class="li"><a href="#comment_router_une_connexion_depuis_le_cote_soudure_vers_le_cote_composant_et_inversement" class="toc">Comment router une connexion depuis le côté soudure vers le côté composant et inversement?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#comment_je_change_le_style_de_routage" class="toc">Comment je change le style de routage?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#j_ai_merde_comment_je_reviens_en_arriere" class="toc">J'ai merdé! Comment je reviens en arrière?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#comment_je_deplace_un_jeu_de_piste_d_une_couche_a_l_autre" class="toc">Comment je déplace un jeu de piste d'une couche à l'autre?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#comment_je_change_les_soldermask_clearance_autour_d_un_trou_via" class="toc">Comment je change les soldermask clearance autour d'un trou/via?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#j_ai_merde_comment_je_reviens_en_arriere" class="toc">J&#039;ai merdé! Comment je reviens en arrière?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#comment_je_deplace_un_jeu_de_piste_d_une_couche_a_l_autre" class="toc">Comment je déplace un jeu de piste d&#039;une couche à l&#039;autre?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#comment_je_change_les_soldermask_clearance_autour_d_un_trou_via" class="toc">Comment je change les soldermask clearance autour d&#039;un trou/via?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#comment_changer_la_taille_des_pistes" class="toc">Comment changer la taille des pistes?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#comment_je_pilote_un_via_pour_connecter_une_piste_a_un_plan_de_masse_sur_une_couche_differente" class="toc">Comment je pilote un via pour connecter une piste à un plan de masse sur une couche différente?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#je_veux_dessiner_une_piste_entre_deux_segments_sur_le_meme_net_mais_pcb_ne_me_laisse_pas_faire_pourquoi" class="toc">Je veux dessiner une piste entre deux segments sur le même net mais PCB ne me laisse pas faire! Pourquoi?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#pcb_semble_manger_mes_noms_de_composants_et_se_plaint_qu_il_ne_peut_pas_trouver_des_nets_adaptes_aux_broches_de_quoi_cela_vient" class="toc">PCB semble manger mes noms de composants et se plaint qu'il ne peut pas trouver des nets adaptés aux broches! De quoi cela vient?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#comment_je_peux_configurer_la_couleur_et_l_epaisseur_des_rats_nests" class="toc">Comment je peux configurer la couleur et l'épaisseur des rats nests?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#pcb_semble_manger_mes_noms_de_composants_et_se_plaint_qu_il_ne_peut_pas_trouver_des_nets_adaptes_aux_broches_de_quoi_cela_vient" class="toc">PCB semble manger mes noms de composants et se plaint qu&#039;il ne peut pas trouver des nets adaptés aux broches! De quoi cela vient?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#comment_je_peux_configurer_la_couleur_et_l_epaisseur_des_rats_nests" class="toc">Comment je peux configurer la couleur et l&#039;épaisseur des rats nests?</a></span></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><span class="li"><a href="#au_dela_des_pistes_et_des_empreintes" class="toc">Au delà des pistes et des empreintes</a></span></div>
@@ -79,7 +82,7 @@
 <li class="level2"><div class="li"><span class="li"><a href="#comment_je_remplis_les_zones_avec_cuivre" class="toc">Comment je remplis les zones avec cuivre?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#les_polygones_mettent_mes_pistes_a_la_masse_que_puis-je_y_faire" class="toc">Les polygones mettent mes pistes à la masse! Que puis-je y faire?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#comment_je_change_le_polygon_clearance" class="toc">Comment je change le polygon clearance?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#comment_je_cache_les_polygones_lorsque_j_edite_le_placement" class="toc">Comment je cache les polygones lorsque j'édite le placement?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#comment_je_cache_les_polygones_lorsque_j_edite_le_placement" class="toc">Comment je cache les polygones lorsque j&#039;édite le placement?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#comment_editer_les_polygones" class="toc">Comment éditer les polygones?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#comment_je_place_des_vias_qui_connectent_un_polygone_pour_une_dissipation_thermique_complete_ou_pour_une_integrite_de_protection_complete" class="toc">Comment je place des vias qui connectent un polygone pour une dissipation thermique complète ou pour une intégrité de protection complète?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#les_polygones_peuvent-ils_etre_un-masques_un_polygone_peut-il_etre_de_cuivre_sans_masque_de_soudure" class="toc">Les polygones peuvent-ils être un-masqués? (Un polygone peut-il être de cuivre sans masque de soudure?)</a></span></div></li>
@@ -87,60 +90,62 @@
 <li class="level2"><div class="li"><span class="li"><a href="#pourquoi_est-il_possible_de_realiser_des_ponts_thermiques_pour_les_broches_mais_pas_pour_une_pastille" class="toc">Pourquoi est-il possible de réaliser des ponts thermiques pour les broches mais pas pour une pastille?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#pcb_peut-il_etre_utilise_pour_realiser_des_cartes_a_simple_couche" class="toc">PCB peut-il être utilisé pour réaliser des cartes à simple couche?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#quelles_ressources_existent_pour_traiter_les_fichiers_pcb_en_utilisant_les_scripts" class="toc">Quelles ressources existent pour traiter les fichiers PCB en utilisant les scripts?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#comment_j_importe_des_graphiques_vectoriels_externe" class="toc">Comment j'importe des graphiques vectoriels externe?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#comment_j_attache_un_nom_a_mon_circuit" class="toc">Comment j'attache un nom à mon circuit?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#comment_j_importe_des_graphiques_vectoriels_externe" class="toc">Comment j&#039;importe des graphiques vectoriels externe?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#comment_j_attache_un_nom_a_mon_circuit" class="toc">Comment j&#039;attache un nom à mon circuit?</a></span></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><span class="li"><a href="#autorouteur" class="toc">Autorouteur</a></span></div>
 <ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#comment_je_force_l_autorouteur_a_ne_placer_des_pistes_que_sur_une_couche_particuliere" class="toc">Comment je force l'autorouteur à ne placer des pistes que sur une couche particulière?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#commennt_forcer_l_autorouteur_a_router_seulement_dans_les_limites_des_contours_du_pcb" class="toc">Commennt forcer l'autorouteur à router seulement dans les limites des contours du pcb?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#comment_je_route_les_plans_d_alimentation_et_de_masse_avec_l_autorouteur" class="toc">Comment je route les plans d'alimentation et de masse avec l'autorouteur?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#le_circuit_produit_par_l_autorouteur_est_inefficace" class="toc">Le circuit produit par l'autorouteur est inefficace!</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#le_circuit_produit_par_l_autorouteur_est_moche" class="toc">Le circuit produit par l'autorouteur est moche!</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#comment_je_force_l_autorouteur_a_ne_placer_des_pistes_que_sur_une_couche_particuliere" class="toc">Comment je force l&#039;autorouteur à ne placer des pistes que sur une couche particulière?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#commennt_forcer_l_autorouteur_a_router_seulement_dans_les_limites_des_contours_du_pcb" class="toc">Commennt forcer l&#039;autorouteur à router seulement dans les limites des contours du pcb?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#comment_je_route_les_plans_d_alimentation_et_de_masse_avec_l_autorouteur" class="toc">Comment je route les plans d&#039;alimentation et de masse avec l&#039;autorouteur?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#le_circuit_produit_par_l_autorouteur_est_inefficace" class="toc">Le circuit produit par l&#039;autorouteur est inefficace!</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#le_circuit_produit_par_l_autorouteur_est_moche" class="toc">Le circuit produit par l&#039;autorouteur est moche!</a></span></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><span class="li"><a href="#generation_gerber_et_production_de_fichiers_i_o" class="toc">Génération Gerber et production de fichiers I/O</a></span></div>
 <ul class="toc">
 <li class="level2"><div class="li"><span class="li"><a href="#comment_je_realise_des_contours_de_carte_pour_proposer_mes_gerbers_vers_le_fabricant_de_carte" class="toc">Comment je réalise des contours de carte pour proposer mes gerbers vers le fabricant de carte?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#j_ai_fini_mon_placement._comment_je_le_controle" class="toc">J'ai fini mon placement. Comment je le contrôle?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#j_ai_fini_mon_placement._comment_je_le_controle" class="toc">J&#039;ai fini mon placement. Comment je le contrôle?</a></span></div></li>
 </ul>
 </li>
-<li class="level1"><div class="li"><span class="li"><a href="#vous_n_avez_pas_repondu_a_mes_questions._ou_puis-je_trouver_d_autres_informations_sur_pcb" class="toc">Vous n'avez pas répondu à mes questions. Où puis-je trouver d'autres informations sur PCB?</a></span></div></li></ul>
+<li class="level1"><div class="li"><span class="li"><a href="#vous_n_avez_pas_repondu_a_mes_questions._ou_puis-je_trouver_d_autres_informations_sur_pcb" class="toc">Vous n&#039;avez pas répondu à mes questions. Où puis-je trouver d&#039;autres informations sur PCB?</a></span></div></li></ul>
 </div>
 </div>
+
+
 
 <h1><a name="outils_pcb" id="outils_pcb">Outils PCB</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [1-26] -->
-<h2><a name="ou_puis-je_lire_les_bases_sur_l_utilisation_de_pcb" id="ou_puis-je_lire_les_bases_sur_l_utilisation_de_pcb">Où puis-je lire les bases sur l'utilisation de pcb?</a></h2>
+<!-- SECTION "Outils PCB" [1-26] -->
+<h2><a name="ou_puis-je_lire_les_bases_sur_l_utilisation_de_pcb" id="ou_puis-je_lire_les_bases_sur_l_utilisation_de_pcb">Où puis-je lire les bases sur l&#039;utilisation de pcb?</a></h2>
 <div class="level2">
 
 <p>
-Le <a href="http://pcb.sourceforge.net/manual.html" class="urlextern" title="http://pcb.sourceforge.net/manual.html"  rel="nofollow">manuel de pcb</a> contient une description concise de l&rsquo;interface utilisateur dans la section «·Getting Started·» (<a href="http://pcb.sourceforge.net/pcb-20060822/pcb.html#Getting%20Started" class="urlextern" title="http://pcb.sourceforge.net/pcb-20060822/pcb.html#Getting%20Started"  rel="nofollow">version 20060822</a>)
+Le <a href="http://pcb.sourceforge.net/manual.html" class="urlextern" title="http://pcb.sourceforge.net/manual.html"  rel="nofollow">manuel de pcb</a> contient une description concise de l’interface utilisateur dans la section «·Getting Started·» (<a href="http://pcb.sourceforge.net/pcb-20060822/pcb.html#Getting%20Started" class="urlextern" title="http://pcb.sourceforge.net/pcb-20060822/pcb.html#Getting%20Started"  rel="nofollow">version 20060822</a>)
 </p>
 
 </div>
-<!-- SECTION [27-342] -->
-<h2><a name="j_ai_trouve_un_bogue_que_puis-je_y_faire" id="j_ai_trouve_un_bogue_que_puis-je_y_faire">J'ai trouvé un bogue·! Que puis-je y faire·?</a></h2>
+<!-- SECTION "Où puis-je lire les bases sur l'utilisation de pcb?" [27-342] -->
+<h2><a name="j_ai_trouve_un_bogue_que_puis-je_y_faire" id="j_ai_trouve_un_bogue_que_puis-je_y_faire">J&#039;ai trouvé un bogue·! Que puis-je y faire·?</a></h2>
 <div class="level2">
 <ol>
 <li class="level1"><div class="li"> Débutez en lisant <a href="http://pcb.sourceforge.net/bugs.html" class="urlextern" title="http://pcb.sourceforge.net/bugs.html"  rel="nofollow">the pcb bug reporting page</a>.</div>
 </li>
 <li class="level1"><div class="li"> Contrôlez, de quoi avons-nous besoin pour reproduire le bogue.</div>
 </li>
-<li class="level1"><div class="li"> Demandez sur la liste de <a href="http://www.geda.seul.org/mailinglist/index.html" class="urlextern" title="http://www.geda.seul.org/mailinglist/index.html"  rel="nofollow">diffusion de geda-user</a> s&rsquo;il est en cours de correction ou s&rsquo;il a été réglé avec la version la plus à jour de pcb. Notez que vous devez être inscrits sur la liste de diffusion de geda-user avant de pouvoir poster.</div>
+<li class="level1"><div class="li"> Demandez sur la liste de <a href="http://www.geda.seul.org/mailinglist/index.html" class="urlextern" title="http://www.geda.seul.org/mailinglist/index.html"  rel="nofollow">diffusion de geda-user</a> s’il est en cours de correction ou s’il a été réglé avec la version la plus à jour de pcb. Notez que vous devez être inscrits sur la liste de diffusion de geda-user avant de pouvoir poster.</div>
 </li>
-<li class="level1"><div class="li"> Vérifiez si le problème est déjà répertorié dans le <a href="http://sourceforge.net/tracker/?group_id=73743&atid=538811" class="urlextern" title="http://sourceforge.net/tracker/?group_id=73743&amp;atid=538811"  rel="nofollow">bug tracking system de pcb</a>. Si ce n&rsquo;est pas le cas; émettez un rapport de bogue. Assurez-vous de donner toutes les informations nécessaires pour reproduire le bogue et ajoutez la version de pcb qui contient le bogue.</div>
+<li class="level1"><div class="li"> Vérifiez si le problème est déjà répertorié dans le <a href="http://sourceforge.net/tracker/?group_id=73743&atid=538811" class="urlextern" title="http://sourceforge.net/tracker/?group_id=73743&amp;atid=538811"  rel="nofollow">bug tracking system de pcb</a>. Si ce n’est pas le cas; émettez un rapport de bogue. Assurez-vous de donner toutes les informations nécessaires pour reproduire le bogue et ajoutez la version de pcb qui contient le bogue.</div>
 </li>
 <li class="level1"><div class="li"> Finallement, avec tous les projets open source ouverts, vous pourriez muscler vos muscles de programmation et tenter de régler le bogue par vous même. Veuillez envoyer un correctif sur les changements que vous avez effectués sur le <a href="http://sourceforge.net/tracker/?group_id=73743&atid=538811" class="urlextern" title="http://sourceforge.net/tracker/?group_id=73743&amp;atid=538811"  rel="nofollow">BTS de pcb</a>. Le correctif sera accepté avec reconnaissance pour améliorer la prochaine version de pcb.</div>
 </li>
 </ol>
 
 </div>
-<!-- SECTION [343-1613] -->
+<!-- SECTION "J'ai trouvé un bogue·! Que puis-je y faire·?" [343-1613] -->
 <h2><a name="comment_configurer_les_regles_du_fabricant_a_utiliser_i.e._diametres_de_percage_specification_des_largeurs_espacements_des_pistes" id="comment_configurer_les_regles_du_fabricant_a_utiliser_i.e._diametres_de_percage_specification_des_largeurs_espacements_des_pistes">Comment configurer les règles du fabricant à utiliser (i.e. diamètres de perçage, spécification des largeurs/espacements des pistes)?</a></h2>
 <div class="level2">
 
@@ -149,83 +154,83 @@ Ce sujet est couvert dans la documentation disponible sur <a href="http://pcb.so
 </p>
 
 </div>
-<!-- SECTION [1614-1915] -->
+<!-- SECTION "Comment configurer les règles du fabricant à utiliser (i.e. diamètres de perçage, spécification des largeurs/espacements des pistes)?" [1614-1915] -->
 <h1><a name="a_propos_des_empreintes" id="a_propos_des_empreintes">À propos des empreintes</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [1916-1955] -->
-<h2><a name="comment_fonctionne_le_systeme_d_empreintes_de_pcb" id="comment_fonctionne_le_systeme_d_empreintes_de_pcb">Comment fonctionne le système d'empreintes de PCB?</a></h2>
+<!-- SECTION "À propos des empreintes" [1916-1955] -->
+<h2><a name="comment_fonctionne_le_systeme_d_empreintes_de_pcb" id="comment_fonctionne_le_systeme_d_empreintes_de_pcb">Comment fonctionne le système d&#039;empreintes de PCB?</a></h2>
 <div class="level2">
 
 <p>
 PCB supporte deux mécanismes de bibliothèque entièrement séparés:
 </p>
 <ol>
-<li class="level1"><div class="li"> Le premier est appelé «·oldlib·», «·pcblib·» ou «·bibliothèque M4·». Ce système est historique·; il dépend du langage macro M4 pour générer des empreintes à la volée. La bibliothèque M4 est assez grande et a quelques bogues. Néanmoins, elle est très maniable et est distribuée avec PCB. Un fonctionnalité puissante de la bibliothèque m4 est qu&rsquo;une famille complète d&rsquo;empreintes peut être définie rapidement avec une macro de base appropriée.</div>
+<li class="level1"><div class="li"> Le premier est appelé «·oldlib·», «·pcblib·» ou «·bibliothèque M4·». Ce système est historique·; il dépend du langage macro M4 pour générer des empreintes à la volée. La bibliothèque M4 est assez grande et a quelques bogues. Néanmoins, elle est très maniable et est distribuée avec PCB. Un fonctionnalité puissante de la bibliothèque m4 est qu’une famille complète d’empreintes peut être définie rapidement avec une macro de base appropriée.</div>
 </li>
-<li class="level1"><div class="li"> La seconde bibliothèque d&rsquo;empreintes pour PCB est appelée «·newlib·». Les empreintes de newlib sont définies en utilisant des fichiers de texte <acronym title="American Standard Code for Information Interchange">ASCII</acronym> qui appelent des primitives graphiques réalisant une empreinte complète. Les empreintes newlib peuvent aussi être créées graphiquement en utilisant PCB ou par toute autre méthode qui peut produire un fichier texte (éditeur de texte, script awk/perl/ruby, etc.).  </div>
+<li class="level1"><div class="li"> La seconde bibliothèque d’empreintes pour PCB est appelée «·newlib·». Les empreintes de newlib sont définies en utilisant des fichiers de texte <acronym title="American Standard Code for Information Interchange">ASCII</acronym> qui appelent des primitives graphiques réalisant une empreinte complète. Les empreintes newlib peuvent aussi être créées graphiquement en utilisant PCB ou par toute autre méthode qui peut produire un fichier texte (éditeur de texte, script awk/perl/ruby, etc.).  </div>
 </li>
 </ol>
 
 <p>
- C&rsquo;est pourquoi, pendant le placement, vous pouvez utiliser des empreintes qui sont distribuées avec PCB, vous pouvez trouver des empreintes par une recherche web ou vous pouvez vous créer la votre et la placer dans un répertoire dédié. Le <a href="http://pcb.sourceforge.net/manual.html" class="urlextern" title="http://pcb.sourceforge.net/manual.html"  rel="nofollow">manuel pcb</a> est complet et mise à jour pour le format de fichier élément. Un tutoriel assez incomplet mais utile est disponible  sur le web comme: <a href="http://www.brorson.com/gEDA/" class="urlextern" title="http://www.brorson.com/gEDA/"  rel="nofollow">http://www.brorson.com/gEDA/</a> (recherche des termes «·newlib·»).
+ C’est pourquoi, pendant le placement, vous pouvez utiliser des empreintes qui sont distribuées avec PCB, vous pouvez trouver des empreintes par une recherche web ou vous pouvez vous créer la votre et la placer dans un répertoire dédié. Le <a href="http://pcb.sourceforge.net/manual.html" class="urlextern" title="http://pcb.sourceforge.net/manual.html"  rel="nofollow">manuel pcb</a> est complet et mise à jour pour le format de fichier élément. Un tutoriel assez incomplet mais utile est disponible  sur le web comme: <a href="http://www.brorson.com/gEDA/" class="urlextern" title="http://www.brorson.com/gEDA/"  rel="nofollow">http://www.brorson.com/gEDA/</a> (recherche des termes «·newlib·»).
 </p>
 
 </div>
-<!-- SECTION [1956-3509] -->
+<!-- SECTION "Comment fonctionne le système d'empreintes de PCB?" [1956-3509] -->
 <h2><a name="ou_puis-je_obtenir_des_empreintes_pre-dessinees_pour_pcb" id="ou_puis-je_obtenir_des_empreintes_pre-dessinees_pour_pcb">Où puis-je obtenir des empreintes pré-dessinées pour PCB?</a></h2>
 <div class="level2">
 
 <p>
-Actuellement, le meilleur endroit pour avoir de empreintes (en plus de la distribution PCB) est le <a href="http://www.gedasymbols.org/" class="urlextern" title="http://www.gedasymbols.org"  rel="nofollow">site web des symboles gEDA</a>. Le <a href="http://www.luciani.org/geda/pcb/pcb-footprint-list.html" class="urlextern" title="http://www.luciani.org/geda/pcb/pcb-footprint-list.html"  rel="nofollow">site web de John Luciani</a> possède une grand nombre d&rsquo;empreintes et d&rsquo;outils. De même, Darrell Harmon fournit un chouette script de génération d&rsquo;empreintes <a href="http://www.dlharmon.com/geda/footgen.html" class="urlextern" title="http://www.dlharmon.com/geda/footgen.html"  rel="nofollow">sur son site web</a>. Votre contribution au projet est la bienvenue, ainsi que le partage des empreintes. Finallement, vous pouvez demander sur la liste geda-user car quelqu&rsquo;un pourrait avoir pitié et vous envoyer un symbole. Notez que vous devez souscrire à la liste de diffusion geda-user avant de pouvoir poster.
+Actuellement, le meilleur endroit pour avoir de empreintes (en plus de la distribution PCB) est le <a href="http://www.gedasymbols.org/" class="urlextern" title="http://www.gedasymbols.org"  rel="nofollow">site web des symboles gEDA</a>. Le <a href="http://www.luciani.org/geda/pcb/pcb-footprint-list.html" class="urlextern" title="http://www.luciani.org/geda/pcb/pcb-footprint-list.html"  rel="nofollow">site web de John Luciani</a> possède une grand nombre d’empreintes et d’outils. De même, Darrell Harmon fournit un chouette script de génération d’empreintes <a href="http://www.dlharmon.com/geda/footgen.html" class="urlextern" title="http://www.dlharmon.com/geda/footgen.html"  rel="nofollow">sur son site web</a>. Votre contribution au projet est la bienvenue, ainsi que le partage des empreintes. Finallement, vous pouvez demander sur la liste geda-user car quelqu’un pourrait avoir pitié et vous envoyer un symbole. Notez que vous devez souscrire à la liste de diffusion geda-user avant de pouvoir poster.
 </p>
 
 </div>
-<!-- SECTION [3510-4322] -->
-<h2><a name="je_veux_utiliser_pcb_pour_faire_le_placement._comment_connaitre_la_valeur_a_utiliser_pour_l_attribut_d_empreinte" id="je_veux_utiliser_pcb_pour_faire_le_placement._comment_connaitre_la_valeur_a_utiliser_pour_l_attribut_d_empreinte">Je veux utiliser PCB pour faire le placement. Comment connaitre la valeur à utiliser pour l'attribut d'empreinte?</a></h2>
+<!-- SECTION "Où puis-je obtenir des empreintes pré-dessinées pour PCB?" [3510-4322] -->
+<h2><a name="je_veux_utiliser_pcb_pour_faire_le_placement._comment_connaitre_la_valeur_a_utiliser_pour_l_attribut_d_empreinte" id="je_veux_utiliser_pcb_pour_faire_le_placement._comment_connaitre_la_valeur_a_utiliser_pour_l_attribut_d_empreinte">Je veux utiliser PCB pour faire le placement. Comment connaitre la valeur à utiliser pour l&#039;attribut d&#039;empreinte?</a></h2>
 <div class="level2">
 
 <p>
-Cette question est une des plus habituelle parmi les nouveaux utilisateurs de gEDA. De fait, aider les nouveaux à déterminer les noms d&rsquo;empreintes appropriés est au coeur d&rsquo;un débat en cours sur les <a href="http://geda.seul.org/wiki/geda:faq-gschem.fr#quel_est_l_objet_de_cette_polemique_entre_les_symboles_lourds_et_legers" class="wikilink1" title="geda:faq-gschem.fr">symboles légers vs. lourds</a>. Dans la distribution courante gEDA/gaf, les symboles sont légers, vous devez attacher l&rsquo;attribut footprint au niveau du schéma (i.e. en utilisant soit gschem, soit gattrib). Le nom des empreintes à utiliser dépend de si vous utilisez la bibliothèque newlib ou M4 (pcblib).
+Cette question est une des plus habituelle parmi les nouveaux utilisateurs de gEDA. De fait, aider les nouveaux à déterminer les noms d’empreintes appropriés est au coeur d’un débat en cours sur les <a href="http://geda.seul.org/wiki/geda:faq-gschem.fr#quel_est_l_objet_de_cette_polemique_entre_les_symboles_lourds_et_legers" class="wikilink1" title="geda:faq-gschem.fr">symboles légers vs. lourds</a>. Dans la distribution courante gEDA/gaf, les symboles sont légers, vous devez attacher l’attribut footprint au niveau du schéma (i.e. en utilisant soit gschem, soit gattrib). Le nom des empreintes à utiliser dépend de si vous utilisez la bibliothèque newlib ou M4 (pcblib).
 </p>
 
 </div>
-<!-- SECTION [4323-5057] -->
+<!-- SECTION "Je veux utiliser PCB pour faire le placement. Comment connaitre la valeur à utiliser pour l'attribut d'empreinte?" [4323-5057] -->
 <h3><a name="newlib" id="newlib">Newlib</a></h3>
 <div class="level3">
 
 <p>
-Newlib stocke une empreinte par fichier et les noms utilisés par newlib sont des noms de fichier des fichiers d&rsquo;empreinte.
+Newlib stocke une empreinte par fichier et les noms utilisés par newlib sont des noms de fichier des fichiers d’empreinte.
 </p>
 
 <p>
-Il y a plusieurs manières de trouver les noms d&rsquo;empreintes newlib à utiliser·:
+Il y a plusieurs manières de trouver les noms d’empreintes newlib à utiliser·:
 </p>
 <ul>
-<li class="level1"><div class="li"> Vous pouvez naviguer dans les empreintes disponibles enlançant pcb et en ouvrant la fenêtre de bibliothèque d&rsquo;empreintes (disponibles depuis la barre de menu par «·Window → library·»). Clickez sur le groupe de bibliothèques «·newlib·» et sélectionnez une sous-bibliothèque pour chercher ses symboles. Le nom de chaque empreinte apparaît dans la fenêtre «·Elements·» sur le côté droit du navigateur de bibliothèque. Utilisez le nom exactement tel qu&rsquo;il apparaît dans le navigateur pour l&rsquo;attribut d&rsquo;empreinte dans gschem ou gattrib.</div>
+<li class="level1"><div class="li"> Vous pouvez naviguer dans les empreintes disponibles enlançant pcb et en ouvrant la fenêtre de bibliothèque d’empreintes (disponibles depuis la barre de menu par «·Window → library·»). Clickez sur le groupe de bibliothèques «·newlib·» et sélectionnez une sous-bibliothèque pour chercher ses symboles. Le nom de chaque empreinte apparaît dans la fenêtre «·Elements·» sur le côté droit du navigateur de bibliothèque. Utilisez le nom exactement tel qu’il apparaît dans le navigateur pour l’attribut d’empreinte dans gschem ou gattrib.</div>
 </li>
-<li class="level1"><div class="li"> Les empreintes newlib distribuées avec PCB sont stockées dans les répertoires sous <strong><code>${PREFIX}/share/pcb/newlib</code></strong>. (<strong><code>${PREFIX}</code></strong> est le répertoire d&rsquo;installation spécifié lors de la configuration/compilation de PCB.) Le nom à coller avec l&rsquo;attribut «·footprint·» est le nom de fichier de l&rsquo;empreinte que vous souhaitez utiliser.<br/>
- Par exemple, sur ma machine, j&rsquo;ai installé gEDA avec le préfix <strong><code>/usr/local/geda/</code></strong>. Le boîtier 0805 (pour les résistances ou capas SMT) est dans un fichier avec un chemin absolu<br/>
+<li class="level1"><div class="li"> Les empreintes newlib distribuées avec PCB sont stockées dans les répertoires sous <strong><code>${PREFIX}/share/pcb/newlib</code></strong>. (<strong><code>${PREFIX}</code></strong> est le répertoire d’installation spécifié lors de la configuration/compilation de PCB.) Le nom à coller avec l’attribut «·footprint·» est le nom de fichier de l’empreinte que vous souhaitez utiliser.<br/>
+ Par exemple, sur ma machine, j’ai installé gEDA avec le préfix <strong><code>/usr/local/geda/</code></strong>. Le boîtier 0805 (pour les résistances ou capas SMT) est dans un fichier avec un chemin absolu<br/>
  <strong><code>/usr/local/geda/share/pcb/newlib/generic_SMD_packages/0805_reflow_solder</code></strong> <br/>
  Donc, pour utiliser cette empreinte avec un composant, je met son attribut «·footprint·» à <strong><code>0805_reflow_solder</code></strong> en utilisant gschem ou gattrib.<br/>
  Notez que si le symbole newlib que vous voulez utiliser est dans un répertoire non-standard, gsch2pcb aura besoin que vous lui spécifiez un chemin vers ce répertoire, siot dans votre fichier project.rc (si vous en utilisez un) ou en utilisant le drapeau <strong><code>–elements-dir</code></strong>  (depuis la ligne de commande).</div>
 </li>
-<li class="level1"><div class="li"> Finalement, comme chaque nouveau schéma vous imposera de dessiner au moins une ou deux nouvelles empreintes, il serait bien d&rsquo;avoir un répertoire d&rsquo;«·empreintes·» local. Comme précédement, le nom d&rsquo;empreinte à utiliser est le nom de fichier que vous assignez à chacune de vos nouvelles empreintes. Encore une fois, n&rsquo;oubliez pas d&rsquo;ajouter une ligne à votre fichier project.rc indiquant à gsch2pcb où trouver vos empreintes locales. Alternativement, vous pouvez lancer gsch2pcb avec le drapeau <strong><code>–elements-dir</code></strong> pour pointer vers votre répertoire d&rsquo;empreintes local.</div>
+<li class="level1"><div class="li"> Finalement, comme chaque nouveau schéma vous imposera de dessiner au moins une ou deux nouvelles empreintes, il serait bien d’avoir un répertoire d’«·empreintes·» local. Comme précédement, le nom d’empreinte à utiliser est le nom de fichier que vous assignez à chacune de vos nouvelles empreintes. Encore une fois, n’oubliez pas d’ajouter une ligne à votre fichier project.rc indiquant à gsch2pcb où trouver vos empreintes locales. Alternativement, vous pouvez lancer gsch2pcb avec le drapeau <strong><code>–elements-dir</code></strong> pour pointer vers votre répertoire d’empreintes local.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [5058-7532] -->
+<!-- SECTION "Newlib" [5058-7532] -->
 <h3><a name="bibliotheque_m4" id="bibliotheque_m4">Bibliothèque M4</a></h3>
 <div class="level3">
 
 <p>
-La bibliothèque M4 stocke les empreintes comme des macros M4·; Il y a habituellement plusieurs (beaucoup) d&rsquo;empreintes contenues dans chaque fichier d&rsquo;empreinte. Les différentes empreintes dans un simple fichier sont généralement des variations d&rsquo;un même motif (e.g. DIP-8, DIP-14, DIP-16, etc.). La manière la plus facile de trouver le nom d&rsquo;attribut correct est de naviguer dans la bibliothèque «·pcblib·» par la fenêtre de bibliothèque de PCB.  Les attributs d&rsquo;empreinte sont données entre crochets dans la description. Vous pouvez aussi voir la liste des empreintes de pcblib sur la <a href="http://www.gedasymbols.org/footprints/" class="urlextern" title="http://www.gedasymbols.org/footprints/"  rel="nofollow">page web des symboles gEDA</a>.
+La bibliothèque M4 stocke les empreintes comme des macros M4·; Il y a habituellement plusieurs (beaucoup) d’empreintes contenues dans chaque fichier d’empreinte. Les différentes empreintes dans un simple fichier sont généralement des variations d’un même motif (e.g. DIP-8, DIP-14, DIP-16, etc.). La manière la plus facile de trouver le nom d’attribut correct est de naviguer dans la bibliothèque «·pcblib·» par la fenêtre de bibliothèque de PCB.  Les attributs d’empreinte sont données entre crochets dans la description. Vous pouvez aussi voir la liste des empreintes de pcblib sur la <a href="http://www.gedasymbols.org/footprints/" class="urlextern" title="http://www.gedasymbols.org/footprints/"  rel="nofollow">page web des symboles gEDA</a>.
 </p>
 
 <p>
-Les bibliothèques m4 suivantes ont reçu plus d&rsquo;attention et d&rsquo;amélioration que les autres·:
+Les bibliothèques m4 suivantes ont reçu plus d’attention et d’amélioration que les autres·:
 </p>
 <ul>
 <li class="level1"><div class="li"> ~amp pour les connecteurs Amp</div>
@@ -247,15 +252,15 @@ Les bibliothèques m4 suivantes ont reçu plus d&rsquo;attention et d&rsquo;amé
 </ul>
 
 <p>
- Finalement, pour les bibliothèques newlib et M4, il est extrêmement important que vous vérifiez que les noms d&rsquo;empreintes utilisées épelent *exactement* celui de l&rsquo;empreinte que vous voulez placer dans PCB. C&rsquo;es la raison pour laquelle il est critique d&rsquo;inspecter l&rsquo;empreinte avant de l&rsquo;utiliser. Vous pouvez vérifier l&rsquo;empreinte que vous voulez utiliser en cliquant dessus dans la «·bibliothèque d&rsquo;empreinte·» puis le placer dans une zone vide de la zone de dessin de PCB. Inspectez manuellement l&rsquo;empreinte pour vous assurer que le nombre correct de broches/pastilles, que les dimensions sont correctes, etc.
+ Finalement, pour les bibliothèques newlib et M4, il est extrêmement important que vous vérifiez que les noms d’empreintes utilisées épelent *exactement* celui de l’empreinte que vous voulez placer dans PCB. C’es la raison pour laquelle il est critique d’inspecter l’empreinte avant de l’utiliser. Vous pouvez vérifier l’empreinte que vous voulez utiliser en cliquant dessus dans la «·bibliothèque d’empreinte·» puis le placer dans une zone vide de la zone de dessin de PCB. Inspectez manuellement l’empreinte pour vous assurer que le nombre correct de broches/pastilles, que les dimensions sont correctes, etc.
 </p>
 
 <p>
-Aussi, une fois que vous avez généré les fichiers Gerber, assurez-vous d&rsquo;avoir <span class="curid"><a href="http://geda.seul.org/wiki/geda:pcb_tips.fr#j_ai_fini_mon_placement._comment_je_le_controle" class="wikilink1" title="geda:pcb_tips.fr">inspecté toutes les empreintes instantiées dans vos Gerbers</a></span> en utilisant gerbv (ou un visualiseur Gerber équivalent) avant que vous n&rsquo;envoyiez votre circuit à la fabrication.
+Aussi, une fois que vous avez généré les fichiers Gerber, assurez-vous d’avoir <span class="curid"><a href="http://geda.seul.org/wiki/geda:pcb_tips.fr#j_ai_fini_mon_placement._comment_je_le_controle" class="wikilink1" title="geda:pcb_tips.fr">inspecté toutes les empreintes instantiées dans vos Gerbers</a></span> en utilisant gerbv (ou un visualiseur Gerber équivalent) avant que vous n’envoyiez votre circuit à la fabrication.
 </p>
 
 </div>
-<!-- SECTION [7533-9792] -->
+<!-- SECTION "Bibliothèque M4" [7533-9792] -->
 <h2><a name="quelle_est_la_maniere_recommandee_pour_traiter_les_differentes_empreintes_pour_le_meme_type_de_composant" id="quelle_est_la_maniere_recommandee_pour_traiter_les_differentes_empreintes_pour_le_meme_type_de_composant">Quelle est la manière recommandée pour traiter les différentes empreintes pour le même type de composant?</a></h2>
 <div class="level2">
 
@@ -264,40 +269,40 @@ Par exemple, un ampli op peut être DIP8 ou SO8. Une résistance peut être 0603
 </p>
 
 <p>
-D&rsquo;abord, l&rsquo;empreinte que vous devez utiliser est votre décision, pas celui de votre outil conception. C&rsquo;est à vous de choisir votre boîtier préféré puis attacher l&rsquo;attribut d&rsquo;empreinte correct dans le composant du schéma. Une fois que vous avez choisi le boîtier (et l&rsquo;empreinte), vous voudrez utiliser soit <span class="curid"><a href="http://geda.seul.org/wiki/geda:pcb_tips.fr#ou_puis-je_obtenir_des_empreintes_pre-dessinees_pour_pcb" class="wikilink1" title="geda:pcb_tips.fr">trouver une empreinte appropriée</a></span> ou en <span class="curid"><a href="http://geda.seul.org/wiki/geda:pcb_tips.fr#comment_je_dessine_une_nouvelle_une_empreinte" class="wikilink1" title="geda:pcb_tips.fr">dessiner une vous même</a></span> et la sauvegarder dans un répertoire local.
+D’abord, l’empreinte que vous devez utiliser est votre décision, pas celui de votre outil conception. C’est à vous de choisir votre boîtier préféré puis attacher l’attribut d’empreinte correct dans le composant du schéma. Une fois que vous avez choisi le boîtier (et l’empreinte), vous voudrez utiliser soit <span class="curid"><a href="http://geda.seul.org/wiki/geda:pcb_tips.fr#ou_puis-je_obtenir_des_empreintes_pre-dessinees_pour_pcb" class="wikilink1" title="geda:pcb_tips.fr">trouver une empreinte appropriée</a></span> ou en <span class="curid"><a href="http://geda.seul.org/wiki/geda:pcb_tips.fr#comment_je_dessine_une_nouvelle_une_empreinte" class="wikilink1" title="geda:pcb_tips.fr">dessiner une vous même</a></span> et la sauvegarder dans un répertoire local.
 </p>
 
 <p>
-Pour la gestion des choix d&rsquo;empreintes (et donc le grand nombre d&rsquo;attributs de composants que vous êtes susceptibles d&rsquo;avoir): Utilisez <a href="http://geda.seul.org/wiki/geda:faq-attribs.fr#au_secours_mon_schema_a_des_centaines_de_composants_et_c_est_penible_d_utiliser_gschem_pour_attacher_tous_mes_attributs" class="wikilink1" title="geda:faq-attribs.fr">gattrib</a>. C&rsquo;est fait pour.
+Pour la gestion des choix d’empreintes (et donc le grand nombre d’attributs de composants que vous êtes susceptibles d’avoir): Utilisez <a href="http://geda.seul.org/wiki/geda:faq-attribs.fr#au_secours_mon_schema_a_des_centaines_de_composants_et_c_est_penible_d_utiliser_gschem_pour_attacher_tous_mes_attributs" class="wikilink1" title="geda:faq-attribs.fr">gattrib</a>. C’est fait pour.
 </p>
 
 </div>
-<!-- SECTION [9793-10988] -->
+<!-- SECTION "Quelle est la manière recommandée pour traiter les différentes empreintes pour le même type de composant?" [9793-10988] -->
 <h2><a name="comment_je_dessine_une_nouvelle_une_empreinte" id="comment_je_dessine_une_nouvelle_une_empreinte">Comment je dessine une nouvelle une empreinte?</a></h2>
 <div class="level2">
 
 <p>
-Tout le monde le fait à sa manière. Quelques personnes dessinent les empreintes en utilisant seulement PCB. Quelques personnes dessinent d&rsquo;abord une empreinte préliminaire dans PCB et puis la terminent ensuite à la main et l&rsquo;éditant (e.g. en utilisant emacs). Quelques personnes écrivent des scripts <acronym title="Practical Extraction and Report Language">Perl</acronym> pour générer automatiquement des empreintes.
+Tout le monde le fait à sa manière. Quelques personnes dessinent les empreintes en utilisant seulement PCB. Quelques personnes dessinent d’abord une empreinte préliminaire dans PCB et puis la terminent ensuite à la main et l’éditant (e.g. en utilisant emacs). Quelques personnes écrivent des scripts <acronym title="Practical Extraction and Report Language">Perl</acronym> pour générer automatiquement des empreintes.
 </p>
 
 <p>
-Karel Kulhavy préfère dessiner l&rsquo;empreinte entièrement en utilisant PCB, qui peut être la manière la moins dangereuse à utiliser pour les nouveaux. Il maintient un <a href="http://ronja.twibright.com/guidelines/footprints.php" class="urlextern" title="http://ronja.twibright.com/guidelines/footprints.php"  rel="nofollow">HOWTO de procédure de création d'empreintes</a> sur son site web Ronja.
+Karel Kulhavy préfère dessiner l’empreinte entièrement en utilisant PCB, qui peut être la manière la moins dangereuse à utiliser pour les nouveaux. Il maintient un <a href="http://ronja.twibright.com/guidelines/footprints.php" class="urlextern" title="http://ronja.twibright.com/guidelines/footprints.php"  rel="nofollow">HOWTO de procédure de création d&#039;empreintes</a> sur son site web Ronja.
 </p>
 
 <p>
-Si vous voulez éditer le fichier empreinte à la main, le <a href="http://www.brorson.com/gEDA/land_patterns_20050129.pdf" class="urlextern" title="http://www.brorson.com/gEDA/land_patterns_20050129.pdf"  rel="nofollow">manuel sur la création d'empreintes</a> par Stephen Meier et Stuart Brorson fournissent les détails de la syntaxe. Le document donne aussi des conseils sur la manière de faire des conceptions élégantes qui s&rsquo;appliquent aussi à l&rsquo;interface graphique de la création d&rsquo;empreintes.
+Si vous voulez éditer le fichier empreinte à la main, le <a href="http://www.brorson.com/gEDA/land_patterns_20050129.pdf" class="urlextern" title="http://www.brorson.com/gEDA/land_patterns_20050129.pdf"  rel="nofollow">manuel sur la création d&#039;empreintes</a> par Stephen Meier et Stuart Brorson fournissent les détails de la syntaxe. Le document donne aussi des conseils sur la manière de faire des conceptions élégantes qui s’appliquent aussi à l’interface graphique de la création d’empreintes.
 </p>
 
 </div>
-<!-- SECTION [10989-12104] -->
-<h2><a name="comment_j_edite_change_une_empreinte_existante" id="comment_j_edite_change_une_empreinte_existante">Comment j'édite/change une empreinte existante?</a></h2>
+<!-- SECTION "Comment je dessine une nouvelle une empreinte?" [10989-12104] -->
+<h2><a name="comment_j_edite_change_une_empreinte_existante" id="comment_j_edite_change_une_empreinte_existante">Comment j&#039;édite/change une empreinte existante?</a></h2>
 <div class="level2">
 
 <p>
 Vous pouvez convertir une empreinte de circuit, éditer les éléments et les reconvertir en empreinte. DAns la liste suivante, les éléments en polices mono space sont des actions depuis le menu buffer.
 </p>
 <ol>
-<li class="level1"><div class="li"> Selectionner l&rsquo;élément</div>
+<li class="level1"><div class="li"> Selectionner l’élément</div>
 </li>
 <li class="level1"><div class="li"> Copier la sélection vers le tampon</div>
 </li>
@@ -315,55 +320,55 @@ Vous pouvez convertir une empreinte de circuit, éditer les éléments et les re
 </li>
 <li class="level1"><div class="li"> <code>Copiez le tampon dans le placement</code></div>
 </li>
-<li class="level1"><div class="li"> Placez la souris sur les pastilles qui ont été arrondis pendant l&rsquo;étape 4 et pressez q. Cela arrondit les bords des pastilles.</div>
+<li class="level1"><div class="li"> Placez la souris sur les pastilles qui ont été arrondis pendant l’étape 4 et pressez q. Cela arrondit les bords des pastilles.</div>
 </li>
 <li class="level1"><div class="li"> Allez sur chaque pastille, pressez n et donnez un nom à la pastille</div>
 </li>
 <li class="level1"><div class="li"> Sélectionnez tout puis <code>copy selection to buffer</code></div>
 </li>
-<li class="level1"><div class="li"> <code>Save buffer as elements to file</code>. Le fichier empreinte sera créé à l&rsquo;endroit d&rsquo;où pcb a été appelé.</div>
+<li class="level1"><div class="li"> <code>Save buffer as elements to file</code>. Le fichier empreinte sera créé à l’endroit d’où pcb a été appelé.</div>
 </li>
 </ol>
 
 <p>
-Alternativement, vous pouvez utiliser votre éditeur de texte favori et éditez le code source de l&rsquo;empreinte.
+Alternativement, vous pouvez utiliser votre éditeur de texte favori et éditez le code source de l’empreinte.
 </p>
 
 </div>
-<!-- SECTION [12105-13249] -->
-<h2><a name="comment_j_ajoute_une_bibliotheque_d_empreintes_a_pcb" id="comment_j_ajoute_une_bibliotheque_d_empreintes_a_pcb">Comment j'ajoute une bibliothèque d'empreintes à PCB?</a></h2>
+<!-- SECTION "Comment j'édite/change une empreinte existante?" [12105-13249] -->
+<h2><a name="comment_j_ajoute_une_bibliotheque_d_empreintes_a_pcb" id="comment_j_ajoute_une_bibliotheque_d_empreintes_a_pcb">Comment j&#039;ajoute une bibliothèque d&#039;empreintes à PCB?</a></h2>
 <div class="level2">
 
 <p>
-L&rsquo;ajoût d&rsquo;une bibliothèque d&rsquo;empreintes peut être réalisée depuis l&rsquo;interface graphique:<br/>
+L’ajoût d’une bibliothèque d’empreintes peut être réalisée depuis l’interface graphique:<br/>
   <strong><em>File</em></strong> –&gt; <strong><em>Preferences</em></strong> –&gt; <strong><em>Library</em></strong> –&gt; <strong>FOOTPRINTDIRECTORY</strong><br/>
-  Alternativement, vous pouvez éditer le fichier <code>$HOME/.pcb/preferences</code>. Cherchez la ligne qui débute par «·library-newlib·».  N&rsquo;oubliez pas d&rsquo;inclure le nouveau répertorie dans votre fichier de ressource gsch2pcb (si vous utilisez gsch2pcb, bien sûr).
+  Alternativement, vous pouvez éditer le fichier <code>$HOME/.pcb/preferences</code>. Cherchez la ligne qui débute par «·library-newlib·».  N’oubliez pas d’inclure le nouveau répertorie dans votre fichier de ressource gsch2pcb (si vous utilisez gsch2pcb, bien sûr).
 </p>
 
 </div>
-<!-- SECTION [13250-13768] -->
+<!-- SECTION "Comment j'ajoute une bibliothèque d'empreintes à PCB?" [13250-13768] -->
 <h2><a name="pcb_ne_trouve_par_mes_empreintes._pourquoi" id="pcb_ne_trouve_par_mes_empreintes._pourquoi">PCB ne trouve par mes empreintes. Pourquoi?</a></h2>
 <div class="level2">
 
 <p>
-Le chemin des empreintes utilisé par PCB est défini en utilisant la variable <strong><code>Pcb.elementPath</code></strong> dans le fichier des applications par défaut appelé <strong><code>PCB</code></strong>. Le chemin pour le fichier <strong><code>PCB</code></strong> est configuré en utilisant la variable d&rsquo;environnement <strong><code>XAPPLRESDIR</code></strong> qui est typiquement fait avec un script nommé <strong><code>pcb</code></strong>.
+Le chemin des empreintes utilisé par PCB est défini en utilisant la variable <strong><code>Pcb.elementPath</code></strong> dans le fichier des applications par défaut appelé <strong><code>PCB</code></strong>. Le chemin pour le fichier <strong><code>PCB</code></strong> est configuré en utilisant la variable d’environnement <strong><code>XAPPLRESDIR</code></strong> qui est typiquement fait avec un script nommé <strong><code>pcb</code></strong>.
 </p>
 
 </div>
-<!-- SECTION [13769-14168] -->
-<h2><a name="maintenant_que_j_ai_toutes_ces_empreintes_ou_dois-je_les_placer" id="maintenant_que_j_ai_toutes_ces_empreintes_ou_dois-je_les_placer">Maintenant que j'ai toutes ces empreintes, où dois-je les placer?</a></h2>
+<!-- SECTION "PCB ne trouve par mes empreintes. Pourquoi?" [13769-14168] -->
+<h2><a name="maintenant_que_j_ai_toutes_ces_empreintes_ou_dois-je_les_placer" id="maintenant_que_j_ai_toutes_ces_empreintes_ou_dois-je_les_placer">Maintenant que j&#039;ai toutes ces empreintes, où dois-je les placer?</a></h2>
 <div class="level2">
 
 <p>
-Je préfère placer toutes les empreintes «·prêtes pour la production·» dans un seul répertoire qui n&rsquo;est pas dans l&rsquo;arbre d&rsquo;installation de gEDA/PCB. Lorsqu&rsquo;une nouvelle version de gEDA/PCB sort, je ne fais aucun changement aux fichier de projet ou aux bibliothèques. S&rsquo;il y a des empreintes newlib dans la bibliothèque PCB que je veux utiliser, je les copie dans le répertoire d&rsquo;empreintes «·prêtes pour la production·».
+Je préfère placer toutes les empreintes «·prêtes pour la production·» dans un seul répertoire qui n’est pas dans l’arbre d’installation de gEDA/PCB. Lorsqu’une nouvelle version de gEDA/PCB sort, je ne fais aucun changement aux fichier de projet ou aux bibliothèques. S’il y a des empreintes newlib dans la bibliothèque PCB que je veux utiliser, je les copie dans le répertoire d’empreintes «·prêtes pour la production·».
 </p>
 
 <p>
-Plutôt que changer les fichiers de configuration permettant à gsch2pcb de trouver les empreintes, j&rsquo;ai créé un script appelé <strong><code>sch2pcb</code></strong> qui contient le chemin des empreitnes. Tous les utilisateurs utilisent le même script et accèdent aux même empreintes de production.
+Plutôt que changer les fichiers de configuration permettant à gsch2pcb de trouver les empreintes, j’ai créé un script appelé <strong><code>sch2pcb</code></strong> qui contient le chemin des empreitnes. Tous les utilisateurs utilisent le même script et accèdent aux même empreintes de production.
 </p>
 
 <p>
-Pour utiliser le script <strong><code>sch2pcb</code></strong> qui est listé ci-dessus, remplacez la chaîne <strong><code>FOOTPRINT_DIR</code></strong> avec votre répertoire d&rsquo;empreintes: 
+Pour utiliser le script <strong><code>sch2pcb</code></strong> qui est listé ci-dessus, remplacez la chaîne <strong><code>FOOTPRINT_DIR</code></strong> avec votre répertoire d’empreintes: 
 </p>
 <pre class="code">
 #!/bin/bash
@@ -380,13 +385,13 @@ gsch2pcb --elements-dir /home/user/pcb/footprints/user --use-files $@
 </pre>
 
 </div>
-<!-- SECTION [14169-15356] -->
+<!-- SECTION "Maintenant que j'ai toutes ces empreintes, où dois-je les placer?" [14169-15356] -->
 <h1><a name="placement_de_composants" id="placement_de_composants">Placement de composants</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [15357-15395] -->
-<h2><a name="comment_je_pivote_une_selection_i.e._pour_plus_d_un_element" id="comment_je_pivote_une_selection_i.e._pour_plus_d_un_element">Comment je pivote une sélection (i.e. pour plus d'un élément)?</a></h2>
+<!-- SECTION "Placement de composants" [15357-15395] -->
+<h2><a name="comment_je_pivote_une_selection_i.e._pour_plus_d_un_element" id="comment_je_pivote_une_selection_i.e._pour_plus_d_un_element">Comment je pivote une sélection (i.e. pour plus d&#039;un élément)?</a></h2>
 <div class="level2">
 <ol>
 <li class="level1"><div class="li"> Sélectionnez les éléments</div>
@@ -400,22 +405,22 @@ gsch2pcb --elements-dir /home/user/pcb/footprints/user --use-files $@
 </ol>
 
 </div>
-<!-- SECTION [15396-15702] -->
-<h2><a name="comment_je_change_la_taille_de_l_objet_graphique_comme_du_texte_des_lignes_de_masque_texte_etc" id="comment_je_change_la_taille_de_l_objet_graphique_comme_du_texte_des_lignes_de_masque_texte_etc">Comment je change la taille de l'objet graphique (comme du texte, des lignes de masque texte, etc)?</a></h2>
+<!-- SECTION "Comment je pivote une sélection (i.e. pour plus d'un élément)?" [15396-15702] -->
+<h2><a name="comment_je_change_la_taille_de_l_objet_graphique_comme_du_texte_des_lignes_de_masque_texte_etc" id="comment_je_change_la_taille_de_l_objet_graphique_comme_du_texte_des_lignes_de_masque_texte_etc">Comment je change la taille de l&#039;objet graphique (comme du texte, des lignes de masque texte, etc)?</a></h2>
 <div class="level2">
 <ul>
-<li class="level1"><div class="li"> La souris sur l&rsquo;objet et frappez [<strong><code>s</code></strong>]. Cela augmentera la taille de l&rsquo;objet sur lequel est la souris.</div>
+<li class="level1"><div class="li"> La souris sur l’objet et frappez [<strong><code>s</code></strong>]. Cela augmentera la taille de l’objet sur lequel est la souris.</div>
 </li>
-<li class="level1"><div class="li"> La souris sur l&rsquo;objet et grappez [<strong><code>&lt;shift&gt;-S</code></strong>]. Cela diminuera la taille de l&rsquo;objet sur lequel est la souris.</div>
+<li class="level1"><div class="li"> La souris sur l’objet et grappez [<strong><code>&lt;shift&gt;-S</code></strong>]. Cela diminuera la taille de l’objet sur lequel est la souris.</div>
 </li>
 </ul>
 
 <p>
- Vous pouvez modifier la valeur d&rsquo;augmentation/diminution en utilisant le menu <strong><em>file</em></strong> → <strong><em>preferences</em></strong> → <strong><em>increments</em></strong>.
+ Vous pouvez modifier la valeur d’augmentation/diminution en utilisant le menu <strong><em>file</em></strong> → <strong><em>preferences</em></strong> → <strong><em>increments</em></strong>.
 </p>
 
 </div>
-<!-- SECTION [15703-16188] -->
+<!-- SECTION "Comment je change la taille de l'objet graphique (comme du texte, des lignes de masque texte, etc)?" [15703-16188] -->
 <h2><a name="comment_placer_les_composants_sur_les_deux_faces_de_pcb" id="comment_placer_les_composants_sur_les_deux_faces_de_pcb">Comment placer les composants sur les deux faces de PCB?</a></h2>
 <div class="level2">
 
@@ -425,49 +430,49 @@ Il y a deux manières de le faire:
 <ul>
 <li class="level1"><div class="li"> Presser la touche de tabulation alternera le côté actif entre le côté composants et et soudure. Lorsque vous placez des composants, il iront sur le côté actif.</div>
 </li>
-<li class="level1"><div class="li"> Si vous visualisez un côté de la carte, placez y un composant et (avec le pointeur dessus), pressez la touche [<strong><code>b</code></strong>] (ce qui signifie, envoyer le composant de l&rsquo;autre côté), le composant va vers l&rsquo;autre côté de la carte.</div>
+<li class="level1"><div class="li"> Si vous visualisez un côté de la carte, placez y un composant et (avec le pointeur dessus), pressez la touche [<strong><code>b</code></strong>] (ce qui signifie, envoyer le composant de l’autre côté), le composant va vers l’autre côté de la carte.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [16189-16699] -->
-<h2><a name="comment_je_place_l_origine_dans_pcb" id="comment_je_place_l_origine_dans_pcb">Comment je place l'origine dans pcb?</a></h2>
+<!-- SECTION "Comment placer les composants sur les deux faces de PCB?" [16189-16699] -->
+<h2><a name="comment_je_place_l_origine_dans_pcb" id="comment_je_place_l_origine_dans_pcb">Comment je place l&#039;origine dans pcb?</a></h2>
 <div class="level2">
 
 <p>
-L&rsquo;origine absolue est toujours dans le coin haut gauche de la zone accessible. Ceci ne peut être configuré ailleurs. Néanmoins, les coordonnées des objets peuvent aussi être donnés en relation de la grile courante. Dans la version GTK2 de pcb, les coordonnées sont montrées dans le coin haut droit de la fenêtre principale. La bonne valeur est la position absolue, alors que la valeur de gauche reflète la position relative d&rsquo;un marqueur arbitraire. Ce marqueur est configuré à la position courante de la souris par la séquence de touche [<strong><code>ctrl-m</code></strong>]. Vous pouvez vouloir configurer le marqueur sur un point de grille ou de broche spécifique.
+L’origine absolue est toujours dans le coin haut gauche de la zone accessible. Ceci ne peut être configuré ailleurs. Néanmoins, les coordonnées des objets peuvent aussi être donnés en relation de la grile courante. Dans la version GTK2 de pcb, les coordonnées sont montrées dans le coin haut droit de la fenêtre principale. La bonne valeur est la position absolue, alors que la valeur de gauche reflète la position relative d’un marqueur arbitraire. Ce marqueur est configuré à la position courante de la souris par la séquence de touche [<strong><code>ctrl-m</code></strong>]. Vous pouvez vouloir configurer le marqueur sur un point de grille ou de broche spécifique.
 </p>
 
 </div>
-<!-- SECTION [16700-17410] -->
+<!-- SECTION "Comment je place l'origine dans pcb?" [16700-17410] -->
 <h2><a name="comment_je_mesure_les_distances_et_les_dimensions_des_composants" id="comment_je_mesure_les_distances_et_les_dimensions_des_composants">Comment je mesure les distances et les dimensions des composants?</a></h2>
 <div class="level2">
 
 <p>
-Utilisez [<strong><code>ctrl-m</code></strong>] pour configurer l&rsquo;origine et lisez la distance de ce point par rapport au pointeur de souris sur le bord haut gauche de la fenêtre de pcb. Quelques objets comme les vias et les pistes donnent des informations utiles dans les rapports d&rsquo;objets. Accédez au rapport de l&rsquo;objet sous le pointeur de souris avec [<strong><code>ctrl-r</code></strong>].
+Utilisez [<strong><code>ctrl-m</code></strong>] pour configurer l’origine et lisez la distance de ce point par rapport au pointeur de souris sur le bord haut gauche de la fenêtre de pcb. Quelques objets comme les vias et les pistes donnent des informations utiles dans les rapports d’objets. Accédez au rapport de l’objet sous le pointeur de souris avec [<strong><code>ctrl-r</code></strong>].
 </p>
 
 </div>
-<!-- SECTION [17411-17841] -->
+<!-- SECTION "Comment je mesure les distances et les dimensions des composants?" [17411-17841] -->
 <h1><a name="routage" id="routage">Routage</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [17842-17863] -->
+<!-- SECTION "Routage" [17842-17863] -->
 <h2><a name="comment_router_une_connexion_depuis_le_cote_soudure_vers_le_cote_composant_et_inversement" id="comment_router_une_connexion_depuis_le_cote_soudure_vers_le_cote_composant_et_inversement">Comment router une connexion depuis le côté soudure vers le côté composant et inversement?</a></h2>
 <div class="level2">
 
 <p>
-Lors de l&rsquo;utilistion de l&rsquo;outil line tool, utilisez les touches de chiffres en haut du clavier pour changer de couche. Un via sera placé automatiquement à la fin du dernier segment complet.
+Lors de l’utilistion de l’outil line tool, utilisez les touches de chiffres en haut du clavier pour changer de couche. Un via sera placé automatiquement à la fin du dernier segment complet.
 </p>
 
 </div>
-<!-- SECTION [17864-18163] -->
+<!-- SECTION "Comment router une connexion depuis le côté soudure vers le côté composant et inversement?" [17864-18163] -->
 <h2><a name="comment_je_change_le_style_de_routage" id="comment_je_change_le_style_de_routage">Comment je change le style de routage?</a></h2>
 <div class="level2">
 
 <p>
-Il existe un jeu de tailles de routage prédéfinies. Le jeu porte des noms suggestifs (Signal, Power, Fat et Skinny). Touchez le bouton «·Route Style·» pour configurer les tailles du jeu courant à vos besoins. L&rsquo;outil line connaît différents modes pour traiter les connexions transversales. La status line sur le bas de la page indique quel mode est en cours:
+Il existe un jeu de tailles de routage prédéfinies. Le jeu porte des noms suggestifs (Signal, Power, Fat et Skinny). Touchez le bouton «·Route Style·» pour configurer les tailles du jeu courant à vos besoins. L’outil line connaît différents modes pour traiter les connexions transversales. La status line sur le bas de la page indique quel mode est en cours:
 </p>
 <ol>
 <li class="level1"><div class="li"> 45° plus vertical/horizontal (status line: “\_”)</div>
@@ -481,42 +486,42 @@ Il existe un jeu de tailles de routage prédéfinies. Le jeu porte des noms sugg
 </ol>
 
 <p>
-La manière d&rsquo;accéder à ces modes diffère en fonction des version de l&rsquo;interface. La version GTK courante (v20060288) a par défaut “_/” mais peut être modifiée temporairement en “\_” avec la touche shift. Vous pouvez passer au mode 45° avec la touche slash “/”. Pour les angles arbitraires, pressez la touche point «·.·» ou choisissez «·enable all line directions·» dans le setting menu.
+La manière d’accéder à ces modes diffère en fonction des version de l’interface. La version GTK courante (v20060288) a par défaut “_/” mais peut être modifiée temporairement en “\_” avec la touche shift. Vous pouvez passer au mode 45° avec la touche slash “/”. Pour les angles arbitraires, pressez la touche point «·.·» ou choisissez «·enable all line directions·» dans le setting menu.
 </p>
 
 </div>
-<!-- SECTION [18164-19200] -->
-<h2><a name="j_ai_merde_comment_je_reviens_en_arriere" id="j_ai_merde_comment_je_reviens_en_arriere">J'ai merdé! Comment je reviens en arrière?</a></h2>
+<!-- SECTION "Comment je change le style de routage?" [18164-19200] -->
+<h2><a name="j_ai_merde_comment_je_reviens_en_arriere" id="j_ai_merde_comment_je_reviens_en_arriere">J&#039;ai merdé! Comment je reviens en arrière?</a></h2>
 <div class="level2">
 
 <p>
-La touche universelle undo [<strong><code>U</code></strong>] fonctionne même en pleine action de placement de piste. IIl enlèvera le dernier segment mais gardera l&rsquo;outil line attaché à la souris. Vous pouvez donc immediatement aller sur le routage et trouver un meilleur placement.
+La touche universelle undo [<strong><code>U</code></strong>] fonctionne même en pleine action de placement de piste. IIl enlèvera le dernier segment mais gardera l’outil line attaché à la souris. Vous pouvez donc immediatement aller sur le routage et trouver un meilleur placement.
 </p>
 
 </div>
-<!-- SECTION [19201-19522] -->
-<h2><a name="comment_je_deplace_un_jeu_de_piste_d_une_couche_a_l_autre" id="comment_je_deplace_un_jeu_de_piste_d_une_couche_a_l_autre">Comment je déplace un jeu de piste d'une couche à l'autre?</a></h2>
+<!-- SECTION "J'ai merdé! Comment je reviens en arrière?" [19201-19522] -->
+<h2><a name="comment_je_deplace_un_jeu_de_piste_d_une_couche_a_l_autre" id="comment_je_deplace_un_jeu_de_piste_d_une_couche_a_l_autre">Comment je déplace un jeu de piste d&#039;une couche à l&#039;autre?</a></h2>
 <div class="level2">
 <ol>
-<li class="level1"><div class="li"> Sélectionnez les pistes. C&rsquo;est plus facile à faire sur vous fermez d&rsquo;abord tout le reste sur cette couche (i.e. silk, broches, autres couches, etc).</div>
+<li class="level1"><div class="li"> Sélectionnez les pistes. C’est plus facile à faire sur vous fermez d’abord tout le reste sur cette couche (i.e. silk, broches, autres couches, etc).</div>
 </li>
-<li class="level1"><div class="li"> Configurez la nouvelle couche de réception. Oui, la nouvelle couche doit être affichée·; ce qui n&rsquo;est pas un problème si vous avez déjà sélectionné les pistes à déplacer.</div>
+<li class="level1"><div class="li"> Configurez la nouvelle couche de réception. Oui, la nouvelle couche doit être affichée·; ce qui n’est pas un problème si vous avez déjà sélectionné les pistes à déplacer.</div>
 </li>
 <li class="level1"><div class="li"> Pressez [<strong><code>shift-M</code></strong>] pour déplacer toutes les pistes sélectionnées vers la couche courante.</div>
 </li>
 </ol>
 
 </div>
-<!-- SECTION [19523-20041] -->
-<h2><a name="comment_je_change_les_soldermask_clearance_autour_d_un_trou_via" id="comment_je_change_les_soldermask_clearance_autour_d_un_trou_via">Comment je change les soldermask clearance autour d'un trou/via?</a></h2>
+<!-- SECTION "Comment je déplace un jeu de piste d'une couche à l'autre?" [19523-20041] -->
+<h2><a name="comment_je_change_les_soldermask_clearance_autour_d_un_trou_via" id="comment_je_change_les_soldermask_clearance_autour_d_un_trou_via">Comment je change les soldermask clearance autour d&#039;un trou/via?</a></h2>
 <div class="level2">
 
 <p>
-Vous pouvez augmenter la soldermask clearance depuis tout trou/via en positionnant le curseur sur l&rsquo;objet et tapez la touche [<strong><code>k</code></strong>]. Vous pouvez diminuer la clearance en utilisant la touche [<strong><code>&lt;shift&gt;-K</code></strong>].
+Vous pouvez augmenter la soldermask clearance depuis tout trou/via en positionnant le curseur sur l’objet et tapez la touche [<strong><code>k</code></strong>]. Vous pouvez diminuer la clearance en utilisant la touche [<strong><code>&lt;shift&gt;-K</code></strong>].
 </p>
 
 </div>
-<!-- SECTION [20042-20335] -->
+<!-- SECTION "Comment je change les soldermask clearance autour d'un trou/via?" [20042-20335] -->
 <h2><a name="comment_changer_la_taille_des_pistes" id="comment_changer_la_taille_des_pistes">Comment changer la taille des pistes?</a></h2>
 <div class="level2">
 
@@ -526,37 +531,37 @@ Il existe plusieurs manières de changer la taille de piste déjà placées:
 <ol>
 <li class="level1"><div class="li"> Utilisez [<strong><code>s</code></strong>] et [<strong><code>shift-s</code></strong>] pour augmenter ou diminuer la taille de la piste sous le curseur de la souris.</div>
 </li>
-<li class="level1"><div class="li"> choisissez <strong><code>Select/Change_size_of_selected_objects/Decrement_lines_by_4mil</code></strong> depuis le menu <strong><code>Select</code></strong>. La valeur de changement  peut être configurée dans <strong><code>File/Preferences/Sizes</code></strong>. Cela n&rsquo;agit que sur les pistes. Donc la sélection peut contenir des composants, des textes, vias et ainsi de suite.</div>
+<li class="level1"><div class="li"> choisissez <strong><code>Select/Change_size_of_selected_objects/Decrement_lines_by_4mil</code></strong> depuis le menu <strong><code>Select</code></strong>. La valeur de changement  peut être configurée dans <strong><code>File/Preferences/Sizes</code></strong>. Cela n’agit que sur les pistes. Donc la sélection peut contenir des composants, des textes, vias et ainsi de suite.</div>
 </li>
-<li class="level1"><div class="li"> Sélectionnez les pistes devant être changées et tapez <strong><code>:ChangeSize(SelectedLines,+4,mils)</code></strong>. La virgule vous offre la ligne de commande et <strong><code>ChangeSize()</code></strong> est la version commandée de l&rsquo;action précédemment décrite. Remplacez “<strong><code>+4</code></strong>” par la valeur à laquelle vous voulez augmenter la taille de la piste. Utilisez le signe moins pour diminuer la taille de la piste. Si vous omettez le signe, la commande configure la taille de la piste à la valeur donnée.</div>
+<li class="level1"><div class="li"> Sélectionnez les pistes devant être changées et tapez <strong><code>:ChangeSize(SelectedLines,+4,mils)</code></strong>. La virgule vous offre la ligne de commande et <strong><code>ChangeSize()</code></strong> est la version commandée de l’action précédemment décrite. Remplacez “<strong><code>+4</code></strong>” par la valeur à laquelle vous voulez augmenter la taille de la piste. Utilisez le signe moins pour diminuer la taille de la piste. Si vous omettez le signe, la commande configure la taille de la piste à la valeur donnée.</div>
 </li>
 </ol>
 
 </div>
-<!-- SECTION [20336-21393] -->
+<!-- SECTION "Comment changer la taille des pistes?" [20336-21393] -->
 <h2><a name="comment_je_pilote_un_via_pour_connecter_une_piste_a_un_plan_de_masse_sur_une_couche_differente" id="comment_je_pilote_un_via_pour_connecter_une_piste_a_un_plan_de_masse_sur_une_couche_differente">Comment je pilote un via pour connecter une piste à un plan de masse sur une couche différente?</a></h2>
 <div class="level2">
 <ol>
 <li class="level1"><div class="li"> Configurez la couche de plan de masse comme la couche active.</div>
 </li>
-<li class="level1"><div class="li"> Sélectionnez l&rsquo;outil «·via·».</div>
+<li class="level1"><div class="li"> Sélectionnez l’outil «·via·».</div>
 </li>
-<li class="level1"><div class="li"> Placez le via où vous voulez qu&rsquo;il aille (clic gauche pour le placer).</div>
+<li class="level1"><div class="li"> Placez le via où vous voulez qu’il aille (clic gauche pour le placer).</div>
 </li>
-<li class="level1"><div class="li"> Sélectionnez maintenant l&rsquo;outil «·thermal·».</div>
+<li class="level1"><div class="li"> Sélectionnez maintenant l’outil «·thermal·».</div>
 </li>
 <li class="level1"><div class="li"> Clic gauche sur le via que vous venez juste de placer.</div>
 </li>
 <li class="level1"><div class="li"> Changer maintenant la couche active en celle de la couche de routage souhaitée.</div>
 </li>
-<li class="level1"><div class="li"> Sélectionnez l&rsquo;outil «·line·».</div>
+<li class="level1"><div class="li"> Sélectionnez l’outil «·line·».</div>
 </li>
-<li class="level1"><div class="li"> Routez la piste sur la couche active vers ou depuis le via comme d&rsquo;habitude.</div>
+<li class="level1"><div class="li"> Routez la piste sur la couche active vers ou depuis le via comme d’habitude.</div>
 </li>
 </ol>
 
 </div>
-<!-- SECTION [21394-22004] -->
+<!-- SECTION "Comment je pilote un via pour connecter une piste à un plan de masse sur une couche différente?" [21394-22004] -->
 <h2><a name="je_veux_dessiner_une_piste_entre_deux_segments_sur_le_meme_net_mais_pcb_ne_me_laisse_pas_faire_pourquoi" id="je_veux_dessiner_une_piste_entre_deux_segments_sur_le_meme_net_mais_pcb_ne_me_laisse_pas_faire_pourquoi">Je veux dessiner une piste entre deux segments sur le même net mais PCB ne me laisse pas faire! Pourquoi?</a></h2>
 <div class="level2">
 
@@ -564,29 +569,29 @@ Il existe plusieurs manières de changer la taille de piste déjà placées:
 Vous pouvez dessiner des pistes avec auto-DRC à on. Pour connecter les deux segments, vous avez ici quelques suggestions:
 </p>
 <ul>
-<li class="level1"><div class="li"> DRC enforcement utilise le ratsnest pour déterminer où les pistes sont permises. Donc, vous devez avoir des ratsnest dessinés de manière à réaliser des connexions dans le mode auto-DRC. Sinon, vous ne serez pas authorisés) à connecter (ou approcher) toute zone de cuivre qui n&rsquo;est pas connectée à notre net. (Si la visibilité du rat vous embête, vous pouvez cacher les couches de rat – mais les rats doivent exister).</div>
+<li class="level1"><div class="li"> DRC enforcement utilise le ratsnest pour déterminer où les pistes sont permises. Donc, vous devez avoir des ratsnest dessinés de manière à réaliser des connexions dans le mode auto-DRC. Sinon, vous ne serez pas authorisés) à connecter (ou approcher) toute zone de cuivre qui n’est pas connectée à notre net. (Si la visibilité du rat vous embête, vous pouvez cacher les couches de rat – mais les rats doivent exister).</div>
 </li>
-<li class="level1"><div class="li"> Vous devrez aussi rafraîchir les rats régulièrement lors du dessin. Tapez [<strong><code>o</code></strong>] pour redessiner/re-optimiser les rats. Assurez-vous qu&rsquo;un rat connecte visiblement deux pièces de métal que vous souhaitez réunir.</div>
+<li class="level1"><div class="li"> Vous devrez aussi rafraîchir les rats régulièrement lors du dessin. Tapez [<strong><code>o</code></strong>] pour redessiner/re-optimiser les rats. Assurez-vous qu’un rat connecte visiblement deux pièces de métal que vous souhaitez réunir.</div>
 </li>
-<li class="level1"><div class="li"> Il est aussi possible que vous expérimentiez cette situation lors du dessin de pistes entre les broches d&rsquo;un connecteur. Dans ce cas, il est possible que la largeur de piste viole les règles de clearance du champ de broche. Tentez de diminuer la clearance broche-vers-métal ou utilisez une épaisseur de piste plus étroite.</div>
+<li class="level1"><div class="li"> Il est aussi possible que vous expérimentiez cette situation lors du dessin de pistes entre les broches d’un connecteur. Dans ce cas, il est possible que la largeur de piste viole les règles de clearance du champ de broche. Tentez de diminuer la clearance broche-vers-métal ou utilisez une épaisseur de piste plus étroite.</div>
 </li>
-<li class="level1"><div class="li"> Quelques fois, ce comportement de blocage du routage peut provenir d&rsquo;une erreur dans votre netlist. Ne terminez pas les refdes avec des minuscules - elles sont réservées pour els portes à l&rsquo;intérieur des composants. Finissez avec un majuscule ou un chiffre·; les minuscules sont simplement ignorées.</div>
+<li class="level1"><div class="li"> Quelques fois, ce comportement de blocage du routage peut provenir d’une erreur dans votre netlist. Ne terminez pas les refdes avec des minuscules - elles sont réservées pour els portes à l’intérieur des composants. Finissez avec un majuscule ou un chiffre·; les minuscules sont simplement ignorées.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [22005-23552] -->
-<h2><a name="pcb_semble_manger_mes_noms_de_composants_et_se_plaint_qu_il_ne_peut_pas_trouver_des_nets_adaptes_aux_broches_de_quoi_cela_vient" id="pcb_semble_manger_mes_noms_de_composants_et_se_plaint_qu_il_ne_peut_pas_trouver_des_nets_adaptes_aux_broches_de_quoi_cela_vient">PCB semble manger mes noms de composants et se plaint qu'il ne peut pas trouver des nets adaptés aux broches! De quoi cela vient?</a></h2>
+<!-- SECTION "Je veux dessiner une piste entre deux segments sur le même net mais PCB ne me laisse pas faire! Pourquoi?" [22005-23552] -->
+<h2><a name="pcb_semble_manger_mes_noms_de_composants_et_se_plaint_qu_il_ne_peut_pas_trouver_des_nets_adaptes_aux_broches_de_quoi_cela_vient" id="pcb_semble_manger_mes_noms_de_composants_et_se_plaint_qu_il_ne_peut_pas_trouver_des_nets_adaptes_aux_broches_de_quoi_cela_vient">PCB semble manger mes noms de composants et se plaint qu&#039;il ne peut pas trouver des nets adaptés aux broches! De quoi cela vient?</a></h2>
 <div class="level2">
 
 <p>
-Plus raisonnablement, vous les nommez de telle manière que pcb croie qu&rsquo;ils ne forment qu&rsquo;un élément. Les minuscules à la fin d&rsquo;un refdes sont ignorés. Donc, les composants U2foo et U2bar ressemblent tous les deux à U2 pour pcb. Lors de la construction des rat nests, pcb cherchera des nets pour U2 qui, bien sûr, n&rsquo;existe pas. Les minuscules sont destinées pour différentier les slots d&rsquo;un multi-composant. E.g., les quatres symboles opamp d&rsquo;un amplificateur opérationnel quadruple.<br/>
- Ligne de fin: N&rsquo;utilisez pas les minuscules à la fin d&rsquo;un refdes, à moins que vous ne sachiez ce que vous faites.  
+Plus raisonnablement, vous les nommez de telle manière que pcb croie qu’ils ne forment qu’un élément. Les minuscules à la fin d’un refdes sont ignorés. Donc, les composants U2foo et U2bar ressemblent tous les deux à U2 pour pcb. Lors de la construction des rat nests, pcb cherchera des nets pour U2 qui, bien sûr, n’existe pas. Les minuscules sont destinées pour différentier les slots d’un multi-composant. E.g., les quatres symboles opamp d’un amplificateur opérationnel quadruple.<br/>
+ Ligne de fin: N’utilisez pas les minuscules à la fin d’un refdes, à moins que vous ne sachiez ce que vous faites.  
 </p>
 
 </div>
-<!-- SECTION [23553-24310] -->
-<h2><a name="comment_je_peux_configurer_la_couleur_et_l_epaisseur_des_rats_nests" id="comment_je_peux_configurer_la_couleur_et_l_epaisseur_des_rats_nests">Comment je peux configurer la couleur et l'épaisseur des rats nests?</a></h2>
+<!-- SECTION "PCB semble manger mes noms de composants et se plaint qu'il ne peut pas trouver des nets adaptés aux broches! De quoi cela vient?" [23553-24310] -->
+<h2><a name="comment_je_peux_configurer_la_couleur_et_l_epaisseur_des_rats_nests" id="comment_je_peux_configurer_la_couleur_et_l_epaisseur_des_rats_nests">Comment je peux configurer la couleur et l&#039;épaisseur des rats nests?</a></h2>
 <div class="level2">
 
 <p>
@@ -594,16 +599,16 @@ Vous pouvez configurer la couleur des rats dans <code>File - Preference - Colors
 </p>
 
 <p>
-Il n&rsquo;existe actuellement pas d&rsquo;interface graphique pour changer les épaisseurs de rat mais vous pouvez éditer votre fichier <code>$HOME/.pcb/preference</code> manuellement. Fermez toutes les instances de pcb et cherchez la ligne qui débute avec <code>rat-thickness</code>.   
+Il n’existe actuellement pas d’interface graphique pour changer les épaisseurs de rat mais vous pouvez éditer votre fichier <code>$HOME/.pcb/preference</code> manuellement. Fermez toutes les instances de pcb et cherchez la ligne qui débute avec <code>rat-thickness</code>.   
 </p>
 
 </div>
-<!-- SECTION [24311-24748] -->
+<!-- SECTION "Comment je peux configurer la couleur et l'épaisseur des rats nests?" [24311-24748] -->
 <h1><a name="au_dela_des_pistes_et_des_empreintes" id="au_dela_des_pistes_et_des_empreintes">Au delà des pistes et des empreintes</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [24749-24801] -->
+<!-- SECTION "Au delà des pistes et des empreintes" [24749-24801] -->
 <h2><a name="comment_je_trace_un_dessin_une_impression_ou_un_autre_pcb" id="comment_je_trace_un_dessin_une_impression_ou_un_autre_pcb">Comment je trace un dessin, une impression ou un autre PCB?</a></h2>
 <div class="level2">
 
@@ -612,15 +617,15 @@ Voyez la page <a href="http://www.delorie.com/pcb/bg-image.html" class="urlexter
 </p>
 
 <p>
-C&rsquo;est un bonne manière pour tracer des images à la main ou un autre PCB, disons un de ceux que vous en avez un au format propriétaire, que vous voudriez «·déverrouiller·» maintenant. De plus, vous pouvez utiliser des images comme outils pour faire des révisions de cartes ou des reconceptions.
+C’est un bonne manière pour tracer des images à la main ou un autre PCB, disons un de ceux que vous en avez un au format propriétaire, que vous voudriez «·déverrouiller·» maintenant. De plus, vous pouvez utiliser des images comme outils pour faire des révisions de cartes ou des reconceptions.
 </p>
 
 <p>
-Si vous n&rsquo;aimez pas utiliser PCB confiné à la zone de la carte, i.e. si vous voulez des marges autour de la carte, alors ajoutez-les dans GIMP. J&rsquo;aime faire des marges de 1.00000 autour de la carte. Lorsque vous configurez votre taille de PCB, vous voudrez ajouter votre zone de marge. CTRL-M vous aidera à vérifier la taille. Aussi, le temps de corriger les distorsions de votre scanner ou depuis votre dessin est à faire avant de le charger, dans GIMP ou un des équivalent.
+Si vous n’aimez pas utiliser PCB confiné à la zone de la carte, i.e. si vous voulez des marges autour de la carte, alors ajoutez-les dans GIMP. J’aime faire des marges de 1.00000 autour de la carte. Lorsque vous configurez votre taille de PCB, vous voudrez ajouter votre zone de marge. CTRL-M vous aidera à vérifier la taille. Aussi, le temps de corriger les distorsions de votre scanner ou depuis votre dessin est à faire avant de le charger, dans GIMP ou un des équivalent.
 </p>
 
 </div>
-<!-- SECTION [24802-25761] -->
+<!-- SECTION "Comment je trace un dessin, une impression ou un autre PCB?" [24802-25761] -->
 <h2><a name="je_ne_peux_pas_copier_des_pastilles_dans_un_circuit._comment_je_fais" id="je_ne_peux_pas_copier_des_pastilles_dans_un_circuit._comment_je_fais">Je ne peux pas copier des pastilles dans un circuit. Comment je fais?</a></h2>
 <div class="level2">
 
@@ -633,19 +638,19 @@ Je peux sélectionner une zone existante. Tout semble virer au au bleu.
 </p>
 
 <p>
-&ldquo;Buffer&rdquo;&ndash;&gt;&rdquo;Copy Selection To Buffer&rdquo; semble réussir (pas de complaintes).
+“Buffer”&ndash;&gt;“Copy Selection To Buffer” semble réussir (pas de complaintes).
 </p>
 
 <p>
-Lorsque je veux copier la zone copiée... et tout ce que j&rsquo;arrive à bouger sont un couple de pistes et quelques vias. Les pastilles qu j&rsquo;ai créé avec difficulté ne sont pas copiées. Pourquoi!?!?!?
+Lorsque je veux copier la zone copiée&hellip; et tout ce que j’arrive à bouger sont un couple de pistes et quelques vias. Les pastilles qu j’ai créé avec difficulté ne sont pas copiées. Pourquoi!?!?!?
 </p>
 
 <p>
-<strong>Réponse:</strong> Si la couche du dessus (silk layer) est désactivée, vous ne pouvez copier les éléments par le tampon copier. Bizarre, mais c&rsquo;est comme cela que cela fonctionne. Donc, validez la couche du dessus avant de copier une section de placement.
+<strong>Réponse:</strong> Si la couche du dessus (silk layer) est désactivée, vous ne pouvez copier les éléments par le tampon copier. Bizarre, mais c’est comme cela que cela fonctionne. Donc, validez la couche du dessus avant de copier une section de placement.
 </p>
 
 </div>
-<!-- SECTION [25762-26535] -->
+<!-- SECTION "Je ne peux pas copier des pastilles dans un circuit. Comment je fais?" [25762-26535] -->
 <h2><a name="comment_je_remplis_les_zones_avec_cuivre" id="comment_je_remplis_les_zones_avec_cuivre">Comment je remplis les zones avec cuivre?</a></h2>
 <div class="level2">
 
@@ -654,72 +659,72 @@ Utilisez les plans rectangle et polygone. Ces objets éviteront toujours les via
 </p>
 
 </div>
-<!-- SECTION [26536-26831] -->
+<!-- SECTION "Comment je remplis les zones avec cuivre?" [26536-26831] -->
 <h2><a name="les_polygones_mettent_mes_pistes_a_la_masse_que_puis-je_y_faire" id="les_polygones_mettent_mes_pistes_a_la_masse_que_puis-je_y_faire">Les polygones mettent mes pistes à la masse! Que puis-je y faire?</a></h2>
 <div class="level2">
 
 <p>
-Vous n&rsquo;avez pas contrôlé le «·Enable_new_lines_clear_polygons·» dans le menu settings lorsque vous avez placé les pistes. Entrez «·changejoin(selection)·» dans la fenêtre de commande pour basculer ce drapeau pour toutes les pistes qui sont actuellement sélectionnées. Le raccourci clavier pour cette action est [<strong><code>shift-j</code></strong>].
+Vous n’avez pas contrôlé le «·Enable_new_lines_clear_polygons·» dans le menu settings lorsque vous avez placé les pistes. Entrez «·changejoin(selection)·» dans la fenêtre de commande pour basculer ce drapeau pour toutes les pistes qui sont actuellement sélectionnées. Le raccourci clavier pour cette action est [<strong><code>shift-j</code></strong>].
 </p>
 
 </div>
-<!-- SECTION [26832-27255] -->
+<!-- SECTION "Les polygones mettent mes pistes à la masse! Que puis-je y faire?" [26832-27255] -->
 <h2><a name="comment_je_change_le_polygon_clearance" id="comment_je_change_le_polygon_clearance">Comment je change le polygon clearance?</a></h2>
 <div class="level2">
 
 <p>
-Pressez [<strong><code>k</code></strong>] pour augmenter la clearence de l&rsquo;objet sous le curseur. Utilisez [<strong><code>ctrl-k</code></strong>] pour augmenter la clearence des objets sélectionnés. Ajoutez le modificateur [<strong><code>shift</code></strong>] pour diminuer la clearence. Pour changer une piste complète, pressez [<strong><code>f</code></strong>] pour trouver tous les segments qui sont connectés à l&rsquo;objet sous le curseur et appliquez l&rsquo;action «·select(connection)·».
+Pressez [<strong><code>k</code></strong>] pour augmenter la clearence de l’objet sous le curseur. Utilisez [<strong><code>ctrl-k</code></strong>] pour augmenter la clearence des objets sélectionnés. Ajoutez le modificateur [<strong><code>shift</code></strong>] pour diminuer la clearence. Pour changer une piste complète, pressez [<strong><code>f</code></strong>] pour trouver tous les segments qui sont connectés à l’objet sous le curseur et appliquez l’action «·select(connection)·».
 </p>
 
 <p>
-La valeur de l&rsquo;incrément peut être configurée dans le dialogue File/Preference/Increments.
+La valeur de l’incrément peut être configurée dans le dialogue File/Preference/Increments.
 </p>
 
 </div>
-<!-- SECTION [27256-27810] -->
-<h2><a name="comment_je_cache_les_polygones_lorsque_j_edite_le_placement" id="comment_je_cache_les_polygones_lorsque_j_edite_le_placement">Comment je cache les polygones lorsque j'édite le placement?</a></h2>
+<!-- SECTION "Comment je change le polygon clearance?" [27256-27810] -->
+<h2><a name="comment_je_cache_les_polygones_lorsque_j_edite_le_placement" id="comment_je_cache_les_polygones_lorsque_j_edite_le_placement">Comment je cache les polygones lorsque j&#039;édite le placement?</a></h2>
 <div class="level2">
 
 <p>
-Placez les polygones (et les rectangles) sur une couce séparée. Utilisez la préférence pour vous assurer que cette couche n&rsquo;est pas dans le même groupe que les pistes. Désactivez la piste en clickant sur le bouton de couche correspondant dans la fenêtre principale. Après que vous ayiez terminé avec les changements, utilisez le dialogue preference pour permettre à la couche des polygones de joindre la couche des pistes.
+Placez les polygones (et les rectangles) sur une couce séparée. Utilisez la préférence pour vous assurer que cette couche n’est pas dans le même groupe que les pistes. Désactivez la piste en clickant sur le bouton de couche correspondant dans la fenêtre principale. Après que vous ayiez terminé avec les changements, utilisez le dialogue preference pour permettre à la couche des polygones de joindre la couche des pistes.
 </p>
 
 </div>
-<!-- SECTION [27811-28318] -->
+<!-- SECTION "Comment je cache les polygones lorsque j'édite le placement?" [27811-28318] -->
 <h2><a name="comment_editer_les_polygones" id="comment_editer_les_polygones">Comment éditer les polygones?</a></h2>
 <div class="level2">
 
 <p>
-Il y a quatre manières de base pour éditer les contours des polygones. Vous pouvez déplacer et effacer les verticales et vous pouvez insérer les verticales en utilisant deux techniques. Les polygones peuvent être éditées de manière équivalente dans le mode «·thin line draw·» (settings –&gt; enable thin line draw) ou dans le mode normal. Déplacer un sommet est facilement accompli en utilisant un-selecting your polygon puis en cliquant et tirant ce sommet dans le nouvel emplacement. Pour effacer un sommet, un coin de votre polygone, placez votre pointeur sur le point et tapez «·delete·» avec le clavier. Pour insérer un sommet, vous devez utiliser l&rsquo;outil insert (’insert’ keystroke). Démarrez en cliquant sur le bord que vous voulez séparer avec un nouveau point. Cliquez et tirez le nouveau point dans le polygone. Une variation de cette technique est 1) cliquer pour sélectionner, suivi par 2) cliquer pour placer le nouveau sommet.
+Il y a quatre manières de base pour éditer les contours des polygones. Vous pouvez déplacer et effacer les verticales et vous pouvez insérer les verticales en utilisant deux techniques. Les polygones peuvent être éditées de manière équivalente dans le mode «·thin line draw·» (settings –&gt; enable thin line draw) ou dans le mode normal. Déplacer un sommet est facilement accompli en utilisant un-selecting your polygon puis en cliquant et tirant ce sommet dans le nouvel emplacement. Pour effacer un sommet, un coin de votre polygone, placez votre pointeur sur le point et tapez «·delete·» avec le clavier. Pour insérer un sommet, vous devez utiliser l’outil insert (’insert’ keystroke). Démarrez en cliquant sur le bord que vous voulez séparer avec un nouveau point. Cliquez et tirez le nouveau point dans le polygone. Une variation de cette technique est 1) cliquer pour sélectionner, suivi par 2) cliquer pour placer le nouveau sommet.
 </p>
 
 <p>
-(NOTE: Insérer des points dans un polygone ne fonctionnera généralement QUE avec «·all direction lines·» de validé («·settings –&gt; enable all direction lines·»). C&rsquo;est parce PCB possède un système de contrainte de 45/90 degrés puissante. Si vous tentez d&rsquo;insérer des nouveaux sommets, dans un polygone, qui ne tombent pas sur des lignes à contraintes de 45 et 90 degrés, PCB ne permet pas cette action!)
+(NOTE: Insérer des points dans un polygone ne fonctionnera généralement QUE avec «·all direction lines·» de validé («·settings –&gt; enable all direction lines·»). C’est parce PCB possède un système de contrainte de 45/90 degrés puissante. Si vous tentez d’insérer des nouveaux sommets, dans un polygone, qui ne tombent pas sur des lignes à contraintes de 45 et 90 degrés, PCB ne permet pas cette action!)
 </p>
 
 </div>
-<!-- SECTION [28319-29752] -->
+<!-- SECTION "Comment éditer les polygones?" [28319-29752] -->
 <h2><a name="comment_je_place_des_vias_qui_connectent_un_polygone_pour_une_dissipation_thermique_complete_ou_pour_une_integrite_de_protection_complete" id="comment_je_place_des_vias_qui_connectent_un_polygone_pour_une_dissipation_thermique_complete_ou_pour_une_integrite_de_protection_complete">Comment je place des vias qui connectent un polygone pour une dissipation thermique complète ou pour une intégrité de protection complète?</a></h2>
 <div class="level2">
 
 <p>
-Il est souvent utile d&rsquo;avoir des vias connectés complètement à un polygone (une zone de cuivre) pour les transferts de chaleur – le problème apparent est que les polygones de PCB ont un seul drapeau «·clear pins/vias·» pour le polygone complet (basculé avec la touche [<strong><code>s</code></strong>]). Notre objectif est de seulement connecter quelques uns des broches/vias au polygone mais pour mieux les connecter que ne le font un des connexions thermiques. Vous avez ici quelques manières de le faire·:
+Il est souvent utile d’avoir des vias connectés complètement à un polygone (une zone de cuivre) pour les transferts de chaleur – le problème apparent est que les polygones de PCB ont un seul drapeau «·clear pins/vias·» pour le polygone complet (basculé avec la touche [<strong><code>s</code></strong>]). Notre objectif est de seulement connecter quelques uns des broches/vias au polygone mais pour mieux les connecter que ne le font un des connexions thermiques. Vous avez ici quelques manières de le faire·:
 </p>
 
 <p>
-Une manière est de faire un objet qui est presque comme une connexion thermique en ce sens quelle est entre le via et le polygone – la différence est que vous créez réellement un anneau pour remplir complètement l&rsquo;espace entre le trou et le polygone (qui, à cause de sa clearance validée, n&rsquo;est pas connecté à la broche). Cet anneau est un arc à quatre segments. Vous pouvez copier ces quatre objets dans le tampon pour créer un «·zero-clearance thermal tool·». Le contre-coup de cette astuce est que lorsque vous changez la taille de via, vous aurez aussi à modifier la taille de ces éléments de remplissage.
+Une manière est de faire un objet qui est presque comme une connexion thermique en ce sens quelle est entre le via et le polygone – la différence est que vous créez réellement un anneau pour remplir complètement l’espace entre le trou et le polygone (qui, à cause de sa clearance validée, n’est pas connecté à la broche). Cet anneau est un arc à quatre segments. Vous pouvez copier ces quatre objets dans le tampon pour créer un «·zero-clearance thermal tool·». Le contre-coup de cette astuce est que lorsque vous changez la taille de via, vous aurez aussi à modifier la taille de ces éléments de remplissage.
 </p>
 
 <p>
-Les arcs vous permettront d&rsquo;utiliser cette astuce de remplissage dans les zones étroites en ne plaçant que deux des quatre arcs.
+Les arcs vous permettront d’utiliser cette astuce de remplissage dans les zones étroites en ne plaçant que deux des quatre arcs.
 </p>
 
 <p>
-Une autre astuce est de réaliser une ligne sans longueur. Prenez un seul segment de ligne et déplacez le point de fin au point de début. Vous avez maintenant une «·ligne à un seul point·» (un cercle) avec le diamètre égal à l&rsquo;épaisseur de la ligne. Faites autant de couches (touche [<strong><code>m</code></strong>]) que vous jugez nécessaire. Placez cet objet centré sur votre via pour le connecter à un polygone.
+Une autre astuce est de réaliser une ligne sans longueur. Prenez un seul segment de ligne et déplacez le point de fin au point de début. Vous avez maintenant une «·ligne à un seul point·» (un cercle) avec le diamètre égal à l’épaisseur de la ligne. Faites autant de couches (touche [<strong><code>m</code></strong>]) que vous jugez nécessaire. Placez cet objet centré sur votre via pour le connecter à un polygone.
 </p>
 
 <p>
-Les utilisateurs intensifs peuvent vouloir garder une petite bibliothèque personnalisée des ces éléments en les sauvegardant comme des éléments. Il est aussi pratique de placer des «·éléments·» dans un de vos tampons PCB de telle manière qu&rsquo;ils soient à portée de main.
+Les utilisateurs intensifs peuvent vouloir garder une petite bibliothèque personnalisée des ces éléments en les sauvegardant comme des éléments. Il est aussi pratique de placer des «·éléments·» dans un de vos tampons PCB de telle manière qu’ils soient à portée de main.
 </p>
 
 <p>
@@ -727,16 +732,16 @@ Vous pouvez aussi ajouter un autre polygone par dessus le polygone sur lequel vo
 </p>
 
 </div>
-<!-- SECTION [29753-32096] -->
+<!-- SECTION "Comment je place des vias qui connectent un polygone pour une dissipation thermique complète ou pour une intégrité de protection complète?" [29753-32096] -->
 <h2><a name="les_polygones_peuvent-ils_etre_un-masques_un_polygone_peut-il_etre_de_cuivre_sans_masque_de_soudure" id="les_polygones_peuvent-ils_etre_un-masques_un_polygone_peut-il_etre_de_cuivre_sans_masque_de_soudure">Les polygones peuvent-ils être un-masqués? (Un polygone peut-il être de cuivre sans masque de soudure?)</a></h2>
 <div class="level2">
 
 <p>
-Ce n&rsquo;est actuellement pas possible dans PCB. La manière habituelle (par exemple si vous voulez qu&rsquo;une zone nue s&rsquo;attache à une zone de dissipation ou un shielding) est de réaliser un élément qui est une pastille simple. Cette pastille doit être aussi petite que possible (0 x 0) mais avec une grand clearance. C&rsquo;est la clearance du masque de soudure de cet élément que vous allez utiliser pour dé-masquer le polygone. PCB limite en interne la taille de la pastille à 250 mils. Pour les zones plus grandes, vous aurez besoin d&rsquo;utiliser plusieurs pastilles.
+Ce n’est actuellement pas possible dans PCB. La manière habituelle (par exemple si vous voulez qu’une zone nue s’attache à une zone de dissipation ou un shielding) est de réaliser un élément qui est une pastille simple. Cette pastille doit être aussi petite que possible (0 x 0) mais avec une grand clearance. C’est la clearance du masque de soudure de cet élément que vous allez utiliser pour dé-masquer le polygone. PCB limite en interne la taille de la pastille à 250 mils. Pour les zones plus grandes, vous aurez besoin d’utiliser plusieurs pastilles.
 </p>
 
 </div>
-<!-- SECTION [32097-32782] -->
+<!-- SECTION "Les polygones peuvent-ils être un-masqués? (Un polygone peut-il être de cuivre sans masque de soudure?)" [32097-32782] -->
 <h2><a name="comment_je_place_des_trous_de_montage_mounting_hole" id="comment_je_place_des_trous_de_montage_mounting_hole">Comment je place des trous de montage (mounting hole)?</a></h2>
 <div class="level2">
 
@@ -745,28 +750,28 @@ Utilisez une empreinte pour les pour trou de montage ou placez un via.
 </p>
 
 <p>
-Si la pastille entourant le trou de montage doit être conneté électriquement, alors vous devez montrer la connexion dans votre schéma. Ajoutez un symbole pour le pour le trou de montage et changez son attribut d&rsquo;empreinte.
+Si la pastille entourant le trou de montage doit être conneté électriquement, alors vous devez montrer la connexion dans votre schéma. Ajoutez un symbole pour le pour le trou de montage et changez son attribut d’empreinte.
 </p>
 
 <p>
-Ma préférence est de créer des empreintes PCB pour les divers types d&rsquo;éléments à monter. J&rsquo;ai une variété de silkscreens pour diverses combinaisons de de matériel (hex nut, hex nut with washer, etc.). Le silkscreen fournit une référence de placement pendant le placement avec PCB.
+Ma préférence est de créer des empreintes PCB pour les divers types d’éléments à monter. J’ai une variété de silkscreens pour diverses combinaisons de de matériel (hex nut, hex nut with washer, etc.). Le silkscreen fournit une référence de placement pendant le placement avec PCB.
 </p>
 
 <p>
-Pour les exemples d&rsquo;empreintes, voyez <a href="http://www.luciani.org/geda/pcb/pcb-footprint-list.html#Hardware" class="urlextern" title="http://www.luciani.org/geda/pcb/pcb-footprint-list.html#Hardware"  rel="nofollow">http://www.luciani.org/geda/pcb/pcb-footprint-list.html#Hardware</a>.
+Pour les exemples d’empreintes, voyez <a href="http://www.luciani.org/geda/pcb/pcb-footprint-list.html#Hardware" class="urlextern" title="http://www.luciani.org/geda/pcb/pcb-footprint-list.html#Hardware"  rel="nofollow">http://www.luciani.org/geda/pcb/pcb-footprint-list.html#Hardware</a>.
 </p>
 
 </div>
-<!-- SECTION [32783-33551] -->
+<!-- SECTION "Comment je place des trous de montage (mounting hole)?" [32783-33551] -->
 <h2><a name="pourquoi_est-il_possible_de_realiser_des_ponts_thermiques_pour_les_broches_mais_pas_pour_une_pastille" id="pourquoi_est-il_possible_de_realiser_des_ponts_thermiques_pour_les_broches_mais_pas_pour_une_pastille">Pourquoi est-il possible de réaliser des ponts thermiques pour les broches mais pas pour une pastille?</a></h2>
 <div class="level2">
 
 <p>
-La raison est que les broches ont habituellement suffisamment d&rsquo;espace avec le plan les entourant qui reste intact sur toutes les faces et ce n&rsquo;est pas le cas des pastilles qui sont habituellement trop serrées. À cause de ceci, vous devez dessiner manuellement les «·doigts·» de liaison thermique pour connecter la pastille au plan de masse. Assurez-vous que vous avez configuré la connexion de telles nouvelles lignes aux plans lorsque vous les dessinez. Si vous avez besoin de faire plusieurs de ces ponts thermiques, passez un peu de temps à faire le premier de la manière dont vous souhaitez puis copiez les doigts dans le tampon et collez-le si vous voulez les autres.
+La raison est que les broches ont habituellement suffisamment d’espace avec le plan les entourant qui reste intact sur toutes les faces et ce n’est pas le cas des pastilles qui sont habituellement trop serrées. À cause de ceci, vous devez dessiner manuellement les «·doigts·» de liaison thermique pour connecter la pastille au plan de masse. Assurez-vous que vous avez configuré la connexion de telles nouvelles lignes aux plans lorsque vous les dessinez. Si vous avez besoin de faire plusieurs de ces ponts thermiques, passez un peu de temps à faire le premier de la manière dont vous souhaitez puis copiez les doigts dans le tampon et collez-le si vous voulez les autres.
 </p>
 
 </div>
-<!-- SECTION [33552-34351] -->
+<!-- SECTION "Pourquoi est-il possible de réaliser des ponts thermiques pour les broches mais pas pour une pastille?" [33552-34351] -->
 <h2><a name="pcb_peut-il_etre_utilise_pour_realiser_des_cartes_a_simple_couche" id="pcb_peut-il_etre_utilise_pour_realiser_des_cartes_a_simple_couche">PCB peut-il être utilisé pour réaliser des cartes à simple couche?</a></h2>
 <div class="level2">
 
@@ -774,63 +779,63 @@ La raison est que les broches ont habituellement suffisamment d&rsquo;espace ave
 Oui. Tracez vos gerbers et et enlevez toutes les couches qui ne sont pas nécessaires. Vous pouvez juste dessiner le placement comme vous le souhaitez (style libre). Si vous voulez vérifier la connectivité, vous avez deux choix:
 </p>
 <ol>
-<li class="level1"><div class="li"> Supposer que votre cuivre est sur le côté oppposé, utilisez le côté supérieur du placement pour y placer les pistes où seront les jumpers. C&rsquo;est probablement le plus facile. Puis, traitez le côté opposé et placez les jumpers où vous avez le côté supérieur du cuivre.</div>
+<li class="level1"><div class="li"> Supposer que votre cuivre est sur le côté oppposé, utilisez le côté supérieur du placement pour y placer les pistes où seront les jumpers. C’est probablement le plus facile. Puis, traitez le côté opposé et placez les jumpers où vous avez le côté supérieur du cuivre.</div>
 </li>
-<li class="level1"><div class="li"> Créez un symbole «·jumper·» dans le schéma et placez-le dans les endroits où vous avez besoin d&rsquo;un jumper. Cela peut être pénible mais vous pouvez forcer les dimensions des jumpers de cette manière si vous en avez besoin.</div>
+<li class="level1"><div class="li"> Créez un symbole «·jumper·» dans le schéma et placez-le dans les endroits où vous avez besoin d’un jumper. Cela peut être pénible mais vous pouvez forcer les dimensions des jumpers de cette manière si vous en avez besoin.</div>
 </li>
 </ol>
 
 <p>
- Si vous tentez d&rsquo;utliser l&rsquo;autorouter, désactivez toutes les couches arrière lorsque vous routez et il collera à cette couche.
+ Si vous tentez d’utliser l’autorouter, désactivez toutes les couches arrière lorsque vous routez et il collera à cette couche.
 </p>
 
 </div>
-<!-- SECTION [34352-35318] -->
+<!-- SECTION "PCB peut-il être utilisé pour réaliser des cartes à simple couche?" [34352-35318] -->
 <h2><a name="quelles_ressources_existent_pour_traiter_les_fichiers_pcb_en_utilisant_les_scripts" id="quelles_ressources_existent_pour_traiter_les_fichiers_pcb_en_utilisant_les_scripts">Quelles ressources existent pour traiter les fichiers PCB en utilisant les scripts?</a></h2>
 <div class="level2">
 
 <p>
-Une des plus grande fonctionnalité de PCB est qu&rsquo;il utilise un format de fichier <acronym title="American Standard Code for Information Interchange">ASCII</acronym> facilement compréhensible. C&rsquo;est la raison pour laquelle de nombreues personnes utilisent les scripts (habituellement <acronym title="Practical Extraction and Report Language">Perl</acronym>) pour traiter leurs cartes de différentes manières. Vous pouvez utiliser ces scripts soit comme ils sont, soit en les modifiant pour les adapter à nos propres buts. Vous avez ici quelques liens vers les scripts disponibles: 
+Une des plus grande fonctionnalité de PCB est qu’il utilise un format de fichier <acronym title="American Standard Code for Information Interchange">ASCII</acronym> facilement compréhensible. C’est la raison pour laquelle de nombreues personnes utilisent les scripts (habituellement <acronym title="Practical Extraction and Report Language">Perl</acronym>) pour traiter leurs cartes de différentes manières. Vous pouvez utiliser ces scripts soit comme ils sont, soit en les modifiant pour les adapter à nos propres buts. Vous avez ici quelques liens vers les scripts disponibles: 
 </p>
 <ol>
 <li class="level1"><div class="li"> John Luciani possède une large éventail de <a href="http://www.luciani.org/geda/pcb/pcb-perl-library.html" class="urlextern" title="http://www.luciani.org/geda/pcb/pcb-perl-library.html"  rel="nofollow">scripts</a> disponible sur <a href="http://www.luciani.org/" class="urlextern" title="http://www.luciani.org"  rel="nofollow"> son site web</a>. Dans cette collection, des scripts sont inclus pour générer des empreintes, de même que </div>
 </li>
-<li class="level1"><div class="li"> David Rowe possède des scripts pour mettre à jour des éléments de même qu&rsquo;ajouter/suprimer des fichiers PCB les uns des autres sur <a href="http://www.rowetel.com/perl4pcb.html" class="urlextern" title="http://www.rowetel.com/perl4pcb.html"  rel="nofollow">son site web</a>.</div>
+<li class="level1"><div class="li"> David Rowe possède des scripts pour mettre à jour des éléments de même qu’ajouter/suprimer des fichiers PCB les uns des autres sur <a href="http://www.rowetel.com/perl4pcb.html" class="urlextern" title="http://www.rowetel.com/perl4pcb.html"  rel="nofollow">son site web</a>.</div>
 </li>
 <li class="level1"><div class="li"> Stuart Brorson a écrit un script simple qui génère des empreintes pour deux ponts thermiques passifs en SMD. Un tarball gzippé est disponible <a href="http://www.brorson.com/gEDA/Smtgen.pl.gz" class="urlextern" title="http://www.brorson.com/gEDA/Smtgen.pl.gz"  rel="nofollow"> ici </a>.</div>
 </li>
 </ol>
 
 </div>
-<!-- SECTION [35319-36519] -->
-<h2><a name="comment_j_importe_des_graphiques_vectoriels_externe" id="comment_j_importe_des_graphiques_vectoriels_externe">Comment j'importe des graphiques vectoriels externe?</a></h2>
+<!-- SECTION "Quelles ressources existent pour traiter les fichiers PCB en utilisant les scripts?" [35319-36519] -->
+<h2><a name="comment_j_importe_des_graphiques_vectoriels_externe" id="comment_j_importe_des_graphiques_vectoriels_externe">Comment j&#039;importe des graphiques vectoriels externe?</a></h2>
 <div class="level2">
 
 <p>
-Il existe un utilitaire open source provenant d&rsquo;une tierce personne appelé <a href="http://www.pstoedit.net/" class="urlextern" title="http://www.pstoedit.net/"  rel="nofollow">pstoedit</a> qui convertit des données postscript au format pcb. Il est inclus dans la plupart des distributions majeures de Linux. Vous pouvez utiliser votre graphique vectoriel préféré pour produire un logo ou toute autre type de marque amusante. Exportez-le comme eps si vous pouvez et assurez-vous que votre logo correspond à la à la boîte de remplissage (contrôlez-le avec un visualiseur postscript tel que ggv). S&rsquo;il n&rsquo;y a pas d&rsquo;export d&rsquo;eps de disponible, vous pouvez produire du postscript en l&rsquo;imprimant dans un fichier. Dans ce cas, vous pouvez ajouter une boîte de remplissage avec <a href="http://www.cs.wisc.edu/~ghost/doc/gnu/6.53/Ps2epsi.htm" class="urlextern" title="http://www.cs.wisc.edu/~ghost/doc/gnu/6.53/Ps2epsi.htm"  rel="nofollow">ps2epsi</a>. Appelez pstoedit avec l&rsquo;option «·<code>-f pcb</code>·» pour produire un fichier pcb valide qui contient les graphiques comme piste sur une couche 1. Chargez ce fichier dans pcb. Les graphiques seront alors quelque part dans le bord bas gauche de la visualisation. Vous avoir à zommer pour l&rsquo;avoir sur l&rsquo;écran.
+Il existe un utilitaire open source provenant d’une tierce personne appelé <a href="http://www.pstoedit.net/" class="urlextern" title="http://www.pstoedit.net/"  rel="nofollow">pstoedit</a> qui convertit des données postscript au format pcb. Il est inclus dans la plupart des distributions majeures de Linux. Vous pouvez utiliser votre graphique vectoriel préféré pour produire un logo ou toute autre type de marque amusante. Exportez-le comme eps si vous pouvez et assurez-vous que votre logo correspond à la à la boîte de remplissage (contrôlez-le avec un visualiseur postscript tel que ggv). S’il n’y a pas d’export d’eps de disponible, vous pouvez produire du postscript en l’imprimant dans un fichier. Dans ce cas, vous pouvez ajouter une boîte de remplissage avec <a href="http://www.cs.wisc.edu/~ghost/doc/gnu/6.53/Ps2epsi.htm" class="urlextern" title="http://www.cs.wisc.edu/~ghost/doc/gnu/6.53/Ps2epsi.htm"  rel="nofollow">ps2epsi</a>. Appelez pstoedit avec l’option «·<code>-f pcb</code>·» pour produire un fichier pcb valide qui contient les graphiques comme piste sur une couche 1. Chargez ce fichier dans pcb. Les graphiques seront alors quelque part dans le bord bas gauche de la visualisation. Vous avoir à zommer pour l’avoir sur l’écran.
 </p>
 
 <p>
-L&rsquo;import de graphiques vectoriels externes est utile si un si une forme irrégulière de pcb est nécessaire. Utilisez le tampon couper pour copier la forme de votre circuit réel. 
+L’import de graphiques vectoriels externes est utile si un si une forme irrégulière de pcb est nécessaire. Utilisez le tampon couper pour copier la forme de votre circuit réel. 
 </p>
 
 </div>
-<!-- SECTION [36520-37846] -->
-<h2><a name="comment_j_attache_un_nom_a_mon_circuit" id="comment_j_attache_un_nom_a_mon_circuit">Comment j'attache un nom à mon circuit?</a></h2>
+<!-- SECTION "Comment j'importe des graphiques vectoriels externe?" [36520-37846] -->
+<h2><a name="comment_j_attache_un_nom_a_mon_circuit" id="comment_j_attache_un_nom_a_mon_circuit">Comment j&#039;attache un nom à mon circuit?</a></h2>
 <div class="level2">
 
 <p>
-Vous pouvez configurer le nom du pcb courant avec <code>Menu Edit - Edit name of - layout</code>. Cela configure l&rsquo;attribut de titre sur le circuit. Cet attribut est utilisé pour els actions d&rsquo;export. Il n&rsquo;interfère pas avec le nom de fichier.   
+Vous pouvez configurer le nom du pcb courant avec <code>Menu Edit - Edit name of - layout</code>. Cela configure l’attribut de titre sur le circuit. Cet attribut est utilisé pour els actions d’export. Il n’interfère pas avec le nom de fichier.   
 </p>
 
 </div>
-<!-- SECTION [37847-38140] -->
+<!-- SECTION "Comment j'attache un nom à mon circuit?" [37847-38140] -->
 <h1><a name="autorouteur" id="autorouteur">Autorouteur</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [38141-38166] -->
-<h2><a name="comment_je_force_l_autorouteur_a_ne_placer_des_pistes_que_sur_une_couche_particuliere" id="comment_je_force_l_autorouteur_a_ne_placer_des_pistes_que_sur_une_couche_particuliere">Comment je force l'autorouteur à ne placer des pistes que sur une couche particulière?</a></h2>
+<!-- SECTION "Autorouteur" [38141-38166] -->
+<h2><a name="comment_je_force_l_autorouteur_a_ne_placer_des_pistes_que_sur_une_couche_particuliere" id="comment_je_force_l_autorouteur_a_ne_placer_des_pistes_que_sur_une_couche_particuliere">Comment je force l&#039;autorouteur à ne placer des pistes que sur une couche particulière?</a></h2>
 <div class="level2">
 
 <p>
@@ -838,35 +843,35 @@ Désactivez juste les couches dont vous ne voulez pas (habituellement vertes et 
 </p>
 
 </div>
-<!-- SECTION [38167-38416] -->
-<h2><a name="commennt_forcer_l_autorouteur_a_router_seulement_dans_les_limites_des_contours_du_pcb" id="commennt_forcer_l_autorouteur_a_router_seulement_dans_les_limites_des_contours_du_pcb">Commennt forcer l'autorouteur à router seulement dans les limites des contours du pcb?</a></h2>
+<!-- SECTION "Comment je force l'autorouteur à ne placer des pistes que sur une couche particulière?" [38167-38416] -->
+<h2><a name="commennt_forcer_l_autorouteur_a_router_seulement_dans_les_limites_des_contours_du_pcb" id="commennt_forcer_l_autorouteur_a_router_seulement_dans_les_limites_des_contours_du_pcb">Commennt forcer l&#039;autorouteur à router seulement dans les limites des contours du pcb?</a></h2>
 <div class="level2">
 
 <p>
-Vous pouvez faire fonctionner l&rsquo;autorouteur seulement dans une zone donnée en dessinant un polygone de cuivre se conformant à votre emboîtement de circuit et placez-le dans chaque couche que vous tentez d&rsquo;autorouter. Vous pouvez aussi utiliser cette astuce pour ne seulement autorouter qu&rsquo;une petite zone. Bien sûr, si vous avez un net qui touche accidentellement le polygone, toutes les routes seront court-circuitées à ce net.
+Vous pouvez faire fonctionner l’autorouteur seulement dans une zone donnée en dessinant un polygone de cuivre se conformant à votre emboîtement de circuit et placez-le dans chaque couche que vous tentez d’autorouter. Vous pouvez aussi utiliser cette astuce pour ne seulement autorouter qu’une petite zone. Bien sûr, si vous avez un net qui touche accidentellement le polygone, toutes les routes seront court-circuitées à ce net.
 </p>
 
 </div>
-<!-- SECTION [38417-38952] -->
-<h2><a name="comment_je_route_les_plans_d_alimentation_et_de_masse_avec_l_autorouteur" id="comment_je_route_les_plans_d_alimentation_et_de_masse_avec_l_autorouteur">Comment je route les plans d'alimentation et de masse avec l'autorouteur?</a></h2>
+<!-- SECTION "Commennt forcer l'autorouteur à router seulement dans les limites des contours du pcb?" [38417-38952] -->
+<h2><a name="comment_je_route_les_plans_d_alimentation_et_de_masse_avec_l_autorouteur" id="comment_je_route_les_plans_d_alimentation_et_de_masse_avec_l_autorouteur">Comment je route les plans d&#039;alimentation et de masse avec l&#039;autorouteur?</a></h2>
 <div class="level2">
 
 <p>
-Connectez les polygones qui deviendront vos plans d&rsquo;alimantation (et de masse) à un net et l&rsquo;autorouteur s&rsquo;occupera du reste. Vous pouvez avoir besoin de quelques astuces de clearances de polygone pour avoir le routage de l&rsquo;alimentation _et_ le routage dans les limites de la carte.
+Connectez les polygones qui deviendront vos plans d’alimantation (et de masse) à un net et l’autorouteur s’occupera du reste. Vous pouvez avoir besoin de quelques astuces de clearances de polygone pour avoir le routage de l’alimentation _et_ le routage dans les limites de la carte.
 </p>
 
 </div>
-<!-- SECTION [38953-39323] -->
-<h2><a name="le_circuit_produit_par_l_autorouteur_est_inefficace" id="le_circuit_produit_par_l_autorouteur_est_inefficace">Le circuit produit par l'autorouteur est inefficace!</a></h2>
+<!-- SECTION "Comment je route les plans d'alimentation et de masse avec l'autorouteur?" [38953-39323] -->
+<h2><a name="le_circuit_produit_par_l_autorouteur_est_inefficace" id="le_circuit_produit_par_l_autorouteur_est_inefficace">Le circuit produit par l&#039;autorouteur est inefficace!</a></h2>
 <div class="level2">
 
 <p>
-Ce une limitation technologique de l&rsquo;autorouteur actuel. Il est sans grille et utilise seulement les rectangles géométriques.
+Ce une limitation technologique de l’autorouteur actuel. Il est sans grille et utilise seulement les rectangles géométriques.
 </p>
 
 </div>
-<!-- SECTION [39324-39517] -->
-<h2><a name="le_circuit_produit_par_l_autorouteur_est_moche" id="le_circuit_produit_par_l_autorouteur_est_moche">Le circuit produit par l'autorouteur est moche!</a></h2>
+<!-- SECTION "Le circuit produit par l'autorouteur est inefficace!" [39324-39517] -->
+<h2><a name="le_circuit_produit_par_l_autorouteur_est_moche" id="le_circuit_produit_par_l_autorouteur_est_moche">Le circuit produit par l&#039;autorouteur est moche!</a></h2>
 <div class="level2">
 
 <p>
@@ -874,12 +879,12 @@ Vous êtes plus que bienvenu pour contribuer à un autorouteur topologique.
 </p>
 
 </div>
-<!-- SECTION [39518-39654] -->
+<!-- SECTION "Le circuit produit par l'autorouteur est moche!" [39518-39654] -->
 <h1><a name="generation_gerber_et_production_de_fichiers_i_o" id="generation_gerber_et_production_de_fichiers_i_o">Génération Gerber et production de fichiers I/O</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [39655-39719] -->
+<!-- SECTION "Génération Gerber et production de fichiers I/O" [39655-39719] -->
 <h2><a name="comment_je_realise_des_contours_de_carte_pour_proposer_mes_gerbers_vers_le_fabricant_de_carte" id="comment_je_realise_des_contours_de_carte_pour_proposer_mes_gerbers_vers_le_fabricant_de_carte">Comment je réalise des contours de carte pour proposer mes gerbers vers le fabricant de carte?</a></h2>
 <div class="level2">
 
@@ -888,11 +893,11 @@ Vous pouvez ajouter une couche  de contour pour vos projets pcb. PCB interprète
 </p>
 
 <p>
-Vous pouvez entrer voter couche de contour par l&rsquo;interface graphique de PCB. Vous dessinez simplement les lignes de contour de la carte. Vous pouvez générer des cartes de toute forme de cette manière.
+Vous pouvez entrer voter couche de contour par l’interface graphique de PCB. Vous dessinez simplement les lignes de contour de la carte. Vous pouvez générer des cartes de toute forme de cette manière.
 </p>
 
 <p>
-Il est aussi possible d&rsquo;éditer le format de fichier natif .pcb de votre circuit. J&rsquo;utilise habituellement la Couche 8 pour les contours: 
+Il est aussi possible d’éditer le format de fichier natif .pcb de votre circuit. J’utilise habituellement la Couche 8 pour les contours: 
 </p>
 <pre class="code">Layer(8 &quot;outline&quot;)
 (
@@ -904,11 +909,11 @@ Il est aussi possible d&rsquo;éditer le format de fichier natif .pcb de votre c
 )</pre>
 
 </div>
-<!-- SECTION [39720-40703] -->
-<h2><a name="j_ai_fini_mon_placement._comment_je_le_controle" id="j_ai_fini_mon_placement._comment_je_le_controle">J'ai fini mon placement. Comment je le contrôle?</a></h2>
+<!-- SECTION "Comment je réalise des contours de carte pour proposer mes gerbers vers le fabricant de carte?" [39720-40703] -->
+<h2><a name="j_ai_fini_mon_placement._comment_je_le_controle" id="j_ai_fini_mon_placement._comment_je_le_controle">J&#039;ai fini mon placement. Comment je le contrôle?</a></h2>
 <div class="level2">
 <ul>
-<li class="level1"><div class="li"> Lancez un contrôle des règles de dessin soit par l&rsquo;interface de commande (&rdquo;DRC()&rdquo;) ou depuis le menu (Connects - Design Rule Checker). Vous pouvez configurer les règles avec la section des tailles dans le dialogue preference. Les résultats du contrôle sont montrés dans la fenêtre de journal (log). </div>
+<li class="level1"><div class="li"> Lancez un contrôle des règles de dessin soit par l’interface de commande (“DRC()&quot;) ou depuis le menu (Connects - Design Rule Checker). Vous pouvez configurer les règles avec la section des tailles dans le dialogue preference. Les résultats du contrôle sont montrés dans la fenêtre de journal (log). </div>
 </li>
 </ul>
 
@@ -920,25 +925,25 @@ avant de lancer le contrôleur de DRC, il est essentiel de contrôler vos fichie
 </li>
 <li class="level1"><div class="li"> Contrôlez que tous les diamètres de trous sont à la bonne taille.</div>
 </li>
-<li class="level1"><div class="li"> Contrôlez que les anneaux de métal autour des trous/vias sont suffisamment larges. L&rsquo;anneau annulaire est la distance entre les bords du trou et le diamètre extérieur de la métallisation. L&rsquo;anneau annulaire doit être suffisamment large pour permettre la zone de perçage + connexion entre couches + autres anomalies de fabrication. Cette information devrait être disponible chez votre fabricant de PCB·; ils publient normalement les tailles minimum d&rsquo;anneau annulaire dans leurs documents de règles de fabrication.</div>
+<li class="level1"><div class="li"> Contrôlez que les anneaux de métal autour des trous/vias sont suffisamment larges. L’anneau annulaire est la distance entre les bords du trou et le diamètre extérieur de la métallisation. L’anneau annulaire doit être suffisamment large pour permettre la zone de perçage + connexion entre couches + autres anomalies de fabrication. Cette information devrait être disponible chez votre fabricant de PCB·; ils publient normalement les tailles minimum d’anneau annulaire dans leurs documents de règles de fabrication.</div>
 </li>
 <li class="level1"><div class="li"> Contrôlez que vos antipads (clearance autour des trous/vias) soient suffisamment larges. Cette information doit être disponible chez votre fabricant de PCB·; demandez-leur leurs documents de règles de fabrication.</div>
 </li>
-<li class="level1"><div class="li"> Vérifiez qu&rsquo;aucun soldermask ou silkscreen ne se superpose avec une pastille de cuivre ou un trou passant.</div>
+<li class="level1"><div class="li"> Vérifiez qu’aucun soldermask ou silkscreen ne se superpose avec une pastille de cuivre ou un trou passant.</div>
 </li>
-<li class="level1"><div class="li"> Sur les couches de plan, vérifiez qu&rsquo;au moins quelques vias s&rsquo;y connectent (oui, j&rsquo;ai vu une carte ou le plan de masse complet était flottant – il n&rsquo;avait pas été réalisé avec pcb, soit dit en passant)</div>
+<li class="level1"><div class="li"> Sur les couches de plan, vérifiez qu’au moins quelques vias s’y connectent (oui, j’ai vu une carte ou le plan de masse complet était flottant – il n’avait pas été réalisé avec pcb, soit dit en passant)</div>
 </li>
-<li class="level1"><div class="li"> Sur les couches de plan, vérifiez qu&rsquo;au moins quelques vias _n&rsquo;y sont pas_ connecté.</div>
+<li class="level1"><div class="li"> Sur les couches de plan, vérifiez qu’au moins quelques vias _n’y sont pas_ connecté.</div>
 </li>
-<li class="level1"><div class="li"> Effectuez une contrôle visuel d&rsquo;anomalie sur toutes les couches. Rien de détaillé, jetez juste une regard approximatif sur la manière dont cela evrait être.</div>
+<li class="level1"><div class="li"> Effectuez une contrôle visuel d’anomalie sur toutes les couches. Rien de détaillé, jetez juste une regard approximatif sur la manière dont cela evrait être.</div>
 </li>
-<li class="level1"><div class="li"> Toutes les couches sont-elles négatives/positives telles qu&rsquo;elles devraient l&rsquo;être? Notez que certains fabricants veulent seulement des couches positives. PCB en créera automatiquement des Gerbers négatives sur les couches de plans sans pistes. Si vous voulez une couche avec tous les plans en sortie comme couche positive, dessinez une piste simple quelque part dans une zone inutilisée du plan. Cela obligera PCB à faire de cette couche une couche positive.</div>
+<li class="level1"><div class="li"> Toutes les couches sont-elles négatives/positives telles qu’elles devraient l’être? Notez que certains fabricants veulent seulement des couches positives. PCB en créera automatiquement des Gerbers négatives sur les couches de plans sans pistes. Si vous voulez une couche avec tous les plans en sortie comme couche positive, dessinez une piste simple quelque part dans une zone inutilisée du plan. Cela obligera PCB à faire de cette couche une couche positive.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [40704-43388] -->
-<h1><a name="vous_n_avez_pas_repondu_a_mes_questions._ou_puis-je_trouver_d_autres_informations_sur_pcb" id="vous_n_avez_pas_repondu_a_mes_questions._ou_puis-je_trouver_d_autres_informations_sur_pcb">Vous n'avez pas répondu à mes questions. Où puis-je trouver d'autres informations sur PCB?</a></h1>
+<!-- SECTION "J'ai fini mon placement. Comment je le contrôle?" [40704-43388] -->
+<h1><a name="vous_n_avez_pas_repondu_a_mes_questions._ou_puis-je_trouver_d_autres_informations_sur_pcb" id="vous_n_avez_pas_repondu_a_mes_questions._ou_puis-je_trouver_d_autres_informations_sur_pcb">Vous n&#039;avez pas répondu à mes questions. Où puis-je trouver d&#039;autres informations sur PCB?</a></h1>
 <div class="level1">
 
 <p>
@@ -948,10 +953,10 @@ avant de lancer le contrôleur de DRC, il est essentiel de contrôler vos fichie
 </p>
 
 <p>
-Vous pouvez avoir des réponses plus rapides avec la liste des geda-user. Si vous n&rsquo;avez trouvé une réponse à votre question à propos de PCB sur cette page ou dans les autres documentations, postez alors sur la liste! Notez que vous devez y souscrire avant de pouvoir y écrire. Les listes de gEDA et leurs archives sont sur: <a href="http://geda.seul.org/mailinglist/index.html" class="urlextern" title="http://geda.seul.org/mailinglist/index.html"  rel="nofollow">http://geda.seul.org/mailinglist/index.html</a> 
+Vous pouvez avoir des réponses plus rapides avec la liste des geda-user. Si vous n’avez trouvé une réponse à votre question à propos de PCB sur cette page ou dans les autres documentations, postez alors sur la liste! Notez que vous devez y souscrire avant de pouvoir y écrire. Les listes de gEDA et leurs archives sont sur: <a href="http://geda.seul.org/mailinglist/index.html" class="urlextern" title="http://geda.seul.org/mailinglist/index.html"  rel="nofollow">http://geda.seul.org/mailinglist/index.html</a> 
 </p>
 
 </div>
-<!-- SECTION [43389-] --></div>
+<!-- SECTION "Vous n'avez pas répondu à mes questions. Où puis-je trouver d'autres informations sur PCB?" [43389-] --></div>
 </body>
 </html>

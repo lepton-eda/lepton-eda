@@ -4,6 +4,11 @@
 	scripts to work with the new wiki software.  Wrote a script to
 	remove duplicate images from the repository.
 
+	* wiki/*: Updated the wiki from the website
+
+	* scripts/wikifetch.sh: Updated script to exclude an export directory
+	that caused an infinite download 
+
 2007-02-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* wiki/: Updated wiki snapshot from the live gEDA wiki.  Phase I 

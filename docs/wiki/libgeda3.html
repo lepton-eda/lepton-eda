@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>libgeda3</title>
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:27-0400" />
+<meta name="keywords" content="libgeda3" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/libgeda3?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/libgeda3" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/libgeda3" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
+</head>
+<body>
+<div class="dokuwiki export">
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#geda_library_v3_specification" class="toc">gEDA Library v3 Specification</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#rationale" class="toc">Rationale</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#requirements" class="toc">Requirements</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#core" class="toc">Core</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#secondary" class="toc">Secondary</a></span></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><span class="li"><a href="#coordinate_system" class="toc">Coordinate System</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#configuration" class="toc">Configuration</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#dependencies" class="toc">Dependencies</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#glib" class="toc">glib</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#gobject" class="toc">gobject</a></span></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><span class="li"><a href="#references" class="toc">References</a></span></div></li></ul>
+</li></ul>
+</div>
+</div>
+
+
+
+<h1><a name="geda_library_v3_specification" id="geda_library_v3_specification">gEDA Library v3 Specification</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "gEDA Library v3 Specification" [1-45] -->
+<h2><a name="rationale" id="rationale">Rationale</a></h2>
+<div class="level2">
+
+<p>
+ The current version (2.x) of the libgeda shared library has a number of defects: 
+</p>
+<ul>
+<li class="level1"><div class="li"> Poor separation between public interface and internals, which leads to&hellip;</div>
+</li>
+<li class="level1"><div class="li"> Frequent changes to the <acronym title="Application Programming Interface">API</acronym></div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Application Programming Interface">API</acronym> contains large amounts of code specific to application internals </div>
+</li>
+</ul>
+
+<p>
+ This page is an attempt to itemise in detail what is required of libgeda, and what the interface to it should look like.  This will enable: 
+</p>
+<ul>
+<li class="level1"><div class="li"> More rigorous testing of library functions</div>
+</li>
+<li class="level1"><div class="li"> Creation of language bindings for libgeda</div>
+</li>
+<li class="level1"><div class="li"> Easier development of other applications for manipulating schematics</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Rationale" [46-643] -->
+<h2><a name="requirements" id="requirements">Requirements</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Requirements" [644-669] -->
+<h3><a name="core" id="core">Core</a></h3>
+<div class="level3">
+<ol>
+<li class="level1"><div class="li"> Define data structures for representing schematics</div>
+</li>
+<li class="level1"><div class="li"> Provide methods for creating and manipulating schematics</div>
+</li>
+<li class="level1"><div class="li"> Provide methods for reading and storing schematics into files and data streams</div>
+</li>
+<li class="level1"><div class="li"> Provide access to detailed data on errors and exceptions</div>
+</li>
+<li class="level1"><div class="li"> Provide a simple interface for configuring libgeda’s behaviour</div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION "Core" [670-1013] -->
+<h3><a name="secondary" id="secondary">Secondary</a></h3>
+<div class="level3">
+<ol>
+<li class="level1"><div class="li"> Make no assumptions about applications which will use the library</div>
+</li>
+<li class="level1"><div class="li"> Make no assumptions about the compiler or architecture on which the library is being used</div>
+</li>
+<li class="level1"><div class="li"> Fully reentrant for thread safety</div>
+</li>
+<li class="level1"><div class="li"> Minimise number of dependency libraries</div>
+</li>
+<li class="level1"><div class="li"> Detect and gracefully handle multiple instances accessing the same schematic file</div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION "Secondary" [1014-1367] -->
+<h2><a name="coordinate_system" id="coordinate_system">Coordinate System</a></h2>
+<div class="level2">
+
+<p>
+ Because libgeda should “make no assumptions about applications which will use the library,&quot; libgeda should use only “world” coordinates throughout (the same coordinate system as used in the files).  See the <a href="geda_file_format_spec.html" class="wikilink1" title="geda:file_format_spec">file format specification</a>.
+</p>
+
+</div>
+<!-- SECTION "Coordinate System" [1368-1659] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+<p>
+ Currently, libgeda relies on an embedded Scheme interpreter (<a href="http://www.gnu.org/software/guile/" class="urlextern" title="http://www.gnu.org/software/guile/"  rel="nofollow">Guile</a>) for configuring settings such as library search paths.  This has a number of pros and cons:
+</p>
+
+<p>
+Pros: 
+</p>
+<ul>
+<li class="level1"><div class="li"> All applications which access libgeda can automatically use the same settings</div>
+</li>
+<li class="level1"><div class="li"> Arbitrary Scheme code can be used in the configuration process</div>
+</li>
+</ul>
+
+<p>
+ Cons: 
+</p>
+<ul>
+<li class="level1"><div class="li"> Large &amp; complex dependency</div>
+</li>
+<li class="level1"><div class="li"> Doesn’t integrate nicely into applications which use e.g. the GNOME or KDE configuration mechanisms</div>
+</li>
+<li class="level1"><div class="li"> Substantially complicates the creation of graphical user interfaces for configuring library settings</div>
+</li>
+<li class="level1"><div class="li"> Problems with Guile backward-compatibility in the past</div>
+</li>
+</ul>
+
+<p>
+ It might, therefore, make more sense to provide a complete <acronym title="Application Programming Interface">API</acronym> for configuring libgeda, and rely on the application to handle the storage and loading of the configuration.
+</p>
+
+</div>
+<!-- SECTION "Configuration" [1660-2523] -->
+<h2><a name="dependencies" id="dependencies">Dependencies</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Dependencies" [2524-2549] -->
+<h3><a name="glib" id="glib">glib</a></h3>
+<div class="level3">
+
+<p>
+ <a href="http://developer.gnome.org/doc/API/glib/" class="urlextern" title="http://developer.gnome.org/doc/API/glib/"  rel="nofollow">glib</a> provides a very large number of useful features that would make writing and maintaining libgeda easier.  These include: 
+</p>
+<ul>
+<li class="level1"><div class="li"> Portable definitions of basic types (although <code>intptr.h</code> does this too, and would probably be preferable)</div>
+</li>
+<li class="level1"><div class="li"> Doubly- and singly-linked lists, and many other data structures</div>
+</li>
+<li class="level1"><div class="li"> Plugin loading, memory allocation, threading, IO abstraction, &hellip;</div>
+</li>
+</ul>
+
+<p>
+ Not having to reinvent the wheel &ndash; and letting a much larger project be responsible for optimising and maintaining these features &ndash; would make the libgeda code smaller and easier to understand and maintain.  libgeda already uses glib to a certain extent, but using it more extensively in future versions of libgeda does not immediately seem to be a bad idea.
+</p>
+
+</div>
+<!-- SECTION "glib" [2550-3349] -->
+<h3><a name="gobject" id="gobject">gobject</a></h3>
+<div class="level3">
+
+<p>
+ <a href="http://developer.gnome.org/doc/API/2.0/gobject/" class="urlextern" title="http://developer.gnome.org/doc/API/2.0/gobject/"  rel="nofollow">gobject</a> is an object-oriented programming system in C. It is used extensively in the GTK+ user interface toolkit.  In addition to class-like structures, it provides a signalling system that allows objects to emit, listen for and respond to events.  It is designed to be compatible with the object systems of other languages, and this is one of the chief reasons that so many bindings of GTK+ are available (Python, <acronym title="Practical Extraction and Report Language">Perl</acronym>, .NET, Java, C++, etc).
+</p>
+
+<p>
+gobject is often considered to be heavyweight, requiring lots of boilerplate code in order to use it effectively.  Its use in libgeda has historically been opposed, though its use in future versions may ease creation of bindings for libgeda in more directly object-oriented languages such as Python, Java or C++.
+</p>
+
+</div>
+<!-- SECTION "gobject" [3350-4179] -->
+<h2><a name="references" id="references">References</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.unet.univie.ac.at/aix/aixprggd/genprogc/writing_reentrant_thread_safe_code.htm" class="urlextern" title="http://www.unet.univie.ac.at/aix/aixprggd/genprogc/writing_reentrant_thread_safe_code.htm"  rel="nofollow">Writing Reentrant and Thread-Safe Code</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "References" [4180-] --></div>
+</body>
+</html>

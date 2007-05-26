@@ -5,20 +5,25 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:verilog_netlister_readme</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:verilog_netlister_readme?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:verilog_netlister_readme?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:verilog_netlister_readme?do=export_raw" />
-  <meta name="date" content="2006-04-20T03:20:12-0400" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:24-0400" />
+<meta name="keywords" content="geda,verilog_netlister_readme" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:verilog_netlister_readme?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:verilog_netlister_readme" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:verilog_netlister_readme" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
+
+
 
 <h1><a name="verilog_netlister_readme" id="verilog_netlister_readme">Verilog netlister README</a></h1>
 <div class="level1">
@@ -35,7 +40,7 @@ Latest README:
 	1) Escaped Verilog identifiers.
 
 	To facilitate board level simulations, the Verilog netlister now
-outputs `escaped' Verilog identifiers for any net, port or instance name
+outputs `escaped&#039; Verilog identifiers for any net, port or instance name
 that does not appear to be a valid Verilog identifier.  In this way, 
 chips with numbered pins can be netlisted and models constructed to run
 digital simulations of complete circuits.
@@ -44,7 +49,7 @@ digital simulations of complete circuits.
 		Mike Jarabek
 
 
------ OLDER README.verilog's -----
+----- OLDER README.verilog&#039;s -----
 
 	This is the fourth release of the Verilog netlister for gEDA.
 
@@ -54,26 +59,26 @@ digital simulations of complete circuits.
 
 How to use: (mostly taken from a previous readme... )
 
-       Here's how to proceed to make a schematic that can be netlisted
+       Here&#039;s how to proceed to make a schematic that can be netlisted
 to verilog.
 
 	   1) Create your modules by the standard method, keep in mind
-              that you must supply a `pin#' attribute for each port
+              that you must supply a `pin#&#039; attribute for each port
               you want to create in the generated verilog.  gmk_sym is
               useful for this.
 
 	   2) Place each of your newly created modules on the
               schematic.  You may also place primitives from the
-              `verilog' symbol library.  Be sure to give a _unique_
-              `uref' to every symbol you place on the schematic,
+              `verilog&#039; symbol library.  Be sure to give a _unique_
+              `uref&#039; to every symbol you place on the schematic,
               unless two symbols are actually different parts of the
               same module, and the pins listed on each symbol do not
               have any names in common.  Otherwise they will not get
               netlisted.
 
 	   3) Connect nets between the modules you want.  Remember, if
-              you want legible Verilog later, don't forget to name all
-              your nets by attaching `label' attributes to them.  For
+              you want legible Verilog later, don&#039;t forget to name all
+              your nets by attaching `label&#039; attributes to them.  For
               Multiple bit wires just use standard Verilog notation.
               The netlister will figure out which bit ordering you
               want.  Be sure to have at least one net labeled with the
@@ -86,11 +91,11 @@ to verilog.
               for a valid Verilog identifier, please post a bug
               report!)
 
-	   4) Insert IPAD's, OPAD's, and IOPAD's for all the nets you
+	   4) Insert IPAD&#039;s, OPAD&#039;s, and IOPAD&#039;s for all the nets you
               want to be visible in the module declaration statement.
               It is especially important to make sure that the nets
               you hook up to the pads are named, as the net names
-              could change from run to run, that's a bad thing. (I/O
+              could change from run to run, that&#039;s a bad thing. (I/O
               pads would be a good place to put the aformentionned
               full range expressions.  Range expressions on I/O pads
               are ignored when outputting the module declaration, but
@@ -98,10 +103,10 @@ to verilog.
               Every pad must have a unique uref, otherwise the
               netlister will get confused.
 
- 	   5) Add an unattached attribute `module_name=Your_Module'
+ 	   5) Add an unattached attribute `module_name=Your_Module&#039;
 	      somewhere on the schematic, near the title block is
 	      good.  This will name the generated Verilog module
-	      `Your_Module'.
+	      `Your_Module&#039;.
 		
 	   6) Save your design.
 
@@ -135,7 +140,7 @@ to verilog.
            xnor symbols
 
         2) Modules instantiated with positional port connections.
-           Just add the attribute `VERILOG_PORTS=POSITIONAL' to your
+           Just add the attribute `VERILOG_PORTS=POSITIONAL&#039; to your
 
           symbol file as an unattached attribute, or attach it to the
            symbol on the schematic.
@@ -162,8 +167,8 @@ to verilog.
         the symbols to use the new unattached attribute convention for
         device et al.) (if you have applied the patch I sent to the
         mailing list that fixes netlisting a module with no ports, you
-        may have trouble applying the gnetlist.scm.diff patch.) Don't
-        forget to do a `make all install' after applying the patches.
+        may have trouble applying the gnetlist.scm.diff patch.) Don&#039;t
+        forget to do a `make all install&#039; after applying the patches.
 
 	Once again, to netlist the example schematics to verilog type:
         (Assuming gnetlist has been patched and is properly installed.)
@@ -187,12 +192,12 @@ THIS IS FREE SOFTWARE, see the included file COPYING for more info.
 	1) The last comma in the argument list to instantiations and
            module definitions is now suppressed
 
-	2) Better handling of `special' components has been added
+	2) Better handling of `special&#039; components has been added
 
 	New in this release:
 
-	1) Continuous assignments to 1'b0 and 1'b1 can now be
-           generated by connecting the `high' or `low' symbol to a
+	1) Continuous assignments to 1&#039;b0 and 1&#039;b1 can now be
+           generated by connecting the `high&#039; or `low&#039; symbol to a
            net.
 
 				Mike Jarabek
@@ -206,7 +211,7 @@ THIS IS FREE SOFTWARE, see the included file COPYING for more info.
 	This the verilog netlister for gEDA.  Included in the tarball
 are several diff files against the 19990327 gEDA distribution.  All of
 the patches apply to the gnetlist subirectory.  You should be able to
-apply them with `patch -p1'.
+apply them with `patch -p1&#039;.
 
       The netlister has its limitations:  (most of these will
 eventually get fixed, I hope..)
@@ -216,20 +221,20 @@ eventually get fixed, I hope..)
               continuous line) create duplicate entries in the wire
               declaration section of the verilog code.
 
-	   2) Multiple width wires don't work.  (Busses will help
+	   2) Multiple width wires don&#039;t work.  (Busses will help
               this)
 
 	   3) There is no way to force a signal to 1,0,z,x (yet).
 
 	   4) Some scheme code needs to be improved. (Mainly the
-              classification code, it inserts `()' elements into the
+              classification code, it inserts `()&#039; elements into the
               output lists. (I should know how to fix this in a day or
               two.. too bad I never got a scheme course before..))
 
-	   5) I don't know if this will work on multiple page schematics.
+	   5) I don&#039;t know if this will work on multiple page schematics.
 
 	   6) The top level module is outputted with the same name
-              every time, I don't currently think there is a way to
+              every time, I don&#039;t currently think there is a way to
               get at the name of the top level schematic.
 
 
@@ -243,28 +248,28 @@ eventually get fixed, I hope..)
 
 	   2) All nets that are found on the design are declared as
               wires. (This is to allow for net attributes later to
-              declare wand's and such)
+              declare wand&#039;s and such)
 
 	   3) Any components placed on the schematic that are given
               uref attributes create a verilog instantiation for the
-              name of the module as stored in the `device' attribute,
-              the instatiated name is given as the `uref' attribute.
+              name of the module as stored in the `device&#039; attribute,
+              the instatiated name is given as the `uref&#039; attribute.
 
 	   4) All connections into and out of instantiated modules are
-              made by name, and not by order, because I can't be sure
+              made by name, and not by order, because I can&#039;t be sure
               that the order will be right coming off the schematic.
-              (anyway, that's better for the long run.)
+              (anyway, that&#039;s better for the long run.)
               
 	   5) A comment is inserted at the top of the module to say
               that the file was automatically generated.
 
 
 
-       Here's how to proceed to make a schematic that can be netlisted
+       Here&#039;s how to proceed to make a schematic that can be netlisted
 to verilog.
 
 	   1) Create your modules by the standard method, keep in mind
-              that you must supply a `pin#' attribute for each port
+              that you must supply a `pin#&#039; attribute for each port
               you want to create in the generated verilog.  gmk_sym is
               useful for this (with the patch to allow ascii pin names).
 
@@ -272,14 +277,14 @@ to verilog.
               schematic
 
 	   3) Connect nets between the modules you want.  Remember, if
-              you want legible verilog later, don't forget to name all
-              your nets by attaching `label' attributes to them.
+              you want legible verilog later, don&#039;t forget to name all
+              your nets by attaching `label&#039; attributes to them.
 
-	   4) Insert IPAD's, OPAD's, and IOPAD's for all the nets you
+	   4) Insert IPAD&#039;s, OPAD&#039;s, and IOPAD&#039;s for all the nets you
               want to be visible in the module declaration statement.
               It is especially important to make sure that the nets
               you hook up to the pads are named, as the net names
-              could change from run to run, that's a bad thing.
+              could change from run to run, that&#039;s a bad thing.
 
 	   5) Save your design.
 
@@ -297,20 +302,20 @@ to verilog.
 The mechanics:
 
     The I/O ports for the module are detected by enumerating all of
-    the nets attached to any symbol bearing the device name of `IPAD',
-    `OPAD', or `IOPAD'.  If you name one of your blocks with that
-    name, don't be surprised if you find `extra' ports in the module
+    the nets attached to any symbol bearing the device name of `IPAD&#039;,
+    `OPAD&#039;, or `IOPAD&#039;.  If you name one of your blocks with that
+    name, don&#039;t be surprised if you find `extra&#039; ports in the module
     declaration.
 
     The wires are declared by walking through the list of nets
     returned by the function that I patched into gnetlist.  This is
     the source of the duplicate wire declarations.  This should
-    probably get fixed when `net_is_duplicate' gets set for
+    probably get fixed when `net_is_duplicate&#039; gets set for
     connections made by reference.
 
     Module instantiations are created by enumerating the pins found on
     a symbol and connecting the nets found to the pins.  If your block
-    has spelling errors, then the module instantiation won't work.
+    has spelling errors, then the module instantiation won&#039;t work.
     You will have to manually trace back to find the error.
 
     
@@ -328,9 +333,9 @@ THIS IS FREE SOFTWARE, see the included file COPYING for more info.
 	This the verilog netlister for gEDA.  Included in the tarball
 are several diff files against the 19990327 gEDA distribution.  All of
 the patches apply to the gnetlist subirectory.  You should be able to
-apply them with `patch -p1'.
+apply them with `patch -p1&#039;.
 
-[ editor's note, if you are reading this file in a gEDA dist, then all
+[ editor&#039;s note, if you are reading this file in a gEDA dist, then all
   the required patching and integration is already done ]
 
       The netlister has its limitations:  (most of these will
@@ -341,20 +346,20 @@ eventually get fixed, I hope..)
               continuous line) create duplicate entries in the wire
               declaration section of the verilog code.
 
-	   2) Multiple width wires don't work.  (Busses will help
+	   2) Multiple width wires don&#039;t work.  (Busses will help
               this)
 
 	   3) There is no way to force a signal to 1,0,z,x (yet).
 
 	   4) Some scheme code needs to be improved. (Mainly the
-              classification code, it inserts `()' elements into the
+              classification code, it inserts `()&#039; elements into the
               output lists. (I should know how to fix this in a day or
               two.. too bad I never got a scheme course before..))
 
-	   5) I don't know if this will work on multiple page schematics.
+	   5) I don&#039;t know if this will work on multiple page schematics.
 
 	   6) The top level module is outputted with the same name
-              every time, I don't currently think there is a way to
+              every time, I don&#039;t currently think there is a way to
               get at the name of the top level schematic.
 
 
@@ -368,28 +373,28 @@ eventually get fixed, I hope..)
 
 	   2) All nets that are found on the design are declared as
               wires. (This is to allow for net attributes later to
-              declare wand's and such)
+              declare wand&#039;s and such)
 
 	   3) Any components placed on the schematic that are given
               uref attributes create a verilog instantiation for the
-              name of the module as stored in the `device' attribute,
-              the instatiated name is given as the `uref' attribute.
+              name of the module as stored in the `device&#039; attribute,
+              the instatiated name is given as the `uref&#039; attribute.
 
 	   4) All connections into and out of instantiated modules are
-              made by name, and not by order, because I can't be sure
+              made by name, and not by order, because I can&#039;t be sure
               that the order will be right coming off the schematic.
-              (anyway, that's better for the long run.)
+              (anyway, that&#039;s better for the long run.)
               
 	   5) A comment is inserted at the top of the module to say
               that the file was automatically generated.
 
 
 
-       Here's how to proceed to make a schematic that can be netlisted
+       Here&#039;s how to proceed to make a schematic that can be netlisted
 to verilog.
 
 	   1) Create your modules by the standard method, keep in mind
-              that you must supply a `pin#' attribute for each port
+              that you must supply a `pin#&#039; attribute for each port
               you want to create in the generated verilog.  gmk_sym is
               useful for this (with the patch to allow ascii pin names).
 
@@ -397,14 +402,14 @@ to verilog.
               schematic
 
 	   3) Connect nets between the modules you want.  Remember, if
-              you want legible verilog later, don't forget to name all
-              your nets by attaching `label' attributes to them.
+              you want legible verilog later, don&#039;t forget to name all
+              your nets by attaching `label&#039; attributes to them.
 
-	   4) Insert IPAD's, OPAD's, and IOPAD's for all the nets you
+	   4) Insert IPAD&#039;s, OPAD&#039;s, and IOPAD&#039;s for all the nets you
               want to be visible in the module declaration statement.
               It is especially important to make sure that the nets
               you hook up to the pads are named, as the net names
-              could change from run to run, that's a bad thing.
+              could change from run to run, that&#039;s a bad thing.
 
 	   5) Save your design.
 
@@ -422,20 +427,20 @@ to verilog.
 The mechanics:
 
     The I/O ports for the module are detected by enumerating all of
-    the nets attached to any symbol bearing the device name of `IPAD',
-    `OPAD', or `IOPAD'.  If you name one of your blocks with that
-    name, don't be surprised if you find `extra' ports in the module
+    the nets attached to any symbol bearing the device name of `IPAD&#039;,
+    `OPAD&#039;, or `IOPAD&#039;.  If you name one of your blocks with that
+    name, don&#039;t be surprised if you find `extra&#039; ports in the module
     declaration.
 
     The wires are declared by walking through the list of nets
     returned by the function that I patched into gnetlist.  This is
     the source of the duplicate wire declarations.  This should
-    probably get fixed when `net_is_duplicate' gets set for
+    probably get fixed when `net_is_duplicate&#039; gets set for
     connections made by reference.
 
     Module instantiations are created by enumerating the pins found on
     a symbol and connecting the nets found to the pins.  If your block
-    has spelling errors, then the module instantiation won't work.
+    has spelling errors, then the module instantiation won&#039;t work.
     You will have to manually trace back to find the error.
 
     

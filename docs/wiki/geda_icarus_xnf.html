@@ -5,27 +5,32 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:icarus_xnf</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:icarus_xnf?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:icarus_xnf?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:icarus_xnf?do=export_raw" />
-  <meta name="date" content="2006-05-07T16:42:17-0400" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:27-0400" />
+<meta name="keywords" content="geda,icarus_xnf" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:icarus_xnf?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:icarus_xnf" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:icarus_xnf" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
+
+
 
 <h1><a name="xilinx_netlist_format" id="xilinx_netlist_format">Xilinx Netlist Format</a></h1>
 <div class="level1">
 <pre class="code">WHAT IS XNF
 
 XNF is the Xilinx Netlist Format. This is somewhat specific to the
-Xilinx tool chain, but it is sufficiently ubiquitous that it's still
+Xilinx tool chain, but it is sufficiently ubiquitous that it&#039;s still
 worth it. This format can be fed to place and route tools and
 simulators. Since some third party simulators accept XNF, the format
 may be useful even independent of Xilinx parts.
@@ -61,7 +66,7 @@ example:
 	module foo(in);
 	input [3:0] in;
 
-causes the single bit ports ``in0'' through ``in3'' be
+causes the single bit ports ``in0&#039;&#039; through ``in3&#039;&#039; be
 generated. Internally, the XNF file uses the bussed names instead of
 the pin name.
 
@@ -189,16 +194,16 @@ support generation of XNF netlists. The XNF modules also allow the
 programmer to use $attributes to control certain aspects of code
 generation.
 
-XNF code generation is enabled with the ``-t xnf'' flag on the command
+XNF code generation is enabled with the ``-t xnf&#039;&#039; flag on the command
 line. The code generator needs to know the type of part to generate
-code for, so the ``-fpart=&lt;type&gt;'' flag is also needed. For example,
+code for, so the ``-fpart=&lt;type&gt;&#039;&#039; flag is also needed. For example,
 to generate code for the 4010E the command line might start out as:
 
 	 ivl -txnf -fpart=4010e -Fsynth -Fnodangle -Fxnfio [...]
 
-Icarus Verilog includes the functions ``synth'' and ``xnfio'' to
+Icarus Verilog includes the functions ``synth&#039;&#039; and ``xnfio&#039;&#039; to
 perform transformations and optimizations on the design before code is
-generated. The ``synth'' function matches certain behavioral constructs
+generated. The ``synth&#039;&#039; function matches certain behavioral constructs
 to structural components, and the xnfio function generates pads and
 fills the IOBs.
 
@@ -268,15 +273,8 @@ IBUF, NOT gates cannot be absorbed as in the OPAD case.
 
 
  $Log$
- Revision 1.6  2007-04-17 20:19:12  pcjc2
- Merge changes from noscreen branch
-
- Revision 1.3.6.1  2007/02/23 23:32:02  pcjc2
- sync with trunk
-
- Revision 1.4  2007/02/13 01:50:14  ahvezda
- Updated wiki snapshot from the live gEDA wiki.  Phase I (only changed
- content; new content coming in next phase).
+ Revision 1.7  2007-05-26 02:35:20  ahvezda
+ Updated wiki from the website.  Fixed wikifetch.sh to not download forever.
 
  Revision 1.16  2003/07/15 03:49:22  steve
   Spelling fixes.

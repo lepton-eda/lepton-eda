@@ -5,20 +5,25 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:igarus_fpga_lcg</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:igarus_fpga_lcg?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:igarus_fpga_lcg?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:igarus_fpga_lcg?do=export_raw" />
-  <meta name="date" content="2006-05-07T16:37:54-0400" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:24-0400" />
+<meta name="keywords" content="geda,igarus_fpga_lcg" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:igarus_fpga_lcg?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:igarus_fpga_lcg" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:igarus_fpga_lcg" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
+
+
 
 <h1><a name="fpga_loadable_code_generator_for_icarus_verilog" id="fpga_loadable_code_generator_for_icarus_verilog">FPGA Loadable Code Generator for Icarus Verilog</a></h1>
 <div class="level1">
@@ -57,7 +62,7 @@ netlists to the device in question.
 
 * arch=generic-edif (obsolete)
 
-This is generic EDIF code. It doesn't necessarily work because the
+This is generic EDIF code. It doesn&#039;t necessarily work because the
 external library is not available to the code generator. But, what it
 does is generate generic style gates that a portability library can
 map to target gates if desired.
@@ -166,7 +171,7 @@ example:
 
 	endmodule
 
-In this example, port ``out'' is assigned to pin 10, and port ``in''
+In this example, port ``out&#039;&#039; is assigned to pin 10, and port ``in&#039;&#039;
 is assigned to pins 20-22. If the architecture supports it, a pin
 number of 0 means let the back end tools choose a pin. The format of
 the pin number depends on the architecture family being targeted, so
@@ -211,15 +216,8 @@ Compile a single-file design with command line tools like so:
 
 ---
 $Log$
-Revision 1.6  2007-04-17 20:19:12  pcjc2
-Merge changes from noscreen branch
-
-Revision 1.3.6.1  2007/02/23 23:32:02  pcjc2
-sync with trunk
-
-Revision 1.4  2007/02/13 01:50:14  ahvezda
-Updated wiki snapshot from the live gEDA wiki.  Phase I (only changed
-content; new content coming in next phase).
+Revision 1.7  2007-05-26 02:35:20  ahvezda
+Updated wiki from the website.  Fixed wikifetch.sh to not download forever.
 
 Revision 1.12  2005/09/19 21:45:36  steve
  Spelling patches from Larry.

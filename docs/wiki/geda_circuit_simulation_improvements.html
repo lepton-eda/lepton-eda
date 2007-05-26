@@ -1,0 +1,394 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>geda:circuit_simulation_improvements</title>
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:27-0400" />
+<meta name="keywords" content="geda,circuit_simulation_improvements" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:circuit_simulation_improvements?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:circuit_simulation_improvements" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:circuit_simulation_improvements" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
+</head>
+<body>
+<div class="dokuwiki export">
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#circuit_simulation_improvements_in_gschem" class="toc">Circuit simulation improvements in gschem</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#rationale" class="toc">Rationale</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#draft" class="toc">Draft</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#the_probes" class="toc">The probes</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#voltage_and_current_sources" class="toc">Voltage and current sources</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#the_simulations" class="toc">The simulations</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#creating_a_simulation_dialog_inside_gschem" class="toc">Creating a simulation dialog inside gschem</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#the_option_dialog" class="toc">The option dialog</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#invoking_the_simulation" class="toc">Invoking the simulation</a></span></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><span class="li"><a href="#appendix" class="toc">Appendix</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#a_current_probe_symbol_draft" class="toc">A current probe symbol (draft)</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#a_voltage_probe_symbol_draft" class="toc">A voltage probe symbol (draft)</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#another_current_probe_symbol_used_by_kurt_peters" class="toc">Another current probe symbol used by Kurt Peters</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+
+
+
+<h1><a name="circuit_simulation_improvements_in_gschem" id="circuit_simulation_improvements_in_gschem">Circuit simulation improvements in gschem</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "Circuit simulation improvements in gschem" [1-58] -->
+<h2><a name="rationale" id="rationale">Rationale</a></h2>
+<div class="level2">
+
+<p>
+Using gschem as a circuit simulation (ngspice or gnucap) frontend is not easy for novice users. A new user would like to do the following things inside gschem: 
+</p>
+<ul>
+<li class="level1"><div class="li"> specify what kinds of simulations should be run</div>
+</li>
+<li class="level1"><div class="li"> specify which voltages and currents should be plotted</div>
+</li>
+<li class="level1"><div class="li"> start the simulation</div>
+</li>
+</ul>
+
+<p>
+ The simulation runs and the postprocessing may be in an external programm that is triggered by IPC.
+</p>
+
+<p>
+There are some graphical frontends around but they can’t solve all of the above problems 
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.geda.seul.org/tools/gspiceui/index.html" class="urlextern" title="http://www.geda.seul.org/tools/gspiceui/index.html"  rel="nofollow">gspiceui</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.comefly.us/" class="urlextern" title="http://www.comefly.us/"  rel="nofollow">kjwaves</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://easy-spice.sourceforge.net/" class="urlextern" title="http://easy-spice.sourceforge.net/"  rel="nofollow">easyspice</a></div>
+</li>
+</ul>
+
+<p>
+ All frontends have the problem that you can not point to the net you’d like to see. You need to know the netname of the node.
+</p>
+
+</div>
+<!-- SECTION "Rationale" [59-862] -->
+<h2><a name="draft" id="draft">Draft</a></h2>
+<div class="level2">
+
+<p>
+Let’s assume we only want to make tiny changes to gschem and libgeda so that we can at least set some probes and ran a simulation.
+</p>
+
+</div>
+<!-- SECTION "Draft" [863-1012] -->
+<h3><a name="the_probes" id="the_probes">The probes</a></h3>
+<div class="level3">
+
+<p>
+<strong>Current probes</strong> can be ordinary dc voltage sources with 0V. The easy way to insert that probe would be a symbol with two pins like an normal ampere meter. If we’d like to set a current probe to an end of a pin we need a netlister that detects that current probe and replaces it with our “ampere meter”. If we use a voltage source as an ampere meter the netlister does not need to know the netnames inside the schematic. All 0V voltage sources with a special device name are current probes.
+</p>
+
+<p>
+<strong>Voltage probes</strong> may be current sources with 0A. The second pin of the current source is tied to GND with a net attribute. Thus again the netlister does not need to know the netnames as it can use that net that is connected with that special current sources. Like above a voltage source could be a special (graphical) symbol that is detected by a netlister.
+</p>
+
+</div>
+<!-- SECTION "The probes" [1013-1888] -->
+<h3><a name="voltage_and_current_sources" id="voltage_and_current_sources">Voltage and current sources</a></h3>
+<div class="level3">
+
+<p>
+Specifying the parameters of sources is not that easy. Currently they are stored inside the “value” attribute of the symbol. eg. “value=pulse 0 1 10n 10n 100n 1u 2u”. These settings needs to match the spice attributes “pulse(V1 V2 TD TR TF PW PER)&quot;.
+</p>
+
+<p>
+A dialog would be nice that prompts the user for the named attributes and not only for the value string.
+</p>
+
+<p>
+A modified edit attribute (ee) command could take care of voltage and current source devices and trigger a different property dialog for that sources. Currently the multiattrib edit dialog is triggered.
+</p>
+
+</div>
+<!-- SECTION "Voltage and current sources" [1889-2487] -->
+<h3><a name="the_simulations" id="the_simulations">The simulations</a></h3>
+<div class="level3">
+
+<p>
+How can we store a simulation inside gschem.
+</p>
+
+<p>
+To store one simulation we can use a symbol with the devicename “SIMULATION”. All options that define one simulation are stored as attributes attached to that object.
+</p>
+<ul>
+<li class="level1"><div class="li"> kind of simulation (dc, ac, tran, &hellip;)</div>
+</li>
+<li class="level1"><div class="li"> simulator options</div>
+</li>
+<li class="level1"><div class="li"> the simulator? (can we run the same circuit with too simulators in one step?)</div>
+</li>
+<li class="level1"><div class="li"> simulation parameters (global parameters, temperature, &hellip;)</div>
+</li>
+</ul>
+<pre class="code">
+v 20061020 1
+C 41500 49200 1 0 0 spice-directive-1.sym
+{
+device=spice_simulation_block
+refdes=A1
+simulation_name=random name
+simulation_active=1
+simulation_type=DC 0V 1V 0.1V
+parametric_simulation1=V1 lin 0 5 0.1
+parametric_simulation2=R1.value lin 10k 100k 10k
+option_TNOM=100 Deg
+option_ABSTOL=1e-3
+global_param1=???
+global_param2=???
+}
+</pre>
+
+<p>
+There may be many simulation objects inside a single schematic. 
+</p>
+
+<p>
+To store additional libraries we can either use an include card or using a “LIBRARY” symbol that contains all libraries either as:
+</p>
+<ul>
+<li class="level1"><div class="li"> a multiline attribute</div>
+</li>
+<li class="level1"><div class="li"> multiple attached library attributes to the LIBRARY symbol</div>
+</li>
+</ul>
+
+<p>
+ There should be a distinction between global, user and local libs. global and user libs may be specified by a gafrc or a new spicerc configuration file.
+</p>
+
+</div>
+<!-- SECTION "The simulations" [2488-3735] -->
+<h3><a name="creating_a_simulation_dialog_inside_gschem" id="creating_a_simulation_dialog_inside_gschem">Creating a simulation dialog inside gschem</a></h3>
+<div class="level3">
+
+<p>
+ Lets assume anything we need to add simulation support to gschem is a single dialog.
+</p>
+<ul>
+<li class="level1"><div class="li"> It would have a list of simulations (listview with enable/disable buttons and simulation names)</div>
+</li>
+<li class="level1"><div class="li"> It would have some icons to add the probes. </div>
+</li>
+<li class="level1"><div class="li"> It may have buttons for the most common symbols: resistor, capacitor, inductor, diode, &hellip; [R,C,L,D,M,E,F,G,H..]</div>
+</li>
+<li class="level1"><div class="li"> It would have some dialog elements to do the spice settings</div>
+</li>
+<li class="level1"><div class="li"> It would have a simulate and a close button</div>
+</li>
+<li class="level1"><div class="li"> Some additional buttons like: Copy simulation, Remove simulation, general options&hellip;</div>
+</li>
+</ul>
+
+<p>
+ When creating that dialog all simulation objects are collected into the simulation list (listview with enable/disable checkbutton)
+</p>
+
+<p>
+When changing the settings the attributes of the assosiated simulation object are changed.
+</p>
+
+</div>
+<!-- SECTION "Creating a simulation dialog inside gschem" [3736-4567] -->
+<h3><a name="the_option_dialog" id="the_option_dialog">The option dialog</a></h3>
+<div class="level3">
+
+<p>
+What kind of options do we need for that dialog? And Why?
+</p>
+
+<p>
+The probes that we have placed can be used to tell the simulator the variables that we like to save or tell the plotting application which plots we’d like to see. This is something completely different, we need an option for that:
+</p>
+<ul>
+<li class="level1"><div class="li"> plot all marks and only save the corresponding node voltages</div>
+</li>
+<li class="level1"><div class="li"> plot all marks but save all node voltages and currents (through voltage sources)</div>
+</li>
+<li class="level1"><div class="li"> only save voltage nodes of the current schematic level or store subcircuit node voltages, too.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "The option dialog" [4568-5135] -->
+<h3><a name="invoking_the_simulation" id="invoking_the_simulation">Invoking the simulation</a></h3>
+<div class="level3">
+
+<p>
+The simulation button of the dialog should lead to the following actions:
+</p>
+<ul>
+<li class="level1"><div class="li"> save the schematic (ask the user or use a temporary file?)</div>
+</li>
+<li class="level1"><div class="li"> create a netlist using gnetlist</div>
+</li>
+<li class="level1"><div class="li"> create simulation files and include the netlist (can this be done with gnetlist too?)</div>
+</li>
+<li class="level1"><div class="li"> execute the simulation startup script (guile, sh, &hellip;)</div>
+</li>
+</ul>
+
+<p>
+ That startup script may even call a scheduler that can take lots of large simulations.
+</p>
+
+</div>
+<!-- SECTION "Invoking the simulation" [5136-5581] -->
+<h2><a name="appendix" id="appendix">Appendix</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Appendix" [5582-5602] -->
+<h3><a name="a_current_probe_symbol_draft" id="a_current_probe_symbol_draft">A current probe symbol (draft)</a></h3>
+<div class="level3">
+<pre class="code">
+v 20061020 1
+P 0 0 200 200 1 0 0
+{
+T 100 0 5 10 0 1 0 0 1
+pintype=pas
+T 0 100 5 10 0 1 0 0 1
+pinseq=1
+T 0 100 5 10 0 1 0 0 1
+pinnumber=1
+T 0 100 5 10 0 1 0 0 1
+pinlabel=1
+}
+V 300 300 150 3 10 0 0 -1 -1 0 -1 -1 -1 -1 -1
+L 300 200 240 360 3 10 0 0 -1 -1
+L 300 200 360 360 3 10 0 0 -1 -1
+T 0 500 9 10 0 0 0 0 1
+device=VOLTAGE_PROBE
+T 200 50 9 6 1 1 0 0 1
+refdes=I_VP?
+T 0 700 9 10 0 0 0 0 1
+net=GND:2
+T 0 900 9 10 0 0 0 0 1
+value=DC 0A
+</pre>
+
+</div>
+<!-- SECTION "A current probe symbol (draft)" [5603-6092] -->
+<h3><a name="a_voltage_probe_symbol_draft" id="a_voltage_probe_symbol_draft">A voltage probe symbol (draft)</a></h3>
+<div class="level3">
+<pre class="code">
+v 20061020 1
+P 0 200 150 200 1 0 0
+{
+T -150 50 5 10 0 1 0 0 1
+pintype=pas
+T 50 250 5 10 0 1 0 0 1
+pinseq=1
+T 50 250 5 10 0 1 0 0 1
+pinnumber=1
+T 50 250 5 10 0 1 0 0 1
+pinlabel=1
+}
+V 300 200 150 3 10 0 0 -1 -1 0 -1 -1 -1 -1 -1
+L 300 300 380 140 3 10 0 0 -1 -1
+L 300 300 220 140 3 10 0 0 -1 -1
+T 0 500 9 10 0 0 0 0 1
+device=CURRENT_PROBE
+T 200 370 9 6 1 1 0 0 1
+refdes=V_IP?
+P 600 200 450 200 1 0 0
+{
+T 500 50 5 10 0 1 0 0 1
+pintype=pas
+T 500 250 5 10 0 1 0 0 1
+pinseq=2
+T 500 250 5 10 0 1 0 0 1
+pinnumber=2
+T 500 250 5 10 0 1 0 0 1
+pinlabel=2
+}
+L 240 180 360 180 3 10 0 0 -1 -1
+T 0 700 9 10 0 0 0 0 1
+value=DC 0V
+</pre>
+
+</div>
+<!-- SECTION "A voltage probe symbol (draft)" [6093-6761] -->
+<h3><a name="another_current_probe_symbol_used_by_kurt_peters" id="another_current_probe_symbol_used_by_kurt_peters">Another current probe symbol used by Kurt Peters</a></h3>
+<div class="level3">
+<pre class="code">
+v 20061020 1
+T 700 650 8 10 1 1 0 0 1
+refdes=VAM?
+T 700 850 5 10 1 1 0 0 1
+device=Ammeter
+T 700 1050 5 10 0 0 0 0 1
+footprint=none
+T 700 1250 5 10 0 0 0 0 1
+numslots=0
+T 700 1450 5 10 0 0 0 0 1
+description=ammeter for spice
+P 300 1200 300 900 1 0 0
+{
+T 350 1000 5 8 1 1 0 0 1
+pinnumber=1
+T 350 1000 5 8 0 1 0 2 1
+pinseq=1
+T 400 850 9 8 1 1 0 5 1
+pinlabel=+
+T 300 700 5 8 0 1 0 5 1
+pintype=pwr
+}
+P 300 0 300 300 1 0 0
+{
+T 350 100 5 8 1 1 0 0 1
+pinnumber=2
+T 350 100 5 8 0 1 0 2 1
+pinseq=2
+T 300 500 5 8 0 1 0 3 1
+pintype=pwr
+T 300 300 5 10 1 1 0 0 1
+pinlabel=-
+}
+L 300 400 400 500 3 0 0 0 -1 -1
+L 200 500 300 400 3 0 0 0 -1 -1
+T 700 450 5 10 0 1 0 0 1
+value=DC 0V
+L 300 400 300 800 3 0 0 0 -1 -1
+L 100 800 500 400 3 0 0 0 -1 -1
+B 0 300 600 600 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+L 200 800 100 800 3 0 0 0 -1 -1
+L 100 700 100 800 3 0 0 0 -1 -1
+</pre>
+
+</div>
+<!-- SECTION "Another current probe symbol used by Kurt Peters" [6762-] --></div>
+</body>
+</html>

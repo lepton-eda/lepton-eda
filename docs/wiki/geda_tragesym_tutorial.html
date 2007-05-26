@@ -5,17 +5,20 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:tragesym_tutorial</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:tragesym_tutorial?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:tragesym_tutorial?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:tragesym_tutorial?do=export_raw" />
-  <meta name="date" content="2006-12-05T11:09:45-0500" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:25-0400" />
+<meta name="keywords" content="geda,tragesym_tutorial" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:tragesym_tutorial?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:tragesym_tutorial" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:tragesym_tutorial" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
@@ -40,6 +43,8 @@
 </div>
 </div>
 
+
+
 <h1><a name="creating_gschem_symbols_quickly_and_easily_using_tragesym_and_a_spreadsheet_programm" id="creating_gschem_symbols_quickly_and_easily_using_tragesym_and_a_spreadsheet_programm">Creating gschem symbols quickly and easily using tragesym and a spreadsheet programm</a></h1>
 <div class="level1">
 
@@ -48,7 +53,7 @@
 </p>
 
 </div>
-<!-- SECTION [1-450] -->
+<!-- SECTION "Creating gschem symbols quickly and easily using tragesym and a spreadsheet programm" [1-450] -->
 <h2><a name="required_steps" id="required_steps">Required Steps</a></h2>
 <div class="level2">
 <ul>
@@ -69,16 +74,16 @@
 </ul>
 
 </div>
-<!-- SECTION [451-872] -->
+<!-- SECTION "Required Steps" [451-872] -->
 <h2><a name="step1open_a_tragesym_template_file" id="step1open_a_tragesym_template_file">Step1: Open a tragesym template file</a></h2>
 <div class="level2">
 
 <p>
- tragesym comes with two template files. One is <a href="_media/tragesym_template.txt" class="media mediafile mf_txt" title="tragesym:template.txt">ASCII text</a>, the second is a <a href="_media/tragesym_template" class="media mediafile mf_ods" title="tragesym:template.ods">OpenOffice spreadsheet file</a>. You can obtain them from the gEDA utility package, too (utils/examples/tragesym/template.src and utils/examples/tragesym/template.ods).  If you prefer a different spreadsheet program, like gnumeric or kspread, just create your own template out of the textual template file. The only difference between the textual template and the spreadsheet template is the syntax of the key value pairs in the [options] and [geda_attr] sections. The textfile splits them with an equal sign (key=value), the spreadsheet has the value in the second column (which becomes a tab after beeing exported).
+ tragesym comes with two template files. One is <a href="_media/tragesym_template" class="media mediafile mf_" title="tragesym:template.txt">ASCII text</a>, the second is a <a href="_media/001tragesym_template" class="media mediafile mf_ods" title="tragesym:template.ods">OpenOffice spreadsheet file</a>. You can obtain them from the gEDA utility package, too (utils/examples/tragesym/template.src and utils/examples/tragesym/template.ods).  If you prefer a different spreadsheet program, like gnumeric or kspread, just create your own template out of the textual template file. The only difference between the textual template and the spreadsheet template is the syntax of the key value pairs in the [options] and [geda_attr] sections. The textfile splits them with an equal sign (key=value), the spreadsheet has the value in the second column (which becomes a tab after beeing exported).
 </p>
 
 </div>
-<!-- SECTION [873-1666] -->
+<!-- SECTION "Step1: Open a tragesym template file" [873-1666] -->
 <h2><a name="step2download_the_part_data_sheet_and_find_the_pin_list" id="step2download_the_part_data_sheet_and_find_the_pin_list">Step2: Download the part data sheet and find the pin list</a></h2>
 <div class="level2">
 
@@ -95,7 +100,7 @@ Inside the datasheet the pin list may only be in the drawing of the pin configur
 </p>
 
 </div>
-<!-- SECTION [1667-2440] -->
+<!-- SECTION "Step2: Download the part data sheet and find the pin list" [1667-2440] -->
 <h2><a name="step3copy_the_pin_list_into_an_editor_and_prepare_it" id="step3copy_the_pin_list_into_an_editor_and_prepare_it">Step3: Copy the pin list into an editor and prepare it</a></h2>
 <div class="level2">
 
@@ -104,7 +109,7 @@ Select the pin list and copy it into a text editor. This intermediate step is re
 </p>
 
 <p>
-<strong>Note:</strong> The selection behaviour of kpdf is different from the acroread viewer. The kpdf viewer seems to give you a copy that looks more like the graphical representation, while the acroread viewer produces an output that is more &ldquo;file order&rdquo; oriented. If you have to create a lot of symbols, try both and compare the results.
+<strong>Note:</strong> The selection behaviour of kpdf is different from the acroread viewer. The kpdf viewer seems to give you a copy that looks more like the graphical representation, while the acroread viewer produces an output that is more “file order” oriented. If you have to create a lot of symbols, try both and compare the results.
 </p>
 
 <p>
@@ -125,7 +130,7 @@ The pictures above illustrate the steps:
 </li>
 <li class="level2"><div class="li"> sort the lines (xemacs can do that <img src="lib/images/smileys/icon_wink.gif" class="middle" alt=";-)" />)</div>
 </li>
-<li class="level2"><div class="li"> remove or repair the lines with the numbers 2,3,... They are not in the same line. You can easily recreate the pin numbers later</div>
+<li class="level2"><div class="li"> remove or repair the lines with the numbers 2,3,&hellip; They are not in the same line. You can easily recreate the pin numbers later</div>
 </li>
 <li class="level2"><div class="li"> replace the spaces with tabs (not really need when using OpenOffice)</div>
 </li>
@@ -136,7 +141,7 @@ The pictures above illustrate the steps:
 </ul>
 
 </div>
-<!-- SECTION [2441-3816] -->
+<!-- SECTION "Step3: Copy the pin list into an editor and prepare it" [2441-3816] -->
 <h2><a name="step4insert_all_missing_data_into_the_spreadsheet" id="step4insert_all_missing_data_into_the_spreadsheet">Step4: Insert all missing data into the spreadsheet</a></h2>
 <div class="level2">
 
@@ -175,7 +180,7 @@ Regarding to that table we change the following things (see result below):
 </ul>
 
 <p>
- <strong>Note:</strong> If one of your pin labels has a backslash &ldquo;\&rdquo; inside, you have to replace it with it&rsquo;s escape sequence &ldquo;\\&rdquo;.
+ <strong>Note:</strong> If one of your pin labels has a backslash “\” inside, you have to replace it with it’s escape sequence “\\”.
 </p>
 
 <p>
@@ -191,7 +196,7 @@ Before going on set the attributes and the options to appropriate values.
 </p>
 
 </div>
-<!-- SECTION [3817-5025] -->
+<!-- SECTION "Step4: Insert all missing data into the spreadsheet" [3817-5025] -->
 <h2><a name="step5export_the_spreadsheet_into_a_tab_seperated_text_file" id="step5export_the_spreadsheet_into_a_tab_seperated_text_file">Step5: Export the spreadsheet into a tab seperated text file</a></h2>
 <div class="level2">
 
@@ -200,7 +205,7 @@ Before going on set the attributes and the options to appropriate values.
 </p>
 
 </div>
-<!-- SECTION [5026-5290] -->
+<!-- SECTION "Step5: Export the spreadsheet into a tab seperated text file" [5026-5290] -->
 <h2><a name="step6execute_tragesym_and_create_the_symbol" id="step6execute_tragesym_and_create_the_symbol">Step6: execute tragesym and create the symbol</a></h2>
 <div class="level2">
 
@@ -213,11 +218,11 @@ Use a shell and execute tragesym:
 </p>
 
 <p>
-If tragesym says that there&rsquo;s an error, just make some changes in the spreadsheet and export the file again, or just edit the exported file.
+If tragesym says that there’s an error, just make some changes in the spreadsheet and export the file again, or just edit the exported file.
 </p>
 
 </div>
-<!-- SECTION [5291-5611] -->
+<!-- SECTION "Step6: execute tragesym and create the symbol" [5291-5611] -->
 <h2><a name="step7check_the_result_with_gschem_and_do_some_artwork" id="step7check_the_result_with_gschem_and_do_some_artwork">Step7: check the result with gschem and do some artwork</a></h2>
 <div class="level2">
 
@@ -230,7 +235,7 @@ If tragesym says that there&rsquo;s an error, just make some changes in the spre
 </p>
 
 <p>
-Enabling the hidden text (&rdquo;en&rdquo;, Edit&rarr;Show/Hide Inv Text), you can see the whole generated symbol. It&rsquo;s not really necessary to change anything, but it might improve the look of the symbol if you rearange the pins a little bit.
+Enabling the hidden text (“en”, Edit&rarr;Show/Hide Inv Text), you can see the whole generated symbol. It’s not really necessary to change anything, but it might improve the look of the symbol if you rearange the pins a little bit.
 </p>
 
 <p>
@@ -242,7 +247,7 @@ Now we have a complete symbol. You can copy the symbol to your local symbol libr
 </p>
 
 </div>
-<!-- SECTION [5612-6253] -->
+<!-- SECTION "Step7: check the result with gschem and do some artwork" [5612-6253] -->
 <h2><a name="conclusion" id="conclusion">Conclusion</a></h2>
 <div class="level2">
 
@@ -251,7 +256,7 @@ This was a simple example with a small pincount, but this method really pays off
 </p>
 
 </div>
-<!-- SECTION [6254-6418] -->
+<!-- SECTION "Conclusion" [6254-6418] -->
 <h2><a name="credits" id="credits">Credits</a></h2>
 <div class="level2">
 
@@ -260,6 +265,6 @@ Many thanks to &lt;Russ.Dill(AT)asu.edu&gt;, who wrote the first version of this
 </p>
 
 </div>
-<!-- SECTION [6419-] --></div>
+<!-- SECTION "Credits" [6419-] --></div>
 </body>
 </html>

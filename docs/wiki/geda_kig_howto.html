@@ -5,17 +5,20 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:kig_howto</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:kig_howto?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:kig_howto?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:kig_howto?do=export_raw" />
-  <meta name="date" content="2006-04-20T11:02:57-0400" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:25-0400" />
+<meta name="keywords" content="geda,kig_howto" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:kig_howto?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:kig_howto" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:kig_howto" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
@@ -47,6 +50,8 @@
 </div>
 </div>
 
+
+
 <h1><a name="how_to_setup_keymapping_in_gschem" id="how_to_setup_keymapping_in_gschem">How To Setup Keymapping In gschem</a></h1>
 <div class="level1">
 
@@ -59,35 +64,35 @@ by: Stefan Petersen, spe@geda.seul.org This document is released under <a href="
 </p>
 
 </div>
-<!-- SECTION [1-177] -->
+<!-- SECTION "How To Setup Keymapping In gschem" [1-177] -->
 <h2><a name="about_this_document" id="about_this_document">About this document</a></h2>
 <div class="level2">
 
 <p>
-The purpose of this document is to try to explain how key mapping works in gEDA/gschem schematic entry program. It uses the langauge Scheme a lot, which is a Lisp-dialect and is used in gschem as a scripting language. If you&rsquo;re not familiar with this language, please see the dictionary (see appendix A, page X, for a short description of common data structures used in Scheme.
+The purpose of this document is to try to explain how key mapping works in gEDA/gschem schematic entry program. It uses the langauge Scheme a lot, which is a Lisp-dialect and is used in gschem as a scripting language. If you’re not familiar with this language, please see the dictionary (see appendix A, page X, for a short description of common data structures used in Scheme.
 </p>
 
 </div>
-<!-- SECTION [178-588] -->
+<!-- SECTION "About this document" [178-588] -->
 <h2><a name="functionality" id="functionality">Functionality</a></h2>
 <div class="level2">
 
 <p>
 When you press a button in gschem, a Scheme function is called. This function (press-key) accepts one argument, the name of the pressed key. Then there are Scheme routines to evaluate which key you pressed and call the appropriate action.<br/>
- Since the evaluation routines are written in Scheme it&rsquo;s simple to change the behaviour of what happens when you presses a key. You can implement macros or do several things at each key press. For example, the &ldquo;repeat-last-key&rdquo; command is implemented completly in Scheme.
+ Since the evaluation routines are written in Scheme it’s simple to change the behaviour of what happens when you presses a key. You can implement macros or do several things at each key press. For example, the “repeat-last-key” command is implemented completly in Scheme.
 </p>
 
 </div>
-<!-- SECTION [589-1128] -->
+<!-- SECTION "Functionality" [589-1128] -->
 <h2><a name="keymaps" id="keymaps">Keymaps</a></h2>
 <div class="level2">
 
 <p>
-The current implementation is built-up around &ldquo;keymaps&rdquo;. A keymap is a list with pairs. Each pairs first element (the car-element) is which key to react on, and the second element (cdr) is a &ldquo;what-to-do-next&rdquo;. This can either be an action, a function to call or another keymap.
+The current implementation is built-up around “keymaps”. A keymap is a list with pairs. Each pairs first element (the car-element) is which key to react on, and the second element (cdr) is a “what-to-do-next”. This can either be an action, a function to call or another keymap.
 </p>
 
 </div>
-<!-- SECTION [1129-1427] -->
+<!-- SECTION "Keymaps" [1129-1427] -->
 <h3><a name="an_example_on_keymaps" id="an_example_on_keymaps">An example on keymaps</a></h3>
 <div class="level3">
 
@@ -95,7 +100,7 @@ The current implementation is built-up around &ldquo;keymaps&rdquo;. A keymap is
 Two simple examples of keymaps are seen in Figure 1 and Figure 2.
 </p>
 <pre class="code">(define global-keymap
-  '((&quot;Escape&quot; . cancel)
+  &#039;((&quot;Escape&quot; . cancel)
     (&quot;a&quot; . add-keymap)))</pre>
 
 <p>
@@ -103,10 +108,10 @@ Figure 1: First example of an simple keymap
 </p>
 
 <p>
-In figure 1 is the keymap called global-keymap. This keymap is the first keymap used. If you for example press the &lsquo;a&rsquo;-key, global-keymap tells us that next key pressed will be interpreted by add-keymap (see figure 2).
+In figure 1 is the keymap called global-keymap. This keymap is the first keymap used. If you for example press the ‘a’-key, global-keymap tells us that next key pressed will be interpreted by add-keymap (see figure 2).
 </p>
 <pre class="code">(define add-keymap
-  '((&quot;c&quot; . add-component)
+  &#039;((&quot;c&quot; . add-component)
     (&quot;a&quot; . add-attribute)
     (&quot;n&quot; . add-net-hotkey)))</pre>
 
@@ -115,13 +120,13 @@ Figure 2: Second example of an simple keymap
 </p>
 
 <p>
-If you, after you pressed &lsquo;a&rsquo;, press a &lsquo;c&rsquo; the built-in action add-component comes to live. This is exactly what had happend if you had selected Add, Component...in the menubar.<br/>
+If you, after you pressed ‘a’, press a ‘c’ the built-in action add-component comes to live. This is exactly what had happend if you had selected Add, Component&hellip;in the menubar.<br/>
  When an action has been performed the current keymap is reset back to global-keymap.<br/>
  Available built-in actions are listed in appendix B.
 </p>
 
 </div>
-<!-- SECTION [1428-2357] -->
+<!-- SECTION "An example on keymaps" [1428-2357] -->
 <h3><a name="description_of_keys" id="description_of_keys">Description of keys</a></h3>
 <div class="level3">
 
@@ -130,19 +135,18 @@ The key are described as:
 </p>
 <table class="inline">
 	<tr>
-		<td> For a </td><td> &ldquo;a&rdquo; </td>
+		<td> For a </td><td> “a” </td>
 	</tr>
 	<tr>
-		<td class="leftalign"> For Shift-A  </td><td> &ldquo;Shift A&rdquo; </td>
+		<td class="leftalign"> For Shift-A  </td><td> “Shift A” </td>
 	</tr>
 	<tr>
-		<td> For Control-a </td><td> &ldquo;Control a&rdquo; </td>
+		<td> For Control-a </td><td> “Control a” </td>
 	</tr>
 	<tr>
-		<td> For Alt-a </td><td> &ldquo;Alt a&rdquo; </td>
+		<td> For Alt-a </td><td> “Alt a” </td>
 	</tr>
 </table>
-<br />
 
 <p>
  There are a few simple rules to follow when keys for a new keymap is defined:
@@ -159,7 +163,7 @@ The key are described as:
 </ul>
 
 </div>
-<!-- SECTION [2358-2925] -->
+<!-- SECTION "Description of keys" [2358-2925] -->
 <h3><a name="actions" id="actions">Actions</a></h3>
 <div class="level3">
 
@@ -169,17 +173,17 @@ The built-in actions that can be called are listed in Appendix B.<br/>
 </p>
 
 </div>
-<!-- SECTION [2926-3240] -->
+<!-- SECTION "Actions" [2926-3240] -->
 <h3><a name="function_calls" id="function_calls">Function calls</a></h3>
 <div class="level3">
 
 <p>
-If the cdr-element is an ordinary Scheme function that function is called. The function can&rsquo;t receive any arguments.<br/>
+If the cdr-element is an ordinary Scheme function that function is called. The function can’t receive any arguments.<br/>
  This can be used if you want to do complex tasks, like several actions in a row or do some calculation. You can do rather advanced actions since the Guile dialect of Scheme used in gschem is extended from plain Scheme. For further information on Guile, please see the Guile documentation.
 </p>
 
 </div>
-<!-- SECTION [3241-3674] -->
+<!-- SECTION "Function calls" [3241-3674] -->
 <h3><a name="another_keymap" id="another_keymap">Another keymap</a></h3>
 <div class="level3">
 
@@ -188,7 +192,7 @@ If the cdr-element is another keymap then that command is a multi-key command, i
 </p>
 
 </div>
-<!-- SECTION [3675-3997] -->
+<!-- SECTION "Another keymap" [3675-3997] -->
 <h2><a name="where_are_the_key_mappings_stored" id="where_are_the_key_mappings_stored">Where are the key mappings stored</a></h2>
 <div class="level2">
 
@@ -202,7 +206,7 @@ The Scheme functions used to resolve keypresses to actions are stored at <code>&
 </p>
 
 </div>
-<!-- SECTION [3998-4471] -->
+<!-- SECTION "Where are the key mappings stored" [3998-4471] -->
 <h3><a name="appendix_a_--_dictionary" id="appendix_a_--_dictionary">Appendix A -- Dictionary</a></h3>
 <div class="level3">
 <table class="inline">
@@ -225,10 +229,9 @@ The Scheme functions used to resolve keypresses to actions are stored at <code>&
 		<td><strong>cdr element</strong> </td><td>(pronounced cudr) The second element in a pair. In the list case it denotes the rest of list. </td>
 	</tr>
 </table>
-<br />
 
 </div>
-<!-- SECTION [4472-5116] -->
+<!-- SECTION "Appendix A -- Dictionary" [4472-5116] -->
 <h2><a name="appendix_b_--_built-in_actions_in_gschem" id="appendix_b_--_built-in_actions_in_gschem">Appendix B -- Built-in actions in gschem</a></h2>
 <div class="level2">
 
@@ -322,6 +325,6 @@ cancel</font></pre>
 </p>
 
 </div>
-<!-- SECTION [5117-] --></div>
+<!-- SECTION "Appendix B -- Built-in actions in gschem" [5117-] --></div>
 </body>
 </html>

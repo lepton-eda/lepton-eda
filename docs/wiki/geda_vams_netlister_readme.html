@@ -5,17 +5,20 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:vams_netlister_readme</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:vams_netlister_readme?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:vams_netlister_readme?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:vams_netlister_readme?do=export_raw" />
-  <meta name="date" content="2006-04-20T03:21:19-0400" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:24-0400" />
+<meta name="keywords" content="geda,vams_netlister_readme" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:vams_netlister_readme?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:vams_netlister_readme" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:vams_netlister_readme" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
@@ -33,11 +36,13 @@
 </div>
 </div>
 
+
+
 <h1><a name="vams_netlister_readme" id="vams_netlister_readme">VAMS netlister README</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [1-36] -->
+<!-- SECTION "VAMS netlister README" [1-36] -->
 <h2><a name="vams_netlister" id="vams_netlister">VAMS netlister</a></h2>
 <div class="level2">
 <pre class="code">date: 10 october 2000
@@ -148,7 +153,7 @@ CONTENT:
      
      BEGIN
 	
-   Ok. it's only marks the start of the architecture body.
+   Ok. it&#039;s only marks the start of the architecture body.
 
 
      {&lt;label&gt; : ENTITY &lt;entity&gt; [(&lt;architecture&gt;)]
@@ -415,7 +420,7 @@ CONTENT:
 
    2.1.2.2. CODE ADAPTATION
 	 
-   To place this new functions at gnetlist scheme's disposal, you must
+   To place this new functions at gnetlist scheme&#039;s disposal, you must
    perform the following actions.
 	 
      (1) gnetlist/src/g_register.c
@@ -476,7 +481,7 @@ CONTENT:
 			 &lt;schematic-file&gt;
 
    There are nothing to explain. The top-attribs list and the
-   generate-mode variable are default defined ('() and 1).
+   generate-mode variable are default defined (&#039;() and 1).
 
 
    calls from gEDA gschem (3 possible variations) :
@@ -516,8 +521,8 @@ CONTENT:
 		       -g vams
 		       &lt;source-file&gt;
 
-		  scheme-comm=&quot;(define top-attribs '&lt;top-attribs&gt;)
-			       (define generate-mode '2)&quot;
+		  scheme-comm=&quot;(define top-attribs &#039;&lt;top-attribs&gt;)
+			       (define generate-mode &#039;2)&quot;
 
 	   
 	   Source-file needs no comment, because it is the same as in
@@ -578,7 +583,7 @@ CONTENT:
          - in one of the gschem startup files
 		    
  	     (define gnetlist-keymap
-	       '((&quot;n&quot; . generate-netlist)
+	       &#039;((&quot;n&quot; . generate-netlist)
 		 (&quot;e&quot; . generate-entity)))
 
 
@@ -656,7 +661,7 @@ CONTENT:
 </pre>
 
 </div>
-<!-- SECTION [37-20220] -->
+<!-- SECTION "VAMS netlister" [37-20220] -->
 <h2><a name="vams_netlister_syntax_architecture" id="vams_netlister_syntax_architecture">VAMS netlister syntax architecture</a></h2>
 <div class="level2">
 <pre class="code">ARCHITECTURE &lt;architecture-identifier&gt; OF &lt;entity-identifier&gt; IS 
@@ -674,7 +679,7 @@ END ARCHITECTURE &lt;architecture-identifier&gt;;
 </pre>
 
 </div>
-<!-- SECTION [20221-20667] -->
+<!-- SECTION "VAMS netlister syntax architecture" [20221-20667] -->
 <h2><a name="vams_netlister_syntax_entity" id="vams_netlister_syntax_entity">VAMS netlister syntax entity</a></h2>
 <div class="level2">
 <pre class="code">LIBRARY &lt;library-identifier&gt;{,&lt;library-identifier&gt;};
@@ -689,6 +694,6 @@ END ENTITY;
 </pre>
 
 </div>
-<!-- SECTION [20668-] --></div>
+<!-- SECTION "VAMS netlister syntax entity" [20668-] --></div>
 </body>
 </html>

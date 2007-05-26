@@ -32,7 +32,7 @@ pavuk -logfile ../wip/pavuk_logfile.txt \
       -cookie_file ../wip/cookies.txt \
       -cookie_send \
       -url_pattern http://geda.seul.org/wiki/\* \
-      -skip_rpattern "(.*\?do=(diff|revisions|backlink|index|export_.*))|feed\.php.*" \
+      -skip_rpattern "(.*\?do=(_export|diff|revisions|backlink|index|export_.*))|_export|feed\.php.*" \
       -tr_chr_chr "?&*:" _ \
       -post_update \
       -fnrules F "*" "%h/%d/%b%E" "$site"

@@ -56,14 +56,17 @@ do_work()
 		echo "" >> Makefile.am
 
 		echo 'EXTRA_DIST = $(docs_DATA)' >> Makefile.am
+
+		echo "" >> Makefile.am
+		echo 'MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in' >> Makefile.am
 	
 	fi
 	echo "" >> Makefile.am
 }
 
 pwd=`pwd`
-thisprogram=/home/ahvezda/1gaf/docs/scripts/populatemkfiles.sh
-basedir=/home/ahvezda/1gaf/docs/wiki
+thisprogram=/home/ahvezda/2gaf/docs/scripts/populatemkfiles.sh
+basedir=/home/ahvezda/2gaf/docs/wip
 
 subdir=`echo $pwd | awk -F$basedir '{print $2}'`
 

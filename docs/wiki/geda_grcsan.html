@@ -5,17 +5,20 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:grcsan</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:grcsan?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:grcsan?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:grcsan?do=export_raw" />
-  <meta name="date" content="2006-04-24T05:02:46-0400" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:25-0400" />
+<meta name="keywords" content="geda,grcsan" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:grcsan?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:grcsan" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:grcsan" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
@@ -50,6 +53,8 @@
 </div>
 </div>
 
+
+
 <h1><a name="geda_gaf_rf_cascade_symbols_and_netlister" id="geda_gaf_rf_cascade_symbols_and_netlister">gEDA/gaf RF Cascade Symbols and Netlister</a></h1>
 <div class="level1">
 
@@ -66,7 +71,7 @@ December 3rd, 2003
 </p>
 
 </div>
-<!-- SECTION [1-173] -->
+<!-- SECTION "gEDA/gaf RF Cascade Symbols and Netlister" [1-173] -->
 <h2><a name="overview" id="overview">Overview</a></h2>
 <div class="level2">
 
@@ -84,7 +89,7 @@ This document describes the symbol library and gnetlist backend which support dr
 </ol>
 
 </div>
-<!-- SECTION [174-630] -->
+<!-- SECTION "Overview" [174-630] -->
 <h2><a name="requirements" id="requirements">Requirements</a></h2>
 <div class="level2">
 
@@ -99,17 +104,17 @@ You will need the following programs to be installed:
 </ul>
 
 </div>
-<!-- SECTION [631-1103] -->
+<!-- SECTION "Requirements" [631-1103] -->
 <h2><a name="creating_schematics" id="creating_schematics">Creating Schematics</a></h2>
 <div class="level2">
 
 <p>
-When creating a block diagram in the gschem schematic editor, use only the symbols from the cascade library. Every block diagram must have a \cascadesource&rdquo; element. In addition, the block diagram must be a simple cascade. No parallel paths or branches are allowed.<br/>
- All instances must have a unique reference designator. For a receiver block diagram, this is often times best achieved by manually entering them. The only restriction on reference designator names is that they contain no spaces. A descriptive name such as \RF Filter&rdquo; or \First Mixer&rdquo; is useful as it will show up in the cascade output report.
+When creating a block diagram in the gschem schematic editor, use only the symbols from the cascade library. Every block diagram must have a \cascadesource” element. In addition, the block diagram must be a simple cascade. No parallel paths or branches are allowed.<br/>
+ All instances must have a unique reference designator. For a receiver block diagram, this is often times best achieved by manually entering them. The only restriction on reference designator names is that they contain no spaces. A descriptive name such as \RF Filter” or \First Mixer” is useful as it will show up in the cascade output report.
 </p>
 
 </div>
-<!-- SECTION [1104-1748] -->
+<!-- SECTION "Creating Schematics" [1104-1748] -->
 <h2><a name="extracting_the_cascade_input_file" id="extracting_the_cascade_input_file">Extracting the Cascade Input File</a></h2>
 <div class="level2">
 
@@ -128,7 +133,7 @@ The netlist will be left in <strong><code>example.cas</code></strong>.
 </p>
 
 </div>
-<!-- SECTION [1749-2078] -->
+<!-- SECTION "Extracting the Cascade Input File" [1749-2078] -->
 <h2><a name="running_cascade" id="running_cascade">Running Cascade</a></h2>
 <div class="level2">
 
@@ -142,7 +147,7 @@ to run the analysis on the system contained in the file <strong><code>example.ca
 </p>
 
 </div>
-<!-- SECTION [2079-2393] -->
+<!-- SECTION "Running Cascade" [2079-2393] -->
 <h2><a name="appendix_a_--_symbols_in_the_library" id="appendix_a_--_symbols_in_the_library">Appendix A -- Symbols in the Library</a></h2>
 <div class="level2">
 
@@ -151,7 +156,7 @@ Please note that all instances must have the <strong><code>refdes=</code></stron
 </p>
 
 </div>
-<!-- SECTION [2394-2519] -->
+<!-- SECTION "Appendix A -- Symbols in the Library" [2394-2519] -->
 <h3><a name="sources_cascade-source" id="sources_cascade-source">Sources (cascade-source)</a></h3>
 <div class="level3">
 
@@ -170,7 +175,7 @@ Source. Attributes:
 </ul>
 
 </div>
-<!-- SECTION [2520-2798] -->
+<!-- SECTION "Sources (cascade-source)" [2520-2798] -->
 <h3><a name="defaults_cascade-default" id="defaults_cascade-default">Defaults (cascade-default)</a></h3>
 <div class="level3">
 
@@ -187,7 +192,7 @@ This symbol sets the default impedance levels as well as the correlation coeffci
 </ul>
 
 </div>
-<!-- SECTION [2799-3458] -->
+<!-- SECTION "Defaults (cascade-default)" [2799-3458] -->
 <h3><a name="elements" id="elements">Elements</a></h3>
 <div class="level3">
 
@@ -214,7 +219,6 @@ Cascade characterizes each block in a system by its gain and optionally noise fi
 		<td colspan="2"> Table 1: Element Types </td>
 	</tr>
 </table>
-<br />
 <ul>
 <li class="level1"><div class="li"> Gain is specified by one of the following:</div>
 <ul>
@@ -239,7 +243,7 @@ Cascade characterizes each block in a system by its gain and optionally noise fi
 </ul>
 
 </div>
-<!-- SECTION [3459-4416] -->
+<!-- SECTION "Elements" [3459-4416] -->
 <h2><a name="example" id="example">Example</a></h2>
 <div class="level2">
 
@@ -248,7 +252,7 @@ This appendix provides a simple example of the entire process of generating a sc
 </p>
 
 </div>
-<!-- SECTION [4417-4605] -->
+<!-- SECTION "Example" [4417-4605] -->
 <h3><a name="example_schematics" id="example_schematics">Example Schematics</a></h3>
 <div class="level3">
 
@@ -264,10 +268,9 @@ Figure 1 shows the schematic of a simple receiver signal chain.<br/>
 		<td> <a href="_detail/geda_rf_cascade_figure2.html" class="media" title="geda:rf_cascade_figure2.jpg"><img src="_media/geda_rf_cascade_figure2.jpg" class="media" title="rf_cascade_figure2.jpg" alt="rf_cascade_figure2.jpg" /></a> </td>
 	</tr>
 </table>
-<br />
 
 </div>
-<!-- SECTION [4606-4829] -->
+<!-- SECTION "Example Schematics" [4606-4829] -->
 <h3><a name="netlist_the_design" id="netlist_the_design">Netlist the Design</a></h3>
 <div class="level3">
 
@@ -277,7 +280,7 @@ To netlist the design, run:
 <pre class="code">gnetlist -g cascade example.cas example.sch</pre>
 
 </div>
-<!-- SECTION [4830-4944] -->
+<!-- SECTION "Netlist the Design" [4830-4944] -->
 <h3><a name="run_the_analysis" id="run_the_analysis">Run the Analysis</a></h3>
 <div class="level3">
 
@@ -287,7 +290,7 @@ Run the analysis with:
 <pre class="code">cascade example.cas</pre>
 
 </div>
-<!-- SECTION [4945-5028] -->
+<!-- SECTION "Run the Analysis" [4945-5028] -->
 <h2><a name="document_revision_history" id="document_revision_history">Document Revision History</a></h2>
 <div class="level2">
 <table class="inline">
@@ -295,9 +298,8 @@ Run the analysis with:
 		<td>December 3rd, 2003</td><td>Created cascade.tex</td>
 	</tr>
 </table>
-<br />
 
 </div>
-<!-- SECTION [5029-] --></div>
+<!-- SECTION "Document Revision History" [5029-] --></div>
 </body>
 </html>

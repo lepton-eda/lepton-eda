@@ -3,9 +3,11 @@
 docname=wiki
 docsdir = @GEDADOCDIR@/$(docname)/lib/images
 
-SUBDIRS = fileicons interwiki smileys 
+SUBDIRS = smileys interwiki fileicons 
 
-docs_DATA = error.png info.png interwiki.png success.png 
+docs_DATA = info.png interwiki.png success.png notify.png error.png 
 
 EXTRA_DIST = $(docs_DATA)
+
+MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in
 

@@ -5,17 +5,20 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:gschem_ug</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:gschem_ug?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:gschem_ug?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:gschem_ug?do=export_raw" />
-  <meta name="date" content="2007-01-05T12:16:18-0500" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:55:35-0400" />
+<meta name="keywords" content="geda,gschem_ug" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:gschem_ug?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:gschem_ug" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:gschem_ug" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
@@ -223,6 +226,8 @@
 </div>
 </div>
 
+
+
 <h1><a name="geda_gschem_user_guide" id="geda_gschem_user_guide">gEDA gschem User Guide</a></h1>
 <div class="level1">
 
@@ -243,7 +248,7 @@ This document is released under the <a href="geda_gfdl.html" class="wikilink1" t
 </p>
 
 </div>
-<!-- SECTION [1-397] -->
+<!-- SECTION "gEDA gschem User Guide" [1-397] -->
 <h1><a name="about_this_document" id="about_this_document">About this document ...</a></h1>
 <div class="level1">
 
@@ -268,7 +273,7 @@ The translation was initiated by Ales Hvezda on 2005-08-20
 </p>
 
 </div>
-<!-- SECTION [398-870] -->
+<!-- SECTION "About this document ..." [398-871] -->
 <h1><a name="introduction" id="introduction">Introduction</a></h1>
 <div class="level1">
 
@@ -277,17 +282,17 @@ This document describes the installation, configuration, and operation of the <s
  This document does not describe the process of generating schematics. For this, refer to the various tutorials on using the gEDA Tool Suite:
 </p>
 <ul>
-<li class="level1"><div class="li"> <a href="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/gschem-warmup.html" class="urlextern" title="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/gschem-warmup.html"  rel="nofollow">Bill Wilson's gschem warmup</a></div>
+<li class="level1"><div class="li"> <a href="http://geda.seul.org/wiki/geda:gschem_warmup" class="wikilink1" title="geda:gschem_warmup">Bill Wilson&#039;s gschem warmup</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/tutorial.html" class="urlextern" title="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/tutorial.html"  rel="nofollow">Bill Wilson's gsch2pcb tutorial</a></div>
+<li class="level1"><div class="li"> <a href="http://geda.seul.org/wiki/geda:gsch2pcb_tutorial" class="wikilink1" title="geda:gsch2pcb_tutorial">Bill Wilson&#039;s gsch2pcb tutorial</a></div>
 </li>
-<li class="level1"><div class="li"> &ldquo;Optical Proximity Sensor for Robots (Part 1), Simple PCB Design with the gEDA Suite&rdquo;, by Stuart Brorson (March 2006 Circuit Cellar article)</div>
+<li class="level1"><div class="li"> “Optical Proximity Sensor for Robots (Part 1), Simple PCB Design with the gEDA Suite”, by Stuart Brorson (March 2006 Circuit Cellar article)</div>
 </li>
 <li class="level1"><div class="li"> <a href="http://www-mdp.eng.cam.ac.uk/urop05/files/gedalib/starting_gEDA.pdf" class="urlextern" title="http://www-mdp.eng.cam.ac.uk/urop05/files/gedalib/starting_gEDA.pdf"  rel="nofollow">Starting with gEDA at the Cambridge University Engineering Department</a></div>
 </li>
 <li class="level1"><div class="li"> <a href="http://www.brorson.com/gEDA/SPICE/t1.html" class="urlextern" title="http://www.brorson.com/gEDA/SPICE/t1.html"  rel="nofollow">&quot;Circuit simulation using gEDA and SPICE -- HOWTO&quot; by Stuart Brorson</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="http://www.circuitcellar.com/magazine/176toc.htm" class="urlextern" title="http://www.circuitcellar.com/magazine/176toc.htm"  rel="nofollow">&quot;gEDA Design Suite for Linux&quot; by Stuart Brorson, Ales Hvezda, &amp; Dan McMahill (03 Mar 2005 Circuite Cellar article)</a></div>
+<li class="level1"><div class="li"> <a href="http://www.circuitcellar.com/magazine/176toc.htm" class="urlextern" title="http://www.circuitcellar.com/magazine/176toc.htm"  rel="nofollow">&quot;gEDA Design Suite for Linux&quot; by Stuart Brorson, Ales Hvezda, &amp; Dan McMahill (03 Mar 2005 Circuit Cellar article)</a></div>
 </li>
 <li class="level1"><div class="li"> <a href="http://www.linuxjournal.com/article/8438" class="urlextern" title="http://www.linuxjournal.com/article/8438"  rel="nofollow">&quot;Circuit Design on Your Linux Box Using gEDA&quot; by Stuart Brorson (29 November 2005 Linux Journal article)</a></div>
 </li>
@@ -298,11 +303,11 @@ This document describes the installation, configuration, and operation of the <s
 </ul>
 
 <p>
- This document assumes you understand basic schematic capture concepts. For example: that a component represents something and that nets and buses interconnect these components to form a schematic, etc... For a basic understanding of the various work-flows available in the gEDA Tool Suite, please read the above tutorials. For more detailed understanding of specific tool issues, please refer to <a href="docs_20060124_gschem_ug_how_to_ask_questions.html" class="wikilink2" title="docs:20060124:gschem_ug:how_to_ask_questions">How To Ask Questions</a> and to the <a href="docs_20060124_gschem_ug_resources.html" class="wikilink2" title="docs:20060124:gschem_ug:resources">Resources</a>.
+ This document assumes you understand basic schematic capture concepts. For example: that a component represents something and that nets and buses interconnect these components to form a schematic, etc&hellip; For a basic understanding of the various work-flows available in the gEDA Tool Suite, please read the above tutorials. For more detailed understanding of specific tool issues, please refer to <a href="docs_20060124_gschem_ug_how_to_ask_questions.html" class="wikilink2" title="docs:20060124:gschem_ug:how_to_ask_questions">How To Ask Questions</a> and to the <a href="docs_20060124_gschem_ug_resources.html" class="wikilink2" title="docs:20060124:gschem_ug:resources">Resources</a>.
 </p>
 
 </div>
-<!-- SECTION [871-2899] -->
+<!-- SECTION "Introduction" [872-2794] -->
 <h1><a name="overview" id="overview">Overview</a></h1>
 <div class="level1">
 
@@ -319,7 +324,7 @@ This document describes the installation, configuration, and operation of the <s
 </ul>
 
 <p>
- Once <strong>gschem</strong> has been used to enter the symbols/schematics for your design, several gEDA Tool Suite &ldquo;utility&rdquo; programs are used to extract information for other purposes:
+ Once <strong>gschem</strong> has been used to enter the symbols/schematics for your design, several gEDA Tool Suite “utility” programs are used to extract information for other purposes:
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>gattrib</strong> &ndash; <strong>gattrib</strong> is a gEDA Tool Suite productivity aid. <strong>gattrib</strong> reads a [hierarchical set of] gschem schematic files and creates a spreadsheet showing all components in rows, with the associated component attributes listed in the columns. It allows the user to add, modify, or delete component attributes outside of <strong>gschem</strong>, and then save the .sch files.</div>
@@ -354,7 +359,7 @@ This document describes the installation, configuration, and operation of the <s
 </li>
 <li class="level1"><div class="li"> <strong>refdes_renum</strong> &ndash; Reads a [hierarchical set of] <strong>gschem</strong> schematic files and renumbers all reference designators. The reference designators are numbered starting with 1 and the old schematic file is replaced by the modified schematic file.</div>
 </li>
-<li class="level1"><div class="li"> <strong>tragesym</strong> &ndash; A python script that creates geda symbols from structured textfiles. The symbols usually need to be &ldquo;cleaned up&rdquo; in gschem.</div>
+<li class="level1"><div class="li"> <strong>tragesym</strong> &ndash; A python script that creates geda symbols from structured textfiles. The symbols usually need to be “cleaned up” in gschem.</div>
 </li>
 </ul>
 <table class="inline">
@@ -362,10 +367,9 @@ This document describes the installation, configuration, and operation of the <s
 		<td> <a href="_detail/geda_gschem_workflow_01.html" class="media" title="geda:gschem_workflow_01.jpg"><img src="_media/geda_gschem_workflow_01.jpg" class="media" title="gschem_workflow_01.jpg" alt="gschem_workflow_01.jpg" /></a> </td>
 	</tr>
 </table>
-<br />
 
 </div>
-<!-- SECTION [2900-5480] -->
+<!-- SECTION "Overview" [2795-5375] -->
 <h1><a name="resources" id="resources">Resources</a></h1>
 <div class="level1">
 
@@ -373,9 +377,9 @@ This document describes the installation, configuration, and operation of the <s
 The following on-line resources are useful for designers using <strong>gschem</strong>:
 </p>
 <ul>
-<li class="level1"><div class="li"> <a href="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/gschem-warmup.html" class="urlextern" title="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/gschem-warmup.html"  rel="nofollow">Bill Wilson's gschem warmup tutorial</a> &ndash; If you are new to the gEDA tools, read this before you read Bill&rsquo;s &ldquo;Bill Wilson&rsquo;s gsch2pcb tutorial&rdquo;.</div>
+<li class="level1"><div class="li"> <a href="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/gschem-warmup.html" class="urlextern" title="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/gschem-warmup.html"  rel="nofollow">Bill Wilson&#039;s gschem warmup tutorial</a> &ndash; If you are new to the gEDA tools, read this before you read Bill’s “Bill Wilson’s gsch2pcb tutorial”.</div>
 </li>
-<li class="level1"><div class="li"> <a href="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/tutorial.html" class="urlextern" title="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/tutorial.html"  rel="nofollow">Bill Wilson's gsch2pcb tutorial</a> &ndash; If you are new to the gEDA tools, this tutorial will bring you up to speed quickly.</div>
+<li class="level1"><div class="li"> <a href="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/tutorial.html" class="urlextern" title="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/tutorial.html"  rel="nofollow">Bill Wilson&#039;s gsch2pcb tutorial</a> &ndash; If you are new to the gEDA tools, this tutorial will bring you up to speed quickly.</div>
 </li>
 <li class="level1"><div class="li"> <a href="http://www.circuitcellar.com/" class="urlextern" title="http://www.circuitcellar.com/"  rel="nofollow">Circuit Cellar Magazine</a> &ndash; Practical, hands-on applications and solutions for embedded designers:</div>
 <ul>
@@ -411,13 +415,13 @@ The following on-line resources are useful for designers using <strong>gschem</s
 </li>
 <li class="level1"><div class="li"> <a href="http://sourceforge.net/tracker/?group_id=161080&atid=818426" class="urlextern" title="http://sourceforge.net/tracker/?group_id=161080&amp;atid=818426"  rel="nofollow">gEDA Bug Tracker</a> &ndash; On SourceForge</div>
 </li>
-<li class="level1"><div class="li"> <a href="http://geda.seul.org/dokuwiki/doku.php?id=geda" class="urlextern" title="http://geda.seul.org/dokuwiki/doku.php?id=geda"  rel="nofollow">gEDA Project's Wiki</a> &ndash; All things related to the gEDA Tools Suite.</div>
+<li class="level1"><div class="li"> <a href="http://geda.seul.org/dokuwiki/doku.php?id=geda" class="urlextern" title="http://geda.seul.org/dokuwiki/doku.php?id=geda"  rel="nofollow">gEDA Project&#039;s Wiki</a> &ndash; All things related to the gEDA Tools Suite.</div>
 </li>
 <li class="level1"><div class="li"> <a href="http://www.gedasymbols.org/" class="urlextern" title="http://www.gedasymbols.org"  rel="nofollow">gedasymbols.org</a> &ndash; On-line repository of user-developed symbols for <strong>gschem</strong>, SPICE models, and footprints for <strong>pcb</strong>.</div>
 </li>
-<li class="level1"><div class="li"> John C. Luciani&rsquo;s proposed <a href="http://www.luciani.org/geda/pcb/footprint-name-spec.pdf" class="urlextern" title="http://www.luciani.org/geda/pcb/footprint-name-spec.pdf"  rel="nofollow">Land Pattern Naming Convention</a> &ndash; Footprint naming conventions document, used by him, and often used by those submitting to the <a href="http://www.gedasymbols.org/" class="urlextern" title="http://www.gedasymbols.org"  rel="nofollow">gedasymbols.org</a> symbols/footprint repository.</div>
+<li class="level1"><div class="li"> John C. Luciani’s proposed <a href="http://www.luciani.org/geda/pcb/footprint-name-spec.pdf" class="urlextern" title="http://www.luciani.org/geda/pcb/footprint-name-spec.pdf"  rel="nofollow">Land Pattern Naming Convention</a> &ndash; Footprint naming conventions document, used by him, and often used by those submitting to the <a href="http://www.gedasymbols.org/" class="urlextern" title="http://www.gedasymbols.org"  rel="nofollow">gedasymbols.org</a> symbols/footprint repository.</div>
 </li>
-<li class="level1"><div class="li"> John C. Luciani&rsquo;s <a href="http://geda.seul.org/shared/HomePages/dhart/index.html" class="urlextern" title="file:///shared/HomePages/dhart/index.html"  rel="nofollow">PCB Footprints Library</a> &ndash; A rather inclusive collection of non-<acronym title="GNU General Public License">GPL</acronym> licensed footprints and the scripts used to create them.</div>
+<li class="level1"><div class="li"> John C. Luciani’s <a href="http://geda.seul.org/shared/HomePages/dhart/index.html" class="urlextern" title="file:///shared/HomePages/dhart/index.html"  rel="nofollow">PCB Footprints Library</a> &ndash; A rather inclusive collection of non-<acronym title="GNU General Public License">GPL</acronym> licensed footprints and the scripts used to create them.</div>
 </li>
 <li class="level1"><div class="li"> <a href="http://www.opencollector.org/" class="urlextern" title="http://www.opencollector.org/"  rel="nofollow">OpenCollector</a> carries listings and news for free EDA software and circuit designs. Open Collector supports gEDA.</div>
 </li>
@@ -427,18 +431,18 @@ The following on-line resources are useful for designers using <strong>gschem</s
 <ul>
 <li class="level2"><div class="li"> The free (windows-based) <a href="http://landpatterns.ipc.org/default.asp" class="urlextern" title="http://landpatterns.ipc.org/default.asp"  rel="nofollow">IPC-7351 Land Pattern Viewer</a> is a very useful tool for viewing the latest IPC footprints.</div>
 </li>
-<li class="level2"><div class="li"> <a href="http://www.pcblibraries.com/resources/LibDoc.asp" class="urlextern" title="http://www.pcblibraries.com/resources/LibDoc.asp"  rel="nofollow">CAD Data Files to be used with PCB Libraries' IPC-7351A LP Programs</a> &ndash; please note the license restrictions.</div>
+<li class="level2"><div class="li"> <a href="http://www.pcblibraries.com/resources/LibDoc.asp" class="urlextern" title="http://www.pcblibraries.com/resources/LibDoc.asp"  rel="nofollow">CAD Data Files to be used with PCB Libraries&#039; IPC-7351A LP Programs</a> &ndash; please note the license restrictions.</div>
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> <a href="http://www-mdp.eng.cam.ac.uk/urop05/files/gedalib/starting_gEDA.pdf" class="urlextern" title="http://www-mdp.eng.cam.ac.uk/urop05/files/gedalib/starting_gEDA.pdf"  rel="nofollow">Starting with gEDA at the Cambridge University Engineering Department</a> &ndash; The Cambridge University Engineering Department&rsquo;s tutorial for using gEDA.</div>
+<li class="level1"><div class="li"> <a href="http://www-mdp.eng.cam.ac.uk/urop05/files/gedalib/starting_gEDA.pdf" class="urlextern" title="http://www-mdp.eng.cam.ac.uk/urop05/files/gedalib/starting_gEDA.pdf"  rel="nofollow">Starting with gEDA at the Cambridge University Engineering Department</a> &ndash; The Cambridge University Engineering Department’s tutorial for using gEDA.</div>
 </li>
-<li class="level1"><div class="li"> <a href="http://www.brorson.com/gEDA/" class="urlextern" title="http://www.brorson.com/gEDA/"  rel="nofollow">Stuart Brorson's gEDA tools and tips</a> &ndash; gEDA related tools and information.</div>
+<li class="level1"><div class="li"> <a href="http://www.brorson.com/gEDA/" class="urlextern" title="http://www.brorson.com/gEDA/"  rel="nofollow">Stuart Brorson&#039;s gEDA tools and tips</a> &ndash; gEDA related tools and information.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [5481-9782] -->
+<!-- SECTION "Resources" [5376-9677] -->
 <h1><a name="how_to_ask_questions" id="how_to_ask_questions">How To Ask Questions</a></h1>
 <div class="level1">
 
@@ -447,9 +451,9 @@ The following on-line resources are useful for designers using <strong>gschem</s
  As a typical OpenSource development, the gEDA Tools Suite development community provides timely and insightful response to user inquiries, but please perform the following steps before bothering the developers (they need to focus on making gEDA Tools Suite applications better, and you can actually learn to answer your own questions and become independent of the developers):
 </p>
 <ol>
-<li class="level1"><div class="li"> Read Rick Moen&rsquo;s <a href="http://www.catb.org/~esr/faqs/smart-questions.html" class="urlextern" title="http://www.catb.org/~esr/faqs/smart-questions.html"  rel="nofollow">How To Ask Questions The Smart Way</a>, about how to ask for help. This is a must read for everybody.</div>
+<li class="level1"><div class="li"> Read Rick Moen’s <a href="http://www.catb.org/~esr/faqs/smart-questions.html" class="urlextern" title="http://www.catb.org/~esr/faqs/smart-questions.html"  rel="nofollow">How To Ask Questions The Smart Way</a>, about how to ask for help. This is a must read for everybody.</div>
 </li>
-<li class="level1"><div class="li"> Read this document. I know, it&rsquo;s a lot to expect engineers to actually read a user&rsquo;s guide. The latest version of this document is maintained on the gEDA web-site at <a href="http://geda.seul.org/wiki/geda:gschem_ug" class="urlextern" title="http://geda.seul.org/wiki/geda:gschem_ug"  rel="nofollow">gschem User Guide</a>. The information should be here. If it isn&rsquo;t, comment to the fact in one of the on-line document&rsquo;s &ldquo;Discussion&rdquo; areas (at the bottom of each wiki-page). Helpful comments are clear, to the point, and may even contain the wording that should be inserted into the document.</div>
+<li class="level1"><div class="li"> Read this document. I know, it’s a lot to expect engineers to actually read a user’s guide. The latest version of this document is maintained on the gEDA web-site at <a href="http://geda.seul.org/wiki/geda:gschem_ug" class="urlextern" title="http://geda.seul.org/wiki/geda:gschem_ug"  rel="nofollow">gschem User Guide</a>. The information should be here. If it isn’t, comment to the fact in one of the on-line document’s “Discussion” areas (at the bottom of each wiki-page). Helpful comments are clear, to the point, and may even contain the wording that should be inserted into the document.</div>
 </li>
 <li class="level1"><div class="li"> Read the <a href="http://geda.seul.org/dokuwiki/doku.php?id=geda:faq-gschem" class="urlextern" title="http://geda.seul.org/dokuwiki/doku.php?id=geda:faq-gschem"  rel="nofollow">gschem Frequently Asked Questions (FAQ)</a> wiki-page. This on-line document is updated often to reflect user and developer experiences with <strong>gschem</strong>.</div>
 </li>
@@ -457,13 +461,13 @@ The following on-line resources are useful for designers using <strong>gschem</s
 </li>
 <li class="level1"><div class="li"> <a href="http://www.google.com/" class="urlextern" title="http://www.google.com"  rel="nofollow">Google</a> is your friend. People that have asked questions that obviously didn’t do any simple Google search will not be treated well when asking for help. This is particularly true if your problem is not unique to the gEDA Tools Suite applications.</div>
 </li>
-<li class="level1"><div class="li"> Ask for a pointer to the right direction. It is considered good &ldquo;net etiquette&rdquo; to ask for a pointer to information, so that you can learn where such information can be found, rather than have someone search the information for you.</div>
+<li class="level1"><div class="li"> Ask for a pointer to the right direction. It is considered good “net etiquette” to ask for a pointer to information, so that you can learn where such information can be found, rather than have someone search the information for you.</div>
 </li>
 <li class="level1"><div class="li"> If you are software literate, look at the source code to see what it is doing.</div>
 </li>
 <li class="level1"><div class="li"> Subscribe to the gEDA e-mail lists (i.e., you can only post to the e-mail lists if you are a subscriber). Then:</div>
 <ol>
-<li class="level2"><div class="li"> Start reading recent messages in the <a href="http://archives.seul.org/geda/user/" class="urlextern" title="http://archives.seul.org/geda/user/"  rel="nofollow">geda-user e-mail list archives</a>. Get a feel for the list&rsquo;s ettiquite so that you learn how to properly ask questions.</div>
+<li class="level2"><div class="li"> Start reading recent messages in the <a href="http://archives.seul.org/geda/user/" class="urlextern" title="http://archives.seul.org/geda/user/"  rel="nofollow">geda-user e-mail list archives</a>. Get a feel for the list’s ettiquite so that you learn how to properly ask questions.</div>
 </li>
 <li class="level2"><div class="li"> Search the archives for issues similar to yours. You may find the question has been asked of the developers and users before, and answered.</div>
 </li>
@@ -474,7 +478,7 @@ The following on-line resources are useful for designers using <strong>gschem</s
 </ol>
 
 </div>
-<!-- SECTION [9783-13020] -->
+<!-- SECTION "How To Ask Questions" [9678-12915] -->
 <h1><a name="installing_gschem" id="installing_gschem">Installing gschem</a></h1>
 <div class="level1">
 
@@ -483,22 +487,22 @@ As a mature OpenSource project, the gEDA Tools Suite and its components have bee
 </p>
 
 </div>
-<!-- SECTION [13021-13279] -->
+<!-- SECTION "Installing gschem" [12916-13174] -->
 <h2><a name="latest_stable" id="latest_stable">Latest Stable</a></h2>
 <div class="level2">
 
 <p>
-<strong>gschem</strong> is a component of the gEDA/gaf set of tools which tend to integrate together in the development and maintenance of schematics and symbols. The term &ldquo;gaf&rdquo; stands for &ldquo;<em class="u">g</em>EDA <em class="u">a</em>nd <em class="u">f</em>riends&rdquo;). The gEDA/gaf applications are actually rather stable, and receive significant testing prior to release.<br/>
+<strong>gschem</strong> is a component of the gEDA/gaf set of tools which tend to integrate together in the development and maintenance of schematics and symbols. The term “gaf” stands for “<em class="u">g</em>EDA <em class="u">a</em>nd <em class="u">f</em>riends”). The gEDA/gaf applications are actually rather stable, and receive significant testing prior to release.<br/>
  There are multiple methods of installing <strong>gschem</strong>. The appropriate method depends on your distribution. See the following for some examples.
 </p>
 
 </div>
-<!-- SECTION [13280-13764] -->
+<!-- SECTION "Latest Stable" [13175-13659] -->
 <h3><a name="geda_tools_suite_cd-rom" id="geda_tools_suite_cd-rom">&quot;gEDA Tools Suite&quot; CD-ROM</a></h3>
 <div class="level3">
 
 <p>
-The recommended method is installation from the &ldquo;gEDA Tools Suite&rdquo; CD-ROM, gratefully prepared by Stuart Brorson. The latest version of this CD-ROM is available on-line for free download as an <acronym title="International Organization for Standardization">ISO</acronym> image from the <a href="http://www.geda.seul.org/download.html" class="urlextern" title="http://www.geda.seul.org/download.html"  rel="nofollow">gEDA Downloads</a> web-page. Simply burn this <acronym title="International Organization for Standardization">ISO</acronym> image to a CD-ROM using your favorite CD burning software (e.g., K3b, ...). Insert the CD-ROM, and if your computer supports autodetection of the CD-ROM, the built-in installation wizzard will launch. This wizzard will first check if your computer has some required software (informing you if you don&rsquo;t and optionally installing these if you want), then build all of the &ldquo;gEDA Tool Suite&rdquo; applications (including <strong>gschem</strong>) from source. The whole process can take 2 hours on a slower computer.
+The recommended method is installation from the “gEDA Tools Suite” CD-ROM, gratefully prepared by Stuart Brorson. The latest version of this CD-ROM is available on-line for free download as an <acronym title="International Organization for Standardization">ISO</acronym> image from the <a href="http://www.geda.seul.org/download.html" class="urlextern" title="http://www.geda.seul.org/download.html"  rel="nofollow">gEDA Downloads</a> web-page. Simply burn this <acronym title="International Organization for Standardization">ISO</acronym> image to a CD-ROM using your favorite CD burning software (e.g., K3b, &hellip;). Insert the CD-ROM, and if your computer supports autodetection of the CD-ROM, the built-in installation wizzard will launch. This wizzard will first check if your computer has some required software (informing you if you don’t and optionally installing these if you want), then build all of the “gEDA Tool Suite” applications (including <strong>gschem</strong>) from source. The whole process can take 2 hours on a slower computer.
 </p>
 
 <p>
@@ -510,20 +514,20 @@ The above command requires superuser permissions configured for the user invokin
 </p>
 
 <p>
-If the installation wizzard did not launch, enter as follows to install the gEDA Tool Suite for access by just the user doing the installation(i.e., when prompted for the installation directory, accept the default &ldquo;/home/{login id}/geda-install&rdquo;): <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0"><strong>sh /media/cdrecorder/installer &ndash;log &ndash;verbose</strong></font></pre>
+If the installation wizzard did not launch, enter as follows to install the gEDA Tool Suite for access by just the user doing the installation(i.e., when prompted for the installation directory, accept the default &quot;/home/{login id}/geda-install”): <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0"><strong>sh /media/cdrecorder/installer &ndash;log &ndash;verbose</strong></font></pre>
 </p>
 
 </div>
-<!-- SECTION [13765-15451] -->
+<!-- SECTION "gEDA Tools Suite CD-ROM" [13660-15346] -->
 <h3><a name="debian_distributions" id="debian_distributions">Debian distributions</a></h3>
 <div class="level3">
 
 <p>
-For Debian distributions, you may wish to download the <a href="http://www.geda.seul.org/download.html" class="urlextern" title="http://www.geda.seul.org/download.html"  rel="nofollow">latest DEB binaries</a> prepared by Hamish Moffatt. These are not always current with the latest &ldquo;gEDA Tools Suite&rdquo; <acronym title="International Organization for Standardization">ISO</acronym> image above, and do not include many of the other tools available on the &ldquo;gEDA Tools Suite&rdquo; <acronym title="International Organization for Standardization">ISO</acronym> image.
+For Debian distributions, you may wish to download the <a href="http://www.geda.seul.org/download.html" class="urlextern" title="http://www.geda.seul.org/download.html"  rel="nofollow">latest DEB binaries</a> prepared by Hamish Moffatt. These are not always current with the latest “gEDA Tools Suite” <acronym title="International Organization for Standardization">ISO</acronym> image above, and do not include many of the other tools available on the “gEDA Tools Suite” <acronym title="International Organization for Standardization">ISO</acronym> image. Nevertheless, the binary packages provide a hassle free way to install the core of geda.
 </p>
 
 </div>
-<!-- SECTION [15452-15800] -->
+<!-- SECTION "Debian distributions" [15347-15784] -->
 <h3><a name="fedora_and_redhat_distributions" id="fedora_and_redhat_distributions">Fedora and RedHat distributions</a></h3>
 <div class="level3">
 
@@ -540,12 +544,12 @@ For more informations read the <a href="geda_fedora_rpm_installation.html" class
 </p>
 
 </div>
-<!-- SECTION [15801-16240] -->
+<!-- SECTION "Fedora and RedHat distributions" [15785-16224] -->
 <h3><a name="suse_and_opensuse_distributions" id="suse_and_opensuse_distributions">SuSE and OpenSuSE distributions</a></h3>
 <div class="level3">
 
 <p>
-For SuSE and OpenSuSE distributions there are rpm packages for several gEDA related programms. They&rsquo;ve been prepared by Werner Hoch using the OpenSuSE Build Service.
+For SuSE and OpenSuSE distributions there are rpm packages for several gEDA related programms. They’ve been prepared by Werner Hoch using the OpenSuSE Build Service.
 </p>
 
 <p>
@@ -557,7 +561,7 @@ For more informations read the <a href="geda_suse_rpm_installation.html" class="
 </p>
 
 </div>
-<!-- SECTION [16241-16723] -->
+<!-- SECTION "SuSE and OpenSuSE distributions" [16225-16707] -->
 <h3><a name="mac_osx_distributions" id="mac_osx_distributions">Mac OSX distributions</a></h3>
 <div class="level3">
 
@@ -566,23 +570,23 @@ For Mac OSX distributions you may wish to download the <a href="http://www.geda.
 </p>
 
 </div>
-<!-- SECTION [16724-16903] -->
+<!-- SECTION "Mac OSX distributions" [16708-16887] -->
 <h2><a name="cvs_unstable_testing" id="cvs_unstable_testing">CVS Unstable/Testing</a></h2>
 <div class="level2">
 
 <p>
-For those already familiar with the gEDA/gaf applications on the &ldquo;gEDA Tools Suite&rdquo; CD-ROM, access to the <acronym title="Concurrent Versions System">CVS</acronym> repository is available. This is the latest developer source-code version of the application.<br/>
+For those already familiar with the gEDA/gaf applications on the “gEDA Tools Suite” CD-ROM, access to the <acronym title="Concurrent Versions System">CVS</acronym> repository is available. This is the latest developer source-code version of the application.<br/>
  Installation from <acronym title="Concurrent Versions System">CVS</acronym> is appropriate for those:
 </p>
 <ul>
-<li class="level1"><div class="li"> Seeking a solution to a specific problem that was submitted to the development team, to test the &ldquo;fix&rdquo; so that the developers can be informed that the &ldquo;fix&rdquo; works.</div>
+<li class="level1"><div class="li"> Seeking a solution to a specific problem that was submitted to the development team, to test the “fix” so that the developers can be informed that the “fix” works.</div>
 </li>
-<li class="level1"><div class="li"> With significant working knowledge of the &ldquo;gEDA Tools Suite&rdquo; and industry expertise, wishing to test the latest version of the application(s) prior to the next release. This usually requires access to several existing designs known to work in the current stable release of the &ldquo;gEDA Tools Suite&rdquo; <acronym title="International Organization for Standardization">ISO</acronym> image, so that comparisons can be made and issues brought to the attention of the developer/user community (via the e-mail lists).</div>
+<li class="level1"><div class="li"> With significant working knowledge of the “gEDA Tools Suite” and industry expertise, wishing to test the latest version of the application(s) prior to the next release. This usually requires access to several existing designs known to work in the current stable release of the “gEDA Tools Suite” <acronym title="International Organization for Standardization">ISO</acronym> image, so that comparisons can be made and issues brought to the attention of the developer/user community (via the e-mail lists).</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [16904-17794] -->
+<!-- SECTION "CVS Unstable/Testing" [16888-17778] -->
 <h1><a name="configuring_gschem" id="configuring_gschem">Configuring gschem</a></h1>
 <div class="level1">
 
@@ -593,7 +597,7 @@ Assume that you have installed the gEDA Tools Suite from CD-ROM (the most common
 </p>
 
 <p>
-The gEDA Tools Suite applications follow normal Unix/Linux conventions for placement of configuration files; there are usually system-wide, user-wide, and project-specific configuration settings. The system-wide settings are placed in a sub-directory of the {binary-install-path}. The user-wide settings are placed in the user&rsquo;s home directory, also known as the login directory (referred to in Unix/Linux parlance as the <strong>$HOME</strong> directory). The project-specific settings are placed in a project-specific directory.<br/>
+The gEDA Tools Suite applications follow normal Unix/Linux conventions for placement of configuration files; there are usually system-wide, user-wide, and project-specific configuration settings. The system-wide settings are placed in a sub-directory of the {binary-install-path}. The user-wide settings are placed in the user’s home directory, also known as the login directory (referred to in Unix/Linux parlance as the <strong>$HOME</strong> directory). The project-specific settings are placed in a project-specific directory.<br/>
 
 </p>
 
@@ -602,9 +606,9 @@ Now that we know the above, we can configure <strong>gschem</strong>.<br/>
  <strong>gschem</strong> is highly configurable. All configuration is handled through the following resource files (written using the GNU Guile programming language, an interpreter for Scheme, a version of Lisp):
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>system-gschemrc</strong>: The system-wide initialization file for <strong>gschem</strong>. Installed in the {binary-install-path}/share/gEDA/system-gschemrc file, it is required for <strong>gschem</strong> to run. Users should not modify this file, but should override the settings in this file by creating their own $HOME/gschemrc file and/or &lsquo;pwd&rsquo;/gschemrc file and putting the new settings in those files. The {binary-install-path} directory is where your gEDA/gaf  executables were installed, including <strong>gschem</strong>. Depends on your install method. Refer to <a href="docs_20060124_gschem_ug_installing_gschem.html" class="wikilink2" title="docs:20060124:gschem_ug:installing_gschem">Installing gschem</a> for more details.</div>
+<li class="level1"><div class="li"> <strong>system-gschemrc</strong>: The system-wide initialization file for <strong>gschem</strong>. Installed in the {binary-install-path}/share/gEDA/system-gschemrc file, it is required for <strong>gschem</strong> to run. Users should not modify this file, but should override the settings in this file by creating their own $HOME/gschemrc file and/or ‘pwd’/gschemrc file and putting the new settings in those files. The {binary-install-path} directory is where your gEDA/gaf  executables were installed, including <strong>gschem</strong>. Depends on your install method. Refer to <a href="docs_20060124_gschem_ug_installing_gschem.html" class="wikilink2" title="docs:20060124:gschem_ug:installing_gschem">Installing gschem</a> for more details.</div>
 </li>
-<li class="level1"><div class="li"> <strong>$HOME/gschemrc</strong>: The per-user initialization file for <strong>gschem</strong>. Created by the user in the user&rsquo;s home directory. Settings placed in this file will override settings in the system-gschemrc file. Users should put settings in this file they want to apply to all of their sessions, such as (to change the default black background color scheme to a light background color scheme):</div>
+<li class="level1"><div class="li"> <strong>$HOME/gschemrc</strong>: The per-user initialization file for <strong>gschem</strong>. Created by the user in the user’s home directory. Settings placed in this file will override settings in the system-gschemrc file. Users should put settings in this file they want to apply to all of their sessions, such as (to change the default black background color scheme to a light background color scheme):</div>
 </li>
 </ul>
 
@@ -613,7 +617,7 @@ Now that we know the above, we can configure <strong>gschem</strong>.<br/>
 (load (string-append gedadatarc &quot;/gschem-lightbg&quot;)) ; light background</font></pre>
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>&lsquo;pwd&rsquo;/gschemrc</strong>: The per-project initialization file for <strong>gschem</strong>. Created by the user in the user&rsquo;s project directory. Settings placed in this file will override settings in both the system-gschemrc file and the $HOME/gschemrc file. Users should put settings in this file they want to apply to this particular project, such as (to autonumber reference designators when components are placed on the schematic):</div>
+<li class="level1"><div class="li"> <strong>‘pwd’/gschemrc</strong>: The per-project initialization file for <strong>gschem</strong>. Created by the user in the user’s project directory. Settings placed in this file will override settings in both the system-gschemrc file and the $HOME/gschemrc file. Users should put settings in this file they want to apply to this particular project, such as (to autonumber reference designators when components are placed on the schematic):</div>
 </li>
 </ul>
 
@@ -625,11 +629,11 @@ Now that we know the above, we can configure <strong>gschem</strong>.<br/>
 (add-hook! add-component-hook auto-uref)</font></pre>
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>system-gafrc</strong>: The system-wide initialization file for gEDA/gaf applications (includes <strong>gschem</strong>, <strong>gnetlist</strong>). Installed in the {binary-install-path}/share/gEDA/system-gafrc file, it is required for <strong>gschem</strong> to run. Users should not modify this file, but should override the settings in this file by creating their own $HOME/gafrc file and/or &lsquo;pwd&rsquo;/gafrc file and putting the new settings in those files. The {binary-install-path} directory is where your gEDA/gaf  executables were installed, including <strong>gschem</strong>. Depends on your install method. Refer to <a href="docs_20060124_gschem_ug_installing_gschem.html" class="wikilink2" title="docs:20060124:gschem_ug:installing_gschem">Installing gschem</a> for more details.</div>
+<li class="level1"><div class="li"> <strong>system-gafrc</strong>: The system-wide initialization file for gEDA/gaf applications (includes <strong>gschem</strong>, <strong>gnetlist</strong>). Installed in the {binary-install-path}/share/gEDA/system-gafrc file, it is required for <strong>gschem</strong> to run. Users should not modify this file, but should override the settings in this file by creating their own $HOME/gafrc file and/or ‘pwd’/gafrc file and putting the new settings in those files. The {binary-install-path} directory is where your gEDA/gaf  executables were installed, including <strong>gschem</strong>. Depends on your install method. Refer to <a href="docs_20060124_gschem_ug_installing_gschem.html" class="wikilink2" title="docs:20060124:gschem_ug:installing_gschem">Installing gschem</a> for more details.</div>
 </li>
-<li class="level1"><div class="li"> <strong>$HOME/gafrc</strong>: The per-user initialization file for gEDA/gaf applications. Created by the user in the user&rsquo;s home directory. Settings placed in this file will override settings in the system-gafrc file. Users should put settings in this file they want to apply to all of their sessions. </div>
+<li class="level1"><div class="li"> <strong>$HOME/gafrc</strong>: The per-user initialization file for gEDA/gaf applications. Created by the user in the user’s home directory. Settings placed in this file will override settings in the system-gafrc file. Users should put settings in this file they want to apply to all of their sessions. </div>
 </li>
-<li class="level1"><div class="li"> <strong>&lsquo;pwd&rsquo;/gafrc</strong>: The per-project initialization file for the gEDA/gaf applications. Created by the user in the user&rsquo;s project directory. Settings placed in this file will override settings in both the system-gafrc file and the $HOME/gafrc file. Users should put settings in this file they want to apply to this particular project. Settings such as the <strong>component-library</strong> or <strong>source-library</strong> keywords go into this file.</div>
+<li class="level1"><div class="li"> <strong>‘pwd’/gafrc</strong>: The per-project initialization file for the gEDA/gaf applications. Created by the user in the user’s project directory. Settings placed in this file will override settings in both the system-gafrc file and the $HOME/gafrc file. Users should put settings in this file they want to apply to this particular project. Settings such as the <strong>component-library</strong> or <strong>source-library</strong> keywords go into this file.</div>
 </li>
 <li class="level1"><div class="li"> <strong>gschem-gtkrc</strong>: Installed in the {binary-install-path}/share/gEDA/gschem-gtkrc file. Used to define the font for all gtk+ widgets in <strong>gschem</strong>.</div>
 </li>
@@ -639,50 +643,50 @@ Now that we know the above, we can configure <strong>gschem</strong>.<br/>
  A few comments about changing the files:
 </p>
 <ul>
-<li class="level1"><div class="li"> Don&rsquo;t break any guile syntax rules. Doing so will cause the scheme interpreter (guile) to stop interpreting.</div>
+<li class="level1"><div class="li"> Don’t break any guile syntax rules. Doing so will cause the scheme interpreter (guile) to stop interpreting.</div>
 </li>
-<li class="level1"><div class="li"> To add a setting to the $HOME/gschemrc file (or to the &lsquo;pwd&rsquo;/gschemrc file), copy the setting&rsquo;s text from the {binary-install-directory}/share/gEDA/system-gschemrc file to the $HOME/gschemrc file (or the &lsquo;pwd&rsquo;/gschemrc file) and make the setting change there.</div>
+<li class="level1"><div class="li"> To add a setting to the $HOME/gschemrc file (or to the ‘pwd’/gschemrc file), copy the setting’s text from the {binary-install-directory}/share/gEDA/system-gschemrc file to the $HOME/gschemrc file (or the ‘pwd’/gschemrc file) and make the setting change there.</div>
 </li>
-<li class="level1"><div class="li"> To add a setting to the $HOME/gafrc file (or the &lsquo;pwd&rsquo;/gafrc file), copy the relevant setting&rsquo;s text from the {binary-install-directory}/share/gEDA/system-gafrc file to the $HOME/gafrc file (or the &lsquo;pwd&rsquo;/gafrc file) and make the setting change there.</div>
+<li class="level1"><div class="li"> To add a setting to the $HOME/gafrc file (or the ‘pwd’/gafrc file), copy the relevant setting’s text from the {binary-install-directory}/share/gEDA/system-gafrc file to the $HOME/gafrc file (or the ‘pwd’/gafrc file) and make the setting change there.</div>
 </li>
 <li class="level1"><div class="li"> Keywords/defaults always override what came before, with the exception of cumulative keywords (like component-library).</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [17795-23515] -->
+<!-- SECTION "Configuring gschem" [17779-23499] -->
 <h2><a name="gschemrc" id="gschemrc">gschemrc</a></h2>
 <div class="level2">
 
 <p>
 The {binary-install-path}/share/gEDA/system-gschemrc file is well commented. Read this file for more details on the settings available.<br/>
- Some of the settings appropriate for override (by placing in either the user&rsquo;s $HOME/gschemrc file or the project&rsquo;s &lsquo;pwd&rsquo;/gschemrc file) are:
+ Some of the settings appropriate for override (by placing in either the user’s $HOME/gschemrc file or the project’s ‘pwd’/gschemrc file) are:
 </p>
 
 </div>
-<!-- SECTION [23516-23817] -->
+<!-- SECTION "gschemrc" [23500-23801] -->
 <h2><a name="gafrc" id="gafrc">gafrc</a></h2>
 <div class="level2">
 
 <p>
 The {binary-install-path}/share/gEDA/system-gafrc file is well commented. Read this file for more details on the settings available.<br/>
- Some of the settings appropriate for override (by placing in either the user&rsquo;s $HOME/gafrc file or the project&rsquo;s &lsquo;pwd&rsquo;/gafrc file) are:
+ Some of the settings appropriate for override (by placing in either the user’s $HOME/gafrc file or the project’s ‘pwd’/gafrc file) are:
 </p>
 
 </div>
-<!-- SECTION [23818-24107] -->
+<!-- SECTION "gafrc" [23802-24091] -->
 <h1><a name="running_gschem" id="running_gschem">Running gschem</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [24108-24137] -->
+<!-- SECTION "Running gschem" [24092-24121] -->
 <h2><a name="confirming_gschem_is_installed" id="confirming_gschem_is_installed">Confirming gschem is installed</a></h2>
 <div class="level2">
 
 <p>
 You should determine if <strong>gschem</strong> has been correctly installed on your Linux computer.<br/>
  Log into your Linux account, and launch your favorite interactive shell. The different Linux distributions will usually offer more than one interactive shell such as xterm, gnome-term, konsole, etc.<br/>
- You will see a shell prompt, which will depend on your Linux distribution and on your selection of interactive shell. It is common practice in Linux documentation to refer to the user&rsquo;s interactive login shell prompt as &ldquo;<strong>%</strong>&ldquo;, and to refer to the superuser&rsquo;s (i.e., user &ldquo;root&rdquo;) interactive login shell prompt as &ldquo;<strong>#</strong>&ldquo;.<br/>
+ You will see a shell prompt, which will depend on your Linux distribution and on your selection of interactive shell. It is common practice in Linux documentation to refer to the user’s interactive login shell prompt as “<strong>%</strong>”, and to refer to the superuser’s (i.e., user “root”) interactive login shell prompt as “<strong>#</strong>”.<br/>
  At the shell prompt, enter the following commands to determine if <strong>gschem</strong> is installed:
 </p>
 
@@ -732,21 +736,21 @@ You should determine if <strong>gschem</strong> has been correctly installed on 
 </p>
 
 <p>
-The <strong>echo $PATH</strong> command displays the user&rsquo;s current setting for the <strong>PATH</strong> environment variable. In the above example for a Fedora Core 4 installation, user <strong>gEDA</strong> executed the command and determined that the <strong>PATH</strong> included the /usr/local/gEDA-20060124/bin directory (this will differ depending on where you put the gEDA Tools Suite executables). If you installed from the gEDA Tools Suite CD-ROM (the most common method of installing the gEDA tools), as the last step of the installation wizzard you were prompted to:
+The <strong>echo $PATH</strong> command displays the user’s current setting for the <strong>PATH</strong> environment variable. In the above example for a Fedora Core 4 installation, user <strong>gEDA</strong> executed the command and determined that the <strong>PATH</strong> included the /usr/local/gEDA-20060124/bin directory (this will differ depending on where you put the gEDA Tools Suite executables). If you installed from the gEDA Tools Suite CD-ROM (the most common method of installing the gEDA tools), as the last step of the installation wizzard you were prompted to:
 </p>
 <ol>
-<li class="level1"><div class="li"> Set your $PATH environment variable to {the directory in which the install wizzard installed gEDA&rsquo;s executables}</div>
+<li class="level1"><div class="li"> Set your $PATH environment variable to {the directory in which the install wizzard installed gEDA’s executables}</div>
 </li>
-<li class="level1"><div class="li"> Set your $LD_LIBRARY_PATH environment variable to {the directory in which the install wizzard installed gEDA&rsquo;s libraries}</div>
+<li class="level1"><div class="li"> Set your $LD_LIBRARY_PATH environment variable to {the directory in which the install wizzard installed gEDA’s libraries}</div>
 </li>
 </ol>
 
 <p>
- The <strong>which</strong> command displays the full path of a command&rsquo;s executable, searching for the command on the user&rsquo;s list of directories, as defined in the <strong>PATH</strong> environment variable. In this case, it will return the full path to the <strong>gschem</strong> executable if it is on the user&rsquo;s <strong>PATH</strong>. If this command does not return the full path to the <strong>gschem</strong> executable, make sure your <strong>PATH</strong> environment variable has been properly set.
+ The <strong>which</strong> command displays the full path of a command’s executable, searching for the command on the user’s list of directories, as defined in the <strong>PATH</strong> environment variable. In this case, it will return the full path to the <strong>gschem</strong> executable if it is on the user’s <strong>PATH</strong>. If this command does not return the full path to the <strong>gschem</strong> executable, make sure your <strong>PATH</strong> environment variable has been properly set.
 </p>
 
 <p>
-The <strong>ldd</strong> command displays shared libraries required by a program. All of the requested libraries must be found for <strong>gschem</strong> to run. Don&rsquo;t be intimidated by the long list of libraries, this is common for mature Linux applications. If we had not received this output (or something very similar), we would have to check on our setting for the <strong>LD_LIBRARY_PATH</strong> environment variable.
+The <strong>ldd</strong> command displays shared libraries required by a program. All of the requested libraries must be found for <strong>gschem</strong> to run. Don’t be intimidated by the long list of libraries, this is common for mature Linux applications. If we had not received this output (or something very similar), we would have to check on our setting for the <strong>LD_LIBRARY_PATH</strong> environment variable.
 </p>
 
 <p>
@@ -772,7 +776,7 @@ If these commands do not return the expected results, then most likely the gEDA 
 </p>
 
 </div>
-<!-- SECTION [24138-29843] -->
+<!-- SECTION "Confirming gschem is installed" [24122-29827] -->
 <h2><a name="the_shell_prompt" id="the_shell_prompt">The Shell Prompt</a></h2>
 <div class="level2">
 <table class="inline">
@@ -783,7 +787,6 @@ If these commands do not return the expected results, then most likely the gEDA 
 		<td> Figure 1 &ndash; gnome-terminal </td>
 	</tr>
 </table>
-<br />
 
 <p>
  You launch <strong>gschem</strong> from your favorite shell prompt (in this case, gnome-terminal on Fedora Core 4).<br/>
@@ -791,7 +794,7 @@ If these commands do not return the expected results, then most likely the gEDA 
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>-q</strong> &ndash; Quiet mode<br/>
- Turns on &ldquo;quiet mode&rdquo;. Output (i.e., stdout and stderr) is not generated to the shell. Useful if calling <strong>gschem</strong> from a script (e.g., bash, sh, csh, etc.) to perform batch operations such as printing a large number of schematics or symbols.</div>
+ Turns on “quiet mode”. Output (i.e., stdout and stderr) is not generated to the shell. Useful if calling <strong>gschem</strong> from a script (e.g., bash, sh, csh, etc.) to perform batch operations such as printing a large number of schematics or symbols.</div>
 </li>
 <li class="level1"><div class="li"> <strong>-v</strong> &ndash; Verbose mode ON<br/>
  Generate verbose information. Not used very much in <strong>gschem</strong>.</div>
@@ -801,10 +804,10 @@ If these commands do not return the expected results, then most likely the gEDA 
  In addition to the following files, <strong>gschem</strong> will process <strong>filename</strong> for additional configuration settings:<br/>
    * {binary-install-path}/share/gEDA/system-gschemrc<br/>
    * $HOME/gschemrc<br/>
-   * &lsquo;pwd&rsquo;/gschemrc<br/>
+   * ‘pwd’/gschemrc<br/>
    * {binary-install-path}/share/gEDA/system-gafrc<br/>
   * $HOME/gafrc<br/>
-   * &lsquo;pwd&rsquo;/gafrc</div>
+   * ‘pwd’/gafrc</div>
 </li>
 <li class="level1"><div class="li"> <strong>-s filename</strong> &ndash; Process <strong>filename</strong> as a guile script<br/>
  The name of a script file (written in guile) for <strong>gschem</strong> to process.<br/>
@@ -817,8 +820,8 @@ If these commands do not return the expected results, then most likely the gEDA 
  Specify the output filename. For example, as used to specify the Postscript filename in the example above.</div>
 </li>
 <li class="level1"><div class="li"> <strong>-p</strong> &ndash; Automatically place the window<br/>
- Don&rsquo;t wait for the windowmanager to place the window.<br/>
- When a new window is opened, some window managers display the bounding box of the window and wait for the user to place the window manually. The &ldquo;-p&rdquo; option avoids that, letting the window manager decide where to put the new window.</div>
+ Don’t wait for the windowmanager to place the window.<br/>
+ When a new window is opened, some window managers display the bounding box of the window and wait for the user to place the window manually. The &quot;-p” option avoids that, letting the window manager decide where to put the new window.</div>
 </li>
 <li class="level1"><div class="li"> <strong>-t</strong> &ndash; Print stroke information<br/>
  </div>
@@ -841,20 +844,20 @@ To open a specific schematic, run: <code><strong>% gschem schematic_name.sch</st
 </p>
 
 <p>
-To open a list of schematics, run: <code><strong>% gschem schematic_1.sch schematic_2.sch, schematic_3.sch ...</strong></code><br/>
+To open a list of schematics, run: <code><strong>% gschem schematic_1.sch schematic_2.sch, schematic_3.sch &hellip;</strong></code><br/>
  or use wildcards to specify multiple filenames: <code><strong>% gschem schematic_*.sch</strong></code>
 </p>
 
 <p>
-As operations are performed in the <strong>gschem</strong> <a href="docs_20060124_gschem_ug_the_main_window.html" class="wikilink2" title="docs:20060124:gschem_ug:the_main_window">Main Window</a> the <strong>gschem</strong> <a href="docs_20060124_gschem_ug_the_status_window.html" class="wikilink2" title="docs:20060124:gschem_ug:the_status_window">Status Window</a> continues to output information, and the shell prompt&rsquo;s window continues to output information, consisting of:
+As operations are performed in the <strong>gschem</strong> <a href="docs_20060124_gschem_ug_the_main_window.html" class="wikilink2" title="docs:20060124:gschem_ug:the_main_window">Main Window</a> the <strong>gschem</strong> <a href="docs_20060124_gschem_ug_the_status_window.html" class="wikilink2" title="docs:20060124:gschem_ug:the_status_window">Status Window</a> continues to output information, and the shell prompt’s window continues to output information, consisting of:
 </p>
 <ul>
-<li class="level1"><div class="li"> ...</div>
+<li class="level1"><div class="li"> &hellip;</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [29844-33378] -->
+<!-- SECTION "The Shell Prompt" [29828-33362] -->
 <h2><a name="backups" id="backups">Backups</a></h2>
 <div class="level2">
 
@@ -863,7 +866,7 @@ There are two basic mechanisms in <strong>gschem</strong> for backing up schemat
 </p>
 
 </div>
-<!-- SECTION [33379-33530] -->
+<!-- SECTION "Backups" [33363-33514] -->
 <h3><a name="classic_linux_backups" id="classic_linux_backups">Classic Linux backups</a></h3>
 <div class="level3">
 
@@ -889,9 +892,9 @@ Do you want to load the backup file?</font></pre>
 The snapshots are saved to a file whose filename is constructed from the original filename (schematic or symbol) as follows:
 </p>
 <ul>
-<li class="level1"><div class="li"> add a &ldquo;#&rdquo; to the beginning of the original filename</div>
+<li class="level1"><div class="li"> add a &quot;#&quot; to the beginning of the original filename</div>
 </li>
-<li class="level1"><div class="li"> add a &ldquo;#&rdquo; to the end</div>
+<li class="level1"><div class="li"> add a &quot;#&quot; to the end</div>
 </li>
 </ul>
 
@@ -899,30 +902,30 @@ The snapshots are saved to a file whose filename is constructed from the origina
  so that:
 </p>
 <ul>
-<li class="level1"><div class="li"> &ldquo;schematic_1.sch&rdquo; becomes &ldquo;#schematic_1.sch#&rdquo;</div>
+<li class="level1"><div class="li"> “schematic_1.sch” becomes &quot;#schematic_1.sch#&quot;</div>
 </li>
-<li class="level1"><div class="li"> &ldquo;symbol.sym&rdquo; becomes &ldquo;#symbol.sym#&rdquo;</div>
+<li class="level1"><div class="li"> “symbol.sym” becomes &quot;#symbol.sym#&quot;</div>
 </li>
 </ul>
 
 <p>
- And yes, the &ldquo;#&rdquo; at the front and back of the filename are part of the filename.<br/>
+ And yes, the &quot;#&quot; at the front and back of the filename are part of the filename.<br/>
 
 </p>
 
 <p>
-When the user does finally manually save the file, the original file (i.e., the file that was opened) is renamed to &ldquo;{filename~}&rdquo; and the latest snapshot file (i.e., &ldquo;#{filename}#&rdquo;) gets copied as &ldquo;{filename}&rdquo;. Note that this new &ldquo;{filename}&rdquo; file may not contain the latest information as displayed on the <strong>gschem</strong> main window, as the <strong>autosave</strong> interval timer may not have expired since the last change to the schematic/symbol.<br/>
- When the user finally decides to close <strong>gschem</strong>, the latest snapshot file (i.e., &ldquo;#{filename}#&rdquo;) is saved to the original file (i.e., &ldquo;{filename}&rdquo;.<br/>
+When the user does finally manually save the file, the original file (i.e., the file that was opened) is renamed to &quot;{filename~}&quot; and the latest snapshot file (i.e., &quot;#{filename}#&quot;) gets copied as &quot;{filename}&quot;. Note that this new &quot;{filename}&quot; file may not contain the latest information as displayed on the <strong>gschem</strong> main window, as the <strong>autosave</strong> interval timer may not have expired since the last change to the schematic/symbol.<br/>
+ When the user finally decides to close <strong>gschem</strong>, the latest snapshot file (i.e., &quot;#{filename}#&quot;) is saved to the original file (i.e., &quot;{filename}&quot;.<br/>
  When you exit <strong>gschem</strong> and are prompted to save any unsaved schematic file(s) or symbol file(s), this constitutes a manual save.
 </p>
 
 </div>
-<!-- SECTION [33531-36437] -->
+<!-- SECTION "Classic Linux backups" [33515-36421] -->
 <h3><a name="incremental_backups" id="incremental_backups">Incremental backups</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION [36438-36471] -->
+<!-- SECTION "Incremental backups" [36422-36455] -->
 <h3><a name="relevant_configuration_settings" id="relevant_configuration_settings">Relevant configuration settings</a></h3>
 <div class="level3">
 
@@ -936,17 +939,17 @@ There are the following configuration settings in the {binary-install-path}/shar
 </li>
 <li class="level1"><div class="li"> <strong>undo-type</strong> : Controls which kind of undo is used, disk or memory. The default is to use the disk as the storage medium (i.e., after every action the undo information is stored to a new file on disk). The disk mechanism is nice because you get that many backups of the schematic, written to disk as backups, so you should never lose a schematic due to a crash.</div>
 </li>
-<li class="level1"><div class="li"> <strong>autosave</strong> : Controls if a backup copy is made every &ldquo;interval&rdquo; seconds. Note that a backup copy is only made when you make some change to the schematic, and there were more than &ldquo;interval&rdquo; seconds from the last autosave. Autosaving will not be allowed if the &ldquo;interval&rdquo; setting is set to zero.</div>
+<li class="level1"><div class="li"> <strong>autosave</strong> : Controls if a backup copy is made every “interval” seconds. Note that a backup copy is only made when you make some change to the schematic, and there were more than “interval” seconds from the last autosave. Autosaving will not be allowed if the “interval” setting is set to zero.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [36472-37513] -->
+<!-- SECTION "Relevant configuration settings" [36456-37497] -->
 <h2><a name="on-line_documentation" id="on-line_documentation">On-line documentation</a></h2>
 <div class="level2">
 
 <p>
-For a listing of the various command line flags run &ldquo;<strong>gschem -h</strong>&ldquo;: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">% <strong>gschem -h</strong>
+For a listing of the various command line flags run “<strong>gschem -h</strong>”: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">% <strong>gschem -h</strong>
 Usage: gschem [OPTIONS] schematic_filename1 ... schematic_filenameN
   -q            Quiet mode
   -v            Verbose mode on
@@ -1073,7 +1076,7 @@ Version			      December 31st, 2003		     gschem(1)</font></pre>
 </p>
 
 </div>
-<!-- SECTION [37514-41983] -->
+<!-- SECTION "On-line documentation" [37498-41967] -->
 <h1><a name="electrical_connectivity" id="electrical_connectivity">Electrical Connectivity</a></h1>
 <div class="level1">
 
@@ -1085,7 +1088,7 @@ As you draw schematics you need be aware of what is considered to be electricall
 </p>
 
 </div>
-<!-- SECTION [41984-43700] -->
+<!-- SECTION "Electrical Connectivity" [41968-43684] -->
 <h1><a name="components_symbols_objects_attributes" id="components_symbols_objects_attributes">Components &amp; Symbols &amp; Objects &amp; Attributes</a></h1>
 <div class="level1">
 
@@ -1094,13 +1097,13 @@ There is a hierarchical association between components, symbols, objects, and at
 </p>
 
 </div>
-<!-- SECTION [43701-43849] -->
+<!-- SECTION "Components & Symbols & Objects & Attributes" [43685-43833] -->
 <h2><a name="components" id="components">Components</a></h2>
 <div class="level2">
 
 <p>
 A component is the instantiation of a specific symbol, as placed on the schematic. When discussing a schematic you refer to <em class="u">components</em> on the schematic, not <em class="u">symbols</em> on the schematic. Think of symbols as being <em class="u">conceptual</em>, and components as being <em class="u">concrete</em>.<br/>
- The component consists of a graphic representation and the attributes describing the component&rsquo;s features.<br/>
+ The component consists of a graphic representation and the attributes describing the component’s features.<br/>
  The component inherits all of the attributes defined in the symbol. Certain attributes in the symbol:
 </p>
 <ul>
@@ -1111,24 +1114,24 @@ A component is the instantiation of a specific symbol, as placed on the schemati
 </ul>
 
 <p>
- are promoted to the component level for manipulation by the circuit designer. These attributes may optionally be exposed (made viewable) with the component&rsquo;s graphic, and their values may be changed.<br/>
+ are promoted to the component level for manipulation by the circuit designer. These attributes may optionally be exposed (made viewable) with the component’s graphic, and their values may be changed.<br/>
  Any attribute not defined in the symbol may be defined in the component. For example, if the symbol does not define the <code>comment</code> attribute, this attribute may be added to the component, perhaps to add a comment for the Bill of Material or Assembly Instructions.<br/>
- Unfortunately, it is difficult to determine a component&rsquo;s attributes from <strong>gschem</strong> while entering the schematic. You have to place a symbol on the schematic, select the resulting component, and select <strong>Hierarchy | Down Symbol</strong> from the pull-down menus. Then, you have to unhide all attributes with <strong>Edit | Make Inv Text Vis</strong> from the pull-down menus. Then you have to expand your view of the symbol with <strong>View | Extents</strong>. Then, you have to go back to the schematic by selecting <strong>Hierarchy | Up</strong> from the pull-down menus. Then, you have to select <strong>Edit | Edit...</strong> to bring up the &ldquo;Edit Attributes&rdquo; dialog box to determine if any attributes have been added at the component level.
+ Unfortunately, it is difficult to determine a component’s attributes from <strong>gschem</strong> while entering the schematic. You have to place a symbol on the schematic, select the resulting component, and select <strong>Hierarchy | Down Symbol</strong> from the pull-down menus. Then, you have to unhide all attributes with <strong>Edit | Make Inv Text Vis</strong> from the pull-down menus. Then you have to expand your view of the symbol with <strong>View | Extents</strong>. Then, you have to go back to the schematic by selecting <strong>Hierarchy | Up</strong> from the pull-down menus. Then, you have to select <strong>Edit | Edit&hellip;</strong> to bring up the “Edit Attributes” dialog box to determine if any attributes have been added at the component level.
 </p>
 
 </div>
-<!-- SECTION [43850-45664] -->
+<!-- SECTION "Components" [43834-45648] -->
 <h2><a name="symbols" id="symbols">Symbols</a></h2>
 <div class="level2">
 
 <p>
 Symbols are just a collection of objects and attributes.<br/>
  The objects have positional significance in the symbol, and define the graphic that is viewed.<br/>
- Attributes may be attached to objects, or they may be attached to the symbol itself (termed as &ldquo;unattached&rdquo; attributes, because they are not attached to an object).
+ Attributes may be attached to objects, or they may be attached to the symbol itself (termed as “unattached” attributes, because they are not attached to an object).
 </p>
 
 </div>
-<!-- SECTION [45665-46006] -->
+<!-- SECTION "Symbols" [45649-45990] -->
 <h2><a name="objects" id="objects">Objects</a></h2>
 <div class="level2">
 
@@ -1153,7 +1156,7 @@ The following are objects:
 </ul>
 
 </div>
-<!-- SECTION [46007-46119] -->
+<!-- SECTION "Objects" [45991-46103] -->
 <h2><a name="attributes" id="attributes">Attributes</a></h2>
 <div class="level2">
 
@@ -1162,11 +1165,11 @@ An attribute is text which is in the form <code>name=value</code> (there are no 
  There are three kinds of attributes:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Attached attributes:</strong> These are attributes which take on the standard form and are attached to some object (pin, net, component, or box etc...) to associate a value with the attribute. For example: a pin number associated with a pin. <span class="hilited">These attributes are usually yellow in color.</span></div>
+<li class="level1"><div class="li"> <strong>Attached attributes:</strong> These are attributes which take on the standard form and are attached to some object (pin, net, component, or box etc&hellip;) to associate a value with the attribute. For example: a pin number associated with a pin. <span class="hilited">These attributes are usually yellow in color.</span></div>
 </li>
 <li class="level1"><div class="li"> <strong>Unattached attributes:</strong> These are attributes which take on the standard form, but are not attached to any object and usually convey some information which is global in nature. For example: a <code>device=</code> attribute (which lives inside symbols) and specifies what device the entire symbol represents. These attributes are also known as floating or toplevel attributes.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Promoted attributes:</strong> These are unattached attributes in the symbol&rsquo;s definition that get turned into attached attributes in the component&rsquo;s definition when the symbol is instantiated as a component when placed in the schematic. If you place an unattached visible attribute inside a symbol and then instantiate that symbol, then that unattached attribute gets &ldquo;promoted&rdquo;; that is, it becomes an attached attribute. This mechanism of attribute reattachement (from within a symbol) is known as attribute promotion.</div>
+<li class="level1"><div class="li"> <strong>Promoted attributes:</strong> These are unattached attributes in the symbol’s definition that get turned into attached attributes in the component’s definition when the symbol is instantiated as a component when placed in the schematic. If you place an unattached visible attribute inside a symbol and then instantiate that symbol, then that unattached attribute gets “promoted”; that is, it becomes an attached attribute. This mechanism of attribute reattachement (from within a symbol) is known as attribute promotion.</div>
 </li>
 </ul>
 
@@ -1174,7 +1177,7 @@ An attribute is text which is in the form <code>name=value</code> (there are no 
  There are some gotchas about attribute promotion:
 </p>
 <ul>
-<li class="level1"><div class="li"> Promotion <strong>only</strong> happens when the symbol is first placed. That means that if you place a symbol (e.g., sym1) and then change it on disk (by adding or removing new unattached attributes), existing sym1&rsquo;s will not reflect these new unattached attributes (i.e., they won&rsquo;t get promoted) in any schematic.</div>
+<li class="level1"><div class="li"> Promotion <strong>only</strong> happens when the symbol is first placed. That means that if you place a symbol (e.g., sym1) and then change it on disk (by adding or removing new unattached attributes), existing sym1’s will not reflect these new unattached attributes (i.e., they won’t get promoted) in any schematic.</div>
 </li>
 <li class="level1"><div class="li"> The <code>device=</code> attribute is not promoted.</div>
 </li>
@@ -1186,23 +1189,23 @@ An attribute is text which is in the form <code>name=value</code> (there are no 
  Now, in order to make everybody happy, this attribute promotion behavior is configurable.<br/>
  The system-gschemrc file defines: 
 </p>
-<pre class="code lisp"><span class="br0">&#40;</span>attribute-promotion <span class="st0">"enabled"</span><span class="br0">&#41;</span></pre>
+<pre class="code lisp"><span class="br0">&#40;</span>attribute-promotion <span class="st0">&quot;enabled&quot;</span><span class="br0">&#41;</span></pre>
 <p>
 which enables attribute promotion.<br/>
- If you override the system-gschemrc&rsquo;s default promote-invisible setting by adding: 
+ If you override the system-gschemrc’s default promote-invisible setting by adding: 
 </p>
-<pre class="code lisp"><span class="br0">&#40;</span>promote-invisible <span class="st0">"enabled"</span><span class="br0">&#41;</span></pre>
+<pre class="code lisp"><span class="br0">&#40;</span>promote-invisible <span class="st0">&quot;enabled&quot;</span><span class="br0">&#41;</span></pre>
 <p>
-to either your user&rsquo;s ~/gschemrc or local &lsquo;pwd&rsquo;/gschemrc file, invisible unattached attributes will also be promoted <span class="hilited">(and in memory removed)</span>.
+to either your user’s ~/gschemrc or local ‘pwd’/gschemrc file, invisible unattached attributes will also be promoted <span class="hilited">(and in memory removed)</span>.
 </p>
 
 <p>
 However, if you do this, component slotting will break because <strong>gschem</strong> expects certain unattached attributes inside the symbol <span class="hilited">(in memory even though they are invisible)</span>.<br/>
  So you can add: 
 </p>
-<pre class="code lisp"><span class="br0">&#40;</span>keep-invisible <span class="st0">"enabled"</span><span class="br0">&#41;</span></pre>
+<pre class="code lisp"><span class="br0">&#40;</span>keep-invisible <span class="st0">&quot;enabled&quot;</span><span class="br0">&#41;</span></pre>
 <p>
-to either your user&rsquo;s ~/gschemrc or local &lsquo;pwd&rsquo;/gschemrc file. This is enabled by default, but has no effect unless promote-invisible is enabled.
+to either your user’s ~/gschemrc or local ‘pwd’/gschemrc file. This is enabled by default, but has no effect unless promote-invisible is enabled.
 </p>
 
 <p>
@@ -1210,7 +1213,7 @@ So, to summarize, attribute promotion takes unattached attributes inside symbols
 </p>
 
 </div>
-<!-- SECTION [46120-49524] -->
+<!-- SECTION "Attributes" [46104-49508] -->
 <h1><a name="the_main_window" id="the_main_window">The Main Window</a></h1>
 <div class="level1">
 <table class="inline">
@@ -1218,7 +1221,6 @@ So, to summarize, attribute promotion takes unattached attributes inside symbols
 		<td> <a href="_detail/geda_gschem_screenshot_001.html" class="media" title="geda:gschem_screenshot_001.jpg"><img src="_media/geda_gschem_screenshot_001.jpg" class="media" title="gschem_screenshot_001.jpg" alt="gschem_screenshot_001.jpg" /></a> </td>
 	</tr>
 </table>
-<br />
 
 <p>
  There are several ways to interact with <strong>gschem</strong>. <strong>gschem</strong> requires a keyboard and mouse. There are three ways to initiate an operation or command:
@@ -1235,12 +1237,12 @@ So, to summarize, attribute promotion takes unattached attributes inside symbols
 <p>
  To make usage matters more confusing, selecting an operation off of the menus behaves slightly differently than typing the keyboard shortcut. Most of the operations operate on the currently selected object(s), hence you need to select the object first before manipulating them. The menu selected operations usually require some more input (usually a mouse click) after they are picked off of the menu. The keyboard shortcut operations take that required input as the current mouse position. This saves an extra click since you can position the mouse at the right place, type in the shortcut(s), and the command then executes. Note, you can change this so that both menu and shortcut behavior is exactly the same. See the section on the resource file for more info on how to configure this.<br/>
  Most of the interaction with <strong>gschem</strong> is fairly mode oriented (similar to the great text editor vi). If you select operations off of the menu, then you are placed into the corresponding mode (like copy or move mode). You must then select an anchor point (or whatever the appropriate point is) to continue the operation. Most of the commands off of the menu expect the objects to be already selected. Some of the modes persist after being execute while other immediately return you into select mode (the default mode).<br/>
- The shortcuts are also mode like in nature. Most of the default shortcuts are for the various commands are not single keystrokes. There are a few which are single keystrokes (like zoom in: `z&rsquo; or pan: `x&rsquo;), but most are typically two keystrokes long. As examples, to execute File/Save you would type `f&rsquo; and `s&rsquo; (without the quotes) or Add/Line is `a&rsquo; and `l&rsquo;. You can get a listing of the shortcuts by picking Help/Hotkeys. You can also see the hotkey assignments in the pulldown menus as well. The shortcuts are defined in the resource files (<strong>system-gschemrc</strong>, <strong>/.gEDA/gschemrc</strong>, or <strong>`pwd`/gschemrc</strong>). See the section on the resource file for more info.<br/>
+ The shortcuts are also mode like in nature. Most of the default shortcuts are for the various commands are not single keystrokes. There are a few which are single keystrokes (like zoom in: `z’ or pan: `x’), but most are typically two keystrokes long. As examples, to execute File/Save you would type `f’ and `s’ (without the quotes) or Add/Line is `a’ and `l’. You can get a listing of the shortcuts by picking Help/Hotkeys. You can also see the hotkey assignments in the pulldown menus as well. The shortcuts are defined in the resource files (<strong>system-gschemrc</strong>, <strong>/.gEDA/gschemrc</strong>, or <strong>`pwd`/gschemrc</strong>). See the section on the resource file for more info.<br/>
  The mouse button actions in <strong>gschem</strong> are mostly configurable. The first mouse button is always used to select objects or pick points. This button is not configurable. The second mouse button is either a copy/move action (when held down over an object), a repeat last command or used to draw a stroke to execute a command. The third mouse button is either a mouse pan (when held down as the mouse is moved) or a popup menu. The behavior of the second and third mouse buttons is controlled through the resource file (see the section below for more info).
 </p>
 
 </div>
-<!-- SECTION [49525-52438] -->
+<!-- SECTION "The Main Window" [49509-52422] -->
 <h1><a name="the_status_window" id="the_status_window">The Status Window</a></h1>
 <div class="level1">
 <table class="inline">
@@ -1248,24 +1250,23 @@ So, to summarize, attribute promotion takes unattached attributes inside symbols
 		<td> <a href="_detail/geda_status_screenshot.html" class="media" title="geda:status_screenshot.jpg"><img src="_media/geda_status_screenshot.jpg" class="media" title=":geda:status_screenshot.jpg" alt=":geda:status_screenshot.jpg" /></a> </td>
 	</tr>
 </table>
-<br />
 
 <p>
  Add some details about what gets displayed in the status window.
 </p>
 
 </div>
-<!-- SECTION [52439-52601] -->
+<!-- SECTION "The Status Window" [52423-52585] -->
 <h1><a name="the_schematic_file" id="the_schematic_file">The Schematic File</a></h1>
 <div class="level1">
 
 <p>
-Schematic files. These files contain components, nets, text, and sometimes primitive objects (like lines, circles, box etc...) Schematics do not contain pins. Schematic filenames should follow this convention: name_#.sch where:
+Schematic files. These files contain components, nets, text, and sometimes primitive objects (like lines, circles, box etc&hellip;) Schematics do not contain pins. Schematic filenames should follow this convention: name_#.sch where:
 </p>
 <ul>
 <li class="level1"><div class="li"> name is a text string which describes what this schematic contains.</div>
 </li>
-<li class="level1"><div class="li"> _# is an underscore and a number (like _1, _2, _7, _13, etc...) This number is used to sequence schematic pages in a multiple page schematic.</div>
+<li class="level1"><div class="li"> _# is an underscore and a number (like _1, _2, _7, _13, etc&hellip;) This number is used to sequence schematic pages in a multiple page schematic.</div>
 </li>
 <li class="level1"><div class="li"> .sch is the schematic extension/suffix. It is important the schematic pages have this extension.</div>
 </li>
@@ -1276,7 +1277,7 @@ Schematic files. These files contain components, nets, text, and sometimes primi
 </p>
 
 </div>
-<!-- SECTION [52602-53371] -->
+<!-- SECTION "The Schematic File" [52586-53355] -->
 <h1><a name="the_symbol_file" id="the_symbol_file">The Symbol File</a></h1>
 <div class="level1">
 
@@ -1287,7 +1288,7 @@ Symbol files. The schematic and symbol file formats are identical. <strong>gsche
 <ul>
 <li class="level1"><div class="li"> name is a text string which describes what the symbol represents.</div>
 </li>
-<li class="level1"><div class="li"> -# is a dash and a number (like -1, -2 etc...) The number is used to allow for a symbols to have the same name yet different contents. There might be multiple representations for resistors so these symbols should be called: resistor-1.sym, resistor-2.sym, and resistor-3.sym.</div>
+<li class="level1"><div class="li"> -# is a dash and a number (like -1, -2 etc&hellip;) The number is used to allow for a symbols to have the same name yet different contents. There might be multiple representations for resistors so these symbols should be called: resistor-1.sym, resistor-2.sym, and resistor-3.sym.</div>
 </li>
 <li class="level1"><div class="li"> .sym is the symbol extension/suffix. It is important the symbols have this extension.</div>
 </li>
@@ -1299,25 +1300,25 @@ Symbol files. The schematic and symbol file formats are identical. <strong>gsche
 </p>
 
 </div>
-<!-- SECTION [53372-54358] -->
+<!-- SECTION "The Symbol File" [53356-54342] -->
 <h1><a name="symbol_libraries" id="symbol_libraries">Symbol Libraries</a></h1>
 <div class="level1">
 
 <p>
-Components are searched for by specifying (component-library &ldquo;...&rdquo;) inside one of the *rc files. See below for more info.
+Components are searched for by specifying (component-library &quot;&hellip;”) inside one of the *rc files. See below for more info.
 </p>
 
 </div>
-<!-- SECTION [54359-54512] -->
+<!-- SECTION "Symbol Libraries" [54343-54496] -->
 <h1><a name="the_log_file" id="the_log_file">The Log File</a></h1>
 <div class="level1">
 
 <p>
-Log file. This file contains informative, error, warnings etc... messages when <strong>gschem</strong> was run. This file is created in the working directory that <strong>gschem</strong> was started in. This allows the user to preserve log files between independent projects.
+Log file. This file contains informative, error, warnings etc&hellip; messages when <strong>gschem</strong> was run. This file is created in the working directory that <strong>gschem</strong> was started in. This allows the user to preserve log files between independent projects.
 </p>
 
 </div>
-<!-- SECTION [54513-54790] -->
+<!-- SECTION "The Log File" [54497-54774] -->
 <h1><a name="grips" id="grips">Grips</a></h1>
 <div class="level1">
 
@@ -1340,12 +1341,12 @@ Using grips is easy:
 </ul>
 
 </div>
-<!-- SECTION [54791-55500] -->
+<!-- SECTION "Grips" [54775-55484] -->
 <h1><a name="menu_operations" id="menu_operations">Menu Operations</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION [55501-55530] -->
+<!-- SECTION "Menu Operations" [55485-55514] -->
 <h2><a name="file" id="file">File</a></h2>
 <div class="level2">
 
@@ -1368,11 +1369,11 @@ The <strong>gschem</strong> application is primarily used for the creation of sc
 </p>
 
 <p>
-The following are available from the <strong>gschem</strong> main window&rsquo;s menu-bar when you expand <strong>File</strong>:
+The following are available from the <strong>gschem</strong> main window’s menu-bar when you expand <strong>File</strong>:
 </p>
 
 </div>
-<!-- SECTION [55531-56684] -->
+<!-- SECTION "File" [55515-56668] -->
 <h3><a name="new_window_fw" id="new_window_fw">New Window (fw)</a></h3>
 <div class="level3">
 
@@ -1381,22 +1382,22 @@ The following are available from the <strong>gschem</strong> main window&rsquo;s
 </p>
 
 </div>
-<!-- SECTION [56685-56850] -->
+<!-- SECTION "New Window (fw)" [56669-56834] -->
 <h3><a name="new_page_fn" id="new_page_fn">New Page (fn)</a></h3>
 <div class="level3">
 
 <p>
-<strong>File | New Page</strong> opens a new page, in addition to any existing open pages. Usually this page will be named &ldquo;untitled_N.sch&rdquo;, where N is an incrementing number.
+<strong>File | New Page</strong> opens a new page, in addition to any existing open pages. Usually this page will be named “untitled_N.sch”, where N is an incrementing number.
 </p>
 
 </div>
-<!-- SECTION [56851-57038] -->
+<!-- SECTION "New Page (fn)" [56835-57022] -->
 <h3><a name="open_page..._fo" id="open_page..._fo">Open Page... (fo)</a></h3>
 <div class="level3">
 
 <p>
-<strong>File | Open Page...</strong> opens an existing page from disk.<br/>
- The &ldquo;Open...&rdquo; dialog box pops up providing:
+<strong>File | Open Page&hellip;</strong> opens an existing page from disk.<br/>
+ The “Open&hellip;” dialog box pops up providing:
 </p>
 <ul>
 <li class="level1"><div class="li"> Directory navigation aids</div>
@@ -1416,7 +1417,7 @@ The following are available from the <strong>gschem</strong> main window&rsquo;s
 </ul>
 
 </div>
-<!-- SECTION [57039-57326] -->
+<!-- SECTION "Open Page... (fo)" [57023-57310] -->
 <h3><a name="close_page_pc" id="close_page_pc">Close Page (pc)</a></h3>
 <div class="level3">
 
@@ -1425,7 +1426,7 @@ The following are available from the <strong>gschem</strong> main window&rsquo;s
 </p>
 
 </div>
-<!-- SECTION [57327-57472] -->
+<!-- SECTION "Close Page (pc)" [57311-57456] -->
 <h3><a name="revert_page_pr" id="revert_page_pr">Revert Page (pr)</a></h3>
 <div class="level3">
 
@@ -1434,17 +1435,17 @@ The following are available from the <strong>gschem</strong> main window&rsquo;s
 </p>
 
 </div>
-<!-- SECTION [57473-57734] -->
+<!-- SECTION "Revert Page (pr)" [57457-57718] -->
 <h3><a name="save_page_fs" id="save_page_fs">Save Page (fs)</a></h3>
 <div class="level3">
 
 <p>
 <strong>File | Save Page</strong> saves the current page. The current filename is displayed in the <strong>gschem</strong> status-bar.<br/>
- If the page&rsquo;s filename is &ldquo;untitled_N.sch&rdquo; (where N is a integer), then the Save As... dialog box will be displayed, prompting for a new filename.<br/>
- If the page&rsquo;s filename is NOT &ldquo;untitled_N.sch&rdquo; (where N is a integer), then the Save As... dialog box will NOT be displayed, and:
+ If the page’s filename is “untitled_N.sch” (where N is a integer), then the Save As&hellip; dialog box will be displayed, prompting for a new filename.<br/>
+ If the page’s filename is NOT “untitled_N.sch” (where N is a integer), then the Save As&hellip; dialog box will NOT be displayed, and:
 </p>
 <ul>
-<li class="level1"><div class="li"> the backup file will be created for the previous version, named {filename}~ That is, the &ldquo;~&rdquo; (tilde character) is appended to the filename. Any previous backup file is lost.</div>
+<li class="level1"><div class="li"> the backup file will be created for the previous version, named {filename}~ That is, the &quot;~&quot; (tilde character) is appended to the filename. Any previous backup file is lost.</div>
 </li>
 <li class="level1"><div class="li"> the file will be saved to the current filename.<br/>
 </div>
@@ -1452,19 +1453,19 @@ The following are available from the <strong>gschem</strong> main window&rsquo;s
 </ul>
 
 </div>
-<!-- SECTION [57735-58382] -->
+<!-- SECTION "Save Page (fs)" [57719-58366] -->
 <h3><a name="save_page_as..._fa" id="save_page_as..._fa">Save Page As... (fa)</a></h3>
 <div class="level3">
 
 <p>
-<strong>File | Save Page As...</strong> opens the Save As.. dialog box.<br/>
- If the current filename is &ldquo;untitled_N.sch&rdquo;, the Save As... dialog box prompts for a new filename.<br/>
- If the current filename is NOT &ldquo;untitled_N.sch&rdquo;, the Save As... dialog box prompts for a new filename, filling in the current filename as a default.<br/>
+<strong>File | Save Page As&hellip;</strong> opens the Save As.. dialog box.<br/>
+ If the current filename is “untitled_N.sch”, the Save As&hellip; dialog box prompts for a new filename.<br/>
+ If the current filename is NOT “untitled_N.sch”, the Save As&hellip; dialog box prompts for a new filename, filling in the current filename as a default.<br/>
  In either case the filename may be changed, and a new file created when the Save As button is clicked.
 </p>
 
 </div>
-<!-- SECTION [58383-58830] -->
+<!-- SECTION "Save Page As... (fa)" [58367-58814] -->
 <h3><a name="save_all_fl_fl" id="save_all_fl_fl">Save All (fl) (fl)</a></h3>
 <div class="level3">
 
@@ -1473,12 +1474,12 @@ The following are available from the <strong>gschem</strong> main window&rsquo;s
 </p>
 
 </div>
-<!-- SECTION [58831-58935] -->
+<!-- SECTION "Save All (fl) (fl)" [58815-58919] -->
 <h3><a name="print..._fp" id="print..._fp">Print... (fp)</a></h3>
 <div class="level3">
 
 <p>
-<strong>File | Print...</strong> brings up the Print... dialog box.<br/>
+<strong>File | Print&hellip;</strong> brings up the Print&hellip; dialog box.<br/>
  The following may be selected:
 </p>
 <ul>
@@ -1488,9 +1489,9 @@ The following are available from the <strong>gschem</strong> main window&rsquo;s
 </li>
 <li class="level1"><div class="li"> The print type:</div>
 <ul>
-<li class="level2"><div class="li"> Extents with margins &ndash; the current page, with margins where the printer doesn&rsquo;t output.</div>
+<li class="level2"><div class="li"> Extents with margins &ndash; the current page, with margins where the printer doesn’t output.</div>
 </li>
-<li class="level2"><div class="li"> Extents no margins &ndash; the current page, but without margins where the printer doesn&rsquo;t output. The printer output may be scaled larger than when using &ldquo;Entents with margins&rdquo;, but at the loss along the borders of the schematic.</div>
+<li class="level2"><div class="li"> Extents no margins &ndash; the current page, but without margins where the printer doesn’t output. The printer output may be scaled larger than when using “Entents with margins”, but at the loss along the borders of the schematic.</div>
 </li>
 <li class="level2"><div class="li"> Current window &ndash; Scaled to fit the page size, but not optimally.</div>
 </li>
@@ -1513,16 +1514,15 @@ The following are available from the <strong>gschem</strong> main window&rsquo;s
 <dt><span class='term'> Fedora Core (from the command-line):</span></dt>
 <dd><code>lp First_1.ps</code></dd>
 </dl>
-<p>
-</p>
+
 
 </div>
-<!-- SECTION [58936-59982] -->
+<!-- SECTION "Print... (fp)" [58920-59966] -->
 <h3><a name="write_png..._fi" id="write_png..._fi">Write PNG... (fi)</a></h3>
 <div class="level3">
 
 <p>
-<strong>File | Write <acronym title="Portable Network Graphics">PNG</acronym>...</strong> brings up the Write <acronym title="Portable Network Graphics">PNG</acronym>... dialog box. Note you must have libgdgeda installed (and any required dependencies) if you want to output images.<br/>
+<strong>File | Write <acronym title="Portable Network Graphics">PNG</acronym>&hellip;</strong> brings up the Write <acronym title="Portable Network Graphics">PNG</acronym>&hellip; dialog box. Note you must have libgdgeda installed (and any required dependencies) if you want to output images.<br/>
  The dialog box allows you to select:
 </p>
 <ul>
@@ -1544,7 +1544,7 @@ The following are available from the <strong>gschem</strong> main window&rsquo;s
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> Filename (if <strong>gschem</strong> has multiple pages loaded, the currently displayed page&rsquo;s filname is given)</div>
+<li class="level1"><div class="li"> Filename (if <strong>gschem</strong> has multiple pages loaded, the currently displayed page’s filname is given)</div>
 </li>
 </ul>
 
@@ -1554,16 +1554,16 @@ The following are available from the <strong>gschem</strong> main window&rsquo;s
 </p>
 
 </div>
-<!-- SECTION [59983-60777] -->
+<!-- SECTION "Write PNG... (fi)" [59967-60761] -->
 <h3><a name="execute_script..._ft" id="execute_script..._ft">Execute Script... (ft)</a></h3>
 <div class="level3">
 
 <p>
-<strong>File | Execute Script...</strong> .....TBD
+<strong>File | Execute Script&hellip;</strong> &hellip;..TBD
 </p>
 
 </div>
-<!-- SECTION [60778-60849] -->
+<!-- SECTION "Execute Script... (ft)" [60762-60833] -->
 <h3><a name="close_window_fc" id="close_window_fc">Close Window (fc)</a></h3>
 <div class="level3">
 
@@ -1572,7 +1572,7 @@ The following are available from the <strong>gschem</strong> main window&rsquo;s
 </p>
 
 </div>
-<!-- SECTION [60850-61088] -->
+<!-- SECTION "Close Window (fc)" [60834-61072] -->
 <h3><a name="quit_alt-q" id="quit_alt-q">Quit (Alt-q)</a></h3>
 <div class="level3">
 
@@ -1581,7 +1581,7 @@ The following are available from the <strong>gschem</strong> main window&rsquo;s
 </p>
 
 </div>
-<!-- SECTION [61089-61281] -->
+<!-- SECTION "Quit (Alt-q)" [61073-61265] -->
 <h2><a name="edit" id="edit">Edit</a></h2>
 <div class="level2">
 
@@ -1590,7 +1590,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 </p>
 
 </div>
-<!-- SECTION [61282-61398] -->
+<!-- SECTION "Edit" [61266-61382] -->
 <h3><a name="undo_shift-u" id="undo_shift-u">Undo (shift-u)</a></h3>
 <div class="level3">
 
@@ -1611,7 +1611,7 @@ After every action (including zooming and panning) the schematic is saved to dis
 </p>
 
 </div>
-<!-- SECTION [61399-62357] -->
+<!-- SECTION "Undo (shift-u)" [61383-62341] -->
 <h3><a name="redo_shift-r" id="redo_shift-r">Redo (shift-r)</a></h3>
 <div class="level3">
 
@@ -1621,16 +1621,16 @@ After every action (including zooming and panning) the schematic is saved to dis
 </p>
 
 </div>
-<!-- SECTION [62358-62666] -->
+<!-- SECTION "Redo (shift-r)" [62342-62650] -->
 <h3><a name="select_mode_s" id="select_mode_s">Select Mode (s)</a></h3>
 <div class="level3">
 
 <p>
 <strong>Edit | Select Mode</strong> is the initial mode in which <strong>gschem</strong> starts.<br/>
- When in <strong>Select Mode</strong>, an unlocked object (i.e., component, line, box, circle, ...) may be selected by placing the mouse pointer within the outline of the object and single-clicking, or by dragging a box (i.e., holding down the first mouse-button) around the object. Selecting an already selected object will leave the object selected (i.e., you can not unselect an object by single-clicking it). Multiple unlocked objects may be selected by dragging a box around the objects.<br/>
+ When in <strong>Select Mode</strong>, an unlocked object (i.e., component, line, box, circle, &hellip;) may be selected by placing the mouse pointer within the outline of the object and single-clicking, or by dragging a box (i.e., holding down the first mouse-button) around the object. Selecting an already selected object will leave the object selected (i.e., you can not unselect an object by single-clicking it). Multiple unlocked objects may be selected by dragging a box around the objects.<br/>
  A locked object may be selected by dragging a box around the object.<br/>
  To de-select all objects, single-click anywhere on the schematic where there is no object.<br/>
- A visible attribute for an unlocked component may be selected by placing the mouse pointer over the component&rsquo;s visible attribute and single-clicking. Placing the mouse pointer over the unlocked component&rsquo;s visible attribute and double-clicking will open the edit dialog box appropriate for the attribute.<br/>
+ A visible attribute for an unlocked component may be selected by placing the mouse pointer over the component’s visible attribute and single-clicking. Placing the mouse pointer over the unlocked component’s visible attribute and double-clicking will open the edit dialog box appropriate for the attribute.<br/>
  Objects will change color when selected.<br/>
  You stay in <strong>Select Mode</strong> until you select one of the other Modes (e.g., Line, Copy, Move, etc.).<br/>
  Your current Mode is displayed on the status-bar, in the lower-right corner of the <strong>gschem</strong> window.<br/>
@@ -1644,25 +1644,25 @@ After every action (including zooming and panning) the schematic is saved to dis
 </p>
 
 </div>
-<!-- SECTION [62667-65074] -->
+<!-- SECTION "Select Mode (s)" [62651-65058] -->
 <h3><a name="edit..._ee" id="edit..._ee">Edit... (ee)</a></h3>
 <div class="level3">
 
 <p>
 First, select the object to be edited (i.e., in <strong>Select Mode</strong>).<br/>
- If the object is a component, <strong>Edit | Edit...</strong> then pops up a dialog box that allows you to edit the component&rsquo;s attributes:
+ If the object is a component, <strong>Edit | Edit&hellip;</strong> then pops up a dialog box that allows you to edit the component’s attributes:
 </p>
 <ul>
 <li class="level1"><div class="li"> Existing attributes (e.g., refdes) are displayed.</div>
 </li>
 <li class="level1"><div class="li"> A drop-down list of pre-defined attributes permits selection, and a edit-box provides association of a value to the attribute.</div>
 </li>
-<li class="level1"><div class="li"> The attribute&rsquo; name and/or value may be made visible or invisible,</div>
+<li class="level1"><div class="li"> The attribute’ name and/or value may be made visible or invisible,</div>
 </li>
 </ul>
 
 <p>
- If the ojbect is a text string, <strong>Edit...</strong> then pops up a dialog box that allows you to modify the text string&rsquo;s attributes:
+ If the ojbect is a text string, <strong>Edit&hellip;</strong> then pops up a dialog box that allows you to modify the text string’s attributes:
 </p>
 <ul>
 <li class="level1"><div class="li"> The text string may be modified. Multiple lines of text may be entered by inserting carriage-returns.</div>
@@ -1693,14 +1693,14 @@ First, select the object to be edited (i.e., in <strong>Select Mode</strong>).<b
 </p>
 
 </div>
-<!-- SECTION [65075-66269] -->
+<!-- SECTION "Edit... (ee)" [65059-66253] -->
 <h3><a name="edit_text..._ex" id="edit_text..._ex">Edit Text... (ex)</a></h3>
 <div class="level3">
 
 <p>
 First, select the text object to be edited (i.e., in <strong>Select Mode</strong>).<br/>
- <strong>Edit | Edit Text...</strong> allows you to edit just text.<br/>
- <strong>Edit | Edit Text...</strong> then pops up a dialog box that allows you to modify the text string&rsquo;s attributes:
+ <strong>Edit | Edit Text&hellip;</strong> allows you to edit just text.<br/>
+ <strong>Edit | Edit Text&hellip;</strong> then pops up a dialog box that allows you to modify the text string’s attributes:
 </p>
 <ul>
 <li class="level1"><div class="li"> The text string may be modified. Multiple lines of text may be entered by inserting carriage-returns.</div>
@@ -1731,7 +1731,7 @@ First, select the text object to be edited (i.e., in <strong>Select Mode</strong
 </p>
 
 </div>
-<!-- SECTION [66270-67128] -->
+<!-- SECTION "Edit Text... (ex)" [66254-67112] -->
 <h3><a name="copy_mode_ec" id="copy_mode_ec">Copy Mode (ec)</a></h3>
 <div class="level3">
 
@@ -1764,7 +1764,7 @@ First, select the text object to be edited (i.e., in <strong>Select Mode</strong
 </p>
 
 </div>
-<!-- SECTION [67129-68053] -->
+<!-- SECTION "Copy Mode (ec)" [67113-68037] -->
 <h3><a name="move_mode_em" id="move_mode_em">Move Mode (em)</a></h3>
 <div class="level3">
 
@@ -1810,7 +1810,7 @@ Since version 20060906, there is another way to move object(s):<br/>
 </ul>
 
 </div>
-<!-- SECTION [68054-69207] -->
+<!-- SECTION "Move Mode (em)" [68038-69191] -->
 <h3><a name="delete_delete-key" id="delete_delete-key">Delete (Delete-key)</a></h3>
 <div class="level3">
 
@@ -1830,7 +1830,7 @@ Since version 20060906, there is another way to move object(s):<br/>
 </p>
 
 </div>
-<!-- SECTION [69208-69526] -->
+<!-- SECTION "Delete (Delete-key)" [69192-69510] -->
 <h3><a name="rotate_90_mode_er" id="rotate_90_mode_er">Rotate 90 Mode (er)</a></h3>
 <div class="level3">
 
@@ -1854,7 +1854,7 @@ Since version 20060906, there is another way to move object(s):<br/>
 </p>
 
 </div>
-<!-- SECTION [69527-70116] -->
+<!-- SECTION "Rotate 90 Mode (er)" [69511-70100] -->
 <h3><a name="mirror_mode_ei" id="mirror_mode_ei">Mirror Mode (ei)</a></h3>
 <div class="level3">
 
@@ -1878,45 +1878,45 @@ Since version 20060906, there is another way to move object(s):<br/>
 </p>
 
 </div>
-<!-- SECTION [70117-70773] -->
+<!-- SECTION "Mirror Mode (ei)" [70101-70757] -->
 <h3><a name="slot..._e_shift-s" id="slot..._e_shift-s">Slot... (e shift-s)</a></h3>
 <div class="level3">
 
 <p>
-Some physical packages (e.g., the classic 7400 Quad NAND gate) contain more than one logical component (e.g., one of the NAND gates). In <strong>gchem</strong> terminology, each of these logical components is termed a &ldquo;slot&rdquo; (e.g., there would be 4 slots in the 7400 Quad NAND gate). Each slot is associated with specific pins on the physical package.<br/>
- <strong>Edit | Slot...</strong> allows you to change the slot number of a multiple-slot package. The package must support slotting. Refer to the <a href="http://www.geda.seul.org/docs/current/symbols/index.html" class="urlextern" title="http://www.geda.seul.org/docs/current/symbols/index.html"  rel="nofollow">gEDA/gaf Symbol Creation Document</a> for more details.<br/>
+Some physical packages (e.g., the classic 7400 Quad NAND gate) contain more than one logical component (e.g., one of the NAND gates). In <strong>gchem</strong> terminology, each of these logical components is termed a “slot” (e.g., there would be 4 slots in the 7400 Quad NAND gate). Each slot is associated with specific pins on the physical package.<br/>
+ <strong>Edit | Slot&hellip;</strong> allows you to change the slot number of a multiple-slot package. The package must support slotting. Refer to the <a href="http://www.geda.seul.org/docs/current/symbols/index.html" class="urlextern" title="http://www.geda.seul.org/docs/current/symbols/index.html"  rel="nofollow">gEDA/gaf Symbol Creation Document</a> for more details.<br/>
  To change the slot number (i.e., select which package pins are associated with a logical component):
 </p>
 <ul>
 <li class="level1"><div class="li"> Select the desired logical component (i.e., in <strong>Select Mode</strong>)</div>
 </li>
-<li class="level1"><div class="li"> Select <strong>Edit | Slot...</strong></div>
+<li class="level1"><div class="li"> Select <strong>Edit | Slot&hellip;</strong></div>
 </li>
-<li class="level1"><div class="li"> Change the &ldquo;slot=n&rdquo; value in the &ldquo;Edit slot number&rdquo; dialog box</div>
+<li class="level1"><div class="li"> Change the “slot=n” value in the “Edit slot number” dialog box</div>
 </li>
 <li class="level1"><div class="li"> Press OK</div>
 </li>
 </ul>
 
 <p>
- Note that selecting the slot on a package often effects the layout of the printed circuit board, as the slot may be on the wrong side of the package for effecient routing of nets. Don&rsquo;t worry, you can always come back and change the slot selection once you start laying out your board and know which slots route best.
+ Note that selecting the slot on a package often effects the layout of the printed circuit board, as the slot may be on the wrong side of the package for effecient routing of nets. Don’t worry, you can always come back and change the slot selection once you start laying out your board and know which slots route best.
 </p>
 
 </div>
-<!-- SECTION [70774-71990] -->
+<!-- SECTION "Slot... (e shift-s)" [70758-71974] -->
 <h3><a name="color..._eo" id="color..._eo">Color... (eo)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Edit | Color...</strong> allows you to change the color of any selected object (with the exception of components).<br/>
+<strong>Edit | Color&hellip;</strong> allows you to change the color of any selected object (with the exception of components).<br/>
  To change the color of the currently selected objects:
 </p>
 <ul>
 <li class="level1"><div class="li"> Select the desired object(s) (i.e., in <strong>Select Mode</strong>)</div>
 </li>
-<li class="level1"><div class="li"> Select <strong>Edit | Color...</strong></div>
+<li class="level1"><div class="li"> Select <strong>Edit | Color&hellip;</strong></div>
 </li>
-<li class="level1"><div class="li"> The &ldquo;Edit | Color Edit&rdquo; dialog box, with a drop down list for colors, will appear:</div>
+<li class="level1"><div class="li"> The “Edit | Color Edit” dialog box, with a drop down list for colors, will appear:</div>
 <ul>
 <li class="level2"><div class="li"> 1 | pin | black</div>
 </li>
@@ -1960,7 +1960,7 @@ Some physical packages (e.g., the classic 7400 Quad NAND gate) contain more than
 </p>
 
 </div>
-<!-- SECTION [71991-72949] -->
+<!-- SECTION "Color... (eo)" [71975-72933] -->
 <h3><a name="lock_el_unlock_e_shift-l" id="lock_el_unlock_e_shift-l">Lock (el) / Unlock (e shift-l)</a></h3>
 <div class="level3">
 
@@ -1979,25 +1979,25 @@ Some physical packages (e.g., the classic 7400 Quad NAND gate) contain more than
 
 <p>
  The locked/unlocked state of components is preserved when <strong>gschem</strong> exits, so components which were locked remain locked the next time the schematic is opened.<br/>
- You can lock and unlock regular objects (e.g., lines, pins, boxes...). This is nice when you are drawing something and an object is in the way. Just lock it, and you will not have to think about it when you click to select other objects. Locking an object is not preserved in the file format, so once you quit <strong>gschem</strong> any locked objects will be unlocked the next time the schematic is opened.<br/>
+ You can lock and unlock regular objects (e.g., lines, pins, boxes&hellip;). This is nice when you are drawing something and an object is in the way. Just lock it, and you will not have to think about it when you click to select other objects. Locking an object is not preserved in the file format, so once you quit <strong>gschem</strong> any locked objects will be unlocked the next time the schematic is opened.<br/>
  Note that if a component is locked, you can not single-click to select a visible attribute, or double-click to select and edit a visible component. First unlock such locked components.
 </p>
 
 </div>
-<!-- SECTION [72950-74488] -->
+<!-- SECTION "Lock (el) / Unlock (e shift-l)" [72934-74472] -->
 <h3><a name="line_width_type..._ew" id="line_width_type..._ew">Line Width &amp; Type... (ew)</a></h3>
 <div class="level3">
 
 <p>
-The <strong>Edit | Line Width &amp; Type...</strong> dialog box lets you control the width and type of lines, boxes, circles, and arcs on the schematic/symbol.<br/>
- To change the <strong>Line Width &amp; Type...</strong>:
+The <strong>Edit | Line Width &amp; Type&hellip;</strong> dialog box lets you control the width and type of lines, boxes, circles, and arcs on the schematic/symbol.<br/>
+ To change the <strong>Line Width &amp; Type&hellip;</strong>:
 </p>
 <ul>
 <li class="level1"><div class="li"> Select the desired object(s) (i.e., in <strong>Select Mode</strong>)</div>
 </li>
-<li class="level1"><div class="li"> Select <strong>Edit | Line Width &amp; Type...</strong></div>
+<li class="level1"><div class="li"> Select <strong>Edit | Line Width &amp; Type&hellip;</strong></div>
 </li>
-<li class="level1"><div class="li"> The &ldquo;Edit Line Width * Type&rdquo; dialog box displays</div>
+<li class="level1"><div class="li"> The “Edit Line Width * Type” dialog box displays</div>
 </li>
 <li class="level1"><div class="li"> Change the following as suites the object:</div>
 <ul>
@@ -2016,22 +2016,22 @@ The <strong>Edit | Line Width &amp; Type...</strong> dialog box lets you control
 </ul>
 
 <p>
- Note that if the line width doesn&rsquo;t seem to change, just pick a larger value.
+ Note that if the line width doesn’t seem to change, just pick a larger value.
 </p>
 
 </div>
-<!-- SECTION [74489-75104] -->
+<!-- SECTION "Line Width & Type... (ew)" [74473-75088] -->
 <h3><a name="fill_type..._ef" id="fill_type..._ef">Fill Type... (ef)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Edit | Fill Type...</strong> is used to fill boxes and circles.<br/>
+<strong>Edit | Fill Type&hellip;</strong> is used to fill boxes and circles.<br/>
  To fill a box or circle:
 </p>
 <ul>
 <li class="level1"><div class="li"> Select the box or circle.</div>
 </li>
-<li class="level1"><div class="li"> Select <strong>Edit | Fill Type...</strong>. The &ldquo;Edit FIll Type&rdquo; dialog box is displayed.</div>
+<li class="level1"><div class="li"> Select <strong>Edit | Fill Type&hellip;</strong>. The “Edit FIll Type” dialog box is displayed.</div>
 </li>
 <li class="level1"><div class="li"> Enter:</div>
 <ul>
@@ -2054,30 +2054,30 @@ The <strong>Edit | Line Width &amp; Type...</strong> dialog box lets you control
 </ul>
 
 </div>
-<!-- SECTION [75105-75445] -->
+<!-- SECTION "Fill Type... (ef)" [75089-75429] -->
 <h3><a name="symbol_translate..._et" id="symbol_translate..._et">Symbol Translate... (et)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Edit | Symbol Translate...</strong> is used when creating a symbol, to translate the symbol to an origin for subsequent placement. The symbol may take an optional offset (in mils), as appropriate to the symbol.<br/>
+<strong>Edit | Symbol Translate&hellip;</strong> is used when creating a symbol, to translate the symbol to an origin for subsequent placement. The symbol may take an optional offset (in mils), as appropriate to the symbol.<br/>
  To translate the symbol:
 </p>
 <ul>
 <li class="level1"><div class="li"> Open a file for the symbol</div>
 </li>
-<li class="level1"><div class="li"> Set the grid snap spacing to 100 mils (<strong>Options</strong> | <strong>Snap Grid Spacing...</strong>).</div>
+<li class="level1"><div class="li"> Set the grid snap spacing to 100 mils (<strong>Options</strong> | <strong>Snap Grid Spacing&hellip;</strong>).</div>
 </li>
 <li class="level1"><div class="li"> Toggle the grid ON (<strong>Options</strong> | <strong>Toggle Grid On/Off</strong>)</div>
 </li>
 <li class="level1"><div class="li"> Toggle the grid snap ON (<strong>Options</strong> | <strong>Toggle Snap On/Off</strong>)</div>
 </li>
-<li class="level1"><div class="li"> Zoom as appropriate for the symbol&rsquo;s dimensions</div>
+<li class="level1"><div class="li"> Zoom as appropriate for the symbol’s dimensions</div>
 </li>
 <li class="level1"><div class="li"> Draw the symbol, according to the recommendations in the <a href="http://www.geda.seul.org/docs/current/symbols/index.html" class="urlextern" title="http://www.geda.seul.org/docs/current/symbols/index.html"  rel="nofollow">gEDA/gaf Symbol Creation Document</a></div>
 </li>
-<li class="level1"><div class="li"> Select <strong>Edit | Symbol Translate...</strong></div>
+<li class="level1"><div class="li"> Select <strong>Edit | Symbol Translate&hellip;</strong></div>
 </li>
-<li class="level1"><div class="li"> The &ldquo;Translate&rdquo; dialog box is displayed.</div>
+<li class="level1"><div class="li"> The “Translate” dialog box is displayed.</div>
 </li>
 <li class="level1"><div class="li"> Enter 0 to translate to the origin, or enter a value (in mils), positive or negative, to offset the symbol from the origin.</div>
 </li>
@@ -2094,7 +2094,7 @@ The <strong>Edit | Line Width &amp; Type...</strong> dialog box lets you control
 </p>
 
 </div>
-<!-- SECTION [75446-76610] -->
+<!-- SECTION "Symbol Translate... (et)" [75430-76594] -->
 <h3><a name="embed_component_picture_eb" id="embed_component_picture_eb">Embed Component/Picture (eb)</a></h3>
 <div class="level3">
 
@@ -2111,18 +2111,18 @@ The <strong>Edit | Line Width &amp; Type...</strong> dialog box lets you control
 
 <p>
  Save the schematic. The schematic file will now contain the text strings for the embedded component or embedded graphic.<br/>
- The <strong>Add Component...</strong> dialog box allows you to optionally embed the component.<br/>
- The <strong>Add Picture...</strong> dialog box does NOT allow you to optionally embed the component.<br/>
+ The <strong>Add Component&hellip;</strong> dialog box allows you to optionally embed the component.<br/>
+ The <strong>Add Picture&hellip;</strong> dialog box does NOT allow you to optionally embed the component.<br/>
  You can only embed and unembed components. Also, you cannot embed and then mirror a component (this is a limitation of <strong>gschem</strong> and will eventually be fixed).
 </p>
 
 </div>
-<!-- SECTION [76611-77640] -->
+<!-- SECTION "Embed Component/Picture (eb)" [76595-77624] -->
 <h3><a name="unembed_component_picture_eu" id="unembed_component_picture_eu">Unembed Component/Picture (eu)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Edit | Unembed Component/Picture</strong> will move the component&rsquo;s or graphic&rsquo;s information from the schematic file&rsquo;s contents and output it to the original file&rsquo;s path/filename (i.e., the schematic file includes the path/filename information). To <strong>Unembed Component/Picture</strong>:
+<strong>Edit | Unembed Component/Picture</strong> will move the component’s or graphic’s information from the schematic file’s contents and output it to the original file’s path/filename (i.e., the schematic file includes the path/filename information). To <strong>Unembed Component/Picture</strong>:
 </p>
 <ul>
 <li class="level1"><div class="li"> Select the component/picture (in <strong>Select Mode</strong>)</div>
@@ -2137,12 +2137,12 @@ The <strong>Edit | Line Width &amp; Type...</strong> dialog box lets you control
 </p>
 
 </div>
-<!-- SECTION [77641-78230] -->
+<!-- SECTION "Unembed Component/Picture (eu)" [77625-78214] -->
 <h3><a name="update_component_ep" id="update_component_ep">Update Component (ep)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Edit | Update Component</strong> updates a component&rsquo;s definition.<br/>
+<strong>Edit | Update Component</strong> updates a component’s definition.<br/>
  A symbol can be modified from within <strong>gschem</strong> using the following sequence:
 </p>
 <ul>
@@ -2150,15 +2150,15 @@ The <strong>Edit | Line Width &amp; Type...</strong> dialog box lets you control
 </li>
 <li class="level1"><div class="li"> Select <strong>Hierarchy | Down Symbol</strong>. This takes you to the symbol editor</div>
 </li>
-<li class="level1"><div class="li"> Modify the symbol. This includes modifying the symbol&rsquo;s graphic objects, adding/changing/deleting attributes, and moving objects with respect to the origin</div>
+<li class="level1"><div class="li"> Modify the symbol. This includes modifying the symbol’s graphic objects, adding/changing/deleting attributes, and moving objects with respect to the origin</div>
 </li>
-<li class="level1"><div class="li"> Don&rsquo;t forget to <strong>Edit | Symbol Translate</strong></div>
+<li class="level1"><div class="li"> Don’t forget to <strong>Edit | Symbol Translate</strong></div>
 </li>
-<li class="level1"><div class="li"> Select <strong>File | Save Page</strong> to save the symbol to it&rsquo;s file</div>
+<li class="level1"><div class="li"> Select <strong>File | Save Page</strong> to save the symbol to it’s file</div>
 </li>
 <li class="level1"><div class="li"> Select <strong>Hierarchy | Up Symbol</strong>. This returns you to the schematic editor</div>
 </li>
-<li class="level1"><div class="li"> With the component still selected, select <strong>Edit | Update Component</strong> to update the componet&rsquo;s description from the modified symbol&rsquo;s definition</div>
+<li class="level1"><div class="li"> With the component still selected, select <strong>Edit | Update Component</strong> to update the componet’s description from the modified symbol’s definition</div>
 </li>
 <li class="level1"><div class="li"> Select each component on the schematic(s) made from this symbol, and select <strong>Edit | Update Component</strong></div>
 </li>
@@ -2167,23 +2167,23 @@ The <strong>Edit | Line Width &amp; Type...</strong> dialog box lets you control
 <p>
  New components placed on the schematic from this updated symbol will use the new symbol definition.<br/>
  Components placed on the schematic from this symbol will be updated the next time this schematic is opened.<br/>
- The symbol&rsquo;s <code>symversion</code> attribute will automatically be incremented for non-trivial changes when the symbol is saved. When a schematic is opened by <strong>gschem</strong>, all symbols used by the schematic are read from their libraries. The <code>symversion</code> attribute of the symbol read from the library is compared to the <code>symversion</code> attribute of the components in the schematic. If the <code>symversion</code> attributes are different, the <code>symversion</code> attribute is exposed on the schematic for those symbols effected. Note that:
+ The symbol’s <code>symversion</code> attribute will automatically be incremented for non-trivial changes when the symbol is saved. When a schematic is opened by <strong>gschem</strong>, all symbols used by the schematic are read from their libraries. The <code>symversion</code> attribute of the symbol read from the library is compared to the <code>symversion</code> attribute of the components in the schematic. If the <code>symversion</code> attributes are different, the <code>symversion</code> attribute is exposed on the schematic for those symbols effected. Note that:
 </p>
 <ul>
-<li class="level1"><div class="li"> This is a &ldquo;hint&rdquo; to the designer to check the symbol.</div>
+<li class="level1"><div class="li"> This is a “hint” to the designer to check the symbol.</div>
 </li>
 <li class="level1"><div class="li"> You need to actually open a schematic file with <strong>gschem</strong> for the components to be updated.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [78231-80040] -->
+<!-- SECTION "Update Component (ep)" [78215-80024] -->
 <h3><a name="show_hide_inv_text_en" id="show_hide_inv_text_en">Show/Hide Inv Text (en)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Edit | Show/Hide Inv Text</strong> is most appropriate when creating or editing symbols, to view or hide the text for all of the symbol&rsquo;s invisible attributes.<br/>
- <a href="#make_inv_text_vis" title="geda:gschem_ug &crarr;" class="wikilink1">Make Inv Text Vis</a> is most appropriate when adding symbols to schematics, to view the text for the symbol&rsquo;s modifiable invisible attributes.<br/>
+<strong>Edit | Show/Hide Inv Text</strong> is most appropriate when creating or editing symbols, to view or hide the text for all of the symbol’s invisible attributes.<br/>
+ <a href="#make_inv_text_vis" title="geda:gschem_ug &crarr;" class="wikilink1">Make Inv Text Vis</a> is most appropriate when adding symbols to schematics, to view the text for the symbol’s modifiable invisible attributes.<br/>
  <strong>Edit | Show/Hide Inv Text</strong> toggles between making all invisible text visible and hiding all invisible text. When selected, all objects in the symbol are effected.<br/>
  Visible text always remains visible.<br/>
  A symbol has the following <em class="u">potential</em> attributes :
@@ -2234,21 +2234,21 @@ The <strong>Edit | Line Width &amp; Type...</strong> dialog box lets you control
 </ul>
 
 <p>
- Not all attributes need to be used to define a symbol (see the discussion of <a href="docs_20060124_gschem_ug_app_a.html" class="wikilink2" title="docs:20060124:gschem_ug:app_a">Appendix A -- Heavy vs Light Symbol Libraries</a>). The <strong>gschem</strong> default is to define symbols as &ldquo;light&rdquo;, indicating that the symbol includes as few attributes as necessary to describe the symbol. &ldquo;light&rdquo; symbols depend on the designer attaching additional descriptive attributes to the symbol when the symbol is placed on the schematic. For example: a &ldquo;light&rdquo; symbol for a resistor might include just the graphic for a resistor, its pin attributes, and the &ldquo;refdes&rdquo; attribute. This describes a resistor. It would be the designer&rsquo;s responsibility, after the resistor has been placed on the schematic, to add the &ldquo;value&rdquo; and &ldquo;footprint&rdquo; attributes appropriate for the specific resistor in the circuit. A &ldquo;heavy&rdquo; symbol includes more descriptive attributes. Using &ldquo;light&rdquo; vs. &ldquo;heavy&rdquo; symbols is up to the designer.<br/>
- A symbol&rsquo;s attributes may be flagged as either visible or invisible. Attributes are flagged as invisible to reduce the clutter around a symbol on the schematic.<br/>
+ Not all attributes need to be used to define a symbol (see the discussion of <a href="docs_20060124_gschem_ug_app_a.html" class="wikilink2" title="docs:20060124:gschem_ug:app_a">Appendix A -- Heavy vs Light Symbol Libraries</a>). The <strong>gschem</strong> default is to define symbols as “light”, indicating that the symbol includes as few attributes as necessary to describe the symbol. “light” symbols depend on the designer attaching additional descriptive attributes to the symbol when the symbol is placed on the schematic. For example: a “light” symbol for a resistor might include just the graphic for a resistor, its pin attributes, and the “refdes” attribute. This describes a resistor. It would be the designer’s responsibility, after the resistor has been placed on the schematic, to add the “value” and “footprint” attributes appropriate for the specific resistor in the circuit. A “heavy” symbol includes more descriptive attributes. Using “light” vs. “heavy” symbols is up to the designer.<br/>
+ A symbol’s attributes may be flagged as either visible or invisible. Attributes are flagged as invisible to reduce the clutter around a symbol on the schematic.<br/>
  When creating or editing the symbol, and changing a visible attribute to an invisible attribute, the attribute can not be viewed during further editing of the symbol. It becomes difficult to place attribute text. To view both the visible and invisible text, select <strong>Edit | Show/Hide Inv Text</strong>.<br/>
- When a symbol is instantiated on a schematic as a component, only the symbol&rsquo;s visible attributes are promoted to the component. For example: if a resistor&rsquo;s symbol defines &ldquo;refdes&rdquo; as the only visible attribute defined in the symbol, the only attribute that the component contains is the &ldquo;refdes&rdquo; attribute). Those attributes not included in the symbol definition may be added at the schematic level, component-by-component.<br/>
+ When a symbol is instantiated on a schematic as a component, only the symbol’s visible attributes are promoted to the component. For example: if a resistor’s symbol defines “refdes” as the only visible attribute defined in the symbol, the only attribute that the component contains is the “refdes” attribute). Those attributes not included in the symbol definition may be added at the schematic level, component-by-component.<br/>
  This operation is useful when drawing/debugging symbols.<br/>
- When hidden text is visible, &ldquo;Show Hidden&rdquo; will appear on the status-bar in the lower right.
+ When hidden text is visible, “Show Hidden” will appear on the status-bar in the lower right.
 </p>
 
 </div>
-<!-- SECTION [80041-82868] -->
+<!-- SECTION "Show/Hide Inv Text (en)" [80025-82852] -->
 <h3><a name="make_inv_text_vis_ev" id="make_inv_text_vis_ev">Make Inv Text Vis (ev)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Edit | Make Inv Text Vis</strong> is a quick method of making all of a component&rsquo;s invisible attributes visible. The same effect can be accomplished by double-clicking on the component and marking all of the entries in the Attributes listbox as &ldquo;Vis?&rdquo; (i.e., visible).<br/>
+<strong>Edit | Make Inv Text Vis</strong> is a quick method of making all of a component’s invisible attributes visible. The same effect can be accomplished by double-clicking on the component and marking all of the entries in the Attributes listbox as “Vis?&quot; (i.e., visible).<br/>
  To <strong>Make Inv Text Vis</strong> for a component:
 </p>
 <ul>
@@ -2260,11 +2260,11 @@ The <strong>Edit | Line Width &amp; Type...</strong> dialog box lets you control
 
 <p>
  The attributes that had been hidden are displayed.<br/>
- To hide the attributes again, you need to double-click the component to bring up it&rsquo;s &ldquo;Edit Attributes&rdquo; dialog box, and explicitly place a check for each attribute you want hidden.
+ To hide the attributes again, you need to double-click the component to bring up it’s “Edit Attributes” dialog box, and explicitly place a check for each attribute you want hidden.
 </p>
 
 </div>
-<!-- SECTION [82869-83532] -->
+<!-- SECTION "Make Inv Text Vis (ev)" [82853-83516] -->
 <h2><a name="buffer" id="buffer">Buffer</a></h2>
 <div class="level2">
 
@@ -2273,7 +2273,7 @@ The <strong>Edit | Line Width &amp; Type...</strong> dialog box lets you control
 </p>
 
 </div>
-<!-- SECTION [83533-83652] -->
+<!-- SECTION "Buffer" [83517-83636] -->
 <h3><a name="copy_into_1_2_3_4_5_yc" id="copy_into_1_2_3_4_5_yc">Copy into 1/2/3/4/5 (yc)</a></h3>
 <div class="level3">
 
@@ -2288,7 +2288,7 @@ To copy something into a buffer:
 </ol>
 
 </div>
-<!-- SECTION [83653-83805] -->
+<!-- SECTION "Copy into 1/2/3/4/5 (yc)" [83637-83789] -->
 <h3><a name="cut_into_1_2_3_4_5_yu" id="cut_into_1_2_3_4_5_yu">Cut into 1/2/3/4/5 (yu)</a></h3>
 <div class="level3">
 
@@ -2297,7 +2297,7 @@ Cut is like copy in that it removes the objects from the schematic
 </p>
 
 </div>
-<!-- SECTION [83806-83907] -->
+<!-- SECTION "Cut into 1/2/3/4/5 (yu)" [83790-83891] -->
 <h3><a name="paste_from_1_2_3_4_5_yp" id="paste_from_1_2_3_4_5_yp">Paste from 1/2/3/4/5 (yp)</a></h3>
 <div class="level3">
 
@@ -2320,22 +2320,22 @@ To paste a buffer into the current schematic:
 </ol>
 
 </div>
-<!-- SECTION [83908-84261] -->
+<!-- SECTION "Paste from 1/2/3/4/5 (yp)" [83892-84245] -->
 <h2><a name="view" id="view">View</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION [84262-84279] -->
+<!-- SECTION "View" [84246-84263] -->
 <h3><a name="redraw_vr" id="redraw_vr">Redraw (vr)</a></h3>
 <div class="level3">
 
 <p>
 <strong>View | Redraw</strong> re-paints the current window.<br/>
- This is useful when you have mouse/component/line/text etc... droppings left over from a previous action. It is also useful when you want to update all visual connectivity cues.
+ This is useful when you have mouse/component/line/text etc&hellip; droppings left over from a previous action. It is also useful when you want to update all visual connectivity cues.
 </p>
 
 </div>
-<!-- SECTION [84280-84530] -->
+<!-- SECTION "Redraw (vr)" [84264-84514] -->
 <h3><a name="pan_x" id="pan_x">Pan (x)</a></h3>
 <div class="level3">
 
@@ -2351,38 +2351,38 @@ To paste a buffer into the current schematic:
 </ul>
 
 <p>
- To pan the display using the shortcut is much simpler, simply place the mouse pointer where you want the display centered and type &ldquo;x&rdquo;. The display will jump to the mouse&rsquo;s location.<br/>
+ To pan the display using the shortcut is much simpler, simply place the mouse pointer where you want the display centered and type “x”. The display will jump to the mouse’s location.<br/>
  Pan behavior is configurable. The system-gschemrc file defines: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(third-button &quot;popup&quot;)</font></pre>
 </p>
 
 <p>
-If you override the system-gschemrc&rsquo;s default, of popping up a menu when the third mouse button is clicked, by adding: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(third-button &quot;mousepan&quot;)</font></pre>
+If you override the system-gschemrc’s default, of popping up a menu when the third mouse button is clicked, by adding: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(third-button &quot;mousepan&quot;)</font></pre>
 </p>
 
 <p>
-to either your user&rsquo;s ~/gschemrc file or local &lsquo;pwd&rsquo;/gschemrc file, the third mouse button (i.e., the right mouse button on scroll-wheel mice) will allow you to pan the schematic by holding down the third mouse button and dragging.<br/>
+to either your user’s ~/gschemrc file or local ‘pwd’/gschemrc file, the third mouse button (i.e., the right mouse button on scroll-wheel mice) will allow you to pan the schematic by holding down the third mouse button and dragging.<br/>
  The system-gschemrc file also defines: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(fast-mousepan &quot;enabled&quot;)</font></pre>
 </p>
 
 <p>
-If you override the system-gschemrc&rsquo;s default by adding: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(fast-mousepan &quot;disabled&quot;)</font></pre>
+If you override the system-gschemrc’s default by adding: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(fast-mousepan &quot;disabled&quot;)</font></pre>
 </p>
 
 <p>
-to either your user&rsquo;s ~/gschemrc file or local &lsquo;pwd&rsquo;/gschemrc file, text will be displayed properly when the third mouse button is held down while dragging. The <code>(third-button &ldquo;mousepan&rdquo;)</code> setting must also be applied for this to work. Disabling <code>fast-mousepan</code> adversely effects rendering speed while panning on large &ldquo;complicated&rdquo; schematics.<br/>
+to either your user’s ~/gschemrc file or local ‘pwd’/gschemrc file, text will be displayed properly when the third mouse button is held down while dragging. The <code>(third-button “mousepan”)</code> setting must also be applied for this to work. Disabling <code>fast-mousepan</code> adversely effects rendering speed while panning on large “complicated” schematics.<br/>
  The system-gschemrc file also defines: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(zoom-with-pan &quot;enabled&quot;)</font></pre>
 </p>
 
 <p>
-If you override the system-gschemrc&rsquo;s default by adding: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(zoom-with-pan &quot;disabled&quot;)</font></pre>
+If you override the system-gschemrc’s default by adding: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(zoom-with-pan &quot;disabled&quot;)</font></pre>
 </p>
 
 <p>
-to either your user&rsquo;s ~/gschemrc file or local &lsquo;pwd&rsquo;/gschemrc file, whenever you zoom in/out, the zoom will NOT center on the mouse pointer, effectively removing the pan feature of the zoom in/out operations.
+to either your user’s ~/gschemrc file or local ‘pwd’/gschemrc file, whenever you zoom in/out, the zoom will NOT center on the mouse pointer, effectively removing the pan feature of the zoom in/out operations.
 </p>
 
 </div>
-<!-- SECTION [84531-86327] -->
+<!-- SECTION "Pan (x)" [84515-86311] -->
 <h3><a name="zoom_box_w" id="zoom_box_w">Zoom Box (w)</a></h3>
 <div class="level3">
 
@@ -2404,18 +2404,18 @@ to either your user&rsquo;s ~/gschemrc file or local &lsquo;pwd&rsquo;/gschemrc 
 </ul>
 
 <p>
- To use <strong>View | Zoom Box</strong> by typing the equivalent shortcut (i.e., &ldquo;<strong>w</strong>&ldquo;) is more convenient. Simply position the mouse pointer at one corner of the zoom box, then type &ldquo;<strong>w</strong>&ldquo;.  The zoom box will start immediately using the current mouse location as the first corner of the box.<br/>
- <strong>View | Zoom Box</strong> will attempt to zoom to the requested area, but some boxes are not legal and <strong>gschem</strong> will do it&rsquo;s best to zoom the requested area.
+ To use <strong>View | Zoom Box</strong> by typing the equivalent shortcut (i.e., “<strong>w</strong>”) is more convenient. Simply position the mouse pointer at one corner of the zoom box, then type “<strong>w</strong>”.  The zoom box will start immediately using the current mouse location as the first corner of the box.<br/>
+ <strong>View | Zoom Box</strong> will attempt to zoom to the requested area, but some boxes are not legal and <strong>gschem</strong> will do it’s best to zoom the requested area.
 </p>
 
 </div>
-<!-- SECTION [86328-87208] -->
+<!-- SECTION "Zoom Box (w)" [86312-87192] -->
 <h3><a name="zoom_extents_ve" id="zoom_extents_ve">Zoom Extents (ve)</a></h3>
 <div class="level3">
 
 <p>
 <strong>View | Extents</strong> will zoom the display to fit all of the placed objects into the current window.<br/>
- To view all of the current window&rsquo;s objects:
+ To view all of the current window’s objects:
 </p>
 <ul>
 <li class="level1"><div class="li"> Select <strong>View | Extents</strong></div>
@@ -2423,12 +2423,12 @@ to either your user&rsquo;s ~/gschemrc file or local &lsquo;pwd&rsquo;/gschemrc 
 </ul>
 
 <p>
- Typing the <strong>View | Extents</strong> shortcut (i.e., &ldquo;<strong>ve</strong>&ldquo;) is particularly convenient for those that have learned to navigate the schematics using the shortcuts.<br/>
+ Typing the <strong>View | Extents</strong> shortcut (i.e., “<strong>ve</strong>”) is particularly convenient for those that have learned to navigate the schematics using the shortcuts.<br/>
 
 </p>
 
 </div>
-<!-- SECTION [87209-87575] -->
+<!-- SECTION "Zoom Extents (ve)" [87193-87559] -->
 <h3><a name="zoom_in_z" id="zoom_in_z">Zoom In (z)</a></h3>
 <div class="level3">
 
@@ -2442,30 +2442,30 @@ to either your user&rsquo;s ~/gschemrc file or local &lsquo;pwd&rsquo;/gschemrc 
 </ul>
 
 <p>
- The (zoom-with-pan &ldquo;enabled&rdquo;) configuration setting in the gschemrc files effects the operation of the zoom in shortcut (i.e., &ldquo;<strong>z</strong>&ldquo;). The default system-gschemrc setting for: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(zoom-with-pan &quot;enabled&quot;)</font></pre>
+ The (zoom-with-pan “enabled”) configuration setting in the gschemrc files effects the operation of the zoom in shortcut (i.e., “<strong>z</strong>”). The default system-gschemrc setting for: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(zoom-with-pan &quot;enabled&quot;)</font></pre>
 </p>
 
 <p>
-enables zooming in, using the mouse pointer&rsquo;s location as the new center of the window. If this changed to: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(zoom-with-pan &quot;disabled&quot;)</font></pre>
+enables zooming in, using the mouse pointer’s location as the new center of the window. If this changed to: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(zoom-with-pan &quot;disabled&quot;)</font></pre>
 </p>
 
 <p>
-in either your user&rsquo;s ~/gschemrc file or local &lsquo;pwd&rsquo;/gschemrc file, whenever you zoom in, the zoom will NOT center on the mouse pointer but will center on the current center of the window, effectively removing the pan feature of the zoom in operation.<br/>
+in either your user’s ~/gschemrc file or local ‘pwd’/gschemrc file, whenever you zoom in, the zoom will NOT center on the mouse pointer but will center on the current center of the window, effectively removing the pan feature of the zoom in operation.<br/>
  To zoom in using the shortcut:
 </p>
 <ul>
-<li class="level1"><div class="li"> If the default (zoom-with-pan &ldquo;enabled&rdquo;) is configured in one of the gschemrc files, position the mouse pointer in the window where you want the new center</div>
+<li class="level1"><div class="li"> If the default (zoom-with-pan “enabled”) is configured in one of the gschemrc files, position the mouse pointer in the window where you want the new center</div>
 </li>
-<li class="level1"><div class="li"> Type &ldquo;<strong>z</strong>&rdquo;</div>
+<li class="level1"><div class="li"> Type “<strong>z</strong>”</div>
 </li>
 </ul>
 
 <p>
- Typing &ldquo;<strong>z</strong>&rdquo; is particularly convenient for those that have learned to navigate the schematics using the shortcuts.
+ Typing “<strong>z</strong>” is particularly convenient for those that have learned to navigate the schematics using the shortcuts.
 </p>
 
 </div>
-<!-- SECTION [87576-88737] -->
+<!-- SECTION "Zoom In (z)" [87560-88721] -->
 <h3><a name="zoom_out_z" id="zoom_out_z">Zoom Out (Z)</a></h3>
 <div class="level3">
 
@@ -2479,30 +2479,30 @@ in either your user&rsquo;s ~/gschemrc file or local &lsquo;pwd&rsquo;/gschemrc 
 </ul>
 
 <p>
- The (zoom-with-pan &ldquo;enabled&rdquo;) configuration setting in the gschemrc files effects the operation of the zoom out shortcut (i.e., &ldquo;<strong>z</strong>&ldquo;). The default system-gschemrc setting for: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(zoom-with-pan &quot;enabled&quot;)</font></pre>
+ The (zoom-with-pan “enabled”) configuration setting in the gschemrc files effects the operation of the zoom out shortcut (i.e., “<strong>z</strong>”). The default system-gschemrc setting for: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(zoom-with-pan &quot;enabled&quot;)</font></pre>
 </p>
 
 <p>
-enables zooming out, using the mouse pointer&rsquo;s location as the new center of the window. If this changed to: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(zoom-with-pan &quot;disabled&quot;)</font></pre>
+enables zooming out, using the mouse pointer’s location as the new center of the window. If this changed to: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">(zoom-with-pan &quot;disabled&quot;)</font></pre>
 </p>
 
 <p>
-in either your user&rsquo;s ~/gschemrc file or local &lsquo;pwd&rsquo;/gschemrc file, whenever you zoom out, the zoom will NOT center on the mouse pointer but will center on the current center of the window, effectively removing the pan feature of the zoom out operation.<br/>
+in either your user’s ~/gschemrc file or local ‘pwd’/gschemrc file, whenever you zoom out, the zoom will NOT center on the mouse pointer but will center on the current center of the window, effectively removing the pan feature of the zoom out operation.<br/>
  To zoom out using the shortcut:
 </p>
 <ul>
-<li class="level1"><div class="li"> If the default (zoom-with-pan &ldquo;enabled&rdquo;) is configured in one of the gschemrc files, position the mouse pointer in the window where you want the new center</div>
+<li class="level1"><div class="li"> If the default (zoom-with-pan “enabled”) is configured in one of the gschemrc files, position the mouse pointer in the window where you want the new center</div>
 </li>
-<li class="level1"><div class="li"> Type &ldquo;<strong>Z</strong>&rdquo; (i.e., shift-z)</div>
+<li class="level1"><div class="li"> Type “<strong>Z</strong>” (i.e., shift-z)</div>
 </li>
 </ul>
 
 <p>
- Typing &ldquo;<strong>Z</strong>&rdquo; is particularly convenient for those that have learned to navigate the schematics using the shortcuts.
+ Typing “<strong>Z</strong>” is particularly convenient for those that have learned to navigate the schematics using the shortcuts.
 </p>
 
 </div>
-<!-- SECTION [88738-89926] -->
+<!-- SECTION "Zoom Out (Z)" [88722-89910] -->
 <h3><a name="zoom_full_vf" id="zoom_full_vf">Zoom Full (vf)</a></h3>
 <div class="level3">
 
@@ -2525,10 +2525,10 @@ To view the maximum displayable area:
 </p>
 
 <p>
-To view the maximum displayable area using the keyboard shortcut (i.e., &ldquo;<strong>vf</strong>&ldquo;):
+To view the maximum displayable area using the keyboard shortcut (i.e., “<strong>vf</strong>”):
 </p>
 <ul>
-<li class="level1"><div class="li"> Type &ldquo;<strong>vf</strong>&rdquo;</div>
+<li class="level1"><div class="li"> Type “<strong>vf</strong>”</div>
 </li>
 </ul>
 
@@ -2542,61 +2542,61 @@ To view the maximum displayable area using the keyboard shortcut (i.e., &ldquo;<
 </p>
 
 </div>
-<!-- SECTION [89927-90705] -->
+<!-- SECTION "Zoom Full (vf)" [89911-90689] -->
 <h2><a name="page" id="page">Page</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION [90706-90724] -->
+<!-- SECTION "Page" [90690-90708] -->
 <h3><a name="manager..._pm" id="manager..._pm">Manager... (pm)</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION [90725-90752] -->
+<!-- SECTION "Manager... (pm)" [90709-90736] -->
 <h3><a name="next" id="next">Next (&gt;)</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION [90753-90773] -->
+<!-- SECTION "Next (>)" [90737-90757] -->
 <h3><a name="previous" id="previous">Previous (&lt;)</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION [90774-90798] -->
+<!-- SECTION "Previous (<)" [90758-90782] -->
 <h3><a name="new_pe" id="new_pe">New (pe)</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION [90799-90819] -->
+<!-- SECTION "New (pe)" [90783-90803] -->
 <h3><a name="revert_pr" id="revert_pr">Revert (pr)</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION [90820-90843] -->
+<!-- SECTION "Revert (pr)" [90804-90827] -->
 <h3><a name="close_pc" id="close_pc">Close (pc)</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION [90844-90866] -->
+<!-- SECTION "Close (pc)" [90828-90850] -->
 <h3><a name="discard_pd" id="discard_pd">Discard (pd)</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION [90867-90891] -->
+<!-- SECTION "Discard (pd)" [90851-90875] -->
 <h2><a name="add" id="add">Add</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION [90892-90908] -->
+<!-- SECTION "Add" [90876-90892] -->
 <h3><a name="component..._i" id="component..._i">Component... (i)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Add | Component...</strong> opens a dialog box which lets you place components from the component libraries.<br/>
+<strong>Add | Component&hellip;</strong> opens a dialog box which lets you place components from the component libraries.<br/>
  To place a component:
 </p>
 <ul>
-<li class="level1"><div class="li"> Select <strong>Add |Component...</strong></div>
+<li class="level1"><div class="li"> Select <strong>Add |Component&hellip;</strong></div>
 </li>
 <li class="level1"><div class="li"> Select a component Library from the left list-box</div>
 </li>
@@ -2632,11 +2632,11 @@ To view the maximum displayable area using the keyboard shortcut (i.e., &ldquo;<
 </ul>
 
 <p>
- It helps to preview the symbol in the &ldquo;Select Component&rdquo; dialog box before selecting and placing the symbol.
+ It helps to preview the symbol in the “Select Component” dialog box before selecting and placing the symbol.
 </p>
 
 </div>
-<!-- SECTION [90909-92385] -->
+<!-- SECTION "Component... (i)" [90893-92369] -->
 <h3><a name="net_n" id="net_n">Net (n)</a></h3>
 <div class="level3">
 
@@ -2658,18 +2658,17 @@ To view the maximum displayable area using the keyboard shortcut (i.e., &ldquo;<
 		<td> <a href="_detail/geda_nets.html" class="media" title="geda:nets.jpg"><img src="_media/geda_nets.jpg" class="media" title="nets.jpg" alt="nets.jpg" /></a> </td>
 	</tr>
 </table>
-<br />
 
 <p>
- Note the small red segment at the end of the resistor&rsquo;s pins. All pins in <strong>gschem</strong> have this red segment. This is the connectivity cue for the pin. It is sometimes difficult to &ldquo;grab&rdquo; this attachment point when drawing nets, you may need to zoom in on the pin. To zoom in, press the &ldquo;z&rdquo; key. To zoom out, press the &ldquo;Z&rdquo; (i.e., shift-z) key.<br/>
+ Note the small red segment at the end of the resistor’s pins. All pins in <strong>gschem</strong> have this red segment. This is the connectivity cue for the pin. It is sometimes difficult to “grab” this attachment point when drawing nets, you may need to zoom in on the pin. To zoom in, press the “z” key. To zoom out, press the “Z” (i.e., shift-z) key.<br/>
  To begin drawing a net using the menu:
 </p>
 <ul>
 <li class="level1"><div class="li"> Select <strong>Add | Net</strong></div>
 </li>
-<li class="level1"><div class="li"> Zoom in on the component where the net is to start, so that you can easily grab the pin&rsquo;s attachment point</div>
+<li class="level1"><div class="li"> Zoom in on the component where the net is to start, so that you can easily grab the pin’s attachment point</div>
 </li>
-<li class="level1"><div class="li"> Position the mouse pointer over the pin&rsquo;s connectivity cue</div>
+<li class="level1"><div class="li"> Position the mouse pointer over the pin’s connectivity cue</div>
 </li>
 <li class="level1"><div class="li"> Press the first mouse button to start the net</div>
 </li>
@@ -2679,11 +2678,11 @@ To view the maximum displayable area using the keyboard shortcut (i.e., &ldquo;<
  To begin drawing the net using the shortcut:
 </p>
 <ul>
-<li class="level1"><div class="li"> Zoom in on the component where the net is to start, so that you can easily grab the pin&rsquo;s attachment point</div>
+<li class="level1"><div class="li"> Zoom in on the component where the net is to start, so that you can easily grab the pin’s attachment point</div>
 </li>
-<li class="level1"><div class="li"> Position the mouse pointer over the pin&rsquo;s connectivity cue</div>
+<li class="level1"><div class="li"> Position the mouse pointer over the pin’s connectivity cue</div>
 </li>
-<li class="level1"><div class="li"> Press the &ldquo;n&rdquo; key</div>
+<li class="level1"><div class="li"> Press the “n” key</div>
 </li>
 </ul>
 
@@ -2719,7 +2718,7 @@ To view the maximum displayable area using the keyboard shortcut (i.e., &ldquo;<
 </p>
 
 </div>
-<!-- SECTION [92386-94977] -->
+<!-- SECTION "Net (n)" [92370-94961] -->
 <h3><a name="bus_u" id="bus_u">Bus (u)</a></h3>
 <div class="level3">
 
@@ -2729,18 +2728,18 @@ To view the maximum displayable area using the keyboard shortcut (i.e., &ldquo;<
 </p>
 
 </div>
-<!-- SECTION [94978-95227] -->
+<!-- SECTION "Bus (u)" [94962-95211] -->
 <h3><a name="attribute..._aa" id="attribute..._aa">Attribute... (aa)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Add | Attribute...</strong> is appropriate when creating or editing symbols, to add a new attribute.<br/>
- <strong>Add | Attribute...</strong> brings up the &ldquo;Single Attribute Editor&rdquo; dialog box. This dialog box is ONLY used to add attributes. It does not display or manipulate already placed attributes.<br/>
+<strong>Add | Attribute&hellip;</strong> is appropriate when creating or editing symbols, to add a new attribute.<br/>
+ <strong>Add | Attribute&hellip;</strong> brings up the “Single Attribute Editor” dialog box. This dialog box is ONLY used to add attributes. It does not display or manipulate already placed attributes.<br/>
  An attribute is nothing more than a text item which is in the form <code>name=value</code> (there cannot be any spaces to the left or right of the name,value pair). It can be either attached to an object, or unattached.<br/>
- To add an unattached attribute (e.g., &ldquo;comment&rdquo;, &ldquo;documentation&rdquo;, etc.) to the symbol:
+ To add an unattached attribute (e.g., “comment”, “documentation”, etc.) to the symbol:
 </p>
 <ul>
-<li class="level1"><div class="li"> Select <strong>Add | Attribute...</strong></div>
+<li class="level1"><div class="li"> Select <strong>Add | Attribute&hellip;</strong></div>
 </li>
 <li class="level1"><div class="li"> Select an attribute name off of the pulldown list, or type the attribute name into the name entry</div>
 </li>
@@ -2753,24 +2752,24 @@ To view the maximum displayable area using the keyboard shortcut (i.e., &ldquo;<
 </ul>
 
 <p>
- If you want to attach an attribute to an object, then select the desired object first and then <strong>Add | Attribute...</strong> from the pull-down menu. If you click on an object which has attached attributes, the attached attributes should be selected as well.<br/>
- If you select <strong>Add | Attribute...</strong> off of the pull down menus then you do not have much control as to where the attribute gets placed (it gets places either at the lower left hand corner of the object extents or at the origin of any selected object). However, if you use the hot key (i.e., &ldquo;aa&rdquo;) then the current mouse position is used as the anchor point for the attribute item.<br/>
+ If you want to attach an attribute to an object, then select the desired object first and then <strong>Add | Attribute&hellip;</strong> from the pull-down menu. If you click on an object which has attached attributes, the attached attributes should be selected as well.<br/>
+ If you select <strong>Add | Attribute&hellip;</strong> off of the pull down menus then you do not have much control as to where the attribute gets placed (it gets places either at the lower left hand corner of the object extents or at the origin of any selected object). However, if you use the hot key (i.e., “aa”) then the current mouse position is used as the anchor point for the attribute item.<br/>
  You cannot place an incomplete attribute (an attribute without a name and value).<br/>
  Please see <a href="docs_20060124_gschem_ug_components_symbols_objects_attributes.html" class="wikilink2" title="docs:20060124:gschem_ug:components_symbols_objects_attributes">Components/Symbols/Objects/Attributes</a> for more info on how to use attributes.
 </p>
 
 </div>
-<!-- SECTION [95228-96940] -->
+<!-- SECTION "Attribute... (aa)" [95212-96924] -->
 <h3><a name="text..._at" id="text..._at">Text... (at)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Add | Text...</strong> displays the &ldquo;Text Entry...&rdquo; dialog box. To place text:
+<strong>Add | Text&hellip;</strong> displays the “Text Entry&hellip;” dialog box. To place text:
 </p>
 <ul>
-<li class="level1"><div class="li"> Select <strong>Options | Text Size...</strong> and select the size for the text</div>
+<li class="level1"><div class="li"> Select <strong>Options | Text Size&hellip;</strong> and select the size for the text</div>
 </li>
-<li class="level1"><div class="li"> Select <strong>Add | Text...</strong></div>
+<li class="level1"><div class="li"> Select <strong>Add | Text&hellip;</strong></div>
 </li>
 <li class="level1"><div class="li"> Type the text in the entry field (multiple lines may be entered by pressing Enter)</div>
 </li>
@@ -2780,13 +2779,13 @@ To view the maximum displayable area using the keyboard shortcut (i.e., &ldquo;<
 </li>
 <li class="level1"><div class="li"> Press the first mouse button to anchor the text</div>
 </li>
-<li class="level1"><div class="li"> Close the &ldquo;Text Entry...&rdquo; dialog box</div>
+<li class="level1"><div class="li"> Close the “Text Entry&hellip;” dialog box</div>
 </li>
 </ul>
 
 <p>
- If you leave the <strong>Add | Text...</strong> dialog box open you can place the same text item again and again by just clicking Apply (or pressing Enter) and moving the mouse into the main window.<br/>
- The following settings in the system-gschemrc file, the user&rsquo;s ~/gschemrc file, or the local &lsquo;pwd&rsquo;/gschemrc file control how text is displayed: 
+ If you leave the <strong>Add | Text&hellip;</strong> dialog box open you can place the same text item again and again by just clicking Apply (or pressing Enter) and moving the mouse into the main window.<br/>
+ The following settings in the system-gschemrc file, the user’s ~/gschemrc file, or the local ‘pwd’/gschemrc file control how text is displayed: 
 </p>
 <pre class="code lisp"><span class="co1">; text-origin-marker : Controls if the text origin markers are displayed.</span>
 <span class="co1">; text-size : Sets the default text size.</span>
@@ -2801,7 +2800,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION [96941-98744] -->
+<!-- SECTION "Text... (at)" [96925-98728] -->
 <h3><a name="line_l" id="line_l">Line (l)</a></h3>
 <div class="level3">
 
@@ -2810,7 +2809,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
  To draw a line:
 </p>
 <ul>
-<li class="level1"><div class="li"> If you want to snap the line to the grid, set the grid spacing by selecting <strong>Options | Snap Grid Spacing...</strong> and entering the grid spacing, and then selecting <strong>Options | Toggle Snap On/Off</strong> until you don&rsquo;t see &ldquo;Snap Off&rdquo; on the status-bar</div>
+<li class="level1"><div class="li"> If you want to snap the line to the grid, set the grid spacing by selecting <strong>Options | Snap Grid Spacing&hellip;</strong> and entering the grid spacing, and then selecting <strong>Options | Toggle Snap On/Off</strong> until you don’t see “Snap Off” on the status-bar</div>
 </li>
 <li class="level1"><div class="li"> Select <strong>Add | Line</strong></div>
 </li>
@@ -2845,7 +2844,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION [98745-99831] -->
+<!-- SECTION "Line (l)" [98729-99815] -->
 <h3><a name="box_b" id="box_b">Box (b)</a></h3>
 <div class="level3">
 
@@ -2853,7 +2852,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 <strong>Add | Box</strong> draws a box. To draw a box:
 </p>
 <ul>
-<li class="level1"><div class="li"> If you want to snap the box to the grid, set the grid spacing by selecting <strong>Options | Snap Grid Spacing...</strong> and entering the grid spacing, and then selecting <strong>Options | Toggle Snap On/Off</strong> until you don’t see “Snap Off” on the status-bar</div>
+<li class="level1"><div class="li"> If you want to snap the box to the grid, set the grid spacing by selecting <strong>Options | Snap Grid Spacing&hellip;</strong> and entering the grid spacing, and then selecting <strong>Options | Toggle Snap On/Off</strong> until you don’t see “Snap Off” on the status-bar</div>
 </li>
 <li class="level1"><div class="li"> Select <strong>Add | Box</strong></div>
 </li>
@@ -2875,7 +2874,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION [99832-100584] -->
+<!-- SECTION "Box (b)" [99816-100568] -->
 <h3><a name="circle_ai" id="circle_ai">Circle (ai)</a></h3>
 <div class="level3">
 
@@ -2884,7 +2883,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
  To draw a circle:
 </p>
 <ul>
-<li class="level1"><div class="li"> If you want to snap the box to the grid, set the grid spacing by selecting <strong>Options | Snap Grid Spacing...</strong> and entering the grid spacing, and then selecting <strong>Options | Toggle Snap On/Off</strong> until you don’t see “Snap Off” on the status-bar</div>
+<li class="level1"><div class="li"> If you want to snap the box to the grid, set the grid spacing by selecting <strong>Options | Snap Grid Spacing&hellip;</strong> and entering the grid spacing, and then selecting <strong>Options | Toggle Snap On/Off</strong> until you don’t see “Snap Off” on the status-bar</div>
 </li>
 <li class="level1"><div class="li"> Select <strong>Add | Circle</strong></div>
 </li>
@@ -2907,7 +2906,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION [100585-101469] -->
+<!-- SECTION "Circle (ai)" [100569-101453] -->
 <h3><a name="arc_ar" id="arc_ar">Arc (ar)</a></h3>
 <div class="level3">
 
@@ -2915,7 +2914,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 <strong>Add | Arc</strong> draws an arc. To draw an arc:
 </p>
 <ul>
-<li class="level1"><div class="li"> If you want to snap the box to the grid, set the grid spacing by selecting <strong>Options | Snap Grid Spacing...</strong> and entering the grid spacing, and then selecting <strong>Options | Toggle Snap On/Off</strong> until you don’t see “Snap Off” on the status-bar</div>
+<li class="level1"><div class="li"> If you want to snap the box to the grid, set the grid spacing by selecting <strong>Options | Snap Grid Spacing&hellip;</strong> and entering the grid spacing, and then selecting <strong>Options | Toggle Snap On/Off</strong> until you don’t see “Snap Off” on the status-bar</div>
 </li>
 <li class="level1"><div class="li"> Select <strong>Add | Arc</strong></div>
 </li>
@@ -2927,7 +2926,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </li>
 <li class="level1"><div class="li"> Press the first mouse button again</div>
 </li>
-<li class="level1"><div class="li"> Enter the Start Angle (in degrees) &ndash; 0º is the &ldquo;x&rdquo; axis</div>
+<li class="level1"><div class="li"> Enter the Start Angle (in degrees) &ndash; 0º is the “x” axis</div>
 </li>
 <li class="level1"><div class="li"> Enter the Degrees of Sweep (for counter-clockwise sweep)</div>
 </li>
@@ -2943,7 +2942,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION [101470-102562] -->
+<!-- SECTION "Arc (ar)" [101454-102546] -->
 <h3><a name="pin_ap" id="pin_ap">Pin (ap)</a></h3>
 <div class="level3">
 
@@ -2953,7 +2952,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
  To draw a pin:
 </p>
 <ul>
-<li class="level1"><div class="li"> Set the grid spacing by selecting <strong>Options | Snap Grid Spacing...</strong> and entering the grid spacing, and then selecting <strong>Options | Toggle Snap On/Off</strong> until you don’t see “Snap Off” on the status-bar. The <a href="http://www.geda.seul.org/docs/current/symbols/symbols.pdf" class="urlextern" title="http://www.geda.seul.org/docs/current/symbols/symbols.pdf"  rel="nofollow">gEDA/gaf Symbol Creation Document</a> specifies grid settings for pin placement in gEDA/gaf compliant symbols files.</div>
+<li class="level1"><div class="li"> Set the grid spacing by selecting <strong>Options | Snap Grid Spacing&hellip;</strong> and entering the grid spacing, and then selecting <strong>Options | Toggle Snap On/Off</strong> until you don’t see “Snap Off” on the status-bar. The <a href="http://www.geda.seul.org/docs/current/symbols/symbols.pdf" class="urlextern" title="http://www.geda.seul.org/docs/current/symbols/symbols.pdf"  rel="nofollow">gEDA/gaf Symbol Creation Document</a> specifies grid settings for pin placement in gEDA/gaf compliant symbols files.</div>
 </li>
 <li class="level1"><div class="li"> Select <strong>Add | Pin</strong></div>
 </li>
@@ -2976,7 +2975,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION [102563-103750] -->
+<!-- SECTION "Pin (ap)" [102547-103734] -->
 <h3><a name="picture..._ag" id="picture..._ag">Picture... (ag)</a></h3>
 <div class="level3">
 
@@ -2984,11 +2983,11 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 <strong>Add | Picture</strong> places a graphic in the schematic. To draw a picture:
 </p>
 <ul>
-<li class="level1"><div class="li"> If you want to snap the picture to the grid, set the grid spacing by selecting <strong>Options | Snap Grid Spacing...</strong> and entering the grid spacing, and then selecting <strong>Options | Toggle Snap On/Off</strong> until you don’t see “Snap Off” on the status-bar</div>
+<li class="level1"><div class="li"> If you want to snap the picture to the grid, set the grid spacing by selecting <strong>Options | Snap Grid Spacing&hellip;</strong> and entering the grid spacing, and then selecting <strong>Options | Toggle Snap On/Off</strong> until you don’t see “Snap Off” on the status-bar</div>
 </li>
 <li class="level1"><div class="li"> Select <strong>Add | Picture</strong></div>
 </li>
-<li class="level1"><div class="li"> Select the graphic file from the &ldquo;Please select a picture file&rdquo; dialog box</div>
+<li class="level1"><div class="li"> Select the graphic file from the “Please select a picture file” dialog box</div>
 </li>
 <li class="level1"><div class="li"> Press OK</div>
 </li>
@@ -3010,12 +3009,12 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION [103751-104746] -->
+<!-- SECTION "Picture... (ag)" [103735-104730] -->
 <h2><a name="hierarchy" id="hierarchy">Hierarchy</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION [104747-104769] -->
+<!-- SECTION "Hierarchy" [104731-104753] -->
 <h3><a name="down_schematic_hd" id="down_schematic_hd">Down Schematic (Hd)</a></h3>
 <div class="level3">
 
@@ -3037,7 +3036,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION [104770-106382] -->
+<!-- SECTION "Down Schematic (Hd)" [104754-106366] -->
 <h3><a name="down_symbol_hs" id="down_symbol_hs">Down Symbol (Hs)</a></h3>
 <div class="level3">
 
@@ -3048,7 +3047,7 @@ This option will open up the symbol of the selected component.<br/>
 </p>
 
 </div>
-<!-- SECTION [106383-106705] -->
+<!-- SECTION "Down Symbol (Hs)" [106367-106689] -->
 <h3><a name="up_hu" id="up_hu">Up (Hu)</a></h3>
 <div class="level3">
 
@@ -3057,27 +3056,27 @@ This option will move up the hierarchy (if there are pages above the currently d
 </p>
 
 </div>
-<!-- SECTION [106706-106820] -->
+<!-- SECTION "Up (Hu)" [106690-106804] -->
 <h3><a name="documentation_ho" id="documentation_ho">Documentation (Ho)</a></h3>
 <div class="level3">
 
 <p>
 Open any documentation available for the selected symbol/component.<br/>
- The job is handed over to &ldquo;gschemdoc&rdquo;, which makes a best-effort attempt of finding relevant documentation.<br/>
+ The job is handed over to “gschemdoc”, which makes a best-effort attempt of finding relevant documentation.<br/>
  The documention would normally be in <acronym title="Portable Document Format">PDF</acronym>, <acronym title="HyperText Markup Language">HTML</acronym>, text or image format, but gschemdoc tries to be as transparent as possible on this account.<br/>
- First and foremost, the attribute &ldquo;documentation=&rdquo; is assumed to point to the documentation. This attribute should either be the filename (basename) of the document, or it should be a complete <acronym title="Uniform Resource Locator">URL</acronym>.<br/>
+ First and foremost, the attribute “documentation=&quot; is assumed to point to the documentation. This attribute should either be the filename (basename) of the document, or it should be a complete <acronym title="Uniform Resource Locator">URL</acronym>.<br/>
  If it is a filename, and the file is found locally (in /usr/share/gEDA/documentation or otherwise), the relevant viewer will be initiated. Otherwise, a Google search for the document will be initiated.<br/>
- If there is no documentation attribute, the attributes &ldquo;device&rdquo; and possibly &ldquo;value&rdquo; will be consulted in much the same way as for &ldquo;documentation&rdquo;. File searches will be made in forms of filenames like &ldquo;device-value.pdf&rdquo; and &ldquo;device.pdf&rdquo;.<br/>
+ If there is no documentation attribute, the attributes “device” and possibly “value” will be consulted in much the same way as for “documentation”. File searches will be made in forms of filenames like “device-value.pdf” and “device.pdf”.<br/>
  Failing that, the file name for the symbol itself will be used as basis for the search.
 </p>
 
 </div>
-<!-- SECTION [106821-107905] -->
+<!-- SECTION "Documentation (Ho)" [106805-107889] -->
 <h2><a name="attributes1" id="attributes1">Attributes</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION [107906-107929] -->
+<!-- SECTION "Attributes" [107890-107913] -->
 <h3><a name="attach_ta" id="attach_ta">Attach (ta)</a></h3>
 <div class="level3">
 
@@ -3100,7 +3099,7 @@ The Attach command allows you to take a text item (in the proper form; <code>nam
 </p>
 
 </div>
-<!-- SECTION [107930-108737] -->
+<!-- SECTION "Attach (ta)" [107914-108721] -->
 <h3><a name="detach_td" id="detach_td">Detach (td)</a></h3>
 <div class="level3">
 
@@ -3121,7 +3120,7 @@ Detach allows you to deassociate attributes from objects.<br/>
 </p>
 
 </div>
-<!-- SECTION [108738-109344] -->
+<!-- SECTION "Detach (td)" [108722-109328] -->
 <h3><a name="show_value_tv" id="show_value_tv">Show Value (tv)</a></h3>
 <div class="level3">
 
@@ -3142,7 +3141,7 @@ These operations allow you to control which part of the attribute string is visi
 </p>
 
 </div>
-<!-- SECTION [109345-109883] -->
+<!-- SECTION "Show Value (tv)" [109329-109867] -->
 <h3><a name="show_name_tn" id="show_name_tn">Show Name (tn)</a></h3>
 <div class="level3">
 
@@ -3163,7 +3162,7 @@ These operations allow you to control which part of the attribute string is visi
 </p>
 
 </div>
-<!-- SECTION [109884-110421] -->
+<!-- SECTION "Show Name (tn)" [109868-110405] -->
 <h3><a name="show_both_tb" id="show_both_tb">Show Both (tb)</a></h3>
 <div class="level3">
 
@@ -3184,7 +3183,7 @@ These operations allow you to control which part of the attribute string is visi
 </p>
 
 </div>
-<!-- SECTION [110422-110959] -->
+<!-- SECTION "Show Both (tb)" [110406-110943] -->
 <h3><a name="toggle_visibility_tt" id="toggle_visibility_tt">Toggle Visibility (tt)</a></h3>
 <div class="level3">
 
@@ -3206,7 +3205,7 @@ This operation allows you to toggle the visibility of attributes.<br/>
 </p>
 
 </div>
-<!-- SECTION [110960-111655] -->
+<!-- SECTION "Toggle Visibility (tt)" [110944-111639] -->
 <h3><a name="find_specific_text..._t_shift-f" id="find_specific_text..._t_shift-f">Find Specific Text... (t shift-f)</a></h3>
 <div class="level3">
 
@@ -3231,11 +3230,11 @@ To use this operation:
 </p>
 
 <p>
-<strong>Note:</strong> gschem will find hidden text elements, too. If you don&rsquo;t see the found element, try to show the hidden text.
+<strong>Note:</strong> gschem will find hidden text elements, too. If you don’t see the found element, try to show the hidden text.
 </p>
 
 </div>
-<!-- SECTION [111656-112316] -->
+<!-- SECTION "Find Specific Text... (t shift-f)" [111640-112300] -->
 <h3><a name="hide_specific_text..._th" id="hide_specific_text..._th">Hide Specific Text... (th)</a></h3>
 <div class="level3">
 
@@ -3262,7 +3261,7 @@ This operation is useful if you like to hide pintype and pinseq attributes when 
 </p>
 
 </div>
-<!-- SECTION [112317-112678] -->
+<!-- SECTION "Hide Specific Text... (th)" [112301-112662] -->
 <h3><a name="show_specific_text..._t_shift-h" id="show_specific_text..._t_shift-h">Show Specific Text... (t shift-h)</a></h3>
 <div class="level3">
 
@@ -3289,7 +3288,7 @@ This operation is useful if you like to see only one specific attribute in the w
 </p>
 
 </div>
-<!-- SECTION [112679-113170] -->
+<!-- SECTION "Show Specific Text... (t shift-h)" [112663-113154] -->
 <h3><a name="autonumber_text..._tu" id="autonumber_text..._tu">Autonumber Text... (tu)</a></h3>
 <div class="level3">
 
@@ -3313,11 +3312,11 @@ You can use it to:
  To use that operation: 
 </p>
 <ol>
-<li class="level1"><div class="li"> select or enter the text elements you like to renumber in the <em>search for</em> entry. searchtext with a &ldquo;?&rdquo; at the end will match trailing &ldquo;?&rdquo; and trailing numbers in the text elements you are searching for. searchtext with a &ldquo;*&rdquo; at the end will match the given searchtext, followed by arbitrary text and followed by a trailing &ldquo;?&rdquo; or trailing numbers.</div>
+<li class="level1"><div class="li"> select or enter the text elements you like to renumber in the <em>search for</em> entry. searchtext with a &quot;?&quot; at the end will match trailing &quot;?&quot; and trailing numbers in the text elements you are searching for. searchtext with a “*” at the end will match the given searchtext, followed by arbitrary text and followed by a trailing &quot;?&quot; or trailing numbers.</div>
 </li>
 <li class="level1"><div class="li"> the <em>autonumber text in</em> option specifies where to search for the given searchstring.</div>
 </li>
-<li class="level1"><div class="li"> the <em>skip numbers found in</em> option specifies in which region you don&rsquo;t want have duplicate numbers. <strong>Example:</strong> If you renumber your components you usually want uniq numbers on a page or even uniq number in the whole hierarchy of a multipage schematic. If you renumber netnames of a bus you usually want to apply the new numbers only to selected net elements. Thus you can have multiple equal netnames on a schematic sheet.</div>
+<li class="level1"><div class="li"> the <em>skip numbers found in</em> option specifies in which region you don’t want have duplicate numbers. <strong>Example:</strong> If you renumber your components you usually want uniq numbers on a page or even uniq number in the whole hierarchy of a multipage schematic. If you renumber netnames of a bus you usually want to apply the new numbers only to selected net elements. Thus you can have multiple equal netnames on a schematic sheet.</div>
 </li>
 <li class="level1"><div class="li"> the <em>overwrite existing numbers</em> option specifies whether you only want to number unnumbered elements or if you like to renumber elements too.</div>
 </li>
@@ -3336,22 +3335,22 @@ You can use it to:
 </p>
 
 </div>
-<!-- SECTION [113171-115608] -->
+<!-- SECTION "Autonumber Text... (tu)" [113155-115592] -->
 <h2><a name="options" id="options">Options</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION [115609-115629] -->
+<!-- SECTION "Options" [115593-115613] -->
 <h3><a name="text_size..._ot" id="text_size..._ot">Text Size... (ot)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Options | Text Size...</strong> pops up a dialog box which allows you to specify the text size of all text (including attributes placed with the Add/Attribute... dialog box).<br/>
- The text size is in points (1/72&rdquo;). The default text size is 10 point text. The smallest text size is 2 points.
+<strong>Options | Text Size&hellip;</strong> pops up a dialog box which allows you to specify the text size of all text (including attributes placed with the Add/Attribute&hellip; dialog box).<br/>
+ The text size is in points (1/72”). The default text size is 10 point text. The smallest text size is 2 points.
 </p>
 
 </div>
-<!-- SECTION [115630-115942] -->
+<!-- SECTION "Text Size... (ot)" [115614-115926] -->
 <h3><a name="toggle_grid_on_off_og" id="toggle_grid_on_off_og">Toggle Grid On/Off (og)</a></h3>
 <div class="level3">
 
@@ -3360,28 +3359,28 @@ You can use it to:
 </p>
 
 </div>
-<!-- SECTION [115943-116036] -->
+<!-- SECTION "Toggle Grid On/Off (og)" [115927-116020] -->
 <h3><a name="toggle_snap_on_off_os" id="toggle_snap_on_off_os">Toggle Snap On/Off (os)</a></h3>
 <div class="level3">
 
 <p>
 <strong>Options | Toggle Snap On/Off</strong> toggles the snap. Be very careful using this. Connections between pins and nets (and nets to nets) depends on being exactly connected. Turning of the grid will almost guarantee that nets/pins do not connect.<br/>
  Before you translate a symbol using Edit/Symbol Translate, make sure the snap is on.<br/>
- When snap mode is off, the text &ldquo;Snap Off&rdquo; will appear in the lower, righthand corner.
+ When snap mode is off, the text “Snap Off” will appear in the lower, righthand corner.
 </p>
 
 </div>
-<!-- SECTION [116037-116488] -->
+<!-- SECTION "Toggle Snap On/Off (os)" [116021-116472] -->
 <h3><a name="snap_grid_spacing..._os" id="snap_grid_spacing..._os">Snap Grid Spacing... (oS)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Options | Snap Grid Spacing...</strong> brings up a dialog box which allows you to change the snap grid spacing (not the grid spacing). The units for this spacing are mils.<br/>
+<strong>Options | Snap Grid Spacing&hellip;</strong> brings up a dialog box which allows you to change the snap grid spacing (not the grid spacing). The units for this spacing are mils.<br/>
  Before you translate a symbol using Edit/Symbol Translate, make sure this spacing is set to 100.
 </p>
 
 </div>
-<!-- SECTION [116489-116792] -->
+<!-- SECTION "Snap Grid Spacing... (oS)" [116473-116776] -->
 <h3><a name="toggle_outline_box_oa" id="toggle_outline_box_oa">Toggle Outline/Box (oa)</a></h3>
 <div class="level3">
 
@@ -3390,16 +3389,16 @@ You can use it to:
 </p>
 
 </div>
-<!-- SECTION [116793-117102] -->
+<!-- SECTION "Toggle Outline/Box (oa)" [116777-117086] -->
 <h3><a name="toggle_net_rubberband_or" id="toggle_net_rubberband_or">Toggle Net/Rubberband (or)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Options | Toggle Net/Rubberband</strong> .....????
+<strong>Options | Toggle Net/Rubberband</strong> &hellip;..????
 </p>
 
 </div>
-<!-- SECTION [117103-117186] -->
+<!-- SECTION "Toggle Net/Rubberband (or)" [117087-117170] -->
 <h3><a name="show_log_window_ol" id="show_log_window_ol">Show Log Window (ol)</a></h3>
 <div class="level3">
 
@@ -3408,71 +3407,71 @@ You can use it to:
 </p>
 
 </div>
-<!-- SECTION [117187-117357] -->
+<!-- SECTION "Show Log Window (ol)" [117171-117341] -->
 <h3><a name="show_coord_window..._oc" id="show_coord_window..._oc">Show Coord Window... (oc)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Options | Show Coord Window...</strong> displays a pop-up window that displays the coordinates of the mouse pointer on the schematic. Useful for accurately placing objects.
+<strong>Options | Show Coord Window&hellip;</strong> displays a pop-up window that displays the coordinates of the mouse pointer on the schematic. Useful for accurately placing objects.
 </p>
 
 </div>
-<!-- SECTION [117358-117562] -->
+<!-- SECTION "Show Coord Window... (oc)" [117342-117546] -->
 <h2><a name="help" id="help">Help</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION [117563-117580] -->
+<!-- SECTION "Help" [117547-117564] -->
 <h3><a name="about..._ha" id="about..._ha">About... (ha)</a></h3>
 <div class="level3">
 
 <p>
-Every <acronym title="Graphical User Interface">GUI</acronym> application needs an <strong>Help | About...</strong> feature, to display:
+Every <acronym title="Graphical User Interface">GUI</acronym> application needs an <strong>Help | About&hellip;</strong> feature, to display:
 </p>
 <ul>
-<li class="level1"><div class="li"> The application&rsquo;s name.</div>
+<li class="level1"><div class="li"> The application’s name.</div>
 </li>
 <li class="level1"><div class="li"> The version of the software.</div>
 </li>
-<li class="level1"><div class="li"> The author&rsquo;s name(s) and how to contact.</div>
+<li class="level1"><div class="li"> The author’s name(s) and how to contact.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [117581-117783] -->
+<!-- SECTION "About... (ha)" [117565-117767] -->
 <h3><a name="manual..._hm" id="manual..._hm">Manual... (hm)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Help | Manual...</strong> brings up the &ldquo;gEDA/gaf Documention&rdquo; web-page installed on this computer. Very useful for accessing the various documentation available for the gEDA/gaf applications.
+<strong>Help | Manual&hellip;</strong> brings up the “gEDA/gaf Documention” web-page installed on this computer. Very useful for accessing the various documentation available for the gEDA/gaf applications.
 </p>
 
 </div>
-<!-- SECTION [117784-117997] -->
+<!-- SECTION "Manual... (hm)" [117768-117981] -->
 <h3><a name="hotkeys..._hh" id="hotkeys..._hh">Hotkeys... (hh)</a></h3>
 <div class="level3">
 
 <p>
-<strong>Help | Hotkeys...</strong> lists the current hotkeys (a.k.a., shortcuts, a.k.a., keyboard accellerators).
+<strong>Help | Hotkeys&hellip;</strong> lists the current hotkeys (a.k.a., shortcuts, a.k.a., keyboard accellerators).
 </p>
 
 </div>
-<!-- SECTION [117998-118125] -->
+<!-- SECTION "Hotkeys... (hh)" [117982-118109] -->
 <h3><a name="component..._ho" id="component..._ho">Component... (Ho)</a></h3>
 <div class="level3">
 
 <p>
-If you select a component on the schematic, and select <strong>Help | Component...</strong>, <strong>gschem</strong> uses the gschemdoc script to do its best job finding some documentation appropriate for the component:
+If you select a component on the schematic, and select <strong>Help | Component&hellip;</strong>, <strong>gschem</strong> uses the gschemdoc script to do its best job finding some documentation appropriate for the component:
 </p>
 <ul>
-<li class="level1"><div class="li"> If the component&rsquo;s symbol included the <code>documentation=documentation_locator</code> attribute, this <acronym title="Uniform Resource Identifier">URI</acronym> is used to retreive the documentation. If the full <acronym title="Uniform Resource Identifier">URI</acronym> is given, the <acronym title="Uniform Resource Identifier">URI</acronym> on the internet is retrieved. If the <acronym title="Uniform Resource Identifier">URI</acronym> is not fully qualified, it is considered to be local to this computer, and is searched for and displayed.</div>
+<li class="level1"><div class="li"> If the component’s symbol included the <code>documentation=documentation_locator</code> attribute, this <acronym title="Uniform Resource Identifier">URI</acronym> is used to retreive the documentation. If the full <acronym title="Uniform Resource Identifier">URI</acronym> is given, the <acronym title="Uniform Resource Identifier">URI</acronym> on the internet is retrieved. If the <acronym title="Uniform Resource Identifier">URI</acronym> is not fully qualified, it is considered to be local to this computer, and is searched for and displayed.</div>
 </li>
-<li class="level1"><div class="li"> If the component&rsquo;s symbol does not include the <code>documentation=documentation_locator</code> attribute, a Google search is performed for <acronym title="Portable Document Format">PDF</acronym> documents, based on the <code>device=</code> attribute, the <code>value=</code> attribute, and the symbol basename.</div>
+<li class="level1"><div class="li"> If the component’s symbol does not include the <code>documentation=documentation_locator</code> attribute, a Google search is performed for <acronym title="Portable Document Format">PDF</acronym> documents, based on the <code>device=</code> attribute, the <code>value=</code> attribute, and the symbol basename.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [118126-118908] -->
+<!-- SECTION "Component... (Ho)" [118110-118892] -->
 <h1><a name="appendix_a_--_heavy_vs_light_symbol_libraries" id="appendix_a_--_heavy_vs_light_symbol_libraries">Appendix A -- Heavy vs Light Symbol Libraries</a></h1>
 <div class="level1">
 
@@ -3481,25 +3480,25 @@ A short discussion of Light Symbol Libraries as the default for <strong>gschem</
 </p>
 
 </div>
-<!-- SECTION [118909-119102] -->
+<!-- SECTION "Appendix A -- Heavy vs Light Symbol Libraries" [118893-119086] -->
 <h1><a name="appendix_b_--_printing_schematics_and_symbols" id="appendix_b_--_printing_schematics_and_symbols">Appendix B -- Printing Schematics and Symbols</a></h1>
 <div class="level1">
 
 <p>
-To be supplied...
+To be supplied&hellip;
 </p>
 
 </div>
-<!-- SECTION [119103-119181] -->
+<!-- SECTION "Appendix B -- Printing Schematics and Symbols" [119087-119165] -->
 <h1><a name="appendix_c_--_writing_guile_scripts" id="appendix_c_--_writing_guile_scripts">Appendix C -- Writing guile Scripts</a></h1>
 <div class="level1">
 
 <p>
-To be supplied...
+To be supplied&hellip;
 </p>
 
 </div>
-<!-- SECTION [119182-119250] -->
+<!-- SECTION "Appendix C -- Writing guile Scripts" [119166-119234] -->
 <h1><a name="appendix_d_--_i_want_to_build_a_printed_circuit_board" id="appendix_d_--_i_want_to_build_a_printed_circuit_board">Appendix D -- I Want To Build A Printed Circuit Board</a></h1>
 <div class="level1">
 
@@ -3517,7 +3516,7 @@ To be supplied...
  The following guidelines will assist you in developing quality designs intended for use by applications that support the creation of Printed Circuit Boards:
 </p>
 <ul>
-<li class="level1"><div class="li"> <span class="hilited">To be supplied...</span></div>
+<li class="level1"><div class="li"> <span class="hilited">To be supplied&hellip;</span></div>
 </li>
 </ul>
 
@@ -3525,14 +3524,14 @@ To be supplied...
  The following on-line tutorials are an excellent method for the beginner to learn the gEDA Tools Suite design workflow resulting in a PCB:
 </p>
 <ul>
-<li class="level1"><div class="li"> <a href="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/gschem-warmup.html" class="urlextern" title="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/gschem-warmup.html"  rel="nofollow">Bill Wilson's gschem warmup</a></div>
+<li class="level1"><div class="li"> <a href="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/gschem-warmup.html" class="urlextern" title="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/gschem-warmup.html"  rel="nofollow">Bill Wilson&#039;s gschem warmup</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/tutorial.html" class="urlextern" title="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/tutorial.html"  rel="nofollow">Bill Wilson's gsch2pcb tutorial</a></div>
+<li class="level1"><div class="li"> <a href="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/tutorial.html" class="urlextern" title="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/tutorial.html"  rel="nofollow">Bill Wilson&#039;s gsch2pcb tutorial</a></div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [119251-120040] -->
+<!-- SECTION "Appendix D -- I Want To Build A Printed Circuit Board" [119235-120024] -->
 <h1><a name="appendix_e_--_i_want_to_simulate_my_design" id="appendix_e_--_i_want_to_simulate_my_design">Appendix E -- I Want To Simulate My Design</a></h1>
 <div class="level1">
 
@@ -3552,7 +3551,7 @@ To be supplied...
 <ul>
 <li class="level1"><div class="li"> Discuss attributes appropriate for a SPICE model, and how these differ from attributes appropriate for a PCB.</div>
 </li>
-<li class="level1"><div class="li"> <span class="hilited">To be supplied...</span></div>
+<li class="level1"><div class="li"> <span class="hilited">To be supplied&hellip;</span></div>
 </li>
 </ul>
 
@@ -3567,7 +3566,7 @@ To be supplied...
 </ul>
 
 </div>
-<!-- SECTION [120041-120920] -->
+<!-- SECTION "Appendix E -- I Want To Simulate My Design" [120025-120904] -->
 <h1><a name="appendix_f_--_change_gschemdoc_user-defined_preferences" id="appendix_f_--_change_gschemdoc_user-defined_preferences">Appendix F -- Change gschemdoc User-Defined Preferences</a></h1>
 <div class="level1">
 
@@ -3575,9 +3574,9 @@ To be supplied...
 As installed, the <strong>gschemdoc</strong> utility script is used by <strong>gschem</strong> to:
 </p>
 <ul>
-<li class="level1"><div class="li"> Display the &ldquo;gEDA/gaf Documentation&rdquo; (i.e., <strong>Help | Manual...</strong>)</div>
+<li class="level1"><div class="li"> Display the “gEDA/gaf Documentation” (i.e., <strong>Help | Manual&hellip;</strong>)</div>
 </li>
-<li class="level1"><div class="li"> Display component documentation (i.e., <strong>Help | Component...</strong>)</div>
+<li class="level1"><div class="li"> Display component documentation (i.e., <strong>Help | Component&hellip;</strong>)</div>
 </li>
 </ul>
 
@@ -3591,20 +3590,20 @@ CANDIDATE_LOCATE=&quot;slocate locate&quot;</font></pre>
 </p>
 
 <p>
-To select a different application launcher, simply edit the {binary-install-path}/bin/gschemdoc file, find the above lines, and move your favorite application to the beginning of the list. For example, to use <strong>firefox</strong> as your preferred browser, move it to the beginning of the <strong>CANDIDATE_BROWSER=</strong> list, to use <strong>acroread</strong> (Adobe&rsquo;s Acrobat Reader) as your preferred <acronym title="Portable Document Format">PDF</acronym> reader, move it to the beginning of the <strong>CANDIDATE_PDFREADER=</strong> list, and to use <strong>locate</strong> as your preferred filesystem search utility, move it to the beginning of the <strong>CANDIDATE_LOCATE=</strong> list.
+To select a different application launcher, simply edit the {binary-install-path}/bin/gschemdoc file, find the above lines, and move your favorite application to the beginning of the list. For example, to use <strong>firefox</strong> as your preferred browser, move it to the beginning of the <strong>CANDIDATE_BROWSER=</strong> list, to use <strong>acroread</strong> (Adobe’s Acrobat Reader) as your preferred <acronym title="Portable Document Format">PDF</acronym> reader, move it to the beginning of the <strong>CANDIDATE_PDFREADER=</strong> list, and to use <strong>locate</strong> as your preferred filesystem search utility, move it to the beginning of the <strong>CANDIDATE_LOCATE=</strong> list.
 </p>
 
 </div>
-<!-- SECTION [120921-122137] -->
+<!-- SECTION "Appendix F -- Change gschemdoc User-Defined Preferences" [120905-122121] -->
 <h1><a name="appendix_g_--_breaking_a_large_symbol_into_smaller_symbols" id="appendix_g_--_breaking_a_large_symbol_into_smaller_symbols">Appendix G -- Breaking a Large Symbol Into Smaller Symbols</a></h1>
 <div class="level1">
 
 <p>
-To be supplied...
+To be supplied&hellip;
 </p>
 
 </div>
-<!-- SECTION [122138-122229] -->
+<!-- SECTION "Appendix G -- Breaking a Large Symbol Into Smaller Symbols" [122122-122213] -->
 <h1><a name="appendix_h_--_definition_of_terms" id="appendix_h_--_definition_of_terms">Appendix H -- Definition of Terms</a></h1>
 <div class="level1">
 
@@ -3614,49 +3613,49 @@ Some terms used in the art of schematic capture:</p>
 <dt><span class='term'> <strong>attribute</strong></span></dt>
 <dd>A text item which is in the form <code>name=value</code>. It can be either unattached or attached.</dd>
 <dt><span class='term'> <strong>buffer</strong></span></dt>
-<dd>...</dd>
+<dd>&hellip;</dd>
 <dt><span class='term'> <strong>component</strong></span></dt>
 <dd>Also know as <strong>part</strong>. The equivalent of an [electronics] device, as one may place on a printed circuit board. Components are instances of a <strong>symbol</strong> placed on a schematic.</dd>
 <dt><span class='term'> <strong>device</strong></span></dt>
-<dd>Also known as &ldquo;package&rdquo;. The equivalent of an [electronics] device, as one may place on a printed circuit board.</dd>
+<dd>Also known as “package”. The equivalent of an [electronics] device, as one may place on a printed circuit board.</dd>
 <dt><span class='term'> <strong>dialog box</strong></span></dt>
-<dd>...</dd>
+<dd>&hellip;</dd>
 <dt><span class='term'> <strong>embedded component</strong></span></dt>
-<dd>A component whose definition is saved as part of the schematic&rsquo;s file.</dd>
+<dd>A component whose definition is saved as part of the schematic’s file.</dd>
 <dt><span class='term'> <strong>footprint</strong></span></dt>
 <dd>Also known as a <strong>land pattern</strong>. The surface space occupied by a <strong>component</strong>/<strong>package</strong>/<strong>part</strong>.</dd>
 <dt><span class='term'> <strong>gEDA/gaf</strong></span></dt>
-<dd><strong>gschem</strong> is a component of the gEDA/gaf set of tools, which tend to integrate together in the development and maintenance of schematics and symbols. The term &ldquo;gaf&rdquo; stands for &ldquo;<em class="u">g</em>EDA <em class="u">a</em>nd <em class="u">f</em>riends&rdquo;).</dd>
+<dd><strong>gschem</strong> is a component of the gEDA/gaf set of tools, which tend to integrate together in the development and maintenance of schematics and symbols. The term “gaf” stands for “<em class="u">g</em>EDA <em class="u">a</em>nd <em class="u">f</em>riends”).</dd>
 <dt><span class='term'> <strong>grip</strong></span></dt>
-<dd>...</dd>
+<dd>&hellip;</dd>
 <dt><span class='term'> <strong>guile</strong></span></dt>
 <dd><a href="http://www.gnu.org/software/guile/" class="urlextern" title="http://www.gnu.org/software/guile/"  rel="nofollow">GNU Guile</a> is an interpreter for Scheme, a version of Lisp.</dd>
 <dt><span class='term'> <strong>HDL</strong></span></dt>
 <dd>Hardware Description Language (e.g., VHDL, Verilog, etc.). Used to simulate or document a device.</dd>
 <dt><span class='term'> <strong>hierarchical</strong></span></dt>
-<dd>The concept that designs can contain nested levels of schematics, so that all the circuit doesn&rsquo;t need to be placed on a single sheet.</dd>
+<dd>The concept that designs can contain nested levels of schematics, so that all the circuit doesn’t need to be placed on a single sheet.</dd>
 <dt><span class='term'> <strong>land pattern</strong></span></dt>
 <dd>Also known as a <strong>footprint</strong>. The surface space occupied by a structure or device.</dd>
 <dt><span class='term'> <strong>library</strong></span></dt>
 <dd>A collection of symbols.</dd>
 <dt><span class='term'> <strong>line</strong></span></dt>
-<dd>A straight drawing element, connecting two points. On the schematic it has no electrical significance. In a symbol, a line is part of the symbol&rsquo;s graphic elements.</dd>
+<dd>A straight drawing element, connecting two points. On the schematic it has no electrical significance. In a symbol, a line is part of the symbol’s graphic elements.</dd>
 <dt><span class='term'> <strong>model</strong></span></dt>
 <dd>A description of how a device behaves. Most often this is a SPICE model. The model is defined in <strong>gschem</strong>, but used in subsequent applications such as <strong>ngspice</strong>, <strong>gnucap</strong>, etc.</dd>
 <dt><span class='term'> <strong>net</strong></span></dt>
-<dd>A net connects two or more pins on a schematic, and is made up of segments. The net&rsquo;s equivalent is a &ldquo;wire&rdquo; or &ldquo;trace&rdquo; on the printed circuit board.</dd>
+<dd>A net connects two or more pins on a schematic, and is made up of segments. The net’s equivalent is a “wire” or “trace” on the printed circuit board.</dd>
 <dt><span class='term'> <strong>object</strong></span></dt>
 <dd>A line, circle, pin, net, box, bus, text/attribute, or picture.</dd>
 <dt><span class='term'> <strong>package</strong></span></dt>
 <dd>Also known as <strong>device</strong>. The equivalent of an [electronics] device, as one may place on a printed circuit board.</dd>
 <dt><span class='term'> <strong>page</strong></span></dt>
-<dd>Also known as a schematic&rsquo;s <strong>sheet</strong>.</dd>
+<dd>Also known as a schematic’s <strong>sheet</strong>.</dd>
 <dt><span class='term'> <strong>part</strong></span></dt>
 <dd> Also know as <strong>component</strong>. The equivalent of an [electronics] device, as one may place on a printed circuit board.</dd>
 <dt><span class='term'> <strong>project</strong></span></dt>
 <dd>A collection of schematics, custom symbols, models, documentation, etc.</dd>
 <dt><span class='term'> <strong>segment</strong></span></dt>
-<dd>Part of a net. A segment has two end-points, or &ldquo;grips&rdquo;.</dd>
+<dd>Part of a net. A segment has two end-points, or “grips”.</dd>
 <dt><span class='term'> <strong>schematic</strong></span></dt>
 <dd>A <strong>page</strong>/<strong>sheet</strong> with electronics symbols, text, and drawing elements (i.e., lines, circles, boxes, etc.) representing a diagram of an electrical or mechanical system.</dd>
 <dt><span class='term'> <strong>series</strong></span></dt>
@@ -3668,11 +3667,11 @@ Some terms used in the art of schematic capture:</p>
 <dt><span class='term'> <strong>symbol</strong></span></dt>
 <dd>A collection of <strong>objects</strong>. The objects may have <strong>attributes</strong> attatched (i.e., associated) with them. There may also be <strong>attributes</strong> attached (i.e., associated) to the <strong>symbol</strong> itself (i.e., not specifically associated with an object).</dd>
 <dt><span class='term'> <strong>sheet</strong></span></dt>
-<dd>Also known as a schematic&rsquo;s <strong>page</strong>.</dd>
+<dd>Also known as a schematic’s <strong>page</strong>.</dd>
 <dt><span class='term'> <strong>trace</strong></span></dt>
 <dd>The equivalent of a wire on a printed circuit board.</dd>
 <dt><span class='term'> <strong>window</strong></span></dt>
-<dd>...</dd>
+<dd>&hellip;</dd>
 <dt><span class='term'> <strong>workflow</strong></span></dt>
 <dd>The process of designing. Usually includes continuous review and re-design, until it works. In the gEDA Tools Suite design workflow, multiple applications are used. One application typically is followed by another. The flow of data collected and how this data effects the design is considered the workflow.</dd>
 </dl>
@@ -3680,6 +3679,6 @@ Some terms used in the art of schematic capture:</p>
 </p>
 
 </div>
-<!-- SECTION [122230-] --></div>
+<!-- SECTION "Appendix H -- Definition of Terms" [122214-] --></div>
 </body>
 </html>

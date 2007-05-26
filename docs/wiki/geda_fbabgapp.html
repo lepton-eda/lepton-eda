@@ -5,17 +5,20 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:fbabgapp</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:fbabgapp?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:fbabgapp?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:fbabgapp?do=export_raw" />
-  <meta name="date" content="2006-04-21T12:35:05-0400" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:25-0400" />
+<meta name="keywords" content="geda,fbabgapp" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:fbabgapp?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:fbabgapp" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:fbabgapp" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
@@ -37,6 +40,8 @@
 </div>
 </div>
 
+
+
 <h1><a name="forward_backward_annotation_between_geda_gaf_and_pads_powerpcb" id="forward_backward_annotation_between_geda_gaf_and_pads_powerpcb">Forward/Backward Annotation Between gEDA/gaf and PADS PowerPCB</a></h1>
 <div class="level1">
 
@@ -53,12 +58,12 @@ March 6th, 2003
 </p>
 
 </div>
-<!-- SECTION [1-191] -->
+<!-- SECTION "Forward/Backward Annotation Between gEDA/gaf and PADS PowerPCB" [1-191] -->
 <h2><a name="forward_annotation_of_geda_schematic_changes_to_pads_powerpcb_layout" id="forward_annotation_of_geda_schematic_changes_to_pads_powerpcb_layout">Forward Annotation of gEDA Schematic Changes to PADS PowerPCB Layout</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION [192-272] -->
+<!-- SECTION "Forward Annotation of gEDA Schematic Changes to PADS PowerPCB Layout" [192-272] -->
 <h2><a name="overview" id="overview">Overview</a></h2>
 <div class="level2">
 
@@ -68,7 +73,7 @@ Forward annotation is the process of updating a layout to reflect changes made i
 </p>
 
 </div>
-<!-- SECTION [273-936] -->
+<!-- SECTION "Overview" [273-936] -->
 <h2><a name="detailed_forward_annotation_procedure" id="detailed_forward_annotation_procedure">Detailed Forward Annotation Procedure</a></h2>
 <div class="level2">
 
@@ -82,7 +87,7 @@ This procedure assumes you have a board layout open in PADS and that you have ma
 </li>
 <li class="level1"><div class="li"> Make a backup copy of your PADS layout in case things fail in a destructive way.</div>
 </li>
-<li class="level1"><div class="li"> From within PADS, choose the &ldquo;Tools &rarr; Compare Netlist&rdquo; menu item and choose the following options in the form:</div>
+<li class="level1"><div class="li"> From within PADS, choose the “Tools &rarr; Compare Netlist” menu item and choose the following options in the form:</div>
 </li>
 </ul>
 <table class="inline">
@@ -117,7 +122,6 @@ This procedure assumes you have a board layout open in PADS and that you have ma
 		<td>√</td><td>ignore all attributes</td>
 	</tr>
 </table>
-<br />
 
 <p>
  Click the OK button to create the ECO file.
@@ -125,12 +129,12 @@ This procedure assumes you have a board layout open in PADS and that you have ma
 <ul>
 <li class="level1"><div class="li"> Examine the ECO file to make sure it looks ok (the ECO file is a text file which can be viewed with any text editor).</div>
 </li>
-<li class="level1"><div class="li"> From within PADS, choose the &ldquo;File &rarr; Import...&rdquo; menu item. Locate and choose the ECO file created previously.</div>
+<li class="level1"><div class="li"> From within PADS, choose the “File &rarr; Import&hellip;” menu item. Locate and choose the ECO file created previously.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION [937-2135] -->
+<!-- SECTION "Detailed Forward Annotation Procedure" [937-2135] -->
 <h2><a name="back_annotation_of_pads_powerpcb_layout_changes_to_geda_schematic" id="back_annotation_of_pads_powerpcb_layout_changes_to_geda_schematic">Back Annotation of PADS PowerPCB Layout Changes to gEDA Schematic</a></h2>
 <div class="level2">
 
@@ -151,7 +155,7 @@ Backannotation is the process of updating schematics to reflect changes made in 
 </p>
 
 </div>
-<!-- SECTION [2136-3463] -->
+<!-- SECTION "Back Annotation of PADS PowerPCB Layout Changes to gEDA Schematic" [2136-3463] -->
 <h3><a name="detailed_backannotation_procedure" id="detailed_backannotation_procedure">Detailed Backannotation Procedure</a></h3>
 <div class="level3">
 
@@ -163,7 +167,7 @@ This procedure assumes you have a board layout open in PADS. For the purposes of
  <strong><code>gnetlist -g pads -o mynet.asc pg1.sch pg2.sch</code></strong><br/>
  This will create the netlist file <strong><code>mynet.asc</code></strong>.</div>
 </li>
-<li class="level1"><div class="li"> From within PADS, choose the &ldquo;Tools &rarr; Compare Netlist&rdquo; menu item and choose the following options in the form:</div>
+<li class="level1"><div class="li"> From within PADS, choose the “Tools &rarr; Compare Netlist” menu item and choose the following options in the form:</div>
 </li>
 </ul>
 <table class="inline">
@@ -198,7 +202,6 @@ This procedure assumes you have a board layout open in PADS. For the purposes of
 		<td>√</td><td>ignore all attributes</td>
 	</tr>
 </table>
-<br />
 
 <p>
  Click the OK button to create the ECO file. 
@@ -215,6 +218,6 @@ This procedure assumes you have a board layout open in PADS. For the purposes of
 </ul>
 
 </div>
-<!-- SECTION [3464-] --></div>
+<!-- SECTION "Detailed Backannotation Procedure" [3464-] --></div>
 </body>
 </html>

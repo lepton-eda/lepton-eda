@@ -5,20 +5,25 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:icarus_readme</title>
-  <meta name="generator" content="DokuWiki Release 2006-03-09" />
-  <link rel="start" href="http://geda.seul.org/wiki/" />
-  <link rel="contents" href="http://geda.seul.org/wiki/geda:icarus_readme?do=index" title="" />
-  <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-  <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-  <link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/geda:icarus_readme?do=export_xhtml" />
-  <link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/geda:icarus_readme?do=export_raw" />
-  <meta name="date" content="2006-05-07T16:38:52-0400" />
-  <meta name="robots" content="index,follow" />
-  <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/css" />
-  <link rel="stylesheet" media="print" type="text/css" href="lib/exe/001css" />
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="date" content="2007-05-24T22:27:27-0400" />
+<meta name="keywords" content="geda,icarus_readme" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:icarus_readme?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:icarus_readme" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:icarus_readme" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
 <div class="dokuwiki export">
+
+
 
 <h1><a name="the_icarus_verilog_compilation_system" id="the_icarus_verilog_compilation_system">The Icarus Verilog Compilation System</a></h1>
 <div class="level1">
@@ -29,7 +34,7 @@
 1.0 What is ICARUS Verilog?
 
 Icarus Verilog is intended to compile ALL of the Verilog HDL as
-described in the IEEE-1364 standard. Of course, it's not quite there
+described in the IEEE-1364 standard. Of course, it&#039;s not quite there
 yet. It does currently handle a mix of structural and behavioral
 constructs. For a view of the current state of Icarus Verilog, see its
 home page at &lt;http://www.icarus.com/eda/verilog&gt;.
@@ -42,7 +47,7 @@ netlist generator. In the future, backends are expected for EDIF/LPM,
 structural Verilog, VHDL, etc.
 
     For instructions on how to run Icarus Verilog,
-    see the ``iverilog'' man page.
+    see the ``iverilog&#039;&#039; man page.
 
 
 2.0 Building/Installing Icarus Verilog From Source
@@ -75,7 +80,7 @@ on a UNIX-like system:
 	- bison and flex
 
 	- gperf 2.7
-	  The lexical analyzer doesn't recognize keywords directly,
+	  The lexical analyzer doesn&#039;t recognize keywords directly,
 	  but instead matches symbols and looks them up in a hash
 	  table in order to get the proper lexical code. The gperf
 	  program generates the lookup table.
@@ -140,7 +145,7 @@ most out of your install, first make sure you have both 64bit and
 32bit development libraries installed. Then configure with this
 somewhat more complicated command:
 
-  ./configure libdir64='$(prefix)/lib64' vpidir1=vpi64 vpidir2=. --enable-vvp32
+  ./configure libdir64=&#039;$(prefix)/lib64&#039; vpidir1=vpi64 vpidir2=. --enable-vvp32
 
 This reflects the convention on AMD64 systems that 64bit libraries go
 into lib64 directories. The &quot;--enable-vvp32&quot; also turns on 32bit
@@ -170,7 +175,7 @@ to do this as root to gain access to installation directories.
 2.5 Uninstallation
 
 The generated Makefiles also include the uninstall target. This should
-remove all the files that ``make install'' creates.
+remove all the files that ``make install&#039;&#039; creates.
 
 3.0 How Icarus Verilog Works
 
@@ -198,7 +203,7 @@ step. There may be dangling references, and it is not yet clear which
 module is the root.
 
 One can see a human readable version of the final pform by using the
-``-P &lt;path&gt;'' flag to the compiler. This will cause iverilog to dump
+``-P &lt;path&gt;&#039;&#039; flag to the compiler. This will cause iverilog to dump
 the pform into the file named &lt;path&gt;.
 
 3.3 Elaboration
@@ -213,7 +218,7 @@ includes all the behavioral descriptions, as well as gates and wires.
 The elaborate() function performs the elaboration.
 
 One can see a human readable version of the final, elaborated and
-optimized netlist by using the ``-N &lt;path&gt;'' flag to the compiler. If
+optimized netlist by using the ``-N &lt;path&gt;&#039;&#039; flag to the compiler. If
 elaboration succeeds, the final netlist (i.e., after optimizations but
 before code generation) will be dumped into the file named &lt;path&gt;.
 
@@ -395,7 +400,7 @@ more details.
     $bits(&lt;expr&gt;)
 	The $bits system function returns the size in bits of the
 	expression that is its argument. The result of this
-	function is undefined if the argument doesn't have a
+	function is undefined if the argument doesn&#039;t have a
 	self-determined size.
 
 	The $sizeof function is deprecated in favor of $bits, which is
@@ -455,7 +460,7 @@ more details.
 	and that is too unpredictable.
 
 	It is said that some commercial compilers do allow macro
-	definitions to span library modules. That's just plain weird.
+	definitions to span library modules. That&#039;s just plain weird.
 
     Width in %t Time Formats
 
