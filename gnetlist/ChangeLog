@@ -4,6 +4,9 @@
 	temporarily since they break make distcheck.  Will re-enable
 	once it is determined what is going wrong (for the next release).
 
+        * configure.ac: Updated version to 20070526 in prep for the next
+        release.
+
 2007-05-13 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/Makefile.am, gnet-osmond.scm: Added new gnetlist backend

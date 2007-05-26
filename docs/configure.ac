@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT
 
-VERSION=20070216
+VERSION=20070526
 PACKAGE=geda-docs
 echo Configuring $PACKAGE version $VERSION
 

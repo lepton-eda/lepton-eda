@@ -4,7 +4,7 @@ AC_CONFIG_SRCDIR([74/7400-1.sym])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-symbols
-VERSION=20070216
+VERSION=20070526
 echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake stuff

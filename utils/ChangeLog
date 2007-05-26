@@ -1,3 +1,8 @@
+2007-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20070526 in prep for the next
+        release.
+
 2007-04-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* tests/refdes_renum/outputs/Makefile.am: Fixed filenames to 
