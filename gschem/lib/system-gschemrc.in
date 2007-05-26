@@ -1728,23 +1728,20 @@
 				     options-show-coord-window)))
 
 ; Set up some functions used to open help files for the help menu
-; 
-; Commented this out until the gsch2pcb tutorial gets into the wiki
-; and the UG wiki page is improved
 (define (help-manual)
-  (gschem-browse-wiki "../gedadocs"))
-
+  (gschem-browse-wiki "geda:documentation"))
 (define (help-faq)
   (gschem-browse-wiki "geda:faq-gschem"))
 (define (help-wiki)
   (gschem-browse-wiki))
+
 (define help-menu-items 
 ;;
 ;;          menu item name      menu action     	menu hotkey action
 ;;
 	'( 
-	   ("Manual"		help-manual             help-manual)
-	   ("FAQ"		help-faq		help-faq)
+	   ("gEDA Documentation"	help-manual     help-manual)
+	   ("gschem FAQ"	help-faq		help-faq)
 	   ("gEDA Wiki"		help-wiki		help-wiki)
 	   ("Component Documentation"	hierarchy-documentation
 						hierarchy-documentation)

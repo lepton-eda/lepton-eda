@@ -1,3 +1,9 @@
+2007-05-26 Peter Brett <peter@peter-b.co.uk>
+
+	* lib/system-gschemrc.in: Help menu updates.
+
+	Change help menu now that all documentation is in the wiki.
+
 2007-05-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_image.c: Applied fix for "Write image" seg fault found (and
