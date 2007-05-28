@@ -635,3 +635,9 @@ char *u_basic_breakup_string(char *string, char delimiter, int count);
 void u_basic_strip_trailing(char *string, char c);
 int u_basic_has_trailing(char *string, char c);
 int u_basic_count_char(const char *string, char character);
+
+/* s_textbuffer.c */
+TextBuffer *s_textbuffer_new (gchar *data, const gint size);
+TextBuffer *s_textbuffer_free (TextBuffer *tb);
+void s_textbuffer_seek (TextBuffer *tb, const gint offset);
+const gchar *s_textbuffer_next (TextBuffer *tb, const gsize count);

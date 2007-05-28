@@ -1,7 +1,19 @@
+2007-05-28 Peter Brett <peter@peter-b.co.uk>
+
+	* include/prototype.h, include/struct.h, src/Makefile.am,
+	  src/s_textbuffer.c: Add managed text buffers to libgeda.
+
+	  In order to facilitate loading symbols & schematics from memory
+	  without an extensive rewrite, this patch adds an API for reading
+	  memory arrays a bit like a file.
+
+          Using memory streams & fgets would be nicer, but unfortunately
+	  memory streams are a GNU libc extension.
+
 2007-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20070526 in prep for the next
-        release.  Also changed shared library's version number to 29:0:0.
+	release.  Also changed shared library's version number to 29:0:0.
 
 2007-05-13 Ales Hvezda   <ahvezda@geda.seul.org>
 

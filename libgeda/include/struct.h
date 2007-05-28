@@ -55,6 +55,9 @@ typedef struct st_net NET;
 typedef struct st_schcheck SCHCHECK;
 typedef struct st_chkerrs CHKERRS;
 
+/* Managed text buffers */
+typedef struct _TextBuffer TextBuffer;
+
 
 /* PB : change begin */
 /* PB : these enum are constant to define :
