@@ -1,5 +1,12 @@
 2007-05-28 Peter Brett <peter@peter-b.co.uk>
 
+	* include/prototype.h, src/g_rc.c, src/g_register.c: Add & update
+	  Scheme callbacks for new component library.
+	
+	  Add the (component-library-command) function, and make
+	  (component-library) take an optional second argument for the
+	  directory's source name.
+	
 	* include/prototype.h, src/g_rc.c, src/s_clib.c: Provide better
 	  names for component sources.
 

@@ -341,15 +341,23 @@ void g_rc_parse(TOPLEVEL *w_current,
 /*! \brief
  *  \par Function Description
  *
- *  \param [in] path  
+ *  \param [in] path 
+ *  \param [in] name Optional descriptive name for library directory.
  *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
  */
-SCM g_rc_component_library(SCM path)
+SCM g_rc_component_library(SCM path, SCM name)
 {
   char *string;
+  char *namestr = NULL;
 
   SCM_ASSERT (SCM_NIMP (path) && SCM_STRINGP (path), path,
               SCM_ARG1, "component-library");
+  
+  if (name != SCM_UNDEFINED) {
+    SCM_ASSERT (SCM_NIMP (name) && SCM_STRINGP (name), name,
+		SCM_ARG2, "component-library");
+    namestr = SCM_STRING_CHARS (name);
+  }
   
   string = g_strdup (SCM_STRING_CHARS (path));
   /* take care of any shell variables */
@@ -365,7 +373,7 @@ SCM g_rc_component_library(SCM path)
   }
 
   if (g_path_is_absolute (string)) {
-    s_clib_add_directory (string, NULL);
+    s_clib_add_directory (string, namestr);
   } else {
     gchar *cwd = g_get_current_dir ();
     gchar *temp;
@@ -373,7 +381,7 @@ SCM g_rc_component_library(SCM path)
     u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
 #endif
     temp = g_strconcat (cwd, G_DIR_SEPARATOR_S, string, NULL);
-    s_clib_add_directory (temp, NULL);
+    s_clib_add_directory (temp, namestr);
     g_free(temp);
     g_free(cwd);
   }
@@ -381,6 +389,39 @@ SCM g_rc_component_library(SCM path)
   if (string) {
     g_free(string);
   }
+
+  return SCM_BOOL_T;
+}
+
+/*! \brief Guile callback for adding library commands.
+ *  \par Function Description
+ *  Callback function for the "component-library-command" Guile
+ *  function, which can be used in the rc files to add a command to
+ *  the component library.
+ *
+ *  \param [in] command Command to add.
+ *  \param [in] name    Optional descriptive name for component source.
+ *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
+ */
+SCM g_rc_component_library_command (SCM command, SCM name)
+{
+  gchar *namestr = NULL;
+  gchar *cmdstr = NULL;
+  SCM_ASSERT (SCM_STRINGP (command), command, SCM_ARG1, 
+	      "component-library-command");
+  cmdstr = g_strdup(SCM_STRING_CHARS (command));
+
+  if (name != SCM_UNDEFINED) {
+    SCM_ASSERT (SCM_STRINGP (name), name, SCM_ARG2, 
+	      "component-library-command");
+    namestr = SCM_STRING_CHARS (name);
+  }
+  /* take care of any shell variables */
+  cmdstr = expand_env_variables(cmdstr);
+
+  s_clib_add_command (cmdstr, namestr);
+
+  g_free (cmdstr);
 
   return SCM_BOOL_T;
 }

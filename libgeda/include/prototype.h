@@ -46,7 +46,8 @@ gint g_rc_parse_local_rc(TOPLEVEL *w_current, const gchar *rcname);
 void g_rc_parse(TOPLEVEL *w_current, const gchar* rcname, 
                 const gchar* specified_rc_filename);
 gint g_rc_parse_specified_rc(TOPLEVEL *w_current, const gchar *rcfilename);
-SCM g_rc_component_library(SCM path);
+SCM g_rc_component_library(SCM path, SCM name);
+SCM g_rc_component_library_command (SCM command, SCM name);
 SCM g_rc_component_library_search(SCM path);
 SCM g_rc_source_library(SCM path);
 SCM g_rc_source_library_search(SCM path);
