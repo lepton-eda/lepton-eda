@@ -169,6 +169,8 @@ struct _CLibSource {
   enum CLibSourceType type;
   /*! Path to directory or name of executable */
   gchar *path_cmd;
+  /*! Name of source */
+  gchar *name;
   /*! Available symbols (CLibSymbol) */
   GList *symbols;
 };
@@ -246,6 +248,10 @@ static void free_source (gpointer data, gpointer user_data)
     if (source->path_cmd != NULL) {
       g_free (source->path_cmd);
       source->path_cmd = NULL;
+    }
+    if (source->name != NULL) {
+      g_free (source->name);
+      source->name = NULL;
     }
     if (source->symbols != NULL) {
       g_list_foreach (source->symbols, (GFunc) free_symbol, NULL);
@@ -575,12 +581,16 @@ static CLibSource *check_source_bump (const gchar *path_cmd)
  *  \par Function Description
  *  Adds a directory containing symbol files to the library.  Only
  *  files ending with #SYM_FILENAME_FILTER are considered to be symbol
- *  files.
+ *  files.  A \a name may be specified for the source; if \a name is
+ *  \b NULL, the basename of the directory as returned by
+ *  g_path_get_basename() is used.
  *
  *  \param directory The path of the directory to add (UTF8).
+ *  \param name      A descriptive name for the directory.
  *  \return The #CLibSource associated with the directory.
  */
-const CLibSource *s_clib_add_directory (const gchar *directory)
+const CLibSource *s_clib_add_directory (const gchar *directory, 
+					const gchar *name)
 {
   CLibSource *source;
 
@@ -595,6 +605,12 @@ const CLibSource *s_clib_add_directory (const gchar *directory)
   source->type = CLIB_DIR;
   source->path_cmd = g_strdup (directory);
   
+  if (name == NULL) {
+    source->name = g_path_get_basename (directory);
+  } else {
+    source->name = g_strdup(name);
+  }
+
   refresh_directory (source);
 
   /* Sources added later get scanned earlier */
@@ -605,15 +621,18 @@ const CLibSource *s_clib_add_directory (const gchar *directory)
 
 /*! \brief Add a symbol-generating command to the library
  *  \par Function Description
- *  Adds a command which can generate symbols to the library.
- *  See page \ref libcmds for more information on library commands.
- *
+ *  Adds a command which can generate symbols to the library.  See
+ *  page \ref libcmds for more information on library commands.  A \a
+ *  name may be specified for the source; if \a name is \b NULL, the
+ *  command is used as the name.
+ *  
  *  \param command The executable to run, resolved using the \b PATH
  *                 environment variable.
- *
+ *  \param name    A descriptive name for the command.
  *  \return The CLibSource associated with the command.
  */
-const CLibSource *s_clib_add_command (const gchar *command)
+const CLibSource *s_clib_add_command (const gchar *command,
+				      const gchar *name)
 {
   CLibSource *source;
   
@@ -627,6 +646,12 @@ const CLibSource *s_clib_add_command (const gchar *command)
   source = g_new0 (CLibSource, 1);
   source->type = CLIB_CMD;
   source->path_cmd = g_strdup (command);
+
+  if (name == NULL) {
+    source->name = g_strdup (command);
+  } else {
+    source->name = g_strdup (name);
+  }
 
   refresh_command (source);
 
@@ -650,7 +675,7 @@ const CLibSource *s_clib_add_command (const gchar *command)
 const gchar *s_clib_source_get_name (const CLibSource *source)
 {
   if (source == NULL) return NULL;
-  return source->path_cmd;
+  return source->name;
 }
 
 /*! \brief Get a list of symbols available from a given source.

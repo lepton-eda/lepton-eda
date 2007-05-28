@@ -1,5 +1,14 @@
 2007-05-28 Peter Brett <peter@peter-b.co.uk>
 
+	* include/prototype.h, src/g_rc.c, src/s_clib.c: Provide better
+	  names for component sources.
+
+	  Full pathnames aren't very user-friendly in the component
+	  browser, and sometimes the name you want for your component
+	  source isn't the same as the directory name. This patch provides
+	  an infrastructure for better source naming, while falling back
+	  to the "classic" behaviour if necessary.
+
 	* include/prototype.h, include/struct.h, src/a_basic.c,
 	  src/o_complex_basic.c, src/o_embed.c, src/o_list.c,
 	  src/s_basic.c, src/s_clib.c, src/s_hierarchy.c,

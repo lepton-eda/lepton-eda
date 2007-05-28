@@ -365,7 +365,7 @@ SCM g_rc_component_library(SCM path)
   }
 
   if (g_path_is_absolute (string)) {
-    s_clib_add_directory (string);
+    s_clib_add_directory (string, NULL);
   } else {
     gchar *cwd = g_get_current_dir ();
     gchar *temp;
@@ -373,7 +373,7 @@ SCM g_rc_component_library(SCM path)
     u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
 #endif
     temp = g_strconcat (cwd, G_DIR_SEPARATOR_S, string, NULL);
-    s_clib_add_directory (temp);
+    s_clib_add_directory (temp, NULL);
     g_free(temp);
     g_free(cwd);
   }
@@ -436,7 +436,7 @@ SCM g_rc_component_library_search(SCM path)
 
       if (g_file_test (fullpath, G_FILE_TEST_IS_DIR)) {
         if (g_path_is_absolute (fullpath)) {
-          s_clib_add_directory (fullpath);
+          s_clib_add_directory (fullpath, NULL);
         } else {
           gchar *cwd = g_get_current_dir ();
           gchar *temp;
@@ -447,7 +447,7 @@ SCM g_rc_component_library_search(SCM path)
                               G_DIR_SEPARATOR_S,
                               fullpath,
                               NULL);
-          s_clib_add_directory (temp);
+          s_clib_add_directory (temp, NULL);
           g_free(temp);
           g_free(cwd);
         }

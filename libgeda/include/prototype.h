@@ -499,8 +499,10 @@ void s_clib_init (void);
 void s_clib_free (void);
 GList *s_clib_get_sources ();
 void s_clib_refresh ();
-const CLibSource *s_clib_add_directory (const gchar *directory);
-const CLibSource *s_clib_add_command (const gchar *command);
+const CLibSource *s_clib_add_directory (const gchar *directory, 
+					const gchar *name);
+const CLibSource *s_clib_add_command (const gchar *command,
+				      const gchar *name);
 const gchar *s_clib_source_get_name (const CLibSource *source);
 GList *s_clib_source_get_symbols (const CLibSource *source);
 const gchar *s_clib_symbol_get_name (const CLibSymbol *symbol);
