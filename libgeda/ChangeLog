@@ -1,5 +1,14 @@
 2007-05-28 Peter Brett <peter@peter-b.co.uk>
 
+	* include/prototype.h, src/g_rc.c, src/g_register.c, src/s_clib.c:
+	  Add component sources based on Scheme procedures.
+
+	  Add the ability to use a set of Scheme procedures which list and
+	  return component symbols as the backend of a component library.
+	  Adds the g_rc_component_library_funcs() and s_clib_add_scm()
+	  functions to libgeda, as well as the component-library-funcs rc
+	  file function.
+	
 	* include/prototype.h, src/s_clib.c: Change way that component
 	  source conflicts are checked.
 

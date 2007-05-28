@@ -158,10 +158,14 @@
 
 /*! Valid types of component source */
 enum CLibSourceType { 
+  CLIB_NONE = 0,
   /*! Directory source */
   CLIB_DIR, 
   /*! Command source */
-  CLIB_CMD };
+  CLIB_CMD,
+  /*! Guile function source */
+  CLIB_SCM,
+};
 
 /*! Stores data about a particular component source */
 struct _CLibSource {
@@ -173,6 +177,9 @@ struct _CLibSource {
   gchar *name;
   /*! Available symbols (CLibSymbol) */
   GList *symbols;
+
+  SCM list_fn;
+  SCM get_fn;
 };
 
 /*! Stores data about a particular symbol */
@@ -203,8 +210,10 @@ static CLibSymbol *source_has_symbol (const CLibSource *source,
 				      const gchar *name);
 static void refresh_directory (CLibSource *source);
 static void refresh_command (CLibSource *source);
+static void refresh_scm (CLibSource *source);
 static gchar *get_data_directory (const CLibSymbol *symbol);
 static gchar *get_data_command (const CLibSymbol *symbol);
+static gchar *get_data_scm (const CLibSymbol *symbol);
 
 /*! \brief Initialise the component library.
  *  \par Function Description
@@ -258,6 +267,10 @@ static void free_source (gpointer data, gpointer user_data)
       g_list_foreach (source->symbols, (GFunc) free_symbol, NULL);
       g_list_free (source->symbols);
       source->symbols = NULL;
+    }
+    if (source->type == CLIB_SCM) {
+      scm_gc_unprotect_object (source->list_fn);
+      scm_gc_unprotect_object (source->get_fn);
     }
   }
 }
@@ -566,6 +579,59 @@ static void refresh_command (CLibSource *source)
 				 (GCompareFunc) compare_symbol_name);
 }
 
+/*! \brief Re-poll a scheme procedure for symbols.
+ *  \par Function Description
+ *  Calls a Scheme procedure to obtain a list of available symbols,
+ *  and updates the source with the new list
+ *
+ *  Private function used only in s_clib.c.
+ */
+static void refresh_scm (CLibSource *source)
+{
+  SCM symlist;
+  SCM symname;
+  CLibSymbol *symbol;
+
+  g_assert (source != NULL);
+  g_assert (source->type == CLIB_SCM);
+
+  /* Clear the current symbol list */
+  g_list_foreach (source->symbols, (GFunc) free_symbol, NULL);
+  g_list_free (source->symbols);
+  source->symbols = NULL;
+
+  symlist = scm_call_0 (source->list_fn);
+
+  if (SCM_NCONSP (symlist) && (symlist != SCM_EOL)) {
+    s_log_message ("Failed to scan library [%s]: Scheme function returned non-list\n",
+		   source->name);
+    return;
+  }
+
+  while (symlist != SCM_EOL) {
+    symname = SCM_CAR (symlist);
+    if (!SCM_STRINGP (symname)) {
+      s_log_message ("Non-string symbol name while scanning library [%s]\n",
+		     source->name);
+    } else {
+      symbol = g_new0 (CLibSymbol, 1);
+      symbol->source = source;
+      symbol->name = g_strdup(SCM_STRING_CHARS (symname));
+      
+
+      /* Prepend because it's faster and it doesn't matter what order we
+       * add them. */
+      source->symbols = g_list_prepend (source->symbols, symbol);
+    }
+ 
+    symlist = SCM_CDR (symlist);
+  }
+
+  /* Now sort the list of symbols by name. */
+  source->symbols = g_list_sort (source->symbols, 
+				 (GCompareFunc) compare_symbol_name);
+}
+
 /*! \brief Rescan all available component libraries.
  *  \par Function Description
  *  Resets the list of symbols available from each source, and
@@ -593,6 +659,9 @@ void s_clib_refresh ()
 	break;
       case CLIB_CMD:
 	refresh_command (source);
+	break;
+      case CLIB_SCM:
+	refresh_scm (source);
 	break;
       default:
 	g_assert_not_reached();
@@ -643,6 +712,7 @@ const CLibSource *s_clib_get_source_by_name (const gchar *name)
 const CLibSource *s_clib_add_directory (const gchar *directory, 
 					const gchar *name)
 {
+  const CLibSource *oldsource;
   CLibSource *source;
   gchar *realname;
 
@@ -656,8 +726,8 @@ const CLibSource *s_clib_add_directory (const gchar *directory,
     realname = g_strdup(name);
   }  
 
-  source = s_clib_get_source_by_name (realname);
-  if (source != NULL) {
+  oldsource = s_clib_get_source_by_name (realname);
+  if (oldsource != NULL) {
     s_log_message ("Cannot add library [%s]: name in use.",
 		   realname);
     g_free (realname);
@@ -692,6 +762,7 @@ const CLibSource *s_clib_add_directory (const gchar *directory,
 const CLibSource *s_clib_add_command (const gchar *command,
 				      const gchar *name)
 {
+  const CLibSource *oldsource;
   CLibSource *source;
   gchar *realname;
 
@@ -705,9 +776,9 @@ const CLibSource *s_clib_add_command (const gchar *command,
     realname = g_strdup (name);
   }
   
-  source = s_clib_get_source_by_name (realname);
-  if (source != NULL) {
-    s_log_message ("Cannot add library [%s]: name in use.",
+  oldsource = s_clib_get_source_by_name (realname);
+  if (oldsource != NULL) {
+    s_log_message ("Cannot add library [%s]: name in use.\n",
 		   realname);
     g_free (realname);
     return NULL;
@@ -720,12 +791,60 @@ const CLibSource *s_clib_add_command (const gchar *command,
 
   refresh_command (source);
 
-  /* Sources added later get scanned earlier */
+  /* Sources added later get sacnned earlier */
   clib_sources = g_list_prepend (clib_sources, source);
 
   return source;
 }
 
+/*! \brief Add symbol-generating Scheme procedures to the library.
+ *  \par Function Description
+ *  Adds a source to the library based on Scheme procedures.  Two
+ *  procedures are required: \a listfunc must return a Scheme list of
+ *  symbol names, and \a getfunc must return a string containing
+ *  symbol data when passed a symbol name.
+ *
+ *  \param listfunc A Scheme function returning a list of symbols.
+ *  \param getfunc  A Scheme function returning symbol data.
+ *  \param name     A descriptive name for the component source.
+ *
+ *  \return         The new CLibSource.
+ */
+const CLibSource *s_clib_add_scm (SCM listfunc, SCM getfunc, const gchar *name)
+{
+  const CLibSource *oldsource;
+  CLibSource *source;
+
+  if (name == NULL) {
+    s_log_message ("Cannot add library: name not specified\n");
+    return NULL;
+  }  
+  
+  oldsource = s_clib_get_source_by_name (name);
+  if (oldsource != NULL) {
+    s_log_message ("Cannot add library [%s]: name in use.\n", name);
+    return NULL;
+  }
+
+  if (scm_is_false (scm_procedure_p (listfunc)) 
+      && scm_is_false (scm_procedure_p (getfunc))) {
+    s_log_message ("Cannot add Scheme-library [%s]: callbacks must be closures\n",
+		   name);
+    return NULL;
+  }
+
+  source = g_new0 (CLibSource, 1);
+  source->type = CLIB_SCM;
+  source->name = g_strdup (name);
+  source->list_fn = scm_gc_protect_object (listfunc);
+  source->get_fn = scm_gc_protect_object (getfunc);
+
+  refresh_scm (source);
+
+  clib_sources = g_list_prepend (clib_sources, source);
+
+  return source;
+}
 
 /*! \brief Get the name of a source.
  *  \par Function Description
@@ -873,6 +992,25 @@ static gchar *get_data_command (const CLibSymbol *symbol)
   return run_source_command ( argv );
 }
 
+static gchar *get_data_scm (const CLibSymbol *symbol)
+{
+  SCM symdata;
+
+  g_assert (symbol != NULL);
+  g_assert (symbol->source->type == CLIB_SCM);
+
+  symdata = scm_call_1 (symbol->source->get_fn, 
+			scm_from_locale_string (symbol->name));
+
+  if (!SCM_STRINGP (symdata)) {
+    s_log_message ("Failed to load symbol data [%s] from source [%s]\n",
+		   symbol->name, symbol->source->name);
+    return NULL;
+  }
+
+  return g_strdup (SCM_STRING_CHARS (symdata));
+}
+
 /*! \brief Get symbol data.
  *  \par Function Description
  *  Get the unparsed gEDA-format data corresponding to a symbol from
@@ -894,6 +1032,8 @@ gchar *s_clib_symbol_get_data (const CLibSymbol *symbol)
       return get_data_directory (symbol);
     case CLIB_CMD:
       return get_data_command (symbol);
+    case CLIB_SCM:
+      return get_data_scm (symbol);
     default:
       g_assert_not_reached();
     }

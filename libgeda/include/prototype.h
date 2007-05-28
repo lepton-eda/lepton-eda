@@ -48,6 +48,7 @@ void g_rc_parse(TOPLEVEL *w_current, const gchar* rcname,
 gint g_rc_parse_specified_rc(TOPLEVEL *w_current, const gchar *rcfilename);
 SCM g_rc_component_library(SCM path, SCM name);
 SCM g_rc_component_library_command (SCM command, SCM name);
+SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name);
 SCM g_rc_component_library_search(SCM path);
 SCM g_rc_source_library(SCM path);
 SCM g_rc_source_library_search(SCM path);
@@ -505,6 +506,8 @@ const CLibSource *s_clib_add_directory (const gchar *directory,
 					const gchar *name);
 const CLibSource *s_clib_add_command (const gchar *command,
 				      const gchar *name);
+const CLibSource *s_clib_add_scm (SCM listfunc, SCM getfunc, 
+				  const gchar *name);
 const gchar *s_clib_source_get_name (const CLibSource *source);
 GList *s_clib_source_get_symbols (const CLibSource *source);
 const gchar *s_clib_symbol_get_name (const CLibSymbol *symbol);

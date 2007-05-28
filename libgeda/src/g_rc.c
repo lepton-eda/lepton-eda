@@ -426,6 +426,37 @@ SCM g_rc_component_library_command (SCM command, SCM name)
   return SCM_BOOL_T;
 }
 
+/*! \brief Guile callback for adding library functions.
+ *  \par Function Description
+ *  Callback function for the "component-library-funcs" Guile
+ *  function, which can be used in the rc files to add a set of Guile
+ *  procedures for listing and generating symbols.
+ *
+ *  \param [in] listfunc A Scheme procedure which takes no arguments
+ *                       and returns a Scheme list of component names.
+ *  \param [in] getfunc A Scheme procedure which takes a component
+ *                      name as an argument and returns a symbol
+ *                      encoded in a string in gEDA format, or the \b
+ *                      \#f if the component name is unknown.
+ *
+ *  \returns SCM_BOOL_T on success, SCM_BOOL_F otherwise.
+ */
+SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name)
+{
+  SCM_ASSERT (scm_is_true (scm_procedure_p (listfunc)), listfunc, SCM_ARG1,
+	      "component-library-funcs");
+  SCM_ASSERT (scm_is_true (scm_procedure_p (getfunc)), getfunc, SCM_ARG2,
+	      "component-library-funcs");
+  SCM_ASSERT (SCM_STRINGP (name), name, SCM_ARG1, 
+	      "component-library-funcs");
+
+  if (s_clib_add_scm (listfunc, getfunc, SCM_STRING_CHARS (name)) != NULL) {
+    return SCM_BOOL_T;
+  } else {
+    return SCM_BOOL_F;
+  }
+}
+
 /*! \todo Finish function description!!!
  *  \brief
  *  \par Function Description
