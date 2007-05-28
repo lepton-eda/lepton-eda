@@ -286,15 +286,22 @@ void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, i
 OBJECT *add_head(void);
 int o_complex_is_eligible_attribute(TOPLEVEL *w_current, OBJECT *object, int promote_invisible);
 int o_complex_is_embedded(OBJECT *o_current);
+OBJECT *o_complex_add_by_name(TOPLEVEL *w_current, OBJECT *object_list, 
+			      GList **object_glist, char type,
+			      int color, int x, int y, int angle,
+			      int mirror, const gchar *basename,
+			      int selectable,
+			      int attribute_promotion);
 OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, 
 		      GList **object_glist, char type, int color, 
-		      int x, int y, int angle, int mirror, char *clib, 
-		      char *basename, int selectable, int attribute_promotion);
-OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, char *clib, char *basename, int selectable);
+		      int x, int y, int angle, int mirror, 
+		      const CLibSymbol *clib_sym, const gchar *basename,
+		      int selectable, int attribute_promotion);
+OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, const gchar *basename, int selectable);
 void o_complex_recalc(TOPLEVEL *w_current, OBJECT *o_current);
 OBJECT *o_complex_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
 char *o_complex_save(OBJECT *object);
-void o_complex_set_filename(TOPLEVEL *w_current, char *clib, char *basename);
+void o_complex_set_filename(TOPLEVEL *w_current, const CLibSymbol *clib, char *basename);
 void o_complex_free_filename(TOPLEVEL *w_current);
 void o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, OBJECT *prim_objs);
 void o_complex_world_translate_toplevel(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
@@ -490,10 +497,18 @@ char *expand_env_variables(char *string);
 /* s_clib.c */
 void s_clib_init (void);
 void s_clib_free (void);
-void s_clib_add_directory (const gchar *directory);
-const GList* s_clib_get_directories ();
-GSList* s_clib_get_files (const gchar *directory, const gchar *filter);
-const GSList* s_clib_search_basename (const gchar *basename);
+GList *s_clib_get_sources ();
+void s_clib_refresh ();
+const CLibSource *s_clib_add_directory (const gchar *directory);
+const CLibSource *s_clib_add_command (const gchar *command);
+const gchar *s_clib_source_get_name (const CLibSource *source);
+GList *s_clib_source_get_symbols (const CLibSource *source);
+const gchar *s_clib_symbol_get_name (const CLibSymbol *symbol);
+gchar *s_clib_symbol_get_filename (const CLibSymbol *symbol);
+const CLibSource *s_clib_symbol_get_source (const CLibSymbol *symbol);
+gchar *s_clib_symbol_get_data (const CLibSymbol *symbol);
+GList *s_clib_glob (const gchar *glob);
+gchar *s_clib_symbol_get_data_by_name (const gchar *name);
 
 /* s_color.c */
 void s_color_init(void);
@@ -536,7 +551,7 @@ gchar* s_encoding_base64_decode (gchar* src, guint srclen, guint* dstlenp);
 /* s_hierarchy.c */
 int s_hierarchy_down_schematic_single(TOPLEVEL *w_current, const gchar *filename, PAGE *parent, int page_control, int flag);
 void s_hierarchy_down_schematic_multiple (TOPLEVEL *w_current, const gchar *filename, PAGE *parent);
-void s_hierarchy_down_symbol (TOPLEVEL *w_current, const gchar *filename, PAGE *parent);
+void s_hierarchy_down_symbol (TOPLEVEL *w_current, const CLibSymbol *symbol, PAGE *parent);
 void s_hierarchy_up(TOPLEVEL *w_current, int pid);
 GList* s_hierarchy_traversepages(TOPLEVEL *w_current, gint flags);
 gint s_hierarchy_print_page(PAGE *p_current, void * data);

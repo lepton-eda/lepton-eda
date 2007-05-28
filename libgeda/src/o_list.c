@@ -95,8 +95,7 @@ OBJECT *o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head,
 
     case(OBJ_COMPLEX):
     case(OBJ_PLACEHOLDER):
-      if (selected->complex_clib && 
-          strncmp(selected->complex_clib, "EMBEDDED", 8) == 0) {
+      if (o_complex_is_embedded (selected)) {
         end = (OBJECT *) o_complex_copy_embedded(w_current, end, selected);	
       } else {
         end = (OBJECT *) o_complex_copy(w_current, end, selected);	

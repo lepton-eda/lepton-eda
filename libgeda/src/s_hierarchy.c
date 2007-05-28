@@ -214,17 +214,23 @@ void s_hierarchy_down_schematic_multiple (TOPLEVEL *w_current,
  *
  */
 void s_hierarchy_down_symbol (TOPLEVEL *w_current,
-			      const gchar *filename, PAGE *parent)
+			      const CLibSymbol *symbol, PAGE *parent)
 {
   PAGE *page;
+  gchar *filename;
+
+  filename = s_clib_symbol_get_filename (symbol);
 
   page = s_page_search (w_current, filename);
   if (page) {
     s_page_goto (w_current, page);
+    g_free (filename);
     return;
   }
 
   page = s_page_new (w_current, filename);
+  g_free(filename);
+
   s_page_goto (w_current, page);
 
   f_open(w_current, page->page_filename);

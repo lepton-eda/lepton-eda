@@ -92,7 +92,7 @@ void o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
 
           case(OBJ_COMPLEX):
             out = (char *) o_complex_save(o_current);
-            if (strncmp(o_current->complex_clib, "EMBEDDED", 8) == 0) {
+            if (o_complex_is_embedded(o_current)) {
               fprintf(fp, "[\n");
 								
               o_save_embedded(
@@ -225,7 +225,7 @@ int o_save(TOPLEVEL *w_current, const char *filename)
             fprintf(fp, "%s\n", out);
             already_wrote=1;
 	    g_free(out); /* need to free here because of the above flag */
-            if (strncmp(o_current->complex_clib, "EMBEDDED", 8) == 0) {
+            if (o_complex_is_embedded(o_current)) {
               fprintf(fp, "[\n");
 								
               o_save_embedded(

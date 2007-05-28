@@ -49,27 +49,17 @@
  */
 void o_embed(TOPLEVEL *w_current, OBJECT *o_current)
 {
-  gchar *new_basename;
 
   /* check o_current is a complex and is not already embedded */
   if (o_current->type == OBJ_COMPLEX &&
       !o_complex_is_embedded (o_current))
   {
-    /* change the clib of complex to "EMBEDDED" */
-    if (o_current->complex_clib) {
-      g_free (o_current->complex_clib);
-    }
-    o_current->complex_clib = g_strdup ("EMBEDDED");
 
-    /* change the basename to "EMBEDDED"+basename */
-    new_basename = g_strconcat ("EMBEDDED",
-                                o_current->complex_basename,
-                                NULL);
-    g_free (o_current->complex_basename);
-    o_current->complex_basename = new_basename;
+    /* set the embedded flag */
+    o_current->complex_embedded = TRUE;
 
     s_log_message ("Component [%s] has been embedded\n",
-                   o_current->complex_basename + 8);
+                   o_current->complex_basename);
     
     /* page content has been modified */
     w_current->page_current->CHANGED = 1;
@@ -98,39 +88,34 @@ void o_embed(TOPLEVEL *w_current, OBJECT *o_current)
  */
 void o_unembed(TOPLEVEL *w_current, OBJECT *o_current)
 {
-  gchar *new_basename, *new_clib;
-  const GSList *clibs;
+  GList *symlist;
   
   /* check o_current is an embedded complex */
   if (o_current->type == OBJ_COMPLEX &&
       o_complex_is_embedded (o_current))
   {
-    /* get ride of the EMBEDDED word in basename */
-    new_basename = g_strdup (o_current->complex_basename + 8);
-    
+        
     /* search for the symbol in the library */
-    clibs = s_clib_search_basename (new_basename);
+    symlist = s_clib_glob (o_current->complex_basename);
 
-    if (!clibs) {
+    if (!symlist) {
       /* symbol not found in the symbol library: signal an error */
       s_log_message ("Could not find component [%s], while trying to unembed. Component is still embedded\n",
-                     o_current->complex_basename + 8);
+                     o_current->complex_basename);
       
     } else {
-      /* set the object new basename */
-      g_free (o_current->complex_basename);
-      o_current->complex_basename = new_basename;
 
       /* set the object new clib */
-      g_free (o_current->complex_clib);
-      if (g_slist_next (clibs)) {
+      if (g_list_next (symlist)) {
         s_log_message ("More than one component found with name [%s]\n",
-                       new_basename);
+                       o_current->complex_basename);
         /* PB: for now, use the first directory in clibs */
         /* PB: maybe open a dialog to select the right one? */
       }
-      new_clib = g_strdup ((gchar*)clibs->data);
-      o_current->complex_clib = new_clib;
+      o_current->complex_clib = (CLibSymbol *) symlist->data;
+
+      /* clear the embedded flag */
+      o_current->complex_embedded = FALSE;
 
       s_log_message ("Component [%s] has been successfully unembedded\n",
                      o_current->complex_basename);

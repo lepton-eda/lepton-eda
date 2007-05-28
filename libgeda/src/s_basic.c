@@ -454,10 +454,6 @@ s_delete_object(TOPLEVEL *w_current, OBJECT *o_current)
     }
     o_current->complex_basename = NULL;
 
-    if (o_current->complex_clib) {
-      /*	printf("sdeleting complex_clib\n");*/
-      g_free(o_current->complex_clib); 
-    }
     o_current->complex_clib = NULL;
 
     if (o_current->complex) {

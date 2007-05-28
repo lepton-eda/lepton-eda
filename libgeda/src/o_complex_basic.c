@@ -308,12 +308,51 @@ int o_complex_is_embedded(OBJECT *o_current)
   if(o_current->complex == NULL)
   return 0;
 
-  if (o_current->complex_clib && 
-      strncmp(o_current->complex_clib, "EMBEDDED", 8) == 0) {
+  if (o_current->complex_embedded) {
     return 1;
   } else {
     return 0;
   }
+
+}
+
+/*! \brief Add a symbol given its basename.
+ *  \todo Complete function documentation
+ */
+OBJECT *o_complex_add_by_name(TOPLEVEL *w_current, OBJECT *object_list, 
+			      GList **object_glist, char type,
+			      int color, int x, int y, int angle,
+			      int mirror, const gchar *basename,
+			      int selectable,
+			      int attribute_promotion)
+{
+  const CLibSymbol *sym;
+  GList *symlist;
+
+  symlist = s_clib_glob (basename);
+
+  if (symlist == NULL) {
+    s_log_message("Component [%s] was not found in any component library\n", 
+		  basename);
+    fprintf(stderr,
+	    "Component [%s] was not found in any component library\n", 
+	    basename);
+    sym = NULL;
+  } else {
+    if (g_list_next (symlist) != NULL) {
+      s_log_message ("More than one component found with name [%s]\n",
+		     basename);
+    }
+    /*! \todo For now, use the first source with a symbol with that
+     *  name. Maybe open a dialog to select the right one? */
+    sym = (CLibSymbol *) symlist->data;
+  }
+
+  g_list_free (symlist);
+
+  return o_complex_add (w_current, object_list, object_glist, type,
+			color, x, y, angle, mirror, sym, basename,
+			selectable, attribute_promotion);
 
 }
 
@@ -325,8 +364,9 @@ int o_complex_is_embedded(OBJECT *o_current)
 OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, 
 		      GList **object_glist, char type,
 		      int color, int x, int y, int angle,
-		      int mirror, char *clib,
-		      char *basename, int selectable,
+		      int mirror, const CLibSymbol *clib,
+		      const gchar *basename,
+		      int selectable,
 		      int attribute_promotion)
 {
   OBJECT *new_node=NULL;
@@ -336,8 +376,9 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
   int save_adding_sel = 0;
   int loaded_normally = FALSE;
   gboolean use_object_list;
-  char *filename;
   GList *glist_ptr;
+
+  gchar *buffer;
 
   if (object_list) {
     use_object_list = TRUE;
@@ -348,11 +389,15 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node = s_basic_init_object("complex");
   new_node->type = type;
 
-  new_node->complex_basename = g_strdup(basename);
-  if (clib)
-    new_node->complex_clib = g_strdup(clib);
-  else
-    new_node->complex_clib = NULL;
+  new_node->complex_clib = clib;
+  if (clib != NULL) {
+    new_node->complex_basename = g_strdup (s_clib_symbol_get_name (clib));
+  } else {
+    new_node->complex_basename = g_strdup (basename);
+  }
+
+
+  new_node->complex_embedded = FALSE;
 
   new_node->color = color;
 	
@@ -389,29 +434,20 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
   w_current->page_current->object_parent = prim_objs;
   /* reason this works is because it has a head, see add_head above */
 
-  /* check for validity */
-  if (clib && basename)
-    filename = g_strdup_printf("%s%c%s", clib, G_DIR_SEPARATOR, basename);
-  else 
-    filename = g_strdup("unknown");
+  /* get the symbol data */
+  if (clib != NULL) {
+    buffer = s_clib_symbol_get_data (clib);
+  }
 
   save_adding_sel = w_current->ADDING_SEL;
   w_current->ADDING_SEL = 1;	/* name is hack, don't want to */
 
-  if (access(filename, R_OK)) {
+  if (clib == NULL || buffer == NULL) {
 
     OBJECT *save_prim_objs;
     char *not_found_text = NULL;
     int left, right, top, bottom;
     int x_offset, y_offset;
-
-    if (clib == NULL) {
-      s_log_message("Component library was not found or specified\n");
-    } else if (basename == NULL) {
-      s_log_message("Basename (component) was not found or specified\n");
-    } else {
-      s_log_message("Could not open symbol file [%s]\n", filename); 
-    } 
 
     /* filename was NOT found */
     loaded_normally = FALSE;
@@ -434,7 +470,8 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
 
     /* Add some useful text */
     not_found_text = 
-      g_strdup_printf ("Component not found:\n %s", basename);
+      g_strdup_printf ("Component not found:\n %s", 
+		       new_node->complex_basename);
     prim_objs = o_text_add(w_current, prim_objs,
                            OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
                            x + NOT_FOUND_TEXT_X, 
@@ -488,7 +525,9 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
     loaded_normally = TRUE;
     
     /* add connections till translated */
-    o_read(w_current, prim_objs, filename);
+    o_read_buffer(w_current, prim_objs, buffer, -1, new_node->complex_basename);
+
+    g_free (buffer);
     
   }
   w_current->ADDING_SEL = save_adding_sel;
@@ -618,7 +657,6 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
   else
     o_complex_recalc(w_current, new_node);
 
-  g_free(filename);
   return(object_list);
 }
 
@@ -628,7 +666,7 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
  */
 OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list,
 			       char type, int color, int x, int y, int angle,
-			       char *clib, char *basename, int selectable)
+			       const gchar *basename, int selectable)
 {
   OBJECT *prim_objs=NULL;
   OBJECT *new_node=NULL;
@@ -643,11 +681,10 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->complex->angle = angle;
   new_node->complex->mirror = 0;
 	
+  new_node->complex_clib = NULL;
   new_node->complex_basename = g_strdup(basename);
-  if (clib)
-    new_node->complex_clib = g_strdup(clib);
-  else
-    new_node->complex_clib = NULL;
+
+  new_node->complex_embedded = TRUE;
 
   new_node->color = color;
 
@@ -700,6 +737,7 @@ void o_complex_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 /*! \brief
  *  \par Function Description
  *
+ *  \todo Don't use fixed-length string for symbol basename
  */
 OBJECT *o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
 		       char buf[], unsigned int release_ver,
@@ -709,8 +747,7 @@ OBJECT *o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
   int x1, y1;
   int angle;
 
-  char basename[256]; /* hack */
-  char *clib=NULL;
+  char basename[256]; /* FIXME This is a hack */
 	
   int selectable;
   int mirror;
@@ -749,32 +786,15 @@ OBJECT *o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
   object_list = o_complex_add_embedded(w_current, 
                                        object_list, type, 
                                        WHITE, x1, y1, angle,
-                                       "EMBEDDED", basename, 
+                                       basename + 8, 
                                        selectable);
   } else {
-    const GSList *clibs = s_clib_search_basename (basename);
-    if (clibs == NULL) {
-      s_log_message("Component [%s] was not found in any component library\n", 
-		    basename);
-      fprintf(stderr,
-	      "Component [%s] was not found in any component library\n", 
-	      basename);
-      clib = NULL;
-    } else {
-      if (g_slist_next (clibs)) {
-	s_log_message ("More than one component found with name [%s]\n",
-		       basename);
-	/* PB: for now, use the first directory in clibs */
-	/* PB: maybe open a dialog to select the right one? */
-      }
-      clib = (gchar*)clibs->data;
-    }
     
-    object_list = o_complex_add(w_current, object_list, NULL, type, 
-				WHITE, 
-				x1, y1, 
-				angle, mirror,
-				clib, basename, selectable, FALSE);
+    object_list = o_complex_add_by_name(w_current, object_list, NULL, type, 
+					WHITE, 
+					x1, y1, 
+					angle, mirror,
+					basename, selectable, FALSE);
   }
 
   return object_list;
@@ -788,6 +808,7 @@ char *o_complex_save(OBJECT *object)
 {
   int selectable;
   char *buf = NULL;
+  char *basename;
 
   g_return_val_if_fail (object != NULL, NULL);
 
@@ -796,16 +817,28 @@ char *o_complex_save(OBJECT *object)
   else 
   selectable = 0;
 
-  if (object->type == OBJ_COMPLEX) {
-    buf = g_strdup_printf("%c %d %d %d %d %d %s", object->type,
-	    		  object->complex->x, object->complex->y, selectable, 
-			  object->complex->angle, object->complex->mirror, 
-			  object->complex_basename);
-  } else if (object->type == OBJ_PLACEHOLDER) {
-    buf = g_strdup_printf("C %d %d %d %d %d %s",
-	    		  object->complex->x, object->complex->y, selectable, 
-			  object->complex->angle, object->complex->mirror, 
-			  object->complex_basename);  /* write 'C' manually */
+  if ((object->type == OBJ_COMPLEX) || (object->type == OBJ_PLACEHOLDER)) {
+    basename = g_strdup_printf ("%s%s",
+				object->complex_embedded ? "EMBEDDED" : "",
+				object->complex_basename);
+    switch (object->type) {
+    case OBJ_COMPLEX:
+      buf = g_strdup_printf("%c %d %d %d %d %d %s", object->type,
+			    object->complex->x, object->complex->y, 
+			    selectable, object->complex->angle, 
+			    object->complex->mirror, basename);
+      break;
+    case OBJ_PLACEHOLDER:
+      /* write 'C' manually */
+      buf = g_strdup_printf("C %d %d %d %d %d %s",
+			    object->complex->x, object->complex->y, 
+			    selectable, object->complex->angle, 
+			    object->complex->mirror, basename);
+      break;
+    default:
+      g_assert_not_reached();
+    }
+    g_free (basename);
   }
 
   return(buf);
@@ -815,36 +848,14 @@ char *o_complex_save(OBJECT *object)
  *  \par Function Description
  *
  */
-void o_complex_set_filename(TOPLEVEL *w_current, char *clib, char *basename) 
+void o_complex_set_filename(TOPLEVEL *w_current, const CLibSymbol *clib, char *basename) 
 {
-  int len;
-
-  if (basename == NULL) {
-    fprintf(stderr, "Got NULL basename in o_complex_set_filename!\n");
-    exit(-1);
-  }
-
   if (clib == NULL) {
     fprintf(stderr, "Got NULL clib in o_complex_set_filename!\n");
     exit(-1);
   }
 
-  if (w_current->internal_basename) {
-    g_free(w_current->internal_basename);
-  }
-
-  if (w_current->internal_clib) {
-    g_free(w_current->internal_clib);
-  }
-
-  len = strlen(basename);
-  w_current->internal_basename = (char *) g_malloc(sizeof(char)*len+1);
-
-  len = strlen(clib) + 1;	
-  w_current->internal_clib = (char *) g_malloc(sizeof(char)*len+1);
-
-  strcpy(w_current->internal_basename, basename);	
-  strcpy(w_current->internal_clib, clib);	
+  w_current->internal_clib = clib;
 } 
 
 /*! \brief
@@ -853,13 +864,7 @@ void o_complex_set_filename(TOPLEVEL *w_current, char *clib, char *basename)
  */
 void o_complex_free_filename(TOPLEVEL *w_current)
 {
-  if (w_current->internal_basename) {
-    g_free(w_current->internal_basename);
-  }
 
-  if (w_current->internal_clib) {
-    g_free(w_current->internal_clib);
-  }
 }
 
 /*! \brief
@@ -998,7 +1003,8 @@ OBJECT *o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail,
 
   new_obj = o_complex_add(w_current, list_tail, NULL, o_current->type, color,
                           o_current->complex->x, o_current->complex->y, 
-                          o_current->complex->angle, o_current->complex->mirror,
+                          o_current->complex->angle, 
+			  o_current->complex->mirror,
                           o_current->complex_clib, o_current->complex_basename, 
                           selectable, FALSE); 
 
@@ -1056,7 +1062,6 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail,
                                    color,
                                    o_current->complex->x, o_current->complex->y, 
                                    o_current->complex->angle, 
-                                   o_current->complex_clib, 
                                    o_current->complex_basename, 
                                    selectable); 
   /* deal with stuff that has changed */

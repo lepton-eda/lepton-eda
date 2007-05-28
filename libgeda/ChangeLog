@@ -1,5 +1,25 @@
 2007-05-28 Peter Brett <peter@peter-b.co.uk>
 
+	* include/prototype.h, include/struct.h, src/a_basic.c,
+	  src/o_complex_basic.c, src/o_embed.c, src/o_list.c,
+	  src/s_basic.c, src/s_clib.c, src/s_hierarchy.c,
+	  src/s_toplevel.c: Implement new component library system in
+	  libgeda.
+
+	  A new component library model is needed to allow gschem etc.  to
+	  work well with part database systems.  This patch provides the
+	  necessary infrastructure in libgeda, without the frontend Guile
+	  commands required to make use of the new features.  In
+	  particular, it abstracts the component library into the concepts
+	  of "Component Sources" and "Symbols", and allows external
+	  "Library Commands" to provide symbol data in addition to the
+	  traditional directory libraries.
+
+	  In order to allow the new system to work, there are major
+	  changes in all code which manipulates COMPLEX objects; in
+	  particular, the magic "EMBEDDED" string is now only used in the
+	  on-disc representation.
+	
 	* include/prototype.h, src/a_basic.c, src/o_attrib.c,
 	  src/o_picture.c, o_text_basic.c: Make libgeda parse schematics
 	  from buffered data.
