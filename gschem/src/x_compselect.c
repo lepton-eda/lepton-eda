@@ -86,11 +86,11 @@ x_compselect_callback_response (GtkDialog *dialog,
 
   switch (arg1) {
       case GTK_RESPONSE_APPLY: {
-        gchar *filename, *directory, *component;
+	CLibSymbol *symbol;
         CompselectBehavior behavior;
         
         g_object_get (compselect,
-                      "filename", &filename,
+                      "symbol", &symbol,
                       "behavior", &behavior,
                       NULL);
 
@@ -108,26 +108,12 @@ x_compselect_callback_response (GtkDialog *dialog,
               g_assert_not_reached();
         }
 
-        if (filename == NULL) {
+        if (symbol == NULL) {
           break;
         }
+                
+	toplevel->current_clib = symbol;
         
-        component = g_path_get_basename (filename);
-        directory = g_path_get_dirname  (filename);
-        g_free (filename);
-        
-        if (toplevel->current_clib == NULL ||
-            g_ascii_strcasecmp (toplevel->current_clib, directory) != 0 ||
-            toplevel->current_basename == NULL ||
-            g_ascii_strcasecmp (toplevel->current_basename, component) != 0) {
-	  g_free (toplevel->current_clib);
-          toplevel->current_clib = directory;
-        
-          strcpy (toplevel->current_basename, component);
-	} else {
-	  g_free(directory);
-	}
-	g_free (component);
 	if (toplevel->event_state == ENDCOMP) {
           gint diff_x, diff_y;
 
@@ -142,8 +128,7 @@ x_compselect_callback_response (GtkDialog *dialog,
 	g_list_free(toplevel->page_current->complex_place_list);
 	toplevel->page_current->complex_place_list = NULL;
 	
-	o_complex_set_filename(toplevel, toplevel->current_clib,
-			       toplevel->current_basename);
+	o_complex_set_filename(toplevel, toplevel->current_clib, NULL);
         
 	toplevel->event_state = DRAWCOMP;
 
@@ -236,7 +221,7 @@ x_compselect_close (TOPLEVEL *toplevel)
 
 
 enum {
-  PROP_FILENAME=1,
+  PROP_SYMBOL=1,
   PROP_BEHAVIOR,
   PROP_HIDDEN
 };
@@ -262,10 +247,9 @@ static void compselect_get_property (GObject *object,
  *  This function determines what data is to be displayed in the
  *  component column of the selection tree.
  *
- *  Any toplevel entry of the model (that is one without parent)
- *  represents an absolute path to a directory of the component
- *  library. Only the last part of the path is displayed. Otherwise it
- *  simply copies data from the model to the column.
+ *  The top level of the model contains sources, and the next symbols.
+ *  s_clib_source_get_name() or s_clib_symbol_get_name() as
+ *  appropriate is called to get the text to display.
  *
  *  \param [in] tree_column The GtkTreeColumn.
  *  \param [in] cell        The GtkCellRenderer that is being rendered
@@ -283,16 +267,27 @@ compselect_treeview_set_cell_data (GtkTreeViewColumn *tree_column,
 {
   GtkTreeIter parent;
   GValue value = { 0, };
+  GValue strvalue = { 0, };
+  CLibSource *source;
+  CLibSymbol *symbol;
   
   gtk_tree_model_get_value (tree_model, iter, 0, &value);
+
+  g_value_init (&strvalue, G_TYPE_STRING);
+
   if (!gtk_tree_model_iter_parent (tree_model, &parent, iter)) {
-    g_value_set_string_take_ownership (
-      &value, g_path_get_basename (g_value_get_string (&value)));
+    /* If top level, must be a source. */
+    source = (CLibSource *) g_value_get_pointer (&value);
+    g_value_set_string (&strvalue, s_clib_source_get_name (source));
+  } else {
+    /* Otherwise, must be a symbol */
+    symbol = (CLibSymbol *) g_value_get_pointer (&value);
+    g_value_set_string (&strvalue, s_clib_symbol_get_name (symbol));
   }
-  g_object_set_property ((GObject*)cell, "text", &value);
+  g_object_set_property ((GObject*)cell, "text", &strvalue);
 
   g_value_unset (&value);
-  
+  g_value_unset (&strvalue);
 }
 
 /*! \brief Determines visibility of items of the treeview.
@@ -311,7 +306,8 @@ compselect_model_filter_visible_func (GtkTreeModel *model,
                                       gpointer      data)
 {
   Compselect *compselect = (Compselect*)data;
-  gchar *compname;
+  CLibSymbol *sym;
+  const gchar *compname;
   gchar *compname_upper=NULL, *text_upper=NULL;
   const gchar *text;
   gboolean ret;
@@ -323,6 +319,8 @@ compselect_model_filter_visible_func (GtkTreeModel *model,
     return TRUE;
   }
 
+  /* If this is a source, only display it if it has children that
+   * match */
   if (gtk_tree_model_iter_has_child (model, iter)) {
     GtkTreeIter iter2;
 
@@ -336,14 +334,14 @@ compselect_model_filter_visible_func (GtkTreeModel *model,
     } while (gtk_tree_model_iter_next (model, &iter2));
   } else {
     gtk_tree_model_get (model, iter,
-                        0, &compname,
+                        0, &sym,
                         -1);
+    compname = s_clib_symbol_get_name (sym);
     /* Do a case insensitive comparison, converting the strings 
        to uppercase */
     compname_upper = g_ascii_strup(compname, -1);
     text_upper = g_ascii_strup(text, -1);
     ret = (strstr (compname_upper, text_upper) != NULL);
-    g_free (compname);
     g_free(compname_upper);
     g_free(text_upper);
   }
@@ -406,30 +404,21 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
   GtkTreeModel *model;
   GtkTreeIter iter, parent;
   Compselect *compselect = (Compselect*)user_data;
-  GString *ret;
-  gchar *value, *filename;
+  CLibSymbol *sym = NULL;
+  gchar *filename;
 
   if (!gtk_tree_selection_get_selected (selection, &model, &iter)) {
     return;
   }
 
-  if (gtk_tree_model_iter_has_child (model, &iter)) {
+  if (!gtk_tree_model_iter_parent (model, &parent, &iter)) {
     /* selected element is not a leaf -> not a component name */
     return;
   }
   
   /* build full path to component looking at parents */
-  gtk_tree_model_get (model, &iter, 0, &value,-1);
-  ret = g_string_new (value);
-  g_free (value);
-  while (gtk_tree_model_iter_parent (model, &parent, &iter)) {
-    gtk_tree_model_get (model, &parent, 0, &value, -1);
-    ret = g_string_prepend (ret, G_DIR_SEPARATOR_S);
-    ret = g_string_prepend (ret, value);
-    g_free (value);
-    iter = parent;
-  }
-  filename = g_string_free (ret, FALSE);
+  gtk_tree_model_get (model, &iter, 0, &sym, -1);
+  filename = s_clib_symbol_get_filename(sym);
 
   /* update the treeview with new filename */
   g_object_set (compselect->preview,
@@ -468,7 +457,7 @@ compselect_filter_timeout (gpointer data)
   
   model = gtk_tree_view_get_model (compselect->treeview);
 
- if (model != NULL) {
+  if (model != NULL) {
     gtk_tree_model_filter_refilter ((GtkTreeModelFilter*)model);
   }
 
@@ -565,34 +554,38 @@ static GtkTreeModel*
 compselect_create_child_model (void)
 {
   GtkTreeStore *store;
-  const GList *directories, *dir; 
+  GList *srchead, *srclist;
+  GList *symhead, *symlist; 
 
-  store = (GtkTreeStore*)gtk_tree_store_new (1,
-                                             G_TYPE_STRING);
+  store = (GtkTreeStore*)gtk_tree_store_new (1, G_TYPE_POINTER);
   
   /* populate component store */
-  directories = s_clib_get_directories ();
-  for (dir = directories; dir != NULL; dir = g_list_next (dir)) {
+  srchead = s_clib_get_sources ();
+  for (srclist = srchead; 
+       srclist != NULL; 
+       srclist = g_list_next (srclist)) {
+
     GtkTreeIter iter, iter2;
-    GSList *components, *comp;
 
     gtk_tree_store_append (store, &iter, NULL);
     gtk_tree_store_set (store, &iter,
-                        0, dir->data,
+                        0, srclist->data,
                         -1);
     
-    components = s_clib_get_files ((gchar*)dir->data, ".sym");
-    components = g_slist_sort (components, (GCompareFunc)g_ascii_strcasecmp);
-    for (comp = components; comp != NULL; comp = g_slist_next (comp)) {
+    symhead = s_clib_source_get_symbols ((CLibSource *)srclist->data);
+    for (symlist = symhead; 
+	 symlist != NULL; 
+	 symlist = g_list_next (symlist)) {
+
       gtk_tree_store_append (store, &iter2, &iter);
       gtk_tree_store_set (store, &iter2,
-                          0, comp->data,
+                          0, symlist->data,
                           -1);
     }
 
-    g_slist_foreach (components, (GFunc)g_free, NULL);
-    g_slist_free (components);
+    g_list_free (symhead);
   }
+  g_list_free (srchead);
 
   return (GtkTreeModel*)store;
 }
@@ -663,12 +656,11 @@ compselect_class_init (CompselectClass *klass)
   gobject_class->get_property = compselect_get_property;
 
   g_object_class_install_property (
-    gobject_class, PROP_FILENAME,
-    g_param_spec_string ("filename",
-                         "",
-                         "",
-                         NULL,
-                         G_PARAM_READABLE));
+    gobject_class, PROP_SYMBOL,
+    g_param_spec_pointer ("symbol",
+			  "",
+			  "",
+			  G_PARAM_READABLE));
   g_object_class_install_property (
     gobject_class, PROP_BEHAVIOR,
     g_param_spec_enum ("behavior",
@@ -985,31 +977,24 @@ compselect_get_property (GObject *object,
   Compselect *compselect = COMPSELECT (object);
 
   switch(property_id) {
-      case PROP_FILENAME: {
-        GtkTreeModel *model;
-        GtkTreeIter iter, parent;
-        if (gtk_tree_selection_get_selected (
-              gtk_tree_view_get_selection (compselect->treeview),
-              &model,
-              &iter)) {
-          GString *str;
-          gchar *tmp;
-          
-          gtk_tree_model_get (model, &iter, 0, &tmp, -1);
-          str = g_string_new (tmp);
-          g_free (tmp);
-          while (gtk_tree_model_iter_parent (model, &parent, &iter)) {
-            gtk_tree_model_get (model, &parent, 0, &tmp, -1);
-            str = g_string_prepend (str, G_DIR_SEPARATOR_S);
-            str = g_string_prepend (str, tmp);
-            g_free (tmp);
-            iter = parent;
-          }
-          g_value_take_string (value, g_string_free (str, FALSE));
-        } else {
-          g_value_set_string (value, NULL);
-        }
-      }
+      case PROP_SYMBOL: 
+	{
+	  GtkTreeModel *model;
+	  GtkTreeIter iter, parent;
+	  CLibSymbol *symbol;
+	  if (gtk_tree_selection_get_selected (
+		gtk_tree_view_get_selection (compselect->treeview),
+		&model,
+		&iter)
+	      && gtk_tree_model_iter_parent (model, &parent, &iter)) {
+	    
+	    gtk_tree_model_get (model, &iter, 0, &symbol, -1);
+	    g_value_set_pointer (value, symbol);
+
+	  } else {
+	    g_value_set_pointer (value, NULL);
+	  }
+	}
         break;
       case PROP_BEHAVIOR:
         g_value_set_enum (value,

@@ -851,7 +851,7 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
   int made_changes = FALSE;
   const int ripper_size = w_current->bus_ripper_size;
   int complex_angle = 0;
-  char *clib = NULL;
+  const CLibSymbol *rippersym = NULL;
   
   length = o_line_length(net_obj);
 
@@ -1123,10 +1123,11 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
     s_conn_remove(w_current, net_obj);
 
     if (w_current->bus_ripper_type == COMP_BUS_RIPPER) {
-      const GSList *clibs = s_clib_search_basename (w_current->bus_ripper_symname);
-      if (clibs != NULL) {
-        clib = (gchar*)clibs->data;
+      GList *symlist = s_clib_glob (w_current->bus_ripper_symname);
+      if (symlist != NULL) {
+        rippersym = (CLibSymbol *) symlist->data;
       }
+      g_list_free (symlist);
     }
     
     for (i = 0; i < ripper_count; i++) {
@@ -1138,7 +1139,7 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
                     rippers[i].x[1], rippers[i].y[1]);
       } else {
 
-        if (clib) {
+        if (rippersym != NULL) {
           w_current->page_current->object_tail = 
           (OBJECT *) o_complex_add(
                                    w_current,
@@ -1147,12 +1148,12 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
                                    OBJ_COMPLEX, WHITE,
                                    rippers[i].x[0], rippers[i].y[0],
                                    complex_angle, 0,
-                                   clib,
+                                   rippersym,
                                    w_current->bus_ripper_symname, 1, TRUE);
           
           o_complex_draw(w_current,w_current->page_current->object_tail);
         } else {
-          s_log_message(_("Could not find %s in any component-library\n"),
+          s_log_message(_("Bus ripper symbol [%s] was not found in any component library\n"),
                         w_current->bus_ripper_symname);
         }
       }

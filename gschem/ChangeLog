@@ -1,3 +1,16 @@
+2007-05-28 Peter Brett <peter@peter-b.co.uk>
+
+	* src/g_hook.c, src/i_callbacks.c, src/o_complex.c, src/o_copy.c,
+	  src/o_misc.c, src/o_net.c, src/x_compselect.c, src/x_window.c:
+	  Implement new component library system in gschem.
+
+	  A new component library model was introduced into libgeda to
+	  allow gschem etc. to work well with database systems.  This
+	  patch updates gschem to use the new library system.  Most code
+	  dealing with creating, updating and (un)embedding symbols is
+	  affected.  However, this patch should not introduce any changes
+	  for the end-user.
+
 2007-05-26 Peter Brett <peter@peter-b.co.uk>
 
 	* lib/system-gschemrc.in: Help menu updates.

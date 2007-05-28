@@ -1057,37 +1057,36 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
   OBJECT *tmp_list, *new_complex;
   ATTRIB *new_attribs, *a_current;
   gboolean is_embedded;
-  gchar *basename, *clib;
+  const CLibSymbol *clib;
 
   g_return_if_fail (o_current != NULL);
 
   is_embedded = o_complex_is_embedded (o_current);
 
-  /* identify symbol name */
-  if (is_embedded) {
-    const GSList *clibs;
+  /* find symbol if not known */
+  if (o_current->complex_clib == NULL) {
+    const GList *symlist = NULL;
     
-    /* skip over EMBEDDED word */
-    basename = g_strdup (o_current->complex_basename + 8);
+    g_assert (o_current->complex_basename != NULL);
+    symlist = s_clib_glob (o_current->complex_basename);
 
-    /* search for basename in component library */
-    clibs    = s_clib_search_basename (basename);
-    if (!clibs) {
-      s_log_message (_("Could not unembedded component, could not find appropriate .sym file\n"));
-      s_log_message (_("Component still embedded and not updated\n"));
+    if (symlist == NULL) {
+      s_log_message (_("Could not find symbol [%s] in library. Update failed.\n"), 
+		     o_current->complex_basename);
       return;
-    }
-    if (g_slist_next (clibs)) {
-      s_log_message (_("More than one component found with name [%s]\n"),
-                     basename);
+    } else {
+      if (g_list_next (symlist) != NULL) {
+	s_log_message (_("More than one component found with name [%s]\n"),
+		       o_current->complex_basename);
       /* PB: for now, use the first directory in clibs */
       /* PB: maybe open a dialog to select the right one? */
+      }
     }
-    clib = (gchar*)clibs->data;
-  } else {
-    basename = o_current->complex_basename;
-    clib     = o_current->complex_clib;
+
+    o_current->complex_clib = (CLibSymbol *) symlist->data;
   }
+
+  clib = o_current->complex_clib;
 
   /* erase the complex object */
   o_erase_single (w_current, o_current);
@@ -1107,7 +1106,8 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
                                o_current->complex->y,
                                o_current->complex->angle,
                                o_current->complex->mirror,
-                               clib, basename, 1, TRUE);
+                               clib, o_current->complex_basename, 
+			       1, TRUE);
 
   /* updating the old complex with data from the new one */
   /* first process the prim_objs: */
@@ -1175,11 +1175,8 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
 		   o_current);
   o_redraw_single (w_current, o_current);
 
-  if (is_embedded) {
-    /* we previously allocated memory for basename */
-    g_free (basename);
-    /* clib should not be freed here since it is owned by libgeda */
-  }
+  /* Re-flag as embedded if necessary */
+  o_current->complex_embedded = is_embedded;
     
   /* mark the page as modified */
   w_current->page_current->CHANGED = 1;

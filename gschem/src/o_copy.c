@@ -222,8 +222,7 @@ void o_copy_end(TOPLEVEL *w_current)
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
         w_current->ADDING_SEL=1; 
-        if (object->complex_clib && 
-            strncmp(object->complex_clib, "EMBEDDED", 8) == 0) {
+        if (o_complex_is_embedded(object)) {
 
           new_object = (OBJECT *) 
             o_complex_copy_embedded(w_current, 
@@ -232,7 +231,7 @@ void o_copy_end(TOPLEVEL *w_current)
 
         } else {
           new_object = (OBJECT *) o_complex_copy(w_current,
-                                                 return_tail(new_objects_head), 
+                                                 return_tail(new_objects_head),
                                                  object);
         }
         w_current->ADDING_SEL=0; 

@@ -147,7 +147,8 @@ void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 		&(w_current->page_current->complex_place_list),
 		OBJ_COMPLEX, WHITE, x, y, 0, 0,
 		w_current->internal_clib,
-		w_current->internal_basename, 1, TRUE);
+		s_clib_symbol_get_name (w_current->internal_clib), 
+		1, TRUE);
   w_current->ADDING_SEL = 0;
   w_current->DONT_DRAW_CONN = 0;
 
@@ -260,7 +261,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
   OBJECT *o_current;
   OBJECT *o_start;
   OBJECT *o_temp;
-  char *include_filename;
+  char *buffer;
   int temp, new_angle, i;
   GList *connected_objects=NULL;
 
@@ -277,20 +278,18 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 #endif
 
   if (w_current->include_complex) {
-    include_filename = g_strconcat (w_current->internal_clib,
-                                    G_DIR_SEPARATOR_S,
-                                    w_current->internal_basename,
-                                    NULL);
+    buffer = s_clib_symbol_get_data (w_current->internal_clib);
 
     w_current->ADDING_SEL=1;
     o_start = w_current->page_current->object_tail;
     w_current->page_current->object_tail =
-      o_read(w_current,
-             w_current->page_current->object_tail,
-             include_filename);
+      o_read_buffer(w_current,
+		    w_current->page_current->object_tail,
+		    buffer, -1,
+		    s_clib_symbol_get_name(w_current->internal_clib));
     o_start = o_start->next;
     w_current->ADDING_SEL=0;
-
+    
     o_complex_world_translate(w_current, x, y, o_start);
 
     o_temp = o_start;
@@ -308,7 +307,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
     o_cue_draw_list(w_current, connected_objects);
     g_list_free(connected_objects);
 
-    g_free(include_filename);
+    g_free(buffer);
 
     if (w_current->actionfeedback_mode == OUTLINE) {
 #if 0
@@ -358,7 +357,8 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
                   w_current->page_current->object_tail, NULL,
                   OBJ_COMPLEX, WHITE, x, y, w_current->complex_rotate, 0,
                   w_current->internal_clib,
-                  w_current->internal_basename, 1, TRUE);
+                  s_clib_symbol_get_name (w_current->internal_clib), 
+		  1, TRUE);
 
   /* complex rotate post processing */
   o_temp = o_temp->next; /* skip over last object */
@@ -398,21 +398,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 
   /* put code here to deal with emebedded stuff */
   if (w_current->embed_complex) {
-    char* new_basename;
-
-    g_free(o_current->complex_clib);
-
-    o_current->complex_clib = g_strdup ("EMBEDDED");
-
-    new_basename = g_strconcat ("EMBEDDED",
-                                o_current->complex_basename,
-                                NULL);
-
-    g_free(o_current->complex_basename);
-
-    o_current->complex_basename = g_strdup (new_basename);
-
-    g_free(new_basename);
+    o_current->complex_embedded = TRUE;
   }
 
   /* check for nulls in all this hack */

@@ -63,7 +63,6 @@ void x_window_setup (TOPLEVEL *toplevel)
   toplevel->current_visible = -1; /* not sure on these */
   toplevel->current_show = -1;
 
-  toplevel->internal_basename=NULL;
   toplevel->internal_clib=NULL;
 
   toplevel->series_name = NULL;

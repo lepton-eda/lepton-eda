@@ -669,9 +669,8 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   TOPLEVEL *w_current;
   PAGE *page;
   gboolean selectable, mirror;
-  gchar *comp_name, *clib;
+  gchar *comp_name;
   int x, y, angle;
-  GSList *clibs = NULL;
   OBJECT *new_object;
 
   /* Return if scm_comp_name is NULL (an empty list) or scheme's FALSE */
@@ -712,31 +711,16 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
     return SCM_BOOL_F;
   }
 
-  clibs = (GSList *) s_clib_search_basename (comp_name);
-  if (clibs == NULL) {
-    /* Component not found */
-    s_log_message ("add-component-at-xy: Component with name [%s] not found.\n",
-		   comp_name);
-    return SCM_BOOL_F;    
-  } 
-
-  g_assert(clibs != NULL);
-  if (g_slist_next (clibs)) {
-    s_log_message ("add-component-at-xy: More than one component found with name [%s]\n",
-		   comp_name);
-    /* PB: for now, use the first directory in clibs */
-    /* PB: maybe open a dialog to select the right one? */
-  }
-  clib = (gchar*)clibs->data;
-  
-  new_object = page->object_tail = o_complex_add(w_current, 
-						 page->object_tail, NULL, 
-						 'C', 
-						 WHITE, 
-						 x, y, 
-						 angle, mirror,
-						 clib, comp_name, 
-						 selectable, FALSE);
+  new_object 
+    = page->object_tail 
+    = o_complex_add_by_name(w_current, 
+			    page->object_tail, NULL, 
+			    'C', 
+			    WHITE, 
+			    x, y, 
+			    angle, mirror,
+			    comp_name, 
+			    selectable, FALSE);
   
   /* 
    * For now, do not redraw the newly added complex, since this might cause

@@ -2848,13 +2848,14 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
+ *  \todo Allow hierarchy descent into embedded components (using a
+ *  component library lookup)
  */
 DEFINE_I_CALLBACK(hierarchy_down_symbol)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
   OBJECT *object;
-  char *filename;
+  const CLibSymbol *sym;
 
   exit_if_null(w_current);
 
@@ -2863,12 +2864,11 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
     /* only allow going into symbols */
     if (object->type == OBJ_COMPLEX &&
         !o_complex_is_embedded (object)) {
-      filename = g_strconcat (object->complex_clib,
-                              G_DIR_SEPARATOR_S,
-                              object->complex_basename, NULL);
-      s_log_message(_("Searching for symbol [%s]\n"), filename);
-      s_hierarchy_down_symbol(w_current, filename, w_current->page_current);
-      g_free(filename);
+      sym = object->complex_clib;
+      s_log_message(_("Searching for symbol [%s]\n"), 
+		    s_clib_symbol_get_name(sym));
+      s_hierarchy_down_symbol(w_current, sym, 
+			      w_current->page_current);
       /* s_hierarchy_down_symbol() will not zoom the loaded page */
       a_zoom_extents(w_current,
                      w_current->page_current->object_head,
@@ -2909,6 +2909,7 @@ DEFINE_I_CALLBACK(hierarchy_documentation)
   char *attrib_device = NULL;
   char *attrib_value = NULL;
   OBJECT *object = NULL;
+  const gchar *sourcename = NULL;
 
   exit_if_null(w_current);
 
@@ -2932,11 +2933,13 @@ DEFINE_I_CALLBACK(hierarchy_documentation)
       if (!attrib_value) {
         attrib_value = o_attrib_search_name(object->complex->prim_objs, "value", 0);
       }
+      
+      sourcename = s_clib_source_get_name (s_clib_symbol_get_source(object->complex_clib));
       initiate_gschemdoc(attrib_doc,
                          attrib_device,
                          attrib_value,
                          object->complex_basename,
-                         object->complex_clib);
+                         sourcename);
 
       if (attrib_doc) g_free(attrib_doc);
       if (attrib_device) g_free(attrib_device);
