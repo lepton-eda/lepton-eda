@@ -97,36 +97,16 @@ AC_MSG_CHECKING(
    AC_MSG_RESULT(yes) ], [AC_MSG_RESULT(no)])
 CFLAGS="${saved_CFLAGS}"
 
-# Check that scm_make_smob_type exist
-AC_CHECK_LIB(guile, scm_make_smob_type,,
-   [AC_MSG_ERROR([Upgrade Guile, At least version >= 1.3.2])],
-   $GUILE_LDFLAGS)
+# Check some Guile functions are available
+AC_CHECK_LIB(guile, scm_init_guile)
 
-# Restore LIBS. Apperantly AC_CHECK_LIB destroys it.
-LIBS="$ac_save_LIBS"
+AC_CHECK_FUNCS([scm_make_smob_type scm_set_smob_mark scm_set_smob_free scm_set_smob_print],,
+	       [AC_MSG_ERROR([Upgrade Guile, at least version >= 1.8.0])])
 
-# Check that scm_set_smob_mark exist
-AC_CHECK_LIB(guile, scm_set_smob_mark,,
-   [AC_MSG_ERROR([Upgrade Guile, At least version >= 1.3.2])],
-   $GUILE_LDFLAGS)
+AC_CHECK_FUNCS([scm_from_locale_string],,
+               [AC_MSG_ERROR([Upgrade Guile, at least version >= 1.8.0])])
 
-# Restore LIBS. Apperantly AC_CHECK_LIB destroys it.
-LIBS="$ac_save_LIBS"
-
-# Check that scm_set_smob_free exist
-AC_CHECK_LIB(guile, scm_set_smob_free,,
-   [AC_MSG_ERROR([Upgrade Guile, At least version >= 1.3.2])],
-   $GUILE_LDFLAGS)
-
-# Restore LIBS. Apperantly AC_CHECK_LIB destroys it.
-LIBS="$ac_save_LIBS"
-
-# Check that scm_set_smob_print exist
-AC_CHECK_LIB(guile, scm_set_smob_print,,
-   [AC_MSG_ERROR([Upgrade Guile, At least version >= 1.3.2])],
-   $GUILE_LDFLAGS)
-
-# Restore LIBS. Apperantly AC_CHECK_LIB destroys it.
+# Restore LIBS. Apparently AC_CHECK_LIB destroys it.
 LIBS="$ac_save_LIBS"
 
 GUILE_VERSION=`$GUILE_CONFIG info guileversion`

@@ -1,5 +1,10 @@
 2007-05-28 Peter Brett <peter@peter-b.co.uk>
 
+	* configure.ac: Require Guile 1.8.x
+
+	  Guile 1.8.x is the current stable series, and 1.6.x is getting
+	  old.  Require 1.8.x for libgeda.
+	
 	* src/g_rc.c, src/s_clib.c: Component library documentation
 	  updates.
 
