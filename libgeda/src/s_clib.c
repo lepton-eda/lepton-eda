@@ -39,7 +39,7 @@
  * 
  *  A directory which contains one or more symbol files in gEDA
  *  format may be used as a component source. Each symbol file should
- *  have a filename ending in ".sym" (case sensitive).  A
+ *  have a filename ending in ".sym" (case insensitive).  A
  *  component source based on a directory can be added using
  *  s_clib_add_directory().  Symbol files with filenames starting with
  *  a period "." are ignored.
@@ -69,9 +69,6 @@
  *
  *  \todo
  *    -# Categorisation of symbols.
- *
- *    -# Case-insensitive matching of symbol file extensions (both ".sym"
- *       and ".SYM" should match).
  *
  *  \page libcmds Library Commands
  *
@@ -143,7 +140,8 @@
  * ===================
  */
 
-/*! All symbols in directory sources end with this string */
+/*! All symbols in directory sources end with this string. Must be
+ *  lowercase. */
 #define SYM_FILENAME_FILTER ".sym"
 
 /*! Library command mode used to fetch list of symbols */
@@ -458,6 +456,7 @@ static void refresh_directory (CLibSource *source)
   CLibSymbol *symbol;
   GDir *dir;
   const gchar *entry;
+  gchar *low_entry;
   gchar *fullpath;
   gboolean isfile;
   GError *e = NULL;
@@ -490,12 +489,17 @@ static void refresh_directory (CLibSource *source)
     g_free (fullpath);
     if (!isfile) continue;
 
-    /* skip filenames that don't match the filter or that we already
-     * know about. */
-    if (!g_str_has_suffix (entry, SYM_FILENAME_FILTER)
-	|| (source_has_symbol (source, entry) != NULL)) {
+    /* skip filenames that we already know about. */
+    if (source_has_symbol (source, entry) != NULL) continue;
+    
+    /* skip filenames which don't have the right suffix. */
+    low_entry = g_strdup(entry);
+    string_tolower (low_entry, low_entry);
+    if (!g_str_has_suffix (low_entry, SYM_FILENAME_FILTER)) {
+      g_free (low_entry);
       continue;
     }
+    g_free (low_entry);
 
     /* Create and add new symbol record */
     symbol = g_new0 (CLibSymbol, 1);

@@ -1,5 +1,15 @@
 2007-05-28 Peter Brett <peter@peter-b.co.uk>
 
+	* src/s_clib.c: Match .sym suffix case-insensively when building
+	  component library.
+
+	  When building symbol lists for directory-based component
+	  sources, match the ".sym" filename suffix case-insensitively.
+	  Note that for backward- compatibility (and sanity on systems
+	  with case-sensitive filenames) searching for symbols does match
+	  symbols case-sensitively ("plug.SYM" will not satisfy a search
+	  for "plug.sym").
+	
 	* include/prototype.h, src/g_rc.c, src/g_register.c, src/s_clib.c:
 	  Add component sources based on Scheme procedures.
 
