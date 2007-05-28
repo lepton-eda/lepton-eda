@@ -438,6 +438,7 @@ SCM g_rc_component_library_command (SCM command, SCM name)
  *                      name as an argument and returns a symbol
  *                      encoded in a string in gEDA format, or the \b
  *                      \#f if the component name is unknown.
+ *  \param [in] name    A descriptive name for this component source.
  *
  *  \returns SCM_BOOL_T on success, SCM_BOOL_F otherwise.
  */

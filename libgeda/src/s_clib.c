@@ -27,7 +27,7 @@
  *  number of component <b>symbols</b>.  Each source may be either a
  *  directory on disk containing symbol files, or a command in the
  *  system PATH which can generate gEDA symbol data (e.g. from a
- *  database).  A component source is represented by a CLibSource
+ *  database).  A component source is represented by a #CLibSource
  *  instance.
  *
  *  The component library system manages component sources and
@@ -49,6 +49,10 @@
  *  on page \ref libcmds.  A component source based on a command may
  *  be added using s_clib_add_command().
  *
+ *  Scheme functions may be used as a component source; for more
+ *  information, please see page \ref libscms.  A component source
+ *  based on Scheme functions may be added using s_clib_add_scm().
+ *
  *  Each symbol is identified by its \b name, which is stored in the
  *  saved schematic file.  The name must be a valid for storage in a
  *  gEDA schematic file as the "basename" of a "component" object.
@@ -56,7 +60,7 @@
  *  taken as the symbol name.  For a command source, the name may be
  *  any permissible string.  Guidelines to follow:
  *
- *    -# Do not begin a symbol name with "<tt>EMBEDDED</tt>"
+ *    -# Do not begin a symbol name with "EMBEDDED"
  *    -# Do not use whitespace, or any of the characters "<tt>/:!*?</tt>".
  *    -# Try to use unique names.
  *  
@@ -67,8 +71,6 @@
  *  symbol data may be requested directly using
  *  s_clib_symbol_get_data_by_name().
  *
- *  \todo
- *    -# Categorisation of symbols.
  *
  *  \page libcmds Library Commands
  *
@@ -79,7 +81,9 @@
  *
  *  The command line syntax for a library command is:
  *
- *  <tt>libcmd \<mode\> [mode arguments]</tt>
+ *  \code
+ *  libcmd <mode> [mode arguments]
+ *  \endcode
  *
  *  All diagnostic and error information should be printed to standard
  *  error.  Only data should be printed to standard output.  All data
@@ -91,24 +95,40 @@
  *
  *  \section libcmds_modes Modes
  *
- *  <tt>libcmd help</tt>
- *
- *  If \b help is passed as the mode, a command may output a help
- *  message.  This mode is optional.
- *
- *  <tt>libcmd list</tt>
+ *  \code
+ *  libcmd list
+ *  \endcode
  *
  *  If \b list is passed as the mode, a command must output a list of
  *  the symbols it provides, separated by newlines.  Lines beginning
  *  with a period '.' are ignored.  If an error occurs, the command
  *  must exit with non-zero exit status.
  *
- *  <tt>libcmd get \<symbolname\>
+ *  \code
+ *  libcmd get <symbolname>
+ *  \endcode
  *
  *  If \b get is passed as the mode, a command must output the symbol
  *  data corresponding to \b symbolname.  If \b symbolname is unknown
  *  to the command, the command must exit with non-zero exit status.
- *  
+ *
+ *
+ *  \page libscms Library Scheme Procedures
+ *
+ *  A set of Scheme procedures can be used as a component source.  The
+ *  procedure used to add such a source from a gEDA rc file is:
+ *
+ *  <code>
+ *  (component-library-funcs listfunc getfunc name)
+ *  </code>
+ *
+ *  This is implemented by g_rc_component_library_funcs(), which is a
+ *  wrapper for s_clib_add_scm().
+ *
+ *  \b listfunc and \b getfunc must both be Guile procedures. \b
+ *  listfunc takes no arguments, and returns a list of symbol
+ *  names. \b getfunc takes a symbol name as an argument, and returns
+ *  gEDA symbol data in a string, or \b \#f if not known.
  */
 
 #include <config.h>
@@ -173,16 +193,18 @@ struct _CLibSource {
   gchar *path_cmd;
   /*! Name of source */
   gchar *name;
-  /*! Available symbols (CLibSymbol) */
+  /*! Available symbols (#CLibSymbol) */
   GList *symbols;
 
+  /*! Scheme function for listing symbols */
   SCM list_fn;
+  /*! Scheme function for retrieving symbol data */
   SCM get_fn;
 };
 
 /*! Stores data about a particular symbol */
 struct _CLibSymbol {
-  /*! The source this symbols is available from */
+  /*! The source this symbol is available from */
   CLibSource *source;
   /*! The name of this symbol */
   gchar *name;
@@ -642,7 +664,7 @@ static void refresh_scm (CLibSource *source)
  *  repopulates it from scratch.  Useful e.g. for checking for new
  *  symbols.
  *
- *  \todo Disabled for now because it would break cached CLibSymbols used
+ *  \bug Disabled for now because it would break cached CLibSymbols used
  *  all over the place (e.g. in #st_object).
  */
 void s_clib_refresh ()
@@ -709,7 +731,7 @@ const CLibSource *s_clib_get_source_by_name (const gchar *name)
  *  \b NULL, the basename of the directory as returned by
  *  g_path_get_basename() is used.
  *
- *  \param directory The path of the directory to add (UTF8).
+ *  \param directory The path of the directory to add.
  *  \param name      A descriptive name for the directory.
  *  \return The #CLibSource associated with the directory.
  */
@@ -803,10 +825,11 @@ const CLibSource *s_clib_add_command (const gchar *command,
 
 /*! \brief Add symbol-generating Scheme procedures to the library.
  *  \par Function Description
- *  Adds a source to the library based on Scheme procedures.  Two
- *  procedures are required: \a listfunc must return a Scheme list of
- *  symbol names, and \a getfunc must return a string containing
- *  symbol data when passed a symbol name.
+ *  Adds a source to the library based on Scheme procedures.  See page
+ *  \ref libscms for more information. Two procedures are required: \a
+ *  listfunc must return a Scheme list of symbol names, and \a getfunc
+ *  must return a string containing symbol data when passed a symbol
+ *  name.
  *
  *  \param listfunc A Scheme function returning a list of symbols.
  *  \param getfunc  A Scheme function returning symbol data.
@@ -853,9 +876,6 @@ const CLibSource *s_clib_add_scm (SCM listfunc, SCM getfunc, const gchar *name)
 /*! \brief Get the name of a source.
  *  \par Function Description
  *  Get the name of a source for use e.g. in displaying a GUI.
- *
- *  \todo Make this do something cleverer than just returning
- *  \b path_cmd.
  *
  *  \param source Source to be examined.
  *  \return Name of source.
@@ -996,6 +1016,16 @@ static gchar *get_data_command (const CLibSymbol *symbol)
   return run_source_command ( argv );
 }
 
+/*! \brief Get symbol data from a Scheme-based component source.
+ *  \par Function Description
+ *  Get symbol data from a Scheme-based component source.  The return
+ *  value should be free()'d when no longer needed.
+ *
+ *  Private function used only in s_clib.c.
+ *
+ *  \param symbol Symbol to get data for.
+ *  \return Allocated buffer containing symbol data.
+ */
 static gchar *get_data_scm (const CLibSymbol *symbol)
 {
   SCM symdata;

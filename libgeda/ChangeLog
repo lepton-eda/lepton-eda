@@ -1,5 +1,11 @@
 2007-05-28 Peter Brett <peter@peter-b.co.uk>
 
+	* src/g_rc.c, src/s_clib.c: Component library documentation
+	  updates.
+
+	  Various changes to update & improve component library
+	  documentation.
+	
 	* src/s_clib.c: Match .sym suffix case-insensively when building
 	  component library.
 
