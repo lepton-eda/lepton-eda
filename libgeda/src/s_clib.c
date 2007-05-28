@@ -196,6 +196,8 @@ static GList *clib_sources = NULL;
 
 static void free_symbol (gpointer data, gpointer user_data);
 static void free_source (gpointer data, gpointer user_data);
+static gint compare_source_name (gconstpointer a, gconstpointer b);
+static gint compare_symbol_name (gconstpointer a, gconstpointer b);
 static gchar *run_source_command (gchar **argv);
 static CLibSymbol *source_has_symbol (const CLibSource *source, 
 				      const gchar *name);
@@ -275,6 +277,57 @@ void s_clib_free ()
   }
 }
 
+/*! \brief Compare two component sources by name.
+ *  \par Function Description
+ *  Compare two component sources by name, case-insensitively.
+ *  Typically used when calling g_list_sort().  Private function used
+ *  only in s_clib.c.  Argument order is as strcasecmp().
+ *
+ *  \param a First source to compare
+ *  \param b Second source to compare
+ *
+ *  \return As strcasecmp().
+ */
+static gint compare_source_name (gconstpointer a, gconstpointer b)
+{
+  const CLibSource *src1 = a;
+  const CLibSource *src2 = b;
+
+  g_assert (src1 != NULL);
+  g_assert (src2 != NULL);
+
+  g_assert (src1->name != NULL);
+  g_assert (src2->name != NULL);
+
+  return strcasecmp(src1->name, src2->name);
+}
+
+/*! \brief Compare two component symbols by name.
+ *  \par Function Description
+ *  Compare two component symbols by name, case-insensitively.
+ *  Typically used when calling g_list_sort().  Private function used
+ *  only in s_clib.c.  Argument order is as strcasecmp().
+ *
+ *  \param a First symbol to compare
+ *  \param b Second symbol to compare
+ *
+ *  \return As strcasecmp().
+ */
+static gint compare_symbol_name (gconstpointer a, gconstpointer b)
+{
+  const CLibSymbol *sym1 = a;
+  const CLibSymbol *sym2 = b;
+
+  g_assert (sym1 != NULL);
+  g_assert (sym2 != NULL);
+
+  g_assert (sym1->name != NULL);
+  g_assert (sym2->name != NULL);
+
+  return strcasecmp(sym1->name, sym2->name);
+}
+
+
 /*! \brief Execute a library command.
  *  \par Function Description
  *  Execute a library command, returning the standard output, or \b
@@ -346,7 +399,9 @@ static gchar *run_source_command (gchar **argv)
  */
 GList *s_clib_get_sources ()
 {
-  return g_list_copy(clib_sources);
+  GList *l = g_list_copy(clib_sources);
+  l = g_list_sort (l, (GCompareFunc) compare_source_name);
+  return l;
 }
 
 /*! \brief Find any symbols within a source with a given name.
@@ -435,16 +490,17 @@ static void refresh_directory (CLibSource *source)
     symbol->source = source;
     symbol->name = g_strdup(entry);
 
-    /* Prepend because it's faster. */
+    /* Prepend because it's faster and it doesn't matter what order we
+     * add them. */
     source->symbols = g_list_prepend (source->symbols, symbol);
   }
 
   entry = NULL;
   g_dir_close (dir);
 
-  /* We prepended each element, so now we have to reverse the whole
-   * list. */
-  source->symbols = g_list_reverse (source->symbols);
+  /* Now sort the list of symbols by name. */
+  source->symbols = g_list_sort (source->symbols, 
+				 (GCompareFunc) compare_symbol_name);
 }
 
 /*! \brief Re-poll a library command for symbols.
@@ -498,16 +554,17 @@ static void refresh_command (CLibSource *source)
     symbol->source = source;
     symbol->name = name;
 
-    /* Prepend because it's faster. */
+    /* Prepend because it's faster and it doesn't matter what order we
+     * add them. */
     source->symbols = g_list_prepend (source->symbols, symbol);    
   }
 
   s_textbuffer_free (tb);
   g_free (cmdout);
 
-  /* We prepended each element, so now we have to reverse the whole
-   * list. */
-  source->symbols = g_list_reverse (source->symbols);  
+  /* Sort all symbols by name. */
+  source->symbols = g_list_sort (source->symbols, 
+				 (GCompareFunc) compare_symbol_name);
 }
 
 /*! \brief Rescan all available component libraries.

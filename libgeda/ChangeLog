@@ -1,5 +1,12 @@
 2007-05-28 Peter Brett <peter@peter-b.co.uk>
 
+	* src/s_clib.c: Sort lists of component sources and symbols.
+
+	  Adds functions to compare sources and symbols by name
+	  case-insensitively, and makes the both
+	  s_clib_source_get_symbols() and s_clib_get_sources() return
+	  lists sorted by name.
+	
 	* include/prototype.h, src/g_rc.c, src/g_register.c: Add & update
 	  Scheme callbacks for new component library.
 	
