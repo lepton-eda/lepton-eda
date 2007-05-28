@@ -499,6 +499,7 @@ char *expand_env_variables(char *string);
 void s_clib_init (void);
 void s_clib_free (void);
 GList *s_clib_get_sources ();
+const CLibSource *s_clib_get_source_by_name (const gchar *name);
 void s_clib_refresh ();
 const CLibSource *s_clib_add_directory (const gchar *directory, 
 					const gchar *name);

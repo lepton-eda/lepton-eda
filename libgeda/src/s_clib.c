@@ -203,7 +203,6 @@ static CLibSymbol *source_has_symbol (const CLibSource *source,
 				      const gchar *name);
 static void refresh_directory (CLibSource *source);
 static void refresh_command (CLibSource *source);
-static CLibSource *check_source_bump (const gchar *path_cmd);
 static gchar *get_data_directory (const CLibSymbol *symbol);
 static gchar *get_data_command (const CLibSymbol *symbol);
 
@@ -602,19 +601,16 @@ void s_clib_refresh ()
 #endif
 }
 
-/*! \brief Check if a given component source is already known.
+/*! \brief Get a named component source.
  *  \par Function Description
  *  Iterates through the known component sources, checking if there is
- *  already a source associated with \b path_cmd.  If there is such a
- *  source, it is bumped to the front of the list of component sources.
+ *  a source with the given \a name.
  *  
- *  Private function used only in s_clib.c.
- *
- *  \param path_cmd The source string to check.
+ *  \param name The source name to look for.
  *
  *  \return The matching source, or \b NULL if no match was found.
  */
-static CLibSource *check_source_bump (const gchar *path_cmd)
+const CLibSource *s_clib_get_source_by_name (const gchar *name)
 {
   GList *sourcelist;
   CLibSource *source;
@@ -624,9 +620,7 @@ static CLibSource *check_source_bump (const gchar *path_cmd)
        sourcelist = g_list_next(sourcelist)) {
 
     source = (CLibSource *) sourcelist->data;
-    if (strcmp (source->path_cmd, path_cmd) == 0) {
-      clib_sources = g_list_remove_link (clib_sources, sourcelist);
-      clib_sources = g_list_concat (sourcelist, clib_sources);
+    if (strcmp (source->name, name) == 0) {
       return source;
     }
   }
@@ -650,23 +644,30 @@ const CLibSource *s_clib_add_directory (const gchar *directory,
 					const gchar *name)
 {
   CLibSource *source;
+  gchar *realname;
 
   if (directory == NULL) {
     return NULL;
   }
   
-  source = check_source_bump (directory);
-  if (source != NULL) return source;
+  if (name == NULL) {
+    realname = g_path_get_basename (directory);
+  } else {
+    realname = g_strdup(name);
+  }  
+
+  source = s_clib_get_source_by_name (realname);
+  if (source != NULL) {
+    s_log_message ("Cannot add library [%s]: name in use.",
+		   realname);
+    g_free (realname);
+    return NULL;
+  }
 
   source = g_new0 (CLibSource, 1);
   source->type = CLIB_DIR;
   source->path_cmd = g_strdup (directory);
-  
-  if (name == NULL) {
-    source->name = g_path_get_basename (directory);
-  } else {
-    source->name = g_strdup(name);
-  }
+  source->name = realname;
 
   refresh_directory (source);
 
@@ -692,23 +693,30 @@ const CLibSource *s_clib_add_command (const gchar *command,
 				      const gchar *name)
 {
   CLibSource *source;
-  
+  gchar *realname;
+
   if (command == NULL) {
     return NULL;
   }
 
-  source = check_source_bump (command);
-  if (source != NULL) return source;
+  if (name == NULL) {
+    realname = g_strdup (command);
+  } else {
+    realname = g_strdup (name);
+  }
+  
+  source = s_clib_get_source_by_name (realname);
+  if (source != NULL) {
+    s_log_message ("Cannot add library [%s]: name in use.",
+		   realname);
+    g_free (realname);
+    return NULL;
+  }
 
   source = g_new0 (CLibSource, 1);
   source->type = CLIB_CMD;
   source->path_cmd = g_strdup (command);
-
-  if (name == NULL) {
-    source->name = g_strdup (command);
-  } else {
-    source->name = g_strdup (name);
-  }
+  source->name = realname;
 
   refresh_command (source);
 

@@ -1,5 +1,12 @@
 2007-05-28 Peter Brett <peter@peter-b.co.uk>
 
+	* include/prototype.h, src/s_clib.c: Change way that component
+	  source conflicts are checked.
+
+	  Allow the same component source to be added more than once, but
+	  only if it has a unique name.  Also adds
+	  s_clib_get_source_by_name().
+	
 	* src/s_clib.c: Sort lists of component sources and symbols.
 
 	  Adds functions to compare sources and symbols by name
