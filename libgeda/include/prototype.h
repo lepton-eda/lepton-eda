@@ -2,6 +2,7 @@
 void o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp);
 void o_save_write_header(FILE *fp);
 int o_save(TOPLEVEL *w_current, const char *filename);
+OBJECT *o_read_buffer(TOPLEVEL *w_current, OBJECT *object_list, char *buffer, const int size, const char *name);
 OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename);
 void o_scale(TOPLEVEL *w_current, OBJECT *list, int x_scale, int y_scale);
 
@@ -162,7 +163,11 @@ ATTRIB *o_attrib_copy(ATTRIB *list);
 void o_attrib_delete(ATTRIB *a_current);
 void o_attrib_remove(ATTRIB *list, ATTRIB *remove);
 void o_attrib_detach_all(TOPLEVEL *w_current, OBJECT *object_list, OBJECT *main_head);
-OBJECT *o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, unsigned int release_ver, unsigned int fileformat_ver);
+OBJECT *o_read_attribs(TOPLEVEL *w_current, 
+		       OBJECT *object_to_get_attribs, 
+		       TextBuffer *tb,
+		       unsigned int release_ver, 
+		       unsigned int fileformat_ver);
 void o_save_attribs(FILE *fp, ATTRIB *attribs);
 int o_attrib_get_name_value(char *string, char **name, char **value);
 void o_attrib_free_current(TOPLEVEL *w_current);
@@ -370,8 +375,11 @@ void o_net_consolidate(TOPLEVEL *w_current);
 void o_net_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 
 /* o_picture.c */
-OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
-            FILE *fp, unsigned int release_ver, unsigned int fileformat_ver);
+OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
+		       const char *first_line,
+		       TextBuffer *tb,
+		       unsigned int release_ver,
+		       unsigned int fileformat_ver);
 char *o_picture_save(OBJECT *object);
 void o_picture_set_pixbuf(TOPLEVEL *w_current, GdkPixbuf *pixbuf, char *filename);
 OBJECT *o_picture_add(TOPLEVEL *w_current, OBJECT *object_list,
@@ -426,7 +434,12 @@ int o_text_width(TOPLEVEL *w_current, char *string, int size);
 OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list, char *string, int size, int color, int x, int y, int alignment, int angle);
 OBJECT *o_text_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int alignment, int angle, char *string, int size, int visibility, int show_name_value);
 void o_text_recalc(TOPLEVEL *w_current, OBJECT *o_current);
-OBJECT *o_text_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], FILE *fp, unsigned int release_ver, unsigned int fileformat_ver);
+OBJECT *o_text_read(TOPLEVEL *w_current, 
+		    OBJECT *object_list, 
+		    const char *first_line,
+		    TextBuffer *tb,
+		    unsigned int release_ver,
+		    unsigned int fileformat_ver);
 void o_text_set_info_font(char buf[]);
 char *o_text_save(OBJECT *object);
 void o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current);
@@ -640,4 +653,5 @@ int u_basic_count_char(const char *string, char character);
 TextBuffer *s_textbuffer_new (gchar *data, const gint size);
 TextBuffer *s_textbuffer_free (TextBuffer *tb);
 void s_textbuffer_seek (TextBuffer *tb, const gint offset);
-const gchar *s_textbuffer_next (TextBuffer *tb, const gsize count);
+gchar *s_textbuffer_next (TextBuffer *tb, const gsize count);
+gchar *s_textbuffer_next_line (TextBuffer *tb);

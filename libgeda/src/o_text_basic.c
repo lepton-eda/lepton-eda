@@ -1015,7 +1015,9 @@ void o_text_recalc(TOPLEVEL *w_current, OBJECT *o_current)
  *
  */
 OBJECT *o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
-		    char buf[], FILE *fp, unsigned int release_ver,
+		    const char *first_line,
+		    TextBuffer *tb,
+		    unsigned int release_ver,
 		    unsigned int fileformat_ver)
 {
   char type; 
@@ -1032,21 +1034,21 @@ OBJECT *o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
   GString *textstr;
 
   if (fileformat_ver == 1) {
-    sscanf(buf, "%c %d %d %d %d %d %d %d %d %d\n", &type, &x, &y, 
+    sscanf(first_line, "%c %d %d %d %d %d %d %d %d %d\n", &type, &x, &y, 
            &color, &size,
            &visibility, &show_name_value, 
            &angle, &alignment, &num_lines);	
   } else if (release_ver < VERSION_20000220) {
     /* yes, above less than (not less than and equal) is correct. The format */
     /* change occurred in 20000220 */
-    sscanf(buf, "%c %d %d %d %d %d %d %d\n", &type, &x, &y, 
+    sscanf(first_line, "%c %d %d %d %d %d %d %d\n", &type, &x, &y, 
            &color, &size,
            &visibility, &show_name_value, 
            &angle);	
     alignment = LOWER_LEFT; /* older versions didn't have this */
     num_lines = 1; /* only support a single line */
   } else {
-    sscanf(buf, "%c %d %d %d %d %d %d %d %d\n", &type, &x, &y, 
+    sscanf(first_line, "%c %d %d %d %d %d %d %d %d\n", &type, &x, &y, 
            &color, &size,
            &visibility, &show_name_value, 
            &angle, &alignment);	
@@ -1097,8 +1099,8 @@ OBJECT *o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
   }
 
   if (color < 0 || color > MAX_COLORS) {
-    fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
-    s_log_message("Found an invalid color [ %s ]\n", buf);
+    fprintf(stderr, "Found an invalid color [ %s ]\n", first_line);
+    s_log_message("Found an invalid color [ %s ]\n", first_line);
     s_log_message("Setting color to WHITE\n");
     color = WHITE;
   }
@@ -1107,11 +1109,14 @@ OBJECT *o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
 
   textstr = g_string_new ("");
   for (i = 0; i < num_lines; i++) {
-    gchar buffer[MAX_TEXT_LINE_LENGTH];
+    gchar *line;
     
-    fgets (buffer, MAX_TEXT_LINE_LENGTH, fp);
+    line = s_textbuffer_next_line (tb);
 
-    textstr = g_string_append (textstr, buffer);
+    if (line != NULL)
+      {
+	textstr = g_string_append (textstr, line);
+      }
   }
   /* retrieve the character string from the GString */
   string = g_string_free (textstr, FALSE);

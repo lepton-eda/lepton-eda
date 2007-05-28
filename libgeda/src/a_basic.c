@@ -288,19 +288,30 @@ int o_save(TOPLEVEL *w_current, const char *filename)
   return 1;
 }
 
-/*! \brief Read a file
+/*! \brief Read a memory buffer
  *  \par Function Description
- *  This function reads a file in libgead format.
+ *  This function reads data in libgeda format from a memory buffer.
+ *
+ *  If the size argument is negative, the buffer is assumed to be
+ *  null-terminated.
+ *
+ *  The name argument is used for debugging, and should be set to a
+ *  meaningful string (e.g. the name of the file the data is from).
  *
  *  \param [in,out] w_current    The current TOPLEVEL structure.
  *  \param [in]     object_list  The object_list to read data to.
- *  \param [in]     filename     The filename to read from.
+ *  \param [in]     buffer       The memory buffer to read from.
+ *  \param [in]     size         The size of the buffer.
+ *  \param [in]     name         The name to describe the data with.
  *  \return object_list if successful read, or NULL on error.
  */
-OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
+OBJECT *o_read_buffer(TOPLEVEL *w_current, OBJECT *object_list, 
+		      char *buffer, const int size, 
+		      const char *name)
 {
-  FILE *fp;
-  char buf[1024];
+  char *line = NULL;
+  TextBuffer *tb = NULL;
+
   char objtype;
   OBJECT *object_list_save=NULL;
   OBJECT *temp_tail=NULL;
@@ -315,19 +326,24 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 
   int embedded_level = 0;
 
+
   /* fill version with default file format version (the current one) */
   current_fileformat_ver = FILEFORMAT_VERSION;
 
-  fp = fopen(filename, "r");
-
-  if (fp == NULL) {
-    s_log_message("o_read: Could not open [%s]\n", filename);
+  if (buffer == NULL) {
+    s_log_message("o_read_buffer: Received NULL buffer\n");
     return(NULL);
   }
 
-  while ( fgets(buf, 1024, fp) != NULL) {
+  tb = s_textbuffer_new (buffer, size);
+  g_assert (tb != NULL);
 
-    sscanf(buf, "%c", &objtype);
+  while (1) {
+
+    line = s_textbuffer_next_line(tb);
+    if (line == NULL) break;
+
+    sscanf(line, "%c", &objtype);
 
     /* Do we need to check the symbol version?  Yes, but only if */
     /* 1) the last object read was a complex and */
@@ -346,40 +362,42 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
     switch (objtype) {
 
       case(OBJ_LINE):
-        object_list = (OBJECT *) o_line_read(w_current, object_list, buf, 
+        object_list = (OBJECT *) o_line_read(w_current, object_list, line, 
 	                                     release_ver, fileformat_ver);
         break;
 
 
       case(OBJ_NET):
-        object_list = (OBJECT *) o_net_read(w_current, object_list, buf,
+        object_list = (OBJECT *) o_net_read(w_current, object_list, line,
                                             release_ver, fileformat_ver);
         break;
 
       case(OBJ_BUS):
-        object_list = (OBJECT *) o_bus_read(w_current, object_list, buf,
+        object_list = (OBJECT *) o_bus_read(w_current, object_list, line,
                                             release_ver, fileformat_ver);
         break;
 
       case(OBJ_BOX):
-        object_list = (OBJECT *) o_box_read(w_current, object_list, buf,
+        object_list = (OBJECT *) o_box_read(w_current, object_list, line,
                                             release_ver, fileformat_ver);
         break;
 		
       case(OBJ_PICTURE):
-        object_list = (OBJECT *) o_picture_read(w_current, object_list, buf,
-						fp,
+	line = g_strdup(line);
+        object_list = (OBJECT *) o_picture_read(w_current, object_list, 
+						line, tb,
 						release_ver, fileformat_ver);
+	g_free (line);
         break;
 		
       case(OBJ_CIRCLE):
-        object_list = (OBJECT *) o_circle_read(w_current, object_list, buf,
+        object_list = (OBJECT *) o_circle_read(w_current, object_list, line,
                                                release_ver, fileformat_ver);
         break;
 
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-        object_list = (OBJECT *) o_complex_read(w_current, object_list, buf,
+        object_list = (OBJECT *) o_complex_read(w_current, object_list, line,
                                                 release_ver, fileformat_ver);
 
         /* this is necessary because complex may add attributes which float */
@@ -391,20 +409,21 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
         break;
 
       case(OBJ_TEXT):
-        /* fgets(string, 1024, fp); string lines are now read inside: */
-        object_list = (OBJECT *) o_text_read(w_current, object_list, buf,
-                                             fp,
+	line = g_strdup(line);
+        object_list = (OBJECT *) o_text_read(w_current, object_list, 
+					     line, tb,
                                              release_ver, fileformat_ver);
+	g_free(line);
         break;
 
       case(OBJ_PIN):
-        object_list = (OBJECT *) o_pin_read(w_current, object_list, buf,
+        object_list = (OBJECT *) o_pin_read(w_current, object_list, line,
                                             release_ver, fileformat_ver);
         found_pin++;
         break;
 
       case(OBJ_ARC):
-        object_list = (OBJECT *) o_arc_read(w_current, object_list, buf,
+        object_list = (OBJECT *) o_arc_read(w_current, object_list, line,
                                             release_ver, fileformat_ver);
         break;
 
@@ -412,7 +431,8 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
         object_before_attr = object_list;
 	/* first is the fp */
 	/* 2nd is the object to get the attributes */ 
-        object_list = (OBJECT *) o_read_attribs(w_current, fp, object_list,
+        object_list = (OBJECT *) o_read_attribs(w_current, object_list,
+						tb,
                                                 release_ver, fileformat_ver);
 
         /* by now we have finished reading all the attributes */
@@ -452,7 +472,7 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 	} else {
         	fprintf(stderr, "Read unexpected embedded "
 				"symbol start marker in [%s] :\n>>\n%s<<\n", 
-				filename, buf);
+				name, line);
 	}
        	break;
 
@@ -472,7 +492,7 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 	} else {
         	fprintf(stderr, "Read unexpected embedded "
 				"symbol end marker in [%s] :\n>>\n%s<<\n", 
-				filename, buf);
+				name, line);
 	}
 	
         break;
@@ -482,7 +502,7 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
         break;	
 
       case(INFO_FONT): 
-        o_text_set_info_font(buf);
+        o_text_set_info_font(line);
         break;	
 
       case(COMMENT):
@@ -490,7 +510,7 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
         break;
 
       case(VERSION_CHAR):
-        itemsread = sscanf(buf, "v %u %u\n", &release_ver, &fileformat_ver);
+        itemsread = sscanf(line, "v %u %u\n", &release_ver, &fileformat_ver);
 
 	/* 20030921 was the last version which did not have a fileformat */
 	/* version.  The below latter test should not happen, but it is here */
@@ -503,18 +523,17 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 	if (fileformat_ver < current_fileformat_ver)
         {
        	  s_log_message("Read an old format sym/sch file!\n"
-                        "Please run g[sym|sch]update on:\n[%s]\n", filename);
+                        "Please run g[sym|sch]update on:\n[%s]\n", name);
 	}
         break;
 
       default:
         fprintf(stderr, "Read garbage in [%s] :\n>>\n%s<<\n",
-                filename, buf);
+                name, line);
         break;
     }
 
   }
-  fclose(fp);
 
   /* Was the very last thing we read a complex and has it not been checked */
   /* yet?  This would happen if the complex is at the very end of the file  */
@@ -530,8 +549,48 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
       o_pin_update_whichend(w_current, return_head(object_list), found_pin);
     }
   }
+
+  tb = s_textbuffer_free(tb);
   
   return(object_list);
+
+}
+
+/*! \brief Read a file
+ *  \par Function Description
+ *  This function reads a file in libgead format.
+ *
+ *  \param [in,out] w_current    The current TOPLEVEL structure.
+ *  \param [in]     object_list  The object_list to read data to.
+ *  \param [in]     filename     The filename to read from.
+ *  \return object_list if successful read, or NULL on error.
+ */
+OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
+{
+  GError *err = NULL;
+  char *buffer = NULL;
+  size_t size;
+  OBJECT *result = NULL;
+
+  g_file_get_contents(filename, &buffer, &size, &err);
+
+  g_assert ((buffer == NULL && err != NULL) 
+	    || (buffer != NULL && err == NULL));
+
+  if (err != NULL)
+    {
+      /* Report error to user, and free error */
+      g_assert (buffer == NULL);
+      fprintf (stderr, "o_read: Unable to read file: [%s]\n", err->message);
+      g_error_free (err);
+      return NULL;
+    } 
+
+  /* Parse file contents */
+  g_assert (buffer != NULL);
+  result = o_read_buffer (w_current, object_list, buffer, size, filename);
+  g_free (buffer);
+  return result;
 }
 
 /*! \brief Scale a set of lines.

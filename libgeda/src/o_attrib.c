@@ -647,37 +647,42 @@ void o_attrib_detach_all(TOPLEVEL *w_current, OBJECT *object_list, OBJECT *main_
 #endif
 }
 
-/*! \brief Read attributes from a file.
+/*! \brief Read attributes from a buffer.
  *  \par Function Description
- *  Read attributes from a file.
+ *  Read attributes from a TextBuffer.
  *
  *  \param [in]  w_current              The TOPLEVEL object.
- *  \param [in]  fp                     FILE pointer to read from.
  *  \param [out] object_to_get_attribs  Storage for attributes.
+ *  \param [in]  tb                     The text buffer to read from.
  *  \param [in]  release_ver            libgeda release version number.
  *  \param [in]  fileformat_ver         file format version number.
  *  \return Pointer to object_to_get_attribs.
  */
-OBJECT *o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs,
+OBJECT *o_read_attribs(TOPLEVEL *w_current, 
+		       OBJECT *object_to_get_attribs,
+   		       TextBuffer *tb,
 		       unsigned int release_ver, unsigned int fileformat_ver)
 {
   OBJECT *object_list=NULL;
-  char buf[1024];
+  char *line = NULL;
   char objtype;
   int ATTACH=FALSE;
   int saved_color = -1;
 
   object_list = object_to_get_attribs;
 
-  while ( fgets(buf, 1024, fp) != NULL) {
+  while (1) {
 
-    sscanf(buf, "%c", &objtype);
+    line = s_textbuffer_next_line (tb);
+    if (line == NULL) break;
+
+    sscanf(line, "%c", &objtype);
     switch (objtype) {
 
       case(OBJ_LINE):
         object_list = (OBJECT *) o_line_read(w_current, 
                                              object_list,
-                                             buf, 
+                                             line, 
                                              release_ver, fileformat_ver);
         break;
 
@@ -685,21 +690,21 @@ OBJECT *o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attr
       case(OBJ_NET):
         object_list = (OBJECT *) o_net_read(w_current, 
                                             object_list, 
-                                            buf, 
+                                            line, 
                                             release_ver, fileformat_ver);
         break;
 
       case(OBJ_BUS):
         object_list = (OBJECT *) o_bus_read(w_current, 
                                             object_list, 
-                                            buf, 
+                                            line, 
                                             release_ver, fileformat_ver);
         break;
 
       case(OBJ_BOX):
         object_list = (OBJECT *) o_box_read(w_current, 
                                             object_list, 
-                                            buf, 
+                                            line, 
                                             release_ver, fileformat_ver);
         break;
 		
@@ -707,7 +712,7 @@ OBJECT *o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attr
         object_list = (OBJECT *) o_circle_read(
                                                w_current, 
                                                object_list, 
-                                               buf, 
+                                               line, 
                                                release_ver, fileformat_ver);
         break;
 
@@ -717,7 +722,7 @@ OBJECT *o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attr
         object_list = (OBJECT *) o_complex_read(
                                                 w_current, 
                                                 object_list, 
-                                                buf, 
+                                                line, 
                                                 release_ver, fileformat_ver);
 
 				/* this is necessary because complex may add
@@ -730,24 +735,25 @@ OBJECT *o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attr
       case(OBJ_PIN):
         object_list = (OBJECT *) o_pin_read(w_current, 
                                             object_list, 
-                                            buf, 
+                                            line, 
                                             release_ver, fileformat_ver);
         break;
 
       case(OBJ_ARC):
         object_list = (OBJECT *) o_arc_read(w_current, 
                                             object_list, 
-                                            buf, 
+                                            line, 
                                             release_ver, fileformat_ver);
         break;
 
       case(OBJ_TEXT):
-        /* fgets(string, 1024, fp); text strings are now read inside: */
+	line = g_strdup (line);
         object_list = (OBJECT *) o_text_read(w_current,
                                              object_list, 
-                                             buf, 
-                                             fp, 
+                                             line,
+					     tb,
                                              release_ver, fileformat_ver);
+	g_free (line);
         saved_color = object_list->color;
         ATTACH=TRUE;
 		

@@ -43,30 +43,32 @@
 
 /*! \brief Create picture OBJECT from character string.
  *  \par Function Description
- *  This function will get the description of a picture from the character
- *  string <B>*buf</B>. The new picture is then added to the list of object of
- *  which <B>*object_list</B> is the last element before the call.
- *  The function returns the new last element, that is the added
- *  picture object.
+ *  This function will get the description of a picture from the
+ *  character string <B>*first_line</B>. The new picture is then added
+ *  to the list of object of which <B>*object_list</B> is the last
+ *  element before the call.  The function returns the new last
+ *  element, that is the added picture object.
  *
  *  \param [in]  w_current       The TOPLEVEL object.
  *  \param [out] object_list     OBJECT list to create picture in.
- *  \param [in]  buf             Character string with picture description.
- *  \param [in]  fp              Picture file to read.
+ *  \param [in]  first_line      Character string with picture description.
+ *  \param [in]  tb              Text buffer to load embedded data from.
  *  \param [in]  release_ver     libgeda release version number.
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new picture object.
  */
 OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
-		       char buf[], FILE *fp,
-		       unsigned int release_ver,unsigned int fileformat_ver)
+		       const char *first_line,
+		       TextBuffer *tb,
+		       unsigned int release_ver,
+		       unsigned int fileformat_ver)
 {
   int x1, y1;
   int width, height, angle;
   gchar mirrored, embedded;
   int num_conv;
   gchar type;
-  gchar buffer[MAX_TEXT_LINE_LENGTH]; 
+  gchar *line = NULL;
   gchar *filename;
   GdkPixbuf *pixbuf;
   static char gdk_initialized=0;
@@ -79,12 +81,12 @@ OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
     gdk_initialized = 1;
   }
 
-  num_conv = sscanf(buf, "%c %d %d %d %d %d %c %c\n",
+  num_conv = sscanf(first_line, "%c %d %d %d %d %d %c %c\n",
 	 &type, &x1, &y1, &width, &height, &angle, &mirrored, &embedded);
   
   if (num_conv != 8) {
-    fprintf(stderr, "Error reading picture definition line: %s.\n", buf);
-    s_log_message ("Error reading picture definition line: %s.\n", buf);
+    fprintf(stderr, "Error reading picture definition line: %s.\n", first_line);
+    s_log_message ("Error reading picture definition line: %s.\n", first_line);
   }
 
   /* Convert from ascii character to number */
@@ -137,11 +139,9 @@ OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
 
   }
 
-  fgets(buffer, 1024, fp);
-  
-  filename = g_strdup (buffer);
+  filename = g_strdup(s_textbuffer_next_line(tb));
   filename = remove_last_nl(filename);	
-    
+
   pixbuf = NULL;
 
   if (embedded == 0) {
@@ -160,10 +160,12 @@ OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
 
     /* Read the encoded picture */
     do {
-      finished = 0;
-      fgets(buffer, 1024, fp);
-      if (g_strcasecmp(buffer, ".\n") != 0) {
-	encoded_picture=g_string_append (encoded_picture, buffer);
+
+      line = s_textbuffer_next_line(tb);
+      if (line == NULL) break;
+
+      if (g_strcasecmp(line, ".\n") != 0) {
+	encoded_picture=g_string_append (encoded_picture, line);
 	encoded_picture=g_string_append (encoded_picture, "\n");
       }
       else {

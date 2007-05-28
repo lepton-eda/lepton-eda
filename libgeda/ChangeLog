@@ -1,5 +1,13 @@
 2007-05-28 Peter Brett <peter@peter-b.co.uk>
 
+	* include/prototype.h, src/a_basic.c, src/o_attrib.c,
+	  src/o_picture.c, o_text_basic.c: Make libgeda parse schematics
+	  from buffered data.
+
+	  In order to support more complex methods of acquiring symbol
+	  data, libgeda needs to be able to load schematics and symbols
+	  directly from a memory buffer as well as from files.
+	
 	* include/prototype.h, include/struct.h, src/Makefile.am,
 	  src/s_textbuffer.c: Add managed text buffers to libgeda.
 
