@@ -35,6 +35,7 @@
 #include <dmalloc.h>
 #endif
 
+#include "../include/gschem_dialog.h"
 #include "../include/x_pagesel.h"
 
 
@@ -55,7 +56,9 @@ void x_pagesel_open (TOPLEVEL *toplevel)
 {
   if (toplevel->pswindow == NULL) {
     toplevel->pswindow = GTK_WIDGET (g_object_new (TYPE_PAGESEL,
-                                                   "toplevel", toplevel,
+                                                   /* GschemDialog */
+                                                   "settings-name", "pagesel",
+                                                   "toplevel",      toplevel,
                                                    NULL));
 
     g_signal_connect (toplevel->pswindow,
@@ -133,10 +136,6 @@ static void x_pagesel_callback_response (GtkDialog *dialog,
 }
 
 enum {
-  PROP_TOPLEVEL=1
-};
-
-enum {
   COLUMN_PAGE,
   COLUMN_NAME,
   COLUMN_CHANGED,
@@ -146,14 +145,6 @@ enum {
 
 static void pagesel_class_init (PageselClass *class);
 static void pagesel_init       (Pagesel *pagesel);
-static void pagesel_set_property (GObject *object,
-                                  guint property_id,
-                                  const GValue *value,
-                                  GParamSpec *pspec);
-static void pagesel_get_property (GObject *object,
-                                  guint property_id,
-                                  GValue *value,
-                                  GParamSpec *pspec);
 
 static void pagesel_popup_menu (Pagesel *pagesel,
                                 GdkEventButton *event);
@@ -176,7 +167,7 @@ static void pagesel_callback_selection_changed (GtkTreeSelection *selection,
     return;
   }
 
-  toplevel = pagesel->toplevel;
+  toplevel = GSCHEM_DIALOG (pagesel)->toplevel;
   gtk_tree_model_get (model, &iter,
                       COLUMN_PAGE, &page,
                       -1);
@@ -234,7 +225,7 @@ static void                                                       \
 pagesel_callback_popup_ ## name (GtkMenuItem *menuitem,           \
                                  gpointer user_data)              \
 {                                                                 \
-  i_callback_ ## action (PAGESEL (user_data)->toplevel, 0, NULL); \
+  i_callback_ ## action (GSCHEM_DIALOG (user_data)->toplevel, 0, NULL); \
 }
 
 DEFINE_POPUP_CALLBACK (new_page,     file_new)
@@ -330,7 +321,7 @@ GType pagesel_get_type()
       (GInstanceInitFunc) pagesel_init,
     };
 		
-    pagesel_type = g_type_register_static (GTK_TYPE_DIALOG,
+    pagesel_type = g_type_register_static (GSCHEM_TYPE_DIALOG,
                                            "Pagesel",
                                            &pagesel_info, 0);
   }
@@ -345,18 +336,6 @@ GType pagesel_get_type()
  */
 static void pagesel_class_init (PageselClass *klass)
 {
-  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-
-  gobject_class->set_property = pagesel_set_property;
-  gobject_class->get_property = pagesel_get_property;
-
-  g_object_class_install_property (
-    gobject_class, PROP_TOPLEVEL,
-    g_param_spec_pointer ("toplevel",
-                          "",
-                          "",
-                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE));
-	
 }
 
 /*! \todo Finish function documentation!!!
@@ -492,53 +471,10 @@ static void pagesel_init (Pagesel *pagesel)
 					  -1);
 #endif
 
-  
+  /* Strictly, this has the wrong prototype, but it doesn't matter */
+  g_signal_connect( pagesel, "notify::toplevel", G_CALLBACK (pagesel_update), NULL );
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-static void pagesel_set_property (GObject *object,
-				  guint property_id,
-				  const GValue *value,
-				  GParamSpec *pspec)
-{
-  Pagesel *pagesel = PAGESEL (object);
-
-  switch(property_id) {
-      case PROP_TOPLEVEL:
-        pagesel->toplevel = (TOPLEVEL*)g_value_get_pointer (value);
-        pagesel_update (pagesel);
-        break;
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-  }
-
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-static void pagesel_get_property (GObject *object,
-				  guint property_id,
-				  GValue *value,
-				  GParamSpec *pspec)
-{
-  Pagesel *pagesel = PAGESEL (object);
-
-  switch(property_id) {
-      case PROP_TOPLEVEL:
-        g_value_set_pointer (value, (gpointer)pagesel->toplevel);
-        break;
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-  }
-
-}
 
 /*! \brief Update tree model of <B>pagesel</B>'s treeview.
  *  \par Function Description
@@ -628,9 +564,9 @@ void pagesel_update (Pagesel *pagesel)
 
   g_assert (IS_PAGESEL (pagesel));
 
-  g_return_if_fail (pagesel->toplevel);
+  g_return_if_fail (GSCHEM_DIALOG (pagesel)->toplevel);
 
-  toplevel = pagesel->toplevel;
+  toplevel = GSCHEM_DIALOG (pagesel)->toplevel;
   model    = gtk_tree_view_get_model (pagesel->treeview);
 
   /* wipe out every thing in the store */

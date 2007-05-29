@@ -36,16 +36,13 @@ typedef struct _Pagesel      Pagesel;
 
 
 struct _PageselClass {
-  GtkDialogClass parent_class;
+  GschemDialogClass parent_class;
 };
 
 struct _Pagesel {
-  GtkDialog parent_instance;
-
-  TOPLEVEL *toplevel;
+  GschemDialog parent_instance;
 
   GtkTreeView *treeview;
-  
 };
 
 

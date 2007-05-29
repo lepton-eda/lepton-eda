@@ -1,3 +1,17 @@
+2007-05-29 Peter Clifton <pcjc2@cam.ac.uk>
+
+	* include/Makefile.am, include/gschem_dialog.h, include/x_compselect.h
+	  include/x_log.h, include/x_multiattrib.h, include/x_pagesel.h
+	  include/x_print.h, src/Makefile.am, src/gschem_dialog.c,
+	  src/x_attribedit.c src/x_autonumber.c, src/x_compselect.c,
+	  src/x_dialog.c, src/x_log.c, src/x_multiattrib.c, src/x_pagesel.c,
+	  src/x_print.c: Applied patch by Ivan Stankovic making dialogs
+	  within gschem save their position and size on exit and restore on
+	  opening. Geometry is saved to {$HOME}/.gEDA/gschem-dialog-geometry
+
+	  Dialogs inherit this functionality by using, or deriving from the
+	  new GschemDialog class (A GtkDialog subclass).
+
 2007-05-28 Peter Brett <peter@peter-b.co.uk>
 
 	* src/g_hook.c, src/i_callbacks.c, src/o_complex.c, src/o_copy.c,

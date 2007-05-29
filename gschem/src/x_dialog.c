@@ -33,6 +33,7 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 #include "../include/x_dialog.h"
+#include "../include/gschem_dialog.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -179,14 +180,15 @@ void text_input_dialog (TOPLEVEL *w_current)
   int real_tab_width;
 
   if (!w_current->tiwindow) { /* dialog not created yet */
-    w_current->tiwindow = gtk_dialog_new_with_buttons(_("Text Entry..."),
-						      GTK_WINDOW(w_current->main_window),
-						      0, /* NON_MODAL */
-						      GTK_STOCK_CLOSE,
-						      GTK_RESPONSE_REJECT,
-						      GTK_STOCK_APPLY,
-						      GTK_RESPONSE_ACCEPT,
-						      NULL);
+    w_current->tiwindow = gschem_dialog_new_with_buttons(_("Text Entry..."),
+                                                         GTK_WINDOW(w_current->main_window),
+                                                         0, /* NON_MODAL */
+                                                         "text-entry", w_current,
+                                                         GTK_STOCK_CLOSE,
+                                                         GTK_RESPONSE_REJECT,
+                                                         GTK_STOCK_APPLY,
+                                                         GTK_RESPONSE_ACCEPT,
+                                                         NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
@@ -503,14 +505,15 @@ void text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
   int select_index=0;
 
   if (!w_current->tewindow) {
-    w_current->tewindow = gtk_dialog_new_with_buttons(_("Edit Text Properties"),
-						      GTK_WINDOW(w_current->main_window),
-						      GTK_DIALOG_MODAL,
-						      GTK_STOCK_CANCEL,
-						      GTK_RESPONSE_REJECT,
-						      GTK_STOCK_OK,
-						      GTK_RESPONSE_ACCEPT,
-						      NULL);
+    w_current->tewindow = gschem_dialog_new_with_buttons(_("Edit Text Properties"),
+                                                         GTK_WINDOW(w_current->main_window),
+                                                         GTK_DIALOG_MODAL,
+                                                         "text-edit", w_current,
+                                                         GTK_STOCK_CANCEL,
+                                                         GTK_RESPONSE_REJECT,
+                                                         GTK_STOCK_OK,
+                                                         GTK_RESPONSE_ACCEPT,
+                                                         NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
@@ -867,14 +870,15 @@ void line_type_dialog (TOPLEVEL *w_current, GList *objects)
   line_type_data = (struct line_type_data*) g_malloc (
     sizeof (struct line_type_data));
 
-  dialog = gtk_dialog_new_with_buttons(_("Edit Line Width & Type"),
-				       GTK_WINDOW(w_current->main_window),
-				       GTK_DIALOG_MODAL,
-				       GTK_STOCK_CANCEL,
-				       GTK_RESPONSE_REJECT,
-				       GTK_STOCK_OK,
-				       GTK_RESPONSE_ACCEPT,
-				       NULL);
+  dialog = gschem_dialog_new_with_buttons(_("Edit Line Width & Type"),
+                                          GTK_WINDOW(w_current->main_window),
+                                          GTK_DIALOG_MODAL,
+                                          "line-type", w_current,
+                                          GTK_STOCK_CANCEL,
+                                          GTK_RESPONSE_REJECT,
+                                          GTK_STOCK_OK,
+                                          GTK_RESPONSE_ACCEPT,
+                                          NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
@@ -1253,14 +1257,15 @@ void fill_type_dialog(TOPLEVEL *w_current, GList *objects)
   fill_type_data = (struct fill_type_data*) g_malloc (
     sizeof (struct fill_type_data));
 
-  dialog = gtk_dialog_new_with_buttons(_("Edit Fill Type"),
-				       GTK_WINDOW(w_current->main_window),
-				       GTK_DIALOG_MODAL,
-				       GTK_STOCK_CANCEL,
-				       GTK_RESPONSE_REJECT,
-				       GTK_STOCK_OK,
-				       GTK_RESPONSE_ACCEPT,
-				       NULL);
+  dialog = gschem_dialog_new_with_buttons(_("Edit Fill Type"),
+                                          GTK_WINDOW(w_current->main_window),
+                                          GTK_DIALOG_MODAL,
+                                          "fill-type", w_current,
+                                          GTK_STOCK_CANCEL,
+                                          GTK_RESPONSE_REJECT,
+                                          GTK_STOCK_OK,
+                                          GTK_RESPONSE_ACCEPT,
+                                          NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
@@ -1474,14 +1479,15 @@ void arc_angle_dialog (TOPLEVEL *w_current)
   GtkWidget *spin_start, *spin_sweep;
 
   if (!w_current->aawindow) {
-    w_current->aawindow = gtk_dialog_new_with_buttons(_("Arc Params"),
-						      GTK_WINDOW(w_current->main_window),
-						      GTK_DIALOG_MODAL,
-						      GTK_STOCK_CANCEL,
-						      GTK_RESPONSE_REJECT,
-						      GTK_STOCK_OK,
-						      GTK_RESPONSE_ACCEPT,
-						      NULL);
+    w_current->aawindow = gschem_dialog_new_with_buttons(_("Arc Params"),
+                                                         GTK_WINDOW(w_current->main_window),
+                                                         GTK_DIALOG_MODAL,
+                                                         "arc-angle", w_current,
+                                                         GTK_STOCK_CANCEL,
+                                                         GTK_RESPONSE_REJECT,
+                                                         GTK_STOCK_OK,
+                                                         GTK_RESPONSE_ACCEPT,
+                                                         NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
@@ -1594,14 +1600,15 @@ void translate_dialog (TOPLEVEL *w_current)
   GtkWidget *vbox;
 
   if (!w_current->trwindow) {
-    w_current->trwindow = gtk_dialog_new_with_buttons(_("Translate"),
-						      GTK_WINDOW(w_current->main_window),
-						      GTK_DIALOG_MODAL,
-						      GTK_STOCK_CANCEL,
-						      GTK_RESPONSE_REJECT,
-						      GTK_STOCK_OK,
-						      GTK_RESPONSE_ACCEPT,
-						      NULL);
+    w_current->trwindow = gschem_dialog_new_with_buttons(_("Translate"),
+                                                         GTK_WINDOW(w_current->main_window),
+                                                         GTK_DIALOG_MODAL,
+                                                         "translate", w_current,
+                                                         GTK_STOCK_CANCEL,
+                                                         GTK_RESPONSE_REJECT,
+                                                         GTK_STOCK_OK,
+                                                         GTK_RESPONSE_ACCEPT,
+                                                         NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
@@ -1693,14 +1700,15 @@ void text_size_dialog (TOPLEVEL *w_current)
   GtkWidget *spin_size;
 
   if (!w_current->tswindow) {
-    w_current->tswindow = gtk_dialog_new_with_buttons(_("Text Size"),
-                                                      GTK_WINDOW(w_current->main_window),
-                                                      GTK_DIALOG_MODAL,
-                                                      GTK_STOCK_CANCEL,
-                                                      GTK_RESPONSE_REJECT,
-                                                      GTK_STOCK_OK,
-                                                      GTK_RESPONSE_ACCEPT,
-                                                      NULL);
+    w_current->tswindow = gschem_dialog_new_with_buttons(_("Text Size"),
+                                                         GTK_WINDOW(w_current->main_window),
+                                                         GTK_DIALOG_MODAL,
+                                                         "text-size", w_current,
+                                                         GTK_STOCK_CANCEL,
+                                                         GTK_RESPONSE_REJECT,
+                                                         GTK_STOCK_OK,
+                                                         GTK_RESPONSE_ACCEPT,
+                                                         NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
@@ -1799,14 +1807,15 @@ void snap_size_dialog (TOPLEVEL *w_current)
   GtkWidget *spin_size;
 
   if (!w_current->tswindow) {
-    w_current->tswindow = gtk_dialog_new_with_buttons(_("Snap Size"),
-                                                      GTK_WINDOW(w_current->main_window),
-                                                      GTK_DIALOG_MODAL,
-                                                      GTK_STOCK_CANCEL,
-                                                      GTK_RESPONSE_REJECT,
-                                                      GTK_STOCK_OK,
-                                                      GTK_RESPONSE_ACCEPT,
-                                                      NULL);
+    w_current->tswindow = gschem_dialog_new_with_buttons(_("Snap Size"),
+                                                         GTK_WINDOW(w_current->main_window),
+                                                         GTK_DIALOG_MODAL,
+                                                         "snap-size", w_current,
+                                                         GTK_STOCK_CANCEL,
+                                                         GTK_RESPONSE_REJECT,
+                                                         GTK_STOCK_OK,
+                                                         GTK_RESPONSE_ACCEPT,
+                                                         NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
@@ -1903,14 +1912,15 @@ void slot_edit_dialog (TOPLEVEL *w_current, char *string)
   GtkWidget *vbox;
 
   if (!w_current->sewindow) {
-    w_current->sewindow = gtk_dialog_new_with_buttons(_("Edit slot number"),
-						      GTK_WINDOW(w_current->main_window),
-						      GTK_DIALOG_MODAL,
-						      GTK_STOCK_CANCEL,
-						      GTK_RESPONSE_REJECT,
-						      GTK_STOCK_OK,
-						      GTK_RESPONSE_ACCEPT,
-						      NULL);
+    w_current->sewindow = gschem_dialog_new_with_buttons(_("Edit slot number"),
+                                                         GTK_WINDOW(w_current->main_window),
+                                                         GTK_DIALOG_MODAL,
+                                                         "slot-edit", w_current,
+                                                         GTK_STOCK_CANCEL,
+                                                         GTK_RESPONSE_REJECT,
+                                                         GTK_STOCK_OK,
+                                                         GTK_RESPONSE_ACCEPT,
+                                                         NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
@@ -1997,12 +2007,13 @@ void about_dialog (TOPLEVEL *w_current)
   char *string;
 
   if (!w_current->abwindow) {
-    w_current->abwindow = gtk_dialog_new_with_buttons(_("About..."),
-						      GTK_WINDOW(w_current->main_window),
-						      GTK_DIALOG_MODAL,
-						      GTK_STOCK_CLOSE,
-						      GTK_RESPONSE_REJECT,
-						      NULL);
+    w_current->abwindow = gschem_dialog_new_with_buttons(_("About..."),
+                                                         GTK_WINDOW(w_current->main_window),
+                                                         GTK_DIALOG_MODAL,
+                                                         "about", w_current,
+                                                         GTK_STOCK_CLOSE,
+                                                         GTK_RESPONSE_REJECT,
+                                                         NULL);
 
     gtk_window_position (GTK_WINDOW (w_current->abwindow),
                          GTK_WIN_POS_MOUSE);
@@ -2090,12 +2101,13 @@ void coord_dialog (TOPLEVEL *w_current, int x, int y)
   GtkWidget *vbox;
 
   if (!w_current->cowindow) {
-    w_current->cowindow = gtk_dialog_new_with_buttons(_("Coords"),
-						      GTK_WINDOW(w_current->main_window),
-						      0, /* Not modal GTK_DIALOG_MODAL */
-						      GTK_STOCK_CLOSE,
-						      GTK_RESPONSE_REJECT,
-						      NULL);
+    w_current->cowindow = gschem_dialog_new_with_buttons(_("Coords"),
+                                                         GTK_WINDOW(w_current->main_window),
+                                                         0, /* Not modal GTK_DIALOG_MODAL */
+                                                         "coord", w_current,
+                                                         GTK_STOCK_CLOSE,
+                                                         GTK_RESPONSE_REJECT,
+                                                         NULL);
 
     gtk_window_position (GTK_WINDOW (w_current->cowindow),
                          GTK_WIN_POS_NONE);
@@ -2405,14 +2417,15 @@ void color_edit_dialog (TOPLEVEL *w_current)
   int select_index = 0;
 
   if (!w_current->clwindow) {
-    w_current->clwindow = gtk_dialog_new_with_buttons(_("Color Edit"),
-						      GTK_WINDOW(w_current->main_window),
-						      0, /* nonmodal dialog */
-						      GTK_STOCK_CLOSE,
-						      GTK_RESPONSE_REJECT,
-						      GTK_STOCK_APPLY,
-						      GTK_RESPONSE_ACCEPT,
-						      NULL);
+    w_current->clwindow = gschem_dialog_new_with_buttons(_("Color Edit"),
+                                                         GTK_WINDOW(w_current->main_window),
+                                                         0, /* nonmodal dialog */
+                                                         "color-edit", w_current,
+                                                         GTK_STOCK_CLOSE,
+                                                         GTK_RESPONSE_REJECT,
+                                                         GTK_STOCK_APPLY,
+                                                         GTK_RESPONSE_ACCEPT,
+                                                         NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
@@ -2498,12 +2511,13 @@ void x_dialog_hotkeys (TOPLEVEL *w_current)
   };
 
   if (!w_current->hkwindow) {
-    w_current->hkwindow = gtk_dialog_new_with_buttons(_("Hotkeys"),
-                                                      GTK_WINDOW(w_current->main_window),
-                                                      0, /* not modal */
-                                                      GTK_STOCK_CLOSE,
-                                                      GTK_RESPONSE_REJECT,
-                                                      NULL);
+    w_current->hkwindow = gschem_dialog_new_with_buttons(_("Hotkeys"),
+                                                         GTK_WINDOW(w_current->main_window),
+                                                         0, /* not modal */
+                                                         "hotkeys", w_current,
+                                                         GTK_STOCK_CLOSE,
+                                                         GTK_RESPONSE_REJECT,
+                                                         NULL);
 
     gtk_window_position (GTK_WINDOW (w_current->hkwindow),
                          GTK_WIN_POS_NONE);
@@ -2922,14 +2936,15 @@ void find_text_dialog(TOPLEVEL * w_current)
   }
 
   if (!w_current->tfindwindow) {
-    w_current->tfindwindow = gtk_dialog_new_with_buttons(_("Find Text"),
-							 GTK_WINDOW(w_current->main_window),
-							 0, /* not modal GTK_DIALOG_MODAL */
-							 GTK_STOCK_CLOSE,
-							 GTK_RESPONSE_REJECT,
-							 GTK_STOCK_FIND,
-							 GTK_RESPONSE_ACCEPT,
-							 NULL);
+    w_current->tfindwindow = gschem_dialog_new_with_buttons(_("Find Text"),
+                                                            GTK_WINDOW(w_current->main_window),
+                                                            0, /* not modal GTK_DIALOG_MODAL */
+                                                            "find-text", w_current,
+                                                            GTK_STOCK_CLOSE,
+                                                            GTK_RESPONSE_REJECT,
+                                                            GTK_STOCK_FIND,
+                                                            GTK_RESPONSE_ACCEPT,
+                                                            NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
@@ -3028,14 +3043,15 @@ void hide_text_dialog(TOPLEVEL * w_current)
   GtkWidget *vbox;
 
   if (!w_current->thidewindow) {
-    w_current->thidewindow = gtk_dialog_new_with_buttons(_("Hide Text"),
-						      GTK_WINDOW(w_current->main_window),
-						      0, /* not modal GTK_DIALOG_MODAL, */
-						      GTK_STOCK_CLOSE,
-						      GTK_RESPONSE_REJECT,
-						      GTK_STOCK_APPLY,
-						      GTK_RESPONSE_ACCEPT,
-						      NULL);
+    w_current->thidewindow = gschem_dialog_new_with_buttons(_("Hide Text"),
+                                                           GTK_WINDOW(w_current->main_window),
+                                                           0, /* not modal GTK_DIALOG_MODAL, */
+                                                           "hide-text", w_current,
+                                                           GTK_STOCK_CLOSE,
+                                                           GTK_RESPONSE_REJECT,
+                                                           GTK_STOCK_APPLY,
+                                                           GTK_RESPONSE_ACCEPT,
+                                                           NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
@@ -3128,14 +3144,15 @@ void show_text_dialog(TOPLEVEL * w_current)
   GtkWidget *vbox;
 
   if (!w_current->tshowwindow) {
-    w_current->tshowwindow = gtk_dialog_new_with_buttons(_("Show Text"),
-						      GTK_WINDOW(w_current->main_window),
-						      0, /* not modal GTK_DIALOG_MODAL, */
-						      GTK_STOCK_CLOSE,
-						      GTK_RESPONSE_REJECT,
-						      GTK_STOCK_APPLY,
-						      GTK_RESPONSE_ACCEPT,
-						      NULL);
+    w_current->tshowwindow = gschem_dialog_new_with_buttons(_("Show Text"),
+                                                            GTK_WINDOW(w_current->main_window),
+                                                            0, /* not modal GTK_DIALOG_MODAL, */
+                                                            "show-text", w_current,
+                                                            GTK_STOCK_CLOSE,
+                                                            GTK_RESPONSE_REJECT,
+                                                            GTK_STOCK_APPLY,
+                                                            GTK_RESPONSE_ACCEPT,
+                                                            NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */

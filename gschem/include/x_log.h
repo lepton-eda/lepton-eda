@@ -35,11 +35,11 @@ typedef struct _Log      Log;
 
 
 struct _LogClass {
-  GtkDialogClass parent_class;
+  GschemDialogClass parent_class;
 };
 
 struct _Log {
-  GtkDialog parent_instance;
+  GschemDialog parent_instance;
 
   GtkTextView *textview;
 

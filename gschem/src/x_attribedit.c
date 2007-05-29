@@ -33,6 +33,7 @@
 #include "../include/i_vars.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/gschem_dialog.h"
 #include "../include/x_dialog.h"
 
 #ifdef HAVE_LIBDMALLOC
@@ -322,14 +323,15 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     }
   }
 
-  aewindow = gtk_dialog_new_with_buttons(_("Single Attribute Editor"),
-					 GTK_WINDOW(w_current->main_window),
-					 GTK_DIALOG_MODAL,
-					 GTK_STOCK_CANCEL,
-					 GTK_RESPONSE_REJECT,
-					 GTK_STOCK_OK,
-					 GTK_RESPONSE_APPLY,
-					 NULL);
+  aewindow = gschem_dialog_new_with_buttons(_("Single Attribute Editor"),
+                                            GTK_WINDOW(w_current->main_window),
+                                            GTK_DIALOG_MODAL,
+                                            "singleattrib", w_current,
+                                            GTK_STOCK_CANCEL,
+                                            GTK_RESPONSE_REJECT,
+                                            GTK_STOCK_OK,
+                                            GTK_RESPONSE_APPLY,
+                                            NULL);
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(aewindow),

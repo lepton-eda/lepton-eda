@@ -34,6 +34,7 @@
 #include "../include/i_vars.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/gschem_dialog.h"
 #include "../include/x_dialog.h"
 
 #ifdef HAVE_LIBDMALLOC
@@ -1216,14 +1217,15 @@ GtkWidget* autonumber_create_dialog(TOPLEVEL *w_current)
   GtkWidget *label3;
 
 
-  autonumber_text = gtk_dialog_new_with_buttons(_("Autonumber text"),
-						GTK_WINDOW(w_current->main_window),
-						0, /* not modal */
-						GTK_STOCK_CLOSE,
-						GTK_RESPONSE_REJECT,
-						GTK_STOCK_APPLY,
-						GTK_RESPONSE_ACCEPT,
-						NULL);
+  autonumber_text = gschem_dialog_new_with_buttons(_("Autonumber text"),
+                                                   GTK_WINDOW(w_current->main_window),
+                                                   0, /* not modal */
+                                                   "autonumber", w_current,
+                                                   GTK_STOCK_CLOSE,
+                                                   GTK_RESPONSE_REJECT,
+                                                   GTK_STOCK_APPLY,
+                                                   GTK_RESPONSE_ACCEPT,
+                                                   NULL);
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(autonumber_text),

@@ -35,12 +35,12 @@ typedef struct _PrintDialog PrintDialog;
 
 struct _PrintDialogClass
 {
-  GtkDialogClass parent_class;
+  GschemDialogClass parent_class;
 };
 
 struct _PrintDialog
 {
-  GtkDialog parent_instance;
+  GschemDialog parent_instance;
 
   GtkEntry *fnfield, *cmdfield;
   GtkRadioButton *fileradio, *cmdradio;

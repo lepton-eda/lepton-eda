@@ -46,8 +46,8 @@
 #include <dmalloc.h>
 #endif
 
+#include "../include/gschem_dialog.h"
 #include "../include/x_preview.h"
-
 #include "../include/x_compselect.h"
 
 /*! \def COMPSELECT_FILTER_INTERVAL
@@ -182,6 +182,9 @@ x_compselect_open (TOPLEVEL *toplevel)
   if (toplevel->cswindow == NULL) {
     toplevel->cswindow = GTK_WIDGET (
       g_object_new (TYPE_COMPSELECT,
+                    /* GschemDialog */
+                    "settings-name", "compselect",
+                    "toplevel",      toplevel,
                     NULL));
 
     g_signal_connect (toplevel->cswindow,
@@ -636,7 +639,7 @@ compselect_get_type ()
       (GInstanceInitFunc) compselect_init,
     };
                 
-    compselect_type = g_type_register_static (GTK_TYPE_DIALOG,
+    compselect_type = g_type_register_static (GSCHEM_TYPE_DIALOG,
                                               "Compselect",
                                               &compselect_info, 0);
   }

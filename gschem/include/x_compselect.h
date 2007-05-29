@@ -52,17 +52,15 @@ typedef struct _Compselect      Compselect;
 
 
 struct _CompselectClass {
-  GtkDialogClass parent_class;
+  GschemDialogClass parent_class;
 
   guint behavior_changed_signal_id;
 
 };
 
 struct _Compselect {
-  GtkDialog parent_instance;
+  GschemDialog parent_instance;
 
-  TOPLEVEL *toplevel;
-  
   GtkTreeView *treeview;
   Preview     *preview;
   GtkEntry    *entry_filter;

@@ -37,6 +37,7 @@
 #endif
 
 #include <gdk/gdkkeysyms.h>
+#include "../include/gschem_dialog.h"
 #include "../include/x_multiattrib.h"
 
 /*! \brief Open multiple attribute editor dialog.
@@ -55,13 +56,16 @@ void x_multiattrib_open (TOPLEVEL *toplevel, OBJECT *object)
   GtkWidget *dialog;
 
   dialog = GTK_WIDGET (g_object_new (TYPE_MULTIATTRIB,
-                                     "toplevel", toplevel,
                                      "object", object,
+                                     /* GschemDialog */
+                                     "settings-name", "multiattrib",
+                                     "toplevel", toplevel,
                                      NULL));
 
   gtk_window_set_transient_for(GTK_WINDOW(dialog),
 			       GTK_WINDOW(toplevel->main_window));
 
+  multiattrib_update (MULTIATTRIB(dialog));
   gtk_widget_show (dialog);
   switch (gtk_dialog_run ((GtkDialog*)dialog)) {
       case MULTIATTRIB_RESPONSE_CLOSE:
@@ -378,8 +382,7 @@ static void cellrenderermultilinetext_init(CellRendererMultiLineText *self)
 
 
 enum {
-  PROP_TOPLEVEL=1,
-  PROP_OBJECT
+  PROP_OBJECT = 1
 };
 
 enum {
@@ -637,7 +640,7 @@ static void multiattrib_callback_edited_name(GtkCellRendererText *cellrendererte
   gchar *name, *value, *newtext;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
-  toplevel = multiattrib->toplevel;
+  toplevel = GSCHEM_DIALOG (multiattrib)->toplevel;
 
   if (!gtk_tree_model_get_iter_from_string (model, &iter, arg1)) {
     return;
@@ -692,7 +695,7 @@ static void multiattrib_callback_edited_value(GtkCellRendererText *cell_renderer
   gchar *name, *value, *newtext;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
-  toplevel = multiattrib->toplevel;
+  toplevel = GSCHEM_DIALOG (multiattrib)->toplevel;
 
   if (!gtk_tree_model_get_iter_from_string (model, &iter, arg1)) {
     return;
@@ -736,7 +739,7 @@ static void multiattrib_callback_toggled_visible(GtkCellRendererToggle *cell_ren
   gint visibility;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
-  toplevel = multiattrib->toplevel;
+  toplevel = GSCHEM_DIALOG (multiattrib)->toplevel;
 
   if (!gtk_tree_model_get_iter_from_string (model, &iter, path)) {
     return;
@@ -778,7 +781,7 @@ static void multiattrib_callback_toggled_show_name(GtkCellRendererToggle *cell_r
   gint new_snv;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
-  toplevel = multiattrib->toplevel;
+  toplevel = GSCHEM_DIALOG (multiattrib)->toplevel;
 
   if (!gtk_tree_model_get_iter_from_string (model, &iter, path)) {
     return;
@@ -827,7 +830,7 @@ static void multiattrib_callback_toggled_show_value(GtkCellRendererToggle *cell_
   gint new_snv;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
-  toplevel = multiattrib->toplevel;
+  toplevel = GSCHEM_DIALOG (multiattrib)->toplevel;
 
   if (!gtk_tree_model_get_iter_from_string (model, &iter, path)) {
     return;
@@ -889,7 +892,7 @@ static gboolean multiattrib_callback_key_pressed(GtkWidget *widget,
                         -1);
     g_assert (o_attrib->type == OBJ_TEXT);
     
-    multiattrib_action_delete_attribute (multiattrib->toplevel,
+    multiattrib_action_delete_attribute (GSCHEM_DIALOG (multiattrib)->toplevel,
                                          o_attrib);
     
     /* update the treeview contents */
@@ -955,7 +958,7 @@ static void multiattrib_callback_popup_duplicate(GtkMenuItem *menuitem,
     return;
   }
 
-  toplevel = multiattrib->toplevel;
+  toplevel = GSCHEM_DIALOG (multiattrib)->toplevel;
   object   = multiattrib->object;
   
   gtk_tree_model_get (model, &iter,
@@ -991,8 +994,8 @@ static void multiattrib_callback_popup_delete(GtkMenuItem *menuitem,
     return;
   }
 
-  toplevel = multiattrib->toplevel;
-  
+  toplevel = GSCHEM_DIALOG (multiattrib)->toplevel;
+
   gtk_tree_model_get (model, &iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
@@ -1081,7 +1084,7 @@ static void multiattrib_callback_button_add(GtkButton *button,
   gboolean visible;
   gint shownv;
 
-  toplevel = multiattrib->toplevel;
+  toplevel = GSCHEM_DIALOG (multiattrib)->toplevel;
   object   = multiattrib->object;
   buffer   = gtk_text_view_get_buffer (multiattrib->textview_value);
   
@@ -1251,7 +1254,7 @@ GType multiattrib_get_type()
       (GInstanceInitFunc) multiattrib_init,
     };
 		
-    multiattrib_type = g_type_register_static (GTK_TYPE_DIALOG,
+    multiattrib_type = g_type_register_static (GSCHEM_TYPE_DIALOG,
                                                "Multiattrib",
                                                &multiattrib_info, 0);
   }
@@ -1271,12 +1274,6 @@ static void multiattrib_class_init(MultiattribClass *klass)
   gobject_class->set_property = multiattrib_set_property;
   gobject_class->get_property = multiattrib_get_property;
 
-  g_object_class_install_property (
-    gobject_class, PROP_TOPLEVEL,
-    g_param_spec_pointer ("toplevel",
-                          "",
-                          "",
-                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE));
   g_object_class_install_property (
     gobject_class, PROP_OBJECT,
     g_param_spec_pointer ("object",
@@ -1317,7 +1314,6 @@ static void multiattrib_init(Multiattrib *multiattrib)
                 "has-separator",   TRUE,
                 NULL);
 
-  multiattrib->toplevel = NULL;
   multiattrib->object   = NULL;
 
   /* connect to the key-press-event of dialog */
@@ -1608,9 +1604,6 @@ static void multiattrib_set_property (GObject *object,
   Multiattrib *multiattrib = MULTIATTRIB (object);
 
   switch(property_id) {
-      case PROP_TOPLEVEL:
-        multiattrib->toplevel = (TOPLEVEL*)g_value_get_pointer (value);
-        break;
       case PROP_OBJECT:
         multiattrib->object = (OBJECT*)g_value_get_pointer (value);
         multiattrib_update (multiattrib);
@@ -1634,9 +1627,6 @@ static void multiattrib_get_property (GObject *object,
   Multiattrib *multiattrib = MULTIATTRIB (object);
 
   switch(property_id) {
-      case PROP_TOPLEVEL:
-        g_value_set_pointer (value, (gpointer)multiattrib->toplevel);
-        break;
       case PROP_OBJECT:
         g_value_set_pointer (value, (gpointer)multiattrib->object);
         break;
@@ -1658,7 +1648,7 @@ void multiattrib_update (Multiattrib *multiattrib)
   OBJECT **object_attribs, *o_current;
   gint i;
   
-  if (multiattrib->toplevel == NULL ||
+  if (GSCHEM_DIALOG (multiattrib)->toplevel == NULL ||
       multiattrib->object   == NULL) {
     /* we can not do anything until both toplevel and object are set */
     return;
@@ -1671,7 +1661,7 @@ void multiattrib_update (Multiattrib *multiattrib)
  
   /* get list of attributes */
   object_attribs = o_attrib_return_attribs (
-    multiattrib->toplevel->page_current->object_head,
+    GSCHEM_DIALOG (multiattrib)->toplevel->page_current->object_head,
     multiattrib->object);
   /* populate the store with attributes */
   if (object_attribs) {

@@ -22,7 +22,8 @@ gschem_SOURCES = \
 	x_pagesel.c x_print.c x_window.c x_stroke.c x_image.c x_color.c \
 	x_compselect.c x_fileselect.c x_preview.c x_attribedit.c \
 	x_multiattrib.c \
-	parsecmd.c o_cue.c
+	parsecmd.c o_cue.c \
+	gschem_dialog.c
 
 if CCISGCC
 AM_CFLAGS = -Wall

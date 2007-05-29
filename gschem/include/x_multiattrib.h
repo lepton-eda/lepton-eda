@@ -42,14 +42,13 @@ typedef struct _Multiattrib      Multiattrib;
 
 
 struct _MultiattribClass {
-  GtkDialogClass parent_class;
+  GschemDialogClass parent_class;
   
 };
 
 struct _Multiattrib {
-  GtkDialog parent_instance;
+  GschemDialog parent_instance;
 
-  TOPLEVEL *toplevel;
   OBJECT *object;
 
   GtkTreeView    *treeview;

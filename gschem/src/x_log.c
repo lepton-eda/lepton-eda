@@ -43,6 +43,7 @@
 #include <dmalloc.h>
 #endif
 
+#include "../include/gschem_dialog.h"
 #include "../include/x_log.h"
 
 static void x_log_callback_response (GtkDialog *dialog,
@@ -62,6 +63,9 @@ void x_log_open ()
     gchar *contents;
     
     log_dialog = GTK_WIDGET (g_object_new (TYPE_LOG,
+                                           /* GschemDialog */
+                                           "settings-name", "log",
+                                           /* "toplevel", TOPEVEL * */
                                            NULL));
 
     g_signal_connect (log_dialog,
@@ -192,7 +196,7 @@ GType log_get_type ()
       (GInstanceInitFunc) log_init,
     };
 		
-    log_type = g_type_register_static (GTK_TYPE_DIALOG,
+    log_type = g_type_register_static (GSCHEM_TYPE_DIALOG,
                                        "Log",
                                        &log_info, 0);
   }
