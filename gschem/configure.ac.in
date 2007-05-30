@@ -399,7 +399,7 @@ AM_NLS
 AC_CHECK_HEADER([locale.h],
                 [AC_DEFINE([HAVE_LOCALE_H], 1, [Define if you have locale.h])],
                 [
-                  if test "$USE_NLS" == "yes"; then
+                  if test "$USE_NLS" = "yes"; then
                     AC_MSG_ERROR([Cannot find useful locale.h, and nls support is enabled. Try compiling with --disable-nls])
                   fi
                 ])
