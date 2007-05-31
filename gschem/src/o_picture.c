@@ -222,7 +222,6 @@ void picture_selection_dialog (TOPLEVEL *w_current)
       o_picture_set_pixbuf(w_current, pixbuf, filename);
     
       w_current->page_current->CHANGED=1;
-      i_allow_expose();
       i_set_state(w_current, DRAWPICTURE);
     }
     g_free (filename);
@@ -767,8 +766,6 @@ void picture_change_filename_dialog (TOPLEVEL *w_current)
 
       g_object_unref(pixbuf);
       w_current->page_current->CHANGED=1;
-  
-      i_allow_expose();
     }
     g_free (filename);
   }

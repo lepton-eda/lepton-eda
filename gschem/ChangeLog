@@ -1,3 +1,11 @@
+2007-05-31 Peter Brett <peter@peter-b.co.uk>
+
+	* include/prototype.h, src/i_basic.c, src/i_callbacks.c,
+	  src/o_picture.c: Cleanup code for status bar messages.
+
+	  Applied patch from Ivan Stankovic cleaning up code used for
+	  displaying status bar messages.
+
 2007-05-29 Peter Clifton <pcjc2@cam.ac.uk>
 
 	* include/Makefile.am, include/gschem_dialog.h, include/x_compselect.h

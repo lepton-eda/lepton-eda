@@ -31,16 +31,19 @@
 #include <dmalloc.h>
 #endif
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Update status bar string 
  *
+ *  \par Function Description
+ *  This function actually updates the status bar 
+ *  widget with the new string.
+ *
+ *  \param [in] w_current TOPLEVEL structure
+ *  \param [in] string The new string to be shown in the status bar
  */
 static void i_update_status(TOPLEVEL *w_current, const char *string)
 {
-  if (!w_current->status_label) {
+  if (!w_current->status_label)
     return;
-  }
 
   if (string) {
     /* NOTE: consider optimizing this if same label */
@@ -50,33 +53,16 @@ static void i_update_status(TOPLEVEL *w_current, const char *string)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Get string corresponding to the currently selected mode
  *
- */
-/* Prefix to i_show_state(), i_set_state() and i_set_state_msg()
- , Allows expose events to happen
- * *EK* Egil Kvaleberg
- */
-void i_allow_expose(void)
-{
-  /* This function is probably not needed and should be deleted eventually */
-#if 0
-   /* HACK: This one allows the expose events to happen? */
-    w_current->DONT_EXPOSE = 1;
-#endif
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
  *  \par Function Description
+ *  Returns a string describing the currently
+ *  selected mode.
  *
- */
-/* Get string corresponding to the currently selected mode
- * The returned string will only last until the next time
- * the function is called (which is probably just fine, really)
- * *EK* Egil Kvaleberg
+ *  \param [in] w_current TOPLEVEL structure
+ *  \returns a string that will only last until the next time
+ *   the function is called (which is probably just fine, really)
+ *   *EK* Egil Kvaleberg
  */
 static const char *i_status_string(TOPLEVEL *w_current)
 {
@@ -161,88 +147,72 @@ static const char *i_status_string(TOPLEVEL *w_current)
     case ENDMCOPY:
       return _("Multiple Copy Mode");
   }
+  g_assert_not_reached();
   return ""; /* should not happen */
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Show state field
  *
- */
-/* Show state field on screen,
- * possibly with the addition of an extra message
- * *EK* Egil Kvaleberg
+ *  \par Function Description
+ *  Show state field on screen, possibly with the 
+ *  addition of an extra message
+ *
+ *  \param [in] w_current TOPLEVEL structure
+ *  \param [in] message The string to be displayed 
  */
 void i_show_state(TOPLEVEL *w_current, const char *message)
 {
-  static char *buf = 0;
-  char *aux = 0;
-  const char *state_string = i_status_string(w_current);
-  const char *what_to_say;
+  gchar *what_to_say;
+  const gchar *array[5] = { NULL };
+  int i = 3; /* array[4] must be NULL */
 
-  /* This may be a memory leak... either way it's weird and -Wall is */
-  /* complaining... */
-  buf = g_strdup("");
-  aux = buf;
+  /* Fill in the string array */
+  array[i--] = i_status_string(w_current);
+  
+  if(w_current->show_hidden_text)
+    array[i--] = _("Show Hidden");
+  
+  if(!w_current->snap)
+    array[i--] = _("Snap Off");
+  
+  if(message && message[0])
+    array[i] = message;
+  
+  /* Skip over NULLs */
+  while(array[i] == NULL)
+    i++;
 
-  if ( message != NULL) {
-    if ( message && message[0] ) {
-      buf = g_strdup_printf("%s - ", message);
-      if (aux) g_free(aux);
-      aux = buf;
-    }
-  }
-
-  if ( !w_current->snap ) {
-    buf = g_strdup_printf("%s%s - ", buf, _("Snap Off"));
-    if (aux) g_free(aux);
-    aux = buf;
-  }
-
-  if ( w_current->show_hidden_text ) {
-    buf = g_strdup_printf("%s%s - ", buf, _("Show Hidden"));
-    if (aux) g_free(aux);
-    aux = buf;
-  }
-
-  if (buf != NULL) {
-    if (strlen(buf) > 0) {
-      buf = g_strdup_printf("%s%s", buf, state_string);
-      if (aux) g_free(aux);
-      aux = buf;
-      what_to_say = buf;
-    } else {
-      what_to_say = state_string;
-    }
-  }
-  else {
-    what_to_say = state_string;
-  }
+  what_to_say = g_strjoinv(" - ", (gchar **) array + i);
 
   i_update_status(w_current, what_to_say);
-  if (buf != NULL) g_free(buf);
+  g_free(what_to_say);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Set new state, then show state field
  *
- */
-/* Set new state, then show state field
- * *EK* Egil Kvaleberg
+ *  \par Function Description
+ *  Set new state, then show state field.
+ *
+ *  \param [in] w_current TOPLEVEL structure
+ *  \param [in] newstate The new state
+ *   *EK* Egil Kvaleberg
  */
 void i_set_state(TOPLEVEL *w_current, enum x_states newstate)
 {
   i_set_state_msg(w_current, newstate, NULL);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Set new state, then show state field including some
+ *         message
  *
- */
-/* Set new state, then show state field including some message
- * *EK* Egil Kvaleberg
+ *  \par Function Description
+ *  Set new state, then show state field including some
+ *  message.
+ *
+ *  \param [in] w_current TOPLEVEL structure
+ *  \param [in] newstate The new state
+ *  \param [in] message Message to be shown
+ *   *EK* Egil Kvaleberg
  */
 void i_set_state_msg(TOPLEVEL *w_current, enum x_states newstate,
 		     const char *message)
@@ -256,31 +226,20 @@ void i_set_state_msg(TOPLEVEL *w_current, enum x_states newstate,
  *  \par Function Description
  *
  */
-void i_update_left_button(const char *string)
-{
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 void i_update_middle_button(TOPLEVEL *w_current,
-			    void (*func_ptr)(gpointer, guint, GtkWidget*), const char *string)
+			    void (*func_ptr)(gpointer, guint, GtkWidget*),
+			    const char *string)
 {
   char *temp_string;
 
-  if (func_ptr == NULL) {
+  if (func_ptr == NULL)
     return;
-  }
 
-  if (string == NULL) {
+  if (string == NULL)
     return;
-  }	
 
-  if (!w_current->middle_label) {
+  if (!w_current->middle_label)
     return;
-  }
 
   switch(w_current->middle_button) {
 
@@ -319,21 +278,11 @@ void i_update_middle_button(TOPLEVEL *w_current,
     break;
 
   }
-
 }
 
 /*! \todo Finish function documentation!!!
  *  \brief
- *  \par Function Description
- *
- */
-void i_update_right_button(const char *string)
-{
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+ *  \param [in] w_current TOPLEVEL structure
  *
  */
 void i_update_toolbar(TOPLEVEL *w_current)
@@ -411,10 +360,12 @@ void i_update_toolbar(TOPLEVEL *w_current)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Update sensitivity of relevant menu items
  *
+ *  \par Function Description
+ *  Update sensitivity of relevant menu items.
+ *
+ *  \param [in] w_current TOPLEVEL structure
  */
 void i_update_menus(TOPLEVEL *w_current)
 {
@@ -476,7 +427,7 @@ void i_update_menus(TOPLEVEL *w_current)
     /* x_menus_popup_sensitivity(w_current, "/Up", TRUE); */
 
   } else {
-    /* Nothing is slected.  grey these out */
+    /* Nothing is selected, grey these out */
     /* These strings should NOT be internationalized */
     x_menus_sensitivity(w_current, "Edit/Cut Buffer", FALSE);
     x_menus_sensitivity(w_current, "Edit/Copy Buffer", FALSE);
@@ -554,137 +505,16 @@ void i_update_menus(TOPLEVEL *w_current)
   } else {
     x_menus_sensitivity(w_current, "Buffer/Paste from 5", FALSE);
   }
- 
-
 }
  
-#if 0
-/* This data is in X bitmap format, and can be created with the 'bitmap'
-     utility. */
-  #define cursor1_width 16
-  #define cursor1_height 16
-  static unsigned char cursor1_bits[] = {
-   0x00, 0x00, 0x08, 0x38, 0x18, 0x08, 0x38, 0x18, 0x78, 0x08, 0xf8, 0x38,
-   0xf8, 0x01, 0xf8, 0x03, 0xf8, 0x07, 0xf8, 0x00, 0xd8, 0x00, 0x88, 0x01,
-   0x80, 0x01, 0x00, 0x03, 0x00, 0x03, 0x00, 0x00};
-
-  static unsigned char cursor1mask_bits[] = {
-   0x0c, 0x7c, 0x1c, 0x7c, 0x3c, 0x7c, 0x7c, 0x3c, 0xfc, 0x7c, 0xfc, 0x7d,
-   0xfc, 0x7f, 0xfc, 0x07, 0xfc, 0x0f, 0xfc, 0x0f, 0xfc, 0x01, 0xdc, 0x03,
-   0xcc, 0x03, 0x80, 0x07, 0x80, 0x07, 0x00, 0x03};
-#endif
-
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Set filename as gschem window title
+ *  
  *  \par Function Description
+ *  Set filename as gschem window title using
+ *  the gnome HID format style.
  *
- */
-void i_update_cursor(TOPLEVEL *w_current)
-{
-#if 0
-  if (!w_current->cursors) 
-	return;
-#endif
-
-#if 0
-  GdkCursor *cursor;
-
-  GdkPixmap *source, *mask;
-  GdkColor fg = { 0, 0, 0, 0 }; /* Red. */
-  GdkColor bg = { 0, 65535, 65535, 65535 }; /* Blue. */
-    
-  source = gdk_bitmap_create_from_data (NULL, cursor1_bits,
-					cursor1_width, cursor1_height);
-  mask = gdk_bitmap_create_from_data (NULL, cursor1mask_bits,
-				      cursor1_width, cursor1_height);
-  cursor = gdk_cursor_new_from_pixmap (source, mask, &fg, &bg, 3, 1);
-  gdk_pixmap_unref (source);
-  gdk_pixmap_unref (mask);
-  
-  gdk_window_set_cursor (w_current->window, cursor);
-#endif
-
-
-  GdkCursor* cursor;
-  cursor = gdk_cursor_new(GDK_ARROW);
-  gdk_window_set_cursor(w_current->window, cursor);
-  gdk_cursor_destroy(cursor);
-  
-#if 0
-  switch(w_current->event_state) {
-    case(NONE):
-    case(SELECT):
-    case(STARTSELECT): 
-    case(TEXTENTRY): 
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
-				   w_current->toolbar_select), TRUE);
-      break;
-
-    case(DRAWNET): 
-    case(STARTDRAWNET): 
-    case(NETCONT): 
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
-				   w_current->toolbar_net), TRUE);
-      break;
-
-    case(DRAWBUS): 
-    case(STARTDRAWBUS): 
-    case(BUSCONT): 
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
-				   w_current->toolbar_bus), TRUE);
-      break;
-
-    case(DRAWCOMP): /*! \todo */
-    case(DRAWLINE): /*! \todo */
-    case(DRAWBOX): /*! \todo */
-    case(DRAWPICTURE): /*! \todo */
-    case(DRAWPIN): /*! \todo */
-    case(DRAWCIRCLE): /*! \todo */
-    case(DRAWARC): /*! \todo */
-    case(MOVE): /*! \todo */
-    case(COPY): /*! \todo */
-    case(ZOOM): /*! \todo */
-    case(PAN): /*! \todo */
-    case(STARTPAN): /*! \todo */
-    case(STARTCOPY): /*! \todo */
-    case(STARTMOVE): /*! \todo */
-    case(ENDCOPY): /*! \todo */
-    case(ENDMOVE): /*! \todo */
-    case(ENDLINE): /*! \todo */
-    case(ENDBOX): /*! \todo */
-    case(ENDPICTURE): /*! \todo */
-    case(ENDCIRCLE): /*! \todo */
-    case(ENDARC): /*! \todo */
-    case(ENDPIN): /*! \todo */
-    case(ENDCOMP): /*! \todo */
-    case(DRAWATTRIB): /*! \todo */
-    case(ENDATTRIB): /*! \todo */
-    case(DRAWTEXT): /*! \todo */
-    case(ENDTEXT): /*! \todo */
-    case(ENDROTATEP): /*! \todo */
-    case(ENDMIRROR): /*! \todo */
-    case(ZOOMBOXSTART): /*! \todo */
-    case(ZOOMBOXEND): /*! \todo */
-    case(STARTROUTENET): /*! \todo */
-    case(ENDROUTENET): /*! \todo */
-    case(MOUSEPAN): /*! \todo */
-    case(STARTPASTE): /*! \todo */
-    case(ENDPASTE): /*! \todo */
-    case(GRIPS): /*! \todo */
-    case(MCOPY): /*! \todo */
-    case(MCOPYSTART): /*! \todo */
-    case(MCOPYEND): /*! \todo */
-    default:
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
-				   w_current->toolbar_select), TRUE);
-      break;
-  }
-#endif
-}
-
-/*! \brief Set filename as gschem  window title
- *  \par Function Description
- *  Set the window title using the gnome HID format style.
+ *  \param [in] w_current TOPLEVEL structure
+ *  \param [in] string The filename
  */
 void i_set_filename(TOPLEVEL *w_current, const gchar *string)
 {
@@ -700,17 +530,6 @@ void i_set_filename(TOPLEVEL *w_current, const gchar *string)
   
   print_string = g_strdup_printf("%s - gschem", filename);
   
-  /* alternativ code with length limited pathname */
-/*  int max_len = 70;
-    if (strlen(string) > max_len) {
-    print_string = g_strdup_printf("gschem: ...%s",
-				   &(string[strlen(string)-max_len]));
-  }
-  else {
-    print_string = g_strdup_printf("gschem: %s",string);
-  }
-*/
-
   gtk_window_set_title(GTK_WINDOW(w_current->main_window),
 		       print_string);
   
@@ -719,10 +538,15 @@ void i_set_filename(TOPLEVEL *w_current, const gchar *string)
 }
 
 /*! \brief Write the grid settings to the gschem status bar
+ *
  *  \par Function Description
- *  The function takes the current grid paramters of gschem and
- *  prints it to the status bar.
+ *  Write the grid settings to the gschem status bar.
+ *  The function takes the current grid paramters of gschem
+ *  and prints it to the status bar.
  *  The format is "Grid([SnapGridSize],[CurrentGridSize])"
+ *
+ *  \param [in] w_current TOPLEVEL structure
+ *  \param [in] visible_grid Visible grid size
  */
 void i_set_grid(TOPLEVEL *w_current, int visible_grid) 
 {
@@ -730,9 +554,8 @@ void i_set_grid(TOPLEVEL *w_current, int visible_grid)
   gchar *snap=NULL;
   gchar *grid=NULL;
 
-  if (!w_current->grid_label) {
+  if (!w_current->grid_label)
     return;
-  }
   
   if (!w_current->snap)
     snap = g_strdup(_("OFF"));

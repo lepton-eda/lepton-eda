@@ -1378,7 +1378,6 @@ DEFINE_I_CALLBACK(view_zoom_box)
 
   o_redraw_cleanstates(w_current);	
   w_current->inside_action = 0;
-  i_allow_expose();
   i_set_state(w_current, ZOOMBOXSTART);
 }
 
@@ -1397,7 +1396,6 @@ DEFINE_I_CALLBACK(view_zoom_box_hotkey)
   a_zoom_box_start(w_current, mouse_x, mouse_y);
 
   w_current->inside_action = 1;
-  i_allow_expose();
   i_set_state(w_current, ZOOMBOXEND);
 }
 
@@ -2233,7 +2231,6 @@ DEFINE_I_CALLBACK(add_component)
   i_update_middle_button(w_current,
                          i_callback_add_component, _("Component"));
 
-  i_allow_expose();
   i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
 }
@@ -2270,7 +2267,6 @@ DEFINE_I_CALLBACK(add_attribute)
   i_update_middle_button(w_current, i_callback_add_attribute,
                          _("Attribute"));
 
-  i_allow_expose();
   i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
 }
@@ -2290,7 +2286,6 @@ DEFINE_I_CALLBACK(add_attribute_hotkey)
   i_update_middle_button(w_current, i_callback_add_attribute_hotkey,
                          _("Attribute"));
 
-  i_allow_expose();
   i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
 }
@@ -2311,7 +2306,6 @@ DEFINE_I_CALLBACK(add_net)
 
   /* need to click */
   i_update_middle_button(w_current, i_callback_add_net, _("Net"));
-  i_allow_expose();
   i_set_state(w_current, STARTDRAWNET);
   i_update_toolbar(w_current);
   /* somewhere you need to nearest point locking... */
@@ -2334,7 +2328,6 @@ DEFINE_I_CALLBACK(add_net_hotkey)
 
   /* need to click */
   i_update_middle_button(w_current, i_callback_add_net_hotkey, _("Net"));
-  i_allow_expose();
   i_set_state(w_current, STARTDRAWNET);
   i_update_toolbar(w_current);
 
@@ -2379,7 +2372,6 @@ DEFINE_I_CALLBACK(add_bus)
 
   /* need to click */
   i_update_middle_button(w_current, i_callback_add_bus, _("Bus"));
-  i_allow_expose();
   i_set_state(w_current, STARTDRAWBUS);
   i_update_toolbar(w_current);
 
@@ -2403,7 +2395,6 @@ DEFINE_I_CALLBACK(add_bus_hotkey)
 
   /* need to click */
   i_update_middle_button(w_current, i_callback_add_bus_hotkey, _("Bus"));
-  i_allow_expose();
   i_set_state(w_current, STARTDRAWBUS);
   i_update_toolbar(w_current);
 
@@ -2485,7 +2476,6 @@ DEFINE_I_CALLBACK(add_line)
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_line, _("Line"));
-  i_allow_expose();
   i_set_state(w_current, DRAWLINE);
   w_current->inside_action = 0;
 }
@@ -2509,7 +2499,6 @@ DEFINE_I_CALLBACK(add_line_hotkey)
   o_line_start(w_current, mouse_x, mouse_y);
 
   w_current->inside_action = 1;
-  i_allow_expose();
   i_set_state(w_current, ENDLINE);
 }
 
@@ -2529,7 +2518,6 @@ DEFINE_I_CALLBACK(add_box)
 
   i_update_middle_button(w_current, i_callback_add_box, _("Box"));
   w_current->inside_action = 0;
-  i_allow_expose();
   i_set_state(w_current, DRAWBOX);
 }
 
@@ -2552,7 +2540,6 @@ DEFINE_I_CALLBACK(add_box_hotkey)
   o_box_start(w_current, mouse_x, mouse_y);
 
   w_current->inside_action = 1;
-  i_allow_expose();
   i_set_state(w_current, ENDBOX);
 }
 
@@ -2606,7 +2593,6 @@ DEFINE_I_CALLBACK(add_circle)
 
   i_update_middle_button(w_current, i_callback_add_circle, _("Circle"));
   w_current->inside_action = 0;
-  i_allow_expose();
   i_set_state(w_current, DRAWCIRCLE);
 }
 
@@ -2630,7 +2616,6 @@ DEFINE_I_CALLBACK(add_circle_hotkey)
   o_circle_start(w_current, mouse_x, mouse_y);
 
   w_current->inside_action = 1;
-  i_allow_expose();
   i_set_state(w_current, ENDCIRCLE);
 }
 
@@ -2650,7 +2635,6 @@ DEFINE_I_CALLBACK(add_arc)
 
   i_update_middle_button(w_current, i_callback_add_arc, _("Arc"));
   w_current->inside_action = 0;
-  i_allow_expose();
   i_set_state(w_current, DRAWARC);
 }
 
@@ -2673,7 +2657,6 @@ DEFINE_I_CALLBACK(add_arc_hotkey)
   o_arc_start(w_current, mouse_x, mouse_y);
 
   w_current->inside_action = 1;
-  i_allow_expose();
   i_set_state(w_current, ENDARC);
 }
 
@@ -2693,7 +2676,6 @@ DEFINE_I_CALLBACK(add_pin)
 
   i_update_middle_button(w_current, i_callback_add_pin, _("Pin"));
   w_current->inside_action = 0;
-  i_allow_expose();
   i_set_state(w_current, DRAWPIN);
 }
 
@@ -2716,7 +2698,6 @@ DEFINE_I_CALLBACK(add_pin_hotkey)
   o_pin_start(w_current, mouse_x, mouse_y);
 
   w_current->inside_action = 1;
-  i_allow_expose();
   i_set_state(w_current, ENDPIN);
 }
 
