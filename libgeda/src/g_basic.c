@@ -77,11 +77,7 @@ static SCM load (void *data)
 			eof_found = 1;
 		} else {
 			most_recently_read_form = form;
-#ifdef HAVE_SCM_EVAL_X_MODULE
   			scm_eval_x (form, scm_current_module() );
-#else
-			scm_eval_x (form);
-#endif
 		}
 	}
 

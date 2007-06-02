@@ -1,3 +1,11 @@
+2007-06-02 Peter Brett <peter@peter-b.co.uk>
+
+	* configure.ac, src/g_basic.c: Improve Guile configure checks &
+	remove 1.4 compat. code.
+
+	Removes compatibility code for Guile 1.4, and makes configure
+	scripts check for actual Guile version.
+
 2007-05-28 Peter Brett <peter@peter-b.co.uk>
 
 	* configure.ac: Require Guile 1.8.x

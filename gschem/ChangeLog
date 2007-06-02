@@ -1,3 +1,9 @@
+2007-06-02 Peter Brett <peter@peter-b.co.uk>
+
+	* configure.ac: Improve Guile configure checks.
+
+	Makes configure scripts check for actual Guile version.
+
 2007-06-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/i_callbacks.c: Fixed a behavior where you would cancel

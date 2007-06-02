@@ -75,41 +75,22 @@ AC_PROG_MAKE_SET
 #
 GUILE_FLAGS
 
-# Manually search for guile-config.  This is provided by GUILE_PROGS, but
-# guile-1.4 does not have GUILE_PROGS, so we have to do it manually.
-AC_PATH_PROG(GUILE_CONFIG,guile-config)
-if test "$GUILE_CONFIG" = "" ; then
-    AC_MSG_ERROR([guile-config required but not found])
-fi
-AC_SUBST(GUILE_CONFIG)
+# Check Guile version
+guile_need_major=1
+guile_need_minor=8
+guile_need_version="$guile_need_major[].$guile_need_minor.0"
 
-# must have guile flags in CFLAGS for AC_COMPILE_IFELSE to work right
-saved_CFLAGS="${CFLAGS}"
-CFLAGS="${CFLAGS} ${GUILE_CFLAGS}"
-
-# 1-argument scm_eval_x (guile-1.4) or 2-argument form (guile-1.6)?
-AC_MSG_CHECKING(
-   [if scm_eval_x() takes a second module argument])
-   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <libguile.h>]], 
-   [[SCM foo,bar; scm_eval_x(foo,bar);]])],
-   [AC_DEFINE([HAVE_SCM_EVAL_X_MODULE], 1, 
-   [Define if the SCM_EVAL_X function takes a second argument "module"])
-   AC_MSG_RESULT(yes) ], [AC_MSG_RESULT(no)])
-CFLAGS="${saved_CFLAGS}"
-
-# Check some Guile functions are available
-AC_CHECK_LIB(guile, scm_init_guile)
-
-AC_CHECK_FUNCS([scm_make_smob_type scm_set_smob_mark scm_set_smob_free scm_set_smob_print],,
-	       [AC_MSG_ERROR([Upgrade Guile, at least version >= 1.8.0])])
-
-AC_CHECK_FUNCS([scm_from_locale_string],,
-               [AC_MSG_ERROR([Upgrade Guile, at least version >= 1.8.0])])
-
-# Restore LIBS. Apparently AC_CHECK_LIB destroys it.
-LIBS="$ac_save_LIBS"
-
+AC_MSG_CHECKING([Guile version >= $guile_need_version])
 GUILE_VERSION=`$GUILE_CONFIG info guileversion`
+
+guile_major=`echo "$GUILE_VERSION" | sed 's/\([[^.]][[^.]]*\).*/\1/'`
+guile_minor=`echo "$GUILE_VERSION" | sed 's/[[^.]][[^.]]*.\([[^.]][[^.]]*\).*/\1/'`
+AC_MSG_RESULT($GUILE_VERSION)
+
+if test $guile_need_major -gt $guile_major \
+   || test $guile_need_minor -gt $guile_minor; then
+  AC_MSG_ERROR([Guile version >= $guile_need_version is required.])
+fi
 
 #
 # Check for guile end
