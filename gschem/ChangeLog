@@ -1,3 +1,18 @@
+2007-06-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/i_callbacks.c: Fixed a behavior where you would cancel
+	(via right mouse button or escape) the placing of components,
+	but gschem would still be in the add component mode (and clicks
+	would still place components).	Calling i_callback_cancel really
+	means cancel the current mode and go into select mode.	This fix
+	shouldn't break anything and still keeps all nice behaviors like
+	pressing "ok" (on the component select dialog box), "apply",
+	right mouse button cancel or escape cancel.
+
+	* include/x_states.h: While debugging above, found out it was
+	hard to map numeric state number to the symbolic name by looking
+	at x_states.h.  Added comments to make this mapping more obvious.
+
 2007-05-31 Peter Brett <peter@peter-b.co.uk>
 
 	* include/prototype.h, src/i_basic.c, src/i_callbacks.c,

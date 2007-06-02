@@ -3405,7 +3405,6 @@ DEFINE_I_CALLBACK(cancel)
     g_value_init (&value, G_TYPE_BOOLEAN);
     g_value_set_boolean (&value, FALSE);
     g_object_set_property (G_OBJECT(w_current->cswindow), "hidden", &value);
-    return;
   }
 
   if ( (w_current->inside_action) && 
