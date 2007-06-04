@@ -1,3 +1,11 @@
+2007-06-04 Peter Brett <peter@peter-b.co.uk>
+
+	* src/g_funcs.c, src/g_hook.c, src/g_keys.c, src/g_rc.c: Replace
+	deprecated Guile functions & macros.
+
+	Replace deprecated SCM_STRINGP, SCM_INUM, SCM_INUMP & SCM_MAKINUM
+	with recommended equivalents for Guile 1.8.
+
 2007-06-02 Peter Brett <peter@peter-b.co.uk>
 
 	* configure.ac: Improve Guile configure checks.

@@ -636,7 +636,7 @@ static void refresh_scm (CLibSource *source)
 
   while (symlist != SCM_EOL) {
     symname = SCM_CAR (symlist);
-    if (!SCM_STRINGP (symname)) {
+    if (!scm_is_string (symname)) {
       s_log_message ("Non-string symbol name while scanning library [%s]\n",
 		     source->name);
     } else {
@@ -1036,7 +1036,7 @@ static gchar *get_data_scm (const CLibSymbol *symbol)
   symdata = scm_call_1 (symbol->source->get_fn, 
 			scm_from_locale_string (symbol->name));
 
-  if (!SCM_STRINGP (symdata)) {
+  if (!scm_is_string (symdata)) {
     s_log_message ("Failed to load symbol data [%s] from source [%s]\n",
 		   symbol->name, symbol->source->name);
     return NULL;

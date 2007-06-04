@@ -65,7 +65,7 @@ int default_dummy;
  *------------------------------------------------------------------*/
 SCM g_rc_gattrib_version(SCM version)
 {
-  SCM_ASSERT (SCM_NIMP (version) && SCM_STRINGP (version), version,
+  SCM_ASSERT (scm_is_string (version), version,
 	      SCM_ARG1, "gattrib-version");
   
   if (g_strcasecmp (SCM_STRING_CHARS (version), VERSION) != 0) {

@@ -80,7 +80,7 @@ g_rc_mode_general(SCM mode,
   int index;
   char *mode;
 
-  SCM_ASSERT (SCM_NIMP (scmmode) && SCM_STRINGP (scmmode), scmmode,
+  SCM_ASSERT (scm_is_string (scmmode), scmmode,
               SCM_ARG1, rc_name);
   
   mode = SCM_STRING_CHARS (scmmode);
@@ -111,7 +111,7 @@ g_rc_mode_general(SCM mode,
 
 SCM g_rc_gsymcheck_version(SCM version)
 {
-  SCM_ASSERT (SCM_NIMP (version) && SCM_STRINGP (version), version,
+  SCM_ASSERT (scm_is_string (version), version,
 	      SCM_ARG1, "gsymcheck-version");
   
   if (g_strcasecmp (SCM_STRING_CHARS (version), VERSION) != 0) {

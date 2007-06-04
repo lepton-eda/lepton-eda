@@ -80,7 +80,7 @@ g_rc_mode_general(SCM scmmode,
   int index;
   char *mode;
 
-  SCM_ASSERT (SCM_NIMP (scmmode) && SCM_STRINGP (scmmode), scmmode,
+  SCM_ASSERT (scm_is_string (scmmode), scmmode,
               SCM_ARG1, rc_name);
   
   mode = SCM_STRING_CHARS (scmmode);
@@ -111,7 +111,7 @@ g_rc_mode_general(SCM scmmode,
 
 SCM g_rc_gnetlist_version(SCM version)
 {
-  SCM_ASSERT (SCM_NIMP (version) && SCM_STRINGP (version), version,
+  SCM_ASSERT (scm_is_string (version), version,
               SCM_ARG1, "gnetlist-version");
 
   if (strcmp (SCM_STRING_CHARS (version), VERSION) != 0) {
@@ -122,7 +122,7 @@ SCM g_rc_gnetlist_version(SCM version)
             "While gnetlist is in ALPHA, please be sure that you have the latest rc file.\n");
   }
 
-  return SCM_MAKINUM (0);
+  return scm_from_int (0);
 }
 
 
@@ -183,7 +183,7 @@ SCM g_rc_hierarchy_netattrib_mangle(SCM mode)
 
 SCM g_rc_hierarchy_netname_separator(SCM name)
 {
-  SCM_ASSERT (SCM_NIMP (name) && SCM_STRINGP (name), name,
+  SCM_ASSERT (scm_is_string (name), name,
               SCM_ARG1, "hierarchy-netname-separator");
 
   if (default_hierarchy_netname_separator) {
@@ -197,7 +197,7 @@ SCM g_rc_hierarchy_netname_separator(SCM name)
 
 SCM g_rc_hierarchy_netattrib_separator(SCM name)
 {
-  SCM_ASSERT (SCM_NIMP (name) && SCM_STRINGP (name), name,
+  SCM_ASSERT (scm_is_string (name), name,
               SCM_ARG1, "hierarchy-netattrib-separator");
 
   if (default_hierarchy_netattrib_separator) {
@@ -211,7 +211,7 @@ SCM g_rc_hierarchy_netattrib_separator(SCM name)
 
 SCM g_rc_hierarchy_uref_separator(SCM name)
 {
-  SCM_ASSERT (SCM_NIMP (name) && SCM_STRINGP (name), name,
+  SCM_ASSERT (scm_is_string (name), name,
               SCM_ARG1, "hierarchy-uref-separator");
 
   if (default_hierarchy_uref_separator) {
@@ -258,7 +258,7 @@ SCM g_rc_hierarchy_uref_order(SCM mode)
 
 SCM g_rc_unnamed_netname(SCM name)
 {
-  SCM_ASSERT (SCM_NIMP (name) && SCM_STRINGP (name), name,
+  SCM_ASSERT (scm_is_string (name), name,
               SCM_ARG1, "unamed-netname");
 
   if (default_unnamed_netname) {

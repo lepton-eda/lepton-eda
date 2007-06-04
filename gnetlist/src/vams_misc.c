@@ -89,8 +89,8 @@ vams_get_package_attributes(SCM scm_uref)
 	char *uref;
 	char *return_value=NULL;
 
-	SCM_ASSERT( (SCM_NIMP (scm_uref) && SCM_STRINGP (scm_uref) ),
-		    scm_uref , SCM_ARG1, "gnetlist:vams-get-package-attributes");
+	SCM_ASSERT(scm_is_string (scm_uref), scm_uref, SCM_ARG1, 
+		   "gnetlist:vams-get-package-attributes");
 
     uref = SCM_STRING_CHARS (scm_uref);
 

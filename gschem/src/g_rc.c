@@ -98,7 +98,7 @@ SCM g_rc_gschem_version(SCM version)
 {
   SCM ret;
   
-  SCM_ASSERT (SCM_NIMP (version) && SCM_STRINGP (version), version,
+  SCM_ASSERT (scm_is_string (version), version,
               SCM_ARG1, "gschem-version");
 
   if (g_strcasecmp (SCM_STRING_CHARS (version), VERSION) != 0) {
@@ -135,23 +135,23 @@ static SCM g_rc_color_general(SCM index, SCM color, SCM outline_color,
   int image_blue;
   SCM ret;
 
-  SCM_ASSERT (SCM_INUMP (index),   index, SCM_ARG1, rc_name);
-  SCM_ASSERT (SCM_STRINGP (color), color, SCM_ARG2, rc_name);
-  SCM_ASSERT (SCM_NIMP (outline_color) && SCM_STRINGP (outline_color),
+  SCM_ASSERT (scm_is_integer (index),   index, SCM_ARG1, rc_name);
+  SCM_ASSERT (scm_is_string (color), color, SCM_ARG2, rc_name);
+  SCM_ASSERT (scm_is_string (outline_color),
               outline_color, SCM_ARG3, rc_name);
-  SCM_ASSERT (SCM_NIMP (ps_color) && SCM_STRINGP (ps_color), ps_color,
+  SCM_ASSERT (scm_is_string (ps_color), ps_color,
               SCM_ARG4, rc_name);
-  SCM_ASSERT (SCM_INUMP (ir), ir, SCM_ARG5, rc_name);
-  SCM_ASSERT (SCM_INUMP (ig), ig, SCM_ARG6, rc_name);
-  SCM_ASSERT (SCM_INUMP (ib), ib, SCM_ARG7, rc_name);
+  SCM_ASSERT (scm_is_integer (ir), ir, SCM_ARG5, rc_name);
+  SCM_ASSERT (scm_is_integer (ig), ig, SCM_ARG6, rc_name);
+  SCM_ASSERT (scm_is_integer (ib), ib, SCM_ARG7, rc_name);
 
-  color_index        = SCM_INUM (index);
+  color_index        = scm_to_int (index);
   color_name         = SCM_STRING_CHARS (color);
   outline_color_name = SCM_STRING_CHARS (outline_color);
   ps_color_string    = SCM_STRING_CHARS (ps_color);
-  image_red          = SCM_INUM (ir);
-  image_green        = SCM_INUM (ig);
-  image_blue         = SCM_INUM (ib);
+  image_red          = scm_to_int (ir);
+  image_green        = scm_to_int (ig);
+  image_blue         = scm_to_int (ib);
   
   status = s_color_request (color_index, color_name, outline_color_name,
                             ps_color_string, 
@@ -346,7 +346,7 @@ static SCM g_rc_mode_general(SCM scmmode,
   int index;
   char *mode;
 
-  SCM_ASSERT (SCM_NIMP (scmmode) && SCM_STRINGP (scmmode), scmmode,
+  SCM_ASSERT (scm_is_string (scmmode), scmmode,
               SCM_ARG1, rc_name);
   
   mode = SCM_STRING_CHARS (scmmode);
@@ -527,10 +527,10 @@ SCM g_rc_text_display_zoomfactor(SCM zoomfactor)
 {
   int val;
   
-  SCM_ASSERT (SCM_INUMP (zoomfactor), zoomfactor,
+  SCM_ASSERT (scm_is_integer (zoomfactor), zoomfactor,
               SCM_ARG1, "test-display-zoom-factor");
 
-  val = SCM_INUM (zoomfactor);
+  val = scm_to_int (zoomfactor);
   if (val == 0) {
     fprintf(stderr,
             _("Invalid zoomfactor [%d] passed to %s\n"),
@@ -557,7 +557,7 @@ SCM g_rc_scrollbar_update(SCM scmmode)
 #endif
   SCM ret = SCM_BOOL_T;
 
-  SCM_ASSERT (SCM_NIMP (scmmode) && SCM_STRINGP (scmmode), scmmode,
+  SCM_ASSERT (scm_is_string (scmmode), scmmode,
               SCM_ARG1, "scrollbar-update");
   
 #if 0
@@ -647,9 +647,9 @@ SCM g_rc_text_size(SCM size)
 {
   int val;
 
-  SCM_ASSERT (SCM_INUMP (size), size, SCM_ARG1, "text-size");
+  SCM_ASSERT (scm_is_integer (size), size, SCM_ARG1, "text-size");
   
-  val = SCM_INUM (size);
+  val = scm_to_int (size);
   if (val == 0) {
     fprintf(stderr,
             _("Invalid size [%d] passed to text-size\n"),
@@ -718,9 +718,9 @@ SCM g_rc_snap_size(SCM size)
 {
   int val;
 
-  SCM_ASSERT (SCM_INUMP (size), size, SCM_ARG1, "snap-size");
+  SCM_ASSERT (scm_is_integer (size), size, SCM_ARG1, "snap-size");
 
-  val = SCM_INUM (size);
+  val = scm_to_int (size);
   if (val == 0) {
     fprintf(stderr, _("Invalid size [%d] passed to snap-size\n"),
             val);
@@ -760,7 +760,7 @@ SCM g_rc_attribute_name(SCM scm_path)
   char *path;
   SCM ret;
 
-  SCM_ASSERT (SCM_NIMP (scm_path) && SCM_STRINGP (scm_path), scm_path,
+  SCM_ASSERT (scm_is_string (scm_path), scm_path,
               SCM_ARG1, "attribute-name");
 
   path = SCM_STRING_CHARS (scm_path);
@@ -789,7 +789,7 @@ SCM g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
 #ifdef HAS_LIBSTROKE
   char *stroke;
 
-  SCM_ASSERT (SCM_NIMP (scm_stroke) && SCM_STRINGP (scm_stroke), scm_stroke,
+  SCM_ASSERT (scm_is_string (scm_stroke), scm_stroke,
               SCM_ARG1, "stroke");
 
   stroke = SCM_STRING_CHARS (scm_stroke);
@@ -871,7 +871,7 @@ SCM g_rc_paper_sizes(SCM scm_papername, SCM scm_width, SCM scm_height)
   char *papername;
   SCM ret;
 
-  SCM_ASSERT (SCM_STRINGP (scm_papername), scm_papername,
+  SCM_ASSERT (scm_is_string (scm_papername), scm_papername,
               SCM_ARG1, FUNC_NAME);
   SCM_ASSERT (SCM_NIMP (scm_width) && SCM_REALP (scm_width), scm_width,
               SCM_ARG2, FUNC_NAME);
@@ -971,12 +971,12 @@ SCM g_rc_image_color(SCM mode)
  */
 SCM g_rc_image_size(SCM width, SCM height)
 {
-  SCM_ASSERT (SCM_INUMP (width),  width,  SCM_ARG1, "image-size");
-  SCM_ASSERT (SCM_INUMP (height), height, SCM_ARG2, "image-size");
+  SCM_ASSERT (scm_is_integer (width),  width,  SCM_ARG1, "image-size");
+  SCM_ASSERT (scm_is_integer (height), height, SCM_ARG2, "image-size");
   
   /* yes this is legit, we are casting the resulting double to an int */
-  default_image_width  = SCM_INUM (width);
-  default_image_height = SCM_INUM (height);
+  default_image_width  = scm_to_int (width);
+  default_image_height = scm_to_int (height);
 
   return SCM_BOOL_T;
 }
@@ -1267,9 +1267,9 @@ SCM g_rc_undo_levels(SCM levels)
 {
   int val;
 
-  SCM_ASSERT (SCM_INUMP (levels), levels, SCM_ARG1, "undo-levels");
+  SCM_ASSERT (scm_is_integer (levels), levels, SCM_ARG1, "undo-levels");
 
-  val = SCM_INUM (levels);
+  val = scm_to_int (levels);
 
   if (val == 0) {
     fprintf(stderr, _("Invalid num levels [%d] passed to undo-levels\n"),
@@ -1372,7 +1372,7 @@ SCM g_rc_sort_component_library(SCM mode)
  */
 SCM g_rc_add_menu(SCM menu_name, SCM menu_items)
 {
-  SCM_ASSERT (SCM_NIMP (menu_name) && SCM_STRINGP (menu_name), menu_name,
+  SCM_ASSERT (scm_is_string (menu_name), menu_name,
               SCM_ARG1, "add-menu");
   SCM_ASSERT (SCM_NIMP (menu_items) && SCM_CONSP (menu_items), menu_items,
               SCM_ARG2, "add-menu");
@@ -1389,11 +1389,11 @@ SCM g_rc_add_menu(SCM menu_name, SCM menu_items)
  */
 SCM g_rc_window_size(SCM width, SCM height)
 {
-  SCM_ASSERT (SCM_INUMP (width),  width,  SCM_ARG1, "window-size");
-  SCM_ASSERT (SCM_INUMP (height), height, SCM_ARG2, "window-size");
+  SCM_ASSERT (scm_is_integer (width),  width,  SCM_ARG1, "window-size");
+  SCM_ASSERT (scm_is_integer (height), height, SCM_ARG2, "window-size");
   
-  default_width  = SCM_INUM (width);
-  default_height = SCM_INUM (height);
+  default_width  = scm_to_int (width);
+  default_height = scm_to_int (height);
 
   return SCM_BOOL_T;
 }
@@ -1492,9 +1492,9 @@ SCM g_rc_bus_ripper_size(SCM size)
 {
   int val;
 
-  SCM_ASSERT (SCM_INUMP (size), size, SCM_ARG1, "bus-ripper-size");
+  SCM_ASSERT (scm_is_integer (size), size, SCM_ARG1, "bus-ripper-size");
   
-  val = SCM_INUM (size);
+  val = scm_to_int (size);
 
   if (val == 0) {
     fprintf(stderr, _("Invalid size [%d] passed to bus-ripper-size\n"),
@@ -1567,9 +1567,9 @@ SCM g_rc_grid_dot_size(SCM dotsize)
 {
   int val;
 
-  SCM_ASSERT (SCM_INUMP (dotsize), dotsize, SCM_ARG1, "grid-dot-size");
+  SCM_ASSERT (scm_is_integer (dotsize), dotsize, SCM_ARG1, "grid-dot-size");
   
-  val = SCM_INUM (dotsize);
+  val = scm_to_int (dotsize);
 
   if (val <= 0) {
     fprintf(stderr, _("Invalid dot size [%d] passed to grid-dot-size\n"),
@@ -1608,9 +1608,9 @@ SCM g_rc_grid_fixed_threshold(SCM spacing)
 {
   int val;
 
-  SCM_ASSERT (SCM_INUMP (spacing), spacing, SCM_ARG1, "grid-fixed-threshold");
+  SCM_ASSERT (scm_is_integer (spacing), spacing, SCM_ARG1, "grid-fixed-threshold");
   
-  val = SCM_INUM (spacing);
+  val = scm_to_int (spacing);
 
   if (val <= 0) {
     fprintf(stderr, _("Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"),
@@ -1632,10 +1632,10 @@ SCM g_rc_output_vector_threshold(SCM numlines)
 {
   int val;
 
-  SCM_ASSERT (SCM_INUMP (numlines), numlines,
+  SCM_ASSERT (scm_is_integer (numlines), numlines,
               SCM_ARG1, "output-vector-threshold");
   
-  val = SCM_INUM (numlines);
+  val = scm_to_int (numlines);
 
   default_print_vector_threshold = val;
 
@@ -1651,10 +1651,10 @@ SCM g_rc_add_attribute_offset(SCM offset)
 {
   int val;
 
-  SCM_ASSERT (SCM_INUMP (offset), offset,
+  SCM_ASSERT (scm_is_integer (offset), offset,
               SCM_ARG1, "add-attribute-offset");
   
-  val = SCM_INUM (offset);
+  val = scm_to_int (offset);
 
   if (val < 0) {
     fprintf(stderr, _("Invalid offset [%d] passed to add-attribute-offset\n"),
@@ -1676,9 +1676,9 @@ SCM g_rc_auto_save_interval(SCM seconds)
 {
   int val;
 
-  SCM_ASSERT (SCM_INUMP (seconds), seconds, SCM_ARG1, "auto-save-interval");
+  SCM_ASSERT (scm_is_integer (seconds), seconds, SCM_ARG1, "auto-save-interval");
 
-  val = SCM_INUM (seconds);
+  val = scm_to_int (seconds);
 
   if (val < 0) {
     fprintf(stderr, _("Invalid number of seconds [%d] passed to auto-save-interval\n"),
@@ -1717,9 +1717,9 @@ SCM g_rc_mousepan_gain(SCM gain)
 {
   int val;
 
-  SCM_ASSERT (SCM_INUMP (gain), gain, SCM_ARG1, "mousepan-gain");
+  SCM_ASSERT (scm_is_integer (gain), gain, SCM_ARG1, "mousepan-gain");
   
-  val = SCM_INUM (gain);
+  val = scm_to_int (gain);
 
   if (val <= 0) {
     fprintf(stderr, _("Invalid gain [%d] passed to mousepan-gain\n"),
@@ -1740,9 +1740,9 @@ SCM g_rc_keyboardpan_gain(SCM gain)
 {
   int val;
 
-  SCM_ASSERT (SCM_INUMP (gain), gain, SCM_ARG1, "keyboardpan-gain");
+  SCM_ASSERT (scm_is_integer (gain), gain, SCM_ARG1, "keyboardpan-gain");
   
-  val = SCM_INUM (gain);
+  val = scm_to_int (gain);
 
   if (val <= 0) {
     fprintf(stderr, _("Invalid gain [%d] passed to keyboardpan-gain\n"),
@@ -1765,7 +1765,7 @@ SCM g_rc_print_command(SCM scm_command)
 {
   char *command;
 
-  SCM_ASSERT (SCM_STRINGP (scm_command), scm_command,
+  SCM_ASSERT (scm_is_string (scm_command), scm_command,
               SCM_ARG1, FUNC_NAME);
   
   command = SCM_STRING_CHARS (scm_command);
@@ -1786,9 +1786,9 @@ SCM g_rc_select_slack_pixels(SCM pixels)
 {
   int val;
 
-  SCM_ASSERT (SCM_INUMP (pixels), pixels, SCM_ARG1, "select-slack-pixels");
+  SCM_ASSERT (scm_is_integer (pixels), pixels, SCM_ARG1, "select-slack-pixels");
   
-  val = SCM_INUM (pixels);
+  val = scm_to_int (pixels);
 
   if (val <= 0) {
     fprintf(stderr, _("Invalid number of pixels [%d] passed to select-slack-pixels\n"),

@@ -145,9 +145,9 @@ SCM g_add_attrib(SCM object, SCM scm_attrib_name,
   int i;
   gchar *newtext=NULL;
 
-  SCM_ASSERT (SCM_STRINGP(scm_attrib_name), scm_attrib_name,
+  SCM_ASSERT (scm_is_string(scm_attrib_name), scm_attrib_name,
 	      SCM_ARG2, "add-attribute-to-object");
-  SCM_ASSERT (SCM_STRINGP(scm_attrib_value), scm_attrib_value,
+  SCM_ASSERT (scm_is_string(scm_attrib_value), scm_attrib_value,
 	      SCM_ARG3, "add-attribute-to-object");
   SCM_ASSERT (scm_boolean_p(scm_vis), scm_vis,
 	      SCM_ARG4, "add-attribute-to-object");
@@ -163,16 +163,16 @@ SCM g_add_attrib(SCM object, SCM scm_attrib_name,
   attrib_value = SCM_STRING_CHARS(scm_attrib_value);
   vis = SCM_NFALSEP(scm_vis);
 
-  for (i=0; i<=SCM_INUM(scm_length(scm_show))-1; i++) {
+  for (i=0; i<=scm_to_int(scm_length(scm_show))-1; i++) {
     /* Check every element in the list. It should be a string! */
-    SCM_ASSERT(scm_list_ref(scm_show, SCM_MAKINUM(i)), 
+    SCM_ASSERT(scm_list_ref(scm_show, scm_from_int(i)), 
 	       scm_show,
 	       SCM_ARG5, "add-attribute-to-object"); 
-    SCM_ASSERT(SCM_STRINGP(scm_list_ref(scm_show, SCM_MAKINUM(i))), 
+    SCM_ASSERT(scm_is_string(scm_list_ref(scm_show, scm_from_int(i))), 
 	       scm_show,
 	       SCM_ARG5, "add-attribute-to-object"); 
     
-    value = SCM_STRING_CHARS(scm_list_ref(scm_show, SCM_MAKINUM(i)));
+    value = SCM_STRING_CHARS(scm_list_ref(scm_show, scm_from_int(i)));
     
     SCM_ASSERT(value, scm_show,
 	       SCM_ARG5, "add-attribute-to-object"); 
@@ -235,10 +235,10 @@ SCM g_get_pin_ends(SCM object)
   SCM_ASSERT (o_current->line != NULL,
 	      object, SCM_ARG1, "get-pin-ends");
 
-  coord1 = scm_cons(SCM_MAKINUM(o_current->line->x[0]), 
-		    SCM_MAKINUM(o_current->line->y[0]));
-  coord2 = scm_cons(SCM_MAKINUM(o_current->line->x[1]),
-		    SCM_MAKINUM(o_current->line->y[1]));
+  coord1 = scm_cons(scm_from_int(o_current->line->x[0]), 
+		    scm_from_int(o_current->line->y[0]));
+  coord2 = scm_cons(scm_from_int(o_current->line->x[1]),
+		    scm_from_int(o_current->line->y[1]));
   if (o_current->whichend == 0) {
     coords = scm_cons(coord1, scm_list(coord2));
   } else {
@@ -288,17 +288,17 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
   int rotation = 0;
   int x = -1, y = -1;
 
-  SCM_ASSERT (SCM_STRINGP(scm_colorname), scm_colorname,
+  SCM_ASSERT (scm_is_string(scm_colorname), scm_colorname,
 	      SCM_ARG2, "set-attribute-text-properties!");
-  SCM_ASSERT ( SCM_INUMP(scm_size),
+  SCM_ASSERT ( scm_is_integer(scm_size),
                scm_size, SCM_ARG3, "set-attribute-text-properties!");
-  SCM_ASSERT (SCM_STRINGP(scm_alignment), scm_alignment,
+  SCM_ASSERT (scm_is_string(scm_alignment), scm_alignment,
 	      SCM_ARG4, "set-attribute-text-properties!");
-  SCM_ASSERT ( SCM_INUMP(scm_rotation),
+  SCM_ASSERT ( scm_is_integer(scm_rotation),
                scm_rotation, SCM_ARG5, "set-attribute-text-properties!");
-  SCM_ASSERT ( SCM_INUMP(scm_x),
+  SCM_ASSERT ( scm_is_integer(scm_x),
                scm_x, SCM_ARG6, "set-attribute-text-properties!");
-  SCM_ASSERT ( SCM_INUMP(scm_y),
+  SCM_ASSERT ( scm_is_integer(scm_y),
                scm_y, SCM_ARG7, "set-attribute-text-properties!");
 
   colorname = SCM_STRING_CHARS(scm_colorname);
@@ -311,10 +311,10 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
     color = -1;
   }
   
-  size = SCM_INUM(scm_size);
-  rotation = SCM_INUM(scm_rotation);
-  x = SCM_INUM(scm_x);
-  y = SCM_INUM(scm_y);
+  size = scm_to_int(scm_size);
+  rotation = scm_to_int(scm_rotation);
+  x = scm_to_int(scm_x);
+  y = scm_to_int(scm_y);
   
   alignment_string = SCM_STRING_CHARS(scm_alignment);
 
@@ -350,7 +350,7 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
   }
   if (alignment == -2) {
     /* Bad specified */
-    SCM_ASSERT (SCM_STRINGP(scm_alignment), scm_alignment,
+    SCM_ASSERT (scm_is_string(scm_alignment), scm_alignment,
 		SCM_ARG4, "set-attribute-text-properties!");
   }
 
@@ -566,23 +566,23 @@ SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclu
 	      SCM_ARG3, "get-object-bounds");
 
   /* Build the exclude attrib list */
-  for (i=0; i <= SCM_INUM(scm_length(scm_exclude_attribs))-1; i++) {
-    SCM_ASSERT (SCM_STRINGP(scm_list_ref(scm_exclude_attribs, SCM_MAKINUM(i))), 
+  for (i=0; i <= scm_to_int(scm_length(scm_exclude_attribs))-1; i++) {
+    SCM_ASSERT (scm_is_string(scm_list_ref(scm_exclude_attribs, scm_from_int(i))), 
 		scm_exclude_attribs, 
 		SCM_ARG2, "get-object-bounds"); 
     exclude_attrib_list = g_list_append(exclude_attrib_list, 
 					SCM_STRING_CHARS(scm_list_ref(scm_exclude_attribs,
-								      SCM_MAKINUM(i))));
+								      scm_from_int(i))));
   }
 
   /* Build the exclude object type list */
-  for (i=0; i <= SCM_INUM(scm_length(scm_exclude_object_type))-1; i++) {
-    SCM_ASSERT (SCM_STRINGP(scm_list_ref(scm_exclude_object_type, SCM_MAKINUM(i))), 
+  for (i=0; i <= scm_to_int(scm_length(scm_exclude_object_type))-1; i++) {
+    SCM_ASSERT (scm_is_string(scm_list_ref(scm_exclude_object_type, scm_from_int(i))), 
 		scm_exclude_object_type, 
 		SCM_ARG3, "get-object-bounds"); 
     exclude_obj_type_list = g_list_append(exclude_obj_type_list, 
 					SCM_STRING_CHARS(scm_list_ref(scm_exclude_object_type,
-								      SCM_MAKINUM(i))));
+								      scm_from_int(i))));
   }
 
   /* Get w_current and o_current. */
@@ -606,8 +606,8 @@ SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclu
   /* Free the exclude attrib_list. Don't free the nodes!! */
   g_list_free(exclude_obj_type_list);
   
-  horizontal = scm_cons (SCM_MAKINUM(left), SCM_MAKINUM(right));
-  vertical = scm_cons (SCM_MAKINUM(top), SCM_MAKINUM(bottom));
+  horizontal = scm_cons (scm_from_int(left), scm_from_int(right));
+  vertical = scm_cons (scm_from_int(top), scm_from_int(bottom));
   returned = scm_cons (horizontal, vertical);
   return (returned);
 }
@@ -683,13 +683,13 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   SCM_ASSERT (g_get_data_from_page_smob (page_smob, &w_current, &page),
 	      page_smob, SCM_ARG1, "add-component-at-xy");
   /* Check the arguments */
-  SCM_ASSERT (SCM_STRINGP(scm_comp_name), scm_comp_name,
+  SCM_ASSERT (scm_is_string(scm_comp_name), scm_comp_name,
 	      SCM_ARG2, "add-component-at-xy");
-  SCM_ASSERT ( SCM_INUMP(scm_x), scm_x, 
+  SCM_ASSERT ( scm_is_integer(scm_x), scm_x, 
                SCM_ARG3, "add-component-at-xy");
-  SCM_ASSERT ( SCM_INUMP(scm_y), scm_y, 
+  SCM_ASSERT ( scm_is_integer(scm_y), scm_y, 
                SCM_ARG4, "add-component-at-xy");
-  SCM_ASSERT ( SCM_INUMP(scm_angle), scm_angle, 
+  SCM_ASSERT ( scm_is_integer(scm_angle), scm_angle, 
                SCM_ARG5, "add-component-at-xy");
   SCM_ASSERT ( scm_boolean_p(scm_selectable), scm_selectable,
 	       SCM_ARG6, "add-component-at-xy");
@@ -698,9 +698,9 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 
   /* Get the parameters */
   comp_name = SCM_STRING_CHARS(scm_comp_name);
-  x = SCM_INUM(scm_y);
-  y = SCM_INUM(scm_y);
-  angle = SCM_INUM(scm_angle);  
+  x = scm_to_int(scm_y);
+  y = scm_to_int(scm_y);
+  angle = scm_to_int(scm_angle);  
   selectable = SCM_NFALSEP(scm_selectable);
   mirror = SCM_NFALSEP(scm_mirror);
 

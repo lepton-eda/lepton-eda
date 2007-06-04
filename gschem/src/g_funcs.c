@@ -48,7 +48,7 @@
  */
 SCM g_funcs_print(SCM filename)
 {
-  SCM_ASSERT (SCM_NIMP (filename) && SCM_STRINGP (filename), filename,
+  SCM_ASSERT (scm_is_string (filename), filename,
               SCM_ARG1, "gschem-print");
 
   if (output_filename) {
@@ -69,7 +69,7 @@ SCM g_funcs_print(SCM filename)
  */
 SCM g_funcs_postscript(SCM filename)
 {
-  SCM_ASSERT (SCM_NIMP (filename) && SCM_STRINGP (filename), filename,
+  SCM_ASSERT (scm_is_string (filename), filename,
               SCM_ARG1, "gschem-postscript");
 
   if (output_filename) {
@@ -90,7 +90,7 @@ SCM g_funcs_postscript(SCM filename)
  */
 SCM g_funcs_image(SCM filename)
 {
-  SCM_ASSERT (SCM_NIMP (filename) && SCM_STRINGP (filename), filename,
+  SCM_ASSERT (scm_is_string (filename), filename,
               SCM_ARG1, "gschem-image");
 
   if (output_filename) {
@@ -126,7 +126,7 @@ SCM g_funcs_exit(void)
 SCM g_funcs_log(SCM msg)
 {
 
-  SCM_ASSERT (SCM_NIMP (msg) && SCM_STRINGP (msg), msg,
+  SCM_ASSERT (scm_is_string (msg), msg,
               SCM_ARG1, "gschem-log");
 
   s_log_message (SCM_STRING_CHARS (msg));
@@ -142,7 +142,7 @@ SCM g_funcs_log(SCM msg)
 SCM g_funcs_msg(SCM msg)
 {
 
-  SCM_ASSERT (SCM_NIMP (msg) && SCM_STRINGP (msg), msg,
+  SCM_ASSERT (scm_is_string (msg), msg,
               SCM_ARG1, "gschem-msg");
 
   generic_msg_dialog (SCM_STRING_CHARS (msg));
@@ -159,7 +159,7 @@ SCM g_funcs_confirm(SCM msg)
 {
   int r;
 
-  SCM_ASSERT (SCM_NIMP (msg) && SCM_STRINGP (msg), msg,
+  SCM_ASSERT (scm_is_string (msg), msg,
 	      SCM_ARG1, "gschem-msg");
   
   r = generic_confirm_dialog (SCM_STRING_CHARS (msg));
@@ -181,10 +181,10 @@ SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags)
   char * r;
   SCM v;
 
-  SCM_ASSERT (SCM_NIMP (msg) && SCM_STRINGP (msg), msg,
+  SCM_ASSERT (scm_is_string (msg), msg,
 	      SCM_ARG1, "gschem-filesel");
   
-  SCM_ASSERT (SCM_NIMP (templ) && SCM_STRINGP (templ), templ,
+  SCM_ASSERT (scm_is_string (templ), templ,
 	      SCM_ARG1, "gschem-filesel");
   
   /*! \bug FIXME -- figure out the magic SCM_ASSERT for the flags */
@@ -325,7 +325,7 @@ SCM g_funcs_browse_wiki(SCM wikiname)
 
   /* Extract wiki name string from Scheme value structure.
    * If not a string, use the empty string */
-  if (SCM_STRINGP (wikiname)) {
+  if (scm_is_string (wikiname)) {
     wikistr = SCM_STRING_CHARS(wikiname);
   } else {
     wikistr = "";

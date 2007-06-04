@@ -79,7 +79,7 @@ g_rc_mode_general(SCM scmmode,
   int index;
   char *mode;
  
-  SCM_ASSERT (SCM_NIMP (scmmode) && SCM_STRINGP (scmmode), scmmode,
+  SCM_ASSERT (scm_is_string (scmmode), scmmode,
 	      SCM_ARG1, rc_name);
 
   mode = SCM_STRING_CHARS (scmmode);
@@ -110,7 +110,7 @@ g_rc_mode_general(SCM scmmode,
 SCM g_rc_gschlas_version(SCM version)
 {
 
-    SCM_ASSERT (SCM_NIMP (version) && SCM_STRINGP (version), version,
+    SCM_ASSERT (scm_is_string (version), version,
 		SCM_ARG1, "gschlas-version");
 
 

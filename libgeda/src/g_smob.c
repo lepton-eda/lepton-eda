@@ -175,8 +175,8 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
   SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
                ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
                attrib_smob, SCM_ARG1, "set-attribute-value!");
-  SCM_ASSERT ( SCM_NIMP(scm_value) && SCM_STRINGP(scm_value),
-               scm_value, SCM_ARG2, "set-attribute-value!");
+  SCM_ASSERT (scm_is_string(scm_value), scm_value, SCM_ARG2, 
+	      "set-attribute-value!");
 
   attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
   value = SCM_STRING_CHARS (scm_value);
@@ -247,18 +247,18 @@ SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
   SCM horizontal = SCM_EOL;
   SCM returned = SCM_EOL;
 
-  SCM_ASSERT (SCM_STRINGP(scm_alignment), scm_alignment,
+  SCM_ASSERT (scm_is_string(scm_alignment), scm_alignment,
 	      SCM_ARG2, "calcule-new-attrib-bounds");
-  SCM_ASSERT ( SCM_INUMP(scm_angle),
+  SCM_ASSERT ( scm_is_integer(scm_angle),
                scm_angle, SCM_ARG3, "calcule-new-attrib-bounds");
-  SCM_ASSERT ( SCM_INUMP(scm_x),
+  SCM_ASSERT ( scm_is_integer(scm_x),
                scm_x, SCM_ARG4, "calcule-new-attrib-bounds");
-  SCM_ASSERT ( SCM_INUMP(scm_y),
+  SCM_ASSERT ( scm_is_integer(scm_y),
                scm_y, SCM_ARG5, "calcule-new-attrib-bounds");
 
-  angle = SCM_INUM(scm_angle);
-  x = SCM_INUM(scm_x);
-  y = SCM_INUM(scm_y);
+  angle = scm_to_int(scm_angle);
+  x = scm_to_int(scm_x);
+  y = scm_to_int(scm_y);
   
   alignment_string = SCM_STRING_CHARS(scm_alignment);
 
@@ -294,7 +294,7 @@ SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
   }
   if (alignment == -2) {
     /* Bad specified */
-    SCM_ASSERT (SCM_STRINGP(scm_alignment), scm_alignment,
+    SCM_ASSERT (scm_is_string(scm_alignment), scm_alignment,
 		SCM_ARG2, "calcule-new-attrib-bounds");
   }
 
@@ -341,8 +341,8 @@ SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
   o_text_recreate(w_current, object);
 
   /* Construct the return value */
-  horizontal = scm_cons (SCM_MAKINUM(left), SCM_MAKINUM(right));
-  vertical = scm_cons (SCM_MAKINUM(top), SCM_MAKINUM(bottom));
+  horizontal = scm_cons (scm_from_int(left), scm_from_int(right));
+  vertical = scm_cons (scm_from_int(top), scm_from_int(bottom));
   returned = scm_cons (horizontal, vertical);
 
   return returned;
@@ -409,8 +409,8 @@ SCM g_get_attrib_bounds(SCM attrib_smob)
     world_get_text_bounds (w_current, attribute->attribute->object,
                            &left, &top, &right, &bottom);
 
-    horizontal = scm_cons (SCM_MAKINUM(left), SCM_MAKINUM(right));
-    vertical = scm_cons (SCM_MAKINUM(top), SCM_MAKINUM(bottom));
+    horizontal = scm_cons (scm_from_int(left), scm_from_int(right));
+    vertical = scm_cons (scm_from_int(top), scm_from_int(bottom));
     returned = scm_cons (horizontal, vertical);
   }
 
@@ -441,7 +441,7 @@ SCM g_get_attrib_angle(SCM attrib_smob)
 	       attribute->attribute->object->text,
                attrib_smob, SCM_ARG1, "get-attribute-angle");
 
-  return SCM_MAKINUM(attribute->attribute->object->text->angle);
+  return scm_from_int(attribute->attribute->object->text->angle);
 }
 
 /*! \brief Free object smob memory.
@@ -572,7 +572,7 @@ SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
                ((long) SCM_CAR(object_smob) == object_smob_tag),
                object_smob, SCM_ARG1, "get-attrib-value-by-attrib-name");
 
-  SCM_ASSERT (SCM_STRINGP(scm_attrib_name), scm_attrib_name,
+  SCM_ASSERT (scm_is_string(scm_attrib_name), scm_attrib_name,
 	      SCM_ARG2, "get-attrib-value-by-attrib-name");
 
   /* Get parameters */

@@ -350,11 +350,11 @@ SCM g_rc_component_library(SCM path, SCM name)
   char *string;
   char *namestr = NULL;
 
-  SCM_ASSERT (SCM_NIMP (path) && SCM_STRINGP (path), path,
+  SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "component-library");
   
   if (name != SCM_UNDEFINED) {
-    SCM_ASSERT (SCM_NIMP (name) && SCM_STRINGP (name), name,
+    SCM_ASSERT (scm_is_string (name), name,
 		SCM_ARG2, "component-library");
     namestr = SCM_STRING_CHARS (name);
   }
@@ -407,12 +407,12 @@ SCM g_rc_component_library_command (SCM command, SCM name)
 {
   gchar *namestr = NULL;
   gchar *cmdstr = NULL;
-  SCM_ASSERT (SCM_STRINGP (command), command, SCM_ARG1, 
+  SCM_ASSERT (scm_is_string (command), command, SCM_ARG1, 
 	      "component-library-command");
   cmdstr = g_strdup(SCM_STRING_CHARS (command));
 
   if (name != SCM_UNDEFINED) {
-    SCM_ASSERT (SCM_STRINGP (name), name, SCM_ARG2, 
+    SCM_ASSERT (scm_is_string (name), name, SCM_ARG2, 
 	      "component-library-command");
     namestr = SCM_STRING_CHARS (name);
   }
@@ -448,7 +448,7 @@ SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name)
 	      "component-library-funcs");
   SCM_ASSERT (scm_is_true (scm_procedure_p (getfunc)), getfunc, SCM_ARG2,
 	      "component-library-funcs");
-  SCM_ASSERT (SCM_STRINGP (name), name, SCM_ARG1, 
+  SCM_ASSERT (scm_is_string (name), name, SCM_ARG1, 
 	      "component-library-funcs");
 
   if (s_clib_add_scm (listfunc, getfunc, SCM_STRING_CHARS (name)) != NULL) {
@@ -471,7 +471,7 @@ SCM g_rc_component_library_search(SCM path)
   GDir *dir;
   const gchar *entry;
   
-  SCM_ASSERT (SCM_NIMP (path) && SCM_STRINGP (path), path,
+  SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "component-library-search");
 
   string = g_strdup (SCM_STRING_CHARS (path));
@@ -547,7 +547,7 @@ SCM g_rc_source_library(SCM path)
 {
   char *string;
   
-  SCM_ASSERT (SCM_NIMP (path) && SCM_STRINGP (path), path,
+  SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "source-library");
 
   string = g_strdup (SCM_STRING_CHARS (path));
@@ -600,7 +600,7 @@ SCM g_rc_source_library_search(SCM path)
   GDir *dir;
   const gchar *entry;
   
-  SCM_ASSERT (SCM_NIMP (path) && SCM_STRINGP (path), path,
+  SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "source-library-search");
 
   string = g_strdup (SCM_STRING_CHARS (path));
@@ -720,7 +720,7 @@ SCM g_rc_world_size(SCM width, SCM height, SCM border)
  */
 SCM g_rc_default_series_name(SCM name)
 {
-  SCM_ASSERT (SCM_NIMP (name) && SCM_STRINGP (name), name,
+  SCM_ASSERT (scm_is_string (name), name,
               SCM_ARG1, "default-series-name");
 
   if (default_series_name) {
@@ -741,7 +741,7 @@ SCM g_rc_default_series_name(SCM name)
  */
 SCM g_rc_untitled_name(SCM name)
 {
-  SCM_ASSERT (SCM_NIMP (name) && SCM_STRINGP (name), name,
+  SCM_ASSERT (scm_is_string (name), name,
               SCM_ARG1, "untitled-name");
 
   if (default_untitled_name) {
@@ -764,7 +764,7 @@ SCM g_rc_font_directory(SCM path)
 {
   char *string;
 
-  SCM_ASSERT (SCM_NIMP (path) && SCM_STRINGP (path), path,
+  SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "font-directory");
 
   string = g_strdup (SCM_STRING_CHARS (path));
@@ -801,7 +801,7 @@ SCM g_rc_scheme_directory(SCM path)
 {
   char *string;
 
-  SCM_ASSERT (SCM_NIMP (path) && SCM_STRINGP (path), path,
+  SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "scheme-directory");
 
   string = g_strdup (SCM_STRING_CHARS (path));
@@ -838,7 +838,7 @@ SCM g_rc_bitmap_directory(SCM path)
 {
   char *string;
 
-  SCM_ASSERT (SCM_NIMP (path) && SCM_STRINGP (path), path,
+  SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "bitmap-directory");
   
   string = g_strdup (SCM_STRING_CHARS (path));
@@ -873,7 +873,7 @@ SCM g_rc_bitmap_directory(SCM path)
  */
 SCM g_rc_bus_ripper_symname(SCM scmsymname)
 {
-  SCM_ASSERT (SCM_NIMP (scmsymname) && SCM_STRINGP (scmsymname), scmsymname,
+  SCM_ASSERT (scm_is_string (scmsymname), scmsymname,
               SCM_ARG1, "bus-ripper-symname");
 
   if (default_bus_ripper_symname) {
@@ -895,7 +895,7 @@ SCM g_rc_postscript_prolog(SCM scmsymname)
 {
   char *string;
   
-  SCM_ASSERT (SCM_NIMP (scmsymname) && SCM_STRINGP (scmsymname), scmsymname,
+  SCM_ASSERT (scm_is_string (scmsymname), scmsymname,
               SCM_ARG1, "postsript-prolog");
 
   if (default_postscript_prolog) {
@@ -951,9 +951,9 @@ SCM g_rc_map_font_character_to_file(SCM scmcharstr, SCM scmfilename)
   gchar *charstr, *filename;
   gunichar character;
 
-  SCM_ASSERT (SCM_STRINGP (scmcharstr), scmcharstr,
+  SCM_ASSERT (scm_is_string (scmcharstr), scmcharstr,
               SCM_ARG1, "map-font-character-to-file");
-  SCM_ASSERT (SCM_STRINGP (scmfilename), scmfilename,
+  SCM_ASSERT (scm_is_string (scmfilename), scmfilename,
               SCM_ARG2, "map-font-character-to-file");
 
   charstr  = SCM_STRING_CHARS (scmcharstr);
@@ -989,7 +989,7 @@ SCM g_rc_map_font_character_to_file(SCM scmcharstr, SCM scmfilename)
  */
 SCM g_rc_always_promote_attributes(SCM scmsymname)
 {
-  SCM_ASSERT (SCM_NIMP (scmsymname) && SCM_STRINGP (scmsymname), scmsymname,
+  SCM_ASSERT (scm_is_string (scmsymname), scmsymname,
               SCM_ARG1, "always-promote-attributes");
 
   if (default_always_promote_attributes) {

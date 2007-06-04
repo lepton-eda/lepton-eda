@@ -140,12 +140,12 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
     scm_items_len = (int) scm_ilength (scm_items);
     for (j = 0 ; j < scm_items_len; j++) {
 
-      scm_index = SCM_MAKINUM (j);
+      scm_index = scm_from_int (j);
       scm_item = scm_list_ref (scm_items, scm_index);
       scm_item_name = SCM_CAR (scm_item);
       scm_item_func = SCM_CADR (scm_item);
       scm_item_hotkey_func = SCM_CADDR (scm_item);
-      SCM_ASSERT(SCM_STRINGP(scm_item_name), scm_item_name, SCM_ARGn, "get_main_menu item_name");
+      SCM_ASSERT(scm_is_string(scm_item_name), scm_item_name, SCM_ARGn, "get_main_menu item_name");
       SCM_ASSERT(SCM_SYMBOLP(scm_item_func), scm_item_func, SCM_ARGn, "get_main_menu item_func");
       SCM_ASSERT(SCM_SYMBOLP(scm_item_hotkey_func), scm_item_hotkey_func, SCM_ARGn, "get_main_menu hotkey_func");
 

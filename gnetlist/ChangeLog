@@ -3,7 +3,14 @@
 	* tests/spice-sdb/Makefile.am: Oops, because of the below disable,
 	need to explicitly include run_tests.sh.  This needs to b undone 
 	once these tests pass make distcheck again.
+2007-06-04 Peter Brett <peter@peter-b.co.uk>
 
+	* src/g_netlist.c, src/g_rc.c, src/vams_misc.c: Replace deprecated
+	Guile functions & macros.
+
+	Replace deprecated SCM_STRINGP, SCM_INUM, SCM_INUMP & SCM_MAKINUM
+	with recommended equivalents for Guile 1.8.
+	
 2007-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* tests/spice-sdb/Makefile.am: Disabled spice-sdb tests
