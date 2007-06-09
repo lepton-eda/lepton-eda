@@ -1,3 +1,13 @@
+2007-06-09 Peter TB Brett <peter@peter-b.co.uk>
+
+	* include/prototype.h, src/s_clib.c: Fix gschem's
+	sort-component-library option
+
+	In the last release, the sort-component-library gschemrc option
+	did nothing.  This patch corrects the issue, by adding an argument
+	to s_clib_get_sources() which enables or disables sorting the list
+	of component sources.
+
 2007-06-09 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
 	* src/a_basic.c: Avoid writting '\r' to files on MinGW.

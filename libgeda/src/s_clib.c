@@ -429,10 +429,12 @@ static gchar *run_source_command (gchar **argv)
  *  calls to s_clib_add_directory() or s_clib_add_command().
  *  \return A \b GList of CLibSource.
  */
-GList *s_clib_get_sources ()
+GList *s_clib_get_sources (const gboolean sorted)
 {
   GList *l = g_list_copy(clib_sources);
-  l = g_list_sort (l, (GCompareFunc) compare_source_name);
+  if (sorted) {
+    l = g_list_sort (l, (GCompareFunc) compare_source_name);
+  }
   return l;
 }
 

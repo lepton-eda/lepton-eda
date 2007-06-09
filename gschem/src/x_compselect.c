@@ -563,7 +563,7 @@ compselect_create_child_model (void)
   store = (GtkTreeStore*)gtk_tree_store_new (1, G_TYPE_POINTER);
   
   /* populate component store */
-  srchead = s_clib_get_sources ();
+  srchead = s_clib_get_sources (global_window_current->sort_component_library != 0);
   for (srclist = srchead; 
        srclist != NULL; 
        srclist = g_list_next (srclist)) {

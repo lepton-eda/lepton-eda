@@ -1,3 +1,13 @@
+2007-06-09 Peter TB Brett <peter@peter-b.co.uk>
+
+	* lib/system-gschemrc.in, src/x_compselect.c: Fix gschem's
+	sort-component-library option
+
+	In the last release, the sort-component-library gschemrc option
+	did nothing.  This patch corrects the issue, by adding an argument
+	to s_clib_get_sources() which enables or disables sorting the list
+	of component sources.
+
 2007-06-09 Peter Clifton <pcjc2@cam.ac.uk>
 
 	* configure.ac.in, src/gschem.c: Call g_thread_init().

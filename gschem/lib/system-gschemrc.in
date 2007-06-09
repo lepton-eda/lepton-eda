@@ -234,12 +234,13 @@
 
 ; sort-components-library string
 ;
-; If this is enabled, then the component library will be sorted in alpha
-; order.  Enabling this will hide the search order for components, keep
-; that in mind.
+; If this is enabled, then the component library will be sorted in
+; alphanumeric order.  Bear in mind that this option is totally
+; cosmetic, and will not alter the component search order (latest
+; added gets scanned first).
 ;
-(sort-component-library "disabled")
-;(sort-component-library "enabled")
+;(sort-component-library "disabled")
+(sort-component-library "enabled")
 
 ; text-feedback string
 ;
