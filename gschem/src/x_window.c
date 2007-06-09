@@ -396,7 +396,9 @@ static GtkWidget *x_window_stock_pixmap(const char *stock, TOPLEVEL *w_current)
     if (pixmap != NULL) {
       wpixmap = gtk_image_new_from_pixmap (pixmap, mask);
     } else {
-      s_log_message("Could not find image at file: %s.\n", filename);
+     s_log_message("Could not find image at file: %s.\n", filename);
+     wpixmap = gtk_image_new_from_stock(GTK_STOCK_MISSING_IMAGE , 
+					GTK_ICON_SIZE_SMALL_TOOLBAR);
     }
   }
 

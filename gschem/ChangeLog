@@ -25,6 +25,8 @@
 
 	Fix for bug #1714493. If a pixmap file doesn't exist, write
 	a message to the log window. Thanks to the anonymous submitter.
+
+	Improve this one loading the GTK missing image pixmap.
 	
 	* src/x_menus.c: Avoid writting '\r' to files on MinGW.
 
