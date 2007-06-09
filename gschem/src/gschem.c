@@ -26,6 +26,8 @@
 #include <unistd.h>
 #endif
 
+#include <glib.h>
+
 #include <libgeda/libgeda.h>
 
 #include "../include/globals.h"
@@ -94,6 +96,14 @@ void main_prog(void *closure, int argc, char *argv[])
   char *geda_data = NULL;
   char *filename;
 
+#ifdef HAVE_GTHREAD
+  /* Gschem isn't threaded, but some of GTK's file chooser
+   * backends uses threading so we need to call g_thread_init().
+   * GLib requires threading be initialised before any other GLib
+   * functions are called. Do it now if its not already setup.  */
+  if (!g_thread_supported ()) g_thread_init (NULL);
+#endif
+
 #if ENABLE_NLS
   /* this should be equivalent to setlocale (LC_ALL, "") */
   gtk_set_locale();
@@ -109,7 +119,6 @@ void main_prog(void *closure, int argc, char *argv[])
   gtk_disable_setlocale(); 
 
 #endif
-
 
   gtk_init(&argc, &argv);
   visual = gdk_visual_get_system();

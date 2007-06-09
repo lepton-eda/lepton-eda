@@ -1,3 +1,11 @@
+2007-06-09 Peter Clifton <pcjc2@cam.ac.uk>
+
+	* configure.ac.in, src/gschem.c: Call g_thread_init().
+	
+	  GLib requires threading to be initialised before calling any of its
+	  functions, should the app require threading. Some of GTK's file
+	  chooser backends use threading, so we need to call g_thread_init().
+
 2007-06-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/g_keys.c, src/i_basic.c: Applied patch from Ivan Stankovic

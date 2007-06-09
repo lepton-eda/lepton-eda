@@ -125,9 +125,15 @@ void gattrib_main(void *closure, int argc, char *argv[])
   char *cwd;
   PAGE *p_local;
   char *logfile;
-  
 
-  
+#ifdef HAVE_GTHREAD
+  /* Gattrib isn't threaded, but some of GTK's file chooser
+   * backends uses threading so we need to call g_thread_init().
+   * GLib requires threading be initialised before any other GLib
+   * functions are called. Do it now if its not already setup.  */
+  if (!g_thread_supported ()) g_thread_init (NULL);
+#endif
+
   /* Initialize gEDA stuff */
   libgeda_init();
 

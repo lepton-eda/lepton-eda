@@ -1,3 +1,11 @@
+2007-06-04 Peter Clifton <pcjc2@cam.ac.uk>
+
+	* configure.ac, gattrib/src/gattrib.c: Call g_thread_init().
+	
+	  GLib requires threading to be initialised before calling any of its
+	  functions, should the app require threading. Some of GTK's file
+	  chooser backends use threading, so we need to call g_thread_init().
+
 2007-06-04 Peter Brett <peter@peter-b.co.uk>
 
 	* src/g_rc.c: Replace deprecated Guile functions & macros.

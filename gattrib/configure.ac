@@ -111,7 +111,14 @@ then
    GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
 
 ##   GTKITEMENTRY_SOURCE=gtkitementry_2_2.c gtkitementry_2_2.h
-    
+
+   # Search for gthread
+   PKG_CHECK_MODULES(GTHREAD, gthread-2.0, GTHREAD="yes", no_GTHREAD="yes")
+   if test "$GTHREAD" = "yes"
+   then
+       AC_DEFINE(HAVE_GTHREAD, 1, [If gthread support is installed, define this])
+   fi
+
 else
    GTK_VERSION=""
 fi
@@ -332,8 +339,8 @@ AC_DEFINE_UNQUOTED(VERSION, "$GEDA_VERSION", [Currently running version of gEDA/
 #########################################################################
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
-GATTRIB_CFLAGS="$GTK_CFLAGS $GLIB_CFLAGS $LIBGEDA_CFLAGS"
-GATTRIB_LDFLAGS="$GTK_LIBS $GLIB_LIBS $LIBGEDA_LIBS"
+GATTRIB_CFLAGS="$GTK_CFLAGS $GLIB_CFLAGS $LIBGEDA_CFLAGS $GTHREAD_CFLAGS"
+GATTRIB_LDFLAGS="$GTK_LIBS $GLIB_LIBS $LIBGEDA_LIBS $GTHREAD_LIBS"
 
 # Makefile.in variable substitution
 AC_SUBST(GATTRIB_CFLAGS)
