@@ -1,3 +1,13 @@
+2007-06-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	Backported the following fix by Carlos Nieves Onega:
+
+		* scheme/gschem.c: Changed nil by #f.
+
+		Nil is no longer supported by guile 1.8. Applied patch from
+		Peter Clifton changing nil by #f. Thanks.
+		Note there are still some files using nil.
+
 2007-05-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_image.c: Applied fix for "Write image" seg fault found (and
