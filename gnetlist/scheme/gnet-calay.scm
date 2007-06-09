@@ -3,7 +3,7 @@
 ;;; gEDA - GNU Electronic Design Automation
 ;;; gnetlist - GNU Netlist
 ;;; Copyright (C) 1998-2000 Ales V. Hvezda
-;;; Copyright (C) 2006 John P. Doty
+;;; Copyright (C) 2006,2007 John P. Doty
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 ;;  Calay format (modified from Ales's gnet-PCB.scm by jpd)
+;;  Netname translation cleaned up at Dan McMahill'suggestion -jpd
 
 (define (calay:display-connections nets)
   (let ((k ""))
@@ -59,7 +60,7 @@
   (if (not (null? netnames))
       (let ((netname (car netnames)))
       	(display "/" port)
-	(display (calay:translate netname) port)
+	(display (gnetlist:alias-net netname) port)
 	(display "\t" port)
 	(display (calay:wrap (calay:display-connections
 	  (gnetlist:get-all-connections netname)) 66) port)
@@ -68,6 +69,7 @@
 
 (define (calay output-filename)
   (let ((port (open-output-file output-filename)))
+    (gnetlist:build-net-aliases calay:translate all-unique-nets)
     (calay:write-net (gnetlist:get-all-unique-nets "dummy") port)
     (close-output-port port)))
 
