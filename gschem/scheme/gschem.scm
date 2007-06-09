@@ -31,7 +31,7 @@
 ; no action hotkey
 (define no-action
   (lambda ()
-      nil 
+      #f 
   )
 )
 
