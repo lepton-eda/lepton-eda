@@ -48,6 +48,7 @@
 /* for now this only supports single chars, not shift/alt/ctrl etc... */
 int g_keys_execute(int state, int keyval)
 {
+  TOPLEVEL *w = global_window_current;
   char *guile_string = NULL;
   char *modifier = NULL;
   char *key_name = NULL;
@@ -70,16 +71,37 @@ int g_keys_execute(int state, int keyval)
   }
 
   if (state & GDK_SHIFT_MASK) {
-    modifier = g_strdup_printf("\"Shift ");
+    modifier = g_strdup_printf("Shift ");
   } else if (state & GDK_CONTROL_MASK) {
-    modifier = g_strdup_printf("\"Control ");
+    modifier = g_strdup_printf("Control ");
   } else if (state & GDK_MOD1_MASK) {
-    modifier = g_strdup_printf("\"Alt ");
+    modifier = g_strdup_printf("Alt ");
+  } else
+    modifier = g_strdup("");
+
+  if(strcmp(key_name, "Escape") == 0) {
+     g_free(w->keyaccel_string);
+     w->keyaccel_string = NULL;
+  } else if(w->keyaccel_string &&
+        strlen(w->keyaccel_string) + strlen(key_name) > 10) {
+     g_free(w->keyaccel_string);
+     w->keyaccel_string = g_strconcat(modifier, key_name, NULL);
   } else {
-    modifier = g_strdup_printf("\"");
+     gchar *p, *r;
+
+     p = w->keyaccel_string;
+     w->keyaccel_string = g_strconcat(modifier, key_name, NULL);
+     if(p) {
+        r = g_strconcat(p, w->keyaccel_string, NULL);
+        g_free(p);
+        g_free(w->keyaccel_string);
+        w->keyaccel_string = r;
+     }
   }
 
-  guile_string = g_strdup_printf("(press-key %s%s\")",
+  i_show_state(w, NULL);
+
+  guile_string = g_strdup_printf("(press-key \"%s%s\")",
                                  modifier, key_name);
 
 #if DEBUG 
@@ -142,14 +164,45 @@ g_keys_dump_keymap (void)
   return ret;
 }
 
-/*! \brief
+/*! \brief Clear the current key accelerator string
  *
+ *  \par Function Description
+ *  This function clears the current keyboard accelerator
+ *  string in the status bar of the relevant toplevel.
+ *  Called after the action specifed by the keyboard
+ *  accelerator is executed and the associated timeout interval
+ *  has passed.
+ *
+ *  \param [in] data a pointer to the toplevel
  */
+static gboolean clear_keyaccel_string(gpointer data)
+{
+  TOPLEVEL *w = global_window_current;
+
+  /* Find out if the toplevel is present... */
+  while(w->prev)
+    w = w->prev;
+
+  while(w) {
+    if(w == (TOPLEVEL *) data) {
+      /* ... it is, update its status bar */
+      g_free(w->keyaccel_string);
+      w->keyaccel_string = NULL;
+      i_show_state(w, NULL);
+      break;
+    }
+    w = w->next;
+  }
+
+  return FALSE;
+}
+
 #define DEFINE_G_KEYS(name)				\
 SCM g_keys_ ## name(void)				\
 {							\
-	i_callback_ ## name(global_window_current, 0, NULL);	\
-	return SCM_BOOL_T;				\
+   g_timeout_add(400, clear_keyaccel_string, global_window_current); \
+   i_callback_ ## name(global_window_current, 0, NULL); \
+   return SCM_BOOL_T;				\
 }
 
 /*! \brief test-comment

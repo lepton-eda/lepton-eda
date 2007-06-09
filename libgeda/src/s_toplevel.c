@@ -264,6 +264,8 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->bounding_xor_gc = NULL;
   toplevel->bus_gc          = NULL;
 
+  toplevel->keyaccel_string = NULL;
+
   toplevel->backingstore = NULL;
 
   toplevel->graphic_color = 0;

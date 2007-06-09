@@ -1,3 +1,8 @@
+2007-06-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/g_keys.c, src/i_basic.c: Applied patch from Ivan Stankovic
+	that displays entered characters in the status bar.
+
 2007-06-09 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
 	* scheme/gschem.c: Changed nil by #f.

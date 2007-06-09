@@ -603,6 +603,9 @@ struct st_toplevel {
   /* backingstore pixmap */
   GdkPixmap *backingstore; 
 
+  /* used for visual feedback when pressing keyboard accelerators */
+  gchar *keyaccel_string;
+
   /* rc/user parameters */
   int graphic_color;
   int pin_color;
