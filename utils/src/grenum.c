@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
 			return FILE_OP_ERROR;
 			}
 		strcpy(&outfilename[0],&infilename[0]);
-		if((outfile=fopen(strcat(&outfilename[0],".tmp"),"w"))==NULL)
+		if((outfile=fopen(strcat(&outfilename[0],".tmp"),"wb"))==NULL)
 			{
 			perror("grenum: could not create tmp file");
 			fclose(infile);	/*Close the file*/
@@ -222,7 +222,7 @@ int main(int argc, char *argv[])
 		strcpy(&buff[0],&infilename[0]); /*buff has the original infilename*/
 /*The next few lines implements the copy program*/
 		fseek(infile,0L,SEEK_SET); /*Go to the begining of the infile*/
-		outfile=fopen(strcat(&buff[0],".save"),"w");
+		outfile=fopen(strcat(&buff[0],".save"),"wb");
 		if(outfile==NULL)
 			{
 			perror("grenum: ould not create backup file");

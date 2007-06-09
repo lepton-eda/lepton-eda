@@ -123,7 +123,7 @@ create_m4_override_file()
 	FILE	*f;
 
 	m4_override_file = "gnet-gsch2pcb-tmp.scm";
-	f = fopen(m4_override_file, "w");
+	f = fopen(m4_override_file, "wb");
 	if (!f)
 		{
 		m4_override_file = NULL;
@@ -810,7 +810,7 @@ add_elements(gchar *pcb_file)
 	if ((f_in = fopen(pcb_file, "r")) == NULL)
 		return 0;
 	tmp_file = g_strconcat(pcb_file, ".tmp", NULL);
-	if ((f_out = fopen(tmp_file, "w")) == NULL)
+	if ((f_out = fopen(tmp_file, "wb")) == NULL)
 		{
 		fclose(f_in);
 		g_free(tmp_file);
@@ -943,7 +943,7 @@ update_element_descriptions(gchar *pcb_file, gchar *bak)
 	if ((f_in = fopen(pcb_file, "r")) == NULL)
 		return;
 	tmp = g_strconcat(pcb_file, ".tmp", NULL);
-	if ((f_out = fopen(tmp, "w")) == NULL)
+	if ((f_out = fopen(tmp, "wb")) == NULL)
 		{
 		fclose(f_in);
 		return;
@@ -1025,7 +1025,7 @@ prune_elements(gchar *pcb_file, gchar *bak)
 	if ((f_in = fopen(pcb_file, "r")) == NULL)
 		return;
 	tmp = g_strconcat(pcb_file, ".tmp", NULL);
-	if ((f_out = fopen(tmp, "w")) == NULL)
+	if ((f_out = fopen(tmp, "wb")) == NULL)
 		{
 		fclose(f_in);
 		return;

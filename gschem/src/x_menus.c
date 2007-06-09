@@ -377,7 +377,7 @@ gboolean g_file_set_contents(const gchar *filename, const gchar *contents,
    FILE *fp;
    gboolean ret = FALSE;
 
-   fp = fopen(filename, "w");
+   fp = fopen(filename, "wb");
    if(fp == NULL)
       return FALSE;
 

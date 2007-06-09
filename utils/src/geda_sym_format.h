@@ -149,7 +149,7 @@ int write_sym(void)
    * makes file .sym.part that stands for "partial" symbol */
   if (vector_found && vector_count == 0)
     strcat(fnsym,".part");
-  if (!(fsym = fopen(fnsym,"w")))
+  if (!(fsym = fopen(fnsym,"wb")))
   {
     perror("Opening sym output file");
     return -1;

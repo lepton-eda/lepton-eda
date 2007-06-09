@@ -1,5 +1,26 @@
 2007-06-09 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
+	* src/a_basic.c: Avoid writting '\r' to files on MinGW.
+
+	Applied patch #1733826 from Cesar Strauss. Thanks.
+	When using the "w" mode in fopen, MinGW translates LF into CR-LF. 
+	This creates havoc when reading the same file again, when sharing 
+	schematics files with other systems, and when placing them in a VCS.
+
+	This can be avoided by using the "wb" mode. The "b" is ignored on 
+	all POSIX conforming systems, according to these sources:
+
+	http://www.die.net/doc/linux/man/man3/fopen.3.html
+	http://www.opengroup.org/onlinepubs/009695399/functions/fopen.html
+
+	There are other ways, however. Adding
+
+	#include <fcntl.h>
+	int _fmode = _O_BINARY;
+
+	on some source file should work as well. Another way is linking 
+	against the MinGW supplied binmode.o, which does exactly that.
+
 	* configure.ac, include/defines.h, src/f_basic.c: 
 	Fix for lack of permission-related file attributes on MinGW.
 

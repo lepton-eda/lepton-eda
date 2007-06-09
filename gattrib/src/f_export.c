@@ -74,7 +74,7 @@ void f_export_components(gchar *filename)
 #ifdef DEBUG
   printf("In f_export_components, trying to open %s.\n", filename);
 #endif
-  fp = fopen(filename, "w");
+  fp = fopen(filename, "wb");
   if (fp == NULL) {
     s_log_message("o_save: Could not open [%s]\n", filename);
     /* XXXXX Throw up error message  in window */

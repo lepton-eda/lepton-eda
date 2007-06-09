@@ -174,7 +174,7 @@ int o_save(TOPLEVEL *w_current, const char *filename)
   char *out;
   int already_wrote=0;
 	
-  fp = fopen(filename, "w");
+  fp = fopen(filename, "wb");
 	
   if (fp == NULL) {
     s_log_message("o_save: Could not open [%s]\n", filename);

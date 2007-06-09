@@ -110,7 +110,7 @@ main(int argc, char **argv)
 	sprintf(name, "sym/%s%u-%u.sym",
 		generate[i].name, j, generate[i].suffix);
 	printf("Working on:%s\n",name);
-	fp = fopen(name, "w");
+	fp = fopen(name, "wb");
 	if(fp == NULL)
 	  {
 	    fprintf(stderr,"Error: Unable to create file `%s' in %s()\n",

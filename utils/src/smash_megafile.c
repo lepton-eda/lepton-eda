@@ -106,7 +106,7 @@ int main(int argc, char **argv)
       strcpy(output_name, argv[1]);
       strcat(output_name, "/");
       strcat(output_name, name);
-      output = fopen(output_name,"w");
+      output = fopen(output_name,"wb");
       if(output == NULL)
 	{
 	  fclose(megafile);
