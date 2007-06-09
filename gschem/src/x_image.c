@@ -157,6 +157,7 @@ static void create_type_menu(GtkComboBox *combo)
     ptr = ptr->next;
   }
   g_slist_free (formats);
+  gtk_combo_box_append_text(GTK_COMBO_BOX(combo), "Encapsulated Postscript");
   
   /* Set the default menu */
   gtk_combo_box_set_active(GTK_COMBO_BOX(combo), default_index);
@@ -183,6 +184,11 @@ static char *x_image_get_type_from_description(char *description) {
   GSList *formats = gdk_pixbuf_get_formats ();
   GSList *ptr;
   gchar *ptr_descr;
+  
+  /*WK - catch EPS export case*/
+  if (strcmp(descr, _("Encapsulated Postscript")) == 0) { 
+    return(g_strdup("eps"));
+  }
 
   ptr = formats;
   while (ptr) {
@@ -281,6 +287,41 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
 #endif
 }
 
+/*! \brief Write eps image file.
+ *  \par This function writes the eps file, using the postscript print code
+ *  from libgeda. Orientation is portrait and type is extents without margins.
+ *  \param w_current [in] the TOPLEVEL structure.
+ *  \param filename [in] the image filename.
+ *  \return nothing
+ *
+ */
+void x_image_write_eps(TOPLEVEL *w_current, const char* filename)
+{
+  int result;
+  int w, h, orientation, type;
+  w = w_current->paper_width;
+  h = w_current->paper_height;
+  orientation = w_current->print_orientation;
+  type = w_current->print_output_type;
+  
+  w_current->paper_width = 0;
+  w_current->paper_height = 0;
+  w_current->print_orientation = PORTRAIT;
+  w_current->print_output_type = EXTENTS_NOMARGINS;
+  result = f_print_file (w_current, filename);
+  if (result) {
+      fprintf(stderr, "x_image_lowlevel: Unable to save eps file  %s.\n", 
+              filename);
+      s_log_message(_("x_image_lowlevel: Unable to write eps file %s.\n"),
+		    filename);
+  }   
+
+  w_current->paper_width = w;
+  w_current->paper_height = h;
+  w_current->print_orientation = orientation;
+  w_current->print_output_type = type;
+}
+
 /*! \brief Write the image file, with the desired options.
  *  \par This function writes the image file, with the options set in the
  *  dialog by the user.
@@ -354,6 +395,9 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename,
   f_image_write(w_current, filename, width, height, 
                 w_current->image_color);
 #else
+ if (strcmp(filetype, "eps") == 0) /*WK - catch EPS export case*/
+    x_image_write_eps(w_current, filename);
+ else {    
   pixbuf = x_image_get_pixbuf(w_current);
   if (pixbuf != NULL) {
     if (!gdk_pixbuf_save(pixbuf, filename, filetype, &gerror, NULL)) {
@@ -403,6 +447,7 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename,
     fprintf(stderr, "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n");
     s_log_message(_("x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"));
   }
+ }
 #endif
 
   w_current->width = save_width;

@@ -23,7 +23,7 @@ void f_image_set_type(TOPLEVEL *w_current, int type);
 /* f_print.c */
 void f_print_set_line_width(FILE *fp, int width);
 void f_print_set_color(FILE *fp, int color);
-int f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y);
+int f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y, int eps);
 void f_print_footer(FILE *fp);
 void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head, int start_x, int start_y, float scale, int unicode_count, gunichar *unicode_table);
 int f_print_file (TOPLEVEL *w_current, const char *filename);

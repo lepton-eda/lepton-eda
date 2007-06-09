@@ -13,6 +13,11 @@
 
 2007-06-09 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
+	* src/x_image.c: Added EPS support.
+
+	Applied patch #1713747 (with minor tweaks) from Wojciech Kazubski 
+	adding support for EPS when writing an image. Thanks.
+
 	* scheme/gschem.c: Changed nil by #f.
 
 	Nil is no longer supported by guile 1.8. Applied patch from

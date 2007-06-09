@@ -1,3 +1,10 @@
+2007-06-09 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
+
+	* include/prototype.h, src/f_print.c: Added EPS support.
+
+	Applied patch #1713747 from Wojciech Kazubski adding support 
+	for EPS in f_print_header function. Thanks.
+
 2007-06-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * include/struct.h, src/s_toplevel.c: Applied patch from Ivan

@@ -94,7 +94,7 @@ void f_print_set_color(FILE *fp, int color)
  *  \return 0 on success, -1 on failure.
  */
 int f_print_header(TOPLEVEL *w_current, FILE *fp, 
-		   int paper_size_x, int paper_size_y) 
+		   int paper_size_x, int paper_size_y, int eps) 
 {
   char *buf;
   FILE *prolog;
@@ -116,8 +116,11 @@ int f_print_header(TOPLEVEL *w_current, FILE *fp,
   }
 
   /* Output the DSC comments at the beginning of the document */
-  fprintf(fp, "%%!PS-Adobe-3.0\n"
-	  "%%%%Creator: gEDA gschem %s\n"
+  if (eps)
+    fprintf(fp, "%%!PS-Adobe-3.0 EPSF-3.0\n");
+  else
+    fprintf(fp, "%%!PS-Adobe-3.0\n");
+  fprintf(fp, "%%%%Creator: gEDA gschem %s\n"
 	  "%%%%CreationDate: %s"
 	  "%%%%Title: %s\n"
 	  "%%%%Author: %s\n"
@@ -434,7 +437,8 @@ int f_print_stream(TOPLEVEL *w_current, FILE *fp)
   int unicode_count;
   gunichar unicode_table [128];  /* to contain the list of unicode
 				    characters that need mapping */
-
+  int eps;
+  
 
   /* Unicode support */
   f_print_initialize_glyph_table();  /* Fill up unicode map */
@@ -485,6 +489,18 @@ int f_print_stream(TOPLEVEL *w_current, FILE *fp)
 
   }
 
+  if(w_current->paper_width == 0) {
+    eps = 1;
+    if(w_current->print_orientation == LANDSCAPE) {
+      w_current->paper_width = dx;
+      w_current->paper_height = dy;
+    } else { /* portrait */
+      w_current->paper_width = dy;
+      w_current->paper_height = dx;
+    }
+  } else
+    eps = 0;
+  
   scale = 0.0;
   if(w_current->print_orientation == LANDSCAPE) {
     /* First attempt to fit in x direction. */
@@ -512,7 +528,8 @@ int f_print_stream(TOPLEVEL *w_current, FILE *fp)
   /* Output the header */
   if (f_print_header(w_current, fp, 
 		     w_current->paper_width, 
-		     w_current->paper_height) != 0) {
+		     w_current->paper_height,
+		     eps) != 0) {
 
     /* There was an error in f_print_header */
     return -1;
