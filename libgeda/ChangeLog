@@ -1,5 +1,13 @@
 2007-06-09 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
+	* configure.ac, include/defines.h, src/f_basic.c: 
+	Fix for lack of permission-related file attributes on MinGW.
+
+	Applied patch #1733728, with some tweaks, from Cesar Strauss.
+	Thanks.
+	Define some file permissions as 0 if they are not defined.
+	Don't use chown if it is not available.
+	
 	* include/prototype.h, src/f_print.c: Added EPS support.
 
 	Applied patch #1713747 from Wojciech Kazubski adding support 

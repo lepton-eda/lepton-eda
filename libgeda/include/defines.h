@@ -366,3 +366,20 @@ s_log_message (const gchar *format,
 
 /* Backup filename creation string */
 #define AUTOSAVE_BACKUP_FILENAME_STRING "#%s#"
+
+/* These permission bits are absent on MinGW */
+#ifndef S_IWGRP
+# define S_IWGRP 0
+#endif
+#ifndef S_IWOTH
+# define S_IWOTH 0
+#endif
+#ifndef S_IXGRP
+# define S_IXGRP 0
+#endif
+#ifndef S_IXOTH
+# define S_IXOTH 0
+#endif
+#ifndef S_IRWXG
+# define S_IRWXG 0
+#endif

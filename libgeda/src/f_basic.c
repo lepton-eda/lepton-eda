@@ -338,6 +338,7 @@ int f_save(TOPLEVEL *w_current, const char *filename)
     saved_umask = umask(0);
     st.st_mode = 0666 & ~saved_umask;
     umask(saved_umask);
+#ifdef HAVE_CHOWN
     st.st_uid = getuid ();
     
     result = stat (dirname, &dir_st);
@@ -346,6 +347,7 @@ int f_save(TOPLEVEL *w_current, const char *filename)
 	  st.st_gid = dir_st.st_gid;
     else
     st.st_gid = getgid ();
+#endif /* HAVE_CHOWN */
   }
   g_free (dirname);
   g_free (only_filename);
@@ -361,7 +363,9 @@ int f_save(TOPLEVEL *w_current, const char *filename)
 
     /* Restore permissions. */
     chmod (real_filename, st.st_mode);
+#ifdef HAVE_CHOWN
     chown (real_filename, st.st_uid, st.st_gid);
+#endif
 
     g_free (real_filename);
     return 1;

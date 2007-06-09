@@ -370,7 +370,7 @@ AC_C_CONST
 
 # Checks for library functions.
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS(getcwd strstr vsnprintf snprintf)
+AC_CHECK_FUNCS(getcwd strstr vsnprintf snprintf chown)
 
 # 
 # Checks for header files end
