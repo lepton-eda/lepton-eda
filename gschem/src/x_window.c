@@ -829,7 +829,6 @@ void x_window_close(TOPLEVEL *w_current)
 
   /* just closed last window, so quit */
   if (last_window) {
-    recent_files_save();
     gschem_quit();
   }
   

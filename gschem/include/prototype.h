@@ -287,6 +287,8 @@ SCM g_rc_select_slack_pixels(SCM pixels);
 void g_register_funcs(void);
 /* globals.c */
 /* gschem.c */
+typedef void (*gschem_atexit_func)(gpointer data);
+void gschem_atexit(gschem_atexit_func func, gpointer data);
 void gschem_quit(void);
 void main_prog(void *closure, int argc, char *argv[]);
 int main(int argc, char *argv[]);
@@ -832,7 +834,7 @@ void x_menus_sensitivity(TOPLEVEL *w_current, const char *buf, int flag);
 void x_menus_popup_sensitivity(TOPLEVEL *w_current, const char *buf, int flag);
 void x_menu_attach_recent_files_submenu(TOPLEVEL *w_current);
 void recent_files_load();
-void recent_files_save();
+void recent_files_save(gpointer user_data);
 void recent_files_add(const char *filename);
 #if !GLIB_CHECK_VERSION(2,8,0)
 gboolean g_file_set_contents(const gchar *filename, const gchar *contents,

@@ -51,8 +51,10 @@ static GKeyFile *dialog_geometry = NULL;
  *
  *  \par Function Description
  *  This is called at program exit to save all window geometry data into a file
+ *
+ *  \param [in] user_data unused
  */
-static void save_geometry_to_file()
+static void save_geometry_to_file(gpointer user_data)
 {
   gchar *data, *file;
 
@@ -119,7 +121,7 @@ static void restore_geometry (GschemDialog *dialog)
     dialog_geometry = g_key_file_new();
 
     /* Remember to save data on program exit */
-    atexit(save_geometry_to_file);
+    gschem_atexit(save_geometry_to_file, NULL);
 
     if (!g_file_test (file, G_FILE_TEST_EXISTS)) {
       gchar *dir = g_build_filename (g_get_home_dir (), ".gEDA", NULL);

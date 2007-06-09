@@ -11,6 +11,14 @@
 	* src/g_keys.c, src/i_basic.c: Applied patch from Ivan Stankovic
 	that displays entered characters in the status bar.
 
+	* gschem/include/prototype.h, gschem/src/gschem.c,
+	gschem/src/gschem_dialog.c, gschem/src/x_menus.c, 
+	gschem/src/x_window.c: Applied a few patches from Ivan Stankovic:
+	[PATCH] Make recent files code and dialog positions code
+                use gschem_atexit
+	[PATCH] Implement gschem_atexit()
+	[PATCH] Improve recent files support
+
 2007-06-09 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
 	* src/x_image.c: Added EPS support.
