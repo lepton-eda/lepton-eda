@@ -1,3 +1,12 @@
+2007-06-09 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
+
+	* src/x_compselect.c: Set alternative button order after buttons
+	are created.
+
+	Apply patch from Cesar Strauss, moving the 
+	gtk_dialog_set_alternative_button_order call after buttons are 
+	created, in the component selector window. Thanks.
+
 2007-06-04 Peter Brett <peter@peter-b.co.uk>
 
 	* src/g_funcs.c, src/g_hook.c, src/g_keys.c, src/g_rc.c: Replace
