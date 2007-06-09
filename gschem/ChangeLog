@@ -21,6 +21,11 @@
 
 2007-06-09 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
 
+	* src/x_window.c: Added check for missing pixmap file.
+
+	Fix for bug #1714493. If a pixmap file doesn't exist, write
+	a message to the log window. Thanks to the anonymous submitter.
+	
 	* src/x_menus.c: Avoid writting '\r' to files on MinGW.
 
 	Applied patch #1733826 from Cesar Strauss. Thanks.

@@ -371,7 +371,7 @@ void x_window_setup_draw_events(TOPLEVEL *w_current)
  */
 static GtkWidget *x_window_stock_pixmap(const char *stock, TOPLEVEL *w_current)
 {
-  GtkWidget *wpixmap;
+  GtkWidget *wpixmap = NULL;
   GdkPixmap *pixmap;
   GdkBitmap *mask;
   GtkStockItem item;
@@ -393,7 +393,11 @@ static GtkWidget *x_window_stock_pixmap(const char *stock, TOPLEVEL *w_current)
     /* Fallback to the original custom icon */
     pixmap = gdk_pixmap_create_from_xpm (window, &mask, 
                                          background, filename);
-    wpixmap = gtk_image_new_from_pixmap (pixmap, mask);
+    if (pixmap != NULL) {
+      wpixmap = gtk_image_new_from_pixmap (pixmap, mask);
+    } else {
+      s_log_message("Could not find image at file: %s.\n", filename);
+    }
   }
 
   g_free(filename);
