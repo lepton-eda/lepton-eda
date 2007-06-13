@@ -1,3 +1,13 @@
+2007-06-13 Carlos Nieves Onega <cnieves (AT) iespana (DOT) es>
+
+	* include/x_multiattrib.h, src/x_compselect.c, src/x_multiattrib.c,
+	src/x_print.c:
+	Removed code handling escape key presses in dialogs.
+
+	Since GTK takes care of escape key presses, this code
+	is not needed. Applied patch from Ivan Stankovic. 
+	Fixes bug #1710818 for gschem. Thanks.
+
 2007-06-09 Peter TB Brett <peter@peter-b.co.uk>
 
 	* lib/system-gschemrc.in, src/x_compselect.c: Fix gschem's

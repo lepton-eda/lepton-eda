@@ -26,11 +26,6 @@
  * Multiattrib
  */
 
-typedef enum {
-  MULTIATTRIB_RESPONSE_CLOSE  = 1
-} MultiattribResponseType;
-
-
 #define TYPE_MULTIATTRIB         (multiattrib_get_type())
 #define MULTIATTRIB(obj)         (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_MULTIATTRIB, Multiattrib))
 #define MULTIATTRIB_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), TYPE_MULTIATTRIB, MultiattribClass))

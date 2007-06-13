@@ -68,9 +68,9 @@ void x_multiattrib_open (TOPLEVEL *toplevel, OBJECT *object)
   multiattrib_update (MULTIATTRIB(dialog));
   gtk_widget_show (dialog);
   switch (gtk_dialog_run ((GtkDialog*)dialog)) {
-      case MULTIATTRIB_RESPONSE_CLOSE:
+      case GTK_RESPONSE_CLOSE:
       case GTK_RESPONSE_DELETE_EVENT:
-        /* resets state and update message in toolbar */
+        /* reset state and update message in toolbar */
         i_set_state (toplevel, SELECT);
         i_update_toolbar (toplevel);
         break;
@@ -1008,29 +1008,6 @@ static void multiattrib_callback_popup_delete(GtkMenuItem *menuitem,
   
 }
 
-
-/*! \todo Finish function documentation
- *  \brief
- *  \par Function Description
- *
- */
-static gboolean multiattrib_callback_dialog_key_pressed(GtkWidget *widget,
-							GdkEventKey *event,
-							gpointer user_data)
-{
-  Multiattrib *multiattrib = (Multiattrib*)widget;
-  gboolean retval = FALSE;
-
-  /* close the dialog if the Escape key is pressed */
-  if (event->keyval == GDK_Escape) {
-    gtk_dialog_response ((GtkDialog*)multiattrib,
-                         MULTIATTRIB_RESPONSE_CLOSE);
-    retval = TRUE;
-  }
-
-  return retval;
-}
-
 /*! \todo Finish function documentation
  *  \brief
  *  \par Function Description
@@ -1316,12 +1293,6 @@ static void multiattrib_init(Multiattrib *multiattrib)
 
   multiattrib->object   = NULL;
 
-  /* connect to the key-press-event of dialog */
-  g_signal_connect (multiattrib,
-                    "key-press-event",
-                    G_CALLBACK (multiattrib_callback_dialog_key_pressed),
-                    multiattrib);
-  
   /* create the attribute list frame */
   frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
 				    /* GtkFrame */
@@ -1587,7 +1558,7 @@ static void multiattrib_init(Multiattrib *multiattrib)
   
   /* now add the close button to the action area */
   gtk_dialog_add_button (GTK_DIALOG (multiattrib),
-                         GTK_STOCK_CLOSE,   MULTIATTRIB_RESPONSE_CLOSE);
+                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
   
 }
 

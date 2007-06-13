@@ -49,9 +49,6 @@ enum
 
 /* Private functions */
 
-static gboolean print_dialog_action_keypress (GtkWidget * widget,
-                                             GdkEventKey * event,
-                                             PrintDialog * dialog);
 static void print_dialog_action_radio_toggled (GtkWidget * w,
                                               PrintDialog * dialog);
 
@@ -119,40 +116,6 @@ print_dialog_action_choosefile (GtkWidget * w, PrintDialog * dialog)
 
   gtk_widget_destroy (filechooser);
 
-}
-
-/*!
- *  \brief Handle keypress events caught by the print dialog.
-  *
- *  \par Private callback function, should not be called by any code
- *  outside x_print.c
- */
-static gboolean
-print_dialog_action_keypress (GtkWidget * widget, GdkEventKey * event,
-                              PrintDialog * dialog)
-{
-  char *key_name;
-
-  key_name = gdk_keyval_name (event->keyval);
-  if ( key_name == NULL ) return FALSE;
-
-  if (widget == GTK_WIDGET (dialog))
-    {
-      if (strcmp (key_name, "Escape") == 0)
-        {
-          gtk_dialog_response (GTK_DIALOG (dialog),
-                               GTK_RESPONSE_REJECT);
-          return TRUE;
-        }
-      if (strcmp (key_name, "Return") == 0)
-        {
-          gtk_dialog_response (GTK_DIALOG (dialog),
-                               GTK_RESPONSE_ACCEPT);
-          return TRUE;
-        }
-    }
-
-  return FALSE;
 }
 
 /*!
@@ -311,17 +274,13 @@ print_dialog_init (PrintDialog * dialog)
   GtkWidget *frame;
   GtkWidget *settingstable, *desttable;
   GtkWidget *label;
+  GtkWidget *print_button;
 
   /* Initialize properties */
   g_object_set (G_OBJECT (dialog),
 		/* GtkWindow */
 		"title", _("Print..."),
 		"modal", TRUE, "destroy-with-parent", TRUE, NULL);
-
-  /* Connect key-press event */
-  g_signal_connect (dialog,
-		    "key_press_event",
-		    GTK_SIGNAL_FUNC (print_dialog_action_keypress), dialog);
 
   /* Setup hbox for two main panes */
   box = gtk_vbox_new (FALSE, 2);
@@ -431,10 +390,11 @@ print_dialog_init (PrintDialog * dialog)
 		    1, 3, 1, 2, GTK_EXPAND | GTK_FILL, 0, 0, 0);
 
   /* Add "Cancel" and "Print" buttons */
-  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-			  GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
-			  GTK_STOCK_PRINT, GTK_RESPONSE_ACCEPT,
-			  NULL);
+   gtk_dialog_add_button (GTK_DIALOG (dialog),
+                  GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT);
+   print_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
+                  GTK_STOCK_PRINT, GTK_RESPONSE_ACCEPT);
+   gtk_widget_grab_focus(print_button);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
