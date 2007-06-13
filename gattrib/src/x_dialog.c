@@ -70,144 +70,68 @@
  * --------------------------------------------------------- */
 void x_dialog_newattrib_get_name()
 {
-  GtkWidget *newattrib_window;
+  GtkWidget *dialog;
   GtkWidget *label;
-  GtkWidget *buttoncancel = NULL;
-  GtkWidget *buttonok = NULL;
-  GtkWidget *vbox, *action_area, *attrib_entry;
+  GtkWidget *attrib_entry;
+  gchar *entry_text;
 
 #ifdef DEBUG
-    printf("In x_dialog_newattrib_get_name, creating windows.\n");
+  printf("In x_dialog_newattrib_get_name, creating windows.\n");
 #endif
 
   /* Create window and set its properties */
-  newattrib_window = x_dialog_create_dialog_box(&vbox, &action_area);
-  gtk_window_position(GTK_WINDOW(newattrib_window),
-		      GTK_WIN_POS_MOUSE);
-  gtk_widget_set_size_request (GTK_WIDGET(newattrib_window), 400, 150);  
+  dialog = gtk_dialog_new_with_buttons("Enter new attribute name", NULL, 
+				       GTK_DIALOG_MODAL,
+				       GTK_STOCK_OK, GTK_RESPONSE_OK,
+				       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				       NULL);
+ 
+  gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_OK);
   
-  gtk_window_set_title(GTK_WINDOW(newattrib_window), "Enter new attribute name");
-  gtk_container_border_width(GTK_CONTAINER(newattrib_window), 5);
+  gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
+  gtk_widget_set_size_request (dialog, 400, 150);  
+  gtk_container_border_width(GTK_CONTAINER(dialog), 5);
   
-  gtk_signal_connect(GTK_OBJECT(newattrib_window),
-		     "destroy", GTK_SIGNAL_FUNC(x_dialog_newattrib_close_callback),
-		     GTK_WIDGET(newattrib_window) );
-  
-  gtk_signal_connect(GTK_OBJECT(newattrib_window),
-		     "key_press_event", GTK_SIGNAL_FUNC(x_dialog_newattrib_keypress_callback),
-		     GTK_WIDGET(newattrib_window) );
-  gtk_window_set_modal(GTK_WINDOW(newattrib_window), TRUE);
-
   /*  Create a text label for the dialog window */
   label = gtk_label_new ("Enter new attribute name");
-  gtk_widget_show (label);
-  gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
-  gtk_widget_set_size_request (label, 127, 50);
-
+  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(dialog)->vbox), label, 
+		      FALSE, FALSE, 0);
+  /* gtk_widget_set_size_request (label, 127, 50); */
 
   /*  Create the "attrib" text entry area */
   attrib_entry = gtk_entry_new_with_max_length(1024);
-  gtk_editable_select_region(GTK_EDITABLE(attrib_entry), 0,
-                             -1);
-  gtk_box_pack_start(GTK_BOX(vbox), attrib_entry, TRUE,
-                     TRUE, 5);
-  gtk_widget_set_size_request (GTK_WIDGET (attrib_entry), 400, 20);
-
-  gtk_object_set_data(GTK_OBJECT(newattrib_window), "attrib_entry",
-                      attrib_entry);  /* here we make the string "attrib_entry" point
-				       * to the attrib_entry widget.  We'll use this later. */
-  gtk_widget_show(attrib_entry);
-
-
-  /* Now create "OK" and "cancel" buttons */
-  buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
-  GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT); /* what does this do? */
-  gtk_box_pack_start(GTK_BOX(action_area), buttonok, FALSE, FALSE, 0);
-  gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
-		     GTK_SIGNAL_FUNC(x_dialog_newattrib_ok_callback), 
-		     GTK_WIDGET(newattrib_window) );
-  gtk_widget_show(buttonok);
-
-
-  buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-  gtk_box_pack_start(GTK_BOX(action_area), buttoncancel, FALSE, FALSE, 0);
-  gtk_signal_connect(GTK_OBJECT(buttoncancel), "clicked",
-		     GTK_SIGNAL_FUNC(x_dialog_newattrib_close_callback), 
-		     GTK_WIDGET(newattrib_window) );
-  gtk_widget_show(buttoncancel);
-
-
-#ifdef DEBUG
-  printf("In x_dialog_newattrib_get_name, now show window.\n");
-#endif
-
-  if (!GTK_WIDGET_VISIBLE(newattrib_window)) {
-    gtk_widget_show(newattrib_window);
-  }
+  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), attrib_entry, TRUE, TRUE, 5);
+  /* are these necessary?? */
+  /* gtk_editable_select_region(GTK_EDITABLE(attrib_entry), 0, -1); */
+  /* gtk_widget_set_size_request (GTK_WIDGET (attrib_entry), 400, 20); */
   
-  return;
-}
-
-/* --------------------------------------------------------- *
- * keypress event
- * Note that I need to add an OK and Cancel button
- * --------------------------------------------------------- */
-int x_dialog_newattrib_keypress_callback(GtkWidget * widget, GdkEventKey * event,
-			    GtkWidget *window)
-{
-  char *key_name;
-
-  key_name = gdk_keyval_name(event->keyval);
-  if ( key_name == NULL ) return FALSE;
-
-  if (strcmp(key_name, "Escape") == 0) {
+  gtk_widget_show_all(dialog);
+  
+  switch(gtk_dialog_run(GTK_DIALOG(dialog))) {
+    case GTK_RESPONSE_OK:
+      entry_text = g_strdup( gtk_entry_get_text(GTK_ENTRY(attrib_entry)) );
+  
+      /* Perhaps do some other checks . . . . */
+      if (entry_text != NULL) {
 #ifdef DEBUG
-    printf("In x_dialog_newattrib_keypress, trying to close window.\n");
+	printf("In x_dialog_newattrib_ok_callback, about to add new attrib = %s\n", entry_text);
 #endif
-    x_dialog_close_window(window);
-    return TRUE;
+        s_toplevel_add_new_attrib(entry_text);
+        g_free(entry_text);
+      }
+  
+      break;
+  
+    case GTK_RESPONSE_CANCEL:
+    default:
+      /* do nothing */
+      break;
   }
 
-  return FALSE;
-}
+  gtk_widget_destroy(dialog);
 
-
-/* --------------------------------------------------------- *
- * OK button pressed -- First get text in entry box.  Then
- * return it.
- * --------------------------------------------------------- */
-void x_dialog_newattrib_ok_callback(GtkWidget *buttonok, 
-				   GtkWidget *window)
-{
-  GtkEntry *entry;
-  gchar *entry_text;
-
-  /* Retreive pointer to attrib_entry widget, then use it to get entered text. */
-  entry = gtk_object_get_data(GTK_OBJECT(window), "attrib_entry");
-  entry_text = g_strdup( gtk_entry_get_text(GTK_ENTRY(entry)) );
-
-  /* Perhaps do some other checks . . . . */
-  if (entry_text != NULL) {
-#ifdef DEBUG
-    printf("In x_dialog_newattrib_ok_callback, about to add new attrib = %s\n", entry_text);
-#endif
-    s_toplevel_add_new_attrib(entry_text);
-    g_free(entry_text);
-  }
-
-  x_dialog_close_window(window);
   return;
 }
-
-
-/* --------------------------------------------------------- *
- * close window
- * --------------------------------------------------------- */
-void x_dialog_newattrib_close_callback(GtkWidget *buttonclose, GtkWidget *window)
-{
-  x_dialog_close_window(window);
-}
-
 
 
 /* ========================================================= *
