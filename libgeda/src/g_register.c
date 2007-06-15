@@ -103,6 +103,13 @@ void g_register_libgeda_funcs (void)
  */
 void g_register_libgeda_vars (void)
 {
+  scm_c_define("geda-rc-path", 
+	       scm_from_locale_string (g_rc_parse_path()));
+  scm_c_define("geda-data-path",
+	       scm_from_locale_string (g_getenv ("GEDADATA")));
+  scm_c_define("path-sep", 
+	       scm_from_locale_string(G_DIR_SEPARATOR_S));
+
   scm_c_define("OBJ_LINE", SCM_MAKE_CHAR((unsigned char) OBJ_LINE));
   scm_c_define("OBJ_BOX", SCM_MAKE_CHAR((unsigned char) OBJ_BOX));
   scm_c_define("OBJ_PICTURE", SCM_MAKE_CHAR((unsigned char) OBJ_PICTURE));
