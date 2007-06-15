@@ -1,5 +1,5 @@
 
-SUBDIRS = src include scripts docs share
+SUBDIRS = src include scripts docs share lib scheme
 
 EXTRA_DIST = HACKING BUGS autogen.sh
 

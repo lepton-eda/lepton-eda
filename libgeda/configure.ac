@@ -490,7 +490,9 @@ AC_CONFIG_FILES([Makefile
                  include/Makefile
                  docs/Makefile
 	         libgeda.pc
-		 share/Makefile ])
+		 share/Makefile
+		 lib/Makefile
+		 scheme/Makefile ])
 
 AC_OUTPUT
 
