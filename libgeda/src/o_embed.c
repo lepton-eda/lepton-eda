@@ -96,7 +96,7 @@ void o_unembed(TOPLEVEL *w_current, OBJECT *o_current)
   {
         
     /* search for the symbol in the library */
-    symlist = s_clib_glob (o_current->complex_basename);
+    symlist = s_clib_search (o_current->complex_basename, CLIB_EXACT);
 
     if (!symlist) {
       /* symbol not found in the symbol library: signal an error */

@@ -1123,7 +1123,8 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
     s_conn_remove(w_current, net_obj);
 
     if (w_current->bus_ripper_type == COMP_BUS_RIPPER) {
-      GList *symlist = s_clib_glob (w_current->bus_ripper_symname);
+      GList *symlist = 
+	s_clib_search (w_current->bus_ripper_symname, CLIB_EXACT);
       if (symlist != NULL) {
         rippersym = (CLibSymbol *) symlist->data;
       }

@@ -514,7 +514,8 @@ const gchar *s_clib_symbol_get_name (const CLibSymbol *symbol);
 gchar *s_clib_symbol_get_filename (const CLibSymbol *symbol);
 const CLibSource *s_clib_symbol_get_source (const CLibSymbol *symbol);
 gchar *s_clib_symbol_get_data (const CLibSymbol *symbol);
-GList *s_clib_glob (const gchar *glob);
+GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode);
+void s_clib_flush_cache ();
 gchar *s_clib_symbol_get_data_by_name (const gchar *name);
 
 /* s_color.c */

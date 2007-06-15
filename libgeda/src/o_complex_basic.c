@@ -329,7 +329,7 @@ OBJECT *o_complex_add_by_name(TOPLEVEL *w_current, OBJECT *object_list,
   const CLibSymbol *sym;
   GList *symlist;
 
-  symlist = s_clib_glob (basename);
+  symlist = s_clib_search (basename, CLIB_EXACT);
 
   if (symlist == NULL) {
     s_log_message("Component [%s] was not found in any component library\n", 

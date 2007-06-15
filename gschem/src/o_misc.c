@@ -1068,7 +1068,7 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
     const GList *symlist = NULL;
     
     g_assert (o_current->complex_basename != NULL);
-    symlist = s_clib_glob (o_current->complex_basename);
+    symlist = s_clib_search (o_current->complex_basename, CLIB_EXACT);
 
     if (symlist == NULL) {
       s_log_message (_("Could not find symbol [%s] in library. Update failed.\n"), 
