@@ -1,0 +1,50 @@
+;                                                         -*-Scheme-*-
+;;; 
+;;; Common init file for gaf
+;;;
+
+; The following global variables are defined by libgeda:
+;
+; path-sep       -- system path separator
+; geda-data-path -- path to gEDA system-wide data directory
+; geda-rc-path   -- path to gEDA system-wide config directory
+
+
+;; The directory containing gaf Scheme code.
+(define geda-scheme-path (string-append geda-data-path path-sep "scheme"))
+; We need to add gaf's scheme library to the Guile load path.
+(set! %load-path (append (list geda-scheme-path) %load-path))
+; This is used in some places for error messages/listing gnetlist
+; backends
+(scheme-directory geda-scheme-path)
+
+; The libgeda Scheme library provides a number of useful functions for
+; writing Scheme code for embedding in gaf.
+(load-from-path "geda.scm")
+
+
+;; The directory containing various bitmaps (e.g. icons)
+(bitmap-directory (build-path geda-data-path "bitmap"))
+
+
+; Load the default component libraries
+(let ((clib-def-file (%search-load-path "geda-clib")))
+  (if clib-def-file 
+      (load clib-def-file)
+      (display "Failed to load default component libraries.\n")))
+
+; Load the default font
+(let ((font-def-file (%search-load-path "geda-font")))
+  (if font-def-file 
+      (load font-def-file)
+      (display "Failed to load default font.\n")))
+
+
+; Set the name of the postscript prolog file that will be 
+; pasted into the postscript output after the DSC comments, but
+; before the main script.
+(postscript-prolog (build-path geda-data-path "prolog.ps"))
+
+; Set the list of attributes that are always promoted regardless of
+; their visibility.
+(always-promote-attributes "footprint device value model-name")

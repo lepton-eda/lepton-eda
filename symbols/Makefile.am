@@ -6,8 +6,8 @@ SUBDIRS = \
 	opto diode relay vhdl power philips transistor switcap cascade \
 	asic asicpads gnetman minicircuits st apex allegro irf documentation
 
-rcdatadir = @GEDARCDIR@
-rcdata_DATA = system-gafrc 
+scmdatadir = @GEDADATADIR@@PATHSEP@scheme
+scmdata_DATA = geda-clib.scm geda-font.scm
 
 EXTRA_DIST = autogen.sh
 

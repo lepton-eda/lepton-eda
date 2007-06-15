@@ -231,8 +231,7 @@ AC_CONFIG_FILES([
 	apex/Makefile 
 	allegro/Makefile 
 	irf/Makefile 
-	documentation/Makefile
-	system-gafrc ])
+	documentation/Makefile ])
 
 AC_OUTPUT 
 

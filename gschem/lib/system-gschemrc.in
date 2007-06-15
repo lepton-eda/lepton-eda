@@ -1,4 +1,4 @@
-
+;                                                         -*-Scheme-*-
 ; 
 ; Init file for gschem
 ;
@@ -9,7 +9,6 @@
 ;  colors are not case sensitive 
 ;  
 
-
 ; gschem-version string
 ;
 ; Specifies the version of this file.  This number is used to make sure 
@@ -18,12 +17,6 @@
 ;
 (gschem-version "@VERSION@")
 
-; Setup data path variables.
-;
-; Contains paths needed for all gaf programs
-(define gedadata (getenv "GEDADATA"))
-(define gedadatarc (getenv "GEDADATARC"))
-
 ;
 ; Start of color section 
 ;
@@ -31,8 +24,8 @@
 ; Comment out the first line and comment in the second line for a
 ; dark (black) background.  The dark background is the original look. 
 ; 
-(load (string-append gedadatarc "@PATHSEP@gschem-darkbg")) ; dark background
-;(load (string-append gedadatarc "@PATHSEP@gschem-lightbg")) ; light background
+(load (build-path geda-rc-path "gschem-darkbg")) ; dark background
+;(load (build-path geda-rc-path "gschem-lightbg")) ; light background
 
 ;
 ; End of color section
@@ -827,7 +820,7 @@
 ; Comment in this scheme code if you want automatic numbering when
 ; placing new component and copying components
 ;
-;(load (string-append gedadata "/scheme/auto-uref.scm"))
+;(load-from-path "auto-uref.scm")
 ;(add-hook! add-component-hook auto-uref)
 ;(add-hook! copy-component-hook auto-uref)
 
@@ -1098,7 +1091,7 @@
 
 
 ; Comment in this to load the functions to place the attributes automatically.
-(load (string-append gedadata "/scheme/auto-place-attribs.scm"))
+(load-from-path "auto-place-attribs.scm")
 
 ; Autoplace pin text attributes hook. 
 ; Comment in these if you want the pin attributes to be automatically placed.
@@ -1780,5 +1773,5 @@
 ;; and there are known (and easy) ways to crash pcb and/or gschem with this code.
 ;; The short answer is neither program likes a pipe to break.
 ;;
-; (load (string-append gedadata "/scheme/pcb.scm"))
+; (load-from-path "pcb.scm")
 
