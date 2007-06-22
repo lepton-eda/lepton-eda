@@ -316,46 +316,6 @@ int o_complex_is_embedded(OBJECT *o_current)
 
 }
 
-/*! \brief Add a symbol given its basename.
- *  \todo Complete function documentation
- */
-OBJECT *o_complex_add_by_name(TOPLEVEL *w_current, OBJECT *object_list, 
-			      GList **object_glist, char type,
-			      int color, int x, int y, int angle,
-			      int mirror, const gchar *basename,
-			      int selectable,
-			      int attribute_promotion)
-{
-  const CLibSymbol *sym;
-  GList *symlist;
-
-  symlist = s_clib_search (basename, CLIB_EXACT);
-
-  if (symlist == NULL) {
-    s_log_message("Component [%s] was not found in any component library\n", 
-		  basename);
-    fprintf(stderr,
-	    "Component [%s] was not found in any component library\n", 
-	    basename);
-    sym = NULL;
-  } else {
-    if (g_list_next (symlist) != NULL) {
-      s_log_message ("More than one component found with name [%s]\n",
-		     basename);
-    }
-    /*! \todo For now, use the first source with a symbol with that
-     *  name. Maybe open a dialog to select the right one? */
-    sym = (CLibSymbol *) symlist->data;
-  }
-
-  g_list_free (symlist);
-
-  return o_complex_add (w_current, object_list, object_glist, type,
-			color, x, y, angle, mirror, sym, basename,
-			selectable, attribute_promotion);
-
-}
-
 /* Done */
 /*! \brief
  *  \par Function Description
@@ -790,11 +750,13 @@ OBJECT *o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
                                        selectable);
   } else {
     
-    object_list = o_complex_add_by_name(w_current, object_list, NULL, type, 
-					WHITE, 
-					x1, y1, 
-					angle, mirror,
-					basename, selectable, FALSE);
+    const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
+
+    object_list = o_complex_add(w_current, object_list, NULL, type, 
+                                WHITE, 
+                                x1, y1, 
+                                angle, mirror, clib,
+                                basename, selectable, FALSE);
   }
 
   return object_list;

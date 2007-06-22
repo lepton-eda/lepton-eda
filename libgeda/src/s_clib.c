@@ -1205,6 +1205,43 @@ void s_clib_flush_cache ()
   g_hash_table_remove_all (clib_cache);
 }
 
+/*! \brief Get symbol structure for a given symbol name.
+ *  \par Function Description
+ *  Return the first symbol found with the given \a name.  If more
+ *  than one matching symbol is found or no matches are found at all,
+ *  emits a log message warning the user.
+ *
+ *  \param name The symbol name to match against.
+ *  \return The first matching symbol, or NULL if none found.
+ */
+const CLibSymbol *s_clib_get_symbol_by_name (const gchar *name)
+{
+  GList *symlist = NULL;
+  const CLibSymbol *retval;
+
+  symlist = s_clib_search (name, CLIB_EXACT);
+
+  if (symlist == NULL) {
+    s_log_message ("Component [%s] was not found in the component library\n", 
+                   name);
+    /*! \bug Why does this need to go to stderr as well? */
+    fprintf(stderr,
+	    "Component [%s] was not found in any component library\n", 
+	    name);
+    return NULL;
+  }
+
+  if (g_list_next (symlist) != NULL) { /* More than one symbol */
+    s_log_message ("More than one component found with name [%s]\n",
+                   name);
+  }
+
+  retval = (CLibSymbol *) symlist->data;
+  g_list_free (symlist);
+
+  return retval;
+}
+
 /*! \brief Get symbol data for a given symbol name.
  *  \par Function Description
  *  Return the data for the first symbol found with the given name.
@@ -1213,31 +1250,14 @@ void s_clib_flush_cache ()
  *
  *  On failure, returns \b NULL (the error will be logged).
  *
- *  \todo Speed this up repeated calls by caching the #CLibSymbol
- *  pointers found for each name requested.
- *
  *  \param name The symbol name to match against.
  *  \return Allocated buffer containing symbol data.
  */
 gchar *s_clib_symbol_get_data_by_name (const gchar *name)
 {
-  GList *sourcelist;
-  CLibSource *source;
-  CLibSymbol *symbol;
+  const CLibSymbol *symbol;
 
-  for (sourcelist = clib_sources; 
-       sourcelist != NULL; 
-       sourcelist = g_list_next(sourcelist)) {
-
-    source = (CLibSource *) sourcelist->data;
-
-    symbol = source_has_symbol (source, name);
-
-    if (symbol != NULL) {
-      return s_clib_symbol_get_data (symbol);
-    }
-    
-  }
-
-  return NULL;
+  symbol = s_clib_get_symbol_by_name (name);
+  if (symbol == NULL) return NULL;
+  return s_clib_symbol_get_data (symbol);
 }

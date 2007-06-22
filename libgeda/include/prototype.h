@@ -288,12 +288,6 @@ void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, i
 OBJECT *add_head(void);
 int o_complex_is_eligible_attribute(TOPLEVEL *w_current, OBJECT *object, int promote_invisible);
 int o_complex_is_embedded(OBJECT *o_current);
-OBJECT *o_complex_add_by_name(TOPLEVEL *w_current, OBJECT *object_list, 
-			      GList **object_glist, char type,
-			      int color, int x, int y, int angle,
-			      int mirror, const gchar *basename,
-			      int selectable,
-			      int attribute_promotion);
 OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, 
 		      GList **object_glist, char type, int color, 
 		      int x, int y, int angle, int mirror, 
@@ -516,6 +510,7 @@ const CLibSource *s_clib_symbol_get_source (const CLibSymbol *symbol);
 gchar *s_clib_symbol_get_data (const CLibSymbol *symbol);
 GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode);
 void s_clib_flush_cache ();
+const CLibSymbol *s_clib_get_symbol_by_name (const gchar *name);
 gchar *s_clib_symbol_get_data_by_name (const gchar *name);
 
 /* s_color.c */
