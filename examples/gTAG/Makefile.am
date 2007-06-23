@@ -8,7 +8,7 @@ example_DATA = 7414-1.sym attribs commonrc copyleft.sym crdist.sh \
              gTAG.bom gTAG.ps gTAG.sch gnetlistrc gschemrc gschlasrc \
              max882.sym sn75240pw.sym README
 
-EXTRA_DIST = $(example_DATA)
+EXTRA_DIST = ChangeLog-1.0 $(example_DATA)
 
 MOSTLYCLEANFILES = gschem.log *~
 CLEANFILES = gschem.log *~

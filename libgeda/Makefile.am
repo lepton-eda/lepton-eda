@@ -1,7 +1,7 @@
 
 SUBDIRS = src include scripts docs share
 
-EXTRA_DIST = HACKING BUGS autogen.sh
+EXTRA_DIST = HACKING BUGS ChangeLog-1.0 autogen.sh
 
 pkgconfigdir            = $(libdir)/pkgconfig
 pkgconfig_DATA          = libgeda.pc

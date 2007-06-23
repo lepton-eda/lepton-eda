@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-26 11:03-0400\n"
+"POT-Creation-Date: 2007-06-23 17:33+0100\n"
 "PO-Revision-Date: 2006-09-13 16:59+0300\n"
 "Last-Translator: Andy Shevchenko <andy@smile.org.ua>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -26,15 +26,15 @@ msgstr "Файл"
 msgid "New Window"
 msgstr "Новое окно"
 
-#: src/rcstrings.c:4 src/x_pagesel.c:267
+#: src/rcstrings.c:4 src/x_pagesel.c:258
 msgid "New Page"
 msgstr "Новая страница"
 
-#: src/rcstrings.c:5 src/x_pagesel.c:268
+#: src/rcstrings.c:5 src/x_pagesel.c:259
 msgid "Open Page..."
 msgstr "Открыть страницу..."
 
-#: src/rcstrings.c:6 src/x_pagesel.c:271
+#: src/rcstrings.c:6 src/x_pagesel.c:262
 msgid "Close Page"
 msgstr "Закрыть страницу"
 
@@ -42,7 +42,7 @@ msgstr "Закрыть страницу"
 msgid "Revert Page"
 msgstr "Возвратить страницу"
 
-#: src/rcstrings.c:8 src/x_pagesel.c:270
+#: src/rcstrings.c:8 src/x_pagesel.c:261
 msgid "Save Page"
 msgstr "Сохранить страницу"
 
@@ -54,16 +54,16 @@ msgstr "Сохранить страницу как..."
 msgid "Save All"
 msgstr "Сохранить все"
 
-#: src/rcstrings.c:11 src/x_print.c:317
+#: src/rcstrings.c:11 src/x_print.c:282
 msgid "Print..."
 msgstr "Печать..."
 
-#: src/rcstrings.c:12 src/x_image.c:496
+#: src/rcstrings.c:12 src/x_image.c:541
 #, fuzzy
 msgid "Write image..."
 msgstr "Записать изображение..."
 
-#: src/rcstrings.c:13
+#: src/rcstrings.c:13 src/x_menus.c:519
 #, fuzzy
 msgid "Recent files"
 msgstr "Новый файл"
@@ -84,15 +84,15 @@ msgstr "Выйти"
 msgid "Edit"
 msgstr "Правка"
 
-#: src/rcstrings.c:19 src/x_window.c:515
+#: src/rcstrings.c:19 src/x_window.c:520
 msgid "Undo"
 msgstr "Отменить действие"
 
-#: src/rcstrings.c:20 src/x_window.c:522
+#: src/rcstrings.c:20 src/x_window.c:527
 msgid "Redo"
 msgstr "Повторить действие"
 
-#: src/rcstrings.c:21 src/i_basic.c:94 src/x_window.c:686
+#: src/rcstrings.c:21 src/i_basic.c:80 src/x_window.c:691
 msgid "Select Mode"
 msgstr "Режим выборки"
 
@@ -119,19 +119,19 @@ msgstr "Правка..."
 msgid "Edit Text..."
 msgstr "Правка текста..."
 
-#: src/rcstrings.c:27 src/i_basic.c:107
+#: src/rcstrings.c:27 src/i_basic.c:93
 msgid "Copy Mode"
 msgstr "Режим копирования"
 
-#: src/rcstrings.c:28 src/i_basic.c:162
+#: src/rcstrings.c:28 src/i_basic.c:148
 msgid "Multiple Copy Mode"
 msgstr "Режим множественного копирования"
 
-#: src/rcstrings.c:29 src/i_basic.c:110
+#: src/rcstrings.c:29 src/i_basic.c:96
 msgid "Move Mode"
 msgstr "Режим перемещения"
 
-#: src/rcstrings.c:30 src/i_callbacks.c:722 src/x_multiattrib.c:1193
+#: src/rcstrings.c:30 src/i_callbacks.c:722 src/x_multiattrib.c:1173
 msgid "Delete"
 msgstr "Удалить"
 
@@ -139,7 +139,7 @@ msgstr "Удалить"
 msgid "Rotate 90 Mode"
 msgstr "Режим вращения на 90"
 
-#: src/rcstrings.c:32 src/i_basic.c:114
+#: src/rcstrings.c:32 src/i_basic.c:100
 msgid "Mirror Mode"
 msgstr "Режим зеркалирования"
 
@@ -263,11 +263,11 @@ msgstr "Вид"
 msgid "Redraw"
 msgstr "Перерисовать"
 
-#: src/rcstrings.c:65 src/i_callbacks.c:1489 src/i_callbacks.c:1558
+#: src/rcstrings.c:65 src/i_callbacks.c:1487 src/i_callbacks.c:1556
 msgid "Pan"
 msgstr "Центрировать"
 
-#: src/rcstrings.c:66 src/i_basic.c:118
+#: src/rcstrings.c:66 src/i_basic.c:104
 msgid "Zoom Box"
 msgstr "Область для масштабирования"
 
@@ -303,7 +303,7 @@ msgstr "Следующая"
 msgid "Previous"
 msgstr "Предыдущая"
 
-#: src/rcstrings.c:76 src/x_window.c:493
+#: src/rcstrings.c:76 src/x_window.c:498
 msgid "New"
 msgstr "Новая"
 
@@ -327,12 +327,12 @@ msgstr "Добавить"
 msgid "Component..."
 msgstr "Компонент..."
 
-#: src/rcstrings.c:83 src/i_callbacks.c:2313 src/i_callbacks.c:2336
+#: src/rcstrings.c:83 src/i_callbacks.c:2308 src/i_callbacks.c:2330
 msgid "Net"
 msgstr "Проводник"
 
-#: src/rcstrings.c:84 src/i_callbacks.c:2381 src/i_callbacks.c:2405
-#: src/x_window.c:551
+#: src/rcstrings.c:84 src/i_callbacks.c:2374 src/i_callbacks.c:2397
+#: src/x_window.c:556
 msgid "Bus"
 msgstr "Шина"
 
@@ -344,23 +344,23 @@ msgstr "Атрибут..."
 msgid "Text..."
 msgstr "Текст..."
 
-#: src/rcstrings.c:87 src/i_callbacks.c:2487 src/i_callbacks.c:2507
+#: src/rcstrings.c:87 src/i_callbacks.c:2478 src/i_callbacks.c:2497
 msgid "Line"
 msgstr "Линия"
 
-#: src/rcstrings.c:88 src/i_callbacks.c:2530 src/i_callbacks.c:2550
+#: src/rcstrings.c:88 src/i_callbacks.c:2519 src/i_callbacks.c:2538
 msgid "Box"
 msgstr "Прямоугольник"
 
-#: src/rcstrings.c:89 src/i_callbacks.c:2607 src/i_callbacks.c:2628
+#: src/rcstrings.c:89 src/i_callbacks.c:2594 src/i_callbacks.c:2614
 msgid "Circle"
 msgstr "Окружность"
 
-#: src/rcstrings.c:90 src/i_callbacks.c:2651 src/i_callbacks.c:2671
+#: src/rcstrings.c:90 src/i_callbacks.c:2636 src/i_callbacks.c:2655
 msgid "Arc"
 msgstr "Дуга"
 
-#: src/rcstrings.c:91 src/i_callbacks.c:2694 src/i_callbacks.c:2714
+#: src/rcstrings.c:91 src/i_callbacks.c:2677 src/i_callbacks.c:2696
 msgid "Pin"
 msgstr "Контакт"
 
@@ -388,15 +388,15 @@ msgstr "Наверх"
 msgid "Documentation"
 msgstr "Документация"
 
-#: src/rcstrings.c:100 src/x_multiattrib.c:1332
+#: src/rcstrings.c:100 src/x_multiattrib.c:1299
 msgid "Attributes"
 msgstr "Атрибуты"
 
-#: src/rcstrings.c:101 src/i_callbacks.c:2974
+#: src/rcstrings.c:101 src/i_callbacks.c:2961
 msgid "Attach"
 msgstr "Прицепить"
 
-#: src/rcstrings.c:102 src/i_callbacks.c:3023
+#: src/rcstrings.c:102 src/i_callbacks.c:3010
 msgid "Detach"
 msgstr "Отцепить"
 
@@ -504,7 +504,7 @@ msgstr "Документация"
 msgid "About gschem"
 msgstr ""
 
-#: src/rcstrings.c:130 src/x_dialog.c:2501
+#: src/rcstrings.c:130 src/x_dialog.c:2514
 #, fuzzy
 msgid "Hotkeys"
 msgstr "Горячие клавиши..."
@@ -645,12 +645,12 @@ msgstr "Неверное ускорение [%d] при обработке keybo
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr "Неверное число секунд [%d] при обработке auto-save-interval\n"
 
-#: src/gschem.c:140 src/gschem.c:150
+#: src/gschem.c:190 src/gschem.c:200
 #, c-format
 msgid "gEDA/gschem version %s%s\n"
 msgstr "Версия gEDA/gschem %s%s\n"
 
-#: src/gschem.c:142 src/gschem.c:152
+#: src/gschem.c:192 src/gschem.c:202
 #, c-format
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
@@ -658,7 +658,7 @@ msgid ""
 msgstr ""
 "gEDA/gschem поставляется БЕЗ ГАРАНТИЙ; смотрите COPYING для подробностей.\n"
 
-#: src/gschem.c:144 src/gschem.c:154
+#: src/gschem.c:194 src/gschem.c:204
 #, c-format
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
@@ -666,7 +666,7 @@ msgstr ""
 "Это свободное программное обеспечение, и его можно распространять при "
 "известных\n"
 
-#: src/gschem.c:146 src/gschem.c:156
+#: src/gschem.c:196 src/gschem.c:206
 #, c-format
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
@@ -675,139 +675,139 @@ msgstr ""
 "условиях; пожалуйста, смотрите файл COPYING для получения подробностей.\n"
 "\n"
 
-#: src/gschem.c:160
+#: src/gschem.c:210
 #, c-format
 msgid "This is the MINGW32 port.\n"
 msgstr "Это MINGW32 версия.\n"
 
-#: src/gschem.c:164
+#: src/gschem.c:214
 #, c-format
 msgid "Current locale settings: %s\n"
 msgstr "Текущие установки локализации: %s\n"
 
-#: src/gschem.c:177
+#: src/gschem.c:227
 #, c-format
 msgid "You must set the GEDADATA environment variable!\n"
 msgstr "Вы должны установить переменную окружения GEDADATA!\n"
 
-#: src/gschem.c:192
+#: src/gschem.c:242
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr "Чтение начального scm-файла [%s]\n"
 
-#: src/gschem.c:196 src/gschem.c:199
+#: src/gschem.c:246 src/gschem.c:249
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "Невозможно прочитать начальный scm-файл [%s]\n"
 
-#: src/gschem.c:259
+#: src/gschem.c:310
 #, c-format
 msgid "Scheme directory NOT set!\n"
 msgstr "Каталог схем НЕ установлен!\n"
 
-#: src/gschem.c:266 src/x_script.c:70
+#: src/gschem.c:317 src/x_script.c:70
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "Запускается guile-скрипт [%s]\n"
 
-#: src/i_basic.c:97
+#: src/i_basic.c:83
 msgid "Attribute Mode"
 msgstr "Режим атрибутов"
 
-#: src/i_basic.c:100
+#: src/i_basic.c:86
 msgid "Component Mode"
 msgstr "Режим компонентов"
 
-#: src/i_basic.c:104
+#: src/i_basic.c:90
 msgid "Text Mode"
 msgstr "Режим текста"
 
-#: src/i_basic.c:112
+#: src/i_basic.c:98
 msgid "Rotate Mode"
 msgstr "Режим вращения"
 
-#: src/i_basic.c:122
+#: src/i_basic.c:108
 msgid "Pan Mode"
 msgstr "Режим центрирования"
 
-#: src/i_basic.c:126
+#: src/i_basic.c:112
 #, c-format
 msgid "Paste %d Mode"
 msgstr "Режим вставки %d"
 
-#: src/i_basic.c:131
+#: src/i_basic.c:117
 msgid "Net Mode"
 msgstr "Режим проводника"
 
-#: src/i_basic.c:135
+#: src/i_basic.c:121
 msgid "Bus Mode"
 msgstr "Режим шины"
 
-#: src/i_basic.c:138
+#: src/i_basic.c:124
 msgid "Line Mode"
 msgstr "Режим линии"
 
-#: src/i_basic.c:141
+#: src/i_basic.c:127
 msgid "Box Mode"
 msgstr "Режим прямоугольника"
 
-#: src/i_basic.c:144
+#: src/i_basic.c:130
 msgid "Picture Mode"
 msgstr "Режим изображения"
 
-#: src/i_basic.c:147
+#: src/i_basic.c:133
 msgid "Circle Mode"
 msgstr "Режим окружности"
 
-#: src/i_basic.c:150
+#: src/i_basic.c:136
 msgid "Arc Mode"
 msgstr "Режим дуги"
 
-#: src/i_basic.c:153
+#: src/i_basic.c:139
 msgid "Pin Mode"
 msgstr "Режим контактов"
 
-#: src/i_basic.c:155 src/i_callbacks.c:603 src/i_callbacks.c:622
+#: src/i_basic.c:141 src/i_callbacks.c:603 src/i_callbacks.c:622
 msgid "Copy"
 msgstr "Копировать"
 
-#: src/i_basic.c:157 src/i_callbacks.c:683 src/i_callbacks.c:702
+#: src/i_basic.c:143 src/i_callbacks.c:683 src/i_callbacks.c:702
 msgid "Move"
 msgstr "Переместить"
 
-#: src/i_basic.c:159 src/i_callbacks.c:643 src/i_callbacks.c:662
+#: src/i_basic.c:145 src/i_callbacks.c:643 src/i_callbacks.c:662
 msgid "Multiple Copy"
 msgstr "Множественное копирование"
 
-#: src/i_basic.c:197
-msgid "Snap Off"
-msgstr "Привязка выключена"
-
-#: src/i_basic.c:203
+#: src/i_basic.c:173
 msgid "Show Hidden"
 msgstr "Показать скрытые"
 
-#: src/i_basic.c:291 src/x_window.c:660
+#: src/i_basic.c:176
+msgid "Snap Off"
+msgstr "Привязка выключена"
+
+#: src/i_basic.c:258 src/x_window.c:665
 msgid "Action"
 msgstr "Действие"
 
-#: src/i_basic.c:299 src/x_window.c:655
+#: src/i_basic.c:266 src/x_window.c:660
 msgid "Stroke"
 msgstr "Штрих"
 
-#: src/i_basic.c:306 src/x_window.c:657
+#: src/i_basic.c:273 src/x_window.c:662
 msgid "none"
 msgstr "пусто"
 
-#: src/i_basic.c:313
+#: src/i_basic.c:280
 msgid "Repeat/"
 msgstr "Повторить/"
 
-#: src/i_basic.c:738 src/i_basic.c:743
+#: src/i_basic.c:569 src/i_basic.c:574
 msgid "OFF"
 msgstr ""
 
-#: src/i_basic.c:747
+#: src/i_basic.c:578
 #, c-format
 msgid "Grid(%s, %s)"
 msgstr ""
@@ -817,12 +817,12 @@ msgstr ""
 msgid "Documentation for [%s,%s,%s,%s]\n"
 msgstr "Документация для [%s, %s, %s, %s]\n"
 
-#: src/i_callbacks.c:191 src/i_callbacks.c:1687
+#: src/i_callbacks.c:191 src/i_callbacks.c:1685
 #, c-format
 msgid "New page created [%s]\n"
 msgstr "Создана новая страница [%s]\n"
 
-#: src/i_callbacks.c:226 src/x_menus.c:432
+#: src/i_callbacks.c:226 src/x_menus.c:490
 #, fuzzy, c-format
 msgid "New Window created [%s]\n"
 msgstr "Создано новое окно\n"
@@ -863,7 +863,7 @@ msgstr "Вращать"
 msgid "Mirror"
 msgstr "Зеркалирование"
 
-#: src/i_callbacks.c:955 src/x_dialog.c:1597
+#: src/i_callbacks.c:955 src/x_dialog.c:1603
 msgid "Translate"
 msgstr "Перевод"
 
@@ -911,162 +911,162 @@ msgstr "Сделать видимым"
 msgid "Edit Line Type"
 msgstr "Правка типа линии"
 
-#: src/i_callbacks.c:1305 src/x_dialog.c:1256
+#: src/i_callbacks.c:1305 src/x_dialog.c:1260
 msgid "Edit Fill Type"
 msgstr "Правка типа заливки"
 
-#: src/i_callbacks.c:1592
+#: src/i_callbacks.c:1590
 msgid "Update Cues"
 msgstr "Обновить сигналы"
 
-#: src/i_callbacks.c:1731
+#: src/i_callbacks.c:1729
 msgid "Really revert page?"
 msgstr "Действительно возвратить страницу?"
 
-#: src/i_callbacks.c:1805
+#: src/i_callbacks.c:1803
 msgid "Copy 1"
 msgstr "Копирование 1"
 
-#: src/i_callbacks.c:1824
+#: src/i_callbacks.c:1822
 msgid "Copy 2"
 msgstr "Копирование 2"
 
-#: src/i_callbacks.c:1843
+#: src/i_callbacks.c:1841
 msgid "Copy 3"
 msgstr "Копирование 3"
 
-#: src/i_callbacks.c:1862
+#: src/i_callbacks.c:1860
 msgid "Copy 4"
 msgstr "Копирование 4"
 
-#: src/i_callbacks.c:1881
+#: src/i_callbacks.c:1879
 msgid "Copy 5"
 msgstr "Копирование 5"
 
-#: src/i_callbacks.c:1900
+#: src/i_callbacks.c:1898
 msgid "Cut 1"
 msgstr "Вырезка 1"
 
-#: src/i_callbacks.c:1919
+#: src/i_callbacks.c:1917
 msgid "Cut 2"
 msgstr "Вырезка 2"
 
-#: src/i_callbacks.c:1938
+#: src/i_callbacks.c:1936
 msgid "Cut 3"
 msgstr "Вырезка 3"
 
-#: src/i_callbacks.c:1957
+#: src/i_callbacks.c:1955
 msgid "Cut 4"
 msgstr "Вырезка 4"
 
-#: src/i_callbacks.c:1976
+#: src/i_callbacks.c:1974
 msgid "Cut 5"
 msgstr "Вырезка 5"
 
-#: src/i_callbacks.c:1992
+#: src/i_callbacks.c:1990
 msgid "Paste 1"
 msgstr "Вставка 1"
 
-#: src/i_callbacks.c:2001 src/i_callbacks.c:2025 src/i_callbacks.c:2049
-#: src/i_callbacks.c:2073 src/i_callbacks.c:2097
+#: src/i_callbacks.c:1999 src/i_callbacks.c:2023 src/i_callbacks.c:2047
+#: src/i_callbacks.c:2071 src/i_callbacks.c:2095
 msgid "Empty buffer"
 msgstr "Пустой буфер"
 
-#: src/i_callbacks.c:2016
+#: src/i_callbacks.c:2014
 msgid "Paste 2"
 msgstr "Вставка 2"
 
-#: src/i_callbacks.c:2040
+#: src/i_callbacks.c:2038
 msgid "Paste 3"
 msgstr "Вставка 3"
 
-#: src/i_callbacks.c:2064
+#: src/i_callbacks.c:2062
 msgid "Paste 4"
 msgstr "Вставка 4"
 
-#: src/i_callbacks.c:2088
+#: src/i_callbacks.c:2086
 msgid "Paste 5"
 msgstr "Вставка 5"
 
-#: src/i_callbacks.c:2234 src/x_window.c:531
+#: src/i_callbacks.c:2232 src/x_window.c:536
 msgid "Component"
 msgstr "Компонент"
 
-#: src/i_callbacks.c:2271 src/i_callbacks.c:2291
+#: src/i_callbacks.c:2268 src/i_callbacks.c:2287
 msgid "Attribute"
 msgstr "Атрибуты"
 
-#: src/i_callbacks.c:2773
+#: src/i_callbacks.c:2754
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "Поиск источника [%s]\n"
 
-#: src/i_callbacks.c:2797 src/i_callbacks.c:2798
+#: src/i_callbacks.c:2778 src/i_callbacks.c:2779
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "Невозможно найти источник [%s]\n"
 
-#: src/i_callbacks.c:2869
+#: src/i_callbacks.c:2846
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Поиск символа [%s]\n"
 
-#: src/i_callbacks.c:2946
+#: src/i_callbacks.c:2933
 msgid ""
 "This command retrieves the component documentation from the web, but there "
 "is no component selected"
 msgstr ""
 
-#: src/i_callbacks.c:3063
+#: src/i_callbacks.c:3050
 msgid "ShowN"
 msgstr "Показать N"
 
-#: src/i_callbacks.c:3094
+#: src/i_callbacks.c:3081
 msgid "ShowV"
 msgstr "Показать V"
 
-#: src/i_callbacks.c:3125
+#: src/i_callbacks.c:3112
 msgid "ShowB"
 msgstr "Показать B"
 
-#: src/i_callbacks.c:3157
+#: src/i_callbacks.c:3144
 msgid "VisToggle"
 msgstr "Перекл. видимости"
 
-#: src/i_callbacks.c:3179
+#: src/i_callbacks.c:3166
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Извините6 но это опция не функционального меню\n"
 
-#: src/i_callbacks.c:3267
+#: src/i_callbacks.c:3254
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr ""
 
-#: src/i_callbacks.c:3270
+#: src/i_callbacks.c:3257
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr ""
 
-#: src/i_callbacks.c:3287
+#: src/i_callbacks.c:3274
 msgid "Grid OFF\n"
 msgstr "Сетка выкл.\n"
 
-#: src/i_callbacks.c:3290
+#: src/i_callbacks.c:3277
 msgid "Grid ON\n"
 msgstr "Сетка вкл.\n"
 
-#: src/i_callbacks.c:3307
+#: src/i_callbacks.c:3294
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "Привязка ВЫКЛЮЧЕНА (Внимание!)\n"
 
-#: src/i_callbacks.c:3310
+#: src/i_callbacks.c:3297
 msgid "Snap ON\n"
 msgstr "Привязка ВКЛЮЧЕНА\n"
 
-#: src/i_callbacks.c:3330
+#: src/i_callbacks.c:3317
 msgid "Rubber band OFF \n"
 msgstr ""
 
-#: src/i_callbacks.c:3333
+#: src/i_callbacks.c:3320
 msgid "Rubber band ON\n"
 msgstr ""
 
@@ -1155,27 +1155,27 @@ msgstr "Неизвестный тип для окружности!\n"
 msgid "Unknown type for circle (fill)!\n"
 msgstr "Неизвестный тип для окружности (с заливкой)!\n"
 
-#: src/o_complex.c:222
+#: src/o_complex.c:224
 #, c-format
 msgid "Could not find complex in new componet placement!\n"
 msgstr "Невозможно найти комплекс в новом расположении компонента!\n"
 
-#: src/o_complex.c:600
+#: src/o_complex.c:588
 #, c-format
 msgid "Got NULL in o_complex_translate_display_selection\n"
 msgstr "Получен NULL в o_complex_translate_display_selection\n"
 
-#: src/o_complex.c:668 src/o_complex.c:674
+#: src/o_complex.c:656 src/o_complex.c:662
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "Перевод схемы [%d %d]\n"
 
-#: src/o_complex.c:718
+#: src/o_complex.c:706
 #, c-format
 msgid "Got NULL in o_complex_translate_selection!\n"
 msgstr "Получен NULL в in o_complex_translate_selection!\n"
 
-#: src/o_copy.c:124 src/o_copy.c:395
+#: src/o_copy.c:124 src/o_copy.c:394
 #, c-format
 msgid "ERROR: NULL object in o_copy_end!\n"
 msgstr "Ошибка: объект NULL в o_copy_end!\n"
@@ -1221,38 +1221,29 @@ msgstr "Скрытый текст сейчас видим\n"
 msgid "Hidden text is now invisible\n"
 msgstr "Скрытый тескт сейчас невидим\n"
 
-#: src/o_misc.c:1076
-msgid "Could not unembedded component, could not find appropriate .sym file\n"
-msgstr ""
-"Невозможно исключить компонент, невозможно найти соответствующий .sym-файл\n"
-
-#: src/o_misc.c:1077
-msgid "Component still embedded and not updated\n"
-msgstr "Компонент всё ещё внедрен и не обновлён\n"
-
-#: src/o_misc.c:1081
+#: src/o_misc.c:1070
 #, c-format
-msgid "More than one component found with name [%s]\n"
-msgstr "Найдено более одного компонента с именем [%s]\n"
+msgid "Could not find symbol [%s] in library. Update failed.\n"
+msgstr ""
 
-#: src/o_misc.c:1229
+#: src/o_misc.c:1210
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr "o_autosave_backups: невозможно получить реально имя файла для %s."
 
-#: src/o_misc.c:1273
+#: src/o_misc.c:1254
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 "Невозможно установить режим чтения-записи для предыдущей резервной копии "
 "файла [%s]\n"
 
-#: src/o_misc.c:1291
+#: src/o_misc.c:1272
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "Невозможно установить режим только чтения для резервного файла [%s]\n"
 
-#: src/o_misc.c:1296
+#: src/o_misc.c:1277
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "Невозможно сохранить резервный файл [%s]\n"
@@ -1282,12 +1273,12 @@ msgstr "Получен неверный параметр в o_net_draw_xor_singl
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr "Попытка добавить более двух разрывов шины. Внутренняя ошибка gschem.\n"
 
-#: src/o_net.c:1155
-#, c-format
-msgid "Could not find %s in any component-library\n"
+#: src/o_net.c:1157
+#, fuzzy, c-format
+msgid "Bus ripper symbol [%s] was not found in any component library\n"
 msgstr "Невозможно найти %s ни в одной из библиотек компонентов\n"
 
-#: src/o_picture.c:205 src/o_picture.c:746
+#: src/o_picture.c:205 src/o_picture.c:745
 #, c-format
 msgid "Failed to load picture: %s"
 msgstr "Невозможно загрзитать изображение: [%s]"
@@ -1296,7 +1287,7 @@ msgstr "Невозможно загрзитать изображение: [%s]"
 msgid "Picture"
 msgstr "Изображение"
 
-#: src/o_picture.c:658 src/x_attribedit.c:137
+#: src/o_picture.c:657 src/x_attribedit.c:138
 #, c-format
 msgid "ERROR: NULL object!\n"
 msgstr "Ошибка: объект NULL!\n"
@@ -1351,178 +1342,178 @@ msgstr ""
 "  -h            Помощь; это сообщение\n"
 "\n"
 
-#: src/x_attribedit.c:122
+#: src/x_attribedit.c:123
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr "Получена неверная опция просмотра, устанавливается просмотр обоих\n"
 
-#: src/x_attribedit.c:325
+#: src/x_attribedit.c:326
 msgid "Single Attribute Editor"
 msgstr "Редактор одного атрибута"
 
-#: src/x_attribedit.c:355
+#: src/x_attribedit.c:357
 #, fuzzy
 msgid "<b>Edit Attribute</b>"
 msgstr "Редактировать атрибуты"
 
-#: src/x_attribedit.c:357
+#: src/x_attribedit.c:359
 #, fuzzy
 msgid "<b>Add Attribute</b>"
 msgstr "Добавить атрибут"
 
-#: src/x_attribedit.c:373 src/x_multiattrib.c:1512
+#: src/x_attribedit.c:375 src/x_multiattrib.c:1479
 msgid "Name:"
 msgstr "Имя:"
 
-#: src/x_attribedit.c:389 src/x_multiattrib.c:1531
+#: src/x_attribedit.c:391 src/x_multiattrib.c:1498
 msgid "Value:"
 msgstr "Значение:"
 
-#: src/x_attribedit.c:404 src/x_multiattrib.c:1559
+#: src/x_attribedit.c:406 src/x_multiattrib.c:1526
 msgid "Visible"
 msgstr "Видимый"
 
-#: src/x_attribedit.c:424
+#: src/x_attribedit.c:426
 msgid "Show Value Only"
 msgstr "Показать только значение"
 
-#: src/x_attribedit.c:426
+#: src/x_attribedit.c:428
 msgid "Show Name Only"
 msgstr "Показать только имя"
 
-#: src/x_attribedit.c:428 src/x_multiattrib.c:1162
+#: src/x_attribedit.c:430 src/x_multiattrib.c:1142
 msgid "Show Name & Value"
 msgstr "Показать имя и значение"
 
-#: src/x_attribedit.c:435
+#: src/x_attribedit.c:437
 #, fuzzy
 msgid "<b>Attach Options</b>"
 msgstr "Настройки"
 
-#: src/x_attribedit.c:450
+#: src/x_attribedit.c:452
 msgid "All"
 msgstr "Все"
 
-#: src/x_attribedit.c:458 src/x_compselect.c:791
+#: src/x_attribedit.c:460 src/x_compselect.c:737
 msgid "Components"
 msgstr "Компоненты"
 
-#: src/x_attribedit.c:466 src/x_window.c:541
+#: src/x_attribedit.c:468 src/x_window.c:546
 msgid "Nets"
 msgstr "Проводники"
 
-#: src/x_attribedit.c:474
+#: src/x_attribedit.c:476
 msgid "Replace existing attributes"
 msgstr ""
 
-#: src/x_autonumber.c:411
+#: src/x_autonumber.c:412
 msgid ""
 "slotted object without slot attribute may cause problems when autonumbering "
 "slots\n"
 msgstr ""
 
-#: src/x_autonumber.c:426
+#: src/x_autonumber.c:427
 #, c-format
 msgid ""
 "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
 msgstr ""
 
-#: src/x_autonumber.c:696
+#: src/x_autonumber.c:697
 msgid "No searchstring given in autonumber text.\n"
 msgstr ""
 
-#: src/x_autonumber.c:747
+#: src/x_autonumber.c:748
 msgid "No '*' or '?' given at the end of the autonumber text.\n"
 msgstr ""
 
-#: src/x_autonumber.c:880
+#: src/x_autonumber.c:881
 #, fuzzy
 msgid "Diagonal"
 msgstr "диагональный"
 
-#: src/x_autonumber.c:881
+#: src/x_autonumber.c:882
 msgid "Top to bottom"
 msgstr ""
 
-#: src/x_autonumber.c:881
+#: src/x_autonumber.c:882
 msgid "Bottom to top"
-msgstr ""
-
-#: src/x_autonumber.c:882
-#, fuzzy
-msgid "Left to right"
-msgstr "левый правый"
-
-#: src/x_autonumber.c:882
-msgid "Right to left"
 msgstr ""
 
 #: src/x_autonumber.c:883
 #, fuzzy
+msgid "Left to right"
+msgstr "левый правый"
+
+#: src/x_autonumber.c:883
+msgid "Right to left"
+msgstr ""
+
+#: src/x_autonumber.c:884
+#, fuzzy
 msgid "File order"
 msgstr "порядок файлов"
 
-#: src/x_autonumber.c:1219
+#: src/x_autonumber.c:1220
 msgid "Autonumber text"
 msgstr "Автонумеровать текст"
 
-#: src/x_autonumber.c:1244
+#: src/x_autonumber.c:1246
 msgid "<b>Scope</b>"
 msgstr ""
 
-#: src/x_autonumber.c:1266
+#: src/x_autonumber.c:1268
 #, fuzzy
 msgid "Search for:"
 msgstr "поиск фокуса"
 
-#: src/x_autonumber.c:1280
+#: src/x_autonumber.c:1282
 #, fuzzy
 msgid "Autonumber text in:"
 msgstr "Автонумеровать текст"
 
-#: src/x_autonumber.c:1287
+#: src/x_autonumber.c:1289
 msgid "Skip numbers found in:"
 msgstr ""
 
-#: src/x_autonumber.c:1299 src/x_autonumber.c:1308
+#: src/x_autonumber.c:1301 src/x_autonumber.c:1310
 #, fuzzy
 msgid "Selected objects"
 msgstr "выбраны объекты"
 
-#: src/x_autonumber.c:1300 src/x_autonumber.c:1309
+#: src/x_autonumber.c:1302 src/x_autonumber.c:1311
 #, fuzzy
 msgid "Current page"
 msgstr "текущий лист"
 
-#: src/x_autonumber.c:1301 src/x_autonumber.c:1310
+#: src/x_autonumber.c:1303 src/x_autonumber.c:1312
 #, fuzzy
 msgid "Whole hierarchy"
 msgstr "Иерархия"
 
-#: src/x_autonumber.c:1312
+#: src/x_autonumber.c:1314
 msgid "Overwrite existing numbers"
 msgstr ""
 
-#: src/x_autonumber.c:1317
+#: src/x_autonumber.c:1319
 #, fuzzy
 msgid "<b>Options</b>"
 msgstr "Настройки"
 
-#: src/x_autonumber.c:1339
+#: src/x_autonumber.c:1341
 #, fuzzy
 msgid "Starting number:"
 msgstr "стартовый номер"
 
-#: src/x_autonumber.c:1346
+#: src/x_autonumber.c:1348
 #, fuzzy
 msgid "Sort order:"
 msgstr "порядок сортировки"
 
-#: src/x_autonumber.c:1367
+#: src/x_autonumber.c:1369
 msgid "Remove numbers"
 msgstr ""
 
-#: src/x_autonumber.c:1371
+#: src/x_autonumber.c:1373
 msgid "Automatic slotting"
 msgstr ""
 
@@ -1541,7 +1532,7 @@ msgstr "Установка белого цвета по умолчанию\n"
 msgid "Ack! Cannot allocate white!\n"
 msgstr "Невозможно назначить белый!\n"
 
-#: src/x_color.c:80 src/x_color.c:128 src/x_window.c:176 src/x_window.c:185
+#: src/x_color.c:80 src/x_color.c:128 src/x_window.c:175 src/x_window.c:184
 #, c-format
 msgid "Could not allocate the color %s!\n"
 msgstr "Невозможно назначить цвет %s!\n"
@@ -1551,36 +1542,36 @@ msgstr "Невозможно назначить цвет %s!\n"
 msgid "Tried to get an invalid color: %d\n"
 msgstr "Попытка получения неверного цвета: %d\n"
 
-#: src/x_compselect.c:615
+#: src/x_compselect.c:577
 msgid "Default behavior - reference component"
 msgstr "Нормальное поведение - ссылка на компонент"
 
-#: src/x_compselect.c:618
+#: src/x_compselect.c:580
 msgid "Embed component in schematic"
 msgstr "Внедрить компонент в схему"
 
-#: src/x_compselect.c:621
+#: src/x_compselect.c:583
 msgid "Include component as individual objects"
 msgstr "Включить компонент как индивидуальный объект"
 
-#: src/x_compselect.c:707
+#: src/x_compselect.c:668
 msgid "Select Component..."
 msgstr "Выбрать компонент..."
 
-#: src/x_compselect.c:821
+#: src/x_compselect.c:767
 #, fuzzy
 msgid "Filter:"
 msgstr "Фильтр"
 
-#: src/x_compselect.c:885 src/x_fileselect.c:123
+#: src/x_compselect.c:831 src/x_fileselect.c:123
 msgid "Preview"
 msgstr "Предварительный просмотр"
 
-#: src/x_dialog.c:182
+#: src/x_dialog.c:183
 msgid "Text Entry..."
 msgstr "Текстовое вхождение..."
 
-#: src/x_dialog.c:214
+#: src/x_dialog.c:216
 msgid ""
 "Enter text, click apply,\n"
 "move cursor into window, click to place text.\n"
@@ -1590,185 +1581,185 @@ msgstr ""
 "переместите курсор в окно, щелкните для установки текста.\n"
 "Средняя кнопка предназначена для вращения во время установки."
 
-#: src/x_dialog.c:303
+#: src/x_dialog.c:305
 msgid "Lower Left"
 msgstr "Нижний левый"
 
-#: src/x_dialog.c:314
+#: src/x_dialog.c:316
 msgid "Middle Left"
 msgstr "Средний левый"
 
-#: src/x_dialog.c:325
+#: src/x_dialog.c:327
 msgid "Upper Left"
 msgstr "Верхний левый"
 
-#: src/x_dialog.c:336
+#: src/x_dialog.c:338
 msgid "Lower Middle"
 msgstr "Нижний средний"
 
-#: src/x_dialog.c:347
+#: src/x_dialog.c:349
 msgid "Middle Middle"
 msgstr "Средний средний"
 
-#: src/x_dialog.c:358
+#: src/x_dialog.c:360
 msgid "Upper Middle"
 msgstr "Верхний средний"
 
-#: src/x_dialog.c:369
+#: src/x_dialog.c:371
 msgid "Lower Right"
 msgstr "Нижний правый"
 
-#: src/x_dialog.c:380
+#: src/x_dialog.c:382
 msgid "Middle Right"
 msgstr "Средний правый"
 
-#: src/x_dialog.c:391
+#: src/x_dialog.c:393
 msgid "Upper Right"
 msgstr "Верхний правый"
 
-#: src/x_dialog.c:506
+#: src/x_dialog.c:508
 #, fuzzy
 msgid "Edit Text Properties"
 msgstr "Правка размера текста"
 
-#: src/x_dialog.c:541
+#: src/x_dialog.c:544
 #, fuzzy
 msgid "<b>Text Content</b>"
 msgstr "Настройки"
 
-#: src/x_dialog.c:573
+#: src/x_dialog.c:576
 #, fuzzy
 msgid "<b>Text Properties</b>"
 msgstr "Настройки"
 
-#: src/x_dialog.c:588
+#: src/x_dialog.c:591
 #, fuzzy
 msgid "Color:"
 msgstr "Цвет"
 
-#: src/x_dialog.c:598
+#: src/x_dialog.c:601
 msgid "Size:"
 msgstr ""
 
-#: src/x_dialog.c:607
+#: src/x_dialog.c:610
 #, fuzzy
 msgid "Alignment:"
 msgstr "Правка выравнивания текста"
 
-#: src/x_dialog.c:661
+#: src/x_dialog.c:664
 msgid "Solid"
 msgstr "Сплошной"
 
-#: src/x_dialog.c:662
+#: src/x_dialog.c:665
 msgid "Dotted"
 msgstr "Пунктир с точкой"
 
-#: src/x_dialog.c:663
+#: src/x_dialog.c:666
 msgid "Dashed"
 msgstr "Пунктир с дефисом"
 
-#: src/x_dialog.c:664
+#: src/x_dialog.c:667
 msgid "Center"
 msgstr "Центрированный"
 
-#: src/x_dialog.c:665
+#: src/x_dialog.c:668
 msgid "Phantom"
 msgstr "Искусственный"
 
-#: src/x_dialog.c:791 src/x_dialog.c:793 src/x_dialog.c:795 src/x_dialog.c:977
-#: src/x_dialog.c:978 src/x_dialog.c:979 src/x_dialog.c:987
-#: src/x_dialog.c:1170 src/x_dialog.c:1172 src/x_dialog.c:1174
-#: src/x_dialog.c:1176 src/x_dialog.c:1178 src/x_dialog.c:1382
-#: src/x_dialog.c:1383 src/x_dialog.c:1384 src/x_dialog.c:1385
-#: src/x_dialog.c:1386 src/x_dialog.c:1394
+#: src/x_dialog.c:794 src/x_dialog.c:796 src/x_dialog.c:798 src/x_dialog.c:981
+#: src/x_dialog.c:982 src/x_dialog.c:983 src/x_dialog.c:991
+#: src/x_dialog.c:1174 src/x_dialog.c:1176 src/x_dialog.c:1178
+#: src/x_dialog.c:1180 src/x_dialog.c:1182 src/x_dialog.c:1387
+#: src/x_dialog.c:1388 src/x_dialog.c:1389 src/x_dialog.c:1390
+#: src/x_dialog.c:1391 src/x_dialog.c:1399
 msgid "*unchanged*"
 msgstr "*неизменено*"
 
-#: src/x_dialog.c:870
+#: src/x_dialog.c:873
 msgid "Edit Line Width & Type"
 msgstr "Правка ширины и типа линии"
 
-#: src/x_dialog.c:910
+#: src/x_dialog.c:914
 #, fuzzy
 msgid "Width:"
 msgstr "Ширина"
 
-#: src/x_dialog.c:914 src/x_print.c:353
+#: src/x_dialog.c:918 src/x_print.c:313
 #, fuzzy
 msgid "Type:"
 msgstr "Тип"
 
-#: src/x_dialog.c:918
+#: src/x_dialog.c:922
 #, fuzzy
 msgid "Dash Length:"
 msgstr "Длина дефиса линии"
 
-#: src/x_dialog.c:922
+#: src/x_dialog.c:926
 #, fuzzy
 msgid "Dash Space:"
 msgstr "Дефисный пробел линии"
 
-#: src/x_dialog.c:1027
+#: src/x_dialog.c:1031
 msgid "Hollow"
 msgstr "Вогнуть"
 
-#: src/x_dialog.c:1028
+#: src/x_dialog.c:1032
 msgid "Filled"
 msgstr "Заполнено"
 
-#: src/x_dialog.c:1029
+#: src/x_dialog.c:1033
 msgid "Mesh"
 msgstr "Ячейка"
 
-#: src/x_dialog.c:1030
+#: src/x_dialog.c:1034
 msgid "Hatch"
 msgstr "Штрих"
 
-#: src/x_dialog.c:1295
+#: src/x_dialog.c:1300
 #, fuzzy
 msgid "Fill Type:"
 msgstr "Тип заливки"
 
-#: src/x_dialog.c:1299
+#: src/x_dialog.c:1304
 #, fuzzy
 msgid "Line Width:"
 msgstr "Ширина линии"
 
-#: src/x_dialog.c:1303
+#: src/x_dialog.c:1308
 #, fuzzy
 msgid "Angle 1:"
 msgstr "Угол1"
 
-#: src/x_dialog.c:1307
+#: src/x_dialog.c:1312
 #, fuzzy
 msgid "Pitch 1:"
 msgstr "Наклон1"
 
-#: src/x_dialog.c:1311
+#: src/x_dialog.c:1316
 #, fuzzy
 msgid "Angle 2:"
 msgstr "Угол2"
 
-#: src/x_dialog.c:1315
+#: src/x_dialog.c:1320
 #, fuzzy
 msgid "Pitch 2:"
 msgstr "Наклон2"
 
-#: src/x_dialog.c:1477
+#: src/x_dialog.c:1482
 msgid "Arc Params"
 msgstr "Параметры дуги"
 
-#: src/x_dialog.c:1518
+#: src/x_dialog.c:1524
 #, fuzzy
 msgid "Start Angle:"
 msgstr "Начало угла"
 
-#: src/x_dialog.c:1528
+#: src/x_dialog.c:1534
 #, fuzzy
 msgid "Degrees of Sweep:"
 msgstr "Угол развертки в градусах"
 
-#: src/x_dialog.c:1628
+#: src/x_dialog.c:1635
 msgid ""
 "Offset to translate?\n"
 "(0 for origin)"
@@ -1776,50 +1767,50 @@ msgstr ""
 "Смещение для перевода?\n"
 "(о для начала отсчета)"
 
-#: src/x_dialog.c:1696
+#: src/x_dialog.c:1703
 msgid "Text Size"
 msgstr "Размер текста"
 
-#: src/x_dialog.c:1727
+#: src/x_dialog.c:1735
 #, fuzzy
 msgid "Enter new text size:"
 msgstr "Введите новый размер текста"
 
-#: src/x_dialog.c:1802
+#: src/x_dialog.c:1810
 #, fuzzy
 msgid "Snap Size"
 msgstr "Сетка привязки"
 
-#: src/x_dialog.c:1833
+#: src/x_dialog.c:1842
 #, fuzzy
 msgid "Enter new snap grid spacing:"
 msgstr "Введите новый шаг сетки привязки"
 
-#: src/x_dialog.c:1906
+#: src/x_dialog.c:1915
 msgid "Edit slot number"
 msgstr "Правка номера слота"
 
-#: src/x_dialog.c:1938
+#: src/x_dialog.c:1948
 #, fuzzy
 msgid "Edit slot number:"
 msgstr "Правка номера слота"
 
-#: src/x_dialog.c:2000
+#: src/x_dialog.c:2010
 msgid "About..."
 msgstr "О..."
 
-#: src/x_dialog.c:2019
+#: src/x_dialog.c:2030
 #, fuzzy
 msgid "<b>gEDA: GPL Electronic Design Automation</b>"
 msgstr ""
 "gEDA: Система Автоматизированного ПРоектирования электронных схем (GPL)"
 
-#: src/x_dialog.c:2023
+#: src/x_dialog.c:2034
 #, fuzzy, c-format
 msgid "<b>gschem version %s%s</b>"
 msgstr "версия gschem %s%s"
 
-#: src/x_dialog.c:2029
+#: src/x_dialog.c:2040
 msgid ""
 "Written by:\n"
 "Ales V. Hvezda\n"
@@ -1832,96 +1823,96 @@ msgstr ""
 "И многими другими (смотрите файл AUTHORS) \n"
 "Перевод: Andy Shevchenko <andy@smile.org.ua>"
 
-#: src/x_dialog.c:2093
+#: src/x_dialog.c:2104
 msgid "Coords"
 msgstr "Координаты"
 
-#: src/x_dialog.c:2113
+#: src/x_dialog.c:2125
 msgid "Screen"
 msgstr "Экран"
 
-#: src/x_dialog.c:2122
+#: src/x_dialog.c:2134
 msgid "World"
 msgstr "Мир"
 
-#: src/x_dialog.c:2345
+#: src/x_dialog.c:2357
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr "Ошибка: объект NULL в color_edit_dialog_apply!\n"
 
-#: src/x_dialog.c:2408
+#: src/x_dialog.c:2420
 msgid "Color Edit"
 msgstr "Правка цвета"
 
-#: src/x_dialog.c:2440
+#: src/x_dialog.c:2453
 msgid "Object color:"
 msgstr ""
 
-#: src/x_dialog.c:2564
+#: src/x_dialog.c:2578
 #, fuzzy
 msgid "Function"
 msgstr "Действие"
 
-#: src/x_dialog.c:2571
+#: src/x_dialog.c:2585
 #, fuzzy
 msgid "Keystroke(s)"
 msgstr "Функция : комбинация клавиш"
 
-#: src/x_dialog.c:2925
+#: src/x_dialog.c:2939
 #, fuzzy
 msgid "Find Text"
 msgstr "Найти текст"
 
-#: src/x_dialog.c:2957
+#: src/x_dialog.c:2972
 msgid "Text to find:"
 msgstr "Текст для поиска:"
 
-#: src/x_dialog.c:2967
+#: src/x_dialog.c:2982
 msgid "descend into hierarchy"
 msgstr "Спуск по иерархии"
 
-#: src/x_dialog.c:3031
+#: src/x_dialog.c:3046
 #, fuzzy
 msgid "Hide Text"
 msgstr "Скрыть текст"
 
-#: src/x_dialog.c:3063
+#: src/x_dialog.c:3079
 msgid "Hide text starting with:"
 msgstr "Скрыть текст, начинающийся с:"
 
-#: src/x_dialog.c:3131
+#: src/x_dialog.c:3147
 #, fuzzy
 msgid "Show Text"
 msgstr "Показать текст"
 
-#: src/x_dialog.c:3163
+#: src/x_dialog.c:3180
 msgid "Show text starting with:"
 msgstr "Показать текст, начинающийся с:"
 
-#: src/x_dialog.c:3608 src/x_multiattrib.c:1389
+#: src/x_dialog.c:3625 src/x_multiattrib.c:1356
 msgid "Name"
 msgstr "Имя"
 
-#: src/x_dialog.c:3630
+#: src/x_dialog.c:3647
 msgid "S_elect the schematics you want to save:"
 msgstr ""
 
-#: src/x_dialog.c:3724
+#: src/x_dialog.c:3741
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr ""
 
-#: src/x_dialog.c:3730
+#: src/x_dialog.c:3747
 #, c-format
 msgid ""
 "There is %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 
-#: src/x_dialog.c:3759
+#: src/x_dialog.c:3776
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
 
-#: src/x_dialog.c:3779
+#: src/x_dialog.c:3796
 msgid "_Close without saving"
 msgstr ""
 
@@ -1950,12 +1941,21 @@ msgstr "Открыть..."
 msgid "Save as..."
 msgstr "Сохранить как..."
 
-#: src/x_image.c:363
+#: src/x_image.c:189
+msgid "Encapsulated Postscript"
+msgstr ""
+
+#: src/x_image.c:315
+#, fuzzy, c-format
+msgid "x_image_lowlevel: Unable to write eps file %s.\n"
+msgstr "x_image_lowlevel: невозможно записать PNG-файл.\n"
+
+#: src/x_image.c:407
 #, fuzzy, c-format
 msgid "x_image_lowlevel: Unable to write %s file %s.\n"
 msgstr "x_image_lowlevel: невозможно записать PNG-файл.\n"
 
-#: src/x_image.c:373
+#: src/x_image.c:417
 #, c-format
 msgid ""
 "There was the following error when saving image with type %s to filename:\n"
@@ -1964,32 +1964,32 @@ msgid ""
 "%s.\n"
 msgstr ""
 
-#: src/x_image.c:392 src/x_image.c:423
+#: src/x_image.c:436 src/x_image.c:468
 #, c-format
 msgid "Wrote color image to [%s] [%d x %d]\n"
 msgstr "Записано цветное изображение в [%s] [%d-x%d]\n"
 
-#: src/x_image.c:394 src/x_image.c:425
+#: src/x_image.c:438 src/x_image.c:470
 #, c-format
 msgid "Wrote black and white image to [%s] [%d x %d]\n"
 msgstr "Записано черно-белое изображение в [%s] [%d-x-%d]\n"
 
-#: src/x_image.c:404
+#: src/x_image.c:448
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"
 msgstr ""
 "x_image_lowlevel: невозможно получить буфер изображения из окна gschem.\n"
 
-#: src/x_image.c:459
+#: src/x_image.c:504
 #, fuzzy
 msgid "Width x Height"
 msgstr "Ширина-x-Высота"
 
-#: src/x_image.c:475
+#: src/x_image.c:520
 #, fuzzy
 msgid "Image type"
 msgstr "Изображение"
 
-#: src/x_log.c:231
+#: src/x_log.c:235
 msgid "Status"
 msgstr "Статус"
 
@@ -2075,202 +2075,212 @@ msgstr ""
 "Попытка установки чувствительности для несуществующего выскакивающего "
 "menu_item\n"
 
-#: src/x_multiattrib.c:652
+#: src/x_menus.c:479
+#, fuzzy, c-format
+msgid "Couldn't open file %s\n"
+msgstr "Невозможно вызвать %s\n"
+
+#: src/x_menus.c:537
+#, fuzzy
+msgid "Clear"
+msgstr "Закрыть"
+
+#: src/x_multiattrib.c:655
 msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr "Атрибуты с пустым именем недопустимы. Пожалуйста, установите имя."
 
-#: src/x_multiattrib.c:1164
+#: src/x_multiattrib.c:1144
 msgid "Show Value only"
 msgstr "Показать только значение"
 
-#: src/x_multiattrib.c:1166
+#: src/x_multiattrib.c:1146
 msgid "Show Name only"
 msgstr "Показать только имя"
 
-#: src/x_multiattrib.c:1192
+#: src/x_multiattrib.c:1172
 msgid "Duplicate"
 msgstr "Дублировать"
 
-#: src/x_multiattrib.c:1309
+#: src/x_multiattrib.c:1283
 msgid "Edit Attributes"
 msgstr "Редактировать атрибуты"
 
-#: src/x_multiattrib.c:1414
+#: src/x_multiattrib.c:1381
 msgid "Value"
 msgstr "Значение"
 
-#: src/x_multiattrib.c:1436
+#: src/x_multiattrib.c:1403
 msgid "Vis?"
 msgstr "Видим?"
 
-#: src/x_multiattrib.c:1456
+#: src/x_multiattrib.c:1423
 msgid "N"
 msgstr ""
 
-#: src/x_multiattrib.c:1476
+#: src/x_multiattrib.c:1443
 msgid "V"
 msgstr ""
 
-#: src/x_multiattrib.c:1497
+#: src/x_multiattrib.c:1464
 msgid "Add Attribute"
 msgstr "Добавить атрибут"
 
-#: src/x_pagesel.c:272
+#: src/x_pagesel.c:263
 msgid "Discard Page"
 msgstr "Отвергнуть страницу"
 
-#: src/x_pagesel.c:381
+#: src/x_pagesel.c:360
 msgid "Page Manager"
 msgstr "Менеджер страниц"
 
-#: src/x_pagesel.c:437
+#: src/x_pagesel.c:416
 msgid "Filename"
 msgstr "Имя файла"
 
-#: src/x_pagesel.c:453
+#: src/x_pagesel.c:432
 msgid "Changed"
 msgstr "Изменено"
 
-#: src/x_pagesel.c:473
+#: src/x_pagesel.c:452
 msgid "Right click on the filename for more options..."
 msgstr "Щелкните правой кнопкой на имени файла для дополнительных опций..."
 
-#: src/x_print.c:90
+#: src/x_print.c:88
 #, fuzzy
 msgid "Select PostScript Filename..."
 msgstr "Сохранить PostScript как..."
 
-#: src/x_print.c:206
+#: src/x_print.c:170
 msgid "Extents with margins"
 msgstr "Расширить с полями"
 
-#: src/x_print.c:212
+#: src/x_print.c:176
 msgid "Extents no margins"
 msgstr "Расширить без полей"
 
-#: src/x_print.c:218
+#: src/x_print.c:182
 msgid "Current Window"
 msgstr "Текущее окно"
 
-#: src/x_print.c:252
+#: src/x_print.c:216
 msgid "Landscape"
 msgstr "Альбом"
 
-#: src/x_print.c:258
+#: src/x_print.c:222
 msgid "Portrait"
 msgstr "Портрет"
 
-#: src/x_print.c:330
+#: src/x_print.c:290
 msgid "Settings"
 msgstr "Установки"
 
-#: src/x_print.c:342
+#: src/x_print.c:302
 #, fuzzy
 msgid "Output paper size:"
 msgstr "Размер бумаги для печати"
 
-#: src/x_print.c:364
+#: src/x_print.c:324
 #, fuzzy
 msgid "Orientation:"
 msgstr "Ориентация"
 
-#: src/x_print.c:376
+#: src/x_print.c:336
 msgid "Destination"
 msgstr "Назначение"
 
-#: src/x_print.c:389
+#: src/x_print.c:349
 #, fuzzy
 msgid "File:"
 msgstr "Файл"
 
-#: src/x_print.c:419
+#: src/x_print.c:379
 #, fuzzy
 msgid "Command:"
 msgstr "Команда"
 
-#: src/x_print.c:785
+#: src/x_print.c:749
 msgid "No print destination specified\n"
 msgstr "Не указано назначение для печати\n"
 
-#: src/x_print.c:792
+#: src/x_print.c:756
 #, c-format
 msgid "Cannot print current schematic to [%s]\n"
 msgstr "Невозможно распечатать текущую схему на [%s]\n"
 
-#: src/x_print.c:801
+#: src/x_print.c:765
 #, c-format
 msgid ""
 "Error printing to file '%s'\n"
 "Check the log window for more information"
 msgstr ""
 
-#: src/x_print.c:808
+#: src/x_print.c:772
 #, c-format
 msgid "Printed current schematic to [%s]\n"
 msgstr "Текущая схема распечатана на [%s]\n"
 
-#: src/x_window.c:176
+#: src/x_window.c:175
 msgid "black"
 msgstr "черный"
 
-#: src/x_window.c:185
+#: src/x_window.c:184
 msgid "white"
 msgstr "белый"
 
-#: src/x_window.c:219
+#: src/x_window.c:218
 #, c-format
 msgid "Couldn't allocate gc\n"
 msgstr "Невозможно назначить gc\n"
 
-#: src/x_window.c:232
+#: src/x_window.c:231
 #, c-format
 msgid "Couldn't allocate xor_gc\n"
 msgstr "Невозможно назначить xor_gc\n"
 
-#: src/x_window.c:245
+#: src/x_window.c:244
 #, c-format
 msgid "Couldn't allocate outline_xor_gc\n"
 msgstr "Невозможно назначить outline_xor_gc\n"
 
-#: src/x_window.c:261
+#: src/x_window.c:260
 #, c-format
 msgid "Couldn't allocate bounding_xor_gc\n"
 msgstr "Невозможно назначить bounding_xor_gc\n"
 
-#: src/x_window.c:268
+#: src/x_window.c:267
 #, c-format
 msgid "Couldn't allocate bus_gc\n"
 msgstr "Невозможно назначить bus_gc\n"
 
-#: src/x_window.c:494
+#: src/x_window.c:499
 msgid "New file"
 msgstr "Новый файл"
 
-#: src/x_window.c:500
+#: src/x_window.c:505
 msgid "Open"
 msgstr "Открыть"
 
-#: src/x_window.c:501
+#: src/x_window.c:506
 msgid "Open file..."
 msgstr "Открыть файл..."
 
-#: src/x_window.c:507
+#: src/x_window.c:512
 msgid "Save"
 msgstr "Сохранить"
 
-#: src/x_window.c:508
+#: src/x_window.c:513
 msgid "Save file"
 msgstr "Сохранить файл"
 
-#: src/x_window.c:516
+#: src/x_window.c:521
 msgid "Undo last operation"
 msgstr "Отменить последнее действие"
 
-#: src/x_window.c:523
+#: src/x_window.c:528
 msgid "Redo last undo"
 msgstr "Повторить отмененное действие"
 
-#: src/x_window.c:532
+#: src/x_window.c:537
 msgid ""
 "Add component...\n"
 "Select library and component from list, move the mouse into main window, "
@@ -2282,7 +2292,7 @@ msgstr ""
 "щелкните для установки\n"
 "Правая кнопка мыши для отмены"
 
-#: src/x_window.c:542
+#: src/x_window.c:547
 msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
@@ -2290,7 +2300,7 @@ msgstr ""
 "Добавить проводники\n"
 "Правая кнопка мыши для отмены"
 
-#: src/x_window.c:552
+#: src/x_window.c:557
 msgid ""
 "Add buses mode\n"
 "Right mouse button to cancel"
@@ -2298,75 +2308,87 @@ msgstr ""
 "Добавить шины\n"
 "Правая кнопка мыши для отмены"
 
-#: src/x_window.c:559
+#: src/x_window.c:564
 msgid "Text"
 msgstr "Текст"
 
-#: src/x_window.c:560
+#: src/x_window.c:565
 msgid "Add Text..."
 msgstr "Добавить текст..."
 
-#: src/x_window.c:570
+#: src/x_window.c:575
 msgid "Select"
 msgstr "Выбрать"
 
-#: src/x_window.c:571
+#: src/x_window.c:576
 msgid "Select mode"
 msgstr "Режим выборки"
 
-#: src/x_window.c:646
+#: src/x_window.c:651
 msgid "Pick"
 msgstr ""
 
-#: src/x_window.c:662
+#: src/x_window.c:667
 msgid "Repeat/none"
 msgstr "Повтор/пусто"
 
-#: src/x_window.c:672
+#: src/x_window.c:677
 msgid "Menu/Cancel"
 msgstr "Меню/Отмена"
 
-#: src/x_window.c:674
+#: src/x_window.c:679
 msgid "Pan/Cancel"
 msgstr "Центр/Отмена"
 
-#: src/x_window.c:932
+#: src/x_window.c:936
 #, c-format
 msgid "Loading schematic [%s]\n"
 msgstr "Загружается схема [%s]\n"
 
-#: src/x_window.c:1034
+#: src/x_window.c:1038
 #, fuzzy, c-format
 msgid "Could NOT save page [%s]\n"
 msgstr "Невозможно сохранить [%s]\n"
 
-#: src/x_window.c:1035
+#: src/x_window.c:1039
 msgid "Error while trying to save"
 msgstr "Ошибка при попытке сохранения"
 
-#: src/x_window.c:1044
+#: src/x_window.c:1048
 #, fuzzy, c-format
 msgid "Saved as [%s]\n"
 msgstr "Записано как [%s]\n"
 
-#: src/x_window.c:1046
+#: src/x_window.c:1050
 #, c-format
 msgid "Saved [%s]\n"
 msgstr "Сохранено [%s]\n"
 
-#: src/x_window.c:1048
+#: src/x_window.c:1052
 msgid "Saved"
 msgstr "Сохранено"
 
-#: src/x_window.c:1109
+#: src/x_window.c:1113
 #, c-format
 msgid "Discarding page [%s]\n"
 msgstr "Отвержение страницы [%s]\n"
 
-#: src/x_window.c:1109
+#: src/x_window.c:1113
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "Закрытие [%s]\n"
+
+#~ msgid ""
+#~ "Could not unembedded component, could not find appropriate .sym file\n"
+#~ msgstr ""
+#~ "Невозможно исключить компонент, невозможно найти соответствующий .sym-"
+#~ "файл\n"
+
+#~ msgid "Component still embedded and not updated\n"
+#~ msgstr "Компонент всё ещё внедрен и не обновлён\n"
+
+#~ msgid "More than one component found with name [%s]\n"
+#~ msgstr "Найдено более одного компонента с именем [%s]\n"
 
 #~ msgid "Write PNG..."
 #~ msgstr "Записать PNG..."

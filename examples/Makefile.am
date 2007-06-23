@@ -5,7 +5,7 @@ exampledir = @GEDADOCDIR@/examples/
 
 example_DATA = README 
 
-EXTRA_DIST = autogen.sh $(example_DATA)
+EXTRA_DIST = ChangeLog-1.0 autogen.sh $(example_DATA)
 
 distclean-local:
 	-rm -rf autom4te.cache

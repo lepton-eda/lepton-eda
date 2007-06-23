@@ -1,7 +1,7 @@
 
 SUBDIRS = toplevel wiki scripts
 
-EXTRA_DIST = autogen.sh
+EXTRA_DIST = ChangeLog-1.0 autogen.sh
 
 distclean-local:
 	-rm -rf autom4te.cache

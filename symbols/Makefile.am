@@ -9,7 +9,7 @@ SUBDIRS = \
 rcdatadir = @GEDARCDIR@
 rcdata_DATA = system-gafrc 
 
-EXTRA_DIST = autogen.sh
+EXTRA_DIST = autogen.sh ChangeLog-1.0
 
 distclean-local:
 	-rm -rf autom4te.cache
