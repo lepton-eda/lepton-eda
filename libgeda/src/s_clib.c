@@ -688,7 +688,6 @@ static void refresh_scm (CLibSource *source)
  */
 void s_clib_refresh ()
 {
-#if 0
   GList *sourcelist;
   CLibSource *source;
 
@@ -712,7 +711,6 @@ void s_clib_refresh ()
 	g_assert_not_reached();
       }
   }
-#endif
 }
 
 /*! \brief Get a named component source.
