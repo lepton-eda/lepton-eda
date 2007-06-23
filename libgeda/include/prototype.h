@@ -297,7 +297,7 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char ty
 void o_complex_recalc(TOPLEVEL *w_current, OBJECT *o_current);
 OBJECT *o_complex_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
 char *o_complex_save(OBJECT *object);
-void o_complex_set_filename(TOPLEVEL *w_current, const CLibSymbol *clib, char *basename);
+void o_complex_set_filename(TOPLEVEL *w_current, const char *basename);
 void o_complex_free_filename(TOPLEVEL *w_current);
 void o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, OBJECT *prim_objs);
 void o_complex_world_translate_toplevel(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);

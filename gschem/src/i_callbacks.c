@@ -2829,8 +2829,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *  \todo Allow hierarchy descent into embedded components (using a
- *  component library lookup)
+ *  \bug may cause problems with non-directory symbols
  */
 DEFINE_I_CALLBACK(hierarchy_down_symbol)
 {
@@ -2843,11 +2842,10 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
   object = o_select_return_first_object(w_current);
   if (object != NULL) {
     /* only allow going into symbols */
-    if (object->type == OBJ_COMPLEX &&
-        !o_complex_is_embedded (object)) {
-      sym = object->complex_clib;
+    if (object->type == OBJ_COMPLEX) {
       s_log_message(_("Searching for symbol [%s]\n"), 
-		    s_clib_symbol_get_name(sym));
+		    object->complex_basename);
+      sym = s_clib_get_symbol_by_name (object->complex_basename);
       s_hierarchy_down_symbol(w_current, sym, 
 			      w_current->page_current);
       /* s_hierarchy_down_symbol() will not zoom the loaded page */
@@ -2891,6 +2889,7 @@ DEFINE_I_CALLBACK(hierarchy_documentation)
   char *attrib_value = NULL;
   OBJECT *object = NULL;
   const gchar *sourcename = NULL;
+  const CLibSymbol *sym = NULL;
 
   exit_if_null(w_current);
 
@@ -2915,7 +2914,11 @@ DEFINE_I_CALLBACK(hierarchy_documentation)
         attrib_value = o_attrib_search_name(object->complex->prim_objs, "value", 0);
       }
       
-      sourcename = s_clib_source_get_name (s_clib_symbol_get_source(object->complex_clib));
+      sym = s_clib_get_symbol_by_name (object->complex_basename);
+      if (sym != NULL) {
+        sourcename = s_clib_source_get_name (s_clib_symbol_get_source(sym));
+      }
+
       initiate_gschemdoc(attrib_doc,
                          attrib_device,
                          attrib_value,

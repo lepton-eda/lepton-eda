@@ -126,7 +126,7 @@ x_compselect_callback_response (GtkDialog *dialog,
 	g_list_free(toplevel->page_current->complex_place_list);
 	toplevel->page_current->complex_place_list = NULL;
 	
-	o_complex_set_filename(toplevel, symbol, NULL);
+	o_complex_set_filename(toplevel, s_clib_symbol_get_name (symbol));
         
 	toplevel->event_state = DRAWCOMP;
 

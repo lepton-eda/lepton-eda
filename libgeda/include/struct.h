@@ -217,7 +217,6 @@ struct st_object {
 
   gboolean complex_embedded;                    /* is embedded component? */
   gchar *complex_basename;              /* Component Library Symbol name */
-  const CLibSymbol *complex_clib;	/* Component Library Symbol */
   OBJECT *complex_parent;		/* Complex parent object pointer */
   /* used only in complex head nodes */
 
@@ -424,7 +423,7 @@ struct st_toplevel {
   /* if it should go in here or not */
   /* leave outside for now */
 
-  const CLibSymbol *internal_clib;     
+  gchar *internal_symbol_name;     
   /* have to decided on component list stuff */
   /* if it should go in here or not */
   /* leave outside for now */

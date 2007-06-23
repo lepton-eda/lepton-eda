@@ -349,7 +349,6 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node = s_basic_init_object("complex");
   new_node->type = type;
 
-  new_node->complex_clib = clib;
   if (clib != NULL) {
     new_node->complex_basename = g_strdup (s_clib_symbol_get_name (clib));
   } else {
@@ -641,7 +640,6 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->complex->angle = angle;
   new_node->complex->mirror = 0;
 	
-  new_node->complex_clib = NULL;
   new_node->complex_basename = g_strdup(basename);
 
   new_node->complex_embedded = TRUE;
@@ -810,14 +808,11 @@ char *o_complex_save(OBJECT *object)
  *  \par Function Description
  *
  */
-void o_complex_set_filename(TOPLEVEL *w_current, const CLibSymbol *clib, char *basename) 
+void o_complex_set_filename(TOPLEVEL *w_current, const char *basename) 
 {
-  if (clib == NULL) {
-    fprintf(stderr, "Got NULL clib in o_complex_set_filename!\n");
-    exit(-1);
-  }
+  o_complex_free_filename (w_current);
 
-  w_current->internal_clib = clib;
+  w_current->internal_symbol_name = g_strdup (basename);
 } 
 
 /*! \brief
@@ -826,7 +821,10 @@ void o_complex_set_filename(TOPLEVEL *w_current, const CLibSymbol *clib, char *b
  */
 void o_complex_free_filename(TOPLEVEL *w_current)
 {
-
+  if (w_current->internal_symbol_name != NULL) {
+    g_free(w_current->internal_symbol_name);
+    w_current->internal_symbol_name = NULL;
+  }
 }
 
 /*! \brief
@@ -948,6 +946,7 @@ OBJECT *o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail,
   ATTRIB *a_current;
   int color;
   int selectable;
+  const CLibSymbol *clib = NULL;
 
   g_return_val_if_fail(o_current != NULL, NULL);
 
@@ -963,11 +962,13 @@ OBJECT *o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail,
     selectable = FALSE;	
   }
 
+  clib = s_clib_get_symbol_by_name (o_current->complex_basename);
+
   new_obj = o_complex_add(w_current, list_tail, NULL, o_current->type, color,
                           o_current->complex->x, o_current->complex->y, 
                           o_current->complex->angle, 
 			  o_current->complex->mirror,
-                          o_current->complex_clib, o_current->complex_basename, 
+                          clib, o_current->complex_basename, 
                           selectable, FALSE); 
 
   o_attrib_slot_copy(w_current, o_current, new_obj);
