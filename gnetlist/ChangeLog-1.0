@@ -1,0 +1,2446 @@
+2007-05-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/spice-sdb/Makefile.am: Oops, because of the below disable,
+	need to explicitly include run_tests.sh.  This needs to b undone 
+	once these tests pass make distcheck again.
+
+2007-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/spice-sdb/Makefile.am: Disabled spice-sdb tests
+	temporarily since they break make distcheck.  Will re-enable
+	once it is determined what is going wrong (for the next release).
+
+        * configure.ac: Updated version to 20070526 in prep for the next
+        release.
+
+2007-05-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/Makefile.am, gnet-osmond.scm: Added new gnetlist backend
+	from John Doty. Thanks!
+
+2007-04-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/Makefile.am: Moved the VHDL regression test into my private
+	test target since it doesn't work for everybody (since some people
+	do not install into $HOME/geda).
+
+	* tests/spice-sdb/inputs/Makefile.am, 
+	tests/spice-sdb/inputs/sym/Makefile.am: Added missing test files 
+	to make distcheck happy again.
+
+2007-04-28 (later) Stuart Brorson   <sdb@cloud9.net>
+	* include/globals.h, scheme/gnet-spice-sdb.scm,
+	src/globals.c, src/parsecmd.c  configure.ac: Add 
+	--nomunge flag to gnetlist, telling spice-sdb 
+	to not autocorrect incorrect device prefixes 
+	(handles complaint from John Doty).  Also 
+	upgraded handling of long opts.  Finally, updated 
+	spice-sdb test suite to check these new features.
+	
+2007-04-28 Stuart Brorson   <sdb@cloud9.net>
+	* src/g_netlist.c, scheme/gnet-spice-sdb.scm:  Fix spice-sdb's
+	treatment of slotted parts so it emits pins in pinseq order.
+	This required making mods to g_netlist.c, as well as several
+	fcns in libgeda.  Then updated spice-sdb test suite.  This
+	closes bug 1680275.
+	
+2007-04-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Move the "-l" command line scheme loading code to
+	be *before* schematics are loaded (instead of after).
+
+	* examples/stack_1.sch, examples/Makefile.am: Added stack example 
+	schematic.
+
+	* tests/Makefile.am, tests/runtest.sh, tests/singlenet.protel,
+	tests/singlenet.protelII, tests/stack.geda, tests/stack_1.geda,
+	tests/drc2/Makefile.am, tests/hierarchy/Makefile.am,
+	tests/hierarchy/gnetlistrc, tests/hierarchy/gnetlistrc.hierarchy:
+	Fixed the gnetlist regressions tests to work with make distcheck.
+
+	* tests/spice-sdb/run_tests.sh: Added -I "gnetlist -g" to the 
+	golden file diff to ignore the embedded command line information
+	in the spice-sdb golden files.
+
+	* scheme/gnet-calay.scm: Added backed written by John Doty for
+	the Calay netlist. Thanks!
+
+	* tests/runtest.sh: Minor improvements in test running script.
+
+2007-04-21 Stuart Brorson   <sdb@cloud9.net>
+	* tests/spice-sdb/*  Added new spice-sdb test directory.  Then
+	created test environment similar to Dan's regression tests for
+	refdes_renum.
+	
+2007-02-20 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-allegro.scm: Fix bug #1663729.
+	  When writing the device files, check if 'devfiles' directory 
+	  exists and create it if needed.
+
+2007-02-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/multiequal.spice-sdb: Updated golden file to be current.
+
+	* tests/Makefile.am, tests/drc2/Makefile.am,
+	tests/hierarchy/Makefile.am: Temporarily disabled make check to
+	get past make distcheck.  The rules in make tests are probably
+	missing a variable specifying the source of the input files.
+	make check should enabled once we figure out what is missing.
+
+	* tests/amp.spice-sdb, tests/darlington.spice-sdb: Updated golden	
+	files to be current.
+
+2007-02-11 (later) Stuart Brorson   <sdb@cloud9.net>
+	* scheme/gnet-spice-sdb.scm, scheme/gnetlist.scm: Changed 
+	string-pad-right to safe-string-head per suggestion from Jeff
+	Mallatt.  Added safe-string-head to gnetlist.scm.
+	
+2007-02-11 Stuart Brorson   <sdb@cloud9.net>
+	* scheme/gnet-spice-sdb.scm: Incorporated patch from Jeff Mallatt
+	enabling SPICE netlisting of slotted parts.
+	
+2007-02-10 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* docs/gnetlist.1, src/gnetlist.c, src/parsecmd.c: Applied patch by
+	Tomaz Solc [ 1593644 ] gnetlist: use "-g help" to list available
+	backends. Thanks!
+
+	* tests/.cvsignore: Added rule to ignore all the newly generated 
+	files.
+
+	* scheme/gnet-bom.scm, scheme/gnet-bom2.scm: Applied patch to
+	change "package" to "refdes" [ 1656822 ] BOM/BOM2 should use
+	refdes in title line
+
+	* tests/hierarchy/hierarchy.geda: Updated golden file due to ordering
+	of output changing. 
+
+	* src/globals.c: Removed quit_func since it is completely unused.
+
+	* docs/gnetlist.1: Updated the man page a little for bug:
+	[ 1556064 ] man page version out of date
+
+	* tests/*.spice-sdb: Updated golden files to be current due to 
+	version number update.
+	
+	* configure.ac: Bumped package version to 20070216.
+
+2007-02-10 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* tests/Makefile.am, tests/drc2/Makefile.am, 
+	  tests/hierarchy/Makefile.am:
+	  When running "make check", run "make tests" too.
+
+        * tests/drc2/Makefile.am:
+	  Added a pass/failed line after each test.
+
+	* tests/drc2/.cvsignore: Added this new file.
+	
+	* configure.ac, tests/Makefile.am, tests/drc2/Makefile.am,
+	  tests/drc2/*.sch, tests/drc2/*.drc2:
+	  Added new regression test suite for the drc2 backend.
+
+	* scheme/gnet-drc2.scm: Changed a (begin) to a (let ()) due to
+	  guile 1.8 problems. Thanks to Stuart Brorson por reporting, and
+	  Dean Ferreyra for pointing out the fix.
+
+2007-02-08 19:24  Dan McMahill <danmc>
+
+	* configure.ac, scheme/Makefile.am, scheme/gnet-gsch2pcb.scm.in: 1)
+	   add a new option to gsch2pcb "use-m4" for the project file or
+	  "--use-m4" for the command line.  By default now, gsch2pcb will
+	  not try to run m4 at all.  If you want the old behaviour of
+	  running m4, you'll have to use this option.  It seems that this
+	  is what most users want (no m4 involved at run time).
+
+	  2) rather than hard coding a number of paths like /usr/X11R6/lib
+	  and /usr/local/share into the code for places to look for PCB
+	  footprints, use a single default directory which is based on
+	  ${datadir}.  If the user wants to, they can override that with
+	  --with-pcb-datadir=/opt/pcb-20070204/share for example.
+
+	  3)  when searching for newlib footprints with, for example, a
+	  name like footprint=MY1206, match either "MY1206" or "MY1206.fp"
+	  so we can start having extensions on footprint files without
+	  needing to explicitly add the ".fp" part in the footprint=
+	  attribute.  All of the footprints in the pcb distribution which
+	  came from the m4 libraries have .fp extensions now.
+
+	  4)  add some example schematic files in the gsch2pcb example
+	  directory
+
+2007-01-15 Stuart Brorson <sdb@cloud9./net>
+	
+	* scheme/gnet-bom.scm, scheme/gnet-bom2.scm: Added
+	(use-modules (ice-9 rdelim)) fix guile-1.8 problem.
+
+2007-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-switcap.scm: Added added (use-modules (ice-9 rdelim)) 
+	to get read-line included and working.
+
+2007-01-15 Stuart Brorson <sdb@cloud9./net>
+	* scheme/gnet-spice-sdb.scm: Changed escaping for parens to fix 
+	guile-1.8 bug.  Also added (use-modules (ice-9 rdelim)) to enable 
+	read-line.
+
+2007-01-07 Stuart Brorson <sdb@cloud9./net>
+	* scheme/gnet-spice-sdb.scm: Added SPICE-NPN and SPICE-PNP
+	to dispatch to cover cases where people had munged the transistor
+	symbols.
+	
+2006-11-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Fixed libgeda detection/find error message when
+        the wrong libgeda version is found. (Bug reported by Karel Kulhavy;
+        thanks)
+
+2006-10-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped package version to 20061020.
+
+	* scheme/gnet-PCB.scm: Applied patch (#1453908) by Thien-Thi Nguyen
+	that cleans up / simplifies some scheme code.
+
+2006-09-27 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* configure.ac : Applied patch #1564796 by Cesar Strauss, 
+	enabling Cygwin's compilation. Thanks.
+	
+2006-09-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * AUTHORS: Updated file pointing people at gschem's AUTHOR file 
+        as the complete list of authors.  Merged all listed files in this
+        file into gschem's file.
+
+2006-09-07 SDB sdb@cloud9.net>
+	* scheme/gnet-gsch2pcb.scm.in:  Applied cursor patch
+	from Peter Clifton. 
+	
+2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated program version to 20060906.
+	
+	* src/gnetlist.c: Added CUSTOM_VERSION to all
+	printfs/output/dialog boxes where VERSION is used so that it is
+	easier to create custom version of gEDA/gaf.
+
+2006-09-03 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-drc2.scm: Applied patch #1551415 from Tomas Solc.
+	  Some part of an error message was written in standard output 
+	  instead of the the output file. Thanks.
+	
+2006-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Updated gtk+ tests to look for 2.4.x or greater.
+
+	* src/gnetlist.c: Removed obsolete code fragment
+
+2006-08-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-gsch2pcb.scm.in: Applied patch by Jeff Mallatt to
+	fix gnet-gsch2pcb.scm fix m4 params bug/limit of 3.  Patch#1542726.
+	Thanks.
+
+2006-08-22 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* scheme/Makefile.am: Added a couple files to the distclean and
+	maintainerclean rules to make distcheck happy.
+
+2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * README: Updated the README a little to be ready for the next
+        release.
+
+2006-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version number to 20060821 in prep for the
+        next gEDA/gaf release.
+
+2006-07-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/multiequal.spice-sdb: Updated golden file to take into
+	account case change of .end
+
+	* tests/amp.spice-sdb, tests/darlington.spice-sdb: Updated golden
+	file to take into account case change of .end
+
+	* tests/powersupply.sch, powersupply.allegro, powersupply.protelII
+	powersupply.tango: Fixed invalid attribute in schematic and updated
+	some golden regression files.
+
+	* src/g_netlist.c, src/g_rc.c, src/gnetlist.c, src/i_vars.c,
+	src/parsecmd.c, src/s_cpinlist.c, src/s_hierarchy.c, src/s_net.c,
+	src/s_netattrib.c, src/s_netlist.c, src/s_rename.c, src/s_traverse.c,
+	src/vams_misc.c: Converted all malloc/free calls to g_malloc/g_free
+
+2006-04-22 Carlos Nieves Onega <cnieves@iespana.es>
+	
+	* include/globals.h, include/prototype.h, src/g_netlist.c, 
+	  src/g_register.c, src/globals.c, s_netlist.c, s_traverse.c:
+	  Build a netlist of graphical objects. This feature enables
+	  using directives in the schematic.
+	
+        * scheme/gnet-drc2.scm: 
+	    - Added support for NoConnection and DontCheckPintypes directives.
+	    - Changed the drc connection matrix. Now an unknown pin doesn't 
+              generate an error, and it can drive a net.
+            - Added report for pins without the 'pintype' attribute.
+	    - Display the pins when reporting a net with only one connection.
+	
+2006-04-11 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-spice-sdb.scm: Changed .END and .ENDS cards to lowercase.
+	This fixes bug 1442912.
+
+2006-04-05 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-drc2.scm: Fixed parenthesis mismatch in 
+	function drc2:check-slots. 
+	Thanks to David Logan for reporting the bug.
+
+2006-03-12 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gnetlistrc.in: Removed load for the system-gafrc file,
+	since it is loaded by libgeda first.
+
+2006-03-10 Stuart Brorson <sdb [AT] cloud9 [DOT] net>
+	* scheme/gnet-spice-sdb.scm: Added "m" attribute to PMOS and NMOS
+	transistors per request of Peter Kaiser. 
+	
+2006-03-06 Carlos Nieves Onega <cnieves@iespana.es>
+
+        * src/g_netlist.c: Return 'pwr' when getting pintype of a hidden
+	pin. Thanks to Holger Oehm for providing the patch.
+	
+2006-03-03 Stuart Brorson <sdb [AT] cloud9 [DOT] net>
+	* configure.ac, parsecmd.c: introduced getopt_long to enable
+	parsing of long command line flags.  Had to change configure.ac
+	to support looking for getopt.h instead of unistd.h.
+	
+2006-03-02 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-drc2.scm: Don't check pintypes of net "NoConnection".
+	Thanks to Holger Oehm for reporting the bug and providing a patch.     
+	
+2006-02-28 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-drc2.scm: Added netname in the output message 
+	when checking pintype connections. 
+	Thanks to Holger Oehm for providing the patch. 
+	
+2006-02-05 Werner Hoch	<werner.ho@gmx.de>
+	* scheme/gnet-spice.scm: cccs, ccvs, vccs and vcvs replacement uses
+	a dash "-" in the name of vsens replacement, ngspice doesn't like that
+
+2006-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* autogen.sh, m4/guile.m4, src/Makefile.am: Removed m4 files since 
+	they are installation specifc.  Also, all required libraries should be
+	coming from LIBGEDA_LDFLAGS.
+
+	* tests/*: Updated some of the spice regression tests to have the
+	correct spice-sdb version
+
+2006-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped package version to 20060123
+
+        * README: Updated for the new year and release.
+
+2006-01-15 Carlos Nieves Onega <cnieves@iespana.es>
+	* scheme/gnet-drc2.scm: Changed error message to be more 
+	self-explaining.
+	
+2006-01-07 Carlos Nieves Onega <cnieves@iespana.es>
+	* scheme/gnet-drc2.scm: Added missing 'passive' in the 
+	pintype-full-names list, and changed the pintype error/warning 
+	message to something more self-explaining.
+	
+2006-01-07 Stuart Brorson <sdb AT cloud9 DOT net>
+	*  configure.ac, src/Makefile.am:  Changed automake stuff
+	to explicitly look for guile, and then link to it.
+
+	*  autogen.sh, m4/guile.m4:  Added local guile macros.
+	
+2006-01-04 Stuart Brorson <sdb@cloud9.net>
+	*  src/g_netlist.c, src/s_net.c, scheme/gnet-drc2.scm
+	scheme/gnetlist.scm, scheme/gnet-systemc.scm, 
+	scheme/gnet-vams.scm, scheme/gnet-verilog.scm
+	scheme/gnet-vhdl.scm:  Modified code to emit
+	"unconnected_pin-<number>" to fix bug noticed by John Doty.
+	Besides modifying s_net.c to achieve this, I had to change
+	the strcmp fcn in many files to a strncmp fcn to compare only
+	the first 15 chars against "unconnected_pin".  Added strncmp?
+	to scheme/gnetlist.scm to do this for Scheme backends.
+
+	*  scheme/gnet-spice-sdb.scm:  Fix bug discovered by John Doty: 
+	spice-IO pins with refdes greater than P9 were sorted 
+	incorrectly (as strings).  Now they are sorted as numbers.
+	
+2005-12-28 Carlos Nieves Onega <cnieves@iespana.es>
+	* src/g_netlist: Dereferenced return value of scm_c_module_lookup,
+	which is passed to scm_sort_list_x.
+	Fixed long standing bug that produces a "Wrong type argument in
+	position 1: #<variable 8059240 binding: #<primitive-procedure <=>>" 
+	error when running gnetlist.
+	Thanks to Neal Baer and James Cotton for the bug report, and also
+	to Patrick Bernaud for the solution.	
+
+2005-11-27 Carlos Nieves Onega <cnieves@iespana.es>
+	* src/globals.c: Added setting of load_newer_backup_func to NULL.
+	It is needed now libgeda checks for autosave backup files when
+	opening a schematic.
+	
+2005-09-27 18:44  Dan McMahill <danmc>
+
+        * configure.ac: check for strings.h for rindex
+
+2005-09-27 18:43  Dan McMahill <danmc>
+
+        * src/s_hierarchy.c: remove various compiler warnings
+
+2005-09-11 Stuart Brorson <sdb@cloud9.net>
+
+        * gnet-spice-sdb.scm: Incorporated patch from Paul Bunyk enabling
+	netlisting of Josephson junctions and other magnetic devices.
+
+2005-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped the package version to 20050820 which will be
+        a real snapshot.
+
+2005-08-16 22:54  Dan McMahill <danmc>
+
+	* configure.ac, scheme/Makefile.am, scheme/gnet-PCBboard.scm,
+	  scheme/gnet-PCBboard.scm.in, scheme/gnet-gsch2pcb.scm,
+	  scheme/gnet-gsch2pcb.scm.in: - use the M4 program discovered at
+	  configure time as the default for m4 in the PCB backends.
+
+	  - use the PCB directories from configure time as the defaults in
+	  the PCB backends.  These can still be changed with
+	  --with-pcbm4dir and --with-pcbconfdir.  As usual, they can be
+	  changed at runtime with the gsch2pcb project file, but hopefully
+	  this gets things nominally right by default.
+
+2005-08-15 10:12  Dan McMahill <danmc>
+
+	* configure.ac: Search for a m4 to use.  Will be used by the pcb
+	  netlisters.
+
+2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Applied patch by Carlos Azevedo which moves the
+	chdir after s_traverse since it might change the directory as well.
+
+	* src/s_rename.c: Applied patch by Carlos Azevedo which 
+	re-implements the rename structures to be completely dynamic.
+
+	* tests/*: Re-copied golden test files to be current with sdb
+	version changes.
+
+        * configure.ac: Updated package version to 20050814.  This is a 
+        temporary version and not a real release number.
+
+	* scheme/gnet-gsch2pcb.scm: Oops accidentally removed an id tag.
+
+2005-08-02 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-gsch2pcb.scm: Update to Bill Wilson's gsch2pcb version
+	1.5.
+
+2005-06-12 Stuart Brorson <sdb@cloud9.net>
+	* scheme/gnet-spice-sdb.scm: Changed order of writing out 
+	netlist and .model/.subckt cards to facilitate use of 
+	numparam with ngspice.
+	
+2005-05-16 Stuart Brorson <sdb@cloud9.net>
+
+        * include/globals.h, src/globals.c, src/parsecmd.c:
+	Incorporated new -e command line flag which forces embedding
+	of .include file's contents into SPICE netlist.
+
+2005-05-16 Stuart Brorson <sdb@cloud9.net>
+
+        * scheme/gnet-spice-sdb.scm: Modified so that .include
+	doesn't embedd the included file's contents in the SPICE
+	netlist by default.
+
+2005-03-16 Stuart Brorson <sdb@cloud9.net>
+
+        * scheme/gnet-spice-sdb.scm: fix typo in CCCS.  Now usage of 
+	Vsense is harmonized.
+
+2005-03-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Removed all tests for gtk+ 1.2.x and fixed error 
+        message if gtk+ 2.2.x is not found.
+
+2005-03-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version to 20050313
+
+2005-03-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Fixed code to allow user to specify absolute 
+	filenames on the command line again.
+
+	* tests/*: Updated more golden regression files to take into
+	account the package reordering changes.
+
+2005-02-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/*, examples/switcap/example.scn: Updated regression golden
+	files to take into account the package reordering that has
+	occurred because the various guile/gnetlist routines were either
+	replaced or rewritten.	No netlist errors detected, just some
+	of the packages were showing up in a different order in the various
+	netlist formats.
+
+2005-02-22  Carlos Nieves Onega <cnieves@iespana.es>
+
+	* configure.ac, src/gnetlist.c: Removed call to gtk_init().
+	  GDK is now initialized in libgeda if it's a non-graphical app.
+
+2005-02-21 03:09  Dan McMahill <danmc>
+
+	* src/gnetlist.c: fix some format string/type mismatch bugs
+
+2005-02-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-spice.scm: Removed string by request from the original
+	author.
+
+2005-02-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/gnetlist.c (main_prog): Adapted for new logging system.
+
+2005-02-19  Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/globals.c: Added definition of picture_draw_func after 
+	adding picture support to libgeda.
+	
+	* configure.ac, src/gnetlist.c: Added call to gtk_init() 
+	  since gdk-pixbuf needs it if called.	  
+
+2005-02-16 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-bom.scm, scheme/gnet-bom2.scm, scheme/gnet-redac.scm:
+	  Use stdout if the output filename is "-".
+
+2005-02-14  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/g_netlist.c (g_get_packages): Added two lines missing after 
+	yesterday rewrite.
+
+2005-02-13  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/g_netlist.c (g_get_packages): Rewritten to use a GLib hash 
+	table instead of the libgeda s_scratch code.
+	(g_get_non_unique_packages): Cleaned up.
+
+2005-02-12 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Added a chdir back to the starting directory
+	after all the rc files and schematics are loaded.  This is done
+	so that the output files from gnetlist go into the expected
+	directory instead of some other schematic directory.  This allows
+	"make tests" in gnetlist/tests to work again.
+
+	* src/gnetlist.c: Changed the size of the cwd directory to be
+	MAXPATHLEN (the correct size).
+
+2005-02-11 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-drc2.scm: Use stdout if the output filename is "-".
+	  Updated documentation showing this behaviour.
+
+2005-02-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/gnetlist.c (main_prog): Adapted for new toplevel and page APIs
+	in libgeda.
+	
+2005-02-08 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-drc2.scm:
+	  Use a parameter instead of the quiet mode of gnetlist so 
+          gnetlist doesn't return a non-zero value when there are only
+	  warnings. This parameter is 'ignore-warnings-in-return-value'.
+	
+2005-02-08 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* include/globals.h, src/globals.c, src/g_netlist.c, 
+	  src/parsecmd.c, src/gnetlist.c: 
+	  Added '-O' option allowing to pass parameters to the backend.
+	
+2005-02-04 23:14  danmc
+
+	* configure.ac, src/g_netlist.c, src/g_rc.c, src/g_register.c,
+	  src/globals.c, src/gnetlist.c, src/i_vars.c, src/parsecmd.c,
+	  src/s_cpinlist.c, src/s_hierarchy.c, src/s_misc.c, src/s_net.c,
+	  src/s_netattrib.c, src/s_netlist.c, src/s_rename.c,
+	  src/s_traverse.c, src/vams_misc.c, utils/mk_verilog_syms.c: add
+	  support for Electric Fence debugging, enabled by --enable-efence,
+	  and dmalloc debugging, enabled by --enable-dmalloc.  Both are off
+	  by default.
+
+2005-02-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/g_netlist.c, src/gnetlist.c, src/i_vars.c:
+	* src/parsecmd.c, src/s_hierarchy.c, src/s_netattrib.c:
+	* src/s_netlist.c, src/s_traverse.c: Replaced u_basic_strdup() and 
+	u_basic_strdup_multiple() by GLib functions.
+	
+	* src/gnetlist.c: Made it use GLib's G_DIR_SEPARATOR* instead of 
+	libgeda's *_SEPARATER_*.
+
+2005-02-03 12:49  danmc
+
+	* scheme/: gnet-PCB.scm, gnet-PCBboard.scm, gnet-allegro.scm,
+	  gnet-bae.scm, gnet-bom.scm, gnet-bom2.scm, gnet-drc.scm,
+	  gnet-drc2.scm, gnet-eagle.scm, gnet-geda.scm, gnet-gossip.scm,
+	  gnet-gsch2pcb.scm, gnet-maxascii.scm, gnet-pads.scm,
+	  gnet-partslist-common.scm, gnet-partslist1.scm,
+	  gnet-partslist2.scm, gnet-partslist3.scm, gnet-protelII.scm,
+	  gnet-redac.scm, gnet-spice-sdb.scm, gnet-spice.scm,
+	  gnet-systemc.scm, gnet-tango.scm, gnet-vams.scm,
+	  gnet-verilog.scm, gnet-vhdl.scm, gnet-vipec.scm: add RCS Ids
+
+2005-02-01  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/g_netlist.c: Switched to the new scm interface of guile.
+
+2005-01-29  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/gnetlist.c (gnetlist_quit): Adapted for new component library
+	code.
+
+2005-01-28 Dan McMahill <dan at mcmahill dot net>
+
+	* scheme/: gnet-futurenet2.scm, gnet-pads.scm, gnet-switcap.scm:
+	  use the new gnetlist:build-refdes-aliases and
+	  gnetlist:alias-refdes functionality to do a better job of
+	  restricting reference designators in the output netlist to ones
+	  which are valid for this netlist type.
+
+2005-01-28 Dan McMahill <dan at mcmahill dot net>
+
+	* scheme/gnetlist.scm: Add gnetlist:build-refdes-aliases,
+	  gnetlist:alias-refdes, and gnetlist:unalias-refdes functions.
+	  These are used to deal with target netlist refdes requirements
+	  which may be more restrictive than gschem/gnetlist.  A backend
+	  uses these by calling gnetlist:build-refdes-aliases at the
+	  beginning of netlisting and then gnetlist:alias-refdes whenever
+	  printing out the refdes.
+
+	  While here add missing RCS Id.
+
+2005-01-27 Stuart Brorson   <sdb@cloud9.net>
+
+	* src/gnetlist.c: Changes made to enable correct opening
+	of schematics in foreign directories.  Changes detailed in libgeda
+	ChangeLog.
+	
+2005-01-23 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-drc2.scm: Added check for duplicated references.
+        (above patch applied by Stuart Brorson)
+
+2005-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c: Added a output message if a component is missing
+	its symbol file.
+
+2005-01-22 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/g_register.c, src/g_netlist.c, include/prototype.h: 
+	Added function g_get_non_unique_packages so backends 
+	can get a non-unique list of packages. Useful for DRC checking.
+
+	* src/g_netlist.c: g_get_slots and g_get_unique_slots functions: 
+	If a package has no slots attribute, then assume it's using slot 1.
+
+	* src/gnetlist.c: Remind the user to check the schematic
+	has no errors using drc2 backend. 
+
+        (above patch applied by Stuart Brorson)
+	
+2004-12-28 Stuart Brorson   <sdb@cloud9.net>
+
+	* lib/system-gnetlistrc: Changed to refer to system-gafrc instead
+	of system-commonrc
+
+2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-cascade.scm: Applied patch by Dan McMahill to fix
+	a bug.
+
+	* docs/README.sysc scheme/gnet-systemc.scm: Added SystemC backend by
+	Jaume Masip
+	
+	* scheme/gnet-eagle.scm scripts/sch2eaglepos.sh docs/README.eagle: 
+	Added Eagle PCB scheme backend and cleanup script.   The backend
+	and script were written by Braddock Gaskill. 
+
+	* docs/gnetlist.1: Added information on -s (from the usage of 
+	gnetlist)
+
+	* tests/*.spice-sdb: Update various regression files with the new
+	output from spice-sdb
+
+2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20041228
+
+2004-08-23 SDB   <sdb@cloud9.net>
+
+	* Added fcns to pass the invoking command line to the Scheme backend
+	as a string.  This allows the invoking command to be placed into
+	a SPICE netlist in the first line.  Affected files:
+	src/g_register.c, parsecmd.c, globals.c, g_netlist.c, gnetlist.c
+	include/globals.h prototype.h
+
+2004-08-17 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/Makefile.am: Removed gschem2pcb from bin_SCRIPTS, as
+	gsch2pcb is now the prefered tool.
+
+2004-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-spice-sdb.scm: Added Stuart's latest backend
+	
+	* tests/*: Updated some of the golden files to take into account
+	version change string in new spice-sdb backend.
+
+2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/i_vars.h, prototype.h, src/g_rc.c, g_register.c,
+	gnetlist.c, i_vars.c: Removed a whole bunch of rc related code.
+	The removed code was moved into libgeda.
+
+        * configure.ac: Updated version to 20040710
+	
+2004-02-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c: Fixed a broken comment (broken by indent)
+
+2004-01-17 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * config.h.in: Remove machine generated file.
+
+2004-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20040111
+
+2004-01-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-switcap.scm: Applied Dan's 20040105 patch.
+
+        * docs/Makefile.am: Changed doc install directory readme to readmes
+
+2004-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-switcap.scm: Applied patch by Dan McMahill to use
+	his new net aliasing (modification) code.
+
+	* docs/gnetlist.1: Spent a little time updating the man page with
+	at least the current list of backends and all the new command line
+	flags.
+
+	* tests/gnetlistrc.vhdl, tests/Makefile.am: Added vhdl only
+	gnetlistrc.  This was required because the vhdl library was
+	removed from system-commonrc, so this rc file has to put it back.
+	The gnetlistrc.vhdl file is copied to gnetlistrc before any vhdl
+	test is run and then the gnetlistrc file is removed.
+
+2004-01-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * scheme/gnet-gsch2pcb.scm: Upgraded to Bill Wilson's latest
+        version (1.2)
+
+	* scheme/gnet-PCBboard.scm: Applied patch by Dan McMahill to fix
+	some m4 quoting issues. Thanks.
+
+	* scheme/gnetlist.scm: Applied patch (20031216) by Dan McMahill to
+	add various scheme functions to handle net name modification
+	for various netlist targets. Thanks.
+
+	* scheme/futurenet2.scm: Added new backend for futernet2 by Dan
+	McMahill.  Thanks.  (20031216)
+
+	* scheme/gnet-pads.scm: Applied patch (20031216) by Dan McMahill to 
+	use the new net name modification scheme functions.
+
+	* tests/powersupply.pads, tests/singlenet.pads: Updated golden files
+	to be current (take into the changes Dan's patches made to the 
+	PADS backend)
+
+	* scheme/gnet-cascade.scm: Added new backend by Dan McMahill.  This
+	backend is for driving RF Cascade (http://rfcascade.sourceforge.net)
+	Thanks!
+
+	* scheme/gnet-redac.scm: Added Racal Redac format backend by 
+	W. Kazubski.  This format is also used by Cadstar PCB software
+	(at least up to version 4.30 for DOS  Thanks!
+
+	* scripts/gschem2pcb: Applied a patch by Christopher K Eveland to
+	fix a condition where gschem2pcb was picking up a pin when it 
+	should not.  I don't know if this fix is correct, but somebody 
+	will complain if it breaks gschem2pcb.  Thanks for the bug fix!
+
+2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Added --with-docdir command line flag as well all	
+	the code to support installing documentation.  Also added a prog
+	check for groff.
+
+	* docs/Makefile.am: Added code to install all the readme files 
+	into the documentation directory.  Also added commands to
+	generate an html version of the man page.  This html man page
+	gets installed into the documentation directory.
+
+	* docs/vams/Makefile.am: Added code to install all the text files
+	for the VAMS backend into the documentation directory.
+
+	* src/Makefile.am, docs/gnetlist.1: Moved man page from the src
+	directory into the docs directory.
+
+	* docs/gnetlist.1: Minor updates and fixes.
+
+2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-spice-sdb.scm: Updated this backend to version
+	12.29.2003.c
+
+	* tests/amp.spice-sdb, darlington.spice-sdb: Updated golden files
+	to the new spice-sdb backend version (version and spaces at the end
+	of certain lines).  
+
+	* tests/multiequal.sch, multiequal.spice-sdb: Added tests
+	to make sure that attributes that have multiple equal signs netlist
+	properly.
+
+        * configure.ac: Bumped version to 20031231
+
+2003-12-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-spice-sdb.scm, gnet-protelII.scm: Replaced with new
+	versions from Stuart Brorson.  gnet-spice-sdb.scm has a version of
+	12.29.2003.b
+
+	* src/g_netlist.c: Integrated new file from Stuart.  This file 
+	improved some slot related error reporting and added
+	"include_mode" to g_get_calling_flags().
+
+	* src/globals.c, parsecmd.c, include/globals.h: Integrated changes 
+	from Stuart.  Added the -I command line flag.
+
+	* scheme/gnetlist.scm: Integrated changes from Stuart.  This
+	included a whole bunch of useful scheme functions for dealing with
+	the command line.
+
+	* tests/amp.spice-sdb, darlington.spice-sdb: Fixed regression
+	golden files to deal with Stuart's new spice-sdb backend.
+
+	* tests/powersupply.protelII, singlenet.protel: Fixed regression
+	golden files to deal with Stuart's changes to the protelII backend.
+	
+2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Added checks for gtk+ 2.2.x and 1.2.x.  This was
+        needed since the HAS_GTK22 will start to be used in libgeda includes.
+
+2003-11-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/i_vars.h, src/g_rc.c, src/i_vars.c, src/g_register.c,
+	include/prototype.h: Added unnamed-netname as a guile rc keyword.
+	This will allow the "unnamed_net" string to be customized from
+	the rc files.
+
+	* src/s_net.c: Added the necessary code to support unnamed-netname.
+
+	* lib/system-gnetlistrc.in: Added the default (unnamed-netname
+	"unnamed_net")
+
+2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* autogen.sh: Added script to generate all the auto* generated files.
+
+	* config.guess config.sub depcomp install-sh mkinstalldirs missing:
+	Removed machine generated files from CVS.
+	
+	* Makefile.am: Added the above files to be cleaned during 
+	maintainer-clean
+
+2003-10-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.1: Updated interactive section in man page a little. 
+
+2003-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-drc2.scm, src/g_netlist.c: Applied Carlos' latest
+	drc2 patch.  This fixed the slotting check and improved an error
+	message from gnetlist.  Minor tweeks by Ales.
+
+	* scheme/gnet-partslist-common.scm, gnet-partslist1.scm,
+	gnet-partslist2.scm, gnet-partslist3.scm: Applied Stuart's 
+	changes to these files.  Stuart just added the footprint attribute
+	to the output.
+
+	* src/s_netattrib.c: Per a user's complaint, fixed the 
+	"Got an invalid net= attribute" to be a little more verbose.
+
+2003-10-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.1: Fixed wrong command line option (-r is not a 
+	valid option).  Pointed out by Stuart.
+
+	* tests/hierarchy/*.sch *.sym: Updated to the latest sch/sym file
+	format.
+
+2003-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/vams_misc.c: Fixed up a call to o_attrib_get_name_value to
+	use the new function signature.
+
+	* src/g_rc.nw: Added the words optional and required to the 
+	*rc log find messages.
+
+	* src/s_rename.c, src/s_net.c, src/s_traverse.c: Removed all //
+	comments (replaced with C comments).
+
+2003-10-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* examples/*.sch: Updated all example schematics
+
+	* configure.ac: Updated version to something more recent, but this
+	version is not an official release.
+	
+2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to something more recent, but this
+        version is not an official release.
+
+2003-10-02 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-gsch2pcb.scm: Replaced file with one from 
+	Bill Wilson's gsch2pcb-1.0.1.  This fixes a guile-1.6 problem.
+
+2003-09-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-gsch2pcb.scm: Replaced file with one from 
+	Bill Wilson's gsch2pcb-1.0.
+
+2003-09-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Fixed MinGW cflags/ldflags
+
+        * auto* files: Updated to autoconf 2.57 and automake 1.7.6
+
+2003-09-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-spice-sdb.scm, include/globals.h, include/prototype.h, 
+	src/g_netlist.c, src/g_register.c, src/globals.c, src/parsecmd.c:
+	Applied Stuart's latest changes to the spice-sdb netlister and added
+	the -s command line flag as well as gnetlist:get-calling-flags scheme
+	function.
+
+	* tests/amp.spice-sdb, darlington.spice-sdb: Updated tests files 
+	based on changes to the spice-sdb backend changes (mainly date).
+
+2003-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Changed AC_CONFIG_HEADER to AM_CONFIG_HEADER
+
+	* tests/stack.geda: Updated test files since one of the symbols got
+	a missing power/gnd net.
+
+	* examples/*.sch, tests/*.sch: Updated schematic files to 20030901
+
+	* scheme/Makefile.am, scheme/gnet-gsch2pcb.scm: Added new PCB helper
+	backend written by Bill Wilson 
+
+2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/gschem2pcb: Moved script into this directory from src/
+
+        * configure.ac: Removed redundant tests (gtk+, guile) and improved
+        the configuration summary message.
+
+2003-08-23 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* include/globals.h, src/globals.c, src/gnetlist.c, src/parsecmd.c:
+	Added the -m flag which allows the user to specify scheme code after
+	the backend is loaded, but before the guile procedure is executed.
+
+        * src/parsecmd.c: Cleaned up help message a little.
+
+        * src/gnetlist.1: Updated manpage a little
+
+2003-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Renamed from configure.in.
+
+	* configure.ac: Bunch of cleanup to start using pkg-config for all
+	libraries.  Unfortunately, gnetlist now links against libgtk*.  I 
+	might fix that in the future.
+
+	* *.in, *.h, etc: Removed a bunch of old unneeded auto* files.
+
+2003-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/g_netlist.c, gnetlist.c: Applied Carlos Nieves Onega's warning
+	cleanup patch.
+
+2003-06-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/prototype.h, scheme/Makefile.am, scheme/gnet-drc2.scm
+ 	src/g_netlist.c src/g_register.c: Integrated Carlos Nieves Onega's
+	drc2 backend.  Thanks.
+
+	* src/g_netlist.c: Renamed the newly added guile functions a little.
+	(removed the "*used-of-package" string; just for consistancy with
+	 the other guile functions).
+
+2003-06-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/globals.h, src/globals.c, src/gnetlist.c,
+	src/parsecmd.c: Applied Carlos Nieves Onega's -l load scheme
+	patch.  Thanks.
+
+	* src/gnetlist.1: Updated manpage with new -l flag
+	
+2003-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c, src/s_netlist.c: Renamed a couple forgotten
+	uref's to refdes.
+
+	* src/s_cpinlist.c: Added #include <string.h>
+
+2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Updated version
+
+	* examples/*.sch: Updated to latest file version
+
+2003-05-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.1: Applied man page patch by Dan McMahill.  
+
+	* scheme/gnet-spice-sdb.scm: Integrated bug fix patch from 
+	Stuart Brorson (for .OPTION handling).
+
+2003-04-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, docs/Makefile.am, docs/README.switcap, 
+	examples/Makefile.am, examples/switchcap/, scheme/Makefile.am,
+	scheme/gnet-switchcap, scripts/Makefile.am, scripts/sw2asc.in: 
+	Integrated Dan McMahill's switcap backend
+
+	* scheme/Makefile.am, scheme/gnet-spice-sdb.scm, src/gnetlist.c:
+	Integrated Stuart Brorson's advanced spice backend.
+
+	* tests/: added some regression tests for the new backends
+
+2003-03-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-PCBboard.scm: Removed a "(false-if-exception  ...)
+   	so that this backend works with guile 1.6.3.  Patch by Dan McMahill.
+
+2003-02-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * examples/vams/commonrc: Changed how the current directory
+        variable is set (used "'s instead of ').
+
+        * src/gnetlist.c: Applied patchlet from Steve Tell for disabling
+        the guile 1.6.3 deprecated warnings.
+
+        * README: Added note suggestion by Steve Tell about warning users
+        that deprecated guile warnings are turned off.
+
+2003-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Bumped version to 20030223
+
+	* tests/singlenet.pads: Updated test file with new fixes to the pads
+	backend.
+
+2003-02-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Applied Gabriel Paubert's warning reducing patch with
+        a few minor mods.
+
+2003-01-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-pads.scm: Oops, managed to break the pads backend. 
+	Fixed a "footprint" which really should have stayed at "pattern".
+
+	* configure.in: Changed -fnative-struct to -mms-bitfields for 
+	gcc 3.2 mingw compiler (older mingw compilers are no longer 
+	supported)
+
+2003-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* Makefile.am: Fixed the distclean-local target.
+
+2002-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/annotate.sh, unannotate.sh: Oops, forgot to change a bunch
+	of uref= attributes to refdes=.  These scripts now work.
+
+2002-11-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gnetlistrc.in: Changed the variable names which hold
+	the paths to the data and rc directories.
+
+	* scheme/gnet-partslist[1|2|3].scm: Fixed another bug reported by
+	Koichi Nagashima (via debian bugs) where the common partslist scm
+	file wasn't being found if --with-rcdir was specified (as the 
+	debian packages do).
+
+        * aclocal.m4: Removed file from cvs.
+
+	* examples/vams/*.sym|sch: Ran gsymupdate/gschupdate on all vams
+	example files
+
+	* scheme/gnet-vams.scm: Fixed a type which prevented "gn" and "ge"
+	within gschem to work.
+
+2002-11-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-partslist[1,2,3].scm: Fixed bug reported by Koichi
+	Nagashima (via Debian bugs).  There was a load in the file which 
+	needed to know where to look.
+
+2002-11-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Updated version to 20021103 (an official version)
+
+	* tests/*: Updated netlists to take into account fixes to the symbols.
+
+2002-10-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* docs/gnetlist.txt: Move this file to ../docs/gnetlist
+
+2002-10-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-maxascii.scm, scheme/gnet-pads.scm, 
+	scheme/gnet-tango.scm: Changed obsolete "pattern" to "footprint".  
+	Pointed out by Antonio A Todo Bom.
+
+2002-10-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Bumped version to 20021031
+
+2002-10-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure and friends: Ran "autoreconf --force --install -v"
+        to really upgrade to the auto* tools.
+
+2002-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* configure.in, *.m4: Upgraded to automake 1.7.1 and autoconf 2.54
+	
+2002-10-17 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/stack.geda: Updated original netlist to take into account
+	Werner's work on the symbols.
+	
+2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Bumped version to 20020922, which is NOT a release.
+
+2002-09-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/Makefile.am: Removed s_project.c from the list of source
+	files.  This functionality is now provided by libgeda
+
+	* tests/*: Updated test output to take into account the changes
+	that Werner Hoch has been making to the symbol library.
+
+	* src/i_var.c: header comment update
+
+	* src/s_project.c: Obsoleted file.  This file is no longer in use.
+
+	* src/globals.c: Added variable_set_func and quit_func.  These are
+	used by libgeda and gnetlist.
+	
+2002-09-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-bom.scm, gnet-bom2.scm, gnet-drc.scm,  
+	  gnet-partslist1.scm, gnet-partslist2.scm,
+          gnet-partslist3.scm: Added a missing `close-output-port' to
+	  each of these backends.  Output would not be written to the port
+	  if the port wasn't closed (affects the win32 port mainly).
+
+2002-08-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/*.nw: Cleaned up -Wall warnings
+	
+2002-08-12 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* examples/singlenet_1.sch: Move testing schematic to tests/
+
+	* tests/*.sch: Renamed schematics to get rid of _1 suffix
+
+	* scheme/gnet-vhdl.scm: Missed a "type" -> "pintype" conversion. Fixed
+
+	* tests/hierarchy/: Added new tests for hierarchy verification
+
+2002-07-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c, s_net.c: Added back some code to search for 
+	the label= attribute.  Users should not use the label= attribute 
+	anymore.  Also, gnetlist prints out a warning message if it finds
+	an old label= attribute.
+
+	* src/g_netlist.c: Removed an obsolete function.
+
+	* src/s_traverse.c, s_net.c, utils/mk_verilog_syms.c: Changed all 
+	user visible references of uref to refdes
+
+	* scheme/gnet-partslist-common.scm, gnet-partslist1.scm 
+	gnet-partslist2.scm gnet-partslist3.scm: Changed all references of
+	uref to refdes
+	
+2002-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gschem2pcb: Intergrated patch from Dan McMahill to make this
+	script a lot more portable (replacing long options with short ones,
+	gawk->awk, bash->sh)
+
+	* src/s_project.c: Disabled all the draw events as gnetlist doesn't
+	do any drawing
+
+	* examples/*.sch, tests/*.sch: Updated sch to use the new netname= 
+        attribute instead of label= (which is now obsolete)
+
+	* lib/system-gschemrc.in, src/g_rc.c: Changed
+	net-naming-priority parameters to start moving away from label= and
+	instead start using netname=
+
+	* src/g_netlist.c, g_register.c: Renamed
+	gnetlist:get-pin-attribute to gnetlist:get-attribute-by-pinseq
+	
+	* src/g_netlist.c, g_register.c: Renamed
+	gnetlist:get-pin-attribute2 to gnetlist:get-attribute-by-pinnumber
+
+	* scheme/gnet-gossip.scm, gnet-spice.scm, gnet-vams.scm, 
+	gnet-vhdl.scm, gnet-vipec.scm: Updated based on above renames
+
+	* src/s_traverse.c, s_net.c: Renamed all instances of label= 
+	to netname=
+
+2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+        * configure.in, Makefile.am: Upgraded to automake 1.6.2
+
+2002-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gnetlistrc.in: Fixed the load of the commonrc file to 
+	work with --with-rcdir again.
+
+	* src/g_netlist.c, g_register.c: Renamed gnetlist:get-pin-attribute
+	to gnetlist:get-pin-attribute2
+
+	* src/g_netlist.c, g_register.c: Renamed 
+	gnetlist:get-pin-attribute-seq to gnetlist:get-pin-attribute
+
+	* scheme/gnet-gossip.scm, gnet-spice.scm, gnet-vams.scm,
+	gnet-vhdl.scm, gnet-vipec.scm: Update code to reflect above renames
+
+2002-06-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_hierarchy.c: Updated all u_basic_breakup_string calls
+
+2002-06-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_rename.c: Added patch by Bryce Denney to fix an infinite loop
+	caused by changing a for index inside of the loop (not a good idea).
+	Patch also added a check to make sure we don't exceed a fixed limit
+	of rename pairs. Thanks for the patch!
+
+	* src/s_net.c, s_traverse.c: Replaced the
+	o_attribute_search_name_partial nonsense with the new scheme.  
+	gnetlist now builds again.
+
+	* src/g_netlist.c, g_register.c: Added g_get_pin_attribute_seq
+	scheme function.  This function takes a uref, a pin seq number, and
+	a desired attribute and returns the value of the desired attribute
+	(if it is found), else returns "unknown".
+
+	* scheme/gnet-spice.scm: Started the cleanup in getting the spice
+	backend to use the new slot/pin numbering attributes.  Initial
+	tests seem to indicate that it does work for very basic
+	schematics.
+
+	* scheme/gnet-vipec.scm: Minor work on getting this working too.
+	
+2002-06-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/g_rc.c, gnetlist.c: Added a call to u_basic_strip_trailing to
+	fix the network timeout problem on WinME
+
+2002-05-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gnetlistrc.in: Fixed incorrect environment variable name
+        "GEDADATARC" to be GEDADATA. 
+
+	* src/g_rc.c, g_register.c, i_vars.c, s_project.c: Added the missing
+	bitmap-directory keyword
+
+	* src/Makefile.am: Added proto target (for making prototype.h)
+
+	* src/g_rc.c: A few more fixes for the mingw32 port.
+
+2002-04-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/g_rc.c: Missed a few hardcoded /'s, fixed.
+
+	* configure.in: Changed the function which is search for libpng.
+	This was needed for the win32 port.
+
+2002-04-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in and friends: More work on getting the upgrade of 
+	autoconf, automake, and libtool to behave correctly.
+
+	* configure.in: Added PATHSEP variable which holds the proper path
+	separater depending on the platform.
+
+	* lib/system-*.in: Work on getting rc files to use above variable.
+
+2002-04-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Added -liberty for the Mingw32 port
+
+        * src/g_rc.c: Used new path separater #defines in a few
+        sprintf/u_strdup_multiple
+
+        * configure.in and friends: Upgraded to autoconf 2.53, libtool 1.5,
+        and automake 1.5.  Lots of changes in various places for this upgrade.
+
+2002-02-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, config.h.in: Added a few checks for some
+	non-portable #includes
+	
+	* configure.in: Added checks for mingw32 and disabled the
+	cygwin port
+	
+2002-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/Makefile.am utils/Makefile.am: Andrew Dyer found a GUILE_* bug. 
+	Fixed.
+
+	* configure.in: Removed all trace of GUILE_LIB and GUILE_INCLUDE
+
+2002-02-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_project.c: Made sure to init show_hidden_text to 0.
+	
+2002-01-27 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* scheme/gnet-PCBboard.scm: put in the fix from Rich Walker about
+	  pcb not finding certain components.  Also seems to fix the space
+	  problem in the footprint attribute.
+
+2002-01-08 Stefan Petersen   <spe@geda.seul.org>
+
+	* scheme/gnet-pads.scm, scheme/gnet-PCB.scm : 
+	  display-connections functions rewritten to non-recursive since
+	  it caused guile stack overflow when the schematics grew very big.
+
+2002-01-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-maxascii.scm:  Checked in new backed by Dave Lawrence
+
+2001-07-26 Stefan Petersen   <spe@geda.seul.org>
+
+	* scheme/gnetlist.scm, scheme/gnet-pads.scm, scheme/gnet-PCB.scm:
+	  gnetlist:wrap now accepts character(s) to terminate line with.
+	  Suggested by Roger Williams <roger@coelacanth.com> since PADS
+	  didn't like lines ending with \.
+	
+2001-07-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, src/gnetlist.c, src/g_rc.c: Cleanup and added the
+	  ability to have the rc files in a different location using
+	  --with-rcdir (was broken recently, now fixed)
+
+	* src/gnetlist.c, src/g_rc.c: More work on getting above to work
+	  completely.
+
+        * src/gnetlist.c, i_vars.c, parsecmd.c, s_net.c, s_rename.c:
+          Added patch by Dan Mcmahill for 64-bit architectures.
+	
+2001-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, aclocal.m4: got configure script to be more like
+	  gschem wrt the guile detection
+	
+2001-07-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Fixed all the LDFLAGS to be correct (and only link
+	  the libraries once)
+
+	* configure.in: Bumped up version to 20010722
+
+	* configure.in: More updates to get cygwin to build right
+
+	* src/Makefile.am: Changed the order in which things are linked
+	  (guile last)
+
+2001-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/bompp.sh: Added bom pretty printer written by Rolf Fiedler
+
+	* scripts/annotate.sh: Added script written by JM Routoure and modified
+	  by Rolf Fiedler
+
+	* src/unannotate.sh: Added script written by Rolf Fiedler
+
+	* src/bom_xref.sh: Added script written by Rolf Fiedler
+
+2001-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-partlist*.scm: Added part list netlist backend written
+	  by MIYAMOTO Takanori
+
+2001-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Removed the "This is alpha software" message and
+	  added the standard gpl/gnu software message
+
+2001-07-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Make sure configure scripts work with autoconf-2.50
+	  (had to fix cygwin check), they do not yet work with 2.50
+
+	* Removed all trace of libtool from gnetlist, not required to build
+
+2001-06-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c: Added an if check so that buses are ignored
+	  (once again).
+
+2001-06-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Oops forgot to call libgeda_init, added call
+
+	* src/i_vars.c: Added code to prevent gnetlist dumping core if
+	  the system-gnetlistrc file is not found
+	
+2001-06-10 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/g_rc.c: Changed g_rc_parse_system to use the GEDADATA 
+	  environment variable
+
+	* lib/system-gnetlistrc.in: Added support for GEDADATA
+	
+2001-03-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* Removed all Makefile.in files and configure 
+
+2001-03-17 Ales Hvezda   <ahvezda@geda.seul.org>
+        
+        * Got make dist and make distcheck working (means all files which are
+          in CVS are in some Makefile)
+
+	* configure.in, acconfig.h: unfortunately libgdgeda and stroke are
+	  required for linking, so they MUST be inside these files
+
+	* configure.in: Added DATADIR instead of PACKAGE
+
+2001-03-06  Stefan Petersen  <spe@geda.seul.org>
+
+	* configure.in, acconfig.h: In the spirit of yesterday I removed
+	  every trace of stroke and libgdgeda.
+	
+2001-03-06  Stefan Petersen  <spe@geda.seul.org>
+
+	* configure.in: Fixed typo and removed some hard coded libraries.
+	  Patch and suggestion from Bruno Schwander.
+	
+2001-03-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/gnet-vhdl.scm: Integrate Thomas Heidel's VHDL bug fixes
+	  (to generate better VHDL output)
+
+	* configure.in: Updated version
+
+	* configure.in: Added a check to make sure libgeda-config and 
+	  gesym-config are the right version
+
+2001-03-01  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/*.c: Misc -Wall warnings cleaned up
+	  Part of this cleanup found some warnings which could have lead
+	  to core dumper bugs.
+
+	* tests/Makefile.am: Fixed location of my test schematics
+
+	* tests/amp_1.spice: Updated regression test to take into account
+	  Bas' latest spice backend changes
+	
+2001-02-25  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_netattrib.c: Added some if (... == NULL) checks to prevent
+	  some core dumps (original bug pointed out by Wolfgang Buesser)
+
+	* scheme/gnet-spice.scm: Integrated Bas Gieltjes' latest changes
+	  to his netlist backend
+
+2001-02-23  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_hierarchy.c: Fixed the nasty bug which was caused by my
+	  replacing the rc system to be like gschem.  Basically schematics
+	  were being loaded so that there was only ONE copy in memory at 
+	  all times.  This is not how gnetlist works.  Each hierarchical
+	  schematic must be uniq in memory.  Fixed it by changing
+	  libgeda's s_hierarchy_down_schematic_single to take a normal
+	  or force flag.
+	
+2001-02-17  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c: Got all the traverse functions to use the new
+	  connection system
+
+	* src/g_rc.c, i_vars.c: Replaced rc system to be almost exactly
+	  the same as gschem's
+
+	* lib/system-gnetlistrc.in: Updates to this file to take into
+	  account about changes
+
+	* include/i_vars.h: Updated file to take into account above
+	  changes
+	
+2001-01-30  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c: Fixed the graphical=1 test so that the 
+	  outside of the component is also looked at for this attribute
+
+2001-01-27  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_rename.c: Due to a bug in how the s_rename_* routines are
+	  being used, you cannot get the renamed names, added code to properly
+	  mux several sets of rename pairs.
+
+	* src/s_hierarchy.c: Changed the s_rename_destroy to use 
+	  s_rename_next_set (instead of destroying, go to the next set)
+
+	* src/gnetlist.c: Changed s_rename_destroy to s_rename_destroy_all
+
+	* tests/netattrib_1*: Added a test schematic and valid netlist to 
+	  the tests
+
+2001-01-26  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_net.c, s_rename.c: More work on getting the rename of two
+	  same named nets working.
+
+2001-01-25  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_net.c: Added some code which will rename nets which are
+	  named twice.  This code needs to be examined again to make sure
+	  this is the right way of doing this.
+
+2001-01-17  Stefan Petersen  <spe@geda.seul.org>
+
+	* scheme/gnet-bom.scm, scheme/gnet-bom2.scm: Improved the
+	  parseconfig procedure. More stable(?) and more PC.
+	
+2001-01-15  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_cpinlist.c: Fixed core dumper when pin doesn't have
+	  the required pin#=# attributed. (Pointed out by Matt, fixed by
+	  Stefan)
+
+2000-12-22  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/gnet-vams.scm: Fixed a minor bug which was uncovered by
+	  Stefan's stricter error checking in g_netlist.c
+
+2000-12-14  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* tests/*: removed some tests since they put version information
+	  into the files which caues the tests to fail.
+
+	* tests/*: Added some more very simple tests (using singlenet_1.sch)
+
+2000-12-17  Stefan Petersen  <spe@geda.seul.org>
+
+	* src/gnetlist.c: Changed the repl to Guile built in one. Better
+	  error handling, work like Guile and so on.
+
+	* src/g_netlist.c, src/vams_misc.c: Added inparameter check on all 
+	  Guile routines (SCM_ASSERT(...)).
+	
+2000-12-14  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* examples/vams/gschemrc: Added one line suggested by Stefan to get
+	  the keymapping stuff working 100% with keymap redefinition.
+
+2000-12-13  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* configure.in: Added -lregex for CYGWIN32 build
+
+2000-12-12  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/gnet-vams.scm: Finally found the time to finish getting this
+	  backend working with guile 1.4 (using the fixes Eduard provided)
+
+2000-12-07  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_project.c: Removed obsolete DONT_REDRAW var from code
+
+2000-12-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* configure.in: Slightly rearranged things to make cygwin port happy
+
+2000-12-02  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * src/gnetlist.c: Changed Cygwin warning message
+
+	* src/g_rc.c: Updated an #if to work with the current cygwin
+
+2000-11-30  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * configure.in: Added -fnative-struct flag for CYGWIN port only
+
+        * configure.in: Added --enable-debug flag to enable -g flag
+
+2000-11-16  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c: Move s_traverse_nethash_build to libgeda
+
+	* src/s_traverse.c: Renamed all o_nethash functions to s_nethash
+	  (in accordance to the changes made in libgeda)
+
+2000-11-12  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/*.c: Fixed the misspelling of separator (pointed out by Stefan)
+
+2000-11-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/gnet-vhdl.scm: Renamed this file to gnet-vhdlold.scm
+
+	* scheme/gnet-vhdl.scm: Put this file back as gnet-vhdl.scm (undid
+	  above)
+
+	* docs/: Created documentation directory and moved all README.* 
+	  files into this directory
+
+	* docs/vams: Created directory, added vams documentation
+
+	* examples/vams/: Created directory, moved the example vams design
+	  into this directory (written by Eduard Moser and Martin Lehmann)
+
+	* scheme/gnet-vams.scm: Added scheme backend code (update Makefile.am)
+	  (written by Eduard Moser and Martin Lehmann)
+
+	* src/g_register.c: Added register call for 
+          gnetlist:vams-get-package-attributes
+
+	* src/vams_misc.c: Added file to support vams backend (updated 
+	  Makefile.am) (written by Eduard Moser and Martin Lehmann)
+
+	* examples/vams/*: Misc updates to the example files
+
+	* docs/gnetlist.txt: Moved file into docs directory
+
+	* src/s_hierarchy.c: Fixed a minor bug in hierarchy-uref-order and
+	  prepend mode: had to unmangle names using this flag as a parameter
+	  (so that the right uref basename was used).
+
+2000-11-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/gnetlist.1: Updated manual with all the various backend formats
+
+2000-11-02  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_netlist.c: Added another call to a post process routine
+	  (the routine to remove the uref mangling if that's enabled via
+	   rc keyword)
+
+	* src/s_hierarchy.c: Added s_hierarchy_remove_uref_mangling
+
+	* src/s_hierarchy.c: Got hierarchy_uref_rename working right.
+
+	* src/*.c: Renamed "rename" to "mangle" (mainly keyword and variable
+	  changes)
+
+	* src/g_rc.c and friends: Added the following keywords:
+		hierarchy-netname-seperator
+		hierarchy-uref-seperator
+		hierarchy-netattrib-seperator
+		hierarchy-uref-order
+		hierarchy-netname-order
+		hierarchy-netattrib-order
+
+	* src/*.c: Wrote the code to use the above new keywords
+
+	* src/g_rc.c: Finally migrated a change from the gschem/src/g_rc.c
+	  which fixes a core dump if you mess up a value for a keyword.
+	  (pass true size of the lookup table in RETURN_G_RC_MODE)
+
+	* src/s_hierarchy.c: Put some verbose print in for the uref
+	  demangling code
+
+2000-11-02  Stefan Petersen  <spe@geda.seul.org>
+
+	* scheme/gnet-pads.scm: Wrapper function applied after request
+	  from Roger Williams.
+
+	* scheme/gnet-*.scm: Updated copyright.
+	 
+2000-10-31  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Change the if(f_open...) calls to properly deal with 
+	  returned value from f_open
+
+	* src/s_hierarchy.c: Divided up s_hierarchy_create_name into
+	  s_hierarchy_create_netname, s_hierarchy_create_uref, and
+	  s_hierarchy_create_netattrib functions
+
+	* src/*.c: Removed all calls to s_hierarchy_create_name and
+	  started using the new name
+
+	* src/g_rc.c and friends: Added several keywords:
+		hierarchy-traversal, 
+		hierarchy-uref-rename,
+		hierarchy-netname-rename,
+		hierarchy-netattrib-rename
+
+ 	* src/*.c: Removed some old #if 0 code	
+
+	* src/*.c: Unfortunately some functions needed the pr_current pointer,
+	  so had to change all instances to pass this pointer in
+
+2000-10-31  Stefan Petersen  <spe@geda.seul.org>
+
+	* scheme/gnetlist.scm: Cleaned up and renamed split
+	  gnetlist:wrap.
+
+	* scheme/gnet-PCB.scm: Now PCB-backend uses wrap function
+	  above. Was reported as a bug by Russ Dill.
+	
+2000-10-29  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_netattrib.c: Got net= attribute to use the hierarchy tag
+	  when a net= is found in some underlying schematic.
+
+	* src/s_hierarchy.c: Created s_hierarchy_create_name which creates
+	  properly structured hierarchy named things 
+	
+	* src/s_traverse.c and others: All the places where hierarchy
+	  names are created now use above new function
+	
+2000-10-23  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_rename.c: Was freeing some memory which was being used else
+	  where, oops, created a memory leak by not freeing memory.
+
+	* src/s_traverse.c: Move hierarchy traverse code into s_hierarchy
+
+	* src/s_misc.c: New file, currently contains verbose_* functions
+
+	* src/s_netlist.c, s_traverse.c: Used some of the above newly created
+	  functions from s_misc.c
+
+	* src/s_netlist.c: Reformated file to with indent
+
+	* src/s_rename.c: Properly reset the rename_counter to be zero.
+
+	* src/s_rename.c: Modified s_rename_add to properly deal with the case
+	  where you might have mutiple overlapping renames (which occurs when
+	  you have more than one level of hierarchy)
+
+	* src/s_rename.c: Ran file through indent
+
+2000-10-22  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Removed extra compare to f_open calls so it
+	  works with the changes Stefan made in libgeda
+
+	* src/create_proto: Updated it the the latest version
+
+	* src/s_traverse.c: Removed a lot of redundant code (made possible
+	  by the recent libgeda structure changes) 
+
+	* src/s_hierarchy.c: Added new file which contains post processing
+	  for hierarchy support 
+
+	* src/*.c: Extensive work to get hierarchy support, modified almost
+	  every file 
+
+	* src/s_traverse.c s_hierarchy.c: Started using indent (gnu mode)
+
+2000-10-12  Stefan Petersen  <spe@geda.seul.org>
+
+	* src/gnetlist.c: Fixed a screw up that made gnetlist fail
+	  compiling.
+	
+2000-10-10  Stefan Petersen  <spe@geda.seul.org>
+
+	* src/gnetlist.c: Honours the error code returned from f_open
+	  from now on and tells invoker it didn't find the file.
+
+2000-10-07  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* configure.in: Removed an old GTK+ test which is no longer used
+	
+2000-10-06  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c: Changed the code which reports if a uref is
+	  missing or not.  Should be a little better, but might falsely
+	  report missing urefs
+
+        * src/gnetlist.c: Changed CYGWIN32 warning message
+
+2000-10-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_net.c: Fixed a lame error message to be a little more 
+	  descripting (when you forget uref or pin number attributes)
+
+2000-08-21  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/*.c: Got gnetlist to build with all the libgeda modifications
+
+2000-07-12  Matt Ettus  <matt@ettus.com>
+
+	* Fixed autoconf/automake stuff to install protel and bae backends
+
+	* scheme/gnetlist.scm:  New function get-component-text to look
+	  for value, label, and device text in that order
+
+	* scheme/gnet-allegro.scm:  Use the above function
+
+2000-07-06  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* configure.in: Bumped version up to 20000704a so people know they 
+	  have applied the 20000704a patch correctly.
+
+2000-07-05  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/gnet-bae.scm, scheme/gnet-pads.scm, scheme/gnet-protelII.scm:
+	  These files still referenced the "physical" attribute, when instead
+	  it should be "footprint"
+
+	* src/s_traverse.c: Because of my overloading of the "label=" attribute
+	  it was possible for a pin to supply a label to net, which is a big
+	  no-no (bug). Fixed by checking to make sure object is not a pin.
+
+2000-07-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * src/*.c: Updated copyright info in each file
+
+        * src/*.c: Changed all GNU to GPL in the appropriate places
+
+	* configure.in: Bumped version up to 20000704
+	
+	* src/g_rc.c: Added an #if around #include <dirent.h> to make 	
+	  Cygwin builds work
+
+	* tests/test_verilog.verilog, tests/7447.verilog: Updated to reflect 
+	  new backend revision (must not have done it right the last time)
+
+	* src/*.c: Fixed all warnings	
+
+2000-06-27  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/g_rc.c, src/g_register.c: Added component-library-search and
+          source-library-search rc keywords
+
+	* tests/test_verilog.verilog, tests/7447.verilog: Updated to reflect 
+	  new backend revision
+
+	* configure.in: Put in checks for gtk+ and glib 1.2.3
+
+2000-06-15  Matt Ettus  <matt@ettus.com>
+
+	* Added scheme/gnet-pads.scm by Roger
+
+2000-06-11  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/parsecmd.c: Added the -c flag which allows you to execute
+	  arbitrary strings from the command line
+
+	* src/gnetlist.1: Update the manual page for above
+
+2000-06-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* tests/*.verilog: Updated baseline verilog tests cases to take into
+	  account latest test_verilog.sch and 7447.sch
+
+2000-06-01  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_project.c: Added init of some important variables which 
+	  libgeda uses when promoting attributes.  The attribute promotion
+	  code is almost completely disabled through these defaults
+
+	* tests/*.verilog: Updated baseline verilog tests cases to include
+          Mike's header addition
+
+	* scheme/gnet-verilog.scm: Added a missing newline in netlist header
+
+2000-04-26  Stefan Petersen  <spe@geda.seul.org>
+
+	* Added gnet-protelII.scm (for Protel2) and gnet-bae.scm (for
+	  Bartels Autoengineer) to the ever increasing list of contributed
+	  backends for gnetlist. Contributed by Rolf Fiedler 
+	  <Rolf.Fiedler@Ferrari.DE>
+	
+2000-04-21  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* */*: Removed all traces of the physical attribute.  This attribute
+	  is now called footprint
+
+2000-04-20  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/gnetlist.scm: Added useful scheme functions by Andrew 
+          Bardsley
+
+2000-04-15  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/g_netlist.c: Added g_get_pin_attribute which given a uref,
+	  a pin number, and a wanted attribute returns the value.
+
+	* src/create_proto: Updated prototype.h creation script to use gtk/glib
+	  paths from my machine (installed in /usr/local ...)
+
+	* src/g_register.c: Added entry for g_get_pin_attribute
+
+2000-02-19  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* README/INSTALL: Updated files to reflect next release
+   
+	* src/*.c: Fixed all warnings (using -Wall -Werror)
+
+	* tests/*.verilog *.vhdl: Updated stored output to be current
+	  (so that the tests pass)
+
+	* src/gnetlist.c: Minor type change (so that it work on PPC)
+          Thanks to njh for pointing this out.
+
+2000-02-07  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/gnet-spice.scm: Updated file with Bas' patch to allow the
+	  use of the uref=include... mechanism, see for more info: 
+	  http://www.geda.seul.org/mailinglist/geda-dev25/msg00113.html
+
+2000-02-04  Stefan Petersen  <spe@geda.seul.org>
+
+	* scheme/gnet-PCBboard.scm: Fixed (hopefully) guile version 
+	  incompatibilities in module popen (didn't exist before 1.3.2)
+	
+2000-01-25  Matt Ettus   <matt@ettus.com>
+
+	* scheme/gnet-PCBboard.scm:  Added JM's code
+
+	* autoconf and automake stuff updated for the above.
+
+	* src/gschem2pcb:  Added.  This will hopefully be integrated
+	  directly, soon.
+
+	* README.pcb:  Info on usage for above
+
+2000-01-24  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/g_netlist.c: Fixed g_get_packages to properly return ALL packages
+	  of ALL loaded schematics (basically switch to an previous attempt, 
+	  and folding in any improvements the new version had)
+
+1999-10-19  Matt Ettus   <matt@ettus.com>
+
+	* scheme/gnet-vipec.scm: Fixed ground node handling, some code cleaning.
+
+	* scheme/gnet-bom.scm:  Removed references to strip1.  Thanks Stefan.
+
+	* scheme/gnetlist.scm: Removed strip1, added ground handling for
+	number-nets function.
+
+1999-10-17  Ales Hvezda  <ahvezda@geda.seul.org>
+	
+	* src/*.c: Changed all files to use the new libgeda/libgeda.h include
+
+1999-10-11  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/*.scm: Removed all gnetlist:set-netlist-mode
+
+	* src/g_register.c: Removed register call to gnetlist:set-netlist-mode
+
+	* src/g_netlist.c: Removed gnetlist:set-netlist-mode
+
+	* scheme/gnet-spice.scm: Integrated latest spice backend by Bas 
+          Gieltjes
+
+	* tests/: Created directory to hold gnetlist tests
+	
+	* tests/*: Populated tests directory with output from correct netlist
+	  runs
+
+1999-10-10  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* gnetlist/gnetlist.c: Fixed up s_log_init to use the new prototype
+
+1999-10-09  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* examples/test.sch: Renamed (replaced) test_verilog.sch
+
+	* examples/test_verilog.sch: Translated it away from borders
+
+	* examples/7447.sch: Translated it away from borders
+
+1999-10-06  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/gnetlist.scm: Fixed a dangling reference to bom:strip1 
+	  (changed to strip1)
+
+1999-10-06  Matthew Ettus   <matt@ettus.com>
+
+	* scheme/gnet-vipec.scm:  New file, not functional yet.
+
+	* scheme/gnet-PCB.scm:  Cleaned up functions, moved common ones to
+	main gnetlist.scm file. 
+
+	* scheme/gnet-allegro.scm:  Clean up, remove dead code
+
+	* scheme/gnet-bom.scm:  Clean up, remove dead code
+
+1999-10-04  Magnus Danielson  <cfmd@swipnet.se>
+
+	* scheme/gnet-vhdl.scm: Finally fixed the write-port-clause stuff.
+	This is now splitted into three routines which forms a much better
+	basis for further development and also fixes the bugs which occurs if
+	any or more of the in, out and inout sublists happends to be empty.
+	Stuck in support for signal type.
+
+1999-10-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * In all *.c included define.h before struct.h
+
+1999-09-28  Magnus Danielson  <cfmd@swipnet.se>
+
+	* scheme/gnet-vhdl.scm: Fixed bug with no ports to entity.
+
+9/25/99	Integrated Magnus's latest VHDL backend .scm code
+
+9/23/99	Split up gnetlist.scm into seperate files.  The basic functions will
+	live gnetlist.scm while the individual backends will be in gnet-*.scm
+	
+	Made some changes to the code so that the right backend *.scm code
+	is loaded when appropriate
+
+	Integrated Magnus Danielson's VHDL backend
+
+9/19/99	Make sure gnetlist runs with guile-1.3.2a
+	
+	Fixed all warnings
+
+9/17/99	Fixed that really nasty bug/problem that dealt with loading up 
+	multiple sheets (see below).  The postprocess was happening too
+	early and was for some odd reason nuking previously post processed
+	nets.
+
+9/16/99	Finally integrated Bas Gieltjes's latest spice netlist (sorry about
+	the delay)  (this basically consisted of adding the code to 
+	gnetlist.scm)  I'm not 100% this still works with the current 
+	gnetlist, especially the new net= attribute
+
+	Added code in gnetlist.c to only load up schematics which haven't
+	been loaded already
+
+	Found a NASTY bug/problem when you try to load up more than one
+	schematic sheet with gnetlist.  Added a line in s_traverse_start
+	which should have helped, but problem/bug still exists
+
+9/14/99 Integrated Matt Ettus's Allegro and PCB gnetlist backends.  Thanks!
+
+	Updated man page to reflect the backends
+
+9/12/99	Fixed a netlist print function to that it doesn't try to print
+	valid null strings
+
+	Fixed up s_net_name_search so that it tells the user if a multiple 
+	named net is found
+
+	Implemented the concept of net name priority (net_name_has_priority)
+	which controls which name has the highest priority.
+
+	Added net-naming-priority keyword which controls which attribute
+	(either net= or label= ) has priority when both are attached to a net
+
+	Added i_vars.c which containes the rc mode init funcs which are 
+	used by Kazu's rc mode functions
+
+	More work on getting net= attribute to override previously defined
+	pins (all controlled through net-naming-priority)
+
+	Removed some obsolete #if 0'd out code from s_net.c
+
+	Added s_rename.c which contains all the code to handle the renaming
+	(aliasing) of net names.
+
+	Integrated s_rename functions into the code
+
+	Fixed a bug in s_netattrib_net_search where the outside of the 
+	component wasn't being search for overriding net= attributes
+
+	Fixed s_netlist_post_process, (the net naming), to only name
+	nets of components which have a uref.  Components which don't
+	have a uref are power/gnd/special components
+
+	Updated verbose legend to include the R (rename of nets)
+
+	Added gnetlist:get-renamed-nets which takes a dummy parameter and
+	returns a list of lists (which contain src -> destination net 
+	renaming pairs)
+
+	Updated the geda netlist backend to output the above renaming
+	list pairs into the netlist file as a new section
+
+9/11/99	Created s_netattrib.c which contains all the code to handle the net=
+	attribute
+
+9/7/99	Start work on getting the net= attribute to work 
+
+9/5/99	Moved test_verilog.sch into the examples directory (from 
+	gschem/examples)
+
+9/3/99	Fixed a nasty stupid bug in the nethash datastructure creation,
+	used a constant instead of the pound define
+
+8/31/99	Renamed ntext to text (finally)
+	
+	Fixed g_rc.c to work on WinNT
+
+8/30/99	Renamed all ales to conn and ALES to CONN
+
+8/27/99	Set the program version to 19990829 to force Ales to release
+	on the 29th :)
+	
+	Updated all *.c and *.h files to have the right address for the
+	FSF in the copyright/licence header
+
+8/19/99 Updated Matt Ettus's BOM backend with thi's formatting changes
+
+8/17/99	Added some bus related globals.
+
+8/11/99	Added the real code to implement gnetlist:get-toplevel-attribute
+
+	Integrated Matt Ettus's bill of material code (cool stuff!)
+
+8/8/99 	Moved mk_verilog_syms to utils (created utils and Makefile.am)
+
+	Minor updates to example schematics since I renamed some of the
+	verilog symbols to have the -1 prefix.
+
+8/5/99	Added some stuff to configure.in for win32 builds
+
+8/3/99	Updated libtool to 1.3.3
+
+	Integrated Mike Jarabek latest verilog backend
+		- Patched g_netlist.c
+		- Patched g_register.c
+		- Patched gnetlist.scm
+		- Added examples/sch/*.sch to examples
+		- Added mk_verilog_syms to src
+		- Added symbols to ../symbols
+
+8/2/99	Added g_netlist_get_attribute, which allows you go find any toplevel
+	attributes (not yet functional)
+
+7/21/99 Removed all trace of s_passing.h
+
+7/15/99	Added support for libgdgeda 1.6 (mainly means searching for libpng)
+
+7/6/99  Changed configure and Makefiles to cut down on the number of 
+	libraries which are linked
+
+	Didn't really disable libgdgeda when using --disable-gdgeda
+        Now fixed.
+
+7/5/99 	Verified that gnetlist works with alphanumeric slotting
+
+	Fixed all warnings 
+
+	Renamed s_netlist_post_resolve to s_netlist_post_process
+
+	Put Manu's configure.in changes into gnetlist as well
+	
+	Got configure.in to be almost identical to gnetlist/configure.in
+
+	Updated man page slightly
+
+7/4/99 	Integrated latest verilog backend from Mike 
+
+	Changed Mike's all-nets function to use get-all-unique-nets 
+	(equate same named nets together)
+
+	Added some improved feedback when doing the net traversal with
+	verbose mode on
+
+7/3/99	Removed almost all executing traces of connected_to_[1|2] (these
+	was replaced by connected_to)
+
+	Added gnetlist:get-all-unique-nets which returns all the unique
+	nets in the design
+
+	Added gnetlist:get-all-connections which returns all connections
+	which are associated with the argument netname 
+
+	Worked on gnetlist.scm to use above functions.
+
+	Got geda netlist format to use above functions correctly.
+
+	Got tango netlist format to use above functions correctly.
+	(all others are okay)
+
+	Reformated the tango backend scheme code to be more scheme like
+	Reformated the gEDA backend scheme code to be more scheme like
+
+	Went through all the code removing old obsolete variables from
+	the internal representation.
+
+	As of the today gnetlisting works again :-)
+
+7/2/99  Fixed the ./configure stuff dealing with libgdgeda so that it works
+        when libgdgeda isn't installed in a system directory
+
+7/1/99 	Got support for gdgeda in configure.in (required because you
+	are linking against libgeda)
+
+6/29/99 Got the core of nethash working with the rest of gnetlist
+
+	Things seem to be working better now.  Core traversal of nets
+	works now as well as the naming of nets.
+
+6/25/99 Added support to configure to look for optarg and friends otherwise
+        include the right externs...
+
+6/17/99 Finally put all the changes in to make gnetlist work with the 
+	new connection system 
+
+6/8/99	Integrated old gnetlist into the current development dist scheme
+
+
+--------------- new devel stuff starts here ----------------------------
+
+
+5/14/99 Updated manual page a bit 
+
+5/13/99 Integrated Mike Jarabek's verilog netlister 
+
+4/11/99	Added some more debugging information when reading in the scm file
+
+4/9/99	Fixed Makefile.am so that gnetlist.1 is installed
+
+3/26/99 Added some newlines in a few places in gnetlist.scm
+
+3/20/99 Got spice backend guile functions to follow the new 
+	backend:function_name naming convention
+
+3/19/99	Updated g_rc to print more diag message to the log file when
+	it can't find an rc file (like gschem)
+
+3/18/99 Updated g_rc to use new macros for finding system-*rc files
+
+3/11/99 Added back the original implementation of the write-net-name-... 
+	guile code for the spice netlist.  It works right for transistors.
+	Mine did not.  Bummer.  Spice netlist doesn't support slotting for
+	now.
+
+3/10/99	Fixed a coredump when you pass in an "unknown" for the pin number
+	in get-nets.  Return a list which is ("ERROR"). (pointed out by
+	Bas Gieltjes)
+
+	Changed ales-netlist format to geda-netlist format.  Changed
+	gnetlist.scm appropriately	
+
+	Renamed all C guile functions to be called gnetlist:<whatever>
+	This makes it clear where functions come from 
+
+	Added code to set netlist_mode which enables/disables certain
+	netlist features.  Each backend should call this with something
+	even if it's the default mode: gEDA
+
+	Added gnetlist:set-netlist-mode to g_register and g_netlist which 
+	sets the above mode
+
+	Integrated tango netlist backend by Nuno Sucena (thanks)
+
+	Changed the highest level function in all backends to take a 
+	parameter which is the netlist output filename.  This is a required
+	parameter
+
+	Added -o flag which specifies output filename (for above), if you
+	don't specify an output filename the default is output.net
+
+	Integrated spice backend by Bas Gieltjes
+
+	Had to add a kludge to gnetlist.c which sets netlist_mode based
+	on the guile_proc string (for spice mode which needs to be set
+	before the .sch files are read in)
+
+	Changed the default unnamed_counter to be one instead of zero
+
+	Fixed the incorrect behavior when you have slotted components and
+	the spice backend.  
+
+	Played a bit with the way power connections show up in the netlists
+	(s_net.c and the POWER string code)  Not completely happy with 
+	any of this.
+
+3/9/99	Fixed a few variables which were uninitialized (width, height,
+	snap_size)
+
+1/24/99 Removed some // comments (shouldn't use those in C code)
+
+12/3/98 Added thi's small gnetlist patch
+
+11/8/98	Changed the ales-netlist slightly (less newlines)
+
+	Started adding code to resolve same net names
+
+	Found a really nasty bug, wasn't initalizing net_name in cpinlist!
+
+	Found several really nasty bugs, where something was initalized
+	incorrectly (strings = 0 ?!?) (s_net.c in add function)
+
+	Found another missing init (object_ptr) in s_netlist.c (add function)
+
+	Found another missing init (original) in s_cpinlist.c (add function)
+
+	All of the above bugs were apparently the cause of the mysterious
+	guile 1.3 problem.  Further testing is needed
+
+10/25/98 Cleaned up all warnings 
+
+10/24/98 Discovered that gnetlist doesn't like guile 1.3
+
+	 Fixed a memory overrite in s_net_name, also added a return(NULL)
+
+	 Fixed a place where I was freeing a null pointer in g_get_packages
+
+	 Found/fixed another "trying to free null data"
+
+ 	 Updated gnetlist.scm with display-connections (output.net looks 
+	 better)
+
+10/20/98 Fixed a bug which prevented gnetlist to work with guile 1.3
+
+	 Change rc file guile primative version to gnetlist-version
+
+10/18/98 Changed o_attrib_search_name_single to pass a null in for the last
+	 argument
+
+10/12/98 Added guile code to handle unconnected pins (gnetlist.scm)
+
+	 Found a place where U? wasn't being set.
+
+10/11/98 Added parsecmd.c (commandline argument parsing)
+
+         Simplified the loading of schematic sheets and intergrated above
+
+	 Added the actual command line options (-v for verbose mode) and
+	 (-i for guile interactive mode)  Default for both of these is
+	 off
+
+	 Added usage() function (which exits when called)
+
+	 Added quiet_mode to the command line arguments, to shut off all
+	 messages
+
+	 Removed all warnings
+
+	 Worked on gnetlist.scm to get some guile code to drive some of 
+	 the new netlist code
+	
+	 Added and registered g_get_package_attribute guile function which
+	 returns the wanted attribute from the specified package uref
+
+	 Added command line option -g guile_proc so you can execute guile
+	 scripts from the command line 
+
+	 Added code to support above
+
+	 More work into gnetlist.scm to get some sort of netlist writer 
+	 going
+		
+
+10/10/98 Added file s_traverse.c which creates flat netlist datastructure
+
+	 Serious work on getting netlist code to work!
+
+	 Add s_net.c (functions that deal with the net structure) 
+
+	 Add s_netlist.c (functions that deal with the netlist struct)
+
+	 Add s_cpinlist.c (functions that deal with the cpinlist struct)
+
+	 Completely preliminary code for netlist generation (first cut,
+	 highly inefficient, but works! :)
+
+	 Updated g_get_packages to use the new available structures (much
+	 faster)
+
+	 Updated g_get_pins to use the new available structures (much
+	 faster)
+
+	 Added (exit) and (quit) guile functions
+
+	 Found a condition where my attempt to speed up the netlist post
+	 processing, but it found a nasty bug, so now we have a 3 pass
+	 post process. 
+	
+
+0.0.5
+-------
+
+9/19/98 Improved the input gathering code for the guile shell a bit.
+
+9/13/98 Changed netlist.scm to gnetlist.scm
+
+	Fixed g_rc_scheme_directory to store the string in the structure 
+
+9/4/98	Made then necessary changes to have gnetlist use libgeda
+
+	Fixed a few minor tidbits related to above
+	
+8/30/98 Added embedded component support from gschem to gnetlist
+ 
+8/29/98 Added complex_parent pointer to object structure
+
+	Added code to fill above pointer 
+
+	Added s_netlist.c and added it to Makefile.am
+
+	Added first cut of GUILE netlist routines	
+		g_get_packages
+
+	Added s_scratch.c (misc scratch buffer routines)
+
+	Made some changes to the attribute handling, head attrib node 
+	points to the object where the attributes belong to.  Be sure 	
+	to propegate this change back to gschem (done)
+
+	Made sure that text_string is only set when it should be by 
+	setting p_text_string[0] = '\0'.  Be sure to propegate this change
+	back to gschem (done)
+
+	Added a bunch of attribute search routines to support all this
+	Be sure to propagate these attribute routines back go gschem
+
+	Wrote some test scheme code which is in ../bin/netlist.scm
+
+8/25/98	Added code into the repository and devel tree
+
+	Fixed logging mechanism
+
+	Added appropriate lines in all the upper makefiles to build this code
+
+	Code doesn't do anything other then read in the schematics
+

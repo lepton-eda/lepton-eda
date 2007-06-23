@@ -1,0 +1,831 @@
+2007-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20070526 in prep for the next
+        release.
+
+2007-02-10 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* docs/gsymcheck.1: Updated the man page a little for bug:
+        [ 1556064 ] man page version out of date
+
+	* configure.ac: Bumped package version to 20070216.
+
+2006-11-29 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* docs/gsymcheck.1: Fixed program name in the synopsis section.
+	  Thanks to Karel Kulhavy for reporting the bug.
+
+	* src/globals.c: Removed quit_func since it is completely unused.
+
+2006-11-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Fixed libgeda detection/find error message when
+        the wrong libgeda version is found. (Bug reported by Karel Kulhavy;
+        thanks)
+
+2006-10-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped package version to 20061020.
+
+2006-09-27 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* configure.ac : Applied patch #1564796 by Cesar Strauss, 
+	enabling Cygwin's compilation. Thanks.
+	
+2006-09-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * AUTHORS: Updated file pointing people at gschem's AUTHOR file 
+        as the complete list of authors.  Merged all listed files in this
+        file into gschem's file.
+
+2006-09-17 Carlos Nieves Onega <cnieves@iespana.es>
+	
+	* include/struct.h, src/s_check.c, src/s_symstruct.c:
+	Applied patch #1558391 by Jeff Mallatt, slightly modified so
+	it doesn't use goto's. Thanks.
+	
+	Counts the number of distinct pinnumbers specified in
+	all slotdef= attributes. Uses that number, plus the
+	number of net= pins, to compare with the "footprint
+	size" when checking for that warning.
+
+	The code used to simply use numpins*numslots, which
+	doesn't account for the possibility of the same
+	pinnumber being used in more than one slotdef= attribute.
+
+	For an example of a symbol where this matters, see
+	'analog/dual-opamp-1.sym'.
+	
+2006-09-13 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/s_check.c: Applied patch #1558122 by Jeff Mallatt.
+	Adds newline that is missing from the "Found Pintype=..." 
+	message in s_check_pintype() in s_check.c. Thanks.
+	
+2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated program version to 20060906.
+
+	* src/g_rc.c, src/gsymcheck.c: Added CUSTOM_VERSION to all
+	printfs/output/dialog boxes where VERSION is used so that it is
+	easier to create custom version of gEDA/gaf.
+
+2006-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated gtk+ tests to look for 2.4.x or greater.
+
+2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * README: Updated the README a little to be ready for the next
+        release.
+
+2006-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version number to 20060821 in prep for the
+        next gEDA/gaf release.
+
+2006-07-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gsymcheck.c, src/s_check.c, src/s_symstruct.c: Changed all
+	malloc/free calls to g_malloc/g_free to be consistent with libgeda
+
+2006-04-09 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/gsymcheck.c: Enable logging when the filename specified couldn't
+	be found. Thanks to Hans for reporting the bug and providing the patch.
+	This fixes bug 1452836.
+	
+2006-03-12 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * lib/system-gsymcheckrc.in: Removed load for the system-gafrc file,
+        since it is loaded by libgeda first.
+
+2006-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped package version to 20060123
+
+        * README: Updated for the new year and release.
+
+2005-11-27 Carlos Nieves Onega <cnieves@iespana.es>
+	* src/globals.c: Added setting of load_newer_backup_func to NULL.
+	It is needed now libgeda checks for autosave backup files when
+	opening a schematic.
+	
+2005-09-27 18:51  Dan McMahill <danmc>
+
+        * src/s_check.c: remove various compiler warnings
+
+2005-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped the package version to 20050820 which will be
+        a real snapshot.
+
+2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated package version to 20050814.  This is a 
+        temporary version and not a real release number.
+
+2005-03-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Removed all tests for gtk+ 1.2.x and fixed error 
+        message if gtk+ 2.2.x is not found.
+
+2005-03-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version to 20050313
+
+2005-03-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gsymcheck.c: Fixed code to allow user to specify absolute
+        filenames on the command line again.
+
+2005-02-26 01:14  Dan McMahill <danmc>
+
+	* src/: gsymcheck.c, s_check.c: remove a handful of compiler
+	  warnings
+
+2005-02-22  Carlos Nieves Onega <cnieves@iespana.es>
+
+	* configure.ac, src/gsymcheck.c: Removed call to gtk_init().
+	  GDK is now initialized in libgeda if it's a non-graphical app.
+	
+2005-02-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/gsymcheck.c (main_prog): Adapted for new logging system.
+
+2005-02-19  Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/globals.c: Added definition of picture_draw_func after 
+	  adding picture support to libgeda.
+
+	* configure.ac, src/gsymcheck.c: Added call to gtk_init() 
+	  since gdk-pixbuf needs it if called.	  
+	
+2005-02-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/gsymcheck.c (main_prog): Adapted for new toplevel and page APIs 
+	in libgeda.
+
+2005-02-09 Carlos Nieves Onega <cnieves@iespana.es>
+	* include/prototype.h, include/struct.h, src/s_check.c, 
+	  src/s_symstruct.c:
+	  Added check of pintype attribute value.
+	
+2005-02-08 22:30  Dan McMahill <danmc>
+
+	* include/prototype.h, src/g_rc.c, src/g_register.c,
+	  src/gsymcheck.c: replace deprecated guile functions with approved
+	  guile-1.6.6 ones
+
+2005-02-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/gsymcheck.c, src/s_check.c: Replaced u_basic_strdup() and 
+	u_basic_strdup_multiple() by GLib functions.
+	
+	* src/gsymcheck.c: Made it use GLib's G_DIR_SEPARATOR* instead of 
+	libgeda's *_SEPARATER_*.
+
+2005-01-29  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/gsymcheck.c (gsymcheck_quit): Adapted for new component library
+	code.
+
+2005-01-27 Stuart Brorson   <sdb@cloud9.net>
+
+	* src/gsymcheck.c: Changes made to enable correct opening
+	of schematics in foreign directories.  Changes detailed in libgeda
+	ChangeLog.  
+	
+2004-12-27 Stuart Brorson   <sdb@cloud9.net>
+
+        * lib/system-gsymcheckrc.in: Changed reference to system-commonrc
+	to system-gafrc
+
+2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/pincounts.h, include/struct.h, include/prototype.h, 
+	src/s_check.c, src/s_symstruct.c: Applied patch by Jim Duchek which
+	adds several important tests to gsymcheck: 
+
+		net=Vcc:8,15,14 (for example) is now checked against
+		the pinnumber= attribs for duplicates.	footprint=
+		is checked to get the proper pincount (I included some
+		support for special cases like TO92, which doesn't
+		quite have 92 pins :), and the number of pins defined
+		vs. the number of pins that SHOULD be defined is compared.
+		Total pins are found by: total = num_net_pins + (numslots
+		* numpins).  Of course if numslots == 0 that multiplier
+		doesn't happen.
+	
+	* tests/incorrect_footprint.sym duplicate_net.sym: Added a couple
+	test symbols to exercise the above patch
+
+2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20041228
+
+2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/i_vars.h, prototype.h, src/g_rc.c, g_register.c,
+	gsymcheck.c, i_vars.c: Removed a whole bunch of rc related code.
+	The removed code was moved into libgeda.
+
+        * configure.ac: Updated version to 20040710
+
+2004-01-17 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * config.h.in: Remove machine generated file.
+
+2004-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20040111
+
+2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* configure.ac: Added --with-docdir command line flag as well all
+        the code to support installing documentation.  Also added a prog
+        check for groff.
+
+	* docs/Makefile.am:  Added commands to generate an html version
+	of the man page.  This html man page gets installed into the
+	documentation directory.
+
+	* src/Makefile.am, docs/gsymcheck.1: Moved man page from the src
+        directory into the docs directory.
+
+	* docs/gsymcheck.1: Minor updates and fixes. 
+
+2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version to 20031231
+
+2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Added checks for gtk+ 2.2.x and 1.2.x.  This was
+        needed since the HAS_GTK22 will start to be used in libgeda includes.
+
+2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* config.guess config.sub depcomp  install-sh missing mkinstalldirs:
+	Removed machine generated files from CVS.
+
+	* Makefile.am: Added above files to maintainer-clean target
+
+	* autogen.sh: Added script to generate all the auto* files
+
+2003-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * src/g_rc.nw: Added the words "optional" and "required" to the
+        *rc log find messages.
+
+        * src/gsymcheck.c: Removed all // comments (replaced
+        with C comments).
+
+2003-10-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Updated version to something more recent, but this
+	version is not an official release.
+	
+2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to something more recent, but this
+        version is not an official release.
+
+2003-09-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Fixed MinGW cflags/ldflags
+
+        * auto* files: Updated to autoconf 2.57 and automake 1.7.6
+
+2003-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Changed AC_CONFIG_HEADER to AM_CONFIG_HEADER
+
+2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Removed redundant tests (gtk+, guile) and improved
+	the configuration summary message. 
+
+2003-08-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/parsecmd.c: Cleaned up help message a little.
+
+	* src/gsymcheck.1: Updated manpage a little 
+
+2003-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Renamed from configure.in.
+
+	* configure.ac: Bunch of cleanup to start using pkg-config for all
+	libraries.  Unfortunately, gsymcheck now links against libgtk*.  I 
+	might fix that in the future.
+
+	* *.in, *.h, etc: Removed a bunch of old unneeded auto* files.
+
+2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Updated version
+
+2003-02-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * src/gsymcheck.c: Applied patchlet from Steve Tell for disabling
+        the guile 1.6.3 deprecated warnings.
+
+        * README: Added note suggestion by Steve Tell about warning users
+        that deprecated guile warnings are turned off.
+
+2003-02-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Bumped version to 20030223
+
+        * configure.in: Applied Gabriel Paubert's warning reducing patch with
+        a few minor mods.
+
+2003-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* Makefile.am: Fixed the distclean-local target.
+
+        * configure.in: Changed -fnative-struct to -mms-bitfields for
+        gcc 3.2 mingw compiler (older mingw compilers are no longer 
+        supported)
+
+2002-11-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * lib/system-gsymcheckrc.in: Changed the variable names which hold
+        the paths to the data and rc directories.
+
+        * aclocal.m4: Removed file from cvs.
+
+2002-11-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Updated version to 20021103 (an official version)
+
+	* src/g_rc.c: #if 0'ed out code which isn't being used
+
+2002-10-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Bumped version to 20021031
+
+002-10-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure and friends: Ran "autoreconf --force --install -v"
+        to really upgrade to the auto* tools.
+
+2002-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, *.m4: Upgraded to automake 1.7.1 and autoconf 2.54
+	
+2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Bumped version to 20020922, which is NOT a release.
+
+2002-09-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/g_rc.c: Update file to the one that gnetlist uses (which is
+	a little bit more polished)
+
+	* src/g_register.c: Updates to take above into account
+
+	* src/globals.c: Added variable_set_func and quit_func.  These are
+	used by libgeda and gsymcheck.
+
+	* src/gsymcheck.c: Rearranged a few function calls for the new 
+	g_rc mechanism (and the s_project_* function which are now in 
+	libgeda)
+
+	* src/s_project.c: Obsoleted file.  This file is no longer in use.
+
+	* src/i_vars.c, include/i_vars.h: Added these files, needed by the
+	new g_rc mechanism.
+
+	* lib/system-gsymcheckrc.in: Removed untitled-series keyword and
+	add world-size keyword.
+	
+2002-09-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_check.c: Put in a check for numslots=0 (slotting checks 
+	completely disabled).
+
+2002-08-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/*.c: Cleaned up -Wall warnings
+	
+2002-08-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_check.c: Changed exit status again to be sane not
+	stupid. :)
+
+	* src/gsymcheck.c: Fixed the "cannot open filename if using a full
+	path" bug
+
+	* src/gsymcheck.c: Change behavior if a file cannot be
+	found/loaded.  Now gsymcheck will exit on this error
+
+	* src/s_check.c: Added a little bit more info output for some of 
+	the tests
+
+	* src/s_check.c: Fixed the search for name= to only search for 
+	name= 
+
+	* src/s_check.c: Fixed the checking for graphical=1 symbols
+
+2002-08-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_check.c: Changed exit status to return negative numbers for
+	warnings (if there are no errors) or zero for no problems.		
+
+2002-07-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_check.c: Added code to check for zero slots number and
+	pins within a slotdef
+
+	* tests/zero*.sym: Added a couple of test symbols to test the
+	above errors
+
+	* tests/*.sym: Added a dummy footprint= attribute to all the files
+	
+2002-07-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/*.sym: Bunch of additional symbols to test various new
+	problems and updates to existing test files
+
+	* src/s_check.c: Finished conversion to use new *_messages lists
+
+	* src/s_symcheck.c: Finished conversion to use new *_messages
+	lists
+
+	* src/parsecmd.c: Improved the verbose flag to be cumulative
+
+	* src/s_check.c: Added the following tests:
+	  checks for missing attributes
+	     pinlabel
+	     pintype
+	     footprint
+	     refdes
+	  checks for multiple attributes
+	     pinlabel
+	     pintype
+	     footprint
+	     refdes
+	  checks for obsolete or forbidden attributes
+	     label
+	     uref
+	     name
+	     type
+	  zero pinseqs or pinnumbers are not allowed
+
+	* include/struct.h: A few changes to track above tests
+
+	* src/s_check.c: Improved some of the messages
+
+	* src/s_check.c: Fixed quiet flag (-q) to be really quiet
+
+2002-07-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added *_messages list items
+
+	* include/struct.h: Slightly cleaned up / reorganized symcheck struct
+
+	* src/s_symcheck.c: Added code to output the new *_message lists
+
+	* src/s_check.c: Added/changed code to use the new *_message lists
+
+	* src/s_check.c: Added more tests to catch duplicate pinnumber
+	attributes
+
+	* src/s_check.c: Added more tests to catch invalid slotdef attributes
+
+	* tests/: Added a few more *.sym files to validate checks
+
+	* src/s_check.c: Still need to comment in tests which I did not 
+	finish converting to using the new *_message lists
+
+2002-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in/Makefile.am, tests: Added tests directory and a whole
+	slew of .sym files with various problems.
+
+	* src/gsymcheck.c: Added a call to free some memory.  This may cause
+	problems if I missed an init of some variable.
+
+	* src/s_project.c: Disabled all drawing events as gsymcheck does not
+	draw anything.
+
+	* src/s_symcheck.c src/s_check.c: Added a bunch more tests:
+	  - search for old pin#=# and slot#=# attributes,
+	  - check for buses or nets inside a symbol,
+ 	  - check for connections inside a symbol.
+	  - check for duplicate pinseq attributes on multiple pins
+	  - various improvements to existing tests 
+
+2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in/Makefile.am: Upgraded to automake 1.6.2
+
+2002-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gsymcheckrc.in: Fixed the load of the commonrc file to 
+	work with --with-rcdir again.
+
+2002-06-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_check.c: Added s_check_slotdef which checks the slot info
+	
+2002-06-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added new file to hold gsymcheck specific 
+	structures
+
+	* src/s_check.c, s_symstruct.c: Added #include for above
+
+	* src/*.c: Went through and re-indented most functions
+	
+	* src/*.c: Started expanding tests to include missing pinseq,
+	missing pinnumber, found old pin/slot attributes. (not completely
+	done; some functions stubbed)
+
+	* src/globals.c: Added s_update_log function so that we can log
+	s_log_messages
+
+	* src/*.c: Changed all fprintfs to s_log_messages
+
+	* src/gsymcheck.c: Cleanup in main_prog, don't load files which
+	don't exist
+
+	* src/s_check.c: Minor reorg, refactoring some of the functions
+	
+2002-06-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * src/g_rc.c, gnetlist.c: Added a call to u_basic_strip_trailing to
+        fix the network timeout problem on WinME
+
+2002-05-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	 * lib/system-gschemrc.in: Fixed incorrect environment variable name
+        "GEDADATARC" to be GEDADATA.
+
+        * src/g_rc.c, g_register.c, i_vars.c, s_project.c: Added the missing
+        bitmap-directory keyword
+
+        * src/g_rc.c: A few more fixes for the mingw32 port.
+
+2002-04-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Changed the function which is search for libpng.
+	This was needed for the win32 port.
+
+2002-04-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: oops had the wrong order of things for MINGW32. fixed.
+
+2002-04-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in and friends: More work on getting the upgrade of 
+	autoconf, automake, and libtool to behave correctly.
+
+	* configure.in: Added PATHSEP variable which holds the proper path
+	separater depending on the platform.
+
+	* lib/system-*.in: Work on getting rc files to use above variable.
+
+	* src/g_rc.c: Got rid of any left of /'s and replaced them with the
+	appropriate #defines
+
+2002-04-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Added -liberty for the Mingw32 port
+
+        * configure.in and friends: Upgraded to autoconf 2.53, libtool 1.5,
+        and automake 1.5.  Lots of changes in various places for this upgrade.
+
+2002-02-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, config.h.in: Added a few checks for some
+	non-portable #includes
+	
+	* configure.in: Added checks for mingw32 and disabled the
+	cygwin port
+	
+2002-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/Makefile.am utils/Makefile.am: Andrew Dyer found a GUILE_* bug. 
+	Fixed.
+
+	* configure.in: Removed all trace of GUILE_LIB and GUILE_INCLUDE
+
+2001-02-09 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* src/s_project.c: Made sure to init show_hidden_text to 0.
+	
+2001-07-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, src/gsymcheck.c, src/g_rc.c: Cleanup and added the
+	  ability to have the rc files in a different location using
+	  --with-rcdir (was broken recently, now fixed)
+
+        * src/gsymcheck.c, s_check.c:
+          Added patch by Dan Mcmahill for 64-bit architectures.
+
+2001-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, src/Makefile.am: got the configure mechanism to
+	  deal with the guile detection more like gschem.
+	
+2001-07-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Fixed all the LDFLAGS to be correct (and only link
+	  the libraries once)
+
+	* configure.in: Bumped up version to 20010722
+
+	* configure.in: More updates to get cygwin to build right
+
+2001-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gsymcheck.c: Removed the "This is alpha software" message and
+	  added the standard gpl/gnu software message
+
+2001-07-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/configure.in: Make sure configure scripts work with autoconf-2.50
+	  (had to fix cygwin check), they do not yet work with 2.50
+
+	* Removed all trace of libtool from gsymcheck, not required to build
+
+2001-06-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/g_rc.c, src/gsymcheck.c: Got the code to use the new GEDADATA
+	  environment variable
+
+	* lib/system-gsymcheckrc.in: Updated to use GEDADATA environment
+	  variable
+
+2001-03-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * Removed all Makefile.in files and configure
+
+2001-03-17 Ales Hvezda   <ahvezda@geda.seul.org>
+        
+        * Got make dist and make distcheck working (means all files which are
+          in CVS are in some Makefile)
+
+        * configure.in, acconfig.h: unfortunately libgdgeda and stroke are
+          required for linking, so they MUST be inside these files
+
+        * configure.in: Added DATADIR instead of PACKAGE
+
+2001-03-07  Stefan Petersen  <spe@geda.seul.org>
+
+        * configure.in, acconfig.h: In the spirit of yesterday I removed
+          every trace of stroke and libgdgeda.
+        
+2001-03-06  Stefan Petersen  <spe@geda.seul.org>
+
+        * configure.in: Removed some hard coded libraries.
+          Patch and suggestion from Bruno Schwander.
+
+2000-03-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * configure.in: Updated version
+
+        * configure.in: Added a check to make sure libgeda-config and
+          gesym-config are the right version
+
+2000-12-07  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_project.c: Removed obsolete DONT_REDRAW variable from code
+
+2000-12-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * configure.in: Slightly rearranged things to make cygwin port happy
+
+2000-12-02  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * src/gsymcheck.c: Changed Cygwin warning message
+
+	* src/src/g_rc.c: Misc changes to get this file to build with the 
+	  current cygwin
+
+	* src/src/parsecmd.c: Misc changes to get this file to build with the 
+	  current cygwin
+
+	* src/Makefile.am: Changed order of libraries in LDFLAGS line
+
+2000-11-30  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * configure.in: Added -fnative-struct flag for CYGWIN port only
+
+        * configure.in: Added --enable-debug flag to enable -g flag
+
+2000-10-12  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/create_proto: Update with the latest version of this
+	  script
+
+2000-10-07  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* configure.in: Removed an old GTK+ which is no longer used
+
+2000-10-06  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/gsymcheck.c: Changed CYGWIN32 port warning
+
+2000-07-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * src/*.c: Updated copyright info in each file
+
+        * src/*.c: Changed all GNU to GPL in the appropriate places
+
+	* configure.in: Bumped version up to 20000704
+
+	* src/*.c: Fixed all warnings
+
+2000-06-27  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * src/g_rc.c, src/g_register.c: Added component-library-search and
+          source-library-search rc keywords
+
+	* configure.in: Put in checks for gtk+ and glib 1.2.3
+
+2000-06-01  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * src/s_project.c: Added init of some important variables which 
+          libgeda uses when promoting attributes
+
+	* src/create_proto: Updated to the latest working version (from
+	  gschem/src)
+
+2000-02-19  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * README/INSTALL: Updated files to reflect next release
+
+	* src/*.c: Fixed all warnings (using -Wall -Werror)
+
+1999-10-17  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/*.c: Changed all files to use the new libgeda/libgeda.h include
+
+1999-10-10  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * src/gsymcheck.c: Fixed up s_log_init to use the new prototype
+
+1999-10-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* In all *.c included define.h before struct.h 
+
+9/19/99 Make sure gsymcheck runs with guile-1.3.2a
+
+	Fixed all warnings
+
+9/16/99	Added code in gsymcheck.c to only load up schematics which haven't
+        been loaded already
+
+9/4/99	Finally integrated gsymcheck into the new development snapshot
+	scheme
+
+	Created basic gsymcheck.1 manpage
+
+	Started to do minor updates to the code 
+
+---------------- Development division starts here --------------------------
+
+3/19/99 Updated g_rc to print more diag message to the log file when
+        it can't find an rc file (like gschem)
+
+3/18/99 Updated g_rc to use new macros for finding system-*rc files
+
+3/9/99  Fixed a few variables which were uninitialized (width, height,
+	snap_size)
+
+3/1/99  Added missing tube and radio paths from *rc file
+
+2/25/99 Added s_symstruct.c to init and manage the per symbol struct 
+
+	Rewrote the way errors are reported and handled (now error messages
+	are printed and checked for after all the checking work is done)
+
+1/30/99 Added -c flag (and associated global variable, check_mode)
+
+	Added s_check.c : s_check_all and s_check_symbol
+
+	Worked on above to get the most basic attribute checks 
+	
+	Changed some quiet_mode ifs to be verbose_mode ifs
+	
+	Renamed gsymbol to gsymcheck.  
+
+	Removed -c flag, since now that's the only purpose of the program
+
+1/27/99 Took gnetlist source and converted to look like gsymbol.
+
+	Got source to compile and load in schematic/symbol files
+
+1/9/99 	Cleaned up some character strings to reflect that this is gsymbol
+	not gnetlist
+
+0.0.5
+-------
+9/4/98 	Added support for libgeda
+
+8/26/98	Added Makefiles and support files to repository
+

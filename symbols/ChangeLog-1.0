@@ -1,0 +1,1574 @@
+2007-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20070526 in prep for the next
+        release.
+
+2007-04-10 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* system-gafrc.in, font/Omega.sym: Added upper case greek omega
+	character by Jens Persson.
+
+2007-02-15 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* system-gafrc.in, font/mu_.sym: Added the greek mu character.
+	
+2007-02-14 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* system-gafrc.in, 
+	  font/o_-double-acute-accent.sym, font/O-double-acute-accent.sym
+	  font/u_-double-acute-accent.sym, font/U-double-acute-accent.sym:
+	  Added the four missing characters for the complete
+	  hungarian charset:
+	    - o and O with double acute accent, 
+	    - u and U with double acute accent. 
+	  They were contributed by Sztrikó János. Thanks.
+	
+2006-02-10 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped package version to 20070216.
+
+2006-10-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped package version to 20061020.
+
+2006-09-27 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* configure.ac : Applied patch #1564796 by Cesar Strauss, 
+	enabling Cygwin's compilation. Thanks.
+	
+2006-09-26 Werner Hoch <werner.ho@gmx.de>
+	* 4000/4022-2.sym, connector/mains-entry-1.sym,
+	  maxim/max186-1.sym, memory/HM628511HC-SOJ36-1.sym,
+	  memory/am27S13D-1.sym, micro/ATmega16L-1.sym,
+	  micro/pic12F675-2.sym, pla/N82S100N-1.sym, xilinx/XC95108-PC84.sym,
+	  supervisor/adm707.sym, opto/hcpl-4534-1.sym: fixed offgrid pins 
+	  inside the symbols
+
+2006-09-24 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* linear/lm311-1.sym: Removed the GND false connection of the 
+	symbol. That pin was not really connected to ground.
+	Thanks to Ramakrishnan Muthukrishnan for reporting the bug
+	and John Luciani for the fix.
+	
+2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated program version to 20060906.
+
+2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * README: Updated the README a little to be ready for the next
+        release.
+
+2006-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version number to 20060821 in prep for the
+        next gEDA/gaf release.
+
+2006-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* micro/ATmega8-1.sym: Applied bug fix to pinlabel by Sascha Silbe 
+
+	* asic/*.sym: Added a bunch of symbols by Peter Kaiser
+
+2006-07-14 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* misc/nc-*.sym: Added graphical=1, device=DRC_Directive, 
+	  value=NoConnection attributes to the NC symbols.
+	  This change, and the directives support included into gnetlist,
+	  fixed bug #1442910 and allows to use the nc-* symbols without
+	  shorting the nets to a new NoConnection net.
+	
+2006-05-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* system-gafrc.in: Added default setting for always-promote-attributes
+
+2006-04-07 Carlos Nieves Onega <cnieves@iespana.es>
+        * asic/asic-cap-1.sym, asic/asic-cap-2.sym, asic/asic-cap-3.sym,
+	  asic/asic-diode-1.sym, asic/asic-nmos-1.sym, asic/asic-pmos-1.sym,
+	  asic/asic-res-1.sym, asic/asic-res-2.sym, asic/asic-res-3.sym,
+	  asic/asic-cap-4.sym:
+	  Added missing pintype and pinlabel attributes.
+	
+2006-04-02: Werner Hoch  <werner.ho@gmx.de>
+	* micro/ATmega16L-1.sym: fixed Port label
+
+2006-03-23: Werner Hoch  <werner.ho@gmx.de>
+	* ecl/MC10E104-1.sym, ecl/MC10E136-1.sym, ecl/MC10E137-1.sym, 
+	  ecl/MC10E137-2.sym, ecl/MC12429-1.sym, ecl/MC100ELT23-1.sym:
+	  changed negation marks from "\" to "\\". This is necessary
+	  to keep them visible after the introduction of the new overbar
+	  feature
+
+2006-02-05: Werner Hoch  <werner.ho@gmx.de>
+	* spice/cccs-1.sym, spice/ccvs-1.sym, spice/vccs-1.sym, 
+	  spice/vcvs-1.sym: added value attribute, pinlabels fixed
+
+2006-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped package version to 20060123
+
+        * README: Updated for the new year and release.
+
+2005-12-09 Carlos Nieves Onega <cnieves@iespana.es>
+	* analog/current-1.sym, analog/nmos-2.sym, analog/npn-1.sym,
+	  analog/npn-2.sym, analog/npn-3.sym, analog/npn-IGBT-1.sym,
+	  analog/ntc-1.sym, analog/photo-resistor-1.sym,
+	  analog/photo-transistor-1.sym, analog/photodiode-1.sym,
+	  analog/pmos-1.sym, analog/pmos-2.sym, analog/pnp-1.sym,
+	  analog/pnp-2.sym, analog/pnp-3.sym, analog/pot-bourns.sym,
+	  analog/pwrxfmr-1.sym, analog/quad_opamp-1.sym,
+	  analog/resistor-1.sym, analog/resistor-2.sym,
+	  analog/resistor-variable-1.sym, analog/resistor-variable-2.sym,
+	  analog/resistorpack10-1.sym, analog/resistorpack11-1.sym,
+	  analog/resistorpack12-1.sym, analog/resistorpack3-1.sym,
+	  analog/resistorpack4-1.sym, analog/resistorpack5-1.sym,
+	  analog/resistorpack6-1.sym, analog/resistorpack7-1.sym,
+	  analog/resistorpack7-2.sym, analog/resistorpack8-1.sym,
+	  analog/resistorpack8-2.sym, analog/resistorpack9-1.sym,
+	  analog/speaker-1.sym, analog/speaker-2.sym,
+	  analog/transformer-1.sym, analog/transformer-2.sym,
+	  analog/transformer-3.sym, analog/transformer-4.sym,
+	  analog/transformer-5.sym, analog/triac-1.sym, analog/txo-1.sym,
+	  analog/voltage-1.sym, analog/voltage-2.sym, analog/voltage-3.sym,
+	  analog/voltmeter-1.sym, connector/BNC-1.sym,
+	  connector/DB15-1.sym, connector/DB25-1.sym, connector/DB25-2.sym,
+	  connector/DB25-3.sym, connector/DB31-1.sym, connector/DB37-1.sym,
+	  connector/DB9-1.sym, connector/DB9-2.sym,
+	  connector/DIN41617C13-1.sym, connector/DIN41617C15-1.sym,
+	  connector/DIN41617C31-1.sym, connector/MCX-1.sym,
+	  connector/connector1-2.sym, connector/connector10-1.sym,
+	  connector/connector10-2.sym, connector/connector11-2.sym,
+	  connector/connector12-1.sym, connector/connector12-2.sym,
+	  connector/connector13-2.sym, connector/connector14-2.sym,
+	  connector/connector15-1.sym, connector/connector15-2.sym,
+	  connector/connector16-1.sym, connector/connector16-2.sym,
+	  connector/connector17-2.sym, connector/connector18-2.sym,
+	  connector/connector19-1.sym, connector/connector19-2.sym,
+	  connector/connector2-1.sym, connector/connector2-2.sym,
+	  connector/connector20-1.sym, connector/connector20-2.sym,
+	  connector/connector21-2.sym, connector/connector22-2.sym,
+	  connector/connector23-2.sym, connector/connector24-2.sym,
+	  connector/connector25-2.sym, connector/connector26-1.sym,
+	  connector/connector26-2.sym, connector/connector27-2.sym,
+	  connector/connector28-2.sym, connector/connector29-2.sym,
+	  connector/connector3-1.sym, connector/connector3-2.sym,
+	  connector/connector30-2.sym, connector/connector31-2.sym,
+	  connector/connector32-2.sym, connector/connector33-2.sym,
+	  connector/connector34-2.sym, connector/connector35-2.sym,
+	  connector/connector36-2.sym, connector/connector37-2.sym,
+	  connector/connector38-2.sym, connector/connector39-2.sym,
+	  connector/connector4-1.sym, connector/connector4-2.sym,
+	  connector/connector40-2.sym, connector/connector41-1.sym,
+	  connector/connector5-1.sym, connector/connector5-2.sym,
+	  connector/connector6-1.sym, connector/connector6-2.sym,
+	  connector/connector7-2.sym, connector/connector8-1.sym,
+	  connector/connector8-2.sym, connector/connector9-1.sym,
+	  connector/connector9-2.sym, connector/dip24-1.sym,
+	  connector/gpib-1.sym, connector/header10-1.sym,
+	  connector/header10-2.sym, connector/header16-1.sym,
+	  connector/header18-2.sym, connector/header20-1.sym,
+	  connector/header20-2.sym, connector/header20-3.sym,
+	  connector/header22-1.sym, connector/header26-1.sym,
+	  connector/header26-2.sym, connector/header3-1.sym,
+	  connector/header32-2.sym, connector/header34-1.sym,
+	  connector/header40-2.sym, connector/header50-1.sym,
+	  connector/header50-2.sym, connector/header50-3.sym,
+	  connector/header50r-1.sym, connector/header8-1.sym,
+	  connector/header8-2.sym, connector/jumper-1.sym,
+	  connector/mains-plug-1.sym, connector/mains-plug-2.sym,
+	  connector/pwrjack-1.sym, connector/rs232-idc10.sym,
+	  diode/diode-1.sym, diode/diode-2.sym, diode/diode-3.sym,
+	  diode/diode-bridge-1.sym, diode/led-2.sym, diode/mbr1545ct-1.sym,
+	  diode/smda05-1.sym, diode/zener-1.sym, diode/zener-2.sym,
+	  diode/zener-3.sym, diode/zener-4.sym, power/12V-minus-1.sym,
+	  power/12V-plus-1.sym, power/3.3V-plus-1.sym,
+	  power/5V-minus-1.sym, power/5V-plus-1.sym, power/9V-minus-1.sym,
+	  power/9V-plus-1.sym, power/generic-power.sym, power/gnd-1.sym,
+	  power/gnd-2.sym, power/vcc-1.sym, power/vcc-2.sym,
+	  power/vcc-minus-1.sym, power/vcc-orcad-circle-1.sym,
+	  power/vdd-1.sym, power/vee-1.sym, power/vss-1.sym,
+	  relay/aromat-tq4.sym, relay/omron-G5V-1-DCx-1.sym,
+	  relay/omron_g2r_24_dc5.sym, spice/aop-spice-1.sym,
+	  spice/cccs-1.sym, spice/ccvs-1.sym, spice/spice-npn-1.sym,
+	  spice/spice-pnp-1.sym, spice/spice-subcircuit-IO-1.sym,
+	  spice/spice-vc-switch-1.sym, spice/tline.sym, spice/vccs-1.sym,
+	  spice/vcvs-1.sym, spice/wline-1x.sym, switch/relay-1.sym,
+	  switch/ssrelay-spdt-lcc110-1.sym,
+	  switch/ssrelay-spst-lcb110-1.sym,
+	  switch/switch-LORLIN-12pos-1com-1.sym, switch/switch-dip12.sym,
+	  switch/switch-dip4-1.sym, switch/switch-dip4-2.sym,
+	  switch/switch-dip5-1.sym, switch/switch-dip5-2.sym,
+	  switch/switch-dip6-1.sym, switch/switch-dip6-2.sym,
+	  switch/switch-dip8-1.sym, switch/switch-dip8-2.sym,
+	  switch/switch-pushbutton-nc-1.sym,
+	  switch/switch-pushbutton-nc-2.sym,
+	  switch/switch-pushbutton-no-1.sym,
+	  switch/switch-pushbutton-spdt-1.sym, switch/switch-spdt-1.sym,
+	  switch/switch-spdt-2.sym, switch/switch-spst-1.sym,
+	  transistor/2N2222-1.sym, transistor/2N3055-1.sym,
+	  transistor/2N3904-1.sym, transistor/2N3904-2.sym,
+	  transistor/2N3906-1.sym, transistor/2N5245-1.sym,
+	  transistor/2N5911-1.sym, transistor/BC182-1.sym,
+	  transistor/BC307-1.sym, transistor/BC547-1.sym,
+	  transistor/BC547-2.sym, transistor/BC547-3.sym,
+	  transistor/BC557-1.sym, transistor/BC557-2.sym,
+	  transistor/IRF1010N-1.sym, transistor/IRLZ24N-1.sym,
+	  transistor/ULN2003-1.sym, transistor/ULN2801A-1.sym,
+	  transistor/dgnmos-1.sym, transistor/ips3310-1.sym,
+	  transistor/ips521-1.sym, transistor/mosfet-with-diode-1.sym:
+	
+	  Fixed pintype and pinlabel attributes.
+	
+2005-10-04 Werner Hoch <werner.ho@gmx.de>
+	* bus/pc104B-1.sym: added missing pinseq
+	* connector/DB37-1.sym: pinseq corrected
+	* connector/DIN41612C*: added pinattributes
+	* connector/smart-media-1.sym: pintype corrected, graphical rework
+	* ecl/*: added documentation (symbols are still bad)
+	* idt/idt7204-1.sym/*: added documentation (still bad)
+
+2005-09-12 Werner Hoch <werner.ho@gmx.de>
+	* analog/*: added missing attributs, fixed a few symbols
+	
+2005-09-11 Stuart Brorson <sdb@cloud9.net>
+
+        * analog/jj-1.sym, spice/kmutual-1.sym: added symbols
+	contributed by Paul Bunyk.
+
+2005-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped the package version to 20050820 which will be
+        a real snapshot.
+
+2005-08-17 03:00  Dan McMahill <danmc>
+
+	* system-gafrc.in: add amphenol library
+
+2005-08-17 02:57  Dan McMahill <danmc>
+
+	* Makefile.am: add amphenol symbols
+
+2005-08-17 02:56  Dan McMahill <danmc>
+
+	* amphenol/31-71043-1.sym: add amphenol 31-71043 BNC connector
+
+2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated package version to 20050814.  This is a 
+        temporary version and not a real release number.
+
+2005-03-25 Werner Hoch <werner.ho@gmx.de>
+	* memory/27C2001-1.sym: lowercase pintype
+	* memory/*: added some datasheet links
+	* micro/AT89C5131_PLCC-1.sym: added missing pins, ...
+	
+
+2005-03-14 07:13  Dan McMahill <danmc>
+
+	* maxim/: max12527-1.sym, max12557-1.sym: add 2 more Maxim high
+	  speed ADCs
+
+2005-03-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* transistor/BC557-1.sym: Replaced this symbol with BC557-2.sym
+	and bumped symversion= to 1.0
+
+	* misc/PCF8563-1.sym: Removed duplicate symbol.
+
+2005-03-12  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* font/:
+	* system-gafrc.in: Added polish font definitions provided by
+	Wojciech Kazubski.
+
+2005-03-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* font/*.sym: Converted special character definitions to UTF-8. 
+	
+	* system-gafrc.in: Converted file to UTF-8 and rewrote the
+	code for declaration of special characters.
+
+2005-03-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version to 20050313
+
+2005-03-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* system-gafrc.in, font/newline.sym: Fixed up hashtable filling
+	scheme code to use the newline.sym file instead of excl.sym and
+	fixed newline.sym to contain something to allow a critical
+	code path within o_text_basic.nw (line 744) to execute.
+
+2005-03-06 Werner Hoch <werner.ho@gmx.de>
+	* micro/pic12c5xx-1.sym: removed accidently added power nets
+
+2005-03-05 Carlos Nieves Onega <cnieves@iespana.es>
+        * system-gafrc.in: Include font character to file map.
+	
+2005-01-29 Werner Hoch <werner.ho@gmx.de>
+	* 4000/4002-2.sym, 4000/4016-2.sym, 4000/4027-1.sym, 4000/4528-1.sym,
+	  4000/4538-1.sym, 74/74124-1.sym, 74/74124-2.sym, 
+	  analog/darlington_NPN-1.sym, analog/dual-opamp-1.sym,
+	  analog/quad_opamp-1.sym, diode/smda05-1.sym, ecl/MC10E104-2.sym, 
+	  linear/lm339-1.sym, linear/lm393-1.sym, misc/ADG601-1.sym,
+	  misc/ADG602-1.sym, misc/ADG619-1.sym, misc/ADG620-1.sym,
+	  switch/ssrelay-spdt-lcc110-1.sym, apex/pa140-1.sym, apex/pa91-1.sym:
+	  repaired slotdef and pinseq errors, misc small changes
+
+2005-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* Removed system-commonrc.in from CVS as system-gafrc.in has replaced
+	it
+
+2005-01-15 Werner Hoch <werner.ho@gmx.de>
+	* memory/27C256-1.sym, memory/27512-1.sym, memory/27256-1.sym:
+	  corrected footprint
+	* maxim/max1480A-1.sym, maxim/max1011-2.sym, maxim/max1011-1.sym:
+	  corrected net attributes
+
+2005-01-06 Stuart Brorson <sdb@cloud9.net>
+	* system-commonrc.in: renamed this file system-gafrc.in.
+	* Makefile.am, configure.ac: changed to accomodate system-gafrc
+	* spice/spice-npn-1.sym, spice/spice-npn-1.sym, 
+	  spice/spice-vc-switch-1.sym:  Added SPICE symbols.
+
+2005-01-06 Werner Hoch <werner.ho@gmx.de>
+	* maxim/*sym: added documentation, pinlabel, pintype,
+	fixed several symbol errors,
+	* analog/ntc-1.sym: contained a component, fixed
+	* linear/lm135-1.sym, transistor/2N5245-1.sym, transistor/2N5911-1.sym:
+	added pinattributes
+	
+2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* allegro/3967-1.sym allegro/3967-2.sym irf/ips021-1.sym
+	maxim/DS1307-1.sym maxim/DS89C450-1.sym maxim/max662A-1.sym
+	memory/27C2001-1.sym micro/ATmega128-1.sym micro/ATmega128-2.sym
+	micro/ATmega128-3.sym micro/ATmega64-1.sym micro/FT245BM-1.sym
+	micro/pic16F628-2.sym micro/pic18F242-1.sym micro/staver24m32-1.sym
+	misc/6A259-1.sym misc/ADG601-1.sym misc/ADG602-1.sym misc/ADG619-1.sym
+	misc/ADG620-1.sym national/ADC0831-1.sym national/DS1620-1.sym
+	national/DS75176-1.sym: Checked in another set of user contributed
+	symbols
+
+	* misc/osc-3.sym: Added another symbol by Karel
+
+	* asic/*.sym: Removed old asic library symbols and replaced with
+ 	Peter's Jun 2004 asic_spice_primitive symbols.
+
+	* system-commonrc.in: Commented back in the asic library now that
+	the symbols have unique names.
+
+	* asicpads asicpads/*.sym: Added new symbol library for Peter's
+	asic_pad symbol library
+
+2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20041228
+
+	* Created new component library directories: mini-circuits st apex 
+	allegro irf
+
+	* 74/7404-4.sym 74/74133-2.sym 74/7414-2.sym 74/74238-1.sym
+	74/7432-3.sym 74/7474-3.sym 74/74power-1.sym analog/capacitor-4.sym
+	analog/darlington_NPN_PNP-1.sym analog/transformer-5.sym 
+	analog/varistor-1.sym connector/DB25-3.sym connector/connector1-2.sym
+	connector/connector10-2.sym connector/connector11-2.sym
+	connector/connector12-2.sym connector/connector13-2.sym
+	connector/connector14-2.sym connector/connector15-2.sym
+	connector/connector16-2.sym connector/connector17-2.sym
+	connector/connector18-2.sym connector/connector19-2.sym
+	connector/connector2-2.sym connector/connector20-2.sym
+	connector/connector21-2.sym connector/connector22-2.sym
+	connector/connector23-2.sym connector/connector24-2.sym
+	connector/connector25-2.sym connector/connector26-2.sym
+	connector/connector27-2.sym connector/connector28-2.sym
+	connector/connector29-2.sym connector/connector3-2.sym
+	connector/connector30-2.sym connector/connector31-2.sym
+	connector/connector32-2.sym connector/connector33-2.sym
+	connector/connector34-2.sym connector/connector35-2.sym
+	connector/connector36-2.sym connector/connector37-2.sym
+	connector/connector38-2.sym connector/connector39-2.sym
+	connector/connector4-2.sym connector/connector40-2.sym
+	connector/connector5-2.sym connector/connector6-2.sym
+	connector/connector7-2.sym connector/connector8-2.sym
+	connector/connector9-2.sym connector/mains-entry-1.sym
+	connector/terminal-1.sym diode/schottky-1.sym
+	io/LCD-1.sym io/TEC4x3-1.sym linear/lm319-1.sym linear/lm723-1.sym
+	linear/lp2954IT-1.sym maxim/max1206-1.sym maxim/max1207-1.sym
+	maxim/max1208-1.sym maxim/max1209-1.sym maxim/max122-1.sym
+	maxim/max12553-1.sym maxim/max12554-1.sym maxim/max12555-1.sym
+	maxim/max507-1.sym memory/25Cxx-1.sym memory/2732-1.sym
+	memory/AT45db021bso8w-1.sym memory/HM628511HC-SOJ36-1.sym
+	micro/AT89C5131_PLCC-1.sym micro/AT89C5132_TQFP-1.sym
+	micro/AT89S53-24PI-1.sym micro/ATmega16L-1.sym
+	micro/ATmega16_DIP-1.sym micro/ATmega32MLF-1.sym
+	micro/ATmega8-1.sym micro/ATtiny15L-1.sym micro/pic12F675-1.sym
+	micro/pic12F675-2.sym micro/pic16F628-1.sym micro/pic18F4431-1.sym
+	misc/75176-1.sym misc/MC34063-1.sym misc/dc_motor-1.sym 
+	misc/ir2110-1.sym misc/ltp-757g-1.sym opto/hsdl3612-1.sym 
+	philips/PCF8563-1.sym spice/gnucap-directive-1.sym 
+	spice/gnucap-include-1.sym spice/gnucap-model-1.sym
+	spice/gnucap-npn-1.sym spice/gnucap-options-1.sym
+	switch/switch-dip12.sym transistor/2N2222-1.sym
+	transistor/2N3904-2.sym transistor/2N3906-1.sym transistor/BC182-1.sym
+	transistor/BC307-1.sym transistor/BC547-2.sym transistor/BC547-3.sym
+	transistor/BC557-2.sym transistor/ips3310-1.sym 
+	transistor/ips521-1.sym: Added a whole bunch of contributed
+	symbols.  Some of these were added without any modification,
+	others with minor tweaks, and some had significant enough changes
+	to warrent a symversion=1.0
+
+2004-12-13 Werner Hoch <werner.ho@gmx.de>
+	* linear/lt1782-1.sym: duplicate pinnumber repaired
+	* pintype corrected to [in,out,io,...]
+	* misc file format corrections
+	
+2004-12-10 Werner Hoch <werner.ho@gmx.de>
+	* opto/hcpl-2430-1.sym added
+	* repaired pinlabels, repaired some file format errors
+	
+2004-11-07 Werner Hoch <werner.ho@gmx.de>
+	* 4000/4006-2.sym: added missing pin, symversion, repaired wrong pinnames
+	* 4000/4042-1.sym, 4000/4042-2.sym, 4000/40147-1.sym, 4000/4352-1.sym,
+	4000/4353-1.sym, 4000/4515-1.sym,: corrected footprint
+	* 4000/4534-1.sym: added missing pins, symversion=1.0
+	* memory/HM6264P15-1.sym: pinlabel A9 corrected
+	
+2004-11-05 Werner Hoch <werner.ho@gmx.de>
+	* 74/74123-2.sym, 74/74124-1.sym, 74/74133-1.sym, 74/74159-1.sym
+	74161-2.sym, 74168-1.sym, 74169-1.sym, 74265-1.sym, 74/7495-1.sym: 
+	Repaired symbol, added symversion=1.0
+	* 74/7447-1.sym, 74/7446-1.sym, 74/7448-1.sym:
+	added lamp test pin, added symversion=1.0
+	* 74/7497-1.sym: repaired whichend, added missing pin, symversion
+	
+2004-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* 4000/4002-1.sym 4000/40107-1.sym 4000/4011-1.sym 4000/4012-1.sym
+ 	4000/4023-1.sym 4000/4025-1.sym 4000/4030-1.sym 4000/4068-1.sym
+ 	4000/4070-1.sym 4000/4072-1.sym 4000/4073-1.sym 4000/4075-1.sym
+ 	4000/4078-1.sym 4000/4081-1.sym 4000/4082-1.sym 4000/4085-1.sym:
+	Completely redrew most of these symbols.  These are the first
+	symbols to get a symversion= attribute to signify that they have
+	changed in a major way.
+
+	* 4000/40107-2.sym: Moved this file to 40107-1.sym since -1 was 
+	completely broken and wrong.
+
+2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20040710
+
+	* system-commonrc.in: Moved local component library to the end 
+	(searched first, since these are user symbols).  This is a bug
+	reported by Eric Winsor.
+
+2004-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20040111
+
+2004-01-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* 4000/40106-1.sym 4000/4061-1.sym 4000/4062-1.sym 4000/4513-1.sym
+	4000/4580-1.sym 4000/4723-1.sym analog/pot-1.sym analog/pot-2.sym:
+	Changed the footprint= attribute to be none (not None or NONE).
+
+2004-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* DS26LS31-1.sym 74133-1.sym switch-spdt-2.sym
+        2N3904-1.sym (added footprint) BC547-1.sym
+        BC557-1.sym tl062-1.sym tl072-1.sym tl082-1.sym
+        7404-1.sym (corrected visible attribute)
+        mc3487-1.sym: Added a bunch of symbol by Karel Kulhavy
+
+	* font/A-acute-accent.sym, E-acute-accent.sym, I-acute-accent.sym,
+	N-tilde.sym, O-acute-accent.sym, U-acute-accent.sym, 
+	a_-acute-accent.sym, e_-acute-accent.sym, excl-open.sym,
+	i_-acute-accent.sym, n_-tilde.sym, o_-acute-accent.sym, 
+	quest-open.sym, u_-acute-accent.sym: Added a bunch of new
+	spanish characters by Carlos.
+
+	* Makefile.am, configure.ac, system-commonrc.in, gnetman/*.sym: Added
+	gnetman symbol library and symbols.  (updated symbols to the latest
+	file format: 1)
+
+	* 74/74259-1.sym analog/darlington_NPN-1.sym
+	analog/photo-transistor-1.sym analog/resistorpack7-2.sym
+	connector/header50-3.sym connector/header50r-1.sym
+	connector/rj45-1.sym linear/lm337-1.sym maxim/adm202-1.sym
+	maxim/adm202-2.sym memory/628512-1.sym misc/HIP4080A-1.sym
+	misc/HIP4081A-1.sym misc/mc3479-1.sym national/DS2405-1.sym
+	national/DS26C31-1.sym national/DS26C32-2.sym
+	national/DS2890_TO92-1.sym opto/CNY17-1.sym opto/K3020P-1.sym
+	opto/hcnr201-1.sym, analog/pot-1.sym analog/pot-2.sym 
+	analog/testpt-1.sym symbols/misc/PCF8563-1.sym: 
+	Added a bunch of contributed symbols.  Thanks everybody!
+
+	* system-commonrc.in: Commented out the following conflicting 
+	component-libraries:
+
+		vhdl/ verilog/ asic/ gnetman/  
+
+	Note this libraries are only commented out temporary, just until
+	the component search limitation is fixed.  (see jitterbug #9)
+	Also commented out the automatic symbol search mechanism.
+
+	* */*.sym: Updated all symbols to creation date 20031231. 
+	20031231 will be the last version where this will be done.
+
+2004-01-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* Makefile.am, configure.ac, system-commonrc.in, cascade/*.sym: Added
+	RF Cascade symbol library and symbols.  (updated symbols to the latest
+	file format: 1)
+
+	* micro/AT89S8252-24PC-1.sym, MSP430x11x1.sym, basicstamp-1.sym,
+	pic16C74A-1.sym, AT90S8535J-1.sym, MSP430x11x2.sym,
+	AT90S8535P-1.sym, MSP430x12x.sym, mc68hc05j1a-1.sym,
+	pic16F876-1.sym, ATmega323-1.sym, MSP430x12x2.sym,
+	mc68hc705kj1-1.sym, pic16F877-1.sym, DS1602-1.sym,
+	MSP430x13-4x.sym, mc68hc811e2fn-1.sym, pic16F877A-1.sym,
+	DS2450-1.sym, MSP430x15-6x.sym, mc68hc812a4-1.sym,
+	pic16c505-1.sym, DS2480B-1.sym, MSP430x41x.sym,
+	mc68hc908gp32cp-1.sym, pic16c5x-1.sym, DS80C310-1.sym,
+	MSP430x43x.sym, mc68hc912b32-1.sym, sx28ac-1.sym, DS80C320-1.sym,
+	MSP430x44x.sym, pic12c5xx-1.sym, z80pio-1.sym: Check in all of Werner's
+	changes to the symbols in the micro directory.  Thanks Werner.
+
+	* Makefile.am, configure.ac, system-commonrc.in, asic/*.sym: Added
+	asic symbol library and symbols (created by Peter Kaiser).  I 
+	translated some of the symbols to the origin.  Thanks Peter.
+
+2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version to 20031231
+
+2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * autogen.sh: Added script to generate all the auto* generated files.
+
+        * config.guess config.sub depcomp install-sh mkinstalldirs missing:
+        Removed machine generated files from CVS.
+        
+        * Makefile.am: Added the above files to be cleaned during 
+        maintainer-clean
+
+2003-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * Updated all symbols to file format version 1.
+
+        * font/newline.sym: Added dummy font definition to get rid of a
+        warning.  This file is not really used.
+
+2003-10-19 Werner Hoch <werner.ho@gmx.de>
+	symbol rework in micro/
+	* 6821-1.sym: added missing pinlabel and pintype
+	* 6821-2.sym: correct some pintypes, prettified
+	* 8031.sym: added missing pin, repaired
+	* 8052basic-1.sym: added pintype
+	* 8086-1.sym: added pinlabel/pintype, missing negation bubbles
+	* ACE1202-1.sym: put pinlabels into pin{}
+	* 8088-1.sym, 8254-1.sym, 8255A-1.sym, 8259A-1.sym: 
+		put pinlabels into pin{} added pintype
+	* AT89C2051-1.sym, AT89C51_DIP.sym, AT89C51_PLCC.sym, 
+	  AT89C51_TQFP.sym: 
+		replaced i/o with io, added numslots=0, description
+	* AT43USB320A.sym, AT90S1200.sym, AT90S2323.sym, AT90S2343.sym,
+	  AT90S4433_DIP.sym, AT90S4433_TQFP.sym, AT90S8515_DIP.sym,
+	  AT90S8515_PLCC.sym, AT90S8515_TQFP.sym, AT90S8535_DIP.sym,
+	  AT90S8535_PLCC.sym, AT90S8535.sym, AT90S8535_TQFP.sym, ATmega103.sym,
+	  ATmega161_DIP.sym, ATmega161_TQFP.sym, ATmega163_DIP.sym, 
+	  ATtiny11.sym, ATmega163_TQFP.sym, ATtiny12.sym, ATtiny28_DIP.sym, 
+	  ATtiny28_TQFP.sym:
+ 	  added numslots=0, author, rearanged pintype
+	
+2003-10-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Updated version to something more recent, but this
+	version is not an official release.
+	
+2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to something more recent, but this
+        version is not an official release.
+
+2003-09-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* */*.sym: Updated all symbols and font defs to the latest version,
+	hopefully for the last time since I have added a file format version
+	to the "v" tag.
+
+2003-09-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* connector/mains-plug-1.sym: Deleted device= attribute which was 
+	out in la la land.
+
+2003-09-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Fixed MinGW cflags/ldflags
+
+	* auto* files: Updated to autoconf 2.57 and automake 1.7.6
+
+	* */*.sym: Updated all symbols to the latest version
+
+2003-09-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* linear/lm339-1.sym: Added note to warn people not to use this 
+	symbol.  This symbol will eventually be removed.
+
+	* 74/74688-2.sym connector/header26-2.sym connector/header32-2.sym 
+	linear/lm2576T-1.sym linear/lm339-2.sym maxim/max1211-1.sym
+	maxim/max6674-1.sym micro/6821-2.sym opto/810-1.sym: Added 
+	contributed symbols.
+
+ 	* 4000/4049-1.sym 4000/4050-1.sym: Applied symbol patch by 
+	Gabriel Paubert to fix the broken 4049-1 symbol.
+
+	* configure.ac: Added --with-docdir and supporting macros.  This
+	fixes a problem with gschemdoc not finding the manual. 
+
+2003-08-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* *.sym: Updated all symbols and font definitions to 20030901
+
+	* connector/DB15-1.sym: Added new symbol by Gabriel Paubert. Thanks.
+
+2003-08-31 Werner Hoch <werner.ho@gmx.de>
+	* memory/*.sym: repaired and completed all symbols
+	
+2003-08-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* maxim/max3223e-1.sym, micro/M41T00-SO8-1.sym, micro/tiny-tiger-1.sym,
+	misc/FND5148-1.sym, misc/QT60040-1.sym: Merged author= and email=
+	attributes together.
+
+2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Improved the configuration summary message.
+
+2003-07-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Created new configure file from configure.in
+	(remvoed configure.in).  Removed all unnecessary auto* files.
+
+	* gesym-config.in: Removed file, since it will not longer be used
+	in the install process.
+
+	* configure.ac: Cleaned up file quite a bit (simplified)
+
+	* *.in, *.h, etc: Removed a bunch of old unneeded auto* files.
+	
+2003-06-01 Werner Hoch <werner.ho@gmx.de>
+	* 74/74520-3.sym, 74/74189-2.sym, 74673A-2.sym: Added with swapped
+	LSB/MSB order. (hint of Magnus Danielson)
+
+2003-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* connector/header50-1.sym: Changed the color on some detached
+	attributes
+
+        * configure.in: Applied Wojciech Kazubski's --with-docdir patch
+
+	* 74/7408-2.sym, 74/7409-2.sym: These two symbols were partially
+	swapped.  Fixed.  Pointed out by Mario Klebsch.
+
+	* 74/7432-2.sym: Added new symbol by Mario Klebsch.
+
+	* analog/bridge-2.sym analog/fuse-2.sym analog/npn-IGBT-1.sym 
+	analog/ntc-1.sym analog/transformer-2.sym analog/transformer-3.sym 
+	analog/transformer-4.sym analog/triac-1.sym 
+	connector/smart-media-1.sym linear/l200-1.sym linear/lm7912-1.sym 
+	maxim/max713-1.sym maxim/max7652-1.sym micro/AT89C2051-1.sym 
+	micro/DS1602-1.sym micro/M41T00-SO8-1.sym micro/mc68hc705kj1-1.sym 
+	opto/tfds4500-1.sym: Added a bunch of new symbols
+
+	* memory/93Cx6-1.sym: Fixed symbol based on patch from Holger Dietze
+	Fix for Bug#65
+
+2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Updated version
+
+	* */*.sym: Updated version of all symbols and font defs
+
+2003-05-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* spice/spice-options-1.sym: Updated symbol from Stuart Brorson's
+	latest symbol tarball.
+
+2003-04-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* memory/am9128-1.sym: Cosmetic improvements to this symbol
+
+	* configure.in, Makefile.am, switchcap/, system-commonrc.in: 
+	Integrated Dan McMahill's new switcap backend (the
+	symbols). switchcap/ is a new directory
+
+	* spice/*.sym: Integrated Stuart Brorson's advanced spice 
+	netlister (the symbols)
+
+2003-03-30 Werner Hoch <werner.ho@gmx.de>
+	* max/max038-1.sym completed, max/max038-2.sym added
+	* max/max100-1.sym changed (missing pins)
+	* max/max1005-1.sym completed, max/max1005-2.sym added
+	* max/max1011-1.sym completed, max/max1011-2.sym added
+	* max/max101A-1.sym changed (missing pins)
+	* max/max1114-1.sym completed, max/max1114-2.sym added
+	* max/max135-1.sym changed (duplicate pins)
+	* max/max1480A-1.sym changed (missing pins)
+	* 74/7404-3.sym completed
+	Note: changed symbols are not pin compatible with the old symbols
+	
+2003-03-07 Werner Hoch <werner.ho@gmx.de>
+	* diode: added sa52-11-1.sym, sc52-11-1.sym
+
+2003-02-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* documentation/Makefile.am: Added a little more to this Makefile to
+	make sure the example documentation is prebuilt into the dist tarball.
+
+2003-02-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* */*.sym: Added a bunch of symbols for the online symbol upload
+	mechanism.
+
+	* philips: Added new component library (suggestions by Walter Fetter) 
+	(and changed all required files for this addition).
+
+	* */*.sym: Updated all symbols to 20030223, including the font symbols
+
+	* configure.in: Added shell code to expand the prefix and set
+	the proper directory for documentation (${prefix}/share/doc/geda-doc)
+	
+	* documentation/Makefile.am: Changed the install dir to the right
+	one (${prefix}/share/doc/geda-doc)
+
+2003-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Bumped version to 20030223
+
+2003-02-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Applied Gabriel Paubert's warning reducing patch with
+        a few minor mods.
+
+2003-01-12 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* README: Removed bogus BUGS and NEWS reference.
+
+2003-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* Makefile.am: Fixed the distclean-local target.
+
+2003-01-03 Werner Hoch <werner.ho@gmx.de>
+
+	* 4000/4[357]*.sym: added missing attributes and ajusted 
+	  the boxwidth of some symbols
+	  corrected some pinnumber errors
+	
+2002-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* 74/7404-3.sym, connector/connector20-1.sym,
+	connector/header16-1.sym, memory/ST39SF020A-1.sym,
+	memory/ST39SF020A.sym, micro/ACE1202-1.sym,
+	micro/DS2450-1.sym, micro/DS2480B-1.sym, national/pc16500d-1.sym:
+	New symbols which needed a few tweaks.  Various contributers.  Thanks.
+
+2002-12-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* font/ae_-lig.sym font/AE-lig.sym font/u_-diaeresis.sym 
+	  font/U-diaeresis.sym font/o_-slash.sym font/O-slash.sym
+	  font/a_-ring.sym font/a-ring.sym: Applied Norwegian/Danish/German
+          characters patch from Egil Kvaleberg
+
+	* font/a-ring.sym: Removed from repository (above patch nulls file). 
+
+2002-12-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* documentation/Makefile.am: Updated makefile to distribute all the
+	nc* docs when doing a make dist.
+
+2002-11-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * aclocal.m4: Removed file from cvs.
+
+2002-11-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* documentation/Makefile.am: Added LC_NUMERIC=C to fix build problem.
+	Not sure if this fixes the problem reported by Andy Shevchenko. Bug#42.	
+
+	* documentation/Makefile.am: Added geda.pic to the distribution.
+
+2002-11-21 Werner Hoch <werner.ho@gmx.de>
+	* 74/*sym: added documentation attribut to symbols
+	* 74/74595-1.sym: completed symbol (added footprint, pintype,...)
+
+2002-11-21 Werner Hoch <werner.ho@gmx.de>
+	* 4000/40[89]?-*.sym: completed symbols (added footprint, numslot,...)
+	* 4000/40[123]??-*.sym: completed symbols (added footprint, numslot,...)
+	* 4000/4081-2.sym added
+
+2002-11-17 Werner Hoch <werner.ho@gmx.de>
+	* 4000/40[567]?-*.sym: completed symbols (added net, footprint, ..)
+	* 4000/: 4053-1.sym marked as unrepairable, 
+                 4056-1.sym repaired pin14, pin15
+	* 4000/: added 4053-2.sym, 4060-2.sym, 4066-2.sym, 4067-2.sym, 
+	         4068-2.sym, 4072-2.sym, 4073-2.sym, 4075-2.sym, 4078-2.sym
+
+2002-11-15 Werner Hoch <werner.ho@gmx.de>
+	* 4000/40[34]?-*.sym: completed symbols (added net, footprint, ..)
+	* 4000/: added 4032-2.sym, 4033-2.sym, 4035-2.sym, 4038-2.sym, 
+	         4042-2.sym, 4043-2.sym, 4044-2.sym
+	
+2002-11-09 Werner Hoch  <werner.ho@gmx.de>	
+	* spice/: added vdc-1.sym, vac-1.sym, vpulse-1.sym, 
+	          vsin-1.sym, vexp-1.sym, vpwl-1.sym
+	
+2002-11-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* 4000/*.sym: Ran gsymupdate on all symbols
+
+	* 4000/4585-1.sym, 40181-1.sym, 4062-1.sym, 4063-1.sym:  Oops, 
+	gsymupdate broke these symbols because it was choking on the =
+	in label= attributes. Fixed.
+
+	* 74/*.sym: Ran gsymupdate on all symbols
+
+	* IEC417/*.sym: Ran gsymupdate on all symbols
+
+	* altera/*.sym: Ran gsymupdate on all symbols
+
+	* analog/*.sym: Ran gsymupdate on all symbols
+
+	* bus/*.sym: Ran gsymupdate on all symbols
+
+	* connector/*.sym: Ran gsymupdate on all symbols
+
+	* dec/*.sym: Ran gsymupdate on all symbols
+
+	* diode/*.sym: Ran gsymupdate on all symbols
+
+	* ecl/*.sym: Ran gsymupdate on all symbols
+
+	* idt/*.sym: Ran gsymupdate on all symbols
+
+	* io/*.sym: Ran gsymupdate on all symbols
+
+	* lattice/*.sym: Ran gsymupdate on all symbols
+
+	* linear/*.sym: Ran gsymupdate on all symbols
+
+	* linear/lm2941-1.sym: Added missing pinlabel= (had values, but no
+	pinlabel= name).
+
+	* linear/lm7805-2.sym lm78l05-1.sym lm78l05c-1.sym lm7905-1.sym
+	lm7805c-1.sym lm78l05ac-1.sym lm78m05-1.sym lm79m05-1.sym: Removed
+	symbols from distribution because they are wrong.  I got a bug fix
+	for each of these symbols from Hans Nieuwenhuis, but when I went
+	to verify them, I found conflicting information.
+
+	* maxim/*.sym: Ran gsymupdate on all symbols
+
+	* memory/*.sym: Ran gsymupdate on all symbols
+
+	* misc/*.sym: Ran gsymupdate on all symbols
+
+	* national/*.sym: Ran gsymupdate on all symbols
+
+	* opto/*.sym: Ran gsymupdate on all symbols
+
+	* pla/*.sym: Ran gsymupdate on all symbols
+
+	* power/*.sym: Ran gsymupdate on all symbols
+
+	* radio/*.sym: Ran gsymupdate on all symbols
+
+	* relay/*.sym: Ran gsymupdate on all symbols
+
+	* rf/*.sym: Ran gsymupdate on all symbols
+
+	* spice/*.sym: Ran gsymupdate on all symbols
+
+	* supervisor/*.sym: Ran gsymupdate on all symbols
+
+	* switch/*.sym: Ran gsymupdate on all symbols
+
+	* titleblock/*.sym: Ran gsymupdate on all symbols
+
+	* transistor/*.sym: Ran gsymupdate on all symbols
+
+	* tube/*.sym: Ran gsymupdate on all symbols
+
+	* verilog/*.sym: Ran gsymupdate on all symbols
+
+	* vhdl/*.sym: Ran gsymupdate on all symbols
+
+	* xilinx/*.sym: Ran gsymupdate on all symbols
+
+	* font/*.sym: Very carefully updated all font defs to the latest
+	version using gsymupdate (used fontupdate)
+
+        * configure.in: Updated version to 20021103 (an official version)
+
+2002-10-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* Makefile.am: Added gesym-config-install target
+
+2002-10-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* maxim/max489-1.sym, micro/pic16F877-1.sym: Added updated symbols
+	from Tommi Keisala.
+
+	* analog/dual-opamp-1.sym: Added symbol by Karel Kulhavy.
+
+2002-10-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Bumped version to 20021031
+
+2002-10-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure and friends: Ran "autoreconf --force --install -v" 
+        to really upgrade to the auto* tools.
+
+	* connector/*.sym: gsymupdate'd all symbols in this library.
+
+	* 74/74595-1.sym linear/lt1782-1.sym maxim/max1407-1.sym
+	maxim/max489-1.sym maxim/max6018-1.sym micro/ATmega323-1.sym
+	micro/MSP430x11x1.sym micro/MSP430x11x2.sym micro/MSP430x12x.sym
+	micro/MSP430x12x2.sym micro/MSP430x15-6x.sym micro/pic16F877-1.sym
+	micro/pic16F877A-1.sym: Added symbols via the web upload mechanism.
+  	Some cleanup.
+
+2002-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* misc/busripper-1.sym, busripper-2.sym: Added bus ripper symbols.
+	Initial version of busripper-1.sym was created by Egil Kvaleberg.
+
+2002-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, *.m4: Upgraded to automake 1.7.1 and autoconf 2.54
+	
+2002-10-17 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* symbols/Makefile.am, symbols/configure.in, symbols/74/7400-1.sym,
+          symbols/74/7400-2.sym, symbols/documentation/Makefile.am,
+ 	  symbols/documentation/geda.fig, symbols/documentation/nc.doc,
+	  symbols/misc/nc-bottom-1.sym, symbols/misc/nc-left-1.sym,
+	  symbols/misc/nc-right-1.sym, symbols/misc/nc-top-1.sym: Added Egil
+          Kvaleberg's find documentation patch.
+
+2002-10-12 Werner Hoch <werner.ho@gmx.de>
+	* 4000/40[12]?-*.sym: completed symbols (added net, footprint, ..)
+	* 4000/: 4014-2.sym, 4016-2.sym, 4017-2.sym, 4018-2.sym, 4019-2.sym
+		 4021-3.sym, 4022-2.sym, 4028-2.sym added
+	* 4000/400[68]-*.sym: changed footprint from none to DIP...
+	
+2002-10-09 Werner Hoch <werner.ho@gmx.de>
+	* maxim/max232-1.sym: completed symbol (added net, pinlabels, ...)
+	* maxim/max232-2.sym: added symbol with rearranged pins, 1400mils block
+	* 4000/400?-*.sym: completed symbol (added net, pinlabels, ...)
+	* 4000/: 4000-2.sym, 4002-2.sym, 4006-2.sym, 4008-2.sym added
+
+2002-10-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* system-commonrc.in: Removed stale source-library paths.  These 
+	paths really ought to be in the users environment and not here.
+	And they most certainly should not be the symbol directories.
+
+2002-10-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* misc/interpage_bidir-1.sym, interpage_from-1.sym, 
+	  interpage_to-1.sym: Symbols into CVS.  These somehow made it into
+          20020825 accidentally, but they should be in CVS either way.
+
+2002-10-03 Werner Hoch <werner.ho@gmx.de>
+        * 74/74240-1.sym: corrected pinlabels YB1..YB4
+	* 74/74244-1.sym: corrected pinlabels YB1..YB4
+	* 74/74[23456]??-*: completed symbols (added net, pinlabels, ...)
+	* 74/74[345789]?-*: inserted numslots=0 at some symbols
+
+2002-10-02 Werner Hoch <werner.ho@gmx.de>
+	* 74/741[789]?-*: completed symbols (added net, pinlabels, pintype, ...)
+	* 74/74HCT245-1.sym, 74/74HCT4094-1.sym, 74/74HCT541-1.sym:
+		added numslots=0
+
+2002-10-01 Werner Hoch <werner.ho@gmx.de>
+	* 74/741[456]?-*: corrected the wrong whichend attribute on some pins
+	
+2002-09-29 Werner Hoch <werner.ho@gmx.de>
+	* 74/741[456]?-*: completed symbols (added net, pinlabels, pintype, ...)
+	* 74/74161-2.sym, 74/74168-1.sym, 74/74169-1.sym: marked as bad
+	
+2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Bumped version to 20020922, which is NOT a release.
+
+2002-09-13 Werner Hoch <werner.ho@gmx.de>
+	* 74/741[123]?-*: completed symbols (added net, pinlabels, pintype, ...)
+
+2002-09-09 Werner Hoch <werner.ho@gmx.de>
+	* 74/74HCT*: completed symbols (added net, pinlabels, ...)
+	* 74/74124-2.sym: corrected slotdefs
+	* 74/7410[79]*.sym: completed symbols (added net, pinlabels, ...)
+	* 74/74109-2.sym: corrected slotdef
+
+2002-09-06 Werner Hoch <werner.ho@gmx.de>
+	
+	* 74/: 74[56789]?-*: completed symbols (added net, pinlabels, ...)
+	       7492-1.sym, 7485-1.sym: corrected pin numbering
+	       74520-1.sym: corrected symbol, added 74520-2.sym without pwr pins
+	       74265-1.sym: marked as unrepairable, added 74265-2.sym 
+	       7491-1.sym: corrected pinnumber of clk
+	       7495-1.sym: marked as bad, added 7495-2.sym
+	       7497-1.sym: marked as bad, added 7497-2.sym
+	
+2002-09-04 Werner Hoch <werner.ho@gmx.de>
+
+	* 74/: repaired 74114-1.sym, 74123-1.sym, 74125-1.sym, 74126-1.sym 
+	       74124-1.sym marked as unrepairable, 74124-2.sym added
+	
+2002-09-02 Werner Hoch <werner.ho@gmx.de>
+
+	* 74/74[1234]?-*.sym: completed the symbols (added net, pinlabels, ..)
+
+2002-09-01 Werner Hoch <werner.ho@gmx.de>
+
+        * 74/740*: completed the symbols (added net, pinlabels, pintypes)
+
+2002-08-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* maxim/max4106-1.sym, max4107-1.sym: Added symbols by Dan McMahill
+	
+	* misc/arfx1229-1.sym: Added symbol by Dan McMahill
+
+	* micro/8052basic-1.sym: Added symbol by Jesse Alexander  
+
+	* 74/74573-1.sym: Fixed incorrect polarity (should be asserted high)
+	on pin 11 (le), pointed by James Tabor
+
+2002-08-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* 74/7474-2.sym: Fixed typo (0 in slotdef), pointed out by Karel
+	Kulhavy
+
+	* 74/7403-1.sym: Added open collector arc by Jim Battle 
+
+	* 74/9602-1.sym 9602-2.sym, 74266-1.sym: Added symbols by Jim Battle
+
+	* micros/pic16F876-1.sym: Added symbol by James Carter
+
+2002-08-12 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* analog/transformer-1.sym: Added symbol, need to verify pinnumbers
+	and pinseq
+
+	* linear/lm317-1.sym: Added new symbol
+
+2002-08-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* misc/nc-*.sym: Added 4 "no connection" symbols (one for each 
+	orientation).  
+
+2002-07-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* */*.sym: Re-ran gsymupdate on all symbol files to update type= and
+	label= to pintype= and pinlabel=
+
+2002-07-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* */*.sym: Ran gsymupdate on all symbol files
+
+	* winfonts: Removed directory
+
+2002-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* font/a_-diaeresis.sym, o_-diaeresis.sym: Renamed these 
+	font def files to include the _ to signify the lowercase version.
+
+2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* connector/aui-1.sym: Added symbol by Karel Kulhavy
+
+        * configure.in/Makefile.am: Upgraded to automake 1.6.2
+
+2002-05-31 Werner Hoch <werner.ho@gmx.de>
+
+	* micro/: startet with symbol rework to match current symbol specs
+
+2002-05-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* switch, linear: Added two new symbols by Vladimir Dergachev.
+
+	* font/colon.sym, comma.sym, excl.sym, quest.sym, semi.sym:
+	Changed the graphical representation to be a little larger.
+	Mauricio de Alencar did the actual work.
+
+	* titleblock: Added a bunch of titleblocks by Eric Winsor.
+
+	* spice: Added a couple symbols by Daniel Nilsson.
+
+	* micro: Added a symbol by Al Williams.
+
+2002-05-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* system-commonrc.in: Add bitmap-directory rc keyword
+
+2002-05-12 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* font/[a-z].sym: Removed these obsolete symbol files
+
+	* foot: Removed directory
+
+2002-04-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* font/period.sym: Changed the graphical representation to be a little
+	larger.  Mauricio de Alencar did the actual work.
+
+2002-04-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in and friends: More work on getting the upgrade of 
+	autoconf, automake, and libtool to behave correctly.
+
+	* configure.in: Added PATHSEP variable which holds the proper path
+	separater depending on the platform.
+
+	* lib/system-*.in: Work on getting rc files to use above variable.
+
+2002-04-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in and friends: Upgraded to autoconf 2.53, libtool 1.5,
+        and automake 1.5.  Lots of changes in various places for this upgrade.
+
+2002-02-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* power/*.sym: Made sure all the power symbols have the net= attribute
+  	in them.  Misc cleanup as well.
+
+2002-02-16 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* micro/AT*.sym: Oops grabbed the wrong versions of Werner's symbols.
+	Got the right ones now.  Updated with Lower Right Text alignment for
+	text on the left hand side of symbols.
+
+2002-02-09 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* micro/AT90S8535.sym  AT90S8535_TQFP.sym AT90S8535_PLCC.sym:
+	Added symbols by Werner Hoch (minor tweeks).
+
+	* micro/AT*.sym: Added a bunch more symbols by Werner Hoch
+
+	* 74/ analog/ transistor/ connector/ linear/ maxim/ micro/ power/
+	opto/: Added a bunch of symbols by Bruno Schwander
+	
+	* 4000/ 74/ maxim/ connector/: Added a bunch of symbols by Bert 
+	Timmerman
+
+	* analog/ 74/ : Added a few of symbols by Karel Kulhavy
+ 
+2002-02-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* analog/resistor-variable-2.sym: Checked in Bert's fix to the 
+	  misalignment
+
+	* power/vcc-orcad-circle-1.sym: Added power symbol from Dave 
+	  Lawrence
+
+	* 4000/*.sym: Added a bunch of symbols by Mark Moss.
+
+2001-07-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* */Makefile.am, configure.in: A bunch of cleanup and changes to 
+	  support rc files living in a different directory than GEDADATA
+	
+2001-07-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Bumped up version to 20010722
+
+2001-07-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* opto/hcpl-2631-1.sym: Minor touch up work
+
+	* local/*.sym: Moved a bunch of symbols around to their right places
+
+	* power: New directory which got all the power/gnd symbols from misc
+	  (changed all config files to add this new symbol directory)
+
+	* misc: Moved all power/gnd symbols into above new dir
+
+	* transistor: Added transistor symbol library (changed all config
+	  files to add this new symbol directory)
+
+	* Rearranged a few symbol libraries (namely local and misc)
+	
+2001-07-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/configure.in: Make sure configure scripts work with autoconf-2.50
+	  (had to fix cygwin check), they do not yet work with 2.50
+
+	* Removed all trace of libtool, libtool is certainly not required
+	  to install the symbols
+
+	* maxim/max6314-1.sym, max535-1.sym: Cleaned up symbols to be more
+	  consistant with the rest of the max* symbols
+
+2001-03-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * Removed all Makefile.in files and configure
+
+2001-03-17 Ales Hvezda   <ahvezda@geda.seul.org>
+        
+        * Got make dist and make distcheck working (means all files which are
+          in CVS are in some Makefile)
+
+        * configure.in: Added DATADIR instead of PACKAGE
+
+2000-03-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* spice/*.sym: Replaced symbols with the latest ones from Bas
+
+	* vhdl/: Created symbol library which was contributed by 
+	  Thomas Heidel (symbols derived from the Verilog symbols by Mike)
+
+        * configure.in: Updated version
+
+2000-12-13  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * configure.in: Added -lregex for CYGWIN32 build
+
+2000-12-10  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* */*.sym: Added a bunch of contributed symbols from Chris Ellec
+
+	* ecl: Created new symbol library (update configure.in, Makefile.am,
+	  and system-commonrc.in)  Added Makefiles* to new dir
+
+2000-11-03  Ales Hvezda  <ahvezda@geda.seul.org>
+	
+	* 74/7414-1.sym: Added symbol by Chris Ellec
+
+2000-11-02  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* verilog/nand2-1.sym: Added a missing line
+
+2000-10-06  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* 4000/4015-1.sym 4000/4024-1.sym 4000/4052-1.sym 4000/4518-1.sym:
+	  Oops left in a physical attribute (should be called footprint)
+
+	* */*.sym: Read All and Saved All symbols to update them to the
+	  latest file format version (except verilog since they are machine	
+	  generated)
+
+	* configure.in: Added bus directory to the list of valid symbols
+
+	* src/*.sym: A bunch of misc cleanup to get ready for a release
+
+2000-10-05  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* 74/74520-1.sym: Fixed version in file (should have been 20000704)
+  	  Removed circle from inside attribute attach 
+
+	* 4000/*.sym: Added urefs to all symbols
+
+2000-09-27  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* font/*.sym: Added version number to all font definitions
+
+2000-08-12  Stefan Petersen  <spe@geda.seul.org>
+
+	* Changed configure.in to be more place independent.
+	  Patch by Roger Gammans. All Makefile.in and configure
+	  regenerated.
+	
+2000-07-26  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* connecter/jumper-1.sym: Fixed missing pin#=# attributes, pointed
+	  out by routoure Jean-Marc
+
+2000-07-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * configure.in: Bumped version up to 20000704
+
+2000-06-27  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* system-commonrc.in: Added component-library-search keyword to allow
+	  for the automatic search for component libraries
+
+	* system-commonrc.in: Added source-library-search keyword to allow
+	  for the automatic search for source libraries
+
+2000-06-21  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* memory/*.sym: Updated all symbols to have default uref
+
+	* micro/*.sym: Updated all symbols to have default uref
+
+	* xilinx/*.sym: Updated all symbols to have default uref
+
+	* dec/*.sym: Updated all symbols to have default uref
+
+	* lattice/*.sym: Updated all symbols to have default uref
+
+	* national/*.sym: Updated all symbols to have default uref
+
+	* pla/*.sym: Updated all symbols to have default uref
+
+	* switch/*.sym: Updated all symbols to have default uref
+
+	* radio/*.sym: Updated all symbols to have default uref
+
+	* tube/*.sym: Updated all symbols to have default uref
+
+2000-06-12  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* maxim/*.sym: Updated all symbols to have default uref
+
+	* local/*.sym: Updated all symbols to have default uref
+
+	* linear/*.sym: Updated all symbols to have default uref
+
+	* linear/lm555.sym: Had to retranslate symbol to origin because
+	  of text location change (this breaks any existing schematics 
+	  which use this symbol)
+
+	* idt/*.sym: Updated all symbols to have default uref
+
+	* connector/*.sym: Updated all symbols to have default uref
+
+	* analog/*.sym: Updated all symbols to have default uref
+	 
+	* analog/voltage-3.sym: Rotated symbol to be like all the other
+	  voltage sources
+
+	* analog/beeper-1.sym: Rotated symbol to be like all the other
+	  symbols 
+
+	* 74/*.sym: Updated all symbols to have default uref
+	  Also moved some labels around, minor cleanup
+
+	* 4000/*.sym: Updated all symbols to have default uref
+
+	* altera/*.sym: Updated all symbols to have default uref
+
+2000-06-19  Matt Ettus  <matt@ettus.com>
+
+	* connector/DB37-1.sym:  Added DB37
+
+	* connector/header10-1.sym:  Added uref=J?
+
+	* connector/header10-2.sym, connector/header20-1.sym, 
+	  connector/header20-2.sym: Added symbol
+
+	* maxim/max233-1.sym: Added symbol
+
+	* maxim/max488-1.sym: Added symbol
+
+	* supervisor/adm707.sym: Added symbol
+
+2000-05-29  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* local/dac08sm-1.sym: Removed a attribute which shouldn't
+	  have been a floating attribute (or an attribute in general)
+
+	* xilinx/XC95108-PC84.sym: Made the device= attribute hidden and
+          added a text label (in device='s place)
+
+	* 74/74181-1.sym: Put spaces around the ='s in the text label 
+	  "A=B", since libgeda/gschem were interpreting this as a valid 
+	  attribute
+
+2000-04-21  Ales Hvezda  <ahvezda@geda.seul.org>
+	
+	* */*.sym: Changed all physical attributes to footprint
+
+	* local/dac08sm-1.sym: Changed some of the attributes to be green
+	
+	* local/EPF10K-1.sym and altera/EPC1LC20-1.sym : Color changes and 
+	  minor cosmetic updates 
+
+	* */*.sym: Changed all pinlabel attributes to label
+
+2000-04-16  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* Added the contributed symbols by JM Routoure 
+
+	* sym/national: Created new symbol library  
+
+	* Added the contributed symbols by Luke Stras 
+
+	* verilog/*.sym: Some how a bogus alignment field got into all these
+	  symbols.  Removed it and replaced it with 0 (lower right)
+
+
+2000-02-20  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* local/ micro/: Added a four symbols created by Marcus Isaksson
+
+	* */*.sym: Loaded and saved all symbols in gschem to get the new 
+	  version and file format (text alignment change) 
+
+	* analog/*.sym: Added pin#= attributes to a few of the symbols
+	  Added missing device= attributes as well
+
+2000-02-19  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * README/INSTALL: Updated files to reflect next release
+
+2000-02-08  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* */*.sym: Removed all spaces from all device= attributes.  This is
+	  to make the pcb netlister(s) happy.
+
+2000-02-07  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* misc/include-1.sym: Added symbol by Bas for use with gnetlist spice
+	  backend. See for more info: 
+	  http://www.geda.seul.org/mailinglist/geda-dev25/msg00113.html
+
+	* analog/diode-2.sym and local/lt1108-1.sym: Symbols added by Arnim
+
+2000-01-25  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* config.h: Remove this file from the cvs repository; should not have
+	  been there in the first place.
+
+2000-01-18  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* analog/opamp-2.sym: Added a slightly larger version of opamp-1.sym
+
+1999-11-07  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* local/ULN2003-1.sym: Fixed the wrong text colors (text colors should
+	  be color 9)
+
+	* local/*phase-stepper*.sym: Added some more symbols created by me.
+
+	* connector/DB25-2.sym: Added an alternate version of the 25 pin
+	  parallel port connector (modified by me :-)
+
+1999-11-06  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* Bunch: Integrated a bunch of symbols by Arnim
+
+	* local/ULN2003-1.sym: Added a symbol created by me. :)
+
+1999-10-22  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* xilinx/XC95108-PC84.sym: Added updated symbol by Jamil Khatib
+
+	* connector/pwrjack-1.sym: Added symbol by Tom Barraza
+
+	* lattice/: Created symbol library (updated all required files)
+
+	* lattice/isp2032-1.sym: Added symbol by Tom Barraza
+
+1999-10-11  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* 4000/4538-1.sym: Translated symbol to origin. 
+	
+	* 4000/4046-1.sym: Translated symbol to origin.
+
+	* pla/: Added symbol library (Makefile.am/configure.in/*commonrc.in)
+
+	* pla/N82S100N-1.sym: Added symbol drawn Magnus
+
+	* 74/74373-1.sym, 74/74374-1.sym: Added symbol drawn by Magnus
+
+	* dec/: Added symbol library (Makefile.am/configure.in/*commonrc.in)
+	
+	* xilinx/: Added symbol library (Makefile.am/configure.in/*commonrc.in)
+
+	* 74/74574-1.sym: Changed CLOCK to CLK
+
+	* 74/74374-1.sym: Removed logic bubble from clock line and moved that
+	  pin so that you can connect to it (on the 100 mil grid)
+
+10/6/99 ETTUS:  Added rf directory, and symbols in it.
+
+9/17/99 Changed a few of the IEC417 symbols (again) to use color 15
+	(lock) as the grey color: ac-ac.sym ac-dc.sym adc.sym dac.sym
+	dc-ac.sym dc-dc.sym
+
+9/17/99	Changed a few of the IEC417 symbols to use color 17 as the grey
+	color: ac-ac.sym ac-dc.sym adc.sym dac.sym dc-ac.sym dc-dc.sym
+
+9/16/99	Created a spice symbol library which hold some of the special
+	spice symbols by Bas Gieltjes
+		- Added spice to all the required configure/Makefiles 
+		- Added spice dir to system-commonrc.in
+
+9/15/99	Added pin#= attributes to all symbols in the io library
+
+	Added device= attributes to all the symbols in the io library
+
+9/13/99	Fixed all the misc power/gnd symbols to work with the new net= 
+	gnetlist options
+		- Removed all special attributes
+		- Properly named pin# attributes
+		- Added net=GND:1 to gnd-1.sym 
+		- Did not add any net= attribs to any v* symbol
+		- Made sure all the v*-1.sym are consistant
+
+	Removed vdd-1.sym and renamed vdd-2.sym to be vdd-1.sym 
+	(old vdd-1.sym was just a 180 degree rotation of vdd-2)
+	All v symbols should be drawn with the label on top, and the 
+	pin going down.  All gnd symbols should have the pin going up.
+
+	Created misc/vee-1.sym
+
+	Created symbol directory called titleblock.  Moved all the title block
+	symbols into this new library.
+
+	Added above to Makefile/configure and to the system-commonrc.in files
+
+	Created symbol directory called io (input/output).  Moved all input
+	and output type symbols into this new library.
+	
+	Added above to Makefile/configure and to the system-commonrc.in files
+
+	Created +3.3V, +5V, -5V, +12V, -12V, 9V, -9V symbols which
+	contain the net= attribute
+
+	Removed all device= attributes from the power/gnd symbols
+
+9/6/99	Start of getting symbols updated with the new colors scheme:
+		- All locked components need to be color 15 (locked)
+		- All text items need to be color 9
+	
+	Did all title blocks (updated locked color to 15)
+
+	Fixed a few symbols (74194-1.sym and 74174-1.sym) which caused
+	a core dump (now fixed) by having improper/incomplete attributes
+
+	Removed 74174-1.sym since it is wrong (wrong number of pins)
+
+	Did all symbols which had text (updated text color to 9)
+
+8/27/99 Set the program version to 19990829 to force Ales to release
+        on the 29th :)
+
+8/8/99	Renamed some of the verilog symbols to be named *-1.sym
+
+8/3/99	Added a whole bunch of verilog symbols by Mike Jarabek
+
+7/5/99 	Removed numslots=1 from switch-dip[4|8]-1.sym (isn't needed)
+
+7/4/99	Added update/new symbols for verilog netlist from Mike Jarabek
+
+7/3/99	Went through all symbols and eliminated all zero length objects
+	(using the new warning code in libgeda)
+
+6/27/99 Integrated more symbols from Arnim Littek
+
+	Integrated more maxim symbols as well as updates from Salman 
+
+6/25/99 Integrated changes to some of the analog symbols by Arno Peters
+
+5/29/99 Changed all symbols so that the top level attributes are no longer
+	attached to an object.  This is a new symbol standard
+
+5/28/99	Got this new way of doing symbols finally done	
+
+	Update all aux files (AUTHORS/README etc...)
