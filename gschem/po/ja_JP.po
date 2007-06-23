@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-26 11:03-0400\n"
+"POT-Creation-Date: 2007-06-23 17:33+0100\n"
 "PO-Revision-Date: 2002-10-05 20:00+0900\n"
 "Last-Translator: MIYAMOTO Takanori <pnms@jcom.home.ne.jp>\n"
 "Language-Team: japanese <ja@li.org>\n"
@@ -23,15 +23,15 @@ msgstr "ファイル"
 msgid "New Window"
 msgstr "新規ウィンドウ"
 
-#: src/rcstrings.c:4 src/x_pagesel.c:267
+#: src/rcstrings.c:4 src/x_pagesel.c:258
 msgid "New Page"
 msgstr "新規ページ"
 
-#: src/rcstrings.c:5 src/x_pagesel.c:268
+#: src/rcstrings.c:5 src/x_pagesel.c:259
 msgid "Open Page..."
 msgstr "開く..."
 
-#: src/rcstrings.c:6 src/x_pagesel.c:271
+#: src/rcstrings.c:6 src/x_pagesel.c:262
 msgid "Close Page"
 msgstr "閉じる"
 
@@ -39,7 +39,7 @@ msgstr "閉じる"
 msgid "Revert Page"
 msgstr "戻す"
 
-#: src/rcstrings.c:8 src/x_pagesel.c:270
+#: src/rcstrings.c:8 src/x_pagesel.c:261
 msgid "Save Page"
 msgstr "保存"
 
@@ -51,16 +51,16 @@ msgstr "名前を付けて保存..."
 msgid "Save All"
 msgstr "すべて保存"
 
-#: src/rcstrings.c:11 src/x_print.c:317
+#: src/rcstrings.c:11 src/x_print.c:282
 msgid "Print..."
 msgstr "印刷..."
 
-#: src/rcstrings.c:12 src/x_image.c:496
+#: src/rcstrings.c:12 src/x_image.c:541
 #, fuzzy
 msgid "Write image..."
 msgstr "イメージ出力..."
 
-#: src/rcstrings.c:13
+#: src/rcstrings.c:13 src/x_menus.c:519
 #, fuzzy
 msgid "Recent files"
 msgstr "新規ファイル"
@@ -81,15 +81,15 @@ msgstr "終了"
 msgid "Edit"
 msgstr "編集"
 
-#: src/rcstrings.c:19 src/x_window.c:515
+#: src/rcstrings.c:19 src/x_window.c:520
 msgid "Undo"
 msgstr "アンドゥ"
 
-#: src/rcstrings.c:20 src/x_window.c:522
+#: src/rcstrings.c:20 src/x_window.c:527
 msgid "Redo"
 msgstr "リドゥ"
 
-#: src/rcstrings.c:21 src/i_basic.c:94 src/x_window.c:686
+#: src/rcstrings.c:21 src/i_basic.c:80 src/x_window.c:691
 msgid "Select Mode"
 msgstr "選択モード"
 
@@ -116,20 +116,20 @@ msgstr "編集..."
 msgid "Edit Text..."
 msgstr "テキスト編集..."
 
-#: src/rcstrings.c:27 src/i_basic.c:107
+#: src/rcstrings.c:27 src/i_basic.c:93
 msgid "Copy Mode"
 msgstr "コピーモード"
 
-#: src/rcstrings.c:28 src/i_basic.c:162
+#: src/rcstrings.c:28 src/i_basic.c:148
 #, fuzzy
 msgid "Multiple Copy Mode"
 msgstr "コピーモード"
 
-#: src/rcstrings.c:29 src/i_basic.c:110
+#: src/rcstrings.c:29 src/i_basic.c:96
 msgid "Move Mode"
 msgstr "移動モード"
 
-#: src/rcstrings.c:30 src/i_callbacks.c:722 src/x_multiattrib.c:1193
+#: src/rcstrings.c:30 src/i_callbacks.c:722 src/x_multiattrib.c:1173
 msgid "Delete"
 msgstr "削除"
 
@@ -137,7 +137,7 @@ msgstr "削除"
 msgid "Rotate 90 Mode"
 msgstr "90度回転モード"
 
-#: src/rcstrings.c:32 src/i_basic.c:114
+#: src/rcstrings.c:32 src/i_basic.c:100
 msgid "Mirror Mode"
 msgstr "反転モード"
 
@@ -263,11 +263,11 @@ msgstr "表示"
 msgid "Redraw"
 msgstr "画面更新"
 
-#: src/rcstrings.c:65 src/i_callbacks.c:1489 src/i_callbacks.c:1558
+#: src/rcstrings.c:65 src/i_callbacks.c:1487 src/i_callbacks.c:1556
 msgid "Pan"
 msgstr "パン"
 
-#: src/rcstrings.c:66 src/i_basic.c:118
+#: src/rcstrings.c:66 src/i_basic.c:104
 msgid "Zoom Box"
 msgstr "拡大"
 
@@ -303,7 +303,7 @@ msgstr "次"
 msgid "Previous"
 msgstr "前"
 
-#: src/rcstrings.c:76 src/x_window.c:493
+#: src/rcstrings.c:76 src/x_window.c:498
 msgid "New"
 msgstr "新規"
 
@@ -327,12 +327,12 @@ msgstr "追加"
 msgid "Component..."
 msgstr "部品..."
 
-#: src/rcstrings.c:83 src/i_callbacks.c:2313 src/i_callbacks.c:2336
+#: src/rcstrings.c:83 src/i_callbacks.c:2308 src/i_callbacks.c:2330
 msgid "Net"
 msgstr "ネット"
 
-#: src/rcstrings.c:84 src/i_callbacks.c:2381 src/i_callbacks.c:2405
-#: src/x_window.c:551
+#: src/rcstrings.c:84 src/i_callbacks.c:2374 src/i_callbacks.c:2397
+#: src/x_window.c:556
 msgid "Bus"
 msgstr "バス"
 
@@ -344,23 +344,23 @@ msgstr "アトリビュート..."
 msgid "Text..."
 msgstr "テキスト..."
 
-#: src/rcstrings.c:87 src/i_callbacks.c:2487 src/i_callbacks.c:2507
+#: src/rcstrings.c:87 src/i_callbacks.c:2478 src/i_callbacks.c:2497
 msgid "Line"
 msgstr "線"
 
-#: src/rcstrings.c:88 src/i_callbacks.c:2530 src/i_callbacks.c:2550
+#: src/rcstrings.c:88 src/i_callbacks.c:2519 src/i_callbacks.c:2538
 msgid "Box"
 msgstr "ボックス"
 
-#: src/rcstrings.c:89 src/i_callbacks.c:2607 src/i_callbacks.c:2628
+#: src/rcstrings.c:89 src/i_callbacks.c:2594 src/i_callbacks.c:2614
 msgid "Circle"
 msgstr "円"
 
-#: src/rcstrings.c:90 src/i_callbacks.c:2651 src/i_callbacks.c:2671
+#: src/rcstrings.c:90 src/i_callbacks.c:2636 src/i_callbacks.c:2655
 msgid "Arc"
 msgstr "円弧"
 
-#: src/rcstrings.c:91 src/i_callbacks.c:2694 src/i_callbacks.c:2714
+#: src/rcstrings.c:91 src/i_callbacks.c:2677 src/i_callbacks.c:2696
 msgid "Pin"
 msgstr "ピン"
 
@@ -389,15 +389,15 @@ msgstr "上へ"
 msgid "Documentation"
 msgstr "ドキュメント表示/検索"
 
-#: src/rcstrings.c:100 src/x_multiattrib.c:1332
+#: src/rcstrings.c:100 src/x_multiattrib.c:1299
 msgid "Attributes"
 msgstr "アトリビュート"
 
-#: src/rcstrings.c:101 src/i_callbacks.c:2974
+#: src/rcstrings.c:101 src/i_callbacks.c:2961
 msgid "Attach"
 msgstr "アタッチ"
 
-#: src/rcstrings.c:102 src/i_callbacks.c:3023
+#: src/rcstrings.c:102 src/i_callbacks.c:3010
 msgid "Detach"
 msgstr "アタッチ解除"
 
@@ -505,7 +505,7 @@ msgstr "ドキュメント表示/検索"
 msgid "About gschem"
 msgstr ""
 
-#: src/rcstrings.c:130 src/x_dialog.c:2501
+#: src/rcstrings.c:130 src/x_dialog.c:2514
 #, fuzzy
 msgid "Hotkeys"
 msgstr "ホットキー..."
@@ -644,12 +644,12 @@ msgstr "無効なサイズ[%d]がsnap-sizeに指定されました。\n"
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
 
-#: src/gschem.c:140 src/gschem.c:150
+#: src/gschem.c:190 src/gschem.c:200
 #, fuzzy, c-format
 msgid "gEDA/gschem version %s%s\n"
 msgstr "gEDA/gschemバージョン%s\n"
 
-#: src/gschem.c:142 src/gschem.c:152
+#: src/gschem.c:192 src/gschem.c:202
 #, c-format
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
@@ -658,7 +658,7 @@ msgstr ""
 "gEDA/gschemは完全に無保証で提供されます。詳しくはCOPYINGファイルをご覧くださ"
 "い。\n"
 
-#: src/gschem.c:144 src/gschem.c:154
+#: src/gschem.c:194 src/gschem.c:204
 #, c-format
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
@@ -666,7 +666,7 @@ msgstr ""
 "これはフリーソフトウェアであり、ある条件の下で再頒布することが奨励されていま"
 "す。\n"
 
-#: src/gschem.c:146 src/gschem.c:156
+#: src/gschem.c:196 src/gschem.c:206
 #, c-format
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
@@ -675,141 +675,141 @@ msgstr ""
 "詳しくはCOPYINGファイルをご覧ください。\n"
 "\n"
 
-#: src/gschem.c:160
+#: src/gschem.c:210
 #, c-format
 msgid "This is the MINGW32 port.\n"
 msgstr "MIGW32版です。\n"
 
-#: src/gschem.c:164
+#: src/gschem.c:214
 #, c-format
 msgid "Current locale settings: %s\n"
 msgstr ""
 
-#: src/gschem.c:177
+#: src/gschem.c:227
 #, c-format
 msgid "You must set the GEDADATA environment variable!\n"
 msgstr "環境変数GEDADATAを設定してください!\n"
 
-#: src/gschem.c:192
+#: src/gschem.c:242
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr "初期化scmファイルを読み込んでいます。[%s]\n"
 
-#: src/gschem.c:196 src/gschem.c:199
+#: src/gschem.c:246 src/gschem.c:249
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
 
-#: src/gschem.c:259
+#: src/gschem.c:310
 #, c-format
 msgid "Scheme directory NOT set!\n"
 msgstr "schemeディレクトリが設定されていません!\n"
 
-#: src/gschem.c:266 src/x_script.c:70
+#: src/gschem.c:317 src/x_script.c:70
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "guileスクリプトを実行しています。[%s]\n"
 
-#: src/i_basic.c:97
+#: src/i_basic.c:83
 msgid "Attribute Mode"
 msgstr "アトリビュートモード"
 
-#: src/i_basic.c:100
+#: src/i_basic.c:86
 msgid "Component Mode"
 msgstr "部品モード"
 
-#: src/i_basic.c:104
+#: src/i_basic.c:90
 msgid "Text Mode"
 msgstr "ネットモード"
 
-#: src/i_basic.c:112
+#: src/i_basic.c:98
 msgid "Rotate Mode"
 msgstr "回転モード"
 
-#: src/i_basic.c:122
+#: src/i_basic.c:108
 msgid "Pan Mode"
 msgstr "パンモード"
 
-#: src/i_basic.c:126
+#: src/i_basic.c:112
 #, c-format
 msgid "Paste %d Mode"
 msgstr "ペースト%dモード"
 
-#: src/i_basic.c:131
+#: src/i_basic.c:117
 msgid "Net Mode"
 msgstr "ネットモード"
 
-#: src/i_basic.c:135
+#: src/i_basic.c:121
 msgid "Bus Mode"
 msgstr "バスモード"
 
-#: src/i_basic.c:138
+#: src/i_basic.c:124
 msgid "Line Mode"
 msgstr "線モード"
 
-#: src/i_basic.c:141
+#: src/i_basic.c:127
 msgid "Box Mode"
 msgstr "ボックスモード"
 
-#: src/i_basic.c:144
+#: src/i_basic.c:130
 #, fuzzy
 msgid "Picture Mode"
 msgstr "ピンモード"
 
-#: src/i_basic.c:147
+#: src/i_basic.c:133
 msgid "Circle Mode"
 msgstr "円モード"
 
-#: src/i_basic.c:150
+#: src/i_basic.c:136
 msgid "Arc Mode"
 msgstr "円弧モード"
 
-#: src/i_basic.c:153
+#: src/i_basic.c:139
 msgid "Pin Mode"
 msgstr "ピンモード"
 
-#: src/i_basic.c:155 src/i_callbacks.c:603 src/i_callbacks.c:622
+#: src/i_basic.c:141 src/i_callbacks.c:603 src/i_callbacks.c:622
 msgid "Copy"
 msgstr "コピー"
 
-#: src/i_basic.c:157 src/i_callbacks.c:683 src/i_callbacks.c:702
+#: src/i_basic.c:143 src/i_callbacks.c:683 src/i_callbacks.c:702
 msgid "Move"
 msgstr "移動"
 
-#: src/i_basic.c:159 src/i_callbacks.c:643 src/i_callbacks.c:662
+#: src/i_basic.c:145 src/i_callbacks.c:643 src/i_callbacks.c:662
 #, fuzzy
 msgid "Multiple Copy"
 msgstr "多重アタッチ"
 
-#: src/i_basic.c:197
-msgid "Snap Off"
-msgstr "スナップ・オフ"
-
-#: src/i_basic.c:203
+#: src/i_basic.c:173
 msgid "Show Hidden"
 msgstr "隠しテキスト表示"
 
-#: src/i_basic.c:291 src/x_window.c:660
+#: src/i_basic.c:176
+msgid "Snap Off"
+msgstr "スナップ・オフ"
+
+#: src/i_basic.c:258 src/x_window.c:665
 msgid "Action"
 msgstr "アクション"
 
-#: src/i_basic.c:299 src/x_window.c:655
+#: src/i_basic.c:266 src/x_window.c:660
 msgid "Stroke"
 msgstr "ストローク"
 
-#: src/i_basic.c:306 src/x_window.c:657
+#: src/i_basic.c:273 src/x_window.c:662
 msgid "none"
 msgstr "なし"
 
-#: src/i_basic.c:313
+#: src/i_basic.c:280
 msgid "Repeat/"
 msgstr "繰り返し/"
 
-#: src/i_basic.c:738 src/i_basic.c:743
+#: src/i_basic.c:569 src/i_basic.c:574
 msgid "OFF"
 msgstr ""
 
-#: src/i_basic.c:747
+#: src/i_basic.c:578
 #, c-format
 msgid "Grid(%s, %s)"
 msgstr ""
@@ -819,12 +819,12 @@ msgstr ""
 msgid "Documentation for [%s,%s,%s,%s]\n"
 msgstr ""
 
-#: src/i_callbacks.c:191 src/i_callbacks.c:1687
+#: src/i_callbacks.c:191 src/i_callbacks.c:1685
 #, fuzzy, c-format
 msgid "New page created [%s]\n"
 msgstr "新規ページを作成しました。[%s]\n"
 
-#: src/i_callbacks.c:226 src/x_menus.c:432
+#: src/i_callbacks.c:226 src/x_menus.c:490
 #, fuzzy, c-format
 msgid "New Window created [%s]\n"
 msgstr "新規ウィンドウを作成しました。\n"
@@ -866,7 +866,7 @@ msgstr "回転"
 msgid "Mirror"
 msgstr "反転"
 
-#: src/i_callbacks.c:955 src/x_dialog.c:1597
+#: src/i_callbacks.c:955 src/x_dialog.c:1603
 msgid "Translate"
 msgstr "転送"
 
@@ -914,163 +914,163 @@ msgstr "表示する"
 msgid "Edit Line Type"
 msgstr "線種を編集"
 
-#: src/i_callbacks.c:1305 src/x_dialog.c:1256
+#: src/i_callbacks.c:1305 src/x_dialog.c:1260
 msgid "Edit Fill Type"
 msgstr "塗りつぶしを編集"
 
-#: src/i_callbacks.c:1592
+#: src/i_callbacks.c:1590
 msgid "Update Cues"
 msgstr "キュー更新"
 
-#: src/i_callbacks.c:1731
+#: src/i_callbacks.c:1729
 #, fuzzy
 msgid "Really revert page?"
 msgstr "戻す"
 
-#: src/i_callbacks.c:1805
+#: src/i_callbacks.c:1803
 msgid "Copy 1"
 msgstr "コピー1"
 
-#: src/i_callbacks.c:1824
+#: src/i_callbacks.c:1822
 msgid "Copy 2"
 msgstr "コピー2"
 
-#: src/i_callbacks.c:1843
+#: src/i_callbacks.c:1841
 msgid "Copy 3"
 msgstr "コピー3"
 
-#: src/i_callbacks.c:1862
+#: src/i_callbacks.c:1860
 msgid "Copy 4"
 msgstr "コピー4"
 
-#: src/i_callbacks.c:1881
+#: src/i_callbacks.c:1879
 msgid "Copy 5"
 msgstr "コピー5"
 
-#: src/i_callbacks.c:1900
+#: src/i_callbacks.c:1898
 msgid "Cut 1"
 msgstr "カット1"
 
-#: src/i_callbacks.c:1919
+#: src/i_callbacks.c:1917
 msgid "Cut 2"
 msgstr "カット2"
 
-#: src/i_callbacks.c:1938
+#: src/i_callbacks.c:1936
 msgid "Cut 3"
 msgstr "カット3"
 
-#: src/i_callbacks.c:1957
+#: src/i_callbacks.c:1955
 msgid "Cut 4"
 msgstr "カット4"
 
-#: src/i_callbacks.c:1976
+#: src/i_callbacks.c:1974
 msgid "Cut 5"
 msgstr "カット5"
 
-#: src/i_callbacks.c:1992
+#: src/i_callbacks.c:1990
 msgid "Paste 1"
 msgstr "ペースト1"
 
-#: src/i_callbacks.c:2001 src/i_callbacks.c:2025 src/i_callbacks.c:2049
-#: src/i_callbacks.c:2073 src/i_callbacks.c:2097
+#: src/i_callbacks.c:1999 src/i_callbacks.c:2023 src/i_callbacks.c:2047
+#: src/i_callbacks.c:2071 src/i_callbacks.c:2095
 msgid "Empty buffer"
 msgstr "バッファが空です。"
 
-#: src/i_callbacks.c:2016
+#: src/i_callbacks.c:2014
 msgid "Paste 2"
 msgstr "ペースト 2"
 
-#: src/i_callbacks.c:2040
+#: src/i_callbacks.c:2038
 msgid "Paste 3"
 msgstr "ペースト 3"
 
-#: src/i_callbacks.c:2064
+#: src/i_callbacks.c:2062
 msgid "Paste 4"
 msgstr "ペースト 4"
 
-#: src/i_callbacks.c:2088
+#: src/i_callbacks.c:2086
 msgid "Paste 5"
 msgstr "ペースト 5"
 
-#: src/i_callbacks.c:2234 src/x_window.c:531
+#: src/i_callbacks.c:2232 src/x_window.c:536
 msgid "Component"
 msgstr "部品"
 
-#: src/i_callbacks.c:2271 src/i_callbacks.c:2291
+#: src/i_callbacks.c:2268 src/i_callbacks.c:2287
 msgid "Attribute"
 msgstr "アトリビュート"
 
-#: src/i_callbacks.c:2773
+#: src/i_callbacks.c:2754
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "ソース検索中[%s]\n"
 
-#: src/i_callbacks.c:2797 src/i_callbacks.c:2798
+#: src/i_callbacks.c:2778 src/i_callbacks.c:2779
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "ソースが見付かりません。[%s]\n"
 
-#: src/i_callbacks.c:2869
+#: src/i_callbacks.c:2846
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "シンボル検索中[%s]\n"
 
-#: src/i_callbacks.c:2946
+#: src/i_callbacks.c:2933
 msgid ""
 "This command retrieves the component documentation from the web, but there "
 "is no component selected"
 msgstr ""
 
-#: src/i_callbacks.c:3063
+#: src/i_callbacks.c:3050
 msgid "ShowN"
 msgstr "N表示"
 
-#: src/i_callbacks.c:3094
+#: src/i_callbacks.c:3081
 msgid "ShowV"
 msgstr "表示V"
 
-#: src/i_callbacks.c:3125
+#: src/i_callbacks.c:3112
 msgid "ShowB"
 msgstr "表示B"
 
-#: src/i_callbacks.c:3157
+#: src/i_callbacks.c:3144
 msgid "VisToggle"
 msgstr "表示切替え"
 
-#: src/i_callbacks.c:3179
+#: src/i_callbacks.c:3166
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "機能しないメニューオプションです。\n"
 
-#: src/i_callbacks.c:3267
+#: src/i_callbacks.c:3254
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr ""
 
-#: src/i_callbacks.c:3270
+#: src/i_callbacks.c:3257
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr ""
 
-#: src/i_callbacks.c:3287
+#: src/i_callbacks.c:3274
 msgid "Grid OFF\n"
 msgstr "グリッド・オフ\n"
 
-#: src/i_callbacks.c:3290
+#: src/i_callbacks.c:3277
 msgid "Grid ON\n"
 msgstr "グリッド・オン\n"
 
-#: src/i_callbacks.c:3307
+#: src/i_callbacks.c:3294
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "スナップ・オフ(注意!)\n"
 
-#: src/i_callbacks.c:3310
+#: src/i_callbacks.c:3297
 msgid "Snap ON\n"
 msgstr "スナップ・オン\n"
 
-#: src/i_callbacks.c:3330
+#: src/i_callbacks.c:3317
 msgid "Rubber band OFF \n"
 msgstr "ラバーバンド・オフ\n"
 
-#: src/i_callbacks.c:3333
+#: src/i_callbacks.c:3320
 msgid "Rubber band ON\n"
 msgstr "ラバーバンド・オン\n"
 
@@ -1159,27 +1159,27 @@ msgstr "不明な円の種類!\n"
 msgid "Unknown type for circle (fill)!\n"
 msgstr "不明な円の種類(塗りつぶし)!\n"
 
-#: src/o_complex.c:222
+#: src/o_complex.c:224
 #, c-format
 msgid "Could not find complex in new componet placement!\n"
 msgstr ""
 
-#: src/o_complex.c:600
+#: src/o_complex.c:588
 #, c-format
 msgid "Got NULL in o_complex_translate_display_selection\n"
 msgstr ""
 
-#: src/o_complex.c:668 src/o_complex.c:674
+#: src/o_complex.c:656 src/o_complex.c:662
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "スケマチックを転送しています。[%d %d]\n"
 
-#: src/o_complex.c:718
+#: src/o_complex.c:706
 #, c-format
 msgid "Got NULL in o_complex_translate_selection!\n"
 msgstr ""
 
-#: src/o_copy.c:124 src/o_copy.c:395
+#: src/o_copy.c:124 src/o_copy.c:394
 #, c-format
 msgid "ERROR: NULL object in o_copy_end!\n"
 msgstr ""
@@ -1225,36 +1225,27 @@ msgstr "隠しテキストが表示されました。\n"
 msgid "Hidden text is now invisible\n"
 msgstr "隠しテキストが非表示になりました。\n"
 
-#: src/o_misc.c:1076
-msgid "Could not unembedded component, could not find appropriate .sym file\n"
-msgstr ""
-
-#: src/o_misc.c:1077
-#, fuzzy
-msgid "Component still embedded and not updated\n"
-msgstr "この部品はすでに組み込まれています。\n"
-
-#: src/o_misc.c:1081
+#: src/o_misc.c:1070
 #, c-format
-msgid "More than one component found with name [%s]\n"
+msgid "Could not find symbol [%s] in library. Update failed.\n"
 msgstr ""
 
-#: src/o_misc.c:1229
+#: src/o_misc.c:1210
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 
-#: src/o_misc.c:1273
+#: src/o_misc.c:1254
 #, fuzzy, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "保存できません。[%s]\n"
 
-#: src/o_misc.c:1291
+#: src/o_misc.c:1272
 #, fuzzy, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "保存できません。[%s]\n"
 
-#: src/o_misc.c:1296
+#: src/o_misc.c:1277
 #, fuzzy, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "保存できません。[%s]\n"
@@ -1284,12 +1275,12 @@ msgstr ""
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 
-#: src/o_net.c:1155
-#, c-format
-msgid "Could not find %s in any component-library\n"
+#: src/o_net.c:1157
+#, fuzzy, c-format
+msgid "Bus ripper symbol [%s] was not found in any component library\n"
 msgstr "無効なパス[%s]がcomponent-libraryに指定されました。\n"
 
-#: src/o_picture.c:205 src/o_picture.c:746
+#: src/o_picture.c:205 src/o_picture.c:745
 #, fuzzy, c-format
 msgid "Failed to load picture: %s"
 msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
@@ -1298,7 +1289,7 @@ msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
 msgid "Picture"
 msgstr ""
 
-#: src/o_picture.c:658 src/x_attribedit.c:137
+#: src/o_picture.c:657 src/x_attribedit.c:138
 #, c-format
 msgid "ERROR: NULL object!\n"
 msgstr ""
@@ -1343,175 +1334,175 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/x_attribedit.c:122
+#: src/x_attribedit.c:123
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr ""
 
-#: src/x_attribedit.c:325
+#: src/x_attribedit.c:326
 msgid "Single Attribute Editor"
 msgstr "シングルアトルビュートエディタ"
 
-#: src/x_attribedit.c:355
+#: src/x_attribedit.c:357
 #, fuzzy
 msgid "<b>Edit Attribute</b>"
 msgstr "アトリビュート編集"
 
-#: src/x_attribedit.c:357
+#: src/x_attribedit.c:359
 #, fuzzy
 msgid "<b>Add Attribute</b>"
 msgstr "アトリビュート追加/編集"
 
-#: src/x_attribedit.c:373 src/x_multiattrib.c:1512
+#: src/x_attribedit.c:375 src/x_multiattrib.c:1479
 msgid "Name:"
 msgstr "名前:"
 
-#: src/x_attribedit.c:389 src/x_multiattrib.c:1531
+#: src/x_attribedit.c:391 src/x_multiattrib.c:1498
 msgid "Value:"
 msgstr "値:"
 
-#: src/x_attribedit.c:404 src/x_multiattrib.c:1559
+#: src/x_attribedit.c:406 src/x_multiattrib.c:1526
 msgid "Visible"
 msgstr "表示"
 
-#: src/x_attribedit.c:424
+#: src/x_attribedit.c:426
 msgid "Show Value Only"
 msgstr "値のみ表示"
 
-#: src/x_attribedit.c:426
+#: src/x_attribedit.c:428
 msgid "Show Name Only"
 msgstr "名前のみ表示"
 
-#: src/x_attribedit.c:428 src/x_multiattrib.c:1162
+#: src/x_attribedit.c:430 src/x_multiattrib.c:1142
 msgid "Show Name & Value"
 msgstr "名前と値を表示"
 
-#: src/x_attribedit.c:435
+#: src/x_attribedit.c:437
 #, fuzzy
 msgid "<b>Attach Options</b>"
 msgstr "オプション"
 
-#: src/x_attribedit.c:450
+#: src/x_attribedit.c:452
 msgid "All"
 msgstr "すべて"
 
-#: src/x_attribedit.c:458 src/x_compselect.c:791
+#: src/x_attribedit.c:460 src/x_compselect.c:737
 msgid "Components"
 msgstr "部品"
 
-#: src/x_attribedit.c:466 src/x_window.c:541
+#: src/x_attribedit.c:468 src/x_window.c:546
 msgid "Nets"
 msgstr "ネット"
 
-#: src/x_attribedit.c:474
+#: src/x_attribedit.c:476
 msgid "Replace existing attributes"
 msgstr ""
 
-#: src/x_autonumber.c:411
+#: src/x_autonumber.c:412
 msgid ""
 "slotted object without slot attribute may cause problems when autonumbering "
 "slots\n"
 msgstr ""
 
-#: src/x_autonumber.c:426
+#: src/x_autonumber.c:427
 #, c-format
 msgid ""
 "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
 msgstr ""
 
-#: src/x_autonumber.c:696
+#: src/x_autonumber.c:697
 msgid "No searchstring given in autonumber text.\n"
 msgstr ""
 
-#: src/x_autonumber.c:747
+#: src/x_autonumber.c:748
 msgid "No '*' or '?' given at the end of the autonumber text.\n"
 msgstr ""
 
-#: src/x_autonumber.c:880
+#: src/x_autonumber.c:881
 msgid "Diagonal"
 msgstr ""
 
-#: src/x_autonumber.c:881
+#: src/x_autonumber.c:882
 msgid "Top to bottom"
 msgstr ""
 
-#: src/x_autonumber.c:881
+#: src/x_autonumber.c:882
 msgid "Bottom to top"
-msgstr ""
-
-#: src/x_autonumber.c:882
-#, fuzzy
-msgid "Left to right"
-msgstr "中央 右"
-
-#: src/x_autonumber.c:882
-msgid "Right to left"
 msgstr ""
 
 #: src/x_autonumber.c:883
 #, fuzzy
+msgid "Left to right"
+msgstr "中央 右"
+
+#: src/x_autonumber.c:883
+msgid "Right to left"
+msgstr ""
+
+#: src/x_autonumber.c:884
+#, fuzzy
 msgid "File order"
 msgstr "円モード"
 
-#: src/x_autonumber.c:1219
+#: src/x_autonumber.c:1220
 msgid "Autonumber text"
 msgstr "オートナンバーテキスト"
 
-#: src/x_autonumber.c:1244
+#: src/x_autonumber.c:1246
 msgid "<b>Scope</b>"
 msgstr ""
 
-#: src/x_autonumber.c:1266
+#: src/x_autonumber.c:1268
 msgid "Search for:"
 msgstr ""
 
-#: src/x_autonumber.c:1280
+#: src/x_autonumber.c:1282
 #, fuzzy
 msgid "Autonumber text in:"
 msgstr "オートナンバーテキスト"
 
-#: src/x_autonumber.c:1287
+#: src/x_autonumber.c:1289
 msgid "Skip numbers found in:"
 msgstr ""
 
-#: src/x_autonumber.c:1299 src/x_autonumber.c:1308
+#: src/x_autonumber.c:1301 src/x_autonumber.c:1310
 #, fuzzy
 msgid "Selected objects"
 msgstr "存在しないオブジェクトが選択されました!\n"
 
-#: src/x_autonumber.c:1300 src/x_autonumber.c:1309
+#: src/x_autonumber.c:1302 src/x_autonumber.c:1311
 #, fuzzy
 msgid "Current page"
 msgstr "テストシート"
 
-#: src/x_autonumber.c:1301 src/x_autonumber.c:1310
+#: src/x_autonumber.c:1303 src/x_autonumber.c:1312
 #, fuzzy
 msgid "Whole hierarchy"
 msgstr "階層"
 
-#: src/x_autonumber.c:1312
+#: src/x_autonumber.c:1314
 msgid "Overwrite existing numbers"
 msgstr ""
 
-#: src/x_autonumber.c:1317
+#: src/x_autonumber.c:1319
 #, fuzzy
 msgid "<b>Options</b>"
 msgstr "オプション"
 
-#: src/x_autonumber.c:1339
+#: src/x_autonumber.c:1341
 #, fuzzy
 msgid "Starting number:"
 msgstr "スロット番号編集"
 
-#: src/x_autonumber.c:1346
+#: src/x_autonumber.c:1348
 msgid "Sort order:"
 msgstr ""
 
-#: src/x_autonumber.c:1367
+#: src/x_autonumber.c:1369
 msgid "Remove numbers"
 msgstr ""
 
-#: src/x_autonumber.c:1371
+#: src/x_autonumber.c:1373
 msgid "Automatic slotting"
 msgstr ""
 
@@ -1530,7 +1521,7 @@ msgstr "デフォルトの色を白にします。\n"
 msgid "Ack! Cannot allocate white!\n"
 msgstr "あっ! 白を指定できません!\n"
 
-#: src/x_color.c:80 src/x_color.c:128 src/x_window.c:176 src/x_window.c:185
+#: src/x_color.c:80 src/x_color.c:128 src/x_window.c:175 src/x_window.c:184
 #, c-format
 msgid "Could not allocate the color %s!\n"
 msgstr "指定できない色[%s]です!\n"
@@ -1540,37 +1531,37 @@ msgstr "指定できない色[%s]です!\n"
 msgid "Tried to get an invalid color: %d\n"
 msgstr "無効な色の指定です。 : %d\n"
 
-#: src/x_compselect.c:615
+#: src/x_compselect.c:577
 msgid "Default behavior - reference component"
 msgstr ""
 
-#: src/x_compselect.c:618
+#: src/x_compselect.c:580
 #, fuzzy
 msgid "Embed component in schematic"
 msgstr "組み込む"
 
-#: src/x_compselect.c:621
+#: src/x_compselect.c:583
 msgid "Include component as individual objects"
 msgstr ""
 
-#: src/x_compselect.c:707
+#: src/x_compselect.c:668
 msgid "Select Component..."
 msgstr "部品選択..."
 
-#: src/x_compselect.c:821
+#: src/x_compselect.c:767
 #, fuzzy
 msgid "Filter:"
 msgstr "フィルタ"
 
-#: src/x_compselect.c:885 src/x_fileselect.c:123
+#: src/x_compselect.c:831 src/x_fileselect.c:123
 msgid "Preview"
 msgstr "プレビュー"
 
-#: src/x_dialog.c:182
+#: src/x_dialog.c:183
 msgid "Text Entry..."
 msgstr "テキスト..."
 
-#: src/x_dialog.c:214
+#: src/x_dialog.c:216
 msgid ""
 "Enter text, click apply,\n"
 "move cursor into window, click to place text.\n"
@@ -1580,185 +1571,185 @@ msgstr ""
 "ウィンドウ内でクリックするとテキストを配置します。\n"
 "中ボタンで回転します。"
 
-#: src/x_dialog.c:303
+#: src/x_dialog.c:305
 msgid "Lower Left"
 msgstr "下 左"
 
-#: src/x_dialog.c:314
+#: src/x_dialog.c:316
 msgid "Middle Left"
 msgstr "中央 左"
 
-#: src/x_dialog.c:325
+#: src/x_dialog.c:327
 msgid "Upper Left"
 msgstr "上 左"
 
-#: src/x_dialog.c:336
+#: src/x_dialog.c:338
 msgid "Lower Middle"
 msgstr "下 中央"
 
-#: src/x_dialog.c:347
+#: src/x_dialog.c:349
 msgid "Middle Middle"
 msgstr "中央 中央"
 
-#: src/x_dialog.c:358
+#: src/x_dialog.c:360
 msgid "Upper Middle"
 msgstr "上 中央"
 
-#: src/x_dialog.c:369
+#: src/x_dialog.c:371
 msgid "Lower Right"
 msgstr "下 右"
 
-#: src/x_dialog.c:380
+#: src/x_dialog.c:382
 msgid "Middle Right"
 msgstr "中央 右"
 
-#: src/x_dialog.c:391
+#: src/x_dialog.c:393
 msgid "Upper Right"
 msgstr "上 右"
 
-#: src/x_dialog.c:506
+#: src/x_dialog.c:508
 #, fuzzy
 msgid "Edit Text Properties"
 msgstr "サイズ"
 
-#: src/x_dialog.c:541
+#: src/x_dialog.c:544
 #, fuzzy
 msgid "<b>Text Content</b>"
 msgstr "オプション"
 
-#: src/x_dialog.c:573
+#: src/x_dialog.c:576
 #, fuzzy
 msgid "<b>Text Properties</b>"
 msgstr "オプション"
 
-#: src/x_dialog.c:588
+#: src/x_dialog.c:591
 #, fuzzy
 msgid "Color:"
 msgstr "色"
 
-#: src/x_dialog.c:598
+#: src/x_dialog.c:601
 msgid "Size:"
 msgstr ""
 
-#: src/x_dialog.c:607
+#: src/x_dialog.c:610
 #, fuzzy
 msgid "Alignment:"
 msgstr "配置"
 
-#: src/x_dialog.c:661
+#: src/x_dialog.c:664
 msgid "Solid"
 msgstr "実線"
 
-#: src/x_dialog.c:662
+#: src/x_dialog.c:665
 msgid "Dotted"
 msgstr "点線"
 
-#: src/x_dialog.c:663
+#: src/x_dialog.c:666
 msgid "Dashed"
 msgstr "破線"
 
-#: src/x_dialog.c:664
+#: src/x_dialog.c:667
 msgid "Center"
 msgstr "中央"
 
-#: src/x_dialog.c:665
+#: src/x_dialog.c:668
 msgid "Phantom"
 msgstr "ファントム"
 
-#: src/x_dialog.c:791 src/x_dialog.c:793 src/x_dialog.c:795 src/x_dialog.c:977
-#: src/x_dialog.c:978 src/x_dialog.c:979 src/x_dialog.c:987
-#: src/x_dialog.c:1170 src/x_dialog.c:1172 src/x_dialog.c:1174
-#: src/x_dialog.c:1176 src/x_dialog.c:1178 src/x_dialog.c:1382
-#: src/x_dialog.c:1383 src/x_dialog.c:1384 src/x_dialog.c:1385
-#: src/x_dialog.c:1386 src/x_dialog.c:1394
+#: src/x_dialog.c:794 src/x_dialog.c:796 src/x_dialog.c:798 src/x_dialog.c:981
+#: src/x_dialog.c:982 src/x_dialog.c:983 src/x_dialog.c:991
+#: src/x_dialog.c:1174 src/x_dialog.c:1176 src/x_dialog.c:1178
+#: src/x_dialog.c:1180 src/x_dialog.c:1182 src/x_dialog.c:1387
+#: src/x_dialog.c:1388 src/x_dialog.c:1389 src/x_dialog.c:1390
+#: src/x_dialog.c:1391 src/x_dialog.c:1399
 msgid "*unchanged*"
 msgstr ""
 
-#: src/x_dialog.c:870
+#: src/x_dialog.c:873
 msgid "Edit Line Width & Type"
 msgstr "線種と幅編集"
 
-#: src/x_dialog.c:910
+#: src/x_dialog.c:914
 #, fuzzy
 msgid "Width:"
 msgstr "幅"
 
-#: src/x_dialog.c:914 src/x_print.c:353
+#: src/x_dialog.c:918 src/x_print.c:313
 #, fuzzy
 msgid "Type:"
 msgstr "種類"
 
-#: src/x_dialog.c:918
+#: src/x_dialog.c:922
 #, fuzzy
 msgid "Dash Length:"
 msgstr "破線の長さ"
 
-#: src/x_dialog.c:922
+#: src/x_dialog.c:926
 #, fuzzy
 msgid "Dash Space:"
 msgstr "破線の間隔"
 
-#: src/x_dialog.c:1027
+#: src/x_dialog.c:1031
 msgid "Hollow"
 msgstr "空洞"
 
-#: src/x_dialog.c:1028
+#: src/x_dialog.c:1032
 msgid "Filled"
 msgstr "塗りつぶし"
 
-#: src/x_dialog.c:1029
+#: src/x_dialog.c:1033
 msgid "Mesh"
 msgstr "メッシュ"
 
-#: src/x_dialog.c:1030
+#: src/x_dialog.c:1034
 msgid "Hatch"
 msgstr "ハッチ"
 
-#: src/x_dialog.c:1295
+#: src/x_dialog.c:1300
 #, fuzzy
 msgid "Fill Type:"
 msgstr "塗りつぶし種類"
 
-#: src/x_dialog.c:1299
+#: src/x_dialog.c:1304
 #, fuzzy
 msgid "Line Width:"
 msgstr "線の幅"
 
-#: src/x_dialog.c:1303
+#: src/x_dialog.c:1308
 #, fuzzy
 msgid "Angle 1:"
 msgstr "角度1"
 
-#: src/x_dialog.c:1307
+#: src/x_dialog.c:1312
 #, fuzzy
 msgid "Pitch 1:"
 msgstr "ピッチ1"
 
-#: src/x_dialog.c:1311
+#: src/x_dialog.c:1316
 #, fuzzy
 msgid "Angle 2:"
 msgstr "角度2"
 
-#: src/x_dialog.c:1315
+#: src/x_dialog.c:1320
 #, fuzzy
 msgid "Pitch 2:"
 msgstr "ピッチ2"
 
-#: src/x_dialog.c:1477
+#: src/x_dialog.c:1482
 msgid "Arc Params"
 msgstr "円弧パラメータ"
 
-#: src/x_dialog.c:1518
+#: src/x_dialog.c:1524
 #, fuzzy
 msgid "Start Angle:"
 msgstr "開始角"
 
-#: src/x_dialog.c:1528
+#: src/x_dialog.c:1534
 #, fuzzy
 msgid "Degrees of Sweep:"
 msgstr "スイープ角"
 
-#: src/x_dialog.c:1628
+#: src/x_dialog.c:1635
 msgid ""
 "Offset to translate?\n"
 "(0 for origin)"
@@ -1766,49 +1757,49 @@ msgstr ""
 "転送しますか?\n"
 "(0で原点)"
 
-#: src/x_dialog.c:1696
+#: src/x_dialog.c:1703
 msgid "Text Size"
 msgstr "テキストサイズ"
 
-#: src/x_dialog.c:1727
+#: src/x_dialog.c:1735
 #, fuzzy
 msgid "Enter new text size:"
 msgstr "テキストサイズを入力してください"
 
-#: src/x_dialog.c:1802
+#: src/x_dialog.c:1810
 #, fuzzy
 msgid "Snap Size"
 msgstr "スナップグリッド"
 
-#: src/x_dialog.c:1833
+#: src/x_dialog.c:1842
 #, fuzzy
 msgid "Enter new snap grid spacing:"
 msgstr "グリッドサイズを入力してください"
 
-#: src/x_dialog.c:1906
+#: src/x_dialog.c:1915
 msgid "Edit slot number"
 msgstr "スロット番号編集"
 
-#: src/x_dialog.c:1938
+#: src/x_dialog.c:1948
 #, fuzzy
 msgid "Edit slot number:"
 msgstr "スロット番号編集"
 
-#: src/x_dialog.c:2000
+#: src/x_dialog.c:2010
 msgid "About..."
 msgstr "gschemについて..."
 
-#: src/x_dialog.c:2019
+#: src/x_dialog.c:2030
 #, fuzzy
 msgid "<b>gEDA: GPL Electronic Design Automation</b>"
 msgstr "gEDA : GPL Electronic Design Automation"
 
-#: src/x_dialog.c:2023
+#: src/x_dialog.c:2034
 #, fuzzy, c-format
 msgid "<b>gschem version %s%s</b>"
 msgstr "gschemバージョン%s"
 
-#: src/x_dialog.c:2029
+#: src/x_dialog.c:2040
 msgid ""
 "Written by:\n"
 "Ales V. Hvezda\n"
@@ -1820,96 +1811,96 @@ msgstr ""
 "ahvezda@geda.seul.org\n"
 "および大勢の人々(ファイルAUTHORS参照)"
 
-#: src/x_dialog.c:2093
+#: src/x_dialog.c:2104
 msgid "Coords"
 msgstr "座標"
 
-#: src/x_dialog.c:2113
+#: src/x_dialog.c:2125
 msgid "Screen"
 msgstr "スクリーン"
 
-#: src/x_dialog.c:2122
+#: src/x_dialog.c:2134
 msgid "World"
 msgstr "ワールド"
 
-#: src/x_dialog.c:2345
+#: src/x_dialog.c:2357
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr ""
 
-#: src/x_dialog.c:2408
+#: src/x_dialog.c:2420
 msgid "Color Edit"
 msgstr "色編集"
 
-#: src/x_dialog.c:2440
+#: src/x_dialog.c:2453
 msgid "Object color:"
 msgstr ""
 
-#: src/x_dialog.c:2564
+#: src/x_dialog.c:2578
 #, fuzzy
 msgid "Function"
 msgstr "アクション"
 
-#: src/x_dialog.c:2571
+#: src/x_dialog.c:2585
 #, fuzzy
 msgid "Keystroke(s)"
 msgstr "関数 : キーストローク"
 
-#: src/x_dialog.c:2925
+#: src/x_dialog.c:2939
 #, fuzzy
 msgid "Find Text"
 msgstr "テキスト検索"
 
-#: src/x_dialog.c:2957
+#: src/x_dialog.c:2972
 msgid "Text to find:"
 msgstr "検索テキスト"
 
-#: src/x_dialog.c:2967
+#: src/x_dialog.c:2982
 msgid "descend into hierarchy"
 msgstr "下の階層も検索"
 
-#: src/x_dialog.c:3031
+#: src/x_dialog.c:3046
 #, fuzzy
 msgid "Hide Text"
 msgstr "テキストを隠す"
 
-#: src/x_dialog.c:3063
+#: src/x_dialog.c:3079
 msgid "Hide text starting with:"
 msgstr "隠しテキスト"
 
-#: src/x_dialog.c:3131
+#: src/x_dialog.c:3147
 #, fuzzy
 msgid "Show Text"
 msgstr "テキスト表示"
 
-#: src/x_dialog.c:3163
+#: src/x_dialog.c:3180
 msgid "Show text starting with:"
 msgstr "テキスト"
 
-#: src/x_dialog.c:3608 src/x_multiattrib.c:1389
+#: src/x_dialog.c:3625 src/x_multiattrib.c:1356
 msgid "Name"
 msgstr "名前"
 
-#: src/x_dialog.c:3630
+#: src/x_dialog.c:3647
 msgid "S_elect the schematics you want to save:"
 msgstr ""
 
-#: src/x_dialog.c:3724
+#: src/x_dialog.c:3741
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr ""
 
-#: src/x_dialog.c:3730
+#: src/x_dialog.c:3747
 #, c-format
 msgid ""
 "There is %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 
-#: src/x_dialog.c:3759
+#: src/x_dialog.c:3776
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
 
-#: src/x_dialog.c:3779
+#: src/x_dialog.c:3796
 msgid "_Close without saving"
 msgstr ""
 
@@ -1942,12 +1933,21 @@ msgstr "開く..."
 msgid "Save as..."
 msgstr "別名で保存..."
 
-#: src/x_image.c:363
+#: src/x_image.c:189
+msgid "Encapsulated Postscript"
+msgstr ""
+
+#: src/x_image.c:315
+#, c-format
+msgid "x_image_lowlevel: Unable to write eps file %s.\n"
+msgstr ""
+
+#: src/x_image.c:407
 #, c-format
 msgid "x_image_lowlevel: Unable to write %s file %s.\n"
 msgstr ""
 
-#: src/x_image.c:373
+#: src/x_image.c:417
 #, c-format
 msgid ""
 "There was the following error when saving image with type %s to filename:\n"
@@ -1956,31 +1956,31 @@ msgid ""
 "%s.\n"
 msgstr ""
 
-#: src/x_image.c:392 src/x_image.c:423
+#: src/x_image.c:436 src/x_image.c:468
 #, c-format
 msgid "Wrote color image to [%s] [%d x %d]\n"
 msgstr "カラーイメージを出力しました。[%s] [%d x %d]\n"
 
-#: src/x_image.c:394 src/x_image.c:425
+#: src/x_image.c:438 src/x_image.c:470
 #, c-format
 msgid "Wrote black and white image to [%s] [%d x %d]\n"
 msgstr "白黒イメージを出力しました。[%s] [%d x %d]\n"
 
-#: src/x_image.c:404
+#: src/x_image.c:448
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"
 msgstr ""
 
-#: src/x_image.c:459
+#: src/x_image.c:504
 #, fuzzy
 msgid "Width x Height"
 msgstr "幅 x 高さ"
 
-#: src/x_image.c:475
+#: src/x_image.c:520
 #, fuzzy
 msgid "Image type"
 msgstr "ページ"
 
-#: src/x_log.c:231
+#: src/x_log.c:235
 msgid "Status"
 msgstr "ステータス"
 
@@ -2081,204 +2081,213 @@ msgstr ""
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
 msgstr ""
 
-#: src/x_multiattrib.c:652
+#: src/x_menus.c:479
+#, fuzzy, c-format
+msgid "Couldn't open file %s\n"
+msgstr "おっと、ディレクトリが開けません: %s\n"
+
+#: src/x_menus.c:537
+msgid "Clear"
+msgstr "クリア"
+
+#: src/x_multiattrib.c:655
 msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr ""
 
-#: src/x_multiattrib.c:1164
+#: src/x_multiattrib.c:1144
 msgid "Show Value only"
 msgstr "値のみ表示"
 
-#: src/x_multiattrib.c:1166
+#: src/x_multiattrib.c:1146
 msgid "Show Name only"
 msgstr "名前のみ表示"
 
-#: src/x_multiattrib.c:1192
+#: src/x_multiattrib.c:1172
 msgid "Duplicate"
 msgstr ""
 
-#: src/x_multiattrib.c:1309
+#: src/x_multiattrib.c:1283
 msgid "Edit Attributes"
 msgstr "アトリビュート編集"
 
-#: src/x_multiattrib.c:1414
+#: src/x_multiattrib.c:1381
 msgid "Value"
 msgstr "値"
 
-#: src/x_multiattrib.c:1436
+#: src/x_multiattrib.c:1403
 msgid "Vis?"
 msgstr "表示"
 
-#: src/x_multiattrib.c:1456
+#: src/x_multiattrib.c:1423
 msgid "N"
 msgstr "名前"
 
-#: src/x_multiattrib.c:1476
+#: src/x_multiattrib.c:1443
 msgid "V"
 msgstr "値"
 
-#: src/x_multiattrib.c:1497
+#: src/x_multiattrib.c:1464
 #, fuzzy
 msgid "Add Attribute"
 msgstr "アトリビュート追加/編集"
 
-#: src/x_pagesel.c:272
+#: src/x_pagesel.c:263
 msgid "Discard Page"
 msgstr "破棄"
 
-#: src/x_pagesel.c:381
+#: src/x_pagesel.c:360
 msgid "Page Manager"
 msgstr "ページマネージャ"
 
-#: src/x_pagesel.c:437
+#: src/x_pagesel.c:416
 msgid "Filename"
 msgstr "ファイル名"
 
-#: src/x_pagesel.c:453
+#: src/x_pagesel.c:432
 #, fuzzy
 msgid "Changed"
 msgstr "変更"
 
-#: src/x_pagesel.c:473
+#: src/x_pagesel.c:452
 msgid "Right click on the filename for more options..."
 msgstr ""
 
-#: src/x_print.c:90
+#: src/x_print.c:88
 #, fuzzy
 msgid "Select PostScript Filename..."
 msgstr "名前を付けて保存..."
 
-#: src/x_print.c:206
+#: src/x_print.c:170
 msgid "Extents with margins"
 msgstr ""
 
-#: src/x_print.c:212
+#: src/x_print.c:176
 msgid "Extents no margins"
 msgstr ""
 
-#: src/x_print.c:218
+#: src/x_print.c:182
 msgid "Current Window"
 msgstr "現在のウィンドウ"
 
-#: src/x_print.c:252
+#: src/x_print.c:216
 msgid "Landscape"
 msgstr "ランドスケープ"
 
-#: src/x_print.c:258
+#: src/x_print.c:222
 msgid "Portrait"
 msgstr "ポートレイト"
 
-#: src/x_print.c:330
+#: src/x_print.c:290
 msgid "Settings"
 msgstr ""
 
-#: src/x_print.c:342
+#: src/x_print.c:302
 #, fuzzy
 msgid "Output paper size:"
 msgstr "出力用紙サイズ"
 
-#: src/x_print.c:364
+#: src/x_print.c:324
 #, fuzzy
 msgid "Orientation:"
 msgstr "オリエンテーション"
 
-#: src/x_print.c:376
+#: src/x_print.c:336
 #, fuzzy
 msgid "Destination"
 msgstr "ドキュメント表示/検索"
 
-#: src/x_print.c:389
+#: src/x_print.c:349
 #, fuzzy
 msgid "File:"
 msgstr "ファイル"
 
-#: src/x_print.c:419
+#: src/x_print.c:379
 msgid "Command:"
 msgstr ""
 
-#: src/x_print.c:785
+#: src/x_print.c:749
 msgid "No print destination specified\n"
 msgstr ""
 
-#: src/x_print.c:792
+#: src/x_print.c:756
 #, c-format
 msgid "Cannot print current schematic to [%s]\n"
 msgstr "現在のスケマチックを印刷できません。[%s]\n"
 
-#: src/x_print.c:801
+#: src/x_print.c:765
 #, c-format
 msgid ""
 "Error printing to file '%s'\n"
 "Check the log window for more information"
 msgstr ""
 
-#: src/x_print.c:808
+#: src/x_print.c:772
 #, c-format
 msgid "Printed current schematic to [%s]\n"
 msgstr "現在のスケマチックを印刷しました。[%s]\n"
 
-#: src/x_window.c:176
+#: src/x_window.c:175
 msgid "black"
 msgstr "黒"
 
-#: src/x_window.c:185
+#: src/x_window.c:184
 msgid "white"
 msgstr "白"
 
-#: src/x_window.c:219
+#: src/x_window.c:218
 #, c-format
 msgid "Couldn't allocate gc\n"
 msgstr ""
 
-#: src/x_window.c:232
+#: src/x_window.c:231
 #, c-format
 msgid "Couldn't allocate xor_gc\n"
 msgstr ""
 
-#: src/x_window.c:245
+#: src/x_window.c:244
 #, c-format
 msgid "Couldn't allocate outline_xor_gc\n"
 msgstr ""
 
-#: src/x_window.c:261
+#: src/x_window.c:260
 #, c-format
 msgid "Couldn't allocate bounding_xor_gc\n"
 msgstr ""
 
-#: src/x_window.c:268
+#: src/x_window.c:267
 #, c-format
 msgid "Couldn't allocate bus_gc\n"
 msgstr ""
 
-#: src/x_window.c:494
+#: src/x_window.c:499
 msgid "New file"
 msgstr "新規ファイル"
 
-#: src/x_window.c:500
+#: src/x_window.c:505
 msgid "Open"
 msgstr "開く"
 
-#: src/x_window.c:501
+#: src/x_window.c:506
 msgid "Open file..."
 msgstr "ファイルを開く..."
 
-#: src/x_window.c:507
+#: src/x_window.c:512
 msgid "Save"
 msgstr "保存"
 
-#: src/x_window.c:508
+#: src/x_window.c:513
 msgid "Save file"
 msgstr "ファイルを保存"
 
-#: src/x_window.c:516
+#: src/x_window.c:521
 msgid "Undo last operation"
 msgstr "アンドゥ"
 
-#: src/x_window.c:523
+#: src/x_window.c:528
 msgid "Redo last undo"
 msgstr "リドゥ"
 
-#: src/x_window.c:532
+#: src/x_window.c:537
 msgid ""
 "Add component...\n"
 "Select library and component from list, move the mouse into main window, "
@@ -2290,7 +2299,7 @@ msgstr ""
 "クリックすると、配置します。\n"
 "右ボタンでキャンセルします。"
 
-#: src/x_window.c:542
+#: src/x_window.c:547
 msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
@@ -2298,7 +2307,7 @@ msgstr ""
 "ネット追加モード\n"
 "右ボタンでキャンセル"
 
-#: src/x_window.c:552
+#: src/x_window.c:557
 msgid ""
 "Add buses mode\n"
 "Right mouse button to cancel"
@@ -2306,75 +2315,79 @@ msgstr ""
 "バス追加モード\n"
 "右ボタンでキャンセル"
 
-#: src/x_window.c:559
+#: src/x_window.c:564
 msgid "Text"
 msgstr "テキスト"
 
-#: src/x_window.c:560
+#: src/x_window.c:565
 msgid "Add Text..."
 msgstr "テキスト追加..."
 
-#: src/x_window.c:570
+#: src/x_window.c:575
 msgid "Select"
 msgstr "選択"
 
-#: src/x_window.c:571
+#: src/x_window.c:576
 msgid "Select mode"
 msgstr "選択モード"
 
-#: src/x_window.c:646
+#: src/x_window.c:651
 msgid "Pick"
 msgstr "ピック"
 
-#: src/x_window.c:662
+#: src/x_window.c:667
 msgid "Repeat/none"
 msgstr "繰り返し/なし"
 
-#: src/x_window.c:672
+#: src/x_window.c:677
 msgid "Menu/Cancel"
 msgstr "メニュー/キャンセル"
 
-#: src/x_window.c:674
+#: src/x_window.c:679
 msgid "Pan/Cancel"
 msgstr "パン/キャンセル"
 
-#: src/x_window.c:932
+#: src/x_window.c:936
 #, c-format
 msgid "Loading schematic [%s]\n"
 msgstr "スケマチックを読み込んでいます。[%s]\n"
 
-#: src/x_window.c:1034
+#: src/x_window.c:1038
 #, fuzzy, c-format
 msgid "Could NOT save page [%s]\n"
 msgstr "保存できません。[%s]\n"
 
-#: src/x_window.c:1035
+#: src/x_window.c:1039
 msgid "Error while trying to save"
 msgstr "保存中にエラー発生"
 
-#: src/x_window.c:1044
+#: src/x_window.c:1048
 #, fuzzy, c-format
 msgid "Saved as [%s]\n"
 msgstr "[%s]として保存しました。\n"
 
-#: src/x_window.c:1046
+#: src/x_window.c:1050
 #, c-format
 msgid "Saved [%s]\n"
 msgstr "保存しました。[%s]\n"
 
-#: src/x_window.c:1048
+#: src/x_window.c:1052
 msgid "Saved"
 msgstr "保存しました。"
 
-#: src/x_window.c:1109
+#: src/x_window.c:1113
 #, c-format
 msgid "Discarding page [%s]\n"
 msgstr "ページを破棄しています。[%s]\n"
 
-#: src/x_window.c:1109
+#: src/x_window.c:1113
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "閉じています。[%s]\n"
+
+#, fuzzy
+#~ msgid "Component still embedded and not updated\n"
+#~ msgstr "この部品はすでに組み込まれています。\n"
 
 #~ msgid "Write PNG..."
 #~ msgstr "PNG出力"
@@ -2487,10 +2500,6 @@ msgstr "閉じています。[%s]\n"
 #~ "\n"
 #~ "よろしいですか?\n"
 #~ "'了解'ですべての変更を破棄します!"
-
-#, fuzzy
-#~ msgid "Agg, could not open directory: %s\n"
-#~ msgstr "おっと、ディレクトリが開けません: %s\n"
 
 #~ msgid "Too many directories! Increase MAX_DIRS\n"
 #~ msgstr "ディレクトリが多すぎます! MAX_DIRSを増やしてください。\n"
@@ -2625,9 +2634,6 @@ msgstr "閉じています。[%s]\n"
 
 #~ msgid "Add/Edit"
 #~ msgstr "追加/編集"
-
-#~ msgid "Clear"
-#~ msgstr "クリア"
 
 #~ msgid "Open Page"
 #~ msgstr "開く"

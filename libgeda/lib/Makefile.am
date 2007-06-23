@@ -1,6 +1,6 @@
 
 rcdatadir = @GEDARCDIR@
-rcdata_DATA = system-gafrc
+dist_rcdata_DATA = system-gafrc
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
