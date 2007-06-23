@@ -553,7 +553,6 @@ struct st_toplevel {
   GtkWidget *cswindow;			/* component select */
   GtkWidget *clib_list;
   GtkWidget *basename_list;
-  CLibSymbol *current_clib;
 
   GtkWidget *iwindow;			/* image write dialog box */
   GtkWidget *ifilename_entry; 

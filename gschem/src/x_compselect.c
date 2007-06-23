@@ -112,8 +112,6 @@ x_compselect_callback_response (GtkDialog *dialog,
           break;
         }
                 
-	toplevel->current_clib = symbol;
-        
 	if (toplevel->event_state == ENDCOMP) {
           gint diff_x, diff_y;
 
@@ -128,7 +126,7 @@ x_compselect_callback_response (GtkDialog *dialog,
 	g_list_free(toplevel->page_current->complex_place_list);
 	toplevel->page_current->complex_place_list = NULL;
 	
-	o_complex_set_filename(toplevel, toplevel->current_clib, NULL);
+	o_complex_set_filename(toplevel, symbol, NULL);
         
 	toplevel->event_state = DRAWCOMP;
 

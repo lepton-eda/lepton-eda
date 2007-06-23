@@ -209,7 +209,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->cswindow      = NULL;
   toplevel->clib_list     = NULL;
   toplevel->basename_list = NULL;
-  toplevel->current_clib = NULL;
 /*   toplevel->current_basename 	 */
 
 /*   toplevel->fileselect */
