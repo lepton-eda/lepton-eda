@@ -608,7 +608,7 @@ msgstr "Kan niet afsplitsen\n"
 #: src/i_callbacks.c:146
 #, c-format
 msgid "Could not invoke %s\n"
-msgstr "Kan %s niet aanroepen %s\n"
+msgstr "Kan %s niet aanroepen\n"
 
 #: src/g_funcs.c:363
 #: src/i_callbacks.c:150
