@@ -23,10 +23,6 @@ AM_MAINTAINER_MODE
 #########################################################################
 # Command line flags start
 # 
-# --enable-gd : turn off libgd support
-no_gd="yes"
-AC_ARG_ENABLE(gd, [  --enable-gd         Enable libgd support (use libgd instead of gdk-pixbuf)], 
-  [ if test $enableval = "yes"; then no_gd=no; fi ])
 
 # Change default location for rc files
 AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
@@ -106,53 +102,6 @@ AC_CHECK_LIB(m, rint, AC_DEFINE(HAS_RINT, 1, [If your math library has rint in i
 AC_CHECK_LIB(dl, dlopen, DL_LIB="-ldl", DL_LIB="")
 #
 # Check for mics things start
-############################################################################
-
-############################################################################
-# Check for libgd start
-# 
-LIBGEDA_HASGD=no
-if test "X$no_gd" != "Xyes"  ; then
-
-	AC_PATH_PROG(LIBGDCONFIG, gdlib-config, no, ${PATH})
-
-	if test "$LIBGDCONFIG" = "no" ; then
-		AC_MSG_WARN([Cannot find gdlib-config.
-Make sure it is installed and in your PATH.
-Libgeda will be built using the builtin png support.  gdlib-config is part 
-of the GD library available from www.boutell.com/gd.  This is needed for 
-png export using libgd, however png support is available without libgd. 
-])
-		GD_CFLAGS=
-		GD_LIBS=
-		GD_VERSION=
-		GD="no"
-		LIBGEDA_HASGD=no
-
-	else
-		GD_CFLAGS=`$LIBGDCONFIG --cflags`
-		GD_LIBS1=`$LIBGDCONFIG --ldflags`
-		GD_LIBS2=`$LIBGDCONFIG --libs`
-		GD_LIBS="$GD_LIBS1 $GD_LIBS2 -lgd"
-		GD_VERSION=`$LIBGDCONFIG --version`
-		GD="yes"
-		LIBGEDA_HASGD=yes
-
-		# This is not really used to figure out paths, but just to make 
-		# sure >= 2.0.15 is installed
-		# PKG_CHECK_MODULES(libgd, libgd >= 2.0.15)
-		AC_DEFINE(HAS_LIBGD, 1, [If gd has been installed, define this])
-	fi
-else
-	GD_CFLAGS=
-	GD_LIBS=
-	GD_VERSION=
-	GD="no"
-	LIBGEDA_HASGD=no
-fi
-
-# 
-# Check for libgd end
 ############################################################################
 
 ############################################################################
@@ -286,7 +235,7 @@ fi
 
 
 ############################################################################
-# Check for doxygen, indent start
+# Check for doxygen start
 # 
 
 # Doxygen is a utility for generating html and latex documentation
@@ -321,27 +270,8 @@ fi
 # using conditionnal in docs/Makefile.in
 AM_CONDITIONAL(BUILDDOC, test x$builddoc = xtrue)
 
-# search for indent
-AC_PATH_PROG(INDENT, indent, no, ${PATH})
-
-if ! test "$INDENT" = "no"; then 
-   indentversion=`$INDENT --version | grep GNU`
-else 
-   indentversion=
-fi
-
-if test "$INDENT" = "no" -o "$indentversion"x = x; then 
-  AC_PATH_PROG(GINDENT, gindent, no, ${PATH})
-  if test "$GINDENT" = "no"; then 
-    echo "** Cannot find GNU indent or gindent, C code formatting disabled **"
-    INDENT=echo
-  else
-    INDENT=$GINDENT
-  fi
-fi
-
 # 
-# Check for doxygen, indent end
+# Check for doxygen end
 #########################################################################
 
 #########################################################################
@@ -506,7 +436,6 @@ AC_MSG_RESULT([
    GTK+ library version:             $GTK_VERSION
    GUILE library version:            $GUILE_VERSION
    GDK-PIXBUF (png output):          $GDK_PIXBUF_VERSION
-   libgd (png output):               $GD $GD_VERSION
    mingw build:                      $MINGW
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR

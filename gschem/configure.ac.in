@@ -28,12 +28,6 @@ AC_ARG_ENABLE(stroke,
 	 no_stroke=yes
         fi ])
 
-# --disable-gd : turn off libgd support
-AC_ARG_ENABLE(gd,
-    [  --disable-gd        Disable libgd support (don't use libgd at all)], [ if test $enableval = "no"; then
-	    no_gd=yes
-           fi ])
-
 # Change default location for rc files
 AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
 
@@ -249,35 +243,6 @@ fi
 ############################################################################
 
 ############################################################################
-# Check for libgd start
-# Do some very simple tests, as we just need to know if libgeda was
-# built with libgd support.
-#
-
-if test "X$no_gd" != "Xyes"; then
-	AC_MSG_CHECKING([if libgeda was compiled with gdlib])
-	haslibgd=`$PKG_CONFIG --variable=LIBGEDA_HASGD libgeda`
-	if test "$haslibgd" != "yes"; then
-		AC_MSG_WARN([libgeda was not built with libgd png support.
-gschem will use the builtin png support.  If you want libgd png support, you 
-must recompile libgeda with gdlib support.])
-		LIBGD=no
-	else
-		AC_MSG_RESULT([yes])
-		LIBGD=yes
-		AC_DEFINE(HAS_LIBGD, 1, [If gd has been installed, define this])
-	fi
-else
-	LIBGD=no
-fi
-
-
-# 
-# Check for libgd end
-############################################################################
-
-
-############################################################################
 # Check for libstroke start
 #
 
@@ -323,7 +288,7 @@ fi
 ############################################################################
 
 ############################################################################
-# Check for doxygen, indent start
+# Check for doxygen start
 # 
 # Doxygen is a utility for generating html and latex documentation
 # from c source code files.
@@ -357,27 +322,8 @@ fi
 # using conditionnal in docs/Makefile.in
 AM_CONDITIONAL(BUILDDOC, test x$builddoc = xtrue)
 
-# search for indent
-AC_PATH_PROG(INDENT, indent, no, ${PATH})
-
-if ! test "$INDENT" = "no"; then 
-   indentversion=`$INDENT --version | grep GNU`
-else 
-   indentversion=
-fi
-
-if test "$INDENT" = "no" -o "$indentversion"x = x; then 
-  AC_PATH_PROG(GINDENT, gindent, no, ${PATH})
-  if test "$GINDENT" = "no"; then 
-    echo "** Cannot find GNU indent or gindent, C code formatting disabled **"
-    INDENT=echo
-  else
-    INDENT=$GINDENT
-  fi
-fi
-
 # 
-# Check for doxygen, indent end
+# Check for doxygen end
 #########################################################################
 
 #########################################################################
@@ -582,7 +528,6 @@ AC_MSG_RESULT([
    GUILE library version:            $GUILE_VERSION
    libgeda library version:          $LIBGEDA_VERSION
    libstroke library:                $LIBSTROKE
-   libgd library:                    $LIBGD
    mingw build:                      $MINGW
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR
