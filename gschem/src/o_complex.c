@@ -431,7 +431,8 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 
   /*! \todo redraw has to happen at the end of all this hack or
    * maybe not? */
-  g_list_free(w_current->page_current->complex_place_list);
+  s_delete_object_glist(w_current, w_current->page_current->
+                        complex_place_list);
   w_current->page_current->complex_place_list = NULL;
 
   /* This doesn't allow anything else to be in the selection
