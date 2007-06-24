@@ -299,8 +299,7 @@ void o_text_erase(TOPLEVEL *w_current, OBJECT *o_current)
  */
 void o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  int screen_x1, screen_y1;
-  int width, height;
+  int top, bottom, left, right;
   int color, factor;
 
   if (o_current->visibility == INVISIBLE && !w_current->show_hidden_text) {
@@ -317,7 +316,9 @@ void o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
     /* text is too small so go through and draw a line in
        it's place */
 
-    WORLDtoSCREEN( w_current, o_current->text->x, o_current->text->y, &screen_x1, &screen_y1 );
+    /* NOTE THAT THE TOP AND BOTTOM ARE REVERSED THROUGHT THE WHOLE OF GEDA FOR WORLD COORDS */
+    WORLDtoSCREEN( w_current, o_current->w_left, o_current->w_bottom, &left, &top );
+    WORLDtoSCREEN( w_current, o_current->w_right, o_current->w_top, &right, &bottom );
 
     if (o_current->saved_color != -1) {
       color = o_current->saved_color;
@@ -328,59 +329,13 @@ void o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
     gdk_gc_set_foreground(w_current->outline_xor_gc,
                           x_get_darkcolor(color));
 
-#if 0
-    width = SCREENabs(w_current, o_text_width(w_current, 
-                                               o_current->text->string,
-                                               o_current->text->size/2)); 
-    height = SCREENabs(w_current, o_text_height(o_current->text->string,
-						o_current->text->size));
-#endif
-
-    width = SCREENabs(w_current, o_current->text->displayed_width);
-    height = SCREENabs(w_current, o_current->text->displayed_height);
-
-    switch(o_current->text->angle) {
-      case(0):
-	gdk_draw_rectangle(w_current->window,
-			   w_current->outline_xor_gc,
-			   FALSE,
-			   screen_x1+dx,
-			   screen_y1+dy-height,
-			   width,
-			   height);
-        break;
-
-      case(90):
-	gdk_draw_rectangle(w_current->window,
-			   w_current->outline_xor_gc,
-			   FALSE,
-			   screen_x1+dx-height,
-			   screen_y1+dy-width,
-			   height,
-			   width);
-        break;
-
-      case(180):
-	gdk_draw_rectangle(w_current->window,
-			   w_current->outline_xor_gc,
-			   FALSE,
-			   screen_x1+dx-width,
-			   screen_y1+dy,
-			   width,
-			   height);
-
-        break;
-
-      case(270):
-	gdk_draw_rectangle(w_current->window,
-			   w_current->outline_xor_gc,
-			   FALSE,
-			   screen_x1+dx,
-			   screen_y1+dy,
-			   height,
-			   width);
-        break;
-    }
+    gdk_draw_rectangle( w_current->window,
+                        w_current->outline_xor_gc,
+                        FALSE,
+                        left+dx,
+                        top+dy,
+                        right - left,
+                        bottom - top );
   }
 }
 
