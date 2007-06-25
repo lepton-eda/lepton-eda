@@ -1,7 +1,5 @@
-;;; $Id$
-;;;
-;;; gEDA - GNU Electronic Design Automation
-;;; gnetlist - GNU Netlist
+;;; gEDA - GPL Electronic Design Automation
+;;; gnetlist - gEDA Netlist
 ;;; Backend for propagating pin names from gschem to footprints in pcb
 ;;; Copyright (C) 2005 Dan McMahill
 ;;;

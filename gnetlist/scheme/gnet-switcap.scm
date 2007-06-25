@@ -1,6 +1,4 @@
-;;; $Id$
-;;;
-;;; gEDA - GNU Electronic Design Automation
+;;; gEDA - GPL Electronic Design Automation
 ;;;
 ;;; Copyright (C) 2003, 2005 Dan McMahill
 ;;;
