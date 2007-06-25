@@ -170,38 +170,6 @@ int s_color_image_int(int color)
  *  \par Function Description
  *
  */
-/* \bug I have no idea if this causes a memory leak or not */
-void s_color_gdcolor_init(void)
-{
-  int i;
-
-  for (i = 0; i < MAX_COLORS; i++) {
-
-    if (colors[i].image_red != -1 && colors[i].image_green != -1 &&
-        colors[i].image_blue != -1) {
-#ifdef HAS_LIBGD
-      colors[i].image_color = gdImageColorAllocate(
-                                                   current_im_ptr, 
-                                                   colors[i].image_red,
-                                                   colors[i].image_green,
-                                                   colors[i].image_blue);
-#endif
-
-#if DEBUG
-      printf("%d) %d %d %d -> %d\n", i,
-             colors[i].image_red,
-             colors[i].image_green,
-             colors[i].image_blue, colors[i].image_color);
-#endif
-    }
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 int s_color_get_name(int index, char *string)
 {
   if (index > MAX_COLORS) {

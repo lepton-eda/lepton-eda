@@ -23,10 +23,6 @@
 #include <gtk/gtk.h>
 #include <libguile.h>
 
-#ifdef HAS_LIBGD
-#include <gd.h>
-#endif
-
 #include "defines.h"
 #include "struct.h"
 #include "globals.h"
@@ -1468,94 +1464,4 @@ void o_box_print_hatch(TOPLEVEL *w_current, FILE *fp,
   }
 }
 
-#if 0 /* original way of printing box, no longer used */
-/*! \brief Print BOX to Postscript document using old method.
- *  \par Function Description
- *  This function is the old function to print a box. It does not handle line
- *  type and filling of a box.
- *
- *  \param [in] w_current  The TOPLEVEL object.
- *  \param [in] fp         FILE pointer to Postscript document.
- *  \param [in] origin_x   Page x coordinate to place BOX OBJECT.
- *  \param [in] origin_y   Page x coordinate to place BOX OBJECT.
- */
-void o_box_print_old(TOPLEVEL *w_current, FILE *fp,
-		     int origin_x, int origin_y)
-{
-  int width, height;
-  int x1, y1;
-  if (o_current == NULL) {
-    printf("got null in o_box_print\n");
-    return;
-  }
 
-  if (w_current->print_color) {
-    f_print_set_color(fp, o_current->color);
-  }
-
-
-  width = abs(o_current->line_points->x2 - o_current->line_points->x1); 
-  height = abs(o_current->line_points->y1 - o_current->line_points->y2);
-
-  x1 = o_current->line_points->x1;
-  y1 = o_current->line_points->y1-height; /* move the origin to 0, 0*/
-
-  fprintf(fp, "newpath\n");
-  fprintf(fp, "%d mils %d mils moveto\n", x1-origin_x, y1-origin_y);
-  fprintf(fp, "%d mils %d mils box\n", width, height);
-
-}
-#endif
-
-/*! \brief Draw a box in an image.
- *  \par Function Description
- *  This function draws a box in an image with the libgd function
- *  #gdImageRectangle().
- *
- *  \param [in] w_current   The TOPLEVEL object.
- *  \param [in] o_current   BOX OBJECT to draw.
- *  \param [in] origin_x    (unused).
- *  \param [in] origin_y    (unused).
- *  \param [in] color_mode  Draw box in color if TRUE, B/W otherwise.
- */
-void o_box_image_write(TOPLEVEL *w_current, OBJECT *o_current, 
-		       int origin_x, int origin_y, int color_mode)
-{
-#ifdef HAS_LIBGD
-  int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
-#endif
-  int color;
-
-  if (o_current == NULL) {
-    printf("got null in o_box_image_write\n");
-    return;
-  }
-
-
-  if (color_mode == TRUE) {
-    color = o_image_geda2gd_color(o_current->color);
-  } else {
-    color = image_black;
-  }
-
-#ifdef HAS_LIBGD
-
-  WORLDtoSCREEN(w_current, 
-                o_current->box->upper_x,
-                o_current->box->upper_y,
-                &s_upper_x, &s_upper_y);
-  WORLDtoSCREEN(w_current, 
-                o_current->box->lower_x,
-                o_current->box->lower_y,
-                &s_lower_x, &s_lower_y);
-
-  gdImageSetThickness(current_im_ptr, SCREENabs(w_current,
-                                                o_current->line_width));
-
-  gdImageRectangle(current_im_ptr, 
-                   s_upper_x, s_upper_y,
-                   s_lower_x, s_lower_y,
-                   color);
-
-#endif /* HAS_GD */
-}

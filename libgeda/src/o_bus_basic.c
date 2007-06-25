@@ -26,10 +26,6 @@
 #include <gtk/gtk.h>
 #include <libguile.h>
 
-#ifdef HAS_LIBGD
-#include <gd.h>
-#endif
-
 #include "defines.h"
 #include "struct.h"
 #include "globals.h"
@@ -326,47 +322,6 @@ void o_bus_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   fprintf(fp, "%d %d %d %d %d line\n",
 	  x1,y1,x2,y2,bus_width);
 
-}
-
-/* \brief
- * \par Function Description
- *
- */
-void o_bus_image_write(TOPLEVEL *w_current, OBJECT *o_current,
-		       int origin_x, int origin_y, int color_mode)
-{
-#ifdef HAS_LIBGD
-  int x[2], y[2];
-#endif
-  int color;
-
-  if (o_current == NULL) {
-    printf("got null in o_bus_image_write\n");
-    return;
-  }
-
-  if (color_mode == TRUE) {
-    color = o_image_geda2gd_color(o_current->color);
-  } else {
-    color = image_black;
-  }
-
-#ifdef HAS_LIBGD
-
-  WORLDtoSCREEN(w_current,
-                o_current->line->x[0],
-                o_current->line->y[0],
-                &x[0], &y[0]);
-  WORLDtoSCREEN(w_current,
-                o_current->line->x[1],
-                o_current->line->y[1],
-                &x[1], &y[1]);
-
-  gdImageSetThickness(current_im_ptr, SCREENabs(w_current, BUS_WIDTH));
-
-  gdImageLine(current_im_ptr, x[0], y[0], x[1], y[1], color);
-
-#endif
 }
 
 

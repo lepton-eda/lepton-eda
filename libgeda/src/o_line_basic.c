@@ -24,9 +24,6 @@
 #include <gtk/gtk.h>
 #include <libguile.h>
 
-#ifdef HAS_LIBGD
-#include <gd.h>
-#endif
 
 #include "defines.h"
 #include "struct.h"
@@ -1184,94 +1181,6 @@ void o_line_print_phantom(TOPLEVEL *w_current, FILE *fp,
   fprintf(fp,"] %d dashed\n", line_width);
 }
 
-#if 0 /* original way of printing line, no longer used */
-/*! \brief Print line to Postscript document using old method.
- *  \par Function Description
- *  This function is the old function to print a line.
- *  It does not handle line type.
- *
- *  \param [in] w_current  The TOPLEVEL object.
- *  \param [in] fp         FILE pointer to Postscript document.
- *  \param [in] o_current  Line object to print.
- *  \param [in] origin_x   Page x coordinate to place line OBJECT.
- *  \param [in] origin_y   Page x coordinate to place line OBJECT.
- */
-void o_line_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
-		      int origin_x, int origin_y)
-{
-  if (o_current == NULL) {
-    printf("got null in o_line_print\n");
-    return;
-  }
-
-  if (w_current->print_color) {
-    f_print_set_color(fp, o_current->color);
-  }
-
-  fprintf(fp, "newpath\n");
-
-  fprintf(fp, "%d mils %d mils moveto\n",
-          o_current->line_points->x1-origin_x,
-          o_current->line_points->y1-origin_y);
-  fprintf(fp, "%d mils %d mils lineto\n", 
-          o_current->line_points->x2-origin_x,
-          o_current->line_points->y2-origin_y);
-  fprintf(fp, "stroke\n");
-
-}
-#endif
-
-/*! \brief Draw a line in an image.
- *  \par Function Description
- *  This function draws a line in an image with the libgd function
- *  #gdImageLine().
- *
- *  \param [in] w_current   The TOPLEVEL object.
- *  \param [in] o_current   Line OBJECT to draw.
- *  \param [in] origin_x    (unused).
- *  \param [in] origin_y    (unused).
- *  \param [in] color_mode  Draw line in color if TRUE, B/W otherwise.
- */
-
-void o_line_image_write(TOPLEVEL *w_current, OBJECT *o_current, 
-			int origin_x, int origin_y, int color_mode)
-{
-#ifdef HAS_LIBGD
-  int x[2], y[2];
-#endif
-  int color;
-
-  if (o_current == NULL) {
-    printf("got null in o_line_print\n");
-    return;
-  }
-
-  if (color_mode == TRUE) {
-    color = o_image_geda2gd_color(o_current->color);
-  } else {
-    color = image_black;
-  }
-
-#ifdef HAS_LIBGD
-
-  WORLDtoSCREEN(w_current,
-                o_current->line->x[0],
-                o_current->line->y[0],
-                &x[0], &y[0]);
-  WORLDtoSCREEN(w_current,
-                o_current->line->x[1],
-                o_current->line->y[1],
-                &x[1], &y[1]);
-
-  gdImageSetThickness(current_im_ptr, SCREENabs(w_current, 
-					        o_current->line_width));
-
-  gdImageLine(current_im_ptr, 
-              x[0], y[0],
-              x[1], y[1],
-              color);
-#endif
-}
 
 /*! \brief
  *  \par Function Description

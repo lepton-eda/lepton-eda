@@ -96,76 +96,6 @@ void s_cue_postscript_fillcircle(TOPLEVEL * w_current, FILE * fp,
   fprintf(fp, "fill\n");
 }
 
-#ifdef HAS_LIBGD
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void s_cue_image_fillbox(TOPLEVEL * w_current, OBJECT * object, int world_x,
-			 int world_y)
-{
-  int endpoint_color;
-  int offset, offset2;
-  int x, y;
-
-  if (w_current->image_color == TRUE) {
-    endpoint_color =
-      o_image_geda2gd_color(w_current->net_endpoint_color);
-  } else {
-    endpoint_color = image_black;
-  }
-
-  WORLDtoSCREEN(w_current, world_x, world_y, &x, &y);
-
-  offset = SCREENabs(w_current, CUE_BOX_SIZE);
-  offset2 = offset * 2;
-
-  gdImageFilledRectangle(current_im_ptr,
-                         x - offset, y - offset, x - offset + offset2,
-                         y - offset + offset2, endpoint_color);
-
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void s_cue_image_fillcircle(TOPLEVEL * w_current, int world_x, int world_y,
-                            int size_flag)
-{
-  int endpoint_color;
-  int offset, offset2;
-  int i;
-  int x, y;
-
-  if (w_current->image_color == TRUE) {
-    endpoint_color =
-      o_image_geda2gd_color(w_current->net_endpoint_color);
-  } else {
-    endpoint_color = image_black;
-  }
-
-  WORLDtoSCREEN(w_current, world_x, world_y, &x, &y);
-
-  /* this needs to be rewritten to be much cleaner */
-  if (!size_flag) {
-    offset = SCREENabs(w_current, 30); /* large size */
-  } else {
-    offset = SCREENabs(w_current, 10);  /* small size */
-  }
-  offset2 = offset * 2;
-
-  gdImageArc(current_im_ptr, x, y,
-             offset2 * 1.25, offset2 * 1.25, 0, 360, endpoint_color);
-
-  for (i = 0; i < offset2 * 1.25; i++) {
-    gdImageArc(current_im_ptr, x, y, i, i, 0, 360, endpoint_color);
-  }
-
-}
-#endif
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -265,10 +195,6 @@ void s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
         if (count < 1) {	/* Didn't find anything connected there */
           if (output_type == POSTSCRIPT) {
             s_cue_postscript_fillbox(w_current, fp, x, y);
-#ifdef HAS_LIBGD
-          } else if (output_type == PNG) {
-            s_cue_image_fillbox(w_current, object, x, y);
-#endif
           }
 
 
@@ -279,14 +205,6 @@ void s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
             } else {
               s_cue_postscript_fillcircle(w_current, fp, x, y, TRUE);
             }
-#ifdef HAS_LIBGD
-          } else if (output_type == PNG) {
-            if (!bus_involved) {
-              s_cue_image_fillcircle(w_current, x, y, FALSE);
-            } else {
-              s_cue_image_fillcircle(w_current, x, y, TRUE);
-            }
-#endif
           }
         }
       }
@@ -299,14 +217,6 @@ void s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
         } else {
           s_cue_postscript_fillcircle(w_current, fp, x, y, TRUE);
         }
-#ifdef HAS_LIBGD
-      } else if (output_type == PNG) {
-        if (!bus_involved) {
-          s_cue_image_fillcircle(w_current, x, y, FALSE);
-        } else {
-          s_cue_image_fillcircle(w_current, x, y, TRUE);
-        }
-#endif
       }
   }
 
@@ -348,10 +258,6 @@ void s_cue_output_lowlevel_midpoints(TOPLEVEL * w_current, OBJECT * object,
         
         if (output_type == POSTSCRIPT) {
           s_cue_postscript_fillcircle(w_current, fp, x, y, size_flag);
-#ifdef HAS_LIBGD
-        } else if (output_type == PNG) {
-          s_cue_image_fillcircle(w_current, x, y, size_flag);
-#endif
         }
         break;
     }

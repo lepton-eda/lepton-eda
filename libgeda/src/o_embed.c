@@ -23,9 +23,6 @@
 #include <gtk/gtk.h>
 #include <libguile.h>
 
-#ifdef HAS_LIBGD
-#include <gd.h>
-#endif
 #include <libgen.h>
 
 #include "defines.h"

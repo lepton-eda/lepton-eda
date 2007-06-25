@@ -23,9 +23,6 @@
 #include <gtk/gtk.h>
 #include <libguile.h>
 
-#ifdef HAS_LIBGD
-#include <gd.h>
-#endif
 
 #include "defines.h"
 #include "struct.h"
@@ -1172,85 +1169,4 @@ void o_circle_print_hatch(TOPLEVEL *w_current, FILE *fp,
   }
 }
 
-#if 0 /* original way of printing circle, no longer used */
-/*! \brief Print Circle to Postscript document using old method.
- *  \par Function Description
- *  This function is the old function to print a circle.
- *  It does not handle line type and filling of a circle.
- *
- *  \param [in] w_current  The TOPLEVEL object.
- *  \param [in] fp         FILE pointer to Postscript document.
- *  \param [in] o_current  Circle object to print.
- *  \param [in] origin_x   Page x coordinate to place circle OBJECT.
- *  \param [in] origin_y   Page x coordinate to place circle OBJECT.
- */
-void o_circle_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
-			int origin_x, int origin_y)
-{
-  if (o_current == NULL) {
-    printf("got null in o_circle_print\n");
-    return;
-  }
 
-  o_arc_print_solid(w_current, fp,
-                    o_current->circle->center_x, 
-		    o_current->circle->center_y,
-		    o_current->circle->radius,
-                    0, FULL_CIRCLE / 64,
-                    o_current->color),
-                    o_current->line_width, -1, -1,
-                    origin_x, origin_y);
-
-}
-#endif
-
-/*! \brief Draw a circle in an image.
- *  \par Function Description
- *  This function draws a circle in an image with the libgd function
- *  #gdImageArc().
- *
- *  \param [in] w_current   The TOPLEVEL object.
- *  \param [in] o_current   Circle OBJECT to draw.
- *  \param [in] origin_x    (unused).
- *  \param [in] origin_y    (unused).
- *  \param [in] color_mode  Draw circle in color if TRUE, B/W otherwise.
- */
-void o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current,
-			  int origin_x, int origin_y, int color_mode)
-{
-#ifdef HAS_LIBGD
-  int diameter;
-  int s_x, s_y;
-#endif
-  int color;
-
-  if (o_current == NULL) {
-    printf("got null in o_circle_image_write\n");
-    return;
-  }
-
-  if (color_mode == TRUE) {
-    color = o_image_geda2gd_color(o_current->color);
-  } else {
-    color = image_black;
-  }
-
-#ifdef HAS_LIBGD
-
-  diameter = SCREENabs(w_current, o_current->circle->radius)*2;
-  WORLDtoSCREEN(w_current,
-                o_current->circle->center_x,
-                o_current->circle->center_y,
-                &s_x, &s_y);
-
-  gdImageSetThickness(current_im_ptr, SCREENabs(w_current,
-                                                o_current->line_width));
-
-  gdImageArc(current_im_ptr, 
-             s_x, s_y,
-             diameter,
-             diameter,
-             0, 360, 
-             color);
-#endif
-}
