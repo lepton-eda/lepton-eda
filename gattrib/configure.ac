@@ -155,7 +155,7 @@ fi
 ############################################################################
 
 ############################################################################
-# Check for doxygen, indent start
+# Check for doxygen start
 #
 
 # Doxygen is a utility for generating html and latex documentation
@@ -190,27 +190,8 @@ fi
 # using conditionnal in docs/Makefile.in
 AM_CONDITIONAL(BUILDDOC, test x$builddoc = xtrue)
 
-# search for indent
-AC_PATH_PROG(INDENT, indent, no, ${PATH})
-
-if ! test "$INDENT" = "no"; then
-   indentversion=`$INDENT --version | grep GNU`
-else
-   indentversion=
-fi
-
-if test "$INDENT" = "no" -o "$indentversion"x = x; then
-  AC_PATH_PROG(GINDENT, gindent, no, ${PATH})
-  if test "$GINDENT" = "no"; then
-    echo "** Cannot find GNU indent or gindent, C code formatting disabled **"
-    INDENT=echo
-  else
-    INDENT=$GINDENT
-  fi
-fi
-
 #
-# Check for doxygen, indent end
+# Check for doxygen end
 #########################################################################
 
 
