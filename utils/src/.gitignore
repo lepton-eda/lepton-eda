@@ -9,3 +9,4 @@ olib
 olib.c
 gsch2pcb
 grenum
+*.o
