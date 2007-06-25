@@ -17,7 +17,7 @@
    ("!" . "excl.sym")
    ("," . "comma.sym")
    ("(" . "lparen.sym")
-   (")" . "lparen.sym")
+   (")" . "rparen.sym")
    ("-" . "minus.sym")
    ("+" . "plus.sym")
    ("#" . "pound.sym")

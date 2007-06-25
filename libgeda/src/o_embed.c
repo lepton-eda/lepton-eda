@@ -1,6 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
- * Copyright (C) 1998-2007 Ales V. Hvezda
+ * Copyright (C) 1998-2007 Ales Hvezda
+ * Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +24,6 @@
 #include <gtk/gtk.h>
 #include <libguile.h>
 
-#ifdef HAS_LIBGD
-#include <gd.h>
-#endif
 #include <libgen.h>
 
 #include "defines.h"
@@ -88,7 +86,7 @@ void o_embed(TOPLEVEL *w_current, OBJECT *o_current)
  */
 void o_unembed(TOPLEVEL *w_current, OBJECT *o_current)
 {
-  GList *symlist;
+  const CLibSymbol *sym;
   
   /* check o_current is an embedded complex */
   if (o_current->type == OBJ_COMPLEX &&
@@ -96,24 +94,14 @@ void o_unembed(TOPLEVEL *w_current, OBJECT *o_current)
   {
         
     /* search for the symbol in the library */
-    symlist = s_clib_glob (o_current->complex_basename);
+    sym = s_clib_get_symbol_by_name (o_current->complex_basename);
 
-    if (!symlist) {
+    if (sym == NULL) {
       /* symbol not found in the symbol library: signal an error */
       s_log_message ("Could not find component [%s], while trying to unembed. Component is still embedded\n",
                      o_current->complex_basename);
       
     } else {
-
-      /* set the object new clib */
-      if (g_list_next (symlist)) {
-        s_log_message ("More than one component found with name [%s]\n",
-                       o_current->complex_basename);
-        /* PB: for now, use the first directory in clibs */
-        /* PB: maybe open a dialog to select the right one? */
-      }
-      o_current->complex_clib = (CLibSymbol *) symlist->data;
-
       /* clear the embedded flag */
       o_current->complex_embedded = FALSE;
 

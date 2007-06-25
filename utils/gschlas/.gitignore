@@ -1,4 +1,5 @@
 Makefile
 Makefile.in
 .deps
-mk_verilog_syms
+gschlas
+*.o

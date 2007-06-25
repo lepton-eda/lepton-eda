@@ -1,0 +1,514 @@
+2007-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/postproc.sh, removedups.sh: Fixed/improved the wiki
+	scripts to work with the new wiki software.  Wrote a script to
+	remove duplicate images from the repository.
+
+	* wiki/*: Updated the wiki from the website
+
+	* scripts/wikifetch.sh: Updated script to exclude an export directory
+	that caused an infinite download 
+
+	* _media/Makefile.am lib/Makefile.am lib/exe/Makefile.am
+	lib/images/fileicons/Makefile.am lib/images/interwiki/Makefile.am
+	lib/plugins/Makefile.am lib/plugins/definitionlist/Makefile.am
+	lib/plugins/note/Makefile.am lib/tpl/Makefile.am
+	lib/tpl/default/Makefile.am: Fixed up Makefiles to pick up any 
+	missed files.
+
+	* gsch2pcb_tutorial/* configure.ac Makefile.am: Removed gsch2pcb
+	tutorial from CVS and install now that it is in the wiki.
+
+	* configure.ac: Updated version to 20070526 in prep for the next
+	release.
+
+2007-02-12 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* wiki/: Updated wiki snapshot from the live gEDA wiki.  Phase I 
+   	(only changed content; new content coming in next phase).
+	
+	* wiki/: Added new content. Phase II (only new content; all makefiles
+	still need to be updated; next phase).
+
+	* scripts/copywip.sh: Added some incomplete logic to copy new content
+	from wip to wiki (only works on level 1 and level 2 directories)
+
+	* wiki/: Updated Makefile.am files with new content.  
+
+2007-02-10 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Bumped package version to 20070216.
+
+2006-10-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* fileformats, gnetlist, gschem, hooks, keymapping, netattrib,
+	pads_backannotate, spice-sdb, switcap, symbols, templates,
+	tragesym_tutorial: Removed all obsolete documentation from CVS.
+	The wiki and the wiki snapshot is now the official documentation.
+
+	* attributes, cascade: Removed more obsolete documentation from CVS.
+
+2006-10-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Bumped package version to 20061020.
+
+	* wiki/*: Updated tarball copy of the wiki from the geda.seul.org
+	wiki.  Lots of various updates (many thanks to various people)
+	and now the tragesym tutorial (Thanks Werner) is now part of
+	the official documentation.
+
+	* scripts/copywip.sh, wikicommit.sh: Added a new script that makes
+	it easier to update changed files when updating the wiki
+	documentation.  Tweak to wikicommit.sh to make it easier to verify
+	that it is doing the right thing.
+
+	* wiki/*/Makefile.am: Fixed up various Makefiles that didn't quite
+	get created correctly because I didn't run the script in the right
+	directory and the script has some hardcoded directories that were
+	incorrect.  Need to fix that at some point.
+
+2006-09-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* AUTHORS: Updated file pointing people at gschem's AUTHOR file 
+	as the complete list of authors.  Merged all listed files in this
+	file into gschem's file.
+
+2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated program version to 20060906.
+
+	* wiki/: Updated to the latest version from the gEDA wiki 
+
+	* wiki/Makefile.am: Updated to include new content
+
+2006-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/populatemkfiles.sh: Added script to automatically go through
+	a directory tree and create Makefile.am files.
+
+	* wiki/*/Makefile.am: Added Makefile.am's to all wiki subdirs in
+	order to make distcheck work correctly.
+
+2006-08-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Removed the various doc program checks, since we are
+	no longer building the latex docs (the wiki snapshot is the official
+	documentation now).
+
+2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* README: Updated the README a little to be ready for the next
+	release.
+
+	* configure.ac, Makefile.am, wiki/Makefile.am: Checked in first
+	snapshot of the wiki documentation.
+
+2006-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Bumped version number to 20060821 in prep for the
+	next gEDA/gaf release.
+
+2006-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* scripts/*, configure.ac, Makefile.am: Added scripts that
+	will be used in getting and cleaning up the the wiki documentation. 
+	wikifetch.sh was written by David Hart.  Thanks!
+
+2006-06-05 Werner Hoch <werner.ho@gmx.de>
+
+	* tragesym_tutorial/*: updated the complete tragesym tutorial
+
+2006-03-02 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* gschem/gschem.tex: Oops, fixed my overzealous use of search
+	and replace. 
+
+2006-02-27 Carlos Nieves Onega <cnieves@iespana.es>
+
+        * gschem/gschem.tex: Added documentation for the new overbar 
+	feature.
+	
+2006-02-25 Carlos Nieves Onega <cnieves@iespana.es>
+	* hooks/hooks_and_scheme.txt: Added documentation for some new 
+	hooks, and the new add-attribute-to-object function.
+	
+2006-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped package version to 20060123
+
+	* README: Updated for the new year and release.
+
+2005-11-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* gsch2pcb_tutorial/transistor-guide.html: Fixed link typo. 
+
+2005-11-05 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* attributes/attributes.tex: Clarified that pinseq= is used in some
+	gnetlist backends to output the pins in increasing pin sequence.
+
+2005-09-30 Carlos Nieves Onega <cnieves@iespana.es>
+	* fileformats/fileformats.tex: Added file format information for 
+	embedded pictures.
+	
+2005-08-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* gsch2pcb_tutorial/*: Updated to Bill Wilson's latest version.
+
+2005-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* configure.ac: Bumped the package version to 20050820 which will be
+	a real snapshot.
+
+	* fileformats/fileformats.tex: Added 20050820 as a real release version
+	number.
+
+2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Updated package version to 20050814.  This is a 
+	temporary version and not a real release number.
+
+	* fileformats/fileformats.tex: Added 20050814 as a test version
+	which should not be used.
+
+2005-03-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: The changes to configure.ac added on 3/12/05 have
+	been removed.  In the distributed tarballs, it is okay to not have
+	latex installed since the docs are pre-generated.
+
+2005-03-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* gschem/gschem.tex: Removed obsolete install tests
+
+2005-03-12 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Changed script so that configure stops when one
+	of require programs is not found.
+
+2005-03-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Bumped version to 20050313
+
+	* gsch2pcb_tutorial/*: Updated tutorial to Bill Wilson's latest 
+	version.
+
+	* fileformats/fileformats.tex: Added 20050313 as a valid version
+	number
+
+	* gsch2pcb_tutorial/tutorial.html: Oops forgot a minor update to
+	get background image right.
+
+2005-02-19 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* fileformats/fileformats.tex: Added picture field description.
+
+2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* toplevel/gedadocs.html.in: Added README.sysc to html manual page
+
+	* toplevel/gedadocs.html.in: Added README.eagle to html manual page
+
+	* fileformats/fileformats.tex: Added new valid version string
+
+	* toplevel/toplevel.html.in: Background color tweak
+
+2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* configure.ac: Updated version to 20041228
+
+2004-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* attributes/attributes.tex: Added details on the symversion= 
+	attribute
+
+	* symbols/symbols.tex: Added info on the symversion= attribute and
+	some more hints/details on proper pin usage.
+
+2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20040710
+
+2004-01-17 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* config.h.in: Remove machine generated file.
+
+2004-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* fileformats/fileformats.tex: More really minor version field 
+	updates 
+
+	* configure.ac: Updated version to 20040111
+
+	* symbols/symbols.tex: Applied a patch by Dan McMahill (added some
+	more footprints). Thanks Dan.
+
+	* symbols/symbols.tex: Added a couple missing \'s to above patch
+	
+	* netattrib/netattrib.txt: Removed obsolete file from CVS.
+
+2004-01-10 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* fileformats/fileformats.tex: Fixed valid/test versions
+
+2004-01-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* toplevel/toplevel.html.in: Changed all readme to readmes
+
+	* Makefile.am, configure.ac, tragesym_tutoral/*, 
+	toplevel/toplevel.html.in: Add tragesym tutorial by Russ Dill.
+	All tutorials get installed into GEDADOCDIR/tutorials/name.
+
+	* Makefile.am, configure.ac, gsch2pcb_tutoral/*, 
+	toplevel/toplevel.html.in: Add gsch2pcb tutorial by Bill Wilson.
+	Minor cleanup (offline link fixups) to the various html files.
+
+	* attributes/attributes.tex: Added some text about setting 
+	the footprint to none and unknown.
+
+2004-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* fileformats/fileformats.tex: Added newest valid version.
+
+	* fileformats/fileformats.tex: Added some text that states
+	that the file format is copyright and under the GPL version 2.0.
+
+2004-01-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* cascade/cascade.tex and friends: Added RF Cascade symbols and
+	backend documentation by Dan McMahill.
+
+2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* attributes/Makefile.am, fileformats/Makefile.am, 
+	gnetlist/Makefile.am, gschem/Makefile.am, 
+	pads_backannotate/Makefile.am, spice-sdb/Makefile.am, 
+	switcap/Makefile.am, symbols/Makefile.am:  Misc cleanup for
+	consistency sake.
+
+	* netattrib/Makefile.am netattrib.tex: Added texified netattrib
+	mini-HOWTO.  This work was done by Dan McMahill.  Thanks.
+
+	* toplevel/gedadocs.html: Greatly expanded the toplevel documentation
+	index to include all the newly installed docs and readmes.
+
+	* toplevel/Makefile.am, gedadocs.html.in: Created an .in file
+	which is preprocessed by the configure mechanism to create the
+	toplevel .html file.  This was done so that the version string
+	can be inserted into the html file.
+
+2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* spice-sdb/*.html: Added a few missing "'s in key places and 
+	removed all absolute a href (replaced with local references)
+
+	* configure.ac: Bumped version to 20031231
+
+2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* README: Updated license text to cover everything
+
+2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* install-sh missing mkinstalldirs: Removed these files from the
+	CVS repository.
+
+	* autogen.sh: Added new script to recreate all the necessary auto*
+	files.
+
+	* Makefile.am: Remove install-sh missing mkinstalldirs when doing
+	maintainer-clean
+
+2003-11-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* symbols/symbols.tex: Added an item to the symbol creation steps.
+
+2003-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* fileformats/fileformats.tex: Added num_lines field for text
+	items.
+
+2003-10-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Updated version to something more recent, but this
+	version is not an official release.
+	
+2003-10-05 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* fileformats/fileformats.tex: Split valid vs test version numbers
+
+2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to something more recent, but this
+        version is not an official release.
+
+	* fileformats/fileformats.tex: Updated doc to talk about the new
+	fileformat version number.	
+
+2003-09-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* gnetlist/gnetlist.tex, gschem/gschem.tex: Added conversion of
+	.txt files to .tex by Dan McMahill.  Thanks. These files still
+	need to be revised, as they are quite dated.  You must have 
+	hyperref.sty installed to build the documentation now.
+
+	* gschem/gschem.txt, gnetlist/gnetlist.txt: Removed obsolete files.
+
+	* */*.tex: Added the use of hyperref.sty to all .tex files,
+	so that pdf files get hyperlinks.  Very handy.
+
+	* symbols/symbols.tex: Applied Dan McMahill's QFP and QFN patch
+	JitterBug #75 can now be closed.
+
+2003-09-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * auto* files: Updated to autoconf 2.57 and automake 1.7.6
+
+2003-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* pads_backannotate: Added Dan's documentation for the
+	backannotation script (by Dan McMahill).
+
+	* switcap/Makefile.am: Added missing *.ps to distribution
+
+	* spice-sdb: Updated to Stuart's latest doc (split into multiple
+	html files).  Thanks Stuart!
+
+	* fileformats/fileformats.tex: Added valid version to version list
+
+	* */Makefile.am: Added a few - to some rm commands which are allowed
+	to fail.
+
+2003-08-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* attributes/attributes.tex: Merged author= and email= together.
+	Suggestion by Werner Hoch.
+
+2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Improved the configuration summary message.
+
+2003-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Renamed from configure.in
+
+	* configure.ac: Minor tweeks to get this file up to snuff.
+	
+	* *.in, *.h, etc: Removed a bunch of old unneeded auto* files.
+	
+2003-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* docs/symbols/symbols.tex: Added blurb about pin order (LSB to MSB)
+
+	* configure.in: Applied Wojciech Kazubski's --with-docdir patch
+
+2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Updated version
+
+2003-04-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+ 	* configure.in, Makefile.am, switcap/: Integrated Dan McMahill's 
+	switcap backend (the docs). switcap is a new directory
+
+	* fileformats/fileformats.tex: Updated valid versions
+
+	* switcap/switcap.tex: Fixed a figure reference typo.  
+
+	* toplevel/gedadocs.html: Added links to the switcap backend docs
+	
+	* Makefile.am, configure.in, spice-sdb/, toplevel/gedadocs.html: 
+	Integrated  Stuart Brorson's advanced spice netlister (the docs)
+
+	* switcap/Makefile.am, symbols/Makefile.am, attributes/Makefile.am,
+	fileformats/Makefile.am: Added a "-" to some rm commands so that they
+	would not fail (ignore errors)
+
+2003-02-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* fileformats/Makefile.am: Oops forgot to add eps and sch files
+	to the EXTRA_DIST variable.
+
+2003-02-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Added shell code to expand prefix and set the
+	GEDADOCDIR to the right install directory for documentation
+
+	* */Makefile.am: Changed all Makefiles to install into GEDADOCDIR
+
+	* attributes/attributes.tex: Added author=, email=, and comment=
+	attribute descriptions.
+
+2003-02-19 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* configure.in: Bumped version to 20030223
+
+2003-02-11 Egil Kvaleberg   <egil@kvaleberg.no>
+ 
+       * symbols/symbols.tex: Footprint naming conventions.
+
+       * atttribute/attribute.tex: Ref. to Footprint naming conventions.
+
+2003-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* Makefile.am: Fixed the distclean-local target.
+
+2002-12-01 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* fileformats/fileformats.tex: Finished up first draft of latex
+	version of this document.
+
+2002-11-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* aclocal.m4: Removed file from cvs.
+
+	* fileformats/fileformats.html: Applied doc patch from Egil (was
+	associated with the unapplied bus ripper support patch)
+
+	* fileformats/Makefile.am: Updated Makefile to be the latex source ->
+	everything else type.
+
+	* fileformats/fileformats.tex: Started converting html into tex.
+	Updating documentation as I go.  Not complete yet.
+	
+2002-11-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* symbols/Makefile.am, attributes/Makefile.am: Changed the mkdir
+	to an install and looped over and install all the htmls files. 
+	Also added the uninstall hook.
+
+2002-11-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Updated version to 20021103 (an official version)
+
+	* configure.in: Changed some of the AC_MSG_ERROR lines to just
+	echos, this will allow me to distribute prebuilt docs and still
+	use the configure mechanism
+
+	* symbols/Makefile.am, attributes/Makefile.am: Attempted to get
+	the dist target to include all the built documentation. 
+
+2002-10-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, Makefile.am: Updates to get things working a little
+	more smoothly
+
+	* symbols/symbols.tex, 7400a.eps, 7400b.eps: Fixed example to 
+	actually be a correct symbol (first version had a duplicate net=
+	pin value for both power and gnd).  Pointed out by Werner Hoch
+	
+	* symbols/Makefile.am, attributes.am: Further refined clean rules
+
+	* Makefile and friends: Added a bunch of subdirs with other docs
+
+	* gschem/ and gnetlist/: Added directory and appropriate txt files
+
+	* toplevel/ and toplevel/gedadocs.html: Created directory to hold
+	the toplevel index html file.  gedadocs.html is an index of all
+	documentation provided with gEDA/gaf
+
+2002-10-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in and friends: Started using automake and autoconf
+	for the docs directory
+

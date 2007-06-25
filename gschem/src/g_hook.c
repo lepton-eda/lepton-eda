@@ -1,6 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
- * Copyright (C) 1998-2000 Ales V. Hvezda
+ * Copyright (C) 1998-2007 Ales Hvezda
+ * Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -672,6 +673,7 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   gchar *comp_name;
   int x, y, angle;
   OBJECT *new_object;
+  const CLibSymbol *clib;
 
   /* Return if scm_comp_name is NULL (an empty list) or scheme's FALSE */
   if (SCM_NULLP(scm_comp_name) || 
@@ -711,16 +713,18 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
     return SCM_BOOL_F;
   }
 
+  clib = s_clib_get_symbol_by_name (comp_name);
+
   new_object 
     = page->object_tail 
-    = o_complex_add_by_name(w_current, 
-			    page->object_tail, NULL, 
-			    'C', 
-			    WHITE, 
-			    x, y, 
-			    angle, mirror,
-			    comp_name, 
-			    selectable, FALSE);
+    = o_complex_add(w_current, 
+                    page->object_tail, NULL, 
+                    'C', 
+                    WHITE, 
+                    x, y, 
+                    angle, mirror,
+                    clib, comp_name, 
+                    selectable, FALSE);
   
   /* 
    * For now, do not redraw the newly added complex, since this might cause

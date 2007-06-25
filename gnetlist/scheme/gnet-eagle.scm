@@ -1,10 +1,9 @@
-;;; $Id$
-;;;
-;;; gEDA - GNU Electronic Design Automation
-;;; gnetlist - GNU Netlist
+;;; gEDA - GPL Electronic Design Automation
+;;; gnetlist - gEDA Netlist
 ;;; Copyright (C) 2004 Braddock Gaskill (braddock@braddock.com, 
 ;;;                                      adapted PCB code to Eagle)
-;;; Copyright (C) 1998-2000 Ales V. Hvezda
+;;; Copyright (C) 1998-2007 Ales Hvezda
+;;; Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by

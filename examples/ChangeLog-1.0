@@ -1,0 +1,173 @@
+2007-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Updated version to 20070526 in prep for the next
+        release.
+
+2007-02-18 Stuart Brorson <sdb@cloud9.net>
+	* TwoStageAmp/models/Makefile.am, TwoStageAmp/Makefile.am,
+	TwoStageAmp/configure.ac:  Fixed automake stuff so the 2N3904
+	model would be installed.
+	
+2007-02-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Bumped package version to 20070216.
+
+	* RF_Amp/MSA-2643.sch, RF_Amp/Q1.sch, RF_Amp/Q2.sch,
+	TwoStageAmp/TwoStageAmp.sch, gTAG/gTAG-jtagio.sch, gTAG/gTAG-psu.sch,
+	gTAG/gTAG-ucont.sch, gTAG/gTAG.sch, lightning_detector/lightning.sch:
+	Updated schematics to get rid of symbol warnings.
+
+2007-2-10 Stuart Brorson <sdb@cloud9.net>
+	* RF_Amp/MSA-2643.sch: Removed source attribute from 
+	transistors since spice-sdb didn't like hierarchy.
+	
+2007-2-10 Stuart Brorson <sdb@cloud9.net>
+        * TwoStageAmp/:  Various fixes to bit-rot problems.
+
+2006-10-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped package version to 20061020.
+
+2006-09-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * AUTHORS: Updated file pointing people at gschem's AUTHOR file 
+        as the complete list of authors.  Merged all listed files in this
+        file into gschem's file.
+
+2006-09-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated program version to 20060906.
+
+2006-08-30 Werner Hoch	<werner.ho@gmx.de>
+
+	* configure.ac: fixed installation error. Install into docdir
+	
+	* */Makefile.am: changed for the installation
+
+2006-08-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * README: Updated the README a little to be ready for the next
+        release.
+
+2006-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version number to 20060821 in prep for the
+        next gEDA/gaf release.
+
+2006-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped package version to 20060123
+
+        * README: Updated for the new year and release.
+
+2005-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped the package version to 20050820 which will be
+        a real snapshot.
+
+2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated package version to 20050814.  This is a 
+        temporary version and not a real release number.
+
+2005-03-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version to 20050313
+
+2005-01-18 Stuart Brorson   <sdb@cloud9.net>
+
+	* RF_Amp/MSA-2643.sch:  Added "source" attributes to Q1, Q2 to enable
+	full use of hierarchy when examining schematic.
+
+	* RF_Amp/gafrc:  Added pointer to source-library for hierarchical
+	schematic browsing support.
+
+2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* RF_Amp/gafrc TwoStageAmp/gafrc lightning_detector/gafrc:
+	Added new rc to the directories and removed all other extra rc files
+
+2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20041228
+
+2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20040710
+
+2004-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20040111
+
+2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version to 20031231
+
+2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * install-sh missing mkinstalldirs: Removed these files from the
+        CVS repository.
+
+        * autogen.sh: Added new script to recreate all the necessary auto*
+        files.
+
+2003-10-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * */*.sch: Updated all example schematics
+
+        * */gschlasrc: Added in all subdirs
+
+	* configure.ac: Updated version to something more recent, but this
+	version is not an official release.
+	
+2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to something more recent, but this
+        version is not an official release.
+
+2003-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* *.sch/*.sym: Updated all sch/sym files to 20030901
+
+2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Added a configuration complete message just to be
+	consistent.
+
+2003-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Renamed from configure.in 
+
+	* configure.ac: Minor tweeks to get this file up to snuff.
+	
+	* *.in, *.h, etc: Removed a bunch of old unneeded auto* files.
+	
+2003-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lightning_detector/: Added sch/pcb example by Terry Porter.
+
+	* RF_Amp/: Added hierarchical spice example by Stuart Brorson
+
+	* TwoStageAmp/: Added another spice example by Stuart Brorson
+
+	* Makefile.am, configure.in: Added above directories
+
+	* Added a bunch of .cvsignore files
+
+2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Updated version
+
+2003-02-20  Ales Hvezda (ahvezda@seul.org)
+
+	* gTAG/commonrc: Changed how the current directory variable is
+	set (used "'s instead of ').
+
+2003-01-11  Ales Hvezda (ahvezda@seul.org)
+
+	* Created configure.in and friends.  Added all files into cvs.
+
+	* Added gTAG to examples.
+
+	* The files contained in this directory will be the example files
+	  for gEDA/gaf.

@@ -1,7 +1,5 @@
-;;; $Id$
-;;;
-;;; gEDA - GNU Electronic Design Automation
-;;; gnetlist - GNU Netlist
+;;; gEDA - GPL Electronic Design Automation
+;;; gnetlist - gEDA Netlist
 ;;; FutureNet2 backend
 ;;; Copyright (C) 2003, 2005 Dan McMahill
 ;;;

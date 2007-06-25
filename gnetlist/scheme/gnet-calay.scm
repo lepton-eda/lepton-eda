@@ -1,8 +1,6 @@
-;;; $Id$
-;;;
-;;; gEDA - GNU Electronic Design Automation
-;;; gnetlist - GNU Netlist
-;;; Copyright (C) 1998-2000 Ales V. Hvezda
+;;; gEDA - GPL Electronic Design Automation
+;;; gnetlist - gEDA Netlist
+;;; Copyright (C) 1998-2007 Ales V. Hvezda
 ;;; Copyright (C) 2006,2007 John P. Doty
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify

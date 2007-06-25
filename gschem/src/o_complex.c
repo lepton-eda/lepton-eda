@@ -1,6 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
- * Copyright (C) 1998-2000 Ales V. Hvezda
+ * Copyright (C) 1998-2007 Ales Hvezda
+ * Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -127,6 +128,7 @@ void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 {
   int x, y;
   int i, temp;
+  const CLibSymbol *sym;
 
   w_current->last_x = w_current->start_x = fix_x(w_current, screen_x);
   w_current->last_y = w_current->start_y = fix_y(w_current, screen_y);
@@ -143,11 +145,11 @@ void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 
   w_current->DONT_DRAW_CONN = 1;
   w_current->ADDING_SEL = 1; /* reuse this flag, rename later hack */
+  sym = s_clib_get_symbol_by_name (w_current->internal_symbol_name);
   o_complex_add(w_current, NULL,
 		&(w_current->page_current->complex_place_list),
 		OBJ_COMPLEX, WHITE, x, y, 0, 0,
-		w_current->internal_clib,
-		s_clib_symbol_get_name (w_current->internal_clib), 
+		sym, w_current->internal_symbol_name,
 		1, TRUE);
   w_current->ADDING_SEL = 0;
   w_current->DONT_DRAW_CONN = 0;
@@ -264,6 +266,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
   char *buffer;
   int temp, new_angle, i;
   GList *connected_objects=NULL;
+  const CLibSymbol *sym;
 
   diff_x = w_current->last_x - w_current->start_x;
   diff_y = w_current->last_y - w_current->start_y;
@@ -278,7 +281,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 #endif
 
   if (w_current->include_complex) {
-    buffer = s_clib_symbol_get_data (w_current->internal_clib);
+    buffer = s_clib_symbol_get_data_by_name (w_current->internal_symbol_name);
 
     w_current->ADDING_SEL=1;
     o_start = w_current->page_current->object_tail;
@@ -286,7 +289,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
       o_read_buffer(w_current,
 		    w_current->page_current->object_tail,
 		    buffer, -1,
-		    s_clib_symbol_get_name(w_current->internal_clib));
+		    w_current->internal_symbol_name);
     o_start = o_start->next;
     w_current->ADDING_SEL=0;
     
@@ -347,17 +350,18 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
     o_undo_savestate(w_current, UNDO_ALL);
     i_update_menus(w_current);
     s_delete_object_glist(w_current, w_current->page_current->
-			  complex_place_list);
+                          complex_place_list);
+    w_current->page_current->complex_place_list = NULL;
     return;
   }
 
   o_temp = w_current->page_current->object_tail;
+  sym = s_clib_get_symbol_by_name (w_current->internal_symbol_name);
   w_current->page_current->object_tail =
     o_complex_add(w_current,
                   w_current->page_current->object_tail, NULL,
                   OBJ_COMPLEX, WHITE, x, y, w_current->complex_rotate, 0,
-                  w_current->internal_clib,
-                  s_clib_symbol_get_name (w_current->internal_clib), 
+                  sym, w_current->internal_symbol_name,
 		  1, TRUE);
 
   /* complex rotate post processing */

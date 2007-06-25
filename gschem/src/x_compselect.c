@@ -1,6 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
- * Copyright (C) 1998-2000 Ales V. Hvezda
+ * Copyright (C) 1998-2007 Ales Hvezda
+ * Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -112,8 +113,6 @@ x_compselect_callback_response (GtkDialog *dialog,
           break;
         }
                 
-	toplevel->current_clib = symbol;
-        
 	if (toplevel->event_state == ENDCOMP) {
           gint diff_x, diff_y;
 
@@ -128,7 +127,7 @@ x_compselect_callback_response (GtkDialog *dialog,
 	g_list_free(toplevel->page_current->complex_place_list);
 	toplevel->page_current->complex_place_list = NULL;
 	
-	o_complex_set_filename(toplevel, toplevel->current_clib, NULL);
+	o_complex_set_filename(toplevel, s_clib_symbol_get_name (symbol));
         
 	toplevel->event_state = DRAWCOMP;
 

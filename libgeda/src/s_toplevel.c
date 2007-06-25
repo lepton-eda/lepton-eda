@@ -1,6 +1,8 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
  * Copyright (C) 1998, 1999, 2000 Kazu Hirata / Ales Hvezda
+ * Copyright (C) 1998-2007 Ales Hvezda
+ * Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -93,7 +95,7 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->current_visible = -1; /* not sure on these */
   toplevel->current_show    = -1;
 
-  toplevel->internal_clib = NULL;
+  toplevel->internal_symbol_name = NULL;
   
   toplevel->RC_list = NULL;
 
@@ -209,8 +211,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->cswindow      = NULL;
   toplevel->clib_list     = NULL;
   toplevel->basename_list = NULL;
-  toplevel->current_clib = NULL;
-/*   toplevel->current_basename 	 */
 
 /*   toplevel->fileselect */
 
@@ -478,6 +478,8 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
     /* do no delete head */
     return;
   }
+
+  g_free (toplevel->internal_symbol_name);
 
   g_free (toplevel->series_name);
   g_free (toplevel->untitled_name);

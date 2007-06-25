@@ -1,7 +1,8 @@
 
 SUBDIRS = src gschlas scripts lib include examples docs man tests
 
-EXTRA_DIST = ChangeLog.tragesym ChangeLog.gsch2pcb autogen.sh
+EXTRA_DIST = ChangeLog.tragesym-1.0 ChangeLog.gsch2pcb-1.0 ChangeLog-1.0 \
+	autogen.sh
 
 distclean-local:
 	-rm -rf autom4te.cache

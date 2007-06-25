@@ -1,7 +1,5 @@
-;;; $Id$
-;;;
-;;; gEDA - GNU Electronic Design Automation
-;;; gnetlist - GNU Netlist
+;;; gEDA - GPL Electronic Design Automation
+;;; gnetlist - gEDA Netlist
 ;;; Backend for cascade (http://rfcascade.sourceforge.net)
 ;;; Copyright (C) 2003 Dan McMahill
 ;;;

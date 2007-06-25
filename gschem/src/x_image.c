@@ -1,6 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
- * Copyright (C) 1998-2000 Ales V. Hvezda
+ * Copyright (C) 1998-2007 Ales Hvezda
+ * Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,12 +42,10 @@
 
 #define X_IMAGE_DEFAULT_SIZE "800x600"
 
-#ifndef HAS_LIBGD
 #define X_IMAGE_SIZE_MENU_NAME "image_size_menu"
 #define X_IMAGE_TYPE_MENU_NAME "image_type_menu"
 
 #define X_IMAGE_DEFAULT_TYPE "PNG"
-#endif
 
 static char *x_image_sizes[] = {"320x240", "640x480", "800x600", "1200x768",
                                 "1280x960", "1600x1200", "3200x2400", NULL};
@@ -121,7 +120,6 @@ static void create_size_menu (GtkComboBox *combo)
  */
 static void create_type_menu(GtkComboBox *combo)
 {
-#ifndef HAS_LIBGD
   GSList *formats = gdk_pixbuf_get_formats ();
   GSList *ptr;
   char *buf;
@@ -161,12 +159,6 @@ static void create_type_menu(GtkComboBox *combo)
   
   /* Set the default menu */
   gtk_combo_box_set_active(GTK_COMBO_BOX(combo), default_index);
-#else
-  gtk_combo_box_append_text(GTK_COMBO_BOX(combo), "PNG");
-
-  /* Set the default menu */
-  gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 0);
-#endif
   return;
 }
 
@@ -179,7 +171,6 @@ static void create_type_menu(GtkComboBox *combo)
  *  \note This function is only used in this file.
  */
 static char *x_image_get_type_from_description(char *description) {
-#ifndef HAS_LIBGD
   gchar *descr = g_strdup_printf(description);
   GSList *formats = gdk_pixbuf_get_formats ();
   GSList *ptr;
@@ -202,11 +193,6 @@ static char *x_image_get_type_from_description(char *description) {
   }
   g_free (descr);
   return NULL;  
-#else
-  /* When using libgd, there is only one supported type: PNG */
-  return(g_strdup("png"));
-#endif
-
 }
 
 /*! \brief Update the filename of a file dialog, when the image type has changed.
@@ -282,9 +268,6 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
   g_free(file_name);
   g_free(file_basename);
   g_free(new_image_filename);
-#ifdef HAS_LIBGD
-  g_free(image_type);
-#endif
 }
 
 /*! \brief Write eps image file.
@@ -340,11 +323,9 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename,
   int save_height, save_width;
   int save_page_left, save_page_right, save_page_top, save_page_bottom;
   int page_width, page_height, page_center_left, page_center_top;
-#ifndef HAS_LIBGD
   GdkPixbuf *pixbuf;
   GError *gerror = NULL;
   GtkWidget *dialog;
-#endif
   float prop;
 
   w_current->image_width = width = desired_width;
@@ -387,14 +368,6 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename,
   o_selection_unselect_list(w_current,
 			    &(w_current->page_current->selection_list));
 		
-
-#ifdef HAS_LIBGD
-  /* try to use recalc here */
-  o_redraw_all(w_current);
-
-  f_image_write(w_current, filename, width, height, 
-                w_current->image_color);
-#else
  if (strcmp(filetype, "eps") == 0) /*WK - catch EPS export case*/
     x_image_write_eps(w_current, filename);
  else {    
@@ -448,7 +421,6 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename,
     s_log_message(_("x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"));
   }
  }
-#endif
 
   w_current->width = save_width;
   w_current->height = save_height;
@@ -463,13 +435,6 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename,
   /* try to use recalc here... */
   o_redraw_all(w_current);
 
-#ifdef HAS_LIBGD
-  if (w_current->image_color == TRUE) {
-    s_log_message(_("Wrote color image to [%s] [%d x %d]\n"), filename, width, height);
-  } else {
-    s_log_message(_("Wrote black and white image to [%s] [%d x %d]\n"), filename, width, height);
-  }
-#endif
 }
 
 /*! \brief Display the image file selection dialog.
@@ -489,9 +454,7 @@ void x_image_setup (TOPLEVEL *w_current)
   GtkWidget *vbox2;
   GtkWidget *label2;
   GtkWidget *type_combo;
-#ifndef HAS_LIBGD
   char *image_type_descr;
-#endif
   char *filename;
   char *image_size;
   char *image_type;
@@ -592,7 +555,6 @@ void x_image_setup (TOPLEVEL *w_current)
     image_size = gtk_combo_box_get_active_text(GTK_COMBO_BOX(size_combo));
 #endif
 
-#ifndef HAS_LIBGD
 #if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
   GSList *ptr;
   /* If GTK < 2.6, get the description from the descriptions list */
@@ -604,10 +566,6 @@ void x_image_setup (TOPLEVEL *w_current)
 #endif
 
     image_type = x_image_get_type_from_description(image_type_descr);
-#else
-    /* Image type not used when using libgd */
-    image_type = NULL;
-#endif
     sscanf(image_size, "%ix%i", &width, &height);
     filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
 

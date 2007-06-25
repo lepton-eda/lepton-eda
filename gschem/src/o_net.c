@@ -1,6 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
- * Copyright (C) 1998-2000 Ales V. Hvezda
+ * Copyright (C) 1998-2007 Ales Hvezda
+ * Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1123,7 +1124,8 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
     s_conn_remove(w_current, net_obj);
 
     if (w_current->bus_ripper_type == COMP_BUS_RIPPER) {
-      GList *symlist = s_clib_glob (w_current->bus_ripper_symname);
+      GList *symlist = 
+	s_clib_search (w_current->bus_ripper_symname, CLIB_EXACT);
       if (symlist != NULL) {
         rippersym = (CLibSymbol *) symlist->data;
       }

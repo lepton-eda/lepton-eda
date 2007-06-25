@@ -1,6 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
- * Copyright (C) 1998-2000 Ales V. Hvezda
+ * Copyright (C) 1998-2007 Ales Hvezda
+ * Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,7 +64,7 @@ void x_window_setup (TOPLEVEL *toplevel)
   toplevel->current_visible = -1; /* not sure on these */
   toplevel->current_show = -1;
 
-  toplevel->internal_clib=NULL;
+  toplevel->internal_symbol_name = NULL;
 
   toplevel->series_name = NULL;
   toplevel->untitled_name = NULL;

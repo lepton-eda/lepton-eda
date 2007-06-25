@@ -1,6 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
- * Copyright (C) 1998-2000 Ales V. Hvezda
+ * Copyright (C) 1998-2007 Ales Hvezda
+ * Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1063,30 +1064,14 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
 
   is_embedded = o_complex_is_embedded (o_current);
 
-  /* find symbol if not known */
-  if (o_current->complex_clib == NULL) {
-    const GList *symlist = NULL;
-    
-    g_assert (o_current->complex_basename != NULL);
-    symlist = s_clib_glob (o_current->complex_basename);
+  g_assert (o_current->complex_basename != NULL);
+  clib = s_clib_get_symbol_by_name (o_current->complex_basename);
 
-    if (symlist == NULL) {
-      s_log_message (_("Could not find symbol [%s] in library. Update failed.\n"), 
-		     o_current->complex_basename);
-      return;
-    } else {
-      if (g_list_next (symlist) != NULL) {
-	s_log_message (_("More than one component found with name [%s]\n"),
-		       o_current->complex_basename);
-      /* PB: for now, use the first directory in clibs */
-      /* PB: maybe open a dialog to select the right one? */
-      }
-    }
-
-    o_current->complex_clib = (CLibSymbol *) symlist->data;
+  if (clib == NULL) {
+    s_log_message (_("Could not find symbol [%s] in library. Update failed.\n"), 
+                   o_current->complex_basename);
+    return;
   }
-
-  clib = o_current->complex_clib;
 
   /* erase the complex object */
   o_erase_single (w_current, o_current);

@@ -1,6 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
- * Copyright (C) 1998-2000 Ales V. Hvezda
+ * Copyright (C) 1998-2007 Ales Hvezda
+ * Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,10 +24,6 @@
 
 #include <gtk/gtk.h>
 #include <libguile.h>
-
-#ifdef HAS_LIBGD
-#include <gd.h>
-#endif
 
 #include "defines.h"
 #include "struct.h"
@@ -1281,151 +1278,3 @@ void o_arc_print_phantom(TOPLEVEL *w_current, FILE *fp,
 	  x,y, radius, arc_width);
 }
 
-
-#if 0 /* original way of printing arcs, no longer used */
-
-/*! \deprecated
- *  \brief Print solid arc in a Postscript file.
- *  \par Function Description
- *  This function prints a solid arc in a Postscript file indepedentely of its line type.
- *  It is basically the old way to manage the arc printing.
- *  This function is now replaced by the #o_arc_print() function.
- *
- *  \param [in] w_current  The TOPLEVEL object.
- *  \param [in] fp         FILE pointer to postscript document.
- *  \param [in] o_current
- *  \param [in] origin_x
- *  \param [in] origin_y
- */
-void o_arc_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
-		     int origin_x, int origin_y)
-{
-  int radius;
-  int start_angle, end_angle;
-  int awidth, aheight;
-  int x, y;
-
-  if (o_current == NULL) {
-    printf("got null in o_arc_print\n");
-    return;
-  }
-
-  fprintf(fp, "gsave\n");
-  if (w_current->print_color) {
-    f_print_set_color(fp, o_current->color);
-  }
-
-  f_print_set_line_width(fp, o_current->line_width);
-
-  awidth = o_current->arc->width;
-  aheight = o_current->arc->height;
-
-  radius = abs(aheight - o_current->arc->y)/2;
-
-  /* hack hack hack */
-  /* the snap_grid here is a safety for arcs inside complex objects */
-  /* which are not snapped to the grid */
-  /* ALL arcs centers will be snapped to the center */
-  /* hack hack hack */
-  /* Geee I wish there was a better solution */
-  /* well for now, if you print the complex structure that's in memory */
-  /* then the arc will be properly snapped */
-  /*x = snap_grid(w_current, o_current->x+radius);
-    y = snap_grid(w_current, o_current->y-radius);*/
-
-  x = (o_current->arc->x+radius);
-  y = (o_current->arc->y-radius);
-
-  start_angle = o_current->arc->start_angle/64;
-  end_angle = o_current->arc->end_angle/64;
-
-  if ( end_angle < 0) {
-		
-    if (end_angle >= 180) {
-      start_angle = (start_angle - (end_angle)) % 360;
-    } else {
-      start_angle = (start_angle + (end_angle)) % 360;
-    }
-
-    end_angle = abs(end_angle);
-		
-  }
-
-  end_angle = start_angle + end_angle;
-		
-
-  fprintf(fp, "newpath\n");
-  fprintf(fp, "%d %d\n", x-origin_x, y-origin_y);
-  fprintf(fp, "%d\n", radius);
-  fprintf(fp, "%d %d arc\n", start_angle, end_angle);
-  fprintf(fp, "stroke\n");
-  fprintf(fp, "grestore\n");
-}
-#endif
-
-/*! \brief Draw an arc in an image.
- *  \par Function Description
- *  This function draws an arc in an image with the libgd function <B>gdImageArc()</B>.
- *
- *  \param [in] w_current  The TOPLEVEL object.
- *  \param [in] o_current
- *  \param [in] origin_x
- *  \param [in] origin_y
- *  \param [in] color_mode
- */
-void
-o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
-                  int origin_x, int origin_y, int color_mode)
-{
-  int start_angle, end_angle;
-  int width, height;
-  int color;
-  int x, y;
-
-  if (o_current == NULL) {
-    printf("got null in o_arc_image_write\n");
-    return;
-  }
-
-  if (color_mode == TRUE) {
-    color = o_image_geda2gd_color(o_current->color);
-  } else {
-    color = image_black;
-  }
-
-  /* libgd angles are in opposite sense to gschem's internal angles */
-  /* Also, gschem's "end_angle" is actually the sweep of the arc, not absolute angle */
-
-  /* Intialise {start|end}_angle to the start of gschem's sweep */
-  start_angle = -o_current->arc->start_angle;
-  end_angle   = -o_current->arc->start_angle;
-
-  /* libgd always sweeps arcs clockwise so we either update */
-  /* the start_angle, or end_angle as appropriate */
-  if ( o_current->arc->end_angle > 0 )
-    start_angle -= o_current->arc->end_angle;
-  else
-    end_angle -= o_current->arc->end_angle;
-
-  /* Ensure each angle is within 0-359. Negative angles make libgd blow up. */
-  start_angle = ( start_angle < 0 ) ? 360 - ( (-start_angle) % 360 ) : start_angle % 360;
-  end_angle =   ( end_angle   < 0 ) ? 360 - ( (-end_angle  ) % 360 ) : end_angle   % 360;
-
-  /* libgd docs state that end angle should always be larger than start_angle */
-  if (end_angle < start_angle)
-    end_angle += 360;
-
-  width = SCREENabs( w_current, o_current->arc->width);
-  height = SCREENabs( w_current, o_current->arc->height);
-  WORLDtoSCREEN( w_current, o_current->arc->x, o_current->arc->y, &x, &y );
-
-#ifdef HAS_LIBGD
-
-  gdImageSetThickness(current_im_ptr, SCREENabs(w_current,
-                                                o_current->line_width));
-
-  gdImageArc(current_im_ptr, 
-	     x, y, width, height, start_angle, end_angle, color);
-#endif
-	
-}

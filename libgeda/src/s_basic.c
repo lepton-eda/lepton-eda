@@ -1,6 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
- * Copyright (C) 1998-2000 Ales V. Hvezda
+ * Copyright (C) 1998-2007 Ales Hvezda
+ * Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -190,7 +191,6 @@ OBJECT *s_basic_init_object( char *name )
   new_node->visited = 0;
 	
   new_node->complex_basename = NULL;
-  new_node->complex_clib = NULL;
   new_node->complex_parent = NULL;
 		
   /* Setup the color */
@@ -453,8 +453,6 @@ s_delete_object(TOPLEVEL *w_current, OBJECT *o_current)
       g_free(o_current->complex_basename); 
     }
     o_current->complex_basename = NULL;
-
-    o_current->complex_clib = NULL;
 
     if (o_current->complex) {
 

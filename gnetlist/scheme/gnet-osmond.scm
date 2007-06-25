@@ -1,6 +1,4 @@
-;;; $Id$
-;;;
-;;; gEDA - GNU Electronic Design Automation
+;;; gEDA - GPL Electronic Design Automation
 ;;; gnetlist back end for Osmond PCB Design
 ;;; Copyright (C) 2007 John P. Doty
 ;;;

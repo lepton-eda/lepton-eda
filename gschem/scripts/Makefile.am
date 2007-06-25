@@ -5,8 +5,8 @@ scmdatadir = @GEDADATADIR@/scheme
 scmdata_DATA = image.scm print.scm
 
 bin_SCRIPTS = gschemdoc
-EXTRA_DIST = config.sh.in ChangeLog makeallimages gschemdoc.sh \
-	     makeimages print.scm image.scm
+EXTRA_DIST = config.sh.in ChangeLog ChangeLog-1.0 makeallimages \
+             gschemdoc.sh makeimages print.scm image.scm
 
 BUILT_SOURCES = config.sh
 

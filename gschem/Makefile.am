@@ -1,7 +1,8 @@
 SUBDIRS = include lib intl src m4 po scheme bitmap scripts examples \
           tests docs 
 
-EXTRA_DIST = VOCABULARY BUGS autogen.sh config.rpath configure.ac.in
+EXTRA_DIST = VOCABULARY BUGS ChangeLog-1.0 autogen.sh config.rpath 
+	configure.ac.in
 
 #proto:
 #	(cd src ; ./create_proto)

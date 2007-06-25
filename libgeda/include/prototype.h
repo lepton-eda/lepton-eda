@@ -15,11 +15,6 @@ char* f_get_directory_from_path(char *path);
 char* f_normalize_filename(const gchar *filename);
 char *follow_symlinks (const gchar *filename, GError **error);
 
-/* f_image.c */
-void f_image_write_objects(TOPLEVEL *w_current, OBJECT *head, int start_x, int start_y, float scale, int color_mode);
-void f_image_write(TOPLEVEL *w_current, const char *filename, int width, int height, int color_mode);
-void f_image_set_type(TOPLEVEL *w_current, int type);
-
 /* f_print.c */
 void f_print_set_line_width(FILE *fp, int width);
 void f_print_set_color(FILE *fp, int color);
@@ -144,7 +139,6 @@ void o_arc_print_dotted(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius,
 void o_arc_print_dashed(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius, int angle1, int angle2, int color, int arc_width, int length, int space, int origin_x, int origin_y);
 void o_arc_print_center(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius, int angle1, int angle2, int color, int arc_width, int length, int space, int origin_x, int origin_y);
 void o_arc_print_phantom(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius, int angle1, int angle2, int color, int arc_width, int length, int space, int origin_x, int origin_y);
-void o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
 
 /* o_attrib.c */
 void o_attrib_update_urefBM(TOPLEVEL *w_current, OBJECT *o_current);
@@ -232,7 +226,6 @@ void o_box_print_phantom(TOPLEVEL *w_current, FILE *fp, int x, int y, int width,
 void o_box_print_filled(TOPLEVEL *w_current, FILE *fp, int x, int y, int width, int height, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
 void o_box_print_mesh(TOPLEVEL *w_current, FILE *fp, int x, int y, int width, int height, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
 void o_box_print_hatch(TOPLEVEL *w_current, FILE *fp, int x, int y, int width, int height, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
-void o_box_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
 
 /* o_bus_basic.c */
 void world_get_bus_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *right, int *bottom);
@@ -243,7 +236,6 @@ char *o_bus_save(OBJECT *object);
 void o_bus_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
 OBJECT *o_bus_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
 void o_bus_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
-void o_bus_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
 void o_bus_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_bus_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 int o_bus_orientation(OBJECT *object);
@@ -273,7 +265,6 @@ void o_circle_print_phantom(TOPLEVEL *w_current, FILE *fp, int x, int y, int rad
 void o_circle_print_filled(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
 void o_circle_print_mesh(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
 void o_circle_print_hatch(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
-void o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
 
 /* o_complex_basic.c */
 int world_get_single_object_bounds(TOPLEVEL *w_current, OBJECT *o_current, 
@@ -288,12 +279,6 @@ void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, i
 OBJECT *add_head(void);
 int o_complex_is_eligible_attribute(TOPLEVEL *w_current, OBJECT *object, int promote_invisible);
 int o_complex_is_embedded(OBJECT *o_current);
-OBJECT *o_complex_add_by_name(TOPLEVEL *w_current, OBJECT *object_list, 
-			      GList **object_glist, char type,
-			      int color, int x, int y, int angle,
-			      int mirror, const gchar *basename,
-			      int selectable,
-			      int attribute_promotion);
 OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, 
 		      GList **object_glist, char type, int color, 
 		      int x, int y, int angle, int mirror, 
@@ -303,7 +288,7 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char ty
 void o_complex_recalc(TOPLEVEL *w_current, OBJECT *o_current);
 OBJECT *o_complex_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
 char *o_complex_save(OBJECT *object);
-void o_complex_set_filename(TOPLEVEL *w_current, const CLibSymbol *clib, char *basename);
+void o_complex_set_filename(TOPLEVEL *w_current, const char *basename);
 void o_complex_free_filename(TOPLEVEL *w_current);
 void o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, OBJECT *prim_objs);
 void o_complex_world_translate_toplevel(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
@@ -327,13 +312,6 @@ void o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object);
 void o_embed(TOPLEVEL *w_current, OBJECT *o_current);
 void o_unembed(TOPLEVEL *w_current, OBJECT *o_current);
 
-/* o_image.c */
-void o_image_init(void);
-void o_image_create(int x, int y, int color_mode);
-void o_image_close(void);
-int o_image_write(const char *filename);
-int o_image_geda2gd_color(int color);
-
 /* o_line_basic.c */
 OBJECT *o_line_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
 OBJECT *o_line_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
@@ -351,7 +329,6 @@ void o_line_print_dotted(TOPLEVEL *w_current, FILE *fp, int x1, int y1, int x2, 
 void o_line_print_dashed(TOPLEVEL *w_current, FILE *fp, int x1, int y1, int x2, int y2, int color, int line_width, int length, int space, int origin_x, int origin_y);
 void o_line_print_center(TOPLEVEL *w_current, FILE *fp, int x1, int y1, int x2, int y2, int color, int line_width, int length, int space, int origin_x, int origin_y);
 void o_line_print_phantom(TOPLEVEL *w_current, FILE *fp, int x1, int y1, int x2, int y2, int color, int line_width, int length, int space, int origin_x, int origin_y);
-void o_line_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
 void o_line_scale_world(TOPLEVEL *w_current, int x_scale, int y_scale, OBJECT *object);
 int o_line_visible(TOPLEVEL *w_current, LINE *line, int *x1, int *y1, int *x2, int *y2);
 double o_line_length(OBJECT *object);
@@ -373,7 +350,6 @@ char *o_net_save(OBJECT *object);
 void o_net_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
 OBJECT *o_net_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
 void o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
-void o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
 void o_net_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_net_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 int o_net_orientation(OBJECT *object);
@@ -417,7 +393,6 @@ char *o_pin_save(OBJECT *object);
 void o_pin_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
 OBJECT *o_pin_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
 void o_pin_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
-void o_pin_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
 void o_pin_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_pin_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 void o_pin_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
@@ -514,7 +489,9 @@ const gchar *s_clib_symbol_get_name (const CLibSymbol *symbol);
 gchar *s_clib_symbol_get_filename (const CLibSymbol *symbol);
 const CLibSource *s_clib_symbol_get_source (const CLibSymbol *symbol);
 gchar *s_clib_symbol_get_data (const CLibSymbol *symbol);
-GList *s_clib_glob (const gchar *glob);
+GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode);
+void s_clib_flush_cache ();
+const CLibSymbol *s_clib_get_symbol_by_name (const gchar *name);
 gchar *s_clib_symbol_get_data_by_name (const gchar *name);
 
 /* s_color.c */
@@ -523,7 +500,6 @@ int s_color_request(int color_index, char *color_name, char *outline_color_name,
 void s_color_destroy_all(void);
 char *s_color_ps_string(int color);
 int s_color_image_int(int color);
-void s_color_gdcolor_init(void);
 int s_color_get_name(int index, char *string);
 int s_color_get_index(char *string);
 
@@ -544,8 +520,6 @@ GList *s_conn_return_complex_others(GList *input_list, OBJECT *object);
 /* s_cue.c */
 void s_cue_postscript_fillbox(TOPLEVEL *w_current, FILE *fp, int x, int y);
 void s_cue_postscript_fillcircle(TOPLEVEL *w_current, FILE *fp, int x, int y, int size_flag);
-void s_cue_image_fillbox(TOPLEVEL *w_current, OBJECT *object, int world_x, int world_y);
-void s_cue_image_fillcircle(TOPLEVEL *w_current, int world_x, int world_y, int size_flag);
 void s_cue_output_all(TOPLEVEL *w_current, OBJECT *head, FILE *fp, int type);
 void s_cue_output_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone, FILE *fp, int output_type);
 void s_cue_output_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object, FILE *fp, int output_type);

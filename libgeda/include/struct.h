@@ -62,6 +62,9 @@ typedef struct _TextBuffer TextBuffer;
 typedef struct _CLibSource CLibSource;
 typedef struct _CLibSymbol CLibSymbol;
 
+/* Component library search modes */
+typedef enum { CLIB_EXACT=0, CLIB_GLOB } CLibSearchMode;
+
 /* PB : change begin */
 /* PB : these enum are constant to define :
    - the end of open line of an object ;
@@ -214,7 +217,6 @@ struct st_object {
 
   gboolean complex_embedded;                    /* is embedded component? */
   gchar *complex_basename;              /* Component Library Symbol name */
-  const CLibSymbol *complex_clib;	/* Component Library Symbol */
   OBJECT *complex_parent;		/* Complex parent object pointer */
   /* used only in complex head nodes */
 
@@ -421,7 +423,7 @@ struct st_toplevel {
   /* if it should go in here or not */
   /* leave outside for now */
 
-  const CLibSymbol *internal_clib;     
+  gchar *internal_symbol_name;     
   /* have to decided on component list stuff */
   /* if it should go in here or not */
   /* leave outside for now */
@@ -550,7 +552,6 @@ struct st_toplevel {
   GtkWidget *cswindow;			/* component select */
   GtkWidget *clib_list;
   GtkWidget *basename_list;
-  CLibSymbol *current_clib;
 
   GtkWidget *iwindow;			/* image write dialog box */
   GtkWidget *ifilename_entry; 

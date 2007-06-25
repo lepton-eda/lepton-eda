@@ -1,6 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
- * Copyright (C) 1998-2000 Ales V. Hvezda
+ * Copyright (C) 1998-2007 Ales Hvezda
+ * Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -316,46 +317,6 @@ int o_complex_is_embedded(OBJECT *o_current)
 
 }
 
-/*! \brief Add a symbol given its basename.
- *  \todo Complete function documentation
- */
-OBJECT *o_complex_add_by_name(TOPLEVEL *w_current, OBJECT *object_list, 
-			      GList **object_glist, char type,
-			      int color, int x, int y, int angle,
-			      int mirror, const gchar *basename,
-			      int selectable,
-			      int attribute_promotion)
-{
-  const CLibSymbol *sym;
-  GList *symlist;
-
-  symlist = s_clib_glob (basename);
-
-  if (symlist == NULL) {
-    s_log_message("Component [%s] was not found in any component library\n", 
-		  basename);
-    fprintf(stderr,
-	    "Component [%s] was not found in any component library\n", 
-	    basename);
-    sym = NULL;
-  } else {
-    if (g_list_next (symlist) != NULL) {
-      s_log_message ("More than one component found with name [%s]\n",
-		     basename);
-    }
-    /*! \todo For now, use the first source with a symbol with that
-     *  name. Maybe open a dialog to select the right one? */
-    sym = (CLibSymbol *) symlist->data;
-  }
-
-  g_list_free (symlist);
-
-  return o_complex_add (w_current, object_list, object_glist, type,
-			color, x, y, angle, mirror, sym, basename,
-			selectable, attribute_promotion);
-
-}
-
 /* Done */
 /*! \brief
  *  \par Function Description
@@ -389,7 +350,6 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node = s_basic_init_object("complex");
   new_node->type = type;
 
-  new_node->complex_clib = clib;
   if (clib != NULL) {
     new_node->complex_basename = g_strdup (s_clib_symbol_get_name (clib));
   } else {
@@ -681,7 +641,6 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->complex->angle = angle;
   new_node->complex->mirror = 0;
 	
-  new_node->complex_clib = NULL;
   new_node->complex_basename = g_strdup(basename);
 
   new_node->complex_embedded = TRUE;
@@ -790,11 +749,13 @@ OBJECT *o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
                                        selectable);
   } else {
     
-    object_list = o_complex_add_by_name(w_current, object_list, NULL, type, 
-					WHITE, 
-					x1, y1, 
-					angle, mirror,
-					basename, selectable, FALSE);
+    const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
+
+    object_list = o_complex_add(w_current, object_list, NULL, type, 
+                                WHITE, 
+                                x1, y1, 
+                                angle, mirror, clib,
+                                basename, selectable, FALSE);
   }
 
   return object_list;
@@ -848,14 +809,11 @@ char *o_complex_save(OBJECT *object)
  *  \par Function Description
  *
  */
-void o_complex_set_filename(TOPLEVEL *w_current, const CLibSymbol *clib, char *basename) 
+void o_complex_set_filename(TOPLEVEL *w_current, const char *basename) 
 {
-  if (clib == NULL) {
-    fprintf(stderr, "Got NULL clib in o_complex_set_filename!\n");
-    exit(-1);
-  }
+  o_complex_free_filename (w_current);
 
-  w_current->internal_clib = clib;
+  w_current->internal_symbol_name = g_strdup (basename);
 } 
 
 /*! \brief
@@ -864,7 +822,10 @@ void o_complex_set_filename(TOPLEVEL *w_current, const CLibSymbol *clib, char *b
  */
 void o_complex_free_filename(TOPLEVEL *w_current)
 {
-
+  if (w_current->internal_symbol_name != NULL) {
+    g_free(w_current->internal_symbol_name);
+    w_current->internal_symbol_name = NULL;
+  }
 }
 
 /*! \brief
@@ -986,6 +947,7 @@ OBJECT *o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail,
   ATTRIB *a_current;
   int color;
   int selectable;
+  const CLibSymbol *clib = NULL;
 
   g_return_val_if_fail(o_current != NULL, NULL);
 
@@ -1001,11 +963,13 @@ OBJECT *o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail,
     selectable = FALSE;	
   }
 
+  clib = s_clib_get_symbol_by_name (o_current->complex_basename);
+
   new_obj = o_complex_add(w_current, list_tail, NULL, o_current->type, color,
                           o_current->complex->x, o_current->complex->y, 
                           o_current->complex->angle, 
 			  o_current->complex->mirror,
-                          o_current->complex_clib, o_current->complex_basename, 
+                          clib, o_current->complex_basename, 
                           selectable, FALSE); 
 
   o_attrib_slot_copy(w_current, o_current, new_obj);

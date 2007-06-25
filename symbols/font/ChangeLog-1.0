@@ -1,0 +1,52 @@
+
+ChangeLog for font defs for gEDA (top level)
+
+See ChangeLog in gschem for more gschem specific changes
+Most recent changes are at the top of this file
+
+2002-11-03 Updated all font defs to 20021103
+
+2001-07-05 Increased the width of the 3 digit
+
+---------------------------------------------------------------------------
+
+11/15/98 Found a bug in the space.sym (my little hack wasn't working for 
+	 using _ as the space char), had to add the special field for 
+	 space only
+
+	 Major width updates to: (better ps to vector matching)
+	 	1.sym 3.sym 5.sym 6.sym 7.sym 8.sym C.sym D.sym G.sym 
+		I.sym K.sym L.sym M.sym N.sym O.sym P.sym Q.sym R.sym 
+		S.sym T.sym U.sym V.sym W.sym X.sym Y.sym b.sym c.sym 
+		d.sym e.sym h.sym i.sym k.sym l.sym m.sym n.sym o.sym 
+		p.sym s.sym space.sym u.sym v.sym w.sym x.sym y.sym
+
+		apost.sym at.sym backslash.sym backtick.sym 
+		dollar.sym excl.sym lbrace.sym lbrack.sym 
+		lparen.sym percent.sym pound.sym quest.sym 
+		quote.sym rbrace.sym rbrack.sym rparen.sym 
+		tilde.sym under.sym vbar.sym
+
+	Added backtick.sym (`)
+
+11/8/98	Changed colon to be two lines instead of two dots
+	
+	Changed semicolon so that top point is a line
+
+	The above changes are consistant everywhere now
+
+0.0.5
+-------
+8/8/98	Reduced width of H to 29 instead of 31 
+
+	Removed all attributes and replaced them with the F key letter 
+
+8/7/98	Changed under.sch to be 2 mils higher so that you can place text on
+	nets and see the underbar
+
+	Reduced the width of D.sch to be 29 instead of 31
+
+8/6/98	Changed I.sch from being centered around 2 to be around 10
+	
+	Changed I.sch back to it's original centering (around 2)
+

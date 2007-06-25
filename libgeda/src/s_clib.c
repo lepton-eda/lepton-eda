@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
- * Copyright (C) 1998-2007 gEDA Contributors
+ * Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@
  *    -# Do not use whitespace, or any of the characters "<tt>/:!*?</tt>".
  *    -# Try to use unique names.
  *  
- *  The component database may be queried using s_clib_glob().  A
+ *  The component database may be queried using s_clib_search().  A
  *  null-terminated buffer containing symbol data (suitable for
  *  loading using o_read_buffer()) may be obtained using
  *  s_clib_symbol_get_data().  If an exact symbol name is known, the
@@ -217,10 +217,12 @@ struct _CLibSymbol {
 /*! Holds the list of all known component sources */
 static GList *clib_sources = NULL;
 
+/*! Caches results of s_clib_search() */
+static GHashTable *clib_cache = NULL;
+
 /* Local static functions
  * ======================
  */
-
 static void free_symbol (gpointer data, gpointer user_data);
 static void free_source (gpointer data, gpointer user_data);
 static gint compare_source_name (gconstpointer a, gconstpointer b);
@@ -246,6 +248,15 @@ void s_clib_init ()
 {
   if (clib_sources != NULL) {
     s_clib_free ();
+  }
+
+  if (clib_cache != NULL) {
+    s_clib_flush_cache();
+  } else {
+    clib_cache = g_hash_table_new_full ((GHashFunc) g_str_hash,
+					(GEqualFunc)g_str_equal,
+					(GDestroyNotify) g_free, 
+					(GDestroyNotify) g_list_free);
   }
 }
 
@@ -541,6 +552,8 @@ static void refresh_directory (CLibSource *source)
   /* Now sort the list of symbols by name. */
   source->symbols = g_list_sort (source->symbols, 
 				 (GCompareFunc) compare_symbol_name);
+
+  s_clib_flush_cache();
 }
 
 /*! \brief Re-poll a library command for symbols.
@@ -605,6 +618,8 @@ static void refresh_command (CLibSource *source)
   /* Sort all symbols by name. */
   source->symbols = g_list_sort (source->symbols, 
 				 (GCompareFunc) compare_symbol_name);
+
+  s_clib_flush_cache();
 }
 
 /*! \brief Re-poll a scheme procedure for symbols.
@@ -658,6 +673,8 @@ static void refresh_scm (CLibSource *source)
   /* Now sort the list of symbols by name. */
   source->symbols = g_list_sort (source->symbols, 
 				 (GCompareFunc) compare_symbol_name);
+
+  s_clib_flush_cache();
 }
 
 /*! \brief Rescan all available component libraries.
@@ -671,7 +688,6 @@ static void refresh_scm (CLibSource *source)
  */
 void s_clib_refresh ()
 {
-#if 0
   GList *sourcelist;
   CLibSource *source;
 
@@ -695,7 +711,6 @@ void s_clib_refresh ()
 	g_assert_not_reached();
       }
   }
-#endif
 }
 
 /*! \brief Get a named component source.
@@ -1076,10 +1091,16 @@ gchar *s_clib_symbol_get_data (const CLibSymbol *symbol)
 }
 
 
-/*! \brief Find all symbols matching a glob pattern.  \par Function
- *  Description Searches the library, returning all symbols whose
- *  names match \a glob (see the GLib documentation for details of the
- *  glob syntax applicable).
+/*! \brief Find all symbols matching a pattern.  
+ *
+ *  \par Function Description 
+ *  Searches the library, returning all symbols whose
+ *  names match \a pattern.
+ *
+ *  Two search modes are available: \b CLIB_EXACT, where \a pattern is
+ *  compared to the symbol name using strcmp(), and \b CLIB_GLOB,
+ *  where \a pattern is assumed to be a glob pattern (see the GLib
+ *  documentation for details of the glob syntax applicable).
  *
  *  \warning The #CLibSymbol instances in the \b GList returned belong
  *  to the component library, and should be considered constants; they
@@ -1088,21 +1109,47 @@ gchar *s_clib_symbol_get_data (const CLibSymbol *symbol)
  *  needed.  Note that the values returned will be invalidated by a
  *  call to s_clib_free() or s_clib_refresh().
  *
- *  \param glob The glob pattern to match against.
+ *  \param pattern The pattern to match against.
+ *  \param mode    The search mode to use.
  *  \return A \b GList of matching #CLibSymbol structures.
  */
-GList *s_clib_glob (const gchar *glob)
+GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode)
 {  
   GList *sourcelist;
   GList *symlist;
   GList *result = NULL;
   CLibSource *source;
   CLibSymbol *symbol;
-  GPatternSpec *pattern;
+  GPatternSpec *globpattern = NULL;
+  gchar *key;
+  gchar keytype;
 
-  if (glob == NULL) return NULL;
+  if (pattern == NULL) return NULL;
 
-  pattern = g_pattern_spec_new(glob);
+  /* Use different cache keys depending on what sort of search is being done */
+  switch (mode)
+    {
+    case CLIB_GLOB:
+      keytype = 'g';
+      break;
+    case CLIB_EXACT:
+      keytype = 's';
+      break;
+    default:
+      g_assert_not_reached();
+    }
+  key = g_strdup_printf("%c%s", keytype, pattern);
+
+  /* Check to see if the query is already in the cache */
+  result = (GList *) g_hash_table_lookup (clib_cache, key);
+  if (result != NULL) {
+    g_free (key);
+    return g_list_copy (result);
+  }
+
+  if (mode == CLIB_GLOB) {
+    globpattern = g_pattern_spec_new(pattern);
+  }
 
   for (sourcelist = clib_sources; 
        sourcelist != NULL; 
@@ -1116,19 +1163,81 @@ GList *s_clib_glob (const gchar *glob)
     
       symbol = (CLibSymbol *) symlist->data;
 
-      if (g_pattern_match_string (pattern, symbol->name)) {
-	result = g_list_prepend (result, symbol);
-      }
-
+      switch (mode)
+	{
+	case CLIB_EXACT:
+	  if (strcmp (pattern, symbol->name) == 0) {
+	    result = g_list_prepend (result, symbol);
+	  }
+	  break;
+	case CLIB_GLOB:
+	  if (g_pattern_match_string (globpattern, symbol->name)) {
+	    result = g_list_prepend (result, symbol);
+	  }
+	  break;
+	}
     }
-    
   }
 
   result = g_list_reverse (result);
 
-  g_pattern_spec_free (pattern);
+  if (globpattern != NULL) {
+    g_pattern_spec_free (globpattern);
+  }
+
+  g_hash_table_insert (clib_cache, key, g_list_copy (result));
+  /* __don't__ free key here, it's stored by the hash table! */
 
   return result;
+}
+
+
+/*! \brief Flush the symbol name lookup cache.
+ *  \par Function Description
+ *  Clears the hashtable which caches the results of s_clib_search().
+ *  You shouldn't ever need to call this, as all functions which
+ *  invalidate the cache are supposed to make sure it's flushed.
+ */
+void s_clib_flush_cache ()
+{
+  g_hash_table_remove_all (clib_cache);
+}
+
+/*! \brief Get symbol structure for a given symbol name.
+ *  \par Function Description
+ *  Return the first symbol found with the given \a name.  If more
+ *  than one matching symbol is found or no matches are found at all,
+ *  emits a log message warning the user.
+ *
+ *  \param name The symbol name to match against.
+ *  \return The first matching symbol, or NULL if none found.
+ */
+const CLibSymbol *s_clib_get_symbol_by_name (const gchar *name)
+{
+  GList *symlist = NULL;
+  const CLibSymbol *retval;
+
+  symlist = s_clib_search (name, CLIB_EXACT);
+
+  if (symlist == NULL) {
+    s_log_message ("Component [%s] was not found in the component library\n", 
+                   name);
+    /*! \bug Why does this need to go to stderr as well? */
+    fprintf(stderr,
+	    "Component [%s] was not found in any component library\n", 
+	    name);
+    return NULL;
+  }
+
+  if (g_list_next (symlist) != NULL) { /* More than one symbol */
+    s_log_message ("More than one component found with name [%s]\n",
+                   name);
+  }
+
+  retval = (CLibSymbol *) symlist->data;
+  g_list_free (symlist);
+
+  return retval;
 }
 
 /*! \brief Get symbol data for a given symbol name.
@@ -1139,31 +1248,14 @@ GList *s_clib_glob (const gchar *glob)
  *
  *  On failure, returns \b NULL (the error will be logged).
  *
- *  \todo Speed this up repeated calls by caching the #CLibSymbol
- *  pointers found for each name requested.
- *
  *  \param name The symbol name to match against.
  *  \return Allocated buffer containing symbol data.
  */
 gchar *s_clib_symbol_get_data_by_name (const gchar *name)
 {
-  GList *sourcelist;
-  CLibSource *source;
-  CLibSymbol *symbol;
+  const CLibSymbol *symbol;
 
-  for (sourcelist = clib_sources; 
-       sourcelist != NULL; 
-       sourcelist = g_list_next(sourcelist)) {
-
-    source = (CLibSource *) sourcelist->data;
-
-    symbol = source_has_symbol (source, name);
-
-    if (symbol != NULL) {
-      return s_clib_symbol_get_data (symbol);
-    }
-    
-  }
-
-  return NULL;
+  symbol = s_clib_get_symbol_by_name (name);
+  if (symbol == NULL) return NULL;
+  return s_clib_symbol_get_data (symbol);
 }
