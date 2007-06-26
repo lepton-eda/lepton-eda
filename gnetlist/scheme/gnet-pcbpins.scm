@@ -25,8 +25,8 @@
 	(begin
 	  (let (
 		(pin (car pins))
-		(label nil)
-		(pinnum nil)
+		(label #f)
+		(pinnum #f)
 		)
 	    (display "ChangePinName(" port)
 	    (display package port)
