@@ -2020,14 +2020,15 @@ void about_dialog (TOPLEVEL *w_current)
     gtk_label_set_use_markup (GTK_LABEL(label), TRUE);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 
-    string = g_strdup_printf(_("<b>gschem version %s%s</b>"), VERSION, CUSTOM_VERSION);
+    string = g_strdup_printf(_("<b>gschem version %s%s</b>"),
+                             PREPEND_VERSION_STRING, VERSION);
     label = gtk_label_new (string);
     gtk_label_set_use_markup (GTK_LABEL(label), TRUE);
     g_free(string);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 
     label = gtk_label_new ( _("Written by:\n"
-			      "Ales V. Hvezda\n"
+			      "Ales Hvezda\n"
 			      "ahvezda@geda.seul.org\n"
 			      "And many others (See AUTHORS file)"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0);

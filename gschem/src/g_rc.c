@@ -104,7 +104,8 @@ SCM g_rc_gschem_version(SCM version)
   if (g_strcasecmp (SCM_STRING_CHARS (version), VERSION) != 0) {
     fprintf(stderr,
             _("Found a version [%s%s] gschemrc file:\n[%s]\n"),
-            SCM_STRING_CHARS (version), CUSTOM_VERSION, rc_filename);
+            PREPEND_VERSION_STRING, SCM_STRING_CHARS (version),
+            rc_filename);
     fprintf(stderr,
             _("While gschem is in ALPHA, "
             "please be sure that you have the latest rc file.\n"));

@@ -70,7 +70,8 @@ SCM g_rc_gattrib_version(SCM version)
   
   if (g_strcasecmp (SCM_STRING_CHARS (version), VERSION) != 0) {
     fprintf(stderr,
-	    "You are running gEDA version [%s%s],\n", VERSION, CUSTOM_VERSION);
+	    "You are running gEDA version [%s%s],\n", PREPEND_VERSION_STRING,
+            VERSION);
     fprintf(stderr,
 	    "but you have a version [%s] gattribrc file:\n[%s]\n",
 	    SCM_STRING_CHARS (version), rc_filename);

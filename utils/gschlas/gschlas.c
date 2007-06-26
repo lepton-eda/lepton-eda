@@ -78,7 +78,7 @@ main_prog(void *closure, int argc, char *argv[])
   if (!quiet_mode)
   {
     s_log_message(
-                  "gEDA/gschlas version %s%s\n", VERSION, CUSTOM_VERSION);
+                  "gEDA/gschlas version %s%s\n", PREPEND_VERSION_STRING, VERSION);
     s_log_message(
                   "gEDA/gschlas comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
     s_log_message(
