@@ -54,7 +54,7 @@
   (lambda (port pkgs)
     (if (not (null? pkgs))
 	(let ( (package (car pkgs) )
-	       (sourcenet nil)
+	       (sourcenet #f)
 	       )
 	  (if (string=? (get-device package) "cascade-source")
 	      (begin
@@ -80,7 +80,7 @@
 	      )
 	  )
 	;; the list of packages is now empty
-	nil
+	'()
 	)
     )
   )
@@ -145,7 +145,7 @@
      (display (string-append "Writing to output file \"" filename
 			     "\"... ") )
       (let ((port (open-output-file filename))
-	    (first_block nil)
+	    (first_block #f)
 	    )
 
 	;; write the header

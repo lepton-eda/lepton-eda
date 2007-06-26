@@ -3,11 +3,13 @@
 SUBDIRS = hierarchy drc2 spice-sdb
 
 EXTRA_DIST = runtest.sh \
-	     7447.vhdl README amp.spice darlington.spice netattrib.geda \
+	     7447.vhdl README amp.spice cascade.sch cascade.cascade \
+	     darlington.spice netattrib.geda \
 	     netattrib.sch powersupply.PCB powersupply.allegro \
              powersupply.bae powersupply.geda powersupply.maxascii \
              powersupply.pads powersupply.protelII powersupply.sch \
              powersupply.tango singlenet.PCB singlenet.geda singlenet.pads \
+             singlenet.pcbpins \
              singlenet.protelII singlenet.sch stack_1.geda amp.spice-sdb \
 	     darlington.spice-sdb skt.switcap test.ana multiequal.sch \
 	     multiequal.spice-sdb gnetlistrc.vhdl
@@ -38,6 +40,10 @@ tests:
 
 # singlenet PCB 
 	$(SRCDIR)/runtest.sh $(SRCDIR)/singlenet.sch PCB \
+		$(BUILDDIR) $(SRCDIR)
+
+# singlenet pcbpins
+	$(SRCDIR)/runtest.sh $(SRCDIR)/singlenet.sch pcbpins \
 		$(BUILDDIR) $(SRCDIR)
 
 # singlenet PADS
@@ -82,6 +88,10 @@ tests:
 
 # multiple equals in attributes SPICE-SDB 
 	$(SRCDIR)/runtest.sh $(SRCDIR)/multiequal.sch spice-sdb \
+		$(BUILDDIR) $(SRCDIR)
+
+# cascade backend
+	$(SRCDIR)/runtest.sh $(SRCDIR)/cascade.sch cascade \
 		$(BUILDDIR) $(SRCDIR)
 
 # Cleanup
