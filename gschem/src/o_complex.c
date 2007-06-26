@@ -348,7 +348,8 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
     o_undo_savestate(w_current, UNDO_ALL);
     i_update_menus(w_current);
     s_delete_object_glist(w_current, w_current->page_current->
-			  complex_place_list);
+                          complex_place_list);
+    w_current->page_current->complex_place_list = NULL;
     return;
   }
 
