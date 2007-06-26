@@ -349,7 +349,7 @@ void x_dialog_about_dialog()
   dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
                                   GTK_MESSAGE_INFO,
                                   GTK_BUTTONS_OK,
-                                  string, VERSION, CUSTOM_VERSION);
+                                  string, PREPEND_VERSION_STRING, VERSION);
   
   gtk_window_set_title(GTK_WINDOW(dialog), "About...");
 

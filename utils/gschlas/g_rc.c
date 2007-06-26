@@ -117,7 +117,8 @@ SCM g_rc_gschlas_version(SCM version)
 
     if (g_strcasecmp (SCM_STRING_CHARS (version), VERSION) != 0) {
 	fprintf(stderr, "Found a version [%s%s] gschlas file:\n[%s]\n",
-		SCM_STRING_CHARS (version), CUSTOM_VERSION, rc_filename ? rc_filename : "unknown");
+		PREPEND_VERSION_STRING, SCM_STRING_CHARS (version),
+                rc_filename ? rc_filename : "unknown");
 	fprintf(stderr,
 		"While gschlas is in ALPHA, please be sure that you have the latest rc file.\n");
 	return SCM_BOOL_F;
