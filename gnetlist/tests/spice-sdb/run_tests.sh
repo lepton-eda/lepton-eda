@@ -131,10 +131,20 @@ for t in $all_tests ; do
     if test "X$code" = "X" ; then
 	code=0
     fi
+    condition=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $6}' | sed 's; ;;g'`
+
     echo "Schematics to copy   = $schematics"
     echo "Args to copy         = $args"
     echo "Expected return code = \"$code\""
-
+    if test "X$condition" != "X" ; then
+        eval "ctest=\`echo \$$condition\`"
+        if test X$ctest = "Xyes" ; then
+            echo "Running test because $condition = yes"
+        else
+            echo "Skipping test because $condition = $ctest"
+	    continue
+        fi
+    fi
 
     tot=`expr $tot + 1`
 

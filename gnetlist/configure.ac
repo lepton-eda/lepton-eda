@@ -76,7 +76,7 @@ if test "x$HAVE_GETOPT_LONG" = xyes ; then
 	AC_DEFINE(HAVE_GETOPT_LONG, [], [Define to 1 if you have the 'getopt_long' function])
 fi
 AC_SUBST(GETOPT_LONG_LIBS)
-
+AC_SUBST(HAVE_GETOPT_LONG)
 
 # 
 # Command line flags end

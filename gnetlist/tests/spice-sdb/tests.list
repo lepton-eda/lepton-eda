@@ -2,7 +2,8 @@
 #
 # test_name | input schematics | aux files (gafrc, symbols, etc) | \ 
 # extra flags to pass to gnetlist -g spice-sdb | \
-# return code if non-zero expected
+# return code if non-zero expected | \
+# variable which must be set for the test to run
 #
 
 
@@ -13,9 +14,9 @@
 # The two stage amp
 TwoStageAmp | TwoStageAmp.sch | Simulation.cmd gafrc models/2N3904.mod sym/transistor.sym | | 
 TwoStageAmp_Include | TwoStageAmp.sch | Simulation.cmd gafrc models/2N3904.mod sym/transistor.sym | -I
-TwoStageAmp_Include_longopt | TwoStageAmp.sch | Simulation.cmd gafrc models/2N3904.mod sym/transistor.sym | --include
+TwoStageAmp_Include_longopt | TwoStageAmp.sch | Simulation.cmd gafrc models/2N3904.mod sym/transistor.sym | --include | | HAVE_GETOPT_LONG
 TwoStageAmp_Sort | TwoStageAmp.sch | Simulation.cmd gafrc models/2N3904.mod sym/transistor.sym | -s
-TwoStageAmp_Sort_longopt | TwoStageAmp.sch | Simulation.cmd gafrc models/2N3904.mod sym/transistor.sym | --sort
+TwoStageAmp_Sort_longopt | TwoStageAmp.sch | Simulation.cmd gafrc models/2N3904.mod sym/transistor.sym | --sort | | HAVE_GETOPT_LONG
 
 # John Doty's test circuit
 # First test mangling
@@ -26,9 +27,9 @@ JD_Sort | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -s
 JD_nomunge | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | | -n
 JD_Include_nomunge | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -I -n
 JD_Sort_nomunge | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -s -n
-JD_nomunge_longopt | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | | --nomunge
-JD_Include_nomunge_longopt | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -I --nomunge
-JD_Sort_nomunge_longopt | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -s --nomunge
+JD_nomunge_longopt | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | --nomunge | | HAVE_GETOPT_LONG
+JD_Include_nomunge_longopt | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -I --nomunge | | HAVE_GETOPT_LONG
+JD_Sort_nomunge_longopt | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -s --nomunge | | HAVE_GETOPT_LONG
 
 
 # Tests for slotted parts

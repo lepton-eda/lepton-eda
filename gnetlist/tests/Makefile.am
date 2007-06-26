@@ -82,7 +82,7 @@ tests:
 
 # multiple equals in attributes SPICE-SDB 
 	$(SRCDIR)/runtest.sh $(SRCDIR)/multiequal.sch spice-sdb \
-		$(BUILDDIR) $(SRCDIR) "-I gnetlist"
+		$(BUILDDIR) $(SRCDIR)
 
 # Cleanup
 	rm -f $(BUILDDIR)/new_*
@@ -108,11 +108,11 @@ tests_ales:
 
 # amp SPICE SDB
 	$(SRCDIR)/runtest.sh $(HOME)/gEDA/alesch/amp.sch spice-sdb \
-		$(BUILDDIR) $(SRCDIR) "-I gnetlist"
+		$(BUILDDIR) $(SRCDIR) 
 
 # darlington SPICE SDB
 	$(SRCDIR)/runtest.sh $(HOME)/gEDA/alesch/darlington.sch spice-sdb \
-		$(BUILDDIR) $(SRCDIR) "-I gnetlist"
+		$(BUILDDIR) $(SRCDIR)
 
 # switcap (does not work with make distcheck due to local test.ana file)
 	gnetlist -o $(BUILDDIR)/new_skt.switcap -g switcap \
