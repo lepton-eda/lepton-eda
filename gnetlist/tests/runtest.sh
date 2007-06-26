@@ -20,9 +20,15 @@ then
 	exit 1
 fi
 
-diff $EXTRADIFF ${SRCDIR}/${schbasename}.$BACKEND ${BUILDDIR}/new_${schbasename}.$BACKEND
+sed '/gnetlist.*-g/d' ${SRCDIR}/${schbasename}.$BACKEND > \
+	${BUILDDIR}/${schbasename}.${BACKEND}.filtered
+sed '/gnetlist.*-g/d' ${BUILDDIR}/new_${schbasename}.$BACKEND > \
+	${BUILDDIR}/new_${schbasename}.${BACKEND}.filtered
+diff $EXTRADIFF ${BUILDDIR}/${schbasename}.${BACKEND}.filtered \
+	 ${BUILDDIR}/new_${schbasename}.${BACKEND}.filtered
 status=$?
 
+rm ${BUILDDIR}/${schbasename}.${BACKEND}.filtered ${BUILDDIR}/new_${schbasename}.${BACKEND}.filtered
 if [ "$status" != 0 ]
 then
 	exit 2
