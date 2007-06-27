@@ -4,13 +4,11 @@ AC_CONFIG_SRCDIR([src/gattrib.c])
 AC_PREREQ(2.53)
 
 PACKAGE=geda-gattrib
-GEDA_VERSION=20070526
-GATTRIB_VERSION=20070526
-echo Configuring $PACKAGE version $GATTRIB_VERSION
-echo Part of gEDA version $GEDA_VERSION
+VERSION=20070526
+echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake -- use base gEDA version here
-AM_INIT_AUTOMAKE($PACKAGE, $GEDA_VERSION)
+AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
 AM_CONFIG_HEADER([config.h])
 
 # Initialize maintainer mode
@@ -140,7 +138,7 @@ AM_CONDITIONAL(GTK24_SOURCE, test "$GLIB24" = "yes")
 ############################################################################
 # Check for libgeda start
 # 
-PKG_CHECK_MODULES(LIBGEDA, libgeda >= $GEDA_VERSION, LIBGEDA="yes", 
+PKG_CHECK_MODULES(LIBGEDA, libgeda >= $VERSION, LIBGEDA="yes", 
                   no_LIBGEDA="yes")
 
 if test "$LIBGEDA" = "yes" 
@@ -313,7 +311,7 @@ expandgedadatadir=`echo $gedatopdir`
 
 # this has to be expanded ( no ${prefix} ) --
 AC_DEFINE_UNQUOTED(GEDADATADIR, "$gedatopdir", [gEDA/gaf's data directory])
-AC_DEFINE_UNQUOTED(VERSION, "$GEDA_VERSION", [Currently running version of gEDA/gaf])
+AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
 
 #
 # gEDA/gaf specify things which need to setup
@@ -347,10 +345,9 @@ expandedGEDADATADIR=`eval "echo $GEDADATADIR"`
 expandedGEDARCDIR=`eval "echo $GEDARCDIR"`
 
 AC_MSG_RESULT([
-***** Configuration summary for $PACKAGE $GATTRIB_VERSION *****
+***** Configuration summary for $PACKAGE VERSION *****
 
-== gattrib version:                  $GATTRIB_VERSION
-== base gEDA version:                $GEDA_VERSION
+== base gEDA version:                $VERSION
 == libgeda library version:          $LIBGEDA_VERSION
 == data directory:                   $expandedGEDADATADIR
 == rc directory:                     $expandedGEDARCDIR
