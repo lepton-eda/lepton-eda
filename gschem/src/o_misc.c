@@ -141,7 +141,7 @@ void o_lock(TOPLEVEL *w_current)
         object->color = w_current->lock_color;
         w_current->page_current->CHANGED=1;
       } else {
-        s_log_message(_("Object alreadly locked\n"));
+        s_log_message(_("Object already locked\n"));
       }
     }
 
@@ -179,7 +179,7 @@ void o_unlock(TOPLEVEL *w_current)
         object->locked_color = -1;
         w_current->page_current->CHANGED = 1;
       } else {
-        s_log_message(_("Object alreadly unlocked\n"));
+        s_log_message(_("Object already unlocked\n"));
       }
     }
 
