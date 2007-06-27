@@ -3,8 +3,8 @@ AM_CFLAGS = -g -O2
 
 SUBDIRS = src include lib design docs
 
-EXTRA_DIST = BUGS NOTES README README.gEDA ChangeLog ChangeLog-1.0 
-	AUTHORS COPYING INSTALL autogen.sh ToDos
+EXTRA_DIST = BUGS NOTES README ChangeLog ChangeLog-1.0 AUTHORS \
+	COPYING INSTALL autogen.sh ToDos
 
 distclean-local:
 	-rm -rf autom4te*.cache
