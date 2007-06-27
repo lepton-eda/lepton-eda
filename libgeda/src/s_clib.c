@@ -1259,3 +1259,74 @@ gchar *s_clib_symbol_get_data_by_name (const gchar *name)
   if (symbol == NULL) return NULL;
   return s_clib_symbol_get_data (symbol);
 }
+
+/*! \brief Get a list of symbols used.
+ *  \par Function Description
+ *
+ *  Scan a #TOPLEVEL structure's object list looking for symbols, and
+ *  return them in a list.
+ *
+ *  \warning The #CLibSymbol instances in the \b GList returned belong
+ *  to the component library, and should be considered constants; they
+ *  should not be manipulated or free()'d.  On the other hand, the \b
+ *  GList returned must be freed with \b g_list_free() when no longer
+ *  needed.  Note that the values returned will be invalidated by a
+ *  call to s_clib_free() or s_clib_refresh().
+ *
+ *  \bug Only includes components which are not embedded, but they
+ *  should (probably) also appear in the list.
+ *
+ *  \param w_current #TOPLEVEL structure to scan.
+ *  \return GList of symbol names.
+ */
+GList *s_toplevel_get_symbol_names (const TOPLEVEL *w_current)
+{
+  GList *result = NULL;
+  GList *iter = NULL;
+  OBJECT *o = NULL;
+  PAGE *p = NULL;
+  GList *symlist = NULL;
+  CLibSymbol *sym = NULL;
+
+  g_assert (w_current != NULL);
+
+  for (p = w_current->page_head->next; p != NULL; p = p->next) {
+    for (o = p->object_head; o != NULL; o = o->next) {
+      if (o->type != OBJ_COMPLEX) continue;
+      if (o->complex_basename == NULL)  continue;
+      
+      /* Since we're not looking at embedded symbols, the first
+       * component with the given name will be the one we need.
+       * N.b. we don't use s_clib_get_symbol_by_name() because it's
+       * spammeh. */
+      symlist = s_clib_search (o->complex_basename, CLIB_EXACT);
+      if (symlist == NULL) continue;
+      sym = (CLibSymbol *) symlist->data;
+      g_list_free (symlist);
+      
+      /* We do the list insertion by evilly comparing pointers.  This
+       * is okay, because we always take the first symbol with the
+       * given name, and symbol pointers don't change while this
+       * function is running (we hope).  Note that this creates a
+       * sorted list.*/
+      for (iter = result;
+           iter != NULL;
+           iter = g_list_next(iter)) {
+        if (iter->data == sym) {
+          break; /* Already in list */
+        }
+        if (compare_symbol_name (iter->data, sym) > 0) {
+          /* not in list yet, and gone past point where it should go */
+          result = g_list_insert_before (result, iter, sym);
+          break;
+        }
+      }
+      if (iter == NULL) {
+        /* not in list yet, and at end of list */
+        result = g_list_append (result, sym);    
+      }
+    }
+  }
+
+  return result;
+}
