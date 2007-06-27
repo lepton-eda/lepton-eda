@@ -196,16 +196,6 @@ void o_bus_draw_xor_single(TOPLEVEL *w_current,
   gdk_gc_set_foreground(w_current->outline_xor_gc,
 			x_get_darkcolor(color));
 
-#if 0
-  if (w_current->bus_style == THICK ) {
-    size = SCREENabs(w_current, BUS_WIDTH);
-    gdk_gc_set_line_attributes(w_current->outline_xor_gc, size+1,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
-#endif
-
   if (whichone == 0) {
     dx1 = dx;
     dy1 = dy;
@@ -228,15 +218,6 @@ void o_bus_draw_xor_single(TOPLEVEL *w_current,
                 sx[1]+dx2, sy[1]+dy2);
 
   /* backing store ? not approriate here */
-
-#if 0
-  if (w_current->bus_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->outline_xor_gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
-#endif
 }
 
 /*! \todo Finish function documentation!!!
@@ -250,86 +231,6 @@ void o_bus_start(TOPLEVEL *w_current, int x, int y)
 
   w_current->last_x = w_current->start_x = fix_x(w_current, x);
   w_current->last_y = w_current->start_y = fix_y(w_current, y);
-
-#if 0 /* not ready for prime time use, this is the snap any point #if 0 */
-  int distance1;
-  int distance2;
-  OBJECT *real;
-  OBJECT *o_current;
-  int temp_x, temp_y;
-  o_current = o_CONN_search_closest_range(w_current,
-                                          w_current->page_current->object_head,
-                                          w_current->start_x, w_current->start_y,
-                                          &temp_x, &temp_y, 200, NULL, NULL);
-
-  if (o_current) {
-    w_current->last_x = w_current->start_x = temp_x;
-    w_current->last_y = w_current->start_y = temp_y;
-  } else {
-    w_current->last_x = w_current->start_x = fix_x(w_current, x);
-    w_current->last_y = w_current->start_y = fix_y(w_current, y);
-  }
-#endif
-
-#if 0 /* not ready for prime time use */
-  /* new bus extenstion stuff */
-  o_current = w_current->page_current->selection_list;
-  if (o_current != NULL && w_current->event_state == STARTDRAWNET) {
-    if (o_current->type == OBJ_BUS) {
-      if (o_current->line) {
-
-        real = o_list_sear( /* ch */
-                           w_current->page_current->object_head,
-                           o_current);
-
-        if (!real) {
-          fprintf(stderr, _("selected a nonexistant object!\n"));
-          exit(-1);
-        }
-        distance1 = dist(
-                         real->line->screen_x[0],
-                         real->line->screen_y[0],
-                         w_current->start_x, w_current->start_y);
-
-        distance2 = dist(
-                         real->line->screen_x[1],
-                         real->line->screen_y[1],
-                         w_current->start_x, w_current->start_y);
-
-        printf("%d %d\n", distance1, distance2);
-
-        if (distance1 < distance2) {
-          w_current->last_x = w_current->start_x =
-            real->line->screen_x[0];
-          w_current->last_y = w_current->start_y =
-            real->line->screen_y[0];
-        } else {
-          w_current->last_x = w_current->start_x =
-            real->line->screen_x[1];
-          w_current->last_y = w_current->start_y =
-            real->line->screen_y[1];
-        }
-      }
-    } else if (o_current->type == OBJ_COMPLEX ||
-               o_current->type == OBJ_PLACEHOLDER) {
-      real = o_list_sear( /* ch */
-                         w_current->page_current->object_head,
-                         o_current);
-
-      if (!real) {
-        fprintf(stderr, _("selected a nonexistant object!\n"));
-        exit(-1);
-      }
-
-      o_CONN_search_closest(w_current, o_current->complex,
-                            w_current->start_x, w_current->start_y,
-                            &temp_x, &temp_y, NULL);
-      w_current->last_x = w_current->start_x = temp_x;
-      w_current->last_y = w_current->start_y = temp_y;
-    }
-
-  }
-#endif
 
   if (w_current->bus_style == THICK ) {
     size = SCREENabs(w_current, BUS_WIDTH);
@@ -415,22 +316,6 @@ int o_bus_end(TOPLEVEL *w_current, int x, int y)
          return(FALSE);
        }
 
-#if 0 /* not ready for prime time use */
-  /* second attempt at all snapping */
-  o_current = o_CONN_search_closest_range(w_current,
-                                          w_current->page_current->object_head,
-                                          w_current->last_x, w_current->last_y,
-                                          &temp_x, &temp_y, 200, NULL, NULL);
-
-  if (o_current) {
-    w_current->last_x = temp_x;
-    w_current->last_y = temp_y;
-  } else {
-    w_current->last_x = fix_x(w_current, x);
-    w_current->last_y = fix_y(w_current, y);
-  }
-#endif
-
   gdk_gc_set_foreground(w_current->gc,
 			x_get_color(color));
   gdk_draw_line(w_current->window, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
@@ -468,18 +353,6 @@ int o_bus_end(TOPLEVEL *w_current, int x, int y)
   o_cue_draw_list(w_current, other_objects);
   g_list_free(other_objects);
   o_cue_draw_single(w_current, w_current->page_current->object_tail);
-
-  /* this needs to be bus specific... might not be needed */
-#if 0
-  o_bus_conn_erase(w_current, w_current->page_current->object_tail);
-  o_bus_conn_draw(w_current, w_current->page_current->object_tail);
-  o_conn_draw_objects(w_current, w_current->page_current->object_tail);
-
-  if (w_current->net_consolidate == TRUE) {
-    o_bus_consolidate_segments(w_current, 
-                               w_current->page_current->object_tail);
-  }
-#endif
 
   w_current->page_current->CHANGED=1;
   w_current->start_x = w_current->save_x;
@@ -570,11 +443,6 @@ void o_bus_eraserubber(TOPLEVEL *w_current)
                                GDK_CAP_NOT_LAST,
                                GDK_JOIN_MITER);
   }
-
-#if 0
-  gdk_gc_set_foreground(w_current->gc,
-			x_get_color(w_current->background_color) );
-#endif
 
   gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 

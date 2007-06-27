@@ -241,16 +241,6 @@ void o_net_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone,
   gdk_gc_set_foreground(w_current->outline_xor_gc,
 			x_get_darkcolor(color));
 
-#if 0 /* if I had this enabled, than xoring would leave a lot of mouse drops */
-  if (w_current->net_style == THICK ) {
-    size = SCREENabs(w_current, NET_WIDTH);
-    gdk_gc_set_line_attributes(w_current->outline_xor_gc, size+1,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
-#endif
-
   if (whichone == 0) {
     dx1 = dx;
     dy1 = dy;
@@ -273,15 +263,6 @@ void o_net_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone,
                 sx[1]+dx2, sy[1]+dy2);
 
   /* backing store ? not approriate here */
-
-#if 0 /* if I had this enabled, than xoring would leave a lot of mouse drops */
-  if (w_current->net_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->outline_xor_gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
-#endif
 }
 
 /*! \todo Finish function documentation!!!
@@ -298,86 +279,6 @@ void o_net_start(TOPLEVEL *w_current, int x, int y)
     fix_x(w_current, x);
   w_current->last_y = w_current->start_y = w_current->second_y = 
     fix_y(w_current, y);
-
-#if 0 /* not ready for prime time use, this is the snap any point #if 0 */
-  int distance1;
-  int distance2;
-  OBJECT *real;
-  OBJECT *o_current;
-  int temp_x, temp_y;
-  o_current = o_CONN_search_closest_range(w_current,
-                                          w_current->page_current->object_head,
-                                          w_current->start_x, w_current->start_y,
-                                          &temp_x, &temp_y, 200, NULL, NULL);
-
-  if (o_current) {
-    w_current->last_x = w_current->start_x = temp_x;
-    w_current->last_y = w_current->start_y = temp_y;
-  } else {
-    w_current->last_x = w_current->start_x = fix_x(w_current, x);
-    w_current->last_y = w_current->start_y = fix_y(w_current, y);
-  }
-#endif
-
-#if 0 /* not ready for prime time use */
-  /* new net extenstion stuff */
-  o_current = (OBJECT *) w_current->page_current->selection_list->data;
-  if (o_current != NULL && w_current->event_state == STARTDRAWNET) {
-    if (o_current->type == OBJ_NET) {
-      if (o_current->line) {
-
-        real = o_list_sear( /* ch */ 
-                           w_current->page_current->object_head,
-                           o_current);
-
-        if (!real) {
-          fprintf(stderr, _("selected a nonexistant object!\n"));
-          exit(-1);
-        }
-        distance1 = dist(
-                         real->line->screen_x[0],
-                         real->line->screen_y[0],
-                         w_current->start_x, w_current->start_y);
-
-        distance2 = dist(
-                         real->line->screen_x[1],
-                         real->line->screen_y[1],
-                         w_current->start_x, w_current->start_y);
-
-        printf("%d %d\n", distance1, distance2);
-
-        if (distance1 < distance2) {
-          w_current->last_x = w_current->start_x =
-            real->line->screen_x[0];
-          w_current->last_y = w_current->start_y =
-            real->line->screen_y[0];
-        } else {
-          w_current->last_x = w_current->start_x =
-            real->line->screen_x[1];
-          w_current->last_y = w_current->start_y =
-            real->line->screen_y[1];
-        }
-      }
-    } else if (o_current->type == OBJ_COMPLEX || 
-               o_current->type == OBJ_PLACEHOLDER) {
-      real = o_list_sear( /* ch */
-                         w_current->page_current->object_head,
-                         o_current);
-
-      if (!real) {
-        fprintf(stderr, _("selected a nonexistant object!\n"));
-        exit(-1);
-      }
-
-      o_CONN_search_closest(w_current, o_current->complex,
-                            w_current->start_x, w_current->start_y,
-                            &temp_x, &temp_y, NULL);
-      w_current->last_x = w_current->start_x = temp_x;
-      w_current->last_y = w_current->start_y = temp_y;
-    }
-
-  }
-#endif
 
   if (w_current->net_style == THICK ) {
     size = SCREENabs(w_current, NET_WIDTH);
@@ -488,23 +389,6 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
     
     return (FALSE);
   }
-#if 0				/* not ready for prime time use */
-  /* second attempt at all snapping */
-  o_current = o_CONN_search_closest_range(w_current,
-					  w_current->page_current->
-					  object_head, w_current->last_x,
-					  w_current->last_y, &temp_x,
-					  &temp_y, 200, NULL, NULL);
-
-  if (o_current) {
-    w_current->last_x = temp_x;
-    w_current->last_y = temp_y;
-  } else {
-    w_current->last_x = fix_x(w_current, x);
-    w_current->last_y = fix_y(w_current, y);
-  }
-#endif
-
 
   /* Primary net runs from (x1,y1)-(x2,y2) */
   /* Secondary net from (x2,y2)-(x3,y3) */
@@ -645,14 +529,6 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
   w_current->start_y = w_current->save_y;
   o_undo_savestate(w_current, UNDO_ALL);
 
-#if 0				/* a false attempt at ending the rubberbanding.. */
-  if (conn_count) {
-    w_current->inside_action = 0;
-    i_set_state(w_current, STARTDRAWNET);
-    o_net_eraserubber(w_current);
-  }
-#endif
-
   return (TRUE);
 }
 
@@ -764,11 +640,6 @@ void o_net_eraserubber(TOPLEVEL *w_current)
 			       GDK_LINE_SOLID,
 			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
   }
-
-#if 0
-  gdk_gc_set_foreground(w_current->gc,
-			x_get_color(w_current->background_color));
-#endif
 
   /* Erase primary primary rubber net line */
   gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x,

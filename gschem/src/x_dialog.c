@@ -2612,13 +2612,6 @@ extern GtkWidget *stwindow;
  */
 void x_dialog_raise_all(TOPLEVEL *w_current)
 {
-
-#if 0 /* don't raise the log window */
-  if (stwindow) {
-    gdk_window_raise(stwindow->window);
-  }
-#endif
-
   if(w_current->fowindow) {
     gdk_window_raise(w_current->fowindow->window);
   }
@@ -2635,24 +2628,9 @@ void x_dialog_raise_all(TOPLEVEL *w_current)
     gdk_window_raise(w_current->cswindow->window);
   }
 
-#if 0 /* don't raise these windows ever */ 
-  if(w_current->fileselect[FILESELECT].xfwindow) {
-    gdk_window_raise(w_current->fileselect[FILESELECT].xfwindow->window);
-  }
-  if(w_current->fileselect[COMPSELECT].xfwindow) {
-    gdk_window_raise(w_current->fileselect[COMPSELECT].xfwindow->window);
-  }
-#endif
-
   if(w_current->iwindow) {
     gdk_window_raise(w_current->iwindow->window);
   }
-
-#if 0 /* don't raise the page manager window */
-  if(w_current->pswindow) {
-    gdk_window_raise(w_current->pswindow->window);
-  }
-#endif
 
   if(w_current->tiwindow) {
     gdk_window_raise(w_current->tiwindow->window);

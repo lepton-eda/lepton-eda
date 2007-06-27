@@ -20,12 +20,6 @@
 #include <config.h>
 #include <stdio.h>
 
-/* instrumentation code */
-#if 0
-#include <sys/time.h>
-#include <unistd.h>
-#endif
-
 #include <libgeda/libgeda.h>
 
 #include "../include/x_states.h"
@@ -400,9 +394,6 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, GList *o_glist,
        (w_current->drawbounding_action_mode == FREE)) {
     diff_x = w_current->last_x - w_current->start_x;
     diff_y = w_current->last_y - w_current->start_y;
-#if 0
-    printf("switching to contrained\n");
-#endif
     w_current->drawbounding_action_mode = CONSTRAINED;
 
     if (w_current->actionfeedback_mode == OUTLINE) {
@@ -507,9 +498,6 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, GList *o_glist,
   /* going to free from constrained */
   if ((!w_current->CONTROLKEY) &&
       (w_current->drawbounding_action_mode == CONSTRAINED)) {
-#if 0
-        printf("switching to free\n");
-#endif
         diff_x = w_current->last_x - w_current->start_x;
         diff_y = w_current->last_y - w_current->start_y;
         w_current->drawbounding_action_mode = FREE;

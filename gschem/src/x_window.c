@@ -446,16 +446,6 @@ void x_window_create_main(TOPLEVEL *w_current)
    if( auto_place_mode )
    	gtk_widget_set_uposition (w_current->main_window, 10, 10);
 
-  /* I could not get the destroy signal to work. always got a: */
-  /* Gdk-ERROR **: an x io error occurred */
-  /* aborting... */
-  /* message */
-#if 0
-  gtk_signal_connect (GTK_OBJECT (w_current->main_window), "destroy",
-                      GTK_SIGNAL_FUNC(i_callback_destroy_wm),
-                      w_current);
-#endif
-
   /* this should work fine */
   gtk_signal_connect (GTK_OBJECT (w_current->main_window), "delete_event",
                       GTK_SIGNAL_FUNC (i_callback_close_wm),

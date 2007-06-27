@@ -103,9 +103,6 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
     conn = (CONN *) cl_current->data;
    
     if (conn->x == x && conn->y == y) {
-#if 0
-      printf("type: %d x: %d y: %d cx: %d cy: %d\n", conn->type, x, y, conn->x, conn->y);
-#endif
       switch(conn->type) {
         
         case(CONN_ENDPOINT):

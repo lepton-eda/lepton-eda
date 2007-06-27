@@ -377,15 +377,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         }
         break;
 
-#if 0 /* old way with the text dialog box which was around only once */
-      case(DRAWTEXT):
-        w_current->start_x = fix_x(w_current, (int) event->x);
-        w_current->start_y = fix_y(w_current, (int) event->y);
-        o_text_input(w_current);
-        w_current->inside_action = 1;
-        break;
-#endif
-
       case(ENDCOMP):
         o_complex_end(w_current,
                       fix_x(w_current, (int) event->x),
@@ -1011,11 +1002,6 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
        w_current->inside_action) {
          pdiff_x = mouse_x - start_pan_x;
          pdiff_y = mouse_y - start_pan_y;
-
-#if 0
-         printf("current center: %d %d\n", current_center_x, current_center_y);
-         printf("pdiff: %d %d\n", pdiff_x, pdiff_y);
-#endif
 
          if (!(throttle % 5)) {
            a_pan_mouse(w_current, pdiff_x*w_current->mousepan_gain, 

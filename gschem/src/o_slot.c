@@ -226,17 +226,6 @@ void o_slot_end(TOPLEVEL *w_current, char *string, int len)
     o_erase_single(w_current, object);
     o_attrib_slot_update(w_current, object);
 
-
-#if 0 /* NEWSEL */
-    /* why? */
-    /* erase the selection list */
-    o_erase_selected(w_current);
-
-    o_attrib_slot_copy(w_current, object,
-                       w_current->page_current->selection_list);
-    o_redraw_single(w_current,object);
-#endif
-
     o_redraw_single(w_current,object);
 
     w_current->page_current->CHANGED = 1;

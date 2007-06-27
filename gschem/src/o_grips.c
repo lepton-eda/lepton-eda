@@ -147,13 +147,8 @@ OBJECT *o_grips_search_world(TOPLEVEL *w_current, int x, int y, int *whichone)
           if(found != NULL) return found;
           break;
 
-#if 0 
-      /* This code is wrong.  Continue searching even if the object */
-      /* does not have grips */
         default:
-          /* object type is unknown : error condition */
-          return NULL;
-#endif
+          break;
       }
     }
     s_current = s_current->next;	

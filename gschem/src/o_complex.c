@@ -313,9 +313,6 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
     g_free(buffer);
 
     if (w_current->actionfeedback_mode == OUTLINE) {
-#if 0
-      printf("inside draw outline here\n");
-#endif
       /* erase outline */
       
       o_complex_translate_display_object_glist(w_current,
@@ -323,9 +320,6 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 					       w_current->page_current->
 					       complex_place_list); 
     } else {
-#if 0
-      printf("inside draw bounding here\n");
-#endif
       world_get_object_glist_bounds(w_current,
 			      w_current->page_current->
 			      complex_place_list,
@@ -407,17 +401,11 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 
   /* check for nulls in all this hack */
   if (w_current->actionfeedback_mode == OUTLINE) {
-#if 0
-    printf("inside draw outline here\n");
-#endif
     /* erase outline */
     o_complex_translate_display_object_glist(w_current,
 					     diff_x, diff_y,
 					     w_current->page_current->complex_place_list);
   } else {
-#if 0
-    printf("inside draw bounding here\n");
-#endif
     world_get_object_glist_bounds(w_current,
                                   w_current->page_current->complex_place_list,
                                   &w_rleft, &w_rtop,
@@ -681,12 +669,6 @@ void o_complex_translate_all(TOPLEVEL *w_current, int offset)
 
   /* this is an experimental mod, to be able to translate to all
    * places */
-#if 0
-  o_complex_world_translate(1000, 1000, object_head);
-  printf("symbol -%d -%d\n", x, y);
-  o_complex_world_translate(-x, -y, object_head); /* to zero, zero */
-#endif
-
   a_zoom_extents(w_current, w_current->page_current->object_head, 
                  A_PAN_DONT_REDRAW);
   o_unselect_all(w_current);
@@ -783,42 +765,22 @@ int o_complex_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_cen
   switch(object->complex->angle) {
     case(90):
       object->complex->angle = 270;
-#if 0
-      o_text_change_angle(w_current, object->complex->prim_objs,
-                          object->complex->angle);
-#endif
-
       change = 1;
       break;
 
     case(270):
       object->complex->angle = 90;
-#if 0
-      o_text_change_angle(w_current, object->complex->prim_objs
-                          object->complex->angle);
-#endif
       change = 1;
       break;
 
   }
-#if 0
-  object->complex->angle = (object->complex->angle + 180) % 360;
-#endif
 
   object->complex->mirror = !object->complex->mirror;
-#if 0
-  object->complex->x = 0;
-  object->complex->y = 0;
-#endif
 
   o_complex_world_translate_toplevel(w_current, x, y, object);
 
 #if DEBUG
   printf("final res %d %d\n", object->complex->x,  object->complex->y);
-#endif
-#if 0
-  object->complex->x = x;
-  object->complex->y = y;
 #endif
   return(change);
 }

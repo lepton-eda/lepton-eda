@@ -239,16 +239,11 @@ DEFINE_I_CALLBACK(file_new_window)
  */
 DEFINE_I_CALLBACK(file_open)
 {
-
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
 
   x_fileselect_open (w_current);
-
-#if 0 /* replaced by above */
-  setup_open_file_selector(w_current);
-#endif
 }
 
 /*! \todo Finish function documentation!!!
@@ -306,12 +301,6 @@ DEFINE_I_CALLBACK(file_save)
   if (strstr(w_current->page_current->page_filename,
              w_current->untitled_name)) {
     x_fileselect_save (w_current);
-#if 0 /* replaced with x_fileselect_setup */
-    setup_saveas_file_selector(
-                               w_current,
-                               SAVEAS,
-                               w_current->page_current->page_filename);
-#endif
   } else {
     x_window_save_page (w_current,
                         w_current->page_current,
@@ -374,12 +363,6 @@ DEFINE_I_CALLBACK(file_save_as)
 
   exit_if_null(w_current);
   x_fileselect_save (w_current);
-
-#if 0 /* replaced with above */
-  setup_saveas_file_selector(w_current,
-                             SAVEAS,
-                             w_current->page_current->page_filename);
-#endif
 }
 
 /*! \todo Finish function documentation!!!
@@ -2226,9 +2209,6 @@ DEFINE_I_CALLBACK(add_component)
 
   x_compselect_open (w_current);
 
-#if 0 /* replaced by above */
-  setup_place_file_selector(w_current);
-#endif
   i_update_middle_button(w_current,
                          i_callback_add_component, _("Component"));
 
@@ -3426,11 +3406,6 @@ DEFINE_I_CALLBACK(cancel)
   /* clear the key guile command-sequence */
   scm_c_eval_string ("(set! current-command-sequence '())");
 
-  /* see above comment hack */
-#if 0
-  set_cursor_normal();
-#endif
-
   if (w_current->inside_action) { 
      o_redraw_all(w_current); 
   }
@@ -3502,21 +3477,6 @@ DEFINE_I_CALLBACK(options_show_coord_window)
   exit_if_null(w_current);
   coord_dialog (w_current, mouse_x, mouse_y);
 }
-
-#if 0 /* experimental */
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(preview)
-{
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
-
-  exit_if_null(w_current);
-  setup_preview(w_current);
-}
-#endif
 
 /* these is a special wrapper function which cannot use the above */
 /* DEFINE_I_CALLBACK macro */

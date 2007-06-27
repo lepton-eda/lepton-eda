@@ -112,11 +112,6 @@ int g_keys_execute(int state, int keyval)
   g_free(guile_string);
   g_free(modifier);
 
-#if 0 /* playing with thi's guile stuff */
-  gh_eval_str("(display (reverse last-command-sequence))");
-  printf("\n");
-#endif
-
   return (SCM_FALSEP (scm_retval)) ? 0 : 1;
 }
 
@@ -251,10 +246,6 @@ DEFINE_G_KEYS(edit_rotate_90)
 DEFINE_G_KEYS(edit_rotate_90_hotkey)
 DEFINE_G_KEYS(edit_mirror)
 DEFINE_G_KEYS(edit_mirror_hotkey)
-#if 0 /* obsolete */
-DEFINE_G_KEYS(edit_stretch)
-DEFINE_G_KEYS(edit_stretch_hotkey)
-#endif
 DEFINE_G_KEYS(edit_slot)
 DEFINE_G_KEYS(edit_color)
 DEFINE_G_KEYS(edit_edit)

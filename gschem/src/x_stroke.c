@@ -61,14 +61,6 @@ void x_stroke_add_point(TOPLEVEL *w_current, int x, int y)
     stroke_points = new_point;
   }
 
-  /* having this xored was causing some grief; when you zoomed
-   * or changed the display, there would be point droppings, so
-   * that's why this isn't xor */
-#if 0
-  gdk_gc_set_foreground(w_current->xor_gc,
-                        x_get_color(w_current->stroke_color));
-#endif
-
   gdk_gc_set_foreground(w_current->gc,
                         x_get_color(w_current->stroke_color));
 

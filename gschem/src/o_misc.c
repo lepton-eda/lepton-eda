@@ -683,10 +683,6 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
 
       case(OBJ_ARC):
         o_arc_erase(w_current, object);
-#if 0 /* not needed anymore */
-	SCREENtoWORLD(w_current, centerx, centery, 
-		      &world_centerx, &world_centery);
-#endif
         o_arc_mirror_world(w_current, centerx, centery, object);
         o_arc_draw(w_current, object);
         break;
@@ -930,15 +926,6 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
      /* replaced strcmp with strstr to simplify the search */
       if (strstr(o_current->text->string,stext)) {
 	if (!skiplast) {
-
-#if 0 /* replaced by code below by avh, might not quite be right though */
-	  set_window(w_current, o_current->text->x - FIND_WINDOW_HALF_SIZE,
-		     o_current->text->x + FIND_WINDOW_HALF_SIZE,
-		     o_current->text->y - FIND_WINDOW_HALF_SIZE,
-		     o_current->text->y + FIND_WINDOW_HALF_SIZE);
-          correct_aspect(w_current);
-
-#endif
           a_zoom(w_current, ZOOM_FULL, DONTCARE, A_PAN_DONT_REDRAW);
           text_screen_height =  SCREENabs(w_current,
                                           o_text_height(o_current->

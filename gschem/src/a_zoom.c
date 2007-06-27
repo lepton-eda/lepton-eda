@@ -358,15 +358,6 @@ void correct_aspect(TOPLEVEL *w_current)
         GET_PAGE_WIDTH(w_current) /
         w_current->page_current->coord_aspectratio;
 
-#if 0 /* ER's original zoom extents code */
-      pad_y = (delta_y -
-               delta_x *
-               w_current->page_current->coord_aspectratio) /
-        2;
-      /* widening */
-      w_current->page_current->bottom += pad_y;
-      w_current->page_current->top    -= pad_y;
-#endif
     } else {
 #if DEBUG
       printf("new smaller then coord\n");
@@ -377,16 +368,6 @@ void correct_aspect(TOPLEVEL *w_current)
         w_current->page_current->left +
         GET_PAGE_HEIGHT(w_current) *
         w_current->page_current->coord_aspectratio;
-
-#if 0 /* ER's original zoom extents code */
-      pad_x = (delta_x -
-               delta_y *
-               w_current->page_current->coord_aspectratio) /
-        2;
-      /* shortening */
-      w_current->page_current->right -= pad_x;
-      w_current->page_current->left  += pad_x;
-#endif
     }
 #if DEBUG
     printf("invalid aspectratio corrected\n");
@@ -397,23 +378,5 @@ void correct_aspect(TOPLEVEL *w_current)
 
 #if DEBUG
   printf("final %f\n", new_aspect);
-#endif
-
-#if 0 /* no longer needed to calc zoom_factor */
-  diff_x = fabs(GET_PAGE_WIDTH(w_current));
-
-#ifdef HAS_RINT
-  zoom_scale = (int) rint(w_current->init_right / diff_x);
-#else
-  zoom_scale = (int)     (w_current->init_right / diff_x);
-#endif
-
-  if (zoom_scale > w_current->max_zoom) {
-    zoom_scale = w_current->max_zoom;
-  }
-  if (zoom_scale < w_current->min_zoom) {
-    zoom_scale = w_current->min_zoom;
-  }
-  w_current->page_current->zoom_factor = zoom_scale;
 #endif
 }

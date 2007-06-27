@@ -117,24 +117,6 @@ void o_text_draw_rectangle(TOPLEVEL *w_current, OBJECT *o_current)
                         right - left,
                         bottom - top );
   }
-
-#if 0 /* in prep for future performance enhancement */
-  right = right+left;
-  bottom = bottom+top;
-  o_current->left   = min(left, right);
-  o_current->top    = min(top, bottom);
-  o_current->right  = max(left, right);
-  o_current->bottom = max(top, bottom);
-  
-  printf("%d %d %d %d\n", left, top, right, bottom);
-  
-  WORLDtoSCREEN(w_current,
-                o_current->text->x,
-                o_current->text->y,
-                &o_current->text->screen_x,
-                &o_current->text->screen_y);
-#endif
-
 }
 
 /*! \todo Finish function documentation!!!
@@ -156,18 +138,6 @@ void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   if (!w_current->fast_mousepan || !w_current->doing_pan) {
-
-#if 0 /* in prep for future performance enhancement... */
-    int pixel_height;
-    pixel_height = SCREENabs(w_current, 26*o_current->text->size/2);
-    if (pixel_height < 4 /* && w_current->text_rectangle */)
-    {
-      o_text_draw_rectangle(w_current, o_current);
-    } else {
-      o_text_draw_lowlevel(w_current, o_current);
-    }
-#endif
-    
     o_text_draw_lowlevel(w_current, o_current);
 
     /* Indicate on the schematic that the text is invisible by */

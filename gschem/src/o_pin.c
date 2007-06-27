@@ -357,11 +357,6 @@ void o_pin_eraserubber(TOPLEVEL *w_current)
                                GDK_JOIN_MITER);
   }
 
-#if 0
-  gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_color(w_current->background_color) );
-#endif
-
   gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
   if (w_current->net_style == THICK ) {

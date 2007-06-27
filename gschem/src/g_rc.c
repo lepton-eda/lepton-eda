@@ -272,26 +272,6 @@ DEFINE_G_RC_COLOR(g_rc_freestyle_color,
 		  "freestyle-color",
 		  default_dummy)
 
-#if 0
-/*! \deprecated Currently unused.
- *  \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-static int vstbl_lookup_val(const vstbl_entry *table, int size, int val)
-{
-  int i;
-
-  for(i = 0; i < size; i++) {
-    if(table[i].m_val == val) {
-      break;
-    }
-  }
-  return i;
-}
-#endif
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -319,19 +299,6 @@ static int vstbl_get_val(const vstbl_entry *table, int index)
 {
   return table[index].m_val;
 }
-
-#if 0
-/*! \deprecated Currently Unused.
- *  \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-static const char *vstbl_get_str(const vstbl_entry *table, int index)
-{
-  return table[index].m_str;
-}
-#endif
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -553,39 +520,11 @@ SCM g_rc_text_display_zoomfactor(SCM zoomfactor)
  */
 SCM g_rc_scrollbar_update(SCM scmmode)
 {
-#if 0
-  char *mode;
-  GtkUpdateType policy;
-#endif
   SCM ret = SCM_BOOL_T;
 
   SCM_ASSERT (scm_is_string (scmmode), scmmode,
               SCM_ARG1, "scrollbar-update");
   
-#if 0
-  mode = SCM_STRING_CHARS (scmmode);
-
-  if (strcmp (mode, "continuous") == 0) {
-    policy = GTK_UPDATE_CONTINUOUS;
-    ret = SCM_BOOL_T;
-  } else if (strcmp (mode, "delayed") == 0) {
-    policy = GTK_UPDATE_DELAYED
-    ret = SCM_BOOL_T;
-  } else {
-    fprintf(stderr,
-            _("Invalid mode [%s] passed to scrollbar-update\n"),
-            mode);
-    ret = SCM_BOOL_F;
-  }
-
-  if (ret == SCM_BOOL_T) {
-    gtk_range_set_update_policy (GTK_RANGE (window_current->v_scrollbar),
-                                 policy);
-    gtk_range_set_update_policy (GTK_RANGE (window_current->h_scrollbar),
-                                 policy);
-  }
-#endif
-
   return ret;
 }
 
@@ -777,50 +716,6 @@ SCM g_rc_attribute_name(SCM scm_path)
   
   return ret;
 }
-
-#if 0
-/*! \deprecated Old obsolete way of handling strokes.
- *  \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
-{
-  SCM ret;
-#ifdef HAS_LIBSTROKE
-  char *stroke;
-
-  SCM_ASSERT (scm_is_string (scm_stroke), scm_stroke,
-              SCM_ARG1, "stroke");
-
-  stroke = SCM_STRING_CHARS (scm_stroke);
-
-  if (!s_stroke_uniq(stroke)) {
-    if (stroke_info_mode) {
-      s_log_message(_("Duplicate stroke definition "
-                    "passed to stroke! [%s]\n"),
-                    stroke);
-      printf(_("Duplicate stroke definition "
-             "passed to stroke! [%s]\n"),
-             stroke);
-    }
-    ret = SCM_BOOL_F;
-  } else {
-    s_stroke_add_entry(stroke, scm_guile_func);
-    ret = SCM_BOOL_T;
-  }
-#else
-  if (stroke_info_mode) {
-    printf(_("A stroke keyword has been found in an rc file, but gschem\n"
-           "is not compiled to support strokes, please recompile gschem\n"
-           "with LibStroke\n"));
-  }
-#endif
-
-  return ret;
-}
-#endif
 
 /*! \todo Finish function documentation!!!
  *  \brief

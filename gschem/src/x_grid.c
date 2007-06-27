@@ -154,16 +154,6 @@ void x_grid_draw(TOPLEVEL *w_current)
                     w_current->gc, points, count);
   }
 
-#if 0
-  gdk_draw_pixmap(w_current->window,
-                  w_current->gc,
-                  w_current->backingstore,
-                  0, 0, 0, 0,
-                  w_current->drawing_area->allocation.width,
-                  w_current->drawing_area->allocation.height);
-
-#endif
-
 #if DEBUG
   /* highly temp, just for diag purposes */
   x_draw_tiles(w_current);

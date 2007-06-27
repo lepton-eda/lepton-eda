@@ -196,10 +196,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "edit-rotate-90-hotkey",     0, 0, 0, g_keys_edit_rotate_90_hotkey },
   { "edit-mirror",               0, 0, 0, g_keys_edit_mirror },
   { "edit-mirror-hotkey",        0, 0, 0, g_keys_edit_mirror_hotkey },
-#if 0 /* Obsolete */
-  { "edit-stretch",              0, 0, 0, g_keys_edit_stretch },
-  { "edit-stretch-hotkey",       0, 0, 0, g_keys_edit_stretch_hotkey },
-#endif
   { "edit-slot",                 0, 0, 0, g_keys_edit_slot },
   { "edit-color",                0, 0, 0, g_keys_edit_color },
   { "edit-edit",                 0, 0, 0, g_keys_edit_edit },

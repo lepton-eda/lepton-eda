@@ -29,22 +29,6 @@ extern GdkVisual *visual;
 extern GdkColor white;
 extern GdkColor black;
 
-#if 0
-extern GdkColor red;
-extern GdkColor green;
-extern GdkColor blue;
-extern GdkColor cyan;
-extern GdkColor yellow;
-extern GdkColor grey;
-extern GdkColor grey90;
-extern GdkColor darkgreen;
-extern GdkColor darkred;
-extern GdkColor darkyellow;
-extern GdkColor darkcyan;
-extern GdkColor darkblue;
-extern GdkColor darkgrey; 
-#endif
-
 extern char *rc_filename; 
 extern char *script_filename;
 extern char *output_filename;

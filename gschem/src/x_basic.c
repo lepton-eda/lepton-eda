@@ -36,49 +36,6 @@
 #include <gdk/gdkx.h>
 #endif
 
-#if 0 /* once you are sure your new color system works... delete code */
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-GdkColor *x_get_color(int color)
-{
-  switch(color) {
-    case(RED):    return(&red   ); break;
-    case(BLUE):   return(&blue  ); break;
-    case(GREEN):  return(&green ); break;
-    case(YELLOW): return(&yellow); break;
-    case(CYAN):   return(&cyan  ); break;
-    case(GREY):   return(&grey  ); break;
-    case(GREY90): return(&grey90); break;
-    case(BLACK):  return(&black ); break;
-    case(WHITE):  return(&white ); break;
-    default:      return(&white ); break;
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-GdkColor *x_get_darkcolor(int color)
-{
-  switch(color) {
-    case(RED):    return(&darkred   ); break;
-    case(BLUE):   return(&darkblue  ); break;
-    case(GREEN):  return(&darkgreen ); break;
-    case(YELLOW): return(&darkyellow); break;
-    case(CYAN):   return(&darkcyan  ); break;
-    case(GREY):   return(&darkgrey  ); break;
-    case(BLACK):  return(&black     ); break;
-    case(WHITE):  return(&grey      ); break;
-    default:      return(&white     ); break;
-  }
-}
-#endif
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

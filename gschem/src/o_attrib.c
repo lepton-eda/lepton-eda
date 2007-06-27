@@ -429,12 +429,6 @@ OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current,
         color = w_current->detachedattr_color;
 
 	o_current = NULL;
-
-#if 0 /* don't error out, instead treat text like another OBJECT, but */
-        /* don't attach it anywhere */
-        /* s_log_message("Cannot attach attribute to text item\n");*/
-        /* return(NULL);*/
-#endif
         break;
     }
   } else {

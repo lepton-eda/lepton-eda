@@ -280,13 +280,6 @@ void o_select_box_end(TOPLEVEL *w_current, int x, int y)
   int box_width, box_height;
   int box_left, box_top;
 
-#if 0
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
-    return;
-  }
-#endif
-
   box_width = abs(w_current->last_x - w_current->start_x);
   box_height = abs(w_current->last_y - w_current->start_y);	
 
@@ -321,13 +314,6 @@ void o_select_box_rubberband(TOPLEVEL *w_current, int x, int y)
 {
   int box_width, box_height;
   int box_left, box_top;
-
-#if 0
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
-    return;
-  }
-#endif
 
   box_width = abs(w_current->last_x - w_current->start_x);
   box_height = abs(w_current->last_y - w_current->start_y);
