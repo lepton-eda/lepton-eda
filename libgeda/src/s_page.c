@@ -68,7 +68,7 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   PAGE *page;
 
   /* Now create a blank page */
-  page = (PAGE*)g_new (PAGE, 1);
+  page = (PAGE*)g_new0 (PAGE, 1);
 
   page->pid = global_pid++;
 
