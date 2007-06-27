@@ -1,0 +1,72 @@
+#!/bin/sh
+
+usage()
+{
+	echo usage: $0 dotted_version date libgeda_sharedlib_version
+	echo Exmaple:
+	echo "   $0 1.0.1 20070626 29:1:0"
+}
+
+new_dottedversion=$1
+new_date=$2
+new_sharedlibversion=$3 
+if [ "$new_dottedversion" = "" ]
+then
+	echo Missing dotted version
+	echo ""
+	usage
+	exit 1
+fi
+
+if [ "$new_date" = "" ]
+then
+	echo Missing date 
+	echo ""
+	usage
+	exit 1
+fi
+
+if [ "$new_sharedlibversion" = "" ]
+then
+	echo Missing libgeda shared library version
+	echo ""
+	usage
+	exit 1
+fi
+
+
+old_dottedversion=`cat libgeda/include/defines.h | \
+	grep "#define PREPEND_VERSION_STRING" | awk '{print $3}'`
+
+old_date=`grep ^VERSION= libgeda/configure.ac | \
+	awk -F= '{print $2}'`
+
+old_sharedlibversion=`grep ^SHARED_LIBRARY_VERSION libgeda/configure.ac | \
+	awk -F= '{print $2}'`
+
+# Update dotted version
+libgeda_defines=libgeda/include/defines.h
+echo Updating $old_dottedversion to \"$new_dottedversion-\" in $libgeda_defines
+mv -f $libgeda_defines $libgeda_defines.orig 
+cat $libgeda_defines.orig | sed "s/#define PREPEND_VERSION_STRING $old_dottedversion/#define PREPEND_VERSION_STRING \"$new_dottedversion-\"/" > $libgeda_defines
+rm -f $libgeda_defines.orig 
+
+# Update dates 
+date_files="docs/configure.ac examples/configure.ac gattrib/configure.ac gnetlist/configure.ac gsymcheck/configure.ac libgeda/configure.ac symbols/configure.ac utils/configure.ac gschem/configure.ac.in"
+
+for i in $date_files
+do
+	echo Updating $old_date to $new_date in $i
+	mv -f $i $i.orig
+	cat $i.orig | sed "s/^VERSION=$old_date/VERSION=$new_date/" > $i
+	rm -f $i.orig
+done
+
+# Update shared library version
+libgeda_conf=libgeda/configure.ac
+echo Updating $old_sharedlibversion to $new_sharedlibversion in $libgeda_conf
+mv -f $libgeda_conf $libgeda_conf.orig2
+cat $libgeda_conf.orig2 | \
+	sed "s/^SHARED_LIBRARY_VERSION=$old_sharedlibversion/SHARED_LIBRARY_VERSION=$new_sharedlibversion/" > $libgeda_conf
+rm -f $libgeda_conf.orig2
+
