@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-26 11:03-0400\n"
+"POT-Creation-Date: 2007-06-26 23:30-0400\n"
 "PO-Revision-Date: 2007-06-26 22:19+0200\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -494,7 +494,7 @@ msgstr "Bauteil Dokumentation"
 msgid "About gschem"
 msgstr "Über gschem"
 
-#: src/rcstrings.c:130 src/x_dialog.c:2501
+#: src/rcstrings.c:130 src/x_dialog.c:2502
 msgid "Hotkeys"
 msgstr "Tastenkürzel"
 
@@ -530,56 +530,57 @@ msgstr ""
 "Die Version der gschemrc Datei ist [%s%s].\n"
 "Dateiname: [%s]\n"
 
-#: src/g_rc.c:109
+#: src/g_rc.c:110
 #, c-format
-msgid "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
+msgid ""
+"While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
 msgstr ""
 "Solange gschem im ALPHA-Stadium ist, sollte unbedingt die neueste rc Datei \n"
 "verwendet werden.\n"
 
-#: src/g_rc.c:169
+#: src/g_rc.c:170
 #, c-format
 msgid "Invalid color [%s] passed to %s\n"
 msgstr "Eine ungültige Farbe [%s] wurde an %s übergeben.\n"
 
-#: src/g_rc.c:358
+#: src/g_rc.c:359
 #, c-format
 msgid "Invalid mode [%s] passed to %s\n"
 msgstr "Ein ungültiger Modus [%s] wurde an %s übergeben.\n"
 
-#: src/g_rc.c:536
+#: src/g_rc.c:537
 #, c-format
 msgid "Invalid zoomfactor [%d] passed to %s\n"
 msgstr "Ein ungültiger Vergrösserungsfaktor [%d] wurde an %s übergeben.\n"
 
-#: src/g_rc.c:574
+#: src/g_rc.c:575
 #, c-format
 msgid "Invalid mode [%s] passed to scrollbar-update\n"
 msgstr "Ein ungültiger Modus [%s] wurde an scrollbar-update übergeben.\n"
 
-#: src/g_rc.c:655
+#: src/g_rc.c:656
 #, c-format
 msgid "Invalid size [%d] passed to text-size\n"
 msgstr "Eine ungültige Größe [%d] wurde an text-size übergeben.\n"
 
-#: src/g_rc.c:682
+#: src/g_rc.c:683
 #, c-format
 msgid "Invalid size [%f] passed to postscript-font-scale\n"
 msgstr "Ein ungültiger Wert [%f] wurde an postscript-font-scale übergeben.\n"
 
-#: src/g_rc.c:725
+#: src/g_rc.c:726
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "Eine ungültige Größe [%d] wurde an snap-size übergeben.\n"
 
-#: src/g_rc.c:799 src/g_rc.c:802
+#: src/g_rc.c:800 src/g_rc.c:803
 #, c-format
 msgid "Duplicate stroke definition passed to stroke! [%s]\n"
 msgstr ""
 "Eine doppelte Definition eines Tastenkürzels wurde an stroke übergeben! [%"
 "s]\n"
 
-#: src/g_rc.c:813
+#: src/g_rc.c:814
 #, c-format
 msgid ""
 "A stroke keyword has been found in an rc file, but gschem\n"
@@ -590,59 +591,61 @@ msgstr ""
 "wurde ohne Tastenkürzelunterstützung kompiliert, bitte kompiliere\n"
 "gschem mit LibStroke.\n"
 
-#: src/g_rc.c:1275
+#: src/g_rc.c:1276
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "Eine ungültige Ebenenanzahl [%d] wurde an undo-levels übergeben.\n"
 
-#: src/g_rc.c:1500
+#: src/g_rc.c:1501
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Eine ungültige Größe [%d] wurde an bus-ripper-size übergeben.\n"
 
-#: src/g_rc.c:1575
+#: src/g_rc.c:1576
 #, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
 msgstr "An \"grid-dot-size\" wurde eine falsche Punktgröße [%d] übergeben.\n"
 
-#: src/g_rc.c:1616
+#: src/g_rc.c:1617
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
-msgstr "An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
+msgstr ""
+"An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
 
-#: src/g_rc.c:1660
+#: src/g_rc.c:1661
 #, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "Ein ungültiger Offset [%d] wurde an add-attribute-offset übergeben.\n"
 
-#: src/g_rc.c:1684
+#: src/g_rc.c:1685
 #, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr ""
 "An \"auto-save-interval\" wurde eine ungültige Sekundenanzahl [%d] "
 "übergeben\n"
 
-#: src/g_rc.c:1725
+#: src/g_rc.c:1726
 #, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr "Ein ungültiger Werte [%d] wurde an mousepan-gain übergeben.\n"
 
-#: src/g_rc.c:1748
+#: src/g_rc.c:1749
 #, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr "Ein ungültiger Wert [%d] wurde an keyboardpan-gain übergeben.\n"
 
-#: src/g_rc.c:1794
+#: src/g_rc.c:1795
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
-msgstr "An \"select-slack-pixels\" wurde eine ungültige Pixelzahl [%d] übergeben\n"
+msgstr ""
+"An \"select-slack-pixels\" wurde eine ungültige Pixelzahl [%d] übergeben\n"
 
-#: src/gschem.c:140 src/gschem.c:150
+#: src/gschem.c:140 src/gschem.c:151
 #, c-format
 msgid "gEDA/gschem version %s%s\n"
 msgstr "gEDA/gschem Version %s%s\n"
 
-#: src/gschem.c:142 src/gschem.c:152
+#: src/gschem.c:143 src/gschem.c:153
 #, c-format
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
@@ -651,14 +654,15 @@ msgstr ""
 "gEDA/gschem kommt OHNE JEGLICHE GARANTIE. Bitte lies die Datei COPYING "
 "fürnähere Informationen.\n"
 
-#: src/gschem.c:144 src/gschem.c:154
+#: src/gschem.c:145 src/gschem.c:155
 #, c-format
-msgid "This is free software, and you are welcome to redistribute it under certain\n"
+msgid ""
+"This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Dies ist Freie Software. Sie darf gerne weitergegeben werden. Bitte lies "
 "die\n"
 
-#: src/gschem.c:146 src/gschem.c:156
+#: src/gschem.c:147 src/gschem.c:157
 #, c-format
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
@@ -667,37 +671,37 @@ msgstr ""
 "Lizenzbestimmungen in der Datei COPYING für nähere Informationen.\n"
 "\n"
 
-#: src/gschem.c:160
+#: src/gschem.c:161
 #, c-format
 msgid "This is the MINGW32 port.\n"
 msgstr "Dies ist die MINGW32 Portierung.\n"
 
-#: src/gschem.c:164
+#: src/gschem.c:165
 #, c-format
 msgid "Current locale settings: %s\n"
 msgstr "Aktuelle Spracheinstellungen: %s\n"
 
-#: src/gschem.c:177
+#: src/gschem.c:178
 #, c-format
 msgid "You must set the GEDADATA environment variable!\n"
 msgstr "Die Umgebungsvariable GEDADATA muß gesetzt werden!\n"
 
-#: src/gschem.c:192
+#: src/gschem.c:193
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr "Lese init scm Datei [%s]\n"
 
-#: src/gschem.c:196 src/gschem.c:199
+#: src/gschem.c:197 src/gschem.c:200
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "Die Datei init scm [%s] konnte nicht gelesen werden.\n"
 
-#: src/gschem.c:259
+#: src/gschem.c:260
 #, c-format
 msgid "Scheme directory NOT set!\n"
 msgstr "Das scheme Verzeichnis wurde nicht definiert!\n"
 
-#: src/gschem.c:266 src/x_script.c:70
+#: src/gschem.c:267 src/x_script.c:70
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "Führe guile scipt aus [%s]\n"
@@ -861,7 +865,8 @@ msgstr "Verschieben nach"
 
 #: src/i_callbacks.c:958
 msgid "WARNING: Do not translate with snap off!\n"
-msgstr "ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
+msgstr ""
+"ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
 
 #: src/i_callbacks.c:959
 msgid "WARNING: Turning snap on and continuing with translate.\n"
@@ -1109,7 +1114,8 @@ msgstr "Undefinierter Typ für das Rechteck (Füllung)!\n"
 #: src/o_buffer.c:41
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_copy]\n"
-msgstr "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
+msgstr ""
+"Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
 
 #: src/o_buffer.c:79
 #, c-format
@@ -1126,12 +1132,14 @@ msgstr ""
 #: src/o_buffer.c:180
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
-msgstr "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_paste_end]\n"
+msgstr ""
+"Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_paste_end]\n"
 
 #: src/o_bus.c:219
 #, c-format
 msgid "Got an invalid which one in o_bus_draw_xor_single\n"
-msgstr "Ungültiger Wert in Variable whichone in der Funktion o_bus_draw_xor_single\n"
+msgstr ""
+"Ungültiger Wert in Variable whichone in der Funktion o_bus_draw_xor_single\n"
 
 #: src/o_bus.c:285 src/o_bus.c:319 src/o_net.c:333 src/o_net.c:367
 #, c-format
@@ -1156,19 +1164,20 @@ msgstr "Undefinierter Typ für einen Kreis (Füllung).\n"
 #: src/o_complex.c:222
 #, c-format
 msgid "Could not find complex in new componet placement!\n"
-msgstr "Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
+msgstr ""
+"Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
 
-#: src/o_complex.c:600
+#: src/o_complex.c:601
 #, c-format
 msgid "Got NULL in o_complex_translate_display_selection\n"
 msgstr "Der Rückgabewert von o_complex_translate_display_selection war NULL.\n"
 
-#: src/o_complex.c:668 src/o_complex.c:674
+#: src/o_complex.c:669 src/o_complex.c:675
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "Verschiebe Schaltplan [%d %d]\n"
 
-#: src/o_complex.c:718
+#: src/o_complex.c:719
 #, c-format
 msgid "Got NULL in o_complex_translate_selection!\n"
 msgstr "Der Rückgabewert von o_complex_translate_selection war NULL.\n"
@@ -1244,7 +1253,8 @@ msgstr ""
 #: src/o_misc.c:1273
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr "Die vorherige Backup-Datei [%s] konnte nicht auf read-write gesetzt werden.\n"
+msgstr ""
+"Die vorherige Backup-Datei [%s] konnte nicht auf read-write gesetzt werden.\n"
 
 #: src/o_misc.c:1291
 #, c-format
@@ -1276,7 +1286,8 @@ msgstr "Da ist ein Objekt in o_move_check_endpoint, welches keine Linie ist.\n"
 #: src/o_net.c:264
 #, c-format
 msgid "Got an invalid which one in o_net_draw_xor_single\n"
-msgstr "Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
+msgstr ""
+"Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
 
 #: src/o_net.c:940 src/o_net.c:977 src/o_net.c:1048 src/o_net.c:1084
 #, c-format
@@ -1425,7 +1436,8 @@ msgstr ""
 
 #: src/x_autonumber.c:426
 #, c-format
-msgid "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
+msgid ""
+"duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
 msgstr ""
 "Doppelt vergebener slot kann Probleme verursachen: [Symbolname=%s, Number=%"
 "d, slot=%d]\n"
@@ -1787,10 +1799,11 @@ msgstr "<b>gEDA : GPL Electronic Design Automation</b>"
 msgid "<b>gschem version %s%s</b>"
 msgstr "<b>gschem Version %s%s</b>"
 
-#: src/x_dialog.c:2029
+#: src/x_dialog.c:2030
+#, fuzzy
 msgid ""
 "Written by:\n"
-"Ales V. Hvezda\n"
+"Ales Hvezda\n"
 "ahvezda@geda.seul.org\n"
 "And many others (See AUTHORS file)"
 msgstr ""
@@ -1799,94 +1812,95 @@ msgstr ""
 "ahvezda@geda.seul.org\n"
 "und vielen anderen (siehe Datei: AUTHORS)"
 
-#: src/x_dialog.c:2093
+#: src/x_dialog.c:2094
 msgid "Coords"
 msgstr "Koordinaten"
 
-#: src/x_dialog.c:2113
+#: src/x_dialog.c:2114
 msgid "Screen"
 msgstr "Bildschirm (Pixel)"
 
-#: src/x_dialog.c:2122
+#: src/x_dialog.c:2123
 msgid "World"
 msgstr "Global (0.001\")"
 
-#: src/x_dialog.c:2345
+#: src/x_dialog.c:2346
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr "FEHLER: NULL Objekt innerhalb von color_edit_dialog_apply!\n"
 
-#: src/x_dialog.c:2408
+#: src/x_dialog.c:2409
 msgid "Color Edit"
 msgstr "Farbe bearbeiten"
 
-#: src/x_dialog.c:2440
+#: src/x_dialog.c:2441
 msgid "Object color:"
 msgstr "Objekt Farbe:"
 
-#: src/x_dialog.c:2564
+#: src/x_dialog.c:2565
 msgid "Function"
 msgstr "Funktion"
 
-#: src/x_dialog.c:2571
+#: src/x_dialog.c:2572
 msgid "Keystroke(s)"
 msgstr "Tastenkürzel"
 
-#: src/x_dialog.c:2925
+#: src/x_dialog.c:2926
 msgid "Find Text"
 msgstr "Suche Text"
 
-#: src/x_dialog.c:2957
+#: src/x_dialog.c:2958
 msgid "Text to find:"
 msgstr "Zu suchender Text:"
 
-#: src/x_dialog.c:2967
+#: src/x_dialog.c:2968
 msgid "descend into hierarchy"
 msgstr "In der Hierachie hinabsteigen"
 
-#: src/x_dialog.c:3031
+#: src/x_dialog.c:3032
 msgid "Hide Text"
 msgstr "Verberge Text"
 
-#: src/x_dialog.c:3063
+#: src/x_dialog.c:3064
 msgid "Hide text starting with:"
 msgstr "Verberge Text, der beginnt mit:"
 
-#: src/x_dialog.c:3131
+#: src/x_dialog.c:3132
 msgid "Show Text"
 msgstr "Zeige Text"
 
-#: src/x_dialog.c:3163
+#: src/x_dialog.c:3164
 msgid "Show text starting with:"
 msgstr "Zeige Text, der beginnt mit:"
 
-#: src/x_dialog.c:3608 src/x_multiattrib.c:1389
+#: src/x_dialog.c:3609 src/x_multiattrib.c:1389
 msgid "Name"
 msgstr "Name"
 
-#: src/x_dialog.c:3630
+#: src/x_dialog.c:3631
 msgid "S_elect the schematics you want to save:"
 msgstr "_Wählen Sie die zu speichernden Seiten:"
 
-#: src/x_dialog.c:3724
+#: src/x_dialog.c:3725
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr ""
 "Sollen die Änderungen am Schaltplan \"%s\" vor dem Schließen gespeichert "
 "werden?"
 
-#: src/x_dialog.c:3730
+#: src/x_dialog.c:3731
 #, c-format
-msgid "There is %d schematics with unsaved changes. Save changes before closing?"
+msgid ""
+"There is %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 "Es gibt %d ungesicherte Schaltpläne. Sollen die Änderungen vor dem Schließen "
 "gespeichert werden?"
 
-#: src/x_dialog.c:3759
+#: src/x_dialog.c:3760
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "Wenn Sie nicht speichern, werden Sie alle Änderungen verlieren."
 
-#: src/x_dialog.c:3779
+#: src/x_dialog.c:3780
 msgid "_Close without saving"
 msgstr "Schließen _ohne Speichern"
 
@@ -2044,7 +2058,8 @@ msgstr ""
 
 #: src/x_multiattrib.c:652
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr "Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
+msgstr ""
+"Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
 
 #: src/x_multiattrib.c:1164
 msgid "Show Value only"
@@ -2691,4 +2706,3 @@ msgstr "Schließe [%s]\n"
 #~ msgid "Invalid path [%s] passed to font-directory\n"
 #~ msgstr ""
 #~ "Ein ungültiges Verzeichnis [%s] wurde an font-directory übergeben.\n"
-

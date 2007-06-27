@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it_IT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-26 11:03-0400\n"
+"POT-Creation-Date: 2007-06-26 23:30-0400\n"
 "PO-Revision-Date: 2007-05-03 21:37+0200\n"
 "Last-Translator: Michele Petrecca <michelinux@alice.it>\n"
 "Language-Team: Italiano\n"
@@ -504,7 +504,7 @@ msgstr "Documentazione"
 msgid "About gschem"
 msgstr ""
 
-#: src/rcstrings.c:130 src/x_dialog.c:2501
+#: src/rcstrings.c:130 src/x_dialog.c:2502
 msgid "Hotkeys"
 msgstr "Hotkeys"
 
@@ -541,7 +541,7 @@ msgstr ""
 "Trovata la versione [%s%s] del file gschemrc:\n"
 "[%s]\n"
 
-#: src/g_rc.c:109
+#: src/g_rc.c:110
 #, c-format
 msgid ""
 "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
@@ -549,47 +549,47 @@ msgstr ""
 "Assicurati di avere sempre l'ultima versione del file rc; gschem si trova "
 "ancora in uno stato di sviluppo alfa.\n"
 
-#: src/g_rc.c:169
+#: src/g_rc.c:170
 #, c-format
 msgid "Invalid color [%s] passed to %s\n"
 msgstr "Colore [%s] non valido passato a %s\n"
 
-#: src/g_rc.c:358
+#: src/g_rc.c:359
 #, c-format
 msgid "Invalid mode [%s] passed to %s\n"
 msgstr "Modo [%s] non valido passato a %s\n"
 
-#: src/g_rc.c:536
+#: src/g_rc.c:537
 #, c-format
 msgid "Invalid zoomfactor [%d] passed to %s\n"
 msgstr "Fattore di ingrandimento [%d] passato a %s non valido.\n"
 
-#: src/g_rc.c:574
+#: src/g_rc.c:575
 #, c-format
 msgid "Invalid mode [%s] passed to scrollbar-update\n"
 msgstr ""
 
-#: src/g_rc.c:655
+#: src/g_rc.c:656
 #, c-format
 msgid "Invalid size [%d] passed to text-size\n"
 msgstr "Grandezza [%d] passata alla dimensione del testo, non valida\n"
 
-#: src/g_rc.c:682
+#: src/g_rc.c:683
 #, c-format
 msgid "Invalid size [%f] passed to postscript-font-scale\n"
 msgstr "L'ampiezza [%f] passata al postscript-font-scale non è valida\n"
 
-#: src/g_rc.c:725
+#: src/g_rc.c:726
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "L'ampiezza [%d] , assegnata alla snap size, non è corretta\n"
 
-#: src/g_rc.c:799 src/g_rc.c:802
+#: src/g_rc.c:800 src/g_rc.c:803
 #, c-format
 msgid "Duplicate stroke definition passed to stroke! [%s]\n"
 msgstr ""
 
-#: src/g_rc.c:813
+#: src/g_rc.c:814
 #, c-format
 msgid ""
 "A stroke keyword has been found in an rc file, but gschem\n"
@@ -597,60 +597,60 @@ msgid ""
 "with LibStroke\n"
 msgstr ""
 
-#: src/g_rc.c:1275
+#: src/g_rc.c:1276
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "Il numero di livelli [%d] assegnato ai livelli Cancella non è valido\n"
 
-#: src/g_rc.c:1500
+#: src/g_rc.c:1501
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr ""
 
-#: src/g_rc.c:1575
+#: src/g_rc.c:1576
 #, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
 msgstr ""
 "Il valore [%d] dell'ampiezza dei punti passata alla griglia non è valida\n"
 
-#: src/g_rc.c:1616
+#: src/g_rc.c:1617
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
 msgstr ""
 
-#: src/g_rc.c:1660
+#: src/g_rc.c:1661
 #, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr ""
 
-#: src/g_rc.c:1684
+#: src/g_rc.c:1685
 #, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr ""
 "Il numero di secondi indicati [%d] non è valido ai fini dell'intervallo di "
 "auto salvataggio\n"
 
-#: src/g_rc.c:1725
+#: src/g_rc.c:1726
 #, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr ""
 
-#: src/g_rc.c:1748
+#: src/g_rc.c:1749
 #, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr ""
 
-#: src/g_rc.c:1794
+#: src/g_rc.c:1795
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr "Il numero [%d] di pixel indicati non è valido\n"
 
-#: src/gschem.c:140 src/gschem.c:150
+#: src/gschem.c:140 src/gschem.c:151
 #, c-format
 msgid "gEDA/gschem version %s%s\n"
 msgstr "gEDA/gschem versione %s%s\n"
 
-#: src/gschem.c:142 src/gschem.c:152
+#: src/gschem.c:143 src/gschem.c:153
 #, c-format
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
@@ -659,7 +659,7 @@ msgstr ""
 "gEDA/gschem viene rilasciato SENZA GARANZIA ALCUNA A CAUSA DEL SUO SVILUPPO "
 "IN FASE ALFA; leggere il file COPYING per ulteriori informazioni.\n"
 
-#: src/gschem.c:144 src/gschem.c:154
+#: src/gschem.c:145 src/gschem.c:155
 #, c-format
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
@@ -667,44 +667,44 @@ msgstr ""
 "Questo software è rilasciato sotto licenza GPL e può essere ridistribuito "
 "sotto determinate\n"
 
-#: src/gschem.c:146 src/gschem.c:156
+#: src/gschem.c:147 src/gschem.c:157
 #, c-format
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
 "\n"
 msgstr "condizioni; per favore leggi il file COPYNG per ulteriori dettagli.\n"
 
-#: src/gschem.c:160
+#: src/gschem.c:161
 #, c-format
 msgid "This is the MINGW32 port.\n"
 msgstr "Port per MINGW32.\n"
 
-#: src/gschem.c:164
+#: src/gschem.c:165
 #, c-format
 msgid "Current locale settings: %s\n"
 msgstr "Impostazioni locali correnti: %s\n"
 
-#: src/gschem.c:177
+#: src/gschem.c:178
 #, c-format
 msgid "You must set the GEDADATA environment variable!\n"
 msgstr "Devi impostare la variabile d'ambiente GEDADATA!\n"
 
-#: src/gschem.c:192
+#: src/gschem.c:193
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr "Lettura del file init scm [%s]\n"
 
-#: src/gschem.c:196 src/gschem.c:199
+#: src/gschem.c:197 src/gschem.c:200
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "Fallita la lettura del file init scm [%s]\n"
 
-#: src/gschem.c:259
+#: src/gschem.c:260
 #, c-format
 msgid "Scheme directory NOT set!\n"
 msgstr "Cartelle degli schemi non impostata!\n"
 
-#: src/gschem.c:266 src/x_script.c:70
+#: src/gschem.c:267 src/x_script.c:70
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "Esecuzione dello script guile [%s]\n"
@@ -1163,17 +1163,17 @@ msgstr "Tipo sconosciuto per il cerchio (riempimento)!\n"
 msgid "Could not find complex in new componet placement!\n"
 msgstr ""
 
-#: src/o_complex.c:600
+#: src/o_complex.c:601
 #, c-format
 msgid "Got NULL in o_complex_translate_display_selection\n"
 msgstr "Ottenuto un NULLO in o_complex_translate_display_selection\n"
 
-#: src/o_complex.c:668 src/o_complex.c:674
+#: src/o_complex.c:669 src/o_complex.c:675
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "Spostamento schema [%d %d]\n"
 
-#: src/o_complex.c:718
+#: src/o_complex.c:719
 #, c-format
 msgid "Got NULL in o_complex_translate_selection!\n"
 msgstr "Ottenuto un NULLO in o_complex_translate_selection!\n"
@@ -1784,10 +1784,11 @@ msgstr "<b>gEDA: GPL Electronic Design Automation</b>"
 msgid "<b>gschem version %s%s</b>"
 msgstr "<b>versione di gschem %s%s</b>"
 
-#: src/x_dialog.c:2029
+#: src/x_dialog.c:2030
+#, fuzzy
 msgid ""
 "Written by:\n"
-"Ales V. Hvezda\n"
+"Ales Hvezda\n"
 "ahvezda@geda.seul.org\n"
 "And many others (See AUTHORS file)"
 msgstr ""
@@ -1796,81 +1797,81 @@ msgstr ""
 "ahvezda@geda.seul.org\n"
 "...e molti altri (leggere il file AUTHORS)"
 
-#: src/x_dialog.c:2093
+#: src/x_dialog.c:2094
 msgid "Coords"
 msgstr "Coordinate"
 
-#: src/x_dialog.c:2113
+#: src/x_dialog.c:2114
 msgid "Screen"
 msgstr "Schermo"
 
-#: src/x_dialog.c:2122
+#: src/x_dialog.c:2123
 msgid "World"
 msgstr ""
 
-#: src/x_dialog.c:2345
+#: src/x_dialog.c:2346
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr "ERRORE: oggetto NULLO in color_edit_dialog_apply!\n"
 
-#: src/x_dialog.c:2408
+#: src/x_dialog.c:2409
 msgid "Color Edit"
 msgstr "Modifica Colore"
 
-#: src/x_dialog.c:2440
+#: src/x_dialog.c:2441
 msgid "Object color:"
 msgstr "Colore dell'oggetto:"
 
-#: src/x_dialog.c:2564
+#: src/x_dialog.c:2565
 msgid "Function"
 msgstr "Funzione"
 
-#: src/x_dialog.c:2571
+#: src/x_dialog.c:2572
 msgid "Keystroke(s)"
 msgstr ""
 
-#: src/x_dialog.c:2925
+#: src/x_dialog.c:2926
 msgid "Find Text"
 msgstr "Trova testo"
 
-#: src/x_dialog.c:2957
+#: src/x_dialog.c:2958
 msgid "Text to find:"
 msgstr "Testo da cercare:"
 
-#: src/x_dialog.c:2967
+#: src/x_dialog.c:2968
 msgid "descend into hierarchy"
 msgstr "discende nella gerarchia"
 
-#: src/x_dialog.c:3031
+#: src/x_dialog.c:3032
 msgid "Hide Text"
 msgstr "Nascondi testo"
 
-#: src/x_dialog.c:3063
+#: src/x_dialog.c:3064
 msgid "Hide text starting with:"
 msgstr "Nascondi il testo iniziando con:"
 
-#: src/x_dialog.c:3131
+#: src/x_dialog.c:3132
 msgid "Show Text"
 msgstr "Mostra testo"
 
-#: src/x_dialog.c:3163
+#: src/x_dialog.c:3164
 msgid "Show text starting with:"
 msgstr "Mostra il testo iniziando con:"
 
-#: src/x_dialog.c:3608 src/x_multiattrib.c:1389
+#: src/x_dialog.c:3609 src/x_multiattrib.c:1389
 msgid "Name"
 msgstr "Nome"
 
-#: src/x_dialog.c:3630
+#: src/x_dialog.c:3631
 msgid "S_elect the schematics you want to save:"
 msgstr "S_eleziona lo schematico che vuoi salvare:"
 
-#: src/x_dialog.c:3724
+#: src/x_dialog.c:3725
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr "Salvare i cambi allo schematico \"%s\" prima di chiudere?"
 
-#: src/x_dialog.c:3730
+#: src/x_dialog.c:3731
 #, c-format
 msgid ""
 "There is %d schematics with unsaved changes. Save changes before closing?"
@@ -1878,13 +1879,13 @@ msgstr ""
 "C'è lo schematico %d che presenta cambi non salvati. Salvare i cambi prima "
 "di chiudere?"
 
-#: src/x_dialog.c:3759
+#: src/x_dialog.c:3760
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
 "Se non effettui un salvataggio dei cambi, essi verranno definitivamente "
 "persi."
 
-#: src/x_dialog.c:3779
+#: src/x_dialog.c:3780
 msgid "_Close without saving"
 msgstr "_Chiudi senza salvare"
 

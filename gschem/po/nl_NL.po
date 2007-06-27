@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-schem-CVS-2002-06-12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-26 11:03-0400\n"
+"POT-Creation-Date: 2007-06-26 23:30-0400\n"
 "PO-Revision-Date: 2007-05-13 09:27+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev@seul.org\n"
@@ -556,7 +556,7 @@ msgstr "Documentatie"
 msgid "About gschem"
 msgstr ""
 
-#: src/rcstrings.c:130 src/x_dialog.c:2501
+#: src/rcstrings.c:130 src/x_dialog.c:2502
 #, fuzzy
 msgid "Hotkeys"
 msgstr "Snel-toets..."
@@ -593,7 +593,7 @@ msgstr ""
 "Een versie [%s%s] gschemrc bestand gevonden:\n"
 "[%s]\n"
 
-#: src/g_rc.c:109
+#: src/g_rc.c:110
 #, c-format
 msgid ""
 "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
@@ -601,47 +601,47 @@ msgstr ""
 "Verzeker je ervan dat je het laatste rc bestand gebruikt zolang gschem in "
 "het ALPHA stadium is.\n"
 
-#: src/g_rc.c:169
+#: src/g_rc.c:170
 #, c-format
 msgid "Invalid color [%s] passed to %s\n"
 msgstr "Ongeldige kleur [%s] overgedragen aan %s\n"
 
-#: src/g_rc.c:358
+#: src/g_rc.c:359
 #, c-format
 msgid "Invalid mode [%s] passed to %s\n"
 msgstr "Ongeldige mode [%s] overgedragen aan %s\n"
 
-#: src/g_rc.c:536
+#: src/g_rc.c:537
 #, c-format
 msgid "Invalid zoomfactor [%d] passed to %s\n"
 msgstr "Ongeldige vergrotingsfactor [%d] overgedragen aan %s\n"
 
-#: src/g_rc.c:574
+#: src/g_rc.c:575
 #, c-format
 msgid "Invalid mode [%s] passed to scrollbar-update\n"
 msgstr "Ongeldige mode [%s] overgedragen aan scrollbar-update\n"
 
-#: src/g_rc.c:655
+#: src/g_rc.c:656
 #, c-format
 msgid "Invalid size [%d] passed to text-size\n"
 msgstr "Ongeldige waarde [%d] overgedragen aan text-size\n"
 
-#: src/g_rc.c:682
+#: src/g_rc.c:683
 #, c-format
 msgid "Invalid size [%f] passed to postscript-font-scale\n"
 msgstr "Ongeldige waarde [%f] overgedragen aan postscript-font-scale\n"
 
-#: src/g_rc.c:725
+#: src/g_rc.c:726
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "Ongeldige waarde [%d] overgedragen aan snap-size\n"
 
-#: src/g_rc.c:799 src/g_rc.c:802
+#: src/g_rc.c:800 src/g_rc.c:803
 #, c-format
 msgid "Duplicate stroke definition passed to stroke! [%s]\n"
 msgstr "Duplikaat stroke definitie overgedragen aan stroke! [%s]\n"
 
-#: src/g_rc.c:813
+#: src/g_rc.c:814
 #, c-format
 msgid ""
 "A stroke keyword has been found in an rc file, but gschem\n"
@@ -652,58 +652,58 @@ msgstr ""
 "maar gschem is gecompileerd om stroke te ondersteunen,\n"
 "kompileer gschem opnieuw met LibStroke\n"
 
-#: src/g_rc.c:1275
+#: src/g_rc.c:1276
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "Ongeldige num niveaus [%d] overgedragen naar undo-levels\n"
 
-#: src/g_rc.c:1500
+#: src/g_rc.c:1501
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Ongeldige afmeting [%d] overgedragen aan bus-ripper-size\n"
 
-#: src/g_rc.c:1575
+#: src/g_rc.c:1576
 #, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
 msgstr "Ongeldige beeldpunt afmeting [%d] overgedragen aan grid-dot-size\n"
 
-#: src/g_rc.c:1616
+#: src/g_rc.c:1617
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
 msgstr "Ongeldige beeldpunt ruimte [%d] overgedragen aan grid-dot-size\n"
 
-#: src/g_rc.c:1660
+#: src/g_rc.c:1661
 #, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "Ongeldige waarde [%d] overgedragen aan add-attribute-offset\n"
 
-#: src/g_rc.c:1684
+#: src/g_rc.c:1685
 #, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr "Ongeldig aantal seconden [%d] overgedragen naar auto-save-interval\n"
 
-#: src/g_rc.c:1725
+#: src/g_rc.c:1726
 #, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr "Ongeldige versterking [%d] overgedragen aan mousepan-gain\n"
 
-#: src/g_rc.c:1748
+#: src/g_rc.c:1749
 #, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr "Ongeldige versterking [%d] overgedragen aan keyboardpan-gain\n"
 
-#: src/g_rc.c:1794
+#: src/g_rc.c:1795
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr ""
 "Ongeldig aantal beeldpunten [%d] overgedragen aan select-slack-pixels\n"
 
-#: src/gschem.c:140 src/gschem.c:150
+#: src/gschem.c:140 src/gschem.c:151
 #, fuzzy, c-format
 msgid "gEDA/gschem version %s%s\n"
 msgstr "gEDA/gschem versie %s\n"
 
-#: src/gschem.c:142 src/gschem.c:152
+#: src/gschem.c:143 src/gschem.c:153
 #, c-format
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
@@ -712,7 +712,7 @@ msgstr ""
 "gEDA/gschem komt ABSOLUUT ZONDER GARANTIE; zie het COPYING bestand voor meer "
 "informatie.\n"
 
-#: src/gschem.c:144 src/gschem.c:154
+#: src/gschem.c:145 src/gschem.c:155
 #, c-format
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
@@ -720,7 +720,7 @@ msgstr ""
 "Dit is vrije software, en je wordt aangemoedigt dit te herdistribueren onder "
 "bepaalde\n"
 
-#: src/gschem.c:146 src/gschem.c:156
+#: src/gschem.c:147 src/gschem.c:157
 #, c-format
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
@@ -729,37 +729,37 @@ msgstr ""
 "condities; zie het COPYING bestand voor meer informatie.\n"
 "\n"
 
-#: src/gschem.c:160
+#: src/gschem.c:161
 #, c-format
 msgid "This is the MINGW32 port.\n"
 msgstr "Dit is de MINGW32 versie.\n"
 
-#: src/gschem.c:164
+#: src/gschem.c:165
 #, c-format
 msgid "Current locale settings: %s\n"
 msgstr "Huidige locale instellingen: %s\n"
 
-#: src/gschem.c:177
+#: src/gschem.c:178
 #, c-format
 msgid "You must set the GEDADATA environment variable!\n"
 msgstr "Je moet de GEDADATA variabele instellen!\n"
 
-#: src/gschem.c:192
+#: src/gschem.c:193
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr "Lees init scm bestand [%s]\n"
 
-#: src/gschem.c:196 src/gschem.c:199
+#: src/gschem.c:197 src/gschem.c:200
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "Fout bij het lezen van het init scm bestand [%s]\n"
 
-#: src/gschem.c:259
+#: src/gschem.c:260
 #, c-format
 msgid "Scheme directory NOT set!\n"
 msgstr "Scheme map is NIET ingesteld!\n"
 
-#: src/gschem.c:266 src/x_script.c:70
+#: src/gschem.c:267 src/x_script.c:70
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "Bezig met uitvoeren van guile script [%s]\n"
@@ -1228,17 +1228,17 @@ msgstr "Onbekend type voor cirkel (arcering)!\n"
 msgid "Could not find complex in new componet placement!\n"
 msgstr "Kan complex niet vinden bij het plaatsen van een nieuwe component!\n"
 
-#: src/o_complex.c:600
+#: src/o_complex.c:601
 #, c-format
 msgid "Got NULL in o_complex_translate_display_selection\n"
 msgstr "Ontving NULL in o_complex_translate_display_selection\n"
 
-#: src/o_complex.c:668 src/o_complex.c:674
+#: src/o_complex.c:669 src/o_complex.c:675
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "Vertaal schema [%d %d]\n"
 
-#: src/o_complex.c:718
+#: src/o_complex.c:719
 #, c-format
 msgid "Got NULL in o_complex_translate_selection!\n"
 msgstr "Ontving NULL in o_complex_translate_selection\n"
@@ -1893,11 +1893,11 @@ msgstr "<b>gEDA : GPL Elektronische Ontwerp Automatisering</b>"
 msgid "<b>gschem version %s%s</b>"
 msgstr "<b>gschem versie %s</b>"
 
-#: src/x_dialog.c:2029
+#: src/x_dialog.c:2030
 #, fuzzy
 msgid ""
 "Written by:\n"
-"Ales V. Hvezda\n"
+"Ales Hvezda\n"
 "ahvezda@geda.seul.org\n"
 "And many others (See AUTHORS file)"
 msgstr ""
@@ -1906,97 +1906,97 @@ msgstr ""
 "ahvezda@geda.seul.org\n"
 "En vele anderen (zie het AUTHORS bestand)\n"
 
-#: src/x_dialog.c:2093
+#: src/x_dialog.c:2094
 msgid "Coords"
 msgstr "Coordinaten"
 
-#: src/x_dialog.c:2113
+#: src/x_dialog.c:2114
 msgid "Screen"
 msgstr "Scherm"
 
-#: src/x_dialog.c:2122
+#: src/x_dialog.c:2123
 msgid "World"
 msgstr "Wereld"
 
-#: src/x_dialog.c:2345
+#: src/x_dialog.c:2346
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr "FOUT: NULL object in color_edit_dialog_apply!\n"
 
-#: src/x_dialog.c:2408
+#: src/x_dialog.c:2409
 msgid "Color Edit"
 msgstr "Kleur Bewerken"
 
-#: src/x_dialog.c:2440
+#: src/x_dialog.c:2441
 msgid "Object color:"
 msgstr "Objekt kleur:"
 
-#: src/x_dialog.c:2564
+#: src/x_dialog.c:2565
 #, fuzzy
 msgid "Function"
 msgstr "Aktie"
 
-#: src/x_dialog.c:2571
+#: src/x_dialog.c:2572
 #, fuzzy
 msgid "Keystroke(s)"
 msgstr "Funktie : toetsaanslag(s)"
 
-#: src/x_dialog.c:2925
+#: src/x_dialog.c:2926
 #, fuzzy
 msgid "Find Text"
 msgstr "Vind tekst"
 
-#: src/x_dialog.c:2957
+#: src/x_dialog.c:2958
 msgid "Text to find:"
 msgstr "Te vinden tekst:"
 
-#: src/x_dialog.c:2967
+#: src/x_dialog.c:2968
 msgid "descend into hierarchy"
 msgstr "afdalen in hierarchie"
 
-#: src/x_dialog.c:3031
+#: src/x_dialog.c:3032
 #, fuzzy
 msgid "Hide Text"
 msgstr "Verberg tekst"
 
-#: src/x_dialog.c:3063
+#: src/x_dialog.c:3064
 msgid "Hide text starting with:"
 msgstr "Verberg tekst beginnend met:"
 
-#: src/x_dialog.c:3131
+#: src/x_dialog.c:3132
 #, fuzzy
 msgid "Show Text"
 msgstr "Toon tekst"
 
-#: src/x_dialog.c:3163
+#: src/x_dialog.c:3164
 msgid "Show text starting with:"
 msgstr "Toon tekst beginnend met:"
 
-#: src/x_dialog.c:3608 src/x_multiattrib.c:1389
+#: src/x_dialog.c:3609 src/x_multiattrib.c:1389
 msgid "Name"
 msgstr "Naam"
 
-#: src/x_dialog.c:3630
+#: src/x_dialog.c:3631
 msgid "S_elect the schematics you want to save:"
 msgstr "S_electeer de schema's die je op wil slaan:"
 
-#: src/x_dialog.c:3724
+#: src/x_dialog.c:3725
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr "Wijzigingen in schema \"%s\" opslaan voor het afsluiten?"
 
-#: src/x_dialog.c:3730
+#: src/x_dialog.c:3731
 #, c-format
 msgid ""
 "There is %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 "Er zijn %d schema's met wijzigingen. Wijzigingen opslaan voor het afsluiten?"
 
-#: src/x_dialog.c:3759
+#: src/x_dialog.c:3760
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "Als je niet opslaat, verlies je de wijzigingen definitief."
 
-#: src/x_dialog.c:3779
+#: src/x_dialog.c:3780
 msgid "_Close without saving"
 msgstr "Afsluiten zonder opslaan"
 
