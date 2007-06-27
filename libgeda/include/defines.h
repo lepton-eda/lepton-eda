@@ -38,9 +38,9 @@
 /* output the program's VERSION.  You would set this if you are creating a */
 /* specific custom version of gEDA/gaf.  This string is also used to */
 /* distinguish between stable and development versions of gEDA/gaf. */
-/* For example, if you set this string  to "1.0-", the resulting output is: */
-/* 1.0-20060906. */
-#define PREPEND_VERSION_STRING "1.0-"
+/* For example, if you set this string to "1.0.0-", the resulting output is: */
+/* 1.0.0-20070526. */
+#define PREPEND_VERSION_STRING "1.0.1-"
 
 
 /* for color mechanism used in gschem */
