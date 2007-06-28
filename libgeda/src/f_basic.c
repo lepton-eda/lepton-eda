@@ -50,15 +50,38 @@
 
 /*! \brief Opens the schematic file.
  *  \par Function Description
- *  Opens the schematic file. Before it reads the schematic, it tries to
- *  open and read the local gafrc file.
+ *  Opens the schematic file by calling f_open_flags() with the
+ *  F_OPEN_RC and F_OPEN_CHECK_BACKUP flags.
  *
  *  \param [in,out] w_current  The TOPLEVEL object to load the schematic into.
  *  \param [in]      filename  A character string containing the file name
  *                             to open.
  *  \return 0 on failure, 1 on success.
  */
-int f_open(TOPLEVEL *w_current, char *filename)
+int f_open(TOPLEVEL *w_current, const gchar *filename)
+{
+  return f_open_flags (w_current, filename, 
+                       F_OPEN_RC | F_OPEN_CHECK_BACKUP);
+}
+
+/*! \brief Opens the schematic file with fine-grained control over behaviour.
+ *  \par Function Description
+ *  Opens the schematic file and carries out a number of actions
+ *  depending on the \a flags set.  If #F_OPEN_RC is set, executes
+ *  configuration files found in the target directory.  If
+ *  #F_OPEN_CHECK_BACKUP is set, warns user if a backup is found for
+ *  the file being loaded, and possibly prompts user for whether to
+ *  load the backup instead.  If #F_OPEN_RESTORE_CWD is set, does not
+ *  change the working directory to that of the file being loaded.
+ *
+ *  \param [in,out] w_current  The TOPLEVEL object to load the schematic into.
+ *  \param [in]     filename   A character string containing the file name
+ *                             to open.
+ *  \param [in]     flags      Combination of #FOpenFlags values.
+ *  \return 0 on failure, 1 on success.
+ */
+int f_open_flags(TOPLEVEL *w_current, const gchar *filename, 
+                 const gint flags)
 {
   int opened=FALSE;
   char *full_filename = NULL;
@@ -76,12 +99,9 @@ int f_open(TOPLEVEL *w_current, char *filename)
              w_current->init_top,  w_current->init_bottom);
 
 
-  /* 
-   * If we are only opening a preview window, we don't want to 
-   * change the directory. Therefore, if this is only a preview window, 
-   * we cache the cwd so we can restore it later.
-   */
-  if (w_current->wid == -1) {
+  /* Cache the cwd so we can restore it later. */
+  /*! \bug Assumes cwd will be less than 1024 characters. */
+  if (flags & F_OPEN_RESTORE_CWD) {
     saved_cwd = getcwd(NULL, 1024);
   }
 
@@ -98,73 +118,77 @@ int f_open(TOPLEVEL *w_current, char *filename)
   /* First cd into file's directory. */
   file_directory = g_dirname (full_filename);
 
-  full_rcfilename = g_strconcat (file_directory,  
-                                 G_DIR_SEPARATOR_S, 
-                                 "gafrc",
-                                 NULL);
   if (file_directory) { 
     chdir(file_directory);  
-    /* Probably should do some checking of chdir return values */
+    /*! \bug Probably should do some checking of chdir return values */
   }
-  /* If directory is not found, we should do something . . . . */
 
   /* Now open RC and process file */
-  g_rc_parse_specified_rc(w_current, full_rcfilename);
+  if (flags & F_OPEN_RC) {
+    full_rcfilename = g_strconcat (file_directory,  
+                                   G_DIR_SEPARATOR_S, 
+                                   "gafrc",
+                                   NULL);
+    g_rc_parse_specified_rc(w_current, full_rcfilename);
+  }
 
-  /* Check if there is a newer autosave backup file */
-  backup_filename = g_strdup_printf("%s%c"AUTOSAVE_BACKUP_FILENAME_STRING,
-				    file_directory, G_DIR_SEPARATOR, 
-				    g_path_get_basename(full_filename));
+  if (flags & F_OPEN_CHECK_BACKUP) {
+    /* Check if there is a newer autosave backup file */
+    backup_filename 
+      = g_strdup_printf("%s%c"AUTOSAVE_BACKUP_FILENAME_STRING,
+                        file_directory, G_DIR_SEPARATOR, 
+                        g_path_get_basename(full_filename));
 
-  g_free (file_directory);
+    g_free (file_directory);
 
-  if ( g_file_test (backup_filename, G_FILE_TEST_EXISTS) && 
-       (! g_file_test (backup_filename, G_FILE_TEST_IS_DIR))) {
-    /* An autosave backup file exists. Check if it's newer */
-    struct stat stat_backup;
-    struct stat stat_file;
-    char error_stat = 0;
-    GString *message;
+    if ( g_file_test (backup_filename, G_FILE_TEST_EXISTS) && 
+         (! g_file_test (backup_filename, G_FILE_TEST_IS_DIR))) {
+      /* An autosave backup file exists. Check if it's newer */
+      struct stat stat_backup;
+      struct stat stat_file;
+      char error_stat = 0;
+      GString *message;
     
-    if (stat (backup_filename, &stat_backup) != 0) {
-      s_log_message ("f_open: Unable to get stat information of backup file %s.", 
-		     backup_filename);
-      error_stat = 1 ;
-    }
-    if (stat (full_filename, &stat_file) != 0) {
-      s_log_message ("f_open: Unable to get stat information of file %s.", 
-		     full_filename);
-      error_stat = 1;
-    }
-    if ((difftime (stat_file.st_ctime, stat_backup.st_ctime) < 0) ||
-	(error_stat == 1))
-    {
-      /* Found an autosave backup. It's newer if error_stat is 0 */
-      message = g_string_new ("");
-      g_string_append_printf(message, "\nWARNING: Found an autosave backup file:\n  %s.\n\n", backup_filename);
-      if (error_stat == 1) {
-	g_string_append(message, "I could not guess if it is newer, so you have to"
-			  "do it manually.\n");
+      if (stat (backup_filename, &stat_backup) != 0) {
+        s_log_message ("f_open: Unable to get stat information of backup file %s.", 
+                       backup_filename);
+        error_stat = 1 ;
       }
-      else {
-	g_string_append(message, "The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n");
+      if (stat (full_filename, &stat_file) != 0) {
+        s_log_message ("f_open: Unable to get stat information of file %s.", 
+                       full_filename);
+        error_stat = 1;
       }
-      g_string_append (message, "Gschem usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptely.\n");
-      if (w_current->page_current->load_newer_backup_func == NULL) {
-	s_log_message(message->str);
-	s_log_message("\nRun gschem and correct the situation.\n\n");
-	fprintf(stderr, message->str);
-	fprintf(stderr, "\nRun gschem and correct the situation.\n\n");
-      }
-      else {
-	/* Ask the user if load the backup or the original file */
-	if (w_current->page_current->load_newer_backup_func 
-	    (w_current, message)) {
-	  /* Load the backup file */
-	  load_backup_file = 1;
-	}
-      }
-      g_string_free (message, TRUE);
+      if ((difftime (stat_file.st_ctime, stat_backup.st_ctime) < 0) ||
+          (error_stat == 1))
+        {
+          /* Found an autosave backup. It's newer if error_stat is 0 */
+          message = g_string_new ("");
+          g_string_append_printf(message, "\nWARNING: Found an autosave backup file:\n  %s.\n\n", backup_filename);
+          if (error_stat == 1) {
+            g_string_append(message, "I could not guess if it is newer, so you have to"
+                            "do it manually.\n");
+          }
+          else {
+            g_string_append(message, "The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n");
+          }
+          g_string_append (message, "Gschem usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptely.\n");
+          if (w_current->page_current->load_newer_backup_func == NULL) {
+            s_log_message(message->str);
+            s_log_message("\nRun gschem and correct the situation.\n\n");
+            fprintf(stderr, message->str);
+            fprintf(stderr, "\nRun gschem and correct the situation.\n\n");
+          }
+          else {
+            /* Ask the user if load the backup or the original file */
+            if (w_current->page_current->load_newer_backup_func 
+                (w_current, message)) {
+              /* Load the backup file */
+              load_backup_file = 1;
+            }
+          }
+          g_string_free (message, TRUE);
+        }
     }
   }
 
@@ -183,20 +207,16 @@ int f_open(TOPLEVEL *w_current, char *filename)
 	   full_filename);
   }
 
-  g_free (backup_filename);
-
   if (w_current->page_current->object_tail != NULL) {
     s_log_message("Opened file [%s]\n", full_filename);
     opened = TRUE;
-
   } else {
     /* Failed to open page */
     opened = FALSE;	 
   }
 
-
-  w_current->page_current->object_tail = (OBJECT *) 
-  return_tail(w_current->page_current->object_head); 
+  w_current->page_current->object_tail 
+    = (OBJECT *) return_tail(w_current->page_current->object_head); 
 
   /* make sure you init net_consolide to false (default) in all */
   /* programs */
@@ -216,12 +236,11 @@ int f_open(TOPLEVEL *w_current, char *filename)
 
   g_free(full_filename);
   g_free(full_rcfilename);
+  g_free (backup_filename);
 
-  /* If this was a preview window, reset the directory to the 
-   * value it had when f_open was called.  Also get rid of component
-   * libraries opened while opening preview window.  If the component
-   * is actually selected, they will be re-read later. */
-  if (w_current->wid == -1) {
+  /* Reset the directory to the value it had when f_open was
+   * called. */
+  if (flags & F_OPEN_RESTORE_CWD) {
     chdir(saved_cwd);
     g_free(saved_cwd);
   }

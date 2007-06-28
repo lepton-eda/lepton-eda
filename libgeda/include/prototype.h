@@ -7,7 +7,9 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename);
 void o_scale(TOPLEVEL *w_current, OBJECT *list, int x_scale, int y_scale);
 
 /* f_basic.c */
-int f_open(TOPLEVEL *w_current, char *filename);
+int f_open(TOPLEVEL *w_current, const gchar *filename);
+int f_open_flags(TOPLEVEL *w_current, const gchar *filename, 
+                 const gint flags);
 void f_close(TOPLEVEL *w_current);
 void f_save_close(TOPLEVEL *w_current, char *filename);
 int f_save(TOPLEVEL *w_current, const char *filename);
