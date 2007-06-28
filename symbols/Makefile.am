@@ -9,7 +9,7 @@ SUBDIRS = \
 scmdatadir = @GEDADATADIR@@PATHSEP@scheme
 dist_scmdata_DATA = geda-clib.scm geda-font.scm
 
-EXTRA_DIST = autogen.sh
+EXTRA_DIST = autogen.sh ChangeLog-1.0
 
 distclean-local:
 	-rm -rf autom4te.cache
