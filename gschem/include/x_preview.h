@@ -47,6 +47,8 @@ struct _Preview {
   TOPLEVEL *preview_toplevel;
 
   gchar *filename;
+  gchar *buffer;
+
   gboolean active;
   
 };

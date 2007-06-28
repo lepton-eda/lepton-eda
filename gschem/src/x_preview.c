@@ -47,6 +47,7 @@ extern int mouse_x, mouse_y;
 
 enum {
   PROP_FILENAME=1,
+  PROP_BUFFER,
   PROP_ACTIVE
 };
 
@@ -239,14 +240,31 @@ preview_update (Preview *preview)
   s_page_delete (preview_toplevel, preview_toplevel->page_current);
   s_page_goto (preview_toplevel, s_page_new (preview_toplevel, "preview"));
   
-  if (preview->active && preview->filename != NULL) {
-    /* open up file in current page */
-    f_open_flags (preview_toplevel, preview->filename,
-                  F_OPEN_RC | F_OPEN_RESTORE_CWD);
-    /* test value returned by f_open... - Fix me */
-    /* we should display something if there an error occured - Fix me */
-  }
+  if (preview->active) {
+    g_assert ((preview->filename == NULL) || (preview->buffer == NULL));
+    if (preview->filename != NULL) {
+      /* open up file in current page */
+      f_open_flags (preview_toplevel, preview->filename,
+                    F_OPEN_RC | F_OPEN_RESTORE_CWD);
+      /* test value returned by f_open... - Fix me */
+      /* we should display something if there an error occured - Fix me */
+    }
+    if (preview->buffer != NULL) {
 
+      /* Load the data buffer */
+      preview_toplevel->page_current->object_tail = (OBJECT *) 
+        o_read_buffer (preview_toplevel, 
+                       preview_toplevel->page_current->object_tail, 
+                       preview->buffer, -1, "Preview Buffer");
+      preview_toplevel->page_current->object_tail = (OBJECT *) 
+        return_tail(preview_toplevel->page_current->object_head); 
+
+      /* Is this needed? */
+      if (preview_toplevel->net_consolidate == TRUE) {	
+              o_net_consolidate(preview_toplevel);
+      }
+    }
+  }
   /* display current page (possibly empty) */
   a_zoom_extents (preview_toplevel,
                   preview_toplevel->page_current->object_head,
@@ -299,6 +317,13 @@ preview_class_init (PreviewClass *klass)
                          "",
                          NULL,
                          G_PARAM_READWRITE));
+  g_object_class_install_property (
+    gobject_class, PROP_BUFFER,
+    g_param_spec_string ("buffer",
+                         "",
+                         "",
+                         NULL,
+                         G_PARAM_WRITABLE));
   g_object_class_install_property(
     gobject_class, PROP_ACTIVE,
     g_param_spec_boolean ("active",
@@ -347,7 +372,8 @@ preview_init (Preview *preview)
                 NULL);
 
   preview->active   = FALSE;
-  preview->filename = NULL;  
+  preview->filename = NULL;
+  preview->buffer   = NULL;
   
   gtk_widget_set_events (GTK_WIDGET (preview), 
                          GDK_EXPOSURE_MASK | 
@@ -376,9 +402,18 @@ preview_set_property (GObject *object,
   switch(property_id) {
       case PROP_FILENAME:
         g_free (preview->filename);
+        g_free (preview->buffer);
         preview->filename = g_strdup (g_value_get_string (value));
-        if (preview->active) preview_update (preview);
+        preview_update (preview);
         break;
+
+      case PROP_BUFFER:
+        g_free (preview->filename);
+        g_free (preview->buffer);
+        preview->buffer = g_strdup (g_value_get_string (value));
+        preview_update (preview);
+        break;
+
       case PROP_ACTIVE:
         preview->active = g_value_get_boolean (value);
         preview_update (preview);
