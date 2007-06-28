@@ -374,8 +374,8 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
   GtkTreeModel *model;
   GtkTreeIter iter, parent;
   Compselect *compselect = (Compselect*)user_data;
-  CLibSymbol *sym = NULL;
-  gchar *filename;
+  const CLibSymbol *sym = NULL;
+  gchar *buffer = NULL;
 
   if (!gtk_tree_selection_get_selected (selection, &model, &iter)) {
     return;
@@ -388,11 +388,12 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
   
   /* build full path to component looking at parents */
   gtk_tree_model_get (model, &iter, 0, &sym, -1);
-  filename = s_clib_symbol_get_filename(sym);
 
-  /* update the treeview with new filename */
+  buffer = s_clib_symbol_get_data (sym);
+
+  /* update the preview with new symbol data */
   g_object_set (compselect->preview,
-                "filename", filename,
+                "buffer", buffer,
                 NULL);
 
   /* signal a component has been selected to parent of dialog */
@@ -401,8 +402,7 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
                          GTK_RESPONSE_APPLY,
                          NULL);
 
-  g_free (filename);
-
+  g_free (buffer);
 }
 
 /*! \brief Requests re-evaluation of the filter.
