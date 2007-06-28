@@ -771,7 +771,7 @@ const CLibSource *s_clib_add_directory (const gchar *directory,
 
   oldsource = s_clib_get_source_by_name (realname);
   if (oldsource != NULL) {
-    s_log_message ("Cannot add library [%s]: name in use.",
+    s_log_message ("Cannot add library [%s]: name in use.\n",
 		   realname);
     g_free (realname);
     return NULL;
