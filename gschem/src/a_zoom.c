@@ -133,6 +133,23 @@ void a_zoom(TOPLEVEL *w_current, int dir, int selected_from, int pan_flags)
   /* calculate new window and draw it */
   a_pan_general(w_current, world_pan_center_x, world_pan_center_y,
                 relativ_zoom_factor, pan_flags);
+
+  /* Before warping the cursor, filter out any consecutive scroll events 
+   * from the event queue.  If the program receives more than one scroll 
+   * event before it can process the first one, then the globals mouse_x 
+   * and mouse_y won't contain the proper mouse position,
+   * because the handler for the mouse moved event needs to 
+   * run first to set these values.
+   */
+  GdkEvent *topEvent = gdk_event_get();
+  while( topEvent != NULL ) {
+    if( topEvent->type != GDK_SCROLL ) {
+      gdk_event_put( topEvent );
+      break;
+    }
+    gdk_event_free( topEvent );
+    topEvent = gdk_event_get();
+  }
 	
   /* warp the cursor to the right position */ 
   if (w_current->warp_cursor) {
