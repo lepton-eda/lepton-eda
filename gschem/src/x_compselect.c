@@ -163,7 +163,9 @@ x_compselect_callback_response (GtkDialog *dialog,
   
         break;
       default:
-        g_assert_not_reached ();
+        /* Do nothing, in case there's another handler function which
+           can handle the response ID received. */
+        break;
   }
   
 }
@@ -521,6 +523,7 @@ compselect_callback_behavior_changed (GtkOptionMenu *optionmenu,
                          NULL);
 }
 
+
 static GtkTreeModel*
 compselect_create_child_model (void)
 {
@@ -560,6 +563,36 @@ compselect_create_child_model (void)
 
   return (GtkTreeModel*)store;
 }
+
+/* \brief On-demand refresh of the component library.
+ * \par Function Description
+ * Requests a rescan of the component library in order to pick up any
+ * new signals, and then updates the component selector.  Handler for
+ * the #COMPSELECT_RESPONSE_REFRESH response ID.
+ */
+static void
+compselect_callback_refresh_library (Compselect *compselect,
+                                     gint response_id,
+                                     gpointer user_data) {
+  GtkTreeModel *model;
+
+  if (response_id != COMPSELECT_RESPONSE_REFRESH) {
+    return;
+  }
+
+  /* Rescan the libraries for symbols */
+  s_clib_refresh ();
+
+  model = (GtkTreeModel *)
+    g_object_new (GTK_TYPE_TREE_MODEL_FILTER,
+                  "child-model", compselect_create_child_model (),
+                  "virtual-root", NULL,
+                  NULL);
+
+  gtk_tree_view_set_model (compselect->treeview, model);
+}
+
+
 
 /*! \brief Create the combo box for behaviors.
  *  \par Function Description
@@ -870,7 +903,6 @@ compselect_init (Compselect *compselect)
   gtk_widget_show_all (combobox);
   /* set behavior combo box of compselect */
   compselect->combobox_behaviors = GTK_COMBO_BOX (combobox);
-
   
   /* now add buttons in the action area */
   gtk_dialog_add_buttons (GTK_DIALOG (compselect),
@@ -879,16 +911,25 @@ compselect_init (Compselect *compselect)
                           /*  - update button */
                           GTK_STOCK_APPLY, COMPSELECT_RESPONSE_PLACE,
 			  GTK_STOCK_OK, COMPSELECT_RESPONSE_HIDE,
+                          /*  - refresh button */
+                          GTK_STOCK_REFRESH, COMPSELECT_RESPONSE_REFRESH,
                           NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(compselect),
+                                          COMPSELECT_RESPONSE_REFRESH,
 					  COMPSELECT_RESPONSE_HIDE,
 					  COMPSELECT_RESPONSE_PLACE,
 					  GTK_RESPONSE_CLOSE,
 					  -1);
 #endif
+
+  /* Add refresh handler */
+  g_signal_connect (compselect, "response",
+                    G_CALLBACK (compselect_callback_refresh_library),
+                    NULL);
+
   /* Initialize the hidden property */
   compselect->hidden = FALSE;
 }
