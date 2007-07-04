@@ -1265,9 +1265,9 @@ gchar *s_clib_symbol_get_data_by_name (const gchar *name)
  *  should (probably) also appear in the list.
  *
  *  \param w_current #TOPLEVEL structure to scan.
- *  \return GList of symbol names.
+ *  \return GList of symbols.
  */
-GList *s_toplevel_get_symbol_names (const TOPLEVEL *w_current)
+GList *s_toplevel_get_symbols (const TOPLEVEL *w_current)
 {
   GList *result = NULL;
   GList *iter = NULL;

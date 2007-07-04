@@ -560,7 +560,7 @@ compselect_callback_behavior_changed (GtkOptionMenu *optionmenu,
 /* \brief Create the tree model for the "In Use" view.
  * \par Function Description
  * Creates a straightforward list of symbols which are currently in
- * use, using s_toplevel_get_symbol_names().
+ * use, using s_toplevel_get_symbols().
  */
 static GtkTreeModel*
 create_inuse_tree_model (void)
@@ -571,7 +571,7 @@ create_inuse_tree_model (void)
 
   store = (GtkListStore *) gtk_list_store_new (1, G_TYPE_POINTER);
 
-  symhead = s_toplevel_get_symbol_names (global_window_current);
+  symhead = s_toplevel_get_symbols (global_window_current);
 
   for (symlist = symhead;
        symlist != NULL;
