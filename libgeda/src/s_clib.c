@@ -74,44 +74,23 @@
  *
  *  \page libcmds Library Commands
  *
- *  A library command should implement this specification.  Note that
- *  as additional features may be added to the component library in
- *  the future, ideally a library command should only respond to the
- *  commands detailed here.
+ *  A program or set of programs can be used as a component source.  The procedure used to add such a source from a gEDA rc file is:
  *
- *  The command line syntax for a library command is:
+ *  <code>
+ *  (component-library-command listcmd getcmd name)
+ *  </code>
  *
- *  \code
- *  libcmd <mode> [mode arguments]
- *  \endcode
+ *  This is implemented by g_rc_component_library_command(), which is
+ *  a wrapper for s_clib_add_command().
  *
- *  All diagnostic and error information should be printed to standard
- *  error.  Only data should be printed to standard output.  All data
- *  output from a library command should be encoded using UTF8.
+ *  The list command will be executed with no further arguments, and
+ *  should output a list of available symbol names on stdout.  The get
+ *  command will have a symbol name appended to it as the final
+ *  argument, and should output gEDA symbol data on stdout.
  *
- *  If an error occurs, the command must exit with non-zero exit
- *  status, with any diagnostic information should be printed on
- *  standard error.
- *
- *  \section libcmds_modes Modes
- *
- *  \code
- *  libcmd list
- *  \endcode
- *
- *  If \b list is passed as the mode, a command must output a list of
- *  the symbols it provides, separated by newlines.  Lines beginning
- *  with a period '.' are ignored.  If an error occurs, the command
- *  must exit with non-zero exit status.
- *
- *  \code
- *  libcmd get <symbolname>
- *  \endcode
- *
- *  If \b get is passed as the mode, a command must output the symbol
- *  data corresponding to \b symbolname.  If \b symbolname is unknown
- *  to the command, the command must exit with non-zero exit status.
- *
+ *  If the command cannot successfully complete, it should exit with
+ *  non-zero exit status.  Anything it has output on stdout will be
+ *  ignored, and any stderr output displayed to the user.
  *
  *  \page libscms Library Scheme Procedures
  *
@@ -189,12 +168,18 @@ enum CLibSourceType {
 struct _CLibSource {
   /*! Type of source */
   enum CLibSourceType type;
-  /*! Path to directory or name of executable */
-  gchar *path_cmd;
   /*! Name of source */
   gchar *name;
   /*! Available symbols (#CLibSymbol) */
   GList *symbols;
+
+  /*! Path to directory */
+  gchar *directory;
+
+  /*! Command & arguments for listing symbols */
+  gchar *list_cmd;
+  /*! Command & arguments for retrieving symbol data */
+  gchar *get_cmd;
 
   /*! Scheme function for listing symbols */
   SCM list_fn;
@@ -227,7 +212,7 @@ static void free_symbol (gpointer data, gpointer user_data);
 static void free_source (gpointer data, gpointer user_data);
 static gint compare_source_name (gconstpointer a, gconstpointer b);
 static gint compare_symbol_name (gconstpointer a, gconstpointer b);
-static gchar *run_source_command (gchar **argv);
+static gchar *run_source_command (const gchar *command);
 static CLibSymbol *source_has_symbol (const CLibSource *source, 
 				      const gchar *name);
 static void refresh_directory (CLibSource *source);
@@ -286,10 +271,6 @@ static void free_source (gpointer data, gpointer user_data)
 {
   CLibSource *source = data;
   if (source != NULL) {
-    if (source->path_cmd != NULL) {
-      g_free (source->path_cmd);
-      source->path_cmd = NULL;
-    }
     if (source->name != NULL) {
       g_free (source->name);
       source->name = NULL;
@@ -298,6 +279,18 @@ static void free_source (gpointer data, gpointer user_data)
       g_list_foreach (source->symbols, (GFunc) free_symbol, NULL);
       g_list_free (source->symbols);
       source->symbols = NULL;
+    }
+    if (source->directory != NULL) {
+      g_free (source->directory);
+      source->directory = NULL;
+    }
+    if (source->list_cmd != NULL) {
+      g_free (source->list_cmd);
+      source->list_cmd = NULL;
+    }
+    if (source->get_cmd != NULL) {
+      g_free (source->get_cmd);
+      source->get_cmd = NULL;
     }
     if (source->type == CLIB_SCM) {
       scm_gc_unprotect_object (source->list_fn);
@@ -379,32 +372,24 @@ static gint compare_symbol_name (gconstpointer a, gconstpointer b)
  *
  *  Private function used only in s_clib.c.
  *
- *  \param argv null-terminated list of arguments.  The name of the
- *              program to execute should appear first.
+ *  \todo This is probably generally useful.
  *
+ *  \param argv Command string to execute.
  *  \return The program's output, or \b NULL on failure.
  */
-static gchar *run_source_command (gchar **argv)
+static gchar *run_source_command (const gchar *command)
 {
   gchar *standard_output = NULL;
   gchar *standard_error = NULL;
   gint exit_status;
   GError *e = NULL;
-  gchar *command = NULL;
   gboolean success = FALSE;
   
-  g_spawn_sync (NULL, /* Use gschem's CWD */
-		argv,
-		NULL, /* No special environment */
-		G_SPAWN_SEARCH_PATH,
-		NULL, /* No setup function (not portable anyway) */
-		NULL, /* No user data */
-		&standard_output,
-		&standard_error,
-		&exit_status,
-		&e);
-
-  command = g_strjoinv (" ", argv);
+  g_spawn_command_line_sync (command,
+                             &standard_output,
+                             &standard_error,
+                             &exit_status,
+                             &e);
 
   if (e != NULL) {
     s_log_message ("Library command failed [%s]: %s\n", command, 
@@ -423,7 +408,6 @@ static gchar *run_source_command (gchar **argv)
     success = TRUE;
   }
 
-  g_free (command);
   g_free (standard_error);
   
   if (success) return standard_output;
@@ -505,11 +489,11 @@ static void refresh_directory (CLibSource *source)
   source->symbols = NULL;  
 
   /* Open the directory for reading. */
-  dir = g_dir_open (source->path_cmd, 0, &e);
+  dir = g_dir_open (source->directory, 0, &e);
 
   if (e != NULL) {
     s_log_message ("Failed to open directory [%s]: %s\n",
-		   source->path_cmd, e->message);
+		   source->directory, e->message);
     g_error_free (e);
     return;
   }
@@ -519,7 +503,7 @@ static void refresh_directory (CLibSource *source)
     if (entry[0] == '.') continue;
 
     /* skip subdirectories (for now) */
-    fullpath = g_build_filename (source->path_cmd, entry, NULL);
+    fullpath = g_build_filename (source->directory, entry, NULL);
     isfile = g_file_test (fullpath, G_FILE_TEST_IS_REGULAR);
     g_free (fullpath);
     if (!isfile) continue;
@@ -570,7 +554,6 @@ static void refresh_command (CLibSource *source)
   const gchar *line;
   CLibSymbol *symbol;
   gchar *name;
-  gchar *argv[3];
 
   g_assert (source != NULL);
   g_assert (source->type == CLIB_CMD);
@@ -581,10 +564,7 @@ static void refresh_command (CLibSource *source)
   source->symbols = NULL;  
 
   /* Run the command to get the list of symbols */
-  argv[0] = source->path_cmd;
-  argv[1] = CLIB_LIST_CMD;
-  argv[2] = NULL;
-  cmdout = run_source_command ( argv );
+  cmdout = run_source_command (source->list_cmd);
   if (cmdout == NULL) return;
 
   /* Use a TextBuffer to help reading out the lines of the output */
@@ -779,7 +759,7 @@ const CLibSource *s_clib_add_directory (const gchar *directory,
 
   source = g_new0 (CLibSource, 1);
   source->type = CLIB_DIR;
-  source->path_cmd = g_strdup (directory);
+  source->directory = g_strdup (directory);
   source->name = realname;
 
   refresh_directory (source);
@@ -790,47 +770,52 @@ const CLibSource *s_clib_add_directory (const gchar *directory,
   return source;
 }
 
-/*! \brief Add a symbol-generating command to the library
+/*! \brief Add symbol-generating commands to the library
  *  \par Function Description
- *  Adds a command which can generate symbols to the library.  See
- *  page \ref libcmds for more information on library commands.  A \a
- *  name may be specified for the source; if \a name is \b NULL, the
- *  command is used as the name.
+ *  Adds a set of commands which can generate symbols to the
+ *  library. \a list_cmd and \a get_cmd should be strings consisting
+ *  of an executable name followed by any arguments required.
+ *  Executables are resolved using the current PATH.  See page \ref
+ *  libcmds for more information on library commands.
  *  
- *  \param command The executable to run, resolved using the \b PATH
- *                 environment variable.
- *  \param name    A descriptive name for the command.
- *  \return The CLibSource associated with the command.
+ *  \param list_cmd The executable & arguments used to list available
+ *                   symbols.
+ *  \param get_cmd  The executable & arguments used to retrieve symbol
+ *                   data.
+ *  \param name      A descriptive name for the component source.
+ *  \return The CLibSource associated with the component source.
  */
-const CLibSource *s_clib_add_command (const gchar *command,
+const CLibSource *s_clib_add_command (const gchar *list_cmd,
+                                      const gchar *get_cmd,
 				      const gchar *name)
 {
   const CLibSource *oldsource;
   CLibSource *source;
-  gchar *realname;
-
-  if (command == NULL) {
-    return NULL;
-  }
-
+  
   if (name == NULL) {
-    realname = g_strdup (command);
-  } else {
-    realname = g_strdup (name);
+    s_log_message ("Cannot add library: name not specified\n");
+    return NULL;
   }
   
-  oldsource = s_clib_get_source_by_name (realname);
+  oldsource = s_clib_get_source_by_name (name);
   if (oldsource != NULL) {
     s_log_message ("Cannot add library [%s]: name in use.\n",
-		   realname);
-    g_free (realname);
+		   name);
     return NULL;
+  }
+
+  if (list_cmd == NULL || get_cmd == NULL) {
+    s_log_message ("Cannot add library [%s]: both 'list' and "
+                   "'get' commands must be specified.\n",
+		   name);
   }
 
   source = g_new0 (CLibSource, 1);
   source->type = CLIB_CMD;
-  source->path_cmd = g_strdup (command);
-  source->name = realname;
+  source->name = g_strdup(name);
+
+  source->list_cmd = g_strdup (list_cmd);
+  source->get_cmd = g_strdup (get_cmd);
 
   refresh_command (source);
 
@@ -958,7 +943,7 @@ gchar *s_clib_symbol_get_filename (const CLibSymbol *symbol)
 
   if (symbol->source->type != CLIB_DIR) return NULL;
 
-  return g_build_filename(symbol->source->path_cmd, symbol->name, NULL);
+  return g_build_filename(symbol->source->directory, symbol->name, NULL);
 }
 
 /*! \brief Get the source to which a symbol belongs.
@@ -993,7 +978,7 @@ static gchar *get_data_directory (const CLibSymbol *symbol)
   g_assert (symbol != NULL);
   g_assert (symbol->source->type == CLIB_DIR);
 
-  filename = g_build_filename(symbol->source->path_cmd, 
+  filename = g_build_filename(symbol->source->directory, 
 			      symbol->name, NULL);
 
   g_file_get_contents (filename, &data, NULL, &e);
@@ -1020,17 +1005,20 @@ static gchar *get_data_directory (const CLibSymbol *symbol)
  */
 static gchar *get_data_command (const CLibSymbol *symbol)
 {
-  gchar *argv[4];
+  gchar *command;
+  gchar *result;
 
   g_assert (symbol != NULL);
   g_assert (symbol->source->type == CLIB_CMD);
   
-  argv[0] = symbol->source->path_cmd;
-  argv[1] = CLIB_DATA_CMD;
-  argv[2] = symbol->name;
-  argv[3] = NULL;
+  command = g_strdup_printf ("%s %s", symbol->source->get_cmd, 
+                          symbol->name);
 
-  return run_source_command ( argv );
+  result = run_source_command ( command );
+
+  g_free (command);
+
+  return result;
 }
 
 /*! \brief Get symbol data from a Scheme-based component source.

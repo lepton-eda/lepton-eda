@@ -59,7 +59,7 @@ struct gsubr_t {
 /*! \brief */
 static struct gsubr_t libgeda_funcs[] = {
   { "component-library",        1, 1, 0, g_rc_component_library },
-  { "component-library-command", 1, 1, 0, g_rc_component_library_command },
+  { "component-library-command", 3, 0, 0, g_rc_component_library_command },
   { "component-library-funcs",  3, 0, 0, g_rc_component_library_funcs },
   { "component-library-search", 1, 0, 0, g_rc_component_library_search },
   { "source-library",           1, 0, 0, g_rc_source_library },

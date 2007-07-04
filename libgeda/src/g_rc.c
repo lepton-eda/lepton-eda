@@ -404,27 +404,39 @@ SCM g_rc_component_library(SCM path, SCM name)
  *  \param [in] name    Optional descriptive name for component source.
  *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
  */
-SCM g_rc_component_library_command (SCM command, SCM name)
+SCM g_rc_component_library_command (SCM listcmd, SCM getcmd, 
+                                    SCM name)
 {
   gchar *namestr = NULL;
-  gchar *cmdstr = NULL;
-  SCM_ASSERT (scm_is_string (command), command, SCM_ARG1, 
+  gchar *lcmdstr = NULL;
+  gchar *gcmdstr = NULL;
+  const CLibSource *src;
+  SCM_ASSERT (scm_is_string (listcmd), listcmd, SCM_ARG1, 
 	      "component-library-command");
-  cmdstr = g_strdup(SCM_STRING_CHARS (command));
+  lcmdstr = scm_to_locale_string (listcmd);
 
-  if (name != SCM_UNDEFINED) {
-    SCM_ASSERT (scm_is_string (name), name, SCM_ARG2, 
+  SCM_ASSERT (scm_is_string (getcmd), getcmd, SCM_ARG2, 
 	      "component-library-command");
-    namestr = SCM_STRING_CHARS (name);
-  }
+  gcmdstr = scm_to_locale_string (getcmd);
+
+  SCM_ASSERT (scm_is_string (name), name, SCM_ARG3, 
+	      "component-library-command");
+  namestr = scm_to_locale_string (name);
+  
   /* take care of any shell variables */
-  cmdstr = expand_env_variables(cmdstr);
+  /*! \bug this may be a security risk! */
+  lcmdstr = expand_env_variables(lcmdstr);
+  gcmdstr = expand_env_variables(gcmdstr);
 
-  s_clib_add_command (cmdstr, namestr);
+  src = s_clib_add_command (lcmdstr, gcmdstr, namestr);
 
-  g_free (cmdstr);
+  g_free (lcmdstr);
+  g_free (gcmdstr);
+  g_free (namestr);
 
-  return SCM_BOOL_T;
+  if (src != NULL) return SCM_BOOL_T;
+
+  return SCM_BOOL_F;
 }
 
 /*! \brief Guile callback for adding library functions.
