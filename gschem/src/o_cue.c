@@ -336,7 +336,7 @@ void o_cue_draw_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object)
                           x_get_color(w_current->override_color));
   } else {
     gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(w_current->net_endpoint_color));
+                          x_get_color(w_current->junction_color));
   }
   
   cl_current = object->conn_list;

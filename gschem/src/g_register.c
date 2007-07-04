@@ -72,6 +72,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "select-color",             7, 0, 0, g_rc_select_color },
   { "boundingbox-color",        7, 0, 0, g_rc_boundingbox_color },
   { "net-endpoint-color",       7, 0, 0, g_rc_net_endpoint_color },
+  { "junction-color",           7, 0, 0, g_rc_junction_color },
   { "stroke-color",             7, 0, 0, g_rc_stroke_color },
   { "output-color-background",  7, 0, 0, g_rc_output_color_background },
   { "freestyle-color",          7, 0, 0, g_rc_freestyle_color },

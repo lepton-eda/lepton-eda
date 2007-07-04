@@ -287,6 +287,7 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->bb_color           = 0;
   toplevel->lock_color         = 0;
   toplevel->net_endpoint_color = 0;
+  toplevel->junction_color     = 0;
   toplevel->net_color          = 0;
   toplevel->bus_color          = 0;
   toplevel->override_net_color = -1;

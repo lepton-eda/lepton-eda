@@ -87,7 +87,7 @@ void s_cue_postscript_fillcircle(TOPLEVEL * w_current, FILE * fp,
   }
 
   if (w_current->print_color) {
-    f_print_set_color(fp, w_current->net_endpoint_color);
+    f_print_set_color(fp, w_current->junction_color);
   }
 
   fprintf(fp, "newpath\n");

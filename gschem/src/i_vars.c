@@ -39,6 +39,7 @@ int   default_detachattr_color = DETACHED_ATTRIBUTE_COLOR;
 int   default_net_color = NET_COLOR;
 int   default_bus_color = BUS_COLOR;
 int   default_net_endpoint_color = NET_ENDPOINT_COLOR;
+int   default_junction_color = JUNCTION_COLOR;
 int   default_override_net_color = -1;
 int   default_override_bus_color = -1;
 int   default_override_pin_color = -1;
@@ -173,6 +174,8 @@ void i_vars_set(TOPLEVEL *w_current)
   w_current->net_endpoint_mode  = default_net_endpoint_mode;
   w_current->net_midpoint_mode  = default_net_midpoint_mode;
   w_current->override_net_color = default_override_net_color;
+
+  w_current->junction_color = default_junction_color;
 
   w_current->bus_color          = default_bus_color;
   w_current->bus_style          = default_bus_style;

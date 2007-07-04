@@ -38,6 +38,7 @@
 ; LOCK_COLOR    	          15
 ; OUTPUT_BACKGROUND_COLOR         16
 ; Freestyle colors		  17-20
+; JUNCTION_COLOR                  21
 ;
 ; OVERRIDE_NET_COLOR              4
 ; OVERRIDE_PIN_COLOR              1
@@ -225,6 +226,14 @@
 ;(freestyle-color 18 "color_name" "dark_color_name" "0.0 0.0 0.0" 0 0 0)
 ;(freestyle-color 19 "color_name" "dark_color_name" "0.0 0.0 0.0" 0 0 0)
 ;(freestyle-color 20 "color_name" "dark_color_name" "0.0 0.0 0.0" 0 0 0)
+
+; junction-color index color_name outline_color ps_color_string 
+;                    int_red int_green int_blue 
+; Set the default junction color.  
+; DO NOT change the value of the index (first number)
+;
+(junction-color 21 "purple" "purple3" ".627 .125 .941" 160 32 240) 
+; light background
 
 ;
 ; End of color related keywords

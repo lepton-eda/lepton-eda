@@ -20,10 +20,6 @@
 #ifndef _COLORS_H_INCL
 #define _COLORS_H_INCL
 
-/* this is a shared file */
-#define BLACK		0
-#define WHITE		1
-
 #define BACKGROUND_COLOR                0
 #define PIN_COLOR                       1
 #define NET_ENDPOINT_COLOR              2
@@ -41,13 +37,16 @@
 #define STROKE_COLOR                    14
 #define LOCK_COLOR 	                15
 #define OUTPUT_BACKGROUND_COLOR         16     
-
+#define FREESTYLE1_COLOR         	17     
+#define FREESTYLE2_COLOR         	18     
+#define FREESTYLE3_COLOR         	19     
+#define FREESTYLE4_COLOR         	20     
+#define JUNCTION_COLOR         		21     
 
 #define OVERRIDE_NET_COLOR              4
 #define OVERRIDE_PIN_COLOR              1
 #define OVERRIDE_BUS_COLOR              10
 
-#if 1 /* this will be eventually deleted */
 #define BLACK           0
 #define WHITE           1
 #define RED             2
@@ -59,6 +58,5 @@
 
 /* Internal colors, please don't use these in schematics */
 #define GREY90          8
-#endif
 
 #endif

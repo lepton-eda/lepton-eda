@@ -200,6 +200,7 @@ SCM g_rc_select_color(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM
 SCM g_rc_boundingbox_color(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM ir, SCM ig, SCM ib);
 SCM g_rc_zoom_box_color(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM ir, SCM ig, SCM ib);
 SCM g_rc_net_endpoint_color(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM ir, SCM ig, SCM ib);
+SCM g_rc_junction_color(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM ir, SCM ig, SCM ib);
 SCM g_rc_logic_bubble_color(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM ir, SCM ig, SCM ib);
 SCM g_rc_lock_color(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM ir, SCM ig, SCM ib);
 SCM g_rc_output_color_background(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM ir, SCM ig, SCM ib);

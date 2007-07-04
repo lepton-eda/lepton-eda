@@ -641,6 +641,7 @@ struct st_toplevel {
   int bb_color;
   int lock_color;
   int net_endpoint_color;
+  int junction_color;
   int net_color;
   int bus_color;
   int override_net_color;

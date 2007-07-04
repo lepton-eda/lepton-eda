@@ -252,6 +252,10 @@ DEFINE_G_RC_COLOR(g_rc_net_endpoint_color,
 		  "net-endpoint-color",
 		  default_net_endpoint_color)
 
+DEFINE_G_RC_COLOR(g_rc_junction_color,
+		  "junction-color",
+		  default_junction_color)
+
 DEFINE_G_RC_COLOR(g_rc_logic_bubble_color,
 		  "logic-bubble-color",
 		  default_logic_bubble_color)
