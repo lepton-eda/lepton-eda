@@ -347,7 +347,7 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_window_set_position (GTK_WINDOW (aewindow), GTK_WIN_POS_MOUSE);
 
   gtk_dialog_set_default_response(GTK_DIALOG(aewindow),
-                                    GTK_RESPONSE_ACCEPT);
+                                  GTK_RESPONSE_APPLY);
 
   vbox = GTK_DIALOG(aewindow)->vbox;
   gtk_container_set_border_width(GTK_CONTAINER(aewindow), 
@@ -402,6 +402,7 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_table_attach (GTK_TABLE (table), value_entry, 1, 2, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_entry_set_activates_default(GTK_ENTRY(value_entry), TRUE);
 
   /* Visibility */
   visbutton = gtk_check_button_new_with_label (_("Visible"));
