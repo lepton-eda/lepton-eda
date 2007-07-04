@@ -87,7 +87,7 @@ x_compselect_callback_response (GtkDialog *dialog,
 
   switch (arg1) {
       case COMPSELECT_RESPONSE_PLACE: {
-	CLibSymbol *symbol;
+	CLibSymbol *symbol = NULL;
         CompselectBehavior behavior;
         
         g_object_get (compselect,
@@ -247,28 +247,54 @@ static void compselect_get_property (GObject *object,
                                      GParamSpec *pspec);
 
 
-/*! \brief Sets data for a particular cell of the treeview.
+
+/*! \brief Sets data for a particular cell of the in use treeview.
  *  \par Function Description
  *  This function determines what data is to be displayed in the
- *  component column of the selection tree.
+ *  "in use" symbol selection view.
+ *
+ *  The model is a list of symbols. s_clib_symbol_get_name() is called
+ *  to get the text to display.
+ */
+static void
+inuse_treeview_set_cell_data (GtkTreeViewColumn *tree_column,
+                            GtkCellRenderer   *cell,
+                            GtkTreeModel      *tree_model,
+                            GtkTreeIter       *iter,
+                            gpointer           data)
+{
+  GValue value = { 0, };
+  GValue strvalue = { 0, };
+  CLibSymbol *symbol;
+
+  gtk_tree_model_get_value (tree_model, iter, 0, &value);
+
+  g_value_init (&strvalue, G_TYPE_STRING);
+
+  symbol = (CLibSymbol *) g_value_get_pointer (&value);
+  g_value_set_string (&strvalue, s_clib_symbol_get_name (symbol));
+
+  g_object_set_property ((GObject*)cell, "text", &strvalue);
+
+  g_value_unset (&value);
+  g_value_unset (&strvalue);
+}
+
+/*! \brief Sets data for a particular cell of the library treeview.
+ *  \par Function Description
+ *  This function determines what data is to be displayed in the
+ *  selection selection view.
  *
  *  The top level of the model contains sources, and the next symbols.
  *  s_clib_source_get_name() or s_clib_symbol_get_name() as
  *  appropriate is called to get the text to display.
- *
- *  \param [in] tree_column The GtkTreeColumn.
- *  \param [in] cell        The GtkCellRenderer that is being rendered
- *                          by tree_column.
- *  \param [in] tree_model  The tree model for components.
- *  \param [in] iter        An iterator on the current row to render.
- *  \param [in] data        Unused user data.
  */
 static void
-compselect_treeview_set_cell_data (GtkTreeViewColumn *tree_column,
-                                   GtkCellRenderer   *cell,
-                                   GtkTreeModel      *tree_model,
-                                   GtkTreeIter       *iter,
-                                   gpointer           data)
+lib_treeview_set_cell_data (GtkTreeViewColumn *tree_column,
+                            GtkCellRenderer   *cell,
+                            GtkTreeModel      *tree_model,
+                            GtkTreeIter       *iter,
+                            gpointer           data)
 {
   GtkTreeIter parent;
   GValue value = { 0, };
@@ -295,7 +321,7 @@ compselect_treeview_set_cell_data (GtkTreeViewColumn *tree_column,
   g_value_unset (&strvalue);
 }
 
-/*! \brief Determines visibility of items of the treeview.
+/*! \brief Determines visibility of items of the library treeview.
  *  \par Function Description
  *  This is the function used to filter entries of the component
  *  selection tree.
@@ -306,7 +332,7 @@ compselect_treeview_set_cell_data (GtkTreeViewColumn *tree_column,
  *  \returns TRUE if item should be visible, FALSE otherwise.
  */
 static gboolean
-compselect_model_filter_visible_func (GtkTreeModel *model,
+lib_model_filter_visible_func (GtkTreeModel *model,
                                       GtkTreeIter  *iter,
                                       gpointer      data)
 {
@@ -332,7 +358,7 @@ compselect_model_filter_visible_func (GtkTreeModel *model,
     gtk_tree_model_iter_children (model, &iter2, iter);
     ret = FALSE;
     do {
-      if (compselect_model_filter_visible_func (model, &iter2, data)) {
+      if (lib_model_filter_visible_func (model, &iter2, data)) {
         ret = TRUE;
         break;
       }
@@ -357,12 +383,11 @@ compselect_model_filter_visible_func (GtkTreeModel *model,
 /*! \brief Handles changes in the treeview selection.
  *  \par Function Description
  *  This is the callback function that is called every time the user
- *  select a row in the component treeview of the dialog.
+ *  select a row in either component treeview of the dialog.
  *
  *  If the selection is not a selection of a component (a directory
- *  name), it does nothing. Otherwise it retrieves the component and
- *  directory name from the model (the directory name is build from
- *  the ancestors of the row in the model).
+ *  name), it does nothing. Otherwise it retrieves the #CLibSymbol
+ *  from the model.
  *
  *  It then emits the dialog's <B>apply</B> signal to let its parent
  *  know that a component has been selected.
@@ -374,6 +399,7 @@ static void
 compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
                                             gpointer          user_data)
 {
+  GtkTreeView *view;
   GtkTreeModel *model;
   GtkTreeIter iter, parent;
   Compselect *compselect = (Compselect*)user_data;
@@ -384,12 +410,20 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
     return;
   }
 
-  if (!gtk_tree_model_iter_parent (model, &parent, &iter)) {
-    /* selected element is not a leaf -> not a component name */
-    return;
+  view = gtk_tree_selection_get_tree_view (selection);
+
+  if (view == compselect->inusetreeview) {
+    /* No special handling at the moment */
+  } else if (view == compselect->libtreeview) {
+    if (!gtk_tree_model_iter_parent (model, &parent, &iter)) {
+      /* selected element is not a leaf -> not a component name */
+      return;
+    }
+  } else {
+    /* Something's gone wrong */
+   g_assert_not_reached();
   }
   
-  /* build full path to component looking at parents */
   gtk_tree_model_get (model, &iter, 0, &sym, -1);
 
   buffer = s_clib_symbol_get_data (sym);
@@ -428,7 +462,7 @@ compselect_filter_timeout (gpointer data)
   /* resets the source id in compselect */
   compselect->filter_timeout = 0;
   
-  model = gtk_tree_view_get_model (compselect->treeview);
+  model = gtk_tree_view_get_model (compselect->libtreeview);
 
   if (model != NULL) {
     gtk_tree_model_filter_refilter ((GtkTreeModelFilter*)model);
@@ -523,9 +557,45 @@ compselect_callback_behavior_changed (GtkOptionMenu *optionmenu,
                          NULL);
 }
 
-
+/* \brief Create the tree model for the "In Use" view.
+ * \par Function Description
+ * Creates a straightforward list of symbols which are currently in
+ * use, using s_toplevel_get_symbol_names().
+ */
 static GtkTreeModel*
-compselect_create_child_model (void)
+create_inuse_tree_model (void)
+{
+  GtkListStore *store;
+  GList *symhead, *symlist;
+  GtkTreeIter iter;
+
+  store = (GtkListStore *) gtk_list_store_new (1, G_TYPE_POINTER);
+
+  symhead = s_toplevel_get_symbol_names (global_window_current);
+
+  for (symlist = symhead;
+       symlist != NULL;
+       symlist = g_list_next (symlist)) {
+
+    gtk_list_store_append (store, &iter);
+
+    gtk_list_store_set (store, &iter,
+                        0, symlist->data,
+                        -1);
+  }
+
+  g_list_free (symlist);
+
+  return (GtkTreeModel*)store;
+}
+
+/* \brief Create the tree model for the "Library" view.
+ * \par Function Description
+ * Creates a tree where the branches are the available component
+ * sources and the leaves are the symbols.
+ */
+static GtkTreeModel*
+create_lib_tree_model (void)
 {
   GtkTreeStore *store;
   GList *srchead, *srclist;
@@ -583,16 +653,229 @@ compselect_callback_refresh_library (Compselect *compselect,
   /* Rescan the libraries for symbols */
   s_clib_refresh ();
 
+  /* Refresh the "Library" view */
   model = (GtkTreeModel *)
     g_object_new (GTK_TYPE_TREE_MODEL_FILTER,
-                  "child-model", compselect_create_child_model (),
+                  "child-model", create_lib_tree_model (),
                   "virtual-root", NULL,
                   NULL);
 
-  gtk_tree_view_set_model (compselect->treeview, model);
+  gtk_tree_view_set_model (compselect->libtreeview, model);
+
+  /* Refresh the "In Use" view */
+  model = create_inuse_tree_model ();
+  gtk_tree_view_set_model (compselect->inusetreeview, model);
 }
 
+/*! \brief Creates the treeview for the "In Use" view. */
+static GtkWidget*
+create_inuse_treeview (Compselect *compselect)
+{
+  GtkWidget *scrolled_win, *treeview;
+  GtkTreeModel *model;
+  GtkTreeSelection *selection;
+  GtkCellRenderer *renderer;
+  GtkTreeViewColumn *column;
 
+  model = create_inuse_tree_model ();
+
+  /* Create a scrolled window to accomodate the treeview */
+  scrolled_win = GTK_WIDGET (
+    g_object_new (GTK_TYPE_SCROLLED_WINDOW,
+                  /* GtkScrolledWindow */
+                  "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                  "vscrollbar-policy", GTK_POLICY_ALWAYS,
+                  "shadow-type",       GTK_SHADOW_ETCHED_IN,
+                  NULL));
+
+  /* Create the treeview */
+  treeview = GTK_WIDGET (g_object_new (GTK_TYPE_TREE_VIEW,
+                                       /* GtkTreeView */
+                                       "model",      model,
+                                       "rules-hint", TRUE,
+                                       "headers-visible", FALSE,
+                                       NULL));
+
+  /* Connect callback to selection */
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
+  gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
+  g_signal_connect (selection,
+                    "changed",
+                    G_CALLBACK (compselect_callback_tree_selection_changed),
+                    compselect);
+
+  /* Insert a column for symbol name */
+  renderer = GTK_CELL_RENDERER (
+    g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
+                  /* GtkCellRendererText */
+                  "editable", FALSE,
+                  NULL));
+  column = GTK_TREE_VIEW_COLUMN (
+    g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
+                  /* GtkTreeViewColumn */
+                  "title", _("Components"),
+                  NULL));
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
+  gtk_tree_view_column_set_cell_data_func (column, renderer,
+                                           inuse_treeview_set_cell_data,
+                                           NULL, NULL);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+
+  /* Add the treeview to the scrolled window */
+  gtk_container_add (GTK_CONTAINER (scrolled_win), treeview);
+  /* set the inuse treeview of compselect */
+  compselect->inusetreeview = GTK_TREE_VIEW (treeview);
+
+  return scrolled_win;
+}
+
+/*! \brief Creates the treeview for the "Library" view */
+static GtkWidget *
+create_lib_treeview (Compselect *compselect)
+{
+  GtkWidget *libtreeview, *vbox, *scrolled_win, *label, 
+    *hbox, *entry, *button;
+  GtkTreeModel *child_model, *model;
+  GtkTreeSelection *selection;
+  GtkCellRenderer *renderer;
+  GtkTreeViewColumn *column;
+
+  /* -- library selection view -- */
+
+  /* vertical box for component selection and search entry */
+  vbox = GTK_WIDGET (g_object_new (GTK_TYPE_VBOX,
+                                   /* GtkContainer */
+                                   "border-width", 5,
+                                   /* GtkBox */
+                                   "homogeneous",  FALSE,
+                                   "spacing",      5,
+                                   NULL));
+
+  child_model  = create_lib_tree_model ();
+  model = (GtkTreeModel*)g_object_new (GTK_TYPE_TREE_MODEL_FILTER,
+                                       "child-model",  child_model,
+                                       "virtual-root", NULL,
+                                       NULL);
+  
+  scrolled_win = GTK_WIDGET (
+    g_object_new (GTK_TYPE_SCROLLED_WINDOW,
+                  /* GtkScrolledWindow */
+                  "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                  "vscrollbar-policy", GTK_POLICY_ALWAYS,
+                  "shadow-type",       GTK_SHADOW_ETCHED_IN,
+                  NULL));
+  /* create the treeview */
+  libtreeview = GTK_WIDGET (g_object_new (GTK_TYPE_TREE_VIEW,
+                                          /* GtkTreeView */
+                                          "model",      model,
+                                          "rules-hint", TRUE,
+                                          "headers-visible", FALSE,
+                                          NULL));
+  /* connect callback to selection */
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (libtreeview));
+  gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
+  g_signal_connect (selection,
+                    "changed",
+                    G_CALLBACK (compselect_callback_tree_selection_changed),
+                    compselect);
+
+  /* insert a column to treeview for library/symbol name */
+  renderer = GTK_CELL_RENDERER (
+    g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
+                  /* GtkCellRendererText */
+                  "editable", FALSE,
+                  NULL));
+  column = GTK_TREE_VIEW_COLUMN (
+    g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
+                  /* GtkTreeViewColumn */
+                  "title", _("Components"),
+                  NULL));
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
+  gtk_tree_view_column_set_cell_data_func (column, renderer,
+                                           lib_treeview_set_cell_data,
+                                           NULL, NULL);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (libtreeview), column);
+  
+  /* add the treeview to the scrolled window */
+  gtk_container_add (GTK_CONTAINER (scrolled_win), libtreeview);
+  /* set directory/component treeview of compselect */
+  compselect->libtreeview = GTK_TREE_VIEW (libtreeview);
+
+  /* add the scrolled window for directories to the vertical box */
+  gtk_box_pack_start (GTK_BOX (vbox), scrolled_win,
+                      TRUE, TRUE, 0);
+
+  
+  /* -- filter area -- */
+  hbox = GTK_WIDGET (g_object_new (GTK_TYPE_HBOX,
+                                          /* GtkBox */
+                                          "homogeneous", FALSE,
+                                          "spacing",     3,
+                                          NULL));
+
+  /* create the entry label */
+  label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
+                                    /* GtkMisc */
+                                    "xalign", 0.0,
+                                    /* GtkLabel */
+                                    "label",  _("Filter:"),
+                                    NULL));
+  /* add the search label to the filter area */
+  gtk_box_pack_start (GTK_BOX (hbox), label,
+                      FALSE, FALSE, 0);
+  
+  /* create the text entry for filter in components */
+  entry = GTK_WIDGET (g_object_new (GTK_TYPE_ENTRY,
+                                    /* GtkEntry */
+                                    "text", "",
+                                    NULL));
+  g_signal_connect (entry,
+                    "changed",
+                    G_CALLBACK (compselect_callback_filter_entry_changed),
+                    compselect);
+
+  /* now that that we have an entry, set the filter func of model */
+  gtk_tree_model_filter_set_visible_func ((GtkTreeModelFilter*)model,
+                                          lib_model_filter_visible_func,
+                                          compselect,
+                                          NULL);
+
+  /* add the filter entry to the filter area */
+  gtk_box_pack_start (GTK_BOX (hbox), entry,
+                      TRUE, TRUE, 0);
+  /* set filter entry of compselect */
+  compselect->entry_filter = GTK_ENTRY (entry);
+  /* and init the event source for component filter */
+  compselect->filter_timeout = 0;
+
+  /* create the erase button for filter entry */
+  button = GTK_WIDGET (g_object_new (GTK_TYPE_BUTTON,
+                                     /* GtkWidget */
+                                     "sensitive", FALSE,
+                                     /* GtkButton */
+                                     "relief",    GTK_RELIEF_NONE,
+                                     NULL));
+  gtk_container_add (GTK_CONTAINER (button),
+                     gtk_image_new_from_stock (GTK_STOCK_CLEAR,
+                                               GTK_ICON_SIZE_SMALL_TOOLBAR));
+  g_signal_connect (button,
+                    "clicked",
+                    G_CALLBACK (compselect_callback_filter_button_clicked),
+                    compselect);
+  /* add the clear button to the filter area */
+  gtk_box_pack_start (GTK_BOX (hbox), button,
+                      FALSE, FALSE, 0);
+  /* set clear button of compselect */
+  compselect->button_clear = GTK_BUTTON (button);
+                                     
+  /* add the filter area to the vertical box */
+  gtk_box_pack_start (GTK_BOX (vbox), hbox,
+                      FALSE, FALSE, 0);
+
+  compselect->libtreeview = GTK_TREE_VIEW (libtreeview);
+
+  return vbox;
+}
 
 /*! \brief Create the combo box for behaviors.
  *  \par Function Description
@@ -600,7 +883,7 @@ compselect_callback_refresh_library (Compselect *compselect,
  *  selecting the behavior when a component is added to the sheet.
  */
 static GtkWidget*
-compselect_create_behaviors_combo_box (void)
+create_behaviors_combo_box (void)
 {
   GtkWidget *combobox;
 
@@ -611,7 +894,7 @@ compselect_create_behaviors_combo_box (void)
   gtk_combo_box_append_text (GTK_COMBO_BOX (combobox),
                              _("Default behavior - reference component"));
   /* COMPSEL_BEHAVIOR_EMBED */
-  gtk_combo_box_append_text (GTK_COMBO_BOX (combobox), 
+  gtk_combo_box_append_text (GTK_COMBO_BOX (combobox),
                              _("Embed component in schematic"));
   /* COMPSEL_BEHAVIOR_INCLUDE */
   gtk_combo_box_append_text (GTK_COMBO_BOX (combobox),
@@ -686,14 +969,10 @@ compselect_class_init (CompselectClass *klass)
 static void
 compselect_init (Compselect *compselect)
 {
-  GtkWidget *hbox, *vbox, *filter_hbox;
-  GtkWidget *scrolled_win, *treeview, *label, *entry, *preview, *combobox;
-  GtkWidget *button;
-  GtkTreeModel *child_model, *model;
-  GtkCellRenderer *renderer;
-  GtkTreeViewColumn *column;
-  GtkTreeSelection *selection;
-
+  GtkWidget *hbox, *notebook;
+  GtkWidget *libview, *inuseview;
+  GtkWidget *preview, *combobox;
+  
   GtkWidget *alignment, *frame;
   
   /* dialog initialization */
@@ -719,143 +998,22 @@ compselect_init (Compselect *compselect)
                                    "spacing",     5,
                                    NULL));
 
-  /* vertical box for component selection and search entry */
-  vbox = GTK_WIDGET (g_object_new (GTK_TYPE_VBOX,
-                                   /* GtkContainer */
-                                   "border-width", 5,
-                                   /* GtkBox */
-                                   "homogeneous",  FALSE,
-                                   "spacing",      5,
-                                   NULL));
-  
-  /* -- directory/component selection -- */
-  child_model  = compselect_create_child_model ();
-  model = (GtkTreeModel*)g_object_new (GTK_TYPE_TREE_MODEL_FILTER,
-                                       "child-model",  child_model,
-                                       "virtual-root", NULL,
-                                       NULL);
-/*   gtk_tree_model_filter_set_visible_func ((GtkTreeModelFilter*)model, */
-/*                                           compselect_model_filter_visible_func, */
-/*                                           compselect, */
-/*                                           NULL); */
-  
-  scrolled_win = GTK_WIDGET (
-    g_object_new (GTK_TYPE_SCROLLED_WINDOW,
-                  /* GtkScrolledWindow */
-                  "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
-                  "vscrollbar-policy", GTK_POLICY_ALWAYS,
-                  "shadow-type",       GTK_SHADOW_ETCHED_IN,
-                  NULL));
-  /* create the treeview */
-  treeview = GTK_WIDGET (g_object_new (GTK_TYPE_TREE_VIEW,
-                                       /* GtkTreeView */
-                                       "model",      model,
-                                       "rules-hint", TRUE,
+  /* notebook for library and inuse views */
+  notebook = GTK_WIDGET (g_object_new (GTK_TYPE_NOTEBOOK,
                                        NULL));
-  /* connect callback to selection */
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
-  gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
-  g_signal_connect (selection,
-                    "changed",
-                    G_CALLBACK (compselect_callback_tree_selection_changed),
-                    compselect);
+  compselect->viewtabs = GTK_NOTEBOOK (notebook);
 
-  /* insert a column to treeview for directory name */
-  renderer = GTK_CELL_RENDERER (
-    g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
-                  /* GtkCellRendererText */
-                  "editable", FALSE,
-                  NULL));
-  column = GTK_TREE_VIEW_COLUMN (
-    g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
-                  /* GtkTreeViewColumn */
-                  "title", _("Components"),
-                  NULL));
-  gtk_tree_view_column_pack_start (column, renderer, TRUE);
-  gtk_tree_view_column_set_cell_data_func (column, renderer,
-                                           compselect_treeview_set_cell_data,
-                                           NULL, NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
-  
-  /* add the treeview to the scrolled window */
-  gtk_container_add (GTK_CONTAINER (scrolled_win), treeview);
-  /* set directory/component treeview of compselect */
-  compselect->treeview = GTK_TREE_VIEW (treeview);
+  inuseview = create_inuse_treeview (compselect);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), inuseview,
+                            gtk_label_new (_("In Use")));  
 
-  /* add the scrolled window for directories to the vertical box */
-  gtk_box_pack_start (GTK_BOX (vbox), scrolled_win,
-                      TRUE, TRUE, 0);
+  libview = create_lib_treeview (compselect);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), libview,
+                            gtk_label_new (_("Libraries")));
 
-  
-  /* -- filter area -- */
-  filter_hbox = GTK_WIDGET (g_object_new (GTK_TYPE_HBOX,
-                                          /* GtkBox */
-                                          "homogeneous", FALSE,
-                                          "spacing",     3,
-                                          NULL));
-
-  /* create the entry label */
-  label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
-                                    /* GtkMisc */
-                                    "xalign", 0.0,
-                                    /* GtkLabel */
-                                    "label",  _("Filter:"),
-                                    NULL));
-  /* add the search label to the filter area */
-  gtk_box_pack_start (GTK_BOX (filter_hbox), label,
-                      FALSE, FALSE, 0);
-  
-  /* create the text entry for filter in components */
-  entry = GTK_WIDGET (g_object_new (GTK_TYPE_ENTRY,
-                                    /* GtkEntry */
-                                    "text", "",
-                                    NULL));
-  g_signal_connect (entry,
-                    "changed",
-                    G_CALLBACK (compselect_callback_filter_entry_changed),
-                    compselect);
-  /* add the filter entry to the filter area */
-  gtk_box_pack_start (GTK_BOX (filter_hbox), entry,
-                      TRUE, TRUE, 0);
-  /* set filter entry of compselect */
-  compselect->entry_filter = GTK_ENTRY (entry);
-  /* and init the event source for component filter */
-  compselect->filter_timeout = 0;
-
-  /* create the erase button for filter entry */
-  button = GTK_WIDGET (g_object_new (GTK_TYPE_BUTTON,
-                                     /* GtkWidget */
-                                     "sensitive", FALSE,
-                                     /* GtkButton */
-                                     "relief",    GTK_RELIEF_NONE,
-                                     NULL));
-  gtk_container_add (GTK_CONTAINER (button),
-                     gtk_image_new_from_stock (GTK_STOCK_CLEAR,
-                                               GTK_ICON_SIZE_SMALL_TOOLBAR));
-  g_signal_connect (button,
-                    "clicked",
-                    G_CALLBACK (compselect_callback_filter_button_clicked),
-                    compselect);
-  /* add the clear button to the filter area */
-  gtk_box_pack_start (GTK_BOX (filter_hbox), button,
-                      FALSE, FALSE, 0);
-  /* set clear button of compselect */
-  compselect->button_clear = GTK_BUTTON (button);
-                                     
-  /* add the filter area to the vertical box */
-  gtk_box_pack_start (GTK_BOX (vbox), filter_hbox,
-                      FALSE, FALSE, 0);
-
-  
   /* include the vertical box in horizontal box */
-  gtk_box_pack_start (GTK_BOX (hbox), vbox,
+  gtk_box_pack_start (GTK_BOX (hbox), notebook,
                       TRUE, TRUE, 0);
-
-  /* now that that we have an entry, set the filter func of model */
-  gtk_tree_model_filter_set_visible_func ((GtkTreeModelFilter*)model,
-                                          compselect_model_filter_visible_func,
-                                          compselect,
-                                          NULL);
 
                      
   /* -- preview area -- */
@@ -893,7 +1051,7 @@ compselect_init (Compselect *compselect)
   
 
   /* -- behavior combo box -- */
-  combobox = compselect_create_behaviors_combo_box ();
+  combobox = create_behaviors_combo_box ();
   g_signal_connect (combobox,
                     "changed",
                     G_CALLBACK (compselect_callback_behavior_changed),
@@ -986,21 +1144,34 @@ compselect_get_property (GObject *object,
 	{
 	  GtkTreeModel *model;
 	  GtkTreeIter iter, parent;
-	  CLibSymbol *symbol;
-	  if (gtk_tree_selection_get_selected (
-		gtk_tree_view_get_selection (compselect->treeview),
-		&model,
-		&iter)
-	      && gtk_tree_model_iter_parent (model, &parent, &iter)) {
-	    
-	    gtk_tree_model_get (model, &iter, 0, &symbol, -1);
-	    g_value_set_pointer (value, symbol);
+	  CLibSymbol *symbol = NULL;
 
-	  } else {
-	    g_value_set_pointer (value, NULL);
-	  }
-	}
-        break;
+          /* FIXME assumes pages are in a specific order */
+          switch (gtk_notebook_get_current_page(compselect->viewtabs)) {
+          case 0: /* In Use page */
+            if (gtk_tree_selection_get_selected (
+                  gtk_tree_view_get_selection (compselect->inusetreeview),
+                  &model,
+                  &iter)) {
+              gtk_tree_model_get (model, &iter, 0, &symbol, -1);
+            }
+            break;
+          case 1:
+            if (gtk_tree_selection_get_selected (
+                  gtk_tree_view_get_selection (compselect->libtreeview),
+                  &model,
+                  &iter)
+                && gtk_tree_model_iter_parent (model, &parent, &iter)) {
+              gtk_tree_model_get (model, &iter, 0, &symbol, -1);
+            }
+            break;
+          default:
+            g_assert_not_reached();
+          }
+
+          g_value_set_pointer (value, symbol);
+          break;
+        }
       case PROP_BEHAVIOR:
         g_value_set_enum (value,
                           gtk_combo_box_get_active (

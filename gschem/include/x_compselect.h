@@ -61,7 +61,8 @@ struct _CompselectClass {
 struct _Compselect {
   GschemDialog parent_instance;
 
-  GtkTreeView *treeview;
+  GtkTreeView *libtreeview, *inusetreeview;
+  GtkNotebook *viewtabs;
   Preview     *preview;
   GtkEntry    *entry_filter;
   GtkButton   *button_clear;
