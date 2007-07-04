@@ -74,5 +74,10 @@ struct _Compselect {
 
 GType compselect_get_type (void);
 
+/* Response IDs for special dialog buttons */
+typedef enum {
+  COMPSELECT_RESPONSE_PLACE = 1,
+  COMPSELECT_RESPONSE_HIDE = 2
+} CompselectResponseType;
 
 #endif /* __X_COMPSEL_H__ */

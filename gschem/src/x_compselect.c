@@ -86,7 +86,7 @@ x_compselect_callback_response (GtkDialog *dialog,
   GValue value = { 0, };
 
   switch (arg1) {
-      case GTK_RESPONSE_APPLY: {
+      case COMPSELECT_RESPONSE_PLACE: {
 	CLibSymbol *symbol;
         CompselectBehavior behavior;
         
@@ -133,12 +133,13 @@ x_compselect_callback_response (GtkDialog *dialog,
 
         break;
       }
-      case GTK_RESPONSE_OK:
+      case COMPSELECT_RESPONSE_HIDE:
 	/* Response when clicking on the "hide" button */
 
 	/* If there is no component in the complex place list, set the current one */
 	if (toplevel->page_current->complex_place_list == NULL) {
-	  gtk_dialog_response (GTK_DIALOG (compselect), GTK_RESPONSE_APPLY);
+	  gtk_dialog_response (GTK_DIALOG (compselect), 
+                               COMPSELECT_RESPONSE_PLACE);
 	}
 
 	/* Hide the component selector */
@@ -399,7 +400,7 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
   /* signal a component has been selected to parent of dialog */
   g_signal_emit_by_name (compselect,
                          "response",
-                         GTK_RESPONSE_APPLY,
+                         COMPSELECT_RESPONSE_PLACE,
                          NULL);
 
   g_free (buffer);
@@ -516,7 +517,7 @@ compselect_callback_behavior_changed (GtkOptionMenu *optionmenu,
 
   g_signal_emit_by_name (compselect,
                          "response",
-                         GTK_RESPONSE_APPLY,
+                         COMPSELECT_RESPONSE_PLACE,
                          NULL);
 }
 
@@ -876,15 +877,15 @@ compselect_init (Compselect *compselect)
                           /*  - close button */
                           GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
                           /*  - update button */
-                          GTK_STOCK_APPLY, GTK_RESPONSE_APPLY,
-			  GTK_STOCK_OK, GTK_RESPONSE_OK,
+                          GTK_STOCK_APPLY, COMPSELECT_RESPONSE_PLACE,
+			  GTK_STOCK_OK, COMPSELECT_RESPONSE_HIDE,
                           NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(compselect),
-					  GTK_RESPONSE_OK,
-					  GTK_RESPONSE_APPLY,
+					  COMPSELECT_RESPONSE_HIDE,
+					  COMPSELECT_RESPONSE_PLACE,
 					  GTK_RESPONSE_CLOSE,
 					  -1);
 #endif
