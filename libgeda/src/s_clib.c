@@ -215,6 +215,7 @@ static gint compare_symbol_name (gconstpointer a, gconstpointer b);
 static gchar *run_source_command (const gchar *command);
 static CLibSymbol *source_has_symbol (const CLibSource *source, 
 				      const gchar *name);
+static gchar *uniquify_source_name (const gchar *name);
 static void refresh_directory (CLibSource *source);
 static void refresh_command (CLibSource *source);
 static void refresh_scm (CLibSource *source);
@@ -459,6 +460,35 @@ static CLibSymbol *source_has_symbol (const CLibSource *source,
   }
 
   return NULL;
+}
+
+/*! \brief Make sure a source name is unique.
+ *  \par Function Description
+ *  Checks if a source already exists with the given \a name.  If one
+ *  does, appends a number to the source name.  If \a name is not
+ *  already in use, returns it as is.  The return value is always a
+ *  newly-allocated string, and should be freed.
+ *  it.
+ */
+static gchar *uniquify_source_name (const gchar *name)
+{
+  gchar *newname = NULL;
+  gint i = 0;
+
+  if (s_clib_get_source_by_name (name) == NULL) {
+    return g_strdup (name);
+  }
+
+  do {
+    g_free (newname);
+    i++;
+    newname = g_strdup_printf ("%s<%i>", name, i);
+  } while (s_clib_get_source_by_name (newname) != NULL);
+
+  s_log_message ("Library name [%s] already in use.  Using [%s].\n", 
+                 name, newname);
+
+  return newname;
 }
 
 /*! \brief Rescan a directory for symbols.
@@ -735,27 +765,20 @@ const CLibSource *s_clib_get_source_by_name (const gchar *name)
 const CLibSource *s_clib_add_directory (const gchar *directory, 
 					const gchar *name)
 {
-  const CLibSource *oldsource;
   CLibSource *source;
-  gchar *realname;
+  gchar *intname, *realname;
 
   if (directory == NULL) {
     return NULL;
   }
   
   if (name == NULL) {
-    realname = g_path_get_basename (directory);
+    intname = g_path_get_basename (directory);
+    realname = uniquify_source_name (intname);
+    g_free (intname);
   } else {
-    realname = g_strdup(name);
+    realname = uniquify_source_name (name);
   }  
-
-  oldsource = s_clib_get_source_by_name (realname);
-  if (oldsource != NULL) {
-    s_log_message ("Cannot add library [%s]: name in use.\n",
-		   realname);
-    g_free (realname);
-    return NULL;
-  }
 
   source = g_new0 (CLibSource, 1);
   source->type = CLIB_DIR;
@@ -789,30 +812,25 @@ const CLibSource *s_clib_add_command (const gchar *list_cmd,
                                       const gchar *get_cmd,
 				      const gchar *name)
 {
-  const CLibSource *oldsource;
   CLibSource *source;
+  gchar *realname;
   
   if (name == NULL) {
     s_log_message ("Cannot add library: name not specified\n");
     return NULL;
   }
   
-  oldsource = s_clib_get_source_by_name (name);
-  if (oldsource != NULL) {
-    s_log_message ("Cannot add library [%s]: name in use.\n",
-		   name);
-    return NULL;
-  }
+  realname = uniquify_source_name (name);
 
   if (list_cmd == NULL || get_cmd == NULL) {
     s_log_message ("Cannot add library [%s]: both 'list' and "
                    "'get' commands must be specified.\n",
-		   name);
+		   realname);
   }
 
   source = g_new0 (CLibSource, 1);
   source->type = CLIB_CMD;
-  source->name = g_strdup(name);
+  source->name = realname;
 
   source->list_cmd = g_strdup (list_cmd);
   source->get_cmd = g_strdup (get_cmd);
@@ -841,30 +859,26 @@ const CLibSource *s_clib_add_command (const gchar *list_cmd,
  */
 const CLibSource *s_clib_add_scm (SCM listfunc, SCM getfunc, const gchar *name)
 {
-  const CLibSource *oldsource;
   CLibSource *source;
+  gchar *realname;
 
   if (name == NULL) {
     s_log_message ("Cannot add library: name not specified\n");
     return NULL;
   }  
   
-  oldsource = s_clib_get_source_by_name (name);
-  if (oldsource != NULL) {
-    s_log_message ("Cannot add library [%s]: name in use.\n", name);
-    return NULL;
-  }
+  realname = uniquify_source_name (name);
 
   if (scm_is_false (scm_procedure_p (listfunc)) 
       && scm_is_false (scm_procedure_p (getfunc))) {
     s_log_message ("Cannot add Scheme-library [%s]: callbacks must be closures\n",
-		   name);
+		   realname);
     return NULL;
   }
 
   source = g_new0 (CLibSource, 1);
   source->type = CLIB_SCM;
-  source->name = g_strdup (name);
+  source->name = realname;
   source->list_fn = scm_gc_protect_object (listfunc);
   source->get_fn = scm_gc_protect_object (getfunc);
 
