@@ -1180,6 +1180,16 @@ GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode)
 }
 
 
+#if !GLIB_CHECK_VERSION(2,12,0)
+/*! \brief g_hash_table_foreach_remove foreach function
+ */
+static gboolean remove_entry(gpointer key, gpointer val, gpointer data)
+{
+   return TRUE;
+}
+#endif
+
+
 /*! \brief Flush the symbol name lookup cache.
  *  \par Function Description
  *  Clears the hashtable which caches the results of s_clib_search().
@@ -1188,7 +1198,11 @@ GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode)
  */
 void s_clib_flush_cache ()
 {
-  g_hash_table_remove_all (clib_cache);
+#if GLIB_CHECK_VERSION(2,12,0)
+  g_hash_table_remove_all (clib_cache);  /* Introduced in glib 2.12 */
+#else
+  g_hash_table_foreach_remove(clib_cache, remove_entry, NULL);
+#endif
 }
 
 /*! \brief Get symbol structure for a given symbol name.
