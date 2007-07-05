@@ -12,10 +12,6 @@ echo Configuring $PACKAGE version $DOTTED_VERSION.$DATE_VERSION
 AM_INIT_AUTOMAKE($PACKAGE, $DOTTED_VERSION, no-define)
 AM_CONFIG_HEADER([config.h])
 
-# Initialize maintainer mode
-AM_MAINTAINER_MODE
-
-
 #########################################################################
 # Command line flags start
 # 

@@ -16,9 +16,6 @@ AM_CONFIG_HEADER([config.h])
 # Init libtool
 AM_PROG_LIBTOOL
 
-# Init maintainer mode
-AM_MAINTAINER_MODE
-
 #########################################################################
 # Command line flags start
 # 

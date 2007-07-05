@@ -11,9 +11,6 @@ echo Configuring $PACKAGE version $DOTTED_VERSION.$DATE_VERSION
 # Initialize automake stuff
 AM_INIT_AUTOMAKE($PACKAGE, $DOTTED_VERSION, no-define)
 
-# Init maintainer mode
-AM_MAINTAINER_MODE
-
 #########################################################################
 # Command line flags start
 # 
