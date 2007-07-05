@@ -1,12 +1,15 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT
+AC_CONFIG_SRCDIR([gTAG/gTAG.sch])
+AC_PREREQ(2.54)
 
 PACKAGE=geda-examples
-VERSION=20070526
-echo Configuring $PACKAGE version $VERSION
+DOTTED_VERSION=1.1
+DATE_VERSION=20070526
+echo Configuring $PACKAGE version $DOTTED_VERSION.$DATE_VERSION
 
 # Initialize automake 
-AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
+AM_INIT_AUTOMAKE($PACKAGE, $DOTTED_VERSION, no-define)
 
 
 # Expand the prefix variable
@@ -26,6 +29,8 @@ expandgedadocdir=`echo $gedadocdir`
 GEDADOCDIR=$expandgedadocdir
 AC_SUBST(GEDADOCDIR)
 
+AC_SUBST(DATE_VERSION)
+AC_SUBST(DOTTED_VERSION)
 
 AC_CONFIG_FILES([ 
         Makefile 
@@ -42,6 +47,6 @@ AC_CONFIG_FILES([
 AC_OUTPUT 
 
 AC_MSG_RESULT([
-** Configuration complete for $PACKAGE $VERSION
+** Configuration complete for $PACKAGE $DOTTED_VERSION.$DATE_VERSION
 ])
 

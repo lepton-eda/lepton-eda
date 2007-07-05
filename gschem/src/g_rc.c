@@ -102,14 +102,15 @@ SCM g_rc_gschem_version(SCM version)
   SCM_ASSERT (scm_is_string (version), version,
               SCM_ARG1, "gschem-version");
 
-  if (g_strcasecmp (SCM_STRING_CHARS (version), VERSION) != 0) {
+  if (g_strcasecmp (SCM_STRING_CHARS (version), DATE_VERSION) != 0) {
     fprintf(stderr,
-            _("Found a version [%s%s] gschemrc file:\n[%s]\n"),
-            PREPEND_VERSION_STRING, SCM_STRING_CHARS (version),
-            rc_filename);
+            "You are running gEDA/gaf version [%s%s.%s],\n",
+            PREPEND_VERSION_STRING, DOTTED_VERSION, DATE_VERSION);
     fprintf(stderr,
-            _("While gschem is in ALPHA, "
-            "please be sure that you have the latest rc file.\n"));
+            "but you have a version [%s] gschemrc file:\n[%s]\n",
+            SCM_STRING_CHARS (version), rc_filename);
+    fprintf(stderr,
+            "Please be sure that you have the latest rc file.\n");
     ret = SCM_BOOL_F;
   } else {
     ret = SCM_BOOL_T;

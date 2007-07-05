@@ -4,11 +4,12 @@ AC_CONFIG_SRCDIR([74/7400-1.sym])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-symbols
-VERSION=20070526
-echo Configuring $PACKAGE version $VERSION
+DOTTED_VERSION=1.1
+DATE_VERSION=20070526
+echo Configuring $PACKAGE version $DOTTED_VERSION.$DATE_VERSION
 
 # Initialize automake stuff
-AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
+AM_INIT_AUTOMAKE($PACKAGE, $DOTTED_VERSION, no-define)
 
 # Init maintainer mode
 AM_MAINTAINER_MODE
@@ -174,7 +175,8 @@ GEDADOCDIR=$expandgedadocdir
 # gEDA/gaf specify setup end
 #########################################################################
 
-AC_SUBST(VERSION)
+AC_SUBST(DATE_VERSION)
+AC_SUBST(DOTTED_VERSION)
 AC_SUBST(GEDADATADIR)
 AC_SUBST(GEDADOCDIR)
 AC_SUBST(GEDARCDIR)
@@ -240,7 +242,7 @@ expandedGEDARCDIR=`eval "echo $GEDARCDIR"`
 expandedGEDADOCDIR=`eval "echo $GEDADOCDIR"`
 
 AC_MSG_RESULT([
-** Configuration summary for $PACKAGE $VERSION:
+** Configuration summary for $PACKAGE $DOTTED_VERSION.$DATE_VERSION: 
 
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR

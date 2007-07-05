@@ -115,13 +115,16 @@ SCM g_rc_gschlas_version(SCM version)
 		SCM_ARG1, "gschlas-version");
 
 
-    if (g_strcasecmp (SCM_STRING_CHARS (version), VERSION) != 0) {
-	fprintf(stderr, "Found a version [%s%s] gschlas file:\n[%s]\n",
-		PREPEND_VERSION_STRING, SCM_STRING_CHARS (version),
-                rc_filename ? rc_filename : "unknown");
-	fprintf(stderr,
-		"While gschlas is in ALPHA, please be sure that you have the latest rc file.\n");
-	return SCM_BOOL_F;
+    if (g_strcasecmp (SCM_STRING_CHARS (version), DATE_VERSION) != 0) {
+      fprintf(stderr,
+              "You are running gEDA/gaf version [%s%s.%s],\n",
+              PREPEND_VERSION_STRING, DOTTED_VERSION, DATE_VERSION);
+      fprintf(stderr,
+              "but you have a version [%s] gschlasrc file:\n[%s]\n",
+              SCM_STRING_CHARS (version), rc_filename);
+      fprintf(stderr,
+              "Please be sure that you have the latest rc file.\n");
+      return SCM_BOOL_F;
     }
 
     return SCM_BOOL_T;

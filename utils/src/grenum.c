@@ -391,6 +391,7 @@ void printhelp()
 void printver()
 	{
 	printf("This is grenum, an advanced refdes renumber utility for gEDA's gschem.\n");
-	printf("Version %s.  gEDA/gaf version %s\n",GRVERSION, VERSION);
+	printf("Version %s.  gEDA/gaf version %s.%s\n",GRVERSION, 
+               DOTTED_VERSION, DATE_VERSION);
 	printf("Compiled on %s at %s\n",COMP_DATE,COMP_TIME);
 	}

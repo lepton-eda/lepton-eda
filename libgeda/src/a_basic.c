@@ -151,14 +151,14 @@ void o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
 
 /*! \brief Write libgeda file header
  *  \par Function Description
- *  This function simply prints the VERSION and FILEFORMAT_VERSION
+ *  This function simply prints the DATE_VERSION and FILEFORMAT_VERSION
  *  definitions to the file.
  *  
  *  \param [in] fp  The file to write the header to.
  */
 void o_save_write_header(FILE *fp)
 {
-  fprintf(fp, "v %s %u\n", VERSION, FILEFORMAT_VERSION);
+  fprintf(fp, "v %s %u\n", DATE_VERSION, FILEFORMAT_VERSION);
 }
 
 /*! \brief Save a file

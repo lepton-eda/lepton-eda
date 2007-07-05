@@ -130,7 +130,7 @@ int f_print_header(TOPLEVEL *w_current, FILE *fp,
 	  "%%%%Pages: 1\n"
 	  "%%%%Endcomments\n"
 	  "%%%%BeginProlog\n",
-	  VERSION,
+	  DATE_VERSION,
 	  ctime(&current_time),
 	  w_current->page_current->page_filename,
 	  getlogin(),

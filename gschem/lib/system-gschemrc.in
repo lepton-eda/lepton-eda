@@ -15,7 +15,7 @@
 ; that the rc file is compatible with the version of gschem that is 
 ; being run. The end user should *not* change this value.
 ;
-(gschem-version "@VERSION@")
+(gschem-version "@DATE_VERSION@")
 
 ;
 ; Start of color section 

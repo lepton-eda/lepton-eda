@@ -6,6 +6,6 @@ includedir=@includedir@
 Name: libgeda
 Description: gEDA/gaf's core library 
 Requires: 
-Version: @VERSION@
+Version: @DATE_VERSION@
 Libs: -L${libdir} -lgeda @LIBGEDA_LDFLAGS@ 
 Cflags: -I${includedir} @LIBGEDA_CFLAGS@

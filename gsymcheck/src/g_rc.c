@@ -115,17 +115,17 @@ SCM g_rc_gsymcheck_version(SCM version)
   SCM_ASSERT (scm_is_string (version), version,
 	      SCM_ARG1, "gsymcheck-version");
   
-  if (g_strcasecmp (SCM_STRING_CHARS (version), VERSION) != 0) {
+  if (g_strcasecmp (SCM_STRING_CHARS (version), DATE_VERSION) != 0) {
     fprintf(stderr,
-	    "You are running gEDA version [%s%s],\n", PREPEND_VERSION_STRING,
-            VERSION);
+            "You are running gEDA/gaf version [%s%s.%s],\n",
+            PREPEND_VERSION_STRING, DOTTED_VERSION, DATE_VERSION);
     fprintf(stderr,
-	    "but you have a version [%s] gsymcheck file:\n[%s]\n",
-	    SCM_STRING_CHARS (version), rc_filename);
+            "but you have a version [%s] gsymcheckrc file:\n[%s]\n",
+            SCM_STRING_CHARS (version), rc_filename);
     fprintf(stderr,
-	    "While gsymcheck is in ALPHA, "
-	    "please be sure that you have the latest rc file.\n");
+            "Please be sure that you have the latest rc file.\n");
     return SCM_BOOL_F;
+
   }
   
   return SCM_BOOL_T;

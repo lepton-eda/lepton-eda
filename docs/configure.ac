@@ -1,12 +1,15 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT
+AC_CONFIG_SRCDIR([wiki/index.html])
+AC_PREREQ(2.54)
 
-VERSION=20070526
+DOTTED_VERSION=1.1
+DATE_VERSION=20070526
 PACKAGE=geda-docs
-echo Configuring $PACKAGE version $VERSION
+echo Configuring $PACKAGE version $DOTTED_VERSION.$DATE_VERSION
 
 # Init automake
-AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
+AM_INIT_AUTOMAKE($PACKAGE, $DOTTED_VERSION, no-define)
 
 # Check for programs.
 
@@ -39,6 +42,8 @@ expandgedadocdir=`echo $gedadocdir`
 GEDADOCDIR=$expandgedadocdir
 AC_SUBST(GEDADOCDIR)
 
+AC_SUBST(DATE_VERSION)
+AC_SUBST(DOTTED_VERSION)
 
 AC_DEFUN([GEDA_DECLARE_DOCS],
  [
@@ -83,7 +88,7 @@ AC_OUTPUT
 expandedGEDADOCDIR=`eval "echo $GEDADOCDIR"`
 
 AC_MSG_RESULT([
-** Configuration summary for $PACKAGE $VERSION:
+** Configuration summary for $PACKAGE $DOTTED_VERSION.$DATE_VERSION:
 
    documentation directory:          $expandedGEDADOCDIR
 ])

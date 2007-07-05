@@ -15,7 +15,7 @@
 ; that the rc file is compatible with the version of gschem that is 
 ; being run. The end user should *not* change this value.
 ;
-(gattrib-version "@VERSION@")
+(gattrib-version "@DATE_VERSION@")
 
 ; Setup data path variables.
 ;

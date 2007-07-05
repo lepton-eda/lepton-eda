@@ -1,17 +1,16 @@
-# $Id$
-#
 # Process this file with autoconf to produce a configure script.
 AC_INIT
 AC_CONFIG_SRCDIR([include/libgeda.h])
 AC_PREREQ(2.54)
 
 PACKAGE=libgeda
-VERSION=20070526
+DOTTED_VERSION=1.1
+DATE_VERSION=20070526
 SHARED_LIBRARY_VERSION=29:0:0
-echo Configuring $PACKAGE version $VERSION
+echo Configuring $PACKAGE version $DOTTED_VERSION.$DATE_VERSION
 
 # Init automake
-AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
+AM_INIT_AUTOMAKE($PACKAGE, $DOTTED_VERSION, no-define)
 AM_CONFIG_HEADER([config.h])
 
 # Init libtool
@@ -388,7 +387,9 @@ expandgedadatadir=`echo $gedatopdir`
 
 # this has to be expanded ( no ${prefix} ) --
 AC_DEFINE_UNQUOTED(GEDADATADIR, "$gedatopdir", [gEDA/gaf's data directory])
-AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
+AC_DEFINE_UNQUOTED(DATE_VERSION, "$DATE_VERSION", [Currently running date version of gEDA/gaf])
+AC_DEFINE_UNQUOTED(DOTTED_VERSION, "$DOTTED_VERSION", [Currently running dotted version of gEDA/gaf])
+AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of this program's package])
 
 #
 # gEDA/gaf specify things which need to setup
@@ -401,7 +402,8 @@ LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GLIB_LIBS $MINGW_LIBS $DMALLOC_LIBS $GDK_PIXBUF
 LIBTOOL_FLAGS="-version-info $SHARED_LIBRARY_VERSION"
 
 # Makefile.in variable substitution
-AC_SUBST(VERSION)
+AC_SUBST(DATE_VERSION)
+AC_SUBST(DOTTED_VERSION)
 AC_SUBST(LIBGEDA_CFLAGS)
 AC_SUBST(LIBGEDA_LDFLAGS)
 AC_SUBST(LIBTOOL_FLAGS)
@@ -429,7 +431,7 @@ expandedGEDADATADIR=`eval "echo $GEDADATADIR"`
 expandedGEDARCDIR=`eval "echo $GEDARCDIR"`
 
 AC_MSG_RESULT([
-** Configuration summary for $PACKAGE $VERSION:
+** Configuration summary for $PACKAGE $DOTTED_VERSION.$DATE_VERSION
 
    GLIB library version:             $GLIB_VERSION
    GTK+ library version:             $GTK_VERSION

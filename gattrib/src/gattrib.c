@@ -152,7 +152,8 @@ void gattrib_main(void *closure, int argc, char *argv[])
   g_free (logfile);
   
   s_log_message
-    ("gEDA/gattrib version %s%s\n", PREPEND_VERSION_STRING, VERSION);
+    ("gEDA/gattrib version %s%s.%s\n", PREPEND_VERSION_STRING, 
+     DOTTED_VERSION, DATE_VERSION);
   s_log_message
     ("gEDA/gattrib comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
   s_log_message
@@ -164,7 +165,8 @@ void gattrib_main(void *closure, int argc, char *argv[])
     fflush(stderr);
     fflush(stdout);
     fprintf(stderr, 
-	    "gEDA/gattrib version %s%s\n", PREPEND_VERSION_STRING, VERSION);
+	    "gEDA/gattrib version %s%s.%s\n", PREPEND_VERSION_STRING, 
+            DOTTED_VERSION, DATE_VERSION);
     fprintf(stderr,
 	    "gEDA/gattrib comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
     fprintf(stderr,

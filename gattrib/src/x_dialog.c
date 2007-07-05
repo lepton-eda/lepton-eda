@@ -339,7 +339,7 @@ void x_dialog_about_dialog()
   GtkWidget *dialog;
   const char *string = "gEDA : GPL Electronic Design Automation\n\n"
                        "This is gattrib -- gEDA's attribute editor\n\n"
-                       "Gattrib version: %s%s\n\n"
+                       "Gattrib version: %s%s.%s\n\n"
                        "Gattrib is written by: Stuart Brorson (sdb@cloud9.net)\n"
                        "with generous helpings of code from gschem, gnetlist, \n"
                        "and gtkextra, as well as support from the gEDA community.";
@@ -347,9 +347,10 @@ void x_dialog_about_dialog()
 
   /* Create the dialog */
   dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
-                                  GTK_MESSAGE_INFO,
-                                  GTK_BUTTONS_OK,
-                                  string, PREPEND_VERSION_STRING, VERSION);
+                                   GTK_MESSAGE_INFO,
+                                   GTK_BUTTONS_OK,
+                                   string, PREPEND_VERSION_STRING, 
+                                   DOTTED_VERSION, DATE_VERSION);
   
   gtk_window_set_title(GTK_WINDOW(dialog), "About...");
 

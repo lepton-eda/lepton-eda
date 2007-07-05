@@ -188,8 +188,8 @@ void main_prog(void *closure, int argc, char *argv[])
 #endif
 	
   s_log_message(
-                _("gEDA/gschem version %s%s\n"), PREPEND_VERSION_STRING,
-                VERSION);
+                _("gEDA/gschem version %s%s.%s\n"), PREPEND_VERSION_STRING,
+                DOTTED_VERSION, DATE_VERSION);
   s_log_message(
                 _("gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n"));
   s_log_message(
@@ -199,7 +199,8 @@ void main_prog(void *closure, int argc, char *argv[])
 
   if (!quiet_mode) {
     fprintf(stderr, 
-            _("gEDA/gschem version %s%s\n"), PREPEND_VERSION_STRING, VERSION);
+            _("gEDA/gschem version %s%s.%s\n"), PREPEND_VERSION_STRING, 
+            DOTTED_VERSION, DATE_VERSION);
     fprintf(stderr, 
             _("gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n"));
     fprintf(stderr, 

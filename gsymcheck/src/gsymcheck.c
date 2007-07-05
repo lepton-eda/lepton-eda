@@ -78,8 +78,8 @@ main_prog(void *closure, int argc, char *argv[])
   if (!quiet_mode)
   {
     s_log_message(
-                  "gEDA/gsymcheck version %s%s\n", PREPEND_VERSION_STRING,
-                  VERSION);
+                  "gEDA/gsymcheck version %s%s.%s\n", PREPEND_VERSION_STRING,
+                  DOTTED_VERSION, DATE_VERSION);
     s_log_message(
                   "gEDA/symcheck comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
     s_log_message(

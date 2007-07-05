@@ -115,15 +115,19 @@ SCM g_rc_gnetlist_version(SCM version)
   SCM_ASSERT (scm_is_string (version), version,
               SCM_ARG1, "gnetlist-version");
 
-  if (strcmp (SCM_STRING_CHARS (version), VERSION) != 0) {
+  if (strcmp (SCM_STRING_CHARS (version), DATE_VERSION) != 0) {
     fprintf(stderr,
-            "Found a version [%s] gnetlist file:\n[%s]\n",
-            SCM_STRING_CHARS (version), rc_filename);
+	    "You are running gEDA/gaf version [%s%s.%s],\n", 
+            PREPEND_VERSION_STRING, DOTTED_VERSION, DATE_VERSION);
     fprintf(stderr,
-            "While gnetlist is in ALPHA, please be sure that you have the latest rc file.\n");
+	    "but you have a version [%s] gnetlistrc file:\n[%s]\n",
+	    SCM_STRING_CHARS (version), rc_filename);
+    fprintf(stderr,
+	    "Please be sure that you have the latest rc file.\n");
+    return SCM_BOOL_F;
   }
 
-  return scm_from_int (0);
+  return SCM_BOOL_T;
 }
 
 

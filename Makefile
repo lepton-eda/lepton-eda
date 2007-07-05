@@ -3,12 +3,17 @@
 #
 
 #
-# Change this to the real version of the distribution
+# These variables hold the the master version of gEDA/gaf.
+# Change this to the real version of the distribution.   However
+# you still need to update all the configure.ac[.in] scripts; this
+# can be accomplished by running ./update-versions.sh with the correct
+# arguments.
 #
-VERSION=20070526
+DOTTED_VERSION=1.1
+DATE_VERSION=20070526
 
 # 
-# Use this when you are building the CVS version
+# Use this when you are building the repository version
 #
 CD_VERSION=
 DIR_PREFIX=
@@ -16,7 +21,7 @@ DIR_PREFIX=
 #
 # Use this when you are building the Released version (comment out above)
 #
-#CD_VERSION=-$(VERSION)
+#CD_VERSION=-$(DOTTED_VERSION)
 #DIR_PREFIX=geda-
 
 #

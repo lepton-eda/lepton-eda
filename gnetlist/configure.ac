@@ -4,11 +4,12 @@ AC_CONFIG_SRCDIR([src/gnetlist.c])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-gnetlist
-VERSION=20070526
-echo Configuring $PACKAGE version $VERSION
+DOTTED_VERSION=1.1
+DATE_VERSION=20070526
+echo Configuring $PACKAGE version $DOTTED_VERSION.$DATE_VERSION
 
 # Initialize automake 
-AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
+AM_INIT_AUTOMAKE($PACKAGE, $DOTTED_VERSION, no-define)
 AM_CONFIG_HEADER([config.h])
 
 # Initialize maintainer mode
@@ -202,7 +203,7 @@ fi
 ############################################################################
 # Check for libgeda start
 # 
-PKG_CHECK_MODULES(LIBGEDA, libgeda >= $VERSION, LIBGEDA="yes", 
+PKG_CHECK_MODULES(LIBGEDA, libgeda >= $DATE_VERSION, LIBGEDA="yes", 
                   no_LIBGEDA="yes")
 
 if test "$LIBGEDA" = "yes" 
@@ -351,7 +352,9 @@ AC_SUBST(GEDADOCDIR)
 
 # this has to be expanded ( no ${prefix} ) --
 AC_DEFINE_UNQUOTED(GEDADATADIR, "$gedatopdir", [gEDA/gaf's data directory])
-AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
+AC_DEFINE_UNQUOTED(DATE_VERSION, "$DATE_VERSION", [Currently running date version of gEDA/gaf])
+AC_DEFINE_UNQUOTED(DOTTED_VERSION, "$DOTTED_VERSION", [Currently running dotted version of gEDA/gaf])
+AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of this program's package])
 
 #
 # gEDA/gaf specify things which need to setup
@@ -362,6 +365,8 @@ GNETLIST_CFLAGS="$LIBGEDA_CFLAGS"
 GNETLIST_LDFLAGS="$LIBGEDA_LIBS $DMALLOC_LIBS"
 
 # Makefile.in variable substitution
+AC_SUBST(DATE_VERSION)
+AC_SUBST(DOTTED_VERSION)
 AC_SUBST(GNETLIST_CFLAGS)
 AC_SUBST(GNETLIST_LDFLAGS)
 AC_SUBST(GEDARCDIR)
@@ -407,7 +412,7 @@ expandedGEDADOCDIR=`eval "echo $GEDADOCDIR"`
 expandedPCBM4DIR=`eval "echo $PCBM4DIR"`
 
 AC_MSG_RESULT([
-** Configuration summary for $PACKAGE $VERSION:
+** Configuration summary for $PACKAGE $DOTTED_VERSION.$DATE_VERSION:
 
    GTK+ library version:             $GTK_VERSION
    libgeda library version:          $LIBGEDA_VERSION

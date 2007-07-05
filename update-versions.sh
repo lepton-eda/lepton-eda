@@ -35,30 +35,28 @@ then
 fi
 
 
-old_dottedversion=`cat libgeda/include/defines.h | \
-	grep "#define PREPEND_VERSION_STRING" | awk '{print $3}'`
+old_dottedversion=`grep ^DOTTED_VERSION= Makefile | \
+	awk -F= '{print $2}'`
 
-old_date=`grep ^VERSION= libgeda/configure.ac | \
+old_date=`grep ^DATE_VERSION= Makefile | \
 	awk -F= '{print $2}'`
 
 old_sharedlibversion=`grep ^SHARED_LIBRARY_VERSION libgeda/configure.ac | \
 	awk -F= '{print $2}'`
 
-# Update dotted version
-libgeda_defines=libgeda/include/defines.h
-echo Updating $old_dottedversion to \"$new_dottedversion-\" in $libgeda_defines
-mv -f $libgeda_defines $libgeda_defines.orig 
-cat $libgeda_defines.orig | sed "s/#define PREPEND_VERSION_STRING $old_dottedversion/#define PREPEND_VERSION_STRING \"$new_dottedversion-\"/" > $libgeda_defines
-rm -f $libgeda_defines.orig 
+echo Existing version info: $old_dottedversion $old_date $old_sharedlibversion
+echo ""
 
-# Update dates 
-date_files="docs/configure.ac examples/configure.ac gattrib/configure.ac gnetlist/configure.ac gsymcheck/configure.ac libgeda/configure.ac symbols/configure.ac utils/configure.ac gschem/configure.ac.in"
+# Update dates and dotted version in the configure scripts
+tbd_files="docs/configure.ac examples/configure.ac gattrib/configure.ac gnetlist/configure.ac gsymcheck/configure.ac libgeda/configure.ac symbols/configure.ac utils/configure.ac gschem/configure.ac.in Makefile"
 
-for i in $date_files
+for i in $tbd_files
 do
-	echo Updating $old_date to $new_date in $i
+	echo Updating $old_date / $old_dottedversion to $new_date / $new_dottedversion in $i
 	mv -f $i $i.orig
-	cat $i.orig | sed "s/^VERSION=$old_date/VERSION=$new_date/" > $i
+	cat $i.orig | \
+	    sed "s/^DATE_VERSION=$old_date/DATE_VERSION=$new_date/" | \
+	    sed "s/^DOTTED_VERSION=$old_dottedversion/DOTTED_VERSION=$new_dottedversion/" > $i
 	rm -f $i.orig
 done
 
@@ -70,3 +68,12 @@ cat $libgeda_conf.orig2 | \
 	sed "s/^SHARED_LIBRARY_VERSION=$old_sharedlibversion/SHARED_LIBRARY_VERSION=$new_sharedlibversion/" > $libgeda_conf
 rm -f $libgeda_conf.orig2
 
+echo ""
+
+# Verification step needed here.
+for i in $tbd_files
+do
+	echo Verify $i
+	grep ^DOTTED_VERSION= $i
+	grep ^DATE_VERSION= $i
+done

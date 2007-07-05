@@ -1,14 +1,15 @@
-dr Process this file with autoconf to produce a configure script.
+# Process this file with autoconf to produce a configure script.
 AC_INIT
 AC_CONFIG_SRCDIR([src/gattrib.c])
-AC_PREREQ(2.53)
+AC_PREREQ(2.54)
 
 PACKAGE=geda-gattrib
-VERSION=20070526
-echo Configuring $PACKAGE version $VERSION
+DOTTED_VERSION=1.1
+DATE_VERSION=20070526
+echo Configuring $PACKAGE version $DOTTED_VERSION.$DATE_VERSION
 
-# Initialize automake -- use base gEDA version here
-AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
+# Initialize automake
+AM_INIT_AUTOMAKE($PACKAGE, $DOTTED_VERSION, no-define)
 AM_CONFIG_HEADER([config.h])
 
 # Initialize maintainer mode
@@ -138,7 +139,7 @@ AM_CONDITIONAL(GTK24_SOURCE, test "$GLIB24" = "yes")
 ############################################################################
 # Check for libgeda start
 # 
-PKG_CHECK_MODULES(LIBGEDA, libgeda >= $VERSION, LIBGEDA="yes", 
+PKG_CHECK_MODULES(LIBGEDA, libgeda >= $DATE_VERSION, LIBGEDA="yes", 
                   no_LIBGEDA="yes")
 
 if test "$LIBGEDA" = "yes" 
@@ -311,7 +312,9 @@ expandgedadatadir=`echo $gedatopdir`
 
 # this has to be expanded ( no ${prefix} ) --
 AC_DEFINE_UNQUOTED(GEDADATADIR, "$gedatopdir", [gEDA/gaf's data directory])
-AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
+AC_DEFINE_UNQUOTED(DATE_VERSION, "$DATE_VERSION", [Currently running date version of gEDA/gaf])
+AC_DEFINE_UNQUOTED(DOTTED_VERSION, "$DOTTED_VERSION", [Currently running dotted version of gEDA/gaf])
+AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of this program's package])
 
 #
 # gEDA/gaf specify things which need to setup
@@ -322,6 +325,8 @@ GATTRIB_CFLAGS="$GTK_CFLAGS $GLIB_CFLAGS $LIBGEDA_CFLAGS $GTHREAD_CFLAGS"
 GATTRIB_LDFLAGS="$GTK_LIBS $GLIB_LIBS $LIBGEDA_LIBS $GTHREAD_LIBS"
 
 # Makefile.in variable substitution
+AC_SUBST(DATE_VERSION)
+AC_SUBST(DOTTED_VERSION)
 AC_SUBST(GATTRIB_CFLAGS)
 AC_SUBST(GATTRIB_LDFLAGS)
 AC_SUBST(GEDARCDIR)
@@ -345,9 +350,8 @@ expandedGEDADATADIR=`eval "echo $GEDADATADIR"`
 expandedGEDARCDIR=`eval "echo $GEDARCDIR"`
 
 AC_MSG_RESULT([
-***** Configuration summary for $PACKAGE VERSION *****
+***** Configuration summary for $PACKAGE $DOTTED_VERSION.$DATE_VERSION *****
 
-== base gEDA version:                $VERSION
 == libgeda library version:          $LIBGEDA_VERSION
 == data directory:                   $expandedGEDADATADIR
 == rc directory:                     $expandedGEDARCDIR
