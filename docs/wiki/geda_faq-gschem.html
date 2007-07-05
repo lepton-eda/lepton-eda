@@ -7,7 +7,7 @@
   <title>geda:faq-gschem</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
 <meta name="robots" content="noindex,nofollow" />
-<meta name="date" content="2007-05-24T22:27:26-0400" />
+<meta name="date" content="2007-07-04T05:43:42-0400" />
 <meta name="keywords" content="geda,faq-gschem" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -27,9 +27,15 @@
 <div id="toc__inside">
 
 <ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#general" class="toc">General</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#i_found_a_bug_what_can_i_do_about_it" class="toc">I found a bug! What can I do about it?</a></span></div></li>
+</ul>
+</li>
 <li class="level1"><div class="li"><span class="li"><a href="#gschem_usage" class="toc">Gschem usage</a></span></div>
 <ul class="toc">
 <li class="level2"><div class="li"><span class="li"><a href="#how_do_i_move_a_component" class="toc">How do I move a component?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#how_do_i_move_components_without_dragging_a_tail_of_connectet_nets" class="toc">How do I move components without dragging a tail of connectet nets?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#how_do_i_change_the_size_of_the_text_on_a_symbol" class="toc">How do I change the size of the text on a symbol?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#how_do_i_unlock_a_locked_component" class="toc">How do I unlock a locked component</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#how_can_i_get_refdes_automatically_numbered_when_i_draw_a_schematic" class="toc">How can I get refdes automatically numbered when I draw a schematic?</a></span></div></li>
@@ -63,7 +69,7 @@
 <li class="level2"><div class="li"><span class="li"><a href="#how_can_i_get_color_postscript_png_output" class="toc">How can I get color postscript/PNG output?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#how_can_i_get_black_and_white_postscript_png_output" class="toc">How can I get black and white postscript/PNG output?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#how_can_i_insert_schematics_into_my_latex_document" class="toc">How can I insert schematics into my LaTex document?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#how_can_i_split_postscript_output_over_multiple_pages" class="toc">How can I split postscript output over multiple pages?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#how_can_i_split_postscript_output_over_multiple_pages" class="toc">How can I split Postscript output over multiple pages?</a></span></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><span class="li"><a href="#gschem_installation_run-time_problems" class="toc">Gschem installation/run-time problems</a></span></div>
@@ -78,11 +84,31 @@
 
 
 
+<h1><a name="general" id="general">General</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "General" [1-24] -->
+<h2><a name="i_found_a_bug_what_can_i_do_about_it" id="i_found_a_bug_what_can_i_do_about_it">I found a bug! What can I do about it?</a></h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> See if you can reproduce the bug.</div>
+</li>
+<li class="level1"><div class="li"> Ask on the <a href="http://www.geda.seul.org/mailinglist/index.html" class="urlextern" title="http://www.geda.seul.org/mailinglist/index.html"  rel="nofollow">geda-user mailing</a> list if there is a work around, or has been dealt with in the bleeding edge version of gEDA/gaf. Note, that you must subscribe to the geda-user e-mail list before you can post to this list.</div>
+</li>
+<li class="level1"><div class="li"> See whether the issue is already in the <a href="http://sourceforge.net/tracker/?group_id=161080&atid=818426" class="urlextern" title="http://sourceforge.net/tracker/?group_id=161080&amp;atid=818426"  rel="nofollow">bug tracking system of geda/gaf</a>. If not, file a bug report. Make sure to give all information necessary to reproduce the bug and add the version of gEDA/gaf that contains the bug.</div>
+</li>
+<li class="level1"><div class="li"> Finally, as with all open source projects, you may flex your programming muscles and try to fix the bug yourself. Please file a patch of the changes you had to make to the BTS of geda/gaf. The patch will be gladly accepted to improve the next release of gEDA/gaf.</div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION "I found a bug! What can I do about it?" [25-946] -->
 <h1><a name="gschem_usage" id="gschem_usage">Gschem usage</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Gschem usage" [1-28] -->
+<!-- SECTION "Gschem usage" [947-974] -->
 <h2><a name="how_do_i_move_a_component" id="how_do_i_move_a_component">How do I move a component?</a></h2>
 <div class="level2">
 
@@ -143,7 +169,16 @@ One:
 </ol>
 
 </div>
-<!-- SECTION "How do I move a component?" [29-1598] -->
+<!-- SECTION "How do I move a component?" [975-2543] -->
+<h2><a name="how_do_i_move_components_without_dragging_a_tail_of_connectet_nets" id="how_do_i_move_components_without_dragging_a_tail_of_connectet_nets">How do I move components without dragging a tail of connectet nets?</a></h2>
+<div class="level2">
+
+<p>
+Type [or] to toggle this behaviour. That is, the “o” key followed by the “r” key. The status window will report if the toggle command was performed. The command can also be accessed via the Options menu.
+</p>
+
+</div>
+<!-- SECTION "How do I move components without dragging a tail of connectet nets?" [2544-2828] -->
 <h2><a name="how_do_i_change_the_size_of_the_text_on_a_symbol" id="how_do_i_change_the_size_of_the_text_on_a_symbol">How do I change the size of the text on a symbol?</a></h2>
 <div class="level2">
 <ol>
@@ -172,16 +207,16 @@ One:
 </p>
 
 </div>
-<!-- SECTION "How do I change the size of the text on a symbol?" [1599-2389] -->
+<!-- SECTION "How do I change the size of the text on a symbol?" [2829-3619] -->
 <h2><a name="how_do_i_unlock_a_locked_component" id="how_do_i_unlock_a_locked_component">How do I unlock a locked component</a></h2>
 <div class="level2">
 
 <p>
-When a component is locked it is unselectable using the middle mouse button however it is selectable using a window select. To window select a component click and hold the left mouse button and drag the mouse to create a rectangular region containing the component to be unlocked. Execute the command <strong><em>Edit</em></strong> <strong>→</strong> <strong><em>unLock</em></strong> to unlock the component.
+When a component is locked it cannot be selected with the middle mouse button; however it is selectable using a window select. To window select a component, click and hold the left mouse button and drag the mouse to create a rectangular region containing the component to be unlocked. Execute the command <strong><em>Edit</em></strong> <strong>→</strong> <strong><em>unLock</em></strong> to unlock the component.
 </p>
 
 </div>
-<!-- SECTION "How do I unlock a locked component" [2390-2799] -->
+<!-- SECTION "How do I unlock a locked component" [3620-4033] -->
 <h2><a name="how_can_i_get_refdes_automatically_numbered_when_i_draw_a_schematic" id="how_can_i_get_refdes_automatically_numbered_when_i_draw_a_schematic">How can I get refdes automatically numbered when I draw a schematic?</a></h2>
 <div class="level2">
 
@@ -199,7 +234,7 @@ Please substitute $YOUR_INSTALL_PATH by the path where geda is installed.
 </p>
 
 </div>
-<!-- SECTION "How can I get refdes automatically numbered when I draw a schematic?" [2800-3411] -->
+<!-- SECTION "How can I get refdes automatically numbered when I draw a schematic?" [4034-4645] -->
 <h2><a name="what_is_a_bus_and_how_do_i_use_it" id="what_is_a_bus_and_how_do_i_use_it">What is a Bus and how do I use it?</a></h2>
 <div class="level2">
 
@@ -212,16 +247,16 @@ Some users have found it helpful to organize their nets by incorporating a bus n
 </p>
 
 </div>
-<!-- SECTION "What is a Bus and how do I use it?" [3412-3967] -->
+<!-- SECTION "What is a Bus and how do I use it?" [4646-5201] -->
 <h2><a name="how_can_i_change_key_bindings_in_gschem" id="how_can_i_change_key_bindings_in_gschem">How can I change Key Bindings in gschem?</a></h2>
 <div class="level2">
 
 <p>
-Key accels are determined by configuration files read on start-up. The default key bindings are set in the file system-gschemrc. If you want to chenge them, it is recommended to copy and modify the corresponding keymap section to a local config file ($HOME/.gEDA/gschemrc, or $PWD/gschemrc). The modified section will override the the definitions given in system-gschemrc.
+Key accels are determined by configuration files read on start-up. The default key bindings are set in the file system-gschemrc. If you want to change them, it is recommended to copy and modify the corresponding keymap section to a local config file ($HOME/.gEDA/gschemrc, or $PWD/gschemrc). The modified section will override the the definitions given in system-gschemrc.
 </p>
 
 </div>
-<!-- SECTION "How can I change Key Bindings in gschem?" [3968-4394] -->
+<!-- SECTION "How can I change Key Bindings in gschem?" [5202-5628] -->
 <h2><a name="what_are_the_mouse_bindings_in_gschem" id="what_are_the_mouse_bindings_in_gschem">What are the mouse bindings in gschem?</a></h2>
 <div class="level2">
 
@@ -229,7 +264,7 @@ Key accels are determined by configuration files read on start-up. The default k
 By default you get:
 </p>
 <ul>
-<li class="level1"><div class="li"> Left mouse button is used for picking and drawing</div>
+<li class="level1"><div class="li"> Left mouse button is used for picking and drawing.</div>
 </li>
 <li class="level1"><div class="li"> Middle mouse button is either move object (just hold down the middle button over an object and move the mouse) or copy object (ALT key held down while holding down the middle button over object and move the mouse).</div>
 </li>
@@ -267,12 +302,12 @@ For more information on these options, please see the <code>${install_prefix}/sh
 </p>
 
 </div>
-<!-- SECTION "What are the mouse bindings in gschem?" [4395-5476] -->
+<!-- SECTION "What are the mouse bindings in gschem?" [5629-6711] -->
 <h2><a name="can_gschem_do_hierarchical_designs_with_sub_sheets" id="can_gschem_do_hierarchical_designs_with_sub_sheets">Can gschem do hierarchical designs with sub sheets?</a></h2>
 <div class="level2">
 
 <p>
-Yes. Sub sheets are represented by special symbols on the top level schematic. You can find an example for a hierarchical design in the doc section of gschem (<code>geda-doc/examples/gTAG/gTAG.sch</code>).Currently, there is no way to automatically build a sub sheet symbol from an actual sub sheet. The sub sheet symbol has to be drawn manually. Any patches or external scripts that get the job done would be greatly appreciated.
+Yes. Sub sheets are represented by special symbols on the top level schematic. You can find an example for a hierarchical design in the doc section of gschem (<code>geda-doc/examples/gTAG/gTAG.sch</code>). Currently, there is no way to automatically build a sub sheet symbol from an actual sub sheet. The sub sheet symbol has to be drawn manually. Any patches or external scripts that get the job done would be greatly appreciated.
 </p>
 
 <p>
@@ -280,16 +315,16 @@ A source attribute attached to the sub sheet symbol gives the path to the sub sh
 </p>
 
 <p>
-To convert a hierarchy to a netlist just call gsch2pcb on the top level schematic. By default, net names and refdes’s of components are strictly local to the subsheet. They get the sub sheet symbol refdes as a prefix when inserted into the net list. You can even use multiple instances of a sub sheet symbol without undue short cuts. Whether or not net names and refdes’s are mangled and thus local to the sub sheet can be configured in a the config file gnetlistrc. Copy the corresponding lines from <code>system-gnetlistrc</code> to <code>gnetlistrc</code> in the current working directory or to <code>$HOME/.gEDA/gnetlistrc</code>. A convinient configuration is to make nets delivered by power symbols global while ordinary nets remain local to the sub sheet. This can be achieved with “hierarchy-netattrib-mangle” enabled. 
+To convert a hierarchy to a netlist just call gsch2pcb on the top level schematic. By default, net names and refdes’s of components are strictly local to the subsheet. They get the sub sheet symbol refdes as a prefix when inserted into the net list. You can even use multiple instances of a sub sheet symbol without undue short cuts. Whether or not net names and refdes’s are mangled and thus local to the sub sheet can be configured in the config file gnetlistrc. Copy the corresponding lines from <code>system-gnetlistrc</code> to <code>gnetlistrc</code> in the current working directory or to <code>$HOME/.gEDA/gnetlistrc</code>. A convenient configuration is to make nets delivered by power symbols global while ordinary nets remain local to the sub sheet. This can be achieved with “hierarchy-netattrib-mangle” enabled.
 </p>
 
 </div>
-<!-- SECTION "Can gschem do hierarchical designs with sub sheets?" [5477-7216] -->
+<!-- SECTION "Can gschem do hierarchical designs with sub sheets?" [6712-8449] -->
 <h1><a name="gschem_symbols" id="gschem_symbols">gschem symbols</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "gschem symbols" [7217-7246] -->
+<!-- SECTION "gschem symbols" [8450-8479] -->
 <h2><a name="what_s_this_business_about_heavy_vs._light_symbols" id="what_s_this_business_about_heavy_vs._light_symbols">What&#039;s this business about heavy vs. light symbols?</a></h2>
 <div class="level2">
 
@@ -298,7 +333,7 @@ This nomenclature arose from a discussion which frequently appears on the geda-u
 </p>
 
 <p>
-The debate between proponents of heavy and light symbols is very detailed and involved. In caricature, proponents of heavy symbols belive that they provide better integration between gschem and PCB since the important layout attributes (such as <a href="geda_pcb_tips.html" class="wikilink1" title="geda:pcb_tips">footprint name</a>) are already built into the symbol. This is considered a good thing for new users (noobs) who just want to design a simple board and don’t appreciate or don’t care about the zillions of variations that even a simple resistor might have (e.g. different footprint, TCR, precision, material composition, etc). Proponents of light symbols prefer to deal with attributes at the schematic level because they believe it to be more flexible. They are quick to point out that a library of heavy symbols will quickly grow into the thousands of parts with grotesquely long names trying to distinguish between the different variations of the part. They also point out that the utility “gattrib” is the preferred tool for dealing with attributes at the schematic level (i.e. in the .sch file).
+The debate between proponents of heavy and light symbols is very detailed and involved. Briefly, proponents of heavy symbols believe that they provide better integration between gschem and PCB since the important layout attributes (such as <a href="geda_pcb_tips.html" class="wikilink1" title="geda:pcb_tips">footprint name</a>) are already built into the symbol. This is considered a good thing for new users (noobs) who just want to design a simple board and don’t appreciate or don’t care about the zillions of variations that even a simple resistor might have (e.g. different footprint, TCR, precision, material composition, etc). Proponents of light symbols prefer to deal with attributes at the schematic level because they believe it to be more flexible. They are quick to point out that a library of heavy symbols will quickly grow into the thousands of parts with grotesquely long names trying to distinguish between the different variations of the part. They also point out that the utility “gattrib” is the preferred tool for dealing with attributes at the schematic level (i.e. in the .sch file).
 </p>
 
 <p>
@@ -314,12 +349,12 @@ GEDA/gaf, as default configured, uses light symbols, although it can be configur
 </p>
 
 </div>
-<!-- SECTION "What's this business about heavy vs. light symbols?" [7247-9378] -->
+<!-- SECTION "What's this business about heavy vs. light symbols?" [8480-10608] -->
 <h2><a name="i_am_using_a_symbol_out_of_the_library._how_come_it_s_not_aligned_to_the_grid" id="i_am_using_a_symbol_out_of_the_library._how_come_it_s_not_aligned_to_the_grid">I am using a symbol out of the library.  How come it&#039;s not aligned to the grid?</a></h2>
 <div class="level2">
 
 <p>
-The symbols in the symbol library, like those available at the  <a href="http://www.gedasymbols.org/" class="urlextern" title="http://www.gedasymbols.org"  rel="nofollow"> gedasymbols </a> website are contributed by users just like you.  Some people use different grid settings than other people (e.g. 50mil vs. 100mil).   If you discover a symbol which seems to be off the grid, try reducing your grid spacing, move the symbol so that it sits on <strong>your</strong> grid, then revert to your preferred grid settings.
+The symbols in the symbol library, like those available at the  <a href="http://www.gedasymbols.org/" class="urlextern" title="http://www.gedasymbols.org"  rel="nofollow"> gedasymbols</a> website are contributed by users just like you. Some people use different grid settings than other people (e.g. 50mil vs. 100mil). If you discover a symbol which seems to be off the grid, try reducing your grid spacing, move the symbol so that it sits on <strong>your</strong> grid, then revert to your preferred grid settings.
 </p>
 
 <p>
@@ -327,7 +362,7 @@ Yes, the gEDA docs suggest that you use a 100mil grid spacing.  But everybody li
 </p>
 
 </div>
-<!-- SECTION "I am using a symbol out of the library.  How come it's not aligned to the grid?" [9379-10156] -->
+<!-- SECTION "I am using a symbol out of the library.  How come it's not aligned to the grid?" [10609-11382] -->
 <h2><a name="is_there_an_explicit_no_connect_symbol_that_i_can_should_place_in_the_schematic_to_prevent_gnetlist_from_thinking_i_ve_forgotten_a_connection" id="is_there_an_explicit_no_connect_symbol_that_i_can_should_place_in_the_schematic_to_prevent_gnetlist_from_thinking_i_ve_forgotten_a_connection">Is there an explicit &quot;no connect&quot; symbol that I can/should place in the schematic to prevent gnetlist from thinking I&#039;ve forgotten a connection?</a></h2>
 <div class="level2">
 
@@ -344,28 +379,28 @@ If you want an entire symbol to be graphical (no elec. connections) , add a “g
 </p>
 
 </div>
-<!-- SECTION "Is there an explicit no connect symbol that I can/should place in the schematic to prevent gnetlist from thinking I've forgotten a connection?" [10157-10726] -->
+<!-- SECTION "Is there an explicit no connect symbol that I can/should place in the schematic to prevent gnetlist from thinking I've forgotten a connection?" [11383-11952] -->
 <h2><a name="how_do_i_promote_an_invisible_symbol_attribute_into_the_schematic" id="how_do_i_promote_an_invisible_symbol_attribute_into_the_schematic">How do I promote an invisible symbol attribute into the schematic?</a></h2>
 <div class="level2">
 
 <p>
 Most attributes living in the symbol do not get promoted to the schematic unless they are visible. To promote invisible symbol attributes, look for the following keywords in the system-gschemrc file: 
 </p>
-<pre class="code">(attribute-promotion “enabled”);
-(promote-invisible “disabled”) ; ⇐ This one
-(keep-invisible “enabled”)</pre>
+<pre class="code">(attribute-promotion &quot;enabled&quot;);
+(promote-invisible &quot;disabled&quot;) ; ⇐ This one
+(keep-invisible &quot;enabled&quot;)</pre>
 
 <p>
 Add to your gschemrc file: 
 </p>
-<pre class="code">(promote-invisible “enabled”)</pre>
+<pre class="code">(promote-invisible &quot;enabled&quot;)</pre>
 
 <p>
 and you will get all the attributes promoted. The “keep-invisible” keyword will keep hidden those attributes that are hidden in the symbol file.
 </p>
 
 </div>
-<!-- SECTION "How do I promote an invisible symbol attribute into the schematic?" [10727-11362] -->
+<!-- SECTION "How do I promote an invisible symbol attribute into the schematic?" [11953-12572] -->
 <h2><a name="what_should_i_do_about_power_pins_on_my_symbolsmake_them_visible_explicit_or_invisible_implicit" id="what_should_i_do_about_power_pins_on_my_symbolsmake_them_visible_explicit_or_invisible_implicit">What should I do about power pins on my symbols: Make them visible (explicit) or invisible (implicit)?</a></h2>
 <div class="level2">
 
@@ -390,11 +425,11 @@ To paraphrase Nancy Reagan: Just say “no” to hidden power pins.
 </p>
 
 <p>
-That said, it may still be usefull to detach the power pins from the functional part of the symbol. To do so, define a seperate power symbol and give it the same <a href="http://geda.seul.org/wiki/geda:glossary" class="wikilink1" title="geda:glossary">refdes</a> as the functional part. A run of gsch2pcb will treat the siblings properly as one single component. As neither gschem nor gsch2pcb explicitely know that the component is only complete with both symbols defined, you have to check yourself. With this workaround, you can draw all power related circuitry in one corner of the schematic where it does not interfere with the signal nets. In many cases this is advantageous with analog circuits.
+That said, it may still be useful to detach the power pins from the functional part of the symbol. To do so, define a seperate power symbol and give it the same <a href="http://geda.seul.org/wiki/geda:glossary" class="wikilink1" title="geda:glossary">refdes</a> as the functional part. A run of gsch2pcb will treat the siblings properly as one single component. As neither gschem nor gsch2pcb explicitely know that the component is only complete with both symbols defined, you have to check yourself. With this workaround, you can draw all power related circuitry in one corner of the schematic where it does not interfere with the signal nets. In many cases this is advantageous with analog circuits.
 </p>
 
 </div>
-<!-- SECTION "What should I do about power pins on my symbols: Make them visible (explicit) or invisible (implicit)?" [11363-13620] -->
+<!-- SECTION "What should I do about power pins on my symbols: Make them visible (explicit) or invisible (implicit)?" [12573-14829] -->
 <h2><a name="is_there_a_specification_or_manual_for_creating_gschem_symbols_where_is_it" id="is_there_a_specification_or_manual_for_creating_gschem_symbols_where_is_it">Is there a specification or manual for creating gschem symbols? Where is it?</a></h2>
 <div class="level2">
 
@@ -403,7 +438,7 @@ Yes. It is the <a href="geda_scg.html" class="wikilink1" title="geda:scg">Symbol
 </p>
 
 </div>
-<!-- SECTION "Is there a specification or manual for creating gschem symbols? Where is it?" [13621-13761] -->
+<!-- SECTION "Is there a specification or manual for creating gschem symbols? Where is it?" [14830-14970] -->
 <h1><a name="gschem_configuration_customization" id="gschem_configuration_customization">Gschem configuration/customization</a></h1>
 <div class="level1">
 
@@ -412,7 +447,7 @@ Gschem is configurable in more ways than can be describe here. Look at “system
 </p>
 
 </div>
-<!-- SECTION "Gschem configuration/customization" [13762-13939] -->
+<!-- SECTION "Gschem configuration/customization" [14971-15148] -->
 <h2><a name="how_do_i_configure_my_local_gafrc_to_find_my_local_symbol_directory" id="how_do_i_configure_my_local_gafrc_to_find_my_local_symbol_directory">How do I configure my local gafrc to find my local symbol directory?</a></h2>
 <div class="level2">
 <ol>
@@ -448,7 +483,7 @@ gschem myschematic.sch</pre>
 </ul>
 
 </div>
-<!-- SECTION "How do I configure my local gafrc to find my local symbol directory?" [13940-15193] -->
+<!-- SECTION "How do I configure my local gafrc to find my local symbol directory?" [15149-16402] -->
 <h2><a name="how_can_i_change_the_default_size_of_floating_text" id="how_can_i_change_the_default_size_of_floating_text">How can I change the default size of floating text?</a></h2>
 <div class="level2">
 
@@ -462,7 +497,7 @@ Put
 </p>
 
 </div>
-<!-- SECTION "How can I change the default size of floating text?" [15194-15352] -->
+<!-- SECTION "How can I change the default size of floating text?" [16403-16561] -->
 <h2><a name="how_can_i_have_a_different_background_color_other_than_black" id="how_can_i_have_a_different_background_color_other_than_black">How can I have a different background color other than black?</a></h2>
 <div class="level2">
 
@@ -492,7 +527,7 @@ A dark background is preferred by many users.
 </p>
 
 </div>
-<!-- SECTION "How can I have a different background color other than black?" [15353-16388] -->
+<!-- SECTION "How can I have a different background color other than black?" [16562-17597] -->
 <h2><a name="each_time_i_start_gschem_the_log_message_window_is_shown._can_i_disable_it" id="each_time_i_start_gschem_the_log_message_window_is_shown._can_i_disable_it">Each time I start gschem, the log message window is shown. Can I disable it?</a></h2>
 <div class="level2">
 
@@ -517,12 +552,12 @@ Comment out the <strong><code>startup</code></strong> line (with a ;) and commen
 <pre class="code">(log-window &quot;later&quot;)</pre>
 
 </div>
-<!-- SECTION "Each time I start gschem, the log message window is shown. Can I disable it?" [16389-17051] -->
+<!-- SECTION "Each time I start gschem, the log message window is shown. Can I disable it?" [17598-18260] -->
 <h1><a name="printing_output" id="printing_output">Printing/Output</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Printing/Output" [17052-17081] -->
+<!-- SECTION "Printing/Output" [18261-18290] -->
 <h2><a name="how_do_i_print_schematics_from_the_command_line" id="how_do_i_print_schematics_from_the_command_line">How do I print schematics from the command line?</a></h2>
 <div class="level2">
 
@@ -536,7 +571,7 @@ The command line below creates a Postscript file from a schematic file (replace 
 <pre class="code">gschem -p -oMY_SCH.ps -sGEDA_SCHEME_DIR/gschem-print.scm MY_SCH.sch</pre>
 
 <p>
-The BASH script below, which I name <strong><code>gschem-print</code></strong>, creates a Postscript file for each schematic file that is specified on the command line and then outputs each Postscript file to the default printer: 
+The <code>bash</code> script below, which I name <strong><code>gschem-print</code></strong>, creates a Postscript file for each schematic file that is specified on the command line and then outputs each Postscript file to the default printer: 
 </p>
 <pre class="code">#!/bin/bash
 
@@ -547,13 +582,13 @@ The BASH script below, which I name <strong><code>gschem-print</code></strong>, 
 
 for name in $*
 do
-base=”${name%.*}”
-gschem -p -o$base.ps -sGEDA_SCHEME_DIR/gschem-print.scm $base.sch
-lpr -P$PRINTER $base.ps
+    base=&quot;${name%.*}&quot;
+    gschem -p -o$base.ps -sGEDA_SCHEME_DIR/gschem-print.scm $base.sch
+    lpr -P$PRINTER $base.ps
 done</pre>
 
 </div>
-<!-- SECTION "How do I print schematics from the command line?" [17082-18067] -->
+<!-- SECTION "How do I print schematics from the command line?" [18291-19288] -->
 <h2><a name="how_can_i_get_color_postscript_png_output" id="how_can_i_get_color_postscript_png_output">How can I get color postscript/PNG output?</a></h2>
 <div class="level2">
 
@@ -569,7 +604,7 @@ To control the background of the PS output, change the following line in either 
 <pre class="code">(output-color-background 16 &quot;black&quot; &quot;null&quot; &quot;0 0 0&quot; 0 0 0)</pre>
 
 <p>
-The “0 0 0��� is the RGB components (between 0..1) for the background color of the PS output.
+The “0 0 0” is the RGB components (between 0..1) for the background color of the PS output.
 </p>
 
 <p>
@@ -582,7 +617,7 @@ The 255 255 255 are the RGB components for the background color of the <acronym 
 </p>
 
 </div>
-<!-- SECTION "How can I get color postscript/PNG output?" [18068-19205] -->
+<!-- SECTION "How can I get color postscript/PNG output?" [19289-20420] -->
 <h2><a name="how_can_i_get_black_and_white_postscript_png_output" id="how_can_i_get_black_and_white_postscript_png_output">How can I get black and white postscript/PNG output?</a></h2>
 <div class="level2">
 
@@ -597,7 +632,7 @@ For black and white <acronym title="Portable Network Graphics">PNG</acronym> ima
 <pre class="code">(image-color &quot;disabled&quot;)       ; for monochromoe PNG output</pre>
 
 </div>
-<!-- SECTION "How can I get black and white postscript/PNG output?" [19206-19571] -->
+<!-- SECTION "How can I get black and white postscript/PNG output?" [20421-20786] -->
 <h2><a name="how_can_i_insert_schematics_into_my_latex_document" id="how_can_i_insert_schematics_into_my_latex_document">How can I insert schematics into my LaTex document?</a></h2>
 <div class="level2">
 <ol>
@@ -605,7 +640,7 @@ For black and white <acronym title="Portable Network Graphics">PNG</acronym> ima
 </li>
 <li class="level1"><div class="li"> Convert the postscript file to epsi with the tool ps2epsi. This is a script from the ghostscript suite.</div>
 </li>
-<li class="level1"><div class="li"> Include usepackage{graphicx} to the preamble of your latex document. Use the comand includegraphics to place your schematic.</div>
+<li class="level1"><div class="li"> Include usepackage{graphicx} to the preamble of your latex document. Use the command <strong>includegraphics</strong> to place your schematic.</div>
 </li>
 </ol>
 
@@ -621,8 +656,8 @@ For black and white <acronym title="Portable Network Graphics">PNG</acronym> ima
 \end{document}</pre>
 
 </div>
-<!-- SECTION "How can I insert schematics into my LaTex document?" [19572-20135] -->
-<h2><a name="how_can_i_split_postscript_output_over_multiple_pages" id="how_can_i_split_postscript_output_over_multiple_pages">How can I split postscript output over multiple pages?</a></h2>
+<!-- SECTION "How can I insert schematics into my LaTex document?" [20787-21355] -->
+<h2><a name="how_can_i_split_postscript_output_over_multiple_pages" id="how_can_i_split_postscript_output_over_multiple_pages">How can I split Postscript output over multiple pages?</a></h2>
 <div class="level2">
 
 <p>
@@ -630,12 +665,12 @@ gschem does not provide this functionality internally, however there is a progra
 </p>
 
 </div>
-<!-- SECTION "How can I split postscript output over multiple pages?" [20136-20479] -->
+<!-- SECTION "How can I split Postscript output over multiple pages?" [21356-21699] -->
 <h1><a name="gschem_installation_run-time_problems" id="gschem_installation_run-time_problems">Gschem installation/run-time problems</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Gschem installation/run-time problems" [20480-20532] -->
+<!-- SECTION "Gschem installation/run-time problems" [21700-21752] -->
 <h2><a name="gschem_segfaults_when_i_delete_components_on_fc5_and_other_linux_distributions_is_there_a_work-around" id="gschem_segfaults_when_i_delete_components_on_fc5_and_other_linux_distributions_is_there_a_work-around">Gschem segfaults when I delete components on FC5 (and other Linux distributions)! Is there a work-around?</a></h2>
 <div class="level2">
 
@@ -658,7 +693,7 @@ csh:
 <pre class="code">setenv G_SLICE always-malloc</pre>
 
 </div>
-<!-- SECTION "Gschem segfaults when I delete components on FC5 (and other Linux distributions)! Is there a work-around?" [20533-21187] -->
+<!-- SECTION "Gschem segfaults when I delete components on FC5 (and other Linux distributions)! Is there a work-around?" [21753-22407] -->
 <h2><a name="after_installation_gschem_does_not_work_what_could_be_wrong" id="after_installation_gschem_does_not_work_what_could_be_wrong">After installation gschem does not work!? What could be wrong?</a></h2>
 <div class="level2">
 
@@ -696,7 +731,7 @@ Also, some older releases of gEDA/gaf had some bugs when the rc files were insta
 </p>
 
 </div>
-<!-- SECTION "After installation gschem does not work!? What could be wrong?" [21188-23111] -->
+<!-- SECTION "After installation gschem does not work!? What could be wrong?" [22408-24331] -->
 <h2><a name="add_components_offers_no_symbols_what_can_i_do_about_it" id="add_components_offers_no_symbols_what_can_i_do_about_it">&quot;Add Components&quot; offers no symbols! What can I do about it?</a></h2>
 <div class="level2">
 
@@ -714,7 +749,7 @@ Make sure that at least one of your config files contains a valid path to a symb
 </li>
 <li class="level1"><div class="li"> user gschemrc file: <code>~/.gEDA/gschemrc</code></div>
 </li>
-<li class="level1"><div class="li"> local gschemrc file: <code>$PWD/gschemrc]</code></div>
+<li class="level1"><div class="li"> local gschemrc file: <code>$PWD/gschemrc</code></div>
 </li>
 </ol>
 
@@ -728,7 +763,7 @@ All of these config files may or may not append paths to the library search list
 </p>
 
 </div>
-<!-- SECTION "Add Components offers no symbols! What can I do about it?" [23112-23916] -->
+<!-- SECTION "Add Components offers no symbols! What can I do about it?" [24332-25135] -->
 <h2><a name="i_m_using_gschem_gaf_through_a_ssh_connection_and_i_get_an_error_likexlibextension_render_missing_on_display_localhost10.0" id="i_m_using_gschem_gaf_through_a_ssh_connection_and_i_get_an_error_likexlibextension_render_missing_on_display_localhost10.0">I&#039;m using gschem/gaf through a SSH connection and I get an error like: &#039;Xlib: extension &quot;RENDER&quot; missing on display &quot;localhost:10.0&quot;.&#039;</a></h2>
 <div class="level2">
 
@@ -738,7 +773,7 @@ All of these config files may or may not append paths to the library search list
 <pre class="code">$ ssh -X your_username@your_remote_machine</pre>
 
 <p>
-and afterwards you get the Xlib RENDER message, then try to get into by doing:
+and afterwards you get the Xlib RENDER message, then try using:
 </p>
 <pre class="code">$ ssh -Y your_username@your_remote_machine</pre>
 
@@ -747,6 +782,6 @@ The latter enables trusted X11 forwarding.
 </p>
 
 </div>
-<!-- SECTION "I'm using gschem/gaf through a SSH connection and I get an error like: 'Xlib: extension RENDER missing on display localhost:10.0.'" [23917-] --></div>
+<!-- SECTION "I'm using gschem/gaf through a SSH connection and I get an error like: 'Xlib: extension RENDER missing on display localhost:10.0.'" [25136-] --></div>
 </body>
 </html>

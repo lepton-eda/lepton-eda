@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Issues:
+#
+# * dot files (like .gitignore) aren't handled correctly.
+#
+
 # $1 is the name of the directory
 do_work()
 {
@@ -17,7 +22,7 @@ do_work()
 
 	thisdir=`echo $thisdir | sed "s%//%/%g"`
 
-	mv -f Makefile.am Makefile.am.old
+	mv -f Makefile.am Makefile.am.old >& /dev/null
 	echo "" > Makefile.am
 
 	echo "" >> Makefile.am
@@ -65,8 +70,8 @@ do_work()
 }
 
 pwd=`pwd`
-thisprogram=/home/ahvezda/2gaf/docs/scripts/populatemkfiles.sh
-basedir=/home/ahvezda/2gaf/docs/wip
+thisprogram=/home/ahvezda/gaf/docs/scripts/populatemkfiles.sh
+basedir=/home/ahvezda/gaf/docs/wip
 
 subdir=`echo $pwd | awk -F$basedir '{print $2}'`
 

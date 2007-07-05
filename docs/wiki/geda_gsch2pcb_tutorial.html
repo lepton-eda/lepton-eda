@@ -6,8 +6,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:gsch2pcb_tutorial</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
-<meta name="robots" content="noindex,nofollow" />
-<meta name="date" content="2007-05-25T02:40:51-0400" />
+<meta name="robots" content="index,follow" />
+<meta name="date" content="2007-06-27T08:12:11-0400" />
 <meta name="keywords" content="geda,gsch2pcb_tutorial" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -179,17 +179,13 @@ output-name board
 <div class="level3">
 
 <p>
- If you are using gschem for the first time, try stepping through this simple <a href="http://geda.seul.org/wiki/geda:gschem_warmup" class="wikilink1" title="geda:gschem_warmup">gschem warmup</a>.
+ If you are using gschem for the first time, try stepping through this simple <a href="geda_gschem_warmup.html" class="wikilink1" title="geda:gschem_warmup">gschem warmup</a>.
 </p>
 
 <p>
 <a href="_detail/geda_one-sch-1.html" class="media" title="geda:one-sch-1.png"><img src="_media/geda_one-sch-1.png" class="medialeft" title="one.sch" alt="one.sch" /></a> Run <strong>gschem one.sch</strong> and create this schematic (the second opamp is redundant, but this is just a tutorial):
 </p>
 <ul>
-<li class="level1"><div class="li">  Add component <strong>title-B.sym</strong> from the <strong>titleblock</strong> library.  </div>
-</li>
-<li class="level1"><div class="li"> Hit keys <strong>ve</strong> to zoom to the titleblock extents. Lock the titleblock with the menu <strong>Edit&rarr;Lock</strong>.  </div>
-</li>
 <li class="level1"><div class="li"> Add components:</div>
 <ul>
 <li class="level2"><div class="li"> From the <strong>analog</strong> library three <strong>resistor-1.sym</strong> and two <strong>dual-opamp-1.sym</strong>.</div>
@@ -206,8 +202,12 @@ output-name board
 </li>
 </ul>
 
+<p>
+ The large frame of the titleblock is a component too. It has been locked for convienience to prevent the mouse from catching it all the time. To unlock it, select it by dragging with left mouse button held down and press [e - shift-L]. You can find title blocks with different sizes in the default library. Remember, to lock the new title block with [el] while the tiotle block is selected.
+</p>
+
 </div>
-<!-- SECTION "Create schematic: one.sch" [8291-9278] -->
+<!-- SECTION "Create schematic: one.sch" [8291-9493] -->
 <h3><a name="edit_the_attributes_of_the_components_on_the_schematic" id="edit_the_attributes_of_the_components_on_the_schematic">Edit the attributes of the components on the schematic.</a></h3>
 <div class="level3">
 
@@ -235,7 +235,7 @@ Anyway, we’re done for now with <strong>one.sch</strong>, so save it with the 
 </p>
 
 </div>
-<!-- SECTION "Edit the attributes of the components on the schematic." [9279-11227] -->
+<!-- SECTION "Edit the attributes of the components on the schematic." [9494-11442] -->
 <h3><a name="create_schematictwo.sch" id="create_schematictwo.sch">Create schematic: two.sch</a></h3>
 <div class="level3">
 
@@ -290,7 +290,7 @@ Now we are done with the schematics except for assigning <strong>refdes</strong>
 </p>
 
 </div>
-<!-- SECTION "Create schematic: two.sch" [11228-14830] -->
+<!-- SECTION "Create schematic: two.sch" [11443-15045] -->
 <h3><a name="generate_pcb_files_from_schematics" id="generate_pcb_files_from_schematics">Generate PCB Files from Schematics</a></h3>
 <div class="level3">
 
@@ -314,7 +314,7 @@ We have to fix one thing in <strong>one.sch</strong> before we can proceed. Run 
 </p>
 
 </div>
-<!-- SECTION "Generate PCB Files from Schematics" [14831-16445] -->
+<!-- SECTION "Generate PCB Files from Schematics" [15046-16660] -->
 <h3><a name="layout_pcb_files" id="layout_pcb_files">Layout PCB Files</a></h3>
 <div class="level3">
 
@@ -416,7 +416,7 @@ You will want more information on using PCB and there is a set of html docs in t
 </p>
 
 </div>
-<!-- SECTION "Layout PCB Files" [16446-24084] -->
+<!-- SECTION "Layout PCB Files" [16661-24299] -->
 <h2><a name="modifying_schematics" id="modifying_schematics">Modifying Schematics</a></h2>
 <div class="level2">
 
@@ -473,7 +473,7 @@ board.pcb is backed up as board.pcb.bak1.
 </p>
 
 </div>
-<!-- SECTION "Modifying Schematics" [24085-27889] -->
+<!-- SECTION "Modifying Schematics" [24300-28104] -->
 <h2><a name="custom_gschem_symbols" id="custom_gschem_symbols">Custom gschem Symbols</a></h2>
 <div class="level2">
 
@@ -572,7 +572,7 @@ For complete details on making symbols, read through the Symbol Creation Documen
 </p>
 
 </div>
-<!-- SECTION "Custom gschem Symbols" [27890-32154] -->
+<!-- SECTION "Custom gschem Symbols" [28105-32369] -->
 <h2><a name="custom_file_elements" id="custom_file_elements">Custom //file elements//</a></h2>
 <div class="level2">
 
@@ -653,7 +653,7 @@ Pin(0 0 70 20 70 42 &quot;&quot; &quot;1&quot; 0x00000101)
 </p>
 
 </div>
-<!-- SECTION "Custom //file elements//" [32155-38620] -->
+<!-- SECTION "Custom //file elements//" [32370-38835] -->
 <h2><a name="custom_m4_elements_requires_gsch2pcb_1.0" id="custom_m4_elements_requires_gsch2pcb_1.0">Custom //m4 elements// (Requires gsch2pcb &gt;= 1.0)</a></h2>
 <div class="level2">
 
@@ -792,7 +792,7 @@ Mark(50 50)
 </p>
 
 </div>
-<!-- SECTION "Custom //m4 elements// (Requires gsch2pcb >= 1.0)" [38621-46312] -->
+<!-- SECTION "Custom //m4 elements// (Requires gsch2pcb >= 1.0)" [38836-46527] -->
 <h2><a name="multi-user_setup_requires_gsch2pcb_1.0" id="multi-user_setup_requires_gsch2pcb_1.0">Multi-user Setup (requires gsch2pcb &gt;= 1.0)</a></h2>
 <div class="level2">
 
@@ -833,7 +833,7 @@ With the above, users will have access to site wide libraries and only need to p
 </p>
 
 </div>
-<!-- SECTION "Multi-user Setup (requires gsch2pcb >= 1.0)" [46313-47948] -->
+<!-- SECTION "Multi-user Setup (requires gsch2pcb >= 1.0)" [46528-48163] -->
 <h2><a name="pc_board_fabrication" id="pc_board_fabrication">PC Board Fabrication</a></h2>
 <div class="level2">
 
@@ -842,6 +842,6 @@ The tutorial should cover pcb fabrication too.
 </p>
 
 </div>
-<!-- SECTION "PC Board Fabrication" [47949-] --></div>
+<!-- SECTION "PC Board Fabrication" [48164-] --></div>
 </body>
 </html>

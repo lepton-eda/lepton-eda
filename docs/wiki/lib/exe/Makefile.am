@@ -3,7 +3,7 @@
 docname=wiki
 docsdir = @GEDADOCDIR@/$(docname)/lib/exe
 
-docs_DATA = css 002css 001css 
+docs_DATA = .gitignore css 002css 001css opensearch 
 
 EXTRA_DIST = $(docs_DATA)
 

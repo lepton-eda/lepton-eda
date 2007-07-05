@@ -3,7 +3,7 @@
 docname=wiki
 docsdir = @GEDADOCDIR@/$(docname)/lib/images/smileys
 
-docs_DATA = icon_wink.gif fixme.gif icon_smile.gif icon_smile2.gif 
+docs_DATA = .gitignore icon_wink.gif fixme.gif icon_smile.gif icon_smile2.gif 
 
 EXTRA_DIST = $(docs_DATA)
 
