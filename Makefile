@@ -220,20 +220,20 @@ proto: libgeda_proto gschem_proto gnetlist_proto gattrib_proto gsymcheck_proto
 symbols: $(DIR_PREFIX)symbols$(CD_VERSION)/configure
 	@echo symbols Installed 
 
-symbols_maint: $(DIR_PREFIX)symbols$(CD_VERSION)/system-gafrc
+symbols_maint: $(DIR_PREFIX)symbols$(CD_VERSION)/geda-font.scm
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} maintainer-clean )
 
-symbols_clean: $(DIR_PREFIX)symbols$(CD_VERSION)/system-gafrc
+symbols_clean: $(DIR_PREFIX)symbols$(CD_VERSION)/geda-font.scm
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} clean )
 
-symbols_distclean: $(DIR_PREFIX)symbols$(CD_VERSION)/system-gafrc
+symbols_distclean: $(DIR_PREFIX)symbols$(CD_VERSION)/geda-font.scm
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} distclean )
 
 symbols_install: $(DIR_PREFIX)symbols$(CD_VERSION)/configure \
 	         $(DIR_PREFIX)symbols$(CD_VERSION)/Makefile 
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} install )
 
-symbols_uninstall: $(DIR_PREFIX)symbols$(CD_VERSION)/system-gafrc
+symbols_uninstall: $(DIR_PREFIX)symbols$(CD_VERSION)/geda-font.scm
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} uninstall )
 
 symbols_config: $(DIR_PREFIX)symbols$(CD_VERSION)/configure
@@ -734,7 +734,7 @@ $(DIR_PREFIX)gattrib$(CD_VERSION)/config.h:
 $(DIR_PREFIX)gattrib$(CD_VERSION)/configure: 
 	( cd $(DIR_PREFIX)gattrib$(CD_VERSION); ./autogen.sh )
 
-$(DIR_PREFIX)symbols$(CD_VERSION)/system-gafrc:
+$(DIR_PREFIX)symbols$(CD_VERSION)/geda-font.scm:
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
