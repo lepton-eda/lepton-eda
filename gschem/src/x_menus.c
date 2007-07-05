@@ -441,6 +441,8 @@ static void update_recent_files_menus()
 
       recent_menu_item = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(
                w->menubar), "File/Recent files");
+      if(recent_menu_item == NULL)
+         return;
 
       submenu = gtk_menu_item_get_submenu(GTK_MENU_ITEM(recent_menu_item));
       gtk_widget_destroy(submenu);
@@ -504,6 +506,8 @@ void x_menu_attach_recent_files_submenu(TOPLEVEL *w_current)
 
    recent_menu_item = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(
             w_current->menubar), "File/Recent files");
+   if(recent_menu_item == NULL)
+      return;
 
    /* disconnect all unblocked signals */
    while(1) {
