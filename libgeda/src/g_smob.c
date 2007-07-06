@@ -630,6 +630,35 @@ SCM g_get_object_type(SCM object_smob)
   return returned;
 }
 
+/*! \brief Get the line width used to draw an object.
+ *  \par Function Description
+ *  This function returns the line width used to draw an object.
+ *
+ *  \param [in] object_smob  The object smob to get the line width.
+ *  \return The line width. 
+ *   Actually it is the object->line_width.
+ */
+SCM g_get_line_width(SCM object_smob)
+{
+  struct st_object_smob *object_struct;
+  OBJECT *object;
+  SCM returned = SCM_EOL;
+
+  SCM_ASSERT ( SCM_NIMP(object_smob) && 
+               ((long) SCM_CAR(object_smob) == object_smob_tag),
+               object_smob, SCM_ARG1, "get-object-type");
+
+  object_struct = (struct st_object_smob *)SCM_CDR(object_smob);
+
+  g_assert (object_struct && object_struct->object);
+  
+  object = (OBJECT *) object_struct->object;
+  
+  returned = scm_from_int(object->line_width);
+
+  return returned;
+}
+
 /*! \brief Initialize the framework to support an object smob.
  *  \par Function Description
  *  Initialize the framework to support an object smob.
@@ -647,6 +676,7 @@ void g_init_object_smob(void)
   scm_c_define_gsubr("get-attrib-value-by-attrib-name", 2, 0, 0, 
 		     g_get_attrib_value_by_attrib_name);
   scm_c_define_gsubr("get-object-type", 1, 0, 0, g_get_object_type);
+  scm_c_define_gsubr("get-line-width", 1, 0, 0, g_get_line_width);
 
   return;
 }
