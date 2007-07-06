@@ -129,6 +129,7 @@ void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
   int x, y;
   int i, temp;
   const CLibSymbol *sym;
+  int redraw_state;
 
   w_current->last_x = w_current->start_x = fix_x(w_current, screen_x);
   w_current->last_y = w_current->start_y = fix_y(w_current, screen_y);
@@ -161,8 +162,12 @@ void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
     }
   }
 
-  /* Run the complex place list changed hook */
+  /* Run the complex place list changed hook without redrawing */
+  /* since the complex place list is going to be redrawn afterwards */
+  redraw_state = w_current->DONT_REDRAW;
+  w_current->DONT_REDRAW = 1;
   o_complex_place_changed_run_hook (w_current);
+  w_current->DONT_REDRAW = redraw_state;
 
   o_drawbounding(w_current, 
                  NULL,
