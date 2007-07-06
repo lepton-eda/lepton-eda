@@ -797,8 +797,12 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
 	o_complex_place_rotate(w_current);
 
-	/* Run the complex place list changed hook */
+	/* Run the complex place list changed hook without redrawing */
+        /* since all objects are being redrawn afterwards */
+        prev_state = w_current->DONT_REDRAW;
+        w_current->DONT_REDRAW = 1;
 	o_complex_place_changed_run_hook (w_current);	
+        w_current->DONT_REDRAW = prev_state;
 	  
         o_drawbounding(w_current,
                        NULL,
