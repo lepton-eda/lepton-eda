@@ -829,9 +829,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         return(0);
 
       }
-      else if ((w_current->event_state == ENDMOVE) ||
-	       (w_current->event_state == ENDCOPY) ||
-	       (w_current->event_state == ENDMCOPY) ) {
+      else if (w_current->event_state == ENDMOVE) {
 	prev_state = w_current->event_state;
 	
 	o_drawbounding(w_current, NULL,
@@ -858,6 +856,11 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 		       x_get_darkcolor(w_current->bb_color), TRUE);
 	
         return(0);
+      }
+      else if ((w_current->event_state == ENDCOPY) ||
+	       (w_current->event_state == ENDMCOPY)) {
+        /* Rotating while copying is still not supported, so do nothing */
+        return 0;
       }
 
     }
