@@ -97,7 +97,9 @@
 		      ; If the y bounds are, this is a horizontal segment.
 		      "<>"
 		      ; X or Y bounds are not the same. We don't know.
-		      ""
+		      (begin
+                        (display "Warning: get-net-connection-sides: Can't guess net direction.\n")
+                        "")
 		      )
 		  )
 	      )
