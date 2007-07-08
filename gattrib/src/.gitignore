@@ -3,3 +3,4 @@ Makefile
 Makefile.in
 gattrib
 *.o
+*~

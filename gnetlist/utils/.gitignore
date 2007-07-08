@@ -3,3 +3,4 @@ Makefile.in
 .deps
 mk_verilog_syms
 *.o
+*~

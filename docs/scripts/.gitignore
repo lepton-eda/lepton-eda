@@ -7,3 +7,4 @@ Makefile.in
 *.ps
 *.pdf
 *.out
+*~

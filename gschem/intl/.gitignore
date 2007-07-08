@@ -9,3 +9,4 @@ VERSION
 config.charset
 locale.alias
 libgnuintl.h.in
+*~
