@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-schem-CVS-2002-06-12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-05 00:52-0400\n"
+"POT-Creation-Date: 2007-07-08 18:16-0400\n"
 "PO-Revision-Date: 2007-06-23 23:19+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev@seul.org\n"
@@ -65,7 +65,7 @@ msgstr "Afdrukken..."
 msgid "Write image..."
 msgstr "Schrijf Afbeelding..."
 
-#: src/rcstrings.c:13 src/x_menus.c:520
+#: src/rcstrings.c:13 src/x_menus.c:524
 #, fuzzy
 msgid "Recent files"
 msgstr "Nieuw bestand"
@@ -837,7 +837,7 @@ msgstr "Documentatie voor [%s,%s,%s,%s]\n"
 msgid "New page created [%s]\n"
 msgstr "Nieuwe pagina gemaakt [%s]\n"
 
-#: src/i_callbacks.c:227 src/x_menus.c:491
+#: src/i_callbacks.c:227 src/x_menus.c:493
 #, fuzzy, c-format
 msgid "New Window created [%s]\n"
 msgstr "Nieuw venster gemaakt\n"
@@ -1172,22 +1172,22 @@ msgstr "Onbekend type voor cirkel!\n"
 msgid "Unknown type for circle (fill)!\n"
 msgstr "Onbekend type voor cirkel (arcering)!\n"
 
-#: src/o_complex.c:225
+#: src/o_complex.c:230
 #, c-format
 msgid "Could not find complex in new componet placement!\n"
 msgstr "Kan complex niet vinden bij het plaatsen van een nieuwe component!\n"
 
-#: src/o_complex.c:578
+#: src/o_complex.c:583
 #, c-format
 msgid "Got NULL in o_complex_translate_display_selection\n"
 msgstr "Ontving NULL in o_complex_translate_display_selection\n"
 
-#: src/o_complex.c:646 src/o_complex.c:652
+#: src/o_complex.c:651 src/o_complex.c:657
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "Vertaal schema [%d %d]\n"
 
-#: src/o_complex.c:690
+#: src/o_complex.c:695
 #, c-format
 msgid "Got NULL in o_complex_translate_selection!\n"
 msgstr "Ontving NULL in o_complex_translate_selection\n"
@@ -1416,7 +1416,7 @@ msgstr "Akties"
 msgid "All"
 msgstr "Alle"
 
-#: src/x_attribedit.c:462 src/x_compselect.c:716 src/x_compselect.c:791
+#: src/x_attribedit.c:462 src/x_compselect.c:728 src/x_compselect.c:803
 msgid "Components"
 msgstr "Componenten"
 
@@ -1567,36 +1567,36 @@ msgstr "Kan de kleur %s niet toewijzen!\n"
 msgid "Tried to get an invalid color: %d\n"
 msgstr "Probeerde een ongeldige kleur te verkrijgen: %d\n"
 
-#: src/x_compselect.c:821
+#: src/x_compselect.c:833
 #, fuzzy
 msgid "Filter:"
 msgstr "Filter"
 
-#: src/x_compselect.c:895
+#: src/x_compselect.c:907
 msgid "Default behavior - reference component"
 msgstr "Normaal gedrag - referentie component"
 
-#: src/x_compselect.c:898
+#: src/x_compselect.c:910
 msgid "Embed component in schematic"
 msgstr "Component insluiten in schema"
 
-#: src/x_compselect.c:901
+#: src/x_compselect.c:913
 msgid "Include component as individual objects"
 msgstr "Invoegen component als individuele objecten"
 
-#: src/x_compselect.c:982
+#: src/x_compselect.c:994
 msgid "Select Component..."
 msgstr "Selecteer Component..."
 
-#: src/x_compselect.c:1008
+#: src/x_compselect.c:1020
 msgid "In Use"
 msgstr ""
 
-#: src/x_compselect.c:1012
+#: src/x_compselect.c:1024
 msgid "Libraries"
 msgstr "Bibliotheken"
 
-#: src/x_compselect.c:1024 src/x_fileselect.c:124
+#: src/x_compselect.c:1036 src/x_fileselect.c:124
 msgid "Preview"
 msgstr "Vooraf zien"
 
@@ -2135,12 +2135,12 @@ msgstr ""
 "Probeerde de gevoeligheid in te stellen op een niet bestaand popup "
 "menu_item\n"
 
-#: src/x_menus.c:480
+#: src/x_menus.c:482
 #, fuzzy, c-format
 msgid "Couldn't open file %s\n"
 msgstr "Kan %s niet aanroepen\n"
 
-#: src/x_menus.c:538
+#: src/x_menus.c:542
 msgid "Clear"
 msgstr "Wis"
 

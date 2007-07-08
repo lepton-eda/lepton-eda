@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-05 00:52-0400\n"
+"POT-Creation-Date: 2007-07-08 18:16-0400\n"
 "PO-Revision-Date: 2006-09-13 16:59+0300\n"
 "Last-Translator: Andy Shevchenko <andy@smile.org.ua>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -63,7 +63,7 @@ msgstr "Печать..."
 msgid "Write image..."
 msgstr "Записать изображение..."
 
-#: src/rcstrings.c:13 src/x_menus.c:520
+#: src/rcstrings.c:13 src/x_menus.c:524
 #, fuzzy
 msgid "Recent files"
 msgstr "Новый файл"
@@ -785,7 +785,7 @@ msgstr "Документация для [%s, %s, %s, %s]\n"
 msgid "New page created [%s]\n"
 msgstr "Создана новая страница [%s]\n"
 
-#: src/i_callbacks.c:227 src/x_menus.c:491
+#: src/i_callbacks.c:227 src/x_menus.c:493
 #, fuzzy, c-format
 msgid "New Window created [%s]\n"
 msgstr "Создано новое окно\n"
@@ -1113,22 +1113,22 @@ msgstr "Неизвестный тип для окружности!\n"
 msgid "Unknown type for circle (fill)!\n"
 msgstr "Неизвестный тип для окружности (с заливкой)!\n"
 
-#: src/o_complex.c:225
+#: src/o_complex.c:230
 #, c-format
 msgid "Could not find complex in new componet placement!\n"
 msgstr "Невозможно найти комплекс в новом расположении компонента!\n"
 
-#: src/o_complex.c:578
+#: src/o_complex.c:583
 #, c-format
 msgid "Got NULL in o_complex_translate_display_selection\n"
 msgstr "Получен NULL в o_complex_translate_display_selection\n"
 
-#: src/o_complex.c:646 src/o_complex.c:652
+#: src/o_complex.c:651 src/o_complex.c:657
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "Перевод схемы [%d %d]\n"
 
-#: src/o_complex.c:690
+#: src/o_complex.c:695
 #, c-format
 msgid "Got NULL in o_complex_translate_selection!\n"
 msgstr "Получен NULL в in o_complex_translate_selection!\n"
@@ -1354,7 +1354,7 @@ msgstr "Настройки"
 msgid "All"
 msgstr "Все"
 
-#: src/x_attribedit.c:462 src/x_compselect.c:716 src/x_compselect.c:791
+#: src/x_attribedit.c:462 src/x_compselect.c:728 src/x_compselect.c:803
 msgid "Components"
 msgstr "Компоненты"
 
@@ -1502,36 +1502,36 @@ msgstr "Невозможно назначить цвет %s!\n"
 msgid "Tried to get an invalid color: %d\n"
 msgstr "Попытка получения неверного цвета: %d\n"
 
-#: src/x_compselect.c:821
+#: src/x_compselect.c:833
 #, fuzzy
 msgid "Filter:"
 msgstr "Фильтр"
 
-#: src/x_compselect.c:895
+#: src/x_compselect.c:907
 msgid "Default behavior - reference component"
 msgstr "Нормальное поведение - ссылка на компонент"
 
-#: src/x_compselect.c:898
+#: src/x_compselect.c:910
 msgid "Embed component in schematic"
 msgstr "Внедрить компонент в схему"
 
-#: src/x_compselect.c:901
+#: src/x_compselect.c:913
 msgid "Include component as individual objects"
 msgstr "Включить компонент как индивидуальный объект"
 
-#: src/x_compselect.c:982
+#: src/x_compselect.c:994
 msgid "Select Component..."
 msgstr "Выбрать компонент..."
 
-#: src/x_compselect.c:1008
+#: src/x_compselect.c:1020
 msgid "In Use"
 msgstr ""
 
-#: src/x_compselect.c:1012
+#: src/x_compselect.c:1024
 msgid "Libraries"
 msgstr "Библиотеки"
 
-#: src/x_compselect.c:1024 src/x_fileselect.c:124
+#: src/x_compselect.c:1036 src/x_fileselect.c:124
 msgid "Preview"
 msgstr "Предварительный просмотр"
 
@@ -2044,12 +2044,12 @@ msgstr ""
 "Попытка установки чувствительности для несуществующего выскакивающего "
 "menu_item\n"
 
-#: src/x_menus.c:480
+#: src/x_menus.c:482
 #, fuzzy, c-format
 msgid "Couldn't open file %s\n"
 msgstr "Невозможно вызвать %s\n"
 
-#: src/x_menus.c:538
+#: src/x_menus.c:542
 #, fuzzy
 msgid "Clear"
 msgstr "Закрыть"

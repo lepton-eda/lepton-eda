@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-05 00:52-0400\n"
+"POT-Creation-Date: 2007-07-08 18:16-0400\n"
 "PO-Revision-Date: 2006-07-27 01:34-0300\n"
 "Last-Translator: \n"
 "Language-Team:  <pt@li.org>\n"
@@ -62,7 +62,7 @@ msgstr "Imprimir..."
 msgid "Write image..."
 msgstr "Salvar Imagem..."
 
-#: src/rcstrings.c:13 src/x_menus.c:520
+#: src/rcstrings.c:13 src/x_menus.c:524
 #, fuzzy
 msgid "Recent files"
 msgstr "Novo arquivo"
@@ -786,7 +786,7 @@ msgstr "Documentação para [%s,%s,%s,%s]\n"
 msgid "New page created [%s]\n"
 msgstr "Criada Nova Página [%s]\n"
 
-#: src/i_callbacks.c:227 src/x_menus.c:491
+#: src/i_callbacks.c:227 src/x_menus.c:493
 #, fuzzy, c-format
 msgid "New Window created [%s]\n"
 msgstr "Nova janela criada\n"
@@ -1113,22 +1113,22 @@ msgstr "Tipo para arco desconhecido!\n"
 msgid "Unknown type for circle (fill)!\n"
 msgstr "Tipo desconhecido para enchimento de arco!\n"
 
-#: src/o_complex.c:225
+#: src/o_complex.c:230
 #, c-format
 msgid "Could not find complex in new componet placement!\n"
 msgstr ""
 
-#: src/o_complex.c:578
+#: src/o_complex.c:583
 #, c-format
 msgid "Got NULL in o_complex_translate_display_selection\n"
 msgstr ""
 
-#: src/o_complex.c:646 src/o_complex.c:652
+#: src/o_complex.c:651 src/o_complex.c:657
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "Transladando diagrama [%d %d]\n"
 
-#: src/o_complex.c:690
+#: src/o_complex.c:695
 #, c-format
 msgid "Got NULL in o_complex_translate_selection!\n"
 msgstr ""
@@ -1352,7 +1352,7 @@ msgstr "Opções"
 msgid "All"
 msgstr "Todos"
 
-#: src/x_attribedit.c:462 src/x_compselect.c:716 src/x_compselect.c:791
+#: src/x_attribedit.c:462 src/x_compselect.c:728 src/x_compselect.c:803
 msgid "Components"
 msgstr "Componentes"
 
@@ -1500,36 +1500,36 @@ msgstr "Impossível alocar a cor %s!\n"
 msgid "Tried to get an invalid color: %d\n"
 msgstr "Tentou ter cor inválida: %d\n"
 
-#: src/x_compselect.c:821
+#: src/x_compselect.c:833
 #, fuzzy
 msgid "Filter:"
 msgstr "Filtro"
 
-#: src/x_compselect.c:895
+#: src/x_compselect.c:907
 msgid "Default behavior - reference component"
 msgstr "Uso normal - referenciar componente"
 
-#: src/x_compselect.c:898
+#: src/x_compselect.c:910
 msgid "Embed component in schematic"
 msgstr "Embutir componente no diagrama"
 
-#: src/x_compselect.c:901
+#: src/x_compselect.c:913
 msgid "Include component as individual objects"
 msgstr "Incluir como objetos individuais"
 
-#: src/x_compselect.c:982
+#: src/x_compselect.c:994
 msgid "Select Component..."
 msgstr "Selecionar Componente"
 
-#: src/x_compselect.c:1008
+#: src/x_compselect.c:1020
 msgid "In Use"
 msgstr ""
 
-#: src/x_compselect.c:1012
+#: src/x_compselect.c:1024
 msgid "Libraries"
 msgstr "Bibliotecas"
 
-#: src/x_compselect.c:1024 src/x_fileselect.c:124
+#: src/x_compselect.c:1036 src/x_fileselect.c:124
 msgid "Preview"
 msgstr "Prévia"
 
@@ -2037,12 +2037,12 @@ msgstr ""
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
 msgstr ""
 
-#: src/x_menus.c:480
+#: src/x_menus.c:482
 #, fuzzy, c-format
 msgid "Couldn't open file %s\n"
 msgstr "Impossível invocar %s!\n"
 
-#: src/x_menus.c:538
+#: src/x_menus.c:542
 #, fuzzy
 msgid "Clear"
 msgstr "Fechar"

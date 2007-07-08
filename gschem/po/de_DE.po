@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-05 00:52-0400\n"
+"POT-Creation-Date: 2007-07-08 18:16-0400\n"
 "PO-Revision-Date: 2007-06-26 22:19+0200\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -61,7 +61,7 @@ msgstr "Drucken..."
 msgid "Write image..."
 msgstr "Speichere Bild..."
 
-#: src/rcstrings.c:13 src/x_menus.c:520
+#: src/rcstrings.c:13 src/x_menus.c:524
 msgid "Recent files"
 msgstr "Zuletzt verwendete Dateien"
 
@@ -779,7 +779,7 @@ msgstr "Dokumentation von [%s,%s,%s,%s]\n"
 msgid "New page created [%s]\n"
 msgstr "Neue Seite erzeugt [%s]\n"
 
-#: src/i_callbacks.c:227 src/x_menus.c:491
+#: src/i_callbacks.c:227 src/x_menus.c:493
 #, c-format
 msgid "New Window created [%s]\n"
 msgstr "Neues Fenster geöffnet [%s]\n"
@@ -1117,23 +1117,23 @@ msgstr "Undefinierter Typ für einen Kreis\n"
 msgid "Unknown type for circle (fill)!\n"
 msgstr "Undefinierter Typ für einen Kreis (Füllung).\n"
 
-#: src/o_complex.c:225
+#: src/o_complex.c:230
 #, c-format
 msgid "Could not find complex in new componet placement!\n"
 msgstr ""
 "Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
 
-#: src/o_complex.c:578
+#: src/o_complex.c:583
 #, c-format
 msgid "Got NULL in o_complex_translate_display_selection\n"
 msgstr "Der Rückgabewert von o_complex_translate_display_selection war NULL.\n"
 
-#: src/o_complex.c:646 src/o_complex.c:652
+#: src/o_complex.c:651 src/o_complex.c:657
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "Verschiebe Schaltplan [%d %d]\n"
 
-#: src/o_complex.c:690
+#: src/o_complex.c:695
 #, c-format
 msgid "Got NULL in o_complex_translate_selection!\n"
 msgstr "Der Rückgabewert von o_complex_translate_selection war NULL.\n"
@@ -1362,7 +1362,7 @@ msgstr "<b>Optionen</b>"
 msgid "All"
 msgstr "Alle"
 
-#: src/x_attribedit.c:462 src/x_compselect.c:716 src/x_compselect.c:791
+#: src/x_attribedit.c:462 src/x_compselect.c:728 src/x_compselect.c:803
 msgid "Components"
 msgstr "Bauteile"
 
@@ -1503,35 +1503,35 @@ msgstr "Konnte die Farbe %s nicht zuteilen!\n"
 msgid "Tried to get an invalid color: %d\n"
 msgstr "Versuchte eine ungültige Farbe zuzuteilen: %d\n"
 
-#: src/x_compselect.c:821
+#: src/x_compselect.c:833
 msgid "Filter:"
 msgstr "Filter:"
 
-#: src/x_compselect.c:895
+#: src/x_compselect.c:907
 msgid "Default behavior - reference component"
 msgstr "Bauteil referenzieren (Voreinstellung)"
 
-#: src/x_compselect.c:898
+#: src/x_compselect.c:910
 msgid "Embed component in schematic"
 msgstr "Bauteil in den Schaltplan einbetten"
 
-#: src/x_compselect.c:901
+#: src/x_compselect.c:913
 msgid "Include component as individual objects"
 msgstr "Bauteil als Einzelkomponenten einfügen"
 
-#: src/x_compselect.c:982
+#: src/x_compselect.c:994
 msgid "Select Component..."
 msgstr "Bauteil auswählen..."
 
-#: src/x_compselect.c:1008
+#: src/x_compselect.c:1020
 msgid "In Use"
 msgstr ""
 
-#: src/x_compselect.c:1012
+#: src/x_compselect.c:1024
 msgid "Libraries"
 msgstr "Bibliotheken"
 
-#: src/x_compselect.c:1024 src/x_fileselect.c:124
+#: src/x_compselect.c:1036 src/x_fileselect.c:124
 msgid "Preview"
 msgstr "Vorschau"
 
@@ -2021,12 +2021,12 @@ msgstr ""
 "Es wurde versucht die Sensibilität für einen nichtexistierenden Menueintrag "
 "zu setzen\n"
 
-#: src/x_menus.c:480
+#: src/x_menus.c:482
 #, fuzzy, c-format
 msgid "Couldn't open file %s\n"
 msgstr "Konnte %s nicht aufrufen\n"
 
-#: src/x_menus.c:538
+#: src/x_menus.c:542
 msgid "Clear"
 msgstr "Entfernen"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-05 00:52-0400\n"
+"POT-Creation-Date: 2007-07-08 18:16-0400\n"
 "PO-Revision-Date: 2007-04-27 19:30+0200\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain\n"
@@ -61,7 +61,7 @@ msgstr "Imprimir..."
 msgid "Write image..."
 msgstr "Guardar imagen..."
 
-#: src/rcstrings.c:13 src/x_menus.c:520
+#: src/rcstrings.c:13 src/x_menus.c:524
 #, fuzzy
 msgid "Recent files"
 msgstr "Nuevo archivo"
@@ -796,7 +796,7 @@ msgstr "Documentación de [%s, %s, %s, %s]\n"
 msgid "New page created [%s]\n"
 msgstr "Se ha creado una página nueva [%s]\n"
 
-#: src/i_callbacks.c:227 src/x_menus.c:491
+#: src/i_callbacks.c:227 src/x_menus.c:493
 #, c-format
 msgid "New Window created [%s]\n"
 msgstr "Se ha creado una nueva ventana [%s]\n"
@@ -1139,23 +1139,23 @@ msgstr "¡Tipo de círculo desconocido!\n"
 msgid "Unknown type for circle (fill)!\n"
 msgstr "¡Tipo de relleno de círculo desconocido!\n"
 
-#: src/o_complex.c:225
+#: src/o_complex.c:230
 #, c-format
 msgid "Could not find complex in new componet placement!\n"
 msgstr "¡No se ha podido encontrar el objeto al colocar el nuevo componente!\n"
 
-#: src/o_complex.c:578
+#: src/o_complex.c:583
 #, c-format
 msgid "Got NULL in o_complex_translate_display_selection\n"
 msgstr ""
 "Se ha recibido NULL en la función o_complex_translate_display_selection\n"
 
-#: src/o_complex.c:646 src/o_complex.c:652
+#: src/o_complex.c:651 src/o_complex.c:657
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "Convirtiendo esquema [%d %d]\n"
 
-#: src/o_complex.c:690
+#: src/o_complex.c:695
 #, c-format
 msgid "Got NULL in o_complex_translate_selection!\n"
 msgstr "¡Se ha recibido NULL en la función o_complex_translate_selection!\n"
@@ -1389,7 +1389,7 @@ msgstr "<b>Opciones de asociación</b>"
 msgid "All"
 msgstr "Todo"
 
-#: src/x_attribedit.c:462 src/x_compselect.c:716 src/x_compselect.c:791
+#: src/x_attribedit.c:462 src/x_compselect.c:728 src/x_compselect.c:803
 msgid "Components"
 msgstr "Componentes"
 
@@ -1530,35 +1530,35 @@ msgstr "¡No se puede reservar memoria para el color %s!\n"
 msgid "Tried to get an invalid color: %d\n"
 msgstr "Se ha intentado obtener un color no válido: %d\n"
 
-#: src/x_compselect.c:821
+#: src/x_compselect.c:833
 msgid "Filter:"
 msgstr "Filtro:"
 
-#: src/x_compselect.c:895
+#: src/x_compselect.c:907
 msgid "Default behavior - reference component"
 msgstr "Comportamiento por defecto - designar componente"
 
-#: src/x_compselect.c:898
+#: src/x_compselect.c:910
 msgid "Embed component in schematic"
 msgstr "Incrustar componente en el esquema"
 
-#: src/x_compselect.c:901
+#: src/x_compselect.c:913
 msgid "Include component as individual objects"
 msgstr "Incluir componentes como objetos individuales"
 
-#: src/x_compselect.c:982
+#: src/x_compselect.c:994
 msgid "Select Component..."
 msgstr "Seleccionar componente..."
 
-#: src/x_compselect.c:1008
+#: src/x_compselect.c:1020
 msgid "In Use"
 msgstr ""
 
-#: src/x_compselect.c:1012
+#: src/x_compselect.c:1024
 msgid "Libraries"
 msgstr ""
 
-#: src/x_compselect.c:1024 src/x_fileselect.c:124
+#: src/x_compselect.c:1036 src/x_fileselect.c:124
 msgid "Preview"
 msgstr "Vista preliminar"
 
@@ -2046,12 +2046,12 @@ msgstr ""
 "Se ha intentado modificar la sensibilidad de una opción de menú que no "
 "existe\n"
 
-#: src/x_menus.c:480
+#: src/x_menus.c:482
 #, fuzzy, c-format
 msgid "Couldn't open file %s\n"
 msgstr "No se ha podido llamar a %s\n"
 
-#: src/x_menus.c:538
+#: src/x_menus.c:542
 #, fuzzy
 msgid "Clear"
 msgstr "Cerrar"
