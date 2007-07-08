@@ -75,6 +75,21 @@ void o_cue_redraw_all(TOPLEVEL *w_current, OBJECT *head, gboolean draw_selected)
   w_current->DONT_REDRAW = redraw_state;
 }
 
+
+/*! 
+ *  \brief Set the color on the gc depending on the passed in color id
+ */
+static void o_cue_set_color(TOPLEVEL *w_current, int color)
+{
+  if (w_current->override_color != -1 ) {
+    gdk_gc_set_foreground(w_current->gc,
+                          x_get_color(w_current->override_color));
+  } else {
+    gdk_gc_set_foreground(w_current->gc, x_get_color(color));
+  }
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -141,14 +156,6 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
   size = SCREENabs(w_current, CUE_BOX_SIZE);
   x2size = 2 * size;
 
-  if (w_current->override_color != -1 ) {
-    gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(w_current->override_color));
-  } else {
-    gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(w_current->net_endpoint_color));
-  }
-
   WORLDtoSCREEN(w_current, x, y, &screen_x, &screen_y);
   
   switch(type) {
@@ -157,6 +164,7 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
       if (object->type == OBJ_NET) { /* only nets have these cues */
         if (count < 1) { /* Didn't find anything connected there */
 	  if (w_current->DONT_REDRAW == 0) {
+	    o_cue_set_color(w_current, w_current->net_endpoint_color);
 	    gdk_draw_rectangle(w_current->window,
 			       w_current->gc, TRUE,
 			       screen_x - size,
@@ -180,6 +188,7 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
             size = SCREENabs(w_current, CUE_CIRCLE_LARGE_SIZE);
           }
 	  if (w_current->DONT_REDRAW == 0) {
+	    o_cue_set_color(w_current, w_current->junction_color);
 	    gdk_draw_arc(w_current->window, w_current->gc,
 			 TRUE,
 			 screen_x - size / 2,
@@ -207,6 +216,7 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
           }
 
 	  if (w_current->DONT_REDRAW == 0) {
+	    o_cue_set_color(w_current, w_current->net_endpoint_color);
 	    if (object->line->y[whichone] == object->line->y[otherone]) {
 	      /* horizontal line */
 	      if (object->line->x[whichone] <= object->line->x[otherone]) {
@@ -259,6 +269,7 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
       }
 
       if (w_current->DONT_REDRAW == 0) {
+	o_cue_set_color(w_current, w_current->junction_color);
 	gdk_draw_arc(w_current->window, w_current->gc,
 		     TRUE,
 		     screen_x - size / 2,
