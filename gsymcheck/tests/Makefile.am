@@ -12,9 +12,53 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
              nameinside.sym nets.sym noslots.sym old_symbol.sym oldpins.sym \
              oldslot.sym typeinside.sym urefinside.sym zero_pinnumber.sym \
              zero_pinseq.sym zero_slotnum.sym zero_slots.sym \
-	     incorrect_footprint.sym duplicate_net.sym
+	     incorrect_footprint.sym duplicate_net.sym \
+	     runtest.sh \
+	     buses.output connections1.output connections2.output \
+	     connections3.output correct.output duplicate_net.output \
+	     duplicate_pinnumber.output duplicate_pinseq.output \
+	     graphical_correct.output graphical_incorrect.output \
+	     incorrect_footprint.output invalid_slotdef1.output \
+   	     invalid_slotdef2.output invalid_slotdef3.output \
+	     invalid_slotdef4.output labelinside.output lots_of_errors.output \
+	     many_slotdefs.output missing_device.output \
+	     missing_footprint.output missing_numslots.output \
+	     missing_pinlabel.output missing_pinnumber.output \
+	     missing_pinseq.output missing_slotdef.output \
+	     multiple_footprint.output multiple_pinlabel.output \
+	     multiple_pinnumber.output multiple_pinseq.output \
+	     multiple_pintype.output multiple_refdes.output \
+	     nameinside.output nets.output noslots.output oldpins.output \
+	     oldslot.output old_symbol.output typeinside.output \
+	     urefinside.output zero_pinnumber.output zero_pinseq.output \
+	     zero_slotnum.output zero_slots.output
 
-MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
+check_SCRIPTS = tests
+
+BUILDDIR=$(top_builddir)/tests
+SRCDIR=$(srcdir)
+
+tests:
+
+# Cleanup
+	rm -f $(BUILDDIR)/new_*
+
+	for file in $(SRCDIR)/*.sym; do \
+	  $(SRCDIR)/runtest.sh $$file $(BUILDDIR) $(SRCDIR); \
+          if [ $$? -ne 0 ]; then \
+ 	     echo "$$file FAILED!"; \
+             exit 1; \
+	   else \
+ 	     echo "$$file passed."; \
+	   fi; \
+ 	done
+
+# Cleanup
+#	rm -f $(BUILDDIR)/new_*
+
+
+
+MOSTLYCLEANFILES = *.log *~ new_*
+CLEANFILES = *.log *~ new_*
+DISTCLEANFILES = *.log core FILE *~ prototype.bak new_*
 MAINTAINERCLEANFILES = system-gsymcheckrc *.log *~ Makefile.in configure

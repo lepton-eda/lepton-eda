@@ -1,0 +1,5 @@
+ERROR: Missing slotdef= (there should be 4 slotdef= attributes)
+ERROR: Found old slot#=# attribute: slot1=1,2,3
+ERROR: Found old slot#=# attribute: slot2=4,5,6
+ERROR: Found old slot#=# attribute: slot4=12,13,11
+4 ERRORS found 

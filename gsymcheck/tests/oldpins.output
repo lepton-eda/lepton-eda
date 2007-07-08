@@ -1,0 +1,10 @@
+ERROR: Missing pinseq= attribute
+ERROR: Missing pinseq= attribute
+ERROR: Missing pinseq= attribute
+ERROR: Missing pinnumber= attribute
+ERROR: Missing pinnumber= attribute
+ERROR: Missing pinnumber= attribute
+ERROR: Found old pin#=# attribute: pin3=3
+ERROR: Found old pin#=# attribute: pin2=2
+ERROR: Found old pin#=# attribute: pin1=1
+9 ERRORS found 

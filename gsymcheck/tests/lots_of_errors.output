@@ -1,0 +1,19 @@
+Warning: Missing pinlabel= attribute
+Warning: Missing pintype= attribute
+Warning: Missing pinlabel= attribute
+Warning: Missing pintype= attribute
+Warning: Missing pinlabel= attribute
+Warning: Missing pintype= attribute
+Warning: Missing footprint= attribute
+Warning: Missing refdes= attribute
+Warning: Found obsolete uref= attribute: uref=U?
+ERROR: Missing device= attribute
+ERROR: Missing pinseq= attribute
+ERROR: Missing pinnumber= attribute
+ERROR: Too many pins in slotdef=1:1,2,3,5,6
+ERROR: Not enough pins in slotdef=2:4,5
+ERROR: Slot 8 is larger then the maximum number (5) of slots
+ERROR: Invalid slotdef=a attributes, not continuing
+ERROR: Malformed slotdef= (the format is #:#,#,#,...)
+9 warnings found 
+8 ERRORS found 

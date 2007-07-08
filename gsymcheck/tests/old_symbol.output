@@ -1,0 +1,21 @@
+Warning: Missing pintype= attribute
+Warning: Missing pintype= attribute
+Warning: Missing pinlabel= attribute
+Warning: Missing refdes= attribute
+Warning: Found obsolete uref= attribute: uref=U?
+ERROR: Invalid pintype=123just a type attribute
+ERROR: Missing pinseq= attribute
+ERROR: Missing pinseq= attribute
+ERROR: Missing pinseq= attribute
+ERROR: Missing pinnumber= attribute
+ERROR: Missing pinnumber= attribute
+ERROR: Missing pinnumber= attribute
+ERROR: Missing slotdef= (there should be 4 slotdef= attributes)
+ERROR: Found old pin#=# attribute: pin3=3
+ERROR: Found old pin#=# attribute: pin2=2
+ERROR: Found old pin#=# attribute: pin1=1
+ERROR: Found old slot#=# attribute: slot1=1,2,3
+ERROR: Found old slot#=# attribute: slot2=4,5,6
+ERROR: Found old slot#=# attribute: slot4=12,13,11
+5 warnings found 
+14 ERRORS found 
