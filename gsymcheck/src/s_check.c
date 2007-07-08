@@ -803,8 +803,9 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     s_current->slotting_errors++;
   } else {
 
-    /* Validate that the pins list isn't null.  If anybody is null, that 
-    /* means the slotdef= attribute was malformed */
+    /* Validate that pinslist does not contain a null entry.  If any entry */
+    /* is null, that means the slotdef= attribute was malformed to start */
+    /* with. */
     for (i = 0; i < s_current->numslots; i++) { 
       if (pinlist[i] == NULL) {
         errors_found++;
