@@ -3,10 +3,10 @@
 # ./update-changelogs.sh <options>
 # Updates ChangeLog files.
 #
-# e.g. if the main gEDA branch is called origin, then to update all
+# e.g. if the main gEDA branch is called master, then to update all
 # ChangeLogs with revisions since the switch to git, do:
 #
-# ./update-changelogs.sh 1.0-20070526..origin
+# ./update-changelogs.sh 1.0-20070526..master
 #
 # This should be only be run while preparing a release, in order to
 # ensure that the released tarballs contain change logs which can be
