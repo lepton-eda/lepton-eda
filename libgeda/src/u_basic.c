@@ -58,6 +58,8 @@ char *u_basic_breakup_string(char *string, char delimiter, int count)
   int done=FALSE;
   char *return_value;
 
+  g_assert(string != NULL);
+
   /* skip over any leading white space */
   while(string[i] == ' ' && !string[i]) {
     i++;
