@@ -181,6 +181,9 @@ x_compselect_callback_response (GtkDialog *dialog,
 void
 x_compselect_open (TOPLEVEL *toplevel)
 {
+  GtkWidget *current_tab, *entry_filter;
+  GtkNotebook *compselect_notebook;
+
   if (toplevel->cswindow == NULL) {
     toplevel->cswindow = GTK_WIDGET (
       g_object_new (TYPE_COMPSELECT,
@@ -203,7 +206,16 @@ x_compselect_open (TOPLEVEL *toplevel)
     gtk_window_present (GTK_WINDOW(toplevel->cswindow));
   }
   gtk_editable_select_region(GTK_EDITABLE(COMPSELECT(toplevel->cswindow)->entry_filter), 0, -1);
-  gtk_widget_grab_focus (GTK_WIDGET(COMPSELECT(toplevel->cswindow)->entry_filter));
+
+  /* Set the focus to the filter entry only if it is in the current 
+     displayed tab */
+  compselect_notebook = GTK_NOTEBOOK(COMPSELECT(toplevel->cswindow)->viewtabs);
+  current_tab = gtk_notebook_get_nth_page(compselect_notebook,
+                                          gtk_notebook_get_current_page(compselect_notebook));
+  entry_filter = GTK_WIDGET(COMPSELECT(toplevel->cswindow)->entry_filter);
+  if (gtk_widget_is_ancestor(entry_filter, current_tab)) {
+    gtk_widget_grab_focus (entry_filter); 
+  }
 }
 
 /*! \brief Closes the component selection dialog.
