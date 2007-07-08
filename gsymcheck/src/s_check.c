@@ -591,6 +591,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
   char* cmp;
   int match;
   gboolean error_parsing = FALSE;
+  int errors_found = 0;
 
   /* look for numslots to see if this symbol has slotting info */
   value = o_attrib_search_name(object_head, "numslots", 0);
@@ -801,37 +802,54 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     s_current->error_count++;
     s_current->slotting_errors++;
   } else {
-    /* Now compare each pin with the rest */
-    s_current->numslotpins = 0;
-    for (i = 0; i < s_current->numslots; i++) {
-      for (n = 1; n <= s_current->numpins; n++) {
-	/* Get the number of one pin */
-	pin = u_basic_breakup_string(pinlist[i], ',', n);
-	if (pin && *pin) {
-	  match = FALSE;
-	  for (j = i - 1; j >= 0 && !match; j--) {
-	    for (m = 1; m <= s_current->numpins && !match; m++) {
-	      /* Get the number of the other pin */
-	      cmp = u_basic_breakup_string(pinlist[j], ',', m);
-	      if (cmp && *cmp) {
-		match = (0 == strcmp (pin, cmp));
-		g_free(cmp);
-	      }
-	    }
-	  }
-	  if (!match) {
-	    /* If they don't match, then increase the number of pins */
-	    s_current->numslotpins++;
-	  }
-	  g_free(pin);
-	}
+
+    /* Validate that the pins list isn't null.  If anybody is null, that 
+    /* means the slotdef= attribute was malformed */
+    for (i = 0; i < s_current->numslots; i++) { 
+      if (pinlist[i] == NULL) {
+        errors_found++;
       }
     }
-    message = g_strdup_printf ("Found %d distinct pins in slots\n", 
-			       s_current->numslotpins);
-    s_current->info_messages = g_list_append(s_current->info_messages,
-					     message);
-    
+
+    if (errors_found) {
+      message = g_strdup_printf(
+               "Malformed slotdef= (the format is #:#,#,#,...)\n");
+      s_current->error_messages = g_list_append(s_current->error_messages,
+                                                message);
+      s_current->error_count++;
+      s_current->slotting_errors++;
+    } else { 
+      /* Now compare each pin with the rest */
+      s_current->numslotpins = 0;
+      for (i = 0; i < s_current->numslots; i++) {
+        for (n = 1; n <= s_current->numpins; n++) {
+          /* Get the number of one pin */
+          pin = u_basic_breakup_string(pinlist[i], ',', n);
+          if (pin && *pin) {
+            match = FALSE;
+            for (j = i - 1; j >= 0 && !match; j--) {
+              for (m = 1; m <= s_current->numpins && !match; m++) {
+                /* Get the number of the other pin */
+                cmp = u_basic_breakup_string(pinlist[j], ',', m);
+                if (cmp && *cmp) {
+                  match = (0 == strcmp (pin, cmp));
+                  g_free(cmp);
+                }
+              }
+            }
+            if (!match) {
+              /* If they don't match, then increase the number of pins */
+              s_current->numslotpins++;
+            }
+            g_free(pin);
+          }
+        }
+      }
+      message = g_strdup_printf ("Found %d distinct pins in slots\n", 
+                                 s_current->numslotpins);
+      s_current->info_messages = g_list_append(s_current->info_messages,
+                                               message);
+    }
   }
   
   if (slotdef) {
