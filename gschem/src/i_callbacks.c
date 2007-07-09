@@ -800,6 +800,30 @@ DEFINE_I_CALLBACK(edit_rotate_90)
 
   exit_if_null(w_current);
 
+  /* Rotating inside a copy action is still not
+     supported. In these cases, do nothing */
+  if ( (w_current->inside_action) &&
+       ((w_current->event_state == ENDCOPY) ||
+        (w_current->event_state == ENDMCOPY)) )
+    {
+      return;
+    }
+
+  /* If inside a move action, send a button 3 released, so rotating 
+     will be handled by x_event.c */
+  if ( (w_current->inside_action) &&
+       ((w_current->event_state == ENDMOVE)) ) 
+    {
+      GdkEvent* event;
+      
+      event = gdk_event_new(GDK_BUTTON_RELEASE);
+      ((GdkEventButton*) event)->button = 2;
+      x_event_button_released (NULL, (GdkEventButton *) event, w_current);
+      gdk_event_free(event);
+
+      return;      
+    }
+  
   i_set_state(w_current, ENDROTATEP);
   i_update_middle_button(w_current, i_callback_edit_rotate_90, _("Rotate"));
 }
@@ -817,6 +841,31 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
   int w_x, w_y;
 
   exit_if_null(w_current);
+
+  /* Rotating inside a copy action is still not
+     supported. In these cases, do nothing */
+  if ( (w_current->inside_action) &&
+       ((w_current->event_state == ENDCOPY) ||
+        (w_current->event_state == ENDMCOPY)) )
+    {
+      return;
+    }
+
+  /* If inside a move action, send a button 3 released, so rotating 
+     will be handled by x_event.c */
+  if ( (w_current->inside_action) &&
+       ((w_current->event_state == ENDMOVE)) ) 
+    {
+      GdkEvent* event;
+      
+      event = gdk_event_new(GDK_BUTTON_RELEASE);
+      ((GdkEventButton*) event)->button = 2;
+      x_event_button_released (NULL, (GdkEventButton *) event, w_current);
+      gdk_event_free(event);
+
+      return;      
+    }
+  
   o_redraw_cleanstates(w_current);	
 
   object_list = w_current->page_current->selection_list;    
