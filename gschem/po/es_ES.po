@@ -9,13 +9,13 @@ msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-08 18:16-0400\n"
-"PO-Revision-Date: 2007-04-27 19:30+0200\n"
+"PO-Revision-Date: 2007-07-09 19:31+0200\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);X-Generator: KBabel 1.0.2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);X-Generator: KBabel 1.0.2"
 
 #: src/rcstrings.c:2
 msgid "File"
@@ -62,9 +62,8 @@ msgid "Write image..."
 msgstr "Guardar imagen..."
 
 #: src/rcstrings.c:13 src/x_menus.c:524
-#, fuzzy
 msgid "Recent files"
-msgstr "Nuevo archivo"
+msgstr "Archivos recientes"
 
 #: src/rcstrings.c:14 src/x_script.c:50
 msgid "Execute Script..."
@@ -95,19 +94,16 @@ msgid "Select Mode"
 msgstr "Seleccionar"
 
 #: src/rcstrings.c:22
-#, fuzzy
 msgid "Cut Buffer"
-msgstr "Memoria intermedia"
+msgstr "Cortar"
 
 #: src/rcstrings.c:23
-#, fuzzy
 msgid "Copy Buffer"
-msgstr "Memoria intermedia"
+msgstr "Copiar"
 
 #: src/rcstrings.c:24
-#, fuzzy
 msgid "Paste Buffer"
-msgstr "Memoria intermedia"
+msgstr "Pegar"
 
 #: src/rcstrings.c:25
 msgid "Edit..."
@@ -451,14 +447,12 @@ msgid "Snap Grid Spacing..."
 msgstr "Espaciado de la rejilla..."
 
 #: src/rcstrings.c:117
-#, fuzzy
 msgid "Scale up Grid Spacing"
-msgstr "Espaciado de la rejilla..."
+msgstr "Aumentar espaciado de la rejilla..."
 
 #: src/rcstrings.c:118
-#, fuzzy
 msgid "Scale down Grid Spacing"
-msgstr "Espaciado de la rejilla..."
+msgstr "Disminuir espaciado de la rejilla..."
 
 #: src/rcstrings.c:119
 msgid "Toggle Outline/Box"
@@ -481,27 +475,24 @@ msgid "Help"
 msgstr "Ayuda"
 
 #: src/rcstrings.c:125
-#, fuzzy
 msgid "Manual"
-msgstr "Manual..."
+msgstr "Manual"
 
 #: src/rcstrings.c:126
-#, fuzzy
 msgid "gEDA Documentation"
-msgstr "Documentación"
+msgstr "Documentación de gEDA"
 
 #: src/rcstrings.c:127
 msgid "gschem FAQ"
-msgstr ""
+msgstr "PUF de gschem"
 
 #: src/rcstrings.c:128
-#, fuzzy
 msgid "Component Documentation"
-msgstr "Documentación"
+msgstr "Documentación del componente"
 
 #: src/rcstrings.c:129
 msgid "About gschem"
-msgstr ""
+msgstr "Acerca de gschem"
 
 #: src/rcstrings.c:130 src/x_dialog.c:2517
 msgid "Hotkeys"
@@ -1181,12 +1172,10 @@ msgid "Got an unexpected NULL in o_edit\n"
 msgstr "Se ha recibido NULL (no esperado) en la función o_edit\n"
 
 #: src/o_misc.c:144
-#, fuzzy
 msgid "Object already locked\n"
 msgstr "Objeto previamente fijado\n"
 
 #: src/o_misc.c:182
-#, fuzzy
 msgid "Object already unlocked\n"
 msgstr "El objeto no estaba fijado\n"
 
@@ -1211,13 +1200,12 @@ msgstr "El texto oculto es ahora invisible\n"
 #: src/o_misc.c:1058
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
-msgstr ""
+msgstr "No se pudo encontrar el símbolo [%s] en la librería. Error al actualizar.\n"
 
 #: src/o_misc.c:1198
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
-msgstr ""
-"o_autosave_backups: Imposible averiguar el nombre de fichero real de %s."
+msgstr "o_autosave_backups: Imposible averiguar el nombre de archivo real de %s."
 
 #: src/o_misc.c:1242
 #, c-format
@@ -1272,9 +1260,9 @@ msgstr ""
 "gschem.\n"
 
 #: src/o_net.c:1029
-#, fuzzy, c-format
+#, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
-msgstr "No se ha encontrado %s en ninguna librería de componentes\n"
+msgstr "No se ha encontrado el símbolo %s en ninguna librería de componentes\n"
 
 #: src/o_picture.c:206 src/o_picture.c:746
 #, c-format
@@ -1552,11 +1540,11 @@ msgstr "Seleccionar componente..."
 
 #: src/x_compselect.c:1020
 msgid "In Use"
-msgstr ""
+msgstr "En uso"
 
 #: src/x_compselect.c:1024
 msgid "Libraries"
-msgstr ""
+msgstr "Librerías"
 
 #: src/x_compselect.c:1036 src/x_fileselect.c:124
 msgid "Preview"
@@ -1784,7 +1772,6 @@ msgid "<b>gschem version %s%s.%s</b>"
 msgstr "<b>versión de gschem %s%s.%s</b>"
 
 #: src/x_dialog.c:2043
-#, fuzzy
 msgid ""
 "Written by:\n"
 "Ales Hvezda\n"
@@ -1911,12 +1898,12 @@ msgstr "Guardar como..."
 
 #: src/x_image.c:180
 msgid "Encapsulated Postscript"
-msgstr ""
+msgstr "Postscript encapsulado"
 
 #: src/x_image.c:298
-#, fuzzy, c-format
+#, c-format
 msgid "x_image_lowlevel: Unable to write eps file %s.\n"
-msgstr "x_image_lowlevel: Imposible escribir archivo %s: %s.\n"
+msgstr "x_image_lowlevel: Imposible escribir archivo eps: %s.\n"
 
 #: src/x_image.c:380
 #, c-format
@@ -2047,14 +2034,13 @@ msgstr ""
 "existe\n"
 
 #: src/x_menus.c:482
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't open file %s\n"
-msgstr "No se ha podido llamar a %s\n"
+msgstr "No se ha podido abrir el archivo %s\n"
 
 #: src/x_menus.c:542
-#, fuzzy
 msgid "Clear"
-msgstr "Cerrar"
+msgstr "Borrar"
 
 #: src/x_multiattrib.c:656
 msgid "Attributes with empty name are not allowed. Please set a name."
@@ -2347,56 +2333,3 @@ msgstr "Descartando página [%s]\n"
 msgid "Closing [%s]\n"
 msgstr "Cerrando [%s]\n"
 
-#~ msgid ""
-#~ "Found a version [%s%s] gschemrc file:\n"
-#~ "[%s]\n"
-#~ msgstr ""
-#~ "Encontrada una versión [%s%s] del fichero gschemrc:\n"
-#~ "[%s]\n"
-
-#~ msgid ""
-#~ "While gschem is in ALPHA, please be sure that you have the latest rc "
-#~ "file.\n"
-#~ msgstr ""
-#~ "Pero gschem es ALPHA. Por favor, asegúrese de que dispone de un fichero "
-#~ "rc actualizado.\n"
-
-#~ msgid "Invalid mode [%s] passed to scrollbar-update\n"
-#~ msgstr ""
-#~ "Se ha especificado un modo no válido [%s] a la función scrollbar-update\n"
-
-#~ msgid "Duplicate stroke definition passed to stroke! [%s]\n"
-#~ msgstr ""
-#~ "¡Se ha especificado una tecla rápida duplicada [%s] a la función stroke!\n"
-
-#~ msgid ""
-#~ "A stroke keyword has been found in an rc file, but gschem\n"
-#~ "is not compiled to support strokes, please recompile gschem\n"
-#~ "with LibStroke\n"
-#~ msgstr ""
-#~ "Se ha encontrado una palabra clave de gestos en un fichero rc, pero "
-#~ "gschem\n"
-#~ "no ha sido compilado con soporte para gestos, por favor, vuelva a "
-#~ "compilar gschem\n"
-#~ "con LibStroke\n"
-
-#~ msgid "selected a nonexistant object!\n"
-#~ msgstr "¡Seleccionado un objeto que no existe!\n"
-
-#~ msgid ""
-#~ "Could not unembedded component, could not find appropriate .sym file\n"
-#~ msgstr ""
-#~ "No se puede desincrustar el componente, no se ha podido encontrar el "
-#~ "fichero .sym correspondiente\n"
-
-#~ msgid "Component still embedded and not updated\n"
-#~ msgstr "El componente todavía está incrustado y no actualizado\n"
-
-#~ msgid "More than one component found with name [%s]\n"
-#~ msgstr "Se ha encontrado más de un componente con el nombre [%s]\n"
-
-#~ msgid "Write PNG..."
-#~ msgstr "Guardar imagen PNG..."
-
-#~ msgid "Hotkeys..."
-#~ msgstr "Teclas rápidas..."
