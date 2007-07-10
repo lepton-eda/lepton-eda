@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-08 18:16-0400\n"
-"PO-Revision-Date: 2007-06-26 22:19+0200\n"
+"PO-Revision-Date: 2007-07-10 17:29+0200\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -479,13 +479,12 @@ msgid "Manual"
 msgstr "Handbuch"
 
 #: src/rcstrings.c:126
-#, fuzzy
 msgid "gEDA Documentation"
-msgstr "Dokumentation"
+msgstr "gEDA Dokumentation"
 
 #: src/rcstrings.c:127
 msgid "gschem FAQ"
-msgstr ""
+msgstr "gschem FAQ"
 
 #: src/rcstrings.c:128
 msgid "Component Documentation"
@@ -570,8 +569,7 @@ msgstr "An \"grid-dot-size\" wurde eine falsche Punktgröße [%d] übergeben.\n"
 #: src/g_rc.c:1518
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
-msgstr ""
-"An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
+msgstr "An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
 
 #: src/g_rc.c:1562
 #, c-format
@@ -598,8 +596,7 @@ msgstr "Ein ungültiger Wert [%d] wurde an keyboardpan-gain übergeben.\n"
 #: src/g_rc.c:1696
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
-msgstr ""
-"An \"select-slack-pixels\" wurde eine ungültige Pixelzahl [%d] übergeben\n"
+msgstr "An \"select-slack-pixels\" wurde eine ungültige Pixelzahl [%d] übergeben\n"
 
 #: src/gschem.c:191 src/gschem.c:202
 #, c-format
@@ -617,8 +614,7 @@ msgstr ""
 
 #: src/gschem.c:196 src/gschem.c:207
 #, c-format
-msgid ""
-"This is free software, and you are welcome to redistribute it under certain\n"
+msgid "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Dies ist Freie Software. Sie darf gerne weitergegeben werden. Bitte lies "
 "die\n"
@@ -826,8 +822,7 @@ msgstr "Verschieben nach"
 
 #: src/i_callbacks.c:942
 msgid "WARNING: Do not translate with snap off!\n"
-msgstr ""
-"ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
+msgstr "ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
 
 #: src/i_callbacks.c:943
 msgid "WARNING: Turning snap on and continuing with translate.\n"
@@ -1075,8 +1070,7 @@ msgstr "Undefinierter Typ für das Rechteck (Füllung)!\n"
 #: src/o_buffer.c:42
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_copy]\n"
-msgstr ""
-"Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
+msgstr "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
 
 #: src/o_buffer.c:80
 #, c-format
@@ -1093,14 +1087,12 @@ msgstr ""
 #: src/o_buffer.c:181
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
-msgstr ""
-"Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_paste_end]\n"
+msgstr "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_paste_end]\n"
 
 #: src/o_bus.c:210
 #, c-format
 msgid "Got an invalid which one in o_bus_draw_xor_single\n"
-msgstr ""
-"Ungültiger Wert in Variable whichone in der Funktion o_bus_draw_xor_single\n"
+msgstr "Ungültiger Wert in Variable whichone in der Funktion o_bus_draw_xor_single\n"
 
 #: src/o_circle.c:136
 #, c-format
@@ -1120,8 +1112,7 @@ msgstr "Undefinierter Typ für einen Kreis (Füllung).\n"
 #: src/o_complex.c:230
 #, c-format
 msgid "Could not find complex in new componet placement!\n"
-msgstr ""
-"Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
+msgstr "Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
 
 #: src/o_complex.c:583
 #, c-format
@@ -1159,14 +1150,12 @@ msgid "Got an unexpected NULL in o_edit\n"
 msgstr "Der Rückgabewert von o_edit war unerwartet NULL\n"
 
 #: src/o_misc.c:144
-#, fuzzy
 msgid "Object already locked\n"
-msgstr "Objekt ist schon gesperrt\n"
+msgstr "Objekt bereits gesperrt\n"
 
 #: src/o_misc.c:182
-#, fuzzy
 msgid "Object already unlocked\n"
-msgstr "Objekt ist schon entsperrt\n"
+msgstr "Objekt bereits entsperrt\n"
 
 #: src/o_misc.c:229 src/o_misc.c:472 src/o_misc.c:712
 #, c-format
@@ -1189,7 +1178,7 @@ msgstr "Verborgener Text ist jetzt unsichbar.\n"
 #: src/o_misc.c:1058
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
-msgstr ""
+msgstr "Das Symbol [%s] konnte nicht gefunden werden. Aktualisierung fehlgeschlagen.\n"
 
 #: src/o_misc.c:1198
 #, c-format
@@ -1201,8 +1190,7 @@ msgstr ""
 #: src/o_misc.c:1242
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr ""
-"Die vorherige Backup-Datei [%s] konnte nicht auf read-write gesetzt werden.\n"
+msgstr "Die vorherige Backup-Datei [%s] konnte nicht auf read-write gesetzt werden.\n"
 
 #: src/o_misc.c:1260
 #, c-format
@@ -1234,8 +1222,7 @@ msgstr "Da ist ein Objekt in o_move_check_endpoint, welches keine Linie ist.\n"
 #: src/o_net.c:255
 #, c-format
 msgid "Got an invalid which one in o_net_draw_xor_single\n"
-msgstr ""
-"Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
+msgstr "Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
 
 #: src/o_net.c:812 src/o_net.c:849 src/o_net.c:920 src/o_net.c:956
 #, c-format
@@ -1245,9 +1232,9 @@ msgstr ""
 "hinzuzufügen\n"
 
 #: src/o_net.c:1029
-#, fuzzy, c-format
+#, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
-msgstr "Konnte %s in keiner Bauteilbibliothek finden\n"
+msgstr "Das Busripper Symbol [%s] wurde in keiner Bauteilbibliothek gefunden\n"
 
 #: src/o_picture.c:206 src/o_picture.c:746
 #, c-format
@@ -1384,8 +1371,7 @@ msgstr ""
 
 #: src/x_autonumber.c:428
 #, c-format
-msgid ""
-"duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
+msgid "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
 msgstr ""
 "Doppelt vergebener slot kann Probleme verursachen: [Symbolname=%s, Number=%"
 "d, slot=%d]\n"
@@ -1525,7 +1511,7 @@ msgstr "Bauteil auswählen..."
 
 #: src/x_compselect.c:1020
 msgid "In Use"
-msgstr ""
+msgstr "In Verwendung"
 
 #: src/x_compselect.c:1024
 msgid "Libraries"
@@ -1756,7 +1742,6 @@ msgid "<b>gschem version %s%s.%s</b>"
 msgstr "<b>gschem Version %s%s.%s</b>"
 
 #: src/x_dialog.c:2043
-#, fuzzy
 msgid ""
 "Written by:\n"
 "Ales Hvezda\n"
@@ -1764,7 +1749,7 @@ msgid ""
 "And many others (See AUTHORS file)"
 msgstr ""
 "Geschrieben von: \n"
-"Ales V. Hvezda\n"
+"Ales Hvezda\n"
 "ahvezda@geda.seul.org\n"
 "und vielen anderen (siehe Datei: AUTHORS)"
 
@@ -1846,8 +1831,7 @@ msgstr ""
 
 #: src/x_dialog.c:3728
 #, c-format
-msgid ""
-"There is %d schematics with unsaved changes. Save changes before closing?"
+msgid "There is %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 "Es gibt %d ungesicherte Schaltpläne. Sollen die Änderungen vor dem Schließen "
 "gespeichert werden?"
@@ -1886,12 +1870,12 @@ msgstr "Speichern unter..."
 
 #: src/x_image.c:180
 msgid "Encapsulated Postscript"
-msgstr ""
+msgstr "Encapsulated Postscript"
 
 #: src/x_image.c:298
-#, fuzzy, c-format
+#, c-format
 msgid "x_image_lowlevel: Unable to write eps file %s.\n"
-msgstr "x_image_lowlevel: Konnte %s-Datei %s nicht schreiben.\n"
+msgstr "x_image_lowlevel: Konnte eps-Datei %s nicht schreiben.\n"
 
 #: src/x_image.c:380
 #, c-format
@@ -2022,9 +2006,9 @@ msgstr ""
 "zu setzen\n"
 
 #: src/x_menus.c:482
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't open file %s\n"
-msgstr "Konnte %s nicht aufrufen\n"
+msgstr "Konnte Datei %s nicht öffnen\n"
 
 #: src/x_menus.c:542
 msgid "Clear"
@@ -2032,8 +2016,7 @@ msgstr "Entfernen"
 
 #: src/x_multiattrib.c:656
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
-"Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
+msgstr "Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
 
 #: src/x_multiattrib.c:1145
 msgid "Show Value only"
@@ -2727,3 +2710,4 @@ msgstr "Schließe [%s]\n"
 #~ msgid "Invalid path [%s] passed to font-directory\n"
 #~ msgstr ""
 #~ "Ein ungültiges Verzeichnis [%s] wurde an font-directory übergeben.\n"
+
