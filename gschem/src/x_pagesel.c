@@ -300,6 +300,28 @@ static void pagesel_popup_menu (Pagesel *pagesel,
   
 }
 
+
+/*! \brief Handler for the notify::toplevel signal of GschemDialog
+ *
+ *  \par Function Description
+ *
+ *  When the toplevel property is set on the parent GschemDialog,
+ *  we should update the pagesel dialog.
+ *
+ *  \param [in] pspec      the GParamSpec of the property which changed
+ *  \param [in] gobject    the object which received the signal.
+ *  \param [in] user_data  user data set when the signal handler was connected.
+ */
+static void notify_toplevel_cb (GObject    *gobject,
+                                GParamSpec *arg1,
+                                gpointer    user_data)
+{
+  Pagesel *pagesel = PAGESEL( gobject );
+
+  pagesel_update( pagesel );
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -472,8 +494,8 @@ static void pagesel_init (Pagesel *pagesel)
 					  -1);
 #endif
 
-  /* Strictly, this has the wrong prototype, but it doesn't matter */
-  g_signal_connect( pagesel, "notify::toplevel", G_CALLBACK (pagesel_update), NULL );
+  g_signal_connect( pagesel, "notify::toplevel",
+                    G_CALLBACK( notify_toplevel_cb ), NULL );
 }
 
 
