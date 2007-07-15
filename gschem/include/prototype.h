@@ -848,7 +848,6 @@ void x_multiattrib_open (TOPLEVEL *toplevel, OBJECT *object);
 void x_pagesel_open (TOPLEVEL *toplevel);
 void x_pagesel_close (TOPLEVEL *toplevel);
 void x_pagesel_update (TOPLEVEL *toplevel);
-GtkWidget *e_gtk_button_new_with_icon(const char *text, const char *stock);
 /* x_preview.c */
 /* x_print.c */
 void x_print_setup(TOPLEVEL *w_current, char *filename);
