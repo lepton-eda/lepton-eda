@@ -97,19 +97,21 @@ static void celltextview_cell_editable_init (GtkCellEditableIface *iface);
  *
  */
 static gboolean celltextview_key_press_event (GtkWidget   *widget,
-					      GdkEventKey *event,
-					      gpointer     data)
+                                              GdkEventKey *key_event,
+                                              gpointer     data)
 {
   CellTextView *celltextview = (CellTextView*)widget;
 
-  /* ends editing of cell if one of these keys are pressed */
-  if (
-    /* the Escape key */
-    event->keyval == GDK_Escape ||
-    /* the Enter key without the Control modifier */
-    (!(event->state & GDK_CONTROL_MASK) &&
-     (event->keyval == GDK_Return ||
-      event->keyval == GDK_KP_Enter))) {
+  /* If the Escape key is pressed, we flag the edit as canceled */
+  if (key_event->keyval == GDK_Escape)
+      celltextview->editing_canceled = TRUE;
+
+  /* ends editing of cell if one of these keys are pressed or editing is canceled */
+  if (celltextview->editing_canceled == TRUE ||
+      /* the Enter key without the Control modifier */
+      (!(key_event->state & GDK_CONTROL_MASK) &&
+       (key_event->keyval == GDK_Return ||
+        key_event->keyval == GDK_KP_Enter))) {
     gtk_cell_editable_editing_done  (GTK_CELL_EDITABLE (celltextview));
     gtk_cell_editable_remove_widget (GTK_CELL_EDITABLE (celltextview));
     return TRUE;
@@ -187,8 +189,9 @@ static void celltextview_class_init(CellTextViewClass *klass)
  *  \par Function Description
  *
  */
-static void celltextview_init(CellTextView *self)
+static void celltextview_init(CellTextView *celltextview)
 {
+  celltextview->editing_canceled = FALSE;
 }
 
 /*! \todo Finish function documentation
@@ -296,17 +299,22 @@ static void cellrenderermultilinetext_editing_done(GtkCellEditable *cell_editabl
     cell->focus_out_id = 0;
   }
 
+  gtk_cell_renderer_stop_editing (GTK_CELL_RENDERER (cell),
+                                  CELL_TEXT_VIEW (cell_editable)->editing_canceled);
+  if (CELL_TEXT_VIEW (cell_editable)->editing_canceled)
+    return;
+
   buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (cell_editable));
   gtk_text_buffer_get_start_iter (buffer, &start);
   gtk_text_buffer_get_end_iter   (buffer, &end);
   new_text = gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
-  
+
   path = g_object_get_data (G_OBJECT (cell_editable),
                             CELL_RENDERER_MULTI_LINE_TEXT_PATH);
   g_signal_emit_by_name (cell, "edited", path, new_text);
 
   g_free (new_text);
-  
+
 }
 
 /*! \todo Finish function documentation

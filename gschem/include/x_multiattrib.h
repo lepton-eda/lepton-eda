@@ -83,6 +83,7 @@ struct _CellTextViewClass {
 struct _CellTextView {
   GtkTextView parent_instance;
 
+  gboolean editing_canceled;
 };
 
 
