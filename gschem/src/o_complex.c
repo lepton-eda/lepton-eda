@@ -438,13 +438,11 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
   /* This doesn't allow anything else to be in the selection
    * list when you add a component */
 
-  o_selection_unselect_list(w_current,
-			    &(w_current->page_current->selection_list));
-  o_selection_add(&(w_current->page_current->selection_list), 
-		    w_current->page_current->object_tail);
+  o_selection_unselect_list( w_current, w_current->page_current->selection_list );
+  o_selection_add( w_current->page_current->selection_list, w_current->page_current->object_tail);
   /* the o_redraw_selected is in x_events.c after this call
    * returns */
-  o_attrib_add_selected(w_current, &(w_current->page_current->selection_list),
+  o_attrib_add_selected(w_current, w_current->page_current->selection_list,
                         w_current->page_current->object_tail);
 
   s_conn_update_complex(w_current, o_current->complex->prim_objs);

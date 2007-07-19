@@ -41,46 +41,92 @@
 #include "o_types.h"
 #include "colors.h"
 
+#include "geda_list.h"
+
 #include "../include/prototype.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
 
+/*! \brief Returns a pointer to a new SELECTION object.
+ *  \par Returns a pointer to a new SELECTION object.
+ *  \return pointer to the new SELECTION object.
+ */
+SELECTION *o_selection_new( void )
+{
+  return (SELECTION*)geda_list_new();
+}
+
 /*! \brief Selects the given object and adds it to the selection list
  *  \par Selects the given object and does the needed work to make the
  *  object visually selected.
- *  \param [in] head Pointer to the selection list
+ *  \param [in] selection Pointer to the selection list
  *  \param [in] o_selected Object to select.
  */
-void o_selection_add(GList **head, OBJECT *o_selected)
+void o_selection_add(SELECTION *selection, OBJECT *o_selected)
 {
-  o_selection_select(o_selected, SELECT_COLOR);
-  *head = g_list_append(*head, o_selected);
+  o_selection_select( o_selected, SELECT_COLOR );
+  geda_list_add( (GedaList *)selection, o_selected );
+}
+
+/*! \brief Removes the given object from the selection list
+ *  \par Removes the given object from the selection list and does the 
+ *  needed work to make the object visually unselected.
+ *  It's ok to call this function with an object which is not necessarily
+ *  selected.
+ *  \param [in] selection Pointer to the selection list
+ *  \param [in] o_selected Object to unselect and remove from the list.
+ */
+void o_selection_remove(SELECTION *selection, OBJECT *o_selected )
+{
+  if (o_selected == NULL) {
+    fprintf(stderr, "Got NULL for o_selected in o_selection_remove\n");
+    return;
+  }
+  o_selection_unselect( o_selected );
+  geda_list_remove( (GedaList *)selection, o_selected );
+}
+
+/*! \brief Unselects all the objects in the given list.
+ *  \par Unselects all objects in the given list, does the 
+ *  needed work to make the objects visually unselected, and redraw them.
+ *  \param [in] w_current TOPLEVEL struct.
+ *  \param [in] head Pointer to the selection list
+ */
+void o_selection_unselect_list(TOPLEVEL *w_current, SELECTION *selection)
+{
+  const GList *list = geda_list_get_glist( selection );
+
+  while ( list != NULL ) {
+    o_selection_unselect( (OBJECT *)list->data );
+    o_redraw_single( w_current, (OBJECT *)list->data );
+   list = g_list_next( list );
+  }
+
+  geda_list_remove_all( (GedaList *)selection );
 }
 
 /*! \brief Prints the given selection list.
  *  \par Prints the given selection list.
- *  \param [in] head Pointer to selection list to print.
+ *  \param [in] selection Pointer to selection list to print.
  *
  */
-void o_selection_print_all(const GList **head)
+void o_selection_print_all(const SELECTION *selection)
 {
   const GList *s_current;
 
-  s_current = *head;
+  s_current = geda_list_get_glist( selection );
 
   printf("START printing selection ********************\n");
   while(s_current != NULL) {
     if (s_current->data) {
-      printf("Selected object: %d\n", 
-	     ( (OBJECT *) s_current->data)->sid);
+      printf("Selected object: %d\n", ((OBJECT *)s_current->data)->sid );
     }
     s_current = s_current->next;
   }
   printf("DONE printing selection ********************\n");
   printf("\n");
-
 }
 
 /*! \brief Selects the given object.
@@ -142,45 +188,3 @@ void o_selection_unselect(OBJECT *object)
   object->saved_color = -1;
 }
 
-/*! \brief Removes the given object from the selection list
- *  \par Removes the given object from the selection list and does the 
- *  needed work to make the object visually unselected.
- *  It's ok to call this function with an object which is not necessarily
- *  selected.
- *  \param [in] head Pointer to the selection list
- *  \param [in] o_selected Object to unselect and remove from the list.
- */
-void
-o_selection_remove(GList **head, OBJECT *o_selected)
-{
-  if (o_selected == NULL) {
-    fprintf(stderr, "Got NULL for o_selected in o_selection_remove\n");
-    return;
-  }
-
-  if (g_list_find(*head, o_selected) != NULL) {
-    o_selection_unselect(o_selected);
-    *head = g_list_remove(*head, o_selected);
-  }
-}
-
-/*! \brief Unselects all the objects in the given list.
- *  \par Unselects all objects in the given list, does the 
- *  needed work to make the objects visually unselected, and redraw them.
- *  \param [in] w_current TOPLEVEL struct.
- *  \param [in] head Pointer to the selection list
- */
-void
-o_selection_unselect_list(TOPLEVEL *w_current, GList **head)
-{
-  GList *list = *head;
-  
-  while (list != NULL) {
-    o_selection_unselect((OBJECT *) list->data);
-    o_redraw_single(w_current, (OBJECT *) list->data);
-   list = list->next;
-  }
-  
-  g_list_free(*head);
-  *head = NULL;  
-}

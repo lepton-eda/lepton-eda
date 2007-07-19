@@ -728,7 +728,7 @@ DEFINE_I_CALLBACK(edit_edit)
   exit_if_null(w_current);
 
   i_update_middle_button(w_current, i_callback_edit_edit, _("Edit"));
-  o_edit(w_current, w_current->page_current->selection_list);
+  o_edit(w_current, geda_list_get_glist( w_current->page_current->selection_list ) );
 }
 
 /*! \todo Finish function documentation!!!
@@ -868,7 +868,7 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
   
   o_redraw_cleanstates(w_current);	
 
-  object_list = w_current->page_current->selection_list;    
+  object_list = geda_list_get_glist( w_current->page_current->selection_list );
 
   if (object_list) {
     i_update_middle_button(w_current,
@@ -917,7 +917,7 @@ DEFINE_I_CALLBACK(edit_mirror_hotkey)
 
   o_redraw_cleanstates(w_current);	
 
-  object_list = w_current->page_current->selection_list;    
+  object_list = geda_list_get_glist( w_current->page_current->selection_list );
 
   if (object_list) {
     i_update_middle_button(w_current,
@@ -1024,7 +1024,7 @@ DEFINE_I_CALLBACK(edit_embed)
   if (o_select_selected(w_current)) {
     /* yes, embed each selected component */
     GList *s_current =
-      w_current->page_current->selection_list;
+      geda_list_get_glist( w_current->page_current->selection_list );
 
     while (s_current != NULL) {
       o_current = (OBJECT *) s_current->data;
@@ -1062,7 +1062,7 @@ DEFINE_I_CALLBACK(edit_unembed)
   if (o_select_selected(w_current)) {
     /* yes, unembed each selected component */
     GList *s_current =
-      w_current->page_current->selection_list;
+      geda_list_get_glist( w_current->page_current->selection_list );
 
     while (s_current != NULL) {
       o_current = (OBJECT *) s_current->data;
@@ -1108,7 +1108,7 @@ DEFINE_I_CALLBACK(edit_update)
     /* left selected. */
 
     /* g_list_copy does a shallow copy which is exactly what we need here */
-    selection_copy = g_list_copy(w_current->page_current->selection_list);
+    selection_copy = g_list_copy( geda_list_get_glist( w_current->page_current->selection_list ));
     s_current = selection_copy;
     while (s_current != NULL) {
       o_current = (OBJECT *) s_current->data;
@@ -1119,13 +1119,12 @@ DEFINE_I_CALLBACK(edit_update)
       else
       {
         /* object was not a OBJ_COMPLEX, so unselect it. */
-        o_selection_remove (&(w_current->page_current->selection_list),
-                            o_current);
+        o_selection_remove( w_current->page_current->selection_list, o_current);
       }
       s_current = s_current->next;
     }
     g_list_free(selection_copy);
-   
+
     /* Make sure the display is up to date */
     o_redraw_all(w_current);
   } else {
@@ -1273,7 +1272,7 @@ DEFINE_I_CALLBACK(edit_linetype)
   /* anything selected ? */
   if (o_select_selected(w_current)) {
     GList *s_current =
-      w_current->page_current->selection_list;
+      geda_list_get_glist( w_current->page_current->selection_list );
     GList *objects = NULL;
 
     /* yes, build a list of relevant objects */
@@ -1316,7 +1315,7 @@ DEFINE_I_CALLBACK(edit_filltype)
   /* anything selected ? */
   if (o_select_selected(w_current)) {
     GList *s_current =
-      w_current->page_current->selection_list;
+      geda_list_get_glist( w_current->page_current->selection_list );
     GList *objects = NULL;
 
     /* yes, build a list of relevant objects */
@@ -1830,8 +1829,8 @@ DEFINE_I_CALLBACK(buffer_copy1)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection_list == NULL)
-  return;
+  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+    return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy1, _("Copy 1"));
   o_buffer_copy(w_current, 0);
@@ -1849,8 +1848,8 @@ DEFINE_I_CALLBACK(buffer_copy2)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection_list == NULL)
-  return;
+  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+    return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy2, _("Copy 2"));
   o_buffer_copy(w_current, 1);
@@ -1868,8 +1867,8 @@ DEFINE_I_CALLBACK(buffer_copy3)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection_list == NULL)
-  return;
+  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+    return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy3, _("Copy 3"));
   o_buffer_copy(w_current, 2);
@@ -1887,8 +1886,8 @@ DEFINE_I_CALLBACK(buffer_copy4)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection_list == NULL)
-  return;
+  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+    return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy4, _("Copy 4"));
   o_buffer_copy(w_current, 3);
@@ -1906,8 +1905,8 @@ DEFINE_I_CALLBACK(buffer_copy5)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection_list == NULL)
-  return;
+  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+    return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy5, _("Copy 5"));
   o_buffer_copy(w_current, 4);
@@ -1925,8 +1924,8 @@ DEFINE_I_CALLBACK(buffer_cut1)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection_list == NULL)
-  return;
+  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+    return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut1, _("Cut 1"));
   o_buffer_cut(w_current, 0);
@@ -1944,8 +1943,8 @@ DEFINE_I_CALLBACK(buffer_cut2)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection_list == NULL)
-  return;
+  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+    return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut2, _("Cut 2"));
   o_buffer_cut(w_current, 1);
@@ -1963,8 +1962,8 @@ DEFINE_I_CALLBACK(buffer_cut3)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection_list == NULL)
-  return;
+  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+    return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut3, _("Cut 3"));
   o_buffer_cut(w_current, 2);
@@ -1982,8 +1981,8 @@ DEFINE_I_CALLBACK(buffer_cut4)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection_list == NULL)
-  return;
+  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+    return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut4, _("Cut 4"));
   o_buffer_cut(w_current, 3);
@@ -2001,8 +2000,8 @@ DEFINE_I_CALLBACK(buffer_cut5)
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->selection_list == NULL)
-  return;
+  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+    return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut5, _("Cut 5"));
   o_buffer_cut(w_current, 4);
@@ -2991,7 +2990,7 @@ DEFINE_I_CALLBACK(attributes_attach)
                          _("Attach"));
 
   /* skip over head */
-  s_current = w_current->page_current->selection_list;
+  s_current = geda_list_get_glist( w_current->page_current->selection_list );
   if (!s_current) {
     return;
   }
@@ -3040,7 +3039,7 @@ DEFINE_I_CALLBACK(attributes_detach)
                          _("Detach"));
 
   /* skip over head */
-  s_current = w_current->page_current->selection_list;
+  s_current = geda_list_get_glist( w_current->page_current->selection_list );
   while (s_current != NULL) {
     o_current = (OBJECT *) s_current->data;
     if (o_current) {
@@ -3080,9 +3079,8 @@ DEFINE_I_CALLBACK(attributes_show_name)
                          _("ShowN"));
 
   if (object != NULL) {
-    o_attrib_toggle_show_name_value(w_current, 
-                                    w_current->page_current->
-                                    selection_list,
+    o_attrib_toggle_show_name_value(w_current,
+                                    geda_list_get_glist( w_current->page_current->selection_list ),
                                     SHOW_NAME);
   }
 }
@@ -3111,9 +3109,8 @@ DEFINE_I_CALLBACK(attributes_show_value)
                          _("ShowV"));
 
   if (object != NULL) {
-    o_attrib_toggle_show_name_value(w_current, 
-                                    w_current->page_current->
-                                    selection_list,
+    o_attrib_toggle_show_name_value(w_current,
+                                    geda_list_get_glist( w_current->page_current->selection_list ),
                                     SHOW_VALUE);
   }
 }
@@ -3142,9 +3139,8 @@ DEFINE_I_CALLBACK(attributes_show_both)
                          _("ShowB"));
 
   if (object != NULL) {
-    o_attrib_toggle_show_name_value(w_current, 
-                                    w_current->page_current->
-                                    selection_list,
+    o_attrib_toggle_show_name_value(w_current,
+                                    geda_list_get_glist( w_current->page_current->selection_list ),
                                     SHOW_NAME_VALUE);
   }
 }
@@ -3174,9 +3170,8 @@ DEFINE_I_CALLBACK(attributes_visibility_toggle)
                          _("VisToggle"));
 
   if (object != NULL) {
-    o_attrib_toggle_visibility(w_current, 
-                               w_current->page_current->
-                               selection_list);
+    o_attrib_toggle_visibility(w_current,
+                               geda_list_get_glist( w_current->page_current->selection_list ) );
   }
 }
 

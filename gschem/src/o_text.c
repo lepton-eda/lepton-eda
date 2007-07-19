@@ -415,7 +415,7 @@ void o_text_end(TOPLEVEL *w_current)
   /*! \todo make this VIS and SHOW default configurable */
   w_current->page_current->object_tail =
   o_text_add(w_current, w_current->page_current->object_tail,
-				/* type changed from TEXT to TEXT */
+             /* type changed from TEXT to TEXT */
              OBJ_TEXT,
              w_current->text_color,
              world_x, world_y, LOWER_LEFT, 
@@ -454,12 +454,9 @@ void o_text_end(TOPLEVEL *w_current)
   w_current->override_color = -1;
 
   w_current->page_current->CHANGED=1;
-  o_select_run_hooks(w_current, NULL, 2); 
-  o_selection_unselect_list(w_current,
-			    &(w_current->page_current->selection_list));
-  o_selection_add(&(w_current->page_current->selection_list), 
-		  w_current->page_current->object_tail);
-	
+  o_select_run_hooks( w_current, NULL, 2 );
+  o_selection_unselect_list( w_current, w_current->page_current->selection_list );
+  o_selection_add( w_current->page_current->selection_list, w_current->page_current->object_tail );
 
   /* object_tail is the object that was just added */
   if (w_current->page_current->object_tail->draw_func != NULL &&
@@ -514,8 +511,8 @@ void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size,
   int numselect;
 
   /* skip over head */
-  s_current = w_current->page_current->selection_list;
-  numselect = g_list_length(w_current->page_current->selection_list);
+  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  numselect = g_list_length( geda_list_get_glist( w_current->page_current->selection_list ));
   
   while(s_current != NULL) {
     object = (OBJECT *) s_current->data;

@@ -402,12 +402,14 @@ void o_pin_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichon
 void o_pin_update_whichend(TOPLEVEL *w_current, OBJECT *object_list, int num_pins);
 
 /* o_selection.c */
-void o_selection_add(GList **head, OBJECT *o_selected);
-void o_selection_print_all(const GList **head);
+SELECTION *o_selection_new( void );
+void o_selection_add(SELECTION *selection, OBJECT *o_selected);
+void o_selection_print_all(const SELECTION *selection);
+void o_selection_remove(SELECTION *selection, OBJECT *o_selected);
+void o_selection_unselect_list(TOPLEVEL *w_current, SELECTION *selection);
+
 void o_selection_select(OBJECT *object, int color); /* DEPRECATED */
 void o_selection_unselect(OBJECT *object);          /* DEPRECATED */
-void o_selection_remove(GList **head, OBJECT *o_selected);
-void o_selection_unselect_list(TOPLEVEL *w_current, GList **head);
 
 /* o_text_basic.c */
 int world_get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom);

@@ -37,7 +37,7 @@
  */
 void o_move_start(TOPLEVEL * w_current, int x, int y)
 {
-  if (w_current->page_current->selection_list != NULL) {
+  if ( geda_list_get_glist( w_current->page_current->selection_list ) != NULL) {
 
     /* Save the current state. When rotating the selection when moving,
        we have to come back to here */
@@ -49,18 +49,18 @@ void o_move_start(TOPLEVEL * w_current, int x, int y)
     w_current->last_y = w_current->start_y = fix_y(w_current, y);
 
     o_erase_selected(w_current);
-    
+
     o_drawbounding(w_current, NULL,
-                   w_current->page_current->selection_list,
+                   geda_list_get_glist( w_current->page_current->selection_list ),
                    x_get_darkcolor(w_current->bb_color), TRUE);
 
     if (w_current->netconn_rubberband) {
       o_move_prep_rubberband(w_current);
       o_move_stretch_rubberband(w_current);
     }
-    
-    o_select_move_to_place_list(w_current); 
-    w_current->inside_action = 1;    
+
+    o_select_move_to_place_list(w_current);
+    w_current->inside_action = 1;
   }
 }
 
@@ -209,12 +209,12 @@ void o_move_end(TOPLEVEL * w_current)
 
   if (w_current->actionfeedback_mode == OUTLINE) {
     o_drawbounding(w_current, NULL,
-                   w_current->page_current->selection_list,
+                   geda_list_get_glist( w_current->page_current->selection_list ),
                    x_get_darkcolor(w_current->bb_color), TRUE);
   }
-  
+
   /* skip over head node */
-  s_current = w_current->page_current->selection_list;
+  s_current = geda_list_get_glist( w_current->page_current->selection_list );
 
   while (s_current != NULL) {
 
@@ -280,7 +280,7 @@ void o_move_end(TOPLEVEL * w_current)
   /* erase the bounding box */
   if (w_current->actionfeedback_mode == BOUNDINGBOX) {
     o_drawbounding(w_current, NULL,
-                   w_current->page_current->selection_list,
+                   geda_list_get_glist( w_current->page_current->selection_list ),
                    x_get_darkcolor(w_current->bb_color), FALSE);
   }
 
@@ -431,7 +431,7 @@ void o_move_prep_rubberband(TOPLEVEL * w_current)
   printf("\n\n\n");
 #endif
 
-  s_current = w_current->page_current->selection_list;
+  s_current = geda_list_get_glist( w_current->page_current->selection_list );
   while (s_current != NULL) {
     object = (OBJECT *) s_current->data;
     if (object) {

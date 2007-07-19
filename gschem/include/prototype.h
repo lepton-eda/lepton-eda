@@ -473,7 +473,7 @@ void o_arc_rubberarc_xor(TOPLEVEL *w_current);
 void o_arc_draw_grips(TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
 /* o_attrib.c */
-void o_attrib_add_selected(TOPLEVEL *w_current, GList **selection_list, OBJECT *selected);
+void o_attrib_add_selected(TOPLEVEL *w_current, SELECTION *selection, OBJECT *selected);
 void o_attrib_toggle_visibility(TOPLEVEL *w_current, GList *list);
 void o_attrib_toggle_show_name_value(TOPLEVEL *w_current, GList *list, int new_show_name_value);
 void o_attrib_start(TOPLEVEL *w_current, int screen_x, int screen_y);

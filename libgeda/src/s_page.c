@@ -101,7 +101,7 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   page->object_head->type = OBJ_HEAD;
 
   /* new selection mechanism */
-  page->selection_list = NULL;
+  page->selection_list = o_selection_new();
 
   /* net/pin/bus stretch when doing moves */
   page->stretch_head = page->stretch_tail = s_stretch_new_head();
@@ -167,7 +167,6 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   gchar *real_filename;
   gchar *only_filename;
   gchar *dirname;
-  int redraw_status=toplevel->DONT_REDRAW;
 
   g_assert (page->pid != -1);
 
@@ -210,21 +209,19 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   }
   g_free(real_filename);
 
-  /* first unselect the objects, without redrawing them */
-  toplevel->DONT_REDRAW = 1;
-  o_selection_unselect_list(toplevel, &(page->selection_list));
-  toplevel->DONT_REDRAW = redraw_status;
+  /* Free the selection object */
+  g_object_unref( page->selection_list );
 
   /* then delete objects of page */
   s_delete_list_fromstart (toplevel, page->object_head);
-  
+
   toplevel->REMOVING_SEL = 1;
   /* The complex place list contain a reference to the objects in the page */
   /* So don't free the objects there. */
   g_list_free (page->complex_place_list);
   page->complex_place_list = NULL;
   s_delete_list_fromstart (toplevel, page->attrib_place_head);
-  toplevel->REMOVING_SEL = 0;  
+  toplevel->REMOVING_SEL = 0;
 
 #if DEBUG
   printf("Freeing page: %s\n", page->page_filename);

@@ -649,10 +649,10 @@ void o_picture_exchange (TOPLEVEL *w_current, GdkPixbuf *pixbuf,
 {
   GList *list;  
 
-  list = w_current->page_current->selection_list;
+  list = geda_list_get_glist( w_current->page_current->selection_list );
   while (list != NULL) {
     OBJECT *object;
-    
+
     object = (OBJECT *) list->data;
     if (object == NULL) {
       fprintf(stderr, _("ERROR: NULL object!\n"));

@@ -162,18 +162,16 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* condition: for both multiple and single object added */
           /* result: remove all objects from selection */
           if (count == 0 && !CONTROLKEY) {
-            o_select_run_hooks(w_current, NULL, 2);
-	    o_selection_unselect_list (w_current,
-				       &(w_current->page_current->selection_list));
+            o_select_run_hooks( w_current, NULL, 2 );
+            o_selection_unselect_list (w_current,w_current->page_current->selection_list);
           }
           break;
 
       } /* end shift key switch */
 
       /* object not select, add it to the selection list */
-      o_select_run_hooks(w_current, o_current, 1);
-      o_selection_add(&(w_current->page_current->selection_list),
-		      o_current);
+      o_select_run_hooks( w_current, o_current, 1 );
+      o_selection_add( w_current->page_current->selection_list, o_current);
 
       break;
 
@@ -187,9 +185,8 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* condition: not doing multiple */
           /* result: remove object from selection */
           if (type != MULTIPLE) {
-            o_select_run_hooks(w_current, o_current, 0);
-            o_selection_remove(&(w_current->page_current->selection_list),
-                               o_current);
+            o_select_run_hooks( w_current, o_current, 0 );
+            o_selection_remove( w_current->page_current->selection_list, o_current );
           }
 
           break;
@@ -202,13 +199,11 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* 1st result: remove all objects from selection */
           /* 2nd result: add object to selection */
           if (type == MULTIPLE && count == 0 && !CONTROLKEY) {
-            o_select_run_hooks(w_current, NULL, 2);
-	    o_selection_unselect_list (w_current,
-				       &(w_current->page_current->selection_list));
-	    
-	    o_select_run_hooks(w_current, o_current, 1);
-	    o_selection_add(&(w_current->page_current->selection_list),
-			    o_current);
+            o_select_run_hooks( w_current, NULL, 2 );
+            o_selection_unselect_list (w_current, w_current->page_current->selection_list );
+
+            o_select_run_hooks( w_current, o_current, 1 );
+            o_selection_add( w_current->page_current->selection_list, o_current);
           }	
 
           /* condition: doing single object add */
@@ -216,19 +211,16 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* 1st result: remove all objects from selection */
           /* 2nd result: add object to selection list */
           if (type == SINGLE && !CONTROLKEY) {
-            o_select_run_hooks(w_current, NULL, 2);
-	    o_selection_unselect_list (w_current,
-				       &(w_current->page_current->selection_list));
+            o_select_run_hooks( w_current, NULL, 2 );
+            o_selection_unselect_list( w_current, w_current->page_current->selection_list );
 
             o_select_run_hooks (w_current, o_current, 1);
-	    o_selection_add(&(w_current->page_current->selection_list),
-			    o_current);
+            o_selection_add( w_current->page_current->selection_list, o_current);
           }
 
           if (CONTROLKEY) {
             o_select_run_hooks(w_current, o_current, 0);
-            o_selection_remove(&(w_current->page_current->selection_list),
-                               o_current);
+            o_selection_remove( w_current->page_current->selection_list, o_current);
           }
 
           break;
@@ -237,8 +229,7 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
   }
 
   /* do the attributes */
-  o_attrib_add_selected(w_current, &(w_current->page_current->selection_list),
-                        o_current);
+  o_attrib_add_selected(w_current, w_current->page_current->selection_list, o_current);
 
   /* finally redraw object */
   o_redraw_single(w_current, o_current);
@@ -418,9 +409,8 @@ void o_select_box_search(TOPLEVEL *w_current)
   /* zero, and you need to deselect anything remaining (unless the shift */
   /* key was pressed */
   if (count == 0 && !SHIFTKEY) {
-    o_select_run_hooks(w_current, NULL, 2);
-    o_selection_unselect_list( w_current,
-                               &(w_current->page_current->selection_list) );
+    o_select_run_hooks( w_current, NULL, 2 );
+    o_selection_unselect_list( w_current, w_current->page_current->selection_list );
   }
   i_update_menus(w_current);
 }
@@ -429,10 +419,10 @@ void o_select_box_search(TOPLEVEL *w_current)
 /* This function always looks at the current page selection list */ 
 OBJECT *o_select_return_first_object(TOPLEVEL *w_current) 
 {
-  if (! (w_current && w_current->page_current && w_current->page_current->selection_list))
+  if (! (w_current && w_current->page_current && geda_list_get_glist( w_current->page_current->selection_list )))
     return NULL;
   else
-    return((OBJECT *) g_list_first(w_current->page_current->selection_list)->data);
+    return (OBJECT *)g_list_first( geda_list_get_glist( w_current->page_current->selection_list ))->data;
 }
 
 /*! \todo Finish function documentation!!!
@@ -444,7 +434,7 @@ OBJECT *o_select_return_first_object(TOPLEVEL *w_current)
  */
 int o_select_selected(TOPLEVEL *w_current)
 {
-  if (w_current->page_current->selection_list) {
+  if ( geda_list_get_glist( w_current->page_current->selection_list )) {
     return(TRUE);
   }
   return(FALSE);
@@ -457,9 +447,8 @@ int o_select_selected(TOPLEVEL *w_current)
  */
 void o_select_unselect_all(TOPLEVEL *w_current)
 {
-  o_select_run_hooks(w_current, NULL, 2);
-  o_selection_unselect_list (w_current,
-			     &(w_current->page_current->selection_list));
+  o_select_run_hooks( w_current, NULL, 2 );
+  o_selection_unselect_list( w_current, w_current->page_current->selection_list );
 }
 
 /*! \todo Finish function documentation!!!
@@ -472,8 +461,8 @@ o_select_move_to_place_list(TOPLEVEL *w_current)
 {
   GList *selection;
   OBJECT *o_current;
-  
-  selection= w_current->page_current->selection_list;
+
+  selection = geda_list_get_glist( w_current->page_current->selection_list );
 
   if (!selection) {
     return;

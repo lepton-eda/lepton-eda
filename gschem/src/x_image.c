@@ -364,10 +364,9 @@ void x_image_lowlevel(TOPLEVEL *w_current, const char* filename,
              page_center_top + (page_height / 2));
 
   /* de select everything first */
-  o_select_run_hooks(w_current, NULL, 2); 
-  o_selection_unselect_list(w_current,
-			    &(w_current->page_current->selection_list));
-		
+  o_select_run_hooks( w_current, NULL, 2 );
+  o_selection_unselect_list( w_current, w_current->page_current->selection_list );
+
  if (strcmp(filetype, "eps") == 0) /*WK - catch EPS export case*/
     x_image_write_eps(w_current, filename);
  else {    

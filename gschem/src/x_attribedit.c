@@ -132,7 +132,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
     int world_x, world_y;
     OBJECT *new = NULL;
 
-    s_current = w_current->page_current->selection_list;
+    s_current = geda_list_get_glist( w_current->page_current->selection_list );
     while (s_current != NULL) {
       object = (OBJECT *)s_current->data;
       if (object == NULL) {
@@ -144,7 +144,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
       }
       s_current = s_current->next;
     }
-    s_current = w_current->page_current->selection_list;
+    s_current = geda_list_get_glist( w_current->page_current->selection_list );
     if (nsel > 1) {
 
       addtoallbutton =
@@ -316,7 +316,7 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     return;
 
   /* gschem specific: What do we count here? (Werner)  */
-  for (s_current = w_current->page_current->selection_list;
+  for (s_current = geda_list_get_glist( w_current->page_current->selection_list );
        s_current != NULL;
        s_current = s_current->next) {
     if (!((OBJECT *) s_current->data)->attached_to) {

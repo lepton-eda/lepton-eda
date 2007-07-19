@@ -52,21 +52,21 @@ void o_redraw_all(TOPLEVEL *w_current)
     switch(w_current->event_state) {
       case(MOVE):
       case(ENDMOVE):
-	o_erase_selected(w_current);	
-	/* continue */
+        o_erase_selected(w_current);
+        /* continue */
       case(ENDCOPY):
       case(ENDMCOPY):
-	o_drawbounding(w_current, NULL,
-                       w_current->page_current->selection_list,
+        o_drawbounding(w_current, NULL,
+                       geda_list_get_glist( w_current->page_current->selection_list ),
                        x_get_darkcolor(w_current->bb_color), FALSE);
 
         break;
 
       case(DRAWCOMP):
       case(ENDCOMP):
-        o_drawbounding(w_current, 
+        o_drawbounding(w_current,
                        NULL,
-		       w_current->page_current->complex_place_list,
+                       w_current->page_current->complex_place_list,
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
 
@@ -148,7 +148,7 @@ void o_unselect_all(TOPLEVEL *w_current)
   if (!w_current->SHIFTKEY) {
     o_select_run_hooks(w_current, NULL, 2);
     o_selection_unselect_list(w_current,
-			      &(w_current->page_current->selection_list));
+                              w_current->page_current->selection_list );
   }
 }
 
@@ -192,14 +192,13 @@ void o_draw_selected(TOPLEVEL *w_current)
     return;
   }
 
-  s_current = w_current->page_current->selection_list;
+  s_current = geda_list_get_glist( w_current->page_current->selection_list );
   while (s_current != NULL) {
     o_current = (OBJECT *) s_current->data;
 
     if (o_current) {
       o_redraw_single(w_current, o_current);
     }
-    
     s_current=s_current->next;
   }
 
@@ -218,7 +217,7 @@ void o_erase_selected(TOPLEVEL *w_current)
     return;
   }
 
-  s_current = w_current->page_current->selection_list;
+  s_current = geda_list_get_glist( w_current->page_current->selection_list );
   while (s_current != NULL) {
     o_current = (OBJECT *) s_current->data;
 

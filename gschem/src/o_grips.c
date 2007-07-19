@@ -103,7 +103,7 @@ OBJECT *o_grips_search_world(TOPLEVEL *w_current, int x, int y, int *whichone)
   w_size = WORLDabs( w_current, size );
 	
   /* skip over head */
-  s_current = w_current->page_current->selection_list;
+  s_current = geda_list_get_glist( w_current->page_current->selection_list );
   while (s_current != NULL) {
     object = (OBJECT *) s_current->data;
     if (object) {

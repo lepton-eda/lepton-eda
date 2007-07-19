@@ -43,7 +43,7 @@ void o_buffer_copy(TOPLEVEL *w_current, int buf_num)
     return;
   }
 
-  s_current = w_current->page_current->selection_list;
+  s_current = geda_list_get_glist( w_current->page_current->selection_list );
 
   if (object_buffer[buf_num] == NULL) {
     object_buffer[buf_num] = s_basic_init_object("buffer0_head");
@@ -81,7 +81,7 @@ void o_buffer_cut(TOPLEVEL *w_current, int buf_num)
     return;
   }
 
-  s_current = w_current->page_current->selection_list;
+  s_current = geda_list_get_glist( w_current->page_current->selection_list );
 
   if (object_buffer[buf_num] == NULL) {
     object_buffer[buf_num] = s_basic_init_object("buffer0_head");
@@ -173,7 +173,7 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
   int w_diff_x, w_diff_y;
   OBJECT *o_current;
   OBJECT *o_saved;
-  GList *temp_list;
+  SELECTION *temp_list = o_selection_new();
   PAGE *p_current;
   GList *connected_objects = NULL;
 
@@ -217,11 +217,10 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
 
   p_current->object_tail = return_tail(p_current->object_head);
   o_current = o_saved->next;
-  temp_list = NULL;
 
   /* now add new objects to the selection list */
   while (o_current != NULL) {
-    o_selection_add(&temp_list, o_current);
+    o_selection_add( temp_list, o_current );
     s_conn_update_object(w_current, o_current);
     if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
       connected_objects = s_conn_return_complex_others(
@@ -239,12 +238,13 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
   o_cue_draw_list(w_current, connected_objects);
   g_list_free(connected_objects);
   connected_objects = NULL;
-    
+
   o_select_run_hooks(w_current, NULL, 2); 
 
-  o_selection_unselect_list(w_current,
-			    &(w_current->page_current->selection_list));
-  w_current->page_current->selection_list = temp_list;
+  o_selection_unselect_list( w_current, w_current->page_current->selection_list );
+  geda_list_add_glist( w_current->page_current->selection_list, geda_list_get_glist( temp_list ) );
+
+  g_object_unref( temp_list );
 
   w_current->page_current->CHANGED = 1;
   o_redraw(w_current, o_saved->next, TRUE); /* only redraw new objects */

@@ -592,7 +592,7 @@ int o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
   OBJECT *other_object;
   int changed = 0;
   int reselect_new=FALSE;
-  
+
   if (object == NULL) {
     return(0);
   }
@@ -615,7 +615,7 @@ int o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
     if (other_object != NULL && conn->type == CONN_ENDPOINT &&
         conn->other_whichone != -1 && conn->whichone != -1 &&
         o_net_consolidate_nomidpoint(object, conn->x, conn->y) ) {
-      
+
       if (other_object->type == OBJ_NET) {
         other_orient = o_net_orientation(other_object);
 
@@ -625,26 +625,23 @@ int o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
             object->sid != other_object->sid &&
             other_orient != NEITHER) {
 
-#if DEBUG          
+#if DEBUG
           printf("consolidating %s to %s\n", object->name, other_object->name);
-#endif          
-          
+#endif
+
           o_net_consolidate_lowlevel(object, other_object, other_orient);
 
           changed++;
           if (other_object->selected == TRUE ) {
-            o_selection_remove(&(w_current->page_current->selection_list), 
-                               other_object);
+            o_selection_remove( w_current->page_current->selection_list, other_object );
             reselect_new=TRUE;
           }
 
           if (reselect_new == TRUE) {
-            o_selection_remove(&(w_current->page_current->selection_list), 
-                               object);
-	    o_selection_add(&(w_current->page_current->selection_list), 
-			    object);
+            o_selection_remove( w_current->page_current->selection_list, object );
+            o_selection_add( w_current->page_current->selection_list, object );
           }
-				
+
           s_conn_remove(w_current, other_object);
           s_delete(w_current, other_object);
           o_net_recalc(w_current, object);

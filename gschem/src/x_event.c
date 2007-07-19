@@ -89,7 +89,7 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
       case(ENDCOPY):
       case(ENDMCOPY):
         o_drawbounding(w_current, NULL,
-                       w_current->page_current->selection_list,
+                       geda_list_get_glist( w_current->page_current->selection_list ),
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
       case(DRAWCOMP):
@@ -170,8 +170,8 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       (w_current->event_state == STARTSELECT || 
        w_current->event_state == SELECT)) {
     o_find_object(w_current, (int) event->x, (int) event->y, TRUE);
-    if (w_current->page_current->selection_list) {
-       o_edit(w_current, w_current->page_current->selection_list);
+    if ( geda_list_get_glist( w_current->page_current->selection_list )) {
+       o_edit(w_current, geda_list_get_glist( w_current->page_current->selection_list ));
        return(0);
     }
   }
@@ -421,40 +421,40 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ENDROTATEP):
-	prev_state = w_current->DONT_REDRAW;
-	w_current->DONT_REDRAW = 0;
-        
+        prev_state = w_current->DONT_REDRAW;
+        w_current->DONT_REDRAW = 0;
+
         SCREENtoWORLD( w_current,
-  	       (int) event->x,
-  	       (int) event->y,
-               &w_x, &w_y );
+                       (int) event->x,
+                       (int) event->y,
+                       &w_x, &w_y );
         w_x = snap_grid(w_current, w_x);
         w_y = snap_grid(w_current, w_y);
 
         o_rotate_90_world(
                     w_current,
-                    w_current->page_current->selection_list,
+                    geda_list_get_glist( w_current->page_current->selection_list ),
                     w_x, w_y);
-	w_current->DONT_REDRAW = prev_state;
+        w_current->DONT_REDRAW = prev_state;
 
         w_current->inside_action = 0;
-	i_set_state(w_current, SELECT);
+        i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         break;
 
       case(ENDMIRROR):
         SCREENtoWORLD( w_current,
-  	       (int) event->x,
-  	       (int) event->y,
+                       (int) event->x,
+                       (int) event->y,
                &w_x, &w_y );
         o_mirror_world(w_current,
-                 w_current->page_current->selection_list,
-                 w_x, w_y);
+                       geda_list_get_glist( w_current->page_current->selection_list ),
+                       w_x, w_y);
         w_x = snap_grid(w_current, w_x);
         w_y = snap_grid(w_current, w_y);
 
         w_current->inside_action = 0;
-	i_set_state(w_current, SELECT);
+        i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         break;
 
@@ -1103,12 +1103,12 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     case(MCOPY):
     if (w_current->inside_action) {
       o_drawbounding(w_current, NULL,
-                     w_current->page_current->selection_list,
+                     geda_list_get_glist( w_current->page_current->selection_list ),
                      x_get_darkcolor(w_current->bb_color), FALSE);
       w_current->last_x = fix_x(w_current,  (int) event->x);
       w_current->last_y = fix_y(w_current,  (int) event->y);
       o_drawbounding(w_current, NULL,
-                     w_current->page_current->selection_list,
+                     geda_list_get_glist( w_current->page_current->selection_list ),
                      x_get_darkcolor(w_current->bb_color), FALSE);
     }
     break;

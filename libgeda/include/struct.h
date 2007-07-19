@@ -22,6 +22,9 @@
 
 #include <glib.h>  /* Include needed to make GList work. */
 
+/* Wrappers around a new list mechanism */
+typedef struct _GedaList SELECTION;
+
 /* gschem structures (gschem) */
 typedef struct st_complex COMPLEX;
 typedef struct st_line LINE;
@@ -345,7 +348,7 @@ struct st_page {
   OBJECT *object_head;
   OBJECT *object_tail;
   OBJECT *object_parent;
-  GList *selection_list; /* new selection mechanism */
+  SELECTION *selection_list; /* new selection mechanism */
   GList *complex_place_list;
   OBJECT *attrib_place_head;
   OBJECT *attrib_place_tail; 

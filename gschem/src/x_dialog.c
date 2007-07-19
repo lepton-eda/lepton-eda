@@ -425,7 +425,7 @@ void text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
   GtkTextIter start, end;
   GtkWidget *widget;
 
-  num_selected = g_list_length(w_current->page_current->selection_list);
+  num_selected = g_list_length( geda_list_get_glist( w_current->page_current->selection_list ));
 
   /* text string entry will only show up if one object is selected */
   if (num_selected == 1) {
@@ -539,7 +539,7 @@ void text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
     /* add a text box if only one object is selected */
-    num_selected = g_list_length(w_current->page_current->selection_list);
+    num_selected = g_list_length( geda_list_get_glist( w_current->page_current->selection_list ));
 
     if (num_selected == 1) {
       label = gtk_label_new (_("<b>Text Content</b>"));
@@ -2275,7 +2275,7 @@ static GtkWidget *create_color_menu (TOPLEVEL * w_current, int * select_index)
   menu = gtk_menu_new ();
   group = NULL;
 
-  s_current = w_current->page_current->selection_list;
+  s_current = geda_list_get_glist( w_current->page_current->selection_list );
 
   if (s_current != NULL) {
 
@@ -2351,7 +2351,7 @@ void color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
   GList *s_current = NULL;
   OBJECT *object = NULL;
 
-  s_current = w_current->page_current->selection_list;
+  s_current = geda_list_get_glist( w_current->page_current->selection_list );
 
   while(s_current != NULL) {
 

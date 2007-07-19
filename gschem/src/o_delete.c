@@ -246,7 +246,7 @@ void o_delete(TOPLEVEL *w_current)
 
 
   /* skip over head node */
-  s_current = w_current->page_current->selection_list;
+  s_current = geda_list_get_glist( w_current->page_current->selection_list );
 
   while(s_current != NULL) {
 
@@ -300,10 +300,9 @@ void o_delete(TOPLEVEL *w_current)
 
   w_current->inside_action = 0;
 
-  /* Objects have been deleted. Free the list, without freeing again 
-     the objects */
-  g_list_free(w_current->page_current->selection_list);
-  w_current->page_current->selection_list = NULL;
+  /* Objects in the selection list have been deleted. Empty the list without touching the objects */
+  geda_list_remove_all( w_current->page_current->selection_list );
+
   w_current->page_current->CHANGED=1;
 
   /* no longer needed */

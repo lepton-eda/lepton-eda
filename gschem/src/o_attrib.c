@@ -52,12 +52,12 @@
  *
  *  \todo get a better name
  */
-void o_attrib_add_selected(TOPLEVEL *w_current, GList** selection_list_ptr,
-			   OBJECT *selected)
+void o_attrib_add_selected(TOPLEVEL *w_current, SELECTION *selection,
+                           OBJECT *selected)
 {
   ATTRIB *a_current;
 
-  if (!(*selection_list_ptr)) return;
+  g_assert( selection != NULL );
 
   /* deal with attributes here? */
   if (selected->attribs != NULL) {
@@ -68,12 +68,9 @@ void o_attrib_add_selected(TOPLEVEL *w_current, GList** selection_list_ptr,
 
       if (a_current->object) {
 
-				/* make sure object isn't selected already */
+        /* make sure object isn't selected already */
         if (a_current->object->saved_color == -1) {
-          o_selection_add(selection_list_ptr,
-			  /* w_current->page_current->
-			     selection2_head,*/
-			  a_current->object);
+          o_selection_add(selection, a_current->object);
           o_redraw_single(w_current, a_current->object);
         }
 
@@ -334,8 +331,14 @@ void o_attrib_end(TOPLEVEL *w_current)
 
   /* here is where you attach the stuff */
   /* if an object is selected, else just place it */
-  /* selection_head should never be null since it has a head struct */
-  object = (OBJECT *) g_list_first (w_current->page_current->selection_list)->data;
+
+  GList *iter = geda_list_get_glist( w_current->page_current->selection_list );
+
+  if ( iter == NULL )
+    object = NULL;
+  else
+    object = (OBJECT *)iter->data;
+
   if (object != NULL) {
     /* should attribute be selected? probably */
     /* this is probably okay, NEWSEL, since tail is a single obj */
@@ -345,9 +348,9 @@ void o_attrib_end(TOPLEVEL *w_current)
                     object);
   }
 
-  o_selection_add(&(w_current->page_current->selection_list),
-		  w_current->page_current->object_tail);
-  o_undo_savestate(w_current, UNDO_ALL);
+  o_selection_add( w_current->page_current->selection_list,
+                   w_current->page_current->object_tail );
+  o_undo_savestate( w_current, UNDO_ALL );
 }
 
 /*! \todo Finish function documentation!!!
@@ -466,8 +469,8 @@ OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current,
                     o_current);
   }
 
-  o_selection_add(&(w_current->page_current->selection_list),
-		  w_current->page_current->object_tail);
+  o_selection_add( w_current->page_current->selection_list,
+                   w_current->page_current->object_tail );
 
   o_text_erase(w_current, w_current->page_current->object_tail); 
   o_text_draw(w_current, w_current->page_current->object_tail);

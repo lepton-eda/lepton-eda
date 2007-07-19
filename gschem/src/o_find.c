@@ -115,14 +115,12 @@ gboolean o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y,
   /* deselect everything only if shift key isn't pressed and 
      the caller allows it */	
   if (change_selection && (!w_current->SHIFTKEY)) {
-
-    o_select_run_hooks(w_current, NULL, 2); 
-    o_selection_unselect_list (w_current,
-			       &(w_current->page_current->selection_list));
+    o_select_run_hooks(w_current, NULL, 2);
+    o_selection_unselect_list (w_current, w_current->page_current->selection_list );
   }
 
   i_update_menus(w_current);
-  
+
   return (object_found);
 }
 
@@ -141,7 +139,7 @@ gboolean o_find_selected_object(TOPLEVEL *w_current,
   SCREENtoWORLD( w_current, screen_x, screen_y, &w_x, &w_y );
   w_slack = WORLDabs( w_current, w_current->select_slack_pixels );
 
-  s_current = w_current->page_current->selection_list;
+  s_current = geda_list_get_glist( w_current->page_current->selection_list );
   /* do first search */
   while (s_current != NULL) {
     o_current = (OBJECT *) s_current->data;
