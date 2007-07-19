@@ -23,7 +23,8 @@ libgeda_la_SOURCES = \
 	s_log.c s_textbuffer.c \
 	s_page.c s_slib.c s_color.c s_undo.c s_conn.c \
 	s_cue.c s_tile.c s_menu.c s_toplevel.c g_smob.c libgeda.c \
-	g_register.c g_rc.c i_vars.c o_picture.c gdk-pixbuf-hacks.c
+	g_register.c g_rc.c i_vars.c o_picture.c gdk-pixbuf-hacks.c \
+	geda_list.c
 
 INCLUDES = -I$(top_srcdir)/include @LIBGEDA_CFLAGS@
 libgeda_la_LDFLAGS = @LIBTOOL_FLAGS@ @LIBGEDA_LDFLAGS@

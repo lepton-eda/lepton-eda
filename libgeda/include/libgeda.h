@@ -36,6 +36,7 @@
 #include <libgeda/papersizes.h>
 #include <libgeda/i_vars.h>
 #include <libgeda/prototype.h>
+#include <libgeda/geda_list.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
