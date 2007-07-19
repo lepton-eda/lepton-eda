@@ -249,17 +249,14 @@ static GtkCellEditable* cellrenderermultilinetext_start_editing(GtkCellRenderer 
   gtk_text_buffer_set_text (textbuffer,
                             cell_text->text,
                             strlen (cell_text->text));
-  
+
   textview = GTK_WIDGET (g_object_new (TYPE_CELL_TEXT_VIEW,
                                        /* GtkTextView */
-				       /* unknown property in GTK 2.2, use
-					* gtk_text_view_set_buffer() instead */
-				       /* "buffer",   textbuffer, */
+                                       "buffer",   textbuffer,
                                        "editable", TRUE,
                                        /* GtkWidget */
                                        "height-request", cell_area->height,
                                        NULL));
-  gtk_text_view_set_buffer (GTK_TEXT_VIEW (textview), textbuffer);
   g_object_set_data_full (G_OBJECT (textview),
                           CELL_RENDERER_MULTI_LINE_TEXT_PATH,
                           g_strdup (path), g_free);
