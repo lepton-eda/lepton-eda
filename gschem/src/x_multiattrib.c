@@ -1335,7 +1335,8 @@ static void selection_changed_cb (SELECTION *selection, Multiattrib *multiattrib
     if (object->type == OBJ_COMPLEX ||
         object->type == OBJ_PLACEHOLDER ||
         object->type == OBJ_NET ||
-        object->type == OBJ_BUS) {
+        object->type == OBJ_BUS ||
+        object->type == OBJ_PIN) {
       object_count++;
     }
   }
