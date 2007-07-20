@@ -103,7 +103,6 @@ void x_pagesel_update (TOPLEVEL *toplevel)
     g_assert (IS_PAGESEL (toplevel->pswindow));
     pagesel_update (PAGESEL (toplevel->pswindow));
   }
-  
 }
 
 /*! \brief Callback for page manager response.

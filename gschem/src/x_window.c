@@ -745,8 +745,7 @@ void x_window_close(TOPLEVEL *w_current)
   if (w_current->aawindow)
   gtk_widget_destroy(w_current->aawindow);
 
-  if (w_current->mawindow)
-  gtk_widget_destroy(w_current->mawindow);
+  x_multiattrib_close (w_current);
 
   if (w_current->aewindow)
   gtk_widget_destroy(w_current->aewindow);
@@ -978,6 +977,7 @@ x_window_set_current_page (TOPLEVEL *toplevel, PAGE *page)
   i_set_filename (toplevel, page->page_filename);
 
   x_pagesel_update (toplevel);
+  x_multiattrib_update (toplevel);
 
   toplevel->DONT_REDRAW = 1;
   x_repaint_background (toplevel);

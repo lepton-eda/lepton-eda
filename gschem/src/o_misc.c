@@ -75,7 +75,7 @@ void o_edit(TOPLEVEL *w_current, GList *list)
     case(OBJ_NET):
     case(OBJ_PIN):
     case(OBJ_BUS):
-    x_multiattrib_open (w_current, o_current);
+    x_multiattrib_open (w_current);
     break;
 
     case(OBJ_PICTURE):

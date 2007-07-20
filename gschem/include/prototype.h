@@ -842,7 +842,9 @@ gboolean g_file_set_contents(const gchar *filename, const gchar *contents,
       gssize length, GError **error);
 #endif
 /* x_multiattrib.c */
-void x_multiattrib_open (TOPLEVEL *toplevel, OBJECT *object);
+void x_multiattrib_open (TOPLEVEL *toplevel);
+void x_multiattrib_close (TOPLEVEL *toplevel);
+void x_multiattrib_update (TOPLEVEL *toplevel);
 /* x_multimulti.c */
 /* x_pagesel.c */
 void x_pagesel_open (TOPLEVEL *toplevel);

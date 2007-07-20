@@ -41,46 +41,96 @@
 #include "../include/gschem_dialog.h"
 #include "../include/x_multiattrib.h"
 
-/*! \brief Open multiple attribute editor dialog.
+/*! \brief Process the response returned by the multi-attribte dialog.
  *  \par Function Description
- *  Opens the multiple attribute editor dialog for <B>object</B> in the
- *  context of <B>toplevel</B>.
+ *  This function handles the response <B>arg1</B> of the multi-attribute
+ *  editor dialog <B>dialog</B>.
  *
- *  The dialog is modal and this function does not return until the user
- *  closes the dialog.
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] object    OBJECT to edit attributes on.
+ *  \param [in] dialog    The multi-attribute editor dialog.
+ *  \param [in] arg1      The response ID.
+ *  \param [in] user_data A pointer on the toplevel environment.
  */
-void x_multiattrib_open (TOPLEVEL *toplevel, OBJECT *object)
+static void
+multiattrib_callback_response (GtkDialog *dialog,
+                               gint arg1,
+                               gpointer user_data)
 {
-  GtkWidget *dialog;
+  TOPLEVEL *toplevel = (TOPLEVEL*)user_data;
 
-  dialog = GTK_WIDGET (g_object_new (TYPE_MULTIATTRIB,
-                                     "object", object,
-                                     /* GschemDialog */
-                                     "settings-name", "multiattrib",
-                                     "toplevel", toplevel,
-                                     NULL));
-
-  gtk_window_set_transient_for(GTK_WINDOW(dialog),
-			       GTK_WINDOW(toplevel->main_window));
-
-  multiattrib_update (MULTIATTRIB(dialog));
-  gtk_widget_show (dialog);
-  switch (gtk_dialog_run ((GtkDialog*)dialog)) {
+  switch (arg1) {
       case GTK_RESPONSE_CLOSE:
       case GTK_RESPONSE_DELETE_EVENT:
-        /* reset state and update message in toolbar */
-        i_set_state (toplevel, SELECT);
-        i_update_toolbar (toplevel);
+        gtk_widget_destroy (GTK_WIDGET (dialog));
+        toplevel->mawindow = NULL;
         break;
-      default:
-        g_assert_not_reached ();
   }
-  gtk_widget_destroy (dialog);
-  
 }
+
+/*! \brief Open multiple attribute editor dialog.
+ *  \par Function Description
+ *  Opens the multiple attribute editor dialog for objects in this <B>toplevel</B>.
+ *
+ *  \param [in] toplevel  The TOPLEVEL object.
+ */
+void x_multiattrib_open (TOPLEVEL *toplevel)
+{
+  if ( toplevel->mawindow == NULL ) {
+    toplevel->mawindow = GTK_WIDGET (g_object_new (TYPE_MULTIATTRIB,
+                                     "selection", toplevel->page_current->selection_list,
+                                      /* GschemDialog */
+                                      "settings-name", "multiattrib",
+                                      "toplevel", toplevel,
+                                      NULL));
+
+      g_signal_connect (toplevel->mawindow,
+                        "response",
+                        G_CALLBACK (multiattrib_callback_response),
+                        toplevel);
+
+    gtk_window_set_transient_for (GTK_WINDOW(toplevel->mawindow),
+                                  GTK_WINDOW(toplevel->main_window));
+
+    gtk_widget_show (toplevel->mawindow);
+  } else {
+    gtk_window_present (GTK_WINDOW(toplevel->mawindow));
+  }
+}
+
+
+/*! \brief Close the multiattrib dialog.
+ *
+ *  \par Function Description
+ *
+ *  Closes the multiattrib dialog associated with <B>toplevel</B>.
+ *
+ *  \param [in] toplevel  The TOPLEVEL object.
+ */
+void x_multiattrib_close (TOPLEVEL *toplevel)
+{
+  if (toplevel->mawindow != NULL) {
+    gtk_widget_destroy (toplevel->mawindow);
+    toplevel->mawindow = NULL;
+  }
+}
+
+
+/*! \brief Update the multiattrib editor dialog for a TOPLEVEL.
+ *
+ *  \par Function Description
+ *
+ *  If the TOPLEVEL has an open multiattrib dialog, switch to
+ *  watching the current page's SELECTION object for changes.
+ *
+ *  \param [in] toplevel     The TOPLEVEL object.
+ */
+void x_multiattrib_update( TOPLEVEL *toplevel )
+{
+  if (toplevel->mawindow != NULL) {
+    g_object_set (G_OBJECT (toplevel->mawindow), "selection",
+                  toplevel->page_current->selection_list, NULL);
+  }
+}
+
 
 /*! \section celltextview-widget Cell TextView Widget Code.
  * This widget makes a 'GtkTextView' widget implements the 'GtkCellEditable'
@@ -388,7 +438,7 @@ static void cellrenderermultilinetext_init(CellRendererMultiLineText *self)
 
 
 enum {
-  PROP_OBJECT = 1
+  PROP_SELECTION = 1
 };
 
 enum {
@@ -396,6 +446,7 @@ enum {
   NUM_COLUMNS
 };
 
+static GObjectClass *multiattrib_parent_class = NULL;
 
 static void multiattrib_class_init (MultiattribClass *class);
 static void multiattrib_init       (Multiattrib *multiattrib);
@@ -1156,6 +1207,7 @@ static void multiattrib_init_visible_types(GtkOptionMenu *optionmenu)
   
 }
 
+
 /*! \brief Popup a context-sensitive menu.
  *  \par Function Description
  *  Pops up a context-sensitive menu.
@@ -1215,10 +1267,16 @@ static void multiattrib_popup_menu(Multiattrib *multiattrib,
   
 }
 
-/*! \todo Finish function documentation
- *  \brief
+
+/*! \brief Function to retrieve Multiattrib's GType identifier.
+ *
  *  \par Function Description
  *
+ *  Function to retrieve Multiattrib's GType identifier.
+ *  Upon first call, this registers Multiattrib in the GType system.
+ *  Subsequently it returns the saved value from its first execution.
+ *
+ *  \return the GType identifier associated with Multiattrib.
  */
 GType multiattrib_get_type()
 {
@@ -1245,31 +1303,189 @@ GType multiattrib_get_type()
   return multiattrib_type;
 }
 
-/*! \todo Finish function documentation
- *  \brief
+
+/*! \brief Update the multiattrib editor dialog when the page's selection changes.
+ *
  *  \par Function Description
  *
+ *  When the page's selection changes this function identifies how many objects
+ *  which can have attributes are currently selected. If this number is 1, the
+ *  dialog is set to edit its attributes.
+ *
+ *  \todo The dialog doesn't currently support editing multiple objects at once
+ *
+ *  \param [in] selection    The SELECTION object of page being edited.
+ *  \param [in] multiattrib  The multi-attribute editor dialog.
+ */
+static void selection_changed_cb (SELECTION *selection, Multiattrib *multiattrib)
+{
+  int object_count = 0;
+  GList *selection_glist;
+  GList *iter;
+  OBJECT *object;
+
+  selection_glist = geda_list_get_glist (selection);
+
+  for ( iter = selection_glist;
+        iter != NULL;
+        iter = g_list_next (iter) ) {
+    object = (OBJECT *)iter->data;
+    g_assert( object != NULL );
+
+    if (object->type == OBJ_COMPLEX ||
+        object->type == OBJ_PLACEHOLDER ||
+        object->type == OBJ_NET ||
+        object->type == OBJ_BUS) {
+      object_count++;
+    }
+  }
+
+  if (object_count == 0) {
+    /* TODO: If the user selects a single attribute which is
+     *       not floating, should we find its parent object and
+     *       display the multi-attribute editor for that?
+     *       Bonus marks for making it jump to the correct attrib.
+     */
+    multiattrib->object = NULL;
+  } else if (object_count == 1) {
+    multiattrib->object = (OBJECT *)selection_glist->data;
+  } else {
+    /* TODO: Something clever with multiple objects selected */
+    multiattrib->object = NULL;
+  }
+
+  multiattrib_update (multiattrib);
+}
+
+
+/*! \brief Update the dialog when the current page's SELECTION object is destroyed
+ *
+ *  \par Function Description
+ *
+ *  This handler is called when the g_object_weak_ref() on the SELECTION object
+ *  we're watching expires. We reset our multiattrib->selection pointer to NULL
+ *  to avoid attempting to access the destroyed object. NB: Our signal handlers
+ *  were automatically disconnected during the destruction process.
+ *
+ *  \param [in] data                  Pointer to the multi-attrib dialog
+ *  \param [in] where_the_object_was  Pointer to where the object was just destroyed
+ */
+static void selection_weak_ref_cb (gpointer data, GObject *where_the_object_was)
+{
+  Multiattrib *multiattrib = (Multiattrib *)data;
+
+  multiattrib->selection = NULL;
+  multiattrib_update (multiattrib);
+}
+
+
+/*! \brief Connect signal handler and weak_ref on the SELECTION object
+ *
+ *  \par Function Description
+ *
+ *  Connect the "changed" signal and add a weak reference
+ *  on the SELECTION object we are going to watch.
+ *
+ *  \param [in] multiattrib  The Multiattrib dialog.
+ *  \param [in] selection    The SELECTION object to watch.
+ */
+static void connect_selection( Multiattrib *multiattrib, SELECTION *selection )
+{
+  multiattrib->selection = selection;
+  if (multiattrib->selection != NULL) {
+    g_object_weak_ref (G_OBJECT (multiattrib->selection),
+                       selection_weak_ref_cb,
+                       multiattrib);
+    multiattrib->selection_changed_id =
+      g_signal_connect (G_OBJECT (multiattrib->selection),
+                        "changed",
+                        G_CALLBACK (selection_changed_cb),
+                        multiattrib);
+    /* Synthesise a selection changed update to refresh the view */
+    selection_changed_cb (multiattrib->selection, multiattrib);
+  } else {
+    /* Call an update to set the sensitivities */
+    multiattrib_update (multiattrib);
+  }
+}
+
+
+/*! \brief Disconnect signal handler and weak_ref on the SELECTION object
+ *
+ *  \par Function Description
+ *
+ *  If the dialog is watching a SELECTION object, disconnect the
+ *  "changed" signal and remove our weak reference on the object.
+ *
+ *  \param [in] multiattrib  The Multiattrib dialog.
+ */
+static void disconnect_selection( Multiattrib *multiattrib )
+{
+  if (multiattrib->selection != NULL) {
+    g_signal_handler_disconnect (multiattrib->selection,
+                                 multiattrib->selection_changed_id);
+    g_object_weak_unref(G_OBJECT( multiattrib->selection ),
+                        selection_weak_ref_cb,
+                        multiattrib );
+  }
+}
+
+
+/*! \brief GObject finalise handler
+ *
+ *  \par Function Description
+ *
+ *  Just before the Multiattrib GObject is finalized, disconnect from
+ *  the SELECTION object being watched and then chain up to the parent
+ *  class's finalize handler.
+ *
+ *  \param [in] object  The GObject being finalized.
+ */
+static void multiattrib_finalize (GObject *object)
+{
+  Multiattrib *multiattrib = MULTIATTRIB(object);
+
+  disconnect_selection( multiattrib );
+  G_OBJECT_CLASS (multiattrib_parent_class)->finalize (object);
+}
+
+
+/*! \brief GType class initialiser for Multiattrib
+ *
+ *  \par Function Description
+ *
+ *  GType class initialiser for Multiattrib. We override our parent
+ *  virtual class methods as needed and register our GObject properties.
+ *
+ *  \param [in]  klass       The MultiattribClass we are initialising
  */
 static void multiattrib_class_init(MultiattribClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
+  multiattrib_parent_class = g_type_class_peek_parent (klass);
+
   gobject_class->set_property = multiattrib_set_property;
   gobject_class->get_property = multiattrib_get_property;
+  gobject_class->finalize     = multiattrib_finalize;
 
   g_object_class_install_property (
-    gobject_class, PROP_OBJECT,
-    g_param_spec_pointer ("object",
+    gobject_class, PROP_SELECTION,
+    g_param_spec_pointer ("selection",
                           "",
                           "",
-                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE));
-	
+                          G_PARAM_READWRITE));
 }
 
-/*! \todo Finish function documentation
- *  \brief
+
+/*! \brief GType instance initialiser for Multiattrib
+ *
  *  \par Function Description
  *
+ *  GType instance initialiser for Multiattrib. Create
+ *  and setup the widgets which make up the dialog.
+ *
+ *  \param [in]  dialog       The Multiattrib we are initialising
  */
 static void multiattrib_init(Multiattrib *multiattrib)
 {
@@ -1289,7 +1505,6 @@ static void multiattrib_init(Multiattrib *multiattrib)
                 "title",           _("Edit Attributes"),
                 "default-width",   320,
                 "default-height",  350,
-                "modal",           TRUE,
                 "window-position", GTK_WIN_POS_MOUSE,
                 "allow-grow",      TRUE,
                 "allow-shrink",    FALSE,
@@ -1304,6 +1519,7 @@ static void multiattrib_init(Multiattrib *multiattrib)
 				    /* GtkFrame */
 				    "label", _("Attributes"),
 				    NULL));
+  multiattrib->frame_add = frame;
   /*   - create the model for the treeview */
   store = (GtkTreeModel*)gtk_list_store_new (NUM_COLUMNS,
 					     G_TYPE_POINTER); /* attribute */
@@ -1469,6 +1685,7 @@ static void multiattrib_init(Multiattrib *multiattrib)
   frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
 				    "label", _("Add Attribute"),
 				    NULL));
+  multiattrib->frame_attributes = frame;
   table = GTK_WIDGET (g_object_new (GTK_TYPE_TABLE,
 				    /* GtkTable */
 				    "n-rows",      4,
@@ -1568,44 +1785,58 @@ static void multiattrib_init(Multiattrib *multiattrib)
   
 }
 
-/*! \todo Finish function documentation
- *  \brief
- *  \par Function Description
+
+/*! \brief GObject property setter function
  *
+ *  \par Function Description
+ *  Setter function for Multiattrib's GObject property, "selection".
+ *
+ *  \param [in]  object       The GObject whose properties we are setting
+ *  \param [in]  property_id  The numeric id. under which the property was
+ *                            registered with g_object_class_install_property()
+ *  \param [in]  value        The GValue the property is being set from
+ *  \param [in]  pspec        A GParamSpec describing the property being set
  */
+
 static void multiattrib_set_property (GObject *object,
-				      guint property_id,
-				      const GValue *value,
-				      GParamSpec *pspec)
+                                      guint property_id,
+                                      const GValue *value,
+                                      GParamSpec *pspec)
 {
   Multiattrib *multiattrib = MULTIATTRIB (object);
 
   switch(property_id) {
-      case PROP_OBJECT:
-        multiattrib->object = (OBJECT*)g_value_get_pointer (value);
-        multiattrib_update (multiattrib);
+      case PROP_SELECTION:
+        disconnect_selection (multiattrib);
+        connect_selection (multiattrib, g_value_get_pointer (value));
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
   }
-
 }
 
-/*! \todo Finish function documentation
- *  \brief
- *  \par Function Description
+
+/*! \brief GObject property getter function
  *
+ *  \par Function Description
+ *  Getter function for Multiattrib's GObject property, "selection".
+ *
+ *  \param [in]  object       The GObject whose properties we are getting
+ *  \param [in]  property_id  The numeric id. under which the property was
+ *                            registered with g_object_class_install_property()
+ *  \param [out] value        The GValue in which to return the value of the property
+ *  \param [in]  pspec        A GParamSpec describing the property being got
  */
 static void multiattrib_get_property (GObject *object,
-				      guint property_id,
-				      GValue *value,
-				      GParamSpec *pspec)
+                                      guint property_id,
+                                      GValue *value,
+                                      GParamSpec *pspec)
 {
   Multiattrib *multiattrib = MULTIATTRIB (object);
 
   switch(property_id) {
-      case PROP_OBJECT:
-        g_value_set_pointer (value, (gpointer)multiattrib->object);
+      case PROP_SELECTION:
+        g_value_set_pointer (value, (gpointer)multiattrib->selection);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1613,10 +1844,18 @@ static void multiattrib_get_property (GObject *object,
 
 }
 
-/*! \todo Finish function documentation
- *  \brief
+
+/*! \brief Update the multiattrib editor dialog's interface
+ *
  *  \par Function Description
  *
+ *  Update the dialog to reflect the attributes of the currently selected
+ *  object. If no (or multiple) objects are selected, the dialog's controls
+ *  are set insensitive.
+ *
+ *  \todo The dialog doesn't currently support editing multiple objects at once
+ *
+ *  \param [in] multiattrib  The multi-attribute editor dialog.
  */
 void multiattrib_update (Multiattrib *multiattrib)
 {
@@ -1624,18 +1863,23 @@ void multiattrib_update (Multiattrib *multiattrib)
   GtkTreeIter iter;
   OBJECT **object_attribs, *o_current;
   gint i;
-  
-  if (GSCHEM_DIALOG (multiattrib)->toplevel == NULL ||
-      multiattrib->object   == NULL) {
-    /* we can not do anything until both toplevel and object are set */
-    return;
-  }
+  gboolean sensitive;
 
-  liststore = (GtkListStore*)gtk_tree_view_get_model (multiattrib->treeview);
+  g_assert (GSCHEM_DIALOG (multiattrib)->toplevel != NULL);
 
   /* clear the list of attributes */
+  liststore = (GtkListStore*)gtk_tree_view_get_model (multiattrib->treeview);
   gtk_list_store_clear (liststore);
- 
+
+  /* Update sensitivities */
+  sensitive = (multiattrib->selection != NULL && multiattrib->object != NULL);
+  gtk_widget_set_sensitive (GTK_WIDGET (multiattrib->frame_attributes), sensitive);
+  gtk_widget_set_sensitive (GTK_WIDGET (multiattrib->frame_add), sensitive);
+
+  /* If we aren't sensitive, there is nothing more to do */
+  if (!sensitive)
+    return;
+
   /* get list of attributes */
   object_attribs = o_attrib_return_attribs (
     GSCHEM_DIALOG (multiattrib)->toplevel->page_current->object_head,
@@ -1653,5 +1897,4 @@ void multiattrib_update (Multiattrib *multiattrib)
   }
   /* delete the list of attribute objects */
   o_attrib_free_returned (object_attribs);
-  
 }
