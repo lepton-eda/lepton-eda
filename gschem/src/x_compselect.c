@@ -694,6 +694,8 @@ create_inuse_treeview (Compselect *compselect)
   /* Create a scrolled window to accomodate the treeview */
   scrolled_win = GTK_WIDGET (
     g_object_new (GTK_TYPE_SCROLLED_WINDOW,
+                  /* GtkContainer */
+                  "border-width", 5,
                   /* GtkScrolledWindow */
                   "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
                   "vscrollbar-policy", GTK_POLICY_ALWAYS,
@@ -981,7 +983,7 @@ compselect_class_init (CompselectClass *klass)
 static void
 compselect_init (Compselect *compselect)
 {
-  GtkWidget *hbox, *notebook;
+  GtkWidget *hpaned, *notebook;
   GtkWidget *libview, *inuseview;
   GtkWidget *preview, *combobox;
   
@@ -1003,12 +1005,11 @@ compselect_init (Compselect *compselect)
                 "homogeneous", FALSE,
                 NULL);
 
-  /* horizontal box selection and preview */
-  hbox = GTK_WIDGET (g_object_new (GTK_TYPE_HBOX,
-                                   /* GtkBox */
-                                   "homogeneous", FALSE,
-                                   "spacing",     5,
-                                   NULL));
+  /* horizontal pane containing selection and preview */
+  hpaned = GTK_WIDGET (g_object_new (GTK_TYPE_HPANED,
+                                    /* GtkContainer */
+                                    "border-width", 5,
+                                     NULL));
 
   /* notebook for library and inuse views */
   notebook = GTK_WIDGET (g_object_new (GTK_TYPE_NOTEBOOK,
@@ -1024,14 +1025,11 @@ compselect_init (Compselect *compselect)
                             gtk_label_new (_("Libraries")));
 
   /* include the vertical box in horizontal box */
-  gtk_box_pack_start (GTK_BOX (hbox), notebook,
-                      TRUE, TRUE, 0);
+  gtk_paned_pack1 (GTK_PANED (hpaned), notebook, TRUE, FALSE);
 
                      
   /* -- preview area -- */
   frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
-                                    /* GtkContainer */
-                                    "border-width", 5,
                                     /* GtkFrame */
                                     "label",        _("Preview"),
                                     NULL));
@@ -1052,14 +1050,13 @@ compselect_init (Compselect *compselect)
   gtk_container_add (GTK_CONTAINER (frame), alignment);
   /* set preview of compselect */
   compselect->preview = PREVIEW (preview);
-  
-  gtk_box_pack_start (GTK_BOX (hbox), frame,
-                      FALSE, TRUE, 0);
 
-  /* add the hbox to the dialog vbox */
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (compselect)->vbox), hbox,
+  gtk_paned_pack2 (GTK_PANED (hpaned), frame, FALSE, FALSE);
+
+  /* add the hpaned to the dialog vbox */
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (compselect)->vbox), hpaned,
                       TRUE, TRUE, 0);
-  gtk_widget_show_all (hbox);
+  gtk_widget_show_all (hpaned);
   
 
   /* -- behavior combo box -- */
