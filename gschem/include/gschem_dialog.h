@@ -34,6 +34,16 @@ typedef struct _GschemDialog      GschemDialog;
 
 struct _GschemDialogClass {
   GtkDialogClass parent_class;
+
+#if GLIB_CHECK_VERSION(2,6,0)
+  void (*geometry_save)    (GschemDialog *dialog,
+                            GKeyFile *key_file,
+                            gchar *group_name);
+  void (*geometry_restore) (GschemDialog *dialog,
+                            GKeyFile *key_file,
+                            gchar *group_name);
+#endif
+
 };
 
 struct _GschemDialog {

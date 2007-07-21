@@ -20,6 +20,7 @@
 
 #include <config.h>
 
+#include <glib-object.h>
 #include <glib/gstdio.h>
 
 #include <libgeda/libgeda.h>
@@ -33,15 +34,62 @@
 #include <dmalloc.h>
 #endif
 
+
 #include "../include/gschem_dialog.h"
 
+/* Signal marshaller based on generated code from glib-genmarshal */
+static void
+gschem_marshal_VOID__POINTER_STRING (GClosure     *closure,
+                                     GValue       *return_value,
+                                     guint         n_param_values,
+                                     const GValue *param_values,
+                                     gpointer      invocation_hint,
+                                     gpointer      marshal_data)
+{
+  typedef void (*GMarshalFunc_VOID__POINTER_STRING) (gpointer     data1,
+                                                     gpointer     arg_1,
+                                                     gpointer     arg_2,
+                                                     gpointer     data2);
+  register GMarshalFunc_VOID__POINTER_STRING callback;
+  register GCClosure *cc = (GCClosure*) closure;
+  register gpointer data1, data2;
 
-#if !GLIB_CHECK_VERSION(2,6,0)
+  g_return_if_fail (n_param_values == 3);
 
-static inline void save_geometry (GschemDialog *dialog) { }
-static inline void restore_geometry (GschemDialog *dialog) { }
+  if (G_CCLOSURE_SWAP_DATA (closure)) {
+    data1 = closure->data;
+    data2 = g_value_peek_pointer (param_values + 0);
+  } else {
+    data1 = g_value_peek_pointer (param_values + 0);
+    data2 = closure->data;
+  }
+  callback = (GMarshalFunc_VOID__POINTER_STRING) (marshal_data ? marshal_data : cc->callback);
 
-#else
+  callback (data1,
+            g_value_get_pointer (param_values + 1),
+            (gchar*)g_value_get_string (param_values + 2),
+            data2);
+}
+/* End section based on generated code from glib-genmashal */
+
+
+enum {
+  PROP_SETTINGS_NAME = 1,
+  PROP_TOPLEVEL
+};
+
+
+enum {
+  GEOMETRY_SAVE,
+  GEOMETRY_RESTORE,
+  LAST_SIGNAL
+};
+
+static guint gschem_dialog_signals[ LAST_SIGNAL ] = { 0 };
+static GObjectClass *gschem_dialog_parent_class = NULL;
+
+
+#if GLIB_CHECK_VERSION(2,6,0)
 
 static GKeyFile *dialog_geometry = NULL;
 
@@ -70,100 +118,90 @@ static void save_geometry_to_file(gpointer user_data)
 }
 
 
-/*! \brief Save dialog's current position and size.
+/*! \brief GschemDialog "geometry_save" class method handler
  *
  *  \par Function Description
- *  Save the dialog's current position and size.
- *  The dialog is referenced by its unique name (the
- *  "settings-name" property).
+ *  Save the dialog's current position and size to the passed GKeyFile
  *
- *  \param [in] dialog  The GschemDialog to save the position and size of.
+ *  \param [in] dialog     The GschemDialog to save the position and size of.
+ *  \param [in] key_file   The GKeyFile to save the geometry data to.
+ *  \param [in] group_name The group name in the key file to store the data under.
  */
-static void save_geometry (GschemDialog *dialog)
+static void geometry_save (GschemDialog *dialog, GKeyFile *key_file, gchar* group_name)
 {
   gint x, y, width, height;
-  gchar *name;
-
-  name = dialog->settings_name;
-  if (name == NULL) return;
-
-  g_assert( dialog_geometry != NULL );
 
   gtk_window_get_position (GTK_WINDOW (dialog), &x, &y);
   gtk_window_get_size (GTK_WINDOW (dialog), &width, &height);
 
-  g_key_file_set_integer (dialog_geometry, name, "x", x);
-  g_key_file_set_integer (dialog_geometry, name, "y", y);
-  g_key_file_set_integer (dialog_geometry, name, "width",  width );
-  g_key_file_set_integer (dialog_geometry, name, "height", height);
+  g_key_file_set_integer (key_file, group_name, "x", x);
+  g_key_file_set_integer (key_file, group_name, "y", y);
+  g_key_file_set_integer (key_file, group_name, "width",  width );
+  g_key_file_set_integer (key_file, group_name, "height", height);
 }
 
 
-/*! \brief Restore dialog's last position and size.
+/*! \brief GschemDialog "geometry_restore" class method handler
  *
  *  \par Function Description
- *  Restore dialog's last position and size.
- *  If the dialog is unknown, do nothing.
+ *  Restore dialog's last position and size from the passed GKeyFile
  *
- *  \param [in] dialog  The GschemDialog to restore the position and size of.
+ *  \param [in] dialog     The GschemDialog to restore the position and size of.
+ *  \param [in] key_file   The GKeyFile to load the geometry data from.
+ *  \param [in] group_name The group name in the key file to find the data under.
  */
-static void restore_geometry (GschemDialog *dialog)
+static void geometry_restore (GschemDialog *dialog, GKeyFile *key_file, gchar* group_name)
 {
-  gchar *name;
   gint x, y, width, height;
 
-  name = dialog->settings_name;
-  if (name == NULL) return;
+  x      = g_key_file_get_integer (key_file, group_name, "x", NULL);
+  y      = g_key_file_get_integer (key_file, group_name, "y", NULL);
+  width  = g_key_file_get_integer (key_file, group_name, "width",  NULL);
+  height = g_key_file_get_integer (key_file, group_name, "height", NULL);
 
-  if (!dialog_geometry) {
-    gchar *file = g_build_filename (g_get_home_dir (), ".gEDA",
-                                    DIALOG_GEOMETRY_STORE, NULL);
-
-    dialog_geometry = g_key_file_new();
-
-    /* Remember to save data on program exit */
-    gschem_atexit(save_geometry_to_file, NULL);
-
-    if (!g_file_test (file, G_FILE_TEST_EXISTS)) {
-      gchar *dir = g_build_filename (g_get_home_dir (), ".gEDA", NULL);
-      g_mkdir (dir, S_IRWXU | S_IRWXG);
-      g_free (dir);
-
-      g_file_set_contents (file, "", -1, NULL);
-    }
-
-    if (!g_key_file_load_from_file (dialog_geometry, file, G_KEY_FILE_NONE, NULL)) {
-      /* error opening key file, create an empty one and try again */
-      g_file_set_contents (file, "", -1, NULL);
-      if ( !g_key_file_load_from_file (dialog_geometry, file, G_KEY_FILE_NONE, NULL)) {
-         g_free (file);
-         return;
-      }
-    }
-    g_free (file);
-  }
-
-  if (g_key_file_has_group (dialog_geometry, name)) {
-    x = g_key_file_get_integer (dialog_geometry, name, "x", NULL);
-    y = g_key_file_get_integer (dialog_geometry, name, "y", NULL);
-    width  = g_key_file_get_integer (dialog_geometry, name, "width",  NULL);
-    height = g_key_file_get_integer (dialog_geometry, name, "height", NULL);
-
-    gtk_window_move (GTK_WINDOW (dialog), x, y);
-    gtk_window_resize (GTK_WINDOW (dialog), width, height);
-  }
+  gtk_window_move (GTK_WINDOW (dialog), x, y);
+  gtk_window_resize (GTK_WINDOW (dialog), width, height);
 }
 
-#endif   /* !GLIB_CHECK_VERSION(2,6,0) */
 
+/*! \brief Setup the GKeyFile for saving / restoring geometry
+ *
+ *  \par Function Description
+ *  Check if the GKeyFile for saving / restoring geometry is open.
+ *  If it doesn't exist, we create it here, and also install a hook
+ *  to ensure its contents are saved at program exit.
+ */
+static void setup_keyfile ()
+{
+  if (dialog_geometry != NULL)
+    return;
 
-enum {
-  PROP_SETTINGS_NAME = 1,
-  PROP_TOPLEVEL
-};
+  gchar *file = g_build_filename (g_get_home_dir (), ".gEDA",
+                                  DIALOG_GEOMETRY_STORE, NULL);
 
+  dialog_geometry = g_key_file_new();
 
-static GObjectClass *gschem_dialog_parent_class = NULL;
+  /* Remember to save data on program exit */
+  gschem_atexit(save_geometry_to_file, NULL);
+
+  if (!g_file_test (file, G_FILE_TEST_EXISTS)) {
+    gchar *dir = g_build_filename (g_get_home_dir (), ".gEDA", NULL);
+    g_mkdir (dir, S_IRWXU | S_IRWXG);
+    g_free (dir);
+
+    g_file_set_contents (file, "", -1, NULL);
+  }
+
+  if (!g_key_file_load_from_file (dialog_geometry, file, G_KEY_FILE_NONE, NULL)) {
+    /* error opening key file, create an empty one and try again */
+    g_file_set_contents (file, "", -1, NULL);
+    if ( !g_key_file_load_from_file (dialog_geometry, file, G_KEY_FILE_NONE, NULL)) {
+       g_free (file);
+       return;
+    }
+  }
+  g_free (file);
+}
 
 
 /*! \brief GtkWidget show signal handler
@@ -176,9 +214,19 @@ static GObjectClass *gschem_dialog_parent_class = NULL;
  */
 static void show_handler (GtkWidget *widget)
 {
+  gchar *group_name;
   GschemDialog *dialog = GSCHEM_DIALOG( widget );
 
-  restore_geometry (dialog);
+  group_name = dialog->settings_name;
+  if (group_name != NULL) {
+
+    setup_keyfile ();
+    g_assert( dialog_geometry != NULL );
+    if (g_key_file_has_group (dialog_geometry, group_name)) {
+      g_signal_emit (dialog, gschem_dialog_signals[ GEOMETRY_RESTORE ], 0,
+                     dialog_geometry, group_name);
+    }
+  }
 
   /* Let GTK show the window */
   GTK_WIDGET_CLASS (gschem_dialog_parent_class)->show (widget);
@@ -197,13 +245,22 @@ static void show_handler (GtkWidget *widget)
  */
 static void unmap_handler (GtkWidget *widget)
 {
+  gchar *group_name;
   GschemDialog *dialog = GSCHEM_DIALOG (widget);
 
-  save_geometry (dialog);
+  group_name = dialog->settings_name;
+  if (group_name != NULL) {
+
+    g_assert( dialog_geometry != NULL );
+    g_signal_emit (dialog, gschem_dialog_signals[ GEOMETRY_SAVE ], 0,
+                   dialog_geometry, group_name);
+  }
 
   /* Let GTK unmap the window */
   GTK_WIDGET_CLASS (gschem_dialog_parent_class)->unmap (widget);
 }
+
+#endif   /* !GLIB_CHECK_VERSION(2,6,0) */
 
 
 /*! \brief GObject finalise handler
@@ -307,17 +364,51 @@ static void gschem_dialog_init (GschemDialog *dialog)
  */
 static void gschem_dialog_class_init (GschemDialogClass *klass)
 {
-  GtkWidgetClass *gtkwidget_class = GTK_WIDGET_CLASS (klass);
-  GObjectClass     *gobject_class =   G_OBJECT_CLASS (klass);
+  GObjectClass     *gobject_class = G_OBJECT_CLASS (klass);
 
-  gschem_dialog_parent_class = g_type_class_peek_parent (klass);
+#if GLIB_CHECK_VERSION(2,6,0)
+  GtkWidgetClass *gtkwidget_class = GTK_WIDGET_CLASS (klass);
+
+  klass->geometry_save         = geometry_save;
+  klass->geometry_restore      = geometry_restore;
 
   gtkwidget_class->show        = show_handler;
   gtkwidget_class->unmap       = unmap_handler;
+#endif
 
   gobject_class->finalize      = gschem_dialog_finalize;
   gobject_class->set_property  = gschem_dialog_set_property;
   gobject_class->get_property  = gschem_dialog_get_property;
+
+  gschem_dialog_parent_class = g_type_class_peek_parent (klass);
+
+  gschem_dialog_signals[ GEOMETRY_SAVE ] =
+    g_signal_new ("geometry-save",
+                  G_OBJECT_CLASS_TYPE( gobject_class ),
+                  G_SIGNAL_RUN_FIRST,     /*signal_flags */
+                  G_STRUCT_OFFSET( GschemDialogClass, geometry_save ),
+                  NULL, /* accumulator */
+                  NULL, /* accu_data */
+                  gschem_marshal_VOID__POINTER_STRING,
+                  G_TYPE_NONE,
+                  2,    /* n_params */
+                  G_TYPE_POINTER,
+                  G_TYPE_STRING
+                 );
+
+  gschem_dialog_signals[ GEOMETRY_RESTORE ] =
+    g_signal_new ("geometry-restore",
+                  G_OBJECT_CLASS_TYPE( gobject_class ),
+                  G_SIGNAL_RUN_FIRST,     /*signal_flags */
+                  G_STRUCT_OFFSET( GschemDialogClass, geometry_restore ),
+                  NULL, /* accumulator */
+                  NULL, /* accu_data */
+                  gschem_marshal_VOID__POINTER_STRING,
+                  G_TYPE_NONE,
+                  2,    /* n_params */
+                  G_TYPE_POINTER,
+                  G_TYPE_STRING
+                 );
 
   g_object_class_install_property (
     gobject_class, PROP_SETTINGS_NAME,
