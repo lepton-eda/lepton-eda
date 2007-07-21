@@ -945,16 +945,75 @@ compselect_get_type ()
   return compselect_type;
 }
 
+#if GLIB_CHECK_VERSION(2,6,0)
+
+/*! \brief GschemDialog "geometry_save" class method handler
+ *
+ *  \par Function Description
+ *  Chain up to our parent's method to save the dialog's size and
+ *  position, then save the dialog's current internal geometry.
+ *
+ *  \param [in] dialog     The GschemDialog to save the geometry of.
+ *  \param [in] key_file   The GKeyFile to save the geometry data to.
+ *  \param [in] group_name The group name in the key file to store the data under.
+ */
+static void
+compselect_geometry_save (GschemDialog *dialog, GKeyFile *key_file, gchar *group_name)
+{
+  int position;
+
+  /* Call the parent's geometry_save method */
+  GSCHEM_DIALOG_CLASS (compselect_parent_class)->
+    geometry_save (dialog, key_file, group_name);
+
+  position = gtk_paned_get_position (GTK_PANED (COMPSELECT (dialog)->hpaned));
+  g_key_file_set_integer (key_file, group_name, "hpaned", position );
+}
+
+
+/*! \brief GschemDialog "geometry_restore" class method handler
+ *
+ *  \par Function Description
+ *  Chain up to our parent's method to restore the dialog's size and
+ *  position, then restore the dialog's current internal geometry.
+ *
+ *  \param [in] dialog     The GschemDialog to restore the geometry of.
+ *  \param [in] key_file   The GKeyFile to save the geometry data to.
+ *  \param [in] group_name The group name in the key file to store the data under.
+ */
+static void
+compselect_geometry_restore (GschemDialog *dialog, GKeyFile *key_file, gchar *group_name)
+{
+  int position;
+
+  /* Call the parent's geometry_restore method */
+  GSCHEM_DIALOG_CLASS (compselect_parent_class)->
+    geometry_restore (dialog, key_file, group_name);
+
+  position = g_key_file_get_integer (key_file, group_name, "hpaned", NULL);
+  if (position != 0)
+    gtk_paned_set_position (GTK_PANED (COMPSELECT (dialog)->hpaned), position);
+}
+
+#endif   /* !GLIB_CHECK_VERSION(2,6,0) */
+
 static void
 compselect_class_init (CompselectClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
-  compselect_parent_class = g_type_class_peek_parent (klass);
-  
+#if GLIB_CHECK_VERSION(2,6,0)
+  GschemDialogClass *gschem_dialog_class = GSCHEM_DIALOG_CLASS (klass);
+
+  gschem_dialog_class->geometry_save    = compselect_geometry_save;
+  gschem_dialog_class->geometry_restore = compselect_geometry_restore;
+#endif
+
   gobject_class->finalize     = compselect_finalize;
   gobject_class->set_property = compselect_set_property;
   gobject_class->get_property = compselect_get_property;
+
+  compselect_parent_class = g_type_class_peek_parent (klass);
 
   g_object_class_install_property (
     gobject_class, PROP_SYMBOL,
@@ -1010,6 +1069,7 @@ compselect_init (Compselect *compselect)
                                     /* GtkContainer */
                                     "border-width", 5,
                                      NULL));
+  compselect->hpaned = hpaned;
 
   /* notebook for library and inuse views */
   notebook = GTK_WIDGET (g_object_new (GTK_TYPE_NOTEBOOK,
