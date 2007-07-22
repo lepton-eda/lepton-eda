@@ -367,11 +367,14 @@ preview_event_configure (GtkWidget         *widget,
 }
 
 
-static gint
+static gboolean
 preview_event_scroll (GtkWidget *widget,
                       GdkEventScroll *event,
                       TOPLEVEL *w_current)
 {
+  if (!PREVIEW (widget)->active) {
+    return TRUE;
+  }
   return x_event_scroll (widget, event, PREVIEW (widget)->preview_toplevel);
 }
 
