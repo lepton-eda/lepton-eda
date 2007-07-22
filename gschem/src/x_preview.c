@@ -88,6 +88,11 @@ preview_callback_realize (GtkWidget *widget,
   preview_toplevel->window = preview_toplevel->drawing_area->window;
   gtk_widget_grab_focus (preview_toplevel->drawing_area);
 
+  preview_toplevel->width  = preview_toplevel->drawing_area->allocation.width;
+  preview_toplevel->height = preview_toplevel->drawing_area->allocation.height;
+  preview_toplevel->win_width  = preview_toplevel->width;
+  preview_toplevel->win_height = preview_toplevel->height;
+
   preview_toplevel->backingstore = gdk_pixmap_new (
     preview_toplevel->window,
     preview_toplevel->drawing_area->allocation.width,
@@ -118,7 +123,7 @@ preview_callback_realize (GtkWidget *widget,
 
   a_zoom_extents(preview_toplevel,
                  preview_page->object_head,
-                 A_PAN_DONT_REDRAW);
+                 A_PAN_DONT_REDRAW | A_PAN_IGNORE_BORDERS);
 
   o_redraw_all(preview_toplevel);
 
@@ -271,7 +276,7 @@ preview_update (Preview *preview)
   /* display current page (possibly empty) */
   a_zoom_extents (preview_toplevel,
                   preview_toplevel->page_current->object_head,
-                  A_PAN_DONT_REDRAW);
+                  A_PAN_DONT_REDRAW | A_PAN_IGNORE_BORDERS);
   o_redraw_all (preview_toplevel);
   
 }
@@ -338,6 +343,30 @@ preview_class_init (PreviewClass *klass)
         
 }
 
+static gboolean
+preview_event_configure (GtkWidget         *widget,
+                         GdkEventConfigure *event,
+                         gpointer           user_data)
+{
+  gboolean retval;
+  int save_redraw;
+  TOPLEVEL *preview_toplevel = PREVIEW (widget)->preview_toplevel;
+  PAGE     *preview_page = preview_toplevel->page_current;
+
+  save_redraw = preview_toplevel->DONT_REDRAW;
+  preview_toplevel->DONT_REDRAW = 1;
+  retval = x_event_configure (widget, event, preview_toplevel);
+  preview_toplevel->DONT_REDRAW = save_redraw;
+  if (preview_page != NULL) {
+    a_zoom_extents(preview_toplevel,
+                   preview_page->object_head,
+                   A_PAN_DONT_REDRAW | A_PAN_IGNORE_BORDERS);
+    o_redraw_all_fast(preview_toplevel);
+  }
+  return retval;
+}
+
+
 static gint
 preview_event_scroll (GtkWidget *widget,
                       GdkEventScroll *event,
@@ -357,6 +386,7 @@ preview_init (Preview *preview)
     { "expose_event",         G_CALLBACK (preview_callback_expose)        },
     { "button_press_event",   G_CALLBACK (preview_callback_button_press)  },
     { "motion_notify_event",  G_CALLBACK (preview_callback_motion_notify) },
+    { "configure_event",      G_CALLBACK (preview_event_configure)        },
     { "scroll_event",         G_CALLBACK (preview_event_scroll)           },
     { NULL,                   NULL                                        }
   }, *tmp;
@@ -368,6 +398,7 @@ preview_init (Preview *preview)
   preview_toplevel->init_top    = 0;
   preview_toplevel->init_right  = WIDTH_C;
   preview_toplevel->init_bottom = HEIGHT_C;
+
   preview_toplevel->width  = 160;
   preview_toplevel->height = 120;
   preview_toplevel->win_width  = preview_toplevel->width;

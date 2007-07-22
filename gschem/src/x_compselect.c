@@ -1095,12 +1095,14 @@ compselect_init (Compselect *compselect)
                                     NULL));
   alignment = GTK_WIDGET (g_object_new (GTK_TYPE_ALIGNMENT,
                                         /* GtkAlignment */
-                                        "right-padding", 5,
-                                        "left-padding",  5,
-                                        "xscale",        0.0,
-                                        "yscale",        0.0,
-                                        "xalign",        0.5,
-                                        "yalign",        0.5,
+                                        "left-padding",   5,
+                                        "right-padding",  5,
+                                        "top-padding",    5,
+                                        "bottom-padding", 5,
+                                        "xscale",         1.0,
+                                        "yscale",         1.0,
+                                        "xalign",         0.5,
+                                        "yalign",         0.5,
                                         NULL));
   preview = GTK_WIDGET (g_object_new (TYPE_PREVIEW,
                                       /* Preview */
