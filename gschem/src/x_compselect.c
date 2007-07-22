@@ -968,6 +968,9 @@ compselect_geometry_save (GschemDialog *dialog, GKeyFile *key_file, gchar *group
 
   position = gtk_paned_get_position (GTK_PANED (COMPSELECT (dialog)->hpaned));
   g_key_file_set_integer (key_file, group_name, "hpaned", position );
+
+  position = gtk_notebook_get_current_page (COMPSELECT (dialog)->viewtabs);
+  g_key_file_set_integer (key_file, group_name, "source-tab", position );
 }
 
 
@@ -993,6 +996,9 @@ compselect_geometry_restore (GschemDialog *dialog, GKeyFile *key_file, gchar *gr
   position = g_key_file_get_integer (key_file, group_name, "hpaned", NULL);
   if (position != 0)
     gtk_paned_set_position (GTK_PANED (COMPSELECT (dialog)->hpaned), position);
+
+  position = g_key_file_get_integer (key_file, group_name, "source-tab", NULL);
+  gtk_notebook_set_current_page (COMPSELECT (dialog)->viewtabs, position);
 }
 
 #endif   /* !GLIB_CHECK_VERSION(2,6,0) */
