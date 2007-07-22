@@ -124,8 +124,10 @@ x_compselect_callback_response (GtkDialog *dialog,
 						   toplevel->page_current->complex_place_list);
 	}
 	
-	g_list_free(toplevel->page_current->complex_place_list);
-	toplevel->page_current->complex_place_list = NULL;
+        /* Free the complex place list and its contents */
+        s_delete_object_glist(toplevel,
+                              toplevel->page_current->complex_place_list);
+        toplevel->page_current->complex_place_list = NULL;
 	
 	o_complex_set_filename(toplevel, s_clib_symbol_get_name (symbol));
         
@@ -153,10 +155,11 @@ x_compselect_callback_response (GtkDialog *dialog,
         gtk_widget_destroy (GTK_WIDGET (dialog));
         toplevel->cswindow = NULL;
 
-	/* Free the complex place list */
-	g_list_free(toplevel->page_current->complex_place_list);
-	toplevel->page_current->complex_place_list = NULL;
-	
+        /* Free the complex place list and its contents */
+        s_delete_object_glist(toplevel,
+                              toplevel->page_current->complex_place_list);
+        toplevel->page_current->complex_place_list = NULL;
+
 	/* return to the default state */
 	i_set_state(toplevel, SELECT);
 	i_update_toolbar(toplevel);

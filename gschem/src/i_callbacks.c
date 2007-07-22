@@ -3424,8 +3424,9 @@ DEFINE_I_CALLBACK(cancel)
       w_current->cswindow) {
     /* user hit escape key when placing components */
 
-    /* delete the complex place list */
-    g_list_free(w_current->page_current->complex_place_list);
+    /* Free the complex place list and its contents */
+    s_delete_object_glist(w_current,
+                          w_current->page_current->complex_place_list);
     w_current->page_current->complex_place_list = NULL;
     o_redraw_all(w_current); 
 
