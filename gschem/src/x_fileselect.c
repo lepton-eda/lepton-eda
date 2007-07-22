@@ -82,18 +82,21 @@ x_fileselect_callback_update_preview (GtkFileChooser *chooser,
                                       gpointer user_data)
 {
   Preview *preview = PREVIEW (user_data);
-  gchar *filename;
-    
+  gchar *filename, *preview_filename = NULL;
+
   filename = gtk_file_chooser_get_preview_filename (chooser);
   if (filename != NULL &&
       !g_file_test (filename, G_FILE_TEST_IS_DIR)) {
-    /* update preview if it is not a directory */
-    g_object_set (preview,
-                  "filename", filename,
-                  NULL);
+    preview_filename = filename;
   }
+
+  /* update preview */
+  g_object_set (preview,
+                "filename", preview_filename,
+                "active", (preview_filename != NULL),
+                NULL);
+
   g_free (filename);
-  
 }
 
 /*! \brief Adds a preview to a file chooser.
