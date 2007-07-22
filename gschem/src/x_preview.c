@@ -41,6 +41,7 @@
 
 #include "../include/x_preview.h"
 
+#define OVER_ZOOM_FACTOR 0.1
 
 extern int mouse_x, mouse_y;
 
@@ -102,18 +103,6 @@ preview_callback_realize (GtkWidget *widget,
 
   preview_page = s_page_new (preview_toplevel, "unknown");
   s_page_goto (preview_toplevel, preview_page);
-
-  i_vars_set (preview_toplevel);
-
-  /* be sure to turn off scrollbars */
-  preview_toplevel->scrollbars_flag = FALSE;
-
-  /* be sure to turn off the grid */
-  preview_toplevel->grid = FALSE;
-
-  /* preview_toplevel windows don't have toolbars */
-  preview_toplevel->handleboxes = FALSE; 
-  preview_toplevel->toolbars    = FALSE;
 
   x_repaint_background(preview_toplevel);
 
@@ -240,6 +229,8 @@ static void
 preview_update (Preview *preview)
 {
   TOPLEVEL *preview_toplevel = preview->preview_toplevel;
+  int left, top, right, bottom;
+  int width, height;
 
   if (preview_toplevel->page_current == NULL) {
     return;
@@ -275,6 +266,20 @@ preview_update (Preview *preview)
       }
     }
   }
+
+  if (world_get_object_list_bounds (preview_toplevel,
+                                    preview_toplevel->page_current->object_head,
+                                    &left, &top,
+                                    &right, &bottom)) {
+    /* Clamp the canvas size to the extents of the page being previewed */
+    width = right - left;
+    height = bottom - top;
+    preview_toplevel->init_left   = left  - ((double)width * OVER_ZOOM_FACTOR);
+    preview_toplevel->init_right  = right + ((double)width * OVER_ZOOM_FACTOR);
+    preview_toplevel->init_top    = top    - ((double)height * OVER_ZOOM_FACTOR);
+    preview_toplevel->init_bottom = bottom + ((double)height * OVER_ZOOM_FACTOR);
+  }
+
   /* display current page (possibly empty) */
   a_zoom_extents (preview_toplevel,
                   preview_toplevel->page_current->object_head,
@@ -396,13 +401,20 @@ preview_init (Preview *preview)
     { NULL,                   NULL                                        }
   }, *tmp;
   TOPLEVEL *preview_toplevel;
-  
+
   preview_toplevel = s_toplevel_new ();
 
-  preview_toplevel->init_left   = 0;
-  preview_toplevel->init_top    = 0;
-  preview_toplevel->init_right  = WIDTH_C;
-  preview_toplevel->init_bottom = HEIGHT_C;
+  i_vars_set (preview_toplevel);
+
+  /* be sure to turn off scrollbars */
+  preview_toplevel->scrollbars_flag = FALSE;
+
+  /* be sure to turn off the grid */
+  preview_toplevel->grid = FALSE;
+
+  /* preview_toplevel windows don't have toolbars */
+  preview_toplevel->handleboxes = FALSE;
+  preview_toplevel->toolbars    = FALSE;
 
   preview_toplevel->width  = 160;
   preview_toplevel->height = 120;
