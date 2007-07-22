@@ -87,9 +87,10 @@ x_compselect_callback_response (GtkDialog *dialog,
 
   switch (arg1) {
       case COMPSELECT_RESPONSE_PLACE: {
-	CLibSymbol *symbol = NULL;
+        CLibSymbol *symbol = NULL;
         CompselectBehavior behavior;
-        
+        gint diff_x, diff_y;
+
         g_object_get (compselect,
                       "symbol", &symbol,
                       "behavior", &behavior,
@@ -109,46 +110,45 @@ x_compselect_callback_response (GtkDialog *dialog,
               g_assert_not_reached();
         }
 
-        if (symbol == NULL) {
-          break;
-        }
-                
-	if (toplevel->event_state == ENDCOMP) {
-          gint diff_x, diff_y;
+        diff_x = toplevel->last_x - toplevel->start_x;
+        diff_y = toplevel->last_y - toplevel->start_y;
 
-	  diff_x = toplevel->last_x - toplevel->start_x;
-	  diff_y = toplevel->last_y - toplevel->start_y;
-	  
-	  o_complex_translate_display_object_glist(toplevel,
-						   diff_x, diff_y,
-						   toplevel->page_current->complex_place_list);
-	}
-	
+        o_complex_translate_display_object_glist(toplevel,
+                                                 diff_x, diff_y,
+                                                 toplevel->page_current->
+                                                   complex_place_list);
+
         /* Free the complex place list and its contents */
         s_delete_object_glist(toplevel,
                               toplevel->page_current->complex_place_list);
         toplevel->page_current->complex_place_list = NULL;
-	
-	o_complex_set_filename(toplevel, s_clib_symbol_get_name (symbol));
-        
-	toplevel->event_state = DRAWCOMP;
 
+        if (symbol == NULL) {
+          /* If there is no symbol selected, switch to SELECT mode */
+          toplevel->event_state = SELECT;
+        } else {
+          /* Otherwise set the new symbol to place */
+          o_complex_set_filename(toplevel, s_clib_symbol_get_name (symbol));
+          toplevel->event_state = DRAWCOMP;
+        }
         break;
       }
+
       case COMPSELECT_RESPONSE_HIDE:
-	/* Response when clicking on the "hide" button */
+        /* Response when clicking on the "hide" button */
 
-	/* If there is no component in the complex place list, set the current one */
-	if (toplevel->page_current->complex_place_list == NULL) {
-	  gtk_dialog_response (GTK_DIALOG (compselect), 
+        /* If there is no component in the complex place list, set the current one */
+        if (toplevel->page_current->complex_place_list == NULL) {
+          gtk_dialog_response (GTK_DIALOG (compselect),
                                COMPSELECT_RESPONSE_PLACE);
-	}
+        }
 
-	/* Hide the component selector */
-	g_value_init (&value, G_TYPE_BOOLEAN);
-	g_value_set_boolean(&value, TRUE);
-	g_object_set_property (G_OBJECT(compselect), "hidden", &value);
-	break;
+        /* Hide the component selector */
+        g_value_init (&value, G_TYPE_BOOLEAN);
+        g_value_set_boolean(&value, TRUE);
+        g_object_set_property (G_OBJECT(compselect), "hidden", &value);
+        break;
+
       case GTK_RESPONSE_CLOSE:
       case GTK_RESPONSE_DELETE_EVENT:
         g_assert (GTK_WIDGET (dialog) == toplevel->cswindow);
@@ -160,11 +160,11 @@ x_compselect_callback_response (GtkDialog *dialog,
                               toplevel->page_current->complex_place_list);
         toplevel->page_current->complex_place_list = NULL;
 
-	/* return to the default state */
-	i_set_state(toplevel, SELECT);
-	i_update_toolbar(toplevel);
-  
+        /* return to the default state */
+        i_set_state(toplevel, SELECT);
+        i_update_toolbar(toplevel);
         break;
+
       default:
         /* Do nothing, in case there's another handler function which
            can handle the response ID received. */
@@ -421,31 +421,24 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
   const CLibSymbol *sym = NULL;
   gchar *buffer = NULL;
 
-  if (!gtk_tree_selection_get_selected (selection, &model, &iter)) {
-    return;
-  }
+  if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
 
-  view = gtk_tree_selection_get_tree_view (selection);
+    view = gtk_tree_selection_get_tree_view (selection);
+    if (view == compselect->inusetreeview ||
+        /* No special handling required */
+        (view == compselect->libtreeview &&
+         gtk_tree_model_iter_parent (model, &parent, &iter))) {
+         /* Tree view needs to check that we're at a leaf node */
 
-  if (view == compselect->inusetreeview) {
-    /* No special handling at the moment */
-  } else if (view == compselect->libtreeview) {
-    if (!gtk_tree_model_iter_parent (model, &parent, &iter)) {
-      /* selected element is not a leaf -> not a component name */
-      return;
+      gtk_tree_model_get (model, &iter, 0, &sym, -1);
+      buffer = s_clib_symbol_get_data (sym);
     }
-  } else {
-    /* Something's gone wrong */
-   g_assert_not_reached();
   }
-  
-  gtk_tree_model_get (model, &iter, 0, &sym, -1);
-
-  buffer = s_clib_symbol_get_data (sym);
 
   /* update the preview with new symbol data */
   g_object_set (compselect->preview,
                 "buffer", buffer,
+                "active", (buffer != NULL),
                 NULL);
 
   /* signal a component has been selected to parent of dialog */
@@ -1115,7 +1108,7 @@ compselect_init (Compselect *compselect)
                                         NULL));
   preview = GTK_WIDGET (g_object_new (TYPE_PREVIEW,
                                       /* Preview */
-                                      "active", TRUE,
+                                      "active", FALSE,
                                       NULL));
   gtk_container_add (GTK_CONTAINER (alignment), preview);
   gtk_container_add (GTK_CONTAINER (frame), alignment);
