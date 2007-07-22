@@ -100,6 +100,9 @@ preview_callback_realize (GtkWidget *widget,
 
   i_vars_set (preview_toplevel);
 
+  /* be sure to turn off scrollbars */
+  preview_toplevel->scrollbars_flag = FALSE;
+
   /* be sure to turn off the grid */
   preview_toplevel->grid = FALSE;
 
@@ -166,11 +169,11 @@ preview_callback_button_press (GtkWidget *widget,
 {
   Preview *preview = PREVIEW (widget);
   TOPLEVEL *preview_toplevel = preview->preview_toplevel;
-  
-  if (!preview->active || preview->filename == NULL) {
+
+  if (!preview->active) {
     return TRUE;
   }
-  
+
   switch (event->button) {
       case 1: /* left mouse button: zoom in */
         a_zoom (preview_toplevel, ZOOM_IN, HOTKEY, 0);
@@ -208,7 +211,7 @@ preview_callback_motion_notify (GtkWidget *widget,
 {
   Preview *preview = PREVIEW (widget);
   
-  if (!preview->active || preview->filename == NULL) {
+  if (!preview->active) {
     return TRUE;
   }
   
@@ -335,6 +338,14 @@ preview_class_init (PreviewClass *klass)
         
 }
 
+static gint
+preview_event_scroll (GtkWidget *widget,
+                      GdkEventScroll *event,
+                      TOPLEVEL *w_current)
+{
+  return x_event_scroll (widget, event, PREVIEW (widget)->preview_toplevel);
+}
+
 static void
 preview_init (Preview *preview)
 {
@@ -346,6 +357,7 @@ preview_init (Preview *preview)
     { "expose_event",         G_CALLBACK (preview_callback_expose)        },
     { "button_press_event",   G_CALLBACK (preview_callback_button_press)  },
     { "motion_notify_event",  G_CALLBACK (preview_callback_motion_notify) },
+    { "scroll_event",         G_CALLBACK (preview_event_scroll)           },
     { NULL,                   NULL                                        }
   }, *tmp;
   TOPLEVEL *preview_toplevel;
@@ -360,8 +372,6 @@ preview_init (Preview *preview)
   preview_toplevel->height = 120;
   preview_toplevel->win_width  = preview_toplevel->width;
   preview_toplevel->win_height = preview_toplevel->height;
-  /* be sure to turn off scrollbars */
-  preview_toplevel->scrollbars_flag = FALSE;
 
   preview_toplevel->drawing_area = GTK_WIDGET (preview);
   preview->preview_toplevel = preview_toplevel;
