@@ -123,7 +123,7 @@ preview_callback_realize (GtkWidget *widget,
 
   a_zoom_extents(preview_toplevel,
                  preview_page->object_head,
-                 A_PAN_DONT_REDRAW | A_PAN_IGNORE_BORDERS);
+                 A_PAN_DONT_REDRAW);
 
   o_redraw_all(preview_toplevel);
 
@@ -181,14 +181,16 @@ preview_callback_button_press (GtkWidget *widget,
 
   switch (event->button) {
       case 1: /* left mouse button: zoom in */
-        a_zoom (preview_toplevel, ZOOM_IN, HOTKEY, 0);
+        a_zoom (preview_toplevel, ZOOM_IN, HOTKEY,
+                A_PAN_DONT_REDRAW);
         o_redraw_all_fast (preview_toplevel);
         break;
       case 2: /* middle mouse button: pan */
         a_pan (preview_toplevel, mouse_x, mouse_y);
         break;
       case 3: /* right mouse button: zoom out */
-        a_zoom (preview_toplevel, ZOOM_OUT, HOTKEY, 0);
+        a_zoom (preview_toplevel, ZOOM_OUT, HOTKEY,
+                A_PAN_DONT_REDRAW);
         o_redraw_all_fast (preview_toplevel);
         break;
   }
@@ -276,7 +278,7 @@ preview_update (Preview *preview)
   /* display current page (possibly empty) */
   a_zoom_extents (preview_toplevel,
                   preview_toplevel->page_current->object_head,
-                  A_PAN_DONT_REDRAW | A_PAN_IGNORE_BORDERS);
+                  A_PAN_DONT_REDRAW);
   o_redraw_all (preview_toplevel);
   
 }
@@ -360,7 +362,7 @@ preview_event_configure (GtkWidget         *widget,
   if (preview_page != NULL) {
     a_zoom_extents(preview_toplevel,
                    preview_page->object_head,
-                   A_PAN_DONT_REDRAW | A_PAN_IGNORE_BORDERS);
+                   A_PAN_DONT_REDRAW);
     o_redraw_all_fast(preview_toplevel);
   }
   return retval;

@@ -71,6 +71,7 @@ void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
      this will be the same as w_current->page_current->to_screen_x/y_constant*/
   int zoom_max = 5;	
   int start_x, start_y;
+  int diff;
   double zx, zy, zoom_old, zoom_new, zoom_min;
 
 #if DEBUG
@@ -130,34 +131,48 @@ void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
   if (!(flags & A_PAN_IGNORE_BORDERS)) {
     /* check right border */
     if (w_current->page_current->right > w_current->init_right) {
-      w_current->page_current->left +=
-        w_current->init_right -
-        w_current->page_current->right;
-      w_current->page_current->right =
-        w_current->init_right;
+      w_current->page_current->left += w_current->init_right -
+                                       w_current->page_current->right;
+      w_current->page_current->right = w_current->init_right;
     }
-    /* check left border; this have to be done after the right border */
+    /* check left border */
     if (w_current->page_current->left < w_current->init_left) {
-      w_current->page_current->right +=
-        w_current->init_left -
-        w_current->page_current->left;
-      w_current->page_current->left =
-        w_current->init_left;
+      w_current->page_current->right += w_current->init_left -
+                                        w_current->page_current->left;
+      w_current->page_current->left = w_current->init_left;
     }
+
+    /* If there is any slack, center the view */
+    diff = (w_current->page_current->right -
+            w_current->page_current->left) -
+           (w_current->init_right - w_current->init_left);
+    if (diff > 0) {
+      w_current->page_current->left -= diff / 2;
+      w_current->page_current->right -= diff / 2;
+    }
+
     /* check bottom border */
     if (w_current->page_current->bottom > w_current->init_bottom) {
-      w_current->page_current->top +=
-        w_current->init_bottom -
-        w_current->page_current->bottom;
+      w_current->page_current->top += w_current->init_bottom -
+                                      w_current->page_current->bottom;
       w_current->page_current->bottom = w_current->init_bottom;
     }
-    /* check top border this have to be done after the bottom border*/
+    /* check top border */
     if (w_current->page_current->top < w_current->init_top) {
-      w_current->page_current->bottom +=
-        w_current->init_top -
-        w_current->page_current->top;
+      w_current->page_current->bottom += w_current->init_top -
+                                         w_current->page_current->top;
       w_current->page_current->top = w_current->init_top;
     }
+
+    /* If there is any slack, center the view */
+    diff = (w_current->page_current->bottom -
+            w_current->page_current->top) -
+           (w_current->init_bottom - w_current->init_top);
+    if (diff > 0) {
+      w_current->page_current->top -= diff / 2;
+      w_current->page_current->bottom -= diff / 2;
+    }
+
   }
 	
 #if DEBUG
