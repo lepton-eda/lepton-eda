@@ -66,6 +66,8 @@ void libgeda_init(void)
     /* g_setenv ("GEDADATA", GEDADATADIR, FALSE); */ /* requires glib-2.4.* */
   }
 
+  g_type_init ();
+
   s_toplevel_init ();
   s_clib_init();
   s_slib_init();
