@@ -114,7 +114,7 @@ int s_slib_search_for_dirname(char *dir_name)
  *  \par Function Description
  *
  *  \warning
- *  Caller must free returned pointer.
+ *  Caller must g_free returned pointer.
  */
 char *s_slib_search_dirs(const char *basename)
 {
@@ -179,7 +179,7 @@ char *s_slib_search_dirs(const char *basename)
  *  \par Function Description
  *
  *  \warning
- *  Caller must free returned pointer.
+ *  Caller must g_free returned pointer.
  */
 char *s_slib_search_lowlevel(const char *basename) 
 {
@@ -228,7 +228,7 @@ char *s_slib_search_lowlevel(const char *basename)
  *  \return The base file name in a character string.
  *
  *  \warning
- *  Caller must free returned pointer.
+ *  Caller must g_free returned pointer.
  */
 char *s_slib_getbasename(const char *rawname)
 {
@@ -301,7 +301,7 @@ char *s_slib_getbasename(const char *rawname)
     i--;
   }
 
-  /* be sure to free this somewhere */
+  /* be sure to g_free this somewhere */
   return(return_filename); 
 }
 
@@ -326,7 +326,7 @@ char *s_slib_getbasename(const char *rawname)
  *  required stripping (up to the first period).
  *
  *  \warning
- *  Caller must free returned pointer.
+ *  Caller must g_free returned pointer.
  */
 char *s_slib_search(const char *filename, int flag)
 {
@@ -347,7 +347,7 @@ char *s_slib_search(const char *filename, int flag)
     case(SLIB_SEARCH_NEXT):
       count++;
 
-      /* be sure to free processed_name */
+      /* be sure to g_free processed_name */
       processed_name = s_slib_getbasename(filename);	
 
 #if DEBUG 
@@ -380,7 +380,7 @@ char *s_slib_search(const char *filename, int flag)
   if (processed_name)
     g_free(processed_name);
 
-  /* don't forget to free this string */
+  /* don't forget to g_free this string */
   return(string);
 }
 
@@ -396,7 +396,7 @@ char *s_slib_search(const char *filename, int flag)
  *  for the file name as is and does no other changes to it.
  *
  *  \warning
- *  Caller must free returned pointer.
+ *  Caller must g_free returned pointer.
  */
 char *s_slib_search_single(const char *filename)
 {
@@ -404,7 +404,7 @@ char *s_slib_search_single(const char *filename)
 
   string = s_slib_search_lowlevel(filename);
 
-  /* don't forget to free this string */
+  /* don't forget to g_free this string */
   return(string);
 }
 
@@ -443,7 +443,7 @@ void s_slib_init()
  *  \par Function Description
  *
  *  \warning
- *  Caller must free returned pointer.
+ *  Caller must not free the returned pointer.
  */
 /* returns slibs */
 char *s_slib_getdir(int index)
@@ -463,7 +463,7 @@ char *s_slib_getdir(int index)
  *  \return A file name if one is found, NULL otherwise.
  *
  *  \warning
- *  Caller must free returned pointer.
+ *  Caller must g_free returned pointer.
  *
  *  The flag parameter can be one of the following values:
  *  <DL>

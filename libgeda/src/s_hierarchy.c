@@ -279,7 +279,7 @@ void s_hierarchy_up(TOPLEVEL *w_current, int pid)
  *  \return A GList of PAGE pointers.
  *
  *  \warning
- *  Call must free returned GList.
+ *  Call must g_list_free returned GList.
  */
 GList *s_hierarchy_traversepages(TOPLEVEL *w_current,
 				 gint flags)

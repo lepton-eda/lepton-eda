@@ -417,19 +417,19 @@ SCM g_rc_component_library_command (SCM listcmd, SCM getcmd,
               "component-library-command");
   tmp_str = scm_to_locale_string (listcmd);
   lcmdstr = g_strdup (tmp_str);
-  free (tmp_str);
+  free (tmp_str); /* this should stay as free (allocated from guile) */
 
   SCM_ASSERT (scm_is_string (getcmd), getcmd, SCM_ARG2, 
               "component-library-command");
   tmp_str = scm_to_locale_string (getcmd);
   gcmdstr = g_strdup (tmp_str);
-  free (tmp_str);
+  free (tmp_str); /* this should stay as free (allocated from guile) */
 
   SCM_ASSERT (scm_is_string (name), name, SCM_ARG3, 
               "component-library-command");
   tmp_str = scm_to_locale_string (name);
   namestr = g_strdup (tmp_str);
-  free (tmp_str);
+  free (tmp_str); /* this should stay as free (allocated from guile) */
 
   /* take care of any shell variables */
   /*! \bug this may be a security risk! */

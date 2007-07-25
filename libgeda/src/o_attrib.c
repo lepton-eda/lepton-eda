@@ -894,7 +894,7 @@ void o_save_attribs(FILE *fp, ATTRIB *attribs)
  *  Also, there cannot be any spaces beside the equals sign
  *  Changed: now it allocates memory for name and value strings.
  *  \warning
- *  Caller must free these strings when not needed.
+ *  Caller must g_free these strings when not needed.
  */
 int o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
 {
@@ -1008,7 +1008,7 @@ o_attrib_set_visible(TOPLEVEL *w_current, int flag)
  *  \param [in] string     The value to set attribute string to.
  *
  *  \note
- *  The user of this function must free the
+ *  The user of this function must g_free the
  *  <B>w_current->current_attribute</B> string after done using it.
  *  They must also free the input string.
  */
@@ -1033,7 +1033,7 @@ void o_attrib_set_string(TOPLEVEL *w_current, char *string)
 
   strcpy(w_current->current_attribute,string);
 	
-  /* be sure to free this string somewhere and free the input string */
+  /* be sure to g_free this string somewhere and free the input string */
 }
 
 /*! \brief Get the parent OBJECT of an attribute.
@@ -1224,7 +1224,7 @@ void o_attrib_set_color(TOPLEVEL *w_current, ATTRIB *attributes)
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
- *  Caller must free returned character string.
+ *  Caller must g_free returned character string.
  */
 char *o_attrib_search_name(OBJECT *list, char *name, int counter) 
 {
@@ -1389,7 +1389,7 @@ OBJECT *o_attrib_search_string_list(OBJECT *list, char *string)
  *  \return Matching object value if found, NULL otherwise.
  *
  *  \warning
- *  Caller must free returned character string.
+ *  Caller must g_free returned character string.
  */
 char *o_attrib_search_string_partial(OBJECT *object, char *search_for,
 				     int counter) 
@@ -1575,7 +1575,7 @@ OBJECT *o_attrib_search_attrib_value(ATTRIB *list, char *value, char *name,
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
- *  Caller must free returned character string.
+ *  Caller must g_free returned character string.
  */
 char *
 o_attrib_search_attrib_name(ATTRIB *list, char *name, int counter) 
@@ -1643,7 +1643,7 @@ o_attrib_search_attrib_name(ATTRIB *list, char *name, int counter)
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
- *  Caller must free returned character string.
+ *  Caller must g_free returned character string.
  */
 char *o_attrib_search_toplevel(OBJECT *list, char *name, int counter) 
 {
@@ -1698,7 +1698,7 @@ char *o_attrib_search_toplevel(OBJECT *list, char *name, int counter)
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
- *  Caller must free returned character string.
+ *  Caller must g_free returned character string.
  */
 /* be sure caller free's return value */
 char *o_attrib_search_special(OBJECT *o_current) 
@@ -1732,7 +1732,7 @@ char *o_attrib_search_special(OBJECT *o_current)
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
- *  Caller must free returned character string.
+ *  Caller must g_free returned character string.
  */
 char *o_attrib_search_name_single(OBJECT *object, char *name,
 				  OBJECT **return_found) 
@@ -1831,7 +1831,7 @@ char *o_attrib_search_name_single(OBJECT *object, char *name,
  *  \return Character string with attribute value, NULL otherwise.
  *  
  *  \warning
- *  Caller must free returned character string.
+ *  Caller must g_free returned character string.
  */
 /* be sure caller free's return value */
 /* this function is like above, except that it returns the n'th occurance */
@@ -1933,7 +1933,7 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name,
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
- *  Caller must free returned character string
+ *  Caller must g_free returned character string
  */
 char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found)
 {
@@ -1962,7 +1962,7 @@ char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found)
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \note
- *  Caller must free returned character string.
+ *  Caller must g_free returned character string.
  */
 char *o_attrib_search_numslots(OBJECT *object, OBJECT **return_found)
 {
@@ -1992,7 +1992,7 @@ char *o_attrib_search_numslots(OBJECT *object, OBJECT **return_found)
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
- *  Caller must free returned character string.
+ *  Caller must g_free returned character string.
  */
 char *o_attrib_search_default_slot(OBJECT *object)
 {
@@ -2047,7 +2047,7 @@ OBJECT *o_attrib_search_pinseq(OBJECT *list, int pin_number)
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
- *  Caller must free returned character string.
+ *  Caller must g_free returned character string.
  */
 char *o_attrib_search_slotdef(OBJECT *object, int slotnumber)
 {

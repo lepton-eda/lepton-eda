@@ -47,7 +47,7 @@
 /* things to do here : */
 /* write the net alias function */
 
-/* be sure to free returned string */
+/* be sure to g_free returned string */
 char *s_netattrib_extract_netname(char *value)
 {
     char *return_value = NULL;

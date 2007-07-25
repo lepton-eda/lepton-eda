@@ -245,7 +245,7 @@ OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
  *  \return A pointer to the picture OBJECT character string.
  *
  *  \note
- *  Caller must free returned character string.
+ *  Caller must g_free returned character string.
  *
  */
 char *o_picture_save(OBJECT *object)
@@ -841,7 +841,7 @@ OBJECT *o_picture_copy(TOPLEVEL *w_current, OBJECT *list_tail,
  *  \return Array of rgb data from image.
  *
  *  \note
- *  Caller must free returned guint8 array.
+ *  Caller must g_free returned guint8 array.
  */
 guint8 *o_picture_rgb_data(GdkPixbuf *image)
 {
@@ -880,7 +880,7 @@ guint8 *o_picture_rgb_data(GdkPixbuf *image)
  *  \return Array of mask data from image.
  *
  *  \note
- *  Caller must free returned guint8 array.
+ *  Caller must g_free returned guint8 array.
  */
 guint8 *o_picture_mask_data(GdkPixbuf *image)
 {

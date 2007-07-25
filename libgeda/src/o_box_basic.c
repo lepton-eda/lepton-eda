@@ -412,7 +412,7 @@ OBJECT *o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
  *  \return A pointer to the BOX character string.
  *
  *  \warning
- *  Caller must free returned character string.
+ *  Caller must g_free returned character string.
  */
 char *o_box_save(OBJECT *object)
 {

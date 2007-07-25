@@ -350,7 +350,7 @@ OBJECT *o_line_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
  *  \return A pointer to the line OBJECT character string.
  *
  *  \note
- *  Caller must free returned character string.
+ *  Caller must g_free returned character string.
  *
  */
 char *o_line_save(OBJECT *object)

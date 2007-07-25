@@ -2185,7 +2185,7 @@ gint color_set(GtkWidget *w, gpointer data)
  *  \par Function Description
  *
  *  \warning
- *  Caller must free returned character string.
+ *  Caller must g_free returned character string.
  *
  */
 char *index2functionstring(int index)
@@ -2748,7 +2748,7 @@ int generic_confirm_dialog (const char *msg)
  *  \par Function Description
  *
  *  \warning
- *   Caller must free returned character string.
+ *   Caller must g_free returned character string.
  */
 char *generic_filesel_dialog (const char *msg, const char *templ, gint flags)
 {

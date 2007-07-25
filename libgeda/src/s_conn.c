@@ -785,7 +785,7 @@ int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list)
  *  \par Function Description
  *
  *  \warning
- *  Caller must free returned GList pointer.
+ *  Caller must g_list_free returned GList pointer.
  *  Do not free individual data items in list.
  */
 GList *s_conn_return_others(GList *input_list, OBJECT *object)
@@ -816,7 +816,7 @@ GList *s_conn_return_others(GList *input_list, OBJECT *object)
  *  \par Function Description
  *
  *  \warning
- *  Caller must free returned GList pointer.
+ *  Caller must g_list_free returned GList pointer.
  *  Do not free individual data items in list.
  */
 GList *s_conn_return_complex_others(GList *input_list, OBJECT *object)

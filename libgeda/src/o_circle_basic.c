@@ -354,7 +354,7 @@ OBJECT *o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
  *  \return A pointer to the circle OBJECT character string.
  *
  *  \note
- *  Caller must free returned character string.
+ *  Caller must g_free returned character string.
  *
  */
 char *o_circle_save(OBJECT *object)
