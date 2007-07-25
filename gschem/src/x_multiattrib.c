@@ -1100,6 +1100,26 @@ static gboolean multiattrib_callback_value_key_pressed(GtkWidget *widget,
   return retval;
 }
 
+
+/*! \brief GtkWidget "grab-focus" signal handler
+ *
+ *  \par Function Description
+ *  Select the text in the GtkTextView so it may be over-typed quickly
+ */
+static void multiattrib_callback_value_grab_focus (GtkWidget *widget,
+                                                   gpointer user_data)
+{
+  GtkTextView *textview = GTK_TEXT_VIEW (widget);
+  GtkTextBuffer *textbuffer;
+  GtkTextIter startiter, enditer;
+
+  textbuffer = gtk_text_view_get_buffer (textview);
+  gtk_text_buffer_get_iter_at_offset (textbuffer, &startiter, 0);
+  gtk_text_buffer_get_iter_at_offset (textbuffer, &enditer, -1);
+  gtk_text_buffer_select_range (textbuffer, &enditer, &startiter);
+}
+
+
 /*! \todo Finish function documentation
  *  \brief
  *  \par Function Description
@@ -1145,22 +1165,8 @@ static void multiattrib_callback_button_add(GtkButton *button,
                                     name, value,
                                     visible, shownv);
   g_free (value);
-  
-  /* clear fields of lower frame */
-  /*   - resets entry for name */
-  gtk_list_select_item (GTK_LIST (multiattrib->combo_name->list), 0);
-  /*   - resets entry for value */
-  gtk_text_buffer_set_text (buffer, "", 0);
-  /*   - resets entry for visibility */
-  g_object_set (multiattrib->button_visible,
-                "active", TRUE,
-                NULL);
-  /*   - resets entry for show name/value */
-  gtk_option_menu_set_history (multiattrib->optionmenu_shownv,
-                               0);
-  
+
   multiattrib_update (multiattrib);
-  
 }
 
 /*! \todo Finish function documentation
@@ -1737,6 +1743,10 @@ static void multiattrib_init(Multiattrib *multiattrib)
 		    "key_press_event",
 		    G_CALLBACK (multiattrib_callback_value_key_pressed),
 		    multiattrib);
+  g_signal_connect (textview,
+                    "grab-focus",
+                    G_CALLBACK (multiattrib_callback_value_grab_focus),
+                    multiattrib);
   gtk_container_add (GTK_CONTAINER (scrolled_win), textview);
   multiattrib->textview_value = GTK_TEXT_VIEW (textview);
   gtk_table_attach (GTK_TABLE (table), label,
