@@ -31,7 +31,7 @@
 import sys, string
 
 ##################### GLOBALS ############################################
-VERSION="0.0.10"
+VERSION="0.0.11"
 
 CHARHIGH=26
 preset_options = {"wordswap":"yes",
@@ -44,9 +44,9 @@ preset_options = {"wordswap":"yes",
                   "pinwidthhorizontal":"400"}
 allowed_attr = ["version", "name", "device", "refdes", "footprint", "numslots",
                 "slot", "slotdef","description", "comment", "author",
-                "documentation","value"]
+                "documentation","value","dist-license", "use-license"]
 single_attr_warning = ["device", "footprint", "author", "documentation",
-                       "description", "numslots"]
+                       "description", "numslots","dist-license", "use-license"]
 single_attr = ["slot"]
 multiple_attr = ["slotdef", "comment"]
 stylelist = ["line","dot","clk","dotclk","none"]

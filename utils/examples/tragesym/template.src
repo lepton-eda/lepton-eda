@@ -18,6 +18,8 @@ pinwidthhorizontal=400
 
 [geda_attr]
 # name will be printed in the top of the symbol
+# name is only some graphical text, not an attribute
+# version specifies a gschem version.
 # if you have a device with slots, you'll have to use slot= and slotdef=
 # use comment= if there are special information you want to add
 version=20060113 1
@@ -28,6 +30,8 @@ footprint=
 description=
 documentation=
 author=
+dist-license=
+use-license=
 numslots=0
 #slot=1
 #slotdef=1:
