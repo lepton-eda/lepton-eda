@@ -420,6 +420,7 @@ void o_undo_callback(TOPLEVEL *w_current, int type)
 
   /* final redraw */
   x_pagesel_update (w_current);
+  x_multiattrib_update (w_current);
 
   /* Let the caller to decide if redraw or not */
   /* w_current->DONT_REDRAW = 0; */
