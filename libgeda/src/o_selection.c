@@ -84,8 +84,11 @@ void o_selection_remove(SELECTION *selection, OBJECT *o_selected )
     fprintf(stderr, "Got NULL for o_selected in o_selection_remove\n");
     return;
   }
-  o_selection_unselect( o_selected );
-  geda_list_remove( (GedaList *)selection, o_selected );
+
+  if (g_list_find( geda_list_get_glist( selection ), o_selected ) != NULL) {
+    o_selection_unselect( o_selected );
+    geda_list_remove( (GedaList *)selection, o_selected );
+  }
 }
 
 /*! \brief Unselects all the objects in the given list.
