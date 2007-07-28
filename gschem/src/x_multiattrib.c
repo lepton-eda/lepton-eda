@@ -1502,6 +1502,7 @@ static void multiattrib_init(Multiattrib *multiattrib)
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
   GtkTreeSelection *selection;
+  GtkStyle *style;
   
   /* dialog initialization */
   g_object_set (G_OBJECT (multiattrib),
@@ -1747,6 +1748,11 @@ static void multiattrib_init(Multiattrib *multiattrib)
                     "grab-focus",
                     G_CALLBACK (multiattrib_callback_value_grab_focus),
                     multiattrib);
+  /* Save the GTK_STATE_NORMAL color so we can work around GtkTextView's
+   * stubborn refusal to draw with GTK_STATE_INSENSITIVE later on */
+  style = gtk_widget_get_style (textview);
+  multiattrib->value_normal_text_color = style->text[ GTK_STATE_NORMAL ];
+
   gtk_container_add (GTK_CONTAINER (scrolled_win), textview);
   multiattrib->textview_value = GTK_TEXT_VIEW (textview);
   gtk_table_attach (GTK_TABLE (table), label,
@@ -1875,6 +1881,7 @@ void multiattrib_update (Multiattrib *multiattrib)
   OBJECT **object_attribs, *o_current;
   gint i;
   gboolean sensitive;
+  GtkStyle *style;
 
   g_assert (GSCHEM_DIALOG (multiattrib)->toplevel != NULL);
 
@@ -1886,6 +1893,14 @@ void multiattrib_update (Multiattrib *multiattrib)
   sensitive = (multiattrib->selection != NULL && multiattrib->object != NULL);
   gtk_widget_set_sensitive (GTK_WIDGET (multiattrib->frame_attributes), sensitive);
   gtk_widget_set_sensitive (GTK_WIDGET (multiattrib->frame_add), sensitive);
+
+  /* Work around GtkTextView's stubborn indifference
+   * to GTK_STATE_INSENSITIVE when rendering its text. */
+  style = gtk_widget_get_style (GTK_WIDGET (multiattrib->textview_value));
+  gtk_widget_modify_text (GTK_WIDGET (multiattrib->textview_value),
+                          GTK_STATE_NORMAL,
+                          sensitive ? &multiattrib->value_normal_text_color
+                                    : &style->text[GTK_STATE_INSENSITIVE]);
 
   /* If we aren't sensitive, there is nothing more to do */
   if (!sensitive)

@@ -56,6 +56,8 @@ struct _Multiattrib {
   GtkWidget      *frame_attributes;
   GtkWidget      *frame_add;
 
+  GdkColor       value_normal_text_color;   /* Workaround for lameness in GtkTextView */
+
   gulong selection_changed_id;
 };
 
