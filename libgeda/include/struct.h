@@ -222,7 +222,7 @@ struct st_object {
   int fill_angle1, fill_pitch1;
   int fill_angle2, fill_pitch2;
   /* PB : change end */	
-	
+
   int visited;		/* used in gnetlist for travesal purposes */
 
   gboolean complex_embedded;                    /* is embedded component? */
@@ -251,7 +251,7 @@ struct st_object {
   /* 1 for right, -1 for left (horizontal bus) */
   /* 1 for up, -1 for down (vertial bus) */
   int bus_ripper_direction;             /* only valid on buses */
-  
+
 
   int font_text_size;			/* used only with fonts defs */
   OBJECT *font_prim_objs;			/* used only with fonts defs */
@@ -272,7 +272,7 @@ struct st_object {
 
 struct st_attrib {
   OBJECT *object;	/* object attribute is connected to */
-	
+
   OBJECT *copied_to; /* used when copying attributes */
 
   ATTRIB *prev;
@@ -404,7 +404,7 @@ struct st_toplevel {
   int wid;			/* Window id, always unique */
 
   int num_untitled;		/* keep track of untitled wins */
-	
+
   int start_x;
   int start_y;
   int save_x;
@@ -415,7 +415,7 @@ struct st_toplevel {
   int second_y;
   int loc_x, loc_y;
   int distance;
-  
+
   /* used by attribute dialog */
   /* also used by text add dialog */
   char *current_attribute;		
@@ -445,7 +445,7 @@ struct st_toplevel {
   char *font_directory; 		/* path of the vector fonts */
   char *scheme_directory; 		/* path of the scheme scripts */
   char *bitmap_directory; 		/* path of the bitmaps */
-	
+
   int event_state;			/* Current event state */
 
   int inside_action;			/* Are we doing an action? */
@@ -496,7 +496,7 @@ struct st_toplevel {
   int CONTROLKEY;			/* control key pressed? */
   int SHIFTKEY;				/* shift key pressed? */
   int ALTKEY;				/* alt key pressed? */
-	
+
   int doing_pan;			/* mouse pan status flag */
 
   /* page system */
@@ -824,7 +824,7 @@ struct st_toplevel {
   /* controls the threshold (in lines of text) when the multi-line text */
   /* output font is forced to vector */
   int print_vector_threshold;
-  
+
   /* controls the offset (in world coordinates) that are added to netname */
   /* attributes when they are attached to vertical or horizontal nets */
   int add_attribute_offset;
@@ -873,9 +873,9 @@ struct st_netlist {
   int nlid;
 
   char *component_uref;
-	
+
   OBJECT *object_ptr;
-	
+
   CPINLIST *cpins;		
 
   char *hierarchy_tag;
@@ -924,7 +924,7 @@ struct st_schcheck {
   int no_warnings;              /* No of Warinings */
 
   CHKERRS * sheet_errs;
- 
+
   CHKERRS *float_nets;           /* Header of the list of floating nets */
   int net_errs;                 /* No of floating nets */
 
