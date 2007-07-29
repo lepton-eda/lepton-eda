@@ -559,7 +559,7 @@ OBJECT *o_read_buffer(TOPLEVEL *w_current, OBJECT *object_list,
 
 /*! \brief Read a file
  *  \par Function Description
- *  This function reads a file in libgead format.
+ *  This function reads a file in libgeda format.
  *
  *  \param [in,out] w_current    The current TOPLEVEL structure.
  *  \param [in]     object_list  The object_list to read data to.

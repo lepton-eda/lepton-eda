@@ -45,7 +45,7 @@
 #endif
 
 /*! \brief Return the bounds of the given object.
- *  \par Given an object, calcule the bounds coordinates.
+ *  \par Given an object, calculate the bounds coordinates.
  *  \param [in] w_current The toplevel structure.
  *  \param [in] o_current The object to look the bounds for.
  *  \param [out] rleft   pointer to the left coordinate of the object.

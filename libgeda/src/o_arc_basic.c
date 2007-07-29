@@ -85,7 +85,7 @@ OBJECT *o_arc_add(TOPLEVEL *w_current, OBJECT *object_list,
   /*! \note
    *  The ARC structure is initialized with the parameters.
    *  A default initialization is performed for the line and
-   *  fill type to avoid misunderstood.
+   *  fill type to avoid misunderstanding.
    *
    *  The functions relative to the use of the object are sets.
    */

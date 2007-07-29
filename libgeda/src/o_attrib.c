@@ -205,7 +205,7 @@ ATTRIB *add_attrib_head(OBJECT *parent)
 
 /*! \brief Add an attribute to an existing attribute list.
  *  \par Function Description
- *  Add an attribute to an exsiting attribute list.
+ *  Add an attribute to an existing attribute list.
  *
  *  \param [in]     w_current  The TOPLEVEL object.
  *  \param [in,out] list_head  The list where you want to add item to.

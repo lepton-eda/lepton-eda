@@ -172,7 +172,7 @@ int f_open_flags(TOPLEVEL *w_current, const gchar *filename,
           else {
             g_string_append(message, "The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n");
           }
-          g_string_append (message, "Gschem usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptely.\n");
+          g_string_append (message, "Gschem usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n");
           if (w_current->page_current->load_newer_backup_func == NULL) {
             s_log_message(message->str);
             s_log_message("\nRun gschem and correct the situation.\n\n");
