@@ -865,9 +865,28 @@ OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 }
 
 /*! \todo Finish function documentation!!!
- *  \brief
+ *  \brief Creates a text OBJECT and the graphical objects representing it
  *  \par Function Description
+ *  Create an OBJECT of type OBJ_TEXT and link it to the end of object_list.
+ *  Also add the OBJECTs forming the graphical representation of the visible
+ *  string, to the text OBJECT's prim_objs list.
  *
+ *  \param [in]  w_current              The TOPLEVEL object.
+ *  \param [in]  object_list            OBJECT list onto which to add text.
+ *  \param [in]  type                   OBJ_TEXT (TODO: why bother)
+ *  \param [in]  color                  The color of the text.
+ *  \param [in]  x                      World x coord of text.
+ *  \param [in]  y                      World y coord of text.
+ *  \param [in]  alignment              How text bounding box aligns on (x, y).
+ *  \param [in]  angle                  Angle at which text will appear.
+ *  \param [in]  string                 The text (TODO: can be char const *)!
+ *  \param [in]  size                   Text size.
+ *  \param [in]  visibility             VISIBLE or INVISIBLE.
+ *  \param [in]  show_name_value        SHOW_NAME_VALUE or friends.
+ *  \return Pointer to text OBJECT.
+ *
+ *  \note
+ *  Caller is responsible for string; this function allocates its own copy.
  */
 OBJECT *o_text_add(TOPLEVEL *w_current, OBJECT *object_list, 
 		   char type, int color, int x, int y, int alignment,
