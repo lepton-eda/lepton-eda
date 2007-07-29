@@ -19,14 +19,14 @@ docsman_DATA = gnetlist.html
 %.html: %.1
 	@echo "Creating html manpage (using groff)"
 	@rm -rf $*.tmp
-	@if which groff >/dev/null 2>/dev/null; then             \
-		LC_NUMERIC=C groff -man -T html  $*.1 >$*.tmp   ;\
+	@if test "x$(GROFF)" != xno; then                        \
+		LC_NUMERIC=C $(GROFF) -man -T html  $*.1 >$*.tmp;\
+		mv -f $*.tmp $*.html                            ;\
 	else                                                     \
 		echo "** Did not find groff **"                 ;\
 		echo "Some Documentation might not be correct!" ;\
                 touch $*.html                                   ;\
 	fi
-	@mv -f $*.tmp $*.html
 
 gnetlist.html: gnetlist.1
 

@@ -22,14 +22,14 @@ BUILT_SOURCES = geda.pic nc.pdf nc.ps
 %.ps: %.doc
 	@echo "Creating ps (using groff)"
 	@rm -rf $*.tmp
-	@if which groff >/dev/null 2>/dev/null; then              \
-		LC_NUMERIC=C groff -t -sp -ms $*.doc >$*.tmp ;\
+	@if test "x$(GROFF)" != xno; then                        \
+		LC_NUMERIC=C $(GROFF) -t -sp -ms $*.doc >$*.tmp ;\
+		mv -f $*.tmp $*.ps                              ;\
 	else						         \
 		echo "** Did not find groff **"                 ;\
 		echo "Some Documentation might not be correct!" ;\
 		touch $*.ps                                     ;\
 	fi
-	@mv -f $*.tmp $*.ps
 
 %.pdf: %.ps
 	@echo "Creating pdf (using ps2pdf)"
