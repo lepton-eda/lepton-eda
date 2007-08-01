@@ -156,107 +156,6 @@ s_toplevel_gtksheet_to_toplevel()
 }
 
 
-
-/* =======================  Callbacks  ====================== */
-
-/* I am putting all callbacks from the menubar here.  This is kind
- * of stupid, since most of the time I just use the fcns here to 
- * invoke a fcn in x_*.  Perhaps I'll change this later.
- */
-
-/*------------------------------------------------------------------
- * This fcn is the callback from the menu bar.  It throws up the 
- * filedialog widget, and then accepts from it a list of files to
- * open.  Then it figures out if there is already an existing
- * project, and call the appropriate version of s_toplevel_read 
- * depending upon that.
- * TODO: this should really be done in two stages:
- * 1. close the current project and reinitialize structures
- * 2. load the new project
- *------------------------------------------------------------------*/
-void s_toplevel_menubar_file_open()
-{
-  GSList *file_list;
-
-  file_list = x_fileselect_open();
-  
-  /* Load the files, don't check if it went OK */
-  x_fileselect_load_files(file_list);
-  
-  g_slist_foreach(file_list, (GFunc)g_free, NULL);
-  g_slist_free(file_list);
-}
-
-
-/*------------------------------------------------------------------
- * This fcn is the file->save callback from the menu bar.  It 
- * first updates the proect, and then saves the project without
- * throwing up the filedialog widget.
- *------------------------------------------------------------------*/
-void s_toplevel_menubar_file_save()
-{
-
-#ifdef DEBUG
-  printf("In s_toplevel_menubar_file_save, about to save out the project\n");
-#endif
-
-  s_toplevel_gtksheet_to_toplevel();  /* Dumps sheet data into TOPLEVEL */
-  s_page_save_all(pr_current);  /* saves all pages in design */
-
-  sheet_head->CHANGED = FALSE;
-
-  return;
-}
-
-
-/*------------------------------------------------------------------
- * This is called when the user wants to export csv
- *------------------------------------------------------------------*/
-void s_toplevel_menubar_file_export_csv()
-{
-  gint cur_page;
-
-
-  /* first verify that we are on the correct page (components) */
-  cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
-
-  /* Check that we are on components page. */
-  if (cur_page == 0) {
-#ifdef DEBUG
-    printf("In s_toplevel_menubar_file_export_csv, about to export csv\n");
-#endif
-    x_dialog_export_file();
-  } else {
-    x_dialog_unimplemented_feature();  /* We only support export 
-                                          of components now */
-  }
-  return;
-}
-
-
-/*------------------------------------------------------------------
- *  This fcn is the edit->new attrib column callback from the menu bar.
- *  It throws up the "enter new attrib name" dialog box, then returns.
- *------------------------------------------------------------------*/
-void s_toplevel_menubar_edit_newattrib()
-{
-  gint cur_page;
-
-  /* first verify that we are on the correct page (components) */
-  cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
-
-  /* Check that we are on components page. */
-  if (cur_page == 0) {
-#ifdef DEBUG
-    printf("In s_toplevel_menubar_edit_newattrib, about to add new attrib column\n");
-#endif
-    x_dialog_newattrib_get_name();  /* This creates dialog box  */
-  }
-
-  return;
-}  
-
-
 /*------------------------------------------------------------------
  *  This fcn gets called when the user has entered a new attrib name,
  *  and clicked the OK button.  It does this:
@@ -346,21 +245,6 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
 
   return;
 }
-
-
-/*------------------------------------------------------------------
- *  This fcn is the edit->new attrib column callback from the menu bar.
- *  It throws up the "enter new attrib name" dialog box, then returns.
- *------------------------------------------------------------------*/
-void s_toplevel_menubar_edit_delattrib()
-{
-#ifdef DEBUG
-  printf("In s_toplevel_menubar_edit_delattrib, about to delete attribute column\n");
-#endif
-
-  x_dialog_delattrib_confirm();
-  return;
-}  
 
 
 /*------------------------------------------------------------------
@@ -462,22 +346,6 @@ void s_toplevel_delete_attrib_col() {
 
   return;
 }
-
-
-/*------------------------------------------------------------------
- *  This fcn is the edit->new attrib column callback from the menu bar.
- *  It throws up the "enter new attrib name" dialog box, then returns.
- *------------------------------------------------------------------*/
-void s_toplevel_menubar_unimplemented_feature()
-{
-#ifdef DEBUG
-  printf("In s_toplevel_menubar_unimplemented_feature, telling the user that feature is lacking\n");
-#endif
-
-  x_dialog_unimplemented_feature();  /* This creates dialog box  */
-  return;
-}  
-
 
 
 /*------------------------------------------------------------------

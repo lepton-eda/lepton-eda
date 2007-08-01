@@ -88,14 +88,8 @@ void s_toplevel_verify_design(TOPLEVEL *pr_current);
 void s_toplevel_empty_project();
 void s_toplevel_gtksheet_to_toplevel();
 void s_toplevel_update_page(OBJECT *start_obj);
-void s_toplevel_menubar_file_open();
-void s_toplevel_menubar_file_save();
-void s_toplevel_menubar_file_export_csv();
-void s_toplevel_menubar_edit_newattrib();
 void s_toplevel_add_new_attrib(gchar *new_attrib_name);
-void s_toplevel_menubar_edit_delattrib();
 void s_toplevel_delete_attrib_col();
-void s_toplevel_menubar_unimplemented_feature();
 void s_toplevel_select_object();
 void s_toplevel_sheetdata_to_toplevel(OBJECT *start_obj);
 

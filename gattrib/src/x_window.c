@@ -34,16 +34,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkkeysyms.h>
-
-#include <glib.h>
-#include <glib-object.h>
 
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
-
 
 #include "gtksheet_2_2.h"
 #include "gtkitementry_2_2.h"
@@ -63,128 +57,149 @@
 static void
 x_window_create_menu(GtkWidget **menubar);
 
-/* ======================  Public functions  ======================== */
-
-/*------------------------------------------------------------------
- * x_window_init -- this fcn initialies the toplevel gtksheet stuff.  It
- * basically just initializes the following widgets:
+/*! \brief This function initializes the toplevel gtksheet stuff. 
+ *
+ *  It basically just initializes the following widgets:
  *  GTK_WINDOW *window 
  *  GTK_CONTAINER *main_vbox
  *  GTK_MENU 
- * Note that it doesn't display the spreadsheet itself.  This is done
- * in x_sheet_build_sheet.
- * I suppose I ctould postpone all initialization until x_sheet_build_sheet, but I 
- * figured that I could at least do some initialization here.  
- * In particular, the stuff to put up the menus is long & it is worthwhile
- * to separate it from other code.  Maybe I'll refactor this later.
- *------------------------------------------------------------------*/
+ * 
+ *  Note that it doesn't display the spreadsheet itself.  This is done
+ *  in x_sheet_build_sheet. I suppose I could postpone all initialization 
+ *  until x_sheet_build_sheet, but I figured that I could at least do 
+ *  some initialization here. In particular, the stuff to put up the 
+ *  menus is long & it is worthwhile to separate it from other code.  
+ *  Maybe I'll refactor this later.
+ */
 void
 x_window_init()
 {
-  /* note that the graphical widgets themselves (window, main_vbox, menu_bar)
-   * are globals defined in ../include/globals.h   On pr_current I 
-   * attach pointers to some of them here for future reference.  */
-  gint i;
+  GtkWidget *menu_bar;
+  GtkWidget *main_vbox;
 
-  /* -----  First initialize stuff in the top-level window  ----- */  
- 
-#ifdef DEBUG
-  printf("In x_window_init, about to call gtk_window_new.\n");
-#endif
   /*  window is a global declared in globals.h.  */
-  window = (GtkWidget *) gtk_window_new(GTK_WINDOW_TOPLEVEL);  
+  window = gtk_window_new(GTK_WINDOW_TOPLEVEL);  
 
   /* I attach a pointer to window to the TOPLEVEL structure */
   pr_current->main_window = window;
   
-#ifdef DEBUG
-  printf("In x_window_init, about to call gtk_window_set_title.\n");
-#endif
   gtk_window_set_title( GTK_WINDOW(window), "gattrib -- gEDA attribute editor"); 
-  /*  gtk_widget_set_usize(GTK_WIDGET(window), 900, 600);  */
   gtk_window_set_default_size(GTK_WINDOW(window), 750, 600);  
   
-
-#ifdef DEBUG
-  printf("In x_window_init, about to connect delete and destroy signals to window.\n");
-#endif
   gtk_signal_connect (GTK_OBJECT (window), "delete_event",
 		      GTK_SIGNAL_FUNC (gattrib_really_quit), 0);
   gtk_signal_connect (GTK_OBJECT (window), "destroy",
 		      GTK_SIGNAL_FUNC (gattrib_really_quit), 0);
-  
 
   /* -----  Now create main_vbox.  This is a container which organizes child  ----- */  
   /* -----  widgets into a vertical column.  ----- */  
-  /* main_vbox is a global defined in globals.h */
-#ifdef DEBUG
-  printf("In x_window_init, about to set up vobx.\n");
-#endif
   main_vbox = gtk_vbox_new(FALSE,1);
   gtk_container_set_border_width(GTK_CONTAINER(main_vbox), 1);
   gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(main_vbox) );
-  gtk_widget_show(GTK_WIDGET(main_vbox) );
-
 
   /* -----  Now create menu bar  ----- */  
-  /* menu_bar is a global defined in globals.h */
-#ifdef DEBUG
-  printf("In x_window_init, about to create menu bar.\n");
-#endif
   x_window_create_menu(&menu_bar);
   pr_current->menubar = menu_bar;    /* attach pointer to menu_bar to (TOPLEVEL pr_current) */
-  gtk_box_pack_start (GTK_BOX (main_vbox), menu_bar, FALSE, TRUE, 0);
-  gtk_widget_show( GTK_WIDGET(menu_bar) );
+  gtk_box_pack_start(GTK_BOX (main_vbox), menu_bar, FALSE, TRUE, 0);
 
   /* -----  Now init notebook widget  ----- */  
-#ifdef DEBUG
-  printf("In x_window_init, about to create notbook.\n");
-#endif
-  notebook=gtk_notebook_new();
+  notebook = gtk_notebook_new();
   gtk_notebook_set_tab_pos(GTK_NOTEBOOK(notebook), GTK_POS_BOTTOM);
   gtk_box_pack_start(GTK_BOX(main_vbox), notebook, TRUE, TRUE, 0);
-  gtk_widget_show( notebook );
-
   
   /* -----  Now malloc -- but don't fill out -- space for sheets  ----- */  
   /* This basically sets up the overhead for the sheets, as I understand
    * it.  The memory for the actual sheet cells is allocated later,
    * when gtk_sheet_new is invoked, I think.  */
-#ifdef DEBUG
-  printf("In x_window_init, about to malloc space for sheets.\n");
-#endif
-  for(i=0; i<NUM_SHEETS; i++){
-    sheets=(GtkSheet **) g_realloc(sheets, (i+1)*sizeof(GtkWidget *));
-  }
+  sheets = g_malloc0(NUM_SHEETS * sizeof(GtkWidget *));
+}
 
-  /* -----  Finally show top level window to make everything appear  ----- */
-#ifdef DEBUG
-  /*   printf("In x_window_init, about to show window widget.\n"); */
-#endif
 
-  /*
-   *  gtk_widget_show( GTK_WIDGET(window) );
-   */
+/*------------------------------------------------------------------
+ * TODO: this should really be done in two stages:
+ * 1. close the current project and reinitialize structures
+ * 2. load the new projec:t
+ *------------------------------------------------------------------*/
+static void
+menu_file_open()
+{
+  x_dialog_unimplemented_feature();
+#if 0
+  GSList *file_list;
+
+  file_list = x_fileselect_open();
   
+  /* Load the files, don't check if it went OK */
+  x_fileselect_load_files(file_list);
+  
+  g_slist_foreach(file_list, (GFunc)g_free, NULL);
+  g_slist_free(file_list);
+#endif
+}
+
+static void
+menu_file_save()
+{
+  s_toplevel_gtksheet_to_toplevel();  /* Dumps sheet data into TOPLEVEL */
+  s_page_save_all(pr_current);  /* saves all pages in design */
+
+  sheet_head->CHANGED = FALSE;
+}
+
+static void 
+menu_file_export_csv()
+{
+  gint cur_page;
+
+  /* first verify that we are on the correct page (components) */
+  cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
+
+  /* Check that we are on components page. */
+  if (cur_page == 0) {
+    x_dialog_export_file();
+  } else {
+    x_dialog_unimplemented_feature();  /* We only support export 
+                                          of components now */
+  }
+}
+
+static void 
+menu_edit_newattrib()
+{
+  gint cur_page;
+
+  /* first verify that we are on the correct page (components) */
+  cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
+
+  /* Check that we are on components page. */
+  if (cur_page == 0) {
+    x_dialog_newattrib_get_name();  /* This creates dialog box  */
+  }
+}
+
+static void
+menu_edit_delattrib()
+{
+  x_dialog_delattrib_confirm();
 }
 
 static const GtkActionEntry actions[] = {
   /* name, stock-id, label, accelerator, tooltip, callback function */
   /* File menu */
   { "file", NULL, "_File"},
-  { "file-open", GTK_STOCK_OPEN, "Open", "<Control>O", "", s_toplevel_menubar_file_open},
-  { "file-save", GTK_STOCK_SAVE, "Save", "<Control>S", "", s_toplevel_menubar_file_save},
-  { "file-export-csv", NULL, "Export CSV", "", "", s_toplevel_menubar_file_export_csv},
-  { "file-print", GTK_STOCK_PRINT, "Print", "<Control>P", "", s_toplevel_menubar_unimplemented_feature},
+  { "file-open", GTK_STOCK_OPEN, "Open", "<Control>O", "", menu_file_open},
+  { "file-save", GTK_STOCK_SAVE, "Save", "<Control>S", "", menu_file_save},
+  { "file-export-csv", NULL, "Export CSV", "", "", menu_file_export_csv},
+  { "file-print", GTK_STOCK_PRINT, "Print", "<Control>P", "", x_dialog_unimplemented_feature},
   { "file-quit", GTK_STOCK_QUIT, "Quit", "<Control>Q", "", gattrib_really_quit},
 
   /* Edit menu */
   { "edit", NULL, "_Edit"},
-  { "edit-add-attrib", NULL, "Add new attrib column", "", "", s_toplevel_menubar_edit_newattrib},
-  { "edit-delete-attrib", NULL, "Delete attrib column", "", "",s_toplevel_menubar_edit_delattrib},
-  { "edit-find-attrib", GTK_STOCK_FIND, "Find attrib value", "<Control>F", "",s_toplevel_menubar_unimplemented_feature},
-  { "edit-search-replace-attrib-value", NULL, "Search and replace attrib value", "", "",s_toplevel_menubar_unimplemented_feature},
-  { "edit-search-for-refdes", NULL, "Search for refdes", "", "",s_toplevel_menubar_unimplemented_feature},
+  { "edit-add-attrib", NULL, "Add new attrib column", "", "", menu_edit_newattrib},
+  { "edit-delete-attrib", NULL, "Delete attrib column", "", "", menu_edit_delattrib},
+  { "edit-find-attrib", GTK_STOCK_FIND, "Find attrib value", "<Control>F", "", x_dialog_unimplemented_feature},
+  { "edit-search-replace-attrib-value", NULL, "Search and replace attrib value", "", "", x_dialog_unimplemented_feature},
+  { "edit-search-for-refdes", NULL, "Search for refdes", "", "", x_dialog_unimplemented_feature},
 
   /* Visibility menu */
   { "visibility", NULL, "_Visibility"},
@@ -219,7 +234,7 @@ x_window_create_menu(GtkWidget **menubar)
 
   /* Create and fill the action group object */
   action_group = gtk_action_group_new("");
-  gtk_action_group_add_actions(action_group, actions, G_N_ELEMENTS(actions), 0);
+  gtk_action_group_add_actions(action_group, actions, G_N_ELEMENTS(actions), NULL);
 
   /* Create the UI manager object */
   ui = gtk_ui_manager_new();

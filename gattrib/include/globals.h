@@ -83,8 +83,6 @@ SHEET_DATA *sheet_head;
 #define NUM_SHEETS 3            /* Components, Nets, and Pins */
 
 GtkWidget *window;              /* Main window */
-GtkWidget *main_vbox;           /* Container which vertically aligns children */
-GtkWidget *menu_bar;            /* Menu bar (holding file, edit, etc . . . */
 GtkWidget *notebook;
 
 GtkSheet **sheets;             /* These are the spreadsheet widgets themselves */
