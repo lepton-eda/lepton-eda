@@ -3725,7 +3725,7 @@ close_confirmation_dialog_constructor (GType type,
   } else {
     /* multi page */
     tmp = g_strdup_printf (
-      _("There is %d schematics with unsaved changes. "
+      _("There are %d schematics with unsaved changes. "
         "Save changes before closing?"),
       count_pages (GTK_TREE_MODEL (dialog->store_unsaved_pages)));
   }
