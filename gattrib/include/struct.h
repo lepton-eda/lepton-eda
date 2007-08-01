@@ -37,7 +37,6 @@
 #include "gtksheet_2_2.h"
 #include "gtkitementry_2_2.h"
 
-/* #include "pixmaps.h" */
 
 /* ========  Data structures used in processing below here  ========== */
 

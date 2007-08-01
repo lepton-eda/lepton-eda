@@ -8,9 +8,7 @@ noinst_HEADERS = \
 	gtkitementry_2_2.h \
 	i_vars.h \
 	struct.h \
-	gtkextra-marshal.h \
-	pixmaps.h
-
+	gtkextra-marshal.h
 
 MOSTLYCLEANFILES = *.log core FILE *~ #*#
 CLEANFILES = *.log core FILE *~ #*#
