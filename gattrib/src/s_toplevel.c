@@ -48,10 +48,12 @@
 /* ===================  Public Functions  ====================== */
 
 
-/*------------------------------------------------------------------
- * This fcn reads in a page & calls f_open, which fills out the 
- * pr_current structure.  
- *------------------------------------------------------------------*/
+/*! \brief Reads in a page & calls f_open, which fills out the
+ *         pr_current structure.
+ *
+ *  \param [in] filename file to be opened
+ *  \returns 1 on success, 0 on failure
+ */
 int s_toplevel_read_page(char *filename)
 {
   int file_return_code;
@@ -61,50 +63,43 @@ int s_toplevel_read_page(char *filename)
   
   /* read in and fill out pr_current using f_open and its callees */
   file_return_code = f_open(pr_current, filename);
-  if (!file_return_code) {     /* 1 = success reading in page */
-                               /* 0 = failure reading in page */
-    fprintf(stderr, "Couldn't load schematic [%s]\n", filename);
-  }
   return file_return_code;
 }
 
 
-/*------------------------------------------------------------------
- * This fcn loops through all components in the design looking for
- * components which are placeholders.  Placeholders are inserted into
- * the object list when no symbol file is found.  If this fcn finds 
- * a placeholder, it warns the user.  
- *------------------------------------------------------------------*/
+/*! \brief This function loops through all components in the
+ *         design looking for components which are placeholders.
+ *
+ *  Placeholders are inserted into the object list when
+ *  no symbol file is found.  If this function finds a
+ *  placeholder, it warns the user.
+ *
+ *  \param [in] pr_current a toplevel object
+ */
 void s_toplevel_verify_design(TOPLEVEL *pr_current)
 {
   OBJECT *o_current;
   PAGE *p_current;
   int missing_sym_flag = 0;
 
-#ifdef DEBUG
-   printf("In s_toplevel_verify_design, about to check that all components have sym files.\n");
-#endif
-   
-   p_current = pr_current->page_head; /* must iterate over all pages in design */
-   while (p_current != NULL) {
-     if (p_current->pid != -1) {  /* skip over page_head which has pid = -1. */
-       o_current = p_current->object_head;
-       while (o_current != NULL) { 
-	 /* --- look for object, and verify that it has a symbol file attached. ---- */
-	 if (o_current->type == OBJ_PLACEHOLDER) {  
-	   missing_sym_flag = 1;  /* flag to signal that problem exists.  */
-	 }
-	 o_current = o_current->next;
-       }
-     }  /* if (p_current->pid != -1) */
-     p_current = p_current->next;
-   }
+  p_current = pr_current->page_head; /* must iterate over all pages in design */
+  while (p_current != NULL) {
+    if (p_current->pid != -1) {  /* skip over page_head which has pid = -1. */
+      o_current = p_current->object_head;
+      while (o_current != NULL) {
+        /* --- look for object, and verify that it has a symbol file attached. ---- */
+        if (o_current->type == OBJ_PLACEHOLDER) {
+          missing_sym_flag = 1;  /* flag to signal that problem exists.  */
+        }
+        o_current = o_current->next;
+      }
+    }  /* if (p_current->pid != -1) */
+    p_current = p_current->next;
+  }
 
-   if (missing_sym_flag) {
-     x_dialog_missing_sym();  /* dialog gives user option to quit */
-   }
-
-   return;
+  if (missing_sym_flag) {
+    x_dialog_missing_sym();  /* dialog gives user option to quit */
+  }
 }
 
 
@@ -175,15 +170,21 @@ s_toplevel_gtksheet_to_toplevel()
  * open.  Then it figures out if there is already an existing
  * project, and call the appropriate version of s_toplevel_read 
  * depending upon that.
+ * TODO: this should really be done in two stages:
+ * 1. close the current project and reinitialize structures
+ * 2. load the new project
  *------------------------------------------------------------------*/
 void s_toplevel_menubar_file_open(TOPLEVEL *pr_current)
 {
-#ifdef DEBUG
-  printf("In s_toplevel_menubar_file_open, about to create fileselect box\n");
-#endif
+  GSList *file_list;
 
-  x_fileselect_open ();
-  return;
+  file_list = x_fileselect_open();
+  
+  /* Load the files, don't check if it went OK */
+  x_fileselect_load_files(file_list);
+  
+  g_slist_foreach(file_list, (GFunc)g_free, NULL);
+  g_slist_free(file_list);
 }
 
 

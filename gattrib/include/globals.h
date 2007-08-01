@@ -69,12 +69,6 @@
 TOPLEVEL *pr_current;
 
 /*------------------------------------------------------------------
- * first_page -- this will eventually get folded into the TOPLEVEL
- * struct.
- *------------------------------------------------------------------*/
-int first_page;  /* set to zero after first page is read in. */
-
-/*------------------------------------------------------------------
  * (SHEET_DATA *sheet_head) -- my own data structure which I made
  * a global because it was easier to deal with when handing
  * callbacks.  It is defined in structs.h

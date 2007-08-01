@@ -180,40 +180,32 @@ void x_dialog_delattrib_confirm()
   gtk_widget_destroy(dialog);
 }
 
-/* ========================================================= *
- * Missing symbol file dialog boxes.                         *
- * ========================================================= */
-
-/* --------------------------------------------------------- *
- * This is the "missing symbol file found on object" dialog.
- * It offers the user the chance to close the project without
- * saving because he read a schematic with a missing symbol file.
- * --------------------------------------------------------- */
+/*! \brief This is the "missing symbol file found on object" dialog.
+ *
+ *  It offers the user the chance to close the project without
+ *  saving because he read a schematic with a missing symbol file.
+ */
 void x_dialog_missing_sym()
 {
-  GtkWidget *label;
   GtkWidget *dialog;
-  const char *string = "Warning!  One or more components have been found with missing symbol files!\n\n"
-    "This probably happened because gattrib couldn't find your component libraries,\n"
-    "perhaps because your gafrc or gattribrc files are misconfigured.\n"
+  const char *string = "One or more components have been found with missing symbol files!\n\n"
+    "This probably happened because gattrib couldn't find your component libraries, "
+    "perhaps because your gafrc or gattribrc files are misconfigured.\n\n"
     "Chose \"Quit\" to leave gattrib and fix the problem, or\n"
     "\"Forward\" to continue working with gattrib.\n";
 
-#ifdef DEBUG
-  printf("In x_dialog_missing_sym, creating windows.\n");
-#endif
-
   /* Create the dialog */
-  dialog = gtk_dialog_new_with_buttons("Missing symbol file found for component!", NULL,
-      GTK_DIALOG_MODAL,
-      GTK_STOCK_QUIT, GTK_RESPONSE_REJECT,
-      GTK_STOCK_GO_FORWARD, GTK_RESPONSE_ACCEPT,
-      NULL);
-  
-  label = gtk_label_new(string);
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(dialog)->vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show(label);
+  dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
+                                  GTK_MESSAGE_WARNING,
+                                  GTK_BUTTONS_NONE,
+                                  string);
 
+  gtk_dialog_add_buttons(GTK_DIALOG(dialog), 
+                  GTK_STOCK_QUIT, GTK_RESPONSE_REJECT,
+                  GTK_STOCK_GO_FORWARD, GTK_RESPONSE_ACCEPT,
+                  NULL);
+
+  gtk_window_set_title(GTK_WINDOW(dialog), "Missing symbol file found for component!");
   gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_REJECT);
 
   switch(gtk_dialog_run(GTK_DIALOG(dialog))) {
@@ -223,7 +215,7 @@ void x_dialog_missing_sym()
 
     default:
       /* Terminate */
-      gattrib_quit(0);
+      exit(0);
       break;
   }
 
@@ -303,32 +295,31 @@ void x_dialog_unimplemented_feature()
   gtk_widget_destroy(dialog);
 }
 
-
-
-/* ========================================================= *
- * Exit announcment callback
- * ========================================================= */
-
-/* --------------------------------------------------------- *
- * This fcn accepts a string and displays it.  It presents
- * only an "OK" button to close the box and exit gattrib.
- * --------------------------------------------------------- */
-void x_dialog_exit_announcement(gchar *string, gint return_code)
+/*! \brief This function displays a dialog with the error string and
+ *         terminates the program.
+ *
+ *  \param [in] string the error string
+ *  \param [in] return_code the exit code
+ *  \return this function never returns
+ */
+void x_dialog_fatal_error(gchar *string, gint return_code)
 {
   GtkWidget *dialog;
+  
+  fprintf(stderr, "%s\n", string);
 
   /* Create the dialog */
   dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
-                                  GTK_MESSAGE_WARNING,
+                                  GTK_MESSAGE_ERROR,
                                   GTK_BUTTONS_OK,
                                   string);
 
-  gtk_window_set_title(GTK_WINDOW(dialog), "Attention!");
+  gtk_window_set_title(GTK_WINDOW(dialog), "Fatal error");
 
   gtk_dialog_run(GTK_DIALOG(dialog));
   gtk_widget_destroy(dialog);
   
-  gattrib_quit( GPOINTER_TO_INT(return_code) );
+  exit(GPOINTER_TO_INT(return_code));
 }
 
 /* ========================================================= *

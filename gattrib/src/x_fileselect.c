@@ -159,24 +159,22 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
 
 }
 
-/*------------------------------------------------------------------
+/*! \brief Open all files specified in the list. The caller
+ *         is responsible for freeing the strings and the list
+ *         itself.
  *
- *------------------------------------------------------------------*/
-static void
-x_fileselect_open_files (GSList *filenames)
+ *  \par Function Description
+ *  The function updates the user interface. At the end of the function, 
+ *  the toplevel's current page is set to the page of the last loaded page.
+ *
+ *  \param [in] filenames list of files to be opened
+ *  \returns FALSE if any of the files could not be opened, TRUE otherwise
+ */
+gboolean
+x_fileselect_load_files (GSList *filenames)
 {
   PAGE *p_local;
-  int return_code = 0;
-  int old_num_rows, old_num_cols;  /* There is a better way . . . */
-
   GSList *filename;
-
-#ifdef DEBUG
-  printf("We have just entered x_fileselect_open_file.\n");
-#endif
-
-  old_num_rows = sheet_head->comp_count;
-  old_num_cols = sheet_head->comp_attrib_count;
 
   /* iterate over selected files */
   for (filename = filenames;
@@ -184,25 +182,17 @@ x_fileselect_open_files (GSList *filenames)
        filename = g_slist_next (filename)) {
     gchar *string = (gchar*)filename->data;
     
-#if DEBUG
-    printf("In x_fileselect_open_file, opening string = %s\n", string);
-#endif
-    
     if (!quiet_mode) {
       s_log_message("Loading file [%s]\n", string);
     }
-    
+
     s_page_goto (pr_current, s_page_new (pr_current, string));
-      
-    return_code = 0;
-    if (first_page == 1) {
-      return_code |= s_toplevel_read_page(string);
-      first_page = 0;
-    } else {
-      return_code |= s_toplevel_read_page(string);
+
+    if(s_toplevel_read_page(string) == 0) {
+       fprintf(stderr, "Couldn't load schematic [%s]\n", string);
+       return FALSE;
     }
-    g_free(string);
-      
+
     /* Now add all items found to the master lists */
     s_sheet_data_add_master_comp_list_items(pr_current->page_current->object_head); 
     s_sheet_data_add_master_comp_attrib_list_items(pr_current->page_current->object_head); 
@@ -216,90 +206,74 @@ x_fileselect_open_files (GSList *filenames)
     
     s_sheet_data_add_master_pin_list_items(pr_current->page_current->object_head);    
     s_sheet_data_add_master_pin_attrib_list_items(pr_current->page_current->object_head); 
-    
-    
   }  	/* end of loop over files     */
   
-  /* Now update rest of project if we had at least one new file */
-  if (return_code) {
-    /* ---------- Sort the master lists  ---------- */
-    s_string_list_sort_master_comp_list();
-    s_string_list_sort_master_comp_attrib_list();
+
+  /* ---------- Sort the master lists  ---------- */
+  s_string_list_sort_master_comp_list();
+  s_string_list_sort_master_comp_attrib_list();
+
 #if 0
-    /* Note that this must be changed.  We need to input the entire project
-     * before doing anything with the nets because we need to first
-     * determine where they are all connected!   */
-    s_string_list_sort_master_net_list();
-    s_string_list_sort_master_net_attrib_list();
+  /* Note that this must be changed.  We need to input the entire project
+   * before doing anything with the nets because we need to first
+   * determine where they are all connected!   */
+  s_string_list_sort_master_net_list();
+  s_string_list_sort_master_net_attrib_list();
 #endif
-    
-    s_string_list_sort_master_pin_list();
-    s_string_list_sort_master_pin_attrib_list();
-    
-    
-    /* ---------- Now create and load the tables  ---------- */
-    sheet_head->component_table = s_table_new(sheet_head->comp_count, sheet_head->comp_attrib_count);
-    sheet_head->net_table = s_table_new(sheet_head->net_count, sheet_head->net_attrib_count);
-    sheet_head->pin_table = s_table_new(sheet_head->pin_count, sheet_head->pin_attrib_count);
-    
-    
-    p_local = pr_current->page_head; /* must iterate over all pages in design */
-    while (p_local != NULL) {
-      if (p_local->pid != -1) {   /* only traverse pages which are toplevel */
+
+  s_string_list_sort_master_pin_list();
+  s_string_list_sort_master_pin_attrib_list();
+
+  /* ---------- Create and load the tables  ---------- */
+  sheet_head->component_table = s_table_new(sheet_head->comp_count, sheet_head->comp_attrib_count);
+  sheet_head->net_table = s_table_new(sheet_head->net_count, sheet_head->net_attrib_count);
+  sheet_head->pin_table = s_table_new(sheet_head->pin_count, sheet_head->pin_attrib_count);
+
+  p_local = pr_current->page_head; /* must iterate over all pages in design */
+  while (p_local != NULL) {
+     if (p_local->pid != -1) {   /* only traverse pages which are toplevel */
         if (p_local->object_head && p_local->page_control == 0) {
-          s_table_add_toplevel_comp_items_to_comp_table(p_local->object_head);    /* adds all objects from page */
+           /* adds all components from page to comp_table */
+           s_table_add_toplevel_comp_items_to_comp_table(p_local->object_head);    
 #if 0
-          /* Note that this must be changed.  We need to input the entire project
-           * before doing anything with the nets because we need to first
-           * determine where they are all connected!   */
-          s_table_add_toplevel_net_items_to_net_table(p_local->object_head);     /* adds all objects from page */
+           /* Note that this must be changed.  We need to input the entire project
+            * before doing anything with the nets because we need to first
+            * determine where they are all connected!   */
+
+           /* adds all nets from page to net_table */
+           s_table_add_toplevel_net_items_to_net_table(p_local->object_head);
 #endif
-          
-          s_table_add_toplevel_pin_items_to_pin_table(p_local->object_head);     /* adds all objects from page */
-          
+
+           /* adds all pins from page to pin_table */
+           s_table_add_toplevel_pin_items_to_pin_table(p_local->object_head);
         }
-      }
-      p_local = p_local->next;  /* iterate to next schematic page */
-    }   /* while(p_local != NULL) */
-    
-#if DEBUG
-    printf("In x_fileselect_open_file -- we have just added more files to the project.\n");
-#endif  
-    
-    /* -------------- update windows --------------- */
-    x_window_add_items();    /* This updates the top level stuff,
-                              * and then calls another fcn to update
-                              * the GtkSheet itself.  */
-    
-#ifdef DEBUG
-    printf("In x_fileselect_open_file -- we have just returned from x_window_add_items.\n");
-#endif
-  } else {
-    fprintf(stderr, "Couldn't open any file!.\n");
+     }
+     p_local = p_local->next;  /* iterate to next schematic page */
   }
 
-  /* try showing all windows now */
-  gtk_widget_show( GTK_WIDGET(notebook));
-  gtk_widget_show( GTK_WIDGET(window));
-  
+  /* -------------- update windows --------------- */
+  x_window_add_items();    /* This updates the top level stuff,
+                            * and then calls another fcn to update
+                            * the GtkSheet itself.  */
+
+
   /* ---------- Now verify correctness of entire design.  ---------- */
   s_toplevel_verify_design(pr_current);  /* pr_current is a global */
-  
+
+  return TRUE;
 }
 
-/*------------------------------------------------------------------
- *  This function opens a file chooser dialog and wait for the user to
- *  select at least one file to load as toplevel's new pages.
+/*! \brief This function opens a file chooser dialog and waits for the user
+ *         to select at least one file to load as toplevel's new pages.
  *
- *  The function updates the user interface.
- *
- *  At the end of the function, the toplevel's current page is set to
- *  the page of the last loaded page.
- *------------------------------------------------------------------*/
-void
+ *  \returns list of files to be opened, or NULL if the user cancelled
+ *           the dialog
+ */
+GSList *
 x_fileselect_open (void)
 {
   GtkWidget *dialog;
+  GSList *filenames = NULL;
 
   dialog = gtk_file_chooser_dialog_new ("Open...",
                                         GTK_WINDOW(window),
@@ -323,22 +297,12 @@ x_fileselect_open (void)
   /* add file filters to dialog */
   x_fileselect_setup_filechooser_filters (GTK_FILE_CHOOSER (dialog));
   gtk_widget_show (dialog);
-  if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_ACCEPT) {
-    GSList *filenames =
-      gtk_file_chooser_get_filenames (GTK_FILE_CHOOSER (dialog));
 
-    /* open each file */
-    x_fileselect_open_files (filenames);
-
-    if (filenames != NULL) {
-      /* free the list of filenames */
-      g_slist_foreach (filenames, (GFunc)g_free, NULL);
-      g_slist_free (filenames);
-    }
-    
-  }
-  gtk_widget_destroy (dialog);
+  if(gtk_dialog_run (GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
+     filenames = gtk_file_chooser_get_filenames (GTK_FILE_CHOOSER (dialog));
   
+  gtk_widget_destroy (dialog);
+  return filenames;
 }
 
 /*------------------------------------------------------------------

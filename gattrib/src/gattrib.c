@@ -84,7 +84,6 @@ void gattrib_really_quit(void)
   }
 }
 
-
 /*------------------------------------------------------------------*/
 /*! \brief gattrib_quit -- wrap up and quit fcn. 
  *
@@ -106,7 +105,6 @@ gint gattrib_quit(gint return_code)
   exit(return_code);
 }
 
-
 /*------------------------------------------------------------------*/
 /*! \brief gattrib_main -- main gattrib fcn. 
  *
@@ -119,12 +117,9 @@ void gattrib_main(void *closure, int argc, char *argv[])
   /* SHEET_DATA *sheet_head is a global */
   /* GtkWidget *main_window is a global */
 
-  int i;
-  int return_code;  /* used when invoking s_toplevel_read_page */
   int argv_index;
-  char *cwd;
-  PAGE *p_local;
-  char *logfile;
+  gchar *cwd;
+  gchar *logfile;
 
 #ifdef HAVE_GTHREAD
   /* Gattrib isn't threaded, but some of GTK's file chooser
@@ -140,17 +135,18 @@ void gattrib_main(void *closure, int argc, char *argv[])
   /* Note that argv_index holds index to first non-flag command line option 
    * (that is, to the first file name) */
   argv_index = parse_commandline(argc, argv);
-  cwd = g_strdup(getcwd(NULL, 1024));
   
   /* ----------  create log file right away ---------- */
   /* ----------  even if logging is enabled ---------- */
+  cwd = g_get_current_dir();
   logfile = g_build_path (G_DIR_SEPARATOR_S,
                           cwd,
                           "gattrib.log",
                           NULL);
   s_log_init (logfile);
   g_free (logfile);
-  
+  g_free (cwd);
+
   s_log_message
     ("gEDA/gattrib version %s%s.%s\n", PREPEND_VERSION_STRING, 
      DOTTED_VERSION, DATE_VERSION);
@@ -174,7 +170,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
     fprintf(stderr,
 	    "conditions; please see the COPYING file for more details.\n\n");
   }
-  
 
   /* ------  register guile (scheme) functions.  Necessary to parse RC file.  ------ */
   g_register_funcs();
@@ -185,198 +180,43 @@ void gattrib_main(void *closure, int argc, char *argv[])
   /* ----- Read in RC files.   ----- */
   g_rc_parse(pr_current, "gattribrc", rc_filename);
 
-  /*
-  i_vars_set(pr_current);
-  */
-
   i_window_vars_set(pr_current);   /* The window vars are used in gschem,
                                       but we need to set them here because
                                       graphical information is used
                                       when introducing new attributes. */
 
-#if DEBUG
-  printf("In gattrib_main -- we have just created and init'ed a new pr_current\n");
-#endif  
-
-
-
-  /* --------  Initialize main_window.  -------- */
-#if DEBUG
-  printf("In gattrib_main -- calling gtk_init. . . ..\n");
-#endif  
   gtk_init(&argc, &argv);
 
   x_window_init();  
-#if DEBUG
-  printf("In gattrib_main -- we have just initialized the main_window.\n");
-#endif  
- 
   
   /* ---------- Initialize SHEET_DATA data structure ---------- */
   sheet_head = s_sheet_data_new();   /* sheet_head was declared in globals.h */
 
-
-  /* ----- Now loop on the files specified on the cmd line & read them in ---- */
-  /* argv[0] = name of this prog (gattrib).  argv_index holds the 
-   * position of the first filename  */
-  i = argv_index;
-  while(argv[i] != NULL) {
-
-    gchar *temp_filename;
-    gchar *filename;
-#ifdef __MINGW32__
-    if (argv[i][1] == ':' && (argv[i][2] == G_DIR_SEPARATOR ||
-                              argv[i][2] == OTHER_PATH_SEPARATER_CHAR))
-#else
-    if (argv[i][0] == G_DIR_SEPARATOR)
-#endif
-    {
-      /* Path is already absolute so no need to do any concat of cwd */
-      temp_filename = g_strdup(argv[i]);
-    } else {
-      temp_filename = g_build_path (G_DIR_SEPARATOR_S, cwd, argv[i], NULL);
-    }
-
-    filename = f_normalize_filename(temp_filename);
-    g_free(temp_filename);
-
-    s_log_message("Loading file [%s]\n", filename);
-    if (!quiet_mode) {
-      printf ("Loading file [%s]\n", filename);
-    }
-
-    s_page_goto (pr_current,
-		 s_page_new (pr_current, filename));
-    
-    return_code = 0;
-    if (first_page == 1) {
-      return_code |= s_toplevel_read_page(filename);
-      first_page = 0;
-    } else {
-      return_code |= s_toplevel_read_page(filename);
-    }
-    
-    /* Now add all items found to the master lists */
-    s_sheet_data_add_master_comp_list_items(pr_current->page_current->object_head); 
-    s_sheet_data_add_master_comp_attrib_list_items(pr_current->page_current->object_head); 
-    
-#if 0
-    /* Note that this must be changed.  We need to input the entire project
-     * before doing anything with the nets because we need to first
-     * determine where they are all connected!   */
-    s_sheet_data_add_master_net_list_items(pr_current->page_current->object_head);    
-    s_sheet_data_add_master_net_attrib_list_items(pr_current->page_current->object_head); 
-#endif
-
-    s_sheet_data_add_master_pin_list_items(pr_current->page_current->object_head); 
-    s_sheet_data_add_master_pin_attrib_list_items(pr_current->page_current->object_head); 
-
-    i++;
-    g_free(filename);
-  }  /* while(argv[i])  */
-  g_free(cwd); /* cwd is allocated with g_strdup so, g_free is correct */
-
-
-  /* ---------- Now complete read-in of project  ---------- */
-  if ( first_page != 1 ) { 
-
-
-    /* ---------- Sort the master lists  ---------- */
-    s_string_list_sort_master_comp_list();
-    s_string_list_sort_master_comp_attrib_list();
-
-#if 0
-    /* Note that this must be changed.  We need to input the entire project
-     * before doing anything with the nets because we need to first
-     * determine where they are all connected!   */
-    s_string_list_sort_master_net_list();
-    s_string_list_sort_master_net_attrib_list();
-#endif
-
-    s_string_list_sort_master_pin_list();
-    s_string_list_sort_master_pin_attrib_list();
-
-    /* ---------- Create and load the tables  ---------- */
-    sheet_head->component_table = s_table_new(sheet_head->comp_count, sheet_head->comp_attrib_count);
-    sheet_head->net_table = s_table_new(sheet_head->net_count, sheet_head->net_attrib_count);
-    sheet_head->pin_table = s_table_new(sheet_head->pin_count, sheet_head->pin_attrib_count);
-    
-    p_local = pr_current->page_head; /* must iterate over all pages in design */
-    while (p_local != NULL) {
-      if (p_local->pid != -1) {   /* only traverse pages which are toplevel */
-	if (p_local->object_head && p_local->page_control == 0) {
-	  s_table_add_toplevel_comp_items_to_comp_table(p_local->object_head);    /* adds all components from page to comp_table */
-
-#if 0
-	  /* Note that this must be changed.  We need to input the entire project
-	   * before doing anything with the nets because we need to first
-	   * determine where they are all connected!   */
-	  s_table_add_toplevel_net_items_to_net_table(p_local->object_head);     /* adds all nets from page to net_table */
-#endif
-
-	  s_table_add_toplevel_pin_items_to_pin_table(p_local->object_head);    /* adds all pins from page to pin_table */
-
-	}
-      }
-      p_local = p_local->next;  /* iterate to next schematic page */
-    }
-#if DEBUG
-    printf("In gattrib_main -- we have just returned from adding to the tables.\n");
-#endif  
-
-
-#if DEBUG
-    /*  -----  Make debug printout of entire object list  -----  */
-    printf("In gattrib_main -- we have just read in the project and filled out pr_current\n");
-    printf("----------------------------  Object list -----------------------------\n");
-    s_page_print_all(pr_current);
-    printf("-----------------------------------------------------------------------\n");
-#endif
-
-    
-    /* -------------- Next, update windows --------------- */
-    x_window_add_items();    /* This updates the top level stuff,
-			      * and then calls another fcn to update
-			      * the GtkSheet itself.  */
-#if DEBUG
-    printf("In gattrib_main -- we have just returned from x_window_add_items.\n");
-#endif  
-    
-  }  /* if (first_page != 1) */
-  else {
-    /* no filename found on command line, therefore we are still on the first page */
-#if DEBUG
-    printf("In gattrib_main -- no files specified on command line.  Throw up filedialog.\n");
-#endif
-    x_fileselect_open ();
-
-    gtk_widget_show( GTK_WIDGET(notebook) );
-    gtk_widget_show( GTK_WIDGET(window) );
-
-    while( gtk_events_pending () ) {
-#ifdef DEBUG
-      printf("In gattrib_main, trying to flush gtk event queue before running gtk_main. . . . \n");
-#endif
-      gtk_main_iteration();  /* force window exposure by running event handler once */
-    }
-    
+  GSList *file_list = NULL;
+  if(argv[argv_index] == NULL) {
+     /* No files specified on the command line, pop up the File open dialog. */
+     file_list = x_fileselect_open();
+     if(file_list == NULL)
+        exit(0);
+  } else {
+     /* Construct the list of filenames from the command line.
+      * argv_index holds the position of the first filename  */
+     while(argv[argv_index] != NULL) {
+        file_list = g_slist_append(file_list, f_normalize_filename(argv[argv_index]));
+        argv_index++;
+     }
   }
 
-  /* ---------- Now verify correctness of read-in design.  ---------- */
-  s_toplevel_verify_design(pr_current);
+  /* Load the files */
+  if(x_fileselect_load_files(file_list) == FALSE) {
+     /* just exit the program */
+     exit(1);
+  }
+  
+  g_slist_foreach(file_list, (GFunc)g_free, NULL);
+  g_slist_free(file_list);
 
-
-  /* ---------- Now enter main event loop for spreadsheet.  ---------- */
-  gtk_widget_show( GTK_WIDGET(window) );  /*  One final show for good measure  */
-  gtk_main_iteration();  /* force window exposure by running event handler once */
   gtk_main();
-
-
-  /* ---------- Spreadsheet has been killed; we are quitting.  ---------- */
-#ifdef DEBUG
-  printf("In gattrib_main, we have exited gtk_main. \n");
-#endif  
-
   exit(0);
 }
 
@@ -391,7 +231,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
  *------------------------------------------------------------------*/
 int main(int argc, char *argv[])
 {
-
   /* This is i18n stuff */
 #if ENABLE_NLS
   setlocale(LC_ALL, "");
@@ -407,8 +246,5 @@ int main(int argc, char *argv[])
   
   scm_boot_guile( argc, argv, gattrib_main, NULL);
 
-#ifdef DEBUG
-  printf("Now exiting main . . . Bye!\n");
-#endif
   exit(0);   /* This is not real exit point.  Real exit is in gattrib_quit. */
 }

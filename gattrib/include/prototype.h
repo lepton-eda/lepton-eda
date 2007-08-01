@@ -6,9 +6,6 @@
 /* ---------------- gattrib.c ---------------- */
 void gattrib_really_quit(void);
 gint gattrib_quit(gint return_code);
-void gattrib_main(void *closure, int argc, char *argv[]);
-int main(int argc, char *argv[]);
-
 
 /* -------------- parsecmd.c ----------------- */
 void usage(char *cmd);   
@@ -212,9 +209,7 @@ void x_dialog_unsaved_data_abort_callback(GtkWidget *buttonyes,
 
 void x_dialog_unimplemented_feature();
 
-void x_dialog_exit_announcement(gchar *string, gint return_code);
-void x_dialog_exit_announcement_close_callback(GtkWidget *buttonok, 
-				   gpointer return_code);
+void x_dialog_fatal_error(gchar *string, gint return_code);
 
 int x_dialog_about_keypress_callback(GtkWidget * widget, GdkEventKey * event,
 				     GtkWidget * window);
@@ -289,8 +284,9 @@ void do_show_column_titles(GtkWidget *widget);
 
 
 /* ------------- x_fileselect.c ------------- */
-void x_fileselect_open (void);
+GSList *x_fileselect_open (void);
 void x_fileselect_save (void);
+gboolean x_fileselect_load_files (GSList *filenames);
 
 /* ------------- x_window.c ------------- */
 void x_window_init();

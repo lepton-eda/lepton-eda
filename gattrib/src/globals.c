@@ -64,9 +64,6 @@ void (*x_log_update_func)() = NULL;
 void (*variable_set_func)() = i_vars_set;
 int (*load_newer_backup_func)() = NULL;
 
-/* gattrib specific variables */
-int first_page = 1;
-
 /* command line arguments */
 int verbose_mode=FALSE;
 int quiet_mode=FALSE;

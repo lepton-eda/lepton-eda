@@ -216,17 +216,19 @@ x_window_create_menu(GtkWidget **menubar)
 }
 
 
-/*------------------------------------------------------------------
- * x_window_add_items -- this fcn updates the top level window
- * after a new page is read in.  It does the following:
+/*! \brief This function updates the top level window
+ *         after a new page is read in.  
+ *
+ *  \par Function Description
+ *  It does the following:
  * 
- * 2.  Create a new gtksheet having the current dimensions.
- * 3.  Call x_gktsheet_add_row_labels(comp_count, master_*_list_head)
- * 4.  Call x_gktsheet_add_col_labels(comp_attrib_count, master_*_attrib_list_head)
- * 5.  Call x_gktsheet_add_row_labels(net_count, master_*_list_head)
- * 6.  Call x_gktsheet_add_col_labels(net_attrib_count, master_*_attrib_list_head)
- * 7.  loop on i, j -- call x_gtksheet_add_entry(i, j, attrib_value)
- * 8.  Call gtk_widget_show(window) to show new window.
+ *  2.  Create a new gtksheet having the current dimensions.
+ *  3.  Call x_gktsheet_add_row_labels(comp_count, master_*_list_head)
+ *  4.  Call x_gktsheet_add_col_labels(comp_attrib_count, master_*_attrib_list_head)
+ *  5.  Call x_gktsheet_add_row_labels(net_count, master_*_list_head)
+ *  6.  Call x_gktsheet_add_col_labels(net_attrib_count, master_*_attrib_list_head)
+ *  7.  loop on i, j -- call x_gtksheet_add_entry(i, j, attrib_value)
+ *  8.  Call gtk_widget_show(window) to show new window.
  *------------------------------------------------------------------*/
 void
 x_window_add_items()
@@ -236,66 +238,36 @@ x_window_add_items()
   gchar *text, *error_string;
   gint visibility, show_name_value;
   
-#ifdef DEBUG
-  fflush(stderr);
-  fflush(stdout);
-  printf("Entered x_window_add_items . . . . . ..\n");
-#endif
-
   /* Do these sanity check to prevent later segfaults */
   if (sheet_head->comp_count == 0) {
-    error_string = g_strdup("\n\nNo components found in entire design!  ");
-    error_string = g_strconcat(error_string, 
-                            "Do you have refdeses on your components?  \n", NULL);
-    error_string = g_strconcat(error_string, 
-			    "Exiting. . . .\n", NULL);
-    fprintf(stderr, "%s", error_string);
-    x_dialog_exit_announcement(error_string, -1);
-    g_free(error_string);
-    gtk_main();
+    error_string = "No components found in entire design!\n"
+            "Do you have refdeses on your components?";
+    x_dialog_fatal_error(error_string, 1);
   }
 
   if (sheet_head->comp_attrib_count == 0) {
-    error_string = g_strdup("\n\nNo configurable component attributes found in entire design!  ");
-    error_string = g_strconcat(error_string, 
-                            "Please attach at least some attributes before running gattrib.\n", NULL);
-    error_string = g_strconcat(error_string, "Exiting. . . .\n", NULL);
-    fprintf(stderr, "%s", error_string);
-    x_dialog_exit_announcement(error_string, -2);
-    g_free(error_string);
-    gtk_main();
+    error_string = "No configurable component attributes found in entire design!\n"
+            "Please attach at least some attributes before running gattrib.";
+    x_dialog_fatal_error(error_string, 2);
   }
 
-
   if (sheet_head->pin_count == 0) {
-    error_string = g_strdup("\n\nNo pins found on any components!  ");
-    error_string = g_strconcat(error_string, "Please check your design.\n", NULL);
-    error_string = g_strconcat(error_string, "Exiting. . . .\n", NULL);
-    fprintf(stderr, "%s", error_string);
-    x_dialog_exit_announcement(error_string, -3);
-    g_free(error_string);
-    gtk_main();
+    error_string = "No pins found on any components!\n"
+            "Please check your design.";
+    x_dialog_fatal_error(error_string, 3);
   }
 
 
   /*  initialize the gtksheet. */
-#ifdef DEBUG
-  printf("In x_window_add_items, about to call x_gtksheet_init.\n");
-#endif
   x_gtksheet_init();  /* this creates a new gtksheet having dimensions specified
 		       * in sheet_head->comp_count, etc. . .  */
 
-
-#ifdef DEBUG
-  printf("In x_window_add_items, now load up the row and column labels.\n");
-#endif
   if (sheet_head->comp_count > 0 ) {
     x_gtksheet_add_row_labels(GTK_SHEET(sheets[0]), 
 			      sheet_head->comp_count, sheet_head->master_comp_list_head);
     x_gtksheet_add_col_labels(GTK_SHEET(sheets[0]), 
 			      sheet_head->comp_attrib_count, sheet_head->master_comp_attrib_list_head);
   }
-
 
   /* This is not ready.  I need to implement net attributes */
   if (sheet_head->net_count > 0 ) {
@@ -316,10 +288,6 @@ x_window_add_items()
 			      sheet_head->pin_attrib_count, sheet_head->master_pin_attrib_list_head);
   }
   
-
-#ifdef DEBUG
-  printf("In x_window_add_items, now put comp attrib values in the comp sheet.\n");
-#endif
   /* ------ Comp sheet: put values in the individual cells ------- */
   num_rows = sheet_head->comp_count;
   num_cols = sheet_head->comp_attrib_count;
@@ -335,14 +303,7 @@ x_window_add_items()
       }
     }
   }
-  /* Do I really need these shows here? */
-  gtk_widget_show( GTK_WIDGET(sheets[0]) );
-  gtk_widget_show( GTK_WIDGET(scrolled_windows[0]) );
 
-
-#ifdef DEBUG
-  printf("In x_window_add_items, now put net attrib values in the net sheet.\n");
-#endif
   /* ------ Net sheet: put values in the individual cells ------- */
   num_rows = sheet_head->net_count;
   num_cols = sheet_head->net_attrib_count;
@@ -358,16 +319,7 @@ x_window_add_items()
       }
     }
   }
-  /* Do I really need these shows here? */
-  if (sheet_head->net_count > 0) {
-    gtk_widget_show( GTK_WIDGET(sheets[1]) );
-    gtk_widget_show( GTK_WIDGET(scrolled_windows[1]) );
-  }
 
-
-#ifdef DEBUG
-  printf("In x_window_add_items, now put pin attrib values in the pin sheet.\n");
-#endif
   /* ------ Pin sheet: put pin attribs in the individual cells ------- */
   num_rows = sheet_head->pin_count;
   num_cols = sheet_head->pin_attrib_count;
@@ -382,19 +334,7 @@ x_window_add_items()
       }
     }
   }
-  /* Do I really need these shows here? */
-  if (sheet_head->pin_count > 0) {
-    gtk_widget_show( GTK_WIDGET(sheets[2]) );
-    gtk_widget_show( GTK_WIDGET(scrolled_windows[2]) );
-  }
 
-  gtk_widget_show( GTK_WIDGET(notebook) );
-  /*  gtk_widget_show( GTK_WIDGET(main_vbox) ); */
-  gtk_widget_show( GTK_WIDGET(window) );
-
-  return;
-
+  gtk_widget_show_all( GTK_WIDGET(window) );
 }
-/* ======================  Private functions  ======================== */
-
 
