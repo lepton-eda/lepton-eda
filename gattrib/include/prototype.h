@@ -164,65 +164,14 @@ void i_vars_setnames(TOPLEVEL * w_current);
 
 
 /* ------------- x_dialog.c ------------- */
-void x_dialog_newattrib_get_name();
-int x_dialog_newattrib_keypress_callback(GtkWidget * widget, 
-					 GdkEventKey * event,
-					 GtkWidget *window);
-void x_dialog_newattrib_close_callback(GtkWidget * widget, 
-				      GtkWidget *window);
-void x_dialog_newattrib_ok_callback(GtkWidget * widget, 
-				      GtkWidget *window);
-
-void x_dialog_delattrib_confirm();
-int x_dialog_delattrib_keypress_callback(GtkWidget * widget, 
-					 GdkEventKey * event,
-					 GtkWidget *window);
-void x_dialog_delattrib_close_callback(GtkWidget *buttonclose, 
-				      GtkWidget *window);
-void x_dialog_delattrib_yes_callback(GtkWidget *buttonok, 
-				    GtkWidget *window);
-
+void x_dialog_newattrib();
+void x_dialog_delattrib();
 void x_dialog_missing_sym();
-int x_dialog_missing_sym_donothing_callback(GtkWidget * widget,
-					    GdkEventKey * event,
-					    GtkWidget *window);
-void x_dialog_missing_sym_continue_callback(GtkWidget *buttonclose,
-					   GtkWidget *window);
-void x_dialog_missing_sym_abort_callback(GtkWidget *buttonyes,
-					GtkWidget *window);
-
 void x_dialog_unsaved_data();
-int x_dialog_unsaved_data_donothing_callback(GtkWidget * widget,
-					    GdkEventKey * event,
-					    GtkWidget *window);
-void x_dialog_unsaved_data_continue_callback(GtkWidget *buttonclose,
-					   GtkWidget *window);
-void x_dialog_unsaved_data_abort_callback(GtkWidget *buttonyes,
-					GtkWidget *window);
-
 void x_dialog_unimplemented_feature();
-
 void x_dialog_fatal_error(gchar *string, gint return_code);
-
-int x_dialog_about_keypress_callback(GtkWidget * widget, GdkEventKey * event,
-				     GtkWidget * window);
-void x_dialog_about_close_callback(GtkWidget * widget, GtkWidget *window);
 void x_dialog_about_dialog();
-
 void x_dialog_export_file();
-int x_dialog_export_file_keypress_callback(GtkWidget * widget, 
-					 GdkEventKey * event,
-					 GtkWidget *window);
-void x_dialog_export_file_close_callback(GtkWidget * widget, 
-				      GtkWidget *window);
-void x_dialog_export_file_ok_callback(GtkWidget * widget, 
-				      GtkWidget *window);
-
-
-GtkWidget *x_dialog_create_dialog_box(GtkWidget ** out_vbox,
-				      GtkWidget ** out_action_area);
-void x_dialog_close_window(GtkWidget * window);
-
 
 /* ------------- x_gtksheet.c ------------- */
 void x_gtksheet_init();

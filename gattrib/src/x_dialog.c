@@ -59,24 +59,16 @@
 #include <dmalloc.h>
 #endif
 
-/* ========================================================= *
- * new attrib dialog widgets
- * ========================================================= */
 
-/* --------------------------------------------------------- *
- * This asks for the name of the attrib column to insert
- * --------------------------------------------------------- */
-void x_dialog_newattrib_get_name()
+/*! \brief This asks for the name of the attrib column to insert
+ *         and then inserts the column.
+ */
+void x_dialog_newattrib()
 {
   GtkWidget *dialog;
   GtkWidget *label;
   GtkWidget *attrib_entry;
   gchar *entry_text;
-
-#ifdef DEBUG
-  printf("In x_dialog_newattrib_get_name, creating windows.\n");
-#endif
-
 
   /* Create the dialog */
   dialog = gtk_dialog_new_with_buttons("Add new attribute", NULL, 
@@ -120,24 +112,15 @@ void x_dialog_newattrib_get_name()
 }
 
 
-/* ========================================================= *
- * delete attrib column dialog widgets
- * ========================================================= */
-
-/* --------------------------------------------------------- *
- * This fcn throws up the "detele foo, are you sure" dialog
- * box.  It offers two buttons: "yes" and "cancel" 
- * --------------------------------------------------------- */
-void x_dialog_delattrib_confirm()
+/*! \brief This function throws up the "Delete foo, are you sure?" dialog
+ *         box.  It offers two buttons: "yes" and "cancel".
+ */
+void x_dialog_delattrib()
 {
   GtkWidget *dialog;
   gint mincol, maxcol;
   GtkSheet *sheet;
   gint cur_page;
-
-#ifdef DEBUG
-  printf("In x_dialog_delattrib_confirm, creating windows.\n");
-#endif
 
   /* First verify that exactly one column is selected.  */ 
   cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
@@ -148,16 +131,11 @@ void x_dialog_delattrib_confirm()
 
   mincol = x_gtksheet_get_min_col(sheet);
   maxcol =  x_gtksheet_get_max_col(sheet);
-#ifdef DEBUG
-  printf("In x_dialog_delattrib_confirm, column range selected = %d, %d\n",
-	 mincol, maxcol);
-#endif
 
   if ( (mincol != maxcol) || (mincol == -1) || (maxcol == -1) ) {
     /* Improper selection -- maybe throw up error box? */
     return;
   }
-
 
   /* Create the dialog */
   dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
@@ -222,24 +200,14 @@ void x_dialog_missing_sym()
   gtk_widget_destroy(dialog);
 }
 
-
-/* ========================================================= *
- * Unsaved data windows
- * ========================================================= */
-
-/* --------------------------------------------------------- *
- * This is the "Unsaved data -- are you sure you want to quit?"
- * dialog box which is thrown up before the user quits.
- * --------------------------------------------------------- */
+/*! \brief This is the "Unsaved data -- are you sure you want to quit?" dialog
+ *         box which is thrown up before the user quits.
+ */
 void x_dialog_unsaved_data()
 {
   GtkWidget *dialog;
   const char *string = "Warning!  You have unsaved data in the spreadsheet!\n"
                        "Are you sure you want to quit?";
-
-#ifdef DEBUG
-  printf("In x_dialog_unsaved_data, creating windows.\n");
-#endif
 
   /* Create the dialog */
   dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
@@ -262,16 +230,9 @@ void x_dialog_unsaved_data()
   return;
 }
 
-
-/* ========================================================= *
- * Unimplemented feature callback
- * ========================================================= */
-
-/* --------------------------------------------------------- *
- * This fcn informs the user that he has chosen an 
- * unimplemented feature.  It presents only an "OK" button
- * to leave.
- * --------------------------------------------------------- */
+/*! \brief This function informs the user that he has chosen an unimplemented
+ *         feature.  It presents only an "OK" button to leave.
+ */
 void x_dialog_unimplemented_feature()
 {
   GtkWidget *dialog;
@@ -322,9 +283,8 @@ void x_dialog_fatal_error(gchar *string, gint return_code)
   exit(GPOINTER_TO_INT(return_code));
 }
 
-/* ========================================================= *
- * help/about dialog widgets
- * ========================================================= */
+/*! \brief This dosplays the about dialog.
+ */
 void x_dialog_about_dialog()
 {
   GtkWidget *dialog;
@@ -349,12 +309,9 @@ void x_dialog_about_dialog()
   gtk_widget_destroy(dialog);
 }
 
-/* ========================================================= *
- * Get name of file for export of CSV
- * ========================================================= */
-/* --------------------------------------------------------- *
- * This asks for the filename for the export file
- * --------------------------------------------------------- */
+/*! \brief This asks for the filename for the CSV export file and then
+ *         does the exporting.
+ */
 void x_dialog_export_file()
 {
   gchar *filename;

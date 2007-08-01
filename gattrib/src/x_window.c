@@ -173,14 +173,14 @@ menu_edit_newattrib()
 
   /* Check that we are on components page. */
   if (cur_page == 0) {
-    x_dialog_newattrib_get_name();  /* This creates dialog box  */
+    x_dialog_newattrib();  /* This creates dialog box  */
   }
 }
 
 static void
 menu_edit_delattrib()
 {
-  x_dialog_delattrib_confirm();
+  x_dialog_delattrib();
 }
 
 static const GtkActionEntry actions[] = {
