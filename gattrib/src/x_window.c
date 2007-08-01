@@ -55,12 +55,13 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
-#include "../include/x_menu.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
 
+static void
+x_window_create_menu(GtkWidget **menubar);
 
 /* ======================  Public functions  ======================== */
 
@@ -167,52 +168,78 @@ x_window_init()
   
 }
 
+static const GtkActionEntry actions[] = {
+  /* name, stock-id, label, accelerator, tooltip, callback function */
+  /* File menu */
+  { "file", NULL, "_File"},
+  { "file-open", GTK_STOCK_OPEN, "Open", "<Control>O", "", s_toplevel_menubar_file_open},
+  { "file-save", GTK_STOCK_SAVE, "Save", "<Control>S", "", s_toplevel_menubar_file_save},
+  { "file-export-csv", NULL, "Export CSV", "", "", s_toplevel_menubar_file_export_csv},
+  { "file-print", GTK_STOCK_PRINT, "Print", "<Control>P", "", s_toplevel_menubar_unimplemented_feature},
+  { "file-quit", GTK_STOCK_QUIT, "Quit", "<Control>Q", "", gattrib_really_quit},
 
-/*------------------------------------------------------------------
- * x_window_create_menu:  This creates the menu widget.  This fcn
- * cloned from GTK+ tutorial.
- *------------------------------------------------------------------*/
-void
+  /* Edit menu */
+  { "edit", NULL, "_Edit"},
+  { "edit-add-attrib", NULL, "Add new attrib column", "", "", s_toplevel_menubar_edit_newattrib},
+  { "edit-delete-attrib", NULL, "Delete attrib column", "", "",s_toplevel_menubar_edit_delattrib},
+  { "edit-find-attrib", GTK_STOCK_FIND, "Find attrib value", "<Control>F", "",s_toplevel_menubar_unimplemented_feature},
+  { "edit-search-replace-attrib-value", NULL, "Search and replace attrib value", "", "",s_toplevel_menubar_unimplemented_feature},
+  { "edit-search-for-refdes", NULL, "Search for refdes", "", "",s_toplevel_menubar_unimplemented_feature},
+
+  /* Visibility menu */
+  { "visibility", NULL, "_Visibility"},
+  { "visibility-invisible", NULL, "Set selected invisible", "", "", s_visibility_set_invisible},
+  { "visibility-name-only", NULL, "Set selected name visible only", "", "", s_visibility_set_name_only},
+  { "visibility-value-only", NULL, "Set selected value visible only", "", "", s_visibility_set_value_only},
+  { "visibility-name-value", NULL, "Set selected name and value visible", "", "", s_visibility_set_name_and_value},
+
+  /* Help menu */
+  { "help", NULL, "_Help"},
+  { "help-about", GTK_STOCK_ABOUT, "About", "", "", x_dialog_about_dialog},
+};
+
+
+/*! \brief Create the menu bar and attach it to the main window.
+ *
+ *  First, the GtkActionGroup object is created and filled with
+ *  entries of type GtkActionEntry (each entry specifies a single
+ *  action, such as opening a file). Then the GtkUIManager object
+ *  is created and used to load menus.xml file with the menu
+ *  description. Finally, the GtkAccelGroup is added to the
+ *  main window to enable keyboard accelerators and a pointer
+ *  to the menu bar is retrieved from the GtkUIManager object.
+ */
+static void
 x_window_create_menu(GtkWidget **menubar)
 {
-  GtkItemFactory *item_factory;
-  GtkAccelGroup *accel_group;
-  gint nmenu_items = sizeof (menu_items) / sizeof (menu_items[0]);
+  gchar *menu_file;
+  GtkUIManager *ui;
+  GtkActionGroup *action_group;
+  GError *error = NULL;
 
-  accel_group = gtk_accel_group_new ();
+  /* Create and fill the action group object */
+  action_group = gtk_action_group_new("");
+  gtk_action_group_add_actions(action_group, actions, G_N_ELEMENTS(actions), 0);
 
-  /* This function initializes the item factory.
-     Param 1: The type of menu - can be GTK_TYPE_MENU_BAR, GTK_TYPE_MENU,
-              or GTK_TYPE_OPTION_MENU.
-     Param 2: The path of the menu.
-     Param 3: A pointer to a gtk_accel_group.  The item factory sets up
-              the accelerator table while generating menus.
-  */
+  /* Create the UI manager object */
+  ui = gtk_ui_manager_new();
 
-#ifdef DEBUG
-  printf("In x_window_create_menu, about to create new item factory\n");
-#endif
-  item_factory = gtk_item_factory_new (GTK_TYPE_MENU_BAR, "<main>", 
-                                       accel_group);
+  gtk_ui_manager_insert_action_group(ui, action_group, 0);
 
-  /* This function generates the menu items. Pass the item factory,
-     the number of items in the array, the array itself, and any
-     callback data for the the menu items. */
-  /* SDB notes: callback data is pr_current, which should hopefully have pointers
-   * to any data required in the callback. */
-  gtk_item_factory_create_items (item_factory, nmenu_items, menu_items, pr_current);
+  menu_file = g_build_filename(GEDADATADIR, "gattrib-menus.xml", NULL);
+  gtk_ui_manager_add_ui_from_file(ui, menu_file, &error);
+  if(error != NULL) {
+    /* An error occured, terminate */
+    fprintf(stderr, "Error loading %s:\n%s\n", menu_file, error->message);
+    exit(1);
+  }
 
+  g_free(menu_file);
 
-  /* Attach the new accelerator group to the window. */
-  /* SDB says: Here's where it comes in handy to have attached a pointer to 
-   * the main window to the TOPLEVEL structure. */
-  gtk_window_add_accel_group (GTK_WINDOW(pr_current->main_window), accel_group);
+  gtk_window_add_accel_group (GTK_WINDOW(pr_current->main_window),
+      gtk_ui_manager_get_accel_group(ui));
 
-  if (menubar)
-    /* Finally, return the actual menu bar created by the item factory. */ 
-    *menubar = gtk_item_factory_get_widget (item_factory, "<main>");
-
-  return;
+  *menubar = gtk_ui_manager_get_widget(ui, "/ui/menubar/");
 }
 
 

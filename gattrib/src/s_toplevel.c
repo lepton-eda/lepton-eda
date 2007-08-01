@@ -174,7 +174,7 @@ s_toplevel_gtksheet_to_toplevel()
  * 1. close the current project and reinitialize structures
  * 2. load the new project
  *------------------------------------------------------------------*/
-void s_toplevel_menubar_file_open(TOPLEVEL *pr_current)
+void s_toplevel_menubar_file_open()
 {
   GSList *file_list;
 
@@ -193,7 +193,7 @@ void s_toplevel_menubar_file_open(TOPLEVEL *pr_current)
  * first updates the proect, and then saves the project without
  * throwing up the filedialog widget.
  *------------------------------------------------------------------*/
-void s_toplevel_menubar_file_save(TOPLEVEL *pr_current)
+void s_toplevel_menubar_file_save()
 {
 
 #ifdef DEBUG
@@ -212,7 +212,7 @@ void s_toplevel_menubar_file_save(TOPLEVEL *pr_current)
 /*------------------------------------------------------------------
  * This is called when the user wants to export csv
  *------------------------------------------------------------------*/
-void s_toplevel_menubar_file_export_csv(TOPLEVEL *pr_current)
+void s_toplevel_menubar_file_export_csv()
 {
   gint cur_page;
 

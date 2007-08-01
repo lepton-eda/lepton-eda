@@ -1,0 +1,33 @@
+<ui>
+  <menubar>
+    <menu action="file">
+      <menuitem action="file-open" />
+      <menuitem action="file-save" />
+      <menuitem action="file-export-csv" />
+      <separator/>
+      <menuitem action="file-print" />
+      <separator/>
+      <menuitem action="file-quit" />
+    </menu>
+
+    <menu action="edit">
+      <menuitem action="edit-add-attrib" />
+      <menuitem action="edit-delete-attrib" />
+      <menuitem action="edit-find-attrib" />
+      <menuitem action="edit-search-replace-attrib-value" />
+      <menuitem action="edit-search-for-refdes" />
+    </menu>
+
+    <menu action="visibility">
+      <menuitem action="visibility-invisible" />
+      <menuitem action="visibility-name-only" />
+      <menuitem action="visibility-value-only" />
+      <menuitem action="visibility-name-value" />
+    </menu>
+
+    <menu action="help">
+      <menuitem action="help-about" />
+    </menu>
+  </menubar>
+</ui>
+

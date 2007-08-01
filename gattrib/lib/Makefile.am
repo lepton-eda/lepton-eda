@@ -1,8 +1,8 @@
 
 rcdatadir = @GEDARCDIR@
-rcdata_DATA = system-gattribrc 
+rcdata_DATA = system-gattribrc gattrib-menus.xml
 
-EXTRA_DIST = system-gattribrc.in 
+EXTRA_DIST = system-gattribrc.in gattrib-menus.xml
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

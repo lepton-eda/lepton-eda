@@ -88,10 +88,9 @@ void s_toplevel_verify_design(TOPLEVEL *pr_current);
 void s_toplevel_empty_project();
 void s_toplevel_gtksheet_to_toplevel();
 void s_toplevel_update_page(OBJECT *start_obj);
-void s_toplevel_menubar_file_open(TOPLEVEL *pr_current);
-void s_toplevel_menubar_file_save(TOPLEVEL *pr_current);
-void s_toplevel_menubar_file_open(TOPLEVEL *pr_current);
-void s_toplevel_menubar_file_export_csv(TOPLEVEL *pr_current);
+void s_toplevel_menubar_file_open();
+void s_toplevel_menubar_file_save();
+void s_toplevel_menubar_file_export_csv();
 void s_toplevel_menubar_edit_newattrib();
 void s_toplevel_add_new_attrib(gchar *new_attrib_name);
 void s_toplevel_menubar_edit_delattrib();
@@ -290,7 +289,6 @@ gboolean x_fileselect_load_files (GSList *filenames);
 
 /* ------------- x_window.c ------------- */
 void x_window_init();
-void x_window_create_menu(GtkWidget **menubar);
 void x_window_add_items();
 
 

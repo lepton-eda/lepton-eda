@@ -9,8 +9,7 @@ noinst_HEADERS = \
 	i_vars.h \
 	struct.h \
 	gtkextra-marshal.h \
-	pixmaps.h \
-	x_menu.h
+	pixmaps.h
 
 
 MOSTLYCLEANFILES = *.log core FILE *~ #*#
