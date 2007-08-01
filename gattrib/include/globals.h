@@ -85,68 +85,17 @@ SHEET_DATA *sheet_head;
 GtkWidget *window;              /* Main window */
 GtkWidget *main_vbox;           /* Container which vertically aligns children */
 GtkWidget *menu_bar;            /* Menu bar (holding file, edit, etc . . . */
-
 GtkWidget *notebook;
+
 GtkSheet **sheets;             /* These are the spreadsheet widgets themselves */
 
 GtkWidget **scrolled_windows;
-GtkWidget *show_hide_box;
-GtkWidget *status_box;
-GtkWidget *location;
 GtkWidget *entry;
-GtkWidget *fgcolorcombo;
-GtkWidget *bgcolorcombo;
-GtkWidget *bordercombo;
-GdkPixmap *pixmap;
-GdkBitmap *mask;
-GtkWidget *bg_pixmap;
-GtkWidget *fg_pixmap;
-GtkWidget *toolbar;
+GtkWidget *location;
 GtkWidget *left_button;
 GtkWidget *center_button;
 GtkWidget *right_button;
-GtkWidget *tpixmap;
-GtkWidget *bullet[10];
-GtkWidget *smile;
-GtkWidget *curve;
-GtkWidget *popup;
-
 GtkWidget *label;
-GtkWidget *font_combo;
-GtkWidget *toggle_combo;
-
-/*------------------------------------------------------------------
- * This stuff copied over from gschem
- *------------------------------------------------------------------*/
-/* color stuff */
-extern GdkColormap *colormap; 
-extern GdkVisual *visual; 
-
-/* colors */
-extern GdkColor white;
-extern GdkColor black;
-extern GdkColor red;
-extern GdkColor green;
-extern GdkColor blue;
-extern GdkColor cyan;
-extern GdkColor yellow;
-extern GdkColor grey;
-extern GdkColor grey90;
-extern GdkColor darkgreen;
-extern GdkColor darkred;
-extern GdkColor darkyellow;
-extern GdkColor darkcyan;
-extern GdkColor darkblue;
-extern GdkColor darkgrey; 
-
-extern char *rc_filename;
-
-extern int logfile_fd;
-extern int do_logging;
-extern int logging_dest;
-
-/* gattrib specific stuff */
-extern char *guile_proc;   /* Needed for read-in of rc files */
 
 /* command line switch settings */
 extern int verbose_mode;

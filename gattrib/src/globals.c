@@ -32,19 +32,11 @@
 #include <dmalloc.h>
 #endif
 
-char *rc_filename = NULL; 
-
-/* color stuff */
-GdkColormap *colormap; 
-GdkVisual *visual; 
-
-/* colors */
-GdkColor white;
-GdkColor black;
-
-int logfile_fd=-1;
 int do_logging=TRUE;
-int logging_dest=LOG_WINDOW;
+
+/* command line arguments */
+int verbose_mode=FALSE;
+int quiet_mode=FALSE;
 
 /* these are required by libgeda */
 /* I have made most of these NULL because they aren't needed
@@ -63,10 +55,4 @@ void (*select_func)() = s_toplevel_select_object;
 void (*x_log_update_func)() = NULL;
 void (*variable_set_func)() = i_vars_set;
 int (*load_newer_backup_func)() = NULL;
-
-/* command line arguments */
-int verbose_mode=FALSE;
-int quiet_mode=FALSE;
-
-
 

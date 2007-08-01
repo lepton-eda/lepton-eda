@@ -73,8 +73,8 @@ SCM g_rc_gattrib_version(SCM version)
             "You are running gEDA/gaf version [%s%s.%s],\n",
             PREPEND_VERSION_STRING, DOTTED_VERSION, DATE_VERSION);
     fprintf(stderr,
-            "but you have a version [%s] gattribrc file:\n[%s]\n",
-            SCM_STRING_CHARS (version), rc_filename);
+            "but you have a version [%s] gattribrc file.\n",
+            SCM_STRING_CHARS (version));
     fprintf(stderr,
             "Please be sure that you have the latest rc file.\n");
     return SCM_BOOL_F;
