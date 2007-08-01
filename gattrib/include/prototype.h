@@ -4,7 +4,7 @@
  */
 
 /* ---------------- gattrib.c ---------------- */
-void gattrib_really_quit(void);
+gboolean gattrib_really_quit(void);
 gint gattrib_quit(gint return_code);
 
 /* -------------- parsecmd.c ----------------- */

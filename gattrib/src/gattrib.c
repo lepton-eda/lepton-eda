@@ -74,7 +74,7 @@
  *  \return Returns 0 to shell (successful quit).
  *
  *------------------------------------------------------------------*/
-void gattrib_really_quit(void)
+gboolean gattrib_really_quit(void)
 {
   if (sheet_head->CHANGED == TRUE) {
     printf("User is quitting without saving last changes.\n");
@@ -82,6 +82,7 @@ void gattrib_really_quit(void)
   } else {
     gattrib_quit(0);
   }
+  return TRUE;
 }
 
 /*------------------------------------------------------------------*/

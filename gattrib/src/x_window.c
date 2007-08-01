@@ -88,8 +88,6 @@ x_window_init()
   
   gtk_signal_connect (GTK_OBJECT (window), "delete_event",
 		      GTK_SIGNAL_FUNC (gattrib_really_quit), 0);
-  gtk_signal_connect (GTK_OBJECT (window), "destroy",
-		      GTK_SIGNAL_FUNC (gattrib_really_quit), 0);
 
   /* -----  Now create main_vbox.  This is a container which organizes child  ----- */  
   /* -----  widgets into a vertical column.  ----- */  
@@ -191,7 +189,7 @@ static const GtkActionEntry actions[] = {
   { "file-save", GTK_STOCK_SAVE, "Save", "<Control>S", "", menu_file_save},
   { "file-export-csv", NULL, "Export CSV", "", "", menu_file_export_csv},
   { "file-print", GTK_STOCK_PRINT, "Print", "<Control>P", "", x_dialog_unimplemented_feature},
-  { "file-quit", GTK_STOCK_QUIT, "Quit", "<Control>Q", "", gattrib_really_quit},
+  { "file-quit", GTK_STOCK_QUIT, "Quit", "<Control>Q", "", G_CALLBACK(gattrib_really_quit)},
 
   /* Edit menu */
   { "edit", NULL, "_Edit"},
