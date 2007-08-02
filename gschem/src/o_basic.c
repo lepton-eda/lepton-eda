@@ -198,6 +198,7 @@ void o_draw_selected(TOPLEVEL *w_current)
 
     if (o_current) {
       o_redraw_single(w_current, o_current);
+      o_cue_draw_single(w_current, o_current);
     }
     s_current=s_current->next;
   }
