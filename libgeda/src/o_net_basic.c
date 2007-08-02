@@ -603,9 +603,6 @@ int o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 
   object_orient = o_net_orientation(object);
 
-  /*screen_x = object->line->screen_x[j];
-    screen_y = object->line->screen_y[i];*/
-
   c_current = object->conn_list;
   while(c_current != NULL) {
     conn = (CONN *) c_current->data;
