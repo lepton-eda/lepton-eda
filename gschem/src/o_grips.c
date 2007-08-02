@@ -1108,7 +1108,6 @@ void o_grips_end(TOPLEVEL *w_current)
       w_current->last_y = (-1);
       w_current->inside_action=0;
       i_set_state(w_current, SELECT);
-      o_net_eraserubber(w_current);
       o_redraw_single(w_current, object);
       i_update_toolbar(w_current);
       return;
@@ -1265,7 +1264,6 @@ void o_grips_end(TOPLEVEL *w_current)
       w_current->start_y = (-1);
       w_current->last_x = (-1);
       w_current->last_y = (-1);
-      o_net_eraserubber(w_current);
       o_redraw_single(w_current, object);
       w_current->inside_action=0;
       i_set_state(w_current, SELECT);
