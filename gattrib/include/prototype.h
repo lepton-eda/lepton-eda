@@ -175,55 +175,14 @@ void x_dialog_export_file();
 
 /* ------------- x_gtksheet.c ------------- */
 void x_gtksheet_init();
-void x_notebook_init();
 void x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
 void x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
 void x_gtksheet_add_cell_item(GtkSheet *sheet, gint i, gint j, 
 			      char *text, gint visibility, gint show_name_value);
-int x_gtksheet_get_min_col(GtkSheet *sheet);
-int x_gtksheet_get_max_col(GtkSheet *sheet);
 void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col, 
 				    gint color_name);
-
-void format_text (GtkSheet *sheet, gchar *text, gint *justification, char *label);
-void alarm_change(GtkWidget *widget, gint row, gint col,
-                  gpointer data);
-void alarm_activate(GtkWidget *widget, gint row, gint col,
-                    gpointer data);
-void alarm_deactivate(GtkWidget *widget, gint row, gint col,
-                      gpointer data);
-gint alarm_traverse(GtkWidget *widget,
-                    gint row, gint col, gint *new_row, gint *new_col,
-                    gpointer data);
-void clipboard_handler(GtkWidget *widget, GdkEventKey *key);
-void parse_numbers(GtkWidget *widget, gpointer data);
-void resize_handler(GtkWidget *widget, GtkSheetRange *old_range, 
-		    GtkSheetRange *new_range, 
-		    gpointer data);
-void move_handler(GtkWidget *widget, GtkSheetRange *old_range, 
-		  GtkSheetRange *new_range, 
-		  gpointer data);
-gint change_entry(GtkWidget *widget, 
-		  gint row, gint col, gint *new_row, gint *new_col,
-		  gpointer data);
-void set_cell(GtkWidget *widget, gchar *insert, gint text_legth, gint position, 
-	      gpointer data);
-void show_sheet_entry(GtkWidget *widget, gpointer data);
-void activate_sheet_entry(GtkWidget *widget, gpointer data);
-void show_entry(GtkWidget *widget, gpointer data);
-void justify_left(GtkWidget *widget);
-void justify_center(GtkWidget *widget);
-void justify_right(GtkWidget *widget);
-gint activate_sheet_cell(GtkWidget *widget, gint row, 
-			 gint column, gpointer data);
-void change_border (GtkWidget *widget, gint border);
-void change_fg(GtkWidget *widget, gint i, gchar *color_name);
-void change_bg(GtkWidget *widget, gint i, gchar *color_name);
-void do_hide_row_titles(GtkWidget *widget);
-void do_hide_column_titles(GtkWidget *widget);
-void do_show_row_titles(GtkWidget *widget);
-void do_show_column_titles(GtkWidget *widget);
-
+int x_gtksheet_get_min_col(GtkSheet *sheet);
+int x_gtksheet_get_max_col(GtkSheet *sheet);
 
 /* ------------- x_fileselect.c ------------- */
 GSList *x_fileselect_open (void);
