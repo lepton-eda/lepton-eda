@@ -76,24 +76,25 @@ fi
 
 # Guile 1.6 compatability
 
-AC_CHECK_FUNC(scm_is_string,,
-  AC_DEFINE(scm_is_string(x),  (SCM_STRINGP(x)), [Compatability define for scm_is_string]))
-AC_CHECK_FUNC(scm_is_integer,,
-  AC_DEFINE(scm_is_integer(x), (SCM_INUMP(x)),   [Compatability define for scm_is_integer]))
-AC_CHECK_FUNC(scm_to_int,,
-  AC_DEFINE(scm_to_int(x),     (SCM_INUM(x)),    [Compatability define for scm_to_int]))
-AC_CHECK_FUNC(scm_from_int,,
-  AC_DEFINE(scm_from_int(x),   (SCM_MAKINUM(x)), [Compatability define for scm_from_int]))
-AC_CHECK_FUNC(scm_is_true,,
-  AC_DEFINE(scm_is_true(x),    (SCM_NFALSEP(x)), [Compatability define for scm_is_true]))
-AC_CHECK_FUNC(scm_is_false,,
-  AC_DEFINE(scm_is_false(x),   (SCM_FALSEP(x)),  [Compatability define for scm_is_false]))
+AC_CHECK_DECL(scm_is_string,,
+  AC_DEFINE(scm_is_string(x),  (SCM_STRINGP(x)), [Compatability define for scm_is_string]), [#include <libguile.h>])
+AC_CHECK_DECL(scm_is_integer,,
+  AC_DEFINE(scm_is_integer(x), (SCM_INUMP(x)),   [Compatability define for scm_is_integer]), [#include <libguile.h>])
+AC_CHECK_DECL(scm_to_int,,
+  AC_DEFINE(scm_to_int(x),     (SCM_INUM(x)),    [Compatability define for scm_to_int]), [#include <libguile.h>])
+AC_CHECK_DECL(scm_from_int,,
+  AC_DEFINE(scm_from_int(x),   (SCM_MAKINUM(x)), [Compatability define for scm_from_int]), [#include <libguile.h>])
+AC_CHECK_DECL(scm_is_true,,
+  AC_DEFINE(scm_is_true(x),    (SCM_NFALSEP(x)), [Compatability define for scm_is_true]), [#include <libguile.h>])
+AC_CHECK_DECL(scm_is_false,,
+  AC_DEFINE(scm_is_false(x),   (SCM_FALSEP(x)),  [Compatability define for scm_is_false]), [#include <libguile.h>])
 
-AC_CHECK_FUNC(scm_from_locale_string,,
-  AC_DEFINE(scm_from_locale_string(x), (scm_makfrom0str(x)), [Compatability define for scm_from_locale_string]))
-
-AC_CHECK_FUNC(scm_to_locale_string,,
-  AC_DEFINE(scm_to_locale_string(x), (strdup(SCM_STRING_CHARS(x))), [Compatability define for scm_to_locale_string]))
+AC_CHECK_DECL(scm_from_locale_string,,
+  AC_DEFINE(scm_from_locale_string(x), (scm_makfrom0str(x)), [Compatability define for scm_from_locale_string]),
+  [#include <libguile.h>])
+AC_CHECK_DECL(scm_to_locale_string,,
+  AC_DEFINE(scm_to_locale_string(x), (strdup(SCM_STRING_CHARS(x))), [Compatability define for scm_to_locale_string]),
+  [#include <libguile.h>])
 
 #
 # Check for guile end
