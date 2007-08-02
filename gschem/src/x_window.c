@@ -925,8 +925,7 @@ x_window_open_page (TOPLEVEL *toplevel, const gchar *filename)
   if (!quiet_mode)
     printf(_("Loading schematic [%s]\n"), filename);
 
-  if (g_file_test (filename, G_FILE_TEST_EXISTS))
-    f_open (toplevel, (gchar *) filename);
+  f_open (toplevel, (gchar *) filename);
 
   if (scm_hook_empty_p (new_page_hook) == SCM_BOOL_F)
     scm_run_hook (new_page_hook,

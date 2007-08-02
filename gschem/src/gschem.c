@@ -137,6 +137,7 @@ void main_prog(void *closure, int argc, char *argv[])
   int first_page = 1;
   char *geda_data = NULL;
   char *filename;
+  gboolean save_grid;
 
 #ifdef HAVE_GTHREAD
   /* Gschem isn't threaded, but some of GTK's file chooser
@@ -262,6 +263,15 @@ void main_prog(void *closure, int argc, char *argv[])
   colormap = gdk_colormap_get_system ();
   x_window_setup_colors();
   x_window_setup (w_current);
+
+  /* Repaint the background in-case we have to throw up a "restore backup?"
+   * dialog box. Disable grid drawing as there is no page loaded, hence no
+   * scale factor to draw the grid at. (gschem will segfault otherwise.)
+   */
+  save_grid = w_current->grid;
+  w_current->grid = FALSE;
+  x_repaint_background (w_current);
+  w_current->grid = save_grid;
 
   i = argv_index;
   while (argv[i] != NULL) {
