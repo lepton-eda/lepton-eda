@@ -153,7 +153,7 @@ C 26500 54600 1 0 0 spice-include-1.sym
 T 26600 55000 5 10 1 1 0 0 1
 refdes=A2
 T 27000 54700 5 10 1 1 0 0 1
-file=Simulation.cmd
+file=./Simulation.cmd
 T 26600 54900 5 10 0 1 0 0 1
 device=include
 }
