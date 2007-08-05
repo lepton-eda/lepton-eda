@@ -76,25 +76,35 @@ fi
 
 # Guile 1.6 compatability
 
-AC_CHECK_DECL(scm_is_string,,
-  AC_DEFINE(scm_is_string(x),  (SCM_STRINGP(x)), [Compatability define for scm_is_string]), [#include <libguile.h>])
-AC_CHECK_DECL(scm_is_integer,,
-  AC_DEFINE(scm_is_integer(x), (SCM_INUMP(x)),   [Compatability define for scm_is_integer]), [#include <libguile.h>])
-AC_CHECK_DECL(scm_to_int,,
-  AC_DEFINE(scm_to_int(x),     (SCM_INUM(x)),    [Compatability define for scm_to_int]), [#include <libguile.h>])
-AC_CHECK_DECL(scm_from_int,,
-  AC_DEFINE(scm_from_int(x),   (SCM_MAKINUM(x)), [Compatability define for scm_from_int]), [#include <libguile.h>])
-AC_CHECK_DECL(scm_is_true,,
-  AC_DEFINE(scm_is_true(x),    (SCM_NFALSEP(x)), [Compatability define for scm_is_true]), [#include <libguile.h>])
-AC_CHECK_DECL(scm_is_false,,
-  AC_DEFINE(scm_is_false(x),   (SCM_FALSEP(x)),  [Compatability define for scm_is_false]), [#include <libguile.h>])
+AC_CHECK_DECLS([scm_is_string, scm_is_integer, scm_to_int,
+scm_from_int,  scm_is_true,    scm_is_false,
+scm_from_locale_string, scm_to_locale_string],,,
+[#include <libguile.h>])
 
-AC_CHECK_DECL(scm_from_locale_string,,
-  AC_DEFINE(scm_from_locale_string(x), (scm_makfrom0str(x)), [Compatability define for scm_from_locale_string]),
-  [#include <libguile.h>])
-AC_CHECK_DECL(scm_to_locale_string,,
-  AC_DEFINE(scm_to_locale_string(x), (strdup(SCM_STRING_CHARS(x))), [Compatability define for scm_to_locale_string]),
-  [#include <libguile.h>])
+AH_VERBATIM(SCM_IS_STRING, [#if !HAVE_DECL_SCM_IS_STRING
+#  define scm_is_string(x) SCM_STRINGP(x)
+#endif])
+AH_VERBATIM(SCM_IS_INTEGER, [#if !HAVE_DECL_SCM_IS_INTEGER
+#  define scm_is_integer(x) SCM_INUMP(x)
+#endif])
+AH_VERBATIM(SCM_TO_INT, [#if !HAVE_DECL_SCM_TO_INT
+#  define scm_to_int(x)     SCM_INUM(x)
+#endif])
+AH_VERBATIM(SCM_FROM_INT, [#if !HAVE_DECL_SCM_FROM_INT
+#  define scm_from_int(x)   SCM_MAKINUM(x)
+#endif])
+AH_VERBATIM(SCM_IS_TRUE, [#if !HAVE_DECL_SCM_IS_TRUE
+#  define scm_is_true(x)    SCM_NFALSEP(x)
+#endif])
+AH_VERBATIM(SCM_IS_FALSE, [#if !HAVE_DECL_SCM_IS_FALSE
+#  define scm_is_false(x)   SCM_FALSEP(x)
+#endif])
+AH_VERBATIM(SCM_FROM_LOCALE_STRING, [#if !HAVE_DECL_SCM_FROM_LOCALE_STRING
+#  define scm_from_locale_string(x) scm_makfrom0str(x)
+#endif])
+AH_VERBATIM(SCM_TO_LOCALE_STRING, [#if !HAVE_DECL_SCM_TO_LOCALE_STRING
+#  define scm_to_locale_string(x)   strdup(SCM_STRING_CHARS(x))
+#endif])
 
 #
 # Check for guile end
