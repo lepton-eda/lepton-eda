@@ -3,7 +3,6 @@
 /* a_pan.c */
 void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy, 
 		   double relativ_zoom_factor, int flags);
-void a_pan_calc(TOPLEVEL *w_current, int x, int y);
 void a_pan(TOPLEVEL *w_current, int x, int y);
 void a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y);
 /* a_zoom.c */
@@ -225,12 +224,7 @@ SCM g_rc_text_caps_style(SCM mode);
 SCM g_rc_postscript_font_scale(SCM scale);
 SCM g_rc_snap_size(SCM size);
 SCM g_rc_logging_destination(SCM mode);
-SCM g_rc_default_series_name(SCM name);
-SCM g_rc_untitled_name(SCM name);
 SCM g_rc_attribute_name(SCM path);
-SCM g_rc_scheme_directory(SCM path);
-SCM g_rc_bitmap_directory(SCM path);
-SCM g_rc_font_directory(SCM path);
 SCM g_rc_scrollbars(SCM mode);
 SCM g_rc_paper_size(SCM width, SCM height);
 SCM g_rc_paper_sizes(SCM papername, SCM scm_width, SCM scm_height);
@@ -270,7 +264,6 @@ SCM g_rc_setpagedevice_orientation(SCM mode);
 SCM g_rc_setpagedevice_pagesize(SCM mode);
 SCM g_rc_bus_ripper_size(SCM size);
 SCM g_rc_bus_ripper_type(SCM mode);
-SCM g_rc_bus_ripper_symname(SCM scmsymname);
 SCM g_rc_bus_ripper_rotation(SCM mode);
 SCM g_rc_force_boundingbox(SCM mode);
 SCM g_rc_grid_dot_size(SCM dotsize);
@@ -446,13 +439,11 @@ void i_callback_misc2(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_misc3(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_cancel(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_help_about(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_help_manual(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_help_hotkeys(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_show_coord_window(gpointer data, guint callback_action, GtkWidget *widget);
 gboolean i_callback_close_wm(GtkWidget *widget, GdkEvent *event, gpointer data);
 /* i_vars.c */
 void i_vars_set(TOPLEVEL *w_current);
-void i_vars_setnames(TOPLEVEL *w_current);
 /* o_arc.c */
 void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint radius, gint angle1, gint angle2, gint arc_width, gint length, gint space);
@@ -738,10 +729,7 @@ void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);
 /* x_attribedit.c */
 gint option_menu_get_history(GtkOptionMenu *option_menu);
-int attrib_edit_dialog_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 void attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
-void attrib_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current);
-void attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current);
 void attrib_edit_dialog(TOPLEVEL *w_current, OBJECT *list, int flag);
 /* x_autonumber.c */
 void autonumber_text_dialog(TOPLEVEL *w_current);
@@ -779,8 +767,6 @@ void coord_display_update(TOPLEVEL *w_current, int x, int y);
 void coord_dialog(TOPLEVEL *w_current, int x, int y);
 gint color_set(GtkWidget *w, gpointer data);
 char *index2functionstring(int index);
-int color_edit_dialog_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
-void color_edit_dialog_close(GtkWidget *w, TOPLEVEL *w_current);
 void color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current);
 void color_edit_dialog(TOPLEVEL *w_current);
 void x_dialog_hotkeys(TOPLEVEL *w_current);
@@ -871,8 +857,6 @@ void x_window_setup_draw_events(TOPLEVEL *w_current);
 void x_window_create_main(TOPLEVEL *w_current);
 void x_window_close(TOPLEVEL *w_current);
 void x_window_close_all(TOPLEVEL *w_current);
-TOPLEVEL *x_window_get_ptr(int wid);
-TOPLEVEL *x_window_search_page_clist(GtkWidget *findme);
 PAGE *x_window_open_untitled_page (TOPLEVEL *toplevel);
 PAGE *x_window_open_page (TOPLEVEL *toplevel, const gchar *filename);
 void x_window_set_current_page (TOPLEVEL *toplevel, PAGE *page);

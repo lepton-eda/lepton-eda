@@ -13,7 +13,6 @@ int f_open_flags(TOPLEVEL *w_current, const gchar *filename,
 void f_close(TOPLEVEL *w_current);
 void f_save_close(TOPLEVEL *w_current, char *filename);
 int f_save(TOPLEVEL *w_current, const char *filename);
-char* f_get_directory_from_path(char *path);
 char* f_normalize_filename(const gchar *filename);
 char *follow_symlinks (const gchar *filename, GError **error);
 
@@ -588,12 +587,6 @@ void s_papersizes_get_size(char *string, int *width, int *height);
 void s_toplevel_init (void);
 TOPLEVEL *s_toplevel_new (void);
 void s_toplevel_delete (TOPLEVEL *toplevel);
-
-/* s_scratch.c */
-void s_scratch_string_init(void);
-void s_scratch_string_free(void);
-int s_scratch_string_fill(char *string);
-int s_scratch_non_unique_string_fill(char *string);
 
 /* s_slib.c */
 int s_slib_add_entry(char *new_path);

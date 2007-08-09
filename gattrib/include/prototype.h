@@ -87,7 +87,6 @@ int s_toplevel_read_page(char *filename);
 void s_toplevel_verify_design(TOPLEVEL *pr_current);
 void s_toplevel_empty_project();
 void s_toplevel_gtksheet_to_toplevel();
-void s_toplevel_update_page(OBJECT *start_obj);
 void s_toplevel_add_new_attrib(gchar *new_attrib_name);
 void s_toplevel_delete_attrib_col();
 void s_toplevel_select_object();
@@ -160,8 +159,6 @@ void s_visibility_set_cell(gint cur_page, gint row, gint col,
 /* ------------- i_vars.c ------------- */
 void i_vars_set(TOPLEVEL * pr_current);
 void i_window_vars_set(TOPLEVEL * w_current);
-void i_vars_setnames(TOPLEVEL * w_current);
-
 
 /* ------------- x_dialog.c ------------- */
 void x_dialog_newattrib();
