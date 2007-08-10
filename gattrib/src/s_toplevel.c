@@ -78,24 +78,23 @@ int s_toplevel_read_page(char *filename)
  */
 void s_toplevel_verify_design(TOPLEVEL *pr_current)
 {
-  GList *iter;
   OBJECT *o_current;
   PAGE *p_current;
   int missing_sym_flag = 0;
 
-  for ( iter = geda_list_get_glist( pr_current->pages );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (PAGE *)iter->data;
-    o_current = p_current->object_head;
-    while (o_current != NULL) {
-      /* --- look for object, and verify that it has a symbol file attached. ---- */
-      if (o_current->type == OBJ_PLACEHOLDER) {
-        missing_sym_flag = 1;  /* flag to signal that problem exists.  */
+  p_current = pr_current->page_head; /* must iterate over all pages in design */
+  while (p_current != NULL) {
+    if (p_current->pid != -1) {  /* skip over page_head which has pid = -1. */
+      o_current = p_current->object_head;
+      while (o_current != NULL) {
+        /* --- look for object, and verify that it has a symbol file attached. ---- */
+        if (o_current->type == OBJ_PLACEHOLDER) {
+          missing_sym_flag = 1;  /* flag to signal that problem exists.  */
+        }
+        o_current = o_current->next;
       }
-      o_current = o_current->next;
-    }
+    }  /* if (p_current->pid != -1) */
+    p_current = p_current->next;
   }
 
   if (missing_sym_flag) {
@@ -127,30 +126,27 @@ void s_toplevel_empty_project()
 void
 s_toplevel_gtksheet_to_toplevel()
 {
-  GList *iter;
   PAGE *p_current;
 
 #if DEBUG
   printf("---------------------   Entering  s_toplevel_gtksheet_to_toplevel   -------------------\n");
-#endif
+#endif  
+
 
   s_sheet_data_gtksheet_to_sheetdata();  /* read data from gtksheet into SHEET_DATA */
 #if DEBUG
   printf("In s_toplevel_gtksheet_to_toplevel -- done writing stuff from gtksheet into SHEET_DATA.\n");
-#endif
+#endif  
 
-  /* must iterate over all pages in design */
-  for ( iter = geda_list_get_glist( pr_current->pages );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (PAGE *)iter->data;
-    /* only traverse pages which are toplevel */
-    if (p_current->object_head && p_current->page_control == 0) {
-      s_toplevel_sheetdata_to_toplevel(p_current->object_head);    /* adds all objects from page */
+  p_current = pr_current->page_head; /* must iterate over all pages in design */
+  while (p_current != NULL) {
+    if (p_current->pid != -1) {   /* only traverse pages which are toplevel */
+      if (p_current->object_head && p_current->page_control == 0) {
+        s_toplevel_sheetdata_to_toplevel(p_current->object_head);    /* adds all objects from page */
+      }
     }
+    p_current = p_current->next;  /* iterate to next schematic page */
   }
-
 #if DEBUG
   printf("In s_toplevel_gtksheet_to_toplevel -- done writing SHEEET_DATA text back into pr_currnet.\n");
 #endif  

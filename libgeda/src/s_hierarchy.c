@@ -36,8 +36,6 @@
 #include "globals.h"
 #include "o_types.h"
 
-#include "geda_list.h"
-
 #include "../include/prototype.h"
 
 #ifdef HAVE_LIBDMALLOC
@@ -95,7 +93,7 @@ int s_hierarchy_down_schematic_single(TOPLEVEL *w_current,
 	/* check whether this page is in the parents list */
 	for (forbear = parent; 
 	     forbear != NULL && found->pid != forbear->pid && forbear->up >= 0;
-	     forbear = s_hierarchy_find_page (w_current->pages, forbear->up))
+	     forbear = s_page_search_pid(w_current, forbear->up))
 	  ; /* void */
 
 	if (found->pid == forbear->pid) {
@@ -258,7 +256,7 @@ void s_hierarchy_up(TOPLEVEL *w_current, int pid)
     return;
   }
 
-  p_current = s_hierarchy_find_page(w_current->pages, pid);
+  p_current = s_hierarchy_find_page(w_current->page_head, pid);
 
   if (p_current) {
     s_page_goto(w_current, p_current);
@@ -337,7 +335,7 @@ GList *s_hierarchy_traversepages(TOPLEVEL *w_current,
 	  /* call the recursive function */
 	  s_hierarchy_traversepages(w_current,
 				    flags | HIERARCHY_INNERLOOP);
-	  s_page_goto(w_current, p_current);
+	  s_hierarchy_up(w_current, w_current->page_current->up);
 	}
 	else {
 	  s_log_message("ERROR in s_hierarchy_traverse: "
@@ -383,18 +381,15 @@ gint s_hierarchy_print_page(PAGE *p_current, void * data)
  *  \par Function Description
  *
  */
-PAGE *s_hierarchy_find_prev_page (GedaPageList *page_list, PAGE *current_page, int page_control)
+PAGE *s_hierarchy_find_prev_page (PAGE *p_start, int page_control) 
 {
-  const GList *iter;
+  PAGE *p_current;	
 
-  iter = g_list_find (geda_list_get_glist (page_list), current_page);
-  for (iter = g_list_previous (iter);
-       iter != NULL;
-       iter = g_list_previous (iter)) {
-
-    PAGE *page = (PAGE *)iter->data;
-    if (page->page_control == page_control) {
-      return page;
+  for (p_current = p_start->prev;
+       p_current != NULL;
+       p_current = p_current->prev) {
+    if (p_current->page_control == page_control) {
+      return p_current;
     }
   }
 
@@ -406,18 +401,15 @@ PAGE *s_hierarchy_find_prev_page (GedaPageList *page_list, PAGE *current_page, i
  *  \par Function Description
  *
  */
-PAGE *s_hierarchy_find_next_page (GedaPageList *page_list, PAGE *current_page, int page_control)
+PAGE *s_hierarchy_find_next_page (PAGE *p_start, int page_control)
 {
-  const GList *iter;
+  PAGE *p_current;	
 
-  iter = g_list_find (geda_list_get_glist (page_list), current_page);
-  for (iter = g_list_next (iter);
-       iter != NULL;
-       iter = g_list_next (iter)) {
-
-    PAGE *page = (PAGE *)iter->data;
-    if (page->page_control == page_control) {
-      return page;
+  for (p_current = p_start->next;
+       p_current != NULL;
+       p_current = p_current->next) {
+    if (p_current->page_control == page_control) {
+      return p_current;
     }
   }
 
@@ -429,17 +421,15 @@ PAGE *s_hierarchy_find_next_page (GedaPageList *page_list, PAGE *current_page, i
  *  \par Function Description
  *
  */
-PAGE *s_hierarchy_find_page (GedaPageList *page_list, int pid)
+PAGE *s_hierarchy_find_page (PAGE *p_start, int pid)
 {
-  const GList *iter;
+  PAGE *p_current = p_start;	
 
-  for ( iter = geda_list_get_glist (page_list);
-        iter != NULL;
-        iter = g_list_next (iter) ) {
-
-    PAGE *page = (PAGE *)iter->data;
-    if (page->pid == pid) {
-      return page;
+  for (p_current = p_start;
+       p_current != NULL;
+       p_current = p_current->next) {
+    if (p_current->pid == pid) {
+      return p_current;
     }
   }
 

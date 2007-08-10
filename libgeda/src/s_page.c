@@ -46,8 +46,6 @@
 #include "o_types.h"
 #include "funcs.h"
 
-#include "geda_list.h"
-
 #include "../include/prototype.h"
 
 #ifdef HAVE_LIBDMALLOC
@@ -142,8 +140,11 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   page->load_newer_backup_func = load_newer_backup_func;
 
   /* now append page to page list of toplevel */
-  geda_list_add( toplevel->pages, page );
-
+  toplevel->page_tail->next = page;
+  page->prev = toplevel->page_tail;
+  page->next = NULL;
+  toplevel->page_tail = page;
+  
   return page;
 }
 
@@ -152,7 +153,8 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
  *  \par Function Description
  *  Deletes a single page <B>page</B> from <B>toplevel</B>'s list of pages.
  *
- *  See #s_page_delete_list() to delete all pages of a <B>toplevel</B>
+ *  This function is not appropriate for deleting page head. 
+ *  See #s_page_delete_list() for that.
  *
  *  If the current page of toplevel is given as parameter <B>page</B>,
  *  the function sets the field <B>page_current</B> of the TOPLEVEL
@@ -166,9 +168,11 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   gchar *only_filename;
   gchar *dirname;
 
+  g_assert (page->pid != -1);
+
   /* we need to play with page_current because s_delete_list_fromstart() */
   /* make use of it (see s_tile_remove_object_all) */
-
+  
   /* save page_current and switch to page */
   if (page == toplevel->page_current) {
     tmp = NULL;
@@ -232,10 +236,22 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
 
   /* ouch, deal with parents going away and the children still around */
   page->up = -2;
+  /* p_current->down = NULL; not needed */
+
   g_free (page->page_filename);
 
-  geda_list_remove( toplevel->pages, page );
-
+  /* now unlink page from its list */
+  if (page->next) {
+    page->next->prev = page->prev;
+  } else {
+    /* page if the tail of page list: update toplevel */
+    g_assert (toplevel->page_tail == page);
+    toplevel->page_tail = page->prev;
+  }
+  if (page->prev) {
+    page->prev->next = page->next;
+  }
+  
 #if DEBUG
   s_tile_print (toplevel);
 #endif
@@ -258,6 +274,34 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   
 }
 
+/*! \todo Finish function documentation!!!
+ *  \brief Initializes <B>toplevel</B>'s list of pages.
+ *  \par Function Description
+ *  This function creates a head page and set the toplevel fields relative
+ *  to page management.
+ */
+void s_page_init_list (TOPLEVEL *toplevel)
+{
+  PAGE *head;
+
+  g_assert (toplevel->page_head == NULL);
+
+  head = (PAGE*)g_new (PAGE, 1);
+
+  head->pid = -1;
+  head->CHANGED = 0;
+  head->page_filename = g_strdup ("page_head");
+  head->prev = NULL;
+  head->next = NULL;
+  /* this is important so that page_next and page_prev ignore the 
+   * page head node 
+   */
+  head->page_control = -1; 
+
+  /* add head as page head of toplevel */
+  toplevel->page_head = toplevel->page_tail = head;
+ 
+}
 
 /*! \todo Finish function documentation!!!
  *  \brief Deletes the list of pages of <B>toplevel</B>.
@@ -267,22 +311,28 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
  */
 void s_page_delete_list(TOPLEVEL *toplevel)
 {
-  GList *list_copy, *iter;
-  PAGE *page;
+  PAGE *p_current, *p_prev;
 
-  /* s_page_delete removes items from the page list, so make a copy */
-  list_copy = g_list_copy (geda_list_get_glist (toplevel->pages));
+  p_current = toplevel->page_tail;
 
-  for (iter = list_copy; iter != NULL; iter = g_list_next (iter)) {
-    page = (PAGE *)iter->data;
+  while (p_current != NULL && p_current->pid != -1) {
+    p_prev = p_current->prev;
+    s_page_delete (toplevel, p_current);
+    p_current = p_prev;
+  }	
 
-    s_page_delete (toplevel, page);
-  }
-
-  g_list_free (list_copy);
+  g_assert (p_current->pid == -1 &&
+            p_current->prev == NULL && p_current->next == NULL);
+  
+  /* Now free the head */
+  g_free (p_current->page_filename);
+  g_free (p_current);
 
   /* reset toplevel fields */
+  toplevel->page_head    = NULL;
+  toplevel->page_tail    = NULL;
   toplevel->page_current = NULL;
+  
 }
 
 /*! \todo Finish function documentation!!!
@@ -294,13 +344,13 @@ void s_page_delete_list(TOPLEVEL *toplevel)
 void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new) 
 {
   gchar *dirname;
-
+  
   toplevel->page_current = p_new;
 
   dirname = g_dirname (p_new->page_filename);
   chdir (dirname);
   g_free (dirname);
-
+  
 }
 
 /*! \todo Finish function documentation!!!
@@ -313,20 +363,39 @@ void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new)
  */
 PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename)
 {
-  const GList *iter;
-  PAGE *page;
+  PAGE *p_current;
 
-  for ( iter = geda_list_get_glist( toplevel->pages );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    page = (PAGE *)iter->data;
-    if ( g_strcasecmp( page->page_filename, filename ) == 0 )
-      return page;
+  for (p_current = toplevel->page_head;
+       p_current != NULL;
+       p_current = p_current->next) {
+    if (g_strcasecmp (p_current->page_filename, filename) == 0) {
+      return p_current;
+    }
   }
+
   return NULL;
 }
 
+/*! \todo Finish function documentation!!!
+ *  \brief Search for pages by page id.
+ *  \par Function Description
+ *  This function tries to find a page refered by its <B>page_id</B>.
+ *
+ *  \return PAGE pointer to matching page, NULL otherwise.
+ */
+PAGE *s_page_search_pid(TOPLEVEL * toplevel, gint page_id) 
+{
+  PAGE* p_current;
+
+  for (p_current = toplevel->page_head;
+       p_current != NULL;
+       p_current = p_current->next) {
+    if (p_current->pid == page_id)
+      return p_current;
+  }
+
+  return NULL;
+}
 
 /*! \brief Print full TOPLEVEL structure.
  *  \par Function Description
@@ -337,17 +406,18 @@ PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename)
  */
 void s_page_print_all (TOPLEVEL *toplevel)
 {
-  const GList *iter;
-  PAGE *page;
+  PAGE *p_current;
 
-  for ( iter = geda_list_get_glist( toplevel->pages );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
+  g_assert (toplevel->page_head != NULL &&
+            toplevel->page_head->pid == -1);
 
-    page = (PAGE *)iter->data;
-    printf ("FILENAME: %s\n", page->page_filename);
-    print_struct_forw (page->object_head);
+  for (p_current = toplevel->page_head->next;
+       p_current != NULL;
+       p_current = p_current->next) {
+    printf ("FILENAME: %s\n", p_current->page_filename);
+    print_struct_forw (p_current->object_head);
   }
+  
 }
 
 /*! \todo Finish function documentation!!!
@@ -360,19 +430,18 @@ void s_page_print_all (TOPLEVEL *toplevel)
  */
 gint s_page_save_all (TOPLEVEL *toplevel)
 {
-  const GList *iter;
   PAGE *p_save, *p_current;
   gint status = 0;
 
+  g_assert (toplevel->page_head != NULL &&
+            toplevel->page_head->pid == -1);
+
   /* save current page */
   p_save = toplevel->page_current;
-
-  for ( iter = geda_list_get_glist( toplevel->pages );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (PAGE *)iter->data;
-
+  
+  for (p_current = toplevel->page_head->next;
+       p_current != NULL;
+       p_current = p_current->next) {
     /* make p_current the current page of toplevel */
     s_page_goto (toplevel, p_current);
 
@@ -381,14 +450,14 @@ gint s_page_save_all (TOPLEVEL *toplevel)
                      toplevel->page_current->page_filename);
       /* reset the CHANGED flag of p_current */
       p_current->CHANGED = 0;
-
+      
     } else {
       s_log_message ("Could NOT save [%s]\n", 
                      toplevel->page_current->page_filename);
       /* increase the error counter */
       status++;
     }
-
+    
   }
 
   /* restore current page */
@@ -403,22 +472,19 @@ gint s_page_save_all (TOPLEVEL *toplevel)
 /*! \todo Finish function documentation!!!
  *  \brief Check if CHANGED flag is set for any page in list.
  *  \par Function Description
- *  This function checks the CHANGED flag for all pages in the <B>list</B>
+ *  This function checks the CHANGED flag for all pages in the <B>head</B>
  *  object.
  *
- *  \param [in] list  GedaPageList to check CHANGED flag in.
+ *  \param [in] head  PAGES list to check CHANGED flag in.
  *  \return 1 if any page has the CHANGED flag set, 0 otherwise.
  */
-gboolean s_page_check_changed (GedaPageList *list)
+gboolean s_page_check_changed (PAGE *head)
 {
-  const GList *iter;
   PAGE *p_current;
 
-  for ( iter = geda_list_get_glist( list );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (PAGE *)iter->data;
+  for (p_current = head;
+       p_current != NULL;
+       p_current = p_current->next) {
     if (p_current->CHANGED) {
       return TRUE;
     }
@@ -433,18 +499,16 @@ gboolean s_page_check_changed (GedaPageList *list)
  *
  *  \param [in,out] head  PAGE list to set CHANGED flags in.
  */
-void s_page_clear_changed (GedaPageList *list)
+void s_page_clear_changed (PAGE *head)
 {
-  const GList *iter;
   PAGE *p_current;
 
-  for ( iter = geda_list_get_glist( list );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (PAGE *)iter->data;
+  for (p_current = head;
+       p_current != NULL;
+       p_current = p_current->next) {
     p_current->CHANGED = 0;
   }
+
 }
 
 /*! \brief Autosave initialization function.
@@ -476,7 +540,6 @@ void s_page_autosave_init(TOPLEVEL *toplevel)
  */
 gint s_page_autosave (TOPLEVEL *toplevel) 
 {
-  const GList *iter;
   PAGE *p_current;
 
   if (toplevel == NULL) {
@@ -487,23 +550,26 @@ gint s_page_autosave (TOPLEVEL *toplevel)
   if (toplevel->auto_save_interval == 0) {
     return toplevel->auto_save_interval;
   }
-
-  /* Should we just disable the autosave timeout returning 0 or
+  
+  /* In which situation can be page_head = NULL?
+     Should we just disable the autosave timeout returning 0 or
      just wait for more pages to be added? */
-  if ( toplevel->pages == NULL)
-    return toplevel->auto_save_interval;
+  if ( (toplevel->page_head == NULL) ||
+       (toplevel->page_head->next == NULL) ) {
+    return (toplevel->auto_save_interval);
+  }
 
-  for ( iter = geda_list_get_glist( toplevel->pages );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (PAGE *)iter->data;
+  for (p_current = toplevel->page_head->next;
+       p_current != NULL;
+       p_current = p_current->next) {
 
     if (p_current->ops_since_last_backup != 0) {
       /* Real autosave is done in o_undo_savestate */
       p_current->do_autosave_backup = 1;
     }
+    
   }
 
   return toplevel->auto_save_interval;
+  
 }

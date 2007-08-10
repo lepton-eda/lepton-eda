@@ -1075,7 +1075,6 @@ void
 x_window_close_page (TOPLEVEL *toplevel, PAGE *page)
 {
   PAGE *new_current = NULL;
-  GList *iter;
 
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (page     != NULL);
@@ -1085,16 +1084,13 @@ x_window_close_page (TOPLEVEL *toplevel, PAGE *page)
   if (page == toplevel->page_current) {
     /* as it will delete current page, select new current page */
     /* first look up in page hierarchy */
-    new_current = s_hierarchy_find_page (toplevel->pages, page->up);
-
+    new_current = s_hierarchy_find_page (toplevel->page_head, page->up);
     if (new_current == NULL) {
-      /* no up in hierarchy, choice is prev, next, new page */
-      iter = g_list_find( geda_list_get_glist( toplevel->pages ), page );
-
-      if ( g_list_previous( iter ) ) {
-        new_current = (PAGE *)g_list_previous( iter )->data;
-      } else if ( g_list_next( iter ) ) {
-        new_current = (PAGE *)g_list_next( iter )->data;
+      /* no up in hierarchy, choice is next, prev, new page */
+      if (page->prev && page->prev->pid != -1) {
+        new_current = page->prev;
+      } else if (page->next != NULL) {
+        new_current = page->next;
       } else {
         /* need to add a new untitled page */
         new_current = NULL;

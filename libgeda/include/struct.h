@@ -24,7 +24,6 @@
 
 /* Wrappers around a new list mechanism */
 typedef struct _GedaList SELECTION;
-typedef struct _GedaList GedaPageList;
 
 /* gschem structures (gschem) */
 typedef struct st_complex COMPLEX;
@@ -395,6 +394,9 @@ struct st_page {
   /* Function which asks the user wether to load a newer backup file */
   int (*load_newer_backup_func)();
 
+  /* left to right movement */
+  PAGE *prev;
+  PAGE *next;
 };
 
 struct st_toplevel {
@@ -498,8 +500,9 @@ struct st_toplevel {
   int doing_pan;			/* mouse pan status flag */
 
   /* page system */
+  PAGE *page_head;	
+  PAGE *page_tail;	
   PAGE *page_current;
-  GedaPageList *pages;
 
   /* buffer_number is used by the buffer copy/cut/paste mechanism */
   /* in gschem to keep track of the current buffer number */

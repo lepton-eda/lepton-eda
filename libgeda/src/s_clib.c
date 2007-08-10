@@ -134,7 +134,6 @@
 #include "colors.h"
 #include "i_vars.h"
 #include "prototype.h"
-#include "geda_list.h"
 
 /* Constant definitions
  * ===================
@@ -1301,18 +1300,14 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *w_current)
   GList *result = NULL;
   GList *iter = NULL;
   OBJECT *o = NULL;
-  PAGE *page;
+  PAGE *p = NULL;
   GList *symlist = NULL;
   CLibSymbol *sym = NULL;
-  const GList *p_iter;
 
   g_assert (w_current != NULL);
 
-  for ( p_iter = geda_list_get_glist( w_current->pages );
-        p_iter != NULL;
-        p_iter = g_list_next( p_iter )) {
-    page = (PAGE *)p_iter->data;
-    for (o = page->object_head; o != NULL; o = o->next) {
+  for (p = w_current->page_head->next; p != NULL; p = p->next) {
+    for (o = p->object_head; o != NULL; o = o->next) {
       if (o->type != OBJ_COMPLEX) continue;
       if (o->complex_basename == NULL)  continue;
       

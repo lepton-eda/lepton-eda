@@ -36,8 +36,6 @@
 #include <dmalloc.h>
 #endif
 
-#include <glib-object.h>
-
 #include "../include/gschem_dialog.h"
 #include "../include/x_pagesel.h"
 
@@ -92,19 +90,6 @@ void x_pagesel_close (TOPLEVEL *toplevel)
   
 }
 
-/*! \brief Callback activated when the <B>toplevel</B>'s page list changes.
- *  \par Function Description
- *  Calls x_pagesel_update(...) when the <B>toplevel</B>'s page list changes.
- *
- *  \param [in] pages     the page list which changed.
- *  \param [in] user_data a pointer to the pagesel which registered this callback.
- */
-static void pagelist_changed_cb( GedaList *page_list, gpointer user_data )
-{
-  Pagesel *pagesel = (Pagesel *)user_data;
-  pagesel_update( pagesel );
-}
-
 /*! \brief Update the list and status of <B>toplevel</B>'s pages.
  *  \par Function Description
  *  Updates the list and status of <B>toplevel</B>\'s pages if the page
@@ -157,7 +142,6 @@ enum {
   NUM_COLUMNS
 };
 
-static GObjectClass *pagesel_parent_class = NULL;
 
 static void pagesel_class_init (PageselClass *class);
 static void pagesel_init       (Pagesel *pagesel);
@@ -320,9 +304,8 @@ static void pagesel_popup_menu (Pagesel *pagesel,
  *
  *  \par Function Description
  *
- *  When the toplevel property is set on the parent GschemDialog:
- *    Connect to its page list's "changed" signal.
- *    Update the pagesel dialog.
+ *  When the toplevel property is set on the parent GschemDialog,
+ *  we should update the pagesel dialog.
  *
  *  \param [in] pspec      the GParamSpec of the property which changed
  *  \param [in] gobject    the object which received the signal.
@@ -333,11 +316,6 @@ static void notify_toplevel_cb (GObject    *gobject,
                                 gpointer    user_data)
 {
   Pagesel *pagesel = PAGESEL( gobject );
-  GschemDialog *dialog = GSCHEM_DIALOG( pagesel );
-
-  pagesel->pagelist_changed_id =
-    g_signal_connect( dialog->toplevel->pages, "changed",
-                      G_CALLBACK( pagelist_changed_cb ), pagesel );
 
   pagesel_update( pagesel );
 }
@@ -378,30 +356,8 @@ GType pagesel_get_type()
  *  \par Function Description
  *
  */
-static void pagesel_finalize (GObject *object)
-{
-  Pagesel *pagesel = PAGESEL (object);
-  GschemDialog *dialog = GSCHEM_DIALOG (pagesel);
-
-  if (dialog->toplevel)
-    g_signal_handler_disconnect (dialog->toplevel->pages,
-                                 pagesel->pagelist_changed_id);
-
-  G_OBJECT_CLASS (pagesel_parent_class)->finalize (object);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 static void pagesel_class_init (PageselClass *klass)
 {
-  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-
-  pagesel_parent_class = g_type_class_peek_parent (klass);
-
-  gobject_class->finalize = pagesel_finalize;
 }
 
 /*! \todo Finish function documentation!!!
@@ -552,15 +508,13 @@ static void pagesel_init (Pagesel *pagesel)
  *
  *  \param [in] model   GtkTreeModel to update.
  *  \param [in] parent  GtkTreeIter pointer to tree root.
- *  \param [in] pages   GedaPageList of pages for this toplevel.
  *  \param [in] page    The PAGE object to update tree model from.
  */
 static void add_page (GtkTreeModel *model, GtkTreeIter *parent,
-                      GedaPageList *pages, PAGE *page)
+		      PAGE *page)
 {
   GtkTreeIter iter;
   PAGE *p_current;
-  GList *p_iter;
 
   /* add the page to the store */
   gtk_tree_store_append (GTK_TREE_STORE (model),
@@ -572,17 +526,16 @@ static void add_page (GtkTreeModel *model, GtkTreeIter *parent,
                       COLUMN_NAME, page->page_filename,
                       COLUMN_CHANGED, page->CHANGED,
                       -1);
-
+  
   /* search a page that has a up field == p_current->pid */
-  for ( p_iter = geda_list_get_glist( pages );
-        p_iter != NULL;
-        p_iter = g_list_next( p_iter ) ) {
-
-    p_current = (PAGE *)p_iter->data;
+  for (p_current = page->next;
+       p_current != NULL;
+       p_current = p_current->next) {
     if (p_current->up == page->pid) {
-      add_page (model, &iter, pages, p_current);
+      add_page (model, &iter, p_current);
     }
   }
+  
 }
 
 /*! \todo Finish function documentation!!!
@@ -630,7 +583,6 @@ void pagesel_update (Pagesel *pagesel)
   GtkTreeModel *model;
   TOPLEVEL *toplevel;
   PAGE *p_current;
-  GList *iter;
 
   g_assert (IS_PAGESEL (pagesel));
 
@@ -642,16 +594,14 @@ void pagesel_update (Pagesel *pagesel)
   /* wipe out every thing in the store */
   gtk_tree_store_clear (GTK_TREE_STORE (model));
   /* now rebuild */
-  for ( iter = geda_list_get_glist( toplevel->pages );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (PAGE *)iter->data;
+  for (p_current = toplevel->page_head->next;
+       p_current != NULL;
+       p_current = p_current->next) {
     /* find every page that is not a hierarchy-down of another page */
     if (p_current->up < 0 ||
-        s_hierarchy_find_page (toplevel->pages,
+        s_hierarchy_find_page (toplevel->page_head->next,
                                p_current->up) == NULL) {
-      add_page (model, NULL, toplevel->pages, p_current);
+      add_page (model, NULL, p_current);
     }
   }
 

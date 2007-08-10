@@ -2846,7 +2846,7 @@ char *generic_filesel_dialog (const char *msg, const char *templ, gint flags)
 /*********** Start of find text dialog box *******/
 
 int start_find;
-PAGE *remember_page;
+OBJECT *remember_page;
 
 /*! \brief response function for the find text dialog
  *  \par Function Description
@@ -2869,11 +2869,11 @@ void find_text_dialog_response(GtkWidget *w, gint response,
 
     strncpy(generic_textstring, string, 256);
 
-    if (remember_page != w_current->page_current) {
-      s_page_goto(w_current, remember_page);
+    while (remember_page != w_current->page_current->object_head) {
+      s_hierarchy_up(w_current, w_current->page_current->up);
     }
     done =
-      o_edit_find_text(w_current, remember_page->object_head, string,
+      o_edit_find_text(w_current, remember_page, string,
 		       gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
 						    (checkdescend)),
 		       !start_find);
@@ -2909,7 +2909,7 @@ void find_text_dialog(TOPLEVEL * w_current)
   OBJECT *object = NULL;
 
   start_find = 1;
-  remember_page = w_current->page_current;
+  remember_page = w_current->page_current->object_head;
   if ((object = o_select_return_first_object(w_current)) != NULL) {
     if (object->type == OBJ_TEXT) {
       strncpy(generic_textstring, object->text->string, 256);
@@ -4004,18 +4004,17 @@ x_dialog_close_changed_page (TOPLEVEL *toplevel, PAGE *page)
 gboolean
 x_dialog_close_window (TOPLEVEL *toplevel)
 {
-  GList *iter;
-  GtkWidget *dialog;
+	GtkWidget *dialog;
   PAGE *p_current;
   GList *unsaved_pages, *p_unsaved;
   gboolean ret = FALSE;
 
-  for ( iter = geda_list_get_glist( toplevel->pages ), unsaved_pages = NULL;
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (PAGE*)iter->data;
-
+  /* build a list of unsaved pages */
+  g_assert (toplevel->page_head != NULL &&
+            toplevel->page_head->next != NULL);
+  for (p_current = toplevel->page_head->next, unsaved_pages = NULL;
+       p_current != NULL;
+       p_current = p_current->next) {
     if (p_current->CHANGED) {
       unsaved_pages = g_list_append (unsaved_pages, (gpointer)p_current);
     }

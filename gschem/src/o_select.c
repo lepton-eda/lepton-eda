@@ -367,14 +367,13 @@ void o_select_box_search(TOPLEVEL *w_current)
   int count = 0; /* object count */
   int SHIFTKEY = w_current->SHIFTKEY;
   int w_start_x, w_start_y, w_last_x, w_last_y;
-  gboolean right_to_left = FALSE;
+	
   int tmp;
 	
   if( w_current->last_x < w_current->start_x ) {
     tmp = w_current->last_x;
     w_current->last_x = w_current->start_x;
     w_current->start_x = tmp;
-    right_to_left = TRUE;
   }
 
   if( w_current->last_y < w_current->start_y ) {
@@ -394,18 +393,10 @@ void o_select_box_search(TOPLEVEL *w_current)
         (o_current->visibility == VISIBLE ||
         (o_current->visibility == INVISIBLE && w_current->show_hidden_text))) {
 
-      if ( /* Select any objects completely enclosed by the dragged box */
-           (o_current->w_left   >= w_start_x &&
-            o_current->w_right  <= w_last_x  &&
-            o_current->w_top    >= w_last_y  &&
-            o_current->w_bottom <= w_start_y  ) ||
-           /* Select any touched objects if box was dragged right to left,
-            * but only if they aren't locked (have a sel_func). */
-           (right_to_left && o_current->sel_func != NULL &&
-            o_current->w_left   <= w_last_x  &&
-            o_current->w_right  >= w_start_x &&
-            o_current->w_top    <= w_start_y &&
-            o_current->w_bottom >= w_last_y   ) ) {
+      if ( o_current->w_left   >= w_start_x &&
+           o_current->w_right  <= w_last_x  &&
+           o_current->w_top    >= w_last_y  &&
+           o_current->w_bottom <= w_start_y ) {
 
         o_select_object(w_current, o_current, MULTIPLE, count);
         count++;

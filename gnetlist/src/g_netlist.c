@@ -736,7 +736,7 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
 
     wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
 
-    return_value = o_attrib_search_toplevel_all(project_current->pages,
+    return_value = o_attrib_search_toplevel_all(project_current->page_head,
 						wanted_attrib);
 
     if (return_value) {

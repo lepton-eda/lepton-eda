@@ -60,7 +60,7 @@ void o_edit(TOPLEVEL *w_current, GList *list)
     return;
   }
 
-  o_current = (OBJECT *) list->data;
+  o_current = (OBJECT *) list->data;	
   if (o_current == NULL) {
     fprintf(stderr, _("Got an unexpected NULL in o_edit\n"));
     exit(-1);
@@ -84,8 +84,8 @@ void o_edit(TOPLEVEL *w_current, GList *list)
     case(OBJ_TEXT):
     if(strchr(o_current->text->string,'=')) {
 
-      /* now really make sure it's an attribute by
-       * checking that there are NO spaces around the ='s
+      /* now really make sure it's an attribute by 
+       * checking that there are NO spaces around the ='s 
        */
       equal_ptr = strchr(o_current->text->string, '=');
 
@@ -99,12 +99,12 @@ void o_edit(TOPLEVEL *w_current, GList *list)
       if ( (*(equal_ptr + 1) != ' ') &&
            (*(equal_ptr - 1) != ' ') &&
            (num_lines == 1) ) {
-        attrib_edit_dialog(w_current,o_current, FROM_MENU);
-        /* multi_attrib_edit(w_current, o_current); */
+	        attrib_edit_dialog(w_current,o_current, FROM_MENU); 
+	/*	multi_attrib_edit(w_current, o_current); */
 
       } else {
         o_text_edit(w_current, o_current);
-      }
+      } 
     } else {
       o_text_edit(w_current, o_current);
     }
@@ -121,7 +121,7 @@ void o_edit(TOPLEVEL *w_current, GList *list)
  *
  */
 /* This locks the entire selected list.  It does lock components, but does NOT
- * change the color (of primatives of the components) though
+ * change the color (of primatives of the components) though 
  * this cannot be called recursively */
 void o_lock(TOPLEVEL *w_current)
 {
@@ -197,14 +197,14 @@ void o_unlock(TOPLEVEL *w_current)
  *  (refdes, pinname, pinlabel, ...).
  *  There is a second pass to run the rotate hooks of non-simple objects,
  *  like pin or complex objects, for example.
- *
+ * 
  *  \param [in] w_current  The TOPLEVEL object.
  *  \param [in] list       The list of objects to rotate.
  *  \param [in] centerx    Center x coordinate of rotation.
  *  \param [in] centery    Center y coordinate of rotation.
  */
 void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
-                       int centerx, int centery)
+		       int centerx, int centery)
 {
   OBJECT *object;
   GList *s_current;
@@ -212,7 +212,7 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
   GList *other_objects=NULL;
   GList *connected_objects=NULL;
   OBJECT *o_current=NULL;
-
+        
   /* this is okay if you just hit rotate and have nothing selected */
   if (list == NULL) {
     w_current->inside_action = 0;
@@ -239,115 +239,116 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
 
 
       case(OBJ_NET):
-        if (!w_current->DONT_REDRAW) {
-          o_cue_undraw(w_current, object);
-          o_net_erase(w_current, object);
-          o_line_erase_grips(w_current, object);
-        }
-
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw(w_current, object);
+	  o_net_erase(w_current, object);
+	  o_line_erase_grips(w_current, object);
+	}
+                                
         /* save the other objects */
         other_objects = s_conn_return_others(other_objects, object);
         s_conn_remove(w_current, object);
-
+                                
         o_net_rotate_world(w_current, centerx, centery, 90, object);
         s_conn_update_object(w_current, object);
-        if (!w_current->DONT_REDRAW) {
-          o_net_draw(w_current, object);
-
-          /* draw the other objects */
-          o_cue_undraw_list(w_current, other_objects);
-          o_cue_draw_list(w_current, other_objects);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_net_draw(w_current, object);
+                                
+	  /* draw the other objects */
+	  o_cue_undraw_list(w_current, other_objects);
+	  o_cue_draw_list(w_current, other_objects);
+	}
 
         /* get other connected objects and redraw */
         connected_objects = s_conn_return_others(connected_objects, object);
-        if (!w_current->DONT_REDRAW) {
-          o_cue_undraw_list(w_current, connected_objects);
-          o_cue_draw_list(w_current, connected_objects);
-
-          /* finally redraw the cues on the current object */
-          o_cue_draw_single(w_current, object);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw_list(w_current, connected_objects);
+	  o_cue_draw_list(w_current, connected_objects);
+	  
+	  /* finally redraw the cues on the current object */
+	  o_cue_draw_single(w_current, object); 
+	}
         break;
 
       case(OBJ_BUS):
-        if (!w_current->DONT_REDRAW) {
-          o_cue_undraw(w_current, object);
-          o_bus_erase(w_current, object);
-          o_line_erase_grips(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw(w_current, object);
+	  o_bus_erase(w_current, object);
+	  o_line_erase_grips(w_current, object);
         }
 
         other_objects = s_conn_return_others(other_objects, object);
         s_conn_remove(w_current, object);
-
+        
         o_bus_rotate_world(w_current, centerx, centery, 90, object);
         s_conn_update_object(w_current, object);
-        if (!w_current->DONT_REDRAW) {
-          o_bus_draw(w_current, object);
-
-          /* draw the other objects */
-          o_cue_undraw_list(w_current, other_objects);
-          o_cue_draw_list(w_current, other_objects);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_bus_draw(w_current, object);
+        
+	  /* draw the other objects */
+	  o_cue_undraw_list(w_current, other_objects);
+	  o_cue_draw_list(w_current, other_objects);
+	}
 
         /* get other connected objects and redraw */
         connected_objects = s_conn_return_others(connected_objects, object);
-        if (!w_current->DONT_REDRAW) {
-          o_cue_undraw_list(w_current, connected_objects);
-          o_cue_draw_list(w_current, connected_objects);
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw_list(w_current, connected_objects);
+	  o_cue_draw_list(w_current, connected_objects);
 
-          /* finally redraw the cues on the current object */
-          o_cue_draw_single(w_current, object);
-        }
+	  /* finally redraw the cues on the current object */
+	  o_cue_draw_single(w_current, object); 
+	}
         break;
 
       case(OBJ_PIN):
-        if (!w_current->DONT_REDRAW) {
-          o_cue_undraw(w_current, object);
-          o_pin_erase(w_current, object);
-          o_line_erase_grips(w_current, object);
-        }
-
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw(w_current, object);
+	  o_pin_erase(w_current, object);
+	  o_line_erase_grips(w_current, object);
+	}
+        
         other_objects = s_conn_return_others(other_objects, object);
         s_conn_remove(w_current, object);
-
-        o_pin_rotate_world(w_current, centerx, centery, 90, object);
+        
+        o_pin_rotate_world(w_current, centerx, centery, 
+                     90, object);
         s_conn_update_object(w_current, object);
-        if (!w_current->DONT_REDRAW) {
-          o_pin_draw(w_current, object);
-
-          /* draw the other objects */
-          o_cue_undraw_list(w_current, other_objects);
-          o_cue_draw_list(w_current, other_objects);
-        }
-
-        /* get other connected objects and redraw */
+	if (!w_current->DONT_REDRAW) {
+	  o_pin_draw(w_current, object);
+        
+	  /* draw the other objects */
+	  o_cue_undraw_list(w_current, other_objects);
+	  o_cue_draw_list(w_current, other_objects);
+	}
+  
+	/* get other connected objects and redraw */
         connected_objects = s_conn_return_others(connected_objects, object);
-        if (!w_current->DONT_REDRAW) {
-          o_cue_undraw_list(w_current, connected_objects);
-          o_cue_draw_list(w_current, connected_objects);
-
-          /* finally redraw the cues on the current object */
-          o_cue_draw_single(w_current, object);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw_list(w_current, connected_objects);
+	  o_cue_draw_list(w_current, connected_objects);
+	  
+	  /* finally redraw the cues on the current object */
+	  o_cue_draw_single(w_current, object);
+	}
         break;
 
       case(OBJ_COMPLEX):
-        if (!w_current->DONT_REDRAW) {
-          o_cue_undraw_objects(w_current, object->complex->prim_objs);
-          /* erase the current selection */
-          o_complex_erase(w_current, object);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw_objects(w_current, object->complex->prim_objs);
+	  /* erase the current selection */
+	  o_complex_erase(w_current, object);
+	}
 
         other_objects = s_conn_return_complex_others(other_objects, object);
-
+        
         /* remove all conn references */
         o_current = object->complex->prim_objs;
         while(o_current != NULL) {
           s_conn_remove(w_current, o_current);
           o_current = o_current->next;
         }
-
+      
         /* do the rotate */
         /*w_current->ADDING_SEL=1; NEWSEL: needed? */
         new_angle = (object->complex->angle + 90) % 360;
@@ -355,105 +356,105 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
                          new_angle, 90, object);
         /*w_current->ADDING_SEL = 0; NEWSEL: needed? */
         s_conn_update_complex(w_current, object->complex->prim_objs);
-        if (!w_current->DONT_REDRAW) {
-          o_complex_draw(w_current, object);
-
-          o_cue_undraw_list(w_current, other_objects);
-          o_cue_draw_list(w_current, other_objects);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_complex_draw(w_current, object);
+	  
+	  o_cue_undraw_list(w_current, other_objects);
+	  o_cue_draw_list(w_current, other_objects);
+	}
 
         /* now draw the newly connected objects */
         connected_objects = s_conn_return_complex_others(connected_objects,
                                                          object);
-        if (!w_current->DONT_REDRAW) {
-          o_cue_undraw_list(w_current, connected_objects);
-          o_cue_draw_list(w_current, connected_objects);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw_list(w_current, connected_objects);
+	  o_cue_draw_list(w_current, connected_objects);
+	}
         break;
-
+        
       case(OBJ_LINE):
-        if (!w_current->DONT_REDRAW) {
-          o_line_erase_grips(w_current, object);
-          o_line_erase(w_current, object);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_line_erase_grips(w_current, object);
+	  o_line_erase(w_current, object);
+	}
 
-        o_line_rotate_world(w_current, centerx, centery,
+        o_line_rotate_world(w_current, centerx, centery, 
                       90, object);
 
-        if (!w_current->DONT_REDRAW) {
-          o_line_draw(w_current, object);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_line_draw(w_current, object);
+	}
         break;
 
       case(OBJ_BOX):
-        /* erase the current selection */
-        if (!w_current->DONT_REDRAW) {
-          o_box_erase_grips(w_current, object);
-          o_box_erase(w_current, object);
-        }
+	/* erase the current selection */
+	if (!w_current->DONT_REDRAW) {
+	  o_box_erase_grips(w_current, object);
+	  o_box_erase(w_current, object);
+	}
 
-        o_box_rotate_world(w_current, centerx, centery,
+        o_box_rotate_world(w_current, centerx, centery, 
                      90, object);
 
-        if (!w_current->DONT_REDRAW) {
-          o_box_draw(w_current, object);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_box_draw(w_current, object);
+	}
         break;
 
       case(OBJ_PICTURE):
-        /* erase the current selection */
-
-        if (!w_current->DONT_REDRAW) {
-          o_picture_erase_grips(w_current, object);
-          o_picture_erase(w_current, object);
-        }
-
-        o_picture_rotate_world(w_current, centerx, centery,
+				/* erase the current selection */
+	
+	if (!w_current->DONT_REDRAW) {
+	  o_picture_erase_grips(w_current, object);
+	  o_picture_erase(w_current, object);
+	}
+	
+        o_picture_rotate_world(w_current, centerx, centery, 
                      90, object);
 
-        if (!w_current->DONT_REDRAW) {
-          o_picture_draw(w_current, object);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_picture_draw(w_current, object);
+	}
         break;
 
       case(OBJ_CIRCLE):
-        if (!w_current->DONT_REDRAW) {
-          o_circle_erase_grips(w_current, object);
-          o_circle_erase(w_current, object);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_circle_erase_grips(w_current, object);
+	  o_circle_erase(w_current, object);
+	}
 
-        o_circle_rotate_world(w_current, centerx, centery,
+        o_circle_rotate_world(w_current, centerx, centery, 
                         90, object);
 
-        if (!w_current->DONT_REDRAW) {
-          o_circle_draw(w_current, object);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_circle_draw(w_current, object);
+	}
         break;
 
       case(OBJ_ARC):
-        if (!w_current->DONT_REDRAW) {
-          o_arc_erase(w_current, object);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_arc_erase(w_current, object);
+	}
 
         o_arc_rotate_world(w_current, centerx, centery, 90, object);
-        if (!w_current->DONT_REDRAW) {
-          o_arc_draw(w_current, object);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_arc_draw(w_current, object);
+	}
         break;
 
       case(OBJ_TEXT):
-        /* erase the current selection */
-        if (!w_current->DONT_REDRAW) {
-          o_text_erase(w_current, object);
-        }
+	/* erase the current selection */
+	if (!w_current->DONT_REDRAW) {
+	  o_text_erase(w_current, object);
+	}
 
         new_angle = (object->text->angle + 90) % 360;
         o_text_rotate_world(w_current, centerx, centery,
                       new_angle, 90, object);
 
-        if (!w_current->DONT_REDRAW) {
-          o_text_draw(w_current, object);
-        }
+	if (!w_current->DONT_REDRAW) {
+	  o_text_draw(w_current, object);
+	}
         break;
     }
     s_current = s_current->next;
@@ -474,26 +475,26 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
 
     switch(object->type) {
       case(OBJ_PIN):
-        /* Run the rotate pin hook */
-        if (scm_hook_empty_p(rotate_pin_hook) == SCM_BOOL_F &&
-            object != NULL) {
-          scm_run_hook(rotate_pin_hook,
-                 scm_cons(g_make_object_smob(w_current, object),
-              SCM_EOL));
-        }
-        break;
+	/* Run the rotate pin hook */
+	if (scm_hook_empty_p(rotate_pin_hook) == SCM_BOOL_F &&
+	    object != NULL) {
+	  scm_run_hook(rotate_pin_hook,
+		       scm_cons(g_make_object_smob(w_current, object),
+				SCM_EOL));
+	}
+	break;
 
       case (OBJ_COMPLEX):
-        /* Run the rotate hook */
-        if (scm_hook_empty_p(rotate_component_object_hook) == SCM_BOOL_F &&
-            object != NULL) {
-          scm_run_hook(rotate_component_object_hook,
-                 scm_cons(g_make_object_smob(w_current, object),
-              SCM_EOL));
-        }
-        break;
+	/* Run the rotate hook */
+	if (scm_hook_empty_p(rotate_component_object_hook) == SCM_BOOL_F &&
+	    object != NULL) {
+	  scm_run_hook(rotate_component_object_hook,
+		       scm_cons(g_make_object_smob(w_current, object),
+				SCM_EOL));
+	}
+	break;
     default:
-        break;
+	break;
     }
 
     s_current = s_current->next;
@@ -511,7 +512,7 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
+ * 
  */
 void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
 {
@@ -537,7 +538,7 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
       fprintf(stderr, _("ERROR: NULL object in o_mirror!\n"));
       return;
     }
-
+    
     g_list_free(other_objects);
     other_objects = NULL;
     g_list_free(connected_objects);
@@ -550,14 +551,14 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
         o_cue_undraw(w_current, object);
         o_net_erase(w_current, object);
         o_line_erase_grips(w_current, object);
-
+        
         other_objects = s_conn_return_others(other_objects, object);
         s_conn_remove(w_current, object);
 
         o_net_mirror_world(w_current, centerx, centery, object);
         s_conn_update_object(w_current, object);
         o_net_draw(w_current, object);
-
+        
         /* draw the other objects */
         o_cue_undraw_list(w_current, other_objects);
         o_cue_draw_list(w_current, other_objects);
@@ -568,14 +569,14 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
         o_cue_draw_list(w_current, connected_objects);
 
         /* finally redraw the cues on the current object */
-        o_cue_draw_single(w_current, object);
+        o_cue_draw_single(w_current, object); 
         break;
 
       case(OBJ_PIN):
         o_cue_undraw(w_current, object);
         o_pin_erase(w_current, object);
         o_line_erase_grips(w_current, object);
-
+        
         other_objects = s_conn_return_others(other_objects, object);
         s_conn_remove(w_current, object);
 
@@ -593,7 +594,7 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
         o_cue_draw_list(w_current, connected_objects);
 
         /* finally redraw the cues on the current object */
-        o_cue_draw_single(w_current, object);
+        o_cue_draw_single(w_current, object); 
         break;
 
       case(OBJ_BUS):
@@ -602,11 +603,11 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
 
         other_objects = s_conn_return_others(other_objects, object);
         s_conn_remove(w_current, object);
-
+        
         o_bus_mirror_world(w_current, centerx, centery, object);
         s_conn_update_object(w_current, object);
         o_bus_draw(w_current, object);
-
+        
         /* draw the other objects */
         o_cue_undraw_list(w_current, other_objects);
         o_cue_draw_list(w_current, other_objects);
@@ -617,23 +618,23 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
         o_cue_draw_list(w_current, connected_objects);
 
         /* finally redraw the cues on the current object */
-        o_cue_draw_single(w_current, object);
+        o_cue_draw_single(w_current, object); 
         break;
-
+        
       case(OBJ_COMPLEX):
         o_cue_undraw_objects(w_current, object->complex->prim_objs);
         /* erase the current selection */
         o_complex_erase(w_current, object);
 
         other_objects = s_conn_return_complex_others(other_objects, object);
-
+        
         /* remove all conn references */
         o_current = object->complex->prim_objs;
         while(o_current != NULL) {
           s_conn_remove(w_current, o_current);
           o_current = o_current->next;
         }
-
+      
         o_complex_mirror_world(w_current, centerx, centery, object);
         s_conn_update_complex(w_current, object->complex->prim_objs);
         o_complex_draw(w_current, object);
@@ -651,28 +652,32 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
       case(OBJ_LINE):
         o_line_erase_grips(w_current, object);
         o_line_erase(w_current, object);
-        o_line_mirror_world(w_current, centerx, centery, object);
+        o_line_mirror_world(w_current,
+                      centerx, centery, object);
         o_line_draw(w_current, object);
         break;
 
       case(OBJ_BOX):
         o_box_erase_grips(w_current, object);
         o_box_erase(w_current, object);
-        o_box_mirror_world(w_current, centerx, centery, object);
+        o_box_mirror_world(w_current,
+                     centerx, centery, object);
         o_box_draw(w_current, object);
         break;
 
       case(OBJ_PICTURE):
         o_picture_erase_grips(w_current, object);
         o_picture_erase(w_current, object);
-        o_picture_mirror_world(w_current, centerx, centery, object);
+        o_picture_mirror_world(w_current,
+			 centerx, centery, object);
         o_picture_draw(w_current, object);
         break;
 
       case(OBJ_CIRCLE):
         o_circle_erase_grips(w_current, object);
         o_circle_erase(w_current, object);
-        o_circle_mirror_world(w_current, centerx, centery, object);
+        o_circle_mirror_world(w_current,
+                        centerx, centery, object);
         o_circle_draw(w_current, object);
         break;
 
@@ -710,26 +715,26 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
 
     switch(object->type) {
       case(OBJ_PIN):
-        /* Run the rotate pin hook */
-        if (scm_hook_empty_p(mirror_pin_hook) == SCM_BOOL_F &&
-            object != NULL) {
-          scm_run_hook(rotate_pin_hook,
-                       scm_cons(g_make_object_smob(w_current, object),
-                                SCM_EOL));
-        }
-        break;
+	/* Run the rotate pin hook */
+	if (scm_hook_empty_p(mirror_pin_hook) == SCM_BOOL_F &&
+	    object != NULL) {
+	  scm_run_hook(rotate_pin_hook,
+		       scm_cons(g_make_object_smob(w_current, object),
+				SCM_EOL));
+	}
+	break;
 
       case (OBJ_COMPLEX):
-        /* Run the rotate pin hook */
-        if (scm_hook_empty_p(rotate_component_object_hook) == SCM_BOOL_F &&
-            object != NULL) {
-          scm_run_hook(mirror_component_object_hook,
-                       scm_cons(g_make_object_smob(w_current, object),
-                                SCM_EOL));
-        }
-        break;
+	/* Run the rotate pin hook */
+	if (scm_hook_empty_p(rotate_component_object_hook) == SCM_BOOL_F &&
+	    object != NULL) {
+	  scm_run_hook(mirror_component_object_hook,
+		       scm_cons(g_make_object_smob(w_current, object),
+				SCM_EOL));
+	}
+	break;
     default:
-        break;
+	break;
     }
 
     s_current = s_current->next;
@@ -743,7 +748,7 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
+ * 
  */
 void o_edit_show_hidden_lowlevel(TOPLEVEL *w_current, OBJECT *o_list)
 {
@@ -772,14 +777,14 @@ void o_edit_show_hidden_lowlevel(TOPLEVEL *w_current, OBJECT *o_list)
         o_text_recalc(w_current, o_current);
         /* unfortunately, you cannot erase the old visible text here */
         /* because o_text_draw will just return */
-      }
+      }    
     }
 
     if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
       o_edit_show_hidden_lowlevel(w_current, o_current->complex->prim_objs);
       o_complex_recalc(w_current, o_current);
     }
-
+   
     o_current = o_current->next;
   }
 }
@@ -787,14 +792,14 @@ void o_edit_show_hidden_lowlevel(TOPLEVEL *w_current, OBJECT *o_list)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
+ * 
  */
 void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list)
 {
   /* this function just shows the hidden text, but doesn't toggle it */
   /* this function does not change the CHANGED bit, no real changes are */
   /* made to the schematic */
-
+  
   /* toggle show_hidden_text variable, which when it is true */
   /* means that hidden text IS drawn */
   w_current->show_hidden_text = !w_current->show_hidden_text;
@@ -813,7 +818,7 @@ void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
+ * 
  */
 void o_edit_make_visible(TOPLEVEL *w_current, OBJECT *o_list)
 {
@@ -836,7 +841,7 @@ void o_edit_make_visible(TOPLEVEL *w_current, OBJECT *o_list)
 
         o_text_draw(w_current, o_current);
 
-        w_current->page_current->CHANGED = 1;
+        w_current->page_current->CHANGED = 1; 
       }
     }
     o_current = o_current->next;
@@ -853,10 +858,10 @@ int skiplast;
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
+ * 
  */
 int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
-                     int descend, int skip)
+		     int descend, int skip)
 {
 
   char *attrib = NULL;
@@ -881,70 +886,75 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
 
     if (descend) {
       if (o_current->type == OBJ_COMPLEX) {
-        parent = w_current->page_current;
-        attrib = o_attrib_search_name_single_count(o_current, "source", count);
+	parent = w_current->page_current;
+	attrib = o_attrib_search_name_single_count(o_current,
+						   "source", count);
 
-        /* if above is null, then look inside symbol */
-        if (attrib == NULL) {
-          attrib = o_attrib_search_name(o_current->complex->prim_objs,
-                                        "source", count);
-          /*          looking_inside = TRUE; */
-        }
+	/* if above is null, then look inside symbol */
+	if (attrib == NULL) {
+	  attrib = o_attrib_search_name(o_current->
+					complex->
+					prim_objs, "source", count);
+	  /*          looking_inside = TRUE; */
+	}
 
-        if (attrib) {
-          pcount = 0;
-          current_filename = u_basic_breakup_string(attrib, ',', pcount);
-          if (current_filename != NULL) {
-            page_control =
-              s_hierarchy_down_schematic_single(w_current,
-                                                current_filename,
-                                                parent,
-                                                page_control,
-                                                HIERARCHY_NORMAL_LOAD);
-            /* o_redraw_all(w_current); */
+	if (attrib) {
+	  pcount = 0;
+	  current_filename = u_basic_breakup_string(attrib, ',', pcount);
+	  if (current_filename != NULL) {
+	    page_control =
+		s_hierarchy_down_schematic_single(w_current,
+						  current_filename,
+						  parent,
+						  page_control,
+						  HIERARCHY_NORMAL_LOAD);
+	    /* o_redraw_all(w_current); */
 
-            rv = o_edit_find_text(w_current,
-                                  w_current->page_current->object_head,
-                                  stext, descend, skiplast);
-            if (!rv) {
-              return 0;
-            }
-            s_page_goto( w_current, parent );
-          }
-        }
+	    rv = o_edit_find_text(w_current,
+				  w_current->page_current->object_head,
+				  stext, descend, skiplast);
+	    if (!rv) {
+	      return 0;
+	    }
+	    s_hierarchy_up(w_current, w_current->page_current->up);
+	  }
+	}
       }
     }
 
     if (o_current->type == OBJ_TEXT) {
      /* replaced strcmp with strstr to simplify the search */
       if (strstr(o_current->text->string,stext)) {
-        if (!skiplast) {
+	if (!skiplast) {
           a_zoom(w_current, ZOOM_FULL, DONTCARE, A_PAN_DONT_REDRAW);
-          text_screen_height =
-            SCREENabs(w_current, o_text_height(o_current->text->string,
-                                               o_current->text->size));
+          text_screen_height =  SCREENabs(w_current,
+                                          o_text_height(o_current->
+							text->string,
+                                                        o_current->
+                                                        text->size));
           /* this code will zoom/pan till the text screen height is about */
           /* 50 pixels high, perhaps a future enhancement will be to make */
           /* this number configurable */
           while (text_screen_height < 50) {
             a_zoom(w_current, ZOOM_IN, DONTCARE, A_PAN_DONT_REDRAW);
-            text_screen_height =
-              SCREENabs(w_current, o_text_height(o_current->text->string,
-                                                 o_current->text->size));
+            text_screen_height =  SCREENabs(w_current,
+                                            o_text_height(o_current->
+							  text->string,
+                                                          o_current->
+                                                          text->size));
           }
-          a_pan_general(w_current,
-                        o_current->text->x, o_current->text->y,
-                        1, 0);
+	  a_pan_general(w_current, o_current->text->x, o_current->text->y, 
+			1, 0);
 
-          last_o = o_current;
-          break;
-        }
-        if (last_o == o_current) {
-          skiplast = 0;
-        }
+	  last_o = o_current;
+	  break;
+	}
+	if (last_o == o_current) {
+	  skiplast = 0;
+	}
 
-      } /* if (strstr(o_current->text->string,stext)) */
-    } /* if (o_current->type == OBJ_TEXT) */
+      }
+    }
     o_current = o_current->next;
 
     if (o_current == NULL) {
@@ -958,10 +968,10 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
+ * 
  */
 void o_edit_hide_specific_text(TOPLEVEL * w_current, OBJECT * o_list,
-                               char *stext)
+			       char *stext)
 {
   OBJECT *o_current = NULL;
 
@@ -974,14 +984,14 @@ void o_edit_hide_specific_text(TOPLEVEL * w_current, OBJECT * o_list,
 
     if (o_current->type == OBJ_TEXT) {
       if (!strncmp(stext, o_current->text->string, strlen(stext))) {
-        if (o_current->visibility == VISIBLE) {
-          o_current->visibility = INVISIBLE;
+	if (o_current->visibility == VISIBLE) {
+	  o_current->visibility = INVISIBLE;
 
-          if (o_current->text->prim_objs == NULL) {
-            o_text_recreate(w_current, o_current);
-          }
-          w_current->page_current->CHANGED = 1;
-        }
+	  if (o_current->text->prim_objs == NULL) {
+	    o_text_recreate(w_current, o_current);
+	  }
+	  w_current->page_current->CHANGED = 1;
+	}
       }
     }
     o_current = o_current->next;
@@ -993,10 +1003,10 @@ void o_edit_hide_specific_text(TOPLEVEL * w_current, OBJECT * o_list,
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
+ * 
  */
 void o_edit_show_specific_text(TOPLEVEL * w_current, OBJECT * o_list,
-                               char *stext)
+			       char *stext)
 {
   OBJECT *o_current = NULL;
 
@@ -1009,15 +1019,15 @@ void o_edit_show_specific_text(TOPLEVEL * w_current, OBJECT * o_list,
 
     if (o_current->type == OBJ_TEXT) {
       if (!strncmp(stext, o_current->text->string, strlen(stext))) {
-        if (o_current->visibility == INVISIBLE) {
-          o_current->visibility = VISIBLE;
+	if (o_current->visibility == INVISIBLE) {
+	  o_current->visibility = VISIBLE;
 
-          if (o_current->text->prim_objs == NULL) {
-            o_text_recreate(w_current, o_current);
-          }
-          o_text_draw(w_current, o_current);
-          w_current->page_current->CHANGED = 1;
-        }
+	  if (o_current->text->prim_objs == NULL) {
+	    o_text_recreate(w_current, o_current);
+	  }
+	  o_text_draw(w_current, o_current);
+	  w_current->page_current->CHANGED = 1;
+	}
       }
     }
     o_current = o_current->next;
@@ -1028,7 +1038,7 @@ void o_edit_show_specific_text(TOPLEVEL * w_current, OBJECT * o_list,
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
+ * 
  */
 void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
 {
@@ -1045,7 +1055,7 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
   clib = s_clib_get_symbol_by_name (o_current->complex_basename);
 
   if (clib == NULL) {
-    s_log_message (_("Could not find symbol [%s] in library. Update failed.\n"),
+    s_log_message (_("Could not find symbol [%s] in library. Update failed.\n"), 
                    o_current->complex_basename);
     return;
   }
@@ -1067,13 +1077,13 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
                                o_current->complex->y,
                                o_current->complex->angle,
                                o_current->complex->mirror,
-                               clib, o_current->complex_basename,
-                               1, TRUE);
+                               clib, o_current->complex_basename, 
+			       1, TRUE);
 
   /* updating the old complex with data from the new one */
   /* first process the prim_objs: */
   /*   - delete the prim_objs of the old component */
-  s_delete_list_fromstart (w_current,
+  s_delete_list_fromstart (w_current, 
                            o_current->complex->prim_objs);
   /*   - put the prim_objs of the new component in the old one */
   o_current->complex->prim_objs = new_complex->complex->prim_objs;
@@ -1092,7 +1102,7 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
     o_attrib_get_name_value (a_current->object->text->string,
                              &name, &value);
 
-    attrfound = o_attrib_search_name_single(o_current, name, NULL);
+    attrfound = o_attrib_search_name_single(o_current, name, NULL); 
 
     /* free these now since they are no longer being used */
     if (name) { g_free(name); }
@@ -1123,7 +1133,7 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
 
     a_current = a_current->next;
   }
-
+    
   /* finally delete the temp list with the updated complex */
   s_delete_list_fromstart (w_current, tmp_list);
 
@@ -1137,11 +1147,11 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
 
   /* Re-flag as embedded if necessary */
   o_current->complex_embedded = is_embedded;
-
+    
   /* mark the page as modified */
   w_current->page_current->CHANGED = 1;
   o_undo_savestate (w_current, UNDO_ALL);
-
+    
 }
 
 /*! \brief Do autosave on all pages that are marked.
@@ -1153,7 +1163,6 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
  */
 void o_autosave_backups(TOPLEVEL *toplevel)
 {
-  GList *iter;
   PAGE *p_save, *p_current;
   gchar *backup_filename;
   gchar *real_filename;
@@ -1163,14 +1172,15 @@ void o_autosave_backups(TOPLEVEL *toplevel)
   mode_t mask;
   struct stat st;
 
+  g_assert (toplevel->page_head != NULL &&
+            toplevel->page_head->pid == -1);
+
   /* save current page */
   p_save = toplevel->page_current;
-
-  for ( iter = geda_list_get_glist( toplevel->pages );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (PAGE *)iter->data;
+  
+  for (p_current = toplevel->page_head->next;
+       p_current != NULL;
+       p_current = p_current->next) {
 
     if (p_current->do_autosave_backup == 0) {
       continue;
@@ -1178,79 +1188,82 @@ void o_autosave_backups(TOPLEVEL *toplevel)
     if (p_current->ops_since_last_backup != 0) {
       /* make p_current the current page of toplevel */
       s_page_goto (toplevel, p_current);
-
+      
       /* Get the real filename and file permissions */
       real_filename = follow_symlinks (p_current->page_filename, NULL);
-
+      
       if (real_filename == NULL) {
-        s_log_message (_("o_autosave_backups: Can't get the real filename of %s."), p_current->page_filename);
-        fprintf (stderr, "o_autosave_backups: Can't get the real filename of %s.\n", p_current->page_filename);
-      } else {
-        /* Get the directory in which the real filename lives */
-        dirname = g_path_get_dirname (real_filename);
-        only_filename = g_path_get_basename(real_filename);
+	s_log_message (_("o_autosave_backups: Can't get the real filename of %s."), p_current->page_filename);
+	fprintf (stderr, "o_autosave_backups: Can't get the real filename of %s.\n", p_current->page_filename);
+      }
+      else {
+	/* Get the directory in which the real filename lives */
+	dirname = g_path_get_dirname (real_filename);
+	only_filename = g_path_get_basename(real_filename);  
+      
 
-        backup_filename = g_strdup_printf("%s%c"AUTOSAVE_BACKUP_FILENAME_STRING,
-                                          dirname, G_DIR_SEPARATOR, only_filename);
+	backup_filename = g_strdup_printf("%s%c"AUTOSAVE_BACKUP_FILENAME_STRING,
+					  dirname, G_DIR_SEPARATOR, only_filename);
+	
+	/* If there is not an existing file with that name, compute the
+	 * permissions and uid/gid that we will use for the newly-created file.
+	 */
+	
+	if (stat (real_filename, &st) != 0)
+	  {
+	    struct stat dir_st;
+	    int result;
+	    
+	    /* Use default permissions */
+	    saved_umask = umask(0);
+	    st.st_mode = 0666 & ~saved_umask;
+	    umask(saved_umask);
+	    st.st_uid = getuid ();
+	    
+	    result = stat (dirname, &dir_st);
+	    
+	    if (result == 0 && (dir_st.st_mode & S_ISGID))
+	      st.st_gid = dir_st.st_gid;
+	    else
+	      st.st_gid = getgid ();
+	  }
+	g_free (dirname);
+	g_free (only_filename);
+	g_free (real_filename);
 
-        /* If there is not an existing file with that name, compute the
-         * permissions and uid/gid that we will use for the newly-created file.
-         */
+	/* Make the backup file writable before saving a new one */
+	if ( g_file_test (backup_filename, G_FILE_TEST_EXISTS) && 
+	     (! g_file_test (backup_filename, G_FILE_TEST_IS_DIR))) {
+	  saved_umask = umask(0);
+	  if (chmod(backup_filename, (S_IWRITE|S_IWGRP|S_IWOTH) & 
+		    ((~saved_umask) & 0777)) != 0) {
+	    s_log_message (_("Could NOT set previous backup file [%s] read-write\n"), 
+			   backup_filename);	    
+	  }
+	  umask(saved_umask);
+	}
+	
+	if (o_save (toplevel, backup_filename)) {
 
-        if (stat (real_filename, &st) != 0) {
-            struct stat dir_st;
-            int result;
+	  p_current->ops_since_last_backup = 0;
+          p_current->do_autosave_backup = 0;
 
-            /* Use default permissions */
-            saved_umask = umask(0);
-            st.st_mode = 0666 & ~saved_umask;
-            umask(saved_umask);
-            st.st_uid = getuid ();
-
-            result = stat (dirname, &dir_st);
-
-            if (result == 0 && (dir_st.st_mode & S_ISGID))
-              st.st_gid = dir_st.st_gid;
-            else
-              st.st_gid = getgid ();
-          }
-        g_free (dirname);
-        g_free (only_filename);
-        g_free (real_filename);
-
-        /* Make the backup file writable before saving a new one */
-        if ( g_file_test (backup_filename, G_FILE_TEST_EXISTS) &&
-             (! g_file_test (backup_filename, G_FILE_TEST_IS_DIR))) {
-          saved_umask = umask(0);
-          if (chmod(backup_filename, (S_IWRITE|S_IWGRP|S_IWOTH) &
-                    ((~saved_umask) & 0777)) != 0) {
-            s_log_message (_("Could NOT set previous backup file [%s] read-write\n"),
-                           backup_filename);
-          }
-          umask(saved_umask);
-        }
-
-        if (o_save (toplevel, backup_filename)) {
-
-          p_current->ops_since_last_backup = 0;
-                p_current->do_autosave_backup = 0;
-
-          /* Make the backup file readonly so a 'rm *' command will ask
-             the user before deleting it */
-          saved_umask = umask(0);
-          mask = (S_IWRITE|S_IWGRP|S_IEXEC|S_IXGRP|S_IXOTH);
-          mask = (~mask)&0777;
-          mask &= ((~saved_umask) & 0777);
-          if (chmod(backup_filename,mask) != 0) {
-            s_log_message (_("Could NOT set backup file [%s] readonly\n"),
-                           backup_filename);
-          }
-          umask(saved_umask);
-        } else {
-          s_log_message (_("Could NOT save backup file [%s]\n"),
-                         backup_filename);
-        }
-        g_free (backup_filename);
+	  /* Make the backup file readonly so a 'rm *' command will ask 
+	     the user before deleting it */
+	  saved_umask = umask(0);
+	  mask = (S_IWRITE|S_IWGRP|S_IEXEC|S_IXGRP|S_IXOTH);
+	  mask = (~mask)&0777;
+	  mask &= ((~saved_umask) & 0777);
+	  if (chmod(backup_filename,mask) != 0) {
+	    s_log_message (_("Could NOT set backup file [%s] readonly\n"), 
+			   backup_filename);	    
+	  }
+	  umask(saved_umask);
+	} else {
+	  s_log_message (_("Could NOT save backup file [%s]\n"), 
+			 backup_filename);
+	}
+	g_free (backup_filename);
       }
     }
   }
