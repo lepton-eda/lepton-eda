@@ -173,6 +173,7 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
 gboolean
 x_fileselect_load_files (GSList *filenames)
 {
+  GList *iter;
   PAGE *p_local;
   GSList *filename;
 
@@ -229,27 +230,29 @@ x_fileselect_load_files (GSList *filenames)
   sheet_head->net_table = s_table_new(sheet_head->net_count, sheet_head->net_attrib_count);
   sheet_head->pin_table = s_table_new(sheet_head->pin_count, sheet_head->pin_attrib_count);
 
-  p_local = pr_current->page_head; /* must iterate over all pages in design */
-  while (p_local != NULL) {
-     if (p_local->pid != -1) {   /* only traverse pages which are toplevel */
-        if (p_local->object_head && p_local->page_control == 0) {
-           /* adds all components from page to comp_table */
-           s_table_add_toplevel_comp_items_to_comp_table(p_local->object_head);    
-#if 0
-           /* Note that this must be changed.  We need to input the entire project
-            * before doing anything with the nets because we need to first
-            * determine where they are all connected!   */
+  /* must iterate over all pages in design */
+  for ( iter = geda_list_get_glist( pr_current->pages );
+        iter != NULL;
+        iter = g_list_next( iter ) ) {
+    p_local = (PAGE *)iter->data;
 
-           /* adds all nets from page to net_table */
-           s_table_add_toplevel_net_items_to_net_table(p_local->object_head);
+    /* only traverse pages which are toplevel */
+    if (p_local->object_head && p_local->page_control == 0) {
+      /* adds all components from page to comp_table */
+      s_table_add_toplevel_comp_items_to_comp_table(p_local->object_head);
+#if 0
+      /* Note that this must be changed.  We need to input the entire project
+       * before doing anything with the nets because we need to first
+       * determine where they are all connected!   */
+
+      /* adds all nets from page to net_table */
+      s_table_add_toplevel_net_items_to_net_table(p_local->object_head);
 #endif
 
-           /* adds all pins from page to pin_table */
-           s_table_add_toplevel_pin_items_to_pin_table(p_local->object_head);
-        }
-     }
-     p_local = p_local->next;  /* iterate to next schematic page */
-  }
+      /* adds all pins from page to pin_table */
+      s_table_add_toplevel_pin_items_to_pin_table(p_local->object_head);
+    }
+  } /* for loop over pages */
 
   /* -------------- update windows --------------- */
   x_window_add_items();    /* This updates the top level stuff,

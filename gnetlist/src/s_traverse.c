@@ -66,36 +66,34 @@ void s_traverse_init(void)
 
 void s_traverse_start(TOPLEVEL * pr_current)
 {
-    PAGE *p_current;
+  GList *iter;
+  PAGE *p_current;
 
-    p_current = pr_current->page_head;
+  for ( iter = geda_list_get_glist( pr_current->pages );
+        iter != NULL;
+        iter = g_list_next( iter ) ) {
 
-    while (p_current != NULL) {
-	if (p_current->pid != -1) {
+    p_current = (PAGE *)iter->data;
 
-	    /* only traverse pages which are toplevel, ie not underneath */
-	    if (p_current->object_head && p_current->page_control == 0) {
-		pr_current->page_current = p_current;
-		s_traverse_sheet(pr_current, p_current->object_head, NULL);
-	    }
-
-	}
-
-	p_current = p_current->next;
+    /* only traverse pages which are toplevel, ie not underneath */
+    if (p_current->object_head && p_current->page_control == 0) {
+      pr_current->page_current = p_current;
+      s_traverse_sheet(pr_current, p_current->object_head, NULL);
     }
+  }
 
-    /* now that all the sheets have been read, go through and do the */
-    /* post processing work */
-    s_netlist_post_process(pr_current, netlist_head);
+  /* now that all the sheets have been read, go through and do the */
+  /* post processing work */
+  s_netlist_post_process(pr_current, netlist_head);
 
-    /* Now match the graphical netlist with the net names already assigned */
-    s_netlist_name_named_nets(pr_current, netlist_head, 
-			      graphical_netlist_head);
-			      
-    if (verbose_mode) {
-	printf("\nInternal netlist representation:\n\n");
-	s_netlist_print(netlist_head);
-    }
+  /* Now match the graphical netlist with the net names already assigned */
+  s_netlist_name_named_nets(pr_current, netlist_head,
+                            graphical_netlist_head);
+
+  if (verbose_mode) {
+    printf("\nInternal netlist representation:\n\n");
+    s_netlist_print(netlist_head);
+  }
 }
 
 

@@ -1264,6 +1264,7 @@ x_event_configure (GtkWidget         *widget,
                    GdkEventConfigure *event,
                    gpointer           user_data)
 {
+  GList *iter;
   TOPLEVEL *toplevel = (TOPLEVEL*)user_data;
   PAGE *old_page_current, *p_current;
   gint old_win_width, old_win_height, new_win_width, new_win_height;
@@ -1320,18 +1321,21 @@ x_event_configure (GtkWidget         *widget,
 
   /* save current page */
   old_page_current = toplevel->page_current;
+
   /* re-pan each page of the toplevel */
-  for (p_current = toplevel->page_head->next;
-       p_current != NULL;
-       p_current = p_current->next) {
+  for ( iter = geda_list_get_glist( toplevel->pages );
+        iter != NULL;
+        iter = g_list_next( iter ) ) {
+
     gdouble cx, cy;
-    
+    p_current = (PAGE *)iter->data;
+
     /* doing this the aspectratio is kept when changing (hw)*/
     cx = ((gdouble)(p_current->left + p_current->right))  / 2;
     cy = ((gdouble)(p_current->top  + p_current->bottom)) / 2;
     s_page_goto (toplevel, p_current);
     a_pan_general (toplevel, cx, cy, relativ_zoom_factor, A_PAN_DONT_REDRAW);	
-    
+
   }
   /* restore current page to saved value */
   s_page_goto (toplevel, old_page_current);
