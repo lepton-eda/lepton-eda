@@ -909,7 +909,7 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
             if (!rv) {
               return 0;
             }
-            s_hierarchy_up(w_current, w_current->page_current->up);
+            s_page_goto( w_current, parent );
           }
         }
       }
