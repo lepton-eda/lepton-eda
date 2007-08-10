@@ -36,6 +36,8 @@
 #include <dmalloc.h>
 #endif
 
+#include <glib-object.h>
+
 #include "../include/gschem_dialog.h"
 #include "../include/x_pagesel.h"
 
@@ -90,6 +92,19 @@ void x_pagesel_close (TOPLEVEL *toplevel)
   
 }
 
+/*! \brief Callback activated when the <B>toplevel</B>'s page list changes.
+ *  \par Function Description
+ *  Calls x_pagesel_update(...) when the <B>toplevel</B>'s page list changes.
+ *
+ *  \param [in] pages     the page list which changed.
+ *  \param [in] user_data a pointer to the pagesel which registered this callback.
+ */
+static void pagelist_changed_cb( GedaList *page_list, gpointer user_data )
+{
+  Pagesel *pagesel = (Pagesel *)user_data;
+  pagesel_update( pagesel );
+}
+
 /*! \brief Update the list and status of <B>toplevel</B>'s pages.
  *  \par Function Description
  *  Updates the list and status of <B>toplevel</B>\'s pages if the page
@@ -142,6 +157,7 @@ enum {
   NUM_COLUMNS
 };
 
+static GObjectClass *pagesel_parent_class = NULL;
 
 static void pagesel_class_init (PageselClass *class);
 static void pagesel_init       (Pagesel *pagesel);
@@ -304,8 +320,9 @@ static void pagesel_popup_menu (Pagesel *pagesel,
  *
  *  \par Function Description
  *
- *  When the toplevel property is set on the parent GschemDialog,
- *  we should update the pagesel dialog.
+ *  When the toplevel property is set on the parent GschemDialog:
+ *    Connect to its page list's "changed" signal.
+ *    Update the pagesel dialog.
  *
  *  \param [in] pspec      the GParamSpec of the property which changed
  *  \param [in] gobject    the object which received the signal.
@@ -316,6 +333,11 @@ static void notify_toplevel_cb (GObject    *gobject,
                                 gpointer    user_data)
 {
   Pagesel *pagesel = PAGESEL( gobject );
+  GschemDialog *dialog = GSCHEM_DIALOG( pagesel );
+
+  pagesel->pagelist_changed_id =
+    g_signal_connect( dialog->toplevel->pages, "changed",
+                      G_CALLBACK( pagelist_changed_cb ), pagesel );
 
   pagesel_update( pagesel );
 }
@@ -356,8 +378,30 @@ GType pagesel_get_type()
  *  \par Function Description
  *
  */
+static void pagesel_finalize (GObject *object)
+{
+  Pagesel *pagesel = PAGESEL (object);
+  GschemDialog *dialog = GSCHEM_DIALOG (pagesel);
+
+  if (dialog->toplevel)
+    g_signal_handler_disconnect (dialog->toplevel->pages,
+                                 pagesel->pagelist_changed_id);
+
+  G_OBJECT_CLASS (pagesel_parent_class)->finalize (object);
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
 static void pagesel_class_init (PageselClass *klass)
 {
+  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+
+  pagesel_parent_class = g_type_class_peek_parent (klass);
+
+  gobject_class->finalize = pagesel_finalize;
 }
 
 /*! \todo Finish function documentation!!!

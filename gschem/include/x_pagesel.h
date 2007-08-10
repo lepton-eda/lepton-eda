@@ -43,6 +43,7 @@ struct _Pagesel {
   GschemDialog parent_instance;
 
   GtkTreeView *treeview;
+  gulong pagelist_changed_id;
 };
 
 
