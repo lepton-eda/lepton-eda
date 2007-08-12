@@ -509,13 +509,15 @@ compselect_callback_filter_entry_changed (GtkEditable *editable,
     gtk_widget_set_sensitive (button, sensitive);
   }
 
-  /* ask for an update of the component list */
-  /* re-evaluation of filter will occur in _INTERVAL ms unless entry */
-  /* has been modified again */
-  compselect->filter_timeout =
-    g_timeout_add (COMPSELECT_FILTER_INTERVAL,
-                   compselect_filter_timeout,
-                   compselect);
+  /* Cancel any pending update of the component list filter */
+  if (compselect->filter_timeout != 0)
+    g_source_remove (compselect->filter_timeout);
+
+  /* Schedule an update of the component list filter in
+   * COMPSELECT_FILTER_INTERVAL milliseconds */
+  compselect->filter_timeout = g_timeout_add (COMPSELECT_FILTER_INTERVAL,
+                                              compselect_filter_timeout,
+                                              compselect);
  
 }
 
