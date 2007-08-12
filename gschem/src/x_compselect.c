@@ -670,6 +670,11 @@ compselect_callback_refresh_library (Compselect *compselect,
                   "virtual-root", NULL,
                   NULL);
 
+  gtk_tree_model_filter_set_visible_func ((GtkTreeModelFilter*)model,
+                                          lib_model_filter_visible_func,
+                                          compselect,
+                                          NULL);
+
   gtk_tree_view_set_model (compselect->libtreeview, model);
 
   /* Refresh the "In Use" view */
