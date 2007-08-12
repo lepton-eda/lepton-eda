@@ -61,7 +61,7 @@
  *
  *  Unit is milliseconds.
  */
-#define COMPSELECT_FILTER_INTERVAL 300
+#define COMPSELECT_FILTER_INTERVAL 200
 
 
 /*! \brief Process the response returned by the component selection dialog.
