@@ -46,68 +46,6 @@
 #include <dmalloc.h>
 #endif
 
-typedef struct {
-    int m_val;
-    char *m_str;
-} vstbl_entry;
-
-static int
-vstbl_lookup_str(const vstbl_entry * table, int size, const char *str)
-{
-    int i;
-
-    for (i = 0; i < size; i++) {
-	if (strcmp(table[i].m_str, str) == 0) {
-	    break;
-	}
-    }
-    return i;
-}
-
-static int vstbl_get_val(const vstbl_entry * table, int index)
-{
-    return table[index].m_val;
-}
-
-
-static SCM
-g_rc_mode_general(SCM scmmode,
-		  const char *rc_name,
-		  int *mode_var,
-		  const vstbl_entry *table,
-		  int table_size)
-{
-  int index;
-  char *mode;
- 
-  SCM_ASSERT (scm_is_string (scmmode), scmmode,
-	      SCM_ARG1, rc_name);
-
-  mode = SCM_STRING_CHARS (scmmode);
-
-  index = vstbl_lookup_str(table, table_size, mode);
-
-  /* no match? */
-  if(index == table_size) {
-    fprintf(stderr,
-            "Invalid mode [%s] passed to %s\n",
-            mode,
-            rc_name);
-    return SCM_BOOL_F;
-  }
-
-  *mode_var = vstbl_get_val(table, index);
-
-  return SCM_BOOL_T;
-}
-
-#define RETURN_G_RC_MODE(rc, var, size)			\
-	return g_rc_mode_general(mode,			\
-				 (rc),			\
-				 &(var),		\
-				 mode_table,		\
-				 size)
-
 SCM g_rc_gschlas_version(SCM version)
 {
 

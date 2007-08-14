@@ -971,4 +971,10 @@ struct st_page_smob {
   PAGE   *page;
 };
 
+/* used by the rc loading mechanisms */
+typedef struct {
+  int   m_val;
+  char *m_str;
+} vstbl_entry;
+
 #endif

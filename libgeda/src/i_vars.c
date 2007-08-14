@@ -72,6 +72,10 @@ char *default_postscript_prolog = NULL;
 char *default_always_promote_attributes = NULL;
 char *default_print_command = NULL;
 
+int   default_attribute_promotion = TRUE;
+int   default_promote_invisible = FALSE;
+int   default_keep_invisible = FALSE;
+
 /*! \brief Initialize variables in TOPLEVEL object
  *  \par Function Description
  *  This function will initialize variables to default values.
@@ -83,6 +87,10 @@ void i_vars_libgeda_set(TOPLEVEL *w_current)
 {
   w_current->init_right   = default_init_right;
   w_current->init_bottom  = default_init_bottom;
+
+  w_current->attribute_promotion = default_attribute_promotion;
+  w_current->promote_invisible = default_promote_invisible;
+  w_current->keep_invisible = default_keep_invisible;
 
   /* you cannot free the default* strings here since new windows */
   /* need them */

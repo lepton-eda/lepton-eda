@@ -42,15 +42,6 @@
 
 
 /* ----------------------------------------------------------------- *
- *  This struct used in dealing with guile's read-in of the rc files.
- * ----------------------------------------------------------------- */
-typedef struct {
-  int m_val;
-  char *m_str;
-} vstbl_entry;
-
-
-/* ----------------------------------------------------------------- *
  *  The sheet data hierarchy built by the prog should look like this:
  *  SHEET_DATA->(STRING_LIST *master_XXX_list)          // list of comps/nets/pins (row labels) 
  *            ->(STRING_LIST *master_XXX_attrib_list)   // list of attached names  (column labels)

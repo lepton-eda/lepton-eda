@@ -49,17 +49,6 @@
 #include <dmalloc.h>
 #endif
 
-#define RETURN_G_RC_MODE(rc, var, size)			\
-	return g_rc_mode_general(mode,			\
-				 (rc),			\
-				 &(var),		\
-				 mode_table,		\
-				 size)
-
-/* a random int, used only as a place holder */
-int default_dummy;
-
-
 /*------------------------------------------------------------------
  * 
  *------------------------------------------------------------------*/

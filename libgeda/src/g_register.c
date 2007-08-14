@@ -78,6 +78,9 @@ static struct gsubr_t libgeda_funcs[] = {
   { "bus-ripper-symname",       1, 0, 0, g_rc_bus_ripper_symname },
   { "postscript-prolog",        1, 0, 0, g_rc_postscript_prolog },
   { "map-font-character-to-file", 2, 0, 0, g_rc_map_font_character_to_file },
+  { "attribute-promotion",       1, 0, 0, g_rc_attribute_promotion },
+  { "promote-invisible",         1, 0, 0, g_rc_promote_invisible },
+  { "keep-invisible",            1, 0, 0, g_rc_keep_invisible },
   { "always-promote-attributes",1, 0, 0, g_rc_always_promote_attributes },
   { NULL,                       0, 0, 0, NULL } };
 

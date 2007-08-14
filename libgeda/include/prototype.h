@@ -32,6 +32,10 @@ int f_print_initialize_glyph_table(void);
 int g_read_file(const gchar *filename);
 
 /* g_rc.c */
+int vstbl_lookup_str(const vstbl_entry *table, int size, const char *str);
+int vstbl_get_val(const vstbl_entry *table, int index);
+SCM g_rc_mode_general(SCM scmmode, const char *rc_name, int *mode_var, 
+                      const vstbl_entry *table, int table_size);
 gint g_rc_parse_general(TOPLEVEL *w_current,
                         const gchar *fname, 
                         const gchar *ok_msg, const gchar *err_msg);
@@ -59,6 +63,9 @@ SCM g_rc_scheme_directory(SCM path);
 SCM g_rc_bus_ripper_symname(SCM scmsymname);
 SCM g_rc_postscript_prolog(SCM scmsymname);
 SCM g_rc_map_font_character_to_file(SCM character_param, SCM file_param);
+SCM g_rc_attribute_promotion(SCM mode);
+SCM g_rc_promote_invisible(SCM mode);
+SCM g_rc_keep_invisible(SCM mode);
 SCM g_rc_always_promote_attributes(SCM scmsymname);
 
 /* g_register.c */

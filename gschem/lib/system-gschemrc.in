@@ -312,40 +312,6 @@
 ;(embed-components "enabled")
 (embed-components "disabled")
 
-; attribute-promotion string
-;
-; This keyword controls if attribute promotion occurs when you instanciate a
-; component.  Attribute promotion basically means that any floating attribute
-; (unattached) which is inside a symbol gets "promoted" or attached to the 
-; newly inserted component.  This only occurs when the component is 
-; instanciated.
-;
-(attribute-promotion "enabled")
-;(attribute-promotion "disabled")
-
-; promote-invisible string
-;
-; If attribute-promotion is enabled, then this controls if invisible floating
-; attributes are promoted (attached to the outside of the component) if the 
-; text string is invisible.  There are cases where it is undesirable, so the 
-; default is disabled.
-;
-;(promote-invisible "enabled")
-(promote-invisible "disabled")
-
-; keep-invisible string
-;
-; If both attribute-promotion and promote-invisible are enabled, then this 
-; controls if invisible floating attributes are kept around in memory and
-; NOT deleted.  Having this enabled will keeps component slotting working.
-; If attribute-promotion and promote-invisible are enabled and this
-; keyword is disabled, then component slotting will NOT work (and maybe 
-; other functions which depend on hidden attributes, since those attributes
-; are deleted from memory).
-;
-;(keep-invisible "disabled")
-(keep-invisible "enabled")
-
 ; logging string
 ;
 ; Determines if the logging mechanism is enabled or disabled

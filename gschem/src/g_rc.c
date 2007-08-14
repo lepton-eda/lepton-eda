@@ -45,21 +45,8 @@
 #include <dmalloc.h>
 #endif
 
-#define RETURN_G_RC_MODE(rc, var, size) \
-  return g_rc_mode_general(mode,        \
-                           (rc),        \
-                           &(var),      \
-                           mode_table,  \
-                           size)
-
 /*! a random int, used only as a place holder */
-int default_dummy;
-
-/*! \brief */
-typedef struct {
-  int   m_val;
-  char *m_str;
-} vstbl_entry;
+static int default_dummy;
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -276,70 +263,6 @@ DEFINE_G_RC_COLOR(g_rc_stroke_color,
 DEFINE_G_RC_COLOR(g_rc_freestyle_color,
 		  "freestyle-color",
 		  default_dummy)
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-static int vstbl_lookup_str(const vstbl_entry *table,
-			    int size, const char *str)
-{
-  int i;
-
-  for(i = 0; i < size; i++) {
-    if(strcmp(table[i].m_str, str) == 0) {
-      break;
-    }
-  }
-  return i;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-static int vstbl_get_val(const vstbl_entry *table, int index)
-{
-  return table[index].m_val;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-static SCM g_rc_mode_general(SCM scmmode,
-			     const char *rc_name,
-			     int *mode_var,
-			     const vstbl_entry *table,
-			     int table_size)
-{
-  SCM ret;
-  int index;
-  char *mode;
-
-  SCM_ASSERT (scm_is_string (scmmode), scmmode,
-              SCM_ARG1, rc_name);
-  
-  mode = SCM_STRING_CHARS (scmmode);
-  
-  index = vstbl_lookup_str(table, table_size, mode);
-  /* no match? */
-  if(index == table_size) {
-    fprintf(stderr,
-            _("Invalid mode [%s] passed to %s\n"),
-            mode,
-            rc_name);
-    ret = SCM_BOOL_F;
-  } else {
-    *mode_var = vstbl_get_val(table, index);
-    ret = SCM_BOOL_T;
-  }
-  
-  return ret;
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -1089,57 +1012,6 @@ SCM g_rc_raise_dialog_boxes_on_expose(SCM mode)
   
   RETURN_G_RC_MODE("raise-dialog-boxes-on-expose",
 		   default_raise_dialog_boxes,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_attribute_promotion(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("attribute-promotion",
-		   default_attribute_promotion,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_promote_invisible(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("promote-invisible",
-		   default_promote_invisible,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_keep_invisible(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("keep-invisible",
-		   default_keep_invisible,
 		   2);
 }
 

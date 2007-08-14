@@ -52,6 +52,70 @@
 #include <dmalloc.h>
 #endif
 
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+int vstbl_lookup_str(const vstbl_entry *table,
+			    int size, const char *str)
+{
+  int i;
+
+  for(i = 0; i < size; i++) {
+    if(strcmp(table[i].m_str, str) == 0) {
+      break;
+    }
+  }
+  return i;
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+int vstbl_get_val(const vstbl_entry *table, int index)
+{
+  return table[index].m_val;
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+SCM g_rc_mode_general(SCM scmmode, 
+                      const char *rc_name,
+                      int *mode_var,
+                      const vstbl_entry *table,
+                      int table_size)
+{
+  SCM ret;
+  int index;
+  char *mode;
+
+  SCM_ASSERT (scm_is_string (scmmode), scmmode,
+              SCM_ARG1, rc_name);
+  
+  mode = SCM_STRING_CHARS (scmmode);
+  
+  index = vstbl_lookup_str(table, table_size, mode);
+  /* no match? */
+  if(index == table_size) {
+    fprintf(stderr,
+            "Invalid mode [%s] passed to %s\n",
+            mode,
+            rc_name);
+    ret = SCM_BOOL_F;
+  } else {
+    *mode_var = vstbl_get_val(table, index);
+    ret = SCM_BOOL_T;
+  }
+  
+  return ret;
+}
+
 extern GHashTable *font_char_to_file;
 
 /*! \brief Reads the gafrc file.
@@ -999,6 +1063,57 @@ SCM g_rc_map_font_character_to_file(SCM scmcharstr, SCM scmfilename)
                        filename);
 
   return SCM_BOOL_T;
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+SCM g_rc_attribute_promotion(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {TRUE , "enabled" },
+    {FALSE, "disabled"},
+  };
+
+  RETURN_G_RC_MODE("attribute-promotion",
+		   default_attribute_promotion,
+		   2);
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+SCM g_rc_promote_invisible(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {TRUE , "enabled" },
+    {FALSE, "disabled"},
+  };
+
+  RETURN_G_RC_MODE("promote-invisible",
+		   default_promote_invisible,
+		   2);
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+SCM g_rc_keep_invisible(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {TRUE , "enabled" },
+    {FALSE, "disabled"},
+  };
+
+  RETURN_G_RC_MODE("keep-invisible",
+		   default_keep_invisible,
+		   2);
 }
 
 /*! \todo Finish function description!!!
