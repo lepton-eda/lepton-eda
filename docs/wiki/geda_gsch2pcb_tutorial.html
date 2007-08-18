@@ -7,7 +7,7 @@
   <title>geda:gsch2pcb_tutorial</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
 <meta name="robots" content="index,follow" />
-<meta name="date" content="2007-06-27T08:12:11-0400" />
+<meta name="date" content="2007-08-04T14:46:19-0400" />
 <meta name="keywords" content="geda,gsch2pcb_tutorial" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -42,8 +42,8 @@
 </li>
 <li class="level2"><div class="li"><span class="li"><a href="#modifying_schematics" class="toc">Modifying Schematics</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#custom_gschem_symbols" class="toc">Custom gschem Symbols</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#custom_file_elements" class="toc">Custom //file elements//</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#custom_m4_elements_requires_gsch2pcb_1.0" class="toc">Custom //m4 elements// (Requires gsch2pcb &gt;= 1.0)</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#custom_file_elements" class="toc">Custom file elements</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#custom_m4_elements_requires_gsch2pcb_1.0" class="toc">Custom m4 elements (Requires gsch2pcb &gt;= 1.0)</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#multi-user_setup_requires_gsch2pcb_1.0" class="toc">Multi-user Setup (requires gsch2pcb &gt;= 1.0)</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#pc_board_fabrication" class="toc">PC Board Fabrication</a></span></div></li></ul>
 </li></ul>
@@ -179,7 +179,7 @@ output-name board
 <div class="level3">
 
 <p>
- If you are using gschem for the first time, try stepping through this simple <a href="geda_gschem_warmup.html" class="wikilink1" title="geda:gschem_warmup">gschem warmup</a>.
+ If you are using gschem for the first time, try stepping through this simple <a href="http://geda.seul.org/wiki/geda:gschem_warmup" class="wikilink1" title="geda:gschem_warmup">gschem warmup</a>.
 </p>
 
 <p>
@@ -290,7 +290,7 @@ Now we are done with the schematics except for assigning <strong>refdes</strong>
 </p>
 
 </div>
-<!-- SECTION "Create schematic: two.sch" [11443-15045] -->
+<!-- SECTION "Create schematic: two.sch" [11443-15046] -->
 <h3><a name="generate_pcb_files_from_schematics" id="generate_pcb_files_from_schematics">Generate PCB Files from Schematics</a></h3>
 <div class="level3">
 
@@ -310,11 +310,11 @@ We have to fix one thing in <strong>one.sch</strong> before we can proceed. Run 
 </p>
 
 <p>
- If you get output from gsch2pcb like: <em>2 unknown elements added to board.pcb.</em>, then run with the -v flag: <strong>gsch2pcb -v project</strong> and the gsch2pcb output will tell you which schematic components don’t have a known <strong>footprint</strong>.  Either you forgot to add the attribute, the attribute value is wrong, or the PCB element for it is missing from your installation.  But if gsch2pcb can’t find any elements and all 7 are unknown, then probably gsch2pcb can’t find your PCB m4 install directory.  In this case, look at the first part of the <a href="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/tutorial.html#CUSTOM_M4" class="urlextern" title="http://www.geda.seul.org/docs/current/tutorials/gsch2pcb/tutorial.html#CUSTOM_M4"  rel="nofollow"> Custom M4 Elements </a> section.
+ If you get output from gsch2pcb like: <em>2 unknown elements added to board.pcb.</em>, then run with the -v flag: <strong>gsch2pcb -v project</strong> and the gsch2pcb output will tell you which schematic components don’t have a known <strong>footprint</strong>.  Either you forgot to add the attribute, the attribute value is wrong, or the PCB element for it is missing from your installation.  But if gsch2pcb can’t find any elements and all 7 are unknown, then probably gsch2pcb can’t find your PCB m4 install directory.  In this case, look at the first part of the <span class="curid"><a href="http://geda.seul.org/wiki/geda:gsch2pcb_tutorial#custom_m4_elements_requires_gsch2pcb_1.0" class="wikilink1" title="geda:gsch2pcb_tutorial"> Custom M4 Elements </a></span> section.
 </p>
 
 </div>
-<!-- SECTION "Generate PCB Files from Schematics" [15046-16660] -->
+<!-- SECTION "Generate PCB Files from Schematics" [15047-16644] -->
 <h3><a name="layout_pcb_files" id="layout_pcb_files">Layout PCB Files</a></h3>
 <div class="level3">
 
@@ -416,7 +416,7 @@ You will want more information on using PCB and there is a set of html docs in t
 </p>
 
 </div>
-<!-- SECTION "Layout PCB Files" [16661-24299] -->
+<!-- SECTION "Layout PCB Files" [16645-24283] -->
 <h2><a name="modifying_schematics" id="modifying_schematics">Modifying Schematics</a></h2>
 <div class="level2">
 
@@ -473,7 +473,7 @@ board.pcb is backed up as board.pcb.bak1.
 </p>
 
 </div>
-<!-- SECTION "Modifying Schematics" [24300-28104] -->
+<!-- SECTION "Modifying Schematics" [24284-28089] -->
 <h2><a name="custom_gschem_symbols" id="custom_gschem_symbols">Custom gschem Symbols</a></h2>
 <div class="level2">
 
@@ -568,12 +568,12 @@ No elements to add so not creating board.new.pcb
 </p>
 
 <p>
-For complete details on making symbols, read through the Symbol Creation Document on the <a href="http://www.geda.seul.org/docs/index.html" class="urlextern" title="http://www.geda.seul.org/docs/index.html"  rel="nofollow"> gEDA Documentation </a> page.
+For complete details on making symbols, read through the <a href="geda_scg.html" class="wikilink1" title="geda:scg">Symbol Creation Document</a> on the <a href="http://geda.seul.org/wiki/geda:documentation" class="wikilink1" title="geda:documentation">gEDA Documentation</a> page.
 </p>
 
 </div>
-<!-- SECTION "Custom gschem Symbols" [28105-32369] -->
-<h2><a name="custom_file_elements" id="custom_file_elements">Custom //file elements//</a></h2>
+<!-- SECTION "Custom gschem Symbols" [28090-32343] -->
+<h2><a name="custom_file_elements" id="custom_file_elements">Custom file elements</a></h2>
 <div class="level2">
 
 <p>
@@ -653,8 +653,8 @@ Pin(0 0 70 20 70 42 &quot;&quot; &quot;1&quot; 0x00000101)
 </p>
 
 </div>
-<!-- SECTION "Custom //file elements//" [32370-38835] -->
-<h2><a name="custom_m4_elements_requires_gsch2pcb_1.0" id="custom_m4_elements_requires_gsch2pcb_1.0">Custom //m4 elements// (Requires gsch2pcb &gt;= 1.0)</a></h2>
+<!-- SECTION "Custom file elements" [32344-38805] -->
+<h2><a name="custom_m4_elements_requires_gsch2pcb_1.0" id="custom_m4_elements_requires_gsch2pcb_1.0">Custom m4 elements (Requires gsch2pcb &gt;= 1.0)</a></h2>
 <div class="level2">
 
 <p>
@@ -792,7 +792,7 @@ Mark(50 50)
 </p>
 
 </div>
-<!-- SECTION "Custom //m4 elements// (Requires gsch2pcb >= 1.0)" [38836-46527] -->
+<!-- SECTION "Custom m4 elements (Requires gsch2pcb >= 1.0)" [38806-46493] -->
 <h2><a name="multi-user_setup_requires_gsch2pcb_1.0" id="multi-user_setup_requires_gsch2pcb_1.0">Multi-user Setup (requires gsch2pcb &gt;= 1.0)</a></h2>
 <div class="level2">
 
@@ -833,7 +833,7 @@ With the above, users will have access to site wide libraries and only need to p
 </p>
 
 </div>
-<!-- SECTION "Multi-user Setup (requires gsch2pcb >= 1.0)" [46528-48163] -->
+<!-- SECTION "Multi-user Setup (requires gsch2pcb >= 1.0)" [46494-48129] -->
 <h2><a name="pc_board_fabrication" id="pc_board_fabrication">PC Board Fabrication</a></h2>
 <div class="level2">
 
@@ -842,6 +842,6 @@ The tutorial should cover pcb fabrication too.
 </p>
 
 </div>
-<!-- SECTION "PC Board Fabrication" [48164-] --></div>
+<!-- SECTION "PC Board Fabrication" [48130-] --></div>
 </body>
 </html>

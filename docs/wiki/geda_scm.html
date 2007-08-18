@@ -6,8 +6,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:scm</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
-<meta name="robots" content="noindex,nofollow" />
-<meta name="date" content="2007-07-04T19:34:57-0400" />
+<meta name="robots" content="index,follow" />
+<meta name="date" content="2007-07-14T20:01:43-0400" />
 <meta name="keywords" content="geda,scm" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -167,7 +167,7 @@ Keep in mind that some of these tutorials are a little dated and may not cover c
 </p>
 
 </div>
-<!-- SECTION "Learning to use git" [1376-2242] -->
+<!-- SECTION "Learning to use git" [1376-2245] -->
 <h2><a name="accessing_the_repository" id="accessing_the_repository">Accessing the repository</a></h2>
 <div class="level2">
 
@@ -175,6 +175,11 @@ Keep in mind that some of these tutorials are a little dated and may not cover c
  To clone the gaf.git repository using anonymous git access: 
 </p>
 <pre class="code">git clone git://git.gpleda.org/gaf.git</pre>
+
+<p>
+ If you are behind a firewall, you can also use the http access method (if you built git with curl and libcurl support) using: 
+</p>
+<pre class="code">git clone http://git.gpleda.org/git/gaf.git</pre>
 
 <p>
  For developer git access, you should contact Ales Hvezda to get an <acronym title="Secure Shell">SSH</acronym> public key installed and an account; having done so, the git <acronym title="Uniform Resource Locator">URL</acronym> to push to is: 
@@ -198,12 +203,12 @@ Port 5022</pre>
 </p>
 
 </div>
-<!-- SECTION "Accessing the repository" [2243-3053] -->
+<!-- SECTION "Accessing the repository" [2246-3230] -->
 <h2><a name="making_and_committing_changes" id="making_and_committing_changes">Making and committing changes</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Making and committing changes" [3054-3098] -->
+<!-- SECTION "Making and committing changes" [3231-3275] -->
 <h3><a name="setting_up_user_information" id="setting_up_user_information">Setting up user information</a></h3>
 <div class="level3">
 
@@ -214,7 +219,7 @@ Port 5022</pre>
 $ git config --global user.email you@yourdomain.example.com</pre>
 
 </div>
-<!-- SECTION "Setting up user information" [3099-3356] -->
+<!-- SECTION "Setting up user information" [3276-3533] -->
 <h3><a name="committing_patches_from_other_contributors" id="committing_patches_from_other_contributors">Committing patches from other contributors</a></h3>
 <div class="level3">
 
@@ -284,7 +289,7 @@ Commit the patch, making sure that the Author’s name and e-mail address are sp
 </p>
 
 </div>
-<!-- SECTION "Committing patches from other contributors" [3357-5208] -->
+<!-- SECTION "Committing patches from other contributors" [3534-5385] -->
 <h3><a name="writing_good_commit_messages" id="writing_good_commit_messages">Writing good commit messages</a></h3>
 <div class="level3">
 
@@ -313,7 +318,7 @@ currenly implemented as a macro.
 </pre>
 
 </div>
-<!-- SECTION "Writing good commit messages" [5209-6190] -->
+<!-- SECTION "Writing good commit messages" [5386-6367] -->
 <h3><a name="push_is_destructive" id="push_is_destructive">Push is Destructive</a></h3>
 <div class="level3">
 
@@ -326,7 +331,7 @@ Unlike <acronym title="Concurrent Versions System">CVS</acronym>, it is not the 
 </p>
 
 </div>
-<!-- SECTION "Push is Destructive" [6191-6555] -->
+<!-- SECTION "Push is Destructive" [6368-6732] -->
 <h2><a name="how_do_i" id="how_do_i">How Do I ... ?</a></h2>
 <div class="level2">
 
@@ -335,7 +340,7 @@ Unlike <acronym title="Concurrent Versions System">CVS</acronym>, it is not the 
 </p>
 
 </div>
-<!-- SECTION "How Do I ... ?" [6556-6679] -->
+<!-- SECTION "How Do I ... ?" [6733-6856] -->
 <h3><a name="get_a_copy_of_geda_gaf_git_repository" id="get_a_copy_of_geda_gaf_git_repository">... get a copy of gEDA/gaf git repository?</a></h3>
 <div class="level3">
 
@@ -350,7 +355,7 @@ Unlike <acronym title="Concurrent Versions System">CVS</acronym>, it is not the 
 <pre class="code">$ git clone git://git.gpleda.org/home/git/gaf.git</pre>
 
 </div>
-<!-- SECTION "... get a copy of gEDA/gaf git repository?" [6680-6899] -->
+<!-- SECTION "... get a copy of gEDA/gaf git repository?" [6857-7076] -->
 <h3><a name="keep_my_local_copy_current" id="keep_my_local_copy_current">... keep my local copy current?</a></h3>
 <div class="level3">
 
@@ -366,7 +371,7 @@ Unlike <acronym title="Concurrent Versions System">CVS</acronym>, it is not the 
 $ git rebase origin</pre>
 
 </div>
-<!-- SECTION "... keep my local copy current?" [6900-7314] -->
+<!-- SECTION "... keep my local copy current?" [7077-7491] -->
 <h3><a name="commit_my_changes_to_the_local_git_repository" id="commit_my_changes_to_the_local_git_repository">... commit my changes to the local git repository?</a></h3>
 <div class="level3">
 <pre class="code">$ git commit -a </pre>
@@ -381,7 +386,7 @@ If you want to commit files in the current directory or want to explicitly commi
 <pre class="code">$ git commit filename1 filename2</pre>
 
 </div>
-<!-- SECTION "... commit my changes to the local git repository?" [7315-7868] -->
+<!-- SECTION "... commit my changes to the local git repository?" [7492-8045] -->
 <h3><a name="undo_any_uncommitted_local_changes" id="undo_any_uncommitted_local_changes">... undo any uncommitted local changes?</a></h3>
 <div class="level3">
 <pre class="code">$ git checkout -f </pre>
@@ -391,7 +396,7 @@ If you want to commit files in the current directory or want to explicitly commi
 </p>
 
 </div>
-<!-- SECTION "... undo any uncommitted local changes?" [7869-8022] -->
+<!-- SECTION "... undo any uncommitted local changes?" [8046-8199] -->
 <h3><a name="fix_change_my_last_commit" id="fix_change_my_last_commit">... fix/change my last commit?</a></h3>
 <div class="level3">
 <pre class="code">$ Edit whatever files
@@ -402,6 +407,6 @@ $ git commit --amend filename1..filenameN </pre>
 </p>
 
 </div>
-<!-- SECTION "... fix/change my last commit?" [8023-] --></div>
+<!-- SECTION "... fix/change my last commit?" [8200-] --></div>
 </body>
 </html>
