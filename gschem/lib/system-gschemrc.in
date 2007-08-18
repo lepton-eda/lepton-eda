@@ -75,6 +75,19 @@
 (undo-type "disk")
 ;(undo-type "memory")
 
+; undo-panzoom string
+;
+; Controls if pan or zoom commands are saved in the undo list.  If this 
+; is enabled then a pan or zoom command will be considered a command and
+; can be undone.  If this is false, then panning and zooming is not saved
+; in the undo list and cannot be undone.  Note, the current viewport 
+; information is saved for every command, so the display will change to the
+; viewport before a command is executed.
+;
+(undo-panzoom "enabled")
+;(undo-panzoom "disabled")
+
+
 ; autosave interval
 ;
 ; Controls if a backup copy is made every "interval" seconds.

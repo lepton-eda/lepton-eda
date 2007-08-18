@@ -314,7 +314,10 @@ void a_zoom_box_end(TOPLEVEL *w_current, int x, int y)
   XOR_DRAW_BOX(w_current, box_left, box_top, box_width, box_height);
 
   a_zoom_box(w_current, 0);
-  o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+
+  if (w_current->undo_panzoom) {
+    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+  }
 }
 
 /*! \todo Finish function documentation!!!

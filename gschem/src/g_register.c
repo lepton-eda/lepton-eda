@@ -126,6 +126,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "undo-levels",               1, 0, 0, g_rc_undo_levels },
   { "undo-control",              1, 0, 0, g_rc_undo_control },
   { "undo-type",                 1, 0, 0, g_rc_undo_type },
+  { "undo-panzoom",              1, 0, 0, g_rc_undo_panzoom },
 
   { "drag-can-move",             1, 0, 0, g_rc_drag_can_move },
 

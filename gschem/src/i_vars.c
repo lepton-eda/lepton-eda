@@ -97,6 +97,7 @@ int   default_continue_component_place = TRUE;
 int   default_undo_levels = 20;
 int   default_undo_control = TRUE;
 int   default_undo_type = UNDO_DISK;
+int   default_undo_panzoom = FALSE;
 int   default_draw_grips = TRUE;
 int   default_netconn_rubberband = FALSE;
 int   default_sort_component_library = FALSE;
@@ -221,6 +222,7 @@ void i_vars_set(TOPLEVEL *w_current)
   w_current->undo_levels = default_undo_levels;
   w_current->undo_control = default_undo_control;
   w_current->undo_type = default_undo_type;
+  w_current->undo_panzoom = default_undo_panzoom;
 
   w_current->draw_grips = default_draw_grips;
   w_current->netconn_rubberband = default_netconn_rubberband;

@@ -1374,7 +1374,10 @@ DEFINE_I_CALLBACK(view_zoom_full)
 
   /* scroll bar stuff */
   a_zoom(w_current, ZOOM_FULL, DONTCARE, 0);
-  o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+
+  if (w_current->undo_panzoom) {
+    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+  }
 }
 
 /*! \todo Finish function documentation!!!
@@ -1392,7 +1395,10 @@ DEFINE_I_CALLBACK(view_zoom_extents)
 
   /* scroll bar stuff */
   a_zoom_extents(w_current, w_current->page_current->object_head, 0);
-  o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+
+  if (w_current->undo_panzoom) {
+    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+  }
 }
 
 /*! \todo Finish function documentation!!!
@@ -1445,7 +1451,10 @@ DEFINE_I_CALLBACK(view_zoom_in)
   exit_if_null(w_current);
 
   a_zoom(w_current, ZOOM_IN, MENU, 0);
-  o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+
+  if (w_current->undo_panzoom) {
+    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+  }
 }
 
 /*! \todo Finish function documentation!!!
@@ -1462,7 +1471,10 @@ DEFINE_I_CALLBACK(view_zoom_out)
   exit_if_null(w_current);
 
   a_zoom(w_current, ZOOM_OUT, MENU, 0);
-  o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+ 
+  if (w_current->undo_panzoom) {
+    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+  }
 }
 
 /*! \todo Finish function documentation!!!
@@ -1480,7 +1492,10 @@ DEFINE_I_CALLBACK(view_zoom_in_hotkey)
   exit_if_null(w_current);
 
   a_zoom(w_current, ZOOM_IN, HOTKEY, 0);
-  o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+
+  if (w_current->undo_panzoom) {
+    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+  }
 }
 
 /*! \todo Finish function documentation!!!
@@ -1497,7 +1512,10 @@ DEFINE_I_CALLBACK(view_zoom_out_hotkey)
   exit_if_null(w_current);
 
   a_zoom(w_current, ZOOM_OUT, HOTKEY, 0);
-  o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+
+  if (w_current->undo_panzoom) {
+    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+  }
 }
 
 /*! \todo Finish function documentation!!!
@@ -1606,7 +1624,10 @@ DEFINE_I_CALLBACK(view_pan_hotkey)
     i_set_state(w_current, SELECT);
     i_update_toolbar(w_current);
     } */
-  o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+
+  if (w_current->undo_panzoom) {
+    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+  }
 }
 
 /*! \todo Finish function documentation!!!

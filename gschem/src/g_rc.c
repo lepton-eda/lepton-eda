@@ -1093,6 +1093,21 @@ SCM g_rc_undo_type(SCM mode)
  *  \par Function Description
  *
  */
+SCM g_rc_undo_panzoom(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {TRUE , "enabled" },
+    {FALSE, "disabled"},
+  };
+
+  RETURN_G_RC_MODE("undo-panzoom", default_undo_panzoom, 2);
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
 SCM g_rc_draw_grips(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

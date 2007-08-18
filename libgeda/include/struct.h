@@ -765,6 +765,9 @@ struct st_toplevel {
   /* Type of undo (disk/memory) */
   int undo_type;	        
 
+  /* Controls if pan / zoom info is saved in undo */
+  int undo_panzoom;
+
   /* Controls if grips are enabled or not */
   int draw_grips;	        
 

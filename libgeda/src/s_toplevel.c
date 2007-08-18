@@ -370,6 +370,8 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->undo_type = 0;
 
+  toplevel->undo_panzoom = 0;
+
   toplevel->draw_grips = 0;
 
   toplevel->netconn_rubberband = 0;

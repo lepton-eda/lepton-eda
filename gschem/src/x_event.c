@@ -920,7 +920,9 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       case(MID_MOUSEPAN_ENABLED):
       w_current->doing_pan=FALSE;
       o_redraw_all_fast(w_current);
-      o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+      if (w_current->undo_panzoom) {
+        o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+      }
       /* this needs to be REDONE */
       /* if you mouse pan, you will be thrown out of the current mode. */
       /* not good */
@@ -934,7 +936,10 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
     if (w_current->doing_pan) { /* just for ending a mouse pan */
       w_current->doing_pan=FALSE;
       o_redraw_all_fast(w_current);
-      o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+
+      if (w_current->undo_panzoom) {
+        o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+      }
       /* this needs to be REDONE */
       /* if you mouse pan, you will be thrown out of the current mode. */
       /* not good */
@@ -1531,7 +1536,11 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
       /*! \todo Change "HOTKEY" TO new "MOUSE" specifier?
        */
       a_zoom(w_current, ZOOM_IN, HOTKEY, 0);
-      o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+ 
+      if (w_current->undo_panzoom) {
+        o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+      }
+
     } else if ( !w_current->CONTROLKEY ) {
       /* if the control key is not held down, scroll up / down */
       /* You must have scrollbars enabled if you want to use the scroll wheel to pan */
@@ -1556,7 +1565,9 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
       /*! \todo Change "HOTKEY" TO new "MOUSE" specifier?
        */
       a_zoom(w_current, ZOOM_OUT, HOTKEY, 0);
-      o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+      if (w_current->undo_panzoom) {
+        o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+      }
     } else if ( !w_current->CONTROLKEY ) {
       /* if the control key is not held down, scroll up / down */
       /* You must have scrollbars enabled if you want to use the scroll wheel to pan */

@@ -249,6 +249,7 @@ SCM g_rc_continue_component_place(SCM mode);
 SCM g_rc_undo_levels(SCM levels);
 SCM g_rc_undo_control(SCM mode);
 SCM g_rc_undo_type(SCM mode);
+SCM g_rc_undo_panzoom(SCM mode);
 SCM g_rc_draw_grips(SCM mode);
 SCM g_rc_netconn_rubberband(SCM mode);
 SCM g_rc_sort_component_library(SCM mode);
