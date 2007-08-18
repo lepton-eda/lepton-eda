@@ -565,7 +565,7 @@ void s_delete_list_fromstart(OBJECT *start)
  *  \par Function Description
  *
  */
-/* deletes everything include the head */
+/* deletes everything include the GList */
 void
 s_delete_object_glist(TOPLEVEL *w_current, GList *list)
 {
@@ -580,7 +580,7 @@ s_delete_object_glist(TOPLEVEL *w_current, GList *list)
     s_delete_object(w_current, o_current);
     ptr = ptr->prev;
   }
-
+  g_list_free(list);
 }
 
 
