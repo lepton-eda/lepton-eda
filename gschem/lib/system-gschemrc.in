@@ -937,6 +937,8 @@
 (attribute-name "symversion")
 (attribute-name "comment")
 (attribute-name "author")
+(attribute-name "dist-license")
+(attribute-name "use-license")
 (attribute-name "file")
 
 ;
