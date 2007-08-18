@@ -1420,7 +1420,7 @@
 				hierarchy-down-symbol)
 	   ("Up"		hierarchy-up
 				hierarchy-up)
-	   ("Documentation"     hierarchy-documentation
+	   ("Documentation..."  hierarchy-documentation
 				hierarchy-documentation)))
 
 (define attributes-menu-items 
@@ -1472,14 +1472,14 @@
 ;;          menu item name      menu action     	menu hotkey action
 ;;
 	'( 
-	   ("gEDA Documentation"	help-manual     help-manual)
-	   ("gschem FAQ"	help-faq		help-faq)
-	   ("gEDA Wiki"		help-wiki		help-wiki)
-	   ("Component Documentation"	hierarchy-documentation
+	   ("gEDA Documentation..."  help-manual     help-manual)
+	   ("gschem FAQ..."	     help-faq		help-faq)
+	   ("gEDA Wiki..."	     help-wiki		help-wiki)
+	   ("Component Documentation..."	hierarchy-documentation
 						hierarchy-documentation)
 	   ("SEPARATOR"		no-action		no-action)
-	   ("About gschem"	help-about		help-about)
-	   ("Hotkeys"		help-hotkeys		help-hotkeys)))
+	   ("Hotkeys..."	help-hotkeys		help-hotkeys)
+	   ("About..."	        help-about		help-about)))
 	  
 ;
 ; Now actually add the menus.  The order here defines the order in which
@@ -1494,7 +1494,7 @@
 (add-menu "Hierarchy" hierarchy-menu-items)
 (add-menu "Attributes" attributes-menu-items)
 (add-menu "Options" options-menu-items)
-(add-menu "Help" help-menu-items)   ; help is special it will be on the right
+(add-menu "Help" help-menu-items)   
 
 ;
 ; End of keymapping related keywords
