@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-14 07:59-0400\n"
+"POT-Creation-Date: 2007-08-19 22:54-0400\n"
 "PO-Revision-Date: 2006-09-13 16:59+0300\n"
 "Last-Translator: Andy Shevchenko <andy@smile.org.ua>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -263,7 +263,7 @@ msgstr "Вид"
 msgid "Redraw"
 msgstr "Перерисовать"
 
-#: src/rcstrings.c:65 src/i_callbacks.c:1519 src/i_callbacks.c:1588
+#: src/rcstrings.c:65 src/i_callbacks.c:1537 src/i_callbacks.c:1606
 msgid "Pan"
 msgstr "Центрировать"
 
@@ -327,11 +327,11 @@ msgstr "Добавить"
 msgid "Component..."
 msgstr "Компонент..."
 
-#: src/rcstrings.c:83 src/i_callbacks.c:2337 src/i_callbacks.c:2359
+#: src/rcstrings.c:83 src/i_callbacks.c:2358 src/i_callbacks.c:2380
 msgid "Net"
 msgstr "Проводник"
 
-#: src/rcstrings.c:84 src/i_callbacks.c:2403 src/i_callbacks.c:2426
+#: src/rcstrings.c:84 src/i_callbacks.c:2424 src/i_callbacks.c:2447
 #: src/x_window.c:547
 msgid "Bus"
 msgstr "Шина"
@@ -344,23 +344,23 @@ msgstr "Атрибут..."
 msgid "Text..."
 msgstr "Текст..."
 
-#: src/rcstrings.c:87 src/i_callbacks.c:2507 src/i_callbacks.c:2526
+#: src/rcstrings.c:87 src/i_callbacks.c:2528 src/i_callbacks.c:2547
 msgid "Line"
 msgstr "Линия"
 
-#: src/rcstrings.c:88 src/i_callbacks.c:2548 src/i_callbacks.c:2567
+#: src/rcstrings.c:88 src/i_callbacks.c:2569 src/i_callbacks.c:2588
 msgid "Box"
 msgstr "Прямоугольник"
 
-#: src/rcstrings.c:89 src/i_callbacks.c:2623 src/i_callbacks.c:2643
+#: src/rcstrings.c:89 src/i_callbacks.c:2644 src/i_callbacks.c:2664
 msgid "Circle"
 msgstr "Окружность"
 
-#: src/rcstrings.c:90 src/i_callbacks.c:2665 src/i_callbacks.c:2684
+#: src/rcstrings.c:90 src/i_callbacks.c:2686 src/i_callbacks.c:2705
 msgid "Arc"
 msgstr "Дуга"
 
-#: src/rcstrings.c:91 src/i_callbacks.c:2706 src/i_callbacks.c:2725
+#: src/rcstrings.c:91 src/i_callbacks.c:2727 src/i_callbacks.c:2746
 msgid "Pin"
 msgstr "Контакт"
 
@@ -392,11 +392,11 @@ msgstr "Документация"
 msgid "Attributes"
 msgstr "Атрибуты"
 
-#: src/rcstrings.c:101 src/i_callbacks.c:2990
+#: src/rcstrings.c:101 src/i_callbacks.c:3011
 msgid "Attach"
 msgstr "Прицепить"
 
-#: src/rcstrings.c:102 src/i_callbacks.c:3039
+#: src/rcstrings.c:102 src/i_callbacks.c:3060
 msgid "Detach"
 msgstr "Отцепить"
 
@@ -563,42 +563,42 @@ msgstr "Неверный размер [%d] при обработке snap-size\n
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "Неверное количество уровней [%d] при обработке undo-levels\n"
 
-#: src/g_rc.c:1274
+#: src/g_rc.c:1289
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Неверный размер [%d] при обработке bus-ripper-size\n"
 
-#: src/g_rc.c:1349
+#: src/g_rc.c:1364
 #, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
 msgstr "Неверный размер точки [%d] при обработке grid-dot-size\n"
 
-#: src/g_rc.c:1390
+#: src/g_rc.c:1405
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
 msgstr "Неверные отступы [%d] при обработке grid-fixed-threshold\n"
 
-#: src/g_rc.c:1434
+#: src/g_rc.c:1449
 #, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "Неверное смещение [%d] при обработке add-attribute-offset\n"
 
-#: src/g_rc.c:1458
+#: src/g_rc.c:1473
 #, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr "Неверное число секунд [%d] при обработке auto-save-interval\n"
 
-#: src/g_rc.c:1499
+#: src/g_rc.c:1514
 #, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr "Неверное ускорение [%d] при обработке mousepan-gain\n"
 
-#: src/g_rc.c:1522
+#: src/g_rc.c:1537
 #, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr "Неверное ускорение [%d] при обработке keyboardpan-gain\n"
 
-#: src/g_rc.c:1568
+#: src/g_rc.c:1583
 #, fuzzy, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr "Неверное число секунд [%d] при обработке auto-save-interval\n"
@@ -775,7 +775,7 @@ msgstr ""
 msgid "Documentation for [%s,%s,%s,%s]\n"
 msgstr "Документация для [%s, %s, %s, %s]\n"
 
-#: src/i_callbacks.c:192 src/i_callbacks.c:1717
+#: src/i_callbacks.c:192 src/i_callbacks.c:1738
 #, c-format
 msgid "New page created [%s]\n"
 msgstr "Создана новая страница [%s]\n"
@@ -873,158 +873,158 @@ msgstr "Правка типа линии"
 msgid "Edit Fill Type"
 msgstr "Правка типа заливки"
 
-#: src/i_callbacks.c:1622
+#: src/i_callbacks.c:1643
 msgid "Update Cues"
 msgstr "Обновить сигналы"
 
-#: src/i_callbacks.c:1761
+#: src/i_callbacks.c:1782
 msgid "Really revert page?"
 msgstr "Действительно возвратить страницу?"
 
-#: src/i_callbacks.c:1835
+#: src/i_callbacks.c:1856
 msgid "Copy 1"
 msgstr "Копирование 1"
 
-#: src/i_callbacks.c:1854
+#: src/i_callbacks.c:1875
 msgid "Copy 2"
 msgstr "Копирование 2"
 
-#: src/i_callbacks.c:1873
+#: src/i_callbacks.c:1894
 msgid "Copy 3"
 msgstr "Копирование 3"
 
-#: src/i_callbacks.c:1892
+#: src/i_callbacks.c:1913
 msgid "Copy 4"
 msgstr "Копирование 4"
 
-#: src/i_callbacks.c:1911
+#: src/i_callbacks.c:1932
 msgid "Copy 5"
 msgstr "Копирование 5"
 
-#: src/i_callbacks.c:1930
+#: src/i_callbacks.c:1951
 msgid "Cut 1"
 msgstr "Вырезка 1"
 
-#: src/i_callbacks.c:1949
+#: src/i_callbacks.c:1970
 msgid "Cut 2"
 msgstr "Вырезка 2"
 
-#: src/i_callbacks.c:1968
+#: src/i_callbacks.c:1989
 msgid "Cut 3"
 msgstr "Вырезка 3"
 
-#: src/i_callbacks.c:1987
+#: src/i_callbacks.c:2008
 msgid "Cut 4"
 msgstr "Вырезка 4"
 
-#: src/i_callbacks.c:2006
+#: src/i_callbacks.c:2027
 msgid "Cut 5"
 msgstr "Вырезка 5"
 
-#: src/i_callbacks.c:2022
+#: src/i_callbacks.c:2043
 msgid "Paste 1"
 msgstr "Вставка 1"
 
-#: src/i_callbacks.c:2031 src/i_callbacks.c:2055 src/i_callbacks.c:2079
-#: src/i_callbacks.c:2103 src/i_callbacks.c:2127
+#: src/i_callbacks.c:2052 src/i_callbacks.c:2076 src/i_callbacks.c:2100
+#: src/i_callbacks.c:2124 src/i_callbacks.c:2148
 msgid "Empty buffer"
 msgstr "Пустой буфер"
 
-#: src/i_callbacks.c:2046
+#: src/i_callbacks.c:2067
 msgid "Paste 2"
 msgstr "Вставка 2"
 
-#: src/i_callbacks.c:2070
+#: src/i_callbacks.c:2091
 msgid "Paste 3"
 msgstr "Вставка 3"
 
-#: src/i_callbacks.c:2094
+#: src/i_callbacks.c:2115
 msgid "Paste 4"
 msgstr "Вставка 4"
 
-#: src/i_callbacks.c:2118
+#: src/i_callbacks.c:2139
 msgid "Paste 5"
 msgstr "Вставка 5"
 
-#: src/i_callbacks.c:2261 src/x_window.c:527
+#: src/i_callbacks.c:2282 src/x_window.c:527
 msgid "Component"
 msgstr "Компонент"
 
-#: src/i_callbacks.c:2297 src/i_callbacks.c:2316
+#: src/i_callbacks.c:2318 src/i_callbacks.c:2337
 msgid "Attribute"
 msgstr "Атрибуты"
 
-#: src/i_callbacks.c:2783
+#: src/i_callbacks.c:2804
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "Поиск источника [%s]\n"
 
-#: src/i_callbacks.c:2807 src/i_callbacks.c:2808
+#: src/i_callbacks.c:2828 src/i_callbacks.c:2829
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "Невозможно найти источник [%s]\n"
 
-#: src/i_callbacks.c:2875
+#: src/i_callbacks.c:2896
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Поиск символа [%s]\n"
 
-#: src/i_callbacks.c:2962
+#: src/i_callbacks.c:2983
 msgid ""
 "This command retrieves the component documentation from the web, but there "
 "is no component selected"
 msgstr ""
 
-#: src/i_callbacks.c:3079
+#: src/i_callbacks.c:3100
 msgid "ShowN"
 msgstr "Показать N"
 
-#: src/i_callbacks.c:3109
+#: src/i_callbacks.c:3130
 msgid "ShowV"
 msgstr "Показать V"
 
-#: src/i_callbacks.c:3139
+#: src/i_callbacks.c:3160
 msgid "ShowB"
 msgstr "Показать B"
 
-#: src/i_callbacks.c:3170
+#: src/i_callbacks.c:3191
 msgid "VisToggle"
 msgstr "Перекл. видимости"
 
-#: src/i_callbacks.c:3191
+#: src/i_callbacks.c:3212
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Извините6 но это опция не функционального меню\n"
 
-#: src/i_callbacks.c:3279
+#: src/i_callbacks.c:3300
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr ""
 
-#: src/i_callbacks.c:3282
+#: src/i_callbacks.c:3303
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr ""
 
-#: src/i_callbacks.c:3299
+#: src/i_callbacks.c:3320
 msgid "Grid OFF\n"
 msgstr "Сетка выкл.\n"
 
-#: src/i_callbacks.c:3302
+#: src/i_callbacks.c:3323
 msgid "Grid ON\n"
 msgstr "Сетка вкл.\n"
 
-#: src/i_callbacks.c:3319
+#: src/i_callbacks.c:3340
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "Привязка ВЫКЛЮЧЕНА (Внимание!)\n"
 
-#: src/i_callbacks.c:3322
+#: src/i_callbacks.c:3343
 msgid "Snap ON\n"
 msgstr "Привязка ВКЛЮЧЕНА\n"
 
-#: src/i_callbacks.c:3342
+#: src/i_callbacks.c:3363
 msgid "Rubber band OFF \n"
 msgstr ""
 
-#: src/i_callbacks.c:3345
+#: src/i_callbacks.c:3366
 msgid "Rubber band ON\n"
 msgstr ""
 

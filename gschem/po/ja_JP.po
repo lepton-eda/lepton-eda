@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-14 07:59-0400\n"
+"POT-Creation-Date: 2007-08-19 22:54-0400\n"
 "PO-Revision-Date: 2002-10-05 20:00+0900\n"
 "Last-Translator: MIYAMOTO Takanori <pnms@jcom.home.ne.jp>\n"
 "Language-Team: japanese <ja@li.org>\n"
@@ -263,7 +263,7 @@ msgstr "表示"
 msgid "Redraw"
 msgstr "画面更新"
 
-#: src/rcstrings.c:65 src/i_callbacks.c:1519 src/i_callbacks.c:1588
+#: src/rcstrings.c:65 src/i_callbacks.c:1537 src/i_callbacks.c:1606
 msgid "Pan"
 msgstr "パン"
 
@@ -327,11 +327,11 @@ msgstr "追加"
 msgid "Component..."
 msgstr "部品..."
 
-#: src/rcstrings.c:83 src/i_callbacks.c:2337 src/i_callbacks.c:2359
+#: src/rcstrings.c:83 src/i_callbacks.c:2358 src/i_callbacks.c:2380
 msgid "Net"
 msgstr "ネット"
 
-#: src/rcstrings.c:84 src/i_callbacks.c:2403 src/i_callbacks.c:2426
+#: src/rcstrings.c:84 src/i_callbacks.c:2424 src/i_callbacks.c:2447
 #: src/x_window.c:547
 msgid "Bus"
 msgstr "バス"
@@ -344,23 +344,23 @@ msgstr "アトリビュート..."
 msgid "Text..."
 msgstr "テキスト..."
 
-#: src/rcstrings.c:87 src/i_callbacks.c:2507 src/i_callbacks.c:2526
+#: src/rcstrings.c:87 src/i_callbacks.c:2528 src/i_callbacks.c:2547
 msgid "Line"
 msgstr "線"
 
-#: src/rcstrings.c:88 src/i_callbacks.c:2548 src/i_callbacks.c:2567
+#: src/rcstrings.c:88 src/i_callbacks.c:2569 src/i_callbacks.c:2588
 msgid "Box"
 msgstr "ボックス"
 
-#: src/rcstrings.c:89 src/i_callbacks.c:2623 src/i_callbacks.c:2643
+#: src/rcstrings.c:89 src/i_callbacks.c:2644 src/i_callbacks.c:2664
 msgid "Circle"
 msgstr "円"
 
-#: src/rcstrings.c:90 src/i_callbacks.c:2665 src/i_callbacks.c:2684
+#: src/rcstrings.c:90 src/i_callbacks.c:2686 src/i_callbacks.c:2705
 msgid "Arc"
 msgstr "円弧"
 
-#: src/rcstrings.c:91 src/i_callbacks.c:2706 src/i_callbacks.c:2725
+#: src/rcstrings.c:91 src/i_callbacks.c:2727 src/i_callbacks.c:2746
 msgid "Pin"
 msgstr "ピン"
 
@@ -393,11 +393,11 @@ msgstr "ドキュメント表示/検索"
 msgid "Attributes"
 msgstr "アトリビュート"
 
-#: src/rcstrings.c:101 src/i_callbacks.c:2990
+#: src/rcstrings.c:101 src/i_callbacks.c:3011
 msgid "Attach"
 msgstr "アタッチ"
 
-#: src/rcstrings.c:102 src/i_callbacks.c:3039
+#: src/rcstrings.c:102 src/i_callbacks.c:3060
 msgid "Detach"
 msgstr "アタッチ解除"
 
@@ -564,42 +564,42 @@ msgstr "無効なサイズ[%d]がsnap-sizeに指定されました。\n"
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
 
-#: src/g_rc.c:1274
+#: src/g_rc.c:1289
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "無効なサイズ[%d]がbus-ripperに指定されました。\n"
 
-#: src/g_rc.c:1349
+#: src/g_rc.c:1364
 #, fuzzy, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
 msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
 
-#: src/g_rc.c:1390
+#: src/g_rc.c:1405
 #, fuzzy, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
 msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
 
-#: src/g_rc.c:1434
+#: src/g_rc.c:1449
 #, fuzzy, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
 
-#: src/g_rc.c:1458
+#: src/g_rc.c:1473
 #, fuzzy, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
 
-#: src/g_rc.c:1499
+#: src/g_rc.c:1514
 #, fuzzy, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr "無効なサイズ[%d]がsnap-sizeに指定されました。\n"
 
-#: src/g_rc.c:1522
+#: src/g_rc.c:1537
 #, fuzzy, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr "無効なサイズ[%d]がsnap-sizeに指定されました。\n"
 
-#: src/g_rc.c:1568
+#: src/g_rc.c:1583
 #, fuzzy, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
@@ -779,7 +779,7 @@ msgstr ""
 msgid "Documentation for [%s,%s,%s,%s]\n"
 msgstr ""
 
-#: src/i_callbacks.c:192 src/i_callbacks.c:1717
+#: src/i_callbacks.c:192 src/i_callbacks.c:1738
 #, fuzzy, c-format
 msgid "New page created [%s]\n"
 msgstr "新規ページを作成しました。[%s]\n"
@@ -878,159 +878,159 @@ msgstr "線種を編集"
 msgid "Edit Fill Type"
 msgstr "塗りつぶしを編集"
 
-#: src/i_callbacks.c:1622
+#: src/i_callbacks.c:1643
 msgid "Update Cues"
 msgstr "キュー更新"
 
-#: src/i_callbacks.c:1761
+#: src/i_callbacks.c:1782
 #, fuzzy
 msgid "Really revert page?"
 msgstr "戻す"
 
-#: src/i_callbacks.c:1835
+#: src/i_callbacks.c:1856
 msgid "Copy 1"
 msgstr "コピー1"
 
-#: src/i_callbacks.c:1854
+#: src/i_callbacks.c:1875
 msgid "Copy 2"
 msgstr "コピー2"
 
-#: src/i_callbacks.c:1873
+#: src/i_callbacks.c:1894
 msgid "Copy 3"
 msgstr "コピー3"
 
-#: src/i_callbacks.c:1892
+#: src/i_callbacks.c:1913
 msgid "Copy 4"
 msgstr "コピー4"
 
-#: src/i_callbacks.c:1911
+#: src/i_callbacks.c:1932
 msgid "Copy 5"
 msgstr "コピー5"
 
-#: src/i_callbacks.c:1930
+#: src/i_callbacks.c:1951
 msgid "Cut 1"
 msgstr "カット1"
 
-#: src/i_callbacks.c:1949
+#: src/i_callbacks.c:1970
 msgid "Cut 2"
 msgstr "カット2"
 
-#: src/i_callbacks.c:1968
+#: src/i_callbacks.c:1989
 msgid "Cut 3"
 msgstr "カット3"
 
-#: src/i_callbacks.c:1987
+#: src/i_callbacks.c:2008
 msgid "Cut 4"
 msgstr "カット4"
 
-#: src/i_callbacks.c:2006
+#: src/i_callbacks.c:2027
 msgid "Cut 5"
 msgstr "カット5"
 
-#: src/i_callbacks.c:2022
+#: src/i_callbacks.c:2043
 msgid "Paste 1"
 msgstr "ペースト1"
 
-#: src/i_callbacks.c:2031 src/i_callbacks.c:2055 src/i_callbacks.c:2079
-#: src/i_callbacks.c:2103 src/i_callbacks.c:2127
+#: src/i_callbacks.c:2052 src/i_callbacks.c:2076 src/i_callbacks.c:2100
+#: src/i_callbacks.c:2124 src/i_callbacks.c:2148
 msgid "Empty buffer"
 msgstr "バッファが空です。"
 
-#: src/i_callbacks.c:2046
+#: src/i_callbacks.c:2067
 msgid "Paste 2"
 msgstr "ペースト 2"
 
-#: src/i_callbacks.c:2070
+#: src/i_callbacks.c:2091
 msgid "Paste 3"
 msgstr "ペースト 3"
 
-#: src/i_callbacks.c:2094
+#: src/i_callbacks.c:2115
 msgid "Paste 4"
 msgstr "ペースト 4"
 
-#: src/i_callbacks.c:2118
+#: src/i_callbacks.c:2139
 msgid "Paste 5"
 msgstr "ペースト 5"
 
-#: src/i_callbacks.c:2261 src/x_window.c:527
+#: src/i_callbacks.c:2282 src/x_window.c:527
 msgid "Component"
 msgstr "部品"
 
-#: src/i_callbacks.c:2297 src/i_callbacks.c:2316
+#: src/i_callbacks.c:2318 src/i_callbacks.c:2337
 msgid "Attribute"
 msgstr "アトリビュート"
 
-#: src/i_callbacks.c:2783
+#: src/i_callbacks.c:2804
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "ソース検索中[%s]\n"
 
-#: src/i_callbacks.c:2807 src/i_callbacks.c:2808
+#: src/i_callbacks.c:2828 src/i_callbacks.c:2829
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "ソースが見付かりません。[%s]\n"
 
-#: src/i_callbacks.c:2875
+#: src/i_callbacks.c:2896
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "シンボル検索中[%s]\n"
 
-#: src/i_callbacks.c:2962
+#: src/i_callbacks.c:2983
 msgid ""
 "This command retrieves the component documentation from the web, but there "
 "is no component selected"
 msgstr ""
 
-#: src/i_callbacks.c:3079
+#: src/i_callbacks.c:3100
 msgid "ShowN"
 msgstr "N表示"
 
-#: src/i_callbacks.c:3109
+#: src/i_callbacks.c:3130
 msgid "ShowV"
 msgstr "表示V"
 
-#: src/i_callbacks.c:3139
+#: src/i_callbacks.c:3160
 msgid "ShowB"
 msgstr "表示B"
 
-#: src/i_callbacks.c:3170
+#: src/i_callbacks.c:3191
 msgid "VisToggle"
 msgstr "表示切替え"
 
-#: src/i_callbacks.c:3191
+#: src/i_callbacks.c:3212
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "機能しないメニューオプションです。\n"
 
-#: src/i_callbacks.c:3279
+#: src/i_callbacks.c:3300
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr ""
 
-#: src/i_callbacks.c:3282
+#: src/i_callbacks.c:3303
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr ""
 
-#: src/i_callbacks.c:3299
+#: src/i_callbacks.c:3320
 msgid "Grid OFF\n"
 msgstr "グリッド・オフ\n"
 
-#: src/i_callbacks.c:3302
+#: src/i_callbacks.c:3323
 msgid "Grid ON\n"
 msgstr "グリッド・オン\n"
 
-#: src/i_callbacks.c:3319
+#: src/i_callbacks.c:3340
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "スナップ・オフ(注意!)\n"
 
-#: src/i_callbacks.c:3322
+#: src/i_callbacks.c:3343
 msgid "Snap ON\n"
 msgstr "スナップ・オン\n"
 
-#: src/i_callbacks.c:3342
+#: src/i_callbacks.c:3363
 msgid "Rubber band OFF \n"
 msgstr "ラバーバンド・オフ\n"
 
-#: src/i_callbacks.c:3345
+#: src/i_callbacks.c:3366
 msgid "Rubber band ON\n"
 msgstr "ラバーバンド・オン\n"
 
