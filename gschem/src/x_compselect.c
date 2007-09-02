@@ -647,18 +647,13 @@ create_lib_tree_model (void)
 /* \brief On-demand refresh of the component library.
  * \par Function Description
  * Requests a rescan of the component library in order to pick up any
- * new signals, and then updates the component selector.  Handler for
- * the #COMPSELECT_RESPONSE_REFRESH response ID.
+ * new signals, and then updates the component selector. 
  */
 static void
-compselect_callback_refresh_library (Compselect *compselect,
-                                     gint response_id,
-                                     gpointer user_data) {
+compselect_callback_refresh_library (GtkButton *button, gpointer user_data) 
+{
+  Compselect *compselect = COMPSELECT (user_data);
   GtkTreeModel *model;
-
-  if (response_id != COMPSELECT_RESPONSE_REFRESH) {
-    return;
-  }
 
   /* Rescan the libraries for symbols */
   s_clib_refresh ();
@@ -872,6 +867,7 @@ create_lib_treeview (Compselect *compselect)
                                      /* GtkButton */
                                      "relief",    GTK_RELIEF_NONE,
                                      NULL));
+
   gtk_container_add (GTK_CONTAINER (button),
                      gtk_image_new_from_stock (GTK_STOCK_CLEAR,
                                                GTK_ICON_SIZE_SMALL_TOOLBAR));
@@ -884,6 +880,23 @@ create_lib_treeview (Compselect *compselect)
                       FALSE, FALSE, 0);
   /* set clear button of compselect */
   compselect->button_clear = GTK_BUTTON (button);
+
+  /* create the refresh button */
+  button = GTK_WIDGET (g_object_new (GTK_TYPE_BUTTON,
+                                     /* GtkWidget */
+                                     "sensitive", TRUE,
+                                     /* GtkButton */
+                                     "relief",    GTK_RELIEF_NONE,
+                                     NULL));
+  gtk_container_add (GTK_CONTAINER (button),
+                     gtk_image_new_from_stock (GTK_STOCK_REFRESH,
+                                            GTK_ICON_SIZE_SMALL_TOOLBAR));
+  /* add the refresh button to the filter area */
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  g_signal_connect (button,
+                    "clicked",
+                    G_CALLBACK (compselect_callback_refresh_library),
+                    compselect);
                                      
   /* add the filter area to the vertical box */
   gtk_box_pack_start (GTK_BOX (vbox), hbox,
@@ -1149,24 +1162,16 @@ compselect_init (Compselect *compselect)
                           /*  - update button */
                           GTK_STOCK_APPLY, COMPSELECT_RESPONSE_PLACE,
 			  GTK_STOCK_OK, COMPSELECT_RESPONSE_HIDE,
-                          /*  - refresh button */
-                          GTK_STOCK_REFRESH, COMPSELECT_RESPONSE_REFRESH,
                           NULL);
 
 #if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(compselect),
-                                          COMPSELECT_RESPONSE_REFRESH,
 					  COMPSELECT_RESPONSE_HIDE,
 					  COMPSELECT_RESPONSE_PLACE,
 					  GTK_RESPONSE_CLOSE,
 					  -1);
 #endif
-
-  /* Add refresh handler */
-  g_signal_connect (compselect, "response",
-                    G_CALLBACK (compselect_callback_refresh_library),
-                    NULL);
 
   /* Initialize the hidden property */
   compselect->hidden = FALSE;
