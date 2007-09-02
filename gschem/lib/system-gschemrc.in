@@ -1283,7 +1283,9 @@
     ("Shift Z" . view-zoom-out-hotkey)
     ("Control x" . buffer-cut1)
     ("Control c" . buffer-copy1)
-    ("Control v" . buffer-paste1-hotkey)))
+    ("Control v" . buffer-paste1-hotkey)
+    ("Control z" . edit-undo)
+    ("Control y" . edit-redo)))
 
 ; finally set the keymap point to the newly created datastructure 
 (define current-keymap global-keymap)
