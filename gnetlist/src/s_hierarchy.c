@@ -50,6 +50,7 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
     int looking_inside = FALSE;
     int loaded_flag = FALSE;
     char *current_filename;
+    int graphical=FALSE;
 
     attrib = o_attrib_search_name_single_count(o_current, "source", 0);
 
@@ -57,10 +58,21 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
     if (attrib == NULL) {
 	attrib = o_attrib_search_name(o_current->complex->prim_objs,
 				      "source", count);
+
 	looking_inside = TRUE;
 #if DEBUG
 	printf("going to look inside now\n");
 #endif
+    }
+
+    graphical = s_hierarchy_graphical_search(o_current, count);
+    if (graphical) {
+	/* Do not bother traversing the hierarchy if the symbol has an */
+	/* graphical attribute attached to it. */
+	if (attrib) {
+	    g_free(attrib);
+ 	    attrib = NULL;
+	}
     }
 
     while (attrib) {
@@ -148,6 +160,16 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 	    attrib = o_attrib_search_name(o_current->complex->prim_objs,
 					  "source", count);
 	}
+
+        graphical = s_hierarchy_graphical_search(o_current, count);
+        if (graphical) {
+	  /* Do not bother looking further in the hierarchy if the symbol */
+          /* has an graphical attribute attached to it. */
+	  if (attrib) {
+	     g_free(attrib);
+	     attrib = NULL;
+          } 
+       }
     }
 }
 
@@ -616,3 +638,24 @@ char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
 
     return (return_value);
 }
+
+int 
+s_hierarchy_graphical_search(OBJECT* o_current, int count)
+{
+    char *graphical_attrib;
+    graphical_attrib = o_attrib_search_name_single_count(o_current, 
+                                                         "graphical", count);
+
+    if (graphical_attrib == NULL) {
+       graphical_attrib = o_attrib_search_name(o_current->complex->prim_objs,
+                                               "graphical", count);
+    }
+ 
+    if (graphical_attrib) {
+      g_free(graphical_attrib);      
+      return TRUE;
+    }
+  
+    return FALSE;
+}
+

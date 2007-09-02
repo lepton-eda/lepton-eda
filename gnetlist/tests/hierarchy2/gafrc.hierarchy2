@@ -1,0 +1,22 @@
+(source-library "${TESTDIR}")
+(component-library "${TESTDIR}")
+;(net-naming-priority "label")
+
+;(hierarchy-traversal "disabled")
+;(hierarchy-uref-mangle "disabled") 
+;(hierarchy-netname-mangle "disabled")
+;(hierarchy-netattrib-mangle "disabled")
+
+;(hierarchy-netname-separator ".")
+;(hierarchy-uref-separator ".")
+;(hierarchy-netattrib-separator ".")
+
+;(hierarchy-netname-order "prepend")
+;(hierarchy-uref-order "prepend")
+;(hierarchy-netattrib-order "prepend")
+
+
+
+
+
+

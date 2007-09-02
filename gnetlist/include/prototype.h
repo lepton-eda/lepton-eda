@@ -62,6 +62,7 @@ char *s_hierarchy_create_netname(TOPLEVEL *pr_current, char *basename, char *hie
 char *s_hierarchy_create_netattrib(TOPLEVEL *pr_current, char *basename, char *hierarchy_tag);
 void s_hierarchy_remove_uref_mangling(TOPLEVEL *pr_current, NETLIST *head);
 char *s_hierarchy_return_baseuref(TOPLEVEL *pr_current, char *uref);
+int s_hierarchy_graphical_search(OBJECT* o_current, int count);
 /* s_misc.c */
 void verbose_print(char *string);
 void verbose_done(void);

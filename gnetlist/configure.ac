@@ -436,6 +436,7 @@ AC_CONFIG_FILES([Makefile
 		 examples/Makefile 
 		 tests/Makefile 
 		 tests/hierarchy/Makefile 
+		 tests/hierarchy2/Makefile 
 		 tests/drc2/Makefile
 		 tests/spice-sdb/Makefile
 		 tests/spice-sdb/inputs/Makefile
