@@ -148,7 +148,7 @@ void o_lock(TOPLEVEL *w_current)
     s_current=s_current->next;
   }
 
-  o_unselect_all(w_current);
+  if (!w_current->SHIFTKEY) o_select_unselect_all(w_current);
   o_undo_savestate(w_current, UNDO_ALL);
   i_update_menus(w_current);
 }

@@ -675,7 +675,7 @@ void o_complex_translate_all(TOPLEVEL *w_current, int offset)
    * places */
   a_zoom_extents(w_current, w_current->page_current->object_head, 
                  A_PAN_DONT_REDRAW);
-  o_unselect_all(w_current);
+  if (!w_current->SHIFTKEY) o_select_unselect_all(w_current);
   o_redraw_all(w_current);
   w_current->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);

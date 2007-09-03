@@ -473,7 +473,6 @@ OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibili
 void o_redraw_all(TOPLEVEL *w_current);
 void o_redraw_all_fast(TOPLEVEL *w_current);
 void o_redraw(TOPLEVEL *w_current, OBJECT *object_list, gboolean draw_selected);
-void o_unselect_all(TOPLEVEL *w_current);
 void o_draw_list(TOPLEVEL *w_current, GList *list);
 void o_draw_selected(TOPLEVEL *w_current);
 void o_erase_selected(TOPLEVEL *w_current);

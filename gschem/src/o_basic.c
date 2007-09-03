@@ -143,20 +143,6 @@ void o_redraw(TOPLEVEL *w_current, OBJECT *object_list, gboolean draw_selected)
  *  \par Function Description
  *
  */
-void o_unselect_all(TOPLEVEL *w_current)
-{
-  if (!w_current->SHIFTKEY) {
-    o_select_run_hooks(w_current, NULL, 2);
-    o_selection_unselect_list(w_current,
-                              w_current->page_current->selection_list );
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 void o_draw_list(TOPLEVEL *w_current, GList* list)
 {
   OBJECT* o_current;
