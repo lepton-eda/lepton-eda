@@ -55,7 +55,7 @@
 #endif
 
 static void
-x_window_create_menu(GtkWidget **menubar);
+x_window_create_menu(GtkWindow *window, GtkWidget **menubar);
 
 /*! \brief This function initializes the toplevel gtksheet stuff. 
  *
@@ -80,9 +80,6 @@ x_window_init()
   /*  window is a global declared in globals.h.  */
   window = gtk_window_new(GTK_WINDOW_TOPLEVEL);  
 
-  /* I attach a pointer to window to the TOPLEVEL structure */
-  pr_current->main_window = window;
-  
   gtk_window_set_title( GTK_WINDOW(window), "gattrib -- gEDA attribute editor"); 
   gtk_window_set_default_size(GTK_WINDOW(window), 750, 600);  
   
@@ -96,8 +93,7 @@ x_window_init()
   gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(main_vbox) );
 
   /* -----  Now create menu bar  ----- */  
-  x_window_create_menu(&menu_bar);
-  pr_current->menubar = menu_bar;    /* attach pointer to menu_bar to (TOPLEVEL pr_current) */
+  x_window_create_menu(GTK_WINDOW(window), &menu_bar);
   gtk_box_pack_start(GTK_BOX (main_vbox), menu_bar, FALSE, TRUE, 0);
 
   /* -----  Now init notebook widget  ----- */  
@@ -223,7 +219,7 @@ static const GtkActionEntry actions[] = {
  *  to the menu bar is retrieved from the GtkUIManager object.
  */
 static void
-x_window_create_menu(GtkWidget **menubar)
+x_window_create_menu(GtkWindow *window, GtkWidget **menubar)
 {
   gchar *menu_file;
   GtkUIManager *ui;
@@ -249,8 +245,7 @@ x_window_create_menu(GtkWidget **menubar)
 
   g_free(menu_file);
 
-  gtk_window_add_accel_group (GTK_WINDOW(pr_current->main_window),
-      gtk_ui_manager_get_accel_group(ui));
+  gtk_window_add_accel_group (window, gtk_ui_manager_get_accel_group(ui));
 
   *menubar = gtk_ui_manager_get_widget(ui, "/ui/menubar/");
 }
