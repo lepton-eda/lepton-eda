@@ -23,7 +23,6 @@
 
 #include <libgeda/libgeda.h>
 
-#include "../include/x_event.h"
 #include "../include/i_vars.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"

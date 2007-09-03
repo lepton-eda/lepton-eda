@@ -25,7 +25,6 @@
 #include <libgeda/libgeda.h>
 
 #include "../include/globals.h"
-#include "../include/x_event.h"
 #include "../include/prototype.h"
 
 #ifdef HAVE_LIBDMALLOC
