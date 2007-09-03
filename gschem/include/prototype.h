@@ -780,6 +780,7 @@ void show_text_dialog(TOPLEVEL *w_current);
 void major_changed_dialog(TOPLEVEL* w_current);
 void x_dialog_close_changed_page (TOPLEVEL *toplevel, PAGE *page);
 gboolean x_dialog_close_window (TOPLEVEL *toplevel);
+int x_dialog_validate_attribute(GtkWindow* parent, char *attribute);
 /* x_event.c */
 gint x_event_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current);
 gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event, TOPLEVEL *w_current);
