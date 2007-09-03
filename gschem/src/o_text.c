@@ -454,8 +454,7 @@ void o_text_end(TOPLEVEL *w_current)
   w_current->override_color = -1;
 
   w_current->page_current->CHANGED=1;
-  o_select_run_hooks( w_current, NULL, 2 );
-  o_selection_unselect_list( w_current, w_current->page_current->selection_list );
+  o_select_unselect_all( w_current );
   o_selection_add( w_current->page_current->selection_list, w_current->page_current->object_tail );
 
   /* object_tail is the object that was just added */

@@ -501,8 +501,7 @@ void o_copy_end(TOPLEVEL *w_current)
                    x_get_darkcolor(w_current->bb_color), TRUE);
   }
 
-  o_select_run_hooks( w_current, NULL, 2 );
-  o_selection_unselect_list( w_current, w_current->page_current->selection_list );
+  o_select_unselect_all( w_current );
   geda_list_add_glist( w_current->page_current->selection_list, geda_list_get_glist( temp_list ) );
 
   g_object_unref( temp_list );

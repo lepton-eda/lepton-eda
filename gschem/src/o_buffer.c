@@ -239,9 +239,7 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
   g_list_free(connected_objects);
   connected_objects = NULL;
 
-  o_select_run_hooks(w_current, NULL, 2); 
-
-  o_selection_unselect_list( w_current, w_current->page_current->selection_list );
+  o_select_unselect_all( w_current );
   geda_list_add_glist( w_current->page_current->selection_list, geda_list_get_glist( temp_list ) );
 
   g_object_unref( temp_list );
