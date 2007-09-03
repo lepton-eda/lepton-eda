@@ -4004,17 +4004,18 @@ x_dialog_close_changed_page (TOPLEVEL *toplevel, PAGE *page)
 gboolean
 x_dialog_close_window (TOPLEVEL *toplevel)
 {
-	GtkWidget *dialog;
+  GList *iter;
+  GtkWidget *dialog;
   PAGE *p_current;
   GList *unsaved_pages, *p_unsaved;
   gboolean ret = FALSE;
 
-  /* build a list of unsaved pages */
-  g_assert (toplevel->page_head != NULL &&
-            toplevel->page_head->next != NULL);
-  for (p_current = toplevel->page_head->next, unsaved_pages = NULL;
-       p_current != NULL;
-       p_current = p_current->next) {
+  for ( iter = geda_list_get_glist( toplevel->pages ), unsaved_pages = NULL;
+        iter != NULL;
+        iter = g_list_next( iter ) ) {
+
+    p_current = (PAGE*)iter->data;
+
     if (p_current->CHANGED) {
       unsaved_pages = g_list_append (unsaved_pages, (gpointer)p_current);
     }

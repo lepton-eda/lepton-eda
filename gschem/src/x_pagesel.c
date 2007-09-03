@@ -508,13 +508,15 @@ static void pagesel_init (Pagesel *pagesel)
  *
  *  \param [in] model   GtkTreeModel to update.
  *  \param [in] parent  GtkTreeIter pointer to tree root.
+ *  \param [in] pages   GedaPageList of pages for this toplevel.
  *  \param [in] page    The PAGE object to update tree model from.
  */
 static void add_page (GtkTreeModel *model, GtkTreeIter *parent,
-		      PAGE *page)
+                      GedaPageList *pages, PAGE *page)
 {
   GtkTreeIter iter;
   PAGE *p_current;
+  GList *p_iter;
 
   /* add the page to the store */
   gtk_tree_store_append (GTK_TREE_STORE (model),
@@ -526,16 +528,17 @@ static void add_page (GtkTreeModel *model, GtkTreeIter *parent,
                       COLUMN_NAME, page->page_filename,
                       COLUMN_CHANGED, page->CHANGED,
                       -1);
-  
+
   /* search a page that has a up field == p_current->pid */
-  for (p_current = page->next;
-       p_current != NULL;
-       p_current = p_current->next) {
+  for ( p_iter = geda_list_get_glist( pages );
+        p_iter != NULL;
+        p_iter = g_list_next( p_iter ) ) {
+
+    p_current = (PAGE *)p_iter->data;
     if (p_current->up == page->pid) {
-      add_page (model, &iter, p_current);
+      add_page (model, &iter, pages, p_current);
     }
   }
-  
 }
 
 /*! \todo Finish function documentation!!!
@@ -583,6 +586,7 @@ void pagesel_update (Pagesel *pagesel)
   GtkTreeModel *model;
   TOPLEVEL *toplevel;
   PAGE *p_current;
+  GList *iter;
 
   g_assert (IS_PAGESEL (pagesel));
 
@@ -594,14 +598,16 @@ void pagesel_update (Pagesel *pagesel)
   /* wipe out every thing in the store */
   gtk_tree_store_clear (GTK_TREE_STORE (model));
   /* now rebuild */
-  for (p_current = toplevel->page_head->next;
-       p_current != NULL;
-       p_current = p_current->next) {
+  for ( iter = geda_list_get_glist( toplevel->pages );
+        iter != NULL;
+        iter = g_list_next( iter ) ) {
+
+    p_current = (PAGE *)iter->data;
     /* find every page that is not a hierarchy-down of another page */
     if (p_current->up < 0 ||
-        s_hierarchy_find_page (toplevel->page_head->next,
+        s_hierarchy_find_page (toplevel->pages,
                                p_current->up) == NULL) {
-      add_page (model, NULL, p_current);
+      add_page (model, NULL, toplevel->pages, p_current);
     }
   }
 

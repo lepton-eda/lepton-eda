@@ -202,7 +202,7 @@ char *o_attrib_search_component(OBJECT *object, char *name);
 void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object);
 void o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target);
 int o_attrib_count_toplevel(TOPLEVEL *w_current, char *name);
-char *o_attrib_search_toplevel_all(PAGE *page_head, char *name);
+char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name);
 OBJECT **o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object);
 void o_attrib_free_returned(OBJECT **found_objects);
 
@@ -549,9 +549,9 @@ void s_hierarchy_down_symbol (TOPLEVEL *w_current, const CLibSymbol *symbol, PAG
 void s_hierarchy_up(TOPLEVEL *w_current, int pid);
 GList* s_hierarchy_traversepages(TOPLEVEL *w_current, gint flags);
 gint s_hierarchy_print_page(PAGE *p_current, void * data);
-PAGE *s_hierarchy_find_prev_page(PAGE *p_start, int page_control);
-PAGE *s_hierarchy_find_next_page(PAGE *p_start, int page_control);
-PAGE *s_hierarchy_find_page(PAGE *p_start, int pid);
+PAGE *s_hierarchy_find_prev_page(GedaPageList *page_list, PAGE *current_page, int page_control);
+PAGE *s_hierarchy_find_next_page(GedaPageList *page_list, PAGE *current_page, int page_control);
+PAGE *s_hierarchy_find_page(GedaPageList *page_list, int pid);
 
 /* s_log.c */
 void s_log_init (const gchar *filename);
@@ -569,15 +569,13 @@ void s_menu_init(void);
 /* s_page.c */
 PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename);
 void s_page_delete (TOPLEVEL *toplevel, PAGE *page);
-void s_page_init_list (TOPLEVEL *toplevel);
 void s_page_delete_list(TOPLEVEL *toplevel);
 void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new);
 PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename);
-PAGE* s_page_search_pid(TOPLEVEL * toplevel, gint page_id);
 void s_page_print_all (TOPLEVEL *toplevel);
 gint s_page_save_all (TOPLEVEL *toplevel);
-gboolean s_page_check_changed (PAGE *head);
-void s_page_clear_changed (PAGE *head);
+gboolean s_page_check_changed (GedaPageList *list);
+void s_page_clear_changed (GedaPageList *list);
 void s_page_autosave_init(TOPLEVEL *toplevel);
 gint s_page_autosave (TOPLEVEL *w_current);
 

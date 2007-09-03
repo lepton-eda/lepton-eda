@@ -1163,6 +1163,7 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
  */
 void o_autosave_backups(TOPLEVEL *toplevel)
 {
+  GList *iter;
   PAGE *p_save, *p_current;
   gchar *backup_filename;
   gchar *real_filename;
@@ -1172,15 +1173,14 @@ void o_autosave_backups(TOPLEVEL *toplevel)
   mode_t mask;
   struct stat st;
 
-  g_assert (toplevel->page_head != NULL &&
-            toplevel->page_head->pid == -1);
-
   /* save current page */
   p_save = toplevel->page_current;
-  
-  for (p_current = toplevel->page_head->next;
-       p_current != NULL;
-       p_current = p_current->next) {
+
+  for ( iter = geda_list_get_glist( toplevel->pages );
+        iter != NULL;
+        iter = g_list_next( iter ) ) {
+
+    p_current = (PAGE *)iter->data;
 
     if (p_current->do_autosave_backup == 0) {
       continue;

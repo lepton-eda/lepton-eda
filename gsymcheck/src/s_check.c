@@ -41,25 +41,23 @@
 int
 s_check_all(TOPLEVEL *pr_current)
 {
+  GList *iter;
   PAGE *p_current;
   int return_status=0;
 
-  p_current = pr_current->page_head;
 
+  for ( iter = geda_list_get_glist( pr_current->pages );
+        iter != NULL;
+        iter = g_list_next( iter ) ) {
 
-  while(p_current != NULL) {
-    if (p_current->pid != -1) {
+    p_current = (PAGE *)iter->data;
 
-      if (p_current->object_head) {
-        return_status = return_status + 
-          s_check_symbol(pr_current, p_current, 
-                         p_current->object_head);
-        if (!quiet_mode) s_log_message("\n");
-      }
-
+    if (p_current->object_head) {
+      return_status = return_status +
+        s_check_symbol(pr_current, p_current,
+                       p_current->object_head);
+      if (!quiet_mode) s_log_message("\n");
     }
-
-    p_current = p_current->next;
   }
 
   return(return_status);

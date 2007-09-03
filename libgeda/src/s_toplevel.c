@@ -41,6 +41,8 @@
 
 #include "../include/prototype.h"
 
+#include "geda_list.h"
+
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
@@ -154,12 +156,10 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->CONTROLKEY = 0;
   toplevel->SHIFTKEY   = 0;
   toplevel->ALTKEY     = 0;
-	
+
   toplevel->doing_pan = 0;
-  
-  /* Put head node on page list... */
-  toplevel->page_head = NULL;
-  s_page_init_list (toplevel);
+
+  toplevel->pages = geda_list_new();
   toplevel->page_current = NULL;
 
   toplevel->buffer_number = 0;
@@ -500,13 +500,16 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
 
   /* delete all pages */
   s_page_delete_list (toplevel);
-  
+
+  /* Delete the page list */
+  g_object_unref(toplevel->pages);
+
   /* unlink toplevel from toplevel list */
   toplevel->prev->next = toplevel->next;
   if (toplevel->next != NULL) {
     toplevel->next->prev = toplevel->prev;
   }
-  
+
   g_free (toplevel);
-  
+
 }

@@ -34,6 +34,8 @@
 #include "o_types.h"
 #include "colors.h"
 
+#include "geda_list.h"
+
 #include "../include/prototype.h"
 
 #ifdef HAVE_LIBDMALLOC
@@ -2390,18 +2392,20 @@ void o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target)
 /* returns the number of toplevel attributes in all loaded pages */
 int o_attrib_count_toplevel(TOPLEVEL *w_current, char *name)
 {
+  const GList *iter;
   int ret_value=0;
   int counter=0;
   PAGE *p_current;
   char *string;
 
-  p_current = w_current->page_head;
+  iter = geda_list_get_glist( w_current->pages );
 
-  while(p_current != NULL) {
+  while( iter != NULL ) {
+    p_current = (PAGE *)iter->data;
 
     counter = 0;
-    string = o_attrib_search_name(p_current->object_head, 
-                                  name, counter); 
+    string = o_attrib_search_name(p_current->object_head,
+                                  name, counter);
     printf("%s %d\n", name, counter);
     while(string) {
       printf("inside\n");
@@ -2410,11 +2414,11 @@ int o_attrib_count_toplevel(TOPLEVEL *w_current, char *name)
       string=NULL;
       counter++;
 
-      string = o_attrib_search_name(p_current->object_head, 
-                                    name, counter); 
+      string = o_attrib_search_name(p_current->object_head,
+                                    name, counter);
     }
 
-    p_current=p_current->next;
+    iter = g_list_next( iter );
   }
   return(ret_value);
 }
@@ -2426,34 +2430,31 @@ int o_attrib_count_toplevel(TOPLEVEL *w_current, char *name)
  *  The caller is responsible for freeing the returned value.
  *  See #o_attrib_search_toplevel() for other comments.
  *
- *  \param [in] page_head  PAGE head object to search through.
+ *  \param [in] page_list  Page list to search through.
  *  \param [in] name       Character string name to search for.
  *  \return Character string from the found attribute, NULL otherwise.
  */
-char *o_attrib_search_toplevel_all(PAGE *page_head, char *name)
+char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name)
 {
+  const GList *iter;
   PAGE *p_current;
   char *ret_value=NULL;
 
-  p_current = page_head;
+  iter = geda_list_get_glist( page_list );
 
-  while (p_current != NULL) {
+  while( iter != NULL ) {
+    p_current = (PAGE *)iter->data;
 
-
-    /* don't look into the head of page_head */
-    if (p_current->pid != -1) {
-
-      /* only look for first occurrance of the attribute */
-      ret_value = o_attrib_search_toplevel(
-                                           p_current->object_head, 
-                                           name, 0);
-    }
+    /* only look for first occurrance of the attribute */
+    ret_value = o_attrib_search_toplevel(
+                                         p_current->object_head,
+                                         name, 0);
 
     if (ret_value != NULL) {
       return(ret_value);
     }
-		
-    p_current = p_current->next;
+
+    iter = g_list_next( iter );
   }
 
   return(NULL);
