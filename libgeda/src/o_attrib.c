@@ -972,36 +972,6 @@ void o_attrib_free_current(TOPLEVEL *toplevel)
   toplevel->current_attribute=NULL;
 }
 
-/*! \brief Set current show flag.
- *  \par Function Description
- *  Set current show flag.
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] flag       Any value which show_name_value takes.
- *                         #SHOW_NAME_VALUE
- *                         #SHOW_VALUE
- *                         #SHOW_NAME
- */
-void o_attrib_set_show(TOPLEVEL *toplevel, int flag)
-{
-  toplevel->current_show = flag;
-}
-
-/*! \brief Set current visibility flag.
- *  \par Function Description
- *  Set current visibility flag.
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] flag       Allowed values are:
- *                         #VISIBLE
- *                         #INVISIBLE
- */
-void
-o_attrib_set_visible(TOPLEVEL *toplevel, int flag)
-{
-  toplevel->current_visible = flag;
-}
-
 /*! \brief Set an attribute's string.
  *  \par Function Description
  *  Set an attribute's string.
