@@ -342,18 +342,6 @@ static void gschem_dialog_get_property (GObject *object, guint property_id, GVal
 }
 
 
-/*! \brief GType instance initialiser for GschemDialog
- *
- *  \par Function Description
- *  GType instance initialiser for GschemDialog. Nothing to do here.
- *
- *  \param [in]  dialog       The GschemDialog we are initialising
- */
-static void gschem_dialog_init (GschemDialog *dialog)
-{
-}
-
-
 /*! \brief GType class initialiser for GschemDialog
  *
  *  \par Function Description
@@ -449,7 +437,7 @@ GType gschem_dialog_get_type ()
       NULL, /* class_data */
       sizeof(GschemDialog),
       0,    /* n_preallocs */
-      (GInstanceInitFunc) gschem_dialog_init,
+      NULL, /* instance_init */
     };
 
     gschem_dialog_type = g_type_register_static (GTK_TYPE_DIALOG,

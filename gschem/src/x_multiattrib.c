@@ -260,8 +260,6 @@ static void celltextview_cell_editable_init(GtkCellEditableIface *iface)
  * of GTK 2.4 (LGPL).
  */
 static void cellrenderermultilinetext_class_init(CellRendererMultiLineTextClass *klass);
-static void cellrenderermultilinetext_init (CellRendererMultiLineText *self);
-
 static void cellrenderermultilinetext_editing_done (GtkCellEditable *cell_editable,
                                                     gpointer         user_data);
 static gboolean cellrenderermultilinetext_focus_out_event (GtkWidget *widget,
@@ -401,7 +399,7 @@ GType cellrenderermultilinetext_get_type()
       NULL, /* class_data */
       sizeof(CellRendererMultiLineText),
       0,    /* n_preallocs */
-      (GInstanceInitFunc) cellrenderermultilinetext_init,
+      NULL, /* instance_init */
     };
 		
     cellrenderermultilinetext_type = g_type_register_static (
@@ -425,15 +423,6 @@ static void cellrenderermultilinetext_class_init(CellRendererMultiLineTextClass 
 
   cell_class->start_editing = cellrenderermultilinetext_start_editing;
   
-}
-
-/*! \todo Finish function documentation
- *  \brief
- *  \par Function Description
- *
- */
-static void cellrenderermultilinetext_init(CellRendererMultiLineText *self)
-{
 }
 
 
