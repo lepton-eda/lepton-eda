@@ -79,54 +79,6 @@
 
 /* ----- x_fileselect stuff begins here ----- */
 
-/* ------------------------------------------------------------- *
- * I think this puts the new filename back into pr_current as part
- * of a "save as" operation.  This was originally i_set_filename
- * in gschem/src/i_basic.c
- * ------------------------------------------------------------- */
-static void x_fileselect_set_filename(TOPLEVEL * w_current, const char *string)
-{
-  char trunc_string[41];
-  int len;
-  int i;
-
-  if (!w_current->filename_label) {
-    return;
-  }
-
-  if (string) {
-    len = strlen(string);
-    w_current->DONT_RESIZE = 1;
-
-    if (w_current->filename_label) {
-      if (len > 40) {
-
-	trunc_string[0] = '.';
-	trunc_string[1] = '.';
-	trunc_string[2] = '.';
-
-	trunc_string[40] = '\0';
-	for (i = 39; i > 2; i--) {
-	  if (len >= 0) {
-	    trunc_string[i] = string[len];
-	  } else {
-	    break;
-	  }
-	  len--;
-	}
-
-	gtk_label_set(GTK_LABEL(w_current->filename_label), trunc_string);
-
-      } else {
-
-	gtk_label_set(GTK_LABEL(w_current->
-				filename_label), (char *) string);
-      }
-    }
-  }
-  return;
-}
-
 /*------------------------------------------------------------------
  * This fcn creates and sets the file filter for the filechooser.
  *------------------------------------------------------------------*/
@@ -356,9 +308,6 @@ x_fileselect_save (void)
         f_save (pr_current, filename)) {
       s_log_message ("Saved As [%s]\n", filename);
 
-      /* Update filename for "saveas" operation */
-      x_fileselect_set_filename (pr_current, filename); 
-      
       /* replace page filename with new one, do not free filename */
       g_free (pr_current->page_current->page_filename);
       pr_current->page_current->page_filename = filename;
