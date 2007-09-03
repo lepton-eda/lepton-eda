@@ -176,12 +176,9 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->toolbar_rotate = NULL;
   toplevel->toolbar_mirror = NULL;
 
-  toplevel->fowindow = NULL;
-  toplevel->fswindow = NULL;
   toplevel->sowindow = NULL;
   toplevel->saveas_flag = 0;
 
-  toplevel->aswindow      = NULL;
   toplevel->attr_list     = NULL;
   toplevel->asentry_name  = NULL;
   toplevel->asentry_value = NULL;
@@ -200,11 +197,8 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->tiwindow = NULL;
   toplevel->tewindow = NULL;
   toplevel->teentry  = NULL;
-  toplevel->ltwindow = NULL;
-  toplevel->ftwindow = NULL;
   toplevel->sewindow = NULL;
   toplevel->seentry  = NULL;
-  toplevel->exwindow = NULL;
   toplevel->aawindow = NULL;
   toplevel->mawindow = NULL;
   toplevel->aewindow = NULL;

@@ -542,14 +542,11 @@ struct st_toplevel {
   GtkWidget *toolbar_mirror;
 
   /* Dialog boxes */
-  GtkWidget *fowindow;			/* File open */
-  GtkWidget *fswindow;			/* File save */
   GtkWidget *sowindow;			/* Script open */
   GtkWidget *pfswindow;                 /* Picture File Selection window */
   GtkWidget *pcfswindow;                /* Picture Change File Selection window */
   int saveas_flag;     			/* what action after save? */
 
-  GtkWidget *aswindow;			/* Attribute select */
   GtkWidget *attr_list;
   GtkWidget *asentry_name;
   GtkWidget *asentry_value; 
@@ -567,11 +564,8 @@ struct st_toplevel {
   GtkWidget *tiwindow;			/* text input */
   GtkWidget *tewindow;			/* text edit */
   GtkWidget *teentry;
-  GtkWidget *ltwindow;			/* line type / width edit */
-  GtkWidget *ftwindow;			/* fill type edit (PB) */
   GtkWidget *sewindow;			/* slot edit */
   GtkWidget *seentry;
-  GtkWidget *exwindow;			/* exit confirm */
   GtkWidget *aawindow;			/* arc attribs */
   GtkWidget *mawindow;			/* multi attribute */
   GtkWidget *aewindow;			/* attribute edit */

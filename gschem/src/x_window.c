@@ -92,14 +92,10 @@ void x_window_setup (TOPLEVEL *toplevel)
   toplevel->grid_label = NULL;
 
   toplevel->cswindow = NULL;
-  toplevel->aswindow = NULL;
-  toplevel->fowindow = NULL;
   toplevel->sowindow = NULL;
-  toplevel->fswindow = NULL;
 
   toplevel->tiwindow = NULL;
   toplevel->tewindow = NULL;
-  toplevel->exwindow = NULL;
   toplevel->aawindow = NULL;
   toplevel->mawindow = NULL;
   toplevel->aewindow = NULL;
@@ -111,8 +107,6 @@ void x_window_setup (TOPLEVEL *toplevel)
   toplevel->hkwindow = NULL;
   toplevel->cowindow = NULL;
   toplevel->clwindow = NULL;
-  toplevel->ltwindow = NULL;
-  toplevel->ftwindow = NULL;
   toplevel->sewindow = NULL;
 
   toplevel->coord_world = NULL;
@@ -723,17 +717,8 @@ void x_window_close(TOPLEVEL *w_current)
 #endif
 
   /* close all the dialog boxes */
-  if (w_current->fowindow)
-  gtk_widget_destroy(w_current->fowindow);
-
   if (w_current->sowindow)
   gtk_widget_destroy(w_current->sowindow);
-
-  if (w_current->fswindow)
-  gtk_widget_destroy(w_current->fswindow);
-
-  if (w_current->aswindow)
-  gtk_widget_destroy(w_current->aswindow);
 
   if (w_current->cswindow)
   gtk_widget_destroy(w_current->cswindow);
@@ -757,9 +742,6 @@ void x_window_close(TOPLEVEL *w_current)
 
   x_pagesel_close (w_current);
 
-  if (w_current->exwindow)
-  gtk_widget_destroy(w_current->exwindow);
-
   if (w_current->tswindow)
   gtk_widget_destroy(w_current->tswindow);
 
@@ -777,9 +759,6 @@ void x_window_close(TOPLEVEL *w_current)
 
   if (w_current->clwindow)
   gtk_widget_destroy(w_current->clwindow);
-
-  if (w_current->ltwindow)
-  gtk_widget_destroy(w_current->ltwindow);
 
   if (w_current->sewindow)
   gtk_widget_destroy(w_current->sewindow);

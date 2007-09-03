@@ -2613,17 +2613,8 @@ extern GtkWidget *stwindow;
  */
 void x_dialog_raise_all(TOPLEVEL *w_current)
 {
-  if(w_current->fowindow) {
-    gdk_window_raise(w_current->fowindow->window);
-  }
-  if(w_current->fswindow) {
-    gdk_window_raise(w_current->fswindow->window);
-  }
   if(w_current->sowindow) {
     gdk_window_raise(w_current->sowindow->window);
-  }
-  if(w_current->aswindow) {
-    gdk_window_raise(w_current->aswindow->window);
   }
   if(w_current->cswindow) {
     gdk_window_raise(w_current->cswindow->window);
@@ -2641,9 +2632,6 @@ void x_dialog_raise_all(TOPLEVEL *w_current)
   }
   if(w_current->sewindow) {
     gdk_window_raise(w_current->sewindow->window);
-  }
-  if(w_current->exwindow) {
-    gdk_window_raise(w_current->exwindow->window);
   }
   if(w_current->aawindow) {
     gdk_window_raise(w_current->aawindow->window);
@@ -2671,12 +2659,6 @@ void x_dialog_raise_all(TOPLEVEL *w_current)
   }
   if(w_current->clwindow) {
     gdk_window_raise(w_current->clwindow->window);
-  }
-  if(w_current->ltwindow) {
-    gdk_window_raise(w_current->ltwindow->window);
-  }
-  if(w_current->ftwindow) {
-    gdk_window_raise(w_current->ftwindow->window);
   }
 
 }
