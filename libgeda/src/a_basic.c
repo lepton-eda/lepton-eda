@@ -614,39 +614,19 @@ void o_scale(TOPLEVEL *toplevel, OBJECT *list, int x_scale, int y_scale)
   OBJECT *o_current;
 
   /* this is okay if you just hit scale and have nothing selected */
-  if (list == NULL) { 
-    /* toplevel->event_state = SELECT;*/
-    /* i_update_status(toplevel, "Select Mode"); not here */
-    /*		toplevel->inside_action = 0;*/
+  if (list == NULL) {
     return;
   }
 
-
   o_current = list;
-
-
   while (o_current != NULL) {
-
     switch(o_current->type) {
-
       case(OBJ_LINE):
-				/* erase the current selection */
-        toplevel->override_color =
-          toplevel->background_color;
-        o_redraw_single(toplevel, o_current);
-                                /* o_line_draw(toplevel, o_current);*/
-        toplevel->override_color = -1;
-
-        o_line_scale_world(toplevel,
-                           x_scale, y_scale, o_current);
+        o_line_scale_world(toplevel, x_scale, y_scale, o_current);
         break;
     }
-
     o_current = o_current->next;
   }
-
-  /* don't do this at this level */
-  /* toplevel->page_current->CHANGED=1;*/
 }
 
 
