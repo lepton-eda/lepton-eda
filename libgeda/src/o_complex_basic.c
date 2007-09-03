@@ -840,9 +840,6 @@ void o_complex_world_translate(TOPLEVEL *toplevel, int x1, int y1,
 			       OBJECT *prim_objs)
 {
   OBJECT *o_current=NULL;
-  OBJECT *one=NULL;
-  OBJECT *two=NULL;
-  unsigned long temp_color;
 
   o_current = prim_objs;
 
@@ -855,21 +852,11 @@ void o_complex_world_translate(TOPLEVEL *toplevel, int x1, int y1,
       case(OBJ_NET):
 				/* same as a line, don't do this */
         o_line_translate_world(toplevel, x1, y1, o_current);
-        temp_color = toplevel->override_color;
-        toplevel->override_color = -1;
-        o_redraw_single(toplevel, one); /* trying loop? hack*/
-        o_redraw_single(toplevel, two);
-        toplevel->override_color = temp_color;
         break;
 
       case(OBJ_BUS):
 				/* same as a line, don't do this */
         o_line_translate_world(toplevel, x1, y1, o_current);
-        temp_color = toplevel->override_color;
-        toplevel->override_color = -1;
-        o_redraw_single(toplevel, one); /* trying loop? hack*/
-        o_redraw_single(toplevel, two);
-        toplevel->override_color = temp_color;
         break;
 	
       case(OBJ_BOX):
