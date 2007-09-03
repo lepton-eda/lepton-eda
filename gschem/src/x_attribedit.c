@@ -101,6 +101,12 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
   label = gtk_entry_get_text(name_entry);
   newtext = g_strconcat (label, "=", value, NULL);
 
+  if (!x_dialog_validate_attribute(GTK_WINDOW(w_current->aewindow), newtext))
+  {
+    g_free(newtext);
+    return;
+  }
+  
   if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(visbutton)))
   vis = VISIBLE;
   else

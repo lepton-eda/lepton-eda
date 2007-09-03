@@ -4073,3 +4073,38 @@ x_dialog_close_window (TOPLEVEL *toplevel)
 
 /***************** End of Close Confirmation dialog box **************/
 
+
+/***************** Start of misc helper dialog boxes **************/
+/*! \brief Validate the input attribute 
+ *  \par Function Description
+ *  This function validates the attribute and if it isn't valid
+ *  pops up an error message box.
+ *
+ *  \param parent The parent window which spawned this dialog box.
+ *  \param attribute The attribute to be validated.
+ *  \returns TRUE if the attribute is valid, FALSE otherwise.
+ */
+int x_dialog_validate_attribute(GtkWindow* parent, char *attribute)
+{
+  GtkWidget* message_box;
+  char *name_ptr, *value_ptr;
+
+  /* validate the new attribute */
+  if (!o_attrib_get_name_value(attribute, &name_ptr, &value_ptr)) {
+      message_box = gtk_message_dialog_new_with_markup (parent,
+                                  GTK_DIALOG_DESTROY_WITH_PARENT,
+                                  GTK_MESSAGE_ERROR,
+                                  GTK_BUTTONS_CLOSE,
+                                  _("<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\nPlease correct in order to continue</span>\n\nThe name and value must be non-empty.\nThe name cannot end with a space.\nThe value cannot start with a space."),
+                                  attribute);
+     gtk_window_set_title(GTK_WINDOW(message_box), _("Invalid Attribute"));
+     gtk_dialog_run (GTK_DIALOG (message_box));
+     gtk_widget_destroy (message_box);
+     return FALSE;
+  }
+  g_free(name_ptr);
+  g_free(value_ptr);
+  return TRUE;
+}
+/***************** End of misc helper dialog boxes **************/
+

@@ -470,6 +470,7 @@ static void multiattrib_popup_menu (Multiattrib *multiattrib,
  */
 static void multiattrib_action_add_attribute(TOPLEVEL *toplevel,
 					     OBJECT *object,
+                                             Multiattrib *multiattrib,
 					     const gchar *name,
 					     const gchar *value,
 					     gint visible,
@@ -479,6 +480,11 @@ static void multiattrib_action_add_attribute(TOPLEVEL *toplevel,
   gchar *newtext;
   
   newtext = g_strdup_printf ("%s=%s", name, value);
+
+  if (!x_dialog_validate_attribute(GTK_WINDOW(multiattrib), newtext)) {
+    g_free(newtext);
+    return;
+  }
 
   /* create a new attribute and link it */
   o_attrib = o_attrib_add_attrib (toplevel, newtext,
@@ -723,6 +729,14 @@ static void multiattrib_callback_edited_name(GtkCellRendererText *cellrendererte
 
   o_attrib_get_name_value (o_attrib->text->string, &name, &value);
   newtext = g_strdup_printf ("%s=%s", arg2, value);
+
+  if (!x_dialog_validate_attribute(GTK_WINDOW(multiattrib), newtext)) {
+    if (name) g_free (name);
+    if (value) g_free (value);
+    g_free(newtext);
+    return;
+  }
+
   
   /* actually modifies the attribute */
   o_text_change (toplevel, o_attrib,
@@ -765,6 +779,13 @@ static void multiattrib_callback_edited_value(GtkCellRendererText *cell_renderer
 
   o_attrib_get_name_value (o_attrib->text->string, &name, &value);
   newtext = g_strdup_printf ("%s=%s", name, arg2);
+
+  if (!x_dialog_validate_attribute(GTK_WINDOW(multiattrib), newtext)) {
+    if (name) g_free (name);
+    if (value) g_free (value);
+    g_free(newtext);
+    return;
+  }
   
   /* actually modifies the attribute */
   o_text_change (toplevel, o_attrib,
@@ -1161,7 +1182,7 @@ static void multiattrib_callback_button_add(GtkButton *button,
     return;
   }
 
-  multiattrib_action_add_attribute (toplevel, object,
+  multiattrib_action_add_attribute (toplevel, object, multiattrib, 
                                     name, value,
                                     visible, shownv);
   g_free (value);
