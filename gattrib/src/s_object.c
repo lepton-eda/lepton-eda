@@ -48,7 +48,12 @@
 #endif
 
 
-                                                                                                           
+/*------------------------------------------------------------------
+ * Gattrib specific defines
+ *------------------------------------------------------------------*/
+#define DEFAULT_TEXT_SIZE 10
+
+
 /* ===================  Public Functions  ====================== */
 
 /*------------------------------------------------------------------*/
@@ -309,7 +314,7 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
 						    LOWER_LEFT, 
 						    0,	/* zero is angle */
 						    text_string, 
-						    pr_current->text_size,  /* current text size */
+						    DEFAULT_TEXT_SIZE,
 						    visibility,
 						    show_name_value);
 
