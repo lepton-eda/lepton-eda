@@ -373,7 +373,6 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
 		       unsigned int release_ver,
 		       unsigned int fileformat_ver);
 char *o_picture_save(OBJECT *object);
-void o_picture_set_pixbuf(TOPLEVEL *toplevel, GdkPixbuf *pixbuf, char *filename);
 OBJECT *o_picture_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		      GdkPixbuf * pixbuf, char *filename, double ratio,
 		      char type, 

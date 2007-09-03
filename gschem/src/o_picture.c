@@ -777,3 +777,40 @@ void picture_change_filename_dialog (TOPLEVEL *w_current)
     w_current->pfswindow=NULL;
   }
 }
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ *  \param [in] toplevel  The TOPLEVEL object.
+ *  \param [in] pixbuf
+ *  \param [in] filename
+ */
+void o_picture_set_pixbuf(TOPLEVEL *toplevel,
+                          GdkPixbuf *pixbuf, char *filename)
+{
+
+  /* need to put an error messages here */
+  if (pixbuf == NULL)  {
+    fprintf(stderr, "error! picture in set pixbuf was NULL\n");
+    return;
+  }
+
+  if (toplevel->current_pixbuf != NULL) {
+    g_object_unref(toplevel->current_pixbuf);
+    toplevel->current_pixbuf=NULL;
+  }
+
+  if (toplevel->pixbuf_filename != NULL) {
+    g_free(toplevel->pixbuf_filename);
+    toplevel->pixbuf_filename=NULL;
+  }
+
+  toplevel->current_pixbuf = pixbuf;
+  toplevel->pixbuf_filename = (char *) g_strdup(filename);
+
+  toplevel->pixbuf_wh_ratio = (double) gdk_pixbuf_get_width(pixbuf) /
+                                        gdk_pixbuf_get_height(pixbuf);
+
+  /* be sure to free this pixbuf somewhere */
+}

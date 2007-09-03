@@ -676,6 +676,7 @@ void o_picture_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_picture_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_picture_exchange(TOPLEVEL *w_current, GdkPixbuf *pixbuf, const gchar *filename);
 void picture_change_filename_dialog (TOPLEVEL *w_current);
+void o_picture_set_pixbuf(TOPLEVEL *toplevel, GdkPixbuf *pixbuf, char *filename);
 
 /* o_pin.c */
 void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current);
