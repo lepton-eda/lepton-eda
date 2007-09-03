@@ -50,20 +50,20 @@ extern int global_sid;
  *  copies selected to list_head (!! returns new list)
  *  flag is either NORMAL_FLAG or SELECTION_FLAG
  *
- *  \param [in]  w_current   The TOPLEVEL object.
+ *  \param [in]  toplevel   The TOPLEVEL object.
  *  \param [in]  list_head
  *  \param [in]  selected
  *  \param [in]  flag
  *  \param [out] return_end  
  *  \return OBJECT pointer.
  */
-OBJECT *o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head,
+OBJECT *o_list_copy_to(TOPLEVEL *toplevel, OBJECT *list_head,
 		       OBJECT *selected, int flag, OBJECT **return_end)
 {
   OBJECT *end=NULL;
 
   /* are we adding a selection or the real object list */
-  w_current->ADDING_SEL = flag;
+  toplevel->ADDING_SEL = flag;
 
   end = (OBJECT *) return_tail(list_head);
 
@@ -71,40 +71,40 @@ OBJECT *o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head,
 
     case(OBJ_LINE):
       /* do we do anything with the return value) ? */
-      end = (OBJECT *) o_line_copy(w_current, end, selected);	
+      end = (OBJECT *) o_line_copy(toplevel, end, selected);
       break;
 
     case(OBJ_NET):
-      end = (OBJECT *) o_net_copy(w_current, end, selected);	
+      end = (OBJECT *) o_net_copy(toplevel, end, selected);
       break;
 
     case(OBJ_BUS):
-      end = (OBJECT *) o_bus_copy(w_current, end, selected);	
+      end = (OBJECT *) o_bus_copy(toplevel, end, selected);
       break;
 
     case(OBJ_BOX):
-      end = (OBJECT *) o_box_copy(w_current, end, selected);	
+      end = (OBJECT *) o_box_copy(toplevel, end, selected);
       break;
 
     case(OBJ_PICTURE):
-      end = (OBJECT *) o_picture_copy(w_current, end, selected);	
+      end = (OBJECT *) o_picture_copy(toplevel, end, selected);
       break;
 
     case(OBJ_CIRCLE):
-      end = (OBJECT *) o_circle_copy(w_current, end, selected);	
+      end = (OBJECT *) o_circle_copy(toplevel, end, selected);
       break;
 
     case(OBJ_COMPLEX):
     case(OBJ_PLACEHOLDER):
       if (o_complex_is_embedded (selected)) {
-        end = (OBJECT *) o_complex_copy_embedded(w_current, end, selected);	
+        end = (OBJECT *) o_complex_copy_embedded(toplevel, end, selected);
       } else {
-        end = (OBJECT *) o_complex_copy(w_current, end, selected);	
+        end = (OBJECT *) o_complex_copy(toplevel, end, selected);
       }
       break;
 
     case(OBJ_TEXT):
-      end = (OBJECT *) o_text_copy(w_current, end, selected);	
+      end = (OBJECT *) o_text_copy(toplevel, end, selected);
       if (selected->attribute && 
           selected->visibility == INVISIBLE) {
         end->visibility = INVISIBLE;
@@ -112,11 +112,11 @@ OBJECT *o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head,
       break;
 
     case(OBJ_PIN):
-      end = (OBJECT *) o_pin_copy(w_current, end, selected);	
+      end = (OBJECT *) o_pin_copy(toplevel, end, selected);
       break;
 
     case(OBJ_ARC):
-      end = (OBJECT *) o_arc_copy(w_current, end, selected);	
+      end = (OBJECT *) o_arc_copy(toplevel, end, selected);
       break;
   }
 
@@ -129,7 +129,7 @@ OBJECT *o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head,
   }
 
   /* I don't think this is a good idea at all */
-  /* w_current->ADDING_SEL = 0; */
+  /* toplevel->ADDING_SEL = 0; */
         
   if (return_end) {
     *return_end = end;	
@@ -144,13 +144,13 @@ OBJECT *o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head,
  *  you need to pass in a head_node for dest_list_head
  *  flag is either NORMAL_FLAG or SELECTION_FLAG
  *
- *  \param [in] w_current       The TOPLEVEL object.
+ *  \param [in] toplevel       The TOPLEVEL object.
  *  \param [in] src_list_head   
  *  \param [in] dest_list_head  
  *  \param [in] flag
  *  \return OBJECT pointer.
  */
-OBJECT *o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head,
+OBJECT *o_list_copy_all(TOPLEVEL *toplevel, OBJECT *src_list_head,
 			OBJECT *dest_list_head, int flag)
 {
   OBJECT *src;
@@ -160,26 +160,26 @@ OBJECT *o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head,
 
   src = src_list_head;
   dest = dest_list_head;
-  temp_parent = w_current->page_current->object_parent;
-  w_current->page_current->object_parent = dest_list_head;
+  temp_parent = toplevel->page_current->object_parent;
+  toplevel->page_current->object_parent = dest_list_head;
 
   if (dest == NULL) {
-    w_current->page_current->object_parent = temp_parent;
+    toplevel->page_current->object_parent = temp_parent;
     return(NULL);
   }
 
   if (src == NULL) {
-    w_current->page_current->object_parent = temp_parent;
+    toplevel->page_current->object_parent = temp_parent;
     return(NULL);
   }
 
-  adding_sel_save = w_current->ADDING_SEL;
+  adding_sel_save = toplevel->ADDING_SEL;
 
   /* first do all NON text items */
   while(src != NULL) {
 
     if (src->type != OBJ_TEXT) {
-      dest->next = o_list_copy_to(w_current, NULL, src, flag,
+      dest->next = o_list_copy_to(toplevel, NULL, src, flag,
                                   NULL);
 		
       dest->next->prev = dest;
@@ -194,12 +194,12 @@ OBJECT *o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head,
   /*dest = dest_list_head; out since we want to add to the end */
 
   if (dest == NULL) {
-    w_current->page_current->object_parent = temp_parent;
+    toplevel->page_current->object_parent = temp_parent;
     return(NULL);
   }
 
   if (src == NULL) {
-    w_current->page_current->object_parent = temp_parent;
+    toplevel->page_current->object_parent = temp_parent;
     return(NULL);
   }
 
@@ -207,17 +207,17 @@ OBJECT *o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head,
   while(src != NULL) {
 
     if (src->type == OBJ_TEXT) {
-      dest->next = o_list_copy_to(w_current, NULL, src, flag,
+      dest->next = o_list_copy_to(toplevel, NULL, src, flag,
                                   NULL);
 		
       dest->next->prev = dest;
       dest = dest->next;
       dest->sid = global_sid++;
 	
-      if (src->attached_to /*&& !w_current->ADDING_SEL*/) {
+      if (src->attached_to /*&& !toplevel->ADDING_SEL*/) {
         if (src->attached_to->copied_to) {
-          o_attrib_attach(w_current,
-                          w_current->page_current->object_parent,
+          o_attrib_attach(toplevel,
+                          toplevel->page_current->object_parent,
                           dest, src->attached_to->copied_to);     
 
                                 /* satisfied copy request */
@@ -229,8 +229,8 @@ OBJECT *o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head,
     src = src->next;
   }
 
-  w_current->ADDING_SEL = adding_sel_save;
-  w_current->page_current->object_parent = temp_parent;
+  toplevel->ADDING_SEL = adding_sel_save;
+  toplevel->page_current->object_parent = temp_parent;
 
   return(dest);
 }
@@ -246,13 +246,13 @@ OBJECT *o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head,
  *  objects are unselected before they are copied and then reselected
  *  this is necessary to preserve the color info
  *
- *  \param [in] w_current       The TOPLEVEL object.
+ *  \param [in] toplevel       The TOPLEVEL object.
  *  \param [in] src_list_head   
  *  \param [in] dest_list_head  
  *  \param [in] flag
  *  \return OBJECT pointer.
  */
-OBJECT *o_list_copy_all_selection2(TOPLEVEL *w_current,
+OBJECT *o_list_copy_all_selection2(TOPLEVEL *toplevel,
 				   GList *src_list_head, 
 				   OBJECT *dest_list_head, int flag)
 {
@@ -265,20 +265,20 @@ OBJECT *o_list_copy_all_selection2(TOPLEVEL *w_current,
   src = src_list_head;
   dest = dest_list_head;
 
-  temp_parent = w_current->page_current->object_parent;
-  w_current->page_current->object_parent = dest_list_head;
+  temp_parent = toplevel->page_current->object_parent;
+  toplevel->page_current->object_parent = dest_list_head;
 
   if (dest == NULL) {
-    w_current->page_current->object_parent = temp_parent;
+    toplevel->page_current->object_parent = temp_parent;
     return(NULL);
   }
 
   if (src == NULL) {
-    w_current->page_current->object_parent = temp_parent;
+    toplevel->page_current->object_parent = temp_parent;
     return(NULL);
   }
 
-  adding_sel_save = w_current->ADDING_SEL;
+  adding_sel_save = toplevel->ADDING_SEL;
 
   /* first do all NON text items */
   while(src != NULL) {
@@ -289,7 +289,7 @@ OBJECT *o_list_copy_all_selection2(TOPLEVEL *w_current,
     o_selection_unselect(object);	
 
     if (object->type != OBJ_TEXT && object->type != OBJ_HEAD) {
-      dest->next = o_list_copy_to(w_current, NULL, object, 
+      dest->next = o_list_copy_to(toplevel, NULL, object,
                                   flag, NULL);
       dest->next->prev = dest;
       dest = dest->next;
@@ -306,12 +306,12 @@ OBJECT *o_list_copy_all_selection2(TOPLEVEL *w_current,
   /*dest = dest_list_head; out since we want to add to the end */
 
   if (dest == NULL) {
-    w_current->page_current->object_parent = temp_parent;
+    toplevel->page_current->object_parent = temp_parent;
     return(NULL);
   }
 
   if (src == NULL) {
-    w_current->page_current->object_parent = temp_parent;
+    toplevel->page_current->object_parent = temp_parent;
     return(NULL);
   }
 
@@ -324,17 +324,17 @@ OBJECT *o_list_copy_all_selection2(TOPLEVEL *w_current,
     o_selection_unselect(object);	
 
     if (object->type == OBJ_TEXT) {
-      dest->next = o_list_copy_to(w_current, NULL, object, 
+      dest->next = o_list_copy_to(toplevel, NULL, object,
                                   flag, NULL);
 	
       dest->next->prev = dest;
       dest = dest->next;
       dest->sid = global_sid++;
 
-      if (object->attached_to /*&& !w_current->ADDING_SEL*/) {
+      if (object->attached_to /*&& !toplevel->ADDING_SEL*/) {
         if (object->attached_to->copied_to) {
-          o_attrib_attach(w_current,
-                          w_current->page_current->object_parent,
+          o_attrib_attach(toplevel,
+                          toplevel->page_current->object_parent,
                           dest, object->attached_to->copied_to);     
                                 /* satisfied copy request */
           object->attached_to->copied_to = NULL;
@@ -348,8 +348,8 @@ OBJECT *o_list_copy_all_selection2(TOPLEVEL *w_current,
     src = src->next;
   }
 
-  w_current->ADDING_SEL = adding_sel_save;
-  w_current->page_current->object_parent = temp_parent;
+  toplevel->ADDING_SEL = adding_sel_save;
+  toplevel->page_current->object_parent = temp_parent;
 
   return(dest);
 }
@@ -391,18 +391,18 @@ OBJECT *o_list_search(OBJECT *list, OBJECT *current)
  *  \brief
  *  \par Function Description
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] list
  *  \param [in] delete
  */
-void o_list_delete(TOPLEVEL *w_current, OBJECT *list, OBJECT *delete)
+void o_list_delete(TOPLEVEL *toplevel, OBJECT *list, OBJECT *delete)
 {
   OBJECT *find;
 
   find = o_list_search(list, delete);
 
   if (find != NULL)
-  s_delete(w_current, find);
+  s_delete(toplevel, find);
 
 }
 
@@ -412,27 +412,27 @@ void o_list_delete(TOPLEVEL *w_current, OBJECT *list, OBJECT *delete)
  *  assuming list is head
  *  head will NOT be deleted
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] list
  */
-void o_list_delete_rest(TOPLEVEL *w_current, OBJECT *list)
+void o_list_delete_rest(TOPLEVEL *toplevel, OBJECT *list)
 {
   OBJECT *o_current=NULL;
   OBJECT *o_prev=NULL;
 	
   o_current = (OBJECT *) return_tail(list);
 
-  w_current->REMOVING_SEL = 1;
+  toplevel->REMOVING_SEL = 1;
   /* remove list backwards */
   while(o_current != NULL) {
     if (o_current->type != OBJ_HEAD) {
       o_prev = o_current->prev;
-      s_delete(w_current, o_current);	
+      s_delete(toplevel, o_current);
       o_current = o_prev;
     } else {
       o_current->next = NULL; /* set sel_head->next to be empty */
       o_current = NULL;
     }
   }
-  w_current->REMOVING_SEL = 0;
+  toplevel->REMOVING_SEL = 0;
 }

@@ -210,7 +210,7 @@ void s_stretch_remove(STRETCH *head, OBJECT *object)
  *
  */
 /*! \note removes all but the head node */
-void s_stretch_remove_most(TOPLEVEL *w_current, STRETCH *head)
+void s_stretch_remove_most(TOPLEVEL *toplevel, STRETCH *head)
 {
   STRETCH *s_current;
   STRETCH *s_prev;

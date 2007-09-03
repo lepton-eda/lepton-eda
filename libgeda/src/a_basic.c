@@ -46,19 +46,19 @@
  *  \par Function Description
  *  This function will save all embedded attributes to a file.
  *
- *  \param [in,out] w_current
+ *  \param [in,out] toplevel
  *  \param [in]     object_list  The list of attributes to write to file
  *  \param [in]     fp           The file to write to.
  */
-void o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
+void o_save_embedded(TOPLEVEL *toplevel, OBJECT *object_list, FILE *fp)
 {
   OBJECT *o_current=NULL;
   char *out;
 
   /* make sure you init net_consolide to false (default) in all */
   /* programs */
-  if (w_current->net_consolidate == TRUE) {
-    o_net_consolidate(w_current);
+  if (toplevel->net_consolidate == TRUE) {
+    o_net_consolidate(toplevel);
   }
 	
   o_current = object_list;
@@ -97,7 +97,7 @@ void o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
               fprintf(fp, "[\n");
 								
               o_save_embedded(
-                              w_current,
+                              toplevel,
                               o_current->
                               complex->prim_objs,
                               fp);
@@ -164,11 +164,11 @@ void o_save_write_header(FILE *fp)
 /*! \brief Save a file
  *  \par Function Description
  *  This function saves the data in a libgeda format to a file
- *  \param [in] w_current  The data to save to file.
+ *  \param [in] toplevel  The data to save to file.
  *  \param [in] filename   The filename to save the data to.
  *  \return 1 on success, 0 on failure.
  */
-int o_save(TOPLEVEL *w_current, const char *filename)
+int o_save(TOPLEVEL *toplevel, const char *filename)
 {
   OBJECT *o_current=NULL;
   FILE *fp;
@@ -183,12 +183,12 @@ int o_save(TOPLEVEL *w_current, const char *filename)
   }
 
 
-  o_current = w_current->page_current->object_head;
+  o_current = toplevel->page_current->object_head;
 
   /* make sure you init net_consolide to false (default) in all */
   /* programs */
-  if (w_current->net_consolidate == TRUE) {
-    o_net_consolidate(w_current);
+  if (toplevel->net_consolidate == TRUE) {
+    o_net_consolidate(toplevel);
   }
 
   o_save_write_header(fp);
@@ -230,7 +230,7 @@ int o_save(TOPLEVEL *w_current, const char *filename)
               fprintf(fp, "[\n");
 								
               o_save_embedded(
-                              w_current,
+                              toplevel,
                               o_current->
                               complex->prim_objs,
                               fp);
@@ -299,14 +299,14 @@ int o_save(TOPLEVEL *w_current, const char *filename)
  *  The name argument is used for debugging, and should be set to a
  *  meaningful string (e.g. the name of the file the data is from).
  *
- *  \param [in,out] w_current    The current TOPLEVEL structure.
+ *  \param [in,out] toplevel    The current TOPLEVEL structure.
  *  \param [in]     object_list  The object_list to read data to.
  *  \param [in]     buffer       The memory buffer to read from.
  *  \param [in]     size         The size of the buffer.
  *  \param [in]     name         The name to describe the data with.
  *  \return object_list if successful read, or NULL on error.
  */
-OBJECT *o_read_buffer(TOPLEVEL *w_current, OBJECT *object_list, 
+OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
 		      char *buffer, const int size, 
 		      const char *name)
 {
@@ -356,49 +356,49 @@ OBJECT *o_read_buffer(TOPLEVEL *w_current, OBJECT *object_list,
     {
         /* yes */
         /* verify symbol version (not file format but rather contents) */
-        o_complex_check_symversion(w_current, last_complex);
+        o_complex_check_symversion(toplevel, last_complex);
         last_complex = NULL;  /* no longer need to check */
     }
 
     switch (objtype) {
 
       case(OBJ_LINE):
-        object_list = (OBJECT *) o_line_read(w_current, object_list, line, 
+        object_list = (OBJECT *) o_line_read(toplevel, object_list, line,
 	                                     release_ver, fileformat_ver);
         break;
 
 
       case(OBJ_NET):
-        object_list = (OBJECT *) o_net_read(w_current, object_list, line,
+        object_list = (OBJECT *) o_net_read(toplevel, object_list, line,
                                             release_ver, fileformat_ver);
         break;
 
       case(OBJ_BUS):
-        object_list = (OBJECT *) o_bus_read(w_current, object_list, line,
+        object_list = (OBJECT *) o_bus_read(toplevel, object_list, line,
                                             release_ver, fileformat_ver);
         break;
 
       case(OBJ_BOX):
-        object_list = (OBJECT *) o_box_read(w_current, object_list, line,
+        object_list = (OBJECT *) o_box_read(toplevel, object_list, line,
                                             release_ver, fileformat_ver);
         break;
 		
       case(OBJ_PICTURE):
 	line = g_strdup(line);
-        object_list = (OBJECT *) o_picture_read(w_current, object_list, 
+        object_list = (OBJECT *) o_picture_read(toplevel, object_list,
 						line, tb,
 						release_ver, fileformat_ver);
 	g_free (line);
         break;
 		
       case(OBJ_CIRCLE):
-        object_list = (OBJECT *) o_circle_read(w_current, object_list, line,
+        object_list = (OBJECT *) o_circle_read(toplevel, object_list, line,
                                                release_ver, fileformat_ver);
         break;
 
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-        object_list = (OBJECT *) o_complex_read(w_current, object_list, line,
+        object_list = (OBJECT *) o_complex_read(toplevel, object_list, line,
                                                 release_ver, fileformat_ver);
 
         /* this is necessary because complex may add attributes which float */
@@ -411,20 +411,20 @@ OBJECT *o_read_buffer(TOPLEVEL *w_current, OBJECT *object_list,
 
       case(OBJ_TEXT):
 	line = g_strdup(line);
-        object_list = (OBJECT *) o_text_read(w_current, object_list, 
+        object_list = (OBJECT *) o_text_read(toplevel, object_list,
 					     line, tb,
                                              release_ver, fileformat_ver);
 	g_free(line);
         break;
 
       case(OBJ_PIN):
-        object_list = (OBJECT *) o_pin_read(w_current, object_list, line,
+        object_list = (OBJECT *) o_pin_read(toplevel, object_list, line,
                                             release_ver, fileformat_ver);
         found_pin++;
         break;
 
       case(OBJ_ARC):
-        object_list = (OBJECT *) o_arc_read(w_current, object_list, line,
+        object_list = (OBJECT *) o_arc_read(toplevel, object_list, line,
                                             release_ver, fileformat_ver);
         break;
 
@@ -432,7 +432,7 @@ OBJECT *o_read_buffer(TOPLEVEL *w_current, OBJECT *object_list,
         object_before_attr = object_list;
 	/* first is the fp */
 	/* 2nd is the object to get the attributes */ 
-        object_list = (OBJECT *) o_read_attribs(w_current, object_list,
+        object_list = (OBJECT *) o_read_attribs(toplevel, object_list,
 						tb,
                                                 release_ver, fileformat_ver);
 
@@ -442,14 +442,14 @@ OBJECT *o_read_buffer(TOPLEVEL *w_current, OBJECT *object_list,
         {
           /* yes */
           /* verify symbol version (not file format but rather contents) */
-          o_complex_check_symversion(w_current, last_complex);
+          o_complex_check_symversion(toplevel, last_complex);
           last_complex = NULL;
         }
         
 	/* slots only apply to complex objects */
         if (object_before_attr->type == OBJ_COMPLEX || 
 	    object_before_attr->type == OBJ_PLACEHOLDER) {
-          o_attrib_slot_update(w_current, object_before_attr);	
+          o_attrib_slot_update(toplevel, object_before_attr);
         }
 
 	/* need this? nope */
@@ -465,9 +465,9 @@ OBJECT *o_read_buffer(TOPLEVEL *w_current, OBJECT *object_list,
         	object_list_save = object_list;
         	object_list = object_list_save->complex->prim_objs;
 				
-        	temp_tail = w_current->page_current->object_tail;
-        	temp_parent = w_current->page_current->object_parent;
-        	w_current->page_current->object_parent = object_list;
+        	temp_tail = toplevel->page_current->object_tail;
+        	temp_parent = toplevel->page_current->object_parent;
+        	toplevel->page_current->object_parent = object_list;
 
 		embedded_level++;
 	} else {
@@ -482,13 +482,13 @@ OBJECT *o_read_buffer(TOPLEVEL *w_current, OBJECT *object_list,
         	object_list = object_list_save;
 		/* don't do this since objects are already
 		 * stored/read translated 
-	         * o_complex_world_translate(w_current, object_list->x,
+	         * o_complex_world_translate(toplevel, object_list->x,
                  *                   object_list->y, object_list->complex);
 		 */
-	        w_current->page_current->object_tail = temp_tail;
-	        w_current->page_current->object_parent = temp_parent;
+	        toplevel->page_current->object_tail = temp_tail;
+	        toplevel->page_current->object_parent = temp_parent;
 
-          o_complex_recalc( w_current, object_list );
+          o_complex_recalc( toplevel, object_list );
 		embedded_level--;
 	} else {
         	fprintf(stderr, "Read unexpected embedded "
@@ -541,13 +541,13 @@ OBJECT *o_read_buffer(TOPLEVEL *w_current, OBJECT *object_list,
   /* and had no attached attributes */
   if (last_complex)
   {
-        o_complex_check_symversion(w_current, last_complex);
+        o_complex_check_symversion(toplevel, last_complex);
         last_complex = NULL;  /* no longer need to check */
   }
 
   if (found_pin) {
     if (release_ver <= VERSION_20020825) {
-      o_pin_update_whichend(w_current, return_head(object_list), found_pin);
+      o_pin_update_whichend(toplevel, return_head(object_list), found_pin);
     }
   }
 
@@ -561,12 +561,12 @@ OBJECT *o_read_buffer(TOPLEVEL *w_current, OBJECT *object_list,
  *  \par Function Description
  *  This function reads a file in libgeda format.
  *
- *  \param [in,out] w_current    The current TOPLEVEL structure.
+ *  \param [in,out] toplevel    The current TOPLEVEL structure.
  *  \param [in]     object_list  The object_list to read data to.
  *  \param [in]     filename     The filename to read from.
  *  \return object_list if successful read, or NULL on error.
  */
-OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
+OBJECT *o_read(TOPLEVEL *toplevel, OBJECT *object_list, char *filename)
 {
   GError *err = NULL;
   char *buffer = NULL;
@@ -589,7 +589,7 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 
   /* Parse file contents */
   g_assert (buffer != NULL);
-  result = o_read_buffer (w_current, object_list, buffer, size, filename);
+  result = o_read_buffer (toplevel, object_list, buffer, size, filename);
   g_free (buffer);
   return result;
 }
@@ -599,7 +599,7 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
  *  This function takes a list of lines and scales them
  *  by the values of x_scale and y_scale.
  *
- *  \param [in] w_current  The current TOPLEVEL object.
+ *  \param [in] toplevel  The current TOPLEVEL object.
  *  \param [in,out]  list  The list with lines to scale.
  *  \param [in]   x_scale  The x scale value for the lines.
  *  \param [in]   y_scale  The y scale value for the lines.
@@ -609,15 +609,15 @@ OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
  *        stuff
  *        move it to o_complex_scale
  */
-void o_scale(TOPLEVEL *w_current, OBJECT *list, int x_scale, int y_scale)
+void o_scale(TOPLEVEL *toplevel, OBJECT *list, int x_scale, int y_scale)
 {
   OBJECT *o_current;
 
   /* this is okay if you just hit scale and have nothing selected */
   if (list == NULL) { 
-    /* w_current->event_state = SELECT;*/
-    /* i_update_status(w_current, "Select Mode"); not here */
-    /*		w_current->inside_action = 0;*/
+    /* toplevel->event_state = SELECT;*/
+    /* i_update_status(toplevel, "Select Mode"); not here */
+    /*		toplevel->inside_action = 0;*/
     return;
   }
 
@@ -631,13 +631,13 @@ void o_scale(TOPLEVEL *w_current, OBJECT *list, int x_scale, int y_scale)
 
       case(OBJ_LINE):
 				/* erase the current selection */
-        w_current->override_color =
-          w_current->background_color;
-        o_redraw_single(w_current, o_current);
-                                /* o_line_draw(w_current, o_current);*/
-        w_current->override_color = -1;
+        toplevel->override_color =
+          toplevel->background_color;
+        o_redraw_single(toplevel, o_current);
+                                /* o_line_draw(toplevel, o_current);*/
+        toplevel->override_color = -1;
 
-        o_line_scale_world(w_current, 
+        o_line_scale_world(toplevel,
                            x_scale, y_scale, o_current);
         break;
     }
@@ -646,7 +646,7 @@ void o_scale(TOPLEVEL *w_current, OBJECT *list, int x_scale, int y_scale)
   }
 
   /* don't do this at this level */
-  /* w_current->page_current->CHANGED=1;*/
+  /* toplevel->page_current->CHANGED=1;*/
 }
 
 

@@ -80,50 +80,50 @@ int   default_keep_invisible = FALSE;
  *  \par Function Description
  *  This function will initialize variables to default values.
  *
- *  \param [out] w_current  The TOPLEVEL object to be updated.
+ *  \param [out] toplevel  The TOPLEVEL object to be updated.
  *
  */
-void i_vars_libgeda_set(TOPLEVEL *w_current)
+void i_vars_libgeda_set(TOPLEVEL *toplevel)
 {
-  w_current->init_right   = default_init_right;
-  w_current->init_bottom  = default_init_bottom;
+  toplevel->init_right   = default_init_right;
+  toplevel->init_bottom  = default_init_bottom;
 
-  w_current->attribute_promotion = default_attribute_promotion;
-  w_current->promote_invisible = default_promote_invisible;
-  w_current->keep_invisible = default_keep_invisible;
+  toplevel->attribute_promotion = default_attribute_promotion;
+  toplevel->promote_invisible = default_promote_invisible;
+  toplevel->keep_invisible = default_keep_invisible;
 
   /* you cannot free the default* strings here since new windows */
   /* need them */
-  INIT_STR(w_current, series_name     , DEFAULT_SERIES_NAME     );
-  INIT_STR(w_current, untitled_name   , DEFAULT_UNTITLED_NAME   );
-  INIT_STR(w_current, font_directory  , DEFAULT_FONT_DIRECTORY  );
-  INIT_STR(w_current, scheme_directory, DEFAULT_SCHEME_DIRECTORY);
-  INIT_STR(w_current, bitmap_directory, DEFAULT_BITMAP_DIRECTORY);
-  INIT_STR(w_current, bus_ripper_symname, DEFAULT_BUS_RIPPER_SYMNAME);
-  INIT_STR(w_current, postscript_prolog,  DEFAULT_POSTSCRIPT_PROLOG);
-  INIT_STR(w_current, always_promote_attributes, DEFAULT_ALWAYS_PROMOTE_ATTRIBUTES);
-  INIT_STR(w_current, print_command, DEFAULT_PRINT_COMMAND);
+  INIT_STR(toplevel, series_name     , DEFAULT_SERIES_NAME     );
+  INIT_STR(toplevel, untitled_name   , DEFAULT_UNTITLED_NAME   );
+  INIT_STR(toplevel, font_directory  , DEFAULT_FONT_DIRECTORY  );
+  INIT_STR(toplevel, scheme_directory, DEFAULT_SCHEME_DIRECTORY);
+  INIT_STR(toplevel, bitmap_directory, DEFAULT_BITMAP_DIRECTORY);
+  INIT_STR(toplevel, bus_ripper_symname, DEFAULT_BUS_RIPPER_SYMNAME);
+  INIT_STR(toplevel, postscript_prolog,  DEFAULT_POSTSCRIPT_PROLOG);
+  INIT_STR(toplevel, always_promote_attributes, DEFAULT_ALWAYS_PROMOTE_ATTRIBUTES);
+  INIT_STR(toplevel, print_command, DEFAULT_PRINT_COMMAND);
 
 }
 
 /*! \brief Set all names in TOPLEVEL object to default.
  *  \par Function Description
- *  This function will set all of the names in the TOPLEVEL w_current variable
+ *  This function will set all of the names in the TOPLEVEL toplevel variable
  *  to their default.
  *
- *  \param [out] w_current  The TOPLEVEL object to set to defaults.
+ *  \param [out] toplevel  The TOPLEVEL object to set to defaults.
  *
  */
-void i_vars_setnames(TOPLEVEL *w_current)
+void i_vars_setnames(TOPLEVEL *toplevel)
 {
-  w_current->series_name        = g_strdup (DEFAULT_SERIES_NAME     );
-  w_current->untitled_name      = g_strdup (DEFAULT_UNTITLED_NAME   );
-  w_current->font_directory     = g_strdup (DEFAULT_FONT_DIRECTORY  );
-  w_current->scheme_directory   = g_strdup (DEFAULT_SCHEME_DIRECTORY);
-  w_current->bitmap_directory   = g_strdup (DEFAULT_BITMAP_DIRECTORY);
-  w_current->bus_ripper_symname = g_strdup (DEFAULT_BUS_RIPPER_SYMNAME);
-  w_current->always_promote_attributes = g_strdup (DEFAULT_ALWAYS_PROMOTE_ATTRIBUTES);
-  w_current->print_command = g_strdup (DEFAULT_PRINT_COMMAND);
+  toplevel->series_name        = g_strdup (DEFAULT_SERIES_NAME     );
+  toplevel->untitled_name      = g_strdup (DEFAULT_UNTITLED_NAME   );
+  toplevel->font_directory     = g_strdup (DEFAULT_FONT_DIRECTORY  );
+  toplevel->scheme_directory   = g_strdup (DEFAULT_SCHEME_DIRECTORY);
+  toplevel->bitmap_directory   = g_strdup (DEFAULT_BITMAP_DIRECTORY);
+  toplevel->bus_ripper_symname = g_strdup (DEFAULT_BUS_RIPPER_SYMNAME);
+  toplevel->always_promote_attributes = g_strdup (DEFAULT_ALWAYS_PROMOTE_ATTRIBUTES);
+  toplevel->print_command = g_strdup (DEFAULT_PRINT_COMMAND);
 }
 
 /*! \brief Free default names

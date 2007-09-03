@@ -65,13 +65,13 @@
  *  \par Function Description
  *  Update an attribute's uref.
  *
- *  \param [in] w_current  The TOPLEVEL object
+ *  \param [in] toplevel  The TOPLEVEL object
  *  \param [in] o_current  The object to update.
  *
  *  \note
  *   Martin Benes' auto uref renumber code
  */
-void o_attrib_update_urefBM (TOPLEVEL *w_current, OBJECT *o_current)
+void o_attrib_update_urefBM (TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *list_head,*obj;
   char *uref;
@@ -117,7 +117,7 @@ void o_attrib_update_urefBM (TOPLEVEL *w_current, OBJECT *o_current)
     sprintf(uref+len,"%d", i);
     g_free(o_current->text->string);
     o_current->text->string=uref;
-    o_text_recreate(w_current, o_current);
+    o_text_recreate(toplevel, o_current);
   }
 
   g_free(index_list);
@@ -209,12 +209,12 @@ ATTRIB *add_attrib_head(OBJECT *parent)
  *  \par Function Description
  *  Add an attribute to an existing attribute list.
  *
- *  \param [in]     w_current  The TOPLEVEL object.
+ *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] list_head  The list where you want to add item to.
  *  \param [in]     item       The item you want to add as an attribute.
  *  \return An ATTRIB pointer to the newly created attribute.
  */
-ATTRIB *o_attrib_add(TOPLEVEL *w_current, ATTRIB *list_head, OBJECT *item)
+ATTRIB *o_attrib_add(TOPLEVEL *toplevel, ATTRIB *list_head, OBJECT *item)
 {
   ATTRIB *end = NULL;
   ATTRIB *new = NULL;
@@ -232,7 +232,7 @@ ATTRIB *o_attrib_add(TOPLEVEL *w_current, ATTRIB *list_head, OBJECT *item)
   new->copied_to = NULL;
   new->object->attribute = 1; /* Set the attribute to true, hack define */
   /* Show that that item is an attribute */
-  new->object->color = w_current->attribute_color; 
+  new->object->color = toplevel->attribute_color;
 
   if (new->object->type == OBJ_TEXT) {
     o_complex_set_color(new->object->text->prim_objs,
@@ -259,14 +259,14 @@ ATTRIB *o_attrib_add(TOPLEVEL *w_current, ATTRIB *list_head, OBJECT *item)
  *  \par Function Description
  *  Free single item in attribute list.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] current    ATTRIB pointer to free.
  *
  *  \note
  *  this routine is not nice to next and prev
  *  this routine is only called from free_all
  */
-void o_attrib_free(TOPLEVEL *w_current, ATTRIB *current)
+void o_attrib_free(TOPLEVEL *toplevel, ATTRIB *current)
 {
   if (current != NULL) {
 
@@ -274,7 +274,7 @@ void o_attrib_free(TOPLEVEL *w_current, ATTRIB *current)
     if (current->object != NULL && current->prev != NULL) {
       current->object->attribute = 0;	
       current->object->attached_to=NULL;
-      current->object->color = w_current->detachedattr_color;	
+      current->object->color = toplevel->detachedattr_color;
 
       if (current->object->type == OBJ_TEXT) {
         o_complex_set_color(current->object->text->prim_objs, 
@@ -288,11 +288,11 @@ void o_attrib_free(TOPLEVEL *w_current, ATTRIB *current)
         if (current->object->type == OBJ_TEXT) {
           o_complex_set_saved_color_only(
                                          current->object->text->prim_objs, 
-                                         w_current->detachedattr_color);
+                                         toplevel->detachedattr_color);
         } else {
           printf("Tried to set the color on a complex!\nlibgeda/src/o_attrib_free 2\n");
         }
-        current->object->saved_color = w_current->
+        current->object->saved_color = toplevel->
         detachedattr_color;
       }
     }
@@ -309,7 +309,7 @@ void o_attrib_free(TOPLEVEL *w_current, ATTRIB *current)
  *  \par Function Description
  *  Attach existing attribute to an object.
  *
- *  \param [in]  w_current    The TOPLEVEL object.
+ *  \param [in]  toplevel    The TOPLEVEL object.
  *  \param [in]  parent_list  List where actual attribute objects live.
  *  \param [in]  text_object  The attribute to be added.
  *  \param [out] object       The object where you want to add item as an attribute.
@@ -322,7 +322,7 @@ void o_attrib_free(TOPLEVEL *w_current, ATTRIB *current)
  *  overridden in o_complex_add so that it points to head node of the complex
  *  
  */
-void o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list, 
+void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *parent_list,
 		     OBJECT *text_object, OBJECT *object)
 {
   OBJECT *o_current = NULL;
@@ -357,11 +357,11 @@ void o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list,
           fprintf(stderr, "You cannot attach this attribute [%s] to more than one object\n", found2->text->string);
         } else {
 
-          o_attrib_add(w_current, 
+          o_attrib_add(toplevel,
                        object->attribs, 
                        found2);
 
-          o_current->color = w_current->
+          o_current->color = toplevel->
             attribute_color; 
 
           o_complex_set_color(
@@ -377,10 +377,10 @@ void o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list,
           }
           /* can't do this here since just selecting something */
           /* will cause this to be set */
-          /* w_current->page_current->CHANGED=1;*/
+          /* toplevel->page_current->CHANGED=1;*/
 
 #ifdef MARTIN_BENES
-          o_attrib_update_urefBM (w_current, o_current);
+          o_attrib_update_urefBM (toplevel, o_current);
 #endif
         }
       } else {
@@ -399,12 +399,12 @@ void o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list,
  *  \brief
  *  \par Function Description
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] list
  *  \param [in] items
  */
 void
-o_attrib_detach_test(TOPLEVEL *w_current, OBJECT *list, OBJECT *items) 
+o_attrib_detach_test(TOPLEVEL *toplevel, OBJECT *list, OBJECT *items)
 {
 
 /* this all needs to be rethought out */
@@ -468,7 +468,7 @@ void o_attrib_unselect_draw(ATTRIB *list)
  *  \par Function Description
  *  Free all attribute items in a list.
  *
- *  \param [in]     w_current  The TOPLEVEL object.
+ *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] list       The list to free.
  *
  *  \note
@@ -476,7 +476,7 @@ void o_attrib_unselect_draw(ATTRIB *list)
  *  so it should only be used when an object is being destroyed
  *  goes backwards
  */
-void o_attrib_free_all(TOPLEVEL *w_current, ATTRIB *list)
+void o_attrib_free_all(TOPLEVEL *toplevel, ATTRIB *list)
 {
   ATTRIB *a_current; 
   ATTRIB *a_next;
@@ -485,7 +485,7 @@ void o_attrib_free_all(TOPLEVEL *w_current, ATTRIB *list)
 
   while (a_current != NULL) {
     a_next = a_current->next;
-    o_attrib_free(w_current, a_current);
+    o_attrib_free(toplevel, a_current);
     a_current = a_next;
   }
 }
@@ -623,11 +623,11 @@ void o_attrib_remove(ATTRIB *list, ATTRIB *remove)
  *  \par Function Description
  *  Detach all attributes from a list.
  *
- *  \param [in] w_current    The TOPLEVEL object.
+ *  \param [in] toplevel    The TOPLEVEL object.
  *  \param [in] object_list  Attribute list to delete.
  *  \param [in] main_head    The head of the attribute list.
  */
-void o_attrib_detach_all(TOPLEVEL *w_current, OBJECT *object_list, OBJECT *main_head)
+void o_attrib_detach_all(TOPLEVEL *toplevel, OBJECT *object_list, OBJECT *main_head)
 {
 #if 0 /* not used */
   OBJECT *o_current=NULL;
@@ -640,9 +640,9 @@ void o_attrib_detach_all(TOPLEVEL *w_current, OBJECT *object_list, OBJECT *main_
 
     if (X) {
       if (X->attribs != NULL) {
-        o_attrib_free_all(w_current, X->attribs);
+        o_attrib_free_all(toplevel, X->attribs);
         X->attribs = NULL; /* leak possible? */
-        w_current->page_current->CHANGED=1;
+        toplevel->page_current->CHANGED=1;
       }
     }
     o_current = o_current->next;
@@ -654,14 +654,14 @@ void o_attrib_detach_all(TOPLEVEL *w_current, OBJECT *object_list, OBJECT *main_
  *  \par Function Description
  *  Read attributes from a TextBuffer.
  *
- *  \param [in]  w_current              The TOPLEVEL object.
+ *  \param [in]  toplevel              The TOPLEVEL object.
  *  \param [out] object_to_get_attribs  Storage for attributes.
  *  \param [in]  tb                     The text buffer to read from.
  *  \param [in]  release_ver            libgeda release version number.
  *  \param [in]  fileformat_ver         file format version number.
  *  \return Pointer to object_to_get_attribs.
  */
-OBJECT *o_read_attribs(TOPLEVEL *w_current, 
+OBJECT *o_read_attribs(TOPLEVEL *toplevel,
 		       OBJECT *object_to_get_attribs,
    		       TextBuffer *tb,
 		       unsigned int release_ver, unsigned int fileformat_ver)
@@ -683,7 +683,7 @@ OBJECT *o_read_attribs(TOPLEVEL *w_current,
     switch (objtype) {
 
       case(OBJ_LINE):
-        object_list = (OBJECT *) o_line_read(w_current, 
+        object_list = (OBJECT *) o_line_read(toplevel,
                                              object_list,
                                              line, 
                                              release_ver, fileformat_ver);
@@ -691,21 +691,21 @@ OBJECT *o_read_attribs(TOPLEVEL *w_current,
 
 
       case(OBJ_NET):
-        object_list = (OBJECT *) o_net_read(w_current, 
+        object_list = (OBJECT *) o_net_read(toplevel,
                                             object_list, 
                                             line, 
                                             release_ver, fileformat_ver);
         break;
 
       case(OBJ_BUS):
-        object_list = (OBJECT *) o_bus_read(w_current, 
+        object_list = (OBJECT *) o_bus_read(toplevel,
                                             object_list, 
                                             line, 
                                             release_ver, fileformat_ver);
         break;
 
       case(OBJ_BOX):
-        object_list = (OBJECT *) o_box_read(w_current, 
+        object_list = (OBJECT *) o_box_read(toplevel,
                                             object_list, 
                                             line, 
                                             release_ver, fileformat_ver);
@@ -713,7 +713,7 @@ OBJECT *o_read_attribs(TOPLEVEL *w_current,
 		
       case(OBJ_CIRCLE):
         object_list = (OBJECT *) o_circle_read(
-                                               w_current, 
+                                               toplevel,
                                                object_list, 
                                                line, 
                                                release_ver, fileformat_ver);
@@ -723,7 +723,7 @@ OBJECT *o_read_attribs(TOPLEVEL *w_current,
       case(OBJ_PLACEHOLDER):
 			
         object_list = (OBJECT *) o_complex_read(
-                                                w_current, 
+                                                toplevel,
                                                 object_list, 
                                                 line, 
                                                 release_ver, fileformat_ver);
@@ -736,14 +736,14 @@ OBJECT *o_read_attribs(TOPLEVEL *w_current,
         break;
 
       case(OBJ_PIN):
-        object_list = (OBJECT *) o_pin_read(w_current, 
+        object_list = (OBJECT *) o_pin_read(toplevel,
                                             object_list, 
                                             line, 
                                             release_ver, fileformat_ver);
         break;
 
       case(OBJ_ARC):
-        object_list = (OBJECT *) o_arc_read(w_current, 
+        object_list = (OBJECT *) o_arc_read(toplevel,
                                             object_list, 
                                             line, 
                                             release_ver, fileformat_ver);
@@ -751,7 +751,7 @@ OBJECT *o_read_attribs(TOPLEVEL *w_current,
 
       case(OBJ_TEXT):
 	line = g_strdup (line);
-        object_list = (OBJECT *) o_text_read(w_current,
+        object_list = (OBJECT *) o_text_read(toplevel,
                                              object_list, 
                                              line,
 					     tb,
@@ -769,8 +769,8 @@ OBJECT *o_read_attribs(TOPLEVEL *w_current,
     }
 
     if (ATTACH) {
-      o_attrib_attach(w_current, 
-                      w_current->page_current->object_parent, 
+      o_attrib_attach(toplevel,
+                      toplevel->page_current->object_parent,
                       object_list, object_to_get_attribs);
       /* check color to set it to the right value */
       if (object_list->color != saved_color) {
@@ -961,60 +961,60 @@ int o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
  *  \par Function Description
  *  Free the currently selected attribute.
  *
- *  \param [in] w_current  The TOPLEVEL object containing current attribute.
+ *  \param [in] toplevel  The TOPLEVEL object containing current attribute.
  *
  */
-void o_attrib_free_current(TOPLEVEL *w_current)
+void o_attrib_free_current(TOPLEVEL *toplevel)
 {
-  if (w_current->current_attribute) {
-    g_free(w_current->current_attribute);
+  if (toplevel->current_attribute) {
+    g_free(toplevel->current_attribute);
   }
-  w_current->current_attribute=NULL;
+  toplevel->current_attribute=NULL;
 }
 
 /*! \brief Set current show flag.
  *  \par Function Description
  *  Set current show flag.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] flag       Any value which show_name_value takes.
  *                         #SHOW_NAME_VALUE
  *                         #SHOW_VALUE
  *                         #SHOW_NAME
  */
-void o_attrib_set_show(TOPLEVEL *w_current, int flag)
+void o_attrib_set_show(TOPLEVEL *toplevel, int flag)
 {
-  w_current->current_show = flag;
+  toplevel->current_show = flag;
 }
 
 /*! \brief Set current visibility flag.
  *  \par Function Description
  *  Set current visibility flag.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] flag       Allowed values are:
  *                         #VISIBLE
  *                         #INVISIBLE
  */
 void
-o_attrib_set_visible(TOPLEVEL *w_current, int flag)
+o_attrib_set_visible(TOPLEVEL *toplevel, int flag)
 {
-  w_current->current_visible = flag;
+  toplevel->current_visible = flag;
 }
 
 /*! \brief Set an attribute's string.
  *  \par Function Description
  *  Set an attribute's string.
  *
- *  \param [in] w_current  The TOPLEVEL object that holds the attribute.
+ *  \param [in] toplevel  The TOPLEVEL object that holds the attribute.
  *  \param [in] string     The value to set attribute string to.
  *
  *  \note
  *  The user of this function must g_free the
- *  <B>w_current->current_attribute</B> string after done using it.
+ *  <B>toplevel->current_attribute</B> string after done using it.
  *  They must also free the input string.
  */
-void o_attrib_set_string(TOPLEVEL *w_current, char *string)
+void o_attrib_set_string(TOPLEVEL *toplevel, char *string)
 {
   int len;
 
@@ -1024,16 +1024,16 @@ void o_attrib_set_string(TOPLEVEL *w_current, char *string)
     return;
   }
 
-  if (w_current->current_attribute != NULL) {
-    g_free(w_current->current_attribute);
-    w_current->current_attribute=NULL;
+  if (toplevel->current_attribute != NULL) {
+    g_free(toplevel->current_attribute);
+    toplevel->current_attribute=NULL;
   }
 
   len = strlen(string);
 
-  w_current->current_attribute = (char *) g_malloc(sizeof(char)*len+1);
+  toplevel->current_attribute = (char *) g_malloc(sizeof(char)*len+1);
 
-  strcpy(w_current->current_attribute,string);
+  strcpy(toplevel->current_attribute,string);
 	
   /* be sure to g_free this string somewhere and free the input string */
 }
@@ -1069,12 +1069,12 @@ OBJECT *o_attrib_return_parent(ATTRIB *attribute)
  *  This function will copy all attributes from the provided list
  *  by attaching them to the provided OBJECT list.
  *
- *  \param [in]  w_current    The TOPLEVEL object.
+ *  \param [in]  toplevel    The TOPLEVEL object.
  *  \param [out] attached_to  OBJECT list to copy attributes to.
  *  \param [in]  attributes   ATTRIB list to copy attributes from.
  *  \return new attribute list.
  */
-ATTRIB *o_attrib_copy_all(TOPLEVEL *w_current, OBJECT *attached_to,
+ATTRIB *o_attrib_copy_all(TOPLEVEL *toplevel, OBJECT *attached_to,
 			  ATTRIB *attributes) 
 {
   ATTRIB *a_current=NULL;
@@ -1156,11 +1156,11 @@ void o_attrib_reattach(ATTRIB *attributes)
  *  This function sets all attribute objects to the right
  *  color (attribute_color).
  *
- *  \param [in]     w_current   The TOPLEVEL object.
+ *  \param [in]     toplevel   The TOPLEVEL object.
  *  \param [in,out] attributes  ATTRIB list to set colors on.
  *
  */
-void o_attrib_set_color(TOPLEVEL *w_current, ATTRIB *attributes) 
+void o_attrib_set_color(TOPLEVEL *toplevel, ATTRIB *attributes)
 {
   ATTRIB *a_current;
 
@@ -1191,16 +1191,16 @@ void o_attrib_set_color(TOPLEVEL *w_current, ATTRIB *attributes)
 
           o_complex_set_saved_color_only(
                                          a_current->object->text->prim_objs,
-                                         w_current->attribute_color); 
-          a_current->object->saved_color = w_current->
+                                         toplevel->attribute_color);
+          a_current->object->saved_color = toplevel->
             attribute_color;
 
         } else {
           o_complex_set_color(
                               a_current->object->text->prim_objs,
-                              w_current->attribute_color); 
+                              toplevel->attribute_color);
           a_current->object->color = 
-            w_current->attribute_color;
+            toplevel->attribute_color;
         }
       }	
 
@@ -2128,10 +2128,10 @@ char *o_attrib_search_component(OBJECT *object, char *name)
  *  parts, but on slotted parts, this is what sets the 
  *  pinnumber= attribute on slots 2, 3, 4....
  *
- *  \param [in]     w_current  The TOPLEVEL object.
+ *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object     The OBJECT to update.
  */
-void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
+void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
 {
   OBJECT *o_current;  /* o_current points to the sch level complex object */
   OBJECT *o_slot_attrib;
@@ -2217,7 +2217,7 @@ void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
         /* removed _int from current_pin */
         sprintf(o_pinnum_object->text->string, "pinnumber=%s", current_pin);
         
-        o_text_recreate(w_current, o_pinnum_object);
+        o_text_recreate(toplevel, o_pinnum_object);
       }
       if (string) {
       	g_free(string);
@@ -2263,7 +2263,7 @@ void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
 	printf("new_pinseq attrib = %s \n", o_pinseq_object->text->string);
 #endif
         
-        o_text_recreate(w_current, o_pinseq_object);
+        o_text_recreate(toplevel, o_pinseq_object);
       }
       if (string) {
       	g_free(string);
@@ -2285,11 +2285,11 @@ void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
  *  This function will perform a slot copy of the <B>original</B> OBJECT
  *  to the <B>target</B> OBJECT.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  original   The original OBJECT to slot copy from.
  *  \param [out] target     The target OBJECT to slot copy to.
  */
-void o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target)
+void o_attrib_slot_copy(TOPLEVEL *toplevel, OBJECT *original, OBJECT *target)
 {
 
   OBJECT *o_current;
@@ -2366,7 +2366,7 @@ void o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target)
         /* removed _int from current_pin */
         sprintf(o_pinnum_object->text->string, "pinnumber=%s", current_pin);
         
-        o_text_recreate(w_current, o_pinnum_object);
+        o_text_recreate(toplevel, o_pinnum_object);
       }
       
       pin_counter++;
@@ -2385,12 +2385,12 @@ void o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target)
  *  This function will return the number of TOPLEVEL attributes
  *  in all loaded pages.
  *
- *  \param [in] w_current  The TOPLEVEL object to search.
+ *  \param [in] toplevel  The TOPLEVEL object to search.
  *  \param [in] name       Attribute name to search for.
  *  \return Count of TOPLEVEL attributes in all loaded pages.
  */
 /* returns the number of toplevel attributes in all loaded pages */
-int o_attrib_count_toplevel(TOPLEVEL *w_current, char *name)
+int o_attrib_count_toplevel(TOPLEVEL *toplevel, char *name)
 {
   const GList *iter;
   int ret_value=0;
@@ -2398,7 +2398,7 @@ int o_attrib_count_toplevel(TOPLEVEL *w_current, char *name)
   PAGE *p_current;
   char *string;
 
-  iter = geda_list_get_glist( w_current->pages );
+  iter = geda_list_get_glist( toplevel->pages );
 
   while( iter != NULL ) {
     p_current = (PAGE *)iter->data;

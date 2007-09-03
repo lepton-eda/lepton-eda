@@ -43,10 +43,10 @@
  *  \par Function Description
  *
  */
-void world_get_pin_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top,
+void world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top,
 			  int *right, int *bottom)
 {
-  world_get_line_bounds( w_current, object, left, top, right, bottom );
+  world_get_line_bounds( toplevel, object, left, top, right, bottom );
 }
 
 /*! \todo Finish function documentation!!!
@@ -54,7 +54,7 @@ void world_get_pin_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *t
  *  \par Function Description
  *
  */
-OBJECT *o_pin_add(TOPLEVEL *w_current, OBJECT *object_list,
+OBJECT *o_pin_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		  char type, int color,
 		  int x1, int y1, int x2, int y2, int pin_type, int whichend)
 {
@@ -73,7 +73,7 @@ OBJECT *o_pin_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->line->y[1] = y2;
   new_node->line_width = PIN_WIDTH;
 
-  world_get_pin_bounds(w_current, new_node, &left, &top, &right, &bottom);
+  world_get_pin_bounds(toplevel, new_node, &left, &top, &right, &bottom);
 	
   new_node->w_left = left;
   new_node->w_top = top;
@@ -97,17 +97,17 @@ OBJECT *o_pin_add(TOPLEVEL *w_current, OBJECT *object_list,
 #if 0
   /*  ifed out 3/15/98 due to above  */
   if (!adding_sel) {
-    o_pin_conn_recalc(w_current, object_list); /* old conn system */
+    o_pin_conn_recalc(toplevel, object_list); /* old conn system */
     /*o_net_conn_recalc(object_list); */
   }     
 #endif
 
 
-  if (!w_current->ADDING_SEL) {
-    s_tile_add_object(w_current, object_list, 
+  if (!toplevel->ADDING_SEL) {
+    s_tile_add_object(toplevel, object_list,
                       new_node->line->x[0], new_node->line->y[0], 
                       new_node->line->x[1], new_node->line->y[1]);
-    s_conn_update_object(w_current, object_list);
+    s_conn_update_object(toplevel, object_list);
   }
 
   return(object_list);
@@ -118,7 +118,7 @@ OBJECT *o_pin_add(TOPLEVEL *w_current, OBJECT *object_list,
  *  \par Function Description
  *
  */
-void o_pin_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+void o_pin_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   int left, right, top, bottom;
 
@@ -126,7 +126,7 @@ void o_pin_recalc(TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  world_get_pin_bounds(w_current, o_current, &left, &top, &right, &bottom);
+  world_get_pin_bounds(toplevel, o_current, &left, &top, &right, &bottom);
 
   o_current->w_left = left;
   o_current->w_top = top;
@@ -140,7 +140,7 @@ void o_pin_recalc(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-OBJECT *o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
+OBJECT *o_pin_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 		   unsigned int release_ver, unsigned int fileformat_ver)
 {
   char type; 
@@ -191,11 +191,11 @@ OBJECT *o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
     color = WHITE;
   }
 
-  if (w_current->override_pin_color != -1) {
-    color = w_current->override_pin_color;
+  if (toplevel->override_pin_color != -1) {
+    color = toplevel->override_pin_color;
   }
 
-  object_list = o_pin_add(w_current, object_list, type, color, d_x1, d_y1,
+  object_list = o_pin_add(toplevel, object_list, type, color, d_x1, d_y1,
                           d_x2, d_y2, pin_type, whichend);
   return(object_list);
 }
@@ -237,7 +237,7 @@ char *o_pin_save(OBJECT *object)
  *  \par Function Description
  *
  */
-void o_pin_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
+void o_pin_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object)
 {
   int left, right, top, bottom;
 
@@ -251,14 +251,14 @@ void o_pin_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
   object->line->y[1] = object->line->y[1] + y1;
 
   /* Update bounding box */
-  world_get_pin_bounds(w_current, object, &left, &top, &right, &bottom);
+  world_get_pin_bounds(toplevel, object, &left, &top, &right, &bottom);
 
   object->w_left = left;
   object->w_top = top;
   object->w_right = right;
   object->w_bottom = bottom;
 
-  s_tile_update_object(w_current, object);
+  s_tile_update_object(toplevel, object);
 }
 
 /*! \todo Finish function documentation!!!
@@ -266,7 +266,7 @@ void o_pin_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
  *  \par Function Description
  *
  */
-OBJECT *o_pin_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
+OBJECT *o_pin_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
 {
   OBJECT *new_obj;
   ATTRIB *a_current;
@@ -278,7 +278,7 @@ OBJECT *o_pin_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
     color = o_current->saved_color;
   }
 
-  new_obj = o_pin_add(w_current, list_tail, OBJ_PIN, color, 
+  new_obj = o_pin_add(toplevel, list_tail, OBJ_PIN, color,
                       o_current->line->x[0], o_current->line->y[0],
                       o_current->line->x[1], o_current->line->y[1],
                       o_current->pin_type, o_current->whichend);
@@ -309,7 +309,7 @@ OBJECT *o_pin_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_pin_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+void o_pin_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 		 int origin_x, int origin_y)
 {
   int pin_width;
@@ -321,7 +321,7 @@ void o_pin_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     return;
   }
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, o_current->color);
   }
 
@@ -330,7 +330,7 @@ void o_pin_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   x2 = o_current->line->x[1] - origin_x;
   y2 = o_current->line->y[1] - origin_y;
   pin_width = 2;
-  if(w_current->pin_style == THICK) {
+  if(toplevel->pin_style == THICK) {
     pin_width = PIN_WIDTH;
   }
 
@@ -343,7 +343,7 @@ void o_pin_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
  *  \par Function Description
  *
  */
-void o_pin_rotate_world(TOPLEVEL *w_current, int world_centerx, 
+void o_pin_rotate_world(TOPLEVEL *toplevel, int world_centerx,
 			int world_centery, int angle,
 			OBJECT *object)
 {
@@ -353,7 +353,7 @@ void o_pin_rotate_world(TOPLEVEL *w_current, int world_centerx,
   return;
 
   /* translate object to origin */
-  o_pin_translate_world(w_current, -world_centerx, -world_centery, object);
+  o_pin_translate_world(toplevel, -world_centerx, -world_centery, object);
 
   rotate_point_90(object->line->x[0], object->line->y[0], angle,
                   &newx, &newy);
@@ -367,7 +367,7 @@ void o_pin_rotate_world(TOPLEVEL *w_current, int world_centerx,
   object->line->x[1] = newx;
   object->line->y[1] = newy;
 
-  o_pin_translate_world(w_current, world_centerx, world_centery, object);
+  o_pin_translate_world(toplevel, world_centerx, world_centery, object);
 }
 
 /*! \todo Finish function documentation!!!
@@ -375,17 +375,17 @@ void o_pin_rotate_world(TOPLEVEL *w_current, int world_centerx,
  *  \par Function Description
  *
  */
-void o_pin_mirror_world(TOPLEVEL *w_current,
+void o_pin_mirror_world(TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, OBJECT *object)
 {
   /* translate object to origin */
-  o_pin_translate_world(w_current, -world_centerx, -world_centery, object);
+  o_pin_translate_world(toplevel, -world_centerx, -world_centery, object);
 
   object->line->x[0] = -object->line->x[0];
 
   object->line->x[1] = -object->line->x[1];
 
-  o_pin_translate_world(w_current, world_centerx, world_centery, object);
+  o_pin_translate_world(toplevel, world_centerx, world_centery, object);
 }
 
 /*! \todo Finish function documentation!!!
@@ -393,7 +393,7 @@ void o_pin_mirror_world(TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-void o_pin_modify(TOPLEVEL *w_current, OBJECT *object, 
+void o_pin_modify(TOPLEVEL *toplevel, OBJECT *object,
 		  int x, int y, int whichone)
 {
   int left, right, top, bottom;
@@ -401,14 +401,14 @@ void o_pin_modify(TOPLEVEL *w_current, OBJECT *object,
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
 
-  world_get_pin_bounds(w_current, object, &left, &top, &right, &bottom);
+  world_get_pin_bounds(toplevel, object, &left, &top, &right, &bottom);
 	
   object->w_left = left;
   object->w_top = top;
   object->w_right = right;
   object->w_bottom = bottom;	
 
-  s_tile_update_object(w_current, object);
+  s_tile_update_object(toplevel, object);
 }
 
 /*! \todo Finish function documentation!!!
@@ -416,7 +416,7 @@ void o_pin_modify(TOPLEVEL *w_current, OBJECT *object,
  *  \par Function Description
  *
  */
-void o_pin_update_whichend(TOPLEVEL *w_current,
+void o_pin_update_whichend(TOPLEVEL *toplevel,
 			   OBJECT *object_list, int num_pins)
 {
   OBJECT *o_current;
@@ -429,8 +429,8 @@ void o_pin_update_whichend(TOPLEVEL *w_current,
   int found;
 
   if (object_list && num_pins) {
-    if (num_pins == 1 || w_current->force_boundingbox) {
-      world_get_object_list_bounds(w_current, object_list,
+    if (num_pins == 1 || toplevel->force_boundingbox) {
+      world_get_object_list_bounds(toplevel, object_list,
                                    &left, &top, &right, &bottom);
     } else {
       found = 0;

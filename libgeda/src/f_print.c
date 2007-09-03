@@ -41,7 +41,7 @@
  */
 GHashTable *unicode_char_to_glyph = NULL;
 
-static int f_print_get_unicode_chars(TOPLEVEL * w_current, OBJECT * head,
+static int f_print_get_unicode_chars(TOPLEVEL * toplevel, OBJECT * head,
 				     int count, gunichar * table);
 static void f_print_unicode_map(FILE * fp, int count, gunichar * table);
 
@@ -88,13 +88,13 @@ void f_print_set_color(FILE *fp, int color)
  *  This function will print a document preamble and header
  *  for a postscript document.
  *
- *  \param [in] w_current     The TOPLEVEL object to create document for.
+ *  \param [in] toplevel     The TOPLEVEL object to create document for.
  *  \param [in] fp            The postscript document to write to.
  *  \param [in] paper_size_x  The width of the document on paper in inches.
  *  \param [in] paper_size_y  The height of the document on paper in inches.
  *  \return 0 on success, -1 on failure.
  */
-int f_print_header(TOPLEVEL *w_current, FILE *fp, 
+int f_print_header(TOPLEVEL *toplevel, FILE *fp,
 		   int paper_size_x, int paper_size_y, int eps) 
 {
   char *buf;
@@ -132,10 +132,10 @@ int f_print_header(TOPLEVEL *w_current, FILE *fp,
 	  "%%%%BeginProlog\n",
 	  DATE_VERSION,
 	  ctime(&current_time),
-	  w_current->page_current->page_filename,
+	  toplevel->page_current->page_filename,
 	  getlogin(),
 	  llx, lly, urx, ury,
-	  ((w_current->print_orientation == LANDSCAPE) 
+	  ((toplevel->print_orientation == LANDSCAPE)
 	   ? "Landscape" : "Portrait")
 	  );
 
@@ -150,11 +150,11 @@ int f_print_header(TOPLEVEL *w_current, FILE *fp,
     return -1;
   }
   /* Open the prolog file */
-  prolog = fopen(w_current->postscript_prolog,"r");
+  prolog = fopen(toplevel->postscript_prolog,"r");
   if(prolog == NULL) {
     s_log_message("Unable to open the prolog file `%s' for reading "
 		  "in f_print_header()\n"
-		  "Giving up on printing\n", w_current->postscript_prolog);
+		  "Giving up on printing\n", toplevel->postscript_prolog);
     g_free(buf);  /* If we got to here, the buffer was allocated. */
     return -1;
   }
@@ -170,7 +170,7 @@ int f_print_header(TOPLEVEL *w_current, FILE *fp,
   if(ferror(prolog)) {
     s_log_message("Error during reading of the prolog file `%s' "
 		  "in f_print_header()\n"
-		  "Giving up on printing\n", w_current->postscript_prolog);
+		  "Giving up on printing\n", toplevel->postscript_prolog);
     g_free(buf);  /* If we got to here, the buffer was allocated. */
     return -1;
   }
@@ -207,12 +207,12 @@ void f_print_footer(FILE *fp)
 	  "%%%%End\n");
 }
 
-/*! \brief Print all objects from the w_current TOPLEVEL object.
+/*! \brief Print all objects from the toplevel TOPLEVEL object.
  *  \par Function Description
  *  This function will parse the head parameter for all objects
  *  and write the to the postscript document.
  *
- *  \param [in] w_current      The current TOPLEVEL object.
+ *  \param [in] toplevel      The current TOPLEVEL object.
  *  \param [in] fp             The postscript document to print to.
  *  \param [in] head           Container for objects to be printed.
  *  \param [in] start_x        X origin on page to start printing objects.
@@ -224,7 +224,7 @@ void f_print_footer(FILE *fp)
  *
  *  \todo  what happens if snap is off? hack deal with this !!!!!!!!
  */
-void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head, 
+void f_print_objects(TOPLEVEL *toplevel, FILE *fp, OBJECT *head,
 		     int start_x, int start_y, float scale, 
 		     int unicode_count, gunichar *unicode_table)
 {
@@ -257,27 +257,27 @@ void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
 
       switch (o_current->type) {
         case(OBJ_LINE):
-          o_line_print(w_current, fp, o_current,
+          o_line_print(toplevel, fp, o_current,
                        origin_x, origin_y);
           break;
 	
         case(OBJ_NET):
-          o_net_print(w_current, fp, o_current,
+          o_net_print(toplevel, fp, o_current,
                       origin_x, origin_y);
           break;
 
         case(OBJ_BUS):
-          o_bus_print(w_current, fp, o_current,
+          o_bus_print(toplevel, fp, o_current,
                       origin_x, origin_y);
           break;
 	
         case(OBJ_BOX):
-          o_box_print(w_current, fp, o_current,
+          o_box_print(toplevel, fp, o_current,
                       origin_x, origin_y);
           break;
 			
         case(OBJ_CIRCLE):
-          o_circle_print(w_current, fp, o_current,
+          o_circle_print(toplevel, fp, o_current,
                          origin_x, origin_y);
           break;
 
@@ -285,7 +285,7 @@ void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
         case(OBJ_PLACEHOLDER): /* new object -- 1.20.2005 SDB */
           fprintf(fp, "gsave\n");
 
-          f_print_objects(w_current, fp, 
+          f_print_objects(toplevel, fp,
                           o_current->complex->prim_objs,
                           origin_x, origin_y, scale,
 			  unicode_count, unicode_table);
@@ -299,11 +299,11 @@ void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
 	    /* Look at flags and determine if vector text should
 	     * be used for output.
 	     */
-	    if(w_current->text_output == VECTOR_FONTS) {
+	    if(toplevel->text_output == VECTOR_FONTS) {
 	      vectors = 1;
-	    } else if( (w_current->print_vector_threshold > 0)
+	    } else if( (toplevel->print_vector_threshold > 0)
 			&& ( o_text_num_lines(o_current->text->string) > 
-			     w_current->print_vector_threshold)) {
+			     toplevel->print_vector_threshold)) {
 	      vectors = 1;
 	    }
             
@@ -312,7 +312,7 @@ void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
             if (vectors)
             {	
 	      /* Output vectors */
-              f_print_objects(w_current, 
+              f_print_objects(toplevel,
                               fp, 
                               o_current->text->
                               prim_objs,
@@ -320,7 +320,7 @@ void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
                               scale, unicode_count, unicode_table);
             } else {
 	      /* Output text */
-              o_text_print(w_current, fp, 
+              o_text_print(toplevel, fp,
                            o_current,
                            origin_x, origin_y, unicode_count, unicode_table);
             }
@@ -331,17 +331,17 @@ void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
 
 
         case(OBJ_PIN):
-          o_pin_print(w_current, fp, o_current,
+          o_pin_print(toplevel, fp, o_current,
                       origin_x, origin_y);
           break;
 	
         case(OBJ_ARC):
-          o_arc_print(w_current, fp, o_current,
+          o_arc_print(toplevel, fp, o_current,
                       origin_x, origin_y);
           break;
 
   	case(OBJ_PICTURE):
-          o_picture_print(w_current, fp, o_current,
+          o_picture_print(toplevel, fp, o_current,
 			  origin_x, origin_y);
 	  break;
 
@@ -355,7 +355,7 @@ void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
     o_current = o_current->next;
   }
 
-  s_cue_output_all(w_current, head, fp, POSTSCRIPT);
+  s_cue_output_all(toplevel, head, fp, POSTSCRIPT);
   return;
 }
 
@@ -364,11 +364,11 @@ void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
  *
  *  \par Function Description
  *
- *  \param [in] w_current  The TOPLEVEL object to print.
+ *  \param [in] toplevel  The TOPLEVEL object to print.
  *  \param [in] filename   The file name of the output postscript document.
  *  \return 0 on success, -1 on failure.
  */
-int f_print_file (TOPLEVEL *w_current, const char *filename)
+int f_print_file (TOPLEVEL *toplevel, const char *filename)
 {
   FILE *fp;
   int result;
@@ -382,7 +382,7 @@ int f_print_file (TOPLEVEL *w_current, const char *filename)
     return -1;
   }
 
-  result = f_print_stream(w_current, fp);
+  result = f_print_stream(toplevel, fp);
   
   if (result != 0) {
     /* If there was an error in f_print_stream, then unlink the output file. */
@@ -397,11 +397,11 @@ int f_print_file (TOPLEVEL *w_current, const char *filename)
  *
  *  \par Function Description
  *
- *  \param [in] w_current  The TOPLEVEL object to print.
+ *  \param [in] toplevel  The TOPLEVEL object to print.
  *  \param [in] command    The command to print to.
  *  \return 0 on success, -1 on failure.
  */
-int f_print_command (TOPLEVEL *w_current, const char *command)
+int f_print_command (TOPLEVEL *toplevel, const char *command)
 {
   FILE *fp;
   int result;
@@ -415,7 +415,7 @@ int f_print_command (TOPLEVEL *w_current, const char *command)
       return -1;
     }
 
-  result = f_print_stream (w_current, fp);
+  result = f_print_stream (toplevel, fp);
   pclose (fp);
   return result;
 }
@@ -424,12 +424,12 @@ int f_print_command (TOPLEVEL *w_current, const char *command)
  *  postscript document.  
  *  \par Function Description
  *
- *  \param [in] w_current  The TOPLEVEL object to print.
+ *  \param [in] toplevel  The TOPLEVEL object to print.
  *  \param [in] fp         A pointer to an open IO stream
  *  \return 0 on success, -1 on failure.
  */
 
-int f_print_stream(TOPLEVEL *w_current, FILE *fp)
+int f_print_stream(TOPLEVEL *toplevel, FILE *fp)
 {
   int origin_x, origin_y, bottom, right;
   int margin_x, margin_y;
@@ -445,21 +445,21 @@ int f_print_stream(TOPLEVEL *w_current, FILE *fp)
   f_print_initialize_glyph_table();  /* Fill up unicode map */
 
   /* Find all the unicode characters */
-  unicode_count = f_print_get_unicode_chars(w_current,
-			 w_current->page_current->object_head, 
+  unicode_count = f_print_get_unicode_chars(toplevel,
+			 toplevel->page_current->object_head,
 			 0, unicode_table);
 
-  /*	printf("%d %d\n", w_current->paper_width, w_current->paper_height);*/
+  /*	printf("%d %d\n", toplevel->paper_width, toplevel->paper_height);*/
 
-  world_get_object_list_bounds(w_current,
-                               w_current->page_current->object_head,
+  world_get_object_list_bounds(toplevel,
+                               toplevel->page_current->object_head,
                                &origin_x, &origin_y,
                                &right, &bottom);
 
   /* Calculate scale factor that will make the image fit on the page */
   dx = 0; dy = 0;
   margin_x = 0; margin_y = 0;
-  switch (w_current->print_output_type) {
+  switch (toplevel->print_output_type) {
   case EXTENTS:
     dx = right  - origin_x;
     dy = bottom - origin_y;
@@ -472,12 +472,12 @@ int f_print_stream(TOPLEVEL *w_current, FILE *fp)
     break;
 
   case WINDOW:
-    dx = w_current->page_current->right - w_current->page_current->left;
-    dy = w_current->page_current->bottom - w_current->page_current->top;
-    origin_x = w_current->page_current->left;
-    origin_y = w_current->page_current->top;
-    right = w_current->page_current->right;
-    bottom = w_current->page_current->bottom;
+    dx = toplevel->page_current->right - toplevel->page_current->left;
+    dy = toplevel->page_current->bottom - toplevel->page_current->top;
+    origin_x = toplevel->page_current->left;
+    origin_y = toplevel->page_current->top;
+    right = toplevel->page_current->right;
+    bottom = toplevel->page_current->bottom;
     break;
 
   case EXTENTS_NOMARGINS:
@@ -490,32 +490,32 @@ int f_print_stream(TOPLEVEL *w_current, FILE *fp)
 
   }
 
-  if(w_current->paper_width == 0) {
+  if(toplevel->paper_width == 0) {
     eps = 1;
-    if(w_current->print_orientation == LANDSCAPE) {
-      w_current->paper_width = dx;
-      w_current->paper_height = dy;
+    if(toplevel->print_orientation == LANDSCAPE) {
+      toplevel->paper_width = dx;
+      toplevel->paper_height = dy;
     } else { /* portrait */
-      w_current->paper_width = dy;
-      w_current->paper_height = dx;
+      toplevel->paper_width = dy;
+      toplevel->paper_height = dx;
     }
   } else
     eps = 0;
   
   scale = 0.0;
-  if(w_current->print_orientation == LANDSCAPE) {
+  if(toplevel->print_orientation == LANDSCAPE) {
     /* First attempt to fit in x direction. */
-    scale = w_current->paper_width / (float)dx;
-    if((w_current->paper_height / (float)dy) < scale ) {
+    scale = toplevel->paper_width / (float)dx;
+    if((toplevel->paper_height / (float)dy) < scale ) {
       /* Else fit with y direction */
-      scale = (w_current->paper_height / (float)dy);
+      scale = (toplevel->paper_height / (float)dy);
     }
   } else { /* portrait */
     /* First attempt to fit in y direction. */
-    scale = w_current->paper_width / (float) dy;
-    if((w_current->paper_height / (float)dx) < scale ) {
+    scale = toplevel->paper_width / (float) dy;
+    if((toplevel->paper_height / (float)dx) < scale ) {
       /* Else fit with x direction */
-      scale = (w_current->paper_height / (float)dx);
+      scale = (toplevel->paper_height / (float)dx);
     }
   }
 
@@ -527,9 +527,9 @@ int f_print_stream(TOPLEVEL *w_current, FILE *fp)
 #endif  
 
   /* Output the header */
-  if (f_print_header(w_current, fp, 
-		     w_current->paper_width, 
-		     w_current->paper_height,
+  if (f_print_header(toplevel, fp,
+		     toplevel->paper_width,
+		     toplevel->paper_height,
 		     eps) != 0) {
 
     /* There was an error in f_print_header */
@@ -549,8 +549,8 @@ int f_print_stream(TOPLEVEL *w_current, FILE *fp)
 
   /* XXX - Do page orientation selection */
 
-/*   if (w_current->setpagedevice_orientation) { */
-/*     if (w_current->print_orientation == LANDSCAPE) { */
+/*   if (toplevel->setpagedevice_orientation) { */
+/*     if (toplevel->print_orientation == LANDSCAPE) { */
 /*       fprintf(fp, "%c%c /Orientation 1 %c%c setpagedevice\n\n", '<', '<', */
 /*               '>', '>'); */
 /*     } else { */
@@ -562,19 +562,19 @@ int f_print_stream(TOPLEVEL *w_current, FILE *fp)
   /* the height and width are in the right order here, since they were
    * specified in landscape order in the system-gschemrc file.
    * \074 is '<', \076 is '>' */
-  if (w_current->setpagedevice_pagesize) {
+  if (toplevel->setpagedevice_pagesize) {
     fprintf(fp, "\074\074 /PageSize [%d %d] \076\076 setpagedevice\n",
-            (w_current->paper_height * 72) / MILS_PER_INCH,
-            (w_current->paper_width * 72) / MILS_PER_INCH);
+            (toplevel->paper_height * 72) / MILS_PER_INCH,
+            (toplevel->paper_width * 72) / MILS_PER_INCH);
   }
 
 
   /* Set line end style */
-  if (w_current->print_output_capstyle == BUTT_CAP) {
+  if (toplevel->print_output_capstyle == BUTT_CAP) {
     fprintf(fp, "0 setlinecap\n");
-  } else if (w_current->print_output_capstyle == SQUARE_CAP) {
+  } else if (toplevel->print_output_capstyle == SQUARE_CAP) {
     fprintf(fp, "2 setlinecap\n");
-  } else if (w_current->print_output_capstyle == ROUND_CAP) {
+  } else if (toplevel->print_output_capstyle == ROUND_CAP) {
     fprintf(fp, "1 setlinecap\n");
   }
 
@@ -584,24 +584,24 @@ int f_print_stream(TOPLEVEL *w_current, FILE *fp)
 
   /* Now the output is defined in terms of mils */
   /* Draw a box with the background colour covering the whole page */
-  if (w_current->print_color) {
-    f_print_set_color(fp, w_current->print_color_background);
+  if (toplevel->print_color) {
+    f_print_set_color(fp, toplevel->print_color_background);
     fprintf(fp,"%d %d 0 0 fbox\n",
-	    w_current->paper_height,
-	    w_current->paper_width);
+	    toplevel->paper_height,
+	    toplevel->paper_width);
   }
 
   /* Now rotate and translate the graphics to fit onto the desired
    * page with the orientation we want. Center it too */
-  if(w_current->print_orientation == LANDSCAPE) {
+  if(toplevel->print_orientation == LANDSCAPE) {
     fprintf(fp,
 	    "%d %d translate 90 rotate\n",
-	    (int)((w_current->paper_height + ( dy-margin_y) * scale)/2.0),
-	    (int)((w_current->paper_width  + (-dx+margin_x) * scale)/2.0));
+	    (int)((toplevel->paper_height + ( dy-margin_y) * scale)/2.0),
+	    (int)((toplevel->paper_width  + (-dx+margin_x) * scale)/2.0));
   } else { /* portrait */
     fprintf(fp,"%d %d translate\n",
-	    (int)((w_current->paper_height + (-dx + margin_x) * scale)/2.0),
-	    (int)((w_current->paper_width  + (-dy + margin_y) * scale)/2.0));
+	    (int)((toplevel->paper_height + (-dx + margin_x) * scale)/2.0),
+	    (int)((toplevel->paper_width  + (-dy + margin_y) * scale)/2.0));
 
   }
 
@@ -610,8 +610,8 @@ int f_print_stream(TOPLEVEL *w_current, FILE *fp)
 	  scale, scale);
 
   /* Print the objects */
-  f_print_objects(w_current, fp, 
-		  w_current->page_current->object_head,
+  f_print_objects(toplevel, fp,
+		  toplevel->page_current->object_head,
 		  origin_x, origin_y, scale, unicode_count, unicode_table);
 
   f_print_footer(fp);
@@ -623,26 +623,26 @@ int f_print_stream(TOPLEVEL *w_current, FILE *fp)
  *  \par Function Description
  *  Sets the current TOPLEVEL object output type.
  *
- *  \param [in,out] w_current  The TOPLEVEL object to set output type in.
+ *  \param [in,out] toplevel  The TOPLEVEL object to set output type in.
  *  \param [in]     type       The print type to set.
  */
-void f_print_set_type(TOPLEVEL *w_current, int type)
+void f_print_set_type(TOPLEVEL *toplevel, int type)
 {
-  w_current->print_output_type = type;
+  toplevel->print_output_type = type;
 }
 
 /*! \brief Converts all text strings to unicode format.
  *  \par Function Description
  *  Converts all text strings to unicode format.
  *
- *  \param [in,out] w_current  The output TOPLEVEL element to store converted
+ *  \param [in,out] toplevel  The output TOPLEVEL element to store converted
  *                             strings in.
  *  \param [in]     head       The object containing strings for conversion.
  *  \param [in]     count      The number of elements in the unicode table.
  *  \param [in]     table      The unicode table.
  *  \return count on success, 0 otherwise.
  */
-static int f_print_get_unicode_chars(TOPLEVEL *w_current, OBJECT *head,
+static int f_print_get_unicode_chars(TOPLEVEL *toplevel, OBJECT *head,
 				     int count, gunichar *table)
 {
   OBJECT *o_current = NULL;
@@ -665,7 +665,7 @@ static int f_print_get_unicode_chars(TOPLEVEL *w_current, OBJECT *head,
       case (OBJ_COMPLEX):
       case (OBJ_PLACEHOLDER):	/* new object -- 1.20.2005 SDB */
 
-	count = f_print_get_unicode_chars(w_current, 
+	count = f_print_get_unicode_chars(toplevel,
                                           o_current->complex->prim_objs, 
                                           count, table);
 	break;

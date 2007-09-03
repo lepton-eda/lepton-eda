@@ -94,16 +94,16 @@ void o_selection_remove(SELECTION *selection, OBJECT *o_selected )
 /*! \brief Unselects all the objects in the given list.
  *  \par Unselects all objects in the given list, does the 
  *  needed work to make the objects visually unselected, and redraw them.
- *  \param [in] w_current TOPLEVEL struct.
+ *  \param [in] toplevel TOPLEVEL struct.
  *  \param [in] head Pointer to the selection list
  */
-void o_selection_unselect_list(TOPLEVEL *w_current, SELECTION *selection)
+void o_selection_unselect_list(TOPLEVEL *toplevel, SELECTION *selection)
 {
   const GList *list = geda_list_get_glist( selection );
 
   while ( list != NULL ) {
     o_selection_unselect( (OBJECT *)list->data );
-    o_redraw_single( w_current, (OBJECT *)list->data );
+    o_redraw_single( toplevel, (OBJECT *)list->data );
    list = g_list_next( list );
   }
 

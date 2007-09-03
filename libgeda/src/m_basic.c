@@ -39,11 +39,11 @@
  *  \par Function Description
  *  Convert a x coordinate to mils.
  *
- *  \param [in] w_current  The TOPLEVEL object
+ *  \param [in] toplevel  The TOPLEVEL object
  *  \param [in] val        The x coordinate to convert
  *  \return The coordinate value in mils.
  */
-int mil_x(TOPLEVEL *w_current, int val)
+int mil_x(TOPLEVEL *toplevel, int val)
 {
   double i;
   double fval;
@@ -51,14 +51,14 @@ int mil_x(TOPLEVEL *w_current, int val)
 
 #if 0 /* removed for speed improvements */
   double fw0,fw1,fw,fval;
-  fw1 = w_current->page_current->right;
-  fw0 = w_current->page_current->left;
-  fw  = w_current->width;
+  fw1 = toplevel->page_current->right;
+  fw0 = toplevel->page_current->left;
+  fw  = toplevel->width;
 #endif
 
   fval = val;
-  i = fval * w_current->page_current->to_world_x_constant + 
-  w_current->page_current->left;
+  i = fval * toplevel->page_current->to_world_x_constant +
+  toplevel->page_current->left;
 
   /* i -= mil_x_tw2;
      i = ((i) / 100 ) * 100; I don't think we need this 
@@ -78,11 +78,11 @@ int mil_x(TOPLEVEL *w_current, int val)
  *  \par Function Description
  *  Convert a y coordinate to mils
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] val        The y coordinate to convert.
  *  \return The coordinate value in mils.
  */
-int mil_y(TOPLEVEL *w_current, int val)
+int mil_y(TOPLEVEL *toplevel, int val)
 {
   double i;
   double fval;
@@ -90,14 +90,14 @@ int mil_y(TOPLEVEL *w_current, int val)
 
 #if 0 /* removed for speed improvements */
   double fw0,fw1,fw,fval;
-  fw1 = w_current->page_current->bottom;
-  fw0 = w_current->page_current->top;
-  fw  = w_current->height;
+  fw1 = toplevel->page_current->bottom;
+  fw0 = toplevel->page_current->top;
+  fw  = toplevel->height;
 #endif
 
-  fval = w_current->height - val; 
-  i = fval * w_current->page_current->to_world_y_constant +
-  w_current->page_current->top;
+  fval = toplevel->height - val;
+  i = fval * toplevel->page_current->to_world_y_constant +
+  toplevel->page_current->top;
 
   /* i = ((i) / 100 ) * 100; I don't think we need this */
   /* i += mil_y_tw1; or this*/
@@ -115,11 +115,11 @@ int mil_y(TOPLEVEL *w_current, int val)
  *  \par Function Description
  *  Convert a x coordinate to pixels.
  *
- *  \param [in] w_current  The TOPLEVEL object
+ *  \param [in] toplevel  The TOPLEVEL object
  *  \param [in] val        The x coordinate to convert
  *  \return The coordinate value in pixels.
  */
-int pix_x(TOPLEVEL *w_current, int val)
+int pix_x(TOPLEVEL *toplevel, int val)
 {
 
   double i;
@@ -127,15 +127,15 @@ int pix_x(TOPLEVEL *w_current, int val)
 
 #if 0 /* removed for speed */
   double fs,f0,f1,f;
-  f0 = w_current->page_current->left;
-  f1 = w_current->page_current->right;
-  fs = w_current->width;
-  f = w_current->width / (f1 - f0);
+  f0 = toplevel->page_current->left;
+  f1 = toplevel->page_current->right;
+  fs = toplevel->width;
+  f = toplevel->width / (f1 - f0);
 #endif
 
 
-  i = w_current->page_current->to_screen_x_constant * 
-  (double)(val - w_current->page_current->left);
+  i = toplevel->page_current->to_screen_x_constant *
+  (double)(val - toplevel->page_current->left);
 
 #ifdef HAS_RINT
   j = rint(i);
@@ -159,25 +159,25 @@ int pix_x(TOPLEVEL *w_current, int val)
  *  \par Function Description
  *  Convert a y coordinate to pixels.
  *
- *  \param [in] w_current  The TOPLEVEL object
+ *  \param [in] toplevel  The TOPLEVEL object
  *  \param [in] val        The y coordinate to convert
  *  \return The coordinate value in pixels.
  */
-int pix_y(TOPLEVEL *w_current, int val)
+int pix_y(TOPLEVEL *toplevel, int val)
 {
   double i;
   int j;
 
 #if 0 /* removed for speed */
   double fs,f0,f1,f;
-  f0 = w_current->page_current->top;
-  f1 = w_current->page_current->bottom;
-  fs = w_current->height;
-  f = fs / (f1 - f0); /* fs was w_current->height */
+  f0 = toplevel->page_current->top;
+  f1 = toplevel->page_current->bottom;
+  fs = toplevel->height;
+  f = fs / (f1 - f0); /* fs was toplevel->height */
 #endif
-  i = w_current->height - (
-                           w_current->page_current->to_screen_y_constant * 
-                           (double)(val - w_current->page_current->top)); 
+  i = toplevel->height - (
+                           toplevel->page_current->to_screen_y_constant *
+                           (double)(val - toplevel->page_current->top));
 
 #ifdef HAS_RINT
   j = rint(i);
@@ -202,7 +202,7 @@ int pix_y(TOPLEVEL *w_current, int val)
  *  This function takes in WORLD x/y coordinates and
  *  transforms them to SCREEN x/y coordinates.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  x          The x coordinate in WORLD units.
  *  \param [in]  y          The y coordinate in WORLD units.
  *  \param [out] mil_x      The x coordinate in SCREEN units.
@@ -211,10 +211,10 @@ int pix_y(TOPLEVEL *w_current, int val)
  *                  if this is WORLD to SCREEN shouldn't SCREEN
  *                  coordinates be returned in x and y?
  */
-void WORLDtoSCREEN(TOPLEVEL *w_current, int x, int y, int *mil_x, int *mil_y)
+void WORLDtoSCREEN(TOPLEVEL *toplevel, int x, int y, int *mil_x, int *mil_y)
 {
-  *mil_x = pix_x(w_current, x);
-  *mil_y = pix_y(w_current, y);
+  *mil_x = pix_x(toplevel, x);
+  *mil_y = pix_y(toplevel, y);
 }
 
 /*! \brief Transform WORLD coordinates to WORLD coordinates
@@ -222,7 +222,7 @@ void WORLDtoSCREEN(TOPLEVEL *w_current, int x, int y, int *mil_x, int *mil_y)
  *  This function takes in SCREEN x/y coordinates and
  *  transforms them to WORLD x/y coordinates.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  mx         The x coordinate in SCREEN units.
  *  \param [in]  my         The y coordinate in SCREEN units.
  *  \param [out] x          The x coordinate in WORLD units.
@@ -231,10 +231,10 @@ void WORLDtoSCREEN(TOPLEVEL *w_current, int x, int y, int *mil_x, int *mil_y)
  *                  if this is SCREEN to WORLD shouldn't WORLD
  *                  coordinates be returned in mx and my?
  */
-void SCREENtoWORLD(TOPLEVEL *w_current, int mx, int my, int *x, int *y)      
+void SCREENtoWORLD(TOPLEVEL *toplevel, int mx, int my, int *x, int *y)
 {
-  *x = mil_x(w_current, mx);
-  *y = mil_y(w_current, my);
+  *x = mil_x(toplevel, mx);
+  *y = mil_y(toplevel, my);
 }
 
 /*! \brief Find the closest grid coordinate.
@@ -242,21 +242,21 @@ void SCREENtoWORLD(TOPLEVEL *w_current, int mx, int my, int *x, int *y)
  *  This function snaps the current input coordinate to the
  *  closest grid coordinate.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] input      The coordinate to snap.
  *  \return The closest grid coordinate to the input.
  */
-int snap_grid(TOPLEVEL *w_current, int input)
+int snap_grid(TOPLEVEL *toplevel, int input)
 {
   int p, m, n;
   int sign, value, snap_grid;
 	
-  if (!w_current->snap) {
+  if (!toplevel->snap) {
     return(input);
   }
 
 		
-  snap_grid = w_current->snap_size;
+  snap_grid = toplevel->snap_size;
 
   /* this code was inspired from killustrator, it's much simpler than mine */
   sign = ( input < 0 ? -1 : 1 );
@@ -309,21 +309,21 @@ int snap_grid(TOPLEVEL *w_current, int input)
  *  \par Function Description
  *  Get absolute SCREEN coordinate.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] val        The coordinate to convert.
  *  \return The converted SCREEN coordinate.
  */
-int SCREENabs(TOPLEVEL *w_current, int val)
+int SCREENabs(TOPLEVEL *toplevel, int val)
 {
   double fs,f0,f1,f;
 
   double i;
   int j;
 
-  f0 = w_current->page_current->left;
-  f1 = w_current->page_current->right;
-  fs = w_current->width;
-  f = w_current->width / (f1 - f0);
+  f0 = toplevel->page_current->left;
+  f1 = toplevel->page_current->right;
+  fs = toplevel->width;
+  f = toplevel->width / (f1 - f0);
   i = f * (double)(val);
 
 #ifdef HAS_RINT
@@ -340,20 +340,20 @@ int SCREENabs(TOPLEVEL *w_current, int val)
  *  \par Function Description
  *  Get absolute WORLD coordinate.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] val        The coordinate to convert.
  *  \return The converted WORLD coordinate.
  */
-int WORLDabs(TOPLEVEL *w_current, int val)
+int WORLDabs(TOPLEVEL *toplevel, int val)
 {
   double fw0,fw1,fw,fval;
 
   double i;
   int j;
 
-  fw1 = w_current->page_current->right;
-  fw0 = w_current->page_current->left;
-  fw  = w_current->width;
+  fw1 = toplevel->page_current->right;
+  fw0 = toplevel->page_current->left;
+  fw  = toplevel->width;
   fval = val;
   i = fval * (fw1 - fw0) / fw;
 
@@ -375,14 +375,14 @@ int WORLDabs(TOPLEVEL *w_current, int val)
  *  \par Function Description
  *  This function will set the current page constraints.
  *
- *  \param [in]     w_current  The TOPLEVEL object.
+ *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] page       The PAGE object to set constraints on.
  *  \param [in]     xmin       The minimum x coordinate for the page.
  *  \param [in]     xmax       The maximum x coordinate for the page.
  *  \param [in]     ymin       The minimum y coordinate for the page.
  *  \param [in]     ymax       The maximum y coordinate for the page.
  */
-void set_window(TOPLEVEL *w_current, PAGE *page,
+void set_window(TOPLEVEL *toplevel, PAGE *page,
                 int xmin, int xmax, int ymin, int ymax)
 {
   double fs,f0,f1;
@@ -398,25 +398,25 @@ void set_window(TOPLEVEL *w_current, PAGE *page,
   /* pix_x */
   f0 = page->left;
   f1 = page->right;
-  fs = w_current->width;
+  fs = toplevel->width;
   page->to_screen_x_constant = fs / (f1 - f0);
 
   /* pix_y */
   f0 = page->top;
   f1 = page->bottom;
-  fs = w_current->height;
+  fs = toplevel->height;
   page->to_screen_y_constant = fs / (f1 - f0); 
 
   /* mil_x */
   fw1 = page->right;
   fw0 = page->left;
-  fw  = w_current->width;
+  fw  = toplevel->width;
   page->to_world_x_constant = (fw1 - fw0) / fw;
 
   /* mil_y */
   fw1 = page->bottom;
   fw0 = page->top;
-  fw  = w_current->height;
+  fw  = toplevel->height;
   page->to_world_y_constant = (fw1 - fw0) / fw;
 }
 
@@ -425,25 +425,25 @@ void set_window(TOPLEVEL *w_current, PAGE *page,
  *  \par Function Description
  *  Get the grid x coordinate for snap.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] in         The x coordinate.
  *  \return The closest grid coordinate to in.
  */
-int fix_x(TOPLEVEL *w_current, int in)
+int fix_x(TOPLEVEL *toplevel, int in)
 {
   int value;
   int ret;
 
-  if (in > w_current->width) { 
-    in = w_current->width;
+  if (in > toplevel->width) {
+    in = toplevel->width;
   }
 	
-  if (!w_current->snap)
+  if (!toplevel->snap)
   return(in);
 
-  value = mil_x(w_current, in);	
+  value = mil_x(toplevel, in);
 
-  ret = pix_x(w_current, snap_grid(w_current, value));
+  ret = pix_x(toplevel, snap_grid(toplevel, value));
   return(ret);
 }
 
@@ -451,25 +451,25 @@ int fix_x(TOPLEVEL *w_current, int in)
  *  \par Function Description
  *  Get the grid y coordinate for snap.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] in         The y coordinate.
  *  \return The closest grid coordinate to in.
  */
-int fix_y(TOPLEVEL *w_current, int in)
+int fix_y(TOPLEVEL *toplevel, int in)
 {
   int value;
   int ret;
 
-  if (in > w_current->height) { 
-    in = w_current->height;
+  if (in > toplevel->height) {
+    in = toplevel->height;
   }
 
-  if (!w_current->snap)
+  if (!toplevel->snap)
   return(in);
 
 
-  value = mil_y(w_current, in);	
-  ret = pix_y(w_current, snap_grid(w_current, value));
+  value = mil_y(toplevel, in);
+  ret = pix_y(toplevel, snap_grid(toplevel, value));
   return(ret);
 }
 
@@ -515,17 +515,17 @@ struct st_point {
  *  of the current TOPLEVEL object's page coordinates. It
  *  handles points with SCREEN coordinates.
  *  
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  point      The point in SCREEN coordinates to be checked.
  *  \param [out] halfspace  The created HALFSPACE structure.
  *
  *  \warning halfspace must be allocated before this function is called
  */
-static void SCREENencode_halfspace(TOPLEVEL *w_current, sPOINT *point, HALFSPACE *halfspace)
+static void SCREENencode_halfspace(TOPLEVEL *toplevel, sPOINT *point, HALFSPACE *halfspace)
 {
   halfspace->left = point->x < 0;
-  halfspace->right = point->x > w_current->width;
-  halfspace->bottom = point->y > w_current->height;
+  halfspace->right = point->x > toplevel->width;
+  halfspace->bottom = point->y > toplevel->height;
   halfspace->top = point->y < 0;
 }
 
@@ -535,18 +535,18 @@ static void SCREENencode_halfspace(TOPLEVEL *w_current, sPOINT *point, HALFSPACE
  *  of the current TOPLEVEL object's page coordinates. It
  *  handles points with WORLD coordinates.
  *  
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  point      The point in WORLD coordinates to be checked.
  *  \param [out] halfspace  The created HALFSPACE structure.
  *
  *  \warning halfspace must be allocated before this function is called
  */
-static void WORLDencode_halfspace(TOPLEVEL *w_current, sPOINT *point, HALFSPACE *halfspace)
+static void WORLDencode_halfspace(TOPLEVEL *toplevel, sPOINT *point, HALFSPACE *halfspace)
 {
-  halfspace->left = point->x < w_current->page_current->left;
-  halfspace->right = point->x > w_current->page_current->right;
-  halfspace->bottom = point->y > w_current->page_current->bottom;
-  halfspace->top = point->y < w_current->page_current->top;
+  halfspace->left = point->x < toplevel->page_current->left;
+  halfspace->right = point->x > toplevel->page_current->right;
+  halfspace->bottom = point->y > toplevel->page_current->bottom;
+  halfspace->top = point->y < toplevel->page_current->top;
 }
 
 /*! \brief Calculate the cliping region for a set of coordinates.
@@ -556,14 +556,14 @@ static void WORLDencode_halfspace(TOPLEVEL *w_current, sPOINT *point, HALFSPACE 
  *  be changed to reflect only the region no covered by the clipping window.
  *  All coordinates should be in SCREEN units.
  *
- *  \param [in] w_current  The current TOPLEVEL object.
+ *  \param [in] toplevel  The current TOPLEVEL object.
  *  \param [in,out] x1     x coordinate of the first screen point.
  *  \param [in,out] y1     y coordinate of the first screen point.
  *  \param [in,out] x2     x coordinate of the second screen point.
  *  \param [in,out] y2     y coordinate of the second screen point.
  *  \return TRUE if coordinates are now visible, FALSE otherwise.
  */
-int SCREENclip_change(TOPLEVEL *w_current,int *x1, int *y1, int *x2, int *y2)
+int SCREENclip_change(TOPLEVEL *toplevel,int *x1, int *y1, int *x2, int *y2)
 {
   HALFSPACE half1, half2; 
   HALFSPACE tmp_half;
@@ -582,16 +582,16 @@ int SCREENclip_change(TOPLEVEL *w_current,int *x1, int *y1, int *x2, int *y2)
 
   w_l = 0;
   w_t = 0;
-  w_r = w_current->width;
-  w_b = w_current->height;
+  w_r = toplevel->width;
+  w_b = toplevel->height;
 
 
   done = FALSE;
   visible = FALSE;
 
   do {
-    SCREENencode_halfspace(w_current, &point1, &half1);
-    SCREENencode_halfspace(w_current, &point2, &half2);
+    SCREENencode_halfspace(toplevel, &point1, &half1);
+    SCREENencode_halfspace(toplevel, &point2, &half2);
 
 #if DEBUG
     printf("starting loop\n");
@@ -688,14 +688,14 @@ int SCREENclip_change(TOPLEVEL *w_current,int *x1, int *y1, int *x2, int *y2)
  *  are within a clipping region. No action will be taken to change
  *  the coordinates.
  *
- *  \param [in] w_current  The current TOPLEVEL object.
+ *  \param [in] toplevel  The current TOPLEVEL object.
  *  \param [in,out] x1     x coordinate of the first screen point.
  *  \param [in,out] y1     y coordinate of the first screen point.
  *  \param [in,out] x2     x coordinate of the second screen point.
  *  \param [in,out] y2     y coordinate of the second screen point.
  *  \return TRUE if coordinates are now visible, FALSE otherwise.
  */
-int clip_nochange(TOPLEVEL *w_current,int x1, int y1, int x2, int y2)
+int clip_nochange(TOPLEVEL *toplevel,int x1, int y1, int x2, int y2)
 {
   HALFSPACE half1, half2; 
   HALFSPACE tmp_half;
@@ -713,17 +713,17 @@ int clip_nochange(TOPLEVEL *w_current,int x1, int y1, int x2, int y2)
 
   /*printf("before: %d %d %d %d\n", x1, y1, x2, y2);*/
 
-  w_l = w_current->page_current->left;
-  w_t = w_current->page_current->top;
-  w_r = w_current->page_current->right;
-  w_b = w_current->page_current->bottom;
+  w_l = toplevel->page_current->left;
+  w_t = toplevel->page_current->top;
+  w_r = toplevel->page_current->right;
+  w_b = toplevel->page_current->bottom;
 
   done = FALSE;
   visible = FALSE;
 
   do {
-    WORLDencode_halfspace(w_current, &point1, &half1);
-    WORLDencode_halfspace(w_current, &point2, &half2);
+    WORLDencode_halfspace(toplevel, &point1, &half1);
+    WORLDencode_halfspace(toplevel, &point2, &half2);
 
 #if DEBUG
     printf("starting loop\n");
@@ -817,30 +817,30 @@ int clip_nochange(TOPLEVEL *w_current,int x1, int y1, int x2, int y2)
  *  top is the smallest "y" value, and bottom is the largest.
  *  Be careful! This doesn't correspond to what you'd expect.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] wleft      Left coordinate of the bounding box.
  *  \param [in] wtop       Top coordinate of the bounding box.
  *  \param [in] wright     Right coordinate of the bounding box.
  *  \param [in] wbottom    Bottom coordinate of the bounding box.
  *  \return TRUE if bounding box is visible, FALSE otherwise
  */
-int visible(TOPLEVEL *w_current, int wleft, int wtop, int wright, int wbottom)
+int visible(TOPLEVEL *toplevel, int wleft, int wtop, int wright, int wbottom)
 {
   int visible=FALSE;
 
   /* don't do object clipping if this is false */
-  if (!w_current->object_clipping) {
+  if (!toplevel->object_clipping) {
     return(TRUE);
   }
 
-  visible = clip_nochange(w_current, wleft, wtop, wright, wtop);
+  visible = clip_nochange(toplevel, wleft, wtop, wright, wtop);
 
 #if DEBUG 
   printf("vis1 %d\n", visible);
 #endif
 
   if (!visible) {
-    visible = clip_nochange(w_current, wleft, wbottom, wright, wbottom);
+    visible = clip_nochange(toplevel, wleft, wbottom, wright, wbottom);
   } else {
     return(visible);
   } 
@@ -850,7 +850,7 @@ int visible(TOPLEVEL *w_current, int wleft, int wtop, int wright, int wbottom)
 #endif
 
   if (!visible) {
-    visible = clip_nochange(w_current, wleft, wtop, wleft, wbottom);
+    visible = clip_nochange(toplevel, wleft, wtop, wleft, wbottom);
   } else {
     return(visible);
   } 
@@ -860,7 +860,7 @@ int visible(TOPLEVEL *w_current, int wleft, int wtop, int wright, int wbottom)
 #endif
 
   if (!visible) {
-    visible = clip_nochange(w_current, wright, wtop, wright, wbottom);
+    visible = clip_nochange(toplevel, wright, wtop, wright, wbottom);
   } else {
     return(visible);
   } 
@@ -870,10 +870,10 @@ int visible(TOPLEVEL *w_current, int wleft, int wtop, int wright, int wbottom)
 #endif
 
 #if DEBUG
-  printf("%d %d %d\n", wleft, w_current->page_current->top, wright);
-  printf("%d %d %d\n", wtop, w_current->page_current->top, wbottom);
-  printf("%d %d %d\n", wleft, w_current->page_current->right, wright);
-  printf("%d %d %d\n", wtop, w_current->page_current->bottom, wbottom);
+  printf("%d %d %d\n", wleft, toplevel->page_current->top, wright);
+  printf("%d %d %d\n", wtop, toplevel->page_current->top, wbottom);
+  printf("%d %d %d\n", wleft, toplevel->page_current->right, wright);
+  printf("%d %d %d\n", wtop, toplevel->page_current->bottom, wbottom);
 #endif
 
   /*
@@ -881,10 +881,10 @@ int visible(TOPLEVEL *w_current, int wleft, int wtop, int wright, int wbottom)
    * We only need to test if one point on the screen clipping boundary
    * is indide the bounding box of the object.
    */
-  if (w_current->page_current->left >= wleft  &&
-      w_current->page_current->left <= wright &&
-      w_current->page_current->top >= wtop    &&
-      w_current->page_current->top <= wbottom ) {
+  if (toplevel->page_current->left >= wleft  &&
+      toplevel->page_current->left <= wright &&
+      toplevel->page_current->top >= wtop    &&
+      toplevel->page_current->top <= wbottom ) {
     visible = 1;
   }
 

@@ -67,10 +67,10 @@ int tab_in_chars = 8;
  *  \par Function Description
  *
  */
-int world_get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left,
+int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
                           int *top, int *right, int *bottom)
 {
-  return world_get_object_list_bounds(w_current, o_current->text->prim_objs,
+  return world_get_object_list_bounds(toplevel, o_current->text->prim_objs,
                                       left, top, right, bottom);
 }
 
@@ -151,7 +151,7 @@ void o_text_print_set(void)
  *  \par Function Description
  *
  */
-OBJECT *o_text_load_font(TOPLEVEL *w_current, gunichar needed_char)
+OBJECT *o_text_load_font(TOPLEVEL *toplevel, gunichar needed_char)
 {
   gchar *temp_string = NULL;
   OBJECT *temp_parent, *o_font_set;
@@ -169,11 +169,11 @@ OBJECT *o_text_load_font(TOPLEVEL *w_current, gunichar needed_char)
        */
       if (needed_char >= 'a' && needed_char <= 'z') {
         temp_string = g_strdup_printf("%s%c%c_.sym", 
-                w_current->font_directory, G_DIR_SEPARATOR,
+                toplevel->font_directory, G_DIR_SEPARATOR,
                 needed_char);
       } else {
         temp_string = g_strdup_printf("%s%c%c.sym", 
-                w_current->font_directory, G_DIR_SEPARATOR,
+                toplevel->font_directory, G_DIR_SEPARATOR,
                 needed_char);
       }
   } else {
@@ -191,7 +191,7 @@ OBJECT *o_text_load_font(TOPLEVEL *w_current, gunichar needed_char)
     s_log_message("Could not find character '%s' definition.\n", outbuf);
     
     g_free (temp_string);
-    temp_string = g_strdup_printf("%s%cquest.sym", w_current->font_directory, G_DIR_SEPARATOR);
+    temp_string = g_strdup_printf("%s%cquest.sym", toplevel->font_directory, G_DIR_SEPARATOR);
     if ( access(temp_string, R_OK) != 0 ) {
       fprintf(stderr, "Could not load question font char -- check font-directory keyword\n");
       exit(-1);
@@ -222,7 +222,7 @@ OBJECT *o_text_load_font(TOPLEVEL *w_current, gunichar needed_char)
     aux_obj = g_hash_table_lookup (font_loaded,
                                    GUINT_TO_POINTER ((gunichar)'?'));
     if (aux_obj == NULL) {
-      o_text_load_font(w_current, (gunichar) '?');
+      o_text_load_font(toplevel, (gunichar) '?');
       aux_obj = g_hash_table_lookup (font_loaded,
                                      GUINT_TO_POINTER ((gunichar)'?'));
     }
@@ -231,13 +231,13 @@ OBJECT *o_text_load_font(TOPLEVEL *w_current, gunichar needed_char)
   }
 	
 
-  temp_parent = w_current->page_current->object_parent;
+  temp_parent = toplevel->page_current->object_parent;
   /* set the addition of attributes to the head node */
-  w_current->page_current->object_parent = o_font_set->font_prim_objs;
+  toplevel->page_current->object_parent = o_font_set->font_prim_objs;
 
-  o_font_set->font_prim_objs = o_read(w_current, o_font_set->font_prim_objs,
+  o_font_set->font_prim_objs = o_read(toplevel, o_font_set->font_prim_objs,
 				      temp_string);
-  w_current->page_current->object_parent = temp_parent;
+  toplevel->page_current->object_parent = temp_parent;
 
   o_font_set->font_prim_objs = return_head(o_font_set->font_prim_objs);
 
@@ -306,7 +306,7 @@ int o_text_height(char *string, int size)
  */
 /* You need to divide the size in half here. */
 /*! \todo FIXME consistancy. */
-int o_text_width(TOPLEVEL *w_current, char *string, int size) 
+int o_text_width(TOPLEVEL *toplevel, char *string, int size)
 {
   int width=0, max_width=0;
   int size_of_tab_in_coord;
@@ -323,7 +323,7 @@ int o_text_width(TOPLEVEL *w_current, char *string, int size)
   o_font_set = g_hash_table_lookup (
     font_loaded, GUINT_TO_POINTER ((gunichar)TAB_CHAR_MODEL[0]));
   if (o_font_set == NULL) {
-    o_text_load_font(w_current, (gunichar) TAB_CHAR_MODEL[0]);
+    o_text_load_font(toplevel, (gunichar) TAB_CHAR_MODEL[0]);
     o_font_set = (OBJECT *) g_hash_table_lookup (
       font_loaded, GUINT_TO_POINTER ((gunichar)TAB_CHAR_MODEL[0]));
   }
@@ -358,7 +358,7 @@ int o_text_width(TOPLEVEL *w_current, char *string, int size)
           o_font_set = g_hash_table_lookup (font_loaded,
                                             GUINT_TO_POINTER (c));
           if (o_font_set == NULL) {
-            o_text_load_font (w_current, (gunichar)c);
+            o_text_load_font (toplevel, (gunichar)c);
             /* let do a new search for character c */
             o_font_set = g_hash_table_lookup (font_loaded,
                                               GUINT_TO_POINTER (c));
@@ -386,7 +386,7 @@ int o_text_width(TOPLEVEL *w_current, char *string, int size)
  *  \par Function Description
  *
  */
-OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list, 
+OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
 			     char *string, int size, int color, int x, int y,
 			     int alignment, int angle)
 {
@@ -420,11 +420,11 @@ OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
   }
 	
   /* now read in the chars */
-  temp_tail = w_current->page_current->object_tail;
+  temp_tail = toplevel->page_current->object_tail;
 
   text_height = o_text_height(string, size); 
   char_height = o_text_height("a", size);
-  text_width = o_text_width(w_current, string, size/2);
+  text_width = o_text_width(toplevel, string, size/2);
 
   switch(angle) {
     case(0):
@@ -573,7 +573,7 @@ OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
   }
 
 #if DEBUG
-  printf("width: %d\n", o_text_width(w_current, string, size/2));
+  printf("width: %d\n", o_text_width(toplevel, string, size/2));
   printf("1 %d %d\n", x_offset, y_offset);
 #endif
 
@@ -593,13 +593,13 @@ OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
     /*   - end the string */
     aux_string[l] = '\0';
     /*   - finally get the width of the previous character */
-    last_char_width = o_text_width(w_current, aux_string, size/2);
+    last_char_width = o_text_width(toplevel, aux_string, size/2);
 
     c = g_utf8_get_char_validated (ptr, -1);
 
     o_font_set = g_hash_table_lookup (font_loaded, GUINT_TO_POINTER (c));
     if (o_font_set == NULL) {
-      o_text_load_font(w_current, (gunichar) c);
+      o_text_load_font(toplevel, (gunichar) c);
       o_font_set = g_hash_table_lookup (font_loaded, GUINT_TO_POINTER (c));
     }
 
@@ -615,14 +615,14 @@ OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
       o_font_set_aux = g_hash_table_lookup (
         font_loaded, GUINT_TO_POINTER ((gunichar)TAB_CHAR_MODEL[0]));
       if (o_font_set_aux == NULL) {
-         o_text_load_font(w_current, (gunichar) TAB_CHAR_MODEL[0]);
+         o_text_load_font(toplevel, (gunichar) TAB_CHAR_MODEL[0]);
          o_font_set_aux = g_hash_table_lookup (
            font_loaded, GUINT_TO_POINTER ((gunichar)TAB_CHAR_MODEL[0]));
        }
     
       /* Get the maximum tab width's in coordinates */
       size_of_tab_in_coord = tab_in_chars * 
-                 o_text_width(w_current, TAB_CHAR_MODEL, size/2);
+                 o_text_width(toplevel, TAB_CHAR_MODEL, size/2);
 
       /* Count escape characters. Notice it includes the current character */
       if (c == '\\') {
@@ -641,7 +641,7 @@ OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 	if ( ( (c != '\\') &&
 	       (!(previous_char == '\\' && c == '_')) ) ||
 	     (previous_char == '\\' && c == '\\' && (escapes_counter > 1)) ) {
-	  temp_list = o_list_copy_all(w_current, 
+	  temp_list = o_list_copy_all(toplevel,
 				      o_font_set->font_prim_objs->next, 
 				      temp_list, NORMAL_FLAG);
 	  if (start_of_char != NULL)
@@ -650,13 +650,13 @@ OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 	     special character.
 	     This is correct. */ 
 	  o_complex_set_color(start_of_char, color);	
-	  o_scale(w_current, start_of_char, size/2, size/2);
+	  o_scale(toplevel, start_of_char, size/2, size/2);
 	  
 	  /* do this if you want to stack chars */
 	  /* we don't want to do that for now */
 	  /* Rotate and translate the character to its world position */
-	  o_text_rotate_lowlevel(w_current, x, y, angle, start_of_char);
-	  o_complex_world_translate(w_current, 
+	  o_text_rotate_lowlevel(toplevel, x, y, angle, start_of_char);
+	  o_complex_world_translate(toplevel,
 				    x_offset, y_offset, 
 				    start_of_char);
 	  
@@ -738,7 +738,7 @@ OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 	  /* Now add the overbar (if it is not a zero length overbar) */
 	  if ( (overbar_startx != overbar_endx) ||
 	       (overbar_starty != overbar_endy) ) {
-	    temp_list = o_line_add(w_current, temp_list, OBJ_LINE, color,
+	    temp_list = o_line_add(toplevel, temp_list, OBJ_LINE, color,
 				   overbar_startx, overbar_starty,
 				   overbar_endx, overbar_endy);
 	  }
@@ -856,7 +856,7 @@ OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 
   /* don't set the head */	
 
-  w_current->page_current->object_tail = temp_tail;
+  toplevel->page_current->object_tail = temp_tail;
 
 #if DEBUG
   printf("2 %d %d\n", x_offset, y_offset);
@@ -871,7 +871,7 @@ OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
  *  Also add the OBJECTs forming the graphical representation of the visible
  *  string, to the text OBJECT's prim_objs list.
  *
- *  \param [in]  w_current              The TOPLEVEL object.
+ *  \param [in]  toplevel              The TOPLEVEL object.
  *  \param [in]  object_list            OBJECT list onto which to add text.
  *  \param [in]  type                   OBJ_TEXT (TODO: why bother)
  *  \param [in]  color                  The color of the text.
@@ -888,7 +888,7 @@ OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
  *  \note
  *  Caller is responsible for string; this function allocates its own copy.
  */
-OBJECT *o_text_add(TOPLEVEL *w_current, OBJECT *object_list, 
+OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		   char type, int color, int x, int y, int alignment,
 		   int angle, char *string, int size, 
 		   int visibility, int show_name_value)
@@ -976,30 +976,30 @@ OBJECT *o_text_add(TOPLEVEL *w_current, OBJECT *object_list,
   /* now start working on the complex */
   temp_list = o_text_add_head();
 
-  temp_parent = w_current->page_current->object_parent;
+  temp_parent = toplevel->page_current->object_parent;
   /* set the addition of attributes to the head node */
-  w_current->page_current->object_parent = temp_list;
+  toplevel->page_current->object_parent = temp_list;
 
   if (visibility == VISIBLE ||
-      (visibility == INVISIBLE && w_current->show_hidden_text)) {
+      (visibility == INVISIBLE && toplevel->show_hidden_text)) {
     object_list->text->prim_objs = 
-      o_text_create_string(w_current, temp_list, 
+      o_text_create_string(toplevel, temp_list,
                            output_string, size, color,
                            x, y, alignment, angle); 
-    object_list->text->displayed_width = o_text_width(w_current,
+    object_list->text->displayed_width = o_text_width(toplevel,
                                                       output_string, size/2);
     object_list->text->displayed_height = o_text_height(output_string, size);
   } else {
     object_list->text->prim_objs = NULL;
     object_list->text->displayed_width = 0;
     object_list->text->displayed_height = 0;
-    s_delete(w_current, temp_list);
+    s_delete(toplevel, temp_list);
   }
 
-  w_current->page_current->object_parent = temp_parent;
+  toplevel->page_current->object_parent = temp_parent;
 
   /* Update bounding box */
-  o_text_recalc( w_current, object_list );
+  o_text_recalc( toplevel, object_list );
 
   if (name) g_free(name);
   if (value) g_free(value);
@@ -1012,15 +1012,15 @@ OBJECT *o_text_add(TOPLEVEL *w_current, OBJECT *object_list,
  *  \par Function Description
  *
  */
-void o_text_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+void o_text_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   int left, right, top, bottom;
 
-  if (o_current->visibility == INVISIBLE && !w_current->show_hidden_text) {
+  if (o_current->visibility == INVISIBLE && !toplevel->show_hidden_text) {
     return;
   }
 
-  if ( !world_get_text_bounds(w_current, o_current, &left, &top, &right, &bottom) )
+  if ( !world_get_text_bounds(toplevel, o_current, &left, &top, &right, &bottom) )
     return;
 
   o_current->w_left = left;
@@ -1034,7 +1034,7 @@ void o_text_recalc(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-OBJECT *o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
+OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
 		    const char *first_line,
 		    TextBuffer *tb,
 		    unsigned int release_ver,
@@ -1159,7 +1159,7 @@ OBJECT *o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
     }
   }
   
-  object_list = o_text_add(w_current, object_list, type, color, x, y, 
+  object_list = o_text_add(toplevel, object_list, type, color, x, y,
                            alignment, angle, string, 
                            size, visibility, show_name_value);
   g_free(string);
@@ -1279,7 +1279,7 @@ char *o_text_save(OBJECT *object)
  *  \par Function Description
  *
  */
-void o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
+void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *temp_parent;
   char *name = NULL;
@@ -1322,14 +1322,14 @@ void o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
     output_string = g_strdup(o_current->text->string);
   }
 
-  o_list_delete_rest(w_current, o_current->text->prim_objs);
+  o_list_delete_rest(toplevel, o_current->text->prim_objs);
 
-  temp_parent = w_current->page_current->object_parent;
+  temp_parent = toplevel->page_current->object_parent;
   /* set the addition of attributes to the head node */
-  w_current->page_current->object_parent = o_current->text->prim_objs;
+  toplevel->page_current->object_parent = o_current->text->prim_objs;
 
   if (o_current->visibility == VISIBLE ||
-      (o_current->visibility == INVISIBLE && w_current->show_hidden_text)) {
+      (o_current->visibility == INVISIBLE && toplevel->show_hidden_text)) {
 
     /* need to create that head node if complex is null */
     if (o_current->text->prim_objs == NULL) {
@@ -1337,7 +1337,7 @@ void o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
     }
 
     o_current->text->prim_objs = 
-      o_text_create_string(w_current, 
+      o_text_create_string(toplevel,
                            o_current->text->prim_objs, 
                            output_string, 
                            o_current->text->size, 
@@ -1349,22 +1349,22 @@ void o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 
     o_complex_set_saved_color_only(o_current->text->prim_objs, 
                                    o_current->saved_color);
-    o_current->text->displayed_width = o_text_width(w_current,
+    o_current->text->displayed_width = o_text_width(toplevel,
                                                     output_string,
                                                     o_current->text->size/2);
     o_current->text->displayed_height = o_text_height(output_string,
                                                       o_current->text->size);
   } else {
     /* make sure list is truely free */
-    s_delete_list_fromstart(w_current, o_current->text->prim_objs);
+    s_delete_list_fromstart(toplevel, o_current->text->prim_objs);
     o_current->text->prim_objs = NULL;
     o_current->text->displayed_width = 0;
     o_current->text->displayed_height = 0;
   }
 
-  o_text_recalc( w_current, o_current );
+  o_text_recalc( toplevel, o_current );
 
-  w_current->page_current->object_parent = temp_parent;
+  toplevel->page_current->object_parent = temp_parent;
   if (name) g_free(name);
   if (value) g_free(value);
   if (output_string) g_free(output_string);
@@ -1375,16 +1375,16 @@ void o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_text_translate_world(TOPLEVEL *w_current,
+void o_text_translate_world(TOPLEVEL *toplevel,
                             int x1, int y1, OBJECT *o_current)
 {
   o_current->text->x = o_current->text->x + x1;
   o_current->text->y = o_current->text->y + y1;
 
-  o_complex_world_translate(w_current, x1, y1, o_current->text->prim_objs);
+  o_complex_world_translate(toplevel, x1, y1, o_current->text->prim_objs);
 
   /* Update bounding box */
-  o_text_recalc( w_current, o_current );
+  o_text_recalc( toplevel, o_current );
 }
 
 /*! \todo Finish function documentation!!!
@@ -1392,7 +1392,7 @@ void o_text_translate_world(TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-OBJECT *o_text_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
+OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
 {
   OBJECT *new_obj;
   int color;
@@ -1403,7 +1403,7 @@ OBJECT *o_text_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
     color = o_current->saved_color;
   }
 
-  new_obj = o_text_add(w_current, list_tail, OBJ_TEXT, 
+  new_obj = o_text_add(toplevel, list_tail, OBJ_TEXT,
                        color, 
                        o_current->text->x, o_current->text->y, 
                        o_current->text->alignment, 
@@ -1447,12 +1447,12 @@ static gboolean delete_font_set (gpointer key, gpointer value,
  *  \par Function Description
  *
  */
-void o_text_freeallfonts(TOPLEVEL *w_current)
+void o_text_freeallfonts(TOPLEVEL *toplevel)
 {
   /* destroy the char-to-objects hastable */
   g_hash_table_foreach_remove (font_loaded,
                                delete_font_set,
-                               w_current);
+                               toplevel);
   g_hash_table_destroy (font_loaded);
   font_loaded = NULL;
 
@@ -1601,7 +1601,7 @@ void o_text_print_text_string(FILE *fp, char *string, int unicode_count,
  *  \par Function Description
  *
  */
-void o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 		  int origin_x, int origin_y, 
 		  int unicode_count, gunichar *unicode_table)
 {
@@ -1619,7 +1619,7 @@ void o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     return;
   }
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, o_current->color);
   }
 
@@ -1743,7 +1743,7 @@ void o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   x = o_current->text->x;
   y = o_current->text->y;
   font_size = (((float)(o_current->text->size))
-	       * w_current->postscript_font_scale / 72.0 * 1000.0);
+	       * toplevel->postscript_font_scale / 72.0 * 1000.0);
   fprintf(fp,"] %d %d %d %f text\n",angle,x,y,font_size);
 
   
@@ -1758,24 +1758,24 @@ void o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
  *
  */
 /* takes world coords as the center point as well as a true angle */
-void o_text_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx,
+void o_text_rotate_lowlevel(TOPLEVEL *toplevel, int world_centerx,
 			    int world_centery, int angle, OBJECT *object)
 {
   OBJECT *o_current=NULL;
 
   /* translate object to origin */
-  /* o_text_translate_world(w_current, -world_centerx, -world_centery, object);*/
+  /* o_text_translate_world(toplevel, -world_centerx, -world_centery, object);*/
 
   /* rotate_point_90(object->text->x, object->text->y, &newx, &newy);*/
 	
-  /* o_text_translate_world(w_current, world_centerx, world_centery, object);*/
+  /* o_text_translate_world(toplevel, world_centerx, world_centery, object);*/
 	
   o_current = object;
 
   while ( o_current != NULL ) {
     switch(o_current->type) {
       case(OBJ_LINE):
-        o_line_rotate_world(w_current, 0, 0, angle, o_current);
+        o_line_rotate_world(toplevel, 0, 0, angle, o_current);
         break;
     }
     o_current=o_current->next;
@@ -1787,7 +1787,7 @@ void o_text_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx,
  *  \par Function Description
  *
  */
-void o_text_rotate_world(TOPLEVEL *w_current,
+void o_text_rotate_world(TOPLEVEL *toplevel,
 			 int world_centerx, int world_centery,
 			 int angle, int angle_change, OBJECT *object)
 {
@@ -1814,9 +1814,9 @@ void o_text_rotate_world(TOPLEVEL *w_current,
   x = newx + (world_centerx);
   y = newy + (world_centery);
 	
-  o_text_translate_world(w_current, x-object->text->x, y-object->text->y, object);
+  o_text_translate_world(toplevel, x-object->text->x, y-object->text->y, object);
 
-  o_text_recreate(w_current, object);
+  o_text_recreate(toplevel, object);
 }
 
 #if 0 /* code which is no longer needed, replaced by new functions below */
@@ -1825,7 +1825,7 @@ void o_text_rotate_world(TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-void o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
+void o_text_mirror_old(TOPLEVEL *toplevel, int centerx, int centery,
 		       OBJECT *object)
 {
   int newx=0, newy=0;
@@ -1838,7 +1838,7 @@ void o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
   int height_mod=0;
   int sign=1;
 	
-  SCREENtoWORLD(w_current, centerx, centery,
+  SCREENtoWORLD(toplevel, centerx, centery,
                 &world_centerx,
                 &world_centery);
 
@@ -1982,7 +1982,7 @@ void o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
   switch (object->text->angle) {
 
     case(0): 
-    newx = -(x + sign*o_text_width(w_current, 
+    newx = -(x + sign*o_text_width(toplevel,
                                    output_string, 
                                    object->text->size/2)); 
     break;
@@ -1994,7 +1994,7 @@ void o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
     break;
 
     case(180):
-    newx = -(x - sign*o_text_width(w_current,
+    newx = -(x - sign*o_text_width(toplevel,
                                    output_string, 
                                    object->text->size/2)); 
     break;
@@ -2019,9 +2019,9 @@ void o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
   y = newy + (world_centery);
 	
   /* don't know if this is needed? */	
-  o_text_translate_world(w_current, x-object->text->x, y-object->text->y, object);
+  o_text_translate_world(toplevel, x-object->text->x, y-object->text->y, object);
 
-  o_text_recreate(w_current, object);
+  o_text_recreate(toplevel, object);
   if (output_string) g_free(output_string);
   if (name) g_free(name);
   if (value) g_free(value);
@@ -2032,7 +2032,7 @@ void o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
  *  \par Function Description
  *
  */
-void o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
+void o_text_mirror_world_old(TOPLEVEL *toplevel, int world_centerx,
 			     int world_centery, OBJECT *object)
 {
   int newx=0, newy=0;
@@ -2186,7 +2186,7 @@ void o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
   switch (object->text->angle) {
 
     case(0): 
-    newx = -(x + sign*o_text_width(w_current, 
+    newx = -(x + sign*o_text_width(toplevel,
                                    output_string, 
                                    object->text->size/2)); 
 
@@ -2198,7 +2198,7 @@ void o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
     break;
 
     case(180):
-    newx = -(x - sign*o_text_width(w_current, 
+    newx = -(x - sign*o_text_width(toplevel,
                                    output_string, 
                                    object->text->size/2)); 
     break;
@@ -2224,8 +2224,8 @@ void o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
   object->text->y = y;
 
   /* don't know if this is needed ?*/	
-  /* o_text_translate_world(w_current, x-object->text->x, y-object->text->y, object);*/
-  o_text_recreate(w_current, object);
+  /* o_text_translate_world(toplevel, x-object->text->x, y-object->text->y, object);*/
+  o_text_recreate(toplevel, object);
   if (output_string) g_free(output_string);
   if (name) g_free(name);
   if (value) g_free(value);
@@ -2238,7 +2238,7 @@ void o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
  *  \par Function Description
  *
  */
-void o_text_return_center(TOPLEVEL *w_current, OBJECT *o_current,
+void o_text_return_center(TOPLEVEL *toplevel, OBJECT *o_current,
 			  int *centerx, int *centery)
 {
   int text_height; 
@@ -2248,7 +2248,7 @@ void o_text_return_center(TOPLEVEL *w_current, OBJECT *o_current,
 			      o_current->text->size);
 
   /* this will NOT NOT NOT work with attributes */
-  text_width = o_text_width(w_current, o_current->text->string, 
+  text_width = o_text_width(toplevel, o_current->text->string,
                             o_current->text->size/2); 
 	
   switch(o_current->text->angle) {
@@ -2280,7 +2280,7 @@ void o_text_return_center(TOPLEVEL *w_current, OBJECT *o_current,
  *
  */
 /* the complex here is the complex of a complex object */
-void o_text_change_angle(TOPLEVEL *w_current, OBJECT *prim_objs, int new_angle)
+void o_text_change_angle(TOPLEVEL *toplevel, OBJECT *prim_objs, int new_angle)
 {
   OBJECT *o_current;
   int centerx, centery;
@@ -2292,35 +2292,35 @@ void o_text_change_angle(TOPLEVEL *w_current, OBJECT *prim_objs, int new_angle)
       o_current->text->angle = new_angle;
 
       /* change world to non */
-      o_text_return_center(w_current, o_current, &centerx, &centery);
+      o_text_return_center(toplevel, o_current, &centerx, &centery);
 
-      o_text_translate_world(w_current, 
+      o_text_translate_world(toplevel,
                              -centerx, -centery, o_current);
 
-      o_text_mirror_world(w_current, 0, 0, 
+      o_text_mirror_world(toplevel, 0, 0,
                           o_current);
       /* 
-         o_text_rotate_world(w_current, 0, 0, 
+         o_text_rotate_world(toplevel, 0, 0,
          new_angle, 180, o_current);
       */
 
-      /*			o_text_rotate_world(w_current, 0, 0, new_angle, 
+      /*			o_text_rotate_world(toplevel, 0, 0, new_angle,
                                 180, o_current)*/
 
-      o_text_translate_world(w_current, 
+      o_text_translate_world(toplevel,
                              centerx, centery, o_current);
 
-      /* 			o_text_rotate_lowlevel(w_current, 
+      /* 			o_text_rotate_lowlevel(toplevel,
 				0, 0, new_angle, 180, o_current->text->prim_objs);*/
 
 #if 0
-      w_current->override_color =
-        w_current->background_color;
-      o_text_draw(w_current, o_current);
-      w_current->override_color = -1;
+      toplevel->override_color =
+        toplevel->background_color;
+      o_text_draw(toplevel, o_current);
+      toplevel->override_color = -1;
 #endif
 
-      o_text_recreate(w_current, o_current);
+      o_text_recreate(toplevel, o_current);
     }
     o_current = o_current->next;
   }
@@ -2332,7 +2332,7 @@ void o_text_change_angle(TOPLEVEL *w_current, OBJECT *prim_objs, int new_angle)
  *  \par Function Description
  *
  */
-void o_text_mirror_world(TOPLEVEL *w_current,
+void o_text_mirror_world(TOPLEVEL *toplevel,
 			 int world_centerx, int world_centery,
 			 OBJECT *object)
 {
@@ -2408,6 +2408,6 @@ void o_text_mirror_world(TOPLEVEL *w_current,
   object->text->x = -x + (world_centerx);
   object->text->y =  y + (world_centery);
 	
-  o_text_recreate(w_current, object);
+  o_text_recreate(toplevel, object);
 }
 

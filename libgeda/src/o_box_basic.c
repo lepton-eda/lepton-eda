@@ -79,7 +79,7 @@
  *  The object is added to the end of the list described by the <B>object_list</B>
  *  parameter by the #s_basic_link_object().
  *
- *  \param [in]     w_current    The TOPLEVEL object.
+ *  \param [in]     toplevel    The TOPLEVEL object.
  *  \param [in,out] object_list  OBJECT list to add box to.
  *  \param [in]     type         Box type.
  *  \param [in]     color        Box border color.
@@ -89,7 +89,7 @@
  *  \param [in]     y2           Lower y coordinate.
  *  \return A new pointer on the end of the <B>object_list</B>
  */
-OBJECT *o_box_add(TOPLEVEL *w_current, OBJECT *object_list,
+OBJECT *o_box_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		  char type, int color,
 		  int x1, int y1, int x2, int y2)
 {
@@ -111,16 +111,16 @@ OBJECT *o_box_add(TOPLEVEL *w_current, OBJECT *object_list,
   box->lower_y = y2;
 
   /* line type and filling initialized to default */
-  o_set_line_options(w_current, new_node,
+  o_set_line_options(toplevel, new_node,
 		     END_NONE, TYPE_SOLID, 0, -1, -1);
-  o_set_fill_options(w_current, new_node,
+  o_set_fill_options(toplevel, new_node,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
   new_node->draw_func = box_draw_func; 
   new_node->sel_func  = select_func;  
 
   /* compute the bounding box */
-  o_box_recalc(w_current, new_node);
+  o_box_recalc(toplevel, new_node);
 
   /* add the object to the list */
   object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
@@ -134,12 +134,12 @@ OBJECT *o_box_add(TOPLEVEL *w_current, OBJECT *object_list,
  *  pointed by <B>o_current</B> describing a box. The new object is added at
  *  the end of the list, following the <B>list_tail</B> pointed object.
  *
- *  \param [in]      w_current  The TOPLEVEL object.
+ *  \param [in]      toplevel  The TOPLEVEL object.
  *  \param [in,out]  list_tail  OBJECT list to copy to.
  *  \param [in]      o_current  BOX OBJECT to copy.
  *  \return A new pointer on the end of the OBJECT <B>list_tail</B>.
  */
-OBJECT *o_box_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
+OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
 {
   OBJECT *new_obj;
   ATTRIB *a_current;
@@ -158,7 +158,7 @@ OBJECT *o_box_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
    */
 
   /* create and link a new box object */	
-  new_obj = o_box_add(w_current, list_tail,
+  new_obj = o_box_add(toplevel, list_tail,
 		      OBJ_BOX, color,
 		      0, 0, 0, 0);
 
@@ -177,15 +177,15 @@ OBJECT *o_box_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
   new_obj->box->lower_x = o_current->box->lower_x;
   new_obj->box->lower_y = o_current->box->lower_y;
 	
-  o_set_line_options(w_current, new_obj, o_current->line_end,
+  o_set_line_options(toplevel, new_obj, o_current->line_end,
 		     o_current->line_type, o_current->line_width,
 		     o_current->line_length, o_current->line_space);
-  o_set_fill_options(w_current, new_obj,
+  o_set_fill_options(toplevel, new_obj,
 		     o_current->fill_type, o_current->fill_width,
 		     o_current->fill_pitch1, o_current->fill_angle1,
 		     o_current->fill_pitch2, o_current->fill_angle2);
 
-  o_box_recalc(w_current, new_obj);
+  o_box_recalc(toplevel, new_obj);
 
   /* new_obj->attribute = 0;*/
   a_current = o_current->attribs;
@@ -213,7 +213,7 @@ OBJECT *o_box_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
  *  The coordinates of the corner is modified in the world coordinate system.
  *  Screen coordinates and boundings are then updated.
  *
- *  \param [in]     w_current  The TOPLEVEL object.
+ *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object     BOX OBJECT to be modified.
  *  \param [in]     x          x coordinate.
  *  \param [in]     y          y coordinate.
@@ -232,7 +232,7 @@ OBJECT *o_box_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
  *  pb20011002 - rewritten : old one did not used <B>x</B>, <B>y</B> and
  *                           <B>whichone</B>
  */
-void o_box_modify(TOPLEVEL *w_current, OBJECT *object, 
+void o_box_modify(TOPLEVEL *toplevel, OBJECT *object,
 		  int x, int y, int whichone)
 {
 	int tmp;
@@ -277,7 +277,7 @@ void o_box_modify(TOPLEVEL *w_current, OBJECT *object,
 	}
 	
 	/* recalculate the world coords and the boundings */
-	o_box_recalc(w_current, object);
+	o_box_recalc(toplevel, object);
   
 }
 
@@ -294,14 +294,14 @@ void o_box_modify(TOPLEVEL *w_current, OBJECT *object,
  *    <DT>*</DT><DD>the file format used for the releases after 2000704.
  *  </DL>
  *
- *  \param [in]     w_current       The TOPLEVEL object.
+ *  \param [in]     toplevel       The TOPLEVEL object.
  *  \param [in,out] object_list     BOX OBJECT list to add new BOX to.
  *  \param [in]     buf             Character string with box description.
  *  \param [in]     release_ver     libgeda release version number.
  *  \param [in]     fileformat_ver  libgeda file format version number.
  *  \return The BOX OBJECT that was created.
  */
-OBJECT *o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
+OBJECT *o_box_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 		   unsigned int release_ver, unsigned int fileformat_ver)
 {
   char type; 
@@ -387,15 +387,15 @@ OBJECT *o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
   d_y2 = y1;
   
   /* create and add the box to the list */
-  object_list = (OBJECT *) o_box_add(w_current, object_list,
+  object_list = (OBJECT *) o_box_add(toplevel, object_list,
 				     type, color,
 				     d_x1, d_y1, d_x2, d_y2);
   /* set its line options */
-  o_set_line_options(w_current, object_list,
+  o_set_line_options(toplevel, object_list,
 		     box_end, box_type, box_width, 
 		     box_length, box_space);
   /* set its fill options */
-  o_set_fill_options(w_current, object_list,
+  o_set_fill_options(toplevel, object_list,
 		     box_filling, fill_width,
 		     pitch1, angle1, pitch2, angle2);
   return(object_list);
@@ -482,12 +482,12 @@ char *o_box_save(OBJECT *object)
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the box
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit.
  *
- *  \param [in]     w_current  The TOPLEVEL object.
+ *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in]     x1         x distance to move.
  *  \param [in]     y1         y distance to move.
  *  \param [in,out] object     BOX OBJECT to translate.
  */
-void o_box_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
+void o_box_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object)
 {
   if (object == NULL) printf("btw NO!\n");
 
@@ -498,7 +498,7 @@ void o_box_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
   object->box->lower_y = object->box->lower_y + y1;     
 
   /* recalc the screen coords and the bounding box */
-  o_box_recalc(w_current, object);
+  o_box_recalc(toplevel, object);
 }
 
 /*! \brief Rotate BOX OBJECT using WORLD coordinates. 
@@ -508,14 +508,14 @@ void o_box_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
  *  <B>angle</B> degrees.
  *  The center of rotation is in world unit.
  *
- *  \param [in]      w_current      The TOPLEVEL object.
+ *  \param [in]      toplevel      The TOPLEVEL object.
  *  \param [in]      world_centerx  Rotation center x coordinate in WORLD units.
  *  \param [in]      world_centery  Rotation center y coordinate in WORLD units.
  *  \param [in]      angle          Rotation angle in degrees (See note below).
  *  \param [in,out]  object         BOX OBJECT to rotate.
  *
  */
-void o_box_rotate_world(TOPLEVEL *w_current, 
+void o_box_rotate_world(TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, int angle,
 			OBJECT *object)
 {
@@ -564,7 +564,7 @@ void o_box_rotate_world(TOPLEVEL *w_current,
   object->box->lower_y += world_centery;
   
   /* recalc boundings and world coords */
-  o_box_recalc(w_current, object);
+  o_box_recalc(toplevel, object);
 }
 
 /*! \brief Mirror BOX using WORLD coordinates.
@@ -575,12 +575,12 @@ void o_box_rotate_world(TOPLEVEL *w_current,
  *  The box is first translated to the origin, then mirrored and finally
  *  translated back at its previous position.
  *
- *  \param [in]     w_current      The TOPLEVEL object.
+ *  \param [in]     toplevel      The TOPLEVEL object.
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         BOX OBJECT to mirror.
  */
-void o_box_mirror_world(TOPLEVEL *w_current,
+void o_box_mirror_world(TOPLEVEL *toplevel,
 			int world_centerx, int world_centery,
 			OBJECT *object)
 {
@@ -612,7 +612,7 @@ void o_box_mirror_world(TOPLEVEL *w_current,
   object->box->lower_y += world_centery;
 
   /* recalc boundings and world coords */
-  o_box_recalc(w_current, object);
+  o_box_recalc(toplevel, object);
   
 }
 
@@ -621,10 +621,10 @@ void o_box_mirror_world(TOPLEVEL *w_current,
  *  This function recalculates the box coordinates and its 
  *  bounding are recalculated as well.
  *
- *  \param [in] w_current      The TOPLEVEL object.
+ *  \param [in] toplevel      The TOPLEVEL object.
  *  \param [in,out] o_current  BOX OBJECT to be recalculated.
  */
-void o_box_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+void o_box_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   int left, top, right, bottom;
 
@@ -633,7 +633,7 @@ void o_box_recalc(TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   /* update the bounding box - world unit */
-  world_get_box_bounds(w_current, o_current, &left, &top, &right, &bottom);
+  world_get_box_bounds(toplevel, o_current, &left, &top, &right, &bottom);
   o_current->w_left   = left;
   o_current->w_top    = top;
   o_current->w_right  = right;
@@ -647,14 +647,14 @@ void o_box_recalc(TOPLEVEL *w_current, OBJECT *o_current)
  *  parameters to the boundings of the box object described in <B>*box</B>
  *  in world units.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  object     BOX OBJECT to read coordinates from.
  *  \param [out] left       Left box coordinate in WORLD units.
  *  \param [out] top        Top box coordinate in WORLD units.
  *  \param [out] right      Right box coordinate in WORLD units.
  *  \param [out] bottom     Bottom box coordinate in WORLD units.
  */
-void world_get_box_bounds(TOPLEVEL *w_current, OBJECT *object,
+void world_get_box_bounds(TOPLEVEL *toplevel, OBJECT *object,
                           int *left, int *top, int *right, int *bottom)
 {
   int halfwidth;
@@ -691,13 +691,13 @@ void world_get_box_bounds(TOPLEVEL *w_current, OBJECT *object,
  *  The outline and the inside of the box are successively handled by two
  *  differend sets of functions.
  *  
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] fp         FILE pointer to Postscript document.
  *  \param [in] o_current  BOX OBJECT to write to document.
  *  \param [in] origin_x   Page x coordinate to place BOX OBJECT.
  *  \param [in] origin_y   Page y coordinate to place BOX OBJECT.
  */
-void o_box_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+void o_box_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 		 int origin_x, int origin_y)
 {
   int x, y, width, height;
@@ -735,7 +735,7 @@ void o_box_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   line_width = o_current->line_width;
   
   if(line_width <=2) {
-    if(w_current->line_style == THICK) {
+    if(toplevel->line_style == THICK) {
       line_width=LINE_WIDTH;
     } else {
       line_width=2;
@@ -779,7 +779,7 @@ void o_box_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     outl_func = o_box_print_solid;
   }
 
-  (*outl_func)(w_current, fp,
+  (*outl_func)(toplevel, fp,
 	       x, y, width, height,
 	       color,
 	       line_width,
@@ -840,7 +840,7 @@ void o_box_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
       fill_func = o_box_print_filled;
     }
     
-    (*fill_func)(w_current, fp,
+    (*fill_func)(toplevel, fp,
                  x, y, width, height,
                  color,
                  fill_width,
@@ -863,7 +863,7 @@ void o_box_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
  *
  *  All dimensions are in mils.
  *
- *  \param [in] w_current   The TOPLEVEL object.
+ *  \param [in] toplevel   The TOPLEVEL object.
  *  \param [in] fp          FILE pointer to Postscript document.
  *  \param [in] x           Upper x coordinate of BOX.
  *  \param [in] y           Upper y coordinate of BOX.
@@ -880,7 +880,7 @@ void o_box_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
  *   PB : parameter filled removed
  */
 void
-o_box_print_solid(TOPLEVEL *w_current, FILE *fp,
+o_box_print_solid(TOPLEVEL *toplevel, FILE *fp,
                   int x, int y,
                   int width, int height,
                   int color,
@@ -889,29 +889,29 @@ o_box_print_solid(TOPLEVEL *w_current, FILE *fp,
 {
   int x1, y1;
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
 
   x1 = x;
   y1 = y - height; /* move the origin to 0, 0*/
 
-  o_line_print_solid(w_current, fp,
+  o_line_print_solid(toplevel, fp,
                      x1, y1, x1 + width, y1,
                      color,
                      line_width, length, space,
                      origin_x, origin_y);
-  o_line_print_solid(w_current, fp,
+  o_line_print_solid(toplevel, fp,
                      x1 + width, y1, x1 + width, y1 + height,
                      color,
                      line_width, length, space,
                      origin_x, origin_y);
-  o_line_print_solid(w_current, fp,
+  o_line_print_solid(toplevel, fp,
                      x1 + width, y1 + height, x1, y1 + height,
                      color,
                      line_width, length, space,
                      origin_x, origin_y);
-  o_line_print_solid(w_current, fp,
+  o_line_print_solid(toplevel, fp,
                      x1, y1 + height, x1, y1,
                      color,
                      line_width, length, space,
@@ -932,7 +932,7 @@ o_box_print_solid(TOPLEVEL *w_current, FILE *fp,
  *
  *  All dimensions are in mils.
  *
- *  \param [in] w_current   The TOPLEVEL object.
+ *  \param [in] toplevel   The TOPLEVEL object.
  *  \param [in] fp          FILE pointer to Postscript document.
  *  \param [in] x           Upper x coordinate of BOX.
  *  \param [in] y           Upper y coordinate of BOX.
@@ -949,7 +949,7 @@ o_box_print_solid(TOPLEVEL *w_current, FILE *fp,
  *  PB : parameter filled removed
  *  PB : parameter o_current removed
  */
-void o_box_print_dotted(TOPLEVEL *w_current, FILE *fp,
+void o_box_print_dotted(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y,
 			int width, int height,
 			int color,
@@ -958,29 +958,29 @@ void o_box_print_dotted(TOPLEVEL *w_current, FILE *fp,
 {
   int x1, y1;
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
 
   x1 = x;
   y1 = y - height; /* move the origin to 0, 0*/
 
-  o_line_print_dotted(w_current, fp,
+  o_line_print_dotted(toplevel, fp,
                       x1, y1, x1 + width, y1,
                       color,
                       line_width, length, space,
                       origin_x, origin_y);
-  o_line_print_dotted(w_current, fp,
+  o_line_print_dotted(toplevel, fp,
                       x1 + width, y1, x1 + width, y1 + height,
                       color,
                       line_width, length, space,
                       origin_x, origin_y);
-  o_line_print_dotted(w_current, fp,
+  o_line_print_dotted(toplevel, fp,
                       x1 + width, y1 + height, x1, y1 + height,
                       color,
                       line_width, length, space,
                       origin_x, origin_y);
-  o_line_print_dotted(w_current, fp,
+  o_line_print_dotted(toplevel, fp,
                       x1, y1 + height, x1, y1,
                       color,
                       line_width, length, space,
@@ -1000,7 +1000,7 @@ void o_box_print_dotted(TOPLEVEL *w_current, FILE *fp,
  *
  *  All dimensions are in mils.
  *
- *  \param [in] w_current   The TOPLEVEL object.
+ *  \param [in] toplevel   The TOPLEVEL object.
  *  \param [in] fp          FILE pointer to Postscript document.
  *  \param [in] x           Upper x coordinate of BOX.
  *  \param [in] y           Upper y coordinate of BOX.
@@ -1017,7 +1017,7 @@ void o_box_print_dotted(TOPLEVEL *w_current, FILE *fp,
  *  PB : parameter filled removed
  *  PB : parameter o_current removed
  */
-void o_box_print_dashed(TOPLEVEL *w_current, FILE *fp,
+void o_box_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y,
 			int width, int height,
 			int color,
@@ -1026,7 +1026,7 @@ void o_box_print_dashed(TOPLEVEL *w_current, FILE *fp,
 {
   int x1, y1;
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
 
@@ -1034,22 +1034,22 @@ void o_box_print_dashed(TOPLEVEL *w_current, FILE *fp,
   x1 = x;
   y1 = y - height; /* move the origin to 0, 0*/
 
-  o_line_print_dashed(w_current, fp,
+  o_line_print_dashed(toplevel, fp,
                       x1, y1, x1 + width, y1,
                       color,
                       line_width, length, space,
                       origin_x, origin_y);
-  o_line_print_dashed(w_current, fp,
+  o_line_print_dashed(toplevel, fp,
                       x1 + width, y1, x1 + width, y1 + height,
                       color,
                       line_width, length, space,
                       origin_x, origin_y);
-  o_line_print_dashed(w_current, fp,
+  o_line_print_dashed(toplevel, fp,
                       x1 + width, y1 + height, x1, y1 + height,
                       color,
                       line_width, length, space,
                       origin_x, origin_y);
-  o_line_print_dashed(w_current, fp,
+  o_line_print_dashed(toplevel, fp,
                       x1, y1 + height, x1, y1,
                       color,
                       line_width, length, space,
@@ -1069,7 +1069,7 @@ void o_box_print_dashed(TOPLEVEL *w_current, FILE *fp,
  *
  *  All dimensions are in mils.
  *
- *  \param [in] w_current   The TOPLEVEL object.
+ *  \param [in] toplevel   The TOPLEVEL object.
  *  \param [in] fp          FILE pointer to Postscript document.
  *  \param [in] x           Upper x coordinate of BOX.
  *  \param [in] y           Upper y coordinate of BOX.
@@ -1086,7 +1086,7 @@ void o_box_print_dashed(TOPLEVEL *w_current, FILE *fp,
  * PB : parameter filled removed
  * PB : parameter o_current removed
  */
-void o_box_print_center(TOPLEVEL *w_current, FILE *fp,
+void o_box_print_center(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y,
 			int width, int height,
 			int color,
@@ -1095,29 +1095,29 @@ void o_box_print_center(TOPLEVEL *w_current, FILE *fp,
 {
   int x1, y1;
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
 
   x1 = x;
   y1 = y - height; /* move the origin to 0, 0*/
 
-  o_line_print_center(w_current, fp,
+  o_line_print_center(toplevel, fp,
                       x1, y1, x1 + width, y1,
                       color,
                       line_width, length, space,
                       origin_x, origin_y);
-  o_line_print_center(w_current, fp,
+  o_line_print_center(toplevel, fp,
                       x1 + width, y1, x1 + width, y1 + height,
                       color,
                       line_width, length, space,
                       origin_x, origin_y);
-  o_line_print_center(w_current, fp,
+  o_line_print_center(toplevel, fp,
                       x1 + width, y1 + height, x1, y1 + height,
                       color,
                       line_width, length, space,
                       origin_x, origin_y);
-  o_line_print_center(w_current, fp,
+  o_line_print_center(toplevel, fp,
                       x1, y1 + height, x1, y1,
                       color,
                       line_width, length, space,
@@ -1137,7 +1137,7 @@ void o_box_print_center(TOPLEVEL *w_current, FILE *fp,
  *
  *  All dimensions are in mils.
  *  
- *  \param [in] w_current   The TOPLEVEL object.
+ *  \param [in] toplevel   The TOPLEVEL object.
  *  \param [in] fp          FILE pointer to Postscript document.
  *  \param [in] x           Upper x coordinate of BOX.
  *  \param [in] y           Upper y coordinate of BOX.
@@ -1154,7 +1154,7 @@ void o_box_print_center(TOPLEVEL *w_current, FILE *fp,
  *  PB : parameter filled removed
  *  PB : parameter o_current removed
  */
-void o_box_print_phantom(TOPLEVEL *w_current, FILE *fp,
+void o_box_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 			 int x, int y,
 			 int width, int height,
 			 int color,
@@ -1163,29 +1163,29 @@ void o_box_print_phantom(TOPLEVEL *w_current, FILE *fp,
 {
   int x1, y1;
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
 
   x1 = x;
   y1 = y - height; /* move the origin to 0, 0*/
 
-  o_line_print_phantom(w_current, fp,
+  o_line_print_phantom(toplevel, fp,
                        x1, y1, x1 + width, y1,
                        color,
                        line_width, length, space,
                        origin_x, origin_y);
-  o_line_print_phantom(w_current, fp,
+  o_line_print_phantom(toplevel, fp,
                        x1 + width, y1, x1 + width, y1 + height,
                        color,
                        line_width, length, space,
                        origin_x, origin_y);
-  o_line_print_phantom(w_current, fp,
+  o_line_print_phantom(toplevel, fp,
                        x1 + width, y1 + height, x1, y1 + height,
                        color,
                        line_width, length, space,
                        origin_x, origin_y);
-  o_line_print_phantom(w_current, fp,
+  o_line_print_phantom(toplevel, fp,
                        x1, y1 + height, x1, y1,
                        color,
                        line_width, length, space,
@@ -1209,7 +1209,7 @@ void o_box_print_phantom(TOPLEVEL *w_current, FILE *fp,
  * 
  *  All dimensions are in mils.
  *
- *  \param [in] w_current   The TOPLEVEL object.
+ *  \param [in] toplevel   The TOPLEVEL object.
  *  \param [in] fp          FILE pointer to Postscript document.
  *  \param [in] x           Upper x coordinate of BOX.
  *  \param [in] y           Upper y coordinate of BOX.
@@ -1224,7 +1224,7 @@ void o_box_print_phantom(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x    Page x coordinate to place BOX OBJECT.
  *  \param [in] origin_y    Page y coordinate to place BOX OBJECT.
  */
-void o_box_print_filled(TOPLEVEL *w_current, FILE *fp,
+void o_box_print_filled(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y,
 			int width, int height,
 			int color,
@@ -1235,7 +1235,7 @@ void o_box_print_filled(TOPLEVEL *w_current, FILE *fp,
 {
   int x1, y1;
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
 
@@ -1263,7 +1263,7 @@ void o_box_print_filled(TOPLEVEL *w_current, FILE *fp,
  * 
  *  All dimensions are in mils.
  *
- *  \param [in] w_current   The TOPLEVEL object.
+ *  \param [in] toplevel   The TOPLEVEL object.
  *  \param [in] fp          FILE pointer to Postscript document.
  *  \param [in] x           Upper x coordinate of BOX.
  *  \param [in] y           Upper y coordinate of BOX.
@@ -1278,7 +1278,7 @@ void o_box_print_filled(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x    Page x coordinate to place BOX OBJECT.
  *  \param [in] origin_y    Page y coordinate to place BOX OBJECT.
  */
-void o_box_print_mesh(TOPLEVEL *w_current, FILE *fp,
+void o_box_print_mesh(TOPLEVEL *toplevel, FILE *fp,
 		      int x, int y,
 		      int width, int height,
 		      int color,
@@ -1287,13 +1287,13 @@ void o_box_print_mesh(TOPLEVEL *w_current, FILE *fp,
 		      int angle2, int pitch2,
 		      int origin_x, int origin_y)
 {
-  o_box_print_hatch(w_current, fp,
+  o_box_print_hatch(toplevel, fp,
                     x, y, width, height,
                     color,
                     fill_width,
                     angle1, pitch1, -1, -1,
                     origin_x, origin_y);
-  o_box_print_hatch(w_current, fp,
+  o_box_print_hatch(toplevel, fp,
                     x, y, width, height,
                     color,
                     fill_width,
@@ -1318,7 +1318,7 @@ void o_box_print_mesh(TOPLEVEL *w_current, FILE *fp,
  *
  *  All dimensions are in mils.
  *
- *  \param [in] w_current   The TOPLEVEL object.
+ *  \param [in] toplevel   The TOPLEVEL object.
  *  \param [in] fp          FILE pointer to Postscript document.
  *  \param [in] x           Upper x coordinate of BOX.
  *  \param [in] y           Upper y coordinate of BOX.
@@ -1333,7 +1333,7 @@ void o_box_print_mesh(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x    Page x coordinate to place BOX OBJECT.
  *  \param [in] origin_y    Page y coordinate to place BOX OBJECT.
  */
-void o_box_print_hatch(TOPLEVEL *w_current, FILE *fp,
+void o_box_print_hatch(TOPLEVEL *toplevel, FILE *fp,
 		       int x, int y,
 		       int width, int height,
 		       int color,
@@ -1348,7 +1348,7 @@ void o_box_print_hatch(TOPLEVEL *w_current, FILE *fp,
   double x1, y1, x2, y2;
   double amin, amax, a[4], min1, min2, max1, max2;
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
 

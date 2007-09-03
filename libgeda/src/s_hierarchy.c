@@ -58,7 +58,7 @@ static int page_control_counter=0;
  *  function will load the page again with a new page id. The second case
  *  is mainly used by gnetlist where pushed down schematics MUST be unique.
  *
- *  \param [in] w_current     The TOPLEVEL object.
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] filename      Schematic file name.
  *  \param [in] parent        The parent page of the schematic.
  *  \param [in] page_control
@@ -73,7 +73,7 @@ static int page_control_counter=0;
  *  flag can either be HIERARCHY_NORMAL_LOAD or HIERARCHY_FORCE_LOAD
  *  flag is mainly used by gnetlist where pushed down schematics MUST be unique
  */
-int s_hierarchy_down_schematic_single(TOPLEVEL *w_current,
+int s_hierarchy_down_schematic_single(TOPLEVEL *toplevel,
 				      const gchar *filename, PAGE *parent,
 				      int page_control, int flag) 
 {
@@ -89,13 +89,13 @@ int s_hierarchy_down_schematic_single(TOPLEVEL *w_current,
   switch (flag) {
     case HIERARCHY_NORMAL_LOAD:
     {
-      found = s_page_search (w_current, string);
+      found = s_page_search (toplevel, string);
       
       if (found) {
 	/* check whether this page is in the parents list */
 	for (forbear = parent; 
 	     forbear != NULL && found->pid != forbear->pid && forbear->up >= 0;
-	     forbear = s_hierarchy_find_page (w_current->pages, forbear->up))
+	     forbear = s_hierarchy_find_page (toplevel->pages, forbear->up))
 	  ; /* void */
 
 	if (found->pid == forbear->pid) {
@@ -103,7 +103,7 @@ int s_hierarchy_down_schematic_single(TOPLEVEL *w_current,
 			"  \"%s\"\n",found->page_filename);
 	  return -1;  /* error signal */
 	}
-        s_page_goto (w_current, found);
+        s_page_goto (toplevel, found);
         if (page_control != 0) {
           found->page_control = page_control;
         }
@@ -112,32 +112,32 @@ int s_hierarchy_down_schematic_single(TOPLEVEL *w_current,
         return found->page_control;
       }
       
-      found = s_page_new (w_current, string);
-      s_page_goto (w_current, found);
+      found = s_page_new (toplevel, string);
+      s_page_goto (toplevel, found);
       
-      f_open (w_current, found->page_filename);
+      f_open (toplevel, found->page_filename);
     }
     break;
 
     case HIERARCHY_FORCE_LOAD:
     {
-      PAGE *page = s_page_new (w_current, string);
-      s_page_goto (w_current, page);
-      f_open (w_current, page->page_filename);
+      PAGE *page = s_page_new (toplevel, string);
+      s_page_goto (toplevel, page);
+      f_open (toplevel, page->page_filename);
     }
     break;
   }
 
   if (page_control == 0) {
     page_control_counter++;
-    w_current->page_current->page_control = page_control_counter;
+    toplevel->page_current->page_control = page_control_counter;
   } else {
-    w_current->page_current->page_control = page_control;
+    toplevel->page_current->page_control = page_control;
   }
 
-  w_current->page_current->up = parent->pid;
+  toplevel->page_current->up = parent->pid;
 
-  s_page_goto(w_current, w_current->page_current);
+  s_page_goto(toplevel, toplevel->page_current);
 
   g_free (string);
 
@@ -153,7 +153,7 @@ int s_hierarchy_down_schematic_single(TOPLEVEL *w_current,
  *  only works for schematic files though
  *  this is basically push
  */
-void s_hierarchy_down_schematic_multiple (TOPLEVEL *w_current,
+void s_hierarchy_down_schematic_multiple (TOPLEVEL *toplevel,
 					  const gchar *filename, PAGE *parent) 
 {
   char *string=NULL;
@@ -166,32 +166,32 @@ void s_hierarchy_down_schematic_multiple (TOPLEVEL *w_current,
   string = s_slib_search (filename, SLIB_SEARCH_NEXT);
   while (string != NULL) {
 
-    found = s_page_new(w_current, string);
+    found = s_page_new(toplevel, string);
 
     if (found) {
-      w_current->page_current = found;
-      s_page_goto(w_current, found);
+      toplevel->page_current = found;
+      s_page_goto(toplevel, found);
       if (string) 
         g_free(string);
       return;
     }
 
-    f_open(w_current, w_current->page_current->page_filename);
+    f_open(toplevel, toplevel->page_current->page_filename);
 
     if (loaded_schematics == 0) {
       page_control_counter++;
-      save_first_page = w_current->page_current;
-      /* parent->down = w_current->page_current; not needed */
-      w_current->page_current->page_control = 
+      save_first_page = toplevel->page_current;
+      /* parent->down = toplevel->page_current; not needed */
+      toplevel->page_current->page_control =
         page_control_counter;
       loaded_schematics=1;
     } else {
-      w_current->page_current->page_control = 
+      toplevel->page_current->page_control =
         page_control_counter;
     }
 
-    w_current->page_current->up = parent->pid;
-    /* w_current->page_current->down = NULL; not needed */
+    toplevel->page_current->up = parent->pid;
+    /* toplevel->page_current->down = NULL; not needed */
 
     if (string) 
       g_free(string);
@@ -204,10 +204,10 @@ void s_hierarchy_down_schematic_multiple (TOPLEVEL *w_current,
   g_free (string);
 
   if (loaded_schematics) {
-    w_current->page_current = save_first_page;
+    toplevel->page_current = save_first_page;
   }
 
-  s_page_goto (w_current, w_current->page_current);
+  s_page_goto (toplevel, toplevel->page_current);
   
 }
 
@@ -216,7 +216,7 @@ void s_hierarchy_down_schematic_multiple (TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-void s_hierarchy_down_symbol (TOPLEVEL *w_current,
+void s_hierarchy_down_symbol (TOPLEVEL *toplevel,
 			      const CLibSymbol *symbol, PAGE *parent)
 {
   PAGE *page;
@@ -224,19 +224,19 @@ void s_hierarchy_down_symbol (TOPLEVEL *w_current,
 
   filename = s_clib_symbol_get_filename (symbol);
 
-  page = s_page_search (w_current, filename);
+  page = s_page_search (toplevel, filename);
   if (page) {
-    s_page_goto (w_current, page);
+    s_page_goto (toplevel, page);
     g_free (filename);
     return;
   }
 
-  page = s_page_new (w_current, filename);
+  page = s_page_new (toplevel, filename);
   g_free(filename);
 
-  s_page_goto (w_current, page);
+  s_page_goto (toplevel, page);
 
-  f_open(w_current, page->page_filename);
+  f_open(toplevel, page->page_filename);
 
   page->up = parent->pid;
   page_control_counter++;
@@ -249,7 +249,7 @@ void s_hierarchy_down_symbol (TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-void s_hierarchy_up(TOPLEVEL *w_current, int pid)
+void s_hierarchy_up(TOPLEVEL *toplevel, int pid)
 {
   PAGE *p_current;
 
@@ -258,10 +258,10 @@ void s_hierarchy_up(TOPLEVEL *w_current, int pid)
     return;
   }
 
-  p_current = s_hierarchy_find_page(w_current->pages, pid);
+  p_current = s_hierarchy_find_page(toplevel->pages, pid);
 
   if (p_current) {
-    s_page_goto(w_current, p_current);
+    s_page_goto(toplevel, p_current);
   } else {
     s_log_message("Cannot find any schematics above the current one!\n");
     s_log_message("Maybe toplevel schematic page was closed/discarded?\n");
@@ -283,7 +283,7 @@ void s_hierarchy_up(TOPLEVEL *w_current, int pid)
  *  \warning
  *  Call must g_list_free returned GList.
  */
-GList *s_hierarchy_traversepages(TOPLEVEL *w_current,
+GList *s_hierarchy_traversepages(TOPLEVEL *toplevel,
 				 gint flags)
 {
   PAGE *p_current;
@@ -297,7 +297,7 @@ GList *s_hierarchy_traversepages(TOPLEVEL *w_current,
     pages = NULL;
   }
 
-  p_current = w_current->page_current;
+  p_current = toplevel->page_current;
 
   /* preorder traversing */
   if (!(flags & HIERARCHY_POSTORDER)) {
@@ -328,16 +328,16 @@ GList *s_hierarchy_traversepages(TOPLEVEL *w_current,
       if (filename != NULL) {
 	/* we got a schematic source attribute 
 	   lets load the page and dive into it */
-	page_control =s_hierarchy_down_schematic_single(w_current,
+	page_control =s_hierarchy_down_schematic_single(toplevel,
 							filename,
 							p_current,
 							0,
 							HIERARCHY_NORMAL_LOAD);
 	if (page_control != -1) {
 	  /* call the recursive function */
-	  s_hierarchy_traversepages(w_current,
+	  s_hierarchy_traversepages(toplevel,
 				    flags | HIERARCHY_INNERLOOP);
-	  s_page_goto(w_current, p_current);
+	  s_page_goto(toplevel, p_current);
 	}
 	else {
 	  s_log_message("ERROR in s_hierarchy_traverse: "

@@ -125,13 +125,13 @@ extern GHashTable *font_char_to_file;
  *  already been read, it just says OK.  After reading the file, it places
  *  the filename in the list of read files.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] fname      RC file name to read.
  *  \param [in] ok_msg     Message to print if file is read ok.
  *  \param [in] err_msg    Message to print if file read error occurs
  *  \return 1 on success, 0 otherwise.
  */
-gint g_rc_parse_general(TOPLEVEL *w_current,
+gint g_rc_parse_general(TOPLEVEL *toplevel,
 			const gchar *fname, 
 			const gchar *ok_msg, const gchar *err_msg)
 {
@@ -139,7 +139,7 @@ gint g_rc_parse_general(TOPLEVEL *w_current,
   GList *found_rc_filename_element;
 
   /* First see if fname is in list of previously read RC files. */
-  found_rc_filename_element = g_list_find_custom(w_current->RC_list, 
+  found_rc_filename_element = g_list_find_custom(toplevel->RC_list,
                                                  (gconstpointer) fname,
                                                  (GCompareFunc) strcmp);
   if (found_rc_filename_element != NULL) {
@@ -153,7 +153,7 @@ gint g_rc_parse_general(TOPLEVEL *w_current,
     g_read_file (fname);
     found_rc = 1;
     /* Everything was OK.  Now add this file to list of read RC files. */
-    w_current->RC_list = g_list_append (w_current->RC_list,
+    toplevel->RC_list = g_list_append (toplevel->RC_list,
                                         g_strdup (fname));
     s_log_message (ok_msg, fname);
   } else {
@@ -193,11 +193,11 @@ const gchar* g_rc_parse_path(void)
  *  \par Function Description
  *  This function wil open and parse a system rc file.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] rcname     System RC file name to parse.
  *  \return 1 on success, 0 on failure.
  */
-gint g_rc_parse_system_rc(TOPLEVEL *w_current, const gchar *rcname)
+gint g_rc_parse_system_rc(TOPLEVEL *toplevel, const gchar *rcname)
 {
   const gchar *geda_data = g_getenv ("GEDADATA");
   gint found_rc;
@@ -223,7 +223,7 @@ gint g_rc_parse_system_rc(TOPLEVEL *w_current, const gchar *rcname)
                              rcname);
   err_msg = g_strdup_printf ("Did not find required system-%s file [%%s]\n",
                              rcname);  
-  found_rc = g_rc_parse_general(w_current, filename, ok_msg, err_msg);
+  found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
 
   g_free(ok_msg);
   g_free(err_msg);  
@@ -237,11 +237,11 @@ gint g_rc_parse_system_rc(TOPLEVEL *w_current, const gchar *rcname)
  *  \par Function Description
  *  This function will open and parse a RC file in the users home directory.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] rcname     User's RC file name.
  *  \return 1 on success, 0 on failure.
  */
-gint g_rc_parse_home_rc(TOPLEVEL *w_current, const gchar *rcname)
+gint g_rc_parse_home_rc(TOPLEVEL *toplevel, const gchar *rcname)
 {
   const gchar *home = g_getenv ("HOME");
   gint found_rc;
@@ -268,7 +268,7 @@ gint g_rc_parse_home_rc(TOPLEVEL *w_current, const gchar *rcname)
                              rcname);
   err_msg = g_strdup_printf ("Did not find optional ~/.gEDA/%s file [%%s]\n",
                              rcname);  
-  found_rc = g_rc_parse_general(w_current, filename, ok_msg, err_msg);
+  found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
   
   g_free(ok_msg);
   g_free(err_msg);
@@ -282,11 +282,11 @@ gint g_rc_parse_home_rc(TOPLEVEL *w_current, const gchar *rcname)
  *  \par Function Description
  *  This function will open and parse a RC file in the current working directory.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] rcname     Local directory RC file name.
  *  \return 1 on success, 0 on failure.
  */
-gint g_rc_parse_local_rc(TOPLEVEL *w_current, const gchar *rcname)
+gint g_rc_parse_local_rc(TOPLEVEL *toplevel, const gchar *rcname)
 {
   gint found_rc;
   gchar *tmp;
@@ -304,7 +304,7 @@ gint g_rc_parse_local_rc(TOPLEVEL *w_current, const gchar *rcname)
                              rcname);
   err_msg = g_strdup_printf ("Did not find optional local %s file [%%s]\n",
                              rcname);  
-  found_rc = g_rc_parse_general(w_current, filename, ok_msg, err_msg);
+  found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
 
   g_free(ok_msg);
   g_free(err_msg);
@@ -318,11 +318,11 @@ gint g_rc_parse_local_rc(TOPLEVEL *w_current, const gchar *rcname)
  *  \par Function Description
  *  This function will open and parse a RC file from a specified location.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] rcname     Specified location RC file name.
  *  \return 1 on success, 0 on failure.
  */
-gint g_rc_parse_specified_rc(TOPLEVEL *w_current, const gchar *rcname)
+gint g_rc_parse_specified_rc(TOPLEVEL *toplevel, const gchar *rcname)
 {
   gint found_rc = 0;
   char *filename;
@@ -339,7 +339,7 @@ gint g_rc_parse_specified_rc(TOPLEVEL *w_current, const gchar *rcname)
                              rcname);
   err_msg = g_strdup_printf ("Did not find specified %s file [%%s]\n",
                              rcname);  
-  found_rc = g_rc_parse_general(w_current, filename, ok_msg, err_msg);
+  found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
   
   g_free(ok_msg);
   g_free(err_msg);
@@ -355,13 +355,13 @@ gint g_rc_parse_specified_rc(TOPLEVEL *w_current, const gchar *rcname)
  *  search for the specified_rc_filename.  When none are found it will
  *  call exit(-1) to terminate the program.
  *
- *  \param [in] w_current              The TOPLEVEL object.
+ *  \param [in] toplevel              The TOPLEVEL object.
  *  \param [in] rcname                 RC file name.
  *  \param [in] specified_rc_filename  Specific location RC file name.
  *  \return calls exit(-1) when no RC file matching either rcname or
  *          specified_rc_filename is found.
  */
-void g_rc_parse(TOPLEVEL *w_current,
+void g_rc_parse(TOPLEVEL *toplevel,
 		const gchar *rcname, const gchar *specified_rc_filename)
 {
   gint found_rc = 0;
@@ -380,17 +380,17 @@ void g_rc_parse(TOPLEVEL *w_current,
   /* visit rc files in order */
   /* Changed by SDB 1.2.2005 in response to Peter Kaiser's bug report.
    * Read gafrc files first */
-  found_rc |= g_rc_parse_system_rc(w_current, "gafrc");
-  found_rc |= g_rc_parse_home_rc(w_current, "gafrc");
-  found_rc |= g_rc_parse_local_rc(w_current, "gafrc");
+  found_rc |= g_rc_parse_system_rc(toplevel, "gafrc");
+  found_rc |= g_rc_parse_home_rc(toplevel, "gafrc");
+  found_rc |= g_rc_parse_local_rc(toplevel, "gafrc");
   /* continue support for individual rc files for each program.  */
-  found_rc |= g_rc_parse_system_rc(w_current, rcname);
-  found_rc |= g_rc_parse_home_rc(w_current, rcname);
-  found_rc |= g_rc_parse_local_rc(w_current, rcname);
+  found_rc |= g_rc_parse_system_rc(toplevel, rcname);
+  found_rc |= g_rc_parse_home_rc(toplevel, rcname);
+  found_rc |= g_rc_parse_local_rc(toplevel, rcname);
 
   /* New fcn introduced by SDB to consolidate this & make it available 
    * for other programs */
-  found_rc |= g_rc_parse_specified_rc(w_current, specified_rc_filename);
+  found_rc |= g_rc_parse_specified_rc(toplevel, specified_rc_filename);
 
   /* Oh well, I couldn't find any rcfile, exit! */
   if (!found_rc) {

@@ -53,12 +53,12 @@
  *  \par Function Description
  *
  */
-void s_tile_init(TOPLEVEL * w_current, PAGE * p_current)
+void s_tile_init(TOPLEVEL * toplevel, PAGE * p_current)
 {
   int i, j;
   TILE *t_current;
-  int x_size = w_current->init_right / MAX_TILES_X;
-  int y_size = w_current->init_bottom / MAX_TILES_Y;
+  int x_size = toplevel->init_right / MAX_TILES_X;
+  int y_size = toplevel->init_bottom / MAX_TILES_Y;
   int x_sum = 0;
   int y_sum = 0;
 
@@ -120,7 +120,7 @@ TILE_LOC *s_tile_new_loc(int i, int j)
  *  \par Function Description
  *
  */
-void s_tile_add_object(TOPLEVEL * w_current, OBJECT * object, int world_x1,
+void s_tile_add_object(TOPLEVEL * toplevel, OBJECT * object, int world_x1,
 		       int world_y1, int world_x2, int world_y2)
 {
   TILE *t_current;
@@ -140,15 +140,15 @@ void s_tile_add_object(TOPLEVEL * w_current, OBJECT * object, int world_x1,
   printf("name: %s\n", object->name);
 #endif
 
-  if (w_current->ADDING_SEL) {
+  if (toplevel->ADDING_SEL) {
 #if DEBUG    
     printf("s_tile_add_object, adding sel TRUE\n");
 #endif
     return;
   }
   
-  x_size = (double) w_current->init_right / (double) MAX_TILES_X;
-  y_size = (double) w_current->init_bottom / (double) MAX_TILES_Y;
+  x_size = (double) toplevel->init_right / (double) MAX_TILES_X;
+  y_size = (double) toplevel->init_bottom / (double) MAX_TILES_Y;
 
   x1 = (int) (world_x1 / x_size);
   x2 = (int) (world_x2 / x_size);
@@ -156,7 +156,7 @@ void s_tile_add_object(TOPLEVEL * w_current, OBJECT * object, int world_x1,
   y2 = (int) (world_y2 / y_size);
 
   bottom = x2 - x1;
-  p_current = w_current->page_current;
+  p_current = toplevel->page_current;
 
   if (bottom != 0.0) {
     m = (double) (y2 - y1) / bottom;
@@ -329,7 +329,7 @@ void s_tile_add_object(TOPLEVEL * w_current, OBJECT * object, int world_x1,
  *  \par Function Description
  *
  */
-void s_tile_remove_object_all_crude(TOPLEVEL * w_current, OBJECT * object)
+void s_tile_remove_object_all_crude(TOPLEVEL * toplevel, OBJECT * object)
 {
   TILE *t_current;
 
@@ -338,7 +338,7 @@ void s_tile_remove_object_all_crude(TOPLEVEL * w_current, OBJECT * object)
   for (j = 0; j < MAX_TILES_Y; j++) {
     for (i = 0; i < MAX_TILES_X; i++) {
 #if 0				/* this checks for existance */
-      t_current = &w_current->page_current->world_tiles[i][j];
+      t_current = &toplevel->page_current->world_tiles[i][j];
       found = g_list_find(t_current->objects, object);
 
       if (found) {
@@ -350,7 +350,7 @@ void s_tile_remove_object_all_crude(TOPLEVEL * w_current, OBJECT * object)
 
       /* this just does the remove if the object is found */
 #if 1
-      t_current = &w_current->page_current->world_tiles[i][j];
+      t_current = &toplevel->page_current->world_tiles[i][j];
       t_current->objects = g_list_remove(t_current->objects, object);
 #endif
     }
@@ -365,7 +365,7 @@ void s_tile_remove_object_all_crude(TOPLEVEL * w_current, OBJECT * object)
  *  this is still wrong, p_current needs to be the page the object is on 
  *  doesn't work if the current page isn't where the object lives
  */
-void s_tile_remove_object_all(TOPLEVEL * w_current, PAGE *p_current,
+void s_tile_remove_object_all(TOPLEVEL * toplevel, PAGE *p_current,
                               OBJECT * object)
 {
   TILE *t_current;
@@ -406,10 +406,10 @@ void s_tile_remove_object_all(TOPLEVEL * w_current, PAGE *p_current,
  *  \par Function Description
  *
  */
-void s_tile_update_object(TOPLEVEL * w_current, OBJECT * object)
+void s_tile_update_object(TOPLEVEL * toplevel, OBJECT * object)
 {
-  s_tile_remove_object_all(w_current, w_current->page_current, object);
-  s_tile_add_object(w_current, object,
+  s_tile_remove_object_all(toplevel, toplevel->page_current, object);
+  s_tile_add_object(toplevel, object,
                     object->line->x[0], object->line->y[0],
                     object->line->x[1], object->line->y[1]);
 }
@@ -419,7 +419,7 @@ void s_tile_update_object(TOPLEVEL * w_current, OBJECT * object)
  *  \par Function Description
  *
  */
-void s_tile_print(TOPLEVEL * w_current)
+void s_tile_print(TOPLEVEL * toplevel)
 {
   TILE *t_current;
   GList *temp;
@@ -432,7 +432,7 @@ void s_tile_print(TOPLEVEL * w_current)
     for (i = 0; i < MAX_TILES_X; i++) {
       printf("\nTile %d %d\n", i, j);
 
-      t_current = &w_current->page_current->world_tiles[i][j];
+      t_current = &toplevel->page_current->world_tiles[i][j];
 
       temp = t_current->objects;
       while (temp) {

@@ -357,10 +357,10 @@ void print_struct(OBJECT *ptr)
  *
  */
 void
-s_delete_object(TOPLEVEL *w_current, OBJECT *o_current)
+s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   if (o_current != NULL) {
-    s_conn_remove(w_current, o_current);
+    s_conn_remove(toplevel, o_current);
 	
     /* second half of if is odd that we need it? hack */
     /* need to do this early so we can do the printfs */
@@ -375,8 +375,8 @@ s_delete_object(TOPLEVEL *w_current, OBJECT *o_current)
       o_attrib_delete(o_current->attached_to);
     }
 
-    if (w_current->page_current->object_lastplace == o_current) {
-      w_current->page_current->object_lastplace = NULL; 
+    if (toplevel->page_current->object_lastplace == o_current) {
+      toplevel->page_current->object_lastplace = NULL;
     }
 
     if (o_current->line) {
@@ -384,8 +384,8 @@ s_delete_object(TOPLEVEL *w_current, OBJECT *o_current)
       g_free(o_current->line);
 
       /* yes this object might be in the tile system */
-      s_tile_remove_object_all(w_current,
-                               w_current->page_current,
+      s_tile_remove_object_all(toplevel,
+                               toplevel->page_current,
                                o_current);
     }
     o_current->line = NULL;
@@ -431,7 +431,7 @@ s_delete_object(TOPLEVEL *w_current, OBJECT *o_current)
 
       if (o_current->text->prim_objs) {
 				/*printf("sdeleting text complex\n");*/
-        s_delete_list_fromstart(w_current, 
+        s_delete_list_fromstart(toplevel,
                                 o_current->text->prim_objs);
       }
       o_current->text->prim_objs = NULL;
@@ -458,7 +458,7 @@ s_delete_object(TOPLEVEL *w_current, OBJECT *o_current)
 
       if (o_current->complex->prim_objs) {
         /* printf("sdeleting complex->primitive_objects\n");*/
-        s_delete_list_fromstart(w_current, 
+        s_delete_list_fromstart(toplevel,
                                 o_current->complex->prim_objs);
       }
       o_current->complex->prim_objs = NULL;
@@ -468,7 +468,7 @@ s_delete_object(TOPLEVEL *w_current, OBJECT *o_current)
     }
 
     if (o_current->attribs) {
-      o_attrib_free_all(w_current, o_current->attribs);
+      o_attrib_free_all(toplevel, o_current->attribs);
     }
     o_current->attribs = NULL;
 
@@ -485,7 +485,7 @@ s_delete_object(TOPLEVEL *w_current, OBJECT *o_current)
  *
  */
 void
-s_delete(TOPLEVEL *w_current, OBJECT *o_current)
+s_delete(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   if (o_current != NULL) {
 
@@ -505,7 +505,7 @@ s_delete(TOPLEVEL *w_current, OBJECT *o_current)
     else
     o_current->prev = NULL;
     
-    s_delete_object(w_current, o_current);
+    s_delete_object(toplevel, o_current);
   }
 }
 
@@ -515,7 +515,7 @@ s_delete(TOPLEVEL *w_current, OBJECT *o_current)
  *
  */
 /* deletes everything include the head */
-void s_delete_list_fromstart(TOPLEVEL *w_current, OBJECT *start)
+void s_delete_list_fromstart(TOPLEVEL *toplevel, OBJECT *start)
 {
   OBJECT *temp=NULL; /* literally is a temp */
   OBJECT *current=NULL; /* ugg... you have both o_current and current? */
@@ -528,14 +528,14 @@ void s_delete_list_fromstart(TOPLEVEL *w_current, OBJECT *start)
   /*while(current != NULL && current->type != OBJ_HEAD ) {*/
   while(current != NULL) {
     o_current = current->prev;
-    s_delete(w_current, current);
+    s_delete(toplevel, current);
     current = o_current;
   }
 
   /* now delete the head node */
   /* might not need this but what the hell */
   /* no longer needed, since it's deleted above */
-  /*s_delete_head(w_current, start);*/
+  /*s_delete_head(toplevel, start);*/
 }
 
 #if 0 /* old way of doing this */
@@ -567,7 +567,7 @@ void s_delete_list_fromstart(OBJECT *start)
  */
 /* deletes everything include the GList */
 void
-s_delete_object_glist(TOPLEVEL *w_current, GList *list)
+s_delete_object_glist(TOPLEVEL *toplevel, GList *list)
 {
   OBJECT *o_current=NULL;
   GList *ptr;
@@ -577,7 +577,7 @@ s_delete_object_glist(TOPLEVEL *w_current, GList *list)
   /* do the delete backwards */
   while(ptr != NULL) {
     o_current = (OBJECT *) ptr->data;
-    s_delete_object(w_current, o_current);
+    s_delete_object(toplevel, o_current);
     ptr = ptr->prev;
   }
   g_list_free(list);
@@ -596,11 +596,11 @@ s_delete_object_glist(TOPLEVEL *w_current, GList *list)
  *  list it belonged to as it can be the last object. Therefore the tail
  *  of the list is modified.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] object
  *  \return OBJECT *
  */
-OBJECT *s_remove(TOPLEVEL *w_current, OBJECT *object)
+OBJECT *s_remove(TOPLEVEL *toplevel, OBJECT *object)
 {
   if(object->type == OBJ_HEAD)
   return NULL;

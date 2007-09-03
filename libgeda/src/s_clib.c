@@ -1293,10 +1293,10 @@ gchar *s_clib_symbol_get_data_by_name (const gchar *name)
  *  \bug Only includes components which are not embedded, but they
  *  should (probably) also appear in the list.
  *
- *  \param w_current #TOPLEVEL structure to scan.
+ *  \param toplevel #TOPLEVEL structure to scan.
  *  \return GList of symbols.
  */
-GList *s_toplevel_get_symbols (const TOPLEVEL *w_current)
+GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
 {
   GList *result = NULL;
   GList *iter = NULL;
@@ -1306,9 +1306,9 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *w_current)
   CLibSymbol *sym = NULL;
   const GList *p_iter;
 
-  g_assert (w_current != NULL);
+  g_assert (toplevel != NULL);
 
-  for ( p_iter = geda_list_get_glist( w_current->pages );
+  for ( p_iter = geda_list_get_glist( toplevel->pages );
         p_iter != NULL;
         p_iter = g_list_next( p_iter )) {
     page = (PAGE *)p_iter->data;

@@ -50,7 +50,7 @@
  *  element before the call.  The function returns the new last
  *  element, that is the added picture object.
  *
- *  \param [in]  w_current       The TOPLEVEL object.
+ *  \param [in]  toplevel       The TOPLEVEL object.
  *  \param [out] object_list     OBJECT list to create picture in.
  *  \param [in]  first_line      Character string with picture description.
  *  \param [in]  tb              Text buffer to load embedded data from.
@@ -58,7 +58,7 @@
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new picture object.
  */
-OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
+OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
 		       const char *first_line,
 		       TextBuffer *tb,
 		       unsigned int release_ver,
@@ -76,7 +76,7 @@ OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
 
   /* Initialize GDK first if it isn't a graphic app */
   /* i.e: it has no main window */
-  if ( (w_current->main_window == NULL) &&
+  if ( (toplevel->main_window == NULL) &&
        (gdk_initialized == 0)) {
     gdk_init(NULL, NULL);
     gdk_initialized = 1;
@@ -209,7 +209,7 @@ OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
     fprintf(stderr, "Loading warning picture.\n");
     s_log_message ("Loading warning picture.\n");
     
-    temp_filename = g_strconcat(w_current->bitmap_directory, 
+    temp_filename = g_strconcat(toplevel->bitmap_directory,
 			       G_DIR_SEPARATOR_S, "gschem-warning.png", NULL);
     pixbuf = gdk_pixbuf_new_from_file (temp_filename, NULL);
     if (pixbuf == NULL) {
@@ -221,7 +221,7 @@ OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
   
   /* create and add the picture to the list */
   /* The picture is described by its upper left and lower right corner */
-  object_list = (OBJECT *) o_picture_add(w_current, object_list,
+  object_list = (OBJECT *) o_picture_add(toplevel, object_list,
 					 pixbuf, filename, 
 					 (double) (height/width),
 					 type, 
@@ -330,11 +330,11 @@ char *o_picture_save(OBJECT *object)
  *  \brief
  *  \par Function Description
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] pixbuf
  *  \param [in] filename
  */
-void o_picture_set_pixbuf(TOPLEVEL *w_current,
+void o_picture_set_pixbuf(TOPLEVEL *toplevel,
 			  GdkPixbuf *pixbuf, char *filename)
 {
 
@@ -344,20 +344,20 @@ void o_picture_set_pixbuf(TOPLEVEL *w_current,
     return;
   }
 
-  if (w_current->current_pixbuf != NULL) {
-    g_object_unref(w_current->current_pixbuf);
-    w_current->current_pixbuf=NULL;
+  if (toplevel->current_pixbuf != NULL) {
+    g_object_unref(toplevel->current_pixbuf);
+    toplevel->current_pixbuf=NULL;
   }
 
-  if (w_current->pixbuf_filename != NULL) {
-    g_free(w_current->pixbuf_filename);
-    w_current->pixbuf_filename=NULL;
+  if (toplevel->pixbuf_filename != NULL) {
+    g_free(toplevel->pixbuf_filename);
+    toplevel->pixbuf_filename=NULL;
   }
 
-  w_current->current_pixbuf = pixbuf;
-  w_current->pixbuf_filename = (char *) g_strdup(filename);
+  toplevel->current_pixbuf = pixbuf;
+  toplevel->pixbuf_filename = (char *) g_strdup(filename);
   
-  w_current->pixbuf_wh_ratio = (double) gdk_pixbuf_get_width(pixbuf) / 
+  toplevel->pixbuf_wh_ratio = (double) gdk_pixbuf_get_width(pixbuf) /
                                         gdk_pixbuf_get_height(pixbuf);
 
   /* be sure to free this pixbuf somewhere */
@@ -380,7 +380,7 @@ void o_picture_set_pixbuf(TOPLEVEL *w_current,
  *  The object is added to the end of the list described by the
  *  <B>object_list</B> parameter by the #s_basic_link_object().
  *
- *  \param [in]     w_current    The TOPLEVEL object.
+ *  \param [in]     toplevel    The TOPLEVEL object.
  *  \param [in,out] object_list  OBJECT list to add line to.
  *  \param [in]     pixbuf       The GdkPixbuf picture to add.
  *  \param [in]     filename     File name to read picture from.
@@ -395,7 +395,7 @@ void o_picture_set_pixbuf(TOPLEVEL *w_current,
  *  \param [in]     embedded     ???
  *  \return A pointer to the new end of the object list.
  */
-OBJECT *o_picture_add(TOPLEVEL *w_current, OBJECT *object_list,
+OBJECT *o_picture_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		      GdkPixbuf * pixbuf, char *filename, double ratio,
 		      char type, 
 		      int x1, int y1, int x2, int y2, int angle, char mirrored,
@@ -432,24 +432,24 @@ OBJECT *o_picture_add(TOPLEVEL *w_current, OBJECT *object_list,
     fprintf(stderr, "new picture: Couldn't get enough memory for the new picture\n");
   }
   
-  /* Clean w_current variables */
+  /* Clean toplevel variables */
   /* \bug This should be done when canceling the action. */
   /* Pixbuf filename is not freed because we want to
      remember the last directory
   */
   /*
-    if (w_current->current_pixbuf != NULL) {
-      g_object_unref(w_current->current_pixbuf);
+    if (toplevel->current_pixbuf != NULL) {
+      g_object_unref(toplevel->current_pixbuf);
     }
-    w_current->current_pixbuf = NULL;
-    w_current->pixbuf_wh_ratio = 0;
+    toplevel->current_pixbuf = NULL;
+    toplevel->pixbuf_wh_ratio = 0;
   */
 
   new_node->draw_func = picture_draw_func; 
   new_node->sel_func  = select_func;  
 
   /* compute the bounding picture */
-  o_picture_recalc(w_current, new_node);
+  o_picture_recalc(toplevel, new_node);
   
   /* add the object to the list */
   object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
@@ -462,10 +462,10 @@ OBJECT *o_picture_add(TOPLEVEL *w_current, OBJECT *object_list,
  *  This function recalculates the bounding box of the <B>o_current</B>
  *  parameter picture object.
  *
- *  \param [in] w_current      The TOPLEVEL object.
+ *  \param [in] toplevel      The TOPLEVEL object.
  *  \param [in,out] o_current  Picture OBJECT to be recalculated.
  */
-void o_picture_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+void o_picture_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   int left, top, right, bottom;
 
@@ -474,7 +474,7 @@ void o_picture_recalc(TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   /* update the bounding picture - world units */
-  world_get_picture_bounds(w_current, o_current,
+  world_get_picture_bounds(toplevel, o_current,
 		     &left, &top, &right, &bottom);
   o_current->w_left   = left;
   o_current->w_top    = top;
@@ -489,14 +489,14 @@ void o_picture_recalc(TOPLEVEL *w_current, OBJECT *o_current)
  *  <B>bottom</B> parameters to the boundings of the picture object
  *  described in <B>*picture</B> in WORLD units.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  object     Picture OBJECT to read coordinates from.
  *  \param [out] left       Left picture coordinate in WORLD units.
  *  \param [out] top        Top picture coordinate in WORLD units.
  *  \param [out] right      Right picture coordinate in WORLD units.
  *  \param [out] bottom     Bottom picture coordinate in WORLD units.
  */
-void world_get_picture_bounds(TOPLEVEL *w_current, OBJECT *object,
+void world_get_picture_bounds(TOPLEVEL *toplevel, OBJECT *object,
                               int *left, int *top, int *right, int *bottom)
 {
   *left   = min(object->picture->upper_x, object->picture->lower_x);
@@ -515,7 +515,7 @@ void world_get_picture_bounds(TOPLEVEL *w_current, OBJECT *object,
  *  The coordinates of the corner is modified in the world coordinate system.
  *  Screen coordinates and boundings are then updated.
  *
- *  \param [in]     w_current  The TOPLEVEL object.
+ *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object     Picture OBJECT to modify.
  *  \param [in]     x          New x coordinate.
  *  \param [in]     y          New y coordinate.
@@ -532,7 +532,7 @@ void world_get_picture_bounds(TOPLEVEL *w_current, OBJECT *object,
  *  \par Author's note
  *  pb20011002 - rewritten : old one did not used x, y and whichone
  */
-void o_picture_modify(TOPLEVEL *w_current, OBJECT *object, 
+void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object,
 		      int x, int y, int whichone)
 {
   int tmp;
@@ -597,7 +597,7 @@ void o_picture_modify(TOPLEVEL *w_current, OBJECT *object,
   }
 	
   /* recalculate the screen coords and the boundings */
-  o_picture_recalc(w_current, object);
+  o_picture_recalc(toplevel, object);
 }
 
 /*! \brief Rotate picture OBJECT using WORLD coordinates.
@@ -607,7 +607,7 @@ void o_picture_modify(TOPLEVEL *w_current, OBJECT *object,
  *  degrees.
  *  The center of rotation is in world units.
  *
- *  \param [in]      w_current      The TOPLEVEL object.
+ *  \param [in]      toplevel      The TOPLEVEL object.
  *  \param [in]      world_centerx  Rotation center x coordinate in
  *                                  WORLD units.
  *  \param [in]      world_centery  Rotation center y coordinate in
@@ -615,7 +615,7 @@ void o_picture_modify(TOPLEVEL *w_current, OBJECT *object,
  *  \param [in]      angle          Rotation angle in degrees (See note below).
  *  \param [in,out]  object         Picture OBJECT to rotate.
  */
-void o_picture_rotate_world(TOPLEVEL *w_current, 
+void o_picture_rotate_world(TOPLEVEL *toplevel,
 			    int world_centerx, int world_centery, int angle,
 			    OBJECT *object)
 {
@@ -662,7 +662,7 @@ void o_picture_rotate_world(TOPLEVEL *w_current,
   object->picture->lower_y += world_centery;
   
   /* recalc boundings and screen coords */
-  o_picture_recalc(w_current, object);
+  o_picture_recalc(toplevel, object);
 	
 }
 
@@ -674,12 +674,12 @@ void o_picture_rotate_world(TOPLEVEL *w_current,
  *  The picture is first translated to the origin, then mirrored and
  *  finally translated back at its previous position.
  *
- *  \param [in]     w_current      The TOPLEVEL object.
+ *  \param [in]     toplevel      The TOPLEVEL object.
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         Picture OBJECT to mirror.
  */
-void o_picture_mirror_world(TOPLEVEL *w_current,
+void o_picture_mirror_world(TOPLEVEL *toplevel,
 			    int world_centerx, int world_centery,
 			    OBJECT *object)
 {
@@ -715,7 +715,7 @@ void o_picture_mirror_world(TOPLEVEL *w_current,
   object->picture->lower_y += world_centery;
 
   /* recalc boundings and screen coords */
-  o_picture_recalc(w_current, object);
+  o_picture_recalc(toplevel, object);
   
 }
 
@@ -724,12 +724,12 @@ void o_picture_mirror_world(TOPLEVEL *w_current,
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the picture
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world units.
  *
- *  \param [in]     w_current  The TOPLEVEL object.
+ *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in]     x1         x distance to move.
  *  \param [in]     y1         y distance to move.
  *  \param [in,out] object     Picture OBJECT to translate.
  */
-void o_picture_translate_world(TOPLEVEL *w_current,
+void o_picture_translate_world(TOPLEVEL *toplevel,
 			       int x1, int y1, OBJECT *object)
 {
   if (object == NULL) printf("btw NO!\n");
@@ -741,7 +741,7 @@ void o_picture_translate_world(TOPLEVEL *w_current,
   object->picture->lower_y = object->picture->lower_y + y1;     
   
   /* recalc the screen coords and the bounding picture */
-  o_picture_recalc(w_current, object);
+  o_picture_recalc(toplevel, object);
 }
 
 /*! \brief Create a copy of a picture.
@@ -750,12 +750,12 @@ void o_picture_translate_world(TOPLEVEL *w_current,
  *  <B>o_current</B> describing a picture. The new object is added at the
  *  end of the list, following the <B>list_tail</B> pointed object.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [out] list_tail  OBJECT list to copy to.
  *  \param [in]  o_current  Picture OBJECT to copy.
  *  \return A new pointer to the end of the object list.
  */
-OBJECT *o_picture_copy(TOPLEVEL *w_current, OBJECT *list_tail,
+OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
 		       OBJECT *o_current)
 {
   OBJECT *new_obj;
@@ -774,10 +774,10 @@ OBJECT *o_picture_copy(TOPLEVEL *w_current, OBJECT *list_tail,
    */
 
   /* create and link a new picture object */	
-  new_obj = o_picture_add(w_current, list_tail,
-			  w_current->current_pixbuf, 
-			  w_current->pixbuf_filename, 
-			  w_current->pixbuf_wh_ratio,
+  new_obj = o_picture_add(toplevel, list_tail,
+			  toplevel->current_pixbuf,
+			  toplevel->pixbuf_filename,
+			  toplevel->pixbuf_wh_ratio,
 			  OBJ_PICTURE,
 			  0, 0, 0, 0, 0, FALSE, FALSE);
 
@@ -813,7 +813,7 @@ OBJECT *o_picture_copy(TOPLEVEL *w_current, OBJECT *list_tail,
   new_obj->picture->angle = o_current->picture->angle;
   new_obj->picture->mirrored = o_current->picture->mirrored;
   
-  o_picture_recalc(w_current, new_obj);
+  o_picture_recalc(toplevel, new_obj);
   
   /* new_obj->attribute = 0;*/
   a_current = o_current->attribs;
@@ -917,13 +917,13 @@ guint8 *o_picture_mask_data(GdkPixbuf *image)
  *
  *  All dimensions are in mils.
  *  
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] fp         FILE pointer to Postscript document.
  *  \param [in] o_current  Picture OBJECT to write to document.
  *  \param [in] origin_x   Page x coordinate to place picture OBJECT.
  *  \param [in] origin_y   Page y coordinate to place picture OBJECT.
  */
-void o_picture_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+void o_picture_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 		     int origin_x, int origin_y)
 {
   int x1, y1, x, y;

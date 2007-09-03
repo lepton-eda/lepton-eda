@@ -45,7 +45,7 @@
  *  \par Function Description
  * 
  */
-void o_embed(TOPLEVEL *w_current, OBJECT *o_current)
+void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
 {
 
   /* check o_current is a complex and is not already embedded */
@@ -60,7 +60,7 @@ void o_embed(TOPLEVEL *w_current, OBJECT *o_current)
                    o_current->complex_basename);
     
     /* page content has been modified */
-    w_current->page_current->CHANGED = 1;
+    toplevel->page_current->CHANGED = 1;
   }
 
   /* If it's a picture and it's not embedded */
@@ -74,7 +74,7 @@ void o_embed(TOPLEVEL *w_current, OBJECT *o_current)
     
     
     /* page content has been modified */
-    w_current->page_current->CHANGED = 1;
+    toplevel->page_current->CHANGED = 1;
   }
   
 }
@@ -84,7 +84,7 @@ void o_embed(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  * 
  */
-void o_unembed(TOPLEVEL *w_current, OBJECT *o_current)
+void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   const CLibSymbol *sym;
   
@@ -109,7 +109,7 @@ void o_unembed(TOPLEVEL *w_current, OBJECT *o_current)
                      o_current->complex_basename);
       
       /* page content has been modified */
-      w_current->page_current->CHANGED = 1;
+      toplevel->page_current->CHANGED = 1;
       
     }
   }
@@ -125,7 +125,7 @@ void o_unembed(TOPLEVEL *w_current, OBJECT *o_current)
     
     
     /* page content has been modified */
-    w_current->page_current->CHANGED = 1;
+    toplevel->page_current->CHANGED = 1;
   }
   
 }

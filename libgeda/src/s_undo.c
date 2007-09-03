@@ -202,7 +202,7 @@ void s_undo_print_all( UNDO *head )
  *  \par Function Description
  *
  */
-void s_undo_destroy_all(TOPLEVEL *w_current, UNDO *head) 
+void s_undo_destroy_all(TOPLEVEL *toplevel, UNDO *head)
 {
   UNDO *u_current;
   UNDO *u_prev;
@@ -214,10 +214,10 @@ void s_undo_destroy_all(TOPLEVEL *w_current, UNDO *head)
     if (u_current->filename) g_free(u_current->filename);
 		
     if (u_current->object_head) {
-      w_current->REMOVING_SEL = 1;
-      s_delete_list_fromstart(w_current, 
+      toplevel->REMOVING_SEL = 1;
+      s_delete_list_fromstart(toplevel,
                               u_current->object_head);
-      w_current->REMOVING_SEL = 0;
+      toplevel->REMOVING_SEL = 0;
       u_current->object_head = NULL;
     }
 
@@ -231,7 +231,7 @@ void s_undo_destroy_all(TOPLEVEL *w_current, UNDO *head)
  *  \par Function Description
  *
  */
-void s_undo_remove(TOPLEVEL *w_current, UNDO *head, UNDO *u_tos)
+void s_undo_remove(TOPLEVEL *toplevel, UNDO *head, UNDO *u_tos)
 {
   UNDO *u_current;
 
@@ -259,10 +259,10 @@ void s_undo_remove(TOPLEVEL *w_current, UNDO *head, UNDO *u_tos)
       }
 
       if (u_current->object_head) {
-				/*w_current->REMOVING_SEL = 1; */
-        s_delete_list_fromstart(w_current, 
+				/*toplevel->REMOVING_SEL = 1; */
+        s_delete_list_fromstart(toplevel,
                                 u_current->object_head);
-				/*w_current->REMOVING_SEL = 0;*/
+				/*toplevel->REMOVING_SEL = 0;*/
         u_current->object_head = NULL;
       }
 
@@ -278,7 +278,7 @@ void s_undo_remove(TOPLEVEL *w_current, UNDO *head, UNDO *u_tos)
  *  \par Function Description
  *
  */
-void s_undo_remove_rest(TOPLEVEL *w_current, UNDO *head) 
+void s_undo_remove_rest(TOPLEVEL *toplevel, UNDO *head)
 {
   UNDO *u_current;
   UNDO *u_next;
@@ -294,10 +294,10 @@ void s_undo_remove_rest(TOPLEVEL *w_current, UNDO *head)
     }
 
     if (u_current->object_head) {
-      w_current->REMOVING_SEL = 1;
-      s_delete_list_fromstart(w_current, 
+      toplevel->REMOVING_SEL = 1;
+      s_delete_list_fromstart(toplevel,
                               u_current->object_head);
-      w_current->REMOVING_SEL = 0;
+      toplevel->REMOVING_SEL = 0;
       u_current->object_head = NULL;
     }
 
@@ -344,9 +344,9 @@ void s_undo_init(PAGE *p_current)
  *  \par Function Description
  *
  */
-void s_undo_free_all(TOPLEVEL *w_current, PAGE *p_current)
+void s_undo_free_all(TOPLEVEL *toplevel, PAGE *p_current)
 {
-  s_undo_destroy_all(w_current, p_current->undo_bottom);
+  s_undo_destroy_all(toplevel, p_current->undo_bottom);
   p_current->undo_bottom = NULL;
   p_current->undo_tos = NULL;
   p_current->undo_current = NULL;

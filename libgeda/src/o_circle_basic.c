@@ -68,7 +68,7 @@ int dist(int x1, int y1, int x2, int y2)
  *  The object is added to the end of the list described by the
  *  <B>object_list</B> parameter with #s_basic_link_object().
  *
- *  \param [in]     w_current    The TOPLEVEL object.
+ *  \param [in]     toplevel    The TOPLEVEL object.
  *  \param [in,out] object_list  OBJECT list to add circle to.
  *  \param [in]     type         Must be OBJ_CIRCLE.
  *  \param [in]     color        Circle line color.
@@ -77,7 +77,7 @@ int dist(int x1, int y1, int x2, int y2)
  *  \param [in]     radius       Radius of new circle.
  *  \return A pointer to the new end of the object list.
  */
-OBJECT *o_circle_add(TOPLEVEL *w_current, OBJECT *object_list,
+OBJECT *o_circle_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		     char type, int color,
 		     int x, int y, int radius)
 {
@@ -96,16 +96,16 @@ OBJECT *o_circle_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->circle->radius   = radius;
   
   /* line type and filling initialized to default */
-  o_set_line_options(w_current, new_node,
+  o_set_line_options(toplevel, new_node,
 		     END_NONE, TYPE_SOLID, 0, -1, -1);
-  o_set_fill_options(w_current, new_node,
+  o_set_fill_options(toplevel, new_node,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
   
   new_node->draw_func = circle_draw_func;  
   new_node->sel_func = select_func;  
   
   /* compute the bounding box coords */
-  o_circle_recalc(w_current, new_node);
+  o_circle_recalc(toplevel, new_node);
   
   /* add the object to the list */
   object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
@@ -120,12 +120,12 @@ OBJECT *o_circle_add(TOPLEVEL *w_current, OBJECT *object_list,
  *  the end of the list, following the <B>list_tail</B> pointed object.
  *
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [out] list_tail  OBJECT list to copy to.
  *  \param [in]  o_current  Circle OBJECT to copy.
  *  \return A new pointer to the end of the object list.
  */
-OBJECT *o_circle_copy(TOPLEVEL *w_current, OBJECT *list_tail,
+OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
 		      OBJECT *o_current)
 {
   OBJECT *new_obj;
@@ -144,7 +144,7 @@ OBJECT *o_circle_copy(TOPLEVEL *w_current, OBJECT *list_tail,
    * modified.
    */
   /* create and link a new circle object */
-  new_obj = o_circle_add(w_current, list_tail, OBJ_CIRCLE, 
+  new_obj = o_circle_add(toplevel, list_tail, OBJ_CIRCLE,
 			 color, 
 			 0, 0, 0);
   
@@ -161,15 +161,15 @@ OBJECT *o_circle_copy(TOPLEVEL *w_current, OBJECT *list_tail,
   new_obj->circle->center_y = o_current->circle->center_y;
   new_obj->circle->radius   = o_current->circle->radius;
   
-  o_set_line_options(w_current, new_obj, o_current->line_end,
+  o_set_line_options(toplevel, new_obj, o_current->line_end,
 		     o_current->line_type, o_current->line_width,
 		     o_current->line_length, o_current->line_space);
-  o_set_fill_options(w_current, new_obj,
+  o_set_fill_options(toplevel, new_obj,
 		     o_current->fill_type, o_current->fill_width,
 		     o_current->fill_pitch1, o_current->fill_angle1,
 		     o_current->fill_pitch2, o_current->fill_angle2);
   
-  o_circle_recalc(w_current, new_obj);
+  o_circle_recalc(toplevel, new_obj);
 
   /*	new_obj->attribute = 0;*/
   a_current = o_current->attribs;
@@ -202,7 +202,7 @@ OBJECT *o_circle_copy(TOPLEVEL *w_current, OBJECT *list_tail,
  *  The bounding box of the circle object is updated after the modification of its 
  *  parameters.
  *
- *  \param [in]     w_current  The TOPLEVEL object.
+ *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object     Circle OBJECT to modify.
  *  \param [in]     x          New center x coordinate, or radius value.
  *  \param [in]     y          New center y coordinate.
@@ -215,7 +215,7 @@ OBJECT *o_circle_copy(TOPLEVEL *w_current, OBJECT *list_tail,
  *    <DT>*</DT><DD>CIRCLE_RADIUS
  *  </DL>
  */
-void o_circle_modify(TOPLEVEL *w_current, OBJECT *object, 
+void o_circle_modify(TOPLEVEL *toplevel, OBJECT *object,
 		     int x, int y, int whichone)
 {
   switch(whichone) {
@@ -237,7 +237,7 @@ void o_circle_modify(TOPLEVEL *w_current, OBJECT *object,
   }
 
   /* recalculate the boundings */
-  o_circle_recalc(w_current, object);
+  o_circle_recalc(toplevel, object);
   
 }
 
@@ -254,14 +254,14 @@ void o_circle_modify(TOPLEVEL *w_current, OBJECT *object,
  *    <DT>*</DT><DD>the file format used for the releases after 20000704.
  *  </DL>
  *
- *  \param [in]  w_current       The TOPLEVEL object.
+ *  \param [in]  toplevel       The TOPLEVEL object.
  *  \param [out] object_list     OBJECT list to create circle in.
  *  \param [in]  buf             Character string with circle description.
  *  \param [in]  release_ver     libgeda release version number.
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new circle object.
  */
-OBJECT *o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
+OBJECT *o_circle_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 		      unsigned int release_ver, unsigned int fileformat_ver)
 {
   char type; 
@@ -332,12 +332,12 @@ OBJECT *o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
    * Its filling and line type are set according to the values of the field
    * on the line.
    */
-  object_list = (OBJECT *) o_circle_add(w_current, object_list,
+  object_list = (OBJECT *) o_circle_add(toplevel, object_list,
 					type, color, x1, y1, radius);
-  o_set_line_options(w_current, object_list,
+  o_set_line_options(toplevel, object_list,
 		     circle_end, circle_type, circle_width, 
 		     circle_length, circle_space);
-  o_set_fill_options(w_current, object_list,
+  o_set_fill_options(toplevel, object_list,
 		     circle_fill, fill_width, pitch1, angle1, pitch2, angle2);
   
   return(object_list);
@@ -419,12 +419,12 @@ char *o_circle_save(OBJECT *object)
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the circle
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit. 
  *
- *  \param [in]     w_current  The TOPLEVEL object.
+ *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in]     x1         x distance to move.
  *  \param [in]     y1         y distance to move.
  *  \param [in,out] object     Circle OBJECT to translate.
  */
-void o_circle_translate_world(TOPLEVEL *w_current,
+void o_circle_translate_world(TOPLEVEL *toplevel,
 			      int x1, int y1, OBJECT *object)
 {
   if (object == NULL) printf("ctw NO!\n");
@@ -434,7 +434,7 @@ void o_circle_translate_world(TOPLEVEL *w_current,
   object->circle->center_y = object->circle->center_y + y1;
   
   /* recalc the screen coords and the bounding box */
-  o_circle_recalc(w_current, object);
+  o_circle_recalc(toplevel, object);
   
 }
 
@@ -445,13 +445,13 @@ void o_circle_translate_world(TOPLEVEL *w_current,
  *  angle <B>angle</B> degrees.
  *  The center of rotation is in world unit.
  *
- *  \param [in]      w_current      The TOPLEVEL object.
+ *  \param [in]      toplevel      The TOPLEVEL object.
  *  \param [in]      world_centerx  Rotation center x coordinate in WORLD units.
  *  \param [in]      world_centery  Rotation center y coordinate in WORLD units.
  *  \param [in]      angle          Rotation angle in degrees (See note below).
  *  \param [in,out]  object         Circle OBJECT to rotate.
  */
-void o_circle_rotate_world(TOPLEVEL *w_current, 
+void o_circle_rotate_world(TOPLEVEL *toplevel,
 			   int world_centerx, int world_centery, int angle,
 			   OBJECT *object)
 {
@@ -486,7 +486,7 @@ void o_circle_rotate_world(TOPLEVEL *w_current,
   object->circle->center_x += world_centerx;
   object->circle->center_y += world_centery;
 
-  o_circle_recalc(w_current, object);
+  o_circle_recalc(toplevel, object);
   
 }
 
@@ -498,12 +498,12 @@ void o_circle_rotate_world(TOPLEVEL *w_current,
  *  The circle coordinates and its bounding are recalculated as well as the
  *  OBJECT specific (line width, filling ...).
  *
- *  \param [in]     w_current      The TOPLEVEL object.
+ *  \param [in]     toplevel      The TOPLEVEL object.
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         Circle OBJECT to mirror.
  */
-void o_circle_mirror_world(TOPLEVEL *w_current,
+void o_circle_mirror_world(TOPLEVEL *toplevel,
 			   int world_centerx, int world_centery,
 			   OBJECT *object)
 {
@@ -520,7 +520,7 @@ void o_circle_mirror_world(TOPLEVEL *w_current,
   object->circle->center_y += world_centery;
 
   /* recalc boundings and screen coords */
-  o_circle_recalc(w_current, object);
+  o_circle_recalc(toplevel, object);
   
 }
 
@@ -532,10 +532,10 @@ void o_circle_mirror_world(TOPLEVEL *w_current,
  *  The circle coordinates and its bounding are recalculated as well as the
  *  OBJECT specific (line width, filling ...).
  *
- *  \param [in] w_current      The TOPLEVEL object.
+ *  \param [in] toplevel      The TOPLEVEL object.
  *  \param [in,out] o_current  Circle OBJECT to be recalculated.
  */
-void o_circle_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+void o_circle_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   int left, right, top, bottom;
 
@@ -544,7 +544,7 @@ void o_circle_recalc(TOPLEVEL *w_current, OBJECT *o_current)
   }
   
   /* update the bounding box - world unit */
-  world_get_circle_bounds(w_current, o_current,
+  world_get_circle_bounds(toplevel, o_current,
 		    &left, &top, &right, &bottom);
   o_current->w_left   = left;
   o_current->w_top    = top;
@@ -559,14 +559,14 @@ void o_circle_recalc(TOPLEVEL *w_current, OBJECT *o_current)
  *  parameters to the boundings of the circle object described in <B>*circle</B>
  *  in world units.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  object     Circle OBJECT to read coordinates from.
  *  \param [out] left       Left circle coordinate in WORLD units.
  *  \param [out] top        Top circle coordinate in WORLD units.
  *  \param [out] right      Right circle coordinate in WORLD units.
  *  \param [out] bottom     Bottom circle coordinate in WORLD units.
  */
-void world_get_circle_bounds(TOPLEVEL *w_current, OBJECT *object, int *left,
+void world_get_circle_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
                              int *top, int *right, int *bottom)
 {
   int halfwidth;
@@ -603,13 +603,13 @@ void world_get_circle_bounds(TOPLEVEL *w_current, OBJECT *object, int *left,
  *  The outline and the inside of the circle are successively handled by
  *  two differend sets of functions.
  *  
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] fp         FILE pointer to Postscript document.
  *  \param [in] o_current  Circle OBJECT to write to document.
  *  \param [in] origin_x   Page x coordinate to place circle OBJECT.
  *  \param [in] origin_y   Page y coordinate to place circle OBJECT.
  */
-void o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+void o_circle_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 		    int origin_x, int origin_y)
 {
   int x, y, radius;
@@ -646,7 +646,7 @@ void o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
    */
   circle_width = o_current->line_width;
   if(circle_width <=2) {
-    if(w_current->line_style == THICK) {
+    if(toplevel->line_style == THICK) {
       circle_width=LINE_WIDTH;
     } else {
       circle_width=2;
@@ -690,7 +690,7 @@ void o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     outl_func = o_circle_print_solid;
   }
 
-  (*outl_func)(w_current, fp,
+  (*outl_func)(toplevel, fp,
                x - origin_x, y - origin_y,
                radius,
                color,
@@ -751,7 +751,7 @@ void o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
       fill_func = o_circle_print_filled;
     }
 		
-    (*fill_func)(w_current, fp,
+    (*fill_func)(toplevel, fp,
                  x, y, radius,
                  color,
                  fill_width,
@@ -774,7 +774,7 @@ void o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
  *
  *  All dimensions are in mils.
  *
- *  \param [in] w_current     The TOPLEVEL object.
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] fp            FILE pointer to Postscript document.
  *  \param [in] x             Center x coordinate of circle.
  *  \param [in] y             Center y coordinate of circle.
@@ -786,14 +786,14 @@ void o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
  *  \param [in] origin_x      Page x coordinate to place circle OBJECT.
  *  \param [in] origin_y      Page y coordinate to place circle OBJECT.
  */
-void o_circle_print_solid(TOPLEVEL *w_current, FILE *fp,
+void o_circle_print_solid(TOPLEVEL *toplevel, FILE *fp,
 			  int x, int y, int radius,
 			  int color,
 			  int circle_width, int length, int space,
 			  int origin_x, int origin_y)
 {
 
-  o_arc_print_solid(w_current, fp,
+  o_arc_print_solid(toplevel, fp,
                     x, y, radius,
                     0, FULL_CIRCLE / 64,
                     color,
@@ -817,7 +817,7 @@ void o_circle_print_solid(TOPLEVEL *w_current, FILE *fp,
  *
  *  All dimensions are in mils.
  *
- *  \param [in] w_current     The TOPLEVEL object.
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] fp            FILE pointer to Postscript document.
  *  \param [in] x             Center x coordinate of circle.
  *  \param [in] y             Center y coordinate of circle.
@@ -829,14 +829,14 @@ void o_circle_print_solid(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x      Page x coordinate to place circle OBJECT.
  *  \param [in] origin_y      Page y coordinate to place circle OBJECT.
  */
-void o_circle_print_dotted(TOPLEVEL *w_current, FILE *fp,
+void o_circle_print_dotted(TOPLEVEL *toplevel, FILE *fp,
 			   int x, int y, int radius,
 			   int color,
 			   int circle_width, int length, int space,
 			   int origin_x, int origin_y)
 {
 
-  o_arc_print_dotted(w_current, fp,
+  o_arc_print_dotted(toplevel, fp,
                      x, y, radius,
                      0, FULL_CIRCLE / 64,
                      color,
@@ -858,7 +858,7 @@ void o_circle_print_dotted(TOPLEVEL *w_current, FILE *fp,
  *
  *  All dimensions are in mils.
  *
- *  \param [in] w_current     The TOPLEVEL object.
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] fp            FILE pointer to Postscript document.
  *  \param [in] x             Center x coordinate of circle.
  *  \param [in] y             Center y coordinate of circle.
@@ -870,7 +870,7 @@ void o_circle_print_dotted(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x      Page x coordinate to place circle OBJECT.
  *  \param [in] origin_y      Page y coordinate to place circle OBJECT.
  */
-void o_circle_print_dashed(TOPLEVEL *w_current, FILE *fp,
+void o_circle_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 			   int x, int y,
 			   int radius,
 			   int color,
@@ -878,7 +878,7 @@ void o_circle_print_dashed(TOPLEVEL *w_current, FILE *fp,
 			   int origin_x, int origin_y)
 {
 
-  o_arc_print_dashed(w_current, fp,
+  o_arc_print_dashed(toplevel, fp,
                      x, y, radius,
                      0, FULL_CIRCLE / 64,
                      color,
@@ -900,7 +900,7 @@ void o_circle_print_dashed(TOPLEVEL *w_current, FILE *fp,
  *
  *  All dimensions are in mils.
  *
- *  \param [in] w_current     The TOPLEVEL object.
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] fp            FILE pointer to Postscript document.
  *  \param [in] x             Center x coordinate of circle.
  *  \param [in] y             Center y coordinate of circle.
@@ -912,7 +912,7 @@ void o_circle_print_dashed(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x      Page x coordinate to place circle OBJECT.
  *  \param [in] origin_y      Page y coordinate to place circle OBJECT.
  */
-void o_circle_print_center(TOPLEVEL *w_current, FILE *fp,
+void o_circle_print_center(TOPLEVEL *toplevel, FILE *fp,
 			   int x, int y,
 			   int radius,
 			   int color,
@@ -920,7 +920,7 @@ void o_circle_print_center(TOPLEVEL *w_current, FILE *fp,
 			   int origin_x, int origin_y)
 {
 	
-  o_arc_print_center(w_current, fp,
+  o_arc_print_center(toplevel, fp,
                      x, y, radius,
                      0, FULL_CIRCLE / 64,
                      color,
@@ -942,7 +942,7 @@ void o_circle_print_center(TOPLEVEL *w_current, FILE *fp,
  *
  *  All dimensions are in mils.
  *
- *  \param [in] w_current     The TOPLEVEL object.
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] fp            FILE pointer to Postscript document.
  *  \param [in] x             Center x coordinate of circle.
  *  \param [in] y             Center y coordinate of circle.
@@ -954,7 +954,7 @@ void o_circle_print_center(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x      Page x coordinate to place circle OBJECT.
  *  \param [in] origin_y      Page y coordinate to place circle OBJECT.
  */
-void o_circle_print_phantom(TOPLEVEL *w_current, FILE *fp,
+void o_circle_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 			    int x, int y,
 			    int radius,
 			    int color,
@@ -962,7 +962,7 @@ void o_circle_print_phantom(TOPLEVEL *w_current, FILE *fp,
 			    int origin_x, int origin_y)
 {
 
-  o_arc_print_phantom(w_current, fp,
+  o_arc_print_phantom(toplevel, fp,
                       x, y, radius,
                       0, FULL_CIRCLE / 64,
                       color,
@@ -984,7 +984,7 @@ void o_circle_print_phantom(TOPLEVEL *w_current, FILE *fp,
  *
  *  All dimensions are in mils (except <B>angle1</B> and <B>angle2</B> in degree). 
  *
- *  \param [in] w_current   The TOPLEVEL object.
+ *  \param [in] toplevel   The TOPLEVEL object.
  *  \param [in] fp          FILE pointer to Postscript document.
  *  \param [in] x           Center x coordinate of circle.
  *  \param [in] y           Center y coordinate of circle.
@@ -998,7 +998,7 @@ void o_circle_print_phantom(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x    Page x coordinate to place circle OBJECT.
  *  \param [in] origin_y    Page y coordinate to place circle OBJECT.
  */
-void o_circle_print_filled(TOPLEVEL *w_current, FILE *fp,
+void o_circle_print_filled(TOPLEVEL *toplevel, FILE *fp,
 			   int x, int y, int radius,
 			   int color,
 			   int fill_width,
@@ -1006,7 +1006,7 @@ void o_circle_print_filled(TOPLEVEL *w_current, FILE *fp,
 			   int angle2, int pitch2,
 			   int origin_x, int origin_y)
 {
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
 
@@ -1032,7 +1032,7 @@ void o_circle_print_filled(TOPLEVEL *w_current, FILE *fp,
  *
  *  All dimensions are in mils (except <B>angle1</B> and <B>angle2</B> in degree).
  *
- *  \param [in] w_current   The TOPLEVEL object.
+ *  \param [in] toplevel   The TOPLEVEL object.
  *  \param [in] fp          FILE pointer to Postscript document.
  *  \param [in] x           Center x coordinate of circle.
  *  \param [in] y           Center y coordinate of circle.
@@ -1046,7 +1046,7 @@ void o_circle_print_filled(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x    Page x coordinate to place circle OBJECT.
  *  \param [in] origin_y    Page y coordinate to place circle OBJECT.
  */
-void o_circle_print_mesh(TOPLEVEL *w_current, FILE *fp,
+void o_circle_print_mesh(TOPLEVEL *toplevel, FILE *fp,
 			 int x, int y, int radius,
 			 int color,
 			 int fill_width,
@@ -1054,14 +1054,14 @@ void o_circle_print_mesh(TOPLEVEL *w_current, FILE *fp,
 			 int angle2, int pitch2,
 			 int origin_x, int origin_y)
 {
-  o_circle_print_hatch(w_current, fp,
+  o_circle_print_hatch(toplevel, fp,
                        x, y, radius,
                        color,
                        fill_width,
                        angle1, pitch1,
                        -1, -1,
                        origin_x, origin_y);
-  o_circle_print_hatch(w_current, fp,
+  o_circle_print_hatch(toplevel, fp,
                        x, y, radius,
                        color,
                        fill_width,
@@ -1087,7 +1087,7 @@ void o_circle_print_mesh(TOPLEVEL *w_current, FILE *fp,
  *
  *  All dimensions are in mils (except <B>angle1</B> is in degrees).
  *
- *  \param [in] w_current   The TOPLEVEL object.
+ *  \param [in] toplevel   The TOPLEVEL object.
  *  \param [in] fp          FILE pointer to Postscript document.
  *  \param [in] x           Center x coordinate of circle.
  *  \param [in] y           Center y coordinate of circle.
@@ -1101,7 +1101,7 @@ void o_circle_print_mesh(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x    Page x coordinate to place circle OBJECT.
  *  \param [in] origin_y    Page y coordinate to place circle OBJECT.
  */
-void o_circle_print_hatch(TOPLEVEL *w_current, FILE *fp,
+void o_circle_print_hatch(TOPLEVEL *toplevel, FILE *fp,
 			  int x, int y, int radius,
 			  int color,
 			  int fill_width,
@@ -1112,7 +1112,7 @@ void o_circle_print_hatch(TOPLEVEL *w_current, FILE *fp,
   double x0, y0, x1, y1, x2, y2;
   double cos_a_, sin_a_;
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
 

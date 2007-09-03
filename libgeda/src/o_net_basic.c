@@ -42,24 +42,24 @@
  *  \brief
  *  \par Function Description
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  line
  *  \param [out] left
  *  \param [out] top
  *  \param [out] right
  *  \param [out] bottom
  */
-void world_get_net_bounds(TOPLEVEL *w_current, OBJECT *object, int *left,
+void world_get_net_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
                           int *top, int *right, int *bottom)
 {
-  world_get_line_bounds( w_current, object, left, top, right, bottom );
+  world_get_line_bounds( toplevel, object, left, top, right, bottom );
 }
 
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
  *
- *  \param [in]     w_current    The TOPLEVEL object.
+ *  \param [in]     toplevel    The TOPLEVEL object.
  *  \param [in,out] object_list
  *  \param [in]     type
  *  \param [in]     color
@@ -69,7 +69,7 @@ void world_get_net_bounds(TOPLEVEL *w_current, OBJECT *object, int *left,
  *  \param [in]     y2
  *  \return OBJECT *
  */
-OBJECT *o_net_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
+OBJECT *o_net_add(TOPLEVEL *toplevel, OBJECT *object_list, char type,
 		  int color, int x1, int y1, int x2, int y2)
 {
   int left, right, top, bottom;
@@ -88,7 +88,7 @@ OBJECT *o_net_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
   new_node->line->y[1] = y2;
   new_node->line_width = NET_WIDTH;
 
-  world_get_net_bounds(w_current, new_node, &left, &top, &right,
+  world_get_net_bounds(toplevel, new_node, &left, &top, &right,
                  &bottom);
 
   new_node->w_left = left;
@@ -102,11 +102,11 @@ OBJECT *o_net_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
   object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
 
-  if (!w_current->ADDING_SEL) {
-    s_tile_add_object(w_current, object_list,
+  if (!toplevel->ADDING_SEL) {
+    s_tile_add_object(toplevel, object_list,
 		      new_node->line->x[0], new_node->line->y[0],
 		      new_node->line->x[1], new_node->line->y[1]);
-    s_conn_update_object(w_current, object_list);
+    s_conn_update_object(toplevel, object_list);
   }
 
   return (object_list);
@@ -118,7 +118,7 @@ OBJECT *o_net_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
  *
  *
  */
-void o_net_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+void o_net_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   int left, right, top, bottom;
 
@@ -130,7 +130,7 @@ void o_net_recalc(TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  world_get_net_bounds(w_current, o_current, &left, &top, &right,
+  world_get_net_bounds(toplevel, o_current, &left, &top, &right,
                  &bottom);
 
   o_current->w_left = left;
@@ -147,7 +147,7 @@ void o_net_recalc(TOPLEVEL *w_current, OBJECT *o_current)
  *
  *
  */
-OBJECT *o_net_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
+OBJECT *o_net_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 		   unsigned int release_ver, unsigned int fileformat_ver)
 {
   char type;
@@ -171,8 +171,8 @@ OBJECT *o_net_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
   }
 
 
-  if (w_current->override_net_color != -1) {
-    color = w_current->override_net_color;
+  if (toplevel->override_net_color != -1) {
+    color = toplevel->override_net_color;
   }
 
   if (color < 0 || color > MAX_COLORS) {
@@ -183,7 +183,7 @@ OBJECT *o_net_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
   }
 
   object_list =
-  o_net_add(w_current, object_list, type, color, d_x1, d_y1, d_x2,
+  o_net_add(toplevel, object_list, type, color, d_x1, d_y1, d_x2,
             d_y2);
   return (object_list);
 }
@@ -222,7 +222,7 @@ char *o_net_save(OBJECT *object)
  *
  *
  */
-void o_net_translate_world(TOPLEVEL *w_current, int x1, int y1,
+void o_net_translate_world(TOPLEVEL *toplevel, int x1, int y1,
 			   OBJECT *object)
 {
   int left, right, top, bottom;
@@ -238,14 +238,14 @@ void o_net_translate_world(TOPLEVEL *w_current, int x1, int y1,
   object->line->y[1] = object->line->y[1] + y1;
 
   /* Update bounding box */
-  world_get_net_bounds(w_current, object, &left, &top, &right, &bottom);
+  world_get_net_bounds(toplevel, object, &left, &top, &right, &bottom);
 
   object->w_left = left;
   object->w_top = top;
   object->w_right = right;
   object->w_bottom = bottom;
 
-  s_tile_update_object(w_current, object);
+  s_tile_update_object(toplevel, object);
 }
 
 /*! \todo Finish function documentation!!!
@@ -254,7 +254,7 @@ void o_net_translate_world(TOPLEVEL *w_current, int x1, int y1,
  *
  *
  */
-OBJECT *o_net_copy(TOPLEVEL *w_current, OBJECT *list_tail,
+OBJECT *o_net_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
 		   OBJECT *o_current)
 {
   OBJECT *new_obj;
@@ -271,7 +271,7 @@ OBJECT *o_net_copy(TOPLEVEL *w_current, OBJECT *list_tail,
   /* still doesn't work... you need to pass in the new values */
   /* or don't update and update later */
   /* I think for now I'll disable the update and manually update */
-  new_obj = o_net_add(w_current, list_tail, OBJ_NET, color,
+  new_obj = o_net_add(toplevel, list_tail, OBJ_NET, color,
                       o_current->line->x[0], o_current->line->y[0],
                       o_current->line->x[1], o_current->line->y[1]);
 
@@ -302,7 +302,7 @@ OBJECT *o_net_copy(TOPLEVEL *w_current, OBJECT *list_tail,
  *
  *
  */
-void o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
+void o_net_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 		 int origin_x, int origin_y)
 {
   int offset, offset2;
@@ -320,12 +320,12 @@ void o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
   cross = offset;
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, o_current->color);
   }
 
   net_width = 2;
-  if (w_current->net_style == THICK) {
+  if (toplevel->net_style == THICK) {
     net_width = NET_WIDTH;
   }
 
@@ -344,7 +344,7 @@ void o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
  *
  *
  */
-void o_net_rotate_world(TOPLEVEL *w_current,
+void o_net_rotate_world(TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, int angle,
 			OBJECT *object)
 {
@@ -354,7 +354,7 @@ void o_net_rotate_world(TOPLEVEL *w_current,
   return;
 
   /* translate object to origin */
-  o_net_translate_world(w_current, -world_centerx, -world_centery,
+  o_net_translate_world(toplevel, -world_centerx, -world_centery,
                         object);
 
   rotate_point_90(object->line->x[0], object->line->y[0], angle,
@@ -369,7 +369,7 @@ void o_net_rotate_world(TOPLEVEL *w_current,
   object->line->x[1] = newx;
   object->line->y[1] = newy;
 
-  o_net_translate_world(w_current, world_centerx, world_centery, object);
+  o_net_translate_world(toplevel, world_centerx, world_centery, object);
 }
 
 /*! \todo Finish function documentation!!!
@@ -378,18 +378,18 @@ void o_net_rotate_world(TOPLEVEL *w_current,
  *
  *
  */
-void o_net_mirror_world(TOPLEVEL *w_current, int world_centerx,
+void o_net_mirror_world(TOPLEVEL *toplevel, int world_centerx,
 			int world_centery, OBJECT *object)
 {
   /* translate object to origin */
-  o_net_translate_world(w_current, -world_centerx, -world_centery,
+  o_net_translate_world(toplevel, -world_centerx, -world_centery,
                         object);
 
   object->line->x[0] = -object->line->x[0];
 
   object->line->x[1] = -object->line->x[1];
 
-  o_net_translate_world(w_current, world_centerx, world_centery, object);
+  o_net_translate_world(toplevel, world_centerx, world_centery, object);
 }
 
 int o_net_orientation(OBJECT *object)
@@ -583,7 +583,7 @@ int o_net_consolidate_nomidpoint(OBJECT *object, int x, int y)
  *
  *
  */
-int o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
+int o_net_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
 {
   int object_orient;
   int other_orient;
@@ -630,22 +630,22 @@ int o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 
           changed++;
           if (other_object->selected == TRUE ) {
-            o_selection_remove( w_current->page_current->selection_list, other_object );
+            o_selection_remove( toplevel->page_current->selection_list, other_object );
             reselect_new=TRUE;
           }
 
           if (reselect_new == TRUE) {
-            o_selection_remove( w_current->page_current->selection_list, object );
-            o_selection_add( w_current->page_current->selection_list, object );
+            o_selection_remove( toplevel->page_current->selection_list, object );
+            o_selection_add( toplevel->page_current->selection_list, object );
           }
 
-          s_conn_remove(w_current, other_object);
-          s_delete(w_current, other_object);
-          o_net_recalc(w_current, object);
-          s_tile_update_object(w_current, object);
-          s_conn_update_object(w_current, object);
-          w_current->page_current->object_tail = 	
-            return_tail(w_current->page_current->object_head);
+          s_conn_remove(toplevel, other_object);
+          s_delete(toplevel, other_object);
+          o_net_recalc(toplevel, object);
+          s_tile_update_object(toplevel, object);
+          s_conn_update_object(toplevel, object);
+          toplevel->page_current->object_tail =
+            return_tail(toplevel->page_current->object_head);
           return(-1);
         }
       }
@@ -664,21 +664,21 @@ int o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
  *
  *
  */
-void o_net_consolidate(TOPLEVEL *w_current)
+void o_net_consolidate(TOPLEVEL *toplevel)
 {
   OBJECT *o_current;
   int status = 0;
 
-  o_current = w_current->page_current->object_head;
+  o_current = toplevel->page_current->object_head;
 
   while (o_current != NULL) {
 
     if (o_current->type == OBJ_NET) {
-      status = o_net_consolidate_segments(w_current, o_current);
+      status = o_net_consolidate_segments(toplevel, o_current);
     }
 
     if (status == -1) {
-      o_current = w_current->page_current->object_head;
+      o_current = toplevel->page_current->object_head;
       status = 0;
     } else {
       o_current = o_current->next;
@@ -692,7 +692,7 @@ void o_net_consolidate(TOPLEVEL *w_current)
  *
  *
  */
-void o_net_modify(TOPLEVEL *w_current, OBJECT *object,
+void o_net_modify(TOPLEVEL *toplevel, OBJECT *object,
 		  int x, int y, int whichone)
 {
   int left, right, top, bottom;
@@ -700,12 +700,12 @@ void o_net_modify(TOPLEVEL *w_current, OBJECT *object,
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
 
-  world_get_net_bounds(w_current, object, &left, &top, &right, &bottom);
+  world_get_net_bounds(toplevel, object, &left, &top, &right, &bottom);
 
   object->w_left = left;
   object->w_top = top;
   object->w_right = right;
   object->w_bottom = bottom;
 
-  s_tile_update_object(w_current, object);
+  s_tile_update_object(toplevel, object);
 }

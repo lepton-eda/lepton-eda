@@ -58,7 +58,7 @@
  *
  *  Now fixed for world coordinates.
  *
- *  \param [in] w_current    The TOPLEVEL object.
+ *  \param [in] toplevel    The TOPLEVEL object.
  *  \param [in] object_list  
  *  \param [in] type
  *  \param [in] color
@@ -69,7 +69,7 @@
  *  \param [in] end_angle
  *  \return
  */
-OBJECT *o_arc_add(TOPLEVEL *w_current, OBJECT *object_list,
+OBJECT *o_arc_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		  char type, int color,
 		  int x, int y, int radius, int start_angle, int end_angle)
 {
@@ -107,12 +107,12 @@ OBJECT *o_arc_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->arc->end_angle   = end_angle;
 
   /* Default init */
-  o_set_line_options(w_current, new_node,
+  o_set_line_options(toplevel, new_node,
                      END_NONE, TYPE_SOLID, 0, -1, -1);
-  o_set_fill_options(w_current, new_node,
+  o_set_fill_options(toplevel, new_node,
                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
 	
-  o_arc_recalc(w_current, new_node);
+  o_arc_recalc(toplevel, new_node);
 
   /* new_node->graphical = arc; eventually */
 	
@@ -141,12 +141,12 @@ OBJECT *o_arc_add(TOPLEVEL *w_current, OBJECT *object_list,
  *  The new object is added to the end of the object list given by <B>list_tail</B>.
  *  A pointer on it is returned for update purpose in the calling function.
  *
- *  \param [in] w_current  The TOPLEVEL object
+ *  \param [in] toplevel  The TOPLEVEL object
  *  \param [in] list_tail
  *  \param [in] o_current
  *  \return
  */
-OBJECT *o_arc_copy(TOPLEVEL *w_current, OBJECT *list_tail,
+OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
 		   OBJECT *o_current)
 {
   OBJECT *new_obj;
@@ -159,16 +159,16 @@ OBJECT *o_arc_copy(TOPLEVEL *w_current, OBJECT *list_tail,
     color = o_current->saved_color;
   }
 
-  new_obj = o_arc_add(w_current, list_tail, OBJ_ARC, color,
+  new_obj = o_arc_add(toplevel, list_tail, OBJ_ARC, color,
                       o_current->arc->x, o_current->arc->y, 
                       o_current->arc->width / 2,
                       o_current->arc->start_angle,
                       o_current->arc->end_angle);
-  o_set_line_options(w_current, new_obj,
+  o_set_line_options(toplevel, new_obj,
                      o_current->line_end, o_current->line_type,
                      o_current->line_width,
                      o_current->line_length, o_current->line_space);
-  o_set_fill_options(w_current, new_obj,
+  o_set_fill_options(toplevel, new_obj,
                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
 	
   a_current = o_current->attribs;
@@ -205,13 +205,13 @@ OBJECT *o_arc_copy(TOPLEVEL *w_current, OBJECT *list_tail,
  *  If <B>whichone</B> is equal to #ARC_END_ANGLE, the <B>x</B> parameter is the ending angle of the arc.
  *  <B>x</B> is in degrees. <B>y</B> is ignored.
  *
- *  \param [in]     w_current  The TOPLEVEL object.
+ *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object     
  *  \param [in]     x
  *  \param [in]     y
  *  \param [in]     whichone
  */
-void o_arc_modify(TOPLEVEL *w_current, OBJECT *object, 
+void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
 		  int x, int y, int whichone)
 {
 
@@ -243,7 +243,7 @@ void o_arc_modify(TOPLEVEL *w_current, OBJECT *object,
 	}
 
 	/* update the screen coords and the bounding box */
-	o_arc_recalc(w_current, object);
+	o_arc_recalc(toplevel, object);
 	
 }
 
@@ -267,14 +267,14 @@ void o_arc_modify(TOPLEVEL *w_current, OBJECT *object,
  * 
  *  A negative or null radius is not allowed.
  *
- *  \param [in] w_current    The TOPLEVEL object.
+ *  \param [in] toplevel    The TOPLEVEL object.
  *  \param [in] object_list  
  *  \param [in] buf
  *  \param [in] release_ver
  *  \param [in] fileformat_ver
  *  \return
  */
-OBJECT *o_arc_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
+OBJECT *o_arc_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 		   unsigned int release_ver, unsigned int fileformat_ver)
 {
   char type; 
@@ -325,12 +325,12 @@ OBJECT *o_arc_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
   }
 
   /* Allocation and initialization */
-  object_list = o_arc_add(w_current, object_list, OBJ_ARC, color,
+  object_list = o_arc_add(toplevel, object_list, OBJ_ARC, color,
                           x1, y1, radius, start_angle, end_angle);
-  o_set_line_options(w_current, object_list,
+  o_set_line_options(toplevel, object_list,
                      arc_end, arc_type, arc_width, arc_length,
                      arc_space);
-  o_set_fill_options(w_current, object_list,
+  o_set_fill_options(toplevel, object_list,
                      FILLING_HOLLOW, -1, -1, -1,
                      -1, -1);
 
@@ -396,12 +396,12 @@ char *o_arc_save(OBJECT *object)
  *  This function applies a translation of (<B>dx</B>,<B>dy</B>)
  *  to the arc described in <B>*object</B>. <B>dx</B> and <B>dy</B> are in world unit.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] dx
  *  \param [in] dy
  *  \param [in] object
  */
-void o_arc_translate_world(TOPLEVEL *w_current, int dx, int dy,
+void o_arc_translate_world(TOPLEVEL *toplevel, int dx, int dy,
 			   OBJECT *object)
 {
   if (object == NULL) {
@@ -414,7 +414,7 @@ void o_arc_translate_world(TOPLEVEL *w_current, int dx, int dy,
 
 
   /* Recalculate screen coords from new world coords */
-  o_arc_recalc(w_current, object);
+  o_arc_recalc(toplevel, object);
 }
 
 /*! \brief
@@ -431,13 +431,13 @@ void o_arc_translate_world(TOPLEVEL *w_current, int dx, int dy,
  *
  *  <B>world_centerx</B> and <B>world_centery</B> are in world units, <B>angle</B> is in degrees.
  *
- *  \param [in] w_current      The TOPLEVEL object.
+ *  \param [in] toplevel      The TOPLEVEL object.
  *  \param [in] world_centerx
  *  \param [in] world_centery
  *  \param [in] angle
  *  \param [in] object
  */
-void o_arc_rotate_world(TOPLEVEL *w_current,
+void o_arc_rotate_world(TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, int angle,
 			OBJECT *object)
 {
@@ -468,7 +468,7 @@ void o_arc_rotate_world(TOPLEVEL *w_current,
   object->arc->y += world_centery;
 
   /* update the screen coords and the bounding box */
-  o_arc_recalc(w_current, object);
+  o_arc_recalc(toplevel, object);
   
 }                                   
 
@@ -483,12 +483,12 @@ void o_arc_rotate_world(TOPLEVEL *w_current,
  *
  *  The arc is finally back translated to its previous location on the page.
  *
- *  \param [in] w_current      The TOPLEVEL object.
+ *  \param [in] toplevel      The TOPLEVEL object.
  *  \param [in] world_centerx
  *  \param [in] world_centery
  *  \param [in] object
  */
-void o_arc_mirror_world(TOPLEVEL *w_current,
+void o_arc_mirror_world(TOPLEVEL *toplevel,
 			int world_centerx, int world_centery,
 			OBJECT *object)
 {
@@ -511,7 +511,7 @@ void o_arc_mirror_world(TOPLEVEL *w_current,
   object->arc->y += world_centery;
 
   /* update the screen coords and bounding box */
-  o_arc_recalc(w_current, object);
+  o_arc_recalc(toplevel, object);
 	
 }
 
@@ -519,16 +519,16 @@ void o_arc_mirror_world(TOPLEVEL *w_current,
  *  \par Function Description
  *  This function recalculates internal parameters in screen units
  *  of an object containing an arc. The object is given as parameters <B>o_current</B>.
- *  The calculation is done according to the zoom factor detailed in the <B>w_current</B>
+ *  The calculation is done according to the zoom factor detailed in the <B>toplevel</B>
  *  pointed structure.
  *  It also recalculates the <B>OBJECT</B> specific fields and the bounding box of the arc.
  *  
  *  The bounding box - in world units - is recalculated with the <B>world_get_arc_bounds()</B> function.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] o_current
  */
-void o_arc_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+void o_arc_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   int left, right, top, bottom;
 	
@@ -537,7 +537,7 @@ void o_arc_recalc(TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   /* recalculates the bounding box */
-  world_get_arc_bounds(w_current, o_current, &left, &top, &right, &bottom);
+  world_get_arc_bounds(toplevel, o_current, &left, &top, &right, &bottom);
   o_current->w_left   = left;
   o_current->w_top    = top;
   o_current->w_right  = right;
@@ -557,14 +557,14 @@ void o_arc_recalc(TOPLEVEL *w_current, OBJECT *o_current)
  *  They forms a first rectangle but (depending on the start angle and the
  *  sweep of the arc) not the right.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  object
  *  \param [out] left
  *  \param [out] top
  *  \param [out] right
  *  \param [out] bottom
  */
-void world_get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left,
+void world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
 			  int *top, int *right, int *bottom)
 {
   int x1, y1, x2, y2, x3, y3;
@@ -626,13 +626,13 @@ void world_get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left,
  *  Parameters of the arc are extracted from object pointed by <B>o_current</B>
  *  and formatted to suit future calls to specialized arc printing functions.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] fp         The postscript document to print to.
  *  \param [in] o_current
  *  \param [in] origin_x
  *  \param [in] origin_y
  */
-void o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+void o_arc_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 		 int origin_x, int origin_y)
 {
   int x, y, radius, start_angle, end_angle;
@@ -674,7 +674,7 @@ void o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 #endif
   arc_width = o_current->line_width;	/* Added instead of above */
   if(arc_width <=2) {
-    if(w_current->line_style == THICK) {
+    if(toplevel->line_style == THICK) {
       arc_width=LINE_WIDTH;
     } else {
       arc_width=2;
@@ -719,7 +719,7 @@ void o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     outl_func = o_arc_print_solid;
   }
 
-  (*outl_func)(w_current, fp,
+  (*outl_func)(toplevel, fp,
                x - origin_x, y - origin_x, radius,
                start_angle, end_angle,
                color, arc_width, length, space, origin_x, origin_y);
@@ -738,7 +738,7 @@ void o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
  *
  *  All dimensions are in mils, except <B>angle1</B> and <B>angle2</B> in degrees.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] fp         FILE pointer to postscript document.
  *  \param [in] x
  *  \param [in] y
@@ -752,14 +752,14 @@ void o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
  *  \param [in] origin_x
  *  \param [in] origin_y
  */
-void o_arc_print_solid(TOPLEVEL *w_current, FILE *fp,
+void o_arc_print_solid(TOPLEVEL *toplevel, FILE *fp,
 		       int x, int y, int radius,
 		       int angle1, int angle2,
 		       int color,
 		       int arc_width, int length, int space,
 		       int origin_x, int origin_y)
 {
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
 
@@ -791,7 +791,7 @@ void o_arc_print_solid(TOPLEVEL *w_current, FILE *fp,
  *
  *  The function sets the color the line will be printed with.
  * 
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] fp         FILE pointer to postscript document.
  *  \param [in] x
  *  \param [in] y
@@ -805,7 +805,7 @@ void o_arc_print_solid(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x
  *  \param [in] origin_y
  */
-void o_arc_print_dotted(TOPLEVEL *w_current, FILE *fp,
+void o_arc_print_dotted(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y, int radius,
 			int angle1, int angle2,
 			int color,				   
@@ -815,7 +815,7 @@ void o_arc_print_dotted(TOPLEVEL *w_current, FILE *fp,
   int da, d;
 
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
 
@@ -842,7 +842,7 @@ void o_arc_print_dotted(TOPLEVEL *w_current, FILE *fp,
 	/* If da or db too small for arc to be displayed as dotted,
            draw a solid arc */
   if (da <= 0) {
-    o_arc_print_solid(w_current, fp,
+    o_arc_print_solid(toplevel, fp,
                       x, y, radius,
                       angle1, angle2,
                       color,
@@ -898,7 +898,7 @@ void o_arc_print_dotted(TOPLEVEL *w_current, FILE *fp,
  *
  *  The function sets the color the line will be printed with.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] fp         FILE pointer to postscript document.
  *  \param [in] x
  *  \param [in] y
@@ -912,7 +912,7 @@ void o_arc_print_dotted(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x
  *  \param [in] origin_y
  */
-void o_arc_print_dashed(TOPLEVEL *w_current, FILE *fp,
+void o_arc_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y, int radius,
 			int angle1, int angle2,
 			int color,				   
@@ -921,7 +921,7 @@ void o_arc_print_dashed(TOPLEVEL *w_current, FILE *fp,
 {
   int da, db, a1, a2, d;
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
   
@@ -951,7 +951,7 @@ void o_arc_print_dashed(TOPLEVEL *w_current, FILE *fp,
   /* If da or db too small for arc to be displayed as dotted,
            draw a solid arc */
   if ((da <= 0) || (db <= 0)) {
-    o_arc_print_solid(w_current, fp,
+    o_arc_print_solid(toplevel, fp,
                       x, y, radius, 
                       angle1, angle2,
                       color,
@@ -1007,7 +1007,7 @@ void o_arc_print_dashed(TOPLEVEL *w_current, FILE *fp,
  *
  *  The function sets the color in which the line will be printed with.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] fp         FILE pointer to postscript document.
  *  \param [in] x
  *  \param [in] y
@@ -1021,7 +1021,7 @@ void o_arc_print_dashed(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x
  *  \param [in] origin_y
  */
-void o_arc_print_center(TOPLEVEL *w_current, FILE *fp,
+void o_arc_print_center(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y, int radius, 
 			int angle1, int angle2,
 			int color,				   
@@ -1030,7 +1030,7 @@ void o_arc_print_center(TOPLEVEL *w_current, FILE *fp,
 {
   int da, db, a1, a2, d;
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
 
@@ -1060,7 +1060,7 @@ void o_arc_print_center(TOPLEVEL *w_current, FILE *fp,
 
   /* If da or db too small to be displayed, draw an arc */
   if ((da <= 0) || (db <= 0)) {
-    o_arc_print_solid(w_current, fp,
+    o_arc_print_solid(toplevel, fp,
 		      x, y, radius,
 		      angle1, angle2,
 		      color,
@@ -1139,7 +1139,7 @@ void o_arc_print_center(TOPLEVEL *w_current, FILE *fp,
  *
  * The function sets the color in which the line will be printed with.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] fp         FILE pointer to postscript document.
  *  \param [in] x
  *  \param [in] y
@@ -1153,7 +1153,7 @@ void o_arc_print_center(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x
  *  \param [in] origin_y
  */
-void o_arc_print_phantom(TOPLEVEL *w_current, FILE *fp,
+void o_arc_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 			 int x, int y, int radius,
 			 int angle1, int angle2,
 			 int color,
@@ -1162,7 +1162,7 @@ void o_arc_print_phantom(TOPLEVEL *w_current, FILE *fp,
 {
   int da, db, a1, a2, d;
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
 
@@ -1192,7 +1192,7 @@ void o_arc_print_phantom(TOPLEVEL *w_current, FILE *fp,
   /* If da or db too small for arc to be displayed as dotted,
      draw a solid arc */
   if ((da <= 0) || (db <= 0)) {
-    o_arc_print_solid(w_current, fp,
+    o_arc_print_solid(toplevel, fp,
 		      x, y, radius,
 		      angle1, angle2,
 		      color,						  

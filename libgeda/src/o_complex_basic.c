@@ -46,7 +46,7 @@
 
 /*! \brief Return the bounds of the given object.
  *  \par Given an object, calculate the bounds coordinates.
- *  \param [in] w_current The toplevel structure.
+ *  \param [in] toplevel The toplevel structure.
  *  \param [in] o_current The object to look the bounds for.
  *  \param [out] rleft   pointer to the left coordinate of the object.
  *  \param [out] rtop    pointer to the top coordinate of the object.
@@ -56,7 +56,7 @@
  *  \retval 0 No bound was found
  *  \retval 1 Bound was found
  */
-int world_get_single_object_bounds(TOPLEVEL *w_current, OBJECT *o_current,
+int world_get_single_object_bounds(TOPLEVEL *toplevel, OBJECT *o_current,
                                    int *rleft, int *rtop, int *rright, int *rbottom)
 {
   if (o_current != NULL) {
@@ -81,7 +81,7 @@ int world_get_single_object_bounds(TOPLEVEL *w_current, OBJECT *o_current,
         /* only do bounding boxes for visible or doing show_hidden_text*/
         /* you might lose some attrs though */
         if ( o_current->visibility == VISIBLE ||
-             w_current->show_hidden_text ) {
+             toplevel->show_hidden_text ) {
           *rleft = o_current->w_left;
           *rtop = o_current->w_top;
           *rright = o_current->w_right;
@@ -99,7 +99,7 @@ int world_get_single_object_bounds(TOPLEVEL *w_current, OBJECT *o_current,
 
 /*! \brief Return the bounds of the given list of objects.
  *  \par Given a list of objects, calcule the bounds coordinates.
- *  \param [in] w_current The toplevel structure.
+ *  \param [in] toplevel The toplevel structure.
  *  \param [in] complex   The list of objects to look the bounds for.
  *  \param [out] left   pointer to the left coordinate of the object.
  *  \param [out] top    pointer to the top coordinate of the object.
@@ -110,7 +110,7 @@ int world_get_single_object_bounds(TOPLEVEL *w_current, OBJECT *o_current,
  *  \retval 1 Bound was found
  */
 int
-world_get_object_list_bounds(TOPLEVEL *w_current, OBJECT *complex, 
+world_get_object_list_bounds(TOPLEVEL *toplevel, OBJECT *complex,
 		       int *left, int *top, int *right, int *bottom)
 {
   OBJECT *o_current=NULL;
@@ -121,7 +121,7 @@ world_get_object_list_bounds(TOPLEVEL *w_current, OBJECT *complex,
 
   // Find the first object with bounds, and set the bounds variables, then expand as necessary
   while ( o_current != NULL ) {
-    if ( world_get_single_object_bounds( w_current, o_current, &rleft, &rtop, &rright, &rbottom) ) {
+    if ( world_get_single_object_bounds( toplevel, o_current, &rleft, &rtop, &rright, &rbottom) ) {
       if ( found ) {
         *left = min( *left, rleft );
         *top = min( *top, rtop );
@@ -142,7 +142,7 @@ world_get_object_list_bounds(TOPLEVEL *w_current, OBJECT *complex,
 
 /*! \brief Return the bounds of the given GList of objects.
  *  \par Given a list of objects, calcule the bounds coordinates.
- *  \param [in] w_current The toplevel structure.
+ *  \param [in] toplevel The toplevel structure.
  *  \param [in] complex   The list of objects to look the bounds for.
  *  \param [out] left   pointer to the left coordinate of the object.
  *  \param [out] top    pointer to the top coordinate of the object.
@@ -152,7 +152,7 @@ world_get_object_list_bounds(TOPLEVEL *w_current, OBJECT *complex,
  *  \retval 0 No bounds were found
  *  \retval 1 Bound was found
  */
-int world_get_object_glist_bounds(TOPLEVEL *w_current, GList *head, 
+int world_get_object_glist_bounds(TOPLEVEL *toplevel, GList *head,
                                   int *left, int *top, int *right, int *bottom)
 {
   GList *s_current=NULL;
@@ -166,7 +166,7 @@ int world_get_object_glist_bounds(TOPLEVEL *w_current, GList *head,
   while ( s_current != NULL ) {
     o_current = (OBJECT *) s_current->data;
     g_assert (o_current != NULL);
-    if ( world_get_single_object_bounds( w_current, o_current, &rleft, &rtop, &rright, &rbottom) ) {
+    if ( world_get_single_object_bounds( toplevel, o_current, &rleft, &rtop, &rright, &rbottom) ) {
       if ( found ) {
         *left = min( *left, rleft );
         *top = min( *top, rtop );
@@ -190,7 +190,7 @@ int world_get_object_glist_bounds(TOPLEVEL *w_current, GList *head,
  *  This function returns the bounding box of the complex object
  *  <B>object</B>.
  *
- *  \param [in]  w_current The toplevel environment.
+ *  \param [in]  toplevel The toplevel environment.
  *  \param [in]  complex   The complex object.
  *  \param [out] left      The leftmost edge of the bounding box (in
  *                         world units).
@@ -201,7 +201,7 @@ int world_get_object_glist_bounds(TOPLEVEL *w_current, GList *head,
  *  \param [out] bottom    The bottom edge of the bounding box (in
  *                         screen units).
  */
-void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, 
+void world_get_complex_bounds(TOPLEVEL *toplevel, OBJECT *complex,
 			      int *left, int *top, int *right, int *bottom)
 {
   g_return_if_fail (complex != NULL &&
@@ -209,7 +209,7 @@ void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
                      complex->type == OBJ_PLACEHOLDER) &&
                     complex->complex != NULL);
 
-  world_get_object_list_bounds (w_current, complex->complex->prim_objs->next,
+  world_get_object_list_bounds (toplevel, complex->complex->prim_objs->next,
                                 left, top, right, bottom);
 
 }
@@ -237,7 +237,7 @@ OBJECT *add_head(void)
  */
 /* The promote_invisible flag is either TRUE or FALSE */
 /* It controls if invisible text is promoted (TRUE) or not (FALSE) */
-int o_complex_is_eligible_attribute (TOPLEVEL *w_current, OBJECT *object,
+int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object,
 				     int promote_invisible) 
 {
   char *name = NULL;
@@ -267,13 +267,13 @@ int o_complex_is_eligible_attribute (TOPLEVEL *w_current, OBJECT *object,
   }
 
   /* check list against attributes which can be promoted */
-  if (w_current->always_promote_attributes &&
-      (strlen(w_current->always_promote_attributes) != 0))
+  if (toplevel->always_promote_attributes &&
+      (strlen(toplevel->always_promote_attributes) != 0))
   {
     if (o_attrib_get_name_value(object->text->string, &name, &value))
     {
       padded_name = g_strdup_printf(" %s ", name);
-      if (strstr(w_current->always_promote_attributes, padded_name))
+      if (strstr(toplevel->always_promote_attributes, padded_name))
       {
 	/* Yes the name of the attribute was in the always promote */
         /* attributes list */
@@ -322,7 +322,7 @@ int o_complex_is_embedded(OBJECT *o_current)
  *  \par Function Description
  *
  */
-OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, 
+OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		      GList **object_glist, char type,
 		      int color, int x, int y, int angle,
 		      int mirror, const CLibSymbol *clib,
@@ -389,9 +389,9 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
   /* for the objects, UGG! there foreattribs are being copied */
   /* you need to override them if there are attached ones */
   /* on the main list */
-  temp_tail = w_current->page_current->object_tail;
-  temp_parent = w_current->page_current->object_parent;	
-  w_current->page_current->object_parent = prim_objs;
+  temp_tail = toplevel->page_current->object_tail;
+  temp_parent = toplevel->page_current->object_parent;
+  toplevel->page_current->object_parent = prim_objs;
   /* reason this works is because it has a head, see add_head above */
 
   /* get the symbol data */
@@ -399,8 +399,8 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
     buffer = s_clib_symbol_get_data (clib);
   }
 
-  save_adding_sel = w_current->ADDING_SEL;
-  w_current->ADDING_SEL = 1;	/* name is hack, don't want to */
+  save_adding_sel = toplevel->ADDING_SEL;
+  toplevel->ADDING_SEL = 1;	/* name is hack, don't want to */
 
   if (clib == NULL || buffer == NULL) {
 
@@ -421,10 +421,10 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
     new_node->type = OBJ_PLACEHOLDER;
 
     /* Mark the origin of the missing component */
-    prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
+    prim_objs = o_line_add(toplevel, prim_objs, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
                            x - 50, y, x + 50, y);
-    prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
+    prim_objs = o_line_add(toplevel, prim_objs, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
                            x, y + 50, x, y - 50); 
 
@@ -432,7 +432,7 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
     not_found_text = 
       g_strdup_printf ("Component not found:\n %s", 
 		       new_node->complex_basename);
-    prim_objs = o_text_add(w_current, prim_objs,
+    prim_objs = o_text_add(toplevel, prim_objs,
                            OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
                            x + NOT_FOUND_TEXT_X, 
                            y + NOT_FOUND_TEXT_Y, LOWER_LEFT, 0, 
@@ -441,37 +441,37 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
     g_free(not_found_text);
 
     /* figure out where to put the hazard triangle */
-    world_get_text_bounds(w_current, prim_objs,
+    world_get_text_bounds(toplevel, prim_objs,
                           &left, &top, &right, &bottom);
     x_offset = (right - left) / 4;  
     y_offset = bottom - top + 100;  /* 100 is just an additional offset */
 
     /* add hazard triangle */
-    prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
+    prim_objs = o_line_add(toplevel, prim_objs, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
                            x + NOT_FOUND_TEXT_X + x_offset, 
                            y + NOT_FOUND_TEXT_Y + y_offset, 
                            x + NOT_FOUND_TEXT_X + x_offset + 600, 
                            y + NOT_FOUND_TEXT_Y + y_offset); 
-    o_set_line_options(w_current, prim_objs, END_ROUND, TYPE_SOLID, 
+    o_set_line_options(toplevel, prim_objs, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
-    prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
+    prim_objs = o_line_add(toplevel, prim_objs, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
                            x + NOT_FOUND_TEXT_X + x_offset, 
                            y + NOT_FOUND_TEXT_Y + y_offset, 
                            x + NOT_FOUND_TEXT_X + x_offset + 300, 
                            y + NOT_FOUND_TEXT_Y + y_offset + 500); 
-    o_set_line_options(w_current, prim_objs, END_ROUND, TYPE_SOLID, 
+    o_set_line_options(toplevel, prim_objs, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
-    prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
+    prim_objs = o_line_add(toplevel, prim_objs, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
                            x + NOT_FOUND_TEXT_X + x_offset + 300, 
                            y + NOT_FOUND_TEXT_Y + y_offset + 500, 
                            x + NOT_FOUND_TEXT_X + x_offset + 600, 
                            y + NOT_FOUND_TEXT_Y + y_offset); 
-    o_set_line_options(w_current, prim_objs, END_ROUND, TYPE_SOLID, 
+    o_set_line_options(toplevel, prim_objs, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
-    prim_objs = o_text_add(w_current, prim_objs,
+    prim_objs = o_text_add(toplevel, prim_objs,
                            OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
                            x + NOT_FOUND_TEXT_X + x_offset + 270, 
                            y + NOT_FOUND_TEXT_Y + y_offset + 90, 
@@ -485,14 +485,14 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
     loaded_normally = TRUE;
     
     /* add connections till translated */
-    o_read_buffer(w_current, prim_objs, buffer, -1, new_node->complex_basename);
+    o_read_buffer(toplevel, prim_objs, buffer, -1, new_node->complex_basename);
 
     g_free (buffer);
     
   }
-  w_current->ADDING_SEL = save_adding_sel;
+  toplevel->ADDING_SEL = save_adding_sel;
 
-  if (w_current->attribute_promotion) { /* controlled through rc file */
+  if (toplevel->attribute_promotion) { /* controlled through rc file */
 
     OBJECT *tmp,*next;
 
@@ -501,8 +501,8 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
       next=tmp->next;
 
       /* valid floating attrib? */
-      if (o_complex_is_eligible_attribute(w_current, tmp,
-                                          w_current->promote_invisible))
+      if (o_complex_is_eligible_attribute(toplevel, tmp,
+                                          toplevel->promote_invisible))
       {
         /* Is attribute promotion called for? (passed in parameter) */
         if (attribute_promotion)
@@ -517,7 +517,7 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
           tmp->next=tmp->prev=NULL;
 	  if (use_object_list) {
 	    object_list = (OBJECT *) s_basic_link_object(tmp, object_list);
-	    o_attrib_attach (w_current, object_list, tmp, new_node);
+	    o_attrib_attach (toplevel, object_list, tmp, new_node);
 	  }
 	  else {
 	    if (object_glist) {
@@ -538,24 +538,24 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
 		glist_ptr = glist_ptr->next;
 	      }
 	      
-	      o_attrib_attach (w_current, ((OBJECT *) g_list_last(*object_glist)->data), 
+	      o_attrib_attach (toplevel, ((OBJECT *) g_list_last(*object_glist)->data),
 			       tmp, new_node);
 	    } else {
-	      o_attrib_attach (w_current, NULL, tmp, new_node);
+	      o_attrib_attach (toplevel, NULL, tmp, new_node);
 	    }
 	  }
-          o_text_translate_world(w_current, x, y, tmp);
+          o_text_translate_world(toplevel, x, y, tmp);
 
         } else { /* not promoting now, but deal with floating attribs */
 
-          if (w_current->keep_invisible == TRUE) {  
+          if (toplevel->keep_invisible == TRUE) {
             /* if we are not promoting invisible attribs, keep them */
             /* around */
             tmp->visibility = INVISIBLE;
           } else {
             /* else do the default behavior of deleting the original */
             /* object */
-            s_delete(w_current, tmp);
+            s_delete(toplevel, tmp);
           }
 
         }
@@ -563,8 +563,8 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
     }
   }
 
-  w_current->page_current->object_tail = temp_tail;
-  w_current->page_current->object_parent = temp_parent;
+  toplevel->page_current->object_tail = temp_tail;
+  toplevel->page_current->object_parent = temp_parent;
 
   if (use_object_list) {
     object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
@@ -601,21 +601,21 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
    */
   if (loaded_normally == TRUE) {
     if (mirror) {
-      o_complex_mirror_lowlevel(w_current, x, y, new_node);
+      o_complex_mirror_lowlevel(toplevel, x, y, new_node);
     } 
     
-    o_complex_rotate_lowlevel(w_current, x, y, angle, angle, new_node); 
-    o_complex_world_translate(w_current, x, y, prim_objs);
+    o_complex_rotate_lowlevel(toplevel, x, y, angle, angle, new_node);
+    o_complex_world_translate(toplevel, x, y, prim_objs);
 
-    if (!w_current->ADDING_SEL) {
-     s_conn_update_complex(w_current, prim_objs);
+    if (!toplevel->ADDING_SEL) {
+     s_conn_update_complex(toplevel, prim_objs);
     }
   }
 
   if (use_object_list)
-    o_complex_recalc(w_current, object_list);
+    o_complex_recalc(toplevel, object_list);
   else
-    o_complex_recalc(w_current, new_node);
+    o_complex_recalc(toplevel, new_node);
 
   return(object_list);
 }
@@ -624,7 +624,7 @@ OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list,
  *  \par Function Description
  *
  */
-OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list,
+OBJECT *o_complex_add_embedded(TOPLEVEL *toplevel, OBJECT *object_list,
 			       char type, int color, int x, int y, int angle,
 			       const gchar *basename, int selectable)
 {
@@ -674,18 +674,18 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list,
  *  \par Function Description
  *
  */
-void o_complex_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   int left, right, top, bottom;
 
   /* realc routine Add this somewhere */
   /* libhack */
-  /* o_recalc(w_current, o_current->complex);*/
+  /* o_recalc(toplevel, o_current->complex);*/
 
   if ((!o_current) || (o_current->type != OBJ_COMPLEX && o_current->type != OBJ_PLACEHOLDER))
     return;
 
-  world_get_complex_bounds(w_current, o_current, &left, &top, &right, &bottom);
+  world_get_complex_bounds(toplevel, o_current, &left, &top, &right, &bottom);
   o_current->w_left = left;
   o_current->w_top = top;
   o_current->w_right = right;
@@ -698,7 +698,7 @@ void o_complex_recalc(TOPLEVEL *w_current, OBJECT *o_current)
  *
  *  \todo Don't use fixed-length string for symbol basename
  */
-OBJECT *o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
+OBJECT *o_complex_read(TOPLEVEL *toplevel, OBJECT *object_list,
 		       char buf[], unsigned int release_ver,
 		       unsigned int fileformat_ver)
 {
@@ -742,7 +742,7 @@ OBJECT *o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
   }
   if (strncmp(basename, "EMBEDDED", 8) == 0) {
     
-  object_list = o_complex_add_embedded(w_current, 
+  object_list = o_complex_add_embedded(toplevel,
                                        object_list, type, 
                                        WHITE, x1, y1, angle,
                                        basename + 8, 
@@ -751,7 +751,7 @@ OBJECT *o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
     
     const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
 
-    object_list = o_complex_add(w_current, object_list, NULL, type, 
+    object_list = o_complex_add(toplevel, object_list, NULL, type,
                                 WHITE, 
                                 x1, y1, 
                                 angle, mirror, clib,
@@ -809,22 +809,22 @@ char *o_complex_save(OBJECT *object)
  *  \par Function Description
  *
  */
-void o_complex_set_filename(TOPLEVEL *w_current, const char *basename) 
+void o_complex_set_filename(TOPLEVEL *toplevel, const char *basename)
 {
-  o_complex_free_filename (w_current);
+  o_complex_free_filename (toplevel);
 
-  w_current->internal_symbol_name = g_strdup (basename);
+  toplevel->internal_symbol_name = g_strdup (basename);
 } 
 
 /*! \brief
  *  \par Function Description
  *
  */
-void o_complex_free_filename(TOPLEVEL *w_current)
+void o_complex_free_filename(TOPLEVEL *toplevel)
 {
-  if (w_current->internal_symbol_name != NULL) {
-    g_free(w_current->internal_symbol_name);
-    w_current->internal_symbol_name = NULL;
+  if (toplevel->internal_symbol_name != NULL) {
+    g_free(toplevel->internal_symbol_name);
+    toplevel->internal_symbol_name = NULL;
   }
 }
 
@@ -836,7 +836,7 @@ void o_complex_free_filename(TOPLEVEL *w_current)
 /* libhack */
 /* and recalc stuff */
 /* this function takes in a complex list */
-void o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, 
+void o_complex_world_translate(TOPLEVEL *toplevel, int x1, int y1,
 			       OBJECT *prim_objs)
 {
   OBJECT *o_current=NULL;
@@ -849,57 +849,57 @@ void o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1,
   while ( o_current != NULL ) {
     switch(o_current->type) {
       case(OBJ_LINE):
-        o_line_translate_world(w_current, x1, y1, o_current);
+        o_line_translate_world(toplevel, x1, y1, o_current);
         break;
 
       case(OBJ_NET):
 				/* same as a line, don't do this */
-        o_line_translate_world(w_current, x1, y1, o_current);
-        temp_color = w_current->override_color;
-        w_current->override_color = -1;
-        o_redraw_single(w_current, one); /* trying loop? hack*/
-        o_redraw_single(w_current, two);
-        w_current->override_color = temp_color;
+        o_line_translate_world(toplevel, x1, y1, o_current);
+        temp_color = toplevel->override_color;
+        toplevel->override_color = -1;
+        o_redraw_single(toplevel, one); /* trying loop? hack*/
+        o_redraw_single(toplevel, two);
+        toplevel->override_color = temp_color;
         break;
 
       case(OBJ_BUS):
 				/* same as a line, don't do this */
-        o_line_translate_world(w_current, x1, y1, o_current);
-        temp_color = w_current->override_color;
-        w_current->override_color = -1;
-        o_redraw_single(w_current, one); /* trying loop? hack*/
-        o_redraw_single(w_current, two);
-        w_current->override_color = temp_color;
+        o_line_translate_world(toplevel, x1, y1, o_current);
+        temp_color = toplevel->override_color;
+        toplevel->override_color = -1;
+        o_redraw_single(toplevel, one); /* trying loop? hack*/
+        o_redraw_single(toplevel, two);
+        toplevel->override_color = temp_color;
         break;
 	
       case(OBJ_BOX):
-        o_box_translate_world(w_current, x1, y1, o_current);
+        o_box_translate_world(toplevel, x1, y1, o_current);
         break;
 
       case(OBJ_PICTURE):
-        o_picture_translate_world(w_current, x1, y1, o_current);
+        o_picture_translate_world(toplevel, x1, y1, o_current);
         break;
 
       case(OBJ_CIRCLE):
-        o_circle_translate_world(w_current, x1, y1, o_current);
+        o_circle_translate_world(toplevel, x1, y1, o_current);
         break;
 	
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-        o_complex_world_translate_toplevel(w_current, x1, y1, o_current);
+        o_complex_world_translate_toplevel(toplevel, x1, y1, o_current);
         break;
 
       case(OBJ_TEXT):
-        o_text_translate_world(w_current, x1, y1, o_current);
+        o_text_translate_world(toplevel, x1, y1, o_current);
         break;
 
         /* same note as above */
       case(OBJ_PIN):
-        o_pin_translate_world(w_current, x1, y1, o_current);
+        o_pin_translate_world(toplevel, x1, y1, o_current);
         break;
 
       case(OBJ_ARC):
-        o_arc_translate_world(w_current, x1, y1, o_current);
+        o_arc_translate_world(toplevel, x1, y1, o_current);
         break;
     }
     o_current=o_current->next;
@@ -912,7 +912,7 @@ void o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1,
  */
 /* this function takes the toplevel object and then also translates the
  * complex */
-void o_complex_world_translate_toplevel(TOPLEVEL *w_current,
+void o_complex_world_translate_toplevel(TOPLEVEL *toplevel,
 					int x1, int y1, OBJECT *object)
 {
   int left, right, top, bottom;
@@ -924,10 +924,10 @@ void o_complex_world_translate_toplevel(TOPLEVEL *w_current,
   object->complex->x = object->complex->x + x1;
   object->complex->y = object->complex->y + y1;
 
-  o_complex_world_translate(w_current, x1, y1, 
+  o_complex_world_translate(toplevel, x1, y1,
                             object->complex->prim_objs);
 
-  world_get_object_list_bounds(w_current, object->complex->prim_objs, 
+  world_get_object_list_bounds(toplevel, object->complex->prim_objs,
 			 &left, &top, &right, &bottom);
 	
   object->w_left = left;
@@ -940,7 +940,7 @@ void o_complex_world_translate_toplevel(TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-OBJECT *o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail,
+OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
 		       OBJECT *o_current)
 {
   OBJECT *new_obj=NULL;
@@ -965,14 +965,14 @@ OBJECT *o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail,
 
   clib = s_clib_get_symbol_by_name (o_current->complex_basename);
 
-  new_obj = o_complex_add(w_current, list_tail, NULL, o_current->type, color,
+  new_obj = o_complex_add(toplevel, list_tail, NULL, o_current->type, color,
                           o_current->complex->x, o_current->complex->y, 
                           o_current->complex->angle, 
 			  o_current->complex->mirror,
                           clib, o_current->complex_basename, 
                           selectable, FALSE); 
 
-  o_attrib_slot_copy(w_current, o_current, new_obj);
+  o_attrib_slot_copy(toplevel, o_current, new_obj);
 
   /* deal with stuff that has changed */
 
@@ -999,7 +999,7 @@ OBJECT *o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail,
  *  \par Function Description
  *
  */
-OBJECT *o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail,
+OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail,
 				OBJECT *o_current)
 {
   OBJECT *new_obj=NULL;
@@ -1022,7 +1022,7 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail,
     selectable = FALSE;	
   }
 
-  new_obj = o_complex_add_embedded(w_current, list_tail, o_current->type, 
+  new_obj = o_complex_add_embedded(toplevel, list_tail, o_current->type,
                                    color,
                                    o_current->complex->x, o_current->complex->y, 
                                    o_current->complex->angle, 
@@ -1030,7 +1030,7 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail,
                                    selectable); 
   /* deal with stuff that has changed */
 	
-  temp_list = o_list_copy_all(w_current,
+  temp_list = o_list_copy_all(toplevel,
                               o_current->complex->prim_objs->next,
                               new_obj->complex->prim_objs, 
                               NORMAL_FLAG);
@@ -1060,24 +1060,24 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail,
  *  \par Function Description
  *
  */
-void o_complex_delete(TOPLEVEL *w_current, OBJECT *delete)
+void o_complex_delete(TOPLEVEL *toplevel, OBJECT *delete)
 {
   g_return_if_fail(delete != NULL);
 
   /* first remove complex pointer */
   if (delete->complex) {
     if (delete->complex->prim_objs) {
-      s_delete_list_fromstart(w_current, 
+      s_delete_list_fromstart(toplevel,
                               delete->complex->prim_objs);
     }
     delete->complex->prim_objs = NULL;
   }
 
   /* then remove the actual node */	
-  s_delete(w_current, delete);
+  s_delete(toplevel, delete);
   delete = NULL;
-  w_current->page_current->object_tail = (OBJECT *) 
-  return_tail(w_current->page_current->object_head);
+  toplevel->page_current->object_tail = (OBJECT *)
+  return_tail(toplevel->page_current->object_head);
 }
 
 /*! \brief
@@ -1353,7 +1353,7 @@ OBJECT *o_complex_return_nth_pin(OBJECT *o_list, int counter)
  *
  */
 /* pass in top level object */
-void o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, 
+void o_complex_rotate_lowlevel(TOPLEVEL *toplevel, int world_centerx,
 			       int world_centery, 
 			       int angle,
 			       int angle_change,
@@ -1377,44 +1377,44 @@ void o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx,
   while ( o_current != NULL ) {
     switch(o_current->type) {
       case(OBJ_LINE):
-        o_line_rotate_world(w_current, 0, 0, angle_change, o_current);
+        o_line_rotate_world(toplevel, 0, 0, angle_change, o_current);
         break;
 
       case(OBJ_NET):
-        o_net_rotate_world(w_current, 0, 0, angle_change, o_current);
+        o_net_rotate_world(toplevel, 0, 0, angle_change, o_current);
         break;
 
       case(OBJ_BUS):
-        o_bus_rotate_world(w_current, 0, 0, angle_change, o_current);
+        o_bus_rotate_world(toplevel, 0, 0, angle_change, o_current);
         break;
 	
       case(OBJ_BOX):
-        o_box_rotate_world(w_current, 0, 0, angle_change, o_current);
+        o_box_rotate_world(toplevel, 0, 0, angle_change, o_current);
         break;
 
       case(OBJ_PICTURE):
-        o_picture_rotate_world(w_current, 0, 0, angle_change, o_current);
+        o_picture_rotate_world(toplevel, 0, 0, angle_change, o_current);
         break;
 
       case(OBJ_CIRCLE):
-        o_circle_rotate_world(w_current, 0, 0, angle_change, o_current);
+        o_circle_rotate_world(toplevel, 0, 0, angle_change, o_current);
         break;
 
       case(OBJ_PIN):
-        o_pin_rotate_world(w_current, 0, 0, angle_change, o_current);
+        o_pin_rotate_world(toplevel, 0, 0, angle_change, o_current);
         break;
 
       case(OBJ_ARC):
-        o_arc_rotate_world(w_current, 0, 0, angle_change, o_current);
+        o_arc_rotate_world(toplevel, 0, 0, angle_change, o_current);
         break;
 
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-	o_complex_rotate_lowlevel(w_current, 0, 0, angle, angle_change, o_current);
+	o_complex_rotate_lowlevel(toplevel, 0, 0, angle, angle_change, o_current);
         break; 
 
       case(OBJ_TEXT):
-        o_text_rotate_world(w_current, 0, 0, angle, angle_change, o_current);
+        o_text_rotate_world(toplevel, 0, 0, angle, angle_change, o_current);
         break;
 
     }
@@ -1427,7 +1427,7 @@ void o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx,
  *
  */
 /* pass in top level object */
-void o_complex_mirror_lowlevel(TOPLEVEL *w_current, 
+void o_complex_mirror_lowlevel(TOPLEVEL *toplevel,
 			       int world_centerx, int world_centery,
 			       OBJECT *object)
 {
@@ -1444,44 +1444,44 @@ void o_complex_mirror_lowlevel(TOPLEVEL *w_current,
   while ( o_current != NULL ) {
     switch(o_current->type) {
       case(OBJ_LINE):
-        o_line_mirror_world(w_current, 0, 0, o_current);
+        o_line_mirror_world(toplevel, 0, 0, o_current);
         break;
 
       case(OBJ_NET):
-        o_net_mirror_world(w_current, 0, 0, o_current);
+        o_net_mirror_world(toplevel, 0, 0, o_current);
         break;
 
       case(OBJ_BUS):
-        o_bus_mirror_world(w_current, 0, 0, o_current);
+        o_bus_mirror_world(toplevel, 0, 0, o_current);
         break;
 	
       case(OBJ_BOX):
-        o_box_mirror_world(w_current, 0, 0, o_current);
+        o_box_mirror_world(toplevel, 0, 0, o_current);
         break;
 
       case(OBJ_PICTURE):
-        o_picture_mirror_world(w_current, 0, 0, o_current);
+        o_picture_mirror_world(toplevel, 0, 0, o_current);
         break;
 
       case(OBJ_CIRCLE):
-        o_circle_mirror_world(w_current, 0, 0, o_current);
+        o_circle_mirror_world(toplevel, 0, 0, o_current);
         break;
 
       case(OBJ_PIN):
-        o_pin_mirror_world(w_current, 0, 0, o_current);
+        o_pin_mirror_world(toplevel, 0, 0, o_current);
         break;
 
       case(OBJ_ARC):
-        o_arc_mirror_world(w_current, 0, 0, o_current);
+        o_arc_mirror_world(toplevel, 0, 0, o_current);
         break;
 
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-	o_complex_mirror_lowlevel(w_current, 0, 0, o_current);
+	o_complex_mirror_lowlevel(toplevel, 0, 0, o_current);
 	break;
 
       case(OBJ_TEXT):
-        o_text_mirror_world(w_current, 0, 0, o_current);
+        o_text_mirror_world(toplevel, 0, 0, o_current);
         break;
 
     }
@@ -1579,7 +1579,7 @@ int o_complex_count_pins(OBJECT *object)
  */
 /* pass in top level object */
 void
-o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object) 
+o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
 {
   char *inside = NULL;
   char *outside = NULL;
@@ -1720,8 +1720,8 @@ o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object)
       refdes_copy = g_strconcat (refdes, " (",
                                  object->complex_basename,
                                  ")", NULL);
-      w_current->major_changed_refdes =
-        g_list_append(w_current->major_changed_refdes, refdes_copy);
+      toplevel->major_changed_refdes =
+        g_list_append(toplevel->major_changed_refdes, refdes_copy);
 
       /* don't bother checking minor changes if there are major ones*/
       goto done; 

@@ -45,17 +45,17 @@
  * \par Function Description
  *
  */
-void world_get_bus_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top,
+void world_get_bus_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top,
 			  int *right, int *bottom)
 {
-  world_get_line_bounds( w_current, object, left, top, right, bottom );
+  world_get_line_bounds( toplevel, object, left, top, right, bottom );
 }
 
 /* \brief
  * \par Function Description
  *
  */
-OBJECT *o_bus_add(TOPLEVEL *w_current, OBJECT *object_list,
+OBJECT *o_bus_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		  char type, int color,
 		  int x1, int y1, int x2, int y2,
 		  int bus_ripper_direction)
@@ -78,7 +78,7 @@ OBJECT *o_bus_add(TOPLEVEL *w_current, OBJECT *object_list,
 
   new_node->bus_ripper_direction = bus_ripper_direction;
 
-  world_get_bus_bounds(w_current, new_node, &left, &top, &right, &bottom);
+  world_get_bus_bounds(toplevel, new_node, &left, &top, &right, &bottom);
 	
   new_node->w_left = left;
   new_node->w_top = top;
@@ -90,12 +90,12 @@ OBJECT *o_bus_add(TOPLEVEL *w_current, OBJECT *object_list,
 
   object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
-  s_tile_add_object(w_current, object_list, 
+  s_tile_add_object(toplevel, object_list,
                     new_node->line->x[0], new_node->line->y[0], 
                     new_node->line->x[1], new_node->line->y[1]);
 
-  if (!w_current->ADDING_SEL) {
-    s_conn_update_object(w_current, object_list);
+  if (!toplevel->ADDING_SEL) {
+    s_conn_update_object(toplevel, object_list);
   }
 
   return(object_list);
@@ -105,7 +105,7 @@ OBJECT *o_bus_add(TOPLEVEL *w_current, OBJECT *object_list,
  * \par Function Description
  *
  */
-void o_bus_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+void o_bus_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   int left, right, top, bottom;
 
@@ -117,7 +117,7 @@ void o_bus_recalc(TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  world_get_bus_bounds(w_current, o_current, &left, &top, &right, &bottom);
+  world_get_bus_bounds(toplevel, o_current, &left, &top, &right, &bottom);
 
   o_current->w_left = left;
   o_current->w_top = top;
@@ -131,7 +131,7 @@ void o_bus_recalc(TOPLEVEL *w_current, OBJECT *o_current)
  * \par Function Description
  *
  */
-OBJECT *o_bus_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
+OBJECT *o_bus_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 		   unsigned int release_ver, unsigned int fileformat_ver)
 {
   char type; 
@@ -160,8 +160,8 @@ OBJECT *o_bus_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
     s_log_message("Found a zero length bus [ %c %d %d %d %d %d ]\n", type, x1, y1, x2, y2, color);
   }
 
-  if (w_current->override_bus_color != -1) {
-    color = w_current->override_bus_color;
+  if (toplevel->override_bus_color != -1) {
+    color = toplevel->override_bus_color;
   }
 
   if (color < 0 || color > MAX_COLORS) {
@@ -178,7 +178,7 @@ OBJECT *o_bus_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
     ripper_dir = 0;
   }
 
-  object_list = o_bus_add(w_current, object_list, type, color,
+  object_list = o_bus_add(toplevel, object_list, type, color,
                           d_x1, d_y1, d_x2, d_y2, ripper_dir);
   return(object_list);
 }
@@ -214,7 +214,7 @@ char *o_bus_save(OBJECT *object)
  * \par Function Description
  *
  */
-void o_bus_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
+void o_bus_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object)
 {
   int left, right, top, bottom;
 
@@ -228,21 +228,21 @@ void o_bus_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
   object->line->y[1] = object->line->y[1] + y1;
 
   /* Update bounding box */
-  world_get_bus_bounds(w_current, object, &left, &top, &right, &bottom);
+  world_get_bus_bounds(toplevel, object, &left, &top, &right, &bottom);
 
   object->w_left = left;
   object->w_top = top;
   object->w_right = right;
   object->w_bottom = bottom;
 
-  s_tile_update_object(w_current, object);
+  s_tile_update_object(toplevel, object);
 }
 
 /* \brief
  * \par Function Description
  *
  */
-OBJECT *o_bus_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
+OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
 {
   OBJECT *new_obj;
   ATTRIB *a_current;
@@ -258,7 +258,7 @@ OBJECT *o_bus_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
   /* still doesn't work... you need to pass in the new values */
   /* or don't update and update later */
   /* I think for now I'll disable the update and manually update */
-  new_obj = o_bus_add(w_current, list_tail, OBJ_BUS, color, 
+  new_obj = o_bus_add(toplevel, list_tail, OBJ_BUS, color,
                       o_current->line->x[0], o_current->line->y[0],
                       o_current->line->x[1], o_current->line->y[1],
                       o_current->bus_ripper_direction);
@@ -289,7 +289,7 @@ OBJECT *o_bus_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
  *
  */
 /* need to make this bus specific */
-void o_bus_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
+void o_bus_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 		 int origin_x, int origin_y)
 {
   int offset, offset2;
@@ -307,12 +307,12 @@ void o_bus_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
   cross = offset;
 
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, o_current->color);
   }
 
   bus_width = 2;
-  if (w_current->bus_style == THICK) {
+  if (toplevel->bus_style == THICK) {
     bus_width = BUS_WIDTH;	
   }
 
@@ -331,7 +331,7 @@ void o_bus_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
  * \par Function Description
  *
  */
-void o_bus_rotate_world(TOPLEVEL *w_current, 
+void o_bus_rotate_world(TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, int angle,
 			OBJECT *object)
 {
@@ -341,7 +341,7 @@ void o_bus_rotate_world(TOPLEVEL *w_current,
   return;
 
   /* translate object to origin */
-  o_bus_translate_world(w_current, -world_centerx, -world_centery, object);
+  o_bus_translate_world(toplevel, -world_centerx, -world_centery, object);
 
   rotate_point_90(object->line->x[0], object->line->y[0], angle,
                   &newx, &newy);
@@ -355,24 +355,24 @@ void o_bus_rotate_world(TOPLEVEL *w_current,
   object->line->x[1] = newx;
   object->line->y[1] = newy;
 
-  o_bus_translate_world(w_current, world_centerx, world_centery, object);
+  o_bus_translate_world(toplevel, world_centerx, world_centery, object);
 }
 
 /* \brief
  * \par Function Description
  *
  */
-void o_bus_mirror_world(TOPLEVEL *w_current,
+void o_bus_mirror_world(TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, OBJECT *object)
 {
   /* translate object to origin */
-  o_bus_translate_world(w_current, -world_centerx, -world_centery, object);
+  o_bus_translate_world(toplevel, -world_centerx, -world_centery, object);
 
   object->line->x[0] = -object->line->x[0];
 
   object->line->x[1] = -object->line->x[1];
 
-  o_bus_translate_world(w_current, world_centerx, world_centery, object);
+  o_bus_translate_world(toplevel, world_centerx, world_centery, object);
 }
 
 /* \brief
@@ -530,7 +530,7 @@ void o_bus_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
  *
  */
 /* needs to be bus specific */
-int o_bus_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
+int o_bus_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
 {
 
   return(0);
@@ -540,7 +540,7 @@ int o_bus_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
  * \par Function Description
  *
  */
-void o_bus_consolidate(TOPLEVEL *w_current)
+void o_bus_consolidate(TOPLEVEL *toplevel)
 {
 
 }
@@ -549,7 +549,7 @@ void o_bus_consolidate(TOPLEVEL *w_current)
  * \par Function Description
  *
  */
-void o_bus_modify(TOPLEVEL *w_current, OBJECT *object, 
+void o_bus_modify(TOPLEVEL *toplevel, OBJECT *object,
 		  int x, int y, int whichone)
 {
   int left, right, top, bottom;
@@ -557,14 +557,14 @@ void o_bus_modify(TOPLEVEL *w_current, OBJECT *object,
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
 
-  world_get_bus_bounds(w_current, object, &left, &top, &right, &bottom);
+  world_get_bus_bounds(toplevel, object, &left, &top, &right, &bottom);
 	
   object->w_left = left;
   object->w_top = top;
   object->w_right = right;
   object->w_bottom = bottom;	
 
-  s_tile_update_object(w_current, object);
+  s_tile_update_object(toplevel, object);
 }
 
 

@@ -53,14 +53,14 @@
  *  Opens the schematic file by calling f_open_flags() with the
  *  F_OPEN_RC and F_OPEN_CHECK_BACKUP flags.
  *
- *  \param [in,out] w_current  The TOPLEVEL object to load the schematic into.
+ *  \param [in,out] toplevel  The TOPLEVEL object to load the schematic into.
  *  \param [in]      filename  A character string containing the file name
  *                             to open.
  *  \return 0 on failure, 1 on success.
  */
-int f_open(TOPLEVEL *w_current, const gchar *filename)
+int f_open(TOPLEVEL *toplevel, const gchar *filename)
 {
-  return f_open_flags (w_current, filename, 
+  return f_open_flags (toplevel, filename,
                        F_OPEN_RC | F_OPEN_CHECK_BACKUP);
 }
 
@@ -74,13 +74,13 @@ int f_open(TOPLEVEL *w_current, const gchar *filename)
  *  load the backup instead.  If #F_OPEN_RESTORE_CWD is set, does not
  *  change the working directory to that of the file being loaded.
  *
- *  \param [in,out] w_current  The TOPLEVEL object to load the schematic into.
+ *  \param [in,out] toplevel  The TOPLEVEL object to load the schematic into.
  *  \param [in]     filename   A character string containing the file name
  *                             to open.
  *  \param [in]     flags      Combination of #FOpenFlags values.
  *  \return 0 on failure, 1 on success.
  */
-int f_open_flags(TOPLEVEL *w_current, const gchar *filename, 
+int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
                  const gint flags)
 {
   int opened=FALSE;
@@ -94,9 +94,9 @@ int f_open_flags(TOPLEVEL *w_current, const gchar *filename,
   /* has the head been freed yet? */
   /* probably not hack PAGE */
 
-  set_window(w_current, w_current->page_current,
-             w_current->init_left, w_current->init_right,
-             w_current->init_top,  w_current->init_bottom);
+  set_window(toplevel, toplevel->page_current,
+             toplevel->init_left, toplevel->init_right,
+             toplevel->init_top,  toplevel->init_bottom);
 
 
   /* Cache the cwd so we can restore it later. */
@@ -109,10 +109,10 @@ int f_open_flags(TOPLEVEL *w_current, const gchar *filename,
   full_filename = f_normalize_filename(filename); 
 
   /* write full, absolute filename into page_current->page_filename */
-  if (w_current->page_current->page_filename) {
-    g_free(w_current->page_current->page_filename);
+  if (toplevel->page_current->page_filename) {
+    g_free(toplevel->page_current->page_filename);
   }
-  w_current->page_current->page_filename = g_strdup(full_filename);
+  toplevel->page_current->page_filename = g_strdup(full_filename);
 
   /* Before we open the page, let's load the corresponding gafrc. */
   /* First cd into file's directory. */
@@ -129,7 +129,7 @@ int f_open_flags(TOPLEVEL *w_current, const gchar *filename,
                                    G_DIR_SEPARATOR_S, 
                                    "gafrc",
                                    NULL);
-    g_rc_parse_specified_rc(w_current, full_rcfilename);
+    g_rc_parse_specified_rc(toplevel, full_rcfilename);
   }
 
   if (flags & F_OPEN_CHECK_BACKUP) {
@@ -173,7 +173,7 @@ int f_open_flags(TOPLEVEL *w_current, const gchar *filename,
             g_string_append(message, "The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n");
           }
           g_string_append (message, "Gschem usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n");
-          if (w_current->page_current->load_newer_backup_func == NULL) {
+          if (toplevel->page_current->load_newer_backup_func == NULL) {
             s_log_message(message->str);
             s_log_message("\nRun gschem and correct the situation.\n\n");
             fprintf(stderr, message->str);
@@ -181,8 +181,8 @@ int f_open_flags(TOPLEVEL *w_current, const gchar *filename,
           }
           else {
             /* Ask the user if load the backup or the original file */
-            if (w_current->page_current->load_newer_backup_func 
-                (w_current, message)) {
+            if (toplevel->page_current->load_newer_backup_func
+                (toplevel, message)) {
               /* Load the backup file */
               load_backup_file = 1;
             }
@@ -196,17 +196,17 @@ int f_open_flags(TOPLEVEL *w_current, const gchar *filename,
    * the RC file, it's time to read in the file. */
   if (load_backup_file == 1) {
     /* Load the backup file */
-    w_current->page_current->object_tail = (OBJECT *) 
-    o_read(w_current, w_current->page_current->object_tail, 
+    toplevel->page_current->object_tail = (OBJECT *)
+    o_read(toplevel, toplevel->page_current->object_tail,
 	   backup_filename);
   } else if (g_file_test (full_filename, G_FILE_TEST_EXISTS)) {
     /* Load the original file */
-    w_current->page_current->object_tail = (OBJECT *) 
-    o_read(w_current, w_current->page_current->object_tail, 
+    toplevel->page_current->object_tail = (OBJECT *)
+    o_read(toplevel, toplevel->page_current->object_tail,
 	   full_filename);
   }
 
-  if (w_current->page_current->object_tail != NULL) {
+  if (toplevel->page_current->object_tail != NULL) {
     s_log_message("Opened file [%s]\n", full_filename);
     opened = TRUE;
   } else {
@@ -214,23 +214,23 @@ int f_open_flags(TOPLEVEL *w_current, const gchar *filename,
     opened = FALSE;	 
   }
 
-  w_current->page_current->object_tail 
-    = (OBJECT *) return_tail(w_current->page_current->object_head); 
+  toplevel->page_current->object_tail
+    = (OBJECT *) return_tail(toplevel->page_current->object_head);
 
   /* make sure you init net_consolide to false (default) in all */
   /* programs */
-  if (w_current->net_consolidate == TRUE) {	
-    o_net_consolidate(w_current);
+  if (toplevel->net_consolidate == TRUE) {
+    o_net_consolidate(toplevel);
   }
 
   if (load_backup_file == 0) {
     /* If it's not the backup file */
-    w_current->page_current->CHANGED=0; /* added 4/7/98 */
+    toplevel->page_current->CHANGED=0; /* added 4/7/98 */
   }
   else {
     /* We are loading the backup file, so gschem should ask
        the user if save it or not when closing the page. */
-    w_current->page_current->CHANGED=1;
+    toplevel->page_current->CHANGED=1;
   }
 
   g_free(full_filename);
@@ -255,9 +255,9 @@ int f_open_flags(TOPLEVEL *w_current, const gchar *filename,
  *  \par Function Description
  *  Does nothing
  *
- *  \param [in,out] w_current  The TOPLEVEL object with schematic to be closed.
+ *  \param [in,out] toplevel  The TOPLEVEL object with schematic to be closed.
  */
-void f_close(TOPLEVEL *w_current)
+void f_close(TOPLEVEL *toplevel)
 {
 
 }
@@ -267,24 +267,24 @@ void f_close(TOPLEVEL *w_current)
  *  This function will save the current schematic file before closing it.
  *  It also deletes the page_current item in the TOPLEVEL structure.
  *
- *  \param [in,out] w_current  The TOPLEVEL object containing the schematic.
+ *  \param [in,out] toplevel  The TOPLEVEL object containing the schematic.
  *  \param [in]      filename  The file name to save the schematic to.
  */
-void f_save_close(TOPLEVEL *w_current, char *filename)
+void f_save_close(TOPLEVEL *toplevel, char *filename)
 {
-  o_save(w_current, filename);
-  s_page_delete (w_current, w_current->page_current);
+  o_save(toplevel, filename);
+  s_page_delete (toplevel, toplevel->page_current);
 }
 
 /*! \brief Save the schematic file
  *  \par Function Description
- *  This function saves the current schematic file in the w_current object.
+ *  This function saves the current schematic file in the toplevel object.
  *
- *  \param [in,out] w_current  The TOPLEVEL object containing the schematic.
+ *  \param [in,out] toplevel  The TOPLEVEL object containing the schematic.
  *  \param [in]      filename  The file name to save the schematic to.
  *  \return 1 on success, 0 on failure.
  */
-int f_save(TOPLEVEL *w_current, const char *filename)
+int f_save(TOPLEVEL *toplevel, const char *filename)
 {
   gchar *backup_filename;
   gchar *real_filename;
@@ -307,7 +307,7 @@ int f_save(TOPLEVEL *w_current, const char *filename)
   only_filename = g_path_get_basename(real_filename);  
 
   /* Do a backup if it's not an undo file backup and it was never saved. */
-  if (w_current->page_current->saved_since_first_loaded == 0) {    
+  if (toplevel->page_current->saved_since_first_loaded == 0) {
     if ( (g_file_test (real_filename, G_FILE_TEST_EXISTS)) && 
 	 (!g_file_test(real_filename, G_FILE_TEST_IS_DIR)) )
     {
@@ -371,14 +371,14 @@ int f_save(TOPLEVEL *w_current, const char *filename)
   g_free (dirname);
   g_free (only_filename);
   
-  if (o_save(w_current, real_filename)) {
+  if (o_save(toplevel, real_filename)) {
 
-    w_current->page_current->saved_since_first_loaded = 1;
+    toplevel->page_current->saved_since_first_loaded = 1;
 
     /* Reset the last saved timer */
-    g_get_current_time (&w_current->page_current->last_load_or_save_time);
-    w_current->page_current->ops_since_last_backup = 0;
-    w_current->page_current->do_autosave_backup = 0;
+    g_get_current_time (&toplevel->page_current->last_load_or_save_time);
+    toplevel->page_current->ops_since_last_backup = 0;
+    toplevel->page_current->do_autosave_backup = 0;
 
     /* Restore permissions. */
     chmod (real_filename, st.st_mode);

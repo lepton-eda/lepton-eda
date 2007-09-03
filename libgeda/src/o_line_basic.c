@@ -63,7 +63,7 @@
  *  The object is added to the end of the list described by the 
  *  <B>object_list</B> parameter by the #s_basic_link_object().
  *
- *  \param [in]     w_current    The TOPLEVEL object.
+ *  \param [in]     toplevel    The TOPLEVEL object.
  *  \param [in,out] object_list  OBJECT list to add line to.
  *  \param [in]     type         Must be OBJ_LINE.
  *  \param [in]     color        Circle line color.
@@ -73,7 +73,7 @@
  *  \param [in]     y2           Lower y coordinate.
  *  \return A pointer to the new end of the object list.
  */
-OBJECT *o_line_add(TOPLEVEL *w_current, OBJECT *object_list,
+OBJECT *o_line_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		   char type, int color, 
 		   int x1, int y1, int x2, int y2)
 {
@@ -93,16 +93,16 @@ OBJECT *o_line_add(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->line->y[1] = y2;
   
   /* line type and filling initialized to default */
-  o_set_line_options(w_current, new_node,
+  o_set_line_options(toplevel, new_node,
 		     END_NONE, TYPE_SOLID, 0, -1, -1);
-  o_set_fill_options(w_current, new_node,
+  o_set_fill_options(toplevel, new_node,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
   
   new_node->draw_func = line_draw_func;
   new_node->sel_func = select_func;  
   
   /* compute bounding box */
-  o_line_recalc(w_current, new_node);
+  o_line_recalc(toplevel, new_node);
   
   object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
     
@@ -116,12 +116,12 @@ OBJECT *o_line_add(TOPLEVEL *w_current, OBJECT *object_list,
  *  is added at the end of the list following the <B>list_tail</B>
  *  parameter.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [out] list_tail  OBJECT list to copy to.
  *  \param [in]  o_current  Line OBJECT to copy.
  *  \return A new pointer to the end of the object list.
  */
-OBJECT *o_line_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
+OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
 {
   OBJECT *new_obj;
   ATTRIB *a_current;
@@ -138,7 +138,7 @@ OBJECT *o_line_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
    * #o_line_add(). Values for its fields are default and need to
    * be modified.
    */
-  new_obj = o_line_add(w_current, list_tail,
+  new_obj = o_line_add(toplevel, list_tail,
 		       OBJ_LINE, color,
 		       0, 0, 0, 0);
 
@@ -158,16 +158,16 @@ OBJECT *o_line_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
   new_obj->line->y[1] = o_current->line->y[1];
   
   /* copy the line type and filling options */
-  o_set_line_options(w_current, new_obj, o_current->line_end,
+  o_set_line_options(toplevel, new_obj, o_current->line_end,
 		     o_current->line_type, o_current->line_width,
 		     o_current->line_length, o_current->line_space);
-  o_set_fill_options(w_current, new_obj,
+  o_set_fill_options(toplevel, new_obj,
 		     o_current->fill_type, o_current->fill_width,
 		     o_current->fill_pitch1, o_current->fill_angle1,
 		     o_current->fill_pitch2, o_current->fill_angle2);
   
   /* calc the bounding box */
-  o_line_recalc(w_current, o_current);
+  o_line_recalc(toplevel, o_current);
   
   /* new_obj->attribute = 0;*/
   a_current = o_current->attribs;
@@ -195,7 +195,7 @@ OBJECT *o_line_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
  *  The coordinates of the end of line is modified in the world
  *  coordinate system. Screen coordinates and boundings are then updated.
  *
- *  \param [in]     w_current  The TOPLEVEL object.
+ *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object     Line OBJECT to modify.
  *  \param [in]     x          New x coordinate.
  *  \param [in]     y          New y coordinate.
@@ -210,7 +210,7 @@ OBJECT *o_line_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
  *  \par Author's note
  *  pb20011009 - modified
  */
-void o_line_modify(TOPLEVEL *w_current, OBJECT *object, 
+void o_line_modify(TOPLEVEL *toplevel, OBJECT *object,
 		   int x, int y, int whichone)
 {
 	/* change one of the end of the line */
@@ -230,7 +230,7 @@ void o_line_modify(TOPLEVEL *w_current, OBJECT *object,
 	}
 	
 	/* recalculate the bounding box */
-	o_line_recalc(w_current, object);
+	o_line_recalc(toplevel, object);
 	
 }
 
@@ -250,14 +250,14 @@ void o_line_modify(TOPLEVEL *w_current, OBJECT *object,
  *    <DT>*</DT><DD>the file format used for the releases after 20010704.
  *  </DL>
  *
- *  \param [in]  w_current       The TOPLEVEL object.
+ *  \param [in]  toplevel       The TOPLEVEL object.
  *  \param [out] object_list     OBJECT list to create line in.
  *  \param [in]  buf             Character string with line description.
  *  \param [in]  release_ver     libgeda release version number.
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new line object.
  */
-OBJECT *o_line_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
+OBJECT *o_line_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 		    unsigned int release_ver, unsigned int fileformat_ver)
 {
   char type; 
@@ -326,14 +326,14 @@ OBJECT *o_line_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
    * type is set according to the values of the fields on the line.
    */
   /* create and add the line to the list */
-  object_list = o_line_add(w_current, object_list,
+  object_list = o_line_add(toplevel, object_list,
 			   type, color, d_x1, d_y1, d_x2, d_y2);
   /* set its line options */
-  o_set_line_options(w_current, object_list,
+  o_set_line_options(toplevel, object_list,
 		     line_end, line_type, line_width, line_length, 
 		     line_space);
   /* filling is irrelevant for line, just set to default */
-  o_set_fill_options(w_current, object_list,
+  o_set_fill_options(toplevel, object_list,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
   return(object_list);
@@ -395,12 +395,12 @@ char *o_line_save(OBJECT *object)
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the line
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit.
  *
- *  \param [in]     w_current  The TOPLEVEL object.
+ *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in]     x1         x distance to move.
  *  \param [in]     y1         y distance to move.
  *  \param [in,out] object     Line OBJECT to translate.
  */
-void o_line_translate_world(TOPLEVEL *w_current,
+void o_line_translate_world(TOPLEVEL *toplevel,
 			    int x1, int y1, OBJECT *object)
 {
   int left, right, top, bottom;
@@ -414,7 +414,7 @@ void o_line_translate_world(TOPLEVEL *w_current,
   object->line->y[1] = object->line->y[1] + y1;
   
   /* Update bounding box */
-  world_get_line_bounds(w_current, object, &left, &top, &right, &bottom);
+  world_get_line_bounds(toplevel, object, &left, &top, &right, &bottom);
   
   object->w_left   = left;
   object->w_top    = top;
@@ -430,13 +430,13 @@ void o_line_translate_world(TOPLEVEL *w_current,
  *  point by <B>angle</B> degrees.
  *  The center of rotation is in world units.
  *
- *  \param [in]      w_current      The TOPLEVEL object.
+ *  \param [in]      toplevel      The TOPLEVEL object.
  *  \param [in]      world_centerx  Rotation center x coordinate in WORLD units.
  *  \param [in]      world_centery  Rotation center y coordinate in WORLD units.
  *  \param [in]      angle          Rotation angle in degrees (See note below).
  *  \param [in,out]  object         Line OBJECT to rotate.
  */
-void o_line_rotate_world(TOPLEVEL *w_current, 
+void o_line_rotate_world(TOPLEVEL *toplevel,
 			 int world_centerx, int world_centery, int angle,
 			 OBJECT *object)
 {
@@ -457,7 +457,7 @@ void o_line_rotate_world(TOPLEVEL *w_current,
    * back to its previous location.
    */
   /* translate object to origin */
-  o_line_translate_world(w_current, -world_centerx, -world_centery, object);
+  o_line_translate_world(toplevel, -world_centerx, -world_centery, object);
 
   /* rotate line end 1 */
   rotate_point_90(object->line->x[0], object->line->y[0], angle,
@@ -474,7 +474,7 @@ void o_line_rotate_world(TOPLEVEL *w_current,
   object->line->y[1] = newy;
 
   /* translate object back to normal position */
-  o_line_translate_world(w_current, world_centerx, world_centery, object);
+  o_line_translate_world(toplevel, world_centerx, world_centery, object);
   
 }
 
@@ -486,23 +486,23 @@ void o_line_rotate_world(TOPLEVEL *w_current,
  *  The line if first translated to the origin, then mirrored
  *  and finally translated back at its previous position.
  *
- *  \param [in]     w_current      The TOPLEVEL object.
+ *  \param [in]     toplevel      The TOPLEVEL object.
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         Line OBJECT to mirror.
  */
-void o_line_mirror_world(TOPLEVEL *w_current, int world_centerx,
+void o_line_mirror_world(TOPLEVEL *toplevel, int world_centerx,
 			 int world_centery, OBJECT *object)
 {
   /* translate object to origin */
-  o_line_translate_world(w_current, -world_centerx, -world_centery, object);
+  o_line_translate_world(toplevel, -world_centerx, -world_centery, object);
 
   /* mirror the line ends */
   object->line->x[0] = -object->line->x[0];
   object->line->x[1] = -object->line->x[1];
 
   /* translate back in position */
-  o_line_translate_world(w_current, world_centerx, world_centery, object);
+  o_line_translate_world(toplevel, world_centerx, world_centery, object);
   
 }
 
@@ -510,10 +510,10 @@ void o_line_mirror_world(TOPLEVEL *w_current, int world_centerx,
  *  \par Function Description
  *  This function recalculate the bounding box of the <B>o_current</B>
  *
- *  \param [in] w_current      The TOPLEVEL object.
+ *  \param [in] toplevel      The TOPLEVEL object.
  *  \param [in,out] o_current  Line OBJECT to be recalculated.
  */
-void o_line_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+void o_line_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   int left, right, top, bottom;
 
@@ -522,7 +522,7 @@ void o_line_recalc(TOPLEVEL *w_current, OBJECT *o_current)
   }
   
   /* update the bounding box - screen unit */
-  world_get_line_bounds(w_current, o_current, 
+  world_get_line_bounds(toplevel, o_current,
 		  &left, &top, &right, &bottom);
   o_current->w_left   = left;
   o_current->w_top    = top;
@@ -537,14 +537,14 @@ void o_line_recalc(TOPLEVEL *w_current, OBJECT *o_current)
  *  <B>bottom</B> parameters to the boundings of the line object described
  *  in <B>*line</B> in world units.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  OBJECT     Line OBJECT to read coordinates from.
  *  \param [out] left       Left line coordinate in WORLD units.
  *  \param [out] top        Top line coordinate in WORLD units.
  *  \param [out] right      Right line coordinate in WORLD units.
  *  \param [out] bottom     Bottom line coordinate in WORLD units.
  */
-void world_get_line_bounds(TOPLEVEL *w_current, OBJECT *object,
+void world_get_line_bounds(TOPLEVEL *toplevel, OBJECT *object,
                            int *left, int *top, int *right, int *bottom)
 {
   int halfwidth;
@@ -572,13 +572,13 @@ void world_get_line_bounds(TOPLEVEL *w_current, OBJECT *object,
  *  Parameters of the line are extracted from object pointed by
  *  <B>o_current</B>.
  *  
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] fp         FILE pointer to Postscript document.
  *  \param [in] o_current  Line OBJECT to write to document.
  *  \param [in] origin_x   Page x coordinate to place line OBJECT.
  *  \param [in] origin_y   Page y coordinate to place line OBJECT.
  */
-void o_line_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+void o_line_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 		  int origin_x, int origin_y)
 {
   int x1, y1, x2, y2;
@@ -612,7 +612,7 @@ void o_line_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
    */
   line_width = o_current->line_width;
   if(line_width <=2) {
-    if(w_current->line_style == THICK) {
+    if(toplevel->line_style == THICK) {
       line_width=LINE_WIDTH;
     } else {
       line_width=2;
@@ -657,7 +657,7 @@ void o_line_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     outl_func = o_line_print_solid;
   }
   
-  (*outl_func)(w_current, fp,
+  (*outl_func)(toplevel, fp,
 	       x1 - origin_x, y1 - origin_y,
 	       x2 - origin_x, y2 - origin_y,
 	       color,
@@ -674,7 +674,7 @@ void o_line_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
  *  The parameters <B>length</B> and <B>space</B> are ignored whereas
  *  <B>line_width</B> specifies the width of the printed line.
  *
- *  \param [in] w_current     The TOPLEVEL object.
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] fp            FILE pointer to Postscript document.
  *  \param [in] x1            Upper x coordinate.
  *  \param [in] y1            Upper y coordinate.
@@ -687,13 +687,13 @@ void o_line_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
  *  \param [in] origin_x      Page x coordinate to place line OBJECT.
  *  \param [in] origin_y      Page y coordinate to place line OBJECT.
  */
-void o_line_print_solid(TOPLEVEL *w_current, FILE *fp,
+void o_line_print_solid(TOPLEVEL *toplevel, FILE *fp,
 			int x1, int y1, int x2, int y2,
 			int color,
 			int line_width, int length, int space,
 			int origin_x, int origin_y)
 {
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
   
@@ -717,7 +717,7 @@ void o_line_print_solid(TOPLEVEL *w_current, FILE *fp,
  *
  *  The function sets the color in which the line will be printed with.
  *
- *  \param [in] w_current     The TOPLEVEL object.
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] fp            FILE pointer to Postscript document.
  *  \param [in] x1            Upper x coordinate.
  *  \param [in] y1            Upper y coordinate.
@@ -730,7 +730,7 @@ void o_line_print_solid(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x      Page x coordinate to place line OBJECT.
  *  \param [in] origin_y      Page y coordinate to place line OBJECT.
  */
-void o_line_print_dotted(TOPLEVEL *w_current, FILE *fp,
+void o_line_print_dotted(TOPLEVEL *toplevel, FILE *fp,
 			 int x1, int y1, int x2, int y2,
 			 int color,
 			 int line_width, int length, int space,
@@ -740,7 +740,7 @@ void o_line_print_dotted(TOPLEVEL *w_current, FILE *fp,
   double dx1, dy1;
   double xa, ya;
   
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
   
@@ -800,7 +800,7 @@ void o_line_print_dotted(TOPLEVEL *w_current, FILE *fp,
  *  The function sets the color in which the line will be printed and
  *  the width of the line - that is the width of the dashes.
  *
- *  \param [in] w_current     The TOPLEVEL object.
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] fp            FILE pointer to Postscript document.
  *  \param [in] x1            Upper x coordinate.
  *  \param [in] y1            Upper y coordinate.
@@ -813,7 +813,7 @@ void o_line_print_dotted(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x      Page x coordinate to place line OBJECT.
  *  \param [in] origin_y      Page y coordinate to place line OBJECT.
  */
-void o_line_print_dashed(TOPLEVEL *w_current, FILE *fp,
+void o_line_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 			 int x1, int y1, int x2, int y2,
 			 int color,
 			 int line_width, int length, int space,
@@ -823,7 +823,7 @@ void o_line_print_dashed(TOPLEVEL *w_current, FILE *fp,
   double dx1, dy1, dx2, dy2;
   double xa, ya, xb, yb;
   
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
   
@@ -905,7 +905,7 @@ void o_line_print_dashed(TOPLEVEL *w_current, FILE *fp,
  *  width of the line - that is the width of the dashes and the diameter
  *  of the dots.
  *
- *  \param [in] w_current     The TOPLEVEL object.
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] fp            FILE pointer to Postscript document.
  *  \param [in] x1            Upper x coordinate.
  *  \param [in] y1            Upper y coordinate.
@@ -918,7 +918,7 @@ void o_line_print_dashed(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x      Page x coordinate to place line OBJECT.
  *  \param [in] origin_y      Page y coordinate to place line OBJECT.
  */
-void o_line_print_center(TOPLEVEL *w_current, FILE *fp,
+void o_line_print_center(TOPLEVEL *toplevel, FILE *fp,
 			 int x1, int y1, int x2, int y2,
 			 int color,
 			 int line_width, int length, int space,
@@ -928,7 +928,7 @@ void o_line_print_center(TOPLEVEL *w_current, FILE *fp,
   double dx1, dy1, dx2, dy2;
   double xa, ya, xb, yb;
   
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
   
@@ -1039,7 +1039,7 @@ void o_line_print_center(TOPLEVEL *w_current, FILE *fp,
  *  width of the line - that is the width of the dashes and the diameter
  *  of the dots.
  *
- *  \param [in] w_current     The TOPLEVEL object.
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] fp            FILE pointer to Postscript document.
  *  \param [in] x1            Upper x coordinate.
  *  \param [in] y1            Upper y coordinate.
@@ -1052,7 +1052,7 @@ void o_line_print_center(TOPLEVEL *w_current, FILE *fp,
  *  \param [in] origin_x      Page x coordinate to place line OBJECT.
  *  \param [in] origin_y      Page y coordinate to place line OBJECT.
  */
-void o_line_print_phantom(TOPLEVEL *w_current, FILE *fp,
+void o_line_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 			  int x1, int y1, int x2, int y2,
 			  int color,
 			  int line_width, int length, int space,
@@ -1062,7 +1062,7 @@ void o_line_print_phantom(TOPLEVEL *w_current, FILE *fp,
   double dx1, dy1, dx2, dy2;
   double xa, ya, xb, yb;
   
-  if (w_current->print_color) {
+  if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
   
@@ -1186,12 +1186,12 @@ void o_line_print_phantom(TOPLEVEL *w_current, FILE *fp,
 /*! \brief
  *  \par Function Description
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] x_scale
  *  \param [in] y_scale
  *  \param [in] object
  */
-void o_line_scale_world(TOPLEVEL *w_current, int x_scale, int y_scale,
+void o_line_scale_world(TOPLEVEL *toplevel, int x_scale, int y_scale,
 			OBJECT *object)
 {
   if (object == NULL) printf("lsw NO!\n");
@@ -1203,14 +1203,14 @@ void o_line_scale_world(TOPLEVEL *w_current, int x_scale, int y_scale,
   object->line->y[1] = object->line->y[1] * y_scale;
 
   /* update boundingbox */
-  o_line_recalc(w_current, object);
+  o_line_recalc(toplevel, object);
   
 }
 
 /*! \brief
  *  \par Function Description
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] line
  *  \param [in] x1
  *  \param [in] y1
@@ -1218,21 +1218,21 @@ void o_line_scale_world(TOPLEVEL *w_current, int x_scale, int y_scale,
  *  \param [in] y2
  *  \return int
  */
-int o_line_visible(TOPLEVEL *w_current, LINE *line, 
+int o_line_visible(TOPLEVEL *toplevel, LINE *line,
                    int *x1, int *y1, int *x2, int *y2)
 {
   int visible=0;
 
 
   /* don't do clipping if this is false */
-  if (!w_current->object_clipping) {
+  if (!toplevel->object_clipping) {
     return(TRUE);
   }
 
-  WORLDtoSCREEN( w_current, line->x[0], line->y[0], x1, y1 );
-  WORLDtoSCREEN( w_current, line->x[1], line->y[1], x2, y2 );
+  WORLDtoSCREEN( toplevel, line->x[0], line->y[0], x1, y1 );
+  WORLDtoSCREEN( toplevel, line->x[1], line->y[1], x2, y2 );
 
-  visible = SCREENclip_change(w_current, x1, y1, x2, y2);
+  visible = SCREENclip_change(toplevel, x1, y1, x2, y2);
 
   return(visible);
 }

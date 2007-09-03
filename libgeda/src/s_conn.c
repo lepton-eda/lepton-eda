@@ -105,7 +105,7 @@ int s_conn_uniq(GList * conn_list, CONN * input_conn)
  *  \par Function Description
  *
  */
-int s_conn_remove_other(TOPLEVEL * w_current, OBJECT * other_object,
+int s_conn_remove_other(TOPLEVEL * toplevel, OBJECT * other_object,
 			OBJECT * to_remove)
 {
     GList *c_current = NULL;
@@ -153,7 +153,7 @@ int s_conn_remove_other(TOPLEVEL * w_current, OBJECT * other_object,
  *  \par Function Description
  *
  */
-void s_conn_remove(TOPLEVEL * w_current, OBJECT * to_remove)
+void s_conn_remove(TOPLEVEL * toplevel, OBJECT * to_remove)
 {
   GList *c_current;
   CONN *conn;
@@ -174,7 +174,7 @@ void s_conn_remove(TOPLEVEL * w_current, OBJECT * to_remove)
     /* keep calling this till it returns false (all refs removed) */
     /* there is NO body to this while loop */
     while (s_conn_remove_other
-           (w_current, conn->other_object, to_remove));
+           (toplevel, conn->other_object, to_remove));
 
 #if DEBUG
     printf("returned from remove_other\n");
@@ -206,7 +206,7 @@ void s_conn_remove(TOPLEVEL * w_current, OBJECT * to_remove)
  *  \par Function Description
  *
  */
-void s_conn_remove_complex(TOPLEVEL * w_current, OBJECT * to_remove)
+void s_conn_remove_complex(TOPLEVEL * toplevel, OBJECT * to_remove)
 {
   OBJECT *o_current;
   
@@ -220,7 +220,7 @@ void s_conn_remove_complex(TOPLEVEL * w_current, OBJECT * to_remove)
       case (OBJ_NET):
       case (OBJ_PIN):
       case (OBJ_BUS):
-        s_conn_remove(w_current, o_current);
+        s_conn_remove(toplevel, o_current);
         break;
 
     }
@@ -284,7 +284,7 @@ OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y)
  *  \par Function Description
  *
  */
-void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
+void s_conn_update_object(TOPLEVEL * toplevel, OBJECT * object)
 {
   TILE *t_current;
   TILE_LOC *tl_current;
@@ -311,7 +311,7 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
     printf("\nInside tile: %d %d\n\n", i, j);
 #endif
     
-    t_current = &w_current->page_current->world_tiles[i][j];
+    t_current = &toplevel->page_current->world_tiles[i][j];
     object_list = t_current->objects;
     while (object_list != NULL) {
       other_object = (OBJECT *) object_list->data;
@@ -700,7 +700,7 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
  *  \par Function Description
  *
  */
-void s_conn_update_complex(TOPLEVEL * w_current, OBJECT * complex)
+void s_conn_update_complex(TOPLEVEL * toplevel, OBJECT * complex)
 {
   OBJECT *o_current;
 
@@ -710,7 +710,7 @@ void s_conn_update_complex(TOPLEVEL * w_current, OBJECT * complex)
       case (OBJ_PIN):
       case (OBJ_NET):
       case (OBJ_BUS):
-        s_conn_update_object(w_current, o_current);
+        s_conn_update_object(toplevel, o_current);
         break;
 
     }

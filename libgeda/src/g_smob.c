@@ -235,7 +235,7 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
 SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
 				 SCM scm_angle, SCM scm_x, SCM scm_y) {
 
-  TOPLEVEL *w_current = NULL;
+  TOPLEVEL *toplevel = NULL;
   OBJECT *object = NULL;
   struct st_attrib_smob *attribute;
   char *alignment_string;
@@ -300,7 +300,7 @@ SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
   }
 
   attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
-  w_current = attribute->world;
+  toplevel = attribute->world;
   
   SCM_ASSERT ( attribute &&
 	       attribute->attribute &&
@@ -327,10 +327,10 @@ SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
   if (y != -1)
 	object->text->y = y;
   
-  o_text_recreate(w_current, object);
+  o_text_recreate(toplevel, object);
 
   /* Get the new bounds */
-  world_get_text_bounds (w_current, object, 
+  world_get_text_bounds (toplevel, object,
 			 &left, &top, &right, &bottom);
   
   /* Restore the original attributes */
@@ -339,7 +339,7 @@ SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
   object->text->x = old_x;
   object->text->y = old_y;
   
-  o_text_recreate(w_current, object);
+  o_text_recreate(toplevel, object);
 
   /* Construct the return value */
   horizontal = scm_cons (scm_from_int(left), scm_from_int(right));
@@ -388,7 +388,7 @@ void g_init_attrib_smob(void)
  */
 SCM g_get_attrib_bounds(SCM attrib_smob)
 {
-  TOPLEVEL *w_current;
+  TOPLEVEL *toplevel;
   struct st_attrib_smob *attribute;
   SCM vertical = SCM_EOL;
   SCM horizontal = SCM_EOL;
@@ -400,14 +400,14 @@ SCM g_get_attrib_bounds(SCM attrib_smob)
                attrib_smob, SCM_ARG1, "get-attribute-bounds");
   
   attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
-  w_current = attribute->world;
+  toplevel = attribute->world;
 
   if (attribute &&
       attribute->attribute &&
       attribute->attribute->object &&
       attribute->attribute->object->text->string ) {
 
-    world_get_text_bounds (w_current, attribute->attribute->object,
+    world_get_text_bounds (toplevel, attribute->attribute->object,
                            &left, &top, &right, &bottom);
 
     horizontal = scm_cons (scm_from_int(left), scm_from_int(right));
@@ -426,7 +426,7 @@ SCM g_get_attrib_bounds(SCM attrib_smob)
  */
 SCM g_get_attrib_angle(SCM attrib_smob)
 {
-  TOPLEVEL *w_current;
+  TOPLEVEL *toplevel;
   struct st_attrib_smob *attribute;
 
   SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
@@ -434,7 +434,7 @@ SCM g_get_attrib_angle(SCM attrib_smob)
                attrib_smob, SCM_ARG1, "get-attribute-angle");
   
   attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
-  w_current = attribute->world;
+  toplevel = attribute->world;
 
   SCM_ASSERT ( attribute && 
                attribute->attribute &&
@@ -523,7 +523,7 @@ SCM g_make_object_smob(TOPLEVEL *curr_w, OBJECT *object)
  */
 SCM g_get_object_attributes(SCM object_smob)
 {
-  TOPLEVEL *w_current;
+  TOPLEVEL *toplevel;
   struct st_object_smob *object;
   SCM returned = SCM_EOL;
 
@@ -538,11 +538,11 @@ SCM g_get_object_attributes(SCM object_smob)
     ATTRIB *pointer;
     
     pointer = object->object->attribs;
-    w_current = object->world;
+    toplevel = object->world;
     while (pointer != NULL) {
       if (pointer->object &&
 	  pointer->object->text) {
-	returned = scm_cons (g_make_attrib_smob (w_current, pointer), returned);
+	returned = scm_cons (g_make_attrib_smob (toplevel, pointer), returned);
       }
       pointer = pointer->next;
     }     
@@ -563,7 +563,7 @@ SCM g_get_object_attributes(SCM object_smob)
  */
 SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
 {
-  TOPLEVEL *w_current;
+  TOPLEVEL *toplevel;
   struct st_object_smob *object;
   gchar *attrib_name=NULL;
   SCM returned = SCM_EOL;
@@ -585,7 +585,7 @@ SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
     ATTRIB *pointer;
     
     pointer = object->object->attribs;
-    w_current = object->world;
+    toplevel = object->world;
     while (pointer != NULL) {
       if (pointer->object &&
 	  pointer->object->text) {

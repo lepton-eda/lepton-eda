@@ -52,7 +52,7 @@
  *  \par Function Description
  *
  */
-void s_cue_postscript_fillbox(TOPLEVEL * w_current, FILE * fp, int x,
+void s_cue_postscript_fillbox(TOPLEVEL * toplevel, FILE * fp, int x,
 			      int y)
 {
   int offset;
@@ -62,8 +62,8 @@ void s_cue_postscript_fillbox(TOPLEVEL * w_current, FILE * fp, int x,
   offset = CUE_BOX_SIZE;
   offset2 = offset*2;
 
-  if (w_current->print_color) {
-    f_print_set_color(fp, w_current->net_endpoint_color);
+  if (toplevel->print_color) {
+    f_print_set_color(fp, toplevel->net_endpoint_color);
   }
 
   fprintf(fp, "%d %d %d %d fbox\n", 
@@ -75,7 +75,7 @@ void s_cue_postscript_fillbox(TOPLEVEL * w_current, FILE * fp, int x,
  *  \par Function Description
  *
  */
-void s_cue_postscript_fillcircle(TOPLEVEL * w_current, FILE * fp,
+void s_cue_postscript_fillcircle(TOPLEVEL * toplevel, FILE * fp,
                                  int x, int y, int size_flag)
 {
   int offset2;
@@ -86,8 +86,8 @@ void s_cue_postscript_fillcircle(TOPLEVEL * w_current, FILE * fp,
     offset2 = CUE_CIRCLE_SMALL_SIZE;
   }
 
-  if (w_current->print_color) {
-    f_print_set_color(fp, w_current->junction_color);
+  if (toplevel->print_color) {
+    f_print_set_color(fp, toplevel->junction_color);
   }
 
   fprintf(fp, "newpath\n");
@@ -103,7 +103,7 @@ void s_cue_postscript_fillcircle(TOPLEVEL * w_current, FILE * fp,
  *  \par Function Description
  *
  */
-void s_cue_output_all(TOPLEVEL * w_current, OBJECT * head, FILE * fp,
+void s_cue_output_all(TOPLEVEL * toplevel, OBJECT * head, FILE * fp,
 		      int type)
 {
   OBJECT *o_current;
@@ -114,12 +114,12 @@ void s_cue_output_all(TOPLEVEL * w_current, OBJECT * head, FILE * fp,
       case (OBJ_NET):
       case (OBJ_BUS):
       case (OBJ_PIN):
-        s_cue_output_single(w_current, o_current, fp, type);
+        s_cue_output_single(toplevel, o_current, fp, type);
         break;
 
       case (OBJ_COMPLEX):
       case (OBJ_PLACEHOLDER):
-        s_cue_output_all(w_current, o_current->complex->prim_objs, fp,
+        s_cue_output_all(toplevel, o_current->complex->prim_objs, fp,
                          type);
         break;
 
@@ -134,7 +134,7 @@ void s_cue_output_all(TOPLEVEL * w_current, OBJECT * head, FILE * fp,
  *  \par Function Description
  *
  */
-void s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
+void s_cue_output_lowlevel(TOPLEVEL * toplevel, OBJECT * object, int whichone,
 			   FILE * fp, int output_type)
 {
   int x, y;
@@ -195,16 +195,16 @@ void s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
       if (object->type == OBJ_NET) {	/* only nets have these cues */
         if (count < 1) {	/* Didn't find anything connected there */
           if (output_type == POSTSCRIPT) {
-            s_cue_postscript_fillbox(w_current, fp, x, y);
+            s_cue_postscript_fillbox(toplevel, fp, x, y);
           }
 
 
         } else if (count >= 2) {
           if (output_type == POSTSCRIPT) {
             if (!bus_involved) {
-              s_cue_postscript_fillcircle(w_current, fp, x, y, FALSE);
+              s_cue_postscript_fillcircle(toplevel, fp, x, y, FALSE);
             } else {
-              s_cue_postscript_fillcircle(w_current, fp, x, y, TRUE);
+              s_cue_postscript_fillcircle(toplevel, fp, x, y, TRUE);
             }
           }
         }
@@ -214,9 +214,9 @@ void s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
     case (CONN_MIDPOINT):
       if (output_type == POSTSCRIPT) {
         if (!bus_involved) {
-          s_cue_postscript_fillcircle(w_current, fp, x, y, FALSE);
+          s_cue_postscript_fillcircle(toplevel, fp, x, y, FALSE);
         } else {
-          s_cue_postscript_fillcircle(w_current, fp, x, y, TRUE);
+          s_cue_postscript_fillcircle(toplevel, fp, x, y, TRUE);
         }
       }
   }
@@ -228,7 +228,7 @@ void s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
  *  \par Function Description
  *
  */
-void s_cue_output_lowlevel_midpoints(TOPLEVEL * w_current, OBJECT * object,
+void s_cue_output_lowlevel_midpoints(TOPLEVEL * toplevel, OBJECT * object,
 				     FILE * fp, int output_type)
 {
   int x, y;
@@ -258,7 +258,7 @@ void s_cue_output_lowlevel_midpoints(TOPLEVEL * w_current, OBJECT * object,
 
         
         if (output_type == POSTSCRIPT) {
-          s_cue_postscript_fillcircle(w_current, fp, x, y, size_flag);
+          s_cue_postscript_fillcircle(toplevel, fp, x, y, size_flag);
         }
         break;
     }
@@ -273,7 +273,7 @@ void s_cue_output_lowlevel_midpoints(TOPLEVEL * w_current, OBJECT * object,
  *  \par Function Description
  *
  */
-void s_cue_output_single(TOPLEVEL * w_current, OBJECT * object, FILE * fp,
+void s_cue_output_single(TOPLEVEL * toplevel, OBJECT * object, FILE * fp,
 			 int type)
 {
   if (!object) {
@@ -285,9 +285,9 @@ void s_cue_output_single(TOPLEVEL * w_current, OBJECT * object, FILE * fp,
 	return;
       }
 
-  s_cue_output_lowlevel(w_current, object, 0, fp, type);
-  s_cue_output_lowlevel(w_current, object, 1, fp, type);
-  s_cue_output_lowlevel_midpoints(w_current, object, fp, type);
+  s_cue_output_lowlevel(toplevel, object, 0, fp, type);
+  s_cue_output_lowlevel(toplevel, object, 1, fp, type);
+  s_cue_output_lowlevel_midpoints(toplevel, object, fp, type);
 }
 
 
