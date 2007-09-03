@@ -126,7 +126,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->DONT_RECALC       = 0;
   toplevel->FORCE_CONN_UPDATE = 0;
   toplevel->ADDING_SEL        = 0;
-  toplevel->REMOVING_SEL      = 0;
 
   toplevel->drawbounding_action_mode = FREE;
   toplevel->last_drawb_mode = -1;

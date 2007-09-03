@@ -211,13 +211,11 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   /* then delete objects of page */
   s_delete_list_fromstart (toplevel, page->object_head);
 
-  toplevel->REMOVING_SEL = 1;
   /* The complex place list contain a reference to the objects in the page */
   /* So don't free the objects there. */
   g_list_free (page->complex_place_list);
   page->complex_place_list = NULL;
   s_delete_list_fromstart (toplevel, page->attrib_place_head);
-  toplevel->REMOVING_SEL = 0;
 
 #if DEBUG
   printf("Freeing page: %s\n", page->page_filename);

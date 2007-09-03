@@ -484,7 +484,6 @@ struct st_toplevel {
   int DONT_RECALC;
   int FORCE_CONN_UPDATE;
   int ADDING_SEL;
-  int REMOVING_SEL;
 
   int drawbounding_action_mode; 	/* outline vs bounding box */
   int last_drawb_mode;			/* last above mode */

@@ -77,7 +77,6 @@ void x_window_setup (TOPLEVEL *toplevel)
 
   toplevel->FORCE_CONN_UPDATE=0;
   toplevel->ADDING_SEL=0;
-  toplevel->REMOVING_SEL=0;
 
   toplevel->drawbounding_action_mode=FREE;
   toplevel->last_drawb_mode = -1;

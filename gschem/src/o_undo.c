@@ -212,10 +212,8 @@ void o_undo_savestate(TOPLEVEL *w_current, int flag)
       }
 
       if (u_current->object_head) {
-        w_current->REMOVING_SEL = 1;
         s_delete_list_fromstart(w_current, 
                                 u_current->object_head);
-        w_current->REMOVING_SEL = 0; 
         u_current->object_head = NULL; 
       }
 

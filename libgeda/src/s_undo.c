@@ -214,10 +214,8 @@ void s_undo_destroy_all(TOPLEVEL *toplevel, UNDO *head)
     if (u_current->filename) g_free(u_current->filename);
 		
     if (u_current->object_head) {
-      toplevel->REMOVING_SEL = 1;
       s_delete_list_fromstart(toplevel,
                               u_current->object_head);
-      toplevel->REMOVING_SEL = 0;
       u_current->object_head = NULL;
     }
 
@@ -259,10 +257,8 @@ void s_undo_remove(TOPLEVEL *toplevel, UNDO *head, UNDO *u_tos)
       }
 
       if (u_current->object_head) {
-				/*toplevel->REMOVING_SEL = 1; */
         s_delete_list_fromstart(toplevel,
                                 u_current->object_head);
-				/*toplevel->REMOVING_SEL = 0;*/
         u_current->object_head = NULL;
       }
 
@@ -294,10 +290,8 @@ void s_undo_remove_rest(TOPLEVEL *toplevel, UNDO *head)
     }
 
     if (u_current->object_head) {
-      toplevel->REMOVING_SEL = 1;
       s_delete_list_fromstart(toplevel,
                               u_current->object_head);
-      toplevel->REMOVING_SEL = 0;
       u_current->object_head = NULL;
     }
 

@@ -422,7 +422,6 @@ void o_list_delete_rest(TOPLEVEL *toplevel, OBJECT *list)
 	
   o_current = (OBJECT *) return_tail(list);
 
-  toplevel->REMOVING_SEL = 1;
   /* remove list backwards */
   while(o_current != NULL) {
     if (o_current->type != OBJ_HEAD) {
@@ -434,5 +433,4 @@ void o_list_delete_rest(TOPLEVEL *toplevel, OBJECT *list)
       o_current = NULL;
     }
   }
-  toplevel->REMOVING_SEL = 0;
 }
