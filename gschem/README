@@ -15,59 +15,7 @@ README for gschem
 
 - System Requirements
 
-	A computer:
-   	   - at least the processing power of a i486/66
-	   - Enough RAM for X (usually 16 Mbytes but 32 Mbytes recommended)
-
-	Running UNIX:
-	   - Semi recent version of Unix or Linux
-
-	The X window system 	
-		- A resolution of at least 800x600
-		- A color display
-		- 3 button mouse (2 button works, but 3 button is better)
-
-	A C compiler (that understands ANSI, like gcc) 
-
-	GLIB version 2.4.x or later (and anything glib requires)
-	GLIB version 1.2.x is no longer supported. 
-	Glib can be found at ftp://ftp.gtk.org/pub/gtk
-
-	GTK+ version 2.4.x or later (and anything gtk requires)
-	GTK+ version 1.2.x is no longer supported. 
-	Gtk can be found at: ftp://ftp.gtk.org/pub/gtk
-
-	libgeda (same version as gschem)
-	This can be found on the gEDA website/ftpsite
-
-	symbols (same version as gschem)
-	This can be found on the gEDA website/ftpsite
-		
-	GUILE - guile-1.6.x or later is required (and anything guile
-	requires).  Guile 1.4.x is no longer supported.
-	Guile can be found at: ftp://ftp.gnu.org/pub/gnu/guile
-
-	LibStroke 0.5.1 [OPTIONAL] - if you want stroke support.  The homepage
-	for LibStroke is: http://www.etla.net/libstroke/
-
-	libgdgeda 2.0.15 [OPTIONAL] - if you want the ability to write png
-	images.  New versions of libgeda/gschem write png using internal code,
-        so you will still be able to create png images without using libgdgeda.
- 	Since 20060922, gd 2.0.x is used instead of libgdgeda, so libgdgeda 
-	is not needed anymore.
-
-	libgdgeda is based on gd 2.0.15  The homepage for gd 2.0.x is
-	http://www.boutell.com/gd  You can find libgdgeda on the gEDA
-	website: http://www.geda.seul.org/dist
-
-        If you use libgdgeda then you also need zlib.  zlib can be found at:
-        http://www.cdrom.com/pub/infozip/zlib  zlib can also be found on
-        the gEDA website: http://www.geda.seul.org/dist
-
-        If you use libgdgeda then you also need libpng.  libpng can be found 
-        at: http://www.libpng.org/pub/png/pngcode.html  libpng can also be              found on the gEDA website: http://www.geda.seul.org/dist
-
-	An understanding that this software is ALPHA release quality :)
+	See libgeda/README for current system requirements.
 
 
 
@@ -80,7 +28,7 @@ README for gschem
         COPYING files for more information.
 
 	Programs and associated files are: 
-	Copyright 1998-2006 by Ales Hvezda and the respective original
+	Copyright 1998-2007 by Ales Hvezda and the respective original
 	authors (which are listed on the respective files)
 
 
