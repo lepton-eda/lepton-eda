@@ -83,7 +83,6 @@ x_compselect_callback_response (GtkDialog *dialog,
 {
   Compselect *compselect = (Compselect*)dialog;
   TOPLEVEL *toplevel = (TOPLEVEL*)user_data;
-  GValue value = { 0, };
 
   switch (arg1) {
       case COMPSELECT_RESPONSE_PLACE: {
@@ -144,9 +143,7 @@ x_compselect_callback_response (GtkDialog *dialog,
         }
 
         /* Hide the component selector */
-        g_value_init (&value, G_TYPE_BOOLEAN);
-        g_value_set_boolean(&value, TRUE);
-        g_object_set_property (G_OBJECT(compselect), "hidden", &value);
+        g_object_set (G_OBJECT(compselect), "hidden", TRUE, NULL);
         break;
 
       case GTK_RESPONSE_CLOSE:
@@ -278,21 +275,10 @@ inuse_treeview_set_cell_data (GtkTreeViewColumn *tree_column,
                             GtkTreeIter       *iter,
                             gpointer           data)
 {
-  GValue value = { 0, };
-  GValue strvalue = { 0, };
   CLibSymbol *symbol;
 
-  gtk_tree_model_get_value (tree_model, iter, 0, &value);
-
-  g_value_init (&strvalue, G_TYPE_STRING);
-
-  symbol = (CLibSymbol *) g_value_get_pointer (&value);
-  g_value_set_string (&strvalue, s_clib_symbol_get_name (symbol));
-
-  g_object_set_property ((GObject*)cell, "text", &strvalue);
-
-  g_value_unset (&value);
-  g_value_unset (&strvalue);
+  gtk_tree_model_get (tree_model, iter, 0, &symbol, -1);
+  g_object_set ((GObject*)cell, "text", s_clib_symbol_get_name (symbol), NULL);
 }
 
 /*! \brief Sets data for a particular cell of the library treeview.
@@ -312,28 +298,20 @@ lib_treeview_set_cell_data (GtkTreeViewColumn *tree_column,
                             gpointer           data)
 {
   GtkTreeIter parent;
-  GValue value = { 0, };
-  GValue strvalue = { 0, };
   CLibSource *source;
   CLibSymbol *symbol;
-  
-  gtk_tree_model_get_value (tree_model, iter, 0, &value);
-
-  g_value_init (&strvalue, G_TYPE_STRING);
+  const char *text;
 
   if (!gtk_tree_model_iter_parent (tree_model, &parent, iter)) {
     /* If top level, must be a source. */
-    source = (CLibSource *) g_value_get_pointer (&value);
-    g_value_set_string (&strvalue, s_clib_source_get_name (source));
+    gtk_tree_model_get (tree_model, iter, 0, &source, -1);
+    text = s_clib_source_get_name (source);
   } else {
     /* Otherwise, must be a symbol */
-    symbol = (CLibSymbol *) g_value_get_pointer (&value);
-    g_value_set_string (&strvalue, s_clib_symbol_get_name (symbol));
+    gtk_tree_model_get (tree_model, iter, 0, &symbol, -1);
+    text = s_clib_symbol_get_name (symbol);
   }
-  g_object_set_property ((GObject*)cell, "text", &strvalue);
-
-  g_value_unset (&value);
-  g_value_unset (&strvalue);
+  g_object_set ((GObject*)cell, "text", text, NULL);
 }
 
 /*! \brief Determines visibility of items of the library treeview.
