@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-19 22:54-0400\n"
+"POT-Creation-Date: 2007-09-02 21:10-0400\n"
 "PO-Revision-Date: 2007-07-10 17:29+0200\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -125,7 +125,7 @@ msgstr "Mehrfach Kopier Modus"
 msgid "Move Mode"
 msgstr "Verschiebe Modus"
 
-#: src/rcstrings.c:30 src/i_callbacks.c:706 src/x_multiattrib.c:1237
+#: src/rcstrings.c:30 src/i_callbacks.c:706 src/x_multiattrib.c:1258
 msgid "Delete"
 msgstr "Löschen"
 
@@ -382,7 +382,7 @@ msgstr "Hinauf"
 msgid "Documentation"
 msgstr "Dokumentation"
 
-#: src/rcstrings.c:100 src/x_multiattrib.c:1528
+#: src/rcstrings.c:100 src/x_multiattrib.c:1549
 msgid "Attributes"
 msgstr "Attribut"
 
@@ -1252,7 +1252,7 @@ msgstr "Das Bild [%s] konnte nicht geladen werden"
 msgid "Picture"
 msgstr "Bild"
 
-#: src/o_picture.c:658 src/x_attribedit.c:139
+#: src/o_picture.c:658 src/x_attribedit.c:145
 #, c-format
 msgid "ERROR: NULL object!\n"
 msgstr "FEHLER: NULL Objekt!\n"
@@ -1307,64 +1307,64 @@ msgstr ""
 "  -h            Hilfe (diese Ausgabe)\n"
 "\n"
 
-#: src/x_attribedit.c:124
+#: src/x_attribedit.c:130
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr "Ungültige Anzeigeoption, zeige beide als Voreinstellung\n"
 
-#: src/x_attribedit.c:327
+#: src/x_attribedit.c:333
 msgid "Single Attribute Editor"
 msgstr "Editor für ein Attribut"
 
-#: src/x_attribedit.c:358
+#: src/x_attribedit.c:364
 msgid "<b>Edit Attribute</b>"
 msgstr "<b>Attribut bearbeiten</b>"
 
-#: src/x_attribedit.c:360
+#: src/x_attribedit.c:366
 msgid "<b>Add Attribute</b>"
 msgstr "<b>Attribut hinzufügen</b>"
 
-#: src/x_attribedit.c:376 src/x_multiattrib.c:1710
+#: src/x_attribedit.c:382 src/x_multiattrib.c:1731
 msgid "Name:"
 msgstr "Name:"
 
-#: src/x_attribedit.c:392 src/x_multiattrib.c:1729
+#: src/x_attribedit.c:398 src/x_multiattrib.c:1750
 msgid "Value:"
 msgstr "Wert:"
 
-#: src/x_attribedit.c:408 src/x_multiattrib.c:1766
+#: src/x_attribedit.c:414 src/x_multiattrib.c:1787
 msgid "Visible"
 msgstr "Sichtbar"
 
-#: src/x_attribedit.c:428
+#: src/x_attribedit.c:434
 msgid "Show Value Only"
 msgstr "Nur Wert anzeigen"
 
-#: src/x_attribedit.c:430
+#: src/x_attribedit.c:436
 msgid "Show Name Only"
 msgstr "Nur Name anzeigen"
 
-#: src/x_attribedit.c:432 src/x_multiattrib.c:1205
+#: src/x_attribedit.c:438 src/x_multiattrib.c:1226
 msgid "Show Name & Value"
 msgstr "Zeige Name & Wert"
 
-#: src/x_attribedit.c:439
+#: src/x_attribedit.c:445
 msgid "<b>Attach Options</b>"
 msgstr "<b>Optionen</b>"
 
-#: src/x_attribedit.c:454
+#: src/x_attribedit.c:460
 msgid "All"
 msgstr "Alle"
 
-#: src/x_attribedit.c:462 src/x_compselect.c:733 src/x_compselect.c:808
+#: src/x_attribedit.c:468 src/x_compselect.c:728 src/x_compselect.c:803
 msgid "Components"
 msgstr "Bauteile"
 
-#: src/x_attribedit.c:470 src/x_window.c:537
+#: src/x_attribedit.c:476 src/x_window.c:537
 msgid "Nets"
 msgstr "Netz"
 
-#: src/x_attribedit.c:478
+#: src/x_attribedit.c:484
 msgid "Replace existing attributes"
 msgstr "Vorhandene Attribute ersetzen"
 
@@ -1497,35 +1497,35 @@ msgstr "Konnte die Farbe %s nicht zuteilen!\n"
 msgid "Tried to get an invalid color: %d\n"
 msgstr "Versuchte eine ungültige Farbe zuzuteilen: %d\n"
 
-#: src/x_compselect.c:838
+#: src/x_compselect.c:833
 msgid "Filter:"
 msgstr "Filter:"
 
-#: src/x_compselect.c:912
+#: src/x_compselect.c:925
 msgid "Default behavior - reference component"
 msgstr "Bauteil referenzieren (Voreinstellung)"
 
-#: src/x_compselect.c:915
+#: src/x_compselect.c:928
 msgid "Embed component in schematic"
 msgstr "Bauteil in den Schaltplan einbetten"
 
-#: src/x_compselect.c:918
+#: src/x_compselect.c:931
 msgid "Include component as individual objects"
 msgstr "Bauteil als Einzelkomponenten einfügen"
 
-#: src/x_compselect.c:1064
+#: src/x_compselect.c:1077
 msgid "Select Component..."
 msgstr "Bauteil auswählen..."
 
-#: src/x_compselect.c:1090
+#: src/x_compselect.c:1103
 msgid "In Use"
 msgstr "In Verwendung"
 
-#: src/x_compselect.c:1094
+#: src/x_compselect.c:1107
 msgid "Libraries"
 msgstr "Bibliotheken"
 
-#: src/x_compselect.c:1103 src/x_fileselect.c:127
+#: src/x_compselect.c:1116 src/x_fileselect.c:127
 msgid "Preview"
 msgstr "Vorschau"
 
@@ -1822,7 +1822,7 @@ msgstr "Zeige Text"
 msgid "Show text starting with:"
 msgstr "Zeige Text, der beginnt mit:"
 
-#: src/x_dialog.c:3606 src/x_multiattrib.c:1586
+#: src/x_dialog.c:3606 src/x_multiattrib.c:1607
 msgid "Name"
 msgstr "Name"
 
@@ -1852,6 +1852,22 @@ msgstr "Wenn Sie nicht speichern, werden Sie alle Änderungen verlieren."
 #: src/x_dialog.c:3777
 msgid "_Close without saving"
 msgstr "Schließen _ohne Speichern"
+
+#: src/x_dialog.c:4098
+#, c-format
+msgid ""
+"<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
+"Please correct in order to continue</span>\n"
+"\n"
+"The name and value must be non-empty.\n"
+"The name cannot end with a space.\n"
+"The value cannot start with a space."
+msgstr ""
+
+#: src/x_dialog.c:4100
+#, fuzzy
+msgid "Invalid Attribute"
+msgstr "Attribut hinzufügen"
 
 #: src/x_fileselect.c:47
 msgid "Schematics"
@@ -2023,44 +2039,44 @@ msgstr "Konnte Datei %s nicht öffnen\n"
 msgid "Clear"
 msgstr "Entfernen"
 
-#: src/x_multiattrib.c:712
+#: src/x_multiattrib.c:718
 msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr ""
 "Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
 
-#: src/x_multiattrib.c:1207
+#: src/x_multiattrib.c:1228
 msgid "Show Value only"
 msgstr "Nur Wert anzeigen"
 
-#: src/x_multiattrib.c:1209
+#: src/x_multiattrib.c:1230
 msgid "Show Name only"
 msgstr "Nur Name anzeigen"
 
-#: src/x_multiattrib.c:1236
+#: src/x_multiattrib.c:1257
 msgid "Duplicate"
 msgstr "Duplizieren"
 
-#: src/x_multiattrib.c:1513
+#: src/x_multiattrib.c:1534
 msgid "Edit Attributes"
 msgstr "Attribute bearbeiten"
 
-#: src/x_multiattrib.c:1611
+#: src/x_multiattrib.c:1632
 msgid "Value"
 msgstr "Wert"
 
-#: src/x_multiattrib.c:1633
+#: src/x_multiattrib.c:1654
 msgid "Vis?"
 msgstr "Sichtbar?"
 
-#: src/x_multiattrib.c:1653
+#: src/x_multiattrib.c:1674
 msgid "N"
 msgstr "Name"
 
-#: src/x_multiattrib.c:1673
+#: src/x_multiattrib.c:1694
 msgid "V"
 msgstr "Wert"
 
-#: src/x_multiattrib.c:1694
+#: src/x_multiattrib.c:1715
 msgid "Add Attribute"
 msgstr "Attribut hinzufügen"
 

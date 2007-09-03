@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-19 22:54-0400\n"
+"POT-Creation-Date: 2007-09-02 21:10-0400\n"
 "PO-Revision-Date: 2002-10-05 20:00+0900\n"
 "Last-Translator: MIYAMOTO Takanori <pnms@jcom.home.ne.jp>\n"
 "Language-Team: japanese <ja@li.org>\n"
@@ -129,7 +129,7 @@ msgstr "コピーモード"
 msgid "Move Mode"
 msgstr "移動モード"
 
-#: src/rcstrings.c:30 src/i_callbacks.c:706 src/x_multiattrib.c:1237
+#: src/rcstrings.c:30 src/i_callbacks.c:706 src/x_multiattrib.c:1258
 msgid "Delete"
 msgstr "削除"
 
@@ -389,7 +389,7 @@ msgstr "上へ"
 msgid "Documentation"
 msgstr "ドキュメント表示/検索"
 
-#: src/rcstrings.c:100 src/x_multiattrib.c:1528
+#: src/rcstrings.c:100 src/x_multiattrib.c:1549
 msgid "Attributes"
 msgstr "アトリビュート"
 
@@ -1246,7 +1246,7 @@ msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
 msgid "Picture"
 msgstr ""
 
-#: src/o_picture.c:658 src/x_attribedit.c:139
+#: src/o_picture.c:658 src/x_attribedit.c:145
 #, c-format
 msgid "ERROR: NULL object!\n"
 msgstr ""
@@ -1291,67 +1291,67 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/x_attribedit.c:124
+#: src/x_attribedit.c:130
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr ""
 
-#: src/x_attribedit.c:327
+#: src/x_attribedit.c:333
 msgid "Single Attribute Editor"
 msgstr "シングルアトルビュートエディタ"
 
-#: src/x_attribedit.c:358
+#: src/x_attribedit.c:364
 #, fuzzy
 msgid "<b>Edit Attribute</b>"
 msgstr "アトリビュート編集"
 
-#: src/x_attribedit.c:360
+#: src/x_attribedit.c:366
 #, fuzzy
 msgid "<b>Add Attribute</b>"
 msgstr "アトリビュート追加/編集"
 
-#: src/x_attribedit.c:376 src/x_multiattrib.c:1710
+#: src/x_attribedit.c:382 src/x_multiattrib.c:1731
 msgid "Name:"
 msgstr "名前:"
 
-#: src/x_attribedit.c:392 src/x_multiattrib.c:1729
+#: src/x_attribedit.c:398 src/x_multiattrib.c:1750
 msgid "Value:"
 msgstr "値:"
 
-#: src/x_attribedit.c:408 src/x_multiattrib.c:1766
+#: src/x_attribedit.c:414 src/x_multiattrib.c:1787
 msgid "Visible"
 msgstr "表示"
 
-#: src/x_attribedit.c:428
+#: src/x_attribedit.c:434
 msgid "Show Value Only"
 msgstr "値のみ表示"
 
-#: src/x_attribedit.c:430
+#: src/x_attribedit.c:436
 msgid "Show Name Only"
 msgstr "名前のみ表示"
 
-#: src/x_attribedit.c:432 src/x_multiattrib.c:1205
+#: src/x_attribedit.c:438 src/x_multiattrib.c:1226
 msgid "Show Name & Value"
 msgstr "名前と値を表示"
 
-#: src/x_attribedit.c:439
+#: src/x_attribedit.c:445
 #, fuzzy
 msgid "<b>Attach Options</b>"
 msgstr "オプション"
 
-#: src/x_attribedit.c:454
+#: src/x_attribedit.c:460
 msgid "All"
 msgstr "すべて"
 
-#: src/x_attribedit.c:462 src/x_compselect.c:733 src/x_compselect.c:808
+#: src/x_attribedit.c:468 src/x_compselect.c:728 src/x_compselect.c:803
 msgid "Components"
 msgstr "部品"
 
-#: src/x_attribedit.c:470 src/x_window.c:537
+#: src/x_attribedit.c:476 src/x_window.c:537
 msgid "Nets"
 msgstr "ネット"
 
-#: src/x_attribedit.c:478
+#: src/x_attribedit.c:484
 msgid "Replace existing attributes"
 msgstr ""
 
@@ -1488,37 +1488,37 @@ msgstr "指定できない色[%s]です!\n"
 msgid "Tried to get an invalid color: %d\n"
 msgstr "無効な色の指定です。 : %d\n"
 
-#: src/x_compselect.c:838
+#: src/x_compselect.c:833
 #, fuzzy
 msgid "Filter:"
 msgstr "フィルタ"
 
-#: src/x_compselect.c:912
+#: src/x_compselect.c:925
 msgid "Default behavior - reference component"
 msgstr ""
 
-#: src/x_compselect.c:915
+#: src/x_compselect.c:928
 #, fuzzy
 msgid "Embed component in schematic"
 msgstr "組み込む"
 
-#: src/x_compselect.c:918
+#: src/x_compselect.c:931
 msgid "Include component as individual objects"
 msgstr ""
 
-#: src/x_compselect.c:1064
+#: src/x_compselect.c:1077
 msgid "Select Component..."
 msgstr "部品選択..."
 
-#: src/x_compselect.c:1090
+#: src/x_compselect.c:1103
 msgid "In Use"
 msgstr ""
 
-#: src/x_compselect.c:1094
+#: src/x_compselect.c:1107
 msgid "Libraries"
 msgstr "ライブラリ"
 
-#: src/x_compselect.c:1103 src/x_fileselect.c:127
+#: src/x_compselect.c:1116 src/x_fileselect.c:127
 msgid "Preview"
 msgstr "プレビュー"
 
@@ -1843,7 +1843,7 @@ msgstr "テキスト表示"
 msgid "Show text starting with:"
 msgstr "テキスト"
 
-#: src/x_dialog.c:3606 src/x_multiattrib.c:1586
+#: src/x_dialog.c:3606 src/x_multiattrib.c:1607
 msgid "Name"
 msgstr "名前"
 
@@ -1869,6 +1869,22 @@ msgstr ""
 #: src/x_dialog.c:3777
 msgid "_Close without saving"
 msgstr ""
+
+#: src/x_dialog.c:4098
+#, c-format
+msgid ""
+"<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
+"Please correct in order to continue</span>\n"
+"\n"
+"The name and value must be non-empty.\n"
+"The name cannot end with a space.\n"
+"The value cannot start with a space."
+msgstr ""
+
+#: src/x_dialog.c:4100
+#, fuzzy
+msgid "Invalid Attribute"
+msgstr "アトリビュート追加/編集"
 
 #: src/x_fileselect.c:47
 #, fuzzy
@@ -2056,43 +2072,43 @@ msgstr "おっと、ディレクトリが開けません: %s\n"
 msgid "Clear"
 msgstr "クリア"
 
-#: src/x_multiattrib.c:712
+#: src/x_multiattrib.c:718
 msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr ""
 
-#: src/x_multiattrib.c:1207
+#: src/x_multiattrib.c:1228
 msgid "Show Value only"
 msgstr "値のみ表示"
 
-#: src/x_multiattrib.c:1209
+#: src/x_multiattrib.c:1230
 msgid "Show Name only"
 msgstr "名前のみ表示"
 
-#: src/x_multiattrib.c:1236
+#: src/x_multiattrib.c:1257
 msgid "Duplicate"
 msgstr ""
 
-#: src/x_multiattrib.c:1513
+#: src/x_multiattrib.c:1534
 msgid "Edit Attributes"
 msgstr "アトリビュート編集"
 
-#: src/x_multiattrib.c:1611
+#: src/x_multiattrib.c:1632
 msgid "Value"
 msgstr "値"
 
-#: src/x_multiattrib.c:1633
+#: src/x_multiattrib.c:1654
 msgid "Vis?"
 msgstr "表示"
 
-#: src/x_multiattrib.c:1653
+#: src/x_multiattrib.c:1674
 msgid "N"
 msgstr "名前"
 
-#: src/x_multiattrib.c:1673
+#: src/x_multiattrib.c:1694
 msgid "V"
 msgstr "値"
 
-#: src/x_multiattrib.c:1694
+#: src/x_multiattrib.c:1715
 #, fuzzy
 msgid "Add Attribute"
 msgstr "アトリビュート追加/編集"
