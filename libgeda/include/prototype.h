@@ -589,7 +589,6 @@ char *s_papersizes_get(int counter);
 void s_papersizes_get_size(char *string, int *width, int *height);
 
 /* s_project.c */
-void s_toplevel_init (void);
 TOPLEVEL *s_toplevel_new (void);
 void s_toplevel_delete (TOPLEVEL *toplevel);
 

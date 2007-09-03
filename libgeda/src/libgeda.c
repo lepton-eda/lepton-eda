@@ -68,7 +68,6 @@ void libgeda_init(void)
 
   g_type_init ();
 
-  s_toplevel_init ();
   s_clib_init();
   s_slib_init();
   s_menu_init();

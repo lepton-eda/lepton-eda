@@ -399,8 +399,6 @@ struct st_page {
 
 struct st_toplevel {
 
-  int wid;			/* Window id, always unique */
-
   int num_untitled;		/* keep track of untitled wins */
 
   int start_x;
@@ -860,9 +858,6 @@ struct st_toplevel {
   int hierarchy_netname_order;
   int hierarchy_uref_order;
   char *unnamed_netname;
-
-  TOPLEVEL *next;
-  TOPLEVEL *prev; 
 };
 
 /* structures below are for gnetlist */

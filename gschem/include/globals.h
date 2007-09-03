@@ -21,6 +21,9 @@
 /* used by various guile functions, set in x_event* functions */
 extern TOPLEVEL *global_window_current;
 
+/* window list */
+extern GList *global_window_list;
+
 /* color stuff */
 extern GdkColormap *colormap; 
 extern GdkVisual *visual; 

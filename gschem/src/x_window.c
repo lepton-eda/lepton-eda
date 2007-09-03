@@ -154,6 +154,9 @@ void x_window_setup (TOPLEVEL *toplevel)
   toplevel->win_height = toplevel->height;
   /* x_window_setup_world() - END */
 
+  /* Add to the list of windows */
+  global_window_list = g_list_append (global_window_list, toplevel);
+
   /* X related stuff */
   x_window_create_main (toplevel);
 
@@ -781,12 +784,11 @@ void x_window_close(TOPLEVEL *w_current)
   if (w_current->sewindow)
   gtk_widget_destroy(w_current->sewindow);
 
-  g_assert(w_current->prev != NULL);
-  if (w_current->next == NULL && w_current->prev->prev == NULL) {
+  if (g_list_length (global_window_list) == 1) {
     /* no more window after this one, remember to quit */
     last_window = TRUE;
   }
-  
+
   o_attrib_free_current(w_current);
   o_complex_free_filename(w_current);
 
@@ -819,14 +821,14 @@ void x_window_close(TOPLEVEL *w_current)
 
   /* finally close the main window */
   gtk_widget_destroy(w_current->main_window);
-  
+
   s_toplevel_delete (w_current);
+  global_window_list = g_list_remove (global_window_list, w_current);
 
   /* just closed last window, so quit */
   if (last_window) {
     gschem_quit();
   }
-  
 }
 
 /*! \todo Finish function documentation!!!
@@ -834,23 +836,18 @@ void x_window_close(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_window_close_all(TOPLEVEL *toplevel)
+void x_window_close_all(TOPLEVEL *w_current)
 {
-  TOPLEVEL *last, *current;
+  TOPLEVEL *current;
+  GList *list_copy, *iter;
 
-  /* find last toplevel in toplevel list */
-  for (last = toplevel; last->next != NULL; last = last->next);
-
-  /* now close each toplevel */
-  for (current = last; current->prev != NULL; current = last) {
-    /* save a ref to the previous toplevel in the list */
-    last = current->prev;
-    /* close current if it is not a preview toplevel */
-    if (current->main_window != NULL) {
-      x_window_close (current);
-    }
+  iter = list_copy = g_list_copy (global_window_list);
+  while (iter != NULL ) {
+    current = (TOPLEVEL *)iter->data;
+    iter = g_list_next (iter);
+    x_window_close (current);
   }
-
+  g_list_free (list_copy);
 }
 
 /*! \brief Opens a new untitled page.

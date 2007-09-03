@@ -47,26 +47,6 @@
 #include <dmalloc.h>
 #endif
 
-/* global_wid always increments, it needs to be unique per run */
-static int global_wid = 0;
-
-/* head pointer to toplevel structure, this points to all the toplevels that
-   currently exist */
-static TOPLEVEL *toplevel_head = NULL;
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void s_toplevel_init (void)
-{
-  toplevel_head = (TOPLEVEL*)g_new (TOPLEVEL, 1);
-  toplevel_head->wid = -1;
-  toplevel_head->next = NULL;  
-  toplevel_head->prev = NULL;
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -74,11 +54,9 @@ void s_toplevel_init (void)
  */
 TOPLEVEL *s_toplevel_new (void)
 {
-  TOPLEVEL *toplevel, *tmp;
+  TOPLEVEL *toplevel;
 
   toplevel = (TOPLEVEL*)g_new (TOPLEVEL, 1);
-
-  toplevel->wid = global_wid++;
 
   toplevel->num_untitled = 0;
 
@@ -452,15 +430,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->DONT_RECALC = 1;
   toplevel->DONT_REDRAW = 1;
 
-  
-  /* now append toplevel to this list: */
-  /*   - find the tail of the toplevel list */
-  for (tmp = toplevel_head; tmp->next != NULL; tmp = tmp->next);
-  /*   - link toplevel with tmp */
-  tmp->next = toplevel;
-  toplevel->prev = tmp;
-  toplevel->next = NULL;
-
   return toplevel;
 }
 
@@ -475,11 +444,6 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
     gboolean ret;
     ret = g_source_remove (toplevel->auto_save_timeout);
     g_assert (ret);
-  }
-
-  if (toplevel->wid == -1) {
-    /* do no delete head */
-    return;
   }
 
   g_free (toplevel->internal_symbol_name);
@@ -503,12 +467,6 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
 
   /* Delete the page list */
   g_object_unref(toplevel->pages);
-
-  /* unlink toplevel from toplevel list */
-  toplevel->prev->next = toplevel->next;
-  if (toplevel->next != NULL) {
-    toplevel->next->prev = toplevel->prev;
-  }
 
   g_free (toplevel);
 

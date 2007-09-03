@@ -36,6 +36,9 @@
  * window set in x_event* functions */
 TOPLEVEL *global_window_current = NULL;
 
+/* window list */
+GList *global_window_list = NULL;
+
 char *rc_filename     = NULL;
 char *script_filename = NULL;
 char *output_filename = NULL;

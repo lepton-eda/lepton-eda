@@ -426,28 +426,27 @@ static GList *recent_files = NULL;
  */
 static void update_recent_files_menus()
 {
-   TOPLEVEL *w;
+   TOPLEVEL *w_current;
    GtkWidget *submenu, *recent_menu_item;
+   GList *iter;
 
-   w = global_window_current;
-   while(w->prev)
-      w = w->prev;
+   for (iter = global_window_list;
+        iter != NULL;
+        iter = g_list_next (iter)) {
+      w_current = (TOPLEVEL *)iter->data;
 
-   while(w) {
-      if(w->wid == -1 || w->menubar == NULL) {
-         w = w->next;
-         continue;
-      }
+      if (w_current->menubar == NULL)
+        continue;
 
-      recent_menu_item = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(
-               w->menubar), "File/Recent files");
+      recent_menu_item =
+        (GtkWidget *) gtk_object_get_data(GTK_OBJECT(w_current->menubar),
+                                          "File/Recent files");
       if(recent_menu_item == NULL)
          return;
 
       submenu = gtk_menu_item_get_submenu(GTK_MENU_ITEM(recent_menu_item));
       gtk_widget_destroy(submenu);
-      x_menu_attach_recent_files_submenu(w);
-      w = w->next;
+      x_menu_attach_recent_files_submenu(w_current);
    }
 }
 

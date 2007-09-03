@@ -173,21 +173,13 @@ g_keys_dump_keymap (void)
  */
 static gboolean clear_keyaccel_string(gpointer data)
 {
-  TOPLEVEL *w = global_window_current;
+  TOPLEVEL *w_current = data;
 
   /* Find out if the toplevel is present... */
-  while(w->prev)
-    w = w->prev;
-
-  while(w) {
-    if(w == (TOPLEVEL *) data) {
-      /* ... it is, update its status bar */
-      g_free(w->keyaccel_string);
-      w->keyaccel_string = NULL;
-      i_show_state(w, NULL);
-      break;
-    }
-    w = w->next;
+  if (g_list_find(global_window_list, w_current) != NULL) {
+    g_free(w_current->keyaccel_string);
+    w_current->keyaccel_string = NULL;
+    i_show_state(w_current, NULL);
   }
 
   return FALSE;
