@@ -2846,7 +2846,7 @@ char *generic_filesel_dialog (const char *msg, const char *templ, gint flags)
 /*********** Start of find text dialog box *******/
 
 int start_find;
-OBJECT *remember_page;
+PAGE *remember_page;
 
 /*! \brief response function for the find text dialog
  *  \par Function Description
@@ -2869,11 +2869,11 @@ void find_text_dialog_response(GtkWidget *w, gint response,
 
     strncpy(generic_textstring, string, 256);
 
-    while (remember_page != w_current->page_current->object_head) {
-      s_hierarchy_up(w_current, w_current->page_current->up);
+    if (remember_page != w_current->page_current) {
+      s_page_goto(w_current, remember_page);
     }
     done =
-      o_edit_find_text(w_current, remember_page, string,
+      o_edit_find_text(w_current, remember_page->object_head, string,
 		       gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
 						    (checkdescend)),
 		       !start_find);
@@ -2909,7 +2909,7 @@ void find_text_dialog(TOPLEVEL * w_current)
   OBJECT *object = NULL;
 
   start_find = 1;
-  remember_page = w_current->page_current->object_head;
+  remember_page = w_current->page_current;
   if ((object = o_select_return_first_object(w_current)) != NULL) {
     if (object->type == OBJ_TEXT) {
       strncpy(generic_textstring, object->text->string, 256);

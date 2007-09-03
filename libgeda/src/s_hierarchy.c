@@ -337,7 +337,7 @@ GList *s_hierarchy_traversepages(TOPLEVEL *w_current,
 	  /* call the recursive function */
 	  s_hierarchy_traversepages(w_current,
 				    flags | HIERARCHY_INNERLOOP);
-	  s_hierarchy_up(w_current, w_current->page_current->up);
+	  s_page_goto(w_current, p_current);
 	}
 	else {
 	  s_log_message("ERROR in s_hierarchy_traverse: "
