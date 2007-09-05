@@ -515,31 +515,6 @@ void o_attrib_print(ATTRIB *attributes)
   }
 }
 
-/*! \brief Print all attributes in reverse order to a Postscript document.
- *  \par Function Description
- *  Print all attributes in reverse order to a Postscript document.
- *
- *  \param [in] attributes  List of attributes to print.
- */
-void o_attrib_print_reverse(ATTRIB *attributes) 
-{
-  ATTRIB *a_current;
-
-  a_current = o_attrib_return_tail(attributes);
-
-  while (a_current != NULL) {
-    printf("Attribute points to: %s\n", a_current->object->name);
-    if (a_current->object && a_current->object->text) {
-      printf("\tText is: %s\n", a_current->object->text->string);
-    }
-
-    if (!a_current->object) {
-      printf("oops found a null attrib object\n");
-    }
-    a_current = a_current->prev;
-  }
-}
-
 /*! \todo Empty function.
  *  \brief
  *  \par Function Description

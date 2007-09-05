@@ -163,7 +163,6 @@ void o_attrib_select_draw(ATTRIB *list);
 void o_attrib_unselect_draw(ATTRIB *list);
 void o_attrib_free_all(TOPLEVEL *toplevel, ATTRIB *list);
 void o_attrib_print(ATTRIB *attributes);
-void o_attrib_print_reverse(ATTRIB *attributes);
 ATTRIB *o_attrib_copy(ATTRIB *list);
 void o_attrib_delete(ATTRIB *a_current);
 void o_attrib_remove(ATTRIB *list, ATTRIB *remove);
