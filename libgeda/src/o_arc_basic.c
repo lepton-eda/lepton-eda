@@ -150,7 +150,6 @@ OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
 		   OBJECT *o_current)
 {
   OBJECT *new_obj;
-  ATTRIB *a_current;
   int color;
 
   if (o_current->saved_color == -1) {
@@ -170,18 +169,8 @@ OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
                      o_current->line_length, o_current->line_space);
   o_set_fill_options(toplevel, new_obj,
                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
-	
-  a_current = o_current->attribs;
-  if (a_current) {
-    while (a_current) {
 
-      /* head attrib node has prev = NULL */
-      if (a_current->prev != NULL) {
-        a_current->copied_to = new_obj;
-      }
-      a_current = a_current->next;
-    }
-  }
+  o_attrib_list_copied_to (o_current->attribs, new_obj);
 
   return(new_obj);
 }

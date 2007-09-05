@@ -931,7 +931,6 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
 		       OBJECT *o_current)
 {
   OBJECT *new_obj=NULL;
-  ATTRIB *a_current;
   int color;
   int selectable;
   const CLibSymbol *clib = NULL;
@@ -966,18 +965,7 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
   /* here you need to create a list of attributes which need to be 
    * connected to the new list, probably make an attribute list and
    * fill it with sid's of the attributes */
-  a_current = o_current->attribs;
-  if (a_current) {
-    while ( a_current ) {
-
-      /* head attrib node has prev = NULL */	
-      if (a_current->prev != NULL) {
-        a_current->copied_to = new_obj;	
-      }
-	
-      a_current = a_current->next;
-    }
-  }
+  o_attrib_list_copied_to (o_current->attribs, new_obj);
 
   return(new_obj);
 }
@@ -991,7 +979,6 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail,
 {
   OBJECT *new_obj=NULL;
   OBJECT *temp_list;
-  ATTRIB *a_current;
   int color;
   int selectable;
 
@@ -1027,18 +1014,7 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail,
   /* here you need to create a list of attributes which need to be 
    * connected to the new list, probably make an attribute list and
    * fill it with sid's of the attributes */
-  a_current = o_current->attribs;
-  if (a_current) {
-    while ( a_current ) {
-
-      /* head attrib node has prev = NULL */	
-      if (a_current->prev != NULL) {
-        a_current->copied_to = new_obj;	
-      }
-	
-      a_current = a_current->next;
-    }
-  }
+  o_attrib_list_copied_to (o_current->attribs, new_obj);
 
   return(new_obj);
 }
