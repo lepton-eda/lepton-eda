@@ -166,7 +166,6 @@ void o_attrib_print(ATTRIB *attributes);
 ATTRIB *o_attrib_copy(ATTRIB *list);
 void o_attrib_delete(ATTRIB *a_current);
 void o_attrib_remove(ATTRIB *list, ATTRIB *remove);
-void o_attrib_detach_all(TOPLEVEL *toplevel, OBJECT *object_list, OBJECT *main_head);
 OBJECT *o_read_attribs(TOPLEVEL *toplevel,
 		       OBJECT *object_to_get_attribs, 
 		       TextBuffer *tb,

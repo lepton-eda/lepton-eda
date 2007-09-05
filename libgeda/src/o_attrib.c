@@ -592,39 +592,6 @@ void o_attrib_remove(ATTRIB *list, ATTRIB *remove)
   }
 }
 
-/*! \todo Is this function used?
- *  \deprecated
- *  \brief Detach all attributes from a list.
- *  \par Function Description
- *  Detach all attributes from a list.
- *
- *  \param [in] toplevel    The TOPLEVEL object.
- *  \param [in] object_list  Attribute list to delete.
- *  \param [in] main_head    The head of the attribute list.
- */
-void o_attrib_detach_all(TOPLEVEL *toplevel, OBJECT *object_list, OBJECT *main_head)
-{
-#if 0 /* not used */
-  OBJECT *o_current=NULL;
-
-  o_current = object_list;
-
-  while(o_current != NULL) {
-
-    X = (OBJECT *) o_list_search(main_head, o_current);
-
-    if (X) {
-      if (X->attribs != NULL) {
-        o_attrib_free_all(toplevel, X->attribs);
-        X->attribs = NULL; /* leak possible? */
-        toplevel->page_current->CHANGED=1;
-      }
-    }
-    o_current = o_current->next;
-  }
-#endif
-}
-
 /*! \brief Read attributes from a buffer.
  *  \par Function Description
  *  Read attributes from a TextBuffer.
