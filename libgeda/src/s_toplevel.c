@@ -111,7 +111,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->display_width  = 0;
 
   toplevel->DONT_REDRAW       = 0;
-  toplevel->DONT_RECALC       = 0;
   toplevel->ADDING_SEL        = 0;
 
   toplevel->drawbounding_action_mode = FREE;
@@ -379,7 +378,6 @@ TOPLEVEL *s_toplevel_new (void)
 
 
   /* disable the events */
-  toplevel->DONT_RECALC = 1;
   toplevel->DONT_REDRAW = 1;
 
   return toplevel;

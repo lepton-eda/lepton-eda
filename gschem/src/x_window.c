@@ -121,8 +121,6 @@ void x_window_setup (TOPLEVEL *toplevel)
   /* Initialize the autosave callback */
   s_page_autosave_init(toplevel);
 
-  toplevel->DONT_RECALC    = 0;
-
   /* X related stuff */
   toplevel->display_height = gdk_screen_height ();
   toplevel->display_width  = gdk_screen_width ();

@@ -1419,12 +1419,10 @@ void x_event_hschanged (GtkAdjustment *adj, TOPLEVEL *w_current)
   current_left = w_current->page_current->left;
   new_left = (int) hadjustment->value;
 
-  if (!w_current->DONT_RECALC) {
-    w_current->page_current->left = new_left;
-    w_current->page_current->right =
-      w_current->page_current->right -
-      (current_left - new_left);
-  }
+  w_current->page_current->left = new_left;
+  w_current->page_current->right =
+    w_current->page_current->right -
+    (current_left - new_left);
 
   if (!w_current->DONT_REDRAW) {	
     o_redraw_all_fast(w_current);
@@ -1455,12 +1453,10 @@ void x_event_vschanged (GtkAdjustment *adj, TOPLEVEL *w_current)
   current_bottom = w_current->page_current->bottom;
   new_bottom = w_current->init_bottom - (int) vadjustment->value;
 
-  if (!w_current->DONT_RECALC) {
-    w_current->page_current->bottom = new_bottom;
-    w_current->page_current->top =
-      w_current->page_current->top -
-      (current_bottom - new_bottom);
-  }
+  w_current->page_current->bottom = new_bottom;
+  w_current->page_current->top =
+    w_current->page_current->top -
+    (current_bottom - new_bottom);
 
 #if DEBUG
   printf("vrange %f %f\n", vadjustment->lower, vadjustment->upper);

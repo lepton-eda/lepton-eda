@@ -466,7 +466,6 @@ struct st_toplevel {
   int display_width;			/* could me made global (?) */
 
   int DONT_REDRAW;			/* misc flags */
-  int DONT_RECALC;
   int ADDING_SEL;
 
   int drawbounding_action_mode; 	/* outline vs bounding box */
