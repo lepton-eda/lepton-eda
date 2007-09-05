@@ -205,6 +205,7 @@ int o_attrib_count_toplevel(TOPLEVEL *w_current, char *name);
 char *o_attrib_search_toplevel_all(PAGE *page_head, char *name);
 OBJECT **o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object);
 void o_attrib_free_returned(OBJECT **found_objects);
+void o_attrib_list_copied_to(ATTRIB *list, OBJECT *to_obj);
 
 /* o_basic.c */
 int inside_region(int xmin, int ymin, int xmax, int ymax, int x, int y);

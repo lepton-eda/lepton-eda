@@ -269,7 +269,6 @@ void o_pin_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
 OBJECT *o_pin_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 {
   OBJECT *new_obj;
-  ATTRIB *a_current;
   int color;
 
   if (o_current->saved_color == -1) {
@@ -289,17 +288,7 @@ OBJECT *o_pin_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
   new_obj->line->y[1] = o_current->line->y[1];
 
   /*	new_obj->attribute = 0;*/
-  a_current = o_current->attribs;
-  if (a_current) {
-    while ( a_current ) {
-
-      /* head attrib node has prev = NULL */
-      if (a_current->prev != NULL) {
-        a_current->copied_to = new_obj;
-      }
-      a_current = a_current->next;
-    }
-  }
+  o_attrib_list_copied_to (o_current->attribs, new_obj);
 
   return(new_obj);
 }

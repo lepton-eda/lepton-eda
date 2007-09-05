@@ -219,13 +219,17 @@ OBJECT *o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head,
           o_attrib_attach(w_current,
                           w_current->page_current->object_parent,
                           dest, src->attached_to->copied_to);     
-
-                                /* satisfied copy request */
-          src->attached_to->copied_to = NULL;
-        } 
+        }
       }
     }
 
+    src = src->next;
+  }
+
+  /* Clean up dangling ATTRIB.copied_to pointers */
+  src = src_list_head;
+  while(src != NULL) {
+    o_attrib_list_copied_to (src->attribs, NULL);
     src = src->next;
   }
 
@@ -336,9 +340,7 @@ OBJECT *o_list_copy_all_selection2(TOPLEVEL *w_current,
           o_attrib_attach(w_current,
                           w_current->page_current->object_parent,
                           dest, object->attached_to->copied_to);     
-                                /* satisfied copy request */
-          object->attached_to->copied_to = NULL;
-        } 
+        }
       }
     }
 
@@ -346,6 +348,14 @@ OBJECT *o_list_copy_all_selection2(TOPLEVEL *w_current,
     o_selection_select(object, SELECT_COLOR);
 
     src = src->next;
+  }
+
+  /* Clean up dangling ATTRIB.copied_to pointers */
+  src = src_list_head;
+  while(src != NULL) {
+    object = src->data;
+    o_attrib_list_copied_to (object->attribs, NULL);
+    src = g_list_next (src);
   }
 
   w_current->ADDING_SEL = adding_sel_save;

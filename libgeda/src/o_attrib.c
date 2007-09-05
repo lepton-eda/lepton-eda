@@ -2557,3 +2557,27 @@ void o_attrib_free_returned(OBJECT **found_objects)
 
   g_free(found_objects);
 }
+
+
+/*! \brief Set the copied_to property on a list of attributes
+ *  \par Function Description
+ *  Sets the copied_to property on a list of attributes.
+ *  Used when copying objects with attributes.
+ *
+ *  \param [in] list    List of attributes to set
+ *  \param [in] to_obj  OBEJCT to set copied_to
+ */
+void o_attrib_list_copied_to(ATTRIB *list, OBJECT *to_obj)
+{
+  ATTRIB *a_current;
+
+  a_current = list;
+  while ( a_current ) {
+
+    /* head attrib node has prev = NULL */
+    if (a_current->prev != NULL) {
+      a_current->copied_to = to_obj;
+    }
+    a_current = a_current->next;
+  }
+}

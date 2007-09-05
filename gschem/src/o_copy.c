@@ -405,9 +405,6 @@ void o_copy_end(TOPLEVEL *w_current)
                                  w_current,
                                  object->attached_to->copied_to);
 #endif
-
-            /* satisfied copy request */
-            object->attached_to->copied_to = NULL;
           }
         }
 
@@ -447,6 +444,14 @@ void o_copy_end(TOPLEVEL *w_current)
     w_current->page_current->object_tail =
       (OBJECT *) return_tail( w_current->page_current->object_head );
     s_current = s_current->next;
+  }
+
+  /* Clean up dangling ATTRIB.copied_to pointers */
+  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  while(s_current != NULL) {
+    object = s_current->data;
+    o_attrib_list_copied_to (object->attribs, NULL);
+    s_current = g_list_next (s_current);
   }
 
   /* This is commented out since it breaks the copy of objects.  */
