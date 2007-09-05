@@ -456,33 +456,19 @@ struct st_toplevel {
   int image_width, image_height;		/* h, w of image write */
   int snap;				/* Snap on/off*/
   int grid;				/* Grid on/off*/
-  int min_zoom;				/* minimum zoom factor */
-  int max_zoom;				/* maximum zoom factor */
-
-  /* starting window width used to control text */
-  int starting_width;			
 
   /* location to hold current alignment of text */
   int text_alignment;
 
-  /* location to hold current line type selection */
-  int line_type;			
-
-  /* location to hold current fill type selection (PB) */
-  int fill_type;	
-
   int override_color;			/* used in doing selections */
   int inside_redraw;			/* complex vs list redrawing */
-  double window_aspectratio;		/* Window ratio (?) */
   int display_height;			/* display params */
   int display_width;			/* could me made global (?) */
 
   int DONT_DRAW_CONN;			/* misc flags */
   int DONT_RESIZE;
-  int DONT_EXPOSE;
   int DONT_REDRAW;
   int DONT_RECALC;
-  int FORCE_CONN_UPDATE;
   int ADDING_SEL;
 
   int drawbounding_action_mode; 	/* outline vs bounding box */
@@ -509,7 +495,6 @@ struct st_toplevel {
   int complex_rotate;	
 
   void (*last_callback)();	  	/* Last i_call* cmd executed */
-  char *cwd; /* current working directory */
 
   GList* major_changed_refdes;          /* A list of all refdes's that have */
                                         /* major symbol version changes */
@@ -526,60 +511,35 @@ struct st_toplevel {
   GtkWidget *left_label;
   GtkWidget *middle_label;
   GtkWidget *right_label;
-  GtkWidget *filename_label;
   GtkWidget *grid_label;
   GtkWidget *status_label;
 
   GtkWidget *toolbar_select;
   GtkWidget *toolbar_net;
   GtkWidget *toolbar_bus;
-  GtkWidget *toolbar_edit;
-  GtkWidget *toolbar_move;
-  GtkWidget *toolbar_copy;
-  GtkWidget *toolbar_delete;
-  GtkWidget *toolbar_rotate;
-  GtkWidget *toolbar_mirror;
 
   /* Dialog boxes */
   GtkWidget *sowindow;			/* Script open */
   GtkWidget *pfswindow;                 /* Picture File Selection window */
-  GtkWidget *pcfswindow;                /* Picture Change File Selection window */
-  int saveas_flag;     			/* what action after save? */
-
-  GtkWidget *attr_list;
-  GtkWidget *asentry_name;
-  GtkWidget *asentry_value; 
 
   GtkWidget *cswindow;			/* component select */
-  GtkWidget *clib_list;
-  GtkWidget *basename_list;
 
   GtkWidget *iwindow;			/* image write dialog box */
-  GtkWidget *ifilename_entry; 
 
   GtkWidget *pswindow;			/* page select */
 
   /* misc dialogs */
   GtkWidget *tiwindow;			/* text input */
   GtkWidget *tewindow;			/* text edit */
-  GtkWidget *teentry;
   GtkWidget *sewindow;			/* slot edit */
-  GtkWidget *seentry;
   GtkWidget *aawindow;			/* arc attribs */
   GtkWidget *mawindow;			/* multi attribute */
   GtkWidget *aewindow;			/* attribute edit */
-  GtkWidget *aaentry_start;
-  GtkWidget *aaentry_sweep;  
   GtkWidget *trwindow;			/* translate */
-  GtkWidget *trentry;
   GtkWidget *tswindow;			/* text size */
   GtkWidget *tshowwindow;               /* text show window */
   GtkWidget *thidewindow;               /* text hide window */    
   GtkWidget *tfindwindow;               /* text find window */
-  GtkWidget *tsentry;			/* used in edit/edit and */
-  					/* Text size and the snap */
-  					/* size dialog boxes */
-	
   GtkWidget *abwindow;			/* Help/About... dialog*/
   GtkWidget *hkwindow;			/* Help/Hotkeys... dialog*/
   GtkWidget *cowindow;
@@ -780,9 +740,6 @@ struct st_toplevel {
 
   /* BUTT, ROUND, SQUARE caps */
   int print_output_capstyle;		
-
-  /* either window or limits */
-  int image_output_type;			
 
   /* landscape printing only */
   int paper_width, paper_height;

@@ -102,29 +102,18 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->image_height = 0;
   toplevel->snap = 1;
   toplevel->grid = 1;
-  toplevel->min_zoom = 0;
-  toplevel->max_zoom = 8;
-
-  toplevel->starting_width = 0;
 
   toplevel->text_alignment = 0;
 
-  toplevel->line_type = 0;
-
-  toplevel->fill_type = 0;
-
   toplevel->override_color = -1;
   toplevel->inside_redraw = 0;
-  toplevel->window_aspectratio = 0;
   toplevel->display_height = 0;
   toplevel->display_width  = 0;
 
   toplevel->DONT_DRAW_CONN    = 0;
   toplevel->DONT_RESIZE       = 0;
-  toplevel->DONT_EXPOSE       = 0;
   toplevel->DONT_REDRAW       = 0;
   toplevel->DONT_RECALC       = 0;
-  toplevel->FORCE_CONN_UPDATE = 0;
   toplevel->ADDING_SEL        = 0;
 
   toplevel->drawbounding_action_mode = FREE;
@@ -146,7 +135,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->complex_rotate = 0;
 
   toplevel->last_callback = NULL;
-  toplevel->cwd = NULL;
 
   toplevel->major_changed_refdes = NULL;
 
@@ -161,55 +149,34 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->left_label   = NULL;
   toplevel->middle_label = NULL;
   toplevel->right_label  = NULL;
-  toplevel->filename_label = NULL;
   toplevel->grid_label = NULL;
   toplevel->status_label = NULL;
 
   toplevel->toolbar_select = NULL;
   toplevel->toolbar_net    = NULL;
   toplevel->toolbar_bus    = NULL;
-  toplevel->toolbar_edit   = NULL;
-  toplevel->toolbar_move   = NULL;
-  toplevel->toolbar_copy   = NULL;
-  toplevel->toolbar_delete = NULL;
-  toplevel->toolbar_rotate = NULL;
-  toplevel->toolbar_mirror = NULL;
 
   toplevel->sowindow = NULL;
-  toplevel->saveas_flag = 0;
-
-  toplevel->attr_list     = NULL;
-  toplevel->asentry_name  = NULL;
-  toplevel->asentry_value = NULL;
 
   toplevel->cswindow      = NULL;
-  toplevel->clib_list     = NULL;
-  toplevel->basename_list = NULL;
 
 /*   toplevel->fileselect */
 
   toplevel->iwindow = NULL;
-  toplevel->ifilename_entry = NULL; 
 
   toplevel->pswindow   = NULL;
 
   toplevel->tiwindow = NULL;
   toplevel->tewindow = NULL;
-  toplevel->teentry  = NULL;
   toplevel->sewindow = NULL;
-  toplevel->seentry  = NULL;
   toplevel->aawindow = NULL;
   toplevel->mawindow = NULL;
   toplevel->aewindow = NULL;
-  toplevel->aaentry_start = NULL;
-  toplevel->aaentry_sweep = NULL;
   toplevel->trwindow = NULL;
-  toplevel->trentry  = NULL;
   toplevel->tswindow = NULL;
   toplevel->tshowwindow = NULL;
   toplevel->thidewindow = NULL;
   toplevel->tfindwindow = NULL;
-  toplevel->tsentry  = NULL;
 	
   toplevel->abwindow = NULL;
   toplevel->hkwindow = NULL;
@@ -218,7 +185,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->coord_screen = NULL;
 
   toplevel->pfswindow = NULL;
-  toplevel->pcfswindow = NULL;
 
   toplevel->current_pixbuf = NULL;
   toplevel->pixbuf_filename = NULL;
@@ -359,8 +325,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->print_output_capstyle = BUTT_CAP;
 
-  toplevel->image_output_type = 0;
-
   toplevel->paper_width  = 0;
   toplevel->paper_height = 0;
 
@@ -419,7 +383,6 @@ TOPLEVEL *s_toplevel_new (void)
   /* disable the events */
   toplevel->DONT_DRAW_CONN = 1;
   toplevel->DONT_RESIZE = 1;
-  toplevel->DONT_EXPOSE = 1;
   toplevel->DONT_RECALC = 1;
   toplevel->DONT_REDRAW = 1;
 

@@ -75,7 +75,6 @@ void x_window_setup (TOPLEVEL *toplevel)
   toplevel->override_color = -1;
   toplevel->inside_redraw=0;
 
-  toplevel->FORCE_CONN_UPDATE=0;
   toplevel->ADDING_SEL=0;
 
   toplevel->drawbounding_action_mode=FREE;
@@ -124,7 +123,6 @@ void x_window_setup (TOPLEVEL *toplevel)
 
   toplevel->DONT_DRAW_CONN = 0;
   toplevel->DONT_RESIZE    = 0;
-  toplevel->DONT_EXPOSE    = 0;
   toplevel->DONT_RECALC    = 0;
 
   /* X related stuff */
@@ -135,13 +133,9 @@ void x_window_setup (TOPLEVEL *toplevel)
   toplevel->init_left = -45;
   toplevel->init_top  = -45;
   /* init_right and _bottom are set before this function is called */
-  toplevel->min_zoom  = 0;
-  toplevel->max_zoom  = 256;  /* was 128 */
 
   toplevel->width  = default_width;
   toplevel->height = default_height;
-
-  toplevel->starting_width = toplevel->width;
 
   toplevel->win_width  = toplevel->width;
   toplevel->win_height = toplevel->height;
