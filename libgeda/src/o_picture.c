@@ -74,10 +74,8 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
   GdkPixbuf *pixbuf;
   static char gdk_initialized=0;
 
-  /* Initialize GDK first if it isn't a graphic app */
-  /* i.e: it has no main window */
-  if ( (toplevel->main_window == NULL) &&
-       (gdk_initialized == 0)) {
+  /* Initialize GDK first in case this isn't a graphic app */
+  if (gdk_initialized == 0) {
     gdk_init(NULL, NULL);
     gdk_initialized = 1;
   }
