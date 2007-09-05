@@ -723,6 +723,7 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
 {
   OBJECT *new_obj;
   int color;
+  GdkPixbuf *new_pixbuf;
 	
   if (o_current->saved_color == -1) {
     color = o_current->color;
@@ -735,54 +736,44 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
    * be modified.
    */
 
+  /* Copy the picture data */
+  new_pixbuf =
+    gdk_pixbuf_scale_simple(o_current->picture->original_picture,
+                            gdk_pixbuf_get_width (o_current->picture->original_picture),
+                            gdk_pixbuf_get_height (o_current->picture->original_picture),
+                            GDK_INTERP_BILINEAR);
+
   /* create and link a new picture object */	
   new_obj = o_picture_add(toplevel, list_tail,
-			  toplevel->current_pixbuf,
-			  toplevel->pixbuf_filename,
-			  toplevel->pixbuf_wh_ratio,
-			  OBJ_PICTURE,
-			  0, 0, 0, 0, 0, FALSE, FALSE);
+                          new_pixbuf,
+                          o_current->picture->filename,
+                          o_current->picture->ratio,
+                          OBJ_PICTURE,
+                          o_current->picture->upper_x,
+                          o_current->picture->upper_y,
+                          o_current->picture->lower_x,
+                          o_current->picture->lower_y,
+                          o_current->picture->angle,
+                          o_current->picture->mirrored,
+                          o_current->picture->embedded);
 
   /* The dimensions of the new picture are set with the ones of the
    * original picture. The two picturees have the same line type and
    * the same filling options.
-   *
-   * The coordinates and the values in screen unit are computed with
-   * #o_picture_recalc().
    */
-  /* modifying */
-  /* pb20011002 - have to check if o_current is a picture object */
-  new_obj->picture->upper_x = o_current->picture->upper_x;
-  new_obj->picture->upper_y = o_current->picture->upper_y;
-  new_obj->picture->lower_x = o_current->picture->lower_x;
-  new_obj->picture->lower_y = o_current->picture->lower_y;
-  
-  /* Copy the picture data */
-  new_obj->picture->original_picture = 
-    gdk_pixbuf_scale_simple(o_current->picture->original_picture,
-			    gdk_pixbuf_get_width (o_current->picture->original_picture),
-			    gdk_pixbuf_get_height (o_current->picture->original_picture),
-			    GDK_INTERP_BILINEAR);
+
   new_obj->picture->displayed_picture = 
     gdk_pixbuf_scale_simple(o_current->picture->displayed_picture,
-			    gdk_pixbuf_get_width (o_current->picture->displayed_picture),
-			    gdk_pixbuf_get_height (o_current->picture->displayed_picture),
-			    GDK_INTERP_BILINEAR);
+                            gdk_pixbuf_get_width (o_current->picture->displayed_picture),
+                            gdk_pixbuf_get_height (o_current->picture->displayed_picture),
+                            GDK_INTERP_BILINEAR);
 
-  new_obj->picture->ratio = o_current->picture->ratio;
-  new_obj->picture->filename = g_strdup(o_current->picture->filename);
-  
-  new_obj->picture->angle = o_current->picture->angle;
-  new_obj->picture->mirrored = o_current->picture->mirrored;
-  
-  o_picture_recalc(toplevel, new_obj);
-  
   /* new_obj->attribute = 0;*/
   o_attrib_list_copied_to (o_current->attribs, new_obj);
 
   /* return the new tail of the object list */
   return(new_obj);
-} 
+}
 
 /*! \brief Get RGB data from image.
  *  \par Function Description
