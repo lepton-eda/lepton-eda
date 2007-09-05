@@ -55,7 +55,6 @@ static void i_update_status(TOPLEVEL * w_current, const char *string)
 
   if (string) {
     /* NOTE: consider optimizing this if same label */
-    w_current->DONT_RESIZE = 1;
     gtk_label_set(GTK_LABEL(w_current->status_label), (char *) string);
   }
 }

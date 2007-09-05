@@ -107,7 +107,6 @@ preview_callback_realize (GtkWidget *widget,
   x_repaint_background(preview_toplevel);
 
   preview_toplevel->DONT_RECALC = 0;
-  preview_toplevel->DONT_RESIZE = 0;
   preview_toplevel->DONT_REDRAW = 0;
 
   a_zoom_extents(preview_toplevel,

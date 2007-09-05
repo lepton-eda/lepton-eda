@@ -48,7 +48,6 @@ static void i_update_status(TOPLEVEL *w_current, const char *string)
 
   if (string) {
     /* NOTE: consider optimizing this if same label */
-    w_current->DONT_RESIZE=1;
     gtk_label_set(GTK_LABEL(w_current->status_label),
                   (char *) string);
   }
@@ -254,30 +253,24 @@ void i_update_middle_button(TOPLEVEL *w_current,
 
     /* remove this case eventually and make it a null case */
     case(ACTION):
-    w_current->DONT_RESIZE = 1;
     gtk_label_set(GTK_LABEL(w_current->middle_label),
                   _("Action"));
     break;
 
 #ifdef HAS_LIBSTROKE
     case(STROKE):
-    w_current->DONT_RESIZE = 1;
-
     gtk_label_set(GTK_LABEL(w_current->middle_label),
                   _("Stroke"));
     break;
 #else 
     /* remove this case eventually and make it a null case */
     case(STROKE):
-    w_current->DONT_RESIZE = 1;
     gtk_label_set(GTK_LABEL(w_current->middle_label),
                   _("none"));
     break;
 #endif
 		
     case(REPEAT):
-    w_current->DONT_RESIZE = 1;
-
     temp_string = g_strconcat (_("Repeat/"), string, NULL);
 
     gtk_label_set(GTK_LABEL(w_current->middle_label),

@@ -465,8 +465,7 @@ struct st_toplevel {
   int display_height;			/* display params */
   int display_width;			/* could me made global (?) */
 
-  int DONT_RESIZE;			/* misc flags */
-  int DONT_REDRAW;
+  int DONT_REDRAW;			/* misc flags */
   int DONT_RECALC;
   int ADDING_SEL;
 
