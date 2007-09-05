@@ -399,29 +399,6 @@ void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *parent_list,
  *  \brief
  *  \par Function Description
  *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] list
- *  \param [in] items
- */
-void
-o_attrib_detach_test(TOPLEVEL *toplevel, OBJECT *list, OBJECT *items)
-{
-
-/* this all needs to be rethought out */
-	/* loop over items till NULL */
-		/* Search for item in object->attrib */
-		/* o_attrib_search(list->attribs, current_item) */
-			/* if found */
-				/*call o_attrib_remove(object->attributes, current_item->attrib_struct);*/
-			/* if not found */
-				/* do nothing */
-
-}
-
-/*! \todo Empty function.
- *  \brief
- *  \par Function Description
- *
  *  \param [in] list
  *  \param [in] item
  */

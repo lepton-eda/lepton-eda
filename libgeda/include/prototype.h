@@ -157,7 +157,6 @@ ATTRIB *add_attrib_head(OBJECT *parent);
 ATTRIB *o_attrib_add(TOPLEVEL *toplevel, ATTRIB *list_head, OBJECT *item);
 void o_attrib_free(TOPLEVEL *toplevel, ATTRIB *current);
 void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *parent_list, OBJECT *text_object, OBJECT *object);
-void o_attrib_detach_test(TOPLEVEL *toplevel, OBJECT *list, OBJECT *items);
 void o_attrib_edit(OBJECT *list, OBJECT *item);
 void o_attrib_select_draw(ATTRIB *list);
 void o_attrib_unselect_draw(ATTRIB *list);
