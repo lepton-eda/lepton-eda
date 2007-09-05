@@ -259,8 +259,6 @@ OBJECT *s_basic_link_object( OBJECT *new_node, OBJECT *ptr )
 void print_struct_forw(OBJECT *ptr)
 {
   OBJECT *o_current=NULL;
-  ATTRIB *attr=NULL;
-  int i;
 
   o_current = ptr;
 
@@ -278,16 +276,7 @@ void print_struct_forw(OBJECT *ptr)
       print_struct_forw(o_current->complex->prim_objs);
     }
 
-	
-    if (o_current->attribs) {
-      attr = o_current->attribs;
-      i = 0;
-      while (attr != NULL) {
-        if (attr->object != NULL) 
-          printf("%d attribute %s\n", i, attr->object->name);
-        attr = attr->next;
-      }    
-    }
+    o_attrib_print (o_current->attribs);
 
     printf("----\n");
     o_current = o_current->next;
@@ -322,8 +311,6 @@ void print_struct_back(OBJECT *ptr)
 void print_struct(OBJECT *ptr)
 {
   OBJECT *o_current=NULL;
-  ATTRIB *attr=NULL;
-  int i;
 
   o_current = ptr;
 
@@ -338,15 +325,8 @@ void print_struct(OBJECT *ptr)
       printf("Line points.y2: %d\n", o_current->line->y[1]);
     }
 
-    if (o_current->attribs) {
-      attr = o_current->attribs;
-      i = 0;
-      while (attr != NULL) {
-        printf("%d attribute %s\n", i, attr->object->name);
-        attr = attr->next;
-      }
-		
-    }
+    o_attrib_print (o_current->attribs);
+
     printf("----\n");
   }
 }
