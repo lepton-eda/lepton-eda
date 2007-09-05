@@ -204,13 +204,14 @@ gchar *s_encoding_base64_decode (gchar* src, guint srclen, guint* dstlenp)
   dst = g_new(gchar, srclen+1);
   *dstlenp = srclen+1;
 
-  while (srclen-- > 0) 
+  while (srclen > 0)
     {
+      srclen--;
       ch = *src++;
-      if (s_encoding_Base64_rank[ch]==255) /* Skip any non-base64 anywhere */
-	continue;
       if (ch == s_encoding_Pad64) 
 	break;
+      if (s_encoding_Base64_rank[ch]==255) /* Skip any non-base64 anywhere */
+	continue;
 
       pos = s_encoding_Base64_rank[ch];
 
@@ -266,9 +267,11 @@ gchar *s_encoding_base64_decode (gchar* src, guint srclen, guint* dstlenp)
 	  return NULL;
 	case 2:             /* Valid, means one byte of info */
                                 /* Skip any number of spaces. */
-	  while (srclen-- > 0) 
+	  while (srclen > 0)
 	    {
+	      srclen--;
 	      ch = *src++;
+	      if (ch == s_encoding_Pad64) break;
 	      if (s_encoding_Base64_rank[ch] != 255) break;
 	    }
                                 /* Make sure there is another trailing = sign. */
@@ -284,8 +287,9 @@ gchar *s_encoding_base64_decode (gchar* src, guint srclen, guint* dstlenp)
                                  * We know this char is an =.  Is there anything but
                                  * whitespace after it?
                                  */
-	  while (srclen-- > 0) 
+	  while (srclen > 0)
 	    {
+	      srclen--;
 	      ch = *src++;
 	      if (s_encoding_Base64_rank[ch] != 255) 
 		{
