@@ -162,7 +162,6 @@ void o_attrib_select_draw(ATTRIB *list);
 void o_attrib_unselect_draw(ATTRIB *list);
 void o_attrib_free_all(TOPLEVEL *toplevel, ATTRIB *list);
 void o_attrib_print(ATTRIB *attributes);
-ATTRIB *o_attrib_copy(ATTRIB *list);
 void o_attrib_delete(ATTRIB *a_current);
 void o_attrib_remove(ATTRIB *list, ATTRIB *remove);
 OBJECT *o_read_attribs(TOPLEVEL *toplevel,
@@ -175,7 +174,6 @@ int o_attrib_get_name_value(char *string, char **name, char **value);
 void o_attrib_free_current(TOPLEVEL *toplevel);
 void o_attrib_set_string(TOPLEVEL *toplevel, char *string);
 OBJECT *o_attrib_return_parent(ATTRIB *attribute);
-ATTRIB *o_attrib_copy_all(TOPLEVEL *toplevel, OBJECT *attached_to, ATTRIB *attributes);
 void o_attrib_reattach(ATTRIB *attributes);
 void o_attrib_set_color(TOPLEVEL *toplevel, ATTRIB *attributes);
 char *o_attrib_search_name(OBJECT *list, char *name, int counter);

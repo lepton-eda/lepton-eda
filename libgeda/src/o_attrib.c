@@ -492,21 +492,6 @@ void o_attrib_print(ATTRIB *attributes)
   }
 }
 
-/*! \todo Empty function.
- *  \brief
- *  \par Function Description
- *
- *  \param [in] list  The attribute list to copy.
- *  \return Always NULL.
- *
- *  \note
- *  very hard, I don't think we need it though
- */
-ATTRIB *o_attrib_copy(ATTRIB *list)
-{
-  return(NULL);
-}
-
 /*! \brief Delete an attribute.
  *  \par Function Description
  *  This function goes out and removes the current attribute,
@@ -951,68 +936,6 @@ OBJECT *o_attrib_return_parent(ATTRIB *attribute)
   /* should be pointing to the parent */
 	
   return(a_current->object);	
-}
-
-/*! \brief Copy all attributes.
- *  \par Function Description
- *  This function will copy all attributes from the provided list
- *  by attaching them to the provided OBJECT list.
- *
- *  \param [in]  toplevel    The TOPLEVEL object.
- *  \param [out] attached_to  OBJECT list to copy attributes to.
- *  \param [in]  attributes   ATTRIB list to copy attributes from.
- *  \return new attribute list.
- */
-ATTRIB *o_attrib_copy_all(TOPLEVEL *toplevel, OBJECT *attached_to,
-			  ATTRIB *attributes) 
-{
-  ATTRIB *a_current=NULL;
-  ATTRIB *a_head=NULL;
-  ATTRIB *a_new=NULL;
-  ATTRIB *a_prev=NULL;
-
-  a_current = attributes;
-
-  while (a_current != NULL) {
-	
-    a_new = (ATTRIB *) g_malloc(sizeof(ATTRIB));
-	
-    /* in the case of the head attrib node, object points to 
-     * the parent which the attributes are attached to */	
-    if (a_head == NULL) {
-      a_new->object = attached_to;
-    } else {
-      a_new->object = a_current->object;  
-    }
-		
-
-		
-    /* object is not null and a_start is not null (ie we are not 
-     * messing with the head attrib node) 
-     */
-    if (a_new->object && a_head != NULL)  {
-      a_new->object->attached_to = a_new;
-    }
-
-    a_new->copied_to = a_current->copied_to;  
-
-    a_new->prev = a_prev; 
-	
-    /* set previous's next pointer */
-    /* if it's null that means we are at the first attrib */
-    if (a_prev) {
-      a_prev->next = a_new;
-    } else {
-      a_head = a_new;
-    }
-	
-    a_new->next = NULL;
-    a_prev = a_new;
-    a_current = a_current->next;	
-  }	
-
-  /* should be pointing to the head node */
-  return(a_head);	
 }
 
 /*! \brief Reattach attributes.
