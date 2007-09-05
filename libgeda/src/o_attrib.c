@@ -938,31 +938,6 @@ OBJECT *o_attrib_return_parent(ATTRIB *attribute)
   return(a_current->object);	
 }
 
-/*! \brief Reattach attributes.
- *  \par Function Description
- *  Reattach attributes.
- *
- *  \param [in] attributes  ATTRIB list to reattach.
- */
-void o_attrib_reattach(ATTRIB *attributes) 
-{
-  ATTRIB *a_current=NULL;
-
-  a_current = attributes;
-	
-  /* skip over head node */
-  if (a_current)
-  a_current = a_current->next;
-
-  while (a_current != NULL) {
-    if (a_current->object)  {
-      a_current->object->attached_to = a_current;
-      a_current->object->attribute = 1;
-    }
-    a_current = a_current->next;	
-  }
-}
-
 /*! \brief Set attribute color
  *  \par Function Description
  *  This function sets all attribute objects to the right

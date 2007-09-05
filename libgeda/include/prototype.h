@@ -174,7 +174,6 @@ int o_attrib_get_name_value(char *string, char **name, char **value);
 void o_attrib_free_current(TOPLEVEL *toplevel);
 void o_attrib_set_string(TOPLEVEL *toplevel, char *string);
 OBJECT *o_attrib_return_parent(ATTRIB *attribute);
-void o_attrib_reattach(ATTRIB *attributes);
 void o_attrib_set_color(TOPLEVEL *toplevel, ATTRIB *attributes);
 char *o_attrib_search_name(OBJECT *list, char *name, int counter);
 OBJECT *o_attrib_search_string_list(OBJECT *list, char *string);
