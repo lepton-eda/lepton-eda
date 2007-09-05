@@ -233,7 +233,6 @@ void o_erase_single(TOPLEVEL *w_current, OBJECT *object)
 
   o_current = object;
 
-  w_current->DONT_DRAW_CONN = 1;
   w_current->override_color = w_current->background_color;
   if (o_current != NULL) {
     if (o_current->draw_func &&
@@ -242,7 +241,6 @@ void o_erase_single(TOPLEVEL *w_current, OBJECT *object)
     }
   }
   w_current->override_color = -1;
-  w_current->DONT_DRAW_CONN = 0;
 }
 
 /*! \todo Finish function documentation!!!

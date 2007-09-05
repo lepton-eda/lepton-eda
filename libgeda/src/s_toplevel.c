@@ -110,7 +110,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->display_height = 0;
   toplevel->display_width  = 0;
 
-  toplevel->DONT_DRAW_CONN    = 0;
   toplevel->DONT_RESIZE       = 0;
   toplevel->DONT_REDRAW       = 0;
   toplevel->DONT_RECALC       = 0;
@@ -381,7 +380,6 @@ TOPLEVEL *s_toplevel_new (void)
 
 
   /* disable the events */
-  toplevel->DONT_DRAW_CONN = 1;
   toplevel->DONT_RESIZE = 1;
   toplevel->DONT_RECALC = 1;
   toplevel->DONT_REDRAW = 1;

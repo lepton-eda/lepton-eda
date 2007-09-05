@@ -144,7 +144,6 @@ void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
                 &x,
                 &y);
 
-  w_current->DONT_DRAW_CONN = 1;
   w_current->ADDING_SEL = 1; /* reuse this flag, rename later hack */
   sym = s_clib_get_symbol_by_name (w_current->internal_symbol_name);
   o_complex_add(w_current, NULL,
@@ -153,7 +152,6 @@ void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 		sym, w_current->internal_symbol_name,
 		1, TRUE);
   w_current->ADDING_SEL = 0;
-  w_current->DONT_DRAW_CONN = 0;
 
   if (w_current->complex_rotate) {
     temp = w_current->complex_rotate / 90;

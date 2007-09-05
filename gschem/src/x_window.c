@@ -121,7 +121,6 @@ void x_window_setup (TOPLEVEL *toplevel)
   /* Initialize the autosave callback */
   s_page_autosave_init(toplevel);
 
-  toplevel->DONT_DRAW_CONN = 0;
   toplevel->DONT_RESIZE    = 0;
   toplevel->DONT_RECALC    = 0;
 
