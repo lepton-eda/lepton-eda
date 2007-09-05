@@ -167,7 +167,6 @@ OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
 
       if (g_strcasecmp(line, ".\n") != 0) {
 	encoded_picture=g_string_append (encoded_picture, line);
-	encoded_picture=g_string_append (encoded_picture, "\n");
       }
       else {
 	finished = 1;
@@ -178,6 +177,7 @@ OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list,
     pixdata_serialized_data=s_encoding_base64_decode(encoded_picture->str,
 						     encoded_picture->len,
 						     &pixdata_serialized_length);
+
     if (pixdata_serialized_data == NULL) {
       fprintf(stderr, "Error decoding picture.\n");      
       s_log_message ("Error decoding picture.\n");
