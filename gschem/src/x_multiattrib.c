@@ -347,10 +347,10 @@ static void cellrenderermultilinetext_editing_done(GtkCellEditable *cell_editabl
     cell->focus_out_id = 0;
   }
 
-  gtk_cell_renderer_stop_editing (GTK_CELL_RENDERER (cell),
-                                  CELL_TEXT_VIEW (cell_editable)->editing_canceled);
-  if (CELL_TEXT_VIEW (cell_editable)->editing_canceled)
+  if (CELL_TEXT_VIEW (cell_editable)->editing_canceled) {
+    g_signal_emit_by_name (cell, "editing-canceled");
     return;
+  }
 
   buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (cell_editable));
   gtk_text_buffer_get_start_iter (buffer, &start);
