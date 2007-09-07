@@ -556,47 +556,6 @@ o_complex_translate_display(TOPLEVEL *w_current,
  *  \brief
  *  \par Function Description
  *
- */
-void o_complex_translate_display_selection(TOPLEVEL *w_current,
-					   int x1, int y1, GList *head)
-{
-  GList *s_current = head;
-  OBJECT *o_current;
-
-  while (s_current != NULL) {
-
-    o_current = (OBJECT *) s_current->data;
-
-    if (!o_current) {
-      fprintf(stderr, _("Got NULL in o_complex_translate_display_selection\n"));
-      exit(-1);
-    }
-    o_complex_translate_display_single_object (w_current, x1, y1, o_current);
-    s_current = s_current->next;
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  experimental
- */
-void o_complex_translate2(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
-{
-  if (object == NULL)  {
-    printf("cmt2 NO!\n");
-    return;
-  }
-
-  o_complex_translate_display(w_current, dx, dy, object);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
  *  \note
  *  don't know if this belongs yet
  */
@@ -669,22 +628,6 @@ void o_complex_translate_all(TOPLEVEL *w_current, int offset)
   w_current->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);
   i_update_menus(w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_complex_translate_selection(TOPLEVEL *w_current, int dx, int dy, 
-				   GList *head)
-{
-  if (head == NULL)  {
-    printf(_("Got NULL in o_complex_translate_selection!\n"));
-    return;
-  }
-
-  o_complex_translate_display_selection(w_current, dx, dy, head);
 }
 
 /*! \todo Finish function documentation!!!

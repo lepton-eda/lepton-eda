@@ -551,10 +551,7 @@ void o_complex_translate_display_object_glist(TOPLEVEL *w_current,
 					      int x1, int y1, 
 					      GList *object_list);
 void o_complex_translate_display(TOPLEVEL *w_current, int x1, int y1, OBJECT *complex);
-void o_complex_translate_display_selection(TOPLEVEL *w_current, int x1, int y1, GList *head);
-void o_complex_translate2(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
 void o_complex_translate_all(TOPLEVEL *w_current, int offset);
-void o_complex_translate_selection(TOPLEVEL *w_current, int dx, int dy, GList *head);
 void o_complex_rotate_world(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJECT *object);
 int o_complex_mirror_world(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 /* o_copy.c */

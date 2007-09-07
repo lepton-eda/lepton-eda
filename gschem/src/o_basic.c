@@ -581,7 +581,7 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, GList *o_glist,
    * so that all lists can be moved ...
    */
   if (o_list) {
-    o_complex_translate2(w_current, diff_x, diff_y, o_list);
+    o_complex_translate_display(w_current, diff_x, diff_y, o_list);
   } else if (o_glist) {
     o_complex_translate_display_object_glist(w_current, 
 					     diff_x, diff_y, o_glist);
