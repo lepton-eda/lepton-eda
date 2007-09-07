@@ -1377,7 +1377,7 @@ void o_complex_rotate_lowlevel(TOPLEVEL *toplevel, int world_centerx,
         break; 
 
       case(OBJ_TEXT):
-        o_text_rotate_world(toplevel, 0, 0, angle, angle_change, o_current);
+        o_text_rotate_world(toplevel, 0, 0, angle_change, o_current);
         break;
 
     }

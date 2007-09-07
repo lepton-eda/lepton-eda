@@ -447,9 +447,7 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
           o_text_erase(w_current, object);
         }
 
-        new_angle = (object->text->angle + 90) % 360;
-        o_text_rotate_world(w_current, centerx, centery,
-                      new_angle, 90, object);
+        o_text_rotate_world(w_current, centerx, centery, 90, object);
 
         if (!w_current->DONT_REDRAW) {
           o_text_draw(w_current, object);

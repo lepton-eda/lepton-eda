@@ -235,9 +235,7 @@ void o_complex_place_rotate(TOPLEVEL *w_current)
     switch(o_current->type) {	
 
       case(OBJ_TEXT):
-        new_angle = (o_current->text->angle + 90) % 360;
-        o_text_rotate_world(w_current, x_local, y_local,
-                            new_angle, 90, o_current);
+        o_text_rotate_world(w_current, x_local, y_local, 90, o_current);
         break;
 
       case(OBJ_COMPLEX):
@@ -267,7 +265,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
   OBJECT *o_start;
   OBJECT *o_temp;
   char *buffer;
-  int temp, new_angle, i;
+  int temp, i;
   GList *connected_objects=NULL;
   const CLibSymbol *sym;
 
@@ -368,11 +366,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
       case(OBJ_TEXT):
         temp = w_current->complex_rotate / 90;
         for (i = 0; i < temp; i++) {
-          new_angle = (o_temp->
-                       text->angle + 90) % 360;
-          o_text_rotate_world(w_current, 
-                              x, y,
-                              new_angle, 90, o_temp);
+          o_text_rotate_world(w_current, x, y, 90, o_temp);
         }
         break;
     }

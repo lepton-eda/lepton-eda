@@ -439,7 +439,7 @@ void o_text_print_text_height_full(FILE *fp, char *string, int size);
 void o_text_print_text_string(FILE *fp, char *string, int unicode_count, gunichar *unicode_table);
 void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y, int unicode_count, gunichar *unicode_table);
 void o_text_rotate_lowlevel(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_text_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object);
+void o_text_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_text_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 /* s_attrib.c */

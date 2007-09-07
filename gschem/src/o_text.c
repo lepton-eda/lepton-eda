@@ -603,7 +603,6 @@ void o_text_place_rotate(TOPLEVEL *w_current)
   OBJECT *o_current;
   int x_local = -1;
   int y_local = -1;
-  int new_angle;
 
   o_current = w_current->page_current->attrib_place_head->next;
   while(o_current) {
@@ -626,9 +625,7 @@ void o_text_place_rotate(TOPLEVEL *w_current)
     switch(o_current->type) {	
 
       case(OBJ_TEXT):
-        new_angle = (o_current->text->angle + 90) % 360;
-        o_text_rotate_world(w_current, x_local, y_local,
-                            new_angle, 90, o_current);
+        o_text_rotate_world(w_current, x_local, y_local, 90, o_current);
         break;
     }
     o_current = o_current->next;

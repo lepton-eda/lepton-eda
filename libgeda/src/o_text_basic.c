@@ -1788,8 +1788,8 @@ void o_text_rotate_lowlevel(TOPLEVEL *toplevel, int world_centerx,
  *
  */
 void o_text_rotate_world(TOPLEVEL *toplevel,
-			 int world_centerx, int world_centery,
-			 int angle, int angle_change, OBJECT *object)
+                         int world_centerx, int world_centery,
+                        int angle, OBJECT *object)
 {
   int newx, newy;
   int origx, origy;
@@ -1798,18 +1798,17 @@ void o_text_rotate_world(TOPLEVEL *toplevel,
   origx = object->text->x;
   origy = object->text->y;
 
-  object->text->angle = ( object->text->angle + angle_change ) % 360;
+  object->text->angle = ( object->text->angle + angle ) % 360;
 
 #if DEBUG 
   printf("rotating text angle: %d\n", angle);
-  printf("rotating text angle_change: %d\n", angle_change);
   printf("final text angle: %d\n",  object->text->angle);
 #endif
 
   x = origx + (-world_centerx);
   y = origy + (-world_centery);
 	
-  rotate_point_90(x, y, angle_change, &newx, &newy);
+  rotate_point_90(x, y, angle, &newx, &newy);
 
   x = newx + (world_centerx);
   y = newy + (world_centery);
