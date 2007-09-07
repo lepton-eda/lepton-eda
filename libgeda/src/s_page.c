@@ -127,7 +127,6 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   s_undo_init(page);
   
   page->object_lastplace = NULL;
-  page->object_selected  = NULL;
   
   set_window (toplevel, page,
               toplevel->init_left, toplevel->init_right,

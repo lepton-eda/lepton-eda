@@ -354,7 +354,6 @@ struct st_page {
   OBJECT *attrib_place_head;
   OBJECT *attrib_place_tail; 
   OBJECT *object_lastplace;
-  OBJECT *object_selected;
   STRETCH *stretch_head; 
   STRETCH *stretch_tail; 
 
