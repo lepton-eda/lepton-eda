@@ -210,7 +210,6 @@ void o_complex_place_rotate(TOPLEVEL *w_current)
   GList *ptr;
   int x_local = -1;
   int y_local = -1;
-  int new_angle;
 
   ptr = w_current->page_current->complex_place_list;
   while(ptr) {
@@ -239,9 +238,7 @@ void o_complex_place_rotate(TOPLEVEL *w_current)
         break;
 
       case(OBJ_COMPLEX):
-        new_angle = (o_current->complex->angle + 90) % 360;
-        o_complex_rotate_world(w_current, x_local, y_local,
-                               new_angle, 90, o_current);
+        o_complex_rotate_world(w_current, x_local, y_local, 90, o_current);
         break;
 
     }
@@ -696,7 +693,7 @@ void o_complex_translate_selection(TOPLEVEL *w_current, int dx, int dy,
  *
  */
 void o_complex_rotate_world(TOPLEVEL *w_current, int centerx, int centery,
-		            int angle, int angle_change, OBJECT *object)
+                            int angle, OBJECT *object)
 {
   int x, y;
   int newx, newy;
@@ -704,7 +701,7 @@ void o_complex_rotate_world(TOPLEVEL *w_current, int centerx, int centery,
   x = object->complex->x + (-centerx);
   y = object->complex->y + (-centery);
 
-  rotate_point_90(x, y, 90, &newx, &newy);
+  rotate_point_90(x, y, angle, &newx, &newy);
 
   x = newx + (centerx);
   y = newy + (centery);
@@ -712,14 +709,14 @@ void o_complex_rotate_world(TOPLEVEL *w_current, int centerx, int centery,
   o_complex_world_translate_toplevel(w_current,
                                      -object->complex->x, 
                                      -object->complex->y, object);
-  o_complex_rotate_lowlevel(w_current, 0, 0, angle_change, object);
+  o_complex_rotate_lowlevel(w_current, 0, 0, angle, object);
 
   object->complex->x = 0;
   object->complex->y = 0;
 
   o_complex_world_translate_toplevel(w_current, x, y, object);
 
-  object->complex->angle = angle;
+  object->complex->angle = ( object->complex->angle + angle ) % 360;
 
 #if DEBUG
   printf("setting final rotated angle to: %d\n\n", object->angle);

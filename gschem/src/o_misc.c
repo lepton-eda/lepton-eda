@@ -208,7 +208,6 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
 {
   OBJECT *object;
   GList *s_current;
-  int new_angle;
   GList *other_objects=NULL;
   GList *connected_objects=NULL;
   OBJECT *o_current=NULL;
@@ -350,9 +349,7 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
 
         /* do the rotate */
         /*w_current->ADDING_SEL=1; NEWSEL: needed? */
-        new_angle = (object->complex->angle + 90) % 360;
-        o_complex_rotate_world(w_current, centerx, centery,
-                         new_angle, 90, object);
+        o_complex_rotate_world(w_current, centerx, centery, 90, object);
         /*w_current->ADDING_SEL = 0; NEWSEL: needed? */
         s_conn_update_complex(w_current, object->complex->prim_objs);
         if (!w_current->DONT_REDRAW) {
