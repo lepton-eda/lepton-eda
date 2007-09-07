@@ -304,7 +304,7 @@ void o_complex_unset_color(OBJECT *complex);
 void o_complex_unset_color_single(OBJECT *o_current);
 void o_complex_set_saved_color_only(OBJECT *complex, int color);
 OBJECT *o_complex_return_nth_pin(OBJECT *o_list, int counter);
-void o_complex_rotate_lowlevel(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object);
+void o_complex_rotate_lowlevel(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_complex_mirror_lowlevel(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin);
 int  o_complex_count_pins(OBJECT *object);

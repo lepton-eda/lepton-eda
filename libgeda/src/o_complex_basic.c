@@ -604,7 +604,7 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
       o_complex_mirror_lowlevel(toplevel, x, y, new_node);
     } 
     
-    o_complex_rotate_lowlevel(toplevel, x, y, angle, angle, new_node);
+    o_complex_rotate_lowlevel(toplevel, x, y, angle, new_node);
     o_complex_world_translate(toplevel, x, y, prim_objs);
 
     if (!toplevel->ADDING_SEL) {
@@ -1317,15 +1317,14 @@ OBJECT *o_complex_return_nth_pin(OBJECT *o_list, int counter)
  */
 /* pass in top level object */
 void o_complex_rotate_lowlevel(TOPLEVEL *toplevel, int world_centerx,
-			       int world_centery, 
-			       int angle,
-			       int angle_change,
-			       OBJECT *object)
+                               int world_centery,
+                               int angle,
+                               OBJECT *object)
 {
   OBJECT *o_current=NULL;
 
 #if DEBUG 
-  printf("------- a %d ac %d\n", angle, angle_change);
+  printf("------- a %d\n", angle);
 #endif
 
   g_return_if_fail(object != NULL);
@@ -1340,44 +1339,44 @@ void o_complex_rotate_lowlevel(TOPLEVEL *toplevel, int world_centerx,
   while ( o_current != NULL ) {
     switch(o_current->type) {
       case(OBJ_LINE):
-        o_line_rotate_world(toplevel, 0, 0, angle_change, o_current);
+        o_line_rotate_world(toplevel, 0, 0, angle, o_current);
         break;
 
       case(OBJ_NET):
-        o_net_rotate_world(toplevel, 0, 0, angle_change, o_current);
+        o_net_rotate_world(toplevel, 0, 0, angle, o_current);
         break;
 
       case(OBJ_BUS):
-        o_bus_rotate_world(toplevel, 0, 0, angle_change, o_current);
+        o_bus_rotate_world(toplevel, 0, 0, angle, o_current);
         break;
 	
       case(OBJ_BOX):
-        o_box_rotate_world(toplevel, 0, 0, angle_change, o_current);
+        o_box_rotate_world(toplevel, 0, 0, angle, o_current);
         break;
 
       case(OBJ_PICTURE):
-        o_picture_rotate_world(toplevel, 0, 0, angle_change, o_current);
+        o_picture_rotate_world(toplevel, 0, 0, angle, o_current);
         break;
 
       case(OBJ_CIRCLE):
-        o_circle_rotate_world(toplevel, 0, 0, angle_change, o_current);
+        o_circle_rotate_world(toplevel, 0, 0, angle, o_current);
         break;
 
       case(OBJ_PIN):
-        o_pin_rotate_world(toplevel, 0, 0, angle_change, o_current);
+        o_pin_rotate_world(toplevel, 0, 0, angle, o_current);
         break;
 
       case(OBJ_ARC):
-        o_arc_rotate_world(toplevel, 0, 0, angle_change, o_current);
+        o_arc_rotate_world(toplevel, 0, 0, angle, o_current);
         break;
 
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-	o_complex_rotate_lowlevel(toplevel, 0, 0, angle, angle_change, o_current);
+        o_complex_rotate_lowlevel(toplevel, 0, 0, angle, o_current);
         break; 
 
       case(OBJ_TEXT):
-        o_text_rotate_world(toplevel, 0, 0, angle_change, o_current);
+        o_text_rotate_world(toplevel, 0, 0, angle, o_current);
         break;
 
     }

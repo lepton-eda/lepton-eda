@@ -712,8 +712,7 @@ void o_complex_rotate_world(TOPLEVEL *w_current, int centerx, int centery,
   o_complex_world_translate_toplevel(w_current,
                                      -object->complex->x, 
                                      -object->complex->y, object);
-  o_complex_rotate_lowlevel(w_current,
-                            0, 0, angle, angle_change, object);
+  o_complex_rotate_lowlevel(w_current, 0, 0, angle_change, object);
 
   object->complex->x = 0;
   object->complex->y = 0;
