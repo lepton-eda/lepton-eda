@@ -656,7 +656,7 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
 	  /* we don't want to do that for now */
 	  /* Rotate and translate the character to its world position */
 	  o_text_rotate_lowlevel(toplevel, x, y, angle, start_of_char);
-	  o_complex_world_translate(toplevel,
+	  o_complex_translate_world(toplevel,
 				    x_offset, y_offset, 
 				    start_of_char);
 	  
@@ -1381,7 +1381,7 @@ void o_text_translate_world(TOPLEVEL *toplevel,
   o_current->text->x = o_current->text->x + x1;
   o_current->text->y = o_current->text->y + y1;
 
-  o_complex_world_translate(toplevel, x1, y1, o_current->text->prim_objs);
+  o_complex_translate_world(toplevel, x1, y1, o_current->text->prim_objs);
 
   /* Update bounding box */
   o_text_recalc( toplevel, o_current );

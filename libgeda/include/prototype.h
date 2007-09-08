@@ -286,7 +286,7 @@ OBJECT *o_complex_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[], unsi
 char *o_complex_save(OBJECT *object);
 void o_complex_set_filename(TOPLEVEL *toplevel, const char *basename);
 void o_complex_free_filename(TOPLEVEL *toplevel);
-void o_complex_world_translate(TOPLEVEL *toplevel, int x1, int y1, OBJECT *prim_objs);
+void o_complex_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *prim_objs);
 void o_complex_world_translate_toplevel(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object);
 OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
 OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);

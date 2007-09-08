@@ -291,7 +291,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
     o_start = o_start->next;
     w_current->ADDING_SEL=0;
     
-    o_complex_world_translate(w_current, x, y, o_start);
+    o_complex_translate_world(w_current, x, y, o_start);
 
     o_temp = o_start;
     while (o_temp != NULL) {
@@ -596,14 +596,14 @@ void o_complex_translate_all(TOPLEVEL *w_current, int offset)
         
   if (offset == 0) {
     s_log_message(_("Translating schematic [%d %d]\n"), -x, -y);
-    o_complex_world_translate(
+    o_complex_translate_world(
                               w_current,
                               -x, -y,
                               w_current->page_current->object_head);
   } else {
     s_log_message(_("Translating schematic [%d %d]\n"),
                   offset, offset);
-    o_complex_world_translate(
+    o_complex_translate_world(
                               w_current,
                               offset, offset,
                               w_current->page_current->object_head);

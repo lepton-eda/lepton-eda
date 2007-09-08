@@ -135,7 +135,7 @@ void o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y,
   y = snap_grid(w_current, rtop);
 
   w_current->ADDING_SEL = 1;
-  o_complex_world_translate(w_current, -x, -y, object_buffer[buf_num]);
+  o_complex_translate_world(w_current, -x, -y, object_buffer[buf_num]);
   w_current->ADDING_SEL = 0;
 
   /* now translate selection to current position */
@@ -144,7 +144,7 @@ void o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y,
   y = snap_grid(w_current, y);
 
   w_current->ADDING_SEL = 1;
-  o_complex_world_translate(w_current, x, y, object_buffer[buf_num]);
+  o_complex_translate_world(w_current, x, y, object_buffer[buf_num]);
   w_current->ADDING_SEL = 0;
 
   w_current->last_x = w_current->start_x = fix_x(w_current, screen_x);
@@ -204,7 +204,7 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
   w_diff_x = w_x - w_start_x;
   w_diff_y = w_y - w_start_y;
   w_current->ADDING_SEL = 1;
-  o_complex_world_translate(w_current, w_diff_x, w_diff_y, 
+  o_complex_translate_world(w_current, w_diff_x, w_diff_y,
                             object_buffer[buf_num]);
   w_current->ADDING_SEL = 0;
 

@@ -145,9 +145,9 @@ void o_move_end_lowlevel(TOPLEVEL * w_current, OBJECT * list, int type,
 
       case (OBJ_COMPLEX):
       case (OBJ_PLACEHOLDER):
-	o_complex_world_translate (w_current, diff_x, diff_y, 
-				   object->complex->prim_objs);
-	break;
+        o_complex_translate_world (w_current, diff_x, diff_y,
+                                   object->complex->prim_objs);
+        break;
     }
 
     if (type == COMPLEX) {

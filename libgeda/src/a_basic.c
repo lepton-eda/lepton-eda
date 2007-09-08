@@ -482,7 +482,7 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
         	object_list = object_list_save;
 		/* don't do this since objects are already
 		 * stored/read translated 
-	         * o_complex_world_translate(toplevel, object_list->x,
+	         * o_complex_translate_world(toplevel, object_list->x,
                  *                   object_list->y, object_list->complex);
 		 */
 	        toplevel->page_current->object_tail = temp_tail;

@@ -605,7 +605,7 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
     } 
     
     o_complex_rotate_lowlevel(toplevel, x, y, angle, new_node);
-    o_complex_world_translate(toplevel, x, y, prim_objs);
+    o_complex_translate_world(toplevel, x, y, prim_objs);
 
     if (!toplevel->ADDING_SEL) {
      s_conn_update_complex(toplevel, prim_objs);
@@ -836,7 +836,7 @@ void o_complex_free_filename(TOPLEVEL *toplevel)
 /* libhack */
 /* and recalc stuff */
 /* this function takes in a complex list */
-void o_complex_world_translate(TOPLEVEL *toplevel, int x1, int y1,
+void o_complex_translate_world(TOPLEVEL *toplevel, int x1, int y1,
 			       OBJECT *prim_objs)
 {
   OBJECT *o_current=NULL;
@@ -911,7 +911,7 @@ void o_complex_world_translate_toplevel(TOPLEVEL *toplevel,
   object->complex->x = object->complex->x + x1;
   object->complex->y = object->complex->y + y1;
 
-  o_complex_world_translate(toplevel, x1, y1,
+  o_complex_translate_world(toplevel, x1, y1,
                             object->complex->prim_objs);
 
   world_get_object_list_bounds(toplevel, object->complex->prim_objs,
