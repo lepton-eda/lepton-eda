@@ -330,51 +330,6 @@ void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *parent_list,
   }
 }
 
-/*! \todo Empty function.
- *  \brief
- *  \par Function Description
- *
- *  \param [in] list
- *  \param [in] item
- */
-/* only can edit a text, special case of edit text */
-void o_attrib_edit(OBJECT *list, OBJECT *item)
-{
-
-}
-
-/*! \todo Empty function.
- *  \brief
- *  \par Function Description
- *
- *  \param [in] list
- *
- *  \note
- *  should this be st_attrib or st_object?
- */
-void o_attrib_select_draw(ATTRIB *list)
-{
-  /* draw list */
-  /* either white */
-  /* or a white bounding box? */
-}
-
-/*! \todo Empty function.
- *  \brief
- *  \par Function Description
- *
- *  \param [in] list
- *
- *  \note
- *  should this be st_attrib or st_object?
- */
-void o_attrib_unselect_draw(ATTRIB *list)
-{
-  /* draw list */
-  /* either white */
-  /* or a white bounding box? */
-
-}
 
 /*! \brief Free all attribute items in a list.
  *  \par Function Description
