@@ -310,15 +310,6 @@ void o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_text_input(TOPLEVEL *w_current)
-{
-  text_input_dialog(w_current);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

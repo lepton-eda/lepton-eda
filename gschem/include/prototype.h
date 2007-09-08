@@ -703,7 +703,6 @@ void o_text_draw_rectangle(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
-void o_text_input(TOPLEVEL *w_current);
 void o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_text_end(TOPLEVEL *w_current);
 void o_text_rubberattrib(TOPLEVEL *w_current);
