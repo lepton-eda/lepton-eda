@@ -201,7 +201,7 @@ void o_recalc_object_list(TOPLEVEL *toplevel, OBJECT *object_list);
 void o_recalc_object_glist(TOPLEVEL *toplevel, GList *object_glist);
 void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current, OBJECT_END end, OBJECT_TYPE type, int width, int length, int space);
 void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current, OBJECT_FILLING type, int width, int pitch1, int angle1, int pitch2, int angle2);
-
+void o_translate_world (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object);
 /* o_box_basic.c */
 OBJECT *o_box_add(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
 OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);

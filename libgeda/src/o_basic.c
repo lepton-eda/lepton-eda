@@ -283,3 +283,40 @@ void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current,
   o_current->fill_angle2 = angle2;
 	
 }
+
+
+/*! \brief Translates an object in world coordinates
+ *  \par Function Description
+ *  This function translates the object <B>object</B> by
+ *  <B>dx</B> and <B>dy</B>.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [in] dx       Amount to horizontally translate object
+ *  \param [in] dx       Amount to vertically translate object
+ *  \param [in] object   The object to translate.
+ */
+void o_translate_world (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object)
+{
+  void (*func) (TOPLEVEL*, int, int, OBJECT*) = NULL;
+
+  switch (object->type) {
+      case OBJ_HEAD:    /* Do nothing for head nodes */   break;
+      case OBJ_LINE:    func = o_line_translate_world;    break;
+      case OBJ_NET:     func = o_net_translate_world;     break;
+      case OBJ_BUS:     func = o_bus_translate_world;     break;
+      case OBJ_BOX:     func = o_box_translate_world;     break;
+      case OBJ_PICTURE: func = o_picture_translate_world; break;
+      case OBJ_CIRCLE:  func = o_circle_translate_world;  break;
+      case OBJ_PLACEHOLDER:
+      case OBJ_COMPLEX: func = o_complex_translate_world; break;
+      case OBJ_TEXT:    func = o_text_translate_world;    break;
+      case OBJ_PIN:     func = o_pin_translate_world;     break;
+      case OBJ_ARC:     func = o_arc_translate_world;     break;
+      default:
+        g_assert_not_reached ();
+  }
+
+  if (func != NULL) {
+    (*func) (toplevel, dx, dy, object);
+  }
+}
