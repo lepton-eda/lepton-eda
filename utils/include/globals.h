@@ -45,9 +45,6 @@ extern int logfile_fd;
 extern int do_logging;
 extern int logging_dest;
 
-extern void (*pin_conn_recalc_func)();
-extern void (*net_conn_recalc_func)();
-
 /* gnetlist specific stuff */
 extern NETLIST *netlist_head;
 extern char *guile_proc;
