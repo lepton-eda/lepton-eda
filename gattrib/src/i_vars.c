@@ -52,27 +52,13 @@ int   default_paper_height = 85000;
 
 
 /*------------------------------------------------------------------
- * This initializes the vars in pr_current.  It is copied from 
- * gnetlist.  It is called by the guile initializtion fcns.
- * It competes with i_window_vars_set.  This is badly architected!!
+ * This initializes the vars in pr_current.
  *------------------------------------------------------------------*/
 void i_vars_set(TOPLEVEL * pr_current)
 {
-    i_vars_libgeda_set(pr_current);
-}
-
-
-/*------------------------------------------------------------------
- * This initializes the vars in pr_current.  It is copied from 
- * gschem.  It is called from s_toplevel_init.
- *------------------------------------------------------------------*/
-void i_window_vars_set(TOPLEVEL * pr_current)
-{
-
-  i_vars_libgeda_set(pr_current); 
+  i_vars_libgeda_set(pr_current);
 
   pr_current->attribute_color = default_attribute_color;
   pr_current->paper_width = default_paper_width;
   pr_current->paper_height = default_paper_height;
-  
 }

@@ -58,8 +58,6 @@ void (*text_draw_func)() = o_text_recalc;
 void (*pin_draw_func)() = o_pin_recalc;
 void (*select_func)() = NULL;
 void (*x_log_update_func)() = NULL;
-/* void (*variable_set_func)() = i_vars_set; */
-void (*variable_set_func)() = NULL;
 int (*load_newer_backup_func)() = NULL;
 
 /* netlist specific variables */

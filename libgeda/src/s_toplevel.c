@@ -371,12 +371,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->auto_save_interval = 0;
   toplevel->auto_save_timeout = 0;
 
-  /* set the rest of the variables */
-  if (variable_set_func) {
-    (*variable_set_func) (toplevel);
-  }
-
-
   /* disable the events */
   toplevel->DONT_REDRAW = 1;
 

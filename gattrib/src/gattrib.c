@@ -181,10 +181,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
   /* ----- Read in RC files.   ----- */
   g_rc_parse(pr_current, "gattribrc", NULL);
 
-  i_window_vars_set(pr_current);   /* The window vars are used in gschem,
-                                      but we need to set them here because
-                                      graphical information is used
-                                      when introducing new attributes. */
+  i_vars_set(pr_current);
 
   gtk_init(&argc, &argv);
 
