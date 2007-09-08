@@ -2057,48 +2057,6 @@ void o_attrib_slot_copy(TOPLEVEL *toplevel, OBJECT *original, OBJECT *target)
   g_free(slotdef);
 }
 
-/*! \brief Get the number of TOPLEVEL attributes in all loaded pages.
- *  \par Function Description
- *  This function will return the number of TOPLEVEL attributes
- *  in all loaded pages.
- *
- *  \param [in] toplevel  The TOPLEVEL object to search.
- *  \param [in] name       Attribute name to search for.
- *  \return Count of TOPLEVEL attributes in all loaded pages.
- */
-/* returns the number of toplevel attributes in all loaded pages */
-int o_attrib_count_toplevel(TOPLEVEL *toplevel, char *name)
-{
-  const GList *iter;
-  int ret_value=0;
-  int counter=0;
-  PAGE *p_current;
-  char *string;
-
-  iter = geda_list_get_glist( toplevel->pages );
-
-  while( iter != NULL ) {
-    p_current = (PAGE *)iter->data;
-
-    counter = 0;
-    string = o_attrib_search_name(p_current->object_head,
-                                  name, counter);
-    printf("%s %d\n", name, counter);
-    while(string) {
-      printf("inside\n");
-      ret_value++;
-      g_free(string);
-      string=NULL;
-      counter++;
-
-      string = o_attrib_search_name(p_current->object_head,
-                                    name, counter);
-    }
-
-    iter = g_list_next( iter );
-  }
-  return(ret_value);
-}
 
 /*! \brief Search for first TOPLEVEL attribute.
  *  \par Function Description
