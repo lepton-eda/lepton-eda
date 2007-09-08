@@ -1368,38 +1368,6 @@ char *o_attrib_search_toplevel(OBJECT *list, char *name, int counter)
   return (NULL);
 } 
 
-/*! \brief Search for special attributes.
- *  \par Function Description
- *  This function will search an OBJECT list for the special
- *  attributes <EM>"gnd"</EM> and <EM>"vdd"</EM>.
- *
- *  \param [in] o_current  The OBJECT list to search.
- *  \return Character string with attribute value, NULL otherwise.
- *
- *  \warning
- *  Caller must g_free returned character string.
- */
-/* be sure caller free's return value */
-char *o_attrib_search_special(OBJECT *o_current) 
-{
-  char *return_value;
-
-  return_value = o_attrib_search_name(o_current->complex->prim_objs, 
-                                      "gnd", 0);
-
-  if (return_value) {
-    return(return_value);
-  }
-
-  return_value = o_attrib_search_name(o_current->complex->prim_objs, 
-                                      "vdd", 0);
-
-  if (return_value) {
-    return(return_value);
-  }
-
-  return(NULL);
-}
 
 /*! \brief Search for first occurance of a named attribute.
  *  \par Function Description

@@ -178,7 +178,6 @@ OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for);
 OBJECT *o_attrib_search_attrib_value(ATTRIB *list, char *value, char *name, int counter);
 char *o_attrib_search_attrib_name(ATTRIB *list, char *name, int counter);
 char *o_attrib_search_toplevel(OBJECT *list, char *name, int counter);
-char *o_attrib_search_special(OBJECT *o_current);
 char *o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found);
 char *o_attrib_search_name_single_count(OBJECT *object, char *name, int counter);
 char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found);
