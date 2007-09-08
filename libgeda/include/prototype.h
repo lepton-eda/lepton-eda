@@ -150,7 +150,6 @@ void o_arc_print_center(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, 
 void o_arc_print_phantom(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int angle1, int angle2, int color, int arc_width, int length, int space, int origin_x, int origin_y);
 
 /* o_attrib.c */
-void o_attrib_update_urefBM(TOPLEVEL *toplevel, OBJECT *o_current);
 ATTRIB *o_attrib_search(ATTRIB *list, OBJECT *item);
 ATTRIB *o_attrib_return_tail(ATTRIB *head);
 ATTRIB *add_attrib_head(OBJECT *parent);

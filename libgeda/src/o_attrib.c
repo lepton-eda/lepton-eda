@@ -61,67 +61,6 @@
  *  return pointer from attrib_list
  */
 
-/*! \brief Update an attribute's uref.
- *  \par Function Description
- *  Update an attribute's uref.
- *
- *  \param [in] toplevel  The TOPLEVEL object
- *  \param [in] o_current  The object to update.
- *
- *  \note
- *   Martin Benes' auto uref renumber code
- */
-void o_attrib_update_urefBM (TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  OBJECT *list_head,*obj;
-  char *uref;
-  int i = -1, name_conflict,len;
-  char *index_list;
-  int index_list_len=1;
-
-  if (strncmp(o_current->text->string,"uref=",5))  /* deprecated */
-    return;
-
-  len=strlen(o_current->text->string);
-  uref=g_malloc(len+10);
-  strcpy(uref,o_current->text->string);
-
-  while (o_current->text->string[len-1]<='9' && 
-	 o_current->text->string[len-1]>='0')
-    --len;
-
-  list_head=return_head(o_current);
-  for (obj=list_head->next;obj;obj=obj->next) {
-    if (obj->type==OBJ_TEXT && obj->attribute)
-      ++index_list_len;
-  }
-
-  index_list=calloc(index_list_len,1); /* convert to g_new maybe... */
-  name_conflict=0;
-
-  for (obj=list_head->next;obj;obj=obj->next) {
-    if (obj->type==OBJ_TEXT && obj->attribute && obj!=o_current) {
-      if (strncmp(uref,obj->text->string,len)==0) {
-	if (strcmp(uref+len,obj->text->string+len)==0) {
-	  name_conflict=1;
-	}
-	i=atoi(obj->text->string+len);
-	if (i<index_list_len)
-	  index_list[i]=1;
-      }
-    }
-  }
-
-  if (name_conflict) {
-    for (i=0;index_list[i];++i);
-    sprintf(uref+len,"%d", i);
-    g_free(o_current->text->string);
-    o_current->text->string=uref;
-    o_text_recreate(toplevel, o_current);
-  }
-
-  g_free(index_list);
-}
 
 /*! \brief Search for an item in an attribute list.
  *  \par Function Description
@@ -378,10 +317,6 @@ void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *parent_list,
           /* can't do this here since just selecting something */
           /* will cause this to be set */
           /* toplevel->page_current->CHANGED=1;*/
-
-#ifdef MARTIN_BENES
-          o_attrib_update_urefBM (toplevel, o_current);
-#endif
         }
       } else {
         fprintf(stderr, "You cannot attach non text items as attributes!\n");
