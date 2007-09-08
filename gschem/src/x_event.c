@@ -447,11 +447,12 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
                        (int) event->x,
                        (int) event->y,
                &w_x, &w_y );
+        w_x = snap_grid(w_current, w_x);
+        w_y = snap_grid(w_current, w_y);
+
         o_mirror_world(w_current,
                        geda_list_get_glist( w_current->page_current->selection_list ),
                        w_x, w_y);
-        w_x = snap_grid(w_current, w_x);
-        w_y = snap_grid(w_current, w_y);
 
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
