@@ -145,8 +145,7 @@ void o_move_end_lowlevel(TOPLEVEL * w_current, OBJECT * list, int type,
 
       case (OBJ_COMPLEX):
       case (OBJ_PLACEHOLDER):
-        o_complex_translate_world (w_current, diff_x, diff_y,
-                                   object->complex->prim_objs);
+        o_complex_translate_world(w_current, diff_x, diff_y, object);
         break;
     }
 
@@ -251,7 +250,7 @@ void o_move_end(TOPLEVEL * w_current)
         }
 
         /* this next section of code is from */
-        /* o_complex_world_translate_toplevel */
+        /* o_complex_world_translate_world */
         object->complex->x = object->complex->x + diff_x;
         object->complex->y = object->complex->y + diff_y;
 

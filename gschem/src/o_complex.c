@@ -291,7 +291,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
     o_start = o_start->next;
     w_current->ADDING_SEL=0;
     
-    o_complex_translate_world(w_current, x, y, o_start);
+    o_list_translate_world(w_current, x, y, o_start);
 
     o_temp = o_start;
     while (o_temp != NULL) {
@@ -596,17 +596,13 @@ void o_complex_translate_all(TOPLEVEL *w_current, int offset)
         
   if (offset == 0) {
     s_log_message(_("Translating schematic [%d %d]\n"), -x, -y);
-    o_complex_translate_world(
-                              w_current,
-                              -x, -y,
-                              w_current->page_current->object_head);
+    o_list_translate_world(w_current, -x, -y,
+                           w_current->page_current->object_head);
   } else {
     s_log_message(_("Translating schematic [%d %d]\n"),
                   offset, offset);
-    o_complex_translate_world(
-                              w_current,
-                              offset, offset,
-                              w_current->page_current->object_head);
+    o_list_translate_world(w_current, offset, offset,
+                           w_current->page_current->object_head);
   }
 
   o_current = w_current->page_current->object_head;
@@ -649,15 +645,15 @@ void o_complex_rotate_world(TOPLEVEL *w_current, int centerx, int centery,
   x = newx + (centerx);
   y = newy + (centery);
 
-  o_complex_world_translate_toplevel(w_current,
-                                     -object->complex->x, 
-                                     -object->complex->y, object);
+  o_complex_translate_world(w_current,
+                            -object->complex->x,
+                            -object->complex->y, object);
   o_complex_rotate_lowlevel(w_current, 0, 0, angle, object);
 
   object->complex->x = 0;
   object->complex->y = 0;
 
-  o_complex_world_translate_toplevel(w_current, x, y, object);
+  o_complex_translate_world(w_current, x, y, object);
 
   object->complex->angle = ( object->complex->angle + angle ) % 360;
 
@@ -691,9 +687,9 @@ int o_complex_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_cen
   x = newx + (world_centerx);
   y = newy + (world_centery);
 
-  o_complex_world_translate_toplevel(w_current,
-                                     -object->complex->x, 
-                                     -object->complex->y, object);
+  o_complex_translate_world(w_current,
+                            -object->complex->x,
+                            -object->complex->y, object);
 
   o_complex_mirror_lowlevel(w_current, 0, 0, object);
 
@@ -712,7 +708,7 @@ int o_complex_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_cen
 
   object->complex->mirror = !object->complex->mirror;
 
-  o_complex_world_translate_toplevel(w_current, x, y, object);
+  o_complex_translate_world(w_current, x, y, object);
 
 #if DEBUG
   printf("final res %d %d\n", object->complex->x,  object->complex->y);

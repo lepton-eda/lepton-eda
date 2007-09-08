@@ -605,7 +605,7 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
     } 
     
     o_complex_rotate_lowlevel(toplevel, x, y, angle, new_node);
-    o_complex_translate_world(toplevel, x, y, prim_objs);
+    o_list_translate_world(toplevel, x, y, prim_objs);
 
     if (!toplevel->ADDING_SEL) {
      s_conn_update_complex(toplevel, prim_objs);
@@ -832,91 +832,23 @@ void o_complex_free_filename(TOPLEVEL *toplevel)
  *  \par Function Description
  *
  */
-/* this needs work remove display stuff */
-/* libhack */
-/* and recalc stuff */
-/* this function takes in a complex list */
 void o_complex_translate_world(TOPLEVEL *toplevel, int x1, int y1,
-			       OBJECT *prim_objs)
-{
-  OBJECT *o_current=NULL;
-
-  o_current = prim_objs;
-
-  while ( o_current != NULL ) {
-    switch(o_current->type) {
-      case(OBJ_LINE):
-        o_line_translate_world(toplevel, x1, y1, o_current);
-        break;
-
-      case(OBJ_NET):
-				/* same as a line, don't do this */
-        o_line_translate_world(toplevel, x1, y1, o_current);
-        break;
-
-      case(OBJ_BUS):
-				/* same as a line, don't do this */
-        o_line_translate_world(toplevel, x1, y1, o_current);
-        break;
-	
-      case(OBJ_BOX):
-        o_box_translate_world(toplevel, x1, y1, o_current);
-        break;
-
-      case(OBJ_PICTURE):
-        o_picture_translate_world(toplevel, x1, y1, o_current);
-        break;
-
-      case(OBJ_CIRCLE):
-        o_circle_translate_world(toplevel, x1, y1, o_current);
-        break;
-	
-      case(OBJ_COMPLEX):
-      case(OBJ_PLACEHOLDER):
-        o_complex_world_translate_toplevel(toplevel, x1, y1, o_current);
-        break;
-
-      case(OBJ_TEXT):
-        o_text_translate_world(toplevel, x1, y1, o_current);
-        break;
-
-        /* same note as above */
-      case(OBJ_PIN):
-        o_pin_translate_world(toplevel, x1, y1, o_current);
-        break;
-
-      case(OBJ_ARC):
-        o_arc_translate_world(toplevel, x1, y1, o_current);
-        break;
-    }
-    o_current=o_current->next;
-  }
-}
-
-/*! \brief
- *  \par Function Description
- *
- */
-/* this function takes the toplevel object and then also translates the
- * complex */
-void o_complex_world_translate_toplevel(TOPLEVEL *toplevel,
-					int x1, int y1, OBJECT *object)
+                               OBJECT *object)
 {
   int left, right, top, bottom;
 
-  g_return_if_fail(object != NULL);
-  g_return_if_fail((object->type == OBJ_COMPLEX) ||
-		   (object->type == OBJ_PLACEHOLDER));
+  g_return_if_fail (object != NULL &&
+                    (object->type == OBJ_COMPLEX ||
+                     object->type == OBJ_PLACEHOLDER));
 
   object->complex->x = object->complex->x + x1;
   object->complex->y = object->complex->y + y1;
 
-  o_complex_translate_world(toplevel, x1, y1,
-                            object->complex->prim_objs);
+  o_list_translate_world (toplevel, x1, y1, object->complex->prim_objs);
 
   world_get_object_list_bounds(toplevel, object->complex->prim_objs,
-			 &left, &top, &right, &bottom);
-	
+                               &left, &top, &right, &bottom);
+
   object->w_left = left;
   object->w_top = top;
   object->w_right = right;

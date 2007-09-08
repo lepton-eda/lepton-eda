@@ -444,3 +444,36 @@ void o_list_delete_rest(TOPLEVEL *toplevel, OBJECT *list)
     }
   }
 }
+
+
+/*! \todo Finish function description!!!
+ *  \brief
+ *  \par Function Description
+ */
+void o_list_translate_world (TOPLEVEL *toplevel, int x, int y, OBJECT *list)
+{
+  OBJECT *o_current = list;
+
+  while ( o_current != NULL ) {
+    o_translate_world (toplevel, x, y, o_current);
+    o_current = o_current->next;
+  }
+}
+
+
+/*! \todo Finish function description!!!
+ *  \brief
+ *  \par Function Description
+ */
+void o_glist_translate_world (TOPLEVEL *toplevel, int x, int y, GList *list)
+{
+  GList *iter = list;
+  OBJECT *o_current;
+
+  while ( iter != NULL ) {
+    o_current = (OBJECT *)iter->data;
+    o_translate_world (toplevel, x, y, o_current);
+    iter = g_list_next (iter);
+  }
+}
+

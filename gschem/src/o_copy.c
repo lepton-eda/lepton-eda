@@ -237,9 +237,7 @@ void o_copy_end(TOPLEVEL *w_current)
                              object->complex->prim_objs);
         }
 
-        o_complex_world_translate_toplevel(w_current,
-                                           diff_x, diff_y,
-                                           new_object);
+        o_complex_translate_world(w_current, diff_x, diff_y, new_object);
 
         o_selection_add( temp_list, new_object );
 

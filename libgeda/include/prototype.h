@@ -286,8 +286,7 @@ OBJECT *o_complex_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[], unsi
 char *o_complex_save(OBJECT *object);
 void o_complex_set_filename(TOPLEVEL *toplevel, const char *basename);
 void o_complex_free_filename(TOPLEVEL *toplevel);
-void o_complex_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *prim_objs);
-void o_complex_world_translate_toplevel(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object);
+void o_complex_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object);
 OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
 OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
 void o_complex_delete(TOPLEVEL *toplevel, OBJECT *delete);
@@ -336,6 +335,8 @@ OBJECT *o_list_copy_all_selection2(TOPLEVEL *toplevel, GList *src_list_head, OBJ
 OBJECT *o_list_search(OBJECT *list, OBJECT *current);
 void o_list_delete(TOPLEVEL *toplevel, OBJECT *list, OBJECT *delete);
 void o_list_delete_rest(TOPLEVEL *toplevel, OBJECT *list);
+void o_list_translate_world(TOPLEVEL *toplevel, int x, int y, OBJECT *list);
+void o_glist_translate_world(TOPLEVEL *toplevel, int x, int y, GList *list);
 
 /* o_net_basic.c */
 void world_get_net_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
