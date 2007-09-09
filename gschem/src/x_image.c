@@ -663,9 +663,6 @@ GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
   toplevel.grid = 0;
   toplevel.text_origin_marker = FALSE;
 
-  toplevel.display_width = toplevel.image_width;
-  toplevel.display_height = toplevel.image_height;
-
   toplevel.win_width = toplevel.image_width;
   toplevel.win_height = toplevel.image_height;
 

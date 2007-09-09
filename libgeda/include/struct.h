@@ -461,8 +461,6 @@ struct st_toplevel {
 
   int override_color;			/* used in doing selections */
   int inside_redraw;			/* complex vs list redrawing */
-  int display_height;			/* display params */
-  int display_width;			/* could me made global (?) */
 
   int DONT_REDRAW;			/* misc flags */
   int ADDING_SEL;

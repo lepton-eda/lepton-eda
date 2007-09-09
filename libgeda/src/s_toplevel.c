@@ -107,8 +107,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->override_color = -1;
   toplevel->inside_redraw = 0;
-  toplevel->display_height = 0;
-  toplevel->display_width  = 0;
 
   toplevel->DONT_REDRAW       = 0;
   toplevel->ADDING_SEL        = 0;

@@ -48,10 +48,6 @@ void x_window_setup (TOPLEVEL *toplevel)
   /* Initialize the autosave callback */
   s_page_autosave_init(toplevel);
 
-  /* X related stuff */
-  toplevel->display_height = gdk_screen_height ();
-  toplevel->display_width  = gdk_screen_width ();
-
   /* x_window_setup_world() - BEGIN */
   toplevel->init_left = -45;
   toplevel->init_top  = -45;
