@@ -47,9 +47,8 @@
  *
  */
 /* for now this only supports single chars, not shift/alt/ctrl etc... */
-int g_keys_execute(int state, int keyval)
+int g_keys_execute(TOPLEVEL *w_current, int state, int keyval)
 {
-  TOPLEVEL *w = global_window_current;
   char *guile_string = NULL;
   char *modifier = NULL;
   char *key_name = NULL;
@@ -81,26 +80,26 @@ int g_keys_execute(int state, int keyval)
     modifier = g_strdup("");
 
   if(strcmp(key_name, "Escape") == 0) {
-     g_free(w->keyaccel_string);
-     w->keyaccel_string = NULL;
-  } else if(w->keyaccel_string &&
-        strlen(w->keyaccel_string) + strlen(key_name) > 10) {
-     g_free(w->keyaccel_string);
-     w->keyaccel_string = g_strconcat(modifier, key_name, NULL);
+     g_free(w_current->keyaccel_string);
+     w_current->keyaccel_string = NULL;
+  } else if(w_current->keyaccel_string &&
+        strlen(w_current->keyaccel_string) + strlen(key_name) > 10) {
+     g_free(w_current->keyaccel_string);
+     w_current->keyaccel_string = g_strconcat(modifier, key_name, NULL);
   } else {
      gchar *p, *r;
 
-     p = w->keyaccel_string;
-     w->keyaccel_string = g_strconcat(modifier, key_name, NULL);
+     p = w_current->keyaccel_string;
+     w_current->keyaccel_string = g_strconcat(modifier, key_name, NULL);
      if(p) {
-        r = g_strconcat(p, w->keyaccel_string, NULL);
+        r = g_strconcat(p, w_current->keyaccel_string, NULL);
         g_free(p);
-        g_free(w->keyaccel_string);
-        w->keyaccel_string = r;
+        g_free(w_current->keyaccel_string);
+        w_current->keyaccel_string = r;
      }
   }
 
-  i_show_state(w, NULL);
+  i_show_state(w_current, NULL);
 
   guile_string = g_strdup_printf("(press-key \"%s%s\")",
                                  modifier, key_name);

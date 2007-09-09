@@ -1504,7 +1504,7 @@ gboolean x_event_key_press (GtkWidget *widget, GdkEventKey *event,
 #if DEBUG
     printf("x_event_key_pressed: Pressed key %i.\n", event->keyval);
 #endif
-    retval = g_keys_execute(event->state, event->keyval) ? TRUE : FALSE;
+    retval = g_keys_execute(w_current, event->state, event->keyval) ? TRUE : FALSE;
   }
 
   return retval;
