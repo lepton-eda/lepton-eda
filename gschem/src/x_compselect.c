@@ -246,17 +246,19 @@ enum {
 static GObjectClass *compselect_parent_class = NULL;
 
 
-static void compselect_class_init (CompselectClass *class);
-static void compselect_init       (Compselect *compselect);
-static void compselect_finalize     (GObject *object);
-static void compselect_set_property (GObject *object,
-                                     guint property_id,
-                                     const GValue *value,
-                                     GParamSpec *pspec);
-static void compselect_get_property (GObject *object,
-                                     guint property_id,
-                                     GValue *value,
-                                     GParamSpec *pspec);
+static void compselect_class_init      (CompselectClass *class);
+static GObject *compselect_constructor (GType type,
+                                        guint n_construct_properties,
+                                        GObjectConstructParam *construct_params);
+static void compselect_finalize        (GObject *object);
+static void compselect_set_property    (GObject *object,
+                                        guint property_id,
+                                        const GValue *value,
+                                        GParamSpec *pspec);
+static void compselect_get_property    (GObject *object,
+                                        guint property_id,
+                                        GValue *value,
+                                        GParamSpec *pspec);
 
 
 
@@ -928,7 +930,7 @@ compselect_get_type ()
       NULL, /* class_data */
       sizeof(Compselect),
       0,    /* n_preallocs */
-      (GInstanceInitFunc) compselect_init,
+      NULL  /* instance_init */
     };
                 
     compselect_type = g_type_register_static (GSCHEM_TYPE_DIALOG,
@@ -1009,6 +1011,7 @@ compselect_class_init (CompselectClass *klass)
   gschem_dialog_class->geometry_restore = compselect_geometry_restore;
 #endif
 
+  gobject_class->constructor  = compselect_constructor;
   gobject_class->finalize     = compselect_finalize;
   gobject_class->set_property = compselect_set_property;
   gobject_class->get_property = compselect_get_property;
@@ -1039,17 +1042,26 @@ compselect_class_init (CompselectClass *klass)
   
 }
 
-static void
-compselect_init (Compselect *compselect)
+static GObject*
+compselect_constructor (GType type,
+                        guint n_construct_properties,
+                        GObjectConstructParam *construct_params)
 {
+  GObject *object;
+  Compselect *compselect;
+
   GtkWidget *hpaned, *notebook;
   GtkWidget *libview, *inuseview;
   GtkWidget *preview, *combobox;
-  
   GtkWidget *alignment, *frame;
-  
+
+  /* chain up to constructor of parent class */
+  object = G_OBJECT_CLASS (compselect_parent_class)->
+    constructor (type, n_construct_properties, construct_params);
+  compselect = COMPSELECT (object);
+
   /* dialog initialization */
-  g_object_set (G_OBJECT (compselect),
+  g_object_set (object,
                 /* GtkWindow */
                 "type",            GTK_WINDOW_TOPLEVEL,
                 "title",           _("Select Component..."),
@@ -1153,6 +1165,8 @@ compselect_init (Compselect *compselect)
 
   /* Initialize the hidden property */
   compselect->hidden = FALSE;
+
+  return object;
 }
 
 static void
