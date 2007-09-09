@@ -553,7 +553,7 @@ compselect_callback_behavior_changed (GtkOptionMenu *optionmenu,
  * use, using s_toplevel_get_symbols().
  */
 static GtkTreeModel*
-create_inuse_tree_model (void)
+create_inuse_tree_model (Compselect *compselect)
 {
   GtkListStore *store;
   GList *symhead, *symlist;
@@ -561,7 +561,7 @@ create_inuse_tree_model (void)
 
   store = (GtkListStore *) gtk_list_store_new (1, G_TYPE_POINTER);
 
-  symhead = s_toplevel_get_symbols (global_window_current);
+  symhead = s_toplevel_get_symbols (GSCHEM_DIALOG (compselect)->toplevel);
 
   for (symlist = symhead;
        symlist != NULL;
@@ -585,7 +585,7 @@ create_inuse_tree_model (void)
  * sources and the leaves are the symbols.
  */
 static GtkTreeModel*
-create_lib_tree_model (void)
+create_lib_tree_model (Compselect *compselect)
 {
   GtkTreeStore *store;
   GList *srchead, *srclist;
@@ -594,7 +594,7 @@ create_lib_tree_model (void)
   store = (GtkTreeStore*)gtk_tree_store_new (1, G_TYPE_POINTER);
   
   /* populate component store */
-  srchead = s_clib_get_sources (global_window_current->sort_component_library != 0);
+  srchead = s_clib_get_sources (GSCHEM_DIALOG (compselect)->toplevel->sort_component_library != 0);
   for (srclist = srchead; 
        srclist != NULL; 
        srclist = g_list_next (srclist)) {
@@ -641,7 +641,7 @@ compselect_callback_refresh_library (GtkButton *button, gpointer user_data)
   /* Refresh the "Library" view */
   model = (GtkTreeModel *)
     g_object_new (GTK_TYPE_TREE_MODEL_FILTER,
-                  "child-model", create_lib_tree_model (),
+                  "child-model", create_lib_tree_model (compselect),
                   "virtual-root", NULL,
                   NULL);
 
@@ -653,7 +653,7 @@ compselect_callback_refresh_library (GtkButton *button, gpointer user_data)
   gtk_tree_view_set_model (compselect->libtreeview, model);
 
   /* Refresh the "In Use" view */
-  model = create_inuse_tree_model ();
+  model = create_inuse_tree_model (compselect);
   gtk_tree_view_set_model (compselect->inusetreeview, model);
 }
 
@@ -667,7 +667,7 @@ create_inuse_treeview (Compselect *compselect)
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
 
-  model = create_inuse_tree_model ();
+  model = create_inuse_tree_model (compselect);
 
   /* Create a scrolled window to accomodate the treeview */
   scrolled_win = GTK_WIDGET (
@@ -743,7 +743,7 @@ create_lib_treeview (Compselect *compselect)
                                    "spacing",      5,
                                    NULL));
 
-  child_model  = create_lib_tree_model ();
+  child_model  = create_lib_tree_model (compselect);
   model = (GtkTreeModel*)g_object_new (GTK_TYPE_TREE_MODEL_FILTER,
                                        "child-model",  child_model,
                                        "virtual-root", NULL,
