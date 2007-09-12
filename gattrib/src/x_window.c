@@ -208,7 +208,11 @@ static const GtkActionEntry actions[] = {
 
   /* Help menu */
   { "help", NULL, "_Help"},
+#if GTK_CHECK_VERSION (2,6,0)
   { "help-about", GTK_STOCK_ABOUT, "About", "", "", x_dialog_about_dialog},
+#else
+  { "help-about", NULL, "About", "", "", x_dialog_about_dialog},
+#endif
 };
 
 
