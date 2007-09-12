@@ -11,9 +11,9 @@ msgstr ""
 "Project-Id-Version: it_IT\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-02 21:10-0400\n"
-"PO-Revision-Date: 2007-05-03 21:37+0200\n"
-"Last-Translator: Michele Petrecca <michelinux@alice.it>\n"
-"Language-Team: Italiano\n"
+"PO-Revision-Date: 2007-09-10 23:05+0200\n"
+"Last-Translator: Michele <michelinux@alice.it>\n"
+"Language-Team: Italiano <michelinux@alice.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,35 +25,35 @@ msgstr "File"
 
 #: src/rcstrings.c:3
 msgid "New Window"
-msgstr "Nuova Finestra"
+msgstr "Nuova finestra"
 
 #: src/rcstrings.c:4 src/x_pagesel.c:258
 msgid "New Page"
-msgstr "Nuova Pagina"
+msgstr "Nuova pagina"
 
 #: src/rcstrings.c:5 src/x_pagesel.c:259
 msgid "Open Page..."
-msgstr "Apri Pagina..."
+msgstr "Apri pagina..."
 
 #: src/rcstrings.c:6 src/x_pagesel.c:262
 msgid "Close Page"
-msgstr "Chiudi Pagina"
+msgstr "Chiudi pagina"
 
 #: src/rcstrings.c:7
 msgid "Revert Page"
-msgstr "Centra la Pagina"
+msgstr ""
 
 #: src/rcstrings.c:8 src/x_pagesel.c:261
 msgid "Save Page"
-msgstr "Salva Pagina"
+msgstr "Salva la pagina"
 
 #: src/rcstrings.c:9
 msgid "Save Page As..."
-msgstr "Salva Pagina Con Nome..."
+msgstr "Salva pagina con nome..."
 
 #: src/rcstrings.c:10
 msgid "Save All"
-msgstr "Salva Tutto"
+msgstr "Salva tutto"
 
 #: src/rcstrings.c:11 src/x_print.c:283
 msgid "Print..."
@@ -64,9 +64,8 @@ msgid "Write image..."
 msgstr "Scrivi immagine..."
 
 #: src/rcstrings.c:13 src/x_menus.c:524
-#, fuzzy
 msgid "Recent files"
-msgstr "Nuovo file"
+msgstr "File recenti"
 
 #: src/rcstrings.c:14 src/x_script.c:50
 msgid "Execute Script..."
@@ -74,7 +73,7 @@ msgstr "Esegui Script..."
 
 #: src/rcstrings.c:15
 msgid "Close Window"
-msgstr "Chiudi Finestra"
+msgstr "Chiudi finestra"
 
 #: src/rcstrings.c:16
 msgid "Quit"
@@ -94,22 +93,19 @@ msgstr "Ripristina"
 
 #: src/rcstrings.c:21 src/i_basic.c:81 src/x_window.c:682
 msgid "Select Mode"
-msgstr "Modalità Selezione"
+msgstr "Modalità selezione"
 
 #: src/rcstrings.c:22
-#, fuzzy
 msgid "Cut Buffer"
-msgstr "Buffer"
+msgstr "Svuota buffer"
 
 #: src/rcstrings.c:23
-#, fuzzy
 msgid "Copy Buffer"
-msgstr "Buffer"
+msgstr "Copia buffer"
 
 #: src/rcstrings.c:24
-#, fuzzy
 msgid "Paste Buffer"
-msgstr "Buffer"
+msgstr "Incolla buffer"
 
 #: src/rcstrings.c:25
 msgid "Edit..."
@@ -117,19 +113,19 @@ msgstr "Modifica..."
 
 #: src/rcstrings.c:26
 msgid "Edit Text..."
-msgstr "Modifica il Testo..."
+msgstr "Modifica il testo..."
 
 #: src/rcstrings.c:27 src/i_basic.c:94
 msgid "Copy Mode"
-msgstr "Modalità Copia"
+msgstr "Modalità copia"
 
 #: src/rcstrings.c:28 src/i_basic.c:149
 msgid "Multiple Copy Mode"
-msgstr "Modalità di Copiatura Multipla"
+msgstr "Modalità di copiatura multipla"
 
 #: src/rcstrings.c:29 src/i_basic.c:97
 msgid "Move Mode"
-msgstr "Modalità Spostamento"
+msgstr "Modalità spostamento"
 
 #: src/rcstrings.c:30 src/i_callbacks.c:706 src/x_multiattrib.c:1258
 msgid "Delete"
@@ -141,7 +137,7 @@ msgstr "Ruota di 90 gradi"
 
 #: src/rcstrings.c:32 src/i_basic.c:101
 msgid "Mirror Mode"
-msgstr "Modalità Specchio"
+msgstr "Modalità specchio"
 
 #: src/rcstrings.c:33
 msgid "Slot..."
@@ -161,7 +157,7 @@ msgstr "Sblocca"
 
 #: src/rcstrings.c:37
 msgid "Line Width & Type..."
-msgstr "Tipo & Larghezza Linea..."
+msgstr "Tipo & Larghezza della linea..."
 
 #: src/rcstrings.c:38
 msgid "Fill Type..."
@@ -169,7 +165,7 @@ msgstr "Riempimento..."
 
 #: src/rcstrings.c:39
 msgid "Symbol Translate..."
-msgstr "Converti Simbolo..."
+msgstr "Converti simbolo..."
 
 #: src/rcstrings.c:40
 msgid "Embed Component/Picture"
@@ -453,14 +449,12 @@ msgid "Snap Grid Spacing..."
 msgstr "Ampiezza Griglia"
 
 #: src/rcstrings.c:117
-#, fuzzy
 msgid "Scale up Grid Spacing"
-msgstr "Ampiezza Griglia"
+msgstr ""
 
 #: src/rcstrings.c:118
-#, fuzzy
 msgid "Scale down Grid Spacing"
-msgstr "Ampiezza Griglia"
+msgstr ""
 
 #: src/rcstrings.c:119
 msgid "Toggle Outline/Box"
@@ -483,27 +477,24 @@ msgid "Help"
 msgstr "Aiuto"
 
 #: src/rcstrings.c:125
-#, fuzzy
 msgid "Manual"
-msgstr "Manuale..."
+msgstr "Manuale"
 
 #: src/rcstrings.c:126
-#, fuzzy
 msgid "gEDA Documentation"
-msgstr "Documentazione"
+msgstr "Documentazione gEDA"
 
 #: src/rcstrings.c:127
 msgid "gschem FAQ"
-msgstr ""
+msgstr "FAQ gschem"
 
 #: src/rcstrings.c:128
-#, fuzzy
 msgid "Component Documentation"
-msgstr "Documentazione"
+msgstr "Documentazione componente"
 
 #: src/rcstrings.c:129
 msgid "About gschem"
-msgstr ""
+msgstr "Informazioni su gschem"
 
 #: src/rcstrings.c:130 src/x_dialog.c:2517
 msgid "Hotkeys"
@@ -511,8 +502,7 @@ msgstr "Hotkeys"
 
 #: src/a_zoom.c:245
 msgid "Zoom too small!  Cannot zoom further.\n"
-msgstr ""
-"Eccessiva riduzione dell'immagine!  Non è possibile ridurla ulteriormente.\n"
+msgstr "Eccessiva riduzione dell'immagine!  Non è possibile ridurla ulteriormente.\n"
 
 #: src/g_funcs.c:342 src/i_callbacks.c:137
 #, c-format
@@ -571,8 +561,7 @@ msgstr ""
 #: src/g_rc.c:1364
 #, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
-msgstr ""
-"Il valore [%d] dell'ampiezza dei punti passata alla griglia non è valida\n"
+msgstr "Il valore [%d] dell'ampiezza dei punti passata alla griglia non è valida\n"
 
 #: src/g_rc.c:1405
 #, c-format
@@ -622,8 +611,7 @@ msgstr ""
 
 #: src/gschem.c:197 src/gschem.c:208
 #, c-format
-msgid ""
-"This is free software, and you are welcome to redistribute it under certain\n"
+msgid "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Questo software è rilasciato sotto licenza GPL e può essere ridistribuito "
 "sotto determinate\n"
@@ -1155,12 +1143,10 @@ msgid "Got an unexpected NULL in o_edit\n"
 msgstr "Ottenuto un NULLO inaspettato in o_edit\n"
 
 #: src/o_misc.c:144
-#, fuzzy
 msgid "Object already locked\n"
 msgstr "Oggetto già bloccato\n"
 
 #: src/o_misc.c:182
-#, fuzzy
 msgid "Object already unlocked\n"
 msgstr "Oggetto già sbloccato\n"
 
@@ -1185,7 +1171,7 @@ msgstr "Il testo ora è non visibile\n"
 #: src/o_misc.c:1058
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
-msgstr ""
+msgstr "Non è possibile trovare il simbolo [%s] nella libreria. Aggiornamento fallito.\n"
 
 #: src/o_misc.c:1196
 #, c-format
@@ -1237,9 +1223,9 @@ msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 
 #: src/o_net.c:1029
-#, fuzzy, c-format
+#, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
-msgstr "Non è possibile trovare %s in nessuna libreria di componenti\n"
+msgstr ""
 
 #: src/o_picture.c:206 src/o_picture.c:746
 #, c-format
@@ -1374,8 +1360,7 @@ msgstr ""
 
 #: src/x_autonumber.c:428
 #, c-format
-msgid ""
-"duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
+msgid "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
 msgstr ""
 
 #: src/x_autonumber.c:697
@@ -1513,11 +1498,11 @@ msgstr "Seleziona Componente..."
 
 #: src/x_compselect.c:1103
 msgid "In Use"
-msgstr ""
+msgstr "In uso"
 
 #: src/x_compselect.c:1107
 msgid "Libraries"
-msgstr ""
+msgstr "Librerie"
 
 #: src/x_compselect.c:1116 src/x_fileselect.c:127
 msgid "Preview"
@@ -1743,7 +1728,6 @@ msgid "<b>gschem version %s%s.%s</b>"
 msgstr "<b>versione di gschem %s%s.%s</b>"
 
 #: src/x_dialog.c:2043
-#, fuzzy
 msgid ""
 "Written by:\n"
 "Ales Hvezda\n"
@@ -1751,7 +1735,7 @@ msgid ""
 "And many others (See AUTHORS file)"
 msgstr ""
 "Scritto da:\n"
-"Ales V. Hvezda\n"
+"Ales  Hvezda\n"
 "ahvezda@geda.seul.org\n"
 "...e molti altri (leggere il file AUTHORS)"
 
@@ -1830,11 +1814,10 @@ msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr "Salvare i cambi allo schematico \"%s\" prima di chiudere?"
 
 #: src/x_dialog.c:3728
-#, fuzzy, c-format
-msgid ""
-"There are %d schematics with unsaved changes. Save changes before closing?"
+#, c-format
+msgid "There are %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
-"C'è lo schematico %d che presenta cambi non salvati. Salvare i cambi prima "
+"Ci sono %d schemi che presentano cambi non salvati. Salvare i cambi prima "
 "di chiudere?"
 
 #: src/x_dialog.c:3757
@@ -1857,11 +1840,16 @@ msgid ""
 "The name cannot end with a space.\n"
 "The value cannot start with a space."
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">Il valore di ingresso \"%s\" non è valido\n"
+"Inserire un valore corretto per continuare</span>\n"
+"\n"
+"Il nome e il valore devono essere campi non vuoti.\n"
+"Il nome non deve terminare con uno spazio.\n"
+"Il valore non deve iniziare con uno spazio."
 
 #: src/x_dialog.c:4100
-#, fuzzy
 msgid "Invalid Attribute"
-msgstr "Aggiungi Attributo"
+msgstr "Caratteristica non valida"
 
 #: src/x_fileselect.c:47
 msgid "Schematics"
@@ -1889,14 +1877,12 @@ msgstr "Salva con nome..."
 
 #: src/x_image.c:180
 msgid "Encapsulated Postscript"
-msgstr ""
+msgstr "formato eps (Encapsulated Postscript)"
 
 #: src/x_image.c:298
-#, fuzzy, c-format
+#, c-format
 msgid "x_image_lowlevel: Unable to write eps file %s.\n"
-msgstr ""
-"x_image_lowlevel: incapace ad ottenere immagine pixbuf dalla finestra di "
-"gschem.\n"
+msgstr "x_image_lowlevel: non è possibile scrivere il file eps %s.\n"
 
 #: src/x_image.c:379
 #, c-format
@@ -2018,23 +2004,20 @@ msgstr "La voce Popup_menu_item_factory non esiste!\n"
 
 #: src/x_menus.c:369
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
-msgstr ""
-"Provato a impostare la sensibilità su una finestra di popup menu_itemi\n"
+msgstr "Provato a impostare la sensibilità su una finestra di popup menu_itemi\n"
 
 #: src/x_menus.c:482
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't open file %s\n"
-msgstr "Non è possibile invocare %s\n"
+msgstr "Non è possibile aprire il file %s\n"
 
 #: src/x_menus.c:542
-#, fuzzy
 msgid "Clear"
-msgstr "Chiudi"
+msgstr "Pulisci"
 
 #: src/x_multiattrib.c:718
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
-"Attributi con il nome vuoto non sono permessi. Per favore inserisci un nome."
+msgstr "Attributi con il nome vuoto non sono permessi. Per favore inserisci un nome."
 
 #: src/x_multiattrib.c:1228
 msgid "Show Value only"
@@ -2328,34 +2311,3 @@ msgstr "Annulla pagina [%s]\n"
 msgid "Closing [%s]\n"
 msgstr "Chiusura [%s]\n"
 
-#~ msgid "Invalid mode [%s] passed to %s\n"
-#~ msgstr "Modo [%s] non valido passato a %s\n"
-
-#~ msgid ""
-#~ "Found a version [%s%s] gschemrc file:\n"
-#~ "[%s]\n"
-#~ msgstr ""
-#~ "Trovata la versione [%s%s] del file gschemrc:\n"
-#~ "[%s]\n"
-
-#~ msgid ""
-#~ "While gschem is in ALPHA, please be sure that you have the latest rc "
-#~ "file.\n"
-#~ msgstr ""
-#~ "Assicurati di avere sempre l'ultima versione del file rc; gschem si trova "
-#~ "ancora in uno stato di sviluppo alfa.\n"
-
-#~ msgid "selected a nonexistant object!\n"
-#~ msgstr "selezionato un oggetto non esistente!\n"
-
-#~ msgid "Component still embedded and not updated\n"
-#~ msgstr "Componente ancora fissato e/o non aggiornato\n"
-
-#~ msgid "More than one component found with name [%s]\n"
-#~ msgstr "Più di un componente è stato trovato con il nome [%s]\n"
-
-#~ msgid "Write PNG..."
-#~ msgstr "Stampa File .png..."
-
-#~ msgid "Hotkeys..."
-#~ msgstr "Hotkeys..."
