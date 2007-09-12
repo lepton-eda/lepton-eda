@@ -112,6 +112,7 @@
 
 #include <config.h>
 
+#include <stdio.h>
 #include <glib.h>
 
 #ifdef HAVE_STRING_H

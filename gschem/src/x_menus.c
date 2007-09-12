@@ -411,7 +411,7 @@ inline void x_menu_attach_recent_files_submenu(TOPLEVEL *w_current)
 }
 
 inline void recent_files_load() { }
-inline void recent_files_save() { }
+inline void recent_files_save(gpointer user_data) { }
 inline void recent_files_add(const char *filename) { }
 
 #else
