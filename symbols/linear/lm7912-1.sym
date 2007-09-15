@@ -1,39 +1,51 @@
-v 20031231 1
-T 900 100 9 8 1 0 0 0 1
-7912
+v 20070818 1
 B 300 300 1000 600 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
-T 1600 1300 8 10 0 0 0 0 1
+T 300 1150 5 10 0 0 0 0 1
 device=7912
 P 300 600 0 600 1 0 1
 {
-T 100 650 5 8 1 1 0 0 1
-pinnumber=1
-T 100 650 5 8 0 0 0 0 1
-pinseq=1
-T 400 600 9 8 1 1 0 0 1
+T 200 650 5 8 1 1 0 6 1
+pinnumber=2
+T 200 550 5 8 0 1 0 8 1
+pinseq=2
+T 350 600 9 8 1 1 0 0 1
 pinlabel=IN
+T 350 600 5 8 0 1 0 2 1
+pintype=pas
 }
 P 800 0 800 300 1 0 0
 {
-T 700 100 5 8 1 1 0 0 1
-pinnumber=2
-T 700 100 5 8 0 0 0 0 1
-pinseq=2
-T 656 401 9 8 1 1 0 0 1
+T 850 100 5 8 1 1 0 0 1
+pinnumber=1
+T 850 100 5 8 0 1 0 2 1
+pinseq=1
+T 800 350 9 8 1 1 0 3 1
 pinlabel=GND
+T 800 500 5 8 0 1 0 3 1
+pintype=pwr
 }
 P 1300 600 1600 600 1 0 1
 {
-T 1430 650 5 8 1 1 0 0 1
+T 1400 650 5 8 1 1 0 0 1
 pinnumber=3
-T 1430 650 5 8 0 0 0 0 1
+T 1400 550 5 8 0 1 0 2 1
 pinseq=3
-T 948 600 9 8 1 1 0 0 1
+T 1250 600 9 8 1 1 0 6 1
 pinlabel=OUT
+T 1250 600 5 8 0 1 0 8 1
+pintype=pas
 }
 T 1400 1000 8 10 1 1 0 6 1
 refdes=U?
-T 1600 1100 8 10 0 0 0 0 1
-pins=3
-T 1600 900 8 10 0 0 0 0 1
-net=GND:2
+T 300 1750 5 10 0 0 0 0 1
+footprint=TO220
+T 300 1950 5 10 0 0 0 0 1
+description=negative voltage regulator
+T 300 1550 5 10 0 0 0 0 1
+numslots=0
+T 300 1350 5 10 0 0 0 0 1
+symversion=1.0
+T 300 2150 5 10 0 0 0 0 1
+documentation=http://www.onsemi.com/pub/Collateral/MC7900-D.PDF
+T 300 950 9 8 1 0 0 0 1
+7912
