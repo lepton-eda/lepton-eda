@@ -3486,8 +3486,8 @@ DEFINE_I_CALLBACK(cancel)
   }
 
   /* it is possible to cancel in the middle of a complex place
-   * so lets be sure to clean up the complex_place_head
-   * structure and also clean up the attrib_place_head.
+   * so lets be sure to clean up the complex_place_list
+   * structure and also clean up the attrib_place_list.
    * remember these don't remove the head structure */
 
   /* If it is a move command, then free the complex place list WITHOUT
@@ -3504,8 +3504,9 @@ DEFINE_I_CALLBACK(cancel)
   }
   w_current->page_current->complex_place_list = NULL;
 
-  o_list_delete_rest(w_current,
-                     w_current->page_current->attrib_place_head);
+  s_delete_object_glist(w_current,
+                        w_current->page_current->attrib_place_list);
+  w_current->page_current->attrib_place_list = NULL;
 
   /* also free internal current_attribute */
   o_attrib_free_current(w_current);

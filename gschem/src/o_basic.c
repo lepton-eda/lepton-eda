@@ -72,10 +72,8 @@ void o_redraw_all(TOPLEVEL *w_current)
 
       case(DRAWTEXT):
       case(ENDTEXT):
-        o_drawbounding(w_current, w_current->
-                       page_current->
-                       attrib_place_head->next,
-                       NULL, 
+        o_drawbounding(w_current, NULL,
+                       w_current->page_current->attrib_place_list,
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
       case (GRIPS):
@@ -699,17 +697,18 @@ int o_redraw_cleanstates(TOPLEVEL *w_current)
       /* from i_callback_cancel() */
       o_redraw_all(w_current);
       /* it is possible to cancel in the middle of a complex place
-       * so lets be sure to clean up the complex_place_head
-       * structure and also clean up the attrib_place_head.
+       * so lets be sure to clean up the complex_place_list
+       * structure and also clean up the attrib_place_list.
        * remember these don't remove the head structure */
       /* The complex place is a reference to the real objects, so don't
 	 free the objects here */
       g_list_free (w_current->page_current->complex_place_list);
       w_current->page_current->complex_place_list = NULL;
 
-      o_list_delete_rest(w_current,
-			 w_current->page_current->attrib_place_head);
- 
+      s_delete_object_glist (w_current,
+                             w_current->page_current->attrib_place_list);
+      w_current->page_current->attrib_place_list = NULL;
+
       /* also free internal current_attribute */
       o_attrib_free_current(w_current);     
       w_current->inside_action = 0;

@@ -109,12 +109,8 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   page->stretch_head = page->stretch_tail = s_stretch_new_head();
 
   page->complex_place_list = NULL;
+  page->attrib_place_list = NULL;
 
-  /* add p_attrib and p_attached_to */
-  page->attrib_place_tail = page->attrib_place_head = 
-  s_basic_init_object("attrib_place_head");
-  page->attrib_place_tail->type = OBJ_HEAD;
-	
   /* do this just to be sure that object tail is truely correct */
   page->object_tail = return_tail(page->object_head);
 
@@ -214,7 +210,9 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   /* So don't free the objects there. */
   g_list_free (page->complex_place_list);
   page->complex_place_list = NULL;
-  s_delete_list_fromstart (toplevel, page->attrib_place_head);
+  /* Free the objects in the attrib place list. */
+  s_delete_object_glist (toplevel, page->attrib_place_list);
+  page->attrib_place_list = NULL;
 
 #if DEBUG
   printf("Freeing page: %s\n", page->page_filename);

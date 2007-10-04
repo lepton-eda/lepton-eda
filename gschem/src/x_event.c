@@ -795,10 +795,8 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 		       x_get_darkcolor(w_current->bb_color), TRUE);
         return(0);
       } else if (w_current->event_state == ENDTEXT) {
-        o_drawbounding(w_current,
-                       w_current->page_current->
-                       attrib_place_head->next, 
-                       NULL, 
+        o_drawbounding(w_current, NULL,
+                       w_current->page_current->attrib_place_list,
 		       x_get_darkcolor(w_current->bb_color), TRUE);
 
         w_current->complex_rotate = 
@@ -806,10 +804,8 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
         o_text_place_rotate(w_current);
 
-        o_drawbounding(w_current,
-                       w_current->page_current->
-                       attrib_place_head->next, 
-                       NULL, 
+        o_drawbounding(w_current, NULL,
+                       w_current->page_current->attrib_place_list,
 		       x_get_darkcolor(w_current->bb_color), TRUE);
         return(0);
 

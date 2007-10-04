@@ -334,10 +334,9 @@ void o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y)
                 &x,
                 &y);
 
-  /* remove the old attrib list if it exists without killing the
-     head structure */
-  o_list_delete_rest(w_current,
-                     w_current->page_current->attrib_place_head);
+  /* remove the old attrib list if it exists */
+  s_delete_object_glist(w_current, w_current->page_current->attrib_place_list);
+  w_current->page_current->attrib_place_list = NULL;
 
   value = w_current->current_attribute;
 
@@ -357,18 +356,17 @@ void o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y)
   }
 
   /* here you need to add OBJ_TEXT when it's done */
-  w_current->page_current->attrib_place_tail =
-  (OBJECT *) o_text_add(
-			w_current,
-			w_current->page_current->attrib_place_head,
-				/* type changed from TEXT to TEXT */
-			OBJ_TEXT, w_current->text_color,
-			x, y, LOWER_LEFT, 0, /* zero is angle */
-			w_current->current_attribute,
-			w_current->text_size,
-			/* has to be visible so you can place it */
-			/* visibility is set when you create the object */
-			VISIBLE, SHOW_NAME_VALUE);
+  w_current->page_current->attrib_place_list =
+    g_list_append(w_current->page_current->attrib_place_list,
+                  o_text_add(w_current, NULL,
+                              /* type changed from TEXT to TEXT */
+                             OBJ_TEXT, w_current->text_color,
+                             x, y, LOWER_LEFT, 0, /* zero is angle */
+                             w_current->current_attribute,
+                             w_current->text_size,
+                             /* has to be visible so you can place it */
+                             /* visibility is set when you create the object */
+                             VISIBLE, SHOW_NAME_VALUE));
 
   if (w_current->complex_rotate) {
     temp = w_current->complex_rotate / 90;
@@ -377,9 +375,8 @@ void o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y)
     }
   }
 
-  o_drawbounding(w_current,
-                 w_current->page_current->attrib_place_head->next,
-                 NULL,
+  o_drawbounding(w_current, NULL,
+                 w_current->page_current->attrib_place_list,
                  x_get_darkcolor(w_current->bb_color), TRUE);
 }
 
@@ -421,15 +418,13 @@ void o_text_end(TOPLEVEL *w_current)
   /* erase the old bounding box / outline */
   if (w_current->actionfeedback_mode == OUTLINE) {
     o_drawbounding(
-                   w_current,
-                   w_current->page_current->attrib_place_head->next,
-                   NULL,
+                   w_current, NULL,
+                   w_current->page_current->attrib_place_list,
                    x_get_color(w_current->text_color), FALSE);
   } else {
     o_drawbounding(
-                   w_current,
-                   w_current->page_current->attrib_place_head->next,
-                   NULL,
+                   w_current, NULL,
+                   w_current->page_current->attrib_place_list,
                    x_get_darkcolor(w_current->select_color), FALSE);
   }
 
@@ -459,9 +454,8 @@ void o_text_end(TOPLEVEL *w_current)
  */
 void o_text_rubberattrib(TOPLEVEL *w_current)
 {
-  o_drawbounding(w_current,
-                 w_current->page_current->attrib_place_head->next,
-                 NULL,
+  o_drawbounding(w_current, NULL,
+                 w_current->page_current->attrib_place_list,
                  x_get_darkcolor(w_current->bb_color), FALSE);
 }
 
@@ -583,18 +577,21 @@ void o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string,
 void o_text_place_rotate(TOPLEVEL *w_current)
 {
   OBJECT *o_current;
+  GList *iter;
+
   int x_local = -1;
   int y_local = -1;
 
-  o_current = w_current->page_current->attrib_place_head->next;
-  while(o_current) {
+  for (iter = w_current->page_current->attrib_place_list;
+       iter != NULL;
+       iter = g_list_next(iter)) {
+    o_current = iter->data;
     switch(o_current->type) {	
       case(OBJ_TEXT):
         x_local = o_current->text->x;
         y_local = o_current->text->y;
         break;
     }
-    o_current = o_current->next;
   }
 
   if (x_local == -1) {
@@ -602,14 +599,15 @@ void o_text_place_rotate(TOPLEVEL *w_current)
     return;
   }
 
-  o_current = w_current->page_current->attrib_place_head->next;
-  while(o_current) {
+  for (iter = w_current->page_current->attrib_place_list;
+       iter != NULL;
+       iter = g_list_next(iter)) {
+    o_current = iter->data;
     switch(o_current->type) {	
 
       case(OBJ_TEXT):
         o_text_rotate_world(w_current, x_local, y_local, 90, o_current);
         break;
     }
-    o_current = o_current->next;
   }
 }
