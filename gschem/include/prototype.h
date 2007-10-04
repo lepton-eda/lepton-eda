@@ -479,7 +479,6 @@ void o_erase_selected(TOPLEVEL *w_current);
 void o_erase_single(TOPLEVEL *w_current, OBJECT *object);
 void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, 
 		    GList *o_glist, GdkColor *color, int firsttime);
-void o_erasebounding(TOPLEVEL *w_current, OBJECT *o_list, GList *s_list);
 int o_erase_rubber(TOPLEVEL *w_current);
 int o_redraw_cleanstates(TOPLEVEL *w_current);
 /* o_box.c */
