@@ -7,7 +7,10 @@ SUBDIRS = \
 	asic asicpads gnetman minicircuits st apex allegro irf documentation
 
 scmdatadir = @GEDADATADIR@@PATHSEP@scheme
-dist_scmdata_DATA = geda-clib.scm geda-font.scm
+dist_scmdata_DATA = geda-font.scm
+
+gafrcddir = @GEDADATADIR@@PATHSEP@gafrc.d
+dist_gafrcd_DATA = geda-clib.scm
 
 EXTRA_DIST = autogen.sh ChangeLog-1.0
 
