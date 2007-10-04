@@ -2051,13 +2051,11 @@ DEFINE_I_CALLBACK(buffer_paste1)
 
   i_update_middle_button(w_current, i_callback_buffer_paste1, _("Paste 1"));
   if (object_buffer[0] != NULL) {
-    if (object_buffer[0]->next != NULL) {
-      o_redraw_cleanstates(w_current);	
-      w_current->buffer_number = 0;
-      w_current->inside_action = 1;
-      i_set_state(w_current, STARTPASTE);
-    }
-  } else { 
+    o_redraw_cleanstates(w_current);
+    w_current->buffer_number = 0;
+    w_current->inside_action = 1;
+    i_set_state(w_current, STARTPASTE);
+  } else {
     i_set_state_msg(w_current, SELECT, _("Empty buffer"));
   }
 }
@@ -2075,12 +2073,10 @@ DEFINE_I_CALLBACK(buffer_paste2)
 
   i_update_middle_button(w_current, i_callback_buffer_paste2, _("Paste 2"));
   if (object_buffer[1] != NULL) {
-    if (object_buffer[1]->next != NULL) {
-      o_redraw_cleanstates(w_current);	
-      w_current->buffer_number = 1;
-      w_current->inside_action = 1;
-      i_set_state(w_current, STARTPASTE);
-    }
+    o_redraw_cleanstates(w_current);
+    w_current->buffer_number = 1;
+    w_current->inside_action = 1;
+    i_set_state(w_current, STARTPASTE);
   } else {
     i_set_state_msg(w_current, SELECT, _("Empty buffer"));
   }
@@ -2099,13 +2095,11 @@ DEFINE_I_CALLBACK(buffer_paste3)
 
   i_update_middle_button(w_current, i_callback_buffer_paste3, _("Paste 3"));
   if (object_buffer[2] != NULL) {
-    if (object_buffer[2]->next != NULL) {
-      o_redraw_cleanstates(w_current);	
-      w_current->buffer_number = 2;
-      w_current->inside_action = 1;
-      i_set_state(w_current, STARTPASTE);
-    }
-  } else { 
+    o_redraw_cleanstates(w_current);
+    w_current->buffer_number = 2;
+    w_current->inside_action = 1;
+    i_set_state(w_current, STARTPASTE);
+  } else {
     i_set_state_msg(w_current, SELECT, _("Empty buffer"));
   }
 }
@@ -2123,12 +2117,10 @@ DEFINE_I_CALLBACK(buffer_paste4)
 
   i_update_middle_button(w_current, i_callback_buffer_paste4, _("Paste 4"));
   if (object_buffer[3] != NULL) {
-    if (object_buffer[3]->next != NULL) {
-      o_redraw_cleanstates(w_current);	
-      w_current->buffer_number = 3;
-      w_current->inside_action = 1;
-      i_set_state(w_current, STARTPASTE);
-    }
+    o_redraw_cleanstates(w_current);
+    w_current->buffer_number = 3;
+    w_current->inside_action = 1;
+    i_set_state(w_current, STARTPASTE);
   } else {
     i_set_state_msg(w_current, SELECT, _("Empty buffer"));
   }
@@ -2147,12 +2139,10 @@ DEFINE_I_CALLBACK(buffer_paste5)
 
   i_update_middle_button(w_current, i_callback_buffer_paste5, _("Paste 5"));
   if (object_buffer[4] != NULL) {
-    if (object_buffer[4]->next != NULL) {
-      o_redraw_cleanstates(w_current);	
-      w_current->buffer_number = 4;
-      w_current->inside_action = 1;
-      i_set_state(w_current, STARTPASTE);
-    }
+    o_redraw_cleanstates(w_current);
+    w_current->buffer_number = 4;
+    w_current->inside_action = 1;
+    i_set_state(w_current, STARTPASTE);
   } else {
     i_set_state_msg(w_current, SELECT, _("Empty buffer"));
   }
@@ -2173,11 +2163,6 @@ DEFINE_I_CALLBACK(buffer_paste1_hotkey)
     return;
   }
 
-  if (object_buffer[0]->next == NULL)  {
-    return;
-	
-  }
-	
   o_buffer_paste_start(w_current, mouse_x, mouse_y, 0);
 }
 
@@ -2194,11 +2179,6 @@ DEFINE_I_CALLBACK(buffer_paste2_hotkey)
 
   if (object_buffer[1] == NULL) {
     return;
-  }
-
-  if (object_buffer[1]->next == NULL)  {
-    return;
-	
   }
 
   o_buffer_paste_start(w_current, mouse_x, mouse_y, 1);
@@ -2219,11 +2199,6 @@ DEFINE_I_CALLBACK(buffer_paste3_hotkey)
     return;
   }
 
-  if (object_buffer[2]->next == NULL)  {
-    return;
-	
-  }
-
   o_buffer_paste_start(w_current, mouse_x, mouse_y, 2);
 }
 
@@ -2242,11 +2217,6 @@ DEFINE_I_CALLBACK(buffer_paste4_hotkey)
     return;
   }
 
-  if (object_buffer[3]->next == NULL)  {
-    return;
-	
-  }
-
   o_buffer_paste_start(w_current, mouse_x, mouse_y, 3);
 }
 
@@ -2263,11 +2233,6 @@ DEFINE_I_CALLBACK(buffer_paste5_hotkey)
 
   if (object_buffer[4] == NULL) {
     return;
-  }
-
-  if (object_buffer[4]->next == NULL)  {
-    return;
-	
   }
 
   o_buffer_paste_start(w_current, mouse_x, mouse_y, 4);

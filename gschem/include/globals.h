@@ -53,7 +53,7 @@ extern int auto_place_mode;
 
 #define MAX_BUFFERS 	5
 /* Global buffers */
-extern OBJECT *object_buffer[MAX_BUFFERS];
+extern GList *object_buffer[MAX_BUFFERS];
 
 /* Hooks */
 extern SCM add_component_hook;

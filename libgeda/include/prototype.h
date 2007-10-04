@@ -331,7 +331,7 @@ double o_line_length(OBJECT *object);
 /* o_list.c */
 OBJECT *o_list_copy_to(TOPLEVEL *toplevel, OBJECT *list_head, OBJECT *selected, int flag, OBJECT **return_end);
 OBJECT *o_list_copy_all(TOPLEVEL *toplevel, OBJECT *src_list_head, OBJECT *dest_list_head, int flag);
-OBJECT *o_list_copy_all_selection2(TOPLEVEL *toplevel, GList *src_list_head, OBJECT *dest_list_head, int flag);
+GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel, GList *src_list, GList *dest_list, int flag);
 OBJECT *o_list_search(OBJECT *list, OBJECT *current);
 void o_list_delete(TOPLEVEL *toplevel, OBJECT *list, OBJECT *delete);
 void o_list_delete_rest(TOPLEVEL *toplevel, OBJECT *list);

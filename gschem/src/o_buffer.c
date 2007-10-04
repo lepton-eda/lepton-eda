@@ -45,26 +45,16 @@ void o_buffer_copy(TOPLEVEL *w_current, int buf_num)
 
   s_current = geda_list_get_glist( w_current->page_current->selection_list );
 
-  if (object_buffer[buf_num] == NULL) {
-    object_buffer[buf_num] = s_basic_init_object("buffer0_head");
-    object_buffer[buf_num]->type = OBJ_HEAD;
-  } else {
-    o_list_delete_rest(w_current, object_buffer[buf_num]);
-    object_buffer[buf_num]->next = NULL;
+  if (object_buffer[buf_num] != NULL) {
+    s_delete_object_glist(w_current, object_buffer[buf_num]);
+    object_buffer[buf_num] = NULL;
   }
 
   w_current->ADDING_SEL = 1;
-  o_list_copy_all_selection2(w_current, s_current, 
-                             object_buffer[buf_num], SELECTION_FLAG);
+  object_buffer[buf_num] =
+    o_glist_copy_all_to_glist(w_current, s_current,
+                              object_buffer[buf_num], SELECTION_FLAG);
   w_current->ADDING_SEL = 0;
-        
-#if DEBUG
-  o_current = object_buffer[buf_num];
-  while(o_current != NULL) {
-    printf("- %s\n", o_current->name);
-    o_current = o_current->next;
-  }
-#endif
 }
 
 /*! \todo Finish function documentation!!!
@@ -83,27 +73,17 @@ void o_buffer_cut(TOPLEVEL *w_current, int buf_num)
 
   s_current = geda_list_get_glist( w_current->page_current->selection_list );
 
-  if (object_buffer[buf_num] == NULL) {
-    object_buffer[buf_num] = s_basic_init_object("buffer0_head");
-    object_buffer[buf_num]->type = OBJ_HEAD;
-  } else {
-    o_list_delete_rest(w_current, object_buffer[buf_num]);
-    object_buffer[buf_num]->next = NULL;
+  if (object_buffer[buf_num] != NULL) {
+    s_delete_object_glist(w_current, object_buffer[buf_num]);
+    object_buffer[buf_num] = NULL;
   }
         
   w_current->ADDING_SEL = 1;
-  o_list_copy_all_selection2(w_current, s_current, 
-                             object_buffer[buf_num], SELECTION_FLAG);
+  object_buffer[buf_num] =
+    o_glist_copy_all_to_glist(w_current, s_current,
+                              object_buffer[buf_num], SELECTION_FLAG);
   w_current->ADDING_SEL = 0;
   o_delete(w_current);
-
-#if DEBUG
-  o_current = object_buffer[buf_num];
-  while(o_current != NULL) {
-    printf("- %s\n", o_current->name);
-    o_current = o_current->next;
-  }
-#endif
 }
 
 /*! \todo Finish function documentation!!!
@@ -122,9 +102,9 @@ void o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y,
     return;
   }
 
-  if (!world_get_object_list_bounds(w_current, object_buffer[buf_num],
-                                    &rleft, &rtop,
-                                    &rright, &rbottom)) {
+  if (!world_get_object_glist_bounds(w_current, object_buffer[buf_num],
+                                     &rleft, &rtop,
+                                     &rright, &rbottom)) {
     /* If the paste buffer doesn't have any objects
      * to define its any bounds, we drop out here */
     return;
@@ -135,7 +115,7 @@ void o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y,
   y = snap_grid(w_current, rtop);
 
   w_current->ADDING_SEL = 1;
-  o_list_translate_world(w_current, -x, -y, object_buffer[buf_num]);
+  o_glist_translate_world(w_current, -x, -y, object_buffer[buf_num]);
   w_current->ADDING_SEL = 0;
 
   /* now translate selection to current position */
@@ -144,7 +124,7 @@ void o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y,
   y = snap_grid(w_current, y);
 
   w_current->ADDING_SEL = 1;
-  o_list_translate_world(w_current, x, y, object_buffer[buf_num]);
+  o_glist_translate_world(w_current, x, y, object_buffer[buf_num]);
   w_current->ADDING_SEL = 0;
 
   w_current->last_x = w_current->start_x = fix_x(w_current, screen_x);
@@ -154,9 +134,7 @@ void o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y,
   /* store the buffer number for future use */
   w_current->buffer_number = buf_num;
 
-  o_drawbounding(w_current,
-                 object_buffer[buf_num]->next,
-                 NULL,
+  o_drawbounding(w_current, NULL, object_buffer[buf_num],
                  x_get_darkcolor(w_current->bb_color), TRUE);
 }
 
@@ -183,9 +161,7 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
   }
 
   /* erase old image */
-  o_drawbounding(w_current,
-                 object_buffer[buf_num]->next,
-                 NULL,
+  o_drawbounding(w_current, NULL, object_buffer[buf_num],
                  x_get_darkcolor(w_current->bb_color), FALSE);
 
   /* get the location where we ended */
@@ -204,11 +180,11 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
   w_diff_x = w_x - w_start_x;
   w_diff_y = w_y - w_start_y;
   w_current->ADDING_SEL = 1;
-  o_list_translate_world(w_current, w_diff_x, w_diff_y,
-                         object_buffer[buf_num]);
+  o_glist_translate_world(w_current, w_diff_x, w_diff_y,
+                          object_buffer[buf_num]);
   w_current->ADDING_SEL = 0;
 
-  o_current = object_buffer[buf_num]->next;
+  o_current = object_buffer[buf_num]->data;
   p_current = w_current->page_current;
 
   o_saved = p_current->object_tail;	
@@ -257,9 +233,7 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
  */
 void o_buffer_paste_rubberpaste(TOPLEVEL *w_current, int buf_num)
 {
-  o_drawbounding(w_current,
-                 object_buffer[buf_num]->next,
-                 NULL,
+  o_drawbounding(w_current, NULL, object_buffer[buf_num],
                  x_get_darkcolor(w_current->bb_color), FALSE);
 }
 
@@ -288,8 +262,7 @@ void o_buffer_free(TOPLEVEL *w_current)
 
   for (i = 0 ; i < MAX_BUFFERS; i++) {
     if (object_buffer[i]) {
-      s_delete_list_fromstart(w_current, 
-                              object_buffer[i]);
+      s_delete_object_glist(w_current, object_buffer[i]);
       object_buffer[i] = NULL;
     }
   }

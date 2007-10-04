@@ -244,122 +244,113 @@ OBJECT *o_list_copy_all(TOPLEVEL *toplevel, OBJECT *src_list_head,
  *  \par Function Description
  *  you need to pass in a head_node for dest_list_head
  *  flag is either NORMAL_FLAG or SELECTION_FLAG
- *  this function copies the objects in the src SELECTION list
- *  to the OBJECT list in dest_list_head
- *  this routine assumes that objects in src_list_head are selected
+ *  this function copies the objects in the src GList src_list
+ *  to the destination GList dest_list
+ *  this routine assumes that objects in src_list are selected
  *  objects are unselected before they are copied and then reselected
  *  this is necessary to preserve the color info
  *
  *  \param [in] toplevel       The TOPLEVEL object.
- *  \param [in] src_list_head   
- *  \param [in] dest_list_head  
+ *  \param [in] src_list       The GList to copy from.
+ *  \param [in] dest_list      The GList to copy to.
  *  \param [in] flag
- *  \return OBJECT pointer.
+ *  \return the dest_list GList with objects appended to it.
  */
-OBJECT *o_list_copy_all_selection2(TOPLEVEL *toplevel,
-				   GList *src_list_head, 
-				   OBJECT *dest_list_head, int flag)
+GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
+                                 GList *src_list,
+                                 GList *dest_list, int flag)
 {
-  GList *src;
-  OBJECT *object;
-  OBJECT *dest;
-  OBJECT *temp_parent=NULL;
+  GList *src, *dest;
+  OBJECT *src_object, *dst_object;
   int adding_sel_save;
 
-  src = src_list_head;
-  dest = dest_list_head;
-
-  temp_parent = toplevel->page_current->object_parent;
-  toplevel->page_current->object_parent = dest_list_head;
-
-  if (dest == NULL) {
-    toplevel->page_current->object_parent = temp_parent;
-    return(NULL);
-  }
+  src = src_list;
+  /* Reverse any existing items, as we will prepend, then reverse at the end */
+  dest = g_list_reverse (dest_list);
 
   if (src == NULL) {
-    toplevel->page_current->object_parent = temp_parent;
     return(NULL);
   }
 
+  /* Save ADDING_SEL as o_list_copy_to() sets it */
   adding_sel_save = toplevel->ADDING_SEL;
 
   /* first do all NON text items */
   while(src != NULL) {
-
-    object = (OBJECT *) src->data;
+    src_object = (OBJECT *) src->data;
 
     /* unselect the object before the copy */
-    o_selection_unselect(object);	
+    o_selection_unselect(src_object);
 
-    if (object->type != OBJ_TEXT && object->type != OBJ_HEAD) {
-      dest->next = o_list_copy_to(toplevel, NULL, object,
-                                  flag, NULL);
-      dest->next->prev = dest;
-      dest = dest->next;
-      dest->sid = global_sid++;
+    if (src_object->type != OBJ_TEXT && src_object->type != OBJ_HEAD) {
+      dst_object = o_list_copy_to (toplevel, NULL, src_object, flag, NULL);
+      dst_object->sid = global_sid++;
+      /* Link the OBJECT nodes in the GList to allow attrib attaching */
+      if (dest != NULL) {
+        dst_object->prev = (OBJECT *)dest->data;
+        dst_object->prev->next = dst_object;
+      } else {
+        dst_object->prev = NULL;
+      }
+      dst_object->next = NULL;
+      dest = g_list_prepend (dest, dst_object);
     }
 
     /* reselect it */
-    o_selection_select(object, SELECT_COLOR);
+    o_selection_select(src_object, SELECT_COLOR);
 
     src = g_list_next(src);
   }
 
-  src = src_list_head;
-  /*dest = dest_list_head; out since we want to add to the end */
-
-  if (dest == NULL) {
-    toplevel->page_current->object_parent = temp_parent;
-    return(NULL);
-  }
-
-  if (src == NULL) {
-    toplevel->page_current->object_parent = temp_parent;
-    return(NULL);
-  }
+  src = src_list;
 
   /* then do all text items */
   while(src != NULL) {
-
-    object = (OBJECT *) src->data;
+    src_object = (OBJECT *) src->data;
 
     /* unselect the object before the copy */
-    o_selection_unselect(object);	
+    o_selection_unselect(src_object);
 
-    if (object->type == OBJ_TEXT) {
-      dest->next = o_list_copy_to(toplevel, NULL, object,
-                                  flag, NULL);
-	
-      dest->next->prev = dest;
-      dest = dest->next;
-      dest->sid = global_sid++;
+    if (src_object->type == OBJ_TEXT) {
+      dst_object = o_list_copy_to (toplevel, NULL, src_object, flag, NULL);
+      dst_object->sid = global_sid++;
+      /* Link the OBJECT nodes in the GList to allow attrib attaching */
+      if (dest != NULL) {
+        dst_object->prev = (OBJECT *)dest->data;
+        dst_object->prev->next = dst_object;
+      } else {
+        dst_object->prev = NULL;
+      }
+      dst_object->next = NULL;
+      dest = g_list_prepend (dest, dst_object);
 
-      if (object->attached_to /*&& !toplevel->ADDING_SEL*/) {
-        if (object->attached_to->copied_to) {
+      if (src_object->attached_to /*&& !toplevel->ADDING_SEL*/) {
+        if (src_object->attached_to->copied_to) {
           o_attrib_attach(toplevel,
-                          toplevel->page_current->object_parent,
-                          dest, object->attached_to->copied_to);     
+                          (OBJECT *)dest->data, /* This param is a hack */
+                          dst_object, src_object->attached_to->copied_to);
         }
       }
     }
 
     /* reselect it */
-    o_selection_select(object, SELECT_COLOR);
+    o_selection_select(src_object, SELECT_COLOR);
 
     src = g_list_next(src);
   }
 
   /* Clean up dangling ATTRIB.copied_to pointers */
-  src = src_list_head;
+  src = src_list;
   while(src != NULL) {
-    object = src->data;
-    o_attrib_list_copied_to (object->attribs, NULL);
+    src_object = src->data;
+    o_attrib_list_copied_to (src_object->attribs, NULL);
     src = g_list_next (src);
   }
 
+  /* Reverse the list to be in the correct order */
+  dest = g_list_reverse (dest);
+
   toplevel->ADDING_SEL = adding_sel_save;
-  toplevel->page_current->object_parent = temp_parent;
 
   return(dest);
 }

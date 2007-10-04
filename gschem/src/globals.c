@@ -76,7 +76,7 @@ int stroke_info_mode = FALSE;
 int auto_place_mode = FALSE;
 
 /* Global buffers */
-OBJECT *object_buffer[MAX_BUFFERS];
+GList *object_buffer[MAX_BUFFERS];
 
 /* Hooks */
 SCM add_attribute_hook;

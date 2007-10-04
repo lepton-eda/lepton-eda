@@ -471,39 +471,15 @@ void i_update_menus(TOPLEVEL *w_current)
     /* x_menus_popup_sensitivity(w_current, "/Up", FALSE);	*/
   }
 
-  if ((object_buffer[0] != NULL) && (object_buffer[0]->next != NULL)) {
-    x_menus_sensitivity(w_current, "Edit/Paste Buffer", TRUE);
-    x_menus_sensitivity(w_current, "Buffer/Paste from 1", TRUE);
-  } else {
-    x_menus_sensitivity(w_current, "Edit/Paste Buffer", FALSE);
-    x_menus_sensitivity(w_current, "Buffer/Paste from 1", FALSE);
-  }
+  x_menus_sensitivity(w_current, "Edit/Paste Buffer",   (object_buffer[0] != NULL));
+  x_menus_sensitivity(w_current, "Buffer/Paste from 1", (object_buffer[0] != NULL));
+  x_menus_sensitivity(w_current, "Buffer/Paste from 2", (object_buffer[1] != NULL));
+  x_menus_sensitivity(w_current, "Buffer/Paste from 3", (object_buffer[2] != NULL));
+  x_menus_sensitivity(w_current, "Buffer/Paste from 4", (object_buffer[3] != NULL));
+  x_menus_sensitivity(w_current, "Buffer/Paste from 5", (object_buffer[4] != NULL));
 
-  if ((object_buffer[1] != NULL) && (object_buffer[1]->next != NULL)) {
-    x_menus_sensitivity(w_current, "Buffer/Paste from 2", TRUE);
-  } else {
-    x_menus_sensitivity(w_current, "Buffer/Paste from 2", FALSE);
-  }
-
-  if ((object_buffer[2] != NULL) && (object_buffer[2]->next != NULL)) {
-    x_menus_sensitivity(w_current, "Buffer/Paste from 3", TRUE);
-  } else {
-    x_menus_sensitivity(w_current, "Buffer/Paste from 3", FALSE);
-  }
-
-  if ((object_buffer[3] != NULL) && (object_buffer[3]->next != NULL)) {
-    x_menus_sensitivity(w_current, "Buffer/Paste from 4", TRUE);
-  } else {
-    x_menus_sensitivity(w_current, "Buffer/Paste from 4", FALSE);
-  }
-
-  if ((object_buffer[4] != NULL) && (object_buffer[4]->next != NULL)) {
-    x_menus_sensitivity(w_current, "Buffer/Paste from 5", TRUE);
-  } else {
-    x_menus_sensitivity(w_current, "Buffer/Paste from 5", FALSE);
-  }
 }
- 
+
 /*! \brief Set filename as gschem window title
  *  
  *  \par Function Description
