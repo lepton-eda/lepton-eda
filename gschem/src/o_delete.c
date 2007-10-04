@@ -287,7 +287,7 @@ void o_delete(TOPLEVEL *w_current)
         o_delete_arc(w_current, object);
         break;
     }
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   }
 
   w_current->inside_action = 0;

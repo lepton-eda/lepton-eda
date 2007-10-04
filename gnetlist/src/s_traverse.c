@@ -325,7 +325,7 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
           }
 
         }
-        cl_current = cl_current->next;
+        cl_current = g_list_next(cl_current);
       }
 
       cpins->nets = nets_head;
@@ -480,7 +480,7 @@ NET *s_traverse_net(TOPLEVEL * pr_current, OBJECT * previous_object,
       } 
 
     }
-    cl_current = cl_current->next;
+    cl_current = g_list_next(cl_current);
   }
 
   return (nets);

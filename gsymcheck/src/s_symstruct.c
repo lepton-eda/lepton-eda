@@ -102,7 +102,7 @@ s_symstruct_print(SYMCHECK *s_current)
         g_free(msg);
       }
 
-      list = list->next;
+      list = g_list_next(list);
     }
   }
 
@@ -117,7 +117,7 @@ s_symstruct_print(SYMCHECK *s_current)
         g_free(msg);
       }
 
-      list = list->next;
+      list = g_list_next(list);
     }
   }
 
@@ -132,7 +132,7 @@ s_symstruct_print(SYMCHECK *s_current)
         g_free(msg);
       }
 
-      list = list->next;
+      list = g_list_next(list);
     }
   }
 }

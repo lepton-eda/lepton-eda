@@ -812,7 +812,7 @@ static void line_type_dialog_ok(GtkWidget *w, gpointer data)
                           space  == -1 ? o_current->line_space  : space);
       o_redraw_single (toplevel, o_current);
           
-      object = object->next;
+      object = g_list_next(object);
     }
   }
 
@@ -1197,7 +1197,7 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
                           angle2 == -1 ? o_current->fill_angle2 : angle2);
       o_redraw_single (toplevel, o_current);
           
-      object = object->next;
+      object = g_list_next(object);
     }
   }
   toplevel->page_current->CHANGED = 1;
@@ -2382,7 +2382,7 @@ void color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
         break;
     }
 
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   }
   o_undo_savestate(w_current, UNDO_ALL);
 }
@@ -3251,7 +3251,7 @@ void major_changed_dialog(TOPLEVEL* w_current)
         refdes_string = tmp;
       }
       
-      current = current->next;
+      current = g_list_next(current);
     }
 
     tmp = g_strconcat (refdes_string, 

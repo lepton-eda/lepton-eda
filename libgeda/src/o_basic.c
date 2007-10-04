@@ -181,7 +181,7 @@ o_recalc_object_glist(TOPLEVEL *toplevel, GList *object_glist)
   while (list != NULL) {
     o_current = (OBJECT *) list->data;
     o_recalc_single_object(toplevel, o_current);
-   list = list->next;
+   list = g_list_next(list);
   }
 }
 

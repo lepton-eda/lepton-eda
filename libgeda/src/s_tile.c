@@ -394,7 +394,7 @@ void s_tile_remove_object_all(TOPLEVEL * toplevel, PAGE *p_current,
     }
 #endif
     
-    tloc_list = tloc_list->next;	
+    tloc_list = g_list_next(tloc_list);
   }
 
   g_list_free(tloc_list);
@@ -443,10 +443,10 @@ void s_tile_print(TOPLEVEL * toplevel)
         while (temp2 != NULL) {
           tloc = (TILE_LOC *) temp2->data;
           printf("	%d %d\n", tloc->i, tloc->j);
-          temp2 = temp2->next;
+          temp2 = g_list_next(temp2);
         }
 
-        temp = temp->next;
+        temp = g_list_next(temp);
       }
 
       printf("------------------\n");

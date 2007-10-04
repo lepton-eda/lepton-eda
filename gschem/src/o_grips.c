@@ -139,7 +139,7 @@ OBJECT *o_grips_search_world(TOPLEVEL *w_current, int x, int y, int *whichone)
           break;
       }
     }
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   }
 
   return(NULL);

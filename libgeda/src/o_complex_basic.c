@@ -180,7 +180,7 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, GList *head,
         found = 1;
       }
     }
-    s_current = s_current->next;
+    s_current = g_list_next (s_current);
   }
   return found;
 }
@@ -525,17 +525,17 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 	      
 	      glist_ptr = *object_glist;
 	      while (glist_ptr) {
-		if (glist_ptr->prev == NULL) {
+		if (g_list_previous(glist_ptr) == NULL) {
 		  ((OBJECT *) glist_ptr->data)->prev = NULL;
 		} else {
-		  ((OBJECT *) glist_ptr->data)->prev = glist_ptr->prev->data;
+		  ((OBJECT *) glist_ptr->data)->prev = g_list_previous (glist_ptr)->data;
 		}
-		if (glist_ptr->next == NULL) {
+		if (g_list_next(glist_ptr) == NULL) {
 		  ((OBJECT *) glist_ptr->data)->next = NULL;
 		} else {
-		  ((OBJECT *) glist_ptr->data)->next = glist_ptr->next->data;
+		  ((OBJECT *) glist_ptr->data)->next = g_list_next (glist_ptr)->data;
 		}
-		glist_ptr = glist_ptr->next;
+		glist_ptr = g_list_next (glist_ptr);
 	      }
 	      
 	      o_attrib_attach (toplevel, ((OBJECT *) g_list_last(*object_glist)->data),
@@ -577,17 +577,17 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 
       glist_ptr = *object_glist;
       while (glist_ptr) {
-	if (glist_ptr->prev == NULL) {
+	if (g_list_previous (glist_ptr) == NULL) {
 	  ((OBJECT *) glist_ptr->data)->prev = NULL;
 	} else {
-	  ((OBJECT *) glist_ptr->data)->prev = glist_ptr->prev->data;
+	  ((OBJECT *) glist_ptr->data)->prev = g_list_previous(glist_ptr)->data;
 	}
-	if (glist_ptr->next == NULL) {
+	if (g_list_next (glist_ptr) == NULL) {
 	  ((OBJECT *) glist_ptr->data)->next = NULL;
 	} else {
-	  ((OBJECT *) glist_ptr->data)->next = glist_ptr->next->data;
+	  ((OBJECT *) glist_ptr->data)->next = g_list_next(glist_ptr)->data;
 	}
-	glist_ptr = glist_ptr->next;
+	glist_ptr = g_list_next(glist_ptr);
       }
       object_list = (OBJECT *) (g_list_last(*object_glist)->data);
     } else {

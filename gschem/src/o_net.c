@@ -765,7 +765,7 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
 	  done = TRUE;
 	}
 
-	cl_current2 = cl_current2->next;
+	cl_current2 = g_list_next(cl_current2);
       }
 
       if (!found_conn) {
@@ -988,7 +988,7 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
     }
 
 
-    cl_current = cl_current->next;
+    cl_current = g_list_next(cl_current);
   }
  
   if (made_changes) {

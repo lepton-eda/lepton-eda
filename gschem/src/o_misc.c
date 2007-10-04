@@ -145,7 +145,7 @@ void o_lock(TOPLEVEL *w_current)
       }
     }
 
-    s_current=s_current->next;
+    s_current = g_list_next(s_current);
   }
 
   if (!w_current->SHIFTKEY) o_select_unselect_all(w_current);
@@ -183,7 +183,7 @@ void o_unlock(TOPLEVEL *w_current)
       }
     }
 
-    s_current=s_current->next;
+    s_current = g_list_next(s_current);
   }
   o_undo_savestate(w_current, UNDO_ALL);
 }
@@ -451,7 +451,7 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
         }
         break;
     }
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   }
 
   /* All objects were rotated. Do a 2nd pass to run the rotate hooks */
@@ -491,7 +491,7 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
         break;
     }
 
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   }
 
   /* Don't save the undo state if we are inside an action */
@@ -686,7 +686,7 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
 
     }
 
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
 
   }
 
@@ -727,7 +727,7 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
         break;
     }
 
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   }
 
 

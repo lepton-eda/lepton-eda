@@ -126,7 +126,7 @@ void o_selection_print_all(const SELECTION *selection)
     if (s_current->data) {
       printf("Selected object: %d\n", ((OBJECT *)s_current->data)->sid );
     }
-    s_current = s_current->next;
+    s_current = g_list_next( s_current );
   }
   printf("DONE printing selection ********************\n");
   printf("\n");

@@ -536,7 +536,7 @@ void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size,
       } 
     }
     
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   }
   
   w_current->page_current->CHANGED = 1;

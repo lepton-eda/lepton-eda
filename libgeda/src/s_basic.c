@@ -558,7 +558,7 @@ s_delete_object_glist(TOPLEVEL *toplevel, GList *list)
   while(ptr != NULL) {
     o_current = (OBJECT *) ptr->data;
     s_delete_object(toplevel, o_current);
-    ptr = ptr->prev;
+    ptr = g_list_previous (ptr);
   }
   g_list_free(list);
 }

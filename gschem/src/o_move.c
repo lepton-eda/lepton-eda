@@ -270,7 +270,7 @@ void o_move_end(TOPLEVEL * w_current)
         break;
     }
 
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   }
 
   /* Remove the undo saved in o_move_start */
@@ -403,7 +403,7 @@ void o_move_check_endpoint(TOPLEVEL * w_current, OBJECT * object)
         }
       }
     }
-    cl_current = cl_current->next;
+    cl_current = g_list_next(cl_current);
   }
 
 }
@@ -457,7 +457,7 @@ void o_move_prep_rubberband(TOPLEVEL * w_current)
 
       }
     }
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   }
 
 #if DEBUG

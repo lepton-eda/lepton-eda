@@ -559,7 +559,7 @@ int o_net_consolidate_nomidpoint(OBJECT *object, int x, int y)
       }
     }
     
-    c_current = c_current->next;
+    c_current = g_list_next(c_current);
   }
 
   return(TRUE);
@@ -640,7 +640,7 @@ int o_net_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
       
     }
 
-    c_current = c_current->next;
+    c_current = g_list_next (c_current);
   }
 
   return(0);

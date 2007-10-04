@@ -303,7 +303,7 @@ OBJECT *o_list_copy_all_selection2(TOPLEVEL *toplevel,
     /* reselect it */
     o_selection_select(object, SELECT_COLOR);
 
-    src = src->next;
+    src = g_list_next(src);
   }
 
   src = src_list_head;
@@ -347,7 +347,7 @@ OBJECT *o_list_copy_all_selection2(TOPLEVEL *toplevel,
     /* reselect it */
     o_selection_select(object, SELECT_COLOR);
 
-    src = src->next;
+    src = g_list_next(src);
   }
 
   /* Clean up dangling ATTRIB.copied_to pointers */

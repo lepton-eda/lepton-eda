@@ -368,7 +368,7 @@ void o_copy_end(TOPLEVEL *w_current)
     w_current->page_current->object_tail =
       (OBJECT *) return_tail(w_current->page_current->
                              object_head);
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   }
 
   s_current = geda_list_get_glist( w_current->page_current->selection_list );
@@ -441,7 +441,7 @@ void o_copy_end(TOPLEVEL *w_current)
 
     w_current->page_current->object_tail =
       (OBJECT *) return_tail( w_current->page_current->object_head );
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   }
 
   /* Clean up dangling ATTRIB.copied_to pointers */

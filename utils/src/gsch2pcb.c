@@ -245,7 +245,7 @@ run_gnetlist(gchar *pins_file, gchar *net_file, gchar *pcb_file, gchar *basename
 	if (m4_override_file)
 		unlink(m4_override_file);
 
-	for (list = extra_gnetlist_list; list; list = list->next)
+	for (list = extra_gnetlist_list; list; list = g_list_next(list))
 		{
 		s = (gchar *) list->data;
 		if (!strstr(s, " -o "))
@@ -465,7 +465,7 @@ pcb_element_exists(PcbElement *el_test, gboolean record)
 	GList	*list;
 	PcbElement	*el;
 
-	for (list = pcb_element_list; list; list = list->next)
+	for (list = pcb_element_list; list; list = g_list_next(list))
 		{
 		el = (PcbElement *) list->data;
 
@@ -660,7 +660,7 @@ search_element_directories( PcbElement	*el)
 	if (verbose > 1)
 		printf("\tSearching directories looking for file element: %s\n",
 					elname);
-	for (list = element_directory_list; list; list = list->next)
+	for (list = element_directory_list; list; list = g_list_next(list))
 		{
 		dir_path = (gchar *) list->data;
 		if (verbose > 1)
@@ -929,7 +929,7 @@ update_element_descriptions(gchar *pcb_file, gchar *bak)
 	PcbElement	*el, *el_exists;
 	gchar		*fmt, *command, *tmp, *s, buf[1024];
 
-	for (list = pcb_element_list; list; list = list->next)
+	for (list = pcb_element_list; list; list = g_list_next(list))
 		{
 		el = (PcbElement *) list->data;
 		if (el->changed_description)
@@ -1000,7 +1000,7 @@ prune_elements(gchar *pcb_file, gchar *bak)
 	gint		paren_level = 0;
 	gboolean	skipping = FALSE;
 
-	for (list = pcb_element_list; list; list = list->next)
+	for (list = pcb_element_list; list; list = g_list_next(list))
 		{
 		el = (PcbElement *) list->data;
 		if (!el->still_exists)

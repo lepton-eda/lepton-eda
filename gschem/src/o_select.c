@@ -474,6 +474,6 @@ o_select_move_to_place_list(TOPLEVEL *w_current)
       w_current->page_current->complex_place_list = g_list_append(w_current->page_current->complex_place_list,
 								  o_current);
     }
-    selection = selection->next;
+    selection = g_list_next(selection);
   }
 }

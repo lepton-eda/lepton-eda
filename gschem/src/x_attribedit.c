@@ -148,7 +148,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
       if (!object->attached_to) {
 	nsel++;
       }
-      s_current = s_current->next;
+      s_current = g_list_next(s_current);
     }
     s_current = geda_list_get_glist( w_current->page_current->selection_list );
     if (nsel > 1) {
@@ -222,7 +222,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
 	    }
 	  }
 	}
-	s_current = s_current->next;
+	s_current = g_list_next(s_current);
       }
       o_undo_savestate(w_current, UNDO_ALL);
     } else {
@@ -324,7 +324,7 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   /* gschem specific: What do we count here? (Werner)  */
   for (s_current = geda_list_get_glist( w_current->page_current->selection_list );
        s_current != NULL;
-       s_current = s_current->next) {
+       s_current = g_list_next(s_current)) {
     if (!((OBJECT *) s_current->data)->attached_to) {
       nsel++;
     }

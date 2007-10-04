@@ -141,7 +141,7 @@ void o_attrib_toggle_visibility(TOPLEVEL *w_current, GList *list)
         w_current->page_current->CHANGED = 1;
       }
     }
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   }
   o_undo_savestate(w_current, UNDO_ALL);
 }
@@ -178,7 +178,7 @@ void o_attrib_toggle_show_name_value(TOPLEVEL *w_current,
       o_text_draw(w_current, object);
       w_current->page_current->CHANGED=1;
     }
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   }
   o_undo_savestate(w_current, UNDO_ALL);
 }

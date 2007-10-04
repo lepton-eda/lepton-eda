@@ -193,7 +193,7 @@ void o_complex_place_changed_run_hook(TOPLEVEL *w_current) {
 		   scm_cons (g_make_object_smob
 			     (w_current, 
 			      (OBJECT *) ptr->data), SCM_EOL));
-      ptr = ptr->next;
+      ptr = g_list_next(ptr);
     }
 
   }
@@ -220,7 +220,7 @@ void o_complex_place_rotate(TOPLEVEL *w_current)
         y_local = o_current->complex->y;
         break;
     }
-    ptr = ptr->next;
+    ptr = g_list_next(ptr);
   }
 
   if (x_local == -1) {
@@ -242,7 +242,7 @@ void o_complex_place_rotate(TOPLEVEL *w_current)
         break;
 
     }
-    ptr = ptr->next;
+    ptr = g_list_next(ptr);
   }
 
 }
@@ -530,7 +530,7 @@ o_complex_translate_display_object_glist(TOPLEVEL *w_current,
   while (ptr != NULL) {
     o_complex_translate_display_single_object (w_current, x1, y1, 
                                                (OBJECT *)ptr->data);
-    ptr = ptr->next;
+    ptr = g_list_next(ptr);
   }
 }
 

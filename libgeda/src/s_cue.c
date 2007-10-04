@@ -182,7 +182,7 @@ void s_cue_output_lowlevel(TOPLEVEL * toplevel, OBJECT * object, int whichone,
       }
     }
 
-    cl_current = cl_current->next;
+    cl_current = g_list_next(cl_current);
   }
 
 #if DEBUG
@@ -264,7 +264,7 @@ void s_cue_output_lowlevel_midpoints(TOPLEVEL * toplevel, OBJECT * object,
     }
 
 
-    cl_current = cl_current->next;
+    cl_current = g_list_next(cl_current);
   }
 }
 

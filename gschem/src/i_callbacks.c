@@ -1033,7 +1033,7 @@ DEFINE_I_CALLBACK(edit_embed)
 	   (o_current->type == OBJ_PICTURE) ) {
         o_embed (w_current, o_current);
       }
-      s_current = s_current->next;
+      s_current = g_list_next(s_current);
     }
   } else {
     /* nothing selected, go back to select state */
@@ -1071,7 +1071,7 @@ DEFINE_I_CALLBACK(edit_unembed)
            (o_current->type == OBJ_PICTURE) ) {
         o_unembed (w_current, o_current);
       }
-      s_current = s_current->next;
+      s_current = g_list_next(s_current);
     }
   } else {
     /* nothing selected, go back to select state */
@@ -1121,7 +1121,7 @@ DEFINE_I_CALLBACK(edit_update)
         /* object was not a OBJ_COMPLEX, so unselect it. */
         o_selection_remove( w_current->page_current->selection_list, o_current);
       }
-      s_current = s_current->next;
+      s_current = g_list_next(s_current);
     }
     g_list_free(selection_copy);
 
@@ -1286,7 +1286,7 @@ DEFINE_I_CALLBACK(edit_linetype)
         objects = g_list_prepend (objects, o_current);
       }
 
-      s_current = s_current->next;
+      s_current = g_list_next(s_current);
     }
 
     if (objects != NULL) {
@@ -1327,7 +1327,7 @@ DEFINE_I_CALLBACK(edit_filltype)
         objects = g_list_prepend (objects, o_current);
       }
 
-      s_current = s_current->next;
+      s_current = g_list_next(s_current);
     }
 
     if (objects != NULL) {
@@ -3031,7 +3031,7 @@ DEFINE_I_CALLBACK(attributes_attach)
   }
 
   /* skip over first object */
-  s_current = s_current->next;
+  s_current = g_list_next(s_current);
   while (s_current != NULL) {
     if (s_current->data) {
       o_attrib_attach(w_current,
@@ -3040,7 +3040,7 @@ DEFINE_I_CALLBACK(attributes_attach)
                       first_object);
       w_current->page_current->CHANGED=1;
     }
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   }
   o_undo_savestate(w_current, UNDO_ALL);
 }
@@ -3080,7 +3080,7 @@ DEFINE_I_CALLBACK(attributes_detach)
         w_current->page_current->CHANGED=1;
       }
     }
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   }
   o_undo_savestate(w_current, UNDO_ALL);
 }

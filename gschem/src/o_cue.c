@@ -146,7 +146,7 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
       }
     }
 
-    cl_current = cl_current->next;
+    cl_current = g_list_next(cl_current);
   }
 
 #if DEBUG
@@ -389,7 +389,7 @@ void o_cue_draw_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object)
     }
    
 
-    cl_current = cl_current->next;
+    cl_current = g_list_next(cl_current);
   }
 }
 
@@ -466,7 +466,7 @@ void o_cue_undraw(TOPLEVEL *w_current, OBJECT *object)
       o_redraw_single(w_current, conn->other_object);
     }
 
-    cl_current = cl_current->next;
+    cl_current = g_list_next(cl_current);
   }
 
   o_redraw_single(w_current, object);
@@ -505,7 +505,7 @@ void o_cue_undraw_complex(TOPLEVEL *w_current, OBJECT *object)
           o_redraw_single(w_current, conn->other_object);
         }
 
-        cl_current = cl_current->next;
+        cl_current = g_list_next(cl_current);
       }
     }
     o_current = o_current->next;
@@ -530,7 +530,7 @@ void o_cue_draw_list(TOPLEVEL *w_current, GList *object_list)
 
     o_cue_draw_single(w_current, object);
     
-    ol_current = ol_current->next;
+    ol_current = g_list_next(ol_current);
   }
 }
 
@@ -550,7 +550,7 @@ void o_cue_undraw_list(TOPLEVEL *w_current, GList *object_list)
 
     o_cue_undraw(w_current, object);
     
-    ol_current = ol_current->next;
+    ol_current = g_list_next(ol_current);
   }
 }
 

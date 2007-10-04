@@ -161,7 +161,7 @@ void o_draw_list(TOPLEVEL *w_current, GList* list)
       o_redraw_single(w_current, o_current);
     }
     
-    l_current = l_current->next;
+    l_current = g_list_next(l_current);
   }
 }
 
@@ -186,7 +186,7 @@ void o_draw_selected(TOPLEVEL *w_current)
       o_redraw_single(w_current, o_current);
       o_cue_draw_single(w_current, o_current);
     }
-    s_current=s_current->next;
+    s_current=g_list_next(s_current);
   }
 
 }
@@ -213,7 +213,7 @@ void o_erase_selected(TOPLEVEL *w_current)
       o_erase_single(w_current, o_current);
     }
     
-    s_current=s_current->next;
+    s_current=g_list_next(s_current);
   }
 
 }

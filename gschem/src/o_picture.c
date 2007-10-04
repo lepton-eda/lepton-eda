@@ -690,7 +690,7 @@ void o_picture_exchange (TOPLEVEL *w_current, GdkPixbuf *pixbuf,
 	o_picture_draw(w_current, object);
       }
     }
-    list = list->next;
+    list = g_list_next(list);
   }
 }
 

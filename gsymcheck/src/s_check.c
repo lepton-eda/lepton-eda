@@ -331,7 +331,7 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
         found++;
       }
       
-      ptr2 = ptr2->next;
+      ptr2 = g_list_next(ptr2);
     }
 
     if (found > 1)
@@ -345,14 +345,14 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
       s_current->duplicate_pinseq_attrib++;
     }
     
-    ptr1 = ptr1->next;
+    ptr1 = g_list_next(ptr1);
   }
 
   ptr1 = found_numbers;
   while (ptr1)
   {
     g_free(ptr1->data);
-    ptr1 = ptr1->next;
+    ptr1 = g_list_next(ptr1);
   }
   g_list_free(found_numbers);
   
@@ -534,7 +534,7 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
         found++;
       }
       
-      ptr2 = ptr2->next;
+      ptr2 = g_list_next(ptr2);
     }
 
     if (found > 1)
@@ -548,14 +548,14 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
       s_current->duplicate_pinnumber_attrib++;
     }
     
-    ptr1 = ptr1->next;
+    ptr1 = g_list_next(ptr1);
   }
 
   ptr1 = found_numbers;
   while (ptr1)
   {
     g_free(ptr1->data);
-    ptr1 = ptr1->next;
+    ptr1 = g_list_next(ptr1);
   }
   g_list_free(found_numbers);
 

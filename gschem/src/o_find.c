@@ -161,7 +161,7 @@ gboolean o_find_selected_object(TOPLEVEL *w_current,
       }
     }
     
-    s_current = s_current->next;
+    s_current = g_list_next(s_current);
   } 
 
   return (FALSE);

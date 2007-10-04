@@ -94,7 +94,7 @@ int s_conn_uniq(GList * conn_list, CONN * input_conn)
       return (FALSE);
     }
 
-    c_current = c_current->next;
+    c_current = g_list_next(c_current);
   }
 
   return (TRUE);
@@ -142,7 +142,7 @@ int s_conn_remove_other(TOPLEVEL * toplevel, OBJECT * other_object,
 	    return (TRUE);
 	}
 
-	c_current = c_current->next;
+	c_current = g_list_next(c_current);
     }
 
     return (FALSE);
@@ -183,7 +183,7 @@ void s_conn_remove(TOPLEVEL * toplevel, OBJECT * to_remove)
 #endif
     c_current->data = NULL;
     g_free(conn);
-    c_current = c_current->next;
+    c_current = g_list_next(c_current);
   }
 
 #if DEBUG
@@ -684,10 +684,10 @@ void s_conn_update_object(TOPLEVEL * toplevel, OBJECT * object)
 
       } /* end of for over endpoints */
 
-      object_list = object_list->next;
+      object_list = g_list_next(object_list);
     } 
 
-    tloc_list = tloc_list->next;
+    tloc_list = g_list_next(tloc_list);
   }
 
 #if DEBUG
@@ -742,7 +742,7 @@ void s_conn_print(GList * conn_list)
     printf("other_whichone: %d\n", conn->other_whichone);
     printf("-----------------------------------\n");
 
-    cl_current = cl_current->next;
+    cl_current = g_list_next(cl_current);
   }
 
 }
@@ -774,7 +774,7 @@ int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list)
        return TRUE;
     }
 
-    cl_current = cl_current->next;
+    cl_current = g_list_next(cl_current);
   }
  
   return FALSE;
@@ -805,7 +805,7 @@ GList *s_conn_return_others(GList *input_list, OBJECT *object)
       return_list = g_list_append(return_list, conn->other_object);
     }
         
-    cl_current = cl_current->next;
+    cl_current = g_list_next(cl_current);
   }
 
   return(return_list);
@@ -843,7 +843,7 @@ GList *s_conn_return_complex_others(GList *input_list, OBJECT *object)
         return_list = g_list_append(return_list, conn->other_object);
       }
         
-      cl_current = cl_current->next;
+      cl_current = g_list_next(cl_current);
     }
 
     o_current = o_current->next;

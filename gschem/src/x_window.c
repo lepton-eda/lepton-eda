@@ -689,7 +689,7 @@ void x_window_close(TOPLEVEL *w_current)
     {
       /* printf("yeah freeing: %s\n", (char*) current->data); */
       g_free(current->data);
-      current = current->next;
+      current = g_list_next(current);
     }
     g_list_free(w_current->major_changed_refdes);
   }
