@@ -88,16 +88,16 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
       case(COPY): 
       case(ENDCOPY):
       case(ENDMCOPY):
-        o_drawbounding(w_current, NULL,
+        o_drawbounding(w_current,
                        geda_list_get_glist( w_current->page_current->selection_list ),
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
       case(DRAWCOMP):
       case(ENDCOMP):
       case(ENDPASTE):
-	o_drawbounding(w_current, NULL,
-		       w_current->page_current->complex_place_list,
-                       x_get_darkcolor(w_current->bb_color), FALSE); 
+        o_drawbounding(w_current,
+                       w_current->page_current->complex_place_list,
+                       x_get_darkcolor(w_current->bb_color), FALSE);
         break;
 
       case(BUSCONT):
@@ -772,10 +772,8 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
     if (w_current->inside_action) {
       if (w_current->event_state == ENDCOMP) {
-        o_drawbounding(w_current,
-                       NULL,
-		       w_current->page_current->complex_place_list,
-		       x_get_darkcolor(w_current->bb_color), TRUE);
+        o_drawbounding(w_current, w_current->page_current->complex_place_list,
+                       x_get_darkcolor(w_current->bb_color), TRUE);
 
         w_current->complex_rotate = 
         (w_current->complex_rotate + 90) % 360;
@@ -789,32 +787,27 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 	o_complex_place_changed_run_hook (w_current);	
         w_current->DONT_REDRAW = prev_state;
 	  
-        o_drawbounding(w_current,
-                       NULL,
-		       w_current->page_current->complex_place_list,
-		       x_get_darkcolor(w_current->bb_color), TRUE);
+        o_drawbounding(w_current, w_current->page_current->complex_place_list,
+                       x_get_darkcolor(w_current->bb_color), TRUE);
         return(0);
       } else if (w_current->event_state == ENDTEXT) {
-        o_drawbounding(w_current, NULL,
-                       w_current->page_current->attrib_place_list,
-		       x_get_darkcolor(w_current->bb_color), TRUE);
+        o_drawbounding(w_current, w_current->page_current->attrib_place_list,
+                       x_get_darkcolor(w_current->bb_color), TRUE);
 
         w_current->complex_rotate = 
         (w_current->complex_rotate + 90) % 360;
 
         o_text_place_rotate(w_current);
 
-        o_drawbounding(w_current, NULL,
-                       w_current->page_current->attrib_place_list,
-		       x_get_darkcolor(w_current->bb_color), TRUE);
+        o_drawbounding(w_current, w_current->page_current->attrib_place_list,
+                       x_get_darkcolor(w_current->bb_color), TRUE);
         return(0);
 
       }
       else if (w_current->event_state == ENDMOVE) {
 	prev_state = w_current->event_state;
 	
-	o_drawbounding(w_current, NULL,
-		       w_current->page_current->complex_place_list,
+	o_drawbounding(w_current, w_current->page_current->complex_place_list,
 		       x_get_darkcolor(w_current->bb_color), TRUE);
 	
 	/* Don't allow o_rotate_90 to erase the selection, neither to
@@ -832,8 +825,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 	w_current->rotated_inside ++;	
 	w_current->event_state = prev_state;
 
-	o_drawbounding(w_current, NULL,
-		       w_current->page_current->complex_place_list,
+	o_drawbounding(w_current, w_current->page_current->complex_place_list,
 		       x_get_darkcolor(w_current->bb_color), TRUE);
 	
         return(0);
@@ -1088,12 +1080,12 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     case(ENDMCOPY):
     case(MCOPY):
     if (w_current->inside_action) {
-      o_drawbounding(w_current, NULL,
+      o_drawbounding(w_current,
                      geda_list_get_glist( w_current->page_current->selection_list ),
                      x_get_darkcolor(w_current->bb_color), FALSE);
       w_current->last_x = fix_x(w_current,  (int) event->x);
       w_current->last_y = fix_y(w_current,  (int) event->y);
-      o_drawbounding(w_current, NULL,
+      o_drawbounding(w_current,
                      geda_list_get_glist( w_current->page_current->selection_list ),
                      x_get_darkcolor(w_current->bb_color), FALSE);
     }

@@ -167,9 +167,7 @@ void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
   o_complex_place_changed_run_hook (w_current);
   w_current->DONT_REDRAW = redraw_state;
 
-  o_drawbounding(w_current, 
-                 NULL,
-                 w_current->page_current->complex_place_list,
+  o_drawbounding(w_current, w_current->page_current->complex_place_list,
                  x_get_darkcolor(w_current->bb_color), TRUE);
 }
 
@@ -455,7 +453,6 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 void o_complex_rubbercomplex(TOPLEVEL *w_current)
 {
   o_drawbounding(w_current,
-                 NULL,
                  w_current->page_current->complex_place_list,
                  x_get_darkcolor(w_current->bb_color), FALSE);
 }

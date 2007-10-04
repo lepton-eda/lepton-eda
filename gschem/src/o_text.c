@@ -375,8 +375,7 @@ void o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y)
     }
   }
 
-  o_drawbounding(w_current, NULL,
-                 w_current->page_current->attrib_place_list,
+  o_drawbounding(w_current, w_current->page_current->attrib_place_list,
                  x_get_darkcolor(w_current->bb_color), TRUE);
 }
 
@@ -417,14 +416,10 @@ void o_text_end(TOPLEVEL *w_current)
 
   /* erase the old bounding box / outline */
   if (w_current->actionfeedback_mode == OUTLINE) {
-    o_drawbounding(
-                   w_current, NULL,
-                   w_current->page_current->attrib_place_list,
+    o_drawbounding(w_current, w_current->page_current->attrib_place_list,
                    x_get_color(w_current->text_color), FALSE);
   } else {
-    o_drawbounding(
-                   w_current, NULL,
-                   w_current->page_current->attrib_place_list,
+    o_drawbounding(w_current, w_current->page_current->attrib_place_list,
                    x_get_darkcolor(w_current->select_color), FALSE);
   }
 
@@ -454,8 +449,7 @@ void o_text_end(TOPLEVEL *w_current)
  */
 void o_text_rubberattrib(TOPLEVEL *w_current)
 {
-  o_drawbounding(w_current, NULL,
-                 w_current->page_current->attrib_place_list,
+  o_drawbounding(w_current, w_current->page_current->attrib_place_list,
                  x_get_darkcolor(w_current->bb_color), FALSE);
 }
 

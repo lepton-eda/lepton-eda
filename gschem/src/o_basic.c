@@ -56,7 +56,7 @@ void o_redraw_all(TOPLEVEL *w_current)
         /* continue */
       case(ENDCOPY):
       case(ENDMCOPY):
-        o_drawbounding(w_current, NULL,
+        o_drawbounding(w_current,
                        geda_list_get_glist( w_current->page_current->selection_list ),
                        x_get_darkcolor(w_current->bb_color), FALSE);
 
@@ -64,16 +64,13 @@ void o_redraw_all(TOPLEVEL *w_current)
 
       case(DRAWCOMP):
       case(ENDCOMP):
-        o_drawbounding(w_current,
-                       NULL,
-                       w_current->page_current->complex_place_list,
+        o_drawbounding(w_current, w_current->page_current->complex_place_list,
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
 
       case(DRAWTEXT):
       case(ENDTEXT):
-        o_drawbounding(w_current, NULL,
-                       w_current->page_current->attrib_place_list,
+        o_drawbounding(w_current, w_current->page_current->attrib_place_list,
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
       case (GRIPS):
@@ -246,7 +243,7 @@ void o_erase_single(TOPLEVEL *w_current, OBJECT *object)
  */
 /* both outline and boundingbox work! */
 /* name is blah */
-void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, GList *o_glist, 
+void o_drawbounding(TOPLEVEL *w_current, GList *o_glist,
 		    GdkColor *color, int firsttime)
 {
   int diff_x, diff_y;
@@ -257,7 +254,7 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, GList *o_glist,
   static int rleft, rtop, rbottom, rright;
   static int w_rleft, w_rtop, w_rbottom, w_rright;
 
-  if (!o_list && !o_glist) {
+  if (o_glist == NULL) {
     return;
   }
 
@@ -273,30 +270,15 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, GList *o_glist,
     gdk_gc_set_foreground(w_current->bounding_xor_gc,
                           x_get_color(
                                       w_current->background_color));
-    if (o_list) {
-      o_complex_translate_display(w_current,
-                                  diff_x,
-                                  diff_y,
-                                  o_list);
-    } else if (o_glist) {
-      o_complex_translate_display_object_glist(w_current, diff_x, diff_y, o_glist);
-    }
+    o_complex_translate_display_object_glist(w_current, diff_x, diff_y, o_glist);
 
     gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
 
-    if (o_list) {
-      world_get_object_list_bounds(w_current, o_list,
-                             &w_rleft  ,
-                             &w_rtop   ,
-                             &w_rright ,
-                             &w_rbottom);
-    } else if (o_glist) {
-      world_get_object_glist_bounds(w_current, o_glist,
-                                    &w_rleft  ,
-                                    &w_rtop   ,
-                                    &w_rright ,
-                                    &w_rbottom);
-    }
+    world_get_object_glist_bounds(w_current, o_glist,
+                                  &w_rleft  ,
+                                  &w_rtop   ,
+                                  &w_rright ,
+                                  &w_rbottom);
 
     WORLDtoSCREEN( w_current, w_rleft, w_rtop, 
                    &rleft, &rtop );
@@ -315,50 +297,35 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, GList *o_glist,
   if ((w_current->last_drawb_mode == BOUNDINGBOX) &&
       (w_current->actionfeedback_mode == OUTLINE)) {
 #if DEBUG
-        printf("going to outline\n");
+    printf("going to outline\n");
 #endif
 
-        if (o_list) {
-          world_get_object_list_bounds(w_current, o_list,
-				 &w_rleft  ,
-				 &w_rtop   ,
-				 &w_rright ,
-				 &w_rbottom);
-        } else if (o_glist) {
-	  world_get_object_glist_bounds(w_current, o_glist,
-				  &w_rleft  ,
-				  &w_rtop   ,
-				  &w_rright ,
-				  &w_rbottom);
-	}
+    world_get_object_glist_bounds(w_current, o_glist,
+                                  &w_rleft  ,
+                                  &w_rtop   ,
+                                  &w_rright ,
+                                  &w_rbottom);
 
-        diff_x = w_current->last_x - w_current->start_x;
-        diff_y = w_current->last_y - w_current->start_y;
-        gdk_gc_set_foreground(w_current->gc,
-                              x_get_color(
-                                          w_current->background_color) );
-        WORLDtoSCREEN( w_current, w_rleft, w_rtop, 
-                       &rleft, &rtop );
-        WORLDtoSCREEN( w_current, w_rright, w_rbottom, 
-                       &rright, &rbottom );
-        gdk_draw_rectangle(w_current->window,
-                           w_current->gc, FALSE,
-                           rleft   + diff_x,
-                           rtop    + diff_y,
-                           rright  - rleft ,
-                           rbottom - rtop  );
+    diff_x = w_current->last_x - w_current->start_x;
+    diff_y = w_current->last_y - w_current->start_y;
+    gdk_gc_set_foreground(w_current->gc,
+                          x_get_color(w_current->background_color));
 
-        if (o_list) {
-          o_complex_translate_display(w_current,
-                                      diff_x,
-                                      diff_y,
-                                      o_list);
-        } else if (o_glist) {
-	  o_complex_translate_display_object_glist(w_current, 
-						   diff_x, diff_y, o_glist);
-	}
-	
-      }
+    WORLDtoSCREEN( w_current, w_rleft, w_rtop,
+                   &rleft, &rtop );
+    WORLDtoSCREEN( w_current, w_rright, w_rbottom,
+                   &rright, &rbottom );
+    gdk_draw_rectangle(w_current->window,
+                       w_current->gc, FALSE,
+                       rleft   + diff_x,
+                       rtop    + diff_y,
+                       rright  - rleft ,
+                       rbottom - rtop  );
+
+    o_complex_translate_display_object_glist(w_current,
+                                             diff_x, diff_y, o_glist);
+
+  }
 
   w_current->last_drawb_mode = w_current->actionfeedback_mode;
 
@@ -377,30 +344,15 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, GList *o_glist,
     w_current->drawbounding_action_mode = CONSTRAINED;
 
     if (w_current->actionfeedback_mode == OUTLINE) {
-      if (o_list) {
-        o_complex_translate_display(w_current,
-                                    diff_x,
-                                    diff_y,
-                                    o_list);
-      } else if (o_glist) {
-	o_complex_translate_display_object_glist(w_current, 
-						 diff_x, diff_y, o_glist);
-      }
-      
+      o_complex_translate_display_object_glist(w_current,
+                                               diff_x, diff_y, o_glist);
+
     } else {
-      if (o_list) {
-        world_get_object_list_bounds(w_current, o_list,
-			       &w_rleft  ,
-			       &w_rtop   ,
-			       &w_rright ,
-			       &w_rbottom);
-      } else if (o_glist) {
-	world_get_object_glist_bounds(w_current, o_glist,
-				&w_rleft  ,
-				&w_rtop   ,
-				&w_rright ,
-				&w_rbottom);
-      }
+      world_get_object_glist_bounds(w_current, o_glist,
+                                    &w_rleft  ,
+                                    &w_rtop   ,
+                                    &w_rright ,
+                                    &w_rbottom);
 
       gdk_gc_set_foreground(w_current->bounding_xor_gc,
                             color);
@@ -428,31 +380,16 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, GList *o_glist,
     diff_y = w_current->last_y - w_current->start_y;
 
     if (w_current->actionfeedback_mode == OUTLINE) {
-      if (o_list) {
-        o_complex_translate_display(w_current,
-                                    diff_x,
-                                    diff_y,
-                                    o_list);
-      } else if (o_glist) {
-	o_complex_translate_display_object_glist(w_current, 
-						 diff_x, diff_y, o_glist);
-      }
+      o_complex_translate_display_object_glist(w_current,
+                                               diff_x, diff_y, o_glist);
 
     } else {
-      if (o_list) {
-        world_get_object_list_bounds(w_current, o_list,
-			       &w_rleft  ,
-			       &w_rtop   ,
-			       &w_rright ,
-			       &w_rbottom);
-      } else if (o_glist) {
-	world_get_object_glist_bounds(w_current, o_glist,
-				&w_rleft  ,
-				&w_rtop   ,
-				&w_rright ,
-				&w_rbottom);
-      }
-      
+      world_get_object_glist_bounds(w_current, o_glist,
+                                    &w_rleft  ,
+                                    &w_rtop   ,
+                                    &w_rright ,
+                                    &w_rbottom);
+
       gdk_gc_set_foreground(w_current->bounding_xor_gc,
                             color);
       WORLDtoSCREEN( w_current, w_rleft, w_rtop, 
@@ -483,38 +420,19 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, GList *o_glist,
         w_current->drawbounding_action_mode = FREE;
         if (w_current->actionfeedback_mode == OUTLINE) {
           /* do it twice to get rid of old outline */
-          if (o_list) {
-            o_complex_translate_display(w_current,
-                                        diff_x,
-                                        diff_y,
-                                        o_list);
-            o_complex_translate_display(w_current,
-                                        diff_x,
-                                        diff_y,
-                                        o_list);
-          } else if (o_glist) {
-	    o_complex_translate_display_object_glist(w_current, 
-						     diff_x, diff_y, o_glist);
-	    o_complex_translate_display_object_glist(w_current,
-						     diff_x, diff_y, o_glist);
-	  }
-	  
+          o_complex_translate_display_object_glist(w_current,
+                                                   diff_x, diff_y, o_glist);
+          o_complex_translate_display_object_glist(w_current,
+                                                   diff_x, diff_y, o_glist);
+
         } else {
           /*! \todo why are we doing this here...?
            * probably a reason */
-          if (o_list) {
-            world_get_object_list_bounds(w_current, o_list,
-				   &w_rleft  ,
-				   &w_rtop   ,
-				   &w_rright ,
-				   &w_rbottom);
-          } else if (o_glist) {
-	    world_get_object_glist_bounds(w_current, o_glist,
-				    &w_rleft  ,
-				    &w_rtop   ,
-				    &w_rright ,
-				    &w_rbottom);
-	  }
+          world_get_object_glist_bounds(w_current, o_glist,
+                                        &w_rleft  ,
+                                        &w_rtop   ,
+                                        &w_rright ,
+                                        &w_rbottom);
 
         }
         if (w_current->netconn_rubberband) {
@@ -536,20 +454,12 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, GList *o_glist,
   if (w_current->actionfeedback_mode == BOUNDINGBOX) {
 
     if (firsttime == TRUE) {
-      if (o_list) {
-        world_get_object_list_bounds(w_current, o_list,
-			       &w_rleft  ,
-			       &w_rtop   ,
-			       &w_rright ,
-			       &w_rbottom);
-      } else if (o_glist) {
-	world_get_object_glist_bounds(w_current, o_glist,
-				&w_rleft  ,
-				&w_rtop   ,
-				&w_rright ,
-				&w_rbottom);
-      }
-      
+      world_get_object_glist_bounds(w_current, o_glist,
+                                    &w_rleft  ,
+                                    &w_rtop   ,
+                                    &w_rright ,
+                                    &w_rbottom);
+
       /*printf("once\n");*/
     
     }
@@ -576,12 +486,8 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, GList *o_glist,
   /*! \todo have I mentioned how temp this is? Make this general
    * so that all lists can be moved ...
    */
-  if (o_list) {
-    o_complex_translate_display(w_current, diff_x, diff_y, o_list);
-  } else if (o_glist) {
-    o_complex_translate_display_object_glist(w_current, 
-					     diff_x, diff_y, o_glist);
-  }
+  o_complex_translate_display_object_glist(w_current,
+                                           diff_x, diff_y, o_glist);
 }
 
 

@@ -50,7 +50,7 @@ void o_move_start(TOPLEVEL * w_current, int x, int y)
 
     o_erase_selected(w_current);
 
-    o_drawbounding(w_current, NULL,
+    o_drawbounding(w_current,
                    geda_list_get_glist( w_current->page_current->selection_list ),
                    x_get_darkcolor(w_current->bb_color), TRUE);
 
@@ -207,7 +207,7 @@ void o_move_end(TOPLEVEL * w_current)
   }
 
   if (w_current->actionfeedback_mode == OUTLINE) {
-    o_drawbounding(w_current, NULL,
+    o_drawbounding(w_current,
                    geda_list_get_glist( w_current->page_current->selection_list ),
                    x_get_darkcolor(w_current->bb_color), TRUE);
   }
@@ -278,7 +278,7 @@ void o_move_end(TOPLEVEL * w_current)
 
   /* erase the bounding box */
   if (w_current->actionfeedback_mode == BOUNDINGBOX) {
-    o_drawbounding(w_current, NULL,
+    o_drawbounding(w_current,
                    geda_list_get_glist( w_current->page_current->selection_list ),
                    x_get_darkcolor(w_current->bb_color), FALSE);
   }

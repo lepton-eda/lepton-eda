@@ -134,7 +134,7 @@ void o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y,
   /* store the buffer number for future use */
   w_current->buffer_number = buf_num;
 
-  o_drawbounding(w_current, NULL, object_buffer[buf_num],
+  o_drawbounding(w_current, object_buffer[buf_num],
                  x_get_darkcolor(w_current->bb_color), TRUE);
 }
 
@@ -161,7 +161,7 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
   }
 
   /* erase old image */
-  o_drawbounding(w_current, NULL, object_buffer[buf_num],
+  o_drawbounding(w_current, object_buffer[buf_num],
                  x_get_darkcolor(w_current->bb_color), FALSE);
 
   /* get the location where we ended */
@@ -233,7 +233,7 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
  */
 void o_buffer_paste_rubberpaste(TOPLEVEL *w_current, int buf_num)
 {
-  o_drawbounding(w_current, NULL, object_buffer[buf_num],
+  o_drawbounding(w_current, object_buffer[buf_num],
                  x_get_darkcolor(w_current->bb_color), FALSE);
 }
 
