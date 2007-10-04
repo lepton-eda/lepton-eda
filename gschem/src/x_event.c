@@ -111,9 +111,6 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
       case(ENDARC): 
 	 o_arc_rubberarc_xor(w_current); 
         break;
-      case(ENDATTRIB): /*! \todo how to test ??? */
-	 o_attrib_rubberattrib(w_current);
-        break;
       case(ENDBOX):
 	 o_box_rubberbox_xor(w_current); 
         break;
@@ -405,19 +402,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         w_current->inside_action = 0;
 	i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
-        break;
-
-      case(ENDATTRIB):
-        o_attrib_end(w_current);
-				/* not sure on this one either... */
-				/* keep it as well */
-        w_current->inside_action = 0;
-	i_set_state(w_current, SELECT);
-        i_update_toolbar(w_current);
-				/* the following happen inside attrib_end */
-				/* therefore they are commeneted out here */
-                                /* o_redraw_single(object_tail);*/
-                                /* o_redraw_selected(); not sure on this */
         break;
 
       case(ENDROTATEP):
@@ -1201,24 +1185,11 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     o_buffer_paste_rubberpaste(w_current, w_current->buffer_number);
     break;
 
-    case(DRAWATTRIB):
-    o_attrib_start(w_current, (int) event->x, (int) event->y);
-    w_current->event_state = ENDATTRIB;
-    w_current->inside_action = 1;
-    break;
-
     case(DRAWTEXT):
     w_current->complex_rotate = 0; /* reset to known state */
     o_text_start(w_current, (int) event->x, (int) event->y);
     w_current->event_state = ENDTEXT;
     w_current->inside_action = 1;
-    break;
-
-    case(ENDATTRIB):
-    o_attrib_rubberattrib(w_current);
-    w_current->last_x = fix_x(w_current, (int) event->x);
-    w_current->last_y = fix_y(w_current, (int) event->y);
-    o_attrib_rubberattrib(w_current);
     break;
 
     case(ENDTEXT):

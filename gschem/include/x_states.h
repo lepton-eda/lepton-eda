@@ -54,28 +54,26 @@ enum x_states {
   ENDARC, 		/* 26 */
   ENDPIN, 		/* 27 */
   ENDCOMP, 		/* 28 */
-  DRAWATTRIB, 		/* 29 */
-  ENDATTRIB,		/* 30 */
-  DRAWTEXT, 		/* 31 */
-  ENDTEXT, 		/* 32 */
-  ENDROTATEP, 		/* 33 */
-  ENDMIRROR, 		/* 34 */
-  ZOOMBOXSTART, 	/* 35 */
-  ZOOMBOXEND, 		/* 36 */
-  STARTROUTENET, 	/* 37 */
-  ENDROUTENET, 		/* 38 */
-  MOUSEPAN, 		/* 39 */
-  DRAWBUS, 		/* 40 */
-  BUSCONT, 		/* 41 */
-  STARTDRAWBUS, 	/* 42 */
-  STARTPASTE, 		/* 43 */
-  ENDPASTE, 		/* 44 */
-  GRIPS, 		/* 45 */
-  DRAWPICTURE, 		/* 46 */
-  ENDPICTURE, 		/* 47 */
-  MCOPY, 		/* 48 */
-  STARTMCOPY,		/* 49 */
-  ENDMCOPY		/* 50 */
+  DRAWTEXT, 		/* 29 */
+  ENDTEXT, 		/* 30 */
+  ENDROTATEP, 		/* 31 */
+  ENDMIRROR, 		/* 32 */
+  ZOOMBOXSTART, 	/* 33 */
+  ZOOMBOXEND, 		/* 34 */
+  STARTROUTENET, 	/* 35 */
+  ENDROUTENET, 		/* 36 */
+  MOUSEPAN, 		/* 37 */
+  DRAWBUS, 		/* 38 */
+  BUSCONT, 		/* 39 */
+  STARTDRAWBUS, 	/* 40 */
+  STARTPASTE, 		/* 41 */
+  ENDPASTE, 		/* 42 */
+  GRIPS, 		/* 43 */
+  DRAWPICTURE, 		/* 44 */
+  ENDPICTURE, 		/* 45 */
+  MCOPY, 		/* 46 */
+  STARTMCOPY,		/* 47 */
+  ENDMCOPY		/* 48 */
 };
 
 

@@ -70,8 +70,6 @@ void o_redraw_all(TOPLEVEL *w_current)
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
 
-      case(DRAWATTRIB):
-      case(ENDATTRIB):
       case(DRAWTEXT):
       case(ENDTEXT):
         o_drawbounding(w_current, w_current->
@@ -678,7 +676,6 @@ int o_redraw_cleanstates(TOPLEVEL *w_current)
     case(DRAWCOMP): 
     case(DRAWNET):   
     case(ENDARC): 
-    case(ENDATTRIB):
     case(ENDBOX): 
     case(ENDCIRCLE): 
     case(ENDCOMP): 
@@ -728,7 +725,6 @@ int o_redraw_cleanstates(TOPLEVEL *w_current)
     case(PAN): 
     case(BUSCONT): 
     case(DRAWARC): 
-    case(DRAWATTRIB): 
     case(DRAWPICTURE): 
     case(DRAWPIN): 
     case(DRAWTEXT): 

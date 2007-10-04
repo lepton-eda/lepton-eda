@@ -465,9 +465,6 @@ void o_arc_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
 void o_attrib_add_selected(TOPLEVEL *w_current, SELECTION *selection, OBJECT *selected);
 void o_attrib_toggle_visibility(TOPLEVEL *w_current, GList *list);
 void o_attrib_toggle_show_name_value(TOPLEVEL *w_current, GList *list, int new_show_name_value);
-void o_attrib_start(TOPLEVEL *w_current, int screen_x, int screen_y);
-void o_attrib_end(TOPLEVEL *w_current);
-void o_attrib_rubberattrib(TOPLEVEL *w_current);
 OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility, int show_name_value, OBJECT *object);
 /* o_basic.c */
 void o_redraw_all(TOPLEVEL *w_current);

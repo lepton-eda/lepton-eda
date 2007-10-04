@@ -78,9 +78,6 @@ static const char *i_status_string(TOPLEVEL *w_current)
     case SBOX:
     case GRIPS:
       return _("Select Mode");
-    case DRAWATTRIB:
-    case ENDATTRIB:
-      return _("Attribute Mode"); /*EK* new */
     case DRAWCOMP:
     case ENDCOMP:
       return _("Component Mode"); /*EK* new */
@@ -338,8 +335,6 @@ void i_update_toolbar(TOPLEVEL *w_current)
     case(ENDARC): /*! \todo */
     case(ENDPIN): /*! \todo */
     case(ENDCOMP): /*! \todo */
-    case(DRAWATTRIB): /*! \todo */
-    case(ENDATTRIB): /*! \todo */
     case(DRAWTEXT): /*! \todo */
     case(ENDTEXT): /*! \todo */
     case(ENDROTATEP): /*! \todo */
