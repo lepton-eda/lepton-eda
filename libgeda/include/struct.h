@@ -422,8 +422,6 @@ struct st_toplevel {
   double pixbuf_wh_ratio;                  /* width/height ratio of the pixbuf */
   char *pixbuf_filename;
 
-  int current_visible;			/* in o_attrib.c */
-  int current_show;
   /* have to decided on attribute list stuff */
   /* if it should go in here or not */
   /* leave outside for now */

@@ -72,9 +72,6 @@ TOPLEVEL *s_toplevel_new (void)
   
   toplevel->current_attribute = NULL;
 
-  toplevel->current_visible = -1; /* not sure on these */
-  toplevel->current_show    = -1;
-
   toplevel->internal_symbol_name = NULL;
   
   toplevel->RC_list = NULL;

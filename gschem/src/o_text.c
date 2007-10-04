@@ -415,15 +415,6 @@ void o_text_end(TOPLEVEL *w_current)
              w_current->text_size,
              VISIBLE, SHOW_NAME_VALUE);
 
-  /* if the text is invisible then you need to erase the outline
-     left by the place */
-  if (w_current->current_visible == INVISIBLE) {
-    o_drawbounding(
-                   w_current,
-                   w_current->page_current->attrib_place_head->next,
-                   NULL,
-                   x_get_darkcolor(w_current->bb_color), FALSE);
-  }
   /*! \todo you need to erase the bounding box if have that mode
      set!!! */
 
