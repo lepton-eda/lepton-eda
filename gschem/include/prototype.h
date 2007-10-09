@@ -687,6 +687,7 @@ void o_select_box_rubberband(TOPLEVEL *w_current, int x, int y);
 void o_select_box_search(TOPLEVEL *w_current);
 OBJECT *o_select_return_first_object(TOPLEVEL *w_current);
 int o_select_selected(TOPLEVEL *w_current);
+void o_select_unselect_list(TOPLEVEL *w_current, SELECTION *selection);
 void o_select_unselect_all(TOPLEVEL *w_current);
 void o_select_move_to_place_list(TOPLEVEL *w_current);
 /* o_slot.c */

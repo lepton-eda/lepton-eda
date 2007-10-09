@@ -163,7 +163,7 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* result: remove all objects from selection */
           if (count == 0 && !CONTROLKEY) {
             o_select_run_hooks( w_current, NULL, 2 );
-            o_selection_unselect_list (w_current,w_current->page_current->selection_list);
+            o_select_unselect_list( w_current, w_current->page_current->selection_list );
           }
           break;
 
@@ -200,7 +200,7 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* 2nd result: add object to selection */
           if (type == MULTIPLE && count == 0 && !CONTROLKEY) {
             o_select_run_hooks( w_current, NULL, 2 );
-            o_selection_unselect_list (w_current, w_current->page_current->selection_list );
+            o_select_unselect_list( w_current, w_current->page_current->selection_list );
 
             o_select_run_hooks( w_current, o_current, 1 );
             o_selection_add( w_current->page_current->selection_list, o_current);
@@ -212,7 +212,7 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* 2nd result: add object to selection list */
           if (type == SINGLE && !CONTROLKEY) {
             o_select_run_hooks( w_current, NULL, 2 );
-            o_selection_unselect_list( w_current, w_current->page_current->selection_list );
+            o_select_unselect_list( w_current, w_current->page_current->selection_list );
 
             o_select_run_hooks (w_current, o_current, 1);
             o_selection_add( w_current->page_current->selection_list, o_current);
@@ -410,7 +410,7 @@ void o_select_box_search(TOPLEVEL *w_current)
   /* key was pressed */
   if (count == 0 && !SHIFTKEY) {
     o_select_run_hooks( w_current, NULL, 2 );
-    o_selection_unselect_list( w_current, w_current->page_current->selection_list );
+    o_select_unselect_list( w_current, w_current->page_current->selection_list );
   }
   i_update_menus(w_current);
 }
@@ -440,6 +440,27 @@ int o_select_selected(TOPLEVEL *w_current)
   return(FALSE);
 }
 
+
+/*! \brief Unselects all the objects in the given list.
+ *  \par Unselects all objects in the given list, does the
+ *  needed work to make the objects visually unselected, and redraw them.
+ *  \param [in] toplevel TOPLEVEL struct.
+ *  \param [in] head Pointer to the selection list
+ */
+void o_select_unselect_list(TOPLEVEL *w_current, SELECTION *selection)
+{
+  const GList *list = geda_list_get_glist( selection );
+
+  while ( list != NULL ) {
+    o_selection_unselect( (OBJECT *)list->data );
+    o_redraw_single( w_current, (OBJECT *)list->data );
+   list = g_list_next( list );
+  }
+
+  geda_list_remove_all( (GedaList *)selection );
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -448,7 +469,7 @@ int o_select_selected(TOPLEVEL *w_current)
 void o_select_unselect_all(TOPLEVEL *w_current)
 {
   o_select_run_hooks( w_current, NULL, 2 );
-  o_selection_unselect_list( w_current, w_current->page_current->selection_list );
+  o_select_unselect_list( w_current, w_current->page_current->selection_list );
 }
 
 /*! \todo Finish function documentation!!!
