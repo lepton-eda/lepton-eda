@@ -1386,7 +1386,7 @@ char *o_attrib_search_name_single(OBJECT *object, char *name,
 {
   OBJECT *o_current;
   ATTRIB *a_current;
-  OBJECT *found=NULL;
+  OBJECT *found;
   int val;
   char *found_name = NULL;
   char *found_value = NULL;
@@ -1448,7 +1448,7 @@ char *o_attrib_search_name_single(OBJECT *object, char *name,
           g_malloc(sizeof(char)* strlen(found_value)+1);
         strcpy(return_string, found_value);
         if (return_found) {
-          *return_found = found;
+          *return_found = o_current;
         }
 	if (found_name) g_free(found_name);
 	if (found_value) g_free(found_value);
