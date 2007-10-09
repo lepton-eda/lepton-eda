@@ -151,28 +151,20 @@ OBJECT *o_list_copy_to(TOPLEVEL *toplevel, OBJECT *list_head,
  *  \return OBJECT pointer.
  */
 OBJECT *o_list_copy_all(TOPLEVEL *toplevel, OBJECT *src_list_head,
-			OBJECT *dest_list_head, int flag)
+                        OBJECT *dest_list_head, int flag)
 {
   OBJECT *src;
   OBJECT *dest;
-  OBJECT *temp_parent=NULL;
   int adding_sel_save;
 
   src = src_list_head;
   dest = dest_list_head;
-  temp_parent = toplevel->page_current->object_parent;
-  toplevel->page_current->object_parent = dest_list_head;
 
-  if (dest == NULL) {
-    toplevel->page_current->object_parent = temp_parent;
+  if (src == NULL || dest == NULL) {
     return(NULL);
   }
 
-  if (src == NULL) {
-    toplevel->page_current->object_parent = temp_parent;
-    return(NULL);
-  }
-
+  /* Save ADDING_SEL as o_list_copy_to() sets it */
   adding_sel_save = toplevel->ADDING_SEL;
 
   /* first do all NON text items */
@@ -181,7 +173,7 @@ OBJECT *o_list_copy_all(TOPLEVEL *toplevel, OBJECT *src_list_head,
     if (src->type != OBJ_TEXT) {
       dest->next = o_list_copy_to(toplevel, NULL, src, flag,
                                   NULL);
-		
+
       dest->next->prev = dest;
       dest = dest->next;
       dest->sid = global_sid++;
@@ -193,32 +185,21 @@ OBJECT *o_list_copy_all(TOPLEVEL *toplevel, OBJECT *src_list_head,
   src = src_list_head;
   /*dest = dest_list_head; out since we want to add to the end */
 
-  if (dest == NULL) {
-    toplevel->page_current->object_parent = temp_parent;
-    return(NULL);
-  }
-
-  if (src == NULL) {
-    toplevel->page_current->object_parent = temp_parent;
-    return(NULL);
-  }
-
   /* then do all text items */
   while(src != NULL) {
 
     if (src->type == OBJ_TEXT) {
       dest->next = o_list_copy_to(toplevel, NULL, src, flag,
                                   NULL);
-		
+
       dest->next->prev = dest;
       dest = dest->next;
       dest->sid = global_sid++;
-	
+
       if (src->attached_to /*&& !toplevel->ADDING_SEL*/) {
         if (src->attached_to->copied_to) {
-          o_attrib_attach(toplevel,
-                          toplevel->page_current->object_parent,
-                          dest, src->attached_to->copied_to);     
+          o_attrib_attach(toplevel, dest_list_head,
+                          dest, src->attached_to->copied_to);
         }
       }
     }
@@ -234,7 +215,6 @@ OBJECT *o_list_copy_all(TOPLEVEL *toplevel, OBJECT *src_list_head,
   }
 
   toplevel->ADDING_SEL = adding_sel_save;
-  toplevel->page_current->object_parent = temp_parent;
 
   return(dest);
 }
