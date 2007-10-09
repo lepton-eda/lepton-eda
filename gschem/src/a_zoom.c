@@ -24,6 +24,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -86,24 +87,25 @@
  * 
  */
 /* dir is either ZOOM_IN, ZOOM_OUT or ZOOM_FULL which are defined in globals.h */
-void a_zoom(TOPLEVEL *w_current, int dir, int selected_from, int pan_flags)
+void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flags)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   double world_pan_center_x,world_pan_center_y,relativ_zoom_factor = - 1;
   int start_x, start_y;
 
   /*calc center: either "mouse_to_world" or center=center */
   if (w_current->zoom_with_pan == TRUE && selected_from == HOTKEY) {
     world_pan_center_x = (double) mouse_x *
-    w_current->page_current->to_world_x_constant +
-    w_current->page_current->left;
-    world_pan_center_y = (double) w_current->page_current->bottom - mouse_y *
-    w_current->page_current->to_world_y_constant;
+    toplevel->page_current->to_world_x_constant +
+    toplevel->page_current->left;
+    world_pan_center_y = (double) toplevel->page_current->bottom - mouse_y *
+    toplevel->page_current->to_world_y_constant;
   }
   else {
-    world_pan_center_x = (double) (w_current->page_current->left +
-                                   w_current->page_current->right ) / 2;
-    world_pan_center_y = (double) (w_current->page_current->top +
-                                   w_current->page_current->bottom ) / 2;
+    world_pan_center_x = (double) (toplevel->page_current->left +
+                                   toplevel->page_current->right ) / 2;
+    world_pan_center_y = (double) (toplevel->page_current->top +
+                                   toplevel->page_current->bottom ) / 2;
   }
 
   switch(dir) {
@@ -153,7 +155,7 @@ void a_zoom(TOPLEVEL *w_current, int dir, int selected_from, int pan_flags)
 	
   /* warp the cursor to the right position */ 
   if (w_current->warp_cursor) {
-     WORLDtoSCREEN(w_current, world_pan_center_x, world_pan_center_y, 
+     WORLDtoSCREEN(toplevel, world_pan_center_x, world_pan_center_y,
 		   &start_x, &start_y);
      x_basic_warp_cursor(w_current->drawing_area, start_x, start_y, 0);
   }
@@ -172,8 +174,9 @@ void a_zoom(TOPLEVEL *w_current, int dir, int selected_from, int pan_flags)
  *  \par Function Description
  * 
  */
-void a_zoom_extents(TOPLEVEL *w_current, OBJECT *o_current, int pan_flags)
+void a_zoom_extents(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int pan_flags)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int lleft, lright, ltop, lbottom;
   double zx, zy, relativ_zoom_factor;
   double world_pan_center_x,world_pan_center_y;
@@ -189,7 +192,7 @@ void a_zoom_extents(TOPLEVEL *w_current, OBJECT *o_current, int pan_flags)
     return;
   }
 
-  if ( !world_get_object_list_bounds(w_current, o_current,
+  if ( !world_get_object_list_bounds(toplevel, o_current,
                                      &lleft, &ltop,
                                      &lright, &lbottom)) {
     return;
@@ -204,11 +207,11 @@ void a_zoom_extents(TOPLEVEL *w_current, OBJECT *o_current, int pan_flags)
    * Start with the windows width and height, then scale back to world
    * coordinates with the to_screen_y_constant as the initial page data
    * may not have the correct aspect ratio. */
-  zx = (double)w_current->width / (lright-lleft);
-  zy = (double)w_current->height / (lbottom-ltop);
+  zx = (double)toplevel->width / (lright-lleft);
+  zy = (double)toplevel->height / (lbottom-ltop);
   /* choose the smaller one, 0.9 for paddings on all side*/
   relativ_zoom_factor = (zx < zy ? zx : zy) * 0.9
-    / w_current->page_current->to_screen_y_constant;
+    / toplevel->page_current->to_screen_y_constant;
 	
   /*get the center of the objects*/
   world_pan_center_x = (double) (lright + lleft) /2.0;
@@ -233,8 +236,9 @@ void a_zoom_extents(TOPLEVEL *w_current, OBJECT *o_current, int pan_flags)
  * 
  */
 /* made a rewrite (hw) */
-void a_zoom_box(TOPLEVEL *w_current, int pan_flags)
+void a_zoom_box(GSCHEM_TOPLEVEL *w_current, int pan_flags)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   double cx,cy;
   double zx, zy, relativ_zoom_factor;
   double world_pan_center_x,world_pan_center_y;
@@ -247,9 +251,9 @@ void a_zoom_box(TOPLEVEL *w_current, int pan_flags)
   }
 	
   /*calc new zoomfactors and choose the smaller one*/
-  zx = (double) w_current->width /
+  zx = (double) toplevel->width /
   abs(w_current->start_x - w_current->last_x);
-  zy = (double) w_current->height /
+  zy = (double) toplevel->height /
   abs(w_current->start_y - w_current->last_y);
   relativ_zoom_factor = (zx < zy ? zx : zy);
 	
@@ -259,10 +263,10 @@ void a_zoom_box(TOPLEVEL *w_current, int pan_flags)
 
   /* and translate that point to world */		
   world_pan_center_x = (double) cx *
-  w_current->page_current->to_world_x_constant +
-  w_current->page_current->left;
-  world_pan_center_y = (double) w_current->page_current->bottom -
-  cy * w_current->page_current->to_world_y_constant;
+  toplevel->page_current->to_world_x_constant +
+  toplevel->page_current->left;
+  world_pan_center_y = (double) toplevel->page_current->bottom -
+  cy * toplevel->page_current->to_world_y_constant;
 
   /* and create the new window*/
   a_pan_general(w_current, world_pan_center_x, world_pan_center_y,
@@ -274,7 +278,7 @@ void a_zoom_box(TOPLEVEL *w_current, int pan_flags)
  *  \par Function Description
  * 
  */
-void a_zoom_box_start(TOPLEVEL *w_current, int x, int y)
+void a_zoom_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   int box_left, box_top;
   int box_width, box_height;
@@ -294,13 +298,14 @@ void a_zoom_box_start(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  * 
  */
-void a_zoom_box_end(TOPLEVEL *w_current, int x, int y)
+void a_zoom_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int box_width, box_height;
   int box_left, box_top;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
@@ -325,13 +330,14 @@ void a_zoom_box_end(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  * 
  */
-void a_zoom_box_rubberband(TOPLEVEL *w_current, int x, int y)
+void a_zoom_box_rubberband(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int box_width, box_height;
   int box_left, box_top;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
@@ -361,25 +367,26 @@ void a_zoom_box_rubberband(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  * 
  */
-void correct_aspect(TOPLEVEL *w_current)
+void correct_aspect(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   double new_aspect;
 
-  new_aspect = GET_PAGE_ASPECT_RATIO(w_current);
+  new_aspect = GET_PAGE_ASPECT_RATIO(toplevel);
 
   /* Make sure aspect ratio is correct */
-  if (fabs(new_aspect - w_current->page_current->coord_aspectratio)) {
+  if (fabs(new_aspect - toplevel->page_current->coord_aspectratio)) {
     /* sign was > */
-    if (new_aspect > w_current->page_current->coord_aspectratio) {
+    if (new_aspect > toplevel->page_current->coord_aspectratio) {
 #if DEBUG
       printf("new larger then coord\n");
       printf("implies that height is too large\n");
 #endif
       /* calculate neccesary padding on Y */
-      w_current->page_current->bottom =
-        w_current->page_current->top +
-        GET_PAGE_WIDTH(w_current) /
-        w_current->page_current->coord_aspectratio;
+      toplevel->page_current->bottom =
+        toplevel->page_current->top +
+        GET_PAGE_WIDTH(toplevel) /
+        toplevel->page_current->coord_aspectratio;
 
     } else {
 #if DEBUG
@@ -387,17 +394,17 @@ void correct_aspect(TOPLEVEL *w_current)
       printf("implies that width is too small\n");
 #endif
       /* calculate necessary padding on X */
-      w_current->page_current->right =
-        w_current->page_current->left +
-        GET_PAGE_HEIGHT(w_current) *
-        w_current->page_current->coord_aspectratio;
+      toplevel->page_current->right =
+        toplevel->page_current->left +
+        GET_PAGE_HEIGHT(toplevel) *
+        toplevel->page_current->coord_aspectratio;
     }
 #if DEBUG
     printf("invalid aspectratio corrected\n");
 #endif
   }
 
-  new_aspect = GET_PAGE_ASPECT_RATIO(w_current);
+  new_aspect = GET_PAGE_ASPECT_RATIO(toplevel);
 
 #if DEBUG
   printf("final %f\n", new_aspect);

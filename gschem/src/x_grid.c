@@ -26,6 +26,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
@@ -40,8 +41,9 @@ static GdkPoint points[5000];
  *  \par Function Description
  *
  */
-void x_grid_draw(TOPLEVEL *w_current)
+void x_grid_draw(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int i, j;
   int x, y;
   int x_start, y_start;
@@ -59,11 +61,11 @@ void x_grid_draw(TOPLEVEL *w_current)
   {
     /* In the variable mode around every 30th screenpixel will be grid-point */
     /* adding 0.1 for correct cast*/
-    incr = round_5_2_1(w_current->page_current->to_world_x_constant *30)+0.1;
+    incr = round_5_2_1(toplevel->page_current->to_world_x_constant *30)+0.1;
 
     /*limit grid to snap_size; only a idea of mine, hope you like it (hw) */
-    if (incr < w_current->snap_size) {
-      incr = w_current->snap_size;
+    if (incr < toplevel->snap_size) {
+      incr = toplevel->snap_size;
     }
     /* usually this should never happen */
     if (incr < 1){
@@ -72,8 +74,8 @@ void x_grid_draw(TOPLEVEL *w_current)
   }
   else
   {
-    incr = w_current->snap_size;
-    screen_incr = SCREENabs(w_current, incr);
+    incr = toplevel->snap_size;
+    screen_incr = SCREENabs(toplevel, incr);
     if (screen_incr < w_current->grid_fixed_threshold)
     {
       /* don't draw the grid if the screen incr spacing is less than the */
@@ -100,18 +102,18 @@ void x_grid_draw(TOPLEVEL *w_current)
   /* figure starting grid coordinates, work by taking the start
    * and end coordinates and rounding down to the nearest
    * increment */
-  x_start = (w_current->page_current->left -
-             (w_current->page_current->left % incr));
-  y_start = (w_current->page_current->top -
-             (w_current->page_current->top  % incr));
+  x_start = (toplevel->page_current->left -
+             (toplevel->page_current->left % incr));
+  y_start = (toplevel->page_current->top -
+             (toplevel->page_current->top  % incr));
 
-  for (i = x_start; i < w_current->page_current->right; i = i + incr) {
-    for(j = y_start; j < w_current->page_current->bottom; j = j + incr) {
-      WORLDtoSCREEN(w_current, i,j, &x, &y);
-      if (inside_region(w_current->page_current->left,
-                        w_current->page_current->top,
-                        w_current->page_current->right,
-                        w_current->page_current->bottom,
+  for (i = x_start; i < toplevel->page_current->right; i = i + incr) {
+    for(j = y_start; j < toplevel->page_current->bottom; j = j + incr) {
+      WORLDtoSCREEN(toplevel, i,j, &x, &y);
+      if (inside_region(toplevel->page_current->left,
+                        toplevel->page_current->top,
+                        toplevel->page_current->right,
+                        toplevel->page_current->bottom,
                         i, j)) {
 
 	if (w_current->grid_dot_size == 1)
@@ -165,8 +167,9 @@ void x_grid_draw(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_draw_tiles(TOPLEVEL *w_current)
+void x_draw_tiles(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   TILE *t_current;
   GdkFont *font;
   int i,j;
@@ -180,10 +183,10 @@ void x_draw_tiles(TOPLEVEL *w_current)
   font = gdk_fontset_load ("fixed");
   for (j = 0; j < MAX_TILES_Y; j++) {
     for (i = 0; i < MAX_TILES_X; i++) {
-      t_current = &w_current->page_current->world_tiles[i][j];
-      WORLDtoSCREEN(w_current, t_current->left, 
+      t_current = &toplevel->page_current->world_tiles[i][j];
+      WORLDtoSCREEN(toplevel, t_current->left,
                     t_current->top, &x1, &y1);
-      WORLDtoSCREEN(w_current, t_current->right, 
+      WORLDtoSCREEN(toplevel, t_current->right,
                     t_current->bottom, &x2, &y2);
 
       screen_x = min(x1, x2);

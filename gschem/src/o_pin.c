@@ -24,6 +24,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/x_states.h"
 #include "../include/prototype.h"
@@ -37,8 +38,9 @@
  *  \par Function Description
  *
  */
-void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
+void o_pin_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int size;
   int x1, y1, x2, y2; /* screen coords */
 
@@ -47,8 +49,8 @@ void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   /* reuse line's routine */
-  if ( (w_current->DONT_REDRAW == 1) ||
-       (!o_line_visible(w_current, o_current->line, &x1, &y1, &x2, &y2)) ) {
+  if ( (toplevel->DONT_REDRAW == 1) ||
+       (!o_line_visible(toplevel, o_current->line, &x1, &y1, &x2, &y2)) ) {
     return;
   }
 
@@ -56,24 +58,24 @@ void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
   printf("drawing pin\n\n");
 #endif
 
-  if (w_current->pin_style == THICK ) {
-    size = SCREENabs(w_current, PIN_WIDTH);
+  if (toplevel->pin_style == THICK ) {
+    size = SCREENabs(toplevel, PIN_WIDTH);
     gdk_gc_set_line_attributes(w_current->gc, size, GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
                                GDK_JOIN_MITER);
   }
 
-  if (w_current->override_color != -1 ) {
+  if (toplevel->override_color != -1 ) {
     gdk_gc_set_foreground(w_current->gc,
-			  x_get_color(w_current->override_color));
-    if (w_current->DONT_REDRAW == 0) {
+			  x_get_color(toplevel->override_color));
+    if (toplevel->DONT_REDRAW == 0) {
       gdk_draw_line(w_current->window, w_current->gc,
 		    x1, y1, x2, y2);
       gdk_draw_line(w_current->backingstore, w_current->gc,
 		    x1, y1, x2, y2);
     }
   } else {
-    if (w_current->DONT_REDRAW == 0) {
+    if (toplevel->DONT_REDRAW == 0) {
       gdk_gc_set_foreground(w_current->gc, x_get_color(o_current->color));
       gdk_draw_line(w_current->window, w_current->gc,
 		    x1, y1, x2, y2);
@@ -86,7 +88,7 @@ void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
   o_cue_draw_lowlevel(w_current, o_current, o_current->whichend);
   
   /* yes zero is right for the width -> use hardware lines */
-  if (w_current->pin_style == THICK ) {
+  if (toplevel->pin_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->gc, 0, GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
                                GDK_JOIN_MITER);
@@ -115,11 +117,12 @@ void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_pin_erase(TOPLEVEL *w_current, OBJECT *o_current)
+void o_pin_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  w_current->override_color = w_current->background_color;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  toplevel->override_color = toplevel->background_color;
   o_pin_draw(w_current, o_current);
-  w_current->override_color = -1;
+  toplevel->override_color = -1;
 }
 
 /*! \todo Finish function documentation!!!
@@ -127,8 +130,9 @@ void o_pin_erase(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+void o_pin_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int size;
   int color;
   int sx[2], sy[2];
@@ -145,22 +149,22 @@ void o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 
   gdk_gc_set_foreground(w_current->xor_gc, x_get_darkcolor(color));
 
-  if (w_current->pin_style == THICK ) {
-    size = SCREENabs(w_current, PIN_WIDTH);
+  if (toplevel->pin_style == THICK ) {
+    size = SCREENabs(toplevel, PIN_WIDTH);
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
                                GDK_JOIN_MITER);
   }
 
-  WORLDtoSCREEN( w_current, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
-  WORLDtoSCREEN( w_current, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
 
   gdk_draw_line(w_current->window, w_current->xor_gc,
                 sx[0]+dx, sy[0]+dy,
                 sx[1]+dx, sy[1]+dy);
 
-  if (w_current->pin_style == THICK ) {
+  if (toplevel->pin_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -173,14 +177,15 @@ void o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_pin_start(TOPLEVEL *w_current, int x, int y)
+void o_pin_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int size;
-  w_current->last_x = w_current->start_x = fix_x(w_current, x);
-  w_current->last_y = w_current->start_y = fix_y(w_current, y);
+  w_current->last_x = w_current->start_x = fix_x(toplevel, x);
+  w_current->last_y = w_current->start_y = fix_y(toplevel, y);
 
-  if (w_current->pin_style == THICK ) {
-    size = SCREENabs(w_current, PIN_WIDTH);
+  if (toplevel->pin_style == THICK ) {
+    size = SCREENabs(toplevel, PIN_WIDTH);
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -193,7 +198,7 @@ void o_pin_start(TOPLEVEL *w_current, int x, int y)
 		w_current->start_x, w_current->start_y, 
 		w_current->last_x, w_current->last_y);
 
-  if (w_current->pin_style == THICK ) {
+  if (toplevel->pin_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -206,8 +211,9 @@ void o_pin_start(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *
  */
-void o_pin_end(TOPLEVEL *w_current, int x, int y)
+void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1;
   int x2, y2;
   int color;
@@ -215,19 +221,19 @@ void o_pin_end(TOPLEVEL *w_current, int x, int y)
   OBJECT *o_current, *o_current_pin;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
-  if (w_current->override_pin_color == -1) {
+  if (toplevel->override_pin_color == -1) {
     color = w_current->pin_color;
   } else {
-    color = w_current->override_pin_color;
+    color = toplevel->override_pin_color;
   }
 
   /* removed 3/15 to see if we can get pins to be ortho only */
-  /* w_current->last_x = fix_x(w_current, x);
-     w_current->last_y = fix_y(w_current, y);*/
+  /* w_current->last_x = fix_x(toplevel, x);
+     w_current->last_y = fix_y(toplevel, y);*/
 
   /* don't allow zero length pins */
   if ( (w_current->start_x == w_current->last_x) &&
@@ -239,26 +245,26 @@ void o_pin_end(TOPLEVEL *w_current, int x, int y)
          return;
   }
 
-  SCREENtoWORLD(w_current, w_current->start_x,w_current->start_y, &x1, &y1);
-  SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y, &x2, &y2);
-  x1 = snap_grid(w_current, x1);
-  y1 = snap_grid(w_current, y1);
-  x2 = snap_grid(w_current, x2);
-  y2 = snap_grid(w_current, y2);
+  SCREENtoWORLD(toplevel, w_current->start_x,w_current->start_y, &x1, &y1);
+  SCREENtoWORLD(toplevel, w_current->last_x, w_current->last_y, &x2, &y2);
+  x1 = snap_grid(toplevel, x1);
+  y1 = snap_grid(toplevel, y1);
+  x2 = snap_grid(toplevel, x2);
+  y2 = snap_grid(toplevel, y2);
 
-  w_current->page_current->object_tail =
-  o_pin_add(w_current,
-            w_current->page_current->object_tail,
+  toplevel->page_current->object_tail =
+  o_pin_add(toplevel,
+            toplevel->page_current->object_tail,
             OBJ_PIN, color,
             x1, y1, x2, y2,
             PIN_TYPE_NET, 0);
 
-  o_current = o_current_pin = w_current->page_current->object_tail;
+  o_current = o_current_pin = toplevel->page_current->object_tail;
 
   if (scm_hook_empty_p(add_pin_hook) == SCM_BOOL_F &&
       o_current != NULL) {
     scm_run_hook(add_pin_hook,
-		 scm_cons(g_make_object_smob(w_current, o_current),
+		 scm_cons(g_make_object_smob(toplevel, o_current),
 			  SCM_EOL));
   }
 
@@ -273,7 +279,7 @@ void o_pin_end(TOPLEVEL *w_current, int x, int y)
   w_current->start_y = (-1);
   w_current->last_x = (-1);
   w_current->last_y = (-1);
-  w_current->page_current->CHANGED=1;
+  toplevel->page_current->CHANGED=1;
 
   o_undo_savestate(w_current, UNDO_ALL);
 }
@@ -283,19 +289,20 @@ void o_pin_end(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *
  */
-void o_pin_rubberpin(TOPLEVEL *w_current, int x, int y)
+void o_pin_rubberpin(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int size;
   int diff_x, diff_y;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
-  size = SCREENabs(w_current, PIN_WIDTH);
+  size = SCREENabs(toplevel, PIN_WIDTH);
 
-  if (w_current->pin_style == THICK ) {
+  if (toplevel->pin_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -308,8 +315,8 @@ void o_pin_rubberpin(TOPLEVEL *w_current, int x, int y)
 		w_current->start_x, w_current->start_y, 
 		w_current->last_x, w_current->last_y);
 
-  w_current->last_x = fix_x(w_current, x);
-  w_current->last_y = fix_y(w_current, y);
+  w_current->last_x = fix_x(toplevel, x);
+  w_current->last_y = fix_y(toplevel, y);
 
   diff_x = abs(w_current->last_x - w_current->start_x);
   diff_y = abs(w_current->last_y - w_current->start_y);
@@ -326,7 +333,7 @@ void o_pin_rubberpin(TOPLEVEL *w_current, int x, int y)
 		w_current->start_x, w_current->start_y, 
 		w_current->last_x, w_current->last_y);
 
-  if (w_current->pin_style == THICK ) {
+  if (toplevel->pin_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -341,12 +348,13 @@ void o_pin_rubberpin(TOPLEVEL *w_current, int x, int y)
  *  \note
  *  used in o_stretch.c
  */
-void o_pin_eraserubber(TOPLEVEL *w_current)
+void o_pin_eraserubber(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int size;
 
-  if (w_current->net_style == THICK ) {
-    size = SCREENabs(w_current, PIN_WIDTH);
+  if (toplevel->net_style == THICK ) {
+    size = SCREENabs(toplevel, PIN_WIDTH);
 
     if (size < 0)
       size=0;
@@ -359,7 +367,7 @@ void o_pin_eraserubber(TOPLEVEL *w_current)
 
   gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-  if (w_current->net_style == THICK ) {
+  if (toplevel->net_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,

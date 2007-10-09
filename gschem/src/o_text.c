@@ -31,6 +31,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -49,21 +50,22 @@
  *  \par Function Description
  *
  */
-void o_text_draw_lowlevel(TOPLEVEL *w_current, OBJECT *o_current)
+void o_text_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int left, right, top, bottom;
 
   g_return_if_fail (o_current != NULL);
   g_return_if_fail (o_current->text != NULL);
 
-  if (o_current->visibility == INVISIBLE && w_current->show_hidden_text &&
+  if (o_current->visibility == INVISIBLE && toplevel->show_hidden_text &&
       o_current->text->prim_objs == NULL) {
-    o_text_recreate(w_current, o_current);
+    o_text_recreate(toplevel, o_current);
   }
   
   o_redraw(w_current, o_current->text->prim_objs, TRUE);
 
-  world_get_object_list_bounds(w_current, o_current->text->prim_objs,
+  world_get_object_list_bounds(toplevel, o_current->text->prim_objs,
 			 &left, &top, &right, &bottom);
   o_current->w_left   = left;
   o_current->w_top    = top;
@@ -77,31 +79,32 @@ void o_text_draw_lowlevel(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_text_draw_rectangle(TOPLEVEL *w_current, OBJECT *o_current)
+void o_text_draw_rectangle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int left=0, right=0, top=0, bottom=0;
   GdkColor *color;
 
-  if (o_current->visibility == INVISIBLE && w_current->show_hidden_text &&
+  if (o_current->visibility == INVISIBLE && toplevel->show_hidden_text &&
       o_current->text->prim_objs == NULL) {
-    o_text_recreate(w_current, o_current);
+    o_text_recreate(toplevel, o_current);
   }
 
   /* text is too small so go through and draw a rectangle in
      it's place */
 
   /* NOTE THAT THE TOP AND BOTTOM ARE REVERSED THROUGHT THE WHOLE OF GEDA FOR WORLD COORDS */
-  WORLDtoSCREEN( w_current, o_current->w_left, o_current->w_bottom, &left, &top );
-  WORLDtoSCREEN( w_current, o_current->w_right, o_current->w_top, &right, &bottom );
+  WORLDtoSCREEN( toplevel, o_current->w_left, o_current->w_bottom, &left, &top );
+  WORLDtoSCREEN( toplevel, o_current->w_right, o_current->w_top, &right, &bottom );
 
-  if (w_current->override_color != -1 ) {  /* Override */
-    color = x_get_color(w_current->override_color);
+  if (toplevel->override_color != -1 ) {  /* Override */
+    color = x_get_color(toplevel->override_color);
   } else {
     color = x_get_color(o_current->color);
   }
   gdk_gc_set_foreground(w_current->gc, color);
 
-  if (w_current->DONT_REDRAW == 0) {
+  if (toplevel->DONT_REDRAW == 0) {
     gdk_draw_rectangle( w_current->window,
                         w_current->gc,
                         FALSE,
@@ -124,8 +127,9 @@ void o_text_draw_rectangle(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
+void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int screen_x1, screen_y1;
   int small_dist, offset;
 
@@ -133,7 +137,7 @@ void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
   g_return_if_fail (o_current->type == OBJ_TEXT);
   g_return_if_fail (o_current->text != NULL);
 
-  if (o_current->visibility == INVISIBLE && !w_current->show_hidden_text) {
+  if (o_current->visibility == INVISIBLE && !toplevel->show_hidden_text) {
     return;
   }
 
@@ -142,22 +146,22 @@ void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
     /* Indicate on the schematic that the text is invisible by */
     /* drawing a little I on the screen at the origin */
-    if (o_current->visibility == INVISIBLE && w_current->show_hidden_text) {
-      if (w_current->override_color != -1 ) {
+    if (o_current->visibility == INVISIBLE && toplevel->show_hidden_text) {
+      if (toplevel->override_color != -1 ) {
         gdk_gc_set_foreground(w_current->gc, 
-                              x_get_color(w_current->override_color));
+                              x_get_color(toplevel->override_color));
       } else {
 
         gdk_gc_set_foreground(w_current->gc, 
                               x_get_color(w_current->lock_color));
       }
 
-      offset = SCREENabs(w_current, 10);
-      small_dist = SCREENabs(w_current, 20);
-      WORLDtoSCREEN( w_current, o_current->text->x, o_current->text->y, &screen_x1, &screen_y1 );
+      offset = SCREENabs(toplevel, 10);
+      small_dist = SCREENabs(toplevel, 20);
+      WORLDtoSCREEN( toplevel, o_current->text->x, o_current->text->y, &screen_x1, &screen_y1 );
       screen_x1 += offset;
       screen_y1 += offset;
-      if (w_current->DONT_REDRAW == 0) {
+      if (toplevel->DONT_REDRAW == 0) {
 	/* Top part of the I */
 	gdk_draw_line(w_current->window, w_current->gc,
 		      screen_x1,
@@ -206,9 +210,9 @@ void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  small_dist = SCREENabs(w_current, 10);
+  small_dist = SCREENabs(toplevel, 10);
 
-  WORLDtoSCREEN( w_current, o_current->text->x, o_current->text->y, &screen_x1, &screen_y1 );
+  WORLDtoSCREEN( toplevel, o_current->text->x, o_current->text->y, &screen_x1, &screen_y1 );
 
   /* this is not really a fix, but a lame patch */
   /* not having this will cause a bad draw of things when coords */
@@ -217,16 +221,16 @@ void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  if (w_current->override_color != -1 ) {
+  if (toplevel->override_color != -1 ) {
     gdk_gc_set_foreground(w_current->gc, 
-                          x_get_color(w_current->override_color));
+                          x_get_color(toplevel->override_color));
   } else {
 
     gdk_gc_set_foreground(w_current->gc, 
                           x_get_color(w_current->lock_color));
   }
 
-  if (w_current->DONT_REDRAW == 0) {
+  if (toplevel->DONT_REDRAW == 0) {
     gdk_draw_line(w_current->window, w_current->gc, 
 		  screen_x1-small_dist, 
 		  screen_y1+small_dist, 
@@ -256,11 +260,12 @@ void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_text_erase(TOPLEVEL *w_current, OBJECT *o_current)
+void o_text_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  w_current->override_color = w_current->background_color;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  toplevel->override_color = toplevel->background_color;
   o_text_draw(w_current, o_current);
-  w_current->override_color = -1;
+  toplevel->override_color = -1;
 }
 
 /*! \todo Finish function documentation!!!
@@ -268,17 +273,18 @@ void o_text_erase(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+void o_text_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int top, bottom, left, right;
   int color, factor;
 
-  if (o_current->visibility == INVISIBLE && !w_current->show_hidden_text) {
+  if (o_current->visibility == INVISIBLE && !toplevel->show_hidden_text) {
     return;
   }
 
   /* always display text which is 12 or larger */
-  factor = (int) w_current->page_current->to_world_x_constant;
+  factor = (int) toplevel->page_current->to_world_x_constant;
   if ((factor < w_current->text_display_zoomfactor) ||
       o_current->text->size >= 12 ||
       w_current->text_feedback == ALWAYS) {
@@ -288,8 +294,8 @@ void o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
        it's place */
 
     /* NOTE THAT THE TOP AND BOTTOM ARE REVERSED THROUGHT THE WHOLE OF GEDA FOR WORLD COORDS */
-    WORLDtoSCREEN( w_current, o_current->w_left, o_current->w_bottom, &left, &top );
-    WORLDtoSCREEN( w_current, o_current->w_right, o_current->w_top, &right, &bottom );
+    WORLDtoSCREEN( toplevel, o_current->w_left, o_current->w_bottom, &left, &top );
+    WORLDtoSCREEN( toplevel, o_current->w_right, o_current->w_top, &right, &bottom );
 
     if (o_current->saved_color != -1) {
       color = o_current->saved_color;
@@ -316,29 +322,30 @@ void o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y)
+void o_text_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x, y;
   int temp, i;
   char *value;
 
-  w_current->last_x = w_current->start_x = fix_x(w_current, screen_x);
-  w_current->last_y = w_current->start_y = fix_y(w_current, screen_y);
+  w_current->last_x = w_current->start_x = fix_x(toplevel, screen_x);
+  w_current->last_y = w_current->start_y = fix_y(toplevel, screen_y);
 
   w_current->last_drawb_mode = -1;
 
   /* make sure list is null first, so that you don't have a mem leak */
-  SCREENtoWORLD(w_current,
+  SCREENtoWORLD(toplevel,
                 w_current->start_x,
                 w_current->start_y,
                 &x,
                 &y);
 
   /* remove the old attrib list if it exists */
-  s_delete_object_glist(w_current, w_current->page_current->attrib_place_list);
-  w_current->page_current->attrib_place_list = NULL;
+  s_delete_object_glist(toplevel, toplevel->page_current->attrib_place_list);
+  toplevel->page_current->attrib_place_list = NULL;
 
-  value = w_current->current_attribute;
+  value = toplevel->current_attribute;
 
   switch(w_current->text_caps) {
     case(LOWER):
@@ -356,13 +363,13 @@ void o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y)
   }
 
   /* here you need to add OBJ_TEXT when it's done */
-  w_current->page_current->attrib_place_list =
-    g_list_append(w_current->page_current->attrib_place_list,
-                  o_text_add(w_current, NULL,
+  toplevel->page_current->attrib_place_list =
+    g_list_append(toplevel->page_current->attrib_place_list,
+                  o_text_add(toplevel, NULL,
                               /* type changed from TEXT to TEXT */
                              OBJ_TEXT, w_current->text_color,
                              x, y, LOWER_LEFT, 0, /* zero is angle */
-                             w_current->current_attribute,
+                             toplevel->current_attribute,
                              w_current->text_size,
                              /* has to be visible so you can place it */
                              /* visibility is set when you create the object */
@@ -375,7 +382,7 @@ void o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y)
     }
   }
 
-  o_drawbounding(w_current, w_current->page_current->attrib_place_list,
+  o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
                  x_get_darkcolor(w_current->bb_color), TRUE);
 }
 
@@ -384,30 +391,31 @@ void o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y)
  *  \par Function Description
  *
  */
-void o_text_end(TOPLEVEL *w_current)
+void o_text_end(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   /*! \todo get consistant names */
   int world_x, world_y;
 
-  SCREENtoWORLD(w_current,
+  SCREENtoWORLD(toplevel,
                 w_current->last_x,
                 w_current->last_y,
                 &world_x,
                 &world_y);
 
-  world_x = snap_grid(w_current, world_x);
-  world_y = snap_grid(w_current, world_y);
+  world_x = snap_grid(toplevel, world_x);
+  world_y = snap_grid(toplevel, world_y);
 
   /* here you need to add OBJ_TEXT when it's done */
   /*! \todo make this VIS and SHOW default configurable */
-  w_current->page_current->object_tail =
-  o_text_add(w_current, w_current->page_current->object_tail,
+  toplevel->page_current->object_tail =
+  o_text_add(toplevel, toplevel->page_current->object_tail,
              /* type changed from TEXT to TEXT */
              OBJ_TEXT,
              w_current->text_color,
              world_x, world_y, LOWER_LEFT, 
              w_current->complex_rotate,
-             w_current->current_attribute,
+             toplevel->current_attribute,
              w_current->text_size,
              VISIBLE, SHOW_NAME_VALUE);
 
@@ -416,28 +424,28 @@ void o_text_end(TOPLEVEL *w_current)
 
   /* erase the old bounding box / outline */
   if (w_current->actionfeedback_mode == OUTLINE) {
-    o_drawbounding(w_current, w_current->page_current->attrib_place_list,
+    o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
                    x_get_color(w_current->text_color), FALSE);
   } else {
-    o_drawbounding(w_current, w_current->page_current->attrib_place_list,
+    o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
                    x_get_darkcolor(w_current->select_color), FALSE);
   }
 
-  w_current->override_color = -1;
+  toplevel->override_color = -1;
 
-  w_current->page_current->CHANGED=1;
+  toplevel->page_current->CHANGED=1;
   o_select_unselect_all( w_current );
-  o_selection_add( w_current->page_current->selection_list, w_current->page_current->object_tail );
+  o_selection_add( toplevel->page_current->selection_list, toplevel->page_current->object_tail );
 
   /* object_tail is the object that was just added */
-  if (w_current->page_current->object_tail->draw_func != NULL &&
-      w_current->page_current->object_tail->type != OBJ_HEAD) {
-    (*w_current->page_current->object_tail->draw_func)(
+  if (toplevel->page_current->object_tail->draw_func != NULL &&
+      toplevel->page_current->object_tail->type != OBJ_HEAD) {
+    (*toplevel->page_current->object_tail->draw_func)(
                                                        w_current,
-                                                       w_current->page_current->object_tail);
+                                                       toplevel->page_current->object_tail);
   }
 
-  w_current->override_color = -1;
+  toplevel->override_color = -1;
   o_undo_savestate(w_current, UNDO_ALL);
   i_update_menus(w_current);
 }
@@ -447,9 +455,10 @@ void o_text_end(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_text_rubberattrib(TOPLEVEL *w_current)
+void o_text_rubberattrib(GSCHEM_TOPLEVEL *w_current)
 {
-  o_drawbounding(w_current, w_current->page_current->attrib_place_list,
+  o_drawbounding(w_current,
+                 w_current->toplevel->page_current->attrib_place_list,
                  x_get_darkcolor(w_current->bb_color), FALSE);
 }
 
@@ -458,7 +467,7 @@ void o_text_rubberattrib(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_text_edit(TOPLEVEL *w_current, OBJECT *o_current)
+void o_text_edit(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   /* you need to check to make sure only one object is selected */
   /* no actually this is okay... not here in o_edit */
@@ -472,16 +481,17 @@ void o_text_edit(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size,
+void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int len, int text_size,
 		     int text_alignment)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *object;
   GList *s_current;
   int numselect;
 
   /* skip over head */
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
-  numselect = g_list_length( geda_list_get_glist( w_current->page_current->selection_list ));
+  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
+  numselect = g_list_length( geda_list_get_glist( toplevel->page_current->selection_list ));
   
   while(s_current != NULL) {
     object = (OBJECT *) s_current->data;
@@ -509,7 +519,7 @@ void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size,
         object->saved_color = w_current->edit_color;
 
         o_text_erase(w_current, object);
-        o_text_recreate(w_current, object);
+        o_text_recreate(toplevel, object);
         o_text_draw(w_current, object);
 
       } 
@@ -518,7 +528,7 @@ void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size,
     s_current = g_list_next(s_current);
   }
   
-  w_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
   o_undo_savestate(w_current, UNDO_ALL);
 }
 
@@ -530,9 +540,10 @@ void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size,
  *  The object passed in should be the REAL object, NOT any copy in any
  *  selection list
  */
-void o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string, 
+void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string,
 		   int visibility, int show)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   if (object == NULL) {
     return;
   }
@@ -552,7 +563,7 @@ void o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string,
   object->text->string = g_strdup (string);
   object->visibility = visibility;
   object->show_name_value = show;
-  o_text_recreate(w_current, object);
+  o_text_recreate(toplevel, object);
   o_text_draw(w_current, object);
 
   /* handle slot= attribute, it's a special case */
@@ -560,7 +571,7 @@ void o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string,
     o_slot_end (w_current, string, strlen (string));
   }
 
-  w_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
 }
 
 /*! \todo Finish function documentation!!!
@@ -568,15 +579,16 @@ void o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string,
  *  \par Function Description
  *
  */
-void o_text_place_rotate(TOPLEVEL *w_current)
+void o_text_place_rotate(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
   GList *iter;
 
   int x_local = -1;
   int y_local = -1;
 
-  for (iter = w_current->page_current->attrib_place_list;
+  for (iter = toplevel->page_current->attrib_place_list;
        iter != NULL;
        iter = g_list_next(iter)) {
     o_current = iter->data;
@@ -593,14 +605,14 @@ void o_text_place_rotate(TOPLEVEL *w_current)
     return;
   }
 
-  for (iter = w_current->page_current->attrib_place_list;
+  for (iter = toplevel->page_current->attrib_place_list;
        iter != NULL;
        iter = g_list_next(iter)) {
     o_current = iter->data;
     switch(o_current->type) {	
 
       case(OBJ_TEXT):
-        o_text_rotate_world(w_current, x_local, y_local, 90, o_current);
+        o_text_rotate_world(toplevel, x_local, y_local, 90, o_current);
         break;
     }
   }

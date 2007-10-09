@@ -22,6 +22,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -34,8 +35,9 @@
  *  \par Function Description
  *
  */
-void o_buffer_copy(TOPLEVEL *w_current, int buf_num)
+void o_buffer_copy(GSCHEM_TOPLEVEL *w_current, int buf_num)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_current = NULL;
 
   if (buf_num < 0 || buf_num > MAX_BUFFERS) {
@@ -43,18 +45,18 @@ void o_buffer_copy(TOPLEVEL *w_current, int buf_num)
     return;
   }
 
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
 
   if (object_buffer[buf_num] != NULL) {
-    s_delete_object_glist(w_current, object_buffer[buf_num]);
+    s_delete_object_glist(toplevel, object_buffer[buf_num]);
     object_buffer[buf_num] = NULL;
   }
 
-  w_current->ADDING_SEL = 1;
+  toplevel->ADDING_SEL = 1;
   object_buffer[buf_num] =
-    o_glist_copy_all_to_glist(w_current, s_current,
+    o_glist_copy_all_to_glist(toplevel, s_current,
                               object_buffer[buf_num], SELECTION_FLAG);
-  w_current->ADDING_SEL = 0;
+  toplevel->ADDING_SEL = 0;
 }
 
 /*! \todo Finish function documentation!!!
@@ -62,8 +64,9 @@ void o_buffer_copy(TOPLEVEL *w_current, int buf_num)
  *  \par Function Description
  *
  */
-void o_buffer_cut(TOPLEVEL *w_current, int buf_num)
+void o_buffer_cut(GSCHEM_TOPLEVEL *w_current, int buf_num)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_current = NULL;
 
   if (buf_num < 0 || buf_num > MAX_BUFFERS) {
@@ -71,18 +74,18 @@ void o_buffer_cut(TOPLEVEL *w_current, int buf_num)
     return;
   }
 
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
 
   if (object_buffer[buf_num] != NULL) {
-    s_delete_object_glist(w_current, object_buffer[buf_num]);
+    s_delete_object_glist(toplevel, object_buffer[buf_num]);
     object_buffer[buf_num] = NULL;
   }
         
-  w_current->ADDING_SEL = 1;
+  toplevel->ADDING_SEL = 1;
   object_buffer[buf_num] =
-    o_glist_copy_all_to_glist(w_current, s_current,
+    o_glist_copy_all_to_glist(toplevel, s_current,
                               object_buffer[buf_num], SELECTION_FLAG);
-  w_current->ADDING_SEL = 0;
+  toplevel->ADDING_SEL = 0;
   o_delete(w_current);
 }
 
@@ -91,9 +94,10 @@ void o_buffer_cut(TOPLEVEL *w_current, int buf_num)
  *  \par Function Description
  *
  */
-void o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y, 
+void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y,
 			  int buf_num)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int rleft, rtop, rbottom, rright;
   int x, y;
 
@@ -102,7 +106,7 @@ void o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y,
     return;
   }
 
-  if (!world_get_object_glist_bounds(w_current, object_buffer[buf_num],
+  if (!world_get_object_glist_bounds(toplevel, object_buffer[buf_num],
                                      &rleft, &rtop,
                                      &rright, &rbottom)) {
     /* If the paste buffer doesn't have any objects
@@ -111,24 +115,24 @@ void o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y,
   }
 
   /* snap x and y to the grid, pointed out by Martin Benes */
-  x = snap_grid(w_current, rleft);
-  y = snap_grid(w_current, rtop);
+  x = snap_grid(toplevel, rleft);
+  y = snap_grid(toplevel, rtop);
 
-  w_current->ADDING_SEL = 1;
-  o_glist_translate_world(w_current, -x, -y, object_buffer[buf_num]);
-  w_current->ADDING_SEL = 0;
+  toplevel->ADDING_SEL = 1;
+  o_glist_translate_world(toplevel, -x, -y, object_buffer[buf_num]);
+  toplevel->ADDING_SEL = 0;
 
   /* now translate selection to current position */
-  SCREENtoWORLD(w_current, screen_x, screen_y, &x, &y);
-  x = snap_grid(w_current, x);
-  y = snap_grid(w_current, y);
+  SCREENtoWORLD(toplevel, screen_x, screen_y, &x, &y);
+  x = snap_grid(toplevel, x);
+  y = snap_grid(toplevel, y);
 
-  w_current->ADDING_SEL = 1;
-  o_glist_translate_world(w_current, x, y, object_buffer[buf_num]);
-  w_current->ADDING_SEL = 0;
+  toplevel->ADDING_SEL = 1;
+  o_glist_translate_world(toplevel, x, y, object_buffer[buf_num]);
+  toplevel->ADDING_SEL = 0;
 
-  w_current->last_x = w_current->start_x = fix_x(w_current, screen_x);
-  w_current->last_y = w_current->start_y = fix_y(w_current, screen_y);
+  w_current->last_x = w_current->start_x = fix_x(toplevel, screen_x);
+  w_current->last_y = w_current->start_y = fix_y(toplevel, screen_y);
   w_current->event_state = ENDPASTE;
 
   /* store the buffer number for future use */
@@ -143,9 +147,10 @@ void o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y,
  *  \par Function Description
  *
  */
-void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y, 
+void o_buffer_paste_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y,
 			int buf_num)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int w_x, w_y;
   int w_start_x, w_start_y;
   int w_diff_x, w_diff_y;
@@ -165,13 +170,13 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
                  x_get_darkcolor(w_current->bb_color), FALSE);
 
   /* get the location where we ended */
-  SCREENtoWORLD(w_current, screen_x, screen_y, &w_x, &w_y);
-  SCREENtoWORLD(w_current, w_current->start_x, w_current->start_y, 
+  SCREENtoWORLD(toplevel, screen_x, screen_y, &w_x, &w_y);
+  SCREENtoWORLD(toplevel, w_current->start_x, w_current->start_y,
                 &w_start_x, &w_start_y);
-  w_x = snap_grid(w_current, w_x);
-  w_y = snap_grid(w_current, w_y);
-  w_start_x = snap_grid(w_current, w_start_x);
-  w_start_y = snap_grid(w_current, w_start_y);
+  w_x = snap_grid(toplevel, w_x);
+  w_y = snap_grid(toplevel, w_y);
+  w_start_x = snap_grid(toplevel, w_start_x);
+  w_start_y = snap_grid(toplevel, w_start_y);
 
 #if DEBUG 
   printf("%d %d\n", w_x - w_start_x,  w_y - w_start_y);
@@ -179,16 +184,16 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
   /* calc and translate objects to their final position */
   w_diff_x = w_x - w_start_x;
   w_diff_y = w_y - w_start_y;
-  w_current->ADDING_SEL = 1;
-  o_glist_translate_world(w_current, w_diff_x, w_diff_y,
+  toplevel->ADDING_SEL = 1;
+  o_glist_translate_world(toplevel, w_diff_x, w_diff_y,
                           object_buffer[buf_num]);
-  w_current->ADDING_SEL = 0;
+  toplevel->ADDING_SEL = 0;
 
   o_current = object_buffer[buf_num]->data;
-  p_current = w_current->page_current;
+  p_current = toplevel->page_current;
 
   o_saved = p_current->object_tail;	
-  o_list_copy_all(w_current, o_current, p_current->object_tail, 
+  o_list_copy_all(toplevel, o_current, p_current->object_tail,
                   NORMAL_FLAG);
 
   p_current->object_tail = return_tail(p_current->object_head);
@@ -197,7 +202,7 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
   /* now add new objects to the selection list */
   while (o_current != NULL) {
     o_selection_add( temp_list, o_current );
-    s_conn_update_object(w_current, o_current);
+    s_conn_update_object(toplevel, o_current);
     if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
       connected_objects = s_conn_return_complex_others(
                                                        connected_objects,
@@ -216,11 +221,11 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
   connected_objects = NULL;
 
   o_select_unselect_all( w_current );
-  geda_list_add_glist( w_current->page_current->selection_list, geda_list_get_glist( temp_list ) );
+  geda_list_add_glist( toplevel->page_current->selection_list, geda_list_get_glist( temp_list ) );
 
   g_object_unref( temp_list );
 
-  w_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
   o_redraw(w_current, o_saved->next, TRUE); /* only redraw new objects */
   o_undo_savestate(w_current, UNDO_ALL);
   i_update_menus(w_current);
@@ -231,7 +236,7 @@ void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
  *  \par Function Description
  *
  */
-void o_buffer_paste_rubberpaste(TOPLEVEL *w_current, int buf_num)
+void o_buffer_paste_rubberpaste(GSCHEM_TOPLEVEL *w_current, int buf_num)
 {
   o_drawbounding(w_current, object_buffer[buf_num],
                  x_get_darkcolor(w_current->bb_color), FALSE);
@@ -256,13 +261,14 @@ void o_buffer_init(void)
  *  \par Function Description
  *
  */
-void o_buffer_free(TOPLEVEL *w_current)
+void o_buffer_free(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int i;
 
   for (i = 0 ; i < MAX_BUFFERS; i++) {
     if (object_buffer[i]) {
-      s_delete_object_glist(w_current, object_buffer[i]);
+      s_delete_object_glist(toplevel, object_buffer[i]);
       object_buffer[i] = NULL;
     }
   }

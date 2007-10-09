@@ -32,6 +32,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -48,7 +49,7 @@
  *  \par Function Description
  *
  */
-void o_edit(TOPLEVEL *w_current, GList *list)
+void o_edit(GSCHEM_TOPLEVEL *w_current, GList *list)
 {
   char *equal_ptr;
   OBJECT *o_current;
@@ -123,13 +124,13 @@ void o_edit(TOPLEVEL *w_current, GList *list)
 /* This locks the entire selected list.  It does lock components, but does NOT
  * change the color (of primatives of the components) though
  * this cannot be called recursively */
-void o_lock(TOPLEVEL *w_current)
+void o_lock(GSCHEM_TOPLEVEL *w_current)
 {
   OBJECT *object = NULL;
   GList *s_current = NULL;
 
   /* skip over head */
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  s_current = geda_list_get_glist( w_current->toplevel->page_current->selection_list );
 
   while(s_current != NULL) {
     object = (OBJECT *) s_current->data;
@@ -139,7 +140,7 @@ void o_lock(TOPLEVEL *w_current)
         object->sel_func = NULL;
         object->locked_color = object->color;
         object->color = w_current->lock_color;
-        w_current->page_current->CHANGED=1;
+        w_current->toplevel->page_current->CHANGED=1;
       } else {
         s_log_message(_("Object already locked\n"));
       }
@@ -162,12 +163,12 @@ void o_lock(TOPLEVEL *w_current)
 /* this will probably change in the future, but for now it's a
    something.. :-) */
 /* this cannot be called recursively */
-void o_unlock(TOPLEVEL *w_current)
+void o_unlock(GSCHEM_TOPLEVEL *w_current)
 {
   OBJECT *object = NULL;
   GList *s_current = NULL;
 
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  s_current = geda_list_get_glist( w_current->toplevel->page_current->selection_list );
 
   while(s_current != NULL) {
     object = (OBJECT *) s_current->data;
@@ -177,7 +178,7 @@ void o_unlock(TOPLEVEL *w_current)
         object->sel_func = select_func;
         object->color = object->locked_color;
         object->locked_color = -1;
-        w_current->page_current->CHANGED = 1;
+        w_current->toplevel->page_current->CHANGED = 1;
       } else {
         s_log_message(_("Object already unlocked\n"));
       }
@@ -198,14 +199,15 @@ void o_unlock(TOPLEVEL *w_current)
  *  There is a second pass to run the rotate hooks of non-simple objects,
  *  like pin or complex objects, for example.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] list       The list of objects to rotate.
  *  \param [in] centerx    Center x coordinate of rotation.
  *  \param [in] centery    Center y coordinate of rotation.
  */
-void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
+void o_rotate_90_world(GSCHEM_TOPLEVEL *w_current, GList *list,
                        int centerx, int centery)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *object;
   GList *s_current;
   GList *other_objects=NULL;
@@ -238,7 +240,7 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
 
 
       case(OBJ_NET):
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_cue_undraw(w_current, object);
           o_net_erase(w_current, object);
           o_line_erase_grips(w_current, object);
@@ -246,11 +248,11 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
 
         /* save the other objects */
         other_objects = s_conn_return_others(other_objects, object);
-        s_conn_remove(w_current, object);
+        s_conn_remove(toplevel, object);
 
-        o_net_rotate_world(w_current, centerx, centery, 90, object);
-        s_conn_update_object(w_current, object);
-        if (!w_current->DONT_REDRAW) {
+        o_net_rotate_world(toplevel, centerx, centery, 90, object);
+        s_conn_update_object(toplevel, object);
+        if (!toplevel->DONT_REDRAW) {
           o_net_draw(w_current, object);
 
           /* draw the other objects */
@@ -260,7 +262,7 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
 
         /* get other connected objects and redraw */
         connected_objects = s_conn_return_others(connected_objects, object);
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_cue_undraw_list(w_current, connected_objects);
           o_cue_draw_list(w_current, connected_objects);
 
@@ -270,18 +272,18 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
         break;
 
       case(OBJ_BUS):
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_cue_undraw(w_current, object);
           o_bus_erase(w_current, object);
           o_line_erase_grips(w_current, object);
         }
 
         other_objects = s_conn_return_others(other_objects, object);
-        s_conn_remove(w_current, object);
+        s_conn_remove(toplevel, object);
 
-        o_bus_rotate_world(w_current, centerx, centery, 90, object);
-        s_conn_update_object(w_current, object);
-        if (!w_current->DONT_REDRAW) {
+        o_bus_rotate_world(toplevel, centerx, centery, 90, object);
+        s_conn_update_object(toplevel, object);
+        if (!toplevel->DONT_REDRAW) {
           o_bus_draw(w_current, object);
 
           /* draw the other objects */
@@ -291,7 +293,7 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
 
         /* get other connected objects and redraw */
         connected_objects = s_conn_return_others(connected_objects, object);
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_cue_undraw_list(w_current, connected_objects);
           o_cue_draw_list(w_current, connected_objects);
 
@@ -301,18 +303,18 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
         break;
 
       case(OBJ_PIN):
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_cue_undraw(w_current, object);
           o_pin_erase(w_current, object);
           o_line_erase_grips(w_current, object);
         }
 
         other_objects = s_conn_return_others(other_objects, object);
-        s_conn_remove(w_current, object);
+        s_conn_remove(toplevel, object);
 
-        o_pin_rotate_world(w_current, centerx, centery, 90, object);
-        s_conn_update_object(w_current, object);
-        if (!w_current->DONT_REDRAW) {
+        o_pin_rotate_world(toplevel, centerx, centery, 90, object);
+        s_conn_update_object(toplevel, object);
+        if (!toplevel->DONT_REDRAW) {
           o_pin_draw(w_current, object);
 
           /* draw the other objects */
@@ -322,7 +324,7 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
 
         /* get other connected objects and redraw */
         connected_objects = s_conn_return_others(connected_objects, object);
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_cue_undraw_list(w_current, connected_objects);
           o_cue_draw_list(w_current, connected_objects);
 
@@ -332,7 +334,7 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
         break;
 
       case(OBJ_COMPLEX):
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_cue_undraw_objects(w_current, object->complex->prim_objs);
           /* erase the current selection */
           o_complex_erase(w_current, object);
@@ -343,16 +345,16 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
         /* remove all conn references */
         o_current = object->complex->prim_objs;
         while(o_current != NULL) {
-          s_conn_remove(w_current, o_current);
+          s_conn_remove(toplevel, o_current);
           o_current = o_current->next;
         }
 
         /* do the rotate */
-        /*w_current->ADDING_SEL=1; NEWSEL: needed? */
-        o_complex_rotate_world(w_current, centerx, centery, 90, object);
-        /*w_current->ADDING_SEL = 0; NEWSEL: needed? */
-        s_conn_update_complex(w_current, object->complex->prim_objs);
-        if (!w_current->DONT_REDRAW) {
+        /*toplevel->ADDING_SEL=1; NEWSEL: needed? */
+        o_complex_rotate_world(toplevel, centerx, centery, 90, object);
+        /*toplevel->ADDING_SEL = 0; NEWSEL: needed? */
+        s_conn_update_complex(toplevel, object->complex->prim_objs);
+        if (!toplevel->DONT_REDRAW) {
           o_complex_draw(w_current, object);
 
           o_cue_undraw_list(w_current, other_objects);
@@ -362,37 +364,37 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
         /* now draw the newly connected objects */
         connected_objects = s_conn_return_complex_others(connected_objects,
                                                          object);
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_cue_undraw_list(w_current, connected_objects);
           o_cue_draw_list(w_current, connected_objects);
         }
         break;
 
       case(OBJ_LINE):
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_line_erase_grips(w_current, object);
           o_line_erase(w_current, object);
         }
 
-        o_line_rotate_world(w_current, centerx, centery,
+        o_line_rotate_world(toplevel, centerx, centery,
                       90, object);
 
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_line_draw(w_current, object);
         }
         break;
 
       case(OBJ_BOX):
         /* erase the current selection */
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_box_erase_grips(w_current, object);
           o_box_erase(w_current, object);
         }
 
-        o_box_rotate_world(w_current, centerx, centery,
+        o_box_rotate_world(toplevel, centerx, centery,
                      90, object);
 
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_box_draw(w_current, object);
         }
         break;
@@ -400,53 +402,53 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
       case(OBJ_PICTURE):
         /* erase the current selection */
 
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_picture_erase_grips(w_current, object);
           o_picture_erase(w_current, object);
         }
 
-        o_picture_rotate_world(w_current, centerx, centery,
+        o_picture_rotate_world(toplevel, centerx, centery,
                      90, object);
 
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_picture_draw(w_current, object);
         }
         break;
 
       case(OBJ_CIRCLE):
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_circle_erase_grips(w_current, object);
           o_circle_erase(w_current, object);
         }
 
-        o_circle_rotate_world(w_current, centerx, centery,
+        o_circle_rotate_world(toplevel, centerx, centery,
                         90, object);
 
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_circle_draw(w_current, object);
         }
         break;
 
       case(OBJ_ARC):
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_arc_erase(w_current, object);
         }
 
-        o_arc_rotate_world(w_current, centerx, centery, 90, object);
-        if (!w_current->DONT_REDRAW) {
+        o_arc_rotate_world(toplevel, centerx, centery, 90, object);
+        if (!toplevel->DONT_REDRAW) {
           o_arc_draw(w_current, object);
         }
         break;
 
       case(OBJ_TEXT):
         /* erase the current selection */
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_text_erase(w_current, object);
         }
 
-        o_text_rotate_world(w_current, centerx, centery, 90, object);
+        o_text_rotate_world(toplevel, centerx, centery, 90, object);
 
-        if (!w_current->DONT_REDRAW) {
+        if (!toplevel->DONT_REDRAW) {
           o_text_draw(w_current, object);
         }
         break;
@@ -473,7 +475,7 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
         if (scm_hook_empty_p(rotate_pin_hook) == SCM_BOOL_F &&
             object != NULL) {
           scm_run_hook(rotate_pin_hook,
-                       scm_cons(g_make_object_smob(w_current, object),
+                       scm_cons(g_make_object_smob(toplevel, object),
                                 SCM_EOL));
         }
         break;
@@ -483,7 +485,7 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
         if (scm_hook_empty_p(rotate_component_object_hook) == SCM_BOOL_F &&
             object != NULL) {
           scm_run_hook(rotate_component_object_hook,
-                       scm_cons(g_make_object_smob(w_current, object),
+                       scm_cons(g_make_object_smob(toplevel, object),
                                 SCM_EOL));
         }
         break;
@@ -496,7 +498,7 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
 
   /* Don't save the undo state if we are inside an action */
   /* This is useful when rotating the selection while moving, for example */
-  w_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
   if (!w_current->inside_action) {
     o_undo_savestate(w_current, UNDO_ALL);
   }
@@ -508,8 +510,9 @@ void o_rotate_90_world(TOPLEVEL *w_current, GList *list,
  *  \par Function Description
  *
  */
-void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
+void o_mirror_world(GSCHEM_TOPLEVEL *w_current, GList *list, int centerx, int centery)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *object;
   GList *s_current;
   OBJECT *o_current = NULL;
@@ -547,10 +550,10 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
         o_line_erase_grips(w_current, object);
 
         other_objects = s_conn_return_others(other_objects, object);
-        s_conn_remove(w_current, object);
+        s_conn_remove(toplevel, object);
 
-        o_net_mirror_world(w_current, centerx, centery, object);
-        s_conn_update_object(w_current, object);
+        o_net_mirror_world(toplevel, centerx, centery, object);
+        s_conn_update_object(toplevel, object);
         o_net_draw(w_current, object);
 
         /* draw the other objects */
@@ -572,10 +575,10 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
         o_line_erase_grips(w_current, object);
 
         other_objects = s_conn_return_others(other_objects, object);
-        s_conn_remove(w_current, object);
+        s_conn_remove(toplevel, object);
 
-        o_pin_mirror_world(w_current, centerx, centery, object);
-        s_conn_update_object(w_current, object);
+        o_pin_mirror_world(toplevel, centerx, centery, object);
+        s_conn_update_object(toplevel, object);
         o_pin_draw(w_current, object);
 
         /* draw the other objects */
@@ -596,10 +599,10 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
         o_line_erase_grips(w_current, object);
 
         other_objects = s_conn_return_others(other_objects, object);
-        s_conn_remove(w_current, object);
+        s_conn_remove(toplevel, object);
 
-        o_bus_mirror_world(w_current, centerx, centery, object);
-        s_conn_update_object(w_current, object);
+        o_bus_mirror_world(toplevel, centerx, centery, object);
+        s_conn_update_object(toplevel, object);
         o_bus_draw(w_current, object);
 
         /* draw the other objects */
@@ -625,12 +628,12 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
         /* remove all conn references */
         o_current = object->complex->prim_objs;
         while(o_current != NULL) {
-          s_conn_remove(w_current, o_current);
+          s_conn_remove(toplevel, o_current);
           o_current = o_current->next;
         }
 
-        o_complex_mirror_world(w_current, centerx, centery, object);
-        s_conn_update_complex(w_current, object->complex->prim_objs);
+        o_complex_mirror_world(toplevel, centerx, centery, object);
+        s_conn_update_complex(toplevel, object->complex->prim_objs);
         o_complex_draw(w_current, object);
 
         o_cue_undraw_list(w_current, other_objects);
@@ -646,40 +649,40 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
       case(OBJ_LINE):
         o_line_erase_grips(w_current, object);
         o_line_erase(w_current, object);
-        o_line_mirror_world(w_current, centerx, centery, object);
+        o_line_mirror_world(toplevel, centerx, centery, object);
         o_line_draw(w_current, object);
         break;
 
       case(OBJ_BOX):
         o_box_erase_grips(w_current, object);
         o_box_erase(w_current, object);
-        o_box_mirror_world(w_current, centerx, centery, object);
+        o_box_mirror_world(toplevel, centerx, centery, object);
         o_box_draw(w_current, object);
         break;
 
       case(OBJ_PICTURE):
         o_picture_erase_grips(w_current, object);
         o_picture_erase(w_current, object);
-        o_picture_mirror_world(w_current, centerx, centery, object);
+        o_picture_mirror_world(toplevel, centerx, centery, object);
         o_picture_draw(w_current, object);
         break;
 
       case(OBJ_CIRCLE):
         o_circle_erase_grips(w_current, object);
         o_circle_erase(w_current, object);
-        o_circle_mirror_world(w_current, centerx, centery, object);
+        o_circle_mirror_world(toplevel, centerx, centery, object);
         o_circle_draw(w_current, object);
         break;
 
       case(OBJ_ARC):
         o_arc_erase(w_current, object);
-        o_arc_mirror_world(w_current, centerx, centery, object);
+        o_arc_mirror_world(toplevel, centerx, centery, object);
         o_arc_draw(w_current, object);
         break;
 
       case(OBJ_TEXT):
         o_text_erase(w_current, object);
-        o_text_mirror_world(w_current,
+        o_text_mirror_world(toplevel,
                       centerx, centery, object);
         o_text_draw(w_current, object);
         break;
@@ -709,7 +712,7 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
         if (scm_hook_empty_p(mirror_pin_hook) == SCM_BOOL_F &&
             object != NULL) {
           scm_run_hook(rotate_pin_hook,
-                       scm_cons(g_make_object_smob(w_current, object),
+                       scm_cons(g_make_object_smob(toplevel, object),
                                 SCM_EOL));
         }
         break;
@@ -719,7 +722,7 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
         if (scm_hook_empty_p(rotate_component_object_hook) == SCM_BOOL_F &&
             object != NULL) {
           scm_run_hook(mirror_component_object_hook,
-                       scm_cons(g_make_object_smob(w_current, object),
+                       scm_cons(g_make_object_smob(toplevel, object),
                                 SCM_EOL));
         }
         break;
@@ -731,7 +734,7 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
   }
 
 
-  w_current->page_current->CHANGED=1;
+  toplevel->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);
 }
 
@@ -740,8 +743,9 @@ void o_mirror_world(TOPLEVEL *w_current, GList *list, int centerx, int centery)
  *  \par Function Description
  *
  */
-void o_edit_show_hidden_lowlevel(TOPLEVEL *w_current, OBJECT *o_list)
+void o_edit_show_hidden_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current = o_list;
 
   if (o_current == NULL) {
@@ -753,18 +757,18 @@ void o_edit_show_hidden_lowlevel(TOPLEVEL *w_current, OBJECT *o_list)
 
       /* don't toggle the visibility flag */
 
-      if (w_current->show_hidden_text) {
+      if (toplevel->show_hidden_text) {
         /* draw the text object if it hidden  */
         if (o_current->text->prim_objs == NULL) {
-          o_text_recreate(w_current, o_current);
+          o_text_recreate(toplevel, o_current);
         }
-        o_text_recalc(w_current, o_current);
+        o_text_recalc(toplevel, o_current);
         o_text_draw(w_current, o_current);
       } else {
         /* object is hidden and we are now NOT drawing it, so */
         /* get rid of the extra primitive data */
-        o_text_recreate(w_current, o_current);
-        o_text_recalc(w_current, o_current);
+        o_text_recreate(toplevel, o_current);
+        o_text_recalc(toplevel, o_current);
         /* unfortunately, you cannot erase the old visible text here */
         /* because o_text_draw will just return */
       }
@@ -772,7 +776,7 @@ void o_edit_show_hidden_lowlevel(TOPLEVEL *w_current, OBJECT *o_list)
 
     if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
       o_edit_show_hidden_lowlevel(w_current, o_current->complex->prim_objs);
-      o_complex_recalc(w_current, o_current);
+      o_complex_recalc(toplevel, o_current);
     }
 
     o_current = o_current->next;
@@ -784,7 +788,7 @@ void o_edit_show_hidden_lowlevel(TOPLEVEL *w_current, OBJECT *o_list)
  *  \par Function Description
  *
  */
-void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list)
+void o_edit_show_hidden(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list)
 {
   /* this function just shows the hidden text, but doesn't toggle it */
   /* this function does not change the CHANGED bit, no real changes are */
@@ -792,13 +796,13 @@ void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list)
 
   /* toggle show_hidden_text variable, which when it is true */
   /* means that hidden text IS drawn */
-  w_current->show_hidden_text = !w_current->show_hidden_text;
+  w_current->toplevel->show_hidden_text = !w_current->toplevel->show_hidden_text;
   i_show_state(w_current, NULL); /* update screen status */
 
   o_edit_show_hidden_lowlevel(w_current, o_list);
   o_redraw_all_fast(w_current);
 
-  if (w_current->show_hidden_text) {
+  if (w_current->toplevel->show_hidden_text) {
     s_log_message(_("Hidden text is now visible\n"));
   } else {
     s_log_message(_("Hidden text is now invisible\n"));
@@ -810,9 +814,10 @@ void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list)
  *  \par Function Description
  *
  */
-void o_edit_make_visible(TOPLEVEL *w_current, OBJECT *o_list)
+void o_edit_make_visible(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list)
 {
   /* this function actually changes the visibility flag */
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current = NULL;
 
   if (o_list == NULL)
@@ -826,12 +831,12 @@ void o_edit_make_visible(TOPLEVEL *w_current, OBJECT *o_list)
         o_current->visibility = VISIBLE;
 
         if (o_current->text->prim_objs == NULL) {
-          o_text_recreate(w_current, o_current);
+          o_text_recreate(toplevel, o_current);
         }
 
         o_text_draw(w_current, o_current);
 
-        w_current->page_current->CHANGED = 1;
+        toplevel->page_current->CHANGED = 1;
       }
     }
     o_current = o_current->next;
@@ -850,10 +855,10 @@ int skiplast;
  *  \par Function Description
  *
  */
-int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
+int o_edit_find_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list, char *stext,
                      int descend, int skip)
 {
-
+  TOPLEVEL *toplevel = w_current->toplevel;
   char *attrib = NULL;
   int count = 0;
   PAGE *parent = NULL;
@@ -876,7 +881,7 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
 
     if (descend) {
       if (o_current->type == OBJ_COMPLEX) {
-        parent = w_current->page_current;
+        parent = toplevel->page_current;
         attrib = o_attrib_search_name_single_count(o_current, "source", count);
 
         /* if above is null, then look inside symbol */
@@ -891,7 +896,7 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
           current_filename = u_basic_breakup_string(attrib, ',', pcount);
           if (current_filename != NULL) {
             page_control =
-              s_hierarchy_down_schematic_single(w_current,
+              s_hierarchy_down_schematic_single(toplevel,
                                                 current_filename,
                                                 parent,
                                                 page_control,
@@ -899,12 +904,12 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
             /* o_redraw_all(w_current); */
 
             rv = o_edit_find_text(w_current,
-                                  w_current->page_current->object_head,
+                                  toplevel->page_current->object_head,
                                   stext, descend, skiplast);
             if (!rv) {
               return 0;
             }
-            s_page_goto( w_current, parent );
+            s_page_goto( toplevel, parent );
           }
         }
       }
@@ -916,16 +921,16 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
         if (!skiplast) {
           a_zoom(w_current, ZOOM_FULL, DONTCARE, A_PAN_DONT_REDRAW);
           text_screen_height =
-            SCREENabs(w_current, o_text_height(o_current->text->string,
-                                               o_current->text->size));
+            SCREENabs(toplevel, o_text_height(o_current->text->string,
+                                              o_current->text->size));
           /* this code will zoom/pan till the text screen height is about */
           /* 50 pixels high, perhaps a future enhancement will be to make */
           /* this number configurable */
           while (text_screen_height < 50) {
             a_zoom(w_current, ZOOM_IN, DONTCARE, A_PAN_DONT_REDRAW);
             text_screen_height =
-              SCREENabs(w_current, o_text_height(o_current->text->string,
-                                                 o_current->text->size));
+              SCREENabs(toplevel, o_text_height(o_current->text->string,
+                                                o_current->text->size));
           }
           a_pan_general(w_current,
                         o_current->text->x, o_current->text->y,
@@ -955,9 +960,10 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
  *  \par Function Description
  *
  */
-void o_edit_hide_specific_text(TOPLEVEL * w_current, OBJECT * o_list,
+void o_edit_hide_specific_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list,
                                char *stext)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current = NULL;
 
   if (o_list == NULL)
@@ -973,9 +979,9 @@ void o_edit_hide_specific_text(TOPLEVEL * w_current, OBJECT * o_list,
           o_current->visibility = INVISIBLE;
 
           if (o_current->text->prim_objs == NULL) {
-            o_text_recreate(w_current, o_current);
+            o_text_recreate(toplevel, o_current);
           }
-          w_current->page_current->CHANGED = 1;
+          toplevel->page_current->CHANGED = 1;
         }
       }
     }
@@ -990,9 +996,10 @@ void o_edit_hide_specific_text(TOPLEVEL * w_current, OBJECT * o_list,
  *  \par Function Description
  *
  */
-void o_edit_show_specific_text(TOPLEVEL * w_current, OBJECT * o_list,
+void o_edit_show_specific_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list,
                                char *stext)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current = NULL;
 
   if (o_list == NULL)
@@ -1008,10 +1015,10 @@ void o_edit_show_specific_text(TOPLEVEL * w_current, OBJECT * o_list,
           o_current->visibility = VISIBLE;
 
           if (o_current->text->prim_objs == NULL) {
-            o_text_recreate(w_current, o_current);
+            o_text_recreate(toplevel, o_current);
           }
           o_text_draw(w_current, o_current);
-          w_current->page_current->CHANGED = 1;
+          toplevel->page_current->CHANGED = 1;
         }
       }
     }
@@ -1025,8 +1032,9 @@ void o_edit_show_specific_text(TOPLEVEL * w_current, OBJECT * o_list,
  *  \par Function Description
  *
  */
-void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
+void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *tmp_list, *new_complex;
   ATTRIB *new_attribs, *a_current;
   gboolean is_embedded;
@@ -1048,13 +1056,13 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
   /* erase the complex object */
   o_erase_single (w_current, o_current);
   /* delete its connections */
-  s_conn_remove_complex (w_current, o_current);
+  s_conn_remove_complex (toplevel, o_current);
   /* and unselect it */
-  o_selection_remove( w_current->page_current->selection_list, o_current);
+  o_selection_remove( toplevel->page_current->selection_list, o_current);
 
   /* build a temporary list and add a complex to this list */
   tmp_list = s_basic_init_object ("update component");
-  new_complex = o_complex_add (w_current,
+  new_complex = o_complex_add (toplevel,
                                tmp_list, NULL,
                                OBJ_COMPLEX,
                                WHITE,
@@ -1068,7 +1076,7 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
   /* updating the old complex with data from the new one */
   /* first process the prim_objs: */
   /*   - delete the prim_objs of the old component */
-  s_delete_list_fromstart (w_current,
+  s_delete_list_fromstart (toplevel,
                            o_current->complex->prim_objs);
   /*   - put the prim_objs of the new component in the old one */
   o_current->complex->prim_objs = new_complex->complex->prim_objs;
@@ -1098,14 +1106,14 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
       /* add new attribute to old component */
 
       /* make a copy of the attribute object */
-      o_list_copy_to (w_current, o_current,
+      o_list_copy_to (toplevel, o_current,
                       a_current->object, NORMAL_FLAG, &o_attrib);
       if (o_current->attribs == NULL) {
         /* object has no attribute list: create it */
         o_current->attribs = add_attrib_head(o_current);
       }
       /* add the attribute to old */
-      o_attrib_add (w_current, o_current->attribs, o_attrib);
+      o_attrib_add (toplevel, o_current->attribs, o_attrib);
       /* redraw the attribute object */
       o_redraw_single (w_current, o_attrib);
       /* note: this object is unselected (not added to selection). */
@@ -1120,21 +1128,21 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   /* finally delete the temp list with the updated complex */
-  s_delete_list_fromstart (w_current, tmp_list);
+  s_delete_list_fromstart (toplevel, tmp_list);
 
   /* Recalculate the bounds of the object */
-  o_complex_recalc(w_current, o_current);
+  o_complex_recalc(toplevel, o_current);
 
   /* reconnect, re-select and redraw */
-  s_conn_update_complex (w_current, o_current->complex->prim_objs);
-  o_selection_add( w_current->page_current->selection_list, o_current );
+  s_conn_update_complex (toplevel, o_current->complex->prim_objs);
+  o_selection_add( toplevel->page_current->selection_list, o_current );
   o_redraw_single (w_current, o_current);
 
   /* Re-flag as embedded if necessary */
   o_current->complex_embedded = is_embedded;
 
   /* mark the page as modified */
-  w_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
   o_undo_savestate (w_current, UNDO_ALL);
 
 }
@@ -1144,10 +1152,11 @@ void o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
  *  Looks for pages with the do_autosave_backup flag activated and
  *  autosaves them.
  *
- *  \param [in] toplevel  The TOPLEVEL object to search for autosave's.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object to search for autosave's.
  */
-void o_autosave_backups(TOPLEVEL *toplevel)
+void o_autosave_backups(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *iter;
   PAGE *p_save, *p_current;
   gchar *backup_filename;

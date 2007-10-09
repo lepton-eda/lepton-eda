@@ -29,6 +29,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -51,25 +52,25 @@ static void x_pagesel_callback_response (GtkDialog *dialog,
  *  Opens the page manager dialog for <B>toplevel</B> if it is not already.
  *  In this last case, it raises the dialog.
  *
- *  \param [in] toplevel  The TOPLEVEL object to open page manager for.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object to open page manager for.
  */
-void x_pagesel_open (TOPLEVEL *toplevel)
+void x_pagesel_open (GSCHEM_TOPLEVEL *w_current)
 {
-  if (toplevel->pswindow == NULL) {
-    toplevel->pswindow = GTK_WIDGET (g_object_new (TYPE_PAGESEL,
-                                                   /* GschemDialog */
-                                                   "settings-name", "pagesel",
-                                                   "toplevel",      toplevel,
-                                                   NULL));
+  if (w_current->pswindow == NULL) {
+    w_current->pswindow = GTK_WIDGET (g_object_new (TYPE_PAGESEL,
+                                                    /* GschemDialog */
+                                                    "settings-name", "pagesel",
+                                                    "gschem-toplevel", w_current,
+                                                    NULL));
 
-    g_signal_connect (toplevel->pswindow,
+    g_signal_connect (w_current->pswindow,
                       "response",
                       G_CALLBACK (x_pagesel_callback_response),
-                      toplevel);
-    
-    gtk_widget_show (toplevel->pswindow);
+                      w_current);
+
+    gtk_widget_show (w_current->pswindow);
   } else {
-    gdk_window_raise (toplevel->pswindow->window);
+    gdk_window_raise (w_current->pswindow->window);
   }
 
 }
@@ -78,14 +79,14 @@ void x_pagesel_open (TOPLEVEL *toplevel)
  *  \par Function Description
  *  Closes the page manager dialog associated with <B>toplevel</B>.
  *
- *  \param [in] toplevel  The TOPLEVEL object to close page manager for.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object to close page manager for.
  */
-void x_pagesel_close (TOPLEVEL *toplevel)
+void x_pagesel_close (GSCHEM_TOPLEVEL *w_current)
 {
-  if (toplevel->pswindow) {
-    g_assert (IS_PAGESEL (toplevel->pswindow));
-    gtk_widget_destroy (toplevel->pswindow);
-    toplevel->pswindow = NULL;
+  if (w_current->pswindow) {
+    g_assert (IS_PAGESEL (w_current->pswindow));
+    gtk_widget_destroy (w_current->pswindow);
+    w_current->pswindow = NULL;
   }
   
 }
@@ -95,13 +96,13 @@ void x_pagesel_close (TOPLEVEL *toplevel)
  *  Updates the list and status of <B>toplevel</B>\'s pages if the page
  *  manager dialog is opened.
  *
- *  \param [in] toplevel  The TOPLEVEL object to update.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object to update.
  */
-void x_pagesel_update (TOPLEVEL *toplevel)
+void x_pagesel_update (GSCHEM_TOPLEVEL *w_current)
 {
-  if (toplevel->pswindow) {
-    g_assert (IS_PAGESEL (toplevel->pswindow));
-    pagesel_update (PAGESEL (toplevel->pswindow));
+  if (w_current->pswindow) {
+    g_assert (IS_PAGESEL (w_current->pswindow));
+    pagesel_update (PAGESEL (w_current->pswindow));
   }
 }
 
@@ -111,13 +112,13 @@ void x_pagesel_update (TOPLEVEL *toplevel)
  *
  *  \param [in] dialog     GtkDialog that issues callback.
  *  \param [in] arg1       Response argument of page manager dialog.
- *  \param [in] user_data  Pointer to relevant TOPLEVEL structure.
+ *  \param [in] user_data  Pointer to relevant GSCHEM_TOPLEVEL structure.
  */
 static void x_pagesel_callback_response (GtkDialog *dialog,
 					 gint arg1,
 					 gpointer user_data)
 {
-  TOPLEVEL *toplevel = (TOPLEVEL*)user_data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)user_data;
 
   switch (arg1) {
       case PAGESEL_RESPONSE_UPDATE:
@@ -125,9 +126,9 @@ static void x_pagesel_callback_response (GtkDialog *dialog,
         break;
       case GTK_RESPONSE_DELETE_EVENT:
       case PAGESEL_RESPONSE_CLOSE:
-        g_assert (GTK_WIDGET (dialog) == toplevel->pswindow);
+        g_assert (GTK_WIDGET (dialog) == w_current->pswindow);
         gtk_widget_destroy (GTK_WIDGET (dialog));
-        toplevel->pswindow = NULL;
+        w_current->pswindow = NULL;
         break;
       default:
         g_assert_not_reached ();
@@ -160,23 +161,23 @@ static void pagesel_callback_selection_changed (GtkTreeSelection *selection,
   GtkTreeModel *model;
   GtkTreeIter iter;
   Pagesel *pagesel = (Pagesel*)user_data;
-  TOPLEVEL *toplevel;
+  GSCHEM_TOPLEVEL *w_current;
   PAGE *page;
 
   if (!gtk_tree_selection_get_selected (selection, &model, &iter)) {
     return;
   }
 
-  toplevel = GSCHEM_DIALOG (pagesel)->toplevel;
+  w_current = GSCHEM_DIALOG (pagesel)->w_current;
   gtk_tree_model_get (model, &iter,
                       COLUMN_PAGE, &page,
                       -1);
 
   /* temp */
-  s_page_goto (toplevel, page);
-  i_set_filename (toplevel, toplevel->page_current->page_filename);
-  x_scrollbars_update (toplevel);
-  o_redraw_all (toplevel);
+  s_page_goto (w_current->toplevel, page);
+  i_set_filename (w_current, w_current->toplevel->page_current->page_filename);
+  x_scrollbars_update (w_current);
+  o_redraw_all (w_current);
 
   /* We would like to use the following call, but since it calls 
    * x_pagesel_update() it would cause an infinite loop.
@@ -225,7 +226,7 @@ static void                                                       \
 pagesel_callback_popup_ ## name (GtkMenuItem *menuitem,           \
                                  gpointer user_data)              \
 {                                                                 \
-  i_callback_ ## action (GSCHEM_DIALOG (user_data)->toplevel, 0, NULL); \
+  i_callback_ ## action (GSCHEM_DIALOG (user_data)->w_current, 0, NULL); \
 }
 
 DEFINE_POPUP_CALLBACK (new_page,     file_new)
@@ -300,20 +301,20 @@ static void pagesel_popup_menu (Pagesel *pagesel,
 }
 
 
-/*! \brief Handler for the notify::toplevel signal of GschemDialog
+/*! \brief Handler for the notify::gschem-toplevel signal of GschemDialog
  *
  *  \par Function Description
  *
- *  When the toplevel property is set on the parent GschemDialog,
+ *  When the gschem-toplevel property is set on the parent GschemDialog,
  *  we should update the pagesel dialog.
  *
  *  \param [in] pspec      the GParamSpec of the property which changed
  *  \param [in] gobject    the object which received the signal.
  *  \param [in] user_data  user data set when the signal handler was connected.
  */
-static void notify_toplevel_cb (GObject    *gobject,
-                                GParamSpec *arg1,
-                                gpointer    user_data)
+static void notify_gschem_toplevel_cb (GObject    *gobject,
+                                       GParamSpec *arg1,
+                                       gpointer    user_data)
 {
   Pagesel *pagesel = PAGESEL( gobject );
 
@@ -493,8 +494,8 @@ static void pagesel_init (Pagesel *pagesel)
 					  -1);
 #endif
 
-  g_signal_connect( pagesel, "notify::toplevel",
-                    G_CALLBACK( notify_toplevel_cb ), NULL );
+  g_signal_connect( pagesel, "notify::gschem-toplevel",
+                    G_CALLBACK( notify_gschem_toplevel_cb ), NULL );
 }
 
 
@@ -503,7 +504,7 @@ static void pagesel_init (Pagesel *pagesel)
  *  Updates the tree model of <B>pagesel</B>\'s treeview.
  *
  *  Right now, each time it is called, it rebuilds all the model from the
- *  list of page in the toplevel.
+ *  list of pages passed in.
  *  It is a recursive function to populate the tree store
  *
  *  \param [in] model   GtkTreeModel to update.
@@ -590,9 +591,9 @@ void pagesel_update (Pagesel *pagesel)
 
   g_assert (IS_PAGESEL (pagesel));
 
-  g_return_if_fail (GSCHEM_DIALOG (pagesel)->toplevel);
+  g_return_if_fail (GSCHEM_DIALOG (pagesel)->w_current);
 
-  toplevel = GSCHEM_DIALOG (pagesel)->toplevel;
+  toplevel = GSCHEM_DIALOG (pagesel)->w_current->toplevel;
   model    = gtk_tree_view_get_model (pagesel->treeview);
 
   /* wipe out every thing in the store */

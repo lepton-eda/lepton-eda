@@ -24,6 +24,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -36,10 +37,11 @@
  *  \par Function Description
  *
  */
-void o_cue_redraw_all(TOPLEVEL *w_current, OBJECT *head, gboolean draw_selected)
+void o_cue_redraw_all(GSCHEM_TOPLEVEL *w_current, OBJECT *head, gboolean draw_selected)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
-  int redraw_state = w_current->DONT_REDRAW;
+  int redraw_state = w_current->toplevel->DONT_REDRAW;
 
   o_current = head;
   while(o_current != NULL) {
@@ -48,10 +50,10 @@ void o_cue_redraw_all(TOPLEVEL *w_current, OBJECT *head, gboolean draw_selected)
       case(OBJ_BUS):
       case(OBJ_PIN):
 	if (o_current->selected && !draw_selected) {
-	  w_current->DONT_REDRAW = 1 || redraw_state;
+	  w_current->toplevel->DONT_REDRAW = 1 || redraw_state;
 	}
 	else {
-	  w_current->DONT_REDRAW = 0 || redraw_state;
+	  w_current->toplevel->DONT_REDRAW = 0 || redraw_state;
 	}
         o_cue_draw_single(w_current, o_current);
         break;
@@ -59,10 +61,10 @@ void o_cue_redraw_all(TOPLEVEL *w_current, OBJECT *head, gboolean draw_selected)
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
 	if (o_current->selected && !draw_selected) {
-	  w_current->DONT_REDRAW = 1 || redraw_state;
+	  toplevel->DONT_REDRAW = 1 || redraw_state;
 	}
 	else {
-	  w_current->DONT_REDRAW = 0 || redraw_state;
+	  toplevel->DONT_REDRAW = 0 || redraw_state;
 	}
         o_cue_redraw_all(w_current, o_current->complex->prim_objs, 
 			 draw_selected);
@@ -72,18 +74,18 @@ void o_cue_redraw_all(TOPLEVEL *w_current, OBJECT *head, gboolean draw_selected)
     
     o_current = o_current->next;
   }
-  w_current->DONT_REDRAW = redraw_state;
+  toplevel->DONT_REDRAW = redraw_state;
 }
 
 
 /*! 
  *  \brief Set the color on the gc depending on the passed in color id
  */
-static void o_cue_set_color(TOPLEVEL *w_current, int color)
+static void o_cue_set_color(GSCHEM_TOPLEVEL *w_current, int color)
 {
-  if (w_current->override_color != -1 ) {
+  if (w_current->toplevel->override_color != -1 ) {
     gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(w_current->override_color));
+                          x_get_color(w_current->toplevel->override_color));
   } else {
     gdk_gc_set_foreground(w_current->gc, x_get_color(color));
   }
@@ -95,8 +97,9 @@ static void o_cue_set_color(TOPLEVEL *w_current, int color)
  *  \par Function Description
  *
  */
-void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
+void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x, y, screen_x, screen_y;
   GList *cl_current;
   CONN *conn;
@@ -153,18 +156,18 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
   printf("type: %d count: %d\n", type, count);
 #endif
   
-  size = SCREENabs(w_current, CUE_BOX_SIZE);
+  size = SCREENabs(toplevel, CUE_BOX_SIZE);
   x2size = 2 * size;
 
-  WORLDtoSCREEN(w_current, x, y, &screen_x, &screen_y);
+  WORLDtoSCREEN(toplevel, x, y, &screen_x, &screen_y);
   
   switch(type) {
     
     case(CONN_ENDPOINT):
       if (object->type == OBJ_NET) { /* only nets have these cues */
         if (count < 1) { /* Didn't find anything connected there */
-	  if (w_current->DONT_REDRAW == 0) {
-	    o_cue_set_color(w_current, w_current->net_endpoint_color);
+	  if (toplevel->DONT_REDRAW == 0) {
+	    o_cue_set_color(w_current, toplevel->net_endpoint_color);
 	    gdk_draw_rectangle(w_current->window,
 			       w_current->gc, TRUE,
 			       screen_x - size,
@@ -183,12 +186,12 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
           /* draw circle */
 
           if (bus_involved) {
-            size = SCREENabs(w_current, CUE_CIRCLE_SMALL_SIZE);
+            size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE);
           } else {
-            size = SCREENabs(w_current, CUE_CIRCLE_LARGE_SIZE);
+            size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE);
           }
-	  if (w_current->DONT_REDRAW == 0) {
-	    o_cue_set_color(w_current, w_current->junction_color);
+	  if (toplevel->DONT_REDRAW == 0) {
+	    o_cue_set_color(w_current, toplevel->junction_color);
 	    gdk_draw_arc(w_current->window, w_current->gc,
 			 TRUE,
 			 screen_x - size / 2,
@@ -207,16 +210,16 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
                   
           otherone = !whichone;
 
-          pinsize = SCREENabs(w_current, 10);
-          if (w_current->pin_style == THICK ) {
+          pinsize = SCREENabs(toplevel, 10);
+          if (toplevel->pin_style == THICK ) {
             gdk_gc_set_line_attributes(w_current->gc, pinsize,
                                        GDK_LINE_SOLID,
                                        GDK_CAP_NOT_LAST,
                                        GDK_JOIN_MITER);
           }
 
-	  if (w_current->DONT_REDRAW == 0) {
-	    o_cue_set_color(w_current, w_current->net_endpoint_color);
+	  if (toplevel->DONT_REDRAW == 0) {
+	    o_cue_set_color(w_current, toplevel->net_endpoint_color);
 	    if (object->line->y[whichone] == object->line->y[otherone]) {
 	      /* horizontal line */
 	      if (object->line->x[whichone] <= object->line->x[otherone]) {
@@ -249,7 +252,7 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
 	    }
 	  }
 
-          if (w_current->pin_style == THICK ) {
+          if (toplevel->pin_style == THICK ) {
             gdk_gc_set_line_attributes(w_current->gc, 0,
                                        GDK_LINE_SOLID,
                                        GDK_CAP_NOT_LAST,
@@ -263,13 +266,13 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
   
       /* draw circle */
       if (bus_involved) {
-        size = SCREENabs(w_current, CUE_CIRCLE_SMALL_SIZE);
+        size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE);
       } else {
-        size = SCREENabs(w_current, CUE_CIRCLE_LARGE_SIZE);
+        size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE);
       }
 
-      if (w_current->DONT_REDRAW == 0) {
-	o_cue_set_color(w_current, w_current->junction_color);
+      if (toplevel->DONT_REDRAW == 0) {
+	o_cue_set_color(w_current, toplevel->junction_color);
 	gdk_draw_arc(w_current->window, w_current->gc,
 		     TRUE,
 		     screen_x - size / 2,
@@ -293,27 +296,28 @@ void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
  *  \par Function Description
  *  This function erases OBJECT endpoints forceably.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] object     OBJECT to forceably erase endpoint from.
  *  \param [in] whichone   Which endpoint to erase from OBJECT.
  */
-void o_cue_erase_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
+void o_cue_erase_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x, y, screen_x, screen_y;
   int size, x2size;
   
   x = object->line->x[whichone];
   y = object->line->y[whichone];
 
-  size = SCREENabs(w_current, CUE_BOX_SIZE);
+  size = SCREENabs(toplevel, CUE_BOX_SIZE);
   x2size = 2 * size;
 
   gdk_gc_set_foreground(w_current->gc,
-                        x_get_color(w_current->background_color));
+                        x_get_color(toplevel->background_color));
  
-  WORLDtoSCREEN(w_current, x, y, &screen_x, &screen_y);
+  WORLDtoSCREEN(toplevel, x, y, &screen_x, &screen_y);
   
-  if (w_current->DONT_REDRAW == 0) {
+  if (toplevel->DONT_REDRAW == 0) {
     gdk_draw_rectangle(w_current->window,
 		       w_current->gc, TRUE,
 		       screen_x - size,
@@ -335,19 +339,20 @@ void o_cue_erase_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
  *  \par Function Description
  *
  */
-void o_cue_draw_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object)
+void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x, y, screen_x, screen_y;
   GList *cl_current;
   CONN *conn;
   int size;
 
-  if (w_current->override_color != -1 ) {
+  if (toplevel->override_color != -1 ) {
     gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(w_current->override_color));
+                          x_get_color(toplevel->override_color));
   } else {
     gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(w_current->junction_color));
+                          x_get_color(toplevel->junction_color));
   }
   
   cl_current = object->conn_list;
@@ -360,7 +365,7 @@ void o_cue_draw_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object)
         x = conn->x;
         y = conn->y;
           
-        WORLDtoSCREEN(w_current, x, y, &screen_x, &screen_y);
+        WORLDtoSCREEN(toplevel, x, y, &screen_x, &screen_y);
  
         /* draw circle */
         if (conn->other_object &&
@@ -368,12 +373,12 @@ void o_cue_draw_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object)
                conn->other_object->type == OBJ_NET) ||
               (object->type == OBJ_NET &&
                conn->other_object->type == OBJ_BUS))) {
-          size = SCREENabs(w_current, CUE_CIRCLE_SMALL_SIZE);
+          size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE);
         } else {
-          size = SCREENabs(w_current, CUE_CIRCLE_LARGE_SIZE);
+          size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE);
         }
 
-	if (w_current->DONT_REDRAW == 0) {
+	if (toplevel->DONT_REDRAW == 0) {
 	  gdk_draw_arc(w_current->window, w_current->gc,
 		       TRUE,
 		       screen_x - size / 2,
@@ -398,7 +403,7 @@ void o_cue_draw_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object)
  *  \par Function Description
  *
  */
-void o_cue_draw_single(TOPLEVEL *w_current, OBJECT *object)
+void o_cue_draw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
   if (!object) {
     return;
@@ -423,8 +428,9 @@ void o_cue_draw_single(TOPLEVEL *w_current, OBJECT *object)
  *  \par Function Description
  *
  */
-void o_cue_erase_single(TOPLEVEL *w_current, OBJECT *object)
+void o_cue_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   if (!object) {
     return;
   }
@@ -438,9 +444,9 @@ void o_cue_erase_single(TOPLEVEL *w_current, OBJECT *object)
   if (object->type != OBJ_PIN) {
     o_cue_erase_lowlevel(w_current, object, 0);
     o_cue_erase_lowlevel(w_current, object, 1);
-    w_current->override_color = w_current->background_color;
+    toplevel->override_color = toplevel->background_color;
     o_cue_draw_lowlevel_midpoints(w_current, object);
-    w_current->override_color = -1;
+    toplevel->override_color = -1;
   } else {
     o_cue_erase_lowlevel(w_current, object, object->whichend);
   }
@@ -451,7 +457,7 @@ void o_cue_erase_single(TOPLEVEL *w_current, OBJECT *object)
  *  \par Function Description
  *
  */
-void o_cue_undraw(TOPLEVEL *w_current, OBJECT *object)
+void o_cue_undraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
   GList *cl_current;
   CONN *conn;
@@ -474,12 +480,12 @@ void o_cue_undraw(TOPLEVEL *w_current, OBJECT *object)
 
 /*! \brief Undraw complex OBJECT.
  *  \par Function Description
- *  This function undraws complex objects (pass in the toplevel object)
+ *  This function undraws complex objects (pass in the GSCHEM_TOPLEVEL object)
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] object     OBJECT to undraw.
  */
-void o_cue_undraw_complex(TOPLEVEL *w_current, OBJECT *object)
+void o_cue_undraw_complex(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
   GList *cl_current;
   CONN *conn;
@@ -519,7 +525,7 @@ void o_cue_undraw_complex(TOPLEVEL *w_current, OBJECT *object)
  *  \par Function Description
  *
  */
-void o_cue_draw_list(TOPLEVEL *w_current, GList *object_list)
+void o_cue_draw_list(GSCHEM_TOPLEVEL *w_current, GList *object_list)
 {
   OBJECT *object;
   GList *ol_current;
@@ -539,7 +545,7 @@ void o_cue_draw_list(TOPLEVEL *w_current, GList *object_list)
  *  \par Function Description
  *
  */
-void o_cue_undraw_list(TOPLEVEL *w_current, GList *object_list)
+void o_cue_undraw_list(GSCHEM_TOPLEVEL *w_current, GList *object_list)
 {
   OBJECT *object;
   GList *ol_current;
@@ -559,7 +565,7 @@ void o_cue_undraw_list(TOPLEVEL *w_current, GList *object_list)
  *  \par Function Description
  *
  */
-void o_cue_undraw_objects(TOPLEVEL *w_current, OBJECT *list)
+void o_cue_undraw_objects(GSCHEM_TOPLEVEL *w_current, OBJECT *list)
 {
   OBJECT *o_current;
 

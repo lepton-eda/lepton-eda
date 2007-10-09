@@ -24,6 +24,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -40,12 +41,13 @@
  *  \par Function Description
  *
  */
-void x_repaint_background(TOPLEVEL *w_current)
+void x_repaint_background(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   if (!w_current->inside_redraw) {
     gdk_gc_set_foreground(
                           w_current->gc,
-                          x_get_color(w_current->background_color));
+                          x_get_color(toplevel->background_color));
 
     gdk_draw_rectangle(w_current->window,
                        w_current->gc, TRUE, 0, 0,
@@ -68,8 +70,9 @@ void x_repaint_background(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_hscrollbar_set_ranges(TOPLEVEL *w_current)
+void x_hscrollbar_set_ranges(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
         GtkAdjustment        *hadjustment;
 
 	if (w_current->scrollbars_flag == FALSE) {
@@ -79,8 +82,8 @@ void x_hscrollbar_set_ranges(TOPLEVEL *w_current)
 	hadjustment =
 		gtk_range_get_adjustment(GTK_RANGE(w_current->h_scrollbar));
 
-	hadjustment->lower = w_current->init_left;
-	hadjustment->upper = w_current->init_right;
+	hadjustment->lower = toplevel->init_left;
+	hadjustment->upper = toplevel->init_right;
 
 }
 
@@ -89,8 +92,9 @@ void x_hscrollbar_set_ranges(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_hscrollbar_update(TOPLEVEL *w_current)
+void x_hscrollbar_update(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GtkAdjustment *hadjustment;
 
   if (w_current->scrollbars_flag == FALSE) {
@@ -104,10 +108,10 @@ void x_hscrollbar_update(TOPLEVEL *w_current)
   hadjustment = gtk_range_get_adjustment (GTK_RANGE (
                                                      w_current->h_scrollbar));
 
-  hadjustment->value = w_current->page_current->left;
+  hadjustment->value = toplevel->page_current->left;
 
-  hadjustment->page_size = fabs(w_current->page_current->right -
-                                w_current->page_current->left);
+  hadjustment->page_size = fabs(toplevel->page_current->right -
+                                toplevel->page_current->left);
 
   hadjustment->page_increment = hadjustment->page_size - 100.0;
 
@@ -125,8 +129,9 @@ void x_hscrollbar_update(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_vscrollbar_set_ranges(TOPLEVEL *w_current)
+void x_vscrollbar_set_ranges(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GtkAdjustment *vadjustment;
 
   if (w_current->scrollbars_flag == FALSE) {
@@ -136,8 +141,8 @@ void x_vscrollbar_set_ranges(TOPLEVEL *w_current)
   vadjustment =
   gtk_range_get_adjustment(GTK_RANGE(w_current->v_scrollbar));
 
-  vadjustment->lower = w_current->init_top;
-  vadjustment->upper = w_current->init_bottom;
+  vadjustment->lower = toplevel->init_top;
+  vadjustment->upper = toplevel->init_bottom;
 }
 
 /*! \todo Finish function documentation!!!
@@ -145,8 +150,9 @@ void x_vscrollbar_set_ranges(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_vscrollbar_update(TOPLEVEL *w_current)
+void x_vscrollbar_update(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GtkAdjustment *vadjustment;
 
   if (w_current->scrollbars_flag == FALSE) {
@@ -160,13 +166,13 @@ void x_vscrollbar_update(TOPLEVEL *w_current)
   vadjustment =
   gtk_range_get_adjustment(GTK_RANGE(w_current->v_scrollbar));
 
-  vadjustment->page_size = fabs(w_current->page_current->bottom -
-                                w_current->page_current->top);
+  vadjustment->page_size = fabs(toplevel->page_current->bottom -
+                                toplevel->page_current->top);
 
   vadjustment->page_increment = vadjustment->page_size - 100.0;
 
   vadjustment->value =
-  w_current->init_bottom - w_current->page_current->bottom;
+  toplevel->init_bottom - toplevel->page_current->bottom;
 
 #if DEBUG
   printf("V %f %f\n", vadjustment->lower, vadjustment->upper);
@@ -182,16 +188,17 @@ void x_vscrollbar_update(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_scrollbars_update(TOPLEVEL *w_current)
+void x_scrollbars_update(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   if (w_current->scrollbars_flag == FALSE) {
     return;
   }
 
-  w_current->DONT_REDRAW = 1;
+  toplevel->DONT_REDRAW = 1;
   x_hscrollbar_update(w_current);
   x_vscrollbar_update(w_current);
-  w_current->DONT_REDRAW = 0;
+  toplevel->DONT_REDRAW = 0;
 }
 
 

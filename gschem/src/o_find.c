@@ -24,6 +24,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
@@ -36,20 +37,21 @@
  *  \par Function Description
  *
  */
-gboolean o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y,
+gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y,
 		       gboolean change_selection)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current=NULL;
   gboolean object_found = FALSE;
   int w_x, w_y, w_slack;
 
-  SCREENtoWORLD( w_current, screen_x, screen_y, &w_x, &w_y );
-  w_slack = WORLDabs( w_current, w_current->select_slack_pixels );
+  SCREENtoWORLD( toplevel, screen_x, screen_y, &w_x, &w_y );
+  w_slack = WORLDabs( toplevel, w_current->select_slack_pixels );
 
-  if (w_current->page_current->object_lastplace == NULL) {
-    o_current = w_current->page_current->object_head;
+  if (toplevel->page_current->object_lastplace == NULL) {
+    o_current = toplevel->page_current->object_head;
   } else {
-    o_current = w_current->page_current->object_lastplace;
+    o_current = toplevel->page_current->object_lastplace;
   }
 
   /* do first search */
@@ -61,14 +63,14 @@ gboolean o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y,
 	  o_current->type != OBJ_HEAD &&
 	  (o_current->visibility == VISIBLE ||
 	   (o_current->visibility == INVISIBLE &&
-	    w_current->show_hidden_text))) {
+	    toplevel->show_hidden_text))) {
 	if (change_selection) {
 	  (*o_current->sel_func)(
 				 w_current, o_current, 
 				 SINGLE, 0); /* 0 is count */
 	}
 	object_found = TRUE;
-	w_current->page_current-> object_lastplace =
+	toplevel->page_current-> object_lastplace =
 	  o_current->next;
 	i_update_menus(w_current);
 	return object_found;
@@ -83,9 +85,9 @@ gboolean o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y,
 
   /* now search again since we didn't find anything starting at start
      just in case we started last time at object_lastplace */
-  o_current = w_current->page_current->object_head;
+  o_current = toplevel->page_current->object_head;
   while (o_current != NULL && 
-         o_current != w_current->page_current->object_lastplace) {
+         o_current != toplevel->page_current->object_lastplace) {
     if (inside_region(o_current->w_left - w_slack, o_current->w_top - w_slack,
                       o_current->w_right + w_slack, o_current->w_bottom + w_slack,
                       w_x, w_y)) {
@@ -94,12 +96,12 @@ gboolean o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y,
           o_current->type != OBJ_HEAD &&
           (o_current->visibility == VISIBLE ||
            (o_current->visibility == INVISIBLE &&
-            w_current->show_hidden_text))) {
+            toplevel->show_hidden_text))) {
 	if (change_selection) {
 	  /* 0 is count */
 	  (*o_current->sel_func)(w_current, o_current, SINGLE, 0);
 	}
-	w_current->page_current->object_lastplace = o_current;
+	toplevel->page_current->object_lastplace = o_current;
  	object_found = TRUE;
         
         i_update_menus(w_current);
@@ -110,7 +112,7 @@ gboolean o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y,
   }
 
   /* didn't find anything.... reset lastplace */
-  w_current->page_current->object_lastplace = NULL;
+  toplevel->page_current->object_lastplace = NULL;
 
   /* deselect everything only if shift key isn't pressed and 
      the caller allows it */	
@@ -128,17 +130,18 @@ gboolean o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y,
  *  \par Function Description
  *
  */
-gboolean o_find_selected_object(TOPLEVEL *w_current,
+gboolean o_find_selected_object(GSCHEM_TOPLEVEL *w_current,
 				int screen_x, int screen_y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current=NULL;
   GList *s_current;
   int w_x, w_y, w_slack;
 
-  SCREENtoWORLD( w_current, screen_x, screen_y, &w_x, &w_y );
-  w_slack = WORLDabs( w_current, w_current->select_slack_pixels );
+  SCREENtoWORLD( toplevel, screen_x, screen_y, &w_x, &w_y );
+  w_slack = WORLDabs( toplevel, w_current->select_slack_pixels );
 
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
   /* do first search */
   while (s_current != NULL) {
     o_current = (OBJECT *) s_current->data;
@@ -156,7 +159,7 @@ gboolean o_find_selected_object(TOPLEVEL *w_current,
 	  o_current->type != OBJ_HEAD &&
 	  (o_current->visibility == VISIBLE ||
 	   (o_current->visibility == INVISIBLE &&
-	    w_current->show_hidden_text))) {
+	    toplevel->show_hidden_text))) {
 	return TRUE;
       }
     }

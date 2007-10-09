@@ -23,6 +23,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -54,17 +55,18 @@ typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \par Function Description
  *  This function is used to draw a box on screen. The box is described in
  *  the OBJECT which is referred by <B>o_current</B>. The box is displayed
- *  according to the current state, described in the TOPLEVEL object
+ *  according to the current state, described in the GSCHEM_TOPLEVEL object
  *  pointed by <B>w_current</B>.
  *
  *  It first checks if the OBJECT pointed is valid or not. If not it
  *  returns and do not output anything. That should never happen though.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  BOX OBJECT to draw.
  */
-void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
+void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int wleft, wright, wtop, wbottom; /* world bounds */
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
   int line_width, length, space;
@@ -80,11 +82,11 @@ void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 	/* Get read to check for visibility of this line by using it's
 	 * bounding box */
-  world_get_box_bounds(w_current, o_current,
+  world_get_box_bounds(toplevel, o_current,
                        &wleft, &wtop, &wright, &wbottom);
 	
-  if ( (w_current->DONT_REDRAW == 1) ||
-       (!visible(w_current, wleft, wtop, wright, wbottom)) ) {
+  if ( (toplevel->DONT_REDRAW == 1) ||
+       (!visible(toplevel, wleft, wtop, wright, wbottom)) ) {
     return;
   }
 	
@@ -107,8 +109,8 @@ void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
    * draw the outline, the second is to draw the filling pattern inside
    * (if any). Finally the function takes care of the grips.
    */
-  if (w_current->override_color != -1 ) {  /* Override */
-    color = x_get_color(w_current->override_color);
+  if (toplevel->override_color != -1 ) {  /* Override */
+    color = x_get_color(toplevel->override_color);
   } else {
     color = x_get_color(o_current->color);
   }
@@ -129,7 +131,7 @@ void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
    * encountered the box is drawn as a solid box independently of its
    * initial type.
    */
-  line_width = SCREENabs( w_current, o_current->line_width );
+  line_width = SCREENabs( toplevel, o_current->line_width );
   if(line_width <= 0) {
     line_width = 1;
   }
@@ -143,8 +145,8 @@ void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
     break;
   }
 	
-  length = SCREENabs( w_current, o_current->line_length );
-  space = SCREENabs( w_current, o_current->line_space );
+  length = SCREENabs( toplevel, o_current->line_length );
+  space = SCREENabs( toplevel, o_current->line_space );
 	
   switch(o_current->line_type) {
     case TYPE_SOLID:
@@ -185,9 +187,9 @@ void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
   if((length == 0) || (space == 0))
   draw_func = o_box_draw_solid;
 
-  WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->upper_y, 
+  WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->upper_y,
                  &s_upper_x, &s_upper_y );
-  WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->lower_y, 
+  WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->lower_y,
                  &s_lower_x, &s_lower_y );
 	
   (*draw_func)(w_current->window, w_current->gc, color, box_end,
@@ -225,15 +227,15 @@ void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
    * to be distinct. If such a case is encountered the circle is filled
    * hollow (e.q. not filled).
    */
-  fill_width = SCREENabs( w_current, o_current->fill_width );
+  fill_width = SCREENabs( toplevel, o_current->fill_width );
   if(fill_width <= 0) {
     fill_width = 1;
   }
 	
   angle1 = o_current->fill_angle1;
-  pitch1 = SCREENabs( w_current, o_current->fill_pitch1 );
+  pitch1 = SCREENabs( toplevel, o_current->fill_pitch1 );
   angle2 = o_current->fill_angle2;
-  pitch2 = SCREENabs( w_current, o_current->fill_pitch2 );
+  pitch2 = SCREENabs( toplevel, o_current->fill_pitch2 );
 	
   switch(o_current->fill_type) {
     case FILLING_HOLLOW:
@@ -821,14 +823,15 @@ void o_box_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  color. Therefore a box is drawn with background color over the previous
  *  one.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Box OBJECT to erase.
  */
-void o_box_erase(TOPLEVEL *w_current, OBJECT *o_current)
+void o_box_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-    w_current->override_color = w_current->background_color;
+    TOPLEVEL *toplevel = w_current->toplevel;
+    toplevel->override_color = toplevel->background_color;
     o_box_draw(w_current, o_current);
-    w_current->override_color = -1;
+    toplevel->override_color = -1;
 }
 
 /*! \todo Finish function documentation!!!
@@ -838,7 +841,7 @@ void o_box_erase(TOPLEVEL *w_current, OBJECT *o_current)
  *  \note
  *  used in button cancel code in x_events.c
  */
-void o_box_eraserubber(TOPLEVEL *w_current)
+void o_box_eraserubber(GSCHEM_TOPLEVEL *w_current)
 {
   o_box_rubberbox_xor(w_current);
 }
@@ -851,13 +854,14 @@ void o_box_eraserubber(TOPLEVEL *w_current)
  *
  *  The box is displayed with the color of the object.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] dx         Delta x coordinate for box.
  *  \param [in] dy         Delta y coordinate for box.
  *  \param [in] o_current  Box OBJECT to draw.
  */
-void o_box_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+void o_box_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int screen_x1, screen_y1;
   int screen_x2, screen_y2;
   int color;
@@ -866,9 +870,9 @@ void o_box_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
     return;
   }
 
-  WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->upper_y, 
+  WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->upper_y,
                  &screen_x1, &screen_y1 );
-  WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->lower_y, 
+  WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->lower_y,
                  &screen_x2, &screen_y2 );
 	
   if (o_current->saved_color != -1) {
@@ -901,15 +905,16 @@ void o_box_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
  *  The other corner will be saved in (<B>w_current->last_x</B>,
  *  <B>w_current->last_y</B>).
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_box_start(TOPLEVEL *w_current, int x, int y)
+void o_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   /* init start_[x|y], last_[x|y] to describe box */
-  w_current->last_x = w_current->start_x = fix_x(w_current, x);
-  w_current->last_y = w_current->start_y = fix_y(w_current, y);
+  w_current->last_x = w_current->start_x = fix_x(toplevel, x);
+  w_current->last_y = w_current->start_y = fix_y(toplevel, y);
 
   /* start to draw the box */
   o_box_rubberbox_xor(w_current);
@@ -929,25 +934,26 @@ void o_box_start(TOPLEVEL *w_current, int x, int y)
  *  and linked to the object list ; The object is finally drawn on the
  *  current sheet.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_box_end(TOPLEVEL *w_current, int x, int y)
+void o_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1;
   int x2, y2;
   int box_width, box_height;
   int box_left, box_top;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
   /* get the last coords of the pointer */
-  w_current->last_x = fix_x(w_current, x);
-  w_current->last_y = fix_y(w_current, y);
+  w_current->last_x = fix_x(toplevel, x);
+  w_current->last_y = fix_y(toplevel, y);
 
   /* erase the temporary box */
   o_box_rubberbox_xor(w_current);
@@ -968,22 +974,22 @@ void o_box_end(TOPLEVEL *w_current, int x, int y)
   }
 
   /* calculate the world coords of the upper left and lower right corners */
-  SCREENtoWORLD(w_current, box_left, box_top, &x1, &y1);
-  SCREENtoWORLD(w_current,
+  SCREENtoWORLD(toplevel, box_left, box_top, &x1, &y1);
+  SCREENtoWORLD(toplevel,
                 box_left + box_width, box_top  + box_height, &x2, &y2);
-  x1 = snap_grid(w_current, x1);
-  y1 = snap_grid(w_current, y1);
-  x2 = snap_grid(w_current, x2);
-  y2 = snap_grid(w_current, y2);
+  x1 = snap_grid(toplevel, x1);
+  y1 = snap_grid(toplevel, y1);
+  x2 = snap_grid(toplevel, x2);
+  y2 = snap_grid(toplevel, y2);
 
   /* create the object */
-  w_current->page_current->object_tail = 
-  o_box_add(w_current,
-            w_current->page_current->object_tail,
+  toplevel->page_current->object_tail =
+  o_box_add(toplevel,
+            toplevel->page_current->object_tail,
             OBJ_BOX, w_current->graphic_color, x1, y1, x2, y2);
 
   /* draw it */
-  o_redraw_single(w_current, w_current->page_current->object_tail);
+  o_redraw_single(w_current, toplevel->page_current->object_tail);
   
 #if DEBUG
   printf("coords: %d %d %d %d\n", x1, y2, x2, y2);
@@ -994,7 +1000,7 @@ void o_box_end(TOPLEVEL *w_current, int x, int y)
   w_current->last_x  = (-1);
   w_current->last_y  = (-1);
 	
-  w_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
 
   o_undo_savestate(w_current, UNDO_ALL);
 }
@@ -1010,14 +1016,15 @@ void o_box_end(TOPLEVEL *w_current, int x, int y)
  *  height and left and top values are recomputed by the corresponding macros.
  *  The box is then erased by performing a xor-drawing over the box.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_box_rubberbox(TOPLEVEL *w_current, int x, int y)
+void o_box_rubberbox(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
@@ -1031,17 +1038,17 @@ void o_box_rubberbox(TOPLEVEL *w_current, int x, int y)
    */
 
   /* update the coords of the corner */
-  w_current->last_x = fix_x(w_current, x);
-  w_current->last_y = fix_y(w_current, y);
+  w_current->last_x = fix_x(toplevel, x);
+  w_current->last_y = fix_y(toplevel, y);
 
   /* draw the new temporary box */
   o_box_rubberbox_xor(w_current);
   
 }
 
-/*! \brief Draw box from TOPLEVEL object.
+/*! \brief Draw box from GSCHEM_TOPLEVEL object.
  *  \par Function Description
- *  This function draws the box from the variables in the toplevel
+ *  This function draws the box from the variables in the GSCHEM_TOPLEVEL
  *  structure <B>*w_current</B>.
  *  One corner of the box is at (<B>w_current->start_x</B>,
  *  <B>w_current->start_y</B>) and the second corner is at
@@ -1050,9 +1057,9 @@ void o_box_rubberbox(TOPLEVEL *w_current, int x, int y)
  *  The box is drawn with a xor-function over the current sheet with the
  *  selection color.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
-void o_box_rubberbox_xor(TOPLEVEL *w_current)
+void o_box_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
 {
 	int box_width, box_height, box_left, box_top;
 
@@ -1078,22 +1085,23 @@ void o_box_rubberbox_xor(TOPLEVEL *w_current)
  *  This function draws four grips on the corners of the box described
  *  by <B>*o_current</B>.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Box OBJECT to draw grip points on.
  *
  *  \par Author's note
  *  p20011003 - modified the prototype : removed parameter 'GdkWindow *w'
  */
-void o_box_draw_grips(TOPLEVEL *w_current, OBJECT *o_current) 
+void o_box_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
 
   if (w_current->draw_grips == FALSE)
 	  return;
   
-  WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->upper_y, 
+  WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->upper_y,
                  &s_upper_x, &s_upper_y );
-  WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->lower_y, 
+  WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->lower_y,
                  &s_lower_x, &s_lower_y );
 
   /* grip on upper left corner (whichone = BOX_UPPER_LEFT) */
@@ -1115,19 +1123,20 @@ void o_box_draw_grips(TOPLEVEL *w_current, OBJECT *o_current)
  *  This function erases the four grips displayed on the <B>*o_current</B>
  *  box object. These grips are on each of the corner.
  * 
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Box OBJECT to erase grip marks from.
  */
-void o_box_erase_grips(TOPLEVEL *w_current, OBJECT *o_current) 
+void o_box_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
 
   if (w_current->draw_grips == FALSE)
 	  return;
   
-  WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->upper_y, 
+  WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->upper_y,
                  &s_upper_x, &s_upper_y );
-  WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->lower_y, 
+  WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->lower_y,
                  &s_lower_x, &s_lower_y );
 
   /* grip on upper left corner (whichone = BOX_UPPER_LEFT) */

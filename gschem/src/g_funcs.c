@@ -34,6 +34,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 #include "../include/x_dialog.h"
@@ -53,10 +54,10 @@ SCM g_funcs_print(SCM filename)
               SCM_ARG1, "gschem-print");
 
   if (output_filename) {
-    if (f_print_file (global_window_current, output_filename))
+    if (f_print_file (global_window_current->toplevel, output_filename))
       return SCM_BOOL_F;
   } else  {
-    if (f_print_file (global_window_current, SCM_STRING_CHARS (filename)))
+    if (f_print_file (global_window_current->toplevel, SCM_STRING_CHARS (filename)))
       return SCM_BOOL_F;
   }
   
@@ -74,10 +75,10 @@ SCM g_funcs_postscript(SCM filename)
               SCM_ARG1, "gschem-postscript");
 
   if (output_filename) {
-    if (f_print_file (global_window_current, output_filename))
+    if (f_print_file (global_window_current->toplevel, output_filename))
       return SCM_BOOL_F;
   } else  {
-    if (f_print_file (global_window_current, SCM_STRING_CHARS (filename)))
+    if (f_print_file (global_window_current->toplevel, SCM_STRING_CHARS (filename)))
       return SCM_BOOL_F;
   }
   
@@ -96,13 +97,13 @@ SCM g_funcs_image(SCM filename)
 
   if (output_filename) {
     x_image_lowlevel (global_window_current, output_filename,
-		      global_window_current->image_width,
-		      global_window_current->image_height,
+                      global_window_current->image_width,
+                      global_window_current->image_height,
 		      "png");
   } else  {
     x_image_lowlevel (global_window_current, SCM_STRING_CHARS (filename),
-		      global_window_current->image_width,
-		      global_window_current->image_height,
+                      global_window_current->image_width,
+                      global_window_current->image_height,
 		      "png");
   }
   
@@ -263,7 +264,7 @@ hash_table_2_list (gpointer key,
  *  \par Function Description
  *
  */
-SCM get_selected_component_attributes(TOPLEVEL *toplevel)
+SCM get_selected_component_attributes(GSCHEM_TOPLEVEL *w_current)
 {
   SCM list = SCM_EOL;
   OBJECT *obj;
@@ -271,7 +272,7 @@ SCM get_selected_component_attributes(TOPLEVEL *toplevel)
  
   /* build a hash table */
   ht = g_hash_table_new (g_str_hash, g_str_equal);
-  for (obj = toplevel->page_current->object_head; obj != NULL;
+  for (obj = w_current->toplevel->page_current->object_head; obj != NULL;
        obj = obj->next) {
     if (obj->selected &&
         obj->type == OBJ_TEXT &&
@@ -296,16 +297,16 @@ SCM get_selected_component_attributes(TOPLEVEL *toplevel)
  *  This function gets the whole filename of the current schematic.
  *  Specifically, the <B>page_filename</B> of the current page.
  *
- *  \param [in] w_current  The TOPLEVEL object to get filename from.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object to get filename from.
  *  \return whole filename of current schematic.
  */
-SCM get_selected_filename(TOPLEVEL *w_current)
+SCM get_selected_filename(GSCHEM_TOPLEVEL *w_current)
 {
   SCM return_value;
   
   exit_if_null(w_current);
   
-  return_value = scm_take0str (w_current->page_current->page_filename);
+  return_value = scm_take0str (w_current->toplevel->page_current->page_filename);
 
   return(return_value);
 }

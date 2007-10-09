@@ -25,6 +25,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -38,10 +39,10 @@
  *  This function actually updates the status bar 
  *  widget with the new string.
  *
- *  \param [in] w_current TOPLEVEL structure
+ *  \param [in] w_current GSCHEM_TOPLEVEL structure
  *  \param [in] string The new string to be shown in the status bar
  */
-static void i_update_status(TOPLEVEL *w_current, const char *string)
+static void i_update_status(GSCHEM_TOPLEVEL *w_current, const char *string)
 {
   if (!w_current->status_label)
     return;
@@ -59,12 +60,12 @@ static void i_update_status(TOPLEVEL *w_current, const char *string)
  *  Returns a string describing the currently
  *  selected mode.
  *
- *  \param [in] w_current TOPLEVEL structure
+ *  \param [in] w_current GSCHEM_TOPLEVEL structure
  *  \returns a string that will only last until the next time
  *   the function is called (which is probably just fine, really)
  *   *EK* Egil Kvaleberg
  */
-static const char *i_status_string(TOPLEVEL *w_current)
+static const char *i_status_string(GSCHEM_TOPLEVEL *w_current)
 {
   static char *buf = 0;
 
@@ -154,11 +155,12 @@ static const char *i_status_string(TOPLEVEL *w_current)
  *  Show state field on screen, possibly with the 
  *  addition of an extra message
  *
- *  \param [in] w_current TOPLEVEL structure
+ *  \param [in] w_current GSCHEM_TOPLEVEL structure
  *  \param [in] message The string to be displayed 
  */
-void i_show_state(TOPLEVEL *w_current, const char *message)
+void i_show_state(GSCHEM_TOPLEVEL *w_current, const char *message)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   gchar *what_to_say;
   const gchar *array[5] = { NULL };
   int i = 3; /* array[4] must be NULL */
@@ -166,10 +168,10 @@ void i_show_state(TOPLEVEL *w_current, const char *message)
   /* Fill in the string array */
   array[i--] = i_status_string(w_current);
   
-  if(w_current->show_hidden_text)
+  if(toplevel->show_hidden_text)
     array[i--] = _("Show Hidden");
   
-  if(!w_current->snap)
+  if(!toplevel->snap)
     array[i--] = _("Snap Off");
   
   if(message && message[0])
@@ -198,11 +200,11 @@ void i_show_state(TOPLEVEL *w_current, const char *message)
  *  \par Function Description
  *  Set new state, then show state field.
  *
- *  \param [in] w_current TOPLEVEL structure
+ *  \param [in] w_current GSCHEM_TOPLEVEL structure
  *  \param [in] newstate The new state
  *   *EK* Egil Kvaleberg
  */
-void i_set_state(TOPLEVEL *w_current, enum x_states newstate)
+void i_set_state(GSCHEM_TOPLEVEL *w_current, enum x_states newstate)
 {
   i_set_state_msg(w_current, newstate, NULL);
 }
@@ -214,12 +216,12 @@ void i_set_state(TOPLEVEL *w_current, enum x_states newstate)
  *  Set new state, then show state field including some
  *  message.
  *
- *  \param [in] w_current TOPLEVEL structure
+ *  \param [in] w_current GSCHEM_TOPLEVEL structure
  *  \param [in] newstate The new state
  *  \param [in] message Message to be shown
  *   *EK* Egil Kvaleberg
  */
-void i_set_state_msg(TOPLEVEL *w_current, enum x_states newstate,
+void i_set_state_msg(GSCHEM_TOPLEVEL *w_current, enum x_states newstate,
 		     const char *message)
 {
   w_current->event_state = newstate;
@@ -231,7 +233,7 @@ void i_set_state_msg(TOPLEVEL *w_current, enum x_states newstate,
  *  \par Function Description
  *
  */
-void i_update_middle_button(TOPLEVEL *w_current,
+void i_update_middle_button(GSCHEM_TOPLEVEL *w_current,
 			    void (*func_ptr)(gpointer, guint, GtkWidget*),
 			    const char *string)
 {
@@ -281,10 +283,10 @@ void i_update_middle_button(TOPLEVEL *w_current,
 
 /*! \todo Finish function documentation!!!
  *  \brief
- *  \param [in] w_current TOPLEVEL structure
+ *  \param [in] w_current GSCHEM_TOPLEVEL structure
  *
  */
-void i_update_toolbar(TOPLEVEL *w_current)
+void i_update_toolbar(GSCHEM_TOPLEVEL *w_current)
 {
   if (!w_current->toolbars) 
 	return;
@@ -362,10 +364,11 @@ void i_update_toolbar(TOPLEVEL *w_current)
  *  \par Function Description
  *  Update sensitivity of relevant menu items.
  *
- *  \param [in] w_current TOPLEVEL structure
+ *  \param [in] w_current GSCHEM_TOPLEVEL structure
  */
-void i_update_menus(TOPLEVEL *w_current)
+void i_update_menus(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   /* 
    * This is very simplistic.  Right now it just disables all menu
    * items which get greyed out when a component is not selected.
@@ -374,9 +377,9 @@ void i_update_menus(TOPLEVEL *w_current)
    */
 
   g_assert(w_current != NULL);
-  g_assert(w_current->page_current != NULL);
+  g_assert(toplevel->page_current != NULL);
 
-  if ( geda_list_get_glist( w_current->page_current->selection_list ) != NULL ) {
+  if ( geda_list_get_glist( toplevel->page_current->selection_list ) != NULL ) {
     /* since one or more things are selected, we set these TRUE */
     /* These strings should NOT be internationalized */
     x_menus_sensitivity(w_current, "Edit/Cut Buffer", TRUE);
@@ -486,10 +489,10 @@ void i_update_menus(TOPLEVEL *w_current)
  *  Set filename as gschem window title using
  *  the gnome HID format style.
  *
- *  \param [in] w_current TOPLEVEL structure
+ *  \param [in] w_current GSCHEM_TOPLEVEL structure
  *  \param [in] string The filename
  */
-void i_set_filename(TOPLEVEL *w_current, const gchar *string)
+void i_set_filename(GSCHEM_TOPLEVEL *w_current, const gchar *string)
 {
   gchar *print_string=NULL;
   gchar *filename=NULL;
@@ -518,11 +521,12 @@ void i_set_filename(TOPLEVEL *w_current, const gchar *string)
  *  and prints it to the status bar.
  *  The format is "Grid([SnapGridSize],[CurrentGridSize])"
  *
- *  \param [in] w_current TOPLEVEL structure
+ *  \param [in] w_current GSCHEM_TOPLEVEL structure
  *  \param [in] visible_grid Visible grid size
  */
-void i_set_grid(TOPLEVEL *w_current, int visible_grid) 
+void i_set_grid(GSCHEM_TOPLEVEL *w_current, int visible_grid)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   gchar *print_string=NULL;
   gchar *snap=NULL;
   gchar *grid=NULL;
@@ -530,10 +534,10 @@ void i_set_grid(TOPLEVEL *w_current, int visible_grid)
   if (!w_current->grid_label)
     return;
   
-  if (!w_current->snap)
+  if (!toplevel->snap)
     snap = g_strdup(_("OFF"));
   else
-    snap = g_strdup_printf("%d", w_current->snap_size);
+    snap = g_strdup_printf("%d", toplevel->snap_size);
 
   if (!w_current->grid)
     grid = g_strdup(_("OFF"));

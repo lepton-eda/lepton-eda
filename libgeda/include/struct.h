@@ -397,33 +397,9 @@ struct st_page {
 
 struct st_toplevel {
 
-  int num_untitled;		/* keep track of untitled wins */
-
-  int start_x;
-  int start_y;
-  int save_x;
-  int save_y;
-  int last_x;
-  int last_y;
-  int second_x;
-  int second_y;
-  int loc_x, loc_y;
-  int distance;
-
   /* used by attribute dialog */
   /* also used by text add dialog */
   char *current_attribute;		
-
-
-  /* used by add picture dialog */
-  GdkPixbuf *current_pixbuf;
-
-  double pixbuf_wh_ratio;                  /* width/height ratio of the pixbuf */
-  char *pixbuf_filename;
-
-  /* have to decided on attribute list stuff */
-  /* if it should go in here or not */
-  /* leave outside for now */
 
   gchar *internal_symbol_name;     
   /* have to decided on component list stuff */
@@ -438,154 +414,40 @@ struct st_toplevel {
   char *scheme_directory; 		/* path of the scheme scripts */
   char *bitmap_directory; 		/* path of the bitmaps */
 
-  int event_state;			/* Current event state */
-
-  int inside_action;			/* Are we doing an action? */
-  int rotated_inside;                   /* Was the selection rotated 
-                                           inside an action? */
-
   int init_left, init_right; 		/* Starting values for above */
   int init_top, init_bottom; 
 
-  int win_width, win_height;		/* Actual size of window (?) */
   int width, height;			/* height, width of window */
-  int image_width, image_height;		/* h, w of image write */
   int snap;				/* Snap on/off*/
-  int grid;				/* Grid on/off*/
-
-  /* location to hold current alignment of text */
-  int text_alignment;
 
   int override_color;			/* used in doing selections */
-  int inside_redraw;			/* complex vs list redrawing */
 
   int DONT_REDRAW;			/* misc flags */
   int ADDING_SEL;
-
-  int drawbounding_action_mode; 	/* outline vs bounding box */
-  int last_drawb_mode;			/* last above mode */
-
-  int CONTROLKEY;			/* control key pressed? */
-  int SHIFTKEY;				/* shift key pressed? */
-  int ALTKEY;				/* alt key pressed? */
-
-  int doing_pan;			/* mouse pan status flag */
 
   /* page system */
   PAGE *page_current;
   GedaPageList *pages;
 
-  /* buffer_number is used by the buffer copy/cut/paste mechanism */
-  /* in gschem to keep track of the current buffer number */
-  int buffer_number;
-
   /* show_hidden_text is used to control which text is hidden in gschem */
   int show_hidden_text;
 
-  /* Variable to keep track of what value the complex is at */
-  int complex_rotate;	
-
-  void (*last_callback)();	  	/* Last i_call* cmd executed */
-
   GList* major_changed_refdes;          /* A list of all refdes's that have */
                                         /* major symbol version changes */
-
-  /* main window widgets */
-  GtkWidget *main_window;
-  GtkWidget *drawing_area;
-  GtkWidget *menubar;
-  GtkWidget *popup_menu;
-  GtkWidget *h_scrollbar;
-  GtkWidget *v_scrollbar;    
-  GtkObject *h_adjustment;
-  GtkObject *v_adjustment;
-  GtkWidget *left_label;
-  GtkWidget *middle_label;
-  GtkWidget *right_label;
-  GtkWidget *grid_label;
-  GtkWidget *status_label;
-
-  GtkWidget *toolbar_select;
-  GtkWidget *toolbar_net;
-  GtkWidget *toolbar_bus;
-
-  /* Dialog boxes */
-  GtkWidget *sowindow;			/* Script open */
-  GtkWidget *pfswindow;                 /* Picture File Selection window */
-
-  GtkWidget *cswindow;			/* component select */
-
-  GtkWidget *iwindow;			/* image write dialog box */
-
-  GtkWidget *pswindow;			/* page select */
-
-  /* misc dialogs */
-  GtkWidget *tiwindow;			/* text input */
-  GtkWidget *tewindow;			/* text edit */
-  GtkWidget *sewindow;			/* slot edit */
-  GtkWidget *aawindow;			/* arc attribs */
-  GtkWidget *mawindow;			/* multi attribute */
-  GtkWidget *aewindow;			/* attribute edit */
-  GtkWidget *trwindow;			/* translate */
-  GtkWidget *tswindow;			/* text size */
-  GtkWidget *tshowwindow;               /* text show window */
-  GtkWidget *thidewindow;               /* text hide window */    
-  GtkWidget *tfindwindow;               /* text find window */
-  GtkWidget *abwindow;			/* Help/About... dialog*/
-  GtkWidget *hkwindow;			/* Help/Hotkeys... dialog*/
-  GtkWidget *cowindow;
-  GtkWidget *coord_world;
-  GtkWidget *coord_screen;
-
-  GtkWidget *clwindow;
-  int edit_color;
-
-  /* this is the drawing_area's X drawable */
-  GdkWindow *window; 
-	
-  /* graphics context stuff */
-  GdkGC *gc;
-  GdkGC *xor_gc;
-  GdkGC *outline_xor_gc;
-  GdkGC *bounding_xor_gc;
-  GdkGC *bus_gc;
-
-  /* backingstore pixmap */
-  GdkPixmap *backingstore; 
-
-  /* used for visual feedback when pressing keyboard accelerators */
-  gchar *keyaccel_string;
-
-  /* rc/user parameters */
-  int graphic_color;
-  int pin_color;
-  int text_color;
 
   /* backup variables */
   int auto_save_interval;
   gint auto_save_timeout;
 
-
-  /* not used anywhere yet, but will be */
-  int logic_bubble_color; 
-  int zoom_box_color; 
-  int text_caps;
-  int attribute_color;
-  int detachedattr_color;
-  int text_size;
-
   /* used by math funcs for the snapping */
   int snap_size;		
 
-  int grid_color;
+  /* BLOCK SET IN GSCHEM, BUT USED IN LIBGEDA - NEEDS A RETHINK */
+  int attribute_color;
+  int detachedattr_color;
   int background_color;
-  int select_color;
-  int bb_color;
-  int lock_color;
   int net_endpoint_color;
   int junction_color;
-  int net_color;
-  int bus_color;
   int override_net_color;
   int override_bus_color;
   int override_pin_color;
@@ -593,37 +455,13 @@ struct st_toplevel {
   int net_style;
   int bus_style;
   int line_style;
-  int zoom_with_pan; 
-
-  /* can be either OUTLINE or BOUNDINGBOX */
-  int actionfeedback_mode; 
-
-  /* controls if text is drawn or not in copy/move/place ops */
-  int text_feedback; 
-
-  /* zoom factor at which text is displayed completely */
-  int text_display_zoomfactor; 
-
-  /* can be either NONE, FILLEDBOX, EMPTYBOX, X */
-  int net_endpoint_mode; 
-
-  /* can be either NONE or FILLED or EMPTY */
-  int net_midpoint_mode; 
+  /* END BLOCK - ALTHOUGH THERE ARE MORE CASES! */
 
   /* controls whether objects are clipped */
   int object_clipping; 
 
-  /* controls if complex objects are embedded */
-  int embed_complex; 
-
-  /* controls if complex objects are included */
-  int include_complex; 
-
   /* controls how text is printed (vector / PS font) */ 
   int text_output; 
-
-  /* controls if scrollbars are displayed */ 
-  int scrollbars_flag; 
 
   /* either landscape or portrait */
   int print_orientation; 
@@ -649,38 +487,8 @@ struct st_toplevel {
   /* Use this as a scaling factor for the output font */
   float postscript_font_scale;
 
-  /* color of the stroke points */
-  int stroke_color; 
-
-  /* controls if the log windows mapped on startup */
-  int log_window; 
-
-  /* controls if the log window is decorated or not */
-  int log_window_type; 
-
-  /* controls what the third mouse button does */
-  int third_button; 
-
-  /* controls what the third mouse button does */
-  int middle_button; 
-
   /* controls if the net consolidation code is used */ 
   int net_consolidate; 
-
-  /* controls if the preview area is enabled or not */ 
-  int file_preview; 
-
-  /* controls how much freedom user has when traversing the hierarchy */
-  int enforce_hierarchy; 
-
-  /* controls if text origin marker is displayed or not */
-  int text_origin_marker; 
-
-  /* controls if text is completely drawn during mouse pan */
-  int fast_mousepan;	
-
-  /*controls if expose events raise dialog boxes*/
-  int raise_dialog_boxes; 
 
   /*controls if attribute promotion happens */
   int attribute_promotion; 
@@ -691,41 +499,6 @@ struct st_toplevel {
   /* controls if invisible attribs are kept and not deleted */
   int keep_invisible;   
 
-  /* controls if after doing a place the */
-  /* same component can be placed again */
-  int continue_component_place; 
-
-  /* Number of undo levels stored on disk */
-  int undo_levels;	
-
-  /* Controls if undo is enabled or not */
-  int undo_control;	
-
-  /* Type of undo (disk/memory) */
-  int undo_type;	        
-
-  /* Controls if pan / zoom info is saved in undo */
-  int undo_panzoom;
-
-  /* Controls if grips are enabled or not */
-  int draw_grips;	        
-
-  /* controls if nets are rubberbanded as you move */
-  /* them (or connecting comps) */
-  int netconn_rubberband;	
-
-  /* sort the component library */
-  int sort_component_library;                    
-
-  /* warp the cursor when zooming */
-  int warp_cursor;                    
-
-  /* controls if the toolbar(s) are enabled or disabled */
-  int toolbars;                    
-
-  /* controls if the handleboxes are enabled or disabled */
-  int handleboxes;                    
-
   /* either window or limits */
   int print_output_type;
 
@@ -735,56 +508,21 @@ struct st_toplevel {
   /* landscape printing only */
   int paper_width, paper_height;
 
-  /* controls the size of the bus rippers */
-  int bus_ripper_size;
-
-  /* controls the type of the bus ripper (either component or net) */
-  int bus_ripper_type;
-
   /* filename of the bus ripper component if set above */
   char *bus_ripper_symname;
 
-  /* controls whether or not the the bus ripper is symmetric or not */
-  int bus_ripper_rotation;
-
   /* controls if the whole bounding box is used in the auto whichend code */
   int force_boundingbox;
-
-  /* controls the grid dot size */
-  int grid_dot_size;
-
-  /* controls the mode of the grid (either variable or fixed) */
-  int grid_mode;
-
-  /* controls the mininum number of pixels necessary for the grid to be */
-  /* displayed */
-  int grid_fixed_threshold;
 
   /* controls the threshold (in lines of text) when the multi-line text */
   /* output font is forced to vector */
   int print_vector_threshold;
 
-  /* controls the offset (in world coordinates) that are added to netname */
-  /* attributes when they are attached to vertical or horizontal nets */
-  int add_attribute_offset;
-
-  /* Controls if drag can move objects or not */
-  int drag_can_move;	
-
   /* List of attributes to always promote */
   char *always_promote_attributes;
 
-  /* Controls the gain of the mouse pan */
-  int mousepan_gain;
-
-  /* Controls the gain of the keyboard pan */
-  int keyboardpan_gain;
-
   /* The command to send postscript to when printing */
   char *print_command;
-
-  /* Number of pixels around an object we can still select it with */
-  int select_slack_pixels;
 
   /* gnetlist specific */
   int net_naming_priority;

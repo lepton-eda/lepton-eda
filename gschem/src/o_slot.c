@@ -26,6 +26,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -40,7 +41,7 @@
  *  \par Function Description
  *
  */
-void o_slot_start(TOPLEVEL *w_current, OBJECT *list)
+void o_slot_start(GSCHEM_TOPLEVEL *w_current, OBJECT *list)
 {
   OBJECT *object;
   OBJECT *slot_text_object;
@@ -110,8 +111,9 @@ void o_slot_start(TOPLEVEL *w_current, OBJECT *list)
  *  \par Function Description
  *
  */
-void o_slot_end(TOPLEVEL *w_current, char *string, int len)
+void o_slot_end(GSCHEM_TOPLEVEL *w_current, char *string, int len)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *object;
   OBJECT *temp;
   char *slot_value;
@@ -181,16 +183,16 @@ void o_slot_end(TOPLEVEL *w_current, char *string, int len)
       temp = slot_text_object;
 
       if (temp->visibility == VISIBLE ||
-          (temp->visibility == INVISIBLE && w_current->show_hidden_text)) {
+          (temp->visibility == INVISIBLE && toplevel->show_hidden_text)) {
         o_erase_single(w_current,temp);
       }
 
-      o_text_recreate(w_current, temp);
+      o_text_recreate(toplevel, temp);
 
       /* this doesn't deal with the selection list
        * item */
       if (temp->visibility == VISIBLE ||
-          (temp->visibility == INVISIBLE && w_current->show_hidden_text)) {
+          (temp->visibility == INVISIBLE && toplevel->show_hidden_text)) {
         o_redraw_single(w_current,temp);
       }
 
@@ -199,10 +201,10 @@ void o_slot_end(TOPLEVEL *w_current, char *string, int len)
     } else {
       /* here you need to do the add the slot
          attribute since it doesn't exist */
-      w_current->page_current->object_tail =
+      toplevel->page_current->object_tail =
         (OBJECT *) o_text_add(
-                              w_current,
-                              w_current->page_current->object_tail,
+                              toplevel,
+                              toplevel->page_current->object_tail,
                               OBJ_TEXT, w_current->text_color,
                               object->complex->x, object->complex->y,
                               LOWER_LEFT,
@@ -214,21 +216,21 @@ void o_slot_end(TOPLEVEL *w_current, char *string, int len)
       /* manually attach attribute */
 
       /* NEWSEL this is okay too, since tail is single obj */
-      o_attrib_attach(w_current,
-                      w_current->page_current->object_head,
-                      w_current->page_current->object_tail,
+      o_attrib_attach(toplevel,
+                      toplevel->page_current->object_head,
+                      toplevel->page_current->object_tail,
                       object);
 
       slot_text_object =
-        w_current->page_current->object_tail;
+        toplevel->page_current->object_tail;
     }
 
     o_erase_single(w_current, object);
-    o_attrib_slot_update(w_current, object);
+    o_attrib_slot_update(toplevel, object);
 
     o_redraw_single(w_current,object);
 
-    w_current->page_current->CHANGED = 1;
+    toplevel->page_current->CHANGED = 1;
     if (name) g_free(name);
     if (value) g_free(value);
 

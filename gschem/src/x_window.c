@@ -23,6 +23,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/i_vars.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
@@ -36,14 +37,12 @@
  *  \par Function Description
  *
  */
-void x_window_setup (TOPLEVEL *toplevel)
+void x_window_setup (GSCHEM_TOPLEVEL *w_current)
 {
-  /* x_window_setup_rest() - BEGIN */
-  toplevel->event_state = SELECT;
-  /* x_window_setup_rest() - END */
+  TOPLEVEL *toplevel = w_current->toplevel;
 
   /* immediately setup user params */
-  i_vars_set(toplevel);
+  i_vars_set(w_current);
 
   /* Initialize the autosave callback */
   s_page_autosave_init(toplevel);
@@ -56,17 +55,17 @@ void x_window_setup (TOPLEVEL *toplevel)
   toplevel->width  = default_width;
   toplevel->height = default_height;
 
-  toplevel->win_width  = toplevel->width;
-  toplevel->win_height = toplevel->height;
+  w_current->win_width  = toplevel->width;
+  w_current->win_height = toplevel->height;
   /* x_window_setup_world() - END */
 
   /* Add to the list of windows */
-  global_window_list = g_list_append (global_window_list, toplevel);
+  global_window_list = g_list_append (global_window_list, w_current);
 
   /* X related stuff */
-  x_window_create_main (toplevel);
+  x_window_create_main (w_current);
 
-  x_menu_attach_recent_files_submenu(toplevel);
+  x_menu_attach_recent_files_submenu(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -103,7 +102,7 @@ void x_window_setup_colors(void)
  *  \par Function Description
  *
  */
-void x_window_free_colors(TOPLEVEL *w_current)
+void x_window_free_colors()
 {
   GdkColor *colors[] = { &black, &white };
   
@@ -116,7 +115,7 @@ void x_window_free_colors(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_window_setup_gc(TOPLEVEL *w_current)
+void x_window_setup_gc(GSCHEM_TOPLEVEL *w_current)
 {
   GdkGCValues     values;
   GdkGCValuesMask  values_mask;
@@ -183,7 +182,7 @@ void x_window_setup_gc(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_window_free_gc(TOPLEVEL *w_current)
+void x_window_free_gc(GSCHEM_TOPLEVEL *w_current)
 {
   gdk_gc_unref(w_current->gc);
   gdk_gc_unref(w_current->xor_gc);
@@ -196,7 +195,7 @@ void x_window_free_gc(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_window_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current)
+void x_window_create_drawing(GtkWidget *drawbox, GSCHEM_TOPLEVEL *w_current)
 {
   /* drawing next */
   w_current->drawing_area = gtk_drawing_area_new ();
@@ -224,7 +223,7 @@ void x_window_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_window_setup_draw_events(TOPLEVEL *w_current)
+void x_window_setup_draw_events(GSCHEM_TOPLEVEL *w_current)
 {
   struct event_reg_t {
     gchar *detailed_signal;
@@ -278,7 +277,7 @@ void x_window_setup_draw_events(TOPLEVEL *w_current)
  * \param stock Name of the stock icon ("new", "open", etc.)
  * \return Pointer to the new GtkImage object.
  */
-static GtkWidget *x_window_stock_pixmap(const char *stock, TOPLEVEL *w_current)
+static GtkWidget *x_window_stock_pixmap(const char *stock, GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *wpixmap = NULL;
   GdkPixmap *pixmap;
@@ -288,7 +287,7 @@ static GtkWidget *x_window_stock_pixmap(const char *stock, TOPLEVEL *w_current)
   GdkWindow *window=w_current->main_window->window;
   GdkColor *background=&w_current->main_window->style->bg[GTK_STATE_NORMAL];
 
-  gchar *filename=g_strconcat(w_current->bitmap_directory, 
+  gchar *filename=g_strconcat(w_current->toplevel->bitmap_directory,
                               G_DIR_SEPARATOR_S, 
                               "gschem-", stock, ".xpm", NULL);
 
@@ -322,8 +321,10 @@ static GtkWidget *x_window_stock_pixmap(const char *stock, TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_window_create_main(TOPLEVEL *w_current)
+void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
+
   GtkWidget *label=NULL;
   GtkWidget *main_box=NULL;
   GtkWidget *menubar=NULL;
@@ -364,7 +365,7 @@ void x_window_create_main(TOPLEVEL *w_current)
   gtk_container_border_width(GTK_CONTAINER(main_box), 0);
   gtk_container_add(GTK_CONTAINER(w_current->main_window), main_box);
 
-  get_main_menu(w_current, &menubar);
+  get_main_menu(&menubar);
   if (w_current->handleboxes) {
   	handlebox = gtk_handle_box_new ();
   	gtk_box_pack_start(GTK_BOX(main_box), handlebox, FALSE, FALSE, 0);
@@ -498,8 +499,8 @@ void x_window_create_main(TOPLEVEL *w_current)
   if (w_current->scrollbars_flag == TRUE) {
     /* setup scroll bars */
     w_current->v_adjustment =
-      gtk_adjustment_new (w_current->init_bottom,
-                          0.0, w_current->init_bottom,
+      gtk_adjustment_new (toplevel->init_bottom,
+                          0.0, toplevel->init_bottom,
                           100.0, 100.0, 10.0);
 
     w_current->v_scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (
@@ -517,7 +518,7 @@ void x_window_create_main(TOPLEVEL *w_current)
                         w_current);
 
     w_current->h_adjustment = gtk_adjustment_new (0.0, 0.0,
-                                                  w_current->init_right,
+                                                  toplevel->init_right,
                                                   100.0, 100.0, 10.0);
 
     w_current->h_scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (
@@ -614,8 +615,9 @@ void x_window_create_main(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_window_close(TOPLEVEL *w_current)
+void x_window_close(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   gboolean last_window = FALSE;
 
   /* last chance to save possible unsaved pages */
@@ -680,24 +682,24 @@ void x_window_close(TOPLEVEL *w_current)
     last_window = TRUE;
   }
 
-  o_attrib_free_current(w_current);
-  o_complex_free_filename(w_current);
+  o_attrib_free_current(toplevel);
+  o_complex_free_filename(toplevel);
 
-  if (w_current->major_changed_refdes) {
-    GList* current = w_current->major_changed_refdes;
+  if (toplevel->major_changed_refdes) {
+    GList* current = toplevel->major_changed_refdes;
     while (current)
     {
       /* printf("yeah freeing: %s\n", (char*) current->data); */
       g_free(current->data);
       current = g_list_next(current);
     }
-    g_list_free(w_current->major_changed_refdes);
+    g_list_free(toplevel->major_changed_refdes);
   }
 
   /* stuff that has to be done before we free w_current */
   if (last_window) {
     /* free all fonts */
-    o_text_freeallfonts (w_current);
+    o_text_freeallfonts (toplevel);
     /* close the log file */
     s_log_close ();
     /* free the buffers */
@@ -713,8 +715,9 @@ void x_window_close(TOPLEVEL *w_current)
   /* finally close the main window */
   gtk_widget_destroy(w_current->main_window);
 
-  s_toplevel_delete (w_current);
+  s_toplevel_delete (toplevel);
   global_window_list = g_list_remove (global_window_list, w_current);
+  g_free (w_current);
 
   /* just closed last window, so quit */
   if (last_window) {
@@ -727,14 +730,14 @@ void x_window_close(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_window_close_all(TOPLEVEL *w_current)
+void x_window_close_all(GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *current;
+  GSCHEM_TOPLEVEL *current;
   GList *list_copy, *iter;
 
   iter = list_copy = g_list_copy (global_window_list);
   while (iter != NULL ) {
-    current = (TOPLEVEL *)iter->data;
+    current = (GSCHEM_TOPLEVEL *)iter->data;
     iter = g_list_next (iter);
     x_window_close (current);
   }
@@ -756,21 +759,22 @@ void x_window_close_all(TOPLEVEL *w_current)
  *  \returns A pointer on the new page.
  */
 PAGE*
-x_window_open_untitled_page (TOPLEVEL *toplevel)
+x_window_open_untitled_page (GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   PAGE *page;
   gchar *cwd, *tmp, *filename;
 
   cwd = g_get_current_dir ();
   tmp = g_strdup_printf ("%s_%d.sch",
                          toplevel->untitled_name,
-                         ++toplevel->num_untitled);
+                         ++w_current->num_untitled);
 
   filename = g_build_filename (cwd, tmp, NULL);
   g_free (cwd);
   g_free (tmp);
 
-  page = x_window_open_page (toplevel, filename);
+  page = x_window_open_page (w_current, filename);
   g_free (filename);
 
   return page;
@@ -793,8 +797,9 @@ x_window_open_untitled_page (TOPLEVEL *toplevel)
  *  \returns A pointer on the new page.
  */
 PAGE*
-x_window_open_page (TOPLEVEL *toplevel, const gchar *filename)
+x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   PAGE *old_current, *page;
 
   g_return_val_if_fail (toplevel != NULL, NULL);
@@ -818,11 +823,11 @@ x_window_open_page (TOPLEVEL *toplevel, const gchar *filename)
     scm_run_hook (new_page_hook,
                   scm_cons (g_make_page_smob (toplevel, page), SCM_EOL));
 
-  a_zoom_extents (toplevel,
+  a_zoom_extents (w_current,
                   toplevel->page_current->object_head,
                   A_PAN_DONT_REDRAW);
 
-  o_undo_savestate (toplevel, UNDO_ALL);
+  o_undo_savestate (w_current, UNDO_ALL);
 
   if ( old_current != NULL )
     s_page_goto (toplevel, old_current);
@@ -832,7 +837,7 @@ x_window_open_page (TOPLEVEL *toplevel, const gchar *filename)
    * needed needed to add it into the page manager. Otherwise,
    * it will get done in x_window_set_current_page(...)
    */
-  x_pagesel_update (toplevel); /* ??? */
+  x_pagesel_update (w_current); /* ??? */
   recent_files_add(filename);
 
   return page;
@@ -852,27 +857,29 @@ x_window_open_page (TOPLEVEL *toplevel, const gchar *filename)
  *  \param [in] page     The page to become current page.
  */
 void
-x_window_set_current_page (TOPLEVEL *toplevel, PAGE *page)
+x_window_set_current_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
+
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (page != NULL);
 
   s_page_goto (toplevel, page);
 
-  i_update_menus (toplevel);
-  i_set_filename (toplevel, page->page_filename);
+  i_update_menus (w_current);
+  i_set_filename (w_current, page->page_filename);
 
-  x_pagesel_update (toplevel);
-  x_multiattrib_update (toplevel);
+  x_pagesel_update (w_current);
+  x_multiattrib_update (w_current);
 
   toplevel->DONT_REDRAW = 1;
-  x_repaint_background (toplevel);
-  x_manual_resize (toplevel);
-  x_hscrollbar_update (toplevel);
-  x_vscrollbar_update (toplevel);
+  x_repaint_background (w_current);
+  x_manual_resize (w_current);
+  x_hscrollbar_update (w_current);
+  x_vscrollbar_update (w_current);
   toplevel->DONT_REDRAW = 0;
 
-  o_redraw_all (toplevel);
+  o_redraw_all (w_current);
 }
 
 /*! \brief Saves a page to a file.
@@ -893,8 +900,9 @@ x_window_set_current_page (TOPLEVEL *toplevel, PAGE *page)
  *  \returns 1 on success, 0 otherwise.
  */
 gint
-x_window_save_page (TOPLEVEL *toplevel, PAGE *page, const gchar *filename)
+x_window_save_page (GSCHEM_TOPLEVEL *w_current, PAGE *page, const gchar *filename)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   PAGE *old_current;
   const gchar *log_msg, *state_msg;
   gint ret;
@@ -939,10 +947,10 @@ x_window_save_page (TOPLEVEL *toplevel, PAGE *page, const gchar *filename)
   s_log_message (log_msg, filename);
 
   /* update display and page manager */
-  x_window_set_current_page (toplevel, old_current);
+  x_window_set_current_page (w_current, old_current);
 
-  i_set_state_msg  (toplevel, SELECT, state_msg);
-  i_update_toolbar (toplevel);
+  i_set_state_msg  (w_current, SELECT, state_msg);
+  i_update_toolbar (w_current);
 
   return ret;
 }
@@ -959,8 +967,9 @@ x_window_save_page (TOPLEVEL *toplevel, PAGE *page, const gchar *filename)
  *  \param [in] page     The page to close.
  */
 void
-x_window_close_page (TOPLEVEL *toplevel, PAGE *page)
+x_window_close_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   PAGE *new_current = NULL;
   GList *iter;
 
@@ -1001,10 +1010,10 @@ x_window_close_page (TOPLEVEL *toplevel, PAGE *page)
 
     /* Create a new page if there wasn't another to switch to */
     if (new_current == NULL) {
-      new_current = x_window_open_untitled_page (toplevel);
+      new_current = x_window_open_untitled_page (w_current);
     }
 
     /* change to new_current and update display */
-    x_window_set_current_page (toplevel, new_current);
+    x_window_set_current_page (w_current, new_current);
   }
 }

@@ -40,6 +40,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h> 
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -74,7 +75,7 @@
  *
  *  \param [in] dialog    The component selection dialog.
  *  \param [in] arg1      The response ID.
- *  \param [in] user_data A pointer on the toplevel environment.
+ *  \param [in] user_data A pointer on the GSCHEM_TOPLEVEL environment.
  */
 static void
 x_compselect_callback_response (GtkDialog *dialog,
@@ -82,7 +83,8 @@ x_compselect_callback_response (GtkDialog *dialog,
                                 gpointer user_data)
 {
   Compselect *compselect = (Compselect*)dialog;
-  TOPLEVEL *toplevel = (TOPLEVEL*)user_data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *)user_data;
+  TOPLEVEL *toplevel = w_current->toplevel;
 
   switch (arg1) {
       case COMPSELECT_RESPONSE_PLACE: {
@@ -95,24 +97,24 @@ x_compselect_callback_response (GtkDialog *dialog,
                       "behavior", &behavior,
                       NULL);
 
-        toplevel->include_complex = toplevel->embed_complex = 0;
+        w_current->include_complex = w_current->embed_complex = 0;
         switch (behavior) {
             case COMPSELECT_BEHAVIOR_REFERENCE:
               break;
             case COMPSELECT_BEHAVIOR_EMBED:
-              toplevel->embed_complex   = 1;
+              w_current->embed_complex   = 1;
               break;
             case COMPSELECT_BEHAVIOR_INCLUDE:
-              toplevel->include_complex = 1;
+              w_current->include_complex = 1;
               break;
             default:
               g_assert_not_reached();
         }
 
-        diff_x = toplevel->last_x - toplevel->start_x;
-        diff_y = toplevel->last_y - toplevel->start_y;
+        diff_x = w_current->last_x - w_current->start_x;
+        diff_y = w_current->last_y - w_current->start_y;
 
-        o_complex_translate_display_object_glist(toplevel,
+        o_complex_translate_display_object_glist(w_current,
                                                  diff_x, diff_y,
                                                  toplevel->page_current->
                                                    complex_place_list);
@@ -124,11 +126,11 @@ x_compselect_callback_response (GtkDialog *dialog,
 
         if (symbol == NULL) {
           /* If there is no symbol selected, switch to SELECT mode */
-          toplevel->event_state = SELECT;
+          w_current->event_state = SELECT;
         } else {
           /* Otherwise set the new symbol to place */
           o_complex_set_filename(toplevel, s_clib_symbol_get_name (symbol));
-          toplevel->event_state = DRAWCOMP;
+          w_current->event_state = DRAWCOMP;
         }
         break;
       }
@@ -148,9 +150,9 @@ x_compselect_callback_response (GtkDialog *dialog,
 
       case GTK_RESPONSE_CLOSE:
       case GTK_RESPONSE_DELETE_EVENT:
-        g_assert (GTK_WIDGET (dialog) == toplevel->cswindow);
+        g_assert (GTK_WIDGET (dialog) == w_current->cswindow);
         gtk_widget_destroy (GTK_WIDGET (dialog));
-        toplevel->cswindow = NULL;
+        w_current->cswindow = NULL;
 
         /* Free the complex place list and its contents */
         s_delete_object_glist(toplevel,
@@ -158,8 +160,8 @@ x_compselect_callback_response (GtkDialog *dialog,
         toplevel->page_current->complex_place_list = NULL;
 
         /* return to the default state */
-        i_set_state(toplevel, SELECT);
-        i_update_toolbar(toplevel);
+        i_set_state(w_current, SELECT);
+        i_update_toolbar(w_current);
         break;
 
       default:
@@ -176,43 +178,43 @@ x_compselect_callback_response (GtkDialog *dialog,
  *  <B>toplevel</B> if it is not already. In this last case, it only
  *  raises the dialog.
  *
- *  \param [in] toplevel The toplevel environment.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL environment.
  */
 void
-x_compselect_open (TOPLEVEL *toplevel)
+x_compselect_open (GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *current_tab, *entry_filter;
   GtkNotebook *compselect_notebook;
 
-  if (toplevel->cswindow == NULL) {
-    toplevel->cswindow = GTK_WIDGET (
+  if (w_current->cswindow == NULL) {
+    w_current->cswindow = GTK_WIDGET (
       g_object_new (TYPE_COMPSELECT,
                     /* GschemDialog */
                     "settings-name", "compselect",
-                    "toplevel",      toplevel,
+                    "gschem-toplevel", w_current,
                     NULL));
 
-    g_signal_connect (toplevel->cswindow,
+    g_signal_connect (w_current->cswindow,
                       "response",
                       G_CALLBACK (x_compselect_callback_response),
-                      toplevel);
+                      w_current);
     
-    gtk_window_set_transient_for(GTK_WINDOW(toplevel->cswindow),
-				 GTK_WINDOW(toplevel->main_window));
+    gtk_window_set_transient_for(GTK_WINDOW(w_current->cswindow),
+				 GTK_WINDOW(w_current->main_window));
 
-    gtk_widget_show (toplevel->cswindow);
+    gtk_widget_show (w_current->cswindow);
     
   } else {
-    gtk_window_present (GTK_WINDOW(toplevel->cswindow));
+    gtk_window_present (GTK_WINDOW(w_current->cswindow));
   }
-  gtk_editable_select_region(GTK_EDITABLE(COMPSELECT(toplevel->cswindow)->entry_filter), 0, -1);
+  gtk_editable_select_region(GTK_EDITABLE(COMPSELECT(w_current->cswindow)->entry_filter), 0, -1);
 
   /* Set the focus to the filter entry only if it is in the current 
      displayed tab */
-  compselect_notebook = GTK_NOTEBOOK(COMPSELECT(toplevel->cswindow)->viewtabs);
+  compselect_notebook = GTK_NOTEBOOK(COMPSELECT(w_current->cswindow)->viewtabs);
   current_tab = gtk_notebook_get_nth_page(compselect_notebook,
                                           gtk_notebook_get_current_page(compselect_notebook));
-  entry_filter = GTK_WIDGET(COMPSELECT(toplevel->cswindow)->entry_filter);
+  entry_filter = GTK_WIDGET(COMPSELECT(w_current->cswindow)->entry_filter);
   if (gtk_widget_is_ancestor(entry_filter, current_tab)) {
     gtk_widget_grab_focus (entry_filter); 
   }
@@ -223,15 +225,15 @@ x_compselect_open (TOPLEVEL *toplevel)
  *  This function closes the component chooser dialog associated with
  *  <B>toplevel</B>.
  *
- *  \param [in] toplevel The toplevel environment.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL environment.
  */
 void
-x_compselect_close (TOPLEVEL *toplevel)
+x_compselect_close (GSCHEM_TOPLEVEL *w_current)
 {
-  if (toplevel->cswindow) {
-    g_assert (IS_COMPSELECT (toplevel->cswindow));
-    gtk_widget_destroy (toplevel->cswindow);
-    toplevel->cswindow = NULL;
+  if (w_current->cswindow) {
+    g_assert (IS_COMPSELECT (w_current->cswindow));
+    gtk_widget_destroy (w_current->cswindow);
+    w_current->cswindow = NULL;
   }    
 }
 
@@ -561,7 +563,7 @@ create_inuse_tree_model (Compselect *compselect)
 
   store = (GtkListStore *) gtk_list_store_new (1, G_TYPE_POINTER);
 
-  symhead = s_toplevel_get_symbols (GSCHEM_DIALOG (compselect)->toplevel);
+  symhead = s_toplevel_get_symbols (GSCHEM_DIALOG (compselect)->w_current->toplevel);
 
   for (symlist = symhead;
        symlist != NULL;
@@ -594,7 +596,7 @@ create_lib_tree_model (Compselect *compselect)
   store = (GtkTreeStore*)gtk_tree_store_new (1, G_TYPE_POINTER);
   
   /* populate component store */
-  srchead = s_clib_get_sources (GSCHEM_DIALOG (compselect)->toplevel->sort_component_library != 0);
+  srchead = s_clib_get_sources (GSCHEM_DIALOG (compselect)->w_current->sort_component_library != 0);
   for (srclist = srchead; 
        srclist != NULL; 
        srclist = g_list_next (srclist)) {

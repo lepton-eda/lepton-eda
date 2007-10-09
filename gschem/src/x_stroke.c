@@ -23,6 +23,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
@@ -44,7 +45,7 @@ static STROKE_POINT *stroke_points = NULL;
  *  \par Function Description
  *
  */
-void x_stroke_add_point(TOPLEVEL *w_current, int x, int y)
+void x_stroke_add_point(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   STROKE_POINT *new_point;
 
@@ -74,7 +75,7 @@ void x_stroke_add_point(TOPLEVEL *w_current, int x, int y)
  *  \note
  *  traverse list as well as free each point as you go along
  */
-void x_stroke_erase_all(TOPLEVEL *w_current)
+void x_stroke_erase_all(GSCHEM_TOPLEVEL *w_current)
 {
   STROKE_POINT *temp;
 
@@ -87,7 +88,7 @@ void x_stroke_erase_all(TOPLEVEL *w_current)
     /* was xor, wasn't working out... see above note */
     gdk_gc_set_foreground(
                           w_current->gc,
-                          x_get_color(w_current->background_color));
+                          x_get_color(w_current->toplevel->background_color));
 
     gdk_draw_point(w_current->window, w_current->gc,
                    stroke_points->x, stroke_points->y);

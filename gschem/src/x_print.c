@@ -29,6 +29,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 #include "../include/gschem_dialog.h"
@@ -651,11 +652,12 @@ print_dialog_get_type ()
  *
  */
 void
-x_print_setup (TOPLEVEL * w_current, char *filename)
+x_print_setup (GSCHEM_TOPLEVEL *w_current, char *filename)
 {
-  gchar * command = w_current->print_command;
-  gint orient = w_current->print_orientation;
-  gint type = w_current->print_output_type;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  gchar * command = toplevel->print_command;
+  gint orient = toplevel->print_orientation;
+  gint type = toplevel->print_output_type;
   gint paperidx, x, y, result;
   gchar *string, *destination;
   gboolean usefile = FALSE;
@@ -675,8 +677,8 @@ x_print_setup (TOPLEVEL * w_current, char *filename)
       string = (gchar *) s_papersizes_get (paperidx);
       s_papersizes_get_size (string, &x, &y);
 
-      if ((x == w_current->paper_width)
-	  && (y == w_current->paper_height))
+      if ((x == toplevel->paper_width)
+	  && (y == toplevel->paper_height))
 	{
 	  break;
 	}
@@ -699,7 +701,7 @@ x_print_setup (TOPLEVEL * w_current, char *filename)
                                      "usefile", usefile,
                                      /* GschemDialog */
                                      "settings-name", "print",
-                                     "toplevel", w_current,
+                                     "gschem-toplevel", w_current,
                                      NULL));
   gtk_widget_show_all (GTK_WIDGET (dialog));
 
@@ -717,14 +719,14 @@ x_print_setup (TOPLEVEL * w_current, char *filename)
 		    "command", &command,
 		    "filename", &filename,
 		    "papersize", &paperidx,
-		    "orientation", &w_current->print_orientation,
-		    "type", &w_current->print_output_type,
+		    "orientation", &toplevel->print_orientation,
+		    "type", &toplevel->print_output_type,
 		    "usefile", &usefile,
 		    NULL);
 
       s_papersizes_get_size (s_papersizes_get (paperidx),
-			     &w_current->paper_width,
-			     &w_current->paper_height);
+			     &toplevel->paper_width,
+			     &toplevel->paper_height);
 		
       /* de select everything first */
       o_select_unselect_all( w_current );
@@ -733,16 +735,16 @@ x_print_setup (TOPLEVEL * w_current, char *filename)
 	/* Print to file */
 	{
 	  destination = filename;
-	  result = f_print_file (w_current, filename);
+	  result = f_print_file (toplevel, filename);
 	}
       else if (command[0])
 	/* Print to command and save command for later use. */
 	{
 	  destination = command;
-	  result = f_print_command (w_current, command);
+	  result = f_print_command (toplevel, command);
 	  
-	  g_free (w_current->print_command);
-	  w_current->print_command = g_strdup (command);
+	  g_free (toplevel->print_command);
+	  toplevel->print_command = g_strdup (command);
 	}
       else
 	{

@@ -24,6 +24,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
@@ -59,9 +60,10 @@
  * */
 /* this code is not longer experimental an is used by several functions
    like every zooming-function and the x_event_configure (Werner Hoch,(hw))*/
-void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
+void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
 		   double relativ_zoom_factor,int flags)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   /* see libgeda/include/defines.h for flags */
   /*if the borders should be ignored always, remove, outcomment or changes
     the flags in the function-calls*/
@@ -80,10 +82,10 @@ void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
 
   /* calc minimum zoomfactors and choose the smaller one. They are equal
      if the aspectratio of the world is the same as the screen ratio */
-  zx = (double) w_current->width / (w_current->init_right -
-                                    w_current->init_left);
-  zy = (double) w_current->height / (w_current->init_bottom -
-                                     w_current->init_top);
+  zx = (double) toplevel->width / (toplevel->init_right -
+                                    toplevel->init_left);
+  zy = (double) toplevel->height / (toplevel->init_bottom -
+                                     toplevel->init_top);
   zoom_min = zx < zy ? zx : zy;
 
 #if DEBUG
@@ -92,7 +94,7 @@ void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
 
   /* to_screen_x_constant and to_screen_y_constant are almost the same.
      lets use to_screen_y_constant */
-  zoom_old = w_current->page_current->to_screen_y_constant;
+  zoom_old = toplevel->page_current->to_screen_y_constant;
 		
   /* calc new zooming factor */
   /* check if there's a zoom_full (relativ_zoom_factor == -1) */
@@ -110,67 +112,67 @@ void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
   /* check to see if we are inside an action draw net, etc.  If
    * yes, convert the start screen coords to world coords */
   if (w_current->inside_action) {
-    SCREENtoWORLD(w_current,
+    SCREENtoWORLD(toplevel,
 		  w_current->start_x, w_current->start_y,
 		  &start_x, &start_y);
-    start_x = snap_grid(w_current, start_x);
-    start_y = snap_grid(w_current, start_y);
+    start_x = snap_grid(toplevel, start_x);
+    start_y = snap_grid(toplevel, start_y);
   }
 
   /* calculate the new visible area; adding 0.5 to round */
-  w_current->page_current->left = world_cx - (double) w_current->width
+  toplevel->page_current->left = world_cx - (double) toplevel->width
     / 2 / zoom_new + 0.5;
-  w_current->page_current->right = world_cx + (double) w_current->width
+  toplevel->page_current->right = world_cx + (double) toplevel->width
     / 2 / zoom_new + 0.5;
-  w_current->page_current->top = world_cy - (double) w_current->height
+  toplevel->page_current->top = world_cy - (double) toplevel->height
     / 2 / zoom_new + 0.5;
-  w_current->page_current->bottom = world_cy + (double) w_current->height
+  toplevel->page_current->bottom = world_cy + (double) toplevel->height
     / 2 / zoom_new + 0.5;
 	
   /* and put it back to the borders */
   if (!(flags & A_PAN_IGNORE_BORDERS)) {
     /* check right border */
-    if (w_current->page_current->right > w_current->init_right) {
-      w_current->page_current->left += w_current->init_right -
-                                       w_current->page_current->right;
-      w_current->page_current->right = w_current->init_right;
+    if (toplevel->page_current->right > toplevel->init_right) {
+      toplevel->page_current->left += toplevel->init_right -
+                                       toplevel->page_current->right;
+      toplevel->page_current->right = toplevel->init_right;
     }
     /* check left border */
-    if (w_current->page_current->left < w_current->init_left) {
-      w_current->page_current->right += w_current->init_left -
-                                        w_current->page_current->left;
-      w_current->page_current->left = w_current->init_left;
+    if (toplevel->page_current->left < toplevel->init_left) {
+      toplevel->page_current->right += toplevel->init_left -
+                                        toplevel->page_current->left;
+      toplevel->page_current->left = toplevel->init_left;
     }
 
     /* If there is any slack, center the view */
-    diff = (w_current->page_current->right -
-            w_current->page_current->left) -
-           (w_current->init_right - w_current->init_left);
+    diff = (toplevel->page_current->right -
+            toplevel->page_current->left) -
+           (toplevel->init_right - toplevel->init_left);
     if (diff > 0) {
-      w_current->page_current->left -= diff / 2;
-      w_current->page_current->right -= diff / 2;
+      toplevel->page_current->left -= diff / 2;
+      toplevel->page_current->right -= diff / 2;
     }
 
     /* check bottom border */
-    if (w_current->page_current->bottom > w_current->init_bottom) {
-      w_current->page_current->top += w_current->init_bottom -
-                                      w_current->page_current->bottom;
-      w_current->page_current->bottom = w_current->init_bottom;
+    if (toplevel->page_current->bottom > toplevel->init_bottom) {
+      toplevel->page_current->top += toplevel->init_bottom -
+                                      toplevel->page_current->bottom;
+      toplevel->page_current->bottom = toplevel->init_bottom;
     }
     /* check top border */
-    if (w_current->page_current->top < w_current->init_top) {
-      w_current->page_current->bottom += w_current->init_top -
-                                         w_current->page_current->top;
-      w_current->page_current->top = w_current->init_top;
+    if (toplevel->page_current->top < toplevel->init_top) {
+      toplevel->page_current->bottom += toplevel->init_top -
+                                         toplevel->page_current->top;
+      toplevel->page_current->top = toplevel->init_top;
     }
 
     /* If there is any slack, center the view */
-    diff = (w_current->page_current->bottom -
-            w_current->page_current->top) -
-           (w_current->init_bottom - w_current->init_top);
+    diff = (toplevel->page_current->bottom -
+            toplevel->page_current->top) -
+           (toplevel->init_bottom - toplevel->init_top);
     if (diff > 0) {
-      w_current->page_current->top -= diff / 2;
-      w_current->page_current->bottom -= diff / 2;
+      toplevel->page_current->top -= diff / 2;
+      toplevel->page_current->bottom -= diff / 2;
     }
 
   }
@@ -188,15 +190,15 @@ void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
 #endif
 	
   /* set_window */
-  set_window(w_current, w_current->page_current,
-             w_current->page_current->left  ,
-             w_current->page_current->right ,
-             w_current->page_current->top   ,
-             w_current->page_current->bottom);
+  set_window(toplevel, toplevel->page_current,
+             toplevel->page_current->left  ,
+             toplevel->page_current->right ,
+             toplevel->page_current->top   ,
+             toplevel->page_current->bottom);
 
   /* convert world coords back to screen coords */
   if (w_current->inside_action) {
-    WORLDtoSCREEN(w_current,
+    WORLDtoSCREEN(toplevel,
 		  start_x, start_y,
 		  &(w_current->start_x), &(w_current->start_y));
     /* set all rubberband points to it's start values:
@@ -224,8 +226,9 @@ void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
  *  \todo Kazu on July 8, 1999 - distill common part from a_pan() and
  *  a_pan_mouse() because they are doing basically the same thing
  */
-void a_pan(TOPLEVEL *w_current, int x, int y)
+void a_pan(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   double world_cx, world_cy;
 
 #if DEBUG
@@ -235,8 +238,8 @@ void a_pan(TOPLEVEL *w_current, int x, int y)
   /* make mouse to the new world-center;
      attention: there are information looses because of type cast in mil_x */
 
-  world_cx = mil_x(w_current, x);
-  world_cy = mil_y(w_current, y);
+  world_cx = mil_x(toplevel, x);
+  world_cy = mil_y(toplevel, y);
 
   a_pan_general(w_current, world_cx, world_cy, 1, 0);
 
@@ -253,16 +256,17 @@ void a_pan(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *
  */
-void a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y)
+void a_pan_mouse(GSCHEM_TOPLEVEL *w_current, int diff_x, int diff_y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   double world_cx, world_cy;
 
 #if DEBUG
   printf("a_pan_mouse(): diff_x=%d, diff_y=%d\n", diff_x, diff_y);
 #endif	
 
-  world_cx=GET_PAGE_CENTER_X(w_current) - WORLDabs(w_current, diff_x);
-  world_cy=GET_PAGE_CENTER_Y(w_current) + WORLDabs(w_current, diff_y);
+  world_cx=GET_PAGE_CENTER_X(toplevel) - WORLDabs(toplevel, diff_x);
+  world_cy=GET_PAGE_CENTER_Y(toplevel) + WORLDabs(toplevel, diff_y);
 
 #if DEBUG
   printf("  world_cx=%f, world_cy=%f, world_dx=%d, world_dy=%d\n",

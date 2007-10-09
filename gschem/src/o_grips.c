@@ -24,6 +24,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -58,7 +59,7 @@ static OBJECT *object_changing;
  *  This function is used to determine if the (<B>x</B>,<B>y</B>) point is
  *  inside a grip of one of the selected object on the current sheet.
  *  The selected object are in a list starting at
- *  <B>w_current->page_current->selection2_head</B>.
+ *  <B>w_current->toplevel->page_current->selection2_head</B>.
  *  The <B>x</B> and <B>y</B> parameters are in world units.
  *  If the point is inside one grip, a pointer on the object it belongs to is
  *  returned and <B>*whichone</B> is set according to the position of the grip
@@ -69,14 +70,15 @@ static OBJECT *object_changing;
  *  The list of selected object is covered : each object is tested with the
  *  appropriate function.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  x          Current x coordinate of pointer in world units.
  *  \param [in]  y          Current y coordinate of pointer in world units.
  *  \param [out] whichone   Which grip point is selected.
  *  \return Pointer to OBJECT the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_world(TOPLEVEL *w_current, int x, int y, int *whichone)
+OBJECT *o_grips_search_world(GSCHEM_TOPLEVEL *w_current, int x, int y, int *whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *object=NULL;
   OBJECT *found=NULL;
   GList *s_current;
@@ -89,9 +91,9 @@ OBJECT *o_grips_search_world(TOPLEVEL *w_current, int x, int y, int *whichone)
 
   /* get the size of the grip according to zoom level */
   size = o_grips_size(w_current);
-  w_size = WORLDabs( w_current, size );
+  w_size = WORLDabs(toplevel, size );
 
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
   while (s_current != NULL) {
     object = (OBJECT *) s_current->data;
     if (object) {
@@ -198,7 +200,7 @@ static gboolean inside_grip( int x, int y, int grip_x, int grip_y, int size )
  *  The <B>size</B> parameter is the width (and height) of the square
  *  representing a grip in world units.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  o_current  Arc OBJECT to check.
  *  \param [in]  x          Current x coordinate of pointer in world units.
  *  \param [in]  y          Current y coordinate of pointer in world units.
@@ -206,7 +208,7 @@ static gboolean inside_grip( int x, int y, int grip_x, int grip_y, int size )
  *  \param [out] whichone   Which grip point is selected.
  *  \return Pointer to OBJECT the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_arc_world(TOPLEVEL *w_current, OBJECT *o_current,
+OBJECT *o_grips_search_arc_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                                  int x, int y, int size, int *whichone)
 {
   int centerx, centery, radius, start_angle, end_angle;
@@ -263,7 +265,7 @@ OBJECT *o_grips_search_arc_world(TOPLEVEL *w_current, OBJECT *o_current,
  *  The <B>size</B> parameter is half the width (and half the height) of
  *  the square representing a grip in world units.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  o_current  Box OBJECT to check.
  *  \param [in]  x          Current x coordinate of pointer in world units.
  *  \param [in]  y          Current y coordinate of pointer in world units.
@@ -271,7 +273,7 @@ OBJECT *o_grips_search_arc_world(TOPLEVEL *w_current, OBJECT *o_current,
  *  \param [out] whichone   Which grip point is selected.
  *  \return Pointer to OBJECT the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_box_world(TOPLEVEL *w_current, OBJECT *o_current,
+OBJECT *o_grips_search_box_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                                  int x, int y, int size, int *whichone)
 {
   /* inside upper left grip ? */
@@ -328,7 +330,7 @@ OBJECT *o_grips_search_box_world(TOPLEVEL *w_current, OBJECT *o_current,
  *  The <B>size</B> parameter is half the width (and half the height) of the
  *  square representing a grip in world units.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  o_current  Picture OBJECT to check.
  *  \param [in]  x          Current x coordinate of pointer in world units.
  *  \param [in]  y          Current y coordinate of pointer in world units.
@@ -336,7 +338,7 @@ OBJECT *o_grips_search_box_world(TOPLEVEL *w_current, OBJECT *o_current,
  *  \param [out] whichone   Which grip point is selected.
  *  \return Pointer to OBJECT the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_picture_world(TOPLEVEL *w_current, OBJECT *o_current,
+OBJECT *o_grips_search_picture_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                                      int x, int y, int size, int *whichone)
 {
   /* inside upper left grip ? */
@@ -391,7 +393,7 @@ OBJECT *o_grips_search_picture_world(TOPLEVEL *w_current, OBJECT *o_current,
  *  is inscribed in. Moving this grip change the radius of the circle.
  *  The identifier of this grip is <B>CIRCLE_RADIUS</B>.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  o_current  Circle OBJECT to check.
  *  \param [in]  x          Current x coordinate of pointer in world units.
  *  \param [in]  y          Current y coordinate of pointer in world units.
@@ -399,7 +401,7 @@ OBJECT *o_grips_search_picture_world(TOPLEVEL *w_current, OBJECT *o_current,
  *  \param [out] whichone   Which grip point is selected.
  *  \return Pointer to OBJECT the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_circle_world(TOPLEVEL *w_current, OBJECT *o_current,
+OBJECT *o_grips_search_circle_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                                     int x, int y, int size, int *whichone)
 {
   /* check the grip for radius */
@@ -426,7 +428,7 @@ OBJECT *o_grips_search_circle_world(TOPLEVEL *w_current, OBJECT *o_current,
  *
  *  The parameter <B>size</B> is half the size of the grip in world units.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  o_current  Line OBJECT to check.
  *  \param [in]  x          Current x coordinate of pointer in world units.
  *  \param [in]  y          Current y coordinate of pointer in world units.
@@ -434,7 +436,7 @@ OBJECT *o_grips_search_circle_world(TOPLEVEL *w_current, OBJECT *o_current,
  *  \param [out] whichone   Which grip point is selected.
  *  \return Pointer to OBJECT the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_line_world(TOPLEVEL *w_current, OBJECT *o_current,
+OBJECT *o_grips_search_line_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                                   int x, int y, int size, int *whichone)
 {
   /* check the grip on the end of line 1 */
@@ -471,13 +473,14 @@ OBJECT *o_grips_search_line_world(TOPLEVEL *w_current, OBJECT *o_current,
  *  <B>whichone_changing</B> and <B>object_changing</B> with respectively the
  *  identifier of the grip and the object it belongs to.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  x          Current x coordinate of pointer in screen units.
  *  \param [in]  y          Current y coordinate of pointer in screen units.
  *  \return FALSE if an error occurred or no grip was found, TRUE otherwise.
  */
-int o_grips_start(TOPLEVEL *w_current, int x, int y)
+int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int w_x, w_y;
   OBJECT *object;
   int whichone;
@@ -486,7 +489,7 @@ int o_grips_start(TOPLEVEL *w_current, int x, int y)
     return(FALSE);
   }
 
-  SCREENtoWORLD( w_current, x, y, &w_x, &w_y );
+  SCREENtoWORLD( toplevel, x, y, &w_x, &w_y );
 
   /* search if there is a grip on a selected object at (x,y) */
   object = o_grips_search_world(w_current, w_x, w_y, &whichone);
@@ -524,9 +527,9 @@ int o_grips_start(TOPLEVEL *w_current, int x, int y)
 
       case(OBJ_NET):
         w_current->last_drawb_mode = -1;
-        WORLDtoSCREEN( w_current, object->line->x[whichone], object->line->y[whichone],
+        WORLDtoSCREEN( toplevel, object->line->x[whichone], object->line->y[whichone],
                        &w_current->last_x, &w_current->last_y );
-        WORLDtoSCREEN( w_current, object->line->x[!whichone], object->line->y[!whichone],
+        WORLDtoSCREEN( toplevel, object->line->x[!whichone], object->line->y[!whichone],
                        &w_current->start_x, &w_current->start_y );
 
         o_net_erase(w_current, object);
@@ -538,14 +541,14 @@ int o_grips_start(TOPLEVEL *w_current, int x, int y)
         o_line_erase_grips(w_current, object);
 
         gdk_gc_set_foreground(w_current->gc,
-                              x_get_color(w_current->background_color));
+                              x_get_color(toplevel->background_color));
         return(TRUE);
 
       case(OBJ_PIN):
         w_current->last_drawb_mode = -1;
-        WORLDtoSCREEN( w_current, object->line->x[whichone], object->line->y[whichone],
+        WORLDtoSCREEN( toplevel, object->line->x[whichone], object->line->y[whichone],
                        &w_current->last_x, &w_current->last_y );
-        WORLDtoSCREEN( w_current, object->line->x[!whichone], object->line->y[!whichone],
+        WORLDtoSCREEN( toplevel, object->line->x[!whichone], object->line->y[!whichone],
                        &w_current->start_x, &w_current->start_y );
 
         o_pin_erase(w_current, object);
@@ -559,9 +562,9 @@ int o_grips_start(TOPLEVEL *w_current, int x, int y)
 
       case(OBJ_BUS):
         w_current->last_drawb_mode = -1;
-        WORLDtoSCREEN( w_current, object->line->x[whichone], object->line->y[whichone],
+        WORLDtoSCREEN( toplevel, object->line->x[whichone], object->line->y[whichone],
                        &w_current->last_x, &w_current->last_y );
-        WORLDtoSCREEN( w_current, object->line->x[!whichone], object->line->y[!whichone],
+        WORLDtoSCREEN( toplevel, object->line->x[!whichone], object->line->y[!whichone],
                        &w_current->start_x, &w_current->start_y );
 
         o_bus_erase(w_current, object);
@@ -573,7 +576,7 @@ int o_grips_start(TOPLEVEL *w_current, int x, int y)
         o_line_erase_grips(w_current, object);
 
         gdk_gc_set_foreground(w_current->gc,
-                              x_get_color(w_current->background_color));
+                              x_get_color(toplevel->background_color));
         return(TRUE);
 
       default:
@@ -587,16 +590,17 @@ int o_grips_start(TOPLEVEL *w_current, int x, int y)
 /*! \brief Initialize grip motion process for an arc.
  *  \par Function Description
  *  This function initializes the grip motion process for an arc.
- *  From the <B>o_current</B> pointed object, it stores into the TOPLEVEL
- *  structure the coordinates of the center, the radius and the two angle
- *  that describes an arc. These variables are used in the grip process.
+ *  From the <B>o_current</B> pointed object, it stores into the
+ *  GSCHEM_TOPLEVEL structure the coordinates of the center, the radius
+ *  and the two angle that describes an arc. These variables are used in
+ *  the grip process.
  *
  *  The coordinates of the center of the arc on x- and y-axis are stored
- *  into the <B>loc_x</B> and <B>loc_y</B> fields of the TOPLEVEL structure
- *  in screen unit.
+ *  into the <B>loc_x</B> and <B>loc_y</B> fields of the GSCHEM_TOPLEVEL
+ *  structure in screen units.
  *
  *  The radius of the center is stored into the <B>distance</B> field of
- *  the TOPLEVEL structure in screen unit.
+ *  the GSCHEM_TOPLEVEL structure in screen units.
  *
  *  The two angles describing the arc on a circle are stored into the
  *  <B>start_x</B> for the starting angle and <B>start_y</B> for the ending angle.
@@ -604,27 +608,28 @@ int o_grips_start(TOPLEVEL *w_current, int x, int y)
  *
  *  Depending on which grips has been selected on the arc, the
  *  corresponding variables in its original state is duplicated in
- *  <B>last_x</B> and/or <B>last_y</B> of the TOPLEVEL structure.
+ *  <B>last_x</B> and/or <B>last_y</B> of the GSCHEM_TOPLEVEL structure.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  o_current  Arc OBJECT to check.
  *  \param [in]  x          (unused)
  *  \param [in]  y          (unused)
  *  \param [out] whichone   (unused)
  */
-void o_grips_start_arc(TOPLEVEL *w_current, OBJECT *o_current,
+void o_grips_start_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                        int x, int y, int whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   w_current->last_drawb_mode = -1;
 
   /* erase the arc before */
   o_arc_erase(w_current, o_current);
 
-  /* describe the arc with TOPLEVEL variables */
+  /* describe the arc with GSCHEM_TOPLEVEL variables */
   /* center */
-  WORLDtoSCREEN( w_current, o_current->arc->x, o_current->arc->y, &w_current->start_x, &w_current->start_y );
+  WORLDtoSCREEN( toplevel, o_current->arc->x, o_current->arc->y, &w_current->start_x, &w_current->start_y );
   /* radius */
-  w_current->distance = SCREENabs( w_current, o_current->arc->width / 2 );
+  w_current->distance = SCREENabs( toplevel, o_current->arc->width / 2 );
   /* angles */
   w_current->loc_x = o_current->arc->start_angle;
   w_current->loc_y = o_current->arc->end_angle;
@@ -637,8 +642,8 @@ void o_grips_start_arc(TOPLEVEL *w_current, OBJECT *o_current,
 /*! \brief Initialize grip motion process for a box.
  *  \par Function Description
  *  This function initializes the grip motion process for a box. From the
- *  <B>o_current</B> pointed object, it stores into the TOPLEVEL structure
- *  the .... These variables are used in the grip process.
+ *  <B>o_current</B> pointed object, it stores into the GSCHEM_TOPLEVEL
+ *  structure the .... These variables are used in the grip process.
  *
  *  The function first erases the grips.
  *
@@ -649,15 +654,16 @@ void o_grips_start_arc(TOPLEVEL *w_current, OBJECT *o_current,
  *  (<B>w_current->start_x</B>,<B>w_current->start_y</B>). They are not suppose
  *  to change during the action.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  o_current  Box OBJECT to check.
  *  \param [in]  x          (unused)
  *  \param [in]  y          (unused)
  *  \param [out] whichone   Which coordinate to check.
  */
-void o_grips_start_box(TOPLEVEL *w_current, OBJECT *o_current,
+void o_grips_start_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                        int x, int y, int whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   w_current->last_drawb_mode = -1;
 
   /* erase the box before */
@@ -667,27 +673,27 @@ void o_grips_start_box(TOPLEVEL *w_current, OBJECT *o_current,
   /* (start_x, start_y) is the opposite corner */
   switch(whichone) {
     case BOX_UPPER_LEFT:
-      WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->upper_y,
+      WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->upper_y,
                      &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->lower_y,
+      WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->lower_y,
                      &w_current->start_x, &w_current->start_y );
       break;
     case BOX_LOWER_RIGHT:
-      WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->lower_y,
+      WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->lower_y,
                      &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->upper_y,
+      WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->upper_y,
                      &w_current->start_x, &w_current->start_y );
       break;
     case BOX_UPPER_RIGHT:
-      WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->upper_y,
+      WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->upper_y,
                      &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->lower_y,
+      WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->lower_y,
                      &w_current->start_x, &w_current->start_y );
       break;
     case BOX_LOWER_LEFT:
-      WORLDtoSCREEN( w_current, o_current->box->upper_x, o_current->box->lower_y,
+      WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->lower_y,
                      &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( w_current, o_current->box->lower_x, o_current->box->upper_y,
+      WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->upper_y,
                      &w_current->start_x, &w_current->start_y );
       break;
     default:
@@ -702,8 +708,9 @@ void o_grips_start_box(TOPLEVEL *w_current, OBJECT *o_current,
 /*! \brief Initialize grip motion process for a picture.
  *  \par Function Description
  *  This function initializes the grip motion process for a picture.
- *  From the <B>o_current</B> pointed object, it stores into the TOPLEVEL
- *  structure the .... These variables are used in the grip process.
+ *  From the <B>o_current</B> pointed object, it stores into the
+ *  GSCHEM_TOPLEVEL structure the ....
+ *  These variables are used in the grip process.
  *
  *  The function first erases the grips.
  *
@@ -714,15 +721,16 @@ void o_grips_start_box(TOPLEVEL *w_current, OBJECT *o_current,
  *  (<B>w_current->start_x</B>,<B>w_current->start_y</B>). They are not
  *  suppose to change during the action.
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  o_current  Picture OBJECT to check.
  *  \param [in]  x          (unused)
  *  \param [in]  y          (unused)
  *  \param [out] whichone   Which coordinate to check.
  */
-void o_grips_start_picture(TOPLEVEL *w_current, OBJECT *o_current,
+void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                            int x, int y, int whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   w_current->last_drawb_mode = -1;
 
   /* erase the picture before */
@@ -735,27 +743,27 @@ void o_grips_start_picture(TOPLEVEL *w_current, OBJECT *o_current,
   /* (start_x, start_y) is the opposite corner */
   switch(whichone) {
     case PICTURE_UPPER_LEFT:
-      WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->upper_y,
+      WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->upper_y,
                      &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->lower_y,
+      WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->lower_y,
                      &w_current->start_x, &w_current->start_y );
       break;
     case PICTURE_LOWER_RIGHT:
-      WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->lower_y,
+      WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->lower_y,
                      &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->upper_y,
+      WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->upper_y,
                      &w_current->start_x, &w_current->start_y );
       break;
     case PICTURE_UPPER_RIGHT:
-      WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->upper_y,
+      WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->upper_y,
                      &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->lower_y,
+      WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->lower_y,
                      &w_current->start_x, &w_current->start_y );
       break;
     case PICTURE_LOWER_LEFT:
-      WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->lower_y,
+      WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->lower_y,
                      &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->upper_y,
+      WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->upper_y,
                      &w_current->start_x, &w_current->start_y );
       break;
     default:
@@ -770,9 +778,9 @@ void o_grips_start_picture(TOPLEVEL *w_current, OBJECT *o_current,
 /*! \brief Initialize grip motion process for a circle.
  *  \par Function Description
  *  This function initializes the grip motion process for a circle.
- *  From the <B>o_current</B> pointed object, it stores into the TOPLEVEL
- *  structure the coordinate of the center and the radius. These variables
- *  are used in the grip process.
+ *  From the <B>o_current</B> pointed object, it stores into the
+ *  GSCHEM_TOPLEVEL structure the coordinate of the center and the radius.
+ *  These variables are used in the grip process.
  *
  *  The function first erases the grips.
  *
@@ -783,29 +791,30 @@ void o_grips_start_picture(TOPLEVEL *w_current, OBJECT *o_current,
  *  The coordinates of the point on the circle to the right of the center
  *  go in (<B>w_current->last_x</B>,<B>w_current->last_y</B>).
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  o_current  Circle OBJECT to check.
  *  \param [in]  x          (unused)
  *  \param [in]  y          (unused)
  *  \param [out] whichone   Which coordinate to check.
  */
-void o_grips_start_circle(TOPLEVEL *w_current, OBJECT *o_current,
+void o_grips_start_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                           int x, int y, int whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   w_current->last_drawb_mode = -1;
 
   /* erase the circle before */
   o_circle_erase(w_current, o_current);
 
-  /* describe the circle with TOPLEVEL variables */
+  /* describe the circle with GSCHEM_TOPLEVEL variables */
   /* (start_x, start_y) is the center of the circle */
-  WORLDtoSCREEN( w_current, o_current->circle->center_x, o_current->circle->center_y,
+  WORLDtoSCREEN( toplevel, o_current->circle->center_x, o_current->circle->center_y,
                  &w_current->start_x, &w_current->start_y );
   /* (last_x,last_y)    is the point on circle on the right of center */
-  WORLDtoSCREEN( w_current, o_current->circle->center_x + o_current->circle->radius, o_current->circle->center_y,
+  WORLDtoSCREEN( toplevel, o_current->circle->center_x + o_current->circle->radius, o_current->circle->center_y,
                  &w_current->last_x, &w_current->last_y );
   /* distance           is the radius of the circle */
-  w_current->distance = SCREENabs( w_current, o_current->circle->radius );
+  w_current->distance = SCREENabs( toplevel, o_current->circle->radius );
 
   /* draw the first temporary circle */
   o_circle_rubbercircle_xor(w_current);
@@ -826,24 +835,25 @@ void o_grips_start_circle(TOPLEVEL *w_current, OBJECT *o_current,
  *  The line end that corresponds to the moving grip is in
  *  (<B>w_current->last_x</B>,<B>w_current->last_y</B>).
  *
- *  \param [in]  w_current  The TOPLEVEL object.
+ *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  o_current  Line OBJECT to check.
  *  \param [in]  x          (unused)
  *  \param [in]  y          (unused)
  *  \param [out] whichone   Which coordinate to check.
  */
-void o_grips_start_line(TOPLEVEL *w_current, OBJECT *o_current,
+void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                         int x, int y, int whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   w_current->last_drawb_mode = -1;
 
   /* erase the line before */
   o_line_erase(w_current, o_current);
 
-  /* describe the line with TOPLEVEL variables */
-  WORLDtoSCREEN( w_current, o_current->line->x[whichone], o_current->line->y[whichone],
+  /* describe the line with GSCHEM_TOPLEVEL variables */
+  WORLDtoSCREEN( toplevel, o_current->line->x[whichone], o_current->line->y[whichone],
                  &w_current->last_x, &w_current->last_y );
-  WORLDtoSCREEN( w_current, o_current->line->x[!whichone], o_current->line->y[!whichone],
+  WORLDtoSCREEN( toplevel, o_current->line->x[!whichone], o_current->line->y[!whichone],
                  &w_current->start_x, &w_current->start_y );
 
   /* draw the first temporary line */
@@ -863,22 +873,23 @@ void o_grips_start_line(TOPLEVEL *w_current, OBJECT *o_current,
  *  It erases the temporary object, updates its internal representation,
  *  and draws it again.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_grips_motion(TOPLEVEL *w_current, int x, int y)
+void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
   /* no object changing */
   if (object_changing == NULL) {
     /* stop grip process */
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
@@ -921,8 +932,8 @@ void o_grips_motion(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *  This function is the refreshing part of the grip motion process.
  *  It is called whenever the position of the pointer is changed,
- *  therefore requiring the TOPLEVEL variables to be updated.
- *  Depending on the grip selected and moved, the temporary TOPLEVEL
+ *  therefore requiring the GSCHEM_TOPLEVEL variables to be updated.
+ *  Depending on the grip selected and moved, the temporary GSCHEM_TOPLEVEL
  *  variables are changed according to the current position of the pointer.
  *
  *  If the grip at the center of the arc has been moved - modifying the
@@ -937,12 +948,12 @@ void o_grips_motion(TOPLEVEL *w_current, int x, int y)
  *  <B>w_current->start_y</B> are updated according to which of the grip
  *  has been selected.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  *  \param [in] whichone   Which grip to start motion with.
  */
-void o_grips_motion_arc(TOPLEVEL *w_current, int x, int y, int whichone)
+void o_grips_motion_arc(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone)
 {
   o_arc_rubberarc(w_current, x, y, whichone);
 }
@@ -951,21 +962,21 @@ void o_grips_motion_arc(TOPLEVEL *w_current, int x, int y, int whichone)
  *  \par Function Description
  *  This function is the refreshing part of the grip motion process. It is
  *  called whenever the position of the pointer is changed, therefore
- *  requiring the TOPLEVEL variables to be updated.
- *  Depending on the grip selected and moved, the temporary TOPLEVEL
+ *  requiring the GSCHEM_TOPLEVEL variables to be updated.
+ *  Depending on the grip selected and moved, the temporary GSCHEM_TOPLEVEL
  *  variables are changed according to the current position of the pointer
  *  and the modifications temporary drawn.
  *
  *  This function only makes a call to #o_box_rubberbox() that updates
- *  the TOPLEVEL variables, erase the previous temporary box and draw the
- *  new temporary box.
+ *  the GSCHEM_TOPLEVEL variables, erase the previous temporary box and draw
+ *  the new temporary box.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  *  \param [in] whichone   Which grip to start motion with.
  */
-void o_grips_motion_box(TOPLEVEL *w_current, int x, int y, int whichone)
+void o_grips_motion_box(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone)
 {
   /* erase, update and draw the temporary box */
   o_box_rubberbox(w_current, x, y);
@@ -975,21 +986,21 @@ void o_grips_motion_box(TOPLEVEL *w_current, int x, int y, int whichone)
  *  \par Function Description
  *  This function is the refreshing part of the grip motion process. It is
  *  called whenever the position of the pointer is changed, therefore
- *  requiring the TOPLEVEL variables to be updated.
- *  Depending on the grip selected and moved, the temporary TOPLEVEL
+ *  requiring the GSCHEM_TOPLEVEL variables to be updated.
+ *  Depending on the grip selected and moved, the temporary GSCHEM_TOPLEVEL
  *  variables are changed according to the current position of the pointer
  *  and the modifications temporary drawn.
  *
  *  This function only makes a call to #o_picture_rubberbox() that
- *  updates the TOPLEVEL variables, erase the previous temporary picture
- *  and draw the new temporary picture.
+ *  updates the GSCHEM_TOPLEVEL variables, erase the previous temporary
+ *   picture and draw the new temporary picture.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  *  \param [in] whichone   Which grip to start motion with.
  */
-void o_grips_motion_picture(TOPLEVEL *w_current, int x, int y, int whichone)
+void o_grips_motion_picture(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone)
 {
   /* erase, update and draw the temporary picture */
   o_picture_rubberbox(w_current, x, y);
@@ -999,21 +1010,21 @@ void o_grips_motion_picture(TOPLEVEL *w_current, int x, int y, int whichone)
  *  \par Function Description
  *  This function is the refreshing part of the grip motion process. It is
  *  called whenever the position of the pointer is changed, therefore
- *  requiring the TOPLEVEL variables to be updated.
- *  Depending on the grip selected and moved, the temporary TOPLEVEL
+ *  requiring the GSCHEM_TOPLEVEL variables to be updated.
+ *  Depending on the grip selected and moved, the temporary GSCHEM_TOPLEVEL
  *  variables are changed according to the current position of the pointer
  *  and the modifications temporary drawn.
  *
  *  This function only makes a call to #o_circle_rubbercircle() that updates
- *  the TOPLEVEL variables, erase the previous temporary circle and draw
- *  the new temporary circle.
+ *  the GSCHEM_TOPLEVEL variables, erase the previous temporary circle and
+ *  draw the new temporary circle.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  *  \param [in] whichone   Which grip to start motion with.
  */
-void o_grips_motion_circle(TOPLEVEL *w_current, int x, int y, int whichone)
+void o_grips_motion_circle(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone)
 {
   /* erase, update and draw the temporary circle */
   o_circle_rubbercircle(w_current, x, y);
@@ -1025,12 +1036,12 @@ void o_grips_motion_circle(TOPLEVEL *w_current, int x, int y, int whichone)
  *  temporary line drawn under the mouse pointer.
  *  The current position of the mouse is in <B>x</B> and <B>y</B> in screen coords.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  *  \param [in] whichone   Which grip to start motion with.
  */
-void o_grips_motion_line(TOPLEVEL *w_current, int x, int y, int whichone)
+void o_grips_motion_line(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone)
 {
   /* erase, update and draw the temporary line */
   o_line_rubberline(w_current, x, y);
@@ -1050,10 +1061,11 @@ void o_grips_motion_line(TOPLEVEL *w_current, int x, int y, int whichone)
  *  the temporary object, updates the object and draws the modified object
  *  normally.
  *
- *  \param [in,out] w_current  The TOPLEVEL object.
+ *  \param [in,out] w_current  The GSCHEM_TOPLEVEL object.
  */
-void o_grips_end(TOPLEVEL *w_current)
+void o_grips_end(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *object=NULL;
   int x, y;
   GList *other_objects = NULL;
@@ -1113,12 +1125,12 @@ void o_grips_end(TOPLEVEL *w_current)
       return;
     }
 
-    SCREENtoWORLD(w_current,
+    SCREENtoWORLD(toplevel,
                   w_current->last_x,
                   w_current->last_y, &x, &y);
 
-    x = snap_grid(w_current, x);
-    y = snap_grid(w_current, y);
+    x = snap_grid(toplevel, x);
+    y = snap_grid(toplevel, y);
 
     o_cue_undraw(w_current, object);
     o_net_erase(w_current, object);
@@ -1131,11 +1143,11 @@ void o_grips_end(TOPLEVEL *w_current)
     o_line_erase_grips(w_current, object);
 
     other_objects = s_conn_return_others(other_objects, object);
-    s_conn_remove(w_current, object);
+    s_conn_remove(toplevel, object);
 
-    o_net_modify(w_current, object, x, y, whichone_changing);
+    o_net_modify(toplevel, object, x, y, whichone_changing);
 
-    s_conn_update_object(w_current, object);
+    s_conn_update_object(toplevel, object);
 
     /* get the other connected objects and redraw them */
     connected_objects = s_conn_return_others(connected_objects,
@@ -1147,8 +1159,8 @@ void o_grips_end(TOPLEVEL *w_current)
       o_net_erase(w_current, object);
       /*o_line_erase_grips(w_current, object); */
 
-      if (w_current->net_style == THICK ) {
-        size = SCREENabs(w_current, 10);
+      if (toplevel->net_style == THICK ) {
+        size = SCREENabs(toplevel, 10);
 
         if (size < 0)
           size=0;
@@ -1160,7 +1172,7 @@ void o_grips_end(TOPLEVEL *w_current)
       }
 
       gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(w_current->background_color));
+                          x_get_color(toplevel->background_color));
       gdk_draw_line(w_current->window, w_current->gc,
                     w_current->start_x, w_current->start_y,
                     w_current->last_x, w_current->last_y);
@@ -1169,7 +1181,7 @@ void o_grips_end(TOPLEVEL *w_current)
       o_net_draw(w_current, object);
       o_cue_draw_single(w_current, object);
 
-      if (w_current->net_style == THICK ) {
+      if (toplevel->net_style == THICK ) {
         gdk_gc_set_line_attributes(w_current->gc, 0,
                                    GDK_LINE_SOLID,
                                    GDK_CAP_NOT_LAST,
@@ -1215,12 +1227,12 @@ void o_grips_end(TOPLEVEL *w_current)
       return;
     }
 
-    SCREENtoWORLD(w_current,
+    SCREENtoWORLD(toplevel,
                   w_current->last_x,
                   w_current->last_y, &x, &y);
 
-    x = snap_grid(w_current, x);
-    y = snap_grid(w_current, y);
+    x = snap_grid(toplevel, x);
+    y = snap_grid(toplevel, y);
 
     o_cue_undraw(w_current, object);
     o_pin_erase(w_current, object);
@@ -1233,11 +1245,11 @@ void o_grips_end(TOPLEVEL *w_current)
     o_line_erase_grips(w_current, object);
 
     other_objects = s_conn_return_others(other_objects, object);
-    s_conn_remove(w_current, object);
+    s_conn_remove(toplevel, object);
 
-    o_pin_modify(w_current, object, x, y,
+    o_pin_modify(toplevel, object, x, y,
                  whichone_changing);
-    s_conn_update_object(w_current, object);
+    s_conn_update_object(toplevel, object);
     o_redraw_single(w_current, object);
 
     /* draw the object objects */
@@ -1271,12 +1283,12 @@ void o_grips_end(TOPLEVEL *w_current)
       return;
     }
 
-    SCREENtoWORLD(w_current,
+    SCREENtoWORLD(toplevel,
                   w_current->last_x,
                   w_current->last_y, &x, &y);
 
-    x = snap_grid(w_current, x);
-    y = snap_grid(w_current, y);
+    x = snap_grid(toplevel, x);
+    y = snap_grid(toplevel, y);
 
     o_cue_undraw(w_current, object);
     o_bus_erase(w_current, object);
@@ -1289,11 +1301,11 @@ void o_grips_end(TOPLEVEL *w_current)
     o_line_erase_grips(w_current, object);
 
     other_objects = s_conn_return_others(other_objects, object);
-    s_conn_remove(w_current, object);
+    s_conn_remove(toplevel, object);
 
-    o_bus_modify(w_current, object, x, y,
+    o_bus_modify(toplevel, object, x, y,
                  whichone_changing);
-    s_conn_update_object(w_current, object);
+    s_conn_update_object(toplevel, object);
     o_redraw_single(w_current, object);
 
     /* draw the object objects */
@@ -1314,7 +1326,7 @@ void o_grips_end(TOPLEVEL *w_current)
     return;
   }
 
-  w_current->page_current->CHANGED=1;
+  toplevel->page_current->CHANGED=1;
 
   g_list_free(other_objects);
   other_objects = NULL;
@@ -1344,12 +1356,13 @@ void o_grips_end(TOPLEVEL *w_current)
  *  angles describing the arc -, this angle is updated with the
  *  #o_arc_modify() function.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Arc OBJECT to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
-void o_grips_end_arc(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
+void o_grips_end_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int arg1, arg2;
 
   /* erase the temporary arc */
@@ -1359,7 +1372,7 @@ void o_grips_end_arc(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
   switch(whichone) {
     case ARC_RADIUS:
       /* convert the radius in world coords */
-      arg1 = WORLDabs(w_current, w_current->distance);
+      arg1 = WORLDabs(toplevel, w_current->distance);
       /* second parameter is not used */
       arg2 = -1;
       break;
@@ -1383,7 +1396,7 @@ void o_grips_end_arc(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
   }
 
   /* modify the arc with the parameters determined above */
-  o_arc_modify(w_current, o_current, arg1, arg2, whichone);
+  o_arc_modify(toplevel, o_current, arg1, arg2, whichone);
 
   /* display the new arc */
   o_redraw_single(w_current, o_current);
@@ -1394,12 +1407,13 @@ void o_grips_end_arc(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
  *  \brief End process of modifying box object with grip.
  *  \par Function Description
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Box OBJECT to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
-void o_grips_end_box(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
+void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int box_width, box_height;
   int x, y;
 
@@ -1424,13 +1438,13 @@ void o_grips_end_box(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
     return;
   }
 
-  SCREENtoWORLD(w_current,
+  SCREENtoWORLD(toplevel,
                 w_current->last_x, w_current->last_y,
                 &x, &y);
-  x = snap_grid(w_current, x);
-  y = snap_grid(w_current, y);
+  x = snap_grid(toplevel, x);
+  y = snap_grid(toplevel, y);
 
-  o_box_modify(w_current, o_current, x, y, whichone);
+  o_box_modify(toplevel, o_current, x, y, whichone);
 
   /* erase the temporary box */
   o_box_rubberbox_xor(w_current);
@@ -1443,12 +1457,13 @@ void o_grips_end_box(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
  *  \brief End process of modifying picture object with grip.
  *  \par Function Description
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Picture OBJECT to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
-void o_grips_end_picture(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
+void o_grips_end_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int picture_width, picture_height;
   int x, y;
 
@@ -1473,13 +1488,13 @@ void o_grips_end_picture(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
     return;
   }
 
-  SCREENtoWORLD(w_current,
+  SCREENtoWORLD(toplevel,
                 w_current->last_x, w_current->last_y,
                 &x, &y);
-  x = snap_grid(w_current, x);
-  y = snap_grid(w_current, y);
+  x = snap_grid(toplevel, x);
+  y = snap_grid(toplevel, y);
 
-  o_picture_modify(w_current, o_current, x, y, whichone);
+  o_picture_modify(toplevel, o_current, x, y, whichone);
 
   /* erase the temporary picture */
   o_picture_rubberbox_xor(w_current);
@@ -1503,12 +1518,13 @@ void o_grips_end_picture(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
  *
  *  The last value of the radius is in <B>w_current->distance</B> in screen units.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Circle OBJECT to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
-void o_grips_end_circle(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
+void o_grips_end_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int radius;
 
   /* erase the temporary circle */
@@ -1534,10 +1550,10 @@ void o_grips_end_circle(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
   }
 
   /* convert the radius in world unit */
-  radius = WORLDabs(w_current, w_current->distance);
+  radius = WORLDabs(toplevel, w_current->distance);
 
   /* modify the radius of the circle */
-  o_circle_modify(w_current, o_current, radius, -1, CIRCLE_RADIUS);
+  o_circle_modify(toplevel, o_current, radius, -1, CIRCLE_RADIUS);
 
   /* display the new circle */
   o_redraw_single(w_current, o_current);
@@ -1555,12 +1571,13 @@ void o_grips_end_circle(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
  *  A line with a null width, i.e. when both ends are identical, is not
  *  allowed. In this case, the process is stopped and the line unchanged.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Circle OBJECT to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
-void o_grips_end_line(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
+void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x, y;
 
   /* erase the temporary line */
@@ -1586,14 +1603,14 @@ void o_grips_end_line(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
   }
 
   /* convert the line end coords in world unit */
-  SCREENtoWORLD(w_current,
+  SCREENtoWORLD(toplevel,
                 w_current->last_x, w_current->last_y,
                 &x, &y);
-  x = snap_grid(w_current, x);
-  y = snap_grid(w_current, y);
+  x = snap_grid(toplevel, x);
+  y = snap_grid(toplevel, y);
 
   /* modify the right line end according to whichone */
-  o_line_modify(w_current, o_current, x, y, whichone);
+  o_line_modify(toplevel, o_current, x, y, whichone);
 
   /* display the new line */
   o_redraw_single(w_current, o_current);
@@ -1608,23 +1625,24 @@ void o_grips_end_line(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
  *  in libgeda #defines.h. They are the half width/height of a grip in
  *  world unit for a determined range of zoom factors.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \return Half grip size in screen units.
  */
-int o_grips_size(TOPLEVEL *w_current)
+int o_grips_size(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int factor, size;
   
-  factor = (int) w_current->page_current->to_world_x_constant;
+  factor = (int) toplevel->page_current->to_world_x_constant;
   if (factor > SMALL_ZOOMFACTOR1) {
     /* big zoom factor : small size converted to screen unit */
-    size = SCREENabs(w_current, GRIP_SIZE1);
+    size = SCREENabs(toplevel, GRIP_SIZE1);
   } else if (factor > SMALL_ZOOMFACTOR2) {
     /* medium zoom factor : medium size converted to screen unit */
-    size = SCREENabs(w_current, GRIP_SIZE2);
+    size = SCREENabs(toplevel, GRIP_SIZE2);
   } else {
     /* small zoom factor : big size converted to screen unit */
-    size = SCREENabs(w_current, GRIP_SIZE3);
+    size = SCREENabs(toplevel, GRIP_SIZE3);
   }
   
   return size;
@@ -1634,18 +1652,19 @@ int o_grips_size(TOPLEVEL *w_current)
  *  \par Function Description
  *  This function draws a grip centered at (<B>x</B>,<B>y</B>). Its color is
  *  either the selection color or the overriding color from
- *  <B>w_current->override_color</B>.
+ *  <B>toplevel->override_color</B>.
  *
  *  The size of the grip depends on the current zoom factor.
  *
  *  <B>x</B> and <B>y</B> are in screen unit.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Center x screen coordinate for drawing grip.
  *  \param [in] y          Center y screen coordinate for drawing grip.
  */
-void o_grips_draw(TOPLEVEL *w_current, int x, int y)
+void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GdkColor *color;
   int size, x2size;
 
@@ -1660,15 +1679,15 @@ void o_grips_draw(TOPLEVEL *w_current, int x, int y)
   x2size = 2 * size;
 
   /*
-   * The grip can be displayed or erased : if <B>w_current->override_color</B>
+   * The grip can be displayed or erased : if <B>toplevel->override_color</B>
    * is not set the grip is drawn with the selection color ; if
-   * <B>w_current->override_color</B> is set then the color it refers it
+   * <B>toplevel->override_color</B> is set then the color it refers it
    * is used. This way the grip can be erased if this color is the
    * background color.
    */
-  if (w_current->override_color != -1 ) {
+  if (toplevel->override_color != -1 ) {
     /* override : use the override_color instead */
-    color = x_get_color(w_current->override_color);
+    color = x_get_color(toplevel->override_color);
   } else {
     /* use the normal selection color */
     color = x_get_color(w_current->select_color);
@@ -1684,7 +1703,7 @@ void o_grips_draw(TOPLEVEL *w_current, int x, int y)
    * A grip is a hollow square centered at (<B>x</B>,<B>y</B>) with a
    * width/height of <B>x2size</B>.
    */
-  if (w_current->DONT_REDRAW == 0) {
+  if (toplevel->DONT_REDRAW == 0) {
     /* draw the grip in window */
     gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
                        x - size, y - size, x2size, x2size);
@@ -1702,16 +1721,17 @@ void o_grips_draw(TOPLEVEL *w_current, int x, int y)
  *  The grip is erased by drawing with the background color over the
  *  visible grip.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Center x screen coordinate for drawing grip.
  *  \param [in] y          Center y screen coordinate for drawing grip.
  */
-void o_grips_erase(TOPLEVEL *w_current, int x, int y)
+void o_grips_erase(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   /* set overriding color */
-  w_current->override_color = w_current->background_color;
+  toplevel->override_color = toplevel->background_color;
   /* draw a grip with backgound color : erase grip */
   o_grips_draw(w_current, x, y);
   /* return to default */
-  w_current->override_color = -1;
+  toplevel->override_color = -1;
 }

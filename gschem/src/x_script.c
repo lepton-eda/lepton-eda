@@ -30,6 +30,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -42,7 +43,7 @@
  *  This function opens a file selection dialog. The selected script 
  *  is executed.
  */
-void setup_script_selector (TOPLEVEL *w_current)
+void setup_script_selector (GSCHEM_TOPLEVEL *w_current)
 {
   char *filename;
 

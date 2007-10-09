@@ -23,6 +23,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -53,17 +54,18 @@ typedef void (*DRAW_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \par Function Description
  *  This function is used to draw an arc on screen. The arc is described
  *  in the object which is referred by <B>o_current</B>. The arc is displayed
- *  according to the current state, described in the TOPLEVEL object
+ *  according to the current state, described in the GSCHEM_TOPLEVEL object
  *  pointed by <B>w_current</B>.
  *
  *  It first checkes if the object is valid or not. If not it returns
  *  and do not output anything. That should never happen though.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  The arc OBJECT to draw.
  */
-void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
+void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int wleft, wright, wtop, wbottom;
   int x, y, radius, start_angle, end_angle;
   int arc_width;
@@ -76,11 +78,11 @@ void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  world_get_arc_bounds(w_current, o_current,
+  world_get_arc_bounds(toplevel, o_current,
                        &wleft, &wtop, &wright, &wbottom);
 
-  if ( (w_current->DONT_REDRAW == 1) ||
-       (!visible(w_current, wleft, wtop, wright, wbottom)) ) {
+  if ( (toplevel->DONT_REDRAW == 1) ||
+       (!visible(toplevel, wleft, wtop, wright, wbottom)) ) {
     return;
   }
 
@@ -105,8 +107,8 @@ void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
    * encountered the arc is drawn as a solid arc independently of its
    * initial type.
    */
-  WORLDtoSCREEN( w_current, o_current->arc->x, o_current->arc->y, &x, &y );
-  radius = SCREENabs( w_current, o_current->arc->width / 2 );
+  WORLDtoSCREEN( toplevel, o_current->arc->x, o_current->arc->y, &x, &y );
+  radius = SCREENabs( toplevel, o_current->arc->width / 2 );
   start_angle = o_current->arc->start_angle;
   end_angle   = o_current->arc->end_angle;
 
@@ -120,12 +122,12 @@ void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
          radius);
 #endif
 
-  if (w_current->override_color != -1 )
-    color = x_get_color(w_current->override_color);
+  if (toplevel->override_color != -1 )
+    color = x_get_color(toplevel->override_color);
   else
     color = x_get_color(o_current->color);
 
-  arc_width = SCREENabs( w_current, o_current->line_width );
+  arc_width = SCREENabs( toplevel, o_current->line_width );
   if(arc_width <= 0) {
     arc_width = 1;
   }
@@ -139,8 +141,8 @@ void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
     break;
   }
 
-  length = SCREENabs( w_current, o_current->line_length );
-  space = SCREENabs( w_current, o_current->line_space );
+  length = SCREENabs( toplevel, o_current->line_length );
+  space = SCREENabs( toplevel, o_current->line_space );
 	
   switch(o_current->line_type) {
   case TYPE_SOLID:
@@ -811,14 +813,15 @@ void o_arc_draw_phantom(GdkWindow *w, GdkGC *gc,
  *  pointed by <B>o_current</B>.
  *
  *  It makes a call to the #o_box_draw() function after setting the
- *  special color. Therefore an arc is drawn with the background color
+ *  special color. Therefo	re an arc is drawn with the background color
  *  over the previous one.
  */
-void o_arc_erase(TOPLEVEL *w_current, OBJECT *o_current)
+void o_arc_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  w_current->override_color = w_current->background_color;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  toplevel->override_color = toplevel->background_color;
   o_arc_draw(w_current, o_current);
-  w_current->override_color = -1;
+  toplevel->override_color = -1;
 }
 
 /*! \todo Finish function documentation!!!
@@ -826,7 +829,7 @@ void o_arc_erase(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_arc_eraserubber(TOPLEVEL *w_current)
+void o_arc_eraserubber(GSCHEM_TOPLEVEL *w_current)
 {
   o_arc_rubberarc_xor(w_current);
 }
@@ -840,13 +843,14 @@ void o_arc_eraserubber(TOPLEVEL *w_current)
  *
  *  The arc is displayed with the color of the object.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] dx         Delta x coordinate for arc.
  *  \param [in] dy         Delta y coordinate for arc.
  *  \param [in] o_current  Arc OBJECT to draw.
  */
-void o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+void o_arc_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x, y, width, height, start_angle, end_angle;
   int color;
 
@@ -855,11 +859,11 @@ void o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
   }
 
   /* diameter */
-  width       = SCREENabs( w_current, o_current->arc->width );
+  width       = SCREENabs( toplevel, o_current->arc->width );
   /* height MUST be equal to width, just another name for diameter */
-  height      = SCREENabs( w_current, o_current->arc->height );
+  height      = SCREENabs( toplevel, o_current->arc->height );
   /* center */
-  WORLDtoSCREEN( w_current, o_current->arc->x, o_current->arc->y, &x, &y );
+  WORLDtoSCREEN( toplevel, o_current->arc->x, o_current->arc->y, &x, &y );
   x           -= (width  / 2);
   y           -= (height / 2);
   /* start and end angles */
@@ -904,15 +908,16 @@ void o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
  *  (<B>w_current->last_x</B>,<B>w_current->last_y</B>). The radius of the arc is
  *  in <B>w_current->distance</B>.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_arc_start(TOPLEVEL *w_current, int x, int y)
+void o_arc_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   /* set the center of the arc */
-  w_current->last_x = w_current->start_x = fix_x(w_current, x);
-  w_current->last_y = w_current->start_y = fix_y(w_current, y);
+  w_current->last_x = w_current->start_x = fix_x(toplevel, x);
+  w_current->last_y = w_current->start_y = fix_y(toplevel, y);
 
   /* set the radius */
   w_current->distance = 0;
@@ -938,24 +943,25 @@ void o_arc_start(TOPLEVEL *w_current, int x, int y)
  *
  *  The two angles needs to be input to fully define the arc.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_arc_end1(TOPLEVEL *w_current, int x, int y)
+void o_arc_end1(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
 	
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
   /* erases the previous temporary radius segment */
   o_arc_rubberarc_xor(w_current);
 
-  w_current->last_x = fix_x(w_current, x);
-  w_current->last_y = fix_y(w_current, y);
+  w_current->last_x = fix_x(toplevel, x);
+  w_current->last_y = fix_y(toplevel, y);
   /* compute the radius */
   diff_x = GET_BOX_WIDTH (w_current);
   diff_y = GET_BOX_HEIGHT(w_current);
@@ -992,11 +998,11 @@ void o_arc_end1(TOPLEVEL *w_current, int x, int y)
  *  This function is used when the input of an arc is fully interactive,
  *  not through a dialog box.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_arc_end2(TOPLEVEL *w_current, int x, int y)
+void o_arc_end2(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   double dx, dy, d, cos_a_, sin_a_, a;
   
@@ -1044,12 +1050,13 @@ void o_arc_end2(TOPLEVEL *w_current, int x, int y)
  *  This function is used when the input of an arc is fully interactive,
  *  i.e. not through a dialog box.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current x coordinate of pointer in screen units.
  */
-void o_arc_end3(TOPLEVEL *w_current, int x, int y)
+void o_arc_end3(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   double d, dx, dy, cos_a_, sin_a_, a;
   
   /* erase the previous temporary arc */
@@ -1078,15 +1085,15 @@ void o_arc_end3(TOPLEVEL *w_current, int x, int y)
   w_current->loc_y = (int) a;
 
   /* create, initialize and link the new arc object */
-  w_current->page_current->object_tail =
-    o_arc_add(w_current, w_current->page_current->object_tail,
+  toplevel->page_current->object_tail =
+    o_arc_add(toplevel, toplevel->page_current->object_tail,
 	      OBJ_ARC, w_current->graphic_color,
 	      w_current->start_x, w_current->start_y,
 	      w_current->distance,
 	      w_current->loc_x, w_current->loc_y);
 
   /* draw the new object */
-  o_redraw_single(w_current, w_current->page_current->object_tail);
+  o_redraw_single(w_current, toplevel->page_current->object_tail);
 
   w_current->start_x  = (-1);
   w_current->start_y  = (-1);
@@ -1096,7 +1103,7 @@ void o_arc_end3(TOPLEVEL *w_current, int x, int y)
   w_current->loc_y    = -1;
   w_current->distance = -1;
 
-  w_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
   
   o_undo_savestate(w_current, UNDO_ALL);
 	
@@ -1110,31 +1117,32 @@ void o_arc_end3(TOPLEVEL *w_current, int x, int y)
  *  the center and the radius of the arc, are converted in world units.
  *  A new object is created and linked to the object list.
  *
- *  \param [in] w_current    The TOPLEVEL object.
+ *  \param [in] w_current    The GSCHEM_TOPLEVEL object.
  *  \param [in] start_angle  Start of angle in degrees.
  *  \param [in] end_angle    End of angle in degrees.
  */
-void o_arc_end4(TOPLEVEL *w_current, int start_angle, int end_angle)
+void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int start_angle, int end_angle)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1;
   int radius;
 
   /* get the center in world coords */
-  SCREENtoWORLD(w_current,
+  SCREENtoWORLD(toplevel,
 		w_current->start_x, w_current->start_y,
 		&x1, &y1);
 
   /* get the radius in world coords */
-  radius = snap_grid(w_current, WORLDabs(w_current, w_current->distance));
+  radius = snap_grid(toplevel, WORLDabs(toplevel, w_current->distance));
 
   /* create, initialize and link the new arc object */
-  w_current->page_current->object_tail =
-    o_arc_add(w_current, w_current->page_current->object_tail,
+  toplevel->page_current->object_tail =
+    o_arc_add(toplevel, toplevel->page_current->object_tail,
 	      OBJ_ARC, w_current->graphic_color,
 	      x1, y1, radius, start_angle, end_angle);
 
   /* draw the new object */
-  o_redraw_single(w_current, w_current->page_current->object_tail);
+  o_redraw_single(w_current, toplevel->page_current->object_tail);
 
   w_current->start_x  = (-1);
   w_current->start_y  = (-1);
@@ -1144,7 +1152,7 @@ void o_arc_end4(TOPLEVEL *w_current, int start_angle, int end_angle)
   w_current->loc_y    = -1;
   w_current->distance = -1;
 
-  w_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
   
   o_undo_savestate(w_current, UNDO_ALL);
 	
@@ -1169,7 +1177,7 @@ void o_arc_end4(TOPLEVEL *w_current, int start_angle, int end_angle)
  *                  start and end angle respectively.
  *  </DL>
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  *  \param [in] whichone   Which angle to change.
@@ -1180,8 +1188,9 @@ void o_arc_end4(TOPLEVEL *w_current, int start_angle, int end_angle)
  *    <DT>*</DT><DD>ARC_END_ANGLE
  *  </DL>
  */
-void o_arc_rubberarc(TOPLEVEL *w_current, int x, int y, int whichone)
+void o_arc_rubberarc(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   double  dx, dy, a;
   int diff_x, diff_y;
 
@@ -1195,8 +1204,8 @@ void o_arc_rubberarc(TOPLEVEL *w_current, int x, int y, int whichone)
      * axis between the center of the arc and the mouse position.
      */		
     /* update the radius */
-    w_current->last_x = fix_x(w_current, x);
-    w_current->last_y = fix_y(w_current, y);
+    w_current->last_x = fix_x(toplevel, x);
+    w_current->last_y = fix_y(toplevel, y);
 
     diff_x = GET_BOX_WIDTH (w_current);
     diff_y = GET_BOX_HEIGHT(w_current);
@@ -1235,9 +1244,9 @@ void o_arc_rubberarc(TOPLEVEL *w_current, int x, int y, int whichone)
 
 }
 
-/*! \brief Draw arc from TOPLEVEL object.
+/*! \brief Draw arc from GSCHEM_TOPLEVEL object.
  *  \par Function Description
- *  This function draws the arc from the variables in the toplevel
+ *  This function draws the arc from the variables in the GSCHEM_TOPLEVEL
  *  structure <B>*w_current</B>.
  *  The center of the arc is at (<B>w_current->start_x</B>,
  *  <B>w_current->start_y</B>), its radius equal to <B>w_current->radius</B>,
@@ -1247,9 +1256,9 @@ void o_arc_rubberarc(TOPLEVEL *w_current, int x, int y, int whichone)
  *  The arc is drawn with a xor function over the current sheet with the
  *  selection color.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
-void o_arc_rubberarc_xor(TOPLEVEL *w_current)
+void o_arc_rubberarc_xor(GSCHEM_TOPLEVEL *w_current)
 {
   double tmp;
   int x1, y1;
@@ -1282,11 +1291,12 @@ void o_arc_rubberarc_xor(TOPLEVEL *w_current)
  *  This function draws three grips on the center and on the ends of
  *  the arc object described by <B>*o_current</B>.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHE_TOPLEVEL object.
  *  \param [in] o_current  Arc OBJECT to draw grip points on.
  */
-void o_arc_draw_grips(TOPLEVEL *w_current, OBJECT *o_current) 
+void o_arc_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int radius, x, y, start_angle, end_angle;
   int x1, y1, x2, y2;
 
@@ -1302,8 +1312,8 @@ void o_arc_draw_grips(TOPLEVEL *w_current, OBJECT *o_current)
    *   <DT>*</DT><DD>one at the end of the arc - at (<B>x2</B>,<B>y2</B>).
    */
 
-  WORLDtoSCREEN( w_current, o_current->arc->x, o_current->arc->y, &x, &y );
-  radius      = SCREENabs( w_current, o_current->arc->width / 2 );
+  WORLDtoSCREEN( toplevel, o_current->arc->x, o_current->arc->y, &x, &y );
+  radius      = SCREENabs( toplevel, o_current->arc->width / 2 );
   start_angle = o_current->arc->start_angle;
   end_angle   = o_current->arc->end_angle;
 
@@ -1329,11 +1339,12 @@ void o_arc_draw_grips(TOPLEVEL *w_current, OBJECT *o_current)
  *  arc object. These grips are on the center of the arc and on each end
  *  of the arc.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Arc OBJECT to remove grip marks from.
  */
-void o_arc_erase_grips(TOPLEVEL *w_current, OBJECT *o_current) 
+void o_arc_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int radius, x, y, start_angle, end_angle;
   int x1, y1, x2, y2;
 
@@ -1346,8 +1357,8 @@ void o_arc_erase_grips(TOPLEVEL *w_current, OBJECT *o_current)
    * and (<B>x2</B>,<B>y2</B>).
    */
 
-  WORLDtoSCREEN( w_current, o_current->arc->x, o_current->arc->y, &x, &y );
-  radius      = SCREENabs( w_current, o_current->arc->width / 2 );
+  WORLDtoSCREEN( toplevel, o_current->arc->x, o_current->arc->y, &x, &y );
+  radius      = SCREENabs( toplevel, o_current->arc->width / 2 );
   start_angle = o_current->arc->start_angle;
   end_angle   = o_current->arc->end_angle;
 

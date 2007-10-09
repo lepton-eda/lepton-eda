@@ -27,6 +27,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -52,7 +53,7 @@
  *
  *  \todo get a better name
  */
-void o_attrib_add_selected(TOPLEVEL *w_current, SELECTION *selection,
+void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
                            OBJECT *selected)
 {
   ATTRIB *a_current;
@@ -88,8 +89,9 @@ void o_attrib_add_selected(TOPLEVEL *w_current, SELECTION *selection,
  *  \par Function Description
  *
  */
-void o_attrib_toggle_visibility(TOPLEVEL *w_current, GList *list)
+void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, GList *list)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_current = NULL;
   OBJECT *object = NULL;
 
@@ -110,22 +112,22 @@ void o_attrib_toggle_visibility(TOPLEVEL *w_current, GList *list)
       if (object->visibility == VISIBLE) {
 
         /* only erase if we are not showing hidden text */
-        if (!w_current->show_hidden_text) {
+        if (!toplevel->show_hidden_text) {
           o_text_erase(w_current, object);
         }
         
         object->visibility = INVISIBLE;
 
-        if (w_current->show_hidden_text) {
+        if (toplevel->show_hidden_text) {
           /* draw text so that little I is drawn */
           o_text_draw(w_current, object); 
         }
 
-        w_current->page_current->CHANGED=1;
+        toplevel->page_current->CHANGED=1;
       } else {
         /* if we are in the special show hidden mode, then erase text first */
         /* to get rid of the little I */
-        if (w_current->show_hidden_text) {
+        if (toplevel->show_hidden_text) {
           o_text_erase(w_current, object);
         }
 
@@ -134,11 +136,11 @@ void o_attrib_toggle_visibility(TOPLEVEL *w_current, GList *list)
         /* you must do this since real->text->complex */
         /* might be null when text is invisible */
         if (object->text->prim_objs == NULL)
-          o_text_recreate(w_current, object);
+          o_text_recreate(toplevel, object);
 
         
         o_text_draw(w_current, object);
-        w_current->page_current->CHANGED = 1;
+        toplevel->page_current->CHANGED = 1;
       }
     }
     s_current = g_list_next(s_current);
@@ -151,9 +153,10 @@ void o_attrib_toggle_visibility(TOPLEVEL *w_current, GList *list)
  *  \par Function Description
  *
  */
-void o_attrib_toggle_show_name_value(TOPLEVEL *w_current, 
+void o_attrib_toggle_show_name_value(GSCHEM_TOPLEVEL *w_current,
 				     GList *list, int new_show_name_value)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_current = NULL;
   OBJECT *object = NULL;
 
@@ -174,9 +177,9 @@ void o_attrib_toggle_show_name_value(TOPLEVEL *w_current,
     if (object->type == OBJ_TEXT) {
       o_text_erase(w_current, object);
       object->show_name_value = new_show_name_value;
-      o_text_recreate(w_current, object);
+      o_text_recreate(toplevel, object);
       o_text_draw(w_current, object);
-      w_current->page_current->CHANGED=1;
+      toplevel->page_current->CHANGED=1;
     }
     s_current = g_list_next(s_current);
   }
@@ -191,16 +194,17 @@ void o_attrib_toggle_show_name_value(TOPLEVEL *w_current,
  */
 /* This function no longer returns NULL, but will always return the new */
 /* text item */
-OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current,
+OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
 			    char *text_string, int visibility, 
 			    int show_name_value, OBJECT *object)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int world_x = - 1, world_y = -1;
   int color; 
   int left, right, top, bottom;
   OBJECT *o_current;
 
-  color = w_current->detachedattr_color;
+  color = toplevel->detachedattr_color;
 
   o_current = object;
 
@@ -212,25 +216,25 @@ OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current,
       case(OBJ_PLACEHOLDER):
         world_x = o_current->complex->x;
         world_y = o_current->complex->y;
-        color = w_current->attribute_color;
+        color = toplevel->attribute_color;
         break;
 
       case(OBJ_ARC):
         world_x = o_current->arc->x;
         world_y = o_current->arc->y;
-        color = w_current->attribute_color;
+        color = toplevel->attribute_color;
         break;
 
       case(OBJ_CIRCLE):
         world_x = o_current->circle->center_x;
         world_y = o_current->circle->center_y;
-        color = w_current->attribute_color;
+        color = toplevel->attribute_color;
         break;
 
       case(OBJ_BOX):
         world_x = o_current->box->upper_x;
         world_y = o_current->box->upper_y;
-        color = w_current->attribute_color;
+        color = toplevel->attribute_color;
         break;
 
       case(OBJ_LINE):
@@ -239,7 +243,7 @@ OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current,
       case(OBJ_BUS):
         world_x = o_current->line->x[0];
         world_y = o_current->line->y[0];
-        color = w_current->attribute_color;
+        color = toplevel->attribute_color;
         break;
 
       case(OBJ_TEXT):
@@ -247,14 +251,14 @@ OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current,
         world_x = o_current->text->x;
         world_y = o_current->text->y;
 			
-        color = w_current->detachedattr_color;
+        color = toplevel->detachedattr_color;
 
 	o_current = NULL;
         break;
     }
   } else {
-    world_get_object_list_bounds(w_current,
-                                 w_current->page_current->object_head,
+    world_get_object_list_bounds(toplevel,
+                                 toplevel->page_current->object_head,
                                  &left, &top, &right, &bottom);
 	
     /* this really is the lower left hand corner */	
@@ -262,12 +266,12 @@ OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current,
     world_y = top;  
 
     /* printf("%d %d\n", world_x, world_y); */
-    color = w_current->detachedattr_color;
+    color = toplevel->detachedattr_color;
   }
 
   /* first create text item */
-  w_current->page_current->object_tail =
-  o_text_add(w_current, w_current->page_current->object_tail,
+  toplevel->page_current->object_tail =
+  o_text_add(toplevel, toplevel->page_current->object_tail,
              OBJ_TEXT, color,
              world_x,
              world_y,
@@ -277,21 +281,21 @@ OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current,
              w_current->text_size,  /* current text size */ 
              visibility, show_name_value);
 
-  /* now w_current->page_current->object_tail contains new text item */
+  /* now toplevel->page_current->object_tail contains new text item */
 
   /* now attach the attribute to the object (if o_current is not NULL) */
   /* remember that o_current contains the object to get the attribute */
   if (o_current) {
-    o_attrib_attach(w_current, w_current->page_current->object_head,
-                    w_current->page_current->object_tail,
+    o_attrib_attach(toplevel, toplevel->page_current->object_head,
+                    toplevel->page_current->object_tail,
                     o_current);
   }
 
-  o_selection_add( w_current->page_current->selection_list,
-                   w_current->page_current->object_tail );
+  o_selection_add( toplevel->page_current->selection_list,
+                   toplevel->page_current->object_tail );
 
-  o_text_erase(w_current, w_current->page_current->object_tail); 
-  o_text_draw(w_current, w_current->page_current->object_tail);
+  o_text_erase(w_current, toplevel->page_current->object_tail);
+  o_text_draw(w_current, toplevel->page_current->object_tail);
 
   /* handle slot= attribute, it's a special case */
   if (g_ascii_strncasecmp (text_string, "slot=", 5) == 0) {
@@ -302,12 +306,12 @@ OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current,
   if (scm_hook_empty_p(add_attribute_hook) == SCM_BOOL_F &&
       o_current != NULL) {
 	scm_run_hook(add_attribute_hook,
-		     scm_cons(g_make_object_smob(w_current, 
+		     scm_cons(g_make_object_smob(toplevel,
 						 o_current),
 			      SCM_EOL));
       }
   
-  w_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
 
-  return(w_current->page_current->object_tail);
+  return(toplevel->page_current->object_tail);
 }

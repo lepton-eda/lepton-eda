@@ -31,6 +31,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/i_vars.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
@@ -69,8 +70,9 @@ gint option_menu_get_history (GtkOptionMenu *option_menu)
  *  \par Function Documentation
  *
  */
-void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
+void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   const char *value, *label;
   char *newtext;
   GtkEntry *value_entry, *name_entry;
@@ -138,7 +140,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
     int world_x, world_y;
     OBJECT *new = NULL;
 
-    s_current = geda_list_get_glist( w_current->page_current->selection_list );
+    s_current = geda_list_get_glist( toplevel->page_current->selection_list );
     while (s_current != NULL) {
       object = (OBJECT *)s_current->data;
       if (object == NULL) {
@@ -150,7 +152,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
       }
       s_current = g_list_next(s_current);
     }
-    s_current = geda_list_get_glist( w_current->page_current->selection_list );
+    s_current = geda_list_get_glist( toplevel->page_current->selection_list );
     if (nsel > 1) {
 
       addtoallbutton =
@@ -212,7 +214,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
 		    o_text_change(w_current, a_sav->object, 
 				  newtext, vis, show);
 		    replaced = TRUE;
-		    w_current->page_current->CHANGED = 1;
+		    toplevel->page_current->CHANGED = 1;
 		  }
 		}
 	      }
@@ -237,21 +239,21 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
       printf("invocation flag: %d\n", invocation_flag);
 #endif
       if (invocation_flag == FROM_HOTKEY) {
-	SCREENtoWORLD(w_current, mouse_x, mouse_y, &world_x, &world_y);
-        world_x = snap_grid(w_current, world_x);
-        world_y = snap_grid(w_current, world_y);
+	SCREENtoWORLD(toplevel, mouse_x, mouse_y, &world_x, &world_y);
+        world_x = snap_grid(toplevel, world_x);
+        world_y = snap_grid(toplevel, world_y);
 	new->text->x = world_x;
 	new->text->y = world_y;
 	o_text_erase(w_current, new);
-	o_text_recreate(w_current, new);
+	o_text_recreate(toplevel, new);
 	o_text_draw(w_current, new);
-	w_current->page_current->CHANGED = 1;
+	toplevel->page_current->CHANGED = 1;
 	o_undo_savestate(w_current, UNDO_ALL);
       }
     }
   } else {
     o_text_change(w_current, attribptr, newtext, vis, show);
-    w_current->page_current->CHANGED = 1;
+    toplevel->page_current->CHANGED = 1;
     o_undo_savestate(w_current, UNDO_ALL);
   }
   gtk_grab_remove(w_current->aewindow);
@@ -266,7 +268,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
  *  attribute dialog.
  */
 void attribute_edit_dialog_response(GtkWidget *w, gint response, 
-				 TOPLEVEL *w_current)
+				 GSCHEM_TOPLEVEL *w_current)
 {
   switch(response) {
   case GTK_RESPONSE_APPLY:
@@ -291,8 +293,9 @@ void attribute_edit_dialog_response(GtkWidget *w, gint response,
  *  \par Function Description
  *  This function creates the single attribute edit dialog.
  */
-void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
+void attrib_edit_dialog(GSCHEM_TOPLEVEL *w_current, OBJECT * list, int flag)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GtkWidget *aewindow;
   GtkWidget *vbox, *label, *table, *alignment;
   GtkWidget *show_options;
@@ -322,7 +325,7 @@ void attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     return;
 
   /* gschem specific: What do we count here? (Werner)  */
-  for (s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  for (s_current = geda_list_get_glist( toplevel->page_current->selection_list );
        s_current != NULL;
        s_current = g_list_next(s_current)) {
     if (!((OBJECT *) s_current->data)->attached_to) {

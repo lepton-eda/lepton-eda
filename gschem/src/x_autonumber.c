@@ -32,6 +32,7 @@
 #include <libgeda/libgeda.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/i_vars.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
@@ -102,8 +103,8 @@ struct autonumber_text_t {
   /** @brief Pointer to the dialog */ 
   GtkWidget *dialog;
 
-  /** @brief Pointer to the toplevel struct */
-  TOPLEVEL *toplevel;
+  /** @brief Pointer to the GSCHEM_TOPLEVEL struct */
+  GSCHEM_TOPLEVEL *w_current;
 
   /* variables used while autonumbering */
   gchar * current_searchtext;
@@ -386,7 +387,7 @@ gint autonumber_match(AUTONUMBER_TEXT *autotext, OBJECT *o_current, gint *number
  *  multislotted symbols, that were used only partially.
  *  The criterias are derivated from the autonumber dialog entries.
  */
-void autonumber_get_used(TOPLEVEL *w_current, AUTONUMBER_TEXT *autotext)
+void autonumber_get_used(GSCHEM_TOPLEVEL *w_current, AUTONUMBER_TEXT *autotext)
 {
   gint number, numslots, slotnr, i;
   OBJECT *o_current, *o_parent, *o_numslots;
@@ -395,7 +396,7 @@ void autonumber_get_used(TOPLEVEL *w_current, AUTONUMBER_TEXT *autotext)
   GList *slot_item;
   char *numslot_str, *slot_str;
   
-  for (o_current = w_current->page_current->object_head; o_current != NULL;
+  for (o_current = w_current->toplevel->page_current->object_head; o_current != NULL;
        o_current = o_current->next) {
     if (autonumber_match(autotext, o_current, &number) == AUTONUMBER_RESPECT) {
       /* check slot and maybe add it to the lists */
@@ -575,9 +576,9 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
 					    autotext->current_searchtext);
 
   /* redraw the text */
-  o_text_erase(autotext->toplevel, o_current);
-  o_text_recreate(autotext->toplevel, o_current);
-  o_text_draw(autotext->toplevel, o_current);
+  o_text_erase(autotext->w_current, o_current);
+  o_text_recreate(autotext->w_current->toplevel, o_current);
+  o_text_draw(autotext->w_current, o_current);
 
   /* remove the slot attribute if slotting is active */
   if (autotext->slotting) {
@@ -588,14 +589,14 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
       if (slot_str != NULL && o_slot != NULL) {
 	g_free(slot_str);
 	/* delete the slot attribute */
-	o_selection_remove (autotext->toplevel->page_current->selection_list, o_slot);
-	o_delete_text (autotext->toplevel, o_slot);
+	o_selection_remove (autotext->w_current->toplevel->page_current->selection_list, o_slot);
+	o_delete_text (autotext->w_current, o_slot);
 	/* redraw the slotted object. So that the pinnumbers appear as with slot=1 */
 	/* --> No: should be done by o_delete_text as several dialog use it. */
       }
     }
   }
-  autotext->toplevel->page_current->CHANGED = 1;
+  autotext->w_current->toplevel->page_current->CHANGED = 1;
 }
 
 /*! \brief Changes the number <B>OBJECT</B> element. Changes the slot attribute.
@@ -621,18 +622,18 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
       g_free(slot_str);
       g_free(o_slot->text->string);
       o_slot->text->string = g_strdup_printf("slot=%d",slot);
-      o_text_erase(autotext->toplevel, o_slot);
-      o_text_recreate(autotext->toplevel, o_slot);
-      o_text_draw(autotext->toplevel, o_slot);
+      o_text_erase(autotext->w_current, o_slot);
+      o_text_recreate(autotext->w_current->toplevel, o_slot);
+      o_text_draw(autotext->w_current, o_slot);
     }
     else {
       /* create a new attribute and attach it */
-      o_attrib_add_attrib(autotext->toplevel, 
+      o_attrib_add_attrib(autotext->w_current,
 			  g_strdup_printf("slot=%d",slot),
 			  INVISIBLE, SHOW_NAME_VALUE,
 			  o_parent);
     }
-    o_attrib_slot_update(autotext->toplevel, o_parent);
+    o_attrib_slot_update(autotext->w_current->toplevel, o_parent);
   }
 
   /* replace old text */
@@ -640,10 +641,10 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
   o_current->text->string = g_strdup_printf("%s%d", autotext->current_searchtext,
 					    number);
   /* redraw the text */
-  o_text_erase(autotext->toplevel, o_current);
-  o_text_recreate(autotext->toplevel, o_current);
-  o_text_draw(autotext->toplevel, o_current);
-  autotext->toplevel->page_current->CHANGED = 1;
+  o_text_erase(autotext->w_current, o_current);
+  o_text_recreate(autotext->w_current->toplevel, o_current);
+  o_text_draw(autotext->w_current, o_current);
+  autotext->w_current->toplevel->page_current->CHANGED = 1;
 }
 
 
@@ -662,14 +663,14 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   GList *searchtext_list=NULL;
   GList *text_item, *obj_item, *page_item;
   OBJECT *o_current;
-  TOPLEVEL *w_current;
+  GSCHEM_TOPLEVEL *w_current;
   gchar *searchtext;
   gchar *scope_text;
   gchar *new_searchtext;
   gint i, number, slot;
   GList *o_list = NULL;
   
-  w_current = autotext->toplevel;
+  w_current = autotext->w_current;
   autotext->current_searchtext = NULL;
   autotext->root_page = 1;
   autotext->used_numbers = NULL;
@@ -679,7 +680,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   scope_text = g_list_first(autotext->scope_text)->data;
 
   /* Step1: get all pages of the hierarchy */
-  pages = s_hierarchy_traversepages(w_current, HIERARCHY_NODUPS);
+  pages = s_hierarchy_traversepages(w_current->toplevel, HIERARCHY_NODUPS);
 
   /*  g_list_foreach(pages, (GFunc) s_hierarchy_print_page, NULL); */
 
@@ -707,9 +708,9 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
     searchtext = g_strndup(scope_text, strlen(scope_text)-1);
     /* collect all the possible searchtexts in all pages of the hierarchy */
     for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
-      s_page_goto(w_current, page_item->data); 
+      s_page_goto(w_current->toplevel, page_item->data);
       /* iterate over all objects an look for matching searchtext's */
-      for (o_current = w_current->page_current->object_head; o_current != NULL;
+      for (o_current = w_current->toplevel->page_current->object_head; o_current != NULL;
 	   o_current = o_current->next) {
 	if (o_current->type == OBJ_TEXT) {
 	  if (autotext->scope_number == SCOPE_HIERARCHY
@@ -760,7 +761,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 	    && autotext->scope_overwrite)) {
 	for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
 	  autotext->root_page = (pages->data == page_item->data);
-	  s_page_goto(w_current, page_item->data);
+	  s_page_goto(w_current->toplevel, page_item->data);
 	  autonumber_get_used(w_current, autotext);
 	}
       }
@@ -768,7 +769,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
     
     /* renumber the elements */
     for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
-      s_page_goto(w_current, page_item->data);
+      s_page_goto(w_current->toplevel, page_item->data);
       autotext->root_page = (pages->data == page_item->data);
       /* build a page database if we're numbering pagebypage or selection only*/
       if (autotext->scope_skip == SCOPE_PAGE || autotext->scope_skip == SCOPE_SELECTED) {
@@ -777,7 +778,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
       
       /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
       /* 1. get objects to renumber */
-      for (o_current = w_current->page_current->object_head; o_current != NULL;
+      for (o_current = w_current->toplevel->page_current->object_head; o_current != NULL;
 	   o_current = o_current->next) {
 	if (autonumber_match(autotext, o_current, &number) == AUTONUMBER_RENUMBER) {
 	  /* put number into the used list */
@@ -836,7 +837,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   /* cleanup and redraw all*/
   g_list_foreach(searchtext_list, (GFunc) g_free, NULL);
   g_list_free(searchtext_list);
-  s_page_goto(w_current, pages->data); /* go back to the root page */
+  s_page_goto(w_current->toplevel, pages->data); /* go back to the root page */
   o_redraw_all(w_current);
   g_list_free(pages);
   o_undo_savestate(w_current, UNDO_ALL);
@@ -864,7 +865,7 @@ GtkWidget* lookup_widget(GtkWidget *widget, const gchar *widget_name)
  *  Load all bitmaps for the combobox and store them together with the label
  *  in a GtkListStore.
  */
-void autonumber_sortorder_create(TOPLEVEL *w_current, GtkWidget *sort_order)
+void autonumber_sortorder_create(GSCHEM_TOPLEVEL *w_current, GtkWidget *sort_order)
 {
   GtkListStore *store;
   GtkTreeIter iter;
@@ -888,7 +889,7 @@ void autonumber_sortorder_create(TOPLEVEL *w_current, GtkWidget *sort_order)
   store = gtk_list_store_new(2, G_TYPE_STRING, GDK_TYPE_PIXBUF); 
 
   for (i=0; filenames[i] != NULL; i++) {
-    path=g_strconcat(w_current->bitmap_directory, 
+    path=g_strconcat(w_current->toplevel->bitmap_directory,
 		     G_DIR_SEPARATOR_S, filenames[i], NULL);
     pixbuf = gdk_pixbuf_new_from_file(path, &error);
     g_free(path);
@@ -1189,7 +1190,7 @@ void autonumber_removenum_toggled(GtkWidget * opt_removenum,
  * @param w_current Pointer to the top level struct.
  * @return Pointer to the dialog window.
  */
-GtkWidget* autonumber_create_dialog(TOPLEVEL *w_current)
+GtkWidget* autonumber_create_dialog(GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *autonumber_text;
   GtkWidget *vbox1;
@@ -1394,7 +1395,7 @@ GtkWidget* autonumber_create_dialog(TOPLEVEL *w_current)
  *
  *  @param w_current Pointer to the top level struct
  */
-void autonumber_text_dialog(TOPLEVEL *w_current)
+void autonumber_text_dialog(GSCHEM_TOPLEVEL *w_current)
 {
   static AUTONUMBER_TEXT *autotext = NULL;
 
@@ -1406,8 +1407,8 @@ void autonumber_text_dialog(TOPLEVEL *w_current)
     autotext=autonumber_init_state();
   }
 
-  /* set the toplevel always. Can it be changed between the calls??? */
-  autotext->toplevel = w_current;
+  /* set the GSCHEM_TOPLEVEL always. Can it be changed between the calls??? */
+  autotext->w_current = w_current;
 
   if(autotext->dialog == NULL) {
     /* Dialog is not currently displayed - create it */

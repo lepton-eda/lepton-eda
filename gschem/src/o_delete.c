@@ -23,6 +23,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -35,8 +36,9 @@
  *  \par Function Description
  *
  */
-void o_delete_net(TOPLEVEL *w_current, OBJECT *obj)
+void o_delete_net(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *other_objects = NULL;
 
   o_cue_undraw(w_current, obj);
@@ -45,10 +47,10 @@ void o_delete_net(TOPLEVEL *w_current, OBJECT *obj)
 
   other_objects = s_conn_return_others(other_objects, obj);
        
-  s_delete(w_current, obj);
+  s_delete(toplevel, obj);
 
-  w_current->page_current->object_tail =
-  (OBJECT *) return_tail(w_current->page_current->object_head);
+  toplevel->page_current->object_tail =
+    (OBJECT *) return_tail(toplevel->page_current->object_head);
 
   o_cue_undraw_list(w_current, other_objects);
   o_cue_draw_list(w_current, other_objects);
@@ -60,8 +62,9 @@ void o_delete_net(TOPLEVEL *w_current, OBJECT *obj)
  *  \par Function Description
  *
  */
-void o_delete_bus(TOPLEVEL *w_current, OBJECT *obj)
+void o_delete_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *other_objects = NULL;
         
   o_cue_undraw(w_current, obj);
@@ -70,10 +73,10 @@ void o_delete_bus(TOPLEVEL *w_current, OBJECT *obj)
 
   other_objects = s_conn_return_others(other_objects, obj);
 
-  s_delete(w_current, obj);
+  s_delete(toplevel, obj);
 
-  w_current->page_current->object_tail =
-  (OBJECT *) return_tail(w_current->page_current->object_head);
+  toplevel->page_current->object_tail =
+    (OBJECT *) return_tail(toplevel->page_current->object_head);
 
   o_cue_undraw_list(w_current, other_objects);
   o_cue_draw_list(w_current, other_objects);
@@ -86,8 +89,9 @@ void o_delete_bus(TOPLEVEL *w_current, OBJECT *obj)
  *  \par Function Description
  *
  */
-static void o_delete_pin(TOPLEVEL *w_current, OBJECT *obj)
+static void o_delete_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *other_objects = NULL;
         
   o_cue_undraw(w_current, obj);
@@ -96,9 +100,9 @@ static void o_delete_pin(TOPLEVEL *w_current, OBJECT *obj)
         
   other_objects = s_conn_return_others(other_objects, obj);
         
-  s_delete(w_current, obj);
-  w_current->page_current->object_tail =
-  (OBJECT *) return_tail(w_current->page_current->object_head);
+  s_delete(toplevel, obj);
+  toplevel->page_current->object_tail =
+    (OBJECT *) return_tail(toplevel->page_current->object_head);
 
   o_cue_undraw_list(w_current, other_objects);
   o_cue_draw_list(w_current, other_objects);
@@ -111,8 +115,9 @@ static void o_delete_pin(TOPLEVEL *w_current, OBJECT *obj)
  *  \par Function Description
  *
  */
-void o_delete_complex(TOPLEVEL *w_current, OBJECT *obj)
+void o_delete_complex(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *other_objects = NULL;
 
   o_cue_undraw_complex(w_current, obj);
@@ -120,7 +125,7 @@ void o_delete_complex(TOPLEVEL *w_current, OBJECT *obj)
 
   other_objects = s_conn_return_complex_others(other_objects, obj);
 
-  o_complex_delete(w_current, obj);
+  o_complex_delete(toplevel, obj);
 
   /*! \todo special case hack no return_tail. why? */
   o_cue_undraw_list(w_current, other_objects);
@@ -133,14 +138,15 @@ void o_delete_complex(TOPLEVEL *w_current, OBJECT *obj)
  *  \par Function Description
  *
  */
-static void o_delete_line(TOPLEVEL *w_current, OBJECT *obj)
+static void o_delete_line(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   o_line_erase(w_current, obj);
   o_line_erase_grips(w_current, obj);
   
-  s_delete(w_current, obj);
-  w_current->page_current->object_tail =
-    (OBJECT *) return_tail(w_current->page_current->object_head);
+  s_delete(toplevel, obj);
+  toplevel->page_current->object_tail =
+    (OBJECT *) return_tail(toplevel->page_current->object_head);
 }
 
 /*! \todo Finish function documentation!!!
@@ -148,14 +154,15 @@ static void o_delete_line(TOPLEVEL *w_current, OBJECT *obj)
  *  \par Function Description
  *
  */
-static void o_delete_box(TOPLEVEL *w_current, OBJECT *obj)
+static void o_delete_box(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   o_box_erase(w_current, obj);
   o_box_erase_grips(w_current, obj);
 
-  s_delete(w_current, obj);
-  w_current->page_current->object_tail =
-  (OBJECT *) return_tail(w_current->page_current->object_head);
+  s_delete(toplevel, obj);
+  toplevel->page_current->object_tail =
+  (OBJECT *) return_tail(toplevel->page_current->object_head);
 }
 
 
@@ -164,14 +171,15 @@ static void o_delete_box(TOPLEVEL *w_current, OBJECT *obj)
  *  \par Function Description
  *
  */
-static void o_delete_picture(TOPLEVEL *w_current, OBJECT *obj)
+static void o_delete_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   o_picture_erase(w_current, obj);
   o_picture_erase_grips(w_current, obj);
 
-  s_delete(w_current, obj);
-  w_current->page_current->object_tail =
-  (OBJECT *) return_tail(w_current->page_current->object_head);
+  s_delete(toplevel, obj);
+  toplevel->page_current->object_tail =
+  (OBJECT *) return_tail(toplevel->page_current->object_head);
 }
 
 /*! \todo Finish function documentation!!!
@@ -179,15 +187,16 @@ static void o_delete_picture(TOPLEVEL *w_current, OBJECT *obj)
  *  \par Function Description
  *
  */
-static void o_delete_circle(TOPLEVEL *w_current, OBJECT *obj)
+static void o_delete_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
 	o_circle_erase(w_current, obj);
 	o_circle_erase_grips(w_current, obj);
 
-	s_delete(w_current, obj);
+	s_delete(toplevel, obj);
 
-	w_current->page_current->object_tail =
-		(OBJECT *) return_tail(w_current->page_current->object_head);
+	toplevel->page_current->object_tail =
+		(OBJECT *) return_tail(toplevel->page_current->object_head);
 }
 
 /*! \todo Finish function documentation!!!
@@ -195,13 +204,14 @@ static void o_delete_circle(TOPLEVEL *w_current, OBJECT *obj)
  *  \par Function Description
  *
  */
-void o_delete_text(TOPLEVEL *w_current, OBJECT *obj)
+void o_delete_text(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   o_text_erase(w_current, obj);
 
-  s_delete(w_current, obj);
-  w_current->page_current->object_tail =
-  (OBJECT *) return_tail(w_current->page_current->object_head);
+  s_delete(toplevel, obj);
+  toplevel->page_current->object_tail =
+  (OBJECT *) return_tail(toplevel->page_current->object_head);
 }
 
 /*! \todo Finish function documentation!!!
@@ -209,13 +219,14 @@ void o_delete_text(TOPLEVEL *w_current, OBJECT *obj)
  *  \par Function Description
  *
  */
-static void o_delete_arc(TOPLEVEL *w_current, OBJECT *obj)
+static void o_delete_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   o_arc_erase(w_current, obj);
 
-  s_delete(w_current, obj);
-  w_current->page_current->object_tail =
-  (OBJECT *) return_tail(w_current->page_current->object_head);
+  s_delete(toplevel, obj);
+  toplevel->page_current->object_tail =
+  (OBJECT *) return_tail(toplevel->page_current->object_head);
 }
 
 /*! \todo Finish function documentation!!!
@@ -223,8 +234,9 @@ static void o_delete_arc(TOPLEVEL *w_current, OBJECT *obj)
  *  \par Function Description
  *
  */
-void o_delete(TOPLEVEL *w_current)
+void o_delete(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_current = NULL;
   OBJECT *object = NULL;
 
@@ -238,7 +250,7 @@ void o_delete(TOPLEVEL *w_current)
 
 
   /* skip over head node */
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
 
   while(s_current != NULL) {
 
@@ -293,12 +305,12 @@ void o_delete(TOPLEVEL *w_current)
   w_current->inside_action = 0;
 
   /* Objects in the selection list have been deleted. Empty the list without touching the objects */
-  geda_list_remove_all( w_current->page_current->selection_list );
+  geda_list_remove_all( toplevel->page_current->selection_list );
 
-  w_current->page_current->CHANGED=1;
+  toplevel->page_current->CHANGED=1;
 
   /* no longer needed */
-  /* o_redraw(w_current, w_current->page_current->object_head);*/
+  /* o_redraw(w_current, toplevel->page_current->object_head);*/
 
   o_undo_savestate(w_current, UNDO_ALL);
   i_update_menus(w_current);

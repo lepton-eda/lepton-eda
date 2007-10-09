@@ -35,6 +35,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/x_states.h"
 #include "../include/prototype.h"
@@ -48,7 +49,7 @@
  *  \par Function Description
  *
  */
-void o_select_run_hooks(TOPLEVEL *w_current, OBJECT *o_current, int flag)
+void o_select_run_hooks(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int flag)
 {
   /*
    * Run the select_component_hook if the hook has been defined and we
@@ -59,7 +60,7 @@ void o_select_run_hooks(TOPLEVEL *w_current, OBJECT *o_current, int flag)
        && flag == 2 )
   {
     scm_run_hook(deselect_all_hook, 
-		 scm_cons (g_make_attrib_smob_list(w_current, o_current), 
+		 scm_cons (g_make_attrib_smob_list(w_current, o_current),
 			   SCM_EOL));
   }
 
@@ -74,7 +75,7 @@ void o_select_run_hooks(TOPLEVEL *w_current, OBJECT *o_current, int flag)
        && flag == 1 )
   {
     scm_run_hook(select_component_hook, 
-		 scm_cons (g_make_attrib_smob_list(w_current, o_current), 
+		 scm_cons (g_make_attrib_smob_list(w_current, o_current),
 			   SCM_EOL));
   }
 
@@ -89,7 +90,7 @@ void o_select_run_hooks(TOPLEVEL *w_current, OBJECT *o_current, int flag)
        && flag == 0 )
   {
     scm_run_hook(deselect_component_hook, 
-		 scm_cons (g_make_attrib_smob_list(w_current, o_current), 
+		 scm_cons (g_make_attrib_smob_list(w_current, o_current),
 			   SCM_EOL));
   }
 
@@ -104,7 +105,7 @@ void o_select_run_hooks(TOPLEVEL *w_current, OBJECT *o_current, int flag)
        && flag == 1) 
   {
     scm_run_hook(select_net_hook, 
-		 scm_cons (g_make_attrib_smob_list(w_current, o_current), 
+		 scm_cons (g_make_attrib_smob_list(w_current, o_current),
 			   SCM_EOL));
   }
 
@@ -119,7 +120,7 @@ void o_select_run_hooks(TOPLEVEL *w_current, OBJECT *o_current, int flag)
        && flag == 0) 
   {
     scm_run_hook(deselect_net_hook, 
-		 scm_cons (g_make_attrib_smob_list(w_current, o_current), 
+		 scm_cons (g_make_attrib_smob_list(w_current, o_current),
 			   SCM_EOL));
   }
 }
@@ -132,9 +133,10 @@ void o_select_run_hooks(TOPLEVEL *w_current, OBJECT *o_current, int flag)
  *  type can be either SINGLE meaning selection is a single mouse click 
  *      or it can be MULTIPLE meaning selection is a selection box
  */
-void o_select_object(TOPLEVEL *w_current, OBJECT *o_current, 
+void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 		     int type, int count)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int SHIFTKEY;
   int CONTROLKEY;
 
@@ -163,7 +165,7 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* result: remove all objects from selection */
           if (count == 0 && !CONTROLKEY) {
             o_select_run_hooks( w_current, NULL, 2 );
-            o_select_unselect_list( w_current, w_current->page_current->selection_list );
+            o_select_unselect_list( w_current, toplevel->page_current->selection_list );
           }
           break;
 
@@ -171,7 +173,7 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
 
       /* object not select, add it to the selection list */
       o_select_run_hooks( w_current, o_current, 1 );
-      o_selection_add( w_current->page_current->selection_list, o_current);
+      o_selection_add( toplevel->page_current->selection_list, o_current);
 
       break;
 
@@ -186,7 +188,7 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* result: remove object from selection */
           if (type != MULTIPLE) {
             o_select_run_hooks( w_current, o_current, 0 );
-            o_selection_remove( w_current->page_current->selection_list, o_current );
+            o_selection_remove( toplevel->page_current->selection_list, o_current );
           }
 
           break;
@@ -200,10 +202,10 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* 2nd result: add object to selection */
           if (type == MULTIPLE && count == 0 && !CONTROLKEY) {
             o_select_run_hooks( w_current, NULL, 2 );
-            o_select_unselect_list( w_current, w_current->page_current->selection_list );
+            o_select_unselect_list( w_current, toplevel->page_current->selection_list );
 
             o_select_run_hooks( w_current, o_current, 1 );
-            o_selection_add( w_current->page_current->selection_list, o_current);
+            o_selection_add( toplevel->page_current->selection_list, o_current);
           }	
 
           /* condition: doing single object add */
@@ -212,15 +214,15 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* 2nd result: add object to selection list */
           if (type == SINGLE && !CONTROLKEY) {
             o_select_run_hooks( w_current, NULL, 2 );
-            o_select_unselect_list( w_current, w_current->page_current->selection_list );
+            o_select_unselect_list( w_current, toplevel->page_current->selection_list );
 
             o_select_run_hooks (w_current, o_current, 1);
-            o_selection_add( w_current->page_current->selection_list, o_current);
+            o_selection_add( toplevel->page_current->selection_list, o_current);
           }
 
           if (CONTROLKEY) {
             o_select_run_hooks(w_current, o_current, 0);
-            o_selection_remove( w_current->page_current->selection_list, o_current);
+            o_selection_remove( toplevel->page_current->selection_list, o_current);
           }
 
           break;
@@ -229,7 +231,7 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
   }
 
   /* do the attributes */
-  o_attrib_add_selected(w_current, w_current->page_current->selection_list, o_current);
+  o_attrib_add_selected(w_current, toplevel->page_current->selection_list, o_current);
 
   /* finally redraw object */
   o_redraw_single(w_current, o_current);
@@ -240,7 +242,7 @@ void o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
  *  \par Function Description
  *
  */
-void o_select_box_start(TOPLEVEL *w_current, int x, int y)
+void o_select_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   int box_width, box_height;
 
@@ -266,7 +268,7 @@ void o_select_box_start(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *
  */
-void o_select_box_end(TOPLEVEL *w_current, int x, int y)
+void o_select_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   int box_width, box_height;
   int box_left, box_top;
@@ -301,7 +303,7 @@ void o_select_box_end(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *
  */
-void o_select_box_rubberband(TOPLEVEL *w_current, int x, int y)
+void o_select_box_rubberband(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   int box_width, box_height;
   int box_left, box_top;
@@ -361,8 +363,9 @@ void o_select_box_rubberband(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *
  */
-void o_select_box_search(TOPLEVEL *w_current) 
+void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current=NULL;
   int count = 0; /* object count */
   int SHIFTKEY = w_current->SHIFTKEY;
@@ -382,16 +385,16 @@ void o_select_box_search(TOPLEVEL *w_current)
     w_current->start_y = tmp;
   }
 
-  SCREENtoWORLD( w_current, w_current->start_x, w_current->start_y, &w_start_x, &w_start_y );
-  SCREENtoWORLD( w_current, w_current->last_x, w_current->last_y, &w_last_x, &w_last_y );
+  SCREENtoWORLD( toplevel, w_current->start_x, w_current->start_y, &w_start_x, &w_start_y );
+  SCREENtoWORLD( toplevel, w_current->last_x, w_current->last_y, &w_last_x, &w_last_y );
 
-  o_current = w_current->page_current->object_head;
+  o_current = toplevel->page_current->object_head;
 
   while (o_current != NULL) {
     /* only select visible objects */
     if (o_current->type != OBJ_HEAD && 
         (o_current->visibility == VISIBLE ||
-        (o_current->visibility == INVISIBLE && w_current->show_hidden_text))) {
+        (o_current->visibility == INVISIBLE && toplevel->show_hidden_text))) {
 
       if ( o_current->w_left   >= w_start_x &&
            o_current->w_right  <= w_last_x  &&
@@ -410,19 +413,20 @@ void o_select_box_search(TOPLEVEL *w_current)
   /* key was pressed */
   if (count == 0 && !SHIFTKEY) {
     o_select_run_hooks( w_current, NULL, 2 );
-    o_select_unselect_list( w_current, w_current->page_current->selection_list );
+    o_select_unselect_list( w_current, toplevel->page_current->selection_list );
   }
   i_update_menus(w_current);
 }
 
 /* This is a wrapper for o_selection_return_first_object */
 /* This function always looks at the current page selection list */ 
-OBJECT *o_select_return_first_object(TOPLEVEL *w_current) 
+OBJECT *o_select_return_first_object(GSCHEM_TOPLEVEL *w_current)
 {
-  if (! (w_current && w_current->page_current && geda_list_get_glist( w_current->page_current->selection_list )))
+  TOPLEVEL *toplevel = w_current->toplevel;
+  if (! (w_current && toplevel->page_current && geda_list_get_glist( toplevel->page_current->selection_list )))
     return NULL;
   else
-    return (OBJECT *)g_list_first( geda_list_get_glist( w_current->page_current->selection_list ))->data;
+    return (OBJECT *)g_list_first( geda_list_get_glist( toplevel->page_current->selection_list ))->data;
 }
 
 /*! \todo Finish function documentation!!!
@@ -432,9 +436,10 @@ OBJECT *o_select_return_first_object(TOPLEVEL *w_current)
  * \return TRUE if the selection list is not empty, otherwise false.
  * also make sure item is valid
  */
-int o_select_selected(TOPLEVEL *w_current)
+int o_select_selected(GSCHEM_TOPLEVEL *w_current)
 {
-  if ( geda_list_get_glist( w_current->page_current->selection_list )) {
+  TOPLEVEL *toplevel = w_current->toplevel;
+  if ( geda_list_get_glist( toplevel->page_current->selection_list )) {
     return(TRUE);
   }
   return(FALSE);
@@ -444,10 +449,10 @@ int o_select_selected(TOPLEVEL *w_current)
 /*! \brief Unselects all the objects in the given list.
  *  \par Unselects all objects in the given list, does the
  *  needed work to make the objects visually unselected, and redraw them.
- *  \param [in] toplevel TOPLEVEL struct.
- *  \param [in] head Pointer to the selection list
+ *  \param [in] w_current  GSCHEM_TOPLEVEL struct.
+ *  \param [in] head       Pointer to the selection list
  */
-void o_select_unselect_list(TOPLEVEL *w_current, SELECTION *selection)
+void o_select_unselect_list(GSCHEM_TOPLEVEL *w_current, SELECTION *selection)
 {
   const GList *list = geda_list_get_glist( selection );
 
@@ -466,10 +471,11 @@ void o_select_unselect_list(TOPLEVEL *w_current, SELECTION *selection)
  *  \par Function Description
  *
  */
-void o_select_unselect_all(TOPLEVEL *w_current)
+void o_select_unselect_all(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   o_select_run_hooks( w_current, NULL, 2 );
-  o_select_unselect_list( w_current, w_current->page_current->selection_list );
+  o_select_unselect_list( w_current, toplevel->page_current->selection_list );
 }
 
 /*! \todo Finish function documentation!!!
@@ -478,12 +484,13 @@ void o_select_unselect_all(TOPLEVEL *w_current)
  *
  */
 void
-o_select_move_to_place_list(TOPLEVEL *w_current)
+o_select_move_to_place_list(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *selection;
   OBJECT *o_current;
 
-  selection = geda_list_get_glist( w_current->page_current->selection_list );
+  selection = geda_list_get_glist( toplevel->page_current->selection_list );
 
   if (!selection) {
     return;
@@ -492,7 +499,7 @@ o_select_move_to_place_list(TOPLEVEL *w_current)
   while (selection) {
     o_current = (OBJECT *) selection->data;
     if (o_current) {
-      w_current->page_current->complex_place_list = g_list_append(w_current->page_current->complex_place_list,
+      toplevel->page_current->complex_place_list = g_list_append(toplevel->page_current->complex_place_list,
 								  o_current);
     }
     selection = g_list_next(selection);

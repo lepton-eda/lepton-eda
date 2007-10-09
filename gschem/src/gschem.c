@@ -31,6 +31,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/i_vars.h"
 #include "../include/prototype.h"
@@ -131,7 +132,7 @@ void main_prog(void *closure, int argc, char *argv[])
 {
   int i;
   char *cwd = NULL;
-  TOPLEVEL *w_current = NULL;
+  GSCHEM_TOPLEVEL *w_current = NULL;
   char *input_str = NULL;
   int argv_index;
   int first_page = 1;
@@ -232,13 +233,14 @@ void main_prog(void *closure, int argc, char *argv[])
     exit(-1);
   }
 
-  /* Allocate w_current.   */
-  w_current = s_toplevel_new ();
+  /* Allocate w_current */
+  w_current = gschem_toplevel_new ();
+  w_current->toplevel = s_toplevel_new ();
   global_window_current = w_current;
 
   /* Now read in RC files. */
   g_rc_parse_gtkrc();
-  g_rc_parse(w_current, "gschemrc", rc_filename);
+  g_rc_parse(w_current->toplevel, "gschemrc", rc_filename);
   
   input_str = g_strdup_printf("%s%cgschem.scm", default_scheme_directory, 
 			      G_DIR_SEPARATOR);
@@ -312,14 +314,14 @@ void main_prog(void *closure, int argc, char *argv[])
   }
 
   /* Update the window to show the current page */
-  x_window_set_current_page( w_current, w_current->page_current );
+  x_window_set_current_page( w_current, w_current->toplevel->page_current );
 
 
 #if DEBUG
   scm_c_eval_string ("(display \"hello guile\n\")");
 #endif
 
-  if (w_current->scheme_directory == NULL) {
+  if (w_current->toplevel->scheme_directory == NULL) {
     fprintf(stderr, _("Scheme directory NOT set!\n"));
     exit(-1);
   }

@@ -25,6 +25,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -34,7 +35,7 @@
 
 /* this is needed since guile scripts only deal with the current
  * window set in x_event* functions */
-TOPLEVEL *global_window_current = NULL;
+GSCHEM_TOPLEVEL *global_window_current = NULL;
 
 /* window list */
 GList *global_window_list = NULL;

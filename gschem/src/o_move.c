@@ -23,6 +23,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -35,9 +36,10 @@
  *  \par Function Description
  *
  */
-void o_move_start(TOPLEVEL * w_current, int x, int y)
+void o_move_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
-  if ( geda_list_get_glist( w_current->page_current->selection_list ) != NULL) {
+  TOPLEVEL *toplevel = w_current->toplevel;
+  if ( geda_list_get_glist( toplevel->page_current->selection_list ) != NULL) {
 
     /* Save the current state. When rotating the selection when moving,
        we have to come back to here */
@@ -45,13 +47,13 @@ void o_move_start(TOPLEVEL * w_current, int x, int y)
     w_current->last_drawb_mode = -1;
     w_current->event_state = MOVE;
 
-    w_current->last_x = w_current->start_x = fix_x(w_current, x);
-    w_current->last_y = w_current->start_y = fix_y(w_current, y);
+    w_current->last_x = w_current->start_x = fix_x(toplevel, x);
+    w_current->last_y = w_current->start_y = fix_y(toplevel, y);
 
     o_erase_selected(w_current);
 
     o_drawbounding(w_current,
-                   geda_list_get_glist( w_current->page_current->selection_list ),
+                   geda_list_get_glist( toplevel->page_current->selection_list ),
                    x_get_darkcolor(w_current->bb_color), TRUE);
 
     if (w_current->netconn_rubberband) {
@@ -75,10 +77,11 @@ void o_move_start(TOPLEVEL * w_current, int x, int y)
  *  type can be SINGLE or COMPLEX
  *  which basically controls if this is a single object or a complex
  */
-void o_move_end_lowlevel(TOPLEVEL * w_current, OBJECT * list, int type,
+void o_move_end_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT * list, int type,
 			 int diff_x, int diff_y,
 			 GList** other_objects, GList** connected_objects)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
   OBJECT *object;
 
@@ -91,61 +94,61 @@ void o_move_end_lowlevel(TOPLEVEL * w_current, OBJECT * list, int type,
       case (OBJ_NET):
         /* save the other objects and remove object's connections */
         *other_objects = s_conn_return_others(*other_objects, object);
-        s_conn_remove(w_current, object);
+        s_conn_remove(toplevel, object);
 
         /* do the actual translation */
-        o_net_translate_world(w_current, diff_x, diff_y, object);
-        s_conn_update_object(w_current, object);
+        o_net_translate_world(toplevel, diff_x, diff_y, object);
+        s_conn_update_object(toplevel, object);
         *connected_objects = s_conn_return_others(*connected_objects, object);
         break;
 
       case (OBJ_BUS):
         /* save the other objects and remove object's connections */
         *other_objects = s_conn_return_others(*other_objects, object);
-        s_conn_remove(w_current, object);
+        s_conn_remove(toplevel, object);
 
-        o_bus_translate_world(w_current, diff_x, diff_y, object);
-        s_conn_update_object(w_current, object);
+        o_bus_translate_world(toplevel, diff_x, diff_y, object);
+        s_conn_update_object(toplevel, object);
         *connected_objects = s_conn_return_others(*connected_objects, object);
         break;
 
       case (OBJ_PIN):
         /* save the other objects and remove object's connections */
         *other_objects = s_conn_return_others(*other_objects, object);
-        s_conn_remove(w_current, object);
+        s_conn_remove(toplevel, object);
         
-        o_pin_translate_world(w_current, diff_x, diff_y, object);
-        s_conn_update_object(w_current, object);
+        o_pin_translate_world(toplevel, diff_x, diff_y, object);
+        s_conn_update_object(toplevel, object);
         *connected_objects = s_conn_return_others(*connected_objects, object);
         break;
 
       case (OBJ_LINE):
-        o_line_translate_world(w_current, diff_x, diff_y, object);
+        o_line_translate_world(toplevel, diff_x, diff_y, object);
         break;
 
       case (OBJ_BOX):
-        o_box_translate_world(w_current, diff_x, diff_y, object);
+        o_box_translate_world(toplevel, diff_x, diff_y, object);
         break;
 
       case (OBJ_PICTURE):
-        o_picture_translate_world(w_current, diff_x, diff_y, object);
+        o_picture_translate_world(toplevel, diff_x, diff_y, object);
         break;
 
       case (OBJ_CIRCLE):
-        o_circle_translate_world(w_current, diff_x, diff_y, object);
+        o_circle_translate_world(toplevel, diff_x, diff_y, object);
         break;
 
       case (OBJ_TEXT):
-        o_text_translate_world(w_current, diff_x, diff_y, object);
+        o_text_translate_world(toplevel, diff_x, diff_y, object);
         break;
 
       case (OBJ_ARC):
-        o_arc_translate_world(w_current, diff_x, diff_y, object);
+        o_arc_translate_world(toplevel, diff_x, diff_y, object);
         break;
 
       case (OBJ_COMPLEX):
       case (OBJ_PLACEHOLDER):
-        o_complex_translate_world(w_current, diff_x, diff_y, object);
+        o_complex_translate_world(toplevel, diff_x, diff_y, object);
         break;
     }
 
@@ -163,8 +166,9 @@ void o_move_end_lowlevel(TOPLEVEL * w_current, OBJECT * list, int type,
  *  \par Function Description
  *
  */
-void o_move_end(TOPLEVEL * w_current)
+void o_move_end(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_current = NULL;
   OBJECT *object;
   int diff_x, diff_y;
@@ -187,14 +191,14 @@ void o_move_end(TOPLEVEL * w_current)
   }
 
 
-  SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y,
+  SCREENtoWORLD(toplevel, w_current->last_x, w_current->last_y,
                 &lx, &ly);
-  SCREENtoWORLD(w_current, w_current->start_x, w_current->start_y,
+  SCREENtoWORLD(toplevel, w_current->start_x, w_current->start_y,
                 &sx, &sy);
-  lx = snap_grid(w_current, lx);
-  ly = snap_grid(w_current, ly);
-  sx = snap_grid(w_current, sx);
-  sy = snap_grid(w_current, sy);
+  lx = snap_grid(toplevel, lx);
+  ly = snap_grid(toplevel, ly);
+  sx = snap_grid(toplevel, sx);
+  sy = snap_grid(toplevel, sy);
 
   diff_x = lx - sx;
   diff_y = ly - sy;
@@ -208,12 +212,12 @@ void o_move_end(TOPLEVEL * w_current)
 
   if (w_current->actionfeedback_mode == OUTLINE) {
     o_drawbounding(w_current,
-                   geda_list_get_glist( w_current->page_current->selection_list ),
+                   geda_list_get_glist( toplevel->page_current->selection_list ),
                    x_get_darkcolor(w_current->bb_color), TRUE);
   }
 
   /* skip over head node */
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
 
   while (s_current != NULL) {
 
@@ -259,7 +263,7 @@ void o_move_end(TOPLEVEL * w_current)
                             &other_objects, &connected_objects);
 
 
-        world_get_object_list_bounds(w_current, object->complex->prim_objs,
+        world_get_object_list_bounds(toplevel, object->complex->prim_objs,
 			       &left, &top, &right, &bottom);
 
         object->w_left = left;
@@ -279,7 +283,7 @@ void o_move_end(TOPLEVEL * w_current)
   /* erase the bounding box */
   if (w_current->actionfeedback_mode == BOUNDINGBOX) {
     o_drawbounding(w_current,
-                   geda_list_get_glist( w_current->page_current->selection_list ),
+                   geda_list_get_glist( toplevel->page_current->selection_list ),
                    x_get_darkcolor(w_current->bb_color), FALSE);
   }
 
@@ -299,7 +303,7 @@ void o_move_end(TOPLEVEL * w_current)
   o_cue_undraw_list(w_current, rubbernet_connected_objects);
   o_cue_draw_list(w_current, rubbernet_connected_objects);
  
-  w_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
   o_undo_savestate(w_current, UNDO_ALL);
 
   g_list_free(other_objects);
@@ -308,8 +312,8 @@ void o_move_end(TOPLEVEL * w_current)
   g_list_free(rubbernet_other_objects);
   g_list_free(rubbernet_connected_objects);
 
-  g_list_free(w_current->page_current->complex_place_list);
-  w_current->page_current->complex_place_list = NULL;
+  g_list_free(toplevel->page_current->complex_place_list);
+  toplevel->page_current->complex_place_list = NULL;
 }
 
 /*! \todo Finish function documentation!!!
@@ -337,8 +341,9 @@ int o_move_return_whichone(OBJECT * object, int x, int y)
  *  \par Function Description
  *
  */
-void o_move_check_endpoint(TOPLEVEL * w_current, OBJECT * object)
+void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *cl_current;
   CONN *c_current;
   int whichone;
@@ -388,8 +393,8 @@ void o_move_check_endpoint(TOPLEVEL * w_current, OBJECT * object)
 #endif
 
           if (whichone >= 0 && whichone <= 1) {
-            w_current->page_current->stretch_tail =
-              s_stretch_add(w_current->page_current->
+            toplevel->page_current->stretch_tail =
+              s_stretch_add(toplevel->page_current->
                             stretch_head,
                             c_current->other_object,
                             c_current, whichone);
@@ -413,24 +418,25 @@ void o_move_check_endpoint(TOPLEVEL * w_current, OBJECT * object)
  *  \par Function Description
  *
  */
-void o_move_prep_rubberband(TOPLEVEL * w_current)
+void o_move_prep_rubberband(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_current;
   OBJECT *object;
   OBJECT *o_current;
 
-  s_stretch_remove_most(w_current,
-                        w_current->page_current->stretch_head);
-  w_current->page_current->stretch_tail =
-  w_current->page_current->stretch_head;
+  s_stretch_remove_most(toplevel,
+                        toplevel->page_current->stretch_head);
+  toplevel->page_current->stretch_tail =
+  toplevel->page_current->stretch_head;
 
 #if DEBUG
   printf("\n\n\n");
-  s_stretch_print_all(w_current->page_current->stretch_head);
+  s_stretch_print_all(toplevel->page_current->stretch_head);
   printf("\n\n\n");
 #endif
 
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
   while (s_current != NULL) {
     object = (OBJECT *) s_current->data;
     if (object) {
@@ -462,7 +468,7 @@ void o_move_prep_rubberband(TOPLEVEL * w_current)
 
 #if DEBUG
   printf("\n\n\n\nfinished building scretch list:\n");
-  s_stretch_print_all(w_current->page_current->stretch_head);
+  s_stretch_print_all(toplevel->page_current->stretch_head);
 #endif
 }
 
@@ -492,18 +498,19 @@ int o_move_zero_length(OBJECT * object)
  *  \par Function Description
  *
  */
-void o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
+void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
 			   int world_diff_y,
 			   GList** objects,
 			   GList** other_objects, GList** connected_objects)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   STRETCH *s_current;
   OBJECT *object;
   int x, y;
   int whichone;
 
   /* skip over head */
-  s_current = w_current->page_current->stretch_head->next;
+  s_current = toplevel->page_current->stretch_head->next;
 
   while (s_current != NULL) {
     
@@ -518,7 +525,7 @@ void o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
           /* save the other objects and remove object's connections */
           *other_objects =
             s_conn_return_others(*other_objects, object);
-          s_conn_remove(w_current, object);
+          s_conn_remove(toplevel, object);
 
           x = object->line->x[whichone];
           y = object->line->y[whichone];
@@ -542,9 +549,9 @@ void o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
           if (o_move_zero_length(object)) {
             o_delete_net(w_current, object);
           } else {
-            o_net_recalc(w_current, object);
-            s_tile_update_object(w_current, object);
-            s_conn_update_object(w_current, object);
+            o_net_recalc(toplevel, object);
+            s_tile_update_object(toplevel, object);
+            s_conn_update_object(toplevel, object);
             *connected_objects =
               s_conn_return_others(*connected_objects, object);
             *objects = g_list_append(*objects, object);
@@ -563,7 +570,7 @@ void o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
           /* save the other objects and remove object's connections */
           *other_objects =
             s_conn_return_others(*other_objects, object);
-          s_conn_remove(w_current, object);
+          s_conn_remove(toplevel, object);
 
           x = object->line->x[whichone];
           y = object->line->y[whichone];
@@ -584,9 +591,9 @@ void o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
           if (o_move_zero_length(object)) {
             o_delete_bus(w_current, object);
           } else {
-            o_bus_recalc(w_current, object);
-            s_tile_update_object(w_current, object);
-            s_conn_update_object(w_current, object);
+            o_bus_recalc(toplevel, object);
+            s_tile_update_object(toplevel, object);
+            s_conn_update_object(toplevel, object);
             *connected_objects =
               s_conn_return_others(*connected_objects, object);
             *objects = g_list_append(*objects, object);
@@ -613,9 +620,9 @@ void o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
  *  \par Function Description
  *
  */
-void o_move_stretch_rubberband(TOPLEVEL * w_current)
+void o_move_stretch_rubberband(GSCHEM_TOPLEVEL *w_current)
 {
-
+  TOPLEVEL *toplevel = w_current->toplevel;
   STRETCH *s_current;
   OBJECT *object;
   int diff_x, diff_y;
@@ -626,7 +633,7 @@ void o_move_stretch_rubberband(TOPLEVEL * w_current)
 
 
   /* skip over head */
-  s_current = w_current->page_current->stretch_head->next;
+  s_current = toplevel->page_current->stretch_head->next;
   while (s_current != NULL) {
 
     object = s_current->object;

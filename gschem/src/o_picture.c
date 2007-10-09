@@ -23,6 +23,7 @@
 
 #include <libgeda/libgeda.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -52,18 +53,19 @@
  *  The other corner will be saved in (<B>w_current->last_x</B>,
  *  <B>w_current->last_y</B>).
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.    
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_picture_start(TOPLEVEL *w_current, int x, int y)
+void o_picture_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
 #if DEBUG
   printf("o_picture_start called\n");
 #endif
   /* init start_[x|y], last_[x|y] to describe box */
-  w_current->last_x = w_current->start_x = fix_x(w_current, x);
-  w_current->last_y = w_current->start_y = fix_y(w_current, y);
+  w_current->last_x = w_current->start_x = fix_x(toplevel, x);
+  w_current->last_y = w_current->start_y = fix_y(toplevel, y);
 
   /* start to draw the box */
   o_picture_rubberbox_xor(w_current);
@@ -83,25 +85,26 @@ void o_picture_start(TOPLEVEL *w_current, int x, int y)
  *  initialized and linked to the object list ; The object is finally
  *  drawn on the current sheet.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_picture_end(TOPLEVEL *w_current, int x, int y)
+void o_picture_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1;
   int x2, y2;
   int picture_width, picture_height;
   int picture_left, picture_top;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
   /* get the last coords of the pointer */
-  w_current->last_x = fix_x(w_current, x);
-  w_current->last_y = fix_y(w_current, y);
+  w_current->last_x = fix_x(toplevel, x);
+  w_current->last_y = fix_y(toplevel, y);
 
   /* erase the temporary picture */
   o_picture_rubberbox_xor(w_current);
@@ -122,26 +125,26 @@ void o_picture_end(TOPLEVEL *w_current, int x, int y)
   }
 
   /* calculate the world coords of the upper left and lower right corners */
-  SCREENtoWORLD(w_current, picture_left, picture_top, &x1, &y1);
-  SCREENtoWORLD(w_current,
+  SCREENtoWORLD(toplevel, picture_left, picture_top, &x1, &y1);
+  SCREENtoWORLD(toplevel,
                 picture_left + picture_width,
 		picture_top + picture_height, &x2, &y2);
-  x1 = snap_grid(w_current, x1);
-  y1 = snap_grid(w_current, y1);
-  x2 = snap_grid(w_current, x2);
-  y2 = snap_grid(w_current, y2);
+  x1 = snap_grid(toplevel, x1);
+  y1 = snap_grid(toplevel, y1);
+  x2 = snap_grid(toplevel, x2);
+  y2 = snap_grid(toplevel, y2);
 
   /* create the object */
-  w_current->page_current->object_tail = 
-  o_picture_add(w_current,
-                w_current->page_current->object_tail,
+  toplevel->page_current->object_tail =
+  o_picture_add(toplevel,
+                toplevel->page_current->object_tail,
 		w_current->current_pixbuf,
 		w_current->pixbuf_filename,
 		w_current->pixbuf_wh_ratio,
                 OBJ_PICTURE, x1, y1, x2, y2, 0, FALSE, FALSE);
 
   /* draw it */
-  o_redraw_single(w_current, w_current->page_current->object_tail);
+  o_redraw_single(w_current, toplevel->page_current->object_tail);
   
 #if DEBUG
   printf("coords: %d %d %d %d\n", x1, y2, x2, y2);
@@ -152,7 +155,7 @@ void o_picture_end(TOPLEVEL *w_current, int x, int y)
   w_current->last_x  = (-1);
   w_current->last_y  = (-1);
 	
-  w_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
 
   o_undo_savestate(w_current, UNDO_ALL);
 
@@ -162,8 +165,9 @@ void o_picture_end(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *  This function creates the add image dialog and loads the selected picture.
  */
-void picture_selection_dialog (TOPLEVEL *w_current)
+void picture_selection_dialog (GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   gchar *filename;
   GdkPixbuf *pixbuf;
   GError *error = NULL;
@@ -222,7 +226,7 @@ void picture_selection_dialog (TOPLEVEL *w_current)
       
       o_picture_set_pixbuf(w_current, pixbuf, filename);
     
-      w_current->page_current->CHANGED=1;
+      toplevel->page_current->CHANGED=1;
       i_set_state(w_current, DRAWPICTURE);
     }
     g_free (filename);
@@ -242,7 +246,7 @@ void picture_selection_dialog (TOPLEVEL *w_current)
  *  \note
  * used in button cancel code in x_events.c
  */
-void o_picture_eraserubber(TOPLEVEL *w_current)
+void o_picture_eraserubber(GSCHEM_TOPLEVEL *w_current)
 {
 #if DEBUG
   printf("o_picture_eraserubber called\n");
@@ -261,17 +265,18 @@ void o_picture_eraserubber(TOPLEVEL *w_current)
  *  width, height and left and top values are recomputed by the corresponding
  *  macros. The box is then erased by performing a xor-drawing over the box.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_picture_rubberbox(TOPLEVEL *w_current, int x, int y)
+void o_picture_rubberbox(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
 #if DEBUG
   printf("o_picture_rubberbox called\n");
 #endif
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
@@ -284,17 +289,17 @@ void o_picture_rubberbox(TOPLEVEL *w_current, int x, int y)
    */
 
   /* update the coords of the corner */
-  w_current->last_x = fix_x(w_current, x);
-  w_current->last_y = fix_y(w_current, y);
+  w_current->last_x = fix_x(toplevel, x);
+  w_current->last_y = fix_y(toplevel, y);
 
   /* draw the new temporary box */
   o_picture_rubberbox_xor(w_current);
   
 }
 
-/*! \brief Draw picture from TOPLEVEL object.
+/*! \brief Draw picture from GSCHEM_TOPLEVEL object.
  *  \par Function Description
- *  This function draws the box from the variables in the toplevel
+ *  This function draws the box from the variables in the GSCHEM_TOPLEVEL
  *  structure <B>*w_current</B>.
  *  One corner of the box is at (<B>w_current->start_x</B>,
  *  <B>w_current->start_y</B>) and the second corner is at
@@ -303,9 +308,9 @@ void o_picture_rubberbox(TOPLEVEL *w_current, int x, int y)
  *  The box is drawn with a xor-function over the current sheet with the
  *  selection color.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
-void o_picture_rubberbox_xor(TOPLEVEL *w_current)
+void o_picture_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
 {
   int picture_width, picture_height, picture_left, picture_top;
   
@@ -339,16 +344,17 @@ void o_picture_rubberbox_xor(TOPLEVEL *w_current)
  *  This function is used to draw a picture on screen. The picture is
  *  described in the OBJECT which is referred by <B>o_current</B>. The picture
  *  is displayed according to the current state, described in the
- *  TOPLEVEL object pointed by <B>w_current</B>.
+ *  GSCHEM_TOPLEVEL object pointed by <B>w_current</B>.
  *
  *  It first checks if the OBJECT pointed is valid or not. If not it
  *  returns and do not output anything. That should never happen though.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Picture OBJECT to draw.
  */
-void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
+void o_picture_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int wleft, wright, wtop, wbottom; /* world bounds */
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
 
@@ -359,16 +365,16 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
   /* Get read to check for visibility of this line by using it's
    * bounding picture
    */
-  world_get_picture_bounds(w_current, o_current,
+  world_get_picture_bounds(toplevel, o_current,
                            &wleft, &wtop, &wright, &wbottom);
 	
-  if (!visible(w_current, wleft, wtop, wright, wbottom)) {
+  if (!visible(toplevel, wleft, wtop, wright, wbottom)) {
     return;
   }
 
-  WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->upper_y,
+  WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->upper_y,
                  &s_upper_x, &s_upper_y );
-  WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->lower_y,
+  WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->lower_y,
                  &s_lower_x, &s_lower_y );
 
 #if  DEBUG 
@@ -390,7 +396,7 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
     o_current->picture->displayed_picture = NULL;
   }
   /* If it's not drawing using the background color then draw the image */
-  if (w_current->override_color != w_current->background_color) { 
+  if (toplevel->override_color != toplevel->background_color) {
     GdkPixbuf *temp_pixbuf1, *temp_pixbuf2;
 
     /* Create a copy of the pixbuf rotated */
@@ -423,7 +429,7 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
       return;
     }
 
-    if (w_current->DONT_REDRAW == 0) {
+    if (toplevel->DONT_REDRAW == 0) {
       gdk_draw_pixbuf(w_current->window, w_current->gc,
 		      o_current->picture->displayed_picture, 
 		      0, 0, s_upper_x, s_upper_y, 
@@ -435,10 +441,10 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
     }
   }
   else {
-    if (w_current->DONT_REDRAW == 0) {
+    if (toplevel->DONT_REDRAW == 0) {
       /* Erase the picture, drawing a rectangle with the background color */
       gdk_gc_set_foreground(w_current->gc, 
-			    x_get_color(w_current->background_color));
+			    x_get_color(toplevel->background_color));
       gdk_draw_rectangle(w_current->window, w_current->gc, TRUE, 
 			 s_upper_x, s_upper_y,
 			 abs(s_lower_x - s_upper_x), 
@@ -455,12 +461,12 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
       if (!o_current->selected) {
 	/* object is no more selected, erase the grips */
 	o_current->draw_grips = FALSE;
-	if (w_current->DONT_REDRAW == 0) {
+	if (toplevel->DONT_REDRAW == 0) {
 	  o_picture_erase_grips(w_current, o_current); 
 	}
       } else {
 	/* object is selected, draw the grips on the picture */
-	if (w_current->DONT_REDRAW == 0) {
+	if (toplevel->DONT_REDRAW == 0) {
 	  o_picture_draw_grips(w_current, o_current); 
 	}
       }
@@ -472,11 +478,12 @@ void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current)
  *  This function draws four grips on the corners of the picture described
  *  by <B>*o_current</B>.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Picture OBJECT to draw grip points on.
  */
-void o_picture_draw_grips(TOPLEVEL *w_current, OBJECT *o_current) 
+void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
 
 #if DEBUG
@@ -485,9 +492,9 @@ void o_picture_draw_grips(TOPLEVEL *w_current, OBJECT *o_current)
   if (w_current->draw_grips == FALSE)
 	  return;
 
-  WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->upper_y,
+  WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->upper_y,
                  &s_upper_x, &s_upper_y );
-  WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->lower_y,
+  WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->lower_y,
                  &s_lower_x, &s_lower_y );
   
 
@@ -519,11 +526,12 @@ void o_picture_draw_grips(TOPLEVEL *w_current, OBJECT *o_current)
  *  This function erases the four grips displayed on the <B>*o_current</B>
  *  picture object. These grips are on each of the corner.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Picture OBJECT to erase grip marks from.
  */
-void o_picture_erase_grips(TOPLEVEL *w_current, OBJECT *o_current) 
+void o_picture_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
 
 #if DEBUG
@@ -532,9 +540,9 @@ void o_picture_erase_grips(TOPLEVEL *w_current, OBJECT *o_current)
   if (w_current->draw_grips == FALSE)
 	  return;
 
-  WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->upper_y,
+  WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->upper_y,
                  &s_upper_x, &s_upper_y );
-  WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->lower_y,
+  WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->lower_y,
                  &s_lower_x, &s_lower_y );
   
   /* grip on upper left corner (whichone = PICTURE_UPPER_LEFT) */
@@ -570,19 +578,20 @@ void o_picture_erase_grips(TOPLEVEL *w_current, OBJECT *o_current)
  *  the special color. Therefore a picture is drawn with background color
  *  over the previous one.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Picture OBJECT to erase.
  */
-void o_picture_erase(TOPLEVEL *w_current, OBJECT *o_current)
+void o_picture_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
 #if DEBUG
   printf("o_picture_erase called\n");
 #endif
     gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(w_current->background_color));
-    w_current->override_color = w_current->background_color;
+                          x_get_color(toplevel->background_color));
+    toplevel->override_color = toplevel->background_color;
     o_picture_draw(w_current, o_current);
-    w_current->override_color = -1;
+    toplevel->override_color = -1;
 }
 
 /*! \brief Draw a picture described by OBJECT with translation
@@ -594,13 +603,14 @@ void o_picture_erase(TOPLEVEL *w_current, OBJECT *o_current)
  *
  *  The picture is displayed with the color of the object.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] dx         Delta x coordinate for picture.
  *  \param [in] dy         Delta y coordinate for picture.
  *  \param [in] o_current  Picture OBJECT to draw.
  */
-void o_picture_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+void o_picture_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int screen_x1, screen_y1;
   int screen_x2, screen_y2;
   int color;
@@ -612,9 +622,9 @@ void o_picture_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
     return;
   }
 
-  WORLDtoSCREEN( w_current, o_current->picture->upper_x, o_current->picture->upper_y,
+  WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->upper_y,
                  &screen_x1, &screen_y1 );
-  WORLDtoSCREEN( w_current, o_current->picture->lower_x, o_current->picture->lower_y,
+  WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->lower_y,
                  &screen_x2, &screen_y2 );
   
   if (o_current->saved_color != -1) {
@@ -639,17 +649,18 @@ void o_picture_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
  *  This function replaces all pictures in the current selection with a 
  *  new image.
  *   
- *  \param [in] w_current  The TOPLEVEL object
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object
  *  \param [in] pixbuf     New GdkPixbuf object
  *  \param [in] filename   The filename of the new picture
  *  
  */
-void o_picture_exchange (TOPLEVEL *w_current, GdkPixbuf *pixbuf, 
+void o_picture_exchange (GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf,
 			 const gchar *filename)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *list;  
 
-  list = geda_list_get_glist( w_current->page_current->selection_list );
+  list = geda_list_get_glist( toplevel->page_current->selection_list );
   while (list != NULL) {
     OBJECT *object;
 
@@ -701,8 +712,9 @@ void o_picture_exchange (TOPLEVEL *w_current, GdkPixbuf *pixbuf,
  *
  *  \todo Maybe merge this dialog function with picture_selection_dialog()
  */
-void picture_change_filename_dialog (TOPLEVEL *w_current)
+void picture_change_filename_dialog (GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   gchar *filename;
   GdkPixbuf *pixbuf;
   GError *error = NULL;
@@ -759,14 +771,14 @@ void picture_change_filename_dialog (TOPLEVEL *w_current)
       o_erase_rubber(w_current);
       w_current->inside_action = 0;
 
-      /* \FIXME Should we set the pixbuf buffer in TOPLEVEL to store 
+      /* \FIXME Should we set the pixbuf buffer in GSCHEM_TOPLEVEL to store
 	 the current pixbuf? (Werner)
 	 o_picture_set_pixbuf(w_current, pixbuf, filename); */
 
       o_picture_exchange(w_current, pixbuf, filename);
 
       g_object_unref(pixbuf);
-      w_current->page_current->CHANGED=1;
+      toplevel->page_current->CHANGED=1;
     }
     g_free (filename);
   }
@@ -782,11 +794,11 @@ void picture_change_filename_dialog (TOPLEVEL *w_current)
  *  \brief
  *  \par Function Description
  *
- *  \param [in] toplevel  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] pixbuf
  *  \param [in] filename
  */
-void o_picture_set_pixbuf(TOPLEVEL *toplevel,
+void o_picture_set_pixbuf(GSCHEM_TOPLEVEL *w_current,
                           GdkPixbuf *pixbuf, char *filename)
 {
 
@@ -796,20 +808,20 @@ void o_picture_set_pixbuf(TOPLEVEL *toplevel,
     return;
   }
 
-  if (toplevel->current_pixbuf != NULL) {
-    g_object_unref(toplevel->current_pixbuf);
-    toplevel->current_pixbuf=NULL;
+  if (w_current->current_pixbuf != NULL) {
+    g_object_unref(w_current->current_pixbuf);
+    w_current->current_pixbuf=NULL;
   }
 
-  if (toplevel->pixbuf_filename != NULL) {
-    g_free(toplevel->pixbuf_filename);
-    toplevel->pixbuf_filename=NULL;
+  if (w_current->pixbuf_filename != NULL) {
+    g_free(w_current->pixbuf_filename);
+    w_current->pixbuf_filename=NULL;
   }
 
-  toplevel->current_pixbuf = pixbuf;
-  toplevel->pixbuf_filename = (char *) g_strdup(filename);
+  w_current->current_pixbuf = pixbuf;
+  w_current->pixbuf_filename = (char *) g_strdup(filename);
 
-  toplevel->pixbuf_wh_ratio = (double) gdk_pixbuf_get_width(pixbuf) /
+  w_current->pixbuf_wh_ratio = (double) gdk_pixbuf_get_width(pixbuf) /
                                         gdk_pixbuf_get_height(pixbuf);
 
   /* be sure to free this pixbuf somewhere */

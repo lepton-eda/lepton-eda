@@ -26,6 +26,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -35,14 +36,14 @@
 
 /* Private function declarations */
 static void custom_world_get_single_object_bounds 
-                                       (TOPLEVEL *w_current, OBJECT *o_current,
+                                       (TOPLEVEL *toplevel, OBJECT *o_current,
                                         int *left, int *top, 
                                         int *right, int *bottom,
                                         GList *exclude_attrib_list,
 					GList *exclude_obj_type_list);
 
 static void custom_world_get_object_list_bounds 
-  (TOPLEVEL *w_current, OBJECT *o_current,
+  (TOPLEVEL *toplevel, OBJECT *o_current,
    int *left, int *top, 
    int *right, int *bottom,
    GList *exclude_attrib_list,
@@ -55,7 +56,7 @@ static void custom_world_get_object_list_bounds
  */
 /* Makes a list of all attributes currently connected to curr_object. *
  * Principle stolen from o_attrib_return_attribs */
-SCM g_make_attrib_smob_list(TOPLEVEL *curr_w, OBJECT *curr_object)
+SCM g_make_attrib_smob_list(GSCHEM_TOPLEVEL *w_current, OBJECT *curr_object)
 {
   ATTRIB *a_current;      
   OBJECT *object;
@@ -81,7 +82,7 @@ SCM g_make_attrib_smob_list(TOPLEVEL *curr_w, OBJECT *curr_object)
     if (a_current->object->type == OBJ_TEXT && 
         a_current->object->text) {
       if (a_current->object->text->string) {
-        smob_list = scm_cons (g_make_attrib_smob (curr_w, a_current), 
+        smob_list = scm_cons (g_make_attrib_smob (w_current->toplevel, a_current),
                               smob_list);
       }
     } else {
@@ -106,14 +107,15 @@ SCM g_make_attrib_smob_list(TOPLEVEL *curr_w, OBJECT *curr_object)
 SCM g_set_attrib_value_x(SCM attrib_smob, SCM scm_value)
 {
   SCM returned;
-  TOPLEVEL *world;
+  TOPLEVEL *toplevel;
   OBJECT *o_attrib;
   char *new_string;
 
   returned = g_set_attrib_value_internal(attrib_smob, scm_value, 
-                                         &world, &o_attrib, &new_string);
+                                         &toplevel, &o_attrib, &new_string);
 
-  o_text_change(world, o_attrib, new_string, o_attrib->visibility, o_attrib->show_name_value);
+  o_text_change(global_window_current, o_attrib, new_string,
+                o_attrib->visibility, o_attrib->show_name_value);
 
   g_free(new_string);
 
@@ -136,7 +138,8 @@ The return value is always TRUE.
 SCM g_add_attrib(SCM object, SCM scm_attrib_name, 
 		 SCM scm_attrib_value, SCM scm_vis, SCM scm_show)
 {
-  TOPLEVEL *w_current=NULL; 
+  GSCHEM_TOPLEVEL *w_current=global_window_current;
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current=NULL;
   gboolean vis;
   int show=0;
@@ -155,8 +158,8 @@ SCM g_add_attrib(SCM object, SCM scm_attrib_name,
   SCM_ASSERT (scm_list_p(scm_show), scm_show,
 	      SCM_ARG5, "add-attribute-to-object");
   
-  /* Get w_current and o_current */
-  SCM_ASSERT (g_get_data_from_object_smob (object, &w_current, &o_current),
+  /* Get toplevel and o_current */
+  SCM_ASSERT (g_get_data_from_object_smob (object, &toplevel, &o_current),
 	      object, SCM_ARG1, "add-attribute-to-object");
 
   /* Get parameters */
@@ -218,14 +221,14 @@ The active connection end of the pin is the beginning, so this function cares ab
  */
 SCM g_get_pin_ends(SCM object)
 {
-  TOPLEVEL *w_current;
+  TOPLEVEL *toplevel;
   OBJECT *o_current;
   SCM coord1 = SCM_EOL;
   SCM coord2 = SCM_EOL;
   SCM coords = SCM_EOL;
 
-  /* Get w_current and o_current */
-  SCM_ASSERT (g_get_data_from_object_smob (object, &w_current, &o_current),
+  /* Get toplevel and o_current */
+  SCM_ASSERT (g_get_data_from_object_smob (object, &toplevel, &o_current),
 	      object, SCM_ARG1, "get-pin-ends");
   
   /* Check that it is a pin object */
@@ -279,7 +282,8 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
   struct st_attrib_smob *attribute = 
   (struct st_attrib_smob *)SCM_CDR(attrib_smob);
   OBJECT *object;
-  TOPLEVEL *w_current = (TOPLEVEL *) attribute->world;
+  GSCHEM_TOPLEVEL *w_current = global_window_current;
+  TOPLEVEL *toplevel = w_current->toplevel;
 
   char *colorname=NULL;
   int color=0;
@@ -377,8 +381,8 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
       if (rotation != -1) {
 	object->text->angle = rotation;
       }
-      o_text_recreate(w_current, object);
-      if (!w_current->DONT_REDRAW) {
+      o_text_recreate(toplevel, object);
+      if (!toplevel->DONT_REDRAW) {
 	o_text_draw(w_current, object);
       }
     }
@@ -392,7 +396,7 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
  *  Get the object bounds without considering the attributes in 
  *  exclude_attrib_list, neither the object types included in 
  *  exclude_obj_type_list
- *  \param [in] w_current TOPLEVEL structure.
+ *  \param [in] toplevel TOPLEVEL structure.
  *  \param [in] o_current The object we want to know the bounds of.
  *  \param [in] exclude_attrib_list A list with the attribute names we don't
  *  want to include when calculing the bounds.
@@ -406,7 +410,7 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
  *
  */
 static void custom_world_get_single_object_bounds 
-                                       (TOPLEVEL *w_current, OBJECT *o_current,
+                                       (TOPLEVEL *toplevel, OBJECT *o_current,
                                         int *left, int *top, 
                                         int *right, int *bottom,
                                         GList *exclude_attrib_list,
@@ -417,8 +421,8 @@ static void custom_world_get_single_object_bounds
     char *name_ptr, *value_ptr, aux_ptr[2];
     gboolean include_text;
 
-    *left = rleft = w_current->init_right;
-    *top = rtop = w_current->init_bottom;;
+    *left = rleft = toplevel->init_right;
+    *top = rtop = toplevel->init_bottom;;
     *right = *bottom = rright = rbottom = 0;
     
       obj_ptr = o_current;
@@ -429,7 +433,7 @@ static void custom_world_get_single_object_bounds
 
 	switch(obj_ptr->type) {
           case (OBJ_PIN):
-	    world_get_single_object_bounds (w_current, obj_ptr,
+	    world_get_single_object_bounds (toplevel, obj_ptr,
 					    &rleft, &rtop, &rright, &rbottom);
 	    break;
           case (OBJ_TEXT):
@@ -444,7 +448,7 @@ static void custom_world_get_single_object_bounds
 		include_text = FALSE;
 	      }
 	      if (include_text) {
-		world_get_single_object_bounds (w_current, obj_ptr, 
+		world_get_single_object_bounds (toplevel, obj_ptr,
 						&rleft, &rtop, &rright, &rbottom);
 	      }
 	      g_free(name_ptr);
@@ -453,7 +457,7 @@ static void custom_world_get_single_object_bounds
 	    break;
           case (OBJ_COMPLEX):
           case (OBJ_PLACEHOLDER):
-	    custom_world_get_object_list_bounds(w_current, 
+	    custom_world_get_object_list_bounds(toplevel,
 						o_current->complex->prim_objs, 
 						left, top, right, bottom,
 						exclude_attrib_list,
@@ -461,7 +465,7 @@ static void custom_world_get_single_object_bounds
 	    break;
 	    
           default:
-	    world_get_single_object_bounds (w_current, obj_ptr, 
+	    world_get_single_object_bounds (toplevel, obj_ptr,
 					    &rleft, &rtop, &rright, &rbottom);
 	    break;
 	}
@@ -478,7 +482,7 @@ static void custom_world_get_single_object_bounds
 	    g_assert(a_current->object);
 
 	    if (a_current->object->type == OBJ_TEXT) {
-	      custom_world_get_single_object_bounds(w_current, 
+	      custom_world_get_single_object_bounds(toplevel,
 						    a_current->object,
 						    &rleft, &rtop, 
 						    &rright, &rbottom,
@@ -497,7 +501,7 @@ static void custom_world_get_single_object_bounds
 }
 
 static void custom_world_get_object_list_bounds 
-  (TOPLEVEL *w_current, OBJECT *o_current,
+  (TOPLEVEL *toplevel, OBJECT *o_current,
    int *left, int *top, 
    int *right, int *bottom,
    GList *exclude_attrib_list,
@@ -515,7 +519,7 @@ static void custom_world_get_object_list_bounds
   obj_ptr = o_current;
 	
   while ( obj_ptr != NULL ) {
-    custom_world_get_single_object_bounds(w_current, obj_ptr, &rleft, &rtop, 
+    custom_world_get_single_object_bounds(toplevel, obj_ptr, &rleft, &rtop,
 					  &rright, &rbottom,
 					  exclude_attrib_list,
 					  exclude_obj_type_list);
@@ -551,7 +555,7 @@ static void custom_world_get_object_list_bounds
 SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclude_object_type)
 {
 
-  TOPLEVEL *w_current=NULL;
+  TOPLEVEL *toplevel=NULL;
   OBJECT *object=NULL;
   int left=0, right=0, bottom=0, top=0; 
   SCM returned = SCM_EOL;
@@ -586,16 +590,16 @@ SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclu
 								      scm_from_int(i))));
   }
 
-  /* Get w_current and o_current. */
-  g_get_data_from_object_smob (object_smob, &w_current, &object);
+  /* Get toplevel and o_current. */
+  g_get_data_from_object_smob (object_smob, &toplevel, &object);
   
-  SCM_ASSERT (w_current && object,
+  SCM_ASSERT (toplevel && object,
 	      object_smob, SCM_ARG1, "get-object-bounds");
 
   if (g_list_find_custom(exclude_attrib_list, "all", (GCompareFunc) &strcmp))
     exclude_all_attribs = TRUE;
 
-  custom_world_get_single_object_bounds (w_current, object,
+  custom_world_get_single_object_bounds (toplevel, object,
 					 &left, &top, 
 					 &right, &bottom, 
 					 exclude_attrib_list,
@@ -623,13 +627,13 @@ SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclu
  */
 SCM g_get_object_pins (SCM object_smob)
 {
-  TOPLEVEL *w_current=NULL;
+  TOPLEVEL *toplevel=NULL;
   OBJECT *object=NULL;
   OBJECT *prim_obj;
   SCM returned=SCM_EOL;
 
-  /* Get w_current and o_current */
-  SCM_ASSERT (g_get_data_from_object_smob (object_smob, &w_current, &object),
+  /* Get toplevel and o_current */
+  SCM_ASSERT (g_get_data_from_object_smob (object_smob, &toplevel, &object),
 	      object_smob, SCM_ARG1, "get-object-pins");
 
   if (!object) {
@@ -639,7 +643,7 @@ SCM g_get_object_pins (SCM object_smob)
     prim_obj = object->complex->prim_objs;
     while (prim_obj != NULL) {
       if (prim_obj->type == OBJ_PIN) {
-	returned = scm_cons (g_make_object_smob(w_current, prim_obj),returned);
+	returned = scm_cons (g_make_object_smob(toplevel, prim_obj),returned);
       }
       prim_obj = prim_obj->next;
     }
@@ -667,7 +671,7 @@ SCM g_get_object_pins (SCM object_smob)
 SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y, 
 		    SCM scm_angle, SCM scm_selectable, SCM scm_mirror)
 {
-  TOPLEVEL *w_current;
+  TOPLEVEL *toplevel;
   PAGE *page;
   gboolean selectable, mirror;
   gchar *comp_name;
@@ -681,8 +685,8 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
     return SCM_BOOL_F;
   }
 
-  /* Get w_current and the page */
-  SCM_ASSERT (g_get_data_from_page_smob (page_smob, &w_current, &page),
+  /* Get toplevel and the page */
+  SCM_ASSERT (g_get_data_from_page_smob (page_smob, &toplevel, &page),
 	      page_smob, SCM_ARG1, "add-component-at-xy");
   /* Check the arguments */
   SCM_ASSERT (scm_is_string(scm_comp_name), scm_comp_name,
@@ -717,7 +721,7 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 
   new_object 
     = page->object_tail 
-    = o_complex_add(w_current, 
+    = o_complex_add(toplevel,
                     page->object_tail, NULL, 
                     'C', 
                     WHITE, 
@@ -733,7 +737,7 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 #if 0 
   /* Now the new component should be added to the object's list and 
      drawn in the screen */
-  o_redraw_single(w_current, new_object);
+  o_redraw_single(toplevel, new_object);
 #endif
   
   return SCM_BOOL_T;        
@@ -748,19 +752,19 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
  */
 SCM g_get_objects_in_page(SCM page_smob) {
 
-  TOPLEVEL *w_current;
+  TOPLEVEL *toplevel;
   PAGE *page;
   OBJECT *object;
   SCM return_list=SCM_EOL;
 
-  /* Get w_current and the page */
-  SCM_ASSERT (g_get_data_from_page_smob (page_smob, &w_current, &page),
+  /* Get toplevel and the page */
+  SCM_ASSERT (g_get_data_from_page_smob (page_smob, &toplevel, &page),
 	      page_smob, SCM_ARG1, "add-component");
 
   if (page && page->object_head && page->object_head->next) {
     object = page->object_head->next;
     while (object) {
-      return_list = scm_cons (g_make_object_smob(w_current, object),
+      return_list = scm_cons (g_make_object_smob(toplevel, object),
 			      return_list);
       object = object->next;
     }

@@ -30,6 +30,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -78,7 +79,7 @@ gschem_marshal_VOID__POINTER_STRING (GClosure     *closure,
 
 enum {
   PROP_SETTINGS_NAME = 1,
-  PROP_TOPLEVEL
+  PROP_GSCHEM_TOPLEVEL
 };
 
 
@@ -305,8 +306,8 @@ static void gschem_dialog_set_property (GObject *object, guint property_id, cons
       if (dialog->settings_name) g_free (dialog->settings_name);
       dialog->settings_name = g_strdup (g_value_get_string (value));
       break;
-    case PROP_TOPLEVEL:
-      dialog->toplevel = (TOPLEVEL*)g_value_get_pointer (value);
+    case PROP_GSCHEM_TOPLEVEL:
+      dialog->w_current = (GSCHEM_TOPLEVEL*)g_value_get_pointer (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -335,8 +336,8 @@ static void gschem_dialog_get_property (GObject *object, guint property_id, GVal
       case PROP_SETTINGS_NAME:
         g_value_set_string (value, dialog->settings_name);
         break;
-      case PROP_TOPLEVEL:
-        g_value_set_pointer (value, (gpointer)dialog->toplevel);
+      case PROP_GSCHEM_TOPLEVEL:
+        g_value_set_pointer (value, (gpointer)dialog->w_current);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -411,8 +412,8 @@ static void gschem_dialog_class_init (GschemDialogClass *klass)
                          NULL,
                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE));
   g_object_class_install_property (
-    gobject_class, PROP_TOPLEVEL,
-    g_param_spec_pointer ("toplevel",
+    gobject_class, PROP_GSCHEM_TOPLEVEL,
+    g_param_spec_pointer ("gschem-toplevel",
                           "",
                           "",
                           G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE));
@@ -501,7 +502,7 @@ static void gschem_dialog_add_buttons_valist (GtkDialog      *dialog,
  *  \param [in]  parent             The GtkWindow which will parent this dialog
  *  \param [in]  flags              The GtkDialogFlags to use when setting up the dialog
  *  \param [in]  settings_name      The name gschem should use to store this dialog's settings
- *  \param [in]  toplevel           The TOPLEVEL object this dialog is associated with
+ *  \param [in]  w_current          The GSCHEM_TOPLEVEL object this dialog is associated with
  *
  *  \return  The GschemDialog created.
  */
@@ -509,13 +510,13 @@ static GtkWidget* gschem_dialog_new_empty (const gchar     *title,
                                            GtkWindow       *parent,
                                            GtkDialogFlags   flags,
                                            const gchar *settings_name,
-                                           TOPLEVEL *toplevel)
+                                           GSCHEM_TOPLEVEL *w_current)
 {
   GschemDialog *dialog;
 
   dialog = g_object_new (GSCHEM_TYPE_DIALOG,
                          "settings-name", settings_name,
-                         "toplevel", toplevel,
+                         "gschem-toplevel", w_current,
                          NULL);
 
   if (title)
@@ -548,20 +549,20 @@ static GtkWidget* gschem_dialog_new_empty (const gchar     *title,
  *  \param [in]  parent             The GtkWindow which will parent this dialog
  *  \param [in]  flags              The GtkDialogFlags to use when setting up the dialog
  *  \param [in]  settings_name      The name gschem should use to store this dialog's settings
- *  \param [in]  toplevel           The TOPLEVEL object this dialog is associated with
+ *  \param [in]  w_current          The GSCHEM_TOPLEVEL object this dialog is associated with
  *  \param [in]  first_button_text  The text string for the first button
  *  \param [in]  ...                A variable number of arguments with the remaining button strings
  *
  *  \return  The GschemDialog created.
  */
 GtkWidget* gschem_dialog_new_with_buttons (const gchar *title, GtkWindow *parent, GtkDialogFlags flags,
-                                           const gchar *settings_name, TOPLEVEL *toplevel,
+                                           const gchar *settings_name, GSCHEM_TOPLEVEL *w_current,
                                            const gchar *first_button_text, ...)
 {
   GschemDialog *dialog;
   va_list args;
 
-  dialog = GSCHEM_DIALOG (gschem_dialog_new_empty (title, parent, flags, settings_name, toplevel));
+  dialog = GSCHEM_DIALOG (gschem_dialog_new_empty (title, parent, flags, settings_name, w_current));
 
   va_start (args, first_button_text);
 

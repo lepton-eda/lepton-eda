@@ -29,6 +29,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -181,14 +182,14 @@ static void initiate_gschemdoc(const char* documentation,const char *device,
  */
 DEFINE_I_CALLBACK(file_new)
 {
-  TOPLEVEL *toplevel = (TOPLEVEL*)data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)data;
   PAGE *page;
 
-  exit_if_null (toplevel);
+  exit_if_null (w_current);
 
   /* create a new page */
-  page = x_window_open_untitled_page (toplevel);
-  x_window_set_current_page (toplevel, page);
+  page = x_window_open_untitled_page (w_current);
+  x_window_set_current_page (w_current, page);
   s_log_message (_("New page created [%s]\n"), page->page_filename);
 }
 
@@ -202,11 +203,11 @@ DEFINE_I_CALLBACK(file_new)
  */
 void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   exit_if_null(w_current);
   if (!w_current->window) return;
     
-  i_callback_file_new((TOPLEVEL*) data, 0, NULL);
+  i_callback_file_new(data, 0, NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -216,14 +217,15 @@ void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(file_new_window)
 {
-  TOPLEVEL *toplevel;
+  GSCHEM_TOPLEVEL *w_current;
   PAGE *page;
 
-  toplevel = s_toplevel_new ();
-  x_window_setup (toplevel);
+  w_current = gschem_toplevel_new ();
+  w_current->toplevel = s_toplevel_new ();
+  x_window_setup (w_current);
 
-  page = x_window_open_untitled_page (toplevel);
-  x_window_set_current_page (toplevel, page);
+  page = x_window_open_untitled_page (w_current);
+  x_window_set_current_page (w_current, page);
   s_log_message (_("New Window created [%s]\n"), page->page_filename);
 }
 
@@ -239,7 +241,7 @@ DEFINE_I_CALLBACK(file_new_window)
  */
 DEFINE_I_CALLBACK(file_open)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -258,11 +260,11 @@ DEFINE_I_CALLBACK(file_open)
  */
 void i_callback_toolbar_file_open(GtkWidget* widget, gpointer data)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   exit_if_null(w_current);
   if (!w_current->window) return;
 
-  i_callback_file_open((TOPLEVEL*) data, 0, NULL);
+  i_callback_file_open(data, 0, NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -272,7 +274,7 @@ void i_callback_toolbar_file_open(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(file_script)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
   setup_script_selector(w_current);
@@ -289,7 +291,7 @@ DEFINE_I_CALLBACK(file_script)
  */
 DEFINE_I_CALLBACK(file_save)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -298,13 +300,13 @@ DEFINE_I_CALLBACK(file_save)
    *   a user. Some twisted people might name their files like
    *   untitled_name. :-)
    */
-  if (strstr(w_current->page_current->page_filename,
-             w_current->untitled_name)) {
+  if (strstr(w_current->toplevel->page_current->page_filename,
+             w_current->toplevel->untitled_name)) {
     x_fileselect_save (w_current);
   } else {
     x_window_save_page (w_current,
-                        w_current->page_current,
-                        w_current->page_current->page_filename);
+                        w_current->toplevel->page_current,
+                        w_current->toplevel->page_current->page_filename);
   }
 }
 
@@ -320,11 +322,11 @@ DEFINE_I_CALLBACK(file_save)
  */
 void i_callback_toolbar_file_save(GtkWidget* widget, gpointer data)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   exit_if_null(w_current);
   if (!w_current->window) return;
 
-  i_callback_file_save((TOPLEVEL*) data, 0, NULL);
+  i_callback_file_save(data, 0, NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -337,11 +339,11 @@ void i_callback_toolbar_file_save(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(file_save_all)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
-  if (s_page_save_all(w_current)) {
+  if (s_page_save_all(w_current->toplevel)) {
      i_set_state_msg(w_current, SELECT, _("Failed to Save All"));
   } else {
      i_set_state_msg(w_current, SELECT, _("Saved All"));
@@ -359,7 +361,7 @@ DEFINE_I_CALLBACK(file_save_all)
  */
 DEFINE_I_CALLBACK(file_save_as)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
   x_fileselect_save (w_current);
@@ -372,20 +374,20 @@ DEFINE_I_CALLBACK(file_save_as)
  */
 DEFINE_I_CALLBACK(file_print)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   char *base=NULL;
   char *ps_filename=NULL;
   
   exit_if_null(w_current);
 
   /* get the base file name */
-  if (strcmp(fnameext_get(w_current->page_current->page_filename),
+  if (strcmp(fnameext_get(w_current->toplevel->page_current->page_filename),
              ".sch") == 0) {
     /* the filename ends with .sch */
-    base = fnameext_remove(w_current->page_current->page_filename);
+    base = fnameext_remove(w_current->toplevel->page_current->page_filename);
   } else {
     /* the filename does not end with .sch */
-    base = g_strdup (w_current->page_current->page_filename);
+    base = g_strdup (w_current->toplevel->page_current->page_filename);
   }
   if(base == NULL) {
     /*! \todo do something */
@@ -413,7 +415,7 @@ DEFINE_I_CALLBACK(file_print)
  */
 DEFINE_I_CALLBACK(file_write_png)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -432,7 +434,7 @@ DEFINE_I_CALLBACK(file_write_png)
  */
 DEFINE_I_CALLBACK(file_close)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -452,7 +454,7 @@ DEFINE_I_CALLBACK(file_close)
  */
 int i_callback_close(gpointer data, guint callback_action, GtkWidget *widget)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
   i_callback_file_close(w_current, 0, widget);
@@ -466,7 +468,7 @@ int i_callback_close(gpointer data, guint callback_action, GtkWidget *widget)
  */
 DEFINE_I_CALLBACK(file_quit)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
   x_window_close_all(w_current);
@@ -480,9 +482,9 @@ DEFINE_I_CALLBACK(file_quit)
  */
 DEFINE_I_CALLBACK(edit_undo)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  w_current->DONT_REDRAW = 0;
+  w_current->toplevel->DONT_REDRAW = 0;
   o_undo_callback(w_current, UNDO_ACTION);
 }
 
@@ -496,11 +498,11 @@ DEFINE_I_CALLBACK(edit_undo)
  */
 void i_callback_toolbar_edit_undo(GtkWidget* widget, gpointer data)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   exit_if_null(w_current);
   if (!w_current->window) return;
 
-  i_callback_edit_undo((TOPLEVEL*) data, 0, NULL);
+  i_callback_edit_undo(data, 0, NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -510,9 +512,9 @@ void i_callback_toolbar_edit_undo(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(edit_redo)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  w_current->DONT_REDRAW = 0;
+  w_current->toplevel->DONT_REDRAW = 0;
   o_undo_callback(w_current, REDO_ACTION);
 }
 
@@ -526,11 +528,11 @@ DEFINE_I_CALLBACK(edit_redo)
  */
 void i_callback_toolbar_edit_redo(GtkWidget* widget, gpointer data)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   exit_if_null(w_current);
   if (!w_current->window) return;
 
-  i_callback_edit_redo((TOPLEVEL*) data, 0, NULL);
+  i_callback_edit_redo(data, 0, NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -542,7 +544,7 @@ void i_callback_toolbar_edit_redo(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(edit_select)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   o_redraw_cleanstates(w_current);	
 
   /* this is probably the only place this should be */
@@ -561,7 +563,7 @@ DEFINE_I_CALLBACK(edit_select)
  */
 void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   exit_if_null(w_current);
   if (!w_current->window) return;
 
@@ -569,7 +571,7 @@ void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
     if (!o_erase_rubber(w_current)) {
       i_callback_cancel(w_current, 0, NULL);
     }
-    i_callback_edit_select((TOPLEVEL*) data, 0, NULL);
+    i_callback_edit_select(data, 0, NULL);
   }
 }
 
@@ -580,7 +582,7 @@ void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(edit_copy)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -599,7 +601,7 @@ DEFINE_I_CALLBACK(edit_copy)
  */
 DEFINE_I_CALLBACK(edit_copy_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -620,7 +622,7 @@ DEFINE_I_CALLBACK(edit_copy_hotkey)
  */
 DEFINE_I_CALLBACK(edit_mcopy)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -639,7 +641,7 @@ DEFINE_I_CALLBACK(edit_mcopy)
  */
 DEFINE_I_CALLBACK(edit_mcopy_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -660,7 +662,7 @@ DEFINE_I_CALLBACK(edit_mcopy_hotkey)
  */
 DEFINE_I_CALLBACK(edit_move)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -679,7 +681,7 @@ DEFINE_I_CALLBACK(edit_move)
  */
 DEFINE_I_CALLBACK(edit_move_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -699,7 +701,7 @@ DEFINE_I_CALLBACK(edit_move_hotkey)
  */
 DEFINE_I_CALLBACK(edit_delete)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -723,12 +725,12 @@ DEFINE_I_CALLBACK(edit_delete)
  */
 DEFINE_I_CALLBACK(edit_edit)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
   i_update_middle_button(w_current, i_callback_edit_edit, _("Edit"));
-  o_edit(w_current, geda_list_get_glist( w_current->page_current->selection_list ) );
+  o_edit(w_current, geda_list_get_glist( w_current->toplevel->page_current->selection_list ) );
 }
 
 /*! \todo Finish function documentation!!!
@@ -738,7 +740,7 @@ DEFINE_I_CALLBACK(edit_edit)
  */
 DEFINE_I_CALLBACK(edit_text)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *object;
 
   exit_if_null(w_current);
@@ -759,7 +761,7 @@ DEFINE_I_CALLBACK(edit_text)
  */
 DEFINE_I_CALLBACK(edit_slot)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *object;
 
   exit_if_null(w_current);
@@ -779,7 +781,7 @@ DEFINE_I_CALLBACK(edit_slot)
  */
 DEFINE_I_CALLBACK(edit_color)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -796,7 +798,7 @@ DEFINE_I_CALLBACK(edit_color)
  */
 DEFINE_I_CALLBACK(edit_rotate_90)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -836,7 +838,7 @@ DEFINE_I_CALLBACK(edit_rotate_90)
  */
 DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   GList *object_list;
   int w_x, w_y;
 
@@ -868,16 +870,16 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
   
   o_redraw_cleanstates(w_current);	
 
-  object_list = geda_list_get_glist( w_current->page_current->selection_list );
+  object_list = geda_list_get_glist( w_current->toplevel->page_current->selection_list );
 
   if (object_list) {
     i_update_middle_button(w_current,
                            i_callback_edit_rotate_90_hotkey, _("Rotate"));
     /* Allow o_rotate_90_world to redraw the objects */
-    w_current->DONT_REDRAW = 0;
-    SCREENtoWORLD( w_current, mouse_x, mouse_y, &w_x, &w_y );
-    w_x = snap_grid(w_current, w_x);
-    w_y = snap_grid(w_current, w_y);
+    w_current->toplevel->DONT_REDRAW = 0;
+    SCREENtoWORLD( w_current->toplevel, mouse_x, mouse_y, &w_x, &w_y );
+    w_x = snap_grid(w_current->toplevel, w_x);
+    w_y = snap_grid(w_current->toplevel, w_y);
 
     o_rotate_90_world(w_current, object_list, w_x, w_y);
   }
@@ -894,7 +896,7 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
  */
 DEFINE_I_CALLBACK(edit_mirror)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -909,7 +911,7 @@ DEFINE_I_CALLBACK(edit_mirror)
  */
 DEFINE_I_CALLBACK(edit_mirror_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   GList *object_list;
   int w_x, w_y;
 
@@ -917,17 +919,17 @@ DEFINE_I_CALLBACK(edit_mirror_hotkey)
 
   o_redraw_cleanstates(w_current);	
 
-  object_list = geda_list_get_glist( w_current->page_current->selection_list );
+  object_list = geda_list_get_glist( w_current->toplevel->page_current->selection_list );
 
   if (object_list) {
     i_update_middle_button(w_current,
                            i_callback_edit_mirror_hotkey, _("Mirror"));
 
-    SCREENtoWORLD( w_current, mouse_x, mouse_y, &w_x, &w_y );
-    w_x = snap_grid(w_current, w_x);
-    w_y = snap_grid(w_current, w_y);
+    SCREENtoWORLD( w_current->toplevel, mouse_x, mouse_y, &w_x, &w_y );
+    w_x = snap_grid(w_current->toplevel, w_x);
+    w_y = snap_grid(w_current->toplevel, w_y);
 
-    o_mirror_world(w_current, 
+    o_mirror_world(w_current,
                    object_list, 
                    w_x, w_y);
   }
@@ -945,7 +947,7 @@ DEFINE_I_CALLBACK(edit_mirror_hotkey)
  */
 DEFINE_I_CALLBACK(edit_lock)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -963,7 +965,7 @@ DEFINE_I_CALLBACK(edit_lock)
  */
 DEFINE_I_CALLBACK(edit_unlock)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -980,22 +982,22 @@ DEFINE_I_CALLBACK(edit_unlock)
  */
 DEFINE_I_CALLBACK(edit_translate)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
   i_update_middle_button(w_current,
                          i_callback_edit_translate, _("Translate"));
 
-  if (w_current->snap == 0) {
+  if (w_current->toplevel->snap == 0) {
     s_log_message(_("WARNING: Do not translate with snap off!\n"));
     s_log_message(_("WARNING: Turning snap on and continuing "
                   "with translate.\n"));
-    w_current->snap = 1;
+    w_current->toplevel->snap = 1;
     i_show_state(w_current, NULL); /* update status on screen */
   }
 
-  if (w_current->snap_size != 100) {
+  if (w_current->toplevel->snap_size != 100) {
     s_log_message(_("WARNING: Snap grid size is "
                   "not equal to 100!\n"));
     s_log_message(_("WARNING: If you are translating a symbol "
@@ -1014,7 +1016,7 @@ DEFINE_I_CALLBACK(edit_translate)
  */
 DEFINE_I_CALLBACK(edit_embed)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *o_current;
 
   exit_if_null(w_current);
@@ -1024,14 +1026,14 @@ DEFINE_I_CALLBACK(edit_embed)
   if (o_select_selected(w_current)) {
     /* yes, embed each selected component */
     GList *s_current =
-      geda_list_get_glist( w_current->page_current->selection_list );
+      geda_list_get_glist( w_current->toplevel->page_current->selection_list );
 
     while (s_current != NULL) {
       o_current = (OBJECT *) s_current->data;
       g_assert (o_current != NULL);
       if ( (o_current->type == OBJ_COMPLEX) ||
 	   (o_current->type == OBJ_PICTURE) ) {
-        o_embed (w_current, o_current);
+        o_embed (w_current->toplevel, o_current);
       }
       s_current = g_list_next(s_current);
     }
@@ -1052,7 +1054,7 @@ DEFINE_I_CALLBACK(edit_embed)
  */
 DEFINE_I_CALLBACK(edit_unembed)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *o_current;
 
   exit_if_null(w_current);
@@ -1062,14 +1064,14 @@ DEFINE_I_CALLBACK(edit_unembed)
   if (o_select_selected(w_current)) {
     /* yes, unembed each selected component */
     GList *s_current =
-      geda_list_get_glist( w_current->page_current->selection_list );
+      geda_list_get_glist( w_current->toplevel->page_current->selection_list );
 
     while (s_current != NULL) {
       o_current = (OBJECT *) s_current->data;
       g_assert (o_current != NULL);
       if ( (o_current->type == OBJ_COMPLEX) ||
            (o_current->type == OBJ_PICTURE) ) {
-        o_unembed (w_current, o_current);
+        o_unembed (w_current->toplevel, o_current);
       }
       s_current = g_list_next(s_current);
     }
@@ -1090,7 +1092,7 @@ DEFINE_I_CALLBACK(edit_unembed)
  */
 DEFINE_I_CALLBACK(edit_update)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *o_current;
   GList* selection_copy;
   GList* s_current;
@@ -1108,7 +1110,7 @@ DEFINE_I_CALLBACK(edit_update)
     /* left selected. */
 
     /* g_list_copy does a shallow copy which is exactly what we need here */
-    selection_copy = g_list_copy( geda_list_get_glist( w_current->page_current->selection_list ));
+    selection_copy = g_list_copy( geda_list_get_glist( w_current->toplevel->page_current->selection_list ));
     s_current = selection_copy;
     while (s_current != NULL) {
       o_current = (OBJECT *) s_current->data;
@@ -1119,7 +1121,7 @@ DEFINE_I_CALLBACK(edit_update)
       else
       {
         /* object was not a OBJ_COMPLEX, so unselect it. */
-        o_selection_remove( w_current->page_current->selection_list, o_current);
+        o_selection_remove( w_current->toplevel->page_current->selection_list, o_current);
       }
       s_current = g_list_next(s_current);
     }
@@ -1143,7 +1145,7 @@ DEFINE_I_CALLBACK(edit_update)
  */
 DEFINE_I_CALLBACK(edit_show_hidden)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1156,7 +1158,7 @@ DEFINE_I_CALLBACK(edit_show_hidden)
                          i_callback_edit_show_hidden,
                          _("ShowHidden"));
 
-  o_edit_show_hidden(w_current, w_current->page_current->object_head);
+  o_edit_show_hidden(w_current, w_current->toplevel->page_current->object_head);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1166,7 +1168,7 @@ DEFINE_I_CALLBACK(edit_show_hidden)
  */
 DEFINE_I_CALLBACK(edit_make_visible)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1179,7 +1181,7 @@ DEFINE_I_CALLBACK(edit_make_visible)
                          i_callback_edit_make_visible,
                          _("MakeVisible"));
 
-  o_edit_make_visible(w_current, w_current->page_current->object_head);
+  o_edit_make_visible(w_current, w_current->toplevel->page_current->object_head);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1189,7 +1191,7 @@ DEFINE_I_CALLBACK(edit_make_visible)
  */
 DEFINE_I_CALLBACK(edit_find)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1208,7 +1210,7 @@ DEFINE_I_CALLBACK(edit_find)
  */
 DEFINE_I_CALLBACK(edit_hide_text)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1227,7 +1229,7 @@ DEFINE_I_CALLBACK(edit_hide_text)
  */
 DEFINE_I_CALLBACK(edit_show_text)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1246,7 +1248,7 @@ DEFINE_I_CALLBACK(edit_show_text)
  */
 DEFINE_I_CALLBACK(edit_autonumber_text)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1265,14 +1267,14 @@ DEFINE_I_CALLBACK(edit_autonumber_text)
  */
 DEFINE_I_CALLBACK(edit_linetype)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
   /* anything selected ? */
   if (o_select_selected(w_current)) {
     GList *s_current =
-      geda_list_get_glist( w_current->page_current->selection_list );
+      geda_list_get_glist( w_current->toplevel->page_current->selection_list );
     GList *objects = NULL;
 
     /* yes, build a list of relevant objects */
@@ -1308,14 +1310,14 @@ DEFINE_I_CALLBACK(edit_linetype)
  */
 DEFINE_I_CALLBACK(edit_filltype)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
   /* anything selected ? */
   if (o_select_selected(w_current)) {
     GList *s_current =
-      geda_list_get_glist( w_current->page_current->selection_list );
+      geda_list_get_glist( w_current->toplevel->page_current->selection_list );
     GList *objects = NULL;
 
     /* yes, build a list of relevant objects */
@@ -1353,7 +1355,7 @@ DEFINE_I_CALLBACK(edit_filltype)
  */
 DEFINE_I_CALLBACK(view_redraw)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
   o_redraw_all(w_current);
@@ -1368,7 +1370,7 @@ DEFINE_I_CALLBACK(view_redraw)
  */
 DEFINE_I_CALLBACK(view_zoom_full)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1389,15 +1391,14 @@ DEFINE_I_CALLBACK(view_zoom_full)
  */
 DEFINE_I_CALLBACK(view_zoom_extents)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
   /* scroll bar stuff */
-  a_zoom_extents(w_current, w_current->page_current->object_head, 0);
-
+  a_zoom_extents(w_current, w_current->toplevel->page_current->object_head, 0);
   if (w_current->undo_panzoom) {
-    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
   }
 }
 
@@ -1410,7 +1411,7 @@ DEFINE_I_CALLBACK(view_zoom_extents)
  */
 DEFINE_I_CALLBACK(view_zoom_box)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1426,7 +1427,7 @@ DEFINE_I_CALLBACK(view_zoom_box)
  */
 DEFINE_I_CALLBACK(view_zoom_box_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1446,7 +1447,7 @@ DEFINE_I_CALLBACK(view_zoom_box_hotkey)
  */
 DEFINE_I_CALLBACK(view_zoom_in)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1466,7 +1467,7 @@ DEFINE_I_CALLBACK(view_zoom_in)
  */
 DEFINE_I_CALLBACK(view_zoom_out)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1487,7 +1488,7 @@ DEFINE_I_CALLBACK(view_zoom_out)
  */
 DEFINE_I_CALLBACK(view_zoom_in_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1507,7 +1508,7 @@ DEFINE_I_CALLBACK(view_zoom_in_hotkey)
  */
 DEFINE_I_CALLBACK(view_zoom_out_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1525,7 +1526,7 @@ DEFINE_I_CALLBACK(view_zoom_out_hotkey)
  */
 DEFINE_I_CALLBACK(view_pan)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1543,7 +1544,7 @@ DEFINE_I_CALLBACK(view_pan)
  */
 DEFINE_I_CALLBACK(view_pan_left)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1556,7 +1557,7 @@ DEFINE_I_CALLBACK(view_pan_left)
  */
 DEFINE_I_CALLBACK(view_pan_right)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1570,7 +1571,7 @@ DEFINE_I_CALLBACK(view_pan_right)
  */
 DEFINE_I_CALLBACK(view_pan_up)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1583,7 +1584,7 @@ DEFINE_I_CALLBACK(view_pan_up)
  */
 DEFINE_I_CALLBACK(view_pan_down)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1598,7 +1599,7 @@ DEFINE_I_CALLBACK(view_pan_down)
  */
 DEFINE_I_CALLBACK(view_pan_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1637,7 +1638,7 @@ DEFINE_I_CALLBACK(view_pan_hotkey)
  */
 DEFINE_I_CALLBACK(view_update_cues)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   i_update_middle_button(w_current,
                          i_callback_view_update_cues, _("Update Cues"));
@@ -1653,7 +1654,7 @@ DEFINE_I_CALLBACK(view_update_cues)
  */
 DEFINE_I_CALLBACK(page_manager)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -1667,14 +1668,15 @@ DEFINE_I_CALLBACK(page_manager)
  */
 DEFINE_I_CALLBACK(page_next)
 {
-  TOPLEVEL *w_current = (TOPLEVEL*)data;
-  PAGE *p_current = w_current->page_current;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)data;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  PAGE *p_current = toplevel->page_current;
   PAGE *p_new;
   GList *iter;
 
   exit_if_null(w_current);
 
-  iter = g_list_find( geda_list_get_glist( w_current->pages ), p_current );
+  iter = g_list_find( geda_list_get_glist( toplevel->pages ), p_current );
   iter = g_list_next( iter );
 
   if (iter == NULL) {
@@ -1682,7 +1684,7 @@ DEFINE_I_CALLBACK(page_next)
   }
 
   if (w_current->enforce_hierarchy) {
-    p_new = s_hierarchy_find_next_page(w_current->pages, p_current, p_current->page_control);
+    p_new = s_hierarchy_find_next_page(toplevel->pages, p_current, p_current->page_control);
   } else {
     p_new = (PAGE *)iter->data;
   }
@@ -1701,14 +1703,15 @@ DEFINE_I_CALLBACK(page_next)
  */
 DEFINE_I_CALLBACK(page_prev)
 {
-  TOPLEVEL *w_current = (TOPLEVEL*)data;
-  PAGE *p_current = w_current->page_current;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)data;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  PAGE *p_current = toplevel->page_current;
   PAGE *p_new;
   GList *iter;
 
   exit_if_null(w_current);
 
-  iter = g_list_find( geda_list_get_glist( w_current->pages ), p_current );
+  iter = g_list_find( geda_list_get_glist( toplevel->pages ), p_current );
   iter = g_list_previous( iter );
 
   if ( iter == NULL  )
@@ -1717,7 +1720,7 @@ DEFINE_I_CALLBACK(page_prev)
   p_new = (PAGE *)iter->data;
 
   if (w_current->enforce_hierarchy) {
-    p_new = s_hierarchy_find_prev_page(w_current->pages, p_current, p_current->page_control);
+    p_new = s_hierarchy_find_prev_page(toplevel->pages, p_current, p_current->page_control);
   } else {
     p_new = (PAGE *)iter->data;
   }
@@ -1736,14 +1739,14 @@ DEFINE_I_CALLBACK(page_prev)
  */
 DEFINE_I_CALLBACK(page_new)
 {
-  TOPLEVEL *toplevel = (TOPLEVEL*)data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)data;
   PAGE *page;
 
-  exit_if_null(toplevel);
+  exit_if_null(w_current);
 
   /* create a new page */
-  page = x_window_open_untitled_page (toplevel);
-  x_window_set_current_page (toplevel, page);
+  page = x_window_open_untitled_page (w_current);
+  x_window_set_current_page (w_current, page);
   s_log_message (_("New page created [%s]\n"), page->page_filename);
 }
 
@@ -1754,14 +1757,14 @@ DEFINE_I_CALLBACK(page_new)
  */
 DEFINE_I_CALLBACK(page_close)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->CHANGED) {
-    x_dialog_close_changed_page (w_current, w_current->page_current);
+  if (w_current->toplevel->page_current->CHANGED) {
+    x_dialog_close_changed_page (w_current, w_current->toplevel->page_current);
   } else {
-    x_window_close_page (w_current, w_current->page_current);
+    x_window_close_page (w_current, w_current->toplevel->page_current);
   }
 
 }
@@ -1774,7 +1777,7 @@ DEFINE_I_CALLBACK(page_close)
  */
 DEFINE_I_CALLBACK(page_revert)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   PAGE *page;
   gchar *filename;
   int page_control;
@@ -1805,12 +1808,12 @@ DEFINE_I_CALLBACK(page_revert)
     return;
 
   /* save this for later */
-  filename = g_strdup (w_current->page_current->page_filename);
-  page_control = w_current->page_current->page_control;
-  up = w_current->page_current->up;
+  filename = g_strdup (w_current->toplevel->page_current->page_filename);
+  page_control = w_current->toplevel->page_current->page_control;
+  up = w_current->toplevel->page_current->up;
 
   /* delete the page, then re-open the file as a new page */
-  s_page_delete (w_current, w_current->page_current);
+  s_page_delete (w_current->toplevel, w_current->toplevel->page_current);
 
   page = x_window_open_page (w_current, filename);
 
@@ -1828,11 +1831,11 @@ DEFINE_I_CALLBACK(page_revert)
  */
 DEFINE_I_CALLBACK(page_discard)
 {
-  TOPLEVEL *w_current = (TOPLEVEL*)data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)data;
 
   exit_if_null(w_current);
 
-  x_window_close_page (w_current, w_current->page_current);
+  x_window_close_page (w_current, w_current->toplevel->page_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1842,9 +1845,9 @@ DEFINE_I_CALLBACK(page_discard)
  */
 DEFINE_I_CALLBACK(page_print)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  s_page_print_all(w_current);
+  s_page_print_all(w_current->toplevel);
 }
 
 /*! \section buffer-menu Buffer Menu Callback Functions */
@@ -1855,11 +1858,11 @@ DEFINE_I_CALLBACK(page_print)
  */
 DEFINE_I_CALLBACK(buffer_copy1)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy1, _("Copy 1"));
@@ -1874,11 +1877,11 @@ DEFINE_I_CALLBACK(buffer_copy1)
  */
 DEFINE_I_CALLBACK(buffer_copy2)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy2, _("Copy 2"));
@@ -1893,11 +1896,11 @@ DEFINE_I_CALLBACK(buffer_copy2)
  */
 DEFINE_I_CALLBACK(buffer_copy3)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy3, _("Copy 3"));
@@ -1912,11 +1915,11 @@ DEFINE_I_CALLBACK(buffer_copy3)
  */
 DEFINE_I_CALLBACK(buffer_copy4)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy4, _("Copy 4"));
@@ -1931,11 +1934,11 @@ DEFINE_I_CALLBACK(buffer_copy4)
  */
 DEFINE_I_CALLBACK(buffer_copy5)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy5, _("Copy 5"));
@@ -1950,11 +1953,11 @@ DEFINE_I_CALLBACK(buffer_copy5)
  */
 DEFINE_I_CALLBACK(buffer_cut1)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut1, _("Cut 1"));
@@ -1969,11 +1972,11 @@ DEFINE_I_CALLBACK(buffer_cut1)
  */
 DEFINE_I_CALLBACK(buffer_cut2)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut2, _("Cut 2"));
@@ -1988,11 +1991,11 @@ DEFINE_I_CALLBACK(buffer_cut2)
  */
 DEFINE_I_CALLBACK(buffer_cut3)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut3, _("Cut 3"));
@@ -2007,11 +2010,11 @@ DEFINE_I_CALLBACK(buffer_cut3)
  */
 DEFINE_I_CALLBACK(buffer_cut4)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut4, _("Cut 4"));
@@ -2026,11 +2029,11 @@ DEFINE_I_CALLBACK(buffer_cut4)
  */
 DEFINE_I_CALLBACK(buffer_cut5)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->page_current->selection_list ) == NULL )
+  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut5, _("Cut 5"));
@@ -2045,7 +2048,7 @@ DEFINE_I_CALLBACK(buffer_cut5)
  */
 DEFINE_I_CALLBACK(buffer_paste1)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2067,7 +2070,7 @@ DEFINE_I_CALLBACK(buffer_paste1)
  */
 DEFINE_I_CALLBACK(buffer_paste2)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2089,7 +2092,7 @@ DEFINE_I_CALLBACK(buffer_paste2)
  */
 DEFINE_I_CALLBACK(buffer_paste3)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2111,7 +2114,7 @@ DEFINE_I_CALLBACK(buffer_paste3)
  */
 DEFINE_I_CALLBACK(buffer_paste4)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2133,7 +2136,7 @@ DEFINE_I_CALLBACK(buffer_paste4)
  */
 DEFINE_I_CALLBACK(buffer_paste5)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2155,7 +2158,7 @@ DEFINE_I_CALLBACK(buffer_paste5)
  */
 DEFINE_I_CALLBACK(buffer_paste1_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2173,7 +2176,7 @@ DEFINE_I_CALLBACK(buffer_paste1_hotkey)
  */
 DEFINE_I_CALLBACK(buffer_paste2_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2191,7 +2194,7 @@ DEFINE_I_CALLBACK(buffer_paste2_hotkey)
  */
 DEFINE_I_CALLBACK(buffer_paste3_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2209,7 +2212,7 @@ DEFINE_I_CALLBACK(buffer_paste3_hotkey)
  */
 DEFINE_I_CALLBACK(buffer_paste4_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2227,7 +2230,7 @@ DEFINE_I_CALLBACK(buffer_paste4_hotkey)
  */
 DEFINE_I_CALLBACK(buffer_paste5_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2246,7 +2249,7 @@ DEFINE_I_CALLBACK(buffer_paste5_hotkey)
  */
 DEFINE_I_CALLBACK(add_component)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2269,11 +2272,11 @@ DEFINE_I_CALLBACK(add_component)
  */
 void i_callback_toolbar_add_component(GtkWidget* widget, gpointer data)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   exit_if_null(w_current);
   if (!w_current->window) return;
 
-  i_callback_add_component((TOPLEVEL*) data, 0, NULL);
+  i_callback_add_component(data, 0, NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2283,7 +2286,7 @@ void i_callback_toolbar_add_component(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(add_attribute)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2302,7 +2305,7 @@ DEFINE_I_CALLBACK(add_attribute)
  */
 DEFINE_I_CALLBACK(add_attribute_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2321,7 +2324,7 @@ DEFINE_I_CALLBACK(add_attribute_hotkey)
  */
 DEFINE_I_CALLBACK(add_net)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2343,7 +2346,7 @@ DEFINE_I_CALLBACK(add_net)
  */
 DEFINE_I_CALLBACK(add_net_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2371,12 +2374,12 @@ DEFINE_I_CALLBACK(add_net_hotkey)
  */
 void i_callback_toolbar_add_net(GtkWidget* widget, gpointer data)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   exit_if_null(w_current);
   if (!w_current->window) return;
 
   if (GTK_TOGGLE_BUTTON (widget)->active) {
-    i_callback_add_net((TOPLEVEL*) data, 0, NULL);
+    i_callback_add_net(data, 0, NULL);
   }
 }
 
@@ -2387,7 +2390,7 @@ void i_callback_toolbar_add_net(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(add_bus)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2410,7 +2413,7 @@ DEFINE_I_CALLBACK(add_bus)
  */
 DEFINE_I_CALLBACK(add_bus_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2438,12 +2441,12 @@ DEFINE_I_CALLBACK(add_bus_hotkey)
  */
 void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   exit_if_null(w_current);
   if (!w_current->window) return;
 
   if (GTK_TOGGLE_BUTTON (widget)->active) {
-     i_callback_add_bus((TOPLEVEL*) data, 0, NULL);
+     i_callback_add_bus(data, 0, NULL);
   }
 }
 
@@ -2454,7 +2457,7 @@ void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(add_text)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
   
@@ -2478,11 +2481,11 @@ DEFINE_I_CALLBACK(add_text)
  */
 void i_callback_toolbar_add_text(GtkWidget* widget, gpointer data)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   exit_if_null(w_current);
   if (!w_current->window) return;
 
-  i_callback_add_text((TOPLEVEL*) data, 0, NULL);
+  i_callback_add_text(data, 0, NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2492,7 +2495,7 @@ void i_callback_toolbar_add_text(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(add_line)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2511,7 +2514,7 @@ DEFINE_I_CALLBACK(add_line)
  */
 DEFINE_I_CALLBACK(add_line_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2533,7 +2536,7 @@ DEFINE_I_CALLBACK(add_line_hotkey)
  */
 DEFINE_I_CALLBACK(add_box)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2552,7 +2555,7 @@ DEFINE_I_CALLBACK(add_box)
  */
 DEFINE_I_CALLBACK(add_box_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2574,7 +2577,7 @@ DEFINE_I_CALLBACK(add_box_hotkey)
  */
 DEFINE_I_CALLBACK(add_picture)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2595,7 +2598,7 @@ DEFINE_I_CALLBACK(add_picture)
  */
 DEFINE_I_CALLBACK(add_picture_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   /* If this function necessary? Yes, if you want the hotkey to work. */
   i_callback_add_picture(w_current, 0, NULL);
@@ -2608,7 +2611,7 @@ DEFINE_I_CALLBACK(add_picture_hotkey)
  */
 DEFINE_I_CALLBACK(add_circle)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2627,7 +2630,7 @@ DEFINE_I_CALLBACK(add_circle)
  */
 DEFINE_I_CALLBACK(add_circle_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2650,7 +2653,7 @@ DEFINE_I_CALLBACK(add_circle_hotkey)
  */
 DEFINE_I_CALLBACK(add_arc)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
   
@@ -2669,7 +2672,7 @@ DEFINE_I_CALLBACK(add_arc)
  */
 DEFINE_I_CALLBACK(add_arc_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2691,7 +2694,7 @@ DEFINE_I_CALLBACK(add_arc_hotkey)
  */
 DEFINE_I_CALLBACK(add_pin)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2710,7 +2713,7 @@ DEFINE_I_CALLBACK(add_pin)
  */
 DEFINE_I_CALLBACK(add_pin_hotkey)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -2733,7 +2736,7 @@ DEFINE_I_CALLBACK(add_pin_hotkey)
  */
 DEFINE_I_CALLBACK(hierarchy_down_schematic)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   char *attrib=NULL;
   char *current_filename=NULL;
   int count=0;
@@ -2754,7 +2757,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
   if (object == NULL || object->type != OBJ_COMPLEX)
     return;
 
-  parent = w_current->page_current;
+  parent = w_current->toplevel->page_current;
   attrib = o_attrib_search_name_single_count(object, "source", count);
 
   /* if above is null, then look inside symbol */
@@ -2778,7 +2781,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
       s_log_message(_("Searching for source [%s]\n"), current_filename);
       saved_page_control = page_control;
       page_control =
-        s_hierarchy_down_schematic_single(w_current,
+        s_hierarchy_down_schematic_single(w_current->toplevel,
                                           current_filename,
                                           parent,
                                           page_control,
@@ -2787,14 +2790,14 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
       /* s_hierarchy_down_schematic_single() will not zoom the loaded page */
       if (page_control != -1) {
         a_zoom_extents(w_current,
-                       w_current->page_current->object_head,
+                       w_current->toplevel->page_current->object_head,
                        A_PAN_DONT_REDRAW);
         o_undo_savestate(w_current, UNDO_ALL);
       }
 
       /* save the first page */
       if ( !loaded_flag && page_control > 0 ) {
-        save_first_page = w_current->page_current;
+        save_first_page = w_current->toplevel->page_current;
       }
 
       /* now do some error fixing */
@@ -2844,9 +2847,9 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
   if (loaded_flag) {
 
     if (save_first_page) {
-      w_current->page_current = save_first_page;
+      w_current->toplevel->page_current = save_first_page;
     }
-    x_window_set_current_page( w_current, w_current->page_current );
+    x_window_set_current_page( w_current, w_current->toplevel->page_current );
   }
 }
 
@@ -2857,7 +2860,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
  */
 DEFINE_I_CALLBACK(hierarchy_down_symbol)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *object;
   const CLibSymbol *sym;
 
@@ -2870,14 +2873,14 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
       s_log_message(_("Searching for symbol [%s]\n"), 
 		    object->complex_basename);
       sym = s_clib_get_symbol_by_name (object->complex_basename);
-      s_hierarchy_down_symbol(w_current, sym, 
-			      w_current->page_current);
+      s_hierarchy_down_symbol(w_current->toplevel, sym,
+			      w_current->toplevel->page_current);
       /* s_hierarchy_down_symbol() will not zoom the loaded page */
       a_zoom_extents(w_current,
-                     w_current->page_current->object_head,
+                     w_current->toplevel->page_current->object_head,
                      A_PAN_DONT_REDRAW);
       o_undo_savestate(w_current, UNDO_ALL);
-      x_window_set_current_page(w_current, w_current->page_current);
+      x_window_set_current_page(w_current, w_current->toplevel->page_current);
     }
   }
 }
@@ -2889,12 +2892,12 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
  */
 DEFINE_I_CALLBACK(hierarchy_up)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
-  s_hierarchy_up(w_current, w_current->page_current->up);
-  x_window_set_current_page(w_current, w_current->page_current);
+  s_hierarchy_up(w_current->toplevel, w_current->toplevel->page_current->up);
+  x_window_set_current_page(w_current, w_current->toplevel->page_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2907,7 +2910,7 @@ DEFINE_I_CALLBACK(hierarchy_up)
  */
 DEFINE_I_CALLBACK(hierarchy_documentation)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   char *attrib_doc = NULL;
   char *attrib_device = NULL;
   char *attrib_value = NULL;
@@ -2967,7 +2970,7 @@ DEFINE_I_CALLBACK(hierarchy_documentation)
  */
 DEFINE_I_CALLBACK(attributes_attach)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *first_object;
   GList *s_current;
 
@@ -2985,7 +2988,7 @@ DEFINE_I_CALLBACK(attributes_attach)
                          _("Attach"));
 
   /* skip over head */
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  s_current = geda_list_get_glist( w_current->toplevel->page_current->selection_list );
   if (!s_current) {
     return;
   }
@@ -2999,11 +3002,11 @@ DEFINE_I_CALLBACK(attributes_attach)
   s_current = g_list_next(s_current);
   while (s_current != NULL) {
     if (s_current->data) {
-      o_attrib_attach(w_current,
-                      w_current->page_current->object_head,
+      o_attrib_attach(w_current->toplevel,
+                      w_current->toplevel->page_current->object_head,
                       (OBJECT *)s_current->data,
                       first_object);
-      w_current->page_current->CHANGED=1;
+      w_current->toplevel->page_current->CHANGED=1;
     }
     s_current = g_list_next(s_current);
   }
@@ -3017,7 +3020,7 @@ DEFINE_I_CALLBACK(attributes_attach)
  */
 DEFINE_I_CALLBACK(attributes_detach)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   GList *s_current;
   OBJECT *o_current;
 
@@ -3034,15 +3037,15 @@ DEFINE_I_CALLBACK(attributes_detach)
                          _("Detach"));
 
   /* skip over head */
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  s_current = geda_list_get_glist( w_current->toplevel->page_current->selection_list );
   while (s_current != NULL) {
     o_current = (OBJECT *) s_current->data;
     if (o_current) {
       if (o_current->attribs) {
-        o_attrib_free_all(w_current, 
+        o_attrib_free_all(w_current->toplevel,
                           o_current->attribs);
         o_current->attribs = NULL;
-        w_current->page_current->CHANGED=1;
+        w_current->toplevel->page_current->CHANGED=1;
       }
     }
     s_current = g_list_next(s_current);
@@ -3057,7 +3060,7 @@ DEFINE_I_CALLBACK(attributes_detach)
  */
 DEFINE_I_CALLBACK(attributes_show_name)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *object;
 
   exit_if_null(w_current);
@@ -3075,7 +3078,7 @@ DEFINE_I_CALLBACK(attributes_show_name)
 
   if (object != NULL) {
     o_attrib_toggle_show_name_value(w_current,
-                                    geda_list_get_glist( w_current->page_current->selection_list ),
+                                    geda_list_get_glist( w_current->toplevel->page_current->selection_list ),
                                     SHOW_NAME);
   }
 }
@@ -3087,7 +3090,7 @@ DEFINE_I_CALLBACK(attributes_show_name)
  */
 DEFINE_I_CALLBACK(attributes_show_value)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *object;
 
   exit_if_null(w_current);
@@ -3105,7 +3108,7 @@ DEFINE_I_CALLBACK(attributes_show_value)
 
   if (object != NULL) {
     o_attrib_toggle_show_name_value(w_current,
-                                    geda_list_get_glist( w_current->page_current->selection_list ),
+                                    geda_list_get_glist( w_current->toplevel->page_current->selection_list ),
                                     SHOW_VALUE);
   }
 }
@@ -3117,7 +3120,7 @@ DEFINE_I_CALLBACK(attributes_show_value)
  */
 DEFINE_I_CALLBACK(attributes_show_both)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *object;
 
   exit_if_null(w_current);
@@ -3135,7 +3138,7 @@ DEFINE_I_CALLBACK(attributes_show_both)
 
   if (object != NULL) {
     o_attrib_toggle_show_name_value(w_current,
-                                    geda_list_get_glist( w_current->page_current->selection_list ),
+                                    geda_list_get_glist( w_current->toplevel->page_current->selection_list ),
                                     SHOW_NAME_VALUE);
   }
 }
@@ -3147,7 +3150,7 @@ DEFINE_I_CALLBACK(attributes_show_both)
  */
 DEFINE_I_CALLBACK(attributes_visibility_toggle)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *object;
 
   exit_if_null(w_current);
@@ -3166,7 +3169,7 @@ DEFINE_I_CALLBACK(attributes_visibility_toggle)
 
   if (object != NULL) {
     o_attrib_toggle_visibility(w_current,
-                               geda_list_get_glist( w_current->page_current->selection_list ) );
+                               geda_list_get_glist( w_current->toplevel->page_current->selection_list ) );
   }
 }
 
@@ -3180,7 +3183,7 @@ DEFINE_I_CALLBACK(attributes_visibility_toggle)
  */
 DEFINE_I_CALLBACK(script_console)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
   printf(_("Sorry but this is a non-functioning menu option\n"));
@@ -3198,7 +3201,7 @@ DEFINE_I_CALLBACK(script_console)
  */
 DEFINE_I_CALLBACK(options_text_size)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
   text_size_dialog(w_current);
@@ -3211,7 +3214,7 @@ DEFINE_I_CALLBACK(options_text_size)
  */
 DEFINE_I_CALLBACK(options_snap_size)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
   snap_size_dialog(w_current);
@@ -3224,12 +3227,12 @@ DEFINE_I_CALLBACK(options_snap_size)
  */
 DEFINE_I_CALLBACK(options_scale_up_snap_size)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
-  w_current->snap_size *= 2;
-  w_current->page_current->CHANGED=1;  /* maybe remove those two lines */
+  w_current->toplevel->snap_size *= 2;
+  w_current->toplevel->page_current->CHANGED=1;  /* maybe remove those two lines */
   o_undo_savestate(w_current, UNDO_ALL);
 
   o_redraw_all(w_current);
@@ -3242,13 +3245,13 @@ DEFINE_I_CALLBACK(options_scale_up_snap_size)
  */
 DEFINE_I_CALLBACK(options_scale_down_snap_size)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
-  if (w_current->snap_size % 2 == 0)
-    w_current->snap_size /= 2;
-  w_current->page_current->CHANGED=1;  /* maybe remove those two lines */
+  if (w_current->toplevel->snap_size % 2 == 0)
+    w_current->toplevel->snap_size /= 2;
+  w_current->toplevel->page_current->CHANGED=1;  /* maybe remove those two lines */
   o_undo_savestate(w_current, UNDO_ALL);
 
   o_redraw_all(w_current);
@@ -3265,7 +3268,7 @@ DEFINE_I_CALLBACK(options_scale_down_snap_size)
  */
 DEFINE_I_CALLBACK(options_afeedback)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -3285,7 +3288,7 @@ DEFINE_I_CALLBACK(options_afeedback)
  */
 DEFINE_I_CALLBACK(options_grid)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
 
@@ -3307,13 +3310,13 @@ DEFINE_I_CALLBACK(options_grid)
  */
 DEFINE_I_CALLBACK(options_snap)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  if (w_current->snap) {
-    w_current->snap = 0;
+  if (w_current->toplevel->snap) {
+    w_current->toplevel->snap = 0;
     s_log_message(_("Snap OFF (CAUTION!)\n"));
   } else {
-    w_current->snap = 1;
+    w_current->toplevel->snap = 1;
     s_log_message(_("Snap ON\n"));
   }
   i_show_state(w_current, NULL); /* update status on screen */
@@ -3330,7 +3333,7 @@ DEFINE_I_CALLBACK(options_snap)
  */
 DEFINE_I_CALLBACK(options_rubberband)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   if (w_current->netconn_rubberband) {
     w_current->netconn_rubberband = 0;
@@ -3348,7 +3351,7 @@ DEFINE_I_CALLBACK(options_rubberband)
  */
 DEFINE_I_CALLBACK(options_show_log_window)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
   x_log_open ();
@@ -3363,9 +3366,9 @@ DEFINE_I_CALLBACK(options_show_log_window)
  */
 DEFINE_I_CALLBACK(misc)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  s_tile_print(w_current);
+  s_tile_print(w_current->toplevel);
 }
 
 /*! \todo Finish function documentation!!!
@@ -3377,7 +3380,7 @@ DEFINE_I_CALLBACK(misc)
  */
 DEFINE_I_CALLBACK(misc2)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *first = o_select_return_first_object(w_current);
 
   if (first) {
@@ -3410,7 +3413,7 @@ DEFINE_I_CALLBACK(misc3)
  */
 DEFINE_I_CALLBACK(cancel)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   GValue value = { 0, };
 
   exit_if_null(w_current);
@@ -3420,9 +3423,9 @@ DEFINE_I_CALLBACK(cancel)
     /* user hit escape key when placing components */
 
     /* Free the complex place list and its contents */
-    s_delete_object_glist(w_current,
-                          w_current->page_current->complex_place_list);
-    w_current->page_current->complex_place_list = NULL;
+    s_delete_object_glist(w_current->toplevel,
+                          w_current->toplevel->page_current->complex_place_list);
+    w_current->toplevel->page_current->complex_place_list = NULL;
     o_redraw_all(w_current); 
 
     /* Present the component selector again */
@@ -3460,21 +3463,21 @@ DEFINE_I_CALLBACK(cancel)
   if ( (w_current->inside_action) && 
        ((w_current->event_state == ENDCOPY) ||
 	(w_current->event_state == ENDMCOPY)) ) {
-	  s_delete_object_glist(w_current,
-				w_current->page_current->complex_place_list);  
-	  w_current->page_current->complex_place_list = NULL;
+	  s_delete_object_glist(w_current->toplevel,
+				w_current->toplevel->page_current->complex_place_list);
+	  w_current->toplevel->page_current->complex_place_list = NULL;
 	}
   else {
-    g_list_free(w_current->page_current->complex_place_list);
+    g_list_free(w_current->toplevel->page_current->complex_place_list);
   }
-  w_current->page_current->complex_place_list = NULL;
+  w_current->toplevel->page_current->complex_place_list = NULL;
 
-  s_delete_object_glist(w_current,
-                        w_current->page_current->attrib_place_list);
-  w_current->page_current->attrib_place_list = NULL;
+  s_delete_object_glist(w_current->toplevel,
+                        w_current->toplevel->page_current->attrib_place_list);
+  w_current->toplevel->page_current->attrib_place_list = NULL;
 
   /* also free internal current_attribute */
-  o_attrib_free_current(w_current);
+  o_attrib_free_current(w_current->toplevel);
 
   w_current->inside_action=0;
 }
@@ -3487,7 +3490,7 @@ DEFINE_I_CALLBACK(cancel)
  */
 DEFINE_I_CALLBACK(help_about)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
   about_dialog(w_current);
@@ -3500,7 +3503,7 @@ DEFINE_I_CALLBACK(help_about)
  */
 DEFINE_I_CALLBACK(help_hotkeys)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
   x_dialog_hotkeys(w_current);
@@ -3513,7 +3516,7 @@ DEFINE_I_CALLBACK(help_hotkeys)
  */
 DEFINE_I_CALLBACK(options_show_coord_window)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
   coord_dialog (w_current, mouse_x, mouse_y);
@@ -3536,7 +3539,7 @@ gboolean i_callback_close_wm ( GtkWidget *widget, GdkEvent *event,
 	                   gpointer data ) 
 {
 
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   exit_if_null(w_current);
 
   x_window_close(w_current);

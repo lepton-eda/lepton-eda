@@ -26,6 +26,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -85,7 +86,7 @@ static void g_menu_execute(char *func)
  *  \par Function Description
  *
  */
-void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
+void get_main_menu(GtkWidget ** menubar)
 {
   char *buf;
   GtkWidget *menu_item;
@@ -247,7 +248,7 @@ static gchar* gettext_fn(const gchar *path,
 	return gettext(path);
 }
 
-GtkWidget *get_main_popup(TOPLEVEL *w_current)
+GtkWidget *get_main_popup(GSCHEM_TOPLEVEL *w_current)
 {
   static GtkItemFactory *item_factory;
   GtkAccelGroup *accel_group;
@@ -288,7 +289,7 @@ GtkWidget *get_main_popup(TOPLEVEL *w_current)
  *  \note
  *  need to look at this... here and the setup
  */
-gint do_popup (TOPLEVEL *w_current, GdkEventButton *event)
+gint do_popup (GSCHEM_TOPLEVEL *w_current, GdkEventButton *event)
 {
   GtkWidget *menu;   /* =NULL; */ /* was static */
 
@@ -311,7 +312,7 @@ gint do_popup (TOPLEVEL *w_current, GdkEventButton *event)
  *  \par Function Description
  *
  */
-void x_menus_sensitivity (TOPLEVEL* w_current, const char *buf, int flag)
+void x_menus_sensitivity (GSCHEM_TOPLEVEL *w_current, const char *buf, int flag)
 {
   GtkWidget* item=NULL;
   
@@ -343,7 +344,7 @@ void x_menus_sensitivity (TOPLEVEL* w_current, const char *buf, int flag)
  *  \note
  *  1.9.2005 -- SDB.
  */
-void x_menus_popup_sensitivity (TOPLEVEL* w_current, const char *buf, int flag)
+void x_menus_popup_sensitivity (GSCHEM_TOPLEVEL *w_current, const char *buf, int flag)
 {
   GtkWidget *menu_item;
   GtkItemFactory *menu_item_factory;
@@ -401,7 +402,7 @@ out:
 #if !GLIB_CHECK_VERSION(2,6,0)
 
 /* disable recent files support */
-inline void x_menu_attach_recent_files_submenu(TOPLEVEL *w_current)
+inline void x_menu_attach_recent_files_submenu(GSCHEM_TOPLEVEL *w_current)
 {
    GtkWidget *recent_menu_item;
 
@@ -426,14 +427,14 @@ static GList *recent_files = NULL;
  */
 static void update_recent_files_menus()
 {
-   TOPLEVEL *w_current;
+   GSCHEM_TOPLEVEL *w_current;
    GtkWidget *submenu, *recent_menu_item;
    GList *iter;
 
    for (iter = global_window_list;
         iter != NULL;
         iter = g_list_next (iter)) {
-      w_current = (TOPLEVEL *)iter->data;
+      w_current = (GSCHEM_TOPLEVEL *)iter->data;
 
       if (w_current->menubar == NULL)
         continue;
@@ -472,7 +473,7 @@ static void recent_file_clicked(gpointer filename)
 {
    FILE *fp;
    PAGE *page;
-   TOPLEVEL *w;
+   GSCHEM_TOPLEVEL *w_current;
 
    /* Check if the file exists */
    fp = fopen((char *) filename, "r");
@@ -485,10 +486,11 @@ static void recent_file_clicked(gpointer filename)
    }
    fclose(fp);
 
-   w = s_toplevel_new();
-   x_window_setup(w);
-   page = x_window_open_page(w, (char *)filename);
-   x_window_set_current_page(w, page);
+   w_current = gschem_toplevel_new();
+   w_current->toplevel = s_toplevel_new();
+   x_window_setup(w_current);
+   page = x_window_open_page(w_current, (char *)filename);
+   x_window_set_current_page(w_current, page);
    s_log_message (_("New Window created [%s]\n"), (char *)filename);
 }
 
@@ -497,7 +499,7 @@ static void recent_file_clicked(gpointer filename)
  *
  *  Called from x_window_setup().
  */
-void x_menu_attach_recent_files_submenu(TOPLEVEL *w_current)
+void x_menu_attach_recent_files_submenu(GSCHEM_TOPLEVEL *w_current)
 {
    gulong id;
    GtkWidget *tmp;

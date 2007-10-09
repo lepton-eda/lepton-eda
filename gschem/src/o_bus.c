@@ -23,6 +23,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -35,8 +36,9 @@
  *  \par Function Description
  *
  */
-void o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
+void o_bus_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int size;
   int x1, y1, x2, y2; /* screen coords */
 
@@ -49,8 +51,8 @@ void o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   /* reuse line's routine */
-  if ( (w_current->DONT_REDRAW == 1) || 
-       (!o_line_visible(w_current, o_current->line, &x1, &y1, &x2, &y2)) ) {
+  if ( (toplevel->DONT_REDRAW == 1) ||
+       (!o_line_visible(toplevel, o_current->line, &x1, &y1, &x2, &y2)) ) {
     return;
   }
 
@@ -58,8 +60,8 @@ void o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
   printf("drawing bus\n\n");
 #endif
 
-  if (w_current->bus_style == THICK ) {
-    size = SCREENabs(w_current, BUS_WIDTH);
+  if (toplevel->bus_style == THICK ) {
+    size = SCREENabs(toplevel, BUS_WIDTH);
 
     if (size < 0)
       size=0;
@@ -69,9 +71,9 @@ void o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
                                GDK_JOIN_MITER);
   }
 
-  if (w_current->override_color != -1 ) {
+  if (toplevel->override_color != -1 ) {
     gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(w_current->override_color));
+                          x_get_color(toplevel->override_color));
     gdk_draw_line(w_current->window, w_current->gc,
                   x1, y1, x2, y2);
     gdk_draw_line(w_current->backingstore, w_current->gc,
@@ -86,7 +88,7 @@ void o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   /* yes zero is right for the width -> use hardware lines */
-  if (w_current->bus_style == THICK ) {
+  if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->gc, 0, GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
                                GDK_JOIN_MITER);
@@ -115,11 +117,12 @@ void o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_bus_erase(TOPLEVEL *w_current, OBJECT *o_current)
+void o_bus_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  w_current->override_color = w_current->background_color;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  toplevel->override_color = toplevel->background_color;
   o_bus_draw(w_current, o_current);
-  w_current->override_color = -1;
+  toplevel->override_color = -1;
 }
 
 /*! \todo Finish function documentation!!!
@@ -127,8 +130,9 @@ void o_bus_erase(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_bus_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+void o_bus_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int size;
   int color;
   int sx[2], sy[2];
@@ -146,16 +150,16 @@ void o_bus_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
   gdk_gc_set_foreground(w_current->outline_xor_gc,
 			x_get_darkcolor(color));
 
-  if (w_current->bus_style == THICK ) {
-    size = SCREENabs(w_current, BUS_WIDTH);
+  if (toplevel->bus_style == THICK ) {
+    size = SCREENabs(toplevel, BUS_WIDTH);
     gdk_gc_set_line_attributes(w_current->outline_xor_gc, size+1,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
                                GDK_JOIN_MITER);
   }
 
-  WORLDtoSCREEN( w_current, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
-  WORLDtoSCREEN( w_current, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
   
   gdk_draw_line(w_current->window, w_current->outline_xor_gc,
                 sx[0]+dx, sy[0]+dy,
@@ -163,7 +167,7 @@ void o_bus_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 
   /* backing store ? not approriate here */
 
-  if (w_current->bus_style == THICK ) {
+  if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->outline_xor_gc, 0,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -176,9 +180,10 @@ void o_bus_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_bus_draw_xor_single(TOPLEVEL *w_current,
+void o_bus_draw_xor_single(GSCHEM_TOPLEVEL *w_current,
 			   int dx, int dy, int whichone, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int color;
   int dx1= - 1, dy1 = - 1, dx2 = -1, dy2 = -1;
   int sx[2], sy[2];
@@ -210,8 +215,8 @@ void o_bus_draw_xor_single(TOPLEVEL *w_current,
     fprintf(stderr, _("Got an invalid which one in o_bus_draw_xor_single\n"));
   }
 
-  WORLDtoSCREEN( w_current, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
-  WORLDtoSCREEN( w_current, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
 
   gdk_draw_line(w_current->window, w_current->outline_xor_gc,
                 sx[0]+dx1, sy[0]+dy1,
@@ -225,15 +230,16 @@ void o_bus_draw_xor_single(TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-void o_bus_start(TOPLEVEL *w_current, int x, int y)
+void o_bus_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int size;
 
-  w_current->last_x = w_current->start_x = fix_x(w_current, x);
-  w_current->last_y = w_current->start_y = fix_y(w_current, y);
+  w_current->last_x = w_current->start_x = fix_x(toplevel, x);
+  w_current->last_y = w_current->start_y = fix_y(toplevel, y);
 
-  if (w_current->bus_style == THICK ) {
-    size = SCREENabs(w_current, BUS_WIDTH);
+  if (toplevel->bus_style == THICK ) {
+    size = SCREENabs(toplevel, BUS_WIDTH);
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -244,7 +250,7 @@ void o_bus_start(TOPLEVEL *w_current, int x, int y)
 			x_get_darkcolor(w_current->select_color) );
   gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-  if (w_current->bus_style == THICK ) {
+  if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -257,8 +263,9 @@ void o_bus_start(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *
  */
-int o_bus_end(TOPLEVEL *w_current, int x, int y)
+int o_bus_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1;
   int x2, y2;
   int color;
@@ -266,19 +273,19 @@ int o_bus_end(TOPLEVEL *w_current, int x, int y)
   GList *other_objects = NULL;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return(FALSE);
   }
 
-  if (w_current->override_bus_color == -1) {
+  if (toplevel->override_bus_color == -1) {
     color = w_current->bus_color;
   } else {
-    color = w_current->override_bus_color;
+    color = toplevel->override_bus_color;
   }
 
-  size = SCREENabs(w_current, BUS_WIDTH);
+  size = SCREENabs(toplevel, BUS_WIDTH);
 
-  if (w_current->bus_style == THICK ) {
+  if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -291,7 +298,7 @@ int o_bus_end(TOPLEVEL *w_current, int x, int y)
 		w_current->start_x, w_current->start_y, 
 		w_current->last_x, w_current->last_y);
 
-  if (w_current->bus_style == THICK ) {
+  if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -321,40 +328,40 @@ int o_bus_end(TOPLEVEL *w_current, int x, int y)
   gdk_draw_line(w_current->window, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
   gdk_draw_line(w_current->backingstore, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-  if (w_current->bus_style == THICK ) {
+  if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->gc, 0,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
                                GDK_JOIN_MITER);
   }
 
-  SCREENtoWORLD(w_current, w_current->start_x, w_current->start_y, &x1, &y1);
-  SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y, &x2, &y2);
-  x1 = snap_grid(w_current, x1);
-  y1 = snap_grid(w_current, y1);
-  x2 = snap_grid(w_current, x2);
-  y2 = snap_grid(w_current, y2);
+  SCREENtoWORLD(toplevel, w_current->start_x, w_current->start_y, &x1, &y1);
+  SCREENtoWORLD(toplevel, w_current->last_x, w_current->last_y, &x2, &y2);
+  x1 = snap_grid(toplevel, x1);
+  y1 = snap_grid(toplevel, y1);
+  x2 = snap_grid(toplevel, x2);
+  y2 = snap_grid(toplevel, y2);
 
   w_current->save_x = w_current->last_x;
   w_current->save_y = w_current->last_y;
 
-  w_current->page_current->object_tail =
-  o_bus_add(w_current,
-            w_current->page_current->object_tail,
+  toplevel->page_current->object_tail =
+  o_bus_add(toplevel,
+            toplevel->page_current->object_tail,
             OBJ_BUS,
             color,
             x1, y1, x2, y2, 0);
 
   /* conn stuff */
   other_objects = s_conn_return_others(other_objects,
-                                       w_current->page_current->
+                                       toplevel->page_current->
                                        object_tail);
   o_cue_undraw_list(w_current, other_objects);
   o_cue_draw_list(w_current, other_objects);
   g_list_free(other_objects);
-  o_cue_draw_single(w_current, w_current->page_current->object_tail);
+  o_cue_draw_single(w_current, toplevel->page_current->object_tail);
 
-  w_current->page_current->CHANGED=1;
+  toplevel->page_current->CHANGED=1;
   w_current->start_x = w_current->save_x;
   w_current->start_y = w_current->save_y;
   o_undo_savestate(w_current, UNDO_ALL);
@@ -366,18 +373,19 @@ int o_bus_end(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *
  */
-void o_bus_rubberbus(TOPLEVEL *w_current, int x, int y)
+void o_bus_rubberbus(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
   int size;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
-  if (w_current->bus_style == THICK ) {
-    size = SCREENabs(w_current, BUS_WIDTH);
+  if (toplevel->bus_style == THICK ) {
+    size = SCREENabs(toplevel, BUS_WIDTH);
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -394,8 +402,8 @@ void o_bus_rubberbus(TOPLEVEL *w_current, int x, int y)
   /* going into non-ortho mode (control key pressed) */
   /* erase ortho line */
 
-  w_current->last_x = fix_x(w_current, x);
-  w_current->last_y = fix_y(w_current, y);
+  w_current->last_x = fix_x(toplevel, x);
+  w_current->last_y = fix_y(toplevel, y);
 
   /* If you press the control key then you can draw non-ortho bus */
   if (!w_current->CONTROLKEY) {
@@ -413,7 +421,7 @@ void o_bus_rubberbus(TOPLEVEL *w_current, int x, int y)
 			x_get_darkcolor(w_current->select_color) );
   gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-  if (w_current->bus_style == THICK ) {
+  if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -428,12 +436,13 @@ void o_bus_rubberbus(TOPLEVEL *w_current, int x, int y)
  *  \note
  *  used in button cancel code in x_events.c
  */
-void o_bus_eraserubber(TOPLEVEL *w_current)
+void o_bus_eraserubber(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int size;
 
-  if (w_current->bus_style == THICK ) {
-    size = SCREENabs(w_current, BUS_WIDTH);
+  if (toplevel->bus_style == THICK ) {
+    size = SCREENabs(toplevel, BUS_WIDTH);
 
     if (size < 0)
       size=0;
@@ -446,7 +455,7 @@ void o_bus_eraserubber(TOPLEVEL *w_current)
 
   gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-  if (w_current->bus_style == THICK ) {
+  if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -461,13 +470,14 @@ void o_bus_eraserubber(TOPLEVEL *w_current)
  *  \note
  *  used in button cancel code in x_events.c
  */
-void o_bus_xorrubber(TOPLEVEL *w_current)
+void o_bus_xorrubber(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int size;
 
-  if (w_current->bus_style == THICK ) {
+  if (toplevel->bus_style == THICK ) {
 
-    size = SCREENabs(w_current, BUS_WIDTH);
+    size = SCREENabs(toplevel, BUS_WIDTH);
 
     if (size < 0)
       size=0;
@@ -482,7 +492,7 @@ void o_bus_xorrubber(TOPLEVEL *w_current)
 			x_get_darkcolor(w_current->select_color) );
   gdk_draw_line(w_current->window, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-  if (w_current->bus_style == THICK ) {
+  if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->gc, 0,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,

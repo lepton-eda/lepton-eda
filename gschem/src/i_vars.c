@@ -22,6 +22,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
@@ -136,9 +137,10 @@ int default_select_slack_pixels = 4;
  *  \par Function Description
  *
  */
-void i_vars_set(TOPLEVEL *w_current)
+void i_vars_set(GSCHEM_TOPLEVEL *w_current)
 {
-  i_vars_libgeda_set(w_current);
+  TOPLEVEL *toplevel = w_current->toplevel;
+  i_vars_libgeda_set(toplevel);
 
   /* this will be false if logging cannot be enabled */
   if (do_logging != FALSE) {
@@ -151,14 +153,14 @@ void i_vars_set(TOPLEVEL *w_current)
   w_current->text_color    = default_text_color;
   w_current->text_size     = default_text_size;
   w_current->text_caps     = default_text_caps;
-  w_current->postscript_font_scale = default_postscript_font_scale;
+  toplevel->postscript_font_scale = default_postscript_font_scale;
 
-  w_current->attribute_color    = default_attribute_color;
-  w_current->detachedattr_color = default_detachattr_color;
+  toplevel->attribute_color    = default_attribute_color;
+  toplevel->detachedattr_color = default_detachattr_color;
   w_current->logic_bubble_color = default_logic_bubble_color;
 
   w_current->grid_color       = default_grid_color;
-  w_current->background_color = default_background_color;
+  toplevel->background_color = default_background_color;
   w_current->select_color     = default_select_color;
   w_current->stroke_color     = default_stroke_color;
 
@@ -167,23 +169,23 @@ void i_vars_set(TOPLEVEL *w_current)
   w_current->lock_color = default_lock_color;
 
   w_current->net_color          = default_net_color;
-  w_current->net_style          = default_net_style;
-  w_current->net_endpoint_color = default_net_endpoint_color;
+  toplevel->net_style          = default_net_style;
+  toplevel->net_endpoint_color = default_net_endpoint_color;
   w_current->net_endpoint_mode  = default_net_endpoint_mode;
   w_current->net_midpoint_mode  = default_net_midpoint_mode;
-  w_current->override_net_color = default_override_net_color;
+  toplevel->override_net_color = default_override_net_color;
 
-  w_current->junction_color = default_junction_color;
+  toplevel->junction_color = default_junction_color;
 
   w_current->bus_color          = default_bus_color;
-  w_current->bus_style          = default_bus_style;
-  w_current->override_bus_color = default_override_bus_color;
+  toplevel->bus_style          = default_bus_style;
+  toplevel->override_bus_color = default_override_bus_color;
 
   w_current->pin_color          = default_pin_color;
-  w_current->pin_style          = default_pin_style;
-  w_current->override_pin_color = default_override_pin_color;
+  toplevel->pin_style          = default_pin_style;
+  toplevel->override_pin_color = default_override_pin_color;
 
-  w_current->line_style         = default_line_style;
+  toplevel->line_style         = default_line_style;
 
   w_current->zoom_with_pan           = default_zoom_with_pan;
   w_current->actionfeedback_mode     = default_actionfeedback_mode;
@@ -191,28 +193,28 @@ void i_vars_set(TOPLEVEL *w_current)
   w_current->text_feedback           = default_text_feedback;
   w_current->scrollbars_flag         = default_scrollbars_flag;
 
-  w_current->object_clipping = default_object_clipping;
+  toplevel->object_clipping = default_object_clipping;
   w_current->embed_complex   = default_embed_complex;
   w_current->include_complex = default_include_complex;
-  w_current->text_output     = default_text_output;
-  w_current->snap_size       = default_snap_size;
+  toplevel->text_output     = default_text_output;
+  toplevel->snap_size       = default_snap_size;
   w_current->log_window      = default_log_window;
   w_current->log_window_type = default_log_window_type;
 
-  w_current->print_output_type      = default_print_output_type;
-  w_current->print_output_capstyle  = default_print_output_capstyle;
-  w_current->print_orientation      = default_print_orientation;
-  w_current->print_color            = default_print_color;
-  w_current->print_color_background = default_print_color_background;
-  w_current->setpagedevice_orientation = default_setpagedevice_orientation;
-  w_current->setpagedevice_pagesize = default_setpagedevice_pagesize;
+  toplevel->print_output_type      = default_print_output_type;
+  toplevel->print_output_capstyle  = default_print_output_capstyle;
+  toplevel->print_orientation      = default_print_orientation;
+  toplevel->print_color            = default_print_color;
+  toplevel->print_color_background = default_print_color_background;
+  toplevel->setpagedevice_orientation = default_setpagedevice_orientation;
+  toplevel->setpagedevice_pagesize = default_setpagedevice_pagesize;
 
-  w_current->image_color        = default_image_color;
+  toplevel->image_color        = default_image_color;
   w_current->image_width        = default_image_width;
   w_current->image_height       = default_image_height;
   w_current->third_button       = default_third_button;
   w_current->middle_button      = default_middle_button;
-  w_current->net_consolidate    = default_net_consolidate;
+  toplevel->net_consolidate    = default_net_consolidate;
   w_current->file_preview       = default_file_preview;
   w_current->enforce_hierarchy  = default_enforce_hierarchy;
   w_current->text_origin_marker = default_text_origin_marker;
@@ -231,18 +233,18 @@ void i_vars_set(TOPLEVEL *w_current)
   w_current->toolbars = default_toolbars;
   w_current->handleboxes = default_handleboxes;
 
-  w_current->paper_width  = default_paper_width;
-  w_current->paper_height = default_paper_height;
+  toplevel->paper_width  = default_paper_width;
+  toplevel->paper_height = default_paper_height;
 
   w_current->bus_ripper_size  = default_bus_ripper_size;
   w_current->bus_ripper_type  = default_bus_ripper_type;
   w_current->bus_ripper_rotation  = default_bus_ripper_rotation;
 
-  w_current->force_boundingbox  = default_force_boundingbox;
+  toplevel->force_boundingbox  = default_force_boundingbox;
   w_current->grid_dot_size  = default_grid_dot_size;
   w_current->grid_mode  = default_grid_mode;
   w_current->grid_fixed_threshold  = default_grid_fixed_threshold;
-  w_current->print_vector_threshold  = default_print_vector_threshold;
+  toplevel->print_vector_threshold  = default_print_vector_threshold;
   w_current->add_attribute_offset  = default_add_attribute_offset;
 
   w_current->drag_can_move = default_drag_can_move;
@@ -252,5 +254,5 @@ void i_vars_set(TOPLEVEL *w_current)
 
   w_current->select_slack_pixels = default_select_slack_pixels;
 
-  w_current->auto_save_interval = default_auto_save_interval;
+  toplevel->auto_save_interval = default_auto_save_interval;
 }

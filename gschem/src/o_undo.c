@@ -30,6 +30,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -79,8 +80,9 @@ void o_undo_init(void)
  *    <DT>*</DT><DD>UNDO_VIEWPORT_ONLY
  *  </DL>
  */
-void o_undo_savestate(TOPLEVEL *w_current, int flag)
+void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   char *filename = NULL;
   OBJECT *object_head = NULL;
   int levels;
@@ -98,8 +100,8 @@ void o_undo_savestate(TOPLEVEL *w_current, int flag)
 
     /* Increment the number of operations since last backup if 
        auto-save is enabled */
-    if (w_current->auto_save_interval != 0) {
-      w_current->page_current->ops_since_last_backup++;
+    if (toplevel->auto_save_interval != 0) {
+      toplevel->page_current->ops_since_last_backup++;
     }
 
     /* 32 is? for max length of pid and index */
@@ -116,61 +118,61 @@ void o_undo_savestate(TOPLEVEL *w_current, int flag)
     /* f_save manages the creaton of backup copies. 
        This way, f_save is called only when saving a file, and not when
        saving an undo backup copy */
-    o_save(w_current, filename);
+    o_save(toplevel, filename);
 
 
   } else if (w_current->undo_type == UNDO_MEMORY && flag == UNDO_ALL) {
 
     /* Increment the number of operations since last backup if 
        auto-save is enabled */
-    if (w_current->auto_save_interval != 0) {
-      w_current->page_current->ops_since_last_backup++;
+    if (toplevel->auto_save_interval != 0) {
+      toplevel->page_current->ops_since_last_backup++;
     }
 
     object_head = s_basic_init_object("undo_head");
 
-    o_list_copy_all(w_current, 
-                    w_current->page_current->object_head->next,
+    o_list_copy_all(toplevel,
+                    toplevel->page_current->object_head->next,
                     object_head, NORMAL_FLAG);
   }
 
   /* Clear Anything above current */
-  if (w_current->page_current->undo_current) {
-    s_undo_remove_rest(w_current, 
-                       w_current->page_current->undo_current->next);
-    w_current->page_current->undo_current->next = NULL;
+  if (toplevel->page_current->undo_current) {
+    s_undo_remove_rest(toplevel,
+                       toplevel->page_current->undo_current->next);
+    toplevel->page_current->undo_current->next = NULL;
   } else { /* undo current is NULL */
-    s_undo_remove_rest(w_current, 
-                       w_current->page_current->undo_bottom);
-    w_current->page_current->undo_bottom = NULL;
+    s_undo_remove_rest(toplevel,
+                       toplevel->page_current->undo_bottom);
+    toplevel->page_current->undo_bottom = NULL;
   }
 
-  w_current->page_current->undo_tos = w_current->page_current->undo_current;
+  toplevel->page_current->undo_tos = toplevel->page_current->undo_current;
 
-  w_current->page_current->undo_tos =
-  s_undo_add(w_current->page_current->undo_tos,
+  toplevel->page_current->undo_tos =
+  s_undo_add(toplevel->page_current->undo_tos,
              flag, filename, object_head,
-             w_current->page_current->left,
-             w_current->page_current->top,
-             w_current->page_current->right,
-             w_current->page_current->bottom,
-             w_current->page_current->page_control,
-             w_current->page_current->up);
+             toplevel->page_current->left,
+             toplevel->page_current->top,
+             toplevel->page_current->right,
+             toplevel->page_current->bottom,
+             toplevel->page_current->page_control,
+             toplevel->page_current->up);
 
-  w_current->page_current->undo_current =
-      w_current->page_current->undo_tos;
+  toplevel->page_current->undo_current =
+      toplevel->page_current->undo_tos;
 
-  if (w_current->page_current->undo_bottom == NULL) {
-    w_current->page_current->undo_bottom =
-        w_current->page_current->undo_tos;
+  if (toplevel->page_current->undo_bottom == NULL) {
+    toplevel->page_current->undo_bottom =
+        toplevel->page_current->undo_tos;
   }
 
 #if DEBUG
   printf("\n\n---Undo----\n");
-  s_undo_print_all(w_current->page_current->undo_bottom);
-  printf("BOTTOM: %s\n", w_current->page_current->undo_bottom->filename);
-  printf("TOS: %s\n", w_current->page_current->undo_tos->filename);
-  printf("CURRENT: %s\n", w_current->page_current->undo_current->filename);
+  s_undo_print_all(toplevel->page_current->undo_bottom);
+  printf("BOTTOM: %s\n", toplevel->page_current->undo_bottom->filename);
+  printf("TOS: %s\n", toplevel->page_current->undo_tos->filename);
+  printf("CURRENT: %s\n", toplevel->page_current->undo_current->filename);
   printf("----\n");
 #endif
 
@@ -186,7 +188,7 @@ void o_undo_savestate(TOPLEVEL *w_current, int flag)
     return;
   }
 
-  levels = s_undo_levels(w_current->page_current->undo_bottom);
+  levels = s_undo_levels(toplevel->page_current->undo_bottom);
 
 #if DEBUG
   printf("levels: %d\n", levels);
@@ -199,7 +201,7 @@ void o_undo_savestate(TOPLEVEL *w_current, int flag)
     printf("Trimming: %d levels\n", levels);
 #endif
 
-    u_current = w_current->page_current->undo_bottom;
+    u_current = toplevel->page_current->undo_bottom;
     while(u_current && levels > 0) {
       u_current_next = u_current->next;
 
@@ -212,7 +214,7 @@ void o_undo_savestate(TOPLEVEL *w_current, int flag)
       }
 
       if (u_current->object_head) {
-        s_delete_list_fromstart(w_current, 
+        s_delete_list_fromstart(toplevel,
                                 u_current->object_head);
         u_current->object_head = NULL; 
       }
@@ -228,7 +230,7 @@ void o_undo_savestate(TOPLEVEL *w_current, int flag)
     /* Because we use a pad you are always garanteed to never */
     /* exhaust the list */
     u_current->prev = NULL;
-    w_current->page_current->undo_bottom = u_current;
+    toplevel->page_current->undo_bottom = u_current;
 
 #if DEBUG
     printf("New current is: %s\n", u_current->filename);
@@ -237,10 +239,10 @@ void o_undo_savestate(TOPLEVEL *w_current, int flag)
 
 #if DEBUG
   printf("\n\n---Undo----\n");
-  s_undo_print_all(w_current->page_current->undo_bottom);
-  printf("BOTTOM: %s\n", w_current->page_current->undo_bottom->filename);
-  printf("TOS: %s\n", w_current->page_current->undo_tos->filename);
-  printf("CURRENT: %s\n", w_current->page_current->undo_current->filename);
+  s_undo_print_all(toplevel->page_current->undo_bottom);
+  printf("BOTTOM: %s\n", toplevel->page_current->undo_bottom->filename);
+  printf("TOS: %s\n", toplevel->page_current->undo_tos->filename);
+  printf("CURRENT: %s\n", toplevel->page_current->undo_current->filename);
   printf("----\n");
 #endif
 
@@ -298,8 +300,9 @@ OBJECT *o_undo_find_prev_object_head(UNDO *start)
  *    <DT>*</DT><DD>REDO_ACTION
  *  </DL>
  */
-void o_undo_callback(TOPLEVEL *w_current, int type)
+void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   UNDO *u_current;
   UNDO *u_next;
   UNDO *save_bottom;
@@ -316,17 +319,17 @@ void o_undo_callback(TOPLEVEL *w_current, int type)
     return;
   }
 
-  if (w_current->page_current->undo_current == NULL) {
+  if (toplevel->page_current->undo_current == NULL) {
     return;
   }
 
   if (type == UNDO_ACTION) {
-    u_current = w_current->page_current->undo_current->prev;
+    u_current = toplevel->page_current->undo_current->prev;
   } else {
-    u_current = w_current->page_current->undo_current->next;
+    u_current = toplevel->page_current->undo_current->next;
   }
 
-  u_next = w_current->page_current->undo_current;
+  u_next = toplevel->page_current->undo_current;
 
   if (u_current == NULL) {
     return;
@@ -347,63 +350,63 @@ void o_undo_callback(TOPLEVEL *w_current, int type)
   }
 
   /* save filename */
-  save_filename = g_strdup (w_current->page_current->page_filename);
+  save_filename = g_strdup (toplevel->page_current->page_filename);
 
   /* save structure so it's not nuked */
-  save_bottom = w_current->page_current->undo_bottom;
-  save_tos = w_current->page_current->undo_tos;
-  save_current = w_current->page_current->undo_current;
-  w_current->page_current->undo_bottom = NULL;
-  w_current->page_current->undo_tos = NULL;
-  w_current->page_current->undo_current = NULL;
+  save_bottom = toplevel->page_current->undo_bottom;
+  save_tos = toplevel->page_current->undo_tos;
+  save_current = toplevel->page_current->undo_current;
+  toplevel->page_current->undo_bottom = NULL;
+  toplevel->page_current->undo_tos = NULL;
+  toplevel->page_current->undo_current = NULL;
 
   if (w_current->undo_type == UNDO_DISK && u_current->filename) {
     PAGE *p_new;
-    s_page_delete (w_current, w_current->page_current);
-    p_new = s_page_new(w_current, u_current->filename);
-    s_page_goto (w_current, p_new);
+    s_page_delete (toplevel, toplevel->page_current);
+    p_new = s_page_new(toplevel, u_current->filename);
+    s_page_goto (toplevel, p_new);
   } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_head) {
     PAGE *p_new;
-    s_page_delete (w_current, w_current->page_current);
-    p_new = s_page_new (w_current, save_filename);
-    s_page_goto (w_current, p_new);
+    s_page_delete (toplevel, toplevel->page_current);
+    p_new = s_page_new (toplevel, save_filename);
+    s_page_goto (toplevel, p_new);
   }
 
   /* temporarily disable logging */
   save_logging = do_logging;
-  prev_status = w_current->DONT_REDRAW;
-  w_current->DONT_REDRAW = 1;
+  prev_status = toplevel->DONT_REDRAW;
+  toplevel->DONT_REDRAW = 1;
   do_logging = FALSE;
 
   if (w_current->undo_type == UNDO_DISK && u_current->filename) {
 
-    f_open(w_current, u_current->filename);
+    f_open(toplevel, u_current->filename);
 
     x_manual_resize(w_current);
-    w_current->page_current->page_control = u_current->page_control;
-    w_current->page_current->up = u_current->up;
-    w_current->page_current->CHANGED=1;
+    toplevel->page_current->page_control = u_current->page_control;
+    toplevel->page_current->up = u_current->up;
+    toplevel->page_current->CHANGED=1;
 
   } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_head) {
 
-    s_delete_list_fromstart(w_current, w_current->page_current->object_head);
+    s_delete_list_fromstart(toplevel, toplevel->page_current->object_head);
 
-    w_current->page_current->object_head = s_basic_init_object("object_head");
-    w_current->page_current->object_head->type = OBJ_HEAD;
+    toplevel->page_current->object_head = s_basic_init_object("object_head");
+    toplevel->page_current->object_head->type = OBJ_HEAD;
 
-    o_list_copy_all(w_current, u_current->object_head->next,
-                    w_current->page_current->object_head,
+    o_list_copy_all(toplevel, u_current->object_head->next,
+                    toplevel->page_current->object_head,
                     NORMAL_FLAG);
 
-    w_current->page_current->object_tail = return_tail(w_current->page_current->object_head);
+    toplevel->page_current->object_tail = return_tail(toplevel->page_current->object_head);
     x_manual_resize(w_current);
-    w_current->page_current->page_control = u_current->page_control;
-    w_current->page_current->up = u_current->up;
-    w_current->page_current->CHANGED=1;
+    toplevel->page_current->page_control = u_current->page_control;
+    toplevel->page_current->up = u_current->up;
+    toplevel->page_current->CHANGED=1;
   }
 
   /* do misc setups */
-  set_window(w_current, w_current->page_current,
+  set_window(toplevel, toplevel->page_current,
              u_current->left, u_current->right,
              u_current->top, u_current->bottom);
   x_hscrollbar_update(w_current);
@@ -413,43 +416,43 @@ void o_undo_callback(TOPLEVEL *w_current, int type)
   do_logging = save_logging;
 
   /* set filename right */
-  g_free(w_current->page_current->page_filename);
-  w_current->page_current->page_filename = save_filename;
+  g_free(toplevel->page_current->page_filename);
+  toplevel->page_current->page_filename = save_filename;
 
   /* final redraw */
   x_pagesel_update (w_current);
   x_multiattrib_update (w_current);
 
   /* Let the caller to decide if redraw or not */
-  /* w_current->DONT_REDRAW = 0; */
-  w_current->DONT_REDRAW = prev_status;
+  /* toplevel->DONT_REDRAW = 0; */
+  toplevel->DONT_REDRAW = prev_status;
 
-  if (!w_current->DONT_REDRAW) {
+  if (!toplevel->DONT_REDRAW) {
     o_redraw_all(w_current);
   }
   i_update_menus(w_current);
 
   /* restore saved undo structures */
-  w_current->page_current->undo_bottom = save_bottom;
-  w_current->page_current->undo_tos = save_tos;
-  w_current->page_current->undo_current = save_current;
+  toplevel->page_current->undo_bottom = save_bottom;
+  toplevel->page_current->undo_tos = save_tos;
+  toplevel->page_current->undo_current = save_current;
 
   if (type == UNDO_ACTION) {
-    if (w_current->page_current->undo_current) {
-      w_current->page_current->undo_current =
-          w_current->page_current->undo_current->prev;
-      if (w_current->page_current->undo_current == NULL) {
-        w_current->page_current->undo_current =
-            w_current->page_current->undo_bottom;
+    if (toplevel->page_current->undo_current) {
+      toplevel->page_current->undo_current =
+          toplevel->page_current->undo_current->prev;
+      if (toplevel->page_current->undo_current == NULL) {
+        toplevel->page_current->undo_current =
+            toplevel->page_current->undo_bottom;
       }
     }
   } else { /* type is REDO_ACTION */
-    if (w_current->page_current->undo_current) {
-      w_current->page_current->undo_current =
-          w_current->page_current->undo_current->next;
-      if (w_current->page_current->undo_current == NULL) {
-        w_current->page_current->undo_current =
-            w_current->page_current->undo_tos;
+    if (toplevel->page_current->undo_current) {
+      toplevel->page_current->undo_current =
+          toplevel->page_current->undo_current->next;
+      if (toplevel->page_current->undo_current == NULL) {
+        toplevel->page_current->undo_current =
+            toplevel->page_current->undo_tos;
       }
     }
   }
@@ -463,9 +466,9 @@ void o_undo_callback(TOPLEVEL *w_current, int type)
 
 #if DEBUG
   printf("\n\n---Undo----\n");
-  s_undo_print_all(w_current->page_current->undo_bottom);
-  printf("TOS: %s\n", w_current->page_current->undo_tos->filename);
-  printf("CURRENT: %s\n", w_current->page_current->undo_current->filename);
+  s_undo_print_all(toplevel->page_current->undo_bottom);
+  printf("TOS: %s\n", toplevel->page_current->undo_tos->filename);
+  printf("CURRENT: %s\n", toplevel->page_current->undo_current->filename);
   printf("----\n");
 #endif
 }
@@ -498,18 +501,19 @@ void o_undo_cleanup(void)
  *  \par Function Description
  *
  */
-void o_undo_remove_last_undo(TOPLEVEL *w_current)
+void o_undo_remove_last_undo(GSCHEM_TOPLEVEL *w_current)
 {
-  if (w_current->page_current->undo_current == NULL) {
+  TOPLEVEL *toplevel = w_current->toplevel;
+  if (toplevel->page_current->undo_current == NULL) {
     return;
   }
 
-  if (w_current->page_current->undo_current) {
-    w_current->page_current->undo_current =
-        w_current->page_current->undo_current->prev;
-    if (w_current->page_current->undo_current == NULL) {
-      w_current->page_current->undo_current =
-          w_current->page_current->undo_bottom;
+  if (toplevel->page_current->undo_current) {
+    toplevel->page_current->undo_current =
+        toplevel->page_current->undo_current->prev;
+    if (toplevel->page_current->undo_current == NULL) {
+      toplevel->page_current->undo_current =
+          toplevel->page_current->undo_bottom;
     }
   }
 

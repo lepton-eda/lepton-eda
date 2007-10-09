@@ -34,6 +34,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -47,7 +48,7 @@
  *
  */
 /* for now this only supports single chars, not shift/alt/ctrl etc... */
-int g_keys_execute(TOPLEVEL *w_current, int state, int keyval)
+int g_keys_execute(GSCHEM_TOPLEVEL *w_current, int state, int keyval)
 {
   char *guile_string = NULL;
   char *modifier = NULL;
@@ -168,13 +169,13 @@ g_keys_dump_keymap (void)
  *  accelerator is executed and the associated timeout interval
  *  has passed.
  *
- *  \param [in] data a pointer to the toplevel
+ *  \param [in] data a pointer to the GSCHEM_TOPLEVEL
  */
 static gboolean clear_keyaccel_string(gpointer data)
 {
-  TOPLEVEL *w_current = data;
+  GSCHEM_TOPLEVEL *w_current = data;
 
-  /* Find out if the toplevel is present... */
+  /* Find out if the GSCHEM_TOPLEVEL is present... */
   if (g_list_find(global_window_list, w_current) != NULL) {
     g_free(w_current->keyaccel_string);
     w_current->keyaccel_string = NULL;

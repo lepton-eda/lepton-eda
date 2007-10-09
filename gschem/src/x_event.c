@@ -27,6 +27,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -62,15 +63,16 @@ int stroke_trans (char *sequence);
  *
  */
 gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
-		    TOPLEVEL *w_current)
+		    GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
 #if DEBUG
   printf("EXPOSE\n");
 #endif
 
   exit_if_null(w_current);
   /* nasty global variable */
-  global_window_current = (TOPLEVEL *) w_current;
+  global_window_current = w_current;
 
   gdk_draw_pixmap(widget->window,
                   widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
@@ -89,14 +91,14 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
       case(ENDCOPY):
       case(ENDMCOPY):
         o_drawbounding(w_current,
-                       geda_list_get_glist( w_current->page_current->selection_list ),
+                       geda_list_get_glist( toplevel->page_current->selection_list ),
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
       case(DRAWCOMP):
       case(ENDCOMP):
       case(ENDPASTE):
         o_drawbounding(w_current,
-                       w_current->page_current->complex_place_list,
+                       toplevel->page_current->complex_place_list,
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
 
@@ -146,8 +148,9 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
  *
  */
 gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
-			    TOPLEVEL *w_current)
+			    GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int prev_state; 
   int w_x, w_y;
 
@@ -159,7 +162,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   printf("event state: %d \n", event->state);
   printf("w_current state: %d \n", w_current->event_state);
   printf("Selection is:\n");
-  o_selection_print_all(&(w_current->page_current->selection_list));
+  o_selection_print_all(&(toplevel->page_current->selection_list));
   printf("\n");
 #endif
 
@@ -167,8 +170,8 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       (w_current->event_state == STARTSELECT || 
        w_current->event_state == SELECT)) {
     o_find_object(w_current, (int) event->x, (int) event->y, TRUE);
-    if ( geda_list_get_glist( w_current->page_current->selection_list )) {
-       o_edit(w_current, geda_list_get_glist( w_current->page_current->selection_list ));
+    if ( geda_list_get_glist( toplevel->page_current->selection_list )) {
+       o_edit(w_current, geda_list_get_glist( toplevel->page_current->selection_list ));
        return(0);
     }
   }
@@ -376,12 +379,12 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
       case(ENDCOMP):
         o_complex_end(w_current,
-                      fix_x(w_current, (int) event->x),
-                      fix_y(w_current, (int) event->y));
+                      fix_x(toplevel, (int) event->x),
+                      fix_y(toplevel, (int) event->y));
 				/* not sure on this one */
 				/* probably keep this one */
 
-        o_redraw_single(w_current, w_current->page_current->
+        o_redraw_single(w_current, toplevel->page_current->
                         object_tail);
         if (w_current->continue_component_place) {
           o_complex_start(w_current,
@@ -396,8 +399,8 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
       case(ENDPASTE):
         o_buffer_paste_end(w_current,
-                           fix_x(w_current, (int) event->x),
-                           fix_y(w_current, (int) event->y),
+                           fix_x(toplevel, (int) event->x),
+                           fix_y(toplevel, (int) event->y),
                            w_current->buffer_number);
         w_current->inside_action = 0;
 	i_set_state(w_current, SELECT);
@@ -405,21 +408,21 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ENDROTATEP):
-        prev_state = w_current->DONT_REDRAW;
-        w_current->DONT_REDRAW = 0;
+        prev_state = toplevel->DONT_REDRAW;
+        toplevel->DONT_REDRAW = 0;
 
-        SCREENtoWORLD( w_current,
+        SCREENtoWORLD( toplevel,
                        (int) event->x,
                        (int) event->y,
                        &w_x, &w_y );
-        w_x = snap_grid(w_current, w_x);
-        w_y = snap_grid(w_current, w_y);
+        w_x = snap_grid(toplevel, w_x);
+        w_y = snap_grid(toplevel, w_y);
 
         o_rotate_90_world(
                     w_current,
-                    geda_list_get_glist( w_current->page_current->selection_list ),
+                    geda_list_get_glist( toplevel->page_current->selection_list ),
                     w_x, w_y);
-        w_current->DONT_REDRAW = prev_state;
+        toplevel->DONT_REDRAW = prev_state;
 
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
@@ -427,15 +430,15 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ENDMIRROR):
-        SCREENtoWORLD( w_current,
+        SCREENtoWORLD( toplevel,
                        (int) event->x,
                        (int) event->y,
                &w_x, &w_y );
-        w_x = snap_grid(w_current, w_x);
-        w_y = snap_grid(w_current, w_y);
+        w_x = snap_grid(toplevel, w_x);
+        w_y = snap_grid(toplevel, w_y);
 
         o_mirror_world(w_current,
-                       geda_list_get_glist( w_current->page_current->selection_list ),
+                       geda_list_get_glist( toplevel->page_current->selection_list ),
                        w_x, w_y);
 
         w_current->inside_action = 0;
@@ -542,10 +545,9 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       }
       break;
 
-      case(REPEAT):	
+      case(REPEAT):
       if (w_current->last_callback != NULL) {
-        (*w_current->last_callback)(w_current, 	
-                                    0, NULL);
+        (*w_current->last_callback)(w_current, 0, NULL);
       }
       break;
 #ifdef HAS_LIBSTROKE
@@ -653,8 +655,9 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
  *
  */
 gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
-			     TOPLEVEL *w_current)
+			     GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int prev_state;
   int redraw_state;
   int w_x, w_y;
@@ -716,8 +719,8 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         /* having this stay in copy was driving me nuts*/
         w_current->inside_action = 1;
 	/* Keep the state and the inside_action, as the copy has not finished. */	
-	w_current->last_x = w_current->start_x = fix_x(w_current, mouse_x);
-	w_current->last_y = w_current->start_y = fix_y(w_current, mouse_y);
+	w_current->last_x = w_current->start_x = fix_x(toplevel, mouse_x);
+	w_current->last_y = w_current->start_y = fix_y(toplevel, mouse_y);
 	i_set_state(w_current, ENDMCOPY); 
         i_update_toolbar(w_current);
 	o_undo_savestate(w_current, UNDO_ALL);
@@ -772,7 +775,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
     if (w_current->inside_action) {
       if (w_current->event_state == ENDCOMP) {
-        o_drawbounding(w_current, w_current->page_current->complex_place_list,
+        o_drawbounding(w_current, toplevel->page_current->complex_place_list,
                        x_get_darkcolor(w_current->bb_color), TRUE);
 
         w_current->complex_rotate = 
@@ -782,16 +785,16 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
 	/* Run the complex place list changed hook without redrawing */
         /* since all objects are being redrawn afterwards */
-        prev_state = w_current->DONT_REDRAW;
-        w_current->DONT_REDRAW = 1;
+        prev_state = toplevel->DONT_REDRAW;
+        toplevel->DONT_REDRAW = 1;
 	o_complex_place_changed_run_hook (w_current);	
-        w_current->DONT_REDRAW = prev_state;
+        toplevel->DONT_REDRAW = prev_state;
 	  
-        o_drawbounding(w_current, w_current->page_current->complex_place_list,
+        o_drawbounding(w_current, toplevel->page_current->complex_place_list,
                        x_get_darkcolor(w_current->bb_color), TRUE);
         return(0);
       } else if (w_current->event_state == ENDTEXT) {
-        o_drawbounding(w_current, w_current->page_current->attrib_place_list,
+        o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
                        x_get_darkcolor(w_current->bb_color), TRUE);
 
         w_current->complex_rotate = 
@@ -799,7 +802,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
         o_text_place_rotate(w_current);
 
-        o_drawbounding(w_current, w_current->page_current->attrib_place_list,
+        o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
                        x_get_darkcolor(w_current->bb_color), TRUE);
         return(0);
 
@@ -807,25 +810,25 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       else if (w_current->event_state == ENDMOVE) {
 	prev_state = w_current->event_state;
 	
-	o_drawbounding(w_current, w_current->page_current->complex_place_list,
+	o_drawbounding(w_current, toplevel->page_current->complex_place_list,
 		       x_get_darkcolor(w_current->bb_color), TRUE);
 	
 	/* Don't allow o_rotate_90 to erase the selection, neither to
 	   redraw the objects after rotating */
 	/* skip over head node */
-	redraw_state = w_current->DONT_REDRAW;
-	w_current->DONT_REDRAW = 1;
-        SCREENtoWORLD( w_current,
+	redraw_state = toplevel->DONT_REDRAW;
+	toplevel->DONT_REDRAW = 1;
+        SCREENtoWORLD( toplevel,
                        w_current->start_x, w_current->start_y,
                        &w_x, &w_y );
-        w_x = snap_grid(w_current, w_x);
-        w_y = snap_grid(w_current, w_y);
-	o_rotate_90_world(w_current, w_current->page_current->complex_place_list, w_x, w_y );
-	w_current->DONT_REDRAW = redraw_state;
+        w_x = snap_grid(toplevel, w_x);
+        w_y = snap_grid(toplevel, w_y);
+	o_rotate_90_world(w_current, toplevel->page_current->complex_place_list, w_x, w_y );
+	toplevel->DONT_REDRAW = redraw_state;
 	w_current->rotated_inside ++;	
 	w_current->event_state = prev_state;
 
-	o_drawbounding(w_current, w_current->page_current->complex_place_list,
+	o_drawbounding(w_current, toplevel->page_current->complex_place_list,
 		       x_get_darkcolor(w_current->bb_color), TRUE);
 	
         return(0);
@@ -930,8 +933,9 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
  *
  */
 gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
-		    TOPLEVEL *w_current)
+		    GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int temp_x, temp_y;
   int pdiff_x, pdiff_y;
 
@@ -1015,17 +1019,17 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 	 (w_current->drag_can_move && 
 	  (! o_find_selected_object(w_current, 
 				    w_current->start_x, w_current->start_y)))) {
-      temp_x = fix_x(w_current, (int) event->x);
-      temp_y = fix_y(w_current, (int) event->y);
+      temp_x = fix_x(toplevel, (int) event->x);
+      temp_y = fix_y(toplevel, (int) event->y);
       /* is eight enough of a threshold? */
       /* make this configurable anyways */
-      diff_x = fabs(w_current->page_current->right -
-		    w_current->page_current->left);
+      diff_x = fabs(toplevel->page_current->right -
+		    toplevel->page_current->left);
       
 #ifdef HAS_RINT
-      zoom_scale = (int) rint(w_current->init_right / diff_x);
+      zoom_scale = (int) rint(toplevel->init_right / diff_x);
 #else
-      zoom_scale = (int) w_current->init_right / diff_x;
+      zoom_scale = (int) toplevel->init_right / diff_x;
 #endif
       
       if (zoom_scale < 10) {
@@ -1065,8 +1069,8 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
       }
 
       o_complex_rubbercomplex(w_current);
-      w_current->last_x = fix_x(w_current,  (int) event->x);
-      w_current->last_y = fix_y(w_current,  (int) event->y);
+      w_current->last_x = fix_x(toplevel,  (int) event->x);
+      w_current->last_y = fix_y(toplevel,  (int) event->y);
       o_complex_rubbercomplex(w_current);
       if (w_current->netconn_rubberband) {
         o_move_stretch_rubberband(w_current);
@@ -1081,12 +1085,12 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     case(MCOPY):
     if (w_current->inside_action) {
       o_drawbounding(w_current,
-                     geda_list_get_glist( w_current->page_current->selection_list ),
+                     geda_list_get_glist( toplevel->page_current->selection_list ),
                      x_get_darkcolor(w_current->bb_color), FALSE);
-      w_current->last_x = fix_x(w_current,  (int) event->x);
-      w_current->last_y = fix_y(w_current,  (int) event->y);
+      w_current->last_x = fix_x(toplevel,  (int) event->x);
+      w_current->last_y = fix_y(toplevel,  (int) event->y);
       o_drawbounding(w_current,
-                     geda_list_get_glist( w_current->page_current->selection_list ),
+                     geda_list_get_glist( toplevel->page_current->selection_list ),
                      x_get_darkcolor(w_current->bb_color), FALSE);
     }
     break;
@@ -1161,15 +1165,15 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
     case(ENDCOMP):
     o_complex_rubbercomplex(w_current);
-    w_current->last_x = fix_x(w_current, (int) event->x);
-    w_current->last_y = fix_y(w_current, (int) event->y);
+    w_current->last_x = fix_x(toplevel, (int) event->x);
+    w_current->last_y = fix_y(toplevel, (int) event->y);
     o_complex_rubbercomplex(w_current);
     break;
 
     case(ENDPASTE):
     o_buffer_paste_rubberpaste(w_current, w_current->buffer_number);
-    w_current->last_x = fix_x(w_current, (int) event->x);
-    w_current->last_y = fix_y(w_current, (int) event->y);
+    w_current->last_x = fix_x(toplevel, (int) event->x);
+    w_current->last_y = fix_y(toplevel, (int) event->y);
     o_buffer_paste_rubberpaste(w_current, w_current->buffer_number);
     break;
 
@@ -1182,8 +1186,8 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
     case(ENDTEXT):
     o_text_rubberattrib(w_current);
-    w_current->last_x = fix_x(w_current, (int) event->x);
-    w_current->last_y = fix_y(w_current, (int) event->y);
+    w_current->last_x = fix_x(toplevel, (int) event->x);
+    w_current->last_y = fix_y(toplevel, (int) event->y);
     o_text_rubberattrib(w_current);
     break;
 
@@ -1206,7 +1210,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
   return(0);
 }
 
-/*! \brief Updates the toplevel and display when drawing area is configured.
+/*! \brief Updates the GSCHEM_TOPLEVEL and display when drawing area is configured.
  *  \par Function Description
  *  This is the callback function connected to the configure event of
  *  the drawing area of the main window.
@@ -1229,22 +1233,23 @@ x_event_configure (GtkWidget         *widget,
                    GdkEventConfigure *event,
                    gpointer           user_data)
 {
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)user_data;
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *iter;
-  TOPLEVEL *toplevel = (TOPLEVEL*)user_data;
   PAGE *old_page_current, *p_current;
   gint old_win_width, old_win_height, new_win_width, new_win_height;
   gdouble relativ_zoom_factor = 1.0;
 
   g_assert (toplevel != NULL);
-  global_window_current = toplevel;
+  global_window_current = w_current;
 
   if (toplevel->page_current == NULL) {
     /* don't want to call this if the current page isn't setup yet */
     return FALSE;
   }
   
-  old_win_width  = toplevel->win_width;
-  old_win_height = toplevel->win_height;
+  old_win_width  = w_current->win_width;
+  old_win_height = w_current->win_height;
   new_win_width  = event->width;
   new_win_height = event->height;
   
@@ -1256,16 +1261,16 @@ x_event_configure (GtkWidget         *widget,
   }
 
   /* update the backingstore of toplevel */
-  if (toplevel->backingstore != NULL) {
-    gdk_pixmap_unref (toplevel->backingstore);
+  if (w_current->backingstore != NULL) {
+    gdk_pixmap_unref (w_current->backingstore);
   }
-  toplevel->backingstore = gdk_pixmap_new (widget->window,
+  w_current->backingstore = gdk_pixmap_new (widget->window,
                                            new_win_width,
                                            new_win_height,
                                            -1);
-  /* update the toplevel with new size of drawing area */
-  toplevel->win_width   = toplevel->width  = new_win_width;
-  toplevel->win_height  = toplevel->height = new_win_height;
+  /* update the GSCHEM_TOPLEVEL with new size of drawing area */
+  w_current->win_width   = toplevel->width  = new_win_width;
+  w_current->win_height  = toplevel->height = new_win_height;
 
   
   /* in the case the user has maximised the window (hence the */
@@ -1287,7 +1292,7 @@ x_event_configure (GtkWidget         *widget,
   /* save current page */
   old_page_current = toplevel->page_current;
 
-  /* re-pan each page of the toplevel */
+  /* re-pan each page of the TOPLEVEL */
   for ( iter = geda_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) ) {
@@ -1299,7 +1304,7 @@ x_event_configure (GtkWidget         *widget,
     cx = ((gdouble)(p_current->left + p_current->right))  / 2;
     cy = ((gdouble)(p_current->top  + p_current->bottom)) / 2;
     s_page_goto (toplevel, p_current);
-    a_pan_general (toplevel, cx, cy, relativ_zoom_factor, A_PAN_DONT_REDRAW);	
+    a_pan_general (w_current, cx, cy, relativ_zoom_factor, A_PAN_DONT_REDRAW);
 
   }
   /* restore current page to saved value */
@@ -1307,8 +1312,8 @@ x_event_configure (GtkWidget         *widget,
 
   if (!toplevel->DONT_REDRAW) {
     /* redraw the current page and update UI */
-    o_redraw_all_fast (toplevel);
-    x_scrollbars_update (toplevel);
+    o_redraw_all_fast (w_current);
+    x_scrollbars_update (w_current);
   }
 
   return FALSE;
@@ -1322,9 +1327,10 @@ x_event_configure (GtkWidget         *widget,
  *  this is used during an open command
  *  to setup the correct sizes
  */
-void x_manual_resize(TOPLEVEL *w_current)
+void x_manual_resize(GSCHEM_TOPLEVEL *w_current)
 {
-  
+  TOPLEVEL *toplevel = w_current->toplevel;
+
   /* of the actual win window (drawing_area) */
   w_current->win_width  = w_current->drawing_area->allocation.width;
   w_current->win_height = w_current->drawing_area->allocation.height;
@@ -1333,15 +1339,15 @@ void x_manual_resize(TOPLEVEL *w_current)
   printf("manual: %d %d\n", w_current->win_width, w_current->win_height);
 #endif
 
-  w_current->width = w_current->win_width;
-  w_current->height = w_current->win_height;
+  toplevel->width = w_current->win_width;
+  toplevel->height = w_current->win_height;
 
   /* need to do this every time you change width / height */
-  set_window(w_current, w_current->page_current,
-             w_current->page_current->left,
-             w_current->page_current->right,
-             w_current->page_current->top,
-             w_current->page_current->bottom);
+  set_window(toplevel, toplevel->page_current,
+             toplevel->page_current->left,
+             toplevel->page_current->right,
+             toplevel->page_current->top,
+             toplevel->page_current->bottom);
 
 #if DEBUG
   printf("Window aspect: %f\n",
@@ -1360,8 +1366,9 @@ void x_manual_resize(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_event_hschanged (GtkAdjustment *adj, TOPLEVEL *w_current)
+void x_event_hschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int current_left;
   int new_left;
   GtkAdjustment        *hadjustment;
@@ -1376,15 +1383,15 @@ void x_event_hschanged (GtkAdjustment *adj, TOPLEVEL *w_current)
   hadjustment =
   gtk_range_get_adjustment(GTK_RANGE(w_current->h_scrollbar));
 
-  current_left = w_current->page_current->left;
+  current_left = toplevel->page_current->left;
   new_left = (int) hadjustment->value;
 
-  w_current->page_current->left = new_left;
-  w_current->page_current->right =
-    w_current->page_current->right -
+  toplevel->page_current->left = new_left;
+  toplevel->page_current->right =
+    toplevel->page_current->right -
     (current_left - new_left);
 
-  if (!w_current->DONT_REDRAW) {	
+  if (!toplevel->DONT_REDRAW) {
     o_redraw_all_fast(w_current);
   }
 }
@@ -1394,8 +1401,9 @@ void x_event_hschanged (GtkAdjustment *adj, TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_event_vschanged (GtkAdjustment *adj, TOPLEVEL *w_current)
+void x_event_vschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int current_bottom;
   int new_bottom;
   GtkAdjustment        *vadjustment;
@@ -1410,22 +1418,22 @@ void x_event_vschanged (GtkAdjustment *adj, TOPLEVEL *w_current)
   vadjustment = gtk_range_get_adjustment(
                                          GTK_RANGE(w_current->v_scrollbar));
 
-  current_bottom = w_current->page_current->bottom;
-  new_bottom = w_current->init_bottom - (int) vadjustment->value;
+  current_bottom = toplevel->page_current->bottom;
+  new_bottom = toplevel->init_bottom - (int) vadjustment->value;
 
-  w_current->page_current->bottom = new_bottom;
-  w_current->page_current->top =
-    w_current->page_current->top -
+  toplevel->page_current->bottom = new_bottom;
+  toplevel->page_current->top =
+    toplevel->page_current->top -
     (current_bottom - new_bottom);
 
 #if DEBUG
   printf("vrange %f %f\n", vadjustment->lower, vadjustment->upper);
   printf("vvalue %f\n", vadjustment->value);
-  printf("actual: %d %d\n", w_current->page_current->top, 
-	 w_current->page_current->bottom);
+  printf("actual: %d %d\n", toplevel->page_current->top,
+	 toplevel->page_current->bottom);
 #endif
 
-  if (!w_current->DONT_REDRAW) {	
+  if (!toplevel->DONT_REDRAW) {
     o_redraw_all_fast(w_current);
   }
 }
@@ -1436,7 +1444,7 @@ void x_event_vschanged (GtkAdjustment *adj, TOPLEVEL *w_current)
  *
  */
 gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
-		   TOPLEVEL *w_current)
+		   GSCHEM_TOPLEVEL *w_current)
 {
   exit_if_null(w_current);
   global_window_current = w_current;
@@ -1450,7 +1458,7 @@ gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
  *
  */
 gboolean x_event_key_press (GtkWidget *widget, GdkEventKey *event,
-			TOPLEVEL *w_current)
+			GSCHEM_TOPLEVEL *w_current)
 {
   int retval;
   
@@ -1476,7 +1484,7 @@ gboolean x_event_key_press (GtkWidget *widget, GdkEventKey *event,
  *
  */
 gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
-		     TOPLEVEL *w_current)
+		     GSCHEM_TOPLEVEL *w_current)
 {
   GtkAdjustment *adj;
 

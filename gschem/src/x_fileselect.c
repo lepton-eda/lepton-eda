@@ -26,6 +26,7 @@
 #include <libgeda/libgeda.h>
 #include <gtk/gtk.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 #include "../include/x_preview.h"
@@ -158,23 +159,23 @@ x_fileselect_add_preview (GtkFileChooser *filechooser)
 /*! \brief Opens a file chooser for opening one or more schematics.
  *  \par Function Description
  *  This function opens a file chooser dialog and wait for the user to
- *  select at least one file to load as <B>toplevel</B>'s new pages.
+ *  select at least one file to load as <B>w_current</B>'s new pages.
  *
  *  The function updates the user interface.
  *
- *  At the end of the function, the toplevel's current page is set to
- *  the page of the last loaded page.
+ *  At the end of the function, the w_current->toplevel's current page
+ *  is set to the page of the last loaded page.
  *
- *  \param [in] toplevel The toplevel environment.
+ *  \param [in] w_current The GSCHEM_TOPLEVEL environment.
  */
 void
-x_fileselect_open(TOPLEVEL *toplevel)
+x_fileselect_open(GSCHEM_TOPLEVEL *w_current)
 {
   PAGE *page = NULL;
   GtkWidget *dialog;
 
   dialog = gtk_file_chooser_dialog_new (_("Open..."),
-                                        GTK_WINDOW(toplevel->main_window),
+                                        GTK_WINDOW(w_current->main_window),
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                         GTK_STOCK_OPEN,   GTK_RESPONSE_ACCEPT,
@@ -202,11 +203,11 @@ x_fileselect_open(TOPLEVEL *toplevel)
 
     /* open each file */ 
     for (tmp = filenames; tmp != NULL;tmp = g_slist_next (tmp)) {
-      page = x_window_open_page (toplevel, (gchar*)tmp->data);
+      page = x_window_open_page (w_current, (gchar*)tmp->data);
     }
     /* Switch to the last page opened */
     if ( page != NULL )
-      x_window_set_current_page (toplevel, page);
+      x_window_set_current_page (w_current, page);
 
     /* free the list of filenames */
     g_slist_foreach (filenames, (GFunc)g_free, NULL);
@@ -227,15 +228,15 @@ x_fileselect_open(TOPLEVEL *toplevel)
  *
  *  The function updates the user interface.
  *
- *  \param [in] toplevel The toplevel environment.
+ *  \param [in] w_current The GSCHEM_TOPLEVEL environment.
  */
 void
-x_fileselect_save (TOPLEVEL *toplevel)
+x_fileselect_save (GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *dialog;
 
   dialog = gtk_file_chooser_dialog_new (_("Save as..."),
-                                        GTK_WINDOW(toplevel->main_window),
+                                        GTK_WINDOW(w_current->main_window),
                                         GTK_FILE_CHOOSER_ACTION_SAVE,
                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                         GTK_STOCK_SAVE,   GTK_RESPONSE_ACCEPT,
@@ -264,7 +265,7 @@ x_fileselect_save (TOPLEVEL *toplevel)
   x_fileselect_setup_filechooser_filters (GTK_FILE_CHOOSER (dialog));
   /* set the current filename or directory name if new document */
   gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
-                                 toplevel->page_current->page_filename);
+                                 w_current->toplevel->page_current->page_filename);
 
   gtk_dialog_set_default_response(GTK_DIALOG(dialog),
 				  GTK_RESPONSE_ACCEPT);
@@ -275,8 +276,8 @@ x_fileselect_save (TOPLEVEL *toplevel)
 
     /* try saving current page of toplevel to file filename */
     if (filename != NULL) {
-      x_window_save_page (toplevel,
-                          toplevel->page_current,
+      x_window_save_page (w_current,
+                          w_current->toplevel->page_current,
                           filename);
     }
   }
@@ -289,6 +290,9 @@ x_fileselect_save (TOPLEVEL *toplevel)
  *  This function opens a message dialog and wait for the user to choose
  *  if load the backup or the original file.
  *
+ *  \todo Make this a registered callback function with user data,
+ *        as we'd rather be passed a GSCHEM_TOPLEVEL than a TOPLEVEL.
+ *
  *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] message   Message to display to user.
  *  \return TRUE if the user wants to load the backup file, FALSE otherwise.
@@ -296,10 +300,24 @@ x_fileselect_save (TOPLEVEL *toplevel)
 int x_fileselect_load_backup(TOPLEVEL *toplevel, GString *message)
 {
   GtkWidget *dialog;
+  GSCHEM_TOPLEVEL *window, *w_current = NULL;
+   GList *iter;
+
+  /* Find the matching GSCHEM_TOPLEVEL for the TOPLEVEL we were passed */
+  iter = global_window_list;
+  while (iter != NULL) {
+    window = (GSCHEM_TOPLEVEL *)iter->data;
+    if (window->toplevel == toplevel) {
+      w_current = window;
+      break;
+    }
+    iter = g_list_next (iter);
+  }
+  g_assert( w_current != NULL );
 
   g_string_append(message, "\nIf you load the original file, the backup file will be overwritten in the next autosave timeout and it will be lost.\n\nDo you want to load the backup file?\n");
 
-  dialog = gtk_message_dialog_new(GTK_WINDOW(toplevel->main_window),
+  dialog = gtk_message_dialog_new(GTK_WINDOW(w_current->main_window),
 			  GTK_DIALOG_MODAL,
 			  GTK_MESSAGE_QUESTION,
 			  GTK_BUTTONS_YES_NO,

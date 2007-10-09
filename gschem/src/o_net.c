@@ -24,6 +24,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -36,8 +37,9 @@
  *  \par Function Description
  *
  */
-void o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
+void o_net_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int size;
   int x1, y1, x2, y2; /* screen coords */
 
@@ -55,8 +57,8 @@ void o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   /* reuse line's routine */
-  if ( (w_current->DONT_REDRAW == 1) || 
-       (!o_line_visible(w_current, o_current->line, &x1, &y1, &x2, &y2)) ) {
+  if ( (toplevel->DONT_REDRAW == 1) ||
+       (!o_line_visible(toplevel, o_current->line, &x1, &y1, &x2, &y2)) ) {
     return;
   }
 
@@ -64,8 +66,8 @@ void o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
   printf("drawing net\n\n");
 #endif
 
-  if (w_current->net_style == THICK ) {
-    size = SCREENabs(w_current, NET_WIDTH);
+  if (toplevel->net_style == THICK ) {
+    size = SCREENabs(toplevel, NET_WIDTH);
 
     if (size < 0)
       size=0;
@@ -81,10 +83,10 @@ void o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
                                GDK_JOIN_MITER);
   }
 
-  if (w_current->override_color != -1 ) {
+  if (toplevel->override_color != -1 ) {
 
     gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(w_current->override_color));
+                          x_get_color(toplevel->override_color));
 
     gdk_draw_line(w_current->window, w_current->gc,
                   x1, y1, x2, y2);
@@ -126,7 +128,7 @@ void o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 #endif
 
   /* yes zero is right for the width -> use hardware lines */
-  if (w_current->net_style == THICK ) {
+  if (toplevel->net_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->gc, 0, 
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -159,11 +161,12 @@ void o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_net_erase(TOPLEVEL *w_current, OBJECT *o_current)
+void o_net_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  w_current->override_color = w_current->background_color;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  toplevel->override_color = toplevel->background_color;
   o_net_draw(w_current, o_current);
-  w_current->override_color = -1;
+  toplevel->override_color = -1;
 }
 
 /*! \todo Finish function documentation!!!
@@ -171,8 +174,9 @@ void o_net_erase(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+void o_net_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int size;
   int color;
   int sx[2], sy[2];
@@ -190,16 +194,16 @@ void o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
   gdk_gc_set_foreground(w_current->outline_xor_gc,
 			x_get_darkcolor(color));
 
-  if (w_current->net_style == THICK ) {
-    size = SCREENabs(w_current, NET_WIDTH);
+  if (toplevel->net_style == THICK ) {
+    size = SCREENabs(toplevel, NET_WIDTH);
     gdk_gc_set_line_attributes(w_current->outline_xor_gc, size+1,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
                                GDK_JOIN_MITER);
   }
 
-  WORLDtoSCREEN( w_current, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
-  WORLDtoSCREEN( w_current, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
 
   gdk_draw_line(w_current->window, w_current->outline_xor_gc,
                 sx[0]+dx, sy[0]+dy,
@@ -208,7 +212,7 @@ void o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 
   /* backing store ? not approriate here */
 
-  if (w_current->net_style == THICK ) {
+  if (toplevel->net_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->outline_xor_gc, 0,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -221,9 +225,10 @@ void o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_net_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone,
+void o_net_draw_xor_single(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int whichone,
 			   OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int color;
   int dx1 = -1, dx2 = -1, dy1 = -1,dy2 = -1;
   int sx[2], sy[2];
@@ -255,8 +260,8 @@ void o_net_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone,
     fprintf(stderr, _("Got an invalid which one in o_net_draw_xor_single\n"));
   }
 
-  WORLDtoSCREEN( w_current, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
-  WORLDtoSCREEN( w_current, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
 
    gdk_draw_line(w_current->window, w_current->outline_xor_gc,
                 sx[0]+dx1, sy[0]+dy1,
@@ -270,18 +275,19 @@ void o_net_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone,
  *  \par Function Description
  *
  */
-void o_net_start(TOPLEVEL *w_current, int x, int y)
+void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int size;
 
   /* initalize all parameters used when drawing the new net */
   w_current->last_x = w_current->start_x = w_current->second_x = 
-    fix_x(w_current, x);
+    fix_x(toplevel, x);
   w_current->last_y = w_current->start_y = w_current->second_y = 
-    fix_y(w_current, y);
+    fix_y(toplevel, y);
 
-  if (w_current->net_style == THICK ) {
-    size = SCREENabs(w_current, NET_WIDTH);
+  if (toplevel->net_style == THICK ) {
+    size = SCREENabs(toplevel, NET_WIDTH);
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -294,7 +300,7 @@ void o_net_start(TOPLEVEL *w_current, int x, int y)
 		w_current->start_x, w_current->start_y, 
 		w_current->last_x, w_current->last_y);
 
-  if (w_current->net_style == THICK ) {
+  if (toplevel->net_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -307,8 +313,9 @@ void o_net_start(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *
  */
-int o_net_end(TOPLEVEL *w_current, int x, int y)
+int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1;
   int x2, y2;
   int x3, y3;
@@ -324,19 +331,19 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
   OBJECT *new_net = NULL;
   
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return(FALSE);
   }
 
-  if (w_current->override_net_color == -1) {
+  if (toplevel->override_net_color == -1) {
     color = w_current->net_color;
   } else {
-    color = w_current->override_net_color;
+    color = toplevel->override_net_color;
   }
 
-  size = SCREENabs(w_current, NET_WIDTH);
+  size = SCREENabs(toplevel, NET_WIDTH);
 
-  if (w_current->net_style == THICK ) {
+  if (toplevel->net_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -356,7 +363,7 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
 		 w_current->last_x, w_current->last_y,
 		 w_current->second_x, w_current->second_y);
 
-  if (w_current->net_style == THICK) {
+  if (toplevel->net_style == THICK) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
 			       GDK_LINE_SOLID,
 			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
@@ -392,32 +399,32 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
 
   /* Primary net runs from (x1,y1)-(x2,y2) */
   /* Secondary net from (x2,y2)-(x3,y3) */
-  SCREENtoWORLD(w_current, w_current->start_x, w_current->start_y, &x1,	&y1);
-  SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y, &x2, &y2);
-  SCREENtoWORLD(w_current, w_current->second_x, w_current->second_y, &x3, &y3);
+  SCREENtoWORLD(toplevel, w_current->start_x, w_current->start_y, &x1,	&y1);
+  SCREENtoWORLD(toplevel, w_current->last_x, w_current->last_y, &x2, &y2);
+  SCREENtoWORLD(toplevel, w_current->second_x, w_current->second_y, &x3, &y3);
 
   /* Snap points to closest grid location */
-  x1 = snap_grid(w_current, x1);
-  y1 = snap_grid(w_current, y1);
-  x2 = snap_grid(w_current, x2);
-  y2 = snap_grid(w_current, y2);
-  x3 = snap_grid(w_current, x3);
-  y3 = snap_grid(w_current, y3);
+  x1 = snap_grid(toplevel, x1);
+  y1 = snap_grid(toplevel, y1);
+  x2 = snap_grid(toplevel, x2);
+  y2 = snap_grid(toplevel, y2);
+  x3 = snap_grid(toplevel, x3);
+  y3 = snap_grid(toplevel, y3);
 
   w_current->save_x = w_current->second_x;
   w_current->save_y = w_current->second_y;
 
   if (!primary_zero_length ) {
   /* create primary net */
-      w_current->page_current->object_tail =
-	  new_net = o_net_add(w_current,
-			      w_current->page_current->object_tail,
+      toplevel->page_current->object_tail =
+	  new_net = o_net_add(toplevel,
+			      toplevel->page_current->object_tail,
 			      OBJ_NET, color, x1, y1, x2, y2);
   
       /* conn stuff */
       /* LEAK CHECK 1 */
       other_objects = s_conn_return_others(other_objects,
-					   w_current->page_current->
+					   toplevel->page_current->
 					   object_tail);
 
       if (o_net_add_busrippers(w_current, new_net, other_objects)) {
@@ -431,8 +438,8 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
       s_conn_print(new_net->conn_list);
 #endif
   
-      WORLDtoSCREEN( w_current, new_net->line->x[0], new_net->line->y[0], &sx[0], &sy[0] );
-      WORLDtoSCREEN( w_current, new_net->line->x[1], new_net->line->y[1], &sx[1], &sy[1] );
+      WORLDtoSCREEN( toplevel, new_net->line->x[0], new_net->line->y[0], &sx[0], &sy[0] );
+      WORLDtoSCREEN( toplevel, new_net->line->x[1], new_net->line->y[1], &sx[1], &sy[1] );
 
       gdk_gc_set_foreground(w_current->gc, x_get_color(color));
       gdk_draw_line(w_current->window, w_current->gc,
@@ -442,7 +449,7 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
                     sx[0], sy[0],
                     sx[1], sy[1]);
 
-      if (w_current->net_style == THICK) {
+      if (toplevel->net_style == THICK) {
 	  gdk_gc_set_line_attributes(w_current->gc, 0,
 				     GDK_LINE_SOLID,
 				     GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
@@ -463,8 +470,8 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
       }
 
       /* you don't want to consolidate nets which are drawn non-ortho */
-      if (w_current->net_consolidate == TRUE && !w_current->CONTROLKEY) {
-	  o_net_consolidate_segments(w_current, new_net);
+      if (toplevel->net_consolidate == TRUE && !w_current->CONTROLKEY) {
+	  o_net_consolidate_segments(toplevel, new_net);
       }
   }
 
@@ -474,15 +481,15 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
   if (!secondary_zero_length && !found_primary_connection) {
       
       /* Add secondary net */
-      w_current->page_current->object_tail =
-	  new_net = o_net_add(w_current,
-			      w_current->page_current->object_tail,
+      toplevel->page_current->object_tail =
+	  new_net = o_net_add(toplevel,
+			      toplevel->page_current->object_tail,
 			      OBJ_NET, color, x2, y2, x3, y3);
   
       /* conn stuff */
       /* LEAK CHECK 2 */
       other_objects = s_conn_return_others(other_objects,
-					   w_current->page_current->
+					   toplevel->page_current->
 					   object_tail);
 
       if (o_net_add_busrippers(w_current, new_net, other_objects)) {
@@ -494,8 +501,8 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
       s_conn_print(new_net->conn_list);
 #endif
 
-      WORLDtoSCREEN( w_current, new_net->line->x[0], new_net->line->y[0], &sx[0], &sy[0] );
-      WORLDtoSCREEN( w_current, new_net->line->x[1], new_net->line->y[1], &sx[1], &sy[1] );
+      WORLDtoSCREEN( toplevel, new_net->line->x[0], new_net->line->y[0], &sx[0], &sy[0] );
+      WORLDtoSCREEN( toplevel, new_net->line->x[1], new_net->line->y[1], &sx[1], &sy[1] );
 
       gdk_gc_set_foreground(w_current->gc, x_get_color(color));
       gdk_draw_line(w_current->window, w_current->gc,
@@ -505,7 +512,7 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
                     sx[0], sy[0],
                     sx[1], sy[1]);
       
-      if (w_current->net_style == THICK) {
+      if (toplevel->net_style == THICK) {
 	  gdk_gc_set_line_attributes(w_current->gc, 0,
 				     GDK_LINE_SOLID,
 				     GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
@@ -516,15 +523,15 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
       o_cue_draw_single(w_current, new_net);
 
       /* you don't want to consolidate nets which are drawn non-ortho */
-      if (w_current->net_consolidate == TRUE && !w_current->CONTROLKEY) {
-	  o_net_consolidate_segments(w_current, new_net);
+      if (toplevel->net_consolidate == TRUE && !w_current->CONTROLKEY) {
+	  o_net_consolidate_segments(toplevel, new_net);
       }
   }
   
   /* LEAK CHECK 3 */
   g_list_free(other_objects);
 
-  w_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
   w_current->start_x = w_current->save_x;
   w_current->start_y = w_current->save_y;
   o_undo_savestate(w_current, UNDO_ALL);
@@ -537,19 +544,20 @@ int o_net_end(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *
  */
-void o_net_rubbernet(TOPLEVEL *w_current, int x, int y)
+void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
   int size;
   int ortho;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
-  if (w_current->net_style == THICK) {
-    size = SCREENabs(w_current, NET_WIDTH);
+  if (toplevel->net_style == THICK) {
+    size = SCREENabs(toplevel, NET_WIDTH);
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
 			       GDK_LINE_SOLID,
 			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
@@ -578,8 +586,8 @@ void o_net_rubbernet(TOPLEVEL *w_current, int x, int y)
       w_current->second_y = w_current->last_y;
   }
 
-  w_current->last_x = fix_x(w_current, x);
-  w_current->last_y = fix_y(w_current, y);
+  w_current->last_x = fix_x(toplevel, x);
+  w_current->last_y = fix_y(toplevel, y);
 
   /* If you press the control key then you can draw non-ortho nets */
   if (ortho) {
@@ -591,10 +599,10 @@ void o_net_rubbernet(TOPLEVEL *w_current, int x, int y)
     if ( !w_current->SHIFTKEY ) {
       w_current->last_y = w_current->start_y;
       w_current->second_x = w_current->last_x;
-      w_current->second_y = fix_y(w_current,y);
+      w_current->second_y = fix_y(toplevel,y);
     } else {
       w_current->last_x = w_current->start_x;
-      w_current->second_x = fix_x(w_current,x);
+      w_current->second_x = fix_x(toplevel,x);
       w_current->second_y = w_current->last_y;
     }
   }
@@ -612,7 +620,7 @@ void o_net_rubbernet(TOPLEVEL *w_current, int x, int y)
 		w_current->last_x, w_current->last_y,
 		w_current->second_x, w_current->second_y);
 
-  if (w_current->net_style == THICK) {
+  if (toplevel->net_style == THICK) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
 			       GDK_LINE_SOLID,
 			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
@@ -626,12 +634,13 @@ void o_net_rubbernet(TOPLEVEL *w_current, int x, int y)
  *  \note
  *  used in button cancel code in x_events.c
  */
-void o_net_eraserubber(TOPLEVEL *w_current)
+void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int size;
 
-  if (w_current->net_style == THICK) {
-    size = SCREENabs(w_current, NET_WIDTH);
+  if (toplevel->net_style == THICK) {
+    size = SCREENabs(toplevel, NET_WIDTH);
 
     if (size < 0)
       size = 0;
@@ -650,7 +659,7 @@ void o_net_eraserubber(TOPLEVEL *w_current)
 		w_current->last_x, w_current->last_y,
 		w_current->second_x, w_current->second_y);
 
-  if (w_current->net_style == THICK) {
+  if (toplevel->net_style == THICK) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
 			       GDK_LINE_SOLID,
 			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
@@ -664,13 +673,14 @@ void o_net_eraserubber(TOPLEVEL *w_current)
  *  \note
  *  used in x_event_expose() in x_events.c
  */
-void o_net_xorrubber(TOPLEVEL *w_current)
+void o_net_xorrubber(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int size;
 
-  if (w_current->net_style == THICK ) {
+  if (toplevel->net_style == THICK ) {
 
-    size = SCREENabs(w_current, NET_WIDTH);
+    size = SCREENabs(toplevel, NET_WIDTH);
 
     if (size < 0)
       size=0;
@@ -690,7 +700,7 @@ void o_net_xorrubber(TOPLEVEL *w_current)
 		w_current->second_x, w_current->second_y, 
 		w_current->last_x, w_current->last_y);
 
-  if (w_current->net_style == THICK ) {
+  if (toplevel->net_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->gc, 0,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -703,10 +713,11 @@ void o_net_xorrubber(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
+int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
 			 GList *other_objects)
 
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int color;
   GList *cl_current = NULL;
   OBJECT *bus_object = NULL;
@@ -735,10 +746,10 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
     return(FALSE);
   }
 
-  if (w_current->override_net_color == -1) {
+  if (toplevel->override_net_color == -1) {
     color = w_current->net_color;
   } else {
-    color = w_current->override_net_color;
+    color = toplevel->override_net_color;
   }
 
   
@@ -827,7 +838,7 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
           }
 
           net_obj->line->y[found_conn->whichone] -= ripper_size;
-          o_net_recalc(w_current, net_obj);
+          o_net_recalc(toplevel, net_obj);
           rippers[ripper_count].x[0] = 
             net_obj->line->x[found_conn->whichone];
           rippers[ripper_count].y[0] =
@@ -864,7 +875,7 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
           }
           
           net_obj->line->y[found_conn->whichone] += ripper_size;
-          o_net_recalc(w_current, net_obj);
+          o_net_recalc(toplevel, net_obj);
           rippers[ripper_count].x[0] = 
             net_obj->line->x[found_conn->whichone];
           rippers[ripper_count].y[0] =
@@ -935,7 +946,7 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
           }
 
           net_obj->line->x[found_conn->whichone] -= ripper_size;
-          o_net_recalc(w_current, net_obj);
+          o_net_recalc(toplevel, net_obj);
           rippers[ripper_count].x[0] = 
             net_obj->line->x[found_conn->whichone];
           rippers[ripper_count].y[0] =
@@ -971,7 +982,7 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
           }
 
           net_obj->line->x[found_conn->whichone] += ripper_size;
-          o_net_recalc(w_current, net_obj);
+          o_net_recalc(toplevel, net_obj);
           rippers[ripper_count].x[0] = 
             net_obj->line->x[found_conn->whichone];
           rippers[ripper_count].y[0] =
@@ -992,11 +1003,11 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
   }
  
   if (made_changes) {
-    s_conn_remove(w_current, net_obj);
+    s_conn_remove(toplevel, net_obj);
 
     if (w_current->bus_ripper_type == COMP_BUS_RIPPER) {
       GList *symlist = 
-	s_clib_search (w_current->bus_ripper_symname, CLIB_EXACT);
+	s_clib_search (toplevel->bus_ripper_symname, CLIB_EXACT);
       if (symlist != NULL) {
         rippersym = (CLibSymbol *) symlist->data;
       }
@@ -1005,34 +1016,34 @@ int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
     
     for (i = 0; i < ripper_count; i++) {
       if (w_current->bus_ripper_type == NET_BUS_RIPPER) {
-        w_current->page_current->object_tail =
-          o_net_add(w_current, w_current->page_current->object_tail,
+        toplevel->page_current->object_tail =
+          o_net_add(toplevel, toplevel->page_current->object_tail,
                     OBJ_NET, color,
                     rippers[i].x[0], rippers[i].y[0],
                     rippers[i].x[1], rippers[i].y[1]);
       } else {
 
         if (rippersym != NULL) {
-          w_current->page_current->object_tail = 
+          toplevel->page_current->object_tail =
           (OBJECT *) o_complex_add(
-                                   w_current,
-                                   w_current->page_current->object_tail,
+                                   toplevel,
+                                   toplevel->page_current->object_tail,
 				   NULL,
                                    OBJ_COMPLEX, WHITE,
                                    rippers[i].x[0], rippers[i].y[0],
                                    complex_angle, 0,
                                    rippersym,
-                                   w_current->bus_ripper_symname, 1, TRUE);
+                                   toplevel->bus_ripper_symname, 1, TRUE);
           
-          o_complex_draw(w_current,w_current->page_current->object_tail);
+          o_complex_draw(w_current,toplevel->page_current->object_tail);
         } else {
           s_log_message(_("Bus ripper symbol [%s] was not found in any component library\n"),
-                        w_current->bus_ripper_symname);
+                        toplevel->bus_ripper_symname);
         }
       }
     }
     
-    s_conn_update_object(w_current, net_obj);
+    s_conn_update_object(toplevel, net_obj);
     return(TRUE);
   }
 

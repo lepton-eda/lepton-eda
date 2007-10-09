@@ -22,6 +22,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
@@ -44,8 +45,9 @@
  *  \par Function Description
  *
  */
-void o_redraw_all(TOPLEVEL *w_current)
+void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   o_redraw_all_fast(w_current);
 
   if (w_current->inside_action) {
@@ -57,20 +59,20 @@ void o_redraw_all(TOPLEVEL *w_current)
       case(ENDCOPY):
       case(ENDMCOPY):
         o_drawbounding(w_current,
-                       geda_list_get_glist( w_current->page_current->selection_list ),
+                       geda_list_get_glist( toplevel->page_current->selection_list ),
                        x_get_darkcolor(w_current->bb_color), FALSE);
 
         break;
 
       case(DRAWCOMP):
       case(ENDCOMP):
-        o_drawbounding(w_current, w_current->page_current->complex_place_list,
+        o_drawbounding(w_current, toplevel->page_current->complex_place_list,
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
 
       case(DRAWTEXT):
       case(ENDTEXT):
-        o_drawbounding(w_current, w_current->page_current->attrib_place_list,
+        o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
       case (GRIPS):
@@ -86,20 +88,21 @@ void o_redraw_all(TOPLEVEL *w_current)
  *
  */
 /* basically like above but doesn't do the o_conn_disconnect_update */
-void o_redraw_all_fast(TOPLEVEL *w_current)
+void o_redraw_all_fast(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   gboolean draw_selected = TRUE;
 
-  if (!w_current->DONT_REDRAW) {
+  if (!toplevel->DONT_REDRAW) {
     x_repaint_background(w_current);
   }
 
   draw_selected = !(w_current->inside_action &&
 		    ((w_current->event_state == MOVE) ||
 		     (w_current->event_state == ENDMOVE)));
-  o_redraw(w_current, w_current->page_current->object_head, draw_selected);
+  o_redraw(w_current, toplevel->page_current->object_head, draw_selected);
   o_cue_redraw_all(w_current,
-		   w_current->page_current->object_head, draw_selected);
+		   toplevel->page_current->object_head, draw_selected);
 }
 
 /*! \todo Finish function documentation!!!
@@ -107,19 +110,20 @@ void o_redraw_all_fast(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_redraw(TOPLEVEL *w_current, OBJECT *object_list, gboolean draw_selected)
+void o_redraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object_list, gboolean draw_selected)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current = object_list;
-  int redraw_state = w_current->DONT_REDRAW;
+  int redraw_state = toplevel->DONT_REDRAW;
 
   while (o_current != NULL) {
     if ((o_current->draw_func != NULL) &&
         (o_current->type != OBJ_HEAD)) {
       if (o_current->selected && !draw_selected) {
-	w_current->DONT_REDRAW = 1 || redraw_state;
+	toplevel->DONT_REDRAW = 1 || redraw_state;
       }
       else {
-	w_current->DONT_REDRAW = 0 || redraw_state;
+	toplevel->DONT_REDRAW = 0 || redraw_state;
       }
       w_current->inside_redraw = 1;
       (*o_current->draw_func)(w_current, o_current);
@@ -128,23 +132,23 @@ void o_redraw(TOPLEVEL *w_current, OBJECT *object_list, gboolean draw_selected)
 
     o_current = o_current->next;
   }
-  w_current->DONT_REDRAW = redraw_state;
+  toplevel->DONT_REDRAW = redraw_state;
 }
 
 /*! \brief Redraw an object on the screen.
  *  \par Function Description
  *  This function will redraw a single object on the screen.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  The OBJECT to redraw.
  *
  */
-void o_redraw_single(TOPLEVEL *w_current, OBJECT *o_current)
+void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   if (o_current == NULL)
   return;
 
-  if (w_current->DONT_REDRAW) /* highly experimental */
+  if (w_current->toplevel->DONT_REDRAW) /* highly experimental */
   return;
 
   if (o_current->draw_func != NULL && o_current->type != OBJ_HEAD) {
@@ -159,7 +163,7 @@ void o_redraw_single(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_draw_list(TOPLEVEL *w_current, GList* list)
+void o_draw_list(GSCHEM_TOPLEVEL *w_current, GList* list)
 {
   OBJECT* o_current;
   GList *l_current;
@@ -186,15 +190,16 @@ void o_draw_list(TOPLEVEL *w_current, GList* list)
  *  \par Function Description
  *
  */
-void o_draw_selected(TOPLEVEL *w_current)
+void o_draw_selected(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList* s_current;
   OBJECT* o_current;
   if (w_current->inside_redraw) {
     return;
   }
 
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
   while (s_current != NULL) {
     o_current = (OBJECT *) s_current->data;
 
@@ -212,15 +217,16 @@ void o_draw_selected(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_erase_selected(TOPLEVEL *w_current)
+void o_erase_selected(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList* s_current;
   OBJECT* o_current;
   if (w_current->inside_redraw) {
     return;
   }
 
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
   while (s_current != NULL) {
     o_current = (OBJECT *) s_current->data;
 
@@ -239,8 +245,9 @@ void o_erase_selected(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_erase_single(TOPLEVEL *w_current, OBJECT *object)
+void o_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
 
   if (w_current->inside_redraw) {
@@ -249,14 +256,14 @@ void o_erase_single(TOPLEVEL *w_current, OBJECT *object)
 
   o_current = object;
 
-  w_current->override_color = w_current->background_color;
+  toplevel->override_color = toplevel->background_color;
   if (o_current != NULL) {
     if (o_current->draw_func &&
         o_current->type != OBJ_HEAD) {
       (*o_current->draw_func)(w_current, o_current);
     }
   }
-  w_current->override_color = -1;
+  toplevel->override_color = -1;
 }
 
 /*! \todo Finish function documentation!!!
@@ -266,9 +273,10 @@ void o_erase_single(TOPLEVEL *w_current, OBJECT *object)
  */
 /* both outline and boundingbox work! */
 /* name is blah */
-void o_drawbounding(TOPLEVEL *w_current, GList *o_glist,
+void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
 		    GdkColor *color, int firsttime)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
   int test_x, test_y;
 
@@ -291,21 +299,20 @@ void o_drawbounding(TOPLEVEL *w_current, GList *o_glist,
     diff_y = w_current->last_y - w_current->start_y;
 
     gdk_gc_set_foreground(w_current->bounding_xor_gc,
-                          x_get_color(
-                                      w_current->background_color));
+                          x_get_color(toplevel->background_color));
     o_complex_translate_display_object_glist(w_current, diff_x, diff_y, o_glist);
 
     gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
 
-    world_get_object_glist_bounds(w_current, o_glist,
+    world_get_object_glist_bounds(toplevel, o_glist,
                                   &w_rleft  ,
                                   &w_rtop   ,
                                   &w_rright ,
                                   &w_rbottom);
 
-    WORLDtoSCREEN( w_current, w_rleft, w_rtop, 
+    WORLDtoSCREEN( toplevel, w_rleft, w_rtop,
                    &rleft, &rtop );
-    WORLDtoSCREEN( w_current, w_rright, w_rbottom, 
+    WORLDtoSCREEN( toplevel, w_rright, w_rbottom,
                  &rright, &rbottom );
 
     gdk_draw_rectangle(w_current->window,
@@ -323,7 +330,7 @@ void o_drawbounding(TOPLEVEL *w_current, GList *o_glist,
     printf("going to outline\n");
 #endif
 
-    world_get_object_glist_bounds(w_current, o_glist,
+    world_get_object_glist_bounds(toplevel, o_glist,
                                   &w_rleft  ,
                                   &w_rtop   ,
                                   &w_rright ,
@@ -332,11 +339,11 @@ void o_drawbounding(TOPLEVEL *w_current, GList *o_glist,
     diff_x = w_current->last_x - w_current->start_x;
     diff_y = w_current->last_y - w_current->start_y;
     gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(w_current->background_color));
+                          x_get_color(toplevel->background_color));
 
-    WORLDtoSCREEN( w_current, w_rleft, w_rtop,
+    WORLDtoSCREEN( toplevel, w_rleft, w_rtop,
                    &rleft, &rtop );
-    WORLDtoSCREEN( w_current, w_rright, w_rbottom,
+    WORLDtoSCREEN( toplevel, w_rright, w_rbottom,
                    &rright, &rbottom );
     gdk_draw_rectangle(w_current->window,
                        w_current->gc, FALSE,
@@ -371,7 +378,7 @@ void o_drawbounding(TOPLEVEL *w_current, GList *o_glist,
                                                diff_x, diff_y, o_glist);
 
     } else {
-      world_get_object_glist_bounds(w_current, o_glist,
+      world_get_object_glist_bounds(toplevel, o_glist,
                                     &w_rleft  ,
                                     &w_rtop   ,
                                     &w_rright ,
@@ -379,9 +386,9 @@ void o_drawbounding(TOPLEVEL *w_current, GList *o_glist,
 
       gdk_gc_set_foreground(w_current->bounding_xor_gc,
                             color);
-      WORLDtoSCREEN( w_current, w_rleft, w_rtop, 
+      WORLDtoSCREEN( toplevel, w_rleft, w_rtop,
                      &rleft, &rtop );
-      WORLDtoSCREEN( w_current, w_rright, w_rbottom, 
+      WORLDtoSCREEN( toplevel, w_rright, w_rbottom,
                      &rright, &rbottom );
       gdk_draw_rectangle(w_current->window,
                          w_current->bounding_xor_gc, FALSE,
@@ -407,7 +414,7 @@ void o_drawbounding(TOPLEVEL *w_current, GList *o_glist,
                                                diff_x, diff_y, o_glist);
 
     } else {
-      world_get_object_glist_bounds(w_current, o_glist,
+      world_get_object_glist_bounds(toplevel, o_glist,
                                     &w_rleft  ,
                                     &w_rtop   ,
                                     &w_rright ,
@@ -415,9 +422,9 @@ void o_drawbounding(TOPLEVEL *w_current, GList *o_glist,
 
       gdk_gc_set_foreground(w_current->bounding_xor_gc,
                             color);
-      WORLDtoSCREEN( w_current, w_rleft, w_rtop, 
+      WORLDtoSCREEN( toplevel, w_rleft, w_rtop,
                      &rleft, &rtop );
-      WORLDtoSCREEN( w_current, w_rright, w_rbottom, 
+      WORLDtoSCREEN( toplevel, w_rright, w_rbottom,
                      &rright, &rbottom );
       gdk_draw_rectangle(w_current->window,
                          w_current->bounding_xor_gc,
@@ -451,7 +458,7 @@ void o_drawbounding(TOPLEVEL *w_current, GList *o_glist,
         } else {
           /*! \todo why are we doing this here...?
            * probably a reason */
-          world_get_object_glist_bounds(w_current, o_glist,
+          world_get_object_glist_bounds(toplevel, o_glist,
                                         &w_rleft  ,
                                         &w_rtop   ,
                                         &w_rright ,
@@ -477,7 +484,7 @@ void o_drawbounding(TOPLEVEL *w_current, GList *o_glist,
   if (w_current->actionfeedback_mode == BOUNDINGBOX) {
 
     if (firsttime == TRUE) {
-      world_get_object_glist_bounds(w_current, o_glist,
+      world_get_object_glist_bounds(toplevel, o_glist,
                                     &w_rleft  ,
                                     &w_rtop   ,
                                     &w_rright ,
@@ -489,9 +496,9 @@ void o_drawbounding(TOPLEVEL *w_current, GList *o_glist,
     diff_x = w_current->last_x - w_current->start_x;
     diff_y = w_current->last_y - w_current->start_y;
     gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
-    WORLDtoSCREEN( w_current, w_rleft, w_rtop, 
+    WORLDtoSCREEN( toplevel, w_rleft, w_rtop,
                    &rleft, &rtop );
-    WORLDtoSCREEN( w_current, w_rright, w_rbottom, 
+    WORLDtoSCREEN( toplevel, w_rright, w_rbottom,
                    &rright, &rbottom );
     gdk_draw_rectangle(w_current->window,
                        w_current->bounding_xor_gc, FALSE,
@@ -519,7 +526,7 @@ void o_drawbounding(TOPLEVEL *w_current, GList *o_glist,
  *  \par Function Description
  *
  */
-int o_erase_rubber(TOPLEVEL *w_current)
+int o_erase_rubber(GSCHEM_TOPLEVEL *w_current)
 {
    /* return FALSE if it did not erase anything */
  
@@ -588,8 +595,9 @@ int o_erase_rubber(TOPLEVEL *w_current)
  *  screen. 
  *  Usually a intermediate select state would clean (redraw) the screen.
  */
-int o_redraw_cleanstates(TOPLEVEL *w_current)
+int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   /* returns FALSE if the function was'nt nessecary */
   if (w_current->inside_action == 0) {
     return FALSE;
@@ -631,15 +639,15 @@ int o_redraw_cleanstates(TOPLEVEL *w_current)
        * remember these don't remove the head structure */
       /* The complex place is a reference to the real objects, so don't
 	 free the objects here */
-      g_list_free (w_current->page_current->complex_place_list);
-      w_current->page_current->complex_place_list = NULL;
+      g_list_free (toplevel->page_current->complex_place_list);
+      toplevel->page_current->complex_place_list = NULL;
 
-      s_delete_object_glist (w_current,
-                             w_current->page_current->attrib_place_list);
-      w_current->page_current->attrib_place_list = NULL;
+      s_delete_object_glist (toplevel,
+                             toplevel->page_current->attrib_place_list);
+      toplevel->page_current->attrib_place_list = NULL;
 
       /* also free internal current_attribute */
-      o_attrib_free_current(w_current);     
+      o_attrib_free_current(toplevel);
       w_current->inside_action = 0;
       return TRUE;
 

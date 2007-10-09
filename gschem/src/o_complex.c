@@ -27,6 +27,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -39,13 +40,13 @@
  *  \par Function Description
  *
  */
-void o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current)
+void o_complex_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   g_return_if_fail (o_current != NULL); 
   g_return_if_fail (o_current->complex != NULL);
   g_return_if_fail (o_current->complex->prim_objs != NULL);
 
-  if (!w_current->DONT_REDRAW) {
+  if (!w_current->toplevel->DONT_REDRAW) {
     o_redraw(w_current, o_current->complex->prim_objs, TRUE);
   }
 }
@@ -55,11 +56,12 @@ void o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_complex_erase(TOPLEVEL *w_current, OBJECT *o_current)
+void o_complex_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  w_current->override_color = w_current->background_color;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  toplevel->override_color = toplevel->background_color;
   o_complex_draw(w_current, o_current);
-  w_current->override_color = -1;
+  toplevel->override_color = -1;
 }
 
 /*! \todo Finish function documentation!!!
@@ -67,7 +69,7 @@ void o_complex_erase(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_complex_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *complex)
+void o_complex_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *complex)
 {
   OBJECT *o_current = complex;
 
@@ -124,34 +126,35 @@ void o_complex_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *complex)
  *  \par Function Description
  *
  */
-void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
+void o_complex_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x, y;
   int i, temp;
   const CLibSymbol *sym;
   int redraw_state;
 
-  w_current->last_x = w_current->start_x = fix_x(w_current, screen_x);
-  w_current->last_y = w_current->start_y = fix_y(w_current, screen_y);
+  w_current->last_x = w_current->start_x = fix_x(toplevel, screen_x);
+  w_current->last_y = w_current->start_y = fix_y(toplevel, screen_y);
 
   w_current->last_drawb_mode = -1;
 
   /* make sure list is null first, so that you don't have a mem
    * leak */
-  SCREENtoWORLD(w_current,
+  SCREENtoWORLD(toplevel,
                 w_current->start_x,
                 w_current->start_y,
                 &x,
                 &y);
 
-  w_current->ADDING_SEL = 1; /* reuse this flag, rename later hack */
-  sym = s_clib_get_symbol_by_name (w_current->internal_symbol_name);
-  o_complex_add(w_current, NULL,
-		&(w_current->page_current->complex_place_list),
+  toplevel->ADDING_SEL = 1; /* reuse this flag, rename later hack */
+  sym = s_clib_get_symbol_by_name (toplevel->internal_symbol_name);
+  o_complex_add(toplevel, NULL,
+		&(toplevel->page_current->complex_place_list),
 		OBJ_COMPLEX, WHITE, x, y, 0, 0,
-		sym, w_current->internal_symbol_name,
+		sym, toplevel->internal_symbol_name,
 		1, TRUE);
-  w_current->ADDING_SEL = 0;
+  toplevel->ADDING_SEL = 0;
 
   if (w_current->complex_rotate) {
     temp = w_current->complex_rotate / 90;
@@ -162,12 +165,12 @@ void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 
   /* Run the complex place list changed hook without redrawing */
   /* since the complex place list is going to be redrawn afterwards */
-  redraw_state = w_current->DONT_REDRAW;
-  w_current->DONT_REDRAW = 1;
+  redraw_state = toplevel->DONT_REDRAW;
+  toplevel->DONT_REDRAW = 1;
   o_complex_place_changed_run_hook (w_current);
-  w_current->DONT_REDRAW = redraw_state;
+  toplevel->DONT_REDRAW = redraw_state;
 
-  o_drawbounding(w_current, w_current->page_current->complex_place_list,
+  o_drawbounding(w_current, toplevel->page_current->complex_place_list,
                  x_get_darkcolor(w_current->bb_color), TRUE);
 }
 
@@ -176,20 +179,21 @@ void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
  *  The complex place list is usually used when placing new components
  *  in the schematic. This function should be called whenever that list
  *  is modified.
- *  \param [in] w_current TOPLEVEL structure.
+ *  \param [in] w_current GSCHEM_TOPLEVEL structure.
  *
  */
-void o_complex_place_changed_run_hook(TOPLEVEL *w_current) {
+void o_complex_place_changed_run_hook(GSCHEM_TOPLEVEL *w_current) {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *ptr = NULL;
 
   /* Run the complex place list changed hook */
   if (scm_hook_empty_p(complex_place_list_changed_hook) == SCM_BOOL_F &&
-      w_current->page_current->complex_place_list != NULL) {
-    ptr = w_current->page_current->complex_place_list;
+      toplevel->page_current->complex_place_list != NULL) {
+    ptr = toplevel->page_current->complex_place_list;
     while (ptr) {
       scm_run_hook(complex_place_list_changed_hook, 
 		   scm_cons (g_make_object_smob
-			     (w_current, 
+			     (toplevel,
 			      (OBJECT *) ptr->data), SCM_EOL));
       ptr = g_list_next(ptr);
     }
@@ -202,14 +206,15 @@ void o_complex_place_changed_run_hook(TOPLEVEL *w_current) {
  *  \par Function Description
  *
  */
-void o_complex_place_rotate(TOPLEVEL *w_current)
+void o_complex_place_rotate(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
   GList *ptr;
   int x_local = -1;
   int y_local = -1;
 
-  ptr = w_current->page_current->complex_place_list;
+  ptr = toplevel->page_current->complex_place_list;
   while(ptr) {
     o_current = (OBJECT *) ptr->data;
     switch(o_current->type) {	
@@ -226,17 +231,17 @@ void o_complex_place_rotate(TOPLEVEL *w_current)
     return;
   }
 
-  ptr = w_current->page_current->complex_place_list;
+  ptr = toplevel->page_current->complex_place_list;
   while(ptr) {
     o_current = (OBJECT *) ptr->data;
     switch(o_current->type) {	
 
       case(OBJ_TEXT):
-        o_text_rotate_world(w_current, x_local, y_local, 90, o_current);
+        o_text_rotate_world(toplevel, x_local, y_local, 90, o_current);
         break;
 
       case(OBJ_COMPLEX):
-        o_complex_rotate_world(w_current, x_local, y_local, 90, o_current);
+        o_complex_rotate_world(toplevel, x_local, y_local, 90, o_current);
         break;
 
     }
@@ -250,8 +255,9 @@ void o_complex_place_rotate(TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
+void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
   int x, y;
   int rleft, rtop, rbottom, rright;
@@ -267,9 +273,9 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
   diff_x = w_current->last_x - w_current->start_x;
   diff_y = w_current->last_y - w_current->start_y;
 
-  SCREENtoWORLD(w_current, screen_x, screen_y, &x, &y);
-  x = snap_grid(w_current, x);
-  y = snap_grid(w_current, y);
+  SCREENtoWORLD(toplevel, screen_x, screen_y, &x, &y);
+  x = snap_grid(toplevel, x);
+  y = snap_grid(toplevel, y);
 
 #if DEBUG
   printf("place_basename: %s\n",internal_basename);
@@ -277,25 +283,25 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 #endif
 
   if (w_current->include_complex) {
-    buffer = s_clib_symbol_get_data_by_name (w_current->internal_symbol_name);
+    buffer = s_clib_symbol_get_data_by_name (toplevel->internal_symbol_name);
 
-    w_current->ADDING_SEL=1;
-    o_start = w_current->page_current->object_tail;
-    w_current->page_current->object_tail =
-      o_read_buffer(w_current,
-		    w_current->page_current->object_tail,
+    toplevel->ADDING_SEL=1;
+    o_start = toplevel->page_current->object_tail;
+    toplevel->page_current->object_tail =
+      o_read_buffer(toplevel,
+		    toplevel->page_current->object_tail,
 		    buffer, -1,
-		    w_current->internal_symbol_name);
+		    toplevel->internal_symbol_name);
     o_start = o_start->next;
-    w_current->ADDING_SEL=0;
+    toplevel->ADDING_SEL=0;
     
-    o_list_translate_world(w_current, x, y, o_start);
+    o_list_translate_world(toplevel, x, y, o_start);
 
     o_temp = o_start;
     while (o_temp != NULL) {
       if (o_temp->type == OBJ_NET || o_temp->type == OBJ_PIN ||
           o_temp->type == OBJ_BUS) {
-        s_conn_update_object(w_current, o_temp);
+        s_conn_update_object(toplevel, o_temp);
                   
         connected_objects = s_conn_return_others(connected_objects,
                                                  o_temp);
@@ -313,20 +319,20 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
       
       o_complex_translate_display_object_glist(w_current,
 					       diff_x, diff_y,
-					       w_current->page_current->
+					       toplevel->page_current->
 					       complex_place_list); 
     } else {
-      world_get_object_glist_bounds(w_current,
-			      w_current->page_current->
+      world_get_object_glist_bounds(toplevel,
+			      toplevel->page_current->
 			      complex_place_list,
 			      &w_rleft, &w_rtop, &w_rright, &w_rbottom);
 
-      WORLDtoSCREEN( w_current, w_rleft, w_rtop, &rleft, &rtop );
-      WORLDtoSCREEN( w_current, w_rright, w_rbottom, &rright, &rbottom );
+      WORLDtoSCREEN( toplevel, w_rleft, w_rtop, &rleft, &rtop );
+      WORLDtoSCREEN( toplevel, w_rright, w_rbottom, &rright, &rbottom );
 
       gdk_gc_set_foreground(
                             w_current->gc,
-                            x_get_color(w_current->background_color));
+                            x_get_color(toplevel->background_color));
       gdk_draw_rectangle(w_current->window, w_current->gc,
                          FALSE,
                          rleft   + diff_x,
@@ -336,22 +342,22 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
     }
 
     o_redraw(w_current, o_start, TRUE);
-    w_current->page_current->CHANGED = 1;
+    toplevel->page_current->CHANGED = 1;
     o_undo_savestate(w_current, UNDO_ALL);
     i_update_menus(w_current);
-    s_delete_object_glist(w_current, w_current->page_current->
+    s_delete_object_glist(toplevel, toplevel->page_current->
                           complex_place_list);
-    w_current->page_current->complex_place_list = NULL;
+    toplevel->page_current->complex_place_list = NULL;
     return;
   }
 
-  o_temp = w_current->page_current->object_tail;
-  sym = s_clib_get_symbol_by_name (w_current->internal_symbol_name);
-  w_current->page_current->object_tail =
-    o_complex_add(w_current,
-                  w_current->page_current->object_tail, NULL,
+  o_temp = toplevel->page_current->object_tail;
+  sym = s_clib_get_symbol_by_name (toplevel->internal_symbol_name);
+  toplevel->page_current->object_tail =
+    o_complex_add(toplevel,
+                  toplevel->page_current->object_tail, NULL,
                   OBJ_COMPLEX, WHITE, x, y, w_current->complex_rotate, 0,
-                  sym, w_current->internal_symbol_name,
+                  sym, toplevel->internal_symbol_name,
 		  1, TRUE);
 
   /* complex rotate post processing */
@@ -361,7 +367,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
       case(OBJ_TEXT):
         temp = w_current->complex_rotate / 90;
         for (i = 0; i < temp; i++) {
-          o_text_rotate_world(w_current, x, y, 90, o_temp);
+          o_text_rotate_world(toplevel, x, y, 90, o_temp);
         }
         break;
     }
@@ -370,7 +376,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
   }
 
   /* 1 should be define fix everywhere hack */
-  o_current = w_current->page_current->object_tail;
+  o_current = toplevel->page_current->object_tail;
 
   if (scm_hook_empty_p(add_component_hook) == SCM_BOOL_F &&
       o_current != NULL) {
@@ -382,7 +388,7 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
   if (scm_hook_empty_p(add_component_object_hook) == SCM_BOOL_F &&
       o_current != NULL) {
     scm_run_hook(add_component_object_hook,
-		 scm_cons(g_make_object_smob(w_current, o_current),
+		 scm_cons(g_make_object_smob(toplevel, o_current),
 			  SCM_EOL));
   }
 
@@ -396,19 +402,19 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
     /* erase outline */
     o_complex_translate_display_object_glist(w_current,
 					     diff_x, diff_y,
-					     w_current->page_current->complex_place_list);
+					     toplevel->page_current->complex_place_list);
   } else {
-    world_get_object_glist_bounds(w_current,
-                                  w_current->page_current->complex_place_list,
+    world_get_object_glist_bounds(toplevel,
+                                  toplevel->page_current->complex_place_list,
                                   &w_rleft, &w_rtop,
                                   &w_rright, &w_rbottom);
     
-    WORLDtoSCREEN( w_current, w_rleft, w_rtop, &rleft, &rtop );
-    WORLDtoSCREEN( w_current, w_rright, w_rbottom, &rright, &rbottom );
+    WORLDtoSCREEN( toplevel, w_rleft, w_rtop, &rleft, &rtop );
+    WORLDtoSCREEN( toplevel, w_rright, w_rbottom, &rright, &rbottom );
 
     gdk_gc_set_foreground(
                           w_current->gc,
-                          x_get_color(w_current->background_color));
+                          x_get_color(toplevel->background_color));
     gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
                        rleft   + diff_x,
                        rtop    + diff_y,
@@ -418,29 +424,29 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 
   /*! \todo redraw has to happen at the end of all this hack or
    * maybe not? */
-  s_delete_object_glist(w_current, w_current->page_current->
+  s_delete_object_glist(toplevel, toplevel->page_current->
                         complex_place_list);
-  w_current->page_current->complex_place_list = NULL;
+  toplevel->page_current->complex_place_list = NULL;
 
   /* This doesn't allow anything else to be in the selection
    * list when you add a component */
 
-  o_select_unselect_list( w_current, w_current->page_current->selection_list );
-  o_selection_add( w_current->page_current->selection_list, w_current->page_current->object_tail);
+  o_select_unselect_list( w_current, toplevel->page_current->selection_list );
+  o_selection_add( toplevel->page_current->selection_list, toplevel->page_current->object_tail);
   /* the o_redraw_selected is in x_events.c after this call
    * returns */
-  o_attrib_add_selected(w_current, w_current->page_current->selection_list,
-                        w_current->page_current->object_tail);
+  o_attrib_add_selected(w_current, toplevel->page_current->selection_list,
+                        toplevel->page_current->object_tail);
 
-  s_conn_update_complex(w_current, o_current->complex->prim_objs);
+  s_conn_update_complex(toplevel, o_current->complex->prim_objs);
   connected_objects = s_conn_return_complex_others(connected_objects,
                                                    o_current);
   o_cue_undraw_list(w_current, connected_objects);
   o_cue_draw_list(w_current, connected_objects);
   g_list_free(connected_objects);
-  o_cue_draw_single(w_current, w_current->page_current->object_tail);
+  o_cue_draw_single(w_current, toplevel->page_current->object_tail);
         
-  w_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
   o_undo_savestate(w_current, UNDO_ALL);
   i_update_menus(w_current);
 }
@@ -450,10 +456,10 @@ void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
  *  \par Function Description
  *
  */
-void o_complex_rubbercomplex(TOPLEVEL *w_current)
+void o_complex_rubbercomplex(GSCHEM_TOPLEVEL *w_current)
 {
   o_drawbounding(w_current,
-                 w_current->page_current->complex_place_list,
+                 w_current->toplevel->page_current->complex_place_list,
                  x_get_darkcolor(w_current->bb_color), FALSE);
 }
 
@@ -463,7 +469,7 @@ void o_complex_rubbercomplex(TOPLEVEL *w_current)
  *
  */
 void
-o_complex_translate_display_single_object(TOPLEVEL *w_current,
+o_complex_translate_display_single_object(GSCHEM_TOPLEVEL *w_current,
 					  int x1, int y1, OBJECT *o_current)
 {
   if (o_current != NULL) {
@@ -519,7 +525,7 @@ o_complex_translate_display_single_object(TOPLEVEL *w_current,
  *
  */
 void
-o_complex_translate_display_object_glist(TOPLEVEL *w_current,
+o_complex_translate_display_object_glist(GSCHEM_TOPLEVEL *w_current,
 			                 int x1, int y1, GList *object_list)
 {
   GList *ptr = object_list;
@@ -538,7 +544,7 @@ o_complex_translate_display_object_glist(TOPLEVEL *w_current,
  *
  */
 void
-o_complex_translate_display(TOPLEVEL *w_current,
+o_complex_translate_display(GSCHEM_TOPLEVEL *w_current,
 			    int x1, int y1, OBJECT *complex)
 {
   OBJECT *o_current = complex;
@@ -556,69 +562,70 @@ o_complex_translate_display(TOPLEVEL *w_current,
  *  \note
  *  don't know if this belongs yet
  */
-void o_complex_translate_all(TOPLEVEL *w_current, int offset)
+void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int w_rleft, w_rtop, w_rright, w_rbottom;
   OBJECT *o_current;
   int x, y;
 
   /* first zoom extents */
-  a_zoom_extents(w_current, w_current->page_current->object_head, 
+  a_zoom_extents(w_current, toplevel->page_current->object_head,
                  A_PAN_DONT_REDRAW);
   o_redraw_all(w_current);
 
-  world_get_object_list_bounds(w_current, w_current->page_current->object_head,
+  world_get_object_list_bounds(toplevel, toplevel->page_current->object_head,
                                &w_rleft,
                                &w_rtop,
                                &w_rright,
                                &w_rbottom);
 
   /*! \todo do we want snap grid here? */
-  x = snap_grid( w_current, w_rleft );
+  x = snap_grid( toplevel, w_rleft );
   /* WARNING: w_rtop isn't the top of the bounds, it is the smaller
    * y_coordinate, which represents in the bottom in world coords.
    * These variables are as named from when screen-coords (which had 
    * the correct sense) were in use . */
-  y = snap_grid( w_current, w_rtop );
+  y = snap_grid( toplevel, w_rtop );
 
-  o_current = w_current->page_current->object_head;
+  o_current = toplevel->page_current->object_head;
   while(o_current != NULL) {
     if (o_current->type != OBJ_COMPLEX && o_current->type != OBJ_PLACEHOLDER) {
-      s_conn_remove(w_current, o_current);
+      s_conn_remove(toplevel, o_current);
     } else {
-      s_conn_remove_complex(w_current, o_current);
+      s_conn_remove_complex(toplevel, o_current);
     }
     o_current = o_current->next;
   }
         
   if (offset == 0) {
     s_log_message(_("Translating schematic [%d %d]\n"), -x, -y);
-    o_list_translate_world(w_current, -x, -y,
-                           w_current->page_current->object_head);
+    o_list_translate_world(toplevel, -x, -y,
+                           toplevel->page_current->object_head);
   } else {
     s_log_message(_("Translating schematic [%d %d]\n"),
                   offset, offset);
-    o_list_translate_world(w_current, offset, offset,
-                           w_current->page_current->object_head);
+    o_list_translate_world(toplevel, offset, offset,
+                           toplevel->page_current->object_head);
   }
 
-  o_current = w_current->page_current->object_head;
+  o_current = toplevel->page_current->object_head;
   while(o_current != NULL) {
     if (o_current->type != OBJ_COMPLEX && o_current->type != OBJ_PLACEHOLDER) {
-      s_conn_update_object(w_current, o_current);
+      s_conn_update_object(toplevel, o_current);
     } else {
-      s_conn_update_complex(w_current, o_current->complex->prim_objs);
+      s_conn_update_complex(toplevel, o_current->complex->prim_objs);
     }
     o_current = o_current->next;
   }
 
   /* this is an experimental mod, to be able to translate to all
    * places */
-  a_zoom_extents(w_current, w_current->page_current->object_head, 
+  a_zoom_extents(w_current, toplevel->page_current->object_head,
                  A_PAN_DONT_REDRAW);
   if (!w_current->SHIFTKEY) o_select_unselect_all(w_current);
   o_redraw_all(w_current);
-  w_current->page_current->CHANGED=1;
+  toplevel->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);
   i_update_menus(w_current);
 }
@@ -628,7 +635,8 @@ void o_complex_translate_all(TOPLEVEL *w_current, int offset)
  *  \par Function Description
  *
  */
-void o_complex_rotate_world(TOPLEVEL *w_current, int centerx, int centery,
+void o_complex_rotate_world(TOPLEVEL *toplevel,
+                            int centerx, int centery,
                             int angle, OBJECT *object)
 {
   int x, y;
@@ -642,15 +650,15 @@ void o_complex_rotate_world(TOPLEVEL *w_current, int centerx, int centery,
   x = newx + (centerx);
   y = newy + (centery);
 
-  o_complex_translate_world(w_current,
+  o_complex_translate_world(toplevel,
                             -object->complex->x,
                             -object->complex->y, object);
-  o_complex_rotate_lowlevel(w_current, 0, 0, angle, object);
+  o_complex_rotate_lowlevel(toplevel, 0, 0, angle, object);
 
   object->complex->x = 0;
   object->complex->y = 0;
 
-  o_complex_translate_world(w_current, x, y, object);
+  o_complex_translate_world(toplevel, x, y, object);
 
   object->complex->angle = ( object->complex->angle + angle ) % 360;
 
@@ -664,7 +672,7 @@ void o_complex_rotate_world(TOPLEVEL *w_current, int centerx, int centery,
  *  \par Function Description
  *
  */
-int o_complex_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery,
+int o_complex_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery,
 		     OBJECT *object)
 {
   int x, y;
@@ -684,11 +692,11 @@ int o_complex_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_cen
   x = newx + (world_centerx);
   y = newy + (world_centery);
 
-  o_complex_translate_world(w_current,
+  o_complex_translate_world(toplevel,
                             -object->complex->x,
                             -object->complex->y, object);
 
-  o_complex_mirror_lowlevel(w_current, 0, 0, object);
+  o_complex_mirror_lowlevel(toplevel, 0, 0, object);
 
   switch(object->complex->angle) {
     case(90):
@@ -705,7 +713,7 @@ int o_complex_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_cen
 
   object->complex->mirror = !object->complex->mirror;
 
-  o_complex_translate_world(w_current, x, y, object);
+  o_complex_translate_world(toplevel, x, y, object);
 
 #if DEBUG
   printf("final res %d %d\n", object->complex->x,  object->complex->y);

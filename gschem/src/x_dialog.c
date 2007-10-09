@@ -30,6 +30,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/i_vars.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
@@ -44,11 +45,11 @@
   g_object_set_data_full (G_OBJECT (component), name, \
     gtk_widget_ref (widget), (GDestroyNotify) gtk_widget_unref)
 
-static GtkWidget* create_menu_linetype (TOPLEVEL *w_current);
+static GtkWidget* create_menu_linetype (GSCHEM_TOPLEVEL *w_current);
 static gint line_type_dialog_linetype_change (GtkWidget *w, gpointer data);
 static void line_type_dialog_ok (GtkWidget *w, gpointer data);
 
-static GtkWidget* create_menu_filltype (TOPLEVEL *w_current);
+static GtkWidget* create_menu_filltype (GSCHEM_TOPLEVEL *w_current);
 static gint fill_type_dialog_filltype_change(GtkWidget *w, gpointer data);
 static void fill_type_dialog_ok(GtkWidget *w, gpointer data);
 
@@ -60,7 +61,7 @@ struct line_type_data {
   GtkWidget *length_entry;
   GtkWidget *space_entry;
 
-  TOPLEVEL *toplevel;
+  GSCHEM_TOPLEVEL *w_current;
   GList *objects;
 };
 
@@ -73,7 +74,7 @@ struct fill_type_data {
   GtkWidget *angle2_entry;
   GtkWidget *pitch2_entry;
 
-  TOPLEVEL *toplevel;
+  GSCHEM_TOPLEVEL *w_current;
   GList *objects;
 };
 
@@ -98,9 +99,10 @@ char generic_textstring[256] = "refdes=R";
  *  \par Function Description
  *  This function applies the text from the text entry dialog.
  */
-void text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
+void text_input_dialog_apply(GtkWidget *w, GSCHEM_TOPLEVEL *w_current)
 {
   int len;
+  TOPLEVEL *toplevel = w_current->toplevel;
   char *string = NULL;
   GtkWidget *tientry;
   GtkTextBuffer *textbuffer;
@@ -136,8 +138,8 @@ void text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
     select_all_text_in_textview(GTK_TEXT_VIEW(tientry));
     gtk_widget_grab_focus(tientry);
 
-    o_attrib_set_string(w_current, string);
-    w_current->page_current->CHANGED=1;
+    o_attrib_set_string(toplevel, string);
+    toplevel->page_current->CHANGED=1;
     w_current->event_state = DRAWTEXT;
     w_current->inside_action = 1;
   }
@@ -147,7 +149,7 @@ void text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
  *  \par Function Description
  *  Callback function for the text entry dialog.
  */
-void text_input_dialog_response(GtkWidget * widget, gint response, TOPLEVEL *w_current)
+void text_input_dialog_response(GtkWidget * widget, gint response, GSCHEM_TOPLEVEL *w_current)
 {
   switch(response) {
   case GTK_RESPONSE_ACCEPT:
@@ -170,7 +172,7 @@ void text_input_dialog_response(GtkWidget * widget, gint response, TOPLEVEL *w_c
  *  \par Function Description
  *  This function creates or raises the modal text entry dialog
  */
-void text_input_dialog (TOPLEVEL *w_current)
+void text_input_dialog (GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *label = NULL;
   GtkWidget *tientry = NULL;
@@ -272,11 +274,11 @@ void text_input_dialog (TOPLEVEL *w_current)
 /*! \brief CAllback for a text aligment change
  *  \par Function Description
  *  This function stores a change of the text alignment in the
- *  <b>TOPLEVEL</b> struct.
+ *  <b>GSCHEM_TOPLEVEL</b> struct.
  *  \todo Remove that function. Only the OK-Button should set any
- *  properties in the TOPLEVEL struct.
+ *  properties in the GSCHEM_TOPLEVEL struct.
  */
-gint change_alignment(GtkWidget *w, TOPLEVEL *w_current)
+gint change_alignment(GtkWidget *w, GSCHEM_TOPLEVEL *w_current)
 {
   char *alignment;
   alignment = gtk_object_get_data(GTK_OBJECT(w),"alignment");
@@ -293,7 +295,7 @@ gint change_alignment(GtkWidget *w, TOPLEVEL *w_current)
  *  This function creates a GtkMenu with nine different alignment 
  *  entries.
  */
-static GtkWidget *create_menu_alignment (TOPLEVEL *w_current)
+static GtkWidget *create_menu_alignment (GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
@@ -406,14 +408,14 @@ static GtkWidget *create_menu_alignment (TOPLEVEL *w_current)
 }
 
 /* we reuse the color menu so we need to declare it */
-static GtkWidget *create_color_menu(TOPLEVEL * w_current, int * select_index);
+static GtkWidget *create_color_menu(GSCHEM_TOPLEVEL * w_current, int * select_index);
 
 /*! \brief Apply the settings from the text property dialog
  *  \par Function Description
  *  This function applies the user settings to the selected text objects
  *  and closes the dialog
  */
-void text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
+void text_edit_dialog_ok(GtkWidget *w, GSCHEM_TOPLEVEL *w_current)
 {
   int len=0;
   int text_size=8;
@@ -425,7 +427,7 @@ void text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
   GtkTextIter start, end;
   GtkWidget *widget;
 
-  num_selected = g_list_length( geda_list_get_glist( w_current->page_current->selection_list ));
+  num_selected = g_list_length( geda_list_get_glist( w_current->toplevel->page_current->selection_list ));
 
   /* text string entry will only show up if one object is selected */
   if (num_selected == 1) {
@@ -461,7 +463,7 @@ void text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
  *  The response is either <b>OK</b>, <b>Cancel</b> or delete.
  *  
  */
-void text_edit_dialog_response(GtkWidget * widget, gint response, TOPLEVEL *w_current)
+void text_edit_dialog_response(GtkWidget * widget, gint response, GSCHEM_TOPLEVEL *w_current)
 {
   switch(response) {
   case GTK_RESPONSE_ACCEPT:
@@ -487,7 +489,7 @@ void text_edit_dialog_response(GtkWidget * widget, gint response, TOPLEVEL *w_cu
  *  \todo Check why there's no color in the calling parameters
  *  \todo If more than one text element is selected, add an unchanged option
  */
-void text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
+void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, char *string, int text_size,
 		       int text_alignment)
 {
   GtkWidget *label = NULL;
@@ -539,7 +541,7 @@ void text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
     /* add a text box if only one object is selected */
-    num_selected = g_list_length( geda_list_get_glist( w_current->page_current->selection_list ));
+    num_selected = g_list_length( geda_list_get_glist( w_current->toplevel->page_current->selection_list ));
 
     if (num_selected == 1) {
       label = gtk_label_new (_("<b>Text Content</b>"));
@@ -655,7 +657,7 @@ void text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
  *  \par Function Description
  *  This function creates a GtkMenu with the different linetypes.
  */
-static GtkWidget *create_menu_linetype (TOPLEVEL *w_current)
+static GtkWidget *create_menu_linetype (GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *menu;
   GSList *group;
@@ -741,15 +743,15 @@ static gint line_type_dialog_linetype_change(GtkWidget *w, gpointer data)
 static void line_type_dialog_ok(GtkWidget *w, gpointer data)
 {
   struct line_type_data *line_type_data = (struct line_type_data*)data;
-  TOPLEVEL *toplevel;
+  GSCHEM_TOPLEVEL *w_current = line_type_data->w_current;
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *objects;
   const gchar *width_str, *length_str, *space_str;
   OBJECT_TYPE type;
     
-  /* retrieve the list of objects and the toplevel */
+  /* retrieve the list of objects */
   objects  = line_type_data->objects;
-  toplevel = line_type_data->toplevel;
-    
+
   /* get the new values from the text entries of the dialog */
   width_str   = gtk_entry_get_text (GTK_ENTRY (
                                       line_type_data->width_entry));
@@ -776,14 +778,14 @@ static void line_type_dialog_ok(GtkWidget *w, gpointer data)
     space  = atoi (space_str);
 
     /* apply the new line options to object */
-    o_erase_single (toplevel, o_current);
+    o_erase_single (w_current, o_current);
     o_set_line_options (toplevel, o_current,
                         o_current->line_end, 
                         type,
                         width,
                         length,
                         space);
-    o_redraw_single (toplevel, o_current);
+    o_redraw_single (w_current, o_current);
       
   } else {
     /* more than one object in the list */
@@ -803,14 +805,14 @@ static void line_type_dialog_ok(GtkWidget *w, gpointer data)
     while (object != NULL) {
       OBJECT *o_current = (OBJECT*)object->data;
 
-      o_erase_single (toplevel, o_current);
+      o_erase_single (w_current, o_current);
       o_set_line_options (toplevel, o_current,
                           o_current->line_end, 
                           type   == -1 ? o_current->line_type : type,
                           width  == -1 ? o_current->line_width  : width,
                           length == -1 ? o_current->line_length : length,
                           space  == -1 ? o_current->line_space  : space);
-      o_redraw_single (toplevel, o_current);
+      o_redraw_single (w_current, o_current);
           
       object = g_list_next(object);
     }
@@ -840,8 +842,8 @@ void line_type_dialog_response(GtkWidget *widget, gint response,
     printf("line_type_dialog_response(): strange signal %d\n",response);
   }
     
-  i_set_state (line_type_data->toplevel, SELECT);
-  i_update_toolbar (line_type_data->toplevel);
+  i_set_state (line_type_data->w_current, SELECT);
+  i_update_toolbar (line_type_data->w_current);
   gtk_widget_destroy (line_type_data->dialog);
   
   /* get ride of the list of objects but not the objects */
@@ -854,7 +856,7 @@ void line_type_dialog_response(GtkWidget *widget, gint response,
  *  This function creates and sets up a dialog for manipulating the 
  *  line width and the line type setting of objects.
  */
-void line_type_dialog (TOPLEVEL *w_current, GList *objects)
+void line_type_dialog (GSCHEM_TOPLEVEL *w_current, GList *objects)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
@@ -963,7 +965,7 @@ void line_type_dialog (TOPLEVEL *w_current, GList *objects)
   line_type_data->length_entry = length_entry;
   line_type_data->space_entry  = space_entry;
   
-  line_type_data->toplevel = w_current;
+  line_type_data->w_current = w_current;
   line_type_data->objects  = objects;
 
   /* fill in the fields of the dialog */
@@ -1022,7 +1024,7 @@ void line_type_dialog (TOPLEVEL *w_current, GList *objects)
  *  \par Function Description
  *  This function creates a GtkMenu with the different fill types.
  */
-static GtkWidget *create_menu_filltype (TOPLEVEL *w_current)
+static GtkWidget *create_menu_filltype (GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *menu;
   GSList *group;
@@ -1117,14 +1119,14 @@ static gint fill_type_dialog_filltype_change(GtkWidget *w, gpointer data)
 static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
 {
   struct fill_type_data *fill_type_data = (struct fill_type_data*)data;
-  TOPLEVEL *toplevel;
+  GSCHEM_TOPLEVEL *w_current = fill_type_data->w_current;
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *objects;
   const gchar *width_str, *angle1_str, *pitch1_str, *angle2_str, *pitch2_str;
   OBJECT_FILLING type;
   
-  /* retrieve the list of objects and the toplevel */
+  /* retrieve the list of objects */
   objects  = fill_type_data->objects;
-  toplevel = fill_type_data->toplevel;
 
   /* get the new values from the text entries of the dialog */
   width_str  = gtk_entry_get_text (GTK_ENTRY (
@@ -1158,12 +1160,12 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
     pitch2 = atoi (pitch2_str);
 
     /* apply the new line options to object */
-    o_erase_single (toplevel, o_current);
+    o_erase_single (w_current, o_current);
     o_set_fill_options(toplevel, o_current,
                        type, width,
                        pitch1, angle1,
                        pitch2, angle2);
-    o_redraw_single (toplevel, o_current);
+    o_redraw_single (w_current, o_current);
       
   } else {
     /* more than one object in the list */
@@ -1187,7 +1189,7 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
     while (object != NULL) {
       OBJECT *o_current = (OBJECT*)object->data;
 
-      o_erase_single (toplevel, o_current);
+      o_erase_single (w_current, o_current);
       o_set_fill_options (toplevel, o_current,
                           type   == -1 ? o_current->fill_type   : type,
                           width  == -1 ? o_current->fill_width  : width,
@@ -1195,7 +1197,7 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
                           angle1 == -1 ? o_current->fill_angle1 : angle1,
                           pitch2 == -1 ? o_current->fill_pitch2 : pitch2,
                           angle2 == -1 ? o_current->fill_angle2 : angle2);
-      o_redraw_single (toplevel, o_current);
+      o_redraw_single (w_current, o_current);
           
       object = g_list_next(object);
     }
@@ -1223,8 +1225,8 @@ void fill_type_dialog_response(GtkWidget *widget, gint response,
     printf("line_type_dialog_response(): strange signal %d\n",response);
   }
   
-  i_set_state (fill_type_data->toplevel, SELECT);
-  i_update_toolbar (fill_type_data->toplevel);
+  i_set_state (fill_type_data->w_current, SELECT);
+  i_update_toolbar (fill_type_data->w_current);
   
   gtk_grab_remove (fill_type_data->dialog);
   gtk_widget_destroy (fill_type_data->dialog);
@@ -1239,7 +1241,7 @@ void fill_type_dialog_response(GtkWidget *widget, gint response,
  *  This function creates the fill type dialog. It operates on a list
  *  of objects.
  */
-void fill_type_dialog(TOPLEVEL *w_current, GList *objects)
+void fill_type_dialog(GSCHEM_TOPLEVEL *w_current, GList *objects)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
@@ -1367,7 +1369,7 @@ void fill_type_dialog(TOPLEVEL *w_current, GList *objects)
   fill_type_data->angle2_entry = angle2_entry;
   fill_type_data->pitch2_entry = pitch2_entry;
   
-  fill_type_data->toplevel = w_current;
+  fill_type_data->w_current = w_current;
   fill_type_data->objects  = objects;
 
   /* fill in the fields of the dialog */
@@ -1441,7 +1443,7 @@ void fill_type_dialog(TOPLEVEL *w_current, GList *objects)
  *  If the dialog is closed or canceled the function destroys the dialog.
  */
 void arc_angle_dialog_response(GtkWidget *w, gint response,
-			       TOPLEVEL *w_current)
+			       GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *spinentry;
   gint start_angle, sweep_angle;
@@ -1472,7 +1474,7 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
  *  \par Function Description
  *  This function create the arc angle dialog. 
  */
-void arc_angle_dialog (TOPLEVEL *w_current)
+void arc_angle_dialog (GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *label = NULL;
   GtkWidget *vbox;
@@ -1562,7 +1564,7 @@ void arc_angle_dialog (TOPLEVEL *w_current)
  *  \todo improve error detection / use a spin button?
  */
 void translate_dialog_response(GtkWidget *widget, gint response,
-			       TOPLEVEL *w_current)
+			       GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *textentry;
   gchar *string;
@@ -1594,7 +1596,7 @@ void translate_dialog_response(GtkWidget *widget, gint response,
  *  \par Function Description
  *  Create the dialog to translate symbols.
  */
-void translate_dialog (TOPLEVEL *w_current)
+void translate_dialog (GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *label;
   GtkWidget *textentry;
@@ -1661,7 +1663,7 @@ void translate_dialog (TOPLEVEL *w_current)
  *  This function takes the user input and applies it to gschem
  */
 void text_size_dialog_response(GtkWidget *w, gint response, 
-			       TOPLEVEL *w_current)
+			       GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *spin_size;
   gint size;
@@ -1672,7 +1674,7 @@ void text_size_dialog_response(GtkWidget *w, gint response,
     size = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spin_size));
 
     w_current->text_size = size;
-    w_current->page_current->CHANGED=1;
+    w_current->toplevel->page_current->CHANGED=1;
     o_undo_savestate(w_current, UNDO_ALL);
     break;
   case GTK_RESPONSE_REJECT:
@@ -1694,7 +1696,7 @@ void text_size_dialog_response(GtkWidget *w, gint response,
  *  \par Function Description
  *  This function creates the text size dialog.
  */
-void text_size_dialog (TOPLEVEL *w_current)
+void text_size_dialog (GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *label = NULL;
   GtkWidget *vbox;
@@ -1767,7 +1769,7 @@ void text_size_dialog (TOPLEVEL *w_current)
  *  It sets the given snap size to gschem.
  */
 void snap_size_dialog_response(GtkWidget *w, gint response, 
-			       TOPLEVEL *w_current)
+			       GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *spin_size;
   gint size;
@@ -1777,9 +1779,9 @@ void snap_size_dialog_response(GtkWidget *w, gint response,
     spin_size = g_object_get_data(G_OBJECT(w_current->tswindow),"spin_size");
     size = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spin_size));
 
-    w_current->snap_size = size;
+    w_current->toplevel->snap_size = size;
     o_redraw_all(w_current);
-    w_current->page_current->CHANGED=1;  /* maybe remove those two lines */
+    w_current->toplevel->page_current->CHANGED=1;  /* maybe remove those two lines */
     o_undo_savestate(w_current, UNDO_ALL);
     break;
   case GTK_RESPONSE_REJECT:
@@ -1801,7 +1803,7 @@ void snap_size_dialog_response(GtkWidget *w, gint response,
  *  \par Function Description
  *  This function creates the snap size dialog.
  */
-void snap_size_dialog (TOPLEVEL *w_current)
+void snap_size_dialog (GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *label = NULL;
   GtkWidget *vbox;
@@ -1860,7 +1862,7 @@ void snap_size_dialog (TOPLEVEL *w_current)
 
   /* always set the current gschem value to the dialog entry */
   spin_size = g_object_get_data(G_OBJECT(w_current->tswindow),"spin_size");
-  gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_size), w_current->snap_size);
+  gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_size), w_current->toplevel->snap_size);
   gtk_editable_select_region(GTK_EDITABLE(spin_size), 0, -1);
 }
 
@@ -1873,7 +1875,7 @@ void snap_size_dialog (TOPLEVEL *w_current)
  *  The function takes the dialog entry and applies the new slot to the 
  *  symbol.
  */
-void slot_edit_dialog_response(GtkWidget *widget, gint response, TOPLEVEL *w_current)
+void slot_edit_dialog_response(GtkWidget *widget, gint response, GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *textentry;
   int len;
@@ -1906,7 +1908,7 @@ void slot_edit_dialog_response(GtkWidget *widget, gint response, TOPLEVEL *w_cur
  *  \par Function Description
  *  This function creates the slot edit dialog.
  */
-void slot_edit_dialog (TOPLEVEL *w_current, char *string)
+void slot_edit_dialog (GSCHEM_TOPLEVEL *w_current, char *string)
 {
   GtkWidget *label = NULL;
   GtkWidget *textentry;
@@ -1982,7 +1984,7 @@ void slot_edit_dialog (TOPLEVEL *w_current, char *string)
  *  This function destoys the about dialg.
  */
 void about_dialog_response(GtkWidget *w, gint response, 
-			   TOPLEVEL *w_current)
+			   GSCHEM_TOPLEVEL *w_current)
 {
   switch (response) {
   case GTK_RESPONSE_REJECT:
@@ -2001,7 +2003,7 @@ void about_dialog_response(GtkWidget *w, gint response,
  *  \par Function Description
  *  This function creates the about dialog.
  */
-void about_dialog (TOPLEVEL *w_current)
+void about_dialog (GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *label = NULL;
   GtkWidget *vbox;
@@ -2062,7 +2064,7 @@ void about_dialog (TOPLEVEL *w_current)
  *  \par Function Description
  *  This function destroys the coord dialog box and does some cleanup.
  */
-void coord_dialog_response(GtkWidget *w, gint response, TOPLEVEL *w_current)
+void coord_dialog_response(GtkWidget *w, gint response, GSCHEM_TOPLEVEL *w_current)
 {
   gtk_widget_destroy(w_current->cowindow);
   w_current->cowindow = NULL;
@@ -2075,8 +2077,9 @@ void coord_dialog_response(GtkWidget *w, gint response, TOPLEVEL *w_current)
  *  This function takes the screen coordinates and prints the 
  *  screen and the world coordinates in the coord dialog.
  */
-void coord_display_update(TOPLEVEL *w_current, int x, int y)
+void coord_display_update(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   char *string;
   int world_x, world_y;
 
@@ -2084,10 +2087,10 @@ void coord_display_update(TOPLEVEL *w_current, int x, int y)
   gtk_label_set_text(GTK_LABEL(w_current->coord_screen), string );
   g_free(string);
 
-  SCREENtoWORLD(w_current, x, y, &world_x, &world_y);
+  SCREENtoWORLD(toplevel, x, y, &world_x, &world_y);
   /* TODO: Do we want to snap the coordinate display? */
-  world_x = snap_grid(w_current, world_x);
-  world_y = snap_grid(w_current, world_y);
+  world_x = snap_grid(toplevel, world_x);
+  world_y = snap_grid(toplevel, world_y);
 
   string = g_strdup_printf("(%d, %d)", world_x, world_y);
   gtk_label_set_text(GTK_LABEL(w_current->coord_world), string );
@@ -2098,7 +2101,7 @@ void coord_display_update(TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *  This function creates the coord dialog box.
  */
-void coord_dialog (TOPLEVEL *w_current, int x, int y)
+void coord_dialog (GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   GtkWidget *frame;
   GtkWidget *vbox;
@@ -2256,7 +2259,7 @@ char *index2functionstring(int index)
  *  This Function creates a GtkOptionMenu with the color list.
  *  It selects the color of the first selected object.
  */
-static GtkWidget *create_color_menu (TOPLEVEL * w_current, int * select_index)
+static GtkWidget *create_color_menu (GSCHEM_TOPLEVEL * w_current, int * select_index)
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
@@ -2275,7 +2278,7 @@ static GtkWidget *create_color_menu (TOPLEVEL * w_current, int * select_index)
   menu = gtk_menu_new ();
   group = NULL;
 
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  s_current = geda_list_get_glist( w_current->toplevel->page_current->selection_list );
 
   if (s_current != NULL) {
 
@@ -2346,12 +2349,12 @@ static GtkWidget *create_color_menu (TOPLEVEL * w_current, int * select_index)
  *  \par Function Description
  *  This function applies a color change to the currently selected objects.
  */
-void color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
+void color_edit_dialog_apply(GtkWidget *w, GSCHEM_TOPLEVEL *w_current)
 {
   GList *s_current = NULL;
   OBJECT *object = NULL;
 
-  s_current = geda_list_get_glist( w_current->page_current->selection_list );
+  s_current = geda_list_get_glist( w_current->toplevel->page_current->selection_list );
 
   while(s_current != NULL) {
 
@@ -2370,7 +2373,7 @@ void color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
       case(OBJ_PIN):
       case(OBJ_ARC):
         object->saved_color = w_current->edit_color;
-        w_current->page_current->CHANGED = 1;
+        w_current->toplevel->page_current->CHANGED = 1;
         break;
 
       case(OBJ_TEXT):
@@ -2378,7 +2381,7 @@ void color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
         o_complex_set_saved_color_only(
                                        object->text->prim_objs,
                                        w_current->edit_color);
-        w_current->page_current->CHANGED = 1;
+        w_current->toplevel->page_current->CHANGED = 1;
         break;
     }
 
@@ -2391,7 +2394,7 @@ void color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
  *  \par Function Description
  *  This function takes the user response from the color edit dialog
  */
-void color_edit_dialog_response(GtkWidget *widget, gint response, TOPLEVEL *w_current)
+void color_edit_dialog_response(GtkWidget *widget, gint response, GSCHEM_TOPLEVEL *w_current)
 {
   switch (response) {
   case GTK_RESPONSE_REJECT:
@@ -2412,7 +2415,7 @@ void color_edit_dialog_response(GtkWidget *widget, gint response, TOPLEVEL *w_cu
  *  \par Function Description
  *  This function creates the color edit dialog
  */
-void color_edit_dialog (TOPLEVEL *w_current)
+void color_edit_dialog (GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *optionmenu;
   GtkWidget *label;
@@ -2480,7 +2483,7 @@ void color_edit_dialog (TOPLEVEL *w_current)
  *  This function destroys the hotkey dialog and does some cleanup.
  */
 void x_dialog_hotkeys_response(GtkWidget *w, gint response, 
-			       TOPLEVEL *w_current)
+			       GSCHEM_TOPLEVEL *w_current)
 {
   switch(response) {
   case GTK_RESPONSE_REJECT:
@@ -2500,7 +2503,7 @@ void x_dialog_hotkeys_response(GtkWidget *w, gint response,
  *  This function creates the hotkey dialog and puts the list of hotkeys 
  *  into it.
  */
-void x_dialog_hotkeys (TOPLEVEL *w_current)
+void x_dialog_hotkeys (GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *vbox, *scrolled_win;
   GtkListStore *store;
@@ -2611,7 +2614,7 @@ extern GtkWidget *stwindow;
  *  \par Function Description
  *
  */
-void x_dialog_raise_all(TOPLEVEL *w_current)
+void x_dialog_raise_all(GSCHEM_TOPLEVEL *w_current)
 {
   if(w_current->sowindow) {
     gdk_window_raise(w_current->sowindow->window);
@@ -2619,11 +2622,9 @@ void x_dialog_raise_all(TOPLEVEL *w_current)
   if(w_current->cswindow) {
     gdk_window_raise(w_current->cswindow->window);
   }
-
   if(w_current->iwindow) {
     gdk_window_raise(w_current->iwindow->window);
   }
-
   if(w_current->tiwindow) {
     gdk_window_raise(w_current->tiwindow->window);
   }
@@ -2836,8 +2837,9 @@ PAGE *remember_page;
  *  in the schematic.
  */
 void find_text_dialog_response(GtkWidget *w, gint response,
-			       TOPLEVEL *w_current)
+			       GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GtkWidget *textentry;
   GtkWidget *checkdescend;
   gchar *string;
@@ -2851,8 +2853,8 @@ void find_text_dialog_response(GtkWidget *w, gint response,
 
     strncpy(generic_textstring, string, 256);
 
-    if (remember_page != w_current->page_current) {
-      s_page_goto(w_current, remember_page);
+    if (remember_page != toplevel->page_current) {
+      s_page_goto(toplevel, remember_page);
     }
     done =
       o_edit_find_text(w_current, remember_page->object_head, string,
@@ -2882,7 +2884,7 @@ void find_text_dialog_response(GtkWidget *w, gint response,
  *  \par Function Description
  *  This function creates the text find dialog.
  */
-void find_text_dialog(TOPLEVEL * w_current)
+void find_text_dialog(GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *label = NULL;
   GtkWidget *vbox;
@@ -2891,7 +2893,7 @@ void find_text_dialog(TOPLEVEL * w_current)
   OBJECT *object = NULL;
 
   start_find = 1;
-  remember_page = w_current->page_current;
+  remember_page = w_current->toplevel->page_current;
   if ((object = o_select_return_first_object(w_current)) != NULL) {
     if (object->type == OBJ_TEXT) {
       strncpy(generic_textstring, object->text->string, 256);
@@ -2971,7 +2973,7 @@ void find_text_dialog(TOPLEVEL * w_current)
  *  and hides all text elements that starts with the searchtext.
  */
 void hide_text_dialog_response(GtkWidget *w, gint response, 
-			       TOPLEVEL *w_current)
+			       GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *textentry;
   gchar *string;
@@ -2983,7 +2985,7 @@ void hide_text_dialog_response(GtkWidget *w, gint response,
 
     strncpy(generic_textstring, string, 256);
     o_edit_hide_specific_text(w_current,
-			      w_current->page_current->object_head, string);
+			      w_current->toplevel->page_current->object_head, string);
     break;
   case GTK_RESPONSE_REJECT:
   case GTK_RESPONSE_DELETE_EVENT:
@@ -2999,7 +3001,7 @@ void hide_text_dialog_response(GtkWidget *w, gint response,
  *  \par Function Description
  *  This function creates the hide text dialog.
  */
-void hide_text_dialog(TOPLEVEL * w_current)
+void hide_text_dialog(GSCHEM_TOPLEVEL * w_current)
 {
   GtkWidget *label = NULL;
   GtkWidget *textentry;
@@ -3072,7 +3074,7 @@ void hide_text_dialog(TOPLEVEL * w_current)
  *  the given search text and hides those text objects.
  */
 void show_text_dialog_response(GtkWidget *widget, gint response,
-                               TOPLEVEL *w_current)
+                               GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *textentry;
   gchar *string;
@@ -3084,7 +3086,7 @@ void show_text_dialog_response(GtkWidget *widget, gint response,
 
     strncpy(generic_textstring, string, 256);
     o_edit_show_specific_text(w_current,
-			      w_current->page_current->object_head, string);
+			      w_current->toplevel->page_current->object_head, string);
     break;
   case GTK_RESPONSE_REJECT:
   case GTK_RESPONSE_DELETE_EVENT:
@@ -3100,7 +3102,7 @@ void show_text_dialog_response(GtkWidget *widget, gint response,
  *  \par Function Description
  *  This function creates the show text dialog.
  */
-void show_text_dialog(TOPLEVEL * w_current)
+void show_text_dialog(GSCHEM_TOPLEVEL * w_current)
 {
   GtkWidget *label = NULL;
   GtkWidget *textentry;
@@ -3229,15 +3231,15 @@ int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size)
  *  \par Function Description
  *
  */
-void major_changed_dialog(TOPLEVEL* w_current)
+void major_changed_dialog(GSCHEM_TOPLEVEL* w_current)
 {
   GtkWidget* dialog;
   char* refdes_string = NULL;
   char* tmp;
 
-  if (w_current->major_changed_refdes) {
+  if (w_current->toplevel->major_changed_refdes) {
 
-    GList* current = w_current->major_changed_refdes;
+    GList* current = w_current->toplevel->major_changed_refdes;
     while (current)
     {
       char *value = (char*) current->data;
@@ -3920,7 +3922,7 @@ close_confirmation_dialog_get_selected_pages (CloseConfirmationDialog *dialog)
  *  \param in page     The page to close.
  */
 void
-x_dialog_close_changed_page (TOPLEVEL *toplevel, PAGE *page)
+x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
 {
 	GtkWidget *dialog;
 
@@ -3938,18 +3940,18 @@ x_dialog_close_changed_page (TOPLEVEL *toplevel, PAGE *page)
       case GTK_RESPONSE_NO:
         /* action selected: close without saving */
         /* close the page, discard changes */
-        x_window_close_page (toplevel, page);
+        x_window_close_page (w_current, page);
         break;
         
 
       case GTK_RESPONSE_YES:
         /* action selected: save */
         /* prompts user for the filename and ultimate confirmation */
-        s_page_goto (toplevel, page);
-        x_fileselect_save (toplevel);
+        s_page_goto (w_current->toplevel, page);
+        x_fileselect_save (w_current);
         /* has the page been really saved? */
         if (!page->CHANGED) {
-          x_window_close_page (toplevel, page);
+          x_window_close_page (w_current, page);
         }
         /* no, user has cancelled the save and page has changes */
         /* do not close page */
@@ -3984,8 +3986,9 @@ x_dialog_close_changed_page (TOPLEVEL *toplevel, PAGE *page)
  *  \returns TRUE if the window can be closed, FALSE otherwise.
  */
 gboolean
-x_dialog_close_window (TOPLEVEL *toplevel)
+x_dialog_close_window (GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GList *iter;
   GtkWidget *dialog;
   PAGE *p_current;
@@ -4033,7 +4036,7 @@ x_dialog_close_window (TOPLEVEL *toplevel)
           p_current = (PAGE*)p_unsaved->data;
 
           s_page_goto (toplevel, p_current);
-          x_fileselect_save (toplevel);
+          x_fileselect_save (w_current);
           /* if user cancelled previous, do not close window */
           ret &= !p_current->CHANGED;
         }

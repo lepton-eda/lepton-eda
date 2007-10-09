@@ -24,6 +24,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -40,17 +41,18 @@ typedef void (*DRAW_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \par Function Description
  *  This function is used to draw a line on screen. The line is described
  *  in the object which is referred by <B>o_current</B>. The line is displayed
- *  according to the current state, described in the TOPLEVEL object pointed
+ *  according to the current state, described in the GSCHEM_TOPLEVEL object pointed
  *  by <B>w_current</B>.
  *
  *  It first checks if the object is valid or not. If not it returns and do
  *  not output anything. That should never happen though.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  The line OBJECT to draw.
  */
-void o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
+void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
   int line_width, length, space;
   GdkColor *color;
@@ -61,8 +63,8 @@ void o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  if ( (w_current->DONT_REDRAW == 1) ||
-       (!o_line_visible(w_current, o_current->line, &x1, &y1, &x2, &y2)) ) {
+  if ( (toplevel->DONT_REDRAW == 1) ||
+       (!o_line_visible(toplevel, o_current->line, &x1, &y1, &x2, &y2)) ) {
     return;
   }
 	
@@ -96,12 +98,12 @@ void o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
    *
    * Finally the function takes care of the grips.
    */
-  if (w_current->override_color != -1 )
-  color = x_get_color(w_current->override_color);
+  if (toplevel->override_color != -1 )
+  color = x_get_color(toplevel->override_color);
   else
   color = x_get_color(o_current->color);
 	
-  line_width = SCREENabs( w_current, o_current->line_width );
+  line_width = SCREENabs( toplevel, o_current->line_width );
   if( line_width <= 0) {
     line_width = 1;
   }
@@ -116,8 +118,8 @@ void o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
     break;
   }
 
-  length = SCREENabs( w_current, o_current->line_length );
-  space = SCREENabs( w_current, o_current->line_space );
+  length = SCREENabs( toplevel, o_current->line_length );
+  space = SCREENabs( toplevel, o_current->line_space );
 	
   switch(o_current->line_type) {
     case TYPE_SOLID:
@@ -733,14 +735,15 @@ void o_line_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color,
  *
  *  It draws the line over the sheet with the background color.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_	TOPLEVEL object.
  *  \param [in] o_current  Line OBJECT to erase.
  */
-void o_line_erase(TOPLEVEL *w_current, OBJECT *o_current)
+void o_line_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  w_current->override_color = w_current->background_color;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  toplevel->override_color = toplevel->background_color;
   o_line_draw(w_current, o_current);
-  w_current->override_color = -1;
+  toplevel->override_color = -1;
 }
 
 /*! \todo Finish function documentation
@@ -750,10 +753,11 @@ void o_line_erase(TOPLEVEL *w_current, OBJECT *o_current)
  *  \note
  *  used in button cancel code in x_events.c
  */
-void o_line_eraserubber(TOPLEVEL *w_current)
+void o_line_eraserubber(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   gdk_gc_set_foreground(w_current->gc,
-			x_get_color(w_current->background_color) );
+			x_get_color(toplevel->background_color) );
   gdk_draw_line(w_current->window, w_current->gc, w_current->start_x,
                 w_current->start_y, w_current->last_x, w_current->last_y);
 }
@@ -765,13 +769,14 @@ void o_line_eraserubber(TOPLEVEL *w_current)
  *  <B>dx</B> and <B>dy</B> in screen unit. It uses and XOR function to draw the
  *  translated line over the current sheet.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] dx         Delta x coordinate for line.
  *  \param [in] dy         Delta y coordinate for line.
  *  \param [in] o_current  Line OBJECT to draw.
  */
-void o_line_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+void o_line_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int color;
   int sx[2], sy[2];
 
@@ -789,8 +794,8 @@ void o_line_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
   gdk_gc_set_foreground(w_current->outline_xor_gc,
                         x_get_darkcolor(color));
   
-  WORLDtoSCREEN( w_current, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
-  WORLDtoSCREEN( w_current, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
 
   gdk_draw_line(w_current->window, w_current->outline_xor_gc,
                 sx[0]+dx, sy[0]+dy,
@@ -811,11 +816,12 @@ void o_line_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
  *  A temporary line is xor-drawn during the process with the selection color
  *  and changed according to the position of the mouse pointer.
  */
-void o_line_start(TOPLEVEL *w_current, int x, int y)
+void o_line_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   /* init start_[x|y], last_[x|y] to describe line */
-  w_current->last_x = w_current->start_x = fix_x(w_current, x);
-  w_current->last_y = w_current->start_y = fix_y(w_current, y);
+  w_current->last_x = w_current->start_x = fix_x(toplevel, x);
+  w_current->last_y = w_current->start_y = fix_y(toplevel, y);
   
   /* draw init xor */
   o_line_rubberline_xor(w_current);
@@ -831,24 +837,25 @@ void o_line_start(TOPLEVEL *w_current, int x, int y)
  *  adds a new initialized line object to the list of object of the current
  *  sheet.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_line_end(TOPLEVEL *w_current, int x, int y)
+void o_line_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1;
   int x2, y2;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
   /* Use last_x and _y from the last time you moved the mouse from the
      rubber function, so in otherwords... comment these out...
-     w_current->last_x = fix_x(w_current, x);
-     w_current->last_y = fix_y(w_current, y);
+     w_current->last_x = fix_x(toplevel, x);
+     w_current->last_y = fix_y(toplevel, y);
   */
 
   /* erase xor image */
@@ -865,33 +872,33 @@ void o_line_end(TOPLEVEL *w_current, int x, int y)
   }
 
   /* calculate the world coords of the two ends of the line */
-  SCREENtoWORLD(w_current,
+  SCREENtoWORLD(toplevel,
 				w_current->start_x, w_current->start_y,
 				&x1, &y1);
-  SCREENtoWORLD(w_current,
+  SCREENtoWORLD(toplevel,
 				w_current->last_x, w_current->last_y,
 				&x2, &y2);
-  x1 = snap_grid(w_current, x1);
-  y1 = snap_grid(w_current, y1);
-  x2 = snap_grid(w_current, x2);
-  y2 = snap_grid(w_current, y2);
+  x1 = snap_grid(toplevel, x1);
+  y1 = snap_grid(toplevel, y1);
+  x2 = snap_grid(toplevel, x2);
+  y2 = snap_grid(toplevel, y2);
 	
   /* create the object */
   /* PB : modification in o_line_add() prototype */	
-  w_current->page_current->object_tail =
-  o_line_add(w_current,
-             w_current->page_current->object_tail,
+  toplevel->page_current->object_tail =
+  o_line_add(toplevel,
+             toplevel->page_current->object_tail,
              OBJ_LINE, w_current->graphic_color, x1, y1, x2, y2);
 
   /* draw it */
-  o_redraw_single(w_current, w_current->page_current->object_tail);
+  o_redraw_single(w_current, toplevel->page_current->object_tail);
   
   w_current->start_x = (-1);
   w_current->start_y = (-1);
   w_current->last_x = (-1);
   w_current->last_y = (-1);
   
-  w_current->page_current->CHANGED=1;
+  toplevel->page_current->CHANGED=1;
 
   o_undo_savestate(w_current, UNDO_ALL);
 }
@@ -905,16 +912,17 @@ void o_line_end(TOPLEVEL *w_current, int x, int y)
  *  (<B>last_x</B>,<B>last_y</B>).
  *  The first end is constant. The second end is updated to the (<B>x</B>,<B>y</B>).
  * 
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_line_rubberline(TOPLEVEL *w_current, int x, int y)
+void o_line_rubberline(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
@@ -936,8 +944,8 @@ void o_line_rubberline(TOPLEVEL *w_current, int x, int y)
    * being snapped to grid.
    */ 
   /* update the coordinate of the modified end */
-  w_current->last_x = fix_x(w_current, x);
-  w_current->last_y = fix_y(w_current, y);
+  w_current->last_x = fix_x(toplevel, x);
+  w_current->last_y = fix_y(toplevel, y);
   
   /* if the control key was pressed then draw ortho lines */
   if (w_current->CONTROLKEY) {
@@ -960,16 +968,16 @@ void o_line_rubberline(TOPLEVEL *w_current, int x, int y)
   o_line_rubberline_xor(w_current);
 }
 
-/*! \brief Draw line from TOPLEVEL object.
+/*! \brief Draw line from GSCHEM_TOPLEVEL object.
  *  \par Function Description
  *  This function draws a line with an exclusive or function over the sheet.
  *  The color of the box is <B>w_current->select_color</B>. The line is
  *  described by the two points (<B>w_current->start_x</B>,
  *  <B>w_current->start_y</B>) and (<B>w_current->last_x</B>,<B>w_current->last_y</B>).
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
-void o_line_rubberline_xor(TOPLEVEL *w_current)
+void o_line_rubberline_xor(GSCHEM_TOPLEVEL *w_current)
 {
   /* draw the circle from the w_current variables */
   /* with xor-function */
@@ -989,18 +997,19 @@ void o_line_rubberline_xor(TOPLEVEL *w_current)
  *
  *  A line has a grip at each end.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Line OBJECT to draw grip points on.
  */
-void o_line_draw_grips(TOPLEVEL *w_current, OBJECT *o_current) 
+void o_line_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x[2], y[2];
 
   if (w_current->draw_grips == FALSE)
 	  return;
 
-  WORLDtoSCREEN( w_current, o_current->line->x[0], o_current->line->y[0], &x[0], &y[0] );
-  WORLDtoSCREEN( w_current, o_current->line->x[1], o_current->line->y[1], &x[1], &y[1] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &x[0], &y[0] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &x[1], &y[1] );
 
   /* draw the grip on line end 1 */
   o_grips_draw(w_current, x[LINE_END1], y[LINE_END1]);
@@ -1015,18 +1024,19 @@ void o_line_draw_grips(TOPLEVEL *w_current, OBJECT *o_current)
  *
  *  A line has a grip at each end.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Line OBJECT to erase grip marks from.
  */
-void o_line_erase_grips(TOPLEVEL *w_current, OBJECT *o_current) 
+void o_line_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x[2], y[2];
 
   if (w_current->draw_grips == FALSE)
     return;
   
-  WORLDtoSCREEN( w_current, o_current->line->x[0], o_current->line->y[0], &x[0], &y[0] );
-  WORLDtoSCREEN( w_current, o_current->line->x[1], o_current->line->y[1], &x[1], &y[1] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &x[0], &y[0] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &x[1], &y[1] );
   
   /* erase the grip on line end 1 */
   o_grips_erase(w_current, x[LINE_END1], y[LINE_END1]);

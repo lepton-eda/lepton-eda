@@ -32,6 +32,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -70,10 +71,10 @@ static void preview_dispose (GObject *self);
 
 /*! \brief Completes initialitation of the widget after realization.
  *  \par Function Description
- *  This function terminates the initialization of preview's toplevel
- *  environment after the widget has been realized.
+ *  This function terminates the initialization of preview's GSCHEM_TOPLEVEL
+ *  and TOPLEVEL environments after the widget has been realized.
  *
- *  It creates a preview page in the toplevel environment.
+ *  It creates a preview page in the TOPLEVEL environment.
  *
  *  \param [in] widget    The preview widget.
  *  \param [in] user_data Unused user data.
@@ -83,36 +84,37 @@ preview_callback_realize (GtkWidget *widget,
                           gpointer user_data)
 {
   Preview *preview = PREVIEW (widget);
-  TOPLEVEL *preview_toplevel = preview->preview_toplevel;
+  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
+  TOPLEVEL *preview_toplevel = preview_w_current->toplevel;
   PAGE *preview_page;
 
-  preview_toplevel->window = preview_toplevel->drawing_area->window;
-  gtk_widget_grab_focus (preview_toplevel->drawing_area);
+  preview_w_current->window = preview_w_current->drawing_area->window;
+  gtk_widget_grab_focus (preview_w_current->drawing_area);
 
-  preview_toplevel->width  = preview_toplevel->drawing_area->allocation.width;
-  preview_toplevel->height = preview_toplevel->drawing_area->allocation.height;
-  preview_toplevel->win_width  = preview_toplevel->width;
-  preview_toplevel->win_height = preview_toplevel->height;
+  preview_toplevel->width  = preview_w_current->drawing_area->allocation.width;
+  preview_toplevel->height = preview_w_current->drawing_area->allocation.height;
+  preview_w_current->win_width  = preview_toplevel->width;
+  preview_w_current->win_height = preview_toplevel->height;
 
-  preview_toplevel->backingstore = gdk_pixmap_new (
-    preview_toplevel->window,
-    preview_toplevel->drawing_area->allocation.width,
-    preview_toplevel->drawing_area->allocation.height, -1);
+  preview_w_current->backingstore = gdk_pixmap_new (
+    preview_w_current->window,
+    preview_w_current->drawing_area->allocation.width,
+    preview_w_current->drawing_area->allocation.height, -1);
 
-  x_window_setup_gc (preview_toplevel);
+  x_window_setup_gc (preview_w_current);
 
   preview_page = s_page_new (preview_toplevel, "unknown");
   s_page_goto (preview_toplevel, preview_page);
 
-  x_repaint_background(preview_toplevel);
+  x_repaint_background(preview_w_current);
 
   preview_toplevel->DONT_REDRAW = 0;
 
-  a_zoom_extents(preview_toplevel,
+  a_zoom_extents(preview_w_current,
                  preview_page->object_head,
                  A_PAN_DONT_REDRAW);
 
-  o_redraw_all(preview_toplevel);
+  o_redraw_all(preview_w_current);
 
 }
 
@@ -131,11 +133,11 @@ preview_callback_expose (GtkWidget *widget,
                          gpointer user_data)
 {
   Preview *preview = PREVIEW (widget);
-  TOPLEVEL *preview_toplevel = preview->preview_toplevel;
+  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
 
   gdk_draw_pixmap(widget->window,
                   widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
-                  preview_toplevel->backingstore,
+                  preview_w_current->backingstore,
                   event->area.x, event->area.y,
                   event->area.x, event->area.y,
                   event->area.width, event->area.height);
@@ -160,7 +162,7 @@ preview_callback_button_press (GtkWidget *widget,
                                gpointer user_data)
 {
   Preview *preview = PREVIEW (widget);
-  TOPLEVEL *preview_toplevel = preview->preview_toplevel;
+  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
 
   if (!preview->active) {
     return TRUE;
@@ -168,17 +170,17 @@ preview_callback_button_press (GtkWidget *widget,
 
   switch (event->button) {
       case 1: /* left mouse button: zoom in */
-        a_zoom (preview_toplevel, ZOOM_IN, HOTKEY,
+        a_zoom (preview_w_current, ZOOM_IN, HOTKEY,
                 A_PAN_DONT_REDRAW);
-        o_redraw_all_fast (preview_toplevel);
+        o_redraw_all_fast (preview_w_current);
         break;
       case 2: /* middle mouse button: pan */
-        a_pan (preview_toplevel, mouse_x, mouse_y);
+        a_pan (preview_w_current, mouse_x, mouse_y);
         break;
       case 3: /* right mouse button: zoom out */
-        a_zoom (preview_toplevel, ZOOM_OUT, HOTKEY,
+        a_zoom (preview_w_current, ZOOM_OUT, HOTKEY,
                 A_PAN_DONT_REDRAW);
-        o_redraw_all_fast (preview_toplevel);
+        o_redraw_all_fast (preview_w_current);
         break;
   }
   
@@ -226,7 +228,8 @@ preview_callback_motion_notify (GtkWidget *widget,
 static void
 preview_update (Preview *preview)
 {
-  TOPLEVEL *preview_toplevel = preview->preview_toplevel;
+  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
+  TOPLEVEL *preview_toplevel = preview_w_current->toplevel;
   int left, top, right, bottom;
   int width, height;
 
@@ -279,10 +282,10 @@ preview_update (Preview *preview)
   }
 
   /* display current page (possibly empty) */
-  a_zoom_extents (preview_toplevel,
+  a_zoom_extents (preview_w_current,
                   preview_toplevel->page_current->object_head,
                   A_PAN_DONT_REDRAW);
-  o_redraw_all (preview_toplevel);
+  o_redraw_all (preview_w_current);
   
 }
 
@@ -355,18 +358,18 @@ preview_event_configure (GtkWidget         *widget,
 {
   gboolean retval;
   int save_redraw;
-  TOPLEVEL *preview_toplevel = PREVIEW (widget)->preview_toplevel;
-  PAGE     *preview_page = preview_toplevel->page_current;
+  GSCHEM_TOPLEVEL *preview_w_current = PREVIEW (widget)->preview_w_current;
+  PAGE     *preview_page = preview_w_current->toplevel->page_current;
 
-  save_redraw = preview_toplevel->DONT_REDRAW;
-  preview_toplevel->DONT_REDRAW = 1;
-  retval = x_event_configure (widget, event, preview_toplevel);
-  preview_toplevel->DONT_REDRAW = save_redraw;
+  save_redraw = preview_w_current->toplevel->DONT_REDRAW;
+  preview_w_current->toplevel->DONT_REDRAW = 1;
+  retval = x_event_configure (widget, event, preview_w_current);
+  preview_w_current->toplevel->DONT_REDRAW = save_redraw;
   if (preview_page != NULL) {
-    a_zoom_extents(preview_toplevel,
+    a_zoom_extents(preview_w_current,
                    preview_page->object_head,
                    A_PAN_DONT_REDRAW);
-    o_redraw_all_fast(preview_toplevel);
+    o_redraw_all_fast(preview_w_current);
   }
   return retval;
 }
@@ -375,12 +378,12 @@ preview_event_configure (GtkWidget         *widget,
 static gboolean
 preview_event_scroll (GtkWidget *widget,
                       GdkEventScroll *event,
-                      TOPLEVEL *w_current)
+                      GSCHEM_TOPLEVEL *w_current)
 {
   if (!PREVIEW (widget)->active) {
     return TRUE;
   }
-  return x_event_scroll (widget, event, PREVIEW (widget)->preview_toplevel);
+  return x_event_scroll (widget, event, PREVIEW (widget)->preview_w_current);
 }
 
 static void
@@ -398,33 +401,33 @@ preview_init (Preview *preview)
     { "scroll_event",         G_CALLBACK (preview_event_scroll)           },
     { NULL,                   NULL                                        }
   }, *tmp;
-  TOPLEVEL *preview_toplevel;
+  GSCHEM_TOPLEVEL *preview_w_current;
+  preview_w_current = gschem_toplevel_new ();
+  preview_w_current->toplevel = s_toplevel_new ();
 
-  preview_toplevel = s_toplevel_new ();
-
-  i_vars_set (preview_toplevel);
+  i_vars_set (preview_w_current);
 
   /* be sure to turn off scrollbars */
-  preview_toplevel->scrollbars_flag = FALSE;
+  preview_w_current->scrollbars_flag = FALSE;
 
   /* be sure to turn off the grid */
-  preview_toplevel->grid = FALSE;
+  preview_w_current->grid = FALSE;
 
-  /* preview_toplevel windows don't have toolbars */
-  preview_toplevel->handleboxes = FALSE;
-  preview_toplevel->toolbars    = FALSE;
+  /* preview_w_current windows don't have toolbars */
+  preview_w_current->handleboxes = FALSE;
+  preview_w_current->toolbars    = FALSE;
 
-  preview_toplevel->width  = 160;
-  preview_toplevel->height = 120;
-  preview_toplevel->win_width  = preview_toplevel->width;
-  preview_toplevel->win_height = preview_toplevel->height;
+  preview_w_current->toplevel->width  = 160;
+  preview_w_current->toplevel->height = 120;
+  preview_w_current->win_width  = preview_w_current->toplevel->width;
+  preview_w_current->win_height = preview_w_current->toplevel->height;
 
-  preview_toplevel->drawing_area = GTK_WIDGET (preview);
-  preview->preview_toplevel = preview_toplevel;
+  preview_w_current->drawing_area = GTK_WIDGET (preview);
+  preview->preview_w_current = preview_w_current;
 
   g_object_set (GTK_WIDGET (preview),
-                "width-request",  preview_toplevel->width,
-                "height-request", preview_toplevel->height,
+                "width-request",  preview_w_current->toplevel->width,
+                "height-request", preview_w_current->toplevel->height,
                 NULL);
 
   preview->active   = FALSE;
@@ -451,9 +454,9 @@ preview_set_property (GObject *object,
                       GParamSpec *pspec)
 {
   Preview *preview = PREVIEW (object);
-  TOPLEVEL *preview_toplevel = preview->preview_toplevel;
+  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
 
-  g_assert (preview_toplevel != NULL);
+  g_assert (preview_w_current != NULL);
   
   switch(property_id) {
       case PROP_FILENAME:
@@ -487,14 +490,14 @@ preview_get_property (GObject *object,
                       GParamSpec *pspec)
 {
   Preview *preview = PREVIEW (object);
-  TOPLEVEL *preview_toplevel = preview->preview_toplevel;
+  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
 
   switch(property_id) {
       case PROP_FILENAME:
-        g_assert (preview_toplevel != NULL);
+        g_assert (preview_w_current != NULL);
         /* return the filename of the current page in toplevel */
         g_value_set_string (value,
-                            preview_toplevel->page_current->page_filename);
+                            preview_w_current->toplevel->page_current->page_filename);
         break;
       case PROP_ACTIVE:
         g_value_set_boolean (value, preview->active);
@@ -509,23 +512,24 @@ static void
 preview_dispose (GObject *self)
 {
   Preview *preview = PREVIEW (self);
-  TOPLEVEL *preview_toplevel = preview->preview_toplevel;
+  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
 
-  if (preview_toplevel != NULL) {
-    preview_toplevel->drawing_area = NULL;
+  if (preview_w_current != NULL) {
+    preview_w_current->drawing_area = NULL;
 
-    o_attrib_free_current (preview_toplevel);
-    o_complex_free_filename (preview_toplevel);
+    o_attrib_free_current (preview_w_current->toplevel);
+    o_complex_free_filename (preview_w_current->toplevel);
 
-    if (preview_toplevel->backingstore) {
-      gdk_pixmap_unref (preview_toplevel->backingstore);
+    if (preview_w_current->backingstore) {
+      gdk_pixmap_unref (preview_w_current->backingstore);
     }
 
-    x_window_free_gc (preview_toplevel);
+    x_window_free_gc (preview_w_current);
     
-    s_toplevel_delete (preview_toplevel);
+    s_toplevel_delete (preview_w_current->toplevel);
+    g_free (preview_w_current);
 
-    preview->preview_toplevel = NULL;
+    preview->preview_w_current = NULL;
   }
     
   G_OBJECT_CLASS (preview_parent_class)->dispose (self);

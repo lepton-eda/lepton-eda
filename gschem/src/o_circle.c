@@ -23,6 +23,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/gschem_struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -50,17 +51,18 @@ typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \par Function Description
  *  This function is used to draw a circle on screen. The circle is described
  *  by the OBJECT which is referred by <B>o_current</B>. The display is done 
- *  according to the current state, given by the TOPLEVEL object pointed by 
+ *  according to the current state, given by the GSCHEM_TOPLEVEL object pointed by
  *  <B>w_current</B>.
  *
  *  It first checks if the OBJECT pointed is valid or not. If not it
  *  returns and do not output anything. That should never happen though.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Circle OBJECT to draw.
  */
-void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
+void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int wleft, wright, wtop, wbottom; /* world bounds */
   int s_x, s_y;
   int radius;
@@ -79,11 +81,11 @@ void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
    * Get read to check for visibility of this line by using it's
    * bounding box
    */
-  world_get_circle_bounds(w_current, o_current,
+  world_get_circle_bounds(toplevel, o_current,
                           &wleft, &wtop, &wright, &wbottom);
 	
-  if ( (w_current->DONT_REDRAW == 1) || 
-       (!visible(w_current, wleft, wtop, wright, wbottom)) ) {
+  if ( (toplevel->DONT_REDRAW == 1) ||
+       (!visible(toplevel, wleft, wtop, wright, wbottom)) ) {
     return;
   }
 	
@@ -97,13 +99,13 @@ void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
    *
    * Finally the function takes care of the grips.
    */
-  if (w_current->override_color != -1 ) {
-    color = x_get_color(w_current->override_color);
+  if (toplevel->override_color != -1 ) {
+    color = x_get_color(toplevel->override_color);
   } else {
     color = x_get_color(o_current->color);
   }
 
-  radius = SCREENabs( w_current, o_current->circle->radius );
+  radius = SCREENabs( toplevel, o_current->circle->radius );
 
   /*
    * The values describing the line type are extracted from the
@@ -121,13 +123,13 @@ void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
    * to an endless loop in function called after. If such a case is encountered
    * the circle is drawn as a solid circle independently of its initial type.
    */
-  circle_width = SCREENabs( w_current, o_current->line_width );
+  circle_width = SCREENabs( toplevel, o_current->line_width );
   if(circle_width <= 0) {
     circle_width = 1;
   }
 
-  length = SCREENabs( w_current, o_current->line_length );
-  space = SCREENabs( w_current, o_current->line_space );
+  length = SCREENabs( toplevel, o_current->line_length );
+  space = SCREENabs( toplevel, o_current->line_space );
 
   switch(o_current->line_end) {
     case END_NONE:   circle_end = GDK_CAP_BUTT;       break;
@@ -177,7 +179,7 @@ void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
   if((length == 0) || (space == 0))
   draw_func = o_arc_draw_solid;
 
-  WORLDtoSCREEN( w_current, o_current->circle->center_x, o_current->circle->center_y,
+  WORLDtoSCREEN( toplevel, o_current->circle->center_x, o_current->circle->center_y,
                  &s_x, &s_y );
 	
   (*draw_func)(w_current->window, w_current->gc, color,
@@ -214,15 +216,15 @@ void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
    * distinct. If such a case is encountered the circle is filled hollow
    * (e.q. not filled).
    */
-  fill_width = SCREENabs( w_current, o_current->fill_width );
+  fill_width = SCREENabs( toplevel, o_current->fill_width );
   if( fill_width <= 0) {
     fill_width = 1;
   }
 	
   angle1 = o_current->fill_angle1;
-  pitch1 = SCREENabs( w_current, o_current->fill_pitch1 );
+  pitch1 = SCREENabs( toplevel, o_current->fill_pitch1 );
   angle2 = o_current->fill_angle2;
-  pitch2 = SCREENabs( w_current, o_current->fill_pitch2 );
+  pitch2 = SCREENabs( toplevel, o_current->fill_pitch2 );
 	
   switch(o_current->fill_type) {
     case FILLING_HOLLOW:
@@ -514,14 +516,15 @@ void o_circle_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  special color. Therefore a circle is drawn with background color over
  *  the previous one.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Circle OBJECT to erase.
  */
-void o_circle_erase(TOPLEVEL *w_current, OBJECT *o_current)
+void o_circle_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-	w_current->override_color = w_current->background_color;
+  TOPLEVEL *toplevel = w_current->toplevel;
+	toplevel->override_color = toplevel->background_color;
 	o_circle_draw(w_current, o_current);
-	w_current->override_color = -1;
+	toplevel->override_color = -1;
 }
 
 /*! \todo Finish function documentation!!!
@@ -529,7 +532,7 @@ void o_circle_erase(TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_circle_eraserubber(TOPLEVEL *w_current)
+void o_circle_eraserubber(GSCHEM_TOPLEVEL *w_current)
 {
    o_circle_rubbercircle_xor(w_current);
 }
@@ -543,7 +546,7 @@ void o_circle_eraserubber(TOPLEVEL *w_current)
  *
  *  The circle is displayed with the color of the object.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] dx         Delta x coordinate for circle.
  *  \param [in] dy         Delta y coordinate for circle.
  *  \param [in] o_current  Circle OBJECT to draw.
@@ -551,8 +554,9 @@ void o_circle_eraserubber(TOPLEVEL *w_current)
  *  \todo
  *  add in offsets, get rid of global diffs_x,y
  */
-void o_circle_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+void o_circle_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x, y, radius;
   int color;
 
@@ -567,10 +571,10 @@ void o_circle_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
   }
 
   /* radius of the circle */
-  radius = SCREENabs( w_current, o_current->circle->radius );
+  radius = SCREENabs( toplevel, o_current->circle->radius );
   /* upper left corner of the square the circle is inscribed in */
   /* gdk coords system */
-  WORLDtoSCREEN( w_current,
+  WORLDtoSCREEN( toplevel,
                  o_current->circle->center_x - o_current->circle->radius,
                  o_current->circle->center_y + o_current->circle->radius,
                  &x, &y );
@@ -602,15 +606,16 @@ void o_circle_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
  *  The first step of the circle input is to set the center of the arc.
  *  This center is kept in (<B>w_current->start_x</B>,<B>w_current->start_y</B>). 
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_circle_start(TOPLEVEL *w_current, int x, int y)
+void o_circle_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
 	/* center of circle */
-	w_current->last_x = w_current->start_x = fix_x(w_current, x);
-	w_current->last_y = w_current->start_y = fix_y(w_current, y);
+	w_current->last_x = w_current->start_x = fix_x(toplevel, x);
+	w_current->last_y = w_current->start_y = fix_y(toplevel, y);
 	/* radius */
 	w_current->distance = 0;
 
@@ -634,18 +639,19 @@ void o_circle_start(TOPLEVEL *w_current, int x, int y)
  *  A new object is allocated, initialized and linked in the object list.
  *  This new object is finally drawn.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_circle_end(TOPLEVEL *w_current, int x, int y)
+void o_circle_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int center_x, center_y;
   int fx, fy;
   int radius;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
@@ -653,8 +659,8 @@ void o_circle_end(TOPLEVEL *w_current, int x, int y)
   o_circle_rubbercircle_xor(w_current);
   
   /* get the last coords of the pointer */
-  fx = fix_x(w_current, x);
-  fy = fix_y(w_current, y);
+  fx = fix_x(toplevel, x);
+  fy = fix_y(toplevel, y);
   /* compute the radius in screen unit */
   w_current->distance = dist(w_current->start_x, w_current->start_y,
                              fx, fy);
@@ -671,22 +677,22 @@ void o_circle_end(TOPLEVEL *w_current, int x, int y)
   }
 
   /* get center coords in world unit */
-  SCREENtoWORLD(w_current,
+  SCREENtoWORLD(toplevel,
                 w_current->start_x, w_current->start_y,
                 &center_x, &center_y);
   /* get radius in world unit */
-  radius = snap_grid(w_current,
-                     WORLDabs(w_current, w_current->distance));
+  radius = snap_grid(toplevel,
+                     WORLDabs(toplevel, w_current->distance));
 
   /* create the object */
-  w_current->page_current->object_tail =
-  o_circle_add(w_current,
-               w_current->page_current->object_tail,
+  toplevel->page_current->object_tail =
+  o_circle_add(toplevel,
+               toplevel->page_current->object_tail,
                OBJ_CIRCLE, w_current->graphic_color,
                center_x, center_y, radius);
 
   /* draw it */
-  o_redraw_single(w_current, w_current->page_current->object_tail);
+  o_redraw_single(w_current, toplevel->page_current->object_tail);
   
   w_current->start_x = (-1);
   w_current->start_y = (-1);
@@ -696,7 +702,7 @@ void o_circle_end(TOPLEVEL *w_current, int x, int y)
   w_current->loc_y   = (-1);
   w_current->distance = (-1);
   
-  w_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
 
   o_undo_savestate(w_current, UNDO_ALL);
 }
@@ -719,16 +725,17 @@ void o_circle_end(TOPLEVEL *w_current, int x, int y)
  *    <DT>*</DT><DD><B>w_current->distance</B> as its radius.
  *  </DL>
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_circle_rubbercircle(TOPLEVEL *w_current, int x, int y)
+void o_circle_rubbercircle(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
 
   if (w_current->inside_action == 0) {
-    o_redraw(w_current, w_current->page_current->object_head, TRUE);
+    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
     return;
   }
 
@@ -740,8 +747,8 @@ void o_circle_rubbercircle(TOPLEVEL *w_current, int x, int y)
    * the center of the circle and the mouse position.
    */
   /* update the radius */
-  w_current->last_x = fix_x(w_current, x);
-  w_current->last_y = fix_y(w_current, y);
+  w_current->last_x = fix_x(toplevel, x);
+  w_current->last_y = fix_y(toplevel, y);
   
   diff_x = GET_BOX_WIDTH (w_current);
   diff_y = GET_BOX_HEIGHT(w_current);
@@ -758,9 +765,9 @@ void o_circle_rubbercircle(TOPLEVEL *w_current, int x, int y)
 
 }
 
-/*! \brief Draw circle from TOPLEVEL object.
+/*! \brief Draw circle from GSCHEM_TOPLEVEL object.
  *  \par Function Description
- *  This function draws the circle from the variables in the toplevel
+ *  This function draws the circle from the variables in the GSCHEM_TOPLEVEL
  *  structure <B>*w_current</B>.
  *  The center of the circle is at (<B>w_current->start_x</B>,
  *  <B>w_current->start_y</B>) and its radius is in <B>w_current->distance</B>.
@@ -769,9 +776,9 @@ void o_circle_rubbercircle(TOPLEVEL *w_current, int x, int y)
  *  the circle with the selection color and an xor-function over the current
  *  sheet..
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
-void o_circle_rubbercircle_xor(TOPLEVEL *w_current)
+void o_circle_rubbercircle_xor(GSCHEM_TOPLEVEL *w_current)
 {
   /* draw the circle from the w_current variables */
   gdk_gc_set_foreground(w_current->xor_gc, 
@@ -792,18 +799,19 @@ void o_circle_rubbercircle_xor(TOPLEVEL *w_current)
  *  \par Function Description
  *  This function draws the grip that match the circle object <B>*o_current</B>.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Circle OBJECT to draw grip points on.
  */
-void o_circle_draw_grips(TOPLEVEL *w_current, OBJECT *o_current) 
+void o_circle_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x, y;
 
   if (w_current->draw_grips == FALSE)
 	  return;
 
   /* coords of the lower right corner of the square */
-  WORLDtoSCREEN( w_current,
+  WORLDtoSCREEN( toplevel,
                  o_current->circle->center_x + o_current->circle->radius,
                  o_current->circle->center_y - o_current->circle->radius,
                  &x, &y );
@@ -820,18 +828,19 @@ void o_circle_draw_grips(TOPLEVEL *w_current, OBJECT *o_current)
  *  A circle has a single grip on the lower right corner of the square it
  *  is inscribed in.
  *
- *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Circle OBJECT to erase grip marks from.
  */
-void o_circle_erase_grips(TOPLEVEL *w_current, OBJECT *o_current) 
+void o_circle_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x, y;
 
   if (w_current->draw_grips == FALSE)
 	  return;
 
   /* coords of the lower right corner of square */
-  WORLDtoSCREEN( w_current,
+  WORLDtoSCREEN( toplevel,
                  o_current->circle->center_x + o_current->circle->radius,
                  o_current->circle->center_y - o_current->circle->radius,
                  &x, &y );
