@@ -116,22 +116,18 @@ void o_redraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object_list, gboolean draw_sel
   OBJECT *o_current = object_list;
   int redraw_state = toplevel->DONT_REDRAW;
 
+  w_current->inside_redraw = 1;
   while (o_current != NULL) {
     if ((o_current->draw_func != NULL) &&
         (o_current->type != OBJ_HEAD)) {
-      if (o_current->selected && !draw_selected) {
-	toplevel->DONT_REDRAW = 1 || redraw_state;
-      }
-      else {
-	toplevel->DONT_REDRAW = 0 || redraw_state;
-      }
-      w_current->inside_redraw = 1;
+      toplevel->DONT_REDRAW = redraw_state ||
+                              (!draw_selected && o_current->selected);
       (*o_current->draw_func)(w_current, o_current);
-      w_current->inside_redraw = 0;
     }
 
     o_current = o_current->next;
   }
+  w_current->inside_redraw = 0;
   toplevel->DONT_REDRAW = redraw_state;
 }
 
