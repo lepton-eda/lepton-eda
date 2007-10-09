@@ -131,6 +131,29 @@ void o_redraw(TOPLEVEL *w_current, OBJECT *object_list, gboolean draw_selected)
   w_current->DONT_REDRAW = redraw_state;
 }
 
+/*! \brief Redraw an object on the screen.
+ *  \par Function Description
+ *  This function will redraw a single object on the screen.
+ *
+ *  \param [in] w_current  The TOPLEVEL object.
+ *  \param [in] o_current  The OBJECT to redraw.
+ *
+ */
+void o_redraw_single(TOPLEVEL *w_current, OBJECT *o_current)
+{
+  if (o_current == NULL)
+  return;
+
+  if (w_current->DONT_REDRAW) /* highly experimental */
+  return;
+
+  if (o_current->draw_func != NULL && o_current->type != OBJ_HEAD) {
+    w_current->inside_redraw = 1;
+    (*o_current->draw_func)(w_current, o_current);
+    w_current->inside_redraw = 0;
+  }
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

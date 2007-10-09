@@ -65,29 +65,6 @@ int inside_region(int xmin, int ymin, int xmax, int ymax, int x, int y)
   return ((x >= xmin && x <= xmax && y >= ymin && y <= ymax) ? 1 : 0);
 }
 
-/*! \brief Redraw an object on the screen.
- *  \par Function Description
- *  This function will redraw a single object on the screen.
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] o_current  The OBJECT to redraw.
- *
- */
-void o_redraw_single(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  if (o_current == NULL)
-  return;
-	
-  if (toplevel->DONT_REDRAW) /* highly experimental */
-  return;
-
-  if (o_current->draw_func != NULL && o_current->type != OBJ_HEAD) {
-    toplevel->inside_redraw = 1;
-    (*o_current->draw_func)(toplevel, o_current);
-    toplevel->inside_redraw = 0;
-  }
-}
-
 /*! \brief Recalculate position of the given object.
  *  \par Function Description
  *  This function will take an object and recalculate its

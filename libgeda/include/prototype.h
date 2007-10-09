@@ -195,7 +195,6 @@ void o_attrib_list_copied_to(ATTRIB *list, OBJECT *to_obj);
 
 /* o_basic.c */
 int inside_region(int xmin, int ymin, int xmax, int ymax, int x, int y);
-void o_redraw_single(TOPLEVEL *toplevel, OBJECT *o_current);
 void o_recalc_single_object(TOPLEVEL *toplevel, OBJECT *o_current);
 void o_recalc_object_list(TOPLEVEL *toplevel, OBJECT *object_list);
 void o_recalc_object_glist(TOPLEVEL *toplevel, GList *object_glist);
