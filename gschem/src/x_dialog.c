@@ -78,6 +78,11 @@ struct fill_type_data {
   GList *objects;
 };
 
+struct color_set_data_st {
+  GSCHEM_TOPLEVEL *w_current;
+  int index;
+};
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -2169,17 +2174,9 @@ void coord_dialog (GSCHEM_TOPLEVEL *w_current, int x, int y)
  */
 gint color_set(GtkWidget *w, gpointer data)
 {
-  int index;
+  struct color_set_data_st *color_set_data = (struct color_set_data_st *)data;
 
-  /* 
-   * here we really are passing an int sized piece of data, the index rather
-   * than a pointer and we shouldn't have issues as long as
-   * sizeof(void *) >= sizeof(int)
-   */
-  index = GPOINTER_TO_INT( data );
-
-  /* hate to use this here... but I have to... */
-  global_window_current->edit_color = index;
+  color_set_data->w_current->edit_color = color_set_data->index;
   return(0);
 }
 
@@ -2268,6 +2265,7 @@ static GtkWidget *create_color_menu (GSCHEM_TOPLEVEL * w_current, int * select_i
   char *buf; 
   char *menu_string;
   char *temp=NULL;
+  struct color_set_data_st *color_set_data;
 
   /* first lets see if we have a selected object, if so select its color */
   int select_col = -1;
@@ -2311,22 +2309,21 @@ static GtkWidget *create_color_menu (GSCHEM_TOPLEVEL * w_current, int * select_i
                                                             menuitem));
       
       gtk_menu_append (GTK_MENU (menu), menuitem);
-      
-      gtk_signal_connect (GTK_OBJECT (menuitem), 
-                          "activate", 
-                          (GtkSignalFunc) color_set,
-                          GINT_TO_POINTER( index ));
-      
-      /* I have no idea if doing the above cast is valid,
-       * since index isn't a pointer, it's just being
-       * treated as one, it's then cast to an int in
-       * color_set.  This should be ok as long as
-       * sizeof(void *) >= sizeof(int)
-       */
+
+      color_set_data = g_new0 (struct color_set_data_st, 1);
+      color_set_data->w_current = w_current;
+      color_set_data->index = index;
+
+      g_signal_connect_data (GTK_OBJECT (menuitem),
+                             "activate",
+                             G_CALLBACK (color_set),
+                             color_set_data,
+                             (GClosureNotify) g_free,
+                             0 /* GConnectFlags */);
 
       if (select_col == -1){
 	/* set the default to the current color */
-        if (index == global_window_current->edit_color) {
+        if (index == w_current->edit_color) {
           gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
           /*fprintf(stderr, "checking item %d\n", index); */
 	  *select_index = item_index;
