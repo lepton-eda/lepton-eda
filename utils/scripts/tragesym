@@ -49,7 +49,7 @@ single_attr_warning = ["device", "footprint", "author", "documentation",
                        "description", "numslots","dist-license", "use-license"]
 single_attr = ["slot"]
 multiple_attr = ["slotdef", "comment"]
-stylelist = ["line","dot","clk","dotclk","none"]
+stylelist = ["line","dot","clk","dotclk","spacer","none"]
 poslist = ["l","r","t","b",""]
 typelist = ["in","out","io","oc","oe","pas","tp","tri","clk","pwr"]
 P_NR, P_SEQ, P_TYPE, P_STYLE, P_POS, P_NET, P_LABEL = 0,1,2,3,4,5,6
@@ -304,7 +304,7 @@ def writesym(filename,options,attr,pins):
     calculated_top_symwidth=(numptop-1)*o_hdist+2*o_hdist
     calculated_bottom_symwidth=(numpbottom-1)*o_hdist+2*o_hdist
     
-    calcutated_symwidth = max(calculated_bottom_symwidth,
+    calculated_symwidth = max(calculated_bottom_symwidth,
                               calculated_top_symwidth)
 
     if (numptop + numpbottom > 0):
@@ -349,6 +349,16 @@ def writesym(filename,options,attr,pins):
     for pin in pins:
         if pin[P_STYLE] == "none": #
             continue
+        if pin[P_STYLE]=="spacer":
+            if pin[P_POS] == "l": #left pin
+                plefty=plefty - o_vdist  #where to draw the _next_ pin
+            elif pin[P_POS] == "r": #right pin
+                prighty=prighty - o_vdist
+            elif pin[P_POS] == "b": # bottom pin
+                pbottomx=pbottomx + o_hdist
+            elif pin[P_POS] == "t": # top pin
+                ptopx=ptopx + o_hdist
+            continue;
 ### decide which pindirection to use
         ## TODO: put all constants into a dictionary         
         if pin[P_POS] == "l": #left pin
@@ -406,8 +416,6 @@ def writesym(filename,options,attr,pins):
                 negl=(0,20,1,0)
                 swap=0
             ptopx=ptopx + o_hdist
-        if (pin[P_STYLE]=="spacer"):
-            continue
 ### draw the pin
         if (pin[P_STYLE]=="dot" or  #short pin and dot?
             pin[P_STYLE]=="dotclk"):

@@ -48,8 +48,8 @@ numslots=0
 # pinnr is the physical number of the pin
 # seq is the pinseq= attribute, leave it blank if it doesn't matter
 # type can be (in, out, io, oc, oe, pas, tp, tri, clk, pwr)
-# style can be (line,dot,clk,dotclk,none). none if only want to add a net
-# posit. can be (l,r,t,b) or empty for nets
+# style can be (line,dot,clk,dotclk,spacer,none). none if only want to add a net
+# posit. can be (l,r,t,b) or empty for nets.
 # net specifies the name of the net. Vcc or GND for example.
 # label represents the pinlabel.
 #	negation lines can be added with "\_" example: \_enable\_ 
