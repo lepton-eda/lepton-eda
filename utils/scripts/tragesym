@@ -31,7 +31,7 @@
 import sys, string
 
 ##################### GLOBALS ############################################
-VERSION="0.0.11"
+VERSION="0.0.12"
 
 CHARHIGH=26
 preset_options = {"wordswap":"yes",
@@ -160,12 +160,12 @@ def readsrc(filename):
 
 def checkpins(pinlist):
     for pin in pinlist:
-    	if (pin[P_STYLE]=="spacer"):
-	    if (pin[P_POS] == ""):
-		print "There must be a position with a spacer.\n"
+    	if pin[P_STYLE] == "spacer":
+	    if pin[P_POS] == "":
+		print "Error: There must be a position with a spacer.\n"
 		sys.exit()
 	    if pin[P_POS] not in poslist:
-		print "Position is not allowed: \n", pin
+		print "Error: position is not allowed: \n", pin
 		sys.exit()
     	    continue
         if pin[P_STYLE] != "none":
@@ -350,7 +350,10 @@ def writesym(filename,options,attr,pins):
         if pin[P_STYLE] == "none": #
             continue
         if pin[P_STYLE]=="spacer":
-            if pin[P_POS] == "l": #left pin
+            if o_sort == "yes":
+                print "warning: spacers are not supported when sorting labels"
+                continue
+            elif pin[P_POS] == "l": #left pin
                 plefty=plefty - o_vdist  #where to draw the _next_ pin
             elif pin[P_POS] == "r": #right pin
                 prighty=prighty - o_vdist
@@ -358,7 +361,7 @@ def writesym(filename,options,attr,pins):
                 pbottomx=pbottomx + o_hdist
             elif pin[P_POS] == "t": # top pin
                 ptopx=ptopx + o_hdist
-            continue;
+            continue
 ### decide which pindirection to use
         ## TODO: put all constants into a dictionary         
         if pin[P_POS] == "l": #left pin
@@ -563,7 +566,7 @@ def mergeoptions(source_opt,pre_opt):
 def generate_pinseq(pins):
     seq=1
     for nr in xrange(len(pins)):
-        if pins[nr][P_STYLE] != "none":
+        if pins[nr][P_STYLE] not in ["none","spacer"]:
             pins[nr][P_SEQ] = "%i"%seq
             seq = seq + 1
     return pins

@@ -5,7 +5,7 @@
 [options]
 wordswap=yes
 rotate_labels=no
-sort_labels=yes
+sort_labels=no
 generate_pinseq=yes
 sym_width=1400
 pinwidthvertical=400
@@ -36,13 +36,16 @@ numslots=0
 #-----------------------------------------------------
 #pinnr	seq	type	style	posit.	net	label	
 #-----------------------------------------------------
-1		out	line	r		Q7
-2		in	line	l		Clear
-3		in	line	l		D
-4		in	dot	l		\_E\_
 5		in	line	l		A0
 6		in	line	l		A1
 7		in	line	l		A2
+			spacer	l
+3		in	line	l		D
+			spacer	l
+2		in	line	l		Clear
+			spacer	l
+			spacer	l
+4		in	dot	l		\_E\_
 8		pwr	none		VSS
 9		out	line	r		Q0
 10		out	line	r		Q1
@@ -51,4 +54,5 @@ numslots=0
 13		out	line	r		Q4
 14		out	line	r		Q5
 15		out	line	r		Q6
+1		out	line	r		Q7
 16		pwr	none		VDD
