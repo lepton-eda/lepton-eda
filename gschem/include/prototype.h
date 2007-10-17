@@ -477,6 +477,7 @@ void o_draw_list(GSCHEM_TOPLEVEL *w_current, GList *list);
 void o_draw_selected(GSCHEM_TOPLEVEL *w_current);
 void o_erase_selected(GSCHEM_TOPLEVEL *w_current);
 void o_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
+void o_erase_list(GSCHEM_TOPLEVEL *w_current, GList *list);
 void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist, GdkColor *color, int firsttime);
 int o_erase_rubber(GSCHEM_TOPLEVEL *w_current);
 int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current);

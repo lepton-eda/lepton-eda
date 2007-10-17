@@ -267,6 +267,28 @@ void o_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
  *  \par Function Description
  *
  */
+void o_erase_list(GSCHEM_TOPLEVEL *w_current, GList* list)
+{
+  OBJECT *o_current;
+  GList *iter;
+
+  if (w_current->inside_redraw) {
+    return;
+  }
+
+  iter = list;
+  while (iter != NULL) {
+    o_current = iter->data;
+    o_erase_single(w_current, o_current);
+    iter = g_list_next(iter);
+  }
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
 /* both outline and boundingbox work! */
 /* name is blah */
 void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
