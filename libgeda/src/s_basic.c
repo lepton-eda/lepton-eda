@@ -505,40 +505,12 @@ void s_delete_list_fromstart(TOPLEVEL *toplevel, OBJECT *start)
   current = return_tail(start);
 
   /* do the delete backwards */
-  /*while(current != NULL && current->type != OBJ_HEAD ) {*/
   while(current != NULL) {
     o_current = current->prev;
     s_delete(toplevel, current);
     current = o_current;
   }
-
-  /* now delete the head node */
-  /* might not need this but what the hell */
-  /* no longer needed, since it's deleted above */
-  /*s_delete_head(toplevel, start);*/
 }
-
-#if 0 /* old way of doing this */
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void s_delete_list_fromstart(OBJECT *start)
-{
-  OBJECT *traverse=NULL;
-  OBJECT *o_current=NULL;
-
-  for (traverse = start; traverse ; traverse = o_current) {
-    o_current = traverse->next;
-    if (traverse->type != OBJ_HEAD) /* don't delete any head nodes */
-      s_delete(traverse);
-    else 
-      break; /* found a head node */
-  }
-  s_delete(traverse);
-}
-#endif
 
 /*! \todo Finish function documentation!!!
  *  \brief

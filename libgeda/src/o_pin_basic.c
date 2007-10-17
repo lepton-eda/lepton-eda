@@ -88,21 +88,6 @@ OBJECT *o_pin_add(TOPLEVEL *toplevel, OBJECT *object_list,
   
   object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
-  /* this mod causes shadow pins to appear at 0,0 if you copy a complex
-   * that has pins... 
-   * This mod was added so that you could draw pins to nets and have
-   * the dangling cue go away 
-   * There is a complementary one in o_nets, but it doesn't work 
-   * completely either... hack */
-#if 0
-  /*  ifed out 3/15/98 due to above  */
-  if (!adding_sel) {
-    o_pin_conn_recalc(toplevel, object_list); /* old conn system */
-    /*o_net_conn_recalc(object_list); */
-  }     
-#endif
-
-
   if (!toplevel->ADDING_SEL) {
     s_tile_add_object(toplevel, object_list,
                       new_node->line->x[0], new_node->line->y[0], 

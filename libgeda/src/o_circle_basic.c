@@ -385,16 +385,6 @@ char *o_circle_save(OBJECT *object)
     color = object->saved_color;
   }
   
-#if 0 /* old system */
-  radius = abs(x2 - x1)/2;
-  if (radius == 0) {
-    radius = abs(y2 - y1)/2;
-  }
-  
-  x = x1 + radius; 
-  y = y1 - radius; /* careful */
-#endif
-  
   buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d", 
 			object->type, x, y, radius, color,
 			circle_width, circle_end, circle_type, circle_length, 

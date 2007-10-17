@@ -847,26 +847,6 @@ void o_arc_print_dotted(TOPLEVEL *toplevel, FILE *fp,
     */
     fprintf(fp,"[%d] ",d);
 
-
-#if 0 
-    /*! \note
-     *  A dot is represented by a filled circle.
-     *  Position of the circle is (<B>xa</B>, <B>ya</B>) and its radius is the <B>arc_width</B> parameter.
-     */
-    /* PB : problem corrected : diameter of printed dots */
-    /* 
-      fprintf(fp, "newpath\n");
-      fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
-      if (arc_width <= 1) {
-        fprintf(fp, "2 mils\n");
-      } else {
-        fprintf(fp, "%d mils\n", (int) arc_width/2);
-      }
-      fprintf(fp, "0 360 arc\n");
-      fprintf(fp, "fill\n");
-    */
-    /* PB : end */		
-#endif
     d = d + da;
   }
   fprintf(fp,"] %d %d %d %d dashedarc %% dotted\n",

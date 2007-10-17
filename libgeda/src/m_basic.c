@@ -49,21 +49,9 @@ int mil_x(TOPLEVEL *toplevel, int val)
   double fval;
   int j;
 
-#if 0 /* removed for speed improvements */
-  double fw0,fw1,fw,fval;
-  fw1 = toplevel->page_current->right;
-  fw0 = toplevel->page_current->left;
-  fw  = toplevel->width;
-#endif
-
   fval = val;
   i = fval * toplevel->page_current->to_world_x_constant +
   toplevel->page_current->left;
-
-  /* i -= mil_x_tw2;
-     i = ((i) / 100 ) * 100; I don't think we need this 
-     i += mil_x_tw1;*/
-
 
 #ifdef HAS_RINT
   j = rint(i);
@@ -88,19 +76,9 @@ int mil_y(TOPLEVEL *toplevel, int val)
   double fval;
   int j;
 
-#if 0 /* removed for speed improvements */
-  double fw0,fw1,fw,fval;
-  fw1 = toplevel->page_current->bottom;
-  fw0 = toplevel->page_current->top;
-  fw  = toplevel->height;
-#endif
-
   fval = toplevel->height - val;
   i = fval * toplevel->page_current->to_world_y_constant +
   toplevel->page_current->top;
-
-  /* i = ((i) / 100 ) * 100; I don't think we need this */
-  /* i += mil_y_tw1; or this*/
 
 #ifdef HAS_RINT
   j = rint(i);
@@ -124,15 +102,6 @@ int pix_x(TOPLEVEL *toplevel, int val)
 
   double i;
   int j;
-
-#if 0 /* removed for speed */
-  double fs,f0,f1,f;
-  f0 = toplevel->page_current->left;
-  f1 = toplevel->page_current->right;
-  fs = toplevel->width;
-  f = toplevel->width / (f1 - f0);
-#endif
-
 
   i = toplevel->page_current->to_screen_x_constant *
   (double)(val - toplevel->page_current->left);
@@ -168,13 +137,6 @@ int pix_y(TOPLEVEL *toplevel, int val)
   double i;
   int j;
 
-#if 0 /* removed for speed */
-  double fs,f0,f1,f;
-  f0 = toplevel->page_current->top;
-  f1 = toplevel->page_current->bottom;
-  fs = toplevel->height;
-  f = fs / (f1 - f0); /* fs was toplevel->height */
-#endif
   i = toplevel->height - (
                            toplevel->page_current->to_screen_y_constant *
                            (double)(val - toplevel->page_current->top));
@@ -277,32 +239,6 @@ int snap_grid(TOPLEVEL *toplevel, int input)
 #endif
 
   return(sign*n);
-
-#if 0 /* working snap code, crude, slow */
-  int interm; 
-  int final;
-  int power;
-  int itop;
-	
-  power = snap_grid;
-  itop = input / power;
-  interm = abs(input % power);
-
-  if (interm > 0 && interm < snap_grid/2) {	
-    interm = 0;
-  } else if (interm >= snap_grid/2 && interm <= snap_grid) {
-    interm = snap_grid;
-  }
-
-  if (input >= 0) {	
-    final = itop*snap_grid+interm;
-  } else if (input < 0) {
-    final = itop*snap_grid-interm;
-  }
-
-  return(final);
-#endif
-
 }                               
 
 /*! \brief Get absolute SCREEN coordinate.
@@ -356,11 +292,6 @@ int WORLDabs(TOPLEVEL *toplevel, int val)
   fw  = toplevel->width;
   fval = val;
   i = fval * (fw1 - fw0) / fw;
-
-  /* i -= mil_x_tw2;
-     i = ((i) / 100 ) * 100; I don't think we need this 
-     i += mil_x_tw1;*/
-
 
 #ifdef HAS_RINT
   j = rint(i);
@@ -965,13 +896,6 @@ void rotate_point_90(int x, int y, int angle, int *newx, int *newy)
 
   *newx = x * costheta - y * sintheta;
   *newy = x * sintheta + y * costheta;
-
-#if 0 /* fixed rotation */
-
-  *newx = -y ; 
-  *newy = x ;
-#endif
-
 }
 
 /*! \brief Convert Paper size to World coordinates.
@@ -1019,46 +943,6 @@ void PAPERSIZEtoWORLD(int width, int height, int border, int *right, int *bottom
 
 }
 
-/*! \deprecated
- *  \brief Get the number of zoom's done.
- *  \par Function Description
- *  This function returns the number of zoom's that have been done.
- *  It is computed from the zoom_factor since, the zoom_factor is
- *  actually the magnification level.
- *
- *  \param [in] zoom_factor The current zoom factor being used.
- *  \return The number of zoom's done so far.
- */
-#if 0 /* no longer used at all */
-int return_zoom_number(int zoom_factor)
-{
-  double check=0;
-  double factor;
-  int i=0;
-	
-  if (zoom_factor != 0) {
-    factor = zoom_factor;
-    check = pow(2, i);
-    while( check != factor && check < factor) {
-      i++;
-      check = pow(2, i);
-    }
-  } else {
-    return(0);
-  }
-	
-  return(i);
-
-#if 0 /* delete eventually */
-  if (zoom_factor > 0) {
-    return(log(zoom_factor)+2);
-    /* return(log(zoom_factor+1));*/
-  } else {
-    return(1);
-  }
-#endif
-}
-#endif
 
 /*! \brief Rounds numbers by a power of 10.
  *  \par Function Description

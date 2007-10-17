@@ -337,22 +337,8 @@ void s_tile_remove_object_all_crude(TOPLEVEL * toplevel, OBJECT * object)
 
   for (j = 0; j < MAX_TILES_Y; j++) {
     for (i = 0; i < MAX_TILES_X; i++) {
-#if 0				/* this checks for existance */
-      t_current = &toplevel->page_current->world_tiles[i][j];
-      found = g_list_find(t_current->objects, object);
-
-      if (found) {
-        printf("found object %s in %d, %d\n", object->name, i, j);
-        t_current->objects = g_list_remove(t_current->objects,
-                                           object);
-      }
-#endif
-
-      /* this just does the remove if the object is found */
-#if 1
       t_current = &toplevel->page_current->world_tiles[i][j];
       t_current->objects = g_list_remove(t_current->objects, object);
-#endif
     }
   }
 }
@@ -472,22 +458,6 @@ void s_tile_free_all(PAGE * p_current)
         fprintf(stderr,
                 "OOPS! t_current->objects had something in it when it was freed!\n");
         fprintf(stderr, "Length: %d\n", g_list_length(t_current->objects));
-
-
-#if 0  /* was if DEBUG, but code won't compile.  Remove it? */
-        printf("%s %d %d\n", p_current->page_filename, i, j);
-        objects = t_current->objects;
-        while(objects != NULL) {
-          real_object = (OBJECT *) objects->data;
-          printf("yes %s\n", real_object->name);
-          objects = objects->next;
-        }
-                        
-        if (t_current->objects == NULL) {
-          printf("yes null\n");
-        }
-#endif
-        
       }
       g_list_free(t_current->objects);
     }

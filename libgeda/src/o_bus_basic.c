@@ -458,14 +458,6 @@ void o_bus_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
 
         printf("object DID have attributes\n");
 
-#if 0
-	printf("object->attribs\n");
-	o_attrib_print(object->attribs);
-	printf("--\n");
-	printf("del_object->attribs\n");
-	o_attrib_print(del_object->attribs);
-	printf("--\n");
-#endif
         tail = o_attrib_return_tail(object->attribs);
 
 				/* skip over old attrib head */
@@ -487,11 +479,6 @@ void o_bus_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
 				/* attribs list */
 
         del_object->attribs = NULL;
-#if 0
-	printf("\n\nfinal object->attribs\n");
-	o_attrib_print(object->attribs);
-	printf("--\n");
-#endif
 
       } else {
 

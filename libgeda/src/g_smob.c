@@ -681,43 +681,6 @@ void g_init_object_smob(void)
   return;
 }
 
-#if 0
-/*! \brief Gets the OBJECT data from the object smob.
- *  \par Function Description
- *  Get the OBJECT data from the object smob.
- *
- *  \param [in] object_smob  The object smob to get the OBJECT data from.
- *  \return The OBJECT data.
- *  \deprecated
- *  \todo check and remove?
- */
-OBJECT *g_get_object_from_object_smob(SCM object_smob)
-{
-  
-  SCM_ASSERT ( SCM_NIMP(object_smob) && 
-               (SCM_CAR(object_smob) == object_smob_tag),
-               object_smob, SCM_ARG1, "get_object_from_object_smob");
-  return ((OBJECT *) (((struct st_object_smob *)SCM_CDR(object_smob))->object));
-}
-
-/*! \brief Get the TOPLEVEL data from the object smob.
- *  \par Function Description
- *  Get the TOPLEVEL data from the object smob.
- *
- *  \param [in] object_smob  The object smob to get the TOPLEVEL data from.
- *  \return The TOPLEVEL data.
- *  \deprecated
- *  \todo check and remove?
- */
-TOPLEVEL *g_get_toplevel_from_object_smob(SCM object_smob)
-{
-  
-  SCM_ASSERT ( SCM_NIMP(object_smob) && 
-               (SCM_CAR(object_smob) == object_smob_tag),
-               object_smob, SCM_ARG1, "get_toplevel_from_object_smob");
-  return ((TOPLEVEL *) (((struct st_object_smob *)SCM_CDR(object_smob))->world));
-}
-#endif
 
 /*! \brief Get the TOPLEVEL and OBJECT data from an object smob.
  *  \par Function Description

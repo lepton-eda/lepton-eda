@@ -475,14 +475,6 @@ void o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
         /* fix it, because you can't just go around deleting objects */
         /* this whole net conslidate needs to be re thought.. since you */
         /* don't really del the del_object */
-#if 0
-        printf("object->attribs\n");
-        o_attrib_print(object->attribs);
-        printf("--\n");
-        printf("del_object->attribs\n");
-        o_attrib_print(del_object->attribs);
-        printf("--\n");
-#endif
         tail = o_attrib_return_tail(object->attribs);
 
         /* skip over old attrib head */
@@ -505,11 +497,6 @@ void o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
         /* attribs list */
 
         del_object->attribs = NULL;
-#if 0
-        printf("\n\nfinal object->attribs\n");
-        o_attrib_print(object->attribs);
-        printf("--\n");
-#endif
 
       } else {
 
