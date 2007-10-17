@@ -368,6 +368,10 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
 
     }
 
+  /* Store a reference in the copied object to where it was copied.
+   * Used to retain associations when copying attributes */
+  object->copied_to = new_object;
+
     toplevel->page_current->object_tail =
       (OBJECT *) return_tail(toplevel->page_current->
                              object_head);
@@ -451,7 +455,7 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
   while(s_current != NULL) {
     object = s_current->data;
-    o_attrib_list_copied_to (object->attribs, NULL);
+    object->copied_to = NULL;
     s_current = g_list_next (s_current);
   }
 

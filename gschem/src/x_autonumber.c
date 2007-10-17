@@ -391,7 +391,6 @@ void autonumber_get_used(GSCHEM_TOPLEVEL *w_current, AUTONUMBER_TEXT *autotext)
 {
   gint number, numslots, slotnr, i;
   OBJECT *o_current, *o_parent, *o_numslots;
-  ATTRIB *a_current;
   AUTONUMBER_SLOT *slot;
   GList *slot_item;
   char *numslot_str, *slot_str;
@@ -400,9 +399,8 @@ void autonumber_get_used(GSCHEM_TOPLEVEL *w_current, AUTONUMBER_TEXT *autotext)
        o_current = o_current->next) {
     if (autonumber_match(autotext, o_current, &number) == AUTONUMBER_RESPECT) {
       /* check slot and maybe add it to the lists */
-      if ((autotext->slotting)
-      			&& (a_current = o_current->attached_to) != NULL) {
-	o_parent = o_attrib_return_parent(a_current);
+      o_parent = o_current->attached_to;
+      if (autotext->slotting && o_parent != NULL) {
 	/* check for slotted symbol */
 	if ((numslot_str = o_attrib_search_numslots(o_parent, &o_numslots)) != NULL) {
 	  sscanf(numslot_str," %d",&numslots);
@@ -485,7 +483,6 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
   gint new_number, numslots, i;
   AUTONUMBER_SLOT *freeslot;
   OBJECT *o_parent = NULL, *o_numslots;
-  ATTRIB *a_current = NULL;
   GList *freeslot_item;
   gchar *numslot_str;
 
@@ -493,8 +490,8 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
   
   /* Check for slots first */
   /* 1. are there any unused slots in the database? */
-  if ((autotext->slotting) && (a_current = o_current->attached_to) != NULL) {
-    o_parent = o_attrib_return_parent(a_current);
+  o_parent = o_current->attached_to;
+  if (autotext->slotting && o_parent != NULL) {
     freeslot = g_new(AUTONUMBER_SLOT,1);
     freeslot->symbolname = o_parent->complex_basename;
     freeslot->number = 0;
@@ -566,7 +563,6 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
  */
 void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
 {
-  ATTRIB *a_current;
   OBJECT *o_parent, *o_slot;
   gchar *slot_str;
 
@@ -583,8 +579,8 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
   /* remove the slot attribute if slotting is active */
   if (autotext->slotting) {
     /* get the slot attribute */
-    if ((a_current = o_current->attached_to) != NULL) {
-      o_parent = o_attrib_return_parent(a_current);
+    o_parent = o_current->attached_to;
+    if (o_parent != NULL) {
       slot_str = o_attrib_search_slot(o_parent, &o_slot);
       if (slot_str != NULL && o_slot != NULL) {
 	g_free(slot_str);
@@ -608,14 +604,12 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
 void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
 			       gint number, gint slot)
 {
-  ATTRIB *a_current;
   OBJECT *o_parent, *o_slot;
   gchar *slot_str;
 
   /* add the slot as attribute to the object */
-  if (slot != 0
-      && (a_current = o_current->attached_to) != NULL) {
-    o_parent = o_attrib_return_parent(a_current);
+  o_parent = o_current->attached_to;
+  if (slot != 0 && o_parent != NULL) {
     slot_str = o_attrib_search_slot(o_parent, &o_slot);
     if (slot_str != NULL) {
       /* update the slot attribute */

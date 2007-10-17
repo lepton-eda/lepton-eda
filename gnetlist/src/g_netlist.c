@@ -583,7 +583,7 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
         o_text_object = o_attrib_search_string_single(nl_current->object_ptr,
                                                       pinseq_attrib);
         if (o_text_object && o_text_object->attached_to) {
-          o_pin_object = o_attrib_return_parent(o_text_object->attached_to);
+          o_pin_object = o_text_object->attached_to;
 
           if (o_pin_object) {
             return_value = o_attrib_search_name_single(o_pin_object,
@@ -609,7 +609,7 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
                                       complex->prim_objs, pinseq_attrib);
 
         if (o_text_object && o_text_object->attached_to) {
-          o_pin_object = o_attrib_return_parent(o_text_object->attached_to);
+          o_pin_object = o_text_object->attached_to;
           if (o_pin_object) {
             return_value = o_attrib_search_name_single(o_pin_object,
                                                        wanted_attrib,

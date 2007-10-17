@@ -171,7 +171,6 @@ OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
   o_circle_recalc(toplevel, new_obj);
 
   /*	new_obj->attribute = 0;*/
-  o_attrib_list_copied_to (o_current->attribs, new_obj);
 
   return(new_obj);
 }

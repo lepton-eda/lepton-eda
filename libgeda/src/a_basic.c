@@ -138,9 +138,7 @@ void o_save_embedded(TOPLEVEL *toplevel, OBJECT *object_list, FILE *fp)
 
         /* save those attributes */
         if (o_current->attribs != NULL) {
-          if (o_current->attribs->next != NULL) {
-            o_save_attribs(fp, o_current->attribs->next);
-          }
+          o_save_attribs(fp, o_current->attribs);
         }
 
       }
@@ -275,9 +273,7 @@ int o_save(TOPLEVEL *toplevel, const char *filename)
 
 				/* save those attributes */
         if (o_current->attribs != NULL) {
-          if (o_current->attribs->next != NULL) {
-            o_save_attribs(fp, o_current->attribs->next);
-          }
+          o_save_attribs(fp, o_current->attribs);
         }
 
       }

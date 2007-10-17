@@ -1036,7 +1036,8 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *tmp_list, *new_complex;
-  ATTRIB *new_attribs, *a_current;
+  ATTRIB *a_current;
+  GList *a_iter;
   gboolean is_embedded;
   const CLibSymbol *clib;
 
@@ -1084,10 +1085,10 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   new_complex->complex->prim_objs = NULL;
 
   /* then process the attributes: */
-  new_attribs = new_complex->attribs;
   /*   - check each attrib of the new complex */
-  a_current = new_attribs ? new_attribs->next : NULL;
-  while (a_current != NULL) {
+  a_iter = new_complex->attribs;
+  while (a_iter != NULL) {
+    a_current = a_iter->data;
     OBJECT *o_attrib;
     gchar *name, *value;
     char *attrfound;
@@ -1108,12 +1109,8 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
       /* make a copy of the attribute object */
       o_list_copy_to (toplevel, o_current,
                       a_current->object, NORMAL_FLAG, &o_attrib);
-      if (o_current->attribs == NULL) {
-        /* object has no attribute list: create it */
-        o_current->attribs = add_attrib_head(o_current);
-      }
       /* add the attribute to old */
-      o_attrib_add (toplevel, o_current->attribs, o_attrib);
+      o_attrib_add (toplevel, o_current, o_attrib);
       /* redraw the attribute object */
       o_redraw_single (w_current, o_attrib);
       /* note: this object is unselected (not added to selection). */
@@ -1124,7 +1121,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     }
 
 
-    a_current = a_current->next;
+    a_iter = g_list_next (a_iter);
   }
 
   /* finally delete the temp list with the updated complex */

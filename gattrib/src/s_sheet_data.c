@@ -165,6 +165,7 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
   char *attrib_text;
   char *attrib_name;
   OBJECT *o_current;
+  GList *a_iter;
   ATTRIB *a_current;
   
 #ifdef DEBUG
@@ -194,8 +195,9 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
 	verbose_print(" C");
 	
 	/*------ Iterate through all attribs found on component -----*/
-	a_current = o_current->attribs; /* This has a side effect.  Why? */
-	while (a_current != NULL) {
+	a_iter = o_current->attribs; /* This has a side effect.  Why? */
+	while (a_iter != NULL) {
+	  a_current = a_iter->data;
 	  if (a_current->object->type == OBJ_TEXT 
 	      && a_current->object->text != NULL) {  /* found an attribute */
 	    attrib_text = g_strdup(a_current->object->text->string);
@@ -215,7 +217,7 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
 	    g_free(attrib_name);
 	    g_free(attrib_text);
 	  }
-	  a_current = a_current->next;
+	  a_iter = g_list_next (a_iter);
 	}   /*  while  */
 	
       }   /* if (o_current->type == OBJ_COMPLEX) */
@@ -367,6 +369,7 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
   char *attrib_value;
   OBJECT *o_current;
   OBJECT *o_lower_current;
+  GList *a_iter;
   ATTRIB *pin_attrib;
   
 #ifdef DEBUG
@@ -399,8 +402,9 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
 #endif
 	    if (o_lower_current->type == OBJ_PIN) {
 	      /* -----  Found a pin.  Now get attrib head and loop on attribs.  ----- */
-	      pin_attrib = o_lower_current->attribs;
-	      while (pin_attrib != NULL) {
+	      a_iter = o_lower_current->attribs;
+	      while (a_iter != NULL) {
+		pin_attrib = a_iter->data;
 		if (pin_attrib->object->type == OBJ_TEXT 
 		    && pin_attrib->object->text != NULL) {  /* found an attribute */
 		  attrib_text = g_strdup(pin_attrib->object->text->string);
@@ -423,7 +427,7 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
 		  g_free(attrib_name);
 		  g_free(attrib_text);
 		}
-		pin_attrib = pin_attrib->next;
+		a_iter = g_list_next (a_iter);
 	      }   /*   while (pin_attrib != NULL)  */
 	    }
 	    o_lower_current = o_lower_current->next;

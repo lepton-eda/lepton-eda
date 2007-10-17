@@ -82,7 +82,8 @@ void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
   OBJECT *attribptr;
   OBJECT *object;
   GList *s_current = NULL;
-  ATTRIB *a_current = NULL, *a_sav;
+  ATTRIB *a_current;
+  GList *a_iter;
   int vis, show;
   int invocation_flag;
   int nsel=0, addto=0, replace=0, addmask=0;
@@ -188,43 +189,42 @@ void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
       }
 
       while (s_current != NULL) {
-	gboolean replaced;
+        gboolean replaced;
 
-	object = (OBJECT *) s_current->data;
-	if (object && !object->attached_to && object->type != OBJ_TEXT ) {
-	  addmask = 4;
-	  if (object->type == OBJ_COMPLEX || object->type == OBJ_PLACEHOLDER) {
-	    addmask = 2;
-	  }
-	  if (object->type == OBJ_NET) {
-	    addmask = 1;
-	  }
-	  replaced = FALSE;
-	  if (addmask & addto) {
-	    a_current = object->attribs;
-	    if (replace) {
-	      while (a_current != NULL) {
-		a_sav = a_current;
-		a_current = a_current->next;
+        object = (OBJECT *) s_current->data;
+        if (object && !object->attached_to && object->type != OBJ_TEXT ) {
+          addmask = 4;
+          if (object->type == OBJ_COMPLEX || object->type == OBJ_PLACEHOLDER) {
+            addmask = 2;
+          }
+          if (object->type == OBJ_NET) {
+            addmask = 1;
+          }
+          replaced = FALSE;
+          if (addmask & addto) {
+            a_iter = object->attribs;
+            if (replace) {
+              while (a_iter != NULL) {
+                a_current = a_iter->data;
 
-		if (a_sav->object->text != NULL) {
-		  if (!strncmp
-		      (a_sav->object->text->string, newtext,
-		       strchr(newtext, '=') - newtext)) {
-		    o_text_change(w_current, a_sav->object, 
-				  newtext, vis, show);
-		    replaced = TRUE;
-		    toplevel->page_current->CHANGED = 1;
-		  }
-		}
-	      }
-	    }
-	    if (!replaced) {
-	      new = o_attrib_add_attrib(w_current, newtext, vis, show, object);
-	    }
-	  }
-	}
-	s_current = g_list_next(s_current);
+                if (a_current->object->text != NULL) {
+                  if (!strncmp(a_current->object->text->string, newtext,
+                               strchr(newtext, '=') - newtext)) {
+                    o_text_change(w_current, a_current->object,
+                                  newtext, vis, show);
+                    replaced = TRUE;
+                    toplevel->page_current->CHANGED = 1;
+                  }
+                }
+                a_iter = g_list_next (a_iter);
+              }
+            }
+            if (!replaced) {
+              new = o_attrib_add_attrib(w_current, newtext, vis, show, object);
+            }
+          }
+        }
+        s_current = g_list_next (s_current);
       }
       o_undo_savestate(w_current, UNDO_ALL);
     } else {

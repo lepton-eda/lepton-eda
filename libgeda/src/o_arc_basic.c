@@ -170,8 +170,6 @@ OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
   o_set_fill_options(toplevel, new_obj,
                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
-  o_attrib_list_copied_to (o_current->attribs, new_obj);
-
   return(new_obj);
 }
 

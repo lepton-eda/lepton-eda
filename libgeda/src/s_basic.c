@@ -345,14 +345,9 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
     /* second half of if is odd that we need it? hack */
     /* need to do this early so we can do the printfs */
     if (o_current->attached_to != NULL && o_current->attribute == 1) {
-      if (o_current->attached_to->object) {
-				/*printf("removing %s\n", o_current->attached_to->object->name);*/
-      } else {
-        printf("found a null I didn't expect!!!!!!!!!\n");
-      }
 
       /* do the actual remove */
-      o_attrib_delete(o_current->attached_to);
+      o_attrib_remove(&o_current->attached_to->attribs, o_current);
     }
 
     if (toplevel->page_current->object_lastplace == o_current) {
@@ -451,7 +446,6 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
       o_attrib_free_all(toplevel, o_current->attribs);
     }
     o_current->attribs = NULL;
-
 
     g_free(o_current);	/* assuming it is not null */
 

@@ -120,8 +120,12 @@ OBJECT *o_list_copy_to(TOPLEVEL *toplevel, OBJECT *list_head,
       break;
   }
 
+  /* Store a reference in the copied object to where it was copied.
+   * Used to retain associations when copying attributes */
+  selected->copied_to = end;
+
   if (list_head == NULL)
-  list_head = end;
+    list_head = end;
 
   /* make sure sid is the same! */
   if (selected) {
@@ -207,10 +211,10 @@ OBJECT *o_list_copy_all(TOPLEVEL *toplevel, OBJECT *src_list_head,
     src = src->next;
   }
 
-  /* Clean up dangling ATTRIB.copied_to pointers */
+  /* Clean up dangling copied_to pointers */
   src = src_list_head;
   while(src != NULL) {
-    o_attrib_list_copied_to (src->attribs, NULL);
+    src->copied_to = NULL;
     src = src->next;
   }
 
@@ -319,11 +323,11 @@ GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
     src = g_list_next(src);
   }
 
-  /* Clean up dangling ATTRIB.copied_to pointers */
+  /* Clean up dangling copied_to pointers */
   src = src_list;
   while(src != NULL) {
     src_object = src->data;
-    o_attrib_list_copied_to (src_object->attribs, NULL);
+    src_object->copied_to = NULL;
     src = g_list_next (src);
   }
 

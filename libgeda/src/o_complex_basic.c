@@ -897,7 +897,6 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
   /* here you need to create a list of attributes which need to be 
    * connected to the new list, probably make an attribute list and
    * fill it with sid's of the attributes */
-  o_attrib_list_copied_to (o_current->attribs, new_obj);
 
   return(new_obj);
 }
@@ -946,7 +945,6 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail,
   /* here you need to create a list of attributes which need to be 
    * connected to the new list, probably make an attribute list and
    * fill it with sid's of the attributes */
-  o_attrib_list_copied_to (o_current->attribs, new_obj);
 
   return(new_obj);
 }

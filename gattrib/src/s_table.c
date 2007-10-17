@@ -240,6 +240,7 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
   gchar *attrib_text;
   gchar *attrib_name;
   gchar *attrib_value;
+  GList *a_iter;
   ATTRIB *a_current;
   gint old_visibility, old_show_name_value;
 
@@ -279,8 +280,9 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
         /* Having found a component, we loop over all attribs in this
          * component, and stick them
          * into cells in the table. */
-        a_current = o_current->attribs;
-        while (a_current != NULL) {
+        a_iter = o_current->attribs;
+        while (a_iter != NULL) {
+          a_current = a_iter->data;
           if (a_current->object->type == OBJ_TEXT
               && a_current->object->text != NULL) {  /* found an attribute */
             /* may need to check more thoroughly here. . . . */
@@ -317,7 +319,7 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
             g_free(attrib_text);
             g_free(attrib_value);
           }
-          a_current = a_current->next;
+          a_iter = g_list_next (a_iter);
            
         }  /* while (a_current != NULL) */
         g_free(temp_uref);
@@ -434,6 +436,7 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
   gchar *attrib_text;
   gchar *attrib_name;
   gchar *attrib_value;
+  GList *a_iter;
   ATTRIB *pin_attrib;
 
   if (verbose_mode) {
@@ -474,8 +477,9 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
         printf("      In s_table_add_toplevel_pin_items_to_pin_table, examining pin %s\n", row_label);
 #endif
 
-	    pin_attrib = o_lower_current->attribs;
-	    while (pin_attrib != NULL) {
+	    a_iter = o_lower_current->attribs;
+	    while (a_iter != NULL) {
+	      pin_attrib = a_iter->data;
 	      if (pin_attrib->object->type == OBJ_TEXT
 		  && pin_attrib->object->text != NULL) {  /* found an attribute */
 		attrib_text = g_strdup(pin_attrib->object->text->string);
@@ -507,7 +511,7 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
 		g_free(attrib_text);
 		g_free(attrib_value);
 	      }
-	      pin_attrib = pin_attrib->next;
+	      a_iter = g_list_next (a_iter);
            
 	    }  /* while (pin_attrib != NULL) */
 	    g_free(pinnumber);

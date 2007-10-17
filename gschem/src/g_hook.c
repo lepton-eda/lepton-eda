@@ -60,6 +60,7 @@ SCM g_make_attrib_smob_list(GSCHEM_TOPLEVEL *w_current, OBJECT *curr_object)
 {
   ATTRIB *a_current;      
   OBJECT *object;
+  GList *a_iter;
   SCM smob_list = SCM_EOL;
 
   object = (OBJECT *) o_list_search(curr_object, curr_object);
@@ -72,13 +73,10 @@ SCM g_make_attrib_smob_list(GSCHEM_TOPLEVEL *w_current, OBJECT *curr_object)
     return(SCM_EOL);
   }
 
-  if (!object->attribs->next) {
-    return(SCM_EOL);
-  }
-
   /* go through attribs */
-  a_current = object->attribs->next;      
-  while(a_current != NULL) {
+  a_iter = object->attribs;
+  while(a_iter != NULL) {
+    a_current = a_iter->data;
     if (a_current->object->type == OBJ_TEXT && 
         a_current->object->text) {
       if (a_current->object->text->string) {
@@ -88,7 +86,7 @@ SCM g_make_attrib_smob_list(GSCHEM_TOPLEVEL *w_current, OBJECT *curr_object)
     } else {
       printf(_("Attribute failed ot find.\n"));
     }
-    a_current = a_current->next;
+    a_iter = g_list_next (a_iter);
   }
 
   return smob_list;
@@ -416,6 +414,8 @@ static void custom_world_get_single_object_bounds
                                         GList *exclude_attrib_list,
 					GList *exclude_obj_type_list) {
     OBJECT *obj_ptr = NULL;
+    ATTRIB *a_current;
+    GList *a_iter;
     int rleft, rright, rbottom, rtop;
     char *text_value; 
     char *name_ptr, *value_ptr, aux_ptr[2];
@@ -477,8 +477,9 @@ static void custom_world_get_single_object_bounds
 	
 	/* If it's a pin object, check the pin attributes */
 	if (obj_ptr->type == OBJ_PIN) {
-	  ATTRIB *a_current = obj_ptr->attribs;
-	  while (a_current) {
+	  a_iter = obj_ptr->attribs;
+	  while (a_iter != NULL) {
+      a_current = a_iter->data;
 	    g_assert(a_current->object);
 
 	    if (a_current->object->type == OBJ_TEXT) {
@@ -494,7 +495,7 @@ static void custom_world_get_single_object_bounds
 	      if (rbottom > *bottom) *bottom = rbottom;
 	    }
 	    
-	    a_current = a_current->next;
+	    a_iter = g_list_next (a_iter);
 	  }
 	}
       }      

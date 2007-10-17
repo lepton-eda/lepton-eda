@@ -767,7 +767,6 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
                             GDK_INTERP_BILINEAR);
 
   /* new_obj->attribute = 0;*/
-  o_attrib_list_copied_to (o_current->attribs, new_obj);
 
   /* return the new tail of the object list */
   return(new_obj);

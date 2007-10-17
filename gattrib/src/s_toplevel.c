@@ -589,6 +589,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   char *old_attrib_name;
   char *old_attrib_value;
   gchar *refdes;
+  GList *a_iter;
   ATTRIB *a_current;
   int count = 0;  /* This is to fake out a fcn called later */
   gint row, col;
@@ -611,8 +612,9 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 
   /* Now create a complete list of unique attribute names.  This will be used in
   *  the loop below when updating attributes.  */
-  a_current = o_current->attribs;
-  while (a_current != NULL) {
+  a_iter = o_current->attribs;
+  while (a_iter != NULL) {
+    a_current = a_iter->data;
     if (a_current->object->type == OBJ_TEXT
 	&& a_current->object->text != NULL) {  /* found a name=value attribute pair. */
       /* may need to check more thoroughly here. . . . */
@@ -647,7 +649,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
      g_free(old_name_value_pair);
      g_free(old_attrib_name);
     }
-    a_current = a_current->next;
+    a_iter = g_list_next (a_iter);
   }  /* while (a_current != NULL) */
 
 

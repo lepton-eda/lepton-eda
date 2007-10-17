@@ -146,14 +146,16 @@ void s_object_replace_attrib_in_object(OBJECT *o_current,
 				       gint visibility, 
 				       gint show_name_value)
 {
+  GList *a_iter;
   ATTRIB *a_current;
   char *old_attrib_text;
   char *old_attrib_name;
   char *new_attrib_text;
 
 
-  a_current = o_current->attribs;
-  while (a_current != NULL) {
+  a_iter = o_current->attribs;
+  while (a_iter != NULL) {
+    a_current = a_iter->data;
     if (a_current->object->type == OBJ_TEXT 
 	&& a_current->object->text != NULL) {  /* found an attribute */
       
@@ -180,7 +182,7 @@ void s_object_replace_attrib_in_object(OBJECT *o_current,
       }  /* if (strcmp . . . . */
     } /* if (a_current . . . . */
   
-    a_current = a_current->next;
+    a_iter = g_list_next (a_iter);
   }  /* while */
 
   /* if we get here, it's because we have failed to find the attrib on the component.
@@ -198,14 +200,15 @@ void s_object_replace_attrib_in_object(OBJECT *o_current,
  *------------------------------------------------------------------*/
 void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name) 
 {
-  
+  GList *a_iter;
   ATTRIB *a_current;
   OBJECT *attribute_object;
   char *old_attrib_text;
   char *old_attrib_name;
   
-  a_current = o_current->attribs;
-  while (a_current != NULL) {
+  a_iter = o_current->attribs;
+  while (a_iter != NULL) {
+    a_current = a_iter->data;
     if (a_current->object->type == OBJ_TEXT 
 	&& a_current->object->text != NULL) {  /* found an attribute */
       
@@ -230,7 +233,7 @@ void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name)
     g_free(old_attrib_text);
     g_free(old_attrib_name);
     }
-    a_current = a_current->next;
+    a_iter = g_list_next (a_iter);
   }
   
   /* if we get here, it's because we have failed to find the attrib on the component.

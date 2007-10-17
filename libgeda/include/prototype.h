@@ -150,33 +150,29 @@ void o_arc_print_center(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, 
 void o_arc_print_phantom(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int angle1, int angle2, int color, int arc_width, int length, int space, int origin_x, int origin_y);
 
 /* o_attrib.c */
-ATTRIB *o_attrib_search(ATTRIB *list, OBJECT *item);
-ATTRIB *o_attrib_return_tail(ATTRIB *head);
-ATTRIB *add_attrib_head(OBJECT *parent);
-ATTRIB *o_attrib_add(TOPLEVEL *toplevel, ATTRIB *list_head, OBJECT *item);
+ATTRIB *o_attrib_search(GList *list, OBJECT *item);
+void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item);
 void o_attrib_free(TOPLEVEL *toplevel, ATTRIB *current);
 void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *parent_list, OBJECT *text_object, OBJECT *object);
-void o_attrib_free_all(TOPLEVEL *toplevel, ATTRIB *list);
-void o_attrib_print(ATTRIB *attributes);
-void o_attrib_delete(ATTRIB *a_current);
-void o_attrib_remove(ATTRIB *list, ATTRIB *remove);
+void o_attrib_free_all(TOPLEVEL *toplevel, GList *list);
+void o_attrib_print(GList *attributes);
+void o_attrib_remove(GList **list, OBJECT *remove);
 OBJECT *o_read_attribs(TOPLEVEL *toplevel,
 		       OBJECT *object_to_get_attribs, 
 		       TextBuffer *tb,
 		       unsigned int release_ver, 
 		       unsigned int fileformat_ver);
-void o_save_attribs(FILE *fp, ATTRIB *attribs);
+void o_save_attribs(FILE *fp, GList *attribs);
 int o_attrib_get_name_value(char *string, char **name, char **value);
 void o_attrib_free_current(TOPLEVEL *toplevel);
 void o_attrib_set_string(TOPLEVEL *toplevel, char *string);
-OBJECT *o_attrib_return_parent(ATTRIB *attribute);
-void o_attrib_set_color(TOPLEVEL *toplevel, ATTRIB *attributes);
+void o_attrib_set_color(TOPLEVEL *toplevel, GList *attributes);
 char *o_attrib_search_name(OBJECT *list, char *name, int counter);
 OBJECT *o_attrib_search_string_list(OBJECT *list, char *string);
 char *o_attrib_search_string_partial(OBJECT *object, char *search_for, int counter);
 OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for);
-OBJECT *o_attrib_search_attrib_value(ATTRIB *list, char *value, char *name, int counter);
-char *o_attrib_search_attrib_name(ATTRIB *list, char *name, int counter);
+OBJECT *o_attrib_search_attrib_value(GList *list, char *value, char *name, int counter);
+char *o_attrib_search_attrib_name(GList *list, char *name, int counter);
 char *o_attrib_search_toplevel(OBJECT *list, char *name, int counter);
 char *o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found);
 char *o_attrib_search_name_single_count(OBJECT *object, char *name, int counter);
@@ -191,7 +187,6 @@ void o_attrib_slot_copy(TOPLEVEL *toplevel, OBJECT *original, OBJECT *target);
 char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name);
 OBJECT **o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object);
 void o_attrib_free_returned(OBJECT **found_objects);
-void o_attrib_list_copied_to(ATTRIB *list, OBJECT *to_obj);
 
 /* o_basic.c */
 int inside_region(int xmin, int ymin, int xmax, int ymax, int x, int y);

@@ -136,7 +136,7 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, char *string, int len)
   /* get the parent object if the selection is only a text object */
   if (object != NULL && object->type == OBJ_TEXT) {
     if (object->attached_to != NULL) {
-      object=o_attrib_return_parent(object->attached_to);
+      object = object->attached_to;
     }
   }
 

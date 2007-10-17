@@ -526,6 +526,8 @@ SCM g_get_object_attributes(SCM object_smob)
   TOPLEVEL *toplevel;
   struct st_object_smob *object;
   SCM returned = SCM_EOL;
+  GList *a_iter;
+  ATTRIB *a_current;
 
   SCM_ASSERT ( SCM_NIMP(object_smob) && 
                ((long) SCM_CAR(object_smob) == object_smob_tag),
@@ -535,17 +537,17 @@ SCM g_get_object_attributes(SCM object_smob)
 
   if (object &&
       object->object) {
-    ATTRIB *pointer;
-    
-    pointer = object->object->attribs;
+
     toplevel = object->world;
-    while (pointer != NULL) {
-      if (pointer->object &&
-	  pointer->object->text) {
-	returned = scm_cons (g_make_attrib_smob (toplevel, pointer), returned);
+    a_iter = object->object->attribs;
+    while (a_iter != NULL) {
+      a_current = a_iter->data;
+      if (a_current->object && a_current->object->text) {
+        returned = scm_cons (g_make_attrib_smob (toplevel, a_current),
+                             returned);
       }
-      pointer = pointer->next;
-    }     
+      a_iter = g_list_next (a_iter);
+    }
   }
 
   return returned;
@@ -568,6 +570,8 @@ SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
   gchar *attrib_name=NULL;
   SCM returned = SCM_EOL;
   gchar *name=NULL, *value=NULL;
+  GList *a_iter;
+  ATTRIB *a_current;
 
   SCM_ASSERT ( SCM_NIMP(object_smob) && 
                ((long) SCM_CAR(object_smob) == object_smob_tag),
@@ -580,22 +584,20 @@ SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
   object = (struct st_object_smob *)SCM_CDR(object_smob);
   attrib_name = SCM_STRING_CHARS(scm_attrib_name);
 
-  if (object &&
-      object->object) {
-    ATTRIB *pointer;
-    
-    pointer = object->object->attribs;
+  if (object && object->object) {
+
     toplevel = object->world;
-    while (pointer != NULL) {
-      if (pointer->object &&
-	  pointer->object->text) {
-	o_attrib_get_name_value(pointer->object->text->string, 
-				&name, &value );
-	if (strcmp(name, attrib_name) == 0) 
-	  returned = scm_cons (scm_makfrom0str (value), returned);
+    a_iter = object->object->attribs;
+    while (a_iter != NULL) {
+      a_current = a_iter->data;
+      if (a_current->object && a_current->object->text) {
+        o_attrib_get_name_value(a_current->object->text->string,
+                                &name, &value );
+        if (strcmp(name, attrib_name) == 0)
+          returned = scm_cons (scm_makfrom0str (value), returned);
       }
-      pointer = pointer->next;
-    }     
+      a_iter = g_list_next (a_iter);
+    }
   }
 
   return returned;

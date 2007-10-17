@@ -267,8 +267,6 @@ OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
   new_obj->line->x[1] = o_current->line->x[1];
   new_obj->line->y[1] = o_current->line->y[1];
 
-  o_attrib_list_copied_to (o_current->attribs, new_obj);
-
   return(new_obj);
 }
 
@@ -395,7 +393,8 @@ void o_bus_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
   int temp1, temp2;
   int final1, final2;
   int changed=0;
-  ATTRIB *tail;
+  GList *a_iter;
+  ATTRIB *a_current;
 
 #if DEBUG
   printf("o %d %d %d %d\n", object->line->x[0], object->line->y[0], object->line->x[1], object->line->y[1]);
@@ -448,56 +447,22 @@ void o_bus_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
   printf("fo %d %d %d %d\n", object->line->x[0], object->line->y[0], object->line->x[1], object->line->y[1]);
 #endif
 
-  if (changed) {
+  /* Move any attributes from the deleted object*/
+  if (changed && del_object->attribs != NULL) {
 
-    /* first check for attributes */
-    if (del_object->attribs) {
-      printf("yeah... del object has attributes\n");
-      printf("reconnecting them to the right place\n");
-      if (object->attribs) {
-
-        printf("object DID have attributes\n");
-
-        tail = o_attrib_return_tail(object->attribs);
-
-				/* skip over old attrib head */
-        tail->next = del_object->attribs->next;
-
-				/* step prev object to point to last object */
-        tail->next->prev = tail; 
-
-
-				/* delete old attrib head */
-				/* and nothing else */
-        del_object->attribs->object=NULL;
-        del_object->attribs->next=NULL;
-        del_object->attribs->prev=NULL;
-        o_attrib_delete(del_object->attribs);
-
-				/* you don't need to free the attribs list */
-				/* since it's been relinked into object's */
-				/* attribs list */
-
-        del_object->attribs = NULL;
-
-      } else {
-
-        printf("object didn't have any attributes\n");
-        object->attribs = del_object->attribs;
-        /*! \todo what should this be? */
-        object->attribs->prev = NULL;
-
-				/* setup parent attribute */
-        object->attribs->object = object;
-
-				/* you don't need to free the attribs list */
-				/* since it's been used by object */
-				
-        del_object->attribs = NULL;
-      }	
+    /* Reassign the attached_to pointer on attributes from the del object */
+    a_iter = del_object->attribs;
+    while (a_iter != NULL) {
+      a_current = a_iter->data;
+      a_current->object->attached_to = object;
+      a_iter = g_list_next (a_iter);
     }
-  }
 
+    object->attribs = g_list_concat (object->attribs, del_object->attribs);
+
+    /* Don't free del_object->attribs as it's relinked into object's list */
+    del_object->attribs = NULL;
+  }
 }
 
 /* \brief

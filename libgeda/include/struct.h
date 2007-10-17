@@ -257,14 +257,15 @@ struct st_object {
   int font_text_size;			/* used only with fonts defs */
   OBJECT *font_prim_objs;			/* used only with fonts defs */
 
-  ATTRIB *attribs;		/* attribute stuff */
-  ATTRIB *attached_to;	  /* when object is an attribute */
+  int whichend;    /* for pins only, either 0 or 1 */
+  int pin_type;    /* for pins only, either NET or BUS */
+
+  GList *attribs;       /* attribute stuff */
   int attribute;
   int show_name_value;
-  int visibility; 
-
-  int whichend;    /* for pins only, either 0 or 1 */
-  int pin_type;    /* for pins only, either NET or BUS */  
+  int visibility;
+  OBJECT *attached_to;  /* when object is an attribute */
+  OBJECT *copied_to;    /* used when copying attributes */
 
   OBJECT *prev;
   OBJECT *next;
@@ -272,12 +273,7 @@ struct st_object {
 
 
 struct st_attrib {
-  OBJECT *object;	/* object attribute is connected to */
-
-  OBJECT *copied_to; /* used when copying attributes */
-
-  ATTRIB *prev;
-  ATTRIB *next;
+  OBJECT *object;       /* object attribute is connected to */
 };
 
 struct st_conn {

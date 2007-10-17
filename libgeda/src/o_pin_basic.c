@@ -273,7 +273,6 @@ OBJECT *o_pin_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
   new_obj->line->y[1] = o_current->line->y[1];
 
   /*	new_obj->attribute = 0;*/
-  o_attrib_list_copied_to (o_current->attribs, new_obj);
 
   return(new_obj);
 }

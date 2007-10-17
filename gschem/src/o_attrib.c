@@ -57,15 +57,17 @@ void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
                            OBJECT *selected)
 {
   ATTRIB *a_current;
+  GList *a_iter;
 
   g_assert( selection != NULL );
 
   /* deal with attributes here? */
   if (selected->attribs != NULL) {
     /* first node is head */
-    a_current = selected->attribs->next;
+    a_iter = selected->attribs;
 
-    while (a_current != NULL) {
+    while (a_iter != NULL) {
+      a_current = a_iter->data;
 
       if (a_current->object) {
 
@@ -77,7 +79,7 @@ void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
 
       }
 
-      a_current = a_current->next;
+      a_iter = g_list_next (a_iter);
     }
   }
 

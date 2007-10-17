@@ -69,106 +69,49 @@
  *  \param [in] list  ATTRIB pointer to the list to be searched.
  *  \param [in] item  item to be found.
  */
-ATTRIB *o_attrib_search(ATTRIB *list, OBJECT *item)
+ATTRIB *o_attrib_search(GList *list, OBJECT *item)
 {
+  GList *a_iter;
   ATTRIB *a_current;
 
   if (item == NULL) {
     return(NULL);
   }
 
-  a_current = list;
+  a_iter = list;
 
-  while(a_current != NULL) {
+  while(a_iter != NULL) {
+    a_current = a_iter->data;
     if (a_current->object != NULL) {
       if (item->sid == a_current->object->sid) {	
         return(a_current);	
       }
     }
 
-    a_current = a_current->next;
+    a_iter = g_list_next (a_iter);
   }
 
   return(NULL);
-}
-
-/*! \brief Get the last attribute in the list.
- *  \par Function Description
- *  Get the last attribute in the list.
- *
- *  \param [in] head  ATTRIB pointer to beginning of list.
- *  \return Returns an ATTRIB pointer to the last attribute in the list.
- */
-ATTRIB *o_attrib_return_tail(ATTRIB *head) 
-{
-  ATTRIB *a_current=NULL;
-  ATTRIB *current=NULL;
-
-  a_current = head;
-  while ( a_current != NULL ) { /* goto end of list */
-    current = a_current;
-    a_current = a_current->next;
-  }
-  return(current); 
-}
-
-/*! \brief Create an attribute list head item.
- *  \par Function Description
- *  Create an attribute list head item.
- *
- *  \param [in] parent  OBJECT pointer that will become the parent
- *                      of this new head item.
- *  \return Returns an ATTRIB pointer to the newly created head item.
- *
- *  \todo Rename this function to be consistant.
- */
-ATTRIB *add_attrib_head(OBJECT *parent)
-{
-  ATTRIB *head = NULL;
-
-  head = (ATTRIB *) g_malloc(sizeof(ATTRIB));
-  head->next = NULL;
-
-  /* highly experimental hack */
-  head->object = parent; 
-  head->copied_to = NULL;
-  head->prev = NULL;
-
-  /* \todo
-   * why the grief? well everywhere a attribute is refered to
-   * you have to skip over the head, you really ought to robustify
-   * all references to this object pointer when talking to attributes
-   * hack of course I think this is okay now though
-   */
-
-  return(head);
 }
 
 /*! \brief Add an attribute to an existing attribute list.
  *  \par Function Description
  *  Add an attribute to an existing attribute list.
  *
- *  \param [in]     toplevel  The TOPLEVEL object.
- *  \param [in,out] list_head  The list where you want to add item to.
- *  \param [in]     item       The item you want to add as an attribute.
- *  \return An ATTRIB pointer to the newly created attribute.
+ *  \param [in]  toplevel   The TOPLEVEL object.
+ *  \param [in]  list_head  The OBJECT we're adding the attribute to.
+ *  \param [in]  item       The item you want to add as an attribute.
+ *  \return The new head of the attributes list.
  */
-ATTRIB *o_attrib_add(TOPLEVEL *toplevel, ATTRIB *list_head, OBJECT *item)
+void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item)
 {
-  ATTRIB *end = NULL;
   ATTRIB *new = NULL;
-
-  /* get tail of list_head */
-  end = o_attrib_return_tail(list_head);
 
   /* create an new st_attrib object */
   new = (ATTRIB *) g_malloc(sizeof(ATTRIB));
 
-  /* fill item with correct data (mainly item) */
-  new->next = NULL;
-  new->prev = end;
+  /* fill item with correct data */
   new->object = item;
-  new->copied_to = NULL;
   new->object->attribute = 1; /* Set the attribute to true, hack define */
   /* Show that that item is an attribute */
   new->object->color = toplevel->attribute_color;
@@ -183,15 +126,9 @@ ATTRIB *o_attrib_add(TOPLEVEL *toplevel, ATTRIB *list_head, OBJECT *item)
   }
 
   /* Add link from item to attrib listing */
-  new->object->attached_to = new;
+  new->object->attached_to = object;
 
-  /* set next of tail of end->attrib to item */
-  if (end) {
-    end->next = new;
-    return(new);
-  } else {
-    return(new);
-  }
+  object->attribs = g_list_append (object->attribs, new);
 }
 
 /*! \brief Free single item in attribute list.
@@ -202,7 +139,6 @@ ATTRIB *o_attrib_add(TOPLEVEL *toplevel, ATTRIB *list_head, OBJECT *item)
  *  \param [in] current    ATTRIB pointer to free.
  *
  *  \note
- *  this routine is not nice to next and prev
  *  this routine is only called from free_all
  */
 void o_attrib_free(TOPLEVEL *toplevel, ATTRIB *current)
@@ -210,7 +146,7 @@ void o_attrib_free(TOPLEVEL *toplevel, ATTRIB *current)
   if (current != NULL) {
 
     /* \todo this makes me nervous... very nervous */
-    if (current->object != NULL && current->prev != NULL) {
+    if (current->object != NULL) {
       current->object->attribute = 0;	
       current->object->attached_to=NULL;
       current->object->color = toplevel->detachedattr_color;
@@ -286,18 +222,12 @@ void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *parent_list,
     if (found2) {
       if (found2->type == OBJ_TEXT) {
 
-        if (object->attribs == NULL) {
-          object->attribs = 
-            add_attrib_head(object);
-        }
-
-
         if (found2->attached_to) {
           fprintf(stderr, "You cannot attach this attribute [%s] to more than one object\n", found2->text->string);
         } else {
 
           o_attrib_add(toplevel,
-                       object->attribs, 
+                       object,
                        found2);
 
           o_current->color = toplevel->
@@ -338,23 +268,20 @@ void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *parent_list,
  *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] list       The list to free.
  *
- *  \note
- *  this routine uses o_attrib_free (which isn't nice to next, prev)
- *  so it should only be used when an object is being destroyed
- *  goes backwards
  */
-void o_attrib_free_all(TOPLEVEL *toplevel, ATTRIB *list)
+void o_attrib_free_all(TOPLEVEL *toplevel, GList *list)
 {
   ATTRIB *a_current; 
-  ATTRIB *a_next;
+  GList *a_iter;
 
-  a_current = list;
+  a_iter = list;
 
-  while (a_current != NULL) {
-    a_next = a_current->next;
+  while (a_iter != NULL) {
+    a_current = a_iter->data;
     o_attrib_free(toplevel, a_current);
-    a_current = a_next;
+    a_iter = g_list_next (a_iter);
   }
+  g_list_free (list);
 }
 
 /*! \brief Print all attributes to a Postscript document.
@@ -363,13 +290,15 @@ void o_attrib_free_all(TOPLEVEL *toplevel, ATTRIB *list)
  *
  *  \param [in] attributes  List of attributes to print.
  */
-void o_attrib_print(ATTRIB *attributes) 
+void o_attrib_print(GList *attributes)
 {
   ATTRIB *a_current;
+  GList *a_iter;
 
-  a_current = attributes;
+  a_iter = attributes;
 
-  while (a_current != NULL) {
+  while (a_iter != NULL) {
+    a_current = a_iter->data;
     printf("Attribute points to: %s\n", a_current->object->name);
     if (a_current->object && a_current->object->text) {
       printf("\tText is: %s\n", a_current->object->text->string);
@@ -378,69 +307,42 @@ void o_attrib_print(ATTRIB *attributes)
     if (!a_current->object) {
       printf("oops found a null attrib object\n");
     }
-    a_current = a_current->next;
-  }
-}
-
-/*! \brief Delete an attribute.
- *  \par Function Description
- *  This function goes out and removes the current attribute,
- *  while preserving the next, prev pointers.
- *  This function should be used when detaching an attribute.
- *
- *  \param [in] a_current  The attribute to be deleted.
- */
-void o_attrib_delete(ATTRIB *a_current)
-{
-  if (a_current != NULL) {
-
-    if (a_current->next)
-    a_current->next->prev = a_current->prev;
-    else
-    a_current->next = NULL;
-
-    if (a_current->prev)
-    a_current->prev->next = a_current->next;
-    else
-    a_current->prev = NULL;
-
-    if (a_current->object) {
-      a_current->object->attribute=0;
-      a_current->object->attached_to=NULL;
-    }
-    a_current->object = NULL;
-
-    g_free(a_current);
+    a_iter = g_list_next (a_iter);
   }
 }
 
 /*! \todo Finish function.
  *  \brief Remove an attribute item from an attribute list.
  *  \par Function Description
- *  This function goes out and removes an attribute from a list.
- *  It searches for the attribute and then removes it using the
- *  good #o_attrib_delete() routine.
+ *  This function removes the given attribute from an attribute list.
+ *  This function should be used when detaching an attribute.
  *
- *  \param [in] list    ATTRIB list to remove attribute from.
- *  \param [in] remove  The ATTRIB to remove from list.
+ *  \param [in] list    The attribute list to remove attribute from.
+ *  \param [in] remove  The OBJECT to remove from list.
  *
- *  \note
- *  This function is the detach_all routine.
- *  It is not currently being used.
- *  It is not even done.
  */
-void o_attrib_remove(ATTRIB *list, ATTRIB *remove) 
+void o_attrib_remove(GList **list, OBJECT *remove)
 {
+  GList *a_iter;
   ATTRIB *a_current;
 
-  a_current = list;
+  g_assert (remove != NULL);
 
-  while (a_current != NULL) {
-	
-    if (a_current == remove) {
-			
-    }	
-    a_current = a_current->next;
+  a_iter = *list;
+  while (a_iter != NULL) {
+    a_current = a_iter->data;
+    if (a_current->object == remove) {
+
+      remove->attribute = 0;
+      remove->attached_to = NULL;
+
+      /* Modifying the list we're iterating over is
+       * ok, since we return straight afterward */
+      *list = g_list_remove (*list, a_current);
+      g_free(a_current);
+      return;
+    }
+    a_iter = g_list_next (a_iter);
   }
 }
 
@@ -595,17 +497,19 @@ OBJECT *o_read_attribs(TOPLEVEL *toplevel,
  *  \todo
  *  this should be trimmed down to only save attributes which are text items
  */
-void o_save_attribs(FILE *fp, ATTRIB *attribs)
+void o_save_attribs(FILE *fp, GList *attribs)
 {
   ATTRIB *a_current=NULL;
   OBJECT *o_current=NULL;
+  GList *a_iter;
   char *out;
 
-  a_current = attribs;
+  a_iter = attribs;
 
   fprintf(fp, "{\n");
 	
-  while ( a_current != NULL ) {
+  while ( a_iter != NULL ) {
+    a_current = a_iter->data;
 
     o_current = a_current->object;	
 
@@ -668,7 +572,7 @@ void o_save_attribs(FILE *fp, ATTRIB *attribs)
       fprintf(fp, "%s\n", out);
       g_free(out);
     }
-    a_current = a_current->next;
+    a_iter = g_list_next (a_iter);
   } 
 
   fprintf(fp, "}\n");
@@ -802,32 +706,6 @@ void o_attrib_set_string(TOPLEVEL *toplevel, char *string)
   /* be sure to g_free this string somewhere and free the input string */
 }
 
-/*! \brief Get the parent OBJECT of an attribute.
- *  \par Function Description
- *  Get the parent OBJECT of an attribute.
- *
- *  \param [in] attribute  ATTRIB pointer to get parent of.
- *  \return The parent OBJECT if it exists, otherwise NULL.
- */
-OBJECT *o_attrib_return_parent(ATTRIB *attribute) 
-{
-  ATTRIB *a_current;
-
-  a_current = attribute;
-
-  if (!a_current) {
-    return(NULL);
-  }
-  
-  while (a_current->prev != NULL) {
-    a_current = a_current->prev;	
-  }	
-
-  /* should be pointing to the parent */
-	
-  return(a_current->object);	
-}
-
 /*! \brief Set attribute color
  *  \par Function Description
  *  This function sets all attribute objects to the right
@@ -837,17 +715,15 @@ OBJECT *o_attrib_return_parent(ATTRIB *attribute)
  *  \param [in,out] attributes  ATTRIB list to set colors on.
  *
  */
-void o_attrib_set_color(TOPLEVEL *toplevel, ATTRIB *attributes)
+void o_attrib_set_color(TOPLEVEL *toplevel, GList *attributes)
 {
   ATTRIB *a_current;
+  GList *a_iter;
 
-  a_current = attributes;
+  a_iter = attributes;
 
-  /* skip over head */
-  if (a_current) 
-  a_current = a_current->next;
-
-  while (a_current != NULL) {
+  while (a_iter != NULL) {
+    a_current = a_iter->data;
 
     if (a_current->object) {	
 			
@@ -881,7 +757,7 @@ void o_attrib_set_color(TOPLEVEL *toplevel, ATTRIB *attributes)
         }
       }	
 
-      a_current = a_current->next;	
+      a_iter = g_list_next (a_iter);
     }
   }
 }
@@ -910,6 +786,7 @@ char *o_attrib_search_name(OBJECT *list, char *name, int counter)
   OBJECT *o_current;
   ATTRIB *a_current;
   OBJECT *found;
+  GList *a_iter;
   int val;
   int internal_counter=0;
   char *found_name = NULL;
@@ -920,9 +797,9 @@ char *o_attrib_search_name(OBJECT *list, char *name, int counter)
 
   while(o_current != NULL) {
     if (o_current->attribs != NULL) {
-      a_current = o_current->attribs;
-
-      while(a_current != NULL) {
+      a_iter = o_current->attribs;
+      while(a_iter != NULL) {
+        a_current = a_iter->data;
         found = a_current->object;
         if (found != NULL) {
           if (found->type == OBJ_TEXT) {
@@ -953,7 +830,7 @@ char *o_attrib_search_name(OBJECT *list, char *name, int counter)
 #endif
           }
         }
-        a_current=a_current->next;
+        a_iter = g_list_next (a_iter);
       }	
     }
 
@@ -1017,15 +894,17 @@ OBJECT *o_attrib_search_string_list(OBJECT *list, char *string)
   OBJECT *o_current;
   ATTRIB *a_current;
   OBJECT *found;
+  GList *a_iter;
 
   o_current = list;
 
   while(o_current != NULL) {
     /* first search attribute list */
     if (o_current->attribs != NULL) {
-      a_current = o_current->attribs;
+      a_iter = o_current->attribs;
 
-      while(a_current != NULL) {
+      while(a_iter != NULL) {
+        a_current = a_iter->data;
         found = a_current->object;
         if (found != NULL) {
           if (found->type == OBJ_TEXT) {
@@ -1038,7 +917,7 @@ OBJECT *o_attrib_search_string_list(OBJECT *list, char *string)
             }
           }	
         }
-        a_current=a_current->next;
+        a_iter = g_list_next (a_iter);
       }
     }	
   
@@ -1126,6 +1005,7 @@ OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for)
   OBJECT *o_current;
   OBJECT *found;
   ATTRIB *a_current;
+  GList *a_iter;
 
   o_current = object;
 
@@ -1153,8 +1033,9 @@ OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for)
   if (o_current->attribs == NULL) 
     return(NULL);
 
-  a_current = o_current->attribs;
-  while(a_current != NULL) {
+  a_iter = o_current->attribs;
+  while(a_iter != NULL) {
+    a_current = a_iter->data;
     found = a_current->object;
     if (found != NULL) {
       if (found->type == OBJ_TEXT) {
@@ -1163,7 +1044,7 @@ OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for)
         }
       }
     }
-    a_current=a_current->next;
+    a_iter = g_list_next (a_iter);
   }
 	
   return (NULL);
@@ -1186,17 +1067,18 @@ OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for)
  *  \return The attribute OBJECT if found, NULL otherwise.
  *
  */
-OBJECT *o_attrib_search_attrib_value(ATTRIB *list, char *value, char *name, 
+OBJECT *o_attrib_search_attrib_value(GList *list, char *value, char *name,
 				     int counter) 
 {
   OBJECT *found;
   ATTRIB *a_current;
+  GList *a_iter;
   int val;
   int internal_counter=0;
   char *found_name = NULL;
   char *found_value = NULL;
 
-  a_current = list;
+  a_iter = list;
 	
   if (!value) 
   return(NULL);
@@ -1204,7 +1086,8 @@ OBJECT *o_attrib_search_attrib_value(ATTRIB *list, char *value, char *name,
   if (!name) 
   return(NULL);
 
-  while(a_current != NULL) {
+  while(a_iter != NULL) {
+    a_current = a_iter->data;
     found = a_current->object;
     if (found != NULL) {
       if (found->type == OBJ_TEXT) {
@@ -1233,7 +1116,7 @@ OBJECT *o_attrib_search_attrib_value(ATTRIB *list, char *value, char *name,
 
       }
     }
-    a_current=a_current->next;
+    a_iter = g_list_next (a_iter);
   }
 
   if (found_name) g_free(found_name);
@@ -1257,19 +1140,21 @@ OBJECT *o_attrib_search_attrib_value(ATTRIB *list, char *value, char *name,
  *  Caller must g_free returned character string.
  */
 char *
-o_attrib_search_attrib_name(ATTRIB *list, char *name, int counter) 
+o_attrib_search_attrib_name(GList *list, char *name, int counter)
 {
   OBJECT *found;
   ATTRIB *a_current;
+  GList *a_iter;
   int val;
   int internal_counter=0;
   char *found_name = NULL;
   char *found_value = NULL;
   char *return_string = NULL;
 
-  a_current = list;
+  a_iter = list;
 
-  while(a_current != NULL) {
+  while(a_iter != NULL) {
+    a_current = a_iter->data;
     found = a_current->object;
     if (found != NULL) {
       if (found->type == OBJ_TEXT) {
@@ -1298,7 +1183,7 @@ o_attrib_search_attrib_name(ATTRIB *list, char *name, int counter)
         }	
       }
     }
-    a_current=a_current->next;
+    a_iter = g_list_next (a_iter);
   }
 
   if (found_name) g_free(found_name);
@@ -1387,6 +1272,7 @@ char *o_attrib_search_name_single(OBJECT *object, char *name,
   OBJECT *o_current;
   ATTRIB *a_current;
   OBJECT *found;
+  GList *a_iter;
   int val;
   char *found_name = NULL;
   char *found_value = NULL;
@@ -1399,9 +1285,10 @@ char *o_attrib_search_name_single(OBJECT *object, char *name,
   }
 
   if (o_current->attribs != NULL) {
-    a_current = o_current->attribs;
+    a_iter = o_current->attribs;
 
-    while(a_current != NULL) {
+    while(a_iter != NULL) {
+      a_current = a_iter->data;
       found = a_current->object;
       if (found != NULL) {
         if (found->type == OBJ_TEXT) {
@@ -1431,7 +1318,7 @@ char *o_attrib_search_name_single(OBJECT *object, char *name,
 #endif
         }
       }
-      a_current=a_current->next;
+      a_iter = g_list_next (a_iter);
     }	
   }
   /* search for attributes outside */
@@ -1489,6 +1376,7 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name,
   OBJECT *o_current;
   ATTRIB *a_current;
   OBJECT *found=NULL;
+  GList *a_iter;
   int val;
   char *found_name = NULL;
   char *found_value = NULL;
@@ -1503,9 +1391,10 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name,
   }
 
   if (o_current->attribs != NULL) {
-    a_current = o_current->attribs;
+    a_iter = o_current->attribs;
 
-    while(a_current != NULL) {
+    while(a_iter != NULL) {
+      a_current = a_iter->data;
       found = a_current->object;
       if (found != NULL) {
         if (found->type == OBJ_TEXT) {
@@ -1536,7 +1425,7 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name,
 #endif
         }
       }
-      a_current=a_current->next;
+      a_iter = g_list_next (a_iter);
     }	
 
   }
@@ -1679,7 +1568,7 @@ OBJECT *o_attrib_search_pinseq(OBJECT *list, int pin_number)
   g_free(search_for);
   
   if (pinseq_text_object && pinseq_text_object->attached_to) {
-    return(o_attrib_return_parent(pinseq_text_object->attached_to));
+    return pinseq_text_object->attached_to;
   }
   
   return(NULL);
@@ -2084,34 +1973,23 @@ OBJECT ** o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object)
   ATTRIB *a_current;	
   OBJECT *o_current;
   OBJECT *object;
+  GList *a_iter;
 
   object = (OBJECT *) o_list_search(object_list, sel_object);
 
-  if (!object) {
-    return(NULL);	
-  }
-
-  if (!object->attribs) {
+  if (!object || !object->attribs) {
     return(NULL);
   }
 
-  if (!object->attribs->next) {
-    return(NULL);
-  }
-
-
-  /* first go through and count the number of attribs */
-  a_current = object->attribs->next;	
-  while(a_current != NULL) {
-    num_attribs++;
-    a_current = a_current->next;
-  }
+  /* first count the number of attribs */
+  num_attribs = g_list_length (object->attribs);
 
   found_objects = (OBJECT **) g_malloc(sizeof(OBJECT *)*(num_attribs+1));
 
   /* now actually fill the array of objects */
-  a_current = object->attribs->next;	
-  while(a_current != NULL) {
+  a_iter = object->attribs;
+  while(a_iter != NULL) {
+    a_current = a_iter->data;
     if (a_current->object != NULL) {
       o_current = a_current->object;
       if (o_current->type == OBJ_TEXT && 
@@ -2120,7 +1998,7 @@ OBJECT ** o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object)
         i++;
       }
     }
-    a_current = a_current->next;
+    a_iter = g_list_next (a_iter);
   }
 
   found_objects[i] = NULL;
@@ -2160,28 +2038,4 @@ void o_attrib_free_returned(OBJECT **found_objects)
   }
 
   g_free(found_objects);
-}
-
-
-/*! \brief Set the copied_to property on a list of attributes
- *  \par Function Description
- *  Sets the copied_to property on a list of attributes.
- *  Used when copying objects with attributes.
- *
- *  \param [in] list    List of attributes to set
- *  \param [in] to_obj  OBEJCT to set copied_to
- */
-void o_attrib_list_copied_to(ATTRIB *list, OBJECT *to_obj)
-{
-  ATTRIB *a_current;
-
-  a_current = list;
-  while ( a_current ) {
-
-    /* head attrib node has prev = NULL */
-    if (a_current->prev != NULL) {
-      a_current->copied_to = to_obj;
-    }
-    a_current = a_current->next;
-  }
 }
