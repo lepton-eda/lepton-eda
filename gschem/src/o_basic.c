@@ -307,14 +307,14 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
     return;
   }
 
+  diff_x = w_current->last_x - w_current->start_x;
+  diff_y = w_current->last_y - w_current->start_y;
+
   if ((w_current->last_drawb_mode == OUTLINE) &&
       (w_current->actionfeedback_mode == BOUNDINGBOX)) {
 #if DEBUG
     printf("going to bounding\n");
 #endif
-
-    diff_x = w_current->last_x - w_current->start_x;
-    diff_y = w_current->last_y - w_current->start_y;
 
     gdk_gc_set_foreground(w_current->bounding_xor_gc,
                           x_get_color(toplevel->background_color));
@@ -323,23 +323,16 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
     gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
 
     world_get_object_glist_bounds(toplevel, o_glist,
-                                  &w_rleft  ,
-                                  &w_rtop   ,
-                                  &w_rright ,
-                                  &w_rbottom);
+                                  &w_rleft, &w_rtop,
+                                  &w_rright, &w_rbottom);
 
-    WORLDtoSCREEN( toplevel, w_rleft, w_rtop,
-                   &rleft, &rtop );
-    WORLDtoSCREEN( toplevel, w_rright, w_rbottom,
-                 &rright, &rbottom );
+    WORLDtoSCREEN( toplevel, w_rleft, w_rtop, &rleft, &rtop );
+    WORLDtoSCREEN( toplevel, w_rright, w_rbottom, &rright, &rbottom );
 
     gdk_draw_rectangle(w_current->window,
                        w_current->bounding_xor_gc, FALSE,
-                       rleft + diff_x,
-                       rtop  + diff_y,
-                       rright  - rleft,
-                       rbottom - rtop);
-
+                       rleft + diff_x, rtop + diff_y,
+                       rright - rleft, rbottom - rtop);
   }
 
   if ((w_current->last_drawb_mode == BOUNDINGBOX) &&
@@ -349,26 +342,18 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
 #endif
 
     world_get_object_glist_bounds(toplevel, o_glist,
-                                  &w_rleft  ,
-                                  &w_rtop   ,
-                                  &w_rright ,
-                                  &w_rbottom);
+                                  &w_rleft, &w_rtop,
+                                  &w_rright, &w_rbottom);
 
-    diff_x = w_current->last_x - w_current->start_x;
-    diff_y = w_current->last_y - w_current->start_y;
     gdk_gc_set_foreground(w_current->gc,
                           x_get_color(toplevel->background_color));
 
-    WORLDtoSCREEN( toplevel, w_rleft, w_rtop,
-                   &rleft, &rtop );
-    WORLDtoSCREEN( toplevel, w_rright, w_rbottom,
-                   &rright, &rbottom );
+    WORLDtoSCREEN( toplevel, w_rleft, w_rtop, &rleft, &rtop );
+    WORLDtoSCREEN( toplevel, w_rright, w_rbottom, &rright, &rbottom );
     gdk_draw_rectangle(w_current->window,
                        w_current->gc, FALSE,
-                       rleft   + diff_x,
-                       rtop    + diff_y,
-                       rright  - rleft ,
-                       rbottom - rtop  );
+                       rleft + diff_x, rtop + diff_y,
+                       rright - rleft, rbottom - rtop);
 
     o_complex_translate_display_object_glist(w_current,
                                              diff_x, diff_y, o_glist);
@@ -387,8 +372,6 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
   /* going to constrained from free */
   if ( (w_current->CONTROLKEY) &&
        (w_current->drawbounding_action_mode == FREE)) {
-    diff_x = w_current->last_x - w_current->start_x;
-    diff_y = w_current->last_y - w_current->start_y;
     w_current->drawbounding_action_mode = CONSTRAINED;
 
     if (w_current->actionfeedback_mode == OUTLINE) {
@@ -397,23 +380,17 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
 
     } else {
       world_get_object_glist_bounds(toplevel, o_glist,
-                                    &w_rleft  ,
-                                    &w_rtop   ,
-                                    &w_rright ,
-                                    &w_rbottom);
+                                    &w_rleft, &w_rtop,
+                                    &w_rright, &w_rbottom);
 
-      gdk_gc_set_foreground(w_current->bounding_xor_gc,
-                            color);
-      WORLDtoSCREEN( toplevel, w_rleft, w_rtop,
-                     &rleft, &rtop );
-      WORLDtoSCREEN( toplevel, w_rright, w_rbottom,
-                     &rright, &rbottom );
+      gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
+
+      WORLDtoSCREEN( toplevel, w_rleft, w_rtop, &rleft, &rtop );
+      WORLDtoSCREEN( toplevel, w_rright, w_rbottom, &rright, &rbottom );
       gdk_draw_rectangle(w_current->window,
                          w_current->bounding_xor_gc, FALSE,
-                         rleft + diff_x,
-                         rtop  + diff_y,
-                         rright  - rleft,
-                         rbottom - rtop);
+                         rleft + diff_x, rtop + diff_y,
+                         rright - rleft, rbottom - rtop);
     }
 
     test_x = GET_BOX_WIDTH (w_current);
@@ -433,24 +410,18 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
 
     } else {
       world_get_object_glist_bounds(toplevel, o_glist,
-                                    &w_rleft  ,
-                                    &w_rtop   ,
-                                    &w_rright ,
-                                    &w_rbottom);
+                                    &w_rleft, &w_rtop,
+                                    &w_rright, &w_rbottom);
 
-      gdk_gc_set_foreground(w_current->bounding_xor_gc,
-                            color);
-      WORLDtoSCREEN( toplevel, w_rleft, w_rtop,
-                     &rleft, &rtop );
-      WORLDtoSCREEN( toplevel, w_rright, w_rbottom,
-                     &rright, &rbottom );
+      gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
+
+      WORLDtoSCREEN( toplevel, w_rleft, w_rtop, &rleft, &rtop );
+      WORLDtoSCREEN( toplevel, w_rright, w_rbottom, &rright, &rbottom );
       gdk_draw_rectangle(w_current->window,
                          w_current->bounding_xor_gc,
                          FALSE,
-                         rleft   + diff_x,
-                         rtop    + diff_y,
-                         rright  - rleft,
-                         rbottom - rtop);
+                         rleft + diff_x, rtop + diff_y,
+                         rright - rleft, rbottom - rtop);
     }
 
     if (w_current->netconn_rubberband) {
@@ -463,8 +434,6 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
   /* going to free from constrained */
   if ((!w_current->CONTROLKEY) &&
       (w_current->drawbounding_action_mode == CONSTRAINED)) {
-        diff_x = w_current->last_x - w_current->start_x;
-        diff_y = w_current->last_y - w_current->start_y;
         w_current->drawbounding_action_mode = FREE;
         if (w_current->actionfeedback_mode == OUTLINE) {
           /* do it twice to get rid of old outline */
@@ -477,10 +446,8 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
           /*! \todo why are we doing this here...?
            * probably a reason */
           world_get_object_glist_bounds(toplevel, o_glist,
-                                        &w_rleft  ,
-                                        &w_rtop   ,
-                                        &w_rright ,
-                                        &w_rbottom);
+                                        &w_rleft, &w_rtop,
+                                        &w_rright, &w_rbottom);
 
         }
         if (w_current->netconn_rubberband) {
@@ -497,39 +464,30 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
     } else {
       w_current->last_x = w_current->start_x;
     }
+    diff_x = w_current->last_x - w_current->start_x;
+    diff_y = w_current->last_y - w_current->start_y;
   }
 
   if (w_current->actionfeedback_mode == BOUNDINGBOX) {
 
     if (firsttime == TRUE) {
       world_get_object_glist_bounds(toplevel, o_glist,
-                                    &w_rleft  ,
-                                    &w_rtop   ,
-                                    &w_rright ,
-                                    &w_rbottom);
+                                    &w_rleft, &w_rtop,
+                                    &w_rright, &w_rbottom);
 
       /*printf("once\n");*/
     
     }
-    diff_x = w_current->last_x - w_current->start_x;
-    diff_y = w_current->last_y - w_current->start_y;
     gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
-    WORLDtoSCREEN( toplevel, w_rleft, w_rtop,
-                   &rleft, &rtop );
-    WORLDtoSCREEN( toplevel, w_rright, w_rbottom,
-                   &rright, &rbottom );
+    WORLDtoSCREEN( toplevel, w_rleft, w_rtop, &rleft, &rtop );
+    WORLDtoSCREEN( toplevel, w_rright, w_rbottom, &rright, &rbottom );
     gdk_draw_rectangle(w_current->window,
                        w_current->bounding_xor_gc, FALSE,
-                       rleft   + diff_x,
-                       rtop    + diff_y,
-                       rright  - rleft,
-                       rbottom - rtop);
+                       rleft + diff_x, rtop + diff_y,
+                       rright - rleft, rbottom - rtop);
 
     return;
   }
-
-  diff_x = w_current->last_x - w_current->start_x;
-  diff_y = w_current->last_y - w_current->start_y;
 
   /*! \todo have I mentioned how temp this is? Make this general
    * so that all lists can be moved ...
