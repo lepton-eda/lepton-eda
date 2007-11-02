@@ -800,7 +800,7 @@ void o_edit_show_hidden(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list)
   i_show_state(w_current, NULL); /* update screen status */
 
   o_edit_show_hidden_lowlevel(w_current, o_list);
-  o_redraw_all_fast(w_current);
+  o_redraw_all(w_current);
 
   if (w_current->toplevel->show_hidden_text) {
     s_log_message(_("Hidden text is now visible\n"));

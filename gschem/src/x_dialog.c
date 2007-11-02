@@ -2859,7 +2859,7 @@ void find_text_dialog_response(GtkWidget *w, gint response,
 						    (checkdescend)),
 		       !start_find);
     if (done) {
-      o_redraw_all_fast(w_current);
+      o_redraw_all(w_current);
       close = 1;
     }
     start_find = 0;

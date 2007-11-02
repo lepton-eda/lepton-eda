@@ -48,7 +48,18 @@
 void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  o_redraw_all_fast(w_current);
+  gboolean draw_selected = TRUE;
+
+  if (!toplevel->DONT_REDRAW) {
+    x_repaint_background(w_current);
+  }
+
+  draw_selected = !(w_current->inside_action &&
+                    ((w_current->event_state == MOVE) ||
+                     (w_current->event_state == ENDMOVE)));
+  o_redraw(w_current, toplevel->page_current->object_head, draw_selected);
+  o_cue_redraw_all(w_current,
+                   toplevel->page_current->object_head, draw_selected);
 
   if (w_current->inside_action) {
     switch(w_current->event_state) {
@@ -82,28 +93,6 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* basically like above but doesn't do the o_conn_disconnect_update */
-void o_redraw_all_fast(GSCHEM_TOPLEVEL *w_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  gboolean draw_selected = TRUE;
-
-  if (!toplevel->DONT_REDRAW) {
-    x_repaint_background(w_current);
-  }
-
-  draw_selected = !(w_current->inside_action &&
-		    ((w_current->event_state == MOVE) ||
-		     (w_current->event_state == ENDMOVE)));
-  o_redraw(w_current, toplevel->page_current->object_head, draw_selected);
-  o_cue_redraw_all(w_current,
-		   toplevel->page_current->object_head, draw_selected);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

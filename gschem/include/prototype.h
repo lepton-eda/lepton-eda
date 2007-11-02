@@ -470,7 +470,6 @@ void o_attrib_toggle_show_name_value(GSCHEM_TOPLEVEL *w_current, GList *list, in
 OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current, char *text_string, int visibility, int show_name_value, OBJECT *object);
 /* o_basic.c */
 void o_redraw_all(GSCHEM_TOPLEVEL *w_current);
-void o_redraw_all_fast(GSCHEM_TOPLEVEL *w_current);
 void o_redraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object_list, gboolean draw_selected);
 void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_draw_list(GSCHEM_TOPLEVEL *w_current, GList *list);

@@ -895,7 +895,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       
       case(MID_MOUSEPAN_ENABLED):
       w_current->doing_pan=FALSE;
-      o_redraw_all_fast(w_current);
+      o_redraw_all(w_current);
       if (w_current->undo_panzoom) {
         o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
       }
@@ -911,7 +911,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
   } else if (event->button == 3) {
     if (w_current->doing_pan) { /* just for ending a mouse pan */
       w_current->doing_pan=FALSE;
-      o_redraw_all_fast(w_current);
+      o_redraw_all(w_current);
 
       if (w_current->undo_panzoom) {
         o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
@@ -1312,7 +1312,7 @@ x_event_configure (GtkWidget         *widget,
 
   if (!toplevel->DONT_REDRAW) {
     /* redraw the current page and update UI */
-    o_redraw_all_fast (w_current);
+    o_redraw_all (w_current);
     x_scrollbars_update (w_current);
   }
 
@@ -1392,7 +1392,7 @@ void x_event_hschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
     (current_left - new_left);
 
   if (!toplevel->DONT_REDRAW) {
-    o_redraw_all_fast(w_current);
+    o_redraw_all(w_current);
   }
 }
 
@@ -1434,7 +1434,7 @@ void x_event_vschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
 #endif
 
   if (!toplevel->DONT_REDRAW) {
-    o_redraw_all_fast(w_current);
+    o_redraw_all(w_current);
   }
 }
 
