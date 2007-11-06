@@ -272,10 +272,7 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   int size;
   GList *other_objects = NULL;
 
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return(FALSE);
-  }
+  g_assert( w_current->inside_action != 0 );
 
   if (toplevel->override_bus_color == -1) {
     color = w_current->bus_color;
@@ -379,10 +376,7 @@ void o_bus_rubberbus(GSCHEM_TOPLEVEL *w_current, int x, int y)
   int diff_x, diff_y;
   int size;
 
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return;
-  }
+  g_assert( w_current->inside_action != 0 );
 
   if (toplevel->bus_style == THICK ) {
     size = SCREENabs(toplevel, BUS_WIDTH);

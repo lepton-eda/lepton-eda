@@ -300,14 +300,10 @@ void a_zoom_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
  */
 void a_zoom_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int box_width, box_height;
   int box_left, box_top;
 
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return;
-  }
+  g_assert( w_current->inside_action != 0 );
 
   box_width  = GET_BOX_WIDTH (w_current);
   box_height = GET_BOX_HEIGHT(w_current);
@@ -332,14 +328,10 @@ void a_zoom_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
  */
 void a_zoom_box_rubberband(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int box_width, box_height;
   int box_left, box_top;
 
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return;
-  }
+  g_assert( w_current->inside_action != 0 );
 
   box_width  = GET_BOX_WIDTH (w_current);
   box_height = GET_BOX_HEIGHT(w_current);

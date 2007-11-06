@@ -951,11 +951,8 @@ void o_arc_end1(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
-	
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return;
-  }
+
+  g_assert( w_current->inside_action != 0 );
 
   /* erases the previous temporary radius segment */
   o_arc_rubberarc_xor(w_current);

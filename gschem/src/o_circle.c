@@ -650,10 +650,7 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   int fx, fy;
   int radius;
 
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return;
-  }
+  g_assert( w_current->inside_action != 0 );
 
   /* erase the temporary circle */
   o_circle_rubbercircle_xor(w_current);
@@ -734,10 +731,7 @@ void o_circle_rubbercircle(GSCHEM_TOPLEVEL *w_current, int x, int y)
   TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
 
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return;
-  }
+  g_assert( w_current->inside_action != 0 );
 
   /* erase the previous temporary circle */
   o_circle_rubbercircle_xor(w_current);

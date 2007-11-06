@@ -220,10 +220,7 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   GList *other_objects = NULL;
   OBJECT *o_current, *o_current_pin;
 
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return;
-  }
+  g_assert( w_current->inside_action != 0 );
 
   if (toplevel->override_pin_color == -1) {
     color = w_current->pin_color;
@@ -295,10 +292,7 @@ void o_pin_rubberpin(GSCHEM_TOPLEVEL *w_current, int x, int y)
   int size;
   int diff_x, diff_y;
 
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return;
-  }
+  g_assert( w_current->inside_action != 0 );
 
   size = SCREENabs(toplevel, PIN_WIDTH);
 

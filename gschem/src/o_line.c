@@ -847,10 +847,7 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   int x1, y1;
   int x2, y2;
 
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return;
-  }
+  g_assert( w_current->inside_action != 0 );
 
   /* Use last_x and _y from the last time you moved the mouse from the
      rubber function, so in otherwords... comment these out...
@@ -921,10 +918,7 @@ void o_line_rubberline(GSCHEM_TOPLEVEL *w_current, int x, int y)
   TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
 
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return;
-  }
+  g_assert( w_current->inside_action != 0 );
 
   /*
    * The current temporary line is described by the two points

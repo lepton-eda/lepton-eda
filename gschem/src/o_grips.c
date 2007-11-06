@@ -881,10 +881,7 @@ void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return;
-  }
+  g_assert( w_current->inside_action != 0 );
 
   /* no object changing */
   if (object_changing == NULL) {

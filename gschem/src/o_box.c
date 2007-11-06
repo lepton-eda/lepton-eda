@@ -946,10 +946,7 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   int box_width, box_height;
   int box_left, box_top;
 
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return;
-  }
+  g_assert( w_current->inside_action != 0 );
 
   /* get the last coords of the pointer */
   w_current->last_x = fix_x(toplevel, x);
@@ -1023,10 +1020,8 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 void o_box_rubberbox(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return;
-  }
+
+  g_assert( w_current->inside_action != 0 );
 
   /* erase the previous temporary box */
   o_box_rubberbox_xor(w_current);

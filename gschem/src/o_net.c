@@ -329,11 +329,8 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   /* OBJECT *o_current;*/
   GList *other_objects = NULL;
   OBJECT *new_net = NULL;
-  
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return(FALSE);
-  }
+
+  g_assert( w_current->inside_action != 0 );
 
   if (toplevel->override_net_color == -1) {
     color = w_current->net_color;
@@ -551,10 +548,7 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
   int size;
   int ortho;
 
-  if (w_current->inside_action == 0) {
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return;
-  }
+  g_assert( w_current->inside_action != 0 );
 
   if (toplevel->net_style == THICK) {
     size = SCREENabs(toplevel, NET_WIDTH);
