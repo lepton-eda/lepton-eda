@@ -147,6 +147,7 @@ void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flag
   while( topEvent != NULL ) {
     if( topEvent->type != GDK_SCROLL ) {
       gdk_event_put( topEvent );
+      gdk_event_free( topEvent );
       break;
     }
     gdk_event_free( topEvent );
