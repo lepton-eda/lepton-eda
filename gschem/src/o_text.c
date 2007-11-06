@@ -288,7 +288,7 @@ void o_text_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
   if ((factor < w_current->text_display_zoomfactor) ||
       o_current->text->size >= 12 ||
       w_current->text_feedback == ALWAYS) {
-    o_complex_draw_xor(w_current, dx, dy, o_current->text->prim_objs);
+    o_list_draw_xor(w_current, dx, dy, o_current->text->prim_objs);
   } else {
     /* text is too small so go through and draw a line in
        it's place */

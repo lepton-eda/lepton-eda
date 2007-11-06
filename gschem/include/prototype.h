@@ -480,6 +480,9 @@ void o_erase_list(GSCHEM_TOPLEVEL *w_current, GList *list);
 void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist, GdkColor *color, int firsttime);
 int o_erase_rubber(GSCHEM_TOPLEVEL *w_current);
 int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current);
+void o_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
+void o_list_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *list);
+void o_glist_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, GList *list);
 /* o_box.c */
 void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_box_draw_solid(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);
@@ -542,13 +545,6 @@ void o_complex_place_changed_run_hook(GSCHEM_TOPLEVEL *w_current);
 void o_complex_place_rotate(GSCHEM_TOPLEVEL *w_current);
 void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_complex_rubbercomplex(GSCHEM_TOPLEVEL *w_current);
-void o_complex_translate_display_single_object(GSCHEM_TOPLEVEL *w_current,
-					       int x1, int y1, 
-					       OBJECT *o_current);
-void o_complex_translate_display_object_glist(GSCHEM_TOPLEVEL *w_current,
-					      int x1, int y1, 
-					      GList *object_list);
-void o_complex_translate_display(GSCHEM_TOPLEVEL *w_current, int x1, int y1, OBJECT *complex);
 void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset);
 void o_complex_rotate_world(TOPLEVEL *toplevel, int centerx, int centery, int angle, OBJECT *object);
 int o_complex_mirror_world(TOPLEVEL *toplevel, int centerx, int centery, OBJECT *object);

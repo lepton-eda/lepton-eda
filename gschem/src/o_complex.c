@@ -69,56 +69,12 @@ void o_complex_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_complex_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *complex)
+void o_complex_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
 {
-  OBJECT *o_current = complex;
+  g_assert( (object->type == OBJ_COMPLEX ||
+             object->type == OBJ_PLACEHOLDER) );
 
-  while(o_current != NULL) {
-    switch(o_current->type) {
-      case(OBJ_LINE):
-        o_line_draw_xor(w_current, dx, dy, o_current);
-        break;
-
-      case(OBJ_NET):
-        o_net_draw_xor(w_current, dx, dy, o_current);
-        break;
-
-      case(OBJ_BUS):
-        o_bus_draw_xor(w_current, dx, dy, o_current);
-        break;
-
-      case(OBJ_BOX):
-        o_box_draw_xor(w_current, dx, dy, o_current);
-        break;
-
-      case(OBJ_PICTURE):
-        o_picture_draw_xor(w_current, dx, dy, o_current);
-        break;
-
-      case(OBJ_CIRCLE):
-        o_circle_draw_xor(w_current, dx, dy, o_current);
-        break;
-
-      case(OBJ_COMPLEX):
-      case(OBJ_PLACEHOLDER):
-        o_complex_draw_xor(w_current, dx, dy,
-                           o_current->complex->prim_objs);
-        break;
-
-      case(OBJ_TEXT):
-        o_text_draw_xor(w_current, dx, dy, o_current);
-        break;
-
-      case(OBJ_PIN):
-        o_pin_draw_xor(w_current, dx, dy, o_current);
-        break;
-
-      case(OBJ_ARC):
-        o_arc_draw_xor(w_current, dx, dy, o_current);
-        break;
-    }
-    o_current = o_current->next;
-  }
+  o_list_draw_xor( w_current, dx, dy, object->complex->prim_objs);
 }
 
 /*! \todo Finish function documentation!!!
@@ -317,10 +273,8 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
     if (w_current->actionfeedback_mode == OUTLINE) {
       /* erase outline */
       
-      o_complex_translate_display_object_glist(w_current,
-					       diff_x, diff_y,
-					       toplevel->page_current->
-					       complex_place_list); 
+      o_glist_draw_xor(w_current, diff_x, diff_y,
+                       toplevel->page_current->complex_place_list);
     } else {
       world_get_object_glist_bounds(toplevel,
 			      toplevel->page_current->
@@ -333,7 +287,7 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
       gdk_gc_set_foreground(
                             w_current->gc,
                             x_get_color(toplevel->background_color));
-      gdk_draw_rectangle(w_current->window, w_current->gc,
+      gdk_draw_rectangle(w_current->backingstore, w_current->gc,
                          FALSE,
                          rleft   + diff_x,
                          rtop    + diff_y,
@@ -400,9 +354,8 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
   /* check for nulls in all this hack */
   if (w_current->actionfeedback_mode == OUTLINE) {
     /* erase outline */
-    o_complex_translate_display_object_glist(w_current,
-					     diff_x, diff_y,
-					     toplevel->page_current->complex_place_list);
+    o_glist_draw_xor(w_current, diff_x, diff_y,
+                     toplevel->page_current->complex_place_list);
   } else {
     world_get_object_glist_bounds(toplevel,
                                   toplevel->page_current->complex_place_list,
@@ -415,7 +368,7 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
     gdk_gc_set_foreground(
                           w_current->gc,
                           x_get_color(toplevel->background_color));
-    gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
+    gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
                        rleft   + diff_x,
                        rtop    + diff_y,
                        rright  - rleft,
@@ -463,97 +416,6 @@ void o_complex_rubbercomplex(GSCHEM_TOPLEVEL *w_current)
                  x_get_darkcolor(w_current->bb_color), FALSE);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-o_complex_translate_display_single_object(GSCHEM_TOPLEVEL *w_current,
-					  int x1, int y1, OBJECT *o_current)
-{
-  if (o_current != NULL) {
-    switch(o_current->type) {
-      case(OBJ_LINE):
-        o_line_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_NET):
-        o_net_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_BUS):
-        o_bus_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_BOX):
-        o_box_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_PICTURE):
-        o_picture_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_CIRCLE):
-        o_circle_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_COMPLEX):
-      case(OBJ_PLACEHOLDER):
-        o_complex_draw_xor(w_current, x1, y1, 
-                           o_current->complex->prim_objs);
-        break;
-
-      case(OBJ_TEXT):
-        o_text_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_PIN):
-        o_pin_draw_xor(w_current, x1, y1, o_current);
-        break;
-
-      case(OBJ_ARC):
-        o_arc_draw_xor(w_current, x1, y1, o_current);
-        break;
-    }
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-o_complex_translate_display_object_glist(GSCHEM_TOPLEVEL *w_current,
-			                 int x1, int y1, GList *object_list)
-{
-  GList *ptr = object_list;
-
-  while (ptr != NULL) {
-    o_complex_translate_display_single_object (w_current, x1, y1, 
-                                               (OBJECT *)ptr->data);
-    ptr = g_list_next(ptr);
-  }
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-o_complex_translate_display(GSCHEM_TOPLEVEL *w_current,
-			    int x1, int y1, OBJECT *complex)
-{
-  OBJECT *o_current = complex;
-
-  while (o_current != NULL) {
-    o_complex_translate_display_single_object (w_current, x1, y1, o_current);
-    o_current = o_current->next;
-  }
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

@@ -236,8 +236,7 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
         complex_object = new_object;
 
         if (w_current->actionfeedback_mode == OUTLINE) {
-          o_complex_draw_xor(w_current, screen_diff_x, screen_diff_y,
-                             object->complex->prim_objs);
+          o_complex_draw_xor(w_current, screen_diff_x, screen_diff_y, object);
         }
 
         o_complex_translate_world(toplevel, diff_x, diff_y, new_object);

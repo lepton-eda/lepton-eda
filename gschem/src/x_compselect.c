@@ -114,10 +114,8 @@ x_compselect_callback_response (GtkDialog *dialog,
         diff_x = w_current->last_x - w_current->start_x;
         diff_y = w_current->last_y - w_current->start_y;
 
-        o_complex_translate_display_object_glist(w_current,
-                                                 diff_x, diff_y,
-                                                 toplevel->page_current->
-                                                   complex_place_list);
+        o_glist_draw_xor(w_current, diff_x, diff_y,
+                         toplevel->page_current->complex_place_list);
 
         /* Free the complex place list and its contents */
         s_delete_object_glist(toplevel,

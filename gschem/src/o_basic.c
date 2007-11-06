@@ -307,7 +307,7 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
 
     gdk_gc_set_foreground(w_current->bounding_xor_gc,
                           x_get_color(toplevel->background_color));
-    o_complex_translate_display_object_glist(w_current, diff_x, diff_y, o_glist);
+    o_glist_draw_xor(w_current, diff_x, diff_y, o_glist);
 
     gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
 
@@ -344,8 +344,7 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
                        rleft + diff_x, rtop + diff_y,
                        rright - rleft, rbottom - rtop);
 
-    o_complex_translate_display_object_glist(w_current,
-                                             diff_x, diff_y, o_glist);
+    o_glist_draw_xor(w_current, diff_x, diff_y, o_glist);
 
   }
 
@@ -364,8 +363,7 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
     w_current->drawbounding_action_mode = CONSTRAINED;
 
     if (w_current->actionfeedback_mode == OUTLINE) {
-      o_complex_translate_display_object_glist(w_current,
-                                               diff_x, diff_y, o_glist);
+      o_glist_draw_xor(w_current, diff_x, diff_y, o_glist);
 
     } else {
       world_get_object_glist_bounds(toplevel, o_glist,
@@ -394,8 +392,7 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
     diff_y = w_current->last_y - w_current->start_y;
 
     if (w_current->actionfeedback_mode == OUTLINE) {
-      o_complex_translate_display_object_glist(w_current,
-                                               diff_x, diff_y, o_glist);
+      o_glist_draw_xor(w_current, diff_x, diff_y, o_glist);
 
     } else {
       world_get_object_glist_bounds(toplevel, o_glist,
@@ -426,10 +423,8 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
         w_current->drawbounding_action_mode = FREE;
         if (w_current->actionfeedback_mode == OUTLINE) {
           /* do it twice to get rid of old outline */
-          o_complex_translate_display_object_glist(w_current,
-                                                   diff_x, diff_y, o_glist);
-          o_complex_translate_display_object_glist(w_current,
-                                                   diff_x, diff_y, o_glist);
+          o_glist_draw_xor(w_current, diff_x, diff_y, o_glist);
+          o_glist_draw_xor(w_current, diff_x, diff_y, o_glist);
 
         } else {
           /*! \todo why are we doing this here...?
@@ -481,8 +476,7 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
   /*! \todo have I mentioned how temp this is? Make this general
    * so that all lists can be moved ...
    */
-  o_complex_translate_display_object_glist(w_current,
-                                           diff_x, diff_y, o_glist);
+  o_glist_draw_xor(w_current, diff_x, diff_y, o_glist);
 }
 
 
@@ -549,6 +543,7 @@ int o_erase_rubber(GSCHEM_TOPLEVEL *w_current)
 
    return(TRUE);
 }
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -650,4 +645,68 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
   }
 
   return FALSE;
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
+{
+  void (*func) (GSCHEM_TOPLEVEL *, int, int, OBJECT*) = NULL;
+
+  switch (object->type) {
+      case OBJ_HEAD:    /* Do nothing for head nodes */   break;
+      case OBJ_LINE:    func = o_line_draw_xor;           break;
+      case OBJ_NET:     func = o_net_draw_xor;            break;
+      case OBJ_BUS:     func = o_bus_draw_xor;            break;
+      case OBJ_BOX:     func = o_box_draw_xor;            break;
+      case OBJ_PICTURE: func = o_picture_draw_xor;        break;
+      case OBJ_CIRCLE:  func = o_circle_draw_xor;         break;
+      case OBJ_PLACEHOLDER:
+      case OBJ_COMPLEX: func = o_complex_draw_xor;        break;
+      case OBJ_TEXT:    func = o_text_draw_xor;           break;
+      case OBJ_PIN:     func = o_pin_draw_xor;            break;
+      case OBJ_ARC:     func = o_arc_draw_xor;            break;
+      default:
+        g_assert_not_reached ();
+  }
+
+  if (func != NULL) {
+    (*func) (w_current, dx, dy, object);
+  }
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_list_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *list)
+{
+  OBJECT *o_current = list;
+
+  while(o_current != NULL) {
+    o_draw_xor(w_current, dx, dy, o_current);
+    o_current = o_current->next;
+  }
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_glist_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, GList *list)
+{
+  GList *iter = list;
+
+  while (iter != NULL) {
+    o_draw_xor(w_current, dx, dy, (OBJECT *)iter->data);
+    iter = g_list_next(iter);
+  }
 }
