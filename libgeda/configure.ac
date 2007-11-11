@@ -39,14 +39,12 @@ esac
 
 if ! test "$MINGW" = "no" -o "$MINGW"x = x; then
    MINGW_CFLAGS="-mms-bitfields -mwindows"
-   MINGW_LIBS="-lregex -liberty"
    MINGW="yes"
    PATHSEP=\\\\
    OTHERPATHSEP=/
 else
    # Unix host
    MINGW_CFLAGS=
-   MINGW_LIBS=
    MINGW="no"
    PATHSEP=/
    OTHERPATHSEP=\\\\
@@ -427,7 +425,7 @@ AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of this program's package])
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GTK_CFLAGS $X_CFLAGS $GDK_PIXBUF_CFLAGS $GDK_CFLAGS"
-LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GLIB_LIBS $MINGW_LIBS $DMALLOC_LIBS $GDK_PIXBUF_LIBS $GDK_LIBS"
+LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GLIB_LIBS $DMALLOC_LIBS $GDK_PIXBUF_LIBS $GDK_LIBS"
 LIBTOOL_FLAGS="-version-info $SHARED_LIBRARY_VERSION"
 
 # Makefile.in variable substitution
