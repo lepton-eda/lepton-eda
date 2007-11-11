@@ -686,7 +686,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     }
 
     /* skip over the : */
-    pins = index(slotdef, ':');
+    pins = strchr(slotdef, ':');
     if (!pins) {
       message = g_strdup_printf (
         "Invalid slotdef=%s attributes, not continuing\n",
