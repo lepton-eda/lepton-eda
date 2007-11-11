@@ -106,12 +106,7 @@ main_prog(void *closure, int argc, char *argv[])
   while (argv[i] != NULL) {
 
     gchar *filename;
-#ifdef __MINGW32__
-     if (argv[i][1] == ':' && (argv[i][2] == G_DIR_SEPARATOR ||
-                               argv[i][2] == OTHER_PATH_SEPARATER_CHAR))
-#else
-    if (argv[i][0] == G_DIR_SEPARATOR)
-#endif
+    if (g_path_is_absolute(argv[i]))
     {
       /* Path is already absolute so no need to do any concat of cwd */
       filename = g_strdup (argv[i]);
