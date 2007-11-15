@@ -38,8 +38,7 @@ AC_PATH_PROGS(AWK, nawk gawk mawk awk, )
 #########################################################################
 # 
 #  Misc win32 / mingw checks and variables start
-#  Win32 stuff currently unsupported by SDB.  I left it in because we need
-#  to set the PATHSEP var.
+#  Win32 stuff currently unsupported by SDB.
 AC_CANONICAL_HOST
 
 # Figure out if we are building on win32 and what environment.
@@ -49,13 +48,9 @@ esac
 
 if ! test "$MINGW" = "no" -o "$MINGW"x = x; then
    MINGW="yes"
-   PATHSEP=\\\\
-   OTHERPATHSEP=/
 else
    # Unix host
    MINGW="no"
-   PATHSEP=/
-   OTHERPATHSEP=\\\\
 fi
 
 # 
@@ -384,8 +379,6 @@ AC_SUBST(GATTRIB_CFLAGS)
 AC_SUBST(GATTRIB_LDFLAGS)
 AC_SUBST(GEDARCDIR)
 AC_SUBST(GEDADATADIR)
-AC_SUBST(PATHSEP)
-AC_SUBST(OTHERPATHSEP)
 
 # Create all the necessary derived files
 AC_CONFIG_FILES([Makefile 

@@ -40,14 +40,10 @@ esac
 if ! test "$MINGW" = "no" -o "$MINGW"x = x; then
    MINGW_CFLAGS="-mms-bitfields -mwindows"
    MINGW="yes"
-   PATHSEP=\\\\
-   OTHERPATHSEP=/
 else
    # Unix host
    MINGW_CFLAGS=
    MINGW="no"
-   PATHSEP=/
-   OTHERPATHSEP=\\\\
 fi
 
 # 
