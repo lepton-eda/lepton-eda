@@ -1199,13 +1199,16 @@ void o_autosave_backups(GSCHEM_TOPLEVEL *w_current)
          */
 
         if (stat (real_filename, &st) != 0) {
+#if defined(HAVE_GETUID) && defined(HAVE_GETGID)
             struct stat dir_st;
             int result;
+#endif
 
             /* Use default permissions */
             saved_umask = umask(0);
             st.st_mode = 0666 & ~saved_umask;
             umask(saved_umask);
+#if defined(HAVE_GETUID) && defined(HAVE_GETGID)
             st.st_uid = getuid ();
 
             result = stat (dirname, &dir_st);
@@ -1214,6 +1217,7 @@ void o_autosave_backups(GSCHEM_TOPLEVEL *w_current)
               st.st_gid = dir_st.st_gid;
             else
               st.st_gid = getgid ();
+#endif
           }
         g_free (dirname);
         g_free (only_filename);
