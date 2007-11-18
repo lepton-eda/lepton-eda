@@ -54,3 +54,4 @@ src/x_print.c
 src/x_script.c
 src/x_stroke.c
 src/x_window.c
+data/geda-gschem.desktop.in

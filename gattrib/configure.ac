@@ -34,6 +34,41 @@ AC_PROG_CC
 AM_CONDITIONAL(CCISGCC, test "$GCC" = "yes")	
 AC_PROG_MAKE_SET
 AC_PATH_PROGS(AWK, nawk gawk mawk awk, )
+IT_PROG_INTLTOOL(0.35.0)
+
+############################################################################
+# Update desktop database utility start
+#
+
+AC_ARG_ENABLE(update-desktop-database,
+   AC_HELP_STRING([--disable-update-dektop-database],
+                   [do not update desktop file database after installation]),,
+                   enable_update_desktop_database=yes)
+
+AM_CONDITIONAL(ENABLE_UPDATE_DESKTOP_DATABASE,
+               test x$enable_update_desktop_database = xyes)
+
+if test x$enable_update_desktop_database = xyes ; then
+  AC_PATH_PROG(UPDATE_DESKTOP_DATABASE, [update-desktop-database], no)
+  if test $UPDATE_DESKTOP_DATABASE = no; then
+     AC_MSG_ERROR([Cannot find update-desktop-database, make sure it is installed and in your PATH, or configure with --disable-update-desktop-database])
+  fi
+fi
+
+#
+# Update mime database utility end
+############################################################################
+
+# Set USE_NLS
+AM_NLS
+
+# Set package name for translations
+GETTEXT_PACKAGE=$PACKAGE
+AC_SUBST(GETTEXT_PACKAGE)
+
+# Check pre-requsites for the PO dir.
+# (Needed without explicitly initialising gettext)
+AM_PO_SUBDIRS
 
 #########################################################################
 # 
@@ -390,6 +425,9 @@ AC_CONFIG_FILES([Makefile
 		 docs/Makefile
 		 design/Makefile
 		 include/Makefile 
+		 data/Makefile
+		 po/Makefile.in
+		 po/Makefile
 		 lib/system-gattribrc
 		])
 

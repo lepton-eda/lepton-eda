@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+GenericName=gschem
+_Name=gEDA Schematic Editor
+_Comment=Create and edit electrical schematics and symbols with gschem
+Type=Application
+Exec=gschem %F
+Icon=gschem
+MimeType=application/x-geda-schematic;application/x-geda-symbol;
+Categories=Engineering;Electronics

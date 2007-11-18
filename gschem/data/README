@@ -1,0 +1,17 @@
+
+gEDA
+
+GPL Electronic Design Automation
+------------------------------------------------------------------------------
+
+README for icon data
+
+This file describes where the various icons came from and their license.
+
+These application icons were created by Peter Clifton, based upon the
+Gnome "text-editor" icon created by Lapo Calamandrei. The gEDA specific
+additions are from the mime-type icons by Tomaz Solc.
+These icons are licensed under the GPL2 license.
+
+gschem.svg
+gschem-48.png

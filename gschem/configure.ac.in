@@ -60,6 +60,30 @@ AC_PROG_CC
 AM_CONDITIONAL(CCISGCC, test "$GCC" = "yes")    
 AC_PROG_CPP
 AC_PROG_MAKE_SET
+IT_PROG_INTLTOOL(0.35.0)
+
+############################################################################
+# Update desktop database utility start
+#
+
+AC_ARG_ENABLE(update-desktop-database,
+   AC_HELP_STRING([--disable-update-dektop-database],
+                   [do not update desktop file database after installation]),,
+                   enable_update_desktop_database=yes)
+
+AM_CONDITIONAL(ENABLE_UPDATE_DESKTOP_DATABASE,
+               test x$enable_update_desktop_database = xyes)
+
+if test x$enable_update_desktop_database = xyes ; then
+  AC_PATH_PROG(UPDATE_DESKTOP_DATABASE, [update-desktop-database], no)
+  if test $UPDATE_DESKTOP_DATABASE = no; then
+     AC_MSG_ERROR([Cannot find update-desktop-database, make sure it is installed and in your PATH, or configure with --disable-update-desktop-database])
+  fi
+fi
+
+#
+# Update mime database utility end
+############################################################################
 
 ############################################################################
 # Check for guile start
@@ -388,6 +412,10 @@ AC_CHECK_HEADER([locale.h],
                   fi
                 ])
 
+# Set package name for translations
+GETTEXT_PACKAGE=$PACKAGE
+AC_SUBST(GETTEXT_PACKAGE)
+
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 
@@ -512,6 +540,12 @@ AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of this program's package])
 AM_GNU_GETTEXT
 AM_GNU_GETTEXT_VERSION([%INSTALLED_GETTEXT_VERSION%])
 
+#GETTEXT_PACKAGE=$PACKAGE
+#AC_SUBST(GETTEXT_PACKAGE)
+#AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"],
+#                   [The domain to use with gettext])
+#AM_GLIB_GNU_GETTEXT
+
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 GSCHEM_CFLAGS="$LIBSTROKE_CFLAGS $LIBGEDA_CFLAGS $GTHREAD_CFLAGS"
 GSCHEM_LDFLAGS="$LIBSTROKE_LIBS $LIBGEDA_LIBS $GTK_LIBS $X_LDFLAGS $DMALLOC_LIBS $GTHREAD_LIBS"
@@ -541,6 +575,7 @@ AC_CONFIG_FILES([Makefile
 		docs/Makefile
 		lib/Makefile
 		tests/Makefile
+		data/Makefile
 		lib/system-gschemrc ])
 
 
