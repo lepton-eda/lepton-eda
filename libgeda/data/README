@@ -1,0 +1,37 @@
+
+gEDA
+
+GPL Electronic Design Automation
+------------------------------------------------------------------------------
+
+README for icon data
+
+This file describes where the various icons came from and their license.
+
+The schematic and symbol mimetype icons and registration data were
+contrinuted by Tomaz Solc, and subsequently modified by Peter Clifton,
+including creation of a gsch2pcb icon in a simlar style. The page outline
+is from the GNOME icon theme's text-x-generic icon by Jakub Steiner.
+
+The icons are licensed under the GPL2 license.
+
+Scalable versions: (128x128 canvas for the "hicolor" fallback theme).
+These were scaled up from the 48x48 pixel targeted version.
+
+application-x-geda-gsch2pcb-project.svg
+application-x-geda-schematic.svg
+application-x-geda-symbol.svg
+
+Pixel targeted varients:
+
+application-x-geda-gsch2pcb-project-{16,22,32,48}.svg
+application-x-geda-schematic-{16,22,32,48}.svg
+application-x-geda-symbol-{16,22,32,48}.svg
+
+
+PNG versions of the above icons were exported from Inkscape. The 24x24 pixel
+versions are copied from the 22x22 version, with a 1 pixel border added:
+
+application-x-geda-gsch2pcb-project-{16,22,24,32,48}.png
+application-x-geda-schematic-{16,22,24,32,48}.png
+application-x-geda-symbol-{16,22,24,32,48}.png

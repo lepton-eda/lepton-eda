@@ -22,7 +22,10 @@ AM_PROG_LIBTOOL
 
 # Change default location for rc files
 AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
- 
+
+# Change default location for XDG files (MIME and Icons)
+AC_ARG_WITH(xdgdir, [  --with-xdgdir=path      Change where the theme icons and mime registrations are installed [[DATAROOTDIR]]], [opt_xdgdir=$withval])
+
 # 
 # Command line flags end
 #########################################################################
@@ -50,11 +53,24 @@ fi
 # Misc win32 / mingw checks and variables end
 #########################################################################
 
+# Set USE_NLS
+AM_NLS
+
+# Set package name for translations
+so_major=`echo "$SHARED_LIBRARY_VERSION" | sed 's/:.*//'`
+GETTEXT_PACKAGE=$PACKAGE$so_major
+AC_SUBST(GETTEXT_PACKAGE)
+
+# Check pre-requsites for the PO dir.
+# (Needed without explicitly initialising gettext)
+AM_PO_SUBDIRS
+
 # Checks for programs.
 AC_PROG_CC
 AM_CONDITIONAL(CCISGCC, test "$GCC" = "yes")    
 AC_PROG_CPP
 AC_PROG_MAKE_SET
+IT_PROG_INTLTOOL(0.35.0)
 
 ############################################################################
 # Check for guile start
@@ -399,6 +415,16 @@ else
 	GEDARCDIR="$opt_rcdir"
 fi
 
+if test x$opt_xdgdir = x; then
+        # path was not specified with --with-xdgdir
+        XDGDIR='${datarootdir}'
+else
+        # path WAS specified with --with-xdgdir
+        #AC_DEFINE_UNQUOTED(XDGDIR, "$opt_xdgdir", [gEDA/gaf's rc directory])
+        XDGDIR="$opt_xdgdir"
+fi
+AC_SUBST(XDGDIR)
+
 # Defs for libary symbol files
 #
 # Expand the prefix variable
@@ -421,6 +447,30 @@ AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of this program's package])
 # gEDA/gaf specify things which need to setup
 #########################################################################
 
+#########################################################################
+# Update mime database utility start
+#
+# Adapted from gnome-control-center.
+#
+
+AC_ARG_ENABLE(update-mime-database,
+   AC_HELP_STRING([--disable-update-mime-database],
+                   [do not update mime database after installation]),,
+                   enable_update_mime_database=yes)
+
+AM_CONDITIONAL(ENABLE_UPDATE_MIME_DATABASE,
+               test x$enable_update_mime_database = xyes)
+
+if test x$enable_update_mime_database = xyes ; then
+  AC_PATH_PROG(UPDATE_MIME_DATABASE, [update-mime-database], no)
+  if test $UPDATE_MIME_DATABASE = no; then
+     AC_MSG_ERROR([Cannot find update-mime-database, make sure it is installed and in your PATH, or configure with --disable-update-mime-database])
+  fi
+fi
+
+#
+# Update mime database utility end
+#########################################################################
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GTK_CFLAGS $X_CFLAGS $GDK_PIXBUF_CFLAGS $GDK_CFLAGS"
@@ -446,6 +496,9 @@ AC_CONFIG_FILES([Makefile
                  scripts/Makefile
                  include/Makefile
                  docs/Makefile
+                 data/Makefile
+                 po/Makefile.in
+                 po/Makefile
 	         libgeda.pc
 		 share/Makefile
 		 lib/Makefile
@@ -455,6 +508,7 @@ AC_OUTPUT
 
 expandedGEDADATADIR=`eval "echo $GEDADATADIR"`
 expandedGEDARCDIR=`eval "echo $GEDARCDIR"`
+expandedXDGDIR=`eval "echo $XDGDIR"`
 
 AC_MSG_RESULT([
 ** Configuration summary for $PACKAGE $DOTTED_VERSION.$DATE_VERSION
@@ -466,6 +520,7 @@ AC_MSG_RESULT([
    mingw build:                      $MINGW
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR
+   xdg directory:                    $expandedXDGDIR
    LIBGEDA .so version:              $SHARED_LIBRARY_VERSION
    dmalloc debugging:                $with_dmalloc
    ElectricFence debugging:          $with_efence

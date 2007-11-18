@@ -1,7 +1,12 @@
 
-SUBDIRS = src include scripts docs share lib scheme
+SUBDIRS = src include scripts docs share lib scheme data po
 
-EXTRA_DIST = HACKING BUGS ChangeLog-1.0 autogen.sh
+INTLTOOL_FILES = intltool-extract.in \
+                 intltool-merge.in \
+                 intltool-update.in
+
+EXTRA_DIST = HACKING BUGS ChangeLog-1.0 autogen.sh \
+             icon-theme-installer $(INTLTOOL_FILES)
 
 pkgconfigdir            = $(libdir)/pkgconfig
 pkgconfig_DATA          = libgeda.pc
@@ -18,9 +23,14 @@ maintainer-clean-local:
 
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak libgeda.pc
+DISTCLEANFILES = *.log core FILE *~ prototype.bak libgeda.pc \
+                 intltool-extract \
+                 intltool-merge \
+                 intltool-update \
+                 po/.intltool-merge-cache
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in configure config.h.in \
 	               config.status aclocal.m4 libgeda.pc config.guess \
 		       config.sub depcomp install-sh ltmain.sh missing \
 		       mkinstalldirs
 
+DISTCHECK_CONFIGURE_FLAGS = --disable-update-mime-database
