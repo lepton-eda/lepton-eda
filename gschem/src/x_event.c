@@ -418,10 +418,8 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         w_x = snap_grid(toplevel, w_x);
         w_y = snap_grid(toplevel, w_y);
 
-        o_rotate_90_world(
-                    w_current,
-                    geda_list_get_glist( toplevel->page_current->selection_list ),
-                    w_x, w_y);
+        o_rotate_world_update(w_current, w_x, w_y, 90,
+          geda_list_get_glist(toplevel->page_current->selection_list ));
         toplevel->DONT_REDRAW = prev_state;
 
         w_current->inside_action = 0;
@@ -826,7 +824,8 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
                        &w_x, &w_y );
         w_x = snap_grid(toplevel, w_x);
         w_y = snap_grid(toplevel, w_y);
-	o_rotate_90_world(w_current, toplevel->page_current->complex_place_list, w_x, w_y );
+        o_rotate_world_update(w_current, w_x, w_y, 90,
+                              toplevel->page_current->complex_place_list );
 	toplevel->DONT_REDRAW = redraw_state;
 	w_current->rotated_inside ++;	
 	w_current->event_state = prev_state;

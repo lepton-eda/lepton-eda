@@ -297,3 +297,41 @@ void o_translate_world (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object)
     (*func) (toplevel, dx, dy, object);
   }
 }
+
+
+/*! \brief Rotates an object in world coordinates
+ *  \par Function Description
+ *  This function rotates the object <B>object</B> about the coordinates
+ *  <B>world_centerx</B> and <B>world_centery</B>, by <B>angle</B>degrees.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [in] world_centerx  X coordinate of rotation center (world coords)
+ *  \param [in] world_centery  Y coordinate of rotation center (world coords)
+ *  \param [in] angle          Angle of rotation (degrees)
+ *  \param [in] object         The object to rotate.
+ */
+void o_rotate_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object)
+{
+  void (*func) (TOPLEVEL*, int, int, int, OBJECT*) = NULL;
+
+  switch (object->type) {
+      case OBJ_HEAD:    /* Do nothing for head nodes */   break;
+      case OBJ_LINE:    func = o_line_rotate_world;       break;
+      case OBJ_NET:     func = o_net_rotate_world;        break;
+      case OBJ_BUS:     func = o_bus_rotate_world;        break;
+      case OBJ_BOX:     func = o_box_rotate_world;        break;
+      case OBJ_PICTURE: func = o_picture_rotate_world;    break;
+      case OBJ_CIRCLE:  func = o_circle_rotate_world;     break;
+      case OBJ_PLACEHOLDER:
+      case OBJ_COMPLEX: func = o_complex_rotate_world;    break;
+      case OBJ_TEXT:    func = o_text_rotate_world;       break;
+      case OBJ_PIN:     func = o_pin_rotate_world;        break;
+      case OBJ_ARC:     func = o_arc_rotate_world;        break;
+      default:
+        g_assert_not_reached ();
+  }
+
+  if (func != NULL) {
+    (*func) (toplevel, world_centerx, world_centery, angle, object);
+  }
+}

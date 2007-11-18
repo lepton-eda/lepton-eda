@@ -602,9 +602,9 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
   if (loaded_normally == TRUE) {
     if (mirror) {
       o_complex_mirror_lowlevel(toplevel, x, y, new_node);
-    } 
-    
-    o_complex_rotate_lowlevel(toplevel, x, y, angle, new_node);
+    }
+
+    o_list_rotate_world(toplevel, 0, 0, angle, prim_objs);
     o_list_translate_world(toplevel, x, y, prim_objs);
 
     if (!toplevel->ADDING_SEL) {
@@ -1241,78 +1241,44 @@ OBJECT *o_complex_return_nth_pin(OBJECT *o_list, int counter)
   return(NULL);
 }
 
-/*! \brief
+
+/*! \todo Finish function documentation!!!
+ *  \brief
  *  \par Function Description
  *
  */
-/* pass in top level object */
-void o_complex_rotate_lowlevel(TOPLEVEL *toplevel, int world_centerx,
-                               int world_centery,
-                               int angle,
-                               OBJECT *object)
+void o_complex_rotate_world(TOPLEVEL *toplevel,
+                            int centerx, int centery,
+                            int angle, OBJECT *object)
 {
-  OBJECT *o_current=NULL;
+  int x, y;
+  int newx, newy;
 
-#if DEBUG 
-  printf("------- a %d\n", angle);
-#endif
+  g_assert(object != NULL);
+  g_assert(((object->type == OBJ_COMPLEX) ||
+            (object->type == OBJ_PLACEHOLDER)));
 
-  g_return_if_fail(object != NULL);
-  g_return_if_fail(((object->type == OBJ_COMPLEX) ||
-		    (object->type == OBJ_PLACEHOLDER)));
-  g_return_if_fail(object->complex != NULL);
+  x = object->complex->x + (-centerx);
+  y = object->complex->y + (-centery);
 
+  rotate_point_90(x, y, angle, &newx, &newy);
 
-  /* do individual complex objects */
-  o_current = object->complex->prim_objs;
+  x = newx + (centerx);
+  y = newy + (centery);
 
-  while ( o_current != NULL ) {
-    switch(o_current->type) {
-      case(OBJ_LINE):
-        o_line_rotate_world(toplevel, 0, 0, angle, o_current);
-        break;
+  o_complex_translate_world(toplevel,
+                            -object->complex->x,
+                            -object->complex->y, object);
+  o_list_rotate_world(toplevel, 0, 0, angle, object->complex->prim_objs);
 
-      case(OBJ_NET):
-        o_net_rotate_world(toplevel, 0, 0, angle, o_current);
-        break;
+  object->complex->x = 0;
+  object->complex->y = 0;
 
-      case(OBJ_BUS):
-        o_bus_rotate_world(toplevel, 0, 0, angle, o_current);
-        break;
-	
-      case(OBJ_BOX):
-        o_box_rotate_world(toplevel, 0, 0, angle, o_current);
-        break;
+  o_complex_translate_world(toplevel, x, y, object);
 
-      case(OBJ_PICTURE):
-        o_picture_rotate_world(toplevel, 0, 0, angle, o_current);
-        break;
-
-      case(OBJ_CIRCLE):
-        o_circle_rotate_world(toplevel, 0, 0, angle, o_current);
-        break;
-
-      case(OBJ_PIN):
-        o_pin_rotate_world(toplevel, 0, 0, angle, o_current);
-        break;
-
-      case(OBJ_ARC):
-        o_arc_rotate_world(toplevel, 0, 0, angle, o_current);
-        break;
-
-      case(OBJ_COMPLEX):
-      case(OBJ_PLACEHOLDER):
-        o_complex_rotate_lowlevel(toplevel, 0, 0, angle, o_current);
-        break; 
-
-      case(OBJ_TEXT):
-        o_text_rotate_world(toplevel, 0, 0, angle, o_current);
-        break;
-
-    }
-    o_current=o_current->next;
-  }
+  object->complex->angle = ( object->complex->angle + angle ) % 360;
 }
+
 
 /*! \brief
  *  \par Function Description

@@ -191,28 +191,28 @@ void o_unlock(GSCHEM_TOPLEVEL *w_current)
 
 /*! \brief Rotate all objects in list.
  *  \par Function Description
- *  Given the selection <B>list</B>, and the center of rotation
+ *  Given an object <B>list</B>, and the center of rotation
  *  (<B>centerx</B>,<B>centery</B>, this function traverses all the selection
- *  list, rotating each object.
- *  The selection list contains a given object and all its attributes
+ *  list, rotating each object through angle <B>angle</B>.
+ *  The list contains a given object and all its attributes
  *  (refdes, pinname, pinlabel, ...).
  *  There is a second pass to run the rotate hooks of non-simple objects,
  *  like pin or complex objects, for example.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] list       The list of objects to rotate.
  *  \param [in] centerx    Center x coordinate of rotation.
  *  \param [in] centery    Center y coordinate of rotation.
+ *  \param [in] angle      Angle to rotate the objects through.
+ *  \param [in] list       The list of objects to rotate.
  */
-void o_rotate_90_world(GSCHEM_TOPLEVEL *w_current, GList *list,
-                       int centerx, int centery)
+void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
+                           int centerx, int centery, int angle, GList *list)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *object;
-  GList *s_current;
+  OBJECT *o_current;
+  GList *o_iter;
   GList *other_objects=NULL;
   GList *connected_objects=NULL;
-  OBJECT *o_current=NULL;
 
   /* this is okay if you just hit rotate and have nothing selected */
   if (list == NULL) {
@@ -221,261 +221,90 @@ void o_rotate_90_world(GSCHEM_TOPLEVEL *w_current, GList *list,
     return;
   }
 
-  s_current = list;
-
-  while (s_current != NULL) {
-    object = (OBJECT *) s_current->data;
-
-    if (!object) {
-      fprintf(stderr, _("ERROR: NULL object in o_rotate_90!\n"));
-      return;
-    }
-
-    g_list_free(other_objects);
-    other_objects = NULL;
-    g_list_free(connected_objects);
-    connected_objects = NULL;
-
-    switch(object->type) {
-
-
-      case(OBJ_NET):
-        if (!toplevel->DONT_REDRAW) {
-          o_cue_undraw(w_current, object);
-          o_net_erase(w_current, object);
-          o_line_erase_grips(w_current, object);
-        }
-
-        /* save the other objects */
-        other_objects = s_conn_return_others(other_objects, object);
-        s_conn_remove(toplevel, object);
-
-        o_net_rotate_world(toplevel, centerx, centery, 90, object);
-        s_conn_update_object(toplevel, object);
-        if (!toplevel->DONT_REDRAW) {
-          o_net_draw(w_current, object);
-
-          /* draw the other objects */
-          o_cue_undraw_list(w_current, other_objects);
-          o_cue_draw_list(w_current, other_objects);
-        }
-
-        /* get other connected objects and redraw */
-        connected_objects = s_conn_return_others(connected_objects, object);
-        if (!toplevel->DONT_REDRAW) {
-          o_cue_undraw_list(w_current, connected_objects);
-          o_cue_draw_list(w_current, connected_objects);
-
-          /* finally redraw the cues on the current object */
-          o_cue_draw_single(w_current, object);
-        }
-        break;
-
-      case(OBJ_BUS):
-        if (!toplevel->DONT_REDRAW) {
-          o_cue_undraw(w_current, object);
-          o_bus_erase(w_current, object);
-          o_line_erase_grips(w_current, object);
-        }
-
-        other_objects = s_conn_return_others(other_objects, object);
-        s_conn_remove(toplevel, object);
-
-        o_bus_rotate_world(toplevel, centerx, centery, 90, object);
-        s_conn_update_object(toplevel, object);
-        if (!toplevel->DONT_REDRAW) {
-          o_bus_draw(w_current, object);
-
-          /* draw the other objects */
-          o_cue_undraw_list(w_current, other_objects);
-          o_cue_draw_list(w_current, other_objects);
-        }
-
-        /* get other connected objects and redraw */
-        connected_objects = s_conn_return_others(connected_objects, object);
-        if (!toplevel->DONT_REDRAW) {
-          o_cue_undraw_list(w_current, connected_objects);
-          o_cue_draw_list(w_current, connected_objects);
-
-          /* finally redraw the cues on the current object */
-          o_cue_draw_single(w_current, object);
-        }
-        break;
-
-      case(OBJ_PIN):
-        if (!toplevel->DONT_REDRAW) {
-          o_cue_undraw(w_current, object);
-          o_pin_erase(w_current, object);
-          o_line_erase_grips(w_current, object);
-        }
-
-        other_objects = s_conn_return_others(other_objects, object);
-        s_conn_remove(toplevel, object);
-
-        o_pin_rotate_world(toplevel, centerx, centery, 90, object);
-        s_conn_update_object(toplevel, object);
-        if (!toplevel->DONT_REDRAW) {
-          o_pin_draw(w_current, object);
-
-          /* draw the other objects */
-          o_cue_undraw_list(w_current, other_objects);
-          o_cue_draw_list(w_current, other_objects);
-        }
-
-        /* get other connected objects and redraw */
-        connected_objects = s_conn_return_others(connected_objects, object);
-        if (!toplevel->DONT_REDRAW) {
-          o_cue_undraw_list(w_current, connected_objects);
-          o_cue_draw_list(w_current, connected_objects);
-
-          /* finally redraw the cues on the current object */
-          o_cue_draw_single(w_current, object);
-        }
-        break;
-
-      case(OBJ_COMPLEX):
-        if (!toplevel->DONT_REDRAW) {
-          o_cue_undraw_objects(w_current, object->complex->prim_objs);
-          /* erase the current selection */
-          o_complex_erase(w_current, object);
-        }
-
-        other_objects = s_conn_return_complex_others(other_objects, object);
-
-        /* remove all conn references */
-        o_current = object->complex->prim_objs;
-        while(o_current != NULL) {
-          s_conn_remove(toplevel, o_current);
-          o_current = o_current->next;
-        }
-
-        /* do the rotate */
-        /*toplevel->ADDING_SEL=1; NEWSEL: needed? */
-        o_complex_rotate_world(toplevel, centerx, centery, 90, object);
-        /*toplevel->ADDING_SEL = 0; NEWSEL: needed? */
-        s_conn_update_complex(toplevel, object->complex->prim_objs);
-        if (!toplevel->DONT_REDRAW) {
-          o_complex_draw(w_current, object);
-
-          o_cue_undraw_list(w_current, other_objects);
-          o_cue_draw_list(w_current, other_objects);
-        }
-
-        /* now draw the newly connected objects */
-        connected_objects = s_conn_return_complex_others(connected_objects,
-                                                         object);
-        if (!toplevel->DONT_REDRAW) {
-          o_cue_undraw_list(w_current, connected_objects);
-          o_cue_draw_list(w_current, connected_objects);
-        }
-        break;
-
-      case(OBJ_LINE):
-        if (!toplevel->DONT_REDRAW) {
-          o_line_erase_grips(w_current, object);
-          o_line_erase(w_current, object);
-        }
-
-        o_line_rotate_world(toplevel, centerx, centery,
-                      90, object);
-
-        if (!toplevel->DONT_REDRAW) {
-          o_line_draw(w_current, object);
-        }
-        break;
-
-      case(OBJ_BOX):
-        /* erase the current selection */
-        if (!toplevel->DONT_REDRAW) {
-          o_box_erase_grips(w_current, object);
-          o_box_erase(w_current, object);
-        }
-
-        o_box_rotate_world(toplevel, centerx, centery,
-                     90, object);
-
-        if (!toplevel->DONT_REDRAW) {
-          o_box_draw(w_current, object);
-        }
-        break;
-
-      case(OBJ_PICTURE):
-        /* erase the current selection */
-
-        if (!toplevel->DONT_REDRAW) {
-          o_picture_erase_grips(w_current, object);
-          o_picture_erase(w_current, object);
-        }
-
-        o_picture_rotate_world(toplevel, centerx, centery,
-                     90, object);
-
-        if (!toplevel->DONT_REDRAW) {
-          o_picture_draw(w_current, object);
-        }
-        break;
-
-      case(OBJ_CIRCLE):
-        if (!toplevel->DONT_REDRAW) {
-          o_circle_erase_grips(w_current, object);
-          o_circle_erase(w_current, object);
-        }
-
-        o_circle_rotate_world(toplevel, centerx, centery,
-                        90, object);
-
-        if (!toplevel->DONT_REDRAW) {
-          o_circle_draw(w_current, object);
-        }
-        break;
-
-      case(OBJ_ARC):
-        if (!toplevel->DONT_REDRAW) {
-          o_arc_erase(w_current, object);
-        }
-
-        o_arc_rotate_world(toplevel, centerx, centery, 90, object);
-        if (!toplevel->DONT_REDRAW) {
-          o_arc_draw(w_current, object);
-        }
-        break;
-
-      case(OBJ_TEXT):
-        /* erase the current selection */
-        if (!toplevel->DONT_REDRAW) {
-          o_text_erase(w_current, object);
-        }
-
-        o_text_rotate_world(toplevel, centerx, centery, 90, object);
-
-        if (!toplevel->DONT_REDRAW) {
-          o_text_draw(w_current, object);
-        }
-        break;
-    }
-    s_current = g_list_next(s_current);
+  if (!toplevel->DONT_REDRAW) {
+    o_cue_undraw_list (w_current, list);
+    o_erase_list (w_current, list);
   }
+
+  /* Find connected objects, removing each object in turn from the
+   * connection list. We only _really_ want those objects connected
+   * to the selection, not those within in it. The extra redraws
+   * don't _really_ hurt though. */
+  o_iter = list;
+  while (o_iter != NULL) {
+    o_current = o_iter->data;
+    switch (o_current->type) {
+      case OBJ_COMPLEX:
+      case OBJ_PLACEHOLDER:
+        other_objects =
+          s_conn_return_complex_others(other_objects, o_current);
+        s_conn_remove_complex (toplevel, o_current);
+        break;
+      case OBJ_NET:
+      case OBJ_PIN:
+      case OBJ_BUS:
+        other_objects = s_conn_return_others(other_objects, o_current);
+        s_conn_remove (toplevel, o_current);
+        break;
+    }
+    o_iter = g_list_next (o_iter);
+  }
+
+  o_glist_rotate_world( toplevel, centerx, centery, angle, list );
+
+  /* Find connected objects, adding each object in turn back to the
+   * connection list. We only _really_ want those objects connected
+   * to the selection, not those within in it. The extra redraws dont
+   * _really_ hurt though. */
+  o_iter = list;
+  while (o_iter != NULL) {
+    o_current = o_iter->data;
+    switch (o_current->type) {
+      case OBJ_COMPLEX:
+      case OBJ_PLACEHOLDER:
+        s_conn_update_complex(toplevel, o_current->complex->prim_objs);
+        connected_objects =
+          s_conn_return_complex_others(connected_objects, o_current);
+        break;
+      case OBJ_NET:
+      case OBJ_PIN:
+      case OBJ_BUS:
+        s_conn_update_object(toplevel, o_current);
+        connected_objects = s_conn_return_others(connected_objects, o_current);
+        break;
+    }
+    o_iter = g_list_next (o_iter);
+  }
+
+  if (!toplevel->DONT_REDRAW) {
+    o_draw_list (w_current, list);
+    o_cue_undraw_list(w_current, other_objects);
+    o_cue_draw_list(w_current, other_objects);
+    o_cue_undraw_list(w_current, connected_objects);
+    o_cue_draw_list(w_current, connected_objects);
+    o_cue_draw_list(w_current, list);
+  }
+
+  g_list_free (other_objects);
+  other_objects = NULL;
+  g_list_free (connected_objects);
+  connected_objects = NULL;
 
   /* All objects were rotated. Do a 2nd pass to run the rotate hooks */
   /* Do not run any hooks for simple objects here, like text, since they
      were rotated in the previous pass, and the selection list can contain
      an object and all its attributes (text) */
-  s_current = list;
-  while (s_current != NULL) {
-    object = (OBJECT *) s_current->data;
+  o_iter = list;
+  while (o_iter != NULL) {
+    o_current = o_iter->data;
 
-    if (!object) {
-      fprintf(stderr, _("ERROR: NULL object in o_rotate_90!\n"));
-      return;
-    }
-
-    switch(object->type) {
+    switch(o_current->type) {
       case(OBJ_PIN):
         /* Run the rotate pin hook */
         if (scm_hook_empty_p(rotate_pin_hook) == SCM_BOOL_F &&
-            object != NULL) {
+            o_current != NULL) {
           scm_run_hook(rotate_pin_hook,
-                       scm_cons(g_make_object_smob(toplevel, object),
+                       scm_cons(g_make_object_smob(toplevel, o_current),
                                 SCM_EOL));
         }
         break;
@@ -483,9 +312,9 @@ void o_rotate_90_world(GSCHEM_TOPLEVEL *w_current, GList *list,
       case (OBJ_COMPLEX):
         /* Run the rotate hook */
         if (scm_hook_empty_p(rotate_component_object_hook) == SCM_BOOL_F &&
-            object != NULL) {
+            o_current != NULL) {
           scm_run_hook(rotate_component_object_hook,
-                       scm_cons(g_make_object_smob(toplevel, object),
+                       scm_cons(g_make_object_smob(toplevel, o_current),
                                 SCM_EOL));
         }
         break;
@@ -493,7 +322,7 @@ void o_rotate_90_world(GSCHEM_TOPLEVEL *w_current, GList *list,
         break;
     }
 
-    s_current = g_list_next(s_current);
+    o_iter = g_list_next(o_iter);
   }
 
   /* Don't save the undo state if we are inside an action */

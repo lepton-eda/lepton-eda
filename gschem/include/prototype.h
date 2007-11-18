@@ -546,7 +546,6 @@ void o_complex_place_rotate(GSCHEM_TOPLEVEL *w_current);
 void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_complex_rubbercomplex(GSCHEM_TOPLEVEL *w_current);
 void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset);
-void o_complex_rotate_world(TOPLEVEL *toplevel, int centerx, int centery, int angle, OBJECT *object);
 int o_complex_mirror_world(TOPLEVEL *toplevel, int centerx, int centery, OBJECT *object);
 /* o_copy.c */
 void o_copy_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -621,7 +620,7 @@ void o_line_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_edit(GSCHEM_TOPLEVEL *w_current, GList *list);
 void o_lock(GSCHEM_TOPLEVEL *w_current);
 void o_unlock(GSCHEM_TOPLEVEL *w_current);
-void o_rotate_90_world(GSCHEM_TOPLEVEL *w_current, GList *list, int centerx, int centery);
+void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery, int angle, GList *list);
 void o_mirror_world(GSCHEM_TOPLEVEL *w_current, GList *list, int centerx, int centery);
 void o_edit_show_hidden_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list);
 void o_edit_show_hidden(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list);

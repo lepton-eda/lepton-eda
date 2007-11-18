@@ -445,42 +445,6 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
   i_update_menus(w_current);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_complex_rotate_world(TOPLEVEL *toplevel,
-                            int centerx, int centery,
-                            int angle, OBJECT *object)
-{
-  int x, y;
-  int newx, newy;
-
-  x = object->complex->x + (-centerx);
-  y = object->complex->y + (-centery);
-
-  rotate_point_90(x, y, angle, &newx, &newy);
-
-  x = newx + (centerx);
-  y = newy + (centery);
-
-  o_complex_translate_world(toplevel,
-                            -object->complex->x,
-                            -object->complex->y, object);
-  o_complex_rotate_lowlevel(toplevel, 0, 0, angle, object);
-
-  object->complex->x = 0;
-  object->complex->y = 0;
-
-  o_complex_translate_world(toplevel, x, y, object);
-
-  object->complex->angle = ( object->complex->angle + angle ) % 360;
-
-#if DEBUG
-  printf("setting final rotated angle to: %d\n\n", object->angle);
-#endif
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

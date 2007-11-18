@@ -655,10 +655,8 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
 	  /* do this if you want to stack chars */
 	  /* we don't want to do that for now */
 	  /* Rotate and translate the character to its world position */
-	  o_text_rotate_lowlevel(toplevel, x, y, angle, start_of_char);
-	  o_list_translate_world(toplevel,
-	                         x_offset, y_offset,
-	                         start_of_char);
+	  o_list_rotate_world(toplevel, 0, 0, angle, start_of_char);
+	  o_list_translate_world(toplevel, x_offset, y_offset, start_of_char);
 	  
 	  /* Reset the escapes counter after being processed. Otherwise, 
 	     if the next character is also a backslash, it will
@@ -1752,35 +1750,6 @@ void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   if (value) g_free(value);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* takes world coords as the center point as well as a true angle */
-void o_text_rotate_lowlevel(TOPLEVEL *toplevel, int world_centerx,
-			    int world_centery, int angle, OBJECT *object)
-{
-  OBJECT *o_current=NULL;
-
-  /* translate object to origin */
-  /* o_text_translate_world(toplevel, -world_centerx, -world_centery, object);*/
-
-  /* rotate_point_90(object->text->x, object->text->y, &newx, &newy);*/
-	
-  /* o_text_translate_world(toplevel, world_centerx, world_centery, object);*/
-	
-  o_current = object;
-
-  while ( o_current != NULL ) {
-    switch(o_current->type) {
-      case(OBJ_LINE):
-        o_line_rotate_world(toplevel, 0, 0, angle, o_current);
-        break;
-    }
-    o_current=o_current->next;
-  }
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -1789,30 +1758,24 @@ void o_text_rotate_lowlevel(TOPLEVEL *toplevel, int world_centerx,
  */
 void o_text_rotate_world(TOPLEVEL *toplevel,
                          int world_centerx, int world_centery,
-                        int angle, OBJECT *object)
+                         int angle, OBJECT *object)
 {
-  int newx, newy;
-  int origx, origy;
   int x, y;
-	
-  origx = object->text->x;
-  origy = object->text->y;
+  int newx, newy;
+
+  g_assert(object != NULL);
+  g_assert(object->type == OBJ_TEXT);
 
   object->text->angle = ( object->text->angle + angle ) % 360;
 
-#if DEBUG 
-  printf("rotating text angle: %d\n", angle);
-  printf("final text angle: %d\n",  object->text->angle);
-#endif
+  x = object->text->x + (-world_centerx);
+  y = object->text->y + (-world_centery);
 
-  x = origx + (-world_centerx);
-  y = origy + (-world_centery);
-	
   rotate_point_90(x, y, angle, &newx, &newy);
 
   x = newx + (world_centerx);
   y = newy + (world_centery);
-	
+
   o_text_translate_world(toplevel, x-object->text->x, y-object->text->y, object);
 
   o_text_recreate(toplevel, object);

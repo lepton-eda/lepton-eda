@@ -875,13 +875,13 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
   if (object_list) {
     i_update_middle_button(w_current,
                            i_callback_edit_rotate_90_hotkey, _("Rotate"));
-    /* Allow o_rotate_90_world to redraw the objects */
+    /* Allow o_rotate_world_update to redraw the objects */
     w_current->toplevel->DONT_REDRAW = 0;
     SCREENtoWORLD( w_current->toplevel, mouse_x, mouse_y, &w_x, &w_y );
     w_x = snap_grid(w_current->toplevel, w_x);
     w_y = snap_grid(w_current->toplevel, w_y);
 
-    o_rotate_90_world(w_current, object_list, w_x, w_y);
+    o_rotate_world_update(w_current, w_x, w_y, 90, object_list);
   }
 
   w_current->event_state = SELECT;
