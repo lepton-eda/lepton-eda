@@ -56,7 +56,8 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
 
   draw_selected = !(w_current->inside_action &&
                     ((w_current->event_state == MOVE) ||
-                     (w_current->event_state == ENDMOVE)));
+                     (w_current->event_state == ENDMOVE) ||
+                     (w_current->event_state == GRIPS)));
   o_redraw(w_current, toplevel->page_current->object_head, draw_selected);
   o_cue_redraw_all(w_current,
                    toplevel->page_current->object_head, draw_selected);
@@ -86,9 +87,6 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
         o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
-      case (GRIPS):
-	o_erase_selected(w_current);	
-	break;
     }
   }
 }
