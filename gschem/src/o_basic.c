@@ -72,20 +72,19 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
       case(ENDMCOPY):
         o_drawbounding(w_current,
                        geda_list_get_glist( toplevel->page_current->selection_list ),
-                       x_get_darkcolor(w_current->bb_color), FALSE);
-
+                       x_get_darkcolor(w_current->bb_color), TRUE);
         break;
 
       case(DRAWCOMP):
       case(ENDCOMP):
         o_drawbounding(w_current, toplevel->page_current->complex_place_list,
-                       x_get_darkcolor(w_current->bb_color), FALSE);
+                       x_get_darkcolor(w_current->bb_color), TRUE);
         break;
 
       case(DRAWTEXT):
       case(ENDTEXT):
         o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
-                       x_get_darkcolor(w_current->bb_color), FALSE);
+                       x_get_darkcolor(w_current->bb_color), TRUE);
         break;
     }
   }
@@ -271,210 +270,100 @@ void o_erase_list(GSCHEM_TOPLEVEL *w_current, GList* list)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief XOR draw a bounding box or outline for OBJECT placement
  *
+ *  \par Function Description
+ *  This function XOR draws either the OBJECTS in the passed GList,
+ *  or a rectangle around their bounding box, depending upon the
+ *  currently selected w_current->actionfeedback_mode. This takes the
+ *  value BOUNDINGBOX or OUTLINE.
+ *
+ * The function applies manhatten mode constraints to the coordinates
+ * before drawing if the CONTROL key is recording as being pressed in
+ * the w_current structure.
+ *
+ * The "drawing" parameter is used to indicate if this drawing should
+ * immediately use the selected feedback mode and positioning constraints.
+ *
+ * With drawing=TRUE, the selected conditions are used immediately,
+ * otherwise the conditions from the last drawing operation are used,
+ * saving the new state for next time.
+ *
+ * o_drawbounding() should be called with drawing=TRUE when starting a
+ * rubberbanding operation and when otherwise refreshing the rubberbanded
+ * outline (e.g. after a screen redraw). For any undraw operation, should
+ * be called with drawing=FALSE, ensuring that the undraw XOR matches the
+ * mode and constraints of the corresponding "draw" operation.
+ *
+ * If any mode / constraint changes are made between a undraw, redraw XOR
+ * pair, the latter (draw) operation must be called with drawing=TRUE. If
+ * no mode / constraint changes were made between the pair, it is not
+ * harmful to call the draw operation with "drawing=FALSE".
+ *
+ *  \param [in] w_current   GSCHEM_TOPLEVEL which we're drawing for.
+ *  \param [in] o_glst      GList of objects to XOR draw.
+ *  \param [in] color       GdkColor used for drawing in BOUNDINGBOX mode.
+ *  \param [in] drawing     Set to FALSE for undraw operations to ensure
+ *                            matching conditions to a previous draw operation.
  */
 /* both outline and boundingbox work! */
 /* name is blah */
 void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
-		    GdkColor *color, int firsttime)
+		    GdkColor *color, int drawing)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
   int test_x, test_y;
-
-  /* static is highly temp */	
-  /* you have to make these static... for the once mode */
-  static int rleft, rtop, rbottom, rright;
-  static int w_rleft, w_rtop, w_rbottom, w_rright;
+  int left, top, bottom, right;
+  int s_left, s_top, s_bottom, s_right;
 
   if (o_glist == NULL) {
     return;
   }
 
+  /* If drawing is true, then don't worry about the previous drawing
+   * method and movement constraints, use with the current settings */
+  if (drawing) {
+    w_current->last_drawb_mode = w_current->actionfeedback_mode;
+    w_current->drawbounding_action_mode = (w_current->CONTROLKEY)
+                                            ? CONSTRAINED : FREE;
+  }
+
+  /* Adjust the coordinates according to the movement constraints */
+  if (w_current->drawbounding_action_mode == CONSTRAINED ) {
+    test_x = GET_BOX_WIDTH (w_current);
+    test_y = GET_BOX_HEIGHT(w_current);
+    if (test_x >= test_y) {
+      w_current->last_y = w_current->start_y;
+    } else {
+      w_current->last_x = w_current->start_x;
+    }
+  }
+
+  /* Calculate delta of X-Y positions from buffer's origin */
   diff_x = w_current->last_x - w_current->start_x;
   diff_y = w_current->last_y - w_current->start_y;
 
-  if ((w_current->last_drawb_mode == OUTLINE) &&
-      (w_current->actionfeedback_mode == BOUNDINGBOX)) {
-#if DEBUG
-    printf("going to bounding\n");
-#endif
-
-    gdk_gc_set_foreground(w_current->bounding_xor_gc,
-                          x_get_color(toplevel->background_color));
-    o_glist_draw_xor(w_current, diff_x, diff_y, o_glist);
-
-    gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
-
+  /* XOR draw with the appropriate mode */
+  if (w_current->last_drawb_mode == BOUNDINGBOX) {
     world_get_object_glist_bounds(toplevel, o_glist,
-                                  &w_rleft, &w_rtop,
-                                  &w_rright, &w_rbottom);
-
-    WORLDtoSCREEN( toplevel, w_rleft, w_rtop, &rleft, &rtop );
-    WORLDtoSCREEN( toplevel, w_rright, w_rbottom, &rright, &rbottom );
-
+                                  &left, &top, &right, &bottom);
+    gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
+    WORLDtoSCREEN( toplevel, left, top, &s_left, &s_top );
+    WORLDtoSCREEN( toplevel, right, bottom, &s_right, &s_bottom );
     gdk_draw_rectangle(w_current->window,
                        w_current->bounding_xor_gc, FALSE,
-                       rleft + diff_x, rtop + diff_y,
-                       rright - rleft, rbottom - rtop);
+                       s_left + diff_x, s_bottom + diff_y,
+                       s_right - s_left, s_top - s_bottom);
+  } else {
+    o_glist_draw_xor (w_current, diff_x, diff_y, o_glist);
   }
 
-  if ((w_current->last_drawb_mode == BOUNDINGBOX) &&
-      (w_current->actionfeedback_mode == OUTLINE)) {
-#if DEBUG
-    printf("going to outline\n");
-#endif
-
-    world_get_object_glist_bounds(toplevel, o_glist,
-                                  &w_rleft, &w_rtop,
-                                  &w_rright, &w_rbottom);
-
-    gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(toplevel->background_color));
-
-    WORLDtoSCREEN( toplevel, w_rleft, w_rtop, &rleft, &rtop );
-    WORLDtoSCREEN( toplevel, w_rright, w_rbottom, &rright, &rbottom );
-    gdk_draw_rectangle(w_current->window,
-                       w_current->gc, FALSE,
-                       rleft + diff_x, rtop + diff_y,
-                       rright - rleft, rbottom - rtop);
-
-    o_glist_draw_xor(w_current, diff_x, diff_y, o_glist);
-
-  }
-
+  /* Save movement constraints and drawing method for any
+   * corresponding undraw operation. */
   w_current->last_drawb_mode = w_current->actionfeedback_mode;
-
-  /* everything above is okay */
-
-  /*! \todo much replicated code... this is the behaviour we need, but
-   * we need to clean it up !!!
-   */
-
-  /* erase old outline */
-  /* going to constrained from free */
-  if ( (w_current->CONTROLKEY) &&
-       (w_current->drawbounding_action_mode == FREE)) {
-    w_current->drawbounding_action_mode = CONSTRAINED;
-
-    if (w_current->actionfeedback_mode == OUTLINE) {
-      o_glist_draw_xor(w_current, diff_x, diff_y, o_glist);
-
-    } else {
-      world_get_object_glist_bounds(toplevel, o_glist,
-                                    &w_rleft, &w_rtop,
-                                    &w_rright, &w_rbottom);
-
-      gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
-
-      WORLDtoSCREEN( toplevel, w_rleft, w_rtop, &rleft, &rtop );
-      WORLDtoSCREEN( toplevel, w_rright, w_rbottom, &rright, &rbottom );
-      gdk_draw_rectangle(w_current->window,
-                         w_current->bounding_xor_gc, FALSE,
-                         rleft + diff_x, rtop + diff_y,
-                         rright - rleft, rbottom - rtop);
-    }
-
-    test_x = GET_BOX_WIDTH (w_current);
-    test_y = GET_BOX_HEIGHT(w_current);
-    if (test_x >= test_y) {
-      w_current->last_y = w_current->start_y;
-    } else {
-      w_current->last_x = w_current->start_x;
-    }
-
-    diff_x = w_current->last_x - w_current->start_x;
-    diff_y = w_current->last_y - w_current->start_y;
-
-    if (w_current->actionfeedback_mode == OUTLINE) {
-      o_glist_draw_xor(w_current, diff_x, diff_y, o_glist);
-
-    } else {
-      world_get_object_glist_bounds(toplevel, o_glist,
-                                    &w_rleft, &w_rtop,
-                                    &w_rright, &w_rbottom);
-
-      gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
-
-      WORLDtoSCREEN( toplevel, w_rleft, w_rtop, &rleft, &rtop );
-      WORLDtoSCREEN( toplevel, w_rright, w_rbottom, &rright, &rbottom );
-      gdk_draw_rectangle(w_current->window,
-                         w_current->bounding_xor_gc,
-                         FALSE,
-                         rleft + diff_x, rtop + diff_y,
-                         rright - rleft, rbottom - rtop);
-    }
-
-    if (w_current->netconn_rubberband) {
-      o_move_stretch_rubberband(w_current);
-      o_move_stretch_rubberband(w_current);
-    }
-  }
-
-  /* erase old outline */
-  /* going to free from constrained */
-  if ((!w_current->CONTROLKEY) &&
-      (w_current->drawbounding_action_mode == CONSTRAINED)) {
-        w_current->drawbounding_action_mode = FREE;
-        if (w_current->actionfeedback_mode == OUTLINE) {
-          /* do it twice to get rid of old outline */
-          o_glist_draw_xor(w_current, diff_x, diff_y, o_glist);
-          o_glist_draw_xor(w_current, diff_x, diff_y, o_glist);
-
-        } else {
-          /*! \todo why are we doing this here...?
-           * probably a reason */
-          world_get_object_glist_bounds(toplevel, o_glist,
-                                        &w_rleft, &w_rtop,
-                                        &w_rright, &w_rbottom);
-
-        }
-        if (w_current->netconn_rubberband) {
-          o_move_stretch_rubberband(w_current);
-          o_move_stretch_rubberband(w_current);
-        }
-      }
-
-  if (w_current->CONTROLKEY) {
-    test_x = GET_BOX_WIDTH (w_current);
-    test_y = GET_BOX_HEIGHT(w_current);
-    if (test_x >= test_y) {
-      w_current->last_y = w_current->start_y;
-    } else {
-      w_current->last_x = w_current->start_x;
-    }
-    diff_x = w_current->last_x - w_current->start_x;
-    diff_y = w_current->last_y - w_current->start_y;
-  }
-
-  if (w_current->actionfeedback_mode == BOUNDINGBOX) {
-
-    if (firsttime == TRUE) {
-      world_get_object_glist_bounds(toplevel, o_glist,
-                                    &w_rleft, &w_rtop,
-                                    &w_rright, &w_rbottom);
-
-      /*printf("once\n");*/
-    
-    }
-    gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
-    WORLDtoSCREEN( toplevel, w_rleft, w_rtop, &rleft, &rtop );
-    WORLDtoSCREEN( toplevel, w_rright, w_rbottom, &rright, &rbottom );
-    gdk_draw_rectangle(w_current->window,
-                       w_current->bounding_xor_gc, FALSE,
-                       rleft + diff_x, rtop + diff_y,
-                       rright - rleft, rbottom - rtop);
-
-    return;
-  }
-
-  /*! \todo have I mentioned how temp this is? Make this general
-   * so that all lists can be moved ...
-   */
-  o_glist_draw_xor(w_current, diff_x, diff_y, o_glist);
+  w_current->drawbounding_action_mode = (w_current->CONTROLKEY)
+                                          ? CONSTRAINED : FREE;
 }
 
 

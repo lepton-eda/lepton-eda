@@ -210,13 +210,10 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
                           &rubbernet_connected_objects);
   }
 
-  if (w_current->actionfeedback_mode == OUTLINE) {
-    o_drawbounding(w_current,
-                   geda_list_get_glist( toplevel->page_current->selection_list ),
-                   x_get_darkcolor(w_current->bb_color), TRUE);
-  }
+  o_drawbounding(w_current,
+                 geda_list_get_glist( toplevel->page_current->selection_list ),
+                 x_get_darkcolor(w_current->bb_color), FALSE);
 
-  /* skip over head node */
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
 
   while (s_current != NULL) {
@@ -279,13 +276,6 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
 
   /* Remove the undo saved in o_move_start */
   o_undo_remove_last_undo(w_current);
-
-  /* erase the bounding box */
-  if (w_current->actionfeedback_mode == BOUNDINGBOX) {
-    o_drawbounding(w_current,
-                   geda_list_get_glist( toplevel->page_current->selection_list ),
-                   x_get_darkcolor(w_current->bb_color), FALSE);
-  }
 
   /* Draw the objects that were moved (and connected/disconnected objects) */
   o_draw_selected(w_current);

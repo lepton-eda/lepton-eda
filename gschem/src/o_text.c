@@ -397,6 +397,10 @@ void o_text_end(GSCHEM_TOPLEVEL *w_current)
   /*! \todo get consistant names */
   int world_x, world_y;
 
+  /* erase the old bounding box / outline */
+    o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
+                   x_get_darkcolor(w_current->bb_color), FALSE);
+
   SCREENtoWORLD(toplevel,
                 w_current->last_x,
                 w_current->last_y,
@@ -418,18 +422,6 @@ void o_text_end(GSCHEM_TOPLEVEL *w_current)
              toplevel->current_attribute,
              w_current->text_size,
              VISIBLE, SHOW_NAME_VALUE);
-
-  /*! \todo you need to erase the bounding box if have that mode
-     set!!! */
-
-  /* erase the old bounding box / outline */
-  if (w_current->actionfeedback_mode == OUTLINE) {
-    o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
-                   x_get_color(w_current->text_color), FALSE);
-  } else {
-    o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
-                   x_get_darkcolor(w_current->select_color), FALSE);
-  }
 
   toplevel->override_color = -1;
 

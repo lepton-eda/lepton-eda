@@ -49,7 +49,6 @@ void o_copy_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
     o_undo_savestate(w_current, UNDO_ALL);
 #endif
 
-    w_current->last_drawb_mode = -1;
     /* Shouldn't this set by the caller ? */
     /*    w_current->event_state = COPY; */
 
@@ -79,7 +78,6 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
   OBJECT *new_objects_head = NULL;
   OBJECT *object;
   int diff_x, diff_y;
-  int screen_diff_x, screen_diff_y;
   int lx, ly;
   int sx, sy;
   int color;
@@ -94,9 +92,6 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
     return;
   }
 
-  screen_diff_x = w_current->last_x - w_current->start_x;
-  screen_diff_y = w_current->last_y - w_current->start_y;
-
   SCREENtoWORLD(toplevel,
                 w_current->last_x, w_current->last_y,
                 &lx, &ly);
@@ -110,6 +105,11 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
 
   diff_x = lx - sx;
   diff_y = ly - sy;
+
+  /* erase the bounding box */
+  o_drawbounding(w_current,
+               geda_list_get_glist( toplevel->page_current->selection_list ),
+               x_get_darkcolor(w_current->bb_color), FALSE);
 
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
   new_objects_head = s_basic_init_object("object_head");
@@ -135,13 +135,6 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
                                             return_tail(new_objects_head),
                                             object );
         toplevel->ADDING_SEL=0;
-
-        if (w_current->actionfeedback_mode == OUTLINE) {
-          o_net_draw_xor(w_current,
-                         screen_diff_x, screen_diff_y,
-                         object);
-        }
-
         o_net_translate_world(toplevel,
                               diff_x, diff_y,
                               new_object);
@@ -165,13 +158,6 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
                                            return_tail(new_objects_head), 
                                            object);
         toplevel->ADDING_SEL=0;
-
-        if (w_current->actionfeedback_mode == OUTLINE) {
-          o_pin_draw_xor(w_current,
-                         screen_diff_x, screen_diff_y,
-                         object);
-        }
-
         o_pin_translate_world(toplevel,
                               diff_x, diff_y,
                               new_object);
@@ -195,13 +181,6 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
                                            return_tail(new_objects_head),
                                            object);
         toplevel->ADDING_SEL=0;
-
-        if (w_current->actionfeedback_mode == OUTLINE) {
-          o_bus_draw_xor(w_current,
-                         screen_diff_x, screen_diff_y,
-                         object);
-        }
-
         o_bus_translate_world(toplevel,
                               diff_x, diff_y,
                               new_object);
@@ -234,11 +213,6 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
         toplevel->ADDING_SEL=0;
 
         complex_object = new_object;
-
-        if (w_current->actionfeedback_mode == OUTLINE) {
-          o_complex_draw_xor(w_current, screen_diff_x, screen_diff_y, object);
-        }
-
         o_complex_translate_world(toplevel, diff_x, diff_y, new_object);
 
         o_selection_add( temp_list, new_object );
@@ -260,12 +234,6 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
         new_object = (OBJECT *) o_line_copy(toplevel,
                                             return_tail(new_objects_head),
                                             object);
-        if (w_current->actionfeedback_mode == OUTLINE) {
-          o_line_draw_xor(w_current,
-                          screen_diff_x, screen_diff_y,
-                          object);
-        }
-
         toplevel->ADDING_SEL=1;
         o_line_translate_world(toplevel,
                                diff_x, diff_y,
@@ -281,12 +249,6 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
         new_object = (OBJECT *) o_box_copy(toplevel,
                                            return_tail(new_objects_head),
                                            object);
-        if (w_current->actionfeedback_mode == OUTLINE) {
-          o_box_draw_xor(w_current,
-                         screen_diff_x, screen_diff_y,
-                         object);
-        }
-
         toplevel->ADDING_SEL=1;
         o_box_translate_world(toplevel,
                               diff_x, diff_y,
@@ -303,12 +265,6 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
         new_object = (OBJECT *) o_picture_copy(toplevel,
                                                return_tail(new_objects_head),
                                                object);
-        if (w_current->actionfeedback_mode == OUTLINE) {
-          o_picture_draw_xor(w_current,
-                             screen_diff_x, screen_diff_y,
-                             object);
-        }
-
         toplevel->ADDING_SEL=1;
         o_picture_translate_world(toplevel,
                                   diff_x, diff_y,
@@ -325,13 +281,6 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
         new_object = (OBJECT *) o_circle_copy(toplevel,
                                               return_tail(new_objects_head),
                                               object);
-
-        if (w_current->actionfeedback_mode == OUTLINE) {
-          o_circle_draw_xor(w_current,
-                            screen_diff_x, screen_diff_y,
-                            object);
-        }
-
         toplevel->ADDING_SEL=1;
         o_circle_translate_world(toplevel,
                                  diff_x, diff_y,
@@ -347,13 +296,6 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
         new_object = (OBJECT *) o_arc_copy( toplevel,
                                             return_tail(new_objects_head),
                                             object );
-
-        if (w_current->actionfeedback_mode == OUTLINE) {
-          o_arc_draw_xor(w_current,
-                         screen_diff_x, screen_diff_y,
-                         object);
-        }
-
         toplevel->ADDING_SEL=1;
         o_arc_translate_world(toplevel,
                               diff_x, diff_y,
@@ -411,14 +353,6 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
 #endif
           }
         }
-
-        if (w_current->actionfeedback_mode == OUTLINE) {
-          o_text_draw_xor(w_current,
-                          screen_diff_x,
-                          screen_diff_y,
-                          object);
-        }
-
         toplevel->ADDING_SEL=1;
         o_text_translate_world(toplevel, diff_x, diff_y, new_object);
         toplevel->ADDING_SEL=0;
@@ -502,13 +436,6 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
 
   toplevel->page_current->object_tail = (OBJECT *)
   return_tail(toplevel->page_current->object_head);
-
-  /* erase the bounding box */
-  if (w_current->actionfeedback_mode == BOUNDINGBOX) {
-    o_drawbounding(w_current,
-                   geda_list_get_glist( toplevel->page_current->selection_list ),
-                   x_get_darkcolor(w_current->bb_color), TRUE);
-  }
 
   o_select_unselect_all( w_current );
   geda_list_add_glist( toplevel->page_current->selection_list, geda_list_get_glist( temp_list ) );

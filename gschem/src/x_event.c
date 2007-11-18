@@ -92,14 +92,14 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
       case(ENDMCOPY):
         o_drawbounding(w_current,
                        geda_list_get_glist( toplevel->page_current->selection_list ),
-                       x_get_darkcolor(w_current->bb_color), FALSE);
+                       x_get_darkcolor(w_current->bb_color), TRUE);
         break;
       case(DRAWCOMP):
       case(ENDCOMP):
       case(ENDPASTE):
         o_drawbounding(w_current,
                        toplevel->page_current->complex_place_list,
-                       x_get_darkcolor(w_current->bb_color), FALSE);
+                       x_get_darkcolor(w_current->bb_color), TRUE);
         break;
 
       case(BUSCONT):
@@ -721,6 +721,9 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 	/* Keep the state and the inside_action, as the copy has not finished. */	
 	w_current->last_x = w_current->start_x = fix_x(toplevel, mouse_x);
 	w_current->last_y = w_current->start_y = fix_y(toplevel, mouse_y);
+        o_drawbounding(w_current,
+                       geda_list_get_glist(toplevel->page_current->selection_list),
+                       x_get_darkcolor(w_current->bb_color), TRUE);
 	i_set_state(w_current, ENDMCOPY); 
         i_update_toolbar(w_current);
 	o_undo_savestate(w_current, UNDO_ALL);
@@ -776,7 +779,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
     if (w_current->inside_action) {
       if (w_current->event_state == ENDCOMP) {
         o_drawbounding(w_current, toplevel->page_current->complex_place_list,
-                       x_get_darkcolor(w_current->bb_color), TRUE);
+                       x_get_darkcolor(w_current->bb_color), FALSE);
 
         w_current->complex_rotate = 
         (w_current->complex_rotate + 90) % 360;
@@ -795,7 +798,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         return(0);
       } else if (w_current->event_state == ENDTEXT) {
         o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
-                       x_get_darkcolor(w_current->bb_color), TRUE);
+                       x_get_darkcolor(w_current->bb_color), FALSE);
 
         w_current->complex_rotate = 
         (w_current->complex_rotate + 90) % 360;
@@ -811,7 +814,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 	prev_state = w_current->event_state;
 	
 	o_drawbounding(w_current, toplevel->page_current->complex_place_list,
-		       x_get_darkcolor(w_current->bb_color), TRUE);
+		       x_get_darkcolor(w_current->bb_color), FALSE);
 	
 	/* Don't allow o_rotate_90 to erase the selection, neither to
 	   redraw the objects after rotating */
@@ -1091,7 +1094,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
       w_current->last_y = fix_y(toplevel,  (int) event->y);
       o_drawbounding(w_current,
                      geda_list_get_glist( toplevel->page_current->selection_list ),
-                     x_get_darkcolor(w_current->bb_color), FALSE);
+                     x_get_darkcolor(w_current->bb_color), TRUE);
     }
     break;
 

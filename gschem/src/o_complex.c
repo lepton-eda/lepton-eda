@@ -216,8 +216,6 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
   TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
   int x, y;
-  int rleft, rtop, rbottom, rright;
-  int w_rleft, w_rtop, w_rbottom, w_rright;
   OBJECT *o_current;
   OBJECT *o_start;
   OBJECT *o_temp;
@@ -237,6 +235,10 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
   printf("place_basename: %s\n",internal_basename);
   printf("place_clib: %s\n",internal_clib);
 #endif
+
+  o_drawbounding(w_current,
+                 w_current->toplevel->page_current->complex_place_list,
+                 x_get_darkcolor(w_current->bb_color), FALSE);
 
   if (w_current->include_complex) {
     buffer = s_clib_symbol_get_data_by_name (toplevel->internal_symbol_name);
@@ -269,31 +271,6 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
     g_list_free(connected_objects);
 
     g_free(buffer);
-
-    if (w_current->actionfeedback_mode == OUTLINE) {
-      /* erase outline */
-      
-      o_glist_draw_xor(w_current, diff_x, diff_y,
-                       toplevel->page_current->complex_place_list);
-    } else {
-      world_get_object_glist_bounds(toplevel,
-			      toplevel->page_current->
-			      complex_place_list,
-			      &w_rleft, &w_rtop, &w_rright, &w_rbottom);
-
-      WORLDtoSCREEN( toplevel, w_rleft, w_rtop, &rleft, &rtop );
-      WORLDtoSCREEN( toplevel, w_rright, w_rbottom, &rright, &rbottom );
-
-      gdk_gc_set_foreground(
-                            w_current->gc,
-                            x_get_color(toplevel->background_color));
-      gdk_draw_rectangle(w_current->backingstore, w_current->gc,
-                         FALSE,
-                         rleft   + diff_x,
-                         rtop    + diff_y,
-                         rright  - rleft,
-                         rbottom - rtop);
-    }
 
     o_redraw(w_current, o_start, TRUE);
     toplevel->page_current->CHANGED = 1;
@@ -349,30 +326,6 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
   /* put code here to deal with emebedded stuff */
   if (w_current->embed_complex) {
     o_current->complex_embedded = TRUE;
-  }
-
-  /* check for nulls in all this hack */
-  if (w_current->actionfeedback_mode == OUTLINE) {
-    /* erase outline */
-    o_glist_draw_xor(w_current, diff_x, diff_y,
-                     toplevel->page_current->complex_place_list);
-  } else {
-    world_get_object_glist_bounds(toplevel,
-                                  toplevel->page_current->complex_place_list,
-                                  &w_rleft, &w_rtop,
-                                  &w_rright, &w_rbottom);
-    
-    WORLDtoSCREEN( toplevel, w_rleft, w_rtop, &rleft, &rtop );
-    WORLDtoSCREEN( toplevel, w_rright, w_rbottom, &rright, &rbottom );
-
-    gdk_gc_set_foreground(
-                          w_current->gc,
-                          x_get_color(toplevel->background_color));
-    gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
-                       rleft   + diff_x,
-                       rtop    + diff_y,
-                       rright  - rleft,
-                       rbottom - rtop);
   }
 
   /*! \todo redraw has to happen at the end of all this hack or
