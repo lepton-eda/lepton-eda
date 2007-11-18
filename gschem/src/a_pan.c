@@ -72,7 +72,9 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
   /* think it's better that the zoomfactor is defined as pix/mills
      this will be the same as w_current->page_current->to_screen_x/y_constant*/
   int zoom_max = 5;	
-  int start_x, start_y;
+  int start_x, start_y, last_x, last_y, second_x, second_y;
+  int loc_x, loc_y, save_x, save_y;
+  int distance = 0; /* Initialise to quiet compiler warning */
   int diff;
   double zx, zy, zoom_old, zoom_new, zoom_min;
 
@@ -112,9 +114,17 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
   /* check to see if we are inside an action draw net, etc.  If
    * yes, convert the start screen coords to world coords */
   if (w_current->inside_action) {
-    SCREENtoWORLD(toplevel,
-		  w_current->start_x, w_current->start_y,
-		  &start_x, &start_y);
+    SCREENtoWORLD(toplevel,  w_current->start_x,  w_current->start_y,
+                                       &start_x,            &start_y);
+    SCREENtoWORLD(toplevel,   w_current->last_x,   w_current->last_y,
+                                        &last_x,             &last_y);
+    SCREENtoWORLD(toplevel, w_current->second_x, w_current->second_y,
+                                      &second_x,           &second_y);
+    SCREENtoWORLD(toplevel,    w_current->loc_x,    w_current->loc_y,
+                                         &loc_x,              &loc_y);
+    SCREENtoWORLD(toplevel,   w_current->save_x,   w_current->save_y,
+                                        &save_x,             &save_y);
+    distance = WORLDabs(toplevel, w_current->distance);
     start_x = snap_grid(toplevel, start_x);
     start_y = snap_grid(toplevel, start_y);
   }
@@ -198,18 +208,17 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
 
   /* convert world coords back to screen coords */
   if (w_current->inside_action) {
-    WORLDtoSCREEN(toplevel,
-		  start_x, start_y,
-		  &(w_current->start_x), &(w_current->start_y));
-    /* set all rubberband points to it's start values:
-       As we don't draw the rubberbands after zooming/paning this
-       will lead the a redraw of the rubberbands with the next
-       motion event */
-    w_current->last_x = w_current->second_x = w_current->start_x;
-    w_current->save_x = w_current->start_x;
-    w_current->last_y = w_current->second_y = w_current->start_y;
-    w_current->save_y = w_current->start_y;
-    w_current->distance = w_current->loc_y = w_current->loc_x = 0;
+    WORLDtoSCREEN(toplevel,    start_x,              start_y,
+                   &w_current->start_x,  &w_current->start_y);
+    WORLDtoSCREEN(toplevel,     last_x,               last_y,
+                    &w_current->last_x,   &w_current->last_y);
+    WORLDtoSCREEN(toplevel,   second_x,             second_y,
+                  &w_current->second_x, &w_current->second_y);
+    WORLDtoSCREEN(toplevel,      loc_x,                loc_y,
+                     &w_current->loc_x,    &w_current->loc_y);
+    WORLDtoSCREEN(toplevel,     save_x,               save_y,
+                    &w_current->save_x,   &w_current->save_y);
+    w_current->distance = SCREENabs(toplevel, distance);
   }
 
   /* redraw */

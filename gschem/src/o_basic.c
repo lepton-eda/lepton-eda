@@ -66,8 +66,6 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
     switch(w_current->event_state) {
       case(MOVE):
       case(ENDMOVE):
-        o_erase_selected(w_current);
-        /* continue */
       case(ENDCOPY):
       case(ENDMCOPY):
         o_drawbounding(w_current,
