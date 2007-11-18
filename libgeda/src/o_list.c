@@ -485,3 +485,34 @@ void o_glist_rotate_world (TOPLEVEL *toplevel, int x, int y, int angle, GList *l
   }
 }
 
+
+/*! \todo Finish function description!!!
+ *  \brief
+ *  \par Function Description
+ */
+void o_list_mirror_world (TOPLEVEL *toplevel, int x, int y, OBJECT *list)
+{
+  OBJECT *o_current = list;
+
+  while ( o_current != NULL ) {
+    o_mirror_world (toplevel, x, y, o_current);
+    o_current = o_current->next;
+  }
+}
+
+
+/*! \todo Finish function description!!!
+ *  \brief
+ *  \par Function Description
+ */
+void o_glist_mirror_world (TOPLEVEL *toplevel, int x, int y, GList *list)
+{
+  GList *iter = list;
+  OBJECT *o_current;
+
+  while ( iter != NULL ) {
+    o_current = (OBJECT *)iter->data;
+    o_mirror_world (toplevel, x, y, o_current);
+    iter = g_list_next (iter);
+  }
+}

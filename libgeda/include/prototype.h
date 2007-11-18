@@ -197,6 +197,7 @@ void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current, OBJECT_END end, O
 void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current, OBJECT_FILLING type, int width, int pitch1, int angle1, int pitch2, int angle2);
 void o_translate_world (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object);
 void o_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
+void o_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 /* o_box_basic.c */
 OBJECT *o_box_add(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
 OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
@@ -293,7 +294,7 @@ void o_complex_unset_color_single(OBJECT *o_current);
 void o_complex_set_saved_color_only(OBJECT *complex, int color);
 OBJECT *o_complex_return_nth_pin(OBJECT *o_list, int counter);
 void o_complex_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_complex_mirror_lowlevel(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+void o_complex_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin);
 int  o_complex_count_pins(OBJECT *object);
 void o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object);
@@ -334,6 +335,8 @@ void o_list_translate_world(TOPLEVEL *toplevel, int x, int y, OBJECT *list);
 void o_glist_translate_world(TOPLEVEL *toplevel, int x, int y, GList *list);
 void o_list_rotate_world(TOPLEVEL *toplevel, int x, int y, int angle, OBJECT *list);
 void o_glist_rotate_world(TOPLEVEL *toplevel, int x, int y, int angle, GList *list);
+void o_list_mirror_world(TOPLEVEL *toplevel, int x, int y, OBJECT *list);
+void o_glist_mirror_world(TOPLEVEL *toplevel, int x, int y, GList *list);
 
 /* o_net_basic.c */
 void world_get_net_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);

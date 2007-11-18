@@ -929,9 +929,7 @@ DEFINE_I_CALLBACK(edit_mirror_hotkey)
     w_x = snap_grid(w_current->toplevel, w_x);
     w_y = snap_grid(w_current->toplevel, w_y);
 
-    o_mirror_world(w_current,
-                   object_list, 
-                   w_x, w_y);
+    o_mirror_world_update(w_current, w_x, w_y, object_list);
   }
 
   w_current->event_state = SELECT;

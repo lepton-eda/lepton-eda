@@ -601,7 +601,7 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
    */
   if (loaded_normally == TRUE) {
     if (mirror) {
-      o_complex_mirror_lowlevel(toplevel, x, y, new_node);
+      o_complex_mirror_world(toplevel, 0, 0, new_node);
     }
 
     o_list_rotate_world(toplevel, 0, 0, angle, prim_objs);
@@ -1280,75 +1280,54 @@ void o_complex_rotate_world(TOPLEVEL *toplevel,
 }
 
 
-/*! \brief
+/*! \todo Finish function documentation!!!
+ *  \brief
  *  \par Function Description
  *
  */
-/* pass in top level object */
-void o_complex_mirror_lowlevel(TOPLEVEL *toplevel,
-			       int world_centerx, int world_centery,
-			       OBJECT *object)
+void o_complex_mirror_world(TOPLEVEL *toplevel,
+                            int world_centerx, int world_centery,
+                            OBJECT *object)
 {
-  OBJECT *o_current=NULL;
+  int x, y;
+  int newx, newy;
 
-  g_return_if_fail(object != NULL);
-  g_return_if_fail(((object->type == OBJ_COMPLEX) ||
-		    (object->type == OBJ_PLACEHOLDER)));
-  g_return_if_fail(object->complex != NULL);
+  g_return_if_fail( object != NULL );
+  g_return_if_fail( (object->type == OBJ_COMPLEX ||
+                     object->type == OBJ_PLACEHOLDER) );
+  g_return_if_fail( object->complex != NULL );
 
-  /* do individual complex objects */
-  o_current = object->complex->prim_objs;
+  x = object->complex->x + (-world_centerx);
+  y = object->complex->y + (-world_centery);
 
-  while ( o_current != NULL ) {
-    switch(o_current->type) {
-      case(OBJ_LINE):
-        o_line_mirror_world(toplevel, 0, 0, o_current);
-        break;
+  newx = -x;
+  newy = y;
 
-      case(OBJ_NET):
-        o_net_mirror_world(toplevel, 0, 0, o_current);
-        break;
+  x = newx + (world_centerx);
+  y = newy + (world_centery);
 
-      case(OBJ_BUS):
-        o_bus_mirror_world(toplevel, 0, 0, o_current);
-        break;
-	
-      case(OBJ_BOX):
-        o_box_mirror_world(toplevel, 0, 0, o_current);
-        break;
+  o_complex_translate_world(toplevel,
+                            -object->complex->x,
+                            -object->complex->y, object);
 
-      case(OBJ_PICTURE):
-        o_picture_mirror_world(toplevel, 0, 0, o_current);
-        break;
+  o_list_mirror_world( toplevel, 0, 0, object->complex->prim_objs );
 
-      case(OBJ_CIRCLE):
-        o_circle_mirror_world(toplevel, 0, 0, o_current);
-        break;
+  switch(object->complex->angle) {
+    case(90):
+      object->complex->angle = 270;
+      break;
 
-      case(OBJ_PIN):
-        o_pin_mirror_world(toplevel, 0, 0, o_current);
-        break;
+    case(270):
+      object->complex->angle = 90;
+      break;
 
-      case(OBJ_ARC):
-        o_arc_mirror_world(toplevel, 0, 0, o_current);
-        break;
-
-      case(OBJ_COMPLEX):
-      case(OBJ_PLACEHOLDER):
-	o_complex_mirror_lowlevel(toplevel, 0, 0, o_current);
-	break;
-
-      case(OBJ_TEXT):
-        o_text_mirror_world(toplevel, 0, 0, o_current);
-        break;
-
-    }
-    o_current=o_current->next;
   }
 
-  /* mirror origin point */
-  /*	object->x = -object->x;*/
+  object->complex->mirror = !object->complex->mirror;
+
+  o_complex_translate_world(toplevel, x, y, object);
 }
+
 
 /*! \brief
  *  \par Function Description

@@ -335,3 +335,40 @@ void o_rotate_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, i
     (*func) (toplevel, world_centerx, world_centery, angle, object);
   }
 }
+
+
+/*! \brief Mirrors an object in world coordinates
+ *  \par Function Description
+ *  This function mirrors an object about the point
+ *  (<B>world_centerx</B>,<B>world_centery</B>) in world units.
+ *
+ *  \param [in]     toplevel       The TOPLEVEL object.
+ *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
+ *  \param [in]     world_centery  Origin y coordinate in WORLD units.
+ *  \param [in,out] object         The OBJECT to mirror.
+ */
+void o_mirror_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object)
+{
+  void (*func) (TOPLEVEL*, int, int, OBJECT*) = NULL;
+
+  switch (object->type) {
+      case OBJ_HEAD:    /* Do nothing for head nodes */   break;
+      case OBJ_LINE:    func = o_line_mirror_world;       break;
+      case OBJ_NET:     func = o_net_mirror_world;        break;
+      case OBJ_BUS:     func = o_bus_mirror_world;        break;
+      case OBJ_BOX:     func = o_box_mirror_world;        break;
+      case OBJ_PICTURE: func = o_picture_mirror_world;    break;
+      case OBJ_CIRCLE:  func = o_circle_mirror_world;     break;
+      case OBJ_PLACEHOLDER:
+      case OBJ_COMPLEX: func = o_complex_mirror_world;    break;
+      case OBJ_TEXT:    func = o_text_mirror_world;       break;
+      case OBJ_PIN:     func = o_pin_mirror_world;        break;
+      case OBJ_ARC:     func = o_arc_mirror_world;        break;
+      default:
+        g_assert_not_reached ();
+  }
+
+  if (func != NULL) {
+    (*func) (toplevel, world_centerx, world_centery, object);
+  }
+}
