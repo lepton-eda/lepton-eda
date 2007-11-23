@@ -42,111 +42,6 @@
 /*! \brief Current version string */
 #define VERSION_20020825 20020825
 
-/*! \brief Save embedded attributes to current file
- *  \par Function Description
- *  This function will save all embedded attributes to a file.
- *
- *  \param [in,out] toplevel
- *  \param [in]     object_list  The list of attributes to write to file
- *  \param [in]     fp           The file to write to.
- */
-void o_save_embedded(TOPLEVEL *toplevel, OBJECT *object_list, FILE *fp)
-{
-  OBJECT *o_current=NULL;
-  char *out;
-
-  /* make sure you init net_consolide to false (default) in all */
-  /* programs */
-  if (toplevel->net_consolidate == TRUE) {
-    o_net_consolidate(toplevel);
-  }
-	
-  o_current = object_list;
-
-  while ( o_current != NULL ) {
-
-    if (o_current->type != OBJ_HEAD) {
-
-      if (o_current->attribute == 0) {
-
-        switch (o_current->type) {
-
-          case(OBJ_LINE):
-            out = (char *) o_line_save(o_current);
-            break;
-	
-          case(OBJ_NET):
-            out = (char *) o_net_save(o_current);
-            break;
-
-          case(OBJ_BUS):
-            out = (char *) o_bus_save(o_current);
-            break;
-	
-          case(OBJ_BOX):
-            out = (char *) o_box_save(o_current);
-            break;
-			
-          case(OBJ_CIRCLE):
-            out = (char *) o_circle_save(o_current);
-            break;
-
-          case(OBJ_COMPLEX):
-            out = (char *) o_complex_save(o_current);
-            if (o_complex_is_embedded(o_current)) {
-              fprintf(fp, "[\n");
-								
-              o_save_embedded(
-                              toplevel,
-                              o_current->
-                              complex->prim_objs,
-                              fp);
-
-              fprintf(fp, "]\n");
-            }
-            break;
-
-          case(OBJ_PLACEHOLDER):  /* new type by SDB 1.20.2005 */
-            out = (char *) o_complex_save(o_current);
-            break;
-
-          case(OBJ_TEXT):
-            out = (char *) o_text_save(o_current);
-            break;
-
-          case(OBJ_PIN):
-            out = (char *) o_pin_save(o_current);
-            break;
-	
-          case(OBJ_ARC):
-            out = (char *) o_arc_save(o_current);
-            break;
-
-  	  case(OBJ_PICTURE):
-	    out = (char *) o_picture_save(o_current); 
-	    break;
-
-          default:
-            fprintf(stderr, "Error type!\n");
-            exit(-1);
-            break;
-        }
-
-	/* output the line */
-        fprintf(fp, "%s\n", out);
-	g_free(out);
-
-        /* save those attributes */
-        if (o_current->attribs != NULL) {
-          o_save_attribs(fp, o_current->attribs);
-        }
-
-      }
-    } 
-    o_current = o_current->next;
-  }
-}
-
 /*! \brief Get the file header string.
  *  \par Function Description
  *  This function simply returns the DATE_VERSION and
@@ -164,29 +59,20 @@ const gchar *o_file_format_header()
   return header;
 }
 
-/*! \brief Save a file
+/*! \brief "Save" a file into a string buffer
  *  \par Function Description
- *  This function saves the data in a libgeda format to a file
- *  \param [in] toplevel  The data to save to file.
- *  \param [in] filename   The filename to save the data to.
- *  \return 1 on success, 0 on failure.
+ *  This function saves a whole schematic into a buffer in libgeda
+ *  format. The buffer should be freed when no longer needed.
+ *
+ *  \param [in] toplevel  The data to save.
+ *  \returns a buffer containing schematic data or NULL on failure.
  */
-int o_save(TOPLEVEL *toplevel, const char *filename)
+gchar *o_save_buffer (TOPLEVEL *toplevel)
 {
-  OBJECT *o_current=NULL;
-  FILE *fp;
-  char *out;
-  int already_wrote=0;
-	
-  fp = fopen(filename, "wb");
-	
-  if (fp == NULL) {
-    s_log_message("o_save: Could not open [%s]\n", filename);
-    return 0;
-  }
+  GString *acc;
+  gchar *buffer;
 
-
-  o_current = toplevel->page_current->object_head;
+  if (toplevel == NULL) return NULL;
 
   /* make sure you init net_consolide to false (default) in all */
   /* programs */
@@ -194,7 +80,34 @@ int o_save(TOPLEVEL *toplevel, const char *filename)
     o_net_consolidate(toplevel);
   }
 
-  fprintf(fp, o_file_format_header());
+  acc = g_string_new (o_file_format_header());
+
+  buffer = o_save_objects (toplevel->page_current->object_head);
+  g_string_append (acc, buffer);
+  g_free (buffer);
+
+  return g_string_free (acc, FALSE);
+}
+
+/*! \brief Save a series of objects into a string buffer
+ *  \par Function Description
+ *  This function recursively saves a set of objects into a buffer in
+ *  libgeda format.  User code should not normally call this function;
+ *  they should call o_save_buffer() instead.
+ *
+ *  \param [in] object_list  Head of list of objects to save.
+ *  \returns a buffer containing schematic data or NULL on failure.
+ */
+gchar *o_save_objects (OBJECT *object_list)
+{
+  OBJECT *o_current = object_list;
+  gchar *out;
+  GString *acc;
+  gboolean already_wrote = FALSE;
+
+  g_assert (object_list != NULL);
+
+  acc = g_string_new("");
 
   while ( o_current != NULL ) {
 
@@ -226,19 +139,18 @@ int o_save(TOPLEVEL *toplevel, const char *filename)
 
           case(OBJ_COMPLEX):
             out = (char *) o_complex_save(o_current);
-            fprintf(fp, "%s\n", out);
-            already_wrote=1;
+            g_string_append_printf(acc, "%s\n", out);
+            already_wrote = TRUE;
 	    g_free(out); /* need to free here because of the above flag */
-            if (o_complex_is_embedded(o_current)) {
-              fprintf(fp, "[\n");
-								
-              o_save_embedded(
-                              toplevel,
-                              o_current->
-                              complex->prim_objs,
-                              fp);
 
-              fprintf(fp, "]\n");
+            if (o_complex_is_embedded(o_current)) {
+              g_string_append(acc, "[\n");
+	      
+              out = o_save_objects(o_current->complex->prim_objs);
+              g_string_append (acc, out);
+              g_free(out);
+
+              g_string_append(acc, "]\n");
             }
             break;
 
@@ -263,22 +175,25 @@ int o_save(TOPLEVEL *toplevel, const char *filename)
 	    break;
 
           default:
+            g_assert_not_reached();
             fprintf(stderr, "Error type!\n");
             exit(-1);
             break;
         }
 
-				/* output the line */
+        /* output the line */
         if (!already_wrote) {
-          fprintf(fp, "%s\n", out);
+          g_string_append_printf(acc, "%s\n", out);
 	  g_free(out);
         } else {
-          already_wrote=0;
+          already_wrote = FALSE;
         }
 
-				/* save those attributes */
+        /* save any attributes */
         if (o_current->attribs != NULL) {
-          o_save_attribs(fp, o_current->attribs);
+          out = o_save_attribs(o_current->attribs);
+          g_string_append(acc, out);
+          g_free (out);
         }
 
       }
@@ -286,7 +201,33 @@ int o_save(TOPLEVEL *toplevel, const char *filename)
     o_current = o_current->next;
   }
 
-  fclose(fp);
+  return g_string_free (acc, FALSE);
+}
+
+/*! \brief Save a file
+ *  \par Function Description
+ *  This function saves the data in a libgeda format to a file
+ *  \param [in] toplevel  The data to save to file.
+ *  \param [in] filename   The filename to save the data to.
+ *  \return 1 on success, 0 on failure.
+ */
+int o_save(TOPLEVEL *toplevel, const char *filename)
+{
+  FILE *fp;
+  char *buffer;
+	
+  fp = fopen(filename, "wb");
+	
+  if (fp == NULL) {
+    s_log_message("o_save: Could not open [%s]\n", filename);
+    return 0;
+  }
+
+  buffer = o_save_buffer (toplevel);
+  fwrite (buffer, strlen(buffer), 1, fp);
+  g_free (buffer);
+  fclose (fp);
+
   return 1;
 }
 

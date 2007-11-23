@@ -488,26 +488,28 @@ OBJECT *o_read_attribs(TOPLEVEL *toplevel,
   return(object_list);
 }
 
-/*! \brief Save attributes to a file.
+/*! \brief Save attributes into a string buffer.
  *  \par Function Description
- *  Save attributes to a file.
+ *  Saves a list of attributes int a buffer in libgeda, including the
+ *  attribute list start and end markers.
  *
  *  \param [in] fp       FILE pointer to write attributes to.
  *  \param [in] attribs  attributes to write.
  *  \todo
  *  this should be trimmed down to only save attributes which are text items
  */
-void o_save_attribs(FILE *fp, GList *attribs)
+gchar *o_save_attribs(GList *attribs)
 {
   ATTRIB *a_current=NULL;
   OBJECT *o_current=NULL;
   GList *a_iter;
-  char *out;
+  GString *acc;
+  gchar *out;
 
   a_iter = attribs;
 
-  fprintf(fp, "{\n");
-	
+  acc = g_string_new("{\n");
+
   while ( a_iter != NULL ) {
     a_current = a_iter->data;
 
@@ -568,14 +570,16 @@ void o_save_attribs(FILE *fp, GList *attribs)
           exit(-1);
           break;
       }
-      /* output the line */
-      fprintf(fp, "%s\n", out);
+
+      g_string_append_printf(acc, "%s\n", out);
       g_free(out);
     }
     a_iter = g_list_next (a_iter);
   } 
 
-  fprintf(fp, "}\n");
+  g_string_append(acc, "}\n");
+
+  return g_string_free(acc, FALSE);
 }
 
 /*! \brief Get name and value from name=value attribute.

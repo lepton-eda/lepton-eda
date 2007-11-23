@@ -1,6 +1,7 @@
 /* a_basic.c */
-void o_save_embedded(TOPLEVEL *toplevel, OBJECT *object_list, FILE *fp);
-const char *o_file_format_header();
+gchar *o_save_objects(OBJECT *object_list);
+const gchar *o_file_format_header();
+gchar *o_save_buffer(TOPLEVEL *toplevel);
 int o_save(TOPLEVEL *toplevel, const char *filename);
 OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list, char *buffer, const int size, const char *name);
 OBJECT *o_read(TOPLEVEL *toplevel, OBJECT *object_list, char *filename);
@@ -162,7 +163,7 @@ OBJECT *o_read_attribs(TOPLEVEL *toplevel,
 		       TextBuffer *tb,
 		       unsigned int release_ver, 
 		       unsigned int fileformat_ver);
-void o_save_attribs(FILE *fp, GList *attribs);
+gchar *o_save_attribs(GList *attribs);
 int o_attrib_get_name_value(char *string, char **name, char **value);
 void o_attrib_free_current(TOPLEVEL *toplevel);
 void o_attrib_set_string(TOPLEVEL *toplevel, char *string);
