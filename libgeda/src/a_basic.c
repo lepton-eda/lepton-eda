@@ -147,16 +147,21 @@ void o_save_embedded(TOPLEVEL *toplevel, OBJECT *object_list, FILE *fp)
   }
 }
 
-/*! \brief Write libgeda file header
+/*! \brief Get the file header string.
  *  \par Function Description
- *  This function simply prints the DATE_VERSION and FILEFORMAT_VERSION
- *  definitions to the file.
- *  
- *  \param [in] fp  The file to write the header to.
+ *  This function simply returns the DATE_VERSION and
+ *  FILEFORMAT_VERSION formatted as a gEDA file header.
+ *
+ *  \warning <em>Do not</em> free the returned string.
  */
-void o_save_write_header(FILE *fp)
+const gchar *o_file_format_header()
 {
-  fprintf(fp, "v %s %u\n", DATE_VERSION, FILEFORMAT_VERSION);
+  static gchar *header = NULL;
+
+  if (header == NULL)
+    header = g_strdup_printf("v %s %u\n", DATE_VERSION, FILEFORMAT_VERSION);
+
+  return header;
 }
 
 /*! \brief Save a file
@@ -189,7 +194,7 @@ int o_save(TOPLEVEL *toplevel, const char *filename)
     o_net_consolidate(toplevel);
   }
 
-  o_save_write_header(fp);
+  fprintf(fp, o_file_format_header());
 
   while ( o_current != NULL ) {
 

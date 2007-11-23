@@ -1,6 +1,6 @@
 /* a_basic.c */
 void o_save_embedded(TOPLEVEL *toplevel, OBJECT *object_list, FILE *fp);
-void o_save_write_header(FILE *fp);
+const char *o_file_format_header();
 int o_save(TOPLEVEL *toplevel, const char *filename);
 OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list, char *buffer, const int size, const char *name);
 OBJECT *o_read(TOPLEVEL *toplevel, OBJECT *object_list, char *filename);
