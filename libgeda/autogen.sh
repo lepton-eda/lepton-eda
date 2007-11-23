@@ -13,6 +13,9 @@ AM_1=1  # Major number
 AM_2=6
 AM_3=0  # Minor number
 
+# Possible names for libtool/libtoolize
+libtoolize_candidates="libtoolize glibtoolize"
+
 DIE=0
 
 (test -f $srcdir/$configure_script) || {
@@ -30,7 +33,8 @@ DIE=0
 }
 
 (grep "^AM_PROG_LIBTOOL" $srcdir/$configure_script >/dev/null) && {
-  (libtool --version) < /dev/null > /dev/null 2>&1 || {
+  LIBTOOLIZE=`which $libtoolize_candidates 2>/dev/null | head -n1`
+  (! test -z "$LIBTOOLIZE") || {
     echo
     echo "**Error**: You must have \`libtool' installed."
     echo "You can get it from: ftp://ftp.gnu.org/pub/gnu/"
@@ -134,10 +138,8 @@ do
         #mv -f $dr/po/Makevars.template $dr/po/Makevars
       fi
       if grep "^AM_PROG_LIBTOOL" $configure_script >/dev/null; then
-	if test -z "$NO_LIBTOOLIZE" ; then 
-	  echo "autogen.sh running: libtoolize ..."
-	  libtoolize --force --copy
-	fi
+	echo "autogen.sh running: libtoolize ..."
+	$LIBTOOLIZE --force --copy
       fi
       echo "autogen.sh running: aclocal $aclocalinclude ..."
       aclocal $aclocalinclude

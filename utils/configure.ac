@@ -115,10 +115,13 @@ fi
 
 # Guile 1.6 compatability
 
+CFLAGS_temp_save="$CFLAGS"
+CFLAGS="$CFLAGS $GUILE_CFLAGS"
 AC_CHECK_DECLS([scm_is_string, scm_is_integer, scm_to_int,
 scm_from_int,  scm_is_true,    scm_is_false,
 scm_from_locale_string, scm_to_locale_string],,,
 [#include <libguile.h>])
+CFLAGS="$CFLAGS_temp_save"
 
 AH_VERBATIM(SCM_IS_STRING, [#if !HAVE_DECL_SCM_IS_STRING
 #  define scm_is_string(x) SCM_STRINGP(x)
