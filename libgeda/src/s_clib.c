@@ -25,10 +25,10 @@
  *  The <b>component library</b> is made up of a number of
  *  <b>component sources</b>, each of which in turn makes available a
  *  number of component <b>symbols</b>.  Each source may be either a
- *  directory on disk containing symbol files, or a command in the
- *  system PATH which can generate gEDA symbol data (e.g. from a
- *  database).  A component source is represented by a #CLibSource
- *  instance.
+ *  directory on disk containing symbol files, a command in the system
+ *  PATH which can generate gEDA symbol data (e.g. from a database),
+ *  or a Scheme function which can do likewise.  A component source is
+ *  represented by a #CLibSource instance.
  *
  *  The component library system manages component sources and
  *  symbols, and abstracts the interface to the underlying storage.
