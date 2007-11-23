@@ -87,7 +87,7 @@ view_file_browser()
 		echo "Using browser and file: $file"
 		# NOTE: Mozilla and Netscape does not seem to support
 		#       -- on the command line
-		${browser} "file://$file"
+		"${browser}" "file://$file"
 		exit
 	else
 		echo "Did not find a browser application."
@@ -102,7 +102,7 @@ go_look_for()
 {
 	if test "${browser}" != "no" ; then
 		echo "Go look for: $1"
-		${browser} "http://www.google.com/search?q=$1%20filetype:pdf"
+		"${browser}" "http://www.google.com/search?q=$1%20filetype:pdf"
 		exit
 	else
 		echo "Did not find a browser application."
@@ -226,7 +226,7 @@ if test "${browser}" != "no"; then
 		if echo "$1" | grep -q "^$s:"; then
 			echo "Found ${browser}"
 			echo "Using browser and URL: $1"
-			${browser} "$1"
+			"${browser}" "$1"
 			exit
 		fi
 	done
