@@ -524,7 +524,7 @@ OBJECT *o_read(TOPLEVEL *toplevel, OBJECT *object_list, char *filename)
     {
       /* Report error to user, and free error */
       g_assert (buffer == NULL);
-      fprintf (stderr, "o_read: Unable to read file: [%s]\n", err->message);
+      fprintf (stderr, "o_read: %s\n", err->message);
       g_error_free (err);
       return NULL;
     } 

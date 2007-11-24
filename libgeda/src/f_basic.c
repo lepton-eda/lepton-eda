@@ -199,7 +199,7 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
     toplevel->page_current->object_tail = (OBJECT *)
     o_read(toplevel, toplevel->page_current->object_tail,
 	   backup_filename);
-  } else if (g_file_test (full_filename, G_FILE_TEST_EXISTS)) {
+  } else {
     /* Load the original file */
     toplevel->page_current->object_tail = (OBJECT *)
     o_read(toplevel, toplevel->page_current->object_tail,
