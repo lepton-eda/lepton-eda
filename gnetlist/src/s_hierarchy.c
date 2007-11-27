@@ -604,7 +604,7 @@ char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
 
     if (pr_current->hierarchy_uref_order == APPEND) {
 
-	start_of_base = rindex(uref, '/');	/* separator is always '/' */
+	start_of_base = strrchr(uref, '/');	/* separator is always '/' */
 
 	if (start_of_base == NULL) {
 	    return (g_strdup (uref));
@@ -614,7 +614,7 @@ char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
 
     } else if (pr_current->hierarchy_uref_order == PREPEND) {
 
-	end_of_base = index(uref, '/');
+	end_of_base = strchr(uref, '/');
 
 	if (end_of_base == NULL) {
 	    return (g_strdup (uref));

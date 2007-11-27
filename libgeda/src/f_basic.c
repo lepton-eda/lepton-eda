@@ -446,6 +446,11 @@ char *follow_symlinks (const gchar *filename, GError **error)
   followed_filename = g_strdup (filename);
   link_count = 0;
   
+#ifdef __MINGW32__
+  /* MinGW does not have symlinks */
+  return followed_filename;
+#else
+
   while (link_count < MAX_LINK_LEVEL) {
     struct stat st;
     
@@ -510,4 +515,5 @@ char *follow_symlinks (const gchar *filename, GError **error)
   fprintf(stderr, "The file has too many symbolic links.");
   
   return NULL;
+#endif /* __MINGW32__ */
 }

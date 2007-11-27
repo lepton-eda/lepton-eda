@@ -2,5 +2,6 @@ Makefile
 Makefile.in
 .deps
 gschlas
+gschlas.exe
 *.o
 *~

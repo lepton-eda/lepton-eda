@@ -35,13 +35,9 @@ esac
 
 if ! test "$MINGW" = "no" -o "$MINGW"x = x; then
    MINGW="yes"
-   PATHSEP=\\\\
-   OTHERPATHSEP=/
 else
    # Unix host
    MINGW="no"
-   PATHSEP=/
-   OTHERPATHSEP=\\\\
 fi
 
 # 
@@ -177,8 +173,6 @@ AC_SUBST(DOTTED_VERSION)
 AC_SUBST(GEDADATADIR)
 AC_SUBST(GEDADOCDIR)
 AC_SUBST(GEDARCDIR)
-AC_SUBST(PATHSEP)
-AC_SUBST(OTHERPATHSEP)
 
 AC_CONFIG_FILES([ 
         Makefile 

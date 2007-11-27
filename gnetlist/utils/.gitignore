@@ -2,5 +2,6 @@ Makefile
 Makefile.in
 .deps
 mk_verilog_syms
+mk_verilog_syms.exe
 *.o
 *~

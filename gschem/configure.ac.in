@@ -46,13 +46,9 @@ esac
 
 if ! test "$MINGW" = "no" -o "$MINGW"x = x; then
    MINGW="yes"
-   PATHSEP=\\\\
-   OTHERPATHSEP=/
 else
    # Unix host
    MINGW="no"
-   PATHSEP=/
-   OTHERPATHSEP=\\\\
 fi
 
 # 
@@ -397,7 +393,7 @@ AC_C_CONST
 
 # Checks for library functions.
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS(getcwd strstr vsnprintf snprintf)
+AC_CHECK_FUNCS(getcwd strstr vsnprintf snprintf getuid getgid)
 
 AC_MSG_CHECKING([for optarg in unistd.h])
 AC_TRY_COMPILE(
@@ -527,8 +523,6 @@ AC_SUBST(GSCHEM_CFLAGS)
 AC_SUBST(GSCHEM_LDFLAGS)
 AC_SUBST(GEDADATADIR)
 AC_SUBST(GEDARCDIR)
-AC_SUBST(PATHSEP)
-AC_SUBST(OTHERPATHSEP)
 AC_SUBST(GUILEINTERP)
 AC_SUBST(INDENT)
 

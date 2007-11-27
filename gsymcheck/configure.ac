@@ -40,13 +40,9 @@ esac
 
 if ! test "$MINGW" = "no" -o "$MINGW"x = x; then
    MINGW="yes"
-   PATHSEP=\\\\
-   OTHERPATHSEP=/
 else
    # Unix host
    MINGW="no"
-   PATHSEP=/
-   OTHERPATHSEP=\\\\
 fi
 
 # 
@@ -291,8 +287,6 @@ AC_SUBST(GSYMCHECK_CFLAGS)
 AC_SUBST(GSYMCHECK_LDFLAGS)
 AC_SUBST(GEDARCDIR)
 AC_SUBST(GEDADATADIR)
-AC_SUBST(PATHSEP)
-AC_SUBST(OTHERPATHSEP)
 
 # Create all the necessary derived files
 AC_CONFIG_FILES([Makefile 

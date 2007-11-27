@@ -11,3 +11,10 @@ gsch2pcb
 grenum
 *.o
 *~
+convert_sym.exe
+sarlacc_schem.exe
+gmk_sym.exe
+smash_megafile.exe
+olib.exe
+grenum.exe
+gsch2pcb.exe

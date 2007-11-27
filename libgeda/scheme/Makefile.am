@@ -1,5 +1,5 @@
 
-scmdatadir = @GEDADATADIR@@PATHSEP@scheme
+scmdatadir = @GEDADATADIR@/scheme
 dist_scmdata_DATA = geda.scm
 
 MOSTLYCLEANFILES = *.log *~

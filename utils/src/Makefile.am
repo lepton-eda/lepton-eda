@@ -24,11 +24,8 @@ olib_CFLAGS = @MINGW_CFLAGS@
 gsch2pcb_CFLAGS = @GSCH2PCB_CFLAGS@
 grenum_CFLAGS = @GRENUM_CFLAGS@
 
-gmk_sym_LDADD = @MINGW_LIBS@ 
-smash_megafile_LDADD = @MINGW_LIBS@
-convert_sym_LDADD = @MINGW_LIBS@ -lm
-sarlacc_schem_LDADD = @MINGW_LIBS@
-olib_LDADD =  @MINGW_LIBS@ -lm
+convert_sym_LDADD = -lm
+olib_LDADD = -lm
 gsch2pcb_LDADD = @GSCH2PCB_LDFLAGS@ 
 grenum_LDADD = @GRENUM_LDFLAGS@
 
