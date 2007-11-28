@@ -216,6 +216,7 @@ OBJECT *s_basic_init_object( char *name )
 	
   new_node->attribs = NULL;
   new_node->attached_to = NULL;
+  new_node->copied_to = NULL;
   new_node->attribute = 0; 
   new_node->show_name_value = SHOW_NAME_VALUE;
   new_node->visibility = VISIBLE;
