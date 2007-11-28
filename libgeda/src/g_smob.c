@@ -648,7 +648,7 @@ SCM g_get_line_width(SCM object_smob)
 
   SCM_ASSERT ( SCM_NIMP(object_smob) && 
                ((long) SCM_CAR(object_smob) == object_smob_tag),
-               object_smob, SCM_ARG1, "get-object-type");
+               object_smob, SCM_ARG1, "get-line-width");
 
   object_struct = (struct st_object_smob *)SCM_CDR(object_smob);
 
