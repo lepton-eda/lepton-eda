@@ -1290,21 +1290,14 @@ void o_complex_mirror_world(TOPLEVEL *toplevel,
                             OBJECT *object)
 {
   int x, y;
-  int newx, newy;
 
   g_return_if_fail( object != NULL );
   g_return_if_fail( (object->type == OBJ_COMPLEX ||
                      object->type == OBJ_PLACEHOLDER) );
   g_return_if_fail( object->complex != NULL );
 
-  x = object->complex->x + (-world_centerx);
-  y = object->complex->y + (-world_centery);
-
-  newx = -x;
-  newy = y;
-
-  x = newx + (world_centerx);
-  y = newy + (world_centery);
+  x = 2 * world_centerx - object->complex->x;
+  y = object->complex->y;
 
   o_complex_translate_world(toplevel,
                             -object->complex->x,
