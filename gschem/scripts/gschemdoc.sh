@@ -26,8 +26,8 @@
 #
 # these may be changed to suit local preferences
 #
-CANDIDATE_BROWSER="galeon mozilla phoenix netscape netscape-navigator opera firefox konqueror iexplore"
-CANDIDATE_PDFREADER="xpdf acroread ggv gv"
+CANDIDATE_BROWSER="xdg-open galeon mozilla phoenix netscape netscape-navigator opera firefox konqueror iexplore"
+CANDIDATE_PDFREADER="xdg-open xpdf acroread ggv gv"
 CANDIDATE_LOCATE="slocate locate"
 
 # For OS X, since Linux has 'open' with different semantics
