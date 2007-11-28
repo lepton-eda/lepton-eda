@@ -24,9 +24,6 @@
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
-#ifdef HAVE_ASSERT_H
-#include <assert.h>
-#endif
 #ifndef HAVE_VSNPRINTF
 #include <stdarg.h>
 #endif
@@ -85,7 +82,7 @@ struct st_old_colors old_colors[] = {
 void error_if_called(void)
 {
 	fprintf(stderr, "Somebody called error_if_called!\n");
-	assert(0);
+	g_assert(0);
 }
 
 /*! \todo Finish function documentation!!!
@@ -97,7 +94,7 @@ void exit_if_null(void *ptr)
 {
   if (ptr == NULL) {
     fprintf(stderr, "gEDA: Got NULL ptr!, please e-mail maintainer\n");
-    assert(0);
+    g_assert(0);
     exit(-1);
   }	
 }

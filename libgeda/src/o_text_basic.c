@@ -22,7 +22,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <sys/stat.h>
-#include <assert.h>
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
@@ -1123,7 +1122,7 @@ OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
     color = WHITE;
   }
 
-  assert(num_lines && num_lines > 0);
+  g_assert(num_lines && num_lines > 0);
 
   textstr = g_string_new ("");
   for (i = 0; i < num_lines; i++) {

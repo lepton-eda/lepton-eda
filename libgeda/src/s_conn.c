@@ -24,9 +24,6 @@
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
-#ifdef HAVE_ASSERT_H
-#include <assert.h>
-#endif
 #ifndef HAVE_VSNPRINTF
 #include <stdarg.h>
 #endif
