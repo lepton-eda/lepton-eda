@@ -128,6 +128,8 @@
 
 #include <sys/wait.h>
 
+#include <time.h>
+
 #include "defines.h"
 #include "struct.h"
 #include "globals.h"
@@ -150,6 +152,11 @@
 
 /*! Library command mode used to fetch symbol data */
 #define CLIB_DATA_CMD       "get"
+
+/*! Maximum number of symbol cache entries */
+#define CLIB_MAX_SYMBOL_CACHE 128
+/*! When symbol cache gets full, remove down to this level */
+#define CLIB_MIN_SYMBOL_CACHE 96
 
 /* Type definitions
  * ================
@@ -197,6 +204,17 @@ struct _CLibSymbol {
   gchar *name;
 };
 
+/*! Symbol data cache entry */
+typedef struct _CacheEntry CacheEntry;
+struct _CacheEntry {
+  /*! Symbol name */
+  gchar *name;
+  /*! Symbol data */
+  gchar *data;
+  /*! Last access */
+  time_t accessed;
+};
+
 /* Static variables
  * ================
  */
@@ -204,16 +222,25 @@ struct _CLibSymbol {
 /*! Holds the list of all known component sources */
 static GList *clib_sources = NULL;
 
-/*! Caches results of s_clib_search() */
+/*! Caches results of s_clib_search().  The key of the hashtable is a
+ *  string describing the search that was carried out, and the value
+ *  is a list of symbol pointers. */
 static GHashTable *clib_search_cache = NULL;
+
+/*! Caches symbol data.  The key of the hashtable is a symbol pointer,
+ *  and the value is a #CacheEntry structure containing the data and
+ *  the time it was last used. */
+static GHashTable *clib_symbol_cache = NULL;
 
 /* Local static functions
  * ======================
  */
 static void free_symbol (gpointer data, gpointer user_data);
+static void free_symbol_cache_entry (gpointer data);
 static void free_source (gpointer data, gpointer user_data);
 static gint compare_source_name (gconstpointer a, gconstpointer b);
 static gint compare_symbol_name (gconstpointer a, gconstpointer b);
+static void cache_find_oldest (gpointer key, gpointer value, gpointer user_data);
 static gchar *run_source_command (const gchar *command);
 static CLibSymbol *source_has_symbol (const CLibSource *source, 
 				      const gchar *name);
@@ -246,6 +273,16 @@ void s_clib_init ()
                                                (GDestroyNotify) g_free,
                                                (GDestroyNotify) g_list_free);
   }
+
+  if (clib_symbol_cache != NULL) {
+    s_clib_flush_symbol_cache();
+  } else {
+    clib_symbol_cache =
+      g_hash_table_new_full ((GHashFunc) g_str_hash,
+                             (GEqualFunc) g_str_equal,
+                             (GDestroyNotify) g_free,
+                             (GDestroyNotify) free_symbol_cache_entry);
+  }
 }
 
 /*! \brief Iterator callback for freeing a symbol.
@@ -264,6 +301,19 @@ static void free_symbol (gpointer data, gpointer user_data)
       symbol->name = NULL;
     }
   }
+}
+
+/*! \brief Iterator callback for freeing a symbol cache entry.
+ *  \par Function Description
+ *  Private function used only in s_clib.c.
+ */
+static void free_symbol_cache_entry (gpointer data)
+{
+  CacheEntry *entry = data;
+  g_return_if_fail (entry != NULL);
+  g_free (entry->name);
+  g_free (entry->data);
+  g_free (entry);
 }
 
 /*! \brief Iterator callback for freeing a source.
@@ -366,6 +416,21 @@ static gint compare_symbol_name (gconstpointer a, gconstpointer b)
   return strcasecmp(sym1->name, sym2->name);
 }
 
+/*! \brief Iterator callback for finding oldest symbol cache entry
+ *  \par Function Description
+ *  Private function used only in s_clib.c.
+ */
+static void cache_find_oldest (gpointer key,
+                               gpointer value,
+                               gpointer user_data)
+{
+  CacheEntry *current = value;
+  CacheEntry **oldest = user_data;
+
+  if (current->accessed < (*oldest)->accessed) {
+    *oldest = current;
+  }
+}
 
 /*! \brief Execute a library command.
  *  \par Function Description
@@ -572,6 +637,7 @@ static void refresh_directory (CLibSource *source)
 				 (GCompareFunc) compare_symbol_name);
 
   s_clib_flush_search_cache();
+  s_clib_flush_symbol_cache();
 }
 
 /*! \brief Re-poll a library command for symbols.
@@ -634,6 +700,7 @@ static void refresh_command (CLibSource *source)
 				 (GCompareFunc) compare_symbol_name);
 
   s_clib_flush_search_cache();
+  s_clib_flush_symbol_cache();
 }
 
 /*! \brief Re-poll a scheme procedure for symbols.
@@ -689,6 +756,7 @@ static void refresh_scm (CLibSource *source)
 				 (GCompareFunc) compare_symbol_name);
 
   s_clib_flush_search_cache();
+  s_clib_flush_symbol_cache();
 }
 
 /*! \brief Rescan all available component libraries.
@@ -1083,22 +1151,59 @@ static gchar *get_data_scm (const CLibSymbol *symbol)
  */
 gchar *s_clib_symbol_get_data (const CLibSymbol *symbol)
 {
+  CacheEntry *cached;
+  gchar *data;
+  gint n;
+
   g_return_val_if_fail ((symbol != NULL), NULL);
   g_return_val_if_fail ((symbol->source != NULL), NULL);
 
+  /* First, try the cache. */
+  cached = g_hash_table_lookup (clib_symbol_cache, symbol->name);
+  if (cached != NULL) {
+    cached->accessed = time(NULL);
+    return g_strdup(cached->data);
+  }
+
+  /* If the symbol wasn't found in the cache, get it directly. */
   switch (symbol->source->type)
     {
     case CLIB_DIR:
-      return get_data_directory (symbol);
+      data = get_data_directory (symbol);
+      break;
     case CLIB_CMD:
-      return get_data_command (symbol);
+      data = get_data_command (symbol);
+      break;
     case CLIB_SCM:
-      return get_data_scm (symbol);
+      data = get_data_scm (symbol);
+      break;
     default:
       g_critical("s_clib_symbol_get_data: source %p has bad source type %i\n",
                  symbol->source, (gint) symbol->source->type);
       return NULL;
     }
+
+  if (data == NULL) return NULL;
+
+  /* Cache the symbol data */
+  cached = g_new (CacheEntry, 1);
+  cached->name = g_strdup (symbol->name);
+  cached->data = g_strdup (data);
+  cached->accessed = time (NULL);
+  g_hash_table_insert (clib_symbol_cache, g_strdup(symbol->name), cached);
+
+  /* Clean out the cache if it's too full */
+  n = g_hash_table_size (clib_symbol_cache);
+  if (n > CLIB_MAX_SYMBOL_CACHE) {
+    for ( ; n > CLIB_MIN_SYMBOL_CACHE; n--) {
+      g_hash_table_foreach (clib_symbol_cache,
+                            (GHFunc) cache_find_oldest,
+                            &cached);
+      g_hash_table_remove (clib_symbol_cache, cached->name);
+    }
+  }
+
+  return data;
 }
 
 
@@ -1226,6 +1331,22 @@ void s_clib_flush_search_cache ()
   g_hash_table_remove_all (clib_search_cache);  /* Introduced in glib 2.12 */
 #else
   g_hash_table_foreach_remove(clib_search_cache, remove_entry, NULL);
+#endif
+}
+
+
+/*! \brief Flush the symbol data cache.
+ *  \par Function Description
+ *  Clears the hashtable which caches the results of s_clib_symbol_get_data().
+ *  You shouldn't ever need to call this, as all functions which
+ *  invalidate the cache are supposed to make sure it's flushed.
+ */
+void s_clib_flush_symbol_cache ()
+{
+#if GLIB_CHECK_VERSION(2,12,0)
+  g_hash_table_remove_all (clib_symbol_cache);  /* Introduced in glib 2.12 */
+#else
+  g_hash_table_foreach_remove(clib_symbol_cache, remove_entry, NULL);
 #endif
 }
 
