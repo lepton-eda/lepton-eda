@@ -601,7 +601,7 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
    */
   if (loaded_normally == TRUE) {
     if (mirror) {
-      o_complex_mirror_world(toplevel, 0, 0, new_node);
+      o_list_mirror_world(toplevel, 0, 0, prim_objs);
     }
 
     o_list_rotate_world(toplevel, 0, 0, angle, prim_objs);
