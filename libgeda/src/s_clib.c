@@ -387,7 +387,9 @@ static gchar *run_source_command (const gchar *command)
   gint exit_status;
   GError *e = NULL;
   gboolean success = FALSE;
-  
+
+  g_return_val_if_fail((command != NULL), NULL);
+
   g_spawn_command_line_sync (command,
                              &standard_output,
                              &standard_error,
@@ -512,8 +514,8 @@ static void refresh_directory (CLibSource *source)
   gboolean isfile;
   GError *e = NULL;
 
-  g_assert (source != NULL);
-  g_assert (source->type == CLIB_DIR);
+  g_return_if_fail (source != NULL);
+  g_return_if_fail (source->type == CLIB_DIR);
 
   /* Clear the current symbol list */
   g_list_foreach (source->symbols, (GFunc) free_symbol, NULL);
@@ -587,8 +589,8 @@ static void refresh_command (CLibSource *source)
   CLibSymbol *symbol;
   gchar *name;
 
-  g_assert (source != NULL);
-  g_assert (source->type == CLIB_CMD);
+  g_return_if_fail (source != NULL);
+  g_return_if_fail (source->type == CLIB_CMD);
 
   /* Clear the current symbol list */
   g_list_foreach (source->symbols, (GFunc) free_symbol, NULL);
@@ -647,8 +649,8 @@ static void refresh_scm (CLibSource *source)
   SCM symname;
   CLibSymbol *symbol;
 
-  g_assert (source != NULL);
-  g_assert (source->type == CLIB_SCM);
+  g_return_if_fail (source != NULL);
+  g_return_if_fail (source->type == CLIB_SCM);
 
   /* Clear the current symbol list */
   g_list_foreach (source->symbols, (GFunc) free_symbol, NULL);
@@ -720,7 +722,9 @@ void s_clib_refresh ()
 	refresh_scm (source);
 	break;
       default:
-	g_assert_not_reached();
+	g_critical("s_clib_refresh: source %p has bad source type %i\n",
+                   source, (gint) source->type);
+        break;
       }
   }
 }
@@ -991,8 +995,8 @@ static gchar *get_data_directory (const CLibSymbol *symbol)
   gchar *data = NULL;
   GError *e = NULL;
 
-  g_assert (symbol != NULL);
-  g_assert (symbol->source->type == CLIB_DIR);
+  g_return_val_if_fail ((symbol != NULL), NULL);
+  g_return_val_if_fail ((symbol->source->type == CLIB_DIR), NULL);
 
   filename = g_build_filename(symbol->source->directory, 
 			      symbol->name, NULL);
@@ -1024,8 +1028,8 @@ static gchar *get_data_command (const CLibSymbol *symbol)
   gchar *command;
   gchar *result;
 
-  g_assert (symbol != NULL);
-  g_assert (symbol->source->type == CLIB_CMD);
+  g_return_val_if_fail ((symbol != NULL), NULL);
+  g_return_val_if_fail ((symbol->source->type == CLIB_CMD), NULL);
   
   command = g_strdup_printf ("%s %s", symbol->source->get_cmd, 
                           symbol->name);
@@ -1051,8 +1055,8 @@ static gchar *get_data_scm (const CLibSymbol *symbol)
 {
   SCM symdata;
 
-  g_assert (symbol != NULL);
-  g_assert (symbol->source->type == CLIB_SCM);
+  g_return_val_if_fail ((symbol != NULL), NULL);
+  g_return_val_if_fail ((symbol->source->type == CLIB_SCM), NULL);
 
   symdata = scm_call_1 (symbol->source->get_fn, 
 			scm_from_locale_string (symbol->name));
@@ -1079,7 +1083,8 @@ static gchar *get_data_scm (const CLibSymbol *symbol)
  */
 gchar *s_clib_symbol_get_data (const CLibSymbol *symbol)
 {
-  g_assert (symbol != NULL);
+  g_return_val_if_fail ((symbol != NULL), NULL);
+  g_return_val_if_fail ((symbol->source != NULL), NULL);
 
   switch (symbol->source->type)
     {
@@ -1090,7 +1095,9 @@ gchar *s_clib_symbol_get_data (const CLibSymbol *symbol)
     case CLIB_SCM:
       return get_data_scm (symbol);
     default:
-      g_assert_not_reached();
+      g_critical("s_clib_symbol_get_data: source %p has bad source type %i\n",
+                 symbol->source, (gint) symbol->source->type);
+      return NULL;
     }
 }
 
@@ -1140,7 +1147,8 @@ GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode)
       keytype = 's';
       break;
     default:
-      g_assert_not_reached();
+      g_critical ("s_clib_search: Bad search mode %i\n", mode);
+      return NULL;
     }
   key = g_strdup_printf("%c%s", keytype, pattern);
 
@@ -1307,7 +1315,7 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
   CLibSymbol *sym = NULL;
   const GList *p_iter;
 
-  g_assert (toplevel != NULL);
+  g_return_val_if_fail ((toplevel != NULL), NULL);
 
   for ( p_iter = geda_list_get_glist( toplevel->pages );
         p_iter != NULL;
