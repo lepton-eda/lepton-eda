@@ -10,53 +10,65 @@
 ;       libraries.  
 (for-each
  (lambda (dir)
-   (component-library (build-path geda-sym-path dir)))
-'(
-  "74"
-  "4000"
-  "IEC417"
-  "amphenol"
-  "analog"
-  "linear"
-  "altera"
-  "lattice"
-  "xilinx"
-  "idt"
-  "misc"
-  "power"
-  "philips"
-  "minicircuits"
-  "st"
-  "apex"
-  "allegro"
-  "irf"
-  "transistor"
-  "io"
-  "titleblock"
-  "memory"
-  "micro"
-  "maxim"
-  "national"
-  "radio"
-  "tube"
-  "connector"
-  "switch"
-  "switcap"
-  ;"verilog"
-  ;"vhdl"
-  "spice"
-  "rf"
-  "bus"
-  "pla"
-  "ecl"
-  "dec"
-  "supervisor"
-  "opto"
-  "diode"
-  "relay"
-  "cascade"
-  "asic"
-  "asicpads"
-  ;"gnetman"
-  "local"
-  ))
+   (if (list? dir)
+       (component-library (build-path geda-sym-path (car dir)) (cadr dir))
+       (component-library (build-path geda-sym-path dir)))
+   )
+ (reverse '(
+    "local"
+  ; Generic symbols
+    ("analog" "Basic devices")
+    ("connector" "Connectors (generic)")
+    ("diode" "Diodes (generic)")
+    ("io" "Input/output (generic)")
+    ("power" "Power rails")
+    ("radio" "Radio elements (generic)")
+    ("switch" "Switches (generic)")
+    ("titleblock" "Titleblocks (generic)")
+    ("IEC417" "IEC 60417")
+  ; Common logic series
+    ("74" "74-series logic")
+    ("4000" "4000-series logic")
+    ("ecl" "ECL logic")
+  ; Simulation
+    ("cascade" "Cascade simulation elements")
+    ("spice" "SPICE simulation elements")
+    ("switcap" "SWITCAP simulation elements")
+  ; ASIC design
+    ("asic" "Basic devices (ASIC)")
+    ("asicpads" "Contact pads (ASIC)")
+  ; Manufacturers
+    ("allegro" "Allegro Microsystems")
+    ("altera" "Altera")
+    ("amphenol" "Connectors (Amphenol)")
+    ("apex" "Apex Microtechnology")
+    ("dec" "DEC")
+    ("idt" "IDT")
+    ("irf" "International Rectifier")
+    ("lattice" "Lattice Semiconductor")
+    ("linear" "Linear Technology")
+    ("maxim" "Maxim/Dallas")
+    ("minicircuits" "Mini-Circuits")
+    ("national" "National Semiconductor")
+    ("philips" "Philips Electronics")
+    ("st" "ST Microelectronics")
+    ("xilinx" "Xilinx")
+  ; Misc. stuff
+    ("bus" "PC104 bus")
+    ("memory" "Memory devices (misc)")
+    ("micro" "Microcontrollers (misc)")
+    ("transistor" "Transistors (misc)")
+    ("tube" "Vacuum tubes (misc)")
+    ("rf" "RF elements (misc)")
+    ("pla" "Programmable logic arrays (misc)")
+    ("supervisor" "Microprocessor supervisors (misc)")
+    ("opto" "Optocouplers (misc)")
+    ("relay" "Relays (misc)")
+    ("misc" "Misc. unsorted symbols")
+
+  ; Other
+
+    ;"verilog"
+    ;"vhdl"
+    ;"gnetman"
+    )))

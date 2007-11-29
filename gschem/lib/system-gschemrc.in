@@ -245,8 +245,8 @@
 ; cosmetic, and will not alter the component search order (latest
 ; added gets scanned first).
 ;
-;(sort-component-library "disabled")
-(sort-component-library "enabled")
+(sort-component-library "disabled")
+;(sort-component-library "enabled")
 
 ; text-feedback string
 ;
