@@ -413,7 +413,7 @@ void i_update_menus(GSCHEM_TOPLEVEL *w_current)
     x_menus_sensitivity(w_current, "Buffer/Cut into 5", TRUE);
     x_menus_sensitivity(w_current, "Hierarchy/Down Schematic", TRUE);
     x_menus_sensitivity(w_current, "Hierarchy/Down Symbol", TRUE);
-    x_menus_sensitivity(w_current, "Hierarchy/Documentation", TRUE);
+    x_menus_sensitivity(w_current, "Hierarchy/Documentation...", TRUE);
     x_menus_sensitivity(w_current, "Attributes/Attach", TRUE);
     x_menus_sensitivity(w_current, "Attributes/Detach", TRUE);
     x_menus_sensitivity(w_current, "Attributes/Show Value", TRUE);
@@ -460,7 +460,7 @@ void i_update_menus(GSCHEM_TOPLEVEL *w_current)
     x_menus_sensitivity(w_current, "Buffer/Cut into 5", FALSE);
     x_menus_sensitivity(w_current, "Hierarchy/Down Schematic", FALSE);
     x_menus_sensitivity(w_current, "Hierarchy/Down Symbol", FALSE);
-    x_menus_sensitivity(w_current, "Hierarchy/Documentation", FALSE);
+    x_menus_sensitivity(w_current, "Hierarchy/Documentation...", FALSE);
     x_menus_sensitivity(w_current, "Attributes/Attach", FALSE);
     x_menus_sensitivity(w_current, "Attributes/Detach", FALSE);
     x_menus_sensitivity(w_current, "Attributes/Show Value", FALSE);
