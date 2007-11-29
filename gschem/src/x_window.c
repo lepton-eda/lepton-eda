@@ -744,42 +744,6 @@ void x_window_close_all(GSCHEM_TOPLEVEL *w_current)
   g_list_free (list_copy);
 }
 
-/*! \brief Opens a new untitled page.
- *  \par Function Description
- *  This function creates an empty, untitled page in <B>toplevel</B>.
- *
- *  It returns a pointer on the new page.
- *
- *  The new page becomes the current page of <B>toplevel</B>.
- *
- *  The name of the untitled page is build from configuration data
- *  ('untitled-name') and a counter for uniqueness.
- *
- *  \param [in] toplevel The toplevel environment.
- *  \returns A pointer on the new page.
- */
-PAGE*
-x_window_open_untitled_page (GSCHEM_TOPLEVEL *w_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  PAGE *page;
-  gchar *cwd, *tmp, *filename;
-
-  cwd = g_get_current_dir ();
-  tmp = g_strdup_printf ("%s_%d.sch",
-                         toplevel->untitled_name,
-                         ++w_current->num_untitled);
-
-  filename = g_build_filename (cwd, tmp, NULL);
-  g_free (cwd);
-  g_free (tmp);
-
-  page = x_window_open_page (w_current, filename);
-  g_free (filename);
-
-  return page;
-}
-
 /*! \brief Opens a new page from a file.
  *  \par Function Description
  *  This function opens the file whose name is <B>filename</B> in a
@@ -790,34 +754,63 @@ x_window_open_untitled_page (GSCHEM_TOPLEVEL *w_current)
  *  a pointer on the new page. Otherwise it returns a pointer on the
  *  existing page.
  *
+ *  If the filename passed is NULL, this function creates an empty,
+ *  untitled page.  The name of the untitled page is build from
+ *  configuration data ('untitled-name') and a counter for uniqueness.
+ *
  *  The opened page becomes the current page of <B>toplevel</B>.
  *
  *  \param [in] toplevel The toplevel environment.
- *  \param [in] filename The name of the file to open.
+ *  \param [in] filename The name of the file to open or NULL for a blank page.
  *  \returns A pointer on the new page.
+ *
+ *  \bug This code should check to make sure any untitled filename
+ *  does not conflict with a file on disk.
  */
 PAGE*
 x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   PAGE *old_current, *page;
+  gchar *fn;
 
   g_return_val_if_fail (toplevel != NULL, NULL);
-  g_return_val_if_fail (filename != NULL, NULL);
+
+  /* Generate untitled filename if none was specified */
+  if (filename == NULL) {
+    gchar *cwd, *tmp;
+    cwd = g_get_current_dir ();
+    tmp = g_strdup_printf ("%s_%d.sch",
+                           toplevel->untitled_name,
+                           ++w_current->num_untitled);
+    fn = g_build_filename (cwd, tmp, NULL);
+    g_free(cwd);
+    g_free(tmp);
+  } else {
+    fn = g_strdup (filename);
+  }
 
   /* Return existing page if it is already loaded */
-  page = s_page_search (toplevel, filename);
+  page = s_page_search (toplevel, fn);
   if ( page != NULL )
     return page;
 
   old_current = toplevel->page_current;
-  page = s_page_new (toplevel, filename);
+  page = s_page_new (toplevel, fn);
   s_page_goto (toplevel, page);
 
-  if (!quiet_mode)
-    printf(_("Loading schematic [%s]\n"), filename);
+  /* Load from file if necessary, otherwise just print a message */
+  if (filename == NULL) {
+    if (!quiet_mode)
+      s_log_message (_("Loading schematic [%s]\n"), fn);
 
-  f_open (toplevel, (gchar *) filename);
+    f_open (toplevel, (gchar *) fn);
+    recent_files_add (fn);
+  } else {
+    if (!quiet_mode)
+      s_log_message (_("New file [%s]\n"),
+                     toplevel->page_current->page_filename);
+  }
 
   if (scm_hook_empty_p (new_page_hook) == SCM_BOOL_F)
     scm_run_hook (new_page_hook,
@@ -838,7 +831,8 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
    * it will get done in x_window_set_current_page(...)
    */
   x_pagesel_update (w_current); /* ??? */
-  recent_files_add(filename);
+
+  g_free (fn);
 
   return page;
 }
@@ -1010,7 +1004,7 @@ x_window_close_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
 
     /* Create a new page if there wasn't another to switch to */
     if (new_current == NULL) {
-      new_current = x_window_open_untitled_page (w_current);
+      new_current = x_window_open_page (w_current, NULL);
     }
 
     /* change to new_current and update display */

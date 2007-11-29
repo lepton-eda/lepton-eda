@@ -305,7 +305,7 @@ void main_prog(void *closure, int argc, char *argv[])
   /* If no page has been loaded (wasn't specified in the command line.) */
   /* Then create an untitled page */
   if ( first_page ) {
-    x_window_open_untitled_page( w_current );
+    x_window_open_page( w_current, NULL );
   }
 
   /* Update the window to show the current page */

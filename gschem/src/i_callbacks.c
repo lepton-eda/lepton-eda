@@ -188,7 +188,7 @@ DEFINE_I_CALLBACK(file_new)
   exit_if_null (w_current);
 
   /* create a new page */
-  page = x_window_open_untitled_page (w_current);
+  page = x_window_open_page (w_current, NULL);
   x_window_set_current_page (w_current, page);
   s_log_message (_("New page created [%s]\n"), page->page_filename);
 }
@@ -224,7 +224,7 @@ DEFINE_I_CALLBACK(file_new_window)
   w_current->toplevel = s_toplevel_new ();
   x_window_setup (w_current);
 
-  page = x_window_open_untitled_page (w_current);
+  page = x_window_open_page (w_current, NULL);
   x_window_set_current_page (w_current, page);
   s_log_message (_("New Window created [%s]\n"), page->page_filename);
 }
@@ -1743,7 +1743,7 @@ DEFINE_I_CALLBACK(page_new)
   exit_if_null(w_current);
 
   /* create a new page */
-  page = x_window_open_untitled_page (w_current);
+  page = x_window_open_page (w_current, NULL);
   x_window_set_current_page (w_current, page);
   s_log_message (_("New page created [%s]\n"), page->page_filename);
 }

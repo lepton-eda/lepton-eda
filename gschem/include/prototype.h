@@ -844,7 +844,6 @@ void x_window_setup_draw_events(GSCHEM_TOPLEVEL *w_current);
 void x_window_create_main(GSCHEM_TOPLEVEL *w_current);
 void x_window_close(GSCHEM_TOPLEVEL *w_current);
 void x_window_close_all(GSCHEM_TOPLEVEL *w_current);
-PAGE *x_window_open_untitled_page (GSCHEM_TOPLEVEL *w_current);
 PAGE *x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename);
 void x_window_set_current_page (GSCHEM_TOPLEVEL *w_current, PAGE *page);
 gint x_window_save_page (GSCHEM_TOPLEVEL *w_current, PAGE *page, const gchar *filename);
