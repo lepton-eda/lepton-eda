@@ -205,7 +205,7 @@ struct _CLibSymbol {
 static GList *clib_sources = NULL;
 
 /*! Caches results of s_clib_search() */
-static GHashTable *clib_cache = NULL;
+static GHashTable *clib_search_cache = NULL;
 
 /* Local static functions
  * ======================
@@ -238,13 +238,13 @@ void s_clib_init ()
     s_clib_free ();
   }
 
-  if (clib_cache != NULL) {
-    s_clib_flush_cache();
+  if (clib_search_cache != NULL) {
+    s_clib_flush_search_cache();
   } else {
-    clib_cache = g_hash_table_new_full ((GHashFunc) g_str_hash,
-					(GEqualFunc)g_str_equal,
-					(GDestroyNotify) g_free, 
-					(GDestroyNotify) g_list_free);
+    clib_search_cache = g_hash_table_new_full ((GHashFunc) g_str_hash,
+                                               (GEqualFunc)g_str_equal,
+                                               (GDestroyNotify) g_free,
+                                               (GDestroyNotify) g_list_free);
   }
 }
 
@@ -571,7 +571,7 @@ static void refresh_directory (CLibSource *source)
   source->symbols = g_list_sort (source->symbols, 
 				 (GCompareFunc) compare_symbol_name);
 
-  s_clib_flush_cache();
+  s_clib_flush_search_cache();
 }
 
 /*! \brief Re-poll a library command for symbols.
@@ -633,7 +633,7 @@ static void refresh_command (CLibSource *source)
   source->symbols = g_list_sort (source->symbols, 
 				 (GCompareFunc) compare_symbol_name);
 
-  s_clib_flush_cache();
+  s_clib_flush_search_cache();
 }
 
 /*! \brief Re-poll a scheme procedure for symbols.
@@ -688,7 +688,7 @@ static void refresh_scm (CLibSource *source)
   source->symbols = g_list_sort (source->symbols, 
 				 (GCompareFunc) compare_symbol_name);
 
-  s_clib_flush_cache();
+  s_clib_flush_search_cache();
 }
 
 /*! \brief Rescan all available component libraries.
@@ -1153,7 +1153,7 @@ GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode)
   key = g_strdup_printf("%c%s", keytype, pattern);
 
   /* Check to see if the query is already in the cache */
-  result = (GList *) g_hash_table_lookup (clib_cache, key);
+  result = (GList *) g_hash_table_lookup (clib_search_cache, key);
   if (result != NULL) {
     g_free (key);
     return g_list_copy (result);
@@ -1197,7 +1197,7 @@ GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode)
     g_pattern_spec_free (globpattern);
   }
 
-  g_hash_table_insert (clib_cache, key, g_list_copy (result));
+  g_hash_table_insert (clib_search_cache, key, g_list_copy (result));
   /* __don't__ free key here, it's stored by the hash table! */
 
   return result;
@@ -1220,12 +1220,12 @@ static gboolean remove_entry(gpointer key, gpointer val, gpointer data)
  *  You shouldn't ever need to call this, as all functions which
  *  invalidate the cache are supposed to make sure it's flushed.
  */
-void s_clib_flush_cache ()
+void s_clib_flush_search_cache ()
 {
 #if GLIB_CHECK_VERSION(2,12,0)
-  g_hash_table_remove_all (clib_cache);  /* Introduced in glib 2.12 */
+  g_hash_table_remove_all (clib_search_cache);  /* Introduced in glib 2.12 */
 #else
-  g_hash_table_foreach_remove(clib_cache, remove_entry, NULL);
+  g_hash_table_foreach_remove(clib_search_cache, remove_entry, NULL);
 #endif
 }
 
