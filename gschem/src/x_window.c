@@ -800,7 +800,7 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
   s_page_goto (toplevel, page);
 
   /* Load from file if necessary, otherwise just print a message */
-  if (filename == NULL) {
+  if (filename != NULL) {
     if (!quiet_mode)
       s_log_message (_("Loading schematic [%s]\n"), fn);
 
