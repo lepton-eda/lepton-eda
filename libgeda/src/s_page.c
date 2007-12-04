@@ -155,8 +155,6 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   PAGE *tmp;
   gchar *backup_filename;
   gchar *real_filename;
-  gchar *only_filename;
-  gchar *dirname;
 
   /* we need to play with page_current because s_delete_list_fromstart() */
   /* make use of it (see s_tile_remove_object_all) */
@@ -177,12 +175,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
     fprintf (stderr, "s_page_delete: Can't get the real filename of %s.\n", page->page_filename);
   }
   else {
-    /* Get the directory in which the real filename lives */
-    dirname = g_path_get_dirname (real_filename);
-    only_filename = g_path_get_basename(real_filename);  
-    
-    backup_filename = g_strdup_printf("%s%c"AUTOSAVE_BACKUP_FILENAME_STRING,
-				      dirname, G_DIR_SEPARATOR, only_filename);
+    backup_filename = f_get_autosave_filename (real_filename);
 
     /* Delete the backup file */
     if ( (g_file_test (backup_filename, G_FILE_TEST_EXISTS)) && 
@@ -191,8 +184,6 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
       if (unlink(backup_filename) != 0) {
 	s_log_message("s_page_delete: Unable to delete backup file %s.", backup_filename);      }
     }
-    g_free (dirname);
-    g_free (only_filename);
     g_free (backup_filename);
   }
   g_free(real_filename);

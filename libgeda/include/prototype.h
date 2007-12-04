@@ -8,6 +8,7 @@ OBJECT *o_read(TOPLEVEL *toplevel, OBJECT *object_list, char *filename);
 void o_scale(TOPLEVEL *toplevel, OBJECT *list, int x_scale, int y_scale);
 
 /* f_basic.c */
+gchar *f_get_autosave_filename (const gchar *filename);
 int f_open(TOPLEVEL *toplevel, const gchar *filename);
 int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
                  const gint flags);

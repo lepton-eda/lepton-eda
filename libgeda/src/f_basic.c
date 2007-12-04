@@ -48,6 +48,31 @@
 #include <dmalloc.h>
 #endif
 
+/*! \brief Get the autosave filename for a file
+ *  \par Function description
+ *  Returns the expected autosave filename for the \a filename passed.
+ *
+ *  \warning The result should be freed when no longer needed.
+ *
+ *  \param [in] filename The filename to create an autosave filename for.
+ *  \return A newly allocated string buffer.
+ */
+gchar *f_get_autosave_filename (const gchar *filename)
+{
+  gchar *result, *basename, *new_basename, *dirname;
+  basename = g_path_get_basename(filename);
+  dirname = g_path_get_dirname(filename);
+  new_basename = g_strdup_printf(AUTOSAVE_BACKUP_FILENAME_STRING,
+                                 basename);
+  result = g_build_filename(dirname, new_basename, NULL);
+
+  g_free(basename);
+  g_free(new_basename);
+  g_free(dirname);
+
+  return result;
+}
+
 /*! \brief Opens the schematic file.
  *  \par Function Description
  *  Opens the schematic file by calling f_open_flags() with the
@@ -132,14 +157,11 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
     g_rc_parse_specified_rc(toplevel, full_rcfilename);
   }
 
+  g_free (file_directory);
+
   if (flags & F_OPEN_CHECK_BACKUP) {
     /* Check if there is a newer autosave backup file */
-    backup_filename 
-      = g_strdup_printf("%s%c"AUTOSAVE_BACKUP_FILENAME_STRING,
-                        file_directory, G_DIR_SEPARATOR, 
-                        g_path_get_basename(full_filename));
-
-    g_free (file_directory);
+    backup_filename = f_get_autosave_filename (full_filename);
 
     if ( g_file_test (backup_filename, G_FILE_TEST_EXISTS) && 
          (! g_file_test (backup_filename, G_FILE_TEST_IS_DIR))) {
