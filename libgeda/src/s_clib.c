@@ -207,8 +207,8 @@ struct _CLibSymbol {
 /*! Symbol data cache entry */
 typedef struct _CacheEntry CacheEntry;
 struct _CacheEntry {
-  /*! Symbol name */
-  gchar *name;
+  /*! Pointer to symbol */
+  CLibSymbol *ptr;
   /*! Symbol data */
   gchar *data;
   /*! Last access */
@@ -278,9 +278,9 @@ void s_clib_init ()
     s_clib_flush_symbol_cache();
   } else {
     clib_symbol_cache =
-      g_hash_table_new_full ((GHashFunc) g_str_hash,
-                             (GEqualFunc) g_str_equal,
-                             (GDestroyNotify) g_free,
+      g_hash_table_new_full ((GHashFunc) g_direct_hash,
+                             (GEqualFunc) g_direct_equal,
+                             NULL,
                              (GDestroyNotify) free_symbol_cache_entry);
   }
 }
@@ -311,7 +311,6 @@ static void free_symbol_cache_entry (gpointer data)
 {
   CacheEntry *entry = data;
   g_return_if_fail (entry != NULL);
-  g_free (entry->name);
   g_free (entry->data);
   g_free (entry);
 }
@@ -1153,13 +1152,17 @@ gchar *s_clib_symbol_get_data (const CLibSymbol *symbol)
 {
   CacheEntry *cached;
   gchar *data;
+  gpointer symptr;
   gint n;
 
   g_return_val_if_fail ((symbol != NULL), NULL);
   g_return_val_if_fail ((symbol->source != NULL), NULL);
 
+  /* Trickery to bypass effects of const */
+  symptr = (gpointer) symbol;
+
   /* First, try the cache. */
-  cached = g_hash_table_lookup (clib_symbol_cache, symbol->name);
+  cached = g_hash_table_lookup (clib_symbol_cache, symptr);
   if (cached != NULL) {
     cached->accessed = time(NULL);
     return g_strdup(cached->data);
@@ -1187,10 +1190,10 @@ gchar *s_clib_symbol_get_data (const CLibSymbol *symbol)
 
   /* Cache the symbol data */
   cached = g_new (CacheEntry, 1);
-  cached->name = g_strdup (symbol->name);
+  cached->ptr = (CLibSymbol *) symptr;
   cached->data = g_strdup (data);
   cached->accessed = time (NULL);
-  g_hash_table_insert (clib_symbol_cache, g_strdup(symbol->name), cached);
+  g_hash_table_insert (clib_symbol_cache, symptr, cached);
 
   /* Clean out the cache if it's too full */
   n = g_hash_table_size (clib_symbol_cache);
@@ -1199,7 +1202,7 @@ gchar *s_clib_symbol_get_data (const CLibSymbol *symbol)
       g_hash_table_foreach (clib_symbol_cache,
                             (GHFunc) cache_find_oldest,
                             &cached);
-      g_hash_table_remove (clib_symbol_cache, cached->name);
+      g_hash_table_remove (clib_symbol_cache, cached->ptr);
     }
   }
 
