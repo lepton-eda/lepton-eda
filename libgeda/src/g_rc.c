@@ -326,6 +326,7 @@ gint g_rc_parse_specified_rc(TOPLEVEL *toplevel, const gchar *rcname)
 {
   gint found_rc = 0;
   char *filename;
+  gchar *rcbasename;
   gchar *ok_msg;
   gchar *err_msg;
 
@@ -335,15 +336,18 @@ gint g_rc_parse_specified_rc(TOPLEVEL *toplevel, const gchar *rcname)
 
   filename = f_normalize_filename (rcname);
 
+  rcbasename = g_path_get_basename (rcname);
+
   ok_msg  = g_strdup_printf ("Read specified %s file [%%s]\n",
-                             rcname);
+                             rcbasename);
   err_msg = g_strdup_printf ("Did not find specified %s file [%%s]\n",
-                             rcname);  
+                             rcbasename);
   found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
   
   g_free(ok_msg);
   g_free(err_msg);
   g_free(filename);
+  g_free(rcbasename);
 
   return found_rc;
 }
