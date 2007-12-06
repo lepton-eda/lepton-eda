@@ -1,3 +1,4 @@
+
 /* a_basic.c */
 gchar *o_save_objects(OBJECT *object_list);
 const gchar *o_file_format_header();
@@ -9,6 +10,7 @@ void o_scale(TOPLEVEL *toplevel, OBJECT *list, int x_scale, int y_scale);
 
 /* f_basic.c */
 gchar *f_get_autosave_filename (const gchar *filename);
+gboolean f_has_active_autosave (const gchar *filename, GError **err);
 int f_open(TOPLEVEL *toplevel, const gchar *filename);
 int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
                  const gint flags);

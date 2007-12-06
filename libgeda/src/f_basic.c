@@ -29,6 +29,9 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <time.h>
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -70,6 +73,75 @@ gchar *f_get_autosave_filename (const gchar *filename)
   g_free(new_basename);
   g_free(dirname);
 
+  return result;
+}
+
+/*! \brief Check if a file has an active autosave file
+ *  \par Function Description
+ *  Checks whether an autosave file exists for the \a filename passed
+ *  which has a modification time newer than the file itself.  If the
+ *  check fails, sets \a err with the reason.  N.b. if the autosave
+ *  file exists but it was not possible to get its modification time,
+ *  returns TRUE.
+ *
+ *  \param [in] filename File to check
+ *  \param [in,out] err  #GError structure for error reporting, or
+ *                       NULL to disable error reporting
+ *
+ *  \returns TRUE if autosave active, FALSE otherwise
+ */
+gboolean f_has_active_autosave (const gchar *filename, GError **err)
+{
+  gboolean result = FALSE;
+  gchar *auto_filename;
+  gint file_err = 0;
+  gint auto_err = 0;
+  GFileError g_errcode = 0;
+  struct stat file_stat, auto_stat;
+
+  auto_filename = f_get_autosave_filename (filename);
+  if (stat (filename, &file_stat) != 0) {
+    file_err = errno;
+  }
+  if (stat (auto_filename, &auto_stat) != 0) {
+    auto_err = errno;
+  }
+
+  /* A valid use of goto! (checks for raptors) */
+  if (auto_err & ENOENT) {
+    /* The autosave file does not exist. */
+    result = FALSE;
+    goto check_autosave_finish;
+  }
+  if (auto_err) {
+    g_errcode = g_file_error_from_errno (auto_err);
+    g_set_error (err, G_FILE_ERROR, g_errcode,
+                 "Failed to stat [%s]: %s",
+                 auto_filename, g_strerror (auto_err));
+    result = TRUE;
+    goto check_autosave_finish;
+  }
+  if (file_err & ENOENT) {
+    /* The autosave file exists, but the actual file does not. */
+    result = TRUE;
+    goto check_autosave_finish;
+  }
+  if (file_err) {
+    g_errcode = g_file_error_from_errno (file_err);
+    g_set_error (err, G_FILE_ERROR, g_errcode,
+                 "Failed to stat [%s]: %s",
+                 auto_filename, g_strerror (file_err));
+    result = TRUE;
+    goto check_autosave_finish;
+  }
+  /* If we got this far, both files exist and we have managed to get
+   * their stat info. */
+  if (difftime (file_stat.st_mtime, auto_stat.st_mtime) < 0) {
+    result = TRUE;
+  }
+
+ check_autosave_finish:
+  g_free (auto_filename);
   return result;
 }
 
@@ -161,57 +233,36 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
 
   if (flags & F_OPEN_CHECK_BACKUP) {
     /* Check if there is a newer autosave backup file */
-    backup_filename = f_get_autosave_filename (full_filename);
+    GString *message;
+    GError *err = NULL;
+    gboolean active_backup = f_has_active_autosave (filename, &err);
+    backup_filename = f_get_autosave_filename (filename);
 
-    if ( g_file_test (backup_filename, G_FILE_TEST_EXISTS) && 
-         (! g_file_test (backup_filename, G_FILE_TEST_IS_DIR))) {
-      /* An autosave backup file exists. Check if it's newer */
-      struct stat stat_backup;
-      struct stat stat_file;
-      char error_stat = 0;
-      GString *message;
-    
-      if (stat (backup_filename, &stat_backup) != 0) {
-        s_log_message ("f_open: Unable to get stat information of backup file %s.", 
-                       backup_filename);
-        error_stat = 1 ;
+    if (err != NULL) g_warning ("%s\n", err->message);
+    if (active_backup) {
+      message = g_string_new ("");
+      g_string_append_printf(message, "\nWARNING: Found an autosave backup file:\n  %s.\n\n", backup_filename);
+      if (err != NULL) {
+        g_string_append(message, "I could not guess if it is newer, so you have to"
+                        "do it manually.\n");
+      } else {
+        g_string_append(message, "The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n");
       }
-      if (stat (full_filename, &stat_file) != 0) {
-        s_log_message ("f_open: Unable to get stat information of file %s.", 
-                       full_filename);
-        error_stat = 1;
-      }
-      if ((difftime (stat_file.st_ctime, stat_backup.st_ctime) < 0) ||
-          (error_stat == 1))
-        {
-          /* Found an autosave backup. It's newer if error_stat is 0 */
-          message = g_string_new ("");
-          g_string_append_printf(message, "\nWARNING: Found an autosave backup file:\n  %s.\n\n", backup_filename);
-          if (error_stat == 1) {
-            g_string_append(message, "I could not guess if it is newer, so you have to"
-                            "do it manually.\n");
-          }
-          else {
-            g_string_append(message, "The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n");
-          }
-          g_string_append (message, "Gschem usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n");
-          if (toplevel->page_current->load_newer_backup_func == NULL) {
-            s_log_message(message->str);
-            s_log_message("\nRun gschem and correct the situation.\n\n");
-            fprintf(stderr, message->str);
-            fprintf(stderr, "\nRun gschem and correct the situation.\n\n");
-          }
-          else {
-            /* Ask the user if load the backup or the original file */
-            if (toplevel->page_current->load_newer_backup_func
-                (toplevel, message)) {
-              /* Load the backup file */
-              load_backup_file = 1;
-            }
-          }
-          g_string_free (message, TRUE);
+      g_string_append (message, "Gschem usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n");
+      if (toplevel->page_current->load_newer_backup_func == NULL) {
+        g_warning (message->str);
+        g_warning ("\nRun gschem and correct the situation.\n\n");
+      } else {
+        /* Ask the user if load the backup or the original file */
+        if (toplevel->page_current->load_newer_backup_func
+            (toplevel, message)) {
+          /* Load the backup file */
+          load_backup_file = 1;
         }
+      }
+      g_string_free (message, TRUE);
     }
+    if (err != NULL) g_error_free (err);
   }
 
   /* Now that we have set the current directory and read
