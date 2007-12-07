@@ -187,6 +187,7 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
   char *saved_cwd = NULL;
   char *backup_filename = NULL;
   char load_backup_file = 0;
+  GError *err = NULL;
 
   /* has the head been freed yet? */
   /* probably not hack PAGE */
@@ -234,7 +235,6 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
   if (flags & F_OPEN_CHECK_BACKUP) {
     /* Check if there is a newer autosave backup file */
     GString *message;
-    GError *err = NULL;
     gboolean active_backup = f_has_active_autosave (filename, &err);
     backup_filename = f_get_autosave_filename (filename);
 
@@ -271,12 +271,12 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
     /* Load the backup file */
     toplevel->page_current->object_tail = (OBJECT *)
     o_read(toplevel, toplevel->page_current->object_tail,
-	   backup_filename);
+	   backup_filename, &err);
   } else {
     /* Load the original file */
     toplevel->page_current->object_tail = (OBJECT *)
     o_read(toplevel, toplevel->page_current->object_tail,
-	   full_filename);
+	   full_filename, &err);
   }
 
   if (toplevel->page_current->object_tail != NULL) {
@@ -284,6 +284,8 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
     opened = TRUE;
   } else {
     /* Failed to open page */
+    g_message ("f_open_flags: %s\n", err->message);
+    g_error_free (err);
     opened = FALSE;	 
   }
 

@@ -506,28 +506,24 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
  *  \param [in,out] toplevel    The current TOPLEVEL structure.
  *  \param [in]     object_list  The object_list to read data to.
  *  \param [in]     filename     The filename to read from.
+ *  \param [in,out] err          #GError structure for error reporting, or
+ *                               NULL to disable error reporting
  *  \return object_list if successful read, or NULL on error.
  */
-OBJECT *o_read(TOPLEVEL *toplevel, OBJECT *object_list, char *filename)
+OBJECT *o_read(TOPLEVEL *toplevel, OBJECT *object_list, char *filename,
+               GError **err)
 {
-  GError *err = NULL;
   char *buffer = NULL;
   size_t size;
   OBJECT *result = NULL;
 
-  g_file_get_contents(filename, &buffer, &size, &err);
+  /* Return NULL if error reporting is enabled and the return location
+   * for an error isn't NULL. */
+  g_return_val_if_fail (err == NULL || *err == NULL, NULL);
 
-  g_assert ((buffer == NULL && err != NULL) 
-	    || (buffer != NULL && err == NULL));
-
-  if (err != NULL)
-    {
-      /* Report error to user, and free error */
-      g_assert (buffer == NULL);
-      fprintf (stderr, "o_read: %s\n", err->message);
-      g_error_free (err);
-      return NULL;
-    } 
+  if (!g_file_get_contents(filename, &buffer, &size, err)) {
+    return NULL;
+  } 
 
   /* Parse file contents */
   g_assert (buffer != NULL);

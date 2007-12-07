@@ -5,7 +5,7 @@ const gchar *o_file_format_header();
 gchar *o_save_buffer(TOPLEVEL *toplevel);
 int o_save(TOPLEVEL *toplevel, const char *filename);
 OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list, char *buffer, const int size, const char *name);
-OBJECT *o_read(TOPLEVEL *toplevel, OBJECT *object_list, char *filename);
+OBJECT *o_read(TOPLEVEL *toplevel, OBJECT *object_list, char *filename, GError **err);
 void o_scale(TOPLEVEL *toplevel, OBJECT *list, int x_scale, int y_scale);
 
 /* f_basic.c */
