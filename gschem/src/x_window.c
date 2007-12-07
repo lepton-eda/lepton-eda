@@ -801,11 +801,27 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
 
   /* Load from file if necessary, otherwise just print a message */
   if (filename != NULL) {
+    GError *err = NULL;
     if (!quiet_mode)
       s_log_message (_("Loading schematic [%s]\n"), fn);
 
-    f_open (toplevel, (gchar *) fn, NULL);
-    recent_files_add (fn);
+    if (!f_open (toplevel, (gchar *) fn, &err)) {
+      GtkWidget *dialog;
+
+      g_warning ("%s\n", err->message);
+      dialog = gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
+                                       GTK_DIALOG_DESTROY_WITH_PARENT,
+                                       GTK_MESSAGE_ERROR,
+                                       GTK_BUTTONS_CLOSE,
+                                       "%s",
+                                       err->message);
+      gtk_window_set_title (GTK_WINDOW (dialog), _("Failed to load file"));
+      gtk_dialog_run (GTK_DIALOG (dialog));
+      gtk_widget_destroy (dialog);
+      g_error_free (err);
+    } else {
+      recent_files_add (fn);
+    }
   } else {
     if (!quiet_mode)
       s_log_message (_("New file [%s]\n"),
