@@ -50,4 +50,3 @@ struct _Log {
 
 GType log_get_type (void);
 
-void log_message (Log *log, const gchar *message);

@@ -51,6 +51,12 @@
 static void x_log_callback_response (GtkDialog *dialog,
                                      gint arg1,
                                      gpointer user_data);
+static void log_message (Log *log, 
+                         const gchar *message, 
+                         const gchar *style);
+
+static void log_class_init (LogClass *class);
+static void log_init       (Log *log);
 
 static GtkWidget *log_dialog = NULL;
 
@@ -85,7 +91,7 @@ void x_log_open ()
       return;
     }
 
-    log_message (LOG (log_dialog), contents);
+    log_message (LOG (log_dialog), contents, "old");
     g_free (contents);
 
     x_log_update_func = x_log_message;
@@ -124,11 +130,20 @@ void x_log_close ()
 void x_log_message (const gchar *log_domain, GLogLevelFlags log_level,
                     const gchar *message)
 {
+  gchar *style;
   g_return_if_fail (log_dialog != NULL);
-  
-  g_assert (IS_LOG (log_dialog));
-  log_message ((Log*)log_dialog, message);
-    
+
+  if (log_level & (G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_ERROR)) {
+    /* Print to console too */
+    g_log_default_handler (log_domain, log_level, message, NULL);
+    style = "critical";
+  } else if (log_level & G_LOG_LEVEL_WARNING) {
+    style = "warning";
+  } else {
+    style = "message";
+  }
+
+  log_message (LOG(log_dialog), message, style);
 }
 
 /*! \todo Finish function documentation!!!
@@ -152,15 +167,13 @@ static void x_log_callback_response (GtkDialog *dialog,
   
 }
 
-static void log_class_init (LogClass *class);
-static void log_init       (Log *log);
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
  * 
  */
-void log_message (Log *log, const gchar *message)
+static void log_message (Log *log, const gchar *message, 
+                         const gchar *style)
 {
   GtkTextBuffer *buffer;
   GtkTextIter iter;
@@ -170,7 +183,10 @@ void log_message (Log *log, const gchar *message)
 
   buffer = gtk_text_view_get_buffer (log->textview);
   gtk_text_buffer_get_end_iter (buffer, &iter);
-  gtk_text_buffer_insert(buffer, &iter, message, -1);
+  /* Apply the "plain" tag before the level-specific tag in order to
+   * reset the formatting */
+  gtk_text_buffer_insert_with_tags_by_name (buffer, &iter, message, -1, 
+                                            "plain", style, NULL);
 
   mark = gtk_text_buffer_create_mark(buffer, NULL, &iter, FALSE);
   gtk_text_view_scroll_to_mark (log->textview, mark, 0, TRUE, 0, 1);
@@ -258,6 +274,34 @@ static void log_init (Log *log)
   /* create the text buffer */
   text_buffer = GTK_TEXT_BUFFER (g_object_new (GTK_TYPE_TEXT_BUFFER,
                                                NULL));
+
+  /* Add some tags for highlighting log messages to the buffer */
+  gtk_text_buffer_create_tag (text_buffer, "plain",
+                              "foreground", "black",
+                              "foreground-set", TRUE,
+                              "weight", PANGO_WEIGHT_NORMAL,
+                              "weight-set", TRUE,
+                              NULL);
+  /* The default "message" style is plain */
+  gtk_text_buffer_create_tag (text_buffer, "message", NULL);
+  /* "old" messages are in dark grey */
+  gtk_text_buffer_create_tag (text_buffer, "old",
+                              "foreground", "#404040",
+                              "foreground-set", TRUE,
+			      NULL);
+  /* "warning" messages are printed in red */
+  gtk_text_buffer_create_tag (text_buffer, "warning",
+                              "foreground", "red",
+                              "foreground-set", TRUE,
+                              NULL);
+  /* "critical" messages are bold red */
+  gtk_text_buffer_create_tag (text_buffer, "critical",
+                              "foreground", "red",
+                              "foreground-set", TRUE,
+                              "weight", PANGO_WEIGHT_BOLD,
+                              "weight-set", TRUE,
+                              NULL);
+
   /* create the text view and attach the buffer to it */
   text_view = GTK_WIDGET (g_object_new (GTK_TYPE_TEXT_VIEW,
                                         /* GtkTextView */
