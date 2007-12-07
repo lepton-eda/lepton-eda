@@ -804,7 +804,7 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
     if (!quiet_mode)
       s_log_message (_("Loading schematic [%s]\n"), fn);
 
-    f_open (toplevel, (gchar *) fn);
+    f_open (toplevel, (gchar *) fn, NULL);
     recent_files_add (fn);
   } else {
     if (!quiet_mode)

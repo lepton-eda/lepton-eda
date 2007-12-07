@@ -128,7 +128,8 @@ main_prog(void *closure, int argc, char *argv[])
                    s_page_new (pr_current, filename));
       
       fopen_status = f_open (pr_current, 
-                             pr_current->page_current->page_filename);
+                             pr_current->page_current->page_filename,
+                             NULL);
 
       if (!fopen_status) {
         s_log_message("gsymcheck: Could not load [%s]\n", 

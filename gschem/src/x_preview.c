@@ -247,7 +247,7 @@ preview_update (Preview *preview)
     if (preview->filename != NULL) {
       /* open up file in current page */
       f_open_flags (preview_toplevel, preview->filename,
-                    F_OPEN_RC | F_OPEN_RESTORE_CWD);
+                    F_OPEN_RC | F_OPEN_RESTORE_CWD, NULL);
       /* test value returned by f_open... - Fix me */
       /* we should display something if there an error occured - Fix me */
     }

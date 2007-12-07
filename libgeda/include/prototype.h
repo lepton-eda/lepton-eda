@@ -11,9 +11,9 @@ void o_scale(TOPLEVEL *toplevel, OBJECT *list, int x_scale, int y_scale);
 /* f_basic.c */
 gchar *f_get_autosave_filename (const gchar *filename);
 gboolean f_has_active_autosave (const gchar *filename, GError **err);
-int f_open(TOPLEVEL *toplevel, const gchar *filename);
+int f_open(TOPLEVEL *toplevel, const gchar *filename, GError **err);
 int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
-                 const gint flags);
+                 const gint flags, GError **err);
 void f_close(TOPLEVEL *toplevel);
 void f_save_close(TOPLEVEL *toplevel, char *filename);
 int f_save(TOPLEVEL *toplevel, const char *filename);

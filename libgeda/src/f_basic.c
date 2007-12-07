@@ -153,12 +153,15 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err)
  *  \param [in,out] toplevel  The TOPLEVEL object to load the schematic into.
  *  \param [in]      filename  A character string containing the file name
  *                             to open.
+ *  \param [in,out] err  #GError structure for error reporting, or
+ *                       NULL to disable error reporting
+ *
  *  \return 0 on failure, 1 on success.
  */
-int f_open(TOPLEVEL *toplevel, const gchar *filename)
+int f_open(TOPLEVEL *toplevel, const gchar *filename, GError **err)
 {
   return f_open_flags (toplevel, filename,
-                       F_OPEN_RC | F_OPEN_CHECK_BACKUP);
+                       F_OPEN_RC | F_OPEN_CHECK_BACKUP, err);
 }
 
 /*! \brief Opens the schematic file with fine-grained control over behaviour.
@@ -175,10 +178,13 @@ int f_open(TOPLEVEL *toplevel, const gchar *filename)
  *  \param [in]     filename   A character string containing the file name
  *                             to open.
  *  \param [in]     flags      Combination of #FOpenFlags values.
+ *  \param [in,out] err  #GError structure for error reporting, or
+ *                       NULL to disable error reporting
+ *
  *  \return 0 on failure, 1 on success.
  */
 int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
-                 const gint flags)
+                 const gint flags, GError **err)
 {
   int opened=FALSE;
   char *full_filename = NULL;
@@ -187,7 +193,7 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
   char *saved_cwd = NULL;
   char *backup_filename = NULL;
   char load_backup_file = 0;
-  GError *err = NULL;
+  GError *tmp_err = NULL;
 
   /* has the head been freed yet? */
   /* probably not hack PAGE */
@@ -235,14 +241,14 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
   if (flags & F_OPEN_CHECK_BACKUP) {
     /* Check if there is a newer autosave backup file */
     GString *message;
-    gboolean active_backup = f_has_active_autosave (filename, &err);
+    gboolean active_backup = f_has_active_autosave (filename, &tmp_err);
     backup_filename = f_get_autosave_filename (filename);
 
-    if (err != NULL) g_warning ("%s\n", err->message);
+    if (tmp_err != NULL) g_warning ("%s\n", tmp_err->message);
     if (active_backup) {
       message = g_string_new ("");
       g_string_append_printf(message, "\nWARNING: Found an autosave backup file:\n  %s.\n\n", backup_filename);
-      if (err != NULL) {
+      if (tmp_err != NULL) {
         g_string_append(message, "I could not guess if it is newer, so you have to"
                         "do it manually.\n");
       } else {
@@ -262,7 +268,7 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
       }
       g_string_free (message, TRUE);
     }
-    if (err != NULL) g_error_free (err);
+    if (tmp_err != NULL) g_error_free (tmp_err);
   }
 
   /* Now that we have set the current directory and read
@@ -271,21 +277,18 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
     /* Load the backup file */
     toplevel->page_current->object_tail = (OBJECT *)
     o_read(toplevel, toplevel->page_current->object_tail,
-	   backup_filename, &err);
+	   backup_filename, err);
   } else {
     /* Load the original file */
     toplevel->page_current->object_tail = (OBJECT *)
     o_read(toplevel, toplevel->page_current->object_tail,
-	   full_filename, &err);
+	   full_filename, err);
   }
 
   if (toplevel->page_current->object_tail != NULL) {
-    s_log_message("Opened file [%s]\n", full_filename);
     opened = TRUE;
   } else {
     /* Failed to open page */
-    g_message ("f_open_flags: %s\n", err->message);
-    g_error_free (err);
     opened = FALSE;	 
   }
 
@@ -319,11 +322,7 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
     g_free(saved_cwd);
   }
 
-  if (!opened) {
-    return (FALSE);
-  } else {
-    return (TRUE);
-  }
+  return opened;
 }
 
 /*! \brief Closes the schematic file

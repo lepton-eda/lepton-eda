@@ -242,7 +242,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
       s_page_goto (pr_current, s_page_new (pr_current, filename));
       
-      if (!f_open (pr_current, filename)) {
+      if (!f_open (pr_current, filename, NULL)) {
         fprintf (stderr, "Couldn't load schematic [%s]\n", filename);
       }
       
