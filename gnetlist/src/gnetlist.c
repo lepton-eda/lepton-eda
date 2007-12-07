@@ -226,6 +226,7 @@ void main_prog(void *closure, int argc, char *argv[])
     i = argv_index;
     while (argv[i] != NULL) {
       gchar *filename; 
+      GError *err = NULL;
 
       if (g_path_is_absolute(argv[i]))
       {
@@ -243,7 +244,9 @@ void main_prog(void *closure, int argc, char *argv[])
       s_page_goto (pr_current, s_page_new (pr_current, filename));
       
       if (!f_open (pr_current, filename, NULL)) {
-        fprintf (stderr, "Couldn't load schematic [%s]\n", filename);
+        g_warning ("%s\n", err->message);
+        fprintf (stderr, "%s\n", err->message);
+        g_error_free (err);
       }
       
       i++;

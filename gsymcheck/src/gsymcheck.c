@@ -50,9 +50,8 @@ main_prog(void *closure, int argc, char *argv[])
   int i;
   int argv_index;
   int exit_status;
-  int fopen_status;
   char *cwd;
-  struct stat buf;
+
   char *logfile;
   
   TOPLEVEL *pr_current;
@@ -106,6 +105,8 @@ main_prog(void *closure, int argc, char *argv[])
   while (argv[i] != NULL) {
 
     gchar *filename;
+    GError *err = NULL;
+
     if (g_path_is_absolute(argv[i]))
     {
       /* Path is already absolute so no need to do any concat of cwd */
@@ -114,29 +115,19 @@ main_prog(void *closure, int argc, char *argv[])
       filename = g_build_path (G_DIR_SEPARATOR_S, cwd, argv[i], NULL);
     }
 
-    if (stat(filename, &buf) != 0) {
+    s_page_goto (pr_current,
+                 s_page_new (pr_current, filename));
+
+    if (!f_open (pr_current,
+                 pr_current->page_current->page_filename,
+                 &err)) {
+      /* Not being able to load a file is apparently a fatal error */
       logging_dest = STDOUT_TTY;
-      s_log_message("Could not open [%s]\n", filename);
-      s_log_message("Exiting...\n");
-      exit(2); /* error */
+      g_warning ("%s\n", err->message);
+      g_error_free (err);
+      exit(2);
     } else {
-      if (verbose_mode) {
-        s_log_message("Loading file [%s]\n", filename);
-      }
-
-      s_page_goto (pr_current,
-                   s_page_new (pr_current, filename));
-      
-      fopen_status = f_open (pr_current, 
-                             pr_current->page_current->page_filename,
-                             NULL);
-
-      if (!fopen_status) {
-        s_log_message("gsymcheck: Could not load [%s]\n", 
-                      pr_current->page_current->page_filename);
-        s_log_message("Exiting...\n");
-        exit(2); /* error */
-      }
+      g_message ("Loaded file [%s]\n", filename);
     }
     i++;
     g_free (filename);
