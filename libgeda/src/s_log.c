@@ -192,7 +192,7 @@ static void s_log_handler (const gchar *log_domain,
   }
 
   if (x_log_update_func) {
-    (*x_log_update_func) (message);
+    (*x_log_update_func) (log_domain, log_level, message);
   }
 
 }

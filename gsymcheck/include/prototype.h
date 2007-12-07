@@ -4,7 +4,8 @@ SCM g_rc_gsymcheck_version(SCM version);
 void g_register_funcs(void);
 SCM g_quit(void);
 /* globals.c */
-void s_log_update(char *buf);
+void s_log_update(const gchar *log_domain, GLogLevelFlags log_level,
+                  const gchar *buf);
 /* gsymcheck.c */
 void gsymcheck_quit(void);
 void main_prog(void *closure, int argc, char *argv[]);

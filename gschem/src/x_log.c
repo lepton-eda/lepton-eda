@@ -121,7 +121,8 @@ void x_log_close ()
  *  \par Function Description
  * 
  */
-void x_log_message (const gchar *message)
+void x_log_message (const gchar *log_domain, GLogLevelFlags log_level,
+                    const gchar *message)
 {
   g_return_if_fail (log_dialog != NULL);
   

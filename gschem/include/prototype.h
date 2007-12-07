@@ -799,7 +799,9 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current);
 /* x_log.c */
 void x_log_open ();
 void x_log_close ();
-void x_log_message (const gchar *message);
+void x_log_message (const gchar *log_domain,
+                    GLogLevelFlags log_level,
+                    const gchar *message);
 /* x_menus.c */
 void get_main_menu(GtkWidget **menubar);
 GtkWidget *get_main_popup(GSCHEM_TOPLEVEL *w_current);

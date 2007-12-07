@@ -63,7 +63,8 @@ int verbose_mode=FALSE;
 int interactive_mode=FALSE;
 int quiet_mode=FALSE;
 
-void s_log_update(char *buf)
+void s_log_update(const gchar *log_domain, GLogLevelFlags log_level,
+                  const gchar *buf)
 {
   if (do_logging == FALSE) {
     return;
