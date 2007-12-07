@@ -134,8 +134,6 @@ void x_log_message (const gchar *log_domain, GLogLevelFlags log_level,
   g_return_if_fail (log_dialog != NULL);
 
   if (log_level & (G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_ERROR)) {
-    /* Print to console too */
-    g_log_default_handler (log_domain, log_level, message, NULL);
     style = "critical";
   } else if (log_level & G_LOG_LEVEL_WARNING) {
     style = "warning";

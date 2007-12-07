@@ -56,6 +56,10 @@
 #include <dmalloc.h>
 #endif
 
+#define CATCH_LOG_LEVELS (G_LOG_LEVEL_MASK ^ \
+                          (G_LOG_LEVEL_DEBUG | G_LOG_LEVEL_INFO))
+#define PRINT_LOG_LEVELS (CATCH_LOG_LEVELS ^ \
+                          (G_LOG_LEVEL_WARNING | G_LOG_LEVEL_MESSAGE))
 
 static void s_log_handler (const gchar *log_domain,
                            GLogLevelFlags log_level,
@@ -90,7 +94,7 @@ void s_log_init (const gchar *filename)
 
   /* install the log handler */
   log_handler_id = g_log_set_handler (NULL,
-                                      G_LOG_LEVEL_MESSAGE,
+                                      CATCH_LOG_LEVELS,
                                       s_log_handler,
                                       NULL);
 
@@ -187,8 +191,11 @@ static void s_log_handler (const gchar *log_domain,
   status = write (logfile_fd, message, strlen (message));
   if (status == -1) {
     fprintf(stderr, "Could not write message to log file\n");
-    fprintf(stderr, "Message was: %s\n", message);
-    fprintf(stderr, "Errno was: %d\n", errno);
+  }
+  if ((status == -1) || (log_level & PRINT_LOG_LEVELS)) {
+    /* If messages are serious or writing to file failed, call the
+     * default handler to write to the console. */
+    g_log_default_handler (log_domain, log_level, message, NULL);
   }
 
   if (x_log_update_func) {
