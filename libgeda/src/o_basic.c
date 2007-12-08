@@ -290,7 +290,8 @@ void o_translate_world (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object)
       case OBJ_PIN:     func = o_pin_translate_world;     break;
       case OBJ_ARC:     func = o_arc_translate_world;     break;
       default:
-        g_assert_not_reached ();
+        g_critical ("o_translate_world: object %p has bad type '%c'\n",
+                    object, object->type);
   }
 
   if (func != NULL) {
@@ -328,7 +329,8 @@ void o_rotate_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, i
       case OBJ_PIN:     func = o_pin_rotate_world;        break;
       case OBJ_ARC:     func = o_arc_rotate_world;        break;
       default:
-        g_assert_not_reached ();
+        g_critical ("o_translate_world: object %p has bad type '%c'\n",
+                    object, object->type);
   }
 
   if (func != NULL) {
@@ -365,7 +367,8 @@ void o_mirror_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, O
       case OBJ_PIN:     func = o_pin_mirror_world;        break;
       case OBJ_ARC:     func = o_arc_mirror_world;        break;
       default:
-        g_assert_not_reached ();
+        g_critical ("o_translate_world: object %p has bad type '%c'\n",
+                    object, object->type);
   }
 
   if (func != NULL) {

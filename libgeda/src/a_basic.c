@@ -105,7 +105,7 @@ gchar *o_save_objects (OBJECT *object_list)
   GString *acc;
   gboolean already_wrote = FALSE;
 
-  g_assert (object_list != NULL);
+  g_return_val_if_fail ((object_list != NULL), NULL);
 
   acc = g_string_new("");
 
@@ -175,10 +175,15 @@ gchar *o_save_objects (OBJECT *object_list)
 	    break;
 
           default:
-            g_assert_not_reached();
-            fprintf(stderr, "Error type!\n");
-            exit(-1);
-            break;
+            /*! \todo Maybe we can continue instead of just failing
+             *  completely? In any case, failing gracefully is better
+             *  than killing the program, which is what this used to
+             *  do... */
+            g_critical ("o_save_objects: object %p has unknown type '%c'\n",
+                        o_current, o_current->type);
+            /* Dump string built so far */
+            g_string_free (acc, TRUE);
+            return NULL;
         }
 
         /* output the line */
@@ -273,13 +278,9 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
   /* fill version with default file format version (the current one) */
   current_fileformat_ver = FILEFORMAT_VERSION;
 
-  if (buffer == NULL) {
-    s_log_message("o_read_buffer: Received NULL buffer\n");
-    return(NULL);
-  }
+  g_return_val_if_fail ((buffer != NULL), NULL);
 
   tb = s_textbuffer_new (buffer, size);
-  g_assert (tb != NULL);
 
   while (1) {
 

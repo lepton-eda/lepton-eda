@@ -326,7 +326,7 @@ void o_attrib_remove(GList **list, OBJECT *remove)
   GList *a_iter;
   ATTRIB *a_current;
 
-  g_assert (remove != NULL);
+  g_return_if_fail (remove != NULL);
 
   a_iter = *list;
   while (a_iter != NULL) {

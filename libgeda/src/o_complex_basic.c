@@ -782,23 +782,12 @@ char *o_complex_save(OBJECT *object)
     basename = g_strdup_printf ("%s%s",
 				object->complex_embedded ? "EMBEDDED" : "",
 				object->complex_basename);
-    switch (object->type) {
-    case OBJ_COMPLEX:
-      buf = g_strdup_printf("%c %d %d %d %d %d %s", object->type,
-			    object->complex->x, object->complex->y, 
-			    selectable, object->complex->angle, 
-			    object->complex->mirror, basename);
-      break;
-    case OBJ_PLACEHOLDER:
-      /* write 'C' manually */
-      buf = g_strdup_printf("C %d %d %d %d %d %s",
-			    object->complex->x, object->complex->y, 
-			    selectable, object->complex->angle, 
-			    object->complex->mirror, basename);
-      break;
-    default:
-      g_assert_not_reached();
-    }
+    /* We force the object type to be output as OBJ_COMPLEX for both
+     * these object types. */
+    buf = g_strdup_printf("%c %d %d %d %d %d %s", OBJ_COMPLEX,
+                          object->complex->x, object->complex->y,
+                          selectable, object->complex->angle,
+                          object->complex->mirror, basename);
     g_free (basename);
   }
 
@@ -1254,9 +1243,9 @@ void o_complex_rotate_world(TOPLEVEL *toplevel,
   int x, y;
   int newx, newy;
 
-  g_assert(object != NULL);
-  g_assert(((object->type == OBJ_COMPLEX) ||
-            (object->type == OBJ_PLACEHOLDER)));
+  g_return_if_fail (object!=NULL);
+  g_return_if_fail ((object->type == OBJ_COMPLEX) ||
+                    (object->type == OBJ_PLACEHOLDER));
 
   x = object->complex->x + (-centerx);
   y = object->complex->y + (-centery);

@@ -1193,7 +1193,12 @@ void o_text_set_info_font(char buf[])
   buf_ptr = (gchar*)string;
   /*   - type */
   type = *buf_ptr++;
-  g_assert (type == INFO_FONT);
+  if (type != INFO_FONT) {
+    g_critical ("o_text_set_info_font: Bad font type '%c', expected '%c'\n",
+                type, INFO_FONT);
+    return;
+  }
+
   while (buf_ptr != NULL && *buf_ptr == ' ') buf_ptr++;
   /*   - character */
   if (buf_ptr != NULL && *buf_ptr != '\0') {
@@ -1770,8 +1775,8 @@ void o_text_rotate_world(TOPLEVEL *toplevel,
   int x, y;
   int newx, newy;
 
-  g_assert(object != NULL);
-  g_assert(object->type == OBJ_TEXT);
+  g_return_if_fail(object != NULL);
+  g_return_if_fail(object->type == OBJ_TEXT);
 
   object->text->angle = ( object->text->angle + angle ) % 360;
 

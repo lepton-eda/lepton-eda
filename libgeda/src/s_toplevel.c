@@ -181,9 +181,8 @@ TOPLEVEL *s_toplevel_new (void)
 void s_toplevel_delete (TOPLEVEL *toplevel)
 {
   if (toplevel->auto_save_timeout != 0) {
-    gboolean ret;
-    ret = g_source_remove (toplevel->auto_save_timeout);
-    g_assert (ret);
+    /* Assume this works */
+    g_source_remove (toplevel->auto_save_timeout);
   }
 
   g_free (toplevel->internal_symbol_name);

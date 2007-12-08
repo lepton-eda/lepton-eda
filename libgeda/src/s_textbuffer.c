@@ -73,7 +73,8 @@ TextBuffer *s_textbuffer_new (gchar *data, const gint size)
   TextBuffer *result;
   gsize realsize;
 
-  g_assert (data != NULL);
+  g_return_val_if_fail ((data != NULL),
+                        NULL);
 
   if (size < 0)
     realsize = strlen(data);
