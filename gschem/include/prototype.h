@@ -521,7 +521,6 @@ void o_bus_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 int o_bus_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_bus_rubberbus(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_bus_eraserubber(GSCHEM_TOPLEVEL *w_current);
-void o_bus_xorrubber(GSCHEM_TOPLEVEL *w_current);
 /* o_circle.c */
 void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_circle_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint radius, gint width, gint angle1, gint pitch1, gint angle2, gint pitch2);
@@ -649,7 +648,6 @@ void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current);
-void o_net_xorrubber(GSCHEM_TOPLEVEL *w_current);
 int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj, GList *other_objects);
 /* o_picture.c */
 void o_picture_start(GSCHEM_TOPLEVEL *w_current, int x, int y);

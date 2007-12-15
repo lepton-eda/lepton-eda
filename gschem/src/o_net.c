@@ -659,47 +659,6 @@ void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  used in x_event_expose() in x_events.c
- */
-void o_net_xorrubber(GSCHEM_TOPLEVEL *w_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int size;
-
-  if (toplevel->net_style == THICK ) {
-
-    size = SCREENabs(toplevel, NET_WIDTH);
-
-    if (size < 0)
-      size=0;
-
-    gdk_gc_set_line_attributes(w_current->gc, size,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
-
-  gdk_gc_set_foreground(w_current->gc,
-			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->window, w_current->gc, 
-		w_current->start_x, w_current->start_y, 
-		w_current->last_x, w_current->last_y);
-  gdk_draw_line(w_current->window, w_current->gc, 
-		w_current->second_x, w_current->second_y, 
-		w_current->last_x, w_current->last_y);
-
-  if (toplevel->net_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
