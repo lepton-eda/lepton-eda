@@ -171,7 +171,7 @@
 ; Basically this color specifies what the mouse droppings color
 ; DO NOT change the value of the index (first number)
 ;
-(stroke-color 14 "grey90" "grey90" "null" -1 -1 -1)	     ; light background
+(stroke-color 14 "purple" "purple" "null" -1 -1 -1)	     ; light background
 
 ; lock-color index color_name outline_color ps_color_string 
 ;            int_red int_green int_blue 
