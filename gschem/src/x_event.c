@@ -882,7 +882,9 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       if (stroke_info_mode) {
         printf ("Sequence=\"%s\"\n",sequence);
       }
-	
+
+      x_stroke_erase_all(w_current);
+
 				/* new way written by Stefan Petersen */ 
 				/* much better */
       if (x_stroke_search_execute(sequence)) {
@@ -890,7 +892,6 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         if (stroke_info_mode) {
           printf("Sequence understood\n");
         }
-        x_stroke_erase_all(w_current);
       }
       break;
 #endif
