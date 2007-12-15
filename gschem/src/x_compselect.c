@@ -65,6 +65,38 @@
 #define COMPSELECT_FILTER_INTERVAL 200
 
 
+enum compselect_view {
+  VIEW_INUSE=0,
+  VIEW_CLIB
+};
+
+
+/*! \brief Return currently active component-selector view
+ *
+ *  \par Function Description
+ *  This function returns which one of the possible views is active
+ *  in the component selector: VIEW_INUSE for the in-use view, or
+ *  VIEW_CLIB for the component library view.
+ *
+ *  \todo FIXME: This function assumes the GtkNotebook pages displaying the
+ *               views are in a specific order.
+ *
+ *  \param [in] compselect  The component selection dialog.
+ *  \returns The currently active view (from the compselect_view enum).
+ */
+static enum compselect_view
+compselect_get_view (Compselect *compselect)
+{
+  switch (gtk_notebook_get_current_page(compselect->viewtabs)) {
+    case 0: return VIEW_INUSE;  /* In use page */
+    case 1: return VIEW_CLIB;   /* Component library page */
+    default:
+      g_critical ("compselect_get_view: Unknown tab position\n");
+      return 0;
+  }
+}
+
+
 /*! \brief Process the response returned by the component selection dialog.
  *  \par Function Description
  *  This function handles the response <B>arg1</B> of the component
@@ -1226,9 +1258,8 @@ compselect_get_property (GObject *object,
 	  GtkTreeIter iter, parent;
 	  CLibSymbol *symbol = NULL;
 
-          /* FIXME assumes pages are in a specific order */
-          switch (gtk_notebook_get_current_page(compselect->viewtabs)) {
-          case 0: /* In Use page */
+          switch (compselect_get_view (compselect)) {
+          case VIEW_INUSE:
             if (gtk_tree_selection_get_selected (
                   gtk_tree_view_get_selection (compselect->inusetreeview),
                   &model,
@@ -1236,7 +1267,7 @@ compselect_get_property (GObject *object,
               gtk_tree_model_get (model, &iter, 0, &symbol, -1);
             }
             break;
-          case 1:
+          case VIEW_CLIB:
             if (gtk_tree_selection_get_selected (
                   gtk_tree_view_get_selection (compselect->libtreeview),
                   &model,
