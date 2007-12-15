@@ -3420,11 +3420,13 @@ DEFINE_I_CALLBACK(cancel)
       w_current->cswindow) {
     /* user hit escape key when placing components */
 
+    /* Undraw any XOR outline of the place list */
+    o_complex_rubbercomplex(w_current);
+
     /* Free the complex place list and its contents */
     s_delete_object_glist(w_current->toplevel,
                           w_current->toplevel->page_current->complex_place_list);
     w_current->toplevel->page_current->complex_place_list = NULL;
-    o_redraw_all(w_current); 
 
     /* Present the component selector again */
     g_value_init (&value, G_TYPE_BOOLEAN);

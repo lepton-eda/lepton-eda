@@ -152,6 +152,9 @@ x_compselect_callback_response (GtkDialog *dialog,
         gtk_widget_destroy (GTK_WIDGET (dialog));
         w_current->cswindow = NULL;
 
+        /* Undraw any XOR outline of the place list */
+        o_complex_rubbercomplex(w_current);
+
         /* Free the complex place list and its contents */
         s_delete_object_glist(toplevel,
                               toplevel->page_current->complex_place_list);
