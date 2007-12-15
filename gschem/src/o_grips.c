@@ -538,9 +538,11 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
       o_net_erase(w_current, object);
       gdk_gc_set_foreground(w_current->xor_gc,
                             x_get_darkcolor(w_current->select_color) );
-      gdk_draw_line(w_current->window, w_current->xor_gc,
+      gdk_draw_line(w_current->backingstore, w_current->xor_gc,
                     w_current->start_x, w_current->start_y,
                     w_current->last_x, w_current->last_y);
+      o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
+                        w_current->last_x, w_current->last_y);
       o_line_erase_grips(w_current, object);
 
       gdk_gc_set_foreground(w_current->gc,
@@ -557,9 +559,11 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
       o_pin_erase(w_current, object);
       gdk_gc_set_foreground(w_current->xor_gc,
                             x_get_darkcolor(w_current->select_color) );
-      gdk_draw_line(w_current->window, w_current->xor_gc,
+      gdk_draw_line(w_current->backingstore, w_current->xor_gc,
                     w_current->start_x, w_current->start_y,
                     w_current->last_x, w_current->last_y);
+      o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
+                        w_current->last_x, w_current->last_y);
       o_line_erase_grips(w_current, object);
       return(TRUE);
 
@@ -573,9 +577,11 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
       o_bus_erase(w_current, object);
       gdk_gc_set_foreground(w_current->xor_gc,
                             x_get_darkcolor(w_current->select_color) );
-      gdk_draw_line(w_current->window, w_current->xor_gc,
+      gdk_draw_line(w_current->backingstore, w_current->xor_gc,
                     w_current->start_x, w_current->start_y,
                     w_current->last_x, w_current->last_y);
+      o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
+                        w_current->last_x, w_current->last_y);
       o_line_erase_grips(w_current, object);
 
       gdk_gc_set_foreground(w_current->gc,
@@ -1128,9 +1134,11 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
     /* erase xor line */
     gdk_gc_set_foreground(w_current->xor_gc,
                           x_get_darkcolor(w_current->select_color));
-    gdk_draw_line(w_current->window, w_current->xor_gc,
+    gdk_draw_line(w_current->backingstore, w_current->xor_gc,
                   w_current->start_x, w_current->start_y,
                   w_current->last_x, w_current->last_y);
+    o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
+                      w_current->last_x, w_current->last_y);
     o_line_erase_grips(w_current, object);
 
     other_objects = s_conn_return_others(other_objects, object);
@@ -1164,9 +1172,11 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
 
       gdk_gc_set_foreground(w_current->gc,
                           x_get_color(toplevel->background_color));
-      gdk_draw_line(w_current->window, w_current->gc,
+      gdk_draw_line(w_current->backingstore, w_current->gc,
                     w_current->start_x, w_current->start_y,
                     w_current->last_x, w_current->last_y);
+      o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
+                        w_current->last_x, w_current->last_y);
 
       o_cue_undraw(w_current, object);
       o_net_draw(w_current, object);
@@ -1230,9 +1240,11 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
     /* erase xor line */
     gdk_gc_set_foreground(w_current->xor_gc,
                           x_get_darkcolor(w_current->select_color));
-    gdk_draw_line(w_current->window, w_current->xor_gc,
+    gdk_draw_line(w_current->backingstore, w_current->xor_gc,
                   w_current->start_x, w_current->start_y,
                   w_current->last_x, w_current->last_y);
+    o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
+                      w_current->last_x, w_current->last_y);
     o_line_erase_grips(w_current, object);
 
     other_objects = s_conn_return_others(other_objects, object);
@@ -1286,9 +1298,11 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
     /* erase xor line */
     gdk_gc_set_foreground(w_current->xor_gc,
                           x_get_darkcolor(w_current->select_color));
-    gdk_draw_line(w_current->window, w_current->xor_gc,
+    gdk_draw_line(w_current->backingstore, w_current->xor_gc,
                   w_current->start_x, w_current->start_y,
                   w_current->last_x, w_current->last_y);
+    o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
+                      w_current->last_x, w_current->last_y);
     o_line_erase_grips(w_current, object);
 
     other_objects = s_conn_return_others(other_objects, object);
@@ -1695,12 +1709,10 @@ void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int x, int y)
    * width/height of <B>x2size</B>.
    */
   if (toplevel->DONT_REDRAW == 0) {
-    /* draw the grip in window */
-    gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
-                       x - size, y - size, x2size, x2size);
     /* draw the grip in backingstore */
     gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
                        x - size, y - size, x2size, x2size);
+    o_invalidate_rect(w_current, x - size, y - size, x + size, y + size);
   }
 }
 

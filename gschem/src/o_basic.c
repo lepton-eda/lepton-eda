@@ -30,6 +30,8 @@
 #include <dmalloc.h>
 #endif
 
+#define INVALIDATE_MARGIN 1
+
 /*! \todo Lots of Gross code... needs lots of cleanup - mainly
  * readability issues
  */
@@ -94,11 +96,13 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_redraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object_list, gboolean draw_selected)
+void o_redraw(GSCHEM_TOPLEVEL *w_current, OBJECT *list, gboolean draw_selected)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current = object_list;
+  OBJECT *o_current = list;
   int redraw_state = toplevel->DONT_REDRAW;
+  int left, top, bottom, right;
+  int s_left, s_top, s_bottom, s_right;
 
   w_current->inside_redraw = 1;
   while (o_current != NULL) {
@@ -113,6 +117,11 @@ void o_redraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object_list, gboolean draw_sel
   }
   w_current->inside_redraw = 0;
   toplevel->DONT_REDRAW = redraw_state;
+
+  world_get_object_list_bounds(toplevel, list, &left, &top, &right, &bottom);
+  WORLDtoSCREEN( toplevel, left, top, &s_left, &s_top );
+  WORLDtoSCREEN( toplevel, right, bottom, &s_right, &s_bottom );
+  o_invalidate_rect( w_current, s_left, s_top, s_right, s_bottom );
 }
 
 /*! \brief Redraw an object on the screen.
@@ -125,10 +134,14 @@ void o_redraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object_list, gboolean draw_sel
  */
 void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int left, top, right, bottom;
+  int s_left, s_top, s_right, s_bottom;
+
   if (o_current == NULL)
   return;
 
-  if (w_current->toplevel->DONT_REDRAW) /* highly experimental */
+  if (toplevel->DONT_REDRAW) /* highly experimental */
   return;
 
   if (o_current->draw_func != NULL && o_current->type != OBJ_HEAD) {
@@ -136,6 +149,13 @@ void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     (*o_current->draw_func)(w_current, o_current);
     w_current->inside_redraw = 0;
   }
+
+  world_get_single_object_bounds(toplevel, o_current,
+                                 &left, &top, &right, &bottom);
+  WORLDtoSCREEN(toplevel, left, top, &s_left, &s_top);
+  WORLDtoSCREEN(toplevel, right, bottom, &s_right, &s_bottom);
+  o_invalidate_rect (w_current, s_left,  s_bottom, s_right, s_top);
+
 }
 
 /*! \todo Finish function documentation!!!
@@ -200,24 +220,32 @@ void o_draw_selected(GSCHEM_TOPLEVEL *w_current)
 void o_erase_selected(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList* s_current;
+  GList *list;
+  GList *iter;
   OBJECT* o_current;
+  int left, top, right, bottom;
+  int s_left, s_top, s_right, s_bottom;
+
   if (w_current->inside_redraw) {
     return;
   }
 
-  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
-  while (s_current != NULL) {
-    o_current = (OBJECT *) s_current->data;
+  list = iter = geda_list_get_glist( toplevel->page_current->selection_list );
+  while (iter != NULL) {
+    o_current = iter->data;
 
     if (o_current) {
       o_cue_erase_single(w_current, o_current);
       o_erase_single(w_current, o_current);
     }
-    
-    s_current=g_list_next(s_current);
+
+    iter = g_list_next( iter );
   }
 
+  world_get_object_glist_bounds(toplevel, list, &left, &top, &right, &bottom);
+  WORLDtoSCREEN(toplevel, left, top, &s_left, &s_top);
+  WORLDtoSCREEN(toplevel, right, bottom, &s_right, &s_bottom);
+  o_invalidate_rect (w_current, s_left,  s_bottom, s_right, s_top);
 }
 
 /*! \todo Finish function documentation!!!
@@ -229,6 +257,8 @@ void o_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
+  int left, top, right, bottom;
+  int s_left, s_top, s_right, s_bottom;
 
   if (w_current->inside_redraw) {
     return;
@@ -244,6 +274,12 @@ void o_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
     }
   }
   toplevel->override_color = -1;
+
+  world_get_single_object_bounds(toplevel, o_current,
+                                 &left, &top, &right, &bottom);
+  WORLDtoSCREEN(toplevel, left, top, &s_left, &s_top);
+  WORLDtoSCREEN(toplevel, right, bottom, &s_right, &s_bottom);
+  o_invalidate_rect (w_current, s_left,  s_bottom, s_right, s_top);
 }
 
 /*! \todo Finish function documentation!!!
@@ -342,20 +378,26 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
   diff_x = w_current->last_x - w_current->start_x;
   diff_y = w_current->last_y - w_current->start_y;
 
+  /* Find the bounds of the drawing to be done */
+  world_get_object_glist_bounds(toplevel, o_glist,
+                                &left, &top, &right, &bottom);
+  WORLDtoSCREEN( toplevel, left, top, &s_left, &s_top );
+  WORLDtoSCREEN( toplevel, right, bottom, &s_right, &s_bottom );
+
   /* XOR draw with the appropriate mode */
   if (w_current->last_drawb_mode == BOUNDINGBOX) {
-    world_get_object_glist_bounds(toplevel, o_glist,
-                                  &left, &top, &right, &bottom);
     gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
-    WORLDtoSCREEN( toplevel, left, top, &s_left, &s_top );
-    WORLDtoSCREEN( toplevel, right, bottom, &s_right, &s_bottom );
-    gdk_draw_rectangle(w_current->window,
+    gdk_draw_rectangle(w_current->backingstore,
                        w_current->bounding_xor_gc, FALSE,
                        s_left + diff_x, s_bottom + diff_y,
                        s_right - s_left, s_top - s_bottom);
   } else {
     o_glist_draw_xor (w_current, diff_x, diff_y, o_glist);
   }
+
+  /* Invalidate the screen buffer where we drew */
+  o_invalidate_rect(w_current, s_left + diff_x, s_top + diff_y,
+                               s_right + diff_x, s_bottom + diff_y);
 
   /* Save movement constraints and drawing method for any
    * corresponding undraw operation. */
@@ -594,4 +636,37 @@ void o_glist_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, GList *list)
     o_draw_xor(w_current, dx, dy, (OBJECT *)iter->data);
     iter = g_list_next(iter);
   }
+}
+
+
+/*! \brief Invalidates a rectangular region of the on screen drawing area
+ *  \par Function Description
+ *
+ *  Given a pair of (x,y) coordinates in SCREEN units, invalidate the
+ *  rectangular on-screen drawing area which has those two coordinate
+ *  pairs as opposite corners of its region. This will cause that region
+ *  to be blitted from the back-buffer once the mainloop reaches idle.
+ *
+ *  A margin, INVALIDATE_MARGIN is added to the invalidated region as
+ *  a hacky workaround for rounding errors which may occur in the
+ *  WORLD -> SCREEN coordinate transform. This margin may also be used
+ *  to expand the invalidated region if anti-aliased drawing is ever
+ *  used.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL who's drawing area is being invalidated.
+ *  \param [in] x1         X coord for corner 1 (SCREEN units)
+ *  \param [in] y1         Y coord for corner 1 (SCREEN units)
+ *  \param [in] x2         X coord for corner 2 (SCREEN units)
+ *  \param [in] y2         Y coord for corner 2 (SCREEN units)
+ */
+void o_invalidate_rect( GSCHEM_TOPLEVEL *w_current,
+                        int x1, int y1, int x2, int y2 )
+{
+  GdkRectangle rect;
+
+  rect.x = MIN(x1, x2) - INVALIDATE_MARGIN;
+  rect.y = MIN(y1, y2) - INVALIDATE_MARGIN;
+  rect.width = 1 + abs( x1 - x2 ) + 2 * INVALIDATE_MARGIN;
+  rect.height = 1 + abs( y1 - y2 ) + 2 * INVALIDATE_MARGIN;
+  gdk_window_invalidate_rect( w_current->window, &rect, FALSE );
 }

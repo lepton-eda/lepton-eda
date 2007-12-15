@@ -192,12 +192,6 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->lower_y,
                  &s_lower_x, &s_lower_y );
 	
-  (*draw_func)(w_current->window, w_current->gc, color, box_end,
-               FALSE,
-               s_upper_x, s_upper_y,
-               abs(s_lower_x - s_upper_x),
-               abs(s_lower_y - s_upper_y),
-               line_width, length, space);
   (*draw_func)(w_current->backingstore, w_current->gc, color, box_end,
                FALSE,
                s_upper_x, s_upper_y,
@@ -277,11 +271,6 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     fill_func = o_box_fill_fill;
   }
 
-  (*fill_func)(w_current->window, w_current->gc, color,
-               s_upper_x, s_upper_y,
-               abs(s_lower_x - s_upper_x),
-               abs(s_lower_y - s_upper_y),
-               fill_width, angle1, pitch1, angle2, pitch2);
   (*fill_func)(w_current->backingstore, w_current->gc, color,
                s_upper_x, s_upper_y,
                abs(s_lower_x - s_upper_x),
@@ -883,7 +872,7 @@ void o_box_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
 
   gdk_gc_set_foreground(w_current->outline_xor_gc,
                         x_get_darkcolor(color));
-  gdk_draw_rectangle(w_current->window,
+  gdk_draw_rectangle(w_current->backingstore,
                      w_current->outline_xor_gc, FALSE,
                      screen_x1 + dx,
                      screen_y1 + dy,
@@ -1070,9 +1059,10 @@ void o_box_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
 	gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
 				   GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
 				   GDK_JOIN_MITER);
-	gdk_draw_rectangle(w_current->window, w_current->xor_gc,
+	gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
 			   FALSE, box_left, box_top, box_width, box_height);
-	
+	o_invalidate_rect(w_current, box_left, box_top,
+	                  box_left + box_width, box_top + box_height);
 }
 
 /*! \brief Draw grip marks on box.

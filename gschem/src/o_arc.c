@@ -184,10 +184,6 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if((length == 0) || (space == 0))
     draw_func =  o_arc_draw_solid;
 
-  (*draw_func)(w_current->window, w_current->gc, color,
-               arc_end,
-               x, y, radius, start_angle, end_angle,
-               arc_width, length, space);
   (*draw_func)(w_current->backingstore, w_current->gc, color,
                arc_end,
                x, y, radius, start_angle, end_angle,
@@ -888,7 +884,7 @@ void o_arc_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
   gdk_gc_set_foreground(w_current->outline_xor_gc,
 			x_get_darkcolor(color));
   /* better to set the line attributes here ? */
-  gdk_draw_arc(w_current->window, w_current->outline_xor_gc, FALSE,
+  gdk_draw_arc(w_current->backingstore, w_current->outline_xor_gc, FALSE,
 	       x + dx, y + dy, width, height,
 	       start_angle * 64, end_angle * 64);
 
@@ -1266,7 +1262,7 @@ void o_arc_rubberarc_xor(GSCHEM_TOPLEVEL *w_current)
 			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
 			     GDK_JOIN_MITER);
   /* draw the arc from the w_current variables */
-  gdk_draw_arc(w_current->window, w_current->xor_gc, FALSE,
+  gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
 	       w_current->start_x - w_current->distance,
 	       w_current->start_y - w_current->distance,
 	       w_current->distance * 2,
@@ -1277,10 +1273,18 @@ void o_arc_rubberarc_xor(GSCHEM_TOPLEVEL *w_current)
   tmp = ((double) w_current->loc_x) * M_PI / 180;
   x1 = w_current->start_x + w_current->distance*cos(tmp);
   y1 = w_current->start_y - w_current->distance*sin(tmp);
-  gdk_draw_line(w_current->window, w_current->xor_gc,
+  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
 		w_current->start_x, w_current->start_y,
 		x1, y1);
-	
+  /* FIXME: This isn't a tight bounding box for now, but the code
+   *        to compute a better bounds it complex, and might wait
+   *        until we're considered having real OBJECT data during
+   *        rubberbanding and using world_get_arc_bounds().
+   */
+  o_invalidate_rect(w_current, w_current->start_x - w_current->distance,
+                               w_current->start_y - w_current->distance,
+                               w_current->start_x + w_current->distance,
+                               w_current->start_y + w_current->distance);
 }
 
 /*! \brief Draw grip marks on arc.

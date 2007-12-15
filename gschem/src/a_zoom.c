@@ -70,7 +70,7 @@
 
 /*! \brief */
 #define XOR_DRAW_BOX(w, x, y, wd, ht)				\
-	gdk_draw_rectangle((w)->window, (w)->xor_gc, FALSE,	\
+	gdk_draw_rectangle((w)->backingstore, (w)->xor_gc, FALSE,	\
 			   (x), (y), (wd), (ht));
 
 /*! \brief */
@@ -292,6 +292,10 @@ void a_zoom_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
   /* draw the box (1st XOR) */
   XOR_SETUP(w_current);
   XOR_DRAW_BOX(w_current, box_left, box_top, box_width, box_height);
+  o_invalidate_rect(w_current, box_left,
+                               box_top,
+                               box_left + box_width,
+                               box_top + box_height);
 }
 
 /*! \todo Finish function documentation!!!
@@ -314,6 +318,10 @@ void a_zoom_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   /* erase the box (2nd XOR) */
   XOR_SETUP(w_current);
   XOR_DRAW_BOX(w_current, box_left, box_top, box_width, box_height);
+  o_invalidate_rect(w_current, box_left,
+                               box_top,
+                               box_left + box_width,
+                               box_top + box_height);
 
   a_zoom_box(w_current, 0);
 
@@ -342,6 +350,10 @@ void a_zoom_box_rubberband(GSCHEM_TOPLEVEL *w_current, int x, int y)
   /* erase the old box (2nd XOR) */
   XOR_SETUP(w_current);
   XOR_DRAW_BOX(w_current, box_left, box_top, box_width, box_height);
+  o_invalidate_rect(w_current, box_left,
+                               box_top,
+                               box_left + box_width,
+                               box_top + box_height);
 
   w_current->last_x = (int) x;
   w_current->last_y = (int) y;
@@ -353,6 +365,10 @@ void a_zoom_box_rubberband(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   /* draw a new box (1st XOR) */
   XOR_DRAW_BOX(w_current, box_left, box_top, box_width, box_height);
+  o_invalidate_rect(w_current, box_left,
+                               box_top,
+                               box_left + box_width,
+                               box_top + box_height);
 }
 
 /*! \todo Finish function documentation!!!

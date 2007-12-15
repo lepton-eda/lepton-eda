@@ -65,7 +65,8 @@ void x_stroke_add_point(GSCHEM_TOPLEVEL *w_current, int x, int y)
   gdk_gc_set_foreground(w_current->gc,
                         x_get_color(w_current->stroke_color));
 
-  gdk_draw_point(w_current->window, w_current->gc, x, y);
+  gdk_draw_point(w_current->backingstore, w_current->gc, x, y);
+  o_invalidate_rect (w_current, x, y, x, y);
 }
 
 /*! \todo Finish function documentation!!!
@@ -90,8 +91,10 @@ void x_stroke_erase_all(GSCHEM_TOPLEVEL *w_current)
                           w_current->gc,
                           x_get_color(w_current->toplevel->background_color));
 
-    gdk_draw_point(w_current->window, w_current->gc,
+    gdk_draw_point(w_current->backingstore, w_current->gc,
                    stroke_points->x, stroke_points->y);
+    o_invalidate_rect (w_current, stroke_points->x, stroke_points->y,
+                                  stroke_points->x, stroke_points->y);
 
     temp = stroke_points;
     stroke_points = stroke_points->next;

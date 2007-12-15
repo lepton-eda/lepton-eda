@@ -65,7 +65,6 @@ int stroke_trans (char *sequence);
 gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
 		    GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
 #if DEBUG
   printf("EXPOSE\n");
 #endif
@@ -80,59 +79,6 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
                   event->area.x, event->area.y,
                   event->area.x, event->area.y,
                   event->area.width, event->area.height);
-
-  /* either this or put xor's and friends into backingstore */
-  /* take care of ghosting when you get an expose event */
-  if (w_current->inside_action) {
-    switch(w_current->event_state) {
-      case(MOVE):
-      case(ENDMOVE):
-      case(COPY): 
-      case(ENDCOPY):
-      case(ENDMCOPY):
-        o_drawbounding(w_current,
-                       geda_list_get_glist( toplevel->page_current->selection_list ),
-                       x_get_darkcolor(w_current->bb_color), TRUE);
-        break;
-      case(DRAWCOMP):
-      case(ENDCOMP):
-      case(ENDPASTE):
-        o_drawbounding(w_current,
-                       toplevel->page_current->complex_place_list,
-                       x_get_darkcolor(w_current->bb_color), TRUE);
-        break;
-
-      case(BUSCONT):
-      case(DRAWBUS):
-	 o_bus_xorrubber(w_current);  
-        break;
-      case(DRAWNET):   
-      case(NETCONT):
-	 o_net_xorrubber(w_current); 
-        break;
-      case(ENDARC): 
-	 o_arc_rubberarc_xor(w_current); 
-        break;
-      case(ENDBOX):
-	 o_box_rubberbox_xor(w_current); 
-        break;
-      case(ENDCIRCLE):
-	 o_circle_rubbercircle_xor(w_current); 
-        break;
-      case(ENDLINE): 
-	 o_line_rubberline_xor(w_current); 
-        break;
-      case(ENDPIN): /*! \todo (no function in o_pin.nw available) */
-        break;
-      case(ENDTEXT): 
-	 o_text_rubberattrib(w_current);
-        break;
-      case(GRIPS): /*! \todo (larger changes in o_grips.nw necessary) */
-        break;
-      case(ZOOMBOXEND): /*! \todo (not realy a problem as zoom will redraw) */
-        break;
-    }
-  }
 
   /* raise the dialog boxes if this feature is enabled */
   if (w_current->raise_dialog_boxes) {

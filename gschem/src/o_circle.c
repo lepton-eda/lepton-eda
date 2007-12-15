@@ -182,12 +182,6 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   WORLDtoSCREEN( toplevel, o_current->circle->center_x, o_current->circle->center_y,
                  &s_x, &s_y );
 	
-  (*draw_func)(w_current->window, w_current->gc, color,
-               circle_end,
-               s_x, s_y,
-               radius,
-               0, FULL_CIRCLE / 64,
-               circle_width, length, space);
   (*draw_func)(w_current->backingstore, w_current->gc, color,
                circle_end,
                s_x, s_y,
@@ -266,10 +260,6 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     fill_func = o_circle_fill_fill;
   }
 
-  (*fill_func)(w_current->window, w_current->gc, color,
-               s_x, s_y,
-               radius,
-               fill_width, angle1, pitch1, angle2, pitch2);
   (*fill_func)(w_current->backingstore, w_current->gc, color,
                s_x, s_y,
                radius,
@@ -586,7 +576,7 @@ void o_circle_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
   /* To draw be sure to setup width height */
   gdk_gc_set_foreground(w_current->outline_xor_gc,
 			x_get_darkcolor(color));
-  gdk_draw_arc(w_current->window, w_current->outline_xor_gc,
+  gdk_draw_arc(w_current->backingstore, w_current->outline_xor_gc,
 	       FALSE,
 	       x, y,
 	       2 * radius, 2 * radius,
@@ -777,16 +767,20 @@ void o_circle_rubbercircle_xor(GSCHEM_TOPLEVEL *w_current)
   /* draw the circle from the w_current variables */
   gdk_gc_set_foreground(w_current->xor_gc, 
 			x_get_darkcolor(w_current->select_color));
-  gdk_draw_line(w_current->window, w_current->xor_gc,
+  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
 		w_current->start_x, w_current->start_y,
 		w_current->start_x + w_current->distance,
 		w_current->start_y);
-  gdk_draw_arc(w_current->window, w_current->xor_gc, FALSE,
+  gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
 	       w_current->start_x - w_current->distance,
 	       w_current->start_y - w_current->distance,
 	       w_current->distance * 2,
 	       w_current->distance * 2,
 	       0, FULL_CIRCLE);
+  o_invalidate_rect(w_current, w_current->start_x - w_current->distance,
+                               w_current->start_y - w_current->distance,
+                               w_current->start_x + w_current->distance,
+                               w_current->start_y + w_current->distance);
 }
 
 /*! \brief Draw grip marks on circle.

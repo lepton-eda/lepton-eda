@@ -168,40 +168,34 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
         if (count < 1) { /* Didn't find anything connected there */
 	  if (toplevel->DONT_REDRAW == 0) {
 	    o_cue_set_color(w_current, toplevel->net_endpoint_color);
-	    gdk_draw_rectangle(w_current->window,
-			       w_current->gc, TRUE,
-			       screen_x - size,
-			       screen_y - size,
-			       x2size,
-			       x2size);
 	    gdk_draw_rectangle(w_current->backingstore,
 			       w_current->gc, TRUE,
 			       screen_x - size,
 			       screen_y - size,
 			       x2size,
 			       x2size);
+	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
+	                                 screen_x + size, screen_y + size);
 	  }
         
         } else if (count >= 2) {
           /* draw circle */
 
           if (bus_involved) {
-            size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE);
+            size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE) / 2;
           } else {
-            size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE);
+            size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE) / 2;
           }
+          x2size = 2 * size;
 	  if (toplevel->DONT_REDRAW == 0) {
 	    o_cue_set_color(w_current, toplevel->junction_color);
-	    gdk_draw_arc(w_current->window, w_current->gc,
-			 TRUE,
-			 screen_x - size / 2,
-			 screen_y - size / 2,
-			 size, size, 0, FULL_CIRCLE);
 	    gdk_draw_arc(w_current->backingstore,
 			 w_current->gc, TRUE,
-                       screen_x - size / 2,
-			 screen_y - size / 2,
-			 size, size, 0, FULL_CIRCLE);
+                       screen_x - size,
+			 screen_y - size,
+			 x2size, x2size, 0, FULL_CIRCLE);
+	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
+                                   screen_x + size, screen_y + size);
 	  }
         }
       } else if (object->type == OBJ_PIN) {
@@ -218,31 +212,25 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
                                        GDK_JOIN_MITER);
           }
 
+    /* No need to invalidate the PIN end CUE, as the
+     * whole pin region is already invalidated. */
 	  if (toplevel->DONT_REDRAW == 0) {
 	    o_cue_set_color(w_current, toplevel->net_endpoint_color);
 	    if (object->line->y[whichone] == object->line->y[otherone]) {
 	      /* horizontal line */
 	      if (object->line->x[whichone] <= object->line->x[otherone]) {
-		gdk_draw_line(w_current->window, w_current->gc,
-			      screen_x, screen_y, screen_x + size, screen_y);
 		gdk_draw_line(w_current->backingstore, w_current->gc,
 			      screen_x, screen_y, screen_x + size, screen_y);
 	      } else {
-		gdk_draw_line(w_current->window, w_current->gc,
-			      screen_x, screen_y, screen_x - size, screen_y);
 		gdk_draw_line(w_current->backingstore, w_current->gc,
 			      screen_x, screen_y, screen_x - size, screen_y);
 	      }
 	    } else if (object->line->x[0] == object->line->x[1]) {
 	      /* vertical line */
 	      if (object->line->y[whichone] <= object->line->y[otherone]) {
-		gdk_draw_line(w_current->window, w_current->gc,
-			      screen_x, screen_y, screen_x, screen_y - size);
 		gdk_draw_line(w_current->backingstore, w_current->gc,
 			      screen_x, screen_y, screen_x, screen_y - size);
 	      } else {
-		gdk_draw_line(w_current->window, w_current->gc,
-			      screen_x, screen_y, screen_x, screen_y + size);
 		gdk_draw_line(w_current->backingstore, w_current->gc,
 			      screen_x, screen_y, screen_x, screen_y + size);
 	      }
@@ -266,23 +254,21 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
   
       /* draw circle */
       if (bus_involved) {
-        size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE);
+        size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE) / 2;
       } else {
-        size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE);
+        size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE) / 2;
       }
+      x2size = size * 2;
 
       if (toplevel->DONT_REDRAW == 0) {
 	o_cue_set_color(w_current, toplevel->junction_color);
-	gdk_draw_arc(w_current->window, w_current->gc,
-		     TRUE,
-		     screen_x - size / 2,
-		     screen_y - size / 2,
-		     size, size, 0, FULL_CIRCLE);
 	gdk_draw_arc(w_current->backingstore,
 		     w_current->gc, TRUE,
-		     screen_x - size / 2,
-		     screen_y - size / 2,
-		     size, size, 0, FULL_CIRCLE);
+		     screen_x - size,
+		     screen_y - size,
+		     x2size, x2size, 0, FULL_CIRCLE);
+	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
+                                   screen_x + size, screen_y + size);
       }
       break;
 
@@ -318,18 +304,14 @@ void o_cue_erase_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whicho
   WORLDtoSCREEN(toplevel, x, y, &screen_x, &screen_y);
   
   if (toplevel->DONT_REDRAW == 0) {
-    gdk_draw_rectangle(w_current->window,
-		       w_current->gc, TRUE,
-		       screen_x - size,
-		       screen_y - size,
-		       x2size,
-		       x2size);
     gdk_draw_rectangle(w_current->backingstore,
 		       w_current->gc, TRUE,
 		       screen_x - size,
 		       screen_y - size,
 		       x2size,
 		       x2size);
+	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
+                                   screen_x + size, screen_y + size);
   }
 
 }
@@ -345,7 +327,7 @@ void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   int x, y, screen_x, screen_y;
   GList *cl_current;
   CONN *conn;
-  int size;
+  int size, x2size;
 
   if (toplevel->override_color != -1 ) {
     gdk_gc_set_foreground(w_current->gc,
@@ -373,22 +355,20 @@ void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
                conn->other_object->type == OBJ_NET) ||
               (object->type == OBJ_NET &&
                conn->other_object->type == OBJ_BUS))) {
-          size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE);
+          size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE) / 2;
         } else {
-          size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE);
+          size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE) / 2;
         }
+        x2size = size * 2;
 
 	if (toplevel->DONT_REDRAW == 0) {
-	  gdk_draw_arc(w_current->window, w_current->gc,
-		       TRUE,
-		       screen_x - size / 2,
-		       screen_y - size / 2,
-		       size, size, 0, FULL_CIRCLE);
 	  gdk_draw_arc(w_current->backingstore,
 		       w_current->gc, TRUE,
-		       screen_x - size / 2,
-		       screen_y - size / 2,
-		       size, size, 0, FULL_CIRCLE);
+		       screen_x - size,
+		       screen_y - size,
+		       x2size, x2size, 0, FULL_CIRCLE);
+	  o_invalidate_rect(w_current, screen_x - size, screen_y - size,
+                                 screen_x + size, screen_y + size);
 	}
         break;
     }

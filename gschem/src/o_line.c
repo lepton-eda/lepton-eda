@@ -161,8 +161,6 @@ void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if((length == 0) || (space == 0))
   draw_func = o_line_draw_solid;
 
-  (*draw_func)(w_current->window, w_current->gc, color, line_end,
-               x1, y1, x2, y2, line_width, length, space);
   (*draw_func)(w_current->backingstore, w_current->gc, color, line_end,
                x1, y1, x2, y2, line_width, length, space);
 
@@ -758,7 +756,7 @@ void o_line_eraserubber(GSCHEM_TOPLEVEL *w_current)
   TOPLEVEL *toplevel = w_current->toplevel;
   gdk_gc_set_foreground(w_current->gc,
 			x_get_color(toplevel->background_color) );
-  gdk_draw_line(w_current->window, w_current->gc, w_current->start_x,
+  gdk_draw_line(w_current->backingstore, w_current->gc, w_current->start_x,
                 w_current->start_y, w_current->last_x, w_current->last_y);
 }
 
@@ -797,11 +795,8 @@ void o_line_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
   WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
   WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
 
-  gdk_draw_line(w_current->window, w_current->outline_xor_gc,
-                sx[0]+dx, sy[0]+dy,
-                sx[1]+dx, sy[1]+dy);
-
-  /* backing store? nope not here */
+  gdk_draw_line(w_current->backingstore, w_current->outline_xor_gc,
+                sx[0] + dx, sy[0] + dy, sx[1] + dx, sy[1] + dy);
 }
 
 /*! \brief Start process to input a new line.
@@ -980,9 +975,11 @@ void o_line_rubberline_xor(GSCHEM_TOPLEVEL *w_current)
   gdk_gc_set_line_attributes(w_current->xor_gc, 0,
 			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
 			     GDK_JOIN_MITER);
-  gdk_draw_line(w_current->window, w_current->xor_gc,
+  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
 		w_current->start_x, w_current->start_y,
 		w_current->last_x,  w_current->last_y);  
+  o_invalidate_rect(w_current,w_current->start_x, w_current->start_y,
+                              w_current->last_x,  w_current->last_y);
 }
 
 /*! \brief Draw grip marks on line.

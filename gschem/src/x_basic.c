@@ -49,15 +49,12 @@ void x_repaint_background(GSCHEM_TOPLEVEL *w_current)
                           w_current->gc,
                           x_get_color(toplevel->background_color));
 
-    gdk_draw_rectangle(w_current->window,
-                       w_current->gc, TRUE, 0, 0,
-                       w_current->win_width,
-                       w_current->win_height);
-
     gdk_draw_rectangle(w_current->backingstore,
                        w_current->gc, TRUE, 0, 0,
                        w_current->win_width,
                        w_current->win_height);
+    o_invalidate_rect(w_current,
+                      0, 0, w_current->win_width, w_current->win_height);
 
     x_grid_draw(w_current);
 

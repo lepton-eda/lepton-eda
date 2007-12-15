@@ -74,15 +74,11 @@ void o_bus_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if (toplevel->override_color != -1 ) {
     gdk_gc_set_foreground(w_current->gc,
                           x_get_color(toplevel->override_color));
-    gdk_draw_line(w_current->window, w_current->gc,
-                  x1, y1, x2, y2);
     gdk_draw_line(w_current->backingstore, w_current->gc,
                   x1, y1, x2, y2);
   } else {
     gdk_gc_set_foreground(w_current->gc,
                           x_get_color(o_current->color));
-    gdk_draw_line(w_current->window, w_current->gc,
-                  x1, y1, x2, y2);
     gdk_draw_line(w_current->backingstore, w_current->gc,
                   x1, y1, x2, y2);
   }
@@ -161,7 +157,7 @@ void o_bus_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
   WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
   WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
   
-  gdk_draw_line(w_current->window, w_current->outline_xor_gc,
+  gdk_draw_line(w_current->backingstore, w_current->outline_xor_gc,
                 sx[0]+dx, sy[0]+dy,
                 sx[1]+dx, sy[1]+dy);
 
@@ -218,11 +214,11 @@ void o_bus_draw_xor_single(GSCHEM_TOPLEVEL *w_current,
   WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
   WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
 
-  gdk_draw_line(w_current->window, w_current->outline_xor_gc,
+  gdk_draw_line(w_current->backingstore, w_current->outline_xor_gc,
                 sx[0]+dx1, sy[0]+dy1,
                 sx[1]+dx2, sy[1]+dy2);
-
-  /* backing store ? not approriate here */
+  o_invalidate_rect(w_current,
+                    sx[0] + dx1, sy[0] + dy1, sx[1] + dx2, sy[1] + dy2);
 }
 
 /*! \todo Finish function documentation!!!
@@ -248,7 +244,9 @@ void o_bus_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   gdk_gc_set_foreground(w_current->xor_gc,
 			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+  gdk_draw_line(w_current->backingstore, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
+                    w_current->last_x, w_current->last_y);
 
   if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
@@ -291,9 +289,11 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   gdk_gc_set_foreground(w_current->xor_gc,
 			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->window, w_current->xor_gc, 
+  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
 		w_current->start_x, w_current->start_y, 
 		w_current->last_x, w_current->last_y);
+  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
+                    w_current->last_x, w_current->last_y);
 
   if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
@@ -322,8 +322,9 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   gdk_gc_set_foreground(w_current->gc,
 			x_get_color(color));
-  gdk_draw_line(w_current->window, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
   gdk_draw_line(w_current->backingstore, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
+                    w_current->last_x, w_current->last_y);
 
   if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->gc, 0,
@@ -388,7 +389,9 @@ void o_bus_rubberbus(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   gdk_gc_set_foreground(w_current->xor_gc, 
 			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+  gdk_draw_line(w_current->backingstore, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
+                    w_current->last_x, w_current->last_y);
 
   /* going into ortho mode (control key not pressed) */
   /* erase non-ortho line */
@@ -413,7 +416,9 @@ void o_bus_rubberbus(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   gdk_gc_set_foreground(w_current->xor_gc,
 			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+  gdk_draw_line(w_current->backingstore, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
+                    w_current->last_x, w_current->last_y);
 
   if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
@@ -447,7 +452,9 @@ void o_bus_eraserubber(GSCHEM_TOPLEVEL *w_current)
                                GDK_JOIN_MITER);
   }
 
-  gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+  gdk_draw_line(w_current->backingstore, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
+                    w_current->last_x, w_current->last_y);
 
   if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,

@@ -483,6 +483,7 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current);
 void o_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
 void o_list_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *list);
 void o_glist_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, GList *list);
+void o_invalidate_rect(GSCHEM_TOPLEVEL *w_current, int x1, int y1, int x2, int y2);
 /* o_box.c */
 void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_box_draw_solid(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);

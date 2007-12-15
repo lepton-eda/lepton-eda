@@ -255,12 +255,16 @@ void o_select_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   gdk_gc_set_foreground(w_current->xor_gc,
                         x_get_darkcolor(w_current->select_color));
-  gdk_draw_rectangle(w_current->window, w_current->xor_gc,
+  gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
                      FALSE,
                      w_current->start_x,
                      w_current->start_y,
                      box_width,
                      box_height);
+  o_invalidate_rect(w_current, w_current->start_x,
+                               w_current->start_y,
+                               w_current->start_x + box_width,
+                               w_current->start_y + box_height);
 }
 
 /*! \todo Finish function documentation!!!
@@ -288,12 +292,16 @@ void o_select_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   gdk_gc_set_foreground(w_current->xor_gc,
                         x_get_darkcolor(w_current->select_color));
-  gdk_draw_rectangle(w_current->window, w_current->xor_gc,
+  gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
                      FALSE,
                      box_left,
                      box_top,
                      box_width,
                      box_height);
+  o_invalidate_rect(w_current, box_left,
+                               box_top,
+                               box_left + box_width,
+                               box_top  + box_height);
 
   o_select_box_search(w_current);
 }
@@ -324,12 +332,16 @@ void o_select_box_rubberband(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   gdk_gc_set_foreground(w_current->xor_gc,
                         x_get_darkcolor(w_current->select_color));
-  gdk_draw_rectangle(w_current->window, w_current->xor_gc,
+  gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
                      FALSE,
                      box_left  ,
                      box_top   ,
                      box_width ,
                      box_height);
+  o_invalidate_rect(w_current, box_left,
+                               box_top,
+                               box_left + box_width,
+                               box_top  + box_height);
 
 
   /* removed fix_x, fix_y to unrestrict sels */
@@ -349,12 +361,16 @@ void o_select_box_rubberband(GSCHEM_TOPLEVEL *w_current, int x, int y)
   else
   box_left = w_current->start_x;
 
-  gdk_draw_rectangle(w_current->window, w_current->xor_gc,
+  gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
                      FALSE,
                      box_left,
                      box_top,
                      box_width,
                      box_height);
+  o_invalidate_rect(w_current, box_left,
+                               box_top,
+                               box_left + box_width,
+                               box_top  + box_height);
 
 }
 
