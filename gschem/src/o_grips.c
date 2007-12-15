@@ -881,8 +881,6 @@ void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  */
 void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-
   g_assert( w_current->inside_action != 0 );
   g_return_if_fail( object_changing != NULL );
 
