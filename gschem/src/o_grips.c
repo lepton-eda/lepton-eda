@@ -52,7 +52,7 @@ static int whichone_changing = -1;
 /*! \brief
  *  This variable holds a pointer on the object under modification.
  */
-static OBJECT *object_changing;
+static OBJECT *object_changing = NULL;
 
 /*! \brief Check if point is inside grip.
  *  \par Function Description
@@ -493,96 +493,98 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   /* search if there is a grip on a selected object at (x,y) */
   object = o_grips_search_world(w_current, w_x, w_y, &whichone);
-  if (object) {
-    whichone_changing = whichone;
-    object_changing = object;
 
-    /* there is one */
-    /* depending on its type, start the modification process */
-    switch(object->type) {
-      case(OBJ_ARC):
-        /* start the modification of a grip on an arc */
-        o_grips_start_arc(w_current, object, x, y, whichone);
-        return(TRUE);
+  if (object == NULL)
+    return FALSE;
 
-      case(OBJ_BOX):
-        /* start the modification of a grip on a box */
-        o_grips_start_box(w_current, object, x, y, whichone);
-        return(TRUE);
+  whichone_changing = whichone;
+  object_changing = object;
 
-      case(OBJ_PICTURE):
-        /* start the modification of a grip on a picture */
-        o_grips_start_picture(w_current, object, x, y, whichone);
-        return(TRUE);
+  /* there is one */
+  /* depending on its type, start the modification process */
+  switch(object->type) {
+    case(OBJ_ARC):
+      /* start the modification of a grip on an arc */
+      o_grips_start_arc(w_current, object, x, y, whichone);
+      return(TRUE);
 
-      case(OBJ_CIRCLE):
-        /* start the modification of a grip on a circle */
-        o_grips_start_circle(w_current, object, x, y, whichone);
-        return(TRUE);
+    case(OBJ_BOX):
+      /* start the modification of a grip on a box */
+      o_grips_start_box(w_current, object, x, y, whichone);
+      return(TRUE);
 
-      case(OBJ_LINE):
-        /* start the modification of a grip on a line */
-        o_grips_start_line(w_current, object, x, y, whichone);
-        return(TRUE);
+    case(OBJ_PICTURE):
+      /* start the modification of a grip on a picture */
+      o_grips_start_picture(w_current, object, x, y, whichone);
+      return(TRUE);
 
-      case(OBJ_NET):
-        w_current->last_drawb_mode = -1;
-        WORLDtoSCREEN( toplevel, object->line->x[whichone], object->line->y[whichone],
-                       &w_current->last_x, &w_current->last_y );
-        WORLDtoSCREEN( toplevel, object->line->x[!whichone], object->line->y[!whichone],
-                       &w_current->start_x, &w_current->start_y );
+    case(OBJ_CIRCLE):
+      /* start the modification of a grip on a circle */
+      o_grips_start_circle(w_current, object, x, y, whichone);
+      return(TRUE);
 
-        o_net_erase(w_current, object);
-        gdk_gc_set_foreground(w_current->xor_gc,
-                              x_get_darkcolor(w_current->select_color) );
-        gdk_draw_line(w_current->window, w_current->xor_gc,
-                      w_current->start_x, w_current->start_y,
-                      w_current->last_x, w_current->last_y);
-        o_line_erase_grips(w_current, object);
+    case(OBJ_LINE):
+      /* start the modification of a grip on a line */
+      o_grips_start_line(w_current, object, x, y, whichone);
+      return(TRUE);
 
-        gdk_gc_set_foreground(w_current->gc,
-                              x_get_color(toplevel->background_color));
-        return(TRUE);
+    case(OBJ_NET):
+      w_current->last_drawb_mode = -1;
+      WORLDtoSCREEN( toplevel, object->line->x[whichone], object->line->y[whichone],
+                     &w_current->last_x, &w_current->last_y );
+      WORLDtoSCREEN( toplevel, object->line->x[!whichone], object->line->y[!whichone],
+                     &w_current->start_x, &w_current->start_y );
 
-      case(OBJ_PIN):
-        w_current->last_drawb_mode = -1;
-        WORLDtoSCREEN( toplevel, object->line->x[whichone], object->line->y[whichone],
-                       &w_current->last_x, &w_current->last_y );
-        WORLDtoSCREEN( toplevel, object->line->x[!whichone], object->line->y[!whichone],
-                       &w_current->start_x, &w_current->start_y );
+      o_net_erase(w_current, object);
+      gdk_gc_set_foreground(w_current->xor_gc,
+                            x_get_darkcolor(w_current->select_color) );
+      gdk_draw_line(w_current->window, w_current->xor_gc,
+                    w_current->start_x, w_current->start_y,
+                    w_current->last_x, w_current->last_y);
+      o_line_erase_grips(w_current, object);
 
-        o_pin_erase(w_current, object);
-        gdk_gc_set_foreground(w_current->xor_gc,
-                              x_get_darkcolor(w_current->select_color) );
-        gdk_draw_line(w_current->window, w_current->xor_gc,
-                      w_current->start_x, w_current->start_y,
-                      w_current->last_x, w_current->last_y);
-        o_line_erase_grips(w_current, object);
-        return(TRUE);
+      gdk_gc_set_foreground(w_current->gc,
+                            x_get_color(toplevel->background_color));
+      return(TRUE);
 
-      case(OBJ_BUS):
-        w_current->last_drawb_mode = -1;
-        WORLDtoSCREEN( toplevel, object->line->x[whichone], object->line->y[whichone],
-                       &w_current->last_x, &w_current->last_y );
-        WORLDtoSCREEN( toplevel, object->line->x[!whichone], object->line->y[!whichone],
-                       &w_current->start_x, &w_current->start_y );
+    case(OBJ_PIN):
+      w_current->last_drawb_mode = -1;
+      WORLDtoSCREEN( toplevel, object->line->x[whichone], object->line->y[whichone],
+                     &w_current->last_x, &w_current->last_y );
+      WORLDtoSCREEN( toplevel, object->line->x[!whichone], object->line->y[!whichone],
+                     &w_current->start_x, &w_current->start_y );
 
-        o_bus_erase(w_current, object);
-        gdk_gc_set_foreground(w_current->xor_gc,
-                              x_get_darkcolor(w_current->select_color) );
-        gdk_draw_line(w_current->window, w_current->xor_gc,
-                      w_current->start_x, w_current->start_y,
-                      w_current->last_x, w_current->last_y);
-        o_line_erase_grips(w_current, object);
+      o_pin_erase(w_current, object);
+      gdk_gc_set_foreground(w_current->xor_gc,
+                            x_get_darkcolor(w_current->select_color) );
+      gdk_draw_line(w_current->window, w_current->xor_gc,
+                    w_current->start_x, w_current->start_y,
+                    w_current->last_x, w_current->last_y);
+      o_line_erase_grips(w_current, object);
+      return(TRUE);
 
-        gdk_gc_set_foreground(w_current->gc,
-                              x_get_color(toplevel->background_color));
-        return(TRUE);
+    case(OBJ_BUS):
+      w_current->last_drawb_mode = -1;
+      WORLDtoSCREEN( toplevel, object->line->x[whichone], object->line->y[whichone],
+                     &w_current->last_x, &w_current->last_y );
+      WORLDtoSCREEN( toplevel, object->line->x[!whichone], object->line->y[!whichone],
+                     &w_current->start_x, &w_current->start_y );
 
-      default:
-        /* object type unknown : error condition */
-        return(FALSE);
-    }
+      o_bus_erase(w_current, object);
+      gdk_gc_set_foreground(w_current->xor_gc,
+                            x_get_darkcolor(w_current->select_color) );
+      gdk_draw_line(w_current->window, w_current->xor_gc,
+                    w_current->start_x, w_current->start_y,
+                    w_current->last_x, w_current->last_y);
+      o_line_erase_grips(w_current, object);
+
+      gdk_gc_set_foreground(w_current->gc,
+                            x_get_color(toplevel->background_color));
+      return(TRUE);
+
+    default:
+      /* object type unknown : error condition */
+      return(FALSE);
   }
   return(FALSE);
 }
@@ -882,13 +884,7 @@ void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y)
   TOPLEVEL *toplevel = w_current->toplevel;
 
   g_assert( w_current->inside_action != 0 );
-
-  /* no object changing */
-  if (object_changing == NULL) {
-    /* stop grip process */
-    o_redraw(w_current, toplevel->page_current->object_head, TRUE);
-    return;
-  }
+  g_return_if_fail( object_changing != NULL );
 
   switch(object_changing->type) {
     case(OBJ_ARC):
