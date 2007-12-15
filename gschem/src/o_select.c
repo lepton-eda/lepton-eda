@@ -250,8 +250,8 @@ void o_select_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
   w_current->last_x = w_current->start_x; 
   w_current->last_y = w_current->start_y; 
 
-  box_width = abs(w_current->last_x - w_current->start_x);
-  box_height = abs(w_current->last_y - w_current->start_y);
+  box_width = 0;
+  box_height = 0;
 
   gdk_gc_set_foreground(w_current->xor_gc,
                         x_get_darkcolor(w_current->select_color));
