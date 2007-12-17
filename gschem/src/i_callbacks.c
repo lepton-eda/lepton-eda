@@ -2251,6 +2251,7 @@ DEFINE_I_CALLBACK(add_component)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates (w_current);
   x_compselect_open (w_current);
 
   i_update_middle_button(w_current,

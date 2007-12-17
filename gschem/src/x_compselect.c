@@ -122,7 +122,6 @@ x_compselect_callback_response (GtkDialog *dialog,
       case COMPSELECT_RESPONSE_PLACE: {
         CLibSymbol *symbol = NULL;
         CompselectBehavior behavior;
-        gint diff_x, diff_y;
 
         g_object_get (compselect,
                       "symbol", &symbol,
@@ -143,16 +142,8 @@ x_compselect_callback_response (GtkDialog *dialog,
               g_assert_not_reached();
         }
 
-        diff_x = w_current->last_x - w_current->start_x;
-        diff_y = w_current->last_y - w_current->start_y;
-
-        o_glist_draw_xor(w_current, diff_x, diff_y,
-                         toplevel->page_current->complex_place_list);
-
-        /* Free the complex place list and its contents */
-        s_delete_object_glist(toplevel,
-                              toplevel->page_current->complex_place_list);
-        toplevel->page_current->complex_place_list = NULL;
+        /* Cancel any action / place operation currently in progress */
+        o_redraw_cleanstates (w_current);
 
         if (symbol == NULL) {
           /* If there is no symbol selected, switch to SELECT mode */
@@ -184,17 +175,16 @@ x_compselect_callback_response (GtkDialog *dialog,
         gtk_widget_destroy (GTK_WIDGET (dialog));
         w_current->cswindow = NULL;
 
-        /* Undraw any XOR outline of the place list */
-        o_complex_rubbercomplex(w_current);
+        if (w_current->event_state == ENDCOMP ||
+            w_current->event_state == DRAWCOMP) {
 
-        /* Free the complex place list and its contents */
-        s_delete_object_glist(toplevel,
-                              toplevel->page_current->complex_place_list);
-        toplevel->page_current->complex_place_list = NULL;
+          /* Cancel the place operation currently in progress */
+          o_redraw_cleanstates (w_current);
 
-        /* return to the default state */
-        i_set_state(w_current, SELECT);
-        i_update_toolbar(w_current);
+          /* return to the default state */
+          i_set_state(w_current, SELECT);
+          i_update_toolbar(w_current);
+        }
         break;
 
       default:
