@@ -607,8 +607,8 @@ DEFINE_I_CALLBACK(edit_copy_hotkey)
 
   i_update_middle_button(w_current, i_callback_edit_copy_hotkey, _("Copy"));
   if (o_select_return_first_object(w_current)) {
+    o_redraw_cleanstates(w_current);
     w_current->event_state = COPY; 
-    o_redraw_cleanstates(w_current);	
     o_copy_start(w_current, mouse_x, mouse_y);
     w_current->event_state = ENDCOPY;
     w_current->inside_action = 1;
