@@ -512,21 +512,19 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
     case(MOVE): 
     case(NETCONT): 
     case(ZOOMBOXEND): 
-      /* reset all rubberband variables and touch the select state */
-      w_current->start_x = w_current->second_x = w_current->last_x = -1;
-      w_current->start_y = w_current->second_y = w_current->last_y = -1;
-      w_current->loc_x = w_current->loc_y = w_current->distance = -1;
-      i_set_state(w_current, SELECT);
-
-      /* from i_callback_cancel() */
-      o_redraw_all(w_current);
-      /* it is possible to cancel in the middle of a complex place
+      /* it is possible to cancel in the middle of a place,
        * so lets be sure to clean up the complex_place_list
-       * structure and also clean up the attrib_place_list.
-       * remember these don't remove the head structure */
-      /* The complex place is a reference to the real objects, so don't
-	 free the objects here */
-      g_list_free (toplevel->page_current->complex_place_list);
+       * structure and also clean up the attrib_place_list. */
+
+      /* If it is a move command, then free the complex place list WITHOUT
+         freeing the individual objects. */
+      if ((w_current->event_state == MOVE) ||
+          (w_current->event_state == ENDMOVE)) {
+        g_list_free (toplevel->page_current->complex_place_list);
+      } else {
+        s_delete_object_glist(toplevel,
+                              toplevel->page_current->complex_place_list);
+      }
       toplevel->page_current->complex_place_list = NULL;
 
       s_delete_object_glist (toplevel,
@@ -536,6 +534,15 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
       /* also free internal current_attribute */
       o_attrib_free_current(toplevel);
       w_current->inside_action = 0;
+
+      /* reset all rubberband variables and touch the select state */
+      w_current->start_x = w_current->second_x = w_current->last_x = -1;
+      w_current->start_y = w_current->second_y = w_current->last_y = -1;
+      w_current->loc_x = w_current->loc_y = w_current->distance = -1;
+      i_set_state(w_current, SELECT);
+
+      /* from i_callback_cancel() */
+      o_redraw_all(w_current);
       return TRUE;
 
     /* all remaining states without dc changes */
