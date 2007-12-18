@@ -869,7 +869,7 @@ void o_picture_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 {
   int x1, y1, x, y;
   int height, width;
-  GdkPixbuf* image = o_current->picture->displayed_picture;
+  GdkPixbuf* image = o_current->picture->original_picture;
   int img_width, img_height, img_rowstride;
   double ratio;
   guint8 *rgb_data;
