@@ -95,6 +95,10 @@ do
 	#echo "Creating $dr/po/Makevars ..."
         #mv -f $dr/po/Makevars.template $dr/po/Makevars
       fi
+      if grep "^IT_PROG_INTLTOOL" $configure_script >/dev/null; then
+	echo "autogen.sh running: intltoolize ..."
+	echo "no" | intltoolize --force --copy --automake
+      fi
       if grep "^AM_PROG_LIBTOOL" $configure_script >/dev/null; then
 	if test -z "$NO_LIBTOOLIZE" ; then 
 	  echo "autogen.sh running: libtoolize ..."
