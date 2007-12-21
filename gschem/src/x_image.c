@@ -649,7 +649,7 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
   /* Do a copy of the w_current struct and work with it */
   memcpy(&new_w_current, w_current, sizeof(GSCHEM_TOPLEVEL));
   /* Do a copy of the toplevel struct and work with it */
-  memcpy(&toplevel, w_current, sizeof(TOPLEVEL));
+  memcpy(&toplevel, w_current->toplevel, sizeof(TOPLEVEL));
 
   new_w_current.toplevel = &toplevel;
 
