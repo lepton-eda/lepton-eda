@@ -17,3 +17,4 @@
 #include "geda_list.h"
 
 /* Private libgeda headers */
+#include "prototype_priv.h"

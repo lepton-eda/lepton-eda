@@ -1,6 +1,5 @@
 
 /* a_basic.c */
-gchar *o_save_objects(OBJECT *object_list);
 const gchar *o_file_format_header();
 gchar *o_save_buffer(TOPLEVEL *toplevel);
 int o_save(TOPLEVEL *toplevel, const char *filename);
@@ -21,23 +20,15 @@ char* f_normalize_filename(const gchar *filename);
 char *follow_symlinks (const gchar *filename, GError **error);
 
 /* f_print.c */
-void f_print_set_line_width(FILE *fp, int width);
-void f_print_set_color(FILE *fp, int color);
-int f_print_header(TOPLEVEL *toplevel, FILE *fp, int paper_size_x, int paper_size_y, int eps);
-void f_print_footer(FILE *fp);
-void f_print_objects(TOPLEVEL *toplevel, FILE *fp, OBJECT *head, int start_x, int start_y, float scale, int unicode_count, gunichar *unicode_table);
 int f_print_file (TOPLEVEL *toplevel, const char *filename);
 int f_print_command (TOPLEVEL *toplevel, const char *command);
 int f_print_stream(TOPLEVEL *toplevel, FILE *fp);
 void f_print_set_type(TOPLEVEL *toplevel, int type);
-int f_print_initialize_glyph_table(void);
 
 /* g_basic.c */
 int g_read_file(const gchar *filename);
 
 /* g_rc.c */
-int vstbl_lookup_str(const vstbl_entry *table, int size, const char *str);
-int vstbl_get_val(const vstbl_entry *table, int index);
 SCM g_rc_mode_general(SCM scmmode, const char *rc_name, int *mode_var, 
                       const vstbl_entry *table, int table_size);
 gint g_rc_parse_general(TOPLEVEL *toplevel,
@@ -50,55 +41,17 @@ gint g_rc_parse_local_rc(TOPLEVEL *toplevel, const gchar *rcname);
 void g_rc_parse(TOPLEVEL *toplevel, const gchar* rcname,
                 const gchar* specified_rc_filename);
 gint g_rc_parse_specified_rc(TOPLEVEL *toplevel, const gchar *rcfilename);
-SCM g_rc_component_library(SCM path, SCM name);
-SCM g_rc_component_library_command (SCM listcmd, SCM getcmd, SCM name);
-SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name);
-SCM g_rc_component_library_search(SCM path);
-SCM g_rc_source_library(SCM path);
-SCM g_rc_source_library_search(SCM path);
-SCM g_rc_world_size(SCM width, SCM height, SCM border);
-SCM g_rc_reset_component_library(void);
-SCM g_rc_reset_source_library(void);
-SCM g_rc_default_series_name(SCM name);
-SCM g_rc_untitled_name(SCM name);
-SCM g_rc_font_directory(SCM path);
-SCM g_rc_bitmap_directory(SCM path);
-SCM g_rc_scheme_directory(SCM path);
-SCM g_rc_bus_ripper_symname(SCM scmsymname);
-SCM g_rc_postscript_prolog(SCM scmsymname);
-SCM g_rc_map_font_character_to_file(SCM character_param, SCM file_param);
-SCM g_rc_attribute_promotion(SCM mode);
-SCM g_rc_promote_invisible(SCM mode);
-SCM g_rc_keep_invisible(SCM mode);
-SCM g_rc_always_promote_attributes(SCM scmsymname);
-
-/* g_register.c */
-void g_register_libgeda_funcs(void);
-void g_register_libgeda_vars (void);
 
 /* g_smob.c */
 SCM g_make_attrib_smob(TOPLEVEL *curr_w, ATTRIB *curr_attr);
-SCM g_get_attrib_name_value(SCM attrib_smob);
 SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value, TOPLEVEL **world, OBJECT **o_attrib, char *new_string[]);
-SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
-				 SCM scm_angle, SCM scm_x, SCM scm_y);
-void g_init_attrib_smob(void);
-
-SCM g_get_attrib_bounds(SCM attrib_smob);
-SCM g_get_attrib_angle(SCM attrib_smob);
-SCM g_make_object_smob(TOPLEVEL *curr_w, OBJECT *object);
-SCM g_get_object_attributes(SCM object_smob);
-SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name);
-SCM g_get_object_type(SCM object_smob);
-SCM g_get_line_width(SCM object_smob);
-void g_init_object_smob(void);
 gboolean g_get_data_from_object_smob(SCM object_smob, TOPLEVEL **toplevel, 
 				     OBJECT **object);
+SCM g_make_object_smob(TOPLEVEL *curr_w, OBJECT *object);
+SCM g_get_object_attributes(SCM object_smob);
 SCM g_make_page_smob(TOPLEVEL *curr_w, PAGE *page);
-void g_init_page_smob(void);
 gboolean g_get_data_from_page_smob(SCM object_smob, TOPLEVEL **toplevel, 
 				   PAGE **object);
-SCM g_get_page_filename(SCM page_smob);
 
 /* i_vars.c */
 void i_vars_libgeda_set(TOPLEVEL *toplevel);
@@ -139,19 +92,11 @@ double round_5_2_1(double unrounded);
 OBJECT *o_arc_add(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, int x, int y, int radius, int start_angle, int end_angle);
 OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
 void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-OBJECT *o_arc_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
-char *o_arc_save(OBJECT *object);
 void o_arc_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
 void o_arc_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_arc_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 void o_arc_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 void world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
-void o_arc_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
-void o_arc_print_solid(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int angle1, int angle2, int color, int arc_width, int length, int space, int origin_x, int origin_y);
-void o_arc_print_dotted(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int angle1, int angle2, int color, int arc_width, int length, int space, int origin_x, int origin_y);
-void o_arc_print_dashed(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int angle1, int angle2, int color, int arc_width, int length, int space, int origin_x, int origin_y);
-void o_arc_print_center(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int angle1, int angle2, int color, int arc_width, int length, int space, int origin_x, int origin_y);
-void o_arc_print_phantom(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int angle1, int angle2, int color, int arc_width, int length, int space, int origin_x, int origin_y);
 
 /* o_attrib.c */
 ATTRIB *o_attrib_search(GList *list, OBJECT *item);
@@ -161,12 +106,6 @@ void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *parent_list, OBJECT *text_objec
 void o_attrib_free_all(TOPLEVEL *toplevel, GList *list);
 void o_attrib_print(GList *attributes);
 void o_attrib_remove(GList **list, OBJECT *remove);
-OBJECT *o_read_attribs(TOPLEVEL *toplevel,
-		       OBJECT *object_to_get_attribs, 
-		       TextBuffer *tb,
-		       unsigned int release_ver, 
-		       unsigned int fileformat_ver);
-gchar *o_save_attribs(GList *attribs);
 int o_attrib_get_name_value(char *string, char **name, char **value);
 void o_attrib_free_current(TOPLEVEL *toplevel);
 void o_attrib_set_string(TOPLEVEL *toplevel, char *string);
@@ -206,32 +145,18 @@ void o_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OB
 OBJECT *o_box_add(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
 OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
 void o_box_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-OBJECT *o_box_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
-char *o_box_save(OBJECT *object);
 void o_box_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object);
 void o_box_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_box_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 void o_box_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 void world_get_box_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
-void o_box_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
-void o_box_print_solid(TOPLEVEL *toplevel, FILE *fp, int x, int y, int width, int height, int color, int line_width, int length, int space, int origin_x, int origin_y);
-void o_box_print_dotted(TOPLEVEL *toplevel, FILE *fp, int x, int y, int width, int height, int color, int line_width, int length, int space, int origin_x, int origin_y);
-void o_box_print_dashed(TOPLEVEL *toplevel, FILE *fp, int x, int y, int width, int height, int color, int line_width, int length, int space, int origin_x, int origin_y);
-void o_box_print_center(TOPLEVEL *toplevel, FILE *fp, int x, int y, int width, int height, int color, int line_width, int length, int space, int origin_x, int origin_y);
-void o_box_print_phantom(TOPLEVEL *toplevel, FILE *fp, int x, int y, int width, int height, int color, int line_width, int length, int space, int origin_x, int origin_y);
-void o_box_print_filled(TOPLEVEL *toplevel, FILE *fp, int x, int y, int width, int height, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
-void o_box_print_mesh(TOPLEVEL *toplevel, FILE *fp, int x, int y, int width, int height, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
-void o_box_print_hatch(TOPLEVEL *toplevel, FILE *fp, int x, int y, int width, int height, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
 
 /* o_bus_basic.c */
 void world_get_bus_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 OBJECT *o_bus_add(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2, int bus_ripper_direction);
 void o_bus_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
-OBJECT *o_bus_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
-char *o_bus_save(OBJECT *object);
 void o_bus_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object);
 OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
-void o_bus_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void o_bus_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_bus_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 int o_bus_orientation(OBJECT *object);
@@ -245,22 +170,11 @@ int dist(int x1, int y1, int x2, int y2);
 OBJECT *o_circle_add(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, int x, int y, int radius);
 OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
 void o_circle_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-OBJECT *o_circle_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
-char *o_circle_save(OBJECT *object);
 void o_circle_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object);
 void o_circle_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_circle_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 void o_circle_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 void world_get_circle_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
-void o_circle_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
-void o_circle_print_solid(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int color, int circle_width, int length, int space, int origin_x, int origin_y);
-void o_circle_print_dotted(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int color, int circle_width, int length, int space, int origin_x, int origin_y);
-void o_circle_print_dashed(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int color, int circle_width, int length, int space, int origin_x, int origin_y);
-void o_circle_print_center(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int color, int circle_width, int length, int space, int origin_x, int origin_y);
-void o_circle_print_phantom(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int color, int circle_width, int length, int space, int origin_x, int origin_y);
-void o_circle_print_filled(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
-void o_circle_print_mesh(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
-void o_circle_print_hatch(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
 
 /* o_complex_basic.c */
 int world_get_single_object_bounds(TOPLEVEL *toplevel, OBJECT *o_current,
@@ -282,8 +196,6 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		      int selectable, int attribute_promotion);
 OBJECT *o_complex_add_embedded(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, int x, int y, int angle, const gchar *basename, int selectable);
 void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
-OBJECT *o_complex_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
-char *o_complex_save(OBJECT *object);
 void o_complex_set_filename(TOPLEVEL *toplevel, const char *basename);
 void o_complex_free_filename(TOPLEVEL *toplevel);
 void o_complex_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object);
@@ -311,19 +223,11 @@ void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current);
 OBJECT *o_line_add(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
 OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
 void o_line_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-OBJECT *o_line_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
-char *o_line_save(OBJECT *object);
 void o_line_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object);
 void o_line_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_line_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 void o_line_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 void world_get_line_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
-void o_line_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
-void o_line_print_solid(TOPLEVEL *toplevel, FILE *fp, int x1, int y1, int x2, int y2, int color, int line_width, int length, int space, int origin_x, int origin_y);
-void o_line_print_dotted(TOPLEVEL *toplevel, FILE *fp, int x1, int y1, int x2, int y2, int color, int line_width, int length, int space, int origin_x, int origin_y);
-void o_line_print_dashed(TOPLEVEL *toplevel, FILE *fp, int x1, int y1, int x2, int y2, int color, int line_width, int length, int space, int origin_x, int origin_y);
-void o_line_print_center(TOPLEVEL *toplevel, FILE *fp, int x1, int y1, int x2, int y2, int color, int line_width, int length, int space, int origin_x, int origin_y);
-void o_line_print_phantom(TOPLEVEL *toplevel, FILE *fp, int x1, int y1, int x2, int y2, int color, int line_width, int length, int space, int origin_x, int origin_y);
 void o_line_scale_world(TOPLEVEL *toplevel, int x_scale, int y_scale, OBJECT *object);
 int o_line_visible(TOPLEVEL *toplevel, LINE *line, int *x1, int *y1, int *x2, int *y2);
 double o_line_length(OBJECT *object);
@@ -346,11 +250,8 @@ void o_glist_mirror_world(TOPLEVEL *toplevel, int x, int y, GList *list);
 void world_get_net_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 OBJECT *o_net_add(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
 void o_net_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
-OBJECT *o_net_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
-char *o_net_save(OBJECT *object);
 void o_net_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object);
 OBJECT *o_net_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
-void o_net_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void o_net_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_net_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 int o_net_orientation(OBJECT *object);
@@ -361,12 +262,6 @@ void o_net_consolidate(TOPLEVEL *toplevel);
 void o_net_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
 /* o_picture.c */
-OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
-		       const char *first_line,
-		       TextBuffer *tb,
-		       unsigned int release_ver,
-		       unsigned int fileformat_ver);
-char *o_picture_save(OBJECT *object);
 OBJECT *o_picture_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		      GdkPixbuf * pixbuf, char *filename, double ratio,
 		      char type, 
@@ -381,18 +276,13 @@ void o_picture_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *objec
 OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
 guint8 *o_picture_rgb_data(GdkPixbuf *image);
 guint8 *o_picture_mask_data(GdkPixbuf *image);
-void o_picture_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
-		     int origin_x, int origin_y);
 
 /* o_pin_basic.c */
 void world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 OBJECT *o_pin_add(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2, int pin_type, int whichend);
 void o_pin_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
-OBJECT *o_pin_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
-char *o_pin_save(OBJECT *object);
 void o_pin_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object);
 OBJECT *o_pin_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
-void o_pin_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void o_pin_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_pin_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 void o_pin_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
@@ -418,23 +308,11 @@ int o_text_width(TOPLEVEL *toplevel, char *string, int size);
 OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list, char *string, int size, int color, int x, int y, int alignment, int angle);
 OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, int x, int y, int alignment, int angle, char *string, int size, int visibility, int show_name_value);
 void o_text_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
-OBJECT *o_text_read(TOPLEVEL *toplevel,
-		    OBJECT *object_list, 
-		    const char *first_line,
-		    TextBuffer *tb,
-		    unsigned int release_ver,
-		    unsigned int fileformat_ver);
 void o_text_set_info_font(char buf[]);
-char *o_text_save(OBJECT *object);
 void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current);
 void o_text_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *o_current);
 OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
 void o_text_freeallfonts(TOPLEVEL *toplevel);
-void o_text_print_text_width(FILE *fp, char *output_string);
-void o_text_print_text_height(FILE *fp, int size);
-void o_text_print_text_height_full(FILE *fp, char *string, int size);
-void o_text_print_text_string(FILE *fp, char *string, int unicode_count, gunichar *unicode_table);
-void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y, int unicode_count, gunichar *unicode_table);
 void o_text_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_text_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
@@ -471,7 +349,6 @@ char *insert_string(char *string, int start, char *insert_string);
 char *expand_env_variables(char *string);
 
 /* s_clib.c */
-void s_clib_init (void);
 void s_clib_free (void);
 GList *s_clib_get_sources (const gboolean sorted);
 const CLibSource *s_clib_get_source_by_name (const gchar *name);
@@ -497,10 +374,8 @@ gchar *s_clib_symbol_get_data_by_name (const gchar *name);
 GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel);
 
 /* s_color.c */
-void s_color_init(void);
 int s_color_request(int color_index, char *color_name, char *outline_color_name, char *ps_color_string, int image_red, int image_green, int image_blue);
 void s_color_destroy_all(void);
-char *s_color_ps_string(int color);
 int s_color_image_int(int color);
 int s_color_get_name(int index, char *string);
 int s_color_get_index(char *string);
@@ -526,10 +401,6 @@ void s_cue_output_all(TOPLEVEL *toplevel, OBJECT *head, FILE *fp, int type);
 void s_cue_output_lowlevel(TOPLEVEL *toplevel, OBJECT *object, int whichone, FILE *fp, int output_type);
 void s_cue_output_lowlevel_midpoints(TOPLEVEL *toplevel, OBJECT *object, FILE *fp, int output_type);
 void s_cue_output_single(TOPLEVEL *toplevel, OBJECT *object, FILE *fp, int type);
-
-/* s_encoding.c */
-gchar* s_encoding_base64_encode (gchar* src, guint srclen, guint* dstlenp, gboolean strict);
-gchar* s_encoding_base64_decode (gchar* src, guint srclen, guint* dstlenp);
 
 /* s_hierarchy.c */
 int s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename, PAGE *parent, int page_control, int flag);
@@ -637,10 +508,3 @@ char *u_basic_breakup_string(char *string, char delimiter, int count);
 void u_basic_strip_trailing(char *string, char c);
 int u_basic_has_trailing(char *string, char c);
 int u_basic_count_char(const char *string, char character);
-
-/* s_textbuffer.c */
-TextBuffer *s_textbuffer_new (gchar *data, const gint size);
-TextBuffer *s_textbuffer_free (TextBuffer *tb);
-void s_textbuffer_seek (TextBuffer *tb, const gint offset);
-gchar *s_textbuffer_next (TextBuffer *tb, const gsize count);
-gchar *s_textbuffer_next_line (TextBuffer *tb);
