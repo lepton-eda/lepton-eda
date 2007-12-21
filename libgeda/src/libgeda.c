@@ -46,17 +46,10 @@
  */
 void libgeda_init(void)
 {
-  char *new_data=NULL;
   char *geda_data = getenv("GEDADATA");
 
-  /* This stuff reverted on 2.17.2005 by SDB in response to W. Hoch. */
   if (geda_data == NULL) {
-    new_data = g_strdup_printf("GEDADATA=%s", GEDADATADIR);
-    putenv(new_data);
-    /*free(new_data); putenv takes over the memory on some OSes, do not free */
-
-    /* We'll use this someday. . . . . */
-    /* g_setenv ("GEDADATA", GEDADATADIR, FALSE); */ /* requires glib-2.4.* */
+    g_setenv ("GEDADATA", GEDADATADIR, FALSE);
   }
 
   g_type_init ();

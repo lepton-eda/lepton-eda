@@ -359,16 +359,13 @@ void g_rc_parse(TOPLEVEL *toplevel,
 {
   gint found_rc = 0;
   char *rc_path;
-  char *geda_rcdata;
 
   /* set the GEDADATARC environment variable so that the rc files */
   /* know where to look for others */
   rc_path = f_normalize_filename (g_rc_parse_path ());
-  /* Reversion to putenv inspired by W. Hoch, 2.17.2005 */
-  /*  g_setenv ("GEDADATARC", rc_path, TRUE); */  /*requires glib 2.4.x*/
-  geda_rcdata = g_strdup_printf("GEDADATARC=%s", rc_path);
-  putenv(geda_rcdata);
-  g_free(rc_path);
+
+  g_setenv ("GEDADATARC", rc_path, TRUE);
+  g_free (rc_path);
   
   /* visit rc files in order */
   /* Changed by SDB 1.2.2005 in response to Peter Kaiser's bug report.
