@@ -31,17 +31,7 @@
 #include <stdlib.h>
 #endif
 
-#include <gtk/gtk.h>
-#include <libguile.h>
-
-#include "defines.h"
-#include "struct.h"
-#include "globals.h"
-#include "funcs.h"
-
-#include "../include/prototype.h"
-
-#include "geda_list.h"
+#include "libgeda_priv.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>

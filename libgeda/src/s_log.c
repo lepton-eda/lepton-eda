@@ -40,17 +40,7 @@
 #include <string.h>
 #endif
 
-#include <gtk/gtk.h>
-#include <libguile.h>
-
-#include "defines.h"
-#include "struct.h"
-#include "defines.h"
-#include "globals.h"
-#include "funcs.h"
-#include "o_types.h"
-
-#include "../include/prototype.h"
+#include "libgeda_priv.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>

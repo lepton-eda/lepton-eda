@@ -35,17 +35,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include <gtk/gtk.h>
-#include <libguile.h>
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
 
-#include "defines.h"
-#include "struct.h"
-#include "globals.h"  
-
-#include "../include/prototype.h"
+#include "libgeda_priv.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>

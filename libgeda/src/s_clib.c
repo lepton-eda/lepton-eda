@@ -123,21 +123,11 @@
 #include <dmalloc.h>
 #endif
 
-#include <gtk/gtk.h>
-#include <libguile.h>
-
 #include <sys/wait.h>
 
 #include <time.h>
 
-#include "defines.h"
-#include "struct.h"
-#include "globals.h"
-#include "o_types.h"
-#include "colors.h"
-#include "i_vars.h"
-#include "prototype.h"
-#include "geda_list.h"
+#include "libgeda_priv.h"
 
 /* Constant definitions
  * ===================

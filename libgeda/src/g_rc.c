@@ -35,18 +35,7 @@
 #include <unistd.h>
 #endif
 
-#include <gtk/gtk.h>
-#include <libguile.h>
-
-#include "defines.h"
-#include "struct.h"
-#include "globals.h"
-#include "o_types.h"
-#include "colors.h"
-
-#include "../include/i_vars.h"
-#include "../include/papersizes.h"
-#include "../include/prototype.h"
+#include "libgeda_priv.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>

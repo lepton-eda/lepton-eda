@@ -33,14 +33,7 @@
 #include <gdk-pixbuf/gdk-pixdata.h>
 
 
-#include "defines.h"
-#include "struct.h"
-#include "globals.h"
-#include "o_types.h"
-#include "colors.h"
-#include "funcs.h"
-
-#include "../include/prototype.h"
+#include "libgeda_priv.h"
 
 /*! \brief Create picture OBJECT from character string.
  *  \par Function Description

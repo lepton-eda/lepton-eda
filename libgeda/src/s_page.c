@@ -30,22 +30,11 @@
 #include <string.h>
 #endif
 
-#include <gtk/gtk.h>
-#include <glib.h>
-#include <libguile.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "defines.h"
-#include "struct.h"
-#include "globals.h"
-#include "o_types.h"
-#include "funcs.h"
-
-#include "geda_list.h"
-
-#include "../include/prototype.h"
+#include "libgeda_priv.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>

@@ -22,14 +22,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include <gtk/gtk.h>
-#include <libguile.h>
-
-#include "defines.h"
-#include "struct.h" /* why should I include these hack, just for prototype ? */
-#include "globals.h"
-
-#include "../include/prototype.h"
+#include "libgeda_priv.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
