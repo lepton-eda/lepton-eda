@@ -261,6 +261,9 @@ void main_prog(void *closure, int argc, char *argv[])
   recent_files_load();
   gschem_atexit(recent_files_save, NULL);
 
+  /* Set default icon */
+  x_window_set_default_icon();
+
   /* At end, complete set up of window. */
   colormap = gdk_colormap_get_system ();
   x_window_setup_colors();

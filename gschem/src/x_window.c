@@ -32,6 +32,9 @@
 #include <dmalloc.h>
 #endif
 
+#define GSCHEM_THEME_ICON_NAME "gschem"
+#define GSCHEM_ICON_SIZES 16, 22, 48
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -1026,4 +1029,45 @@ x_window_close_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
     /* change to new_current and update display */
     x_window_set_current_page (w_current, new_current);
   }
+}
+
+
+/*! \brief Setup default icon for GTK windows
+ *
+ *  \par Function Description
+ *  Sets the default window icon by name, to be found in the current icon
+ *  theme. The name used is #defined above as GSCHEM_THEME_ICON_NAME.
+ *
+ *  For GTK versions < 2.6, we have to load the icons explicitly, and pass
+ *  them to GTK. As we don't know what size is appropriate, a #define above,
+ *  GSCHEM_ICON_SIZES is used to list (comma separated) the sizes we have
+ *  icons for. Icons loaded at all of these sizes are passed to GTK.
+ */
+void x_window_set_default_icon( void )
+{
+#if GTK_CHECK_VERSION (2,6,0)
+  gtk_window_set_default_icon_name( GSCHEM_THEME_ICON_NAME );
+#else
+  GtkIconTheme *icon_theme;
+  GdkPixbuf *icon;
+  GList *icon_list = NULL;
+  int icon_size[] = { GSCHEM_ICON_SIZES };
+  int i;
+
+  for ( i = 0; i < sizeof( icon_size ) / sizeof( *icon_size ); i++ ) {
+    icon_theme = gtk_icon_theme_get_default();
+    icon = gtk_icon_theme_load_icon( icon_theme,
+                                     GSCHEM_THEME_ICON_NAME,
+                                     icon_size[i],
+                                     0,   /* flags */
+                                     NULL /* **error */ );
+    if (icon != NULL)
+      icon_list = g_list_append( icon_list, icon );
+  }
+
+  gtk_window_set_default_icon_list( icon_list );
+
+  g_list_foreach( icon_list, (GFunc) g_object_unref, NULL );
+  g_list_free( icon_list );
+#endif
 }
