@@ -92,63 +92,20 @@ void o_move_end_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT * list, int type,
     switch (object->type) {
 
       case (OBJ_NET):
+      case (OBJ_BUS):
+      case (OBJ_PIN):
         /* save the other objects and remove object's connections */
         *other_objects = s_conn_return_others(*other_objects, object);
         s_conn_remove(toplevel, object);
 
         /* do the actual translation */
-        o_net_translate_world(toplevel, diff_x, diff_y, object);
+        o_translate_world(toplevel, diff_x, diff_y, object);
         s_conn_update_object(toplevel, object);
         *connected_objects = s_conn_return_others(*connected_objects, object);
         break;
 
-      case (OBJ_BUS):
-        /* save the other objects and remove object's connections */
-        *other_objects = s_conn_return_others(*other_objects, object);
-        s_conn_remove(toplevel, object);
-
-        o_bus_translate_world(toplevel, diff_x, diff_y, object);
-        s_conn_update_object(toplevel, object);
-        *connected_objects = s_conn_return_others(*connected_objects, object);
-        break;
-
-      case (OBJ_PIN):
-        /* save the other objects and remove object's connections */
-        *other_objects = s_conn_return_others(*other_objects, object);
-        s_conn_remove(toplevel, object);
-        
-        o_pin_translate_world(toplevel, diff_x, diff_y, object);
-        s_conn_update_object(toplevel, object);
-        *connected_objects = s_conn_return_others(*connected_objects, object);
-        break;
-
-      case (OBJ_LINE):
-        o_line_translate_world(toplevel, diff_x, diff_y, object);
-        break;
-
-      case (OBJ_BOX):
-        o_box_translate_world(toplevel, diff_x, diff_y, object);
-        break;
-
-      case (OBJ_PICTURE):
-        o_picture_translate_world(toplevel, diff_x, diff_y, object);
-        break;
-
-      case (OBJ_CIRCLE):
-        o_circle_translate_world(toplevel, diff_x, diff_y, object);
-        break;
-
-      case (OBJ_TEXT):
-        o_text_translate_world(toplevel, diff_x, diff_y, object);
-        break;
-
-      case (OBJ_ARC):
-        o_arc_translate_world(toplevel, diff_x, diff_y, object);
-        break;
-
-      case (OBJ_COMPLEX):
-      case (OBJ_PLACEHOLDER):
-        o_complex_translate_world(toplevel, diff_x, diff_y, object);
+      default:
+        o_translate_world(toplevel, diff_x, diff_y, object);
         break;
     }
 

@@ -135,9 +135,7 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
                                             return_tail(new_objects_head),
                                             object );
         toplevel->ADDING_SEL=0;
-        o_net_translate_world(toplevel,
-                              diff_x, diff_y,
-                              new_object);
+        o_translate_world(toplevel, diff_x, diff_y, new_object);
 
         o_selection_add( temp_list, new_object );
         new_object->saved_color = object->saved_color;
@@ -158,9 +156,7 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
                                            return_tail(new_objects_head), 
                                            object);
         toplevel->ADDING_SEL=0;
-        o_pin_translate_world(toplevel,
-                              diff_x, diff_y,
-                              new_object);
+        o_translate_world(toplevel, diff_x, diff_y, new_object);
 
         o_selection_add( temp_list, new_object );
         new_object->saved_color = object->saved_color;
@@ -181,9 +177,7 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
                                            return_tail(new_objects_head),
                                            object);
         toplevel->ADDING_SEL=0;
-        o_bus_translate_world(toplevel,
-                              diff_x, diff_y,
-                              new_object);
+        o_translate_world(toplevel, diff_x, diff_y, new_object);
 
         o_selection_add( temp_list, new_object );
         new_object->saved_color = object->saved_color;
@@ -213,7 +207,7 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
         toplevel->ADDING_SEL=0;
 
         complex_object = new_object;
-        o_complex_translate_world(toplevel, diff_x, diff_y, new_object);
+        o_translate_world(toplevel, diff_x, diff_y, new_object);
 
         o_selection_add( temp_list, new_object );
 
@@ -235,9 +229,7 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
                                             return_tail(new_objects_head),
                                             object);
         toplevel->ADDING_SEL=1;
-        o_line_translate_world(toplevel,
-                               diff_x, diff_y,
-                               new_object);
+        o_translate_world(toplevel, diff_x, diff_y, new_object);
         toplevel->ADDING_SEL=0;
 
         o_selection_add( temp_list, new_object );
@@ -250,9 +242,7 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
                                            return_tail(new_objects_head),
                                            object);
         toplevel->ADDING_SEL=1;
-        o_box_translate_world(toplevel,
-                              diff_x, diff_y,
-                              new_object);
+        o_translate_world(toplevel, diff_x, diff_y, new_object);
         toplevel->ADDING_SEL=0;
 
         o_selection_add( temp_list, new_object );
@@ -266,9 +256,7 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
                                                return_tail(new_objects_head),
                                                object);
         toplevel->ADDING_SEL=1;
-        o_picture_translate_world(toplevel,
-                                  diff_x, diff_y,
-                                  new_object);
+        o_translate_world(toplevel, diff_x, diff_y, new_object);
         toplevel->ADDING_SEL=0;
 
         o_selection_add( temp_list, new_object );
@@ -282,9 +270,7 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
                                               return_tail(new_objects_head),
                                               object);
         toplevel->ADDING_SEL=1;
-        o_circle_translate_world(toplevel,
-                                 diff_x, diff_y,
-                                 new_object);
+        o_translate_world(toplevel, diff_x, diff_y, new_object);
         toplevel->ADDING_SEL=0;
 
         o_selection_add( temp_list, new_object );
@@ -297,9 +283,7 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
                                             return_tail(new_objects_head),
                                             object );
         toplevel->ADDING_SEL=1;
-        o_arc_translate_world(toplevel,
-                              diff_x, diff_y,
-                              new_object);
+        o_translate_world(toplevel, diff_x, diff_y, new_object);
         toplevel->ADDING_SEL=0;
 
         o_selection_add( temp_list, new_object );
@@ -354,7 +338,7 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
           }
         }
         toplevel->ADDING_SEL=1;
-        o_text_translate_world(toplevel, diff_x, diff_y, new_object);
+        o_translate_world(toplevel, diff_x, diff_y, new_object);
         toplevel->ADDING_SEL=0;
 
         /* old object was attr */
