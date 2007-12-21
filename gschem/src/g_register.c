@@ -327,10 +327,6 @@ void g_register_funcs (void)
     tmp++;
   }
 
-  g_init_attrib_smob ();
-  g_init_object_smob ();
-  g_init_page_smob ();
-
   /* Hook stuff */
   scm_c_define_gsubr ("add-attribute-to-object", 5, 0, 0, g_add_attrib);
   scm_c_define_gsubr ("get-object-attributes", 1, 0, 0, g_get_object_attributes);
