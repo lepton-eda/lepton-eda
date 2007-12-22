@@ -3922,9 +3922,12 @@ void
 x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
 {
 	GtkWidget *dialog;
+  PAGE *keep_page;
 
   g_return_if_fail (page != NULL && page->CHANGED);
   
+  keep_page = w_current->toplevel->page_current;
+
   dialog = GTK_WIDGET (g_object_new (TYPE_CLOSE_CONFIRMATION_DIALOG,
                                      "unsaved-page", page,
                                      NULL));
@@ -3964,6 +3967,9 @@ x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
   }
   gtk_widget_destroy (dialog);
 
+  /* Switch back to the page we were on */
+  g_return_if_fail (keep_page != NULL);
+  s_page_goto (w_current->toplevel, keep_page);
 }
 
 /*! \brief Asks for confirmation before closing a window.
@@ -3988,8 +3994,11 @@ x_dialog_close_window (GSCHEM_TOPLEVEL *w_current)
   GList *iter;
   GtkWidget *dialog;
   PAGE *p_current;
+  PAGE *keep_page;
   GList *unsaved_pages, *p_unsaved;
   gboolean ret = FALSE;
+
+  keep_page = toplevel->page_current;
 
   for ( iter = geda_list_get_glist( toplevel->pages ), unsaved_pages = NULL;
         iter != NULL;
@@ -4047,6 +4056,10 @@ x_dialog_close_window (GSCHEM_TOPLEVEL *w_current)
         break;
   }
   gtk_widget_destroy (dialog);
+
+  /* Switch back to the page we were on */
+  g_return_val_if_fail (keep_page != NULL, ret);
+  s_page_goto (toplevel, keep_page);
 
   return ret;
 }
