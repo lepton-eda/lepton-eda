@@ -3943,9 +3943,8 @@ x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
 
       case GTK_RESPONSE_YES:
         /* action selected: save */
-        /* prompts user for the filename and ultimate confirmation */
         s_page_goto (w_current->toplevel, page);
-        x_fileselect_save (w_current);
+        i_callback_file_save (w_current, 0, NULL);
         /* has the page been really saved? */
         if (!page->CHANGED) {
           x_window_close_page (w_current, page);
@@ -4022,8 +4021,6 @@ x_dialog_close_window (GSCHEM_TOPLEVEL *w_current)
 
       case GTK_RESPONSE_YES:
         /* action selected: save */
-        /* prompts user for the filename and ultimate confirmation for */
-        /* each selected page */
         g_object_get (dialog,
                       "selected-pages", &unsaved_pages,
                       NULL);
@@ -4033,7 +4030,7 @@ x_dialog_close_window (GSCHEM_TOPLEVEL *w_current)
           p_current = (PAGE*)p_unsaved->data;
 
           s_page_goto (toplevel, p_current);
-          x_fileselect_save (w_current);
+          i_callback_file_save (w_current, 0, NULL);
           /* if user cancelled previous, do not close window */
           ret &= !p_current->CHANGED;
         }
