@@ -87,7 +87,7 @@ void f_print_set_color(FILE *fp, int color)
 int f_print_header(TOPLEVEL *toplevel, FILE *fp,
 		   int paper_size_x, int paper_size_y, int eps) 
 {
-  char *buf;
+  char *buf = NULL;
   FILE *prolog;
   size_t bytes;
   int llx,lly,urx,ury;
@@ -133,20 +133,16 @@ int f_print_header(TOPLEVEL *toplevel, FILE *fp,
   
   /* Allocate a buffer to use during copy */
 #define PROLOG_BUFFER_SIZE 8192
+
+  /* Don't check this (succeeds or aborts) */
   buf = g_malloc(PROLOG_BUFFER_SIZE);
-  if(buf == NULL) {
-    s_log_message("Unable to allocate %d bytes in f_print_header()\n"
-		  "Giving up on printing.\n",PROLOG_BUFFER_SIZE);
-    return -1;
-  }
+
   /* Open the prolog file */
   prolog = fopen(toplevel->postscript_prolog,"r");
   if(prolog == NULL) {
     s_log_message("Unable to open the prolog file `%s' for reading "
-		  "in f_print_header()\n"
-		  "Giving up on printing\n", toplevel->postscript_prolog);
-    g_free(buf);  /* If we got to here, the buffer was allocated. */
-    return -1;
+		  "in f_print_header()\n", toplevel->postscript_prolog);
+    goto f_print_header_fail;
   }
   /* Loop while reading file into buffer and dump it
    * back out to the supplied file handle
@@ -159,29 +155,27 @@ int f_print_header(TOPLEVEL *toplevel, FILE *fp,
 
   if(ferror(prolog)) {
     s_log_message("Error during reading of the prolog file `%s' "
-		  "in f_print_header()\n"
-		  "Giving up on printing\n", toplevel->postscript_prolog);
-    g_free(buf);  /* If we got to here, the buffer was allocated. */
-    return -1;
+		  "in f_print_header()\n", toplevel->postscript_prolog);
+    goto f_print_header_fail;
   }
 
   if(ferror(fp)) {
     s_log_message("Error during writing of the output postscript file "
-		  "in f_print_header()\n"
-		  "Giving up on printing\n");
-    g_free(buf);  /* If we got to here, the buffer was allocated. */
-    return -1;
+		  "in f_print_header()\n");
+    goto f_print_header_fail;
   }
   g_free(buf);  /* If we got to here, the buffer was allocated. */
 
   fprintf(fp,"%%%%EndProlog\n"
 	  "%%%%Page: 1 1\n");     /* Just name it `page 1' for now */
   
-  /* These go after the prolog ends because they affect the graphics
-   * state
-   */
 
   return 0;
+
+ f_print_header_fail:
+  s_log_message ("Giving up on printing\n");
+  g_free (buf); /* g_free() succeeds if argument is NULL */
+  return -1;
 }
 
 /*! \brief Prints the footer to a postscript document
