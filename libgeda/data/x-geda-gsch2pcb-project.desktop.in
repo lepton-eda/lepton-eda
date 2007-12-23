@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+_Comment=gEDA gsch2pcb project
+MimeType=application/x-geda-gsch2pcb-project
+Type=MimeType
+Icon=application/x-geda-gsch2pcb-project
+Patterns=*.gsch2pcb;*.prj;
+X-KDE-IsAlso=text/plain

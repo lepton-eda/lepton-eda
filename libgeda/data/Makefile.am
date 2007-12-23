@@ -32,6 +32,18 @@ xml_DATA = $(xml_in_files:.xml.in=.xml)
 
 @INTLTOOL_XML_RULE@
 
+kdedir=@KDEDIR@
+mimelnkdir = $(kdedir)/share/mimelnk
+applicationdir = $(mimelnkdir)/application
+
+application_in_files = \
+	x-geda-gsch2pcb-project.desktop.in \
+	x-geda-schematic.desktop.in \
+	x-geda-symbol.desktop.in
+application_DATA = $(application_in_files:.desktop.in=.desktop)
+
+@INTLTOOL_DESKTOP_RULE@
+
 install_icon_exec = \
 	$(top_srcdir)/icon-theme-installer \
 	-t $(theme) \

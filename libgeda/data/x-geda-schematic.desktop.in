@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+_Comment=gEDA circuit schematic
+MimeType=application/x-geda-schematic
+Type=MimeType
+Icon=application-x-geda-schematic
+Patterns=*.sch
+X-KDE-IsAlso=text/plain

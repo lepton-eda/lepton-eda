@@ -1,1 +1,4 @@
 data/libgeda.xml.in
+data/x-geda-gsch2pcb-project.desktop.in
+data/x-geda-schematic.desktop.in
+data/x-geda-symbol.desktop.in

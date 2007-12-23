@@ -26,6 +26,9 @@ AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files 
 # Change default location for XDG files (MIME and Icons)
 AC_ARG_WITH(xdgdir, [  --with-xdgdir=path      Change where the theme icons and mime registrations are installed [[DATAROOTDIR]]], [opt_xdgdir=$withval])
 
+# Change default location for KDE files (KDE MIME registrations)
+AC_ARG_WITH(kdedir, [  --with-kdedir=path      Change where the KDE mime registrations are installed [[PREFIX]]], [opt_kdedir=$withval])
+
 # 
 # Command line flags end
 #########################################################################
@@ -411,6 +414,15 @@ else
 fi
 AC_SUBST(XDGDIR)
 
+if test x$opt_kdedir = x; then
+        # path was not specified with --with-kdedir
+        KDEDIR='${prefix}'
+else
+        # path WAS specified with --with-kdedir
+        KDEDIR="$opt_kdedir"
+fi
+AC_SUBST(KDEDIR)
+
 # Defs for libary symbol files
 #
 # Expand the prefix variable
@@ -507,6 +519,7 @@ AC_MSG_RESULT([
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR
    xdg directory:                    $expandedXDGDIR
+   KDE directory:                    $KDEDIR
    LIBGEDA .so version:              $SHARED_LIBRARY_VERSION
    dmalloc debugging:                $with_dmalloc
    ElectricFence debugging:          $with_efence
