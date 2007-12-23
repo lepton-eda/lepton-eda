@@ -40,7 +40,7 @@
           (if (and (regular-file? path)
                    (has-suffix? path ".scm")
                    (access? path R_OK))
-            (load path)
+            (eval-protected `(load ,path))
             #f
           )))
       (closedir dir))
