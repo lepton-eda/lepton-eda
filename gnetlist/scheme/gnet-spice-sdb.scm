@@ -383,7 +383,7 @@
 	   
 	 ((string=? (string (string-ref file-line 0)) ".")
 	  (begin
-	    (display "In get-file-type, first-char = .\n")  ;; DEBUG stuff
+	    (debug-spew "In get-file-type, first-char = .\n")  ;; DEBUG stuff
 	    (cond
 
 	      ((string-ci=? (safe-string-head file-line 7) ".subckt")  ;; found .subckt as first line.
