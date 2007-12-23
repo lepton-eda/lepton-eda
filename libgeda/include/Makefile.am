@@ -6,7 +6,9 @@ libgedainclude_HEADERS = \
 	prototype.h struct.h libgeda.h i_vars.h papersizes.h \
 	geda_list.h
 
-noinst_HEADERS = libgeda_priv.h
+noinst_HEADERS = \
+	libgeda_priv.h \
+	prototype_priv.h
 
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
