@@ -25,6 +25,9 @@ AC_ARG_ENABLE(debug,
 # Change default location for rc files
 AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
 
+# Change default location for XDG files (.desktop and icons)
+AC_ARG_WITH(xdgdir, [  --with-xdgdir=path      Change where the .desktop file and theme icons are installed [[DATAROOTDIR]]], [opt_xdgdir=$withval])
+
 # 
 # Command line flags end
 #########################################################################
@@ -385,6 +388,16 @@ else
 	GEDARCDIR="$opt_rcdir"
 fi
 
+if test x$opt_xdgdir = x; then
+        # path was not specified with --with-xdgdir
+        XDGDIR='${datarootdir}'
+else
+        # path WAS specified with --with-xdgdir
+        #AC_DEFINE_UNQUOTED(XDGDIR, "$opt_xdgdir", [gEDA/gaf's rc directory])
+        XDGDIR="$opt_xdgdir"
+fi
+AC_SUBST(XDGDIR)
+
 # Expand the prefix variable
 # I don't like the way this is done, but it works (I hope).
 if eval "test x$prefix = xNONE"; then
@@ -435,6 +448,7 @@ AC_OUTPUT
 
 expandedGEDADATADIR=`eval "echo $GEDADATADIR"`
 expandedGEDARCDIR=`eval "echo $GEDARCDIR"`
+expandedXDGDIR=`eval "echo $XDGDIR"`
 
 AC_MSG_RESULT([
 ***** Configuration summary for $PACKAGE $DOTTED_VERSION.$DATE_VERSION *****
@@ -442,6 +456,7 @@ AC_MSG_RESULT([
 == libgeda library version:          $LIBGEDA_VERSION
 == data directory:                   $expandedGEDADATADIR
 == rc directory:                     $expandedGEDARCDIR
+== xdg directory:                    $expandedXDGDIR
 == compiler flags:                   $GATTRIB_CFLAGS
 == linker flags:                     $GATTRIB_LDFLAGS
 == glib compiler flags:              $GLIB_CFLAGS

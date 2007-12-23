@@ -1,5 +1,6 @@
 theme=hicolor
-themedir=$(datadir)/icons/$(theme)
+xdgdir=@XDGDIR@
+themedir=$(xdgdir)/icons/$(theme)
 
 app_icon = gattrib
 
@@ -15,7 +16,7 @@ theme_icons = \
 	$(app_icon_files:%=apps,%)
 
 
-desktopdir=$(datadir)/applications
+desktopdir=$(xdgdir)/applications
 desktop_in_files = geda-gattrib.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
