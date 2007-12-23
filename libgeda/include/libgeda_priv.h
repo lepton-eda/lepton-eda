@@ -2,6 +2,7 @@
 #include <glib.h>
 #include <gtk/gtk.h> /* FIXME */
 #include <libguile.h>
+#include "guile_compat_1.6.h"
 
 /* Public libgeda headers */
 #include "defines.h"
