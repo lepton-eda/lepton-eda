@@ -29,101 +29,166 @@
 #include <unistd.h>
 #endif
 
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
 #include "libgeda_priv.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
 
-/* The following code was contributed by thi (with formating changes
- * by Ales) Thanks!
- * Later updated by spe
- *
- * This `load()' is modeled after libguile/load.c, load().
- * Additionally, the most recent form read is saved in case something
- * goes wrong.
- */
-
-/*! \brief */
-static SCM most_recently_read_form = SCM_BOOL_F;
-
-/*! \todo Finish function description!!!
- *  \brief Loads a scheme file.
- *  \par Function Description
- *  Loads a scheme file.
- *
- *  \param [in] data  ????
- *  \return SCM_BOOL_T always.
- */
-static SCM load (void *data)
+/* Pre-unwind handler called in the context in which the exception was
+ * thrown.  Not used with Guile 1.6.x. */
+#if HAVE_DECL_SCM_C_CATCH
+static SCM protected_pre_unwind_handler (void *data, SCM key, SCM args)
 {
-	SCM load_port = (SCM)data;
-	SCM form;
-	int eof_found = 0;
+  /* Capture the stack trace */
+  *((SCM *) data) = scm_make_stack (SCM_BOOL_T, SCM_EOL);
 
-	while (!eof_found) {
-		form = scm_read(load_port);
-		if (SCM_EOF_OBJECT_P(form)) {
-			eof_found = 1;
-		} else {
-			most_recently_read_form = form;
-  			scm_eval_x (form, scm_current_module() );
-		}
-	}
+  return SCM_BOOL_T;
+}
+#endif
 
-	most_recently_read_form = SCM_BOOL_F;
+/* Post-unwind handler called in the context of the catch expression.
+ * This actually does the work of parsing the stack and generating log
+ * messages. */
+static SCM protected_post_unwind_handler (void *data, SCM key, SCM args)
+{
+  SCM s_stack;
+#if HAVE_DECL_SCM_C_CATCH /* The stack was captured pre-unwind */
+  s_stack = *(SCM *) data;
+#else                        /* Get stack from magic variable */
+  s_stack = scm_fluid_ref (SCM_VARIABLE_REF (scm_the_last_stack_fluid_var));
+#endif /* HAVE_DECL_SCM_C_CATCH */
 
-	return SCM_BOOL_T;
+
+  char *message = NULL;
+  
+  /* Capture the error message */
+  if (scm_list_p (scm_caddr (args)) == SCM_BOOL_T) {
+    SCM s_msg = scm_simple_format (SCM_BOOL_F, 
+                                   scm_cadr (args), 
+                                   scm_caddr (args));
+    message = scm_to_locale_string (s_msg);
+  } else {
+    message = scm_to_locale_string (scm_cadr (args));
+  }
+
+  /* If a stack was captured, extract debugging information */
+  if (scm_stack_p (s_stack) == SCM_BOOL_T) {
+    SCM s_port, s_source, s_filename, s_line_num, s_col_num;
+    char *filename, *trace;
+
+    /* Capture & log backtrace */
+    s_port = scm_open_output_string();
+    scm_display_backtrace (s_stack, s_port,
+                           SCM_BOOL_F, SCM_BOOL_F);
+    trace = scm_to_locale_string (scm_get_output_string (s_port));
+    scm_close_output_port (s_port);
+    s_log_message ("\n%s\n", trace);
+    free (trace);
+    trace = NULL;
+
+    /* Capture & log location */
+    s_source = scm_frame_source (scm_stack_ref (s_stack, scm_from_int (0)));
+
+    s_filename = scm_source_property (s_source,
+                                      scm_from_locale_symbol ("filename"));
+    s_line_num = scm_source_property (s_source,
+                                      scm_from_locale_symbol ("line"));
+    s_col_num = scm_source_property (s_source,
+                                     scm_from_locale_symbol ("column"));
+    
+    if (scm_is_string (s_filename)
+         && scm_is_integer (s_line_num)
+         && scm_is_integer (s_col_num)) {
+
+       filename = scm_to_locale_string (s_filename);
+       s_log_message ("%s:%i:%i: %s\n", filename, scm_to_int (s_line_num),
+                      scm_to_int (s_col_num), message);
+       free (filename);
+
+    } else {
+
+      s_log_message ("Unknown file: %s\n", message);
+
+    }
+
+  } else {
+    /* No stack, so can't display debugging info */
+    s_log_message ("Evaluation failed: %s\n"
+                   "Enable debugging for more detailed information\n",
+                   message);
+  }
+
+  free (message);
+
+  return SCM_BOOL_F;
 }
 
-/*! \todo Finish function description!!!
- *  \brief The error handler for load.
- *  \par Function Description
- *  The error handler for load
- *
- *  \param [in] data
- *  \param [in] tag
- *  \param [in] throw_args
- *  \return SCM_BOOL_F always.
- */
-static SCM load_error_handler(void *data, SCM tag, SCM throw_args)
+/* Actually carries out evaluation for protected eval */
+static SCM protected_body_eval (void *data)
 {
-	SCM cur_out = scm_current_output_port ();
-	SCM load_port = (SCM)data;
-	SCM filename  = scm_port_filename(load_port);
+  SCM args = *((SCM *)data);
+  return scm_eval (scm_car (args), scm_cadr (args));
+}
 
-	/*
-	 * If misc-error the column and line pointers points
-	 * to end of file. Not necessary to confuse user.
-	 */
+/*! \brief Evaluate a Scheme expression safely.
+ *  \par Function Description
+ *
+ *  Often a libgeda program (or libgeda itself) will need to call out
+ *  to Scheme code, for example to load a Scheme configuration file.
+ *  If an error or exception caused by such code goes uncaught, it
+ *  locks up the Scheme interpreter, stopping any further Scheme code
+ *  from being run until the program is restarted.
+ *
+ *  This function is equivalent to scm_eval (), with the important
+ *  difference that any errors or exceptions caused by the evaluated
+ *  expression \a exp are caught and reported via the libgeda logging
+ *  mechanism.  If an error occurs during evaluation, this function
+ *  returns SCM_BOOL_F.  If \a module_or_state is undefined, uses the
+ *  current interaction environment.
+ *
+ *  \param exp             Expression to evaluate
+ *  \param module_or_state Environment in which to evaluate \a exp
+ *
+ *  \returns Evaluation results or SCM_BOOL_F if exception caught.
+ */
+SCM g_scm_eval_protected (SCM exp, SCM module_or_state)
+{
+  SCM stack = SCM_BOOL_T;
+  SCM body_data;
+  SCM result;
 
-    if (!scm_eq_p (tag, scm_str2symbol ("misc-error"))) {
-               scm_display(scm_makfrom0str("Error : "), cur_out);
-		scm_display(tag, cur_out);
-			
-		scm_display(scm_makfrom0str(" [C:"), cur_out);
-		scm_display(scm_port_column(load_port), cur_out );
-		scm_display(scm_makfrom0str(" L:"), cur_out);
-		scm_display(scm_port_line(load_port), cur_out );
-		scm_display(scm_makfrom0str("]"), cur_out);
-	} else {
-		scm_display(scm_makfrom0str("Probably parenthesis mismatch"), 
-			    cur_out);
+  if (module_or_state == SCM_UNDEFINED) {
+    body_data = scm_list_2 (exp, scm_interaction_environment ());
+  } else {
+    body_data = scm_list_2 (exp, module_or_state);
+  }
 
-	}
+#if HAVE_DECL_SCM_C_CATCH /* Guile 1.8.x approach */
+  result = scm_c_catch (SCM_BOOL_T,
+                        protected_body_eval,           /* catch body */
+                        &body_data,                    /* body data */
+                        protected_post_unwind_handler, /* post handler */
+                        &stack,                        /* post data */
+                        protected_pre_unwind_handler,  /* pre handler */
+                        &stack                         /* pre data */
+                        );
+#else                     /* Guile 1.6.x approach using magic variables */
+  result =
+    scm_internal_stack_catch (SCM_BOOL_T,
+                              protected_body_eval,           /* catch body */
+                              &body_data,                    /* body data */
+                              protected_post_unwind_handler, /* post handler */
+                              NULL);
+#endif /* HAVE_DECL_SCM_C_CATCH */
 
-	scm_display(scm_makfrom0str(" in "), cur_out);
-	scm_display(filename, cur_out);
-	scm_newline(cur_out);
+  scm_remember_upto_here_2 (body_data, stack);
 
-	if (most_recently_read_form != SCM_BOOL_F) {
-		scm_display(scm_makfrom0str ("Most recently read form: "),
-			    cur_out);
-		scm_display(most_recently_read_form, cur_out);
-		scm_newline(cur_out);
-	}
-
-	return SCM_BOOL_F;
+  return result;
 }
 
 
@@ -136,8 +201,8 @@ static SCM load_error_handler(void *data, SCM tag, SCM throw_args)
  */
 int g_read_file(const gchar *filename)
 {
-	SCM port;
 	SCM eval_result = SCM_BOOL_F;
+        SCM expr;
 	char * full_filename;
 
 	if (filename == NULL) {
@@ -156,17 +221,12 @@ int g_read_file(const gchar *filename)
 		return(-1);
   	}
 
-	port = scm_open_file(scm_makfrom0str(full_filename), scm_makfrom0str("r"));
+        expr = scm_list_2 (scm_from_locale_symbol ("load"),
+                           scm_from_locale_string (full_filename));
+        eval_result = g_scm_eval_protected (expr,
+                                            scm_interaction_environment ());
 
-	eval_result = scm_internal_catch (SCM_BOOL_T,
-                                      (scm_t_catch_body)load,
-                                      (void*)port,
-                                      (scm_t_catch_handler)load_error_handler,
-                                      (void*)port);
-
-	scm_close_port(port);
-	
 	g_free(full_filename);
 
-	return (eval_result == SCM_BOOL_T);
+	return (eval_result != SCM_BOOL_F);
 }

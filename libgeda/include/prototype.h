@@ -26,6 +26,7 @@ int f_print_stream(TOPLEVEL *toplevel, FILE *fp);
 void f_print_set_type(TOPLEVEL *toplevel, int type);
 
 /* g_basic.c */
+SCM g_scm_eval_protected (SCM exp, SCM module_or_state);
 int g_read_file(const gchar *filename);
 
 /* g_rc.c */
