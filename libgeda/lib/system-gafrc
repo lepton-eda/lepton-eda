@@ -9,6 +9,10 @@
 ; geda-data-path -- path to gEDA system-wide data directory
 ; geda-rc-path   -- path to gEDA system-wide config directory
 
+;; Set some flags to aid in debugging rc files
+(debug-enable 'debug)
+(debug-enable 'backtrace)
+(read-enable 'positions)
 
 ;; The directory containing gaf Scheme code.
 (define geda-scheme-path (string-append geda-data-path path-sep "scheme"))
