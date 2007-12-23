@@ -46,12 +46,12 @@ install-data-local:
 
 install-data-hook:
 if ENABLE_UPDATE_MIME_DATABASE
-	$(UPDATE_MIME_DATABASE) "$(mimedir)"
+	$(UPDATE_MIME_DATABASE) "$(DESTDIR)$(mimedir)"
 endif
 
 uninstall-hook:
 if ENABLE_UPDATE_MIME_DATABASE
-	$(UPDATE_MIME_DATABASE) "$(mimedir)"
+	$(UPDATE_MIME_DATABASE) "$(DESTDIR)$(mimedir)"
 endif
 	$(install_icon_exec) -u $(theme_icons)
 
