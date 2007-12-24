@@ -20,5 +20,5 @@
 /* Private libgeda headers */
 #include "prototype_priv.h"
 
-/* Dummy _() macro for future gettext translation FIXME */
-#define _(X) X
+/* Gettext translation */
+#include "gettext_priv.h"

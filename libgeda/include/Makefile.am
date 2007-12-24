@@ -9,6 +9,7 @@ libgedainclude_HEADERS = \
 noinst_HEADERS = \
 	libgeda_priv.h \
 	prototype_priv.h \
+	gettext_priv.h \
 	guile_compat_1.6.h
 
 MOSTLYCLEANFILES = *.log core FILE *~

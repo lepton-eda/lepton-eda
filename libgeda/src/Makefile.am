@@ -61,6 +61,7 @@ libgeda_la_SOURCES = \
 	u_basic.c
 
 INCLUDES = -I$(top_srcdir)/include @LIBGEDA_CFLAGS@
+DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 libgeda_la_LDFLAGS = @LIBTOOL_FLAGS@ @LIBGEDA_LDFLAGS@
 LIBTOOL=@LIBTOOL@ --silent
 

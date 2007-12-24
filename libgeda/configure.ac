@@ -13,6 +13,9 @@ echo Configuring $PACKAGE version $DOTTED_VERSION.$DATE_VERSION
 AM_INIT_AUTOMAKE($PACKAGE, $DOTTED_VERSION, no-define)
 AM_CONFIG_HEADER([config.h])
 
+# Call this to make autoconf and friends happy
+AC_GNU_SOURCE
+
 # Init libtool
 AM_PROG_LIBTOOL
 
@@ -56,24 +59,35 @@ fi
 # Misc win32 / mingw checks and variables end
 #########################################################################
 
+# Checks for programs.
+AC_PROG_CC
+AM_CONDITIONAL(CCISGCC, test "$GCC" = "yes")
+AC_PROG_CPP
+AC_PROG_MAKE_SET
+
+############################################################################
+# Internationalisation start
+#
 # Set USE_NLS
 AM_NLS
 
 # Set package name for translations
 so_major=`echo "$SHARED_LIBRARY_VERSION" | sed 's/:.*//'`
 GETTEXT_PACKAGE=$PACKAGE$so_major
+AH_TEMPLATE([GETTEXT_PACKAGE], [Name of this program's gettext domain])
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"])
 AC_SUBST(GETTEXT_PACKAGE)
 
-# Check pre-requsites for the PO dir.
-# (Needed without explicitly initialising gettext)
-AM_PO_SUBDIRS
+# Initialise gettext
+AM_GNU_GETTEXT
+AM_GNU_GETTEXT_VERSION([0.16.1])
 
-# Checks for programs.
-AC_PROG_CC
-AM_CONDITIONAL(CCISGCC, test "$GCC" = "yes")    
-AC_PROG_CPP
-AC_PROG_MAKE_SET
+# Initialise intltool
 IT_PROG_INTLTOOL(0.35.0)
+
+# 
+# Internationalisation end
+#########################################################################
 
 ############################################################################
 # Check for guile start
@@ -495,6 +509,7 @@ AC_CONFIG_FILES([Makefile
                  include/Makefile
                  docs/Makefile
                  data/Makefile
+                 intl/Makefile
                  po/Makefile.in
                  po/Makefile
 	         libgeda.pc

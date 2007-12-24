@@ -52,6 +52,10 @@ void libgeda_init(void)
     g_setenv ("GEDADATA", GEDADATADIR, FALSE);
   }
 
+  /* Initialise gettext */
+  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+
+  /* Initialise gobject */
   g_type_init ();
 
   s_clib_init();
