@@ -178,12 +178,12 @@ OBJECT *o_text_load_font(TOPLEVEL *toplevel, gunichar needed_char)
     /* convert needed_char to a utf-8 string */
     l = g_unichar_to_utf8 (needed_char, outbuf);
     outbuf[l] = '\0';
-    s_log_message("Could not find character '%s' definition.\n", outbuf);
+    s_log_message(_("Could not find character '%s' definition.\n"), outbuf);
     
     g_free (temp_string);
     temp_string = g_strdup_printf("%s%cquest.sym", toplevel->font_directory, G_DIR_SEPARATOR);
     if ( access(temp_string, R_OK) != 0 ) {
-      fprintf(stderr, "Could not load question font char -- check font-directory keyword\n");
+      fprintf(stderr, _("Could not load question font char -- check font-directory keyword\n"));
       exit(-1);
     }
     not_found = TRUE; 
@@ -1071,8 +1071,8 @@ OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
   }
 
   if (size == 0) {
-    fprintf(stderr, "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle, alignment);
-    s_log_message("Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle, alignment);
+    fprintf(stderr, _("Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"), type, x, y, color, size, visibility, show_name_value, angle, alignment);
+    s_log_message(_("Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"), type, x, y, color, size, visibility, show_name_value, angle, alignment);
   }
 
   switch(angle) {
@@ -1084,11 +1084,13 @@ OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
     break;
 
     default:
-    fprintf(stderr, "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle, alignment);
-    s_log_message("Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle, alignment);
-    s_log_message("Setting angle to 0\n");
-    angle=0;
-    break;
+      fprintf(stderr, _("Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"),
+              type, x, y, color, size, visibility, show_name_value, angle, alignment);
+      s_log_message(_("Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"),
+                    type, x, y, color, size, visibility, show_name_value, angle, alignment);
+      s_log_message(_("Setting angle to 0\n"));
+      angle=0;
+      break;
 
   }
 
@@ -1106,17 +1108,19 @@ OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
     break;
 		
     default:
-    fprintf(stderr, "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle, alignment);
-    s_log_message("Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle, alignment);
-    s_log_message("Setting alignment to LOWER_LEFT\n");
-    alignment = LOWER_LEFT; 
-    break;
+      fprintf(stderr, _("Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"),
+              type, x, y, color, size, visibility, show_name_value, angle, alignment);
+      s_log_message(_("Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"),
+                    type, x, y, color, size, visibility, show_name_value, angle, alignment);
+      s_log_message(_("Setting alignment to LOWER_LEFT\n"));
+      alignment = LOWER_LEFT;
+      break;
   }
 
   if (color < 0 || color > MAX_COLORS) {
-    fprintf(stderr, "Found an invalid color [ %s ]\n", first_line);
-    s_log_message("Found an invalid color [ %s ]\n", first_line);
-    s_log_message("Setting color to WHITE\n");
+    fprintf(stderr, _("Found an invalid color [ %s ]\n"), first_line);
+    s_log_message(_("Found an invalid color [ %s ]\n"), first_line);
+    s_log_message(_("Setting color to WHITE\n"));
     color = WHITE;
   }
 
@@ -1194,9 +1198,8 @@ void o_text_set_info_font(char buf[])
   if (buf_ptr != NULL && *buf_ptr != '\0') {
     character = g_utf8_get_char_validated (buf_ptr, -1);
     if (character == (gunichar)-1) {
-      s_log_message (
-        "Failed to validate utf-8 character in font definition: \"%s\".\n",
-        string);
+      s_log_message (_("Failed to validate utf-8 character in font definition: \"%s\".\n"),
+                     string);
       return;
     }
     /* move buf_ptr just after character */

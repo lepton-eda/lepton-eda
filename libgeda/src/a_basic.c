@@ -170,7 +170,7 @@ gchar *o_save_objects (OBJECT *object_list)
              *  completely? In any case, failing gracefully is better
              *  than killing the program, which is what this used to
              *  do... */
-            g_critical ("o_save_objects: object %p has unknown type '%c'\n",
+            g_critical (_("o_save_objects: object %p has unknown type '%c'\n"),
                         o_current, o_current->type);
             /* Dump string built so far */
             g_string_free (acc, TRUE);
@@ -215,7 +215,7 @@ int o_save(TOPLEVEL *toplevel, const char *filename)
   fp = fopen(filename, "wb");
 	
   if (fp == NULL) {
-    s_log_message("o_save: Could not open [%s]\n", filename);
+    s_log_message(_("o_save: Could not open [%s]\n"), filename);
     return 0;
   }
 
@@ -405,9 +405,9 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
 
 		embedded_level++;
 	} else {
-        	fprintf(stderr, "Read unexpected embedded "
-				"symbol start marker in [%s] :\n>>\n%s<<\n", 
-				name, line);
+          fprintf(stderr, _("Read unexpected embedded "
+                            "symbol start marker in [%s] :\n>>\n%s<<\n"),
+                  name, line);
 	}
        	break;
 
@@ -425,9 +425,9 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
           o_complex_recalc( toplevel, object_list );
 		embedded_level--;
 	} else {
-        	fprintf(stderr, "Read unexpected embedded "
-				"symbol end marker in [%s] :\n>>\n%s<<\n", 
-				name, line);
+          fprintf(stderr, _("Read unexpected embedded "
+                            "symbol end marker in [%s] :\n>>\n%s<<\n"),
+                  name, line);
 	}
 	
         break;
@@ -457,13 +457,13 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
         
 	if (fileformat_ver < current_fileformat_ver)
         {
-       	  s_log_message("Read an old format sym/sch file!\n"
-                        "Please run g[sym|sch]update on:\n[%s]\n", name);
+          s_log_message(_("Read an old format sym/sch file!\n"
+                          "Please run g[sym|sch]update on:\n[%s]\n"), name);
 	}
         break;
 
       default:
-        fprintf(stderr, "Read garbage in [%s] :\n>>\n%s<<\n",
+        fprintf(stderr, _("Read garbage in [%s] :\n>>\n%s<<\n"),
                 name, line);
         break;
     }

@@ -46,7 +46,7 @@ void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
     /* set the embedded flag */
     o_current->complex_embedded = TRUE;
 
-    s_log_message ("Component [%s] has been embedded\n",
+    s_log_message (_("Component [%s] has been embedded\n"),
                    o_current->complex_basename);
     
     /* page content has been modified */
@@ -59,7 +59,7 @@ void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
 
     o_current->picture->embedded = 1;
     
-    s_log_message ("Picture [%s] has been embedded\n",
+    s_log_message (_("Picture [%s] has been embedded\n"),
 		   basename(o_current->picture->filename));
     
     
@@ -88,14 +88,15 @@ void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current)
 
     if (sym == NULL) {
       /* symbol not found in the symbol library: signal an error */
-      s_log_message ("Could not find component [%s], while trying to unembed. Component is still embedded\n",
+      s_log_message (_("Could not find component [%s], while trying to "
+                       "unembed. Component is still embedded\n"),
                      o_current->complex_basename);
       
     } else {
       /* clear the embedded flag */
       o_current->complex_embedded = FALSE;
 
-      s_log_message ("Component [%s] has been successfully unembedded\n",
+      s_log_message (_("Component [%s] has been successfully unembedded\n"),
                      o_current->complex_basename);
       
       /* page content has been modified */
@@ -110,7 +111,7 @@ void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current)
 
     o_current->picture->embedded = 0;
     
-    s_log_message ("Picture [%s] has been unembedded\n",
+    s_log_message (_("Picture [%s] has been unembedded\n"),
 		   basename(o_current->picture->filename));
     
     

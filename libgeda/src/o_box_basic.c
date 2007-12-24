@@ -333,16 +333,16 @@ OBJECT *o_box_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   }
 
   if (width == 0 || height == 0) {
-    fprintf(stderr, "Found a zero width/height box [ %c %d %d %d %d %d ]\n",
+    fprintf(stderr, _("Found a zero width/height box [ %c %d %d %d %d %d ]\n"),
             type, x1, y1, width, height, color);
-    s_log_message("Found a zero width/height box [ %c %d %d %d %d %d ]\n",
+    s_log_message(_("Found a zero width/height box [ %c %d %d %d %d %d ]\n"),
                   type, x1, y1, width, height, color);
   }
 
   if (color < 0 || color > MAX_COLORS) {
-    fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
-    s_log_message("Found an invalid color [ %s ]\n", buf);
-    s_log_message("Setting color to WHITE\n");
+    fprintf(stderr, _("Found an invalid color [ %s ]\n"), buf);
+    s_log_message(_("Found an invalid color [ %s ]\n"), buf);
+    s_log_message(_("Setting color to WHITE\n"));
     color = WHITE;
   }
   

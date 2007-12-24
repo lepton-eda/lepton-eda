@@ -77,8 +77,10 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
 	 &type, &x1, &y1, &width, &height, &angle, &mirrored, &embedded);
   
   if (num_conv != 8) {
-    fprintf(stderr, "Error reading picture definition line: %s.\n", first_line);
-    s_log_message ("Error reading picture definition line: %s.\n", first_line);
+    fprintf(stderr, _("Error reading picture definition line: %s.\n"),
+            first_line);
+    s_log_message (_("Error reading picture definition line: %s.\n"),
+                   first_line);
   }
 
   /* Convert from ascii character to number */
@@ -91,27 +93,27 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
   }
 
   if (width == 0 || height == 0) {
-    fprintf(stderr, "Found a zero width/height picture [ %c %d %d %d %d ]\n",
+    fprintf(stderr, _("Found a zero width/height picture [ %c %d %d %d %d ]\n"),
             type, x1, y1, width, height);
-    s_log_message("Found a zero width/height picture [ %c %d %d %d %d ]\n",
+    s_log_message(_("Found a zero width/height picture [ %c %d %d %d %d ]\n"),
                   type, x1, y1, width, height);
   }
 
   if ( (mirrored > 1) || (mirrored < 0)) {
-    fprintf(stderr, "Found a picture with a wrong 'mirrored' parameter: %c.\n",
+    fprintf(stderr, _("Found a picture with a wrong 'mirrored' parameter: %c.\n"),
 	    mirrored);
-    s_log_message("Found a picture with a wrong 'mirrored' parameter: %c.\n",
+    s_log_message(_("Found a picture with a wrong 'mirrored' parameter: %c.\n"),
 	    mirrored);
-    s_log_message("Setting mirrored to 0\n");
+    s_log_message(_("Setting mirrored to 0\n"));
     mirrored = 0;
   }
 
   if ( (embedded > 1) || (embedded < 0)) {
-    fprintf(stderr, "Found a picture with a wrong 'embedded' parameter: %c.\n",
+    fprintf(stderr, _("Found a picture with a wrong 'embedded' parameter: %c.\n"),
 	    embedded);
-    s_log_message("Found a picture with a wrong 'embedded' parameter: %c.\n",
+    s_log_message(_("Found a picture with a wrong 'embedded' parameter: %c.\n"),
 	    embedded);
-    s_log_message("Setting embedded to 0\n");
+    s_log_message(_("Setting embedded to 0\n"));
     embedded = 0;
   }
   switch(angle) {
@@ -123,11 +125,11 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
     break;
 
     default:
-    fprintf(stderr, "Found an unsupported picture angle [ %d ]\n", angle);
-    s_log_message("Found an unsupported picture angle [ %d ]\n", angle);
-    s_log_message("Setting angle to 0\n");
-    angle=0;
-    break;
+      fprintf(stderr, _("Found an unsupported picture angle [ %d ]\n"), angle);
+      s_log_message(_("Found an unsupported picture angle [ %d ]\n"), angle);
+      s_log_message(_("Setting angle to 0\n"));
+      angle=0;
+      break;
 
   }
 
@@ -139,8 +141,8 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
   if (embedded == 0) {
     pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
     if (pixbuf == NULL) {
-      fprintf(stderr, "Error loading picture from file: %s.\n", filename);
-      s_log_message( "Error loading picture from file: %s.\n", filename);
+      fprintf(stderr, _("Error loading picture from file: %s.\n"), filename);
+      s_log_message(_("Error loading picture from file: %s.\n"), filename);
     }
   }
   else {
@@ -170,16 +172,15 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
 						     &pixdata_serialized_length);
 
     if (pixdata_serialized_data == NULL) {
-      fprintf(stderr, "Error decoding picture.\n");      
-      s_log_message ("Error decoding picture.\n");
+      fprintf(stderr, _("Error decoding picture.\n"));
+      s_log_message (_("Error decoding picture.\n"));
     }
     else {
       /* Deserialize the picture */
       if (!gdk_pixdata_deserialize(&pixdata,pixdata_serialized_length, 
 				   (guint8 *) pixdata_serialized_data, NULL)) {
-				     fprintf(stderr, "Error deserializing picture.\n");
-				   }
-      else {
+        fprintf(stderr, _("Error deserializing picture.\n"));
+      } else {
 	pixbuf = gdk_pixbuf_from_pixdata (&pixdata,TRUE, NULL);
       }
     }
@@ -197,15 +198,17 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
     /* If the pixbuf couldn't be loaded, then try to load a warning picture */
     char *temp_filename;
 
-    fprintf(stderr, "Loading warning picture.\n");
-    s_log_message ("Loading warning picture.\n");
+    fprintf(stderr, _("Loading warning picture.\n"));
+    s_log_message (_("Loading warning picture.\n"));
     
     temp_filename = g_strconcat(toplevel->bitmap_directory,
 			       G_DIR_SEPARATOR_S, "gschem-warning.png", NULL);
     pixbuf = gdk_pixbuf_new_from_file (temp_filename, NULL);
     if (pixbuf == NULL) {
-      fprintf(stderr, "Error loading picture from file: %s.\n", temp_filename);
-      s_log_message( "Error loading picture from file: %s.\n", temp_filename);
+      fprintf(stderr, _("Error loading picture from file: %s.\n"),
+              temp_filename);
+      s_log_message( _("Error loading picture from file: %s.\n"),
+                     temp_filename);
     }      
     g_free (temp_filename);
   }
@@ -269,8 +272,8 @@ char *o_picture_save(OBJECT *object)
     pixdata_serialized_data = (gchar *) gdk_pixdata_serialize(&pixdata, 
 						    &pixdata_serialized_stream_length);
     if (pixdata_serialized_data == NULL) {
-      fprintf (stderr, "ERROR: o_picture_save: failed to create serialized data from picture\n");
-      s_log_message ("ERROR: o_picture_save: failed to create serialized data from picture\n");
+      fprintf (stderr, _("ERROR: o_picture_save: failed to create serialized data from picture\n"));
+      s_log_message (_("ERROR: o_picture_save: failed to create serialized data from picture\n"));
     }
     else {
       /* Encode the picture */
@@ -278,8 +281,8 @@ char *o_picture_save(OBJECT *object)
 						 pixdata_serialized_stream_length,
 						 &encoded_picture_length, TRUE); 
       if (encoded_picture == NULL) {
-	fprintf(stderr, "ERROR: o_picture_save: unable to encode the picture.\n");
-	s_log_message("ERROR: o_picture_save: unable to encode the picture.\n");
+	fprintf(stderr, _("ERROR: o_picture_save: unable to encode the picture.\n"));
+	s_log_message(_("ERROR: o_picture_save: unable to encode the picture.\n"));
       }
     }
   }

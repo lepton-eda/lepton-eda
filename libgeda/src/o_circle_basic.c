@@ -203,7 +203,7 @@ void o_circle_modify(TOPLEVEL *toplevel, OBJECT *object,
     case CIRCLE_RADIUS:
       /* modify the radius of the circle */
       if (x == 0) {
-	s_log_message("Null radius circles are not allowed\n");
+	s_log_message(_("Null radius circles are not allowed\n"));
 	return;
       }
       object->circle->radius = x;
@@ -287,17 +287,17 @@ OBJECT *o_circle_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 
 
   if (radius == 0) {
-    fprintf(stderr, "Found a zero radius circle [ %c %d %d %d %d ]\n",
+    fprintf(stderr, _("Found a zero radius circle [ %c %d %d %d %d ]\n"),
             type, x1, y1, radius, color);
-    s_log_message("Found a zero radius circle [ %c %d %d %d %d ]\n",
+    s_log_message(_("Found a zero radius circle [ %c %d %d %d %d ]\n"),
                   type, x1, y1, radius, color);
 	
   }
   
   if (color < 0 || color > MAX_COLORS) {
-    fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
-    s_log_message("Found an invalid color [ %s ]\n", buf);
-    s_log_message("Setting color to WHITE\n");
+    fprintf(stderr, _("Found an invalid color [ %s ]\n"), buf);
+    s_log_message(_("Found an invalid color [ %s ]\n"), buf);
+    s_log_message(_("Setting color to WHITE\n"));
     color = WHITE;
   }
 

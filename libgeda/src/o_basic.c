@@ -186,7 +186,7 @@ void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current,
     case(TYPE_DOTTED):
     if (space < 1) {
       space = 100;
-      s_log_message ("Invalid space specified, setting to 100\n");
+      s_log_message (_("Invalid space specified, setting to 100\n"));
     }
     break;
     case(TYPE_DASHED):
@@ -194,11 +194,11 @@ void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current,
     case(TYPE_PHANTOM):
     if (length < 1) {
       length = 100;
-      s_log_message ("Invalid length specified, setting to 100\n");
+      s_log_message (_("Invalid length specified, setting to 100\n"));
     }
     if (space < 1) {
       space = 100;
-      s_log_message ("Invalid space specified, setting to 100\n");
+      s_log_message (_("Invalid space specified, setting to 100\n"));
     }
     break;
     default:

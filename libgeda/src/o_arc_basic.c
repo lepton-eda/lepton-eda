@@ -287,17 +287,16 @@ OBJECT *o_arc_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   /* Error check */
   if (radius <= 0) {
     fprintf(stderr,
-            "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n",
+            _("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"),
             type, x1, y1, radius, start_angle, end_angle, color);
-    s_log_message
-      ("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n",
-       type, x1, y1, radius, start_angle, end_angle, color);
+    s_log_message (_("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"),
+                   type, x1, y1, radius, start_angle, end_angle, color);
   }
 	
   if (color < 0 || color > MAX_COLORS) {
-    fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
-    s_log_message("Found an invalid color [ %s ]\n", buf);
-    s_log_message("Setting color to WHITE\n");
+    fprintf(stderr, _("Found an invalid color [ %s ]\n"), buf);
+    s_log_message(_("Found an invalid color [ %s ]\n"), buf);
+    s_log_message(_("Setting color to WHITE\n"));
     color = WHITE;
   }
 

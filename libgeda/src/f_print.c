@@ -102,7 +102,7 @@ int f_print_header(TOPLEVEL *toplevel, FILE *fp,
   /* Get Time of day for creation date */
   time_rc = time(&current_time);
   if(time_rc == (time_t)-1) {
-    s_log_message("Unable to get time of day in f_print_header()\n");
+    s_log_message(_("Unable to get time of day in f_print_header()\n"));
     current_time=0; /* Just set it to 1970... */
   }
 
@@ -140,8 +140,8 @@ int f_print_header(TOPLEVEL *toplevel, FILE *fp,
   /* Open the prolog file */
   prolog = fopen(toplevel->postscript_prolog,"r");
   if(prolog == NULL) {
-    s_log_message("Unable to open the prolog file `%s' for reading "
-		  "in f_print_header()\n", toplevel->postscript_prolog);
+    s_log_message(_("Unable to open the prolog file `%s' for reading "
+                    "in f_print_header()\n"), toplevel->postscript_prolog);
     goto f_print_header_fail;
   }
   /* Loop while reading file into buffer and dump it
@@ -154,14 +154,14 @@ int f_print_header(TOPLEVEL *toplevel, FILE *fp,
   } while(!feof(prolog) && !ferror(prolog) && !ferror(fp));
 
   if(ferror(prolog)) {
-    s_log_message("Error during reading of the prolog file `%s' "
-		  "in f_print_header()\n", toplevel->postscript_prolog);
+      s_log_message(_("Error during reading of the prolog file `%s' "
+                      "in f_print_header()\n"), toplevel->postscript_prolog);
     goto f_print_header_fail;
   }
 
   if(ferror(fp)) {
-    s_log_message("Error during writing of the output postscript file "
-		  "in f_print_header()\n");
+    s_log_message(_("Error during writing of the output postscript file "
+                    "in f_print_header()\n"));
     goto f_print_header_fail;
   }
   g_free(buf);  /* If we got to here, the buffer was allocated. */
@@ -173,7 +173,7 @@ int f_print_header(TOPLEVEL *toplevel, FILE *fp,
   return 0;
 
  f_print_header_fail:
-  s_log_message ("Giving up on printing\n");
+  s_log_message (_("Giving up on printing\n"));
   g_free (buf); /* g_free() succeeds if argument is NULL */
   return -1;
 }
@@ -362,7 +362,7 @@ int f_print_file (TOPLEVEL *toplevel, const char *filename)
 
   /* check to see if it worked */ 
   if (fp == NULL) {
-    s_log_message("Could not open [%s] for printing\n", filename);
+    s_log_message(_("Could not open [%s] for printing\n"), filename);
     return -1;
   }
 
@@ -395,7 +395,8 @@ int f_print_command (TOPLEVEL *toplevel, const char *command)
   /* check to see if it worked */ 
   if (fp == NULL) 
     {
-      s_log_message("Could not execute command [%s] for printing\n", command);
+      s_log_message(_("Could not execute command [%s] for printing\n"),
+                    command);
       return -1;
     }
 
@@ -672,7 +673,7 @@ static int f_print_get_unicode_chars(TOPLEVEL *toplevel, OBJECT *head,
 	        if (count < 128)
 		  table[count++] = current_char;
 	        else 
-	          s_log_message("Too many UTF-8 characters, cannot print\n");
+	          s_log_message(_("Too many UTF-8 characters, cannot print\n"));
 	      }
 	    }  
             aux = g_utf8_find_next_char(aux, NULL);

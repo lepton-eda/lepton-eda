@@ -185,7 +185,7 @@ char *s_slib_search_lowlevel(const char *basename)
   if (slib_path) {
     /* return type */
 
-    s_log_message("Found [%s]\n", basename);
+    s_log_message(_("Found [%s]\n"), basename);
     /* s_log_message("Found [%s] in [%s]\n", basename, slib_path);*/
 
     len = strlen(basename)+strlen(slib_path);
@@ -201,10 +201,10 @@ char *s_slib_search_lowlevel(const char *basename)
     return(full_path);
   } else {
 
-    s_log_message("Could not find [%s] in any SourceLibrary\n", basename);
+    s_log_message(_("Could not find [%s] in any SourceLibrary\n"), basename);
 
 #if DEBUG 
-    fprintf(stderr, "Could not find [%s] in any SourceLibrary\n", basename);
+    fprintf(stderr, _("Could not find [%s] in any SourceLibrary\n"), basename);
 #endif
     return(NULL);
   }

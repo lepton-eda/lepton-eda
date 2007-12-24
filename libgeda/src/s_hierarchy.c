@@ -85,8 +85,8 @@ int s_hierarchy_down_schematic_single(TOPLEVEL *toplevel,
 	  ; /* void */
 
 	if (found->pid == forbear->pid) {
-	  s_log_message("hierarchy loop detected while visiting page:\n"
-			"  \"%s\"\n",found->page_filename);
+	  s_log_message(_("hierarchy loop detected while visiting page:\n"
+                          "  \"%s\"\n"), found->page_filename);
 	  return -1;  /* error signal */
 	}
         s_page_goto (toplevel, found);
@@ -240,7 +240,7 @@ void s_hierarchy_up(TOPLEVEL *toplevel, int pid)
   PAGE *p_current;
 
   if (pid < 0) {
-    s_log_message("There are no schematics above the current one!\n");
+    s_log_message(_("There are no schematics above the current one!\n"));
     return;
   }
 
@@ -249,8 +249,8 @@ void s_hierarchy_up(TOPLEVEL *toplevel, int pid)
   if (p_current) {
     s_page_goto(toplevel, p_current);
   } else {
-    s_log_message("Cannot find any schematics above the current one!\n");
-    s_log_message("Maybe toplevel schematic page was closed/discarded?\n");
+    s_log_message(_("Cannot find any schematics above the current one!\n"));
+    s_log_message(_("Maybe toplevel schematic page was closed/discarded?\n"));
   }
 }
 
@@ -326,8 +326,8 @@ GList *s_hierarchy_traversepages(TOPLEVEL *toplevel,
 	  s_page_goto(toplevel, p_current);
 	}
 	else {
-	  s_log_message("ERROR in s_hierarchy_traverse: "
-			"schematic not found: %s\n", 
+	  s_log_message(_("ERROR in s_hierarchy_traverse: "
+                          "schematic not found: %s\n"),
 			filename);
 	}
 	

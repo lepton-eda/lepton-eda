@@ -110,7 +110,7 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err)
   if (auto_err) {
     g_errcode = g_file_error_from_errno (auto_err);
     g_set_error (err, G_FILE_ERROR, g_errcode,
-                 "Failed to stat [%s]: %s",
+                 _("Failed to stat [%s]: %s"),
                  auto_filename, g_strerror (auto_err));
     result = TRUE;
     goto check_autosave_finish;
@@ -123,7 +123,7 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err)
   if (file_err) {
     g_errcode = g_file_error_from_errno (file_err);
     g_set_error (err, G_FILE_ERROR, g_errcode,
-                 "Failed to stat [%s]: %s",
+                 _("Failed to stat [%s]: %s"),
                  auto_filename, g_strerror (file_err));
     result = TRUE;
     goto check_autosave_finish;
@@ -241,17 +241,16 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
     if (tmp_err != NULL) g_warning ("%s\n", tmp_err->message);
     if (active_backup) {
       message = g_string_new ("");
-      g_string_append_printf(message, "\nWARNING: Found an autosave backup file:\n  %s.\n\n", backup_filename);
+      g_string_append_printf(message, _("\nWARNING: Found an autosave backup file:\n  %s.\n\n"), backup_filename);
       if (tmp_err != NULL) {
-        g_string_append(message, "I could not guess if it is newer, so you have to"
-                        "do it manually.\n");
+        g_string_append(message, _("I could not guess if it is newer, so you have to do it manually.\n"));
       } else {
-        g_string_append(message, "The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n");
+        g_string_append(message, _("The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n"));
       }
-      g_string_append (message, "Gschem usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n");
+      g_string_append (message, _("Gschem usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n"));
       if (toplevel->page_current->load_newer_backup_func == NULL) {
         g_warning (message->str);
-        g_warning ("\nRun gschem and correct the situation.\n\n");
+        g_warning (_("\nRun gschem and correct the situation.\n\n"));
       } else {
         /* Ask the user if load the backup or the original file */
         if (toplevel->page_current->load_newer_backup_func
@@ -365,8 +364,8 @@ int f_save(TOPLEVEL *toplevel, const char *filename)
   real_filename = follow_symlinks (filename, NULL);
 
   if (real_filename == NULL) {
-    s_log_message ("Can't get the real filename of %s.", filename);
-    fprintf (stderr, "Can't get the real filename of %s.\n", filename);
+    s_log_message (_("Can't get the real filename of %s."), filename);
+    fprintf (stderr, _("Can't get the real filename of %s.\n"), filename);
     return 0;
   }
   
@@ -386,14 +385,14 @@ int f_save(TOPLEVEL *toplevel, const char *filename)
       if ( g_file_test (backup_filename, G_FILE_TEST_EXISTS) && 
 	   (! g_file_test (backup_filename, G_FILE_TEST_IS_DIR))) {
 	if (chmod(backup_filename, S_IREAD|S_IWRITE) != 0) {
-	  s_log_message ("Could NOT set previous backup file [%s] read-write\n", 
-			 backup_filename);	    
+	  s_log_message (_("Could NOT set previous backup file [%s] read-write\n"),
+			 backup_filename);
 	}
       }
 	
       if (rename(real_filename, backup_filename) != 0) {
-	s_log_message ("Can't save backup file: %s.", backup_filename);
-	fprintf (stderr, "Can't save backup file: %s.", backup_filename);
+	s_log_message (_("Can't save backup file: %s."), backup_filename);
+	fprintf (stderr, _("Can't save backup file: %s."), backup_filename);
       }
       else {
 	/* Make the backup file readonly so a 'rm *' command will ask 
@@ -403,8 +402,8 @@ int f_save(TOPLEVEL *toplevel, const char *filename)
 	mask = (~mask)&0777;
 	mask &= ((~saved_umask) & 0777);
 	if (chmod(backup_filename, mask) != 0) {
-	  s_log_message ("Could NOT set backup file [%s] readonly\n", 
-			   backup_filename);	    
+	  s_log_message (_("Could NOT set backup file [%s] readonly\n"),
+                         backup_filename);
 	}
 	umask(saved_umask);
       }
@@ -538,8 +537,8 @@ char *follow_symlinks (const gchar *filename, GError **error)
       len = readlink (followed_filename, linkname, MAXPATHLEN - 1);
       
       if (len == -1) {
-	s_log_message("Could not read symbolic link information for %s", followed_filename);
-	fprintf(stderr, "Could not read symbolic link information for %s", followed_filename);
+	s_log_message(_("Could not read symbolic link information for %s"), followed_filename);
+	fprintf(stderr, _("Could not read symbolic link information for %s"), followed_filename);
 	g_free (followed_filename);
 	return NULL;
       }
@@ -579,8 +578,8 @@ char *follow_symlinks (const gchar *filename, GError **error)
 
   /* Too many symlinks */
   
-  s_log_message("The file has too many symbolic links.");
-  fprintf(stderr, "The file has too many symbolic links.");
+  s_log_message(_("The file has too many symbolic links."));
+  fprintf(stderr, _("The file has too many symbolic links."));
   
   return NULL;
 #endif /* __MINGW32__ */

@@ -637,7 +637,7 @@ int o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
   g_strfreev(str_array);
   
   if (*value_ptr && (*value_ptr)[0] == '\0') {
-    s_log_message("Found an improper attribute: _%s_\n", string);
+    s_log_message(_("Found an improper attribute: _%s_\n"), string);
 #if 0 /* for now leak this memory till this is verified correct everywhere */
     g_free(*name_ptr); *name_ptr = NULL;
     g_free(*value_ptr); *value_ptr = NULL;
@@ -1692,13 +1692,13 @@ void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
   slotdef = o_attrib_search_slotdef(o_current, slot);
   
   if (!slotdef) {
-    s_log_message("Did not find slotdef=#:#,#,#... attribute\n");
+    s_log_message(_("Did not find slotdef=#:#,#,#... attribute\n"));
     return;
   }
 
   if (!strstr(slotdef, ":")) {
     /* Didn't find proper slotdef=#:... put warning into log */
-    s_log_message("Improper slotdef syntax: missing \":\".\n");
+    s_log_message(_("Improper slotdef syntax: missing \":\".\n"));
     g_free(slotdef);    
     return;
   }
@@ -1713,7 +1713,7 @@ void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
   cptr++; /* skip colon */
 
   if (*cptr == '\0') {
-    s_log_message("Did not find proper slotdef=#:#,#,#... attribute\n");
+    s_log_message(_("Did not find proper slotdef=#:#,#,#... attribute\n"));
     g_free(slotdef);    
     return;
   }
@@ -1798,7 +1798,7 @@ void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
       
       pin_counter++;
     } else {
-      s_log_message("component missing pinseq= attribute\n");
+      s_log_message(_("component missing pinseq= attribute\n"));
     }
     
     current_pin = strtok(NULL, DELIMITERS);
@@ -1845,7 +1845,7 @@ void o_attrib_slot_copy(TOPLEVEL *toplevel, OBJECT *original, OBJECT *target)
   slotdef = o_attrib_search_slotdef(o_current, slot);
  
   if (!slotdef) {
-    s_log_message("Did not find slotdef=#:#,#,#... attribute\n");
+    s_log_message(_("Did not find slotdef=#:#,#,#... attribute\n"));
     return;
   }
 
@@ -1864,7 +1864,7 @@ void o_attrib_slot_copy(TOPLEVEL *toplevel, OBJECT *original, OBJECT *target)
   cptr++; /* skip colon */
 
   if (*cptr == '\0') {
-    s_log_message("Did not find proper slotdef=#:#,#,#... attribute\n");
+    s_log_message(_("Did not find proper slotdef=#:#,#,#... attribute\n"));
     return;
   }
   
@@ -1898,7 +1898,7 @@ void o_attrib_slot_copy(TOPLEVEL *toplevel, OBJECT *original, OBJECT *target)
       
       pin_counter++;
     } else {
-      s_log_message("component missing pinseq= attribute\n");
+      s_log_message(_("component missing pinseq= attribute\n"));
     }
     
     current_pin = strtok(NULL, DELIMITERS);

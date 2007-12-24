@@ -133,7 +133,7 @@ gint g_rc_parse_general(TOPLEVEL *toplevel,
                                                  (GCompareFunc) strcmp);
   if (found_rc_filename_element != NULL) {
     /* We've already read this one in. */
-    s_log_message("RC file [%s] already read in.\n", fname);
+    s_log_message(_("RC file [%s] already read in.\n"), fname);
     return 0;
   }
 
@@ -387,8 +387,8 @@ void g_rc_parse(TOPLEVEL *toplevel,
     /*! \todo these two are basically the
      * same. Inefficient!
      */
-    s_log_message("Could not find any %s file!\n", rcname);
-    fprintf(stderr, "Could not find a %s file\n", rcname);
+    s_log_message(_("Could not find any %s file!\n"), rcname);
+    fprintf(stderr, _("Could not find a %s file\n"), rcname);
     exit(-1);
   }
 }

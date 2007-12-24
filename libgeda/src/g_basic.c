@@ -106,21 +106,21 @@ static SCM protected_post_unwind_handler (void *data, SCM key, SCM args)
          && scm_is_integer (s_col_num)) {
 
        filename = scm_to_locale_string (s_filename);
-       s_log_message ("%s:%i:%i: %s\n", filename, scm_to_int (s_line_num),
+       s_log_message (_("%s:%i:%i: %s\n"), filename,
+                      scm_to_int (s_line_num),
                       scm_to_int (s_col_num), message);
        free (filename);
 
     } else {
 
-      s_log_message ("Unknown file: %s\n", message);
+      s_log_message (_("Unknown file: %s\n"), message);
 
     }
 
   } else {
     /* No stack, so can't display debugging info */
-    s_log_message ("Evaluation failed: %s\n"
-                   "Enable debugging for more detailed information\n",
-                   message);
+    s_log_message (_("Evaluation failed: %s\n"), message);
+    s_log_message (_("Enable debugging for more detailed information\n"));
   }
 
   free (message);
@@ -264,8 +264,8 @@ int g_read_file(const gchar *filename)
 	}
 	
 	if (access(full_filename, R_OK) != 0) {
-		s_log_message("Could not find [%s] for interpretion\n",
-			      full_filename);
+          s_log_message(_("Could not find [%s] for interpretion\n"),
+                        full_filename);
 		return(-1);
   	}
 
