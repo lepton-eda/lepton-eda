@@ -31,6 +31,6 @@ DISTCLEANFILES = *.log core FILE *~ prototype.bak libgeda.pc \
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in configure config.h.in \
 	               config.status aclocal.m4 libgeda.pc config.guess \
 		       config.sub depcomp install-sh ltmain.sh missing \
-		       mkinstalldirs
+		       mkinstalldirs $(INTLTOOL_FILES)
 
 DISTCHECK_CONFIGURE_FLAGS = --disable-update-mime-database

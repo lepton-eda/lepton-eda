@@ -25,6 +25,7 @@ DISTCLEANFILES = *.log core FILE *~ prototype.bak \
                  intltool-update \
                  po/.intltool-merge-cache
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in configure \
-                       config.status aclocal.m4 #*#
+                       config.status aclocal.m4 \
+                       $(INTLTOOL_FILES) #*#
 
 DISTCHECK_CONFIGURE_FLAGS = --disable-update-desktop-database

@@ -34,5 +34,5 @@ DISTCLEANFILES = *.log core FILE *~ prototype.bak \
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in configure config.h.in \
 	               config.status aclocal.m4 config.guess config.rpath \
 		       config.sub depcomp install-sh missing mkinstalldirs \
-		       configure.ac
+		       configure.ac $(INTLTOOL_FILES)
 DISTCHECK_CONFIGURE_FLAGS = --disable-update-desktop-database
