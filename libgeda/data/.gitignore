@@ -1,4 +1,4 @@
 libgeda.xml
-libgeda/data/x-geda-gsch2pcb-project.desktop
-libgeda/data/x-geda-schematic.desktop
-libgeda/data/x-geda-symbol.desktop
+x-geda-gsch2pcb-project.desktop
+x-geda-schematic.desktop
+x-geda-symbol.desktop
