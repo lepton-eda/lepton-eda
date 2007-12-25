@@ -1556,7 +1556,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
   if ((inside_present && outside_present) && (outside_value > inside_value))
   {
     s_log_message(_("WARNING: Symbol version oddity on refdes %s:\n"
-                    "\tInstanciated symbol is newer than "
+                    "\tInstantiated symbol is newer than "
                     "symbol in library\n"),
                   refdes);
     goto done;
