@@ -571,18 +571,11 @@ msgid "ERROR: o_picture_save: unable to encode the picture.\n"
 msgstr "FOUT: o_picture_save: kan de afbeelding niet coderen.\n"
 
 #: ../src/o_pin_basic.c:141
+#: ../src/o_pin_basic.c:143
 #, c-format
 msgid ""
 "Found a pin which did not have the whichone field set.\n"
 "Verify and correct manually.\n"
-msgstr ""
-"Pen die geen whichone veld ingesteld heeft gevonden.\n"
-"Verifieer en corigeer handmatig.\n"
-
-#: ../src/o_pin_basic.c:143
-msgid ""
-"Found a pin which did not have the whichone field set.\n"
-"Verify and correct manully.\n"
 msgstr ""
 "Pen die geen whichone veld ingesteld heeft gevonden.\n"
 "Verifieer en corigeer handmatig.\n"

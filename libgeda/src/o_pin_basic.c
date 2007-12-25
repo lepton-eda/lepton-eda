@@ -141,7 +141,7 @@ OBJECT *o_pin_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
             _("Found a pin which did not have the whichone field set.\n"
               "Verify and correct manually.\n"));
     s_log_message(_("Found a pin which did not have the whichone field set.\n"
-                    "Verify and correct manully.\n"));
+                    "Verify and correct manually.\n"));
   } else if (whichend < -1 || whichend > 1) {
     fprintf(stderr,
             _("Found an invalid whichend on a pin (reseting to zero): %d\n"),
