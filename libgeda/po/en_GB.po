@@ -235,8 +235,8 @@ msgstr "Enable debugging for more detailed information\n"
 
 #: ../src/g_basic.c:267
 #, c-format
-msgid "Could not find [%s] for interpretion\n"
-msgstr "Could not find [%s] for interpretion\n"
+msgid "Could not find [%s] for interpretation\n"
+msgstr "Could not find [%s] for interpretation\n"
 
 #. We've already read this one in.
 #: ../src/g_rc.c:136

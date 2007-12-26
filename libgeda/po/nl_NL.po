@@ -240,7 +240,7 @@ msgstr "Schakel foutzoeken in voor meer gedetaileerde informatie\n"
 
 #: ../src/g_basic.c:267
 #, c-format
-msgid "Could not find [%s] for interpretion\n"
+msgid "Could not find [%s] for interpretation\n"
 msgstr "Kan [%s] niet vinden voor interpretatie\n"
 
 # We hebben deze al ingelezen.

@@ -264,7 +264,7 @@ int g_read_file(const gchar *filename)
 	}
 	
 	if (access(full_filename, R_OK) != 0) {
-          s_log_message(_("Could not find [%s] for interpretion\n"),
+          s_log_message(_("Could not find [%s] for interpretation\n"),
                         full_filename);
 		return(-1);
   	}
