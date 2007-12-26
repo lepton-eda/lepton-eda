@@ -68,7 +68,8 @@ endif
 	$(install_icon_exec) -u $(theme_icons)
 
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in
-DISTCLEANFILES = $(xml_DATA)
+DISTCLEANFILES = $(xml_DATA) $(application_DATA)
 EXTRA_DIST = $(mime_icon_files) $(mime_icon_sources) \
-             $(xml_in_files) $(xml_DATA)
+             $(xml_in_files) $(xml_DATA) \
+             $(application_in_files)
 
