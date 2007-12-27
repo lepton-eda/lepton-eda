@@ -19,7 +19,6 @@ maintainer-clean-local:
           intl/*.h intl/*.c intl/*.alias intl/*.y intl/*.sin intl/VERSION \
           intl/config.charset intl/Makefile.in intl/ChangeLog \
           po/*.sed po/*.header po/*.sin po/*.template po/Rules-quot \
-          po/Makefile.in.in po/ChangeLog \
           m4/*.m4 
 
 ACLOCAL_AMFLAGS = -I m4
