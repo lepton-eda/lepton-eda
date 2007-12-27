@@ -200,19 +200,19 @@ char *strip_quotes(char *str)
 
 
 
- /* decimal integer */
+/* decimal integer */
 INTEGER		[+-]?[0-9]+
 
- /* floating point decimal, like 123.234 */
+/* floating point decimal, like 123.234 */
 DECIMAL		[+-]?[0-9]*[\.][0-9]*
 
- /* string name, like 'abcd' */
+/* string name, like 'abcd' */
 IDENT		'[^'\n]+'
 
- /* comment, like { comment } */
+/* comment, like { comment } */
 COMMENT		\{[^\n\}]*\}
 
- /* pin identifier, example T3 L12 R3 .... */
+/* pin identifier, example T3 L12 R3 .... */
 PIN_ID		[TBLR][0-9]{1,4}
 
 
