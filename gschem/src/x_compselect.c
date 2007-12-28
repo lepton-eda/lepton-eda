@@ -359,7 +359,7 @@ lib_model_filter_visible_func (GtkTreeModel *model,
   Compselect *compselect = (Compselect*)data;
   CLibSymbol *sym;
   const gchar *compname;
-  gchar *compname_upper=NULL, *text_upper=NULL;
+  gchar *compname_upper, *text_upper, *pattern;
   const gchar *text;
   gboolean ret;
 
@@ -392,9 +392,11 @@ lib_model_filter_visible_func (GtkTreeModel *model,
        to uppercase */
     compname_upper = g_ascii_strup(compname, -1);
     text_upper = g_ascii_strup(text, -1);
-    ret = (strstr (compname_upper, text_upper) != NULL);
+    pattern = g_strconcat ("*", text_upper, "*", NULL);
+    ret = g_pattern_match_simple (pattern, compname_upper);
     g_free(compname_upper);
     g_free(text_upper);
+    g_free(pattern);
   }
 
   return ret;
