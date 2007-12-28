@@ -932,3 +932,36 @@ void o_picture_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 	
 }
 
+
+/*! \brief Embed the given picture
+ *
+ *  \par Function Description
+ *  This function embeds the given picture.
+ *
+ *  \param [in]     toplevel     The TOPLEVEL object.
+ *  \param [in]     object       The picture OBJECT to embed
+ */
+void o_picture_embed (TOPLEVEL *toplevel, OBJECT *object)
+{
+  object->picture->embedded = 1;
+
+  s_log_message (_("Picture [%s] has been embedded\n"),
+                 basename(object->picture->filename));
+}
+
+
+/*! \brief Unembed the given picture
+ *
+ *  \par Function Description
+ *  This function unembeds the given picture.
+ *
+ *  \param [in]     toplevel     The TOPLEVEL object.
+ *  \param [in]     object       The picture OBJECT to unembed
+ */
+void o_picture_unembed (TOPLEVEL *toplevel, OBJECT *object)
+{
+  object->picture->embedded = 0;
+
+  s_log_message (_("Picture [%s] has been unembedded\n"),
+                 basename(object->picture->filename));
+}

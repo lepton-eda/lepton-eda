@@ -56,17 +56,11 @@ void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
   /* If it's a picture and it's not embedded */
   if ( (o_current->type == OBJ_PICTURE) &&
        (o_current->picture->embedded == 0) ) {
+    o_picture_embed (toplevel, o_current);
 
-    o_current->picture->embedded = 1;
-    
-    s_log_message (_("Picture [%s] has been embedded\n"),
-		   basename(o_current->picture->filename));
-    
-    
     /* page content has been modified */
     toplevel->page_current->CHANGED = 1;
   }
-  
 }
 
 /*! \todo Finish function documentation!!!
@@ -108,15 +102,9 @@ void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current)
   /* If it's a picture and it's embedded */
   if ( (o_current->type == OBJ_PICTURE) &&
        (o_current->picture->embedded == 1) ) {
+    o_picture_unembed (toplevel, o_current);
 
-    o_current->picture->embedded = 0;
-    
-    s_log_message (_("Picture [%s] has been unembedded\n"),
-		   basename(o_current->picture->filename));
-    
-    
     /* page content has been modified */
     toplevel->page_current->CHANGED = 1;
   }
-  
 }

@@ -280,6 +280,8 @@ void o_picture_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *objec
 OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
 guint8 *o_picture_rgb_data(GdkPixbuf *image);
 guint8 *o_picture_mask_data(GdkPixbuf *image);
+void o_picture_embed(TOPLEVEL *toplevel, OBJECT *object);
+void o_picture_unembed(TOPLEVEL *toplevel, OBJECT *object);
 
 /* o_pin_basic.c */
 void world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
