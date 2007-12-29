@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-25 22:15+0000\n"
-"PO-Revision-Date: 2007-12-25 22:47+0100\n"
+"POT-Creation-Date: 2007-12-29 11:17+0000\n"
+"PO-Revision-Date: 2007-12-29 11:21+0100\n"
 "Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"
@@ -448,26 +448,16 @@ msgstr ""
 msgid "Component [%s] has been embedded\n"
 msgstr "Component [%s] has been embedded\n"
 
-#: ../src/o_embed.c:62
-#, c-format
-msgid "Picture [%s] has been embedded\n"
-msgstr "Picture [%s] has been embedded\n"
-
 #. symbol not found in the symbol library: signal an error
-#: ../src/o_embed.c:91
+#: ../src/o_embed.c:85
 #, c-format
 msgid "Could not find component [%s], while trying to unembed. Component is still embedded\n"
 msgstr "Could not find component [%s], while trying to unembed. Component is still embedded\n"
 
-#: ../src/o_embed.c:99
+#: ../src/o_embed.c:93
 #, c-format
 msgid "Component [%s] has been successfully unembedded\n"
 msgstr "Component [%s] has been successfully unembedded\n"
-
-#: ../src/o_embed.c:114
-#, c-format
-msgid "Picture [%s] has been unembedded\n"
-msgstr "Picture [%s] has been unembedded\n"
 
 #: ../src/o_line_basic.c:288
 #: ../src/o_line_basic.c:290
@@ -481,85 +471,100 @@ msgstr "Found a zero length line [ %c %d %d %d %d %d ]\n"
 msgid "Found a zero length net [ %c %d %d %d %d %d ]\n"
 msgstr "Found a zero length net [ %c %d %d %d %d %d ]\n"
 
-#: ../src/o_picture.c:80
-#: ../src/o_picture.c:82
+#: ../src/o_picture.c:83
+#: ../src/o_picture.c:85
 #, c-format
 msgid "Error reading picture definition line: %s.\n"
 msgstr "Error reading picture definition line: %s.\n"
 
-#: ../src/o_picture.c:96
-#: ../src/o_picture.c:98
+#: ../src/o_picture.c:99
+#: ../src/o_picture.c:101
 #, c-format
 msgid "Found a zero width/height picture [ %c %d %d %d %d ]\n"
 msgstr "Found a zero width/height picture [ %c %d %d %d %d ]\n"
 
-#: ../src/o_picture.c:103
-#: ../src/o_picture.c:105
+#: ../src/o_picture.c:106
+#: ../src/o_picture.c:108
 #, c-format
 msgid "Found a picture with a wrong 'mirrored' parameter: %c.\n"
 msgstr "Found a picture with a wrong 'mirrored' parameter: %c.\n"
 
-#: ../src/o_picture.c:107
+#: ../src/o_picture.c:110
 msgid "Setting mirrored to 0\n"
 msgstr "Setting mirrored to 0\n"
 
-#: ../src/o_picture.c:112
-#: ../src/o_picture.c:114
+#: ../src/o_picture.c:115
+#: ../src/o_picture.c:117
 #, c-format
 msgid "Found a picture with a wrong 'embedded' parameter: %c.\n"
 msgstr "Found a picture with a wrong 'embedded' parameter: %c.\n"
 
-#: ../src/o_picture.c:116
+#: ../src/o_picture.c:119
 msgid "Setting embedded to 0\n"
 msgstr "Setting embedded to 0\n"
 
-#: ../src/o_picture.c:128
-#: ../src/o_picture.c:129
+#: ../src/o_picture.c:131
+#: ../src/o_picture.c:132
 #, c-format
 msgid "Found an unsupported picture angle [ %d ]\n"
 msgstr "Found an unsupported picture angle [ %d ]\n"
 
-#: ../src/o_picture.c:130
+#: ../src/o_picture.c:133
 #: ../src/o_text_basic.c:1091
 msgid "Setting angle to 0\n"
 msgstr "Setting angle to 0\n"
 
-#: ../src/o_picture.c:144
-#: ../src/o_picture.c:145
-#: ../src/o_picture.c:208
-#: ../src/o_picture.c:210
+#: ../src/o_picture.c:168
+#: ../src/o_picture.c:179
+#: ../src/o_picture.c:949
 #, c-format
-msgid "Error loading picture from file: %s.\n"
-msgstr "Error loading picture from file: %s.\n"
+msgid "Failed to load image from embedded data [%s]: %s\n"
+msgstr "Failed to load image from embedded data [%s]: %s\n"
 
-#: ../src/o_picture.c:175
-#: ../src/o_picture.c:176
+#: ../src/o_picture.c:169
+msgid "Base64 decoding failed."
+msgstr "Base64 decoding failed."
+
+#: ../src/o_picture.c:170
+#: ../src/o_picture.c:181
+#: ../src/o_picture.c:951
+msgid "Falling back to file loading. Picture unembedded.\n"
+msgstr "Falling back to file loading. Picture unembedded.\n"
+
+#: ../src/o_picture.c:192
+#: ../src/o_picture.c:937
+#: ../src/o_picture.c:984
 #, c-format
-msgid "Error decoding picture.\n"
-msgstr "Error decoding picture.\n"
+msgid "Failed to load image from file [%s]: %s\n"
+msgstr "Failed to load image from file [%s]: %s\n"
 
-#: ../src/o_picture.c:182
-#, c-format
-msgid "Error deserializing picture.\n"
-msgstr "Error deserialising picture.\n"
-
-#: ../src/o_picture.c:201
-#: ../src/o_picture.c:202
+#: ../src/o_picture.c:203
+#: ../src/o_picture.c:204
 #, c-format
 msgid "Loading warning picture.\n"
 msgstr "Loading warning picture.\n"
 
-#: ../src/o_picture.c:275
-#: ../src/o_picture.c:276
+#: ../src/o_picture.c:210
+#: ../src/o_picture.c:212
 #, c-format
-msgid "ERROR: o_picture_save: failed to create serialized data from picture\n"
-msgstr "ERROR: o_picture_save: failed to create serialised data from picture\n"
+msgid "Error loading picture from file: %s.\n"
+msgstr "Error loading picture from file: %s.\n"
 
-#: ../src/o_picture.c:284
-#: ../src/o_picture.c:285
+#: ../src/o_picture.c:272
+#: ../src/o_picture.c:273
 #, c-format
 msgid "ERROR: o_picture_save: unable to encode the picture.\n"
 msgstr "ERROR: o_picture_save: unable to encode the picture.\n"
+
+#: ../src/o_picture.c:963
+#, c-format
+msgid "Picture [%s] has been embedded\n"
+msgstr "Picture [%s] has been embedded\n"
+
+#: ../src/o_picture.c:1001
+#, c-format
+msgid "Picture [%s] has been unembedded\n"
+msgstr "Picture [%s] has been unembedded\n"
 
 #: ../src/o_pin_basic.c:141
 #: ../src/o_pin_basic.c:143
@@ -767,4 +772,13 @@ msgstr "Found [%s]\n"
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "Could not find [%s] in any SourceLibrary\n"
+
+#~ msgid "Error decoding picture.\n"
+#~ msgstr "Error decoding picture.\n"
+#~ msgid "Error deserializing picture.\n"
+#~ msgstr "Error deserialising picture.\n"
+#~ msgid ""
+#~ "ERROR: o_picture_save: failed to create serialized data from picture\n"
+#~ msgstr ""
+#~ "ERROR: o_picture_save: failed to create serialised data from picture\n"
 
