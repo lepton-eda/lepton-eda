@@ -1035,6 +1035,7 @@ DEFINE_I_CALLBACK(edit_embed)
       }
       s_current = g_list_next(s_current);
     }
+    o_undo_savestate(w_current, UNDO_ALL);
   } else {
     /* nothing selected, go back to select state */
     o_redraw_cleanstates(w_current);	
@@ -1073,6 +1074,7 @@ DEFINE_I_CALLBACK(edit_unembed)
       }
       s_current = g_list_next(s_current);
     }
+    o_undo_savestate(w_current, UNDO_ALL);
   } else {
     /* nothing selected, go back to select state */
     o_redraw_cleanstates(w_current);	
