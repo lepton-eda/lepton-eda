@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-29 08:37+0100\n"
+"POT-Creation-Date: 2007-12-29 09:21-0500\n"
 "PO-Revision-Date: 2007-12-29 08:51+0100\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -573,7 +573,8 @@ msgstr "An \"grid-dot-size\" wurde eine falsche Punktgröße [%d] übergeben.\n"
 #: ../src/g_rc.c:1406
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
-msgstr "An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
+msgstr ""
+"An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
 
 #: ../src/g_rc.c:1450
 #, c-format
@@ -600,7 +601,8 @@ msgstr "Ein ungültiger Wert [%d] wurde an keyboardpan-gain übergeben.\n"
 #: ../src/g_rc.c:1584
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
-msgstr "An \"select-slack-pixels\" wurde eine ungültige Pixelzahl [%d] übergeben\n"
+msgstr ""
+"An \"select-slack-pixels\" wurde eine ungültige Pixelzahl [%d] übergeben\n"
 
 #: ../src/gschem.c:193 ../src/gschem.c:204
 #, c-format
@@ -618,7 +620,8 @@ msgstr ""
 
 #: ../src/gschem.c:198 ../src/gschem.c:209
 #, c-format
-msgid "This is free software, and you are welcome to redistribute it under certain\n"
+msgid ""
+"This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Dies ist Freie Software. Sie darf gerne weitergegeben werden. Bitte lies "
 "die\n"
@@ -824,7 +827,8 @@ msgstr "Verschieben nach"
 
 #: ../src/i_callbacks.c:991
 msgid "WARNING: Do not translate with snap off!\n"
-msgstr "ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
+msgstr ""
+"ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
 
 #: ../src/i_callbacks.c:992
 msgid "WARNING: Turning snap on and continuing with translate.\n"
@@ -1068,7 +1072,8 @@ msgstr "Undefinierter Typ für das Rechteck (Füllung)!\n"
 #: ../src/o_buffer.c:44
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_copy]\n"
-msgstr "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
+msgstr ""
+"Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
 
 #: ../src/o_buffer.c:73
 #, c-format
@@ -1085,12 +1090,14 @@ msgstr ""
 #: ../src/o_buffer.c:164
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
-msgstr "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_paste_end]\n"
+msgstr ""
+"Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_paste_end]\n"
 
 #: ../src/o_bus.c:199
 #, c-format
 msgid "Got an invalid which one in o_bus_draw_xor_single\n"
-msgstr "Ungültiger Wert in Variable whichone in der Funktion o_bus_draw_xor_single\n"
+msgstr ""
+"Ungültiger Wert in Variable whichone in der Funktion o_bus_draw_xor_single\n"
 
 #: ../src/o_circle.c:138
 #, c-format
@@ -1111,7 +1118,8 @@ msgstr "Undefinierter Typ für einen Kreis (Füllung).\n"
 #: ../src/o_complex.c:174
 #, c-format
 msgid "Could not find complex in new componet placement!\n"
-msgstr "Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
+msgstr ""
+"Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
 
 #: ../src/o_complex.c:405 ../src/o_complex.c:409
 #, c-format
@@ -1172,7 +1180,8 @@ msgstr ""
 #: ../src/o_misc.c:951
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr "Die vorherige Backup-Datei [%s] konnte nicht auf read-write gesetzt werden.\n"
+msgstr ""
+"Die vorherige Backup-Datei [%s] konnte nicht auf read-write gesetzt werden.\n"
 
 #: ../src/o_misc.c:969
 #, c-format
@@ -1204,7 +1213,8 @@ msgstr "Da ist ein Objekt in o_move_check_endpoint, welches keine Linie ist.\n"
 #: ../src/o_net.c:234
 #, c-format
 msgid "Got an invalid which one in o_net_draw_xor_single\n"
-msgstr "Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
+msgstr ""
+"Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
 
 #. try to exit gracefully
 #: ../src/o_net.c:763 ../src/o_net.c:800 ../src/o_net.c:871 ../src/o_net.c:907
@@ -1364,7 +1374,8 @@ msgstr ""
 #. duplicate slot in used_slots
 #: ../src/x_autonumber.c:427
 #, c-format
-msgid "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
+msgid ""
+"duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
 msgstr ""
 "Doppelt vergebener slot kann Probleme verursachen: [Symbolname=%s, Number=%"
 "d, slot=%d]\n"
@@ -1535,38 +1546,47 @@ msgstr ""
 "Mittlere Maustaste dreht während des Plazierens."
 
 #: ../src/x_dialog.c:313
+#, c-format
 msgid "Lower Left"
 msgstr "Unten Links"
 
 #: ../src/x_dialog.c:324
+#, c-format
 msgid "Middle Left"
 msgstr "Mitte Links"
 
 #: ../src/x_dialog.c:335
+#, c-format
 msgid "Upper Left"
 msgstr "Oben Links"
 
 #: ../src/x_dialog.c:346
+#, c-format
 msgid "Lower Middle"
 msgstr "Unten Mitte"
 
 #: ../src/x_dialog.c:357
+#, c-format
 msgid "Middle Middle"
 msgstr "Mitte Mitte"
 
 #: ../src/x_dialog.c:368
+#, c-format
 msgid "Upper Middle"
 msgstr "Oben Mitte"
 
 #: ../src/x_dialog.c:379
+#, c-format
 msgid "Lower Right"
 msgstr "Unten Rechts"
 
 #: ../src/x_dialog.c:390
+#, c-format
 msgid "Middle Right"
 msgstr "Mitte Rechts"
 
 #: ../src/x_dialog.c:401
+#, c-format
 msgid "Upper Right"
 msgstr "0ben Rechts"
 
@@ -1620,6 +1640,7 @@ msgstr "StrichZweiPunkt"
 #: ../src/x_dialog.c:1186 ../src/x_dialog.c:1188 ../src/x_dialog.c:1190
 #: ../src/x_dialog.c:1395 ../src/x_dialog.c:1396 ../src/x_dialog.c:1397
 #: ../src/x_dialog.c:1398 ../src/x_dialog.c:1399 ../src/x_dialog.c:1407
+#, c-format
 msgid "*unchanged*"
 msgstr "*unverändert*"
 
@@ -1831,7 +1852,8 @@ msgstr ""
 
 #: ../src/x_dialog.c:3709
 #, c-format
-msgid "There are %d schematics with unsaved changes. Save changes before closing?"
+msgid ""
+"There are %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 "Es gibt %d ungesicherte Schaltpläne. Sollen die Änderungen vor dem Schließen "
 "gespeichert werden?"
@@ -1855,7 +1877,8 @@ msgid ""
 "The name cannot end with a space.\n"
 "The value cannot start with a space."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Das eingegebene Attribut \"%s\" ist nicht zulässig\n"
+"<span weight=\"bold\" size=\"larger\">Das eingegebene Attribut \"%s\" ist "
+"nicht zulässig\n"
 "Bitte korrigiere es um fortzufahren.</span>\n"
 "\n"
 "Der Name und der Wert dürfen nicht leer sein.\n"
@@ -2034,7 +2057,9 @@ msgstr "/Hinauf"
 #: ../src/x_menus.c:333
 #, c-format
 msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
-msgstr "Es wurde versucht die Empfindlichkeit des nicht existenten Menueintrags '%s' zu setzen\n"
+msgstr ""
+"Es wurde versucht die Empfindlichkeit des nicht existenten Menueintrags '%s' "
+"zu setzen\n"
 
 #: ../src/x_menus.c:357
 msgid "Popup_menu_item_factory doesn't exist!\n"
@@ -2058,7 +2083,8 @@ msgstr "Entfernen"
 
 #: ../src/x_multiattrib.c:708
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr "Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
+msgstr ""
+"Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
 
 #: ../src/x_multiattrib.c:1218
 msgid "Show Value only"
@@ -2367,7 +2393,9 @@ msgstr "Schließe [%s]\n"
 
 #: ../data/geda-gschem.desktop.in.h:1
 msgid "Create and edit electrical schematics and symbols with gschem"
-msgstr "Erstellen oder editieren eines elektrischen Schaltplans oder Symbols mit gschem"
+msgstr ""
+"Erstellen oder editieren eines elektrischen Schaltplans oder Symbols mit "
+"gschem"
 
 #: ../data/geda-gschem.desktop.in.h:2
 msgid "gEDA Schematic Editor"
@@ -2801,4 +2829,3 @@ msgstr "gEDA Schaltplan Editor"
 #~ msgid "Invalid path [%s] passed to font-directory\n"
 #~ msgstr ""
 #~ "Ein ungültiges Verzeichnis [%s] wurde an font-directory übergeben.\n"
-

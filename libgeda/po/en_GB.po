@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-29 11:17+0000\n"
+"POT-Creation-Date: 2007-12-29 09:21-0500\n"
 "PO-Revision-Date: 2007-12-29 11:21+0100\n"
 "Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -97,8 +97,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: ../src/f_basic.c:113
-#: ../src/f_basic.c:126
+#: ../src/f_basic.c:113 ../src/f_basic.c:126
 #, c-format
 msgid "Failed to stat [%s]: %s"
 msgstr "Failed to stat [%s]: %s"
@@ -121,12 +120,20 @@ msgid "I could not guess if it is newer, so you have to do it manually.\n"
 msgstr "I could not guess if it is newer, so you have to do it manually.\n"
 
 #: ../src/f_basic.c:248
-msgid "The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n"
-msgstr "The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n"
+msgid ""
+"The backup copy is newer than the schematic, so it seems you should load it "
+"instead of the original file.\n"
+msgstr ""
+"The backup copy is newer than the schematic, so it seems you should load it "
+"instead of the original file.\n"
 
 #: ../src/f_basic.c:250
-msgid "Gschem usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n"
-msgstr "Gschem usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n"
+msgid ""
+"Gschem usually makes backup copies automatically, and this situation happens "
+"when it crashed or it was forced to exit abruptly.\n"
+msgstr ""
+"Gschem usually makes backup copies automatically, and this situation happens "
+"when it crashed or it was forced to exit abruptly.\n"
 
 #: ../src/f_basic.c:253
 msgid ""
@@ -153,8 +160,7 @@ msgstr "Can't get the real filename of %s.\n"
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "Could NOT set previous backup file [%s] read-write\n"
 
-#: ../src/f_basic.c:394
-#: ../src/f_basic.c:395
+#: ../src/f_basic.c:394 ../src/f_basic.c:395
 #, c-format
 msgid "Can't save backup file: %s."
 msgstr "Can't save backup file: %s."
@@ -164,15 +170,13 @@ msgstr "Can't save backup file: %s."
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "Could NOT set backup file [%s] readonly\n"
 
-#: ../src/f_basic.c:540
-#: ../src/f_basic.c:541
+#: ../src/f_basic.c:540 ../src/f_basic.c:541
 #, c-format
 msgid "Could not read symbolic link information for %s"
 msgstr "Could not read symbolic link information for %s"
 
 #. Too many symlinks
-#: ../src/f_basic.c:581
-#: ../src/f_basic.c:582
+#: ../src/f_basic.c:581 ../src/f_basic.c:582
 #, c-format
 msgid "The file has too many symbolic links."
 msgstr "The file has too many symbolic links."
@@ -192,8 +196,10 @@ msgid "Error during reading of the prolog file `%s' in f_print_header()\n"
 msgstr "Error during reading of the prolog file `%s' in f_print_header()\n"
 
 #: ../src/f_print.c:163
-msgid "Error during writing of the output postscript file in f_print_header()\n"
-msgstr "Error during writing of the output postscript file in f_print_header()\n"
+msgid ""
+"Error during writing of the output postscript file in f_print_header()\n"
+msgstr ""
+"Error during writing of the output postscript file in f_print_header()\n"
 
 #: ../src/f_print.c:176
 msgid "Giving up on printing\n"
@@ -257,39 +263,25 @@ msgstr "Could not find any %s file!\n"
 msgid "Could not find a %s file\n"
 msgstr "Could not find a %s file\n"
 
-#: ../src/o_arc_basic.c:290
-#: ../src/o_arc_basic.c:292
+#: ../src/o_arc_basic.c:290 ../src/o_arc_basic.c:292
 #, c-format
 msgid "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"
 msgstr "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"
 
-#: ../src/o_arc_basic.c:297
-#: ../src/o_arc_basic.c:298
-#: ../src/o_box_basic.c:343
-#: ../src/o_box_basic.c:344
-#: ../src/o_bus_basic.c:160
-#: ../src/o_bus_basic.c:161
-#: ../src/o_circle_basic.c:298
-#: ../src/o_circle_basic.c:299
-#: ../src/o_line_basic.c:295
-#: ../src/o_line_basic.c:296
-#: ../src/o_net_basic.c:169
-#: ../src/o_net_basic.c:170
-#: ../src/o_pin_basic.c:165
-#: ../src/o_pin_basic.c:166
-#: ../src/o_text_basic.c:1121
+#: ../src/o_arc_basic.c:297 ../src/o_arc_basic.c:298 ../src/o_box_basic.c:343
+#: ../src/o_box_basic.c:344 ../src/o_bus_basic.c:160 ../src/o_bus_basic.c:161
+#: ../src/o_circle_basic.c:298 ../src/o_circle_basic.c:299
+#: ../src/o_line_basic.c:295 ../src/o_line_basic.c:296
+#: ../src/o_net_basic.c:169 ../src/o_net_basic.c:170 ../src/o_pin_basic.c:165
+#: ../src/o_pin_basic.c:166 ../src/o_text_basic.c:1121
 #: ../src/o_text_basic.c:1122
 #, c-format
 msgid "Found an invalid color [ %s ]\n"
 msgstr "Found an invalid colour [ %s ]\n"
 
-#: ../src/o_arc_basic.c:299
-#: ../src/o_box_basic.c:345
-#: ../src/o_bus_basic.c:162
-#: ../src/o_circle_basic.c:300
-#: ../src/o_line_basic.c:297
-#: ../src/o_net_basic.c:171
-#: ../src/o_pin_basic.c:167
+#: ../src/o_arc_basic.c:299 ../src/o_box_basic.c:345 ../src/o_bus_basic.c:162
+#: ../src/o_circle_basic.c:300 ../src/o_line_basic.c:297
+#: ../src/o_net_basic.c:171 ../src/o_pin_basic.c:167
 #: ../src/o_text_basic.c:1123
 msgid "Setting color to WHITE\n"
 msgstr "Setting colour to WHITE\n"
@@ -299,8 +291,7 @@ msgstr "Setting colour to WHITE\n"
 msgid "Found an improper attribute: _%s_\n"
 msgstr "Found an improper attribute: _%s_\n"
 
-#: ../src/o_attrib.c:1695
-#: ../src/o_attrib.c:1848
+#: ../src/o_attrib.c:1695 ../src/o_attrib.c:1848
 msgid "Did not find slotdef=#:#,#,#... attribute\n"
 msgstr "Did not find slotdef=#:#,#,#... attribute\n"
 
@@ -309,18 +300,15 @@ msgstr "Did not find slotdef=#:#,#,#... attribute\n"
 msgid "Improper slotdef syntax: missing \":\".\n"
 msgstr "Improper slotdef syntax: missing \":\".\n"
 
-#: ../src/o_attrib.c:1716
-#: ../src/o_attrib.c:1867
+#: ../src/o_attrib.c:1716 ../src/o_attrib.c:1867
 msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
 msgstr "Did not find proper slotdef=#:#,#,#... attribute\n"
 
-#: ../src/o_attrib.c:1801
-#: ../src/o_attrib.c:1901
+#: ../src/o_attrib.c:1801 ../src/o_attrib.c:1901
 msgid "component missing pinseq= attribute\n"
 msgstr "component missing pinseq= attribute\n"
 
-#: ../src/o_basic.c:189
-#: ../src/o_basic.c:201
+#: ../src/o_basic.c:189 ../src/o_basic.c:201
 msgid "Invalid space specified, setting to 100\n"
 msgstr "Invalid space specified, setting to 100\n"
 
@@ -328,20 +316,17 @@ msgstr "Invalid space specified, setting to 100\n"
 msgid "Invalid length specified, setting to 100\n"
 msgstr "Invalid length specified, setting to 100\n"
 
-#: ../src/o_box_basic.c:336
-#: ../src/o_box_basic.c:338
+#: ../src/o_box_basic.c:336 ../src/o_box_basic.c:338
 #, c-format
 msgid "Found a zero width/height box [ %c %d %d %d %d %d ]\n"
 msgstr "Found a zero width/height box [ %c %d %d %d %d %d ]\n"
 
-#: ../src/o_bus_basic.c:149
-#: ../src/o_bus_basic.c:151
+#: ../src/o_bus_basic.c:149 ../src/o_bus_basic.c:151
 #, c-format
 msgid "Found a zero length bus [ %c %d %d %d %d %d ]\n"
 msgstr "Found a zero length bus [ %c %d %d %d %d %d ]\n"
 
-#: ../src/o_bus_basic.c:167
-#: ../src/o_bus_basic.c:168
+#: ../src/o_bus_basic.c:167 ../src/o_bus_basic.c:168
 #, c-format
 msgid "Found an invalid bus ripper direction [ %s ]\n"
 msgstr "Found an invalid bus ripper direction [ %s ]\n"
@@ -354,23 +339,22 @@ msgstr "Resetting direction to neutral (no direction)\n"
 msgid "Null radius circles are not allowed\n"
 msgstr "Null radius circles are not allowed\n"
 
-#: ../src/o_circle_basic.c:290
-#: ../src/o_circle_basic.c:292
+#: ../src/o_circle_basic.c:290 ../src/o_circle_basic.c:292
 #, c-format
 msgid "Found a zero radius circle [ %c %d %d %d %d ]\n"
 msgstr "Found a zero radius circle [ %c %d %d %d %d ]\n"
 
-#: ../src/o_complex_basic.c:716
-#: ../src/o_complex_basic.c:717
+#: ../src/o_complex_basic.c:716 ../src/o_complex_basic.c:717
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 
-#: ../src/o_complex_basic.c:730
-#: ../src/o_complex_basic.c:732
+#: ../src/o_complex_basic.c:730 ../src/o_complex_basic.c:732
 #, c-format
-msgid "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
-msgstr "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
+msgid ""
+"Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
+msgstr ""
+"Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
 
 #: ../src/o_complex_basic.c:1431
 #, c-format
@@ -403,13 +387,14 @@ msgstr ""
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
-"\tsymversion=%s attached to instantiated symbol, but no symversion= inside symbol file\n"
+"\tsymversion=%s attached to instantiated symbol, but no symversion= inside "
+"symbol file\n"
 msgstr ""
 "WARNING: Symbol version oddity on refdes %s:\n"
-"\tsymversion=%s attached to instantiated symbol, but no symversion= inside symbol file\n"
+"\tsymversion=%s attached to instantiated symbol, but no symversion= inside "
+"symbol file\n"
 
-#: ../src/o_complex_basic.c:1491
-#: ../src/o_complex_basic.c:1495
+#: ../src/o_complex_basic.c:1491 ../src/o_complex_basic.c:1495
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -428,8 +413,7 @@ msgstr "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f)!\n"
 msgstr "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f)!\n"
 
-#: ../src/o_complex_basic.c:1544
-#: ../src/o_complex_basic.c:1547
+#: ../src/o_complex_basic.c:1544 ../src/o_complex_basic.c:1547
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\tMinor version change (file %.3f, instantiated %.3f)\n"
@@ -451,40 +435,39 @@ msgstr "Component [%s] has been embedded\n"
 #. symbol not found in the symbol library: signal an error
 #: ../src/o_embed.c:85
 #, c-format
-msgid "Could not find component [%s], while trying to unembed. Component is still embedded\n"
-msgstr "Could not find component [%s], while trying to unembed. Component is still embedded\n"
+msgid ""
+"Could not find component [%s], while trying to unembed. Component is still "
+"embedded\n"
+msgstr ""
+"Could not find component [%s], while trying to unembed. Component is still "
+"embedded\n"
 
 #: ../src/o_embed.c:93
 #, c-format
 msgid "Component [%s] has been successfully unembedded\n"
 msgstr "Component [%s] has been successfully unembedded\n"
 
-#: ../src/o_line_basic.c:288
-#: ../src/o_line_basic.c:290
+#: ../src/o_line_basic.c:288 ../src/o_line_basic.c:290
 #, c-format
 msgid "Found a zero length line [ %c %d %d %d %d %d ]\n"
 msgstr "Found a zero length line [ %c %d %d %d %d %d ]\n"
 
-#: ../src/o_net_basic.c:157
-#: ../src/o_net_basic.c:159
+#: ../src/o_net_basic.c:157 ../src/o_net_basic.c:159
 #, c-format
 msgid "Found a zero length net [ %c %d %d %d %d %d ]\n"
 msgstr "Found a zero length net [ %c %d %d %d %d %d ]\n"
 
-#: ../src/o_picture.c:83
-#: ../src/o_picture.c:85
+#: ../src/o_picture.c:83 ../src/o_picture.c:85
 #, c-format
 msgid "Error reading picture definition line: %s.\n"
 msgstr "Error reading picture definition line: %s.\n"
 
-#: ../src/o_picture.c:99
-#: ../src/o_picture.c:101
+#: ../src/o_picture.c:99 ../src/o_picture.c:101
 #, c-format
 msgid "Found a zero width/height picture [ %c %d %d %d %d ]\n"
 msgstr "Found a zero width/height picture [ %c %d %d %d %d ]\n"
 
-#: ../src/o_picture.c:106
-#: ../src/o_picture.c:108
+#: ../src/o_picture.c:106 ../src/o_picture.c:108
 #, c-format
 msgid "Found a picture with a wrong 'mirrored' parameter: %c.\n"
 msgstr "Found a picture with a wrong 'mirrored' parameter: %c.\n"
@@ -493,8 +476,7 @@ msgstr "Found a picture with a wrong 'mirrored' parameter: %c.\n"
 msgid "Setting mirrored to 0\n"
 msgstr "Setting mirrored to 0\n"
 
-#: ../src/o_picture.c:115
-#: ../src/o_picture.c:117
+#: ../src/o_picture.c:115 ../src/o_picture.c:117
 #, c-format
 msgid "Found a picture with a wrong 'embedded' parameter: %c.\n"
 msgstr "Found a picture with a wrong 'embedded' parameter: %c.\n"
@@ -503,20 +485,16 @@ msgstr "Found a picture with a wrong 'embedded' parameter: %c.\n"
 msgid "Setting embedded to 0\n"
 msgstr "Setting embedded to 0\n"
 
-#: ../src/o_picture.c:131
-#: ../src/o_picture.c:132
+#: ../src/o_picture.c:131 ../src/o_picture.c:132
 #, c-format
 msgid "Found an unsupported picture angle [ %d ]\n"
 msgstr "Found an unsupported picture angle [ %d ]\n"
 
-#: ../src/o_picture.c:133
-#: ../src/o_text_basic.c:1091
+#: ../src/o_picture.c:133 ../src/o_text_basic.c:1091
 msgid "Setting angle to 0\n"
 msgstr "Setting angle to 0\n"
 
-#: ../src/o_picture.c:168
-#: ../src/o_picture.c:179
-#: ../src/o_picture.c:949
+#: ../src/o_picture.c:168 ../src/o_picture.c:179 ../src/o_picture.c:949
 #, c-format
 msgid "Failed to load image from embedded data [%s]: %s\n"
 msgstr "Failed to load image from embedded data [%s]: %s\n"
@@ -525,33 +503,26 @@ msgstr "Failed to load image from embedded data [%s]: %s\n"
 msgid "Base64 decoding failed."
 msgstr "Base64 decoding failed."
 
-#: ../src/o_picture.c:170
-#: ../src/o_picture.c:181
-#: ../src/o_picture.c:951
+#: ../src/o_picture.c:170 ../src/o_picture.c:181 ../src/o_picture.c:951
 msgid "Falling back to file loading. Picture unembedded.\n"
 msgstr "Falling back to file loading. Picture unembedded.\n"
 
-#: ../src/o_picture.c:192
-#: ../src/o_picture.c:937
-#: ../src/o_picture.c:984
+#: ../src/o_picture.c:192 ../src/o_picture.c:937 ../src/o_picture.c:984
 #, c-format
 msgid "Failed to load image from file [%s]: %s\n"
 msgstr "Failed to load image from file [%s]: %s\n"
 
-#: ../src/o_picture.c:203
-#: ../src/o_picture.c:204
+#: ../src/o_picture.c:203 ../src/o_picture.c:204
 #, c-format
 msgid "Loading warning picture.\n"
 msgstr "Loading warning picture.\n"
 
-#: ../src/o_picture.c:210
-#: ../src/o_picture.c:212
+#: ../src/o_picture.c:210 ../src/o_picture.c:212
 #, c-format
 msgid "Error loading picture from file: %s.\n"
 msgstr "Error loading picture from file: %s.\n"
 
-#: ../src/o_picture.c:272
-#: ../src/o_picture.c:273
+#: ../src/o_picture.c:272 ../src/o_picture.c:273
 #, c-format
 msgid "ERROR: o_picture_save: unable to encode the picture.\n"
 msgstr "ERROR: o_picture_save: unable to encode the picture.\n"
@@ -566,8 +537,7 @@ msgstr "Picture [%s] has been embedded\n"
 msgid "Picture [%s] has been unembedded\n"
 msgstr "Picture [%s] has been unembedded\n"
 
-#: ../src/o_pin_basic.c:141
-#: ../src/o_pin_basic.c:143
+#: ../src/o_pin_basic.c:141 ../src/o_pin_basic.c:143
 #, c-format
 msgid ""
 "Found a pin which did not have the whichone field set.\n"
@@ -576,14 +546,12 @@ msgstr ""
 "Found a pin which did not have the whichone field set.\n"
 "Verify and correct manually.\n"
 
-#: ../src/o_pin_basic.c:147
-#: ../src/o_pin_basic.c:149
+#: ../src/o_pin_basic.c:147 ../src/o_pin_basic.c:149
 #, c-format
 msgid "Found an invalid whichend on a pin (reseting to zero): %d\n"
 msgstr "Found an invalid whichend on a pin (reseting to zero): %d\n"
 
-#: ../src/o_pin_basic.c:160
-#: ../src/o_pin_basic.c:161
+#: ../src/o_pin_basic.c:160 ../src/o_pin_basic.c:161
 #, c-format
 msgid "Found a zero length pin: [ %s ]\n"
 msgstr "Found a zero length pin: [ %s ]\n"
@@ -598,20 +566,17 @@ msgstr "Could not find character '%s' definition.\n"
 msgid "Could not load question font char -- check font-directory keyword\n"
 msgstr "Could not load question font char -- check font-directory keyword\n"
 
-#: ../src/o_text_basic.c:1074
-#: ../src/o_text_basic.c:1075
+#: ../src/o_text_basic.c:1074 ../src/o_text_basic.c:1075
 #, c-format
 msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: ../src/o_text_basic.c:1087
-#: ../src/o_text_basic.c:1089
+#: ../src/o_text_basic.c:1087 ../src/o_text_basic.c:1089
 #, c-format
 msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: ../src/o_text_basic.c:1111
-#: ../src/o_text_basic.c:1113
+#: ../src/o_text_basic.c:1111 ../src/o_text_basic.c:1113
 #, c-format
 msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
@@ -669,15 +634,16 @@ msgstr "Failed to scan library [%s]: Scheme function returned non-list\n"
 msgid "Non-string symbol name while scanning library [%s]\n"
 msgstr "Non-string symbol name while scanning library [%s]\n"
 
-#: ../src/s_clib.c:882
-#: ../src/s_clib.c:929
+#: ../src/s_clib.c:882 ../src/s_clib.c:929
 msgid "Cannot add library: name not specified\n"
 msgstr "Cannot add library: name not specified\n"
 
 #: ../src/s_clib.c:889
 #, c-format
-msgid "Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
-msgstr "Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
+msgid ""
+"Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
+msgstr ""
+"Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
 
 #: ../src/s_clib.c:937
 #, c-format
@@ -767,18 +733,18 @@ msgstr "Could NOT save [%s]\n"
 msgid "Found [%s]\n"
 msgstr "Found [%s]\n"
 
-#: ../src/s_slib.c:204
-#: ../src/s_slib.c:207
+#: ../src/s_slib.c:204 ../src/s_slib.c:207
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "Could not find [%s] in any SourceLibrary\n"
 
 #~ msgid "Error decoding picture.\n"
 #~ msgstr "Error decoding picture.\n"
+
 #~ msgid "Error deserializing picture.\n"
 #~ msgstr "Error deserialising picture.\n"
+
 #~ msgid ""
 #~ "ERROR: o_picture_save: failed to create serialized data from picture\n"
 #~ msgstr ""
 #~ "ERROR: o_picture_save: failed to create serialised data from picture\n"
-
