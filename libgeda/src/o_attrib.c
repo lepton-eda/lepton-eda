@@ -2135,13 +2135,10 @@ void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
   OBJECT *o_slot_attrib;
   OBJECT *o_pin_object;
   OBJECT *o_pinnum_object;
-  OBJECT *o_pinseq_object;
   char *string;
   char *slotdef;
   int slot;
   int pin_counter;    /* Internal pin counter private to this fcn. */
-  char *new_pinseq;   /* New pinseq = (slot*(number of pins -1) + pin_count */
-  int numpins;        /* Total number of pins on this slot */
   char* current_pin;  /* text from slotdef= to be made into pinnumber= */
   char* cptr;         /* char pointer pointing to pinnumbers in slotdef=#:#,#,# string */
 
@@ -2221,6 +2218,13 @@ void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
       	g_free(string);
       }
 
+/* This block of code is commented out since it breaks slotting in general. */
+/* A better way should be found for spice-sdb's use. */
+#if 0 
+  /* these variables are used in this block and should be moved above */
+  char *new_pinseq;   /* New pinseq = (slot*(number of pins -1) + pin_count */
+  int numpins;        /* Total number of pins on this slot */
+  OBJECT *o_pinseq_object;
 
       /* Now update pinseq= attrib on this part. */
       /* Algorithm:
@@ -2266,6 +2270,7 @@ void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
       if (string) {
       	g_free(string);
       }
+#endif /* commented out since it breaks slotting */
       
       pin_counter++;
     } else {
