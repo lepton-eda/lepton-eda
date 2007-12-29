@@ -535,7 +535,7 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
       WORLDtoSCREEN( toplevel, object->line->x[!whichone], object->line->y[!whichone],
                      &w_current->start_x, &w_current->start_y );
 
-      o_net_erase(w_current, object);
+      o_erase_single(w_current, object);
       gdk_gc_set_foreground(w_current->xor_gc,
                             x_get_darkcolor(w_current->select_color) );
       gdk_draw_line(w_current->backingstore, w_current->xor_gc,
@@ -556,7 +556,7 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
       WORLDtoSCREEN( toplevel, object->line->x[!whichone], object->line->y[!whichone],
                      &w_current->start_x, &w_current->start_y );
 
-      o_pin_erase(w_current, object);
+      o_erase_single(w_current, object);
       gdk_gc_set_foreground(w_current->xor_gc,
                             x_get_darkcolor(w_current->select_color) );
       gdk_draw_line(w_current->backingstore, w_current->xor_gc,
@@ -574,7 +574,7 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
       WORLDtoSCREEN( toplevel, object->line->x[!whichone], object->line->y[!whichone],
                      &w_current->start_x, &w_current->start_y );
 
-      o_bus_erase(w_current, object);
+      o_erase_single(w_current, object);
       gdk_gc_set_foreground(w_current->xor_gc,
                             x_get_darkcolor(w_current->select_color) );
       gdk_draw_line(w_current->backingstore, w_current->xor_gc,
@@ -631,7 +631,7 @@ void o_grips_start_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->last_drawb_mode = -1;
 
   /* erase the arc before */
-  o_arc_erase(w_current, o_current);
+  o_erase_single(w_current, o_current);
 
   /* describe the arc with GSCHEM_TOPLEVEL variables */
   /* center */
@@ -675,7 +675,7 @@ void o_grips_start_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->last_drawb_mode = -1;
 
   /* erase the box before */
-  o_box_erase(w_current, o_current);
+  o_erase_single(w_current, o_current);
 
   /* (last_x,last_y)    is the selected corner */
   /* (start_x, start_y) is the opposite corner */
@@ -742,7 +742,7 @@ void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->last_drawb_mode = -1;
 
   /* erase the picture before */
-  o_picture_erase(w_current, o_current);
+  o_erase_single(w_current, o_current);
   w_current->current_pixbuf = o_current->picture->original_picture;
   w_current->pixbuf_filename = o_current->picture->filename;
   w_current->pixbuf_wh_ratio = o_current->picture->ratio;
@@ -812,7 +812,7 @@ void o_grips_start_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->last_drawb_mode = -1;
 
   /* erase the circle before */
-  o_circle_erase(w_current, o_current);
+  o_erase_single(w_current, o_current);
 
   /* describe the circle with GSCHEM_TOPLEVEL variables */
   /* (start_x, start_y) is the center of the circle */
@@ -856,7 +856,7 @@ void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->last_drawb_mode = -1;
 
   /* erase the line before */
-  o_line_erase(w_current, o_current);
+  o_erase_single(w_current, o_current);
 
   /* describe the line with GSCHEM_TOPLEVEL variables */
   WORLDtoSCREEN( toplevel, o_current->line->x[whichone], o_current->line->y[whichone],
@@ -1130,7 +1130,7 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
     y = snap_grid(toplevel, y);
 
     o_cue_undraw(w_current, object);
-    o_net_erase(w_current, object);
+    o_erase_single(w_current, object);
     /* erase xor line */
     gdk_gc_set_foreground(w_current->xor_gc,
                           x_get_darkcolor(w_current->select_color));
@@ -1155,7 +1155,7 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
     /* add bus rippers if necessary */
     if (o_net_add_busrippers(w_current, object, connected_objects)) {
 
-      o_net_erase(w_current, object);
+      o_erase_single(w_current, object);
       /*o_line_erase_grips(w_current, object); */
 
       if (toplevel->net_style == THICK ) {
@@ -1236,7 +1236,7 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
     y = snap_grid(toplevel, y);
 
     o_cue_undraw(w_current, object);
-    o_pin_erase(w_current, object);
+    o_erase_single(w_current, object);
     /* erase xor line */
     gdk_gc_set_foreground(w_current->xor_gc,
                           x_get_darkcolor(w_current->select_color));
@@ -1294,7 +1294,7 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
     y = snap_grid(toplevel, y);
 
     o_cue_undraw(w_current, object);
-    o_bus_erase(w_current, object);
+    o_erase_single(w_current, object);
     /* erase xor line */
     gdk_gc_set_foreground(w_current->xor_gc,
                           x_get_darkcolor(w_current->select_color));

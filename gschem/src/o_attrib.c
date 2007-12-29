@@ -115,7 +115,7 @@ void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, GList *list)
 
         /* only erase if we are not showing hidden text */
         if (!toplevel->show_hidden_text) {
-          o_text_erase(w_current, object);
+          o_erase_single(w_current, object);
         }
         
         object->visibility = INVISIBLE;
@@ -130,7 +130,7 @@ void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, GList *list)
         /* if we are in the special show hidden mode, then erase text first */
         /* to get rid of the little I */
         if (toplevel->show_hidden_text) {
-          o_text_erase(w_current, object);
+          o_erase_single(w_current, object);
         }
 
         object->visibility = VISIBLE;
@@ -177,7 +177,7 @@ void o_attrib_toggle_show_name_value(GSCHEM_TOPLEVEL *w_current,
     }
 
     if (object->type == OBJ_TEXT) {
-      o_text_erase(w_current, object);
+      o_erase_single(w_current, object);
       object->show_name_value = new_show_name_value;
       o_text_recreate(toplevel, object);
       o_text_draw(w_current, object);
@@ -296,7 +296,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
   o_selection_add( toplevel->page_current->selection_list,
                    toplevel->page_current->object_tail );
 
-  o_text_erase(w_current, toplevel->page_current->object_tail);
+  o_erase_single(w_current, toplevel->page_current->object_tail);
   o_text_draw(w_current, toplevel->page_current->object_tail);
 
   /* handle slot= attribute, it's a special case */

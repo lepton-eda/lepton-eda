@@ -803,23 +803,6 @@ void o_arc_draw_phantom(GdkWindow *w, GdkGC *gc,
 }
 
 
-/*! \brief Erase arc described by OBJECT.
- *  \par Function Description
- *  This function erases the arc described in the <B>OBJECT</B> structure
- *  pointed by <B>o_current</B>.
- *
- *  It makes a call to the #o_box_draw() function after setting the
- *  special color. Therefo	re an arc is drawn with the background color
- *  over the previous one.
- */
-void o_arc_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  toplevel->override_color = toplevel->background_color;
-  o_arc_draw(w_current, o_current);
-  toplevel->override_color = -1;
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

@@ -803,26 +803,6 @@ void o_box_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color,
 }
 
 
-/*! \brief Erase a box described by OBJECT.
- *  \par Function Description
- *  This function erases a box, described in a <B>OBJECT</B> structure pointed
- *  by <B>o_current</B>.
- *
- *  It makes a call to the function #o_box_draw() after setting the special
- *  color. Therefore a box is drawn with background color over the previous
- *  one.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Box OBJECT to erase.
- */
-void o_box_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-    TOPLEVEL *toplevel = w_current->toplevel;
-    toplevel->override_color = toplevel->background_color;
-    o_box_draw(w_current, o_current);
-    toplevel->override_color = -1;
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief 
  *  \par Function Description

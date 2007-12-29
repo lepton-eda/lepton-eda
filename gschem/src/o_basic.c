@@ -252,10 +252,19 @@ void o_erase_selected(GSCHEM_TOPLEVEL *w_current)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Erase a given OBJECT
  *
+ *  \par Function Description
+ *  This function erases the passed OBJECT, <B>object</B>.
+ *
+ *  It makes a call to object's draw function after having set a
+ *  color override to the background color. The object is drawn in
+ *  the background color, causing it to dissapear.
+ *
+ *  \bug No redrawing is done of occluded objects, including the grid.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] o_current  Circle OBJECT to erase.
  */
 void o_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {

@@ -223,18 +223,6 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_text_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  toplevel->override_color = toplevel->background_color;
-  o_text_draw(w_current, o_current);
-  toplevel->override_color = -1;
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -479,7 +467,7 @@ void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int len, int text
         /* and we should pass it here with a function parameter (?) */
         object->saved_color = w_current->edit_color;
 
-        o_text_erase(w_current, object);
+        o_erase_single(w_current, object);
         o_text_recreate(toplevel, object);
         o_text_draw(w_current, object);
 
@@ -514,7 +502,7 @@ void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string,
   }
 
   /* erase old object */
-  o_text_erase(w_current, object);
+  o_erase_single(w_current, object);
 
   /* second change the real object */
   if (object->text->string) {

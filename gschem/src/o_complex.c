@@ -51,18 +51,6 @@ void o_complex_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_complex_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  toplevel->override_color = toplevel->background_color;
-  o_complex_draw(w_current, o_current);
-  toplevel->override_color = -1;
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

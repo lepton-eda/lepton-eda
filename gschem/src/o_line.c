@@ -727,22 +727,6 @@ void o_line_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color,
   }
 }
 
-/*! \brief Erase line object.
- *  \par Function Description
- *  This function erases the line object described by <B>*o_current</B>.
- *
- *  It draws the line over the sheet with the background color.
- *
- *  \param [in] w_current  The GSCHEM_	TOPLEVEL object.
- *  \param [in] o_current  Line OBJECT to erase.
- */
-void o_line_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  toplevel->override_color = toplevel->background_color;
-  o_line_draw(w_current, o_current);
-  toplevel->override_color = -1;
-}
 
 /*! \todo Finish function documentation
  *  \brief

@@ -244,7 +244,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
         world_y = snap_grid(toplevel, world_y);
 	new->text->x = world_x;
 	new->text->y = world_y;
-	o_text_erase(w_current, new);
+	o_erase_single(w_current, new);
 	o_text_recreate(toplevel, new);
 	o_text_draw(w_current, new);
 	toplevel->page_current->CHANGED = 1;

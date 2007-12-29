@@ -817,7 +817,7 @@ static void multiattrib_callback_toggled_visible(GtkCellRendererToggle *cell_ren
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
-  o_text_erase (w_current, o_attrib);
+  o_erase_single (w_current, o_attrib);
 
   visibility = o_attrib->visibility == VISIBLE ? INVISIBLE : VISIBLE;
 
@@ -859,7 +859,7 @@ static void multiattrib_callback_toggled_show_name(GtkCellRendererToggle *cell_r
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
-  o_text_erase (w_current, o_attrib);
+  o_erase_single (w_current, o_attrib);
 
   switch (o_attrib->show_name_value) {
       case SHOW_NAME_VALUE: new_snv = SHOW_VALUE;      break;
@@ -908,7 +908,7 @@ static void multiattrib_callback_toggled_show_value(GtkCellRendererToggle *cell_
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
-  o_text_erase (w_current, o_attrib);
+  o_erase_single (w_current, o_attrib);
 
   switch (o_attrib->show_name_value) {
       case SHOW_NAME_VALUE: new_snv = SHOW_NAME;       break;

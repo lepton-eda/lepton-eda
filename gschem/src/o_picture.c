@@ -549,30 +549,6 @@ void o_picture_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   
 }
 
-/*! \brief Erase a picture described by OBJECT.
- *  \par Function Description
- *  This function erases a picture, described in a <B>OBJECT</B> structure
- *  pointed by <B>o_current</B>.
- *
- *  It makes a call to the function #o_picture_draw() after setting
- *  the special color. Therefore a picture is drawn with background color
- *  over the previous one.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Picture OBJECT to erase.
- */
-void o_picture_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-#if DEBUG
-  printf("o_picture_erase called\n");
-#endif
-    gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(toplevel->background_color));
-    toplevel->override_color = toplevel->background_color;
-    o_picture_draw(w_current, o_current);
-    toplevel->override_color = -1;
-}
 
 /*! \brief Draw a picture described by OBJECT with translation
  *  \par Function Description
@@ -652,7 +628,7 @@ void o_picture_exchange (GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf,
       /* It's selected. Then change picture if it's a picture */
       if (object->type == OBJ_PICTURE) {
 	/* Erase previous picture */
-	o_picture_erase(w_current, object);
+	o_erase_single(w_current, object);
 
 	/* Change picture attributes */
 	if (object->picture->original_picture != NULL) {

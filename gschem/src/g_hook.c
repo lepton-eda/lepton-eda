@@ -363,7 +363,7 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
     object = (OBJECT *) attribute->attribute->object;
     if (object &&
 	object->text) {
-      o_text_erase(w_current, object);
+      o_erase_single(w_current, object);
       if (x != -1) {
 	object->text->x = x;
       }

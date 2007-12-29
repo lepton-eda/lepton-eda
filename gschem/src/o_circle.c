@@ -497,25 +497,6 @@ void o_circle_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color,
 	
 }
 
-/*! \brief Erase a circle described by OBJECT
- *  \par Function Description
- *  This function erases a circle described in a #OBJECT structure
- *  pointed by <B>o_current</B>.
- *
- *  It makes a call to the function #o_circle_draw() after setting the
- *  special color. Therefore a circle is drawn with background color over
- *  the previous one.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Circle OBJECT to erase.
- */
-void o_circle_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-	toplevel->override_color = toplevel->background_color;
-	o_circle_draw(w_current, o_current);
-	toplevel->override_color = -1;
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

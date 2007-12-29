@@ -42,7 +42,8 @@ void o_delete_net(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
   GList *other_objects = NULL;
 
   o_cue_undraw(w_current, obj);
-  o_net_erase(w_current, obj);
+
+  o_erase_single(w_current, obj);
   o_line_erase_grips(w_current, obj);
 
   other_objects = s_conn_return_others(other_objects, obj);
@@ -68,7 +69,7 @@ void o_delete_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
   GList *other_objects = NULL;
         
   o_cue_undraw(w_current, obj);
-  o_bus_erase(w_current, obj);
+  o_erase_single(w_current, obj);
   o_line_erase_grips(w_current, obj);
 
   other_objects = s_conn_return_others(other_objects, obj);
@@ -95,7 +96,7 @@ static void o_delete_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
   GList *other_objects = NULL;
         
   o_cue_undraw(w_current, obj);
-  o_pin_erase(w_current, obj);
+  o_erase_single(w_current, obj);
   o_line_erase_grips(w_current, obj);
         
   other_objects = s_conn_return_others(other_objects, obj);
@@ -121,7 +122,7 @@ void o_delete_complex(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
   GList *other_objects = NULL;
 
   o_cue_undraw_complex(w_current, obj);
-  o_complex_erase(w_current, obj);
+  o_erase_single(w_current, obj);
 
   other_objects = s_conn_return_complex_others(other_objects, obj);
 
@@ -141,7 +142,7 @@ void o_delete_complex(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 static void o_delete_line(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  o_line_erase(w_current, obj);
+  o_erase_single(w_current, obj);
   o_line_erase_grips(w_current, obj);
   
   s_delete(toplevel, obj);
@@ -157,7 +158,7 @@ static void o_delete_line(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 static void o_delete_box(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  o_box_erase(w_current, obj);
+  o_erase_single(w_current, obj);
   o_box_erase_grips(w_current, obj);
 
   s_delete(toplevel, obj);
@@ -174,7 +175,7 @@ static void o_delete_box(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 static void o_delete_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  o_picture_erase(w_current, obj);
+  o_erase_single(w_current, obj);
   o_picture_erase_grips(w_current, obj);
 
   s_delete(toplevel, obj);
@@ -190,7 +191,7 @@ static void o_delete_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 static void o_delete_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-	o_circle_erase(w_current, obj);
+	o_erase_single(w_current, obj);
 	o_circle_erase_grips(w_current, obj);
 
 	s_delete(toplevel, obj);
@@ -207,7 +208,7 @@ static void o_delete_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 void o_delete_text(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  o_text_erase(w_current, obj);
+  o_erase_single(w_current, obj);
 
   s_delete(toplevel, obj);
   toplevel->page_current->object_tail =
@@ -222,7 +223,7 @@ void o_delete_text(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 static void o_delete_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  o_arc_erase(w_current, obj);
+  o_erase_single(w_current, obj);
 
   s_delete(toplevel, obj);
   toplevel->page_current->object_tail =

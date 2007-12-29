@@ -451,7 +451,6 @@ void o_arc_draw_dotted(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap
 void o_arc_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint radius, gint angle1, gint angle2, gint arc_width, gint length, gint space);
 void o_arc_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint radius, gint angle1, gint angle2, gint arc_width, gint length, gint space);
 void o_arc_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint radius, gint angle1, gint angle2, gint arc_width, gint length, gint space);
-void o_arc_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_eraserubber(GSCHEM_TOPLEVEL *w_current);
 void o_arc_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_arc_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -495,7 +494,6 @@ void o_box_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint 
 void o_box_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint width, gint height, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_box_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint width, gint height, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_box_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint width, gint height, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_box_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_box_eraserubber(GSCHEM_TOPLEVEL *w_current);
 void o_box_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -514,7 +512,6 @@ void o_buffer_init(void);
 void o_buffer_free(GSCHEM_TOPLEVEL *w_current);
 /* o_bus.c */
 void o_bus_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_bus_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_bus_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_bus_draw_xor_single(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int whichone, OBJECT *o_current);
 void o_bus_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -527,7 +524,6 @@ void o_circle_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gi
 void o_circle_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint radius, gint width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_circle_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint radius, gint width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_circle_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint radius, gint width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_circle_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_circle_eraserubber(GSCHEM_TOPLEVEL *w_current);
 void o_circle_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_circle_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -538,7 +534,6 @@ void o_circle_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_circle_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 /* o_complex.c */
 void o_complex_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_complex_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_complex_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *complex);
 void o_complex_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_complex_place_changed_run_hook(GSCHEM_TOPLEVEL *w_current);
@@ -606,7 +601,6 @@ void o_line_draw_dotted(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle ca
 void o_line_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
 void o_line_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
 void o_line_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
-void o_line_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_line_eraserubber(GSCHEM_TOPLEVEL *w_current);
 void o_line_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_line_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -641,7 +635,6 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x, int wor
 void o_move_stretch_rubberband(GSCHEM_TOPLEVEL *w_current);
 /* o_net.c */
 void o_net_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_net_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_net_draw_xor_single(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int whichone, OBJECT *o_current);
 void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -659,7 +652,6 @@ void o_picture_rubberbox(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_picture_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_picture_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_picture_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_picture_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_picture_exchange(GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf, const gchar *filename);
 void picture_change_filename_dialog (GSCHEM_TOPLEVEL *w_current);
@@ -667,7 +659,6 @@ void o_picture_set_pixbuf(GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf, char *f
 
 /* o_pin.c */
 void o_pin_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_pin_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_pin_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_pin_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -692,7 +683,6 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, char *string, int len);
 void o_text_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw_rectangle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_text_erase(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_text_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_text_end(GSCHEM_TOPLEVEL *w_current);

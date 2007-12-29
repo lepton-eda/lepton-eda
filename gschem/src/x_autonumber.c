@@ -572,7 +572,7 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
 					    autotext->current_searchtext);
 
   /* redraw the text */
-  o_text_erase(autotext->w_current, o_current);
+  o_erase_single(autotext->w_current, o_current);
   o_text_recreate(autotext->w_current->toplevel, o_current);
   o_text_draw(autotext->w_current, o_current);
 
@@ -616,7 +616,7 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
       g_free(slot_str);
       g_free(o_slot->text->string);
       o_slot->text->string = g_strdup_printf("slot=%d",slot);
-      o_text_erase(autotext->w_current, o_slot);
+      o_erase_single(autotext->w_current, o_slot);
       o_text_recreate(autotext->w_current->toplevel, o_slot);
       o_text_draw(autotext->w_current, o_slot);
     }
@@ -635,7 +635,7 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
   o_current->text->string = g_strdup_printf("%s%d", autotext->current_searchtext,
 					    number);
   /* redraw the text */
-  o_text_erase(autotext->w_current, o_current);
+  o_erase_single(autotext->w_current, o_current);
   o_text_recreate(autotext->w_current->toplevel, o_current);
   o_text_draw(autotext->w_current, o_current);
   autotext->w_current->toplevel->page_current->CHANGED = 1;
