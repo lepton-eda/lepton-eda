@@ -1,14 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2007, 2008 Ales Hvezda and the respective original authors (which are listed on the respective files).
-# This file is distributed under the same license as the GPL Electronic Design Automation package.
-# Bert Timmerman <bert.timmerman@xs4all.nl>, 2007 and 2008.
+# Dutch translation for the geda-libgeda package.
+# Copyright (C) 1998-2007 Ales Hvezda and the respective original authors (which are listed on the respective files).
+# This file is distributed under the same license as the geda-libgeda package.
+# Bert Timmerman <bert.timmerman@xs4all.nl>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-29 09:21-0500\n"
-"PO-Revision-Date: 2007-12-25 10:14+0100\n"
+"POT-Creation-Date: 2007-12-29 16:48+0000\n"
+"PO-Revision-Date: 2007-12-29 17:03+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"
@@ -301,21 +301,21 @@ msgstr "Stel de kleur in op WIT \n"
 msgid "Found an improper attribute: _%s_\n"
 msgstr "Ongewenst attribuut gevonden: _%s_\n"
 
-#: ../src/o_attrib.c:1695 ../src/o_attrib.c:1848
+#: ../src/o_attrib.c:1692 ../src/o_attrib.c:1853
 msgid "Did not find slotdef=#:#,#,#... attribute\n"
 msgstr "Kan slotdef=#:#,#,#... attribuut niet vinden\n"
 
 # Geen gebruikelijke slotdef=#:... gevonden, doe een waarschuwing in het log
 #. Didn't find proper slotdef=#:... put warning into log
-#: ../src/o_attrib.c:1701
+#: ../src/o_attrib.c:1698
 msgid "Improper slotdef syntax: missing \":\".\n"
 msgstr "Ongewenst slotdef syntax: \":\". ontbreekt\n"
 
-#: ../src/o_attrib.c:1716 ../src/o_attrib.c:1867
+#: ../src/o_attrib.c:1713 ../src/o_attrib.c:1872
 msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
 msgstr "Kan het gewenste slotdef=#:#,#,#... attribuut niet vinden\n"
 
-#: ../src/o_attrib.c:1801 ../src/o_attrib.c:1901
+#: ../src/o_attrib.c:1806 ../src/o_attrib.c:1906
 msgid "component missing pinseq= attribute\n"
 msgstr "komponent mist het pinseq= attribuut\n"
 
@@ -511,22 +511,22 @@ msgid "Setting angle to 0\n"
 msgstr "Hoek op 0 ingesteld\n"
 
 #: ../src/o_picture.c:168 ../src/o_picture.c:179 ../src/o_picture.c:949
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to load image from embedded data [%s]: %s\n"
-msgstr "Laden van symbool uit bestand faalde [%s]: %s\n"
+msgstr "Laden van afbeelding uit ingesloten data faalde [%s]: %s\n"
 
 #: ../src/o_picture.c:169
 msgid "Base64 decoding failed."
-msgstr ""
+msgstr "Base64 decodering faalde."
 
 #: ../src/o_picture.c:170 ../src/o_picture.c:181 ../src/o_picture.c:951
 msgid "Falling back to file loading. Picture unembedded.\n"
-msgstr ""
+msgstr "Val terug op het laden van bestand. Afbeelding uitgesloten.\n"
 
 #: ../src/o_picture.c:192 ../src/o_picture.c:937 ../src/o_picture.c:984
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to load image from file [%s]: %s\n"
-msgstr "Laden van symbool uit bestand faalde [%s]: %s\n"
+msgstr "Laden van afbeelding uit bestand faalde [%s]: %s\n"
 
 #: ../src/o_picture.c:203 ../src/o_picture.c:204
 #, c-format
