@@ -7,7 +7,7 @@
   <title>libgeda3</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
 <meta name="robots" content="index,follow" />
-<meta name="date" content="2007-05-24T22:27:27-0400" />
+<meta name="date" content="2007-08-22T15:49:47-0400" />
 <meta name="keywords" content="libgeda3" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -195,7 +195,7 @@ Pros:
 </p>
 
 </div>
-<!-- SECTION "glib" [2550-3349] -->
+<!-- SECTION "glib" [2550-3350] -->
 <h3><a name="gobject" id="gobject">gobject</a></h3>
 <div class="level3">
 
@@ -207,8 +207,12 @@ Pros:
 gobject is often considered to be heavyweight, requiring lots of boilerplate code in order to use it effectively.  Its use in libgeda has historically been opposed, though its use in future versions may ease creation of bindings for libgeda in more directly object-oriented languages such as Python, Java or C++.
 </p>
 
+<p>
+GObject is currently used in libgeda for the GedaList class which wrapps a GList, and provides a notification signal when <acronym title="Application Programming Interface">API</acronym> is used to modify the list.
+</p>
+
 </div>
-<!-- SECTION "gobject" [3350-4179] -->
+<!-- SECTION "gobject" [3351-4335] -->
 <h2><a name="references" id="references">References</a></h2>
 <div class="level2">
 <ul>
@@ -217,6 +221,6 @@ gobject is often considered to be heavyweight, requiring lots of boilerplate cod
 </ul>
 
 </div>
-<!-- SECTION "References" [4180-] --></div>
+<!-- SECTION "References" [4336-] --></div>
 </body>
 </html>

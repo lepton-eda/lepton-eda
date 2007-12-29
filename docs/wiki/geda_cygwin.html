@@ -7,7 +7,7 @@
   <title>geda:cygwin</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
 <meta name="robots" content="index,follow" />
-<meta name="date" content="2007-05-24T22:27:25-0400" />
+<meta name="date" content="2007-10-08T13:25:47-0400" />
 <meta name="keywords" content="geda,cygwin" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -49,10 +49,13 @@ In the package selection dialog, select the following packages:
 (Hint: press the “view” button once to arrange the list in alphabetical order) 
 </p>
 <pre class="code">atk-devel
+crypt
 file
 gcc
 gtk2-x11-devel
 guile-devel
+libgmp-devel
+libtool1.5
 make
 pango-devel
 patchutils
@@ -64,11 +67,7 @@ xorg-x11-fscl
 xterm</pre>
 
 <p>
- Take care that you select guile and guile-devel version 1.6.7. Version 1.8.1 doesn’t work. (Werner)
-</p>
-
-<p>
-<strong>2. Append these lines to your .bash_profile:</strong> 
+ <strong>2. Append these lines to your .bash_profile:</strong> 
 </p>
 <pre class="code">export LD_LIBRARY_PATH=$HOME/geda/lib:$LD_LIBRARY_PATH
 export PATH=$HOME/geda/bin:$PATH
@@ -84,11 +83,12 @@ export PKG_CONFIG_PATH=$HOME/geda/lib/pkgconfig:$PKG_CONFIG_PATH</pre>
 </p>
 
 <p>
-From the gEDA/gaf group, download <strong>only</strong> the packages which have a date as its version. The necessary dependencies where already installed in step 1.
+From the gEDA/gaf group, download <strong>only</strong> the packages which have a date as its version. The necessary dependencies were already installed in step 1. However, if you haven’t installed or built the libstroke package, be sure to uncomment the opts= line in the gaf Makefile and change it to 
 </p>
+<pre class="code">opts=--disable-stroke</pre>
 
 <p>
-<strong>4. Go to the download directory and type:</strong>
+ <strong>4. Go to the download directory and type:</strong>
 </p>
 <pre class="code">$ make open
 $ make install

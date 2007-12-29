@@ -7,7 +7,7 @@
   <title>geda:faq-gsch2pcb</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
 <meta name="robots" content="index,follow" />
-<meta name="date" content="2007-06-27T07:29:37-0400" />
+<meta name="date" content="2007-10-17T12:54:25-0400" />
 <meta name="keywords" content="geda,faq-gsch2pcb" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -31,7 +31,8 @@
 <ul class="toc">
 <li class="level2"><div class="li"><span class="li"><a href="#where_is_the_gsch2pcb_tutorial" class="toc">Where is the gsch2pcb tutorial?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#where_can_i_download_gsch2pcb" class="toc">Where can I download gsch2pcb?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#gsch2pcb_can_t_find_some_of_my_footprints_or_errors_out._what_can_i_do_to_diagnose_my_problem" class="toc">gsch2pcb can&#039;t find some of my footprints, or errors out. What can I do to diagnose my problem?</a></span></div></li></ul>
+<li class="level2"><div class="li"><span class="li"><a href="#gsch2pcb_can_t_find_some_of_my_footprints_or_errors_out._what_can_i_do_to_diagnose_my_problem" class="toc">gsch2pcb can&#039;t find some of my footprints, or errors out. What can I do to diagnose my problem?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#i_don_t_like_the_default_layer_stack_of_gschem2pcb._how_can_i_change_this" class="toc">I don&#039;t like the default layer stack of gschem2pcb. How can I change this?</a></span></div></li></ul>
 </li></ul>
 </div>
 </div>
@@ -51,7 +52,7 @@ Currently, the best information about how to get started with gsch2pcb is contai
 </p>
 
 <p>
-There is a wrapper script for gsch2pcb called sch2pcb.  Read about it in the <a href="geda_pcb_tips.html" class="wikilink1" title="geda:pcb_tips">pcb_tips</a> section of this wiki.
+There is a wrapper script for gsch2pcb called sch2pcb.  Read about it in the <a href="http://geda.seul.org/wiki/geda:pcb_tips" class="wikilink1" title="geda:pcb_tips">pcb_tips</a> section of this wiki.
 </p>
 
 </div>
@@ -81,10 +82,36 @@ gsch2pcb is part of gEDA/gaf, in the utils. It is normally installed by default 
 <div class="level2">
 
 <p>
-Try running gsch2pcb in double verbose mode: “gsch2pcb -v -v”. This will produce lots of spew telling you where gsch2pcb is looking while it tries to find footprints. It will also tell you where it does find the footprints it uses. 
+Try running gsch2pcb in double verbose mode: “gsch2pcb -v -v”. This will produce lots of spew telling you where gsch2pcb is looking while it tries to find footprints. It will also tell you where it does find the footprints it uses.
 </p>
 
 </div>
-<!-- SECTION "gsch2pcb can't find some of my footprints, or errors out. What can I do to diagnose my problem?" [792-] --></div>
+<!-- SECTION "gsch2pcb can't find some of my footprints, or errors out. What can I do to diagnose my problem?" [792-1136] -->
+<h2><a name="i_don_t_like_the_default_layer_stack_of_gschem2pcb._how_can_i_change_this" id="i_don_t_like_the_default_layer_stack_of_gschem2pcb._how_can_i_change_this">I don&#039;t like the default layer stack of gschem2pcb. How can I change this?</a></h2>
+<div class="level2">
+
+<p>
+Edit $INSTALLDIR/share/gEDA/schemegnet-gsch2pcb.scm to reflect your preferred layer stack. In particular you may have to modify the line that defines the layer groups: 
+</p>
+<pre class="code">    (display &quot;Groups(\&quot;1,2,3,s:4,5,6,c:7:8\&quot;)\n&quot; port) </pre>
+
+<p>
+ and the layer stack itself: 
+</p>
+<pre class="code">(lambda (port)
+    (display &quot;Layer(1 \&quot;bottom\&quot;)\n(\n)\n&quot; port)
+    (display &quot;Layer(2 \&quot;bott.-poly.\&quot;)\n(\n)\n&quot; port)
+ ...
+    (display &quot;Layer(8 \&quot;lineout\&quot;)\n(\n)&quot; port)
+    (display &quot;Layer(9 \&quot;ignored\&quot;)\n(\n)\n&quot; port)
+    (display &quot;Layer(10 \&quot;ignored\&quot;)\n(\n)&quot; port)
+    (newline port)))</pre>
+
+<p>
+ Note, the last two layers will map to silk on both sides of the board. So you will have to define two more layers than you want for your copper layout. 
+</p>
+
+</div>
+<!-- SECTION "I don't like the default layer stack of gschem2pcb. How can I change this?" [1137-] --></div>
 </body>
 </html>

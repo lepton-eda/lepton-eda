@@ -1,0 +1,650 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>gsoc2007_projects</title>
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="index,follow" />
+<meta name="date" content="2007-10-28T22:55:15-0400" />
+<meta name="keywords" content="gsoc2007_projects" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/gsoc2007_projects?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/gsoc2007_projects" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/gsoc2007_projects" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
+</head>
+<body>
+<div class="dokuwiki export">
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#geda_gsoc_project_ideas" class="toc">gEDA GSoC Project Ideas</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#project_manager" class="toc">Project manager</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#improve_handling_of_non-copper_layers_in_pcb" class="toc">Improve handling of non-copper layers in pcb</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#gerber_to_pcb_converter" class="toc">Gerber to PCB converter</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#usability_improvements_for_ngspice_gnucap" class="toc">Usability improvements for ngspice/Gnucap</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#parts_manager" class="toc">Parts manager</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#gnetlist_gnetman_support_for_hierarchy" class="toc">Gnetlist/gnetman support for hierarchy</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#libgeda_api_formalization" class="toc">Libgeda API formalization</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#recently_loaded_file_list_for_gschem_and_or_pcb" class="toc">Recently loaded file list for gschem and/or pcb</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#remember_dialog_size_and_positions" class="toc">Remember dialog size and positions</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#show_hidden_attributes_for_selected_components" class="toc">Show hidden attributes for selected components</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#constant_sized_handles_grips" class="toc">Constant sized handles/grips</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#automatically_fill_in_global_attributes_in_gschem" class="toc">Automatically fill in global attributes in gschem</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#visual_feedback_when_pressing_keyboard_accelerators" class="toc">Visual feedback when pressing keyboard accelerators</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#improve_error_messages_in_gschem" class="toc">Improve error messages in gschem</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#global_search_and_replace" class="toc">Global search and replace</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#visual_feedback_for_attached_attributes" class="toc">Visual feedback for attached attributes</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#schematic_and_symbol_modes" class="toc">Schematic and symbol modes</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#movable_symbol_origin" class="toc">Movable symbol origin</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#modify_instantiated_symbols_in_a_schematic" class="toc">Modify instantiated symbols in a schematic</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#finer_grid_when_moving_attributes" class="toc">Finer grid when moving attributes</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#frequently_used_symbols_sidebar" class="toc">Frequently used symbols sidebar</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#add_more_toolbar_buttons" class="toc">Add more toolbar buttons</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#filled_polygon_object" class="toc">Filled polygon object</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#fix_geda_gaf_bugs_and_or_implement_feature_requests" class="toc">Fix gEDA/gaf bugs and/or implement feature requests</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#make_gsch2pcb_use_same_search_paths_as_pcb" class="toc">Make gsch2pcb use same search paths as PCB</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#verilog_vhdl_code_generator_s_for_icarus_verilog" class="toc">Verilog/VHDL code generator[s] for Icarus Verilog</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#create_comprehensive_test_suite_for_entire_geda_suite" class="toc">Create comprehensive test suite for entire gEDA Suite</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#revive_tclspice_add_return_code_to_analysis" class="toc">Revive TCLSpice, add return code to analysis</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#pcb_drc_interface_improvements" class="toc">PCB DRC interface improvements</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#add_enhancements_to_gerbv" class="toc">Add enhancements to gerbv.</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#pcb_autorouter" class="toc">PCB Autorouter</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#improved_and_formalized_mechanism_for_forward_backward_annotation" class="toc">Improved and formalized mechanism for forward/backward annotation</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#ipc_footprint_calculator" class="toc">IPC Footprint Calculator</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+
+
+
+<h3><a name="geda_gsoc_project_ideas" id="geda_gsoc_project_ideas">gEDA GSoC Project Ideas</a></h3>
+<div class="level3">
+
+<p>
+ This page contains various ideas for projects. You can use these as fodder for creating your application to Google. Also, if you have your own idea, feel free to share it with the gEDA developers &ndash; they might like it more than any project on this list!
+</p>
+
+<p>
+Note that some of these projects are too small by themselves to be stand-alone projects. The Summer of Code program is a 3 month program, and you’re supposed to treat your project as a full-time job. Applicants should keep that in mind and possibly combine ideas from different projects if one suggested project is too small. To help you, I have graded each project on a scale of 1 to 5, where 1 = too small for a full summer, 3 = roughly enough for a full summer, and 5 = way too large for a full summer. Of course, what takes one programmer one week might take another six months, so any judgement is subjective. However, you can use these ratings to help you figure out which project is the right one for you.
+</p>
+
+<p>
+The vast majority of gEDA Suite programs are written in either C or C++. However, a whole range of scripting languages are used including scheme (guile), perl, python, bourne shell, tcl/tk, and others. <acronym title="Graphical User Interface">GUI</acronym> toolkit use is also fairly broad including GTK+ (this is the primary toolkit of most of the programs), Lesstif, WxWidgets, and others. We are pretty much open to using most languages or <acronym title="Graphical User Interface">GUI</acronym> toolkits for new programs, however some of the projects listed below will require knowledge of a specific language and/or <acronym title="Graphical User Interface">GUI</acronym> toolkit (as they are well established programs).
+</p>
+
+<p>
+Please visit the gEDA Project’s main GSoC page for more info (including contact information).
+</p>
+
+</div>
+<!-- SECTION "gEDA GSoC Project Ideas" [1-1671] -->
+<h3><a name="project_manager" id="project_manager">Project manager</a></h3>
+<div class="level3">
+
+<p>
+gEDA needs a new, top-level project manager. Using this tool, A user would type “geda” at the command line (or push a button on his desktop manager), and this program would start a <acronym title="Graphical User Interface">GUI</acronym> which would provide easy, user-friendly access to all design tools. The project manager would implement (at least) the following functionalities: 
+</p>
+<ul>
+<li class="level1"><div class="li"> Menu items or buttons to run various gEDA programs like gschem, gattrib, gsch2pcb, PCB, gerbv, ngspice, Gnucap, etc.</div>
+</li>
+<li class="level2"><div class="li"> Manage resource files (i.e. the project manager allows you to edit and write gafrc, gsch2pcb project file, spinit, etc.</div>
+</li>
+<li class="level2"><div class="li"> Enable creation of project archives &ndash; i.e. using garchive, but using an intelligent method to gather &amp; archive the symbols &amp; footprints used in the project.</div>
+</li>
+<li class="level2"><div class="li"> Perhaps implement some type of lockfiles, or at least some enforcement of the design flow (good for newbies).</div>
+</li>
+</ul>
+
+<p>
+ Since the project manager is the first program seen by many new users, this program needs a high degree of polish, and should enforce good design practice without getting in the user’s way too much.
+</p>
+
+<p>
+Difficulty = 4
+</p>
+
+</div>
+<!-- SECTION "Project manager" [1672-2777] -->
+<h3><a name="improve_handling_of_non-copper_layers_in_pcb" id="improve_handling_of_non-copper_layers_in_pcb">Improve handling of non-copper layers in pcb</a></h3>
+<div class="level3">
+
+<p>
+ PCB’s support for non-copper layers needs improvement. In this project, you would add support for more easily-editable non-copper layers. These non-copper layers would be used for things like keepout regions, assembly drawing, and an actual board outline layer that is not just a copper layer. For more thoughts on the issue of layers in PCB, please see database.txt and keepouts.txt
+</p>
+
+<p>
+Difficulty = 2
+</p>
+
+</div>
+<!-- SECTION "Improve handling of non-copper layers in pcb" [2778-3234] -->
+<h3><a name="gerber_to_pcb_converter" id="gerber_to_pcb_converter">Gerber to PCB converter</a></h3>
+<div class="level3">
+
+<p>
+ In this project, the student would create a program which reads a Gerber file, and creates an output file which is a metal layer or footprint editable by PCB. This might be a <acronym title="Practical Extraction and Report Language">Perl</acronym> or Python script. Such a program is very desirable since it gives users the ability to edit legacy designs &ndash; i.e. those for which they only have Gerbers.
+</p>
+
+<p>
+Difficulty = 3
+</p>
+
+</div>
+<!-- SECTION "Gerber to PCB converter" [3235-3621] -->
+<h3><a name="usability_improvements_for_ngspice_gnucap" id="usability_improvements_for_ngspice_gnucap">Usability improvements for ngspice/Gnucap</a></h3>
+<div class="level3">
+
+<p>
+ Ngspice and Gnucap are the gEDA Project’s analog circuit simulators. They are both command-line tools, meaning that you type commands into a shell-like program at a prompt. However, some popular commercial simulators support easy simulation and analysis directly from within a schematic capture <acronym title="Graphical User Interface">GUI</acronym>. This method of working is particularly well suited to newbies.
+</p>
+
+<p>
+A new user would like to do the following things inside gschem: 
+</p>
+<ul>
+<li class="level1"><div class="li"> Specify what kinds of simulations should be run</div>
+</li>
+<li class="level2"><div class="li"> Specify which voltages and currents should be plotted</div>
+</li>
+<li class="level2"><div class="li"> Start the simulation</div>
+</li>
+</ul>
+
+<p>
+ The simulation runs and the postprocessing may be in an extra program that is triggered by IPC. More thoughts about the project have been entered by Werner Hoch on the gEDA Wiki.
+</p>
+
+<p>
+This project involves tightening the link between gschem and the back-end simulation programs. This might be done using some type of IPC, such as DBUS. Indeed, a preliminary DBUS implementation for gschem &harr; PCB already exists; the student might leverage the DBUS work for this project.
+</p>
+
+<p>
+Difficulty = 3
+</p>
+
+</div>
+<!-- SECTION "Usability improvements for ngspice/Gnucap" [3622-4730] -->
+<h3><a name="parts_manager" id="parts_manager">Parts manager</a></h3>
+<div class="level3">
+
+<p>
+ In this project, you would create a parts manager that takes a graphical symbol and a physical footprint, and marries the two to produce a heavy part. In addition, this tool should be able to support multiple backend flows. By this I mean that the parts manager should be able to also indicate how the symbol should be netlisted for spice, gnucap, or other backends. If possible it would be nice to integrate this into gschem in a way that allowed symbols to be placed and the footprint attribute to come up with a list of choices.
+</p>
+
+<p>
+Another possible direction for improved parts management is to create a program like gattrib (or perhaps just re-use gattrib) which reads a bunch of .sch files, and also interfaces to an <acronym title="Structured Query Language">SQL</acronym> database holding all info about parts (including spice models, footprints, .pdf datasheets, etc) . The program would then allow users to perform database searches for footprints and other attributes stored as columns in the database.
+</p>
+
+<p>
+Difficulty = 4
+</p>
+
+</div>
+<!-- SECTION "Parts manager" [4731-5730] -->
+<h3><a name="gnetlist_gnetman_support_for_hierarchy" id="gnetlist_gnetman_support_for_hierarchy">Gnetlist/gnetman support for hierarchy</a></h3>
+<div class="level3">
+
+<p>
+ The goal of this project is to create a scalable, professional-grade netlister. The project might involve re-writing gnetlist to enable hierarchical designs, or might involve upgrading “gnetman” to incorporate scripted back-ends. The upgrade would be done with an eye towards scalability. Ideally, highly capable and efficient internal data structures and methods for accessing the netlist database should be used. Then a scheme/guile <acronym title="Application Programming Interface">API</acronym> provided for an external script engine. (It may be beneficial to use swig to allow easy interfacing to multiple scripting languages.) The idea is to produce a netlister capable of handling large, hierarchical designs while still allowing users to write their own netlisters for their favorite netlist format (as gnetlist does now).
+</p>
+
+<p>
+Gnetman is probably the logical starting point since the database was designed by someone with a lot of experience in EDA, and it uses datadraw which is a proven high power CASE tool. However, the student may take whatever approach he wishes, but should provide a strong argument that his approach makes sense before starting coding. In any event, It will be important to provide a compatibility <acronym title="Application Programming Interface">API</acronym> for the existing backends while providing a more high power and flexible <acronym title="Application Programming Interface">API</acronym> for new backends and improvements of the old ones.
+</p>
+
+<p>
+Difficulty = 3
+</p>
+
+</div>
+<!-- SECTION "Gnetlist/gnetman support for hierarchy" [5731-7097] -->
+<h3><a name="libgeda_api_formalization" id="libgeda_api_formalization">Libgeda API formalization</a></h3>
+<div class="level3">
+
+<p>
+ In this project, you would expand libgeda (if needed) to provide a complete enough guile interface to be able to do more complex database manipulations. One use would be to have a back annotation tool that used libgeda instead of relying on perl. The problem with perl is that you’ve involved Yet Another Gschem Parser. This actually may be combined with the previous project about rewriting the gnetlist internals.
+</p>
+
+<p>
+Difficulty = 3
+</p>
+
+</div>
+<!-- SECTION "Libgeda API formalization" [7098-7567] -->
+<h3><a name="recently_loaded_file_list_for_gschem_and_or_pcb" id="recently_loaded_file_list_for_gschem_and_or_pcb">Recently loaded file list for gschem and/or pcb</a></h3>
+<div class="level3">
+
+<p>
+ Presently gschem and pcb do not present a list of recently loaded files in the file menu. It would be nice if gschem and/or pcb kept track of the last few files a user loaded. This is a common feature found in other programs.
+</p>
+
+<p>
+Difficulty = 1
+</p>
+
+</div>
+<!-- SECTION "Recently loaded file list for gschem and/or pcb" [7568-7869] -->
+<h3><a name="remember_dialog_size_and_positions" id="remember_dialog_size_and_positions">Remember dialog size and positions</a></h3>
+<div class="level3">
+
+<p>
+ gschem and pcb dialogs should remember their size and position. Currently they do not remember anything about their position and size and several users have complained since they have to reposition and/or resize the dialog boxes every time they are opened..
+</p>
+
+<p>
+Difficulty = 1
+</p>
+
+</div>
+<!-- SECTION "Remember dialog size and positions" [7870-8190] -->
+<h3><a name="show_hidden_attributes_for_selected_components" id="show_hidden_attributes_for_selected_components">Show hidden attributes for selected components</a></h3>
+<div class="level3">
+
+<p>
+ In gschem, please add a why to show hidden text for just one symbol only. Currently [en] will show all the hidden text for all symbols and that makes a real visual mess. Implement this by just showing the hidden text for the currently selected symbols.
+</p>
+
+<p>
+Difficulty = 1
+</p>
+
+</div>
+<!-- SECTION "Show hidden attributes for selected components" [8191-8518] -->
+<h3><a name="constant_sized_handles_grips" id="constant_sized_handles_grips">Constant sized handles/grips</a></h3>
+<div class="level3">
+
+<p>
+ In gschem, the size of the handles for lines, nets, and objects scale with increasing zoom. Thus for small lines the handles overlap, and if I zoom in closely, it becomes very hard to pick the right object to manipulate. Please let the size of the handles be constant, regardless of the zoom factor. This is virtually how all vector graphics applications work.
+</p>
+
+<p>
+Difficulty = 1
+</p>
+
+</div>
+<!-- SECTION "Constant sized handles/grips" [8519-8936] -->
+<h3><a name="automatically_fill_in_global_attributes_in_gschem" id="automatically_fill_in_global_attributes_in_gschem">Automatically fill in global attributes in gschem</a></h3>
+<div class="level3">
+
+<p>
+ In gschem, implement a mechanism that would (when turned enabled) automatically fill in proper global attributes for the design. These attributes could be the date of the last modification, name of the project, author, number of sheets, etc&hellip;
+</p>
+
+<p>
+Difficulty = 1 to 2
+</p>
+
+</div>
+<!-- SECTION "Automatically fill in global attributes in gschem" [8937-9263] -->
+<h3><a name="visual_feedback_when_pressing_keyboard_accelerators" id="visual_feedback_when_pressing_keyboard_accelerators">Visual feedback when pressing keyboard accelerators</a></h3>
+<div class="level3">
+
+<p>
+ In gschem, please give some feedback when a user presses one of the keyboard accelerator keys. Currently gschem allows for multiple key presses to represent a single command. Sometimes it is hard to remember which one you have pressed. Maybe a little area in the status bar can output this information.
+</p>
+
+<p>
+Difficulty = 1
+</p>
+
+</div>
+<!-- SECTION "Visual feedback when pressing keyboard accelerators" [9264-9646] -->
+<h3><a name="improve_error_messages_in_gschem" id="improve_error_messages_in_gschem">Improve error messages in gschem</a></h3>
+<div class="level3">
+
+<p>
+ Improve error messages in gschem when a rc file doesn’t load correctly. Currently the error messages are cryptic and not useful at all. There are several other places in gschem where the error messages could be vastly improved.
+</p>
+
+<p>
+Difficulty = 1
+</p>
+
+</div>
+<!-- SECTION "Improve error messages in gschem" [9647-9935] -->
+<h3><a name="global_search_and_replace" id="global_search_and_replace">Global search and replace</a></h3>
+<div class="level3">
+
+<p>
+ Add a dialog box that lets you do a global search and replace. Currently you can do a find for a specific attribute, but several users have asked if gschem could also provide a way of doing a replace operation as well.
+</p>
+
+<p>
+Difficulty = 1 to 2
+</p>
+
+</div>
+<!-- SECTION "Global search and replace" [9936-10213] -->
+<h3><a name="visual_feedback_for_attached_attributes" id="visual_feedback_for_attached_attributes">Visual feedback for attached attributes</a></h3>
+<div class="level3">
+
+<p>
+ In gschem, add some sort of visual feedback to tell the user which attribute is attached to which component. This would be useful since sometimes you move attributes/components around and things get a little bit separated distance wise.
+</p>
+
+<p>
+Difficulty = 1 to 2
+</p>
+
+</div>
+<!-- SECTION "Visual feedback for attached attributes" [10214-10523] -->
+<h3><a name="schematic_and_symbol_modes" id="schematic_and_symbol_modes">Schematic and symbol modes</a></h3>
+<div class="level3">
+
+<p>
+ Add schematic and symbol modes to gschem. Right now users can do invalid things like add a net or bus inside a symbol and gschem allows this quite happily. If there was a symbol mode that disallowed certain actions, then users will not be able to hurt themselves so easily when creating symbols. Like wise a schematic mode wouldn’t allow certain operations (such as adding a pin).
+</p>
+
+<p>
+Difficulty = 2 to 3
+</p>
+
+</div>
+<!-- SECTION "Schematic and symbol modes" [10524-10964] -->
+<h3><a name="movable_symbol_origin" id="movable_symbol_origin">Movable symbol origin</a></h3>
+<div class="level3">
+
+<p>
+ Add the ability to move the origin of a symbol in gschem. Right now the origin is always at 0,0 and users have to translate the symbol to the origin. It would be nice if the origin was movable so that you wouldn’t have to translate the symbol manually anymore. This would also allow the user to pick the insert point of the symbol when adding components to a schematic.
+</p>
+
+<p>
+Difficulty = 2 to 3
+</p>
+
+</div>
+<!-- SECTION "Movable symbol origin" [10965-11389] -->
+<h3><a name="modify_instantiated_symbols_in_a_schematic" id="modify_instantiated_symbols_in_a_schematic">Modify instantiated symbols in a schematic</a></h3>
+<div class="level3">
+
+<p>
+ Add the ability to move pins/attributes/whatever on instantiated components in a schematic. This one is quite tricky, but it would allow for various things that people have been requesting (this might be a good foundation for a greatly improved back annotation mechanism from PCB).
+</p>
+
+<p>
+Difficulty = 3 to 4
+</p>
+
+</div>
+<!-- SECTION "Modify instantiated symbols in a schematic" [11390-11747] -->
+<h3><a name="finer_grid_when_moving_attributes" id="finer_grid_when_moving_attributes">Finer grid when moving attributes</a></h3>
+<div class="level3">
+
+<p>
+ In gschem, add a finer grid when moving attributes or text around.
+</p>
+
+<p>
+Difficulty = 2
+</p>
+
+</div>
+<!-- SECTION "Finer grid when moving attributes" [11748-11876] -->
+<h3><a name="frequently_used_symbols_sidebar" id="frequently_used_symbols_sidebar">Frequently used symbols sidebar</a></h3>
+<div class="level3">
+
+<p>
+ Add a frequently used symbols sidebar to gschem that is dynamically loaded and/or can be preloaded from an rc file. Several people have asked for this since using the component selection dialog box can be time consuming for recently used/needed components. This is a <acronym title="Graphical User Interface">GUI</acronym> heavy project idea.
+</p>
+
+<p>
+Difficulty = 3
+</p>
+
+</div>
+<!-- SECTION "Frequently used symbols sidebar" [11877-12227] -->
+<h3><a name="add_more_toolbar_buttons" id="add_more_toolbar_buttons">Add more toolbar buttons</a></h3>
+<div class="level3">
+
+<p>
+ Adding some more useful buttons to the gschem toolbar. Typical functionalities that gschem does not have on the toolbar: 
+</p>
+<ul>
+<li class="level1"><div class="li"> Up/down schematic/symbol</div>
+</li>
+<li class="level2"><div class="li"> Add various graphical objects (maybe make these only appear in symbol editing mode)</div>
+</li>
+<li class="level2"><div class="li"> Edit component attributes</div>
+</li>
+<li class="level2"><div class="li"> Copy/paste/delete</div>
+</li>
+<li class="level2"><div class="li"> Page forward/back</div>
+</li>
+<li class="level2"><div class="li"> Component mirror/rotate</div>
+</li>
+<li class="level2"><div class="li"> Zoom in/out</div>
+</li>
+</ul>
+
+<p>
+ It would be really nice if the toolbar buttons were configurable either on the fly or through an rc file.
+</p>
+
+<p>
+Difficulty = 2 to 3
+</p>
+
+</div>
+<!-- SECTION "Add more toolbar buttons" [12228-12763] -->
+<h3><a name="filled_polygon_object" id="filled_polygon_object">Filled polygon object</a></h3>
+<div class="level3">
+
+<p>
+ Adding a filled polygon graphical object type to the gschem symbol file format and, of course, gschem would be a nice project. This would be useful for filled arrows (transistors) and a filled triangle for diodes.
+</p>
+
+<p>
+Difficulty = 2 to 3
+</p>
+
+</div>
+<!-- SECTION "Filled polygon object" [12764-13032] -->
+<h3><a name="fix_geda_gaf_bugs_and_or_implement_feature_requests" id="fix_geda_gaf_bugs_and_or_implement_feature_requests">Fix gEDA/gaf bugs and/or implement feature requests</a></h3>
+<div class="level3">
+
+<p>
+ There are several bugs listed at the gEDA/gaf bug tracker and feature request at the gEDA/gaf feature request tracker that could potentially make good student projects. Some of the bugs/feature requests are quite feasible to finish in one summer, while others are way beyond what is possible to finish in one summer. However some of the bugs/feature requests are trivial to implement, so several might need to be combined together to fill up the entire summer.
+</p>
+
+<p>
+There are other bug/feature request trackers for the other gEDA affiliated programs (such as PCB or Icarus Verilog) that contain possible project ideas as well. Selecting bugs or features requests to work on from any of the trackers needs to be approved and agreed upon by the appropriate mentor(s) to make sure it is appropriate, feasible, or even fixable.
+</p>
+
+<p>
+Difficulty = various
+</p>
+
+</div>
+<!-- SECTION "Fix gEDA/gaf bugs and/or implement feature requests" [13033-13938] -->
+<h3><a name="make_gsch2pcb_use_same_search_paths_as_pcb" id="make_gsch2pcb_use_same_search_paths_as_pcb">Make gsch2pcb use same search paths as PCB</a></h3>
+<div class="level3">
+
+<p>
+ Gsch2pcb is a key program in the gEDA Suite. It made it relatively easy to take a schematic drawn using gschem and prepare it for layout using PCB. It has played an important role in popularizing gEDA for PCB design amongst students and hobbyists. However, it has a flaw: It uses footprint search paths which can be different from those in PCB. Users are sometimes perplexed that they can see footprints in PCB, but gsch2pcb claims it can’t find them. Or gsch2pcb gives them footprints different from the ones they expect to see based upon a footprint search using PCB. In addition, gsch2pcb needs to be able to parse the PCB .pcb files directly. This means many file format changes trigger a required update to gsch2pcb.
+</p>
+
+<p>
+It would be more preferable for gsch2pcb to be able to query PCB through a well defined and stable <acronym title="Application Programming Interface">API</acronym> to find out the information it needs. In addition, rather than trying to duplicate PCB’s mechanism for creating a new board and locating footprints, gsch2pcb should simply instruct PCB to peform these operations. The goal is to provide a stable interface between the tools and impose appropriate abstraction barriers in between.
+</p>
+
+<p>
+Difficulty = 2
+</p>
+
+</div>
+<!-- SECTION "Make gsch2pcb use same search paths as PCB" [13939-15164] -->
+<h3><a name="verilog_vhdl_code_generator_s_for_icarus_verilog" id="verilog_vhdl_code_generator_s_for_icarus_verilog">Verilog/VHDL code generator[s] for Icarus Verilog</a></h3>
+<div class="level3">
+
+<p>
+ A Verilog code generator targets to emit simplified Verilog code. This has use as a Verilog “reducer” (or obfuscator) to translate verilog to more simplified forms. It can also be used to support other Verilog run time engines.
+</p>
+
+<p>
+A variant of this is to generate VHDL, and thus get a VHDL translation from the Verilog input.
+</p>
+
+<p>
+This task remains pretty clear of the core Icarus Verilog compiler and just works with loadable code generators. SDF Parser/Annotator for Icarus Verilog
+</p>
+
+<p>
+SDF parser to parse SDF files generated by typical SDF sources such as Xilinx ISE. It should be possible to invoke this from an $sdf_annotate system task and match paths with the specify paths actually available (via vpi) in the design.
+</p>
+
+<p>
+The specify paths are now available in the vvp run time, some work is needed to offer up the VPI objects that an SDF annotator needs.
+</p>
+
+<p>
+This task can mostly be done in C and loaded as a VPI module. There is some work needed in the vvp run time engine to make the paths available to VPI modules, though. Macros with Arguments
+</p>
+
+<p>
+The Icarus Verilog preprocessor currently does not support macros with arguments. A good task would be to add support for arguments. This task would work entirely within the ivlpp program that does the preprocessing for the ivl core. It is written in C and bison and would be a good task for someone not an expert in Verilog or EE in general. Upgrading/resurrecting the analog waveform viewer “gwave”
+</p>
+
+<p>
+In this project, you would work on improving and modernizing the analog waveform viewer “gwave”. Several improvements are desirable, including (but not limited to): 
+</p>
+<ul>
+<li class="level1"><div class="li"> Remove requirement for guile-gtk (which is basically dead I as far as I can tell).</div>
+</li>
+<li class="level2"><div class="li"> Adding support for hdf5 (as a way to help move towards a better than ascii format that is non proprietary).</div>
+</li>
+<li class="level2"><div class="li"> Add a waveform calculator that lets you do things like add waveforms, do fft’s, etc.</div>
+</li>
+<li class="level2"><div class="li"> Provide a way for the tool to be easily extensible by the user. Some examples are custom grid lines (smith, nichols, polar, etc), custom cursor functions (smith, nichols, etc), and complex measurement and waveform processing functions.</div>
+</li>
+<li class="level2"><div class="li"> Support for digital as well as analog signals. For example you may have a digital bus present in a mixed signal circuit and would like to plot the value on the bus as simply a digital transition diagram with annotated bus values, or you may wish to plot the bus value as a quantized value. </div>
+</li>
+</ul>
+
+<p>
+ Note that the gEDA Project needs a gwave mentor.
+</p>
+
+<p>
+Difficulty = 3
+</p>
+
+</div>
+<!-- SECTION "Verilog/VHDL code generator[s] for Icarus Verilog" [15165-17735] -->
+<h3><a name="create_comprehensive_test_suite_for_entire_geda_suite" id="create_comprehensive_test_suite_for_entire_geda_suite">Create comprehensive test suite for entire gEDA Suite</a></h3>
+<div class="level3">
+
+<p>
+ This project encompasses the functionality of the entire gEDA PCB design flow. You would develop a test framework for as much of these tools as possible. This likely means creating a large regression test suite. Some examples are sets of layouts (using PCB) that just barely pass and just barely fail each of the different DRC checks, generate BOM’s, x-y files, generate gerbers and maybe use gerbv to do a graphical xor against a “golden” file. For gnetlist, reference netlists that have been placed into some canonical form should be generated from gschem schematics (.sch files).
+</p>
+
+<p>
+This project should be fun for a hardware hacker, since it would involve creating all kinds of strange circuit designs, and you would learn the detailed ins-and-outs of all tools in the gEDA Suite!
+</p>
+
+<p>
+Difficulty = 3
+</p>
+
+</div>
+<!-- SECTION "Create comprehensive test suite for entire gEDA Suite" [17736-18599] -->
+<h3><a name="revive_tclspice_add_return_code_to_analysis" id="revive_tclspice_add_return_code_to_analysis">Revive TCLSpice, add return code to analysis</a></h3>
+<div class="level3">
+
+<p>
+ TCLSpice is a version of ngspice (the classic analog simulation program) in which the SPICE commands and cards have been exported to TCL. The idea is that you can then write a scripted SPICE analysis using TCL, a feature which is extremely valuable for performing circuit optimizations, repeated circuit simulations for Monte Carlo or corner-case evaluation, and so on.
+</p>
+
+<p>
+A problem with TCLSpice is that the internal data structures do not provide return codes when called, so it is impossible to see if an analysis has run successfully or now. In this project, the student would fix tclspice so that every analysis would provide a return code reporting success or failure.
+</p>
+
+<p>
+Difficulty = 4
+</p>
+
+</div>
+<!-- SECTION "Revive TCLSpice, add return code to analysis" [18600-19345] -->
+<h3><a name="pcb_drc_interface_improvements" id="pcb_drc_interface_improvements">PCB DRC interface improvements</a></h3>
+<div class="level3">
+
+<p>
+ Improve the DRC interface for PCB. Perhaps have a DRC layer that gets generated when you run DRC. Then you could have an interface that lets you step through them and see on that layer, exactly what failed. Maybe this could be combined with making the DRC checks more unit testable.
+</p>
+
+<p>
+Difficulty = 2
+</p>
+
+</div>
+<!-- SECTION "PCB DRC interface improvements" [19346-19687] -->
+<h3><a name="add_enhancements_to_gerbv" id="add_enhancements_to_gerbv">Add enhancements to gerbv.</a></h3>
+<div class="level3">
+
+<p>
+ Gerbv is gEDA’s Gerber viewer. It is a good tool for inspecting Gerbers. Adding a different pop-up box displaying the properties of objects you click on (i.e. round pad diameters, track widths, etc.) would be invaluable.
+</p>
+
+<p>
+Difficulty = ?
+</p>
+
+</div>
+<!-- SECTION "Add enhancements to gerbv." [19688-19963] -->
+<h3><a name="pcb_autorouter" id="pcb_autorouter">PCB Autorouter</a></h3>
+<div class="level3">
+
+<p>
+ PCB currently incorporates a simple autorouter. However, a topological autorouter would represent a significant improvement over the existing autorouter. In this ambitious project, the student would create a topological autorouter for PCB.
+</p>
+
+<p>
+Difficulty = 5
+</p>
+
+</div>
+<!-- SECTION "PCB Autorouter" [19964-20246] -->
+<h3><a name="improved_and_formalized_mechanism_for_forward_backward_annotation" id="improved_and_formalized_mechanism_for_forward_backward_annotation">Improved and formalized mechanism for forward/backward annotation</a></h3>
+<div class="level3">
+
+<p>
+ Add hooks into gschem needed to fully support things like backannotation of simulation results and click-to-plot results. Specifically, this would enable you to draw a schematic in gschem, then simulate it in ngspice without leaving gschem. The simulation plots would then appear in a graphical pop-up window.
+</p>
+
+<p>
+Difficulty = 3
+</p>
+
+</div>
+<!-- SECTION "Improved and formalized mechanism for forward/backward annotation" [20247-20650] -->
+<h3><a name="ipc_footprint_calculator" id="ipc_footprint_calculator">IPC Footprint Calculator</a></h3>
+<div class="level3">
+
+<p>
+ Build a footprint calculator that can take the IPC rules and produce a pcb footprint. Preferably write this in a way where the core program is independent of a gui so that you can script it for generating entire large families of footprints or hook it up to a <acronym title="Graphical User Interface">GUI</acronym> of choice (lesstif, gtk, maybe even cgi). Would require the purchase of IPC-7351 (approximately U.S.A. $100)and verifying that one is allowed to produce such a calculator.
+</p>
+
+<p>
+Difficulty = 2
+</p>
+
+</div>
+<!-- SECTION "IPC Footprint Calculator" [20651-] --></div>
+</body>
+</html>
