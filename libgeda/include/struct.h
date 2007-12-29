@@ -128,6 +128,8 @@ struct st_box {
 struct st_picture {
   GdkPixbuf *original_picture;
   GdkPixbuf *displayed_picture;
+  gchar *file_content;
+  gsize file_length;
 
   double ratio;
   char *filename;

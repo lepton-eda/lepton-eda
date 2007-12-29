@@ -266,11 +266,11 @@ void o_net_consolidate(TOPLEVEL *toplevel);
 void o_net_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
 /* o_picture.c */
-OBJECT *o_picture_add(TOPLEVEL *toplevel, OBJECT *object_list,
-		      GdkPixbuf * pixbuf, char *filename, double ratio,
-		      char type, 
-		      int x1, int y1, int x2, int y2, int angle, char mirrored,
-		      char embedded);
+OBJECT *o_picture_add(TOPLEVEL *toplevel, OBJECT *list_tail, GdkPixbuf *pixbuf,
+                      gchar *file_content, gsize file_length, char *filename,
+                      double ratio, char type,
+                      int x1, int y1, int x2, int y2, int angle, char mirrored,
+                      char embedded);
 void o_picture_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 void world_get_picture_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
@@ -282,6 +282,7 @@ guint8 *o_picture_rgb_data(GdkPixbuf *image);
 guint8 *o_picture_mask_data(GdkPixbuf *image);
 void o_picture_embed(TOPLEVEL *toplevel, OBJECT *object);
 void o_picture_unembed(TOPLEVEL *toplevel, OBJECT *object);
+GdkPixbuf *o_picture_pixbuf_from_buffer (gchar *file_content, gsize file_length, GError **err);
 
 /* o_pin_basic.c */
 void world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);

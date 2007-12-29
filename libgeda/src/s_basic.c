@@ -374,6 +374,8 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
     if (o_current->picture) {
       /*	printf("sdeleting picture\n");*/
 
+      if (o_current->picture->file_content)
+        g_free(o_current->picture->file_content);
       if (o_current->picture->original_picture)
 	g_object_unref(o_current->picture->original_picture);
       if (o_current->picture->displayed_picture)

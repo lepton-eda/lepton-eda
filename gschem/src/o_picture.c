@@ -136,6 +136,7 @@ void o_picture_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   o_picture_add(toplevel,
                 toplevel->page_current->object_tail,
 		w_current->current_pixbuf,
+		NULL, 0,
 		w_current->pixbuf_filename,
 		w_current->pixbuf_wh_ratio,
                 OBJ_PICTURE, x1, y1, x2, y2, 0, FALSE, FALSE);
@@ -627,33 +628,39 @@ void o_picture_exchange (GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf,
     if (!object->attached_to) {
       /* It's selected. Then change picture if it's a picture */
       if (object->type == OBJ_PICTURE) {
-	/* Erase previous picture */
-	o_erase_single(w_current, object);
 
-	/* Change picture attributes */
-	if (object->picture->original_picture != NULL) {
-	  g_object_unref(object->picture->original_picture);
-	  object->picture->original_picture=NULL;
-	}
-	
-	if (object->picture->filename != NULL) {
-	  g_free(object->picture->filename);
-	  object->picture->filename=NULL;
-	}
-	/* Create a copy of the pixbuf */
-	object->picture->original_picture = gdk_pixbuf_copy(pixbuf);
-	
-	if (object->picture->original_picture == NULL) {
-	  fprintf(stderr, "change picture: Couldn't get enough memory for the new picture\n");
-	  return;
-	}
+        /* Erase previous picture */
+        o_erase_single(w_current, object);
 
-	object->picture->filename = (char *) g_strdup(filename);
-  
-	object->picture->ratio = (double)gdk_pixbuf_get_width(pixbuf) /
-	                                 gdk_pixbuf_get_height(pixbuf);
-	/* Draw new picture */
-	o_picture_draw(w_current, object);
+        if (object->picture->filename != NULL)
+          g_free(object->picture->filename);
+
+        object->picture->filename = (char *) g_strdup(filename);
+
+        /* Unref the old pixmap */
+        if (object->picture->original_picture != NULL) {
+          g_object_unref(object->picture->original_picture);
+          object->picture->original_picture=NULL;
+        }
+
+        if (object->picture->embedded) {
+          /* For embedded pictures, call o_picture_embed() to update the
+           * embedded picture data from the new file and reload the pixmap */
+          o_picture_embed(toplevel, object);
+        } else {
+          /* For non-embedded pictures, create a copy of the passed pixbuf
+           * and insert it manually */
+          object->picture->original_picture = gdk_pixbuf_copy(pixbuf);
+          if (object->picture->original_picture == NULL) {
+            fprintf(stderr, "change picture: Couldn't get enough memory for the new picture\n");
+            return;
+          }
+        }
+
+        object->picture->ratio = (double)gdk_pixbuf_get_width(pixbuf) /
+                                         gdk_pixbuf_get_height(pixbuf);
+        /* Draw new picture */
+        o_picture_draw(w_current, object);
       }
     }
     list = g_list_next(list);

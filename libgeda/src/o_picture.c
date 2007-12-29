@@ -64,7 +64,10 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
   gchar type;
   gchar *line = NULL;
   gchar *filename;
-  GdkPixbuf *pixbuf;
+  GdkPixbuf *pixbuf = NULL;
+  gchar *file_content = NULL;
+  guint file_length = 0;
+  GError *err = NULL;
   static char gdk_initialized=0;
 
   /* Initialize GDK first in case this isn't a graphic app */
@@ -136,20 +139,8 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
   filename = g_strdup(s_textbuffer_next_line(tb));
   filename = remove_last_nl(filename);	
 
-  pixbuf = NULL;
-
-  if (embedded == 0) {
-    pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-    if (pixbuf == NULL) {
-      fprintf(stderr, _("Error loading picture from file: %s.\n"), filename);
-      s_log_message(_("Error loading picture from file: %s.\n"), filename);
-    }
-  }
-  else {
+  if (embedded == 1) {
     GString *encoded_picture=g_string_new("");
-    GdkPixdata pixdata;
-    guint pixdata_serialized_length;
-    gchar *pixdata_serialized_data;
     char finished = 0;
 
     /* Read the encoded picture */
@@ -159,50 +150,61 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
       if (line == NULL) break;
 
       if (g_strcasecmp(line, ".\n") != 0) {
-	encoded_picture=g_string_append (encoded_picture, line);
-      }
-      else {
-	finished = 1;
+        encoded_picture = g_string_append (encoded_picture, line);
+      } else {
+        finished = 1;
       }
     } while (finished == 0);
 
     /* Decode the picture */
-    pixdata_serialized_data=s_encoding_base64_decode(encoded_picture->str,
-						     encoded_picture->len,
-						     &pixdata_serialized_length);
-
-    if (pixdata_serialized_data == NULL) {
-      fprintf(stderr, _("Error decoding picture.\n"));
-      s_log_message (_("Error decoding picture.\n"));
-    }
-    else {
-      /* Deserialize the picture */
-      if (!gdk_pixdata_deserialize(&pixdata,pixdata_serialized_length, 
-				   (guint8 *) pixdata_serialized_data, NULL)) {
-        fprintf(stderr, _("Error deserializing picture.\n"));
-      } else {
-	pixbuf = gdk_pixbuf_from_pixdata (&pixdata,TRUE, NULL);
-      }
-    }
-
-    if (pixdata_serialized_data != NULL) {
-      g_free (pixdata_serialized_data);
-    }
+    file_content = s_encoding_base64_decode(encoded_picture->str,
+                                            encoded_picture->len,
+                                            &file_length);
     if (encoded_picture != NULL) {
       g_string_free (encoded_picture, TRUE);
     }
 
+    if (file_content == NULL) {
+      s_log_message (_("Failed to load image from embedded data [%s]: %s\n"),
+                     filename, _("Base64 decoding failed."));
+      s_log_message (_("Falling back to file loading. Picture unembedded.\n"));
+      embedded = 0;
+    }
   }
 
+  /* If we have embedded data, try loading from the decoded buffer */
+  if (file_content != NULL) {
+    pixbuf = o_picture_pixbuf_from_buffer (file_content, file_length, &err);
+    if (err != NULL) {
+      s_log_message (_("Failed to load image from embedded data [%s]: %s\n"),
+                     filename, err->message);
+      s_log_message (_("Falling back to file loading. Picture unembedded.\n"));
+      g_error_free (err);
+      err = NULL;
+      embedded = 0;
+    }
+  }
+
+  /* If we haven't loaded the pixbuf above, try loading from file */
   if (pixbuf == NULL) {
-    /* If the pixbuf couldn't be loaded, then try to load a warning picture */
+    pixbuf = gdk_pixbuf_new_from_file (filename, &err);
+    if (err != NULL) {
+      s_log_message (_("Failed to load image from file [%s]: %s\n"),
+                     filename, err->message);
+      g_error_free (err);
+      err = NULL;
+    }
+  }
+
+  /* If the pixbuf couldn't be loaded, then try to load a warning picture */
+  if (pixbuf == NULL) {
     char *temp_filename;
 
     fprintf(stderr, _("Loading warning picture.\n"));
     s_log_message (_("Loading warning picture.\n"));
     
     temp_filename = g_strconcat(toplevel->bitmap_directory,
-			       G_DIR_SEPARATOR_S, "gschem-warning.png", NULL);
+                                G_DIR_SEPARATOR_S, "gschem-warning.png", NULL);
     pixbuf = gdk_pixbuf_new_from_file (temp_filename, NULL);
     if (pixbuf == NULL) {
       fprintf(stderr, _("Error loading picture from file: %s.\n"),
@@ -215,20 +217,18 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
   
   /* create and add the picture to the list */
   /* The picture is described by its upper left and lower right corner */
-  object_list = (OBJECT *) o_picture_add(toplevel, object_list,
-					 pixbuf, filename, 
-					 (double)height / width,
-					 type, 
-					 x1, y1+height, x1+width, y1, 
-					 angle, mirrored, embedded);
-  if (object_list->picture->filename) {
-    g_free(object_list->picture->filename);
-  }
-  object_list->picture->filename = g_strdup(filename);
-  
-  g_free (filename);
+  object_list = o_picture_add(toplevel, object_list, pixbuf,
+                              file_content, file_length, filename,
+                              (double)height/ width,
+                              type,
+                              x1, y1+height, x1+width, y1,
+                              angle, mirrored, embedded);
+
+  /* Don't free file_content, it is now owned by the picture object */
+
   return(object_list);
 }
+
 
 /*! \brief Create a character string representation of a picture OBJECT.
  *  \par Function Description
@@ -247,8 +247,6 @@ char *o_picture_save(OBJECT *object)
   int width, height, x1, y1;
   gchar *encoded_picture=NULL;
   gchar *out=NULL;
-  gchar *pixdata_serialized_data=NULL;
-  guint pixdata_serialized_stream_length;
   guint encoded_picture_length;
 
   /* calculate the width and height of the box */
@@ -258,36 +256,26 @@ char *o_picture_save(OBJECT *object)
   /* calculate the lower left corner of the box */
   x1 = object->picture->upper_x;
   y1 = object->picture->upper_y - height; /* move the origin to 0, 0*/
-  
+
 #if DEBUG
   printf("picture: %d %d %d %d\n", x1, y1, width, height);
 #endif
 
   /* Encode the picture if it's embedded */
   if (object->picture->embedded == 1) {
-    GdkPixdata pixdata;
-    
-    /* Serialize the picture data */
-    gdk_pixdata_from_pixbuf (&pixdata, object->picture->original_picture, FALSE);
-    pixdata_serialized_data = (gchar *) gdk_pixdata_serialize(&pixdata, 
-						    &pixdata_serialized_stream_length);
-    if (pixdata_serialized_data == NULL) {
-      fprintf (stderr, _("ERROR: o_picture_save: failed to create serialized data from picture\n"));
-      s_log_message (_("ERROR: o_picture_save: failed to create serialized data from picture\n"));
-    }
-    else {
-      /* Encode the picture */
-      encoded_picture = s_encoding_base64_encode(pixdata_serialized_data, 
-						 pixdata_serialized_stream_length,
-						 &encoded_picture_length, TRUE); 
-      if (encoded_picture == NULL) {
-	fprintf(stderr, _("ERROR: o_picture_save: unable to encode the picture.\n"));
-	s_log_message(_("ERROR: o_picture_save: unable to encode the picture.\n"));
-      }
+    encoded_picture =
+      s_encoding_base64_encode( (char *)object->picture->file_content,
+                                object->picture->file_length,
+                                &encoded_picture_length,
+                                TRUE);
+    if (encoded_picture == NULL) {
+      fprintf(stderr, _("ERROR: o_picture_save: unable to encode the picture.\n"));
+      s_log_message(_("ERROR: o_picture_save: unable to encode the picture.\n"));
     }
   }
 
-  if (object->picture->embedded==1) {
+  if (object->picture->embedded==1 &&
+      encoded_picture != NULL) {
     out = g_strdup_printf("%c %d %d %d %d %d %c %c\n%s\n%s\n%s", 
 			  object->type,
 			  x1, y1, width, height,
@@ -312,18 +300,15 @@ char *o_picture_save(OBJECT *object)
   if (encoded_picture != NULL) {
     g_free(encoded_picture);
   }
-  if (pixdata_serialized_data != NULL) {
-    g_free(pixdata_serialized_data);
-  }
 
   return(out);
-
 }
+
 
 /*! \brief Create and add picture OBJECT to list.
  *  \par Function Description
  *  This function creates a new object representing a picture.
- *  This object is added to the end of the list <B>object_list</B> pointed
+ *  This object is added to the end of the list <B>list_tail</B> pointed
  *  object belongs to.
  *  The picture is described by its upper left corner - <B>x1</B>, <B>y1</B> -
  *  and its lower right corner - <B>x2</B>, <B>y2</B>.
@@ -337,26 +322,33 @@ char *o_picture_save(OBJECT *object)
  *  The object is added to the end of the list described by the
  *  <B>object_list</B> parameter by the #s_basic_link_object().
  *
- *  \param [in]     toplevel    The TOPLEVEL object.
- *  \param [in,out] object_list  OBJECT list to add line to.
- *  \param [in]     pixbuf       The GdkPixbuf picture to add.
- *  \param [in]     filename     File name to read picture from.
- *  \param [in]     ratio        Picture height to width ratio.
- *  \param [in]     type         Must be OBJ_PICTURE.
- *  \param [in]     x1           Upper x coordinate.
- *  \param [in]     y1           Upper y coordinate.
- *  \param [in]     x2           Lower x coordinate.
- *  \param [in]     y2           Lower y coordinate.
- *  \param [in]     angle        Picture rotation angle.
- *  \param [in]     mirrored     Whether the image should be mirrored or not.
- *  \param [in]     embedded     ???
+ *  \param [in]     toplevel      The TOPLEVEL object.
+ *  \param [in,out] list_tail     OBJECT list to add line to.
+ *  \param [in]     pixbuf        The GdkPixbuf picture to add.
+ *                                A copy of this pixbuf is made.
+ *  \param [in]     file_content  Raw data of the image file.
+ *                                NULL for non embedded loading. The object
+ *                                object takes ownership of this buffer, and it
+ *                                should not be free'd by the caller.
+ *  \param [in]     file_length   Length of raw data buffer
+ *  \param [in]     filename      File name backing this picture.
+ *                                A copy of this string is made.
+ *  \param [in]     ratio         Picture height to width ratio.
+ *  \param [in]     type          Must be OBJ_PICTURE.
+ *  \param [in]     x1            Upper x coordinate.
+ *  \param [in]     y1            Upper y coordinate.
+ *  \param [in]     x2            Lower x coordinate.
+ *  \param [in]     y2            Lower y coordinate.
+ *  \param [in]     angle         Picture rotation angle.
+ *  \param [in]     mirrored      Whether the image should be mirrored or not.
+ *  \param [in]     embedded      Whether the embedded flag should be set or not.
  *  \return A pointer to the new end of the object list.
  */
-OBJECT *o_picture_add(TOPLEVEL *toplevel, OBJECT *object_list,
-		      GdkPixbuf * pixbuf, char *filename, double ratio,
-		      char type, 
-		      int x1, int y1, int x2, int y2, int angle, char mirrored,
-		      char embedded)
+OBJECT *o_picture_add(TOPLEVEL *toplevel, OBJECT *list_tail, GdkPixbuf *pixbuf,
+                      gchar *file_content, gsize file_length, char *filename,
+                      double ratio, char type,
+                      int x1, int y1, int x2, int y2, int angle, char mirrored,
+                      char embedded)
 {
   OBJECT *new_node;
   PICTURE *picture;
@@ -364,54 +356,36 @@ OBJECT *o_picture_add(TOPLEVEL *toplevel, OBJECT *object_list,
   /* create the object */
   new_node        = s_basic_init_object("picture");
   new_node->type  = type;
-  
+
   picture = (PICTURE *) g_malloc(sizeof(PICTURE));
-  new_node->picture   = picture;
-  
+  new_node->picture = picture;
+
   /* describe the picture with its upper left and lower right corner */
   picture->upper_x = x1;
   picture->upper_y = y1;
   picture->lower_x = x2;
   picture->lower_y = y2;
-  
-  /* Fill the picture data */
-  
-  /* Create a copy of the pixbuf */
-  picture->original_picture = gdk_pixbuf_rotate(pixbuf, 0);
-  picture->filename = (char *) g_strdup(filename);
+
+  picture->file_content = file_content;
+  picture->file_length  = file_length;
+  picture->filename = g_strdup (filename);
   picture->ratio = ratio;
+  picture->original_picture = gdk_pixbuf_copy(pixbuf);
   picture->displayed_picture = NULL;
   picture->angle = angle;
   picture->mirrored = mirrored;
   picture->embedded = embedded;
-  
-  if (picture->original_picture == NULL) {
-    fprintf(stderr, "new picture: Couldn't get enough memory for the new picture\n");
-  }
-  
-  /* Clean toplevel variables */
-  /* \bug This should be done when canceling the action. */
-  /* Pixbuf filename is not freed because we want to
-     remember the last directory
-  */
-  /*
-    if (toplevel->current_pixbuf != NULL) {
-      g_object_unref(toplevel->current_pixbuf);
-    }
-    toplevel->current_pixbuf = NULL;
-    toplevel->pixbuf_wh_ratio = 0;
-  */
 
-  new_node->draw_func = picture_draw_func; 
-  new_node->sel_func  = select_func;  
+  new_node->draw_func = picture_draw_func;
+  new_node->sel_func  = select_func;
 
   /* compute the bounding picture */
   o_picture_recalc(toplevel, new_node);
-  
+
   /* add the object to the list */
-  object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
-  
-  return(object_list);
+  list_tail = (OBJECT *) s_basic_link_object(new_node, list_tail);
+
+  return(list_tail);
 }
 
 /*! \brief Recalculate picture bounding box.
@@ -707,66 +681,71 @@ void o_picture_translate_world(TOPLEVEL *toplevel,
  *  <B>o_current</B> describing a picture. The new object is added at the
  *  end of the list, following the <B>list_tail</B> pointed object.
  *
- *  \param [in]  toplevel  The TOPLEVEL object.
+ *  \param [in]  toplevel   The TOPLEVEL object.
  *  \param [out] list_tail  OBJECT list to copy to.
- *  \param [in]  o_current  Picture OBJECT to copy.
+ *  \param [in]  objcet     Picture OBJECT to copy.
  *  \return A new pointer to the end of the object list.
  */
 OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
-		       OBJECT *o_current)
+		       OBJECT *object)
 {
-  OBJECT *new_obj;
-  int color;
-  GdkPixbuf *new_pixbuf;
-	
-  if (o_current->saved_color == -1) {
-    color = o_current->color;
+  OBJECT *new_node;
+  PICTURE *picture;
+
+  /* create the object */
+  new_node        = s_basic_init_object("picture");
+  new_node->type  = object->type;
+
+  picture = g_malloc(sizeof(PICTURE));
+  new_node->picture = picture;
+
+  if (object->saved_color == -1) {
+    new_node->color = object->color;
   } else {
-    color = o_current->saved_color;
+    new_node->color = object->saved_color;
   }
 
-  /* A new picture object is added at the end of the object list with
-   * #o_picture_add(). Values for its fields are default and need to
-   * be modified.
-   */
+  /* describe the picture with its upper left and lower right corner */
+  picture->upper_x = object->picture->upper_x;
+  picture->upper_y = object->picture->upper_y;
+  picture->lower_x = object->picture->lower_x;
+  picture->lower_y = object->picture->lower_y;
+
+  if (object->picture->file_content != NULL) {
+    picture->file_content = g_malloc (object->picture->file_length);
+    memcpy (picture->file_content, object->picture->file_content,
+                                   object->picture->file_length);
+  } else {
+    picture->file_content = NULL;
+  }
+
+  picture->file_length = object->picture->file_length;
+  picture->filename    = g_strdup (object->picture->filename);
+  picture->ratio       = object->picture->ratio;
+  picture->angle       = object->picture->angle;
+  picture->mirrored    = object->picture->mirrored;
+  picture->embedded    = object->picture->embedded;
 
   /* Copy the picture data */
-  new_pixbuf =
-    gdk_pixbuf_scale_simple(o_current->picture->original_picture,
-                            gdk_pixbuf_get_width (o_current->picture->original_picture),
-                            gdk_pixbuf_get_height (o_current->picture->original_picture),
-                            GDK_INTERP_BILINEAR);
+  picture->original_picture =
+    gdk_pixbuf_copy(object->picture->original_picture);
 
-  /* create and link a new picture object */	
-  new_obj = o_picture_add(toplevel, list_tail,
-                          new_pixbuf,
-                          o_current->picture->filename,
-                          o_current->picture->ratio,
-                          OBJ_PICTURE,
-                          o_current->picture->upper_x,
-                          o_current->picture->upper_y,
-                          o_current->picture->lower_x,
-                          o_current->picture->lower_y,
-                          o_current->picture->angle,
-                          o_current->picture->mirrored,
-                          o_current->picture->embedded);
+  picture->displayed_picture =
+    gdk_pixbuf_copy(object->picture->displayed_picture);
 
-  /* The dimensions of the new picture are set with the ones of the
-   * original picture. The two picturees have the same line type and
-   * the same filling options.
-   */
+  new_node->draw_func = object->draw_func;
+  new_node->sel_func  = object->sel_func;
 
-  new_obj->picture->displayed_picture = 
-    gdk_pixbuf_scale_simple(o_current->picture->displayed_picture,
-                            gdk_pixbuf_get_width (o_current->picture->displayed_picture),
-                            gdk_pixbuf_get_height (o_current->picture->displayed_picture),
-                            GDK_INTERP_BILINEAR);
+  /* compute the bounding picture */
+  o_picture_recalc(toplevel, new_node);
 
-  /* new_obj->attribute = 0;*/
+  /* add the object to the list */
+  list_tail = (OBJECT *) s_basic_link_object(new_node, list_tail);
 
   /* return the new tail of the object list */
-  return(new_obj);
+  return(list_tail);
 }
+
 
 /*! \brief Get RGB data from image.
  *  \par Function Description
@@ -933,35 +912,133 @@ void o_picture_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 }
 
 
-/*! \brief Embed the given picture
+/*! \brief Embed the image file associated with a picture
  *
  *  \par Function Description
- *  This function embeds the given picture.
+ *  This function reads and embeds image file associated with the picture.
  *
  *  \param [in]     toplevel     The TOPLEVEL object.
  *  \param [in]     object       The picture OBJECT to embed
  */
 void o_picture_embed (TOPLEVEL *toplevel, OBJECT *object)
 {
+  GError *err = NULL;
+  GdkPixbuf *pixbuf;
+
+  /* Free any existing embedded data */
+  g_free (object->picture->file_content);
+  object->picture->file_content = NULL;
+
+  g_file_get_contents (object->picture->filename,
+                       &object->picture->file_content,
+                       &object->picture->file_length,
+                       &err);
+  if (err != NULL) {
+    s_log_message (_("Failed to load image from file [%s]: %s\n"),
+                   object->picture->filename, err->message);
+    g_error_free (err);
+    return;
+  }
+
   object->picture->embedded = 1;
+
+  pixbuf = o_picture_pixbuf_from_buffer (object->picture->file_content,
+                                         object->picture->file_length,
+                                         &err);
+  if (err != NULL) {
+    s_log_message (_("Failed to load image from embedded data [%s]: %s\n"),
+                   object->picture->filename, err->message);
+    s_log_message (_("Falling back to file loading. Picture unembedded.\n"));
+    g_error_free (err);
+    object->picture->embedded = 0;
+    return;
+  }
+
+  /* Change to the new pixbuf loaded before we embedded. */
+  if (object->picture->original_picture != NULL)
+    g_object_unref(object->picture->original_picture);
+
+  object->picture->original_picture = pixbuf;
 
   s_log_message (_("Picture [%s] has been embedded\n"),
                  basename(object->picture->filename));
 }
 
 
-/*! \brief Unembed the given picture
+/*! \brief Unembed a picture, reloading the image from disk
  *
  *  \par Function Description
- *  This function unembeds the given picture.
+ *  This function re-reads the image file associated with the picture, and
+ *  discards the embeded copy of the file.
  *
  *  \param [in]     toplevel     The TOPLEVEL object.
  *  \param [in]     object       The picture OBJECT to unembed
  */
 void o_picture_unembed (TOPLEVEL *toplevel, OBJECT *object)
 {
+  GError *err = NULL;
+  GdkPixbuf *pixbuf;
+
+  pixbuf = gdk_pixbuf_new_from_file (object->picture->filename, &err);
+  if (err != NULL) {
+    s_log_message (_("Failed to load image from file [%s]: %s\n"),
+                   object->picture->filename, err->message);
+    g_error_free (err);
+    return;
+  }
+
+  /* Change to the new pixbuf loaded from the file. */
+  if (object->picture->original_picture != NULL)
+    g_object_unref(object->picture->original_picture);
+
+  object->picture->original_picture = pixbuf;
+
+  g_free (object->picture->file_content);
+  object->picture->file_content = NULL;
+  object->picture->file_length = 0;
   object->picture->embedded = 0;
 
   s_log_message (_("Picture [%s] has been unembedded\n"),
                  basename(object->picture->filename));
+}
+
+
+/*! \brief Load a GdkPixbuf from a memory buffer
+ *
+ *  \par Function Description
+ *  This function loads a GdkPixbuf from a memory buffer. The pixbuf
+ *  returned already has a reference taken out on the callers behalf.
+ *
+ *  \param [in]   file_content  The memory buffer containing the image data.
+ *  \param [in]   file_length   The size of the image data
+ *  \param [out]  err           GError** pointer to return any error messages.
+ *  \return  A GdkPixbuf loaded from the image data, or NULL on error.
+ */
+
+GdkPixbuf *o_picture_pixbuf_from_buffer (gchar *file_content,
+                                         gsize file_length,
+                                         GError **err)
+{
+  GdkPixbufLoader *loader;
+  GdkPixbuf *pixbuf;
+
+  loader = gdk_pixbuf_loader_new();
+
+  gdk_pixbuf_loader_write (loader, (guchar *)file_content,
+                                             file_length, err);
+  if (err != NULL && *err != NULL)
+    return NULL;
+
+  gdk_pixbuf_loader_close (loader, err);
+  if (err != NULL && *err != NULL)
+    return NULL;
+
+  pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
+
+  if (pixbuf != NULL)
+    g_object_ref (pixbuf);
+
+  g_object_unref (loader);
+
+  return pixbuf;
 }
