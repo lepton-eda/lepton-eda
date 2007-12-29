@@ -360,7 +360,7 @@ SCM g_rc_line_style(SCM mode)
     {THICK, "thick"}
   };
 
-  RETURN_G_RC_MODE("pin-style",
+  RETURN_G_RC_MODE("line-style",
 		   default_line_style,
 		   2);
 }
