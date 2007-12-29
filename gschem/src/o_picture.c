@@ -640,8 +640,8 @@ void o_picture_exchange (GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf,
 	  g_free(object->picture->filename);
 	  object->picture->filename=NULL;
 	}
-	/* Create a copy of the pixbuf rotated */
-	object->picture->original_picture = gdk_pixbuf_rotate(pixbuf, 0);
+	/* Create a copy of the pixbuf */
+	object->picture->original_picture = gdk_pixbuf_copy(pixbuf);
 	
 	if (object->picture->original_picture == NULL) {
 	  fprintf(stderr, "change picture: Couldn't get enough memory for the new picture\n");
