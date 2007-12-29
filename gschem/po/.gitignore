@@ -9,6 +9,7 @@ POTFILES
 *.sin
 Rules-quot
 Makevars.template
+geda-gschem.pot
 stamp-po
 stamp-it
 .intltool-merge-cache
