@@ -11,12 +11,14 @@ config.status
 libgeda.pc
 aclocal.m4
 config.guess
+config.rpath
 config.sub
 ltmain.sh
 depcomp
 install-sh
 missing
 mkinstalldirs
+ABOUT-NLS
 intltool-extract
 intltool-extract.in
 intltool-merge
