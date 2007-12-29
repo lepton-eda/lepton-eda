@@ -1732,9 +1732,9 @@ msgid ""
 "And many others (See AUTHORS file)"
 msgstr ""
 "Geschreven door:\n"
-"Ales V. Hvezda\n"
+"Ales Hvezda\n"
 "ahvezda@geda.seul.org\n"
-"En vele anderen (zie het AUTHORS bestand)\n"
+"En vele anderen (zie het AUTHORS bestand)"
 
 #: src/x_dialog.c:2107
 msgid "Coords"
