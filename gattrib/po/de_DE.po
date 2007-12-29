@@ -1,0 +1,26 @@
+# translation of de_DE.po to deutsch
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Werner Hoch <werner.ho@gmx.de>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: de_DE\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-12-29 09:08+0100\n"
+"PO-Revision-Date: 2007-12-29 09:14+0100\n"
+"Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
+"Language-Team: deutsch <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: ../data/geda-gattrib.desktop.in.h:1
+msgid "Manipulate component attributes with gattrib"
+msgstr "Editieren von Bauteilattributen mit gattrib"
+
+#: ../data/geda-gattrib.desktop.in.h:2
+msgid "gEDA Attribute Editor"
+msgstr "gEDA Attributeditor"
+
