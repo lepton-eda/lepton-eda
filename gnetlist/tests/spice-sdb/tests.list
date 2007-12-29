@@ -33,4 +33,4 @@ JD_Sort_nomunge_longopt | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -
 
 
 # Tests for slotted parts
-SlottedOpamps | SlottedOpamps.sch | gafrc sym/LM324_slotted-1.sym | |
+#SlottedOpamps | SlottedOpamps.sch | gafrc sym/LM324_slotted-1.sym | |
