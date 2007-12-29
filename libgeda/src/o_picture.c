@@ -217,7 +217,7 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
   /* The picture is described by its upper left and lower right corner */
   object_list = (OBJECT *) o_picture_add(toplevel, object_list,
 					 pixbuf, filename, 
-					 (double) (height/width),
+					 (double)height / width,
 					 type, 
 					 x1, y1+height, x1+width, y1, 
 					 angle, mirrored, embedded);

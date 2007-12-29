@@ -650,8 +650,8 @@ void o_picture_exchange (GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf,
 
 	object->picture->filename = (char *) g_strdup(filename);
   
-	object->picture->ratio = gdk_pixbuf_get_width(pixbuf) / 
-	  gdk_pixbuf_get_height(pixbuf);
+	object->picture->ratio = (double)gdk_pixbuf_get_width(pixbuf) /
+	                                 gdk_pixbuf_get_height(pixbuf);
 	/* Draw new picture */
 	o_picture_draw(w_current, object);
       }
