@@ -77,7 +77,7 @@ static void g_menu_execute(char *func)
 #if DEBUG
   printf("%s\n", guile_string);
 #endif
-  scm_c_eval_string (guile_string);
+  g_scm_c_eval_string_protected (guile_string);
   g_free(guile_string);
 }
 
