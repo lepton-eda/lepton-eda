@@ -198,6 +198,21 @@ static SCM protected_body_eval_string (void *data)
   return scm_eval_string (str);
 }
 
+/*! \brief Evaluate a C string as a Scheme expression safely
+ *  \par Function Description
+ *
+ *  Evaluates a C string like scm_c_eval_string().  Simple wrapper for
+ *  g_scm_eval_string_protected().
+ *
+ *  \param str  String to evaluate.
+ *
+ *  \returns Evaluation results or SCM_BOOL_F if exception caught.
+ */
+SCM g_scm_c_eval_string_protected (const gchar *str) {
+  SCM s_str = scm_from_locale_string (str);
+  return g_scm_eval_string_protected (s_str);
+}
+
 /*! \brief Evaluate a string as a Scheme expression safely
  *  \par Function Description
  *
