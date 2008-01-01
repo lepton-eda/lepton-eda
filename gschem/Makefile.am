@@ -21,6 +21,12 @@ maintainer-clean-local:
           po/*.sed po/*.header po/*.sin po/*.template po/Rules-quot \
           m4/*.m4 
 
+
+# Special rule to make sure that configure.ac is recreated when configure.ac.in
+# changes.
+configure.ac: configure.ac.in
+	./autogen.sh recreate_configure_only
+
 ACLOCAL_AMFLAGS = -I m4
 
 MOSTLYCLEANFILES = *.log core FILE *~
