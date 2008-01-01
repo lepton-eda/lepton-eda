@@ -21,6 +21,11 @@ distclean-local:
 maintainer-clean-local:
 	-rm -rf autom4te.cache
 
+# Special rule to make sure that configure.ac is recreated when configure.ac.in
+# changes.
+configure.ac: configure.ac.in
+	./autogen.sh recreate_configure_only
+
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
 DISTCLEANFILES = *.log core FILE *~ prototype.bak libgeda.pc \

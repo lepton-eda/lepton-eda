@@ -6,7 +6,16 @@
 
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
-configure_script=configure.ac
+configure_script=configure.ac.in
+
+# If "recreate_configure_only" is specified on the command line as the first
+# argument, then enter a special mode to rebuild configure only.  If we add
+# arguments to this script, then this has to be made a bit more intelligent.
+if test "$1" = "recreate_configure_only"; then
+  recreate_configure_only=1
+else
+  recreate_configure_only=0
+fi
 
 # Automake required version
 AM_1=1  # Major number
@@ -120,6 +129,15 @@ xlc )
   am_opt=--include-deps;;
 esac
 
+# Create the configure.ac from the configure.ac.in file.
+# The below line to get the gettext version isn't the most robust construct
+# because if gettext changes its version output format, this will break.
+echo autogen.sh creating configure.ac
+installed_gettext_version=`gettext --version | grep gettext | awk '{print $4}'`
+cat $configure_script | \
+  sed "s/%INSTALLED_GETTEXT_VERSION%/$installed_gettext_version/" > configure.ac
+configure_script=configure.ac
+
 for coin in $srcdir/$configure_script
 do 
   dr=`dirname $coin`
@@ -131,28 +149,36 @@ do
 
       aclocalinclude="$ACLOCAL_FLAGS"
 
-      if grep "^AM_GNU_GETTEXT" $configure_script >/dev/null; then
-	echo "autogen.sh running: autopoint ..." 
-	echo "no" | autopoint --force 
-	#echo "Creating $dr/po/Makevars ..."
-        #mv -f $dr/po/Makevars.template $dr/po/Makevars
+      if test "$recreate_configure_only" = "0"; then
+        # Only run these if we are NOT in the recreate_configure_only mode
+        if grep "^AM_GNU_GETTEXT" $configure_script >/dev/null; then
+	  echo "autogen.sh running: autopoint ..." 
+	  echo "no" | autopoint --force 
+	fi
+	if grep "^IT_PROG_INTLTOOL" $configure_script >/dev/null; then
+	    echo "autogen.sh running: intltoolize ..."
+	    echo "no" | intltoolize --force --copy --automake
+	fi
+	if grep "^AM_PROG_LIBTOOL" $configure_script >/dev/null; then
+	    echo "autogen.sh running: libtoolize ..."
+	    $LIBTOOLIZE --force --copy
+	fi
       fi
-      if grep "^IT_PROG_INTLTOOL" $configure_script >/dev/null; then
-	echo "autogen.sh running: intltoolize ..."
-	echo "no" | intltoolize --force --copy --automake
-      fi
-      if grep "^AM_PROG_LIBTOOL" $configure_script >/dev/null; then
-	echo "autogen.sh running: libtoolize ..."
-	$LIBTOOLIZE --force --copy
-      fi
+
+
       echo "autogen.sh running: aclocal $aclocalinclude ..."
       aclocal $aclocalinclude
       if grep "^AM_CONFIG_HEADER" $configure_script >/dev/null; then
 	echo "autogen.sh running: autoheader ..."
 	autoheader
       fi
-      echo "autogen.sh running: automake $am_opt ..."
-      automake --copy --add-missing --gnu $am_opt
+
+      if test "$recreate_configure_only" = "0"; then
+        # Only run these if we are NOT in the recreate_configure_only mode
+        echo "autogen.sh running: automake $am_opt ..."
+	automake --copy --add-missing --gnu $am_opt
+      fi
+
       echo "autogen.sh running: autoconf ..."
       autoconf 
     )
