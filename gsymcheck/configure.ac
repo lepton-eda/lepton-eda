@@ -65,8 +65,9 @@ guile_major=`echo "$GUILE_VERSION" | sed 's/\([[^.]][[^.]]*\).*/\1/'`
 guile_minor=`echo "$GUILE_VERSION" | sed 's/[[^.]][[^.]]*.\([[^.]][[^.]]*\).*/\1/'`
 AC_MSG_RESULT($GUILE_VERSION)
 
-if test $guile_need_major -gt $guile_major \
-   || test $guile_need_minor -gt $guile_minor; then
+if test "$guile_need_major" -gt "$guile_major" \
+   || (test "$guile_need_major" -le "$guile_major" \
+       && test "$guile_need_minor" -gt "$guile_minor"); then
   AC_MSG_ERROR([Guile version >= $guile_need_version is required.])
 fi
 
