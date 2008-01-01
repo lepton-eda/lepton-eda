@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-02 21:10-0400\n"
+"POT-Creation-Date: 2007-12-31 21:07-0500\n"
 "PO-Revision-Date: 2002-10-05 20:00+0900\n"
 "Last-Translator: MIYAMOTO Takanori <pnms@jcom.home.ne.jp>\n"
 "Language-Team: japanese <ja@li.org>\n"
@@ -511,7 +511,7 @@ msgstr ""
 msgid "Hotkeys"
 msgstr "ホットキー..."
 
-#: src/a_zoom.c:245
+#: src/a_zoom.c:246
 msgid "Zoom too small!  Cannot zoom further.\n"
 msgstr "これ以上ズームできません。\n"
 
@@ -1870,7 +1870,7 @@ msgstr ""
 msgid "_Close without saving"
 msgstr ""
 
-#: src/x_dialog.c:4098
+#: src/x_dialog.c:4101
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1881,7 +1881,7 @@ msgid ""
 "The value cannot start with a space."
 msgstr ""
 
-#: src/x_dialog.c:4100
+#: src/x_dialog.c:4103
 #, fuzzy
 msgid "Invalid Attribute"
 msgstr "アトリビュート追加/編集"
@@ -1914,6 +1914,23 @@ msgstr "開く..."
 #, fuzzy
 msgid "Save as..."
 msgstr "別名で保存..."
+
+#: src/x_fileselect.c:285
+#, c-format
+msgid ""
+"The selected file `%s' already exists.\n"
+"\n"
+"Would you like to overwrite it?"
+msgstr ""
+
+#: src/x_fileselect.c:288
+#, fuzzy
+msgid "Overwrite file?"
+msgstr "新規ファイル"
+
+#: src/x_fileselect.c:290
+msgid "Save cancelled on user request\n"
+msgstr ""
 
 #: src/x_image.c:180
 msgid "Encapsulated Postscript"
@@ -2052,7 +2069,8 @@ msgid "/Up"
 msgstr "上へ"
 
 #: src/x_menus.c:332
-msgid "Tried to set the sensitivity on a non-existent menu item\n"
+#, c-format
+msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
 msgstr ""
 
 #: src/x_menus.c:356

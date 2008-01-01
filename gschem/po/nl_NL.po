@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-schem-CVS-2002-06-12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-02 21:10-0400\n"
+"POT-Creation-Date: 2007-12-31 21:07-0500\n"
 "PO-Revision-Date: 2007-06-23 23:19+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev@seul.org\n"
@@ -553,7 +553,7 @@ msgstr "Over gschem"
 msgid "Hotkeys"
 msgstr "Snel-toets"
 
-#: src/a_zoom.c:245
+#: src/a_zoom.c:246
 msgid "Zoom too small!  Cannot zoom further.\n"
 msgstr "Vergroting te klein! Kan niet verder vergroten.\n"
 
@@ -1945,7 +1945,7 @@ msgstr "Als je niet opslaat, verlies je de wijzigingen definitief."
 msgid "_Close without saving"
 msgstr "Afsluiten zonder opslaan"
 
-#: src/x_dialog.c:4098
+#: src/x_dialog.c:4101
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1956,7 +1956,7 @@ msgid ""
 "The value cannot start with a space."
 msgstr ""
 
-#: src/x_dialog.c:4100
+#: src/x_dialog.c:4103
 #, fuzzy
 msgid "Invalid Attribute"
 msgstr "Plaats Attribuut"
@@ -1989,6 +1989,23 @@ msgstr "Open..."
 #, fuzzy
 msgid "Save as..."
 msgstr "Opslaan Als..."
+
+#: src/x_fileselect.c:285
+#, c-format
+msgid ""
+"The selected file `%s' already exists.\n"
+"\n"
+"Would you like to overwrite it?"
+msgstr ""
+
+#: src/x_fileselect.c:288
+#, fuzzy
+msgid "Overwrite file?"
+msgstr "Nieuw bestand"
+
+#: src/x_fileselect.c:290
+msgid "Save cancelled on user request\n"
+msgstr ""
 
 #: src/x_image.c:180
 msgid "Encapsulated Postscript"
@@ -2132,7 +2149,8 @@ msgid "/Up"
 msgstr "/Omhoog"
 
 #: src/x_menus.c:332
-msgid "Tried to set the sensitivity on a non-existent menu item\n"
+#, fuzzy, c-format
+msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
 msgstr ""
 "Probeerde de gevoeligheid in te stellen op een niet bestaand menu_item\n"
 

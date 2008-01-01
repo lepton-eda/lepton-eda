@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-02 21:10-0400\n"
+"POT-Creation-Date: 2007-12-31 21:07-0500\n"
 "PO-Revision-Date: 2007-02-16 14:08+0100\n"
 "Last-Translator: Patrick Bernaud <b-patrick@wanadoo.fr>\n"
 "Language-Team: French\n"
@@ -508,7 +508,7 @@ msgstr ""
 msgid "Hotkeys"
 msgstr "Raccourcis"
 
-#: src/a_zoom.c:245
+#: src/a_zoom.c:246
 msgid "Zoom too small!  Cannot zoom further.\n"
 msgstr "Agrandissement maximum ! Impossible d'agrandir plus.\n"
 
@@ -1855,7 +1855,7 @@ msgstr ""
 msgid "_Close without saving"
 msgstr "Fermer sans sa_uvegarder"
 
-#: src/x_dialog.c:4098
+#: src/x_dialog.c:4101
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1866,7 +1866,7 @@ msgid ""
 "The value cannot start with a space."
 msgstr ""
 
-#: src/x_dialog.c:4100
+#: src/x_dialog.c:4103
 #, fuzzy
 msgid "Invalid Attribute"
 msgstr "Ajouter un attribut"
@@ -1894,6 +1894,23 @@ msgstr "Ouvrir..."
 #: src/x_fileselect.c:237
 msgid "Save as..."
 msgstr "Enregistrer sous..."
+
+#: src/x_fileselect.c:285
+#, c-format
+msgid ""
+"The selected file `%s' already exists.\n"
+"\n"
+"Would you like to overwrite it?"
+msgstr ""
+
+#: src/x_fileselect.c:288
+#, fuzzy
+msgid "Overwrite file?"
+msgstr "Nouveau fichier"
+
+#: src/x_fileselect.c:290
+msgid "Save cancelled on user request\n"
+msgstr ""
 
 #: src/x_image.c:180
 msgid "Encapsulated Postscript"
@@ -2017,7 +2034,8 @@ msgid "/Up"
 msgstr "/Remonter"
 
 #: src/x_menus.c:332
-msgid "Tried to set the sensitivity on a non-existent menu item\n"
+#, fuzzy, c-format
+msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
 msgstr "Tentative de rendre sensible un élément de menu inexistant\n"
 
 #: src/x_menus.c:356
