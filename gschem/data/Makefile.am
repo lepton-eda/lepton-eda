@@ -2,7 +2,7 @@ theme=hicolor
 xdgdatadir=@XDGDATADIR@
 themedir=$(xdgdatadir)/icons/$(theme)
 
-app_icon = gschem
+app_icon = geda-gschem
 
 app_icon_files = \
 	$(app_icon:%=%-48.png) \

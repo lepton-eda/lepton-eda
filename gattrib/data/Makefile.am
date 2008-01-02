@@ -2,7 +2,7 @@ theme=hicolor
 xdgdatadir=@XDGDATADIR@
 themedir=$(xdgdatadir)/icons/$(theme)
 
-app_icon = gattrib
+app_icon = geda-gattrib
 
 app_icon_files = \
 	$(app_icon:%=%-48.png) \

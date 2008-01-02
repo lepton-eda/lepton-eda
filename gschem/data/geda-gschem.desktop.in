@@ -6,6 +6,6 @@ _Name=gEDA Schematic Editor
 _Comment=Create and edit electrical schematics and symbols with gschem
 Type=Application
 Exec=gschem %F
-Icon=gschem
+Icon=geda-gschem
 MimeType=application/x-geda-schematic;application/x-geda-symbol;
 Categories=Engineering;Electronics

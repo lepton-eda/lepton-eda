@@ -57,7 +57,7 @@
 /*------------------------------------------------------------------
  * Gattrib specific defines
  *------------------------------------------------------------------*/
-#define GATTRIB_THEME_ICON_NAME "gattrib"
+#define GATTRIB_THEME_ICON_NAME "geda-gattrib"
 #define GATTRIB_ICON_SIZES 16, 22, 48
 
 static void

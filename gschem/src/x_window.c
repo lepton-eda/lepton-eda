@@ -32,7 +32,7 @@
 #include <dmalloc.h>
 #endif
 
-#define GSCHEM_THEME_ICON_NAME "gschem"
+#define GSCHEM_THEME_ICON_NAME "geda-gschem"
 #define GSCHEM_ICON_SIZES 16, 22, 48
 
 /*! \todo Finish function documentation!!!
