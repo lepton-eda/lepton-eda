@@ -33,7 +33,7 @@ prefix?=$(HOME)/geda
 # You can set any global options you want here to be passed to the 
 # individual ./configure scripts
 #
-opts=--with-xdgdir=$(HOME)/.local/share --with-kdedatadir=$(HOME)/.kde/share
+opts=--with-xdgdatadir=$(HOME)/.local/share --with-kdedatadir=$(HOME)/.kde/share
 
 #
 # Set this to the shell that you want the various commands to run in.

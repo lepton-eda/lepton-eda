@@ -1,6 +1,6 @@
 theme=hicolor
-xdgdir=@XDGDIR@
-themedir=$(xdgdir)/icons/$(theme)
+xdgdatadir=@XDGDATADIR@
+themedir=$(xdgdatadir)/icons/$(theme)
 
 mime_icons = \
 	application-x-geda-gsch2pcb-project \
@@ -24,7 +24,7 @@ mime_icon_sources = \
 theme_icons = \
 	$(mime_icon_files:%=mimetypes,%)
 
-mimedir = $(xdgdir)/mime
+mimedir = $(xdgdatadir)/mime
 xmldir = $(mimedir)/packages
 
 xml_in_files = libgeda.xml.in

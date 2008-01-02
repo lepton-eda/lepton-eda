@@ -28,7 +28,7 @@ AM_PROG_LIBTOOL
 AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
 
 # Change default location for XDG files (MIME and Icons)
-AC_ARG_WITH(xdgdir, [  --with-xdgdir=path      Change where the theme icons and mime registrations are installed [[DATADIR]]], [opt_xdgdir=$withval])
+AC_ARG_WITH(xdgdatadir, [  --with-xdgdatadir=path  Change where the theme icons and mime registrations are installed [[DATADIR]]], [opt_xdgdatadir=$withval])
 
 # Change default location for KDE data files (KDE MIME registrations)
 AC_ARG_WITH(kdedatadir, [  --with-kdedatadir=path  Change where the KDE mime registrations are installed [[DATADIR]]], [opt_kdedatadir=$withval])
@@ -420,15 +420,14 @@ else
 	GEDARCDIR="$opt_rcdir"
 fi
 
-if test x$opt_xdgdir = x; then
-        # path was not specified with --with-xdgdir
-        XDGDIR='${datadir}'
+if test x$opt_xdgdatadir = x; then
+        # path was not specified with --with-xdgdatadir
+        XDGDATADIR='${datadir}'
 else
-        # path WAS specified with --with-xdgdir
-        #AC_DEFINE_UNQUOTED(XDGDIR, "$opt_xdgdir", [gEDA/gaf's rc directory])
-        XDGDIR="$opt_xdgdir"
+        # path WAS specified with --with-xdgdatadir
+        XDGDATADIR="$opt_xdgdatadir"
 fi
-AC_SUBST(XDGDIR)
+AC_SUBST(XDGDATADIR)
 
 if test x$opt_kdedatadir = x; then
         # path was not specified with --with-kdedatadir
@@ -523,7 +522,7 @@ AC_OUTPUT
 
 expandedGEDADATADIR=`eval "echo $GEDADATADIR"`
 expandedGEDARCDIR=`eval "echo $GEDARCDIR"`
-expandedXDGDIR=`eval "echo $XDGDIR"`
+expandedXDGDATADIR=`eval "echo $XDGDATADIR"`
 expandedKDEDATADIR=`eval "echo $KDEDATADIR"`
 
 AC_MSG_RESULT([
@@ -536,7 +535,7 @@ AC_MSG_RESULT([
    mingw build:                      $MINGW
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR
-   xdg directory:                    $expandedXDGDIR
+   xdg data directory:               $expandedXDGDATADIR
    KDE data directory:               $expandedKDEDATADIR
    LIBGEDA .so version:              $SHARED_LIBRARY_VERSION
    dmalloc debugging:                $with_dmalloc
