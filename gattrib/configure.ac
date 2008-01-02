@@ -26,7 +26,7 @@ AC_ARG_ENABLE(debug,
 AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
 
 # Change default location for XDG files (.desktop and icons)
-AC_ARG_WITH(xdgdir, [  --with-xdgdir=path      Change where the .desktop file and theme icons are installed [[DATAROOTDIR]]], [opt_xdgdir=$withval])
+AC_ARG_WITH(xdgdir, [  --with-xdgdir=path      Change where the .desktop file and theme icons are installed [[DATADIR]]], [opt_xdgdir=$withval])
 
 # 
 # Command line flags end
@@ -391,7 +391,7 @@ fi
 
 if test x$opt_xdgdir = x; then
         # path was not specified with --with-xdgdir
-        XDGDIR='${datarootdir}'
+        XDGDIR='${datadir}'
 else
         # path WAS specified with --with-xdgdir
         #AC_DEFINE_UNQUOTED(XDGDIR, "$opt_xdgdir", [gEDA/gaf's rc directory])
