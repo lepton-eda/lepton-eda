@@ -32,8 +32,8 @@ xml_DATA = $(xml_in_files:.xml.in=.xml)
 
 @INTLTOOL_XML_RULE@
 
-kdedir=@KDEDIR@
-mimelnkdir = $(kdedir)/share/mimelnk
+kdedatadir=@KDEDATADIR@
+mimelnkdir = $(kdedatadir)/mimelnk
 applicationdir = $(mimelnkdir)/application
 
 application_in_files = \
