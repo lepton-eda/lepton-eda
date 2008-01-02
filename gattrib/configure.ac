@@ -44,7 +44,7 @@ IT_PROG_INTLTOOL(0.35.0)
 #
 
 AC_ARG_ENABLE(update-desktop-database,
-   AC_HELP_STRING([--disable-update-dektop-database],
+   AC_HELP_STRING([--disable-update-desktop-database],
                    [do not update desktop file database after installation]),,
                    enable_update_desktop_database=yes)
 
@@ -59,7 +59,7 @@ if test x$enable_update_desktop_database = xyes ; then
 fi
 
 #
-# Update mime database utility end
+# Update desktop database utility end
 ############################################################################
 
 # Set USE_NLS
