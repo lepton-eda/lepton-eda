@@ -165,9 +165,14 @@ do
 	fi
       fi
 
-
       echo "autogen.sh running: aclocal $aclocalinclude ..."
       aclocal $aclocalinclude
+      status=$?
+      if test ! "$status" = 0; then
+        echo autogen.sh exiting...
+        exit $status
+      fi
+
       if grep "^AM_CONFIG_HEADER" $configure_script >/dev/null; then
 	echo "autogen.sh running: autoheader ..."
 	autoheader
