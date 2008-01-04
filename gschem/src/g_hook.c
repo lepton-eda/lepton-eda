@@ -83,8 +83,6 @@ SCM g_make_attrib_smob_list(GSCHEM_TOPLEVEL *w_current, OBJECT *curr_object)
         smob_list = scm_cons (g_make_attrib_smob (w_current->toplevel, a_current),
                               smob_list);
       }
-    } else {
-      printf(_("Attribute failed ot find.\n"));
     }
     a_iter = g_list_next (a_iter);
   }
