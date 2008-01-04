@@ -719,13 +719,21 @@ compselect_callback_refresh_library (GtkButton *button, gpointer user_data)
 static GtkWidget*
 create_inuse_treeview (Compselect *compselect)
 {
-  GtkWidget *scrolled_win, *treeview;
+  GtkWidget *scrolled_win, *treeview, *vbox, *hbox, *button;
   GtkTreeModel *model;
   GtkTreeSelection *selection;
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
 
   model = create_inuse_tree_model (compselect);
+
+  vbox = GTK_WIDGET (g_object_new (GTK_TYPE_VBOX,
+                                   /* GtkContainer */
+                                   "border-width", 5,
+                                   /* GtkBox */
+                                   "homogeneous",  FALSE,
+                                   "spacing",      5,
+                                   NULL));
 
   /* Create a scrolled window to accomodate the treeview */
   scrolled_win = GTK_WIDGET (
@@ -776,7 +784,38 @@ create_inuse_treeview (Compselect *compselect)
   /* set the inuse treeview of compselect */
   compselect->inusetreeview = GTK_TREE_VIEW (treeview);
 
-  return scrolled_win;
+  /* add the scrolled window for directories to the vertical box */
+  gtk_box_pack_start (GTK_BOX (vbox), scrolled_win,
+                      TRUE, TRUE, 0);
+
+  /* -- refresh button area -- */
+  hbox = GTK_WIDGET (g_object_new (GTK_TYPE_HBOX,
+                                          /* GtkBox */
+                                          "homogeneous", FALSE,
+                                          "spacing",     3,
+                                          NULL));
+  /* create the refresh button */
+  button = GTK_WIDGET (g_object_new (GTK_TYPE_BUTTON,
+                                     /* GtkWidget */
+                                     "sensitive", TRUE,
+                                     /* GtkButton */
+                                     "relief",    GTK_RELIEF_NONE,
+                                     NULL));
+  gtk_container_add (GTK_CONTAINER (button),
+                     gtk_image_new_from_stock (GTK_STOCK_REFRESH,
+                                            GTK_ICON_SIZE_SMALL_TOOLBAR));
+  /* add the refresh button to the horizontal box at the end */
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  g_signal_connect (button,
+                    "clicked",
+                    G_CALLBACK (compselect_callback_refresh_library),
+                    compselect);
+                                     
+  /* add the refresh button area to the vertical box */
+  gtk_box_pack_start (GTK_BOX (vbox), hbox,
+                      FALSE, FALSE, 0);
+
+  return vbox;
 }
 
 /*! \brief Creates the treeview for the "Library" view */
