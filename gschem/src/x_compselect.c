@@ -848,6 +848,8 @@ create_lib_treeview (Compselect *compselect)
   
   scrolled_win = GTK_WIDGET (
     g_object_new (GTK_TYPE_SCROLLED_WINDOW,
+                  /* GtkContainer */
+                  "border-width", 5,
                   /* GtkScrolledWindow */
                   "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
                   "vscrollbar-policy", GTK_POLICY_ALWAYS,
