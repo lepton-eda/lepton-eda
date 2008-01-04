@@ -3438,6 +3438,9 @@ DEFINE_I_CALLBACK(cancel)
                           w_current->toplevel->page_current->complex_place_list);
     w_current->toplevel->page_current->complex_place_list = NULL;
 
+    /* De-select the lists in the component selector */
+    x_compselect_deselect (w_current);
+
     /* Present the component selector again */
     g_value_init (&value, G_TYPE_BOOLEAN);
     g_value_set_boolean (&value, FALSE);

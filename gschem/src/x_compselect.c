@@ -142,8 +142,17 @@ x_compselect_callback_response (GtkDialog *dialog,
               g_assert_not_reached();
         }
 
-        /* Cancel any action / place operation currently in progress */
-        o_redraw_cleanstates (w_current);
+        if (w_current->event_state == ENDCOMP ||
+            w_current->event_state == DRAWCOMP) {
+          /* Delete the component which was being placed */
+          o_complex_rubbercomplex(w_current);
+          s_delete_object_glist(toplevel,
+                                toplevel->page_current->complex_place_list);
+          toplevel->page_current->complex_place_list = NULL;
+        } else {
+          /* Cancel whatever other action is currently in progress */
+          o_redraw_cleanstates (w_current);
+        }
 
         if (symbol == NULL) {
           /* If there is no symbol selected, switch to SELECT mode */
@@ -260,6 +269,28 @@ x_compselect_close (GSCHEM_TOPLEVEL *w_current)
   }    
 }
 
+
+void
+x_compselect_deselect (GSCHEM_TOPLEVEL *w_current)
+{
+  Compselect *compselect = COMPSELECT (w_current->cswindow);
+
+  if (compselect == NULL)
+    return;
+
+  switch (compselect_get_view (compselect)) {
+  case VIEW_INUSE:
+    gtk_tree_selection_unselect_all (
+      gtk_tree_view_get_selection (compselect->inusetreeview));
+    break;
+  case VIEW_CLIB:
+    gtk_tree_selection_unselect_all (
+      gtk_tree_view_get_selection (compselect->libtreeview));
+    break;
+  default:
+    g_assert_not_reached();
+  }
+}
 
 
 enum {

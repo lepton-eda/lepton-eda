@@ -773,6 +773,7 @@ gint x_event_scroll(GtkWidget *widget, GdkEventScroll *event, GSCHEM_TOPLEVEL *w
 /* x_compselect.c */
 void x_compselect_open (GSCHEM_TOPLEVEL *w_current);
 void x_compselect_close (GSCHEM_TOPLEVEL *w_current);
+void x_compselect_deselect (GSCHEM_TOPLEVEL *w_current);
 /* x_fileselect.c */
 void x_fileselect_open(GSCHEM_TOPLEVEL *w_current);
 void x_fileselect_save(GSCHEM_TOPLEVEL *w_current);

@@ -506,15 +506,19 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
 
   switch (w_current->event_state) {
     /* all states with something on the dc */
+    case(DRAWCOMP):
+    case(ENDCOMP):
+      /* De-select the lists in the component selector */
+      x_compselect_deselect (w_current);
+
+      /* Fall through */
     case(COPY): 
     case(MCOPY): 
     case(DRAWBUS): 
-    case(DRAWCOMP): 
     case(DRAWNET):   
     case(ENDARC): 
     case(ENDBOX): 
     case(ENDCIRCLE): 
-    case(ENDCOMP): 
     case(ENDCOPY):
     case(ENDMCOPY): 
     case(ENDLINE): 
