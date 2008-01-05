@@ -1434,14 +1434,24 @@ main(gint argc, gchar **argv)
 	gboolean initial_pcb = TRUE;
 	gboolean created_pcb_file = TRUE;
 	char *path, *p;
+	const char *pcbdata_path;
 
 	if (argc < 2)
 		usage();
 
-	/* Use the default value passed in from the configure script instead
-  	 * of trying to hard code a value which is very likely wrong
-	 */
-	m4_pcbdir = g_strconcat( PCBDATADIR, "/pcb/m4", NULL );
+	pcbdata_path = g_getenv ("PCBDATA");  /* do not free return value */
+	if (pcbdata_path != NULL)
+	{
+		/* If PCBDATA is set, use the value */
+		m4_pcbdir = g_strconcat( pcbdata_path, "/pcb/m4", NULL );
+	} else {
+		/* Use the default value passed in from the configure script 
+		 * instead of trying to hard code a value which is very 
+		 * likely wrong
+		 */
+		m4_pcbdir = g_strconcat( PCBDATADIR, "/pcb/m4", NULL );
+	}
+
 	default_m4_pcbdir = g_strdup(m4_pcbdir);
 
 	get_args(argc, argv);
