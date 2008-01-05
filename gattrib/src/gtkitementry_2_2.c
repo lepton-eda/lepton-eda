@@ -2274,7 +2274,6 @@ gtk_item_entry_new (void)
 
   /* Copied from GtkEntry by SDB */
   return g_object_new (GTK_TYPE_ITEM_ENTRY, NULL);
-
 }
 
 
