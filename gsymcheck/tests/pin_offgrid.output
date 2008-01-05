@@ -1,0 +1,12 @@
+Warning: Found offgrid pin at location (x1=701,y1=3600)
+Warning: Found offgrid pin at location (x2=710,y2=2000)
+Warning: Found offgrid pin at location (x2=700,y2=1620)
+Warning: Found offgrid pin at location (x2=706,y2=806)
+Warning: Found offgrid pin at location (x2=700,y2=3204)
+ERROR: Found offgrid pin at location (x2=401,y2=3600)
+ERROR: Found offgrid pin at location (x1=410,y1=2800)
+ERROR: Found offgrid pin at location (x1=400,y1=2420)
+ERROR: Found offgrid pin at location (x1=404,y1=1204)
+ERROR: Found offgrid pin at location (x1=400,y1=3204)
+5 warnings found 
+5 ERRORS found 
