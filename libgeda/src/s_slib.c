@@ -203,9 +203,6 @@ char *s_slib_search_lowlevel(const char *basename)
 
     s_log_message(_("Could not find [%s] in any SourceLibrary\n"), basename);
 
-#if DEBUG 
-    fprintf(stderr, _("Could not find [%s] in any SourceLibrary\n"), basename);
-#endif
     return(NULL);
   }
 }

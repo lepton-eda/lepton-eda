@@ -623,8 +623,6 @@ int o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
     s_log_message("Found attrib/text with spaces beside the ='s [%s]\n", 
 	          string);
     s_log_message("You can ignore the above message if the text is not intended to be an attribute\n");
-    fprintf(stderr, "Found an attribute with spaces beside the ='s [%s]\n", 
-            string);
 #endif
 
     return(FALSE);

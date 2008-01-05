@@ -713,7 +713,6 @@ OBJECT *o_complex_read(TOPLEVEL *toplevel, OBJECT *object_list,
       break;
 
     default:
-      fprintf(stderr, _("Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"), type, x1, y1, selectable, angle, mirror, basename);
       s_log_message(_("Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"), type, x1, y1, selectable, angle, mirror, basename);
       break;
   }
@@ -726,9 +725,6 @@ OBJECT *o_complex_read(TOPLEVEL *toplevel, OBJECT *object_list,
       break;
 		
     default:
-      fprintf(stderr,
-              _("Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"),
-              type, x1, y1, selectable, angle, mirror, basename);
       s_log_message(_("Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"), type, x1, y1, selectable, angle, mirror, basename);
       break;
   }
@@ -1487,11 +1483,6 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
       ((inside_present && outside_present) && (inside_value > outside_value)))
   {
     
-    fprintf(stderr,
-            _("WARNING: Symbol version mismatch on refdes %s (%s):\n"
-              "\tSymbol in library is newer than "
-              "instantiated symbol\n"),
-            refdes, object->complex_basename);
     s_log_message(_("WARNING: Symbol version mismatch on refdes %s (%s):\n"
                     "\tSymbol in library is newer than "
                     "instantiated symbol\n"),
@@ -1520,12 +1511,9 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
     if (inside_major > outside_major)
     {
       char* refdes_copy;
-      fprintf(stderr, _("\tMAJOR VERSION CHANGE (file %.3f, "
-                        "instantiated %.3f, %s)!\n"),
-              inside_value, outside_value, refdes);
       s_log_message(_("\tMAJOR VERSION CHANGE (file %.3f, "
-                      "instantiated %.3f)!\n"),
-                    inside_value, outside_value);
+                      "instantiated %.3f, %s)!\n"),
+                    inside_value, outside_value, refdes);
 
       /* add the refdes to the major_changed_refdes GList */
       /* make sure refdes_copy is freed somewhere */
@@ -1541,9 +1529,6 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
 
     if (inside_minor > outside_minor)
     {
-      fprintf(stderr, _("\tMinor version change (file %.3f, "
-                        "instantiated %.3f)\n"),
-              inside_value, outside_value);
       s_log_message(_("\tMinor version change (file %.3f, "
                       "instantiated %.3f)\n"),
                     inside_value, outside_value);

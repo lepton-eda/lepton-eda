@@ -267,7 +267,6 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
         new_image_filename);
   } else {
     s_log_message("x_image_update_dialog_filename: No parent file chooser found!.\n");
-    fprintf(stderr, "x_image_update_dialog_filename: No parent file chooser found!.\n");
   }
 
   g_free(file_name);
@@ -299,8 +298,6 @@ void x_image_write_eps(GSCHEM_TOPLEVEL *w_current, const char* filename)
   toplevel->print_output_type = EXTENTS_NOMARGINS;
   result = f_print_file (toplevel, filename);
   if (result) {
-    fprintf(stderr, "x_image_lowlevel: Unable to save eps file  %s.\n",
-        filename);
     s_log_message(_("x_image_lowlevel: Unable to write eps file %s.\n"),
         filename);
   }   
@@ -379,9 +376,6 @@ void x_image_lowlevel(GSCHEM_TOPLEVEL *w_current, const char* filename,
     pixbuf = x_image_get_pixbuf(w_current);
     if (pixbuf != NULL) {
       if (!gdk_pixbuf_save(pixbuf, filename, filetype, &gerror, NULL)) {
-        fprintf(stderr, "x_image_lowlevel: Unable to save %s file  %s.\n",
-            filetype, filename);
-        fprintf(stderr, "%s\n", gerror->message);
         s_log_message(_("x_image_lowlevel: Unable to write %s file %s.\n"),
             filetype, filename);
         s_log_message(gerror->message);
@@ -422,7 +416,6 @@ void x_image_lowlevel(GSCHEM_TOPLEVEL *w_current, const char* filename,
         g_object_unref(pixbuf);
     }
     else {
-      fprintf(stderr, "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n");
       s_log_message(_("x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"));
     }
   }

@@ -146,8 +146,6 @@ OBJECT *o_bus_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   d_y2 = y2; 
 
   if (x1 == x2 && y1 == y2) {
-    fprintf(stderr, _("Found a zero length bus [ %c %d %d %d %d %d ]\n"),
-            type, x1, y1, x2, y2, color);
     s_log_message(_("Found a zero length bus [ %c %d %d %d %d %d ]\n"),
                     type, x1, y1, x2, y2, color);
   }
@@ -157,14 +155,12 @@ OBJECT *o_bus_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   }
 
   if (color < 0 || color > MAX_COLORS) {
-    fprintf(stderr, _("Found an invalid color [ %s ]\n"), buf);
     s_log_message(_("Found an invalid color [ %s ]\n"), buf);
     s_log_message(_("Setting color to WHITE\n"));
     color = WHITE;
   }
 
   if (ripper_dir < -1 || ripper_dir > 1) {
-    fprintf(stderr, _("Found an invalid bus ripper direction [ %s ]\n"), buf);
     s_log_message(_("Found an invalid bus ripper direction [ %s ]\n"), buf);
     s_log_message(_("Resetting direction to neutral (no direction)\n"));
     ripper_dir = 0;

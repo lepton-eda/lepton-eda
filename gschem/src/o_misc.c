@@ -904,7 +904,6 @@ void o_autosave_backups(GSCHEM_TOPLEVEL *w_current)
 
       if (real_filename == NULL) {
         s_log_message (_("o_autosave_backups: Can't get the real filename of %s."), p_current->page_filename);
-        fprintf (stderr, "o_autosave_backups: Can't get the real filename of %s.\n", p_current->page_filename);
       } else {
         /* Get the directory in which the real filename lives */
         dirname = g_path_get_dirname (real_filename);

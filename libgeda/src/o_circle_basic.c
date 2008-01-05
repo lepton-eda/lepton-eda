@@ -287,15 +287,12 @@ OBJECT *o_circle_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 
 
   if (radius == 0) {
-    fprintf(stderr, _("Found a zero radius circle [ %c %d %d %d %d ]\n"),
-            type, x1, y1, radius, color);
     s_log_message(_("Found a zero radius circle [ %c %d %d %d %d ]\n"),
                   type, x1, y1, radius, color);
 	
   }
   
   if (color < 0 || color > MAX_COLORS) {
-    fprintf(stderr, _("Found an invalid color [ %s ]\n"), buf);
     s_log_message(_("Found an invalid color [ %s ]\n"), buf);
     s_log_message(_("Setting color to WHITE\n"));
     color = WHITE;

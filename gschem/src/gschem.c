@@ -251,8 +251,6 @@ void main_prog(void *closure, int argc, char *argv[])
      * integrated. */
     s_log_message(_("Failed to read init scm file [%s]\n"),
                   input_str);
-    fprintf(stderr,
-            _("Failed to read init scm file [%s]\n"), input_str);
   }
   g_free(input_str);
 

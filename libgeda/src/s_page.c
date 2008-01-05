@@ -162,8 +162,6 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   if (real_filename == NULL) {
     s_log_message (_("s_page_delete: Can't get the real filename of %s."),
                    page->page_filename);
-    fprintf (stderr, _("s_page_delete: Can't get the real filename of %s.\n"),
-             page->page_filename);
   }
   else {
     backup_filename = f_get_autosave_filename (real_filename);

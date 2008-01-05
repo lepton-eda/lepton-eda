@@ -1071,7 +1071,6 @@ OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
   }
 
   if (size == 0) {
-    fprintf(stderr, _("Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"), type, x, y, color, size, visibility, show_name_value, angle, alignment);
     s_log_message(_("Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"), type, x, y, color, size, visibility, show_name_value, angle, alignment);
   }
 
@@ -1084,8 +1083,6 @@ OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
     break;
 
     default:
-      fprintf(stderr, _("Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"),
-              type, x, y, color, size, visibility, show_name_value, angle, alignment);
       s_log_message(_("Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"),
                     type, x, y, color, size, visibility, show_name_value, angle, alignment);
       s_log_message(_("Setting angle to 0\n"));
@@ -1108,8 +1105,6 @@ OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
     break;
 		
     default:
-      fprintf(stderr, _("Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"),
-              type, x, y, color, size, visibility, show_name_value, angle, alignment);
       s_log_message(_("Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"),
                     type, x, y, color, size, visibility, show_name_value, angle, alignment);
       s_log_message(_("Setting alignment to LOWER_LEFT\n"));
@@ -1118,7 +1113,6 @@ OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
   }
 
   if (color < 0 || color > MAX_COLORS) {
-    fprintf(stderr, _("Found an invalid color [ %s ]\n"), first_line);
     s_log_message(_("Found an invalid color [ %s ]\n"), first_line);
     s_log_message(_("Setting color to WHITE\n"));
     color = WHITE;

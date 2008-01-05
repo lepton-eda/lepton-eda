@@ -137,15 +137,9 @@ OBJECT *o_pin_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   }
 
   if (whichend == -1) {
-    fprintf(stderr,
-            _("Found a pin which did not have the whichone field set.\n"
-              "Verify and correct manually.\n"));
     s_log_message(_("Found a pin which did not have the whichone field set.\n"
                     "Verify and correct manually.\n"));
   } else if (whichend < -1 || whichend > 1) {
-    fprintf(stderr,
-            _("Found an invalid whichend on a pin (reseting to zero): %d\n"),
-            whichend);
     s_log_message(_("Found an invalid whichend on a pin (reseting to zero): %d\n"),
                   whichend);
     whichend = 0;
@@ -157,12 +151,10 @@ OBJECT *o_pin_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   d_y2 = y2; 
 
   if (x1 == x2 && y1 == y2) {
-    fprintf(stderr, _("Found a zero length pin: [ %s ]\n"), buf);
     s_log_message(_("Found a zero length pin: [ %s ]\n"), buf);
   }
 
   if (color < 0 || color > MAX_COLORS) {
-    fprintf(stderr, _("Found an invalid color [ %s ]\n"), buf);
     s_log_message(_("Found an invalid color [ %s ]\n"), buf);
     s_log_message(_("Setting color to WHITE\n"));
     color = WHITE;

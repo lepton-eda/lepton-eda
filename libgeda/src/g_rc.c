@@ -388,7 +388,6 @@ void g_rc_parse(TOPLEVEL *toplevel,
      * same. Inefficient!
      */
     s_log_message(_("Could not find any %s file!\n"), rcname);
-    fprintf(stderr, _("Could not find a %s file\n"), rcname);
     exit(-1);
   }
 }

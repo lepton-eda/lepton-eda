@@ -1362,10 +1362,6 @@ const CLibSymbol *s_clib_get_symbol_by_name (const gchar *name)
   if (symlist == NULL) {
     s_log_message (_("Component [%s] was not found in the component library\n"),
                    name);
-    /*! \bug Why does this need to go to stderr as well? */
-    fprintf(stderr,
-	    _("Component [%s] was not found in any component library\n"),
-	    name);
     return NULL;
   }
 

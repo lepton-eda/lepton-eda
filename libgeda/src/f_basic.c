@@ -365,7 +365,6 @@ int f_save(TOPLEVEL *toplevel, const char *filename)
 
   if (real_filename == NULL) {
     s_log_message (_("Can't get the real filename of %s."), filename);
-    fprintf (stderr, _("Can't get the real filename of %s.\n"), filename);
     return 0;
   }
   
@@ -392,7 +391,6 @@ int f_save(TOPLEVEL *toplevel, const char *filename)
 	
       if (rename(real_filename, backup_filename) != 0) {
 	s_log_message (_("Can't save backup file: %s."), backup_filename);
-	fprintf (stderr, _("Can't save backup file: %s."), backup_filename);
       }
       else {
 	/* Make the backup file readonly so a 'rm *' command will ask 
@@ -538,7 +536,6 @@ char *follow_symlinks (const gchar *filename, GError **error)
       
       if (len == -1) {
 	s_log_message(_("Could not read symbolic link information for %s"), followed_filename);
-	fprintf(stderr, _("Could not read symbolic link information for %s"), followed_filename);
 	g_free (followed_filename);
 	return NULL;
       }
@@ -579,7 +576,6 @@ char *follow_symlinks (const gchar *filename, GError **error)
   /* Too many symlinks */
   
   s_log_message(_("The file has too many symbolic links."));
-  fprintf(stderr, _("The file has too many symbolic links."));
   
   return NULL;
 #endif /* __MINGW32__ */

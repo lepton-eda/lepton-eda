@@ -2811,7 +2811,6 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
       /* now do some error fixing */
       if (page_control == -1) {
         s_log_message(_("Cannot find source [%s]\n"), current_filename);
-        fprintf(stderr, _("Cannot find source [%s]\n"), current_filename);
 
         /* restore this for the next page */
         page_control = saved_page_control;

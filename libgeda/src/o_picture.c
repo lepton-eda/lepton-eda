@@ -80,8 +80,6 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
 	 &type, &x1, &y1, &width, &height, &angle, &mirrored, &embedded);
   
   if (num_conv != 8) {
-    fprintf(stderr, _("Error reading picture definition line: %s.\n"),
-            first_line);
     s_log_message (_("Error reading picture definition line: %s.\n"),
                    first_line);
   }
@@ -96,15 +94,11 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
   }
 
   if (width == 0 || height == 0) {
-    fprintf(stderr, _("Found a zero width/height picture [ %c %d %d %d %d ]\n"),
-            type, x1, y1, width, height);
     s_log_message(_("Found a zero width/height picture [ %c %d %d %d %d ]\n"),
                   type, x1, y1, width, height);
   }
 
   if ( (mirrored > 1) || (mirrored < 0)) {
-    fprintf(stderr, _("Found a picture with a wrong 'mirrored' parameter: %c.\n"),
-	    mirrored);
     s_log_message(_("Found a picture with a wrong 'mirrored' parameter: %c.\n"),
 	    mirrored);
     s_log_message(_("Setting mirrored to 0\n"));
@@ -112,8 +106,6 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
   }
 
   if ( (embedded > 1) || (embedded < 0)) {
-    fprintf(stderr, _("Found a picture with a wrong 'embedded' parameter: %c.\n"),
-	    embedded);
     s_log_message(_("Found a picture with a wrong 'embedded' parameter: %c.\n"),
 	    embedded);
     s_log_message(_("Setting embedded to 0\n"));
@@ -128,7 +120,6 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
     break;
 
     default:
-      fprintf(stderr, _("Found an unsupported picture angle [ %d ]\n"), angle);
       s_log_message(_("Found an unsupported picture angle [ %d ]\n"), angle);
       s_log_message(_("Setting angle to 0\n"));
       angle=0;
@@ -200,15 +191,12 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
   if (pixbuf == NULL) {
     char *temp_filename;
 
-    fprintf(stderr, _("Loading warning picture.\n"));
     s_log_message (_("Loading warning picture.\n"));
     
     temp_filename = g_strconcat(toplevel->bitmap_directory,
                                 G_DIR_SEPARATOR_S, "gschem-warning.png", NULL);
     pixbuf = gdk_pixbuf_new_from_file (temp_filename, NULL);
     if (pixbuf == NULL) {
-      fprintf(stderr, _("Error loading picture from file: %s.\n"),
-              temp_filename);
       s_log_message( _("Error loading picture from file: %s.\n"),
                      temp_filename);
     }      
@@ -269,7 +257,6 @@ char *o_picture_save(OBJECT *object)
                                 &encoded_picture_length,
                                 TRUE);
     if (encoded_picture == NULL) {
-      fprintf(stderr, _("ERROR: o_picture_save: unable to encode the picture.\n"));
       s_log_message(_("ERROR: o_picture_save: unable to encode the picture.\n"));
     }
   }
