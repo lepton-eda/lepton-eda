@@ -100,6 +100,9 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
   /* check for pinnumber attribute (and multiples) on all pins */
   s_check_pinnumber(object_head, s_symcheck);
 
+  /* check for whether all pins are on grid */
+  s_check_pin_ongrid(object_head, s_symcheck);
+
   /* check for slotdef attribute on all pins (if numslots exists) */
   s_check_slotdef(object_head, s_symcheck);
 
@@ -565,6 +568,56 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
   s_current->info_messages = g_list_append(s_current->info_messages,
                                            message);
 
+}
+void
+s_check_pin_ongrid(OBJECT *object_head, SYMCHECK *s_current)
+{
+  int x1, x2, y1, y2;
+  OBJECT *o_current;
+  char *message;
+
+  
+  for (o_current = object_head;
+       o_current != NULL;
+       o_current = o_current->next) {
+    if (o_current->type == OBJ_PIN) {
+      x1 = o_current->line->x[0];
+      y1 = o_current->line->y[0];
+      x2 = o_current->line->x[1];
+      y2 = o_current->line->y[1];
+      
+      if (x1 % 100 != 0 || y1 % 100 != 0) {
+	message = g_strdup_printf("Found offgrid pin at location"
+				  " (x1=%d,y1=%d)\n", x1, y1);
+	/* error if it is the whichend, warning if not */
+	if (o_current->whichend == 0) {
+	  s_current->error_messages = g_list_append(s_current->error_messages,
+						    message);
+	  s_current->error_count++;
+	}
+	else {
+	  s_current->warning_messages = g_list_append(s_current->warning_messages,
+						      message);
+	  s_current->warning_count++;
+	}
+      }
+      if (x2 % 100 != 0 || y2 % 100 != 0) {
+	message = g_strdup_printf("Found offgrid pin at location"
+				  " (x2=%d,y2=%d)\n", x2, y2);
+	/* error when whichend, warning if not */
+	if (o_current-> whichend != 0) {
+	  s_current->error_messages = g_list_append(s_current->error_messages,
+						    message);
+	  s_current->error_count++;
+	}
+	else {
+	  s_current->warning_messages = g_list_append(s_current->warning_messages,
+						      message);
+	  s_current->warning_count++;
+	}
+      }
+    }
+  }
 }
 
 
