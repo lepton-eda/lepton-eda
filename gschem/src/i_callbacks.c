@@ -588,6 +588,7 @@ DEFINE_I_CALLBACK(edit_copy)
 
   i_update_middle_button(w_current, i_callback_edit_copy, _("Copy"));
   if (o_select_return_first_object(w_current)) {
+    o_redraw_cleanstates(w_current);
     i_set_state(w_current, STARTCOPY);
   } else {
     i_set_state_msg(w_current, SELECT, _("Select objs first"));
@@ -628,6 +629,7 @@ DEFINE_I_CALLBACK(edit_mcopy)
 
   i_update_middle_button(w_current, i_callback_edit_copy, _("Multiple Copy"));
   if (o_select_return_first_object(w_current)) {
+    o_redraw_cleanstates(w_current);
     i_set_state(w_current, STARTMCOPY);
   } else {
     i_set_state_msg(w_current, SELECT, _("Select objs first"));
@@ -668,6 +670,7 @@ DEFINE_I_CALLBACK(edit_move)
 
   i_update_middle_button(w_current, i_callback_edit_move, _("Move"));
   if (o_select_return_first_object(w_current)) {
+    o_redraw_cleanstates(w_current);
     i_set_state(w_current, STARTMOVE);
   } else {
     i_set_state_msg(w_current, SELECT, _("Select objs first"));
@@ -3434,6 +3437,9 @@ DEFINE_I_CALLBACK(cancel)
     s_delete_object_glist(w_current->toplevel,
                           w_current->toplevel->page_current->complex_place_list);
     w_current->toplevel->page_current->complex_place_list = NULL;
+
+    /* De-select the lists in the component selector */
+    x_compselect_deselect (w_current);
 
     /* Present the component selector again */
     g_value_init (&value, G_TYPE_BOOLEAN);

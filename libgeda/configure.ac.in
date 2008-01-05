@@ -70,6 +70,7 @@ AC_PROG_MAKE_SET
 # Internationalisation start
 #
 # Set USE_NLS
+AC_GEDA_MACRO_CHECK([AM_NLS], [nls.m4])
 AM_NLS
 
 # Set package name for translations
@@ -80,10 +81,12 @@ AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"])
 AC_SUBST(GETTEXT_PACKAGE)
 
 # Initialise gettext
+AC_GEDA_MACRO_CHECK([AM_GNU_GETTEXT], [gettext.m4])
 AM_GNU_GETTEXT
 AM_GNU_GETTEXT_VERSION([%INSTALLED_GETTEXT_VERSION%])
 
 # Initialise intltool
+AC_GEDA_MACRO_CHECK([IT_PROG_INTLTOOL], [intltool.m4])
 IT_PROG_INTLTOOL(0.35.0)
 
 # 
@@ -93,6 +96,9 @@ IT_PROG_INTLTOOL(0.35.0)
 ############################################################################
 # Check for guile start
 #
+
+# Find about the installed guile
+AC_GEDA_MACRO_CHECK([GUILE_FLAGS], [guile.m4])
 GUILE_FLAGS
 
 # Check Guile version

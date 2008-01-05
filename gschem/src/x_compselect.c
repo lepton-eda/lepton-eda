@@ -142,8 +142,17 @@ x_compselect_callback_response (GtkDialog *dialog,
               g_assert_not_reached();
         }
 
-        /* Cancel any action / place operation currently in progress */
-        o_redraw_cleanstates (w_current);
+        if (w_current->event_state == ENDCOMP ||
+            w_current->event_state == DRAWCOMP) {
+          /* Delete the component which was being placed */
+          o_complex_rubbercomplex(w_current);
+          s_delete_object_glist(toplevel,
+                                toplevel->page_current->complex_place_list);
+          toplevel->page_current->complex_place_list = NULL;
+        } else {
+          /* Cancel whatever other action is currently in progress */
+          o_redraw_cleanstates (w_current);
+        }
 
         if (symbol == NULL) {
           /* If there is no symbol selected, switch to SELECT mode */
@@ -260,6 +269,28 @@ x_compselect_close (GSCHEM_TOPLEVEL *w_current)
   }    
 }
 
+
+void
+x_compselect_deselect (GSCHEM_TOPLEVEL *w_current)
+{
+  Compselect *compselect = COMPSELECT (w_current->cswindow);
+
+  if (compselect == NULL)
+    return;
+
+  switch (compselect_get_view (compselect)) {
+  case VIEW_INUSE:
+    gtk_tree_selection_unselect_all (
+      gtk_tree_view_get_selection (compselect->inusetreeview));
+    break;
+  case VIEW_CLIB:
+    gtk_tree_selection_unselect_all (
+      gtk_tree_view_get_selection (compselect->libtreeview));
+    break;
+  default:
+    g_assert_not_reached();
+  }
+}
 
 
 enum {
@@ -688,13 +719,21 @@ compselect_callback_refresh_library (GtkButton *button, gpointer user_data)
 static GtkWidget*
 create_inuse_treeview (Compselect *compselect)
 {
-  GtkWidget *scrolled_win, *treeview;
+  GtkWidget *scrolled_win, *treeview, *vbox, *hbox, *button;
   GtkTreeModel *model;
   GtkTreeSelection *selection;
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
 
   model = create_inuse_tree_model (compselect);
+
+  vbox = GTK_WIDGET (g_object_new (GTK_TYPE_VBOX,
+                                   /* GtkContainer */
+                                   "border-width", 5,
+                                   /* GtkBox */
+                                   "homogeneous",  FALSE,
+                                   "spacing",      5,
+                                   NULL));
 
   /* Create a scrolled window to accomodate the treeview */
   scrolled_win = GTK_WIDGET (
@@ -745,7 +784,38 @@ create_inuse_treeview (Compselect *compselect)
   /* set the inuse treeview of compselect */
   compselect->inusetreeview = GTK_TREE_VIEW (treeview);
 
-  return scrolled_win;
+  /* add the scrolled window for directories to the vertical box */
+  gtk_box_pack_start (GTK_BOX (vbox), scrolled_win,
+                      TRUE, TRUE, 0);
+
+  /* -- refresh button area -- */
+  hbox = GTK_WIDGET (g_object_new (GTK_TYPE_HBOX,
+                                          /* GtkBox */
+                                          "homogeneous", FALSE,
+                                          "spacing",     3,
+                                          NULL));
+  /* create the refresh button */
+  button = GTK_WIDGET (g_object_new (GTK_TYPE_BUTTON,
+                                     /* GtkWidget */
+                                     "sensitive", TRUE,
+                                     /* GtkButton */
+                                     "relief",    GTK_RELIEF_NONE,
+                                     NULL));
+  gtk_container_add (GTK_CONTAINER (button),
+                     gtk_image_new_from_stock (GTK_STOCK_REFRESH,
+                                            GTK_ICON_SIZE_SMALL_TOOLBAR));
+  /* add the refresh button to the horizontal box at the end */
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  g_signal_connect (button,
+                    "clicked",
+                    G_CALLBACK (compselect_callback_refresh_library),
+                    compselect);
+                                     
+  /* add the refresh button area to the vertical box */
+  gtk_box_pack_start (GTK_BOX (vbox), hbox,
+                      FALSE, FALSE, 0);
+
+  return vbox;
 }
 
 /*! \brief Creates the treeview for the "Library" view */
@@ -778,6 +848,8 @@ create_lib_treeview (Compselect *compselect)
   
   scrolled_win = GTK_WIDGET (
     g_object_new (GTK_TYPE_SCROLLED_WINDOW,
+                  /* GtkContainer */
+                  "border-width", 5,
                   /* GtkScrolledWindow */
                   "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
                   "vscrollbar-policy", GTK_POLICY_ALWAYS,
@@ -1176,8 +1248,6 @@ compselect_constructor (GType type,
   gtk_dialog_add_buttons (GTK_DIALOG (compselect),
                           /*  - close button */
                           GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-                          /*  - update button */
-                          GTK_STOCK_APPLY, COMPSELECT_RESPONSE_PLACE,
 			  GTK_STOCK_OK, COMPSELECT_RESPONSE_HIDE,
                           NULL);
 
@@ -1185,7 +1255,6 @@ compselect_constructor (GType type,
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(compselect),
 					  COMPSELECT_RESPONSE_HIDE,
-					  COMPSELECT_RESPONSE_PLACE,
 					  GTK_RESPONSE_CLOSE,
 					  -1);
 #endif
