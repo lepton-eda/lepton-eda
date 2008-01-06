@@ -124,6 +124,8 @@
    ("Ź" . "Z-acute-accent.sym")
    ("ż" . "z_-dot.sym")
    ("Ż" . "Z-dot.sym")
+   ;; latin sharp s character german
+   ("ß" . "s_-sharp.sym")
    ;; small mu character greek
    ("µ" . "mu_.sym")
    ("Ω" . "Omega.sym")
