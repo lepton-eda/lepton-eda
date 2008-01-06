@@ -88,6 +88,7 @@ int   default_middle_button = STROKE;
 #else
 int   default_middle_button = REPEAT;
 #endif
+int   default_scroll_wheel = SCROLL_WHEEL_CLASSIC;
 int   default_net_consolidate = TRUE;
 int   default_file_preview = FALSE;
 int   default_enforce_hierarchy = TRUE;
@@ -214,6 +215,7 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
   w_current->image_height       = default_image_height;
   w_current->third_button       = default_third_button;
   w_current->middle_button      = default_middle_button;
+  w_current->scroll_wheel       = default_scroll_wheel;
   toplevel->net_consolidate    = default_net_consolidate;
   w_current->file_preview       = default_file_preview;
   w_current->enforce_hierarchy  = default_enforce_hierarchy;

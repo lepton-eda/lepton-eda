@@ -155,6 +155,7 @@ struct st_gschem_toplevel {
   int log_window_type;    /* controls if the log window is decorated or not */
   int third_button;       /* controls what the third mouse button does */
   int middle_button;      /* controls what the third mouse button does */
+  int scroll_wheel;       /* controls what the mouse scroll wheel does */
   int file_preview;       /* controls if the preview area is enabled or not */
   int enforce_hierarchy;  /* controls how much freedom user has when traversing the hierarchy */
   int text_origin_marker; /* controls if text origin marker is displayed or not */

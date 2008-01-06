@@ -241,6 +241,7 @@ SCM g_rc_log_window(SCM mode);
 SCM g_rc_log_window_type(SCM mode);
 SCM g_rc_third_button(SCM mode);
 SCM g_rc_middle_button(SCM mode);
+SCM g_rc_scroll_wheel(SCM mode);
 SCM g_rc_net_consolidate(SCM mode);
 SCM g_rc_file_preview(SCM mode);
 SCM g_rc_enforce_hierarchy(SCM mode);

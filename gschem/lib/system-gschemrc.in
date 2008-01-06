@@ -667,6 +667,16 @@
 (third-button "popup")
 ;(third-button "mousepan")
 
+; scroll-wheel string
+;
+; Controls the binding of the mouse scroll wheel.
+; "classic" style is the gschem default, where scrolling with no modifier
+; key is mapped to zoom, + CTRL -> x-axis pan, + SHIFT -> y-axis pan.
+; "gtk" style changes the behaviour to be more like other GTK appliactions,
+; no modifier -> y-axis pan, + CTRL -> zoom, + SHIFT -> x-axis pan.
+(scroll-wheel "classic")
+;(scroll-wheel "gtk")
+
 ; warp-cursor string
 ;
 ; Controls if the cursor is warped (or moved) when you zoom in and out.

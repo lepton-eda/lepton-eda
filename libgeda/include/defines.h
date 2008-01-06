@@ -293,6 +293,10 @@
 #define ACTION			2
 #define MID_MOUSEPAN_ENABLED	3
 
+/* for scroll-wheel */
+#define SCROLL_WHEEL_CLASSIC 0
+#define SCROLL_WHEEL_GTK     1
+
 /* for selected_from */
 #define DONTCARE		0
 #define MENU			1
