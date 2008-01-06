@@ -5,7 +5,7 @@ INTLTOOL_FILES = intltool-extract.in \
                  intltool-merge.in \
                  intltool-update.in
 
-EXTRA_DIST = HACKING BUGS ChangeLog-1.0 autogen.sh \
+EXTRA_DIST = HACKING BUGS ChangeLog-1.0 autogen.sh configure.ac.in \
              icon-theme-installer $(INTLTOOL_FILES)
 
 pkgconfigdir            = $(libdir)/pkgconfig
