@@ -41,14 +41,14 @@ old_dottedversion=`grep ^DOTTED_VERSION= Makefile | \
 old_date=`grep ^DATE_VERSION= Makefile | \
 	awk -F= '{print $2}'`
 
-old_sharedlibversion=`grep ^SHARED_LIBRARY_VERSION libgeda/configure.ac | \
+old_sharedlibversion=`grep ^SHARED_LIBRARY_VERSION libgeda/configure.ac.in | \
 	awk -F= '{print $2}'`
 
 echo Existing version info: $old_dottedversion $old_date $old_sharedlibversion
 echo ""
 
 # Update dates and dotted version in the configure scripts
-tbd_files="docs/configure.ac examples/configure.ac gattrib/configure.ac gnetlist/configure.ac gsymcheck/configure.ac libgeda/configure.ac symbols/configure.ac utils/configure.ac gschem/configure.ac.in Makefile"
+tbd_files="docs/configure.ac examples/configure.ac gattrib/configure.ac gnetlist/configure.ac gsymcheck/configure.ac libgeda/configure.ac.in symbols/configure.ac utils/configure.ac gschem/configure.ac.in Makefile"
 
 for i in $tbd_files
 do
@@ -61,7 +61,7 @@ do
 done
 
 # Update shared library version
-libgeda_conf=libgeda/configure.ac
+libgeda_conf=libgeda/configure.ac.in
 echo Updating $old_sharedlibversion to $new_sharedlibversion in $libgeda_conf
 mv -f $libgeda_conf $libgeda_conf.orig2
 cat $libgeda_conf.orig2 | \
