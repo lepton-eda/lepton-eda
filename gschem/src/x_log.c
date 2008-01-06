@@ -183,8 +183,19 @@ static void log_message (Log *log, const gchar *message,
   gtk_text_buffer_get_end_iter (buffer, &iter);
   /* Apply the "plain" tag before the level-specific tag in order to
    * reset the formatting */
-  gtk_text_buffer_insert_with_tags_by_name (buffer, &iter, message, -1, 
-                                            "plain", style, NULL);
+
+  if (g_utf8_validate (message, -1, NULL)) {
+    gtk_text_buffer_insert_with_tags_by_name (buffer, &iter, message, -1,
+                                              "plain", style, NULL);
+  } else {
+    /* If UTF-8 wasn't valid (due to a system locale encoded filename or
+     * other string being included by mistake), log a warning, and print
+     * the original message to stderr, where it may be partly intelligible */
+    gtk_text_buffer_insert_with_tags_by_name (buffer, &iter,
+      _("** Invalid UTF-8 in log message. See stderr or gschem.log.\n"),
+                                              -1, "plain", style, NULL);
+    fprintf (stderr, "%s", message);
+  }
 
   mark = gtk_text_buffer_create_mark(buffer, NULL, &iter, FALSE);
   gtk_text_view_scroll_to_mark (log->textview, mark, 0, TRUE, 0, 1);
