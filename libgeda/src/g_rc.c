@@ -208,9 +208,9 @@ gint g_rc_parse_system_rc(TOPLEVEL *toplevel, const gchar *rcname)
     return 0;
   }
 
-  ok_msg  = g_strdup_printf ("Read system-%s file [%%s]\n",
+  ok_msg  = g_strdup_printf (_("Read system-%s file [%%s]\n"),
                              rcname);
-  err_msg = g_strdup_printf ("Did not find required system-%s file [%%s]\n",
+  err_msg = g_strdup_printf (_("Did not find required system-%s file [%%s]\n"),
                              rcname);  
   found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
 
@@ -253,9 +253,9 @@ gint g_rc_parse_home_rc(TOPLEVEL *toplevel, const gchar *rcname)
     return 0;
   }
 
-  ok_msg  = g_strdup_printf ("Read ~/.gEDA/%s file [%%s]\n",
+  ok_msg  = g_strdup_printf (_("Read ~/.gEDA/%s file [%%s]\n"),
                              rcname);
-  err_msg = g_strdup_printf ("Did not find optional ~/.gEDA/%s file [%%s]\n",
+  err_msg = g_strdup_printf (_("Did not find optional ~/.gEDA/%s file [%%s]\n"),
                              rcname);  
   found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
   
@@ -289,9 +289,9 @@ gint g_rc_parse_local_rc(TOPLEVEL *toplevel, const gchar *rcname)
     return 0;
   }
 
-  ok_msg  = g_strdup_printf ("Read local %s file [%%s]\n",
+  ok_msg  = g_strdup_printf (_("Read local %s file [%%s]\n"),
                              rcname);
-  err_msg = g_strdup_printf ("Did not find optional local %s file [%%s]\n",
+  err_msg = g_strdup_printf (_("Did not find optional local %s file [%%s]\n"),
                              rcname);  
   found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
 
@@ -327,9 +327,9 @@ gint g_rc_parse_specified_rc(TOPLEVEL *toplevel, const gchar *rcname)
 
   rcbasename = g_path_get_basename (rcname);
 
-  ok_msg  = g_strdup_printf ("Read specified %s file [%%s]\n",
+  ok_msg  = g_strdup_printf (_("Read specified %s file [%%s]\n"),
                              rcbasename);
-  err_msg = g_strdup_printf ("Did not find specified %s file [%%s]\n",
+  err_msg = g_strdup_printf (_("Did not find specified %s file [%%s]\n"),
                              rcbasename);
   found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
   

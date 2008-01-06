@@ -420,7 +420,7 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 
     /* Add some useful text */
     not_found_text = 
-      g_strdup_printf ("Component not found:\n %s", 
+      g_strdup_printf (_("Component not found:\n %s"),
 		       new_node->complex_basename);
     prim_objs = o_text_add(toplevel, prim_objs,
                            OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
