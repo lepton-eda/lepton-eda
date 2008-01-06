@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-29 09:21-0500\n"
+"POT-Creation-Date: 2008-01-05 21:12-0500\n"
 "PO-Revision-Date: 2007-12-28 19:50+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -153,38 +153,32 @@ msgstr ""
 msgid "Can't get the real filename of %s."
 msgstr "No se puede averiguar el nombre real del archivo %s."
 
-#: ../src/f_basic.c:368
-#, c-format
-msgid "Can't get the real filename of %s.\n"
-msgstr "No se puede averiguar el nombre real del archivo %s.\n"
-
-#: ../src/f_basic.c:388
+#: ../src/f_basic.c:387
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 "No se ha podido poner el archivo de copia de seguridad anterior en modo de "
 "lectura-escritura\n"
 
-#: ../src/f_basic.c:394 ../src/f_basic.c:395
+#: ../src/f_basic.c:393
 #, c-format
 msgid "Can't save backup file: %s."
 msgstr "No se puede guardar la copia de seguridad: %s"
 
-#: ../src/f_basic.c:405
+#: ../src/f_basic.c:403
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr ""
 "No se ha podido poner el archivo de copia de seguridad anterior en modo de "
 "sólo lectura\n"
 
-#: ../src/f_basic.c:540 ../src/f_basic.c:541
+#: ../src/f_basic.c:538
 #, c-format
 msgid "Could not read symbolic link information for %s"
 msgstr "No se puede leer la información del enlace simbólico %s"
 
 #. Too many symlinks
-#: ../src/f_basic.c:581 ../src/f_basic.c:582
-#, c-format
+#: ../src/f_basic.c:578
 msgid "The file has too many symbolic links."
 msgstr "El archivo tiene demasiados enlaces simbólicos."
 
@@ -247,7 +241,7 @@ msgstr "Ha fallado la evaluación de: %s\n"
 msgid "Enable debugging for more detailed information\n"
 msgstr "Habilitar la depuración para ver información más detallada\n"
 
-#: ../src/g_basic.c:267
+#: ../src/g_basic.c:282
 #, c-format
 msgid "Could not find [%s] for interpretation\n"
 msgstr "No se puede encontrar [%s] para interpretar\n"
@@ -266,54 +260,46 @@ msgstr "El archivo RC [%s] ya ha sido leído.\n"
 msgid "Could not find any %s file!\n"
 msgstr "¡No se puede encontrar ningún archivo %s!\n"
 
-#: ../src/g_rc.c:391
-#, c-format
-msgid "Could not find a %s file\n"
-msgstr "No se puede encontrar el archivo %s\n"
-
-#: ../src/o_arc_basic.c:290 ../src/o_arc_basic.c:292
+#: ../src/o_arc_basic.c:289
 #, c-format
 msgid "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"
 msgstr ""
 "Se ha encontrado un arco con radio cero [ %c %d, %d, %d, %d, %d, %d ]\n"
 
-#: ../src/o_arc_basic.c:297 ../src/o_arc_basic.c:298 ../src/o_box_basic.c:343
-#: ../src/o_box_basic.c:344 ../src/o_bus_basic.c:160 ../src/o_bus_basic.c:161
-#: ../src/o_circle_basic.c:298 ../src/o_circle_basic.c:299
-#: ../src/o_line_basic.c:295 ../src/o_line_basic.c:296
-#: ../src/o_net_basic.c:169 ../src/o_net_basic.c:170 ../src/o_pin_basic.c:165
-#: ../src/o_pin_basic.c:166 ../src/o_text_basic.c:1121
-#: ../src/o_text_basic.c:1122
+#: ../src/o_arc_basic.c:294 ../src/o_box_basic.c:341 ../src/o_bus_basic.c:158
+#: ../src/o_circle_basic.c:296 ../src/o_line_basic.c:293
+#: ../src/o_net_basic.c:167 ../src/o_pin_basic.c:158
+#: ../src/o_text_basic.c:1116
 #, c-format
 msgid "Found an invalid color [ %s ]\n"
 msgstr "Se ha encontrado un color no válido [%s]\n"
 
-#: ../src/o_arc_basic.c:299 ../src/o_box_basic.c:345 ../src/o_bus_basic.c:162
-#: ../src/o_circle_basic.c:300 ../src/o_line_basic.c:297
-#: ../src/o_net_basic.c:171 ../src/o_pin_basic.c:167
-#: ../src/o_text_basic.c:1123
+#: ../src/o_arc_basic.c:295 ../src/o_box_basic.c:342 ../src/o_bus_basic.c:159
+#: ../src/o_circle_basic.c:297 ../src/o_line_basic.c:294
+#: ../src/o_net_basic.c:168 ../src/o_pin_basic.c:159
+#: ../src/o_text_basic.c:1117
 msgid "Setting color to WHITE\n"
 msgstr "Seleccionando color BLANCO\n"
 
-#: ../src/o_attrib.c:640
+#: ../src/o_attrib.c:638
 #, c-format
 msgid "Found an improper attribute: _%s_\n"
 msgstr "Se ha encontrado una propiedad no válida: _%s_\n"
 
-#: ../src/o_attrib.c:1695 ../src/o_attrib.c:1848
+#: ../src/o_attrib.c:1690 ../src/o_attrib.c:1851
 msgid "Did not find slotdef=#:#,#,#... attribute\n"
 msgstr "No se ha encontrado un atributo slotdef=#:#,#,#...\n"
 
 #. Didn't find proper slotdef=#:... put warning into log
-#: ../src/o_attrib.c:1701
+#: ../src/o_attrib.c:1696
 msgid "Improper slotdef syntax: missing \":\".\n"
 msgstr "Sintaxis de slotdef incorrecta: falta el carácter \":\".\n"
 
-#: ../src/o_attrib.c:1716 ../src/o_attrib.c:1867
+#: ../src/o_attrib.c:1711 ../src/o_attrib.c:1870
 msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
 msgstr "No se ha encontrado un atributo válido slotdef=#:#,#,#...\n"
 
-#: ../src/o_attrib.c:1801 ../src/o_attrib.c:1901
+#: ../src/o_attrib.c:1804 ../src/o_attrib.c:1904
 msgid "component missing pinseq= attribute\n"
 msgstr "El componente no tiene el atributo pinseq\n"
 
@@ -325,26 +311,26 @@ msgstr "Se ha especificado un espaciado no válido, se corrige a 100\n"
 msgid "Invalid length specified, setting to 100\n"
 msgstr "Se ha especificado una longitud no válida, se corrige a 100\n"
 
-#: ../src/o_box_basic.c:336 ../src/o_box_basic.c:338
+#: ../src/o_box_basic.c:336
 #, c-format
 msgid "Found a zero width/height box [ %c %d %d %d %d %d ]\n"
 msgstr ""
 "Se ha encontrado un rectángulo con altura o anchura cero [ %c %d %d %d %d %"
 "d ]\n"
 
-#: ../src/o_bus_basic.c:149 ../src/o_bus_basic.c:151
+#: ../src/o_bus_basic.c:149
 #, c-format
 msgid "Found a zero length bus [ %c %d %d %d %d %d ]\n"
 msgstr "Se ha encontrado un bus de longitud cero [ %c %d %d %d %d %d ]\n"
 
-#: ../src/o_bus_basic.c:167 ../src/o_bus_basic.c:168
+#: ../src/o_bus_basic.c:164
 #, c-format
 msgid "Found an invalid bus ripper direction [ %s ]\n"
 msgstr ""
 "Se ha encontrado una dirección del símbolo de extracción de bus no válida [ %"
 "s ]\n"
 
-#: ../src/o_bus_basic.c:169
+#: ../src/o_bus_basic.c:165
 msgid "Resetting direction to neutral (no direction)\n"
 msgstr "Cambiando la dirección al valor por defecto neutro (sin dirección)\n"
 
@@ -352,19 +338,19 @@ msgstr "Cambiando la dirección al valor por defecto neutro (sin dirección)\n"
 msgid "Null radius circles are not allowed\n"
 msgstr "No se permiten círculos con radio cero\n"
 
-#: ../src/o_circle_basic.c:290 ../src/o_circle_basic.c:292
+#: ../src/o_circle_basic.c:290
 #, c-format
 msgid "Found a zero radius circle [ %c %d %d %d %d ]\n"
 msgstr "Se ha encontrado un círculo con radio cero [ %c %d %d %d %d ]\n"
 
-#: ../src/o_complex_basic.c:716 ../src/o_complex_basic.c:717
+#: ../src/o_complex_basic.c:716
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
 "Se ha encontrado un componente con un ángulo de rotación no válido [ %c %d %"
 "d %d %d %d %s ]\n"
 
-#: ../src/o_complex_basic.c:730 ../src/o_complex_basic.c:732
+#: ../src/o_complex_basic.c:728
 #, c-format
 msgid ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
@@ -372,7 +358,7 @@ msgstr ""
 "Se ha encontrado un componente con un atributo de simetría no válido [ %c %d "
 "%d %d %d %d %s ]\n"
 
-#: ../src/o_complex_basic.c:1431
+#: ../src/o_complex_basic.c:1427
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -381,7 +367,7 @@ msgstr ""
 "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
 "\tNo se ha podido procesar el atributo de versión de archivo symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1435
+#: ../src/o_complex_basic.c:1431
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -390,7 +376,7 @@ msgstr ""
 "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
 "\tNo se ha podido procesar el atributo de versión de archivo symversion=\n"
 
-#: ../src/o_complex_basic.c:1451
+#: ../src/o_complex_basic.c:1447
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -399,7 +385,7 @@ msgstr ""
 "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
 "\tNo se ha podido procesar el atributo añadido symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1476
+#: ../src/o_complex_basic.c:1472
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -411,7 +397,7 @@ msgstr ""
 "\tse ha añadido el atributo symversion=%s a la instancia del símbolo, pero "
 "no hay ningún atributo symversion= dentro del archivo del símbolo\n"
 
-#: ../src/o_complex_basic.c:1491 ../src/o_complex_basic.c:1495
+#: ../src/o_complex_basic.c:1486
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -422,23 +408,18 @@ msgstr ""
 "\t El símbolo en la librería es más reciente que el instanciado en el "
 "esquema\n"
 
-#: ../src/o_complex_basic.c:1523
+#: ../src/o_complex_basic.c:1514
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr ""
 "\t¡CAMBIO DE VERSIÓN IMPORTANTE (archivo %.3f, instanciado %.3f, %s)!\n"
 
-#: ../src/o_complex_basic.c:1526
-#, c-format
-msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f)!\n"
-msgstr "\t¡CAMBIO DE VERSIÓN IMPORTANTE (archivo %.3f, instanciado %.3f)!\n"
-
-#: ../src/o_complex_basic.c:1544 ../src/o_complex_basic.c:1547
+#: ../src/o_complex_basic.c:1532
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\t Cambio menor en la versión (archivo %.3f, instanciado %.3f)\n"
 
-#: ../src/o_complex_basic.c:1558
+#: ../src/o_complex_basic.c:1543
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -468,103 +449,100 @@ msgstr ""
 msgid "Component [%s] has been successfully unembedded\n"
 msgstr "Se ha desincrustado satisfactoriamente el componente [%s]\n"
 
-#: ../src/o_line_basic.c:288 ../src/o_line_basic.c:290
+#: ../src/o_line_basic.c:288
 #, c-format
 msgid "Found a zero length line [ %c %d %d %d %d %d ]\n"
 msgstr "Se ha encontrado una línea con longitud cero [ %c %d %d %d %d %d ]\n"
 
-#: ../src/o_net_basic.c:157 ../src/o_net_basic.c:159
+#: ../src/o_net_basic.c:157
 #, c-format
 msgid "Found a zero length net [ %c %d %d %d %d %d ]\n"
 msgstr ""
 "Se ha encontrado una conexión con longitud cero [ %c %d %d %d %d %d ]\n"
 
-#: ../src/o_picture.c:83 ../src/o_picture.c:85
+#: ../src/o_picture.c:83
 #, c-format
 msgid "Error reading picture definition line: %s.\n"
 msgstr "Error al leer la línea de definición de la imagen: %s\n"
 
-#: ../src/o_picture.c:99 ../src/o_picture.c:101
+#: ../src/o_picture.c:97
 #, c-format
 msgid "Found a zero width/height picture [ %c %d %d %d %d ]\n"
 msgstr ""
 "Se ha encontrado una imagen con altura ó anchura cero [ %c %d %d %d %d ]\n"
 
-#: ../src/o_picture.c:106 ../src/o_picture.c:108
+#: ../src/o_picture.c:102
 #, c-format
 msgid "Found a picture with a wrong 'mirrored' parameter: %c.\n"
 msgstr ""
 "Se ha encontrado una imagen con el parámetro 'volteado' incorrecto: %c.\n"
 
-#: ../src/o_picture.c:110
+#: ../src/o_picture.c:104
 msgid "Setting mirrored to 0\n"
 msgstr "Cambiando el parámetro 'volteado' a 0\n"
 
-#: ../src/o_picture.c:115 ../src/o_picture.c:117
+#: ../src/o_picture.c:109
 #, c-format
 msgid "Found a picture with a wrong 'embedded' parameter: %c.\n"
 msgstr ""
 "Se ha encontrado una imagen con el parámetro 'incrustado' incorrecto: %c.\n"
 
-#: ../src/o_picture.c:119
+#: ../src/o_picture.c:111
 msgid "Setting embedded to 0\n"
 msgstr "Cambiando el parámetro 'incrustado' a 0\n"
 
-#: ../src/o_picture.c:131 ../src/o_picture.c:132
+#: ../src/o_picture.c:123
 #, c-format
 msgid "Found an unsupported picture angle [ %d ]\n"
 msgstr ""
 "Se ha encontrado una imagen con un ángulo de rotación no válido [ %d ]\n"
 
-#: ../src/o_picture.c:133 ../src/o_text_basic.c:1091
+#: ../src/o_picture.c:124 ../src/o_text_basic.c:1088
 msgid "Setting angle to 0\n"
 msgstr "Cambiando el parámetro 'ángulo' a 0\n"
 
-#: ../src/o_picture.c:168 ../src/o_picture.c:179 ../src/o_picture.c:949
+#: ../src/o_picture.c:159 ../src/o_picture.c:170 ../src/o_picture.c:936
 #, fuzzy, c-format
 msgid "Failed to load image from embedded data [%s]: %s\n"
 msgstr "Error al cargar símbolo desde el archivo [%s]: %s\n"
 
-#: ../src/o_picture.c:169
+#: ../src/o_picture.c:160
 msgid "Base64 decoding failed."
 msgstr ""
 
-#: ../src/o_picture.c:170 ../src/o_picture.c:181 ../src/o_picture.c:951
+#: ../src/o_picture.c:161 ../src/o_picture.c:172 ../src/o_picture.c:938
 msgid "Falling back to file loading. Picture unembedded.\n"
 msgstr ""
 
-#: ../src/o_picture.c:192 ../src/o_picture.c:937 ../src/o_picture.c:984
+#: ../src/o_picture.c:183 ../src/o_picture.c:924 ../src/o_picture.c:971
 #, fuzzy, c-format
 msgid "Failed to load image from file [%s]: %s\n"
 msgstr "Error al cargar símbolo desde el archivo [%s]: %s\n"
 
-#: ../src/o_picture.c:203 ../src/o_picture.c:204
-#, c-format
+#: ../src/o_picture.c:194
 msgid "Loading warning picture.\n"
 msgstr "Cargando imagen de advertencia.\n"
 
-#: ../src/o_picture.c:210 ../src/o_picture.c:212
+#: ../src/o_picture.c:200
 #, c-format
 msgid "Error loading picture from file: %s.\n"
 msgstr "Error al cargar la imagen desde el fichero: %s\n"
 
-#: ../src/o_picture.c:272 ../src/o_picture.c:273
-#, c-format
+#: ../src/o_picture.c:260
 msgid "ERROR: o_picture_save: unable to encode the picture.\n"
 msgstr "ERROR: o_picture_save: imposible codificar la imagen.\n"
 
-#: ../src/o_picture.c:963
+#: ../src/o_picture.c:950
 #, c-format
 msgid "Picture [%s] has been embedded\n"
 msgstr "Se ha incrustado la imagen [%s]\n"
 
-#: ../src/o_picture.c:1001
+#: ../src/o_picture.c:988
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
 msgstr "Se ha desincrustado la imagen [%s]\n"
 
-#: ../src/o_pin_basic.c:141 ../src/o_pin_basic.c:143
-#, c-format
+#: ../src/o_pin_basic.c:140
 msgid ""
 "Found a pin which did not have the whichone field set.\n"
 "Verify and correct manually.\n"
@@ -572,13 +550,13 @@ msgstr ""
 "Se ha encontrado una pata que no tiene el campo 'whichone'.\n"
 "Por favor, compruébelo y corríjalo manualmente.\n"
 
-#: ../src/o_pin_basic.c:147 ../src/o_pin_basic.c:149
+#: ../src/o_pin_basic.c:143
 #, c-format
 msgid "Found an invalid whichend on a pin (reseting to zero): %d\n"
 msgstr ""
 "Se ha encontrado un parámetro 'whichone' en una pata (y se cambia a 0): %d\n"
 
-#: ../src/o_pin_basic.c:160 ../src/o_pin_basic.c:161
+#: ../src/o_pin_basic.c:154
 #, c-format
 msgid "Found a zero length pin: [ %s ]\n"
 msgstr "Se ha encontrado una pata con longitud cero [ %s ]\n"
@@ -595,31 +573,31 @@ msgstr ""
 "No se puede cargar el carácter de interrogación -- compruebe la variable "
 "font-directory\n"
 
-#: ../src/o_text_basic.c:1074 ../src/o_text_basic.c:1075
+#: ../src/o_text_basic.c:1074
 #, c-format
 msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 "Se ha encontrado un texto con tamaño cero [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: ../src/o_text_basic.c:1087 ../src/o_text_basic.c:1089
+#: ../src/o_text_basic.c:1086
 #, c-format
 msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 "Se ha encontrado un texto con ángulo no válido [ %c %d %d %d %d %d %d %d %"
 "d ]\n"
 
-#: ../src/o_text_basic.c:1111 ../src/o_text_basic.c:1113
+#: ../src/o_text_basic.c:1108
 #, c-format
 msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 "Se ha encontrado un texto con alineamiento no válido [ %c %d %d %d %d %d %d %"
 "d %d ]\n"
 
-#: ../src/o_text_basic.c:1115
+#: ../src/o_text_basic.c:1110
 msgid "Setting alignment to LOWER_LEFT\n"
 msgstr "Cambiando el alineamiento a 'Abajo a la izquierda'\n"
 
-#: ../src/o_text_basic.c:1201
+#: ../src/o_text_basic.c:1195
 #, c-format
 msgid "Failed to validate utf-8 character in font definition: \"%s\".\n"
 msgstr ""
@@ -708,14 +686,8 @@ msgstr "Error al cargar los datos del símbolo [%s] desde la fuente [%s]\n"
 msgid "Component [%s] was not found in the component library\n"
 msgstr "No se ha encontrado el componente [%s] en la librería de componentes\n"
 
-#: ../src/s_clib.c:1367
-#, c-format
-msgid "Component [%s] was not found in any component library\n"
-msgstr ""
-"No se ha encontrado el componente [%s] en ninguna librería de componentes\n"
-
 #. More than one symbol
-#: ../src/s_clib.c:1373
+#: ../src/s_clib.c:1369
 #, c-format
 msgid "More than one component found with name [%s]\n"
 msgstr "Se ha encontrado más de un componente con el nombre [%s]\n"
@@ -753,23 +725,18 @@ msgstr "ERROR: en s_hierarchy_traverse: no se encuentra el esquema %s\n"
 msgid "s_page_delete: Can't get the real filename of %s."
 msgstr "s_page_delete: No se puede encontrar el nombre real del archivo %s."
 
-#: ../src/s_page.c:165
-#, c-format
-msgid "s_page_delete: Can't get the real filename of %s.\n"
-msgstr "s_page_delete: No se puede encontrar el nombre real del archivo %s.\n"
-
-#: ../src/s_page.c:176
+#: ../src/s_page.c:174
 #, c-format
 msgid "s_page_delete: Unable to delete backup file %s."
 msgstr ""
 "s_page_delete: No se ha podido borrar el archivo de copia de seguridad %s."
 
-#: ../src/s_page.c:356
+#: ../src/s_page.c:354
 #, c-format
 msgid "Saved [%s]\n"
 msgstr "Guardado [%s]\n"
 
-#: ../src/s_page.c:362
+#: ../src/s_page.c:360
 #, c-format
 msgid "Could NOT save [%s]\n"
 msgstr "No se ha podido guardar [%s]\n"
@@ -780,10 +747,28 @@ msgstr "No se ha podido guardar [%s]\n"
 msgid "Found [%s]\n"
 msgstr "Encontrado [%s]\n"
 
-#: ../src/s_slib.c:204 ../src/s_slib.c:207
+#: ../src/s_slib.c:204
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "No se ha podido encontrar [%s] en ninguna librería fuente\n"
+
+#~ msgid "Can't get the real filename of %s.\n"
+#~ msgstr "No se puede averiguar el nombre real del archivo %s.\n"
+
+#~ msgid "Could not find a %s file\n"
+#~ msgstr "No se puede encontrar el archivo %s\n"
+
+#~ msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f)!\n"
+#~ msgstr "\t¡CAMBIO DE VERSIÓN IMPORTANTE (archivo %.3f, instanciado %.3f)!\n"
+
+#~ msgid "Component [%s] was not found in any component library\n"
+#~ msgstr ""
+#~ "No se ha encontrado el componente [%s] en ninguna librería de "
+#~ "componentes\n"
+
+#~ msgid "s_page_delete: Can't get the real filename of %s.\n"
+#~ msgstr ""
+#~ "s_page_delete: No se puede encontrar el nombre real del archivo %s.\n"
 
 #~ msgid "Error decoding picture.\n"
 #~ msgstr "Error al decodificar una imagen.\n"

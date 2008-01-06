@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-29 09:21-0500\n"
+"POT-Creation-Date: 2008-01-05 21:12-0500\n"
 "PO-Revision-Date: 2007-06-23 23:19+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev@moira.seul.org\n"
@@ -56,7 +56,7 @@ msgid "Print..."
 msgstr "Afdrukken..."
 
 #. Create the dialog
-#: ../src/rcstrings.c:12 ../src/x_image.c:509
+#: ../src/rcstrings.c:12 ../src/x_image.c:502
 msgid "Write image..."
 msgstr "Schrijf Afbeelding..."
 
@@ -76,7 +76,7 @@ msgstr "Sluit venster"
 msgid "Quit"
 msgstr "Afsluiten"
 
-#: ../src/rcstrings.c:18 ../src/i_callbacks.c:732
+#: ../src/rcstrings.c:18 ../src/i_callbacks.c:735
 msgid "Edit"
 msgstr "Bewerk"
 
@@ -124,7 +124,7 @@ msgstr "Meervoudige Kopieer Mode"
 msgid "Move Mode"
 msgstr "Verplaats Mode"
 
-#: ../src/rcstrings.c:30 ../src/i_callbacks.c:708 ../src/x_multiattrib.c:1248
+#: ../src/rcstrings.c:30 ../src/i_callbacks.c:711 ../src/x_multiattrib.c:1248
 msgid "Delete"
 msgstr "Verwijder"
 
@@ -144,11 +144,11 @@ msgstr "Slot..."
 msgid "Color..."
 msgstr "Kleur..."
 
-#: ../src/rcstrings.c:35 ../src/i_callbacks.c:952
+#: ../src/rcstrings.c:35 ../src/i_callbacks.c:955
 msgid "Lock"
 msgstr "Vergrendel"
 
-#: ../src/rcstrings.c:36 ../src/i_callbacks.c:970
+#: ../src/rcstrings.c:36 ../src/i_callbacks.c:973
 msgid "Unlock"
 msgstr "Ontgrendel"
 
@@ -257,7 +257,7 @@ msgid "Redraw"
 msgstr "Hertekenen"
 
 #. I don't know if this would get in the way
-#: ../src/rcstrings.c:65 ../src/i_callbacks.c:1542 ../src/i_callbacks.c:1611
+#: ../src/rcstrings.c:65 ../src/i_callbacks.c:1545 ../src/i_callbacks.c:1614
 msgid "Pan"
 msgstr "Schuif"
 
@@ -322,12 +322,12 @@ msgid "Component..."
 msgstr "Component..."
 
 #. need to click
-#: ../src/rcstrings.c:83 ../src/i_callbacks.c:2340 ../src/i_callbacks.c:2362
+#: ../src/rcstrings.c:83 ../src/i_callbacks.c:2343 ../src/i_callbacks.c:2365
 msgid "Net"
 msgstr "Draad"
 
 #. need to click
-#: ../src/rcstrings.c:84 ../src/i_callbacks.c:2406 ../src/i_callbacks.c:2429
+#: ../src/rcstrings.c:84 ../src/i_callbacks.c:2409 ../src/i_callbacks.c:2432
 #: ../src/x_window.c:459
 msgid "Bus"
 msgstr "Bus"
@@ -340,23 +340,23 @@ msgstr "Attribuut..."
 msgid "Text..."
 msgstr "Tekst..."
 
-#: ../src/rcstrings.c:87 ../src/i_callbacks.c:2510 ../src/i_callbacks.c:2529
+#: ../src/rcstrings.c:87 ../src/i_callbacks.c:2513 ../src/i_callbacks.c:2532
 msgid "Line"
 msgstr "Lijn"
 
-#: ../src/rcstrings.c:88 ../src/i_callbacks.c:2551 ../src/i_callbacks.c:2570
+#: ../src/rcstrings.c:88 ../src/i_callbacks.c:2554 ../src/i_callbacks.c:2573
 msgid "Box"
 msgstr "Rechthoek"
 
-#: ../src/rcstrings.c:89 ../src/i_callbacks.c:2626 ../src/i_callbacks.c:2646
+#: ../src/rcstrings.c:89 ../src/i_callbacks.c:2629 ../src/i_callbacks.c:2649
 msgid "Circle"
 msgstr "Cirkel"
 
-#: ../src/rcstrings.c:90 ../src/i_callbacks.c:2668 ../src/i_callbacks.c:2687
+#: ../src/rcstrings.c:90 ../src/i_callbacks.c:2671 ../src/i_callbacks.c:2690
 msgid "Arc"
 msgstr "Boog"
 
-#: ../src/rcstrings.c:91 ../src/i_callbacks.c:2709 ../src/i_callbacks.c:2728
+#: ../src/rcstrings.c:91 ../src/i_callbacks.c:2712 ../src/i_callbacks.c:2731
 msgid "Pin"
 msgstr "Pin"
 
@@ -389,11 +389,11 @@ msgstr "Documentatie"
 msgid "Attributes"
 msgstr "Attributen"
 
-#: ../src/rcstrings.c:101 ../src/i_callbacks.c:2993
+#: ../src/rcstrings.c:101 ../src/i_callbacks.c:2995
 msgid "Attach"
 msgstr "Vastmaken"
 
-#: ../src/rcstrings.c:102 ../src/i_callbacks.c:3042
+#: ../src/rcstrings.c:102 ../src/i_callbacks.c:3044
 msgid "Detach"
 msgstr "Losmaken"
 
@@ -522,11 +522,6 @@ msgstr "Kan %s niet aanroepen\n"
 msgid "Documentation commands not supported under MinGW.\n"
 msgstr "Documentatie opdrachten niet ondersteund bij MinGW.\n"
 
-#: ../src/g_hook.c:87
-#, c-format
-msgid "Attribute failed ot find.\n"
-msgstr "Attribuut weigert of niet gevonden.\n"
-
 #: ../src/g_rc.c:160
 #, c-format
 msgid "Invalid color [%s] passed to %s\n"
@@ -652,17 +647,17 @@ msgstr "Lees init scm bestand [%s]\n"
 
 #. ! \todo These two messages are the same. Should be
 #. * integrated.
-#: ../src/gschem.c:252 ../src/gschem.c:255
+#: ../src/gschem.c:252
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "Fout bij het lezen van het init scm bestand [%s]\n"
 
-#: ../src/gschem.c:323
+#: ../src/gschem.c:321
 #, c-format
 msgid "Scheme directory NOT set!\n"
 msgstr "Scheme bestandenmap is NIET ingesteld!\n"
 
-#: ../src/gschem.c:330 ../src/x_script.c:72
+#: ../src/gschem.c:328 ../src/x_script.c:72
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "Bezig met uitvoeren van guile script [%s]\n"
@@ -720,15 +715,15 @@ msgstr "Boog Mode"
 msgid "Pin Mode"
 msgstr "Pen Mode"
 
-#: ../src/i_basic.c:139 ../src/i_callbacks.c:589 ../src/i_callbacks.c:608
+#: ../src/i_basic.c:139 ../src/i_callbacks.c:589 ../src/i_callbacks.c:609
 msgid "Copy"
 msgstr "Kopieer"
 
-#: ../src/i_basic.c:141 ../src/i_callbacks.c:669 ../src/i_callbacks.c:688
+#: ../src/i_basic.c:141 ../src/i_callbacks.c:671 ../src/i_callbacks.c:691
 msgid "Move"
 msgstr "Verplaats"
 
-#: ../src/i_basic.c:143 ../src/i_callbacks.c:629 ../src/i_callbacks.c:648
+#: ../src/i_basic.c:143 ../src/i_callbacks.c:630 ../src/i_callbacks.c:650
 msgid "Multiple Copy"
 msgstr "Meervoudig Kopieren"
 
@@ -770,7 +765,7 @@ msgstr "Raster(%s, %s)"
 msgid "Documentation for [%s,%s,%s,%s]\n"
 msgstr "Documentatie voor [%s,%s,%s,%s]\n"
 
-#: ../src/i_callbacks.c:193 ../src/i_callbacks.c:1754
+#: ../src/i_callbacks.c:193 ../src/i_callbacks.c:1757
 #, c-format
 msgid "New page created [%s]\n"
 msgstr "Nieuwe pagina gemaakt [%s]\n"
@@ -793,47 +788,47 @@ msgstr "Alles Opgeslagen"
 msgid "Closing Window\n"
 msgstr "Sluit Venster\n"
 
-#: ../src/i_callbacks.c:593 ../src/i_callbacks.c:633 ../src/i_callbacks.c:673
+#: ../src/i_callbacks.c:594 ../src/i_callbacks.c:635 ../src/i_callbacks.c:676
 msgid "Select objs first"
 msgstr "Selecteer voorwerpen eerst"
 
-#: ../src/i_callbacks.c:748
+#: ../src/i_callbacks.c:751
 msgid "Edit Text"
 msgstr "Bewerk Tekst"
 
-#: ../src/i_callbacks.c:771
+#: ../src/i_callbacks.c:774
 msgid "Slot"
 msgstr "Slot"
 
-#: ../src/i_callbacks.c:788
+#: ../src/i_callbacks.c:791
 msgid "Color"
 msgstr "Kleur"
 
-#: ../src/i_callbacks.c:830 ../src/i_callbacks.c:877
+#: ../src/i_callbacks.c:833 ../src/i_callbacks.c:880
 msgid "Rotate"
 msgstr "Roteer"
 
-#: ../src/i_callbacks.c:904 ../src/i_callbacks.c:926
+#: ../src/i_callbacks.c:907 ../src/i_callbacks.c:929
 msgid "Mirror"
 msgstr "Spiegel"
 
-#: ../src/i_callbacks.c:988 ../src/x_dialog.c:1611
+#: ../src/i_callbacks.c:991 ../src/x_dialog.c:1611
 msgid "Translate"
 msgstr "Verplaats"
 
-#: ../src/i_callbacks.c:991
+#: ../src/i_callbacks.c:994
 msgid "WARNING: Do not translate with snap off!\n"
 msgstr "ATTENTIE: Niet verplaatsen met snap uit!\n"
 
-#: ../src/i_callbacks.c:992
+#: ../src/i_callbacks.c:995
 msgid "WARNING: Turning snap on and continuing with translate.\n"
 msgstr "ATTENTIE: Zet snap aan en vervolg de verplaatsing.\n"
 
-#: ../src/i_callbacks.c:999
+#: ../src/i_callbacks.c:1002
 msgid "WARNING: Snap grid size is not equal to 100!\n"
 msgstr "ATTENTIE: Snap grid waarde is niet gelijk aan 100!\n"
 
-#: ../src/i_callbacks.c:1001
+#: ../src/i_callbacks.c:1004
 msgid ""
 "WARNING: If you are translating a symbol to the origin, the snap grid size "
 "should be set to 100\n"
@@ -841,132 +836,132 @@ msgstr ""
 "ATTENTIE: Als je een symbool naar de oorsprong verschuift, dan moet de snap "
 "grip waarde op 100 gezet worden\n"
 
-#: ../src/i_callbacks.c:1022
+#: ../src/i_callbacks.c:1025
 msgid "Embed"
 msgstr "Insluiten"
 
-#: ../src/i_callbacks.c:1063
+#: ../src/i_callbacks.c:1066
 msgid "Unembed"
 msgstr "Uitsluiten"
 
-#: ../src/i_callbacks.c:1106
+#: ../src/i_callbacks.c:1109
 msgid "Update"
 msgstr "Vernieuw"
 
-#: ../src/i_callbacks.c:1163
+#: ../src/i_callbacks.c:1166
 msgid "ShowHidden"
 msgstr "ZichtbaarVerborgen"
 
-#: ../src/i_callbacks.c:1186
+#: ../src/i_callbacks.c:1189
 msgid "MakeVisible"
 msgstr "MaakZichtbaar"
 
-#: ../src/i_callbacks.c:1302
+#: ../src/i_callbacks.c:1305
 msgid "Edit Line Type"
 msgstr "Bewerk Lijn Type"
 
-#: ../src/i_callbacks.c:1343 ../src/x_dialog.c:1268
+#: ../src/i_callbacks.c:1346 ../src/x_dialog.c:1268
 msgid "Edit Fill Type"
 msgstr "Bewerk Arcering Type"
 
-#: ../src/i_callbacks.c:1648
+#: ../src/i_callbacks.c:1651
 msgid "Update Cues"
 msgstr "Vernieuw aanwijzing"
 
-#: ../src/i_callbacks.c:1798
+#: ../src/i_callbacks.c:1801
 msgid "Really revert page?"
 msgstr "Echt Terughalen pagina?"
 
-#: ../src/i_callbacks.c:1872
+#: ../src/i_callbacks.c:1875
 msgid "Copy 1"
 msgstr "Kopieer 1"
 
-#: ../src/i_callbacks.c:1891
+#: ../src/i_callbacks.c:1894
 msgid "Copy 2"
 msgstr "Kopieer 2"
 
-#: ../src/i_callbacks.c:1910
+#: ../src/i_callbacks.c:1913
 msgid "Copy 3"
 msgstr "Kopieer 3"
 
-#: ../src/i_callbacks.c:1929
+#: ../src/i_callbacks.c:1932
 msgid "Copy 4"
 msgstr "Kopieer 4"
 
-#: ../src/i_callbacks.c:1948
+#: ../src/i_callbacks.c:1951
 msgid "Copy 5"
 msgstr "Kopieer 5"
 
-#: ../src/i_callbacks.c:1967
+#: ../src/i_callbacks.c:1970
 msgid "Cut 1"
 msgstr "Knip 1"
 
-#: ../src/i_callbacks.c:1986
+#: ../src/i_callbacks.c:1989
 msgid "Cut 2"
 msgstr "Knip 2"
 
-#: ../src/i_callbacks.c:2005
+#: ../src/i_callbacks.c:2008
 msgid "Cut 3"
 msgstr "Knip 3"
 
-#: ../src/i_callbacks.c:2024
+#: ../src/i_callbacks.c:2027
 msgid "Cut 4"
 msgstr "Knip 4"
 
-#: ../src/i_callbacks.c:2043
+#: ../src/i_callbacks.c:2046
 msgid "Cut 5"
 msgstr "Knip 5"
 
-#: ../src/i_callbacks.c:2059
+#: ../src/i_callbacks.c:2062
 msgid "Paste 1"
 msgstr "Plak 1"
 
-#: ../src/i_callbacks.c:2066 ../src/i_callbacks.c:2088
-#: ../src/i_callbacks.c:2110 ../src/i_callbacks.c:2132
-#: ../src/i_callbacks.c:2154
+#: ../src/i_callbacks.c:2069 ../src/i_callbacks.c:2091
+#: ../src/i_callbacks.c:2113 ../src/i_callbacks.c:2135
+#: ../src/i_callbacks.c:2157
 msgid "Empty buffer"
 msgstr "Maak buffer leeg"
 
-#: ../src/i_callbacks.c:2081
+#: ../src/i_callbacks.c:2084
 msgid "Paste 2"
 msgstr "Plak 2"
 
-#: ../src/i_callbacks.c:2103
+#: ../src/i_callbacks.c:2106
 msgid "Paste 3"
 msgstr "Plak 3"
 
-#: ../src/i_callbacks.c:2125
+#: ../src/i_callbacks.c:2128
 msgid "Paste 4"
 msgstr "Plak 4"
 
-#: ../src/i_callbacks.c:2147
+#: ../src/i_callbacks.c:2150
 msgid "Paste 5"
 msgstr "Plak 5"
 
-#: ../src/i_callbacks.c:2264 ../src/x_window.c:439
+#: ../src/i_callbacks.c:2267 ../src/x_window.c:439
 msgid "Component"
 msgstr "Component"
 
-#: ../src/i_callbacks.c:2300 ../src/i_callbacks.c:2319
+#: ../src/i_callbacks.c:2303 ../src/i_callbacks.c:2322
 msgid "Attribute"
 msgstr "Attribuut"
 
-#: ../src/i_callbacks.c:2786
+#: ../src/i_callbacks.c:2789
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "Zoek naar bron [%s]\n"
 
-#: ../src/i_callbacks.c:2810 ../src/i_callbacks.c:2811
+#: ../src/i_callbacks.c:2813
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "Kan bron [%s] niet vinden\n"
 
-#: ../src/i_callbacks.c:2878
+#: ../src/i_callbacks.c:2880
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Zoek naar symbool [%s]\n"
 
-#: ../src/i_callbacks.c:2965
+#: ../src/i_callbacks.c:2967
 msgid ""
 "This command retrieves the component documentation from the web, but there "
 "is no component selected"
@@ -974,56 +969,56 @@ msgstr ""
 "Dit commando haalt de component documentatie van het web, maar er is geen "
 "component geselecteerd"
 
-#: ../src/i_callbacks.c:3082
+#: ../src/i_callbacks.c:3084
 msgid "ShowN"
 msgstr "ToonN"
 
-#: ../src/i_callbacks.c:3112
+#: ../src/i_callbacks.c:3114
 msgid "ShowV"
 msgstr "ToonV"
 
-#: ../src/i_callbacks.c:3142
+#: ../src/i_callbacks.c:3144
 msgid "ShowB"
 msgstr "ToonB"
 
-#: ../src/i_callbacks.c:3173
+#: ../src/i_callbacks.c:3175
 msgid "VisToggle"
 msgstr "SchakelZichtbaarheid"
 
-#: ../src/i_callbacks.c:3194
+#: ../src/i_callbacks.c:3196
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Sorry, maar dit is een niet werkende menu optie\n"
 
-#: ../src/i_callbacks.c:3282
+#: ../src/i_callbacks.c:3284
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr "Aktie terugkoppel mode is ingesteld op OUTLINE\n"
 
-#: ../src/i_callbacks.c:3285
+#: ../src/i_callbacks.c:3287
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr "Aktie terugkoppel mode is ingesteld op BOUNDINGBOX.\n"
 
-#: ../src/i_callbacks.c:3302
+#: ../src/i_callbacks.c:3304
 msgid "Grid OFF\n"
 msgstr "Grid UIT\n"
 
-#: ../src/i_callbacks.c:3305
+#: ../src/i_callbacks.c:3307
 msgid "Grid ON\n"
 msgstr "Grid AAN\n"
 
-#: ../src/i_callbacks.c:3322
+#: ../src/i_callbacks.c:3324
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "Snap UIT (PAS OP!)\n"
 
-#: ../src/i_callbacks.c:3325
+#: ../src/i_callbacks.c:3327
 msgid "Snap ON\n"
 msgstr "Snap AAN\n"
 
-#: ../src/i_callbacks.c:3345
+#: ../src/i_callbacks.c:3347
 msgid "Rubber band OFF \n"
 msgstr "Elastiek band UIT\n"
 
-#: ../src/i_callbacks.c:3348
+#: ../src/i_callbacks.c:3350
 msgid "Rubber band ON\n"
 msgstr "Elastiek band AAN\n"
 
@@ -1160,19 +1155,19 @@ msgstr "Kan symbool [%s] niet in bibliotheek vinden. Vernieuwen faalde.\n"
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr "o_autosave_backups: Kan de echte bestandsnaam van %s niet krijgen."
 
-#: ../src/o_misc.c:951
+#: ../src/o_misc.c:950
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 "Voorgaande reserve bestand [%s] kan NIET op lezen-schrijven ingesteld "
 "worden\n"
 
-#: ../src/o_misc.c:969
+#: ../src/o_misc.c:968
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "Reserve bestand [%s] kan NIET op alleen-lezen ingesteld worden\n"
 
-#: ../src/o_misc.c:974
+#: ../src/o_misc.c:973
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "Reserve bestand [%s] kan NIET opgeslagen worden\n"
@@ -1330,8 +1325,8 @@ msgid "All"
 msgstr "Alle"
 
 #. GtkTreeViewColumn
-#: ../src/x_attribedit.c:471 ../src/x_compselect.c:735
-#: ../src/x_compselect.c:810
+#: ../src/x_attribedit.c:471 ../src/x_compselect.c:774
+#: ../src/x_compselect.c:882
 msgid "Components"
 msgstr "Componenten"
 
@@ -1476,36 +1471,36 @@ msgid "Tried to get an invalid color: %d\n"
 msgstr "Probeerde een ongeldige kleur te verkrijgen: %d\n"
 
 #. GtkLabel
-#: ../src/x_compselect.c:840
+#: ../src/x_compselect.c:912
 msgid "Filter:"
 msgstr "Filter:"
 
-#: ../src/x_compselect.c:932
+#: ../src/x_compselect.c:1004
 msgid "Default behavior - reference component"
 msgstr "Normaal gedrag - referentie component"
 
-#: ../src/x_compselect.c:935
+#: ../src/x_compselect.c:1007
 msgid "Embed component in schematic"
 msgstr "Component insluiten in schema"
 
-#: ../src/x_compselect.c:938
+#: ../src/x_compselect.c:1010
 msgid "Include component as individual objects"
 msgstr "Invoegen component als individuele objecten"
 
-#: ../src/x_compselect.c:1094
+#: ../src/x_compselect.c:1166
 msgid "Select Component..."
 msgstr "Selecteer Component..."
 
-#: ../src/x_compselect.c:1120
+#: ../src/x_compselect.c:1192
 msgid "In Use"
 msgstr "In gebruik"
 
-#: ../src/x_compselect.c:1124
+#: ../src/x_compselect.c:1196
 msgid "Libraries"
 msgstr "Bibliotheken"
 
 #. GtkFrame
-#: ../src/x_compselect.c:1133 ../src/x_fileselect.c:128
+#: ../src/x_compselect.c:1205 ../src/x_fileselect.c:128
 msgid "Preview"
 msgstr "Vooraf zien"
 
@@ -1904,17 +1899,17 @@ msgstr ""
 msgid "Encapsulated Postscript"
 msgstr "Encapsulated Postscript"
 
-#: ../src/x_image.c:304
+#: ../src/x_image.c:301
 #, c-format
 msgid "x_image_lowlevel: Unable to write eps file %s.\n"
 msgstr "x_image_lowlevel: Kan EPS bestand %s niet schrijven.\n"
 
-#: ../src/x_image.c:385
+#: ../src/x_image.c:379
 #, c-format
 msgid "x_image_lowlevel: Unable to write %s file %s.\n"
 msgstr "x_image_lowlevel: Kan [%s] bestand niet schrijven.\n"
 
-#: ../src/x_image.c:395
+#: ../src/x_image.c:389
 #, c-format
 msgid ""
 "There was the following error when saving image with type %s to filename:\n"
@@ -1928,25 +1923,25 @@ msgstr ""
 "\n"
 "%s.\n"
 
-#: ../src/x_image.c:414
+#: ../src/x_image.c:408
 #, c-format
 msgid "Wrote color image to [%s] [%d x %d]\n"
 msgstr "Schreef kleuren afbeelding naar [%s] [%d x %d]\n"
 
-#: ../src/x_image.c:416
+#: ../src/x_image.c:410
 #, c-format
 msgid "Wrote black and white image to [%s] [%d x %d]\n"
 msgstr "Schreef zwart/wit afbeelding naar [%s] [%d x %d]\n"
 
-#: ../src/x_image.c:426
+#: ../src/x_image.c:419
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"
 msgstr "x_image_lowlevel: Kan geen pixbuf krijgen van gschem's venster.\n"
 
-#: ../src/x_image.c:472
+#: ../src/x_image.c:465
 msgid "Width x Height"
 msgstr "Breedte x Hoogte"
 
-#: ../src/x_image.c:488
+#: ../src/x_image.c:481
 msgid "Image type"
 msgstr "Afbeelding type"
 
@@ -2366,6 +2361,9 @@ msgstr ""
 #, fuzzy
 msgid "gEDA Schematic Editor"
 msgstr "Naar Schema"
+
+#~ msgid "Attribute failed ot find.\n"
+#~ msgstr "Attribuut weigert of niet gevonden.\n"
 
 #~ msgid "Attribute Mode"
 #~ msgstr "Attribuut Mode"

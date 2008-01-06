@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-29 09:21-0500\n"
+"POT-Creation-Date: 2008-01-05 21:12-0500\n"
 "PO-Revision-Date: 2007-02-16 14:08+0100\n"
 "Last-Translator: Patrick Bernaud <b-patrick@wanadoo.fr>\n"
 "Language-Team: French\n"
@@ -59,7 +59,7 @@ msgid "Print..."
 msgstr "Imprimer..."
 
 #. Create the dialog
-#: ../src/rcstrings.c:12 ../src/x_image.c:509
+#: ../src/rcstrings.c:12 ../src/x_image.c:502
 #, fuzzy
 msgid "Write image..."
 msgstr "Exporter l'image..."
@@ -81,7 +81,7 @@ msgstr "Fermer la fenêtre"
 msgid "Quit"
 msgstr "Quitter"
 
-#: ../src/rcstrings.c:18 ../src/i_callbacks.c:732
+#: ../src/rcstrings.c:18 ../src/i_callbacks.c:735
 msgid "Edit"
 msgstr "Édition"
 
@@ -132,7 +132,7 @@ msgstr "Mode Copie Multiple"
 msgid "Move Mode"
 msgstr "Mode Déplacement"
 
-#: ../src/rcstrings.c:30 ../src/i_callbacks.c:708 ../src/x_multiattrib.c:1248
+#: ../src/rcstrings.c:30 ../src/i_callbacks.c:711 ../src/x_multiattrib.c:1248
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -152,11 +152,11 @@ msgstr "Slot..."
 msgid "Color..."
 msgstr "Couleur..."
 
-#: ../src/rcstrings.c:35 ../src/i_callbacks.c:952
+#: ../src/rcstrings.c:35 ../src/i_callbacks.c:955
 msgid "Lock"
 msgstr "Verrouiller"
 
-#: ../src/rcstrings.c:36 ../src/i_callbacks.c:970
+#: ../src/rcstrings.c:36 ../src/i_callbacks.c:973
 msgid "Unlock"
 msgstr "Déverrouiller"
 
@@ -265,7 +265,7 @@ msgid "Redraw"
 msgstr "Redessiner"
 
 #. I don't know if this would get in the way
-#: ../src/rcstrings.c:65 ../src/i_callbacks.c:1542 ../src/i_callbacks.c:1611
+#: ../src/rcstrings.c:65 ../src/i_callbacks.c:1545 ../src/i_callbacks.c:1614
 msgid "Pan"
 msgstr "Panoramique"
 
@@ -330,12 +330,12 @@ msgid "Component..."
 msgstr "Composant..."
 
 #. need to click
-#: ../src/rcstrings.c:83 ../src/i_callbacks.c:2340 ../src/i_callbacks.c:2362
+#: ../src/rcstrings.c:83 ../src/i_callbacks.c:2343 ../src/i_callbacks.c:2365
 msgid "Net"
 msgstr "Piste"
 
 #. need to click
-#: ../src/rcstrings.c:84 ../src/i_callbacks.c:2406 ../src/i_callbacks.c:2429
+#: ../src/rcstrings.c:84 ../src/i_callbacks.c:2409 ../src/i_callbacks.c:2432
 #: ../src/x_window.c:459
 msgid "Bus"
 msgstr "Bus"
@@ -348,23 +348,23 @@ msgstr "Attribut..."
 msgid "Text..."
 msgstr "Texte..."
 
-#: ../src/rcstrings.c:87 ../src/i_callbacks.c:2510 ../src/i_callbacks.c:2529
+#: ../src/rcstrings.c:87 ../src/i_callbacks.c:2513 ../src/i_callbacks.c:2532
 msgid "Line"
 msgstr "Ligne"
 
-#: ../src/rcstrings.c:88 ../src/i_callbacks.c:2551 ../src/i_callbacks.c:2570
+#: ../src/rcstrings.c:88 ../src/i_callbacks.c:2554 ../src/i_callbacks.c:2573
 msgid "Box"
 msgstr "Boîte"
 
-#: ../src/rcstrings.c:89 ../src/i_callbacks.c:2626 ../src/i_callbacks.c:2646
+#: ../src/rcstrings.c:89 ../src/i_callbacks.c:2629 ../src/i_callbacks.c:2649
 msgid "Circle"
 msgstr "Cercle"
 
-#: ../src/rcstrings.c:90 ../src/i_callbacks.c:2668 ../src/i_callbacks.c:2687
+#: ../src/rcstrings.c:90 ../src/i_callbacks.c:2671 ../src/i_callbacks.c:2690
 msgid "Arc"
 msgstr "Arc"
 
-#: ../src/rcstrings.c:91 ../src/i_callbacks.c:2709 ../src/i_callbacks.c:2728
+#: ../src/rcstrings.c:91 ../src/i_callbacks.c:2712 ../src/i_callbacks.c:2731
 msgid "Pin"
 msgstr "Broche"
 
@@ -397,11 +397,11 @@ msgstr "Documentation"
 msgid "Attributes"
 msgstr "Attributs"
 
-#: ../src/rcstrings.c:101 ../src/i_callbacks.c:2993
+#: ../src/rcstrings.c:101 ../src/i_callbacks.c:2995
 msgid "Attach"
 msgstr "Attacher"
 
-#: ../src/rcstrings.c:102 ../src/i_callbacks.c:3042
+#: ../src/rcstrings.c:102 ../src/i_callbacks.c:3044
 msgid "Detach"
 msgstr "Détacher"
 
@@ -535,11 +535,6 @@ msgstr "Impossible de lancer %s\n"
 msgid "Documentation commands not supported under MinGW.\n"
 msgstr "Commandes de documentation non supportées sous MinGW.\n"
 
-#: ../src/g_hook.c:87
-#, c-format
-msgid "Attribute failed ot find.\n"
-msgstr "Impossible de trouver l'attribut.\n"
-
 #: ../src/g_rc.c:160
 #, c-format
 msgid "Invalid color [%s] passed to %s\n"
@@ -663,17 +658,17 @@ msgstr "Lecture du fichier scm de démarrage [%s]\n"
 
 #. ! \todo These two messages are the same. Should be
 #. * integrated.
-#: ../src/gschem.c:252 ../src/gschem.c:255
+#: ../src/gschem.c:252
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "Échec de la lecture du fichier scm de démarrage [%s]\n"
 
-#: ../src/gschem.c:323
+#: ../src/gschem.c:321
 #, c-format
 msgid "Scheme directory NOT set!\n"
 msgstr "Répertoire Scheme NON initialisé !\n"
 
-#: ../src/gschem.c:330 ../src/x_script.c:72
+#: ../src/gschem.c:328 ../src/x_script.c:72
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "Exécution du script guile [%s]\n"
@@ -731,15 +726,15 @@ msgstr "Mode Arc"
 msgid "Pin Mode"
 msgstr "Mode Broche"
 
-#: ../src/i_basic.c:139 ../src/i_callbacks.c:589 ../src/i_callbacks.c:608
+#: ../src/i_basic.c:139 ../src/i_callbacks.c:589 ../src/i_callbacks.c:609
 msgid "Copy"
 msgstr "Copier"
 
-#: ../src/i_basic.c:141 ../src/i_callbacks.c:669 ../src/i_callbacks.c:688
+#: ../src/i_basic.c:141 ../src/i_callbacks.c:671 ../src/i_callbacks.c:691
 msgid "Move"
 msgstr "Déplacer"
 
-#: ../src/i_basic.c:143 ../src/i_callbacks.c:629 ../src/i_callbacks.c:648
+#: ../src/i_basic.c:143 ../src/i_callbacks.c:630 ../src/i_callbacks.c:650
 msgid "Multiple Copy"
 msgstr "Copie Multiple"
 
@@ -781,7 +776,7 @@ msgstr "Grille(%s,%s)"
 msgid "Documentation for [%s,%s,%s,%s]\n"
 msgstr "Documentation pour [%s,%s,%s,%s]\n"
 
-#: ../src/i_callbacks.c:193 ../src/i_callbacks.c:1754
+#: ../src/i_callbacks.c:193 ../src/i_callbacks.c:1757
 #, c-format
 msgid "New page created [%s]\n"
 msgstr "Nouvelle page [%s] créée\n"
@@ -803,47 +798,47 @@ msgstr "Toutes les pages enregistrées"
 msgid "Closing Window\n"
 msgstr "Fermeture de la fenêtre\n"
 
-#: ../src/i_callbacks.c:593 ../src/i_callbacks.c:633 ../src/i_callbacks.c:673
+#: ../src/i_callbacks.c:594 ../src/i_callbacks.c:635 ../src/i_callbacks.c:676
 msgid "Select objs first"
 msgstr "Sélectionnez d'abord des objets"
 
-#: ../src/i_callbacks.c:748
+#: ../src/i_callbacks.c:751
 msgid "Edit Text"
 msgstr "Éditer le texte"
 
-#: ../src/i_callbacks.c:771
+#: ../src/i_callbacks.c:774
 msgid "Slot"
 msgstr "Slot"
 
-#: ../src/i_callbacks.c:788
+#: ../src/i_callbacks.c:791
 msgid "Color"
 msgstr "Couleur"
 
-#: ../src/i_callbacks.c:830 ../src/i_callbacks.c:877
+#: ../src/i_callbacks.c:833 ../src/i_callbacks.c:880
 msgid "Rotate"
 msgstr "Pivoter"
 
-#: ../src/i_callbacks.c:904 ../src/i_callbacks.c:926
+#: ../src/i_callbacks.c:907 ../src/i_callbacks.c:929
 msgid "Mirror"
 msgstr "Miroir"
 
-#: ../src/i_callbacks.c:988 ../src/x_dialog.c:1611
+#: ../src/i_callbacks.c:991 ../src/x_dialog.c:1611
 msgid "Translate"
 msgstr "Translater"
 
-#: ../src/i_callbacks.c:991
+#: ../src/i_callbacks.c:994
 msgid "WARNING: Do not translate with snap off!\n"
 msgstr "ATTENTION : ne translatez pas quand le snap est désactivé !\n"
 
-#: ../src/i_callbacks.c:992
+#: ../src/i_callbacks.c:995
 msgid "WARNING: Turning snap on and continuing with translate.\n"
 msgstr "ATTENTION : activation du snap et poursuite de la translation.\n"
 
-#: ../src/i_callbacks.c:999
+#: ../src/i_callbacks.c:1002
 msgid "WARNING: Snap grid size is not equal to 100!\n"
 msgstr "ATTENTION : la taille du snap sur la grille n'est pas égale à 100 !\n"
 
-#: ../src/i_callbacks.c:1001
+#: ../src/i_callbacks.c:1004
 msgid ""
 "WARNING: If you are translating a symbol to the origin, the snap grid size "
 "should be set to 100\n"
@@ -851,187 +846,187 @@ msgstr ""
 "ATTENTION : si vous déplacez un symbole à l'origine, la taille de snap de la "
 "grille devrait être de 100 !\n"
 
-#: ../src/i_callbacks.c:1022
+#: ../src/i_callbacks.c:1025
 msgid "Embed"
 msgstr "Embarquer"
 
-#: ../src/i_callbacks.c:1063
+#: ../src/i_callbacks.c:1066
 msgid "Unembed"
 msgstr "Débarquer"
 
-#: ../src/i_callbacks.c:1106
+#: ../src/i_callbacks.c:1109
 msgid "Update"
 msgstr "Mettre à jour"
 
-#: ../src/i_callbacks.c:1163
+#: ../src/i_callbacks.c:1166
 msgid "ShowHidden"
 msgstr "AfficheCaché"
 
-#: ../src/i_callbacks.c:1186
+#: ../src/i_callbacks.c:1189
 msgid "MakeVisible"
 msgstr "RendVisible"
 
-#: ../src/i_callbacks.c:1302
+#: ../src/i_callbacks.c:1305
 msgid "Edit Line Type"
 msgstr "Éditer le type de ligne"
 
-#: ../src/i_callbacks.c:1343 ../src/x_dialog.c:1268
+#: ../src/i_callbacks.c:1346 ../src/x_dialog.c:1268
 msgid "Edit Fill Type"
 msgstr "Éditer le type de remplissage"
 
-#: ../src/i_callbacks.c:1648
+#: ../src/i_callbacks.c:1651
 msgid "Update Cues"
 msgstr "Met à jour les extrémités"
 
-#: ../src/i_callbacks.c:1798
+#: ../src/i_callbacks.c:1801
 msgid "Really revert page?"
 msgstr "Abandonner les modifications ?"
 
-#: ../src/i_callbacks.c:1872
+#: ../src/i_callbacks.c:1875
 msgid "Copy 1"
 msgstr "Copier 1"
 
-#: ../src/i_callbacks.c:1891
+#: ../src/i_callbacks.c:1894
 msgid "Copy 2"
 msgstr "Copier 2"
 
-#: ../src/i_callbacks.c:1910
+#: ../src/i_callbacks.c:1913
 msgid "Copy 3"
 msgstr "Copier 3"
 
-#: ../src/i_callbacks.c:1929
+#: ../src/i_callbacks.c:1932
 msgid "Copy 4"
 msgstr "Copier 4"
 
-#: ../src/i_callbacks.c:1948
+#: ../src/i_callbacks.c:1951
 msgid "Copy 5"
 msgstr "Copier 5"
 
-#: ../src/i_callbacks.c:1967
+#: ../src/i_callbacks.c:1970
 msgid "Cut 1"
 msgstr "Couper 1"
 
-#: ../src/i_callbacks.c:1986
+#: ../src/i_callbacks.c:1989
 msgid "Cut 2"
 msgstr "Couper 2"
 
-#: ../src/i_callbacks.c:2005
+#: ../src/i_callbacks.c:2008
 msgid "Cut 3"
 msgstr "Couper 3"
 
-#: ../src/i_callbacks.c:2024
+#: ../src/i_callbacks.c:2027
 msgid "Cut 4"
 msgstr "Couper 4"
 
-#: ../src/i_callbacks.c:2043
+#: ../src/i_callbacks.c:2046
 msgid "Cut 5"
 msgstr "Couper 5"
 
-#: ../src/i_callbacks.c:2059
+#: ../src/i_callbacks.c:2062
 msgid "Paste 1"
 msgstr "Coller 1"
 
-#: ../src/i_callbacks.c:2066 ../src/i_callbacks.c:2088
-#: ../src/i_callbacks.c:2110 ../src/i_callbacks.c:2132
-#: ../src/i_callbacks.c:2154
+#: ../src/i_callbacks.c:2069 ../src/i_callbacks.c:2091
+#: ../src/i_callbacks.c:2113 ../src/i_callbacks.c:2135
+#: ../src/i_callbacks.c:2157
 msgid "Empty buffer"
 msgstr "Tampon vide"
 
-#: ../src/i_callbacks.c:2081
+#: ../src/i_callbacks.c:2084
 msgid "Paste 2"
 msgstr "Coller 2"
 
-#: ../src/i_callbacks.c:2103
+#: ../src/i_callbacks.c:2106
 msgid "Paste 3"
 msgstr "Coller 3"
 
-#: ../src/i_callbacks.c:2125
+#: ../src/i_callbacks.c:2128
 msgid "Paste 4"
 msgstr "Coller 4"
 
-#: ../src/i_callbacks.c:2147
+#: ../src/i_callbacks.c:2150
 msgid "Paste 5"
 msgstr "Coller 5"
 
-#: ../src/i_callbacks.c:2264 ../src/x_window.c:439
+#: ../src/i_callbacks.c:2267 ../src/x_window.c:439
 msgid "Component"
 msgstr "Composant"
 
-#: ../src/i_callbacks.c:2300 ../src/i_callbacks.c:2319
+#: ../src/i_callbacks.c:2303 ../src/i_callbacks.c:2322
 msgid "Attribute"
 msgstr "Attribut"
 
-#: ../src/i_callbacks.c:2786
+#: ../src/i_callbacks.c:2789
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "Recherche de source [%s]\n"
 
-#: ../src/i_callbacks.c:2810 ../src/i_callbacks.c:2811
+#: ../src/i_callbacks.c:2813
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "Impossible de trouver source [%s]\n"
 
-#: ../src/i_callbacks.c:2878
+#: ../src/i_callbacks.c:2880
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Recherche du symbole [%s]\n"
 
-#: ../src/i_callbacks.c:2965
+#: ../src/i_callbacks.c:2967
 msgid ""
 "This command retrieves the component documentation from the web, but there "
 "is no component selected"
 msgstr ""
 
-#: ../src/i_callbacks.c:3082
+#: ../src/i_callbacks.c:3084
 msgid "ShowN"
 msgstr "MontrerN"
 
-#: ../src/i_callbacks.c:3112
+#: ../src/i_callbacks.c:3114
 msgid "ShowV"
 msgstr "MontrerV"
 
-#: ../src/i_callbacks.c:3142
+#: ../src/i_callbacks.c:3144
 msgid "ShowB"
 msgstr "MontrerNV"
 
-#: ../src/i_callbacks.c:3173
+#: ../src/i_callbacks.c:3175
 msgid "VisToggle"
 msgstr ""
 
-#: ../src/i_callbacks.c:3194
+#: ../src/i_callbacks.c:3196
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Désolé mais c'est une option de menu non fonctionnelle\n"
 
-#: ../src/i_callbacks.c:3282
+#: ../src/i_callbacks.c:3284
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr "Mode de retour utilisateur positionné à OUTLINE\n"
 
-#: ../src/i_callbacks.c:3285
+#: ../src/i_callbacks.c:3287
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr "Mode de retour utilisateur positionné à BOUNDINGBOX\n"
 
-#: ../src/i_callbacks.c:3302
+#: ../src/i_callbacks.c:3304
 msgid "Grid OFF\n"
 msgstr "Grille OFF\n"
 
-#: ../src/i_callbacks.c:3305
+#: ../src/i_callbacks.c:3307
 msgid "Grid ON\n"
 msgstr "Grille ON\n"
 
-#: ../src/i_callbacks.c:3322
+#: ../src/i_callbacks.c:3324
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "Snap OFF (ATTENTION)\n"
 
-#: ../src/i_callbacks.c:3325
+#: ../src/i_callbacks.c:3327
 msgid "Snap ON\n"
 msgstr "Snap ON\n"
 
-#: ../src/i_callbacks.c:3345
+#: ../src/i_callbacks.c:3347
 msgid "Rubber band OFF \n"
 msgstr ""
 
-#: ../src/i_callbacks.c:3348
+#: ../src/i_callbacks.c:3350
 msgid "Rubber band ON\n"
 msgstr ""
 
@@ -1172,20 +1167,20 @@ msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 "o_autosave_backups() : Impossible de récupérer le véritable nom du fichier %s"
 
-#: ../src/o_misc.c:951
+#: ../src/o_misc.c:950
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 "Impossible de passer le fichier copie de sauvegarde [%s] en lecture/"
 "écriture\n"
 
-#: ../src/o_misc.c:969
+#: ../src/o_misc.c:968
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr ""
 "Impossible de passer le fichier copie de sauvegarde [%s] en lecture seule\n"
 
-#: ../src/o_misc.c:974
+#: ../src/o_misc.c:973
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "Échec lors de la création de la copie de sauvegarde [%s]\n"
@@ -1345,8 +1340,8 @@ msgid "All"
 msgstr "Tous"
 
 #. GtkTreeViewColumn
-#: ../src/x_attribedit.c:471 ../src/x_compselect.c:735
-#: ../src/x_compselect.c:810
+#: ../src/x_attribedit.c:471 ../src/x_compselect.c:774
+#: ../src/x_compselect.c:882
 msgid "Components"
 msgstr "Composants"
 
@@ -1494,36 +1489,36 @@ msgid "Tried to get an invalid color: %d\n"
 msgstr "Tentative d'obtention d'une couleur invalide : %d\n"
 
 #. GtkLabel
-#: ../src/x_compselect.c:840
+#: ../src/x_compselect.c:912
 msgid "Filter:"
 msgstr "Filtre:"
 
-#: ../src/x_compselect.c:932
+#: ../src/x_compselect.c:1004
 msgid "Default behavior - reference component"
 msgstr "Comportement par défaut - référencer le composant"
 
-#: ../src/x_compselect.c:935
+#: ../src/x_compselect.c:1007
 msgid "Embed component in schematic"
 msgstr "Embarquer le composant dans le schéma"
 
-#: ../src/x_compselect.c:938
+#: ../src/x_compselect.c:1010
 msgid "Include component as individual objects"
 msgstr "Éclater le composant en objets individuels"
 
-#: ../src/x_compselect.c:1094
+#: ../src/x_compselect.c:1166
 msgid "Select Component..."
 msgstr "Sélecteur de composant..."
 
-#: ../src/x_compselect.c:1120
+#: ../src/x_compselect.c:1192
 msgid "In Use"
 msgstr ""
 
-#: ../src/x_compselect.c:1124
+#: ../src/x_compselect.c:1196
 msgid "Libraries"
 msgstr "Bibliothèques"
 
 #. GtkFrame
-#: ../src/x_compselect.c:1133 ../src/x_fileselect.c:128
+#: ../src/x_compselect.c:1205 ../src/x_fileselect.c:128
 msgid "Preview"
 msgstr "Prévisualisation"
 
@@ -1931,17 +1926,17 @@ msgstr ""
 msgid "Encapsulated Postscript"
 msgstr ""
 
-#: ../src/x_image.c:304
+#: ../src/x_image.c:301
 #, fuzzy, c-format
 msgid "x_image_lowlevel: Unable to write eps file %s.\n"
 msgstr "x_image_lowlevel(): Impossible d'écrire le fichier PNG.\n"
 
-#: ../src/x_image.c:385
+#: ../src/x_image.c:379
 #, fuzzy, c-format
 msgid "x_image_lowlevel: Unable to write %s file %s.\n"
 msgstr "x_image_lowlevel(): Impossible d'écrire le fichier PNG.\n"
 
-#: ../src/x_image.c:395
+#: ../src/x_image.c:389
 #, c-format
 msgid ""
 "There was the following error when saving image with type %s to filename:\n"
@@ -1950,28 +1945,28 @@ msgid ""
 "%s.\n"
 msgstr ""
 
-#: ../src/x_image.c:414
+#: ../src/x_image.c:408
 #, c-format
 msgid "Wrote color image to [%s] [%d x %d]\n"
 msgstr "Image couleur exportée dans fichier [%s] [%d x %d]\n"
 
-#: ../src/x_image.c:416
+#: ../src/x_image.c:410
 #, c-format
 msgid "Wrote black and white image to [%s] [%d x %d]\n"
 msgstr "Image noire et blanche exportée dans fichier [%s] [%d x %d]\n"
 
-#: ../src/x_image.c:426
+#: ../src/x_image.c:419
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"
 msgstr ""
 "x_image_lowlevel(): Impossible de récupérer le pixbuf depuis la fenêtre de "
 "gschem.\n"
 
-#: ../src/x_image.c:472
+#: ../src/x_image.c:465
 #, fuzzy
 msgid "Width x Height"
 msgstr "Largeur x Hauteur :"
 
-#: ../src/x_image.c:488
+#: ../src/x_image.c:481
 #, fuzzy
 msgid "Image type"
 msgstr "Image"
@@ -2390,6 +2385,9 @@ msgstr ""
 #, fuzzy
 msgid "gEDA Schematic Editor"
 msgstr "Descendre dans la hiérarchie"
+
+#~ msgid "Attribute failed ot find.\n"
+#~ msgstr "Impossible de trouver l'attribut.\n"
 
 #~ msgid "Attribute Mode"
 #~ msgstr "Mode Attribut"
