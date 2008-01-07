@@ -1,7 +1,7 @@
 # Spanish/Spain translation of gschem.
 # Copyright (C) 2005-2006 Carlos Nieves Onega
 # This file is distributed under the same license as the gschem package.
-# Carlos Nieves Ónega <cnieves@iespana.es>, 2005-2007.
+# Carlos Nieves Ónega <cnieves@iespana.es>, 2005-2008.
 # 
 # 
 msgid ""
@@ -9,13 +9,13 @@ msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-01-05 21:12-0500\n"
-"PO-Revision-Date: 2007-07-09 19:31+0200\n"
+"PO-Revision-Date: 2008-01-07 19:04+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
-"Language-Team: Spanish/Spain\n"
+"Language-Team: Spanish/Spain"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);X-Generator: KBabel 1.0.2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);X-Generator: KBabel 1.0.2"
 
 #: ../src/rcstrings.c:2
 msgid "File"
@@ -1862,11 +1862,11 @@ msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr "¿Guardar cambios del esquema \"%s\" antes de salir?"
 
 #: ../src/x_dialog.c:3709
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
-"Hay %d esquemas con cambios sin guardar. ¿Guardar cambios antes de salir?"
+"Hay %d esquemas con cambios sin guardar. ¿Guardar cambios antes de cerrar?"
 
 #. secondary label
 #: ../src/x_dialog.c:3738
@@ -1887,11 +1887,16 @@ msgid ""
 "The name cannot end with a space.\n"
 "The value cannot start with a space."
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">La propiedad introducida \"%s\" no es correcta\n"
+"Por favor, corríjala para continuar</span>\n"
+"\n"
+"El nombre y el valor no pueden estar en blanco.\n"
+"El nombre no puede finalizar en un espacio.\n"
+"El valor no puede empezar con un espacio."
 
 #: ../src/x_dialog.c:4096
-#, fuzzy
 msgid "Invalid Attribute"
-msgstr "Añadir propiedad"
+msgstr "Propiedad incorrecta"
 
 #: ../src/x_fileselect.c:48
 msgid "Schematics"
@@ -1924,15 +1929,17 @@ msgid ""
 "\n"
 "Would you like to overwrite it?"
 msgstr ""
+"El archivo seleccionado '%s' ya existe.\n"
+"\n"
+"¿Quiere sobreescribirlo?"
 
 #: ../src/x_fileselect.c:289
-#, fuzzy
 msgid "Overwrite file?"
-msgstr "Nuevo archivo"
+msgstr "¿Sobreescribir el archivo?"
 
 #: ../src/x_fileselect.c:291
 msgid "Save cancelled on user request\n"
-msgstr ""
+msgstr "El usuario ha cancelado la operación de guardar los cambios\n"
 
 #. WK - catch EPS export case
 #: ../src/x_image.c:181
@@ -2057,11 +2064,11 @@ msgid "/Up"
 msgstr "/Arriba"
 
 #: ../src/x_menus.c:333
-#, fuzzy, c-format
+#, c-format
 msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
 msgstr ""
 "Se ha intentado modificar la sensibilidad de una opción de menú que no "
-"existe\n"
+"existe '%s'\n"
 
 #: ../src/x_menus.c:357
 msgid "Popup_menu_item_factory doesn't exist!\n"
@@ -2351,14 +2358,13 @@ msgid "Loading schematic [%s]\n"
 msgstr "Cargando esquema [%s]\n"
 
 #: ../src/x_window.c:821
-#, fuzzy
 msgid "Failed to load file"
-msgstr "Fallo al cargar la imagen: %s"
+msgstr "Fallo al cargar el archivo"
 
 #: ../src/x_window.c:830
-#, fuzzy, c-format
+#, c-format
 msgid "New file [%s]\n"
-msgstr "Nuevo archivo"
+msgstr "Nuevo archivo [%s]\n"
 
 #. an error occured when saving page to file
 #: ../src/x_window.c:936
@@ -2396,34 +2402,9 @@ msgstr "Cerrando [%s]\n"
 
 #: ../data/geda-gschem.desktop.in.h:1
 msgid "Create and edit electrical schematics and symbols with gschem"
-msgstr ""
+msgstr "Crear y modificar esquemas y símbolos con gschem"
 
 #: ../data/geda-gschem.desktop.in.h:2
-#, fuzzy
 msgid "gEDA Schematic Editor"
-msgstr "Descender en esquema"
+msgstr "Editor de esquemas gEDA"
 
-#~ msgid "Attribute failed ot find.\n"
-#~ msgstr "Propiedad no encontrada.\n"
-
-#~ msgid "Attribute Mode"
-#~ msgstr "Modo Propiedades"
-
-#~ msgid "ERROR! you can't get an attribute without an ='s\n"
-#~ msgstr "¡ERROR! No puede tener una propiedad sin un signo '='\n"
-
-#~ msgid "Got NULL in o_complex_translate_display_selection\n"
-#~ msgstr ""
-#~ "Se ha recibido NULL en la función o_complex_translate_display_selection\n"
-
-#~ msgid "Got NULL in o_complex_translate_selection!\n"
-#~ msgstr "¡Se ha recibido NULL en la función o_complex_translate_selection!\n"
-
-#~ msgid "ERROR: NULL object in o_rotate_90!\n"
-#~ msgstr "ERROR: en la función o_rotate_90, ¡el objeto es NULL!\n"
-
-#~ msgid "ERROR: NULL object in o_mirror!\n"
-#~ msgstr "ERROR: en la función o_mirror, ¡el objeto es NULL!\n"
-
-#~ msgid "Invalid mode [%s] passed to %s\n"
-#~ msgstr "Se ha especificado un modo no válido [%s] a la función %s\n"
