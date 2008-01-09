@@ -1,5 +1,5 @@
 /* gEDA - GPL Electronic Design Automation
- * gnetlist - gEDA Netlist 
+ * gnetlist - gEDA Netlist
  * Copyright (C) 1998-2007 Ales Hvezda
  * Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
  *
@@ -54,7 +54,7 @@ void gnetlist_quit(void)
     s_slib_free();
     s_rename_destroy_all();
     /* o_text_freeallfonts(); */
-    
+
     /* Free GSList *backend_params */
     g_slist_free (backend_params);
 }
@@ -62,7 +62,7 @@ void gnetlist_quit(void)
 /** @brief Prints a list of all installed gnetlist backends to standard output.
  *
  * @param current Pointer to the toplevel struct.
- */ 
+ */
 void gnetlist_backends(TOPLEVEL *current)
 {
 	DIR *schemedir;
@@ -116,7 +116,7 @@ void main_prog(void *closure, int argc, char *argv[])
     gchar *logfile;
 
     TOPLEVEL *pr_current;
-  
+
     /* set default output filename */
     output_filename =
 	(char *) g_malloc(sizeof(char) * (strlen("output.net") + 1));
@@ -155,7 +155,7 @@ void main_prog(void *closure, int argc, char *argv[])
     s_log_init (logfile);
     g_free (logfile);
 
-    s_log_message("gEDA/gnetlist version %s%s.%s\n", PREPEND_VERSION_STRING, 
+    s_log_message("gEDA/gnetlist version %s%s.%s\n", PREPEND_VERSION_STRING,
                   DOTTED_VERSION, DATE_VERSION);
     s_log_message
 	("gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
@@ -165,7 +165,7 @@ void main_prog(void *closure, int argc, char *argv[])
 	("conditions; please see the COPYING file for more details.\n\n");
 
     if (!quiet_mode) {
-	fprintf(stderr, "gEDA/gnetlist version %s%s.%s\n", 
+	fprintf(stderr, "gEDA/gnetlist version %s%s.%s\n",
                 PREPEND_VERSION_STRING, DOTTED_VERSION, DATE_VERSION);
 	fprintf(stderr,
 		"gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
@@ -210,12 +210,12 @@ void main_prog(void *closure, int argc, char *argv[])
     list_pnt = pre_backend_list;
     while (list_pnt) {
       if (g_read_file(list_pnt->data) != -1) {
-        s_log_message("Read scm file [%s]\n", 
+        s_log_message("Read scm file [%s]\n",
                       (char *) list_pnt->data);
       } else {
-        s_log_message("Failed to read scm file [%s]\n", 
+        s_log_message("Failed to read scm file [%s]\n",
                       (char *) list_pnt->data);
-        fprintf(stderr, "Failed to read scm file [%s]\n", 
+        fprintf(stderr, "Failed to read scm file [%s]\n",
                 (char *) list_pnt->data);
       }
       list_pnt = g_slist_next(list_pnt);
@@ -225,7 +225,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
     i = argv_index;
     while (argv[i] != NULL) {
-      gchar *filename; 
+      gchar *filename;
       GError *err = NULL;
 
       if (g_path_is_absolute(argv[i]))
@@ -242,17 +242,17 @@ void main_prog(void *closure, int argc, char *argv[])
       }
 
       s_page_goto (pr_current, s_page_new (pr_current, filename));
-      
+
       if (!f_open (pr_current, filename, &err)) {
         g_warning ("%s\n", err->message);
         fprintf (stderr, "%s\n", err->message);
         g_error_free (err);
       }
-      
+
       i++;
       g_free (filename);
     }
-    
+
     /* Change back to the directory where we started.  This is done */
     /* since gnetlist is a command line utility and will deposit its output */
     /* in the current directory.  Having the output go to a different */
@@ -273,11 +273,9 @@ void main_prog(void *closure, int argc, char *argv[])
 
     s_traverse_init();
     s_traverse_start(pr_current);
-    /* s_traverse_start(pr_current, pr_current->page_current->object_head); */
 
     /* temporarly reuse input_str */
-
-    sprintf(input_str, "%s%cgnetlist.scm", pr_current->scheme_directory, 
+    sprintf(input_str, "%s%cgnetlist.scm", pr_current->scheme_directory,
             G_DIR_SEPARATOR);
 
     /* Change back to the directory where we started AGAIN.  This is done */
@@ -285,20 +283,12 @@ void main_prog(void *closure, int argc, char *argv[])
     chdir(cwd);
     free(cwd); /* allocated by getcwd, so this should stay as free() */
 
-/* don't need either of these */
-/*	gh_eval_str ("(primitive-load-path \"ice-9/boot-9.scm\")");*/
-    /* scm_primitive_load_path (scm_makfrom0str ("ice-9/boot-9.scm")); */
-
     if (g_read_file(input_str) != -1) {
 	s_log_message("Read init scm file [%s]\n", input_str);
     } else {
 	s_log_message("Failed to read init scm file [%s]\n", input_str);
 	fprintf(stderr, "Failed to read init scm file [%s]\n", input_str);
     }
-
-
-
-
 
     if (guile_proc) {
 
@@ -322,12 +312,12 @@ void main_prog(void *closure, int argc, char *argv[])
         list_pnt = post_backend_list;
         while (list_pnt) {
           if (g_read_file(list_pnt->data) != -1) {
-            s_log_message("Read scm file [%s]\n", 
+            s_log_message("Read scm file [%s]\n",
                           (char *) list_pnt->data);
           } else {
-            s_log_message("Failed to read scm file [%s]\n", 
+            s_log_message("Failed to read scm file [%s]\n",
                           (char *) list_pnt->data);
-            fprintf(stderr, "Failed to read scm file [%s]\n", 
+            fprintf(stderr, "Failed to read scm file [%s]\n",
                  (char *) list_pnt->data);
           }
           list_pnt = g_slist_next(list_pnt);
