@@ -815,7 +815,6 @@ SCM g_get_slots(SCM scm_uref)
 		  slot_tmp=g_strdup("1");
 		}
 		slot = g_strconcat ("#d", slot_tmp, NULL);
-		  g_free (slot_tmp);
 		  slot_number = scm_string_to_number(scm_makfrom0str (slot),
                                              scm_from_int(10));
 		  g_free (slot);
@@ -824,6 +823,7 @@ SCM g_get_slots(SCM scm_uref)
 		  }
 		  else 
 		    fprintf(stderr, "Uref %s: Bad slot number: %s.\n", uref, slot_tmp);
+		  g_free (slot_tmp);
 	    }
 	}
 	nl_current = nl_current->next;
@@ -880,7 +880,6 @@ SCM g_get_unique_slots(SCM scm_uref)
 		  slot_tmp=g_strdup("1");
 		}
 		slot = g_strconcat ("#d", slot_tmp, NULL);
-		g_free (slot_tmp);
 		slot_number = scm_string_to_number(scm_makfrom0str (slot),
                                            scm_from_int(10));
 		g_free (slot);
@@ -891,6 +890,7 @@ SCM g_get_unique_slots(SCM scm_uref)
 		}
 		else 
 		  fprintf(stderr, "Uref %s: Bad slot number: %s.\n", uref, slot_tmp);
+		g_free (slot_tmp);
 	    }
 	}
 	nl_current = nl_current->next;
