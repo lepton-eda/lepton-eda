@@ -46,7 +46,7 @@
 #include <dmalloc.h>
 #endif
 
-#define BACKEND_LIST_COLS	3
+#define BACKEND_LIST_COLS      3
 
 void gnetlist_quit(void)
 {
@@ -65,45 +65,45 @@ void gnetlist_quit(void)
  */
 void gnetlist_backends(TOPLEVEL *current)
 {
-	DIR *schemedir;
-	struct dirent *entry;
-	char *filename;
-	int n;
+    DIR *schemedir;
+    struct dirent *entry;
+    char *filename;
+    int n;
 
-	schemedir=opendir(current->scheme_directory);
-	if(schemedir==NULL) {
-		fprintf(stderr, "\nERROR! Can't open directory %s: %s\n",
-					current->scheme_directory,
-					strerror(errno));
-		return;
-	}
+    schemedir=opendir(current->scheme_directory);
+    if(schemedir==NULL) {
+        fprintf(stderr, "\nERROR! Can't open directory %s: %s\n",
+                        current->scheme_directory,
+                        strerror(errno));
+        return;
+    }
 
-	printf("List of available backends:\n\n");
+    printf("List of available backends:\n\n");
 
-	n=1;
-	while(1) {
-		entry=readdir(schemedir);
-		if(entry==NULL) break;
+    n=1;
+    while(1) {
+        entry=readdir(schemedir);
+        if(entry==NULL) break;
 
-		filename=strdup(entry->d_name);
+        filename=strdup(entry->d_name);
 
-		if(g_str_has_prefix(filename, "gnet-")&&
-					g_str_has_suffix(filename, ".scm")) {
+        if(g_str_has_prefix(filename, "gnet-")&&
+           g_str_has_suffix(filename, ".scm")) {
 
-			/* strip the suffix */
-			filename[strlen(filename)-4]='\0';
-			/* and skip the prefix */
-			printf("%-25s", &filename[5]);
-			if(n>=BACKEND_LIST_COLS) {
-				printf("\n");
-				n=0;
-			}
-			n++;
-		}
+            /* strip the suffix */
+            filename[strlen(filename)-4]='\0';
+            /* and skip the prefix */
+            printf("%-25s", &filename[5]);
+            if(n>=BACKEND_LIST_COLS) {
+                printf("\n");
+                n=0;
+            }
+            n++;
+        }
 
-		free(filename);
-	}
-	printf("\n");
+        free(filename);
+    }
+    printf("\n");
 }
 
 void main_prog(void *closure, int argc, char *argv[])
@@ -119,9 +119,8 @@ void main_prog(void *closure, int argc, char *argv[])
 
     /* set default output filename */
     output_filename =
-	(char *) g_malloc(sizeof(char) * (strlen("output.net") + 1));
+        (char *) g_malloc(sizeof(char) * (strlen("output.net") + 1));
     strcpy(output_filename, "output.net");
-
 
     argv_index = parse_commandline(argc, argv);
     cwd = getcwd(NULL, MAXPATHLEN);
@@ -131,17 +130,17 @@ void main_prog(void *closure, int argc, char *argv[])
 
     /* this is a kludge to make sure that spice mode gets set */
     /*  Hacked by SDB to allow spice netlisters of arbitrary name
-     *	as long as they begin with "spice".  For example, this spice
+     *        as long as they begin with "spice".  For example, this spice
      *  netlister is valid: "spice-sdb".
      */
     if (guile_proc) {
-	if (strncmp(guile_proc, "spice", 5) == 0) {
-	    netlist_mode = SPICE;
-	    command_line = create_command_line(argc, argv);
+        if (strncmp(guile_proc, "spice", 5) == 0) {
+            netlist_mode = SPICE;
+            command_line = create_command_line(argc, argv);
 
-	    printf("Command line passed = %s \n", command_line);
+            printf("Command line passed = %s \n", command_line);
 
-	}
+        }
     }
 
     libgeda_init();
@@ -158,21 +157,21 @@ void main_prog(void *closure, int argc, char *argv[])
     s_log_message("gEDA/gnetlist version %s%s.%s\n", PREPEND_VERSION_STRING,
                   DOTTED_VERSION, DATE_VERSION);
     s_log_message
-	("gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
+        ("gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
     s_log_message
-	("This is free software, and you are welcome to redistribute it under certain\n");
+        ("This is free software, and you are welcome to redistribute it under certain\n");
     s_log_message
-	("conditions; please see the COPYING file for more details.\n\n");
+        ("conditions; please see the COPYING file for more details.\n\n");
 
     if (!quiet_mode) {
-	fprintf(stderr, "gEDA/gnetlist version %s%s.%s\n",
+        fprintf(stderr, "gEDA/gnetlist version %s%s.%s\n",
                 PREPEND_VERSION_STRING, DOTTED_VERSION, DATE_VERSION);
-	fprintf(stderr,
-		"gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
-	fprintf(stderr,
-		"This is free software, and you are welcome to redistribute it under certain\n");
-	fprintf(stderr,
-		"conditions; please see the COPYING file for more details.\n\n");
+        fprintf(stderr,
+                "gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
+        fprintf(stderr,
+                "This is free software, and you are welcome to redistribute it under certain\n");
+        fprintf(stderr,
+                "conditions; please see the COPYING file for more details.\n\n");
     }
 
 #ifdef __MINGW32__
@@ -187,7 +186,6 @@ void main_prog(void *closure, int argc, char *argv[])
       fprintf (stderr, "Remember to check that your schematic has no errors using the drc2 backend.\n");
       fprintf (stderr, "You can do it running 'gnetlist -g drc2 your_schematic.sch -o drc_output.txt'\n");
       fprintf (stderr, "and seeing the contents of the file drc_output.txt.\n\n");
-
     }
     /* register guile (scheme) functions */
     g_register_funcs();
@@ -200,10 +198,10 @@ void main_prog(void *closure, int argc, char *argv[])
     s_rename_init();
 
     if(guile_proc!=NULL) {
-	if(!strcmp(guile_proc, "help")) {
-		gnetlist_backends(pr_current);
-		exit(0);
-    	}
+        if(!strcmp(guile_proc, "help")) {
+                gnetlist_backends(pr_current);
+                exit(0);
+            }
     }
 
     /* Load the first set of scm files before we load any schematic files */
@@ -228,8 +226,7 @@ void main_prog(void *closure, int argc, char *argv[])
       gchar *filename;
       GError *err = NULL;
 
-      if (g_path_is_absolute(argv[i]))
-      {
+      if (g_path_is_absolute(argv[i])) {
         /* Path is already absolute so no need to do any concat of cwd */
         filename = g_strdup (argv[i]);
       } else {
@@ -261,9 +258,9 @@ void main_prog(void *closure, int argc, char *argv[])
     /* free(cwd); - Defered; see below */
 
     if (argv[argv_index] == NULL) {
-	fprintf(stderr,
-		"\nERROR! You must specify at least one filename\n\n");
-	usage(argv[0]);
+        fprintf(stderr,
+                "\nERROR! You must specify at least one filename\n\n");
+        usage(argv[0]);
     }
 
     g_set_project_current(pr_current);
@@ -284,29 +281,26 @@ void main_prog(void *closure, int argc, char *argv[])
     free(cwd); /* allocated by getcwd, so this should stay as free() */
 
     if (g_read_file(input_str) != -1) {
-	s_log_message("Read init scm file [%s]\n", input_str);
+        s_log_message("Read init scm file [%s]\n", input_str);
     } else {
-	s_log_message("Failed to read init scm file [%s]\n", input_str);
-	fprintf(stderr, "Failed to read init scm file [%s]\n", input_str);
+        s_log_message("Failed to read init scm file [%s]\n", input_str);
+        fprintf(stderr, "Failed to read init scm file [%s]\n", input_str);
     }
 
     if (guile_proc) {
+        /* load the appropriate scm file */
+        sprintf(input_str, "%s%cgnet-%s.scm", pr_current->scheme_directory,
+                G_DIR_SEPARATOR, guile_proc);
 
-	/* load the appropriate scm file */
-	sprintf(input_str, "%s%cgnet-%s.scm", pr_current->scheme_directory,
-		G_DIR_SEPARATOR, guile_proc);
-
-	if (g_read_file(input_str) != -1) {
-	    s_log_message("Read %s scm file [%s]\n", guile_proc,
-			  input_str);
-	} else {
-	    s_log_message("Failed to read %s scm file [%s]\n",
-			  guile_proc, input_str);
-
-	    fprintf(stderr, "Failed to read %s scm file [%s]\n",
-		    guile_proc, input_str);
-	}
-
+        if (g_read_file(input_str) != -1) {
+            s_log_message("Read %s scm file [%s]\n", guile_proc,
+                          input_str);
+        } else {
+            s_log_message("Failed to read %s scm file [%s]\n",
+                          guile_proc, input_str);
+            fprintf(stderr, "Failed to read %s scm file [%s]\n",
+                    guile_proc, input_str);
+        }
 
         /* Load second set of scm files */
         list_pnt = post_backend_list;
@@ -325,17 +319,16 @@ void main_prog(void *closure, int argc, char *argv[])
         /* Free now the list of configuration files */
         g_slist_free(post_backend_list);
 
-	/* check size here hack */
-	sprintf(input_str, "(%s \"%s\")", guile_proc, output_filename);
-	scm_c_eval_string (input_str);
-	/* gh_eval_str_with_stack_saving_handler (input_str); */
+        /* check size here hack */
+        sprintf(input_str, "(%s \"%s\")", guile_proc, output_filename);
+        scm_c_eval_string (input_str);
+        /* gh_eval_str_with_stack_saving_handler (input_str); */
     } else if (interactive_mode) {
-	scm_c_eval_string ("(set-repl-prompt! \"gnetlist> \")");
-	scm_shell (0, NULL);
+        scm_c_eval_string ("(set-repl-prompt! \"gnetlist> \")");
+        scm_shell (0, NULL);
     } else {
-	fprintf(stderr,
-		"You gave neither backend to execute nor interactive mode!\n");
-
+        fprintf(stderr,
+                "You gave neither backend to execute nor interactive mode!\n");
     }
 
     gnetlist_quit();
