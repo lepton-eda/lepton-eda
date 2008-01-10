@@ -1126,7 +1126,7 @@ msgstr "¡Tipo de relleno de círculo desconocido!\n"
 
 #: ../src/o_complex.c:174
 #, c-format
-msgid "Could not find complex in new componet placement!\n"
+msgid "Could not find complex in new component placement!\n"
 msgstr "¡No se ha podido encontrar el objeto al colocar el nuevo componente!\n"
 
 #: ../src/o_complex.c:405 ../src/o_complex.c:409

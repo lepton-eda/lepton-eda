@@ -1109,7 +1109,7 @@ msgstr "Tipo desconhecido para enchimento de arco!\n"
 
 #: ../src/o_complex.c:174
 #, c-format
-msgid "Could not find complex in new componet placement!\n"
+msgid "Could not find complex in new component placement!\n"
 msgstr ""
 
 #: ../src/o_complex.c:405 ../src/o_complex.c:409

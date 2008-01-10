@@ -171,7 +171,7 @@ void o_complex_place_rotate(GSCHEM_TOPLEVEL *w_current)
   }
 
   if (x_local == -1) {
-    printf(_("Could not find complex in new componet placement!\n"));
+    printf(_("Could not find complex in new component placement!\n"));
     return;
   }
 

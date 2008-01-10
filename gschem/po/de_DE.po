@@ -1112,7 +1112,7 @@ msgstr "Undefinierter Typ für einen Kreis (Füllung).\n"
 
 #: ../src/o_complex.c:174
 #, c-format
-msgid "Could not find complex in new componet placement!\n"
+msgid "Could not find complex in new component placement!\n"
 msgstr ""
 "Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
 
