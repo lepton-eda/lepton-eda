@@ -86,6 +86,7 @@
 ;;  2.10.2007 -- Various bugfixes.  Also incorporated slotted part
 ;;               netlist patch from Jeff Mallatt.  SDB.
 ;;  4.28.2007 -- Fixed slotted part stuff so that it uses pinseq to emit pins.  SDB
+;;  1.9.2008 -- Fix slotted part handling to work without a modified pinseq.  pcjc2
 ;;               
 ;;**********************************************************************************
 ;;
@@ -682,7 +683,6 @@
 ;;   5.  Outputs optional attributes attached to device, if any.  Feature 
 ;;       added by SDB on 12.25.2003.
 ;;   6.  Outputs a new line
-;;   *.  Loops back to "1." if more than one slot.
 ;;   7.  Looks for a the "model" attribute.  If it exists, it it writes out
 ;;       a .MODEL line like this:  .MODEL model-name type (model)
 ;;      
@@ -699,39 +699,34 @@
 	  (model-file (gnetlist:get-package-attribute package "file"))
 	 )   ;; end of local assignments
 
-    ;; loop over slots
-      (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))
+   ;; Write out the refdes prefix, if specified and necessary.
+      (if prefix
+        (spice-sdb:write-prefix package prefix port)
+      )
 
-     ;; Write out the refdes prefix, if specified and necessary.
-	(if prefix
-	  (spice-sdb:write-prefix package prefix port)
-	)
+   ;; Next we write out the refdes and nets.
+      (spice-sdb:write-component-no-value package port)
 
-     ;; Next we write out the refdes and nets.  
-	(spice-sdb:write-component-slotted-no-value package slot port)
+   ;; next look for "model-name" attribute.  Write it out if it exists.
+   ;; otherwise look for "device" attribute.
+      (if (not (string=? model-name "unknown"))
+          (display (string-append model-name " " ) port)  ;; display model-name if known
+          (display (string-append value " ") port))       ;; otherwise display device
 
-     ;; next look for "model-name" attribute.  Write it out if it exists.
-     ;; otherwise look for "device" attribute.  
-        (if (not (string=? model-name "unknown"))
-	    (display (string-append model-name " " ) port)  ;; display model-name if known 
-	    (display (string-append value " ") port))       ;; otherwise display device
+  ;; Next write out attribtes if they exist
+  ;; First attribute is area.  It is written as a simple string
+      (if (not (string=? area "unknown"))
+          (display (string-append area " ") port))
 
-    ;; Next write out attribtes if they exist
-    ;; First attribute is area.  It is written as a simple string
-	(if (not (string=? area "unknown"))
-	    (display (string-append area " ") port))
+  ;; Next attribute is off.    It is written as a simple string
+      (if (not (string=? off "unknown"))
+          (display (string-append off " ") port))
 
-    ;; Next attribute is off.    It is written as a simple string
-	(if (not (string=? off "unknown"))
-	    (display (string-append off " ") port))
+  ;; Write out remaining attributes
+      (spice-sdb:write-list-of-attributes package attrib-list port)
 
-    ;; Write out remaining attributes
-	(spice-sdb:write-list-of-attributes package attrib-list port)
-
-    ;; Now write out newline in preparation for writing out model.
-	(newline port)
-
-      ) ;; do
+  ;; Now write out newline in preparation for writing out model.
+      (newline port)
 
      ;; Now write out any model which is pointed to by the part.
 	(cond
@@ -823,18 +818,14 @@
 	  (if (not (string=? model "unknown"))             
 	    (begin                                     ;; model attribute exists -- write out card and model.
 	      (debug-spew "Model info not found in model file list, but model attribute exists.  Write out spice card and .model line..\n") 
-	      (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))  ;; loop over slots
-		(spice-sdb:write-component-slotted-no-value package slot port)
-		(display (string-append model-name "\n" ) port)
-	      ) ;; do
+              (spice-sdb:write-component-no-value package port)
+              (display (string-append model-name "\n" ) port)
 	      (display (string-append ".MODEL " model-name " " type " (" model ")\n") port)
 	    )
 	    (begin                                     ;; no model attribute either.  Just write out card.
 	      (debug-spew "Model info not found in model file list.  No model attribute either.  Just write what we know.\n")
-	      (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))  ;; loop over slots
-		(spice-sdb:write-component-slotted-no-value package slot port)
-		(display (string-append model-name "\n" ) port)
-	      ) ;; do
+              (spice-sdb:write-component-no-value package port)
+              (display (string-append model-name "\n" ) port)
 	    )
 	  )   ;; end if (not (string=? . . . .
 
@@ -845,11 +836,9 @@
 	      ((string=? file-type ".MODEL") 
 	       (begin
 		(debug-spew (string-append "Found .MODEL with model-file and model-name for " package "\n")) 
-		 (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))  ;; loop over slots
-		   (spice-sdb:write-prefix package "U" port)  ;; this appends an "U" to the refdes since we have a .model
-		   (spice-sdb:write-component-slotted-no-value package slot port)
-		   (display (string-append model-name "\n" ) port)
-		 ) ;; do
+                 (spice-sdb:write-prefix package "U" port)  ;; this appends an "U" to the refdes since we have a .model
+                 (spice-sdb:write-component-no-value package port)
+                 (display (string-append model-name "\n" ) port)
 		(debug-spew "We'll handle the file contents later . . .\n")
 	       ))
 
@@ -857,11 +846,9 @@
 	      ((string=? file-type ".SUBCKT") 
 	       (begin
 		 (debug-spew (string-append "Found .SUBCKT with model-file and model-name for " package "\n")) 
-		 (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))  ;; loop over slots
-		   (spice-sdb:write-prefix package "X" port)  ;; this appends an "X" to the refdes since we have a .subckt
-		   (spice-sdb:write-component-slotted-no-value package slot port)
-		   (display (string-append model-name "\n" ) port)
-		 ) ;; do
+                 (spice-sdb:write-prefix package "X" port)  ;; this appends an "X" to the refdes since we have a .subckt
+                 (spice-sdb:write-component-no-value package port)
+                 (display (string-append model-name "\n" ) port)
 		 (debug-spew "We'll handle the file contents later . . .\n")
 	       ))
 	   )  ;; close of inner cond
@@ -921,18 +908,14 @@
 	  (if (not (string=? model "unknown"))             
 	    (begin                                     ;; model attribute exists -- write out card and model.
 	      (debug-spew "Model info not found in model file list, but model attribute exists.  Write out spice card and .model line..\n") 
-	      (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))  ;; loop over slots
-		(spice-sdb:write-component-slotted-no-value package slot port)
-		(display (string-append model-name "\n" ) port)
-	      ) ;; do
+              (spice-sdb:write-component-no-value package port)
+              (display (string-append model-name "\n" ) port)
 	      (display (string-append ".MODEL " model-name " " type " (" model ")\n") port)
 	    )
 	    (begin                                     ;; no model attribute either.  Just write out card.
 	      (debug-spew "Model info not found in model file list.  No model attribute either.  Just write what we know.\n")
-	      (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))  ;; loop over slots
-		(spice-sdb:write-component-slotted-no-value package slot port)
-		(display (string-append model-name "\n" ) port)
-	      ) ;; do
+              (spice-sdb:write-component-no-value package port)
+              (display (string-append model-name "\n" ) port)
 	    )
 	  )   ;; end if (not (string=? . . . .
 
@@ -943,11 +926,9 @@
 	      ((string=? file-type ".MODEL") 
 	       (begin
 		(debug-spew (string-append "Found .MODEL with model-file and model-name for " package "\n")) 
-		 (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))  ;; loop over slots
-		   (spice-sdb:write-prefix package "U" port)  ;; this prepends an "U" to the refdes if needed
-		   (spice-sdb:write-component-slotted-no-value package slot port)
-		   (display (string-append model-name "\n" ) port)
-		 ) ;; do
+                 (spice-sdb:write-prefix package "U" port)  ;; this prepends an "U" to the refdes if needed
+                 (spice-sdb:write-component-no-value package port)
+                 (display (string-append model-name "\n" ) port)
 		(debug-spew "We'll handle the file contents later . . .\n")
 	       ))
 
@@ -955,11 +936,9 @@
 	      ((string=? file-type ".SUBCKT") 
 	       (begin
 		 (debug-spew (string-append "Found .SUBCKT with model-file and model-name for " package "\n")) 
-		 (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))  ;; loop over slots
-		   (spice-sdb:write-prefix package "X" port)  ;; this appends an "X" to the refdes if needed
-		   (spice-sdb:write-component-slotted-no-value package slot port)
-		   (display (string-append model-name "\n" ) port)
-		 ) ;; do
+                 (spice-sdb:write-prefix package "X" port)  ;; this appends an "X" to the refdes if needed
+                 (spice-sdb:write-component-no-value package port)
+                 (display (string-append model-name "\n" ) port)
 		 (debug-spew "We'll handle the file contents later . . .\n")
 	       ))
 	   )  ;; close of inner cond
@@ -1074,11 +1053,8 @@
 
     (debug-spew (string-append "Found resistor.  Refdes = " package "\n"))
 
-    ;; loop over slots
-    (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))
-
     ;; first write out refdes and attached nets
-    (spice-sdb:write-component-slotted-no-value package slot port) 
+    (spice-sdb:write-component-no-value package port)
 
     ;; next write out mandatory resistor value if it exists.
     (let ((value (gnetlist:get-package-attribute package "value")))
@@ -1102,7 +1078,6 @@
     ;; finally output a new line
     (newline port)
 
-    ) ;; do
   )
 )
 
@@ -1115,11 +1090,8 @@
 
     (debug-spew (string-append "Found capacitor.  Refdes = " package "\n"))
 
-    ;; loop over slots
-    (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))
-
     ;; first write out refdes and attached nets
-    (spice-sdb:write-component-slotted-no-value package slot port) 
+    (spice-sdb:write-component-no-value package port)
 
     ;; next write capacitor value, if any.  Note that if the 
     ;; component value is not assigned nothing will be written out.
@@ -1144,8 +1116,6 @@
 		(display " " port))  ;; add additional space. . . . 
 
     (newline port)
-
-    ) ;; do
   )
 )
 
@@ -1158,11 +1128,8 @@
 
     (debug-spew (string-append "Found inductor.  Refdes = " package "\n"))
 
-    ;; loop over slots
-    (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))
-
     ;; first write out refdes and attached nets
-    (spice-sdb:write-component-slotted-no-value package slot port) 
+    (spice-sdb:write-component-no-value package port)
 
 ;;            ;; next write inductor model name, if any.
 ;;    (let ((model-name (gnetlist:get-package-attribute package "model-name")))
@@ -1185,8 +1152,6 @@
       (display " " port))  ;; add additional space. . . . 
 
     (newline port)
-
-    ) ;; do
   )
 )
 
@@ -1199,11 +1164,8 @@
   (lambda (package port)
     (debug-spew (string-append "Found independent voltage source.  Refdes = " package "\n"))
 
-    ;; loop over slots
-    (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))
-
             ;; first write out refdes and attached nets
-    (spice-sdb:write-component-slotted-no-value package slot port) 
+    (spice-sdb:write-component-no-value package port)
 
             ;; next write voltage value, if any.  Note that if the 
 	    ;; voltage value is not assigned, then it will write "unknown"
@@ -1212,8 +1174,6 @@
     )
 
     (newline port)
-
-    ) ;; do
   )
 )
 
@@ -1226,11 +1186,8 @@
 
 	(debug-spew (string-append "Found independent current source.  Refdes = " package "\n")) 
 
-    ;; loop over slots
-    (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))
-
             ;; first write out refdes and attached nets
-    (spice-sdb:write-component-slotted-no-value package slot port) 
+    (spice-sdb:write-component-no-value package port)
 
             ;; next write current value, if any.  Note that if the 
 	    ;; current value is not assigned, then it will write "unknown"
@@ -1239,8 +1196,6 @@
     )
 
     (newline port)
-
-    ) ;; do
   )
 )
 
@@ -1252,11 +1207,8 @@
 
     (debug-spew (string-append "Found Josephson junction.  Refdes = " package "\n"))
 
-    ;; loop over slots
-    (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))
-
     ;; first write out refdes and attached nets
-    (spice-sdb:write-component-slotted-no-value package slot port) 
+    (spice-sdb:write-component-no-value package port)
 
     ;; next, add a dummy node for JJ phase. Unlike in Xic netlister, give it 
     ;; a reasonable name, not a number, e.g., refdes.
@@ -1276,8 +1228,6 @@
 		(display " " port))  ;; add additional space. . . . 
 
     (newline port)
-
-    ) ;; do
   )
 )
 
@@ -1289,11 +1239,8 @@
 
     (debug-spew (string-append "Found mutual inductance.  Refdes = " package "\n"))
 
-    ;; loop over slots
-    (do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))
-
     ;; first write out refdes and attached nets (none)
-    (spice-sdb:write-component-slotted-no-value package slot port) 
+    (spice-sdb:write-component-no-value package port)
 
     ;; next two inductor names and value
     (let ((inductors (gnetlist:get-package-attribute package "inductors"))
@@ -1306,8 +1253,6 @@
     )
 
     (newline port)
-
-    ) ;; do
   )
 )
 
@@ -1348,75 +1293,16 @@
   )
 )
 
-;;--------------------------------------------------------------------
-;; Given a refdes and number of pins, this writes out the nets
-;; attached to the component's pins.  This version is used to write out
-;; slotted parts.  Call it with a component refdes and the number 
-;; of pins left on this component to look at.
-;; New fcn cloned from write-net-names-on-component on 4.28.2007 -- SDB.
-;;--------------------------------------------------------------------
-(define spice-sdb:write-net-names-on-component-slotted
-  (lambda (refdes this-pin end-pin pins-per-slot port)
-    (if (>= this-pin end-pin)
-      (begin
-	;; recurse to implement loop over pins
-        (spice-sdb:write-net-names-on-component-slotted refdes (- this-pin 1) end-pin pins-per-slot port)
-	;; This is hack to deal with slotted pins.
-        (let* ((pin-name (number->string this-pin)) 
-	       (pinnumber (gnetlist:get-attribute-by-pinseq refdes pin-name "pinnumber"))
-	       (netname (car (spice-sdb:get-net refdes pinnumber)) )
-	      )
-;; -------  Super debug stuff  --------
-	  (debug-spew "  In write-net-names-on-component-slotted. . . . \n")
-	  (debug-spew (string-append "     this-pin = " (number->string this-pin) "\n"))
-	  (debug-spew (string-append "     end-pin = " (number->string end-pin) "\n"))
-	  (debug-spew (string-append "     pin-name = " pin-name "\n"))
-	  (debug-spew (string-append "     pinnumber = " pinnumber "\n"))
-	  (debug-spew (string-append "     netname = " netname "\n"))
-;; ------------------------------ 
-	  (if (not (string=? netname "ERROR_INVALID_PIN"))
-             (display (string-append netname " ") port)     ;; write out attached net if OK.
-             (debug-spew (string-append "For " refdes ", found pin with no pinseq attribute.  Ignoring. . . .\n"))
-          )
-        )  ;; let*
-      )    ;; begin
-    )
-  )
-)
-
 
 ;;-------------------------------------------------------------------
-;; Write the refdes -dot- slot (if not only slot), and the net names
-;; connected to pins in this slot.  No return, and no component value
-;; is written, or extra attribs.  Those are handled later.
-;; This fcn is called once for each slot in a component.
+;; Write the refdes and the net names connected to pins on this component.
+;; No return, and no component value is written, or extra attribs.
+;; Those are handled later.
 ;;-------------------------------------------------------------------
-(define spice-sdb:write-component-slotted-no-value
-  (lambda (package slot port)
-    (let ((numslots (gnetlist:get-package-attribute package "numslots"))
-	  (slot-count (length (gnetlist:get-unique-slots package)))
-	  (pin-count (length (gnetlist:get-pins package))) )
-      (if (or (string=? numslots "unknown") (string=? numslots "0"))
-	  (begin	                                ;; non-slotted part.
-	    (display (string-append package " ") port)  ;; write component refdes
-	    (spice-sdb:write-net-names-on-component package pin-count port)
-	  )   ;; begin
-	  (let* ((pins-per-slot (/ pin-count slot-count))       ;; slotted part
-	         (end-pos (+ (* pins-per-slot (- slot 1)) 1) )  ;; start high
-		 (beginning-pos  (* pins-per-slot slot))        ;; and count down.
-                )
-;; -------  Super debug stuff for writing out slotted components  --------
-	    (debug-spew "In write-component-slotted-no-value. . . . \n")
-	    (debug-spew (string-append "     pins per slot = " (number->string pins-per-slot) "\n"))
-	    (debug-spew (string-append "     slot = " (number->string slot) "\n"))
-	    (debug-spew (string-append "     beginning-pos = " (number->string beginning-pos) "\n"))
-	    (debug-spew (string-append "     end-pos = " (number->string end-pos) "\n"))
-;; ------------------------------ 
-	    (format port "~a.~a " package slot)  ;; write component refdes -dot- slot
-	    (spice-sdb:write-net-names-on-component-slotted package beginning-pos end-pos pins-per-slot port)
-	  )  ;; let*
-      )  ;; if
-    )
+(define spice-sdb:write-component-no-value
+  (lambda (package port)
+    (display (string-append package " ") port)  ;; write component refdes
+    (spice-sdb:write-net-names-on-component package (length (gnetlist:get-pins package)) port)
   )
 )
 
@@ -1630,13 +1516,11 @@
        ((string=? first-char "X") (spice-sdb:write-subcircuit package file-info-list port))
        (else 
 	(display (string-append "Found unknown component.  Refdes = " package "\n"))
-	(do ((slot 1 (1+ slot))) ((> slot (length (gnetlist:get-unique-slots package))))  ;; loop over slots
-	  (spice-sdb:write-component-slotted-no-value package slot port)
-	  ;; write component value, if components have a label "value=#"
-	  ;; what if a component has no value label, currently unknown is written
-	  (display (spice-sdb:component-value package) port)
-	  (newline port)
-	) ;; do
+        (spice-sdb:write-component-no-value package port)
+        ;; write component value, if components have a label "value=#"
+        ;; what if a component has no value label, currently unknown is written
+        (display (spice-sdb:component-value package) port)
+        (newline port)
        )
       ) ;; end cond
      )  ;; end let
@@ -2012,4 +1896,25 @@
       (debug-spew "\nOutput file is written.  We are done.\n")
    )    ;; (let* ((port . . . .
  )
+)
+
+
+;; Custom get-uref function to append ".${SLOT}" where a component
+;; has a "slot=${SLOT}" attribute attached.
+;;
+;; NOTE: Original test for appending the ".<SLOT>" was this:
+;;   (let ((numslots (gnetlist:get-package-attribute package "numslots"))
+;;        (slot-count (length (gnetlist:get-unique-slots package)))
+;;     (if (or (string=? numslots "unknown") (string=? numslots "0"))
+;;
+(define get-uref
+  (lambda (object)
+    (let ((real_uref (gnetlist:get-uref object)))
+      (if (null? (get-attrib-value-by-attrib-name object "slot"))
+        real_uref
+        (string-append real_uref "."
+          (car (get-attrib-value-by-attrib-name object "slot")))
+      )
+    )
+  )
 )
