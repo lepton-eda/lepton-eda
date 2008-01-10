@@ -145,6 +145,7 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
     OBJECT *o_pinnum_object;
     char *pinnum = NULL;
     char *uref = NULL;
+    SCM scm_uref;
     char *temp_uref = NULL;
     char *string;
     char *misc;
@@ -163,17 +164,10 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
     printf("found pinnum: %s\n", pinnum);
 #endif
 
-    /* this function only searches the single o_current */
-    temp_uref =
-	o_attrib_search_name_single(head->complex_parent, "refdes", NULL);
+    scm_uref = g_scm_c_get_uref(pr_current, head->complex_parent);
 
-    if (!temp_uref)
-    {
-      temp_uref =
-	o_attrib_search_name_single(head->complex_parent, "uref", NULL); /* deprecated */
-      if (temp_uref) {
-        printf("WARNING: Found uref=%s, uref= is deprecated, please use refdes=\n", temp_uref);
-      }
+    if (scm_is_string( scm_uref )) {
+      temp_uref = scm_to_locale_string( scm_uref );
     }
 
     if (hierarchy_tag) {

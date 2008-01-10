@@ -1,5 +1,6 @@
 /* g_netlist.c */
 void g_set_project_current(TOPLEVEL *pr_current);
+SCM g_scm_c_get_uref(TOPLEVEL *toplevel, OBJECT *object);
 SCM g_get_command_line();   /* SDB -- 8.22.2004 */
 SCM g_get_calling_flags();  /* SDB -- 9.1.2003  */
 SCM g_get_packages(SCM level);

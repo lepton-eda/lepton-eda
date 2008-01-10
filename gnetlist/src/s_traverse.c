@@ -104,6 +104,7 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
   OBJECT *o_current;
   NETLIST *netlist;
   char *temp;
+  SCM scm_uref;
   char *temp_uref;
   gboolean is_graphical=FALSE;
 
@@ -143,34 +144,20 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
       }
       netlist = s_netlist_add(netlist);
       netlist->nlid = o_current->sid;
-      
-      /* search the single object only.... */
-      temp_uref =
-	o_attrib_search_name_single(o_current, "refdes", NULL);
-      
-      if (!temp_uref) {
-	temp_uref =
-	  o_attrib_search_name_single(o_current, "uref", NULL); /* deprecated */
-	
-	if (temp_uref) {
-	  printf("WARNING: Found uref=%s, uref= is deprecated, please use refdes=\n", temp_uref);
-	}
-      }
-      
-      if (temp_uref) {
-	netlist->component_uref =
-	  s_hierarchy_create_uref(pr_current, temp_uref,
-				  hierarchy_tag);
+
+      scm_uref = g_scm_c_get_uref(pr_current, o_current);
+
+      if (scm_is_string( scm_uref )) {
+        temp_uref = scm_to_locale_string( scm_uref );
+        netlist->component_uref =
+          s_hierarchy_create_uref(pr_current, temp_uref, hierarchy_tag);
+        g_free(temp_uref);
       } else {
-	netlist->component_uref = NULL;
+        netlist->component_uref = NULL;
       }
       
       if (hierarchy_tag) {
 	netlist->hierarchy_tag = g_strdup (hierarchy_tag);
-      }
-      
-      if (temp_uref) {
-	g_free(temp_uref);
       }
 
       netlist->object_ptr = o_current;

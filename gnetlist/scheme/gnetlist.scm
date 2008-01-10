@@ -249,3 +249,32 @@
 ; (run-test "one two three four five six seven eight nine ten" 5)
 ; (run-test "one two three four five six seven eight nine ten" 10)
 ; (run-test "one two three four five six seven eight nine ten" 20)
+
+(define first-val-or-#f
+  (lambda (value_list)
+    (if (null? value_list)
+      '#f
+      (car value_list)
+    )
+  )
+)
+
+;; determine the uref to use for a particular OBJECT
+(define gnetlist:get-uref
+  (lambda (object)
+    (cond
+      ((first-val-or-#f (get-attrib-value-by-attrib-name object "refdes"))
+        (car (get-attrib-value-by-attrib-name object "refdes")))
+      ((first-val-or-#f (get-attrib-value-by-attrib-name object "uref"))
+        (let ((uref (car (get-attrib-value-by-attrib-name object "uref"))))
+          (display (string-append "WARNING: Found uref=" uref " uref= is "))
+          (display (string-append "deprecated, please use refdes=" uref "\n"))
+          uref))
+      (else
+        '#f)
+    )
+  )
+)
+
+;; define the default handler for get-uref
+(define get-uref gnetlist:get-uref)
