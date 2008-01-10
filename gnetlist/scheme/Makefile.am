@@ -11,7 +11,8 @@ scmdata_DATA = $(DIST_SCM) $(BUILT_SCM)
 DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-geda.scm \
 	   gnet-spice.scm gnet-tango.scm gnet-verilog.scm \
 	   gnet-vhdl.scm gnet-vipec.scm \
-           gnet-pads.scm gnetlist.scm gnet-bae.scm gnet-protelII.scm \
+           gnet-pads.scm gnetlist.scm gnetlist-post.scm \
+           gnet-bae.scm gnet-protelII.scm \
            gnet-bom2.scm gnet-gossip.scm gnet-drc.scm gnet-vams.scm \
 	   gnet-partslist-common.scm gnet-partslist1.scm \
 	   gnet-partslist2.scm gnet-partslist3.scm gnet-maxascii.scm \

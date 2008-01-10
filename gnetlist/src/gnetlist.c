@@ -268,17 +268,9 @@ void main_prog(void *closure, int argc, char *argv[])
     s_page_print_all(pr_current);
 #endif
 
-    s_traverse_init();
-    s_traverse_start(pr_current);
-
     /* temporarly reuse input_str */
     sprintf(input_str, "%s%cgnetlist.scm", pr_current->scheme_directory,
             G_DIR_SEPARATOR);
-
-    /* Change back to the directory where we started AGAIN.  This is done */
-    /* because the s_traverse functions can change the Current Working Directory. */
-    chdir(cwd);
-    free(cwd); /* allocated by getcwd, so this should stay as free() */
 
     if (g_read_file(input_str) != -1) {
         s_log_message("Read init scm file [%s]\n", input_str);
@@ -318,7 +310,28 @@ void main_prog(void *closure, int argc, char *argv[])
         }
         /* Free now the list of configuration files */
         g_slist_free(post_backend_list);
+    }
 
+    s_traverse_init();
+    s_traverse_start(pr_current);
+
+    /* Change back to the directory where we started AGAIN.  This is done */
+    /* because the s_traverse functions can change the Current Working Directory. */
+    chdir(cwd);
+    free(cwd); /* allocated by getcwd, so this should stay as free() */
+
+    /* temporarly reuse input_str */
+    sprintf(input_str, "%s%cgnetlist-post.scm", pr_current->scheme_directory,
+            G_DIR_SEPARATOR);
+
+    if (g_read_file(input_str) != -1) {
+        s_log_message("Read post traversal scm file [%s]\n", input_str);
+    } else {
+        s_log_message("Failed to read post traversal scm file [%s]\n", input_str);
+        fprintf(stderr, "Failed to read post traversal scm file [%s]\n", input_str);
+    }
+
+    if (guile_proc) {
         /* check size here hack */
         sprintf(input_str, "(%s \"%s\")", guile_proc, output_filename);
         scm_c_eval_string (input_str);
