@@ -17,6 +17,7 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
+(use-modules (srfi srfi-13) (srfi srfi-14))
 
 ;; write out the pins for a particular component
 (define pcbpins:component_pins
@@ -96,3 +97,12 @@
     )
   )
 
+;; Custom get-uref function to stip lowercase suffixes
+(define (get-uref object)
+  (let ((real_uref (gnetlist:get-uref object)))
+    (if real_uref
+      (string-trim-right real_uref char-set:lower-case)
+      #f
+    )
+  )
+)

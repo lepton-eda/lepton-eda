@@ -24,6 +24,7 @@
 ;;  Bill Wilson    billw@wt.net
 ;;  6/17/2003
 
+(use-modules (srfi srfi-13) (srfi srfi-14))
 
 ;;
 ;;
@@ -168,3 +169,12 @@
     close-port port)
   )
 
+;; Custom get-uref function to stip lowercase suffixes
+(define (get-uref object)
+  (let ((real_uref (gnetlist:get-uref object)))
+    (if real_uref
+      (string-trim-right real_uref char-set:lower-case)
+      #f
+    )
+  )
+)
