@@ -1,6 +1,4 @@
-(load "commonrc")
-
-
 (hierarchy-netattrib-mangle "disabled")
 (hierarchy-netname-mangle "disabled")
 (hierarchy-uref-mangle "disabled")
+
