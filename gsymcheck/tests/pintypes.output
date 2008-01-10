@@ -1,0 +1,6 @@
+ERROR: Found multiple pintype=pas attributes on one pin
+ERROR: Found multiple pintype=out attributes on one pin
+ERROR: Invalid pintype=i attribute
+ERROR: Invalid pintype=iox attribute
+ERROR: Invalid pintype=abc attribute
+5 ERRORS found 

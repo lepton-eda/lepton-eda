@@ -18,6 +18,7 @@ int parse_commandline(int argc, char *argv[]);
 /* s_check.c */
 int s_check_all(TOPLEVEL *pr_current);
 int s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head);
+gboolean s_check_list_has_item(char **list , char *item);
 void s_check_graphical(OBJECT *o_current, SYMCHECK *s_current);
 void s_check_device(OBJECT *o_current, SYMCHECK *s_current);
 void s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current);
