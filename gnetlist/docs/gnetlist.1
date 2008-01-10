@@ -1,9 +1,9 @@
-.TH gnetlist 1 "February 16th, 2007" Version 20070210
+.TH gnetlist 1 "January 10th, 2008" Version 1.3.1.20080110
 .SH NAME
 gnetlist - gEDA/gaf Netlist extraction/generation
 .SH SYNOPSIS
 .B gnetlist
-[-e] [-i] [-I] [-q] [-s] [-v] [-l schem_file] [-m schem_file ] [ -O option ] [-h | --help] [-g guile_procedure] [-c scheme_string ] [-o output_filename] schematic1 [... schematicN]
+[-e] [-i] [-I] [-q] [-s] [-v] [-l schem_file] [-m schem_file ] [-n] [ -O option ] [-h | --help] [-g guile_procedure] [-c scheme_string ] [-o output_filename] schematic1 [... schematicN]
 .SH DESCRIPTION
 .PP
 \fIgnetlist\fP is the netlist extraction/generation program which is part gEDA 
@@ -18,67 +18,73 @@ guile script extracts the connections into some netlist format.
 gnetlist is very much so a work in progress.  Currently it supports the
 following backends: 
 
-        1) Allegro netlist format (-g allegro)
-
-        2) BAE netlist format (-g bae)
-
-        3) BOM / BOM2 - Bill of Materials (-g bom and -g bom2)
-
-        4) Partslist 1,2,3 - More Bill of Materials (-g partslist[1-3])
-
-        5) DRC - Start of a design rule checker (-g drc)
-
-        6) DRC2 - A second design rule checker (-g drc2)
-
-        7) gEDA - native format, mainly used for testing (-g geda)
-
-        8) Gossip netlist format (-g gossip)
-
-        9) PADS netlist format (-g pads)
-
-        10) PCB / PCBboard (-g PCB and -g PCBboard)
-
-        11) gsch2pcb backend (-g gsch2pcb)
-
-        12) ProtelII netlist format (-g protelII)
-
-        13) Spice compatible netlist format (-g spice)
-
-        14) Enhanced spice compatible netlist format (-g spice-sdb)
-
-        15) Switcap netlist format (-g switcap)
-
-        16) Tango netlist format (-g tango)
-
-        17) Verilog code (-g verilog)
-
-        18) VHDL code (-g vhdl)
-
-        19) VIPEC netlist format (-g vipec)
-
-        20) Bartels Autoengineer netlist format (-g bae)
-
-        21) GOSSIP system simulation system netlist format (-g gossip)
-
-        22) MAXASCII netlist format (-g maxascii)
-
-        23) VHDL-AMS netlist format (-g vams)
-
-        24) Futurenet2 netlist format (-g futurenet2 )
-
-        25) SWITCAP switched capacitor simulator netlist format (-g switcap )
-
-        26) RF Cascade netlist format (-g cascade )
-
-        27) RACAL-REDAC netlist format (-g redac )
-
-        28) PCB actions file for forward annotating pin/pad names from
-	    schematic to layout (-g pcbpins)
-
+.IP \[bu] 2 
+Allegro netlist format (-g allegro)
+.IP \[bu]
+BOM / BOM2 - Bill of Materials (-g bom and -g bom2)
+.IP \[bu]
+Partslist 1,2,3 - More Bill of Materials (-g partslist[1-3])
+.IP \[bu]
+DRC - Start of a design rule checker (-g drc)
+.IP \[bu]
+DRC2 - A second design rule checker (-g drc2)
+.IP \[bu]
+gEDA - native format, mainly used for testing (-g geda)
+.IP \[bu]
+Gossip netlist format (-g gossip)
+.IP \[bu]
+PADS netlist format (-g pads)
+.IP \[bu]
+PCB / PCBboard (-g PCB and -g PCBboard)
+.IP \[bu]
+PCB actions file for forward annotating pin/pad names from
+schematic to layout (-g pcbpins)
+.IP \[bu]
+gsch2pcb backend (-g gsch2pcb)
+.IP \[bu]
+ProtelII netlist format (-g protelII)
+.IP \[bu]
+Spice compatible netlist format (-g spice)
+.IP \[bu]
+Enhanced spice compatible netlist format (-g spice-sdb)
+.IP \[bu]
+Tango netlist format (-g tango)
+.IP \[bu]
+Verilog code (-g verilog)
+.IP \[bu]
+VHDL code (-g vhdl)
+.IP \[bu]
+VIPEC netlist format (-g vipec)
+.IP \[bu]
+Bartels Autoengineer netlist format (-g bae)
+.IP \[bu]
+GOSSIP system simulation system netlist format (-g gossip)
+.IP \[bu]
+MAXASCII netlist format (-g maxascii)
+.IP \[bu]
+VHDL-AMS netlist format (-g vams)
+.IP \[bu]
+Futurenet2 netlist format (-g futurenet2 )
+.IP \[bu]
+SWITCAP switched capacitor simulator netlist format (-g switcap )
+.IP \[bu]
+RF Cascade netlist format (-g cascade )
+.IP \[bu]
+RACAL-REDAC netlist format (-g redac )
+.IP \[bu]
+SystemC netlist backend (-g systemc)
+.IP \[bu]
+Calay format netlist backend (-g calay)
+.IP \[bu]
+Osmond format netlist backend (-g osmond)
+.IP \[bu]
+Eagle netlist format (-g eagle)
+.IP \[bu]
+Netlister for symbolic circuit analysis using Mathematica (-g mathematica)
 
 For more info on these formats please look at the README.*
 
-Please read the official (non-existant) documentation on how to use
+Please read the official documentation on how to use
 gnetlist, since this man page just describes the command line arguments
 and a few examples on how to run gnetlist.
 
@@ -104,7 +110,7 @@ execute before any backend is loaded or any guile procedure (using -g flag)
 is executed.  This flag can be specified multiple times and can be used to 
 pass information to backends.
 .TP 8
-.B -e 
+.B -e, --embed 
 Force embedding contents of .include file when using the spice-sdb backend.
 .TP 8
 .B -O string
@@ -117,6 +123,9 @@ execute after the backend is loaded but still before any guile procedure
 and can be used to pass information to backends.  This flag, for example, 
 allows the user to override variables inside of the backends (such as paths).
 .TP 8
+.B -n --nomunge
+Do not autocorrect the refdes attributes.  Only applies to the spice-sdb backend.
+.TP 8
 .B -c string
 Pass the specified string to the guile interpreter.  This allows you to 
 execute arbitrary guile scripts from the command line.  Be sure to surround
@@ -124,10 +133,10 @@ the string with either single or double quotes to satisfy your shell.  The
 string is execute before any init or netlist backend scheme code is
 loaded or executed.
 .TP 8
-.B -I 
+.B -I --include 
 Put .INCLUDE <filename> in output file instead of model file's contents.
 .TP 8
-.B -h 
+.B -h --help
 Print out short command line help.
 .TP 8
 .B -i 
@@ -190,7 +199,14 @@ with the -v flag:
 .ad b 
 
 .SH "ENVIRONMENT"
-No environment variables are used.
+\fIgnetlist\fP respects the following environment variable:
+.PP
+.TP 8
+.B GEDADATA 
+specifies where the various required scheme and rc files are located
+(the default is ${prefix}/share/gEDA).  This environment variables does
+not need to be set by the end user unless they are moving the executables
+to a new install ${prefix}.
 
 .SH "AUTHOR"
 Ales Hvezda and many others
@@ -199,7 +215,7 @@ Ales Hvezda and many others
 .BR gschem (1),
 .BR gsymcheck (1)
 .SH COPYRIGHT
-Copyright \(co  1999-2007 Ales Hvezda
+Copyright \(co  1999-2008 Ales Hvezda
 
 This document can be freely redistributed according to the terms of the 
 GNU General Public License version 2.0

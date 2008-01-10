@@ -1,4 +1,4 @@
-.TH gsymcheck 1 "February 16th, 2007" Version 20070210
+.TH gsymcheck 1 "January 10th, 2008" Version 1.3.1.20080110
 .SH NAME
 gsymcheck - gEDA/gaf Symbol Checker
 .SH SYNOPSIS
@@ -6,8 +6,30 @@ gsymcheck - gEDA/gaf Symbol Checker
 [-h] [-v] [-q] symbol1 [... symbolN]
 .SH DESCRIPTION
 .PP
-\fIgsymcheck\fP is a symbol checker for gEDA.  Eventually there will be a 
-list of checks performed on the symbols listed here.
+\fIgsymcheck\fP is a symbol checker for gEDA/gaf.  Here is a list of checks that 
+\fIgsymcheck\fP performs:
+
+.IP \[bu] 2 
+Checks for graphical= attribute (if present does varied tests)
+.IP \[bu] 
+Checks for the device= attribute
+.IP \[bu] 
+Checks for various other missing attributes (pinlabel, pintype,
+pinseq, footprint, refdes) 
+.IP \[bu] 
+Checks to make sure that the active pin end is on the 100 unit
+grid.
+.IP \[bu] 
+Checks the uses of the various attributes (duplicates, incorrect
+syntax, invalid values, etc...)
+.IP \[bu] 
+Checks for obsolete, old, and forbidden attributes
+.IP \[bu] 
+Checks for any nets or buses within a symbol
+.IP \[bu] 
+Checks for any other connections within a symbol
+.IP \[bu] 
+Checks to make sure the number of pins is the correct number
 
 .SH OPTIONS
 .l
@@ -34,10 +56,37 @@ specified then they are sequentially read in and checked.  It is important
 that the schematic(s) follow all the options (ie last).
 
 .SH EXAMPLES 
-Examples to be listed here eventually
+Here are some examples on how to run \fIgsymcheck\fP:  
+
+To get usage information just run:
+
+	 gsymcheck
+
+To actually check a symbol with just error counts, run:
+
+	gsymcheck symbolfilename.sym
+
+To get the actuall error messages, run:
+
+	gsymcheck -v symbolfilename.sym
+
+To see all the error messages and warnings, run:
+
+	gsymcheck -vv symbolfilename.sym
+
+To see all the error messages, warnings, and parse info, run:
+
+	gsymcheck -vvv symbolfilename.sym
 
 .SH "ENVIRONMENT"
-No environment variables are used.
+\fIgsymcheck\fP respects the following environment variable:
+.PP
+.TP 8
+.B GEDADATA 
+specifies where the various required scheme and rc files are located
+(the default is ${prefix}/share/gEDA).  This environment variables does
+not need to be set by the end user unless they are moving the executables
+to a new install ${prefix}.
 
 .SH "AUTHOR"
 Ales Hvezda and many others
@@ -46,7 +95,7 @@ Ales Hvezda and many others
 .BR gschem (1),
 .BR gnetlist (1)
 .SH COPYRIGHT
-Copyright \(co  1999-2007 Ales Hvezda
+Copyright \(co  1999-2008 Ales Hvezda
 
 This document can be freely redistributed according to the terms of the 
 GNU General Public License version 2.0

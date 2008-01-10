@@ -1,4 +1,4 @@
-.TH gschem 1 "February 16th, 2007" Version 20070210
+.TH gschem 1 "January 10th, 2008" Version 1.3.1.20080110
 .SH NAME
 gschem - gEDA/gaf Schematic Capture
 .SH SYNOPSIS
@@ -13,7 +13,7 @@ are either part of a standard library or created by the user) which
 represent the various gates and components.  These components are then 
 interconnected by nets (wires).  Schematics may be printed to a
 PostScript file for printing or further conversion to other output
-formats. 
+formats.  Output to various image formats is also supported.
 
 \fIgschem\fP is also the symbol creation editor.  All the standard 
 methods of creating schematics are used in the creation of symbols. There
@@ -74,19 +74,26 @@ the current directory
 
 To run \fIgschem\fP and then interact with the program:
 
-	./gschem 
+	gschem 
 .br
 
 To run \fIgschem\fP in interactive mode but load a sample schematic:
 
-	./gschem adders_1.sch
+	gschem adders_1.sch
 
 To run \fIgschem\fP and load up all schematics in the current subdirectory:
 
-	./gschem *.sch
+	gschem *.sch
 
 .SH "ENVIRONMENT"
-No environment variables are used.
+\fIgschem\fP respects the following environment variable:
+.PP
+.TP 8
+.B GEDADATA 
+specifies where the various required scheme and rc files are located
+(the default is ${prefix}/share/gEDA).  This environment variables does
+not need to be set by the end user unless they are moving the executables
+to a new install ${prefix}.
 
 .SH "AUTHOR"
 Ales Hvezda and many others
@@ -96,7 +103,7 @@ Ales Hvezda and many others
 .BR gsymcheck (1)
 .SH COPYRIGHT
 .nf
-Copyright \(co  1999-2007 Ales Hvezda
+Copyright \(co  1999-2008 Ales Hvezda
 
 This document can be freely redistributed according to the terms of the 
 GNU General Public License version 2.0
