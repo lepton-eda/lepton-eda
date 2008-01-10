@@ -1745,60 +1745,6 @@ void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
       	g_free(string);
       }
 
-/* This block of code is commented out since it breaks slotting in general. */
-/* A better way should be found for spice-sdb's use. */
-#if 0 
-  /* these variables are used in this block and should be moved above */
-  char *new_pinseq;   /* New pinseq = (slot*(number of pins -1) + pin_count */
-  int numpins;        /* Total number of pins on this slot */
-  OBJECT *o_pinseq_object;
-
-      /* Now update pinseq= attrib on this part. */
-      /* Algorithm:
-       * 1. Get pointer to pinseq= attrib (graphic object) on this part.
-       * 2. Verify it has a pinseq= string attached.
-       * 3. free pinseq string.
-       * 4. figure out how many pins are on this part.
-       * 5. Write new string pinseq=(slot * (number of pins-1)) + pin_counter
-       *    into pinseq= object.
-       */
-      string = o_attrib_search_name_single(o_pin_object, "pinseq",
-                                           &o_pinseq_object);
-  
-      if (string && o_pinseq_object && o_pinseq_object->type == OBJ_TEXT &&
-          o_pinseq_object->text->string) {
-	g_free(o_pinseq_object->text->string);  /* free old pinseq text */
-
-	/* I need to check that the return is non-zero! */
-	numpins = o_complex_count_pins(o_current);
-
-#if DEBUG
-	printf("libgeda:o_attrib.c:o_attrib_slot_update -- name = %s\n", o_current->name);
-	printf("                                           numpins = %d\n", numpins);
-#endif
-
-	/* Now put new pinseq attrib onto pin. */
-	new_pinseq = g_malloc(sizeof(char)*((numpins-1)*slot)+pin_counter);
-	sprintf(new_pinseq, "%d", numpins*(slot-1)+pin_counter);
-        /* Add 1 for EOL char */
-	o_pinseq_object->text->string = (char *)
-          g_malloc(sizeof(char)*(strlen("pinseq=") + 
-				 strlen(new_pinseq) +1 ));
-
-	sprintf(o_pinseq_object->text->string, "pinseq=%s", new_pinseq);
-	g_free(new_pinseq);
-#if DEBUG
-	printf("libgeda:o_attrib.c:o_attrib_slot_update -- ");
-	printf("new_pinseq attrib = %s \n", o_pinseq_object->text->string);
-#endif
-        
-        o_text_recreate(toplevel, o_pinseq_object);
-      }
-      if (string) {
-      	g_free(string);
-      }
-#endif /* commented out since it breaks slotting */
-      
       pin_counter++;
     } else {
       s_log_message(_("component missing pinseq= attribute\n"));
