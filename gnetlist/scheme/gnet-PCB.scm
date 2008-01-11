@@ -19,7 +19,7 @@
 
 ;;  PCB format
 
-(use-modules (ice-9 format) (srfi srfi-13) (srfi srfi-14))
+(use-modules (ice-9 format))
 
 
 (define (PCB:display-connections nets)
@@ -51,12 +51,3 @@
     (PCB:write-net (gnetlist:get-all-unique-nets "dummy") port)
     (close-output-port port)))
 
-;; Custom get-uref function to stip lowercase suffixes
-(define (get-uref object)
-  (let ((real_uref (gnetlist:get-uref object)))
-    (if real_uref
-      (string-trim-right real_uref char-set:lower-case)
-      #f
-    )
-  )
-)
