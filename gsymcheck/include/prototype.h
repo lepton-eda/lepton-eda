@@ -30,7 +30,6 @@ void s_check_oldpin(OBJECT *object_head, SYMCHECK *s_current);
 void s_check_oldslot(OBJECT *object_head, SYMCHECK *s_current);
 void s_check_nets_buses(OBJECT *object_head, SYMCHECK *s_current);
 void s_check_connections(OBJECT *object_head, SYMCHECK *s_current);
-void s_check_obsolete_forbidden_attributes(OBJECT *object_head, SYMCHECK *s_current);
 void s_check_missing_attribute(OBJECT *object, char *attribute, SYMCHECK *s_current);
 void s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current);
 void s_check_pintype(OBJECT *object_head, SYMCHECK *s_current);

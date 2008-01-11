@@ -1,5 +1,6 @@
-Warning: Found obsolete label= attribute: label=2
+Warning: Found obsolete label= attribute: [label=2]
 ERROR: Found wrongly attached attribute: [footprint=2]
+ERROR: Found forbidden type= attribute: [type=out]
 ERROR: Found misplaced pin attribute: [pintype=io]
 ERROR: Found misplaced pin attribute: [pinlabel=attached to box]
 ERROR: Found wrongly attached attribute: [comment=attached to circle]
@@ -7,6 +8,5 @@ ERROR: Found misplaced pin attribute: [pinlabel=not attached]
 ERROR: Found misplaced pin attribute: [pinseq=3]
 ERROR: Found misplaced pin attribute: [pinnumber=3]
 ERROR: Found misplaced pin attribute: [pintype=io]
-ERROR: Found forbidden type= attribute: type=out
 1 warnings found 
 9 ERRORS found 

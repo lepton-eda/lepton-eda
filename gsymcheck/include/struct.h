@@ -43,12 +43,12 @@ struct st_symcheck {
   int found_connection;
 
   /* obsolete attribute checks */
-  int found_label;
-  int found_uref;
+  /* int found_label; */
+  /* int found_uref; */
 
   /* forbidden attributes */
-  int found_name;
-  int found_type;
+  /* int found_name; */
+  /* int found_type; */
 
   /* misc attributes */
   int found_footprint;

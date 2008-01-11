@@ -64,10 +64,6 @@ s_symstruct_init(void)
   s_symcheck->found_net=FALSE;
   s_symcheck->found_bus=FALSE;
   s_symcheck->found_connection=FALSE;
-  s_symcheck->found_label=FALSE;
-  s_symcheck->found_uref=FALSE;
-  s_symcheck->found_name=FALSE;
-  s_symcheck->found_type=FALSE;
   s_symcheck->found_footprint=FALSE;
   s_symcheck->found_refdes=FALSE;
 

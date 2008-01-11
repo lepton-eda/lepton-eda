@@ -75,9 +75,6 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
     s_log_message("Checking: %s\n", p_current->page_filename);
   }
   
-  /* check version number */
-  /* s_check_version(object_head, s_symcheck); out */
-
   /* overal symbol structure test */
   s_check_symbol_structure(object_head, s_symcheck);
 
@@ -90,9 +87,6 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
   /* check for missing attributes */
   s_check_missing_attributes(object_head, s_symcheck);
   
-  /* check for obsolete attributes */
-  s_check_obsolete_forbidden_attributes(object_head, s_symcheck);
-
   /* check for pintype attribute (and multiples) on all pins */
   s_check_pintype(object_head, s_symcheck);
     
@@ -198,9 +192,11 @@ s_check_symbol_structure(OBJECT *object_head, SYMCHECK *s_current)
 			      "refdes", "slot", "net", "value",
 			      "symversion", "dist-license",
 			      NULL};
-  char *obsolete_attributes[] = {"uref", "name", "label", "type",
-				 "email", /* pin# ?, slot# ? */
+  char *obsolete_attributes[] = {"uref", "label", "email", 
 				 NULL};
+  char *forbidden_attributes[] = {"type", "name", 
+				  NULL};
+  /* pin# ?, slot# ? */
   
   for (o_current = object_head;
        o_current != NULL;
@@ -209,14 +205,19 @@ s_check_symbol_structure(OBJECT *object_head, SYMCHECK *s_current)
     if (o_current->type == OBJ_TEXT) {
       tokens = g_strsplit(o_current->text->string,"=", 2);
       if (tokens[0] != NULL && tokens[1] != NULL) {
-	if (s_check_list_has_item(obsolete_attributes, tokens[0])) {
-#if 0
+	if (s_check_list_has_item(forbidden_attributes, tokens[0])) {
+	  message = g_strdup_printf ("Found forbidden %s= attribute: [%s=%s]\n",
+				     tokens[0], tokens[0], tokens[1]);
+	  s_current->error_messages =
+	    g_list_append(s_current->error_messages, message);
+	  s_current->error_count++;
+	}
+	else if (s_check_list_has_item(obsolete_attributes, tokens[0])) {
 	  message = g_strdup_printf ("Found obsolete %s= attribute: [%s=%s]\n",
-				     token[0], tokens[0], tokens[1]);
+				     tokens[0], tokens[0], tokens[1]);
 	  s_current->warning_messages =
 	    g_list_append(s_current->warning_messages, message);
 	  s_current->warning_count++;
-#endif
 	}
 	else if (s_check_list_has_item(valid_pin_attributes, tokens[0])) {
 	  if (o_current->attached_to == NULL 
@@ -248,12 +249,7 @@ s_check_symbol_structure(OBJECT *object_head, SYMCHECK *s_current)
       }
       g_strfreev(tokens);
     }
-    else {
-      if (g_list_length(o_current->attribs) != 0) {
-	
-      }
-    }
-  }  
+  }
 }
 
 void
@@ -1221,71 +1217,6 @@ s_check_connections(OBJECT *object_head, SYMCHECK *s_current)
     o_current = o_current->next;
   }
 }
-
-void
-s_check_obsolete_forbidden_attributes(OBJECT *object_head, SYMCHECK *s_current)
-{
-  OBJECT *o_current;
-  char *message;
-  char *attrib;
-  
-  o_current = object_head;
-  while(o_current != NULL)
-  {
-    if (o_current->type == OBJ_TEXT)
-    {
-
-      attrib = strstr(o_current->text->string, "label=");
-      /* make sure we only check for label= and not pinlabel= */
-      if (attrib && attrib == o_current->text->string) {
-        message = g_strdup_printf (
-          "Found obsolete label= attribute: %s\n",
-          o_current->text->string);
-        s_current->warning_messages =
-          g_list_append(s_current->warning_messages, message);
-        s_current->found_label++;
-        s_current->warning_count++;
-      }
-      
-      if (strstr(o_current->text->string, "uref=")) {
-        message = g_strdup_printf (
-          "Found obsolete uref= attribute: %s\n",
-          o_current->text->string);
-        s_current->warning_messages =
-          g_list_append(s_current->warning_messages, message);
-        s_current->found_uref++;
-        s_current->warning_count++;     
-      }
-
-      attrib = strstr(o_current->text->string, "type=");
-      /* make sure we only check for type= and not pintype= */
-      if (attrib && attrib == o_current->text->string) {
-        message = g_strdup_printf (
-          "Found forbidden type= attribute: %s\n",
-          o_current->text->string);
-        s_current->error_messages =
-          g_list_append(s_current->error_messages, message);
-        s_current->found_type++;
-        s_current->error_count++;         
-      }
-
-      attrib = strstr(o_current->text->string, "name=");
-      if (attrib && attrib == o_current->text->string) {
-        message = g_strdup_printf (
-          "Found forbidden name= attribute: %s\n",
-          o_current->text->string);
-        s_current->error_messages =
-          g_list_append(s_current->error_messages, message);
-        s_current->found_name++;
-        s_current->error_count++;
-      }
-    }
-
-    o_current = o_current->next;
-  }
-  
-}
-
 
 void
 s_check_missing_attribute(OBJECT *object, char *attribute, SYMCHECK *s_current)
