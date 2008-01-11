@@ -1,4 +1,4 @@
-v 20070216 1
+v 20080110 1
 C 40200 42900 0 0 0 title-A2.sym
 C 45400 53600 1 0 0 in-1.sym
 {
@@ -46,7 +46,7 @@ net=jtag_power:14
 T 53000 54300 5 10 1 0 0 0 1
 net=GND:7
 T 53600 55600 5 10 0 1 0 0 1
-footprint=so14
+footprint=SO14
 T 54500 54800 5 10 1 1 0 0 1
 device=7414
 }

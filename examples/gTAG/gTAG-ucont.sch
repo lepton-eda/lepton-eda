@@ -1,11 +1,11 @@
-v 20070216 1
+v 20080110 1
 C 43700 38500 0 0 0 title-A2.sym
 C 46000 42600 1 0 0 24Cxx-1.sym
 {
 T 47000 43600 5 10 1 1 0 0 1
 refdes=U2
 T 46400 43700 5 10 0 1 0 0 1
-footprint=so8
+footprint=SO8
 T 46300 42300 5 10 1 0 0 0 1
 net=+3.3V:8
 T 46300 42100 5 10 1 0 0 0 1
@@ -20,7 +20,7 @@ refdes=X1
 T 55100 53000 5 10 1 1 0 0 1
 value=12MHz
 T 55000 52800 5 10 0 1 0 0 1
-footprint=xtal300
+footprint=CRYSTAL 300
 T 55200 53700 5 10 0 0 0 0 1
 device=CRYSTAL
 T 55200 53900 5 10 0 0 0 0 1
@@ -300,7 +300,7 @@ refdes=C2
 T 49100 52500 5 10 1 1 90 0 1
 value=2.2u
 T 48300 51900 5 10 0 1 0 0 1
-footprint=sm1206p
+footprint=sm1206
 T 48700 53800 5 10 0 0 0 0 1
 device=POLARIZED_CAPACITOR
 T 48700 54000 5 10 0 0 0 0 1
@@ -337,7 +337,7 @@ C 50300 41100 1 0 0 cy7c64603-52nc.sym
 T 50700 52600 5 10 1 1 0 0 1
 refdes=U1
 T 53900 47600 5 10 0 1 0 0 1
-footprint=cy7c64603_qfp
+footprint=cy7c64603
 }
 N 51400 39900 57200 39900 4
 N 57200 40300 57200 39900 4
@@ -552,7 +552,7 @@ C 48400 42600 1 90 0 jumper-1.sym
 T 47800 42400 5 10 1 1 0 0 1
 refdes=J1
 T 47600 42300 5 10 0 1 0 0 1
-footprint=jumper2
+footprint=JUMPER2
 T 48700 43100 5 8 0 0 0 0 1
 device=JUMPER
 }
@@ -570,7 +570,7 @@ C 63200 45900 1 90 0 header20-1.sym
 T 59100 46300 5 10 1 1 90 0 1
 refdes=CONN1
 T 63300 46700 5 10 0 1 0 0 1
-footprint=connector20
+footprint=CONNECTOR 10 2
 T 63400 45650 5 10 0 1 0 0 1
 device=HEADER20
 }

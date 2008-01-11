@@ -1,4 +1,4 @@
-v 20070216 1
+v 20080110 1
 C 48300 42000 0 0 0 title-A2.sym
 C 54700 52300 1 0 0 in-1.sym
 {
@@ -32,7 +32,7 @@ refdes=C32
 T 63600 50700 5 10 1 1 0 0 1
 value=2.2u
 T 63300 51400 5 10 0 1 0 0 1
-footprint=sm1206p
+footprint=sm1206
 T 63500 52100 5 10 0 0 0 0 1
 device=POLARIZED_CAPACITOR
 T 63500 52300 5 10 0 0 0 0 1
@@ -45,7 +45,7 @@ refdes=C31
 T 59000 50600 5 10 1 1 0 0 1
 value=2.2u
 T 58700 51300 5 10 0 1 0 0 1
-footprint=sm1206p
+footprint=sm1206
 T 58900 52000 5 10 0 0 0 0 1
 device=POLARIZED_CAPACITOR
 T 58900 52200 5 10 0 0 0 0 1
