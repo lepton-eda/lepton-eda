@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-05 21:12-0500\n"
+"POT-Creation-Date: 2008-01-11 01:22-0500\n"
 "PO-Revision-Date: 2007-12-29 08:51+0100\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -550,50 +550,50 @@ msgstr "Ein ungültiger Wert [%f] wurde an postscript-font-scale übergeben.\n"
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "Eine ungültige Größe [%d] wurde an snap-size übergeben.\n"
 
-#: ../src/g_rc.c:1050
+#: ../src/g_rc.c:1067
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "Eine ungültige Ebenenanzahl [%d] wurde an undo-levels übergeben.\n"
 
-#: ../src/g_rc.c:1290
+#: ../src/g_rc.c:1307
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Eine ungültige Größe [%d] wurde an bus-ripper-size übergeben.\n"
 
-#: ../src/g_rc.c:1365
+#: ../src/g_rc.c:1382
 #, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
 msgstr "An \"grid-dot-size\" wurde eine falsche Punktgröße [%d] übergeben.\n"
 
-#: ../src/g_rc.c:1406
+#: ../src/g_rc.c:1423
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
 msgstr ""
 "An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
 
-#: ../src/g_rc.c:1450
+#: ../src/g_rc.c:1467
 #, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "Ein ungültiger Offset [%d] wurde an add-attribute-offset übergeben.\n"
 
-#: ../src/g_rc.c:1474
+#: ../src/g_rc.c:1491
 #, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr ""
 "An \"auto-save-interval\" wurde eine ungültige Sekundenanzahl [%d] "
 "übergeben\n"
 
-#: ../src/g_rc.c:1515
+#: ../src/g_rc.c:1532
 #, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr "Ein ungültiger Werte [%d] wurde an mousepan-gain übergeben.\n"
 
-#: ../src/g_rc.c:1538
+#: ../src/g_rc.c:1555
 #, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr "Ein ungültiger Wert [%d] wurde an keyboardpan-gain übergeben.\n"
 
-#: ../src/g_rc.c:1584
+#: ../src/g_rc.c:1601
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr ""
@@ -1158,32 +1158,32 @@ msgstr "Verborgener Text ist jetzt sichtbar.\n"
 msgid "Hidden text is now invisible\n"
 msgstr "Verborgener Text ist jetzt unsichbar.\n"
 
-#: ../src/o_misc.c:771
+#: ../src/o_misc.c:775
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
 msgstr ""
 "Das Symbol [%s] konnte nicht gefunden werden. Aktualisierung "
 "fehlgeschlagen.\n"
 
-#: ../src/o_misc.c:906
+#: ../src/o_misc.c:910
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 "o_autosave_backups: Konnte den tatsächlichen Dateinamen von %s nicht "
 "ermitteln."
 
-#: ../src/o_misc.c:950
+#: ../src/o_misc.c:954
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 "Die vorherige Backup-Datei [%s] konnte nicht auf read-write gesetzt werden.\n"
 
-#: ../src/o_misc.c:968
+#: ../src/o_misc.c:972
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "Die Backup-Datei [%s] konnte nicht auf readonly gesetzt werden.\n"
 
-#: ../src/o_misc.c:973
+#: ../src/o_misc.c:977
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "Die Backup-Datei [%s] konnte nicht gespeichert werden.\n"
@@ -1977,7 +1977,11 @@ msgstr "Breite x Höhe"
 msgid "Image type"
 msgstr "Bild Format"
 
-#: ../src/x_log.c:252
+#: ../src/x_log.c:195
+msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
+msgstr ""
+
+#: ../src/x_log.c:263
 msgid "Status"
 msgstr "Status"
 

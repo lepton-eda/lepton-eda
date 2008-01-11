@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-05 21:12-0500\n"
+"POT-Creation-Date: 2008-01-11 01:22-0500\n"
 "PO-Revision-Date: 2006-07-27 01:34-0300\n"
 "Last-Translator: \n"
 "Language-Team:  <pt@li.org>\n"
@@ -561,49 +561,49 @@ msgstr "Tamanho [%d] inválido (text-size)\n"
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "Tamanho [%d] inválido passado tamanho de grade\n"
 
-#: ../src/g_rc.c:1050
+#: ../src/g_rc.c:1067
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr ""
 "Número de níveis [%d] inválido para função desfaz passado para undo-level\n"
 
-#: ../src/g_rc.c:1290
+#: ../src/g_rc.c:1307
 #, fuzzy, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Tamanho [%d] inválido passado tamanho de grade\n"
 
-#: ../src/g_rc.c:1365
+#: ../src/g_rc.c:1382
 #, fuzzy, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
 msgstr "Tamanho [%d] inválido (text-size)\n"
 
-#: ../src/g_rc.c:1406
+#: ../src/g_rc.c:1423
 #, fuzzy, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
 msgstr "Tamanho [%d] inválido (text-size)\n"
 
-#: ../src/g_rc.c:1450
+#: ../src/g_rc.c:1467
 #, fuzzy, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "Tamanho [%d] inválido (text-size)\n"
 
-#: ../src/g_rc.c:1474
+#: ../src/g_rc.c:1491
 #, fuzzy, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr ""
 "Número de níveis [%d] inválido para função desfaz passado para undo-level\n"
 
-#: ../src/g_rc.c:1515
+#: ../src/g_rc.c:1532
 #, fuzzy, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr "Tamanho [%d] inválido passado tamanho de grade\n"
 
-#: ../src/g_rc.c:1538
+#: ../src/g_rc.c:1555
 #, fuzzy, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr "Tamanho [%d] inválido passado tamanho de grade\n"
 
-#: ../src/g_rc.c:1584
+#: ../src/g_rc.c:1601
 #, fuzzy, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr ""
@@ -1156,27 +1156,27 @@ msgstr "Texto oculto agora está visível\n"
 msgid "Hidden text is now invisible\n"
 msgstr "Texto oculto agora está invisível\n"
 
-#: ../src/o_misc.c:771
+#: ../src/o_misc.c:775
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
 msgstr ""
 
-#: ../src/o_misc.c:906
+#: ../src/o_misc.c:910
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 
-#: ../src/o_misc.c:950
+#: ../src/o_misc.c:954
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "NÃO foi possível deixar arquivo backup [%s] como leitura e gravação\n"
 
-#: ../src/o_misc.c:968
+#: ../src/o_misc.c:972
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "NÃO foi possível deixar arquivo backup [%s] apenas leitura!\n"
 
-#: ../src/o_misc.c:973
+#: ../src/o_misc.c:977
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "NÃO foi possível salvar  arquivo backup [%s] !\n"
@@ -1991,7 +1991,11 @@ msgstr "Largura x Altura"
 msgid "Image type"
 msgstr ""
 
-#: ../src/x_log.c:252
+#: ../src/x_log.c:195
+msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
+msgstr ""
+
+#: ../src/x_log.c:263
 msgid "Status"
 msgstr "Status"
 

@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-07 20:11+0100\n"
+"POT-Creation-Date: 2008-01-11 01:22-0500\n"
 "PO-Revision-Date: 2008-01-07 20:17+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: ../data/libgeda.xml.in.h:1
 msgid "gEDA circuit schematic"
@@ -326,7 +326,7 @@ msgstr "Seleccionando color BLANCO\n"
 msgid "Found an improper attribute: _%s_\n"
 msgstr "Se ha encontrado una propiedad no válida: _%s_\n"
 
-#: ../src/o_attrib.c:1690 ../src/o_attrib.c:1851
+#: ../src/o_attrib.c:1690 ../src/o_attrib.c:1797
 msgid "Did not find slotdef=#:#,#,#... attribute\n"
 msgstr "No se ha encontrado un atributo slotdef=#:#,#,#...\n"
 
@@ -335,11 +335,11 @@ msgstr "No se ha encontrado un atributo slotdef=#:#,#,#...\n"
 msgid "Improper slotdef syntax: missing \":\".\n"
 msgstr "Sintaxis de slotdef incorrecta: falta el carácter \":\".\n"
 
-#: ../src/o_attrib.c:1711 ../src/o_attrib.c:1870
+#: ../src/o_attrib.c:1711 ../src/o_attrib.c:1816
 msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
 msgstr "No se ha encontrado un atributo válido slotdef=#:#,#,#...\n"
 
-#: ../src/o_attrib.c:1804 ../src/o_attrib.c:1904
+#: ../src/o_attrib.c:1750 ../src/o_attrib.c:1850
 msgid "component missing pinseq= attribute\n"
 msgstr "El componente no tiene el atributo pinseq\n"
 
@@ -800,4 +800,3 @@ msgstr "Encontrado [%s]\n"
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "No se ha podido encontrar [%s] en ninguna librería fuente\n"
-

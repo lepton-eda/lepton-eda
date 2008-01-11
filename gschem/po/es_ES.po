@@ -8,14 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-05 21:12-0500\n"
+"POT-Creation-Date: 2008-01-11 01:22-0500\n"
 "PO-Revision-Date: 2008-01-07 19:04+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
-"Language-Team: Spanish/Spain"
-"MIME-Version: 1.0\n"
+"Language-Team: Spanish/SpainMIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);X-Generator: KBabel 1.0.2"
+"Plural-Forms: nplurals=2; plural=(n != 1);X-Generator: KBabel 1.0.2\n"
 
 #: ../src/rcstrings.c:2
 msgid "File"
@@ -553,57 +552,57 @@ msgstr ""
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "Se ha especificado un tamaño no válido [%d] a la función snap-size\n"
 
-#: ../src/g_rc.c:1050
+#: ../src/g_rc.c:1067
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr ""
 "Número de niveles [%d] no válidos especificados a la función undo-levels\n"
 
-#: ../src/g_rc.c:1290
+#: ../src/g_rc.c:1307
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Tamaño no válido [%d] especificado a la función bus-ripper-size\n"
 
-#: ../src/g_rc.c:1365
+#: ../src/g_rc.c:1382
 #, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
 msgstr ""
 "Tamaño de punto no válido [%d] especificado a la función grid-dot-size\n"
 
-#: ../src/g_rc.c:1406
+#: ../src/g_rc.c:1423
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
 msgstr ""
 "Espaciado de punto no válido [%d] especificado a la función grid-fixed-"
 "threshold\n"
 
-#: ../src/g_rc.c:1450
+#: ../src/g_rc.c:1467
 #, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr ""
 "Se ha especificado un desplazamiento no válido [%d] a la función add-"
 "attribute-offset\n"
 
-#: ../src/g_rc.c:1474
+#: ../src/g_rc.c:1491
 #, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr ""
 "Se ha especificado un número de segundos no válido [%d] a la función auto-"
 "save-interval\n"
 
-#: ../src/g_rc.c:1515
+#: ../src/g_rc.c:1532
 #, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr ""
 "Se ha especificado un aumento no válido [%d] a la función mousepan-gain\n"
 
-#: ../src/g_rc.c:1538
+#: ../src/g_rc.c:1555
 #, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr ""
 "Se ha especificado un aumento no válido [%d] a la función keyboardpan-gain\n"
 
-#: ../src/g_rc.c:1584
+#: ../src/g_rc.c:1601
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr ""
@@ -1171,33 +1170,33 @@ msgstr "El texto oculto es ahora visible\n"
 msgid "Hidden text is now invisible\n"
 msgstr "El texto oculto es ahora invisible\n"
 
-#: ../src/o_misc.c:771
+#: ../src/o_misc.c:775
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
 msgstr ""
 "No se pudo encontrar el símbolo [%s] en la librería. Error al actualizar.\n"
 
-#: ../src/o_misc.c:906
+#: ../src/o_misc.c:910
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 "o_autosave_backups: Imposible averiguar el nombre de archivo real de %s."
 
-#: ../src/o_misc.c:950
+#: ../src/o_misc.c:954
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 "NO se han podido cambiar los permisos de la copia de seguridad anterior [%s] "
 "a lectura-escritura\n"
 
-#: ../src/o_misc.c:968
+#: ../src/o_misc.c:972
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr ""
 "NO se han podido cambiar los permisos de la copia de seguridad anterior [%s] "
 "a sólo lectura\n"
 
-#: ../src/o_misc.c:973
+#: ../src/o_misc.c:977
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "NO se ha podido guardar la copia de seguridad [%s]\n"
@@ -1887,7 +1886,8 @@ msgid ""
 "The name cannot end with a space.\n"
 "The value cannot start with a space."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">La propiedad introducida \"%s\" no es correcta\n"
+"<span weight=\"bold\" size=\"larger\">La propiedad introducida \"%s\" no es "
+"correcta\n"
 "Por favor, corríjala para continuar</span>\n"
 "\n"
 "El nombre y el valor no pueden estar en blanco.\n"
@@ -1991,7 +1991,11 @@ msgstr "Anchura x Altura"
 msgid "Image type"
 msgstr "Tipo de imagen"
 
-#: ../src/x_log.c:252
+#: ../src/x_log.c:195
+msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
+msgstr ""
+
+#: ../src/x_log.c:263
 msgid "Status"
 msgstr "Estado"
 
@@ -2407,4 +2411,3 @@ msgstr "Crear y modificar esquemas y símbolos con gschem"
 #: ../data/geda-gschem.desktop.in.h:2
 msgid "gEDA Schematic Editor"
 msgstr "Editor de esquemas gEDA"
-

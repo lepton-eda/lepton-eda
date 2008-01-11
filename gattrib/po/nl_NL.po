@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: geda-gattrib\n"
-"Report-Msgid-Bugs-To: gEDA developers <geda-dev@moira.seul.org>\n"
-"POT-Creation-Date: 2008-01-05 21:13-0500\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-11 01:23-0500\n"
 "PO-Revision-Date: 2008-01-06 13:07+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@moira.seul.org>\n"
@@ -24,4 +24,3 @@ msgstr "Manipuleer componenten attributen met hattrib"
 #: ../data/geda-gattrib.desktop.in.h:2
 msgid "gEDA Attribute Editor"
 msgstr "gEDA Attribuut Bewerking"
-

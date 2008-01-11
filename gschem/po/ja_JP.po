@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-05 21:12-0500\n"
+"POT-Creation-Date: 2008-01-11 01:22-0500\n"
 "PO-Revision-Date: 2002-10-05 20:00+0900\n"
 "Last-Translator: MIYAMOTO Takanori <pnms@jcom.home.ne.jp>\n"
 "Language-Team: japanese <ja@li.org>\n"
@@ -563,47 +563,47 @@ msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "無効なサイズ[%d]がsnap-sizeに指定されました。\n"
 
-#: ../src/g_rc.c:1050
+#: ../src/g_rc.c:1067
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
 
-#: ../src/g_rc.c:1290
+#: ../src/g_rc.c:1307
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "無効なサイズ[%d]がbus-ripperに指定されました。\n"
 
-#: ../src/g_rc.c:1365
+#: ../src/g_rc.c:1382
 #, fuzzy, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
 msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
 
-#: ../src/g_rc.c:1406
+#: ../src/g_rc.c:1423
 #, fuzzy, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
 msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
 
-#: ../src/g_rc.c:1450
+#: ../src/g_rc.c:1467
 #, fuzzy, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
 
-#: ../src/g_rc.c:1474
+#: ../src/g_rc.c:1491
 #, fuzzy, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
 
-#: ../src/g_rc.c:1515
+#: ../src/g_rc.c:1532
 #, fuzzy, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr "無効なサイズ[%d]がsnap-sizeに指定されました。\n"
 
-#: ../src/g_rc.c:1538
+#: ../src/g_rc.c:1555
 #, fuzzy, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr "無効なサイズ[%d]がsnap-sizeに指定されました。\n"
 
-#: ../src/g_rc.c:1584
+#: ../src/g_rc.c:1601
 #, fuzzy, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
@@ -1162,27 +1162,27 @@ msgstr "隠しテキストが表示されました。\n"
 msgid "Hidden text is now invisible\n"
 msgstr "隠しテキストが非表示になりました。\n"
 
-#: ../src/o_misc.c:771
+#: ../src/o_misc.c:775
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
 msgstr ""
 
-#: ../src/o_misc.c:906
+#: ../src/o_misc.c:910
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 
-#: ../src/o_misc.c:950
+#: ../src/o_misc.c:954
 #, fuzzy, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "保存できません。[%s]\n"
 
-#: ../src/o_misc.c:968
+#: ../src/o_misc.c:972
 #, fuzzy, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "保存できません。[%s]\n"
 
-#: ../src/o_misc.c:973
+#: ../src/o_misc.c:977
 #, fuzzy, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "保存できません。[%s]\n"
@@ -1989,7 +1989,11 @@ msgstr "幅 x 高さ"
 msgid "Image type"
 msgstr "ページ"
 
-#: ../src/x_log.c:252
+#: ../src/x_log.c:195
+msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
+msgstr ""
+
+#: ../src/x_log.c:263
 msgid "Status"
 msgstr "ステータス"
 
