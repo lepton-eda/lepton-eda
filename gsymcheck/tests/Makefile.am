@@ -12,7 +12,8 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
              nameinside.sym nets.sym noslots.sym old_symbol.sym oldpins.sym \
              oldslot.sym typeinside.sym urefinside.sym zero_pinnumber.sym \
              zero_pinseq.sym zero_slotnum.sym zero_slots.sym \
-	     duplicate_net.sym pin_offgrid.sym pintypes.sym\
+	     duplicate_net.sym pin_offgrid.sym pintypes.sym \
+	     misplaced_attributes.sym \
 	     runtest.sh \
 	     buses.output connections1.output connections2.output \
 	     connections3.output correct.output duplicate_net.output \
@@ -32,7 +33,7 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
 	     oldslot.output old_symbol.output typeinside.output \
 	     urefinside.output zero_pinnumber.output zero_pinseq.output \
 	     zero_slotnum.output zero_slots.output pin_offgrid.output \
-	     pintypes.output
+	     pintypes.output misplaced_attributes.output
 
 check_SCRIPTS = tests
 

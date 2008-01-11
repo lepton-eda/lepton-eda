@@ -78,6 +78,9 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
   /* check version number */
   /* s_check_version(object_head, s_symcheck); out */
 
+  /* overal symbol structure test */
+  s_check_symbol_structure(object_head, s_symcheck);
+
   /* check for graphical attribute */
   s_check_graphical(object_head, s_symcheck);
 
@@ -178,6 +181,80 @@ s_check_list_has_item(char **list , char *item)
   return FALSE;
 }
 
+void
+s_check_symbol_structure(OBJECT *object_head, SYMCHECK *s_current)
+{
+  OBJECT *o_current;
+
+  gchar *message;
+  gchar **tokens;
+
+  char *valid_pin_attributes[] = {"pinlabel", "pintype",
+				  "pinseq", "pinnumber",
+				  NULL};
+  char *valid_attributes[] = {"device", "graphical", "description",
+			      "author", "comment", "numslots",
+			      "slotdef", "footprint", "documentation",
+			      "refdes", "slot", "net", "value",
+			      "symversion", "dist-license",
+			      NULL};
+  char *obsolete_attributes[] = {"uref", "name", "label", "type",
+				 "email", /* pin# ?, slot# ? */
+				 NULL};
+  
+  for (o_current = object_head;
+       o_current != NULL;
+       o_current = o_current->next) {
+
+    if (o_current->type == OBJ_TEXT) {
+      tokens = g_strsplit(o_current->text->string,"=", 2);
+      if (tokens[0] != NULL && tokens[1] != NULL) {
+	if (s_check_list_has_item(obsolete_attributes, tokens[0])) {
+#if 0
+	  message = g_strdup_printf ("Found obsolete %s= attribute: [%s=%s]\n",
+				     token[0], tokens[0], tokens[1]);
+	  s_current->warning_messages =
+	    g_list_append(s_current->warning_messages, message);
+	  s_current->warning_count++;
+#endif
+	}
+	else if (s_check_list_has_item(valid_pin_attributes, tokens[0])) {
+	  if (o_current->attached_to == NULL 
+	      || o_current->attached_to->type != OBJ_PIN) {
+	    message = g_strdup_printf ("Found misplaced pin attribute:"
+				       " [%s=%s]\n", tokens[0], tokens[1]);
+	    s_current->error_messages =
+	      g_list_append(s_current->error_messages, message);
+	    s_current->error_count++;
+	  }
+	}
+	else if (!s_check_list_has_item(valid_attributes, tokens[0])) {
+#if 0
+	  message = g_strdup_printf ("Found unknown %s= attribute: [%s=%s]\n",
+				     token[0], tokens[0], tokens[1]);
+	  s_current->warning_messages =
+	    g_list_append(s_current->warning_messages, message);
+	  s_current->warning_count++;
+#endif
+	}
+	else if (o_current->attached_to != NULL) {
+	  message = g_strdup_printf ("Found wrongly attached attribute: "
+				     "[%s=%s]\n",
+				     tokens[0], tokens[1]);
+	  s_current->error_messages =
+	    g_list_append(s_current->error_messages, message);
+	  s_current->error_count++;
+	}	  
+      }
+      g_strfreev(tokens);
+    }
+    else {
+      if (g_list_length(o_current->attribs) != 0) {
+	
+      }
+    }
+  }  
+}
 
 void
 s_check_graphical(OBJECT *o_current, SYMCHECK *s_current)

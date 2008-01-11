@@ -1,0 +1,66 @@
+v 20080110 1
+P 1100 5100 1400 5100 1 0 0
+{
+T 1300 5150 5 8 1 1 0 6 1
+pinnumber=1
+T 1300 5050 5 8 0 1 0 8 1
+pinseq=1
+T 1450 5100 9 8 1 1 0 0 1
+pinlabel=pin_ok
+T 1450 5100 5 8 0 1 0 2 1
+pintype=in
+}
+P 1100 4300 1400 4300 1 0 0
+{
+T 1300 4350 5 8 1 0 0 6 1
+footprint=2
+T 1300 4250 5 8 0 0 0 8 1
+label=2
+T 1450 4300 9 8 1 0 0 0 1
+type=out
+T 1450 4300 5 8 0 0 0 2 1
+xxxxx=out
+T 1500 3600 5 10 1 0 0 0 1
+pintype=io
+T 1500 3400 5 10 1 0 0 0 1
+pinseq=2
+T 1500 4000 5 10 1 0 0 0 1
+pinlabel=xxxx
+T 1500 3800 5 10 1 0 0 0 1
+pinnumber=2
+}
+B 1400 2500 2400 2900 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+{
+T 2300 2600 5 10 1 0 0 0 1
+pintype=io
+T 2300 2300 5 10 1 0 0 0 1
+pinlabel=attached to box
+}
+T 3800 5600 8 10 1 1 0 6 1
+refdes=U?
+T 1400 5600 9 10 1 0 0 0 1
+symbol structure test
+T 1400 5800 5 10 0 0 0 0 1
+device=symbol_structure_test
+T 1400 6200 5 10 0 0 0 0 1
+documentation=none
+T 1400 6400 5 10 0 0 0 0 1
+description=many attributes are attached the wrong way
+T 1400 6000 5 10 0 0 0 0 1
+numslots=0
+V 5103 3599 600 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+{
+T 5100 3600 5 10 1 1 0 0 1
+comment=attached to circle
+}
+T 4600 5500 8 10 1 0 0 0 1
+pinlabel=not attached
+T 4600 5200 8 10 1 0 0 0 1
+pinseq=3
+T 4600 4900 8 10 1 0 0 0 1
+pinnumber=3
+T 4600 4600 8 10 1 0 0 0 1
+pintype=io
+B 4500 4500 2200 1200 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 4500 5800 9 10 1 0 0 0 1
+not attached pin labels
