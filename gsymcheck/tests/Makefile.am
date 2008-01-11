@@ -12,13 +12,13 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
              nameinside.sym nets.sym noslots.sym old_symbol.sym oldpins.sym \
              oldslot.sym typeinside.sym urefinside.sym zero_pinnumber.sym \
              zero_pinseq.sym zero_slotnum.sym zero_slots.sym \
-	     incorrect_footprint.sym duplicate_net.sym \
+	     duplicate_net.sym \
 	     runtest.sh \
 	     buses.output connections1.output connections2.output \
 	     connections3.output correct.output duplicate_net.output \
 	     duplicate_pinnumber.output duplicate_pinseq.output \
 	     graphical_correct.output graphical_incorrect.output \
-	     incorrect_footprint.output invalid_slotdef1.output \
+	     invalid_slotdef1.output \
    	     invalid_slotdef2.output invalid_slotdef3.output \
 	     invalid_slotdef4.output labelinside.output lots_of_errors.output \
 	     many_slotdefs.output missing_device.output \

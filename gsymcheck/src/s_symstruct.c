@@ -71,7 +71,6 @@ s_symstruct_init(void)
   s_symcheck->found_footprint=FALSE;
   s_symcheck->found_refdes=FALSE;
 
-  s_symcheck->footprint_size = -1;
   s_symcheck->numpins=0;
   s_symcheck->numnetpins=0;
   s_symcheck->numslots=0;

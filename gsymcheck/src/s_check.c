@@ -36,7 +36,6 @@
 #include "../include/struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
-#include "../include/pincounts.h"
 
 int
 s_check_all(TOPLEVEL *pr_current)
@@ -117,10 +116,6 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
 
   /* check for connections with in a symbol (completely disallowed) */
   s_check_connections(object_head, s_symcheck);
-
-  /* Check to make sure the total number of pins is correct */
-  s_check_totalpins(object_head, s_symcheck);
-  
 
   /* now report the info/warnings/errors to the user */
   if (!quiet_mode) {
@@ -1282,17 +1277,6 @@ s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current)
           o_current->text->string);
         s_current->info_messages = g_list_append(s_current->info_messages,
                                                message);
-                
-
-        s_current->footprint_size = s_get_footprint_size(
-        					o_current->text->string);	                               
-
-        message = g_strdup_printf (
-          "Footprint size is %d.\n",
-          s_current->footprint_size);
-        s_current->info_messages = g_list_append(s_current->info_messages,
-                                             message);
-        
         s_current->found_footprint++;
       }
 
@@ -1340,33 +1324,6 @@ s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current)
     s_current->error_count++;
   }
   
-}
-
-void
-s_check_totalpins(OBJECT *object_head, SYMCHECK *s_current)
-{
-  int totalpins = 0;
-  char *message;
-  
-  totalpins = s_current->numnetpins;
-  
-  if (s_current->numslots)
-    if (s_current->numslotpins)
-      totalpins += s_current->numslotpins;
-    else
-      totalpins += s_current->numpins * s_current->numslots;
-  else
-    totalpins += s_current->numpins;
-  
-  if (totalpins != s_current->footprint_size &&
-      s_current->footprint_size != -1) {
-    message = g_strdup ("Number of pins does not match footprint size.\n");
-    s_current->warning_messages = g_list_append(s_current->warning_messages,
-                                                message);
-    s_current->warning_count++;
-  }
-
-
 }
 
 void s_check_pintype(OBJECT *object_head, SYMCHECK *s_current)

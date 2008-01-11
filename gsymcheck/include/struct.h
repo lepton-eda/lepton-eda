@@ -52,7 +52,6 @@ struct st_symcheck {
 
   /* misc attributes */
   int found_footprint;
-  int footprint_size;
   int found_refdes;
   
   /* number of pins */
