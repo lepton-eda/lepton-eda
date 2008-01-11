@@ -655,6 +655,10 @@ int o_edit_find_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list, char *stext,
                         o_current->text->x, o_current->text->y,
                         1, 0);
 
+	  /* Make sure the titlebar and scrollbars are up-to-date */
+	  x_window_set_current_page(w_current, 
+                                    w_current->toplevel->page_current );
+
           last_o = o_current;
           break;
         }
