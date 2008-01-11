@@ -12,14 +12,14 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
              nameinside.sym nets.sym noslots.sym old_symbol.sym oldpins.sym \
              oldslot.sym typeinside.sym urefinside.sym zero_pinnumber.sym \
              zero_pinseq.sym zero_slotnum.sym zero_slots.sym \
-	     duplicate_net.sym pin_offgrid.sym \
+	     duplicate_net.sym pin_offgrid.sym pintypes.sym\
 	     runtest.sh \
 	     buses.output connections1.output connections2.output \
 	     connections3.output correct.output duplicate_net.output \
 	     duplicate_pinnumber.output duplicate_pinseq.output \
 	     graphical_correct.output graphical_incorrect.output \
 	     invalid_slotdef1.output \
-   	     invalid_slotdef2.output invalid_slotdef3.output \
+	     invalid_slotdef2.output invalid_slotdef3.output \
 	     invalid_slotdef4.output labelinside.output lots_of_errors.output \
 	     many_slotdefs.output missing_device.output \
 	     missing_footprint.output missing_numslots.output \
@@ -31,7 +31,8 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
 	     nameinside.output nets.output noslots.output oldpins.output \
 	     oldslot.output old_symbol.output typeinside.output \
 	     urefinside.output zero_pinnumber.output zero_pinseq.output \
-	     zero_slotnum.output zero_slots.output pin_offgrid.output
+	     zero_slotnum.output zero_slots.output pin_offgrid.output \
+	     pintypes.output
 
 check_SCRIPTS = tests
 
@@ -46,12 +47,12 @@ tests:
 	for file in $(SRCDIR)/*.sym; do \
 	  $(SRCDIR)/runtest.sh $$file $(BUILDDIR) $(SRCDIR); \
           if [ $$? -ne 0 ]; then \
- 	     echo "$$file FAILED!"; \
+	     echo "$$file FAILED!"; \
              exit 1; \
 	   else \
- 	     echo "$$file passed."; \
+	     echo "$$file passed."; \
 	   fi; \
- 	done
+	done
 
 # Cleanup
 #	rm -f $(BUILDDIR)/new_*
