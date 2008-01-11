@@ -235,8 +235,8 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
   if (flags & F_OPEN_CHECK_BACKUP) {
     /* Check if there is a newer autosave backup file */
     GString *message;
-    gboolean active_backup = f_has_active_autosave (filename, &tmp_err);
-    backup_filename = f_get_autosave_filename (filename);
+    gboolean active_backup = f_has_active_autosave (full_filename, &tmp_err);
+    backup_filename = f_get_autosave_filename (full_filename);
 
     if (tmp_err != NULL) g_warning ("%s\n", tmp_err->message);
     if (active_backup) {
