@@ -426,6 +426,8 @@ static void cache_find_oldest (gpointer key,
  *  Execute a library command, returning the standard output, or \b
  *  NULL if the command fails for some reason.  The system \b PATH is
  *  used to find the program to execute.
+ *  The command can write messages to the standard error output. They 
+ *  are forwarded to the libgeda logging mechanism.
  *
  *  Private function used only in s_clib.c.
  *
@@ -466,6 +468,10 @@ static gchar *run_source_command (const gchar *command)
   } else {
     success = TRUE;
   }
+
+  /* forward library command messages */
+  if (success && standard_error != NULL)
+    s_log_message (standard_error);
 
   g_free (standard_error);
   
