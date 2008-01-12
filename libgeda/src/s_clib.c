@@ -459,7 +459,7 @@ static gchar *run_source_command (const gchar *command)
     s_log_message (_("Library command failed [%s]: Uncaught signal %i.\n"),
                    command, WTERMSIG(exit_status));
     
-  } else if (!WIFEXITED(exit_status)) {
+  } else if (WIFEXITED(exit_status) && WEXITSTATUS(exit_status)) {
     s_log_message (_("Library command failed [%s]\n"), command);
     s_log_message(_("Error output was:\n%s\n"), standard_error);
 
