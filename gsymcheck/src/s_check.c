@@ -445,104 +445,117 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
 {
   OBJECT *o_current;
   char *string;
-  int found_first=FALSE;
   int missing_pinnumber_attrib_sum=0;
   int multiple_pinnumber_attrib_sum=0;
   int counter=0;
-  int j;
+  int i;
 
-  GList *found_numbers = NULL;
-  GList *ptr1 = NULL;
-  GList *ptr2 = NULL;
-  char *number = NULL;
+  gchar **net_tokens;
+  gchar **pin_tokens;
+  GList *net_numbers = NULL;
+  GList *pin_numbers = NULL;
+  GList *cur = NULL;
   char *message;
   char *net = NULL;
-  char *temp;
-  char *netpins = NULL;
-  char tempstr[10];
-  
-  counter = 0;
 
-  while( (net = o_attrib_search_toplevel(object_head, "net", counter)) != NULL)
-  {
+
+    
+  /* collect all net pins */
+  for (counter = 0;
+       (net = o_attrib_search_toplevel(object_head, "net", counter)) != NULL;
+       counter++) {
     message = g_strdup_printf ("Found net=%s attribute\n", net);
     s_current->info_messages = g_list_append(s_current->info_messages,
                                                       message);
 
-    netpins = u_basic_breakup_string(net, ':', 1);
-    
-    if (!netpins) {
-      message = g_strdup ("Bad net= attribute\n");
+    net_tokens = g_strsplit(net,":", -1);
+    /* length of net tokens have to be 2 */
+    if (net_tokens[1] == NULL) {
+      message = g_strdup_printf ("Bad net= attribute [net=%s]\n", net);
       s_current->error_messages = g_list_append(s_current->error_messages,
-                                              message);
+						message);
       s_current->error_count++;
-    
-      g_free(net);
-      counter++;
+      g_strfreev(net_tokens);
+      continue;
+    } else if (net_tokens[2] != NULL) { /* more than 2 tokens */
+      message = g_strdup_printf ("Bad net= attribute [net=%s]\n", net);
+      s_current->error_messages = g_list_append(s_current->error_messages,
+						message);
+      s_current->error_count++;
+      g_strfreev(net_tokens);
       continue;
     }
+
+    pin_tokens = g_strsplit(net_tokens[1],",",-1);
     
-    j = 0;
-    do {
-      if (number) {
-        g_free(number);
-        number = NULL;
-      }
-        
-      number = u_basic_breakup_string(netpins, ',', j);
-
-      if (!number)
-        break;
-
+    for (i = 0; pin_tokens[i] != NULL; i++) {
+      net_numbers = g_list_append(net_numbers, g_strdup(pin_tokens[i]));
       message = g_strdup_printf ("Found pin number %s in net attribute\n",
-                                 number);
+                                 pin_tokens[i]);
       s_current->info_messages = g_list_append(s_current->info_messages,
-                                             message);
-
-
-      if (strcmp(number, "0") == 0) {
-        message = g_strdup ("Found pinnumber 0 in net= attribute\n");
-        s_current->error_messages = g_list_append(s_current->error_messages,
-                                                message);
-        s_current->error_count++;
-      }
-
-      temp = g_strdup(number);
-      found_numbers = g_list_append(found_numbers, temp);
-      
+					       message);
       s_current->numnetpins++;
-
-      j++;
-    } while (number);
-
-    if (number)
-      g_free(number);
-
-
+    }
     g_free(net);
-    g_free(netpins);
-    
-    counter++;
+    g_strfreev(net_tokens);
+    g_strfreev(pin_tokens);
+  }
+  
+  /* check for duplicate net pin numbers */
+  net_numbers = g_list_sort(net_numbers, (GCompareFunc)strcmp);
+
+  for (cur = net_numbers;
+       cur != NULL && g_list_next(cur) != NULL;
+       cur = g_list_next(cur)) {
+    if (strcmp((gchar*)cur->data, (gchar*) cur->next->data) == 0) {
+      message = g_strdup_printf ("Found duplicate pin in net= "
+				 "attributes [%s]\n", (gchar*) cur->data);
+      s_current->error_messages = g_list_append(s_current->error_messages,
+						message);
+      s_current->error_count++;
+    }
+    if (strcmp((gchar*) cur->data, "0") == 0) {
+      message = g_strdup ("Found pinnumber 0 in net= attribute\n");
+      s_current->error_messages = g_list_append(s_current->error_messages,
+                                                message);
+      s_current->error_count++;
+    }
   }
 
-
-  o_current = object_head;
-  while(o_current != NULL)
-  {
+  /* collect all pin numbers */
+  for (o_current = object_head; o_current != NULL; 
+       o_current = o_current->next) {
     
-    if (o_current->type == OBJ_PIN)
-    {
+    if (o_current->type == OBJ_PIN) {
       s_current->numpins++;
       
       missing_pinnumber_attrib_sum = 0;
       multiple_pinnumber_attrib_sum = 0;
-      found_first = FALSE;
-      counter = 0;
       
-      string = o_attrib_search_name_single_count(o_current, "pinnumber",
-                                                 counter);
-      if (!string)
-      {
+      for (counter = 0; 
+	   (string = o_attrib_search_name_single_count(o_current, "pinnumber",
+						       counter)) != NULL;
+	   counter++) {
+	
+        message = g_strdup_printf ("Found pinnumber=%s attribute\n", string);
+        s_current->info_messages = g_list_append(s_current->info_messages,
+	 	    			         message);
+
+	if (counter == 0) { /* collect the first appearance */
+	  pin_numbers = g_list_append(pin_numbers, string);
+	}
+        if (counter >= 1) {
+          message = g_strdup_printf ("Found multiple pinnumber=%s attributes"
+				     " on one pin\n", string);
+          s_current->error_messages = g_list_append(s_current->error_messages,
+	 	    			            message);
+          multiple_pinnumber_attrib_sum++;
+          s_current->error_count++;
+	  g_free(string); 
+        }
+      }
+	   
+      if (counter == 0) {
         message = g_strdup ("Missing pinnumber= attribute\n");
         s_current->error_messages = g_list_append(s_current->error_messages,
                                                   message);
@@ -550,103 +563,45 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
         s_current->error_count++;
       }
 
-      while (string)
-      {
-        message = g_strdup_printf ("Found pinnumber=%s attribute\n", string);
-        s_current->info_messages = g_list_append(s_current->info_messages,
-	 	    			         message);
-
-        if (found_first) {
-          message = g_strdup_printf (
-            "Found multiple pinnumber=%s attributes on one pin\n",
-            string);
-          s_current->error_messages = g_list_append(s_current->error_messages,
-	 	    			            message);
-          multiple_pinnumber_attrib_sum++;
-          s_current->error_count++;
-        }
-        
-        number = g_strdup (string);
-        g_free(string);
-
-        if (strcmp(number, "0") == 0) {
-          message = g_strdup ("Found pinnumber=0 attribute\n");
-          s_current->error_messages = g_list_append(s_current->error_messages,
-	 	    			            message);
-          s_current->error_count++;
-        }
-
-        /* this is the first attribute found */
-        if (!found_first) {
-          found_numbers = g_list_append(found_numbers, number);
-          found_first=TRUE;
-        } else {
-          if (number)
-            g_free(number);
-	}
-        
-        counter++;
-        string = o_attrib_search_name_single_count(o_current, "pinnumber",
-                                                   counter);
-      }
-
       s_current->missing_pinnumber_attrib += missing_pinnumber_attrib_sum;
       s_current->multiple_pinnumber_attrib += multiple_pinnumber_attrib_sum;
     }
-    
-    o_current = o_current->next;
   }
 
-
-
-
-  ptr1 = found_numbers;
-  while (ptr1)
-  {
-    char *string = (char *) ptr1->data;
-    int found = 0;
-    
-    ptr2 = found_numbers;
-    while(ptr2 && string)
-    {
-      char *current = (char *) ptr2->data;
-
-      if (current && strcmp(string, current) == 0) {
-        found++;
-      }
-      
-      ptr2 = g_list_next(ptr2);
-    }
-
-    if (found > 1)
-    {
-      message = g_strdup_printf (
-        "Found duplicate pinnumber=%s attribute in the symbol\n",
-        string);
+  /* check for duplicate net_numbers */
+  pin_numbers = g_list_sort(pin_numbers, (GCompareFunc)strcmp);
+  for (cur = pin_numbers;
+       cur != NULL && g_list_next(cur) != NULL;
+       cur = g_list_next(cur)) { 
+    if (strcmp((gchar*)cur->data, (gchar*) cur->next->data) == 0) {
+      message = g_strdup_printf ("Found duplicate pinnumber=%s attribute "
+				 "in the symbol\n", (gchar*) cur->data);
       s_current->error_messages = g_list_append(s_current->error_messages,
-                                                message);
+						message);
       s_current->error_count++;
       s_current->duplicate_pinnumber_attrib++;
     }
-    
-    ptr1 = g_list_next(ptr1);
+    if (strcmp((gchar*) cur->data, "0") == 0) {
+      message = g_strdup ("Found pinnumber=0 attribute\n");
+      s_current->error_messages = g_list_append(s_current->error_messages,
+						message);
+      s_current->error_count++;
+    }
   }
 
-  ptr1 = found_numbers;
-  while (ptr1)
-  {
-    g_free(ptr1->data);
-    ptr1 = g_list_next(ptr1);
-  }
-  g_list_free(found_numbers);
-
-
-  sprintf(tempstr, "%d", s_current->numpins + s_current->numnetpins);
-  message = g_strdup_printf ("Found %s pins inside symbol\n", tempstr);
+  /* FIXME: this is not correct if a pinnumber is defined as pinnumber and
+     inside a net. We have to calculate the union set */
+  message = g_strdup_printf ("Found %d pins inside symbol\n", 
+			     s_current->numpins + s_current->numnetpins);
   s_current->info_messages = g_list_append(s_current->info_messages,
                                            message);
 
+  g_list_foreach(pin_numbers, (GFunc) g_free, NULL);
+  g_list_free(pin_numbers);
+  g_list_foreach(net_numbers, (GFunc) g_free, NULL);
+  g_list_free(net_numbers);
 }
+
 void
 s_check_pin_ongrid(OBJECT *object_head, SYMCHECK *s_current)
 {
