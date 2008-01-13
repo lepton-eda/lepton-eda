@@ -1,3 +1,6 @@
+Warning: Found unknown pin3= attribute: [pin3=3]
+Warning: Found unknown pin2= attribute: [pin2=2]
+Warning: Found unknown pin1= attribute: [pin1=1]
 ERROR: Missing pinseq= attribute
 ERROR: Missing pinseq= attribute
 ERROR: Missing pinseq= attribute
@@ -7,4 +10,5 @@ ERROR: Missing pinnumber= attribute
 ERROR: Found old pin#=# attribute: pin3=3
 ERROR: Found old pin#=# attribute: pin2=2
 ERROR: Found old pin#=# attribute: pin1=1
+3 warnings found 
 9 ERRORS found 

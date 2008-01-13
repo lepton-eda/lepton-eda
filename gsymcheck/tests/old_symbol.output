@@ -1,3 +1,10 @@
+Warning: Found unknown slot1= attribute: [slot1=1,2,3]
+Warning: Found unknown slot2= attribute: [slot2=4,5,6]
+Warning: Found unknown slot3= attribute: [slot3=9,10,8]
+Warning: Found unknown slot4= attribute: [slot4=12,13,11]
+Warning: Found unknown pin3= attribute: [pin3=3]
+Warning: Found unknown pin2= attribute: [pin2=2]
+Warning: Found unknown pin1= attribute: [pin1=1]
 Warning: Found obsolete uref= attribute: [uref=U?]
 Warning: Missing pintype= attribute
 Warning: Missing pintype= attribute
@@ -17,5 +24,5 @@ ERROR: Found old pin#=# attribute: pin1=1
 ERROR: Found old slot#=# attribute: slot1=1,2,3
 ERROR: Found old slot#=# attribute: slot2=4,5,6
 ERROR: Found old slot#=# attribute: slot4=12,13,11
-5 warnings found 
+12 warnings found 
 14 ERRORS found 

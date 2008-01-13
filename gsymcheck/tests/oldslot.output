@@ -1,5 +1,10 @@
+Warning: Found unknown slot1= attribute: [slot1=1,2,3]
+Warning: Found unknown slot2= attribute: [slot2=4,5,6]
+Warning: Found unknown slot3= attribute: [slot3=9,10,8]
+Warning: Found unknown slot4= attribute: [slot4=12,13,11]
 ERROR: Missing slotdef= (there should be 4 slotdef= attributes)
 ERROR: Found old slot#=# attribute: slot1=1,2,3
 ERROR: Found old slot#=# attribute: slot2=4,5,6
 ERROR: Found old slot#=# attribute: slot4=12,13,11
+4 warnings found 
 4 ERRORS found 

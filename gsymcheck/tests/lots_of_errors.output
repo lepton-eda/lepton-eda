@@ -1,3 +1,6 @@
+Warning: Found unknown device_missing= attribute: [device_missing=7400]
+Warning: Found unknown pinnumbe= attribute: [pinnumbe=3]
+Warning: Found unknown pineq= attribute: [pineq=2]
 Warning: Found obsolete uref= attribute: [uref=U?]
 Warning: Missing pinlabel= attribute
 Warning: Missing pintype= attribute
@@ -15,5 +18,5 @@ ERROR: Not enough pins in slotdef=2:4,5
 ERROR: Slot 8 is larger then the maximum number (5) of slots
 ERROR: Invalid slotdef=a attributes, not continuing
 ERROR: Malformed slotdef= (the format is #:#,#,#,...)
-9 warnings found 
+12 warnings found 
 8 ERRORS found 

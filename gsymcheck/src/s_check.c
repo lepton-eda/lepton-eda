@@ -190,7 +190,7 @@ s_check_symbol_structure(OBJECT *object_head, SYMCHECK *s_current)
 			      "author", "comment", "numslots",
 			      "slotdef", "footprint", "documentation",
 			      "refdes", "slot", "net", "value",
-			      "symversion", "dist-license",
+			      "symversion", "dist-license", "use-license",
 			      NULL};
   char *obsolete_attributes[] = {"uref", "label", "email", 
 				 NULL};
@@ -230,13 +230,11 @@ s_check_symbol_structure(OBJECT *object_head, SYMCHECK *s_current)
 	  }
 	}
 	else if (!s_check_list_has_item(valid_attributes, tokens[0])) {
-#if 0
 	  message = g_strdup_printf ("Found unknown %s= attribute: [%s=%s]\n",
-				     token[0], tokens[0], tokens[1]);
+				     tokens[0], tokens[0], tokens[1]);
 	  s_current->warning_messages =
 	    g_list_append(s_current->warning_messages, message);
 	  s_current->warning_count++;
-#endif
 	}
 	else if (o_current->attached_to != NULL) {
 	  message = g_strdup_printf ("Found wrongly attached attribute: "
