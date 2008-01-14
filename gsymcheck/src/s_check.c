@@ -455,10 +455,9 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
   GList *net_numbers = NULL;
   GList *pin_numbers = NULL;
   GList *cur = NULL;
+  GList *cur2 = NULL;
   char *message;
   char *net = NULL;
-
-
     
   /* collect all net pins */
   for (counter = 0;
@@ -466,7 +465,7 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
        counter++) {
     message = g_strdup_printf ("Found net=%s attribute\n", net);
     s_current->info_messages = g_list_append(s_current->info_messages,
-                                                      message);
+					     message);
 
     net_tokens = g_strsplit(net,":", -1);
     /* length of net tokens have to be 2 */
@@ -568,7 +567,7 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
     }
   }
 
-  /* check for duplicate net_numbers */
+  /* check for duplicate pinlabel numbers */
   pin_numbers = g_list_sort(pin_numbers, (GCompareFunc)strcmp);
   for (cur = pin_numbers;
        cur != NULL && g_list_next(cur) != NULL;
@@ -586,6 +585,33 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
       s_current->error_messages = g_list_append(s_current->error_messages,
 						message);
       s_current->error_count++;
+    }
+  }
+
+  /* Check for all pins that are in both lists and print a warning.
+     Sometimes this is useful and sometimes it's an error. */
+
+  cur = net_numbers;
+  cur2 = pin_numbers;
+
+  while (cur != NULL && cur2 != NULL) {
+    
+    i = strcmp((gchar*)cur->data, (gchar*)cur2->data);
+
+    if (i == 0) {
+      message = g_strdup_printf ("Found the same number in a pinnumber "
+				 "attribute and in a net attribute [%s]\n",
+				 (gchar*) cur->data);
+      s_current->warning_messages = g_list_append(s_current->warning_messages,
+						  message);
+      s_current->warning_count++;
+      cur = g_list_next(cur);
+
+    } else if ( i > 0 ) {
+      cur2 = g_list_next(cur2);
+
+    } else { /* i < 0 */
+      cur = g_list_next(cur);
     }
   }
 
