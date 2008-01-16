@@ -433,6 +433,9 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
       o_cue_draw_list(w_current, other_objects);
       o_cue_draw_single(w_current, new_net);
 
+      g_list_free(other_objects);
+      other_objects = NULL;
+
       /* Go off and search for valid connection on this newly created net */
       found_primary_connection = s_conn_net_search(new_net, 1, 
                                                    new_net->conn_list);
@@ -445,7 +448,9 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
       /* you don't want to consolidate nets which are drawn non-ortho */
       if (toplevel->net_consolidate == TRUE && !w_current->CONTROLKEY) {
-	  o_net_consolidate_segments(toplevel, new_net);
+        /* CAUTION: Object list will change when nets are consolidated, don't
+         *          keep pointers to other objects than new_net after this. */
+        o_net_consolidate_segments(toplevel, new_net);
       }
   }
 
@@ -493,14 +498,16 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
       o_cue_draw_list(w_current, other_objects);
       o_cue_draw_single(w_current, new_net);
 
+      g_list_free(other_objects);
+      other_objects = NULL;
+
       /* you don't want to consolidate nets which are drawn non-ortho */
       if (toplevel->net_consolidate == TRUE && !w_current->CONTROLKEY) {
-	  o_net_consolidate_segments(toplevel, new_net);
+        /* CAUTION: Object list will change when nets are consolidated, don't
+         *          keep pointers to other objects than new_net after this. */
+        o_net_consolidate_segments(toplevel, new_net);
       }
   }
-  
-  /* LEAK CHECK 3 */
-  g_list_free(other_objects);
 
   toplevel->page_current->CHANGED = 1;
   w_current->start_x = w_current->save_x;
