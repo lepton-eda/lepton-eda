@@ -297,7 +297,7 @@ int main(int argc, char *argv[]);
 void i_show_state(GSCHEM_TOPLEVEL *w_current, const char *message);
 void i_set_state(GSCHEM_TOPLEVEL *w_current, enum x_states newstate);
 void i_set_state_msg(GSCHEM_TOPLEVEL *w_current, enum x_states newstate, const char *message);
-void i_update_middle_button(GSCHEM_TOPLEVEL *w_current, void (*func_ptr)(gpointer, guint, GtkWidget*), const char *string);
+void i_update_middle_button(GSCHEM_TOPLEVEL *w_current, void (*func_ptr)(), const char *string);
 void i_update_toolbar(GSCHEM_TOPLEVEL *w_current);
 void i_update_menus(GSCHEM_TOPLEVEL *w_current);
 void i_set_filename(GSCHEM_TOPLEVEL *w_current, const gchar *string);
