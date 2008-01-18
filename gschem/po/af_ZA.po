@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-11 01:22-0500\n"
+"POT-Creation-Date: 2008-01-18 22:55+0000\n"
 "PO-Revision-Date: 2008-01-05 00:23+0200\n"
 "Last-Translator: Bernd Jendrissek <bernd.jendrissek@gmail.com>\n"
 "Language-Team: <geda-dev@moira.seul.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: ../src/rcstrings.c:2
 msgid "File"
-msgstr "Leêr"
+msgstr "Lêer"
 
 #: ../src/rcstrings.c:3
 msgid "New Window"
@@ -62,7 +62,7 @@ msgstr "Skryf afbeelding..."
 
 #: ../src/rcstrings.c:13 ../src/x_menus.c:525
 msgid "Recent files"
-msgstr "Onlangse leêrs"
+msgstr "Onlangse lêers"
 
 #: ../src/rcstrings.c:14 ../src/x_script.c:51
 msgid "Execute Script..."
@@ -461,7 +461,7 @@ msgstr "Verklein Roosterspasiëring"
 
 #: ../src/rcstrings.c:119
 msgid "Toggle Outline/Box"
-msgstr ""
+msgstr "Skakel Skets/Omtrekreghoek"
 
 #: ../src/rcstrings.c:120
 msgid "Toggle Net Rubberband"
@@ -641,14 +641,14 @@ msgstr "Jy moet die GEDADATA omgewingswaarde stel!\n"
 #: ../src/gschem.c:248
 #, c-format
 msgid "Read init scm file [%s]\n"
-msgstr ""
+msgstr "Het scm-aanvangslêer [%s] gelees\n"
 
 #. ! \todo These two messages are the same. Should be
 #. * integrated.
 #: ../src/gschem.c:252
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
-msgstr ""
+msgstr "Het misluk of scm-aanvangslêer [%s] te lees\n"
 
 #: ../src/gschem.c:321
 #, c-format
@@ -735,11 +735,11 @@ msgstr ""
 
 #: ../src/i_basic.c:256 ../src/x_window.c:568
 msgid "Action"
-msgstr ""
+msgstr "Handeling"
 
 #: ../src/i_basic.c:262 ../src/x_window.c:563
 msgid "Stroke"
-msgstr ""
+msgstr "Wyserslag"
 
 #: ../src/i_basic.c:268 ../src/x_window.c:565
 msgid "none"
@@ -989,11 +989,11 @@ msgstr "Jammer, maar hierdie opsie werk nie\n"
 
 #: ../src/i_callbacks.c:3284
 msgid "Action feedback mode set to OUTLINE\n"
-msgstr ""
+msgstr "Handelingsterugvoermodus na SKETS gestel\n"
 
 #: ../src/i_callbacks.c:3287
 msgid "Action feedback mode set to BOUNDINGBOX\n"
-msgstr ""
+msgstr "Handelingsterugvoermodus na OMTREKREGHOEK\n"
 
 #: ../src/i_callbacks.c:3304
 msgid "Grid OFF\n"
@@ -1150,22 +1150,22 @@ msgstr ""
 #: ../src/o_misc.c:910
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
-msgstr "o_autosave_backups: Kan nie die egte leêrnaam van %s kry nie."
+msgstr "o_autosave_backups: Kan nie die egte lêernaam van %s kry nie."
 
 #: ../src/o_misc.c:954
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr "Kon NIE vorige bestandleêr [%s] lees-skryf stel nie\n"
+msgstr "Kon NIE vorige bestandlêer [%s] lees-skryf stel nie\n"
 
 #: ../src/o_misc.c:972
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
-msgstr "Kon NIE bestandleêr [%s] lees-slegs stel nie\n"
+msgstr "Kon NIE bestandlêer [%s] lees-slegs stel nie\n"
 
 #: ../src/o_misc.c:977
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
-msgstr "Kon NIE bestandleêr [%s] bewaar nie\n"
+msgstr "Kon NIE bestandlêer [%s] bewaar nie\n"
 
 #: ../src/o_move.c:181
 #, c-format
@@ -1371,7 +1371,7 @@ msgstr "Regs tot links"
 
 #: ../src/x_autonumber.c:879
 msgid "File order"
-msgstr "Leêrorde"
+msgstr "Lêerorde"
 
 #: ../src/x_autonumber.c:1215
 msgid "Autonumber text"
@@ -1444,13 +1444,13 @@ msgstr ""
 #: ../src/x_color.c:70 ../src/x_color.c:107
 #, c-format
 msgid "Ack! Cannot allocate white!\n"
-msgstr ""
+msgstr "Ag! Kon nie aanspraak maak op wit nie!\n"
 
 #: ../src/x_color.c:81 ../src/x_color.c:129 ../src/x_window.c:86
 #: ../src/x_window.c:95
 #, c-format
 msgid "Could not allocate the color %s!\n"
-msgstr "Kon aanspraak maak op die kleur %s nie!\n"
+msgstr "Kon nie aanspraak maak op die kleur %s nie!\n"
 
 #: ../src/x_color.c:148 ../src/x_color.c:164
 #, c-format
@@ -1672,7 +1672,7 @@ msgstr "Beginhoek:"
 
 #: ../src/x_dialog.c:1542
 msgid "Degrees of Sweep:"
-msgstr ""
+msgstr "Grade van Kromming:"
 
 #: ../src/x_dialog.c:1643
 msgid ""
@@ -1729,7 +1729,7 @@ msgstr ""
 "Geskryf deur:\n"
 "Ales Hvezda\n"
 "ahvezda@geda.seul.org\n"
-"en vele andere (Sien AUTHORS leêr)"
+"en vele andere (Sien AUTHORS lêer)"
 
 # FIXME: May need to have a deëlteken on second 'o'.
 #: ../src/x_dialog.c:2115
@@ -1861,7 +1861,7 @@ msgstr "Stroombaandiagramme en simbole"
 
 #: ../src/x_fileselect.c:64
 msgid "All files"
-msgstr "Alle leêrs"
+msgstr "Alle lêers"
 
 #: ../src/x_fileselect.c:177
 msgid "Open..."
@@ -1881,7 +1881,7 @@ msgstr ""
 
 #: ../src/x_fileselect.c:289
 msgid "Overwrite file?"
-msgstr "Vervang leêr?"
+msgstr "Vervang lêer?"
 
 #: ../src/x_fileselect.c:291
 msgid "Save cancelled on user request\n"
@@ -1895,12 +1895,12 @@ msgstr ""
 #: ../src/x_image.c:301
 #, c-format
 msgid "x_image_lowlevel: Unable to write eps file %s.\n"
-msgstr "x_image_lowlevel: Kon nie eps-leêr %s skryf nie.\n"
+msgstr "x_image_lowlevel: Kon nie eps-lêer %s skryf nie.\n"
 
 #: ../src/x_image.c:379
 #, c-format
 msgid "x_image_lowlevel: Unable to write %s file %s.\n"
-msgstr "x_image_lowlevel: Kon nie %s-leêr %s skryf nie.\n"
+msgstr "x_image_lowlevel: Kon nie %s-lêer %s skryf nie.\n"
 
 #: ../src/x_image.c:389
 #, c-format
@@ -1910,6 +1910,10 @@ msgid ""
 "\n"
 "%s.\n"
 msgstr ""
+"Die volgende fout het gebeur gedurende die bewaring van %s-lêer:\n"
+"%s\n"
+"\n"
+"%s.\n"
 
 #: ../src/x_image.c:408
 #, c-format
@@ -1939,7 +1943,7 @@ msgstr ""
 
 #: ../src/x_log.c:263
 msgid "Status"
-msgstr ""
+msgstr "Stand"
 
 #: ../src/x_menus.c:42
 msgid "/Add Net"
@@ -2026,7 +2030,7 @@ msgstr ""
 #: ../src/x_menus.c:482
 #, c-format
 msgid "Couldn't open file %s\n"
-msgstr "Kon nie leêr %s oopmaak nie\n"
+msgstr "Kon nie lêer %s oopmaak nie\n"
 
 #: ../src/x_menus.c:543
 msgid "Clear"
@@ -2087,7 +2091,7 @@ msgstr "Bladsybestuurder"
 #. GtkTreeViewColumn
 #: ../src/x_pagesel.c:439
 msgid "Filename"
-msgstr "Leêrnaam"
+msgstr "Lêernaam"
 
 #. GtkTreeViewColumn
 #: ../src/x_pagesel.c:455
@@ -2097,11 +2101,11 @@ msgstr "Veranderd"
 #. GtkLabel
 #: ../src/x_pagesel.c:475
 msgid "Right click on the filename for more options..."
-msgstr "Regs-klik op die leêrnaam vir meer opsies..."
+msgstr "Regs-klik op die lêernaam vir meer opsies..."
 
 #: ../src/x_print.c:90
 msgid "Select PostScript Filename..."
-msgstr "Kies PostScript Leêrnaam"
+msgstr "Kies PostScript Lêernaam"
 
 #: ../src/x_print.c:172
 msgid "Extents with margins"
@@ -2143,7 +2147,7 @@ msgstr "Bestemming"
 
 #: ../src/x_print.c:351
 msgid "File:"
-msgstr "Leêr:"
+msgstr "Lêer:"
 
 #: ../src/x_print.c:381
 msgid "Command:"
@@ -2164,6 +2168,8 @@ msgid ""
 "Error printing to file '%s'\n"
 "Check the log window for more information"
 msgstr ""
+"Fout gedurende lêerdruk na '%s'\n"
+"Ondersoek die log-venster vir meer inligting"
 
 #: ../src/x_print.c:774
 #, c-format
@@ -2205,7 +2211,7 @@ msgstr "Kon nie aanspraak maak op bus_gc nie\n"
 
 #: ../src/x_window.c:402
 msgid "New file"
-msgstr "Nuwe leêr"
+msgstr "Nuwe lêer"
 
 #: ../src/x_window.c:408
 msgid "Open"
@@ -2213,7 +2219,7 @@ msgstr "Maak Oop"
 
 #: ../src/x_window.c:409
 msgid "Open file..."
-msgstr "Maak leêr oop..."
+msgstr "Maak lêer oop..."
 
 #: ../src/x_window.c:415
 msgid "Save"
@@ -2221,15 +2227,15 @@ msgstr "Bewaar"
 
 #: ../src/x_window.c:416
 msgid "Save file"
-msgstr "Bewaar leêr"
+msgstr "Bewaar lêer"
 
 #: ../src/x_window.c:424
 msgid "Undo last operation"
-msgstr ""
+msgstr "Maak laaste handeling ongedaan"
 
 #: ../src/x_window.c:431
 msgid "Redo last undo"
-msgstr ""
+msgstr "Herhaal laas-ongedane handeling"
 
 #: ../src/x_window.c:440
 msgid ""
@@ -2277,7 +2283,7 @@ msgstr "Herhaal/geen"
 
 #: ../src/x_window.c:580
 msgid "Menu/Cancel"
-msgstr ""
+msgstr "Menu/Kanselleer"
 
 #: ../src/x_window.c:582
 msgid "Pan/Cancel"
@@ -2290,12 +2296,12 @@ msgstr "Laai stroombaandiagram [%s]\n"
 
 #: ../src/x_window.c:821
 msgid "Failed to load file"
-msgstr "Misluk om leêr te laai"
+msgstr "Misluk om lêer te laai"
 
 #: ../src/x_window.c:830
 #, c-format
 msgid "New file [%s]\n"
-msgstr "Nuwe leêr [%s]\n"
+msgstr "Nuwe lêer [%s]\n"
 
 #. an error occured when saving page to file
 #: ../src/x_window.c:936
