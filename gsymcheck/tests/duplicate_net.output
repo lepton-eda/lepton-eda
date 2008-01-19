@@ -1,3 +1,5 @@
 Warning: Found the same number in a pinnumber attribute and in a net attribute [1]
+ERROR: Found duplicate pin in net= attributes [5]
+ERROR: Found duplicate pin in net= attributes [6]
 1 warnings found 
-No errors found
+2 ERRORS found 
