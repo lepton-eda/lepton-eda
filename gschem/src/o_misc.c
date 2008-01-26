@@ -850,6 +850,9 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   /* finally delete the temp list with the updated complex */
   s_delete_list_fromstart (toplevel, tmp_list);
 
+  /* update the pinnumbers to the current slot */
+  o_attrib_slot_update(toplevel, o_current);
+
   /* Recalculate the bounds of the object */
   o_complex_recalc(toplevel, o_current);
 
