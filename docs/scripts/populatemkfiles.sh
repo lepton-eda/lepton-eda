@@ -67,6 +67,11 @@ do_work()
 	
 	fi
 	echo "" >> Makefile.am
+
+	# Fixup any gitignore files to be called .gitignore
+	mv Makefile.am Makefile.am.before
+	cat Makefile.am.before | sed "s/gitignore/\.gitignore/" > Makefile.am
+	rm -f Makefile.am.before
 }
 
 pwd=`pwd`
