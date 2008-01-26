@@ -19,7 +19,7 @@ msgstr ""
 
 #: ../data/geda-gattrib.desktop.in.h:1
 msgid "Manipulate component attributes with gattrib"
-msgstr "Manipuleer componenten attributen met hattrib"
+msgstr "Manipuleer componenten attributen met gattrib"
 
 #: ../data/geda-gattrib.desktop.in.h:2
 msgid "gEDA Attribute Editor"
