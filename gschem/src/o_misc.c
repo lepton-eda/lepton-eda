@@ -769,6 +769,10 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   is_embedded = o_complex_is_embedded (o_current);
 
   g_assert (o_current->complex_basename != NULL);
+
+  /* This shuold be replaced with API to invalidate only the specific
+   * symbol name we want to update */
+  s_clib_flush_symbol_cache ();
   clib = s_clib_get_symbol_by_name (o_current->complex_basename);
 
   if (clib == NULL) {
