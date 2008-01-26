@@ -208,11 +208,16 @@ static void o_delete_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 void o_delete_text(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  OBJECT *o_parent = obj->attached_to;
+
   o_erase_single(w_current, obj);
 
   s_delete(toplevel, obj);
   toplevel->page_current->object_tail =
-  (OBJECT *) return_tail(toplevel->page_current->object_head);
+    (OBJECT *) return_tail(toplevel->page_current->object_head);
+
+  if (o_parent != NULL)
+    o_attrib_slot_update(toplevel, o_parent);
 }
 
 /*! \todo Finish function documentation!!!
