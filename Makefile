@@ -33,6 +33,12 @@ prefix?=$(HOME)/geda
 # You can set any global options you want here to be passed to the 
 # individual ./configure scripts
 #
+# To disable the updating of the mime database and desktop database put the
+# following flags into opt=  
+#
+#             --disable-update-mime-database
+#             --disable-update-desktop-database
+#
 opts=--with-xdgdatadir=$(HOME)/.local/share --with-kdedatadir=$(HOME)/.kde/share
 
 #
