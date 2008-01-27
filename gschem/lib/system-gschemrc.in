@@ -1267,7 +1267,7 @@
     ("r" . view-redraw)
     ("s" . edit-select)
     ("t" . attributes-keymap)
-    ("u" . add-bus-hotkey)
+    ("u" . edit-undo)
     ("v" . view-keymap)
     ("w" . view-zoom-box-hotkey)
     ("x" . view-pan-hotkey)
@@ -1287,6 +1287,7 @@
     ("Shift less" . page-prev) ; Deprecated; preserved for backward compat
     ("Page_Up" . page-prev)
     ("Alt q" . file-quit)
+    ("Shift B" . add-bus-hotkey)
     ("Shift H" . hierarchy-keymap)
     ("Shift U" . edit-undo)
     ("Shift R" . edit-redo)
