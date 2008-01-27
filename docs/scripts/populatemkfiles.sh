@@ -68,9 +68,10 @@ do_work()
 	fi
 	echo "" >> Makefile.am
 
-	# Fixup any gitignore files to be called .gitignore
+	# Remove any references to (.)gitignore files (should not be
+	# distributed)
 	mv Makefile.am Makefile.am.before
-	cat Makefile.am.before | sed "s/gitignore/\.gitignore/" > Makefile.am
+	cat Makefile.am.before | sed "s/.gitignore//" > Makefile.am
 	rm -f Makefile.am.before
 }
 
