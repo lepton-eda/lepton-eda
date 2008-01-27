@@ -7,7 +7,7 @@
   <title>geda:installation</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
 <meta name="robots" content="index,follow" />
-<meta name="date" content="2007-05-24T22:27:26-0400" />
+<meta name="date" content="2008-01-01T11:05:14-0500" />
 <meta name="keywords" content="geda,installation" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -34,7 +34,7 @@
 <li class="level2"><div class="li"><span class="li"><a href="#suse_and_opensuse_distributions" class="toc">SuSE and OpenSuSE distributions</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#mac_osx_distributions" class="toc">Mac OSX distributions</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#geda_tools_suite_cd-rom" class="toc">&quot;gEDA Tools Suite&quot; CD-ROM</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#cvs_unstable_testing" class="toc">CVS Unstable/Testing</a></span></div></li></ul>
+<li class="level2"><div class="li"><span class="li"><a href="#cvs_gitunstable_testing" class="toc">CVS / git: Unstable/Testing</a></span></div></li></ul>
 </li></ul>
 </div>
 </div>
@@ -118,26 +118,39 @@ For more informations read the <a href="geda_gedasuite_installation.html" class=
 </p>
 
 </div>
-<!-- SECTION "gEDA Tools Suite CD-ROM" [2366-3042] -->
-<h2><a name="cvs_unstable_testing" id="cvs_unstable_testing">CVS Unstable/Testing</a></h2>
+<!-- SECTION "gEDA Tools Suite CD-ROM" [2366-3044] -->
+<h2><a name="cvs_gitunstable_testing" id="cvs_gitunstable_testing">CVS / git: Unstable/Testing</a></h2>
 <div class="level2">
 
 <p>
-For those already familiar with the gEDA/gaf applications and those who need the latest stuff, access to the <acronym title="Concurrent Versions System">CVS</acronym> repository is available. This is the latest developer source-code version of the application.<br/>
- Installation from <acronym title="Concurrent Versions System">CVS</acronym> is appropriate for those:
+For those already familiar with the gEDA/gaf applications and those who need the latest stuff, access to source-code repository is available (this has changed from <acronym title="Concurrent Versions System">CVS</acronym> to a <a href="http://git.or.cz/" class="urlextern" title="http://git.or.cz/"  rel="nofollow">git</a> repository). This is the latest developer source-code version of the application.<br/>
+ Installation from the Unstable/Testing repository is appropriate for those:
 </p>
 <ul>
-<li class="level1"><div class="li"> Seeking a solution to a specific problem that was submitted to the development team, to test the “fix” so that the developers can be informed that the “fix” works.</div>
+<li class="level1"><div class="li"> Seeking a solution to a specific problem that was submitted to the development team, e.g., to test the “fix” so that the developers can be informed that the “fix” works.</div>
 </li>
-<li class="level1"><div class="li"> With significant working knowledge of the gEDA Tools and quite some knowlegde in using and installing from <acronym title="Concurrent Versions System">CVS</acronym>.</div>
+<li class="level1"><div class="li"> With significant working knowledge of the gEDA Tools and quite some knowledge in using and installing from <acronym title="Concurrent Versions System">CVS</acronym>.</div>
 </li>
 </ul>
 
 <p>
- This usually requires access to several existing designs known to work in the current stable release of the gEDA Tools, so that comparisons can be made and issues brought to the attention of the developer/user community (via the e-mail lists or the bug tracker). 
+ This usually requires access to several existing designs known to work in the current stable release of the gEDA Tools, so that comparisons can be made and issues brought to the attention of the developer/user community (via the e-mail lists or the bug tracker).  You must build and install the packages in the following order: 
+</p>
+<pre class="code"> 1. libgeda
+ 2. symbols
+ 3. gschem
+ 4. gnetlist
+ 5. gsymcheck
+ 6. gattrib
+ 7. utils
+ 8. docs
+ 9. examples</pre>
+
+<p>
+ The repository can be found <a href="http://geda.seul.org/developer.html" class="urlextern" title="http://geda.seul.org/developer.html"  rel="nofollow">here</a>. 
 </p>
 
 </div>
-<!-- SECTION "CVS Unstable/Testing" [3043-] --></div>
+<!-- SECTION "CVS / git: Unstable/Testing" [3045-] --></div>
 </body>
 </html>

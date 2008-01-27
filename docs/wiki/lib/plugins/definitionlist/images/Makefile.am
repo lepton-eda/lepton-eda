@@ -1,9 +1,9 @@
 
 
 docname=wiki
-docsdir = @GEDADOCDIR@/$(docname)/lib/plugins/definitionlist/images
+docsdir = @GEDADOCDIR@/$(docname)/lib/plugins//images
 
-docs_DATA = .gitignore bullet.gif 
+docs_DATA =  bullet.gif 
 
 EXTRA_DIST = $(docs_DATA)
 

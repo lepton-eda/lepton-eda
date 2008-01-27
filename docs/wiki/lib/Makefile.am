@@ -5,7 +5,7 @@ docsdir = @GEDADOCDIR@/$(docname)/lib
 
 SUBDIRS = exe tpl images plugins 
 
-docs_DATA = .gitignore 
+docs_DATA =  
 
 EXTRA_DIST = $(docs_DATA)
 

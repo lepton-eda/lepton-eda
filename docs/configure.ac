@@ -74,8 +74,8 @@ AC_CONFIG_FILES([Makefile
 		 wiki/lib/images/fileicons/Makefile
 		 wiki/lib/images/smileys/Makefile
 		 wiki/lib/images/Makefile
-		 wiki/lib/tpl/default/images/Makefile
-		 wiki/lib/tpl/default/Makefile
+		 wiki/lib/tpl/geda/images/Makefile
+		 wiki/lib/tpl/geda/Makefile
 		 wiki/lib/tpl/Makefile
 		 wiki/lib/plugins/note/images/Makefile
 		 wiki/lib/plugins/note/Makefile
