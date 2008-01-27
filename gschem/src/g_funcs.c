@@ -99,12 +99,12 @@ SCM g_funcs_image(SCM filename)
     x_image_lowlevel (global_window_current, output_filename,
                       global_window_current->image_width,
                       global_window_current->image_height,
-		      "png");
+		      g_strdup("png"));
   } else  {
     x_image_lowlevel (global_window_current, SCM_STRING_CHARS (filename),
                       global_window_current->image_width,
                       global_window_current->image_height,
-		      "png");
+		      g_strdup("png"));
   }
   
   return SCM_BOOL_T;
