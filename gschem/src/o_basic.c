@@ -678,6 +678,12 @@ void o_glist_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, GList *list)
  *  to expand the invalidated region if anti-aliased drawing is ever
  *  used.
  *
+ *  If the GSCHEM_TOPLEVEL in question is not rendering to a GDK_WINDOW,
+ *  (e.g. image export), this function call is a no-op. A test is used:
+ *  GDK_IS_WINDOW(), which should be safe since in either case,
+ *  w_current->window is a GObject. This is really a _HACK_,
+ *  and should be fixed with a re-worked drawing model.
+ *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL who's drawing area is being invalidated.
  *  \param [in] x1         X coord for corner 1 (SCREEN units)
  *  \param [in] y1         Y coord for corner 1 (SCREEN units)
@@ -688,6 +694,11 @@ void o_invalidate_rect( GSCHEM_TOPLEVEL *w_current,
                         int x1, int y1, int x2, int y2 )
 {
   GdkRectangle rect;
+
+  /* BUG: We get called when rendering an image, and w_current->window
+   *      is a GdkPixmap. Ensure we only invalidate GdkWindows. */
+  if (!GDK_IS_WINDOW( w_current->window ))
+    return;
 
   rect.x = MIN(x1, x2) - INVALIDATE_MARGIN;
   rect.y = MIN(y1, y2) - INVALIDATE_MARGIN;
