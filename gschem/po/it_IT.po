@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it_IT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-11 01:22-0500\n"
+"POT-Creation-Date: 2008-01-26 19:35-0500\n"
 "PO-Revision-Date: 2007-09-10 23:05+0200\n"
 "Last-Translator: Michele <michelinux@alice.it>\n"
 "Language-Team: Italiano <michelinux@alice.it>\n"
@@ -1151,33 +1151,33 @@ msgstr "Il testo nascosto è ora visibile\n"
 msgid "Hidden text is now invisible\n"
 msgstr "Il testo ora è non visibile\n"
 
-#: ../src/o_misc.c:775
+#: ../src/o_misc.c:779
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
 msgstr ""
 "Non è possibile trovare il simbolo [%s] nella libreria. Aggiornamento "
 "fallito.\n"
 
-#: ../src/o_misc.c:910
+#: ../src/o_misc.c:917
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr "o_autosave_backups: Non è possibile ottenere il vero nome del file %s."
 
-#: ../src/o_misc.c:954
+#: ../src/o_misc.c:961
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 "NOn è possibile impostare il precedente file di ripristino [%s] in lettura-"
 "scrittura\n"
 
-#: ../src/o_misc.c:972
+#: ../src/o_misc.c:979
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr ""
 "Non è possibile impostare il precedente file di ripristino [%s] in sola "
 "lettura\n"
 
-#: ../src/o_misc.c:977
+#: ../src/o_misc.c:984
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "Non è possibile salvare il file di ripristino [%s]\n"
@@ -1203,12 +1203,12 @@ msgid "Got an invalid which one in o_net_draw_xor_single\n"
 msgstr ""
 
 #. try to exit gracefully
-#: ../src/o_net.c:763 ../src/o_net.c:800 ../src/o_net.c:871 ../src/o_net.c:907
+#: ../src/o_net.c:770 ../src/o_net.c:807 ../src/o_net.c:878 ../src/o_net.c:914
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 
-#: ../src/o_net.c:980
+#: ../src/o_net.c:987
 #, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
 msgstr ""

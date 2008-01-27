@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-11 01:22-0500\n"
+"POT-Creation-Date: 2008-01-26 19:35-0500\n"
 "PO-Revision-Date: 2007-02-16 14:08+0100\n"
 "Last-Translator: Patrick Bernaud <b-patrick@wanadoo.fr>\n"
 "Language-Team: French\n"
@@ -1156,31 +1156,31 @@ msgstr "Le texte normalement caché est maintenant visible\n"
 msgid "Hidden text is now invisible\n"
 msgstr "Le texte normalement caché est maintenant invisible\n"
 
-#: ../src/o_misc.c:775
+#: ../src/o_misc.c:779
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
 msgstr ""
 
-#: ../src/o_misc.c:910
+#: ../src/o_misc.c:917
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 "o_autosave_backups() : Impossible de récupérer le véritable nom du fichier %s"
 
-#: ../src/o_misc.c:954
+#: ../src/o_misc.c:961
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 "Impossible de passer le fichier copie de sauvegarde [%s] en lecture/"
 "écriture\n"
 
-#: ../src/o_misc.c:972
+#: ../src/o_misc.c:979
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr ""
 "Impossible de passer le fichier copie de sauvegarde [%s] en lecture seule\n"
 
-#: ../src/o_misc.c:977
+#: ../src/o_misc.c:984
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "Échec lors de la création de la copie de sauvegarde [%s]\n"
@@ -1206,13 +1206,13 @@ msgid "Got an invalid which one in o_net_draw_xor_single\n"
 msgstr "Valeur de whichone incorrecte dans o_net_draw_xor_single\n"
 
 #. try to exit gracefully
-#: ../src/o_net.c:763 ../src/o_net.c:800 ../src/o_net.c:871 ../src/o_net.c:907
+#: ../src/o_net.c:770 ../src/o_net.c:807 ../src/o_net.c:878 ../src/o_net.c:914
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 "Tentative d'ajout de plus de deux jonctions de bus. Erreur interne gschem.\n"
 
-#: ../src/o_net.c:980
+#: ../src/o_net.c:987
 #, fuzzy, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
 msgstr "Impossible de trouver %s dans toutes les bibliothèques de composants\n"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-11 01:22-0500\n"
+"POT-Creation-Date: 2008-01-26 19:35-0500\n"
 "PO-Revision-Date: 2007-12-29 08:51+0100\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -1158,32 +1158,32 @@ msgstr "Verborgener Text ist jetzt sichtbar.\n"
 msgid "Hidden text is now invisible\n"
 msgstr "Verborgener Text ist jetzt unsichbar.\n"
 
-#: ../src/o_misc.c:775
+#: ../src/o_misc.c:779
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
 msgstr ""
 "Das Symbol [%s] konnte nicht gefunden werden. Aktualisierung "
 "fehlgeschlagen.\n"
 
-#: ../src/o_misc.c:910
+#: ../src/o_misc.c:917
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 "o_autosave_backups: Konnte den tatsächlichen Dateinamen von %s nicht "
 "ermitteln."
 
-#: ../src/o_misc.c:954
+#: ../src/o_misc.c:961
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 "Die vorherige Backup-Datei [%s] konnte nicht auf read-write gesetzt werden.\n"
 
-#: ../src/o_misc.c:972
+#: ../src/o_misc.c:979
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "Die Backup-Datei [%s] konnte nicht auf readonly gesetzt werden.\n"
 
-#: ../src/o_misc.c:977
+#: ../src/o_misc.c:984
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "Die Backup-Datei [%s] konnte nicht gespeichert werden.\n"
@@ -1212,14 +1212,14 @@ msgstr ""
 "Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
 
 #. try to exit gracefully
-#: ../src/o_net.c:763 ../src/o_net.c:800 ../src/o_net.c:871 ../src/o_net.c:907
+#: ../src/o_net.c:770 ../src/o_net.c:807 ../src/o_net.c:878 ../src/o_net.c:914
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 "Interner gschem Fehler: Versuchte mehr als zwei Bus Abzweigungen "
 "hinzuzufügen\n"
 
-#: ../src/o_net.c:980
+#: ../src/o_net.c:987
 #, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
 msgstr "Das Busripper Symbol [%s] wurde in keiner Bauteilbibliothek gefunden\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-11 01:22-0500\n"
+"POT-Creation-Date: 2008-01-26 19:34-0500\n"
 "PO-Revision-Date: 2007-12-29 17:03+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -635,22 +635,22 @@ msgstr "Uitlijning op LINKS_ONDER ingesteld\n"
 msgid "Failed to validate utf-8 character in font definition: \"%s\".\n"
 msgstr "Valideren van utf-8 karakter in font definitie: \"%s\" faalde.\n"
 
-#: ../src/s_clib.c:454
+#: ../src/s_clib.c:456
 #, c-format
 msgid "Library command failed [%s]: %s\n"
 msgstr "Bibliotheek opdracht faalde [%s]: %s\n"
 
-#: ../src/s_clib.c:459
+#: ../src/s_clib.c:461
 #, c-format
 msgid "Library command failed [%s]: Uncaught signal %i.\n"
 msgstr "Bibliotheek opdracht faalde [%s]: Niet opgevangen signaal %i.\n"
 
-#: ../src/s_clib.c:463
+#: ../src/s_clib.c:465
 #, c-format
 msgid "Library command failed [%s]\n"
 msgstr "Bibliotheek opdracht faalde [%s]\n"
 
-#: ../src/s_clib.c:464
+#: ../src/s_clib.c:466
 #, c-format
 msgid ""
 "Error output was:\n"
@@ -659,34 +659,34 @@ msgstr ""
 "Fout uitvoer was:\n"
 "%s\n"
 
-#: ../src/s_clib.c:546
+#: ../src/s_clib.c:552
 #, c-format
 msgid "Library name [%s] already in use.  Using [%s].\n"
 msgstr "Bibliotheeknaam [%s] is al in gebruik.  Gebruik nu [%s].\n"
 
-#: ../src/s_clib.c:583
+#: ../src/s_clib.c:589
 #, c-format
 msgid "Failed to open directory [%s]: %s\n"
 msgstr "Openen van directory faalde [%s]: %s\n"
 
-#: ../src/s_clib.c:719
+#: ../src/s_clib.c:725
 #, c-format
 msgid "Failed to scan library [%s]: Scheme function returned non-list\n"
 msgstr ""
 "Doorzoeken van bibliotheek [%s] faalde: Scheme functie retourneerde non-"
 "list\n"
 
-#: ../src/s_clib.c:727
+#: ../src/s_clib.c:733
 #, c-format
 msgid "Non-string symbol name while scanning library [%s]\n"
 msgstr ""
 "Niet string symboolnaam tijdens het doorzoeken van de bibliotheek [%s]\n"
 
-#: ../src/s_clib.c:882 ../src/s_clib.c:929
+#: ../src/s_clib.c:888 ../src/s_clib.c:935
 msgid "Cannot add library: name not specified\n"
 msgstr "Kan bibliotheek niet toevoegen: naam niet gespecificeerd\n"
 
-#: ../src/s_clib.c:889
+#: ../src/s_clib.c:895
 #, c-format
 msgid ""
 "Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
@@ -694,31 +694,31 @@ msgstr ""
 "Kan bibliotheek niet toevoegen [%s]: zowel 'list' en 'get' opdrachten moeten "
 "gespecificeerd zijn.\n"
 
-#: ../src/s_clib.c:937
+#: ../src/s_clib.c:943
 #, c-format
 msgid "Cannot add Scheme-library [%s]: callbacks must be closures\n"
 msgstr ""
 "Kan scheme bibliotheek niet toevoegen [%s]: callbacks moeten afsluitingen "
 "zijn\n"
 
-#: ../src/s_clib.c:1064
+#: ../src/s_clib.c:1070
 #, c-format
 msgid "Failed to load symbol from file [%s]: %s\n"
 msgstr "Laden van symbool uit bestand faalde [%s]: %s\n"
 
-#: ../src/s_clib.c:1122
+#: ../src/s_clib.c:1128
 #, c-format
 msgid "Failed to load symbol data [%s] from source [%s]\n"
 msgstr "Laden van symbool gegevens [%s] uit bron [%s] faalde\n"
 
-#: ../src/s_clib.c:1363
+#: ../src/s_clib.c:1369
 #, c-format
 msgid "Component [%s] was not found in the component library\n"
 msgstr "Komponent [%s] is niet in de komponenten bibliotheek gevonden\n"
 
 # Meer dan een symbool
 #. More than one symbol
-#: ../src/s_clib.c:1369
+#: ../src/s_clib.c:1375
 #, c-format
 msgid "More than one component found with name [%s]\n"
 msgstr "Meer dan een komponent gevonden met de naam [%s]\n"
