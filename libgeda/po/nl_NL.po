@@ -1,13 +1,13 @@
 # Dutch translation for the geda-libgeda package.
 # Copyright (C) 1998-2007 Ales Hvezda and the respective original authors (which are listed on the respective files).
 # This file is distributed under the same license as the geda-libgeda package.
-# Bert Timmerman <bert.timmerman@xs4all.nl>, 2007.
+# Bert Timmerman <bert.timmerman@xs4all.nl>, 2007, 2008
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-26 19:34-0500\n"
+"POT-Creation-Date: 2008-01-27 10:51+0100\n"
 "PO-Revision-Date: 2007-12-29 17:03+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -86,7 +86,7 @@ msgid ""
 "[%s]\n"
 msgstr ""
 "Lees een oud formaat sym/sch bestand!\n"
-"Voer g[sym|scg]update uit op:\n"
+"Voer g[sym|sch]update uit op:\n"
 "[%s]\n"
 
 #: ../src/a_basic.c:466
@@ -335,7 +335,7 @@ msgstr "Kan slotdef=#:#,#,#... attribuut niet vinden\n"
 #. Didn't find proper slotdef=#:... put warning into log
 #: ../src/o_attrib.c:1696
 msgid "Improper slotdef syntax: missing \":\".\n"
-msgstr "Ongewenst slotdef syntax: \":\". ontbreekt\n"
+msgstr "Ongewenst slotdef syntax: \":\" ontbreekt.\n"
 
 #: ../src/o_attrib.c:1711 ../src/o_attrib.c:1816
 msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
@@ -549,7 +549,7 @@ msgstr "Base64 decodering faalde."
 
 #: ../src/o_picture.c:161 ../src/o_picture.c:172 ../src/o_picture.c:938
 msgid "Falling back to file loading. Picture unembedded.\n"
-msgstr "Val terug op het laden van bestand. Afbeelding uitgesloten.\n"
+msgstr "Val terug op het laden van bestand. Afbeelding uitgevoegd.\n"
 
 #: ../src/o_picture.c:183 ../src/o_picture.c:924 ../src/o_picture.c:971
 #, c-format
