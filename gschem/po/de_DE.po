@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-27 09:14+0100\n"
+"POT-Creation-Date: 2008-01-27 10:39-0500\n"
 "PO-Revision-Date: 2008-01-27 09:14+0100\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -1541,38 +1541,47 @@ msgstr ""
 "Mittlere Maustaste dreht während des Plazierens."
 
 #: ../src/x_dialog.c:313
+#, c-format
 msgid "Lower Left"
 msgstr "Unten Links"
 
 #: ../src/x_dialog.c:324
+#, c-format
 msgid "Middle Left"
 msgstr "Mitte Links"
 
 #: ../src/x_dialog.c:335
+#, c-format
 msgid "Upper Left"
 msgstr "Oben Links"
 
 #: ../src/x_dialog.c:346
+#, c-format
 msgid "Lower Middle"
 msgstr "Unten Mitte"
 
 #: ../src/x_dialog.c:357
+#, c-format
 msgid "Middle Middle"
 msgstr "Mitte Mitte"
 
 #: ../src/x_dialog.c:368
+#, c-format
 msgid "Upper Middle"
 msgstr "Oben Mitte"
 
 #: ../src/x_dialog.c:379
+#, c-format
 msgid "Lower Right"
 msgstr "Unten Rechts"
 
 #: ../src/x_dialog.c:390
+#, c-format
 msgid "Middle Right"
 msgstr "Mitte Rechts"
 
 #: ../src/x_dialog.c:401
+#, c-format
 msgid "Upper Right"
 msgstr "0ben Rechts"
 
@@ -1626,6 +1635,7 @@ msgstr "StrichZweiPunkt"
 #: ../src/x_dialog.c:1186 ../src/x_dialog.c:1188 ../src/x_dialog.c:1190
 #: ../src/x_dialog.c:1395 ../src/x_dialog.c:1396 ../src/x_dialog.c:1397
 #: ../src/x_dialog.c:1398 ../src/x_dialog.c:1399 ../src/x_dialog.c:1407
+#, c-format
 msgid "*unchanged*"
 msgstr "*unverändert*"
 
