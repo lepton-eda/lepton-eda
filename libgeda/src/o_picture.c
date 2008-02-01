@@ -25,6 +25,11 @@
 #endif
 #include <math.h>
 
+/* for basename(3) */
+#ifdef HAVE_LIBGEN_H
+#include <libgen.h>
+#endif
+
 #include <gtk/gtk.h>
 #include <guile/gh.h>
 
