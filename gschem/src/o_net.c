@@ -473,10 +473,9 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   return (TRUE);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief erase and redraw the rubber lines when drawing a net
  *  \par Function Description
- *
+ *  This function draws the rubbernet lines when drawing a net.
  */
 void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
@@ -487,34 +486,14 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   g_assert( w_current->inside_action != 0 );
 
-  if (toplevel->net_style == THICK) {
-    size = SCREENabs(toplevel, NET_WIDTH);
-    gdk_gc_set_line_attributes(w_current->xor_gc, size,
-			       GDK_LINE_SOLID,
-			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
-  }
-  gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_darkcolor(w_current->select_color));
-
   /* Orthognal mode enabled when Control Key is NOT pressed */
   ortho = !w_current->CONTROLKEY;
 
-  /* Erase primary line */
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		w_current->start_x, w_current->start_y,
-		w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
+  gdk_gc_set_foreground(w_current->xor_gc,
+			x_get_darkcolor(w_current->select_color));
+  
+  o_net_eraserubber(w_current);
 
-  /* Erase secondary line*/
-  if ( w_current->second_x != -1 && w_current->second_y != -1 ) {
-      gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		    w_current->last_x, w_current->last_y,
-		    w_current->second_x, w_current->second_y);
-    o_invalidate_rect(w_current, w_current->last_x, w_current->last_y,
-                      w_current->second_x, w_current->second_y);
-  }
- 
   /* In orthogonal mode secondary line is the same as the first */
   if (!ortho)
   {
@@ -541,6 +520,13 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
       w_current->second_x = fix_x(toplevel,x);
       w_current->second_y = w_current->last_y;
     }
+  }
+
+  if (toplevel->net_style == THICK) {
+    size = SCREENabs(toplevel, NET_WIDTH);
+    gdk_gc_set_line_attributes(w_current->xor_gc, size,
+			       GDK_LINE_SOLID,
+			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
   }
 
   gdk_gc_set_foreground(w_current->xor_gc,
