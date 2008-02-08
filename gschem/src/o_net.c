@@ -261,10 +261,11 @@ void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief finish a net drawing action
  *  \par Function Description
- *
+ *  This function finishes the drawing of a net. The rubber nets are
+ *  removed, the nets and cues are drawn and the net is added to the
+ *  TOPLEVEL structure.
  */
 int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
@@ -285,43 +286,14 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   g_assert( w_current->inside_action != 0 );
 
-  if (toplevel->override_net_color == -1) {
-    color = w_current->net_color;
-  } else {
-    color = toplevel->override_net_color;
-  }
-
-  size = SCREENabs(toplevel, NET_WIDTH);
-
-  if (toplevel->net_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->xor_gc, size,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
 
   gdk_gc_set_foreground(w_current->xor_gc,
 			x_get_darkcolor(w_current->select_color) );
 
-  /* Erase primary rubber net line */
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		w_current->start_x, w_current->start_y,
-		w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                               w_current->last_x, w_current->last_y);
-
-
-  /* Erase secondary rubber net line */
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		 w_current->last_x, w_current->last_y,
-		 w_current->second_x, w_current->second_y);
-  o_invalidate_rect(w_current, w_current->last_x, w_current->last_y,
-                               w_current->second_x, w_current->second_y);
+  o_net_eraserubber(w_current);
 
   if (toplevel->net_style == THICK) {
-    gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-			       GDK_LINE_SOLID,
-			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
+    size = SCREENabs(toplevel, NET_WIDTH);
     gdk_gc_set_line_attributes(w_current->gc, size,
 			       GDK_LINE_SOLID,
 			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
@@ -368,6 +340,12 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   w_current->save_x = w_current->second_x;
   w_current->save_y = w_current->second_y;
+
+  if (toplevel->override_net_color == -1) {
+    color = w_current->net_color;
+  } else {
+    color = toplevel->override_net_color;
+  }
 
   if (!primary_zero_length ) {
   /* create primary net */
