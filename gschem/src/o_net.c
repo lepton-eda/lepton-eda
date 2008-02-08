@@ -244,15 +244,14 @@ void o_net_draw_xor_single(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int which
 
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief set the start point of a new net
  *  \par Function Description
- *
+ *  This function sets the start point of a new net at the position of the 
+ *  cursor.
  */
 void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int size;
 
   /* initalize all parameters used when drawing the new net */
   w_current->last_x = w_current->start_x = w_current->second_x = 
@@ -260,27 +259,6 @@ void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
   w_current->last_y = w_current->start_y = w_current->second_y = 
     fix_y(toplevel, y);
 
-  if (toplevel->net_style == THICK ) {
-    size = SCREENabs(toplevel, NET_WIDTH);
-    gdk_gc_set_line_attributes(w_current->xor_gc, size,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
-
-  gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		w_current->start_x, w_current->start_y, 
-		w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                               w_current->last_x, w_current->last_y);
-  if (toplevel->net_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
 }
 
 /*! \todo Finish function documentation!!!
