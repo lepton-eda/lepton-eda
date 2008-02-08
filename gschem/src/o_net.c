@@ -481,7 +481,6 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
-  int size;
   int ortho;
 
   g_assert( w_current->inside_action != 0 );
@@ -522,6 +521,18 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
     }
   }
 
+  o_net_drawrubber(w_current);
+}
+
+/*! \brief draw rubbernet lines to the gc
+ *  \par Function Description
+ *  This function draws the rubbernets to the graphic context
+ */
+void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int size;
+
   if (toplevel->net_style == THICK) {
     size = SCREENabs(toplevel, NET_WIDTH);
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
@@ -552,6 +563,7 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
 			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
   }
 }
+
 
 /*! \todo Finish function documentation!!!
  *  \brief

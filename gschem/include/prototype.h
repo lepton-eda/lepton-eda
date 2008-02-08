@@ -641,6 +641,7 @@ void o_net_draw_xor_single(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int which
 void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y);
+void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current);
 void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current);
 int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj, GList *other_objects);
 /* o_picture.c */
