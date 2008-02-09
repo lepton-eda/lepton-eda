@@ -98,6 +98,8 @@ struct st_gschem_toplevel {
   int inside_action;                    /* Are we doing an action? */
   int rotated_inside;                   /* Was the selection rotated
                                            inside an action? */
+  int rubbernet_visible;                /* Is the rubbernet currently on
+					   the drawing area? */
 
   /* --------------------- */
   /* Gschem internal state */

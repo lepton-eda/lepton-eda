@@ -122,6 +122,7 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->distance = -1;
   w_current->inside_action = 0;
   w_current->rotated_inside = 0;
+  w_current->rubbernet_visible = 0;
 
   /* --------------------- */
   /* Gschem internal state */

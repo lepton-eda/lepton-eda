@@ -533,6 +533,8 @@ void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
   TOPLEVEL *toplevel = w_current->toplevel;
   int size;
 
+  w_current->rubbernet_visible = 1;
+
   if (toplevel->net_style == THICK) {
     size = SCREENabs(toplevel, NET_WIDTH);
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
@@ -576,6 +578,11 @@ void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int size;
+
+  if (! w_current->rubbernet_visible)
+    return;
+
+  w_current->rubbernet_visible = 0;
 
   if (toplevel->net_style == THICK) {
     size = SCREENabs(toplevel, NET_WIDTH);
