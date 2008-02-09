@@ -389,7 +389,65 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
   }
 }
 
+/*! \brief calcutates the net route to the magnetic marker
+ *  \par Function Description
+ *  Depending on the two rubbernet lines from start to last and from
+ *  last to second, the 3 coordinates are manipulated to find
+ *  a way to the magnetic marker.
+ */
+void o_net_finishmagnetic(GSCHEM_TOPLEVEL *w_current)
+{
+  int primary_zero_length, secondary_zero_length;
 
+  primary_zero_length = ((w_current->start_x == w_current->last_x) 
+			 && (w_current->start_y == w_current->last_y));
+ 
+  secondary_zero_length = ((w_current->last_x == w_current->second_x) 
+			   && (w_current->last_y == w_current->second_y));
+
+  if (!primary_zero_length && secondary_zero_length) {
+    if (w_current->start_x == w_current->last_x) {
+      /* expand vertical line to magnetic_y */
+      w_current->last_y = w_current->magnetic_y;
+    }
+    else if (w_current->start_y == w_current->last_y) {
+      /* expand horitontal line to vertical to magnetic_x */
+      w_current->last_x = w_current->magnetic_x;
+    }
+    /* connect to magnetic */
+    w_current->second_x = w_current->magnetic_x;
+    w_current->second_y = w_current->magnetic_y;
+  }
+
+  if (primary_zero_length && !secondary_zero_length) {
+    /* move second line to the first (empty line) */
+    w_current->start_x = w_current->last_x;
+    w_current->start_y = w_current->last_y;
+    if (w_current->last_x == w_current->second_x) {
+      /* expand vertical line to magnetic_y */
+      w_current->last_y = w_current->magnetic_y;
+    }
+    else if (w_current->last_y == w_current->second_y) {
+      /* expand horitontal line to magnetic_x */
+      w_current->last_x = w_current->magnetic_x;
+    }
+    /* connect to magnetic */
+    w_current->second_x = w_current->magnetic_x;
+    w_current->second_y = w_current->magnetic_y;
+  }
+
+  if (!primary_zero_length && !secondary_zero_length) {
+    /* expand line in both directions */
+    if (w_current->start_x == w_current->last_x) {
+      w_current->last_y = w_current->magnetic_y;
+    }
+    else {
+      w_current->last_x = w_current->magnetic_x;
+    }
+    w_current->second_x = w_current->magnetic_x;
+    w_current->second_y = w_current->magnetic_y;
+  }
+}
 
 /*! \brief callback function to draw a net marker in magnetic mode
  *  \par Function Description
@@ -412,13 +470,18 @@ void o_net_start_magnetic(GSCHEM_TOPLEVEL *w_current, int x, int y)
 /*! \brief set the start point of a new net
  *  \par Function Description
  *  This function sets the start point of a new net at the position of the 
- *  cursor.
+ *  cursor. If we have a visible magnetic marker, we use that instead of 
+ *  the cursor position
  */
 void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 
-  /* initalize all parameters used when drawing the new net */
+  if (w_current->magnetic_visible) {
+    x = w_current->magnetic_x;
+    y = w_current->magnetic_y;
+  }
+
   w_current->last_x = w_current->start_x = w_current->second_x = 
     fix_x(toplevel, x);
   w_current->last_y = w_current->start_y = w_current->second_y = 
@@ -426,11 +489,14 @@ void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
 }
 
-/*! \brief finish a net drawing action
- *  \par Function Description
- *  This function finishes the drawing of a net. The rubber nets are
- *  removed, the nets and cues are drawn and the net is added to the
- *  TOPLEVEL structure.
+/*! \brief finish a net drawing action 
+ * \par Function Description 
+ * This function finishes the drawing of a net. If we have a visible
+ * magnetic marker, we use that instead of the current cursor
+ * position.
+ *
+ * The rubber nets are removed, the nets and cues are drawn and the
+ * net is added to the TOPLEVEL structure.  
  */
 int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
@@ -443,19 +509,24 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   int primary_zero_length, secondary_zero_length;
   int found_primary_connection = FALSE;
   int sx[2], sy[2];
+  int save_magnetic;
 
-  /*int temp_x, temp_y;*/
-  /* OBJECT *o_current;*/
   GList *other_objects = NULL;
   OBJECT *new_net = NULL;
 
   g_assert( w_current->inside_action != 0 );
 
+  /* I've to store that because o_net_eraserubber would delete it
+     but I need it for o_net_finish_magnetic */
+  save_magnetic = w_current->magnetic_visible;
 
   gdk_gc_set_foreground(w_current->xor_gc,
 			x_get_darkcolor(w_current->select_color) );
 
   o_net_eraserubber(w_current);
+
+  if (save_magnetic)
+    o_net_finishmagnetic(w_current);
 
   if (toplevel->net_style == THICK) {
     size = SCREENabs(toplevel, NET_WIDTH);
@@ -463,7 +534,6 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 			       GDK_LINE_SOLID,
 			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
   }
-
 
   /* See if either of the nets are zero length.  We'll only add */
   /* the non-zero ones */
@@ -657,6 +727,9 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
 			x_get_darkcolor(w_current->select_color));
   
   o_net_eraserubber(w_current);
+
+  if (w_current->magneticnet_mode)
+    o_net_find_magnetic(w_current, x, y);
 
   /* In orthogonal mode secondary line is the same as the first */
   if (!ortho)
