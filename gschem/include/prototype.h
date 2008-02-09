@@ -640,6 +640,8 @@ void o_move_stretch_rubberband(GSCHEM_TOPLEVEL *w_current);
 void o_net_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_net_draw_xor_single(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int whichone, OBJECT *o_current);
+void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current, int event_x, int event_y);
+void o_net_start_magnetic(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y);

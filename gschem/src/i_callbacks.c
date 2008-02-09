@@ -3361,7 +3361,7 @@ DEFINE_I_CALLBACK(options_magneticnet)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  if (w_current->magneticnet_mode = ! w_current->magneticnet_mode){
+  if ((w_current->magneticnet_mode = !w_current->magneticnet_mode)) {
     s_log_message(_("magnetic net mode: ON\n"));
   }
   else {

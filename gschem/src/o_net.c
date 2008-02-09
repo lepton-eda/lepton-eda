@@ -32,6 +32,22 @@
 #include <dmalloc.h>
 #endif
 
+
+/* magnetic options */
+/* size of the magnetic marker on the screen. */
+#define MAGNETIC_HALFSIZE 6
+
+/* define how far the cursor could be to activate magnetic */
+#define MAGNETIC_PIN_REACH 50 
+#define MAGNETIC_NET_REACH 20
+#define MAGNETIC_BUS_REACH 30
+
+/* weighting factors to tell that a pin is more important than a net */
+#define MAGNETIC_PIN_WEIGHT 3
+#define MAGNETIC_NET_WEIGHT 1
+#define MAGNETIC_BUS_WEIGHT 2
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -242,6 +258,155 @@ void o_net_draw_xor_single(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int which
   o_invalidate_rect(w_current,
                     sx[0] + dx1, sy[0] + dy1, sx[1] + dx2, sy[1] + dy2);
 
+}
+
+/*! \brief find the closest possible location to connect to
+ *  \par Function Description
+ *  This function calculates the distance to all connectable objects 
+ *  and searches the closest connection point.
+ *  It searches for pins, nets and busses.
+ *  
+ *  The connection point is stored in GSCHEM_TOPLEVEL->magnetic_x and
+ *  GSCHEM_TOPLEVEL->magnetic_y. If no connection is found. Both variables
+ *  are set to -1.
+ */
+void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
+			 int x, int y)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x1, x2, y1, y2, dist1, dist2;
+  int min_x, min_y, mindist, minbest;
+  int weight, min_weight;
+  int magnetic_reach = 0;
+  OBJECT *o_current;
+  OBJECT *o_simple;
+  OBJECT *o_magnetic = NULL;
+
+  minbest = min_x = min_y = 0;
+  min_weight = 0;
+
+  for (o_current = toplevel->page_current->object_head->next;
+       o_current != NULL;
+       o_current = o_current->next) {
+
+    if (o_current->type == OBJ_COMPLEX) {
+      /* if the object is complex, then search for the pin that is
+	 closest to the cursor */
+      for  (o_simple = o_current->complex->prim_objs->next;
+	    o_simple != NULL;
+	    o_simple = o_simple->next) {
+	if (o_simple->type == OBJ_PIN) {
+	  WORLDtoSCREEN(toplevel,
+			o_simple->line->x[o_simple->whichend],
+			o_simple->line->y[o_simple->whichend],
+			&x1, &y1);
+	  mindist = abs(x - x1) + abs(y - y1);
+
+	  weight = mindist / MAGNETIC_PIN_WEIGHT;
+	  if (o_magnetic == NULL
+	      || weight < min_weight) {
+	    minbest = mindist;
+	    min_weight = weight;
+	    o_magnetic = o_simple;
+	    w_current->magnetic_x = x1;
+	    w_current->magnetic_y = y1;
+	  }
+	}
+      }
+    }
+
+    if (o_current->type == OBJ_NET
+	|| o_current->type == OBJ_BUS) {
+      /* we have 3 possible points to connect: 
+	 2 endpoints and 1 intersect point */
+      WORLDtoSCREEN(toplevel, o_current->line->x[0],
+		    o_current->line->y[0], &x1, &y1);
+      WORLDtoSCREEN(toplevel, o_current->line->x[1],
+		    o_current->line->y[1], &x2, &y2);
+      dist1 = abs(x - x1) + abs(y - y1);
+      dist2 = abs(x - x2) + abs(y - y2);
+      if (dist1 < dist2) {
+	min_x = x1;
+	min_y = y1;
+	mindist = dist1;
+      }
+      else {
+	min_x = x2;
+	min_y = y2;
+	mindist = dist2;
+      }
+      
+      if ((x1 == x2)  /* vertical net */
+	  && ((y1 >= y && y >= y2)
+	      || (y2 >= y && y >= y1))) {
+	if (abs(x - x1) < mindist) {
+	  mindist = abs(x - x1);
+	  min_x = x1;
+	  min_y = y;
+	}
+      } 
+      if ((y1 == y2)  /* horitontal net */
+	  && ((x1 >= x && x >= x2)
+	      || (x2 >= x && x >= x1))) {  
+	if (abs(y - y1) < mindist) {
+	  mindist = abs(y - y1);
+	  min_x = x;
+	  min_y = y1;
+	}
+      }
+
+      if (o_current->type == OBJ_BUS)
+	weight = mindist / MAGNETIC_BUS_WEIGHT;
+      else /* OBJ_NET */
+	weight = mindist / MAGNETIC_NET_WEIGHT;
+
+      if (o_magnetic == NULL
+	  || weight < min_weight) {
+	minbest = mindist;
+	min_weight = weight;
+	o_magnetic = o_current;
+	w_current->magnetic_x = min_x;
+	w_current->magnetic_y = min_y;
+      }
+    }
+  } 
+
+  /* check whether we found an object and if it's close enough */
+  if (o_magnetic != NULL) {
+    switch (o_magnetic->type) {
+    case (OBJ_PIN): magnetic_reach = MAGNETIC_PIN_REACH; break;
+    case (OBJ_NET): magnetic_reach = MAGNETIC_NET_REACH; break;
+    case (OBJ_BUS): magnetic_reach = MAGNETIC_BUS_REACH; break;
+    }
+    if (minbest > magnetic_reach) {
+      w_current->magnetic_x = -1;
+      w_current->magnetic_y = -1;
+    }
+  }
+  else {
+    w_current->magnetic_x = -1;
+    w_current->magnetic_y = -1;
+  }
+}
+
+
+
+/*! \brief callback function to draw a net marker in magnetic mode
+ *  \par Function Description
+ *  If the mouse is moved, this function is called to update the 
+ *  position of the magnetic marker.
+ */
+void o_net_start_magnetic(GSCHEM_TOPLEVEL *w_current, int x, int y)
+{
+  w_current->start_x = w_current->start_y = -1;
+  w_current->last_x = w_current->last_y = -1;
+  w_current->second_x = w_current->second_y = -1;
+
+  o_net_eraserubber(w_current);
+
+  o_net_find_magnetic(w_current, x, y);
+
+  o_net_drawrubber(w_current);
 }
 
 /*! \brief set the start point of a new net
@@ -535,6 +700,22 @@ void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
 
   w_current->rubbernet_visible = 1;
 
+  if (w_current->magneticnet_mode) {
+    if (w_current->magnetic_x != -1 && w_current->magnetic_y != -1) {
+      w_current->magnetic_visible = 1;
+      gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
+			 TRUE,
+			 w_current->magnetic_x - MAGNETIC_HALFSIZE,
+			 w_current->magnetic_y - MAGNETIC_HALFSIZE,
+			 2*MAGNETIC_HALFSIZE, 2*MAGNETIC_HALFSIZE);
+      o_invalidate_rect(w_current, 
+			w_current->magnetic_x - MAGNETIC_HALFSIZE,
+			w_current->magnetic_y - MAGNETIC_HALFSIZE,
+			w_current->magnetic_x + MAGNETIC_HALFSIZE,
+			w_current->magnetic_y + MAGNETIC_HALFSIZE);
+    }
+  }
+
   if (toplevel->net_style == THICK) {
     size = SCREENabs(toplevel, NET_WIDTH);
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
@@ -583,6 +764,22 @@ void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
     return;
 
   w_current->rubbernet_visible = 0;
+
+  if (w_current->magneticnet_mode) {
+    if (w_current->magnetic_x != -1 && w_current->magnetic_y != -1) {
+      w_current->magnetic_visible = 0;
+      gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
+			 TRUE,
+			 w_current->magnetic_x - MAGNETIC_HALFSIZE,
+			 w_current->magnetic_y - MAGNETIC_HALFSIZE,
+			 2*MAGNETIC_HALFSIZE, 2*MAGNETIC_HALFSIZE);
+      o_invalidate_rect(w_current,
+			w_current->magnetic_x - MAGNETIC_HALFSIZE,
+			w_current->magnetic_y - MAGNETIC_HALFSIZE,
+			w_current->magnetic_x + MAGNETIC_HALFSIZE,
+			w_current->magnetic_y + MAGNETIC_HALFSIZE);
+    }
+  }
 
   if (toplevel->net_style == THICK) {
     size = SCREENabs(toplevel, NET_WIDTH);

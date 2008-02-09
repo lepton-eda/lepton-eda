@@ -1080,6 +1080,16 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 					(int) event->y, ARC_RADIUS);
     break;
 
+
+    case(STARTDRAWNET):
+    if(w_current->magneticnet_mode == 1) {
+      o_net_start_magnetic(w_current,
+			   (int) event->x,
+			   (int) event->y);
+    }
+
+    break;
+
     case(DRAWNET):
     case(NETCONT):
     if (w_current->inside_action)
