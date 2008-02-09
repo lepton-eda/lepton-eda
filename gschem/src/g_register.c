@@ -299,6 +299,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "options-grid",              0, 0, 0, g_keys_options_grid },
   { "options-snap",              0, 0, 0, g_keys_options_snap },
   { "options-rubberband",        0, 0, 0, g_keys_options_rubberband },
+  { "options-magneticnet",       0, 0, 0, g_keys_options_magneticnet },
   { "options-show-log-window",   0, 0, 0, g_keys_options_show_log_window },
   { "options-show-coord-window", 0, 0, 0, g_keys_options_show_coord_window },
   { "help-about",                0, 0, 0, g_keys_help_about },

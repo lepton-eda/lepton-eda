@@ -1229,6 +1229,7 @@
     ("g" . options-grid)
     ("s" . options-snap)
     ("r" . options-rubberband)
+    ("m" . options-magneticnet)
     ("Shift S" . options-snap-size)
     ("l" . options-show-log-window)
     ("c" . options-show-coord-window)))
@@ -1480,6 +1481,7 @@
 	   ("Toggle Outline/Box"   options-action-feedback   	
 				   options-action-feedback)
 	   ("Toggle Net Rubberband" options-rubberband   options-rubberband)
+	   ("Toggle Magnetic Net" options-magneticnet options-magneticnet)
 	   ("Show Log Window..."    options-show-log-window   
 	 			    options-show-log-window)
 	   ("Show Coord Window..."   options-show-coord-window   

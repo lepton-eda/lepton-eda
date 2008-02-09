@@ -172,6 +172,7 @@ SCM g_keys_options_snap_size(void);
 SCM g_keys_options_scale_up_snap_size(void);
 SCM g_keys_options_scale_down_snap_size(void);
 SCM g_keys_options_rubberband(void);
+SCM g_keys_options_magneticnet(void);
 SCM g_keys_options_show_log_window(void);
 SCM g_keys_options_show_coord_window(void);
 SCM g_keys_misc(void);
@@ -434,6 +435,7 @@ void i_callback_options_afeedback(gpointer data, guint callback_action, GtkWidge
 void i_callback_options_grid(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_snap(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_rubberband(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_options_magneticnet(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_show_log_window(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_misc(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_misc2(gpointer data, guint callback_action, GtkWidget *widget);
