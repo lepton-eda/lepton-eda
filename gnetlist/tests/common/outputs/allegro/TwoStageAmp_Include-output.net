@@ -1,0 +1,69 @@
+(Allegro netlister by M. Ettus)
+$PACKAGES
+! CAPACITOR! 2.2uF; Cout
+! RESISTOR! 10; R5
+! RESISTOR! 2.8K; R4
+! RESISTOR! 100; RE2
+! NPN_TRANSISTOR! NPN_TRANSISTOR; Q2
+! directive! .options TEMP=25; A3
+! RESISTOR! 28K; R3
+! include! include; A2
+! RESISTOR! 100; RE1
+! NPN_TRANSISTOR! NPN_TRANSISTOR; Q1
+! model! model; A1
+! RESISTOR! 2K; R2
+none! vsin! DC 1.6V AC 10MV SIN(0 1MV 1KHZ); Vinput
+! RESISTOR! 28K; R1
+! CAPACITOR! 2.2uF; C2
+! CAPACITOR! 1pF; CE2
+! CAPACITOR! 2.2uF; C1
+! CAPACITOR! 1pF; CE1
+! RESISTOR! 1; R8
+none! VOLTAGE_SOURCE! DC 15V; VCC
+! RESISTOR! 1K; RC2
+! RESISTOR! 3.3K; RC1
+! RESISTOR! 100K; RL
+$NETS
+unnamed_net2; C2.1,
+ R8.2
+Vbase2; R3.1,
+ C2.2,
+ R4.2,
+ Q2.2
+Vem2; CE2.2,
+ RE2.2,
+ Q2.1
+Vout; Cout.2,
+ RL.2
+VColl2; Q2.3,
+ Cout.1,
+ RC2.1
+GND; R4.1,
+ CE2.1,
+ RE2.1,
+ VCC.2,
+ Vinput.2,
+ CE1.1,
+ RL.1,
+ RE1.1,
+ R2.1
+Vcc; R3.2,
+ RC1.2,
+ VCC.1,
+ RC2.2,
+ R1.2
+Vin; Vinput.1,
+ R5.1
+unnamed_net1; C1.1,
+ R5.2
+Vbase1; C1.2,
+ R2.2,
+ R1.1,
+ Q1.2
+Vem1; CE1.2,
+ RE1.2,
+ Q1.1
+Vcoll1; R8.1,
+ RC1.1,
+ Q1.3
+$END

@@ -1,0 +1,11 @@
+;; Gossip Netlist Created by gNetlist
+
+;; Created By Matt Ettus <matt@ettus.com>
+;; Libraries:
+
+(use-library unknown *)
+(define-block (not found (
+(signals (GND unnamed_net1))
+   (V1)
+   (A1)
+   (R1)

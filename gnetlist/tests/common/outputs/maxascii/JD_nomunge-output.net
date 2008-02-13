@@ -1,0 +1,27 @@
+*OrCAD
+*START
+*COMP V1	"none"
+*COMP Cm	"unknown"
+*COMP A1	"unknown"
+*COMP Rt	"unknown"
+*COMP M1	"unknown"
+*COMP X1	"unknown"
+*COMP Rlp	"unknown"
+*COMP Vdd	"none"
+*COMP Rlm	"unknown"
+*COMP Cp	"unknown"
+*COMP Rb	"unknown"
+*NET "Vdd1"
+*NET "Vdd1" Rlp."2" M1."B" M1."S" Vdd."1" X1."6"
+*NET "GND"
+*NET "GND" Cm."2" Cp."2" Rlm."2" Vdd."2" V1."2" Rb."1" X1."7" X1."2"
+*NET "LVH"
+*NET "LVH" Rb."2" M1."D" M1."G" X1."3"
+*NET "i"
+*NET "i" V1."1" X1."1"
+*NET "p"
+*NET "p" Cp."1" Rt."1" Rlp."1" X1."5"
+*NET "m"
+*NET "m" Cm."1" Rlm."1" Rt."2" X1."4"
+
+*END

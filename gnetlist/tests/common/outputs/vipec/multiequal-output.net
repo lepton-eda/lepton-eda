@@ -1,0 +1,10 @@
+% ViPEC RF Netlister
+% Written by Matthew Ettus
+% Based on code by Bas Gieltjes
+CKT
+	error	1 0 	% V1
+	error		% A1
+	RES	0 1 R=20		% R1
+	DEF2P	#<unspecified>  #<unspecified>
+	TERM	50 50
+

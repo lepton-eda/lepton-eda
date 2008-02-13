@@ -1,0 +1,30 @@
+% ViPEC RF Netlister
+% Written by Matthew Ettus
+% Based on code by Bas Gieltjes
+CKT
+	CAP	5 4 C=2.2uF		% Cout
+	RES	7 8 R=10		% R5
+	RES	0 2 R=2.8K		% R4
+	RES	0 3 R=100		% RE2
+	error	5 2 3 	% Q2
+	error		% A3
+	RES	2 6 R=28K		% R3
+	error		% A2
+	RES	0 10 R=100		% RE1
+	error	11 9 10 	% Q1
+	error		% A1
+	RES	0 9 R=2K		% R2
+	error	7 0 	% Vinput
+	RES	9 6 R=28K		% R1
+	CAP	1 2 C=2.2uF		% C2
+	CAP	0 3 C=1pF		% CE2
+	CAP	8 9 C=2.2uF		% C1
+	CAP	0 10 C=1pF		% CE1
+	RES	11 1 R=1		% R8
+	error	6 0 	% VCC
+	RES	5 6 R=1K		% RC2
+	RES	11 6 R=3.3K		% RC1
+	RES	0 4 R=100K		% RL
+	DEF2P	#<unspecified>  #<unspecified>
+	TERM	50 50
+

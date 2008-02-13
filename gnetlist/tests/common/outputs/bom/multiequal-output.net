@@ -1,0 +1,4 @@
+refdes	refdes	value	device	
+V1	V1	DC 1V	VOLTAGE_SOURCE	
+A1	A1	abotol=1e-11	options	
+R1	R1	20	RESISTOR	

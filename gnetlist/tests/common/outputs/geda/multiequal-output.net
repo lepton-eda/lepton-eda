@@ -1,0 +1,27 @@
+START header
+
+gEDA's netlist format
+Created specifically for testing of gnetlist
+
+END header
+
+START components
+
+V1 device=VOLTAGE_SOURCE
+A1 device=options
+R1 device=RESISTOR
+
+END components
+
+START renamed-nets
+
+
+END renamed-nets
+
+START nets
+
+GND : V1 2, R1 1 
+unnamed_net1 : V1 1, R1 2 
+
+END nets
+

@@ -1,0 +1,22 @@
+Part none { Name AMP2 }
+Part none { Name AMP1 }
+Part none { Name SOURCE }
+Part unknown { Name DEFAULTS }
+Part none { Name MX1 }
+Part none { Name DEF1 }
+Part none { Name T1 }
+Part none { Name FL1 }
+Signal "unnamed_net6"
+  { AMP2-1 T1-2 }
+Signal "unnamed_net5"
+  { T1-1 MX1-2 }
+Signal "unnamed_net4"
+  { MX1-1 FL1-2 }
+Signal "unnamed_net3"
+  { FL1-1 DEF1-2 }
+Signal "unnamed_net2"
+  { DEF1-1 AMP1-2 }
+Signal "unnamed_net1"
+  { AMP1-1 SOURCE-1 }
+Signal "GND"
+  { DEFAULTS-1 }

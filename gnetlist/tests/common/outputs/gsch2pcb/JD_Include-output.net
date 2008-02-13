@@ -1,0 +1,42 @@
+# release: pcb 1.6.3
+PCB("" 6000 5000)
+Grid(10 0 0)
+Cursor(0 0 3)
+Flags(0x000000d0)
+Groups("1,2,3,s:4,5,6,c:7:8:")
+Styles("Signal,10,40,20:Power,25,60,35:Fat,40,60,35:Skinny,8,36,20")
+PKG_none(none,V1,pulse 3.3 0 1u 10p 10p 1.25u 2.5u)
+PKG_unknown(unknown,Cm,20p)
+PKG_unknown(unknown,A1,unknown)
+PKG_unknown(unknown,Rt,1k)
+PKG_unknown(unknown,M1,unknown)
+PKG_unknown(unknown,X1,unknown)
+PKG_unknown(unknown,Rlp,1meg)
+PKG_none(none,Vdd,DC 3.3V)
+PKG_unknown(unknown,Rlm,500k)
+PKG_unknown(unknown,Cp,20p)
+PKG_unknown(unknown,Rb,5.6k)
+Layer(1 "solder")
+(
+)
+Layer(2 "GND-sldr")
+(
+)
+Layer(3 "Vcc-sldr")
+(
+)
+Layer(4 "component")
+(
+)
+Layer(5 "GND-comp")
+(
+)
+Layer(6 "Vcc-comp")
+(
+)
+Layer(7 "unused")
+(
+)
+Layer(8 "unused")
+(
+)

@@ -1,0 +1,23 @@
+Part none { Name V1 }
+Part unknown { Name Cm }
+Part unknown { Name A1 }
+Part unknown { Name Rt }
+Part unknown { Name M1 }
+Part unknown { Name X1 }
+Part unknown { Name Rlp }
+Part none { Name Vdd }
+Part unknown { Name Rlm }
+Part unknown { Name Cp }
+Part unknown { Name Rb }
+Signal "Vdd1"
+  { Rlp-2 M1-B M1-S Vdd-1 X1-6 }
+Signal "GND"
+  { Cm-2 Cp-2 Rlm-2 Vdd-2 V1-2 Rb-1 X1-7 X1-2 }
+Signal "LVH"
+  { Rb-2 M1-D M1-G X1-3 }
+Signal "i"
+  { V1-1 X1-1 }
+Signal "p"
+  { Cp-1 Rt-1 Rlp-1 X1-5 }
+Signal "m"
+  { Cm-1 Rlm-1 Rt-2 X1-4 }

@@ -1,0 +1,37 @@
+SUBDIRS= \
+       allegro \
+       bae \
+       bom2 \
+       bom \
+       calay \
+       cascade \
+       drc2 \
+       drc \
+       eagle \
+       futurenet2 \
+       geda \
+       gossip \
+       gsch2pcb \
+       mathematica \
+       maxascii \
+       osmond \
+       pads \
+       partslist1 \
+       partslist2 \
+       partslist3 \
+       PCBboard \
+       pcbpins \
+       PCB \
+       protelII \
+       redac \
+       spice \
+       spice-sdb \
+       switcap \
+       systemc \
+       tango \
+       vams \
+       verilog \
+       vhdl \
+       vipec
+
+EXTRA_DIST= regen_sub_makefile_am.sh

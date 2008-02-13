@@ -1,0 +1,16 @@
+v["V1","2"]=v["GND"];
+v["R1","1"]=v["GND"];
+v["V1","1"]=v["unnamed_net1"];
+v["R1","2"]=v["unnamed_net1"];
+nodeEquations={
+i["V1","1"]+i["R1","2"]==0};
+modelEquations={
+voltage_source[value->DC 1V]["V1"],
+options[value->abotol=1e-11]["A1"],
+resistor[value->20]["R1"]};
+variables={
+v["unnamed_net1"],
+i["V1","2"],
+i["R1","1"],
+i["V1","1"],
+i["R1","2"]};

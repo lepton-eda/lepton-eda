@@ -1,0 +1,33 @@
+   ;
+ADD 'U1' unknown@smd-ipc (1 1);
+VALUE 'U1' 'LM324';
+SIGNAL 'MINUSIN_SLOT4_PIN13_B'
+   'U1' '13'
+;
+SIGNAL 'PLUSIN_SLOT4_PIN12_A'
+   'U1' '12'
+;
+SIGNAL 'MINUSIN_SLOT3_PIN_B'
+   'U1' '9'
+;
+SIGNAL 'PLUSIN_SLOT3_PIN10_A'
+   'U1' '10'
+;
+SIGNAL 'MINUSIN_SLOT2_PIN6_B'
+   'U1' '6'
+;
+SIGNAL 'PLUSIN_SLOT2_PIN5_A'
+   'U1' '5'
+;
+SIGNAL 'SAMENET_OUTPUT_C'
+   'U1' '14'
+   'U1' '8'
+   'U1' '7'
+   'U1' '1'
+;
+SIGNAL 'MINUSIN_SLOT1_PIN_B'
+   'U1' '2'
+;
+SIGNAL 'PLUSIN_SLOT1_PIN3_A'
+   'U1' '3'
+;

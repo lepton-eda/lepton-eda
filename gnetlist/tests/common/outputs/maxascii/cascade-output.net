@@ -1,0 +1,26 @@
+*OrCAD
+*START
+*COMP AMP2	"none"
+*COMP AMP1	"none"
+*COMP SOURCE	"none"
+*COMP DEFAULTS	"unknown"
+*COMP MX1	"none"
+*COMP DEF1	"none"
+*COMP T1	"none"
+*COMP FL1	"none"
+*NET "unnamed_net6"
+*NET "unnamed_net6" AMP2."1" T1."2"
+*NET "unnamed_net5"
+*NET "unnamed_net5" T1."1" MX1."2"
+*NET "unnamed_net4"
+*NET "unnamed_net4" MX1."1" FL1."2"
+*NET "unnamed_net3"
+*NET "unnamed_net3" FL1."1" DEF1."2"
+*NET "unnamed_net2"
+*NET "unnamed_net2" DEF1."1" AMP1."2"
+*NET "unnamed_net1"
+*NET "unnamed_net1" AMP1."1" SOURCE."1"
+*NET "GND"
+*NET "GND" DEFAULTS."1"
+
+*END

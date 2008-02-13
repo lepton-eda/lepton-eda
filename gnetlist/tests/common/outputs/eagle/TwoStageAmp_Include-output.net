@@ -1,0 +1,113 @@
+   ;
+ADD 'Cout' unknown@smd-ipc (1 1);
+VALUE 'Cout' '2.2uF';
+ADD 'R5' unknown@smd-ipc (1 1);
+VALUE 'R5' '10';
+ADD 'R4' unknown@smd-ipc (1 1);
+VALUE 'R4' '2.8K';
+ADD 'RE2' unknown@smd-ipc (1 1);
+VALUE 'RE2' '100';
+ADD 'Q2' unknown@smd-ipc (1 1);
+VALUE 'Q2' 'NPN_TRANSISTOR';
+ADD 'A3' unknown@smd-ipc (1 1);
+VALUE 'A3' '.options TEMP=25';
+ADD 'R3' unknown@smd-ipc (1 1);
+VALUE 'R3' '28K';
+ADD 'A2' unknown@smd-ipc (1 1);
+VALUE 'A2' 'include';
+ADD 'RE1' unknown@smd-ipc (1 1);
+VALUE 'RE1' '100';
+ADD 'Q1' unknown@smd-ipc (1 1);
+VALUE 'Q1' 'NPN_TRANSISTOR';
+ADD 'A1' unknown@smd-ipc (1 1);
+VALUE 'A1' 'model';
+ADD 'R2' unknown@smd-ipc (1 1);
+VALUE 'R2' '2K';
+ADD 'Vinput' none@smd-ipc (1 1);
+VALUE 'Vinput' 'DC 1.6V AC 10MV SIN(0 1MV 1KHZ)';
+ADD 'R1' unknown@smd-ipc (1 1);
+VALUE 'R1' '28K';
+ADD 'C2' unknown@smd-ipc (1 1);
+VALUE 'C2' '2.2uF';
+ADD 'CE2' unknown@smd-ipc (1 1);
+VALUE 'CE2' '1pF';
+ADD 'C1' unknown@smd-ipc (1 1);
+VALUE 'C1' '2.2uF';
+ADD 'CE1' unknown@smd-ipc (1 1);
+VALUE 'CE1' '1pF';
+ADD 'R8' unknown@smd-ipc (1 1);
+VALUE 'R8' '1';
+ADD 'VCC' none@smd-ipc (1 1);
+VALUE 'VCC' 'DC 15V';
+ADD 'RC2' unknown@smd-ipc (1 1);
+VALUE 'RC2' '1K';
+ADD 'RC1' unknown@smd-ipc (1 1);
+VALUE 'RC1' '3.3K';
+ADD 'RL' unknown@smd-ipc (1 1);
+VALUE 'RL' '100K';
+SIGNAL 'UNNAMED_NET2'
+   'C2' '1'
+   'R8' '2'
+;
+SIGNAL 'VBASE2'
+   'R3' '1'
+   'C2' '2'
+   'R4' '2'
+   'Q2' '2'
+;
+SIGNAL 'VEM2'
+   'CE2' '2'
+   'RE2' '2'
+   'Q2' '1'
+;
+SIGNAL 'VOUT'
+   'Cout' '2'
+   'RL' '2'
+;
+SIGNAL 'VCOLL2'
+   'Q2' '3'
+   'Cout' '1'
+   'RC2' '1'
+;
+SIGNAL 'GND'
+   'R4' '1'
+   'CE2' '1'
+   'RE2' '1'
+   'VCC' '2'
+   'Vinput' '2'
+   'CE1' '1'
+   'RL' '1'
+   'RE1' '1'
+   'R2' '1'
+;
+SIGNAL 'VCC'
+   'R3' '2'
+   'RC1' '2'
+   'VCC' '1'
+   'RC2' '2'
+   'R1' '2'
+;
+SIGNAL 'VIN'
+   'Vinput' '1'
+   'R5' '1'
+;
+SIGNAL 'UNNAMED_NET1'
+   'C1' '1'
+   'R5' '2'
+;
+SIGNAL 'VBASE1'
+   'C1' '2'
+   'R2' '2'
+   'R1' '1'
+   'Q1' '2'
+;
+SIGNAL 'VEM1'
+   'CE1' '2'
+   'RE1' '2'
+   'Q1' '1'
+;
+SIGNAL 'VCOLL1'
+   'R8' '1'
+   'RC1' '1'
+   'Q1' '3'
+;

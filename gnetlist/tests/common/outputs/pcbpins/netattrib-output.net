@@ -1,0 +1,25 @@
+# Pin name action command file
+
+# Start of element F1
+ChangePinName(F1, 2, 2)
+ChangePinName(F1, 1, 1)
+
+# Start of element U100
+ChangePinName(U100, unknown, unknown)
+ChangePinName(U100, unknown, unknown)
+ChangePinName(U100, unknown, unknown)
+ChangePinName(U100, 1, A)
+ChangePinName(U100, 2, B)
+ChangePinName(U100, 3, Y)
+
+# Start of element U300
+ChangePinName(U300, unknown, unknown)
+ChangePinName(U300, unknown, unknown)
+ChangePinName(U300, 2, Y)
+ChangePinName(U300, 1, A)
+
+# Start of element U200
+ChangePinName(U200, unknown, unknown)
+ChangePinName(U200, unknown, unknown)
+ChangePinName(U200, 2, Y)
+ChangePinName(U200, 1, A)

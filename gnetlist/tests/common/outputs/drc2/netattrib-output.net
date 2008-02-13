@@ -1,0 +1,40 @@
+Checking non-numbered parts...
+
+Checking duplicated references...
+
+Checking nets with only one connection...
+ERROR: Net 'unnamed_net1' is connected to only one pin: U300:2 .
+
+Checking pins without the 'pintype' attribute...
+
+Checking type of pins connected to a net...
+ERROR: Pin(s) with pintype 'output': U200:2 
+	are connected by net 'netattrib'
+	to pin(s) with pintype 'power': U100:5 
+
+Checking unconnected pins...
+ERROR: Unconnected pin F1:2
+ERROR: Unconnected pin U100:2
+ERROR: Unconnected pin U100:1
+
+Checking slots...
+
+Checking duplicated slots...
+
+Checking unused slots...
+WARNING: Unused slot 2 of uref U100
+WARNING: Unused slot 3 of uref U100
+WARNING: Unused slot 4 of uref U100
+WARNING: Unused slot 2 of uref U300
+WARNING: Unused slot 3 of uref U300
+WARNING: Unused slot 4 of uref U300
+WARNING: Unused slot 5 of uref U300
+WARNING: Unused slot 6 of uref U300
+WARNING: Unused slot 2 of uref U200
+WARNING: Unused slot 3 of uref U200
+WARNING: Unused slot 4 of uref U200
+WARNING: Unused slot 5 of uref U200
+WARNING: Unused slot 6 of uref U200
+
+Found 13 warnings.
+Found 5 errors.

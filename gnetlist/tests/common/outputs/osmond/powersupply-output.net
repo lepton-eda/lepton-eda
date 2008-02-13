@@ -1,0 +1,34 @@
+Part unknown { Name F1 }
+Part unknown { Name R2 }
+Part unknown { Name CONN1 }
+Part unknown { Name C4 }
+Part unknown { Name R1 }
+Part unknown { Name C3 }
+Part unknown { Name C2 }
+Part unknown { Name S1 }
+Part unknown { Name C1 }
+Part unknown { Name T1 }
+Part unknown { Name U2 }
+Part unknown { Name U1 }
+Signal "ten"
+  { U2-1 R1-2 C3-1 R2-1 }
+Signal "eleven"
+  { U2-2 C4-1 R2-2 }
+Signal "GND"
+  { CONN1-3 }
+Signal "one"
+  { S1-1 CONN1-1 }
+Signal "five"
+  { CONN1-2 T1-2 }
+Signal "three"
+  { T1-1 F1-2 }
+Signal "two"
+  { S1-2 F1-1 }
+Signal "six"
+  { T1-3 U1-4 }
+Signal "seven"
+  { T1-4 U1-3 }
+Signal "nine"
+  { C4-2 C3-2 R1-3 R1-1 C2-2 C1-2 U1-2 }
+Signal "eight"
+  { U2-3 C2-1 C1-1 U1-1 }

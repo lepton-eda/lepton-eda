@@ -1,0 +1,15 @@
+/* Switcap netlist produced by gnetlist (part of gEDA) */
+/* See http://www.geda.seul.org for more information.  */
+/* Switcap backend written by Dan McMahill             */
+
+
+TIMING;
+END;
+
+CIRCUIT;
+END;
+
+
+
+/* End of SWITCAP netlist */
+END;

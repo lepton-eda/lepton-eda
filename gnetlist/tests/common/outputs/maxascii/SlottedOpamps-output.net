@@ -1,0 +1,23 @@
+*OrCAD
+*START
+*COMP U1	"unknown"
+*NET "minusin_slot4_pin13_b"
+*NET "minusin_slot4_pin13_b" U1."13"
+*NET "plusin_slot4_pin12_a"
+*NET "plusin_slot4_pin12_a" U1."12"
+*NET "minusin_slot3_pin_b"
+*NET "minusin_slot3_pin_b" U1."9"
+*NET "plusin_slot3_pin10_a"
+*NET "plusin_slot3_pin10_a" U1."10"
+*NET "minusin_slot2_pin6_b"
+*NET "minusin_slot2_pin6_b" U1."6"
+*NET "plusin_slot2_pin5_a"
+*NET "plusin_slot2_pin5_a" U1."5"
+*NET "samenet_output_c"
+*NET "samenet_output_c" U1."14" U1."8" U1."7" U1."1"
+*NET "minusin_slot1_pin_b"
+*NET "minusin_slot1_pin_b" U1."2"
+*NET "plusin_slot1_pin3_a"
+*NET "plusin_slot1_pin3_a" U1."3"
+
+*END

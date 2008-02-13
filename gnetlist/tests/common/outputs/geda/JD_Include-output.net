@@ -1,0 +1,39 @@
+START header
+
+gEDA's netlist format
+Created specifically for testing of gnetlist
+
+END header
+
+START components
+
+V1 device=vpulse
+Cm device=CAPACITOR
+A1 device=model
+Rt device=RESISTOR
+M1 device=PMOS_TRANSISTOR
+X1 device=LVD
+Rlp device=RESISTOR
+Vdd device=VOLTAGE_SOURCE
+Rlm device=RESISTOR
+Cp device=CAPACITOR
+Rb device=RESISTOR
+
+END components
+
+START renamed-nets
+
+
+END renamed-nets
+
+START nets
+
+Vdd1 : Rlp 2, M1 B, M1 S, Vdd 1, X1 6 
+GND : Cm 2, Cp 2, Rlm 2, Vdd 2, V1 2, Rb 1, X1 7, X1 2 
+LVH : Rb 2, M1 D, M1 G, X1 3 
+i : V1 1, X1 1 
+p : Cp 1, Rt 1, Rlp 1, X1 5 
+m : Cm 1, Rlm 1, Rt 2, X1 4 
+
+END nets
+

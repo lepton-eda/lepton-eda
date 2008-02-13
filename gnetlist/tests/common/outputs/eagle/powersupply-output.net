@@ -1,0 +1,78 @@
+   ;
+ADD 'F1' unknown@smd-ipc (1 1);
+VALUE 'F1' 'FUSE';
+ADD 'R2' unknown@smd-ipc (1 1);
+VALUE 'R2' '220';
+ADD 'CONN1' unknown@smd-ipc (1 1);
+VALUE 'CONN1' 'MAINS_CONNECTOR';
+ADD 'C4' unknown@smd-ipc (1 1);
+VALUE 'C4' '1uf';
+ADD 'R1' unknown@smd-ipc (1 1);
+VALUE 'R1' '5k';
+ADD 'C3' unknown@smd-ipc (1 1);
+VALUE 'C3' '22uF';
+ADD 'C2' unknown@smd-ipc (1 1);
+VALUE 'C2' '0.1uF';
+ADD 'S1' unknown@smd-ipc (1 1);
+VALUE 'S1' 'SPST';
+ADD 'C1' unknown@smd-ipc (1 1);
+VALUE 'C1' '2200uF';
+ADD 'T1' unknown@smd-ipc (1 1);
+VALUE 'T1' 'transformer';
+ADD 'U2' unknown@smd-ipc (1 1);
+VALUE 'U2' 'LM317';
+ADD 'U1' unknown@smd-ipc (1 1);
+VALUE 'U1' 'DIODE-BRIDGE';
+SIGNAL 'TEN'
+   'U2' '1'
+   'R1' '2'
+   'C3' '1'
+   'R2' '1'
+;
+SIGNAL 'ELEVEN'
+   'U2' '2'
+   'C4' '1'
+   'R2' '2'
+;
+SIGNAL 'GND'
+   'CONN1' '3'
+;
+SIGNAL 'ONE'
+   'S1' '1'
+   'CONN1' '1'
+;
+SIGNAL 'FIVE'
+   'CONN1' '2'
+   'T1' '2'
+;
+SIGNAL 'THREE'
+   'T1' '1'
+   'F1' '2'
+;
+SIGNAL 'TWO'
+   'S1' '2'
+   'F1' '1'
+;
+SIGNAL 'SIX'
+   'T1' '3'
+   'U1' '4'
+;
+SIGNAL 'SEVEN'
+   'T1' '4'
+   'U1' '3'
+;
+SIGNAL 'NINE'
+   'C4' '2'
+   'C3' '2'
+   'R1' '3'
+   'R1' '1'
+   'C2' '2'
+   'C1' '2'
+   'U1' '2'
+;
+SIGNAL 'EIGHT'
+   'U2' '3'
+   'C2' '1'
+   'C1' '1'
+   'U1' '1'
+;

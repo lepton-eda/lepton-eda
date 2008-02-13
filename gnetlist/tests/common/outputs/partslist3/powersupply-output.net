@@ -1,0 +1,15 @@
+.START
+..device	value	footprint	quantity	refdes
+DIODE-BRIDGE	unknown	unknown	1	U1
+FUSE	unknown	unknown	1	F1
+LM317	unknown	unknown	1	U2
+MAINS_CONNECTOR	unknown	unknown	1	CONN1
+POLARIZED_CAPACITOR	0.1uF	unknown	1	C2
+POLARIZED_CAPACITOR	1uf	unknown	1	C4
+POLARIZED_CAPACITOR	2200uF	unknown	1	C1
+POLARIZED_CAPACITOR	22uF	unknown	1	C3
+RESISTOR	220	unknown	1	R2
+SPST	unknown	unknown	1	S1
+transformer	unknown	unknown	1	T1
+VARIABLE_RESISTOR	5k	unknown	1	R1
+.END

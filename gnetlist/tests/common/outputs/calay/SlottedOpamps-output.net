@@ -1,0 +1,9 @@
+/minusin-slot4-pin13-b	 U1(13);
+/plusin-slot4-pin12-a	 U1(12);
+/minusin-slot3-pin-b	 U1(9);
+/plusin-slot3-pin10-a	 U1(10);
+/minusin-slot2-pin6-b	 U1(6);
+/plusin-slot2-pin5-a	 U1(5);
+/samenet-output-c	 U1(14) U1(8) U1(7) U1(1);
+/minusin-slot1-pin-b	 U1(2);
+/plusin-slot1-pin3-a	 U1(3);

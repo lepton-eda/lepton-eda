@@ -1,0 +1,31 @@
+# Pin name action command file
+
+# Start of element AMP2
+ChangePinName(AMP2, 2, OUT)
+ChangePinName(AMP2, 1, IN)
+
+# Start of element AMP1
+ChangePinName(AMP1, 2, OUT)
+ChangePinName(AMP1, 1, IN)
+
+# Start of element SOURCE
+ChangePinName(SOURCE, 1, OUT)
+
+# Start of element DEFAULTS
+ChangePinName(DEFAULTS, unknown, unknown)
+
+# Start of element MX1
+ChangePinName(MX1, 2, OUT)
+ChangePinName(MX1, 1, IN)
+
+# Start of element DEF1
+ChangePinName(DEF1, 2, OUT)
+ChangePinName(DEF1, 1, IN)
+
+# Start of element T1
+ChangePinName(T1, 2, 2)
+ChangePinName(T1, 1, 1)
+
+# Start of element FL1
+ChangePinName(FL1, 2, O)
+ChangePinName(FL1, 1, I)

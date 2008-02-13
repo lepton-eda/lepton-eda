@@ -1,0 +1,10 @@
+.PCB
+.REM CREATED BY gEDA GNETLIST
+.CON
+.COD 2
+
+.REM GND
+V1 2 R1 1
+.REM unnamed_net1
+V1 1 R1 2
+.EOD

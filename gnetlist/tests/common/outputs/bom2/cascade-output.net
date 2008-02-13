@@ -1,0 +1,9 @@
+refdes:refdes:value:device
+FL1:FL1:unknown:cascade-filter
+T1:T1:unknown:cascade-transformer
+DEF1:DEF1:unknown:cascade-defaults
+MX1:MX1:unknown:cascade-mixer
+DEFAULTS:DEFAULTS:unknown:cascade-defaults-top
+SOURCE:SOURCE:unknown:cascade-source
+AMP1:AMP1:unknown:cascade-amp
+AMP2:AMP2:unknown:cascade-amp

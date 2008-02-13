@@ -1,0 +1,10 @@
+.START
+..device	value	footprint	quantity	refdes
+cascade-amp	unknown	none	2	AMP1 AMP2
+cascade-defaults	unknown	none	1	DEF1
+cascade-defaults-top	unknown	unknown	1	DEFAULTS
+cascade-filter	unknown	none	1	FL1
+cascade-mixer	unknown	none	1	MX1
+cascade-source	unknown	none	1	SOURCE
+cascade-transformer	unknown	none	1	T1
+.END
