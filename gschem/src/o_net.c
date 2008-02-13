@@ -34,7 +34,7 @@
 
 
 /* magnetic options */
-/* size of the magnetic marker on the screen. */
+/* half size of the magnetic marker on the screen. */
 #define MAGNETIC_HALFSIZE 6
 
 /* define how far the cursor could be to activate magnetic */
@@ -43,9 +43,9 @@
 #define MAGNETIC_BUS_REACH 30
 
 /* weighting factors to tell that a pin is more important than a net */
-#define MAGNETIC_PIN_WEIGHT 3
-#define MAGNETIC_NET_WEIGHT 1
-#define MAGNETIC_BUS_WEIGHT 2
+#define MAGNETIC_PIN_WEIGHT 5.0
+#define MAGNETIC_NET_WEIGHT 2.0
+#define MAGNETIC_BUS_WEIGHT 3.0
 
 
 /*! \todo Finish function documentation!!!
@@ -276,7 +276,7 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
   TOPLEVEL *toplevel = w_current->toplevel;
   int x1, x2, y1, y2, dist1, dist2;
   int min_x, min_y, mindist, minbest;
-  int weight, min_weight;
+  double weight, min_weight;
   int magnetic_reach = 0;
   OBJECT *o_current;
   OBJECT *o_simple;
@@ -300,7 +300,7 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
 			o_simple->line->x[o_simple->whichend],
 			o_simple->line->y[o_simple->whichend],
 			&x1, &y1);
-	  mindist = abs(x - x1) + abs(y - y1);
+	  mindist = max(abs(x - x1), abs(y - y1));
 
 	  weight = mindist / MAGNETIC_PIN_WEIGHT;
 	  if (o_magnetic == NULL
@@ -323,8 +323,8 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
 		    o_current->line->y[0], &x1, &y1);
       WORLDtoSCREEN(toplevel, o_current->line->x[1],
 		    o_current->line->y[1], &x2, &y2);
-      dist1 = abs(x - x1) + abs(y - y1);
-      dist2 = abs(x - x2) + abs(y - y2);
+      dist1 = max(abs(x - x1), abs(y - y1));
+      dist2 = max(abs(x - x2), abs(y - y2));
       if (dist1 < dist2) {
 	min_x = x1;
 	min_y = y1;
@@ -775,12 +775,14 @@ void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
 
   if (w_current->magneticnet_mode) {
     if (w_current->magnetic_x != -1 && w_current->magnetic_y != -1) {
+      w_current->magnetic_x = fix_x(toplevel, w_current->magnetic_x);
+      w_current->magnetic_y = fix_y(toplevel, w_current->magnetic_y);
       w_current->magnetic_visible = 1;
-      gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
-			 TRUE,
-			 w_current->magnetic_x - MAGNETIC_HALFSIZE,
-			 w_current->magnetic_y - MAGNETIC_HALFSIZE,
-			 2*MAGNETIC_HALFSIZE, 2*MAGNETIC_HALFSIZE);
+      gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
+		   w_current->magnetic_x - MAGNETIC_HALFSIZE,
+		   w_current->magnetic_y - MAGNETIC_HALFSIZE,
+		   2*MAGNETIC_HALFSIZE, 2*MAGNETIC_HALFSIZE,
+		   0, FULL_CIRCLE);
       o_invalidate_rect(w_current, 
 			w_current->magnetic_x - MAGNETIC_HALFSIZE,
 			w_current->magnetic_y - MAGNETIC_HALFSIZE,
@@ -839,13 +841,13 @@ void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
   w_current->rubbernet_visible = 0;
 
   if (w_current->magneticnet_mode) {
-    if (w_current->magnetic_x != -1 && w_current->magnetic_y != -1) {
+    if (w_current->magnetic_visible == 1) {
       w_current->magnetic_visible = 0;
-      gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
-			 TRUE,
-			 w_current->magnetic_x - MAGNETIC_HALFSIZE,
-			 w_current->magnetic_y - MAGNETIC_HALFSIZE,
-			 2*MAGNETIC_HALFSIZE, 2*MAGNETIC_HALFSIZE);
+      gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
+		   w_current->magnetic_x - MAGNETIC_HALFSIZE,
+		   w_current->magnetic_y - MAGNETIC_HALFSIZE,
+		   2*MAGNETIC_HALFSIZE, 2*MAGNETIC_HALFSIZE,
+		   0, FULL_CIRCLE);
       o_invalidate_rect(w_current,
 			w_current->magnetic_x - MAGNETIC_HALFSIZE,
 			w_current->magnetic_y - MAGNETIC_HALFSIZE,
