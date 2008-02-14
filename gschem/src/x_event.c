@@ -309,6 +309,12 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
                       (int) w_current->save_y);
           w_current->event_state=NETCONT;
         }
+	else { /* cleanup and start a new net */
+	  o_net_eraserubber(w_current);
+	  o_net_reset(w_current);
+	  i_set_state(w_current, STARTDRAWNET);
+	  w_current->inside_action = 0;
+	}
         break;
 
       case(DRAWBUS):
@@ -531,6 +537,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         w_current->inside_action = 0;
 	i_set_state(w_current, STARTDRAWNET);
         o_net_eraserubber(w_current);
+	o_net_reset(w_current);
         break;
 
         case(STARTDRAWBUS):

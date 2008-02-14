@@ -48,6 +48,22 @@
 #define MAGNETIC_BUS_WEIGHT 3.0
 
 
+
+/*! \brief Reset all variables used for net drawing
+ *  \par Function Description
+ *  This function resets all variables from GSCHEM_TOPLEVEL that are used
+ *  for net drawing. This function should be called when escaping from
+ *  a net drawing action or before entering it.
+ */
+void o_net_reset(GSCHEM_TOPLEVEL *w_current) 
+{
+  w_current->start_x = w_current->start_y = -1;
+  w_current->last_x = w_current->last_y = -1;
+  w_current->second_x = w_current->second_y = -1;
+  w_current->magnetic_x = w_current->magnetic_y = -1;
+  w_current->magnetic_visible = w_current->rubbernet_visible = 0;
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -456,11 +472,9 @@ void o_net_finishmagnetic(GSCHEM_TOPLEVEL *w_current)
  */
 void o_net_start_magnetic(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
-  w_current->start_x = w_current->start_y = -1;
-  w_current->last_x = w_current->last_y = -1;
-  w_current->second_x = w_current->second_y = -1;
-
   o_net_eraserubber(w_current);
+  /* the dc is completely clean now, reset inside_action. */
+  w_current->inside_action = 0;
 
   o_net_find_magnetic(w_current, x, y);
 
@@ -497,6 +511,8 @@ void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *
  * The rubber nets are removed, the nets and cues are drawn and the
  * net is added to the TOPLEVEL structure.  
+ *
+ * The function returns TRUE if it has drawn a net, FALSE otherwise.
  */
 int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
@@ -544,19 +560,9 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
       (w_current->last_y == w_current->second_y);
 
   /* If both nets are zero length... */
-  /* this ends the net drawing behavior we want this? hack */
+  /* this ends the net drawing behavior */
   if ( primary_zero_length && secondary_zero_length ) {
-    w_current->start_x = (-1);
-    w_current->start_y = (-1);
-    w_current->last_x = (-1);
-    w_current->last_y = (-1);
-    w_current->second_x = (-1);
-    w_current->second_y = (-1);
-    w_current->inside_action = 0;
-    i_set_state(w_current, STARTDRAWNET);
-    o_net_eraserubber(w_current);
-    
-    return (FALSE);
+    return FALSE;
   }
 
   /* Primary net runs from (x1,y1)-(x2,y2) */
@@ -778,6 +784,7 @@ void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
       w_current->magnetic_x = fix_x(toplevel, w_current->magnetic_x);
       w_current->magnetic_y = fix_y(toplevel, w_current->magnetic_y);
       w_current->magnetic_visible = 1;
+      w_current->inside_action = 1;
       gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
 		   w_current->magnetic_x - MAGNETIC_HALFSIZE,
 		   w_current->magnetic_y - MAGNETIC_HALFSIZE,
@@ -840,20 +847,18 @@ void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
 
   w_current->rubbernet_visible = 0;
 
-  if (w_current->magneticnet_mode) {
-    if (w_current->magnetic_visible == 1) {
-      w_current->magnetic_visible = 0;
-      gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
-		   w_current->magnetic_x - MAGNETIC_HALFSIZE,
-		   w_current->magnetic_y - MAGNETIC_HALFSIZE,
-		   2*MAGNETIC_HALFSIZE, 2*MAGNETIC_HALFSIZE,
-		   0, FULL_CIRCLE);
-      o_invalidate_rect(w_current,
-			w_current->magnetic_x - MAGNETIC_HALFSIZE,
-			w_current->magnetic_y - MAGNETIC_HALFSIZE,
-			w_current->magnetic_x + MAGNETIC_HALFSIZE,
-			w_current->magnetic_y + MAGNETIC_HALFSIZE);
-    }
+  if (w_current->magnetic_visible) {
+    w_current->magnetic_visible = 0;
+    gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
+		 w_current->magnetic_x - MAGNETIC_HALFSIZE,
+		 w_current->magnetic_y - MAGNETIC_HALFSIZE,
+		 2*MAGNETIC_HALFSIZE, 2*MAGNETIC_HALFSIZE,
+		 0, FULL_CIRCLE);
+    o_invalidate_rect(w_current,
+		      w_current->magnetic_x - MAGNETIC_HALFSIZE,
+		      w_current->magnetic_y - MAGNETIC_HALFSIZE,
+		      w_current->magnetic_x + MAGNETIC_HALFSIZE,
+		      w_current->magnetic_y + MAGNETIC_HALFSIZE);
   }
 
   if (toplevel->net_style == THICK) {

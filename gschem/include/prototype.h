@@ -637,6 +637,7 @@ int o_move_zero_length(OBJECT *object);
 void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x, int world_diff_y, GList **objects, GList **other_objects, GList **connected_objects);
 void o_move_stretch_rubberband(GSCHEM_TOPLEVEL *w_current);
 /* o_net.c */
+void o_net_reset(GSCHEM_TOPLEVEL *w_current); 
 void o_net_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_net_draw_xor_single(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int whichone, OBJECT *o_current);

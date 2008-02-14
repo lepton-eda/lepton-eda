@@ -2338,6 +2338,7 @@ DEFINE_I_CALLBACK(add_net)
 
   o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
+  o_net_reset(w_current);
 
   /* need to click */
   i_update_middle_button(w_current, i_callback_add_net, _("Net"));
@@ -2360,6 +2361,7 @@ DEFINE_I_CALLBACK(add_net_hotkey)
 
   o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
+  o_net_reset(w_current);
 
   /* need to click */
   i_update_middle_button(w_current, i_callback_add_net_hotkey, _("Net"));
