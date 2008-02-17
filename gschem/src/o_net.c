@@ -290,8 +290,8 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
 			 int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int x1, x2, y1, y2, dist1, dist2;
-  int min_x, min_y, mindist, minbest;
+  int x1, x2, y1, y2, min_x, min_y;
+  double mindist, minbest, dist1, dist2;
   double weight, min_weight;
   int magnetic_reach = 0;
   OBJECT *o_current;
@@ -305,6 +305,10 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
        o_current != NULL;
        o_current = o_current->next) {
 
+    if (!visible(toplevel,  o_current->w_left, o_current->w_top, 
+		 o_current->w_right, o_current->w_bottom))
+      continue; /* skip invisible objects */
+
     if (o_current->type == OBJ_COMPLEX) {
       /* if the object is complex, then search for the pin that is
 	 closest to the cursor */
@@ -312,12 +316,16 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
 	    o_simple != NULL;
 	    o_simple = o_simple->next) {
 	if (o_simple->type == OBJ_PIN) {
+	  if (!visible(toplevel,  o_current->w_left, o_current->w_top, 
+		       o_current->w_right, o_current->w_bottom))
+	    continue; /* skip invisible pins */
+
 	  WORLDtoSCREEN(toplevel,
 			o_simple->line->x[o_simple->whichend],
 			o_simple->line->y[o_simple->whichend],
 			&x1, &y1);
-	  mindist = max(abs(x - x1), abs(y - y1));
-
+	  mindist = sqrt((double) (x - x1)*(x - x1)
+			 + (double) (y - y1)*(y - y1));
 	  weight = mindist / MAGNETIC_PIN_WEIGHT;
 	  if (o_magnetic == NULL
 	      || weight < min_weight) {
@@ -339,8 +347,10 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
 		    o_current->line->y[0], &x1, &y1);
       WORLDtoSCREEN(toplevel, o_current->line->x[1],
 		    o_current->line->y[1], &x2, &y2);
-      dist1 = max(abs(x - x1), abs(y - y1));
-      dist2 = max(abs(x - x2), abs(y - y2));
+      dist1 = sqrt((double) (x - x1)*(x - x1)
+		   + (double) (y - y1)*(y - y1));
+      dist2 = sqrt((double) (x - x2)*(x - x2)
+		   + (double) (y - y2)*(y - y2));
       if (dist1 < dist2) {
 	min_x = x1;
 	min_y = y1;
