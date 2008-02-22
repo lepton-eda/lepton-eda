@@ -297,94 +297,90 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
   OBJECT *o_current;
   OBJECT *o_simple;
   OBJECT *o_magnetic = NULL;
+  GList *objectlists, *iter1, *iter2;
 
   minbest = min_x = min_y = 0;
   min_weight = 0;
 
-  for (o_current = toplevel->page_current->object_head->next;
-       o_current != NULL;
-       o_current = o_current->next) {
+  /* max distance of all the different reaches */
+  magnetic_reach = max(MAGNETIC_PIN_REACH, MAGNETIC_NET_REACH);
+  magnetic_reach = max(magnetic_reach, MAGNETIC_BUS_REACH);
 
-    if (!visible(toplevel,  o_current->w_left, o_current->w_top, 
-		 o_current->w_right, o_current->w_bottom))
-      continue; /* skip invisible objects */
+  /* get the objects of the tiles around the reach region */
+  SCREENtoWORLD(toplevel, x - magnetic_reach, y - magnetic_reach, &x1, &y1);
+  SCREENtoWORLD(toplevel, x + magnetic_reach, y + magnetic_reach, &x2, &y2);
+  objectlists = s_tile_get_objectlists(toplevel, x1, y1, x2, y2);
 
-    if (o_current->type == OBJ_COMPLEX) {
-      /* if the object is complex, then search for the pin that is
-	 closest to the cursor */
-      for  (o_simple = o_current->complex->prim_objs->next;
-	    o_simple != NULL;
-	    o_simple = o_simple->next) {
-	if (o_simple->type == OBJ_PIN) {
-	  if (!visible(toplevel,  o_current->w_left, o_current->w_top, 
-		       o_current->w_right, o_current->w_bottom))
-	    continue; /* skip invisible pins */
+  for (iter1 = objectlists; iter1 != NULL; iter1 = g_list_next(iter1)) {
+    for (iter2 = (GList*) iter1->data; iter2 != NULL; iter2 = g_list_next(iter2)) {
+      o_current = (OBJECT*) iter2->data;
 
-	  WORLDtoSCREEN(toplevel,
-			o_simple->line->x[o_simple->whichend],
-			o_simple->line->y[o_simple->whichend],
-			&x1, &y1);
-	  mindist = sqrt((double) (x - x1)*(x - x1)
-			 + (double) (y - y1)*(y - y1));
-	  weight = mindist / MAGNETIC_PIN_WEIGHT;
-	  if (o_magnetic == NULL
-	      || weight < min_weight) {
-	    minbest = mindist;
-	    min_weight = weight;
-	    o_magnetic = o_simple;
-	    w_current->magnetic_x = x1;
-	    w_current->magnetic_y = y1;
+      if (!visible(toplevel,  o_current->w_left, o_current->w_top, 
+		   o_current->w_right, o_current->w_bottom))
+	continue; /* skip invisible objects */
+
+      if (o_current->type == OBJ_PIN) {
+	WORLDtoSCREEN(toplevel,
+		      o_current->line->x[o_current->whichend],
+		      o_current->line->y[o_current->whichend],
+		      &min_x, &min_y);
+	mindist = sqrt((double) (x - min_x)*(x - min_x)
+		       + (double) (y - min_y)*(y - min_y));
+	weight = mindist / MAGNETIC_PIN_WEIGHT;
+      }
+
+      else if (o_current->type == OBJ_NET
+	       || o_current->type == OBJ_BUS) {
+	/* we have 3 possible points to connect: 
+	   2 endpoints and 1 midpoint point */
+	WORLDtoSCREEN(toplevel, o_current->line->x[0], 
+		      o_current->line->y[0], &x1, &y1);
+	WORLDtoSCREEN(toplevel, o_current->line->x[1],
+		      o_current->line->y[1], &x2, &y2);
+	/* endpoint tests */
+	dist1 = sqrt((double) (x - x1)*(x - x1)
+		     + (double) (y - y1)*(y - y1));
+	dist2 = sqrt((double) (x - x2)*(x - x2)
+		     + (double) (y - y2)*(y - y2));
+	if (dist1 < dist2) {
+	  min_x = x1;
+	  min_y = y1;
+	  mindist = dist1;
+	}
+	else {
+	  min_x = x2;
+	  min_y = y2;
+	  mindist = dist2;
+	}
+      
+	/* midpoint tests */
+	if ((x1 == x2)  /* vertical net */
+	    && ((y1 >= y && y >= y2)
+		|| (y2 >= y && y >= y1))) {
+	  if (abs(x - x1) < mindist) {
+	    mindist = abs(x - x1);
+	    min_x = x1;
+	    min_y = y;
+	  }
+	} 
+	if ((y1 == y2)  /* horitontal net */
+	    && ((x1 >= x && x >= x2)
+		|| (x2 >= x && x >= x1))) {  
+	  if (abs(y - y1) < mindist) {
+	    mindist = abs(y - y1);
+	    min_x = x;
+	    min_y = y1;
 	  }
 	}
-      }
-    }
 
-    if (o_current->type == OBJ_NET
-	|| o_current->type == OBJ_BUS) {
-      /* we have 3 possible points to connect: 
-	 2 endpoints and 1 intersect point */
-      WORLDtoSCREEN(toplevel, o_current->line->x[0],
-		    o_current->line->y[0], &x1, &y1);
-      WORLDtoSCREEN(toplevel, o_current->line->x[1],
-		    o_current->line->y[1], &x2, &y2);
-      dist1 = sqrt((double) (x - x1)*(x - x1)
-		   + (double) (y - y1)*(y - y1));
-      dist2 = sqrt((double) (x - x2)*(x - x2)
-		   + (double) (y - y2)*(y - y2));
-      if (dist1 < dist2) {
-	min_x = x1;
-	min_y = y1;
-	mindist = dist1;
+	if (o_current->type == OBJ_BUS)
+	  weight = mindist / MAGNETIC_BUS_WEIGHT;
+	else /* OBJ_NET */
+	  weight = mindist / MAGNETIC_NET_WEIGHT;
       }
-      else {
-	min_x = x2;
-	min_y = y2;
-	mindist = dist2;
+      else { /* neither pin nor net or bus */
+	continue;
       }
-      
-      if ((x1 == x2)  /* vertical net */
-	  && ((y1 >= y && y >= y2)
-	      || (y2 >= y && y >= y1))) {
-	if (abs(x - x1) < mindist) {
-	  mindist = abs(x - x1);
-	  min_x = x1;
-	  min_y = y;
-	}
-      } 
-      if ((y1 == y2)  /* horitontal net */
-	  && ((x1 >= x && x >= x2)
-	      || (x2 >= x && x >= x1))) {  
-	if (abs(y - y1) < mindist) {
-	  mindist = abs(y - y1);
-	  min_x = x;
-	  min_y = y1;
-	}
-      }
-
-      if (o_current->type == OBJ_BUS)
-	weight = mindist / MAGNETIC_BUS_WEIGHT;
-      else /* OBJ_NET */
-	weight = mindist / MAGNETIC_NET_WEIGHT;
 
       if (o_magnetic == NULL
 	  || weight < min_weight) {
@@ -395,7 +391,7 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
 	w_current->magnetic_y = min_y;
       }
     }
-  } 
+  }
 
   /* check whether we found an object and if it's close enough */
   if (o_magnetic != NULL) {
@@ -413,6 +409,8 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
     w_current->magnetic_x = -1;
     w_current->magnetic_y = -1;
   }
+
+  g_list_free(objectlists);
 }
 
 /*! \brief calcutates the net route to the magnetic marker
