@@ -68,7 +68,7 @@
 
 	       (write-char #\tab port) 
                (display (gnetlist:get-package-attribute package "footprint") port)
-               (newline port))
+               (display "\r\n" port))
             (pads:components port (cdr packages))))))
 
 (define (pads:display-connections nets)
@@ -78,7 +78,7 @@
               (map (lambda (net)
                      (string-append " " (gnetlist:alias-refdes (car net)) "." (car (cdr net))))
                    nets))
-    (string-append k "\n")))
+    (string-append k "\r\n")))
 
 
 ; This function is replaced with the above one. Due to non existent
@@ -88,7 +88,7 @@
 ;  (if (not (null? nets))
 ;      (string-append " " (car (car nets)) "." (car (cdr (car nets)))
 ;       (pads:display-connections (cdr nets)))
-;      "\n"))
+;      "\r\n"))
 
 
 
@@ -98,7 +98,7 @@
          (let ((netname (car netnames)))
 	    (display "*SIGNAL* " port)
 	    (display (gnetlist:alias-net netname) port)
-	    (newline port)
+	    (display "\r\n" port)
             (display (gnetlist:wrap 
 		      (pads:display-connections 
 		       (gnetlist:get-all-connections netname)) 
@@ -117,17 +117,17 @@
 	(gnetlist:build-refdes-aliases pads:map-refdes packages)
 
 	;; print out the header
-	(display "!PADS-POWERPCB-V3.0-MILS!\n" port)
-	(display "\n*PART*\n" port)
+	(display "!PADS-POWERPCB-V3.0-MILS!\r\n" port)
+	(display "\r\n*PART*\r\n" port)
 	
 	;; print out the parts
 	(pads:components port packages)
 	
 	;; print out the net information
-	(display "\n*NET*\n" port)
+	(display "\r\n*NET*\r\n" port)
 	(pads:write-net port (gnetlist:get-all-unique-nets "dummy"))
 	
 	;; print out the footer
-	(display "\n*END*\n" port)
+	(display "\r\n*END*\r\n" port)
 	(close-output-port port))))
 
