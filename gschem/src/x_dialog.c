@@ -3967,9 +3967,10 @@ x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
   }
   gtk_widget_destroy (dialog);
 
-  /* Switch back to the page we were on */
+  /* Switch back to the page we were on if it wasn't the one being closed */
   g_return_if_fail (keep_page != NULL);
-  s_page_goto (w_current->toplevel, keep_page);
+  if (keep_page != page)
+    s_page_goto (w_current->toplevel, keep_page);
 }
 
 /*! \brief Asks for confirmation before closing a window.

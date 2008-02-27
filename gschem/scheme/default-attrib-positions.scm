@@ -29,15 +29,23 @@
    ;      The attribute is going to be placed at a position of the
    ;      component, given by the "reference" item.
    ;      It has the following items:
+   ;        - x_offset, y_offset: the position offset to the reference point.
+   ;          The attribute position is offset by these amounts from the
+   ;          reference point. They can be positive or negative integers.
    ;        - reference: the component's reference point where to place 
-   ;          the attribute.
+   ;          the attribute. The reference point is calculated using 
+   ;          component's bounds, so pin's line width, for example, matter.
+   ;          Example: Pin from (100,50) to (400,50), pin's line width is 10.
+   ;            Pin bounds:
+   ;              top: 55
+   ;              bottom: 45
+   ;              left: 95
+   ;              right: 405
+   ;            "Lower left": (95,45)
    ;          It is a string with the format "horizontal vertical", where:
    ;            - "horizontal" is one of: "Left",  "Middle", "Right".
    ;            - "vertical"   is one of: "Lower", "Middle", "Upper".
    ;          Example: "Lower Right".
-   ;        - x_offset, y_offset: the position offset to the reference point.
-   ;          The attribute position is offset by these amounts from the
-   ;          reference point. They can be positive or negative integers.
    ;        - alignment: the attribute text's alignment.
    ;        - angle: the attribute's angle.
    ;

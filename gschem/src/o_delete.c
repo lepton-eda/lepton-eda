@@ -216,7 +216,7 @@ void o_delete_text(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
   toplevel->page_current->object_tail =
     (OBJECT *) return_tail(toplevel->page_current->object_head);
 
-  if (o_parent != NULL)
+  if (o_parent != NULL && o_parent->type == OBJ_COMPLEX)
     o_attrib_slot_update(toplevel, o_parent);
 }
 

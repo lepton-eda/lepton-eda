@@ -566,7 +566,15 @@ void world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
    *  The previous rectangle is extended to the final one
    *  by checking whether the arc is over a main axis (vertical or horizontal).
    *  If so, the rectangle is extended in these directions.
+   *
+   *  In the mirror mode, the sweep angle is negativ. To get a
+   *  CCW arc before this calculation we have to move the 
+   *  start angle to the end angle and reverse the sweep angle.
    */
+  if (end_angle < 0) {
+    start_angle = (start_angle + end_angle + 360) % 360;
+    end_angle = -end_angle;
+  }
   angle = ((int) (start_angle / 90)) * 90;
   for(i = 0; i < 4; i++) {
     angle = angle + 90;

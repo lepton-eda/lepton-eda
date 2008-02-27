@@ -157,8 +157,8 @@ msgstr "No se puede averiguar el nombre real del archivo %s."
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
-"No se ha podido poner el archivo de copia de seguridad anterior en modo de "
-"lectura-escritura\n"
+"No se ha podido poner el archivo de copia de seguridad anterior [%s] "
+"en modo de lectura-escritura\n"
 
 #: ../src/f_basic.c:393
 #, c-format
@@ -169,8 +169,8 @@ msgstr "No se puede guardar la copia de seguridad: %s"
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr ""
-"No se ha podido poner el archivo de copia de seguridad anterior en modo de "
-"sólo lectura\n"
+"No se ha podido poner el archivo de copia de seguridad [%s] "
+"en modo de sólo lectura\n"
 
 #: ../src/f_basic.c:538
 #, c-format
