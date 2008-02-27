@@ -102,6 +102,7 @@ int   default_undo_type = UNDO_DISK;
 int   default_undo_panzoom = FALSE;
 int   default_draw_grips = TRUE;
 int   default_netconn_rubberband = FALSE;
+int   default_magnetic_net_mode = TRUE;
 int   default_sort_component_library = FALSE;
 int   default_warp_cursor = TRUE;
 int   default_toolbars = TRUE;
@@ -230,6 +231,7 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
 
   w_current->draw_grips = default_draw_grips;
   w_current->netconn_rubberband = default_netconn_rubberband;
+  w_current->magneticnet_mode = default_magnetic_net_mode;
   w_current->sort_component_library = default_sort_component_library;
   w_current->warp_cursor = default_warp_cursor;
   w_current->toolbars = default_toolbars;
