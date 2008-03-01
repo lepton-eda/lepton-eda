@@ -86,6 +86,12 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
         o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
                        x_get_darkcolor(w_current->bb_color), TRUE);
         break;
+      case(STARTDRAWNET):
+      case(DRAWNET):
+      case(NETCONT):
+        w_current->rubbernet_visible=0;
+	w_current->magnetic_visible=0;
+        break;
     }
   }
 }

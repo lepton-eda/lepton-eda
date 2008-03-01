@@ -492,6 +492,7 @@ void s_tile_add_object(TOPLEVEL *toplevel, OBJECT *object, int world_x1, int wor
 void s_tile_remove_object_all_crude(TOPLEVEL *toplevel, OBJECT *object);
 void s_tile_remove_object_all(TOPLEVEL *toplevel, PAGE *p_current, OBJECT *object);
 void s_tile_update_object(TOPLEVEL *toplevel, OBJECT *object);
+GList *s_tile_get_objectlists(TOPLEVEL *toplevel, int world_x1, int world_y1, int world_x2, int world_y2);
 void s_tile_print(TOPLEVEL *toplevel);
 void s_tile_free_all(PAGE *p_current);
 

@@ -120,8 +120,12 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->loc_x = -1;
   w_current->loc_y = -1;
   w_current->distance = -1;
+  w_current->magnetic_x = -1;
+  w_current->magnetic_y = -1;
   w_current->inside_action = 0;
   w_current->rotated_inside = 0;
+  w_current->rubbernet_visible = 0;
+  w_current->magnetic_visible = 0;
 
   /* --------------------- */
   /* Gschem internal state */
@@ -199,6 +203,7 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->bus_ripper_rotation = 0;
   w_current->grid_dot_size = 1;
   w_current->grid_mode = GRID_VARIABLE_MODE;
+  w_current->magneticnet_mode = 0;
   w_current->grid_fixed_threshold = 10;
   w_current->add_attribute_offset = 50;
   w_current->drag_can_move = TRUE;

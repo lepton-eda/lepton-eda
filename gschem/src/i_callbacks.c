@@ -2338,6 +2338,7 @@ DEFINE_I_CALLBACK(add_net)
 
   o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
+  o_net_reset(w_current);
 
   /* need to click */
   i_update_middle_button(w_current, i_callback_add_net, _("Net"));
@@ -2360,6 +2361,7 @@ DEFINE_I_CALLBACK(add_net_hotkey)
 
   o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
+  o_net_reset(w_current);
 
   /* need to click */
   i_update_middle_button(w_current, i_callback_add_net_hotkey, _("Net"));
@@ -3350,6 +3352,25 @@ DEFINE_I_CALLBACK(options_rubberband)
     s_log_message(_("Rubber band ON\n"));
   }
 }
+
+
+/*! \brief callback function for setting the magnetic net option
+ *  \par Function Description
+ *  This function just toggles a variable to switch the magnetic net
+ *  mode ON and OFF
+ */
+DEFINE_I_CALLBACK(options_magneticnet)
+{
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+
+  if ((w_current->magneticnet_mode = !w_current->magneticnet_mode)) {
+    s_log_message(_("magnetic net mode: ON\n"));
+  }
+  else {
+    s_log_message(_("magnetic net mode: OFF\n"));
+  }
+}
+
 
 /*! \todo Finish function documentation!!!
  *  \brief

@@ -387,6 +387,59 @@ void s_tile_update_object(TOPLEVEL * toplevel, OBJECT * object)
                     object->line->x[1], object->line->y[1]);
 }
 
+
+/*! \brief get a list of object lists of all tiles inside a region
+ *  \par Function Description
+ *  This functions collects all object lists of the tiles that are touched
+ *  by the given rectangle (x1,y1), (x2,y2).
+ *  Note: The caller has to g_list_free() the returned list.
+ */
+GList* s_tile_get_objectlists(TOPLEVEL *toplevel, int world_x1, int world_y1,
+			      int world_x2, int world_y2)
+{
+  TILE *t_current;
+  PAGE *p_current;
+  int x1, x2, y1, y2, x, y;
+  double x_size, y_size;
+  GList *objectlists = NULL;
+
+  p_current = toplevel->page_current;
+
+  x_size = (double) toplevel->init_right / (double) MAX_TILES_X;
+  y_size = (double) toplevel->init_bottom / (double) MAX_TILES_Y;
+
+  x1 = (int) (world_x1 / x_size);
+  x2 = (int) (world_x2 / x_size);
+  y1 = (int) (world_y1 / y_size);
+  y2 = (int) (world_y2 / y_size);
+
+  /* limit all tile ranges to [0, MAX_TILES-1]
+     (paranoid error checking) */
+  x1= max(x1, 0);  x1 = min(x1, MAX_TILES_X-1);
+  x2= max(x2, 0);  x2 = min(x2, MAX_TILES_X-1);
+  y1= max(y1, 0);  y1 = min(y1, MAX_TILES_Y-1);
+  y2= max(y2, 0);  y2 = min(y2, MAX_TILES_Y-1);
+
+  /* Check and correct the order of the coordinates */
+  if (x1 > x2) {
+    x = x1;  x1 = x2;  x2 = x;
+  }
+  if (y1 > y2) {
+    y = y1;  y1 = y2;  y2 = y;
+  }
+
+  /* finally, collect all object lists from the tiles */
+  for (x = x1; x <= x2; x++) {
+    for (y = y1; y <= y2; y++) {
+      t_current = &p_current->world_tiles[x][y];
+      objectlists = g_list_append(objectlists, t_current->objects);
+    }
+  }
+
+  return objectlists;
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

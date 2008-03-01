@@ -134,6 +134,7 @@ static struct gsubr_t gschem_funcs[] = {
 
   { "draw-grips",                1, 0, 0, g_rc_draw_grips },
   { "netconn-rubberband",        1, 0, 0, g_rc_netconn_rubberband },
+  { "magnetic-net-mode",         1, 0, 0, g_rc_magnetic_net_mode },
   { "sort-component-library",    1, 0, 0, g_rc_sort_component_library },
   { "add-menu",                  2, 0, 0, g_rc_add_menu },
   { "window-size",               2, 0, 0, g_rc_window_size },
@@ -299,6 +300,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "options-grid",              0, 0, 0, g_keys_options_grid },
   { "options-snap",              0, 0, 0, g_keys_options_snap },
   { "options-rubberband",        0, 0, 0, g_keys_options_rubberband },
+  { "options-magneticnet",       0, 0, 0, g_keys_options_magneticnet },
   { "options-show-log-window",   0, 0, 0, g_keys_options_show_log_window },
   { "options-show-coord-window", 0, 0, 0, g_keys_options_show_coord_window },
   { "help-about",                0, 0, 0, g_keys_help_about },
