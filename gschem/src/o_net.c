@@ -295,7 +295,6 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
   double weight, min_weight;
   int magnetic_reach = 0;
   OBJECT *o_current;
-  OBJECT *o_simple;
   OBJECT *o_magnetic = NULL;
   GList *objectlists, *iter1, *iter2;
 
@@ -783,28 +782,9 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
 void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int size;
+  int size=0, magnetic_halfsize;
 
   w_current->rubbernet_visible = 1;
-
-  if (w_current->magneticnet_mode) {
-    if (w_current->magnetic_x != -1 && w_current->magnetic_y != -1) {
-      w_current->magnetic_x = fix_x(toplevel, w_current->magnetic_x);
-      w_current->magnetic_y = fix_y(toplevel, w_current->magnetic_y);
-      w_current->magnetic_visible = 1;
-      w_current->inside_action = 1;
-      gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
-		   w_current->magnetic_x - MAGNETIC_HALFSIZE,
-		   w_current->magnetic_y - MAGNETIC_HALFSIZE,
-		   2*MAGNETIC_HALFSIZE, 2*MAGNETIC_HALFSIZE,
-		   0, FULL_CIRCLE);
-      o_invalidate_rect(w_current, 
-			w_current->magnetic_x - MAGNETIC_HALFSIZE,
-			w_current->magnetic_y - MAGNETIC_HALFSIZE,
-			w_current->magnetic_x + MAGNETIC_HALFSIZE,
-			w_current->magnetic_y + MAGNETIC_HALFSIZE);
-    }
-  }
 
   if (toplevel->net_style == THICK) {
     size = SCREENabs(toplevel, NET_WIDTH);
@@ -812,10 +792,31 @@ void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
 			       GDK_LINE_SOLID,
 			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
   }
+  size = max(size, 0);
 
   gdk_gc_set_foreground(w_current->xor_gc,
 			x_get_darkcolor(w_current->select_color));
-  
+
+  if (w_current->magneticnet_mode) {
+    if (w_current->magnetic_x != -1 && w_current->magnetic_y != -1) {
+      w_current->magnetic_x = fix_x(toplevel, w_current->magnetic_x);
+      w_current->magnetic_y = fix_y(toplevel, w_current->magnetic_y);
+      w_current->magnetic_visible = 1;
+      w_current->inside_action = 1;
+      magnetic_halfsize = max(4*size, MAGNETIC_HALFSIZE);
+      gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
+		   w_current->magnetic_x - magnetic_halfsize,
+		   w_current->magnetic_y - magnetic_halfsize,
+		   2*magnetic_halfsize, 2*magnetic_halfsize,
+		   0, FULL_CIRCLE);
+      o_invalidate_rect(w_current, 
+			w_current->magnetic_x - magnetic_halfsize,
+			w_current->magnetic_y - magnetic_halfsize,
+			w_current->magnetic_x + magnetic_halfsize,
+			w_current->magnetic_y + magnetic_halfsize);
+    }
+  }
+
   /* draw primary line */
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
 		w_current->start_x, w_current->start_y,
@@ -848,36 +849,34 @@ void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
 void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int size;
+  int size=0, magnetic_halfsize;
 
   if (! w_current->rubbernet_visible)
     return;
 
   w_current->rubbernet_visible = 0;
 
-  if (w_current->magnetic_visible) {
-    w_current->magnetic_visible = 0;
-    gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
-		 w_current->magnetic_x - MAGNETIC_HALFSIZE,
-		 w_current->magnetic_y - MAGNETIC_HALFSIZE,
-		 2*MAGNETIC_HALFSIZE, 2*MAGNETIC_HALFSIZE,
-		 0, FULL_CIRCLE);
-    o_invalidate_rect(w_current,
-		      w_current->magnetic_x - MAGNETIC_HALFSIZE,
-		      w_current->magnetic_y - MAGNETIC_HALFSIZE,
-		      w_current->magnetic_x + MAGNETIC_HALFSIZE,
-		      w_current->magnetic_y + MAGNETIC_HALFSIZE);
-  }
-
   if (toplevel->net_style == THICK) {
     size = SCREENabs(toplevel, NET_WIDTH);
-
-    if (size < 0)
-      size = 0;
-
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
 			       GDK_LINE_SOLID,
 			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
+  }
+  size = max(size, 0);
+
+  if (w_current->magnetic_visible) {
+    w_current->magnetic_visible = 0;
+    magnetic_halfsize = max(4*size, MAGNETIC_HALFSIZE);
+    gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
+		 w_current->magnetic_x - magnetic_halfsize,
+		 w_current->magnetic_y - magnetic_halfsize,
+		 2*magnetic_halfsize, 2*magnetic_halfsize,
+		 0, FULL_CIRCLE);
+    o_invalidate_rect(w_current,
+		      w_current->magnetic_x - magnetic_halfsize,
+		      w_current->magnetic_y - magnetic_halfsize,
+		      w_current->magnetic_x + magnetic_halfsize,
+		      w_current->magnetic_y + magnetic_halfsize);
   }
 
   /* Erase primary primary rubber net line */
