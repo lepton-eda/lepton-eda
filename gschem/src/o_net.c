@@ -810,10 +810,10 @@ void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
 		   2*magnetic_halfsize, 2*magnetic_halfsize,
 		   0, FULL_CIRCLE);
       o_invalidate_rect(w_current, 
-			w_current->magnetic_x - magnetic_halfsize,
-			w_current->magnetic_y - magnetic_halfsize,
-			w_current->magnetic_x + magnetic_halfsize,
-			w_current->magnetic_y + magnetic_halfsize);
+			w_current->magnetic_x - magnetic_halfsize - size/2,
+			w_current->magnetic_y - magnetic_halfsize - size/2,
+			w_current->magnetic_x + magnetic_halfsize + size/2,
+			w_current->magnetic_y + magnetic_halfsize + size/2);
     }
   }
 
@@ -821,15 +821,21 @@ void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
 		w_current->start_x, w_current->start_y,
 		w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
+  o_invalidate_rect(w_current, 
+		    min(w_current->start_x, w_current->last_x) - size/2,
+		    min(w_current->start_y, w_current->last_y) - size/2,
+		    max(w_current->start_x, w_current->last_x) + size/2,
+		    max(w_current->start_y, w_current->last_y) + size/2);
 
   /* Draw secondary line */
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
 		w_current->last_x, w_current->last_y,
 		w_current->second_x, w_current->second_y);
-  o_invalidate_rect(w_current, w_current->last_x, w_current->last_y,
-                    w_current->second_x, w_current->second_y);
+  o_invalidate_rect(w_current, 
+		    min(w_current->last_x, w_current->second_x) - size/2,
+		    min(w_current->last_y, w_current->second_y) - size/2,
+		    max(w_current->last_x, w_current->second_x) + size/2,
+		    max(w_current->last_y, w_current->second_y) + size/2);
 
   if (toplevel->net_style == THICK) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
@@ -872,25 +878,31 @@ void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
 		 w_current->magnetic_y - magnetic_halfsize,
 		 2*magnetic_halfsize, 2*magnetic_halfsize,
 		 0, FULL_CIRCLE);
-    o_invalidate_rect(w_current,
-		      w_current->magnetic_x - magnetic_halfsize,
-		      w_current->magnetic_y - magnetic_halfsize,
-		      w_current->magnetic_x + magnetic_halfsize,
-		      w_current->magnetic_y + magnetic_halfsize);
+      o_invalidate_rect(w_current, 
+			w_current->magnetic_x - magnetic_halfsize - size/2,
+			w_current->magnetic_y - magnetic_halfsize - size/2,
+			w_current->magnetic_x + magnetic_halfsize + size/2,
+			w_current->magnetic_y + magnetic_halfsize + size/2);
   }
 
   /* Erase primary primary rubber net line */
   gdk_draw_line(w_current->backingstore, w_current->xor_gc, w_current->start_x,
 		w_current->start_y, w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                               w_current->last_x, w_current->last_y);
+  o_invalidate_rect(w_current, 
+		    min(w_current->start_x, w_current->last_x) - size/2,
+		    min(w_current->start_y, w_current->last_y) - size/2,
+		    max(w_current->start_x, w_current->last_x) + size/2,
+		    max(w_current->start_y, w_current->last_y) + size/2);
 
   /* Erase secondary rubber net line */
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
 		w_current->last_x, w_current->last_y,
 		w_current->second_x, w_current->second_y);
-  o_invalidate_rect(w_current, w_current->last_x, w_current->last_y,
-                               w_current->second_x, w_current->second_y);
+  o_invalidate_rect(w_current, 
+		    min(w_current->last_x, w_current->second_x) - size/2,
+		    min(w_current->last_y, w_current->second_y) - size/2,
+		    max(w_current->last_x, w_current->second_x) + size/2,
+		    max(w_current->last_y, w_current->second_y) + size/2);
 
   if (toplevel->net_style == THICK) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
