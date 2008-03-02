@@ -3369,6 +3369,7 @@ DEFINE_I_CALLBACK(options_magneticnet)
   else {
     s_log_message(_("magnetic net mode: OFF\n"));
   }
+  i_show_state(w_current, NULL);
 }
 
 

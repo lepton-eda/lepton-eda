@@ -112,7 +112,10 @@ static const char *i_status_string(GSCHEM_TOPLEVEL *w_current)
     case STARTDRAWNET:
     case DRAWNET:
     case NETCONT:
-      return _("Net Mode");
+      if (w_current->magneticnet_mode)
+	return _("Magnetic Net Mode");
+      else
+	return _("Net Mode");
     case STARTDRAWBUS:
     case DRAWBUS:
     case BUSCONT:
