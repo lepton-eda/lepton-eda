@@ -9,7 +9,7 @@
 # can be accomplished by running ./update-versions.sh with the correct
 # arguments.
 #
-DOTTED_VERSION=1.4.0
+DOTTED_VERSION=1.4.1
 DATE_VERSION=20080127
 
 # 
