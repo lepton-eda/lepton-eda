@@ -252,7 +252,7 @@ void o_net_draw_xor_single(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int which
 void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int size;
+  int size=0;
 
   /* initalize all parameters used when drawing the new net */
   w_current->last_x = w_current->start_x = w_current->second_x = 
@@ -273,8 +273,12 @@ void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
 		w_current->start_x, w_current->start_y, 
 		w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                               w_current->last_x, w_current->last_y);
+  o_invalidate_rect(w_current, 
+		    min(w_current->start_x, w_current->last_x) - size/2,
+		    min(w_current->start_y, w_current->last_y) - size/2,
+		    max(w_current->start_x, w_current->last_x) + size/2,
+		    max(w_current->start_y, w_current->last_y) + size/2);
+
   if (toplevel->net_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
                                GDK_LINE_SOLID,
@@ -329,16 +333,21 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
 		w_current->start_x, w_current->start_y,
 		w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                               w_current->last_x, w_current->last_y);
-
+  o_invalidate_rect(w_current, 
+		    min(w_current->start_x, w_current->last_x) - size/2,
+		    min(w_current->start_y, w_current->last_y) - size/2,
+		    max(w_current->start_x, w_current->last_x) + size/2,
+		    max(w_current->start_y, w_current->last_y) + size/2);
 
   /* Erase secondary rubber net line */
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
 		 w_current->last_x, w_current->last_y,
 		 w_current->second_x, w_current->second_y);
-  o_invalidate_rect(w_current, w_current->last_x, w_current->last_y,
-                               w_current->second_x, w_current->second_y);
+  o_invalidate_rect(w_current, 
+		    min(w_current->last_x, w_current->second_x) - size/2,
+		    min(w_current->last_y, w_current->second_y) - size/2,
+		    max(w_current->last_x, w_current->second_x) + size/2,
+		    max(w_current->last_y, w_current->second_y) + size/2);
 
   if (toplevel->net_style == THICK) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
@@ -526,7 +535,7 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
-  int size;
+  int size=0;
   int ortho;
 
   g_assert( w_current->inside_action != 0 );
@@ -547,16 +556,22 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
 		w_current->start_x, w_current->start_y,
 		w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
+  o_invalidate_rect(w_current, 
+		    min(w_current->start_x, w_current->last_x) - size/2,
+		    min(w_current->start_y, w_current->last_y) - size/2,
+		    max(w_current->start_x, w_current->last_x) + size/2,
+		    max(w_current->start_y, w_current->last_y) + size/2);
 
   /* Erase secondary line*/
   if ( w_current->second_x != -1 && w_current->second_y != -1 ) {
-      gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		    w_current->last_x, w_current->last_y,
-		    w_current->second_x, w_current->second_y);
-    o_invalidate_rect(w_current, w_current->last_x, w_current->last_y,
-                      w_current->second_x, w_current->second_y);
+    gdk_draw_line(w_current->backingstore, w_current->xor_gc,
+		  w_current->last_x, w_current->last_y,
+		  w_current->second_x, w_current->second_y);
+    o_invalidate_rect(w_current, 
+		      min(w_current->last_x, w_current->second_x) - size/2,
+		      min(w_current->last_y, w_current->second_y) - size/2,
+		      max(w_current->last_x, w_current->second_x) + size/2,
+		      max(w_current->last_y, w_current->second_y) + size/2);
   }
  
   /* In orthogonal mode secondary line is the same as the first */
@@ -594,15 +609,21 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
 		w_current->start_x, w_current->start_y,
 		w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
+  o_invalidate_rect(w_current, 
+		    min(w_current->start_x, w_current->last_x) - size/2,
+		    min(w_current->start_y, w_current->last_y) - size/2,
+		    max(w_current->start_x, w_current->last_x) + size/2,
+		    max(w_current->start_y, w_current->last_y) + size/2);
 
   /* Draw secondary line */
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
 		w_current->last_x, w_current->last_y,
 		w_current->second_x, w_current->second_y);
-  o_invalidate_rect(w_current, w_current->last_x, w_current->last_y,
-                    w_current->second_x, w_current->second_y);
+  o_invalidate_rect(w_current, 
+		    min(w_current->last_x, w_current->second_x) - size/2,
+		    min(w_current->last_y, w_current->second_y) - size/2,
+		    max(w_current->last_x, w_current->second_x) + size/2,
+		    max(w_current->last_y, w_current->second_y) + size/2);
 
   if (toplevel->net_style == THICK) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
@@ -621,7 +642,7 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
 void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int size;
+  int size=0;
 
   if (toplevel->net_style == THICK) {
     size = SCREENabs(toplevel, NET_WIDTH);
@@ -637,15 +658,21 @@ void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
   /* Erase primary primary rubber net line */
   gdk_draw_line(w_current->backingstore, w_current->xor_gc, w_current->start_x,
 		w_current->start_y, w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                               w_current->last_x, w_current->last_y);
+  o_invalidate_rect(w_current, 
+		    min(w_current->start_x, w_current->last_x) - size/2,
+		    min(w_current->start_y, w_current->last_y) - size/2,
+		    max(w_current->start_x, w_current->last_x) + size/2,
+		    max(w_current->start_y, w_current->last_y) + size/2);
 
   /* Erase secondary rubber net line */
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
 		w_current->last_x, w_current->last_y,
 		w_current->second_x, w_current->second_y);
-  o_invalidate_rect(w_current, w_current->last_x, w_current->last_y,
-                               w_current->second_x, w_current->second_y);
+  o_invalidate_rect(w_current, 
+		    min(w_current->last_x, w_current->second_x) - size/2,
+		    min(w_current->last_y, w_current->second_y) - size/2,
+		    max(w_current->last_x, w_current->second_x) + size/2,
+		    max(w_current->last_y, w_current->second_y) + size/2);
 
   if (toplevel->net_style == THICK) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
