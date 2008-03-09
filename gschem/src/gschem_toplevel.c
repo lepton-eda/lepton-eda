@@ -126,6 +126,7 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->rotated_inside = 0;
   w_current->rubbernet_visible = 0;
   w_current->magnetic_visible = 0;
+  w_current->net_direction = 0;
 
   /* --------------------- */
   /* Gschem internal state */

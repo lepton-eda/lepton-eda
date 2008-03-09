@@ -102,6 +102,7 @@ struct st_gschem_toplevel {
   int rubbernet_visible;                /* Is the rubbernet currently on
 					   the screen? */
   int magnetic_visible;                 /* Is the magnetic marker visible */
+  int net_direction;                    /* bit field to guess the best net direction */
 
   /* --------------------- */
   /* Gschem internal state */

@@ -47,6 +47,11 @@
 #define MAGNETIC_NET_WEIGHT 2.0
 #define MAGNETIC_BUS_WEIGHT 3.0
 
+/* Bit definitions for the four quardrants of the direction guessing */
+#define QUADRANT1  0x01
+#define QUADRANT2  0x02
+#define QUADRANT3  0x04
+#define QUADRANT4  0x08
 
 
 /*! \brief Reset all variables used for net drawing
@@ -274,6 +279,132 @@ void o_net_draw_xor_single(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int which
   o_invalidate_rect(w_current,
                     sx[0] + dx1, sy[0] + dy1, sx[1] + dx2, sy[1] + dy2);
 
+}
+
+
+/*! \brief guess the best direction for the next net drawing action
+ *  \par Function Description
+ *  This function checks all connectable objects at a starting point.
+ *  It determines the best drawing direction for each quadrant of the
+ *  possible net endpoint.
+ *  
+ *  The directions are stored in the GSCHEM_TOPLEVEL->net_direction variable
+ *  as a bitfield.
+ */
+void o_net_guess_direction(GSCHEM_TOPLEVEL *w_current,
+			   int x, int y)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int up=0, down=0, left=0, right=0;
+  int x1, y1, x2, y2, wx, wy;
+  int xmin, ymin, xmax, ymax;
+  int orientation;
+  GList *objectlists, *iter1, *iter2;
+  OBJECT *o_current;
+
+  int *current_rules;
+  /* badness values       {OVERWRITE, ORTHO, CONTINUE} */
+  const int pin_rules[] = {100, 50, 0};
+  const int bus_rules[] = {90, 0, 40};
+  const int net_rules[] = {80, 30, 0};
+  
+
+  SCREENtoWORLD(toplevel, x, y, &wx, &wy);
+  wx = snap_grid(toplevel, wx);
+  wy = snap_grid(toplevel, wy);
+  objectlists = s_tile_get_objectlists(toplevel, wx, wy, wx, wy);
+
+  for (iter1 = objectlists; iter1 != NULL; iter1 = g_list_next(iter1)) {
+    for (iter2 = (GList*) iter1->data; iter2 != NULL; iter2 = g_list_next(iter2)) {
+      o_current = (OBJECT*) iter2->data;
+
+      if ((orientation = o_net_orientation(o_current)) == NEITHER)
+	continue;
+
+      switch (o_current->type) {
+      case OBJ_NET:
+	current_rules = (int*) net_rules;
+	break;
+      case OBJ_PIN:
+	current_rules = (int*) pin_rules;
+	break;
+      case OBJ_BUS:
+	current_rules = (int*) bus_rules;
+	break;
+      default:
+	g_assert_not_reached ();
+      }
+      
+      x1 = o_current->line->x[0];
+      x2 = o_current->line->x[1];
+      y1 = o_current->line->y[0];
+      y2 = o_current->line->y[1];
+      
+      xmin = min(x1, x2);
+      ymin = min(y1, y2);
+      xmax = max(x1, x2);
+      ymax = max(y1, y2);
+      
+      if (orientation == HORIZONTAL && wy == y1) {
+	if (wx == xmin) {
+	  up = max(up, current_rules[1]);
+	  down = max(down, current_rules[1]);
+	  right = max(right, current_rules[0]);
+	  left = max(left, current_rules[2]);
+	}
+	else if (wx == xmax) {
+	  up = max(up, current_rules[1]);
+	  down = max(down, current_rules[1]);
+	  right = max(right, current_rules[2]);
+	  left = max(left, current_rules[0]);
+	}
+	else if (xmin < wx && wx < xmax) {
+	  up = max(up, current_rules[1]);
+	  down = max(down, current_rules[1]);
+	  right = max(right, current_rules[0]);
+	  left = max(left, current_rules[0]);
+	}
+	else {
+	  continue;
+	}
+      }
+      if (orientation == VERTICAL && wx == x1) {
+	if (wy == ymin) {
+	  up = max(up, current_rules[0]);
+	  down = max(down, current_rules[2]);
+	  right = max(right, current_rules[1]);
+	  left = max(left, current_rules[1]);
+	}
+	else if (wy == ymax) {
+	  up = max(up, current_rules[2]);
+	  down = max(down, current_rules[0]);
+	  right = max(right, current_rules[1]);
+	  left = max(left, current_rules[1]);
+	}
+	else if (ymin < wy && wy < ymax) {
+	  up = max(up, current_rules[0]);
+	  down = max(down, current_rules[0]);
+	  right = max(right, current_rules[1]);
+	  left = max(left, current_rules[1]);
+	}
+	else {
+	  continue;
+	}
+      }
+    }
+  }
+  
+  w_current->net_direction = 0;
+  w_current->net_direction |= up >= right ? 0 : QUADRANT1;
+  w_current->net_direction |= up >= left ? 0 : QUADRANT2;
+  w_current->net_direction |= down >= left ? 0 : QUADRANT3;
+  w_current->net_direction |= down >= right ? 0 : QUADRANT4;
+
+#if 0
+  printf("o_net_guess_direction: up=%d down=%d left=%d right=%d direction=%d\n",
+	 up, down, left, right, w_current->net_direction);
+#endif
+  g_list_free(objectlists);
 }
 
 /*! \brief find the closest possible location to connect to
@@ -508,6 +639,7 @@ void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
   w_current->last_y = w_current->start_y = w_current->second_y = 
     fix_y(toplevel, y);
 
+  o_net_guess_direction(w_current, x, y);
 }
 
 /*! \brief finish a net drawing action 
@@ -728,40 +860,41 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int diff_x, diff_y;
-  int ortho;
+  int ortho, horizontal, quadrant;
 
   g_assert( w_current->inside_action != 0 );
 
   /* Orthognal mode enabled when Control Key is NOT pressed */
   ortho = !w_current->CONTROLKEY;
 
-  gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_darkcolor(w_current->select_color));
-  
   o_net_eraserubber(w_current);
 
   if (w_current->magneticnet_mode)
     o_net_find_magnetic(w_current, x, y);
 
-  /* In orthogonal mode secondary line is the same as the first */
-  if (!ortho)
-  {
-      w_current->second_x = w_current->last_x;
-      w_current->second_y = w_current->last_y;
-  }
-
   w_current->last_x = fix_x(toplevel, x);
   w_current->last_y = fix_y(toplevel, y);
 
+  /* In orthogonal mode secondary line is the same as the first */
+  if (!ortho) {
+      w_current->second_x = w_current->last_x;
+      w_current->second_y = w_current->last_y;
+  }
   /* If you press the control key then you can draw non-ortho nets */
-  if (ortho) {
-    diff_x = abs(w_current->last_x - w_current->start_x);
-    diff_y = abs(w_current->last_y - w_current->start_y);
+  else {
+    if (w_current->last_y < w_current->start_y) 
+      quadrant = w_current->last_x > w_current->start_x ? QUADRANT1: QUADRANT2;
+    else
+      quadrant = w_current->last_x > w_current->start_x ? QUADRANT4: QUADRANT3;
+
+    horizontal = w_current->net_direction & quadrant;
+
+    if (!w_current->SHIFTKEY)
+      horizontal = !horizontal;
 
     /* calculate the co-ordinates necessary to draw the lines*/
     /* Pressing the shift key will cause the vertical and horizontal lines to switch places */
-    if ( !w_current->SHIFTKEY ) {
+    if ( horizontal ) {
       w_current->last_y = w_current->start_y;
       w_current->second_x = w_current->last_x;
       w_current->second_y = fix_y(toplevel,y);
