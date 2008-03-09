@@ -113,6 +113,14 @@
 ; Not user changable.
 (net-midpoint-mode "filled")
 
+;  net-direction-mode string
+;
+;  Controlls if the net direction mode is used. This mode tries to guess
+;  the best continuation direction of a L-shape net when adding a net.
+;
+(net-direction-mode "enabled")
+;(net-direction-mode "disabled")
+
 ;  net-consolidate string
 ;
 ;  Controls if the net consolidation code is used when schematics are read

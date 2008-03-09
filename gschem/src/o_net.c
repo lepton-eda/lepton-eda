@@ -639,7 +639,8 @@ void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
   w_current->last_y = w_current->start_y = w_current->second_y = 
     fix_y(toplevel, y);
 
-  o_net_guess_direction(w_current, x, y);
+  if (w_current->net_direction_mode)
+    o_net_guess_direction(w_current, x, y);
 }
 
 /*! \brief finish a net drawing action 

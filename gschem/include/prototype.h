@@ -210,6 +210,7 @@ SCM g_rc_stroke_color(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM
 SCM g_rc_freestyle_color(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM ir, SCM ig, SCM ib);
 SCM g_rc_net_endpoint_mode(SCM mode);
 SCM g_rc_net_midpoint_mode(SCM mode);
+SCM g_rc_net_direction_mode(SCM mode);
 SCM g_rc_net_style(SCM mode);
 SCM g_rc_bus_style(SCM mode);
 SCM g_rc_pin_style(SCM mode);

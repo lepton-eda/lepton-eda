@@ -176,6 +176,7 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->text_display_zoomfactor = 0;
   w_current->net_endpoint_mode = NONE;
   w_current->net_midpoint_mode = NONE;
+  w_current->net_direction_mode = TRUE;
   w_current->embed_complex = 0;
   w_current->include_complex = 0;
   w_current->scrollbars_flag = 0;

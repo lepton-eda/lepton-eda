@@ -153,6 +153,7 @@ struct st_gschem_toplevel {
   int text_display_zoomfactor;  /* zoom factor at which text is displayed completely */
   int net_endpoint_mode;  /* can be either NONE, FILLEDBOX, EMPTYBOX, X */
   int net_midpoint_mode;  /* can be either NONE or FILLED or EMPTY */
+  int net_direction_mode; /* controls if the net direction mode is used */
   int embed_complex;      /* controls if complex objects are embedded */
   int include_complex;    /* controls if complex objects are included */
   int scrollbars_flag;    /* controls if scrollbars are displayed */
