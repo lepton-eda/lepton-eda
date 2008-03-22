@@ -250,15 +250,6 @@
 ; (run-test "one two three four five six seven eight nine ten" 10)
 ; (run-test "one two three four five six seven eight nine ten" 20)
 
-(define first-val-or-#f
-  (lambda (value_list)
-    (if (null? value_list)
-      '#f
-      (car value_list)
-    )
-  )
-)
-
 ;; determine the uref to use for a particular OBJECT
 (define (gnetlist:get-uref object)
   ; Returns first value of first attrib found with given name, or #f.
