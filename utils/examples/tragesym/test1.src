@@ -21,6 +21,8 @@ description=pin sorting test, pin sequence test
 documentation=http://url_to_the_datasheet.com/datasheet.pdf
 author=Werner Hoch <werner.ho(AT)gmx.de>
 numslots=4
+use-license=unlimited
+dist-license=GPL
 slot=1
 slotdef=1:1,2,3
 slotdef=2:4,5,6
@@ -34,8 +36,8 @@ comment=blablub
 #-----------------------------------------------------
 #pinnr	seq	type	style	posit.	net	label	
 #-----------------------------------------------------
-1	21	io	line	l		hello
-2	20	out	clk	l		\_neg\_
+1	21	i	line	l		hello
+2	20	o	clk	l		\_neg\_
 3	19	out	dot	l		\_n\_0\_n\_
 4		pwr	none		GND
 5	18	IO	line	l		\_ABC\_ (DEF)
@@ -56,7 +58,7 @@ comment=blablub
 20 	6	in	dotclk	b		other
 21	5	in	dot	b		\_Reset\_
 22	4	out	line	t		PD1 (\_SS\_)
-23	3	io	clk	r		PD2 (\_xxx\_hello\_sss\_)
-24	2	io	dot	r		PD3 (x_no_over)
+23	3	pas	clk	r		PD2 (\_xxx\_hello\_sss\_)
+24	2	p	dot	r		PD3 (x_no_over)
 25	1	io	clk	r		PD4 (\\\_strange\\\_)
 

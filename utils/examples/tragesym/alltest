@@ -1,8 +1,13 @@
 #!/bin/sh
 
 # run tragesym over all test and example files
+echo testing 4099.src
 ../../scripts/tragesym 4099.src 4099.sym
+echo testing test1.src
 ../../scripts/tragesym test1.src test1.sym
+echo testing test2.src
 ../../scripts/tragesym test2.src test2.sym
+echo testing test3.src
 ../../scripts/tragesym test3.src test3.sym
+echo testing AT90S8535_TQFP.src
 ../../scripts/tragesym AT90S8535_TQFP.src AT90S8535_TQFP.sym

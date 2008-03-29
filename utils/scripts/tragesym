@@ -3,7 +3,7 @@
 ############################################################################
 #    tragesym  - create gEDA symbols out of structured textfiles
 #    begin      : 2001-10-20
-#    copyright  : (C) 2001,2002,2003,2004,2006,2007 by Werner Hoch
+#    copyright  : (C) 2001,2002,2003,2004,2006,2007, 2008 by Werner Hoch
 #    email      : werner.ho@gmx.de
 ############################################################################
 #                                                                          #
@@ -24,28 +24,10 @@
 #   symbol width based on the greater number of pins at the top or at the
 #   bottom of the symbol
 
-# TODO:
-# - make a nicer comandline interface including stdin /stdout
-# - write cleaner code (variables, constants, structure)
-
-
-# Changes by Thomas Hille:
-# - use getopt for parsing command line
-# - check for existing input file prior trying to open it
-# - section headers are identified (and parsed) by a regular expression instead of line[0]=='['
-# - pins are stored as an object instead of a dictionary
-# - pin comparison is now done in class Pin itself:
-#       - _for now_ only the pin position and the label are taken into account
-#
-# TODO:
-# - sorting and spacer(s) don't go well with each other, tell the user
-#
-
-
 import getopt, os.path, re, string, sys
 
 ##################### GLOBALS ############################################
-VERSION="0.0.12"
+VERSION="0.0.13"
 
 CHARHIGH=26
 preset_options = {"wordswap":"yes",
@@ -66,6 +48,7 @@ multiple_attr = ["slotdef", "comment"]
 stylelist = ["line","dot","clk","dotclk","spacer","none"]
 poslist = ["l","r","t","b",""]
 typelist = ["in","out","io","oc","oe","pas","tp","tri","clk","pwr"]
+translate_pintype = {"i/o":"io", "i":"in", "o":"out", "p":"pas"}
 P_NR, P_SEQ, P_TYPE, P_STYLE, P_POS, P_NET, P_LABEL = 0,1,2,3,4,5,6
 re_section_header = re.compile("^\s*\[(?P<name>.+)]\s*$")
 
@@ -78,66 +61,66 @@ class Pin:
         element.extend(('', '', '', '', '', '', ''))
         self.nr = element[P_NR].strip()
         self.seq = element[P_SEQ].strip()
-        self.type = element[P_TYPE].lower().strip()
+        pintype = element[P_TYPE].lower().strip()
+        self.type = translate_pintype.get(pintype, pintype)
         self.style = element[P_STYLE].lower().strip()
         self.pos = element[P_POS].lower().strip()
         self.net = element[P_NET].strip()
         self.label = element[P_LABEL].strip()
-		
+
     def __str__(self):
         str = "Pin object (nr:" + self.nr + " seq:" + self.seq + " type:" + self.type
         str += " style:" + self.style + " pos:" + self.pos + " net:" + self.net
         str += " label:" + self.label + ")"
         return str
 
-# rules: nets, positions, labels
-    def __lt__(self, other):
+    def __cmp__(self, other):
+        """
+        Comparison function for the pin.
+        * The sorting rule is to place the nets first.
+        * The pin position is the second sorting key
+        * The pin label is the third sorting key
+        """
         if not isinstance(other, Pin):
             return NotImplemented
-        if self.pos != other.pos:
-            return self.pos < other.pos
-        return self.label < other.label
-
-      
-    def __le__(self, other):
-        if not isinstance(other, Pin):
-            return NotImplemented
-        if self.pos != other.pos:
-            return self.pos < other.pos
-        return self.label <= other.label
-
-      
-    def __eq__(self, other):
-        if not isinstance(other, Pin):
-            return NotImplemented
-        if self.pos != other.pos:
-            return False
-        return self.label == other.label
+        ret = cmp(self.net, other.net)
+        if ret != 0:
+            return ret
+        ret = cmp(other.pos, self.pos)
+        if ret != 0:
+            return ret
+        return cmp(splitspecial(parselabel(self.label)),
+                   splitspecial(parselabel(other.label)))
 
 
-    def __ne__(self, other):
-        if not isinstance(other, Pin):
-            return NotImplemented
-        if self.pos != other.pos:
-            return True
-        return self.label != other.label
-
-
-    def __gt__(self, other):
-        if not isinstance(other, Pin):
-            return NotImplemented
-        if self.pos != other.pos:
-            return self.pos > other.pos
-        return self.label > other.label
+    def check(self):
+    	if self.style=="spacer":
+	    if self.pos == "":
+		print "Error: there must be a position with a spacer.\n"
+		sys.exit()
+	    if self.pos not in poslist:
+		print "Error: position is not allowed: \n", self
+		sys.exit()
+            return
+        if self.style != "none":
+            if self.seq.isdigit():
+                string.atoi(self.seq)
+            else:
+                print "pinseq needs to be a number: \n", self
+                sys.exit()
+        if self.type not in typelist:
+            print "Pintype not allowed: \n", self
+            sys.exit()
+        if self.style not in stylelist:
+            print "Style is not allowed: \n", self
+            sys.exit()
+        if self.pos not in poslist:
+            print "Position is not allowed: \n", self
+            sys.exit()
+        if self.pos == "" and self.net == "":
+            print "There must be either position or a netlabel: \n", self
+            sys.exit()
         
-        
-
-    def __ge__(self, other):
-        if not isinstance(other, Pin):
-            return NotImplemented
-        if self.pos != other.pos:
-            return self.pos > other.pos
-        return self.label >= other.label
         
 ################################# FUNCTIONS ##############################
 
@@ -183,18 +166,6 @@ def swapwords(str):
     for i in list[1:]:
         back=i+" "+back
     return back
-
-## make the parser more tolerant to the input file
-def type_translate(str):
-    if str == "i/o":
-        str="io"
-    elif str == "i":
-        str="in"
-    elif str == "o":
-        str="out"
-    elif str == "p":
-        str="pas"
-    return str
 
 ## split a string at the first tab or equal char
 def split_tab_equal(str,n=1):
@@ -245,35 +216,6 @@ def readsrc(filename):
             sys.exit()
     return options, geda_attr, pins
 
-def checkpins(pinlist):
-    for pin in pinlist:
-    	if (pin.style=="spacer"):
-	    if (pin.pos == ""):
-		print "There must be a position with a spacer.\n"
-		sys.exit()
-	    if pin.pos not in poslist:
-		print "Position is not allowed: \n", pin
-		sys.exit()
-    	    continue
-        if pin.style != "none":
-            if pin.seq.isdigit():
-                string.atoi(pin.seq)
-            else:
-                print "pinseq needs to be a number: \n", pin
-                sys.exit()
-        if pin.type not in typelist:
-            print "Pintype not allowed: \n", pin
-            sys.exit()
-        if pin.style not in stylelist:
-            print "Style is not allowed: \n", pin
-            sys.exit()
-        if pin.pos not in poslist:
-            print "Position is not allowed: \n", pin
-            sys.exit()
-        if pin.pos == "" and pin.net == "":
-            print "There must be either position or a netlabel: \n", pin
-            sys.exit()
-
 def checkattr(attr):
     for attr,value in attr.items():
         attr,nr=attr
@@ -281,32 +223,35 @@ def checkattr(attr):
             print "this attribute is not allowed: ", attr, value
             sys.exit()
 
-## makes a list out of a string: "3abc345x?" --> ["","3","abc","345","x?"]
+
 def splitspecial(str):
+    """
+    makes a list out of a string:
+    "3abc345x?" --> ["",3,"abc",345,"x?"]
+    """
     isletter=1
-    list=[""]
+    list=[]
+    current = ""
     for letter in str:
         if letter not in string.digits:
             if isletter == 1:
-                list[-1]=list[-1] + letter
+                current += letter
             else:
-                list.append(letter)
+                list.append(int(current))
+                current = letter
                 isletter=1
         else:
             if isletter == 0:
-                list[-1]=list[-1] + letter
+                current += letter
             else:
-                list.append(letter)
+                list.append(current)
+                current = letter
                 isletter=0
+    if isletter == 0:
+        list.append(int(current))
+    else:
+        list.append(current)
     return list
-
-    
-def sort(item1,item2):
-    if item1 < item2:
-        return -1
-    elif item1 > item2:
-        return 1
-    return 0
 
 def writesym(filename,options,attr,pins):
     o_symwidth=string.atoi(options["sym_width"])
@@ -400,7 +345,6 @@ def writesym(filename,options,attr,pins):
         sys.exit()
    
     if o_sort == "yes":
-        print "sorting..."
         pins.sort()
 
     for pin in pins:
@@ -419,6 +363,7 @@ def writesym(filename,options,attr,pins):
             elif pin.pos == "t": # top pin
                 ptopx=ptopx + o_hdist
             continue
+        
 ### decide which pindirection to use
         ## TODO: put all constants into a dictionary         
         if pin.pos == "l": #left pin
@@ -428,7 +373,6 @@ def writesym(filename,options,attr,pins):
             pinl=(350,0,0,0)  # """"
             pina=(350,0,2,0)  # """"
             pinq=(200,-50,8,0)  # """"
-            negl=(0, CHARHIGH*4+20,0,0) # dx,dy,vert,rotate (base is label)
             swap=0   # swap words in label ?
             plefty=plefty - o_vdist  #where to draw the _next_ pin
         elif pin.pos == "r": #right pin
@@ -438,7 +382,6 @@ def writesym(filename,options,attr,pins):
             pinl=(-350,0,6,0)
             pina=(-350,0,8,0)
             pinq=(-200,-50,2,0)
-            negl=(0, CHARHIGH*4+20,2,0)
             swap=1
             prighty=prighty - o_vdist
         elif pin.pos == "b": # bottom pin
@@ -449,13 +392,11 @@ def writesym(filename,options,attr,pins):
                 pinl=(0,350,0,90)
                 pina=(0,350,2,90)
                 pinq=(50,200,8,90)
-                negl=(CHARHIGH*4+20,0,0,1)
             else:
                 pint=(50,100,0,0)
                 pinl=(0,350,3,0)
                 pina=(0,500,3,0)
                 pinq=(50,100,2,0)
-                negl=(0,CHARHIGH*4+20,1,0)
             swap=0
             pbottomx=pbottomx + o_hdist
         elif pin.pos == "t": # top pin
@@ -466,14 +407,12 @@ def writesym(filename,options,attr,pins):
                 pinl=(0,-350,6,90)
                 pina=(0,-350,8,90)
                 pinq=(50,-200,2,90)
-                negl=(CHARHIGH*4+20,0,2,1)
                 swap=1
             else:
                 pint=(50,-200,0,0)
                 pinl=(0,-350,5,0)
                 pina=(0,-500,5,0)
                 pinq=(50,-200,2,0)
-                negl=(0,20,1,0)
                 swap=0
             ptopx=ptopx + o_hdist
 ### draw the pin
@@ -662,7 +601,9 @@ options=mergeoptions(opts,preset_options)
 if options["generate_pinseq"] == "yes":
     pins=generate_pinseq(pins)
 
-checkpins(pins)
+for pin in pins:
+    pin.check()
+
 checkattr(attr)
 
 writesym(file_out,options,attr,pins)
