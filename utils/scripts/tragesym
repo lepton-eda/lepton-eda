@@ -28,7 +28,21 @@
 # - make a nicer comandline interface including stdin /stdout
 # - write cleaner code (variables, constants, structure)
 
-import sys, string
+
+# Changes by Thomas Hille:
+# - use getopt for parsing command line
+# - check for existing input file prior trying to open it
+# - section headers are identified (and parsed) by a regular expression instead of line[0]=='['
+# - pins are stored as an object instead of a dictionary
+# - pin comparison is now done in class Pin itself:
+#       - _for now_ only the pin position and the label are taken into account
+#
+# TODO:
+# - sorting and spacer(s) don't go well with each other, tell the user
+#
+
+
+import getopt, os.path, re, string, sys
 
 ##################### GLOBALS ############################################
 VERSION="0.0.12"
@@ -53,9 +67,86 @@ stylelist = ["line","dot","clk","dotclk","spacer","none"]
 poslist = ["l","r","t","b",""]
 typelist = ["in","out","io","oc","oe","pas","tp","tri","clk","pwr"]
 P_NR, P_SEQ, P_TYPE, P_STYLE, P_POS, P_NET, P_LABEL = 0,1,2,3,4,5,6
+re_section_header = re.compile("^\s*\[(?P<name>.+)]\s*$")
+
+################################## CLASSES ###############################
+
+class Pin:
+    '''Encapsulation for all data related to a pin.'''
+    def __init__(self, element):
+		
+        element.extend(('', '', '', '', '', '', ''))
+        self.nr = element[P_NR].strip()
+        self.seq = element[P_SEQ].strip()
+        self.type = element[P_TYPE].lower().strip()
+        self.style = element[P_STYLE].lower().strip()
+        self.pos = element[P_POS].lower().strip()
+        self.net = element[P_NET].strip()
+        self.label = element[P_LABEL].strip()
+		
+    def __str__(self):
+        str = "Pin object (nr:" + self.nr + " seq:" + self.seq + " type:" + self.type
+        str += " style:" + self.style + " pos:" + self.pos + " net:" + self.net
+        str += " label:" + self.label + ")"
+        return str
+
+# rules: nets, positions, labels
+    def __lt__(self, other):
+        if not isinstance(other, Pin):
+            return NotImplemented
+        if self.pos != other.pos:
+            return self.pos < other.pos
+        return self.label < other.label
+
+      
+    def __le__(self, other):
+        if not isinstance(other, Pin):
+            return NotImplemented
+        if self.pos != other.pos:
+            return self.pos < other.pos
+        return self.label <= other.label
+
+      
+    def __eq__(self, other):
+        if not isinstance(other, Pin):
+            return NotImplemented
+        if self.pos != other.pos:
+            return False
+        return self.label == other.label
 
 
+    def __ne__(self, other):
+        if not isinstance(other, Pin):
+            return NotImplemented
+        if self.pos != other.pos:
+            return True
+        return self.label != other.label
+
+
+    def __gt__(self, other):
+        if not isinstance(other, Pin):
+            return NotImplemented
+        if self.pos != other.pos:
+            return self.pos > other.pos
+        return self.label > other.label
+        
+        
+
+    def __ge__(self, other):
+        if not isinstance(other, Pin):
+            return NotImplemented
+        if self.pos != other.pos:
+            return self.pos > other.pos
+        return self.label >= other.label
+        
 ################################# FUNCTIONS ##############################
+
+def usage():
+    '''Print a usage message.'''
+    print "tragesym version " + VERSION
+    print "(C) 2001,2002,2003,2004,2006,2007 by Werner Hoch <werner.ho@gmx.de>"
+    print "Usage is: ", sys.argv[0] ,"<infile> <outfile>"
+
 
 def parselabel(str):
     '''returns a stripped label without overbar markers "\_"'''
@@ -123,13 +214,17 @@ def readsrc(filename):
     content= f.readlines()
     section=""
     linenr=0
-    for line in content:
+    for lineraw in content:
+    	line = lineraw.rstrip()
         linenr=linenr+1
-        if line[0]=="[":        # find a section 
-            section=string.split(line[1:],"]")[0]
+    	if len(line) == 0:
+    		continue
+        match = re_section_header.match(line)
+        if match:        			# find a section 
+            section=match.group('name')
             continue
         elif section=="" or line[0]=="#" \
-             or len(string.strip(line)) == 0: # comment, empty line or no section
+             or len(string.strip(line)) == 0:	# comment, empty line or no section
             continue
         if section=="options":
             element=split_tab_equal(line,1)
@@ -144,15 +239,7 @@ def readsrc(filename):
         elif section=="pins":
             element=string.split(line,"\t")
             if len(element) > 2:
-                for j in xrange(len(element)):
-                    element[j]=string.strip(element[j])
-                    if j in [P_TYPE,P_POS,P_STYLE]:
-                        element[j]= string.lower(element[j])
-                    if j == P_TYPE:
-                        element[j] = type_translate(element[j])
-                while len(element) < 7:
-                    element.append("")
-                pins.append(element)
+                pins.append(Pin(element))
         else:
             print linenr, ": illegal section name: ", section
             sys.exit()
@@ -160,30 +247,30 @@ def readsrc(filename):
 
 def checkpins(pinlist):
     for pin in pinlist:
-    	if pin[P_STYLE] == "spacer":
-	    if pin[P_POS] == "":
-		print "Error: There must be a position with a spacer.\n"
+    	if (pin.style=="spacer"):
+	    if (pin.pos == ""):
+		print "There must be a position with a spacer.\n"
 		sys.exit()
-	    if pin[P_POS] not in poslist:
-		print "Error: position is not allowed: \n", pin
+	    if pin.pos not in poslist:
+		print "Position is not allowed: \n", pin
 		sys.exit()
     	    continue
-        if pin[P_STYLE] != "none":
-            if pin[P_SEQ].isdigit():
-                string.atoi(pin[P_SEQ])
+        if pin.style != "none":
+            if pin.seq.isdigit():
+                string.atoi(pin.seq)
             else:
                 print "pinseq needs to be a number: \n", pin
                 sys.exit()
-        if pin[P_TYPE] not in typelist:
+        if pin.type not in typelist:
             print "Pintype not allowed: \n", pin
             sys.exit()
-        if pin[P_STYLE] not in stylelist:
+        if pin.style not in stylelist:
             print "Style is not allowed: \n", pin
             sys.exit()
-        if pin[P_POS] not in poslist:
+        if pin.pos not in poslist:
             print "Position is not allowed: \n", pin
             sys.exit()
-        if pin[P_POS] == "" and pin[P_NET] == "":
+        if pin.pos == "" and pin.net == "":
             print "There must be either position or a netlabel: \n", pin
             sys.exit()
 
@@ -212,39 +299,8 @@ def splitspecial(str):
                 list.append(letter)
                 isletter=0
     return list
-    
-def pinsort(pin1,pin2):
-    ## rules: nets first, positions second, labels last
-    ## net
-    if pin1[P_NET] != "" and pin2[P_NET] != "":
-        return 0
-    elif pin2[P_NET] != "":
-        return 1
-    elif pin1[P_NET] != "":
-        return -1
-    ## position
-    if pin1[P_POS] > pin2[P_POS]:
-        return -1
-    elif pin1[P_POS] < pin2[P_POS]:
-        return 1
-    ## pinlabel
-    label1 = parselabel(pin1[P_LABEL])
-    label2 = parselabel(pin2[P_LABEL])
-    l1 = splitspecial(label1)
-    l2 = splitspecial(label2)
-    minlen = len(l1)
-    if len(l2) < minlen:
-        minlen = len(l2)
-    for i in xrange(minlen):
-        if i % 2 == 1:
-            ret= sort(string.atoi(l1[i]),string.atoi(l2[i]))
-        else:
-            ret= sort(l1[i],l2[i])
-        if ret != 0:
-            return ret
-    ret=sort(len(l1),len(l2))
-    return ret
 
+    
 def sort(item1,item2):
     if item1 < item2:
         return -1
@@ -277,13 +333,13 @@ def writesym(filename,options,attr,pins):
     numpbottom=0
     numptop = 0
     for pin in pins:
-    	if pin[P_POS] == "l": # left pin
+    	if pin.pos == "l": # left pin
     		numpleft=numpleft+1
-    	elif pin[P_POS] == "r": #right pin
+    	elif pin.pos == "r": #right pin
     		numpright=numpright+1
-    	elif pin[P_POS] == "b": #right pin
+    	elif pin.pos == "b": #right pin
     		numpbottom=numpbottom+1
-    	elif pin[P_POS] == "t": #right pin
+    	elif pin.pos == "t": #right pin
     		numptop=numptop+1
 
     # Calculate the position of the pins in the left and right side.    
@@ -344,27 +400,28 @@ def writesym(filename,options,attr,pins):
         sys.exit()
    
     if o_sort == "yes":
-        pins.sort(pinsort)
+        print "sorting..."
+        pins.sort()
 
     for pin in pins:
-        if pin[P_STYLE] == "none": #
+        if pin.style == "none": #
             continue
-        if pin[P_STYLE]=="spacer":
+        if pin.style=="spacer":
             if o_sort == "yes":
                 print "warning: spacers are not supported when sorting labels"
                 continue
-            elif pin[P_POS] == "l": #left pin
+            elif pin.pos == "l": #left pin
                 plefty=plefty - o_vdist  #where to draw the _next_ pin
-            elif pin[P_POS] == "r": #right pin
+            elif pin.pos == "r": #right pin
                 prighty=prighty - o_vdist
-            elif pin[P_POS] == "b": # bottom pin
+            elif pin.pos == "b": # bottom pin
                 pbottomx=pbottomx + o_hdist
-            elif pin[P_POS] == "t": # top pin
+            elif pin.pos == "t": # top pin
                 ptopx=ptopx + o_hdist
             continue
 ### decide which pindirection to use
         ## TODO: put all constants into a dictionary         
-        if pin[P_POS] == "l": #left pin
+        if pin.pos == "l": #left pin
             basex, basey= pleftx, plefty  #where to draw this pin
             xf, yf= 1, 0  # orientation factors  
             pint=(200,50,6,0) # dx, dy, alignment, angle
@@ -374,7 +431,7 @@ def writesym(filename,options,attr,pins):
             negl=(0, CHARHIGH*4+20,0,0) # dx,dy,vert,rotate (base is label)
             swap=0   # swap words in label ?
             plefty=plefty - o_vdist  #where to draw the _next_ pin
-        elif pin[P_POS] == "r": #right pin
+        elif pin.pos == "r": #right pin
             basex, basey = prightx, prighty 
             xf, yf= -1, 0
             pint=(-200,50,0,0)
@@ -384,7 +441,7 @@ def writesym(filename,options,attr,pins):
             negl=(0, CHARHIGH*4+20,2,0)
             swap=1
             prighty=prighty - o_vdist
-        elif pin[P_POS] == "b": # bottom pin
+        elif pin.pos == "b": # bottom pin
             basex, basey=pbottomx, pbottomy
             xf, yf= 0, 1
             if o_rotate == "yes": # bottom pin with 90° text
@@ -401,7 +458,7 @@ def writesym(filename,options,attr,pins):
                 negl=(0,CHARHIGH*4+20,1,0)
             swap=0
             pbottomx=pbottomx + o_hdist
-        elif pin[P_POS] == "t": # top pin
+        elif pin.pos == "t": # top pin
             basex, basey=ptopx, ptopy
             xf, yf= 0, -1
             if o_rotate == "yes": # with 90° text
@@ -420,8 +477,8 @@ def writesym(filename,options,attr,pins):
                 swap=0
             ptopx=ptopx + o_hdist
 ### draw the pin
-        if (pin[P_STYLE]=="dot" or  #short pin and dot?
-            pin[P_STYLE]=="dotclk"):
+        if (pin.style=="dot" or  #short pin and dot?
+            pin.style=="dotclk"):
             x=basex + xf*200
             y=basey + yf*200
         else:
@@ -433,23 +490,23 @@ def writesym(filename,options,attr,pins):
         pintx, pinty, pinta, pintr=pint
         x=basex+pintx
         y=basey+pinty
-        if pin[P_POS] == "t": # top pin
+        if pin.pos == "t": # top pin
 	    y += 50
         f.write("T %i"%x+" %i"%y+" 5 8 1 1 %i"%pintr+" %i 1\n"%pinta)
-        f.write("pinnumber="+pin[P_NR]+"\n")
+        f.write("pinnumber="+pin.nr+"\n")
 ### draw pinseq
         pintx, pinty, pinta, pintr=pinq
         x=basex+pintx
         y=basey+pinty
-        if pin[P_POS] == "t": # top pin
+        if pin.pos == "t": # top pin
 	    y += 50
         f.write("T %i"%x+" %i"%y+" 5 8 0 1 %i"%pintr+" %i 1\n"%pinta)
-        f.write("pinseq="+pin[P_SEQ]+"\n")
+        f.write("pinseq="+pin.seq+"\n")
 ### draw pinlabel and pintype
         pinlx, pinly, pinla, pinlr=pinl
         pinax, pinay, pinaa, pinar=pina
-        if (pin[P_STYLE]=="clk" or  #move label if clocksign
-            pin[P_STYLE]=="dotclk"):
+        if (pin.style=="clk" or  #move label if clocksign
+            pin.style=="dotclk"):
             pinlx=pinlx + xf*75
             pinly=pinly + yf*75
             pinax=pinax + xf*75
@@ -459,22 +516,22 @@ def writesym(filename,options,attr,pins):
         pinax=pinax + basex
         pinay=pinay + basey
         if o_wordswap=="yes" and swap==1:
-            label=swapwords(pin[P_LABEL])
+            label=swapwords(pin.label)
         else:
-            label=pin[P_LABEL]
+            label=pin.label
         f.write("T %i"%pinlx+" %i"%pinly+" 9 8 1 1 %i"%pinlr+" %i 1\n"%pinla)
         f.write("pinlabel="+label+"\n")
         f.write("T %i"%pinax+" %i"%pinay+" 5 8 0 1 %i"%pinar+" %i 1\n"%pinaa)
-        f.write("pintype="+pin[P_TYPE]+"\n")
+        f.write("pintype="+pin.type+"\n")
         f.write("}\n")
 ### draw the negation bubble
-        if (pin[P_STYLE]=="dot" or pin[P_STYLE]=="dotclk"):
+        if (pin.style=="dot" or pin.style=="dotclk"):
             x=basex + xf*250
             y=basey + yf*250
             f.write("V %i"%x+" %i"%y +" 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1\n")
 ### draw the clocksign
-        if (pin[P_STYLE]=="clk" or
-            pin[P_STYLE]=="dotclk"):
+        if (pin.style=="clk" or
+            pin.style=="dotclk"):
             x1=basex+ xf*400
             y1=basey+ yf*400
             x2=x1- xf*100 +yf*75
@@ -541,11 +598,11 @@ def writesym(filename,options,attr,pins):
 
     nets={}
     for pin in pins:
-        if pin[P_STYLE] == "none":
-            if not nets.has_key(pin[P_NET]):
-                nets[pin[P_NET]] = pin[P_NR]
+        if pin.style == "none":
+            if not nets.has_key(pin.net):
+                nets[pin.net] = pin.nr
             else:
-                nets[pin[P_NET]] = nets[pin[P_NET]] + ","+ pin[P_NR]
+                nets[pin.net] = nets[pin.net] + ","+ pin.nr
     for key,value in nets.items():
         f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
         f.write("net=" + key + ":" + value + "\n")
@@ -566,22 +623,37 @@ def mergeoptions(source_opt,pre_opt):
 def generate_pinseq(pins):
     seq=1
     for nr in xrange(len(pins)):
-        if pins[nr][P_STYLE] not in ["none","spacer"]:
-            pins[nr][P_SEQ] = "%i"%seq
+        if pins[nr].style not in ["none","spacer"]:
+            pins[nr].seq = "%i"%seq
             seq = seq + 1
     return pins
 
 ###################### MAIN #################################################
 
-## TODO: use getopt
+## parse command line options
 try:
-    file_in=sys.argv[1]
-    file_out=sys.argv[2]
+    opts, args = getopt.getopt(sys.argv[1:], "h", ["help"])
 except:
-    print "tragesym version " + VERSION
-    print "Bad arguments, usage is: ", sys.argv[0] ,"infile outfile"
+    usage()
     sys.exit()
-    
+
+## handle command line options
+for o, a in opts:
+    if o in ("-h", "--help"):
+        usage()
+        sys.exit()
+
+## get files
+if len(args) != 2:
+    usage()
+    sys.exit()
+
+file_in=args[0]
+file_out=args[1]
+if not os.path.exists(file_in):
+    print "Input file " + file_in + " not found."
+    sys.exit()
+
 ## read sourcefile
 opts,attr,pins=readsrc(file_in)
 
