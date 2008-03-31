@@ -607,6 +607,7 @@ void o_net_finishmagnetic(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *  If the mouse is moved, this function is called to update the 
  *  position of the magnetic marker.
+ *  If the controllkey is pressed the magnetic marker follows the mouse.
  */
 void o_net_start_magnetic(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
@@ -614,7 +615,13 @@ void o_net_start_magnetic(GSCHEM_TOPLEVEL *w_current, int x, int y)
   /* the dc is completely clean now, reset inside_action. */
   w_current->inside_action = 0;
 
-  o_net_find_magnetic(w_current, x, y);
+  if (w_current->CONTROLKEY) {
+    w_current->magnetic_x = x;
+    w_current->magnetic_y = y;
+  }
+  else {
+    o_net_find_magnetic(w_current, x, y);
+  }
 
   o_net_drawrubber(w_current);
 }
@@ -865,13 +872,24 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   g_assert( w_current->inside_action != 0 );
 
-  /* Orthognal mode enabled when Control Key is NOT pressed */
-  ortho = !w_current->CONTROLKEY;
+  /* Orthognal mode enabled when Control Key is NOT pressed or
+     if we are using magnetic mode */
+  ortho = !w_current->CONTROLKEY || w_current->magneticnet_mode;
 
   o_net_eraserubber(w_current);
 
-  if (w_current->magneticnet_mode)
-    o_net_find_magnetic(w_current, x, y);
+  if (w_current->magneticnet_mode) {
+    if (w_current->CONTROLKEY) {
+      /* set the magnetic marker position to current xy if the
+	 controlkey is pressed. Thus the net will not connect to 
+	 the closest net if we finish the net drawing */
+      w_current->magnetic_x = x;
+      w_current->magnetic_y = y;
+    }
+    else {
+      o_net_find_magnetic(w_current, x, y);
+    }
+  }
 
   w_current->last_x = fix_x(toplevel, x);
   w_current->last_y = fix_y(toplevel, y);
