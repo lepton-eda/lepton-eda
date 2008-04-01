@@ -93,8 +93,11 @@ struct st_gschem_toplevel {
   int last_y;
   int second_x;
   int second_y;
+  int first_wx, first_wy;
+  int second_wx, second_wy;
+  int third_wx, third_wy;
   int loc_x, loc_y;
-  int magnetic_x, magnetic_y;           /* Position of the magnetic marker*/
+  int magnetic_wx, magnetic_wy;         /* Position of the magnetic marker*/
   int distance;
   int inside_action;                    /* Are we doing an action? */
   int rotated_inside;                   /* Was the selection rotated
