@@ -304,9 +304,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         /* Only continue the net if net end worked */
         if (o_net_end(w_current, (int) event->x,
                       (int) event->y)) {
-          o_net_start(w_current,
-                      (int) w_current->save_x,
-                      (int) w_current->save_y);
           w_current->event_state=NETCONT;
         }
 	else { /* cleanup and start a new net */

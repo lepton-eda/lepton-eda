@@ -292,11 +292,11 @@ void o_net_draw_xor_single(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int which
  *  as a bitfield.
  */
 void o_net_guess_direction(GSCHEM_TOPLEVEL *w_current,
-			   int x, int y)
+			   int wx, int wy)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int up=0, down=0, left=0, right=0;
-  int x1, y1, x2, y2, wx, wy;
+  int x1, y1, x2, y2;
   int xmin, ymin, xmax, ymax;
   int orientation;
   GList *objectlists, *iter1, *iter2;
@@ -308,10 +308,6 @@ void o_net_guess_direction(GSCHEM_TOPLEVEL *w_current,
   const int bus_rules[] = {90, 0, 40};
   const int net_rules[] = {80, 30, 0};
   
-
-  SCREENtoWORLD(toplevel, x, y, &wx, &wy);
-  wx = snap_grid(toplevel, wx);
-  wy = snap_grid(toplevel, wy);
   objectlists = s_tile_get_objectlists(toplevel, wx, wy, wx, wy);
 
   for (iter1 = objectlists; iter1 != NULL; iter1 = g_list_next(iter1)) {
@@ -422,6 +418,7 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int x1, x2, y1, y2, min_x, min_y;
+  int world_x, world_y;
   double mindist, minbest, dist1, dist2;
   double weight, min_weight;
   int magnetic_reach = 0;
@@ -435,6 +432,8 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
   /* max distance of all the different reaches */
   magnetic_reach = max(MAGNETIC_PIN_REACH, MAGNETIC_NET_REACH);
   magnetic_reach = max(magnetic_reach, MAGNETIC_BUS_REACH);
+
+  SCREENtoWORLD(toplevel, x, y, &world_x, &world_y);
 
   /* get the objects of the tiles around the reach region */
   SCREENtoWORLD(toplevel, x - magnetic_reach, y - magnetic_reach, &x1, &y1);
@@ -450,12 +449,11 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
 	continue; /* skip invisible objects */
 
       if (o_current->type == OBJ_PIN) {
-	WORLDtoSCREEN(toplevel,
-		      o_current->line->x[o_current->whichend],
-		      o_current->line->y[o_current->whichend],
-		      &min_x, &min_y);
-	mindist = sqrt((double) (x - min_x)*(x - min_x)
-		       + (double) (y - min_y)*(y - min_y));
+	min_x = o_current->line->x[o_current->whichend];
+	min_y = o_current->line->y[o_current->whichend];
+
+	mindist = sqrt((double) (world_x - min_x)*(world_x - min_x)
+		       + (double) (world_y - min_y)*(world_y - min_y));
 	weight = mindist / MAGNETIC_PIN_WEIGHT;
       }
 
@@ -463,15 +461,15 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
 	       || o_current->type == OBJ_BUS) {
 	/* we have 3 possible points to connect: 
 	   2 endpoints and 1 midpoint point */
-	WORLDtoSCREEN(toplevel, o_current->line->x[0], 
-		      o_current->line->y[0], &x1, &y1);
-	WORLDtoSCREEN(toplevel, o_current->line->x[1],
-		      o_current->line->y[1], &x2, &y2);
+	x1 = o_current->line->x[0];
+	y1 = o_current->line->y[0];
+	x2 = o_current->line->x[1];
+	y2 = o_current->line->y[1];
 	/* endpoint tests */
-	dist1 = sqrt((double) (x - x1)*(x - x1)
-		     + (double) (y - y1)*(y - y1));
-	dist2 = sqrt((double) (x - x2)*(x - x2)
-		     + (double) (y - y2)*(y - y2));
+	dist1 = sqrt((double) (world_x - x1)*(world_x - x1)
+		     + (double) (world_y - y1)*(world_y - y1));
+	dist2 = sqrt((double) (world_x - x2)*(world_x - x2)
+		     + (double) (world_y - y2)*(world_y - y2));
 	if (dist1 < dist2) {
 	  min_x = x1;
 	  min_y = y1;
@@ -485,20 +483,20 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
       
 	/* midpoint tests */
 	if ((x1 == x2)  /* vertical net */
-	    && ((y1 >= y && y >= y2)
-		|| (y2 >= y && y >= y1))) {
-	  if (abs(x - x1) < mindist) {
-	    mindist = abs(x - x1);
+	    && ((y1 >= world_y && world_y >= y2)
+		|| (y2 >= world_y && world_y >= y1))) {
+	  if (abs(world_x - x1) < mindist) {
+	    mindist = abs(world_x - x1);
 	    min_x = x1;
-	    min_y = y;
+	    min_y = world_y;
 	  }
 	} 
 	if ((y1 == y2)  /* horitontal net */
-	    && ((x1 >= x && x >= x2)
-		|| (x2 >= x && x >= x1))) {  
-	  if (abs(y - y1) < mindist) {
-	    mindist = abs(y - y1);
-	    min_x = x;
+	    && ((x1 >= world_x && world_x >= x2)
+		|| (x2 >= world_x && world_x >= x1))) {  
+	  if (abs(world_y - y1) < mindist) {
+	    mindist = abs(world_y - y1);
+	    min_x = world_x;
 	    min_y = y1;
 	  }
 	}
@@ -517,8 +515,8 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
 	minbest = mindist;
 	min_weight = weight;
 	o_magnetic = o_current;
-	w_current->magnetic_x = min_x;
-	w_current->magnetic_y = min_y;
+	w_current->magnetic_x = snap_grid(toplevel, min_x);
+	w_current->magnetic_y = snap_grid(toplevel, min_y);
       }
     }
   }
@@ -530,7 +528,7 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
     case (OBJ_NET): magnetic_reach = MAGNETIC_NET_REACH; break;
     case (OBJ_BUS): magnetic_reach = MAGNETIC_BUS_REACH; break;
     }
-    if (minbest > magnetic_reach) {
+    if (minbest > magnetic_reach*toplevel->page_current->to_world_x_constant) {
       w_current->magnetic_x = -1;
       w_current->magnetic_y = -1;
     }
@@ -611,13 +609,16 @@ void o_net_finishmagnetic(GSCHEM_TOPLEVEL *w_current)
  */
 void o_net_start_magnetic(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
+
   o_net_eraserubber(w_current);
   /* the dc is completely clean now, reset inside_action. */
   w_current->inside_action = 0;
 
   if (w_current->CONTROLKEY) {
-    w_current->magnetic_x = x;
-    w_current->magnetic_y = y;
+    SCREENtoWORLD(toplevel, x, y, &w_current->magnetic_x, &w_current->magnetic_y);
+    w_current->magnetic_x = snap_grid(toplevel, w_current->magnetic_x);
+    w_current->magnetic_y = snap_grid(toplevel, w_current->magnetic_y);
   }
   else {
     o_net_find_magnetic(w_current, x, y);
@@ -637,17 +638,20 @@ void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
   TOPLEVEL *toplevel = w_current->toplevel;
 
   if (w_current->magnetic_visible) {
-    x = w_current->magnetic_x;
-    y = w_current->magnetic_y;
+    w_current->start_x = w_current->magnetic_x;
+    w_current->start_y = w_current->magnetic_y;
   }
-
-  w_current->last_x = w_current->start_x = w_current->second_x = 
-    fix_x(toplevel, x);
-  w_current->last_y = w_current->start_y = w_current->second_y = 
-    fix_y(toplevel, y);
+  else {
+    SCREENtoWORLD(toplevel, x, y, &w_current->start_x, &w_current->start_y);
+    w_current->start_x = snap_grid(toplevel, w_current->start_x);
+    w_current->start_y = snap_grid(toplevel, w_current->start_y);
+  }
+   
+  w_current->last_x = w_current->second_x = w_current->start_x;
+  w_current->last_y = w_current->second_y = w_current->start_y;
 
   if (w_current->net_direction_mode)
-    o_net_guess_direction(w_current, x, y);
+    o_net_guess_direction(w_current, w_current->start_x, w_current->start_y);
 }
 
 /*! \brief finish a net drawing action 
@@ -701,7 +705,7 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   /* See if either of the nets are zero length.  We'll only add */
   /* the non-zero ones */
   primary_zero_length = (w_current->start_x == w_current->last_x) &&
-      (w_current->start_y == w_current->last_y);
+    (w_current->start_y == w_current->last_y);
  
   secondary_zero_length = (w_current->last_x == w_current->second_x) &&
       (w_current->last_y == w_current->second_y);
@@ -712,19 +716,15 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
     return FALSE;
   }
 
+  /* Snap points to closest grid location */
   /* Primary net runs from (x1,y1)-(x2,y2) */
   /* Secondary net from (x2,y2)-(x3,y3) */
-  SCREENtoWORLD(toplevel, w_current->start_x, w_current->start_y, &x1,	&y1);
-  SCREENtoWORLD(toplevel, w_current->last_x, w_current->last_y, &x2, &y2);
-  SCREENtoWORLD(toplevel, w_current->second_x, w_current->second_y, &x3, &y3);
-
-  /* Snap points to closest grid location */
-  x1 = snap_grid(toplevel, x1);
-  y1 = snap_grid(toplevel, y1);
-  x2 = snap_grid(toplevel, x2);
-  y2 = snap_grid(toplevel, y2);
-  x3 = snap_grid(toplevel, x3);
-  y3 = snap_grid(toplevel, y3);
+  x1 = snap_grid(toplevel, w_current->start_x);
+  y1 = snap_grid(toplevel, w_current->start_y);
+  x2 = snap_grid(toplevel, w_current->last_x);
+  y2 = snap_grid(toplevel, w_current->last_y);
+  x3 = snap_grid(toplevel, w_current->second_x);
+  y3 = snap_grid(toplevel, w_current->second_y);
 
   w_current->save_x = w_current->second_x;
   w_current->save_y = w_current->second_y;
@@ -856,6 +856,8 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   toplevel->page_current->CHANGED = 1;
   w_current->start_x = w_current->save_x;
   w_current->start_y = w_current->save_y;
+  if (w_current->net_direction_mode)
+    o_net_guess_direction(w_current, w_current->start_x, w_current->start_y);
   o_undo_savestate(w_current, UNDO_ALL);
 
   return (TRUE);
@@ -869,6 +871,7 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int ortho, horizontal, quadrant;
+  int world_x, world_y;
 
   g_assert( w_current->inside_action != 0 );
 
@@ -878,21 +881,25 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   o_net_eraserubber(w_current);
 
+  SCREENtoWORLD(toplevel, x, y, &world_x, &world_y);
+  world_x = snap_grid(toplevel, world_x);
+  world_y = snap_grid(toplevel, world_y);
+
   if (w_current->magneticnet_mode) {
     if (w_current->CONTROLKEY) {
       /* set the magnetic marker position to current xy if the
 	 controlkey is pressed. Thus the net will not connect to 
 	 the closest net if we finish the net drawing */
-      w_current->magnetic_x = x;
-      w_current->magnetic_y = y;
+      w_current->magnetic_x = world_x;
+      w_current->magnetic_y = world_y;
     }
     else {
       o_net_find_magnetic(w_current, x, y);
     }
   }
 
-  w_current->last_x = fix_x(toplevel, x);
-  w_current->last_y = fix_y(toplevel, y);
+  w_current->last_x = world_x;
+  w_current->last_y = world_y;
 
   /* In orthogonal mode secondary line is the same as the first */
   if (!ortho) {
@@ -901,7 +908,7 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
   }
   /* If you press the control key then you can draw non-ortho nets */
   else {
-    if (w_current->last_y < w_current->start_y) 
+    if (w_current->last_y > w_current->start_y) 
       quadrant = w_current->last_x > w_current->start_x ? QUADRANT1: QUADRANT2;
     else
       quadrant = w_current->last_x > w_current->start_x ? QUADRANT4: QUADRANT3;
@@ -916,10 +923,10 @@ void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int x, int y)
     if ( horizontal ) {
       w_current->last_y = w_current->start_y;
       w_current->second_x = w_current->last_x;
-      w_current->second_y = fix_y(toplevel,y);
+      w_current->second_y = world_y;
     } else {
       w_current->last_x = w_current->start_x;
-      w_current->second_x = fix_x(toplevel,x);
+      w_current->second_x = world_x;
       w_current->second_y = w_current->last_y;
     }
   }
@@ -935,6 +942,17 @@ void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int size=0, magnetic_halfsize;
+  int magnetic_x, magnetic_y;
+  int start_x, start_y, second_x, second_y, last_x, last_y;
+
+  WORLDtoSCREEN(toplevel, w_current->magnetic_x, w_current->magnetic_y,
+		&magnetic_x, &magnetic_y);
+  WORLDtoSCREEN(toplevel, w_current->start_x, w_current->start_y,
+		&start_x, &start_y);
+  WORLDtoSCREEN(toplevel, w_current->second_x, w_current->second_y,
+		&second_x, &second_y);
+  WORLDtoSCREEN(toplevel, w_current->last_x, w_current->last_y,
+		&last_x, &last_y);
 
   w_current->rubbernet_visible = 1;
 
@@ -951,43 +969,39 @@ void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
 
   if (w_current->magneticnet_mode) {
     if (w_current->magnetic_x != -1 && w_current->magnetic_y != -1) {
-      w_current->magnetic_x = fix_x(toplevel, w_current->magnetic_x);
-      w_current->magnetic_y = fix_y(toplevel, w_current->magnetic_y);
       w_current->magnetic_visible = 1;
       w_current->inside_action = 1;
       magnetic_halfsize = max(4*size, MAGNETIC_HALFSIZE);
       gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
-		   w_current->magnetic_x - magnetic_halfsize,
-		   w_current->magnetic_y - magnetic_halfsize,
+		   magnetic_x - magnetic_halfsize,
+		   magnetic_y - magnetic_halfsize,
 		   2*magnetic_halfsize, 2*magnetic_halfsize,
 		   0, FULL_CIRCLE);
       o_invalidate_rect(w_current, 
-			w_current->magnetic_x - magnetic_halfsize - size/2,
-			w_current->magnetic_y - magnetic_halfsize - size/2,
-			w_current->magnetic_x + magnetic_halfsize + size/2,
-			w_current->magnetic_y + magnetic_halfsize + size/2);
+			magnetic_x - magnetic_halfsize - size/2,
+			magnetic_y - magnetic_halfsize - size/2,
+			magnetic_x + magnetic_halfsize + size/2,
+			magnetic_y + magnetic_halfsize + size/2);
     }
   }
 
   /* draw primary line */
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		w_current->start_x, w_current->start_y,
-		w_current->last_x, w_current->last_y);
+		start_x, start_y, last_x, last_y);
   o_invalidate_rect(w_current, 
-		    min(w_current->start_x, w_current->last_x) - size/2,
-		    min(w_current->start_y, w_current->last_y) - size/2,
-		    max(w_current->start_x, w_current->last_x) + size/2,
-		    max(w_current->start_y, w_current->last_y) + size/2);
+		    min(start_x, last_x) - size/2,
+		    min(start_y, last_y) - size/2,
+		    max(start_x, last_x) + size/2,
+		    max(start_y, last_y) + size/2);
 
   /* Draw secondary line */
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		w_current->last_x, w_current->last_y,
-		w_current->second_x, w_current->second_y);
+		last_x, last_y, second_x, second_y);
   o_invalidate_rect(w_current, 
-		    min(w_current->last_x, w_current->second_x) - size/2,
-		    min(w_current->last_y, w_current->second_y) - size/2,
-		    max(w_current->last_x, w_current->second_x) + size/2,
-		    max(w_current->last_y, w_current->second_y) + size/2);
+		    min(last_x, second_x) - size/2,
+		    min(last_y, second_y) - size/2,
+		    max(last_x, second_x) + size/2,
+		    max(last_y, second_y) + size/2);
 
   if (toplevel->net_style == THICK) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
@@ -1008,9 +1022,20 @@ void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int size=0, magnetic_halfsize;
+  int magnetic_x, magnetic_y;
+  int start_x, start_y, second_x, second_y, last_x, last_y;
 
   if (! w_current->rubbernet_visible)
     return;
+
+  WORLDtoSCREEN(toplevel, w_current->magnetic_x, w_current->magnetic_y,
+		&magnetic_x, &magnetic_y);
+  WORLDtoSCREEN(toplevel, w_current->start_x, w_current->start_y,
+		&start_x, &start_y);
+  WORLDtoSCREEN(toplevel, w_current->second_x, w_current->second_y,
+		&second_x, &second_y);
+  WORLDtoSCREEN(toplevel, w_current->last_x, w_current->last_y,
+		&last_x, &last_y);
 
   w_current->rubbernet_visible = 0;
 
@@ -1026,35 +1051,34 @@ void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
     w_current->magnetic_visible = 0;
     magnetic_halfsize = max(4*size, MAGNETIC_HALFSIZE);
     gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
-		 w_current->magnetic_x - magnetic_halfsize,
-		 w_current->magnetic_y - magnetic_halfsize,
+		 magnetic_x - magnetic_halfsize,
+		 magnetic_y - magnetic_halfsize,
 		 2*magnetic_halfsize, 2*magnetic_halfsize,
 		 0, FULL_CIRCLE);
       o_invalidate_rect(w_current, 
-			w_current->magnetic_x - magnetic_halfsize - size/2,
-			w_current->magnetic_y - magnetic_halfsize - size/2,
-			w_current->magnetic_x + magnetic_halfsize + size/2,
-			w_current->magnetic_y + magnetic_halfsize + size/2);
+			magnetic_x - magnetic_halfsize - size/2,
+			magnetic_y - magnetic_halfsize - size/2,
+			magnetic_x + magnetic_halfsize + size/2,
+			magnetic_y + magnetic_halfsize + size/2);
   }
 
   /* Erase primary primary rubber net line */
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc, w_current->start_x,
-		w_current->start_y, w_current->last_x, w_current->last_y);
+  gdk_draw_line(w_current->backingstore, w_current->xor_gc, 
+		start_x, start_y, last_x, last_y);
   o_invalidate_rect(w_current, 
-		    min(w_current->start_x, w_current->last_x) - size/2,
-		    min(w_current->start_y, w_current->last_y) - size/2,
-		    max(w_current->start_x, w_current->last_x) + size/2,
-		    max(w_current->start_y, w_current->last_y) + size/2);
+		    min(start_x, last_x) - size/2,
+		    min(start_y, last_y) - size/2,
+		    max(start_x, last_x) + size/2,
+		    max(start_y, last_y) + size/2);
 
   /* Erase secondary rubber net line */
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		w_current->last_x, w_current->last_y,
-		w_current->second_x, w_current->second_y);
+		last_x, last_y, second_x, second_y);
   o_invalidate_rect(w_current, 
-		    min(w_current->last_x, w_current->second_x) - size/2,
-		    min(w_current->last_y, w_current->second_y) - size/2,
-		    max(w_current->last_x, w_current->second_x) + size/2,
-		    max(w_current->last_y, w_current->second_y) + size/2);
+		    min(last_x, second_x) - size/2,
+		    min(last_y, second_y) - size/2,
+		    max(last_x, second_x) + size/2,
+		    max(last_y, second_y) + size/2);
 
   if (toplevel->net_style == THICK) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
