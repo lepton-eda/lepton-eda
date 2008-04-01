@@ -668,9 +668,6 @@ void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int x1, y1;
-  int x2, y2;
-  int x3, y3;
   int color;
   int size;
   int primary_zero_length, secondary_zero_length;
@@ -716,16 +713,6 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
     return FALSE;
   }
 
-  /* Snap points to closest grid location */
-  /* Primary net runs from (x1,y1)-(x2,y2) */
-  /* Secondary net from (x2,y2)-(x3,y3) */
-  x1 = snap_grid(toplevel, w_current->first_wx);
-  y1 = snap_grid(toplevel, w_current->first_wy);
-  x2 = snap_grid(toplevel, w_current->second_wx);
-  y2 = snap_grid(toplevel, w_current->second_wy);
-  x3 = snap_grid(toplevel, w_current->third_wx);
-  y3 = snap_grid(toplevel, w_current->third_wy);
-
   w_current->save_x = w_current->third_wx;
   w_current->save_y = w_current->third_wy;
 
@@ -740,7 +727,9 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
       toplevel->page_current->object_tail =
 	  new_net = o_net_add(toplevel,
 			      toplevel->page_current->object_tail,
-			      OBJ_NET, color, x1, y1, x2, y2);
+			      OBJ_NET, color, 
+			      w_current->first_wx, w_current->first_wy,
+			      w_current->second_wx, w_current->second_wy);
   
       /* conn stuff */
       /* LEAK CHECK 1 */
@@ -807,7 +796,9 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
       toplevel->page_current->object_tail =
 	  new_net = o_net_add(toplevel,
 			      toplevel->page_current->object_tail,
-			      OBJ_NET, color, x2, y2, x3, y3);
+			      OBJ_NET, color, 
+			      w_current->second_wx, w_current->second_wy,
+			      w_current->third_wx, w_current->third_wy);
   
       /* conn stuff */
       /* LEAK CHECK 2 */
