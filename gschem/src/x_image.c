@@ -225,7 +225,7 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
   if (ptr != NULL) {
     image_type_descr = (char *) (ptr->data);
   } else {
-    image_type_descr = NULL:
+    image_type_descr = NULL;
   }
 #else
   image_type_descr = gtk_combo_box_get_active_text(GTK_COMBO_BOX(combo));
