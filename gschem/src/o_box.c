@@ -974,7 +974,6 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_box_rubberbox(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
 
   g_assert( w_current->inside_action != 0 );
 

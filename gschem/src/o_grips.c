@@ -32,10 +32,8 @@
 #include <dmalloc.h>
 #endif
 
-#define GET_BOX_WIDTH(w)  abs((w)->last_x - (w)->start_x)
-#define GET_BOX_HEIGHT(w) abs((w)->last_y - (w)->start_y)
-#define GET_BOX_LEFT(w)   min((w)->start_x, (w)->last_x);
-#define GET_BOX_TOP(w)    min((w)->start_y, (w)->last_y);
+#define GET_BOX_WIDTH(w)  abs((w)->second_wx - (w)->first_wx)
+#define GET_BOX_HEIGHT(w) abs((w)->second_wy - (w)->second_wy)
 
 #define GET_PICTURE_WIDTH(w) abs((w)->last_x - (w)->start_x)
 #define GET_PICTURE_HEIGHT(w) (w)->pixbuf_wh_ratio == 0 ? 0 : \
@@ -499,6 +497,7 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   whichone_changing = whichone;
   object_changing = object;
+  w_current->rubber_visible = 1;
 
   /* there is one */
   /* depending on its type, start the modification process */
@@ -656,10 +655,10 @@ void o_grips_start_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  *  The function first erases the grips.
  *
  *  The coordinates of the selected corner are put in
- *  (<B>w_current->last_x</B>,<B>w_current->last_y</B>).
+ *  (<B>w_current->second_wx</B>,<B>w_current->second_wx</B>).
  *
  *  The coordinates of the opposite corner go in
- *  (<B>w_current->start_x</B>,<B>w_current->start_y</B>). They are not suppose
+ *  (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>). They are not suppose
  *  to change during the action.
  *
  *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
@@ -671,38 +670,37 @@ void o_grips_start_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 void o_grips_start_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                        int x, int y, int whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   w_current->last_drawb_mode = -1;
 
   /* erase the box before */
   o_erase_single(w_current, o_current);
 
-  /* (last_x,last_y)    is the selected corner */
-  /* (start_x, start_y) is the opposite corner */
+  /* (second_wx, second_wy) is the selected corner */
+  /* (first_wx, first_wy) is the opposite corner */
   switch(whichone) {
     case BOX_UPPER_LEFT:
-      WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->upper_y,
-                     &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->lower_y,
-                     &w_current->start_x, &w_current->start_y );
+      w_current->second_wx = o_current->box->upper_x;
+      w_current->second_wy = o_current->box->upper_y;
+      w_current->first_wx = o_current->box->lower_x;
+      w_current->first_wy = o_current->box->lower_y;
       break;
     case BOX_LOWER_RIGHT:
-      WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->lower_y,
-                     &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->upper_y,
-                     &w_current->start_x, &w_current->start_y );
+      w_current->second_wx = o_current->box->lower_x;
+      w_current->second_wy = o_current->box->lower_y;
+      w_current->first_wx = o_current->box->upper_x;
+      w_current->first_wy = o_current->box->upper_y;
       break;
     case BOX_UPPER_RIGHT:
-      WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->upper_y,
-                     &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->lower_y,
-                     &w_current->start_x, &w_current->start_y );
+      w_current->second_wx = o_current->box->lower_x;
+      w_current->second_wy = o_current->box->upper_y;
+      w_current->first_wx = o_current->box->upper_x;
+      w_current->first_wy = o_current->box->lower_y;
       break;
     case BOX_LOWER_LEFT:
-      WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->lower_y,
-                     &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->upper_y,
-                     &w_current->start_x, &w_current->start_y );
+      w_current->second_wx = o_current->box->upper_x;
+      w_current->second_wy = o_current->box->lower_y;
+      w_current->first_wx = o_current->box->lower_x;
+      w_current->first_wy = o_current->box->upper_y;
       break;
     default:
       return; /* error */
@@ -887,6 +885,13 @@ void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  */
 void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int w_x, w_y;
+
+  SCREENtoWORLD(toplevel, x, y, &w_x, &w_y);
+  w_x = snap_grid(toplevel, w_x);
+  w_y = snap_grid(toplevel, w_y);
+
   g_assert( w_current->inside_action != 0 );
   g_return_if_fail( object_changing != NULL );
 
@@ -898,7 +903,7 @@ void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
     case(OBJ_BOX):
     /* erase, update and draw a box */
-    o_grips_motion_box(w_current, x, y, whichone_changing);
+    o_grips_motion_box(w_current, w_x, w_y, whichone_changing);
     break;
 
     case(OBJ_PICTURE):
@@ -969,14 +974,14 @@ void o_grips_motion_arc(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone)
  *  the new temporary box.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
  *  \param [in] whichone   Which grip to start motion with.
  */
-void o_grips_motion_box(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone)
+void o_grips_motion_box(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
 {
   /* erase, update and draw the temporary box */
-  o_box_rubberbox(w_current, x, y);
+  o_box_rubberbox(w_current, w_x, w_y);
 }
 
 /*! \brief Modify previously selected picture according to mouse position.
@@ -1420,7 +1425,6 @@ void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int box_width, box_height;
-  int x, y;
 
   box_width  = GET_BOX_WIDTH (w_current);
   box_height = GET_BOX_HEIGHT(w_current);
@@ -1429,10 +1433,10 @@ void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
    * this ends the box drawing behavior
    * we want this? hack */
   if ((box_width == 0) && (box_height == 0)) {
-    w_current->start_x = (-1);
-    w_current->start_y = (-1);
-    w_current->last_x  = (-1);
-    w_current->last_y  = (-1);
+    w_current->first_wx = (-1);
+    w_current->first_wy = (-1);
+    w_current->second_wx  = (-1);
+    w_current->second_wy  = (-1);
 
     w_current->inside_action=0;
     i_set_state(w_current, SELECT);
@@ -1443,13 +1447,7 @@ void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
     return;
   }
 
-  SCREENtoWORLD(toplevel,
-                w_current->last_x, w_current->last_y,
-                &x, &y);
-  x = snap_grid(toplevel, x);
-  y = snap_grid(toplevel, y);
-
-  o_box_modify(toplevel, o_current, x, y, whichone);
+  o_box_modify(toplevel, o_current, w_current->second_wx, w_current->second_wy, whichone);
 
   /* erase the temporary box */
   o_box_rubberbox_xor(w_current);
