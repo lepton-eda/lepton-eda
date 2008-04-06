@@ -66,7 +66,7 @@ void o_net_reset(GSCHEM_TOPLEVEL *w_current)
   w_current->second_wx = w_current->second_wy = -1;
   w_current->third_wx = w_current->third_wy = -1;
   w_current->magnetic_wx = w_current->magnetic_wy = -1;
-  w_current->magnetic_visible = w_current->rubbernet_visible = 0;
+  w_current->magnetic_visible = w_current->rubber_visible = 0;
 }
 
 /*! \todo Finish function documentation!!!
@@ -941,7 +941,7 @@ void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
   WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy,
 		&second_x, &second_y);
 
-  w_current->rubbernet_visible = 1;
+  w_current->rubber_visible = 1;
 
   if (toplevel->net_style == THICK) {
     size = SCREENabs(toplevel, NET_WIDTH);
@@ -1012,7 +1012,7 @@ void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
   int magnetic_x, magnetic_y;
   int first_x, first_y, third_x, third_y, second_x, second_y;
 
-  if (! w_current->rubbernet_visible)
+  if (! w_current->rubber_visible)
     return;
 
   WORLDtoSCREEN(toplevel, w_current->magnetic_wx, w_current->magnetic_wy,
@@ -1024,7 +1024,7 @@ void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
   WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy,
 		&second_x, &second_y);
 
-  w_current->rubbernet_visible = 0;
+  w_current->rubber_visible = 0;
 
   if (toplevel->net_style == THICK) {
     size = SCREENabs(toplevel, NET_WIDTH);

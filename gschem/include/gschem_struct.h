@@ -102,7 +102,7 @@ struct st_gschem_toplevel {
   int inside_action;                    /* Are we doing an action? */
   int rotated_inside;                   /* Was the selection rotated
                                            inside an action? */
-  int rubbernet_visible;                /* Is the rubbernet currently on
+  int rubber_visible;                   /* Are there any rubber lines on
 					   the screen? */
   int magnetic_visible;                 /* Is the magnetic marker visible */
   int net_direction;                    /* bit field to guess the best net direction */

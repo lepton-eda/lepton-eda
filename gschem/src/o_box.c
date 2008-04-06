@@ -31,15 +31,14 @@
 #include <dmalloc.h>
 #endif
 
-/* Kazu on July 16, 1999 - Added these macros to simplify the code */
 #define GET_BOX_WIDTH(w)			\
-	abs((w)->last_x - (w)->start_x)
+	abs((w)->second_wx - (w)->first_wx)
 #define GET_BOX_HEIGHT(w)			\
-	abs((w)->last_y - (w)->start_y)
+	abs((w)->second_wy - (w)->first_wy)
 #define GET_BOX_LEFT(w)				\
-	min((w)->start_x, (w)->last_x);
+	min((w)->first_wx, (w)->second_wx)
 #define GET_BOX_TOP(w)				\
-	min((w)->start_y, (w)->last_y);
+        max((w)->first_wy, (w)->second_wy)
 
 typedef void (*DRAW_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
                            GdkCapStyle cap, gint filled,
@@ -864,62 +863,57 @@ void o_box_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
  *  \par Function Description
  *  This function starts the process to input a new box. Parameters for this
  *  box are put into/extracted from the <B>w_current</B> toplevel structure.
- *  <B>x</B> and <B>y</B> are current coordinates of the pointer in screen
+ *  <B>w_x</B> and <B>w_y</B> are current coordinates of the pointer in world
  *  coordinates.
  *
  *  The first step is to input one corner of the box. This corner is
- *  (<B>x</B>,<B>y</B>) snapped to the grid and saved in <B>w_current->start_x</B>
- *  and <B>w_current->start_y</B>.
+ *  (<B>w_x</B>,<B>w_y</B>) snapped to the grid and saved in <B>w_current->first_wx</B>
+ *  and <B>w_current->first_wy</B>.
  *
- *  The other corner will be saved in (<B>w_current->last_x</B>,
- *  <B>w_current->last_y</B>).
+ *  The other corner will be saved in (<B>w_current->second_wx</B>,
+ *  <B>w_current->second_wy</B>).
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        Current x coordinate of pointer in world.
+ *  \param [in] w_y        Current y coordinate of pointer in world.
  */
-void o_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  /* init start_[x|y], last_[x|y] to describe box */
-  w_current->last_x = w_current->start_x = fix_x(toplevel, x);
-  w_current->last_y = w_current->start_y = fix_y(toplevel, y);
+  /* init first_w[x|y], second_w[x|y] to describe box */
+  w_current->first_wx = w_current->second_wx = w_x;
+  w_current->first_wy = w_current->second_wy = w_y;
 
   /* start to draw the box */
   o_box_rubberbox_xor(w_current);
-  
 }
 
 /*! \brief End the input of a box.
  *  \par Function Description
  *  This function ends the input of the second corner of a box.
- *  The (<B>x</B>,<B>y</B>) point is set to be this second corner. The box is
- *  then defined by (<B>w_current->start_x</B>,<B>w_current->start_y</B> and
- *  (<B>w_current->last_x</B>,<B>w_current->last_y</B> that is a snapped version
- *  of (<B>x</B>,<B>y</B>).
- *  <B>x</B> and <B>y</B> are in screen unit.
+ *  The (<B>w_x</B>,<B>w_y</B>) point is set to be this second corner. The box is
+ *  then defined by (<B>w_current->first_wx</B>,<B>w_current->first_wy</B> and
+ *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>.
+ *  <B>w_x</B> and <B>w_y</B> are in screen unit.
  *
  *  The temporary box is erased ; a new box object is allocated, initialized
  *  and linked to the object list ; The object is finally drawn on the
  *  current sheet.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int x1, y1;
-  int x2, y2;
   int box_width, box_height;
   int box_left, box_top;
 
   g_assert( w_current->inside_action != 0 );
 
   /* get the last coords of the pointer */
-  w_current->last_x = fix_x(toplevel, x);
-  w_current->last_y = fix_y(toplevel, y);
+  w_current->second_wx = w_x;
+  w_current->second_wy = w_y;
 
   /* erase the temporary box */
   o_box_rubberbox_xor(w_current);
@@ -929,42 +923,34 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   box_left   = GET_BOX_LEFT  (w_current);
   box_top    = GET_BOX_TOP   (w_current);
 
-  /* boxes with null width and height are not allowed */
-  if ((box_width == 0) && (box_height == 0)) {
+  /* boxes with null width or height are not allowed */
+  if ((box_width == 0) || (box_height == 0)) {
 	  /* cancel the object creation */
-	  w_current->start_x = (-1);
-	  w_current->start_y = (-1);
-	  w_current->last_x  = (-1);
-	  w_current->last_y  = (-1);
+	  w_current->first_wx = (-1);
+	  w_current->first_wy = (-1);
+	  w_current->second_wx  = (-1);
+	  w_current->second_wy  = (-1);
 	  return;
   }
-
-  /* calculate the world coords of the upper left and lower right corners */
-  SCREENtoWORLD(toplevel, box_left, box_top, &x1, &y1);
-  SCREENtoWORLD(toplevel,
-                box_left + box_width, box_top  + box_height, &x2, &y2);
-  x1 = snap_grid(toplevel, x1);
-  y1 = snap_grid(toplevel, y1);
-  x2 = snap_grid(toplevel, x2);
-  y2 = snap_grid(toplevel, y2);
 
   /* create the object */
   toplevel->page_current->object_tail =
   o_box_add(toplevel,
             toplevel->page_current->object_tail,
-            OBJ_BOX, w_current->graphic_color, x1, y1, x2, y2);
+            OBJ_BOX, w_current->graphic_color, 
+	    box_left, box_top, box_left + box_width, box_top - box_height);
 
   /* draw it */
   o_redraw_single(w_current, toplevel->page_current->object_tail);
   
 #if DEBUG
-  printf("coords: %d %d %d %d\n", x1, y2, x2, y2);
+  printf("coords: %d %d %d %d\n", box_left, box_top, box_width, box_height);
 #endif
 	
-  w_current->start_x = (-1);
-  w_current->start_y = (-1);
-  w_current->last_x  = (-1);
-  w_current->last_y  = (-1);
+  w_current->first_wx = (-1);
+  w_current->first_wy = (-1);
+  w_current->second_wx  = (-1);
+  w_current->second_wy  = (-1);
 	
   toplevel->page_current->CHANGED = 1;
 
@@ -975,7 +961,7 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *  This function is used to draw the box while dragging one of its edge or
  *  angle. It erases the previous temporary box drawn before, and draws a new
- *  updated one. <B>x</B> and <B>y</B> are the new position of the mobile point,
+ *  updated one. <B>w_x</B> and <B>w_y</B> are the new position of the mobile point,
  *  ie the mouse.
  *
  *  The old values are inside the <B>w_current</B> pointed structure. Old width,
@@ -983,30 +969,33 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  The box is then erased by performing a xor-drawing over the box.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_box_rubberbox(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_box_rubberbox(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 
   g_assert( w_current->inside_action != 0 );
 
-  /* erase the previous temporary box */
-  o_box_rubberbox_xor(w_current);
+  /* erase the previous temporary box if it is visible */
+  if (w_current->rubber_visible)
+    o_box_rubberbox_xor(w_current);
 
   /*
-   * New values are fixed according to the <B>x</B> and <B>y</B> parameters.
+   * New values are fixed according to the <B>w_x</B> and <B>w_y</B> parameters.
    * These are saved in <B>w_current</B> pointed structure as new temporary
    * values. The new box is then drawn.
    */
 
   /* update the coords of the corner */
-  w_current->last_x = fix_x(toplevel, x);
-  w_current->last_y = fix_y(toplevel, y);
+  w_current->second_wx = w_x;
+  w_current->second_wy = w_y;
 
   /* draw the new temporary box */
   o_box_rubberbox_xor(w_current);
+
+  w_current->rubber_visible = 1;
   
 }
 
@@ -1014,9 +1003,9 @@ void o_box_rubberbox(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *  This function draws the box from the variables in the GSCHEM_TOPLEVEL
  *  structure <B>*w_current</B>.
- *  One corner of the box is at (<B>w_current->start_x</B>,
- *  <B>w_current->start_y</B>) and the second corner is at
- *  (<B>w_current->last_x</B>,<B>w_current->last_y</B>.
+ *  One corner of the box is at (<B>w_current->first_wx</B>,
+ *  <B>w_current->first_wy</B>) and the second corner is at
+ *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>.
  *
  *  The box is drawn with a xor-function over the current sheet with the
  *  selection color.
@@ -1025,24 +1014,31 @@ void o_box_rubberbox(GSCHEM_TOPLEVEL *w_current, int x, int y)
  */
 void o_box_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
 {
-	int box_width, box_height, box_left, box_top;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x1, y1, x2, y2;
+  int box_width, box_height, box_left, box_top;
+  
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy,
+		&x1, &y1);
+  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, 
+		&x2, &y2);
 
-	/* get the width/height and the upper left corner of the box */
-	box_width  = GET_BOX_WIDTH (w_current);
-	box_height = GET_BOX_HEIGHT(w_current);
-	box_left   = GET_BOX_LEFT  (w_current);
-	box_top    = GET_BOX_TOP   (w_current);
-
+  /* get the width/height and the upper left corner of the box */
+  box_width  = abs(x2 - x1);
+  box_height = abs(y2 - y1);
+  box_left   = min(x1, x2);
+  box_top    = min(y1, y2);
+  
 	/* draw the box from the previous variables */
-	gdk_gc_set_foreground(w_current->xor_gc, 
-			      x_get_darkcolor(w_current->select_color));
-	gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
-				   GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
-				   GDK_JOIN_MITER);
-	gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
-			   FALSE, box_left, box_top, box_width, box_height);
-	o_invalidate_rect(w_current, box_left, box_top,
-	                  box_left + box_width, box_top + box_height);
+  gdk_gc_set_foreground(w_current->xor_gc, 
+			x_get_darkcolor(w_current->select_color));
+  gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
+			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
+			     GDK_JOIN_MITER);
+  gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
+		     FALSE, box_left, box_top, box_width, box_height);
+  o_invalidate_rect(w_current, box_left, box_top,
+		    box_left + box_width, box_top + box_height);
 }
 
 /*! \brief Draw grip marks on box.

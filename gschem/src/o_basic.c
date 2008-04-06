@@ -89,10 +89,10 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
       case(STARTDRAWNET):
       case(DRAWNET):
       case(NETCONT):
-        w_current->rubbernet_visible=0;
 	w_current->magnetic_visible=0;
         break;
     }
+    w_current->rubber_visible=0;
   }
 }
 
