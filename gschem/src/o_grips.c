@@ -522,68 +522,12 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
       return(TRUE);
 
     case(OBJ_LINE):
+    case(OBJ_NET):
+    case(OBJ_PIN):
+    case(OBJ_BUS):
+      /* identical for line/net/pin/bus */
       /* start the modification of a grip on a line */
       o_grips_start_line(w_current, object, x, y, whichone);
-      return(TRUE);
-
-    case(OBJ_NET):
-      w_current->last_drawb_mode = -1;
-      WORLDtoSCREEN( toplevel, object->line->x[whichone], object->line->y[whichone],
-                     &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( toplevel, object->line->x[!whichone], object->line->y[!whichone],
-                     &w_current->start_x, &w_current->start_y );
-
-      o_erase_single(w_current, object);
-      gdk_gc_set_foreground(w_current->xor_gc,
-                            x_get_darkcolor(w_current->select_color) );
-      gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-                    w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
-      o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                        w_current->last_x, w_current->last_y);
-      o_line_erase_grips(w_current, object);
-
-      gdk_gc_set_foreground(w_current->gc,
-                            x_get_color(toplevel->background_color));
-      return(TRUE);
-
-    case(OBJ_PIN):
-      w_current->last_drawb_mode = -1;
-      WORLDtoSCREEN( toplevel, object->line->x[whichone], object->line->y[whichone],
-                     &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( toplevel, object->line->x[!whichone], object->line->y[!whichone],
-                     &w_current->start_x, &w_current->start_y );
-
-      o_erase_single(w_current, object);
-      gdk_gc_set_foreground(w_current->xor_gc,
-                            x_get_darkcolor(w_current->select_color) );
-      gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-                    w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
-      o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                        w_current->last_x, w_current->last_y);
-      o_line_erase_grips(w_current, object);
-      return(TRUE);
-
-    case(OBJ_BUS):
-      w_current->last_drawb_mode = -1;
-      WORLDtoSCREEN( toplevel, object->line->x[whichone], object->line->y[whichone],
-                     &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( toplevel, object->line->x[!whichone], object->line->y[!whichone],
-                     &w_current->start_x, &w_current->start_y );
-
-      o_erase_single(w_current, object);
-      gdk_gc_set_foreground(w_current->xor_gc,
-                            x_get_darkcolor(w_current->select_color) );
-      gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-                    w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
-      o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                        w_current->last_x, w_current->last_y);
-      o_line_erase_grips(w_current, object);
-
-      gdk_gc_set_foreground(w_current->gc,
-                            x_get_color(toplevel->background_color));
       return(TRUE);
 
     default:
@@ -824,11 +768,11 @@ void o_grips_start_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  *  sheet with an xor-function.
  *
  *  During the move of the grip, the line is described by
- *  (<B>w_current->start_x</B>,<B>w_current->start_y</B>) and
- *  (<B>w_current->last_x</B>,<B>w_current->last_y</B>).
+ *  (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>) and
+ *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>).
  *
  *  The line end that corresponds to the moving grip is in
- *  (<B>w_current->last_x</B>,<B>w_current->last_y</B>).
+ *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>).
  *
  *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  o_current  Line OBJECT to check.
@@ -839,20 +783,20 @@ void o_grips_start_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                         int x, int y, int whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   w_current->last_drawb_mode = -1;
 
   /* erase the line before */
   o_erase_single(w_current, o_current);
 
   /* describe the line with GSCHEM_TOPLEVEL variables */
-  WORLDtoSCREEN( toplevel, o_current->line->x[whichone], o_current->line->y[whichone],
-                 &w_current->last_x, &w_current->last_y );
-  WORLDtoSCREEN( toplevel, o_current->line->x[!whichone], o_current->line->y[!whichone],
-                 &w_current->start_x, &w_current->start_y );
+  w_current->second_wx = o_current->line->x[whichone];
+  w_current->second_wy = o_current->line->y[whichone];
+  w_current->first_wx = o_current->line->x[!whichone];
+  w_current->first_wy = o_current->line->y[!whichone];
 
   /* draw the first temporary line */
   o_line_rubberline_xor(w_current);
+  w_current->rubber_visible = 1;
 }
 
 /*! \brief Modify previously selected object according to mouse position.
@@ -911,7 +855,7 @@ void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y)
     case(OBJ_BUS):
     /* erase, update and draw a line */
     /* same for net, pin and bus as they share the same internal rep. */
-    o_grips_motion_line(w_current, x, y, whichone_changing);
+    o_grips_motion_line(w_current, w_x, w_y, whichone_changing);
     break;
 
     default:
@@ -1025,17 +969,17 @@ void o_grips_motion_circle(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whi
  *  \par Function Description
  *  This function is called during the move of the grip to update the
  *  temporary line drawn under the mouse pointer.
- *  The current position of the mouse is in <B>x</B> and <B>y</B> in screen coords.
+ *  The current position of the mouse is in <B>w_x</B> and <B>w_y</B> in world coords.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
  *  \param [in] whichone   Which grip to start motion with.
  */
-void o_grips_motion_line(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone)
+void o_grips_motion_line(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
 {
   /* erase, update and draw the temporary line */
-  o_line_rubberline(w_current, x, y);
+  o_line_rubberline(w_current, w_x, w_y);
 }
 
 /*! \brief End process of modifying object with grip.
@@ -1563,7 +1507,6 @@ void o_grips_end_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int which
 void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int x, y;
 
   /* erase the temporary line */
   o_line_rubberline_xor(w_current);
@@ -1571,12 +1514,12 @@ void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichon
   /* don't allow zero length nets / lines / pins
    * this ends the net drawing behavior
    * we want this? hack */
-  if ((w_current->start_x == w_current->last_x) &&
-      (w_current->start_y == w_current->last_y)) {
-    w_current->start_x = (-1);
-    w_current->start_y = (-1);
-    w_current->last_x  = (-1);
-    w_current->last_y  = (-1);
+  if ((w_current->first_wx == w_current->second_wx) &&
+      (w_current->first_wy == w_current->second_wy)) {
+    w_current->first_wx = -1;
+    w_current->first_wy = -1;
+    w_current->second_wx = -1;
+    w_current->second_wy = -1;
 
     /* return to select mode */
     w_current->inside_action=0;
@@ -1587,15 +1530,9 @@ void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichon
     return;
   }
 
-  /* convert the line end coords in world unit */
-  SCREENtoWORLD(toplevel,
-                w_current->last_x, w_current->last_y,
-                &x, &y);
-  x = snap_grid(toplevel, x);
-  y = snap_grid(toplevel, y);
-
   /* modify the right line end according to whichone */
-  o_line_modify(toplevel, o_current, x, y, whichone);
+  o_line_modify(toplevel, o_current, 
+		w_current->second_wx, w_current->second_wy, whichone);
 
   /* display the new line */
   o_redraw_single(w_current, o_current);
