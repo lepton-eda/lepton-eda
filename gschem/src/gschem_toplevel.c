@@ -122,7 +122,7 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->third_wx = w_current->third_wy = -1;
   w_current->loc_x = -1;
   w_current->loc_y = -1;
-  w_current->distance = -1;
+  w_current->distance = 0;
   w_current->magnetic_wx = -1;
   w_current->magnetic_wy = -1;
   w_current->inside_action = 0;

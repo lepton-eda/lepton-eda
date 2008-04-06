@@ -74,7 +74,6 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
   int zoom_max = 5;	
   int start_x, start_y, last_x, last_y, second_x, second_y;
   int loc_x, loc_y, save_x, save_y;
-  int distance = 0; /* Initialise to quiet compiler warning */
   int diff;
   double zx, zy, zoom_old, zoom_new, zoom_min;
 
@@ -124,7 +123,6 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
                                          &loc_x,              &loc_y);
     SCREENtoWORLD(toplevel,   w_current->save_x,   w_current->save_y,
                                         &save_x,             &save_y);
-    distance = WORLDabs(toplevel, w_current->distance);
     start_x = snap_grid(toplevel, start_x);
     start_y = snap_grid(toplevel, start_y);
   }
@@ -218,7 +216,6 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
                      &w_current->loc_x,    &w_current->loc_y);
     WORLDtoSCREEN(toplevel,     save_x,               save_y,
                     &w_current->save_x,   &w_current->save_y);
-    w_current->distance = SCREENabs(toplevel, distance);
   }
 
   /* redraw */

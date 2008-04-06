@@ -497,7 +497,6 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   whichone_changing = whichone;
   object_changing = object;
-  w_current->rubber_visible = 1;
 
   /* there is one */
   /* depending on its type, start the modification process */
@@ -708,7 +707,7 @@ void o_grips_start_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 
   /* draw the first temporary box */
   o_box_rubberbox_xor(w_current);
-
+  w_current->rubber_visible = 1;
 }
 
 /*! \brief Initialize grip motion process for a picture.
@@ -791,11 +790,10 @@ void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  *  The function first erases the grips.
  *
  *  The coordinates of the center are put in
- *  (<B>w_current->start_x</B>,<B>w_current->start_y</B>). They are not suppose
+ *  (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>). They are not suppose
  *  to change during the action.
  *
- *  The coordinates of the point on the circle to the right of the center
- *  go in (<B>w_current->last_x</B>,<B>w_current->last_y</B>).
+ *  The radius of the circle is stored in <B>w_current->distance<B>.
  *
  *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  o_current  Circle OBJECT to check.
@@ -806,25 +804,20 @@ void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 void o_grips_start_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                           int x, int y, int whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+
   w_current->last_drawb_mode = -1;
 
   /* erase the circle before */
   o_erase_single(w_current, o_current);
 
-  /* describe the circle with GSCHEM_TOPLEVEL variables */
-  /* (start_x, start_y) is the center of the circle */
-  WORLDtoSCREEN( toplevel, o_current->circle->center_x, o_current->circle->center_y,
-                 &w_current->start_x, &w_current->start_y );
-  /* (last_x,last_y)    is the point on circle on the right of center */
-  WORLDtoSCREEN( toplevel, o_current->circle->center_x + o_current->circle->radius, o_current->circle->center_y,
-                 &w_current->last_x, &w_current->last_y );
-  /* distance           is the radius of the circle */
-  w_current->distance = SCREENabs( toplevel, o_current->circle->radius );
+  /* store circle center and radius in GSCHEM_TOPLEVEL structure */
+  w_current->first_wx = o_current->circle->center_x;
+  w_current->first_wy = o_current->circle->center_y;
+  w_current->distance = o_current->circle->radius;
 
   /* draw the first temporary circle */
   o_circle_rubbercircle_xor(w_current);
-
+  w_current->rubber_visible = 1;
 }
 
 /*! \brief Initialize grip motion process for a line.
@@ -913,7 +906,7 @@ void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
     case(OBJ_CIRCLE):
     /* erase, update and draw a circle */
-    o_grips_motion_circle(w_current, x, y, whichone_changing);
+    o_grips_motion_circle(w_current, w_x, w_y, whichone_changing);
     break;
 
     case(OBJ_LINE):
@@ -1022,14 +1015,14 @@ void o_grips_motion_picture(GSCHEM_TOPLEVEL *w_current, int x, int y, int whicho
  *  draw the new temporary circle.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
  *  \param [in] whichone   Which grip to start motion with.
  */
-void o_grips_motion_circle(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone)
+void o_grips_motion_circle(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
 {
   /* erase, update and draw the temporary circle */
-  o_circle_rubbercircle(w_current, x, y);
+  o_circle_rubbercircle(w_current, w_x, w_y);
 }
 
 /*! \brief Modify previously selected line according to mouse position.
@@ -1528,7 +1521,6 @@ void o_grips_end_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whic
 void o_grips_end_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int radius;
 
   /* erase the temporary circle */
   o_circle_rubbercircle_xor(w_current);
@@ -1536,12 +1528,9 @@ void o_grips_end_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int which
   /* don't allow zero radius circles
    * this ends the circle drawing behavior
    * we want this? hack */
-  if ((w_current->start_x == w_current->last_x) &&
-      (w_current->start_y == w_current->last_y)) {
+  if (w_current->distance == 0) {
     w_current->start_x = (-1);
     w_current->start_y = (-1);
-    w_current->last_x  = (-1);
-    w_current->last_y  = (-1);
 
     /* return to select mode */
     w_current->inside_action = 0;
@@ -1552,11 +1541,8 @@ void o_grips_end_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int which
     return;
   }
 
-  /* convert the radius in world unit */
-  radius = WORLDabs(toplevel, w_current->distance);
-
   /* modify the radius of the circle */
-  o_circle_modify(toplevel, o_current, radius, -1, CIRCLE_RADIUS);
+  o_circle_modify(toplevel, o_current, w_current->distance, -1, CIRCLE_RADIUS);
 
   /* display the new circle */
   o_redraw_single(w_current, o_current);

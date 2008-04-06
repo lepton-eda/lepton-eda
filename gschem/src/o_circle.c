@@ -31,11 +31,6 @@
 #include <dmalloc.h>
 #endif
 
-/* Kazu on July 16, 1999 - Added these macros to simplify the code */
-#define GET_BOX_WIDTH(w)			\
-	abs((w)->last_x - (w)->start_x)
-#define GET_BOX_HEIGHT(w)			\
-	abs((w)->last_y - (w)->start_y)
 
 typedef void (*DRAW_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
                            GdkCapStyle cap, gint x, gint y, gint radius,
@@ -571,104 +566,80 @@ void o_circle_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
  *  This function starts the process to input a new circle. Parameters for
  *  this circle are pu into/extracted from the <B>w_current</B> toplevel
  *  structure.
- *  <B>x</B> and <B>y</B> are current coordinates of the mouse pointer in
- *  screen units.
+ *  <B>w_x</B> and <B>w_y</B> are current coordinates of the mouse pointer in
+ *  world units.
  *
  *  The first step of the circle input is to set the center of the arc.
- *  This center is kept in (<B>w_current->start_x</B>,<B>w_current->start_y</B>). 
+ *  This center is kept in (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>). 
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_circle_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_circle_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-	/* center of circle */
-	w_current->last_x = w_current->start_x = fix_x(toplevel, x);
-	w_current->last_y = w_current->start_y = fix_y(toplevel, y);
-	/* radius */
-	w_current->distance = 0;
+  /* center of circle */
+  w_current->first_wx = w_x;
+  w_current->first_wy = w_y;
 
-	/* first temporary circle */
-	o_circle_rubbercircle_xor(w_current);
+  /* radius */
+  w_current->distance = 0;
 
+  /* first temporary circle */
+  o_circle_rubbercircle_xor(w_current);
+  w_current->rubber_visible = 1;
 }
 
 /*! \brief End the input of a circle.
  *  \par Function Description
  *  This function ends the input of the radius of the circle.
- *  The (<B>x</B>,<B>y</B>) point is taken as the other end of the radius
+ *  The (<B>w_x</B>,<B>w_y</B>) point is taken as the other end of the radius
  *  segment, i.e. on the circle. The distance between this point and the
  *  center is the radius of the circle.
- *  <B>x</B> and <B>y</B> are in screen coords.
+ *  <B>w_x</B> and <B>w_y</B> are in world coords.
  *
  *  The center has previously been input and saved as
- *  (<B>w_current->start_x</B>,<B>w_current->start_y</B>).
+ *  (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>).
  *
  *  The temporary circle drawn during the input of the radius is erased.
  *  A new object is allocated, initialized and linked in the object list.
  *  This new object is finally drawn.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        (unused)
+ *  \param [in] w_y        (unused)
  */
-void o_circle_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_circle_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int center_x, center_y;
-  int fx, fy;
-  int radius;
 
   g_assert( w_current->inside_action != 0 );
 
   /* erase the temporary circle */
   o_circle_rubbercircle_xor(w_current);
   
-  /* get the last coords of the pointer */
-  fx = fix_x(toplevel, x);
-  fy = fix_y(toplevel, y);
-  /* compute the radius in screen unit */
-  w_current->distance = dist(w_current->start_x, w_current->start_y,
-                             fx, fy);
-
   /* circle with null radius are not allowed */
   if (w_current->distance == 0) {
     /* cancel the object creation */
-    w_current->start_x  = -1;
-    w_current->start_y  = -1;
-    w_current->last_x   = -1;
-    w_current->last_y   = -1;
-    w_current->distance = -1;
+    w_current->first_wx  = -1;
+    w_current->first_wy  = -1;
     return;
   }
 
-  /* get center coords in world unit */
-  SCREENtoWORLD(toplevel,
-                w_current->start_x, w_current->start_y,
-                &center_x, &center_y);
-  /* get radius in world unit */
-  radius = snap_grid(toplevel,
-                     WORLDabs(toplevel, w_current->distance));
-
   /* create the object */
   toplevel->page_current->object_tail =
-  o_circle_add(toplevel,
-               toplevel->page_current->object_tail,
-               OBJ_CIRCLE, w_current->graphic_color,
-               center_x, center_y, radius);
+    o_circle_add(toplevel,
+		 toplevel->page_current->object_tail,
+		 OBJ_CIRCLE, w_current->graphic_color,
+		 w_current->first_wx, w_current->first_wy, 
+		 w_current->distance);
 
   /* draw it */
   o_redraw_single(w_current, toplevel->page_current->object_tail);
   
-  w_current->start_x = (-1);
-  w_current->start_y = (-1);
-  w_current->last_x  = (-1);
-  w_current->last_y  = (-1);
-  w_current->loc_x   = (-1);
-  w_current->loc_y   = (-1);
-  w_current->distance = (-1);
+  w_current->first_wx = -1;
+  w_current->first_wy = -1;
+  w_current->distance = 0;
   
   toplevel->page_current->CHANGED = 1;
 
@@ -679,7 +650,7 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *  This function draws a circle according to its internal representation and
  *  allows the modification of its radius. The radius is updated according to
- *  the current mouse position in <B>x</B> and <B>y</B>.
+ *  the current mouse position in <B>w_x</B> and <B>w_y</B>.
  *  It draws a full circle and the horizontal segment of the radius in the
  *  right half of the circle.
  *
@@ -688,54 +659,44 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *
  *  The arc is internally described by :
  *  <DL>
- *    <DT>*</DT><DD>(<B>w_current->start_x</B>,<B>w_current->start_y</B>) as its
+ *    <DT>*</DT><DD>(<B>w_current->first_wx</B>,<B>w_current->first_wy</B>) as its
  *                   center ;
  *    <DT>*</DT><DD><B>w_current->distance</B> as its radius.
  *  </DL>
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_circle_rubbercircle(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_circle_rubbercircle(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
 
   g_assert( w_current->inside_action != 0 );
 
-  /* erase the previous temporary circle */
-  o_circle_rubbercircle_xor(w_current);
+  /* erase the previous temporary circle if it is visible */
+  if (w_current->rubber_visible)
+    o_circle_rubbercircle_xor(w_current);
 
   /*
    * The radius is taken as the biggest distance on the x and y axis between
    * the center of the circle and the mouse position.
    */
-  /* update the radius */
-  w_current->last_x = fix_x(toplevel, x);
-  w_current->last_y = fix_y(toplevel, y);
-  
-  diff_x = GET_BOX_WIDTH (w_current);
-  diff_y = GET_BOX_HEIGHT(w_current);
-  if (diff_x >= diff_y) {
-    w_current->last_y   = w_current->start_y;
-    w_current->distance = diff_x;
-  } else {
-    w_current->last_x   = w_current->start_x;
-    w_current->distance = diff_y;
-  }
+  diff_x = abs(w_current->first_wx - w_x);
+  diff_y = abs(w_current->first_wy - w_y);
+  w_current->distance = max(diff_x, diff_y);
 
   /* draw the new temporary circle */
   o_circle_rubbercircle_xor(w_current);
-
+  w_current->rubber_visible =1;
 }
 
 /*! \brief Draw circle from GSCHEM_TOPLEVEL object.
  *  \par Function Description
  *  This function draws the circle from the variables in the GSCHEM_TOPLEVEL
  *  structure <B>*w_current</B>.
- *  The center of the circle is at (<B>w_current->start_x</B>,
- *  <B>w_current->start_y</B>) and its radius is in <B>w_current->distance</B>.
+ *  The center of the circle is at (<B>w_current->first_wx</B>,
+ *  <B>w_current->first_wy</B>) and its radius is in <B>w_current->distance</B>.
  *
  *  It draws a horizontal radius segment on the right half of the circle and
  *  the circle with the selection color and an xor-function over the current
@@ -745,23 +706,23 @@ void o_circle_rubbercircle(GSCHEM_TOPLEVEL *w_current, int x, int y)
  */
 void o_circle_rubbercircle_xor(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int cx, cy, radius;
+
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &cx, &cy);
+  radius = SCREENabs(toplevel, w_current->distance);
+
   /* draw the circle from the w_current variables */
   gdk_gc_set_foreground(w_current->xor_gc, 
 			x_get_darkcolor(w_current->select_color));
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		w_current->start_x, w_current->start_y,
-		w_current->start_x + w_current->distance,
-		w_current->start_y);
+		cx, cy, cx + radius, cy);
   gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
-	       w_current->start_x - w_current->distance,
-	       w_current->start_y - w_current->distance,
-	       w_current->distance * 2,
-	       w_current->distance * 2,
+	       cx - radius, cy - radius, 2 * radius, 2* radius,
 	       0, FULL_CIRCLE);
-  o_invalidate_rect(w_current, w_current->start_x - w_current->distance,
-                               w_current->start_y - w_current->distance,
-                               w_current->start_x + w_current->distance,
-                               w_current->start_y + w_current->distance);
+  o_invalidate_rect(w_current, 
+		    cx - radius, cy - radius,
+		    cx + radius, cy + radius);
 }
 
 /*! \brief Draw grip marks on circle.
