@@ -31,24 +31,11 @@
 #include <dmalloc.h>
 #endif
 
-/* Kazu on July 8, 1999 - added these macros to simplify the code */
-/*! \brief */
-#define GET_BOX_WIDTH(w)			\
-	abs((w)->last_x - (w)->start_x)
-/*! \brief */
-#define GET_BOX_HEIGHT(w)			\
-	abs((w)->last_y - (w)->start_y)
 
 typedef void (*DRAW_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
                            GdkCapStyle cap, gint x, gint y, gint radius,
                            gint angle1, gint angle2,
                            gint arc_width, gint length, gint space );
-
-/*! \brief
- *  \note pb20011011 - added this macro to compute distance
- */
-#define GET_DISTANCE(w)             \
-    sqrt(pow((w)->last_x-(w)->start_x,2)+pow((w)->last_y-(w)->start_y,2))
 
 /*! \brief Draw an arc on the screen.
  *  \par Function Description

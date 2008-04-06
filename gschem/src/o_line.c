@@ -479,43 +479,6 @@ void o_line_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color,
   }
 }
 
-/*! \note This code was not inserted in the no web file, but it was present.
-If the above condition is not satisfied, it may still be possible to continue drawing a part of the initial pattern. Here two cases are possible :
-@itemize @bullet
-@item
-it is possible to draw a dash and a dot ;
-@item
-it is possible to draw a dash or a part of the original dash ;
-@end itemize
-
-<<o_line.c : o_line_center()>>=
-  if((d + length + space) < l) {
-    d = d + length;
-    xb = xa + dx1;
-    yb = ya + dy1;
-    gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
-		
-    d = d + space;
-    xa = xb + dx2;
-    ya = yb + dy2;
-		
-    <<o_line_draw_center() : drawing a dot>>
-		
-  } else {
-    if(d + length < l) {
-      xb = xa + dx1;
-      yb = ya + dy1;
-    } else {
-      xb = x2;
-      yb = y2;
-    }
-		
-    gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
-	
-  }
-
-}
-*/
 
 /*! \brief Draw a line with a phantom line type.
  *  \par Function Description
@@ -789,21 +752,25 @@ void o_line_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
  *  the current sheet.
  *
  *  During all the process, the line is internally represented by the two
- *  ends of the line as (<B>w_current->start_x</B>,<B>w_current->start_y</B>) and
- *  (<B>w_current->last_x</B>,<B>w_current->last_y</B>).
+ *  ends of the line as (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>) and
+ *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>).
  *
  *  A temporary line is xor-drawn during the process with the selection color
  *  and changed according to the position of the mouse pointer.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_line_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_line_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  /* init start_[x|y], last_[x|y] to describe line */
-  w_current->last_x = w_current->start_x = fix_x(toplevel, x);
-  w_current->last_y = w_current->start_y = fix_y(toplevel, y);
+  /* init first_w[x|y], second_w[x|y] to describe line */
+  w_current->first_wx = w_current->second_wx = w_x;
+  w_current->first_wy = w_current->second_wy = w_y;
   
   /* draw init xor */
   o_line_rubberline_xor(w_current);
+  w_current->rubber_visible = 1;
 }
 
 /*! \brief End the input of a line.
@@ -817,62 +784,42 @@ void o_line_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  sheet.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        (unused)
+ *  \param [in] w_y        (unused)
  */
-void o_line_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_line_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int x1, y1;
-  int x2, y2;
 
   g_assert( w_current->inside_action != 0 );
-
-  /* Use last_x and _y from the last time you moved the mouse from the
-     rubber function, so in otherwords... comment these out...
-     w_current->last_x = fix_x(toplevel, x);
-     w_current->last_y = fix_y(toplevel, y);
-  */
 
   /* erase xor image */
   o_line_rubberline_xor(w_current);
 
   /* don't allow zero length lines */
-  if ( (w_current->start_x == w_current->last_x) &&
-       (w_current->start_y == w_current->last_y) ) {
-    w_current->start_x = (-1);
-    w_current->start_y = (-1);
-    w_current->last_x = (-1);
-    w_current->last_y = (-1);
+  if ( (w_current->first_wx == w_current->second_wx) &&
+       (w_current->first_wy == w_current->second_wy) ) {
+    w_current->first_wx = -1;
+    w_current->first_wy = -1;
+    w_current->second_wx = -1;
+    w_current->second_wy = -1;
     return;
   }
 
-  /* calculate the world coords of the two ends of the line */
-  SCREENtoWORLD(toplevel,
-				w_current->start_x, w_current->start_y,
-				&x1, &y1);
-  SCREENtoWORLD(toplevel,
-				w_current->last_x, w_current->last_y,
-				&x2, &y2);
-  x1 = snap_grid(toplevel, x1);
-  y1 = snap_grid(toplevel, y1);
-  x2 = snap_grid(toplevel, x2);
-  y2 = snap_grid(toplevel, y2);
-	
-  /* create the object */
-  /* PB : modification in o_line_add() prototype */	
+  /* create the line object and draw it */
   toplevel->page_current->object_tail =
-  o_line_add(toplevel,
-             toplevel->page_current->object_tail,
-             OBJ_LINE, w_current->graphic_color, x1, y1, x2, y2);
+    o_line_add(toplevel,
+	       toplevel->page_current->object_tail,
+	       OBJ_LINE, w_current->graphic_color, 
+	       w_current->first_wx, w_current->first_wy,
+	       w_current->second_wx, w_current->second_wy);
 
-  /* draw it */
   o_redraw_single(w_current, toplevel->page_current->object_tail);
   
-  w_current->start_x = (-1);
-  w_current->start_y = (-1);
-  w_current->last_x = (-1);
-  w_current->last_y = (-1);
+  w_current->first_wx = -1;
+  w_current->first_wy = -1;
+  w_current->second_wx = -1;
+  w_current->second_wy = -1;
   
   toplevel->page_current->CHANGED=1;
 
@@ -884,17 +831,16 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  This function manages the erase/update/draw process of temporary line
  *  when modifying one end of the line.
  *  The line is described by four <B>*w_current</B> variables : the first end
- *  of the line is (<B>start_x</B>,<B>start_y</B>), the second end is
- *  (<B>last_x</B>,<B>last_y</B>).
- *  The first end is constant. The second end is updated to the (<B>x</B>,<B>y</B>).
+ *  of the line is (<B>first_wx</B>,<B>first_wy</B>), the second end is
+ *  (<B>second_wx</B>,<B>second_wy</B>).
+ *  The first end is constant. The second end is updated to the (<B>w_x</B>,<B>w_y</B>).
  * 
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_line_rubberline(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_line_rubberline(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
 
   g_assert( w_current->inside_action != 0 );
@@ -907,28 +853,26 @@ void o_line_rubberline(GSCHEM_TOPLEVEL *w_current, int x, int y)
    * This line is xor-drawn : if the line was already displayed, it is
    * erased. If the line was not already displayed it is drawn.
    */
-  /* xor-draw a line at the old location */
-  o_line_rubberline_xor(w_current);
+  if (w_current->rubber_visible)
+    o_line_rubberline_xor(w_current);
 
   /*
    * The coordinates of the moving end of the line are updated. Its new
-   * coordinates are in <B>x</B> and <B>y</B> parameters and saved to
-   * <B>w_current->last_x</B> and <B>w_current->last_y</B> respectively - after
-   * being snapped to grid.
+   * coordinates are in <B>w_x</B> and <B>w_y</B> parameters and saved to
+   * <B>w_current->second_wx</B> and <B>w_current->second_wy</B> respectively.
    */ 
-  /* update the coordinate of the modified end */
-  w_current->last_x = fix_x(toplevel, x);
-  w_current->last_y = fix_y(toplevel, y);
+  w_current->second_wx = w_x;
+  w_current->second_wy = w_y;
   
   /* if the control key was pressed then draw ortho lines */
   if (w_current->CONTROLKEY) {
-    diff_x = abs(w_current->last_x - w_current->start_x);
-    diff_y = abs(w_current->last_y - w_current->start_y);
+    diff_x = abs(w_current->second_wx - w_current->first_wx);
+    diff_y = abs(w_current->second_wy - w_current->first_wy);
     
     if (diff_x >= diff_y) {
-      w_current->last_y = w_current->start_y;
+      w_current->second_wy = w_current->first_wy;
     } else {
-      w_current->last_x = w_current->start_x;
+      w_current->second_wx = w_current->first_wx;
     }
   }
   
@@ -937,21 +881,27 @@ void o_line_rubberline(GSCHEM_TOPLEVEL *w_current, int x, int y)
    * function, if the line was displayed, it has been erased, updated and
    * displayed again.
    */
-  /* xor-draw the updated line */
   o_line_rubberline_xor(w_current);
+  w_current->rubber_visible = 1;
 }
 
 /*! \brief Draw line from GSCHEM_TOPLEVEL object.
  *  \par Function Description
  *  This function draws a line with an exclusive or function over the sheet.
  *  The color of the box is <B>w_current->select_color</B>. The line is
- *  described by the two points (<B>w_current->start_x</B>,
- *  <B>w_current->start_y</B>) and (<B>w_current->last_x</B>,<B>w_current->last_y</B>).
+ *  described by the two points (<B>w_current->first_wx</B>,
+ *  <B>w_current->first_wy</B>) and (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>).
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
 void o_line_rubberline_xor(GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x1, y1, x2, y2;
+
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+
   /* draw the circle from the w_current variables */
   /* with xor-function */
   gdk_gc_set_foreground(w_current->xor_gc, 
@@ -960,10 +910,8 @@ void o_line_rubberline_xor(GSCHEM_TOPLEVEL *w_current)
 			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
 			     GDK_JOIN_MITER);
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		w_current->start_x, w_current->start_y,
-		w_current->last_x,  w_current->last_y);  
-  o_invalidate_rect(w_current,w_current->start_x, w_current->start_y,
-                              w_current->last_x,  w_current->last_y);
+		x1, y1, x2, y2);
+  o_invalidate_rect(w_current, x1, y1, x2, y2);
 }
 
 /*! \brief Draw grip marks on line.

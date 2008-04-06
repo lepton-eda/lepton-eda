@@ -281,7 +281,7 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   o_bus_draw(w_current, bus_new);
 
-  /* connect the new bus to the  stuff */
+  /* connect the new bus to the other busses */
   other_objects = s_conn_return_others(other_objects,
                                        toplevel->page_current->
                                        object_tail);

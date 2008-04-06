@@ -2533,7 +2533,7 @@ DEFINE_I_CALLBACK(add_line_hotkey)
 
   i_update_middle_button(w_current, i_callback_add_line_hotkey, _("Line"));
 
-  o_line_start(w_current, mouse_x, mouse_y);
+  o_line_start(w_current, mouse_wx, mouse_wy);
 
   w_current->inside_action = 1;
   i_set_state(w_current, ENDLINE);
