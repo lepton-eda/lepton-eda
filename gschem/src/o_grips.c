@@ -602,19 +602,15 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  the grip process.
  *
  *  The coordinates of the center of the arc on x- and y-axis are stored
- *  into the <B>loc_x</B> and <B>loc_y</B> fields of the GSCHEM_TOPLEVEL
+ *  into the <B>first_wx</B> and <B>first_wy</B> fields of the GSCHEM_TOPLEVEL
  *  structure in screen units.
  *
  *  The radius of the center is stored into the <B>distance</B> field of
  *  the GSCHEM_TOPLEVEL structure in screen units.
  *
  *  The two angles describing the arc on a circle are stored into the
- *  <B>start_x</B> for the starting angle and <B>start_y</B> for the ending angle.
+ *  <B>second_wx</B> for the starting angle and <B>second_wy</B> for the ending angle.
  *  These angles are expressed in degrees.
- *
- *  Depending on which grips has been selected on the arc, the
- *  corresponding variables in its original state is duplicated in
- *  <B>last_x</B> and/or <B>last_y</B> of the GSCHEM_TOPLEVEL structure.
  *
  *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  o_current  Arc OBJECT to check.
@@ -625,7 +621,6 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 void o_grips_start_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                        int x, int y, int whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   w_current->last_drawb_mode = -1;
 
   /* erase the arc before */
@@ -633,16 +628,17 @@ void o_grips_start_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 
   /* describe the arc with GSCHEM_TOPLEVEL variables */
   /* center */
-  WORLDtoSCREEN( toplevel, o_current->arc->x, o_current->arc->y, &w_current->start_x, &w_current->start_y );
+  w_current->first_wx = o_current->arc->x;
+  w_current->first_wy = o_current->arc->y;
   /* radius */
-  w_current->distance = SCREENabs( toplevel, o_current->arc->width / 2 );
+  w_current->distance = o_current->arc->width / 2;
   /* angles */
-  w_current->loc_x = o_current->arc->start_angle;
-  w_current->loc_y = o_current->arc->end_angle;
+  w_current->second_wx = o_current->arc->start_angle;
+  w_current->second_wy = o_current->arc->end_angle;
 
   /* draw the first temporary arc */
   o_arc_rubberarc_xor(w_current);
-
+  w_current->rubber_visible = 1;
 }
 
 /*! \brief Initialize grip motion process for a box.
@@ -891,7 +887,7 @@ void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y)
   switch(object_changing->type) {
     case(OBJ_ARC):
     /* erase, update and draw an arc */
-    o_grips_motion_arc(w_current, x, y, whichone_changing);
+    o_grips_motion_arc(w_current, w_x, w_y, whichone_changing);
     break;
 
     case(OBJ_BOX):
@@ -939,18 +935,18 @@ void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  obtained.
  *
  *  If one of the end of arc grip has been moved - modifying the arc
- *  describing the arc -, the <B>w_current->start_x</B> or
- *  <B>w_current->start_y</B> are updated according to which of the grip
+ *  describing the arc -, the <B>w_current->second_wx</B> or
+ *  <B>w_current->second_wy</B> are updated according to which of the grip
  *  has been selected.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
  *  \param [in] whichone   Which grip to start motion with.
  */
-void o_grips_motion_arc(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone)
+void o_grips_motion_arc(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
 {
-  o_arc_rubberarc(w_current, x, y, whichone);
+  o_arc_rubberarc(w_current, w_x, w_y, whichone);
 }
 
 /*! \brief Modify previously selected box according to mouse position.
@@ -1374,22 +1370,22 @@ void o_grips_end_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   /* determination of the parameters to give to o_arc_modify() */
   switch(whichone) {
     case ARC_RADIUS:
-      /* convert the radius in world coords */
-      arg1 = WORLDabs(toplevel, w_current->distance);
+      /* get the radius from w_current */
+      arg1 = w_current->distance;
       /* second parameter is not used */
       arg2 = -1;
       break;
 
     case ARC_START_ANGLE:
       /* get the start angle from w_current */
-      arg1 = w_current->loc_x;
+      arg1 = w_current->second_wx;
       /* second parameter is not used */
       arg2 = -1;
       break;
 
     case ARC_END_ANGLE:
       /* get the end angle from w_current */
-      arg1 = w_current->loc_y;
+      arg1 = w_current->second_wy;
       /* second parameter is not used */
       arg2 = -1;
       break;

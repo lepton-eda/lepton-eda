@@ -96,7 +96,6 @@ struct st_gschem_toplevel {
   int first_wx, first_wy;
   int second_wx, second_wy;
   int third_wx, third_wy;
-  int loc_x, loc_y;
   int magnetic_wx, magnetic_wy;         /* Position of the magnetic marker*/
   int distance;
   int inside_action;                    /* Are we doing an action? */

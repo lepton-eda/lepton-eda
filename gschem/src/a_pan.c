@@ -73,7 +73,7 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
      this will be the same as w_current->page_current->to_screen_x/y_constant*/
   int zoom_max = 5;	
   int start_x, start_y, last_x, last_y, second_x, second_y;
-  int loc_x, loc_y, save_x, save_y;
+  int save_x, save_y;
   int diff;
   double zx, zy, zoom_old, zoom_new, zoom_min;
 
@@ -119,8 +119,6 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
                                         &last_x,             &last_y);
     SCREENtoWORLD(toplevel, w_current->second_x, w_current->second_y,
                                       &second_x,           &second_y);
-    SCREENtoWORLD(toplevel,    w_current->loc_x,    w_current->loc_y,
-                                         &loc_x,              &loc_y);
     SCREENtoWORLD(toplevel,   w_current->save_x,   w_current->save_y,
                                         &save_x,             &save_y);
     start_x = snap_grid(toplevel, start_x);
@@ -212,8 +210,6 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
                     &w_current->last_x,   &w_current->last_y);
     WORLDtoSCREEN(toplevel,   second_x,             second_y,
                   &w_current->second_x, &w_current->second_y);
-    WORLDtoSCREEN(toplevel,      loc_x,                loc_y,
-                     &w_current->loc_x,    &w_current->loc_y);
     WORLDtoSCREEN(toplevel,     save_x,               save_y,
                     &w_current->save_x,   &w_current->save_y);
   }

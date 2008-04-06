@@ -247,17 +247,13 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(DRAWARC):
-        o_arc_start(w_current,
-                    (int) event->x,
-                    (int) event->y);
+        o_arc_start(w_current, w_x, w_y);
         w_current->event_state = ENDARC;
         w_current->inside_action = 1;
         break;
 
       case(ENDARC):
-        o_arc_end1(w_current,
-                   (int) event->x,
-                   (int) event->y);
+        o_arc_end1(w_current, w_x, w_y);
         w_current->inside_action = 0;
         w_current->event_state = DRAWARC;
         break;
@@ -1060,10 +1056,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
     case(ENDARC):
     if (w_current->inside_action)
-	/* pb20011022 - changed name to _rubberarc() and added a parameter */
-    o_arc_rubberarc(w_current,
-					(int) event->x,
-					(int) event->y, ARC_RADIUS);
+      o_arc_rubberarc(w_current, w_x, w_y, ARC_RADIUS);
     break;
 
 

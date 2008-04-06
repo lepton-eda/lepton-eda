@@ -879,73 +879,56 @@ void o_arc_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
  *  \par Function Description
  *  This function starts the process to input a new arc. Parameters for
  *  this arc are put into/extracted from the <B>w_current</B> toplevel structure.
- *  <B>x</B> and <B>y</B> are current coordinates of the pointer in screen unit.
+ *  <B>w_x</B> and <B>w_y</B> are current coordinates of the pointer in screen unit.
  *
  *  First step of the arc input is to set the radius of the arc. The center
- *  of the arc is kept in (<B>w_current->start_x</B>,<B>w_current->start_y</B>).
- *  The other point of the radius, i.e. on the arc, in
- *  (<B>w_current->last_x</B>,<B>w_current->last_y</B>). The radius of the arc is
- *  in <B>w_current->distance</B>.
+ *  of the arc is kept in (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>).
+ *  The radius of the arc is in <B>w_current->distance</B>.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_arc_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_arc_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   /* set the center of the arc */
-  w_current->last_x = w_current->start_x = fix_x(toplevel, x);
-  w_current->last_y = w_current->start_y = fix_y(toplevel, y);
+  w_current->first_wx = w_x;
+  w_current->first_wy = w_y;
 
   /* set the radius */
   w_current->distance = 0;
 
   /* set the start and end angles */
-  w_current->loc_x = w_current->loc_y = 0;
+  w_current->second_wx = w_current->second_wy = 0;
 
   /* start the rubberbanding process of the radius */
   o_arc_rubberarc_xor(w_current);
-  
+  w_current->rubber_visible = 1;
 }
 
 /*! \brief End the input of an arc.
  *  \par Function Description
  *  This function ends the input of the radius of the arc.
- *  The (<B>x</B>,<B>y</B>) point is taken as the other end of the radius segment.
+ *  The (<B>w_x</B>,<B>w_y</B>) point is taken as the other end of the radius segment.
  *  The distance between this point and the center is the radius of the arc.
- *  <B>x</B> and <B>y</B> are in screen coords.
+ *  <B>w_x</B> and <B>w_y</B> are in world coords.
  *
  *  At the end of this function, the center of the arc is at
- *  (<B>w_current->start_x</B>,<B>w_current->start_y</B>) and its radius is
+ *  (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>) and its radius is
  *  <B>w_current->distance</B>.
  *
  *  The two angles needs to be input to fully define the arc.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        (unused)
+ *  \param [in] w_y        (unused)
  */
-void o_arc_end1(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_arc_end1(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int diff_x, diff_y;
-
   g_assert( w_current->inside_action != 0 );
 
   /* erases the previous temporary radius segment */
   o_arc_rubberarc_xor(w_current);
-
-  w_current->last_x = fix_x(toplevel, x);
-  w_current->last_y = fix_y(toplevel, y);
-  /* compute the radius */
-  diff_x = GET_BOX_WIDTH (w_current);
-  diff_y = GET_BOX_HEIGHT(w_current);
-  if (diff_x >= diff_y) {
-    w_current->distance = diff_x;
-  } else {
-    w_current->distance = diff_y;
-  }
 
   /* ack! zero length radius */
   if (w_current->distance == 0) {
@@ -959,130 +942,6 @@ void o_arc_end1(GSCHEM_TOPLEVEL *w_current, int x, int y)
   /* open a dialog to input the start and end angle */
   arc_angle_dialog(w_current);
   
-}
-
-/*! \brief Set the start angle of a temporary arc.
- *  \par Function Description
- *  This function sets the start angle of the temporary representation of
- *  an arc. This angle is determined from the current mouse position
- *  described by <B>x</B> and <B>y</B> in screen coords, and the arc center
- *  previously set as (<B>w_current->start_x</B>,<B>w_current->start_y</B>).
- *
- *  The previous temporary arc is erased, the start angle is then updated
- *  and finally, the temporary arc is drawn again.
- *
- *  This function is used when the input of an arc is fully interactive,
- *  not through a dialog box.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
- */
-void o_arc_end2(GSCHEM_TOPLEVEL *w_current, int x, int y)
-{
-  double dx, dy, d, cos_a_, sin_a_, a;
-  
-  /* erase the previous temporary arc */
-  o_arc_rubberarc_xor(w_current);
-
-  /* compute the start angle */
-  dx =   ((double) x) - ((double) w_current->start_x);
-  dy = - ((double) y) + ((double) w_current->start_y);
-  d  = sqrt((dx * dx) + (dy * dy));
-
-  sin_a_ = dy / ((double) d);
-  cos_a_ = dx / ((double) d);
-  a = asin(sin_a_) * 180 / M_PI;
-  if(a < 0) a *= -1;
-
-  /* find the right quadrant */
-  if(sin_a_ >= 0) {
-    if(cos_a_ >= 0) a = a;
-    else            a = 180 - a;
-  } else {
-    if(cos_a_ >= 0) a = 360 - a;
-    else            a = 180 + a;
-  }
-
-  /* start angle in degree is in a */
-  w_current->loc_x = (int) a;
-
-  /* draw the new temporary arc */
-  o_arc_rubberarc_xor(w_current);
-	
-}
-
-/*! \brief Set the end angle during the input of a new arc object.
- *  \par Function Description
- *  This function sets the end angle during the input of a new arc object.
- *  The angle is computed from the current mouse position in <B>x</B> and
- *  <B>y</B> and the center of the arc. The arc is internally represented
- *  with its center in (<B>w_current->start_x</B>,<B>w_current->start_y</B>),
- *  its radius in <B>w_current->distance</B> and its start angle in
- *  <B>w_current->loc_x</B>.
- *
- *  The temporary arc is erased, a new object is initialized and drawn.
- *
- *  This function is used when the input of an arc is fully interactive,
- *  i.e. not through a dialog box.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current x coordinate of pointer in screen units.
- */
-void o_arc_end3(GSCHEM_TOPLEVEL *w_current, int x, int y)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  double d, dx, dy, cos_a_, sin_a_, a;
-  
-  /* erase the previous temporary arc */
-  o_arc_rubberarc_xor(w_current);
-
-  /* compute the end angle */
-  dx =   ((double) x) - ((double) w_current->start_x);
-  dy = - ((double) y) + ((double) w_current->start_y);
-  d  = sqrt((dx * dx) + (dy * dy));
-
-  sin_a_ = dy / ((double) d);
-  cos_a_ = dx / ((double) d);
-  a = asin(sin_a_) * 180 / M_PI;
-  if(a < 0) a *= -1;
-
-  /* find the right quadrant */
-  if(sin_a_ >= 0) {
-    if(cos_a_ >= 0) a = a;
-    else            a = 180 - a;
-  } else {
-    if(cos_a_ >= 0) a = 360 - a;
-    else            a = 180 + a;
-  }
-
-  /* end angle in degree is in a */
-  w_current->loc_y = (int) a;
-
-  /* create, initialize and link the new arc object */
-  toplevel->page_current->object_tail =
-    o_arc_add(toplevel, toplevel->page_current->object_tail,
-	      OBJ_ARC, w_current->graphic_color,
-	      w_current->start_x, w_current->start_y,
-	      w_current->distance,
-	      w_current->loc_x, w_current->loc_y);
-
-  /* draw the new object */
-  o_redraw_single(w_current, toplevel->page_current->object_tail);
-
-  w_current->start_x  = (-1);
-  w_current->start_y  = (-1);
-  w_current->last_x   = (-1);
-  w_current->last_y   = (-1);
-  w_current->loc_x    = -1;
-  w_current->loc_y    = -1;
-  w_current->distance = -1;
-
-  toplevel->page_current->CHANGED = 1;
-  
-  o_undo_savestate(w_current, UNDO_ALL);
-	
 }
 
 /*! \brief Ends the process of arc input.
@@ -1100,38 +959,24 @@ void o_arc_end3(GSCHEM_TOPLEVEL *w_current, int x, int y)
 void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int start_angle, int end_angle)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int x1, y1;
-  int radius;
-
-  /* get the center in world coords */
-  SCREENtoWORLD(toplevel,
-		w_current->start_x, w_current->start_y,
-		&x1, &y1);
-
-  /* get the radius in world coords */
-  radius = snap_grid(toplevel, WORLDabs(toplevel, w_current->distance));
 
   /* create, initialize and link the new arc object */
   toplevel->page_current->object_tail =
     o_arc_add(toplevel, toplevel->page_current->object_tail,
 	      OBJ_ARC, w_current->graphic_color,
-	      x1, y1, radius, start_angle, end_angle);
+	      w_current->first_wx, w_current->first_wy,
+	      w_current->distance, start_angle, end_angle);
 
   /* draw the new object */
   o_redraw_single(w_current, toplevel->page_current->object_tail);
 
-  w_current->start_x  = (-1);
-  w_current->start_y  = (-1);
-  w_current->last_x   = (-1);
-  w_current->last_y   = (-1);
-  w_current->loc_x    = -1;
-  w_current->loc_y    = -1;
-  w_current->distance = -1;
+  w_current->first_wx  = -1;
+  w_current->first_wy  = -1;
+  w_current->distance = 0;
 
   toplevel->page_current->CHANGED = 1;
   
   o_undo_savestate(w_current, UNDO_ALL);
-	
 }
 
 /*! \brief Draw an arc using one angle modification.
@@ -1146,16 +991,16 @@ void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int start_angle, int end_angle)
  *
  *  The arc is internally described by :
  *  <DL>
- *    <DT>*</DT><DD>(<B>w_current->start_x</B>,<B>w_current->start_y</B>) as
+ *    <DT>*</DT><DD>(<B>w_current->first_wx</B>,<B>w_current->first_wy</B>) as
  *                   its center.
  *    <DT>*</DT><DD><B>w_current->distance</B> as its radius.
- *    <DT>*</DT><DD><B>w_current->loc_x</B> and <B>w_current->loc_y</B> as its
+ *    <DT>*</DT><DD><B>w_current->second_wx</B> and <B>w_current->second_wx</B> as its
  *                  start and end angle respectively.
  *  </DL>
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
  *  \param [in] whichone   Which angle to change.
  *
  *  <B>whichone</B> can have one of the following values:
@@ -1164,49 +1009,38 @@ void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int start_angle, int end_angle)
  *    <DT>*</DT><DD>ARC_END_ANGLE
  *  </DL>
  */
-void o_arc_rubberarc(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone)
+void o_arc_rubberarc(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  double  dx, dy, a;
-  int diff_x, diff_y;
+  int diff_x, diff_y, angle_deg;
 
   /* erase the previous temporary arc */
-  o_arc_rubberarc_xor(w_current);
+  if (w_current->rubber_visible)
+    o_arc_rubberarc_xor(w_current);
 
   if(whichone == ARC_RADIUS) {
-
     /*
      * The radius is taken as the biggest distance on the x and y
      * axis between the center of the arc and the mouse position.
      */		
-    /* update the radius */
-    w_current->last_x = fix_x(toplevel, x);
-    w_current->last_y = fix_y(toplevel, y);
-
-    diff_x = GET_BOX_WIDTH (w_current);
-    diff_y = GET_BOX_HEIGHT(w_current);
-    if (diff_x >= diff_y) {
-      w_current->distance = diff_x;
-    } else {
-      w_current->distance = diff_y;
-    }
-
+    diff_x = abs(w_current->first_wx - w_x);
+    diff_y = abs(w_current->first_wy - w_y);
+    w_current->distance = max(diff_x, diff_y);
   }
   else if((whichone == ARC_START_ANGLE) || (whichone == ARC_END_ANGLE)) {
 		
     /* compute the angle */
-    dx =   ((double) x) - ((double) w_current->start_x);
-    dy = - ((double) y) + ((double) w_current->start_y);
-    a = atan2(dy,dx) * 180 / M_PI;
+    diff_x = w_current->first_wx - w_x;
+    diff_y = w_current->first_wy - w_y;
+    angle_deg = atan2(diff_y, diff_x) * 180 / M_PI;
 
     /* set the start or end angle with this angle */
     switch(whichone) {
     case ARC_START_ANGLE:
-      w_current->loc_x = ((int) a + 360) % 360;
+      w_current->second_wx = (angle_deg + 360 + 180) % 360;
       break;
 	
     case ARC_END_ANGLE:
-      w_current->loc_y = ((int) a - w_current->loc_x + 720) % 360;
+      w_current->second_wy = (angle_deg - w_current->second_wx + 720 + 180) % 360;
       break;
 	
     default:
@@ -1217,17 +1051,17 @@ void o_arc_rubberarc(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone)
 	
   /* draw the new temporary arc */
   o_arc_rubberarc_xor(w_current);
-
+  w_current->rubber_visible = 1;
 }
 
 /*! \brief Draw arc from GSCHEM_TOPLEVEL object.
  *  \par Function Description
  *  This function draws the arc from the variables in the GSCHEM_TOPLEVEL
  *  structure <B>*w_current</B>.
- *  The center of the arc is at (<B>w_current->start_x</B>,
- *  <B>w_current->start_y</B>), its radius equal to <B>w_current->radius</B>,
- *  and the start and end angle are given by <B>w_current->loc_x</B> and
- *  <B>w_current->loc_y</B>.
+ *  The center of the arc is at (<B>w_current->first_wx</B>,
+ *  <B>w_current->first_wy</B>), its radius equal to <B>w_current->distance</B>,
+ *  and the start and end angle are given by <B>w_current->second_wx</B> and
+ *  <B>w_current->second_wy</B>.
  *
  *  The arc is drawn with a xor function over the current sheet with the
  *  selection color.
@@ -1236,38 +1070,42 @@ void o_arc_rubberarc(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone)
  */
 void o_arc_rubberarc_xor(GSCHEM_TOPLEVEL *w_current)
 {
-  double tmp;
-  int x1, y1;
-	
-  gdk_gc_set_foreground(w_current->xor_gc, 
+  TOPLEVEL *toplevel = w_current->toplevel;
+
+  double rad_angle;
+  int cx, cy, x1, y1, radius;
+
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &cx, &cy);
+  radius = SCREENabs(toplevel, w_current->distance);
+  
+  gdk_gc_set_foreground(w_current->xor_gc,
 			x_get_darkcolor(w_current->select_color));
   gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
 			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
 			     GDK_JOIN_MITER);
+
   /* draw the arc from the w_current variables */
   gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
-	       w_current->start_x - w_current->distance,
-	       w_current->start_y - w_current->distance,
-	       w_current->distance * 2,
-	       w_current->distance * 2,
-	       w_current->loc_x * 64,
-	       w_current->loc_y * 64);
+	       cx - radius, cy - radius,
+	       radius * 2, radius * 2,
+	       w_current->second_wx * 64,
+	       w_current->second_wy * 64);
+
   /* draw the radius segment from the w_current variables */
-  tmp = ((double) w_current->loc_x) * M_PI / 180;
-  x1 = w_current->start_x + w_current->distance*cos(tmp);
-  y1 = w_current->start_y - w_current->distance*sin(tmp);
+  rad_angle = ((double) w_current->second_wx) * M_PI / 180;
+  x1 = cx + radius*cos(rad_angle);
+  y1 = cy - radius*sin(rad_angle);
   gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		w_current->start_x, w_current->start_y,
-		x1, y1);
+		cx, cy, x1, y1);
+
   /* FIXME: This isn't a tight bounding box for now, but the code
    *        to compute a better bounds it complex, and might wait
    *        until we're considered having real OBJECT data during
    *        rubberbanding and using world_get_arc_bounds().
    */
-  o_invalidate_rect(w_current, w_current->start_x - w_current->distance,
-                               w_current->start_y - w_current->distance,
-                               w_current->start_x + w_current->distance,
-                               w_current->start_y + w_current->distance);
+  o_invalidate_rect(w_current, 
+		    cx - radius, cy - radius,
+		    cx + radius, cy + radius);
 }
 
 /*! \brief Draw grip marks on arc.
