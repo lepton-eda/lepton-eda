@@ -209,54 +209,43 @@ void o_bus_draw_xor_single(GSCHEM_TOPLEVEL *w_current,
                     sx[0] + dx1, sy[0] + dy1, sx[1] + dx2, sy[1] + dy2);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief set the start point of a new bus
  *  \par Function Description
- *
+ *  This function sets the start point (<B>w_x</B>,<B>w_y</B>) of a new bus
+ *  in the <B>GSCHEM_TOPLEVEL</B> structure.
+ *  
+ *  The start point is stored in <B>first_wx</B>, <B>first_wy</B>.
+ *  
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_x        the x position in world coords
+ *  \param [in] w_x        the y position in world coords
  */
-void o_bus_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_bus_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int size;
-
-  w_current->last_x = w_current->start_x = fix_x(toplevel, x);
-  w_current->last_y = w_current->start_y = fix_y(toplevel, y);
-
-  if (toplevel->bus_style == THICK ) {
-    size = SCREENabs(toplevel, BUS_WIDTH);
-    gdk_gc_set_line_attributes(w_current->xor_gc, size,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
-
-  gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
-
-  if (toplevel->bus_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
+  w_current->first_wx = w_current->second_wx = w_x;
+  w_current->first_wy = w_current->second_wy = w_y;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief finish a bus drawing action
  *  \par Function Description
+ *  This function finishes a net drawing action. The function draws
+ *  a bus from the point (<B>first_wx</B>,<B>first_wy</B>) to 
+ *  (<B>second_wx</B>,<B>second_wy</B>). Both points are taken from
+ *  the <B>GSCHEM_TOPLEVEL</B> structure.
  *
+ *  The function returns TRUE if a bus object has been created and 
+ *  FALSE if no bus object has been created.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_x        (unused)
+ *  \param [in] w_x        (unused)
  */
-int o_bus_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
+int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int x1, y1;
-  int x2, y2;
   int color;
-  int size;
   GList *other_objects = NULL;
+  OBJECT *bus_new;
 
   g_assert( w_current->inside_action != 0 );
 
@@ -266,79 +255,33 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
     color = toplevel->override_bus_color;
   }
 
-  size = SCREENabs(toplevel, BUS_WIDTH);
-
-  if (toplevel->bus_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->xor_gc, size,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
-
-  gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		w_current->start_x, w_current->start_y, 
-		w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
-
-  if (toplevel->bus_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-    gdk_gc_set_line_attributes(w_current->gc, size,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
+  /* erase the rubberbus */
+  o_bus_rubberbus_xor(w_current);
 
   /* don't allow zero length bus */
   /* this ends the bus drawing behavior we want this? hack */
-  if ( (w_current->start_x == w_current->last_x) &&
-       (w_current->start_y == w_current->last_y) ) {
-         w_current->start_x = (-1);
-         w_current->start_y = (-1);
-         w_current->last_x = (-1);
-         w_current->last_y = (-1);
-         w_current->inside_action=0;
-	 i_set_state(w_current, STARTDRAWBUS);
-         o_bus_eraserubber(w_current);
-         return(FALSE);
-       }
-
-  gdk_gc_set_foreground(w_current->gc,
-			x_get_color(color));
-  gdk_draw_line(w_current->backingstore, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
-
-  if (toplevel->bus_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
+  if ( (w_current->first_wx == w_current->second_wx) &&
+       (w_current->first_wy == w_current->second_wy) ) {
+    w_current->first_wx = -1;
+    w_current->first_wy = -1;
+    w_current->second_wx = -1;
+    w_current->second_wy = -1;
+    w_current->inside_action=0;
+    i_set_state(w_current, STARTDRAWBUS);
+    return FALSE;
   }
 
-  SCREENtoWORLD(toplevel, w_current->start_x, w_current->start_y, &x1, &y1);
-  SCREENtoWORLD(toplevel, w_current->last_x, w_current->last_y, &x2, &y2);
-  x1 = snap_grid(toplevel, x1);
-  y1 = snap_grid(toplevel, y1);
-  x2 = snap_grid(toplevel, x2);
-  y2 = snap_grid(toplevel, y2);
+  /* create a new bus object and draw it */
+  bus_new = toplevel->page_current->object_tail =
+    o_bus_add(toplevel,
+	      toplevel->page_current->object_tail,
+	      OBJ_BUS, color,
+	      w_current->first_wx, w_current->first_wy, 
+	      w_current->second_wx, w_current->second_wy, 0);
 
-  w_current->save_x = w_current->last_x;
-  w_current->save_y = w_current->last_y;
+  o_bus_draw(w_current, bus_new);
 
-  toplevel->page_current->object_tail =
-  o_bus_add(toplevel,
-            toplevel->page_current->object_tail,
-            OBJ_BUS,
-            color,
-            x1, y1, x2, y2, 0);
-
-  /* conn stuff */
+  /* connect the new bus to the  stuff */
   other_objects = s_conn_return_others(other_objects,
                                        toplevel->page_current->
                                        object_tail);
@@ -348,65 +291,92 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   o_cue_draw_single(w_current, toplevel->page_current->object_tail);
 
   toplevel->page_current->CHANGED=1;
-  w_current->start_x = w_current->save_x;
-  w_current->start_y = w_current->save_y;
+  w_current->first_wx = w_current->second_wx;
+  w_current->first_wy = w_current->second_wy;
   o_undo_savestate(w_current, UNDO_ALL);
-  return(TRUE);
+  return TRUE;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief draw the bus rubber when creating a bus
  *  \par Function Description
+ *  This function draws
+ *  a bus rubber from the point (<B>first_wx</B>,<B>first_wy</B>) from  
+ *  the <B>GSCHEM_TOPLEVEL</B> structure to the input parameter
+ *  (<B>w_x</B>, <B>w_y</B>).
  *
+ *  The function stores creates an non-orthogonal bus segment if the 
+ *  CONTROLKEY is pressed. The coordinates of the second rubberbus point
+ *  is stored as (<B>second_wx</B>,<B>second_wy</B>) in the 
+ *  <B>GSCHEM_TOPLEVEL</B> structure.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_x        current x position in world units
+ *  \param [in] w_y        current y position in world units
  */
-void o_bus_rubberbus(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_bus_rubberbus(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
-  int size;
 
   g_assert( w_current->inside_action != 0 );
 
+  if (w_current->rubber_visible)
+    o_bus_rubberbus_xor(w_current);
+
+  w_current->second_wx = w_x;
+  w_current->second_wy = w_y;
+
+  /* If you press the control key then you can draw non-ortho bus */
+  if (!w_current->CONTROLKEY) {
+    diff_x = abs(w_current->second_wx - w_current->first_wx);
+    diff_y = abs(w_current->second_wy - w_current->first_wy);
+
+    if (diff_x >= diff_y) {
+      w_current->second_wy = w_current->first_wy;
+    } else {
+      w_current->second_wx = w_current->first_wx;
+    }
+  }
+
+  o_bus_rubberbus_xor(w_current);
+  w_current->rubber_visible = 1;
+}
+
+/*! \brief draw a rubberbus segment in XOR mode
+ *  \par Function Description
+ *  This function draws a bus segment in XOR mode from the point
+ *  (<B>first_wx</B>,<B>first_wy</B>) to the point 
+ *  (<B>second_wx</B>,<B>second_wy</B>) from the <B>GSCHEM_TOPLEVEL</B>
+ *   structure.
+ *
+ *  The function can be used to draw or erase the rubberbus on the screen.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object
+ */
+void o_bus_rubberbus_xor(GSCHEM_TOPLEVEL *w_current)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x1, y1, x2, y2, size=0;
+
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+
   if (toplevel->bus_style == THICK ) {
     size = SCREENabs(toplevel, BUS_WIDTH);
+    
+    if (size < 0)
+      size=0;
+
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
                                GDK_JOIN_MITER);
   }
 
-  gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
-
-  /* going into ortho mode (control key not pressed) */
-  /* erase non-ortho line */
-
-  /* going into non-ortho mode (control key pressed) */
-  /* erase ortho line */
-
-  w_current->last_x = fix_x(toplevel, x);
-  w_current->last_y = fix_y(toplevel, y);
-
-  /* If you press the control key then you can draw non-ortho bus */
-  if (!w_current->CONTROLKEY) {
-    diff_x = abs(w_current->last_x - w_current->start_x);
-    diff_y = abs(w_current->last_y - w_current->start_y);
-
-    if (diff_x >= diff_y) {
-      w_current->last_y = w_current->start_y;
-    } else {
-      w_current->last_x = w_current->start_x;
-    }
-  }
-
-  gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
+  gdk_draw_line(w_current->backingstore, w_current->xor_gc, 
+		x1, y1, x2, y2);
+  o_invalidate_rect(w_current, 
+		    min(x1, x2) - size/2, min(y1, y2) - size/2,
+		    max(x1, x2) + size/2, max(y1, y2) + size/2);
 
   if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
@@ -425,29 +395,5 @@ void o_bus_rubberbus(GSCHEM_TOPLEVEL *w_current, int x, int y)
  */
 void o_bus_eraserubber(GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int size;
-
-  if (toplevel->bus_style == THICK ) {
-    size = SCREENabs(toplevel, BUS_WIDTH);
-
-    if (size < 0)
-      size=0;
-
-    gdk_gc_set_line_attributes(w_current->xor_gc, size,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
-
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
-
-  if (toplevel->bus_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
+  o_bus_rubberbus_xor(w_current);
 }

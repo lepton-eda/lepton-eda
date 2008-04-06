@@ -282,9 +282,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(STARTDRAWBUS):  
-        o_bus_start(w_current,
-                    (int) event->x,
-                    (int) event->y);
+        o_bus_start(w_current, w_x, w_y);
         w_current->inside_action = 1;
         w_current->event_state=DRAWBUS;
 
@@ -308,11 +306,8 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       case(DRAWBUS):
       case(BUSCONT):
         /* Only continue the net if net end worked */
-        if (o_bus_end(w_current, (int) event->x,
-                      (int) event->y)) {
-          o_bus_start(w_current,
-                      (int) w_current->save_x,
-                      (int) w_current->save_y);
+        if (o_bus_end(w_current, w_x, w_y)) {
+	  o_bus_start(w_current, w_current->first_wx, w_current->first_wy);
           w_current->event_state=BUSCONT;
         }
         break;
@@ -1075,9 +1070,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     case(DRAWBUS):
     case(BUSCONT):
     if (w_current->inside_action)
-    o_bus_rubberbus(w_current,
-                    (int) event->x,
-                    (int) event->y);
+      o_bus_rubberbus(w_current, w_x, w_y);
     break;
 
     case(ENDPIN):

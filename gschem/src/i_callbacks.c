@@ -2435,7 +2435,7 @@ DEFINE_I_CALLBACK(add_bus_hotkey)
   i_set_state(w_current, STARTDRAWBUS);
   i_update_toolbar(w_current);
 
-  o_bus_start(w_current, mouse_x, mouse_y);
+  o_bus_start(w_current, mouse_wx, mouse_wy);
 
   w_current->event_state=DRAWBUS;
   w_current->inside_action = 1;

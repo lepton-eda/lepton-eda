@@ -520,6 +520,7 @@ void o_bus_draw_xor_single(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int which
 void o_bus_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 int o_bus_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_bus_rubberbus(GSCHEM_TOPLEVEL *w_current, int x, int y);
+void o_bus_rubberbus_xor(GSCHEM_TOPLEVEL *w_current);
 void o_bus_eraserubber(GSCHEM_TOPLEVEL *w_current);
 /* o_circle.c */
 void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
