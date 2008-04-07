@@ -595,6 +595,9 @@ void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
 void o_grips_end_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 void o_grips_end_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);
+void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);
+void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);
+void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 int o_grips_size(GSCHEM_TOPLEVEL *w_current);
 void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_grips_erase(GSCHEM_TOPLEVEL *w_current, int x, int y);

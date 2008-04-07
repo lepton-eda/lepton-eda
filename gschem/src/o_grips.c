@@ -1002,10 +1002,6 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *object=NULL;
-  int x, y;
-  GList *other_objects = NULL;
-  GList *connected_objects = NULL;
-  int size;
 
   object = object_changing;
 
@@ -1044,237 +1040,25 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
     break;
 
     case(OBJ_NET):
-    /* don't allow zero length nets / lines / pins
-     * this ends the net drawing behavior
-     * we want this? hack */
-    if ((w_current->start_x == w_current->last_x) &&
-        (w_current->start_y == w_current->last_y)) {
-      w_current->start_x = (-1);
-      w_current->start_y = (-1);
-      w_current->last_x = (-1);
-      w_current->last_y = (-1);
-      w_current->inside_action=0;
-      i_set_state(w_current, SELECT);
-      o_redraw_single(w_current, object);
-      i_update_toolbar(w_current);
-      return;
-    }
-
-    SCREENtoWORLD(toplevel,
-                  w_current->last_x,
-                  w_current->last_y, &x, &y);
-
-    x = snap_grid(toplevel, x);
-    y = snap_grid(toplevel, y);
-
-    o_cue_undraw(w_current, object);
-    o_erase_single(w_current, object);
-    /* erase xor line */
-    gdk_gc_set_foreground(w_current->xor_gc,
-                          x_get_darkcolor(w_current->select_color));
-    gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-                  w_current->start_x, w_current->start_y,
-                  w_current->last_x, w_current->last_y);
-    o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                      w_current->last_x, w_current->last_y);
-    o_line_erase_grips(w_current, object);
-
-    other_objects = s_conn_return_others(other_objects, object);
-    s_conn_remove(toplevel, object);
-
-    o_net_modify(toplevel, object, x, y, whichone_changing);
-
-    s_conn_update_object(toplevel, object);
-
-    /* get the other connected objects and redraw them */
-    connected_objects = s_conn_return_others(connected_objects,
-                                             object);
-
-    /* add bus rippers if necessary */
-    if (o_net_add_busrippers(w_current, object, connected_objects)) {
-
-      o_erase_single(w_current, object);
-      /*o_line_erase_grips(w_current, object); */
-
-      if (toplevel->net_style == THICK ) {
-        size = SCREENabs(toplevel, 10);
-
-        if (size < 0)
-          size=0;
-
-        gdk_gc_set_line_attributes(w_current->gc, size,
-                                   GDK_LINE_SOLID,
-                                   GDK_CAP_BUTT,
-                                   GDK_JOIN_MITER);
-      }
-
-      gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(toplevel->background_color));
-      gdk_draw_line(w_current->backingstore, w_current->gc,
-                    w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
-      o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                        w_current->last_x, w_current->last_y);
-
-      o_cue_undraw(w_current, object);
-      o_net_draw(w_current, object);
-      o_cue_draw_single(w_current, object);
-
-      if (toplevel->net_style == THICK ) {
-        gdk_gc_set_line_attributes(w_current->gc, 0,
-                                   GDK_LINE_SOLID,
-                                   GDK_CAP_NOT_LAST,
-                                   GDK_JOIN_MITER);
-      }
-    }
-
-    /* draw the object objects */
-    o_cue_undraw_list(w_current, other_objects);
-    o_cue_draw_list(w_current, other_objects);
-
-    o_redraw_single(w_current, object);
-
-    if (connected_objects) {
-      g_list_free(connected_objects);
-      connected_objects = NULL;
-    }
-
-    /* get the other connected objects and redraw them */
-    connected_objects = s_conn_return_others(connected_objects,
-                                             object);
-
-    o_cue_undraw_list(w_current, connected_objects);
-    o_cue_draw_list(w_current, connected_objects);
-    /* finally draw this objects cues */
-    o_cue_draw_single(w_current, object);
-    break;
+      /* modify a net object */
+      o_grips_end_net(w_current, object, whichone_changing);
+      break;
 
     case(OBJ_PIN):
-    /* don't allow zero length nets / lines / pins
-     * this ends the net drawing behavior
-     * we want this? hack */
-    if ((w_current->start_x == w_current->last_x) &&
-        (w_current->start_y == w_current->last_y)) {
-      w_current->start_x = (-1);
-      w_current->start_y = (-1);
-      w_current->last_x = (-1);
-      w_current->last_y = (-1);
-      o_redraw_single(w_current, object);
-      w_current->inside_action=0;
-      i_set_state(w_current, SELECT);
-      i_update_toolbar(w_current);
-      return;
-    }
-
-    SCREENtoWORLD(toplevel,
-                  w_current->last_x,
-                  w_current->last_y, &x, &y);
-
-    x = snap_grid(toplevel, x);
-    y = snap_grid(toplevel, y);
-
-    o_cue_undraw(w_current, object);
-    o_erase_single(w_current, object);
-    /* erase xor line */
-    gdk_gc_set_foreground(w_current->xor_gc,
-                          x_get_darkcolor(w_current->select_color));
-    gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-                  w_current->start_x, w_current->start_y,
-                  w_current->last_x, w_current->last_y);
-    o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                      w_current->last_x, w_current->last_y);
-    o_line_erase_grips(w_current, object);
-
-    other_objects = s_conn_return_others(other_objects, object);
-    s_conn_remove(toplevel, object);
-
-    o_pin_modify(toplevel, object, x, y,
-                 whichone_changing);
-    s_conn_update_object(toplevel, object);
-    o_redraw_single(w_current, object);
-
-    /* draw the object objects */
-    o_cue_undraw_list(w_current, other_objects);
-    o_cue_draw_list(w_current, other_objects);
-
-    /* get the other connected objects and redraw them */
-    connected_objects = s_conn_return_others(connected_objects,
-                                             object);
-    o_cue_undraw_list(w_current, connected_objects);
-    o_cue_draw_list(w_current, connected_objects);
-
-    /* finally draw this objects cues */
-    o_cue_draw_single(w_current, object);
-    break;
+      /* modify a pin object */
+      o_grips_end_pin(w_current, object, whichone_changing);
+      break;
 
     case(OBJ_BUS):
-    /* don't allow zero length nets / lines / pins
-     * this ends the net drawing behavior
-     * we want this? hack */
-    if ((w_current->start_x == w_current->last_x) &&
-        (w_current->start_y == w_current->last_y)) {
-      w_current->start_x = (-1);
-      w_current->start_y = (-1);
-      w_current->last_x = (-1);
-      w_current->last_y = (-1);
-      o_redraw_single(w_current, object);
-      w_current->inside_action=0;
-      i_set_state(w_current, SELECT);
-      i_update_toolbar(w_current);
-      return;
-    }
-
-    SCREENtoWORLD(toplevel,
-                  w_current->last_x,
-                  w_current->last_y, &x, &y);
-
-    x = snap_grid(toplevel, x);
-    y = snap_grid(toplevel, y);
-
-    o_cue_undraw(w_current, object);
-    o_erase_single(w_current, object);
-    /* erase xor line */
-    gdk_gc_set_foreground(w_current->xor_gc,
-                          x_get_darkcolor(w_current->select_color));
-    gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-                  w_current->start_x, w_current->start_y,
-                  w_current->last_x, w_current->last_y);
-    o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                      w_current->last_x, w_current->last_y);
-    o_line_erase_grips(w_current, object);
-
-    other_objects = s_conn_return_others(other_objects, object);
-    s_conn_remove(toplevel, object);
-
-    o_bus_modify(toplevel, object, x, y,
-                 whichone_changing);
-    s_conn_update_object(toplevel, object);
-    o_redraw_single(w_current, object);
-
-    /* draw the object objects */
-    o_cue_undraw_list(w_current, other_objects);
-    o_cue_draw_list(w_current, other_objects);
-
-    /* get the other connected objects and redraw them */
-    connected_objects = s_conn_return_others(connected_objects,
-                                             object);
-    o_cue_undraw_list(w_current, connected_objects);
-    o_cue_draw_list(w_current, connected_objects);
-
-    /* finally draw this objects cues */
-    o_cue_draw_single(w_current, object);
-    break;
+      /* modify a bus object */
+      o_grips_end_bus(w_current, object, whichone_changing);
+      break;
 
     default:
     return;
   }
 
   toplevel->page_current->CHANGED=1;
-
-  g_list_free(other_objects);
-  other_objects = NULL;
-  g_list_free(connected_objects);
-  connected_objects = NULL;
 
   /* reset global variables */
   whichone_changing = -1;
@@ -1501,7 +1285,7 @@ void o_grips_end_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int which
  *  allowed. In this case, the process is stopped and the line unchanged.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Circle OBJECT to end modification on.
+ *  \param [in] o_current  Line OBJECT to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
 void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
@@ -1537,6 +1321,244 @@ void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichon
   /* display the new line */
   o_redraw_single(w_current, o_current);
 }
+
+
+/*! \brief End process of modifying net object with grip.
+ *  \par Function Description
+ *  This function ends the process of modifying one end of the net
+ *  object <B>*o_current</B>.
+ *  This end is identified by <B>whichone</B>. The line object is modified
+ *  according to the <B>whichone</B> parameter and the last position of the
+ *  line end.
+ *  The connections to the modified net are checked and recreated if neccessary.
+ *
+ *  A net with zero length, i.e. when both ends are identical, is not
+ *  allowed. In this case, the process is stopped and the line unchanged.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] o_current  Net OBJECT to end modification on.
+ *  \param [in] whichone   Which grip is pointed to.
+ */
+void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  GList *other_objects = NULL;
+  GList *connected_objects = NULL;
+
+  /* erase the temporary line */
+  o_line_rubberline_xor(w_current);
+
+  /* don't allow zero length net
+   * this ends the net drawing behavior
+   * we want this? hack */
+  if ((w_current->first_wx == w_current->second_wx) &&
+      (w_current->first_wy == w_current->second_wy)) {
+    w_current->first_wx = -1;
+    w_current->first_wy = -1;
+    w_current->second_wx = -1;
+    w_current->second_wy = -1;
+    w_current->inside_action=0;
+    i_set_state(w_current, SELECT);
+    o_redraw_single(w_current, o_current);
+    i_update_toolbar(w_current);
+    return;
+  }
+
+  /* remove the old net */
+  o_cue_undraw(w_current, o_current);
+  o_erase_single(w_current, o_current);
+
+  other_objects = s_conn_return_others(other_objects, o_current);
+
+  s_conn_remove(toplevel, o_current);
+  o_net_modify(toplevel, o_current, 
+	       w_current->second_wx, w_current->second_wy, whichone_changing);
+  s_conn_update_object(toplevel, o_current);
+
+  /* get the other connected objects and redraw them */
+  connected_objects = s_conn_return_others(connected_objects,
+					   o_current);
+  /* add bus rippers if necessary */
+  if (o_net_add_busrippers(w_current, o_current, connected_objects)) {
+
+    o_erase_single(w_current, o_current);
+    o_cue_undraw(w_current, o_current);
+
+    o_net_draw(w_current, o_current);
+    o_cue_draw_single(w_current, o_current);
+  }
+
+  /* draw the object objects */
+  o_cue_undraw_list(w_current, other_objects);
+  o_cue_draw_list(w_current, other_objects);
+  
+  o_redraw_single(w_current, o_current);
+  
+  g_list_free(connected_objects);
+  connected_objects = NULL;
+  
+  /* get the other connected objects and redraw them */
+  connected_objects = s_conn_return_others(connected_objects,
+					   o_current);
+  
+  o_cue_undraw_list(w_current, connected_objects);
+  o_cue_draw_list(w_current, connected_objects);
+  /* finally draw this objects cues */
+  o_cue_draw_single(w_current, o_current);
+
+  g_list_free(other_objects);
+  other_objects = NULL;
+  g_list_free(connected_objects);
+  connected_objects = NULL;
+}
+
+/*! \brief End process of modifying pin object with grip.
+ *  \par Function Description
+ *  This function ends the process of modifying one end of the pin
+ *  object <B>*o_current</B>.
+ *  This end is identified by <B>whichone</B>. The pin object is modified
+ *  according to the <B>whichone</B> parameter and the last position of the
+ *  pin end.
+ *  The connections to the modified pin are checked and recreated if neccessary.
+ *
+ *  A pin with zero length, i.e. when both ends are identical, is not
+ *  allowed. In this case, the process is stopped and the line unchanged.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] o_current  Net OBJECT to end modification on.
+ *  \param [in] whichone   Which grip is pointed to.
+ */
+void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  GList *other_objects = NULL;
+  GList *connected_objects = NULL;
+
+  /* erase the temporary line */
+  o_line_rubberline_xor(w_current);
+
+  /* don't allow zero length pin
+   * this ends the pin changing behavior
+   * we want this? hack */
+  if ((w_current->first_wx == w_current->second_wx) &&
+      (w_current->first_wy == w_current->second_wy)) {
+    w_current->first_wx = -1;
+    w_current->first_wy = -1;
+    w_current->second_wx = -1;
+    w_current->second_wy = -1;
+    w_current->inside_action=0;
+    i_set_state(w_current, SELECT);
+    o_redraw_single(w_current, o_current);
+    i_update_toolbar(w_current);
+    return;
+  }
+
+  /* erase old pin object */
+  o_cue_undraw(w_current, o_current);
+  o_erase_single(w_current, o_current);
+
+  other_objects = s_conn_return_others(other_objects, o_current);
+
+  s_conn_remove(toplevel, o_current);
+  o_pin_modify(toplevel, o_current, 
+	       w_current->second_wx, w_current->second_wy, whichone_changing);
+  s_conn_update_object(toplevel, o_current);
+
+  o_redraw_single(w_current, o_current);
+
+  /* redraw the object connections */
+  o_cue_undraw_list(w_current, other_objects);
+  o_cue_draw_list(w_current, other_objects);
+
+  /* get the other connected objects and redraw them */
+  connected_objects = s_conn_return_others(connected_objects,
+					   o_current);
+  o_cue_undraw_list(w_current, connected_objects);
+  o_cue_draw_list(w_current, connected_objects);
+
+  /* finally draw this objects cues */
+  o_cue_draw_single(w_current, o_current);
+
+  /* free the two lists */
+  g_list_free(other_objects);
+  other_objects = NULL;
+  g_list_free(connected_objects);
+  connected_objects = NULL;
+}
+
+/*! \brief End process of modifying bus object with grip.
+ *  \par Function Description
+ *  This function ends the process of modifying one end of the bus
+ *  object <B>*o_current</B>.
+ *  This end is identified by <B>whichone</B>. The line object is modified
+ *  according to the <B>whichone</B> parameter and the last position of the
+ *  bus end.
+ *  The connections to the modified bus are checked and recreated if neccessary.
+ *
+ *  A bus with zero length, i.e. when both ends are identical, is not
+ *  allowed. In this case, the process is stopped and the bus unchanged.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] o_current  bus OBJECT to end modification on.
+ *  \param [in] whichone   Which grip is pointed to.
+ */
+void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  GList *other_objects = NULL;
+  GList *connected_objects = NULL;
+
+  /* erase the temporary line */
+  o_line_rubberline_xor(w_current);
+
+  /* don't allow zero length bus
+   * this ends the bus changing behavior
+   * we want this? hack */
+  if ((w_current->first_wx == w_current->second_wx) &&
+      (w_current->first_wy == w_current->second_wy)) {
+    w_current->first_wx = -1;
+    w_current->first_wy = -1;
+    w_current->second_wx = -1;
+    w_current->second_wy = -1;
+    w_current->inside_action=0;
+    i_set_state(w_current, SELECT);
+    o_redraw_single(w_current, o_current);
+    i_update_toolbar(w_current);
+    return;
+  }
+
+  /* erase the old bus and it's cues */
+  o_cue_undraw(w_current, o_current);
+  o_erase_single(w_current, o_current);
+
+  other_objects = s_conn_return_others(other_objects, o_current);
+  s_conn_remove(toplevel, o_current);
+
+  o_bus_modify(toplevel, o_current, 
+	       w_current->second_wx, w_current->second_wy, whichone_changing);
+  s_conn_update_object(toplevel, o_current);
+  o_redraw_single(w_current, o_current);
+
+  /* redraw the connected objects */
+  o_cue_undraw_list(w_current, other_objects);
+  o_cue_draw_list(w_current, other_objects);
+
+  /* get the other connected objects and redraw them */
+  connected_objects = s_conn_return_others(connected_objects,
+					   o_current);
+  o_cue_undraw_list(w_current, connected_objects);
+  o_cue_draw_list(w_current, connected_objects);
+
+  /* finally draw this objects cues */
+  o_cue_draw_single(w_current, o_current);
+
+  /* free the two lists */
+  g_list_free(other_objects);
+  other_objects = NULL;
+  g_list_free(connected_objects);
+  connected_objects = NULL;
+}
+
 
 /*! \brief Get half the width and height of grip in screen units.
  *  \par Function Description
