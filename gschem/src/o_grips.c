@@ -1150,17 +1150,7 @@ void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
    * this ends the box drawing behavior
    * we want this? hack */
   if ((box_width == 0) && (box_height == 0)) {
-    w_current->first_wx = (-1);
-    w_current->first_wy = (-1);
-    w_current->second_wx  = (-1);
-    w_current->second_wy  = (-1);
-
-    w_current->inside_action=0;
-    i_set_state(w_current, SELECT);
-
     o_redraw_single(w_current, o_current);
-    i_update_toolbar(w_current);
-
     return;
   }
 
@@ -1194,17 +1184,7 @@ void o_grips_end_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whic
    * this ends the picture drawing behavior
    * we want this? hack */
   if ((picture_width == 0) && (picture_height == 0)) {
-    w_current->start_x = (-1);
-    w_current->start_y = (-1);
-    w_current->last_x  = (-1);
-    w_current->last_y  = (-1);
-
-    w_current->inside_action=0;
-    i_set_state(w_current, SELECT);
-
     o_redraw_single(w_current, o_current);
-    i_update_toolbar(w_current);
-
     return;
   }
 
@@ -1253,14 +1233,6 @@ void o_grips_end_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int which
    * this ends the circle drawing behavior
    * we want this? hack */
   if (w_current->distance == 0) {
-    w_current->start_x = (-1);
-    w_current->start_y = (-1);
-
-    /* return to select mode */
-    w_current->inside_action = 0;
-    i_set_state(w_current, SELECT);
-    i_update_toolbar(w_current);
-
     o_redraw_single(w_current, o_current);
     return;
   }
@@ -1300,16 +1272,6 @@ void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichon
    * we want this? hack */
   if ((w_current->first_wx == w_current->second_wx) &&
       (w_current->first_wy == w_current->second_wy)) {
-    w_current->first_wx = -1;
-    w_current->first_wy = -1;
-    w_current->second_wx = -1;
-    w_current->second_wy = -1;
-
-    /* return to select mode */
-    w_current->inside_action=0;
-    i_set_state(w_current, SELECT);
-    i_update_toolbar(w_current);
-
     o_redraw_single(w_current, o_current);
     return;
   }
@@ -1353,14 +1315,7 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
    * we want this? hack */
   if ((w_current->first_wx == w_current->second_wx) &&
       (w_current->first_wy == w_current->second_wy)) {
-    w_current->first_wx = -1;
-    w_current->first_wy = -1;
-    w_current->second_wx = -1;
-    w_current->second_wy = -1;
-    w_current->inside_action=0;
-    i_set_state(w_current, SELECT);
     o_redraw_single(w_current, o_current);
-    i_update_toolbar(w_current);
     return;
   }
 
@@ -1442,14 +1397,7 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
    * we want this? hack */
   if ((w_current->first_wx == w_current->second_wx) &&
       (w_current->first_wy == w_current->second_wy)) {
-    w_current->first_wx = -1;
-    w_current->first_wy = -1;
-    w_current->second_wx = -1;
-    w_current->second_wy = -1;
-    w_current->inside_action=0;
-    i_set_state(w_current, SELECT);
     o_redraw_single(w_current, o_current);
-    i_update_toolbar(w_current);
     return;
   }
 
@@ -1463,7 +1411,6 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_pin_modify(toplevel, o_current, 
 	       w_current->second_wx, w_current->second_wy, whichone_changing);
   s_conn_update_object(toplevel, o_current);
-
   o_redraw_single(w_current, o_current);
 
   /* redraw the object connections */
@@ -1516,14 +1463,7 @@ void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
    * we want this? hack */
   if ((w_current->first_wx == w_current->second_wx) &&
       (w_current->first_wy == w_current->second_wy)) {
-    w_current->first_wx = -1;
-    w_current->first_wy = -1;
-    w_current->second_wx = -1;
-    w_current->second_wy = -1;
-    w_current->inside_action=0;
-    i_set_state(w_current, SELECT);
     o_redraw_single(w_current, o_current);
-    i_update_toolbar(w_current);
     return;
   }
 
