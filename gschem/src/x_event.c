@@ -255,17 +255,13 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(DRAWPIN):
-        o_pin_start(w_current,
-                    (int) event->x,
-                    (int) event->y);
+        o_pin_start(w_current, w_x, w_y);
         w_current->event_state = ENDPIN;
         w_current->inside_action = 1;
         break;
 
       case(ENDPIN):
-        o_pin_end(w_current,
-                  (int) event->x,
-                  (int) event->y);
+        o_pin_end(w_current, w_x, w_y);
         w_current->inside_action = 0;
         w_current->event_state = DRAWPIN;
         break;
@@ -1069,9 +1065,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
     case(ENDPIN):
     if (w_current->inside_action)
-    o_pin_rubberpin(w_current,
-                    (int) event->x,
-                    (int) event->y);
+      o_pin_rubberpin(w_current, w_x, w_y);
     break;
 
     case(DRAWCOMP):

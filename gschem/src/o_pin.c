@@ -161,35 +161,10 @@ void o_pin_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
  *  \par Function Description
  *
  */
-void o_pin_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_pin_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int size;
-  w_current->last_x = w_current->start_x = fix_x(toplevel, x);
-  w_current->last_y = w_current->start_y = fix_y(toplevel, y);
-
-  if (toplevel->pin_style == THICK ) {
-    size = SCREENabs(toplevel, PIN_WIDTH);
-    gdk_gc_set_line_attributes(w_current->xor_gc, size,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
-
-  gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		w_current->start_x, w_current->start_y, 
-		w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                               w_current->last_x, w_current->last_y);
-
-  if (toplevel->pin_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
+  w_current->first_wx = w_current->second_wx = w_x;
+  w_current->first_wy = w_current->second_wy = w_y;
 }
 
 /*! \todo Finish function documentation!!!
@@ -200,8 +175,6 @@ void o_pin_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
 void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int x1, y1;
-  int x2, y2;
   int color;
   GList *other_objects = NULL;
   OBJECT *o_current, *o_current_pin;
@@ -214,33 +187,22 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
     color = toplevel->override_pin_color;
   }
 
-  /* removed 3/15 to see if we can get pins to be ortho only */
-  /* w_current->last_x = fix_x(toplevel, x);
-     w_current->last_y = fix_y(toplevel, y);*/
+  /* undraw rubber line */
+  o_pin_rubberpin_xor(w_current);
 
   /* don't allow zero length pins */
-  if ( (w_current->start_x == w_current->last_x) &&
-       (w_current->start_y == w_current->last_y) ) {
-         w_current->start_x = (-1);
-         w_current->start_y = (-1);
-         w_current->last_x = (-1);
-         w_current->last_y = (-1);
-         return;
+  if ((w_current->first_wx == w_current->second_wx) &&
+      (w_current->first_wy == w_current->second_wy)) {
+    return;
   }
 
-  SCREENtoWORLD(toplevel, w_current->start_x,w_current->start_y, &x1, &y1);
-  SCREENtoWORLD(toplevel, w_current->last_x, w_current->last_y, &x2, &y2);
-  x1 = snap_grid(toplevel, x1);
-  y1 = snap_grid(toplevel, y1);
-  x2 = snap_grid(toplevel, x2);
-  y2 = snap_grid(toplevel, y2);
-
   toplevel->page_current->object_tail =
-  o_pin_add(toplevel,
-            toplevel->page_current->object_tail,
-            OBJ_PIN, color,
-            x1, y1, x2, y2,
-            PIN_TYPE_NET, 0);
+    o_pin_add(toplevel,
+	      toplevel->page_current->object_tail,
+	      OBJ_PIN, color,
+	      w_current->first_wx, w_current->first_wy,
+	      w_current->second_wx, w_current->second_wy,
+	      PIN_TYPE_NET, 0);
 
   o_current = o_current_pin = toplevel->page_current->object_tail;
 
@@ -251,6 +213,7 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 			  SCM_EOL));
   }
 
+  /* look for connected objects */
   other_objects = s_conn_return_others(other_objects, o_current_pin);
   o_cue_undraw_list(w_current, other_objects);
   o_cue_draw_list(w_current, other_objects);
@@ -258,12 +221,7 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   o_cue_draw_single(w_current, o_current_pin); 
   o_pin_draw(w_current, o_current_pin);
 
-  w_current->start_x = (-1);
-  w_current->start_y = (-1);
-  w_current->last_x = (-1);
-  w_current->last_y = (-1);
   toplevel->page_current->CHANGED=1;
-
   o_undo_savestate(w_current, UNDO_ALL);
 }
 
@@ -272,57 +230,27 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *
  */
-void o_pin_rubberpin(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_pin_rubberpin(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int size;
-  int diff_x, diff_y;
-
   g_assert( w_current->inside_action != 0 );
 
-  size = SCREENabs(toplevel, PIN_WIDTH);
+  /* erase the rubberpin if it is visible */
+  if (w_current->rubber_visible)
+    o_pin_rubberpin_xor(w_current);
 
-  if (toplevel->pin_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->xor_gc, size,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
+  w_current->second_wx = w_x;
+  w_current->second_wy = w_y;
 
-  gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		w_current->start_x, w_current->start_y, 
-		w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
-
-  w_current->last_x = fix_x(toplevel, x);
-  w_current->last_y = fix_y(toplevel, y);
-
-  diff_x = abs(w_current->last_x - w_current->start_x);
-  diff_y = abs(w_current->last_y - w_current->start_y);
-
-  if (diff_x >= diff_y) {
-    w_current->last_y = w_current->start_y;
+  /* decide whether to draw the pin vertical or horizontal */
+  if (abs(w_current->second_wx - w_current->first_wx)
+      >= abs(w_current->second_wy - w_current->first_wy)) {
+    w_current->second_wy = w_current->first_wy;
   } else {
-    w_current->last_x = w_current->start_x;
+    w_current->second_wx = w_current->first_wx;
   }
 
-  gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		w_current->start_x, w_current->start_y, 
-		w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
-
-  if (toplevel->pin_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
+  o_pin_rubberpin_xor(w_current);
+  w_current->rubber_visible = 1;
 }
 
 /*! \todo Finish function documentation!!!
@@ -334,8 +262,23 @@ void o_pin_rubberpin(GSCHEM_TOPLEVEL *w_current, int x, int y)
  */
 void o_pin_eraserubber(GSCHEM_TOPLEVEL *w_current)
 {
+  o_pin_rubberpin_xor(w_current);
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_pin_rubberpin_xor(GSCHEM_TOPLEVEL *w_current) 
+{
   TOPLEVEL *toplevel = w_current->toplevel;
-  int size;
+  int x1, y1, x2, y2;
+  int size = 0;
+
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
   if (toplevel->net_style == THICK ) {
     size = SCREENabs(toplevel, PIN_WIDTH);
@@ -349,9 +292,10 @@ void o_pin_eraserubber(GSCHEM_TOPLEVEL *w_current)
                                GDK_JOIN_MITER);
   }
 
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
-  o_invalidate_rect(w_current, w_current->start_x, w_current->start_y,
-                    w_current->last_x, w_current->last_y);
+  gdk_draw_line(w_current->backingstore, w_current->xor_gc, x1, y1, x2, y2);
+  o_invalidate_rect(w_current, 
+		    min(x1, x2) - size/2, min(y1, y2) - size/2,
+		    max(x1, x2) + size/2, max(y1, y2) + size/2);
 
   if (toplevel->net_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,

@@ -676,6 +676,7 @@ void o_pin_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
 void o_pin_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_pin_rubberpin(GSCHEM_TOPLEVEL *w_current, int x, int y);
+void o_pin_rubberpin_xor(GSCHEM_TOPLEVEL *w_current);
 void o_pin_eraserubber(GSCHEM_TOPLEVEL *w_current);
 /* o_select.c */
 void o_select_run_hooks(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int flag);
