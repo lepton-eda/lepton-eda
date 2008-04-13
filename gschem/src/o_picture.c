@@ -29,79 +29,66 @@
 
 /* This works, but using one macro inside of other doesn't */
 #define GET_PICTURE_WIDTH(w)			\
-	abs((w)->last_x - (w)->start_x) 
-#define GET_PICTURE_HEIGHT(w)			\
-	(w)->pixbuf_wh_ratio == 0 ? 0 : abs((w)->last_x - (w)->start_x)/(w)->pixbuf_wh_ratio
-#define GET_PICTURE_LEFT(w)				\
-	min((w)->start_x, (w)->last_x);
-#define GET_PICTURE_TOP(w)				\
-	(w)->start_y < (w)->last_y ? (w)->start_y  : \
-                                     (w)->start_y-abs((w)->last_x - (w)->start_x)/(w)->pixbuf_wh_ratio;
+  abs((w)->second_wx - (w)->first_wx) 
+#define GET_PICTURE_HEIGHT(w)						\
+  (w)->pixbuf_wh_ratio == 0 ? 0 : abs((w)->second_wx - (w)->first_wx)/(w)->pixbuf_wh_ratio
+#define GET_PICTURE_LEFT(w)			\
+  min((w)->first_wx, (w)->second_wx)
+#define GET_PICTURE_TOP(w)						\
+  (w)->first_wy > (w)->second_wy ? (w)->first_wy  :			\
+  (w)->first_wy+abs((w)->second_wx - (w)->first_wx)/(w)->pixbuf_wh_ratio
 
 /*! \brief Start process to input a new picture.
  *  \par Function Description
  *  This function starts the process to input a new picture. Parameters
  *  for this picture are put into/extracted from the <B>w_current</B> toplevel
  *  structure.
- *  <B>x</B> and <B>y</B> are current coordinates of the pointer in screen
+ *  <B>w_x</B> and <B>w_y</B> are current coordinates of the pointer in world
  *  coordinates.
  *
  *  The first step is to input one corner of the picture. This corner is
- *  (<B>x</B>,<B>y</B>) snapped to the grid and saved in
- *  <B>w_current->start_x</B> and <B>w_current->start_y</B>.
+ *  (<B>w_x</B>,<B>w_y</B>) snapped to the grid and saved in
+ *  <B>w_current->first_wx</B> and <B>w_current->first_wy</B>.
  *
- *  The other corner will be saved in (<B>w_current->last_x</B>,
- *  <B>w_current->last_y</B>).
+ *  The other corner will be saved in (<B>w_current->second_wx</B>,
+ *  <B>w_current->second_wy</B>).
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.    
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.    
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_picture_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_picture_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-#if DEBUG
-  printf("o_picture_start called\n");
-#endif
-  /* init start_[x|y], last_[x|y] to describe box */
-  w_current->last_x = w_current->start_x = fix_x(toplevel, x);
-  w_current->last_y = w_current->start_y = fix_y(toplevel, y);
+  /* init first_w[x|y], second_w[x|y] to describe box */
+  w_current->first_wx = w_current->second_wx = w_x;
+  w_current->first_wy = w_current->second_wy = w_y;
 
   /* start to draw the box */
   o_picture_rubberbox_xor(w_current);
-
+  w_current->rubber_visible = 1;
 }
 
 /*! \brief End the input of a circle.
  *  \par Function Description
  *  This function ends the input of the second corner of a picture.
- *  The (<B>x</B>,<B>y</B>) point is set to be this second corner. The picture
- *  is then defined by (<B>w_current->start_x</B>,<B>w_current->start_y</B>
- *  and (<B>w_current->last_x</B>,<B>w_current->last_y</B> that is a snapped
- *  version of (<B>x</B>,<B>y</B>).
- *  <B>x</B> and <B>y</B> are in screen unit.
+ *  The picture is defined by (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>
+ *  and (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>.
  *
- *  The temporary picture is erased ; a new picture object is allocated,
+ *  The temporary picture frame is erased ; a new picture object is allocated,
  *  initialized and linked to the object list ; The object is finally
  *  drawn on the current sheet.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        (unused)
+ *  \param [in] w_y        (unused)
  */
-void o_picture_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_picture_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int x1, y1;
-  int x2, y2;
   int picture_width, picture_height;
   int picture_left, picture_top;
 
   g_assert( w_current->inside_action != 0 );
-
-  /* get the last coords of the pointer */
-  w_current->last_x = fix_x(toplevel, x);
-  w_current->last_y = fix_y(toplevel, y);
 
   /* erase the temporary picture */
   o_picture_rubberbox_xor(w_current);
@@ -114,49 +101,27 @@ void o_picture_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   /* pictures with null width and height are not allowed */
   if ((picture_width == 0) && (picture_height == 0)) {
     /* cancel the object creation */
-    w_current->start_x = (-1);
-    w_current->start_y = (-1);
-    w_current->last_x  = (-1);
-    w_current->last_y  = (-1);
     return;
   }
 
-  /* calculate the world coords of the upper left and lower right corners */
-  SCREENtoWORLD(toplevel, picture_left, picture_top, &x1, &y1);
-  SCREENtoWORLD(toplevel,
-                picture_left + picture_width,
-		picture_top + picture_height, &x2, &y2);
-  x1 = snap_grid(toplevel, x1);
-  y1 = snap_grid(toplevel, y1);
-  x2 = snap_grid(toplevel, x2);
-  y2 = snap_grid(toplevel, y2);
-
   /* create the object */
   toplevel->page_current->object_tail =
-  o_picture_add(toplevel,
-                toplevel->page_current->object_tail,
-		w_current->current_pixbuf,
-		NULL, 0,
-		w_current->pixbuf_filename,
-		w_current->pixbuf_wh_ratio,
-                OBJ_PICTURE, x1, y1, x2, y2, 0, FALSE, FALSE);
+    o_picture_add(toplevel,
+		  toplevel->page_current->object_tail,
+		  w_current->current_pixbuf,
+		  NULL, 0,
+		  w_current->pixbuf_filename,
+		  w_current->pixbuf_wh_ratio,
+		  OBJ_PICTURE, 
+		  picture_left, picture_top,
+		  picture_left + picture_width, picture_top - picture_height,
+		  0, FALSE, FALSE);
 
   /* draw it */
   o_redraw_single(w_current, toplevel->page_current->object_tail);
   
-#if DEBUG
-  printf("coords: %d %d %d %d\n", x1, y2, x2, y2);
-#endif
-	
-  w_current->start_x = (-1);
-  w_current->start_y = (-1);
-  w_current->last_x  = (-1);
-  w_current->last_y  = (-1);
-	
   toplevel->page_current->CHANGED = 1;
-
   o_undo_savestate(w_current, UNDO_ALL);
-
 }
 
 /*! \brief Creates the add image dialog
@@ -256,7 +221,7 @@ void o_picture_eraserubber(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *  This function is used to draw the box while dragging one of its edge or
  *  angle. It erases the previous temporary box drawn before, and draws
- *  a new updated one. <B>x</B> and <B>y</B> are the new position of the mobile
+ *  a new updated one. <B>w_x</B> and <B>w_y</B> are the new position of the mobile
  *  point, ie the mouse.
  *
  *  The old values are inside the <B>w_current</B> pointed structure. Old
@@ -267,38 +232,39 @@ void o_picture_eraserubber(GSCHEM_TOPLEVEL *w_current)
  *  \param [in] x          Current x coordinate of pointer in screen units.
  *  \param [in] y          Current y coordinate of pointer in screen units.
  */
-void o_picture_rubberbox(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_picture_rubberbox(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
 #if DEBUG
   printf("o_picture_rubberbox called\n");
 #endif
   g_assert( w_current->inside_action != 0 );
 
   /* erase the previous temporary box */
-  o_picture_rubberbox_xor(w_current);
+  if (w_current->rubber_visible)
+    o_picture_rubberbox_xor(w_current);
 
   /*
-   * New values are fixed according to the <B>x</B> and <B>y</B> parameters. These are saved in <B>w_current</B> pointed structure as new temporary values. The new box is then drawn.
-
+   * New values are fixed according to the <B>w_x</B> and <B>w_y</B> parameters. 
+   * These are saved in <B>w_current</B> pointed structure as new temporary values. 
+   * The new box is then drawn.
    */
 
   /* update the coords of the corner */
-  w_current->last_x = fix_x(toplevel, x);
-  w_current->last_y = fix_y(toplevel, y);
+  w_current->second_wx = w_x;
+  w_current->second_wy = w_y;
 
   /* draw the new temporary box */
   o_picture_rubberbox_xor(w_current);
-  
+  w_current->rubber_visible = 1;
 }
 
 /*! \brief Draw picture from GSCHEM_TOPLEVEL object.
  *  \par Function Description
  *  This function draws the box from the variables in the GSCHEM_TOPLEVEL
  *  structure <B>*w_current</B>.
- *  One corner of the box is at (<B>w_current->start_x</B>,
- *  <B>w_current->start_y</B>) and the second corner is at
- *  (<B>w_current->last_x</B>,<B>w_current->last_y</B>.
+ *  One corner of the box is at (<B>w_current->first_wx</B>,
+ *  <B>w_current->first_wy</B>) and the second corner is at
+ *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>.
  *
  *  The box is drawn with a xor-function over the current sheet with the
  *  selection color.
@@ -307,14 +273,16 @@ void o_picture_rubberbox(GSCHEM_TOPLEVEL *w_current, int x, int y)
  */
 void o_picture_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
 {
-  int picture_width, picture_height, picture_left, picture_top;
-  
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int left, top, width, height;
+
   /* get the width/height and the upper left corner of the picture */
-  picture_width  = GET_PICTURE_WIDTH (w_current);
-  picture_height = GET_PICTURE_HEIGHT(w_current);
-  picture_left   = GET_PICTURE_LEFT  (w_current);
-  picture_top    = GET_PICTURE_TOP   (w_current);
-  
+  WORLDtoSCREEN(toplevel,
+		GET_PICTURE_LEFT(w_current), GET_PICTURE_TOP(w_current),
+		&left, &top);
+  width = SCREENabs(toplevel, GET_PICTURE_WIDTH (w_current));
+  height = SCREENabs(toplevel, GET_PICTURE_HEIGHT(w_current));
+
 #if DEBUG
   printf("o_picture_rubberbox_xor called:\n");
   printf("pixbuf wh ratio: %i\n", w_current->pixbuf_wh_ratio);
@@ -330,10 +298,9 @@ void o_picture_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
 			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
 			     GDK_JOIN_MITER);
   gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
-		     FALSE, picture_left, picture_top,
-		     picture_width, picture_height);
-  o_invalidate_rect(w_current, picture_left, picture_top,
-                    picture_left + picture_width, picture_top + picture_height);
+		     FALSE, left, top, width, height);
+  o_invalidate_rect(w_current, 
+		    left, top, left + width, top + height);
 }
 
 /*! \brief Draw a picture on the screen.

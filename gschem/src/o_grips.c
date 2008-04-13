@@ -35,12 +35,15 @@
 #define GET_BOX_WIDTH(w)  abs((w)->second_wx - (w)->first_wx)
 #define GET_BOX_HEIGHT(w) abs((w)->second_wy - (w)->second_wy)
 
-#define GET_PICTURE_WIDTH(w) abs((w)->last_x - (w)->start_x)
-#define GET_PICTURE_HEIGHT(w) (w)->pixbuf_wh_ratio == 0 ? 0 : \
-          abs((w)->last_x - (w)->start_x)/(w)->pixbuf_wh_ratio
-#define GET_PICTURE_LEFT(w) min((w)->start_x, (w)->last_x);
-#define GET_PICTURE_TOP(w)  (w)->start_y < (w)->last_y ? (w)->start_y : \
-          (w)->start_y-abs((w)->last_x - (w)->start_x)/(w)->pixbuf_wh_ratio;
+#define GET_PICTURE_WIDTH(w)			\
+  abs((w)->second_wx - (w)->first_wx) 
+#define GET_PICTURE_HEIGHT(w)						\
+  (w)->pixbuf_wh_ratio == 0 ? 0 : abs((w)->second_wx - (w)->first_wx)/(w)->pixbuf_wh_ratio
+#define GET_PICTURE_LEFT(w)			\
+  min((w)->first_wx, (w)->second_wx)
+#define GET_PICTURE_TOP(w)						\
+  (w)->first_wy > (w)->second_wy ? (w)->first_wy  :			\
+  (w)->first_wy+abs((w)->second_wx - (w)->first_wx)/(w)->pixbuf_wh_ratio
 
 /*! \brief
  *  This variable holds the identifier of the grip currently under
@@ -660,10 +663,10 @@ void o_grips_start_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  *  The function first erases the grips.
  *
  *  The coordinates of the selected corner are put in
- *  (<B>w_current->last_x</B>,<B>w_current->last_y</B>).
+ *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>).
  *
  *  The coordinates of the opposite corner go in
- *  (<B>w_current->start_x</B>,<B>w_current->start_y</B>). They are not
+ *  (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>). They are not
  *  suppose to change during the action.
  *
  *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
@@ -675,7 +678,6 @@ void o_grips_start_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                            int x, int y, int whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   w_current->last_drawb_mode = -1;
 
   /* erase the picture before */
@@ -684,32 +686,32 @@ void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->pixbuf_filename = o_current->picture->filename;
   w_current->pixbuf_wh_ratio = o_current->picture->ratio;
 
-  /* (last_x,last_y)    is the selected corner */
-  /* (start_x, start_y) is the opposite corner */
+  /* (second_wx,second_wy) is the selected corner */
+  /* (first_wx, first_wy) is the opposite corner */
   switch(whichone) {
     case PICTURE_UPPER_LEFT:
-      WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->upper_y,
-                     &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->lower_y,
-                     &w_current->start_x, &w_current->start_y );
+      w_current->second_wx = o_current->picture->upper_x;
+      w_current->second_wy = o_current->picture->upper_y;
+      w_current->first_wx = o_current->picture->lower_x; 
+      w_current->first_wy = o_current->picture->lower_y;
       break;
     case PICTURE_LOWER_RIGHT:
-      WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->lower_y,
-                     &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->upper_y,
-                     &w_current->start_x, &w_current->start_y );
+      w_current->second_wx = o_current->picture->lower_x;
+      w_current->second_wy = o_current->picture->lower_y;
+      w_current->first_wx = o_current->picture->upper_x; 
+      w_current->first_wy = o_current->picture->upper_y;
       break;
     case PICTURE_UPPER_RIGHT:
-      WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->upper_y,
-                     &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->lower_y,
-                     &w_current->start_x, &w_current->start_y );
+      w_current->second_wx = o_current->picture->lower_x;
+      w_current->second_wy = o_current->picture->upper_y;
+      w_current->first_wx = o_current->picture->upper_x; 
+      w_current->first_wy = o_current->picture->lower_y;
       break;
     case PICTURE_LOWER_LEFT:
-      WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->lower_y,
-                     &w_current->last_x, &w_current->last_y );
-      WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->upper_y,
-                     &w_current->start_x, &w_current->start_y );
+      w_current->second_wx = o_current->picture->upper_x;
+      w_current->second_wy = o_current->picture->lower_y;
+      w_current->first_wx = o_current->picture->lower_x; 
+      w_current->first_wy = o_current->picture->upper_y;
       break;
     default:
       return; /* error */
@@ -717,7 +719,7 @@ void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 
   /* draw the first temporary picture */
   o_picture_rubberbox_xor(w_current);
-
+  w_current->rubber_visible = 1;
 }
 
 /*! \brief Initialize grip motion process for a circle.
@@ -841,7 +843,7 @@ void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
     case(OBJ_PICTURE):
     /* erase, update and draw a box */
-    o_grips_motion_picture(w_current, x, y, whichone_changing);
+    o_grips_motion_picture(w_current, w_x, w_y, whichone_changing);
     break;
 
     case(OBJ_CIRCLE):
@@ -931,14 +933,14 @@ void o_grips_motion_box(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whicho
  *   picture and draw the new temporary picture.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
  *  \param [in] whichone   Which grip to start motion with.
  */
-void o_grips_motion_picture(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone)
+void o_grips_motion_picture(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
 {
   /* erase, update and draw the temporary picture */
-  o_picture_rubberbox(w_current, x, y);
+  o_picture_rubberbox(w_current, w_x, w_y);
 }
 
 /*! \brief Modify previously selected circle according to mouse position.
@@ -1174,30 +1176,20 @@ void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
 void o_grips_end_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int picture_width, picture_height;
-  int x, y;
 
-  picture_width  = GET_PICTURE_WIDTH (w_current);
-  picture_height = GET_PICTURE_HEIGHT(w_current);
+  /* erase the temporary picture */
+  o_picture_rubberbox_xor(w_current);
 
   /* don't allow zero width/height picturees
    * this ends the picture drawing behavior
    * we want this? hack */
-  if ((picture_width == 0) && (picture_height == 0)) {
+  if ((GET_PICTURE_WIDTH(w_current) == 0) || (GET_PICTURE_HEIGHT(w_current) == 0)) {
     o_redraw_single(w_current, o_current);
     return;
   }
 
-  SCREENtoWORLD(toplevel,
-                w_current->last_x, w_current->last_y,
-                &x, &y);
-  x = snap_grid(toplevel, x);
-  y = snap_grid(toplevel, y);
-
-  o_picture_modify(toplevel, o_current, x, y, whichone);
-
-  /* erase the temporary picture */
-  o_picture_rubberbox_xor(w_current);
+  o_picture_modify(toplevel, o_current, 
+		   w_current->second_wx, w_current->second_wy, whichone);
 
   /* draw the modified picture */
   o_redraw_single(w_current, o_current);

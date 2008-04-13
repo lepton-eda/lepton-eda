@@ -215,17 +215,13 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(DRAWPICTURE):
-        o_picture_start(w_current,
-                    (int) event->x,
-                    (int) event->y);
+        o_picture_start(w_current, w_x, w_y);
         w_current->event_state = ENDPICTURE;
         w_current->inside_action = 1;
         break;
 
       case(ENDPICTURE):
-        o_picture_end(w_current,
-                  (int) event->x,
-                  (int) event->y);
+        o_picture_end(w_current, w_x, w_y);
         w_current->inside_action = 0;
         w_current->event_state = DRAWPICTURE;
         break;
@@ -1029,9 +1025,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
     case(ENDPICTURE):
     if (w_current->inside_action)
-    o_picture_rubberbox( w_current,
-                        (int) event->x,
-                        (int) event->y);
+      o_picture_rubberbox( w_current, w_x, w_y);
     break;
 
     case(ENDCIRCLE):
