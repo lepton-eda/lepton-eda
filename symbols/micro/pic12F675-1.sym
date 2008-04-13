@@ -1,4 +1,4 @@
-v 20041228 1
+v 20080127 1
 T 5000 1300 8 10 1 1 180 0 1
 refdes=U?
 T 300 1340 8 10 0 0 0 0 1
@@ -74,17 +74,15 @@ pinlabel=GP0/AN0/CIN+/ICSPDAT
 T 4950 800 5 8 0 1 0 8 1
 pintype=io
 }
-T 700 -400 5 10 0 0 0 0 1
-net=Vdd:1
-T -300 -500 5 10 0 0 0 0 1
-net=Vss:8
 T 300 1950 8 10 0 0 0 0 1
 description=8-bit FLASH microcontroller
 T 300 2150 8 10 0 0 0 0 1
-documentation=http://www.microchip.com/download/lit/pline/picmicro/families/12f6xx/41190c.pdf
+documentation=http://ww1.microchip.com/downloads/en/DeviceDoc/41190E.pdf
 T 300 1150 9 10 1 0 0 0 1
 PIC12F675
 T 300 2350 8 10 0 0 0 0 1
 net=GND:8
 T 300 2550 8 10 0 0 0 0 1
 net=Vcc:1
+T 300 2750 8 10 0 0 0 0 1
+symversion=1.0

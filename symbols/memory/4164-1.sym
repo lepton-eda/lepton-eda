@@ -1,4 +1,4 @@
-v 20050313 1
+v 20080127 1
 V 250 200 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 P 0 200 200 200 1 0 0
 {
@@ -7,7 +7,7 @@ pinnumber=15
 T 200 150 5 8 0 1 0 8 1
 pinseq=15
 T 350 200 9 8 1 1 0 0 1
-pinlabel=CAS
+pinlabel=\_CAS\_
 T 350 200 5 8 0 1 0 2 1
 pintype=in
 }
@@ -19,7 +19,7 @@ pinnumber=4
 T 200 450 5 8 0 1 0 8 1
 pinseq=4
 T 350 500 9 8 1 1 0 0 1
-pinlabel=RAS
+pinlabel=\_RAS\_
 T 350 500 5 8 0 1 0 2 1
 pintype=in
 }
@@ -31,7 +31,7 @@ pinnumber=3
 T 200 750 5 8 0 1 0 8 1
 pinseq=3
 T 350 800 9 8 1 1 0 0 1
-pinlabel=WE
+pinlabel=\_WE\_
 T 350 800 5 8 0 1 0 2 1
 pintype=in
 }
@@ -159,13 +159,12 @@ numslots=0
 T 300 5650 5 10 0 0 0 0 1
 author=Werner Hoch <werner.hoATgmx.de>
 T 300 5250 5 10 0 0 0 0 1
-net=Vcc:16
+net=Vcc:8
 T 300 5450 5 10 0 0 0 0 1
-net=GND:8
+net=GND:16
 T 300 4450 3 10 1 0 0 0 1
 4164
-L 350 625 650 625 3 0 0 0 -1 -1
-L 350 925 575 925 3 0 0 0 -1 -1
-L 350 325 650 325 3 0 0 0 -1 -1
 T 300 6050 5 10 0 0 0 0 1
-documentation=http://www.ecs.umass.edu/ece/labs/vlsicad/ece353/docs/smj4164.pdf
+documentation=http://www.alldatasheet.com/datasheet-pdf/pdf/167176/PANASONIC/MN4164-15.html
+T 300 6250 5 10 0 0 0 0 1
+symversion=0.1
