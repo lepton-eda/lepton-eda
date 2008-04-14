@@ -286,8 +286,8 @@ void o_picture_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
 #if DEBUG
   printf("o_picture_rubberbox_xor called:\n");
   printf("pixbuf wh ratio: %i\n", w_current->pixbuf_wh_ratio);
-  printf("start: %i, %i\n", w_current->start_x, w_current->start_y);
-  printf("last: %i, %i\n", w_current->last_x, w_current->last_y);
+  printf("first: %i, %i\n", w_current->first_wx, w_current->first_wy);
+  printf("second: %i, %i\n", w_current->second_wx, w_current->second_wy);
   printf("Left: %i\nTop: %i\nWidth: %i\nHeight: %i\n",
 	 picture_left, picture_top, picture_width, picture_height);
 #endif

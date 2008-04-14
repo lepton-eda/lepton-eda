@@ -1028,7 +1028,7 @@ void o_box_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
   box_left   = min(x1, x2);
   box_top    = min(y1, y2);
   
-	/* draw the box from the previous variables */
+  /* draw the box from the previous variables */
   gdk_gc_set_foreground(w_current->xor_gc, 
 			x_get_darkcolor(w_current->select_color));
   gdk_gc_set_line_attributes(w_current->xor_gc, 0, 

@@ -700,11 +700,7 @@ void o_line_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color,
  */
 void o_line_eraserubber(GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  gdk_gc_set_foreground(w_current->gc,
-			x_get_color(toplevel->background_color) );
-  gdk_draw_line(w_current->backingstore, w_current->gc, w_current->start_x,
-                w_current->start_y, w_current->last_x, w_current->last_y);
+  o_line_rubberline_xor(w_current);
 }
 
 /*! \brief Draw a line object after applying translation.
@@ -847,8 +843,8 @@ void o_line_rubberline(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /*
    * The current temporary line is described by the two points
-   * (<B>w_current->start_x</B>,<B>w_current->start_y</B>) and
-   * (<B>w_current->last_x</B>,<B>w_current->last_y</B>) as end of the line.
+   * (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>) and
+   * (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>) as end of the line.
    *
    * This line is xor-drawn : if the line was already displayed, it is
    * erased. If the line was not already displayed it is drawn.

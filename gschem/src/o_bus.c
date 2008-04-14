@@ -372,6 +372,8 @@ void o_bus_rubberbus_xor(GSCHEM_TOPLEVEL *w_current)
                                GDK_JOIN_MITER);
   }
 
+  gdk_gc_set_foreground(w_current->xor_gc, 
+			x_get_darkcolor(w_current->select_color));
   gdk_draw_line(w_current->backingstore, w_current->xor_gc, 
 		x1, y1, x2, y2);
   o_invalidate_rect(w_current, 
