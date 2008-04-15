@@ -174,8 +174,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       case(STARTMOVE):
         if (o_select_selected(w_current)) {
 	  w_current->rotated_inside = 0;
-          o_move_start(w_current,
-                       (int) event->x, (int) event->y);
+          o_move_start(w_current, w_x, w_y);
           w_current->event_state = MOVE;
           w_current->inside_action = 1;
         }
@@ -443,9 +442,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         w_current->inside_action = 1;
 	i_set_state(w_current, COPY);
       } else {
-        o_move_start(w_current,
-                     (int) event->x,
-                     (int) event->y);
+        o_move_start(w_current, w_x, w_y);
         w_current->inside_action = 1;
 	i_set_state(w_current, MOVE);
       }
@@ -968,8 +965,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     else {
       /* Start the object movement */
       w_current->rotated_inside = 0;
-      o_move_start(w_current,
-		   (int) event->x, (int) event->y);
+      o_move_start(w_current, w_x, w_y);
       w_current->event_state = ENDMOVE;
       w_current->inside_action = 1;
       
@@ -987,13 +983,12 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
       }
 
       o_complex_rubbercomplex(w_current);
-      w_current->last_x = fix_x(toplevel,  (int) event->x);
-      w_current->last_y = fix_y(toplevel,  (int) event->y);
+      w_current->second_wx = w_x;
+      w_current->second_wy = w_y;
       o_complex_rubbercomplex(w_current);
       if (w_current->netconn_rubberband) {
         o_move_stretch_rubberband(w_current);
       }
-
     }
     break;
 

@@ -690,8 +690,8 @@ DEFINE_I_CALLBACK(edit_move_hotkey)
 
   i_update_middle_button(w_current, i_callback_edit_move_hotkey, _("Move"));
   if (o_select_return_first_object(w_current)) {
-    o_redraw_cleanstates(w_current);	
-    o_move_start(w_current, mouse_x, mouse_y);
+    o_redraw_cleanstates(w_current);
+    o_move_start(w_current, mouse_wx, mouse_wy);
     w_current->event_state = ENDMOVE;
     w_current->inside_action = 1;
   }

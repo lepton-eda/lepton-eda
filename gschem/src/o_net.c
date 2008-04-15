@@ -271,13 +271,13 @@ void o_net_draw_xor_single(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int which
     fprintf(stderr, _("Got an invalid which one in o_net_draw_xor_single\n"));
   }
 
-  WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
-  WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[0] + dx1, o_current->line->y[0] + dy1, &sx[0], &sy[0] );
+  WORLDtoSCREEN( toplevel, o_current->line->x[1] + dx2, o_current->line->y[1] + dy2, &sx[1], &sy[1] );
 
   gdk_draw_line(w_current->backingstore, w_current->outline_xor_gc,
-                sx[0] + dx1, sy[0] + dy1, sx[1] + dx2, sy[1] + dy2);
+                sx[0], sy[0], sx[1], sy[1]);
   o_invalidate_rect(w_current,
-                    sx[0] + dx1, sy[0] + dy1, sx[1] + dx2, sy[1] + dy2);
+                    sx[0], sy[0], sx[1], sy[1]);
 
 }
 

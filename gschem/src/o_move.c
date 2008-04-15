@@ -36,7 +36,7 @@
  *  \par Function Description
  *
  */
-void o_move_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_move_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   if ( geda_list_get_glist( toplevel->page_current->selection_list ) != NULL) {
@@ -47,8 +47,8 @@ void o_move_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
     w_current->last_drawb_mode = -1;
     w_current->event_state = MOVE;
 
-    w_current->last_x = w_current->start_x = fix_x(toplevel, x);
-    w_current->last_y = w_current->start_y = fix_y(toplevel, y);
+    w_current->first_wx = w_current->second_wx = w_x;
+    w_current->first_wy = w_current->second_wy = w_y;
 
     o_erase_selected(w_current);
 
@@ -129,8 +129,6 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
   GList *s_current = NULL;
   OBJECT *object;
   int diff_x, diff_y;
-  int lx, ly;
-  int sx, sy;
   int left, top, right, bottom;
   GList *other_objects = NULL;
   GList *connected_objects = NULL;
@@ -147,18 +145,8 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
     return;
   }
 
-
-  SCREENtoWORLD(toplevel, w_current->last_x, w_current->last_y,
-                &lx, &ly);
-  SCREENtoWORLD(toplevel, w_current->start_x, w_current->start_y,
-                &sx, &sy);
-  lx = snap_grid(toplevel, lx);
-  ly = snap_grid(toplevel, ly);
-  sx = snap_grid(toplevel, sx);
-  sy = snap_grid(toplevel, sy);
-
-  diff_x = lx - sx;
-  diff_y = ly - sy;
+  diff_x = w_current->second_wx - w_current->first_wx;
+  diff_y = w_current->second_wy - w_current->first_wy;
 
   if (w_current->netconn_rubberband)
   {
@@ -575,9 +563,8 @@ void o_move_stretch_rubberband(GSCHEM_TOPLEVEL *w_current)
   int diff_x, diff_y;
   int whichone;
 
-  diff_x = w_current->last_x - w_current->start_x;
-  diff_y = w_current->last_y - w_current->start_y;
-
+  diff_x = w_current->second_wx - w_current->first_wx;
+  diff_y = w_current->second_wy - w_current->first_wy;
 
   /* skip over head */
   s_current = toplevel->page_current->stretch_head->next;
