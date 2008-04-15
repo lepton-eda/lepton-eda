@@ -276,24 +276,16 @@ void o_text_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
  *  \par Function Description
  *
  */
-void o_text_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
+void o_text_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int x, y;
   int temp, i;
   char *value;
 
-  w_current->last_x = w_current->start_x = fix_x(toplevel, screen_x);
-  w_current->last_y = w_current->start_y = fix_y(toplevel, screen_y);
+  w_current->first_wx = w_current->second_wx = w_x;
+  w_current->first_wy = w_current->second_wy = w_y;
 
   w_current->last_drawb_mode = -1;
-
-  /* make sure list is null first, so that you don't have a mem leak */
-  SCREENtoWORLD(toplevel,
-                w_current->start_x,
-                w_current->start_y,
-                &x,
-                &y);
 
   /* remove the old attrib list if it exists */
   s_delete_object_glist(toplevel, toplevel->page_current->attrib_place_list);
@@ -320,9 +312,8 @@ void o_text_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
   toplevel->page_current->attrib_place_list =
     g_list_append(toplevel->page_current->attrib_place_list,
                   o_text_add(toplevel, NULL,
-                              /* type changed from TEXT to TEXT */
                              OBJ_TEXT, w_current->text_color,
-                             x, y, LOWER_LEFT, 0, /* zero is angle */
+                             w_x, w_y, LOWER_LEFT, 0, /* zero is angle */
                              toplevel->current_attribute,
                              w_current->text_size,
                              /* has to be visible so you can place it */
@@ -348,21 +339,10 @@ void o_text_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
 void o_text_end(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  /*! \todo get consistant names */
-  int world_x, world_y;
 
   /* erase the old bounding box / outline */
-    o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
-                   x_get_darkcolor(w_current->bb_color), FALSE);
-
-  SCREENtoWORLD(toplevel,
-                w_current->last_x,
-                w_current->last_y,
-                &world_x,
-                &world_y);
-
-  world_x = snap_grid(toplevel, world_x);
-  world_y = snap_grid(toplevel, world_y);
+  o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
+		 x_get_darkcolor(w_current->bb_color), FALSE);
 
   /* here you need to add OBJ_TEXT when it's done */
   /*! \todo make this VIS and SHOW default configurable */
@@ -371,7 +351,7 @@ void o_text_end(GSCHEM_TOPLEVEL *w_current)
              /* type changed from TEXT to TEXT */
              OBJ_TEXT,
              w_current->text_color,
-             world_x, world_y, LOWER_LEFT, 
+             w_current->second_wx, w_current->second_wy, LOWER_LEFT,
              w_current->complex_rotate,
              toplevel->current_attribute,
              w_current->text_size,

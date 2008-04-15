@@ -1082,15 +1082,15 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
     case(DRAWTEXT):
     w_current->complex_rotate = 0; /* reset to known state */
-    o_text_start(w_current, (int) event->x, (int) event->y);
+    o_text_start(w_current, w_x, w_y);
     w_current->event_state = ENDTEXT;
     w_current->inside_action = 1;
     break;
 
     case(ENDTEXT):
     o_text_rubberattrib(w_current);
-    w_current->last_x = fix_x(toplevel, (int) event->x);
-    w_current->last_y = fix_y(toplevel, (int) event->y);
+    w_current->second_wx = w_x;
+    w_current->second_wy = w_y;
     o_text_rubberattrib(w_current);
     break;
 

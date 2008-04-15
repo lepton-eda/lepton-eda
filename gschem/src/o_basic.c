@@ -36,12 +36,6 @@
  * readability issues
  */
 
-/* Kazu on July 16, 1999 - Added these macros to simplify the code */
-#define GET_BOX_WIDTH(w)			\
-	abs((w)->last_x - (w)->start_x)
-#define GET_BOX_HEIGHT(w)			\
-	abs((w)->last_y - (w)->start_y)
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -374,7 +368,9 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
 
   /* BUG: temporary fix while switching to world corrds */
   if (!(w_current->event_state == MOVE)
-      && !(w_current->event_state == ENDMOVE)) {
+      && !(w_current->event_state == ENDMOVE)
+      && !(w_current->event_state == DRAWTEXT)
+      && !(w_current->event_state == ENDTEXT)) {
     SCREENtoWORLD(toplevel, w_current->start_x, w_current->start_y,
 		  &(w_current->first_wx), &(w_current->first_wy));
     SCREENtoWORLD(toplevel, w_current->last_x, w_current->last_y,
