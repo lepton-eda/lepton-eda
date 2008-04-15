@@ -707,7 +707,7 @@ void o_line_eraserubber(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *  This function is used to draw the line object described by
  *  <B>*o_current</B> after applying a translation on the two directions of
- *  <B>dx</B> and <B>dy</B> in screen unit. It uses and XOR function to draw the
+ *  <B>dx</B> and <B>dy</B> in world units. It uses and XOR function to draw the
  *  translated line over the current sheet.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
@@ -735,11 +735,11 @@ void o_line_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
   gdk_gc_set_foreground(w_current->outline_xor_gc,
                         x_get_darkcolor(color));
   
-  WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
-  WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
+  WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0]);
+  WORLDtoSCREEN(toplevel, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1]);
 
   gdk_draw_line(w_current->backingstore, w_current->outline_xor_gc,
-                sx[0] + dx, sy[0] + dy, sx[1] + dx, sy[1] + dy);
+                sx[0], sy[0], sx[1], sy[1]);
 }
 
 /*! \brief Start process to input a new line.

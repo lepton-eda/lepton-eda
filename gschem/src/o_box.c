@@ -818,7 +818,7 @@ void o_box_eraserubber(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *  This function daws the box object described by <B>*o_current</B> translated
  *  by the vector (<B>dx</B>,<B>dy</B>) with an xor-function over the current sheet.
- *  The translation vector is in screen unit.
+ *  The translation vector is in world unit.
  *
  *  The box is displayed with the color of the object.
  *
@@ -838,10 +838,10 @@ void o_box_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
     return;
   }
 
-  WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->upper_y,
-                 &screen_x1, &screen_y1 );
-  WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->lower_y,
-                 &screen_x2, &screen_y2 );
+  WORLDtoSCREEN(toplevel, o_current->box->upper_x + dx, o_current->box->upper_y + dy,
+                &screen_x1, &screen_y1);
+  WORLDtoSCREEN(toplevel, o_current->box->lower_x + dx, o_current->box->lower_y + dy,
+                &screen_x2, &screen_y2);
 	
   if (o_current->saved_color != -1) {
     color = o_current->saved_color;
@@ -853,8 +853,8 @@ void o_box_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
                         x_get_darkcolor(color));
   gdk_draw_rectangle(w_current->backingstore,
                      w_current->outline_xor_gc, FALSE,
-                     screen_x1 + dx,
-                     screen_y1 + dy,
+                     screen_x1,
+                     screen_y1,
                      abs(screen_x2 - screen_x1),
                      abs(screen_y2 - screen_y1));
 }

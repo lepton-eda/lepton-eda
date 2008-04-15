@@ -360,14 +360,11 @@ void o_erase_list(GSCHEM_TOPLEVEL *w_current, GList* list)
  *  \param [in] drawing     Set to FALSE for undraw operations to ensure
  *                            matching conditions to a previous draw operation.
  */
-/* both outline and boundingbox work! */
-/* name is blah */
 void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
 		    GdkColor *color, int drawing)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
-  int test_x, test_y;
   int left, top, bottom, right;
   int s_left, s_top, s_bottom, s_right;
 
@@ -376,12 +373,12 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
   }
 
   /* BUG: temporary fix while switching to world corrds */
-  if (w_current->event_state == MOVE
-      || w_current->event_state == ENDMOVE) {
-    WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy,
-		  &(w_current->start_x), &(w_current->start_y));
-    WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy,
-		  &(w_current->last_x), &(w_current->last_y));
+  if (!(w_current->event_state == MOVE)
+      && !(w_current->event_state == ENDMOVE)) {
+    SCREENtoWORLD(toplevel, w_current->start_x, w_current->start_y,
+		  &(w_current->first_wx), &(w_current->first_wy));
+    SCREENtoWORLD(toplevel, w_current->last_x, w_current->last_y,
+		  &(w_current->second_wx), &(w_current->second_wy));
   }
 
   /* If drawing is true, then don't worry about the previous drawing
@@ -392,41 +389,39 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
                                             ? CONSTRAINED : FREE;
   }
 
+  /* Calculate delta of X-Y positions from buffer's origin */
+  diff_x = w_current->second_wx - w_current->first_wx;
+  diff_y = w_current->second_wy - w_current->first_wy;
+
   /* Adjust the coordinates according to the movement constraints */
   if (w_current->drawbounding_action_mode == CONSTRAINED ) {
-    test_x = GET_BOX_WIDTH (w_current);
-    test_y = GET_BOX_HEIGHT(w_current);
-    if (test_x >= test_y) {
-      w_current->last_y = w_current->start_y;
+    if (abs(diff_x) >= abs(diff_y)) {
+      w_current->second_wy = w_current->first_wy;
     } else {
-      w_current->last_x = w_current->start_x;
+      w_current->second_wx = w_current->first_wx;
     }
   }
-
-  /* Calculate delta of X-Y positions from buffer's origin */
-  diff_x = w_current->last_x - w_current->start_x;
-  diff_y = w_current->last_y - w_current->start_y;
 
   /* Find the bounds of the drawing to be done */
   world_get_object_glist_bounds(toplevel, o_glist,
                                 &left, &top, &right, &bottom);
-  WORLDtoSCREEN( toplevel, left, top, &s_left, &s_top );
-  WORLDtoSCREEN( toplevel, right, bottom, &s_right, &s_bottom );
+  WORLDtoSCREEN(toplevel, left + diff_x, top + diff_y, &s_left, &s_top);
+  WORLDtoSCREEN(toplevel, right + diff_x, bottom + diff_y, &s_right, &s_bottom);
 
   /* XOR draw with the appropriate mode */
   if (w_current->last_drawb_mode == BOUNDINGBOX) {
     gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
     gdk_draw_rectangle(w_current->backingstore,
                        w_current->bounding_xor_gc, FALSE,
-                       s_left + diff_x, s_bottom + diff_y,
+                       s_left, s_bottom,
                        s_right - s_left, s_top - s_bottom);
   } else {
     o_glist_draw_xor (w_current, diff_x, diff_y, o_glist);
   }
 
   /* Invalidate the screen buffer where we drew */
-  o_invalidate_rect(w_current, s_left + diff_x, s_top + diff_y,
-                               s_right + diff_x, s_bottom + diff_y);
+  o_invalidate_rect(w_current, s_left, s_top,
+                               s_right, s_bottom);
 
   /* Save movement constraints and drawing method for any
    * corresponding undraw operation. */

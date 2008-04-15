@@ -829,9 +829,9 @@ void o_arc_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
   /* height MUST be equal to width, just another name for diameter */
   height      = SCREENabs( toplevel, o_current->arc->height );
   /* center */
-  WORLDtoSCREEN( toplevel, o_current->arc->x, o_current->arc->y, &x, &y );
-  x           -= (width  / 2);
-  y           -= (height / 2);
+  WORLDtoSCREEN(toplevel, o_current->arc->x + dx, o_current->arc->y + dy, &x, &y);
+  x -= (width  / 2);
+  y -= (height / 2);
   /* start and end angles */
   start_angle = o_current->arc->start_angle;
   end_angle   = o_current->arc->end_angle;
@@ -855,7 +855,7 @@ void o_arc_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
 			x_get_darkcolor(color));
   /* better to set the line attributes here ? */
   gdk_draw_arc(w_current->backingstore, w_current->outline_xor_gc, FALSE,
-	       x + dx, y + dy, width, height,
+	       x, y, width, height,
 	       start_angle * 64, end_angle * 64);
 
   /* backing store? not appropriate here  */

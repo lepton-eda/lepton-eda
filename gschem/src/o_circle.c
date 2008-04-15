@@ -508,7 +508,7 @@ void o_circle_eraserubber(GSCHEM_TOPLEVEL *w_current)
  *  This function draws the circle object described by <B>*o_current</B>
  *  translated by the vector (<B>dx</B>,<B>dy</B>) with an xor-function over
  *  the current sheet.
- *  The translation vector is in screen unit.
+ *  The translation vector is in world unit.
  *
  *  The circle is displayed with the color of the object.
  *
@@ -541,13 +541,9 @@ void o_circle_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
   /* upper left corner of the square the circle is inscribed in */
   /* gdk coords system */
   WORLDtoSCREEN( toplevel,
-                 o_current->circle->center_x - o_current->circle->radius,
-                 o_current->circle->center_y + o_current->circle->radius,
+                 o_current->circle->center_x - o_current->circle->radius + dx,
+                 o_current->circle->center_y + o_current->circle->radius + dy,
                  &x, &y );
-  
-  /* translate the upper left corner */
-  x = x + dx;
-  y = y + dy;
   
   /* To draw be sure to setup width height */
   gdk_gc_set_foreground(w_current->outline_xor_gc,

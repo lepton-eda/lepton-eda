@@ -248,10 +248,8 @@ void o_text_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
   } else {
     /* text is too small so go through and draw a line in
        it's place */
-
-    /* NOTE THAT THE TOP AND BOTTOM ARE REVERSED THROUGHT THE WHOLE OF GEDA FOR WORLD COORDS */
-    WORLDtoSCREEN( toplevel, o_current->w_left, o_current->w_bottom, &left, &top );
-    WORLDtoSCREEN( toplevel, o_current->w_right, o_current->w_top, &right, &bottom );
+    WORLDtoSCREEN(toplevel, o_current->w_left + dx, o_current->w_bottom + dy, &left, &top);
+    WORLDtoSCREEN(toplevel, o_current->w_right + dx, o_current->w_top + dy, &right, &bottom);
 
     if (o_current->saved_color != -1) {
       color = o_current->saved_color;
@@ -265,11 +263,10 @@ void o_text_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
     gdk_draw_rectangle( w_current->backingstore,
                         w_current->outline_xor_gc,
                         FALSE,
-                        left+dx,
-                        top+dy,
+                        left,
+                        top,
                         right - left,
                         bottom - top );
-
   }
 }
 

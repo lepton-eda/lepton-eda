@@ -142,12 +142,11 @@ void o_bus_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
                                GDK_JOIN_MITER);
   }
 
-  WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &sx[0], &sy[0] );
-  WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &sx[1], &sy[1] );
+  WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0] );
+  WORLDtoSCREEN(toplevel, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1] );
   
   gdk_draw_line(w_current->backingstore, w_current->outline_xor_gc,
-                sx[0]+dx, sy[0]+dy,
-                sx[1]+dx, sy[1]+dy);
+                sx[0], sy[0], sx[1], sy[1]);
 
   /* backing store ? not approriate here */
 
