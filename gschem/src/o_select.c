@@ -242,29 +242,23 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  *  \par Function Description
  *
  */
-void o_select_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
+int o_select_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  int box_width, box_height;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int diff_x, diff_y;
 
-  /* don't set these to the passed in x, y */
-  w_current->last_x = w_current->start_x; 
-  w_current->last_y = w_current->start_y; 
+  diff_x = abs(w_current->first_wx - w_x);
+  diff_y = abs(w_current->first_wy - w_y);
 
-  box_width = 0;
-  box_height = 0;
+  /* if we are still close to the button press location,
+     then don't enter the selection box mode */
+  if (SCREENabs(toplevel, max(diff_x, diff_y)) < 10) {
+    return FALSE;
+  }
 
-  gdk_gc_set_foreground(w_current->xor_gc,
-                        x_get_darkcolor(w_current->select_color));
-  gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
-                     FALSE,
-                     w_current->start_x,
-                     w_current->start_y,
-                     box_width,
-                     box_height);
-  o_invalidate_rect(w_current, w_current->start_x,
-                               w_current->start_y,
-                               w_current->start_x + box_width,
-                               w_current->start_y + box_height);
+  w_current->second_wx = w_x;
+  w_current->second_wy = w_y;
+  return TRUE;
 }
 
 /*! \todo Finish function documentation!!!
@@ -272,36 +266,10 @@ void o_select_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *
  */
-void o_select_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_select_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  int box_width, box_height;
-  int box_left, box_top;
-
-  box_width = abs(w_current->last_x - w_current->start_x);
-  box_height = abs(w_current->last_y - w_current->start_y);	
-
-  if( w_current->last_y < w_current->start_y )
-  box_top = w_current->last_y;
-  else
-  box_top = w_current->start_y;
-
-  if( w_current->last_x < w_current->start_x )
-  box_left = w_current->last_x;
-  else
-  box_left = w_current->start_x;
-
-  gdk_gc_set_foreground(w_current->xor_gc,
-                        x_get_darkcolor(w_current->select_color));
-  gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
-                     FALSE,
-                     box_left,
-                     box_top,
-                     box_width,
-                     box_height);
-  o_invalidate_rect(w_current, box_left,
-                               box_top,
-                               box_left + box_width,
-                               box_top  + box_height);
+  o_select_box_rubberband_xor(w_current);
+  w_current->rubber_visible = 0;
 
   o_select_box_search(w_current);
 }
@@ -311,67 +279,45 @@ void o_select_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *
  */
-void o_select_box_rubberband(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_select_box_rubberband(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  int box_width, box_height;
-  int box_left, box_top;
+  if (w_current->rubber_visible)
+    o_select_box_rubberband_xor(w_current);
+    
+  w_current->second_wx = w_x; 
+  w_current->second_wy = w_y;
 
-  box_width = abs(w_current->last_x - w_current->start_x);
-  box_height = abs(w_current->last_y - w_current->start_y);
+  o_select_box_rubberband_xor(w_current);
+  w_current->rubber_visible = 1;
+}
 
-  if( w_current->last_y < w_current->start_y )
-  box_top = w_current->last_y;
-  else
-  box_top = w_current->start_y;
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_select_box_rubberband_xor(GSCHEM_TOPLEVEL *w_current)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int box_width, box_height, box_left, box_top;
+  int x1, y1, x2, y2;
 
-  if( w_current->last_x < w_current->start_x )
-  box_left = w_current->last_x;
-  else
-  box_left = w_current->start_x;
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
+  box_width = abs(x1 - x2);
+  box_height = abs(y1 - y2);
+  box_left = min(x1, x2);
+  box_top = min(y1, y2);
 
   gdk_gc_set_foreground(w_current->xor_gc,
                         x_get_darkcolor(w_current->select_color));
   gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
                      FALSE,
-                     box_left  ,
-                     box_top   ,
-                     box_width ,
-                     box_height);
-  o_invalidate_rect(w_current, box_left,
-                               box_top,
-                               box_left + box_width,
-                               box_top  + box_height);
-
-
-  /* removed fix_x, fix_y to unrestrict sels */
-  w_current->last_x = (int) x; 
-  w_current->last_y = (int) y;
-
-  box_width = abs(w_current->last_x - w_current->start_x);
-  box_height = abs(w_current->last_y - w_current->start_y);
-
-  if( w_current->last_y < w_current->start_y )
-  box_top = w_current->last_y;
-  else
-  box_top = w_current->start_y;
-
-  if( w_current->last_x < w_current->start_x )
-  box_left = w_current->last_x;
-  else
-  box_left = w_current->start_x;
-
-  gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
-                     FALSE,
-                     box_left,
-                     box_top,
-                     box_width,
-                     box_height);
-  o_invalidate_rect(w_current, box_left,
-                               box_top,
-                               box_left + box_width,
-                               box_top  + box_height);
-
+                     box_left, box_top, box_width, box_height);
+  o_invalidate_rect(w_current, 
+		    box_left, box_top,
+		    box_left + box_width, box_top  + box_height);
 }
 
 /*! \todo Finish function documentation!!!
@@ -385,24 +331,12 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
   OBJECT *o_current=NULL;
   int count = 0; /* object count */
   int SHIFTKEY = w_current->SHIFTKEY;
-  int w_start_x, w_start_y, w_last_x, w_last_y;
+  int left, right, top, bottom;
 	
-  int tmp;
-	
-  if( w_current->last_x < w_current->start_x ) {
-    tmp = w_current->last_x;
-    w_current->last_x = w_current->start_x;
-    w_current->start_x = tmp;
-  }
-
-  if( w_current->last_y < w_current->start_y ) {
-    tmp = w_current->last_y;
-    w_current->last_y = w_current->start_y;
-    w_current->start_y = tmp;
-  }
-
-  SCREENtoWORLD( toplevel, w_current->start_x, w_current->start_y, &w_start_x, &w_start_y );
-  SCREENtoWORLD( toplevel, w_current->last_x, w_current->last_y, &w_last_x, &w_last_y );
+  left = min(w_current->first_wx, w_current->second_wx);
+  right = max(w_current->first_wx, w_current->second_wx);
+  top = min(w_current->first_wy, w_current->second_wy);
+  bottom = max(w_current->first_wy, w_current->second_wy);
 
   o_current = toplevel->page_current->object_head;
 
@@ -412,10 +346,10 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
         (o_current->visibility == VISIBLE ||
         (o_current->visibility == INVISIBLE && toplevel->show_hidden_text))) {
 
-      if ( o_current->w_left   >= w_start_x &&
-           o_current->w_right  <= w_last_x  &&
-           o_current->w_top    >= w_last_y  &&
-           o_current->w_bottom <= w_start_y ) {
+      if ( o_current->w_left   >= left &&
+           o_current->w_right  <= right  &&
+           o_current->w_top    >= top  &&
+           o_current->w_bottom <= bottom ) {
 
         o_select_object(w_current, o_current, MULTIPLE, count);
         count++;

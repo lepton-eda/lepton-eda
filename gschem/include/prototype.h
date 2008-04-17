@@ -681,9 +681,10 @@ void o_pin_eraserubber(GSCHEM_TOPLEVEL *w_current);
 /* o_select.c */
 void o_select_run_hooks(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int flag);
 void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int type, int count);
-void o_select_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
+int o_select_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_select_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_select_box_rubberband(GSCHEM_TOPLEVEL *w_current, int x, int y);
+void o_select_box_rubberband_xor(GSCHEM_TOPLEVEL *w_current);
 void o_select_box_search(GSCHEM_TOPLEVEL *w_current);
 OBJECT *o_select_return_first_object(GSCHEM_TOPLEVEL *w_current);
 int o_select_selected(GSCHEM_TOPLEVEL *w_current);

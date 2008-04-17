@@ -140,12 +140,10 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
                            w_current, (int) event->x, (int) event->y)) {
 				/* now go into normal SELECT */
 	  w_current->event_state = STARTSELECT;
-	  w_current->start_x = w_current->last_x =
-	    (int) event->x;
-	  w_current->start_y = w_current->last_y =
-	    (int) event->y;
+	  w_current->first_wx = w_current->second_wx = w_x;
+	  w_current->first_wy = w_current->second_wy = w_y;
         } else {
-				/* a grip was found */
+	  /* a grip was found */
           w_current->event_state = GRIPS;
           w_current->inside_action = 1;
         }
@@ -638,14 +636,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(SBOX):
-        /* fix_x,y was removed to allow more flex */
-        w_current->last_x = (int) event->x;
-        w_current->last_y = (int) event->y;
-        /* NEW SELECTION code */
-        o_select_box_end(w_current,
-                         (int) event->x,
-                         (int) event->y);
-        /* this one stays */
+        o_select_box_end(w_current, w_x, w_y);
         w_current->inside_action = 0;
 	i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
@@ -933,32 +924,10 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     if ( (!w_current->drag_can_move) ||
 	 (w_current->drag_can_move && 
 	  (! o_find_selected_object(w_current, 
-				    w_current->start_x, w_current->start_y)))) {
-      temp_x = fix_x(toplevel, (int) event->x);
-      temp_y = fix_y(toplevel, (int) event->y);
-      /* is eight enough of a threshold? */
-      /* make this configurable anyways */
-      diff_x = fabs(toplevel->page_current->right -
-		    toplevel->page_current->left);
-      
-#ifdef HAS_RINT
-      zoom_scale = (int) rint(toplevel->init_right / diff_x);
-#else
-      zoom_scale = (int) toplevel->init_right / diff_x;
-#endif
-      
-      if (zoom_scale < 10) {
-	zoom_scale = 10;
-      }
-      
-      if ( (abs(temp_x - w_current->start_x) > zoom_scale) ||
-	   (abs(temp_y - w_current->start_y) > zoom_scale) ) {
+				    w_current->first_wx, w_current->first_wy)))) {
+      if (o_select_box_start(w_current, w_x, w_y)) {
 	w_current->event_state = SBOX;
-	/* NEW SELECTION code */
-	o_select_box_start(w_current,
-			   (int) event->x,
-			   (int) event->y);
-	     w_current->inside_action = 1;
+	w_current->inside_action = 1;
       }
       break;
     }
@@ -1097,9 +1066,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     case(SBOX):
     if (w_current->inside_action)
     /* NEW SELECTION code */
-    o_select_box_rubberband(w_current,
-                            (int) event->x,
-                            (int) event->y);
+      o_select_box_rubberband(w_current, w_x, w_y);
     break;
 
     case(ZOOMBOXEND):

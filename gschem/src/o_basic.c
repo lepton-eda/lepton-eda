@@ -559,10 +559,7 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
       o_attrib_free_current(toplevel);
       w_current->inside_action = 0;
 
-      /* reset all rubberband variables and touch the select state */
-      w_current->start_x = w_current->second_x = w_current->last_x = -1;
-      w_current->start_y = w_current->second_y = w_current->last_y = -1;
-      w_current->distance = 0;
+      /* touch the select state */
       i_set_state(w_current, SELECT);
 
       /* from i_callback_cancel() */
