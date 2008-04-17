@@ -46,7 +46,6 @@ char *output_filename = NULL;
 
 /* color stuff */
 GdkColormap *colormap;
-GdkVisual *visual;
 
 /* colors */
 GdkColor white;

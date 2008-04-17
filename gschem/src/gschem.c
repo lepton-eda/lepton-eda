@@ -165,7 +165,6 @@ void main_prog(void *closure, int argc, char *argv[])
 #endif
 
   gtk_init(&argc, &argv);
-  visual = gdk_visual_get_system();
 
   argv_index = parse_commandline(argc, argv);
   cwd = getcwd(NULL, 1024);

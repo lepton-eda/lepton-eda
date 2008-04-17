@@ -26,7 +26,6 @@ extern GList *global_window_list;
 
 /* color stuff */
 extern GdkColormap *colormap; 
-extern GdkVisual *visual; 
 
 /* colors */
 extern GdkColor white;
