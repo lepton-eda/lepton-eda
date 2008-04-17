@@ -2173,7 +2173,7 @@ DEFINE_I_CALLBACK(buffer_paste1_hotkey)
     return;
   }
 
-  o_buffer_paste_start(w_current, mouse_x, mouse_y, 0);
+  o_buffer_paste_start(w_current, mouse_wx, mouse_wy, 0);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2191,7 +2191,7 @@ DEFINE_I_CALLBACK(buffer_paste2_hotkey)
     return;
   }
 
-  o_buffer_paste_start(w_current, mouse_x, mouse_y, 1);
+  o_buffer_paste_start(w_current, mouse_wx, mouse_wy, 1);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2209,7 +2209,7 @@ DEFINE_I_CALLBACK(buffer_paste3_hotkey)
     return;
   }
 
-  o_buffer_paste_start(w_current, mouse_x, mouse_y, 2);
+  o_buffer_paste_start(w_current, mouse_wx, mouse_wy, 2);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2227,7 +2227,7 @@ DEFINE_I_CALLBACK(buffer_paste4_hotkey)
     return;
   }
 
-  o_buffer_paste_start(w_current, mouse_x, mouse_y, 3);
+  o_buffer_paste_start(w_current, mouse_wx, mouse_wy, 3);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2245,7 +2245,7 @@ DEFINE_I_CALLBACK(buffer_paste5_hotkey)
     return;
   }
 
-  o_buffer_paste_start(w_current, mouse_x, mouse_y, 4);
+  o_buffer_paste_start(w_current, mouse_wx, mouse_wy, 4);
 }
 
 /*! \section add-menu Add Menu Callback Functions */

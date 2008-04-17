@@ -131,14 +131,13 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y,
  *
  */
 gboolean o_find_selected_object(GSCHEM_TOPLEVEL *w_current,
-				int screen_x, int screen_y)
+				int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current=NULL;
   GList *s_current;
-  int w_x, w_y, w_slack;
+  int w_slack;
 
-  SCREENtoWORLD( toplevel, screen_x, screen_y, &w_x, &w_y );
   w_slack = WORLDabs( toplevel, w_current->select_slack_pixels );
 
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );

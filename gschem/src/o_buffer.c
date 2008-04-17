@@ -94,7 +94,7 @@ void o_buffer_cut(GSCHEM_TOPLEVEL *w_current, int buf_num)
  *  \par Function Description
  *
  */
-void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y,
+void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
 			  int buf_num)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -114,6 +114,11 @@ void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y
     return;
   }
 
+  w_current->first_wx = w_current->second_wx = w_x;
+  w_current->first_wy = w_current->second_wy = w_y;
+  /* store the buffer number for future use */
+  w_current->buffer_number = buf_num;
+
   /* snap x and y to the grid, pointed out by Martin Benes */
   x = snap_grid(toplevel, rleft);
   y = snap_grid(toplevel, rtop);
@@ -122,21 +127,11 @@ void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y
   o_glist_translate_world(toplevel, -x, -y, object_buffer[buf_num]);
   toplevel->ADDING_SEL = 0;
 
-  /* now translate selection to current position */
-  SCREENtoWORLD(toplevel, screen_x, screen_y, &x, &y);
-  x = snap_grid(toplevel, x);
-  y = snap_grid(toplevel, y);
-
   toplevel->ADDING_SEL = 1;
-  o_glist_translate_world(toplevel, x, y, object_buffer[buf_num]);
+  o_glist_translate_world(toplevel, w_x, w_y, object_buffer[buf_num]);
   toplevel->ADDING_SEL = 0;
 
-  w_current->last_x = w_current->start_x = fix_x(toplevel, screen_x);
-  w_current->last_y = w_current->start_y = fix_y(toplevel, screen_y);
   w_current->event_state = ENDPASTE;
-
-  /* store the buffer number for future use */
-  w_current->buffer_number = buf_num;
 
   o_drawbounding(w_current, object_buffer[buf_num],
                  x_get_darkcolor(w_current->bb_color), TRUE);
@@ -147,12 +142,10 @@ void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y
  *  \par Function Description
  *
  */
-void o_buffer_paste_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y,
+void o_buffer_paste_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
 			int buf_num)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int w_x, w_y;
-  int w_start_x, w_start_y;
   int w_diff_x, w_diff_y;
   OBJECT *o_current;
   OBJECT *o_saved;
@@ -169,21 +162,13 @@ void o_buffer_paste_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y,
   o_drawbounding(w_current, object_buffer[buf_num],
                  x_get_darkcolor(w_current->bb_color), FALSE);
 
-  /* get the location where we ended */
-  SCREENtoWORLD(toplevel, screen_x, screen_y, &w_x, &w_y);
-  SCREENtoWORLD(toplevel, w_current->start_x, w_current->start_y,
-                &w_start_x, &w_start_y);
-  w_x = snap_grid(toplevel, w_x);
-  w_y = snap_grid(toplevel, w_y);
-  w_start_x = snap_grid(toplevel, w_start_x);
-  w_start_y = snap_grid(toplevel, w_start_y);
-
 #if DEBUG 
   printf("%d %d\n", w_x - w_start_x,  w_y - w_start_y);
 #endif
   /* calc and translate objects to their final position */
-  w_diff_x = w_x - w_start_x;
-  w_diff_y = w_y - w_start_y;
+  w_diff_x = w_current->second_wx - w_current->first_wx;
+  w_diff_y = w_current->second_wy - w_current->first_wy;
+
   toplevel->ADDING_SEL = 1;
   o_glist_translate_world(toplevel, w_diff_x, w_diff_y,
                           object_buffer[buf_num]);

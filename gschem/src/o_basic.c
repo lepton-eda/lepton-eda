@@ -370,7 +370,8 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
   if (!(w_current->event_state == MOVE)
       && !(w_current->event_state == ENDMOVE)
       && !(w_current->event_state == DRAWTEXT)
-      && !(w_current->event_state == ENDTEXT)) {
+      && !(w_current->event_state == ENDTEXT)
+      && !(w_current->event_state == ENDPASTE)) {
     SCREENtoWORLD(toplevel, w_current->start_x, w_current->start_y,
 		  &(w_current->first_wx), &(w_current->first_wy));
     SCREENtoWORLD(toplevel, w_current->last_x, w_current->last_y,

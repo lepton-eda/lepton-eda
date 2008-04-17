@@ -179,9 +179,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(STARTPASTE):
-        o_buffer_paste_start(w_current, 
-                             (int) event->x,
-                             (int) event->y,
+        o_buffer_paste_start(w_current, w_x, w_y,
                              w_current->buffer_number);
         w_current->event_state = ENDPASTE;
         w_current->inside_action = 1;
@@ -318,9 +316,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ENDPASTE):
-        o_buffer_paste_end(w_current,
-                           fix_x(toplevel, (int) event->x),
-                           fix_y(toplevel, (int) event->y),
+        o_buffer_paste_end(w_current, w_x, w_y,
                            w_current->buffer_number);
         w_current->inside_action = 0;
 	i_set_state(w_current, SELECT);
@@ -835,12 +831,8 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 		    GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int temp_x, temp_y;
   int pdiff_x, pdiff_y;
   int w_x, w_y;
-
-  int zoom_scale;
-  int diff_x; 
   int skip_event=0;
   GdkEvent *test_event;
 
@@ -1044,8 +1036,8 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
     case(ENDPASTE):
     o_buffer_paste_rubberpaste(w_current, w_current->buffer_number);
-    w_current->last_x = fix_x(toplevel, (int) event->x);
-    w_current->last_y = fix_y(toplevel, (int) event->y);
+    w_current->second_wx = w_x;
+    w_current->second_wy = w_y;
     o_buffer_paste_rubberpaste(w_current, w_current->buffer_number);
     break;
 
