@@ -191,7 +191,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
   sheet_head = s_sheet_data_new();   /* sheet_head was declared in globals.h */
 
   GSList *file_list = NULL;
-  if(argv[argv_index] == NULL) {
+  if (argv_index >= argc) {
      /* No files specified on the command line, pop up the File open dialog. */
      file_list = x_fileselect_open();
      if(file_list == NULL)
@@ -199,7 +199,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
   } else {
      /* Construct the list of filenames from the command line.
       * argv_index holds the position of the first filename  */
-     while(argv[argv_index] != NULL) {
+     while (argv_index < argc) {
         file_list = g_slist_append(file_list, f_normalize_filename(argv[argv_index]));
         argv_index++;
      }

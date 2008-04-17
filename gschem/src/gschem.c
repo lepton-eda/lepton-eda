@@ -275,8 +275,7 @@ void main_prog(void *closure, int argc, char *argv[])
   x_repaint_background (w_current);
   w_current->grid = save_grid;
 
-  i = argv_index;
-  while (argv[i] != NULL) {
+  for (i = argv_index; i < argc; i++) {
 
     if (g_path_is_absolute(argv[i]))
     {
@@ -296,8 +295,6 @@ void main_prog(void *closure, int argc, char *argv[])
      */
     x_window_open_page(w_current, filename);
 
-    /* Go to the next argument */
-    i++;
   }
 
   free(cwd); /* allocated from getcwd, should be regular free */
