@@ -610,7 +610,7 @@ DEFINE_I_CALLBACK(edit_copy_hotkey)
   if (o_select_return_first_object(w_current)) {
     o_redraw_cleanstates(w_current);
     w_current->event_state = COPY; 
-    o_copy_start(w_current, mouse_x, mouse_y);
+    o_copy_start(w_current, mouse_wx, mouse_wy);
     w_current->event_state = ENDCOPY;
     w_current->inside_action = 1;
   }
@@ -651,7 +651,7 @@ DEFINE_I_CALLBACK(edit_mcopy_hotkey)
   if (o_select_return_first_object(w_current)) {
     o_redraw_cleanstates(w_current);	
     w_current->event_state = MCOPY; 
-    o_copy_start(w_current, mouse_x, mouse_y);
+    o_copy_start(w_current, mouse_wx, mouse_wy);
     w_current->event_state = ENDMCOPY;
     w_current->inside_action = 1;
   }
@@ -843,7 +843,6 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   GList *object_list;
-  int w_x, w_y;
 
   exit_if_null(w_current);
 
@@ -880,11 +879,7 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
                            i_callback_edit_rotate_90_hotkey, _("Rotate"));
     /* Allow o_rotate_world_update to redraw the objects */
     w_current->toplevel->DONT_REDRAW = 0;
-    SCREENtoWORLD( w_current->toplevel, mouse_x, mouse_y, &w_x, &w_y );
-    w_x = snap_grid(w_current->toplevel, w_x);
-    w_y = snap_grid(w_current->toplevel, w_y);
-
-    o_rotate_world_update(w_current, w_x, w_y, 90, object_list);
+    o_rotate_world_update(w_current, mouse_wx, mouse_wy, 90, object_list);
   }
 
   w_current->event_state = SELECT;
@@ -916,7 +911,6 @@ DEFINE_I_CALLBACK(edit_mirror_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   GList *object_list;
-  int w_x, w_y;
 
   exit_if_null(w_current);
 
@@ -927,12 +921,7 @@ DEFINE_I_CALLBACK(edit_mirror_hotkey)
   if (object_list) {
     i_update_middle_button(w_current,
                            i_callback_edit_mirror_hotkey, _("Mirror"));
-
-    SCREENtoWORLD( w_current->toplevel, mouse_x, mouse_y, &w_x, &w_y );
-    w_x = snap_grid(w_current->toplevel, w_x);
-    w_y = snap_grid(w_current->toplevel, w_y);
-
-    o_mirror_world_update(w_current, w_x, w_y, object_list);
+    o_mirror_world_update(w_current, mouse_wx, mouse_wy, object_list);
   }
 
   w_current->event_state = SELECT;

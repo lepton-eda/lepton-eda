@@ -70,32 +70,24 @@ void o_complex_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *obje
  *  \par Function Description
  *
  */
-void o_complex_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
+void o_complex_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int x, y;
   int i, temp;
   const CLibSymbol *sym;
   int redraw_state;
 
-  w_current->last_x = w_current->start_x = fix_x(toplevel, screen_x);
-  w_current->last_y = w_current->start_y = fix_y(toplevel, screen_y);
-
+  w_current->first_wx = w_current->second_wx = w_x;
+  w_current->first_wy = w_current->second_wy = w_y;
   w_current->last_drawb_mode = -1;
 
   /* make sure list is null first, so that you don't have a mem
    * leak */
-  SCREENtoWORLD(toplevel,
-                w_current->start_x,
-                w_current->start_y,
-                &x,
-                &y);
-
   toplevel->ADDING_SEL = 1; /* reuse this flag, rename later hack */
   sym = s_clib_get_symbol_by_name (toplevel->internal_symbol_name);
   o_complex_add(toplevel, NULL,
 		&(toplevel->page_current->complex_place_list),
-		OBJ_COMPLEX, WHITE, x, y, 0, 0,
+		OBJ_COMPLEX, WHITE, w_x, w_y, 0, 0,
 		sym, toplevel->internal_symbol_name,
 		1, TRUE);
   toplevel->ADDING_SEL = 0;
@@ -199,11 +191,9 @@ void o_complex_place_rotate(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
+void o_complex_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int diff_x, diff_y;
-  int x, y;
   OBJECT *o_current;
   OBJECT *o_start;
   OBJECT *o_temp;
@@ -212,17 +202,13 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
   GList *connected_objects=NULL;
   const CLibSymbol *sym;
 
-  diff_x = w_current->last_x - w_current->start_x;
-  diff_y = w_current->last_y - w_current->start_y;
-
-  SCREENtoWORLD(toplevel, screen_x, screen_y, &x, &y);
-  x = snap_grid(toplevel, x);
-  y = snap_grid(toplevel, y);
-
 #if DEBUG
   printf("place_basename: %s\n",internal_basename);
   printf("place_clib: %s\n",internal_clib);
 #endif
+
+  w_current->second_wx = w_x;
+  w_current->second_wy = w_y;
 
   o_drawbounding(w_current,
                  w_current->toplevel->page_current->complex_place_list,
@@ -241,7 +227,7 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
     o_start = o_start->next;
     toplevel->ADDING_SEL=0;
     
-    o_list_translate_world(toplevel, x, y, o_start);
+    o_list_translate_world(toplevel, w_x, w_y, o_start);
 
     o_temp = o_start;
     while (o_temp != NULL) {
@@ -275,7 +261,7 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
   toplevel->page_current->object_tail =
     o_complex_add(toplevel,
                   toplevel->page_current->object_tail, NULL,
-                  OBJ_COMPLEX, WHITE, x, y, w_current->complex_rotate, 0,
+                  OBJ_COMPLEX, WHITE, w_x, w_y, w_current->complex_rotate, 0,
                   sym, toplevel->internal_symbol_name,
 		  1, TRUE);
 
@@ -286,7 +272,7 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y)
       case(OBJ_TEXT):
         temp = w_current->complex_rotate / 90;
         for (i = 0; i < temp; i++) {
-          o_text_rotate_world(toplevel, x, y, 90, o_temp);
+          o_text_rotate_world(toplevel, w_x, w_y, 90, o_temp);
         }
         break;
     }

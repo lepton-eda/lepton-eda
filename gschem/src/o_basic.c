@@ -366,18 +366,6 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
     return;
   }
 
-  /* BUG: temporary fix while switching to world corrds */
-  if (!(w_current->event_state == MOVE)
-      && !(w_current->event_state == ENDMOVE)
-      && !(w_current->event_state == DRAWTEXT)
-      && !(w_current->event_state == ENDTEXT)
-      && !(w_current->event_state == ENDPASTE)) {
-    SCREENtoWORLD(toplevel, w_current->start_x, w_current->start_y,
-		  &(w_current->first_wx), &(w_current->first_wy));
-    SCREENtoWORLD(toplevel, w_current->last_x, w_current->last_y,
-		  &(w_current->second_wx), &(w_current->second_wy));
-  }
-
   /* If drawing is true, then don't worry about the previous drawing
    * method and movement constraints, use with the current settings */
   if (drawing) {
@@ -394,8 +382,10 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
   if (w_current->drawbounding_action_mode == CONSTRAINED ) {
     if (abs(diff_x) >= abs(diff_y)) {
       w_current->second_wy = w_current->first_wy;
+      diff_y = 0;
     } else {
       w_current->second_wx = w_current->first_wx;
+      diff_x = 0;
     }
   }
 

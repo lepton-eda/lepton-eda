@@ -37,7 +37,7 @@
  *  \par Function Description
  *
  */
-void o_copy_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_copy_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   if (geda_list_get_glist( toplevel->page_current->selection_list ) != NULL) {
@@ -49,15 +49,11 @@ void o_copy_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
     o_undo_savestate(w_current, UNDO_ALL);
 #endif
 
-    /* Shouldn't this set by the caller ? */
-    /*    w_current->event_state = COPY; */
-
-    w_current->last_x = w_current->start_x = fix_x(toplevel, x);
-    w_current->last_y = w_current->start_y = fix_y(toplevel, y);
+    w_current->first_wx = w_current->second_wx = w_x;
+    w_current->first_wy = w_current->second_wy = w_y;
     o_drawbounding(w_current,
                    geda_list_get_glist( toplevel->page_current->selection_list ),
                    x_get_darkcolor(w_current->bb_color), TRUE);
-    w_current->inside_action = 1;
   }
 }
 
@@ -78,8 +74,6 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
   OBJECT *new_objects_head = NULL;
   OBJECT *object;
   int diff_x, diff_y;
-  int lx, ly;
-  int sx, sy;
   int color;
   /* int redraw_state;  not needed for now */
 
@@ -92,19 +86,8 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
     return;
   }
 
-  SCREENtoWORLD(toplevel,
-                w_current->last_x, w_current->last_y,
-                &lx, &ly);
-  SCREENtoWORLD(toplevel,
-                w_current->start_x, w_current->start_y,
-                &sx, &sy);
-  lx = snap_grid(toplevel,lx);
-  ly = snap_grid(toplevel,ly);
-  sx = snap_grid(toplevel,sx);
-  sy = snap_grid(toplevel,sy);
-
-  diff_x = lx - sx;
-  diff_y = ly - sy;
+  diff_x = w_current->second_wx - w_current->first_wx;
+  diff_y = w_current->second_wy - w_current->first_wy;
 
   /* erase the bounding box */
   o_drawbounding(w_current,

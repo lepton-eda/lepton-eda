@@ -162,12 +162,13 @@ void o_buffer_paste_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
   o_drawbounding(w_current, object_buffer[buf_num],
                  x_get_darkcolor(w_current->bb_color), FALSE);
 
-#if DEBUG 
-  printf("%d %d\n", w_x - w_start_x,  w_y - w_start_y);
-#endif
   /* calc and translate objects to their final position */
   w_diff_x = w_current->second_wx - w_current->first_wx;
   w_diff_y = w_current->second_wy - w_current->first_wy;
+
+#if DEBUG 
+  printf("%d %d\n", w_diff_x, w_diff_y);
+#endif
 
   toplevel->ADDING_SEL = 1;
   o_glist_translate_world(toplevel, w_diff_x, w_diff_y,

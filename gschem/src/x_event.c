@@ -152,8 +152,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       case(STARTCOPY):
         if (o_select_selected(w_current)) {
 	  w_current->rotated_inside = 0;
-          o_copy_start(w_current, 
-                       (int) event->x, (int) event->y);
+          o_copy_start(w_current, w_x, w_y);
           w_current->event_state = COPY;
           w_current->inside_action = 1;
         }
@@ -162,8 +161,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       case(STARTMCOPY):
         if (o_select_selected(w_current)) {
 	  w_current->rotated_inside = 0;
-          o_copy_start(w_current, 
-                       (int) event->x, (int) event->y);
+          o_copy_start(w_current, w_x, w_y);
           w_current->event_state = MCOPY;
           w_current->inside_action = 1;
         }
@@ -296,18 +294,11 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ENDCOMP):
-        o_complex_end(w_current,
-                      fix_x(toplevel, (int) event->x),
-                      fix_y(toplevel, (int) event->y));
-				/* not sure on this one */
-				/* probably keep this one */
-
+        o_complex_end(w_current, w_x, w_y);
         o_redraw_single(w_current, toplevel->page_current->
                         object_tail);
         if (w_current->continue_component_place) {
-          o_complex_start(w_current,
-                          (int) event->x,
-                          (int) event->y);
+          o_complex_start(w_current, w_x, w_y);
         } else {
           w_current->inside_action = 0;
 	  i_set_state(w_current, SELECT);
@@ -430,9 +421,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       }
 
       if (w_current->ALTKEY) {
-        o_copy_start(w_current,
-                     (int) event->x,
-                     (int) event->y);
+        o_copy_start(w_current, w_x, w_y);
         w_current->inside_action = 1;
 	i_set_state(w_current, COPY);
       } else {
@@ -621,8 +610,8 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         /* having this stay in copy was driving me nuts*/
         w_current->inside_action = 1;
 	/* Keep the state and the inside_action, as the copy has not finished. */	
-	w_current->last_x = w_current->start_x = fix_x(toplevel, mouse_x);
-	w_current->last_y = w_current->start_y = fix_y(toplevel, mouse_y);
+	w_current->first_wx = w_current->second_wx = w_x;
+	w_current->first_wy = w_current->second_wy = w_y;
         o_drawbounding(w_current,
                        geda_list_get_glist(toplevel->page_current->selection_list),
                        x_get_darkcolor(w_current->bb_color), TRUE);
@@ -961,8 +950,8 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
       o_drawbounding(w_current,
                      geda_list_get_glist( toplevel->page_current->selection_list ),
                      x_get_darkcolor(w_current->bb_color), FALSE);
-      w_current->last_x = fix_x(toplevel,  (int) event->x);
-      w_current->last_y = fix_y(toplevel,  (int) event->y);
+      w_current->second_wx = w_x;
+      w_current->second_wy = w_y;
       o_drawbounding(w_current,
                      geda_list_get_glist( toplevel->page_current->selection_list ),
                      x_get_darkcolor(w_current->bb_color), TRUE);
@@ -1020,17 +1009,15 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
     case(DRAWCOMP):
     w_current->complex_rotate = 0; /* reset to known state */
-    o_complex_start(w_current,
-                    (int) event->x,
-                    (int) event->y);
+    o_complex_start(w_current, w_x, w_y);
     w_current->event_state = ENDCOMP;
     w_current->inside_action = 1;
     break;
 
     case(ENDCOMP):
     o_complex_rubbercomplex(w_current);
-    w_current->last_x = fix_x(toplevel, (int) event->x);
-    w_current->last_y = fix_y(toplevel, (int) event->y);
+    w_current->second_wx = w_x;
+    w_current->second_wy = w_y;
     o_complex_rubbercomplex(w_current);
     break;
 
