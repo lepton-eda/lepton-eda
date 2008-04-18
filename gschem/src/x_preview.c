@@ -44,7 +44,7 @@
 
 #define OVER_ZOOM_FACTOR 0.1
 
-extern int mouse_x, mouse_y;
+extern int mouse_wx, mouse_wy;
 
 
 enum {
@@ -175,7 +175,7 @@ preview_callback_button_press (GtkWidget *widget,
         o_redraw_all (preview_w_current);
         break;
       case 2: /* middle mouse button: pan */
-        a_pan (preview_w_current, mouse_x, mouse_y);
+        a_pan (preview_w_current, mouse_wx, mouse_wy);
         break;
       case 3: /* right mouse button: zoom out */
         a_zoom (preview_w_current, ZOOM_OUT, HOTKEY,
@@ -206,13 +206,15 @@ preview_callback_motion_notify (GtkWidget *widget,
                                 gpointer user_data)
 {
   Preview *preview = PREVIEW (widget);
+  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
+  TOPLEVEL *preview_toplevel = preview_w_current->toplevel;
   
   if (!preview->active) {
     return TRUE;
   }
-  
-  mouse_x = (int)event->x;
-  mouse_y = (int)event->y;
+
+  SCREENtoWORLD(preview_toplevel,
+		(int) event->x, (int) event->y, &mouse_wx, &mouse_wy);
 
   return FALSE;
 }

@@ -14,6 +14,7 @@ void a_zoom_box(GSCHEM_TOPLEVEL *w_current, int pan_flags);
 void a_zoom_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_rubberband(GSCHEM_TOPLEVEL *w_current, int x, int y);
+void a_zoom_box_rubberband_xor(GSCHEM_TOPLEVEL *w_current);
 void correct_aspect(GSCHEM_TOPLEVEL *w_current);
 /* g_funcs.c */
 SCM g_funcs_print(SCM filename);

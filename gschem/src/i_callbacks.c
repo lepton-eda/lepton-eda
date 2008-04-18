@@ -1428,7 +1428,7 @@ DEFINE_I_CALLBACK(view_zoom_box_hotkey)
   exit_if_null(w_current);
 
   o_redraw_cleanstates(w_current);
-  a_zoom_box_start(w_current, mouse_x, mouse_y);
+  a_zoom_box_start(w_current, mouse_wx, mouse_wy);
 
   w_current->inside_action = 1;
   i_set_state(w_current, ZOOMBOXEND);
@@ -1599,28 +1599,9 @@ DEFINE_I_CALLBACK(view_pan_hotkey)
 
   exit_if_null(w_current);
 
-  /* I don't know if this would get in the way */
   i_update_middle_button(w_current, i_callback_view_pan_hotkey, _("Pan"));
 
-  /* I have NO idea what ramifications removing the next line has,
-   * only that it makes the code work when drawing a net and panning
-   * at the same time.  Jeff McNeal - 11-19-98
-   * w_current->inside_action = 0;
-   * I think it's okay - Ales 12/13/98 */
-
-  a_pan(w_current, mouse_x, mouse_y);
-
-  /* Jeff McNeal on Nov 19, 1998 - if we are drawing a net,
-   * don't change the event state, because we want to continue
-   * drawing a net. If we are just panning, then continue in
-   * select mode.  */
-  /* removed the limitations of the pan mode (werner) */
-  /* if(!(w_current->event_state == DRAWNET ||
-       w_current->event_state == NETCONT ||
-       w_current->event_state == STARTDRAWNET )) {
-    i_set_state(w_current, SELECT);
-    i_update_toolbar(w_current);
-    } */
+  a_pan(w_current, mouse_wx, mouse_wy);
 
   if (w_current->undo_panzoom) {
     o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 

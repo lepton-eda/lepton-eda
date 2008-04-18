@@ -109,17 +109,12 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   /* ------------- */
   /* Drawing state */
   /* ------------- */
-  w_current->start_x = -1;
-  w_current->start_y = -1;
-  w_current->save_x = -1;
-  w_current->save_y = -1;
-  w_current->last_x = -1;
-  w_current->last_y = -1;
-  w_current->second_x = -1;
-  w_current->second_y = -1;
-  w_current->first_wx = w_current->first_wy = -1;
-  w_current->second_wx = w_current->second_wy = -1;
-  w_current->third_wx = w_current->third_wy = -1;
+  w_current->first_wx = -1;
+  w_current->first_wy = -1;
+  w_current->second_wx = -1;
+  w_current->second_wy = -1;
+  w_current->third_wx = -1;
+  w_current->third_wy = -1;
   w_current->distance = 0;
   w_current->magnetic_wx = -1;
   w_current->magnetic_wy = -1;

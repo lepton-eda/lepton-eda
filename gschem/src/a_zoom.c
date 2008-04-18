@@ -50,36 +50,6 @@
 	((float) fabs(GET_PAGE_WIDTH (w)) /	\
 	 (float) fabs(GET_PAGE_HEIGHT(w)))
 
-/*! \brief */
-#define GET_BOX_WIDTH(w)			\
-	abs((w)->last_x - (w)->start_x)
-/*! \brief */
-#define GET_BOX_HEIGHT(w)			\
-	abs((w)->last_y - (w)->start_y)
-/*! \brief */
-#define GET_BOX_LEFT(w)				\
-	min((w)->start_x, (w)->last_x);
-/*! \brief */
-#define GET_BOX_TOP(w)				\
-	min((w)->start_y, (w)->last_y);
-
-/*! \brief */
-#define XOR_SETUP(w)				\
-	gdk_gc_set_foreground((w)->xor_gc, 	\
-		              x_get_darkcolor(w_current->zoom_box_color))
-
-/*! \brief */
-#define XOR_DRAW_BOX(w, x, y, wd, ht)				\
-	gdk_draw_rectangle((w)->backingstore, (w)->xor_gc, FALSE,	\
-			   (x), (y), (wd), (ht));
-
-/*! \brief */
-#define SWAP_INT(a, b)				\
-	{ int tmp = a; a = b; b = tmp; }
-/*! \brief */
-#define SORT2_INT(a, b)				\
-	{ if((b) < (a)) { SWAP_INT(a, b); }}
-
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -95,11 +65,8 @@ void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flag
 
   /*calc center: either "mouse_to_world" or center=center */
   if (w_current->zoom_with_pan == TRUE && selected_from == HOTKEY) {
-    world_pan_center_x = (double) mouse_x *
-    toplevel->page_current->to_world_x_constant +
-    toplevel->page_current->left;
-    world_pan_center_y = (double) toplevel->page_current->bottom - mouse_y *
-    toplevel->page_current->to_world_y_constant;
+    world_pan_center_x = mouse_wx;
+    world_pan_center_y = mouse_wy;
   }
   else {
     world_pan_center_x = (double) (toplevel->page_current->left +
@@ -181,10 +148,7 @@ void a_zoom_extents(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int pan_flags
   int lleft, lright, ltop, lbottom;
   double zx, zy, relativ_zoom_factor;
   double world_pan_center_x,world_pan_center_y;
-  /*	double new_aspect, delta_x, delta_y, pad_x, pad_y;
-	int zoom_scale;
-	int diff_x;
-  */
+
   if (o_current != NULL) {
     if (o_current->next == NULL) {
       return;
@@ -236,38 +200,30 @@ void a_zoom_extents(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int pan_flags
  *  \par Function Description
  * 
  */
-/* made a rewrite (hw) */
 void a_zoom_box(GSCHEM_TOPLEVEL *w_current, int pan_flags)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  double cx,cy;
   double zx, zy, relativ_zoom_factor;
-  double world_pan_center_x,world_pan_center_y;
+  double world_pan_center_x, world_pan_center_y;
 
   /*test if there is really a box*/
-  if (w_current->start_x == w_current->last_x ||
-      w_current->start_y == w_current->last_y) {
+  if (w_current->first_wx == w_current->second_wx ||
+      w_current->first_wy == w_current->second_wy) {
     s_log_message(_("Zoom too small!  Cannot zoom further.\n"));
     return;
   }
 	
   /*calc new zoomfactors and choose the smaller one*/
-  zx = (double) toplevel->width /
-  abs(w_current->start_x - w_current->last_x);
-  zy = (double) toplevel->height /
-  abs(w_current->start_y - w_current->last_y);
+  zx = (double) abs(toplevel->page_current->left - toplevel->page_current->right) /
+    abs(w_current->first_wx - w_current->second_wx);
+  zy = (double) abs(toplevel->page_current->top - toplevel->page_current->bottom) /
+    abs(w_current->first_wy - w_current->second_wy);
+
   relativ_zoom_factor = (zx < zy ? zx : zy);
 	
-  /*calc new center, first in the box*/	
-  cx = (double) (w_current->start_x + w_current->last_x) /2;
-  cy = (double) (w_current->start_y + w_current->last_y) /2;
-
-  /* and translate that point to world */		
-  world_pan_center_x = (double) cx *
-  toplevel->page_current->to_world_x_constant +
-  toplevel->page_current->left;
-  world_pan_center_y = (double) toplevel->page_current->bottom -
-  cy * toplevel->page_current->to_world_y_constant;
+  /* calculate the center of the zoom box */
+  world_pan_center_x = (w_current->first_wx + w_current->second_wx) / 2.0;
+  world_pan_center_y = (w_current->first_wy + w_current->second_wy) / 2.0;
 
   /* and create the new window*/
   a_pan_general(w_current, world_pan_center_x, world_pan_center_y,
@@ -279,23 +235,10 @@ void a_zoom_box(GSCHEM_TOPLEVEL *w_current, int pan_flags)
  *  \par Function Description
  * 
  */
-void a_zoom_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void a_zoom_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  int box_left, box_top;
-  int box_width, box_height;
-
-  box_left = w_current->last_x = w_current->start_x = x;
-  box_top  = w_current->last_y = w_current->start_y = y;
-  box_width  = 0;
-  box_height = 0;
-
-  /* draw the box (1st XOR) */
-  XOR_SETUP(w_current);
-  XOR_DRAW_BOX(w_current, box_left, box_top, box_width, box_height);
-  o_invalidate_rect(w_current, box_left,
-                               box_top,
-                               box_left + box_width,
-                               box_top + box_height);
+  w_current->first_wx = w_current->second_wx = w_x;
+  w_current->first_wy = w_current->second_wy = w_y;
 }
 
 /*! \todo Finish function documentation!!!
@@ -305,23 +248,10 @@ void a_zoom_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
  */
 void a_zoom_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
-  int box_width, box_height;
-  int box_left, box_top;
-
   g_assert( w_current->inside_action != 0 );
 
-  box_width  = GET_BOX_WIDTH (w_current);
-  box_height = GET_BOX_HEIGHT(w_current);
-  box_left   = GET_BOX_LEFT  (w_current);
-  box_top    = GET_BOX_TOP   (w_current);
-
-  /* erase the box (2nd XOR) */
-  XOR_SETUP(w_current);
-  XOR_DRAW_BOX(w_current, box_left, box_top, box_width, box_height);
-  o_invalidate_rect(w_current, box_left,
-                               box_top,
-                               box_left + box_width,
-                               box_top + box_height);
+  a_zoom_box_rubberband_xor(w_current);
+  w_current->rubber_visible = 0;
 
   a_zoom_box(w_current, 0);
 
@@ -335,40 +265,49 @@ void a_zoom_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  * 
  */
-void a_zoom_box_rubberband(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void a_zoom_box_rubberband(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
+  g_assert( w_current->inside_action != 0 );
+
+  if (w_current->rubber_visible)
+    a_zoom_box_rubberband_xor(w_current);
+
+  w_current->second_wx = w_x;
+  w_current->second_wy = w_y;
+
+  a_zoom_box_rubberband_xor(w_current);
+  w_current->rubber_visible = 1;
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ * 
+ */
+void a_zoom_box_rubberband_xor(GSCHEM_TOPLEVEL *w_current)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x1, y1, x2, y2;
   int box_width, box_height;
   int box_left, box_top;
 
-  g_assert( w_current->inside_action != 0 );
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
-  box_width  = GET_BOX_WIDTH (w_current);
-  box_height = GET_BOX_HEIGHT(w_current);
-  box_left   = GET_BOX_LEFT  (w_current);
-  box_top    = GET_BOX_TOP   (w_current);
+  box_width  = abs(x1 - x2);
+  box_height = abs(y1 - y2);
+  box_left   = min(x1, x2);
+  box_top    = min(y1, y2);
 
-  /* erase the old box (2nd XOR) */
-  XOR_SETUP(w_current);
-  XOR_DRAW_BOX(w_current, box_left, box_top, box_width, box_height);
+  gdk_gc_set_foreground(w_current->xor_gc,				
+			x_get_darkcolor(w_current->zoom_box_color));
+  gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc, FALSE,
+		     box_left, box_top, box_width, box_height);
   o_invalidate_rect(w_current, box_left,
                                box_top,
                                box_left + box_width,
-                               box_top + box_height);
-
-  w_current->last_x = (int) x;
-  w_current->last_y = (int) y;
-
-  box_width  = GET_BOX_WIDTH (w_current);
-  box_height = GET_BOX_HEIGHT(w_current);
-  box_left   = GET_BOX_LEFT  (w_current);
-  box_top    = GET_BOX_TOP   (w_current);
-
-  /* draw a new box (1st XOR) */
-  XOR_DRAW_BOX(w_current, box_left, box_top, box_width, box_height);
-  o_invalidate_rect(w_current, box_left,
-                               box_top,
-                               box_left + box_width,
-                               box_top + box_height);
+		               box_top + box_height);
 }
 
 /*! \todo Finish function documentation!!!

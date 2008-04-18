@@ -32,34 +32,12 @@
 #include <dmalloc.h>
 #endif
 
-/* Kazu on July 8, 1999 - added these macros to simplify the code */
-/* keep these macros local to this file! KISS! */
-/*! \brief */
-#define GET_PAGE_WIDTH(w)					\
-	((w)->page_current->right  - (w)->page_current->left)
-/*! \brief */
-#define GET_PAGE_HEIGHT(w)					\
-	((w)->page_current->bottom - (w)->page_current->top )
-
-/*! \brief */
-#define GET_PAGE_CENTER_X(w)					\
-        (((w)->page_current->left + (w)->page_current->right)  / 2.0)
-/*! \brief */
-#define GET_PAGE_CENTER_Y(w)					\
-        (((w)->page_current->top + (w)->page_current->bottom) / 2.0)
 
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
  *
  */
-/* Kazu Hirata <kazu@seul.org> on July 25, 1999 - all zoom- and
- * pan-related functions should eventually get to this function. It
- * takes the desired center coordinate and the desired zoom
- * factor. Necessary adjustments may be done depending on situations.
- * */
-/* this code is not longer experimental an is used by several functions
-   like every zooming-function and the x_event_configure (Werner Hoch,(hw))*/
 void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
 		   double relativ_zoom_factor,int flags)
 {
@@ -72,8 +50,6 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
   /* think it's better that the zoomfactor is defined as pix/mills
      this will be the same as w_current->page_current->to_screen_x/y_constant*/
   int zoom_max = 5;	
-  int start_x, start_y, last_x, last_y, second_x, second_y;
-  int save_x, save_y;
   int diff;
   double zx, zy, zoom_old, zoom_new, zoom_min;
 
@@ -108,21 +84,6 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
     if (!(flags & A_PAN_IGNORE_BORDERS)) {
       zoom_new = zoom_new < zoom_min ? zoom_min : zoom_new;
     }
-  }
-
-  /* check to see if we are inside an action draw net, etc.  If
-   * yes, convert the start screen coords to world coords */
-  if (w_current->inside_action) {
-    SCREENtoWORLD(toplevel,  w_current->start_x,  w_current->start_y,
-                                       &start_x,            &start_y);
-    SCREENtoWORLD(toplevel,   w_current->last_x,   w_current->last_y,
-                                        &last_x,             &last_y);
-    SCREENtoWORLD(toplevel, w_current->second_x, w_current->second_y,
-                                      &second_x,           &second_y);
-    SCREENtoWORLD(toplevel,   w_current->save_x,   w_current->save_y,
-                                        &save_x,             &save_y);
-    start_x = snap_grid(toplevel, start_x);
-    start_y = snap_grid(toplevel, start_y);
   }
 
   /* calculate the new visible area; adding 0.5 to round */
@@ -202,18 +163,6 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
              toplevel->page_current->top   ,
              toplevel->page_current->bottom);
 
-  /* convert world coords back to screen coords */
-  if (w_current->inside_action) {
-    WORLDtoSCREEN(toplevel,    start_x,              start_y,
-                   &w_current->start_x,  &w_current->start_y);
-    WORLDtoSCREEN(toplevel,     last_x,               last_y,
-                    &w_current->last_x,   &w_current->last_y);
-    WORLDtoSCREEN(toplevel,   second_x,             second_y,
-                  &w_current->second_x, &w_current->second_y);
-    WORLDtoSCREEN(toplevel,     save_x,               save_y,
-                    &w_current->save_x,   &w_current->save_y);
-  }
-
   /* redraw */
   if (!(flags & A_PAN_DONT_REDRAW)) {
     x_scrollbars_update(w_current);
@@ -224,26 +173,13 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
- *  \todo Kazu on July 8, 1999 - distill common part from a_pan() and
- *  a_pan_mouse() because they are doing basically the same thing
  */
-void a_pan(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void a_pan(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  double world_cx, world_cy;
-
-#if DEBUG
-  printf("a_pan(): x=%d, y=%d\n", x, y);
-#endif	
-
   /* make mouse to the new world-center;
      attention: there are information looses because of type cast in mil_x */
 
-  world_cx = mil_x(toplevel, x);
-  world_cy = mil_y(toplevel, y);
-
-  a_pan_general(w_current, world_cx, world_cy, 1, 0);
+  a_pan_general(w_current, w_x, w_y, 1, 0);
 
   /*! \bug FIXME? This call will trigger a motion event (x_event_motion()),
    * even if the user doesn't move the mouse 
@@ -262,13 +198,17 @@ void a_pan_mouse(GSCHEM_TOPLEVEL *w_current, int diff_x, int diff_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   double world_cx, world_cy;
+  double page_cx, page_cy;
 
 #if DEBUG
   printf("a_pan_mouse(): diff_x=%d, diff_y=%d\n", diff_x, diff_y);
 #endif	
 
-  world_cx=GET_PAGE_CENTER_X(toplevel) - WORLDabs(toplevel, diff_x);
-  world_cy=GET_PAGE_CENTER_Y(toplevel) + WORLDabs(toplevel, diff_y);
+  page_cx = (toplevel->page_current->left + toplevel->page_current->right) / 2.0;
+  page_cy = (toplevel->page_current->top + toplevel->page_current->bottom) / 2.0;
+
+  world_cx = page_cx - WORLDabs(toplevel, diff_x);
+  world_cy = page_cy + WORLDabs(toplevel, diff_y);
 
 #if DEBUG
   printf("  world_cx=%f, world_cy=%f, world_dx=%d, world_dy=%d\n",

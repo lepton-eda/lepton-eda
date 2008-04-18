@@ -361,9 +361,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ZOOMBOXSTART):
-        a_zoom_box_start(w_current,
-                         (int) event->x,
-                         (int) event->y);
+        a_zoom_box_start(w_current, w_x, w_y);
         w_current->event_state = ZOOMBOXEND;
         w_current->inside_action = 1;
         break;
@@ -628,13 +626,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ZOOMBOXEND):
-        /* fix_x,y was removed to allow more flex */
-        w_current->last_x = (int) event->x;
-        w_current->last_y = (int) event->y;
-        a_zoom_box_end(w_current,
-                       (int) event->x,
-                       (int) event->y);
-        /* this one stays */
+        a_zoom_box_end(w_current, w_x, w_y);
         w_current->inside_action = 0;
 	i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
@@ -1044,15 +1036,12 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
     case(SBOX):
     if (w_current->inside_action)
-    /* NEW SELECTION code */
-      o_select_box_rubberband(w_current, w_x, w_y);
+    o_select_box_rubberband(w_current, w_x, w_y);
     break;
 
     case(ZOOMBOXEND):
     if (w_current->inside_action)
-    a_zoom_box_rubberband( w_current,
-                           (int) event->x,
-                           (int) event->y);
+    a_zoom_box_rubberband(w_current, w_x, w_y);
     break;
 
   }

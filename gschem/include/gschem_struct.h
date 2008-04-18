@@ -85,17 +85,12 @@ struct st_gschem_toplevel {
   /* ------------- */
   /* Drawing state */
   /* ------------- */
-  int start_x;
-  int start_y;
-  int save_x;
-  int save_y;
-  int last_x;
-  int last_y;
-  int second_x;
-  int second_y;
-  int first_wx, first_wy;
-  int second_wx, second_wy;
-  int third_wx, third_wy;
+  int first_wx;
+  int first_wy;
+  int second_wx;
+  int second_wy;
+  int third_wx;
+  int third_wy;
   int magnetic_wx, magnetic_wy;         /* Position of the magnetic marker*/
   int distance;
   int inside_action;                    /* Are we doing an action? */
