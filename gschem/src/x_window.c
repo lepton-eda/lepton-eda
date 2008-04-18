@@ -795,8 +795,10 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
 
   /* Return existing page if it is already loaded */
   page = s_page_search (toplevel, fn);
-  if ( page != NULL )
+  if ( page != NULL ) {
+    g_free(fn);
     return page;
+  }
 
   old_current = toplevel->page_current;
   page = s_page_new (toplevel, fn);
