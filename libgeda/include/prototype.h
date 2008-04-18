@@ -58,7 +58,6 @@ gboolean g_get_data_from_page_smob(SCM object_smob, TOPLEVEL **toplevel,
 
 /* i_vars.c */
 void i_vars_libgeda_set(TOPLEVEL *toplevel);
-void i_vars_setnames(TOPLEVEL *toplevel);
 void i_vars_freenames();
 
 /* gdk-pixbuf-hacks.c */

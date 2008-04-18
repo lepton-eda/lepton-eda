@@ -95,25 +95,6 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
 
 }
 
-/*! \brief Set all names in TOPLEVEL object to default.
- *  \par Function Description
- *  This function will set all of the names in the TOPLEVEL toplevel variable
- *  to their default.
- *
- *  \param [out] toplevel  The TOPLEVEL object to set to defaults.
- *
- */
-void i_vars_setnames(TOPLEVEL *toplevel)
-{
-  toplevel->series_name        = g_strdup (DEFAULT_SERIES_NAME     );
-  toplevel->untitled_name      = g_strdup (DEFAULT_UNTITLED_NAME   );
-  toplevel->font_directory     = g_strdup (DEFAULT_FONT_DIRECTORY  );
-  toplevel->scheme_directory   = g_strdup (DEFAULT_SCHEME_DIRECTORY);
-  toplevel->bitmap_directory   = g_strdup (DEFAULT_BITMAP_DIRECTORY);
-  toplevel->bus_ripper_symname = g_strdup (DEFAULT_BUS_RIPPER_SYMNAME);
-  toplevel->always_promote_attributes = g_strdup (DEFAULT_ALWAYS_PROMOTE_ATTRIBUTES);
-  toplevel->print_command = g_strdup (DEFAULT_PRINT_COMMAND);
-}
 
 /*! \brief Free default names
  *  \par Function Description
