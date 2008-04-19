@@ -37,11 +37,9 @@
 
 /* used in key_press, since it isn't passed this information */
 /* filled in x_event_motion */
-int mouse_x, mouse_y;
 int mouse_wx, mouse_wy;
 
 /* used by mouse pan */
-extern int current_center_x, current_center_y;
 int start_pan_x, start_pan_y;
 int throttle = 0;
 
@@ -116,7 +114,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   if (event->type == GDK_2BUTTON_PRESS && 
       (w_current->event_state == STARTSELECT || 
        w_current->event_state == SELECT)) {
-    o_find_object(w_current, (int) event->x, (int) event->y, TRUE);
+    o_find_object(w_current, w_x, w_y, TRUE);
     if ( geda_list_get_glist( toplevel->page_current->selection_list )) {
        o_edit(w_current, geda_list_get_glist( toplevel->page_current->selection_list ));
        return(0);
@@ -350,14 +348,9 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(STARTPAN):
-        a_pan(w_current,
-              (int) event->x,
-              (int) event->y);
-
-				/* keep this one too */
+        a_pan(w_current, w_x, w_y);
 	i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
-				/* go to select state or not? hack */
         break;
 
       case(ZOOMBOXSTART):
@@ -394,18 +387,14 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         /* don't want to search if shift */
         /* key is depresed */
         if (!w_current->SHIFTKEY) {
-          o_find_object(w_current, 
-                        (int) event->x, 
-                        (int) event->y, TRUE);
+          o_find_object(w_current, w_x, w_y, TRUE);
         }
       } else {
         o_select_unselect_all(w_current);
         /* don't want to search if shift */
         /* key is depresed */
         if (!w_current->SHIFTKEY) {
-          o_find_object(w_current, 
-                        (int) event->x, 
-                        (int) event->y, TRUE);
+          o_find_object(w_current, w_x, w_y, TRUE);
         }
       }
 
@@ -637,9 +626,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         if (!o_grips_start(
                            w_current, (int) event->x, (int) event->y)) {
 				/* now go looking for objects to select */
-          o_find_object(w_current, 
-                        (int) event->x, 
-                        (int) event->y, TRUE);
+          o_find_object(w_current, w_x, w_y, TRUE);
           w_current->event_state = SELECT;
           w_current->inside_action = 0;
         } else {
@@ -858,18 +845,16 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
   mouse_wx = w_x;
   mouse_wy = w_y;
-  mouse_x = (int) event->x;
-  mouse_y = (int) event->y;
 
   if (w_current->cowindow) {
-    coord_display_update(w_current, mouse_x, mouse_y);
+    coord_display_update(w_current, (int) event->x, (int) event->y);
   }
 
   if (w_current->third_button == MOUSEPAN_ENABLED || w_current->middle_button == MID_MOUSEPAN_ENABLED) {
     if((w_current->event_state == MOUSEPAN) &&
        w_current->inside_action) {
-         pdiff_x = mouse_x - start_pan_x;
-         pdiff_y = mouse_y - start_pan_y;
+         pdiff_x = (int) event->x - start_pan_x;
+         pdiff_y = (int) event->y - start_pan_y;
 
          if (!(throttle % 5)) {
            a_pan_mouse(w_current, pdiff_x*w_current->mousepan_gain, 

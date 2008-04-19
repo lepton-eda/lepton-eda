@@ -3523,7 +3523,7 @@ DEFINE_I_CALLBACK(options_show_coord_window)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
-  coord_dialog (w_current, mouse_x, mouse_y);
+  coord_dialog (w_current, 0, 0);
 }
 
 /* these is a special wrapper function which cannot use the above */

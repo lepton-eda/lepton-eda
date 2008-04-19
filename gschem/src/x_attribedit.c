@@ -138,7 +138,6 @@ void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
   attribptr =
   gtk_object_get_data(GTK_OBJECT(w_current->aewindow), "attrib");
   if (!attribptr) {
-    int world_x, world_y;
     OBJECT *new = NULL;
 
     s_current = geda_list_get_glist( toplevel->page_current->selection_list );
@@ -239,11 +238,8 @@ void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
       printf("invocation flag: %d\n", invocation_flag);
 #endif
       if (invocation_flag == FROM_HOTKEY) {
-	SCREENtoWORLD(toplevel, mouse_x, mouse_y, &world_x, &world_y);
-        world_x = snap_grid(toplevel, world_x);
-        world_y = snap_grid(toplevel, world_y);
-	new->text->x = world_x;
-	new->text->y = world_y;
+	new->text->x = snap_grid(toplevel, mouse_wx);
+	new->text->y = snap_grid(toplevel, mouse_wy);
 	o_erase_single(w_current, new);
 	o_text_recreate(toplevel, new);
 	o_text_draw(w_current, new);
