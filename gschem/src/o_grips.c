@@ -462,12 +462,12 @@ OBJECT *o_grips_search_line_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 /*! \brief Start process of modifiying one grip.
  *  \par Function Description
  *  This function starts the process of modifying one grip of an object
- *  on the current sheet. The event occured in (<B>x</B>,<B>y</B>) in screen unit.
+ *  on the current sheet. The event occured in (<B>w_x</B>,<B>w_y</B>) in world unit.
  *  If this position is related to a grip of an object, the function
  *  prepares the modification of this grip thanks to the user input.
  *
- *  The function returns <B>FALSE</B> if an error occured of if no grip
- *  have been found under (<B>x</B>,<B>y</B>). It returns <B>TRUE</B> if a grip
+ *  The function returns <B>FALSE</B> if an error occured or if no grip
+ *  have been found under (<B>w_x</B>,<B>w_y</B>). It returns <B>TRUE</B> if a grip
  *  has been found and modification of the object has been started.
  *
  *  If a grip has been found, this function modifies the global variables
@@ -475,22 +475,21 @@ OBJECT *o_grips_search_line_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  *  identifier of the grip and the object it belongs to.
  *
  *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in]  x          Current x coordinate of pointer in screen units.
- *  \param [in]  y          Current y coordinate of pointer in screen units.
+ *  \param [in]  w_x        Current x coordinate of pointer in screen units.
+ *  \param [in]  w_y        Current y coordinate of pointer in screen units.
  *  \return FALSE if an error occurred or no grip was found, TRUE otherwise.
  */
-int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y)
+int o_grips_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int w_x, w_y;
   OBJECT *object;
   int whichone;
+  /* the x/y variables are currently not used by the start_* functions 
+     set them savely to 0*/
+  int x=0, y=0; 
 
   if (w_current->draw_grips == FALSE) {
     return(FALSE);
   }
-
-  SCREENtoWORLD( toplevel, x, y, &w_x, &w_y );
 
   /* search if there is a grip on a selected object at (x,y) */
   object = o_grips_search_world(w_current, w_x, w_y, &whichone);
@@ -804,7 +803,7 @@ void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 /*! \brief Modify previously selected object according to mouse position.
  *  \par Function Description
  *  This function modify the previously selected
- *  object according to the mouse position in <B>x</B> and <B>y</B>.
+ *  object according to the mouse position in <B>w_x</B> and <B>w_y</B>.
  *  The grip under modification is updated and the temporary object displayed.
  *
  *  The object under modification is <B>object_changing</B> and the grip
@@ -815,17 +814,16 @@ void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  *  and draws it again.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Current x coordinate of pointer in screen units.
- *  \param [in] y          Current y coordinate of pointer in screen units.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int unsnapped_wx, int unsnapped_wy)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int w_x, w_y;
 
-  SCREENtoWORLD(toplevel, x, y, &w_x, &w_y);
-  w_x = snap_grid(toplevel, w_x);
-  w_y = snap_grid(toplevel, w_y);
+  w_x = snap_grid(toplevel, unsnapped_wx);
+  w_y = snap_grid(toplevel, unsnapped_wy);
 
   g_assert( w_current->inside_action != 0 );
   g_return_if_fail( object_changing != NULL );
@@ -833,7 +831,7 @@ void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y)
   switch(object_changing->type) {
     case(OBJ_ARC):
     /* erase, update and draw an arc */
-    o_grips_motion_arc(w_current, w_x, w_y, whichone_changing);
+    o_grips_motion_arc(w_current, unsnapped_wx, unsnapped_wy, whichone_changing);
     break;
 
     case(OBJ_BOX):

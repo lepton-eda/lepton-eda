@@ -98,6 +98,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   TOPLEVEL *toplevel = w_current->toplevel;
   int prev_state; 
   int w_x, w_y;
+  int unsnapped_wx, unsnapped_wy;
 
   exit_if_null(w_current);
   global_window_current = w_current;
@@ -125,21 +126,21 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
   w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
 
-  SCREENtoWORLD( toplevel, (int) event->x, (int) event->y, &w_x, &w_y );
-  w_x = snap_grid(toplevel, w_x);
-  w_y = snap_grid(toplevel, w_y);
+  SCREENtoWORLD( toplevel, (int) event->x, (int) event->y,
+		 &unsnapped_wx, &unsnapped_wy );
+  w_x = snap_grid(toplevel, unsnapped_wx);
+  w_y = snap_grid(toplevel, unsnapped_wy);
 
   if (event->button == 1) {
     switch(w_current->event_state) {
 
       case(SELECT):
         /* look for grips or fall through if not enabled */
-        if (!o_grips_start(
-                           w_current, (int) event->x, (int) event->y)) {
+        if (!o_grips_start(w_current, unsnapped_wx, unsnapped_wy)) {
 				/* now go into normal SELECT */
 	  w_current->event_state = STARTSELECT;
-	  w_current->first_wx = w_current->second_wx = w_x;
-	  w_current->first_wy = w_current->second_wy = w_y;
+	  w_current->first_wx = w_current->second_wx = unsnapped_wx;
+	  w_current->first_wy = w_current->second_wy = unsnapped_wy;
         } else {
 	  /* a grip was found */
           w_current->event_state = GRIPS;
@@ -354,7 +355,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ZOOMBOXSTART):
-        a_zoom_box_start(w_current, w_x, w_y);
+        a_zoom_box_start(w_current, unsnapped_wx, unsnapped_wy);
         w_current->event_state = ZOOMBOXEND;
         w_current->inside_action = 1;
         break;
@@ -387,14 +388,14 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         /* don't want to search if shift */
         /* key is depresed */
         if (!w_current->SHIFTKEY) {
-          o_find_object(w_current, w_x, w_y, TRUE);
+          o_find_object(w_current, unsnapped_wx, unsnapped_wy, TRUE);
         }
       } else {
         o_select_unselect_all(w_current);
         /* don't want to search if shift */
         /* key is depresed */
         if (!w_current->SHIFTKEY) {
-          o_find_object(w_current, w_x, w_y, TRUE);
+          o_find_object(w_current, unsnapped_wx, unsnapped_wy, TRUE);
         }
       }
 
@@ -535,6 +536,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
   int prev_state;
   int redraw_state;
   int w_x, w_y;
+  int unsnapped_wx, unsnapped_wy;
 
   exit_if_null(w_current);
   global_window_current = w_current;
@@ -547,9 +549,10 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
   w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
   w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
 
-  SCREENtoWORLD( toplevel, (int) event->x, (int) event->y, &w_x, &w_y );
-  w_x = snap_grid(toplevel, w_x);
-  w_y = snap_grid(toplevel, w_y);
+  SCREENtoWORLD( toplevel, (int) event->x, (int) event->y,
+		 &unsnapped_wx, &unsnapped_wy );
+  w_x = snap_grid(toplevel, unsnapped_wx);
+  w_y = snap_grid(toplevel, unsnapped_wy);
 
   if (event->button == 1) {
     switch(w_current->event_state) {
@@ -608,14 +611,14 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(SBOX):
-        o_select_box_end(w_current, w_x, w_y);
+        o_select_box_end(w_current, unsnapped_wx, unsnapped_wy);
         w_current->inside_action = 0;
 	i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         break;
 
       case(ZOOMBOXEND):
-        a_zoom_box_end(w_current, w_x, w_y);
+        a_zoom_box_end(w_current, unsnapped_wx, unsnapped_wy);
         w_current->inside_action = 0;
 	i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
@@ -623,10 +626,9 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
       case(STARTSELECT):
         /* first look for grips */
-        if (!o_grips_start(
-                           w_current, (int) event->x, (int) event->y)) {
+        if (!o_grips_start(w_current, unsnapped_wx, unsnapped_wy)) {
 				/* now go looking for objects to select */
-          o_find_object(w_current, w_x, w_y, TRUE);
+	  o_find_object(w_current, unsnapped_wx, unsnapped_wy, TRUE);
           w_current->event_state = SELECT;
           w_current->inside_action = 0;
         } else {
@@ -801,6 +803,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
   TOPLEVEL *toplevel = w_current->toplevel;
   int pdiff_x, pdiff_y;
   int w_x, w_y;
+  int unsnapped_wx, unsnapped_wy;
   int skip_event=0;
   GdkEvent *test_event;
 
@@ -839,9 +842,10 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
       return 0;
   }
 
-  SCREENtoWORLD( toplevel, (int) event->x, (int) event->y, &w_x, &w_y );
-  w_x = snap_grid(toplevel, w_x);
-  w_y = snap_grid(toplevel, w_y);
+  SCREENtoWORLD( toplevel, (int) event->x, (int) event->y,
+		 &unsnapped_wx, &unsnapped_wy );
+  w_x = snap_grid(toplevel, unsnapped_wx);
+  w_y = snap_grid(toplevel, unsnapped_wy);
 
   mouse_wx = w_x;
   mouse_wy = w_y;
@@ -875,7 +879,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     break;
 
     case(GRIPS):
-    o_grips_motion(w_current, (int) event->x, (int) event->y);
+    o_grips_motion(w_current, unsnapped_wx, unsnapped_wy);
     break;
 
     case(STARTSELECT):
@@ -883,7 +887,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 	 (w_current->drag_can_move && 
 	  (! o_find_selected_object(w_current, 
 				    w_current->first_wx, w_current->first_wy)))) {
-      if (o_select_box_start(w_current, w_x, w_y)) {
+      if (o_select_box_start(w_current, unsnapped_wx, unsnapped_wy)) {
 	w_current->event_state = SBOX;
 	w_current->inside_action = 1;
       }
@@ -1021,12 +1025,12 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
     case(SBOX):
     if (w_current->inside_action)
-    o_select_box_rubberband(w_current, w_x, w_y);
+    o_select_box_rubberband(w_current, unsnapped_wx, unsnapped_wy);
     break;
 
     case(ZOOMBOXEND):
     if (w_current->inside_action)
-    a_zoom_box_rubberband(w_current, w_x, w_y);
+    a_zoom_box_rubberband(w_current, unsnapped_wx, unsnapped_wy);
     break;
 
   }

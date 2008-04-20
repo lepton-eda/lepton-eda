@@ -992,6 +992,7 @@ void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int start_angle, int end_angle)
  *
  *  <B>whichone</B> can have one of the following values:
  *  <DL>
+ *    <DT>*</DT><DD>ARC_RADIUS
  *    <DT>*</DT><DD>ARC_START_ANGLE
  *    <DT>*</DT><DD>ARC_END_ANGLE
  *  </DL>
@@ -1009,12 +1010,11 @@ void o_arc_rubberarc(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
      * The radius is taken as the biggest distance on the x and y
      * axis between the center of the arc and the mouse position.
      */		
-    diff_x = abs(w_current->first_wx - w_x);
-    diff_y = abs(w_current->first_wy - w_y);
+    diff_x = abs(w_current->first_wx - snap_grid(w_current->toplevel, w_x));
+    diff_y = abs(w_current->first_wy - snap_grid(w_current->toplevel, w_y));
     w_current->distance = max(diff_x, diff_y);
   }
   else if((whichone == ARC_START_ANGLE) || (whichone == ARC_END_ANGLE)) {
-		
     /* compute the angle */
     diff_x = w_current->first_wx - w_x;
     diff_y = w_current->first_wy - w_y;
