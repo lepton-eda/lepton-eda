@@ -613,12 +613,11 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* erase the temporary circle */
   o_circle_rubbercircle_xor(w_current);
+  w_current->rubber_visible = 0;
   
   /* circle with null radius are not allowed */
   if (w_current->distance == 0) {
     /* cancel the object creation */
-    w_current->first_wx  = -1;
-    w_current->first_wy  = -1;
     return;
   }
 
@@ -633,12 +632,7 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   /* draw it */
   o_redraw_single(w_current, toplevel->page_current->object_tail);
   
-  w_current->first_wx = -1;
-  w_current->first_wy = -1;
-  w_current->distance = 0;
-  
   toplevel->page_current->CHANGED = 1;
-
   o_undo_savestate(w_current, UNDO_ALL);
 }
 

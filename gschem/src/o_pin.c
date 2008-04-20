@@ -188,6 +188,7 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   /* undraw rubber line */
   o_pin_rubberpin_xor(w_current);
+  w_current->rubber_visible = 0;
 
   /* don't allow zero length pins */
   if ((w_current->first_wx == w_current->second_wx) &&

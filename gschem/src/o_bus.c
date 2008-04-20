@@ -255,17 +255,12 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* erase the rubberbus */
   o_bus_rubberbus_xor(w_current);
+  w_current->rubber_visible = 0;
 
   /* don't allow zero length bus */
   /* this ends the bus drawing behavior we want this? hack */
   if ( (w_current->first_wx == w_current->second_wx) &&
        (w_current->first_wy == w_current->second_wy) ) {
-    w_current->first_wx = -1;
-    w_current->first_wy = -1;
-    w_current->second_wx = -1;
-    w_current->second_wy = -1;
-    w_current->inside_action=0;
-    i_set_state(w_current, STARTDRAWBUS);
     return FALSE;
   }
 

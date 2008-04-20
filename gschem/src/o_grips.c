@@ -1058,12 +1058,13 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
     return;
   }
 
-  toplevel->page_current->CHANGED=1;
-
   /* reset global variables */
   whichone_changing = -1;
   object_changing = NULL;
 
+  w_current->rubber_visible = 0;
+
+  toplevel->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);
 }
 

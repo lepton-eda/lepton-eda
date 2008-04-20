@@ -92,6 +92,7 @@ void o_picture_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* erase the temporary picture */
   o_picture_rubberbox_xor(w_current);
+  w_current->rubber_visible = 0;
   
   picture_width  = GET_PICTURE_WIDTH (w_current);
   picture_height = GET_PICTURE_HEIGHT(w_current);

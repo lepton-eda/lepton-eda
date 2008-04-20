@@ -112,6 +112,11 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   printf("\n");
 #endif
 
+  SCREENtoWORLD( toplevel, (int) event->x, (int) event->y,
+		 &unsnapped_wx, &unsnapped_wy );
+  w_x = snap_grid(toplevel, unsnapped_wx);
+  w_y = snap_grid(toplevel, unsnapped_wy);
+
   if (event->type == GDK_2BUTTON_PRESS && 
       (w_current->event_state == STARTSELECT || 
        w_current->event_state == SELECT)) {
@@ -125,11 +130,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
   w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
   w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
-
-  SCREENtoWORLD( toplevel, (int) event->x, (int) event->y,
-		 &unsnapped_wx, &unsnapped_wy );
-  w_x = snap_grid(toplevel, unsnapped_wx);
-  w_y = snap_grid(toplevel, unsnapped_wy);
 
   if (event->button == 1) {
     switch(w_current->event_state) {
@@ -290,6 +290,10 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 	  o_bus_start(w_current, w_current->first_wx, w_current->first_wy);
           w_current->event_state=BUSCONT;
         }
+	else {
+	  w_current->inside_action=0;
+	  i_set_state(w_current, STARTDRAWBUS);
+	}
         break;
 
       case(ENDCOMP):

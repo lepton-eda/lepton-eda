@@ -791,14 +791,11 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* erase xor image */
   o_line_rubberline_xor(w_current);
+  w_current->rubber_visible = 0;
 
   /* don't allow zero length lines */
   if ( (w_current->first_wx == w_current->second_wx) &&
        (w_current->first_wy == w_current->second_wy) ) {
-    w_current->first_wx = -1;
-    w_current->first_wy = -1;
-    w_current->second_wx = -1;
-    w_current->second_wy = -1;
     return;
   }
 
@@ -812,13 +809,7 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   o_redraw_single(w_current, toplevel->page_current->object_tail);
   
-  w_current->first_wx = -1;
-  w_current->first_wy = -1;
-  w_current->second_wx = -1;
-  w_current->second_wy = -1;
-  
   toplevel->page_current->CHANGED=1;
-
   o_undo_savestate(w_current, UNDO_ALL);
 }
 

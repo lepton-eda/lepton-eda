@@ -916,6 +916,7 @@ void o_arc_end1(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* erases the previous temporary radius segment */
   o_arc_rubberarc_xor(w_current);
+  w_current->rubber_visible = 0;
 
   /* ack! zero length radius */
   if (w_current->distance == 0) {
