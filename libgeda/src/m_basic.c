@@ -345,58 +345,6 @@ void set_window(TOPLEVEL *toplevel, PAGE *page,
 }
 
 
-/*! \brief Get the grid x coordinate for snap.
- *  \par Function Description
- *  Get the grid x coordinate for snap.
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] in         The x coordinate.
- *  \return The closest grid coordinate to in.
- */
-int fix_x(TOPLEVEL *toplevel, int in)
-{
-  int value;
-  int ret;
-
-  if (in > toplevel->width) {
-    in = toplevel->width;
-  }
-	
-  if (!toplevel->snap)
-  return(in);
-
-  value = mil_x(toplevel, in);
-
-  ret = pix_x(toplevel, snap_grid(toplevel, value));
-  return(ret);
-}
-
-/*! \brief Get the grid y coordinate for snap.
- *  \par Function Description
- *  Get the grid y coordinate for snap.
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] in         The y coordinate.
- *  \return The closest grid coordinate to in.
- */
-int fix_y(TOPLEVEL *toplevel, int in)
-{
-  int value;
-  int ret;
-
-  if (in > toplevel->height) {
-    in = toplevel->height;
-  }
-
-  if (!toplevel->snap)
-  return(in);
-
-
-  value = mil_y(toplevel, in);
-  ret = pix_y(toplevel, snap_grid(toplevel, value));
-  return(ret);
-}
-
 /*! \brief Checks if a point is snapped.
  *  \par Function Description
  *  This function checks if a point is snapped.

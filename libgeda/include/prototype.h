@@ -79,8 +79,6 @@ int snap_grid(TOPLEVEL *toplevel, int input);
 int SCREENabs(TOPLEVEL *toplevel, int val);
 int WORLDabs(TOPLEVEL *toplevel, int val);
 void set_window(TOPLEVEL *toplevel, PAGE *page, int xmin, int xmax, int ymin, int ymax);
-int fix_x(TOPLEVEL *toplevel, int in);
-int fix_y(TOPLEVEL *toplevel, int in);
 int on_snap(int val);
 int SCREENclip_change(TOPLEVEL *toplevel, int *x1, int *y1, int *x2, int *y2);
 int clip_nochange(TOPLEVEL *toplevel, int x1, int y1, int x2, int y2);
