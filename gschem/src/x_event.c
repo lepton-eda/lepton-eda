@@ -62,7 +62,7 @@ int stroke_trans (char *sequence);
  *
  */
 gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
-		    GSCHEM_TOPLEVEL *w_current)
+                    GSCHEM_TOPLEVEL *w_current)
 {
 #if DEBUG
   printf("EXPOSE\n");
@@ -93,10 +93,10 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
  *
  */
 gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
-			    GSCHEM_TOPLEVEL *w_current)
+                            GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int prev_state; 
+  int prev_state;
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
@@ -113,12 +113,12 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 #endif
 
   SCREENtoWORLD( toplevel, (int) event->x, (int) event->y,
-		 &unsnapped_wx, &unsnapped_wy );
+                 &unsnapped_wx, &unsnapped_wy );
   w_x = snap_grid(toplevel, unsnapped_wx);
   w_y = snap_grid(toplevel, unsnapped_wy);
 
-  if (event->type == GDK_2BUTTON_PRESS && 
-      (w_current->event_state == STARTSELECT || 
+  if (event->type == GDK_2BUTTON_PRESS &&
+      (w_current->event_state == STARTSELECT ||
        w_current->event_state == SELECT)) {
     o_find_object(w_current, w_x, w_y, TRUE);
     if ( geda_list_get_glist( toplevel->page_current->selection_list )) {
@@ -137,12 +137,12 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       case(SELECT):
         /* look for grips or fall through if not enabled */
         if (!o_grips_start(w_current, unsnapped_wx, unsnapped_wy)) {
-				/* now go into normal SELECT */
-	  w_current->event_state = STARTSELECT;
-	  w_current->first_wx = w_current->second_wx = unsnapped_wx;
-	  w_current->first_wy = w_current->second_wy = unsnapped_wy;
+          /* now go into normal SELECT */
+          w_current->event_state = STARTSELECT;
+          w_current->first_wx = w_current->second_wx = unsnapped_wx;
+          w_current->first_wy = w_current->second_wy = unsnapped_wy;
         } else {
-	  /* a grip was found */
+          /* a grip was found */
           w_current->event_state = GRIPS;
           w_current->inside_action = 1;
         }
@@ -150,7 +150,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
       case(STARTCOPY):
         if (o_select_selected(w_current)) {
-	  w_current->rotated_inside = 0;
+          w_current->rotated_inside = 0;
           o_copy_start(w_current, w_x, w_y);
           w_current->event_state = COPY;
           w_current->inside_action = 1;
@@ -159,7 +159,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
       case(STARTMCOPY):
         if (o_select_selected(w_current)) {
-	  w_current->rotated_inside = 0;
+          w_current->rotated_inside = 0;
           o_copy_start(w_current, w_x, w_y);
           w_current->event_state = MCOPY;
           w_current->inside_action = 1;
@@ -168,7 +168,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
       case(STARTMOVE):
         if (o_select_selected(w_current)) {
-	  w_current->rotated_inside = 0;
+          w_current->rotated_inside = 0;
           o_move_start(w_current, w_x, w_y);
           w_current->event_state = MOVE;
           w_current->inside_action = 1;
@@ -176,8 +176,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(STARTPASTE):
-        o_buffer_paste_start(w_current, w_x, w_y,
-                             w_current->buffer_number);
+        o_buffer_paste_start(w_current, w_x, w_y, w_current->buffer_number);
         w_current->event_state = ENDPASTE;
         w_current->inside_action = 1;
         break;
@@ -261,7 +260,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
         break;
 
-      case(STARTDRAWBUS):  
+      case(STARTDRAWBUS):
         o_bus_start(w_current, w_x, w_y);
         w_current->inside_action = 1;
         w_current->event_state=DRAWBUS;
@@ -272,28 +271,26 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       case(NETCONT):
         /* Only continue the net if net end worked */
         if (o_net_end(w_current, w_x, w_y)) {
-	  o_net_start(w_current, w_current->first_wx, w_current->first_wy);
+          o_net_start(w_current, w_current->first_wx, w_current->first_wy);
           w_current->event_state=NETCONT;
+        } else { /* cleanup and start a new net */
+          o_net_eraserubber(w_current);
+          o_net_reset(w_current);
+          i_set_state(w_current, STARTDRAWNET);
+          w_current->inside_action = 0;
         }
-	else { /* cleanup and start a new net */
-	  o_net_eraserubber(w_current);
-	  o_net_reset(w_current);
-	  i_set_state(w_current, STARTDRAWNET);
-	  w_current->inside_action = 0;
-	}
         break;
 
       case(DRAWBUS):
       case(BUSCONT):
         /* Only continue the net if net end worked */
         if (o_bus_end(w_current, w_x, w_y)) {
-	  o_bus_start(w_current, w_current->first_wx, w_current->first_wy);
+          o_bus_start(w_current, w_current->first_wx, w_current->first_wy);
           w_current->event_state=BUSCONT;
+        } else {
+          w_current->inside_action=0;
+          i_set_state(w_current, STARTDRAWBUS);
         }
-	else {
-	  w_current->inside_action=0;
-	  i_set_state(w_current, STARTDRAWBUS);
-	}
         break;
 
       case(ENDCOMP):
@@ -304,7 +301,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
           o_complex_start(w_current, w_x, w_y);
         } else {
           w_current->inside_action = 0;
-	  i_set_state(w_current, SELECT);
+          i_set_state(w_current, SELECT);
           i_update_toolbar(w_current);
         }
         break;
@@ -313,7 +310,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         o_buffer_paste_end(w_current, w_x, w_y,
                            w_current->buffer_number);
         w_current->inside_action = 0;
-	i_set_state(w_current, SELECT);
+        i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         break;
 
@@ -341,20 +338,20 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
       case(ENDTEXT):
         o_text_end(w_current);
-				/* not sure on this one either... */
-				/* keep it as well */
+                                /* not sure on this one either... */
+                                /* keep it as well */
         w_current->inside_action = 0;
-	i_set_state(w_current, SELECT);
+        i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
-				/* the following happen inside attrib_end */
-				/* therefore they are commeneted out here */
+                                /* the following happen inside attrib_end */
+                                /* therefore they are commeneted out here */
                                 /* o_redraw_single(object_tail);*/
                                 /* o_redraw_selected(); not sure on this */
         break;
 
       case(STARTPAN):
         a_pan(w_current, w_x, w_y);
-	i_set_state(w_current, SELECT);
+        i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         break;
 
@@ -371,9 +368,9 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
     if (w_current->inside_action) {
       if (w_current->event_state == ENDCOMP ||
           w_current->event_state == ENDTEXT ||
-	  w_current->event_state == ENDMOVE ||
-	  w_current->event_state == ENDCOPY ||
-	  w_current->event_state == ENDMCOPY) {
+          w_current->event_state == ENDMOVE ||
+          w_current->event_state == ENDCOPY ||
+          w_current->event_state == ENDMCOPY) {
             return(0);
           } else {
             i_callback_cancel(w_current, 0, NULL);
@@ -383,10 +380,10 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
     switch(w_current->middle_button) {
 
-      case(ACTION): 
-				/* determine here if copy or move */
-				/* for now do move only */
-				/* make sure the list is not empty */
+      case(ACTION):
+                                /* determine here if copy or move */
+                                /* for now do move only */
+                                /* make sure the list is not empty */
       if (o_select_selected(w_current)) {
 
         /* don't want to search if shift */
@@ -404,10 +401,10 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       }
 
       if (!o_select_selected(w_current)) {
-        /* this means the above find did not 
+        /* this means the above find did not
          * find anything */
         w_current->inside_action = 0;
-	i_set_state(w_current, SELECT);
+        i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         return(0);
       }
@@ -415,11 +412,11 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       if (w_current->ALTKEY) {
         o_copy_start(w_current, w_x, w_y);
         w_current->inside_action = 1;
-	i_set_state(w_current, COPY);
+        i_set_state(w_current, COPY);
       } else {
         o_move_start(w_current, w_x, w_y);
         w_current->inside_action = 1;
-	i_set_state(w_current, MOVE);
+        i_set_state(w_current, MOVE);
       }
       break;
 
@@ -441,13 +438,13 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       start_pan_x = (int) event->x;
       start_pan_y = (int) event->y;
       throttle=0;
-      break;      
+      break;
     }
 
   } else if (event->button == 3) {
     if (!w_current->inside_action) {
       if (w_current->third_button == POPUP_ENABLED) {
-	i_update_menus(w_current);  /* update menus before popup  */
+        i_update_menus(w_current);  /* update menus before popup  */
         do_popup(w_current, event);
       } else {
         w_current->event_state = MOUSEPAN; /* start */
@@ -462,67 +459,67 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         case(STARTDRAWNET):
         case(DRAWNET):
         case(NETCONT):
-        w_current->inside_action = 0;
-	i_set_state(w_current, STARTDRAWNET);
-        o_net_eraserubber(w_current);
-	o_net_reset(w_current);
-        break;
+          w_current->inside_action = 0;
+          i_set_state(w_current, STARTDRAWNET);
+          o_net_eraserubber(w_current);
+          o_net_reset(w_current);
+          break;
 
         case(STARTDRAWBUS):
         case(DRAWBUS):
         case(BUSCONT):
-        w_current->inside_action = 0;
-	i_set_state(w_current, STARTDRAWBUS);
-        o_bus_eraserubber(w_current);
-        break;
+          w_current->inside_action = 0;
+          i_set_state(w_current, STARTDRAWBUS);
+          o_bus_eraserubber(w_current);
+          break;
 
         case(DRAWPIN):
         case(ENDPIN):
-        w_current->inside_action = 0;
-	i_set_state(w_current, DRAWPIN);
-        o_pin_eraserubber(w_current);
-        break;
+          w_current->inside_action = 0;
+          i_set_state(w_current, DRAWPIN);
+          o_pin_eraserubber(w_current);
+          break;
 
         case(DRAWLINE):
         case(ENDLINE):
-        w_current->inside_action = 0;
-	i_set_state(w_current, DRAWLINE);
-        o_line_eraserubber(w_current);
-        break;
+          w_current->inside_action = 0;
+          i_set_state(w_current, DRAWLINE);
+          o_line_eraserubber(w_current);
+          break;
 
         case(DRAWBOX):
         case(ENDBOX):
-        w_current->inside_action = 0;
-	i_set_state(w_current, DRAWBOX);
-        o_box_eraserubber(w_current);
-        break;
+          w_current->inside_action = 0;
+          i_set_state(w_current, DRAWBOX);
+          o_box_eraserubber(w_current);
+          break;
 
         case(DRAWPICTURE):
         case(ENDPICTURE):
-        w_current->inside_action = 0;
-	i_set_state(w_current, DRAWPICTURE);
-        o_picture_eraserubber(w_current);
-        break;
+          w_current->inside_action = 0;
+          i_set_state(w_current, DRAWPICTURE);
+          o_picture_eraserubber(w_current);
+          break;
 
         case(DRAWCIRCLE):
         case(ENDCIRCLE):
-        w_current->inside_action = 0;
-	i_set_state(w_current, DRAWCIRCLE);
-        o_circle_eraserubber(w_current);
-        break;
+          w_current->inside_action = 0;
+          i_set_state(w_current, DRAWCIRCLE);
+          o_circle_eraserubber(w_current);
+          break;
 
         case(DRAWARC):
         case(ENDARC):
-        w_current->inside_action = 0;
-	i_set_state(w_current, DRAWARC);
-        o_arc_eraserubber(w_current);
-        break;
+          w_current->inside_action = 0;
+          i_set_state(w_current, DRAWARC);
+          o_arc_eraserubber(w_current);
+          break;
 
         default:
-        i_callback_cancel(w_current, 0, NULL);
-        break;
+          i_callback_cancel(w_current, 0, NULL);
+          break;
       }
-      i_update_toolbar(w_current);	
+      i_update_toolbar(w_current);
     }
   }
   return(0);
@@ -534,7 +531,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
  *
  */
 gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
-			     GSCHEM_TOPLEVEL *w_current)
+                             GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int prev_state;
@@ -554,7 +551,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
   w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
 
   SCREENtoWORLD( toplevel, (int) event->x, (int) event->y,
-		 &unsnapped_wx, &unsnapped_wy );
+                 &unsnapped_wx, &unsnapped_wy );
   w_x = snap_grid(toplevel, unsnapped_wx);
   w_y = snap_grid(toplevel, unsnapped_wy);
 
@@ -577,9 +574,9 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(GRIPS):
-        o_grips_end(w_current), 
+        o_grips_end(w_current),
         w_current->inside_action = 0;
-	i_set_state(w_current, SELECT);
+        i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         break;
 
@@ -587,7 +584,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         o_move_end(w_current);
         /* having this stay in copy was driving me nuts*/
         w_current->inside_action = 0;
-	i_set_state(w_current, SELECT);
+        i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         break;
 
@@ -595,7 +592,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         o_copy_end(w_current);
         /* having this stay in copy was driving me nuts*/
         w_current->inside_action = 0;
-	i_set_state(w_current, SELECT);
+        i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         break;
 
@@ -603,40 +600,40 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         o_copy_end(w_current);
         /* having this stay in copy was driving me nuts*/
         w_current->inside_action = 1;
-	/* Keep the state and the inside_action, as the copy has not finished. */	
-	w_current->first_wx = w_current->second_wx = w_x;
-	w_current->first_wy = w_current->second_wy = w_y;
+        /* Keep the state and the inside_action, as the copy has not finished. */
+        w_current->first_wx = w_current->second_wx = w_x;
+        w_current->first_wy = w_current->second_wy = w_y;
         o_drawbounding(w_current,
                        geda_list_get_glist(toplevel->page_current->selection_list),
                        x_get_darkcolor(w_current->bb_color), TRUE);
-	i_set_state(w_current, ENDMCOPY); 
+        i_set_state(w_current, ENDMCOPY);
         i_update_toolbar(w_current);
-	o_undo_savestate(w_current, UNDO_ALL);
+        o_undo_savestate(w_current, UNDO_ALL);
         break;
 
       case(SBOX):
         o_select_box_end(w_current, unsnapped_wx, unsnapped_wy);
         w_current->inside_action = 0;
-	i_set_state(w_current, SELECT);
+        i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         break;
 
       case(ZOOMBOXEND):
         a_zoom_box_end(w_current, unsnapped_wx, unsnapped_wy);
         w_current->inside_action = 0;
-	i_set_state(w_current, SELECT);
+        i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         break;
 
       case(STARTSELECT):
         /* first look for grips */
         if (!o_grips_start(w_current, unsnapped_wx, unsnapped_wy)) {
-				/* now go looking for objects to select */
-	  o_find_object(w_current, unsnapped_wx, unsnapped_wy, TRUE);
+                                /* now go looking for objects to select */
+          o_find_object(w_current, unsnapped_wx, unsnapped_wy, TRUE);
           w_current->event_state = SELECT;
           w_current->inside_action = 0;
         } else {
-				/* an grip was found */
+                                /* an grip was found */
           w_current->event_state = GRIPS;
           w_current->inside_action = 1;
         }
@@ -650,18 +647,18 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         o_drawbounding(w_current, toplevel->page_current->complex_place_list,
                        x_get_darkcolor(w_current->bb_color), FALSE);
 
-        w_current->complex_rotate = 
+        w_current->complex_rotate =
         (w_current->complex_rotate + 90) % 360;
 
-	o_complex_place_rotate(w_current);
+        o_complex_place_rotate(w_current);
 
-	/* Run the complex place list changed hook without redrawing */
+        /* Run the complex place list changed hook without redrawing */
         /* since all objects are being redrawn afterwards */
         prev_state = toplevel->DONT_REDRAW;
         toplevel->DONT_REDRAW = 1;
-	o_complex_place_changed_run_hook (w_current);	
+        o_complex_place_changed_run_hook (w_current);
         toplevel->DONT_REDRAW = prev_state;
-	  
+
         o_drawbounding(w_current, toplevel->page_current->complex_place_list,
                        x_get_darkcolor(w_current->bb_color), TRUE);
         return(0);
@@ -669,7 +666,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
                        x_get_darkcolor(w_current->bb_color), FALSE);
 
-        w_current->complex_rotate = 
+        w_current->complex_rotate =
         (w_current->complex_rotate + 90) % 360;
 
         o_text_place_rotate(w_current);
@@ -680,49 +677,49 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
       }
       else if (w_current->event_state == ENDMOVE) {
-	prev_state = w_current->event_state;
-	
-	o_drawbounding(w_current, toplevel->page_current->complex_place_list,
-		       x_get_darkcolor(w_current->bb_color), FALSE);
-	
-	/* Don't allow o_rotate_90 to erase the selection, neither to
-	   redraw the objects after rotating */
-	/* skip over head node */
-	redraw_state = toplevel->DONT_REDRAW;
-	toplevel->DONT_REDRAW = 1;
+        prev_state = w_current->event_state;
+
+        o_drawbounding(w_current, toplevel->page_current->complex_place_list,
+                       x_get_darkcolor(w_current->bb_color), FALSE);
+
+        /* Don't allow o_rotate_90 to erase the selection, neither to
+           redraw the objects after rotating */
+        /* skip over head node */
+        redraw_state = toplevel->DONT_REDRAW;
+        toplevel->DONT_REDRAW = 1;
         o_rotate_world_update(w_current, w_x, w_y, 90,
                               toplevel->page_current->complex_place_list );
-	toplevel->DONT_REDRAW = redraw_state;
-	w_current->rotated_inside ++;	
-	w_current->event_state = prev_state;
+        toplevel->DONT_REDRAW = redraw_state;
+        w_current->rotated_inside ++;
+        w_current->event_state = prev_state;
 
-	o_drawbounding(w_current, toplevel->page_current->complex_place_list,
-		       x_get_darkcolor(w_current->bb_color), TRUE);
-	
+        o_drawbounding(w_current, toplevel->page_current->complex_place_list,
+                       x_get_darkcolor(w_current->bb_color), TRUE);
+
         return(0);
       }
       else if ((w_current->event_state == ENDCOPY) ||
-	       (w_current->event_state == ENDMCOPY)) {
+               (w_current->event_state == ENDMCOPY)) {
         /* Rotating while copying is still not supported, so do nothing */
         return 0;
       }
 
     }
 
-    switch(w_current->middle_button) { 
-      case(ACTION): 	
+    switch(w_current->middle_button) {
+      case(ACTION):
       switch(w_current->event_state) {
         case(MOVE):
         o_move_end(w_current);
         w_current->inside_action = 0;
-	i_set_state(w_current, SELECT);
+        i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         break;
 
         case(COPY):
         o_copy_end(w_current);
         w_current->inside_action = 0;
-	i_set_state(w_current, SELECT);
+        i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         break;
       }
@@ -744,15 +741,15 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
                   " failed: ");
         }
       }
-	
+
       if (stroke_info_mode) {
         printf ("Sequence=\"%s\"\n",sequence);
       }
 
       x_stroke_erase_all(w_current);
 
-				/* new way written by Stefan Petersen */ 
-				/* much better */
+                                /* new way written by Stefan Petersen */
+                                /* much better */
       if (x_stroke_search_execute(sequence)) {
 
         if (stroke_info_mode) {
@@ -761,12 +758,12 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       }
       break;
 #endif
-      
+
       case(MID_MOUSEPAN_ENABLED):
       w_current->doing_pan=FALSE;
       o_redraw_all(w_current);
       if (w_current->undo_panzoom) {
-        o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+        o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
       }
       /* this needs to be REDONE */
       /* if you mouse pan, you will be thrown out of the current mode. */
@@ -783,7 +780,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       o_redraw_all(w_current);
 
       if (w_current->undo_panzoom) {
-        o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+        o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
       }
       /* this needs to be REDONE */
       /* if you mouse pan, you will be thrown out of the current mode. */
@@ -802,7 +799,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
  *
  */
 gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
-		    GSCHEM_TOPLEVEL *w_current)
+                    GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int pdiff_x, pdiff_y;
@@ -831,13 +828,13 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
   }
 #endif
 
-  /* skip the moving event if there are other moving events in the 
+  /* skip the moving event if there are other moving events in the
      gdk event queue (Werner)
-     Only skip the event if is the same event and no buttons or modifier 
+     Only skip the event if is the same event and no buttons or modifier
      keys changed*/
   if ((test_event = gdk_event_get()) != NULL) {
     if (test_event->type == GDK_MOTION_NOTIFY
-	&& ((GdkEventMotion *) test_event)->state == event->state) {
+        && ((GdkEventMotion *) test_event)->state == event->state) {
       skip_event= 1;
     }
     gdk_event_put(test_event); /* put it back in front of the queue */
@@ -847,7 +844,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
   }
 
   SCREENtoWORLD( toplevel, (int) event->x, (int) event->y,
-		 &unsnapped_wx, &unsnapped_wy );
+                 &unsnapped_wx, &unsnapped_wy );
   w_x = snap_grid(toplevel, unsnapped_wx);
   w_y = snap_grid(toplevel, unsnapped_wy);
 
@@ -865,7 +862,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
          pdiff_y = (int) event->y - start_pan_y;
 
          if (!(throttle % 5)) {
-           a_pan_mouse(w_current, pdiff_x*w_current->mousepan_gain, 
+           a_pan_mouse(w_current, pdiff_x*w_current->mousepan_gain,
                        pdiff_y*w_current->mousepan_gain);
 
            start_pan_x = (int) event->x;
@@ -888,12 +885,12 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
     case(STARTSELECT):
     if ( (!w_current->drag_can_move) ||
-	 (w_current->drag_can_move && 
-	  (! o_find_selected_object(w_current, 
-				    w_current->first_wx, w_current->first_wy)))) {
+         (w_current->drag_can_move &&
+          (! o_find_selected_object(w_current,
+                                    w_current->first_wx, w_current->first_wy)))) {
       if (o_select_box_start(w_current, unsnapped_wx, unsnapped_wy)) {
-	w_current->event_state = SBOX;
-	w_current->inside_action = 1;
+        w_current->event_state = SBOX;
+        w_current->inside_action = 1;
       }
       break;
     }
@@ -903,10 +900,10 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
       o_move_start(w_current, w_x, w_y);
       w_current->event_state = ENDMOVE;
       w_current->inside_action = 1;
-      
+
       /* Continue to the MOVE actions */
-      /* Important!! keep the MOVE and ENDMOVE cases below this 
-	 without the break statement!! */
+      /* Important!! keep the MOVE and ENDMOVE cases below this
+         without the break statement!! */
     }
 
     case(ENDMOVE):
@@ -1034,7 +1031,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
     case(ZOOMBOXEND):
     if (w_current->inside_action)
-    a_zoom_box_rubberband(w_current, unsnapped_wx, unsnapped_wy);
+      a_zoom_box_rubberband(w_current, unsnapped_wx, unsnapped_wy);
     break;
 
   }
@@ -1078,12 +1075,12 @@ x_event_configure (GtkWidget         *widget,
     /* don't want to call this if the current page isn't setup yet */
     return FALSE;
   }
-  
+
   old_win_width  = w_current->win_width;
   old_win_height = w_current->win_height;
   new_win_width  = event->width;
   new_win_height = event->height;
-  
+
   if (old_win_width  == new_win_width &&
       old_win_height == new_win_height) {
     /* the size of the drawing area has not changed */
@@ -1103,21 +1100,21 @@ x_event_configure (GtkWidget         *widget,
   w_current->win_width   = toplevel->width  = new_win_width;
   w_current->win_height  = toplevel->height = new_win_height;
 
-  
+
   /* in the case the user has maximised the window (hence the */
   /* configure event) fit the view by playing with zoom level */
   if (gdk_window_get_state (
         (gtk_widget_get_toplevel (
           widget))->window) & GDK_WINDOW_STATE_MAXIMIZED) {
     gdouble width_ratio, height_ratio;
-    
+
     /* tweak relative_zoom to better fit page in maximized window */
     width_ratio  = ((gdouble)new_win_width)  / ((gdouble)old_win_width);
     height_ratio = ((gdouble)new_win_height) / ((gdouble)old_win_height);
     /* keep smallest ratio as relative zoom factor when panning */
     relativ_zoom_factor =
       (width_ratio < height_ratio) ? width_ratio : height_ratio;
-  
+
   }
 
   /* save current page */
@@ -1241,7 +1238,7 @@ void x_event_vschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
 
   exit_if_null(w_current);
   global_window_current = w_current;
-        
+
   if (w_current->scrollbars_flag == FALSE) {
     return;
   }
@@ -1261,7 +1258,7 @@ void x_event_vschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
   printf("vrange %f %f\n", vadjustment->lower, vadjustment->upper);
   printf("vvalue %f\n", vadjustment->value);
   printf("actual: %d %d\n", toplevel->page_current->top,
-	 toplevel->page_current->bottom);
+         toplevel->page_current->bottom);
 #endif
 
   if (!toplevel->DONT_REDRAW) {
@@ -1275,7 +1272,7 @@ void x_event_vschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
  *
  */
 gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
-		   GSCHEM_TOPLEVEL *w_current)
+                   GSCHEM_TOPLEVEL *w_current)
 {
   exit_if_null(w_current);
   global_window_current = w_current;
@@ -1289,12 +1286,12 @@ gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
  *
  */
 gboolean x_event_key_press (GtkWidget *widget, GdkEventKey *event,
-			GSCHEM_TOPLEVEL *w_current)
+                            GSCHEM_TOPLEVEL *w_current)
 {
   int retval;
-  
+
   retval = FALSE;
-  
+
   exit_if_null(w_current);
   global_window_current = w_current;
 
@@ -1315,7 +1312,7 @@ gboolean x_event_key_press (GtkWidget *widget, GdkEventKey *event,
  *
  */
 gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
-		     GSCHEM_TOPLEVEL *w_current)
+                     GSCHEM_TOPLEVEL *w_current)
 {
   GtkAdjustment *adj;
   gboolean pan_xaxis = FALSE;
