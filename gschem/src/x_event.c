@@ -648,7 +648,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
                        x_get_darkcolor(w_current->bb_color), FALSE);
 
         w_current->complex_rotate =
-        (w_current->complex_rotate + 90) % 360;
+          (w_current->complex_rotate + 90) % 360;
 
         o_complex_place_rotate(w_current);
 
@@ -893,19 +893,14 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
         w_current->inside_action = 1;
       }
       break;
-    }
-    else {
+    } else {
       /* Start the object movement */
       w_current->rotated_inside = 0;
       o_move_start(w_current, w_x, w_y);
       w_current->event_state = ENDMOVE;
       w_current->inside_action = 1;
-
-      /* Continue to the MOVE actions */
-      /* Important!! keep the MOVE and ENDMOVE cases below this
-         without the break statement!! */
     }
-
+    /* Fall through */
     case(ENDMOVE):
     case(MOVE):
     if (w_current->inside_action) {

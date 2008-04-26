@@ -81,7 +81,7 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
       case(STARTDRAWNET):
       case(DRAWNET):
       case(NETCONT):
-	w_current->magnetic_visible=0;
+        w_current->magnetic_visible=0;
         break;
     }
     w_current->rubber_visible=0;
@@ -180,7 +180,7 @@ void o_draw_list(GSCHEM_TOPLEVEL *w_current, GList* list)
     if (o_current) {
       o_redraw_single(w_current, o_current);
     }
-    
+
     l_current = g_list_next(l_current);
   }
 }
@@ -353,7 +353,7 @@ void o_erase_list(GSCHEM_TOPLEVEL *w_current, GList* list)
  *                            matching conditions to a previous draw operation.
  */
 void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
-		    GdkColor *color, int drawing)
+                    GdkColor *color, int drawing)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
@@ -423,61 +423,61 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
  */
 int o_erase_rubber(GSCHEM_TOPLEVEL *w_current)
 {
-   /* return FALSE if it did not erase anything */
- 
-   if (!w_current->inside_action)
-     return(FALSE);
+  /* return FALSE if it did not erase anything */
 
-   switch(w_current->event_state) {
+  if (!w_current->inside_action)
+    return(FALSE);
 
-     case(STARTDRAWBUS):
-     case(DRAWBUS):
-     case(BUSCONT):
-        o_bus_eraserubber(w_current);
-     break;
+  switch(w_current->event_state) {
 
-     case(STARTDRAWNET):
-     case(DRAWNET):
-     case(NETCONT):
-        o_net_eraserubber(w_current);
-     break;
+    case(STARTDRAWBUS):
+    case(DRAWBUS):
+    case(BUSCONT):
+      o_bus_eraserubber(w_current);
+    break;
 
-     case(DRAWPIN):
-     case(ENDPIN):
-        o_pin_eraserubber(w_current);
-     break;
+    case(STARTDRAWNET):
+    case(DRAWNET):
+    case(NETCONT):
+      o_net_eraserubber(w_current);
+    break;
 
-     case(DRAWLINE):
-     case(ENDLINE):
-        o_line_eraserubber(w_current);
-     break;
+    case(DRAWPIN):
+    case(ENDPIN):
+      o_pin_eraserubber(w_current);
+    break;
 
-     case(DRAWBOX):
-     case(ENDBOX):
-        o_box_eraserubber(w_current);
-     break;
+    case(DRAWLINE):
+    case(ENDLINE):
+      o_line_eraserubber(w_current);
+    break;
 
-     case(DRAWPICTURE):
-     case(ENDPICTURE):
-        o_picture_eraserubber(w_current);
-     break;
+    case(DRAWBOX):
+    case(ENDBOX):
+      o_box_eraserubber(w_current);
+    break;
 
-     case(DRAWCIRCLE):
-     case(ENDCIRCLE):
-        o_circle_eraserubber(w_current);
-     break;
+    case(DRAWPICTURE):
+    case(ENDPICTURE):
+      o_picture_eraserubber(w_current);
+    break;
 
-     case(DRAWARC):
-     case(ENDARC):
-        o_arc_eraserubber(w_current);
-     break;
+    case(DRAWCIRCLE):
+    case(ENDCIRCLE):
+      o_circle_eraserubber(w_current);
+    break;
 
-     default:
- 	return(FALSE);
-     break;
-   }
+    case(DRAWARC):
+    case(ENDARC):
+      o_arc_eraserubber(w_current);
+    break;
 
-   return(TRUE);
+    default:
+      return(FALSE);
+    break;
+  }
+
+  return(TRUE);
 }
 
 
@@ -485,10 +485,10 @@ int o_erase_rubber(GSCHEM_TOPLEVEL *w_current)
  *  \brief
  *  \par Function Description
  *  This function is neccesary to make jumps between event_states.
- *  If we are inside an drawing action that created something on the dc, 
- *  e.g. if we are drawing a box and then jump to line drawing without 
+ *  If we are inside an drawing action that created something on the dc,
+ *  e.g. if we are drawing a box and then jump to line drawing without
  *  leaving the box drawing mode, there will remain some rubberbands on the
- *  screen. 
+ *  screen.
  *  Usually a intermediate select state would clean (redraw) the screen.
  */
 int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
@@ -507,24 +507,24 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
       x_compselect_deselect (w_current);
 
       /* Fall through */
-    case(COPY): 
-    case(MCOPY): 
-    case(DRAWBUS): 
-    case(DRAWNET):   
-    case(ENDARC): 
-    case(ENDBOX): 
-    case(ENDCIRCLE): 
+    case(COPY):
+    case(MCOPY):
+    case(DRAWBUS):
+    case(DRAWNET):
+    case(ENDARC):
+    case(ENDBOX):
+    case(ENDCIRCLE):
     case(ENDCOPY):
-    case(ENDMCOPY): 
-    case(ENDLINE): 
-    case(ENDMOVE): 
-    case(ENDPASTE): 
-    case(ENDPIN): 
-    case(ENDTEXT): 
-    case(GRIPS): 
-    case(MOVE): 
-    case(NETCONT): 
-    case(ZOOMBOXEND): 
+    case(ENDMCOPY):
+    case(ENDLINE):
+    case(ENDMOVE):
+    case(ENDPASTE):
+    case(ENDPIN):
+    case(ENDTEXT):
+    case(GRIPS):
+    case(MOVE):
+    case(NETCONT):
+    case(ZOOMBOXEND):
       /* it is possible to cancel in the middle of a place,
        * so lets be sure to clean up the complex_place_list
        * structure and also clean up the attrib_place_list. */
@@ -556,35 +556,35 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
       return TRUE;
 
     /* all remaining states without dc changes */
-    case(NONE): 
-    case(SELECT): 
-    case(DRAWLINE): 
-    case(DRAWBOX): 
-    case(DRAWCIRCLE): 
+    case(NONE):
+    case(SELECT):
+    case(DRAWLINE):
+    case(DRAWBOX):
+    case(DRAWCIRCLE):
     case(ZOOM):
-    case(PAN): 
-    case(BUSCONT): 
-    case(DRAWARC): 
-    case(DRAWPICTURE): 
-    case(DRAWPIN): 
-    case(DRAWTEXT): 
-    case(ENDMIRROR): 
+    case(PAN):
+    case(BUSCONT):
+    case(DRAWARC):
+    case(DRAWPICTURE):
+    case(DRAWPIN):
+    case(DRAWTEXT):
+    case(ENDMIRROR):
     case(ENDPICTURE):
-    case(ENDROTATEP): 
-    case(ENDROUTENET): 
-    case(MOUSEPAN): 
-    case(SBOX): 
-    case(STARTCOPY): 
+    case(ENDROTATEP):
+    case(ENDROUTENET):
+    case(MOUSEPAN):
+    case(SBOX):
+    case(STARTCOPY):
     case(STARTMCOPY):
-    case(STARTDRAWBUS): 
-    case(STARTDRAWNET): 
-    case(STARTMOVE): 
-    case(STARTPAN): 
-    case(STARTPASTE): 
-    case(STARTROUTENET): 
-    case(STARTSELECT): 
-    case(TEXTENTRY): 
-    case(ZOOMBOXSTART): 
+    case(STARTDRAWBUS):
+    case(STARTDRAWNET):
+    case(STARTMOVE):
+    case(STARTPAN):
+    case(STARTPASTE):
+    case(STARTROUTENET):
+    case(STARTSELECT):
+    case(TEXTENTRY):
+    case(ZOOMBOXSTART):
       return FALSE;
   }
 

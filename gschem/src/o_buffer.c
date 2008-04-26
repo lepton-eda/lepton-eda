@@ -80,7 +80,7 @@ void o_buffer_cut(GSCHEM_TOPLEVEL *w_current, int buf_num)
     s_delete_object_glist(toplevel, object_buffer[buf_num]);
     object_buffer[buf_num] = NULL;
   }
-        
+
   toplevel->ADDING_SEL = 1;
   object_buffer[buf_num] =
     o_glist_copy_all_to_glist(toplevel, s_current,
@@ -95,7 +95,7 @@ void o_buffer_cut(GSCHEM_TOPLEVEL *w_current, int buf_num)
  *
  */
 void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
-			  int buf_num)
+                          int buf_num)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int rleft, rtop, rbottom, rright;
@@ -143,7 +143,7 @@ void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
  *
  */
 void o_buffer_paste_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
-			int buf_num)
+                        int buf_num)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int w_diff_x, w_diff_y;
@@ -166,7 +166,7 @@ void o_buffer_paste_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
   w_diff_x = w_current->second_wx - w_current->first_wx;
   w_diff_y = w_current->second_wy - w_current->first_wy;
 
-#if DEBUG 
+#if DEBUG
   printf("%d %d\n", w_diff_x, w_diff_y);
 #endif
 
@@ -178,7 +178,7 @@ void o_buffer_paste_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
   o_current = object_buffer[buf_num]->data;
   p_current = toplevel->page_current;
 
-  o_saved = p_current->object_tail;	
+  o_saved = p_current->object_tail;
   o_list_copy_all(toplevel, o_current, p_current->object_tail,
                   NORMAL_FLAG);
 
@@ -235,11 +235,11 @@ void o_buffer_paste_rubberpaste(GSCHEM_TOPLEVEL *w_current, int buf_num)
  */
 void o_buffer_init(void)
 {
-	int i;
+  int i;
 
-	for (i = 0 ; i < MAX_BUFFERS; i++) {
-		object_buffer[i] = NULL;
-	}
+  for (i = 0 ; i < MAX_BUFFERS; i++) {
+    object_buffer[i] = NULL;
+  }
 }
 
 /*! \todo Finish function documentation!!!
