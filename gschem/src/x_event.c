@@ -38,6 +38,7 @@
 /* used in key_press, since it isn't passed this information */
 /* filled in x_event_motion */
 int mouse_x, mouse_y;
+int mouse_wx, mouse_wy;
 
 /* used by mouse pan */
 extern int current_center_x, current_center_y;
@@ -125,6 +126,10 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
   w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
   w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
+
+  SCREENtoWORLD( toplevel, (int) event->x, (int) event->y, &w_x, &w_y );
+  w_x = snap_grid(toplevel, w_x);
+  w_y = snap_grid(toplevel, w_y);
 
   if (event->button == 1) {
     switch(w_current->event_state) {
@@ -282,9 +287,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(STARTDRAWNET):  /*! \todo change state name? */
-        o_net_start(w_current,
-                    (int) event->x,
-                    (int) event->y);
+        o_net_start(w_current, w_x, w_y);
         w_current->inside_action = 1;
         w_current->event_state=DRAWNET;
 
@@ -302,8 +305,8 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       case(DRAWNET):
       case(NETCONT):
         /* Only continue the net if net end worked */
-        if (o_net_end(w_current, (int) event->x,
-                      (int) event->y)) {
+        if (o_net_end(w_current, w_x, w_y)) {
+	  o_net_start(w_current, w_current->first_wx, w_current->first_wy);
           w_current->event_state=NETCONT;
         }
 	else { /* cleanup and start a new net */
@@ -359,14 +362,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       case(ENDROTATEP):
         prev_state = toplevel->DONT_REDRAW;
         toplevel->DONT_REDRAW = 0;
-
-        SCREENtoWORLD( toplevel,
-                       (int) event->x,
-                       (int) event->y,
-                       &w_x, &w_y );
-        w_x = snap_grid(toplevel, w_x);
-        w_y = snap_grid(toplevel, w_y);
-
         o_rotate_world_update(w_current, w_x, w_y, 90,
           geda_list_get_glist(toplevel->page_current->selection_list ));
         toplevel->DONT_REDRAW = prev_state;
@@ -377,13 +372,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ENDMIRROR):
-        SCREENtoWORLD( toplevel,
-                       (int) event->x,
-                       (int) event->y,
-               &w_x, &w_y );
-        w_x = snap_grid(toplevel, w_x);
-        w_y = snap_grid(toplevel, w_y);
-
         o_mirror_world_update(w_current, w_x, w_y,
                               geda_list_get_glist(
                                 toplevel->page_current->selection_list ));
@@ -621,6 +609,10 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
   w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
   w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
 
+  SCREENtoWORLD( toplevel, (int) event->x, (int) event->y, &w_x, &w_y );
+  w_x = snap_grid(toplevel, w_x);
+  w_y = snap_grid(toplevel, w_y);
+
   if (event->button == 1) {
     switch(w_current->event_state) {
       case(SELECT):
@@ -769,11 +761,6 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 	/* skip over head node */
 	redraw_state = toplevel->DONT_REDRAW;
 	toplevel->DONT_REDRAW = 1;
-        SCREENtoWORLD( toplevel,
-                       w_current->start_x, w_current->start_y,
-                       &w_x, &w_y );
-        w_x = snap_grid(toplevel, w_x);
-        w_y = snap_grid(toplevel, w_y);
         o_rotate_world_update(w_current, w_x, w_y, 90,
                               toplevel->page_current->complex_place_list );
 	toplevel->DONT_REDRAW = redraw_state;
@@ -891,6 +878,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
   TOPLEVEL *toplevel = w_current->toplevel;
   int temp_x, temp_y;
   int pdiff_x, pdiff_y;
+  int w_x, w_y;
 
   int zoom_scale;
   int diff_x; 
@@ -932,6 +920,12 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
       return 0;
   }
 
+  SCREENtoWORLD( toplevel, (int) event->x, (int) event->y, &w_x, &w_y );
+  w_x = snap_grid(toplevel, w_x);
+  w_y = snap_grid(toplevel, w_y);
+
+  mouse_wx = w_x;
+  mouse_wy = w_y;
   mouse_x = (int) event->x;
   mouse_y = (int) event->y;
 
@@ -1087,19 +1081,14 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
     case(STARTDRAWNET):
     if(w_current->magneticnet_mode == 1) {
-      o_net_start_magnetic(w_current,
-			   (int) event->x,
-			   (int) event->y);
+      o_net_start_magnetic(w_current, w_x, w_y);
     }
-
     break;
 
     case(DRAWNET):
     case(NETCONT):
     if (w_current->inside_action)
-    o_net_rubbernet(w_current,
-                    (int) event->x,
-                    (int) event->y);
+      o_net_rubbernet(w_current, w_x, w_y);
     break;
 
     case(DRAWBUS):

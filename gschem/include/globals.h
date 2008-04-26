@@ -43,6 +43,8 @@ extern int logging_dest;
 /* current mouse location */
 extern int mouse_x; /* defined in x_event.c */
 extern int mouse_y;
+extern int mouse_wx;
+extern int mouse_wy;
 
 /* command line options */
 extern int quiet_mode;

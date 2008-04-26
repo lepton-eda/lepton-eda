@@ -2368,7 +2368,7 @@ DEFINE_I_CALLBACK(add_net_hotkey)
   i_set_state(w_current, STARTDRAWNET);
   i_update_toolbar(w_current);
 
-  o_net_start(w_current, mouse_x, mouse_y);
+  o_net_start(w_current, mouse_wx, mouse_wy);
 
   w_current->event_state=DRAWNET;
   w_current->inside_action = 1;
