@@ -551,6 +551,8 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset);
 /* o_copy.c */
 void o_copy_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_copy_end(GSCHEM_TOPLEVEL *w_current);
+void o_copy_rubbercopy(GSCHEM_TOPLEVEL *w_current, int x, int y);
+void o_copy_rubbercopy_xor(GSCHEM_TOPLEVEL *w_current, int drawing);
 /* o_cue.c */
 void o_cue_redraw_all(GSCHEM_TOPLEVEL *w_current, OBJECT *head, gboolean draw_selected);
 void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichone);

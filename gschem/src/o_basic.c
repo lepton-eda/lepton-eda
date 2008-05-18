@@ -62,11 +62,14 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
     switch(w_current->event_state) {
       case(MOVE):
       case(ENDMOVE):
-      case(ENDCOPY):
-      case(ENDMCOPY):
         o_drawbounding(w_current,
                        geda_list_get_glist( toplevel->page_current->selection_list ),
                        x_get_darkcolor(w_current->bb_color), TRUE);
+        break;
+
+      case(ENDCOPY):
+      case(ENDMCOPY):
+        o_copy_rubbercopy_xor (w_current, TRUE);
         break;
 
       case(ENDCOMP):

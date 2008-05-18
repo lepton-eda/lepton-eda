@@ -51,9 +51,7 @@ void o_copy_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
     w_current->first_wx = w_current->second_wx = w_x;
     w_current->first_wy = w_current->second_wy = w_y;
-    o_drawbounding(w_current,
-                   geda_list_get_glist( toplevel->page_current->selection_list ),
-                   x_get_darkcolor(w_current->bb_color), TRUE);
+    o_copy_rubbercopy_xor (w_current, TRUE);
   }
 }
 
@@ -90,9 +88,7 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
   diff_y = w_current->second_wy - w_current->first_wy;
 
   /* erase the bounding box */
-  o_drawbounding(w_current,
-               geda_list_get_glist( toplevel->page_current->selection_list ),
-               x_get_darkcolor(w_current->bb_color), FALSE);
+  o_copy_rubbercopy_xor (w_current, FALSE);
 
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
   new_objects_head = s_basic_init_object("object_head");
@@ -422,4 +418,32 @@ void o_copy_end(GSCHEM_TOPLEVEL *w_current)
   connected_objects = NULL;
 
   o_undo_savestate(w_current, UNDO_ALL);
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_copy_rubbercopy (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+{
+  o_copy_rubbercopy_xor (w_current, FALSE);
+  w_current->second_wx = w_x;
+  w_current->second_wy = w_y;
+  o_copy_rubbercopy_xor (w_current, TRUE);
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_copy_rubbercopy_xor (GSCHEM_TOPLEVEL *w_current, int drawing)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  o_drawbounding (w_current,
+                  geda_list_get_glist (toplevel->page_current->selection_list),
+                  x_get_darkcolor (w_current->bb_color), drawing);
 }

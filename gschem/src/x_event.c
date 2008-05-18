@@ -904,16 +904,8 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     case(COPY):
     case(ENDMCOPY):
     case(MCOPY):
-    if (w_current->inside_action) {
-      o_drawbounding(w_current,
-                     geda_list_get_glist( toplevel->page_current->selection_list ),
-                     x_get_darkcolor(w_current->bb_color), FALSE);
-      w_current->second_wx = w_x;
-      w_current->second_wy = w_y;
-      o_drawbounding(w_current,
-                     geda_list_get_glist( toplevel->page_current->selection_list ),
-                     x_get_darkcolor(w_current->bb_color), TRUE);
-    }
+    if (w_current->inside_action)
+      o_copy_rubbercopy(w_current, w_x, w_y);
     break;
 
     case(ENDLINE):
