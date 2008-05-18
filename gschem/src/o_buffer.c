@@ -133,8 +133,7 @@ void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
 
   w_current->event_state = ENDPASTE;
 
-  o_drawbounding(w_current, object_buffer[buf_num],
-                 x_get_darkcolor(w_current->bb_color), TRUE);
+  o_buffer_paste_rubberpaste_xor (w_current, buf_num, TRUE);
 }
 
 /*! \todo Finish function documentation!!!
@@ -159,8 +158,7 @@ void o_buffer_paste_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
   }
 
   /* erase old image */
-  o_drawbounding(w_current, object_buffer[buf_num],
-                 x_get_darkcolor(w_current->bb_color), FALSE);
+  o_buffer_paste_rubberpaste_xor (w_current, buf_num, FALSE);
 
   /* calc and translate objects to their final position */
   w_diff_x = w_current->second_wx - w_current->first_wx;
@@ -217,16 +215,34 @@ void o_buffer_paste_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
   i_update_menus(w_current);
 }
 
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
  *
  */
-void o_buffer_paste_rubberpaste(GSCHEM_TOPLEVEL *w_current, int buf_num)
+void o_buffer_paste_rubberpaste (GSCHEM_TOPLEVEL *w_current, int buf_num,
+                                 int w_x, int w_y)
+{
+  o_buffer_paste_rubberpaste_xor (w_current, buf_num, FALSE);
+  w_current->second_wx = w_x;
+  w_current->second_wy = w_y;
+  o_buffer_paste_rubberpaste_xor (w_current, buf_num, TRUE);
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_buffer_paste_rubberpaste_xor(GSCHEM_TOPLEVEL *w_current, int buf_num,
+                                    int drawing)
 {
   o_drawbounding(w_current, object_buffer[buf_num],
-                 x_get_darkcolor(w_current->bb_color), FALSE);
+                 x_get_darkcolor(w_current->bb_color), drawing);
 }
+
 
 /*! \todo Finish function documentation!!!
  *  \brief

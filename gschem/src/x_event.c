@@ -977,10 +977,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     break;
 
     case(ENDPASTE):
-    o_buffer_paste_rubberpaste(w_current, w_current->buffer_number);
-    w_current->second_wx = w_x;
-    w_current->second_wy = w_y;
-    o_buffer_paste_rubberpaste(w_current, w_current->buffer_number);
+    o_buffer_paste_rubberpaste(w_current, w_current->buffer_number, w_x, w_y);
     break;
 
     case(DRAWTEXT):

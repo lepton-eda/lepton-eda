@@ -511,7 +511,8 @@ void o_buffer_copy(GSCHEM_TOPLEVEL *w_current, int buf_num);
 void o_buffer_cut(GSCHEM_TOPLEVEL *w_current, int buf_num);
 void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int x, int y, int buf_num);
 void o_buffer_paste_end(GSCHEM_TOPLEVEL *w_current, int x, int y, int buf_num);
-void o_buffer_paste_rubberpaste(GSCHEM_TOPLEVEL *w_current, int buf_num);
+void o_buffer_paste_rubberpaste(GSCHEM_TOPLEVEL *w_current, int buf_num, int x, int y);
+void o_buffer_paste_rubberpaste_xor(GSCHEM_TOPLEVEL *w_current, int buf_num, int drawing);
 void o_buffer_init(void);
 void o_buffer_free(GSCHEM_TOPLEVEL *w_current);
 /* o_bus.c */
