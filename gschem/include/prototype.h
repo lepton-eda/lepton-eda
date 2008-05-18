@@ -509,8 +509,8 @@ void o_box_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 /* o_buffer.c */
 void o_buffer_copy(GSCHEM_TOPLEVEL *w_current, int buf_num);
 void o_buffer_cut(GSCHEM_TOPLEVEL *w_current, int buf_num);
-void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y, int buf_num);
-void o_buffer_paste_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y, int buf_num);
+void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int x, int y, int buf_num);
+void o_buffer_paste_end(GSCHEM_TOPLEVEL *w_current, int x, int y, int buf_num);
 void o_buffer_paste_rubberpaste(GSCHEM_TOPLEVEL *w_current, int buf_num);
 void o_buffer_init(void);
 void o_buffer_free(GSCHEM_TOPLEVEL *w_current);
@@ -540,10 +540,10 @@ void o_circle_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 /* o_complex.c */
 void o_complex_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_complex_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *complex);
-void o_complex_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y);
+void o_complex_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_complex_place_changed_run_hook(GSCHEM_TOPLEVEL *w_current);
 void o_complex_place_rotate(GSCHEM_TOPLEVEL *w_current);
-void o_complex_end(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y);
+void o_complex_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_complex_rubbercomplex(GSCHEM_TOPLEVEL *w_current);
 void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset);
 /* o_copy.c */
@@ -568,9 +568,9 @@ void o_delete_complex(GSCHEM_TOPLEVEL *w_current, OBJECT *obj);
 void o_delete_text(GSCHEM_TOPLEVEL *w_current, OBJECT *obj);
 void o_delete(GSCHEM_TOPLEVEL *w_current);
 /* o_find.c */
-gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y,
+gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int x, int y,
 		       gboolean deselect_afterwards);
-gboolean o_find_selected_object(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y);
+gboolean o_find_selected_object(GSCHEM_TOPLEVEL *w_current, int x, int y);
 /* o_grips.c */
 OBJECT *o_grips_search_world(GSCHEM_TOPLEVEL *w_current, int x, int y, int *whichone);
 OBJECT *o_grips_search_arc_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
@@ -700,7 +700,7 @@ void o_text_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw_rectangle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
-void o_text_start(GSCHEM_TOPLEVEL *w_current, int screen_x, int screen_y);
+void o_text_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_text_end(GSCHEM_TOPLEVEL *w_current);
 void o_text_rubberattrib(GSCHEM_TOPLEVEL *w_current);
 void o_text_edit(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
