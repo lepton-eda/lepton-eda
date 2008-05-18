@@ -903,18 +903,8 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     /* Fall through */
     case(ENDMOVE):
     case(MOVE):
-    if (w_current->inside_action) {
-
-      if (w_current->netconn_rubberband) {
-        o_move_stretch_rubberband(w_current);
-      }
-
-      o_complex_rubbercomplex(w_current, w_x, w_y);
-
-      if (w_current->netconn_rubberband) {
-        o_move_stretch_rubberband(w_current);
-      }
-    }
+    if (w_current->inside_action)
+      o_move_rubbermove(w_current, w_x, w_y);
     break;
 
     case(ENDCOPY):

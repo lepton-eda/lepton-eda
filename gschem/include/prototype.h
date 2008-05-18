@@ -636,6 +636,7 @@ void o_autosave_backups(GSCHEM_TOPLEVEL *w_current);
 void o_move_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_move_end_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *list, int type, int diff_x, int diff_y, GList **other_objects, GList **connected_objects);
 void o_move_end(GSCHEM_TOPLEVEL *w_current);
+void o_move_rubbermove(GSCHEM_TOPLEVEL *w_current, int x, int y);
 int o_move_return_whichone(OBJECT *object, int x, int y);
 void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_move_prep_rubberband(GSCHEM_TOPLEVEL *w_current);

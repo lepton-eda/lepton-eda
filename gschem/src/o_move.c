@@ -251,6 +251,24 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
   toplevel->page_current->complex_place_list = NULL;
 }
 
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_move_rubbermove(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+{
+  if (w_current->netconn_rubberband)
+    o_move_stretch_rubberband(w_current);
+
+  o_complex_rubbercomplex(w_current, w_x, w_y);
+
+  if (w_current->netconn_rubberband)
+    o_move_stretch_rubberband(w_current);
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
