@@ -142,16 +142,20 @@ x_compselect_callback_response (GtkDialog *dialog,
               g_assert_not_reached();
         }
 
-        if (w_current->event_state == ENDCOMP ||
-            w_current->event_state == DRAWCOMP) {
-          /* Delete the component which was being placed */
-          o_complex_rubbercomplex(w_current);
-          s_delete_object_glist(toplevel,
-                                toplevel->page_current->complex_place_list);
-          toplevel->page_current->complex_place_list = NULL;
-        } else {
-          /* Cancel whatever other action is currently in progress */
-          o_redraw_cleanstates (w_current);
+        switch (w_current->event_state) {
+          case ENDCOMP:
+            /* Undraw the component which was being placed */
+            o_complex_rubbercomplex(w_current);
+            /* Fall through */
+          case DRAWCOMP:
+            s_delete_object_glist(toplevel,
+                                  toplevel->page_current->complex_place_list);
+            toplevel->page_current->complex_place_list = NULL;
+            break;
+
+          default:
+            /* Cancel whatever other action is currently in progress */
+            o_redraw_cleanstates (w_current);
         }
 
         if (symbol == NULL) {

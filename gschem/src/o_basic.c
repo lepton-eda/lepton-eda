@@ -69,13 +69,11 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
                        x_get_darkcolor(w_current->bb_color), TRUE);
         break;
 
-      case(DRAWCOMP):
       case(ENDCOMP):
         o_drawbounding(w_current, toplevel->page_current->complex_place_list,
                        x_get_darkcolor(w_current->bb_color), TRUE);
         break;
 
-      case(DRAWTEXT):
       case(ENDTEXT):
         o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
                        x_get_darkcolor(w_current->bb_color), TRUE);
