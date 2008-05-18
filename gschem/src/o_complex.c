@@ -336,11 +336,25 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void o_complex_rubbercomplex(GSCHEM_TOPLEVEL *w_current)
+void o_complex_rubbercomplex (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  o_drawbounding(w_current,
-                 w_current->toplevel->page_current->complex_place_list,
-                 x_get_darkcolor(w_current->bb_color), FALSE);
+  o_complex_rubbercomplex_xor (w_current);
+  w_current->second_wx = w_x;
+  w_current->second_wy = w_y;
+  o_complex_rubbercomplex_xor (w_current);
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_complex_rubbercomplex_xor (GSCHEM_TOPLEVEL *w_current)
+{
+  o_drawbounding (w_current,
+                  w_current->toplevel->page_current->complex_place_list,
+                  x_get_darkcolor (w_current->bb_color), FALSE);
 }
 
 

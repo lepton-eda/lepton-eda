@@ -3422,7 +3422,7 @@ DEFINE_I_CALLBACK(cancel)
     /* user hit escape key when placing components */
 
     /* Undraw any XOR outline of the place list */
-    o_complex_rubbercomplex(w_current);
+    o_complex_rubbercomplex_xor(w_current);
 
     /* Free the complex place list and its contents */
     s_delete_object_glist(w_current->toplevel,

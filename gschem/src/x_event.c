@@ -909,10 +909,8 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
         o_move_stretch_rubberband(w_current);
       }
 
-      o_complex_rubbercomplex(w_current);
-      w_current->second_wx = w_x;
-      w_current->second_wy = w_y;
-      o_complex_rubbercomplex(w_current);
+      o_complex_rubbercomplex(w_current, w_x, w_y);
+
       if (w_current->netconn_rubberband) {
         o_move_stretch_rubberband(w_current);
       }
@@ -992,10 +990,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     break;
 
     case(ENDCOMP):
-    o_complex_rubbercomplex(w_current);
-    w_current->second_wx = w_x;
-    w_current->second_wy = w_y;
-    o_complex_rubbercomplex(w_current);
+    o_complex_rubbercomplex(w_current, w_x, w_y);
     break;
 
     case(ENDPASTE):

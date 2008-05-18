@@ -145,7 +145,7 @@ x_compselect_callback_response (GtkDialog *dialog,
         switch (w_current->event_state) {
           case ENDCOMP:
             /* Undraw the component which was being placed */
-            o_complex_rubbercomplex(w_current);
+            o_complex_rubbercomplex_xor(w_current);
             /* Fall through */
           case DRAWCOMP:
             s_delete_object_glist(toplevel,
