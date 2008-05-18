@@ -687,7 +687,8 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         /* skip over head node */
         redraw_state = toplevel->DONT_REDRAW;
         toplevel->DONT_REDRAW = 1;
-        o_rotate_world_update(w_current, w_x, w_y, 90,
+        o_rotate_world_update(w_current, w_current->first_wx,
+                                         w_current->first_wy, 90,
                               toplevel->page_current->complex_place_list );
         toplevel->DONT_REDRAW = redraw_state;
         w_current->rotated_inside ++;
