@@ -106,8 +106,7 @@ void o_complex_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   o_complex_place_changed_run_hook (w_current);
   toplevel->DONT_REDRAW = redraw_state;
 
-  o_drawbounding(w_current, toplevel->page_current->complex_place_list,
-                 x_get_darkcolor(w_current->bb_color), TRUE);
+  o_complex_rubbercomplex_xor (w_current, TRUE);
 }
 
 /*! \brief Run the complex place list changed hook. 
@@ -210,9 +209,7 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
 
-  o_drawbounding(w_current,
-                 w_current->toplevel->page_current->complex_place_list,
-                 x_get_darkcolor(w_current->bb_color), FALSE);
+  o_complex_rubbercomplex_xor (w_current, FALSE);
 
   if (w_current->include_complex) {
     buffer = s_clib_symbol_get_data_by_name (toplevel->internal_symbol_name);
@@ -338,10 +335,10 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_complex_rubbercomplex (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  o_complex_rubbercomplex_xor (w_current);
+  o_complex_rubbercomplex_xor (w_current, FALSE);
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
-  o_complex_rubbercomplex_xor (w_current);
+  o_complex_rubbercomplex_xor (w_current, TRUE);
 }
 
 
@@ -350,11 +347,11 @@ void o_complex_rubbercomplex (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void o_complex_rubbercomplex_xor (GSCHEM_TOPLEVEL *w_current)
+void o_complex_rubbercomplex_xor (GSCHEM_TOPLEVEL *w_current, int drawing)
 {
   o_drawbounding (w_current,
                   w_current->toplevel->page_current->complex_place_list,
-                  x_get_darkcolor (w_current->bb_color), FALSE);
+                  x_get_darkcolor (w_current->bb_color), drawing);
 }
 
 

@@ -545,7 +545,7 @@ void o_complex_place_changed_run_hook(GSCHEM_TOPLEVEL *w_current);
 void o_complex_place_rotate(GSCHEM_TOPLEVEL *w_current);
 void o_complex_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_complex_rubbercomplex(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_complex_rubbercomplex_xor(GSCHEM_TOPLEVEL *w_current);
+void o_complex_rubbercomplex_xor(GSCHEM_TOPLEVEL *w_current, int drawing);
 void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset);
 /* o_copy.c */
 void o_copy_start(GSCHEM_TOPLEVEL *w_current, int x, int y);

@@ -70,8 +70,7 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
         break;
 
       case(ENDCOMP):
-        o_drawbounding(w_current, toplevel->page_current->complex_place_list,
-                       x_get_darkcolor(w_current->bb_color), TRUE);
+        o_complex_rubbercomplex_xor (w_current, TRUE);
         break;
 
       case(ENDTEXT):

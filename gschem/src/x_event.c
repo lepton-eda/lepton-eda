@@ -603,9 +603,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         /* Keep the state and the inside_action, as the copy has not finished. */
         w_current->first_wx = w_current->second_wx = w_x;
         w_current->first_wy = w_current->second_wy = w_y;
-        o_drawbounding(w_current,
-                       geda_list_get_glist(toplevel->page_current->selection_list),
-                       x_get_darkcolor(w_current->bb_color), TRUE);
+        o_complex_rubbercomplex_xor (w_current, TRUE);
         i_set_state(w_current, ENDMCOPY);
         i_update_toolbar(w_current);
         o_undo_savestate(w_current, UNDO_ALL);
@@ -644,8 +642,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
     if (w_current->inside_action) {
       if (w_current->event_state == ENDCOMP) {
-        o_drawbounding(w_current, toplevel->page_current->complex_place_list,
-                       x_get_darkcolor(w_current->bb_color), FALSE);
+        o_complex_rubbercomplex_xor (w_current, FALSE);
 
         w_current->complex_rotate =
           (w_current->complex_rotate + 90) % 360;
@@ -659,8 +656,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         o_complex_place_changed_run_hook (w_current);
         toplevel->DONT_REDRAW = prev_state;
 
-        o_drawbounding(w_current, toplevel->page_current->complex_place_list,
-                       x_get_darkcolor(w_current->bb_color), TRUE);
+        o_complex_rubbercomplex_xor (w_current, TRUE);
         return(0);
       } else if (w_current->event_state == ENDTEXT) {
         o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
@@ -679,8 +675,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       else if (w_current->event_state == ENDMOVE) {
         prev_state = w_current->event_state;
 
-        o_drawbounding(w_current, toplevel->page_current->complex_place_list,
-                       x_get_darkcolor(w_current->bb_color), FALSE);
+        o_complex_rubbercomplex_xor (w_current, FALSE);
 
         /* Don't allow o_rotate_90 to erase the selection, neither to
            redraw the objects after rotating */
@@ -694,8 +689,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         w_current->rotated_inside ++;
         w_current->event_state = prev_state;
 
-        o_drawbounding(w_current, toplevel->page_current->complex_place_list,
-                       x_get_darkcolor(w_current->bb_color), TRUE);
+        o_complex_rubbercomplex_xor (w_current, TRUE);
 
         return(0);
       }
