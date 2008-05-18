@@ -327,8 +327,7 @@ void o_text_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
     }
   }
 
-  o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
-                 x_get_darkcolor(w_current->bb_color), TRUE);
+  o_text_rubberattrib_xor (w_current, TRUE);
 }
 
 /*! \todo Finish function documentation!!!
@@ -341,8 +340,7 @@ void o_text_end(GSCHEM_TOPLEVEL *w_current)
   TOPLEVEL *toplevel = w_current->toplevel;
 
   /* erase the old bounding box / outline */
-  o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
-		 x_get_darkcolor(w_current->bb_color), FALSE);
+  o_text_rubberattrib_xor (w_current, FALSE);
 
   /* here you need to add OBJ_TEXT when it's done */
   /*! \todo make this VIS and SHOW default configurable */
@@ -376,17 +374,33 @@ void o_text_end(GSCHEM_TOPLEVEL *w_current)
   i_update_menus(w_current);
 }
 
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
  *
  */
-void o_text_rubberattrib(GSCHEM_TOPLEVEL *w_current)
+void o_text_rubberattrib(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+{
+  o_text_rubberattrib_xor (w_current, FALSE);
+  w_current->second_wx = w_x;
+  w_current->second_wy = w_y;
+  o_text_rubberattrib_xor (w_current, TRUE);
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_text_rubberattrib_xor(GSCHEM_TOPLEVEL *w_current, int drawing)
 {
   o_drawbounding(w_current,
                  w_current->toplevel->page_current->attrib_place_list,
-                 x_get_darkcolor(w_current->bb_color), FALSE);
+                 x_get_darkcolor(w_current->bb_color), drawing);
 }
+
 
 /*! \todo Finish function documentation!!!
  *  \brief

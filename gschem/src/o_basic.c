@@ -74,8 +74,7 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
         break;
 
       case(ENDTEXT):
-        o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
-                       x_get_darkcolor(w_current->bb_color), TRUE);
+        o_text_rubberattrib_xor (w_current, TRUE);
         break;
       case(STARTDRAWNET):
       case(DRAWNET):

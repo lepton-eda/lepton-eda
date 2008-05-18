@@ -659,16 +659,14 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         o_complex_rubbercomplex_xor (w_current, TRUE);
         return(0);
       } else if (w_current->event_state == ENDTEXT) {
-        o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
-                       x_get_darkcolor(w_current->bb_color), FALSE);
+        o_text_rubberattrib_xor (w_current, FALSE);
 
         w_current->complex_rotate =
         (w_current->complex_rotate + 90) % 360;
 
         o_text_place_rotate(w_current);
 
-        o_drawbounding(w_current, toplevel->page_current->attrib_place_list,
-                       x_get_darkcolor(w_current->bb_color), TRUE);
+        o_text_rubberattrib_xor (w_current, TRUE);
         return(0);
 
       }
@@ -993,10 +991,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     break;
 
     case(ENDTEXT):
-    o_text_rubberattrib(w_current);
-    w_current->second_wx = w_x;
-    w_current->second_wy = w_y;
-    o_text_rubberattrib(w_current);
+    o_text_rubberattrib(w_current, w_x, w_y);
     break;
 
     case(SBOX):
