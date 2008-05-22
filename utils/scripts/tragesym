@@ -27,7 +27,7 @@
 import getopt, os.path, re, string, sys
 
 ##################### GLOBALS ############################################
-VERSION="0.0.13"
+VERSION="0.0.14"
 
 CHARHIGH=26
 preset_options = {"wordswap":"yes",
@@ -399,10 +399,10 @@ def writesym(filename,options,attr,pins):
                 pina=(0,350,2,90)
                 pinq=(50,200,8,90)
             else:
-                pint=(50,100,0,0)
+                pint=(50,200,2,0)
                 pinl=(0,350,3,0)
                 pina=(0,500,3,0)
-                pinq=(50,100,2,0)
+                pinq=(-50,200,8,0)
             swap=0
             pbottomx=pbottomx + o_hdist
         elif pin.pos == "t": # top pin
@@ -418,7 +418,7 @@ def writesym(filename,options,attr,pins):
                 pint=(50,-200,0,0)
                 pinl=(0,-350,5,0)
                 pina=(0,-500,5,0)
-                pinq=(50,-200,2,0)
+                pinq=(-50,-200,6,0)
                 swap=0
             ptopx=ptopx + o_hdist
 ### draw the pin
@@ -435,16 +435,12 @@ def writesym(filename,options,attr,pins):
         pintx, pinty, pinta, pintr=pint
         x=basex+pintx
         y=basey+pinty
-        if pin.pos == "t": # top pin
-	    y += 50
         f.write("T %i"%x+" %i"%y+" 5 8 1 1 %i"%pintr+" %i 1\n"%pinta)
         f.write("pinnumber="+pin.nr+"\n")
 ### draw pinseq
         pintx, pinty, pinta, pintr=pinq
         x=basex+pintx
         y=basey+pinty
-        if pin.pos == "t": # top pin
-	    y += 50
         f.write("T %i"%x+" %i"%y+" 5 8 0 1 %i"%pintr+" %i 1\n"%pinta)
         f.write("pinseq="+pin.seq+"\n")
 ### draw pinlabel and pintype
