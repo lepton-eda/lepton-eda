@@ -339,7 +339,13 @@ def writesym(filename,options,attr,pins):
 ### Draw the symbol version
     if attr.has_key(("version",1)):
         value=attr[("version",1)]
-        f.write("v " + value + " 1\n")
+        if re.match("[0-9]{8}$", value):
+            f.write("v " + value + " 1\n")
+        elif re.match("[0-9]{8} 1$", value):
+            f.write("v " + value + "\n")
+        else:
+            print "error: version string format invalid: [%s]" % value
+            sys.exit()
     else:
         print "error: version attribut missing"
         sys.exit()

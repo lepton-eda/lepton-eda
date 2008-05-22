@@ -12,7 +12,7 @@ pinwidthvertical	400
 pinwidthhorizontal	800
 
 [geda_attr]
-version	20060113 1
+version	20060113
 name	TEST2
 device	devTEST2
 refdes	U?
