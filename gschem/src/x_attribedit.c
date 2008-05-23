@@ -88,6 +88,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
   int invocation_flag;
   int nsel=0, addto=0, replace=0, addmask=0;
   int option_index;
+  gint wx, wy;
 
   i_set_state(w_current, SELECT);
 
@@ -233,13 +234,18 @@ void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
       invocation_flag =
 	GPOINTER_TO_INT( gtk_object_get_data(GTK_OBJECT(w_current->aewindow),
 				  "invocation_flag") );
+      wx = GPOINTER_TO_INT( gtk_object_get_data(GTK_OBJECT(w_current->aewindow),
+						"position_wx"));
+      wy = GPOINTER_TO_INT( gtk_object_get_data(GTK_OBJECT(w_current->aewindow),
+						"position_wy"));
       
 #if DEBUG
       printf("invocation flag: %d\n", invocation_flag);
 #endif
-      if (invocation_flag == FROM_HOTKEY) {
-	new->text->x = snap_grid(toplevel, mouse_wx);
-	new->text->y = snap_grid(toplevel, mouse_wy);
+      if (invocation_flag == FROM_HOTKEY
+	  && wx != -1 && wy != -1) {
+	new->text->x = wx;
+	new->text->y = wy;
 	o_erase_single(w_current, new);
 	o_text_recreate(toplevel, new);
 	o_text_draw(w_current, new);
@@ -315,6 +321,7 @@ void attrib_edit_dialog(GSCHEM_TOPLEVEL *w_current, OBJECT * list, int flag)
   char *name = NULL;
   char *val = NULL;
   OBJECT *attrib = NULL;
+  gint wx, wy;
   
   /* gschem specific */
   if (w_current->aewindow)
@@ -531,6 +538,14 @@ void attrib_edit_dialog(GSCHEM_TOPLEVEL *w_current, OBJECT * list, int flag)
   }
   gtk_object_set_data(GTK_OBJECT(aewindow), "invocation_flag",
                       GINT_TO_POINTER(flag));
+
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy)) {
+    wx = wy = -1;
+  }
+  gtk_object_set_data(GTK_OBJECT(aewindow), "position_wx",
+                      GINT_TO_POINTER(wx));
+  gtk_object_set_data(GTK_OBJECT(aewindow), "position_wy",
+                      GINT_TO_POINTER(wy));
   
   /* gschem specific */
   i = 0;

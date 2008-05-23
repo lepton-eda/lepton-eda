@@ -35,9 +35,6 @@
 #include <dmalloc.h>
 #endif
 
-/* used in key_press, since it isn't passed this information */
-/* filled in x_event_motion */
-int mouse_wx, mouse_wy;
 
 /* used by mouse pan */
 int start_pan_x, start_pan_y;
@@ -840,9 +837,6 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
                  &unsnapped_wx, &unsnapped_wy );
   w_x = snap_grid(toplevel, unsnapped_wx);
   w_y = snap_grid(toplevel, unsnapped_wy);
-
-  mouse_wx = w_x;
-  mouse_wy = w_y;
 
   if (w_current->cowindow) {
     coord_display_update(w_current, (int) event->x, (int) event->y);

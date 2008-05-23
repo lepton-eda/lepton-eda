@@ -44,8 +44,6 @@
 
 #define OVER_ZOOM_FACTOR 0.1
 
-extern int mouse_wx, mouse_wy;
-
 
 enum {
   PROP_FILENAME=1,
@@ -163,6 +161,7 @@ preview_callback_button_press (GtkWidget *widget,
 {
   Preview *preview = PREVIEW (widget);
   GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
+  gint wx, wy; 
 
   if (!preview->active) {
     return TRUE;
@@ -175,7 +174,9 @@ preview_callback_button_press (GtkWidget *widget,
         o_redraw_all (preview_w_current);
         break;
       case 2: /* middle mouse button: pan */
-        a_pan (preview_w_current, mouse_wx, mouse_wy);
+	if (!x_event_get_pointer_position(preview_w_current, FALSE, &wx, &wy))
+	  return FALSE;
+        a_pan (preview_w_current, wx, wy);
         break;
       case 3: /* right mouse button: zoom out */
         a_zoom (preview_w_current, ZOOM_OUT, HOTKEY,
@@ -187,37 +188,6 @@ preview_callback_button_press (GtkWidget *widget,
   return FALSE;
 }
 
-/*! \brief Handles the displacement of the pointer.
- *  \par Function Description
- *  This function temporary saves the position of the mouse pointer
- *  over the preview widget.
- *
- *  This position can be later used when the user press a button of
- *  the mouse (see <B>preview_callback_button_press()</B>).
- *
- *  \param [in] widget    The preview widget.
- *  \param [in] event     The event structure.
- *  \param [in] user_data Unused user data.
- *  \returns FALSE to propagate the event further.
- */
-static gboolean
-preview_callback_motion_notify (GtkWidget *widget,
-                                GdkEventMotion *event,
-                                gpointer user_data)
-{
-  Preview *preview = PREVIEW (widget);
-  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
-  TOPLEVEL *preview_toplevel = preview_w_current->toplevel;
-  
-  if (!preview->active) {
-    return TRUE;
-  }
-
-  SCREENtoWORLD(preview_toplevel,
-		(int) event->x, (int) event->y, &mouse_wx, &mouse_wy);
-
-  return FALSE;
-}
 
 /*! \brief Updates the preview widget.
  *  \par Function Description
@@ -395,7 +365,6 @@ preview_init (Preview *preview)
     { "realize",              G_CALLBACK (preview_callback_realize)       },
     { "expose_event",         G_CALLBACK (preview_callback_expose)        },
     { "button_press_event",   G_CALLBACK (preview_callback_button_press)  },
-    { "motion_notify_event",  G_CALLBACK (preview_callback_motion_notify) },
     { "configure_event",      G_CALLBACK (preview_event_configure)        },
     { "scroll_event",         G_CALLBACK (preview_event_scroll)           },
     { NULL,                   NULL                                        }
