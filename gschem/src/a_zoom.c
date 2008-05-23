@@ -65,8 +65,11 @@ void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flag
 
   /*calc center: either "mouse_to_world" or center=center */
   if (w_current->zoom_with_pan == TRUE && selected_from == HOTKEY) {
-    world_pan_center_x = mouse_wx;
-    world_pan_center_y = mouse_wy;
+    if (!x_event_get_pointer_position(w_current, FALSE, 
+				      &start_x, &start_y))
+      return;
+    world_pan_center_x = start_x;
+    world_pan_center_y = start_y;
   }
   else {
     world_pan_center_x = (double) (toplevel->page_current->left +

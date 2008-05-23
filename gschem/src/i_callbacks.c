@@ -603,14 +603,18 @@ DEFINE_I_CALLBACK(edit_copy)
 DEFINE_I_CALLBACK(edit_copy_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
+
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
 
   i_update_middle_button(w_current, i_callback_edit_copy_hotkey, _("Copy"));
   if (o_select_return_first_object(w_current)) {
     o_redraw_cleanstates(w_current);
     w_current->event_state = COPY;
-    o_copy_start(w_current, mouse_wx, mouse_wy);
+    o_copy_start(w_current, wx, wy);
     w_current->event_state = ENDCOPY;
     w_current->inside_action = 1;
   }
@@ -644,14 +648,18 @@ DEFINE_I_CALLBACK(edit_mcopy)
 DEFINE_I_CALLBACK(edit_mcopy_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
+
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
 
   i_update_middle_button(w_current, i_callback_edit_mcopy_hotkey, _("Multiple Copy"));
   if (o_select_return_first_object(w_current)) {
     o_redraw_cleanstates(w_current);	
     w_current->event_state = MCOPY; 
-    o_copy_start(w_current, mouse_wx, mouse_wy);
+    o_copy_start(w_current, wx, wy);
     w_current->event_state = ENDMCOPY;
     w_current->inside_action = 1;
   }
@@ -685,13 +693,17 @@ DEFINE_I_CALLBACK(edit_move)
 DEFINE_I_CALLBACK(edit_move_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
+
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
 
   i_update_middle_button(w_current, i_callback_edit_move_hotkey, _("Move"));
   if (o_select_return_first_object(w_current)) {
     o_redraw_cleanstates(w_current);
-    o_move_start(w_current, mouse_wx, mouse_wy);
+    o_move_start(w_current, wx, wy);
     w_current->event_state = ENDMOVE;
     w_current->inside_action = 1;
   }
@@ -843,6 +855,7 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   GList *object_list;
+  gint wx, wy; 
 
   exit_if_null(w_current);
 
@@ -854,6 +867,9 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
     {
       return;
     }
+
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
 
   /* If inside a move action, send a button 3 released, so rotating 
      will be handled by x_event.c */
@@ -879,7 +895,7 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
                            i_callback_edit_rotate_90_hotkey, _("Rotate"));
     /* Allow o_rotate_world_update to redraw the objects */
     w_current->toplevel->DONT_REDRAW = 0;
-    o_rotate_world_update(w_current, mouse_wx, mouse_wy, 90, object_list);
+    o_rotate_world_update(w_current, wx, wy, 90, object_list);
   }
 
   w_current->event_state = SELECT;
@@ -911,8 +927,12 @@ DEFINE_I_CALLBACK(edit_mirror_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   GList *object_list;
+  gint wx, wy; 
 
   exit_if_null(w_current);
+
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
 
   o_redraw_cleanstates(w_current);	
 
@@ -921,7 +941,7 @@ DEFINE_I_CALLBACK(edit_mirror_hotkey)
   if (object_list) {
     i_update_middle_button(w_current,
                            i_callback_edit_mirror_hotkey, _("Mirror"));
-    o_mirror_world_update(w_current, mouse_wx, mouse_wy, object_list);
+    o_mirror_world_update(w_current, wx, wy, object_list);
   }
 
   w_current->event_state = SELECT;
@@ -1424,11 +1444,15 @@ DEFINE_I_CALLBACK(view_zoom_box)
 DEFINE_I_CALLBACK(view_zoom_box_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
 
+  if (!x_event_get_pointer_position(w_current, FALSE, &wx, &wy))
+    return;
+
   o_redraw_cleanstates(w_current);
-  a_zoom_box_start(w_current, mouse_wx, mouse_wy);
+  a_zoom_box_start(w_current, wx, wy);
 
   w_current->inside_action = 1;
   i_set_state(w_current, ZOOMBOXEND);
@@ -1596,12 +1620,16 @@ DEFINE_I_CALLBACK(view_pan_down)
 DEFINE_I_CALLBACK(view_pan_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
 
+  if (!x_event_get_pointer_position(w_current, FALSE, &wx, &wy))
+    return;
+
   i_update_middle_button(w_current, i_callback_view_pan_hotkey, _("Pan"));
 
-  a_pan(w_current, mouse_wx, mouse_wy);
+  a_pan(w_current, wx, wy);
 
   if (w_current->undo_panzoom) {
     o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
@@ -2136,6 +2164,7 @@ DEFINE_I_CALLBACK(buffer_paste5)
 DEFINE_I_CALLBACK(buffer_paste1_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
 
@@ -2143,7 +2172,10 @@ DEFINE_I_CALLBACK(buffer_paste1_hotkey)
     return;
   }
 
-  o_buffer_paste_start(w_current, mouse_wx, mouse_wy, 0);
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
+
+  o_buffer_paste_start(w_current, wx, wy, 0);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2154,6 +2186,7 @@ DEFINE_I_CALLBACK(buffer_paste1_hotkey)
 DEFINE_I_CALLBACK(buffer_paste2_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
 
@@ -2161,7 +2194,10 @@ DEFINE_I_CALLBACK(buffer_paste2_hotkey)
     return;
   }
 
-  o_buffer_paste_start(w_current, mouse_wx, mouse_wy, 1);
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
+
+  o_buffer_paste_start(w_current, wx, wy, 1);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2172,6 +2208,7 @@ DEFINE_I_CALLBACK(buffer_paste2_hotkey)
 DEFINE_I_CALLBACK(buffer_paste3_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
 
@@ -2179,7 +2216,10 @@ DEFINE_I_CALLBACK(buffer_paste3_hotkey)
     return;
   }
 
-  o_buffer_paste_start(w_current, mouse_wx, mouse_wy, 2);
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
+
+  o_buffer_paste_start(w_current, wx, wy, 2);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2190,6 +2230,7 @@ DEFINE_I_CALLBACK(buffer_paste3_hotkey)
 DEFINE_I_CALLBACK(buffer_paste4_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
 
@@ -2197,7 +2238,10 @@ DEFINE_I_CALLBACK(buffer_paste4_hotkey)
     return;
   }
 
-  o_buffer_paste_start(w_current, mouse_wx, mouse_wy, 3);
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
+
+  o_buffer_paste_start(w_current, wx, wy, 3);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2208,6 +2252,7 @@ DEFINE_I_CALLBACK(buffer_paste4_hotkey)
 DEFINE_I_CALLBACK(buffer_paste5_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
 
@@ -2215,7 +2260,10 @@ DEFINE_I_CALLBACK(buffer_paste5_hotkey)
     return;
   }
 
-  o_buffer_paste_start(w_current, mouse_wx, mouse_wy, 4);
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
+
+  o_buffer_paste_start(w_current, wx, wy, 4);
 }
 
 /*! \section add-menu Add Menu Callback Functions */
@@ -2326,8 +2374,12 @@ DEFINE_I_CALLBACK(add_net)
 DEFINE_I_CALLBACK(add_net_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
+
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
 
   o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
@@ -2338,7 +2390,7 @@ DEFINE_I_CALLBACK(add_net_hotkey)
   i_set_state(w_current, STARTDRAWNET);
   i_update_toolbar(w_current);
 
-  o_net_start(w_current, mouse_wx, mouse_wy);
+  o_net_start(w_current, wx, wy);
 
   w_current->event_state=DRAWNET;
   w_current->inside_action = 1;
@@ -2394,8 +2446,12 @@ DEFINE_I_CALLBACK(add_bus)
 DEFINE_I_CALLBACK(add_bus_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
+
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
 
   o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
@@ -2405,7 +2461,7 @@ DEFINE_I_CALLBACK(add_bus_hotkey)
   i_set_state(w_current, STARTDRAWBUS);
   i_update_toolbar(w_current);
 
-  o_bus_start(w_current, mouse_wx, mouse_wy);
+  o_bus_start(w_current, wx, wy);
 
   w_current->event_state=DRAWBUS;
   w_current->inside_action = 1;
@@ -2495,15 +2551,19 @@ DEFINE_I_CALLBACK(add_line)
 DEFINE_I_CALLBACK(add_line_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
+  gint wx, wy;
+  
   exit_if_null(w_current);
+
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
 
   o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_line_hotkey, _("Line"));
 
-  o_line_start(w_current, mouse_wx, mouse_wy);
+  o_line_start(w_current, wx, wy);
 
   w_current->inside_action = 1;
   i_set_state(w_current, ENDLINE);
@@ -2536,15 +2596,19 @@ DEFINE_I_CALLBACK(add_box)
 DEFINE_I_CALLBACK(add_box_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
+
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
 
   o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_box_hotkey, _("Box"));
 
-  o_box_start(w_current, mouse_wx, mouse_wy);
+  o_box_start(w_current, wx, wy);
 
   w_current->inside_action = 1;
   i_set_state(w_current, ENDBOX);
@@ -2611,8 +2675,12 @@ DEFINE_I_CALLBACK(add_circle)
 DEFINE_I_CALLBACK(add_circle_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
+
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
 
   o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
@@ -2620,7 +2688,7 @@ DEFINE_I_CALLBACK(add_circle_hotkey)
   i_update_middle_button(w_current, i_callback_add_circle_hotkey,
                          _("Circle"));
 
-  o_circle_start(w_current, mouse_wx, mouse_wy);
+  o_circle_start(w_current, wx, wy);
 
   w_current->inside_action = 1;
   i_set_state(w_current, ENDCIRCLE);
@@ -2653,15 +2721,19 @@ DEFINE_I_CALLBACK(add_arc)
 DEFINE_I_CALLBACK(add_arc_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
+
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
 
   o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_arc_hotkey, _("Arc"));
 
-  o_arc_start(w_current, mouse_wx, mouse_wy);
+  o_arc_start(w_current, wx, wy);
 
   w_current->inside_action = 1;
   i_set_state(w_current, ENDARC);
@@ -2694,15 +2766,19 @@ DEFINE_I_CALLBACK(add_pin)
 DEFINE_I_CALLBACK(add_pin_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   exit_if_null(w_current);
+
+  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+    return;
 
   o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_pin_hotkey, _("Pin"));
 
-  o_pin_start(w_current, mouse_wx, mouse_wy);
+  o_pin_start(w_current, wx, wy);
 
   w_current->inside_action = 1;
   i_set_state(w_current, ENDPIN);
