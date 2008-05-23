@@ -1344,3 +1344,43 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
 
   return 0;
 }
+
+
+/*! \brief get the pointer position of a given GSCHEM_TOPLEVEL
+ *  \par Function Description
+ *  This function gets the pointer position of the drawing area of the 
+ *  current workspace <b>GSCHEM_TOPLEVEL</b>. The flag <b>snapped</b> specifies
+ *  whether the pointer position should be snapped to the current grid.
+ *  
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] snapped    An option flag to specify the wished coords
+ *  \param [out] wx        snapped/unsnapped world x coordinate
+ *  \param [out] wy        snapped/unsnapped world y coordinate
+ *
+ *  \return Returns TRUE if the pointer position is inside the drawing area.
+ *  
+ */
+gboolean x_event_get_pointer_position (GSCHEM_TOPLEVEL *w_current,
+				       gboolean snapped,
+				       gint *wx, gint *wy)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int sx, sy, x, y;
+
+  gtk_widget_get_pointer(w_current->drawing_area, &sx, &sy);
+
+  /* check if we are inside the drawing area */
+  if (sx < 0 || sx >= w_current->win_width 
+      || sy <0 || sy >= w_current->win_height)
+    return FALSE;
+
+  SCREENtoWORLD(toplevel, sx, sy, &x, &y);
+  if (snapped) {
+    x = snap_grid(toplevel, x);
+    y = snap_grid(toplevel, y);
+  }
+  *wx = x;
+  *wy = y;
+
+  return TRUE;
+}
