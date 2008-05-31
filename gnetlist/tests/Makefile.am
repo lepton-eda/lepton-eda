@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = hierarchy hierarchy2 drc2 spice-sdb common
+SUBDIRS = hierarchy hierarchy2 drc2 common
 
 EXTRA_DIST = runtest.sh \
 	     7447.vhdl README amp.spice cascade.sch cascade.cascade \

@@ -436,11 +436,6 @@ AC_CONFIG_FILES([Makefile
 		 tests/hierarchy/Makefile 
 		 tests/hierarchy2/Makefile 
 		 tests/drc2/Makefile
-		 tests/spice-sdb/Makefile
-		 tests/spice-sdb/inputs/Makefile
-		 tests/spice-sdb/inputs/sym/Makefile
-		 tests/spice-sdb/inputs/models/Makefile
-		 tests/spice-sdb/outputs/Makefile
 		 tests/common/Makefile
 		 tests/common/outputs/osmond/Makefile
 		 tests/common/outputs/pcbpins/Makefile
