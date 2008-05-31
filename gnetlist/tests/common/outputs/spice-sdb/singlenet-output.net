@@ -6,7 +6,7 @@
 * Documentation at http://www.brorson.com/gEDA/SPICE/   *
 *********************************************************
 *==============  Begin SPICE netlist of main design ============
-U100.3 SING_N SING_N SING_N unknown
-U100.2 SING_N SING_N SING_N unknown
-U100.1 SING_N_2 unconnected_pin-1 SING_N_2 unknown
+U100.1 SING_N_2 unconnected_pin-1 SING_N_2 SING_N SING_N unknown
+U100.2 SING_N SING_N SING_N SING_N unknown
+U100.3 unknown
 .end

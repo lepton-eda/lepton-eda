@@ -2,7 +2,7 @@
 % Written by Matthew Ettus
 % Based on code by Bas Gieltjes
 CKT
-	error	3 3 3 #<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified> 	% U100
+	error	1 #<unspecified> 1 3 3 3 3 3 3 #<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified> 	% U100
 	DEF2P	#<unspecified>  #<unspecified>
 	TERM	50 50
 

@@ -7,7 +7,7 @@
 *********************************************************
 *==============  Begin SPICE netlist of main design ============
 F1 one unconnected_pin-3 <No valid value attribute found>
-U100 unconnected_pin-2 unconnected_pin-1 one unknown
-U300 one 1 unknown
-U200 one netattrib unknown
+U100.1 unconnected_pin-2 unconnected_pin-1 one unknown
+U300.1 one 1 unknown
+U200.1 one netattrib unknown
 .end
