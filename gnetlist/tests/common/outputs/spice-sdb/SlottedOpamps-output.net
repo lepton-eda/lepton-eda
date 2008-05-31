@@ -6,8 +6,8 @@
 * Documentation at http://www.brorson.com/gEDA/SPICE/   *
 *********************************************************
 *==============  Begin SPICE netlist of main design ============
-U1.1 samenet_output_c minusin_slot1_pin_b plusin_slot1_pin3_a unknown
-U1.2 samenet_output_c minusin_slot2_pin6_b plusin_slot2_pin5_a unknown
-U1.3 samenet_output_c minusin_slot3_pin_b plusin_slot3_pin10_a unknown
 U1.4 samenet_output_c minusin_slot4_pin13_b plusin_slot4_pin12_a unknown
+U1.3 samenet_output_c minusin_slot3_pin_b plusin_slot3_pin10_a unknown
+U1.2 samenet_output_c minusin_slot2_pin6_b plusin_slot2_pin5_a unknown
+U1.1 samenet_output_c minusin_slot1_pin_b plusin_slot1_pin3_a unknown
 .end
