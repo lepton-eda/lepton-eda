@@ -195,11 +195,18 @@ gchar *s_textbuffer_next (TextBuffer *tb, const gsize count)
 gchar *s_textbuffer_next_line (TextBuffer *tb)
 {
   int len = 0;
+  gchar *line;
 
   if (tb == NULL) return NULL;
 
   if (tb->offset >= tb->size) 
     return NULL;
+
+  /* skip leading CR characters */
+  while (tb->buffer[tb->offset] == '\r'
+	 && tb->offset < tb->size - 1) {
+    tb->offset += 1;
+  }
 
   while ((tb->buffer[tb->offset + len] != '\n')
 	 && (len < tb->size - tb->offset - 1)) {
@@ -208,5 +215,13 @@ gchar *s_textbuffer_next_line (TextBuffer *tb)
 
   len++;
 
-  return s_textbuffer_next (tb, len);
+  line = s_textbuffer_next (tb, len);
+
+  /* wipe out all trailing CR characters */
+  while (len > 1 && line[len-2] == '\r') {
+    line[len-1] = 0;
+    len--;
+  }
+
+  return line;
 }
