@@ -953,7 +953,7 @@ void o_picture_embed (TOPLEVEL *toplevel, OBJECT *object)
   object->picture->original_picture = pixbuf;
 
   s_log_message (_("Picture [%s] has been embedded\n"),
-                 basename(object->picture->filename));
+                 g_path_get_basename(object->picture->filename));
 }
 
 
@@ -991,7 +991,7 @@ void o_picture_unembed (TOPLEVEL *toplevel, OBJECT *object)
   object->picture->embedded = 0;
 
   s_log_message (_("Picture [%s] has been unembedded\n"),
-                 basename(object->picture->filename));
+                 g_path_get_basename(object->picture->filename));
 }
 
 
