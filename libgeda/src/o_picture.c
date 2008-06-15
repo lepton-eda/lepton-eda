@@ -916,6 +916,7 @@ void o_picture_embed (TOPLEVEL *toplevel, OBJECT *object)
 {
   GError *err = NULL;
   GdkPixbuf *pixbuf;
+  gchar *filename;
 
   /* Free any existing embedded data */
   g_free (object->picture->file_content);
@@ -952,8 +953,9 @@ void o_picture_embed (TOPLEVEL *toplevel, OBJECT *object)
 
   object->picture->original_picture = pixbuf;
 
-  s_log_message (_("Picture [%s] has been embedded\n"),
-                 g_path_get_basename(object->picture->filename));
+  filename = g_path_get_basename(object->picture->filename);
+  s_log_message (_("Picture [%s] has been embedded\n"), filename);
+  g_free(filename);
 }
 
 
@@ -970,6 +972,7 @@ void o_picture_unembed (TOPLEVEL *toplevel, OBJECT *object)
 {
   GError *err = NULL;
   GdkPixbuf *pixbuf;
+  gchar *filename;
 
   pixbuf = gdk_pixbuf_new_from_file (object->picture->filename, &err);
   if (err != NULL) {
@@ -990,8 +993,9 @@ void o_picture_unembed (TOPLEVEL *toplevel, OBJECT *object)
   object->picture->file_length = 0;
   object->picture->embedded = 0;
 
-  s_log_message (_("Picture [%s] has been unembedded\n"),
-                 g_path_get_basename(object->picture->filename));
+  filename = g_path_get_basename(object->picture->filename);
+  s_log_message (_("Picture [%s] has been unembedded\n"), filename);
+  g_free(filename);
 }
 
 
