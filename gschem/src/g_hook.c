@@ -726,7 +726,7 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
                     x, y, 
                     angle, mirror,
                     clib, comp_name, 
-                    selectable, FALSE);
+                    selectable, TRUE);
   
   /* 
    * For now, do not redraw the newly added complex, since this might cause
