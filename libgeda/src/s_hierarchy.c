@@ -75,7 +75,9 @@ int s_hierarchy_down_schematic_single(TOPLEVEL *toplevel,
   switch (flag) {
     case HIERARCHY_NORMAL_LOAD:
     {
-      found = s_page_search (toplevel, string);
+      gchar *filename = f_normalize_filename (string);
+      found = s_page_search (toplevel, filename);
+      g_free (filename);
       
       if (found) {
 	/* check whether this page is in the parents list */
