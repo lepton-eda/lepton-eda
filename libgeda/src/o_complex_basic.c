@@ -615,7 +615,7 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
  *
  */
 OBJECT *o_complex_add_embedded(TOPLEVEL *toplevel, OBJECT *object_list,
-			       char type, int color, int x, int y, int angle,
+			       char type, int color, int x, int y, int angle, int mirror,
 			       const gchar *basename, int selectable)
 {
   OBJECT *prim_objs=NULL;
@@ -629,7 +629,7 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *toplevel, OBJECT *object_list,
   new_node->complex->y = y;
 
   new_node->complex->angle = angle;
-  new_node->complex->mirror = 0;
+  new_node->complex->mirror = mirror;
 	
   new_node->complex_basename = g_strdup(basename);
 
@@ -732,7 +732,7 @@ OBJECT *o_complex_read(TOPLEVEL *toplevel, OBJECT *object_list,
     
   object_list = o_complex_add_embedded(toplevel,
                                        object_list, type, 
-                                       WHITE, x1, y1, angle,
+                                       WHITE, x1, y1, angle, mirror,
                                        basename + 8, 
                                        selectable);
   } else {
@@ -908,6 +908,7 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail,
                                    color,
                                    o_current->complex->x, o_current->complex->y, 
                                    o_current->complex->angle, 
+                                   o_current->complex->mirror,
                                    o_current->complex_basename, 
                                    selectable); 
   /* deal with stuff that has changed */

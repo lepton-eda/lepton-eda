@@ -194,7 +194,7 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		      int x, int y, int angle, int mirror, 
 		      const CLibSymbol *clib_sym, const gchar *basename,
 		      int selectable, int attribute_promotion);
-OBJECT *o_complex_add_embedded(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, int x, int y, int angle, const gchar *basename, int selectable);
+OBJECT *o_complex_add_embedded(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, int x, int y, int angle, int mirror, const gchar *basename, int selectable);
 void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 void o_complex_set_filename(TOPLEVEL *toplevel, const char *basename);
 void o_complex_free_filename(TOPLEVEL *toplevel);
