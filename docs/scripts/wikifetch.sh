@@ -35,5 +35,6 @@ pavuk -logfile ../wip/pavuk_logfile.txt \
       -skip_rpattern "(.*\?do=(_export|diff|revisions|backlink|index|export_.*))|_export|feed\.php.*" \
       -tr_chr_chr "?&*:" _ \
       -post_update \
+      -sleep 1 \
       -fnrules F "*" "%h/%d/%b%E" "$site"
 
