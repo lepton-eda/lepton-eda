@@ -10,7 +10,7 @@
 # arguments.
 #
 DOTTED_VERSION=1.5.0
-DATE_VERSION=20080127
+DATE_VERSION=20080706
 
 # 
 # Use this when you are building the repository version
