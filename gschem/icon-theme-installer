@@ -75,7 +75,7 @@ while getopts "iut:b:d:s:m:x:" flag; do
 		i) INSTALL=yes ;;
 		u) UNINSTALL=yes ;;
 		t) THEME_NAME=$OPTARG ;;
-		d) INSTALL_DEST_DIR=${OPTARG##x} ;;
+		d) INSTALL_DEST_DIR="`echo $OPTARG | sed 's;^x;;'`" ;;
 		b) INSTALL_BASE_DIR=$OPTARG ;;
 		s) SRC_DIR=$OPTARG ;;
 		m) MKINSTALLDIRS_EXEC=$OPTARG ;;
@@ -83,7 +83,7 @@ while getopts "iut:b:d:s:m:x:" flag; do
 	esac
 done
 
-shift $(($OPTIND - 1))
+shift `expr $OPTIND - 1`
 
 if test "x$INSTALL" = "xyes" -a "x$UNINSTALL" = "xyes"; then
 	echo "Cannot pass both -i and -u"
@@ -103,7 +103,7 @@ if test -z "$INSTALL_BASE_DIR"; then
 	exit 1
 fi
 
-if test ! -x $(echo "$MKINSTALLDIRS_EXEC" | cut -f1 -d' '); then
+if test ! -x `echo "$MKINSTALLDIRS_EXEC" | cut -f1 -d' '`; then
 	echo "Cannot find '$MKINSTALLDIRS_EXEC'; You probably want to pass -m \$(mkinstalldirs)"
 	exit 1
 fi
@@ -118,11 +118,11 @@ if test -z "$SRC_DIR"; then
 fi
 
 for icon in $@; do
-	size=$(echo $icon | sed -n "s/.*-\([0-9]*\).*/\1/p")
-	category=$(echo $icon | cut -d, -f1)
-	build_name=$(echo $icon | cut -d, -f2)
-	install_name=$(echo $build_name | sed "s/-[0-9]\+//g")
-	install_name=$(basename $install_name)
+	size=`echo $icon | sed -n 's/.*-\([0-9]*\).*/\1/p'`
+	category=`echo $icon | cut -d, -f1`
+	build_name=`echo $icon | cut -d, -f2`
+	install_name=`echo $build_name | sed 's/-[0-9]\+//g'`
+	install_name=`basename $install_name`
 
 	if test -z $size; then 
 		size=scalable;
@@ -136,12 +136,12 @@ for icon in $@; do
 	if test "x$INSTALL" = "xyes"; then
 		echo "Installing $size $install_name into $THEME_NAME icon theme"
 		
-		$($MKINSTALLDIRS_EXEC $install_dir) || {
+		$MKINSTALLDIRS_EXEC $install_dir || {
 			echo "Failed to create directory $install_dir"
 			exit 1
 		}
 		
-		$($INSTALL_DATA_EXEC $SRC_DIR/$build_name $install_path) || {
+		$INSTALL_DATA_EXEC $SRC_DIR/$build_name $install_path || {
 			echo "Failed to install $SRC_DIR/$build_name into $install_path"
 			exit 1
 		}
@@ -163,7 +163,9 @@ for icon in $@; do
 done
 
 if test "x$INSTALL" = "xyes"; then
-	gtk_update_icon_cache_bin="$((which gtk-update-icon-cache || echo /opt/gnome/bin/gtk-update-icon-cache)2>/dev/null)"
+	gtk_update_icon_cache_bin="`(which gtk-update-icon-cache || echo /opt/gnome/bin/gtk-update-icon-cache)2>/dev/null`"
+	gtk_update_icon_cache_bin="${GTK_UPDATE_ICON_CACHE_BIN:-$gtk_update_icon_cache_bin}"
+
 	gtk_update_icon_cache="$gtk_update_icon_cache_bin -f -t $INSTALL_BASE_DIR"
 
 	if test -z "$INSTALL_DEST_DIR"; then 
