@@ -447,7 +447,6 @@ AC_CONFIG_FILES([Makefile
 		 tests/common/outputs/verilog/Makefile
 		 tests/common/outputs/cascade/Makefile
 		 tests/common/outputs/partslist1/Makefile
-		 tests/common/outputs/spice/Makefile
 		 tests/common/outputs/drc2/Makefile
 		 tests/common/outputs/geda/Makefile
 		 tests/common/outputs/gossip/Makefile
