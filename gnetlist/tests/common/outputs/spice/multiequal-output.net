@@ -1,5 +1,0 @@
-* Spice netlister for gnetlist
-V1 1 0 DC 1V
-A1 abotol=1e-11
-R1 0 1 20
-.END

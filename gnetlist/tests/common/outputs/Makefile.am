@@ -24,7 +24,6 @@ SUBDIRS= \
        PCB \
        protelII \
        redac \
-       spice \
        spice-sdb \
        switcap \
        systemc \
