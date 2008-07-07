@@ -25,3 +25,6 @@ src/s_clib.c
 src/s_hierarchy.c
 src/s_page.c
 src/s_slib.c
+
+intl/plural.c
+
