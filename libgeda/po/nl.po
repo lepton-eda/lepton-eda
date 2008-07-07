@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-30 22:18+0100\n"
+"POT-Creation-Date: 2008-07-06 11:05-0400\n"
 "PO-Revision-Date: 2007-12-29 17:03+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -406,7 +406,7 @@ msgstr ""
 "Een komponent met een ongeldige spiegel vlag gevonden [ %c %d %d %d %d %d %"
 "s ]\n"
 
-#: ../src/o_complex_basic.c:1427
+#: ../src/o_complex_basic.c:1430
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -415,7 +415,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan symboolbestand niet doorzoeken symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1431
+#: ../src/o_complex_basic.c:1434
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -424,7 +424,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan symboolbestand niet doorzoeken symversion=\n"
 
-#: ../src/o_complex_basic.c:1447
+#: ../src/o_complex_basic.c:1450
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -433,7 +433,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan bijgevoegd symboolbestand niet doorzoeken symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1472
+#: ../src/o_complex_basic.c:1475
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -444,7 +444,7 @@ msgstr ""
 "\tsymversion=%s bijgevoegd aan bedoelde symbool, maar geen symversion= in "
 "het symbool bestand\n"
 
-#: ../src/o_complex_basic.c:1486
+#: ../src/o_complex_basic.c:1489
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -453,17 +453,17 @@ msgstr ""
 "WAARSCHUWING: Symbool versie fout bij refdes %s (%s):\n"
 "\tSymbool in bibliotheek is nieuwer dan bedoelde symbool\n"
 
-#: ../src/o_complex_basic.c:1514
+#: ../src/o_complex_basic.c:1517
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr "\tGROTE VERSIE VERANDERING (bestand %.3f, bedoeld %.3f, %s)!\n"
 
-#: ../src/o_complex_basic.c:1532
+#: ../src/o_complex_basic.c:1535
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\tKleine versie verandering (bestand %.3f, bedoeld %.3f)!\n"
 
-#: ../src/o_complex_basic.c:1543
+#: ../src/o_complex_basic.c:1546
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -503,81 +503,81 @@ msgstr "Lijn met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
 msgid "Found a zero length net [ %c %d %d %d %d %d ]\n"
 msgstr "Net met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
 
-#: ../src/o_picture.c:83
+#: ../src/o_picture.c:88
 #, c-format
 msgid "Error reading picture definition line: %s.\n"
 msgstr "Fout bij het lezen van afbeelding definitie regel: %s.\n"
 
-#: ../src/o_picture.c:97
+#: ../src/o_picture.c:102
 #, c-format
 msgid "Found a zero width/height picture [ %c %d %d %d %d ]\n"
 msgstr ""
 "Afbeelding met een breedte/hoogte van nul gevonden [ %c %d %d %d %d ]\n"
 
-#: ../src/o_picture.c:102
+#: ../src/o_picture.c:107
 #, c-format
 msgid "Found a picture with a wrong 'mirrored' parameter: %c.\n"
 msgstr "Afbeelding met een verkeerde 'gespiegelde' parameter gevonden: %c.\n"
 
-#: ../src/o_picture.c:104
+#: ../src/o_picture.c:109
 msgid "Setting mirrored to 0\n"
 msgstr "Spiegelen op 0 ingesteld\n"
 
-#: ../src/o_picture.c:109
+#: ../src/o_picture.c:114
 #, c-format
 msgid "Found a picture with a wrong 'embedded' parameter: %c.\n"
 msgstr "Afbeelding met een verkeerd 'ingevoegde' waarde gevonden: %c.\n"
 
-#: ../src/o_picture.c:111
+#: ../src/o_picture.c:116
 msgid "Setting embedded to 0\n"
 msgstr "Invoegen op 0 ingesteld\n"
 
-#: ../src/o_picture.c:123
+#: ../src/o_picture.c:128
 #, c-format
 msgid "Found an unsupported picture angle [ %d ]\n"
 msgstr "Niet ondersteunde afbeelding hoek [ %d ] gevonden\n"
 
-#: ../src/o_picture.c:124 ../src/o_text_basic.c:1088
+#: ../src/o_picture.c:129 ../src/o_text_basic.c:1088
 msgid "Setting angle to 0\n"
 msgstr "Hoek op 0 ingesteld\n"
 
-#: ../src/o_picture.c:159 ../src/o_picture.c:170 ../src/o_picture.c:936
+#: ../src/o_picture.c:164 ../src/o_picture.c:175 ../src/o_picture.c:942
 #, c-format
 msgid "Failed to load image from embedded data [%s]: %s\n"
 msgstr "Laden van afbeelding uit ingesloten data faalde [%s]: %s\n"
 
-#: ../src/o_picture.c:160
+#: ../src/o_picture.c:165
 msgid "Base64 decoding failed."
 msgstr "Base64 decodering faalde."
 
-#: ../src/o_picture.c:161 ../src/o_picture.c:172 ../src/o_picture.c:938
+#: ../src/o_picture.c:166 ../src/o_picture.c:177 ../src/o_picture.c:944
 msgid "Falling back to file loading. Picture unembedded.\n"
 msgstr "Val terug op het laden van bestand. Afbeelding uitgevoegd.\n"
 
-#: ../src/o_picture.c:183 ../src/o_picture.c:924 ../src/o_picture.c:971
+#: ../src/o_picture.c:188 ../src/o_picture.c:930 ../src/o_picture.c:979
 #, c-format
 msgid "Failed to load image from file [%s]: %s\n"
 msgstr "Laden van afbeelding uit bestand faalde [%s]: %s\n"
 
-#: ../src/o_picture.c:194
+#: ../src/o_picture.c:199
 msgid "Loading warning picture.\n"
 msgstr "Laad de waarschuwing afbeelding.\n"
 
-#: ../src/o_picture.c:200
+#: ../src/o_picture.c:205
 #, c-format
 msgid "Error loading picture from file: %s.\n"
 msgstr "Fout bij het laden van een afbeelding uit een bestand: %s.\n"
 
-#: ../src/o_picture.c:260
+#: ../src/o_picture.c:265
 msgid "ERROR: o_picture_save: unable to encode the picture.\n"
 msgstr "FOUT: o_picture_save: kan de afbeelding niet coderen.\n"
 
-#: ../src/o_picture.c:950
+#: ../src/o_picture.c:957
 #, c-format
 msgid "Picture [%s] has been embedded\n"
 msgstr "Afbeelding [%s] is ingevoegd\n"
 
-#: ../src/o_picture.c:988
+#: ../src/o_picture.c:997
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
 msgstr "Afbeelding [%s] is uitgevoegd\n"
@@ -726,7 +726,7 @@ msgstr "Komponent [%s] is niet in de komponenten bibliotheek gevonden\n"
 msgid "More than one component found with name [%s]\n"
 msgstr "Meer dan een komponent gevonden met de naam [%s]\n"
 
-#: ../src/s_hierarchy.c:88
+#: ../src/s_hierarchy.c:90
 #, c-format
 msgid ""
 "hierarchy loop detected while visiting page:\n"
@@ -735,19 +735,19 @@ msgstr ""
 "hierarchie lus gedetecteerd tijdens het bezoeken van pagina:\n"
 "  \"%s\"\n"
 
-#: ../src/s_hierarchy.c:243
+#: ../src/s_hierarchy.c:245
 msgid "There are no schematics above the current one!\n"
 msgstr "Er zijn geen schema's boven de huidige!\n"
 
-#: ../src/s_hierarchy.c:252
+#: ../src/s_hierarchy.c:254
 msgid "Cannot find any schematics above the current one!\n"
 msgstr "Kan geen schema's vinden boven de huidige!\n"
 
-#: ../src/s_hierarchy.c:253
+#: ../src/s_hierarchy.c:255
 msgid "Maybe toplevel schematic page was closed/discarded?\n"
 msgstr "Misschien is de bovenste schema bladzijde gesloten/weggedaan?\n"
 
-#: ../src/s_hierarchy.c:329
+#: ../src/s_hierarchy.c:331
 #, c-format
 msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
 msgstr "FOUT in s_hierarchy_traverse: schema niet gevonden: %s\n"

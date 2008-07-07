@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-27 10:39-0500\n"
+"POT-Creation-Date: 2008-07-06 11:05-0400\n"
 "PO-Revision-Date: 2008-01-07 18:44+0100\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -321,20 +321,21 @@ msgstr "Verwende die Farbe WEISS\n"
 msgid "Found an improper attribute: _%s_\n"
 msgstr "Fehlerhaftes Attribut entdeckt: [%s]\n"
 
-#: ../src/o_attrib.c:1690 ../src/o_attrib.c:1797
+#. only an error if there's a slot string
+#: ../src/o_attrib.c:1699 ../src/o_attrib.c:1806
 msgid "Did not find slotdef=#:#,#,#... attribute\n"
 msgstr "Es wurde kein slotdef=#:#,#,#... Attribut gefunden\n"
 
 #. Didn't find proper slotdef=#:... put warning into log
-#: ../src/o_attrib.c:1696
+#: ../src/o_attrib.c:1705
 msgid "Improper slotdef syntax: missing \":\".\n"
 msgstr "Fehlerhafte slotdef syntax: \":\" fehlt.\n"
 
-#: ../src/o_attrib.c:1711 ../src/o_attrib.c:1816
+#: ../src/o_attrib.c:1720 ../src/o_attrib.c:1825
 msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
 msgstr "Kein korrektes Attribut slotdef=#:#,#,#... gefunden\n"
 
-#: ../src/o_attrib.c:1750 ../src/o_attrib.c:1850
+#: ../src/o_attrib.c:1759 ../src/o_attrib.c:1859
 msgid "component missing pinseq= attribute\n"
 msgstr "pinseq= Attribut fehlt.\n"
 
@@ -397,7 +398,7 @@ msgstr ""
 "Bauteil mit fehlerhafter Spiegelungsangabe entdeckt [ %c %d %d %d %d %d %"
 "s ]\n"
 
-#: ../src/o_complex_basic.c:1427
+#: ../src/o_complex_basic.c:1430
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -407,7 +408,7 @@ msgstr ""
 "s':\n"
 "\tKonnte das Attribut symversion=%s nicht zerlegen\n"
 
-#: ../src/o_complex_basic.c:1431
+#: ../src/o_complex_basic.c:1434
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -417,7 +418,7 @@ msgstr ""
 "s':\n"
 "\tKonnte das Attribut symversion= nicht zerlegen\n"
 
-#: ../src/o_complex_basic.c:1447
+#: ../src/o_complex_basic.c:1450
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -427,7 +428,7 @@ msgstr ""
 "s':\n"
 "\tKonnte das angehängte Attribut symversion=%s nicht zerlegen\n"
 
-#: ../src/o_complex_basic.c:1472
+#: ../src/o_complex_basic.c:1475
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -439,7 +440,7 @@ msgstr ""
 "\tsymversion=%s existiert bei dem Symbol im Schaltplan, fehlt aber innerhalb "
 "der Schaltsymbol-Datei\n"
 
-#: ../src/o_complex_basic.c:1486
+#: ../src/o_complex_basic.c:1489
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -449,20 +450,20 @@ msgstr ""
 "s):\n"
 "\tDas Symbol in der Bibliothek ist neuer als das Symbol im Schaltplan\n"
 
-#: ../src/o_complex_basic.c:1514
+#: ../src/o_complex_basic.c:1517
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr ""
 "\tGROSSE VERSIONSÄNDERUNG (Symboldatei %.3f, Symbol im Schaltplan %.3f, %"
 "s)!\n"
 
-#: ../src/o_complex_basic.c:1532
+#: ../src/o_complex_basic.c:1535
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr ""
 "\tKleine Versionsänderung (Symboldatei %.3f, Symbol im Schaltplan %.3f)!\n"
 
-#: ../src/o_complex_basic.c:1543
+#: ../src/o_complex_basic.c:1546
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -501,80 +502,80 @@ msgstr "Linie mit der Länge 0 entdeckt [ %c %d %d %d %d %d ]\n"
 msgid "Found a zero length net [ %c %d %d %d %d %d ]\n"
 msgstr "Netz mit der Länge 0 entdeckt [ %c %d %d %d %d %d ]\n"
 
-#: ../src/o_picture.c:83
+#: ../src/o_picture.c:88
 #, c-format
 msgid "Error reading picture definition line: %s.\n"
 msgstr "Fehler beim Lesen der Bildinformation. Zeile: %s.\n"
 
-#: ../src/o_picture.c:97
+#: ../src/o_picture.c:102
 #, c-format
 msgid "Found a zero width/height picture [ %c %d %d %d %d ]\n"
 msgstr "Bild mit der Seitenlänge 0 entdeckt [ %c %d %d %d %d ]\n"
 
-#: ../src/o_picture.c:102
+#: ../src/o_picture.c:107
 #, c-format
 msgid "Found a picture with a wrong 'mirrored' parameter: %c.\n"
 msgstr "Bild mit fehlerhaften Spiegelungsparametern entdeckt: %c.\n"
 
-#: ../src/o_picture.c:104
+#: ../src/o_picture.c:109
 msgid "Setting mirrored to 0\n"
 msgstr "Setze die Spiegelung auf 0\n"
 
-#: ../src/o_picture.c:109
+#: ../src/o_picture.c:114
 #, c-format
 msgid "Found a picture with a wrong 'embedded' parameter: %c.\n"
 msgstr "Bild mit fehlerhaften Einbettungsparametern entdeckt. %c.\n"
 
-#: ../src/o_picture.c:111
+#: ../src/o_picture.c:116
 msgid "Setting embedded to 0\n"
 msgstr "Setze die Einbettung auf 0\n"
 
-#: ../src/o_picture.c:123
+#: ../src/o_picture.c:128
 #, c-format
 msgid "Found an unsupported picture angle [ %d ]\n"
 msgstr "Bild mit fehlerhafter Winkelangabe entdeckt [%d]\n"
 
-#: ../src/o_picture.c:124 ../src/o_text_basic.c:1088
+#: ../src/o_picture.c:129 ../src/o_text_basic.c:1088
 msgid "Setting angle to 0\n"
 msgstr "Setze die Winkelangabe auf 0\n"
 
-#: ../src/o_picture.c:159 ../src/o_picture.c:170 ../src/o_picture.c:936
+#: ../src/o_picture.c:164 ../src/o_picture.c:175 ../src/o_picture.c:942
 #, c-format
 msgid "Failed to load image from embedded data [%s]: %s\n"
 msgstr "Fehler beim Laden der Daten eines eingebetteten Bildes [%s]: %s\n"
 
-#: ../src/o_picture.c:160
+#: ../src/o_picture.c:165
 msgid "Base64 decoding failed."
 msgstr "Base64 Dekodierung fehlgeschlagen."
 
-#: ../src/o_picture.c:161 ../src/o_picture.c:172 ../src/o_picture.c:938
+#: ../src/o_picture.c:166 ../src/o_picture.c:177 ../src/o_picture.c:944
 msgid "Falling back to file loading. Picture unembedded.\n"
 msgstr "Lade das Bild aus der Datei. Das Bild ist ausgebettet.\n"
 
-#: ../src/o_picture.c:183 ../src/o_picture.c:924 ../src/o_picture.c:971
+#: ../src/o_picture.c:188 ../src/o_picture.c:930 ../src/o_picture.c:979
 #, c-format
 msgid "Failed to load image from file [%s]: %s\n"
 msgstr "Das Bild konnte nicht aus der Datei [%s] geladen werden: %s\n"
 
-#: ../src/o_picture.c:194
+#: ../src/o_picture.c:199
 msgid "Loading warning picture.\n"
 msgstr "Lade das Warnbild.\n"
 
-#: ../src/o_picture.c:200
+#: ../src/o_picture.c:205
 #, c-format
 msgid "Error loading picture from file: %s.\n"
 msgstr "Fehler beim Laden des Bildes aus der Datei %s.\n"
 
-#: ../src/o_picture.c:260
+#: ../src/o_picture.c:265
 msgid "ERROR: o_picture_save: unable to encode the picture.\n"
 msgstr "FEHLER: o_picture_save: Kann das Bild nicht kodieren.\n"
 
-#: ../src/o_picture.c:950
+#: ../src/o_picture.c:957
 #, c-format
 msgid "Picture [%s] has been embedded\n"
 msgstr "Das Bild [%s] wurde eingebettet\n"
 
-#: ../src/o_picture.c:988
+#: ../src/o_picture.c:997
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
 msgstr "Das Bild [%s] wurde ausgebettet\n"
@@ -731,7 +732,7 @@ msgstr ""
 msgid "More than one component found with name [%s]\n"
 msgstr "Mehr als ein Bauteil mit dem Namen [%s] gefunden\n"
 
-#: ../src/s_hierarchy.c:88
+#: ../src/s_hierarchy.c:90
 #, c-format
 msgid ""
 "hierarchy loop detected while visiting page:\n"
@@ -740,19 +741,19 @@ msgstr ""
 "Zirkuläre Abhängigkeiten in der Hierarchie entdeckt. Schaltplan:\n"
 "  \"%s\"\n"
 
-#: ../src/s_hierarchy.c:243
+#: ../src/s_hierarchy.c:245
 msgid "There are no schematics above the current one!\n"
 msgstr "Über diesem Schaltplan gibt es keinen weiteren!\n"
 
-#: ../src/s_hierarchy.c:252
+#: ../src/s_hierarchy.c:254
 msgid "Cannot find any schematics above the current one!\n"
 msgstr "Es wurde kein Schaltplan über dem aktuellen gefunden!\n"
 
-#: ../src/s_hierarchy.c:253
+#: ../src/s_hierarchy.c:255
 msgid "Maybe toplevel schematic page was closed/discarded?\n"
 msgstr "Eventuell wurde der übergeordnete Schaltplan geschlossen?\n"
 
-#: ../src/s_hierarchy.c:329
+#: ../src/s_hierarchy.c:331
 #, c-format
 msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
 msgstr "ERROR: s_hierarchy_traverse: Schaltplan [%s] wurde nicht gefunden.\n"

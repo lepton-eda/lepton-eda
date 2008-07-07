@@ -2,13 +2,13 @@
 # Copyright (C) 2007 Carlos Nieves Ónega
 # This file is distributed under the same license as the libgeda package.
 # Carlos Nieves Ónega <cnieves@iespana.es>, 2007-2008.
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-27 10:39-0500\n"
+"POT-Creation-Date: 2008-07-06 11:05-0400\n"
 "PO-Revision-Date: 2008-01-07 20:17+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -157,8 +157,8 @@ msgstr "No se puede averiguar el nombre real del archivo %s."
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
-"No se ha podido poner el archivo de copia de seguridad anterior [%s] "
-"en modo de lectura-escritura\n"
+"No se ha podido poner el archivo de copia de seguridad anterior [%s] en modo "
+"de lectura-escritura\n"
 
 #: ../src/f_basic.c:393
 #, c-format
@@ -169,8 +169,8 @@ msgstr "No se puede guardar la copia de seguridad: %s"
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr ""
-"No se ha podido poner el archivo de copia de seguridad [%s] "
-"en modo de sólo lectura\n"
+"No se ha podido poner el archivo de copia de seguridad [%s] en modo de sólo "
+"lectura\n"
 
 #: ../src/f_basic.c:538
 #, c-format
@@ -326,20 +326,21 @@ msgstr "Seleccionando color BLANCO\n"
 msgid "Found an improper attribute: _%s_\n"
 msgstr "Se ha encontrado una propiedad no válida: _%s_\n"
 
-#: ../src/o_attrib.c:1690 ../src/o_attrib.c:1797
+#. only an error if there's a slot string
+#: ../src/o_attrib.c:1699 ../src/o_attrib.c:1806
 msgid "Did not find slotdef=#:#,#,#... attribute\n"
 msgstr "No se ha encontrado un atributo slotdef=#:#,#,#...\n"
 
 #. Didn't find proper slotdef=#:... put warning into log
-#: ../src/o_attrib.c:1696
+#: ../src/o_attrib.c:1705
 msgid "Improper slotdef syntax: missing \":\".\n"
 msgstr "Sintaxis de slotdef incorrecta: falta el carácter \":\".\n"
 
-#: ../src/o_attrib.c:1711 ../src/o_attrib.c:1816
+#: ../src/o_attrib.c:1720 ../src/o_attrib.c:1825
 msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
 msgstr "No se ha encontrado un atributo válido slotdef=#:#,#,#...\n"
 
-#: ../src/o_attrib.c:1750 ../src/o_attrib.c:1850
+#: ../src/o_attrib.c:1759 ../src/o_attrib.c:1859
 msgid "component missing pinseq= attribute\n"
 msgstr "El componente no tiene el atributo pinseq\n"
 
@@ -407,7 +408,7 @@ msgstr ""
 "Se ha encontrado un componente con un atributo de simetría no válido [ %c %d "
 "%d %d %d %d %s ]\n"
 
-#: ../src/o_complex_basic.c:1427
+#: ../src/o_complex_basic.c:1430
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -416,7 +417,7 @@ msgstr ""
 "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
 "\tNo se ha podido procesar el atributo de versión de archivo symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1431
+#: ../src/o_complex_basic.c:1434
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -425,7 +426,7 @@ msgstr ""
 "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
 "\tNo se ha podido procesar el atributo de versión de archivo symversion=\n"
 
-#: ../src/o_complex_basic.c:1447
+#: ../src/o_complex_basic.c:1450
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -434,7 +435,7 @@ msgstr ""
 "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
 "\tNo se ha podido procesar el atributo añadido symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1472
+#: ../src/o_complex_basic.c:1475
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -446,7 +447,7 @@ msgstr ""
 "\tse ha añadido el atributo symversion=%s a la instancia del símbolo, pero "
 "no hay ningún atributo symversion= dentro del archivo del símbolo\n"
 
-#: ../src/o_complex_basic.c:1486
+#: ../src/o_complex_basic.c:1489
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -457,18 +458,18 @@ msgstr ""
 "\t El símbolo en la librería es más reciente que el instanciado en el "
 "esquema\n"
 
-#: ../src/o_complex_basic.c:1514
+#: ../src/o_complex_basic.c:1517
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr ""
 "\t¡CAMBIO DE VERSIÓN IMPORTANTE (archivo %.3f, instanciado %.3f, %s)!\n"
 
-#: ../src/o_complex_basic.c:1532
+#: ../src/o_complex_basic.c:1535
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\t Cambio menor en la versión (archivo %.3f, instanciado %.3f)\n"
 
-#: ../src/o_complex_basic.c:1543
+#: ../src/o_complex_basic.c:1546
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -509,84 +510,84 @@ msgid "Found a zero length net [ %c %d %d %d %d %d ]\n"
 msgstr ""
 "Se ha encontrado una conexión con longitud cero [ %c %d %d %d %d %d ]\n"
 
-#: ../src/o_picture.c:83
+#: ../src/o_picture.c:88
 #, c-format
 msgid "Error reading picture definition line: %s.\n"
 msgstr "Error al leer la línea de definición de la imagen: %s\n"
 
-#: ../src/o_picture.c:97
+#: ../src/o_picture.c:102
 #, c-format
 msgid "Found a zero width/height picture [ %c %d %d %d %d ]\n"
 msgstr ""
 "Se ha encontrado una imagen con altura ó anchura cero [ %c %d %d %d %d ]\n"
 
-#: ../src/o_picture.c:102
+#: ../src/o_picture.c:107
 #, c-format
 msgid "Found a picture with a wrong 'mirrored' parameter: %c.\n"
 msgstr ""
 "Se ha encontrado una imagen con el parámetro 'volteado' incorrecto: %c.\n"
 
-#: ../src/o_picture.c:104
+#: ../src/o_picture.c:109
 msgid "Setting mirrored to 0\n"
 msgstr "Cambiando el parámetro 'volteado' a 0\n"
 
-#: ../src/o_picture.c:109
+#: ../src/o_picture.c:114
 #, c-format
 msgid "Found a picture with a wrong 'embedded' parameter: %c.\n"
 msgstr ""
 "Se ha encontrado una imagen con el parámetro 'incrustado' incorrecto: %c.\n"
 
-#: ../src/o_picture.c:111
+#: ../src/o_picture.c:116
 msgid "Setting embedded to 0\n"
 msgstr "Cambiando el parámetro 'incrustado' a 0\n"
 
-#: ../src/o_picture.c:123
+#: ../src/o_picture.c:128
 #, c-format
 msgid "Found an unsupported picture angle [ %d ]\n"
 msgstr ""
 "Se ha encontrado una imagen con un ángulo de rotación no válido [ %d ]\n"
 
-#: ../src/o_picture.c:124 ../src/o_text_basic.c:1088
+#: ../src/o_picture.c:129 ../src/o_text_basic.c:1088
 msgid "Setting angle to 0\n"
 msgstr "Cambiando el parámetro 'ángulo' a 0\n"
 
-#: ../src/o_picture.c:159 ../src/o_picture.c:170 ../src/o_picture.c:936
+#: ../src/o_picture.c:164 ../src/o_picture.c:175 ../src/o_picture.c:942
 #, c-format
 msgid "Failed to load image from embedded data [%s]: %s\n"
 msgstr "Error al cargar imagen desde los datos embebidos [%s]: %s\n"
 
-#: ../src/o_picture.c:160
+#: ../src/o_picture.c:165
 msgid "Base64 decoding failed."
 msgstr "Ha fallado la decodificación Base64"
 
-#: ../src/o_picture.c:161 ../src/o_picture.c:172 ../src/o_picture.c:938
+#: ../src/o_picture.c:166 ../src/o_picture.c:177 ../src/o_picture.c:944
 msgid "Falling back to file loading. Picture unembedded.\n"
 msgstr "Volviendo al modo de carga de archivo. Imagen desincrustada.\n"
 
-#: ../src/o_picture.c:183 ../src/o_picture.c:924 ../src/o_picture.c:971
+#: ../src/o_picture.c:188 ../src/o_picture.c:930 ../src/o_picture.c:979
 #, c-format
 msgid "Failed to load image from file [%s]: %s\n"
 msgstr "Error al cargar imagen desde el archivo [%s]: %s\n"
 
-#: ../src/o_picture.c:194
+#: ../src/o_picture.c:199
 msgid "Loading warning picture.\n"
 msgstr "Cargando imagen de advertencia.\n"
 
-#: ../src/o_picture.c:200
+#: ../src/o_picture.c:205
 #, c-format
 msgid "Error loading picture from file: %s.\n"
 msgstr "Error al cargar la imagen desde el fichero: %s\n"
 
-#: ../src/o_picture.c:260
+#: ../src/o_picture.c:265
 msgid "ERROR: o_picture_save: unable to encode the picture.\n"
 msgstr "ERROR: o_picture_save: imposible codificar la imagen.\n"
 
-#: ../src/o_picture.c:950
+#: ../src/o_picture.c:957
 #, c-format
 msgid "Picture [%s] has been embedded\n"
 msgstr "Se ha incrustado la imagen [%s]\n"
 
-#: ../src/o_picture.c:988
+#: ../src/o_picture.c:997
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
 msgstr "Se ha desincrustado la imagen [%s]\n"
@@ -741,7 +742,7 @@ msgstr "No se ha encontrado el componente [%s] en la librería de componentes\n"
 msgid "More than one component found with name [%s]\n"
 msgstr "Se ha encontrado más de un componente con el nombre [%s]\n"
 
-#: ../src/s_hierarchy.c:88
+#: ../src/s_hierarchy.c:90
 #, c-format
 msgid ""
 "hierarchy loop detected while visiting page:\n"
@@ -750,21 +751,21 @@ msgstr ""
 "Se ha detectado un bucle de jerarquía al cargar la página:\n"
 "  \"%s\"\n"
 
-#: ../src/s_hierarchy.c:243
+#: ../src/s_hierarchy.c:245
 msgid "There are no schematics above the current one!\n"
 msgstr "¡No hay más esquemas en un nivel de jerarquía superior al actual!\n"
 
-#: ../src/s_hierarchy.c:252
+#: ../src/s_hierarchy.c:254
 msgid "Cannot find any schematics above the current one!\n"
 msgstr ""
 "¡No se encuentra ningún esquema con un nivel de jerarquía superior al "
 "actual!\n"
 
-#: ../src/s_hierarchy.c:253
+#: ../src/s_hierarchy.c:255
 msgid "Maybe toplevel schematic page was closed/discarded?\n"
 msgstr "¿Quizás se ha cerrado/descartado el esquema principal?\n"
 
-#: ../src/s_hierarchy.c:329
+#: ../src/s_hierarchy.c:331
 #, c-format
 msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
 msgstr "ERROR: en s_hierarchy_traverse: no se encuentra el esquema %s\n"
