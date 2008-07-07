@@ -277,6 +277,15 @@ static GtkWidget *x_window_stock_pixmap(const char *stock, GSCHEM_TOPLEVEL *w_cu
   return wpixmap;
 }
 
+static void x_window_invoke_macro(GtkEntry *entry, void *userdata)
+{
+  GSCHEM_TOPLEVEL *w_current = userdata;
+
+  scm_c_eval_string(gtk_entry_get_text(entry));
+  gtk_widget_hide(w_current->macro_box);
+  gtk_widget_grab_focus(w_current->drawing_area);
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -497,6 +506,18 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
                         w_current);
   }
 
+  /* macro box */
+  w_current->macro_entry = gtk_entry_new();
+  g_signal_connect(w_current->macro_entry, "activate",
+		   G_CALLBACK(&x_window_invoke_macro), w_current);
+
+  w_current->macro_box = gtk_hbox_new(FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(w_current->macro_box), w_current->macro_entry,
+		     FALSE, FALSE, 2);
+  gtk_container_border_width(GTK_CONTAINER(w_current->macro_box), 1);
+  gtk_box_pack_start (GTK_BOX (main_box), w_current->macro_box,
+		      FALSE, FALSE, 0);
+
   /* bottom box */
   bottom_box = gtk_hbox_new(FALSE, 0);
   gtk_container_border_width(GTK_CONTAINER(bottom_box), 1);
@@ -554,6 +575,7 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
                     FALSE, 10);
 
   gtk_widget_show_all (w_current->main_window);
+  gtk_widget_hide(w_current->macro_box);
 
   w_current->window = w_current->drawing_area->window;
 

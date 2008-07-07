@@ -1001,6 +1001,16 @@ DEFINE_I_CALLBACK(edit_translate)
   translate_dialog(w_current);
 }
 
+DEFINE_I_CALLBACK(edit_invoke_macro)
+{
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+
+  exit_if_null(w_current);
+
+  gtk_widget_show(w_current->macro_box);
+  gtk_widget_grab_focus(w_current->macro_entry);
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

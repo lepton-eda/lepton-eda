@@ -81,6 +81,7 @@ SCM g_keys_edit_unlock(SCM rest);
 SCM g_keys_edit_linetype(SCM rest);
 SCM g_keys_edit_filltype(SCM rest);
 SCM g_keys_edit_translate(SCM rest);
+SCM g_keys_edit_invoke_macro(SCM rest);
 SCM g_keys_edit_embed(SCM rest);
 SCM g_keys_edit_unembed(SCM rest);
 SCM g_keys_edit_update(SCM rest);
@@ -342,6 +343,7 @@ void i_callback_edit_mirror_hotkey(SCM rest, gpointer data, guint callback_actio
 void i_callback_edit_lock(SCM rest, gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_unlock(SCM rest, gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_translate(SCM rest, gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_edit_invoke_macro(SCM rest, gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_embed(SCM rest, gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_unembed(SCM rest, gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_update(SCM rest, gpointer data, guint callback_action, GtkWidget *widget);

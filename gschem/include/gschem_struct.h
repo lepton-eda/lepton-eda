@@ -18,6 +18,8 @@ struct st_gschem_toplevel {
   GtkObject *h_adjustment;
   GtkObject *v_adjustment;
 
+  GtkWidget *macro_box;
+  GtkWidget *macro_entry;
   GtkWidget *left_label;
   GtkWidget *middle_label;
   GtkWidget *right_label;
