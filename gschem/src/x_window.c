@@ -281,7 +281,7 @@ static void x_window_invoke_macro(GtkEntry *entry, void *userdata)
 {
   GSCHEM_TOPLEVEL *w_current = userdata;
 
-  scm_c_eval_string(gtk_entry_get_text(entry));
+  g_scm_c_eval_string_protected(gtk_entry_get_text(entry));
   gtk_widget_hide(w_current->macro_box);
   gtk_widget_grab_focus(w_current->drawing_area);
 }
