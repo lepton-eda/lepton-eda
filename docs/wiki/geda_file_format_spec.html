@@ -7,7 +7,7 @@
   <title>geda:file_format_spec</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
 <meta name="robots" content="index,follow" />
-<meta name="date" content="2008-01-03T16:48:55-0500" />
+<meta name="date" content="2008-01-26T18:49:35-0500" />
 <meta name="keywords" content="geda,file_format_spec" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -154,7 +154,7 @@ A schematic/symbol file for gEDA/gaf consists of:
 </p>
 
 </div>
-<!-- SECTION "Object types" [2241-3510] -->
+<!-- SECTION "Object types" [2241-3511] -->
 <h3><a name="version" id="version">version</a></h3>
 <div class="level3">
 
@@ -195,9 +195,9 @@ Valid in: Schematic and Symbol files<br/>
 </li>
 <li class="level1"><div class="li"> fileformat version is just an integer with no minor number.</div>
 </li>
-<li class="level1"><div class="li"> Development versions include: 19990601, 19990610, 19990705, 19990829, 19990919, 19991011, 20000220, 20000704, 20001006, 20001217, 20010304, 20010708, 20010722, 20020209, 20020414, 20020527, 20020825, 20021103, 20030223, 20030525, 20030901, 20040111, 20040710, 20041228, 20050313, 20050820, 20060123, 20060824, 20060906, 20061020, 20070216, 20070705, 20070708, 20070818, 20071229</div>
+<li class="level1"><div class="li"> Development versions include: 19990601, 19990610, 19990705, 19990829, 19990919, 19991011, 20000220, 20000704, 20001006, 20001217, 20010304, 20010708, 20010722, 20020209, 20020414, 20020527, 20020825, 20021103, 20030223, 20030525, 20030901, 20040111, 20040710, 20041228, 20050313, 20050820, 20060123, 20060824, 20060906, 20061020, 20070216, 20070705, 20070708, 20070818, 20071229, 20080110</div>
 </li>
-<li class="level1"><div class="li"> Stable versions include: 20070526, 20070626, 20070902, 20071231</div>
+<li class="level1"><div class="li"> Stable versions include: 20070526, 20070626, 20070902, 20071231, 20080127</div>
 </li>
 <li class="level1"><div class="li"> <acronym title="Concurrent Versions System">CVS</acronym> or test versions (should not be used): 20030921, 20031004, 20031019, 20031231, 20050814</div>
 </li>
@@ -212,7 +212,7 @@ Valid in: Schematic and Symbol files<br/>
 <pre class="code">v 20040111 1</pre>
 
 </div>
-<!-- SECTION "version" [3511-5418] -->
+<!-- SECTION "version" [3512-5439] -->
 <h3><a name="line" id="line">line</a></h3>
 <div class="level3">
 
@@ -300,7 +300,7 @@ A line segment from (23000, 69000) to (28000, 69000) with color index 3, 40 mils
 </p>
 
 </div>
-<!-- SECTION "line" [5419-6653] -->
+<!-- SECTION "line" [5440-6674] -->
 <h3><a name="picture" id="picture">picture</a></h3>
 <div class="level3">
 
@@ -410,7 +410,7 @@ A picture object with the lower left corner at (16900, 35800). The width of the 
 </p>
 
 </div>
-<!-- SECTION "picture" [6654-9447] -->
+<!-- SECTION "picture" [6675-9468] -->
 <h3><a name="box" id="box">box</a></h3>
 <div class="level3">
 
@@ -539,7 +539,7 @@ A box with the lower left hand corner at (33000, 67300) and a width and height o
 </p>
 
 </div>
-<!-- SECTION "box" [9448-11654] -->
+<!-- SECTION "box" [9469-11675] -->
 <h3><a name="circle" id="circle">circle</a></h3>
 <div class="level3">
 
@@ -655,7 +655,7 @@ A circle with the center at (38000, 67000) and a radius of 900 mils, color index
 </p>
 
 </div>
-<!-- SECTION "circle" [11655-13780] -->
+<!-- SECTION "circle" [11676-13801] -->
 <h3><a name="arc" id="arc">arc</a></h3>
 <div class="level3">
 
@@ -751,7 +751,7 @@ dashlength dashspace</code></strong>
 </p>
 
 </div>
-<!-- SECTION "arc" [13781-15296] -->
+<!-- SECTION "arc" [13802-15317] -->
 <h3><a name="text" id="text">text</a></h3>
 <div class="level3">
 
@@ -885,7 +885,7 @@ This is a similar text object as the above example, however here there are five 
 </p>
 
 </div>
-<!-- SECTION "text" [15297-17950] -->
+<!-- SECTION "text" [15318-17971] -->
 <h3><a name="net" id="net">net</a></h3>
 <div class="level3">
 
@@ -934,7 +934,7 @@ A net segment from (12700, 29400) to (32900, 29400) with color index 4.
 </p>
 
 </div>
-<!-- SECTION "net" [17951-18476] -->
+<!-- SECTION "net" [17972-18497] -->
 <h3><a name="bus" id="bus">bus</a></h3>
 <div class="level3">
 
@@ -990,7 +990,7 @@ A bus segment from (27300, 37400) to (27300, 35300) with color index 3 and no ne
 </p>
 
 </div>
-<!-- SECTION "bus" [18477-19408] -->
+<!-- SECTION "bus" [18498-19429] -->
 <h3><a name="pin" id="pin">pin</a></h3>
 <div class="level3">
 
@@ -1057,7 +1057,7 @@ A pin from (0, 200) to (200, 200) with color index 1, a regular pin, and the fir
 </p>
 
 </div>
-<!-- SECTION "pin" [19409-20405] -->
+<!-- SECTION "pin" [19430-20426] -->
 <h3><a name="component" id="component">component</a></h3>
 <div class="level3">
 
@@ -1119,7 +1119,7 @@ A component who’s origin is at (18600,19900), is selectable, not rotated, not 
 </p>
 
 </div>
-<!-- SECTION "component" [20406-21409] -->
+<!-- SECTION "component" [20427-21430] -->
 <h3><a name="font" id="font">font</a></h3>
 <div class="level3">
 
@@ -1162,7 +1162,7 @@ The above font definition is for the space character.
 </p>
 
 </div>
-<!-- SECTION "font" [21410-21930] -->
+<!-- SECTION "font" [21431-21951] -->
 <h2><a name="colors" id="colors">Colors</a></h2>
 <div class="level2">
 
@@ -1231,7 +1231,7 @@ In the gEDA/gaf schematic and symbol file format colors are specified via an int
 </p>
 
 </div>
-<!-- SECTION "Colors" [21931-22802] -->
+<!-- SECTION "Colors" [21952-22823] -->
 <h2><a name="attributes" id="attributes">Attributes</a></h2>
 <div class="level2">
 
@@ -1253,7 +1253,7 @@ The object is a pin which has an attribute pinnumber=3 and pinseq=3 (name=value)
 </p>
 
 </div>
-<!-- SECTION "Attributes" [22803-23790] -->
+<!-- SECTION "Attributes" [22824-23811] -->
 <h2><a name="embedded_components" id="embedded_components">Embedded Components</a></h2>
 <div class="level2">
 
@@ -1272,7 +1272,7 @@ In the example above, <strong>555-1.sym</strong> is the component. The EMBEDDED 
 </p>
 
 </div>
-<!-- SECTION "Embedded Components" [23791-24550] -->
+<!-- SECTION "Embedded Components" [23812-24571] -->
 <h2><a name="document_revision_history" id="document_revision_history">Document Revision History</a></h2>
 <div class="level2">
 <table class="inline">
@@ -1291,6 +1291,6 @@ In the example above, <strong>555-1.sym</strong> is the component. The EMBEDDED 
 </table>
 
 </div>
-<!-- SECTION "Document Revision History" [24551-] --></div>
+<!-- SECTION "Document Revision History" [24572-] --></div>
 </body>
 </html>

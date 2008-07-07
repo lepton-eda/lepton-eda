@@ -7,7 +7,7 @@
   <title>geda:faq-gnetlist</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
 <meta name="robots" content="index,follow" />
-<meta name="date" content="2007-05-24T22:27:26-0400" />
+<meta name="date" content="2008-05-27T00:44:25-0400" />
 <meta name="keywords" content="geda,faq-gnetlist" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -94,13 +94,16 @@ ERROR: In procedure open-file:
 ERROR: No such file or directory: “attribs”</pre>
 
 <p>
-then you need to create a file called “attribs” in the current directory which contains the attributes which you want inside the bom file. An example of this file would be: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">refdes
-device
+then you need to create a file called “attribs” in the current directory which contains the attributes which you want inside the bom file. An example of this file would be: <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">device
 value</font></pre>
 </p>
 
+<p>
+For information about BOM generation see the <a href="http://geda.seul.org/wiki/geda:faq-attribs#bom_generation" class="wikilink1" title="geda:faq-attribs">FAQ-attribs</a>.
+</p>
+
 </div>
-<!-- SECTION "The gnetlist bom backend does not work. What is wrong?" [1316-1844] -->
+<!-- SECTION "The gnetlist bom backend does not work. What is wrong?" [1316-1932] -->
 <h2><a name="some_gnetlist_backends_overflow_the_stack._how_do_i_solve_this" id="some_gnetlist_backends_overflow_the_stack._how_do_i_solve_this">Some gnetlist backends overflow the stack. How do I solve this?</a></h2>
 <div class="level2">
 
@@ -120,7 +123,7 @@ If this does not work, then edit the appropriate backend (usually named: gnet-ba
 </p>
 
 </div>
-<!-- SECTION "Some gnetlist backends overflow the stack. How do I solve this?" [1845-2650] -->
+<!-- SECTION "Some gnetlist backends overflow the stack. How do I solve this?" [1933-2738] -->
 <h2><a name="gnetlist_has_created_a_netlist_with_duplicate_pins" id="gnetlist_has_created_a_netlist_with_duplicate_pins">gnetlist has created a netlist with duplicate pins!?</a></h2>
 <div class="level2">
 
@@ -147,6 +150,6 @@ The developers are debating whether or not this is a bug in gnetlist, but for no
 </p>
 
 </div>
-<!-- SECTION "gnetlist has created a netlist with duplicate pins!?" [2651-] --></div>
+<!-- SECTION "gnetlist has created a netlist with duplicate pins!?" [2739-] --></div>
 </body>
 </html>

@@ -5,7 +5,7 @@ docsdir = @GEDADOCDIR@/$(docname)/lib/tpl
 
 SUBDIRS = geda 
 
-docs_DATA =  
+docs_DATA = 
 
 EXTRA_DIST = $(docs_DATA)
 

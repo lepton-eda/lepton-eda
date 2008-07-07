@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>gerbv-projects</title>
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="index,follow" />
+<meta name="date" content="2008-03-21T01:00:30-0400" />
+<meta name="keywords" content="gerbv-projects" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/gerbv-projects?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/gerbv-projects" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/gerbv-projects" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+<h3><a name="gerbv" id="gerbv">Gerbv</a></h3>
+<div class="level3">
+
+</div>
+
+<h5><a name="edit_gerbers_using_gerbv" id="edit_gerbers_using_gerbv">Edit Gerbers using gerbv</a></h5>
+<div class="level5">
+
+<p>
+ Gerbv is gEDA’s Gerber file viewer.  However, it has the potential to become more than a viewer &ndash; it can become a complete CAM tool, allowing (simple) editing of Gerbers, like moving or deleting tracks, changing drill hole diameters, changing pad or ring diameters, and so on.
+</p>
+
+<p>
+Difficulty = 4
+</p>
+
+</div>
+
+<h5><a name="autodetection_of_footprints_and_footprint_centroid_location" id="autodetection_of_footprints_and_footprint_centroid_location">Autodetection of footprints, and footprint centroid location</a></h5>
+<div class="level5">
+
+<p>
+ This project involves writing code which will allow gerbv to autoidentify footprints via some type of pattern matching (e.g. 2D correlation with known footprints).  Then, gerbv would store the (X, Y) coordinates of each identified footprint’s centroid.  The idea is to produce a pick-place file for automated board stuffing using only the information contained in a set of Gerber files.  This would make a good project for somebody with some AI and/or machine vision background.
+</p>
+
+<p>
+Difficulty = 5
+</p>
+
+</div>
+
+<h5><a name="gerber_to_.pcb_file_exporter" id="gerber_to_.pcb_file_exporter">Gerber to .pcb file exporter</a></h5>
+<div class="level5">
+
+<p>
+ In this project, the student would implement a feature in which gerbv would read in a gerber, and then export a file which could be read by gEDA/PCB.  The .pcb file generated wouldn’t need to be much more than the individual graphical elements held in the Gerber since a Gerber file doesn’t have the concept of e.g. footprints or text on the silkscreen layer.  However, the ability to create .pcb files would be very useful, since the one could use the full power of PCB when editing legacy Gerbers.
+</p>
+
+<p>
+Difficulty = 3   
+</p>
+
+</div>
+</div>
+</body>
+</html>

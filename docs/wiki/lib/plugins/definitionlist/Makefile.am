@@ -1,11 +1,11 @@
 
 
 docname=wiki
-docsdir = @GEDADOCDIR@/$(docname)/lib/plugins//definitionlist
+docsdir = @GEDADOCDIR@/$(docname)/lib/plugins/definitionlist
 
 SUBDIRS = images 
 
-docs_DATA =  
+docs_DATA = 
 
 EXTRA_DIST = $(docs_DATA)
 

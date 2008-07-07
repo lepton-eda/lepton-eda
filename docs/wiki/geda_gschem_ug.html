@@ -7,7 +7,7 @@
   <title>geda:gschem_ug</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
 <meta name="robots" content="index,follow" />
-<meta name="date" content="2007-07-14T16:56:40-0400" />
+<meta name="date" content="2008-05-17T12:07:52-0400" />
 <meta name="keywords" content="geda,gschem_ug" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -586,7 +586,7 @@ For those already familiar with the gEDA/gaf applications on the “gEDA Tools S
 </ul>
 
 </div>
-<!-- SECTION "CVS Unstable/Testing" [16852-17742] -->
+<!-- SECTION "CVS Unstable/Testing" [16852-17746] -->
 <h1><a name="configuring_gschem" id="configuring_gschem">Configuring gschem</a></h1>
 <div class="level1">
 
@@ -606,18 +606,18 @@ Now that we know the above, we can configure <strong>gschem</strong>.<br/>
  <strong>gschem</strong> is highly configurable. All configuration is handled through the following resource files (written using the GNU Guile programming language, an interpreter for Scheme, a version of Lisp):
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>system-gschemrc</strong>: The system-wide initialization file for <strong>gschem</strong>. Installed in the {binary-install-path}/share/gEDA/system-gschemrc file, it is required for <strong>gschem</strong> to run. Users should not modify this file, but should override the settings in this file by creating their own $HOME/gschemrc file and/or ‘pwd’/gschemrc file and putting the new settings in those files. The {binary-install-path} directory is where your gEDA/gaf  executables were installed, including <strong>gschem</strong>. Depends on your install method. Refer to <a href="docs_20060124_gschem_ug_installing_gschem.html" class="wikilink2" title="docs:20060124:gschem_ug:installing_gschem">Installing gschem</a> for more details.</div>
+<li class="level1"><div class="li"> <strong>system-gschemrc</strong>: The system-wide initialization file for <strong>gschem</strong>. Installed in the {binary-install-path}/share/gEDA/system-gschemrc file, it is required for <strong>gschem</strong> to run. Users should not modify this file, but should override the settings in this file by creating their own $HOME/.gEDA/gschemrc file and/or ‘pwd’/gschemrc file and putting the new settings in those files. The {binary-install-path} directory is where your gEDA/gaf  executables were installed, including <strong>gschem</strong>. Depends on your install method. Refer to <a href="docs_20060124_gschem_ug_installing_gschem.html" class="wikilink2" title="docs:20060124:gschem_ug:installing_gschem">Installing gschem</a> for more details.</div>
 </li>
-<li class="level1"><div class="li"> <strong>$HOME/gschemrc</strong>: The per-user initialization file for <strong>gschem</strong>. Created by the user in the user’s home directory. Settings placed in this file will override settings in the system-gschemrc file. Users should put settings in this file they want to apply to all of their sessions, such as (to change the default black background color scheme to a light background color scheme):</div>
+<li class="level1"><div class="li"> <strong>$HOME/.gEDA/gschemrc</strong>: The per-user initialization file for <strong>gschem</strong>. Created by the user under the user’s home directory. Settings placed in this file will override settings in the system-gschemrc file. Users should put settings in this file they want to apply to all of their sessions, such as (to change the default black background color scheme to a light background color scheme):</div>
 </li>
 </ul>
 
 <p>
 <pre STYLE="background : Lightgreen;margin-left : 2em"><font size="+0">; Load up a color scheme
-(load (string-append gedadatarc &quot;/gschem-lightbg&quot;)) ; light background</font></pre>
+(load (build-path geda-rc-path &quot;gschem-lightbg&quot;)) ; light background</font></pre>
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>‘pwd’/gschemrc</strong>: The per-project initialization file for <strong>gschem</strong>. Created by the user in the user’s project directory. Settings placed in this file will override settings in both the system-gschemrc file and the $HOME/gschemrc file. Users should put settings in this file they want to apply to this particular project, such as (to autonumber reference designators when components are placed on the schematic):</div>
+<li class="level1"><div class="li"> <strong>‘pwd’/gschemrc</strong>: The per-project initialization file for <strong>gschem</strong>. Created by the user in the user’s project directory. Settings placed in this file will override settings in both the system-gschemrc file and the $HOME/.gEDA/gschemrc file. Users should put settings in this file they want to apply to this particular project, such as (to autonumber reference designators when components are placed on the schematic):</div>
 </li>
 </ul>
 
@@ -629,11 +629,11 @@ Now that we know the above, we can configure <strong>gschem</strong>.<br/>
 (add-hook! add-component-hook auto-uref)</font></pre>
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>system-gafrc</strong>: The system-wide initialization file for gEDA/gaf applications (includes <strong>gschem</strong>, <strong>gnetlist</strong>). Installed in the {binary-install-path}/share/gEDA/system-gafrc file, it is required for <strong>gschem</strong> to run. Users should not modify this file, but should override the settings in this file by creating their own $HOME/gafrc file and/or ‘pwd’/gafrc file and putting the new settings in those files. The {binary-install-path} directory is where your gEDA/gaf  executables were installed, including <strong>gschem</strong>. Depends on your install method. Refer to <a href="docs_20060124_gschem_ug_installing_gschem.html" class="wikilink2" title="docs:20060124:gschem_ug:installing_gschem">Installing gschem</a> for more details.</div>
+<li class="level1"><div class="li"> <strong>system-gafrc</strong>: The system-wide initialization file for gEDA/gaf applications (includes <strong>gschem</strong>, <strong>gnetlist</strong>). Installed in the {binary-install-path}/share/gEDA/system-gafrc file, it is required for <strong>gschem</strong> to run. Users should not modify this file, but should override the settings in this file by creating their own $HOME/.gEDA/gafrc file and/or ‘pwd’/gafrc file and putting the new settings in those files. The {binary-install-path} directory is where your gEDA/gaf  executables were installed, including <strong>gschem</strong>. Depends on your install method. Refer to <a href="docs_20060124_gschem_ug_installing_gschem.html" class="wikilink2" title="docs:20060124:gschem_ug:installing_gschem">Installing gschem</a> for more details.</div>
 </li>
-<li class="level1"><div class="li"> <strong>$HOME/gafrc</strong>: The per-user initialization file for gEDA/gaf applications. Created by the user in the user’s home directory. Settings placed in this file will override settings in the system-gafrc file. Users should put settings in this file they want to apply to all of their sessions. </div>
+<li class="level1"><div class="li"> <strong>$HOME/.gEDA/gafrc</strong>: The per-user initialization file for gEDA/gaf applications. Created by the user under the user’s home directory. Settings placed in this file will override settings in the system-gafrc file. Users should put settings in this file they want to apply to all of their sessions. </div>
 </li>
-<li class="level1"><div class="li"> <strong>‘pwd’/gafrc</strong>: The per-project initialization file for the gEDA/gaf applications. Created by the user in the user’s project directory. Settings placed in this file will override settings in both the system-gafrc file and the $HOME/gafrc file. Users should put settings in this file they want to apply to this particular project. Settings such as the <strong>component-library</strong> or <strong>source-library</strong> keywords go into this file.</div>
+<li class="level1"><div class="li"> <strong>‘pwd’/gafrc</strong>: The per-project initialization file for the gEDA/gaf applications. Created by the user in the user’s project directory. Settings placed in this file will override settings in both the system-gafrc file and the $HOME/.gEDA/gafrc file. Users should put settings in this file they want to apply to this particular project. Settings such as the <strong>component-library</strong> or <strong>source-library</strong> keywords go into this file.</div>
 </li>
 <li class="level1"><div class="li"> <strong>gschem-gtkrc</strong>: Installed in the {binary-install-path}/share/gEDA/gschem-gtkrc file. Used to define the font for all gtk+ widgets in <strong>gschem</strong>.</div>
 </li>
@@ -645,16 +645,16 @@ Now that we know the above, we can configure <strong>gschem</strong>.<br/>
 <ul>
 <li class="level1"><div class="li"> Don’t break any guile syntax rules. Doing so will cause the scheme interpreter (guile) to stop interpreting.</div>
 </li>
-<li class="level1"><div class="li"> To add a setting to the $HOME/gschemrc file (or to the ‘pwd’/gschemrc file), copy the setting’s text from the {binary-install-directory}/share/gEDA/system-gschemrc file to the $HOME/gschemrc file (or the ‘pwd’/gschemrc file) and make the setting change there.</div>
+<li class="level1"><div class="li"> To add a setting to the $HOME/.gEDA/gschemrc file (or to the ‘pwd’/gschemrc file), copy the setting’s text from the {binary-install-directory}/share/gEDA/system-gschemrc file to the $HOME/.gEDA/gschemrc file (or the ‘pwd’/gschemrc file) and make the setting change there.</div>
 </li>
-<li class="level1"><div class="li"> To add a setting to the $HOME/gafrc file (or the ‘pwd’/gafrc file), copy the relevant setting’s text from the {binary-install-directory}/share/gEDA/system-gafrc file to the $HOME/gafrc file (or the ‘pwd’/gafrc file) and make the setting change there.</div>
+<li class="level1"><div class="li"> To add a setting to the $HOME/.gEDA/gafrc file (or the ‘pwd’/gafrc file), copy the relevant setting’s text from the {binary-install-directory}/share/gEDA/system-gafrc file to the $HOME/.gEDA/gafrc file (or the ‘pwd’/gafrc file) and make the setting change there.</div>
 </li>
 <li class="level1"><div class="li"> Keywords/defaults always override what came before, with the exception of cumulative keywords (like component-library).</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Configuring gschem" [17743-23463] -->
+<!-- SECTION "Configuring gschem" [17747-23531] -->
 <h2><a name="gschemrc" id="gschemrc">gschemrc</a></h2>
 <div class="level2">
 
@@ -664,7 +664,7 @@ The {binary-install-path}/share/gEDA/system-gschemrc file is well commented. Rea
 </p>
 
 </div>
-<!-- SECTION "gschemrc" [23464-23765] -->
+<!-- SECTION "gschemrc" [23532-23833] -->
 <h2><a name="gafrc" id="gafrc">gafrc</a></h2>
 <div class="level2">
 
@@ -674,12 +674,12 @@ The {binary-install-path}/share/gEDA/system-gafrc file is well commented. Read t
 </p>
 
 </div>
-<!-- SECTION "gafrc" [23766-24055] -->
+<!-- SECTION "gafrc" [23834-24123] -->
 <h1><a name="running_gschem" id="running_gschem">Running gschem</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Running gschem" [24056-24085] -->
+<!-- SECTION "Running gschem" [24124-24153] -->
 <h2><a name="confirming_gschem_is_installed" id="confirming_gschem_is_installed">Confirming gschem is installed</a></h2>
 <div class="level2">
 
@@ -776,7 +776,7 @@ If these commands do not return the expected results, then most likely the gEDA 
 </p>
 
 </div>
-<!-- SECTION "Confirming gschem is installed" [24086-29791] -->
+<!-- SECTION "Confirming gschem is installed" [24154-29859] -->
 <h2><a name="the_shell_prompt" id="the_shell_prompt">The Shell Prompt</a></h2>
 <div class="level2">
 <table class="inline">
@@ -857,7 +857,7 @@ As operations are performed in the <strong>gschem</strong> <a href="docs_2006012
 </ul>
 
 </div>
-<!-- SECTION "The Shell Prompt" [29792-33326] -->
+<!-- SECTION "The Shell Prompt" [29860-33394] -->
 <h2><a name="backups" id="backups">Backups</a></h2>
 <div class="level2">
 
@@ -866,7 +866,7 @@ There are two basic mechanisms in <strong>gschem</strong> for backing up schemat
 </p>
 
 </div>
-<!-- SECTION "Backups" [33327-33478] -->
+<!-- SECTION "Backups" [33395-33546] -->
 <h3><a name="classic_linux_backups" id="classic_linux_backups">Classic Linux backups</a></h3>
 <div class="level3">
 
@@ -920,12 +920,12 @@ When the user does finally manually save the file, the original file (i.e., the 
 </p>
 
 </div>
-<!-- SECTION "Classic Linux backups" [33479-36385] -->
+<!-- SECTION "Classic Linux backups" [33547-36453] -->
 <h3><a name="incremental_backups" id="incremental_backups">Incremental backups</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION "Incremental backups" [36386-36419] -->
+<!-- SECTION "Incremental backups" [36454-36487] -->
 <h3><a name="relevant_configuration_settings" id="relevant_configuration_settings">Relevant configuration settings</a></h3>
 <div class="level3">
 
@@ -944,7 +944,7 @@ There are the following configuration settings in the {binary-install-path}/shar
 </ul>
 
 </div>
-<!-- SECTION "Relevant configuration settings" [36420-37461] -->
+<!-- SECTION "Relevant configuration settings" [36488-37529] -->
 <h2><a name="on-line_documentation" id="on-line_documentation">On-line documentation</a></h2>
 <div class="level2">
 
@@ -1076,7 +1076,7 @@ Version			      December 31st, 2003		     gschem(1)</font></pre>
 </p>
 
 </div>
-<!-- SECTION "On-line documentation" [37462-41931] -->
+<!-- SECTION "On-line documentation" [37530-41999] -->
 <h1><a name="electrical_connectivity" id="electrical_connectivity">Electrical Connectivity</a></h1>
 <div class="level1">
 
@@ -1088,7 +1088,7 @@ As you draw schematics you need be aware of what is considered to be electricall
 </p>
 
 </div>
-<!-- SECTION "Electrical Connectivity" [41932-43648] -->
+<!-- SECTION "Electrical Connectivity" [42000-43716] -->
 <h1><a name="components_symbols_objects_attributes" id="components_symbols_objects_attributes">Components &amp; Symbols &amp; Objects &amp; Attributes</a></h1>
 <div class="level1">
 
@@ -1097,7 +1097,7 @@ There is a hierarchical association between components, symbols, objects, and at
 </p>
 
 </div>
-<!-- SECTION "Components & Symbols & Objects & Attributes" [43649-43797] -->
+<!-- SECTION "Components & Symbols & Objects & Attributes" [43717-43865] -->
 <h2><a name="components" id="components">Components</a></h2>
 <div class="level2">
 
@@ -1120,7 +1120,7 @@ A component is the instantiation of a specific symbol, as placed on the schemati
 </p>
 
 </div>
-<!-- SECTION "Components" [43798-45612] -->
+<!-- SECTION "Components" [43866-45680] -->
 <h2><a name="symbols" id="symbols">Symbols</a></h2>
 <div class="level2">
 
@@ -1131,7 +1131,7 @@ Symbols are just a collection of objects and attributes.<br/>
 </p>
 
 </div>
-<!-- SECTION "Symbols" [45613-45954] -->
+<!-- SECTION "Symbols" [45681-46022] -->
 <h2><a name="objects" id="objects">Objects</a></h2>
 <div class="level2">
 
@@ -1156,12 +1156,12 @@ The following are objects:
 </ul>
 
 </div>
-<!-- SECTION "Objects" [45955-46067] -->
+<!-- SECTION "Objects" [46023-46136] -->
 <h2><a name="attributes" id="attributes">Attributes</a></h2>
 <div class="level2">
 
 <p>
-An attribute is text which is in the form <code>name=value</code> (there are no spaces to the left or right of the name,value pair). An attribute can be either attached to an object or unattached. Attributes are used extensively in the gEDA project to convey information (e.g., device name, pin numbers, hidden nets, and unit reference numbers). Check <a href="http://www.geda.seul.org/docs/current/attributes/index.html" class="urlextern" title="http://www.geda.seul.org/docs/current/attributes/index.html"  rel="nofollow">gEDA/gaf Master Attribute Document</a> for a complete list of attributes.<br/>
+An attribute is text which is in the form <code>name=value</code> (there are no spaces to the left or right of the name,value pair). An attribute can be either attached to an object or unattached. Attributes are used extensively in the gEDA project to convey information (e.g., device name, pin numbers, hidden nets, and unit reference numbers). Check <a href="geda_master_attributes_list.html" class="wikilink1" title="geda:master_attributes_list">gEDA/gaf Master Attribute Document</a> for a complete list of attributes.<br/>
  There are three kinds of attributes:
 </p>
 <ul>
@@ -1213,7 +1213,7 @@ So, to summarize, attribute promotion takes unattached attributes inside symbols
 </p>
 
 </div>
-<!-- SECTION "Attributes" [46068-49472] -->
+<!-- SECTION "Attributes" [46137-49509] -->
 <h1><a name="the_main_window" id="the_main_window">The Main Window</a></h1>
 <div class="level1">
 <table class="inline">
@@ -1242,7 +1242,7 @@ So, to summarize, attribute promotion takes unattached attributes inside symbols
 </p>
 
 </div>
-<!-- SECTION "The Main Window" [49473-52386] -->
+<!-- SECTION "The Main Window" [49510-52423] -->
 <h1><a name="the_status_window" id="the_status_window">The Status Window</a></h1>
 <div class="level1">
 <table class="inline">
@@ -1256,7 +1256,7 @@ So, to summarize, attribute promotion takes unattached attributes inside symbols
 </p>
 
 </div>
-<!-- SECTION "The Status Window" [52387-52549] -->
+<!-- SECTION "The Status Window" [52424-52586] -->
 <h1><a name="the_schematic_file" id="the_schematic_file">The Schematic File</a></h1>
 <div class="level1">
 
@@ -1277,7 +1277,7 @@ Schematic files. These files contain components, nets, text, and sometimes primi
 </p>
 
 </div>
-<!-- SECTION "The Schematic File" [52550-53319] -->
+<!-- SECTION "The Schematic File" [52587-53356] -->
 <h1><a name="the_symbol_file" id="the_symbol_file">The Symbol File</a></h1>
 <div class="level1">
 
@@ -1300,7 +1300,7 @@ Symbol files. The schematic and symbol file formats are identical. <strong>gsche
 </p>
 
 </div>
-<!-- SECTION "The Symbol File" [53320-54306] -->
+<!-- SECTION "The Symbol File" [53357-54343] -->
 <h1><a name="symbol_libraries" id="symbol_libraries">Symbol Libraries</a></h1>
 <div class="level1">
 
@@ -1309,7 +1309,7 @@ Components are searched for by specifying (component-library &quot;&hellip;”) 
 </p>
 
 </div>
-<!-- SECTION "Symbol Libraries" [54307-54460] -->
+<!-- SECTION "Symbol Libraries" [54344-54497] -->
 <h1><a name="the_log_file" id="the_log_file">The Log File</a></h1>
 <div class="level1">
 
@@ -1318,7 +1318,7 @@ Log file. This file contains informative, error, warnings etc&hellip; messages w
 </p>
 
 </div>
-<!-- SECTION "The Log File" [54461-54738] -->
+<!-- SECTION "The Log File" [54498-54775] -->
 <h1><a name="grips" id="grips">Grips</a></h1>
 <div class="level1">
 
@@ -1341,12 +1341,12 @@ Using grips is easy:
 </ul>
 
 </div>
-<!-- SECTION "Grips" [54739-55448] -->
+<!-- SECTION "Grips" [54776-55485] -->
 <h1><a name="menu_operations" id="menu_operations">Menu Operations</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Menu Operations" [55449-55478] -->
+<!-- SECTION "Menu Operations" [55486-55515] -->
 <h2><a name="file" id="file">File</a></h2>
 <div class="level2">
 
@@ -1373,7 +1373,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 </p>
 
 </div>
-<!-- SECTION "File" [55479-56632] -->
+<!-- SECTION "File" [55516-56669] -->
 <h3><a name="new_window_fw" id="new_window_fw">New Window (fw)</a></h3>
 <div class="level3">
 
@@ -1382,7 +1382,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 </p>
 
 </div>
-<!-- SECTION "New Window (fw)" [56633-56798] -->
+<!-- SECTION "New Window (fw)" [56670-56835] -->
 <h3><a name="new_page_fn" id="new_page_fn">New Page (fn)</a></h3>
 <div class="level3">
 
@@ -1391,7 +1391,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 </p>
 
 </div>
-<!-- SECTION "New Page (fn)" [56799-56986] -->
+<!-- SECTION "New Page (fn)" [56836-57023] -->
 <h3><a name="open_page..._fo" id="open_page..._fo">Open Page... (fo)</a></h3>
 <div class="level3">
 
@@ -1417,7 +1417,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 </ul>
 
 </div>
-<!-- SECTION "Open Page... (fo)" [56987-57274] -->
+<!-- SECTION "Open Page... (fo)" [57024-57311] -->
 <h3><a name="close_page_pc" id="close_page_pc">Close Page (pc)</a></h3>
 <div class="level3">
 
@@ -1426,7 +1426,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 </p>
 
 </div>
-<!-- SECTION "Close Page (pc)" [57275-57420] -->
+<!-- SECTION "Close Page (pc)" [57312-57457] -->
 <h3><a name="revert_page_pr" id="revert_page_pr">Revert Page (pr)</a></h3>
 <div class="level3">
 
@@ -1435,7 +1435,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 </p>
 
 </div>
-<!-- SECTION "Revert Page (pr)" [57421-57682] -->
+<!-- SECTION "Revert Page (pr)" [57458-57719] -->
 <h3><a name="save_page_fs" id="save_page_fs">Save Page (fs)</a></h3>
 <div class="level3">
 
@@ -1453,7 +1453,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 </ul>
 
 </div>
-<!-- SECTION "Save Page (fs)" [57683-58330] -->
+<!-- SECTION "Save Page (fs)" [57720-58367] -->
 <h3><a name="save_page_as..._fa" id="save_page_as..._fa">Save Page As... (fa)</a></h3>
 <div class="level3">
 
@@ -1465,7 +1465,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 </p>
 
 </div>
-<!-- SECTION "Save Page As... (fa)" [58331-58778] -->
+<!-- SECTION "Save Page As... (fa)" [58368-58815] -->
 <h3><a name="save_all_fl_fl" id="save_all_fl_fl">Save All (fl) (fl)</a></h3>
 <div class="level3">
 
@@ -1474,7 +1474,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 </p>
 
 </div>
-<!-- SECTION "Save All (fl) (fl)" [58779-58883] -->
+<!-- SECTION "Save All (fl) (fl)" [58816-58920] -->
 <h3><a name="print..._fp" id="print..._fp">Print... (fp)</a></h3>
 <div class="level3">
 
@@ -1517,7 +1517,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 
 
 </div>
-<!-- SECTION "Print... (fp)" [58884-59930] -->
+<!-- SECTION "Print... (fp)" [58921-59967] -->
 <h3><a name="write_png..._fi" id="write_png..._fi">Write PNG... (fi)</a></h3>
 <div class="level3">
 
@@ -1554,7 +1554,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 </p>
 
 </div>
-<!-- SECTION "Write PNG... (fi)" [59931-60725] -->
+<!-- SECTION "Write PNG... (fi)" [59968-60762] -->
 <h3><a name="execute_script..._ft" id="execute_script..._ft">Execute Script... (ft)</a></h3>
 <div class="level3">
 
@@ -1563,7 +1563,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 </p>
 
 </div>
-<!-- SECTION "Execute Script... (ft)" [60726-60797] -->
+<!-- SECTION "Execute Script... (ft)" [60763-60834] -->
 <h3><a name="close_window_fc" id="close_window_fc">Close Window (fc)</a></h3>
 <div class="level3">
 
@@ -1572,7 +1572,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 </p>
 
 </div>
-<!-- SECTION "Close Window (fc)" [60798-61036] -->
+<!-- SECTION "Close Window (fc)" [60835-61073] -->
 <h3><a name="quit_alt-q" id="quit_alt-q">Quit (Alt-q)</a></h3>
 <div class="level3">
 
@@ -1581,7 +1581,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 </p>
 
 </div>
-<!-- SECTION "Quit (Alt-q)" [61037-61229] -->
+<!-- SECTION "Quit (Alt-q)" [61074-61266] -->
 <h2><a name="edit" id="edit">Edit</a></h2>
 <div class="level2">
 
@@ -1590,7 +1590,7 @@ The following are available from the <strong>gschem</strong> main window’s men
 </p>
 
 </div>
-<!-- SECTION "Edit" [61230-61346] -->
+<!-- SECTION "Edit" [61267-61383] -->
 <h3><a name="undo_shift-u" id="undo_shift-u">Undo (shift-u)</a></h3>
 <div class="level3">
 
@@ -1611,7 +1611,7 @@ After every action (including zooming and panning) the schematic is saved to dis
 </p>
 
 </div>
-<!-- SECTION "Undo (shift-u)" [61347-62305] -->
+<!-- SECTION "Undo (shift-u)" [61384-62342] -->
 <h3><a name="redo_shift-r" id="redo_shift-r">Redo (shift-r)</a></h3>
 <div class="level3">
 
@@ -1621,7 +1621,7 @@ After every action (including zooming and panning) the schematic is saved to dis
 </p>
 
 </div>
-<!-- SECTION "Redo (shift-r)" [62306-62614] -->
+<!-- SECTION "Redo (shift-r)" [62343-62651] -->
 <h3><a name="select_mode_s" id="select_mode_s">Select Mode (s)</a></h3>
 <div class="level3">
 
@@ -1644,7 +1644,7 @@ After every action (including zooming and panning) the schematic is saved to dis
 </p>
 
 </div>
-<!-- SECTION "Select Mode (s)" [62615-65022] -->
+<!-- SECTION "Select Mode (s)" [62652-65059] -->
 <h3><a name="edit..._ee" id="edit..._ee">Edit... (ee)</a></h3>
 <div class="level3">
 
@@ -1693,7 +1693,7 @@ First, select the object to be edited (i.e., in <strong>Select Mode</strong>).<b
 </p>
 
 </div>
-<!-- SECTION "Edit... (ee)" [65023-66217] -->
+<!-- SECTION "Edit... (ee)" [65060-66254] -->
 <h3><a name="edit_text..._ex" id="edit_text..._ex">Edit Text... (ex)</a></h3>
 <div class="level3">
 
@@ -1731,7 +1731,7 @@ First, select the text object to be edited (i.e., in <strong>Select Mode</strong
 </p>
 
 </div>
-<!-- SECTION "Edit Text... (ex)" [66218-67076] -->
+<!-- SECTION "Edit Text... (ex)" [66255-67113] -->
 <h3><a name="copy_mode_ec" id="copy_mode_ec">Copy Mode (ec)</a></h3>
 <div class="level3">
 
@@ -1764,7 +1764,7 @@ First, select the text object to be edited (i.e., in <strong>Select Mode</strong
 </p>
 
 </div>
-<!-- SECTION "Copy Mode (ec)" [67077-68001] -->
+<!-- SECTION "Copy Mode (ec)" [67114-68038] -->
 <h3><a name="move_mode_em" id="move_mode_em">Move Mode (em)</a></h3>
 <div class="level3">
 
@@ -1810,7 +1810,7 @@ Since version 20060906, there is another way to move object(s):<br/>
 </ul>
 
 </div>
-<!-- SECTION "Move Mode (em)" [68002-69155] -->
+<!-- SECTION "Move Mode (em)" [68039-69192] -->
 <h3><a name="delete_delete-key" id="delete_delete-key">Delete (Delete-key)</a></h3>
 <div class="level3">
 
@@ -1830,7 +1830,7 @@ Since version 20060906, there is another way to move object(s):<br/>
 </p>
 
 </div>
-<!-- SECTION "Delete (Delete-key)" [69156-69474] -->
+<!-- SECTION "Delete (Delete-key)" [69193-69511] -->
 <h3><a name="rotate_90_mode_er" id="rotate_90_mode_er">Rotate 90 Mode (er)</a></h3>
 <div class="level3">
 
@@ -1854,7 +1854,7 @@ Since version 20060906, there is another way to move object(s):<br/>
 </p>
 
 </div>
-<!-- SECTION "Rotate 90 Mode (er)" [69475-70064] -->
+<!-- SECTION "Rotate 90 Mode (er)" [69512-70101] -->
 <h3><a name="mirror_mode_ei" id="mirror_mode_ei">Mirror Mode (ei)</a></h3>
 <div class="level3">
 
@@ -1878,7 +1878,7 @@ Since version 20060906, there is another way to move object(s):<br/>
 </p>
 
 </div>
-<!-- SECTION "Mirror Mode (ei)" [70065-70721] -->
+<!-- SECTION "Mirror Mode (ei)" [70102-70758] -->
 <h3><a name="slot..._e_shift-s" id="slot..._e_shift-s">Slot... (e shift-s)</a></h3>
 <div class="level3">
 
@@ -1903,7 +1903,7 @@ Some physical packages (e.g., the classic 7400 Quad NAND gate) contain more than
 </p>
 
 </div>
-<!-- SECTION "Slot... (e shift-s)" [70722-71938] -->
+<!-- SECTION "Slot... (e shift-s)" [70759-71975] -->
 <h3><a name="color..._eo" id="color..._eo">Color... (eo)</a></h3>
 <div class="level3">
 
@@ -1960,7 +1960,7 @@ Some physical packages (e.g., the classic 7400 Quad NAND gate) contain more than
 </p>
 
 </div>
-<!-- SECTION "Color... (eo)" [71939-72897] -->
+<!-- SECTION "Color... (eo)" [71976-72934] -->
 <h3><a name="lock_el_unlock_e_shift-l" id="lock_el_unlock_e_shift-l">Lock (el) / Unlock (e shift-l)</a></h3>
 <div class="level3">
 
@@ -1984,7 +1984,7 @@ Some physical packages (e.g., the classic 7400 Quad NAND gate) contain more than
 </p>
 
 </div>
-<!-- SECTION "Lock (el) / Unlock (e shift-l)" [72898-74436] -->
+<!-- SECTION "Lock (el) / Unlock (e shift-l)" [72935-74473] -->
 <h3><a name="line_width_type..._ew" id="line_width_type..._ew">Line Width &amp; Type... (ew)</a></h3>
 <div class="level3">
 
@@ -2020,7 +2020,7 @@ The <strong>Edit | Line Width &amp; Type&hellip;</strong> dialog box lets you co
 </p>
 
 </div>
-<!-- SECTION "Line Width & Type... (ew)" [74437-75052] -->
+<!-- SECTION "Line Width & Type... (ew)" [74474-75089] -->
 <h3><a name="fill_type..._ef" id="fill_type..._ef">Fill Type... (ef)</a></h3>
 <div class="level3">
 
@@ -2054,7 +2054,7 @@ The <strong>Edit | Line Width &amp; Type&hellip;</strong> dialog box lets you co
 </ul>
 
 </div>
-<!-- SECTION "Fill Type... (ef)" [75053-75393] -->
+<!-- SECTION "Fill Type... (ef)" [75090-75430] -->
 <h3><a name="symbol_translate..._et" id="symbol_translate..._et">Symbol Translate... (et)</a></h3>
 <div class="level3">
 
@@ -2094,7 +2094,7 @@ The <strong>Edit | Line Width &amp; Type&hellip;</strong> dialog box lets you co
 </p>
 
 </div>
-<!-- SECTION "Symbol Translate... (et)" [75394-76558] -->
+<!-- SECTION "Symbol Translate... (et)" [75431-76595] -->
 <h3><a name="embed_component_picture_eb" id="embed_component_picture_eb">Embed Component/Picture (eb)</a></h3>
 <div class="level3">
 
@@ -2117,7 +2117,7 @@ The <strong>Edit | Line Width &amp; Type&hellip;</strong> dialog box lets you co
 </p>
 
 </div>
-<!-- SECTION "Embed Component/Picture (eb)" [76559-77588] -->
+<!-- SECTION "Embed Component/Picture (eb)" [76596-77625] -->
 <h3><a name="unembed_component_picture_eu" id="unembed_component_picture_eu">Unembed Component/Picture (eu)</a></h3>
 <div class="level3">
 
@@ -2137,7 +2137,7 @@ The <strong>Edit | Line Width &amp; Type&hellip;</strong> dialog box lets you co
 </p>
 
 </div>
-<!-- SECTION "Unembed Component/Picture (eu)" [77589-78178] -->
+<!-- SECTION "Unembed Component/Picture (eu)" [77626-78215] -->
 <h3><a name="update_component_ep" id="update_component_ep">Update Component (ep)</a></h3>
 <div class="level3">
 
@@ -2177,7 +2177,7 @@ The <strong>Edit | Line Width &amp; Type&hellip;</strong> dialog box lets you co
 </ul>
 
 </div>
-<!-- SECTION "Update Component (ep)" [78179-79988] -->
+<!-- SECTION "Update Component (ep)" [78216-80025] -->
 <h3><a name="show_hide_inv_text_en" id="show_hide_inv_text_en">Show/Hide Inv Text (en)</a></h3>
 <div class="level3">
 
@@ -2243,7 +2243,7 @@ The <strong>Edit | Line Width &amp; Type&hellip;</strong> dialog box lets you co
 </p>
 
 </div>
-<!-- SECTION "Show/Hide Inv Text (en)" [79989-82816] -->
+<!-- SECTION "Show/Hide Inv Text (en)" [80026-82853] -->
 <h3><a name="make_inv_text_vis_ev" id="make_inv_text_vis_ev">Make Inv Text Vis (ev)</a></h3>
 <div class="level3">
 
@@ -2264,7 +2264,7 @@ The <strong>Edit | Line Width &amp; Type&hellip;</strong> dialog box lets you co
 </p>
 
 </div>
-<!-- SECTION "Make Inv Text Vis (ev)" [82817-83480] -->
+<!-- SECTION "Make Inv Text Vis (ev)" [82854-83517] -->
 <h2><a name="buffer" id="buffer">Buffer</a></h2>
 <div class="level2">
 
@@ -2273,7 +2273,7 @@ The <strong>Edit | Line Width &amp; Type&hellip;</strong> dialog box lets you co
 </p>
 
 </div>
-<!-- SECTION "Buffer" [83481-83600] -->
+<!-- SECTION "Buffer" [83518-83637] -->
 <h3><a name="copy_into_1_2_3_4_5_yc" id="copy_into_1_2_3_4_5_yc">Copy into 1/2/3/4/5 (yc)</a></h3>
 <div class="level3">
 
@@ -2288,7 +2288,7 @@ To copy something into a buffer:
 </ol>
 
 </div>
-<!-- SECTION "Copy into 1/2/3/4/5 (yc)" [83601-83753] -->
+<!-- SECTION "Copy into 1/2/3/4/5 (yc)" [83638-83790] -->
 <h3><a name="cut_into_1_2_3_4_5_yu" id="cut_into_1_2_3_4_5_yu">Cut into 1/2/3/4/5 (yu)</a></h3>
 <div class="level3">
 
@@ -2297,7 +2297,7 @@ Cut is like copy in that it removes the objects from the schematic
 </p>
 
 </div>
-<!-- SECTION "Cut into 1/2/3/4/5 (yu)" [83754-83855] -->
+<!-- SECTION "Cut into 1/2/3/4/5 (yu)" [83791-83892] -->
 <h3><a name="paste_from_1_2_3_4_5_yp" id="paste_from_1_2_3_4_5_yp">Paste from 1/2/3/4/5 (yp)</a></h3>
 <div class="level3">
 
@@ -2320,12 +2320,12 @@ To paste a buffer into the current schematic:
 </ol>
 
 </div>
-<!-- SECTION "Paste from 1/2/3/4/5 (yp)" [83856-84209] -->
+<!-- SECTION "Paste from 1/2/3/4/5 (yp)" [83893-84246] -->
 <h2><a name="view" id="view">View</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "View" [84210-84227] -->
+<!-- SECTION "View" [84247-84264] -->
 <h3><a name="redraw_vr" id="redraw_vr">Redraw (vr)</a></h3>
 <div class="level3">
 
@@ -2335,7 +2335,7 @@ To paste a buffer into the current schematic:
 </p>
 
 </div>
-<!-- SECTION "Redraw (vr)" [84228-84478] -->
+<!-- SECTION "Redraw (vr)" [84265-84515] -->
 <h3><a name="pan_x" id="pan_x">Pan (x)</a></h3>
 <div class="level3">
 
@@ -2382,7 +2382,7 @@ to either your user’s ~/gschemrc file or local ‘pwd’/gschemrc file, whenev
 </p>
 
 </div>
-<!-- SECTION "Pan (x)" [84479-86275] -->
+<!-- SECTION "Pan (x)" [84516-86312] -->
 <h3><a name="zoom_box_w" id="zoom_box_w">Zoom Box (w)</a></h3>
 <div class="level3">
 
@@ -2409,7 +2409,7 @@ to either your user’s ~/gschemrc file or local ‘pwd’/gschemrc file, whenev
 </p>
 
 </div>
-<!-- SECTION "Zoom Box (w)" [86276-87156] -->
+<!-- SECTION "Zoom Box (w)" [86313-87193] -->
 <h3><a name="zoom_extents_ve" id="zoom_extents_ve">Zoom Extents (ve)</a></h3>
 <div class="level3">
 
@@ -2428,7 +2428,7 @@ to either your user’s ~/gschemrc file or local ‘pwd’/gschemrc file, whenev
 </p>
 
 </div>
-<!-- SECTION "Zoom Extents (ve)" [87157-87523] -->
+<!-- SECTION "Zoom Extents (ve)" [87194-87560] -->
 <h3><a name="zoom_in_z" id="zoom_in_z">Zoom In (z)</a></h3>
 <div class="level3">
 
@@ -2465,7 +2465,7 @@ in either your user’s ~/gschemrc file or local ‘pwd’/gschemrc file, whenev
 </p>
 
 </div>
-<!-- SECTION "Zoom In (z)" [87524-88685] -->
+<!-- SECTION "Zoom In (z)" [87561-88722] -->
 <h3><a name="zoom_out_z" id="zoom_out_z">Zoom Out (Z)</a></h3>
 <div class="level3">
 
@@ -2502,7 +2502,7 @@ in either your user’s ~/gschemrc file or local ‘pwd’/gschemrc file, whenev
 </p>
 
 </div>
-<!-- SECTION "Zoom Out (Z)" [88686-89874] -->
+<!-- SECTION "Zoom Out (Z)" [88723-89911] -->
 <h3><a name="zoom_full_vf" id="zoom_full_vf">Zoom Full (vf)</a></h3>
 <div class="level3">
 
@@ -2542,52 +2542,52 @@ To view the maximum displayable area using the keyboard shortcut (i.e., “<stro
 </p>
 
 </div>
-<!-- SECTION "Zoom Full (vf)" [89875-90653] -->
+<!-- SECTION "Zoom Full (vf)" [89912-90690] -->
 <h2><a name="page" id="page">Page</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Page" [90654-90672] -->
+<!-- SECTION "Page" [90691-90709] -->
 <h3><a name="manager..._pm" id="manager..._pm">Manager... (pm)</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION "Manager... (pm)" [90673-90700] -->
+<!-- SECTION "Manager... (pm)" [90710-90737] -->
 <h3><a name="next" id="next">Next (&gt;)</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION "Next (>)" [90701-90721] -->
+<!-- SECTION "Next (>)" [90738-90758] -->
 <h3><a name="previous" id="previous">Previous (&lt;)</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION "Previous (<)" [90722-90746] -->
+<!-- SECTION "Previous (<)" [90759-90783] -->
 <h3><a name="new_pe" id="new_pe">New (pe)</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION "New (pe)" [90747-90767] -->
+<!-- SECTION "New (pe)" [90784-90804] -->
 <h3><a name="revert_pr" id="revert_pr">Revert (pr)</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION "Revert (pr)" [90768-90791] -->
+<!-- SECTION "Revert (pr)" [90805-90828] -->
 <h3><a name="close_pc" id="close_pc">Close (pc)</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION "Close (pc)" [90792-90814] -->
+<!-- SECTION "Close (pc)" [90829-90851] -->
 <h3><a name="discard_pd" id="discard_pd">Discard (pd)</a></h3>
 <div class="level3">
 
 </div>
-<!-- SECTION "Discard (pd)" [90815-90839] -->
+<!-- SECTION "Discard (pd)" [90852-90876] -->
 <h2><a name="add" id="add">Add</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Add" [90840-90856] -->
+<!-- SECTION "Add" [90877-90893] -->
 <h3><a name="component..._i" id="component..._i">Component... (i)</a></h3>
 <div class="level3">
 
@@ -2636,7 +2636,7 @@ To view the maximum displayable area using the keyboard shortcut (i.e., “<stro
 </p>
 
 </div>
-<!-- SECTION "Component... (i)" [90857-92333] -->
+<!-- SECTION "Component... (i)" [90894-92370] -->
 <h3><a name="net_n" id="net_n">Net (n)</a></h3>
 <div class="level3">
 
@@ -2718,7 +2718,7 @@ To view the maximum displayable area using the keyboard shortcut (i.e., “<stro
 </p>
 
 </div>
-<!-- SECTION "Net (n)" [92334-94925] -->
+<!-- SECTION "Net (n)" [92371-94962] -->
 <h3><a name="bus_u" id="bus_u">Bus (u)</a></h3>
 <div class="level3">
 
@@ -2728,7 +2728,7 @@ To view the maximum displayable area using the keyboard shortcut (i.e., “<stro
 </p>
 
 </div>
-<!-- SECTION "Bus (u)" [94926-95175] -->
+<!-- SECTION "Bus (u)" [94963-95212] -->
 <h3><a name="attribute..._aa" id="attribute..._aa">Attribute... (aa)</a></h3>
 <div class="level3">
 
@@ -2759,7 +2759,7 @@ To view the maximum displayable area using the keyboard shortcut (i.e., “<stro
 </p>
 
 </div>
-<!-- SECTION "Attribute... (aa)" [95176-96888] -->
+<!-- SECTION "Attribute... (aa)" [95213-96925] -->
 <h3><a name="text..._at" id="text..._at">Text... (at)</a></h3>
 <div class="level3">
 
@@ -2800,7 +2800,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION "Text... (at)" [96889-98692] -->
+<!-- SECTION "Text... (at)" [96926-98729] -->
 <h3><a name="line_l" id="line_l">Line (l)</a></h3>
 <div class="level3">
 
@@ -2844,7 +2844,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION "Line (l)" [98693-99779] -->
+<!-- SECTION "Line (l)" [98730-99816] -->
 <h3><a name="box_b" id="box_b">Box (b)</a></h3>
 <div class="level3">
 
@@ -2874,7 +2874,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION "Box (b)" [99780-100532] -->
+<!-- SECTION "Box (b)" [99817-100569] -->
 <h3><a name="circle_ai" id="circle_ai">Circle (ai)</a></h3>
 <div class="level3">
 
@@ -2906,7 +2906,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION "Circle (ai)" [100533-101417] -->
+<!-- SECTION "Circle (ai)" [100570-101454] -->
 <h3><a name="arc_ar" id="arc_ar">Arc (ar)</a></h3>
 <div class="level3">
 
@@ -2942,7 +2942,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION "Arc (ar)" [101418-102510] -->
+<!-- SECTION "Arc (ar)" [101455-102547] -->
 <h3><a name="pin_ap" id="pin_ap">Pin (ap)</a></h3>
 <div class="level3">
 
@@ -2975,7 +2975,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION "Pin (ap)" [102511-103698] -->
+<!-- SECTION "Pin (ap)" [102548-103735] -->
 <h3><a name="picture..._ag" id="picture..._ag">Picture... (ag)</a></h3>
 <div class="level3">
 
@@ -3009,12 +3009,12 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION "Picture... (ag)" [103699-104694] -->
+<!-- SECTION "Picture... (ag)" [103736-104731] -->
 <h2><a name="hierarchy" id="hierarchy">Hierarchy</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Hierarchy" [104695-104717] -->
+<!-- SECTION "Hierarchy" [104732-104754] -->
 <h3><a name="down_schematic_hd" id="down_schematic_hd">Down Schematic (Hd)</a></h3>
 <div class="level3">
 
@@ -3036,7 +3036,7 @@ Text which is placed will be automatically capitalized. Please see the Resource 
 </p>
 
 </div>
-<!-- SECTION "Down Schematic (Hd)" [104718-106330] -->
+<!-- SECTION "Down Schematic (Hd)" [104755-106367] -->
 <h3><a name="down_symbol_hs" id="down_symbol_hs">Down Symbol (Hs)</a></h3>
 <div class="level3">
 
@@ -3047,7 +3047,7 @@ This option will open up the symbol of the selected component.<br/>
 </p>
 
 </div>
-<!-- SECTION "Down Symbol (Hs)" [106331-106653] -->
+<!-- SECTION "Down Symbol (Hs)" [106368-106690] -->
 <h3><a name="up_hu" id="up_hu">Up (Hu)</a></h3>
 <div class="level3">
 
@@ -3056,7 +3056,7 @@ This option will move up the hierarchy (if there are pages above the currently d
 </p>
 
 </div>
-<!-- SECTION "Up (Hu)" [106654-106768] -->
+<!-- SECTION "Up (Hu)" [106691-106805] -->
 <h3><a name="documentation_ho" id="documentation_ho">Documentation (Ho)</a></h3>
 <div class="level3">
 
@@ -3071,12 +3071,12 @@ Open any documentation available for the selected symbol/component.<br/>
 </p>
 
 </div>
-<!-- SECTION "Documentation (Ho)" [106769-107853] -->
+<!-- SECTION "Documentation (Ho)" [106806-107890] -->
 <h2><a name="attributes1" id="attributes1">Attributes</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Attributes" [107854-107877] -->
+<!-- SECTION "Attributes" [107891-107914] -->
 <h3><a name="attach_ta" id="attach_ta">Attach (ta)</a></h3>
 <div class="level3">
 
@@ -3099,7 +3099,7 @@ The Attach command allows you to take a text item (in the proper form; <code>nam
 </p>
 
 </div>
-<!-- SECTION "Attach (ta)" [107878-108685] -->
+<!-- SECTION "Attach (ta)" [107915-108722] -->
 <h3><a name="detach_td" id="detach_td">Detach (td)</a></h3>
 <div class="level3">
 
@@ -3120,7 +3120,7 @@ Detach allows you to deassociate attributes from objects.<br/>
 </p>
 
 </div>
-<!-- SECTION "Detach (td)" [108686-109292] -->
+<!-- SECTION "Detach (td)" [108723-109329] -->
 <h3><a name="show_value_tv" id="show_value_tv">Show Value (tv)</a></h3>
 <div class="level3">
 
@@ -3141,7 +3141,7 @@ These operations allow you to control which part of the attribute string is visi
 </p>
 
 </div>
-<!-- SECTION "Show Value (tv)" [109293-109831] -->
+<!-- SECTION "Show Value (tv)" [109330-109868] -->
 <h3><a name="show_name_tn" id="show_name_tn">Show Name (tn)</a></h3>
 <div class="level3">
 
@@ -3162,7 +3162,7 @@ These operations allow you to control which part of the attribute string is visi
 </p>
 
 </div>
-<!-- SECTION "Show Name (tn)" [109832-110369] -->
+<!-- SECTION "Show Name (tn)" [109869-110406] -->
 <h3><a name="show_both_tb" id="show_both_tb">Show Both (tb)</a></h3>
 <div class="level3">
 
@@ -3183,7 +3183,7 @@ These operations allow you to control which part of the attribute string is visi
 </p>
 
 </div>
-<!-- SECTION "Show Both (tb)" [110370-110907] -->
+<!-- SECTION "Show Both (tb)" [110407-110944] -->
 <h3><a name="toggle_visibility_tt" id="toggle_visibility_tt">Toggle Visibility (tt)</a></h3>
 <div class="level3">
 
@@ -3205,7 +3205,7 @@ This operation allows you to toggle the visibility of attributes.<br/>
 </p>
 
 </div>
-<!-- SECTION "Toggle Visibility (tt)" [110908-111603] -->
+<!-- SECTION "Toggle Visibility (tt)" [110945-111640] -->
 <h3><a name="find_specific_text..._t_shift-f" id="find_specific_text..._t_shift-f">Find Specific Text... (t shift-f)</a></h3>
 <div class="level3">
 
@@ -3234,7 +3234,7 @@ To use this operation:
 </p>
 
 </div>
-<!-- SECTION "Find Specific Text... (t shift-f)" [111604-112264] -->
+<!-- SECTION "Find Specific Text... (t shift-f)" [111641-112301] -->
 <h3><a name="hide_specific_text..._th" id="hide_specific_text..._th">Hide Specific Text... (th)</a></h3>
 <div class="level3">
 
@@ -3261,7 +3261,7 @@ This operation is useful if you like to hide pintype and pinseq attributes when 
 </p>
 
 </div>
-<!-- SECTION "Hide Specific Text... (th)" [112265-112626] -->
+<!-- SECTION "Hide Specific Text... (th)" [112302-112663] -->
 <h3><a name="show_specific_text..._t_shift-h" id="show_specific_text..._t_shift-h">Show Specific Text... (t shift-h)</a></h3>
 <div class="level3">
 
@@ -3288,7 +3288,7 @@ This operation is useful if you like to see only one specific attribute in the w
 </p>
 
 </div>
-<!-- SECTION "Show Specific Text... (t shift-h)" [112627-113118] -->
+<!-- SECTION "Show Specific Text... (t shift-h)" [112664-113155] -->
 <h3><a name="autonumber_text..._tu" id="autonumber_text..._tu">Autonumber Text... (tu)</a></h3>
 <div class="level3">
 
@@ -3335,12 +3335,12 @@ You can use it to:
 </p>
 
 </div>
-<!-- SECTION "Autonumber Text... (tu)" [113119-115556] -->
+<!-- SECTION "Autonumber Text... (tu)" [113156-115593] -->
 <h2><a name="options" id="options">Options</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Options" [115557-115577] -->
+<!-- SECTION "Options" [115594-115614] -->
 <h3><a name="text_size..._ot" id="text_size..._ot">Text Size... (ot)</a></h3>
 <div class="level3">
 
@@ -3350,7 +3350,7 @@ You can use it to:
 </p>
 
 </div>
-<!-- SECTION "Text Size... (ot)" [115578-115890] -->
+<!-- SECTION "Text Size... (ot)" [115615-115927] -->
 <h3><a name="toggle_grid_on_off_og" id="toggle_grid_on_off_og">Toggle Grid On/Off (og)</a></h3>
 <div class="level3">
 
@@ -3359,7 +3359,7 @@ You can use it to:
 </p>
 
 </div>
-<!-- SECTION "Toggle Grid On/Off (og)" [115891-115984] -->
+<!-- SECTION "Toggle Grid On/Off (og)" [115928-116021] -->
 <h3><a name="toggle_snap_on_off_os" id="toggle_snap_on_off_os">Toggle Snap On/Off (os)</a></h3>
 <div class="level3">
 
@@ -3370,7 +3370,7 @@ You can use it to:
 </p>
 
 </div>
-<!-- SECTION "Toggle Snap On/Off (os)" [115985-116436] -->
+<!-- SECTION "Toggle Snap On/Off (os)" [116022-116473] -->
 <h3><a name="snap_grid_spacing..._os" id="snap_grid_spacing..._os">Snap Grid Spacing... (oS)</a></h3>
 <div class="level3">
 
@@ -3380,7 +3380,7 @@ You can use it to:
 </p>
 
 </div>
-<!-- SECTION "Snap Grid Spacing... (oS)" [116437-116740] -->
+<!-- SECTION "Snap Grid Spacing... (oS)" [116474-116777] -->
 <h3><a name="toggle_outline_box_oa" id="toggle_outline_box_oa">Toggle Outline/Box (oa)</a></h3>
 <div class="level3">
 
@@ -3389,7 +3389,7 @@ You can use it to:
 </p>
 
 </div>
-<!-- SECTION "Toggle Outline/Box (oa)" [116741-117050] -->
+<!-- SECTION "Toggle Outline/Box (oa)" [116778-117087] -->
 <h3><a name="toggle_net_rubberband_or" id="toggle_net_rubberband_or">Toggle Net/Rubberband (or)</a></h3>
 <div class="level3">
 
@@ -3398,7 +3398,7 @@ You can use it to:
 </p>
 
 </div>
-<!-- SECTION "Toggle Net/Rubberband (or)" [117051-117134] -->
+<!-- SECTION "Toggle Net/Rubberband (or)" [117088-117171] -->
 <h3><a name="show_log_window_ol" id="show_log_window_ol">Show Log Window (ol)</a></h3>
 <div class="level3">
 
@@ -3407,7 +3407,7 @@ You can use it to:
 </p>
 
 </div>
-<!-- SECTION "Show Log Window (ol)" [117135-117305] -->
+<!-- SECTION "Show Log Window (ol)" [117172-117342] -->
 <h3><a name="show_coord_window..._oc" id="show_coord_window..._oc">Show Coord Window... (oc)</a></h3>
 <div class="level3">
 
@@ -3416,12 +3416,12 @@ You can use it to:
 </p>
 
 </div>
-<!-- SECTION "Show Coord Window... (oc)" [117306-117510] -->
+<!-- SECTION "Show Coord Window... (oc)" [117343-117547] -->
 <h2><a name="help" id="help">Help</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Help" [117511-117528] -->
+<!-- SECTION "Help" [117548-117565] -->
 <h3><a name="about..._ha" id="about..._ha">About... (ha)</a></h3>
 <div class="level3">
 
@@ -3438,7 +3438,7 @@ Every <acronym title="Graphical User Interface">GUI</acronym> application needs 
 </ul>
 
 </div>
-<!-- SECTION "About... (ha)" [117529-117731] -->
+<!-- SECTION "About... (ha)" [117566-117768] -->
 <h3><a name="manual..._hm" id="manual..._hm">Manual... (hm)</a></h3>
 <div class="level3">
 
@@ -3447,7 +3447,7 @@ Every <acronym title="Graphical User Interface">GUI</acronym> application needs 
 </p>
 
 </div>
-<!-- SECTION "Manual... (hm)" [117732-117945] -->
+<!-- SECTION "Manual... (hm)" [117769-117982] -->
 <h3><a name="hotkeys..._hh" id="hotkeys..._hh">Hotkeys... (hh)</a></h3>
 <div class="level3">
 
@@ -3456,7 +3456,7 @@ Every <acronym title="Graphical User Interface">GUI</acronym> application needs 
 </p>
 
 </div>
-<!-- SECTION "Hotkeys... (hh)" [117946-118073] -->
+<!-- SECTION "Hotkeys... (hh)" [117983-118110] -->
 <h3><a name="component..._ho" id="component..._ho">Component... (Ho)</a></h3>
 <div class="level3">
 
@@ -3471,7 +3471,7 @@ If you select a component on the schematic, and select <strong>Help | Component&
 </ul>
 
 </div>
-<!-- SECTION "Component... (Ho)" [118074-118856] -->
+<!-- SECTION "Component... (Ho)" [118111-118893] -->
 <h1><a name="appendix_a_--_heavy_vs_light_symbol_libraries" id="appendix_a_--_heavy_vs_light_symbol_libraries">Appendix A -- Heavy vs Light Symbol Libraries</a></h1>
 <div class="level1">
 
@@ -3480,7 +3480,7 @@ A short discussion of Light Symbol Libraries as the default for <strong>gschem</
 </p>
 
 </div>
-<!-- SECTION "Appendix A -- Heavy vs Light Symbol Libraries" [118857-119050] -->
+<!-- SECTION "Appendix A -- Heavy vs Light Symbol Libraries" [118894-119087] -->
 <h1><a name="appendix_b_--_printing_schematics_and_symbols" id="appendix_b_--_printing_schematics_and_symbols">Appendix B -- Printing Schematics and Symbols</a></h1>
 <div class="level1">
 
@@ -3489,7 +3489,7 @@ To be supplied&hellip;
 </p>
 
 </div>
-<!-- SECTION "Appendix B -- Printing Schematics and Symbols" [119051-119129] -->
+<!-- SECTION "Appendix B -- Printing Schematics and Symbols" [119088-119166] -->
 <h1><a name="appendix_c_--_writing_guile_scripts" id="appendix_c_--_writing_guile_scripts">Appendix C -- Writing guile Scripts</a></h1>
 <div class="level1">
 
@@ -3498,7 +3498,7 @@ To be supplied&hellip;
 </p>
 
 </div>
-<!-- SECTION "Appendix C -- Writing guile Scripts" [119130-119198] -->
+<!-- SECTION "Appendix C -- Writing guile Scripts" [119167-119235] -->
 <h1><a name="appendix_d_--_i_want_to_build_a_printed_circuit_board" id="appendix_d_--_i_want_to_build_a_printed_circuit_board">Appendix D -- I Want To Build A Printed Circuit Board</a></h1>
 <div class="level1">
 
@@ -3531,7 +3531,7 @@ To be supplied&hellip;
 </ul>
 
 </div>
-<!-- SECTION "Appendix D -- I Want To Build A Printed Circuit Board" [119199-119988] -->
+<!-- SECTION "Appendix D -- I Want To Build A Printed Circuit Board" [119236-120025] -->
 <h1><a name="appendix_e_--_i_want_to_simulate_my_design" id="appendix_e_--_i_want_to_simulate_my_design">Appendix E -- I Want To Simulate My Design</a></h1>
 <div class="level1">
 
@@ -3566,7 +3566,7 @@ To be supplied&hellip;
 </ul>
 
 </div>
-<!-- SECTION "Appendix E -- I Want To Simulate My Design" [119989-120868] -->
+<!-- SECTION "Appendix E -- I Want To Simulate My Design" [120026-120905] -->
 <h1><a name="appendix_f_--_change_gschemdoc_user-defined_preferences" id="appendix_f_--_change_gschemdoc_user-defined_preferences">Appendix F -- Change gschemdoc User-Defined Preferences</a></h1>
 <div class="level1">
 
@@ -3594,7 +3594,7 @@ To select a different application launcher, simply edit the {binary-install-path
 </p>
 
 </div>
-<!-- SECTION "Appendix F -- Change gschemdoc User-Defined Preferences" [120869-122085] -->
+<!-- SECTION "Appendix F -- Change gschemdoc User-Defined Preferences" [120906-122122] -->
 <h1><a name="appendix_g_--_breaking_a_large_symbol_into_smaller_symbols" id="appendix_g_--_breaking_a_large_symbol_into_smaller_symbols">Appendix G -- Breaking a Large Symbol Into Smaller Symbols</a></h1>
 <div class="level1">
 
@@ -3603,7 +3603,7 @@ To be supplied&hellip;
 </p>
 
 </div>
-<!-- SECTION "Appendix G -- Breaking a Large Symbol Into Smaller Symbols" [122086-122177] -->
+<!-- SECTION "Appendix G -- Breaking a Large Symbol Into Smaller Symbols" [122123-122214] -->
 <h1><a name="appendix_h_--_definition_of_terms" id="appendix_h_--_definition_of_terms">Appendix H -- Definition of Terms</a></h1>
 <div class="level1">
 
@@ -3679,6 +3679,6 @@ Some terms used in the art of schematic capture:</p>
 </p>
 
 </div>
-<!-- SECTION "Appendix H -- Definition of Terms" [122178-] --></div>
+<!-- SECTION "Appendix H -- Definition of Terms" [122215-] --></div>
 </body>
 </html>

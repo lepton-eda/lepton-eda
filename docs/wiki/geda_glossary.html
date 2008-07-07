@@ -7,7 +7,7 @@
   <title>geda:glossary</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
 <meta name="robots" content="index,follow" />
-<meta name="date" content="2007-10-29T17:37:15-0400" />
+<meta name="date" content="2008-02-02T12:10:43-0500" />
 <meta name="keywords" content="geda,glossary" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -64,13 +64,13 @@
 </li>
 </ol>
 </li>
-<li class="level1"><div class="li"> <strong>rats nest</strong>: The lines drawn on the pcb working area that hint which pads still need need to be connected with tracks. Unlike the actual tracks the rats nest are straight lines. If multiple pads are involved in a net, pcb tries to draw rats nests with the shortest possible length.</div>
+<li class="level1"><div class="li"> <strong>rats nest</strong>: The lines drawn on the pcb working area that hint which pads still need to be connected with tracks. Unlike the actual tracks the rats nest are straight lines. If multiple pads are involved in a net, pcb tries to draw rats nests with the shortest possible length.</div>
 </li>
 <li class="level1"><div class="li"> <strong>refdes</strong>: Short for “reference designator”. The unique designator (or name) of a component. The gEDA tools rely on the refdefs to organize the components internally. Therefore, for successful creation of a printed circuit board every component has to be linked with a refdes. Usually, the refdes consists of a few upper case letters and a digit. Examples: R1, R2, U115, CONN3. (Protel: “Designator”)</div>
 </li>
 <li class="level1"><div class="li"> <strong>silkscreen</strong>: This is the layer that defines the text and graphics printed on the pcb board. It usually contains the name of the board, outlines of the components and possibly their values or refdes. The origin of the name is the silk traditionally used during the print process. </div>
 </li>
-<li class="level1"><div class="li"> <strong>slot</strong>: Some components contain multiple, identical devices inside a signal package. The IOs for each component are mapped to different pin sets on the package. A classic example is the TTL 7400 quad nand gate. Gschem (like other schematic capture packages) handles this type of component by allowing you to draw four separate nand gate symbols, and then selecting which <strong>slot</strong> each symbol should have by attaching a slot attribute to the symbol. In the example of the 7400 quad nand, you would select <strong><code>slot=1</code></strong> for the first appearance of the symbol, slot=2 for the second appearance, and so on. Note that in gschem you need to attach power nets to a slotted component only <strong>once</strong>. (Other schematic capture programs like Orcad require you to attach common nets – like power nets – on each instantiation of the slotted symbol.)</div>
+<li class="level1"><div class="li"> <strong>slot</strong>: Some components contain multiple, identical devices inside a single package. The IOs for each component are mapped to different pin sets on the package. A classic example is the TTL 7400 quad nand gate. Gschem (like other schematic capture packages) handles this type of component by allowing you to draw four separate nand gate symbols, and then selecting which <strong>slot</strong> each symbol should have by attaching a slot attribute to the symbol. In the example of the 7400 quad nand, you would select <strong><code>slot=1</code></strong> for the first appearance of the symbol, slot=2 for the second appearance, and so on. Note that in gschem you need to attach power nets to a slotted component only <strong>once</strong>. (Other schematic capture programs like Orcad require you to attach common nets – like power nets – on each instantiation of the slotted symbol.)</div>
 </li>
 <li class="level1"><div class="li"> <strong>solder layer</strong>: This is the side of the board where traditional, thru hole components are soldered. (Protel: “Bottom Layer”)</div>
 </li>

@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>gschem-projects</title>
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="index,follow" />
+<meta name="date" content="2008-04-04T13:35:50-0400" />
+<meta name="keywords" content="gschem-projects" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/gschem-projects?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/gschem-projects" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/gschem-projects" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+<h3><a name="gschem_schematic_capture_tool" id="gschem_schematic_capture_tool">Gschem schematic capture tool</a></h3>
+<div class="level3">
+
+</div>
+
+<h5><a name="libgeda_api_formalization" id="libgeda_api_formalization">Libgeda API formalization</a></h5>
+<div class="level5">
+
+<p>
+ In this project, you would expand libgeda (if needed) to provide a complete enough guile interface to be able to do more complex database manipulations. One use would be to have a back annotation tool that used libgeda instead of relying on perl. The problem with perl is that you’ve involved Yet Another Gschem Parser. This actually may be combined with the previous project about rewriting the gnetlist internals.
+</p>
+
+<p>
+Difficulty = 3
+</p>
+
+</div>
+
+<h5><a name="show_hidden_attributes_for_selected_components" id="show_hidden_attributes_for_selected_components">Show hidden attributes for selected components</a></h5>
+<div class="level5">
+
+<p>
+ In gschem, please add a why to show hidden text for just one symbol only. Currently [en] will show all the hidden text for all symbols and that makes a real visual mess. Implement this by just showing the hidden text for the currently selected symbols.
+</p>
+
+<p>
+Difficulty = 1
+</p>
+
+</div>
+
+<h5><a name="constant_sized_handles_grips" id="constant_sized_handles_grips">Constant sized handles/grips</a></h5>
+<div class="level5">
+
+<p>
+ In gschem, the size of the handles for lines, nets, and objects scale with increasing zoom. Thus for small lines the handles overlap, and if I zoom in closely, it becomes very hard to pick the right object to manipulate. Please let the size of the handles be constant, regardless of the zoom factor. This is virtually how all vector graphics applications work.
+</p>
+
+<p>
+Difficulty = 1
+</p>
+
+</div>
+
+<h5><a name="automatically_fill_in_global_attributes_in_gschem" id="automatically_fill_in_global_attributes_in_gschem">Automatically fill in global attributes in gschem</a></h5>
+<div class="level5">
+
+<p>
+ In gschem, implement a mechanism that would (when turned enabled) automatically fill in proper global attributes for the design. These attributes could be the date of the last modification, name of the project, author, number of sheets, etc&hellip;
+</p>
+
+<p>
+Difficulty = 1 to 2
+</p>
+
+</div>
+
+<h5><a name="improve_error_messages_in_gschem" id="improve_error_messages_in_gschem">Improve error messages in gschem</a></h5>
+<div class="level5">
+
+<p>
+ Improve error messages in gschem when a rc file doesn’t load correctly. Currently the error messages are cryptic and not useful at all. There are several other places in gschem where the error messages could be vastly improved.
+</p>
+
+<p>
+Difficulty = 1
+</p>
+
+</div>
+
+<h5><a name="global_search_and_replace" id="global_search_and_replace">Global search and replace</a></h5>
+<div class="level5">
+
+<p>
+ Add a dialog box that lets you do a global search and replace. Currently you can do a find for a specific attribute, but several users have asked if gschem could also provide a way of doing a replace operation as well.
+</p>
+
+<p>
+Difficulty = 1 to 2
+</p>
+
+</div>
+
+<h5><a name="visual_feedback_for_attached_attributes" id="visual_feedback_for_attached_attributes">Visual feedback for attached attributes</a></h5>
+<div class="level5">
+
+<p>
+ In gschem, add some sort of visual feedback to tell the user which attribute is attached to which component. This would be useful since sometimes you move attributes/components around and things get a little bit separated distance wise.
+</p>
+
+<p>
+Difficulty = 1 to 2
+</p>
+
+</div>
+
+<h5><a name="schematic_and_symbol_modes" id="schematic_and_symbol_modes">Schematic and symbol modes</a></h5>
+<div class="level5">
+
+<p>
+ Add schematic and symbol modes to gschem. Right now users can do invalid things like add a net or bus inside a symbol and gschem allows this quite happily. If there was a symbol mode that disallowed certain actions, then users will not be able to hurt themselves so easily when creating symbols. Like wise a schematic mode wouldn’t allow certain operations (such as adding a pin).
+</p>
+
+<p>
+Difficulty = 2 to 3
+</p>
+
+</div>
+
+<h5><a name="movable_symbol_origin" id="movable_symbol_origin">Movable symbol origin</a></h5>
+<div class="level5">
+
+<p>
+ Add the ability to move the origin of a symbol in gschem. Right now the origin is always at 0,0 and users have to translate the symbol to the origin. It would be nice if the origin was movable so that you wouldn’t have to translate the symbol manually anymore. This would also allow the user to pick the insert point of the symbol when adding components to a schematic.
+</p>
+
+<p>
+Difficulty = 2 to 3
+</p>
+
+</div>
+
+<h5><a name="modify_instantiated_symbols_in_a_schematic" id="modify_instantiated_symbols_in_a_schematic">Modify instantiated symbols in a schematic</a></h5>
+<div class="level5">
+
+<p>
+ Add the ability to move pins/attributes/whatever on instantiated components in a schematic. This one is quite tricky, but it would allow for various things that people have been requesting (this might be a good foundation for a greatly improved back annotation mechanism from PCB).
+</p>
+
+<p>
+Difficulty = 3 to 4
+</p>
+
+</div>
+
+<h5><a name="finer_grid_when_moving_attributes" id="finer_grid_when_moving_attributes">Finer grid when moving attributes</a></h5>
+<div class="level5">
+
+<p>
+ In gschem, add a finer grid when moving attributes or text around.
+</p>
+
+<p>
+Difficulty = 2
+</p>
+
+</div>
+
+<h5><a name="add_more_toolbar_buttons" id="add_more_toolbar_buttons">Add more toolbar buttons</a></h5>
+<div class="level5">
+
+<p>
+ Adding some more useful buttons to the gschem toolbar. Typical functionalities that gschem does not have on the toolbar: 
+</p>
+<ul>
+<li class="level1"><div class="li"> Up/down schematic/symbol</div>
+</li>
+<li class="level2"><div class="li"> Add various graphical objects (maybe make these only appear in symbol editing mode)</div>
+</li>
+<li class="level2"><div class="li"> Edit component attributes</div>
+</li>
+<li class="level2"><div class="li"> Copy/paste/delete</div>
+</li>
+<li class="level2"><div class="li"> Page forward/back</div>
+</li>
+<li class="level2"><div class="li"> Component mirror/rotate</div>
+</li>
+<li class="level2"><div class="li"> Zoom in/out</div>
+</li>
+</ul>
+
+<p>
+ It would be really nice if the toolbar buttons were configurable either on the fly or through an rc file.
+</p>
+
+<p>
+Difficulty = 2 to 3
+</p>
+
+</div>
+
+<h5><a name="filled_polygon_object" id="filled_polygon_object">Filled polygon object</a></h5>
+<div class="level5">
+
+<p>
+ Adding a filled polygon graphical object type to the gschem symbol file format and, of course, gschem would be a nice project. This would be useful for filled arrows (transistors) and a filled triangle for diodes.
+</p>
+
+<p>
+Difficulty = 2 to 3
+</p>
+
+</div>
+
+<h5><a name="an_interactive_sub_sheet_generator" id="an_interactive_sub_sheet_generator">An Interactive Sub Sheet Generator</a></h5>
+<div class="level5">
+
+<p>
+ In gschem hierarchical design is accomplished by symbols in the top sheet that represent sub sheets. Currently these sub sheet symbols and the sub sheet itself have to be created manually. The purpose of this project is to design and implement an interactive generator of such symbols and sub sheets. It should work both strategies of hierachical design, bottom-up and top-down. Top-down refers to the case where the  parent sheet is designed first and diverts into sub sheets. With bottom-up the sub sheets are designed first. The generator should accept user input on the number and the name of input and output signals. The generator may present a list of named net on the current sheet and let the user pick those that should link to the sub sheet. Power nets to be available on the sub sheet may be specified too. In case of a top-down approach the generator should additionally create a draft of the sub sheet with symbols for the in and out signals placed at some default position. The generator should integrate into the main <acronym title="Graphical User Interface">GUI</acronym> of gschem. 
+</p>
+
+<p>
+Some work has already been done to deal with the bottom-up case. See <a href="http://sourceforge.net/tracker/index.php?func=detail&aid=1800913&group_id=161080&atid=818428" class="urlextern" title="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1800913&amp;group_id=161080&amp;atid=818428"  rel="nofollow">the bash script geda_sch2sym</a> available at sourceforge. This may be used as a starting point. However, a restart from scratch would be welcome too.
+</p>
+
+<p>
+Difficulty = 2   
+</p>
+
+</div>
+</div>
+</body>
+</html>

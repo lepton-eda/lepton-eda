@@ -6,8 +6,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geda:release_engineering</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
-<meta name="robots" content="noindex,nofollow" />
-<meta name="date" content="2008-01-26T10:47:37-0500" />
+<meta name="robots" content="index,follow" />
+<meta name="date" content="2008-01-26T19:08:07-0500" />
 <meta name="keywords" content="geda,release_engineering" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -29,7 +29,7 @@
 <div class="level1">
 
 </div>
-<!-- SECTION "gEDA's Release Engineering" [1-42] -->
+<!-- SECTION "gEDA's Release Engineering" [1-43] -->
 <h2><a name="geda_gaf_release_creation_checklist" id="geda_gaf_release_creation_checklist">gEDA/gaf Release Creation Checklist</a></h2>
 <div class="level2">
 
@@ -73,7 +73,7 @@
         scripts/copygitignores.sh
         cd wip
         ../scripts/populatemkfiles.sh
-        vi `find . -name Makefile.am`   (fix all gitignore files to have . (dot) in front; bug in scripts)
+        vi `find . -name Makefile.am`   (Make sure all files have correct install path)
         cd ..
         diff -r -q wiki wip  | grep -v Only | sed &quot;s/Files /tkdiff /&quot; | sed &quot;s/ and//&quot; | sed &quot;s/differ//&quot; &gt; diffs
         sh diffs  (and examine all changes; you need to have tkdiff installer or use just plain diff above)
@@ -132,6 +132,6 @@
 </ul>
 
 </div>
-<!-- SECTION "gEDA/gaf Release Creation Checklist" [43-] --></div>
+<!-- SECTION "gEDA/gaf Release Creation Checklist" [44-] --></div>
 </body>
 </html>

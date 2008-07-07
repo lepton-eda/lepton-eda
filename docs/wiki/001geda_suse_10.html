@@ -4,18 +4,18 @@
  lang="en" dir="ltr">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>geda:suse_10.0</title>
+  <title>geda:suse_10.1</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
 <meta name="robots" content="index,follow" />
-<meta name="date" content="2007-05-24T22:27:26-0400" />
-<meta name="keywords" content="geda,suse_10.0" />
+<meta name="date" content="2007-05-24T22:27:25-0400" />
+<meta name="keywords" content="geda,suse_10.1" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
-<link rel="contents" href="http://geda.seul.org/wiki/geda:suse_10.0?do=index" title="Index" />
+<link rel="contents" href="http://geda.seul.org/wiki/geda:suse_10.1?do=index" title="Index" />
 <link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
 <link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=geda" />
-<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:suse_10.0" />
-<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:suse_10.0" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/geda:suse_10.1" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/geda:suse_10.1" />
 <link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
 <link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
 <link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
@@ -25,61 +25,37 @@
 
 
 
-<h1><a name="suse_10.0_install_notes" id="suse_10.0_install_notes">Suse 10.0 install notes</a></h1>
+<h1><a name="suse_10.1_install_notes" id="suse_10.1_install_notes">Suse 10.1 install notes</a></h1>
 <div class="level1">
 
+<p>
+These notes pertain to the latest gEDA CD install (20060825).
+</p>
+
 </div>
-<!-- SECTION "Suse 10.0 install notes" [1-39] -->
+<!-- SECTION "Suse 10.1 install notes" [1-101] -->
 <h2><a name="prerequisites" id="prerequisites">Prerequisites:</a></h2>
 <div class="level2">
 
 <p>
-First off, I suggest you use the installer with date code 20051203 (or later). The 2005080X installer may not work with SuSE-10.0 without major upfront preparation. 
+If you are installing gEDA onto a pre-existing SuSE system, make sure your system runs the Gnome desktop, or at least has the Gnome libraries installed.  If you have a KDE desktop system, unpredictable things may happen with the installer.
 </p>
 
 <p>
-Secondly, if you are installing gEDA onto a pre-existing SuSE system, make sure your system runs the Gnome desktop, or at least has the Gnome libraries installed.  If you have a KDE desktop system, unpredictable things may happen with the installer.
-</p>
-
-<p>
-The remainder of these instructions describe how to build your SuSE system so that you may install gEDA.  If you already have gEDA built (and it’s a Gnome desktop), you can use YaST to install any of the below-mentioned packages you might be missing from your original install.
-</p>
-
-<p>
-When installing SuSE-10.0 using YaST, click on the “change” button when YaST shows you your configuration. Select “software” → “details”. Then add the following packages to your installation list:
+When installing SuSE-10.1, click on the “change” button when YaST shows you your configuration. Select “software” → “details”. Then add the following packages to your installation list:
 </p>
 <ul>
 <li class="level1"><div class="li"> C/C++ tools</div>
 </li>
-<li class="level1"><div class="li"> Kernal development</div>
-</li>
 <li class="level1"><div class="li"> Gnome development</div>
 </li>
-<li class="level1"><div class="li"> KDE development</div>
-</li>
-<li class="level1"><div class="li"> TCL/Tk development</div>
-</li>
 </ul>
 
 <p>
- Then change the filter to search for and install the following packages:
-</p>
-<ul>
-<li class="level1"><div class="li"> Gtk-devel</div>
-</li>
-<li class="level1"><div class="li"> Termcap</div>
-</li>
-<li class="level1"><div class="li"> Ncurses-devel</div>
-</li>
-<li class="level1"><div class="li"> wxGTK-devel</div>
-</li>
-</ul>
-
-<p>
- Once these packages are installed, the installer should run to completion. 
+ Once these packages are installed, the installer should run to completion.  You <strong>will</strong> need to let the installer become root to install gd-devel as well as WxGTK.  If you don’t want to do this, then install gd-devel and WxGTK manually before running the installer.
 </p>
 
 </div>
-<!-- SECTION "Prerequisites:" [40-] --></div>
+<!-- SECTION "Prerequisites:" [102-] --></div>
 </body>
 </html>

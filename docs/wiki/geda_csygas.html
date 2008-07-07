@@ -7,7 +7,7 @@
   <title>geda:csygas</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
 <meta name="robots" content="index,follow" />
-<meta name="date" content="2007-05-25T10:46:10-0400" />
+<meta name="date" content="2008-04-04T12:04:48-0400" />
 <meta name="keywords" content="geda,csygas" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -247,7 +247,7 @@ When you create schematic symbols for inclusion into your schematic, you must ma
 </p>
 
 </div>
-<!-- SECTION "Preliminary work: preparing your symbols and SPICE files" [10148-10524] -->
+<!-- SECTION "Preliminary work: preparing your symbols and SPICE files" [10148-10526] -->
 <h3><a name="configuring_your_symbols" id="configuring_your_symbols">Configuring your symbols</a></h3>
 <div class="level3">
 
@@ -288,7 +288,7 @@ If a symbol is not native (i.e. the netlister doesn’t recognize it as a built-
 <div class="level4">
 
 <p>
-The netlister emits a components pins in the order set by the <strong><code>pinseq</code></strong> attribute. Note that this is not the same as the physical pin location. To set the <strong><code>pinseq</code></strong> attribute, first determine the pin ordering you want. SPICE uses a specific pin order for many components, including diodes and transistors. For example, a bipolar transistor’s pins listed in CBE order. Another example: if your symbol is meant to represent an IC modeled with a vendor’s <strong><code>.subckt</code></strong>, the order of the connections to the subcircuit is set by the <strong><code>.subckt</code></strong> line in the file.
+The netlister emits component pins in the order set by the <strong><code>pinseq</code></strong> attribute. Note that this is not the same as the physical pin location. To set the <strong><code>pinseq</code></strong> attribute, first determine the pin ordering you want. SPICE uses a specific pin order for many components, including diodes and transistors. For example, a bipolar transistor’s pins listed in CBE order. Another example: if your symbol is meant to represent an IC modeled with a vendor’s <strong><code>.subckt</code></strong>, the order of the connections to the subcircuit is set by the <strong><code>.subckt</code></strong> line in the file.
 </p>
 
 <p>
@@ -296,7 +296,7 @@ Once you know the order in which to emit the pins, simply set the <strong><code>
 </p>
 
 </div>
-<!-- SECTION "Configuring your symbols" [10525-13604] -->
+<!-- SECTION "Configuring your symbols" [10527-13603] -->
 <h3><a name="configuring_your_spice_files" id="configuring_your_spice_files">Configuring your SPICE files</a></h3>
 <div class="level3">
 
@@ -313,7 +313,7 @@ Files holding complicated SPICE models or other SPICE code may be incorporated i
 </ul>
 
 </div>
-<!-- SECTION "Configuring your SPICE files" [13605-14751] -->
+<!-- SECTION "Configuring your SPICE files" [13604-14750] -->
 <h2><a name="creating_your_circuitschematic_capture" id="creating_your_circuitschematic_capture">Creating your circuit: schematic capture</a></h2>
 <div class="level2">
 
@@ -322,7 +322,7 @@ Schematic capture is the process by which one uses a special-purpose drawing pro
 </p>
 
 </div>
-<!-- SECTION "Creating your circuit: schematic capture" [14752-15475] -->
+<!-- SECTION "Creating your circuit: schematic capture" [14751-15474] -->
 <h3><a name="gschem_attributes_for_spice_netlisting" id="gschem_attributes_for_spice_netlisting">Gschem attributes for spice netlisting</a></h3>
 <div class="level3">
 
@@ -331,7 +331,7 @@ There are several ways that spice attributes may be associated with a component 
 </p>
 
 </div>
-<!-- SECTION "Gschem attributes for spice netlisting" [15476-15757] -->
+<!-- SECTION "Gschem attributes for spice netlisting" [15475-15756] -->
 <h3><a name="component_attributes_and_meanings" id="component_attributes_and_meanings">Component attributes and meanings</a></h3>
 <div class="level3">
 
@@ -354,7 +354,7 @@ The following attributes are meaningful for SPICE netlisting, and may be attache
 </ul>
 
 </div>
-<!-- SECTION "Component attributes and meanings" [15758-17117] -->
+<!-- SECTION "Component attributes and meanings" [15757-17116] -->
 <h3><a name="refdes_conventions" id="refdes_conventions">refdes conventions</a></h3>
 <div class="level3">
 
@@ -367,7 +367,7 @@ Note that the first letter of the <strong><code>refdes</code></strong> must corr
 </p>
 
 </div>
-<!-- SECTION "refdes conventions" [17118-17612] -->
+<!-- SECTION "refdes conventions" [17117-17611] -->
 <h3><a name="passives" id="passives">Passives</a></h3>
 <div class="level3">
 
@@ -423,7 +423,7 @@ The most basic components which one encounters in SPICE are passive components l
 </p>
 
 </div>
-<!-- SECTION "Passives" [17613-18708] -->
+<!-- SECTION "Passives" [17612-18707] -->
 <h3><a name="passives_with_additional_attributes" id="passives_with_additional_attributes">Passives with additional attributes</a></h3>
 <div class="level3">
 
@@ -461,7 +461,7 @@ Oftentimes, passive components have additional attributes attached to them for s
 </p>
 
 </div>
-<!-- SECTION "Passives with additional attributes" [18709-19794] -->
+<!-- SECTION "Passives with additional attributes" [18708-19793] -->
 <h3><a name="passives_for_semiconductor_design" id="passives_for_semiconductor_design">Passives for semiconductor design</a></h3>
 <div class="level3">
 
@@ -514,7 +514,7 @@ The values for resistors and capacitors are often given as dimensions in an ASIC
 </p>
 
 </div>
-<!-- SECTION "Passives for semiconductor design" [19795-20721] -->
+<!-- SECTION "Passives for semiconductor design" [19794-20720] -->
 <h3><a name="transistors_and_diodes" id="transistors_and_diodes">Transistors and diodes</a></h3>
 <div class="level3">
 
@@ -582,7 +582,7 @@ To incorporate a file-full of SPICE parameters into the netlist, the following a
 </p>
 
 </div>
-<!-- SECTION "Transistors and diodes" [20722-23422] -->
+<!-- SECTION "Transistors and diodes" [20721-23421] -->
 <h3><a name="actives_--_integrated_circuits" id="actives_--_integrated_circuits">Actives -- integrated circuits</a></h3>
 <div class="level3">
 
@@ -633,7 +633,7 @@ To incorporate a file-full of SPICE parameters into the netlist, the following a
 </p>
 
 </div>
-<!-- SECTION "Actives -- integrated circuits" [23423-25766] -->
+<!-- SECTION "Actives -- integrated circuits" [23422-25765] -->
 <h3><a name="independent_sources" id="independent_sources">Independent sources</a></h3>
 <div class="level3">
 
@@ -654,7 +654,7 @@ There are two independent sources: voltage sources and current sources. For inco
 </ol>
 
 </div>
-<!-- SECTION "Independent sources" [25767-26340] -->
+<!-- SECTION "Independent sources" [25766-26339] -->
 <h3><a name="dependent_sources" id="dependent_sources">Dependent sources</a></h3>
 <div class="level3">
 
@@ -667,7 +667,7 @@ This section remains TBD.
 </p>
 
 </div>
-<!-- SECTION "Dependent sources" [26341-26430] -->
+<!-- SECTION "Dependent sources" [26340-26429] -->
 <h3><a name="spice_components" id="spice_components">SPICE components</a></h3>
 <div class="level3">
 
@@ -775,7 +775,7 @@ Placing a SPICE directive block into your schematic creates an arbitrary block o
 </ol>
 
 </div>
-<!-- SECTION "SPICE components" [26431-28840] -->
+<!-- SECTION "SPICE components" [26430-28839] -->
 <h3><a name="handling_hierarchical_models" id="handling_hierarchical_models">Handling hierarchical models</a></h3>
 <div class="level3">
 
@@ -839,12 +839,12 @@ Since this kind of task is very common in SPICE simulation, <strong>gnet-spice-s
 </p>
 
 </div>
-<!-- SECTION "Handling hierarchical models" [28841-33381] -->
+<!-- SECTION "Handling hierarchical models" [28840-33380] -->
 <h2><a name="spice_netlist_generation" id="spice_netlist_generation">SPICE netlist generation</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "SPICE netlist generation" [33382-33418] -->
+<!-- SECTION "SPICE netlist generation" [33381-33417] -->
 <h3><a name="using_gnetlist" id="using_gnetlist">Using gnetlist</a></h3>
 <div class="level3">
 
@@ -867,7 +867,7 @@ Once the schematic is captured, a SPICE netlist can be generated running gEDA’
 -s          Sort output netlist (for Gnucap)</pre>
 
 </div>
-<!-- SECTION "Using gnetlist" [33419-34979] -->
+<!-- SECTION "Using gnetlist" [33418-34978] -->
 <h3><a name="creating_the_netlist_using_gnetlist_and_spice-sdb" id="creating_the_netlist_using_gnetlist_and_spice-sdb">Creating the netlist using gnetlist and spice-sdb</a></h3>
 <div class="level3">
 
@@ -888,7 +888,7 @@ Creating a netlist from a schematic is easy. To generate a SPICE netlist, just d
 </ul>
 
 </div>
-<!-- SECTION "Creating the netlist using gnetlist and spice-sdb" [34980-35773] -->
+<!-- SECTION "Creating the netlist using gnetlist and spice-sdb" [34979-35772] -->
 <h3><a name="common_netlisting_problems" id="common_netlisting_problems">Common netlisting problems</a></h3>
 <div class="level3">
 
@@ -909,7 +909,7 @@ The following list attempts to catalog common problems with the netlist and the 
 </p>
 
 </div>
-<!-- SECTION "Common netlisting problems" [35774-36779] -->
+<!-- SECTION "Common netlisting problems" [35773-36778] -->
 <h2><a name="spice_simulation" id="spice_simulation">SPICE simulation</a></h2>
 <div class="level2">
 
@@ -930,7 +930,7 @@ There are several options for doing SPICE simulations under GNU/Linux; I will hi
 </p>
 
 </div>
-<!-- SECTION "SPICE simulation" [36780-38432] -->
+<!-- SECTION "SPICE simulation" [36779-38431] -->
 <h3><a name="ltspice" id="ltspice">LTSpice</a></h3>
 <div class="level3">
 
@@ -997,7 +997,7 @@ LTSpice can read a file holding a gEDA SPICE netlist. I have had success doing L
 </p>
 
 </div>
-<!-- SECTION "LTSpice" [38433-41372] -->
+<!-- SECTION "LTSpice" [38432-41371] -->
 <h3><a name="ngspice" id="ngspice">Ngspice</a></h3>
 <div class="level3">
 
@@ -1109,7 +1109,7 @@ A better way to read in the <strong><code>spice2poly</code></strong> codemodel i
 </p>
 
 </div>
-<!-- SECTION "Ngspice" [41373-48077] -->
+<!-- SECTION "Ngspice" [41372-48076] -->
 <h3><a name="tclspice" id="tclspice">Tclspice</a></h3>
 <div class="level3">
 
@@ -1222,7 +1222,7 @@ This method of waiting a specific amount of time for the child process is prefer
 </p>
 
 </div>
-<!-- SECTION "Tclspice" [48078-55609] -->
+<!-- SECTION "Tclspice" [48077-55608] -->
 <h1><a name="appendix_a" id="appendix_a">Appendix A</a></h1>
 <div class="level1">
 
@@ -1340,7 +1340,7 @@ When dealing with simple actives (diodes, transistors) having SPICE models held 
 </p>
 
 </div>
-<!-- SECTION "Appendix A" [55610-60281] -->
+<!-- SECTION "Appendix A" [55609-60280] -->
 <h1><a name="appendix_b" id="appendix_b">Appendix B</a></h1>
 <div class="level1">
 
@@ -1398,7 +1398,7 @@ The “type” attribute is a flag signaling the spice engine the component type
 </p>
 
 </div>
-<!-- SECTION "Appendix B" [60282-] --><div class="footnotes">
+<!-- SECTION "Appendix B" [60281-] --><div class="footnotes">
 <div class="fn"><a href="#fnt__1" id="fn__1" name="fn__1" class="fn_bot">1)</a> 
 This HOWTO is released under the GNU Free Documentation License thanks to the generosity of Electroniscript, inc. The most recent copy can always be found at <a href="http://www.brorson.com/gEDA/HOWTO/" class="urlextern" title="http://www.brorson.com/gEDA/HOWTO/"  rel="nofollow">http://www.brorson.com/gEDA/HOWTO/</a></div>
 </div>

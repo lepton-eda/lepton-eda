@@ -7,7 +7,7 @@
   <title>geda:scm</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
 <meta name="robots" content="index,follow" />
-<meta name="date" content="2007-12-01T01:20:56-0500" />
+<meta name="date" content="2008-03-11T21:48:36-0400" />
 <meta name="keywords" content="geda,scm" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -52,6 +52,8 @@
 <li class="level3"><div class="li"><span class="li"><a href="#commit_my_changes_to_the_local_git_repository" class="toc">... commit my changes to the local git repository?</a></span></div></li>
 <li class="level3"><div class="li"><span class="li"><a href="#undo_any_uncommitted_local_changes" class="toc">... undo any uncommitted local changes?</a></span></div></li>
 <li class="level3"><div class="li"><span class="li"><a href="#fix_change_my_last_commit" class="toc">... fix/change my last commit?</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#track_a_branch" class="toc">... track a branch?</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#create_a_branch_starting_at_a_tag" class="toc">... create a branch (starting at a tag)?</a></span></div></li>
 <li class="level3"><div class="li"><span class="li"><a href="#recover_from_a_really_messed_up_local_repository" class="toc">... recover from a really messed up local repository?</a></span></div></li></ul>
 </li></ul>
 </li></ul>
@@ -409,7 +411,35 @@ $ git commit --amend filename1..filenameN </pre>
 </p>
 
 </div>
-<!-- SECTION "... fix/change my last commit?" [8119-8329] -->
+<!-- SECTION "... fix/change my last commit?" [8119-8327] -->
+<h3><a name="track_a_branch" id="track_a_branch">... track a branch?</a></h3>
+<div class="level3">
+<pre class="code">$ git checkout --track -b &lt;local name&gt; origin/&lt;remote name&gt;</pre>
+
+<p>
+ This will create a branch with the &lt;local name&gt; which tracks the &lt;remote name&gt;‘d branch.
+</p>
+
+</div>
+<!-- SECTION "... track a branch?" [8328-8511] -->
+<h3><a name="create_a_branch_starting_at_a_tag" id="create_a_branch_starting_at_a_tag">... create a branch (starting at a tag)?</a></h3>
+<div class="level3">
+
+<p>
+ Run the following commands (using the stable-1.4 branch as an example): 
+</p>
+<pre class="code"> $ git branch stable-1.4 1.4.0-20080127
+ $ git checkout stable-1.4
+ &lt;make changes&gt;
+ $ git commit -a </pre>
+
+<p>
+ To publish this branch in the central repository (requires write access to the central repository): 
+</p>
+<pre class="code"> $ git push origin stable-1.4</pre>
+
+</div>
+<!-- SECTION "... create a branch (starting at a tag)?" [8512-8881] -->
 <h3><a name="recover_from_a_really_messed_up_local_repository" id="recover_from_a_really_messed_up_local_repository">... recover from a really messed up local repository?</a></h3>
 <div class="level3">
 
@@ -432,6 +462,6 @@ Second, the command that will really save your bacon is git-reflog.  Using it wo
 </p>
 
 </div>
-<!-- SECTION "... recover from a really messed up local repository?" [8330-] --></div>
+<!-- SECTION "... recover from a really messed up local repository?" [8882-] --></div>
 </body>
 </html>

@@ -7,7 +7,7 @@
   <title>geda:gsch2pcb_tutorial</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
 <meta name="robots" content="index,follow" />
-<meta name="date" content="2007-08-04T14:46:19-0400" />
+<meta name="date" content="2008-02-28T17:48:29-0500" />
 <meta name="keywords" content="geda,gsch2pcb_tutorial" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -314,7 +314,7 @@ We have to fix one thing in <strong>one.sch</strong> before we can proceed. Run 
 </p>
 
 </div>
-<!-- SECTION "Generate PCB Files from Schematics" [15047-16644] -->
+<!-- SECTION "Generate PCB Files from Schematics" [15047-16645] -->
 <h3><a name="layout_pcb_files" id="layout_pcb_files">Layout PCB Files</a></h3>
 <div class="level3">
 
@@ -416,7 +416,16 @@ You will want more information on using PCB and there is a set of html docs in t
 </p>
 
 </div>
-<!-- SECTION "Layout PCB Files" [16645-24283] -->
+
+<h4><a name="looking_at_the_other_side_of_the_board" id="looking_at_the_other_side_of_the_board">Looking at the other side of the board</a></h4>
+<div class="level4">
+
+<p>
+In some layouts it is important to put components on either side of  the board, although not for the preceeding example. In such a case the ‘tab’ key can be used to flip the board over and view it from the back while the ‘b’ key can be used to put a selected component on the other side of the board.  On dual sided boards it is also important to note what side a particular layer of traces is on. This can be seen, and set, in the  File&rarr;Preferences&rarr;Layers&rarr;Groups dialog. Layers on the ‘component’ side will be on the top of the board and layers on the ‘solder’ side will be on the bottom. In this dialog you should make sure that all layers which are to be fabricated in the same step (i.e. etched with photo-lithography) are grouped together.
+</p>
+
+</div>
+<!-- SECTION "Layout PCB Files" [16646-25079] -->
 <h2><a name="modifying_schematics" id="modifying_schematics">Modifying Schematics</a></h2>
 <div class="level2">
 
@@ -473,7 +482,7 @@ board.pcb is backed up as board.pcb.bak1.
 </p>
 
 </div>
-<!-- SECTION "Modifying Schematics" [24284-28089] -->
+<!-- SECTION "Modifying Schematics" [25080-28885] -->
 <h2><a name="custom_gschem_symbols" id="custom_gschem_symbols">Custom gschem Symbols</a></h2>
 <div class="level2">
 
@@ -568,11 +577,11 @@ No elements to add so not creating board.new.pcb
 </p>
 
 <p>
-For complete details on making symbols, read through the <a href="geda_scg.html" class="wikilink1" title="geda:scg">Symbol Creation Document</a> on the <a href="http://geda.seul.org/wiki/geda:documentation" class="wikilink1" title="geda:documentation">gEDA Documentation</a> page.
+For complete details on making symbols, read through the <a href="http://geda.seul.org/wiki/geda:scg" class="wikilink1" title="geda:scg">Symbol Creation Document</a> on the <a href="http://geda.seul.org/wiki/geda:documentation" class="wikilink1" title="geda:documentation">gEDA Documentation</a> page.
 </p>
 
 </div>
-<!-- SECTION "Custom gschem Symbols" [28090-32343] -->
+<!-- SECTION "Custom gschem Symbols" [28886-33139] -->
 <h2><a name="custom_file_elements" id="custom_file_elements">Custom file elements</a></h2>
 <div class="level2">
 
@@ -653,7 +662,7 @@ Pin(0 0 70 20 70 42 &quot;&quot; &quot;1&quot; 0x00000101)
 </p>
 
 </div>
-<!-- SECTION "Custom file elements" [32344-38805] -->
+<!-- SECTION "Custom file elements" [33140-39601] -->
 <h2><a name="custom_m4_elements_requires_gsch2pcb_1.0" id="custom_m4_elements_requires_gsch2pcb_1.0">Custom m4 elements (Requires gsch2pcb &gt;= 1.0)</a></h2>
 <div class="level2">
 
@@ -792,7 +801,7 @@ Mark(50 50)
 </p>
 
 </div>
-<!-- SECTION "Custom m4 elements (Requires gsch2pcb >= 1.0)" [38806-46493] -->
+<!-- SECTION "Custom m4 elements (Requires gsch2pcb >= 1.0)" [39602-47289] -->
 <h2><a name="multi-user_setup_requires_gsch2pcb_1.0" id="multi-user_setup_requires_gsch2pcb_1.0">Multi-user Setup (requires gsch2pcb &gt;= 1.0)</a></h2>
 <div class="level2">
 
@@ -833,15 +842,41 @@ With the above, users will have access to site wide libraries and only need to p
 </p>
 
 </div>
-<!-- SECTION "Multi-user Setup (requires gsch2pcb >= 1.0)" [46494-48129] -->
+<!-- SECTION "Multi-user Setup (requires gsch2pcb >= 1.0)" [47290-48927] -->
 <h2><a name="pc_board_fabrication" id="pc_board_fabrication">PC Board Fabrication</a></h2>
 <div class="level2">
 
 <p>
-The tutorial should cover pcb fabrication too. 
+The tutorial should cover pcb fabrication too.
 </p>
 
 </div>
-<!-- SECTION "PC Board Fabrication" [48130-] --></div>
+
+<h5><a name="photo-lithography" id="photo-lithography">Photo-lithography</a></h5>
+<div class="level5">
+
+<p>
+ Use File&rarr;Export layout&rarr;ps to make a postscript file suitable for printing on a transparency. Note the presence of the ‘mirror’ and ‘ps-invert’ options which you may need depending on your process.
+</p>
+
+<p>
+Open the ps file and print only the pages that you will actually need for fabrication. There are a large number of pages here, many of which you may  not need. 
+</p>
+
+<p>
+If you find that your pads and traces don’t print on the same page, or are placed on the wrong side you need to check the settings under File&rarr;Preferences&rarr;Layers to group the layers appropriately and place them on the correct side.
+</p>
+
+</div>
+
+<h5><a name="machining" id="machining">Machining</a></h5>
+<div class="level5">
+
+<p>
+ <a href="http://www.lpkf.com/" class="urlextern" title="http://www.lpkf.com"  rel="nofollow">LPKF</a> (and probably other companies) have a pcb plotting machines that accept gerber files. These files can be produced by choosing File&rarr;Export Layout&rarr;gerber which produces a large number of files. The files can be viewed using <a href="http://geda.seul.org/tools/gerbv/index.html" class="urlextern" title="http://geda.seul.org/tools/gerbv/index.html"  rel="nofollow">gerbv</a> and the visualization saved. Once you are satisfied with the output gerber files just hand them off to whomever controls the pcb plotting machine and wait for the boards to be completed! 
+</p>
+
+</div>
+<!-- SECTION "PC Board Fabrication" [48928-] --></div>
 </body>
 </html>

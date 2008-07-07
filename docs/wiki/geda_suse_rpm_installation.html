@@ -7,7 +7,7 @@
   <title>geda:suse_rpm_installation</title>
 <meta name="generator" content="DokuWiki Release rc2007-05-24" />
 <meta name="robots" content="index,follow" />
-<meta name="date" content="2008-01-07T16:09:18-0500" />
+<meta name="date" content="2008-03-27T04:50:13-0400" />
 <meta name="keywords" content="geda,suse_rpm_installation" />
 <link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
 <link rel="start" href="http://geda.seul.org/wiki/" />
@@ -36,7 +36,14 @@
 <li class="level3"><div class="li"><span class="li"><a href="#suse_10.0" class="toc">SuSE 10.0</a></span></div></li>
 <li class="level3"><div class="li"><span class="li"><a href="#suse_10.1" class="toc">SuSE 10.1</a></span></div></li>
 <li class="level3"><div class="li"><span class="li"><a href="#suse_10.2" class="toc">SuSE 10.2</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#suse_10.3" class="toc">SuSE 10.3</a></span></div></li></ul>
+<li class="level3"><div class="li"><span class="li"><a href="#suse_10.3" class="toc">SuSE 10.3</a></span></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><span class="li"><a href="#desktop_integration" class="toc">Desktop Integration</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#electronics_menu" class="toc">Electronics Menu</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#notes_about_rpm_spec_file" class="toc">Notes about rpm spec file</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#installing_rpm_packages_manually" class="toc">Installing rpm packages manually</a></span></div></li></ul>
 </li></ul>
 </li></ul>
 </div>
@@ -48,52 +55,56 @@
 <div class="level1">
 
 </div>
-<!-- SECTION "Installing gEDA rpm packages on SuSE" [1-58] -->
+<!-- SECTION "Installing gEDA rpm packages on SuSE" [1-52] -->
 <h2><a name="available_rpm_packages" id="available_rpm_packages">Available rpm packages</a></h2>
 <div class="level2">
 <ul>
-<li class="level1"><div class="li"> libgeda (1.2.1)</div>
+<li class="level1"><div class="li"> libgeda (1.4.0)</div>
 </li>
-<li class="level1"><div class="li"> geda-docs (1.2.1)</div>
+<li class="level1"><div class="li"> geda-docs (1.4.0)</div>
 </li>
-<li class="level1"><div class="li"> geda-examples (1.2.1)</div>
+<li class="level1"><div class="li"> geda-examples (1.4.0)</div>
 </li>
-<li class="level1"><div class="li"> geda-gattrib (1.2.1)</div>
+<li class="level1"><div class="li"> geda-gattrib (1.4.0)</div>
 </li>
-<li class="level1"><div class="li"> geda-gnetlist (1.2.1)</div>
+<li class="level1"><div class="li"> geda-gnetlist (1.4.0)</div>
 </li>
-<li class="level1"><div class="li"> geda-gschem (1.2.1)</div>
+<li class="level1"><div class="li"> geda-gschem (1.4.0)</div>
 </li>
-<li class="level1"><div class="li"> geda-gsymcheck (1.2.1)</div>
+<li class="level1"><div class="li"> geda-gsymcheck (1.4.0)</div>
 </li>
-<li class="level1"><div class="li"> geda-symbols (1.2.1)</div>
+<li class="level1"><div class="li"> geda-symbols (1.4.0)</div>
 </li>
-<li class="level1"><div class="li"> geda-utils (1.2.1)</div>
+<li class="level1"><div class="li"> geda-utils (1.4.0)</div>
 </li>
-<li class="level1"><div class="li"> gerbv (1.0.3)</div>
+<li class="level1"><div class="li"> gerbv (2.0.1)</div>
 </li>
-<li class="level1"><div class="li"> pcb (20070912)</div>
+<li class="level1"><div class="li"> pcb (20080202)</div>
 </li>
 <li class="level1"><div class="li"> ng-spice-rework (17)</div>
 </li>
 <li class="level1"><div class="li"> gnucap (0.35)</div>
 </li>
-<li class="level1"><div class="li"> gspiceui (0.9.55)</div>
+<li class="level1"><div class="li"> gspiceui (0.9.65)</div>
 </li>
 <li class="level1"><div class="li"> gwave (20051222)</div>
 </li>
-<li class="level1"><div class="li"> gtkwave (3.1.2)</div>
+<li class="level1"><div class="li"> gtkwave (3.1.7)</div>
 </li>
-<li class="level1"><div class="li"> dinotrace (9.3e)</div>
+<li class="level1"><div class="li"> dinotrace (9.3f)</div>
 </li>
 <li class="level1"><div class="li"> verilog (0.8.6)</div>
 </li>
 <li class="level1"><div class="li"> wcalc (1.0)</div>
 </li>
+<li class="level1"><div class="li"> xgsch2pcb (0.1.2)</div>
+</li>
+<li class="level1"><div class="li"> electronics-menu (1.0)</div>
+</li>
 </ul>
 
 </div>
-<!-- SECTION "Available rpm packages" [59-514] -->
+<!-- SECTION "Available rpm packages" [53-558] -->
 <h2><a name="installing_packages_from_the_suse_build_service" id="installing_packages_from_the_suse_build_service">Installing Packages from the SuSE Build Service</a></h2>
 <div class="level2">
 <ol>
@@ -101,12 +112,18 @@
 </li>
 <li class="level1"><div class="li"> Add a <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> source with the following properties: </div>
 <ul>
-<li class="level3"><div class="li"> <strong>Servername:</strong> software.opensuse.org </div>
+<li class="level3"><div class="li"> <strong>Servername:</strong> software.opensuse.org</div>
 </li>
-<li class="level3"><div class="li"> <strong>Directory:</strong> /download/repositories/home:/werner2101/openSUSE_10.2/ (Choose the directory for your distribution version) </div>
+<li class="level3"><div class="li"> <strong>Directory:</strong> /download/repositories/science/openSUSE_10.2/ </div>
 </li>
 </ul>
 </li>
+</ol>
+
+<p>
+         (Choose the directory for your distribution) 
+</p>
+<ol>
 <li class="level1"><div class="li"> Start “Install Software” in Yast, goto “Search” and look for gEDA. All packages appear.</div>
 </li>
 <li class="level1"><div class="li"> Install the packages as usuall.</div>
@@ -118,11 +135,11 @@
 </p>
 
 <p>
-You can also browse through repositories first:  <a href="http://software.opensuse.org/download/home:/werner2101/SUSE_Linux_10.0/repodata/" class="urlextern" title="http://software.opensuse.org/download/home:/werner2101/SUSE_Linux_10.0/repodata/"  rel="nofollow"> SUSE_Linux_10.0 repo</a>, <a href="http://software.opensuse.org/download/home:/werner2101/SUSE_Linux_10.1/repodata/" class="urlextern" title="http://software.opensuse.org/download/home:/werner2101/SUSE_Linux_10.1/repodata/"  rel="nofollow"> SUSE_Linux_10.1 repo</a>, <a href="http://software.opensuse.org/download/home:/werner2101/openSUSE_10.2/repodata/" class="urlextern" title="http://software.opensuse.org/download/home:/werner2101/openSUSE_10.2/repodata/"  rel="nofollow"> openSUSE_10.2 repo</a>, <a href="http://software.opensuse.org/download/home:/werner2101/openSUSE_10.3/repodata/" class="urlextern" title="http://software.opensuse.org/download/home:/werner2101/openSUSE_10.3/repodata/"  rel="nofollow"> openSUSE_10.3 repo</a>
+You can also browse through repositories first:  <a href="http://software.opensuse.org/download/science/SUSE_Linux_10.0/repodata/" class="urlextern" title="http://software.opensuse.org/download/science/SUSE_Linux_10.0/repodata/"  rel="nofollow"> SUSE_Linux_10.0 repo</a>, <a href="http://software.opensuse.org/download/science/SUSE_Linux_10.1/repodata/" class="urlextern" title="http://software.opensuse.org/download/science/SUSE_Linux_10.1/repodata/"  rel="nofollow"> SUSE_Linux_10.1 repo</a>, <a href="http://software.opensuse.org/download/science/openSUSE_10.2/repodata/" class="urlextern" title="http://software.opensuse.org/download/science/openSUSE_10.2/repodata/"  rel="nofollow"> openSUSE_10.2 repo</a>, <a href="http://software.opensuse.org/download/science/openSUSE_10.3/repodata/" class="urlextern" title="http://software.opensuse.org/download/science/openSUSE_10.3/repodata/"  rel="nofollow"> openSUSE_10.3 repo</a>
 </p>
 
 </div>
-<!-- SECTION "Installing Packages from the SuSE Build Service" [515-1663] -->
+<!-- SECTION "Installing Packages from the SuSE Build Service" [559-1663] -->
 <h2><a name="distribution_specific_notes" id="distribution_specific_notes">Distribution specific notes</a></h2>
 <div class="level2">
 
@@ -131,25 +148,25 @@ You can also browse through repositories first:  <a href="http://software.opensu
 </p>
 
 </div>
-<!-- SECTION "Distribution specific notes" [1664-1781] -->
+<!-- SECTION "Distribution specific notes" [1664-1782] -->
 <h3><a name="suse_10.0" id="suse_10.0">SuSE 10.0</a></h3>
 <div class="level3">
 <ul>
-<li class="level1"><div class="li"></div>
+<li class="level1"><div class="li"> <strong>xgschem2pcb</strong> not available, it requires a more recent dbus library</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "SuSE 10.0" [1782-1806] -->
+<!-- SECTION "SuSE 10.0" [1783-1879] -->
 <h3><a name="suse_10.1" id="suse_10.1">SuSE 10.1</a></h3>
 <div class="level3">
 <ul>
-<li class="level1"><div class="li"></div>
+<li class="level1"><div class="li"> <strong>xgschem2pcb</strong> not available, it requires a more recent dbus library</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "SuSE 10.1" [1807-1831] -->
+<!-- SECTION "SuSE 10.1" [1880-1974] -->
 <h3><a name="suse_10.2" id="suse_10.2">SuSE 10.2</a></h3>
 <div class="level3">
 <ul>
@@ -158,7 +175,7 @@ You can also browse through repositories first:  <a href="http://software.opensu
 </ul>
 
 </div>
-<!-- SECTION "SuSE 10.2" [1832-1994] -->
+<!-- SECTION "SuSE 10.2" [1975-2137] -->
 <h3><a name="suse_10.3" id="suse_10.3">SuSE 10.3</a></h3>
 <div class="level3">
 <ul>
@@ -167,6 +184,90 @@ You can also browse through repositories first:  <a href="http://software.opensu
 </ul>
 
 </div>
-<!-- SECTION "SuSE 10.3" [1995-] --></div>
+<!-- SECTION "SuSE 10.3" [2138-2301] -->
+<h2><a name="desktop_integration" id="desktop_integration">Desktop Integration</a></h2>
+<div class="level2">
+
+<p>
+This is a summary how the gEDA and other electronic packages are integrated into the desktop of openSUSE.
+</p>
+
+</div>
+<!-- SECTION "Desktop Integration" [2302-2441] -->
+<h3><a name="electronics_menu" id="electronics_menu">Electronics Menu</a></h3>
+<div class="level3">
+
+<p>
+Unfortunatly the openSUSE distribution does not provide a electronics menu entry for all the nice gEDA programms. Peter Clifton has created a menu entry for electronics. This menu package is available in the <strong>electronics-menu</strong> rpm. It contains the menu item and some icons for it. The menu categorie is called <strong>Edutainment&ndash;&gt;Electronics</strong> in openSUSE.
+</p>
+
+<p>
+If it is installed, it looks like this in KDE (manually combined with gimp):
+</p>
+
+<p>
+<a href="_detail/geda_suse_electronics_menu.html" class="media" title="geda:suse_electronics_menu.png"><img src="_media/geda_suse_electronics_menu.png" class="media" alt="" /></a>
+</p>
+
+</div>
+<!-- SECTION "Electronics Menu" [2442-2942] -->
+<h3><a name="notes_about_rpm_spec_file" id="notes_about_rpm_spec_file">Notes about rpm spec file</a></h3>
+<div class="level3">
+
+<p>
+openSUSE calls it’s <em>SuSEconfig</em> program after every installation of rpm packages with YaST. Thus it’s not necessary to integrate all configuration calls into the <em>post</em> and <em>postun</em> rpm sections.
+</p>
+
+<p>
+The only additions in the <acronym title="specification">spec</acronym> files are for the <em>Shared <acronym title="Multipurpose Internet Mail Extension">MIME</acronym> Info</em>. It is described in this openSUSE <a href="http://en.opensuse.org/Packaging/SUSE_Package_Conventions/Specific_Packages#10.1.3._Shared_MIME_Info" class="urlextern" title="http://en.opensuse.org/Packaging/SUSE_Package_Conventions/Specific_Packages#10.1.3._Shared_MIME_Info"  rel="nofollow">SUSE_Package_Conventions/Specific_Packages</a> article. 
+</p>
+<pre class="code">PreReq:       shared-mime-info
+[...]</pre>
+<pre class="code">%post
+/usr/bin/update-mime-database /opt/gnome/share/mime &gt;/dev/null</pre>
+<pre class="code">%postun
+/usr/bin/update-mime-database /opt/gnome/share/mime &gt;/dev/null</pre>
+
+<p>
+ Another addition is required to install the mimelnks properly in the KDE environment. KDE does not take care of the mimelnks installed in <em>/usr/share/mimelnk</em>/, thus they have to be copied to  the KDE directory <em>/opt/kde3/mimelnk</em>/. This is done in the rpm <acronym title="specification">spec</acronym> file inside the %install section 
+</p>
+<pre class="code">%install
+%makeinstall
+kdemimedir=$(kde-config --install mime)
+mkdir -p &quot;$RPM_BUILD_ROOT&quot;&quot;$kdemimedir&quot;&quot;/application&quot;
+cp &quot;$RPM_BUILD_ROOT&quot;/usr/share/mimelnk/application/* &quot;$RPM_BUILD_ROOT&quot;&quot;$kdemimedir&quot;&quot;/application/&quot;</pre>
+
+</div>
+<!-- SECTION "Notes about rpm spec file" [2943-4164] -->
+<h3><a name="installing_rpm_packages_manually" id="installing_rpm_packages_manually">Installing rpm packages manually</a></h3>
+<div class="level3">
+
+<p>
+For those who don’t use YaST for installation the SuSEconfig command has to be executed manually after installing or removing any rpm package. You can either call the toplevel SuSEconfig command 
+</p>
+<pre class="code">/sbin/SuSEconfig </pre>
+
+<p>
+ or call only the two required subconfiguration tools  
+</p>
+<pre class="code">/sbin/conf.d/SuSEconfig.desktop-file-utils </pre>
+
+<p>
+ which calls  
+</p>
+<pre class="code">/usr/bin/update-desktop-database</pre>
+
+<p>
+ and  
+</p>
+<pre class="code">/sbin/conf.d/SuSEconfig.gtk2</pre>
+
+<p>
+ which calls 
+</p>
+<pre class="code">/usr/bin/gtk-update-icon-cache --quiet --ignore-theme-index --remove-empty-cache &quot;$SUBDIR&quot;</pre>
+
+</div>
+<!-- SECTION "Installing rpm packages manually" [4165-] --></div>
 </body>
 </html>

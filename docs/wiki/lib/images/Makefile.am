@@ -5,7 +5,7 @@ docsdir = @GEDADOCDIR@/$(docname)/lib/images
 
 SUBDIRS = smileys interwiki fileicons 
 
-docs_DATA =  info.png interwiki.png success.png notify.png error.png 
+docs_DATA = info.png interwiki.png success.png notify.png error.png 
 
 EXTRA_DIST = $(docs_DATA)
 

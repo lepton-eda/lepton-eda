@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>gwave-projects</title>
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="index,follow" />
+<meta name="date" content="2008-03-21T00:50:23-0400" />
+<meta name="keywords" content="gwave-projects" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/gwave-projects?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/gwave-projects" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/gwave-projects" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+<h3><a name="gwave_--_analog_waveform_viewer" id="gwave_--_analog_waveform_viewer">Gwave -- analog waveform viewer</a></h3>
+<div class="level3">
+
+<p>
+ Gwave is an analog waveform viewer which is used to view the output files produced by ngspice or gnucap.  Here are some feature suggestions.  You might choose a large handful of features to implement as your GSoC project.
+</p>
+
+</div>
+
+<h5><a name="user_interface" id="user_interface">User Interface</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> Replace the existing variable-list with a tree-style variable-selector. allow multiple ways of organizing the tree: file/sweep/variable vs.  file/variable/sweep, extract circuit heirarchy from variable names, etc.  Perhaps a two-pane tree browser, with the internal nodes of the tree in one pane, and the leaf nodes (variables that can be displayed) in another.</div>
+</li>
+<li class="level1"><div class="li"> Add icons to the toolbar elements</div>
+</li>
+<li class="level1"><div class="li"> Enhance use of Gtk2.0 file chooser: wildcards for selecting particular types of files,</div>
+</li>
+<li class="level1"><div class="li"> Accept drag-and-drop from a file manager to add files, run scripts </div>
+</li>
+<li class="level1"><div class="li"> Allow drag-and-drop from one wavepanel to another to move wave</div>
+</li>
+<li class="level1"><div class="li"> Remember/restore the position of the windows, both most-recent-session, and also save it in the scripts.</div>
+</li>
+<li class="level1"><div class="li"> Add keybinding mechanism</div>
+</li>
+<li class="level1"><div class="li"> An undo stack for operations that change the view</div>
+</li>
+<li class="level1"><div class="li"> Add a guile console window, where expressions can be typed to query/manipulate/debug gwave objects and variable data.</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="data_visualization_and_analysis" id="data_visualization_and_analysis">Data visualization and analysis</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> Draw a real graticule in wave panels, including a grid of faint/dotted lines and numeric scales</div>
+</li>
+<li class="level1"><div class="li"> Add ability to customize measurements</div>
+</li>
+<li class="level1"><div class="li"> Add additional drawing styles: dotted/dashed lines, symbols showing actual datapoints, </div>
+</li>
+<li class="level1"><div class="li"> Add user-configurable colors</div>
+</li>
+<li class="level1"><div class="li"> waveform calculations (Requires some of the infrastructure work below)</div>
+<ul>
+<li class="level2"><div class="li"> display-functions of a single wavevar and scalars</div>
+</li>
+<li class="level2"><div class="li"> display-functions of wavevars sharing the same independent var</div>
+</li>
+<li class="level2"><div class="li"> more general stuff that computes a new wavevar</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Additional types of wavepanels for different types of viewing/analsis. (best done after refactoring the wavepanel UI elements into a class heirarchy of proper Gtk widgets)</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="datafile_variable_infrastructure" id="datafile_variable_infrastructure">Datafile/Variable Infrastructure</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> Readers for additional file-formats: wdf, sst2, psf have been mentioned</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Convert from ad-hoc data structures to a glib/GObject class heirarchy</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Ability to add a variable to a file after it is read in, to support  computing a new variable as a function of existing ones</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Deferred read: initialy read only the independent variable from a datafile,  then read the others when they are first displayed.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Add a new class of variable, which is a function of other variables and constants to computed on the fly as it is displayed</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> New class of variable for digital data; reader and display capability for verilog vcd</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Ability to create new datafile-like constructs programaticly, to hold  the result of computations involving variables in two or more exisiting files. </div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Handle creation of the independent-variable intelligently.</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="other_infrastructure" id="other_infrastructure">Other infrastructure</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> convert other data structure from ad-hoc structures wrapped as custom SMOBs to GObject wrapped with guile-gobject.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Convert the wavepanel drawing-area code into a new Gtk widget type</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="geda_integration" id="geda_integration">gEDA integration</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> communication with gschem: choose variable to plot from the schematic, etc.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> comunication with gnucap and other simulators</div>
+</li>
+</ul>
+
+</div>
+</div>
+</body>
+</html>

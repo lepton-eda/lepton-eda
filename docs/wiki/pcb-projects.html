@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>pcb-projects</title>
+<meta name="generator" content="DokuWiki Release rc2007-05-24" />
+<meta name="robots" content="index,follow" />
+<meta name="date" content="2008-03-21T07:21:01-0400" />
+<meta name="keywords" content="pcb-projects" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
+<link rel="start" href="http://geda.seul.org/wiki/" />
+<link rel="contents" href="http://geda.seul.org/wiki/pcb-projects?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/pcb-projects" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/pcb-projects" />
+<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
+<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+<h3><a name="pcb_layout_editor" id="pcb_layout_editor">PCB Layout Editor</a></h3>
+<div class="level3">
+
+</div>
+
+<h5><a name="improve_handling_of_non-copper_layers_in_pcb" id="improve_handling_of_non-copper_layers_in_pcb">Improve handling of non-copper layers in pcb</a></h5>
+<div class="level5">
+
+<p>
+ PCB’s support for non-copper layers needs improvement. In this project, you would add support for more easily-editable non-copper layers. These non-copper layers would be used for things like keepout regions, assembly drawing, and an actual board outline layer that is not just a copper layer. For more thoughts on the issue of layers in PCB, please see database.txt and keepouts.txt
+</p>
+
+<p>
+Difficulty = 2
+</p>
+
+</div>
+
+<h5><a name="pcb_drc_interface_improvements" id="pcb_drc_interface_improvements">PCB DRC interface improvements</a></h5>
+<div class="level5">
+
+<p>
+ Improve the DRC interface for PCB. Perhaps have a DRC layer that gets generated when you run DRC. Then you could have an interface that lets you step through them and see on that layer, exactly what failed. Maybe this could be combined with making the DRC checks more unit testable.
+</p>
+
+<p>
+Difficulty = 2
+</p>
+
+</div>
+
+<h5><a name="pcb_autorouter" id="pcb_autorouter">PCB Autorouter</a></h5>
+<div class="level5">
+
+<p>
+ PCB currently incorporates a simple autorouter. However, a topological autorouter would represent a significant improvement over the existing autorouter. In this ambitious project, the student would create a topological autorouter for PCB.
+</p>
+
+<p>
+Difficulty = 5
+</p>
+
+</div>
+
+<h5><a name="improved_and_formalized_mechanism_for_forward_backward_annotation" id="improved_and_formalized_mechanism_for_forward_backward_annotation">Improved and formalized mechanism for forward/backward annotation</a></h5>
+<div class="level5">
+
+<p>
+ Add hooks into gschem needed to fully support things like backannotation of simulation results and click-to-plot results. Specifically, this would enable you to draw a schematic in gschem, then simulate it in ngspice without leaving gschem. The simulation plots would then appear in a graphical pop-up window.
+</p>
+
+<p>
+Difficulty = 3
+</p>
+
+</div>
+
+<h5><a name="ipc_footprint_calculator" id="ipc_footprint_calculator">IPC Footprint Calculator</a></h5>
+<div class="level5">
+
+<p>
+ Build a footprint calculator that can take the IPC rules and produce a pcb footprint. Preferably write this in a way where the core program is independent of a gui so that you can script it for generating entire large families of footprints or hook it up to a <acronym title="Graphical User Interface">GUI</acronym> of choice (lesstif, gtk, maybe even cgi). Would require the purchase of IPC-7351 (approximately U.S.A. $100)and verifying that one is allowed to produce such a calculator.
+</p>
+
+<p>
+Difficulty = 2
+</p>
+
+</div>
+
+<h5><a name="export_ipc-356" id="export_ipc-356">Export IPC-356</a></h5>
+<div class="level5">
+
+<p>
+ IPC-D-356 is a specification for a netlist output format used for manufacturing test of PCBs.  It specifies both connectivity as well as pad position information, thereby facilitating the use of automated testing after PCB manufacture.  In this project, you would implement an exporter which would write an IPC-D-356 compliant file from within PCB.  The IPC-D-356 <acronym title="specification">spec</acronym> is available at: <a href="http://www.solidigm.com/downloads/ipc356.pdf" class="urlextern" title="http://www.solidigm.com/downloads/ipc356.pdf"  rel="nofollow">http://www.solidigm.com/downloads/ipc356.pdf</a>
+</p>
+
+<p>
+Difficulty = 3
+</p>
+
+</div>
+
+<h5><a name="recently_loaded_file_list" id="recently_loaded_file_list">Recently loaded file list</a></h5>
+<div class="level5">
+
+<p>
+ Presently pcb does not present a list of recently loaded files in the file menu. It would be nice if pcb kept track of the last few files a user loaded. This is a common feature found in other programs.
+</p>
+
+<p>
+Difficulty = 1
+</p>
+
+</div>
+
+<h5><a name="remember_dialog_size_and_positions" id="remember_dialog_size_and_positions">Remember dialog size and positions</a></h5>
+<div class="level5">
+
+<p>
+ pcb dialogs should remember their size and position. Some of pcb’s dialogs remember their size, but this isn’t universal. Several users have complained since they have to reposition and/or resize the dialog boxes every time they are opened.
+</p>
+
+<p>
+Difficulty = 1
+</p>
+
+</div>
+</div>
+</body>
+</html>
