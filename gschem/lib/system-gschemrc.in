@@ -1317,6 +1317,7 @@
     ("y" . buffer-keymap)
     ("z" . view-zoom-in-hotkey)
     ("period" . repeat-last-command)
+    ("Shift colon" . edit-invoke-macro)
     ("comma" . misc-misc)
     ("equal" . misc-misc2)
     ("Shift plus" . misc-misc3)
