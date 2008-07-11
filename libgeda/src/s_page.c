@@ -298,6 +298,31 @@ PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename)
   return NULL;
 }
 
+/*! \brief Search for a page given its page id in a page list.
+ *  \par Function Description
+ *  This functions returns the page that have the page id \a pid in
+ *  the list of pages starting at \a page_list, or NULL if there is no
+ *  such page.
+ *
+ *  \param [in] page_list The list of page to search the page in.
+ *  \param [in] pid       The ID of the page to find.
+ *  \returns A pointer on the page found or NULL if not found.
+ */
+PAGE *s_page_search_by_page_id (GedaPageList *list, int pid)
+{
+  const GList *iter;
+
+  for ( iter = geda_list_get_glist (list);
+        iter != NULL;
+        iter = g_list_next (iter) ) {
+    PAGE *page = (PAGE *)iter->data;
+    if (page->pid == pid) {
+      return page;
+    }
+  }
+
+  return NULL;
+}
 
 /*! \brief Print full TOPLEVEL structure.
  *  \par Function Description

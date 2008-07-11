@@ -408,7 +408,6 @@ GList* s_hierarchy_traversepages(TOPLEVEL *toplevel, gint flags);
 gint s_hierarchy_print_page(PAGE *p_current, void * data);
 PAGE *s_hierarchy_find_prev_page(GedaPageList *page_list, PAGE *current_page, int page_control);
 PAGE *s_hierarchy_find_next_page(GedaPageList *page_list, PAGE *current_page, int page_control);
-PAGE *s_hierarchy_find_page(GedaPageList *page_list, int pid);
 
 /* s_log.c */
 void s_log_init (const gchar *filename);
@@ -429,6 +428,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page);
 void s_page_delete_list(TOPLEVEL *toplevel);
 void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new);
 PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename);
+PAGE *s_page_search_by_page_id (GedaPageList *list, int pid);
 void s_page_print_all (TOPLEVEL *toplevel);
 gint s_page_save_all (TOPLEVEL *toplevel);
 gboolean s_page_check_changed (GedaPageList *list);

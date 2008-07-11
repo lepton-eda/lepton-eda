@@ -83,7 +83,7 @@ int s_hierarchy_down_schematic_single(TOPLEVEL *toplevel,
 	/* check whether this page is in the parents list */
 	for (forbear = parent; 
 	     forbear != NULL && found->pid != forbear->pid && forbear->up >= 0;
-	     forbear = s_hierarchy_find_page (toplevel->pages, forbear->up))
+	     forbear = s_page_search_by_page_id (toplevel->pages, forbear->up))
 	  ; /* void */
 
 	if (found->pid == forbear->pid) {
@@ -179,7 +179,7 @@ void s_hierarchy_up(TOPLEVEL *toplevel, int pid)
     return;
   }
 
-  p_current = s_hierarchy_find_page(toplevel->pages, pid);
+  p_current = s_page_search_by_page_id(toplevel->pages, pid);
 
   if (p_current) {
     s_page_goto(toplevel, p_current);
@@ -338,28 +338,6 @@ PAGE *s_hierarchy_find_next_page (GedaPageList *page_list, PAGE *current_page, i
 
     PAGE *page = (PAGE *)iter->data;
     if (page->page_control == page_control) {
-      return page;
-    }
-  }
-
-  return NULL;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-PAGE *s_hierarchy_find_page (GedaPageList *page_list, int pid)
-{
-  const GList *iter;
-
-  for ( iter = geda_list_get_glist (page_list);
-        iter != NULL;
-        iter = g_list_next (iter) ) {
-
-    PAGE *page = (PAGE *)iter->data;
-    if (page->pid == pid) {
       return page;
     }
   }

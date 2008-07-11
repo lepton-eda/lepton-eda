@@ -606,8 +606,8 @@ void pagesel_update (Pagesel *pagesel)
     p_current = (PAGE *)iter->data;
     /* find every page that is not a hierarchy-down of another page */
     if (p_current->up < 0 ||
-        s_hierarchy_find_page (toplevel->pages,
-                               p_current->up) == NULL) {
+        s_page_search_by_page_id (toplevel->pages,
+                                  p_current->up) == NULL) {
       add_page (model, NULL, toplevel->pages, p_current);
     }
   }
