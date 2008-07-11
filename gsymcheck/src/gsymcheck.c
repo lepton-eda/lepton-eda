@@ -57,7 +57,7 @@ main_prog(void *closure, int argc, char *argv[])
   TOPLEVEL *pr_current;
   
   argv_index = parse_commandline(argc, argv);
-  cwd = getcwd(NULL, 1024);
+  cwd = g_get_current_dir();
 #ifdef __MINGW32__
   u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
 #endif
@@ -135,7 +135,7 @@ main_prog(void *closure, int argc, char *argv[])
     usage(argv[0]);
   }
 
-  free(cwd); /* allocated with getcwd, should stay as free */
+  g_free(cwd);
 
   logging_dest=STDOUT_TTY;
 

@@ -121,7 +121,7 @@ void main_prog(void *closure, int argc, char *argv[])
     output_filename = g_strdup("output.net");
 
     argv_index = parse_commandline(argc, argv);
-    cwd = getcwd(NULL, MAXPATHLEN);
+    cwd = g_get_current_dir();
 #ifdef __MINGW32__
     u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
 #endif
@@ -313,7 +313,7 @@ void main_prog(void *closure, int argc, char *argv[])
     /* Change back to the directory where we started AGAIN.  This is done */
     /* because the s_traverse functions can change the Current Working Directory. */
     chdir(cwd);
-    free(cwd); /* allocated by getcwd, so this should stay as free() */
+    g_free(cwd);
 
     /* temporarly reuse input_str */
     sprintf(input_str, "%s%cgnetlist-post.scm", pr_current->scheme_directory,

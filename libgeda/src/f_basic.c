@@ -200,7 +200,7 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
   /* Cache the cwd so we can restore it later. */
   /*! \bug Assumes cwd will be less than 1024 characters. */
   if (flags & F_OPEN_RESTORE_CWD) {
-    saved_cwd = getcwd(NULL, 1024);
+    saved_cwd = g_get_current_dir();
   }
 
   /* get full, absolute path to file */

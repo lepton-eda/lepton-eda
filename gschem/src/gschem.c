@@ -167,7 +167,7 @@ void main_prog(void *closure, int argc, char *argv[])
   gtk_init(&argc, &argv);
 
   argv_index = parse_commandline(argc, argv);
-  cwd = getcwd(NULL, 1024);
+  cwd = g_get_current_dir();
 #ifdef __MINGW32__
     u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
 #endif
@@ -293,7 +293,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
   }
 
-  free(cwd); /* allocated from getcwd, should be regular free */
+  g_free(cwd);
 
   /* If no page has been loaded (wasn't specified in the command line.) */
   /* Then create an untitled page */
