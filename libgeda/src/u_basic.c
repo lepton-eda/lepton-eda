@@ -98,37 +98,3 @@ char *u_basic_breakup_string(char *string, char delimiter, int count)
   return_value[j] = '\0';
   return(return_value);
 }
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/*
- * This fcn counts the number of occurances of the character
- * "character" in the string "string".
- * 1.23.2005 -- SDB
- */
-int u_basic_count_char(const char *string, char character)
-{
-  int count = 0;
-  int i=0;
-
-#ifdef DEBUG
-  printf("In u_basic_count_char, looking for char \"%c\" in string \"%s\".\n", 
-	  character, string);
-#endif
-
-  while (string[i] != '\0') {
-    if (string[i] == character) {
-      count++;
-    }
-  i++;
-  }
-#ifdef DEBUG
-  printf(". . . . .   Found it %d times.\n", 
-	  count);
-#endif
-
-return count;
-}

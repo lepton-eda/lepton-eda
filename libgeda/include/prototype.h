@@ -507,4 +507,3 @@ void s_undo_free_all(TOPLEVEL *toplevel, PAGE *p_current);
 
 /* u_basic.c */
 char *u_basic_breakup_string(char *string, char delimiter, int count);
-int u_basic_count_char(const char *string, char character);
