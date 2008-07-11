@@ -116,8 +116,7 @@ void s_attrib_free()
   int i;
 
   for (i = 0; i < attrib_index; i++) {
-     if (attrib[i].attrib_name)
-        g_free(attrib[i].attrib_name);
+     g_free(attrib[i].attrib_name);
   }
 
   attrib_index=0;

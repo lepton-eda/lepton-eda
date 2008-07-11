@@ -127,9 +127,7 @@ SCM g_rc_hierarchy_netname_separator(SCM name)
   SCM_ASSERT (scm_is_string (name), name,
               SCM_ARG1, "hierarchy-netname-separator");
 
-  if (default_hierarchy_netname_separator) {
-    g_free(default_hierarchy_netname_separator);
-  }
+  g_free(default_hierarchy_netname_separator);
 
   default_hierarchy_netname_separator = g_strdup (SCM_STRING_CHARS (name));
 
@@ -141,9 +139,7 @@ SCM g_rc_hierarchy_netattrib_separator(SCM name)
   SCM_ASSERT (scm_is_string (name), name,
               SCM_ARG1, "hierarchy-netattrib-separator");
 
-  if (default_hierarchy_netattrib_separator) {
-    g_free(default_hierarchy_netattrib_separator);
-  }
+  g_free(default_hierarchy_netattrib_separator);
 
   default_hierarchy_netattrib_separator = g_strdup (SCM_STRING_CHARS (name));
 
@@ -155,9 +151,7 @@ SCM g_rc_hierarchy_uref_separator(SCM name)
   SCM_ASSERT (scm_is_string (name), name,
               SCM_ARG1, "hierarchy-uref-separator");
 
-  if (default_hierarchy_uref_separator) {
-    g_free(default_hierarchy_uref_separator);
-  }
+  g_free(default_hierarchy_uref_separator);
 
   default_hierarchy_uref_separator = g_strdup (SCM_STRING_CHARS (name));
 
@@ -202,9 +196,7 @@ SCM g_rc_unnamed_netname(SCM name)
   SCM_ASSERT (scm_is_string (name), name,
               SCM_ARG1, "unamed-netname");
 
-  if (default_unnamed_netname) {
-    g_free(default_unnamed_netname);
-  }
+  g_free(default_unnamed_netname);
 
   default_unnamed_netname = g_strdup (SCM_STRING_CHARS (name));
 

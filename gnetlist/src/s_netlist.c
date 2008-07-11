@@ -166,9 +166,7 @@ void s_netlist_post_process(TOPLEVEL * pr_current, NETLIST * head)
 
 		if (pl_current->plid != -1 && pl_current->nets) {
 
-		    if (pl_current->net_name) {
-			g_free(pl_current->net_name);
-		    }
+		    g_free(pl_current->net_name);
 
 		    verbose_print("n");
 
@@ -253,9 +251,7 @@ void s_netlist_name_named_nets (TOPLEVEL *pr_current,
 	  net_name = NULL;
 	  n_current = pl_current->nets;
 	  while (n_current != NULL) {
-	    if (n_current->net_name) {
-	      g_free (n_current->net_name);
-	    }	    
+	    g_free (n_current->net_name);
 	    n_current->net_name = s_netlist_netname_of_netid(pr_current,
 							     named_netlist,
 							     n_current->nid);

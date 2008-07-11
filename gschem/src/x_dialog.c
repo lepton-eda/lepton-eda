@@ -3270,7 +3270,7 @@ void major_changed_dialog(GSCHEM_TOPLEVEL* w_current)
                               G_CALLBACK (gtk_widget_destroy),
                               dialog);
 
-    if (refdes_string) g_free(refdes_string);
+    g_free(refdes_string);
   }
 }
 

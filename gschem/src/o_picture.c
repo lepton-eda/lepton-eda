@@ -600,8 +600,7 @@ void o_picture_exchange (GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf,
         /* Erase previous picture */
         o_erase_single(w_current, object);
 
-        if (object->picture->filename != NULL)
-          g_free(object->picture->filename);
+        g_free(object->picture->filename);
 
         object->picture->filename = (char *) g_strdup(filename);
 

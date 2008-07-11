@@ -571,8 +571,8 @@ void attrib_edit_dialog(GSCHEM_TOPLEVEL *w_current, OBJECT * list, int flag)
     gtk_widget_grab_focus(attrib_combo_entry);
   }
 
-  if (name) g_free(name);
-  if (val) g_free(val);
+  g_free(name);
+  g_free(val);
 
 }
 /***************** End of Attrib Edit dialog box **********************/

@@ -126,13 +126,9 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 	    current_filename = u_basic_breakup_string(attrib, ',', pcount);
 	}
 
-	if (attrib) {
-	    g_free(attrib);
-	}
+	g_free(attrib);
 
-	if (current_filename) {
-	    g_free(current_filename);
-	}
+	g_free(current_filename);
 
 	count++;
 

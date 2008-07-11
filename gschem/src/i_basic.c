@@ -106,7 +106,7 @@ static const char *i_status_string(GSCHEM_TOPLEVEL *w_current)
       return _("Pan Mode");
     case STARTPASTE:
     case ENDPASTE:
-      if (buf) g_free(buf);
+      g_free(buf);
       buf = g_strdup_printf(_("Paste %d Mode"), w_current->buffer_number+1);
       return buf;
     case STARTDRAWNET:

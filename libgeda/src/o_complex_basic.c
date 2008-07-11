@@ -271,8 +271,8 @@ int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object,
       }
       
       g_free(padded_name);
-      if (name) g_free(name);
-      if (value) g_free(value);
+      g_free(name);
+      g_free(value);
       if (promotableAttribute)
 	return TRUE;
     }
@@ -1553,7 +1553,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
   /* if inside_value and outside_value match, then symbol versions are okay */
 
 done:
-  if (inside) g_free(inside);
-  if (outside) g_free(outside);
-  if (refdes) g_free(refdes);
+  g_free(inside);
+  g_free(outside);
+  g_free(refdes);
 }

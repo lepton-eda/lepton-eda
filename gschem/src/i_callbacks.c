@@ -403,9 +403,7 @@ DEFINE_I_CALLBACK(file_print)
     x_print_setup(w_current, ps_filename);
   }
 
-  if (ps_filename) {
-    g_free(ps_filename);
-  }
+  g_free(ps_filename);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2872,8 +2870,8 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
       current_filename = u_basic_breakup_string(attrib, ',', pcount);
     }
 
-    if (attrib)           g_free(attrib);
-    if (current_filename) g_free(current_filename);
+    g_free(attrib);
+    g_free(current_filename);
 
     count++;
 
@@ -3007,9 +3005,9 @@ DEFINE_I_CALLBACK(hierarchy_documentation)
                          object->complex_basename,
                          sourcename);
 
-      if (attrib_doc) g_free(attrib_doc);
-      if (attrib_device) g_free(attrib_device);
-      if (attrib_value) g_free(attrib_value);
+      g_free(attrib_doc);
+      g_free(attrib_device);
+      g_free(attrib_value);
     }
   } else {
     generic_msg_dialog(_("This command retrieves the component documentation from the web, but there is no component selected"));

@@ -136,8 +136,8 @@ SCM g_get_attrib_name_value(SCM attrib_smob)
                             &name, &value );
     returned = scm_cons (scm_makfrom0str (name),
                          scm_makfrom0str (value));
-    if (name) g_free(name);
-    if (value) g_free(value);
+    g_free(name);
+    g_free(value);
   }
 
   return returned;
@@ -189,8 +189,8 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
     *world = attribute->world;
     *o_attrib = attribute->attribute->object;
 
-    if (name) g_free(name);
-    if (old_value) g_free(old_value);
+    g_free(name);
+    g_free(old_value);
   }
 
   return SCM_UNDEFINED;

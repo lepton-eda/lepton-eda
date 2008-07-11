@@ -213,9 +213,7 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
   }
 
   /* write full, absolute filename into page_current->page_filename */
-  if (toplevel->page_current->page_filename) {
-    g_free(toplevel->page_current->page_filename);
-  }
+  g_free(toplevel->page_current->page_filename);
   toplevel->page_current->page_filename = g_strdup(full_filename);
 
   /* Before we open the page, let's load the corresponding gafrc. */

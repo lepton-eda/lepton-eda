@@ -289,9 +289,7 @@ char *o_picture_save(OBJECT *object)
 			  object->picture->embedded+0x30, 
 			  object->picture->filename);
   }
-  if (encoded_picture != NULL) {
-    g_free(encoded_picture);
-  }
+  g_free(encoded_picture);
 
   return(out);
 }

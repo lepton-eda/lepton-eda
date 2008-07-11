@@ -210,14 +210,11 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
 	}
     }
 
-    if (pinnum)
-	g_free(pinnum);
+    g_free(pinnum);
 
-    if (uref)
-	g_free(uref);
+    g_free(uref);
 
-    if (temp_uref)
-	g_free(temp_uref);
+    g_free(temp_uref);
 
     return (string);
 }

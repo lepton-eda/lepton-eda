@@ -423,7 +423,7 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
 		    s_string_list_add_item(sheet_head->master_pin_attrib_list_head, 
 					   &(sheet_head->pin_attrib_count), attrib_name);
 		  }   /* if (strcmp(attrib_name, "pinnumber") != 0) */ 
-		  if (attrib_value != NULL) g_free(attrib_value);
+		  g_free(attrib_value);
 		  g_free(attrib_name);
 		  g_free(attrib_text);
 		}

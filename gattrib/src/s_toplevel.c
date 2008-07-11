@@ -650,8 +650,8 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 	     (s_attrib_name_in_list(new_comp_attrib_list, old_attrib_name) == FALSE) ) {
 	  s_string_list_add_item(complete_comp_attrib_list, &count, old_name_value_pair);
         }
-	if (old_attrib_name) g_free (old_attrib_name);
-	if (old_attrib_value) g_free (old_attrib_value);
+	g_free (old_attrib_name);
+	g_free (old_attrib_value);
       }
  #endif
      g_free(old_name_value_pair);
@@ -777,18 +777,10 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
     
 
     /* free everything and iterate */
-    if (new_attrib_name != NULL) {
-      g_free(new_attrib_name);  /* Be careful, this can be NULL */
-    }
-    if (new_attrib_value != NULL) {
-      g_free(new_attrib_value);  /* Be careful, this can be NULL */
-    }
-    if (old_attrib_name != NULL) {
-      g_free(old_attrib_name);  /* Be careful, this can be NULL */
-    }
-    if (old_attrib_value != NULL) {
-      g_free(old_attrib_value);  /* Be careful, this can be NULL */
-    }
+    g_free(new_attrib_name);
+    g_free(new_attrib_value);
+    g_free(old_attrib_name);
+    g_free(old_attrib_value);
     local_list = local_list->next;
   }   /*   while (local_list != NULL)  */
   return;
@@ -943,8 +935,7 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
   new_attrib_value = u_basic_breakup_string(new_name_value_pair, '=', 1);
 
   if (strlen(new_attrib_value) == 0) {
-    if (new_attrib_value != NULL)
-      g_free(new_attrib_value);   
+    g_free(new_attrib_value);   
     new_attrib_value = NULL;  /* s_misc_remaining_string doesn't return NULL for empty substring. */
   }
   old_attrib_value = o_attrib_search_name_single_count(o_pin, new_attrib_name, 0);
@@ -995,12 +986,8 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
     /* free everything and iterate */
     g_free(new_name_value_pair);
     g_free(new_attrib_name);
-    if (new_attrib_value != NULL) {
-      g_free(new_attrib_value);  /* Be careful, this can be NULL */
-    }
-    if (old_attrib_value != NULL) {
-      g_free(old_attrib_value);  /* Be careful, this can be NULL */
-    }
+    g_free(new_attrib_value);
+    g_free(old_attrib_value);
     local_list = local_list->next;
   }   /*   while (local_list != NULL)  */
 

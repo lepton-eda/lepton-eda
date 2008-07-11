@@ -159,8 +159,7 @@ void s_hierarchy_down_schematic_multiple (TOPLEVEL *toplevel,
     if (found) {
       toplevel->page_current = found;
       s_page_goto(toplevel, found);
-      if (string) 
-        g_free(string);
+      g_free(string);
       return;
     }
 
@@ -181,8 +180,7 @@ void s_hierarchy_down_schematic_multiple (TOPLEVEL *toplevel,
     toplevel->page_current->up = parent->pid;
     /* toplevel->page_current->down = NULL; not needed */
 
-    if (string) 
-      g_free(string);
+    g_free(string);
 
     string = s_slib_search(filename, SLIB_SEARCH_NEXT);
   }

@@ -238,7 +238,7 @@ OBJECT *o_text_load_font(TOPLEVEL *toplevel, gunichar needed_char)
 
   o_font_set->font_prim_objs = return_head(o_font_set->font_prim_objs);
 
-  if (temp_string) g_free(temp_string);
+  g_free(temp_string);
 
   return(o_font_set->font_prim_objs);
 }
@@ -996,9 +996,9 @@ OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list,
   /* Update bounding box */
   o_text_recalc( toplevel, object_list );
 
-  if (name) g_free(name);
-  if (value) g_free(value);
-  if (output_string) g_free(output_string);
+  g_free(name);
+  g_free(value);
+  g_free(output_string);
   return(object_list);
 }
 
@@ -1362,9 +1362,9 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
   o_text_recalc( toplevel, o_current );
 
   toplevel->page_current->object_parent = temp_parent;
-  if (name) g_free(name);
-  if (value) g_free(value);
-  if (output_string) g_free(output_string);
+  g_free(name);
+  g_free(value);
+  g_free(output_string);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1501,7 +1501,7 @@ void o_text_print_text_width(FILE *fp, char *output_string)
     if (single_len > max_len)
     {
       max_len = strlen(single_line);
-      if (max_length_line) g_free(max_length_line);
+      g_free(max_length_line);
       max_length_line = g_strdup (single_line);
     }
   }
@@ -1521,8 +1521,8 @@ void o_text_print_text_width(FILE *fp, char *output_string)
   /* .95 is a fudge factor */
   fprintf(fp, ") stringwidth pop\n");
 
-  if (single_line) g_free(single_line);
-  if (max_length_line) g_free(max_length_line);
+  g_free(single_line);
+  g_free(max_length_line);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1744,9 +1744,9 @@ void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   fprintf(fp,"] %d %d %d %f text\n",angle,x,y,font_size);
 
   
-  if (output_string) g_free(output_string);
-  if (name) g_free(name);
-  if (value) g_free(value);
+  g_free(output_string);
+  g_free(name);
+  g_free(value);
 }
 
 

@@ -304,8 +304,7 @@ s_check_device(OBJECT *o_current, SYMCHECK *s_current)
     s_current->warning_count++;
   } 
 
-  if (temp) 
-    g_free(temp);
+  g_free(temp);
 }
 
 
@@ -380,8 +379,7 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
           found_numbers = g_list_append(found_numbers, number);
           found_first=TRUE;
         } else {
-          if (number)
-            g_free(number);
+          g_free(number);
         }
         
         counter++;
@@ -893,8 +891,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
       j++;
     } while (temp);
 
-    if (temp)
-      g_free(temp);
+    g_free(temp);
 
     g_free(slotdef);
     slotdef = NULL;
@@ -963,15 +960,11 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     }
   }
   
-  if (slotdef) {
-    g_free(slotdef);
-  }
+  g_free(slotdef);
   if (pinlist) {
     /* Free the pinlist */
     for (i = 0; i < s_current->numslots; i++) {
-      if (pinlist[i]) {
-	g_free(pinlist[i]);
-      }
+      g_free(pinlist[i]);
     }
     g_free(pinlist);
   }

@@ -442,9 +442,7 @@ SCM g_rc_component_library(SCM path, SCM name)
     g_free(cwd);
   }
 
-  if (string) {
-    g_free(string);
-  }
+  g_free(string);
 
   return SCM_BOOL_T;
 }
@@ -600,9 +598,7 @@ SCM g_rc_component_library_search(SCM path)
     }
   }
 
-  if (string) {
-    g_free(string);
-  }
+  g_free(string);
 
   return SCM_BOOL_T;
 }
@@ -650,9 +646,7 @@ SCM g_rc_source_library(SCM path)
     g_free(cwd);
   }
   
-  if (string) {
-    g_free(string);
-  }
+  g_free(string);
   
   return SCM_BOOL_T;
 }
@@ -690,9 +684,7 @@ SCM g_rc_source_library_search(SCM path)
     fprintf (stderr,
              "Invalid path [%s] passed to source-library-search\n",
              string);
-    if (string) {
-      g_free(string);
-    }
+    g_free(string);
     return SCM_BOOL_F;
   }
 
@@ -731,9 +723,7 @@ SCM g_rc_source_library_search(SCM path)
     }
   }
 
-  if (string) {
-    g_free(string);
-  }
+  g_free(string);
 
   return SCM_BOOL_T;
 }
@@ -792,9 +782,7 @@ SCM g_rc_default_series_name(SCM name)
   SCM_ASSERT (scm_is_string (name), name,
               SCM_ARG1, "default-series-name");
 
-  if (default_series_name) {
-    g_free(default_series_name);
-  }
+  g_free(default_series_name);
 
   default_series_name = g_strdup (SCM_STRING_CHARS (name));
 
@@ -813,9 +801,7 @@ SCM g_rc_untitled_name(SCM name)
   SCM_ASSERT (scm_is_string (name), name,
               SCM_ARG1, "untitled-name");
 
-  if (default_untitled_name) {
-    g_free(default_untitled_name);
-  }
+  g_free(default_untitled_name);
 
   default_untitled_name = g_strdup (SCM_STRING_CHARS (name));
 
@@ -844,15 +830,11 @@ SCM g_rc_font_directory(SCM path)
     fprintf (stderr,
              "Invalid path [%s] passed to font-directory\n",
              string);
-    if (string) {
-      g_free(string);
-    }
+    g_free(string);
     return SCM_BOOL_F;
   }
 
-  if (default_font_directory) {
-    g_free(default_font_directory);
-  }
+  g_free(default_font_directory);
   default_font_directory = string;
 
   return SCM_BOOL_T;
@@ -880,15 +862,11 @@ SCM g_rc_scheme_directory(SCM path)
     fprintf (stderr,
              "Invalid path [%s] passed to scheme-directory\n",
              string);
-    if (string) {
-      g_free(string);
-    }
+    g_free(string);
     return SCM_BOOL_F;
   }
 
-  if (default_scheme_directory) {
-    g_free(default_scheme_directory);
-  }
+  g_free(default_scheme_directory);
   default_scheme_directory = string;
 
   return SCM_BOOL_T;
@@ -916,15 +894,11 @@ SCM g_rc_bitmap_directory(SCM path)
     fprintf (stderr,
              "Invalid path [%s] passed to bitmap-directory\n",
              string);
-    if (string) {
-      g_free(string);
-    }
+    g_free(string);
     return SCM_BOOL_F;
   }
 
-  if (default_bitmap_directory) {
-    g_free(default_bitmap_directory);
-  }
+  g_free(default_bitmap_directory);
   default_bitmap_directory = string;
 
   return SCM_BOOL_T;
@@ -942,9 +916,7 @@ SCM g_rc_bus_ripper_symname(SCM scmsymname)
   SCM_ASSERT (scm_is_string (scmsymname), scmsymname,
               SCM_ARG1, "bus-ripper-symname");
 
-  if (default_bus_ripper_symname) {
-    g_free(default_bus_ripper_symname);
-  }
+  g_free(default_bus_ripper_symname);
   default_bus_ripper_symname = g_strdup (SCM_STRING_CHARS (scmsymname));
 
   return SCM_BOOL_T;
@@ -962,9 +934,7 @@ SCM g_rc_postscript_prolog(SCM scmsymname)
   SCM_ASSERT (scm_is_string (scmsymname), scmsymname,
               SCM_ARG1, "postsript-prolog");
 
-  if (default_postscript_prolog) {
-    g_free(default_postscript_prolog);
-  }
+  g_free(default_postscript_prolog);
 
   /* take care of any shell variables */
   default_postscript_prolog =
@@ -1105,9 +1075,7 @@ SCM g_rc_always_promote_attributes(SCM scmsymname)
   SCM_ASSERT (scm_is_string (scmsymname), scmsymname,
               SCM_ARG1, "always-promote-attributes");
 
-  if (default_always_promote_attributes) {
-    g_free(default_always_promote_attributes);
-  }
+  g_free(default_always_promote_attributes);
   default_always_promote_attributes = 
     g_strdup_printf(" %s ", SCM_STRING_CHARS (scmsymname));
 

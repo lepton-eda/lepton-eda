@@ -279,7 +279,7 @@ static void gschem_dialog_finalize (GObject *object)
 {
   GschemDialog *dialog = GSCHEM_DIALOG (object);
 
-  if (dialog->settings_name) g_free (dialog->settings_name);
+  g_free (dialog->settings_name);
 
   G_OBJECT_CLASS (gschem_dialog_parent_class)->finalize (object);
 }
@@ -303,7 +303,7 @@ static void gschem_dialog_set_property (GObject *object, guint property_id, cons
 
   switch(property_id) {
     case PROP_SETTINGS_NAME:
-      if (dialog->settings_name) g_free (dialog->settings_name);
+      g_free (dialog->settings_name);
       dialog->settings_name = g_strdup (g_value_get_string (value));
       break;
     case PROP_GSCHEM_TOPLEVEL:

@@ -721,8 +721,8 @@ static void multiattrib_callback_edited_name(GtkCellRendererText *cellrendererte
   newtext = g_strdup_printf ("%s=%s", arg2, value);
 
   if (!x_dialog_validate_attribute(GTK_WINDOW(multiattrib), newtext)) {
-    if (name) g_free (name);
-    if (value) g_free (value);
+    g_free (name);
+    g_free (value);
     g_free(newtext);
     return;
   }
@@ -771,8 +771,8 @@ static void multiattrib_callback_edited_value(GtkCellRendererText *cell_renderer
   newtext = g_strdup_printf ("%s=%s", name, arg2);
 
   if (!x_dialog_validate_attribute(GTK_WINDOW(multiattrib), newtext)) {
-    if (name) g_free (name);
-    if (value) g_free (value);
+    g_free (name);
+    g_free (value);
     g_free(newtext);
     return;
   }

@@ -367,8 +367,7 @@ char *s_slib_search(const char *filename, int flag)
       break;
   }
 
-  if (processed_name)
-    g_free(processed_name);
+  g_free(processed_name);
 
   /* don't forget to g_free this string */
   return(string);
@@ -408,8 +407,7 @@ void s_slib_free()
   int i;
 
   for (i = 0; i < slib_index; i++) {
-    if (slib[i].dir_name)
-      g_free(slib[i].dir_name);
+    g_free(slib[i].dir_name);
   }
 
   slib_index=0;
@@ -487,8 +485,7 @@ char *s_slib_getfiles(char *directory, int flag)
       ptr = NULL;
 
       for (j = 0 ; j < count ;j++) {
-        if (whole_dir[j]) 
-          g_free(whole_dir[j]);
+        g_free(whole_dir[j]);
       }
       count = current = 0 ;
 
@@ -505,8 +502,7 @@ char *s_slib_getfiles(char *directory, int flag)
       ptr = NULL;
 
       for (j = 0 ; j < count ;j++) {
-        if (whole_dir[j]) 
-          g_free(whole_dir[j]);
+        g_free(whole_dir[j]);
       }
       count = current = 0 ;
 

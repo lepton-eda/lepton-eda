@@ -42,9 +42,7 @@
 #define DEFAULT_BITMAP_DIRECTORY   "non-existant"
 
 #define INIT_STR(w, name, str) {                            \
-    if ((w)->name) {                                        \
-        g_free((w)->name);                                  \
-    }                                                       \
+    g_free((w)->name);                                      \
     (w)->name = g_strdup (((default_ ## name) != NULL) ?    \
                           (default_ ## name) : (str));      \
 }

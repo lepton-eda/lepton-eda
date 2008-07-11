@@ -353,45 +353,35 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
     }
     o_current->line = NULL;
 
-    if (o_current->circle) {
-      /*	printf("sdeleting circle\n");*/
-      g_free(o_current->circle);
-    }
+    /*	printf("sdeleting circle\n");*/
+    g_free(o_current->circle);
     o_current->circle = NULL;
 
-    if (o_current->arc) {
-      /*	printf("sdeleting arc\n");*/
-      g_free(o_current->arc);
-    }
+    /*	printf("sdeleting arc\n");*/
+    g_free(o_current->arc);
     o_current->arc = NULL;
 
-    if (o_current->box) {
-      /*	printf("sdeleting box\n");*/
-      g_free(o_current->box);
-    }
+    /*	printf("sdeleting box\n");*/
+    g_free(o_current->box);
     o_current->box = NULL;
 
     if (o_current->picture) {
       /*	printf("sdeleting picture\n");*/
 
-      if (o_current->picture->file_content)
-        g_free(o_current->picture->file_content);
+      g_free(o_current->picture->file_content);
       if (o_current->picture->original_picture)
 	g_object_unref(o_current->picture->original_picture);
       if (o_current->picture->displayed_picture)
 	g_object_unref(o_current->picture->displayed_picture);
 
-      if (o_current->picture->filename)
-	g_free(o_current->picture->filename);
+      g_free(o_current->picture->filename);
       g_free(o_current->picture);
     }
     o_current->picture = NULL;
 
     if (o_current->text) {
-      if (o_current->text->string) {
-				/*printf("sdeleting text->string\n");*/
-        g_free(o_current->text->string); 
-      }
+      /*printf("sdeleting text->string\n");*/
+      g_free(o_current->text->string); 
       o_current->text->string = NULL;
 
       if (o_current->text->prim_objs) {
@@ -406,17 +396,13 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
     }
     o_current->text = NULL;
 
-    if (o_current->name) {
-      /*	printf("sdeleting name\n");*/
-      g_free(o_current->name);
-    }
+    /*	printf("sdeleting name\n");*/
+    g_free(o_current->name);
     o_current->name = NULL;
 
 
-    if (o_current->complex_basename) {
-      /*	printf("sdeleting complex_basename\n");*/
-      g_free(o_current->complex_basename); 
-    }
+    /*	printf("sdeleting complex_basename\n");*/
+    g_free(o_current->complex_basename); 
     o_current->complex_basename = NULL;
 
     if (o_current->complex) {

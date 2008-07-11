@@ -137,9 +137,7 @@ s_symstruct_free(SYMCHECK *s_current)
 {
   if (s_current) {
 
-    if (s_current->device_attribute) {
-      g_free(s_current->device_attribute);
-    }
+    g_free(s_current->device_attribute);
 
     g_free(s_current);
   }

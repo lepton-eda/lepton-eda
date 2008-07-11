@@ -182,9 +182,7 @@ int parse_commandline(int argc, char *argv[])
            break;
 
 	case 'o':
-	    if (output_filename) {
-		g_free(output_filename);
-	    }
+	    g_free(output_filename);
 	    output_filename = (char *) g_malloc(sizeof(char) *
 					      (strlen(optarg) + 1));
 	    strcpy(output_filename, optarg);

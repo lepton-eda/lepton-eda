@@ -138,12 +138,9 @@ void s_table_destroy(TABLE **table, int row_count, int col_count)
 
   for (i = 0; i < row_count; i++) {
     for (j = 0; j < col_count; j++) {
-      if ( (table[i][j]).attrib_value != NULL)
-	g_free( (table[i][j]).attrib_value );
-      if ( (table[i][j]).row_name != NULL)
-	g_free( (table[i][j]).row_name );
-      if ( (table[i][j]).col_name != NULL)
-	g_free( (table[i][j]).col_name );
+      g_free( (table[i][j]).attrib_value );
+      g_free( (table[i][j]).row_name );
+      g_free( (table[i][j]).col_name );
     }
   }
 
@@ -652,9 +649,7 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
 #ifdef DEBUG
       printf("     Updating attrib_value %s\n", attrib_value);
 #endif
-      if ( local_table[row][col].attrib_value != NULL) {
-	g_free( local_table[row][col].attrib_value );
-      }
+      g_free( local_table[row][col].attrib_value );
       if (attrib_value != NULL) {
 	local_table[row][col].attrib_value = (gchar *) g_strdup(attrib_value);
       } else {
@@ -665,9 +660,7 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
 #ifdef DEBUG
       printf("     Updating row_name %s\n", row_title);
 #endif
-      if ( local_table[row][col].row_name != NULL) {
-	g_free( local_table[row][col].row_name );
-      }
+      g_free( local_table[row][col].row_name );
       if (row_title != NULL) {
 	local_table[row][col].row_name = (gchar *) g_strdup(row_title);
       } else {
@@ -678,9 +671,7 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
 #ifdef DEBUG
       printf("     Updating col_name %s\n", col_title);
 #endif
-      if ( local_table[row][col].col_name != NULL) {
-	g_free( local_table[row][col].col_name );
-      }
+      g_free( local_table[row][col].col_name );
       if (col_title != NULL) {
 	local_table[row][col].col_name = (gchar *) g_strdup(col_title);
       } else {

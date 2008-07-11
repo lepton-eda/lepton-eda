@@ -148,8 +148,8 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, char *string, int len)
       s_log_message(_("numslots attribute missing\n"));
       s_log_message(
                     _("Slotting not allowed for this component\n"));
-      if (name) g_free(name);
-      if (value) g_free(value);
+      g_free(name);
+      g_free(value);
       return;
     }
 
@@ -164,8 +164,8 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, char *string, int len)
 
     if (new_slot_number > numslots || new_slot_number <=0 ) {
       s_log_message(_("New slot number out of range\n"));
-      if (name) g_free(name);
-      if (value) g_free(value);
+      g_free(name);
+      g_free(value);
       return;
     }
 
@@ -174,9 +174,7 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, char *string, int len)
     slot_value = o_attrib_search_slot(object, &slot_text_object);
 
     if (slot_value) {
-      if (slot_text_object->text->string) {
-        g_free(slot_text_object->text->string);
-      }
+      g_free(slot_text_object->text->string);
 
       slot_text_object->text->string = g_strdup (string);
 
@@ -231,14 +229,14 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, char *string, int len)
     o_redraw_single(w_current,object);
 
     toplevel->page_current->CHANGED = 1;
-    if (name) g_free(name);
-    if (value) g_free(value);
+    g_free(name);
+    g_free(value);
 
   } else {
     fprintf(stderr,
             _("uggg! you tried to slot edit something that doesn't exist!\n"));
-    if (name) g_free(name);
-    if (value) g_free(value);
+    g_free(name);
+    g_free(value);
     exit(-1);
   }
 }

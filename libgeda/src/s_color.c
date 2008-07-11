@@ -80,9 +80,7 @@ int s_color_request(int color_index, char *color_name,
 
   /* search for the color name see if it's already been alloced */
 
-  if (colors[color_index].color_name) {
-    g_free(colors[color_index].color_name);	
-  }
+  g_free(colors[color_index].color_name);	
 
   colors[color_index].color_name = g_strdup (color_name);
 
@@ -114,15 +112,9 @@ void s_color_destroy_all(void)
   int i;
 
   for (i = 0; i < MAX_COLORS; i++) {
-    if (colors[i].color_name) {
-      g_free(colors[i].color_name);
-    }
-    if (colors[i].outline_color_name) {
-      g_free(colors[i].outline_color_name);
-    }
-    if (colors[i].ps_color_string) {
-      g_free(colors[i].ps_color_string);
-    }
+    g_free(colors[i].color_name);
+    g_free(colors[i].outline_color_name);
+    g_free(colors[i].ps_color_string);
     colors[i].image_red = -1;
     colors[i].image_green = -1;
     colors[i].image_blue = -1;

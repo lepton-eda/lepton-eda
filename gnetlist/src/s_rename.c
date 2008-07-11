@@ -80,14 +80,8 @@ void s_rename_destroy_all(void)
     {
         for (temp = first_set->first_rename; temp;)
         {
-            if (temp->src) 
-            {
-                g_free(temp->src);
-            }
-            if (temp->dest) 
-	    {
-                g_free(temp->dest);
-            }
+            g_free(temp->src);
+            g_free(temp->dest);
 	    to_free = temp;
 	    temp = temp->next;
 	    g_free(to_free);

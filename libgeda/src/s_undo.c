@@ -198,7 +198,7 @@ void s_undo_destroy_all(TOPLEVEL *toplevel, UNDO *head)
 
   while (u_current != NULL) {
     u_prev = u_current->prev;	
-    if (u_current->filename) g_free(u_current->filename);
+    g_free(u_current->filename);
 		
     if (u_current->object_head) {
       s_delete_list_fromstart(toplevel,
@@ -239,9 +239,7 @@ void s_undo_remove(TOPLEVEL *toplevel, UNDO *head, UNDO *u_tos)
       else
         u_current->prev = NULL;
 
-      if (u_current->filename) {
-        g_free(u_current->filename);	
-      }
+      g_free(u_current->filename);	
 
       if (u_current->object_head) {
         s_delete_list_fromstart(toplevel,

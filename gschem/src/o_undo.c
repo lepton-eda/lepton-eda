@@ -176,9 +176,7 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
   printf("----\n");
 #endif
 
-  if (filename) {
-    g_free(filename);
-  }
+  g_free(filename);
 
   /* Now go through and see if we need to free/remove some undo levels */ 
   /* so we stay within the limits */

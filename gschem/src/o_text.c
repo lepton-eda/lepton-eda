@@ -441,9 +441,7 @@ void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int len, int text
 
         /* only change text string if there is only ONE text object selected */
         if (numselect == 1 && string) {
-          if (object->text->string) {
-            g_free(object->text->string);
-          }
+          g_free(object->text->string);
           object->text->string = g_strdup (string);
 	  /* handle slot= attribute, it's a special case */
 	  if (g_ascii_strncasecmp (string, "slot=", 5) == 0) {
@@ -496,9 +494,7 @@ void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string,
   o_erase_single(w_current, object);
 
   /* second change the real object */
-  if (object->text->string) {
-    g_free(object->text->string);
-  }
+  g_free(object->text->string);
 
   object->text->string = g_strdup (string);
   object->visibility = visibility;

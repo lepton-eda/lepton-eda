@@ -215,9 +215,7 @@ s_netattrib_handle(TOPLEVEL * pr_current, OBJECT * o_current,
     }
 
 
-    if (value) {
-	g_free(value);
-    }
+    g_free(value);
 
 
     /* for now just look inside the component */
@@ -234,9 +232,7 @@ s_netattrib_handle(TOPLEVEL * pr_current, OBJECT * o_current,
 	    o_attrib_search_name_single_count(o_current, "net", counter);
     }
 
-    if (value) {
-	g_free(value);
-    }
+    g_free(value);
 }
 
 char *s_netattrib_net_search(OBJECT * o_current, char *wanted_pin)
@@ -294,9 +290,7 @@ char *s_netattrib_net_search(OBJECT * o_current, char *wanted_pin)
     }
 
 
-    if (value) {
-	g_free(value);
-    }
+    g_free(value);
 
 
     /* now look outside the component */
@@ -341,9 +335,7 @@ char *s_netattrib_net_search(OBJECT * o_current, char *wanted_pin)
 	    o_attrib_search_name_single_count(o_current, "net", counter);
     }
 
-    if (value) {
-	g_free(value);
-    }
+    g_free(value);
 
     if (return_value) {
 	return (return_value);

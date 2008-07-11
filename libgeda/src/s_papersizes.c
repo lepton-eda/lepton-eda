@@ -121,8 +121,7 @@ void s_papersizes_free()
   int i;
 
   for (i = 0; i < papersizes_index; i++) {
-    if (papersizes[i].papersize_name)
-      g_free(papersizes[i].papersize_name);
+    g_free(papersizes[i].papersize_name);
   }
 
   papersizes_index=0;

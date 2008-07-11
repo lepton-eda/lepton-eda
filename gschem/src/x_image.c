@@ -410,8 +410,7 @@ void x_image_lowlevel(GSCHEM_TOPLEVEL *w_current, const char* filename,
           s_log_message(_("Wrote black and white image to [%s] [%d x %d]\n"), filename, width, height);
         }
       }
-      if (filetype != NULL)
-        g_free(filetype);
+      g_free(filetype);
       if (pixbuf != NULL)
         g_object_unref(pixbuf);
     }
