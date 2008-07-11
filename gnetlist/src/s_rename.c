@@ -98,11 +98,6 @@ void s_rename_next_set(void)
     SET * new_set;
     
     new_set = g_malloc(sizeof(SET));
-    if (new_set == NULL) 
-    {
-        fprintf(stderr,"Unable to create a new rename set.\n");
-        exit(-1);
-    }
     memset(new_set,0,sizeof(SET));
     if (first_set)
     {
@@ -189,8 +184,6 @@ void s_rename_add(char *src, char *dest)
                        dest, temp->src, temp->dest, src, temp->dest);
 #endif
                 new_rename = g_malloc(sizeof(RENAME));
-		if (new_rename)
-		{
 		     new_rename->next = NULL;
                      new_rename->src = g_strdup(src);
                      new_rename->dest = g_strdup(temp->dest);
@@ -204,7 +197,6 @@ void s_rename_add(char *src, char *dest)
 		         last_set->last_rename->next = new_rename;
 			 last_set->last_rename = new_rename;
 		     } 
-                }
             }
             if (temp == last)
             {
@@ -218,15 +210,10 @@ void s_rename_add(char *src, char *dest)
 	if (first_set == NULL)
 	{
 	    new_set = g_malloc(sizeof(SET));
-	    if (new_set)
-	    {
 	        memset(new_set,0,sizeof(SET));
 		first_set = last_set = new_set;
-	    }
 	}    
         new_rename = g_malloc(sizeof(RENAME));
-        if (new_rename)
-	{
 	     new_rename->next = NULL;
              new_rename->src = g_strdup(src);
              new_rename->dest = g_strdup(dest);
@@ -239,7 +226,6 @@ void s_rename_add(char *src, char *dest)
 	         last_set->last_rename->next = new_rename;
 		 last_set->last_rename = new_rename;
 	     } 
-        }
     }
 }
 

@@ -323,10 +323,6 @@ void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col,
   
   /* XXXXX  Attempt to set cell color */
   range = g_malloc(sizeof(GtkSheetRange));
-  if (range == NULL) {
-    g_error ("Can't malloc range");
-    return;
-  }
   range->row0 = row;
   range->rowi = row;
   range->col0 = col;

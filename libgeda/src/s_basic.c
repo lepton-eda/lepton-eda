@@ -142,11 +142,6 @@ OBJECT *s_basic_init_object( char *name )
 
   new_node = (OBJECT *) g_malloc(sizeof(OBJECT));	
 
-  if (new_node == NULL) {
-    fprintf(stderr, "Could not perform malloc; something is broken or increase your process limits\n");
-    exit(-1);
-  }
-
   /* setup sid */
   new_node->sid = global_sid++;
   new_node->type = -1;
