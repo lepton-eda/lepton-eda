@@ -203,7 +203,7 @@ gint g_rc_parse_system_rc(TOPLEVEL *toplevel, const gchar *rcname)
                      G_DIR_SEPARATOR_S,
                      "system-", rcname,
                      NULL);
-  filename = f_normalize_filename(tmp);
+  filename = f_normalize_filename (tmp, NULL);
   if (filename == NULL) {
     return 0;
   }
@@ -248,7 +248,7 @@ gint g_rc_parse_home_rc(TOPLEVEL *toplevel, const gchar *rcname)
                      G_DIR_SEPARATOR_S,
                      rcname,
                      NULL);
-  filename = f_normalize_filename(tmp);
+  filename = f_normalize_filename (tmp, NULL);
   if (filename == NULL) {
     return 0;
   }
@@ -284,7 +284,7 @@ gint g_rc_parse_local_rc(TOPLEVEL *toplevel, const gchar *rcname)
   gchar *err_msg;
 
   tmp = g_strconcat (".", G_DIR_SEPARATOR_S, rcname, NULL);
-  filename = f_normalize_filename (tmp);
+  filename = f_normalize_filename (tmp, NULL);
   if (filename == NULL) {
     return 0;
   }
@@ -323,7 +323,10 @@ gint g_rc_parse_specified_rc(TOPLEVEL *toplevel, const gchar *rcname)
     return 0;
   }
 
-  filename = f_normalize_filename (rcname);
+  filename = f_normalize_filename (rcname, NULL);
+  if (filename == NULL) {
+    return 0;
+  }
 
   rcbasename = g_path_get_basename (rcname);
 
@@ -362,7 +365,7 @@ void g_rc_parse(TOPLEVEL *toplevel,
 
   /* set the GEDADATARC environment variable so that the rc files */
   /* know where to look for others */
-  rc_path = f_normalize_filename (g_rc_parse_path ());
+  rc_path = f_normalize_filename (g_rc_parse_path (), NULL);
 
   g_setenv ("GEDADATARC", rc_path, TRUE);
   g_free (rc_path);

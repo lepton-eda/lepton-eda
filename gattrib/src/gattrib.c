@@ -200,7 +200,13 @@ void gattrib_main(void *closure, int argc, char *argv[])
      /* Construct the list of filenames from the command line.
       * argv_index holds the position of the first filename  */
      while (argv_index < argc) {
-        file_list = g_slist_append(file_list, f_normalize_filename(argv[argv_index]));
+        gchar *filename = f_normalize_filename(argv[argv_index], NULL);
+        if (filename != NULL) {
+            file_list = g_slist_append(file_list, filename);
+        } else {
+            fprintf(stderr, "Couldn't find file [%s]\n", argv[argv_index]);
+            exit(1);
+        }
         argv_index++;
      }
   }

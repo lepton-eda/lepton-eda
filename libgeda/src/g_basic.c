@@ -273,7 +273,7 @@ int g_read_file(const gchar *filename)
 	}
 
 	/* get full, absolute path to file */
-	full_filename = f_normalize_filename(filename);
+	full_filename = f_normalize_filename (filename, NULL);
 	if (full_filename == NULL) {
 		return(-1);
 	}

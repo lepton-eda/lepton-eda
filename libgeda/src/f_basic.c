@@ -204,7 +204,13 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
   }
 
   /* get full, absolute path to file */
-  full_filename = f_normalize_filename(filename); 
+  full_filename = f_normalize_filename (filename, &tmp_err);
+  if (full_filename == NULL) {
+    g_set_error (err, G_FILE_ERROR, tmp_err->code,
+                 _("Cannot find file %s: %s"),
+                 filename, g_strerror (tmp_err->code));
+    return 0;
+  }
 
   /* write full, absolute filename into page_current->page_filename */
   if (toplevel->page_current->page_filename) {
@@ -460,33 +466,118 @@ int f_save(TOPLEVEL *toplevel, const char *filename)
   }
 }
 
-/*! \brief Reformats a filename as an absolute resolved filename
+/*! \brief Builds an absolute pathname.
  *  \par Function Description
- *  Given a filename in any format, this returns the full, absolute
- *  resolved filename.
+ *  This function derives an absolute pathname for the pathname
+ *  pointed to by \a name with '.' and '..' resolved. It does not
+ *  resolve symbolic links.
  *
- *  \param [in] filename  A character string containing the file
- *                        name to resolve.
- *  \return A character string with the resolved filename.
+ *  It returns NULL and sets the \a error (if not NULL) if it failed
+ *  to build the pathname or the pathname does not exists.
+ *
+ *  \note
+ *  The code for this function is derived from the realpath() of
+ *  the GNU C Library (Copyright (C) 1996-2002, 2004, 2005, 2006 Free
+ *  Software Foundation, Inc. / LGPL 2.1 or later).
+ *
+ *  The part for the resolution of symbolic links has been discarded
+ *  and it has been adapted for glib and for use on Windows.
+ *
+ *  \param [in]     name  A character string containing the pathname
+ *                        to resolve.
+ *  \param [in,out] error Return location for a GError, or NULL.
+ *  \return A newly-allocated string with the resolved absolute
+ *  pathname on success, NULL otherwise.
  */
-char* f_normalize_filename(const gchar *filename)
+gchar *f_normalize_filename (const gchar *name, GError **error)
 {
-  char filename_buffer[MAXPATHLEN];  /* nasty hack for realpath */
-  char *full_filename;
-
-  /*  Check for pathological case  */
-  if (filename == NULL) {
+#ifdef G_OS_WIN32
+#define ROOT_MARKER_LEN 3
+#else
+#define ROOT_MARKER_LEN 1
+#endif /* G_OS_WIN32 */   
+  GString *rpath;
+  const char *start, *end;
+  
+  if (name == NULL) {
+    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_INVAL,
+                 g_strerror (EINVAL));
     return NULL;
   }
 
-  realpath(filename, filename_buffer);  /* places reult in filename_buffer */
-  full_filename = g_strdup (filename_buffer);
+  if (*name == '\0') {
+    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_NOENT,
+                 g_strerror (ENOENT));
+    return NULL;
+  }
 
-#ifdef DEBUG
-  printf("In f_normalize_filename, returning full_filename= %s \n", full_filename);
-#endif 
+  rpath = g_string_sized_new (strlen (name));
+  
+  /* if relative path, prepend current dir */
+  if (!g_path_is_absolute (name)) {
+    gchar *cwd = g_get_current_dir ();
+    g_string_append (rpath, cwd);
+    g_free (cwd);
+    if (!G_IS_DIR_SEPARATOR (rpath->str[rpath->len - 1])) {
+      g_string_append_c (rpath, G_DIR_SEPARATOR);
+    }
+  } else {
+    g_string_append_len (rpath, name, ROOT_MARKER_LEN);
+    /* move to first path separator */
+    name += ROOT_MARKER_LEN - 1;
+  }
 
-  return full_filename;
+  for (start = end = name; *start != '\0'; start = end) {
+    /* skip sequence of multiple path-separators */
+    while (G_IS_DIR_SEPARATOR (*start)) {
+      ++start;
+    }
+
+    /* find end of path component */
+    for (end = start; *end != '\0' && !G_IS_DIR_SEPARATOR (*end); ++end);
+
+    if (end - start == 0) {
+      break;
+    } else if (end - start == 1 && start[0] == '.') {
+      /* nothing */;
+    } else if (end - start == 2 && start[0] == '.' && start[1] == '.') {
+      /* back up to previous component, ignore if at root already.  */
+      if (rpath->len > ROOT_MARKER_LEN) {
+        while (!G_IS_DIR_SEPARATOR (rpath->str[(--rpath->len) - 1]));
+        g_string_set_size (rpath, rpath->len);
+      }
+    } else {
+      /* path component, copy to new path */
+      if (!G_IS_DIR_SEPARATOR (rpath->str[rpath->len - 1])) {
+        g_string_append_c (rpath, G_DIR_SEPARATOR);
+      }
+
+      g_string_append_len (rpath, start, end - start);
+
+      if (!g_file_test (rpath->str, G_FILE_TEST_EXISTS)) {
+        g_set_error (error,G_FILE_ERROR, G_FILE_ERROR_NOENT,
+                     g_strerror (ENOENT));
+        goto error;
+      } else if (!g_file_test (rpath->str, G_FILE_TEST_IS_DIR) &&
+                 *end != '\0') {
+        g_set_error (error,G_FILE_ERROR, G_FILE_ERROR_NOTDIR,
+                     g_strerror (ENOTDIR));
+        goto error;
+      }
+    }
+  }
+  
+  if (G_IS_DIR_SEPARATOR (rpath->str[rpath->len - 1]) &&
+      rpath->len > ROOT_MARKER_LEN) {
+    g_string_set_size (rpath, rpath->len - 1);
+  }
+  
+  return g_string_free (rpath, FALSE);
+
+  error:
+  g_string_free (rpath, TRUE);
+  return NULL;
+#undef ROOT_MARKER_LEN
 }
 
 /*! \brief Follow symlinks until a real file is found
