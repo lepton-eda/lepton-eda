@@ -233,7 +233,6 @@ int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object,
   char *name = NULL;
   char *padded_name = NULL;
   int promotableAttribute = FALSE;
-  char *ptr;
 
   g_return_val_if_fail(object != NULL, FALSE);
 
@@ -243,8 +242,7 @@ int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object,
   }
 
   /* Make sure text item is an attribute */
-  ptr = strchr(object->text->string, '=');
-  if (!ptr || ptr[1] == '\0' || ptr[1] == ' ')
+  if (!o_attrib_get_name_value (object->text->string, NULL, NULL))
   {
     return FALSE;  /* not an attribute */
   }
