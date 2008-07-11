@@ -66,10 +66,7 @@ main_prog(void *closure, int argc, char *argv[])
 
   /* create log file right away */
   /* even if logging is enabled */
-  logfile = g_build_path (G_DIR_SEPARATOR_S,
-                          cwd,
-                          "gsymcheck.log",
-                          NULL);
+  logfile = g_build_filename (cwd, "gsymcheck.log", NULL);
   s_log_init (logfile);
   g_free (logfile);
 	
@@ -112,7 +109,7 @@ main_prog(void *closure, int argc, char *argv[])
       /* Path is already absolute so no need to do any concat of cwd */
       filename = g_strdup (argv[i]);
     } else {
-      filename = g_build_path (G_DIR_SEPARATOR_S, cwd, argv[i], NULL);
+      filename = g_build_filename (cwd, argv[i], NULL);
     }
 
     s_page_goto (pr_current,

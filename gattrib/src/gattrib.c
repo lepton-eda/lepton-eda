@@ -140,10 +140,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
   /* ----------  create log file right away ---------- */
   /* ----------  even if logging is enabled ---------- */
   cwd = g_get_current_dir();
-  logfile = g_build_path (G_DIR_SEPARATOR_S,
-                          cwd,
-                          "gattrib.log",
-                          NULL);
+  logfile = g_build_filename (cwd, "gattrib.log", NULL);
   s_log_init (logfile);
   g_free (logfile);
   g_free (cwd);

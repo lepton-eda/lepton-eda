@@ -67,10 +67,7 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
     page->page_filename = g_strdup (filename);
   } else {
     gchar *pwd = g_get_current_dir ();
-    page->page_filename = g_strconcat (pwd,
-                                       G_DIR_SEPARATOR_S,
-                                       filename,
-                                       NULL);
+    page->page_filename = g_build_filename (pwd, filename, NULL);
     g_free (pwd);
   }
 	

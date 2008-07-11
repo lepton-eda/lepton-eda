@@ -227,10 +227,7 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
 
   /* Now open RC and process file */
   if (flags & F_OPEN_RC) {
-    full_rcfilename = g_strconcat (file_directory,  
-                                   G_DIR_SEPARATOR_S, 
-                                   "gafrc",
-                                   NULL);
+    full_rcfilename = g_build_filename (file_directory, "gafrc", NULL);
     g_rc_parse_specified_rc(toplevel, full_rcfilename);
   }
 

@@ -176,10 +176,7 @@ void main_prog(void *closure, int argc, char *argv[])
   
   /*! \todo Probably the file name shuold be defined elsewhere */
   /* create log file right away even if logging is enabled */
-  filename = g_build_path (G_DIR_SEPARATOR_S,
-                           cwd,
-                           "gschem.log",
-                           NULL);
+  filename = g_build_filename (cwd, "gschem.log", NULL);
   s_log_init (filename);
   g_free (filename);
 
@@ -241,8 +238,7 @@ void main_prog(void *closure, int argc, char *argv[])
   g_rc_parse_gtkrc();
   g_rc_parse(w_current->toplevel, "gschemrc", rc_filename);
   
-  input_str = g_strdup_printf("%s%cgschem.scm", default_scheme_directory, 
-			      G_DIR_SEPARATOR);
+  input_str = g_build_filename (default_scheme_directory, "gschem.scm", NULL);
   if (g_read_file(input_str) != -1) {
     s_log_message(_("Read init scm file [%s]\n"), input_str);
   } else {
@@ -282,7 +278,7 @@ void main_prog(void *closure, int argc, char *argv[])
       /* Path is already absolute so no need to do any concat of cwd */
       filename = g_strdup (argv[i]);
     } else {
-      filename = g_strconcat (cwd, G_DIR_SEPARATOR_S, argv[i], NULL);
+      filename = g_build_filename (cwd, argv[i], NULL);
     }
 
     if ( first_page )

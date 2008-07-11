@@ -181,7 +181,7 @@ OBJECT *o_text_load_font(TOPLEVEL *toplevel, gunichar needed_char)
     s_log_message(_("Could not find character '%s' definition.\n"), outbuf);
     
     g_free (temp_string);
-    temp_string = g_strdup_printf("%s%cquest.sym", toplevel->font_directory, G_DIR_SEPARATOR);
+    temp_string = g_build_filename (toplevel->font_directory, "quest.sym", NULL);
     if ( access(temp_string, R_OK) != 0 ) {
       fprintf(stderr, _("Could not load question font char -- check font-directory keyword\n"));
       exit(-1);

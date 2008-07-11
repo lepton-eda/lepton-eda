@@ -198,8 +198,8 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
 
     s_log_message (_("Loading warning picture.\n"));
     
-    temp_filename = g_strconcat(toplevel->bitmap_directory,
-                                G_DIR_SEPARATOR_S, "gschem-warning.png", NULL);
+    temp_filename = g_build_filename (toplevel->bitmap_directory,
+                                      "gschem-warning.png", NULL);
     pixbuf = gdk_pixbuf_new_from_file (temp_filename, NULL);
     if (pixbuf == NULL) {
       s_log_message( _("Error loading picture from file: %s.\n"),

@@ -881,8 +881,8 @@ void autonumber_sortorder_create(GSCHEM_TOPLEVEL *w_current, GtkWidget *sort_ord
   store = gtk_list_store_new(2, G_TYPE_STRING, GDK_TYPE_PIXBUF); 
 
   for (i=0; filenames[i] != NULL; i++) {
-    path=g_strconcat(w_current->toplevel->bitmap_directory,
-		     G_DIR_SEPARATOR_S, filenames[i], NULL);
+    path=g_build_filename(w_current->toplevel->bitmap_directory,
+		     filenames[i], NULL);
     pixbuf = gdk_pixbuf_new_from_file(path, &error);
     g_free(path);
     gtk_list_store_append(store, &iter);

@@ -242,12 +242,7 @@ gint g_rc_parse_home_rc(TOPLEVEL *toplevel, const gchar *rcname)
     return 0;
   }
 
-  tmp = g_strconcat (home,
-                     G_DIR_SEPARATOR_S,
-                     ".gEDA",
-                     G_DIR_SEPARATOR_S,
-                     rcname,
-                     NULL);
+  tmp = g_build_filename (home, ".gEDA", rcname, NULL);
   filename = f_normalize_filename (tmp, NULL);
   if (filename == NULL) {
     return 0;
@@ -278,13 +273,11 @@ gint g_rc_parse_home_rc(TOPLEVEL *toplevel, const gchar *rcname)
 gint g_rc_parse_local_rc(TOPLEVEL *toplevel, const gchar *rcname)
 {
   gint found_rc;
-  gchar *tmp;
   char *filename;
   gchar *ok_msg;
   gchar *err_msg;
 
-  tmp = g_strconcat (".", G_DIR_SEPARATOR_S, rcname, NULL);
-  filename = f_normalize_filename (tmp, NULL);
+  filename = f_normalize_filename (rcname, NULL);
   if (filename == NULL) {
     return 0;
   }
@@ -297,7 +290,6 @@ gint g_rc_parse_local_rc(TOPLEVEL *toplevel, const gchar *rcname)
 
   g_free(ok_msg);
   g_free(err_msg);
-  g_free(tmp);
   g_free(filename);
 
   return found_rc;
@@ -436,7 +428,7 @@ SCM g_rc_component_library(SCM path, SCM name)
 #ifdef __MINGW32__
     u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
 #endif
-    temp = g_strconcat (cwd, G_DIR_SEPARATOR_S, string, NULL);
+    temp = g_build_filename (cwd, string, NULL);
     s_clib_add_directory (temp, namestr);
     g_free(temp);
     g_free(cwd);
@@ -571,10 +563,7 @@ SCM g_rc_component_library_search(SCM path)
         (g_strcasecmp (entry, "..")   != 0) &&
         (g_strcasecmp (entry, "font") != 0))
     {
-      gchar *fullpath = g_strconcat (string,
-                                     G_DIR_SEPARATOR_S,
-                                     entry,
-                                     NULL);
+      gchar *fullpath = g_build_filename (string, entry, NULL);
 
       if (g_file_test (fullpath, G_FILE_TEST_IS_DIR)) {
         if (g_path_is_absolute (fullpath)) {
@@ -585,10 +574,7 @@ SCM g_rc_component_library_search(SCM path)
 #ifdef __MINGW32__
           u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
 #endif
-          temp = g_strconcat (cwd,
-                              G_DIR_SEPARATOR_S,
-                              fullpath,
-                              NULL);
+          temp = g_build_filename (cwd, fullpath, NULL);
           s_clib_add_directory (temp, NULL);
           g_free(temp);
           g_free(cwd);
@@ -637,10 +623,7 @@ SCM g_rc_source_library(SCM path)
 #ifdef __MINGW32__
     u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
 #endif
-    temp = g_strconcat (cwd,
-                        G_DIR_SEPARATOR_S,
-                        string,
-                        NULL);
+    temp = g_build_filename (cwd, string, NULL);
     s_slib_add_entry (temp);
     g_free(temp);
     g_free(cwd);
@@ -694,10 +677,7 @@ SCM g_rc_source_library_search(SCM path)
         (g_strcasecmp (entry, "..")   != 0) &&
         (g_strcasecmp (entry, "font") != 0))
     {
-      gchar *fullpath = g_strconcat (string,
-                                     G_DIR_SEPARATOR_S,
-                                     entry,
-                                     NULL);
+      gchar *fullpath = g_build_filename (string, entry, NULL);
 
       if (g_file_test (fullpath, G_FILE_TEST_IS_DIR)) {
         if (s_slib_uniq (fullpath)) {
@@ -709,10 +689,7 @@ SCM g_rc_source_library_search(SCM path)
 #ifdef __MINGW32__
             u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
 #endif
-            temp = g_strconcat (cwd,
-                                G_DIR_SEPARATOR_S,
-                                fullpath,
-                                NULL);
+            temp = g_build_filename (cwd, fullpath, NULL);
             s_slib_add_entry (temp);
             g_free(temp);
             g_free(cwd);

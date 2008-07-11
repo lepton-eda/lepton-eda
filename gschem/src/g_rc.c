@@ -59,19 +59,13 @@ void g_rc_parse_gtkrc()
   gchar *filename;
   const gchar *home;
 
-  filename = g_strconcat (g_rc_parse_path (),
-                          G_DIR_SEPARATOR_S,
-                          "gschem-gtkrc",
-                          NULL);
+  filename = g_build_filename (g_rc_parse_path (), "gschem-gtkrc", NULL);
   gtk_rc_parse (filename);
   g_free (filename);
   
   home = g_getenv ("HOME");
   if (home != NULL) {
-    filename = g_strconcat (home,
-                            G_DIR_SEPARATOR_S,
-                            ".gschem-gtkrc",
-                            NULL);
+    filename = g_build_filename (home, ".gschem-gtkrc", NULL);
     gtk_rc_parse (filename);
     g_free (filename);
   }
