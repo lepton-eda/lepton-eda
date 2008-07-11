@@ -402,7 +402,6 @@ void s_cue_output_single(TOPLEVEL *toplevel, OBJECT *object, FILE *fp, int type)
 
 /* s_hierarchy.c */
 int s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename, PAGE *parent, int page_control, int flag);
-void s_hierarchy_down_schematic_multiple (TOPLEVEL *toplevel, const gchar *filename, PAGE *parent);
 void s_hierarchy_down_symbol (TOPLEVEL *toplevel, const CLibSymbol *symbol, PAGE *parent);
 void s_hierarchy_up(TOPLEVEL *toplevel, int pid);
 GList* s_hierarchy_traversepages(TOPLEVEL *toplevel, gint flags);
