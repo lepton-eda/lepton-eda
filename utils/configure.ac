@@ -270,7 +270,7 @@ AC_C_CONST
 
 # Checks for library functions.
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS(getcwd strstr vsnprintf snprintf getopt_long)
+AC_CHECK_FUNCS(strstr snprintf getopt_long)
 AC_CHECK_FUNCS(strcasecmp strncasecmp stricmp strnicmp)
 
 AC_MSG_CHECKING([for optarg in unistd.h])

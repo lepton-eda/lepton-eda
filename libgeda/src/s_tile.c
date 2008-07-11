@@ -25,9 +25,6 @@
 #endif
 #include <ctype.h>
 #include <math.h>
-#ifndef HAVE_VSNPRINTF
-#include <stdarg.h>
-#endif
 
 #include "libgeda_priv.h"
 

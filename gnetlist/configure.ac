@@ -285,7 +285,7 @@ AC_C_CONST
 
 # Checks for library functions.
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS(getcwd strstr vsnprintf snprintf)
+AC_CHECK_FUNCS(strstr)
 
 AC_MSG_CHECKING([for optarg in unistd.h])
 AC_TRY_COMPILE(

@@ -24,9 +24,6 @@
 #if HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
-#ifndef HAVE_VSNPRINTF
-#include <stdarg.h>
-#endif
 
 #include "libgeda_priv.h"
 
