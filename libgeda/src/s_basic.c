@@ -550,20 +550,6 @@ char *remove_last_nl(char *string)
   return(string);
 }
 
-#ifndef HAVE_VSNPRINTF
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void vsnprintf(char *buff, size_t bufsiz, const char *fmt, va_list ap)
-{
-    char *tmpbuf = buff;
-
-    vsprintf(tmpbuf, fmt, ap);
-}
-#endif
-
 /*! \brief Expand environment variables in string.
  *  \par Function Description
  *  This function returns the passed string with environment variables
