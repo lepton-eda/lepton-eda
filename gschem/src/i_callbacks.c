@@ -1680,7 +1680,7 @@ DEFINE_I_CALLBACK(page_next)
   }
 
   if (w_current->enforce_hierarchy) {
-    p_new = s_hierarchy_find_next_page(toplevel->pages, p_current, p_current->page_control);
+    p_new = s_hierarchy_find_next_page(toplevel->pages, p_current);
   } else {
     p_new = (PAGE *)iter->data;
   }
@@ -1716,7 +1716,7 @@ DEFINE_I_CALLBACK(page_prev)
   p_new = (PAGE *)iter->data;
 
   if (w_current->enforce_hierarchy) {
-    p_new = s_hierarchy_find_prev_page(toplevel->pages, p_current, p_current->page_control);
+    p_new = s_hierarchy_find_prev_page(toplevel->pages, p_current);
   } else {
     p_new = (PAGE *)iter->data;
   }

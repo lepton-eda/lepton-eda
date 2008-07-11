@@ -299,12 +299,22 @@ gint s_hierarchy_print_page(PAGE *p_current, void * data)
   return 0;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Search for a page preceding a given page in hierarchy.
  *  \par Function Description
+ *  This function searches the previous sibling of page \a page in the
+ *  hierarchy. It checks all the pages preceding \a page in the list
+ *  \a page_list.
  *
- */
-PAGE *s_hierarchy_find_prev_page (GedaPageList *page_list, PAGE *current_page, int page_control)
+ *  It returns a pointer on the page if found, NULL otherwise.
+ *
+ *  \note
+ *  The page \a current_page must be in the list \a page_list.
+ *
+ *  \param [in] page_list    The list of pages in which to search.
+ *  \param [in] current_page The reference page for the search.
+ *  \returns A pointer on the page found or NULL if not found.
+  */
+PAGE *s_hierarchy_find_prev_page (GedaPageList *page_list, PAGE *current_page)
 {
   const GList *iter;
 
@@ -314,7 +324,7 @@ PAGE *s_hierarchy_find_prev_page (GedaPageList *page_list, PAGE *current_page, i
        iter = g_list_previous (iter)) {
 
     PAGE *page = (PAGE *)iter->data;
-    if (page->page_control == page_control) {
+    if (page->page_control == current_page->page_control) {
       return page;
     }
   }
@@ -322,12 +332,22 @@ PAGE *s_hierarchy_find_prev_page (GedaPageList *page_list, PAGE *current_page, i
   return NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Search for a page following a given page in hierarchy.
  *  \par Function Description
+ *  This function searches the next sibling of page \a page in the
+ *  hierarchy. It checks all the pages following \a page in the list
+ *  \a page_list.
  *
- */
-PAGE *s_hierarchy_find_next_page (GedaPageList *page_list, PAGE *current_page, int page_control)
+ *  It returns a pointer on the page if found, NULL otherwise.
+ *
+ *  \note
+ *  The page \a current_page must be in the list \a page_list.
+ *
+ *  \param [in] page_list    The list of pages in which to search.
+ *  \param [in] current_page The reference page for the search.
+ *  \returns A pointer on the page found or NULL if not found.
+  */
+PAGE *s_hierarchy_find_next_page (GedaPageList *page_list, PAGE *current_page)
 {
   const GList *iter;
 
@@ -337,7 +357,7 @@ PAGE *s_hierarchy_find_next_page (GedaPageList *page_list, PAGE *current_page, i
        iter = g_list_next (iter)) {
 
     PAGE *page = (PAGE *)iter->data;
-    if (page->page_control == page_control) {
+    if (page->page_control == current_page->page_control) {
       return page;
     }
   }

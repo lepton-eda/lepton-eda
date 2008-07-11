@@ -406,8 +406,8 @@ void s_hierarchy_down_symbol (TOPLEVEL *toplevel, const CLibSymbol *symbol, PAGE
 void s_hierarchy_up(TOPLEVEL *toplevel, int pid);
 GList* s_hierarchy_traversepages(TOPLEVEL *toplevel, gint flags);
 gint s_hierarchy_print_page(PAGE *p_current, void * data);
-PAGE *s_hierarchy_find_prev_page(GedaPageList *page_list, PAGE *current_page, int page_control);
-PAGE *s_hierarchy_find_next_page(GedaPageList *page_list, PAGE *current_page, int page_control);
+PAGE *s_hierarchy_find_prev_page(GedaPageList *page_list, PAGE *current_page);
+PAGE *s_hierarchy_find_next_page(GedaPageList *page_list, PAGE *current_page);
 
 /* s_log.c */
 void s_log_init (const gchar *filename);
