@@ -40,30 +40,6 @@
 /*! this is modified here and in o_list.c */
 int global_sid=0;
 
-#define NUMCOLORS 9  /*!< */
-
-/*! \brief */
-struct st_old_colors {
-        char *name;
-        int value;
-};
-
-/*! \brief
- * Colors must be in alphabetical order
- * be sure that you update above define
- */
-struct st_old_colors old_colors[] = {
-	{ "black", 0 },
-	{ "blue", 4 },
-	{ "cyan", 6 },
-	{ "green", 3 },
-	{ "grey", 7 }, 
-	{ "grey90", 8 },
-	{ "red", 2 },
-	{ "white", 1 },
-	{ "yellow", 5 },
-};
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -564,42 +540,6 @@ void string_tolower(char *in, char *out)
 	for (i = 0 ; i < len ; i++) {
 		out[i] = tolower(in[i]);
 	}
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-int colornametovalue(char *string)
-{
-	
-  int lower = 0; 
-  int upper = NUMCOLORS - 1;
-  int middle;
-  int val;
-  struct st_old_colors *ptr=NULL;
-
-  if (!string) {
-    return(-1);
-  }
-
-  string_tolower(string, string);
-  while (lower <= upper) {
-    middle = (lower + upper) / 2;
-
-    ptr = &old_colors[middle];
-    val = strcmp (ptr->name, string);
-
-    if (val < 0) {
-      lower = middle + 1;
-    } else if (val == 0) {
-      return(ptr->value);
-    } else {
-      upper = middle - 1;
-    }
-  }                
-  return(-1);
 }
 
 /*! \todo Finish function documentation!!!
