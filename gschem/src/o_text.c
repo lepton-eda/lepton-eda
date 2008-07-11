@@ -291,15 +291,17 @@ void o_text_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   s_delete_object_glist(toplevel, toplevel->page_current->attrib_place_list);
   toplevel->page_current->attrib_place_list = NULL;
 
-  value = toplevel->current_attribute;
-
   switch(w_current->text_caps) {
     case(LOWER):
-      string_tolower(value, value);
+      value = toplevel->current_attribute;
+      toplevel->current_attribute = g_utf8_strdown (value, -1);
+      g_free (value);
       break;
 
     case(UPPER):
-      string_toupper(value, value);
+      value = toplevel->current_attribute;
+      toplevel->current_attribute = g_utf8_strup (value, -1);
+      g_free (value);
       break;
 
     case(BOTH):

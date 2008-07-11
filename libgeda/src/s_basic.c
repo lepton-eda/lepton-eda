@@ -512,41 +512,6 @@ OBJECT *s_remove(TOPLEVEL *toplevel, OBJECT *object)
  *  \par Function Description
  *
  */
-/* Done */
-void string_toupper(char *in, char *out)
-{
-  int len;
-  int i;
-
-  len = strlen(in);
-
-  for (i = 0 ; i < len ; i++) {
-    out[i] = toupper(in[i]);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void string_tolower(char *in, char *out)
-{
-	int len;
-	int i;
-
-	len = strlen(in);
-
-	for (i = 0 ; i < len ; i++) {
-		out[i] = tolower(in[i]);
-	}
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 /* used by o_text_read */
 char *remove_nl(char *string)
 {

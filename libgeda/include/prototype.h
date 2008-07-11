@@ -342,8 +342,6 @@ void s_delete(TOPLEVEL *toplevel, OBJECT *o_current);
 void s_delete_list_fromstart(TOPLEVEL *toplevel, OBJECT *start);
 void s_delete_object_glist(TOPLEVEL *toplevel, GList *list);
 OBJECT *s_remove(TOPLEVEL *toplevel, OBJECT *object);
-void string_toupper(char *in, char *out);
-void string_tolower(char *in, char *out);
 char *remove_nl(char *string);
 char *remove_last_nl(char *string);
 gchar *s_expand_env_variables (const gchar *string);

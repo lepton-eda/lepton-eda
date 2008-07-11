@@ -606,8 +606,7 @@ static void refresh_directory (CLibSource *source)
     if (source_has_symbol (source, entry) != NULL) continue;
     
     /* skip filenames which don't have the right suffix. */
-    low_entry = g_strdup(entry);
-    string_tolower (low_entry, low_entry);
+    low_entry = g_utf8_strdown (entry, -1);
     if (!g_str_has_suffix (low_entry, SYM_FILENAME_FILTER)) {
       g_free (low_entry);
       continue;

@@ -120,17 +120,18 @@ void text_input_dialog_apply(GtkWidget *w, GSCHEM_TOPLEVEL *w_current)
   string =  gtk_text_iter_get_text (&start, &end);
 
   if (string[0] != '\0' ) {
+    gchar *tmp = NULL;
     len = strlen(string);
 #if DEBUG
     printf("text was: _%s_ %d\n", string, len);
 #endif
     switch(w_current->text_caps) {
       case(LOWER):
-        string_tolower(string, string);
+        tmp = g_utf8_strdown (string, -1);
         break;
 
       case(UPPER):
-        string_toupper(string, string);
+        tmp = g_utf8_strup (string, -1);
         break;
 
       case(BOTH):
@@ -143,7 +144,8 @@ void text_input_dialog_apply(GtkWidget *w, GSCHEM_TOPLEVEL *w_current)
     select_all_text_in_textview(GTK_TEXT_VIEW(tientry));
     gtk_widget_grab_focus(tientry);
 
-    o_attrib_set_string(toplevel, string);
+    o_attrib_set_string(toplevel, tmp == NULL ? string : tmp);
+    g_free (tmp);
     toplevel->page_current->CHANGED=1;
     w_current->event_state = DRAWTEXT;
     w_current->inside_action = 1;
