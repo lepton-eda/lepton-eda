@@ -104,37 +104,6 @@ char *u_basic_breakup_string(char *string, char delimiter, int count)
  *  \par Function Description
  *
  */
-void u_basic_strip_trailing(char *string, char c)
-{
-  if (string) {
-   int len = strlen(string) - 1; /* point to last char */
-   if (string[len] == c) {
-       string[len] = '\0';
-    }
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-int u_basic_has_trailing(char *string, char c)
-{
-  if (string) {
-   int len = strlen(string) - 1; /* point to last char */
-   if (string[len] == c) {
-	return TRUE;
-    }
-  }
-  return FALSE;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 /*
  * This fcn counts the number of occurances of the character
  * "character" in the string "string".
