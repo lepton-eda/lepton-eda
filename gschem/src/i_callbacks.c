@@ -2939,11 +2939,17 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
 DEFINE_I_CALLBACK(hierarchy_up)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  PAGE *up_page;
 
   exit_if_null(w_current);
 
-  s_hierarchy_up(w_current->toplevel, w_current->toplevel->page_current->up);
-  x_window_set_current_page(w_current, w_current->toplevel->page_current);
+  up_page = s_hierarchy_find_up_page (w_current->toplevel->pages,
+                                      w_current->toplevel->page_current);
+  if (up_page == NULL) {
+    s_log_message(_("Cannot find any schematics above the current one!\n"));
+  } else {
+    x_window_set_current_page(w_current, up_page);
+  }
 }
 
 /*! \todo Finish function documentation!!!

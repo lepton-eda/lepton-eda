@@ -165,28 +165,28 @@ void s_hierarchy_down_symbol (TOPLEVEL *toplevel,
 
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Search for the parent page of a page in hierarchy.
  *  \par Function Description
+ *  This function searches the parent page of page \a page in the
+ *  hierarchy. It checks all the pages in the list \a page_list.
  *
+ *  It returns a pointer on the page if found, NULL otherwise.
+ *
+ *  \note
+ *  The page \a current_page must be in the list \a page_list.
+ *
+ *  \param [in] page_list    The list of pages in which to search.
+ *  \param [in] current_page The reference page for the search.
+ *  \returns A pointer on the page found or NULL if not found.
  */
-void s_hierarchy_up(TOPLEVEL *toplevel, int pid)
+PAGE *s_hierarchy_find_up_page (GedaPageList *page_list, PAGE *current_page)
 {
-  PAGE *p_current;
-
-  if (pid < 0) {
+  if (current_page->up < 0) {
     s_log_message(_("There are no schematics above the current one!\n"));
-    return;
+    return NULL;
   }
 
-  p_current = s_page_search_by_page_id(toplevel->pages, pid);
-
-  if (p_current) {
-    s_page_goto(toplevel, p_current);
-  } else {
-    s_log_message(_("Cannot find any schematics above the current one!\n"));
-    s_log_message(_("Maybe toplevel schematic page was closed/discarded?\n"));
-  }
+  return s_page_search_by_page_id (page_list, current_page->up);
 }
 
 /*! \todo Finish function documentation!!!

@@ -403,7 +403,7 @@ void s_cue_output_single(TOPLEVEL *toplevel, OBJECT *object, FILE *fp, int type)
 /* s_hierarchy.c */
 int s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename, PAGE *parent, int page_control, int flag);
 void s_hierarchy_down_symbol (TOPLEVEL *toplevel, const CLibSymbol *symbol, PAGE *parent);
-void s_hierarchy_up(TOPLEVEL *toplevel, int pid);
+PAGE *s_hierarchy_find_up_page(GedaPageList *page_list, PAGE *current_page);
 GList* s_hierarchy_traversepages(TOPLEVEL *toplevel, gint flags);
 gint s_hierarchy_print_page(PAGE *p_current, void * data);
 PAGE *s_hierarchy_find_prev_page(GedaPageList *page_list, PAGE *current_page);
