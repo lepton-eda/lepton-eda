@@ -401,7 +401,7 @@ void g_rc_parse(TOPLEVEL *toplevel,
  */
 SCM g_rc_component_library(SCM path, SCM name)
 {
-  char *string;
+  gchar *string;
   char *namestr = NULL;
 
   SCM_ASSERT (scm_is_string (path), path,
@@ -413,9 +413,8 @@ SCM g_rc_component_library(SCM path, SCM name)
     namestr = SCM_STRING_CHARS (name);
   }
   
-  string = g_strdup (SCM_STRING_CHARS (path));
   /* take care of any shell variables */
-  string = s_expand_env_variables(string);
+  string = s_expand_env_variables (SCM_STRING_CHARS (path));
 
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
@@ -460,40 +459,36 @@ SCM g_rc_component_library(SCM path, SCM name)
 SCM g_rc_component_library_command (SCM listcmd, SCM getcmd, 
                                     SCM name)
 {
-  gchar *namestr = NULL;
-  gchar *lcmdstr = NULL;
-  gchar *gcmdstr = NULL;
   const CLibSource *src;
-  char *tmp_str;
+  gchar *lcmdstr, *gcmdstr;
+  char *tmp_str, *namestr;
 
   SCM_ASSERT (scm_is_string (listcmd), listcmd, SCM_ARG1, 
               "component-library-command");
-  tmp_str = scm_to_locale_string (listcmd);
-  lcmdstr = g_strdup (tmp_str);
-  free (tmp_str); /* this should stay as free (allocated from guile) */
-
   SCM_ASSERT (scm_is_string (getcmd), getcmd, SCM_ARG2, 
               "component-library-command");
-  tmp_str = scm_to_locale_string (getcmd);
-  gcmdstr = g_strdup (tmp_str);
-  free (tmp_str); /* this should stay as free (allocated from guile) */
-
   SCM_ASSERT (scm_is_string (name), name, SCM_ARG3, 
               "component-library-command");
-  tmp_str = scm_to_locale_string (name);
-  namestr = g_strdup (tmp_str);
+
+  /* take care of any shell variables */
+  /*! \bug this may be a security risk! */
+  tmp_str = scm_to_locale_string (listcmd);
+  lcmdstr = s_expand_env_variables (tmp_str);
   free (tmp_str); /* this should stay as free (allocated from guile) */
 
   /* take care of any shell variables */
   /*! \bug this may be a security risk! */
-  lcmdstr = s_expand_env_variables(lcmdstr);
-  gcmdstr = s_expand_env_variables(gcmdstr);
+  tmp_str = scm_to_locale_string (getcmd);
+  gcmdstr = s_expand_env_variables (tmp_str);
+  free (tmp_str); /* this should stay as free (allocated from guile) */
+
+  namestr = scm_to_locale_string (name);
 
   src = s_clib_add_command (lcmdstr, gcmdstr, namestr);
 
+  free (namestr); /* this should stay as free (allocated from guile) */
   g_free (lcmdstr);
   g_free (gcmdstr);
-  g_free (namestr);
 
   if (src != NULL) return SCM_BOOL_T;
 
@@ -541,16 +536,15 @@ SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name)
  */
 SCM g_rc_component_library_search(SCM path)
 {
-  char *string;
+  gchar *string;
   GDir *dir;
   const gchar *entry;
   
   SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "component-library-search");
 
-  string = g_strdup (SCM_STRING_CHARS (path));
   /* take care of any shell variables */
-  string = s_expand_env_variables(string);
+  string = s_expand_env_variables (SCM_STRING_CHARS (path));
 
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
@@ -619,14 +613,13 @@ SCM g_rc_component_library_search(SCM path)
  */
 SCM g_rc_source_library(SCM path)
 {
-  char *string;
+  gchar *string;
   
   SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "source-library");
 
-  string = g_strdup (SCM_STRING_CHARS (path));
   /* take care of any shell variables */
-  string = s_expand_env_variables(string);
+  string = s_expand_env_variables (SCM_STRING_CHARS (path));
   
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
@@ -670,16 +663,15 @@ SCM g_rc_source_library(SCM path)
  */
 SCM g_rc_source_library_search(SCM path)
 {
-  char *string;
+  gchar *string;
   GDir *dir;
   const gchar *entry;
   
   SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "source-library-search");
 
-  string = g_strdup (SCM_STRING_CHARS (path));
   /* take care of any shell variables */
-  string = s_expand_env_variables(string);
+  string = s_expand_env_variables (SCM_STRING_CHARS (path));
 
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
@@ -836,14 +828,13 @@ SCM g_rc_untitled_name(SCM name)
  */
 SCM g_rc_font_directory(SCM path)
 {
-  char *string;
+  gchar *string;
 
   SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "font-directory");
 
-  string = g_strdup (SCM_STRING_CHARS (path));
   /* take care of any shell variables */
-  string = s_expand_env_variables(string);
+  string = s_expand_env_variables (SCM_STRING_CHARS (path));
 
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
@@ -873,14 +864,13 @@ SCM g_rc_font_directory(SCM path)
  */
 SCM g_rc_scheme_directory(SCM path)
 {
-  char *string;
+  gchar *string;
 
   SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "scheme-directory");
 
-  string = g_strdup (SCM_STRING_CHARS (path));
   /* take care of any shell variables */
-  string = s_expand_env_variables(string);
+  string = s_expand_env_variables (SCM_STRING_CHARS (path));
 
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
@@ -910,14 +900,13 @@ SCM g_rc_scheme_directory(SCM path)
  */
 SCM g_rc_bitmap_directory(SCM path)
 {
-  char *string;
+  gchar *string;
 
   SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "bitmap-directory");
   
-  string = g_strdup (SCM_STRING_CHARS (path));
   /* take care of any shell variables */
-  string = s_expand_env_variables(string);
+  string = s_expand_env_variables (SCM_STRING_CHARS (path));
 
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
@@ -967,8 +956,6 @@ SCM g_rc_bus_ripper_symname(SCM scmsymname)
  */
 SCM g_rc_postscript_prolog(SCM scmsymname)
 {
-  char *string;
-  
   SCM_ASSERT (scm_is_string (scmsymname), scmsymname,
               SCM_ARG1, "postsript-prolog");
 
@@ -976,11 +963,9 @@ SCM g_rc_postscript_prolog(SCM scmsymname)
     g_free(default_postscript_prolog);
   }
 
-  string = g_strdup (SCM_STRING_CHARS (scmsymname));
   /* take care of any shell variables */
-  string = s_expand_env_variables(string);
-
-  default_postscript_prolog = g_strdup (string);
+  default_postscript_prolog =
+    s_expand_env_variables (SCM_STRING_CHARS (scmsymname));
 
   return SCM_BOOL_T;
 }
@@ -1042,7 +1027,7 @@ SCM g_rc_map_font_character_to_file(SCM scmcharstr, SCM scmfilename)
   }
 
   /* take care of expansion of any shell variables in filename */
-  filename = s_expand_env_variables (g_strdup (filename));
+  filename = s_expand_env_variables (filename);
 
   character = g_utf8_get_char_validated (charstr, -1);
   

@@ -680,229 +680,99 @@ void vsnprintf(char *buff, size_t bufsiz, const char *fmt, va_list ap)
 }
 #endif
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Expand environment variables in string.
  *  \par Function Description
+ *  This function returns the passed string with environment variables
+ *  expanded.
  *
- */
-/* this function is called by s_expand_env_variables */
-/* changes and returns new string, frees the one that was passed in */
-char *remove_string(char *string, int start, int end) 
-{
-  char *return_string;
-  int i;
-  int len;
-  int j;
-
-  if (!string) {
-    return(NULL);
-  }
-
-  len = strlen(string);
-
-  return_string = (char *) g_malloc(sizeof(char)*(len+1));
-
-  j = 0;
-  for (i = 0 ; i < len; i++) {
-    if (i >= start && i <= end) {
-      /* do nothing */
-      /* removing characters */
-    } else {
-      return_string[j] = string[i];
-      j++;
-    }
-  }
-  return_string[j] = '\0';
-
-  /* free original string */
-  g_free(string);
-
-  return(return_string);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+ *  The invocations of environment variable MUST be in the form
+ *  '${variable_name}', '$variable_name' is not valid here. Environment
+ *  variable names consists solely of letters, digits and '_'. It is
+ *  possible to escape a '$' character in the string by repeating it
+ *  twice.
  *
+ *  It outputs error messages to console and leaves the malformed and
+ *  bad variable names in the returned string.
+ *
+ *  \param [in] string The string with variables to expand.
+ *  \return A newly-allocated string with variables expanded or NULL
+ *  if input string was NULL.
  */
-/* this function is called by s_expand_env_variables */
-/* changes and returns new string, frees the one that was passed in */
-char *insert_string(char *string, int start, char *insert_string)
+gchar*
+s_expand_env_variables (const gchar *string)
 {
-  char *new_string=NULL;
-  int i;
-  int len;
-  int insert_len;
-  int total_len;
-  int j;
-  int orig_count=0;
+  GString *gstring;
+  gint i;
 
-  /* this should never happen */
-  if (!insert_string) {
-    return(NULL);	
+  if (string == NULL) {
+    return NULL;
   }
 
-  /* this should never happen either */
-  if (!string) {
-    return(NULL);	
-  }
-
-  len = strlen(string);
-  insert_len = strlen(insert_string);
-  total_len = len+insert_len;
-
-  new_string = (char *) g_malloc(sizeof(char)*(total_len+1));
-
+  gstring = g_string_sized_new (strlen (string));
   i = 0;
-  while (i < total_len) {
-    if (i == start) {
-      for (j = 0 ; j < insert_len; j++) {
-        new_string[i+j] = insert_string[j];
-      }
-      i = j+i;
-    } else {
-      new_string[i] = string[orig_count];
-      i++;
-      orig_count++;
+  while (TRUE) {
+    gint start;
+
+    start = i;
+    /* look for end of string or possible variable name start */
+    while (string[i] != '\0' && string[i] != '$') i++;
+    g_string_append_len (gstring, string + start, i - start);
+    if (string[i] == '\0') {
+      /* end of string, return built string */
+      return g_string_free (gstring, FALSE);
     }
-  }
 
-  new_string[i] = '\0';
+    i++;
+    switch (string[i]) {
+        case ('{'):
+          /* look for the end of the variable name */
+          start = i;
+          while (string[i] != '\0' && string[i] != '}') i++;
+          if (string[i] == '\0') {
+            /* problem: no closing '}' to variable */
+            fprintf (stderr,
+                     "Found malformed environment variable in '%s'\n",
+                     string);
+            g_string_append (gstring, "$");
+            g_string_append_len (gstring, string + start, i - start + 1);
+          } else {
+            gint j;
 
-  /* now free the original string */
-  g_free(string);
-
-  return(new_string);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* this function changes and then returns the string which has the 
- * expanded environment variables, frees passed in string */
-/* Environment variables MUST be in the form ${variable_name} */
-/* $variable_name is not valid here */
-char *s_expand_env_variables(char *string)
-{
-  char wanted_var[80]; /* size is hack */
-  char *return_string=NULL;
-  char *environment_string=NULL;
-  int changed=1;
-  int found_dollar=0;
-  int found_lbrac=0; 
-  int found_rbrac=0;
-  int start_of_variable= -1;
-  int end_of_variable= -1;
-  int count=0;
-  int i,j;
-
-  if (!string) {
-    return(NULL);
-  }
-
-  return_string = string;	
-
-  while(changed) {
-	
-    changed=0;
-    j=0;
-    for (i = 0 ; i < strlen(return_string); i++) {
-
-      switch(return_string[i]) {
-
-        case('$'):
-
-#if DEBUG
-          printf("found a $\n");
-#endif
-          found_dollar=1;	
-          start_of_variable=i;
-          break;
-
-        case('{'):
-          if (found_dollar) {
-            found_lbrac=1;
-            count=1;
+            /* discard "${" */
+            start = start + 1;
+            /* test characters of variable name */
+            for (j = start;
+                 j < i && (g_ascii_isalnum (string[j]) || string[j] == '_');
+                 j++);
+            if (i != j) {
+              /* illegal character detected in variable name */
+              fprintf (stderr,
+                       "Found bad character [%c] in variable name.\n",
+                       string[j]);
+              g_string_append (gstring, "${");
+              g_string_append_len (gstring, string + start, i - start + 1);
+            } else {
+              /* extract variable name from string and expand it */
+              gchar *variable_name = g_strndup (string + start, i - start);
+              const gchar *env = g_getenv (variable_name);
+              g_free (variable_name);
+              g_string_append (gstring, (env == NULL) ? "" : env);
+            }
+            i++;
           }
           break;
 
-        case('}'):
-          if (found_dollar) {
-            found_rbrac=1;
-            /* ends filling of wanted_var */	
-            found_lbrac=0;
-            end_of_variable=i;
-          }
+        case ('$'):
+          /* an escaped '$' */
+          g_string_append_c (gstring, string[i++]);
           break;
-
-      }
-
-      /* the > 1 bit is so that we don't store the { */
-      if (found_dollar && found_lbrac && (count > 1)) {
-        wanted_var[j] = return_string[i];
-        j++; /* check for size */
-      }
-
-      /* skip over initial { */ 
-      count++;
-
-      if (found_rbrac && !found_lbrac) {
-        wanted_var[j] = '\0';
-#if DEBUG
-        printf("variable wanted: _%s_\n",  wanted_var);
-        printf("Between index: %d and %d\n", 
-               start_of_variable,
-               end_of_variable);
-#endif
-
-		
-        environment_string = getenv(wanted_var);	
-
-#if DEBUG
-        if (environment_string) {
-          printf("%s = _%s_\n", wanted_var, 
-                 environment_string);
-        }
-#endif
-
-        return_string = remove_string(return_string,
-                                      start_of_variable,
-                                      end_of_variable);
-
-#if DEBUG
-        printf("removed string: _%s_\n", return_string);
-#endif
-
-        if (environment_string) {
-          return_string = insert_string(
-                                        return_string,
-                                        start_of_variable,
-                                        environment_string);
-
-        }
-
-#if DEBUG
-        printf("final string: _%s_\n", return_string);
-#endif
-        changed=1;
-
-				/* end of search */
-        found_dollar=0;
-        found_rbrac=0;
-        count=0;
-        start_of_variable= -1;
-        end_of_variable= -1;
-
-        break;
-      }
+          
+        default:
+          /* an isolated '$', put it in output */
+          g_string_append_c (gstring, '$');
     }
   }
 
-  if (found_dollar) {
-    fprintf(stderr, "Found malformed environment variable (use ${varname})!\n");
-  }
-
-  return(return_string);
+  /* never reached */
+  return NULL;
 }
