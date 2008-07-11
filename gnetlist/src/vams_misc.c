@@ -45,7 +45,6 @@ vams_get_attribs_list(OBJECT *object, SCM *list, OBJECT **return_found)
   OBJECT *found;
   int val;
   char* found_name = NULL;
-  char* found_value = NULL;
 
   o_current = object;
 
@@ -55,14 +54,13 @@ vams_get_attribs_list(OBJECT *object, SCM *list, OBJECT **return_found)
     found = a_current->object;
     if (found != NULL && found->text && found->text->string) {
       val = o_attrib_get_name_value(found->text->string,
-                                    &found_name, &found_value);
+                                    &found_name, NULL);
 
       if (val) {
         *list = scm_cons (scm_makfrom0str (found_name), *list);
       }
 
      g_free(found_name);
-     g_free(found_value);
 #if DEBUG
       printf("0 _%s_\n", found->text->string);
       printf("1 _%s_\n", found_name);

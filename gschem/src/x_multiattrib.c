@@ -536,19 +536,18 @@ static void multiattrib_column_set_data_name(GtkTreeViewColumn *tree_column,
 					     gpointer data)
 {
   OBJECT *o_attrib;
-  gchar *name, *value;
+  gchar *name;
 
   gtk_tree_model_get (tree_model, iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
   
-  o_attrib_get_name_value (o_attrib->text->string, &name, &value);
+  o_attrib_get_name_value (o_attrib->text->string, &name, NULL);
   g_object_set (cell,
                 "text", name,
                 NULL);
   g_free (name);
-  g_free (value);
   
 }
 
@@ -564,18 +563,17 @@ static void multiattrib_column_set_data_value(GtkTreeViewColumn *tree_column,
 					      gpointer data)           
 {
   OBJECT *o_attrib;
-  gchar *name, *value;
+  gchar *value;
 
   gtk_tree_model_get (tree_model, iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
   
-  o_attrib_get_name_value (o_attrib->text->string, &name, &value);
+  o_attrib_get_name_value (o_attrib->text->string, NULL, &value);
   g_object_set (cell,
                 "text", value,
                 NULL);
-  g_free (name);
   g_free (value);
   
 }
@@ -690,7 +688,7 @@ static void multiattrib_callback_edited_name(GtkCellRendererText *cellrendererte
   GtkTreeIter iter;
   OBJECT *o_attrib;
   GSCHEM_TOPLEVEL *w_current;
-  gchar *name, *value, *newtext;
+  gchar *value, *newtext;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
   w_current = GSCHEM_DIALOG (multiattrib)->w_current;
@@ -717,11 +715,10 @@ static void multiattrib_callback_edited_name(GtkCellRendererText *cellrendererte
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
 
-  o_attrib_get_name_value (o_attrib->text->string, &name, &value);
+  o_attrib_get_name_value (o_attrib->text->string, NULL, &value);
   newtext = g_strdup_printf ("%s=%s", arg2, value);
 
   if (!x_dialog_validate_attribute(GTK_WINDOW(multiattrib), newtext)) {
-    g_free (name);
     g_free (value);
     g_free(newtext);
     return;
@@ -732,7 +729,6 @@ static void multiattrib_callback_edited_name(GtkCellRendererText *cellrendererte
   o_text_change (w_current, o_attrib,
                  newtext, o_attrib->visibility, o_attrib->show_name_value);
 
-  g_free (name);
   g_free (value);
   g_free (newtext);
   
@@ -753,7 +749,7 @@ static void multiattrib_callback_edited_value(GtkCellRendererText *cell_renderer
   GtkTreeIter iter;
   OBJECT *o_attrib;
   GSCHEM_TOPLEVEL *w_current;
-  gchar *name, *value, *newtext;
+  gchar *name, *newtext;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
   w_current = GSCHEM_DIALOG (multiattrib)->w_current;
@@ -767,12 +763,11 @@ static void multiattrib_callback_edited_value(GtkCellRendererText *cell_renderer
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
 
-  o_attrib_get_name_value (o_attrib->text->string, &name, &value);
+  o_attrib_get_name_value (o_attrib->text->string, &name, NULL);
   newtext = g_strdup_printf ("%s=%s", name, arg2);
 
   if (!x_dialog_validate_attribute(GTK_WINDOW(multiattrib), newtext)) {
     g_free (name);
-    g_free (value);
     g_free(newtext);
     return;
   }
@@ -785,7 +780,6 @@ static void multiattrib_callback_edited_value(GtkCellRendererText *cell_renderer
   update_row_display (model, &iter);
   
   g_free (name);
-  g_free (value);
   g_free (newtext);
   
 }

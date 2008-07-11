@@ -571,79 +571,52 @@ gchar *o_save_attribs(GList *attribs)
   return g_string_free(acc, FALSE);
 }
 
-/*! \brief Get name and value from name=value attribute.
+/*! \brief Get name and value from an attribute 'name=value' string.
  *  \par Function Description
- *  Get name and value from a name=value attribute.
+ *  This function parses the character string \a string expected to be
+ *  an attribute string of the form 'name=value'.
+ *
+ *  It returns TRUE if it has been able to parse the string into the
+ *  name and value parts of an attribute. Otherwise it returns FALSE,
+ *  in that case \a *name_ptr and \a *value_ptr are unset.
+ *
+ *  \a name_ptr and/or \a value_ptr can be NULL.
  *
  *  \param [in]  string     String to split into name/value pair.
- *  \param [out] name_ptr   Name if found in string, NULL otherwise.
- *  \param [out] value_ptr  Value if found in string, NULL otherwise.
- *  \return TRUE if string had equals in it, FALSE otherwise.
- *
- *  \note
- *  both name and value must be pre allocated
- *  And if you get an invalid attribute (improper) with a name and no
- *  value, then it is NOT an attribute.
- *  Also, there cannot be any spaces beside the equals sign
- *  Changed: now it allocates memory for name and value strings.
- *  \warning
- *  Caller must g_free these strings when not needed.
+ *  \param [out] name_ptr   The return location for the name, or NULL.
+ *  \param [out] value_ptr  The return location for the value, or NULL.
+ *  \return TRUE on success, FALSE otherwise.
  */
-int o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
+gboolean
+o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_ptr)
 {
-  char *equal_ptr;
-  char **str_array;
-
-  if (name_ptr == NULL || value_ptr == NULL) {
-    return(FALSE);
-  }
-
-  *name_ptr = NULL;  /* force these values to null */
-  *value_ptr = NULL;
-
-  if (!string) {
-    return(FALSE);
-  }
-
-  /* make sure there are no spaces in between equals */
-  equal_ptr = strchr(string, '=');
-  if (equal_ptr == NULL) {
-    return(FALSE);
-  }
-
-
-  /*! \todo Technically this isn't a correct if statement.  This if will 
-   * cause an invalid read for strings:  =name and value= 
-   */
-  if ( (*(equal_ptr + 1) == ' ') || (*(equal_ptr - 1) == ' ') ) {
-     /* sometimes you have text with an ='s in it, it shouldn't be */
-     /* treated like an attribute */
-
-#if DEBUG 
-    s_log_message("Found attrib/text with spaces beside the ='s [%s]\n", 
-	          string);
-    s_log_message("You can ignore the above message if the text is not intended to be an attribute\n");
-#endif
-
-    return(FALSE);
-  }
-
-  str_array = g_strsplit (string, "=", 2);
+  gchar *ptr, *prev_char, *next_char;
   
-  *name_ptr = g_strdup(str_array[0]);
-  *value_ptr = g_strdup(str_array[1]);
-  g_strfreev(str_array);
-  
-  if (*value_ptr && (*value_ptr)[0] == '\0') {
-    s_log_message(_("Found an improper attribute: _%s_\n"), string);
-#if 0 /* for now leak this memory till this is verified correct everywhere */
-    g_free(*name_ptr); *name_ptr = NULL;
-    g_free(*value_ptr); *value_ptr = NULL;
-#endif
-    return(FALSE);
-  } else {
-    return(TRUE);
+  g_return_val_if_fail (string != NULL, FALSE);
+
+  ptr = g_utf8_strchr (string, -1, g_utf8_get_char ("="));
+  if (ptr == NULL) {
+    return FALSE;
   }
+
+  prev_char = g_utf8_find_prev_char (string, ptr);
+  next_char = g_utf8_find_next_char (ptr, NULL);
+  if ((prev_char == NULL) ||
+      g_unichar_isspace (g_utf8_get_char (prev_char)) ||
+      ((next_char != NULL) &&
+       g_unichar_isspace (g_utf8_get_char (next_char)))) {
+    return FALSE;
+  }
+
+  if (name_ptr != NULL) {
+    *name_ptr = g_strndup (string, (ptr - string));
+  }
+
+  if (value_ptr != NULL) {
+    *value_ptr = g_strdup (next_char != NULL ? next_char : "");
+  }
+
+  return TRUE;
 }
 
 /*! \brief Free the currently selected attribute.
@@ -934,7 +907,6 @@ char *o_attrib_search_string_partial(OBJECT *object, char *search_for,
   OBJECT *o_current;
   int val;
   int internal_counter=0;
-  char *found_name = NULL;
   char *found_value = NULL;
   char *return_string = NULL;
 
@@ -950,10 +922,9 @@ char *o_attrib_search_string_partial(OBJECT *object, char *search_for,
         internal_counter++;	
       } else {
         val = o_attrib_get_name_value(o_current->text->string, 
-                                      &found_name, &found_value);
+                                      NULL, &found_value);
         if (val) {
           return_string = g_strdup(found_value);
-	  g_free(found_name);
 	  g_free(found_value);
 	  return(return_string);
         }
@@ -961,7 +932,6 @@ char *o_attrib_search_string_partial(OBJECT *object, char *search_for,
     }
   }	
 	
-  g_free(found_name);
   g_free(found_value);
   return (NULL);
 } 

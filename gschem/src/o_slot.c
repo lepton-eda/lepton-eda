@@ -113,13 +113,12 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, char *string, int len)
   char *slot_value;
   char *numslots_value;
   OBJECT *slot_text_object;
-  char *name = NULL;
   char *value = NULL;
   int numslots;
   int new_slot_number;
   int status;
 
-  status = o_attrib_get_name_value(string, &name, &value);
+  status = o_attrib_get_name_value(string, NULL, &value);
   if (!status) {
     s_log_message(_("Slot attribute malformed\n"));
     return;
@@ -142,7 +141,6 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, char *string, int len)
       s_log_message(_("numslots attribute missing\n"));
       s_log_message(
                     _("Slotting not allowed for this component\n"));
-      g_free(name);
       g_free(value);
       return;
     }
@@ -158,7 +156,6 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, char *string, int len)
 
     if (new_slot_number > numslots || new_slot_number <=0 ) {
       s_log_message(_("New slot number out of range\n"));
-      g_free(name);
       g_free(value);
       return;
     }
@@ -223,13 +220,11 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, char *string, int len)
     o_redraw_single(w_current,object);
 
     toplevel->page_current->CHANGED = 1;
-    g_free(name);
     g_free(value);
 
   } else {
     fprintf(stderr,
             _("uggg! you tried to slot edit something that doesn't exist!\n"));
-    g_free(name);
     g_free(value);
     exit(-1);
   }

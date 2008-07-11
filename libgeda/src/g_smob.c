@@ -164,7 +164,6 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
   struct st_attrib_smob *attribute;
   char *name = NULL;
   char *value = NULL;
-  char *old_value = NULL;
 
   SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
                ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
@@ -182,7 +181,7 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
       attribute->attribute->object->text->string ) {
 
     o_attrib_get_name_value(attribute->attribute->object->text->string, 
-                            &name, &old_value );
+                            &name, NULL);
 
     *new_string = g_strconcat (name, "=", value, NULL);
 		
@@ -190,7 +189,6 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
     *o_attrib = attribute->attribute->object;
 
     g_free(name);
-    g_free(old_value);
   }
 
   return SCM_UNDEFINED;

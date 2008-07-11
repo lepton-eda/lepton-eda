@@ -231,7 +231,6 @@ int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object,
 				     int promote_invisible) 
 {
   char *name = NULL;
-  char *value = NULL;
   char *padded_name = NULL;
   int promotableAttribute = FALSE;
   char *ptr;
@@ -260,7 +259,7 @@ int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object,
   if (toplevel->always_promote_attributes &&
       (strlen(toplevel->always_promote_attributes) != 0))
   {
-    if (o_attrib_get_name_value(object->text->string, &name, &value))
+    if (o_attrib_get_name_value(object->text->string, &name, NULL))
     {
       padded_name = g_strdup_printf(" %s ", name);
       if (strstr(toplevel->always_promote_attributes, padded_name))
@@ -272,7 +271,6 @@ int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object,
       
       g_free(padded_name);
       g_free(name);
-      g_free(value);
       if (promotableAttribute)
 	return TRUE;
     }

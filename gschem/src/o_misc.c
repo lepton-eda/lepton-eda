@@ -817,17 +817,16 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   while (a_iter != NULL) {
     a_current = a_iter->data;
     OBJECT *o_attrib;
-    gchar *name, *value;
+    gchar *name;
     char *attrfound;
     g_assert (a_current->object->type == OBJ_TEXT);
     o_attrib_get_name_value (a_current->object->text->string,
-                             &name, &value);
+                             &name, NULL);
 
     attrfound = o_attrib_search_name_single(o_current, name, NULL);
 
     /* free these now since they are no longer being used */
     g_free(name);
-    g_free(value);
 
     if (attrfound == NULL) {
       /* attribute with same name not found in old component: */

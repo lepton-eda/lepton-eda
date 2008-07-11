@@ -416,7 +416,7 @@ static void custom_world_get_single_object_bounds
     GList *a_iter;
     int rleft, rright, rbottom, rtop;
     char *text_value; 
-    char *name_ptr, *value_ptr, aux_ptr[2];
+    char *name_ptr, aux_ptr[2];
     gboolean include_text;
 
     *left = rleft = toplevel->init_right;
@@ -437,7 +437,7 @@ static void custom_world_get_single_object_bounds
           case (OBJ_TEXT):
 	    if (obj_ptr->text && obj_ptr->text->string) {
 	      text_value = obj_ptr->text->string;
-	      if (o_attrib_get_name_value(text_value, &name_ptr, &value_ptr) &&
+	      if (o_attrib_get_name_value(text_value, &name_ptr, NULL) &&
 		  g_list_find_custom(exclude_attrib_list, name_ptr, (GCompareFunc) &strcmp)) {
 		include_text = FALSE;
 	      }
@@ -450,7 +450,6 @@ static void custom_world_get_single_object_bounds
 						&rleft, &rtop, &rright, &rbottom);
 	      }
 	      g_free(name_ptr);
-	      g_free(value_ptr);
 	    }
 	    break;
           case (OBJ_COMPLEX):

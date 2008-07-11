@@ -4072,10 +4072,9 @@ x_dialog_close_window (GSCHEM_TOPLEVEL *w_current)
 int x_dialog_validate_attribute(GtkWindow* parent, char *attribute)
 {
   GtkWidget* message_box;
-  char *name_ptr, *value_ptr;
 
   /* validate the new attribute */
-  if (!o_attrib_get_name_value(attribute, &name_ptr, &value_ptr)) {
+  if (!o_attrib_get_name_value(attribute, NULL, NULL)) {
       message_box = gtk_message_dialog_new_with_markup (parent,
                                   GTK_DIALOG_DESTROY_WITH_PARENT,
                                   GTK_MESSAGE_ERROR,
@@ -4087,8 +4086,6 @@ int x_dialog_validate_attribute(GtkWindow* parent, char *attribute)
      gtk_widget_destroy (message_box);
      return FALSE;
   }
-  g_free(name_ptr);
-  g_free(value_ptr);
   return TRUE;
 }
 /***************** End of misc helper dialog boxes **************/
