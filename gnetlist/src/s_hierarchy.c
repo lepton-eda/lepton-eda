@@ -564,9 +564,7 @@ s_hierarchy_remove_uref_mangling(TOPLEVEL * pr_current, NETLIST * head)
 		    sscanf(n_current->connected_to, "%s %s", uref, pin);
 		    new_uref =
 			s_hierarchy_return_baseuref(pr_current, uref);
-		    new_connected_to =
-			g_strdup(n_current->connected_to);
-		    sprintf(new_connected_to, "%s %s", new_uref, pin);
+		    new_connected_to = g_strdup_printf("%s %s", new_uref, pin);
 		    g_free(n_current->connected_to);
 		    n_current->connected_to = new_connected_to;
 		}
@@ -586,7 +584,6 @@ char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
     char *start_of_base = NULL;
     char *end_of_base = NULL;
     char *cptr = NULL;
-    int i = 0;
 
     /* use hierarchy separator */
 
@@ -618,14 +615,7 @@ char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
 
 	cptr = uref;
 
-	return_value = (char *) g_malloc(sizeof(char) * (strlen(uref)));
-	i = 0;
-	while (cptr != end_of_base) {
-	    return_value[i] = *cptr;
-	    i++;
-	    cptr++;
-	}
-	return_value[i] = '\0';
+	return_value = g_strndup(uref, end_of_base - uref);
     }
 
 #if DEBUG

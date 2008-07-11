@@ -67,10 +67,7 @@ int s_papersizes_add_entry(char *new_papersize, int width, int height)
     return(-1); 
   }
 	
-  papersizes[papersizes_index].papersize_name = 
-    (char *) g_malloc(sizeof(char)*strlen(new_papersize)+1);
-
-  strcpy(papersizes[papersizes_index].papersize_name, new_papersize);
+  papersizes[papersizes_index].papersize_name = g_strdup (new_papersize);
 
   papersizes[papersizes_index].width = width;
   papersizes[papersizes_index].height = height;

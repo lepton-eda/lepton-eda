@@ -75,19 +75,12 @@ static const char *fnameext_get(const char* fname)
 static char *fnameext_remove(const char *fname)
 {
   const char *p = fnameext_get(fname);
-  char *fname_new;
-  int len;
+  char *fname_new = NULL;
 
   if(*p == '\0') {
     fname_new = g_strdup (p);
   } else {
-    len = (p - fname); /*  + 1; this extra was causing grief */
-    fname_new = (char *) g_malloc(sizeof(char) * (len + 1));
-    if(fname_new == NULL) {
-      return NULL;
-    }
-    strncpy(fname_new, fname, len);
-    fname_new[len] = '\0';
+    fname_new = g_strndup (fname_new, p - fname);
   }
   return fname_new;
 }

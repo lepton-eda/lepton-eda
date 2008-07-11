@@ -673,8 +673,6 @@ void o_attrib_free_current(TOPLEVEL *toplevel)
  */
 void o_attrib_set_string(TOPLEVEL *toplevel, char *string)
 {
-  int len;
-
   /* need to put an error messages here */
   if (string == NULL)  {
     fprintf(stderr, "error! string in set_string was NULL\n");
@@ -686,11 +684,7 @@ void o_attrib_set_string(TOPLEVEL *toplevel, char *string)
     toplevel->current_attribute=NULL;
   }
 
-  len = strlen(string);
-
-  toplevel->current_attribute = (char *) g_malloc(sizeof(char)*len+1);
-
-  strcpy(toplevel->current_attribute,string);
+  toplevel->current_attribute = g_strdup (string);
 	
   /* be sure to g_free this string somewhere and free the input string */
 }
@@ -800,9 +794,7 @@ char *o_attrib_search_name(OBJECT *list, char *name, int counter)
                 if (counter != internal_counter) {
                   internal_counter++;	
                 } else {
-                  return_string = (char *) 
-                    g_malloc(sizeof(char)*strlen(found_value)+1);
-                  strcpy(return_string, found_value);
+                  return_string = g_strdup (found_value);
 		  g_free(found_name);
 		  g_free(found_value);
                   return(return_string);
@@ -835,9 +827,7 @@ char *o_attrib_search_name(OBJECT *list, char *name, int counter)
           if (counter != internal_counter) {
             internal_counter++;	
           } else {
-            return_string = (char *) 
-              g_malloc(sizeof(char)* strlen(found_value)+1);
-            strcpy(return_string, found_value);
+            return_string = g_strdup (found_value);
 	    g_free(found_name);
 	    g_free(found_value);
             return(return_string);
@@ -1159,9 +1149,7 @@ o_attrib_search_attrib_name(GList *list, char *name, int counter)
             if (counter != internal_counter) {
               internal_counter++;	
             } else {
-              return_string = (char *) 
-                g_malloc(sizeof(char)* strlen(found_value)+1);
-              strcpy(return_string, found_value);
+              return_string = g_strdup (found_value);
 	      g_free(found_name);
 	      g_free(found_value);
               return(return_string);
@@ -1221,9 +1209,7 @@ char *o_attrib_search_toplevel(OBJECT *list, char *name, int counter)
           if (counter != internal_counter) {
             internal_counter++;	
           } else {
-            return_string = (char *) 
-              g_malloc(sizeof(char)* strlen(found_value)+1);
-            strcpy(return_string, found_value);
+            return_string = g_strdup (found_value);
 	    g_free(found_name);
 	    g_free(found_value);
             return(return_string);
@@ -1286,9 +1272,7 @@ char *o_attrib_search_name_single(OBJECT *object, char *name,
 
           if (val) {
             if (strcmp(name, found_name) == 0) {
-              return_string = (char *) 
-                g_malloc(sizeof(char)* strlen(found_value)+1);
-              strcpy(return_string, found_value);
+              return_string = g_strdup (found_value);
               if (return_found) {
                 *return_found = found;
               }
@@ -1320,9 +1304,7 @@ char *o_attrib_search_name_single(OBJECT *object, char *name,
 
     if (val) {
       if (strcmp(name, found_name) == 0) {
-        return_string = (char *) 
-          g_malloc(sizeof(char)* strlen(found_value)+1);
-        strcpy(return_string, found_value);
+        return_string = g_strdup (found_value);
         if (return_found) {
           *return_found = o_current;
         }
@@ -1395,9 +1377,7 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name,
               if (counter != internal_counter) {
                 internal_counter++;
               } else {
-                return_string = (char *) 
-                  g_malloc(sizeof(char)* strlen(found_value)+1);
-                strcpy(return_string, found_value);
+                return_string = g_strdup (found_value);
 		g_free(found_name);
 		g_free(found_value);
                 return(return_string);
@@ -1431,9 +1411,7 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name,
         if (counter != internal_counter) {
           internal_counter++;
         } else {
-          return_string = (char *) 
-            g_malloc(sizeof(char)* strlen(found_value)+1);
-          strcpy(return_string, found_value);
+          return_string = g_strdup (found_value);
 	  g_free(found_name);
 	  g_free(found_value);
           return(return_string);
@@ -1549,10 +1527,7 @@ OBJECT *o_attrib_search_pinseq(OBJECT *list, int pin_number)
   OBJECT *pinseq_text_object;
   char *search_for;
 
-  /* The 9 is the number of allowed digits plus null */
-  search_for = (char *) g_malloc(sizeof(char)*(strlen("pinseq=")+9));
-  sprintf(search_for, "pinseq=%d", pin_number);
-
+  search_for = g_strdup_printf ("pinseq=%d", pin_number);
   pinseq_text_object = o_attrib_search_string_list(list, search_for);
   g_free(search_for);
   
@@ -1580,10 +1555,7 @@ char *o_attrib_search_slotdef(OBJECT *object, int slotnumber)
   char *search_for=NULL;
   OBJECT *o_current;
 
-  /* The 9 is the number of digits plus null */
-  search_for = (char *) g_malloc(sizeof(char)*(strlen("slotdef=:")+9));
-
-  sprintf(search_for, "slotdef=%d:", slotnumber);
+  search_for = g_strdup_printf ("slotdef=%d:", slotnumber);
 
   o_current = object->complex->prim_objs;
   while (o_current != NULL) {
@@ -1739,12 +1711,7 @@ void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
           o_pinnum_object->text->string) {
         g_free(o_pinnum_object->text->string);
 
-        /* 9 is the size of one number plus null character */
-        o_pinnum_object->text->string = (char *)
-          g_malloc(sizeof(char)*(strlen("pinnumber=")+strlen(current_pin)+9));
-
-        /* removed _int from current_pin */
-        sprintf(o_pinnum_object->text->string, "pinnumber=%s", current_pin);
+        o_pinnum_object->text->string = g_strdup_printf ("pinnumber=%s", current_pin);
         
         o_text_recreate(toplevel, o_pinnum_object);
       }
@@ -1840,12 +1807,7 @@ void o_attrib_slot_copy(TOPLEVEL *toplevel, OBJECT *original, OBJECT *target)
         g_free(string);
         g_free(o_pinnum_object->text->string);
 
-        /* 9 is the size of one number plus null character */
-        o_pinnum_object->text->string = (char *)
-          g_malloc(sizeof(char)*(strlen("pinnumber=")+strlen(current_pin)+9));
-
-        /* removed _int from current_pin */
-        sprintf(o_pinnum_object->text->string, "pinnumber=%s", current_pin);
+        o_pinnum_object->text->string = g_strdup_printf ("pinnumber=%s", current_pin);
         
         o_text_recreate(toplevel, o_pinnum_object);
       }

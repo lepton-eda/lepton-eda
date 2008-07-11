@@ -282,9 +282,7 @@ s_check_device(OBJECT *o_current, SYMCHECK *s_current)
   } else {
     /* found device= attribute */
     s_current->missing_device_attrib=FALSE;
-    s_current->device_attribute =
-      (char *) g_malloc(sizeof(char)*(strlen(temp)+1));
-    strcpy(s_current->device_attribute, temp);
+    s_current->device_attribute = g_strdup (temp);
     message = g_strdup_printf ("Found device=%s\n", temp);
     s_current->info_messages = g_list_append(s_current->info_messages,
 		                             message);

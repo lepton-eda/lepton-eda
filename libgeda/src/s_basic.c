@@ -152,9 +152,7 @@ OBJECT *s_basic_init_object( char *name )
   new_node->type = -1;
 
   /* Setup the name */
-  /*! \todo get rid of magic number 16 that's the size of new_node->sid, */
-  new_node->name = (char *) g_malloc(sizeof(char)*(strlen(name)+16));
-  sprintf(new_node->name, "%s.%d", name, new_node->sid);
+  new_node->name = g_strdup_printf("%s.%d", name, new_node->sid);
 
   /* Setup the bounding box */
   new_node->w_top = 0;

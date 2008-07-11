@@ -130,14 +130,10 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 		    s_hierarchy_create_netattrib(pr_current, net_name,
 						 hierarchy_tag);
 		old_cpin->nets->net_name_has_priority = TRUE;
-		connected_to =
-		    (char *) g_malloc(sizeof(char) *
-				    (strlen
-				     (netlist->component_uref) +
-				     strlen(current_pin) + 2));
-		sprintf(connected_to, "%s %s",
-			netlist->component_uref, current_pin);
-		old_cpin->nets->connected_to = g_strdup (connected_to);
+		connected_to = g_strdup_printf("%s %s",
+                                   netlist->component_uref,
+                                   current_pin);
+		old_cpin->nets->connected_to = g_strdup(connected_to);
 		old_cpin->nets->nid = o_current->sid;
 		g_free(connected_to);
 	    } else {
@@ -156,13 +152,9 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 		    s_hierarchy_create_netattrib(pr_current, net_name,
 						 hierarchy_tag);
 
-		connected_to =
-		    (char *) g_malloc(sizeof(char) *
-				    (strlen
-				     (netlist->component_uref) +
-				     strlen(current_pin) + 2));
-		sprintf(connected_to, "%s %s",
-			netlist->component_uref, current_pin);
+		connected_to = g_strdup_printf("%s %s",
+                                   netlist->component_uref,
+                                   current_pin);
 		new_cpin->nets->connected_to = g_strdup(connected_to);
 		new_cpin->nets->nid = o_current->sid;
 

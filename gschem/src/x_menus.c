@@ -165,9 +165,7 @@ void get_main_menu(GtkWidget ** menubar)
         scm_keys = scm_c_eval_string (buf);
 	g_free(buf);
         if (scm_keys == SCM_BOOL_F) {
-          menu_item_keys = g_malloc(sizeof(char)*2);
-          menu_item_keys[0] = ' ';
-          menu_item_keys[1] = '\0';
+          menu_item_keys = g_strdup (" ");
         } else {
           menu_item_keys = g_strdup (SCM_STRING_CHARS (scm_keys));
         }      
@@ -191,9 +189,7 @@ void get_main_menu(GtkWidget ** menubar)
            pad = 1;
 	} 
 
-        spaces = g_malloc(sizeof(char)*(pad+1));
-        memset(spaces, ' ', pad);
-        spaces[pad] = '\0';
+        spaces = g_strnfill (pad, ' ');
         buf = g_strdup_printf("%s%s%s", menu_item_name, spaces, menu_item_keys);
 
 #if DEBUG

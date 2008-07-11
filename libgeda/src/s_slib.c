@@ -74,10 +74,7 @@ int s_slib_add_entry(char *new_path)
     return(-1); 
   }
 
-  slib[slib_index].dir_name = 
-    (char *) g_malloc(sizeof(char)*strlen(new_path)+1);
-
-  strcpy(slib[slib_index].dir_name, new_path);
+  slib[slib_index].dir_name = g_strdup (new_path);
 
   slib_index++;
   return(slib_index);
@@ -112,7 +109,6 @@ int s_slib_search_for_dirname(char *dir_name)
 char *s_slib_search_dirs(const char *basename)
 {
   int i;
-  int len;
   DIR *ptr=NULL;
   struct dirent *dptr;
   char *slib_path=NULL;
@@ -138,9 +134,7 @@ char *s_slib_search_dirs(const char *basename)
 
       /* Do a substring comp for a match */
       if (strstr(dptr->d_name, basename) != NULL)  {
-        len = strlen(slib[i].dir_name);				
-        slib_path = (char *) g_malloc(sizeof(char)*len+1);
-        strcpy(slib_path, slib[i].dir_name);
+        slib_path = g_strdup (slib[i].dir_name);
 	
         if (ptr) {
           closedir(ptr);
@@ -178,7 +172,6 @@ char *s_slib_search_lowlevel(const char *basename)
 {
   char *slib_path=NULL;
   char *full_path=NULL;
-  int len;
 
   slib_path = s_slib_search_dirs(basename);
 
@@ -188,13 +181,7 @@ char *s_slib_search_lowlevel(const char *basename)
     s_log_message(_("Found [%s]\n"), basename);
     /* s_log_message("Found [%s] in [%s]\n", basename, slib_path);*/
 
-    len = strlen(basename)+strlen(slib_path);
-	
-    /* The 2 is for NULL char and the slash inbetween the two */
-    /* strings */	
-    full_path = (char *) g_malloc(sizeof(char)*(len+2));
-
-    sprintf(full_path, "%s%c%s", slib_path, G_DIR_SEPARATOR, basename);
+    full_path = g_build_filename (slib_path, basename, NULL);
 		
     g_free(slib_path);
 
@@ -323,9 +310,6 @@ char *s_slib_search(const char *filename, int flag)
   char *processed_name=NULL;
   char *new_filename=NULL;
   char *string=NULL;
-  char *number_suffix;
-  int len;
-  int len2;
   static int count;
 
   switch(flag) {
@@ -344,21 +328,14 @@ char *s_slib_search(const char *filename, int flag)
       printf("proced: %s\n", processed_name);
 #endif
 
-      len = strlen(processed_name);
-
       /* for now only look for .sch's */
       /* this needs to be *MUCH* more flexible */
       /* number_suffix is large enough ? */
-      number_suffix = g_strdup_printf("_%d.sch", count); 
-      len2 = strlen(number_suffix);
-      new_filename = (char *) 
-        g_malloc (sizeof(char)*(len+len2+1));
+      new_filename = g_strdup_printf ("%s_%d.sch", processed_name, count);
 
-      sprintf(new_filename, "%s%s", processed_name, number_suffix);
       string = s_slib_search_lowlevel(new_filename);
 
       g_free(new_filename);
-      g_free(number_suffix);
       break;
 
     case(SLIB_SEARCH_DONE):
@@ -473,7 +450,6 @@ char *s_slib_getfiles(char *directory, int flag)
   static int current=0;
 
   int j;
-  int len;
 
   switch(flag) {
 
@@ -531,14 +507,10 @@ char *s_slib_getfiles(char *directory, int flag)
         }	
 
         if (dptr->d_name != NULL) {
-          len = strlen(dptr->d_name);
-
           /* hack */
           if (count < 256) {
 
-            whole_dir[count] = (char *)
-              g_malloc(sizeof(char)*len+1);
-            strcpy(whole_dir[count], dptr->d_name);
+            whole_dir[count] = g_strdup (dptr->d_name);
             count++;
           } else {
             fprintf(stderr, 

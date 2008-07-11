@@ -183,15 +183,9 @@ void s_rename_add(char *src, char *dest)
 #endif
 
 		    rename_pairs[cur_set][rename_counter].src =
-			(char *) g_malloc(sizeof(char) * (strlen(src) + 1));
-		    strcpy(rename_pairs[cur_set][rename_counter].src, src);
+			g_strdup(src);
 		    rename_pairs[cur_set][rename_counter].dest =
-			(char *) g_malloc(sizeof(char) *
-					(strlen
-					 (rename_pairs[cur_set][i].dest) +
-					 1));
-		    strcpy(rename_pairs[cur_set][rename_counter].dest,
-			   rename_pairs[cur_set][i].dest);
+			g_strdup(rename_pairs[cur_set][i].dest);
 		    rename_counter++;
 		}
 	    }
@@ -199,11 +193,9 @@ void s_rename_add(char *src, char *dest)
     } else {
 
 	rename_pairs[cur_set][rename_counter].src =
-	    (char *) g_malloc(sizeof(char) * (strlen(src) + 1));
-	strcpy(rename_pairs[cur_set][rename_counter].src, src);
+	    g_strdup(src);
 	rename_pairs[cur_set][rename_counter].dest =
-	    (char *) g_malloc(sizeof(char) * (strlen(dest) + 1));
-	strcpy(rename_pairs[cur_set][rename_counter].dest, dest);
+	    g_strdup(dest);
 	rename_counter++;
     }
     if (rename_counter == MAX_RENAME) {
@@ -236,8 +228,7 @@ void s_rename_all_lowlevel(NETLIST * netlist_head, char *src, char *dest)
 			/*g_free(pl_current->net_name); */
 
 			pl_current->net_name =
-			    g_malloc(sizeof(char) * (strlen(dest) + 1));
-			strcpy(pl_current->net_name, dest);
+			    g_strdup(dest);
 		    }
 		}
 

@@ -162,9 +162,7 @@ int parse_commandline(int argc, char *argv[])
 	    break;
 
 	case 'g':
-	    guile_proc = (char *) g_malloc(sizeof(char) *
-					 (strlen(optarg) + 1));
-	    strcpy(guile_proc, optarg);
+	    guile_proc = g_strdup(optarg);
 
 	    break;
 
@@ -183,9 +181,7 @@ int parse_commandline(int argc, char *argv[])
 
 	case 'o':
 	    g_free(output_filename);
-	    output_filename = (char *) g_malloc(sizeof(char) *
-					      (strlen(optarg) + 1));
-	    strcpy(output_filename, optarg);
+	    output_filename = g_strdup(optarg);
 	    break;
 
 	case 'O':        

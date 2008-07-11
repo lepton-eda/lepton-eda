@@ -118,9 +118,7 @@ void main_prog(void *closure, int argc, char *argv[])
     TOPLEVEL *pr_current;
 
     /* set default output filename */
-    output_filename =
-        (char *) g_malloc(sizeof(char) * (strlen("output.net") + 1));
-    strcpy(output_filename, "output.net");
+    output_filename = g_strdup("output.net");
 
     argv_index = parse_commandline(argc, argv);
     cwd = getcwd(NULL, MAXPATHLEN);

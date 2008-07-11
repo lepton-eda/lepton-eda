@@ -104,15 +104,9 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
       toplevel->page_current->ops_since_last_backup++;
     }
 
-    /* 32 is? for max length of pid and index */
-
-
-    filename = g_malloc(sizeof(char)*(strlen("/gschem.save_.sch")
-                                      + strlen(TMP) + 32));
-
-    sprintf(filename, "%s%cgschem.save%d_%d.sch", TMP, G_DIR_SEPARATOR,
-            prog_pid, 
-            undo_file_index++);
+    filename = g_strdup_printf("%s%cgschem.save%d_%d.sch",
+                               TMP, G_DIR_SEPARATOR,
+                               prog_pid, undo_file_index++);
 
     /* Changed from f_save to o_save when adding backup copy creation. */
     /* f_save manages the creaton of backup copies. 

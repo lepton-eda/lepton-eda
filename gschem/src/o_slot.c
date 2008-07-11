@@ -81,13 +81,7 @@ void o_slot_start(GSCHEM_TOPLEVEL *w_current, OBJECT *list)
         o_attrib_search_default_slot(object);
 
       if (default_slot_value) {
-				/* two is for null and equals sign */
-        slot_value = (char *) g_malloc(sizeof(char)*(
-                                                   strlen("slot")+
-                                                   strlen(default_slot_value)+
-                                                   2));
-        sprintf(slot_value, "slot=%s",
-                default_slot_value);
+        slot_value = g_strdup_printf ("slot=%s", default_slot_value);
       } else {
 				/* no default, make something up? */
 				/* for now.. this is an error

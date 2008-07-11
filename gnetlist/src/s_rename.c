@@ -192,10 +192,8 @@ void s_rename_add(char *src, char *dest)
 		if (new_rename)
 		{
 		     new_rename->next = NULL;
-                     new_rename->src = (char *) g_malloc(sizeof(char) * (strlen(src) + 1));
-                     strcpy(new_rename->src, src);
-                     new_rename->dest = (char *) g_malloc(sizeof(char) * (strlen(temp->dest) + 1));
-                     strcpy(new_rename->dest, temp->dest);
+                     new_rename->src = g_strdup(src);
+                     new_rename->dest = g_strdup(temp->dest);
 		     /* If the rename pair was found then a set already exists, so there's no need the check it */
 		     if (last_set->first_rename == NULL)
 		     {
@@ -230,10 +228,8 @@ void s_rename_add(char *src, char *dest)
         if (new_rename)
 	{
 	     new_rename->next = NULL;
-             new_rename->src = (char *) g_malloc(sizeof(char) * (strlen(src) + 1));
-             strcpy(new_rename->src, src);
-             new_rename->dest = (char *) g_malloc(sizeof(char) * (strlen(dest) + 1));
-             strcpy(new_rename->dest, dest);
+             new_rename->src = g_strdup(src);
+             new_rename->dest = g_strdup(dest);
 	     if (last_set->first_rename == NULL)
 	     {
 	         last_set->first_rename = last_set->last_rename = new_rename;
@@ -265,8 +261,7 @@ void s_rename_all_lowlevel(NETLIST * netlist_head, char *src, char *dest)
 		{
                     if (strcmp(pl_current->net_name, src) == 0) 
 		    {
-                        pl_current->net_name = g_malloc(sizeof(char) * (strlen(dest) + 1));
-                        strcpy(pl_current->net_name, dest);
+                        pl_current->net_name = g_strdup(dest);
                     }
                 }
                 pl_current = pl_current->next;

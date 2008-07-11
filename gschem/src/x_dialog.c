@@ -3187,20 +3187,12 @@ int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size)
 {
   PangoLayout *layout;
   gchar *tab_string;
-  gint counter = 0;
   gint tab_width = 0;
 
   if (tab_size == 0)
   return -1;
 
-  tab_string = g_malloc (tab_size + 1);
-
-  while (counter < tab_size) {
-    tab_string [counter] = ' ';
-    counter++;
-  }
-
-  tab_string [tab_size] = 0;
+  tab_string = g_strnfill (tab_size, ' ');
 
   layout = gtk_widget_create_pango_layout (
                                            GTK_WIDGET (textview),

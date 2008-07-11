@@ -64,10 +64,7 @@ int s_attrib_add_entry(char *new_attrib)
     return(-1); 
   }
 	
-  attrib[attrib_index].attrib_name = (char *) 
-    g_malloc(sizeof(char)*strlen(new_attrib)+1);
-
-  strcpy(attrib[attrib_index].attrib_name, new_attrib);
+  attrib[attrib_index].attrib_name = g_strdup (new_attrib);
 
   attrib_index++;
   return(attrib_index);
