@@ -349,7 +349,7 @@ char *remove_nl(char *string);
 char *remove_last_nl(char *string);
 char *remove_string(char *string, int start, int end);
 char *insert_string(char *string, int start, char *insert_string);
-char *expand_env_variables(char *string);
+char *s_expand_env_variables(char *string);
 
 /* s_clib.c */
 void s_clib_free (void);

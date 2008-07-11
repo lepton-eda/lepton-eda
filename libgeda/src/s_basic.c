@@ -685,7 +685,7 @@ void vsnprintf(char *buff, size_t bufsiz, const char *fmt, va_list ap)
  *  \par Function Description
  *
  */
-/* this function is called by expand_env_variables */
+/* this function is called by s_expand_env_variables */
 /* changes and returns new string, frees the one that was passed in */
 char *remove_string(char *string, int start, int end) 
 {
@@ -725,7 +725,7 @@ char *remove_string(char *string, int start, int end)
  *  \par Function Description
  *
  */
-/* this function is called by expand_env_variables */
+/* this function is called by s_expand_env_variables */
 /* changes and returns new string, frees the one that was passed in */
 char *insert_string(char *string, int start, char *insert_string)
 {
@@ -784,7 +784,7 @@ char *insert_string(char *string, int start, char *insert_string)
  * expanded environment variables, frees passed in string */
 /* Environment variables MUST be in the form ${variable_name} */
 /* $variable_name is not valid here */
-char *expand_env_variables(char *string)
+char *s_expand_env_variables(char *string)
 {
   char wanted_var[80]; /* size is hack */
   char *return_string=NULL;
