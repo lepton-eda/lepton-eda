@@ -168,9 +168,6 @@ void main_prog(void *closure, int argc, char *argv[])
 
   argv_index = parse_commandline(argc, argv);
   cwd = g_get_current_dir();
-#ifdef __MINGW32__
-    u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
-#endif
   
   libgeda_init();
   

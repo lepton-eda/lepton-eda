@@ -425,9 +425,6 @@ SCM g_rc_component_library(SCM path, SCM name)
   } else {
     gchar *cwd = g_get_current_dir ();
     gchar *temp;
-#ifdef __MINGW32__
-    u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
-#endif
     temp = g_build_filename (cwd, string, NULL);
     s_clib_add_directory (temp, namestr);
     g_free(temp);
@@ -571,9 +568,6 @@ SCM g_rc_component_library_search(SCM path)
         } else {
           gchar *cwd = g_get_current_dir ();
           gchar *temp;
-#ifdef __MINGW32__
-          u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
-#endif
           temp = g_build_filename (cwd, fullpath, NULL);
           s_clib_add_directory (temp, NULL);
           g_free(temp);
@@ -620,9 +614,6 @@ SCM g_rc_source_library(SCM path)
   } else {
     gchar *cwd = g_get_current_dir ();
     gchar *temp;
-#ifdef __MINGW32__
-    u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
-#endif
     temp = g_build_filename (cwd, string, NULL);
     s_slib_add_entry (temp);
     g_free(temp);
@@ -686,9 +677,6 @@ SCM g_rc_source_library_search(SCM path)
           } else {
             gchar *cwd = g_get_current_dir ();
             gchar *temp;
-#ifdef __MINGW32__
-            u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
-#endif
             temp = g_build_filename (cwd, fullpath, NULL);
             s_slib_add_entry (temp);
             g_free(temp);

@@ -122,9 +122,6 @@ void main_prog(void *closure, int argc, char *argv[])
 
     argv_index = parse_commandline(argc, argv);
     cwd = g_get_current_dir();
-#ifdef __MINGW32__
-    u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
-#endif
 
     /* this is a kludge to make sure that spice mode gets set */
     /*  Hacked by SDB to allow spice netlisters of arbitrary name
