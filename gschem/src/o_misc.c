@@ -51,9 +51,7 @@
  */
 void o_edit(GSCHEM_TOPLEVEL *w_current, GList *list)
 {
-  char *equal_ptr;
   OBJECT *o_current;
-  int num_lines = 0;
 
   if (list == NULL) {
     w_current->inside_action = 0;
@@ -83,29 +81,10 @@ void o_edit(GSCHEM_TOPLEVEL *w_current, GList *list)
     picture_change_filename_dialog(w_current);
     break;
     case(OBJ_TEXT):
-    if(strchr(o_current->text->string,'=')) {
-
-      /* now really make sure it's an attribute by
-       * checking that there are NO spaces around the ='s
-       */
-      equal_ptr = strchr(o_current->text->string, '=');
-
-      /* and also make sure it is only a single line */
-      num_lines = o_text_num_lines(o_current->text->string);
-
-      /* there is a possiblity for core dump yes? */
-      /* by exceeding the size of the text_string? */
-      /* or maybe not, since if the ='s is at the end of */
-      /* the string, there better be a null after it! */
-      if ( (*(equal_ptr + 1) != ' ') &&
-           (*(equal_ptr - 1) != ' ') &&
-           (num_lines == 1) ) {
+    if (o_attrib_get_name_value (o_current->text->string, NULL, NULL) &&
+        /* attribute editor only accept 1-line values for attribute */
+        o_text_num_lines (o_current->text->string) == 1) {
         attrib_edit_dialog(w_current,o_current, FROM_MENU);
-        /* multi_attrib_edit(w_current, o_current); */
-
-      } else {
-        o_text_edit(w_current, o_current);
-      }
     } else {
       o_text_edit(w_current, o_current);
     }
