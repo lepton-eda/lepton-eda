@@ -52,7 +52,7 @@ int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name)
 
   local_list_item = name_value_list;
   while (local_list_item != NULL) {
-    local_name =  u_basic_breakup_string(local_list_item->data, '=', 0);
+    o_attrib_get_name_value(local_list_item->data, &local_name, NULL);
     if (strcmp(local_name, name) == 0) {
       return TRUE;
     }

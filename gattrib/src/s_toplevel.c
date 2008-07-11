@@ -630,7 +630,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 
       /* Else clause is suggestion from Ales */
 #if 1
-      old_attrib_name = u_basic_breakup_string(old_name_value_pair, '=', 0);
+      o_attrib_get_name_value(old_name_value_pair, &old_attrib_name, NULL);
       if ( (strcmp(old_attrib_name, "refdes") != 0) &&
 	   (strcmp(old_attrib_name, "net") != 0) &&
 	   (strcmp(old_attrib_name, "slot") != 0) &&
@@ -683,7 +683,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 
   /*  Now get the old attrib name & value from complete_comp_attrib_list 
    *  and value from o_current  */
-  old_attrib_name = u_basic_breakup_string(local_list->data, '=', 0); 
+  o_attrib_get_name_value(local_list->data, &old_attrib_name, NULL);
   old_attrib_value = o_attrib_search_name_single_count(o_current, old_attrib_name, 0);
 
 #if DEBUG
@@ -694,7 +694,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 #endif
 
   /*  Next try to get this attrib from new_comp_attrib_list  */
-  new_attrib_name = u_basic_breakup_string(local_list->data, '=', 0);
+  o_attrib_get_name_value(local_list->data, &new_attrib_name, NULL);
   if (s_string_list_in_list(new_comp_attrib_list, local_list->data)) {
     new_attrib_value = s_misc_remaining_string(local_list->data, '=', 1);      
   } else {
@@ -931,8 +931,7 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
   printf("        In s_toplevel_update_pin_attribs_in_toplevel, handling entry in master list %s .\n", new_name_value_pair);
 #endif
 
-  new_attrib_name = u_basic_breakup_string(new_name_value_pair, '=', 0);
-  new_attrib_value = u_basic_breakup_string(new_name_value_pair, '=', 1);
+  o_attrib_get_name_value(new_name_value_pair, &new_attrib_name, &new_attrib_value);
 
   if (strlen(new_attrib_value) == 0) {
     g_free(new_attrib_value);   

@@ -161,7 +161,7 @@ void s_object_replace_attrib_in_object(OBJECT *o_current,
       
       /* may need to check more thoroughly here. . . . */
       old_attrib_text = g_strdup(a_current->object->text->string);
-      old_attrib_name = u_basic_breakup_string(old_attrib_text, '=', 0);
+      o_attrib_get_name_value(old_attrib_text, &old_attrib_name, NULL);
       
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
 	/* create attrib=value text string & stuff it back into pr_current */
@@ -214,7 +214,7 @@ void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name)
       
       /* may need to check more thoroughly here. . . . */
       old_attrib_text = g_strdup(a_current->object->text->string);
-      old_attrib_name = u_basic_breakup_string(old_attrib_text, '=', 0);
+      o_attrib_get_name_value(old_attrib_text, &old_attrib_name, NULL);
       
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
 	/* We've found the attrib.  Delete it and then return. */

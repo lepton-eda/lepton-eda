@@ -284,8 +284,7 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
               && a_current->object->text != NULL) {  /* found an attribute */
             /* may need to check more thoroughly here. . . . */
             attrib_text = g_strdup(a_current->object->text->string);
-            attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
-            attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
+            o_attrib_get_name_value(attrib_text, &attrib_name, &attrib_value);
 	    old_visibility = a_current->object->visibility;
 	    old_show_name_value = a_current->object->show_name_value;
 
@@ -368,8 +367,7 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
             && a_current->object->text != NULL) {  /* found an attribute */
           /* may need to check more thoroughly here. . . . */
           attrib_text = g_strdup(a_current->object->text->string);
-          attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
-          attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
+          o_attrib_get_name_value(attrib_text, &attrib_name, &attrib_value);
           if (strcmp(attrib_name, "netname") != 0) {
             /* Don't include "netname" */
              
@@ -480,8 +478,7 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
 	      if (pin_attrib->object->type == OBJ_TEXT
 		  && pin_attrib->object->text != NULL) {  /* found an attribute */
 		attrib_text = g_strdup(pin_attrib->object->text->string);
-		attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
-		attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
+		o_attrib_get_name_value(attrib_text, &attrib_name, &attrib_value);
  
 		if ( (strcmp(attrib_name, "pinnumber") != 0) 
 		     && (attrib_value != 0) ) {
