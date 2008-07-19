@@ -1234,3 +1234,65 @@ double o_line_length(OBJECT *object)
                 
   return(length);
 }
+
+/*! \brief Calculates the distance between the given point and the closest
+ *  point on the given line segment.
+ *
+ *  If the closest point on the line resides beyond the line segment's
+ *  end point, this function returns the distance from the given point to the
+ *  closest end point.
+ *
+ *  \param [in] object The object, where object->line != NULL.
+ *  \param [in] x The x coordinate of the given point.
+ *  \param [in] y The y coordinate of the given point.
+ *  \return The shortest distance from the object to the point.  With an
+ *  invalid parameter, this function returns G_MAXDOUBLE.
+ */
+gdouble o_line_shortest_distance(LINE *line, gint x, gint y)
+{
+  gdouble cx;
+  gdouble cy;
+  gdouble dx;
+  gdouble dx0;
+  gdouble dy;
+  gdouble dy0;
+  gdouble ldx;
+  gdouble ldy;
+  gdouble lx0;
+  gdouble ly0;
+  gdouble shortest_distance;
+  gdouble t;
+
+  if (line == NULL) {
+    g_critical("o_line_shortest_distance(): line == NULL\n");
+    return G_MAXDOUBLE;
+  }
+
+  lx0 = (double) line->x[0];
+  ly0 = (double) line->y[0];
+  ldx = ((double) line->x[1]) - ((double) line->x[0]);
+  ldy = ((double) line->y[1]) - ((double) line->y[0]);
+
+  /* calculate parametric value of perpendicular intersection */
+  dx0 = ldx * ( x - lx0 );
+  dy0 = ldy * ( y - ly0 );
+
+  t = (dx0 + dy0) / ((ldx*ldx) + (ldy*ldy));
+
+  /* constrain the parametric value to a point on the line */
+  t = max(t, 0);
+  t = min(t, 1);
+
+  /* calculate closest point on the line */
+  cx = t * ldx + lx0;
+  cy = t * ldy + ly0;
+
+  /* calculate distance to closest point */
+  dx = x-cx;
+  dy = y-cy;
+
+  shortest_distance = sqrt( (dx*dx) + (dy*dy) );
+
+  return shortest_distance;
+}
+

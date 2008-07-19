@@ -366,3 +366,69 @@ void o_mirror_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, O
     (*func) (toplevel, world_centerx, world_centery, object);
   }
 }
+
+/*! \brief Calculates the distance between the given point and the closest
+ * point on the given object.
+ *
+ *  \param [in] object The given object.
+ *  \param [in] x The x coordinate of the given point.
+ *  \param [in] y The y coordinate of the given point.
+ *  \return The shortest distance from the object to the point. If the
+ *  distance cannot be calculated, this function returns a really large
+ *  number (G_MAXDOUBLE).  If an error occurs, this function returns
+ *  G_MAXDOUBLE.
+ */
+gdouble o_shortest_distance(OBJECT *object, gint x, gint y)
+{
+  gdouble shortest_distance = G_MAXDOUBLE;
+
+  if (object == NULL) {
+    g_critical("o_shortest_distance(): object == NULL\n");
+    return G_MAXDOUBLE;
+  }
+
+
+  switch(object->type) {
+
+    case(OBJ_ARC):
+      shortest_distance = o_arc_shortest_distance(object->arc, x, y);
+      break;
+
+    case(OBJ_BOX):
+      shortest_distance = o_box_shortest_distance(object->box, x, y);
+      break;
+
+    case(OBJ_BUS):
+    case(OBJ_LINE):
+    case(OBJ_NET):
+    case(OBJ_PIN):
+      shortest_distance = o_line_shortest_distance(object->line, x, y);
+      break;
+
+    case(OBJ_CIRCLE):
+      shortest_distance = o_circle_shortest_distance(object->circle, x, y);
+      break;
+
+    case(OBJ_COMPLEX):
+    case(OBJ_PLACEHOLDER):
+      shortest_distance = o_complex_shortest_distance(object->complex, x, y);
+      break;
+
+    case(OBJ_HEAD):
+      break;
+
+    case(OBJ_PICTURE):
+      shortest_distance = o_picture_shortest_distance(object->picture, x, y);
+      break;
+
+    case(OBJ_TEXT):
+      shortest_distance = o_text_shortest_distance(object->text, x, y);
+      break;
+
+    default:
+      g_critical ("o_shortest_distance: object %p has bad type '%c'\n",
+                  object, object->type);
+  }
+  return shortest_distance;
+}
+

@@ -1133,4 +1133,34 @@ void o_circle_print_hatch(TOPLEVEL *toplevel, FILE *fp,
   }
 }
 
+/*! \brief Calculates the distance between the given point and the closest
+ * point on the perimeter of the circle.
+ *
+ *  \param [in] object The object, where object->circle != NULL.
+ *  \param [in] x The x coordinate of the given point.
+ *  \param [in] y The y coordinate of the given point.
+ *  \return The shortest distance from the object to the point.  With an
+ *  invalid parameter, this function returns G_MAXDOUBLE.
+ */
+gdouble o_circle_shortest_distance(CIRCLE *circle, gint x, gint y)
+{
+  gdouble distance_to_center;
+  gdouble dx;
+  gdouble dy;
+  gdouble shortest_distance;
+
+  if (circle == NULL) {
+    g_critical("o_circle_shortest_distance(): circle == NULL\n");
+    return FALSE;
+  }
+
+  dx = ((gdouble) x) - ((gdouble) circle->center_x);
+  dy = ((gdouble) y) - ((gdouble) circle->center_y);
+
+  distance_to_center = sqrt((dx*dx) + (dy*dy));
+
+  shortest_distance = fabs(distance_to_center - circle->radius);
+
+  return shortest_distance;
+}
 

@@ -1036,3 +1036,46 @@ GdkPixbuf *o_picture_pixbuf_from_buffer (gchar *file_content,
 
   return pixbuf;
 }
+
+/*! \brief Calculates the distance between the given point and the closest
+ * point in the picture.
+ *
+ *  Interrior points within the picture return a distance of zero.
+ *
+ *  \param [in] object The object, where object->picture != NULL.
+ *  \param [in] x The x coordinate of the given point.
+ *  \param [in] y The y coordinate of the given point.
+ *  \return The shortest distance from the object to the point.  With an
+ *  invalid parameter, this function returns G_MAXDOUBLE.
+ */
+gdouble o_picture_shortest_distance(PICTURE *picture, gint x, gint y)
+{
+  gdouble dx;
+  gdouble dy;
+  gdouble shortest_distance;
+  gdouble x0;
+  gdouble x1;
+  gdouble y0;
+  gdouble y1;
+
+  if (picture == NULL) {
+    g_critical("o_picture_shortest_distance(): picture == NULL\n");
+    return G_MAXDOUBLE;
+  }
+
+  x0 = (gdouble) min(picture->upper_x, picture->lower_x);
+  x1 = (gdouble) max(picture->upper_x, picture->lower_x);
+  y0 = (gdouble) min(picture->upper_y, picture->lower_y);
+  y1 = (gdouble) max(picture->upper_y, picture->lower_y);
+
+  dx = min(((gdouble) x)-x0, x1-((gdouble) x));
+  dy = min(((gdouble) y)-y0, y1-((gdouble) y));
+
+  dx = min(dx, 0);
+  dy = min(dy, 0);
+
+  shortest_distance = sqrt((dx*dx) + (dy*dy));
+
+  return shortest_distance;
+}
+

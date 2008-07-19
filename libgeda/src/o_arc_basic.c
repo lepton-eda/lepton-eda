@@ -1238,3 +1238,100 @@ void o_arc_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 	  x,y, radius, arc_width);
 }
 
+/*! \brief Calculates the distance between the given point and the closest
+ * point on the perimeter of the arc.
+ *
+ *  \param [in] object The object, where object->arc != NULL.
+ *  \param [in] x The x coordinate of the given point.
+ *  \param [in] y The y coordinate of the given point.
+ *  \return The shortest distance from the object to the point.  With an
+ *  invalid parameter, this function returns G_MAXDOUBLE.
+ */
+gdouble o_arc_shortest_distance(ARC *arc, gint x, gint y)
+{
+  gdouble radius;
+  gdouble shortest_distance;
+
+  if (arc == NULL) {
+    g_critical("o_arc_shortest_distance(): arc == NULL\n");
+    return G_MAXDOUBLE;
+  }
+
+  radius = ((gdouble) arc->width) / 2.0;
+
+  if ( o_arc_within_sweep(arc, x, y) ) {
+    gdouble distance_to_center;
+    gdouble dx;
+    gdouble dy;
+
+    dx = ((gdouble) x) - ((gdouble) arc->x);
+    dy = ((gdouble) y) - ((gdouble) arc->y);
+
+    distance_to_center = sqrt((dx*dx) + (dy*dy));
+
+    shortest_distance = fabs(distance_to_center - radius);
+  }
+  else {
+    gdouble angle;
+    gdouble distance_to_end0;
+    gdouble distance_to_end1;
+    gdouble dx;
+    gdouble dy;
+
+    angle = G_PI * ((gdouble) arc->start_angle ) / 180;
+
+    dx = ((gdouble) x) - radius*cos(angle) - ((gdouble) arc->x);
+    dy = ((gdouble) y) - radius*sin(angle) - ((gdouble) arc->y);
+
+    distance_to_end0 = sqrt((dx*dx) + (dy*dy));
+
+    angle += G_PI * ((gdouble) arc->end_angle ) / 180;
+
+    dx = ((gdouble) x) - radius*cos(angle) - ((gdouble) arc->x);
+    dy = ((gdouble) y) - radius*sin(angle) - ((gdouble) arc->y);
+
+    distance_to_end1 = sqrt((dx*dx) + (dy*dy));
+
+    shortest_distance = min(distance_to_end0, distance_to_end1);
+  }
+
+  return shortest_distance;
+}
+
+/*! \brief Determines if a point lies within the sweep of the arc.
+ *
+ *  \param [in] object The object, where object->arc != NULL.
+ *  \param [in] x The x coordinate of the given point.
+ *  \param [in] y The y coordinate of the given point.
+ *  \return TRUE if the point lies within the sweep of the arc.
+ *  FALSE if the point lies outside the sweep of the arc. With an 
+ *  invalid parameter, this function returns FALSE.
+ */
+gboolean o_arc_within_sweep(ARC *arc, gint x, gint y)
+{
+  gdouble a0;
+  gdouble a1;
+  gdouble angle;
+  gdouble dx;
+  gdouble dy;
+
+  if (arc == NULL) {
+    g_critical("o_arc_within_sweep(): arc == NULL\n");
+    return FALSE;
+  }
+
+  dx = ((gdouble) x) - ((gdouble) arc->x);
+  dy = ((gdouble) y) - ((gdouble) arc->y);
+
+  angle = 180 * atan2(dy, dx) / G_PI;
+
+  a0 = (gdouble) arc->start_angle;
+  a1 = ((gdouble) arc->end_angle) + a0;
+
+  while (angle < a0) {
+    angle+=360;
+  }
+
+  return (angle < a1);
+}
+

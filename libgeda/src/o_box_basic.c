@@ -1440,4 +1440,55 @@ void o_box_print_hatch(TOPLEVEL *toplevel, FILE *fp,
   }
 }
 
+/*! \brief Calculates the distance between the given point and the closest
+ * point on the perimeter of the box.
+ *
+ *  \param [in] object The object, where object->box != NULL.
+ *  \param [in] x The x coordinate of the given point.
+ *  \param [in] y The y coordinate of the given point.
+ *  \return The shortest distance from the object to the point.  With an 
+ *  invalid parameter, this function returns G_MAXDOUBLE.
+ */
+gdouble o_box_shortest_distance(BOX *box, gint x, gint y)
+{
+  gdouble dx;
+  gdouble dy;
+  gdouble shortest_distance;
+  gdouble x0;
+  gdouble x1;
+  gdouble y0;
+  gdouble y1;
+
+  if (box == NULL) {
+    g_critical("o_box_shortest_distance(): box == NULL\n");
+    return G_MAXDOUBLE;
+  }
+
+  x0 = (gdouble) min(box->upper_x, box->lower_x);
+  x1 = (gdouble) max(box->upper_x, box->lower_x);
+  y0 = (gdouble) min(box->upper_y, box->lower_y);
+  y1 = (gdouble) max(box->upper_y, box->lower_y);
+
+  dx = min(((gdouble) x)-x0, x1-((gdouble) x));
+  dy = min(((gdouble) y)-y0, y1-((gdouble) y));
+
+  if ( dx < 0 ) {
+    if ( dy < 0 ) {
+      shortest_distance = sqrt((dx*dx) + (dy*dy));
+    }
+    else {
+      shortest_distance = fabs(dx);
+    }
+  }
+  else {
+    if ( dy < 0 ) {
+      shortest_distance = fabs(dy);
+    }
+    else {
+      shortest_distance = min(dx,dy);
+    }
+  }
+
+  return shortest_distance;
+}
 
