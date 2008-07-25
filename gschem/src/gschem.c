@@ -44,11 +44,6 @@
 #include <locale.h>
 #endif
 
-#ifdef HAS_LIBSTROKE
-/* libstroke prototype */
-void stroke_init(void);
-#endif
-
 typedef struct {
   gschem_atexit_func func;
   gpointer arg;
@@ -103,7 +98,9 @@ void gschem_quit(void)
   /* o_text_freeallfonts();*/
   s_attrib_free();
   s_papersizes_free();
-  x_stroke_free_all();
+#ifdef HAS_LIBSTROKE
+  x_stroke_free ();
+#endif /* HAS_LIBSTROKE */
   s_color_destroy_all();
   o_undo_cleanup();
   /* s_stroke_free(); no longer needed */
@@ -177,11 +174,6 @@ void main_prog(void *closure, int argc, char *argv[])
   s_log_init (filename);
   g_free (filename);
 
-#ifdef HAS_LIBSTROKE
-  stroke_init(); /* libstroke function */
-  /* s_stroke_init(); no longer needed libgeda function */
-#endif
-	
   s_log_message(
                 _("gEDA/gschem version %s%s.%s\n"), PREPEND_VERSION_STRING,
                 DOTTED_VERSION, DATE_VERSION);
@@ -267,6 +259,10 @@ void main_prog(void *closure, int argc, char *argv[])
   w_current->grid = FALSE;
   x_repaint_background (w_current);
   w_current->grid = save_grid;
+
+#ifdef HAS_LIBSTROKE
+  x_stroke_init ();
+#endif /* HAS_LIBSTROKE */
 
   for (i = argv_index; i < argc; i++) {
 

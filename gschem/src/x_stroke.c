@@ -19,8 +19,6 @@
  */
 #include <config.h>
 
-#include <math.h>
-
 #include <libgeda/libgeda.h>
 
 #include "../include/gschem_struct.h"
@@ -31,118 +29,140 @@
 #include <dmalloc.h>
 #endif
 
-typedef struct st_stroke_point STROKE_POINT;
+#ifdef HAS_LIBSTROKE
+#include <stroke.h>
 
-struct st_stroke_point {
-        int x, y;
-        STROKE_POINT *next;
-};
-
-static STROKE_POINT *stroke_points = NULL;
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*
+ * <B>stroke_points</B> is an array of points for the stroke
+ * footprints. The points of the stroke are displayed over the display
+ * area of the main window. They have to be erased when the stroke is
+ * translated and the sequence evaluated.
  *
+ * Its size will never exceed <B>STROKE_MAX_POINTS</B> (the limit in
+ * number of points of a stroke provided by libstroke).
  */
-void x_stroke_add_point(GSCHEM_TOPLEVEL *w_current, int x, int y)
+typedef struct {
+  gint x, y;
+} StrokePoint;
+
+static GArray *stroke_points = NULL;
+
+
+/*! \brief Initializes the stroke interface.
+ *  \par Function Description
+ *  This is the initialization function for the stroke interface. It
+ *  initializes the libstroke library and prepare an array of points
+ *  for the mouse footprints.
+ *
+ *  This function has to be called only once at application
+ *  initialization before any use of the stroke interface.
+ */
+void
+x_stroke_init (void)
 {
-  STROKE_POINT *new_point;
+  g_return_if_fail (stroke_points == NULL);
 
-  new_point = (STROKE_POINT *) g_malloc(sizeof(STROKE_POINT));
+  stroke_init ();
 
-  new_point->x = x;
-  new_point->y = y;
-
-  if (stroke_points == NULL) {
-    stroke_points = new_point;
-    stroke_points->next = NULL;
-  } else {
-    new_point->next = stroke_points;
-    stroke_points = new_point;
-  }
-
-  gdk_gc_set_foreground(w_current->gc,
-                        x_get_color(w_current->stroke_color));
-
-  gdk_draw_point(w_current->backingstore, w_current->gc, x, y);
-  o_invalidate_rect (w_current, x, y, x, y);
+  stroke_points = g_array_new (FALSE,
+                               FALSE,
+                               sizeof (StrokePoint));
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Frees memory of the stroke interface.
  *  \par Function Description
- *
- *  \note
- *  traverse list as well as free each point as you go along
+ *  This function frees the memory used for the mouse footprint
+ *  points. It terminates the use of the stroke interface.
  */
-void x_stroke_erase_all(GSCHEM_TOPLEVEL *w_current)
+void
+x_stroke_free (void)
 {
-  STROKE_POINT *temp;
+  g_return_if_fail (stroke_points != NULL);
 
-  while(stroke_points != NULL) {
-
-#if DEBUG
-    printf("%d %d\n", stroke_points->x, stroke_points->y);
-#endif
-
-    /* was xor, wasn't working out... see above note */
-    gdk_gc_set_foreground(
-                          w_current->gc,
-                          x_get_color(w_current->toplevel->background_color));
-
-    gdk_draw_point(w_current->backingstore, w_current->gc,
-                   stroke_points->x, stroke_points->y);
-    o_invalidate_rect (w_current, stroke_points->x, stroke_points->y,
-                                  stroke_points->x, stroke_points->y);
-
-    temp = stroke_points;
-    stroke_points = stroke_points->next;
-    g_free(temp);
-  }
-
+  g_array_free (stroke_points, TRUE);
   stroke_points = NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Records a new point for the stroke.
  *  \par Function Description
+ *  This function adds the point (<B>x</B>,<B>y</B>) as a new point in
+ *  the stroke.
  *
+ * The footprint is updated and the new point is drawn on the drawing area.
+ *
+ *  \param [in] w_current The GSCHEM_TOPLEVEL object.
+ *  \param [in] x        The X coord of the new point.
+ *  \param [in] Y        The X coord of the new point.
  */
-void x_stroke_free_all(void)
+void
+x_stroke_record (GSCHEM_TOPLEVEL *w_current, gint x, gint y)
 {
-  STROKE_POINT *temp;
+  g_assert (stroke_points != NULL);
 
-  while(stroke_points != NULL) {
-#if DEBUG
-    printf("%d %d\n", stroke_points->x, stroke_points->y);
-#endif
+  stroke_record (x, y);
 
-    temp = stroke_points;
-    stroke_points = stroke_points->next;
-    g_free(temp);
+  if (stroke_points->len < STROKE_MAX_POINTS) {
+    StrokePoint point = { x, y };
+
+    g_array_append_val (stroke_points, point);
+
+    gdk_gc_set_foreground (w_current->gc,
+                           x_get_color (w_current->stroke_color));
+    gdk_draw_point (w_current->window, w_current->gc, x, y);
   }
 
-  stroke_points = NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Evaluates the stroke.
  *  \par Function Description
+ *  This function transforms the stroke input so far in an action.
  *
- *  \note
- *  this is the function that does the actual work of the strokes
- *  by executing the right guile function which is associated with the stroke
+ *  It makes use of the guile procedure <B>eval-stroke</B> to evaluate
+ *  the stroke sequence into a possible action. The mouse footprint is
+ *  erased in this function.
+ *
+ *  It returns 1 if the stroke has been successfully evaluated as an
+ *  action. It returns 0 if libstroke failed to transform the stroke
+ *  or there is no action attached to the stroke.
+ *
+ *  \param [in] w_current The GSCHEM_TOPLEVEL object.
+ *  \returns 1 on success, 0 otherwise.
  */
-int x_stroke_search_execute(char *sequence)
+gint
+x_stroke_translate_and_execute (GSCHEM_TOPLEVEL *w_current)
 {
-  gchar *guile_string; 
-  SCM eval;
+  gchar sequence[STROKE_MAX_SEQUENCE];
+  gint i;
 
-  guile_string = g_strdup_printf("(eval-stroke \"%s\")", sequence);
+  g_assert (stroke_points != NULL);
 
-  eval = scm_c_eval_string (guile_string);
-  g_free(guile_string);
+  /* erase footprint */
+  for (i = 0; i < stroke_points->len; i++) {
+    StrokePoint *point = &g_array_index (stroke_points, StrokePoint, i);
 
-  return (SCM_FALSEP (eval)) ? 0 : 1;
+    gdk_gc_set_foreground (w_current->gc,
+                           x_get_color (
+                             w_current->toplevel->background_color));
+    gdk_draw_point (w_current->window, w_current->gc,
+                    point->x, point->y);
+  }
+  /* resets length of array */
+  stroke_points->len = 0;
+
+  /* try evaluating stroke */
+  if (stroke_trans ((char*)&sequence)) {
+    gchar *guile_string =
+      g_strdup_printf("(eval-stroke \"%s\")", sequence);
+    SCM ret;
+
+    ret = scm_c_eval_string (guile_string);
+
+    g_free (guile_string);
+
+    return (SCM_NFALSEP (ret));
+  }
+
+  return 0;
 }
+
+#endif /* HAS_LIBSTROKE */

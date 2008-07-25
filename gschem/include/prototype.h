@@ -841,10 +841,10 @@ void x_print_setup(GSCHEM_TOPLEVEL *w_current, char *filename);
 /* x_script.c */
 void setup_script_selector(GSCHEM_TOPLEVEL *w_current);
 /* x_stroke.c */
-void x_stroke_add_point(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void x_stroke_erase_all(GSCHEM_TOPLEVEL *w_current);
-void x_stroke_free_all(void);
-int x_stroke_search_execute(char *sequence);
+void x_stroke_init (void);
+void x_stroke_free (void);
+void x_stroke_record (GSCHEM_TOPLEVEL *w_current, gint x, gint y);
+gint x_stroke_translate_and_execute (GSCHEM_TOPLEVEL *w_current);
 /* x_window.c */
 void x_window_setup (GSCHEM_TOPLEVEL *w_current);
 void x_window_setup_colors(void);

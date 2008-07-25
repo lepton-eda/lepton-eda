@@ -42,16 +42,8 @@ int throttle = 0;
 
 /* used for the stroke stuff */
 #ifdef HAS_LIBSTROKE
-
-#define MAX_SEQUENCE 20
 static int DOING_STROKE = FALSE;
-char sequence[MAX_SEQUENCE+1];
-
-/* libstroke prototypes */
-void stroke_init (void);
-void stroke_record (int x, int y);
-int stroke_trans (char *sequence);
-#endif
+#endif /* HAS_LIBSTROKE */
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -426,8 +418,8 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       case(STROKE):
       DOING_STROKE=TRUE;
       break;
+#endif /* HAS_LIBSTROKE */
 
-#endif
       case(MID_MOUSEPAN_ENABLED):
       w_current->event_state = MOUSEPAN; /* start */
       w_current->inside_action = 1;
@@ -717,37 +709,10 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
 #ifdef HAS_LIBSTROKE
       case(STROKE):
-
       DOING_STROKE = FALSE;
-
-      if (stroke_trans (sequence) == TRUE) {
-        if (stroke_info_mode) {
-          printf ("LibStroke Translation"
-                  " succeeded: ");
-        }
-      } else {
-        if (stroke_info_mode) {
-          printf ("LibStroke Translation"
-                  " failed: ");
-        }
-      }
-
-      if (stroke_info_mode) {
-        printf ("Sequence=\"%s\"\n",sequence);
-      }
-
-      x_stroke_erase_all(w_current);
-
-                                /* new way written by Stefan Petersen */
-                                /* much better */
-      if (x_stroke_search_execute(sequence)) {
-
-        if (stroke_info_mode) {
-          printf("Sequence understood\n");
-        }
-      }
+      x_stroke_translate_and_execute (w_current);
       break;
-#endif
+#endif /* HAS_LIBSTROKE */
 
       case(MID_MOUSEPAN_ENABLED):
       w_current->doing_pan=FALSE;
@@ -811,12 +776,10 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
 #ifdef HAS_LIBSTROKE
   if (DOING_STROKE == TRUE) {
-    x_stroke_add_point(w_current, (int) event->x, (int) event->y);
-
-    stroke_record ((int) event->x, (int) event->y);
+    x_stroke_record (w_current, event->x, event->y);
     return(0);
   }
-#endif
+#endif /* HAS_LIBSTROKE */
 
   /* skip the moving event if there are other moving events in the
      gdk event queue (Werner)
