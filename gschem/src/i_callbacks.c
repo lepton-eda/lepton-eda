@@ -3114,11 +3114,9 @@ DEFINE_I_CALLBACK(attributes_detach)
 DEFINE_I_CALLBACK(attributes_show_name)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  OBJECT *object;
+  TOPLEVEL *toplevel = w_current->toplevel;
 
   exit_if_null(w_current);
-
-  object = o_select_return_first_object(w_current);
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
@@ -3129,10 +3127,19 @@ DEFINE_I_CALLBACK(attributes_show_name)
   i_update_middle_button(w_current, i_callback_attributes_show_name,
                          _("ShowN"));
 
-  if (object != NULL) {
-    o_attrib_toggle_show_name_value(w_current,
-                                    geda_list_get_glist( w_current->toplevel->page_current->selection_list ),
-                                    SHOW_NAME);
+  if (o_select_selected (w_current)) {
+    SELECTION *selection = toplevel->page_current->selection_list;
+    GList *s_current;
+
+    for (s_current = geda_list_get_glist (selection);
+         s_current != NULL;
+         s_current = g_list_next (s_current)) {
+      OBJECT *object = (OBJECT*)s_current->data;
+      o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME);
+    }
+
+    toplevel->page_current->CHANGED=1;
+    o_undo_savestate (w_current, UNDO_ALL);
   }
 }
 
@@ -3144,11 +3151,9 @@ DEFINE_I_CALLBACK(attributes_show_name)
 DEFINE_I_CALLBACK(attributes_show_value)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  OBJECT *object;
+  TOPLEVEL *toplevel = w_current->toplevel;
 
   exit_if_null(w_current);
-
-  object = o_select_return_first_object(w_current);
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
@@ -3159,10 +3164,19 @@ DEFINE_I_CALLBACK(attributes_show_value)
   i_update_middle_button(w_current, i_callback_attributes_show_value,
                          _("ShowV"));
 
-  if (object != NULL) {
-    o_attrib_toggle_show_name_value(w_current,
-                                    geda_list_get_glist( w_current->toplevel->page_current->selection_list ),
-                                    SHOW_VALUE);
+  if (o_select_selected (w_current)) {
+    SELECTION *selection = toplevel->page_current->selection_list;
+    GList *s_current;
+
+    for (s_current = geda_list_get_glist (selection);
+         s_current != NULL;
+         s_current = g_list_next (s_current)) {
+      OBJECT *object = (OBJECT*)s_current->data;
+      o_attrib_toggle_show_name_value (w_current, object, SHOW_VALUE);
+    }
+
+    toplevel->page_current->CHANGED=1;
+    o_undo_savestate (w_current, UNDO_ALL);
   }
 }
 
@@ -3174,11 +3188,9 @@ DEFINE_I_CALLBACK(attributes_show_value)
 DEFINE_I_CALLBACK(attributes_show_both)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  OBJECT *object;
+  TOPLEVEL *toplevel = w_current->toplevel;
 
   exit_if_null(w_current);
-
-  object = o_select_return_first_object(w_current);
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
@@ -3189,10 +3201,19 @@ DEFINE_I_CALLBACK(attributes_show_both)
   i_update_middle_button(w_current, i_callback_attributes_show_both,
                          _("ShowB"));
 
-  if (object != NULL) {
-    o_attrib_toggle_show_name_value(w_current,
-                                    geda_list_get_glist( w_current->toplevel->page_current->selection_list ),
-                                    SHOW_NAME_VALUE);
+  if (o_select_selected (w_current)) {
+    SELECTION *selection = toplevel->page_current->selection_list;
+    GList *s_current;
+
+    for (s_current = geda_list_get_glist (selection);
+         s_current != NULL;
+         s_current = g_list_next (s_current)) {
+      OBJECT *object = (OBJECT*)s_current->data;
+      o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME_VALUE);
+    }
+
+    toplevel->page_current->CHANGED=1;
+    o_undo_savestate (w_current, UNDO_ALL);
   }
 }
 
@@ -3204,11 +3225,9 @@ DEFINE_I_CALLBACK(attributes_show_both)
 DEFINE_I_CALLBACK(attributes_visibility_toggle)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  OBJECT *object;
+  TOPLEVEL *toplevel = w_current->toplevel;
 
   exit_if_null(w_current);
-
-  object = o_select_return_first_object(w_current);
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */

@@ -133,42 +133,27 @@ void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Set what part of an attribute is shown.
  *  \par Function Description
+ *  This function changes what part (name, value or both) of an
+ *  attribute is shown by its attribute object. The attribute object
+ *  is erased, updated and finally redrawn.
  *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] object     The attribute object.
+ *  \param [in] show_name_value  The new display flag for attribute.
  */
 void o_attrib_toggle_show_name_value(GSCHEM_TOPLEVEL *w_current,
-				     GList *list, int new_show_name_value)
+                                     OBJECT *object, int show_name_value)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList *s_current = NULL;
-  OBJECT *object = NULL;
 
-  if (list == NULL) {
-    return;
-  }
+  g_return_if_fail (object != NULL && object->type == OBJ_TEXT);
 
-  s_current = list;
-
-  while(s_current != NULL) {
-    object = (OBJECT *) s_current->data;
-
-    if (object == NULL) {
-      fprintf(stderr, _("Got NULL in o_attrib_toggle_show_name_value\n"));
-      exit(-1);
-    }
-
-    if (object->type == OBJ_TEXT) {
-      o_erase_single(w_current, object);
-      object->show_name_value = new_show_name_value;
-      o_text_recreate(toplevel, object);
-      o_text_draw(w_current, object);
-      toplevel->page_current->CHANGED=1;
-    }
-    s_current = g_list_next(s_current);
-  }
-  o_undo_savestate(w_current, UNDO_ALL);
+  o_erase_single(w_current, object);
+  object->show_name_value = show_name_value;
+  o_text_recreate(toplevel, object);
+  o_text_draw(w_current, object);
 }
 
 
