@@ -104,8 +104,7 @@ TILE_LOC *s_tile_new_loc(int i, int j)
  *  \par Function Description
  *
  */
-void s_tile_add_object(TOPLEVEL * toplevel, OBJECT * object, int world_x1,
-		       int world_y1, int world_x2, int world_y2)
+void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
 {
   TILE *t_current;
   PAGE *p_current;
@@ -124,6 +123,9 @@ void s_tile_add_object(TOPLEVEL * toplevel, OBJECT * object, int world_x1,
   printf("name: %s\n", object->name);
 #endif
 
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+
   if (toplevel->ADDING_SEL) {
 #if DEBUG    
     printf("s_tile_add_object, adding sel TRUE\n");
@@ -134,10 +136,10 @@ void s_tile_add_object(TOPLEVEL * toplevel, OBJECT * object, int world_x1,
   x_size = (double) toplevel->init_right / (double) MAX_TILES_X;
   y_size = (double) toplevel->init_bottom / (double) MAX_TILES_Y;
 
-  x1 = (int) (world_x1 / x_size);
-  x2 = (int) (world_x2 / x_size);
-  y1 = (int) (world_y1 / y_size);
-  y2 = (int) (world_y2 / y_size);
+  x1 = (int) (object->line->x[0] / x_size);
+  x2 = (int) (object->line->x[1] / x_size);
+  y1 = (int) (object->line->y[0] / y_size);
+  y2 = (int) (object->line->y[1] / y_size);
 
   bottom = x2 - x1;
   p_current = toplevel->page_current;
@@ -359,9 +361,7 @@ void s_tile_remove_object(TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 void s_tile_update_object(TOPLEVEL * toplevel, OBJECT * object)
 {
   s_tile_remove_object(toplevel, toplevel->page_current, object);
-  s_tile_add_object(toplevel, object,
-                    object->line->x[0], object->line->y[0],
-                    object->line->x[1], object->line->y[1]);
+  s_tile_add_line_object(toplevel, object);
 }
 
 

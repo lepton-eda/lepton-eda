@@ -79,9 +79,7 @@ OBJECT *o_pin_add(TOPLEVEL *toplevel, OBJECT *object_list,
   object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
   if (!toplevel->ADDING_SEL) {
-    s_tile_add_object(toplevel, object_list,
-                      new_node->line->x[0], new_node->line->y[0], 
-                      new_node->line->x[1], new_node->line->y[1]);
+    s_tile_add_line_object(toplevel, object_list);
     s_conn_update_object(toplevel, object_list);
   }
 
