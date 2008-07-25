@@ -316,8 +316,7 @@ void s_tile_add_object(TOPLEVEL * toplevel, OBJECT * object, int world_x1,
  *  this is still wrong, p_current needs to be the page the object is on 
  *  doesn't work if the current page isn't where the object lives
  */
-void s_tile_remove_object_all(TOPLEVEL * toplevel, PAGE *p_current,
-                              OBJECT * object)
+void s_tile_remove_object(TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
   TILE *t_current;
   TILE_LOC *tl_current;
@@ -335,7 +334,7 @@ void s_tile_remove_object_all(TOPLEVEL * toplevel, PAGE *p_current,
 
     g_free(tl_current);
 
-    t_current = &p_current->world_tiles[i][j];
+    t_current = &page->world_tiles[i][j];
     t_current->objects = g_list_remove(t_current->objects, object);
 
 #if 1 
@@ -359,7 +358,7 @@ void s_tile_remove_object_all(TOPLEVEL * toplevel, PAGE *p_current,
  */
 void s_tile_update_object(TOPLEVEL * toplevel, OBJECT * object)
 {
-  s_tile_remove_object_all(toplevel, toplevel->page_current, object);
+  s_tile_remove_object(toplevel, toplevel->page_current, object);
   s_tile_add_object(toplevel, object,
                     object->line->x[0], object->line->y[0],
                     object->line->x[1], object->line->y[1]);

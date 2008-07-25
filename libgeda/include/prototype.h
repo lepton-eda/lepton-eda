@@ -479,7 +479,7 @@ void s_stretch_destroy_all(STRETCH *head);
 void s_tile_init(TOPLEVEL *toplevel, PAGE *p_current);
 TILE_LOC *s_tile_new_loc(int i, int j);
 void s_tile_add_object(TOPLEVEL *toplevel, OBJECT *object, int world_x1, int world_y1, int world_x2, int world_y2);
-void s_tile_remove_object_all(TOPLEVEL *toplevel, PAGE *p_current, OBJECT *object);
+void s_tile_remove_object(TOPLEVEL *toplevel, PAGE *page, OBJECT *object);
 void s_tile_update_object(TOPLEVEL *toplevel, OBJECT *object);
 GList *s_tile_get_objectlists(TOPLEVEL *toplevel, int world_x1, int world_y1, int world_x2, int world_y2);
 void s_tile_print(TOPLEVEL *toplevel);
