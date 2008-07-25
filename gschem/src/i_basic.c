@@ -382,7 +382,7 @@ void i_update_menus(GSCHEM_TOPLEVEL *w_current)
   g_assert(w_current != NULL);
   g_assert(toplevel->page_current != NULL);
 
-  if ( geda_list_get_glist( toplevel->page_current->selection_list ) != NULL ) {
+  if (o_select_selected (w_current)) {
     /* since one or more things are selected, we set these TRUE */
     /* These strings should NOT be internationalized */
     x_menus_sensitivity(w_current, "Edit/Cut Buffer", TRUE);

@@ -2272,23 +2272,13 @@ static GtkWidget *create_color_menu (GSCHEM_TOPLEVEL * w_current, int * select_i
   /* first lets see if we have a selected object, if so select its color */
   int select_col = -1;
   int item_index = 0;
-  GList *s_current = NULL;
   OBJECT *object = NULL;
 
   menu = gtk_menu_new ();
   group = NULL;
 
-  s_current = geda_list_get_glist( w_current->toplevel->page_current->selection_list );
-
-  if (s_current != NULL) {
-
-    object = (OBJECT *) s_current->data;
-    if (object == NULL) {
-      fprintf(stderr, "no object selected - WHEE!\n");
-    }else{
-      select_col = object->saved_color;
-      /* fprintf(stderr, "setting object color %d\n", select_col); */
-    }
+  if ((object = o_select_return_first_object (w_current)) != NULL) {
+    select_col = object->saved_color;
   }else /*fprintf(stderr, "no object selected\n")*/;
 
   for (index=0; index < MAX_COLORS;index++) {

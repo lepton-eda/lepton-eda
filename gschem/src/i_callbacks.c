@@ -1859,7 +1859,7 @@ DEFINE_I_CALLBACK(buffer_copy1)
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
+  if (!o_select_selected (w_current))
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy1, _("Copy 1"));
@@ -1878,7 +1878,7 @@ DEFINE_I_CALLBACK(buffer_copy2)
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
+  if (!o_select_selected (w_current))
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy2, _("Copy 2"));
@@ -1897,7 +1897,7 @@ DEFINE_I_CALLBACK(buffer_copy3)
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
+  if (!o_select_selected (w_current))
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy3, _("Copy 3"));
@@ -1916,7 +1916,7 @@ DEFINE_I_CALLBACK(buffer_copy4)
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
+  if (!o_select_selected (w_current))
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy4, _("Copy 4"));
@@ -1935,7 +1935,7 @@ DEFINE_I_CALLBACK(buffer_copy5)
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
+  if (!o_select_selected (w_current))
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_copy5, _("Copy 5"));
@@ -1954,7 +1954,7 @@ DEFINE_I_CALLBACK(buffer_cut1)
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
+  if (!o_select_selected (w_current))
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut1, _("Cut 1"));
@@ -1973,7 +1973,7 @@ DEFINE_I_CALLBACK(buffer_cut2)
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
+  if (!o_select_selected (w_current))
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut2, _("Cut 2"));
@@ -1992,7 +1992,7 @@ DEFINE_I_CALLBACK(buffer_cut3)
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
+  if (!o_select_selected (w_current))
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut3, _("Cut 3"));
@@ -2011,7 +2011,7 @@ DEFINE_I_CALLBACK(buffer_cut4)
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
+  if (!o_select_selected (w_current))
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut4, _("Cut 4"));
@@ -2030,7 +2030,7 @@ DEFINE_I_CALLBACK(buffer_cut5)
 
   exit_if_null(w_current);
 
-  if ( geda_list_get_glist( w_current->toplevel->page_current->selection_list ) == NULL )
+  if (!o_select_selected (w_current))
     return;
 
   i_update_middle_button(w_current, i_callback_buffer_cut5, _("Cut 5"));

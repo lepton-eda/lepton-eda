@@ -39,7 +39,7 @@
 void o_move_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  if ( geda_list_get_glist( toplevel->page_current->selection_list ) != NULL) {
+  if (o_select_selected (w_current)) {
 
     /* Save the current state. When rotating the selection when moving,
        we have to come back to here */

@@ -110,7 +110,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       (w_current->event_state == STARTSELECT ||
        w_current->event_state == SELECT)) {
     o_find_object(w_current, w_x, w_y, TRUE);
-    if ( geda_list_get_glist( toplevel->page_current->selection_list )) {
+    if (o_select_selected (w_current)) {
        o_edit(w_current, geda_list_get_glist( toplevel->page_current->selection_list ));
        return(0);
     }

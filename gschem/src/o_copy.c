@@ -39,8 +39,7 @@
  */
 void o_copy_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  if (geda_list_get_glist( toplevel->page_current->selection_list ) != NULL) {
+  if (o_select_selected (w_current)) {
 
   /* This is commented out since it breaks the copy of objects.  See below. */
 #if 0
