@@ -586,7 +586,7 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
 	g_free(slot_str);
 	/* delete the slot attribute */
 	o_selection_remove (autotext->w_current->toplevel->page_current->selection_list, o_slot);
-	o_delete_text (autotext->w_current, o_slot);
+	o_delete (autotext->w_current, o_slot);
       }
     }
   }

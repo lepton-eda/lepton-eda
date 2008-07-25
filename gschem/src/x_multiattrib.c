@@ -518,7 +518,7 @@ static void multiattrib_action_delete_attribute(GSCHEM_TOPLEVEL *w_current,
 {
   /* actually deletes the attribute */
   o_selection_remove ( w_current->toplevel->page_current->selection_list, o_attrib);
-  o_delete_text (w_current, o_attrib);
+  o_delete (w_current, o_attrib);
   w_current->toplevel->page_current->CHANGED=1;
   o_undo_savestate (w_current, UNDO_ALL);
 

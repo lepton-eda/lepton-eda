@@ -566,10 +566,7 @@ void o_cue_draw_list(GSCHEM_TOPLEVEL *w_current, GList *object_list);
 void o_cue_undraw_list(GSCHEM_TOPLEVEL *w_current, GList *object_list);
 void o_cue_undraw_objects(GSCHEM_TOPLEVEL *w_current, OBJECT *list);
 /* o_delete.c */
-void o_delete_net(GSCHEM_TOPLEVEL *w_current, OBJECT *obj);
-void o_delete_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *obj);
-void o_delete_complex(GSCHEM_TOPLEVEL *w_current, OBJECT *obj);
-void o_delete_text(GSCHEM_TOPLEVEL *w_current, OBJECT *obj);
+void o_delete(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_delete_selected(GSCHEM_TOPLEVEL *w_current);
 /* o_find.c */
 gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int x, int y,

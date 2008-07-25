@@ -500,7 +500,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
 
 
           if (o_move_zero_length(object)) {
-            o_delete_net(w_current, object);
+            o_delete(w_current, object);
           } else {
             o_net_recalc(toplevel, object);
             s_tile_update_object(toplevel, object);
@@ -542,7 +542,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
           object->line->y[whichone] = y;
 
           if (o_move_zero_length(object)) {
-            o_delete_bus(w_current, object);
+            o_delete(w_current, object);
           } else {
             o_bus_recalc(toplevel, object);
             s_tile_update_object(toplevel, object);
