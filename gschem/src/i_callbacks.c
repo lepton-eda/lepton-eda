@@ -3220,9 +3220,19 @@ DEFINE_I_CALLBACK(attributes_visibility_toggle)
                          i_callback_attributes_visibility_toggle,
                          _("VisToggle"));
 
-  if (object != NULL) {
-    o_attrib_toggle_visibility(w_current,
-                               geda_list_get_glist( w_current->toplevel->page_current->selection_list ) );
+  if (o_select_selected (w_current)) {
+    SELECTION *selection = toplevel->page_current->selection_list;
+    GList *s_current;
+
+    for (s_current = geda_list_get_glist (selection);
+         s_current != NULL;
+         s_current = g_list_next (s_current)) {
+      OBJECT *object = (OBJECT*)s_current->data;
+      o_attrib_toggle_visibility (w_current, object);
+    }
+
+    toplevel->page_current->CHANGED=1;
+    o_undo_savestate (w_current, UNDO_ALL);
   }
 }
 

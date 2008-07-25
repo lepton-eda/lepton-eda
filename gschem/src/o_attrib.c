@@ -86,68 +86,51 @@ void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
   return;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Change visibility status of attribute object.
  *  \par Function Description
+ *  This function toggles the visibility status of the attribute \a
+ *  object and updates it. The object is erased or redrawn if
+ *  necessary.
  *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] object     The attribute object.
  */
-void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, GList *list)
+void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList *s_current = NULL;
-  OBJECT *object = NULL;
 
-  if (list == NULL) {
-    return;
-  }
+  g_return_if_fail (object != NULL && object->type == OBJ_TEXT);
 
-  s_current = list;
-
-  while(s_current != NULL) {
-    object = (OBJECT *) s_current->data;
-    if (object == NULL) {
-      fprintf(stderr, _("Got NULL in o_attrib_toggle_visibility\n"));
-      exit(-1);
+  if (object->visibility == VISIBLE) {
+    /* only erase if we are not showing hidden text */
+    if (!toplevel->show_hidden_text) {
+      o_erase_single(w_current, object);
     }
 
-    if (object->type == OBJ_TEXT) {
-      if (object->visibility == VISIBLE) {
+    object->visibility = INVISIBLE;
 
-        /* only erase if we are not showing hidden text */
-        if (!toplevel->show_hidden_text) {
-          o_erase_single(w_current, object);
-        }
-        
-        object->visibility = INVISIBLE;
-
-        if (toplevel->show_hidden_text) {
-          /* draw text so that little I is drawn */
-          o_text_draw(w_current, object); 
-        }
-
-        toplevel->page_current->CHANGED=1;
-      } else {
-        /* if we are in the special show hidden mode, then erase text first */
-        /* to get rid of the little I */
-        if (toplevel->show_hidden_text) {
-          o_erase_single(w_current, object);
-        }
-
-        object->visibility = VISIBLE;
-        
-        /* you must do this since real->text->complex */
-        /* might be null when text is invisible */
-        if (object->text->prim_objs == NULL)
-          o_text_recreate(toplevel, object);
-
-        
-        o_text_draw(w_current, object);
-        toplevel->page_current->CHANGED = 1;
-      }
+    if (toplevel->show_hidden_text) {
+      /* draw text so that little I is drawn */
+      o_text_draw(w_current, object);
     }
-    s_current = g_list_next(s_current);
+
+  } else {
+    /* if we are in the special show hidden mode, then erase text first */
+    /* to get rid of the little I */
+    if (toplevel->show_hidden_text) {
+      o_erase_single(w_current, object);
+    }
+
+    object->visibility = VISIBLE;
+
+    /* you must do this since real->text->complex */
+    /* might be null when text is invisible */
+    if (object->text->prim_objs == NULL) {
+      o_text_recreate(toplevel, object);
+    }
+
+    o_text_draw(w_current, object);
   }
-  o_undo_savestate(w_current, UNDO_ALL);
 }
 
 /*! \todo Finish function documentation!!!

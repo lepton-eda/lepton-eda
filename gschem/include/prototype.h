@@ -468,7 +468,7 @@ void o_arc_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 /* o_attrib.c */
 void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection, OBJECT *selected);
-void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, GList *list);
+void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_attrib_toggle_show_name_value(GSCHEM_TOPLEVEL *w_current, GList *list, int new_show_name_value);
 OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current, char *text_string, int visibility, int show_name_value, OBJECT *object);
 /* o_basic.c */
