@@ -271,31 +271,22 @@ OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y)
 void s_conn_update_object(TOPLEVEL * toplevel, OBJECT * object)
 {
   TILE *t_current;
-  TILE_LOC *tl_current;
-  GList *tloc_list;
+  GList *tl_current;
   GList *object_list;
   OBJECT *other_object;
   OBJECT *found;
   CONN *new_conn;
-  int i, j;
   int k;
   int add_conn;
 
   /* loop over all tiles which object appears in */
-  tloc_list = object->tile_locs;
-  while (tloc_list != NULL) {
-    tl_current = (TILE_LOC *) tloc_list->data;
+  for (tl_current = object->tiles;
+       tl_current != NULL;
+       tl_current = g_list_next (tl_current)) {
+    t_current = (TILE*)tl_current->data;
 
     add_conn = FALSE;
     
-    i = tl_current->i;
-    j = tl_current->j;
-
-#if DEBUG
-    printf("\nInside tile: %d %d\n\n", i, j);
-#endif
-    
-    t_current = &toplevel->page_current->world_tiles[i][j];
     object_list = t_current->objects;
     while (object_list != NULL) {
       other_object = (OBJECT *) object_list->data;
@@ -670,8 +661,6 @@ void s_conn_update_object(TOPLEVEL * toplevel, OBJECT * object)
 
       object_list = g_list_next(object_list);
     } 
-
-    tloc_list = g_list_next(tloc_list);
   }
 
 #if DEBUG

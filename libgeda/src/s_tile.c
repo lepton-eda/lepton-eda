@@ -87,29 +87,11 @@ void s_tile_init(TOPLEVEL * toplevel, PAGE * p_current)
  *  \par Function Description
  *
  */
-TILE_LOC *s_tile_new_loc(int i, int j)
-{
-  TILE_LOC *tile_loc;
-
-  tile_loc = (TILE_LOC *) g_malloc(sizeof(TILE_LOC));
-
-  tile_loc->i = i;
-  tile_loc->j = j;
-
-  return (tile_loc);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
 {
   TILE *t_current;
   PAGE *p_current;
   GList *found;
-  TILE_LOC *tile_loc;
   int i, j;
   int v, w;
   double x1, y1, x2, y2;
@@ -168,10 +150,7 @@ void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
           /*printf("%d %d\n", v, w);*/
           t_current->objects = g_list_append(t_current->objects,
                                              object);
-
-          tile_loc = s_tile_new_loc(v, w);
-          object->tile_locs = g_list_append(object->tile_locs,
-                                            tile_loc);
+          object->tiles = g_list_append(object->tiles, t_current);
         }
 
         v = (int) x;
@@ -187,9 +166,7 @@ void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
           /*printf("%d %d\n", v, w);*/
           t_current->objects = g_list_append(t_current->objects,
                                              object);
-          tile_loc = s_tile_new_loc(v, w);
-          object->tile_locs = g_list_append(object->tile_locs,
-                                            tile_loc);
+          object->tiles = g_list_append(object->tiles, t_current);
         }
 
       } else {
@@ -206,9 +183,7 @@ void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
           /*printf("%d %d\n", v, w);*/
           t_current->objects = g_list_append(t_current->objects,
                                              object);
-          tile_loc = s_tile_new_loc(v, w);
-          object->tile_locs = g_list_append(object->tile_locs,
-                                            tile_loc);
+          object->tiles = g_list_append(object->tiles, t_current);
         }
       }
     }
@@ -234,9 +209,7 @@ void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
             /*printf("%d %d\n", v, w);*/
             t_current->objects =
               g_list_append(t_current->objects, object);
-            tile_loc = s_tile_new_loc(v, w);
-            object->tile_locs =
-              g_list_append(object->tile_locs, tile_loc);
+            object->tiles = g_list_append(object->tiles, t_current);
           }
 
           w = (int) y;
@@ -253,9 +226,7 @@ void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
             /*printf("%d %d\n", v, w);*/
             t_current->objects =
               g_list_append(t_current->objects, object);
-            tile_loc = s_tile_new_loc(v, w);
-            object->tile_locs =
-              g_list_append(object->tile_locs, tile_loc);
+            object->tiles = g_list_append(object->tiles, t_current);
           }
 
         } else {
@@ -273,9 +244,7 @@ void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
             /*printf("%d %d\n", v, w);*/
             t_current->objects =
               g_list_append(t_current->objects, object);
-            tile_loc = s_tile_new_loc(v, w);
-            object->tile_locs =
-              g_list_append(object->tile_locs, tile_loc);
+            object->tiles = g_list_append(object->tiles, t_current);
           }
         }
       }
@@ -301,9 +270,7 @@ void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
         /*printf("%d %d\n", v, w);*/
         t_current->objects = g_list_append(t_current->objects,
                                            object);
-        tile_loc = s_tile_new_loc(v, w);
-        object->tile_locs = g_list_append(object->tile_locs,
-                                          tile_loc);
+        object->tiles = g_list_append(object->tiles, t_current);
       }
 
     }
@@ -320,37 +287,20 @@ void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
  */
 void s_tile_remove_object(TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
-  TILE *t_current;
-  TILE_LOC *tl_current;
-  GList *tloc_list;
-  GList *found;
-  int i, j;
+  GList *tl_current;
 
-  tloc_list = object->tile_locs;
-  while (tloc_list != NULL) {
-
-    tl_current = (TILE_LOC *) tloc_list->data;
-        
-    i = tl_current->i;
-    j = tl_current->j;
-
-    g_free(tl_current);
-
-    t_current = &page->world_tiles[i][j];
-    t_current->objects = g_list_remove(t_current->objects, object);
-
-#if 1 
-    found = g_list_find(t_current->objects, object);
-    if (found) {
-      printf("found an object left over %s in %d, %d\nPlease e-mail ahvezda@geda.seul.org with this error message and .sch\n", object->name, i, j);
-    }
-#endif
+  for (tl_current = object->tiles;
+       tl_current != NULL;
+       tl_current = g_list_next (tl_current)) {
+    TILE *t_current = (TILE*)tl_current->data;
     
-    tloc_list = g_list_next(tloc_list);
+    /* remove object from the list of objects for this tile */
+    t_current->objects = g_list_remove(t_current->objects, object);
   }
 
-  g_list_free(tloc_list);
-  object->tile_locs = NULL;
+  /* reset the list of tiles for this object appears in */
+  g_list_free(object->tiles);
+  object->tiles = NULL;
 }
 
 /*! \todo Finish function documentation!!!
@@ -426,9 +376,7 @@ void s_tile_print(TOPLEVEL * toplevel)
 {
   TILE *t_current;
   GList *temp;
-  GList *temp2;
   OBJECT *o_current;
-  TILE_LOC *tloc;
   int i, j;
 
   for (j = 0; j < MAX_TILES_Y; j++) {
@@ -442,12 +390,6 @@ void s_tile_print(TOPLEVEL * toplevel)
         o_current = (OBJECT *) temp->data;
 
         printf("%s\n", o_current->name);
-        temp2 = o_current->tile_locs;
-        while (temp2 != NULL) {
-          tloc = (TILE_LOC *) temp2->data;
-          printf("	%d %d\n", tloc->i, tloc->j);
-          temp2 = g_list_next(temp2);
-        }
 
         temp = g_list_next(temp);
       }

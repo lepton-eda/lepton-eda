@@ -137,7 +137,7 @@ OBJECT *s_basic_init_object( char *name )
   new_node->text = NULL;
   new_node->complex = NULL;
 
-  new_node->tile_locs = NULL;
+  new_node->tiles = NULL;
 
   new_node->conn_list = NULL;
 

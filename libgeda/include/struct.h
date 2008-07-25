@@ -42,7 +42,6 @@ typedef struct st_toplevel TOPLEVEL;
 typedef struct st_color COLOR;
 typedef struct st_undo UNDO;
 typedef struct st_tile TILE;
-typedef struct st_tile_loc TILE_LOC;
 
 typedef struct st_conn CONN;
 typedef struct st_bus_ripper BUS_RIPPER;
@@ -205,7 +204,7 @@ struct st_object {
   TEXT *text;
   PICTURE *picture;
 
-  GList *tile_locs;			/* tile locations */
+  GList *tiles;			/* tiles */
 
   GList *conn_list;			/* List of connections */
   /* to and from this object */
@@ -334,10 +333,6 @@ struct st_tile {
   GList *objects;
 
   int top, left, right, bottom;
-};
-
-struct st_tile_loc {
-  int i, j;	/* these are the indices into the tile structure */
 };
 
 struct st_page {

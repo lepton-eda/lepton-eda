@@ -477,7 +477,6 @@ void s_stretch_destroy_all(STRETCH *head);
 
 /* s_tile.c */
 void s_tile_init(TOPLEVEL *toplevel, PAGE *p_current);
-TILE_LOC *s_tile_new_loc(int i, int j);
 void s_tile_add_line_object(TOPLEVEL *toplevel, OBJECT *object);
 void s_tile_remove_object(TOPLEVEL *toplevel, PAGE *page, OBJECT *object);
 void s_tile_update_object(TOPLEVEL *toplevel, OBJECT *object);
