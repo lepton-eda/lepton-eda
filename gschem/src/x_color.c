@@ -37,6 +37,7 @@
 
 extern COLOR colors[MAX_COLORS];
 
+static void x_color_allocate_all(void);
 
 /*! \brief Initializes the color system for the application.
  *  \par Function Documentation
@@ -88,7 +89,7 @@ x_color_free (void)
  *  \par Function Documentation
  *
  */
-void x_color_allocate_all(void)
+static void x_color_allocate_all(void)
 {
   int error;
   int i;		
