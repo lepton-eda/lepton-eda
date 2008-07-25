@@ -121,7 +121,7 @@ void o_delete_complex(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *other_objects = NULL;
 
-  o_cue_undraw_complex(w_current, obj);
+  o_cue_undraw(w_current, obj);
   o_erase_single(w_current, obj);
 
   other_objects = s_conn_return_complex_others(other_objects, obj);

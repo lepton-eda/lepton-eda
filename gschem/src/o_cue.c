@@ -432,12 +432,15 @@ void o_cue_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Erase the cues of an object and redraw connected objects.
  *  \par Function Description
+ *  This function erases the cues on object \a object. It then redraws
+ *  the cues of its connected objects.
  *
+ *  \param [in] w_current The GSCHEM_TOPLEVEL object.
+ *  \param [in] object    The object to redraw with no cue.
  */
-void o_cue_undraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
+static void o_cue_undraw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
   GList *cl_current;
   CONN *conn;
@@ -454,47 +457,41 @@ void o_cue_undraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 
     cl_current = g_list_next(cl_current);
   }
-
-  o_redraw_single(w_current, object);
 }
 
-/*! \brief Undraw complex OBJECT.
+/*! \brief Hide the cues of an object.
  *  \par Function Description
- *  This function undraws complex objects (pass in the GSCHEM_TOPLEVEL object)
+ *  This function takes an object and redraws it without its cues. It
+ *  also manages the redraw of connected objects.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] object     OBJECT to undraw.
+ *  \note
+ *  The connections of the object are unchanged by this function.
+ *
+ *  \param [in] w_current The GSCHEM_TOPLEVEL object.
+ *  \param [in] object    The object to redraw with no cue.
  */
-void o_cue_undraw_complex(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
+void o_cue_undraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
-  GList *cl_current;
-  CONN *conn;
-  OBJECT *o_current;
-
-  if (object->type != OBJ_COMPLEX && object->type != OBJ_PLACEHOLDER) {
-    return;
-  }
-
-  o_current = object->complex->prim_objs;
-  while(o_current != NULL) {
-
-    if (o_current->type == OBJ_PIN || o_current->type == OBJ_NET ||
-        o_current->type == OBJ_BUS) {
-      
-      o_cue_erase_single(w_current, o_current);
-      
-      cl_current = o_current->conn_list;
-      while(cl_current != NULL) {
-        conn = (CONN *) cl_current->data;
-
-        if (conn->other_object) {
-          o_redraw_single(w_current, conn->other_object);
+  switch (object->type) {
+      case OBJ_PIN:
+      case OBJ_NET:
+      case OBJ_BUS:
+        o_cue_undraw_lowlevel (w_current, object);
+        break;
+      case OBJ_COMPLEX:
+      case OBJ_PLACEHOLDER:
+      {
+        OBJECT *o_current;
+        for (o_current = object->complex->prim_objs;
+             o_current != NULL;
+             o_current = o_current->next) {
+          if (o_current->type == OBJ_PIN ||
+              o_current->type == OBJ_NET ||
+              o_current->type == OBJ_BUS) {
+            o_cue_undraw_lowlevel (w_current, o_current);
+          }
         }
-
-        cl_current = g_list_next(cl_current);
       }
-    }
-    o_current = o_current->next;
   }
 
   o_redraw_single(w_current, object);

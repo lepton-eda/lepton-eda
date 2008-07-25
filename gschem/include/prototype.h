@@ -562,7 +562,6 @@ void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_cue_draw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_cue_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_cue_undraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
-void o_cue_undraw_complex(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_cue_draw_list(GSCHEM_TOPLEVEL *w_current, GList *object_list);
 void o_cue_undraw_list(GSCHEM_TOPLEVEL *w_current, GList *object_list);
 void o_cue_undraw_objects(GSCHEM_TOPLEVEL *w_current, OBJECT *list);
