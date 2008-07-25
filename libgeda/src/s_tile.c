@@ -312,25 +312,6 @@ void s_tile_add_object(TOPLEVEL * toplevel, OBJECT * object, int world_x1,
  *  \brief
  *  \par Function Description
  *
- */
-void s_tile_remove_object_all_crude(TOPLEVEL * toplevel, OBJECT * object)
-{
-  TILE *t_current;
-
-  int i, j;
-
-  for (j = 0; j < MAX_TILES_Y; j++) {
-    for (i = 0; i < MAX_TILES_X; i++) {
-      t_current = &toplevel->page_current->world_tiles[i][j];
-      t_current->objects = g_list_remove(t_current->objects, object);
-    }
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
  *  \bug
  *  this is still wrong, p_current needs to be the page the object is on 
  *  doesn't work if the current page isn't where the object lives
