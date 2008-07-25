@@ -126,7 +126,7 @@ void o_delete_complex(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 
   other_objects = s_conn_return_complex_others(other_objects, obj);
 
-  o_complex_delete(toplevel, obj);
+  s_delete(toplevel, obj);
 
   /*! \todo special case hack no return_tail. why? */
   o_cue_undraw_list(w_current, other_objects);

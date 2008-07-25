@@ -929,30 +929,6 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail,
  *  \par Function Description
  *
  */
-void o_complex_delete(TOPLEVEL *toplevel, OBJECT *delete)
-{
-  g_return_if_fail(delete != NULL);
-
-  /* first remove complex pointer */
-  if (delete->complex) {
-    if (delete->complex->prim_objs) {
-      s_delete_list_fromstart(toplevel,
-                              delete->complex->prim_objs);
-    }
-    delete->complex->prim_objs = NULL;
-  }
-
-  /* then remove the actual node */	
-  s_delete(toplevel, delete);
-  delete = NULL;
-  toplevel->page_current->object_tail = (OBJECT *)
-  return_tail(toplevel->page_current->object_head);
-}
-
-/*! \brief
- *  \par Function Description
- *
- */
 void o_complex_set_color(OBJECT *prim_objs, int color)
 {
   OBJECT *o_current=NULL;

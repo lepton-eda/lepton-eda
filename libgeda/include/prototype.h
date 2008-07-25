@@ -201,7 +201,6 @@ void o_complex_free_filename(TOPLEVEL *toplevel);
 void o_complex_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object);
 OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
 OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
-void o_complex_delete(TOPLEVEL *toplevel, OBJECT *delete);
 void o_complex_set_color(OBJECT *prim_objs, int color);
 void o_complex_set_color_single(OBJECT *o_current, int color);
 void o_complex_set_color_save(OBJECT *complex, int color);
