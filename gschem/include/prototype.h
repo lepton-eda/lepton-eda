@@ -737,6 +737,8 @@ void x_scrollbars_update(GSCHEM_TOPLEVEL *w_current);
 void x_basic_warp_cursor(GtkWidget *widget, gint x, gint y, gboolean relative);
 /* x_color.c */
 void x_color_allocate_all(void);
+void x_color_init (void);
+void x_color_free (void);
 GdkColor *x_get_color(int color);
 GdkColor *x_get_darkcolor(int color);
 gchar *x_color_get_name(int index);
@@ -847,8 +849,6 @@ void x_stroke_record (GSCHEM_TOPLEVEL *w_current, gint x, gint y);
 gint x_stroke_translate_and_execute (GSCHEM_TOPLEVEL *w_current);
 /* x_window.c */
 void x_window_setup (GSCHEM_TOPLEVEL *w_current);
-void x_window_setup_colors(void);
-void x_window_free_colors();
 void x_window_setup_gc(GSCHEM_TOPLEVEL *w_current);
 void x_window_free_gc(GSCHEM_TOPLEVEL *w_current);
 void x_window_create_drawing(GtkWidget *drawbox, GSCHEM_TOPLEVEL *w_current);

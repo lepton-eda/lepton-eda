@@ -76,48 +76,6 @@ void x_window_setup (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_window_setup_colors(void)
-{
-  gdk_color_parse ("black", &black);
-  if (!gdk_colormap_alloc_color (colormap,
-                                 &black,
-                                 FALSE,
-                                 TRUE)) {
-    fprintf (stderr, _("Could not allocate the color %s!\n"), _("black"));
-    exit (-1);
-  }
-
-  gdk_color_parse ("white", &white);
-  if (!gdk_colormap_alloc_color (colormap,
-                                 &white,
-                                 FALSE,
-                                 TRUE)) {
-    fprintf (stderr, _("Could not allocate the color %s!\n"), _("white"));
-    exit (-1);
-  }
-
-  x_color_allocate_all ();
-
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_window_free_colors()
-{
-  GdkColor *colors[] = { &black, &white };
-  
-  gdk_colormap_free_colors (colormap, *colors, 2);
-  
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 void x_window_setup_gc(GSCHEM_TOPLEVEL *w_current)
 {
   GdkGCValues     values;

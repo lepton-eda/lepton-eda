@@ -37,6 +37,52 @@
 
 extern COLOR colors[MAX_COLORS];
 
+
+/*! \brief Initializes the color system for the application.
+ *  \par Function Documentation
+ *  This function initializes the default \b black and \b white color.
+ *
+ *  It also allocates the colormap.
+ */
+void
+x_color_init (void)
+{
+  gdk_color_parse ("black", &black);
+  if (!gdk_colormap_alloc_color (colormap,
+                                 &black,
+                                 FALSE,
+                                 TRUE)) {
+    fprintf (stderr, _("Could not allocate the color %s!\n"), _("black"));
+    exit (-1);
+  }
+
+  gdk_color_parse ("white", &white);
+  if (!gdk_colormap_alloc_color (colormap,
+                                 &white,
+                                 FALSE,
+                                 TRUE)) {
+    fprintf (stderr, _("Could not allocate the color %s!\n"), _("white"));
+    exit (-1);
+  }
+
+  x_color_allocate_all ();
+
+}
+
+/*! \brief Frees memory used by the color system.
+ *  \par Function Documentation
+ *  This function frees the colors from colormap along with
+ *  \b black and \b white.
+ */
+void
+x_color_free (void)
+{
+  GdkColor *colors[] = { &black, &white };
+
+  gdk_colormap_free_colors (colormap, *colors, 2);
+
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Documentation

@@ -248,7 +248,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
   /* At end, complete set up of window. */
   colormap = gdk_colormap_get_system ();
-  x_window_setup_colors();
+  x_color_init();
   x_window_setup (w_current);
 
   /* Repaint the background in-case we have to throw up a "restore backup?"
