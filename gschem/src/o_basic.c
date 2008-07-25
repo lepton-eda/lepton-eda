@@ -699,3 +699,32 @@ void o_invalidate_rect( GSCHEM_TOPLEVEL *w_current,
   rect.height = 1 + abs( y1 - y2 ) + 2 * INVALIDATE_MARGIN;
   gdk_window_invalidate_rect( w_current->window, &rect, FALSE );
 }
+
+/*! \brief Erase grip marks on object.
+ *  \par Function Description
+ *  This function erases the grips on the object \a object.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] object     The object of which to erase the grips.
+ */
+void o_erase_grips (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
+{
+  void (*func) (GSCHEM_TOPLEVEL*, OBJECT*) = NULL;
+
+  g_return_if_fail (object != NULL);
+
+  switch (object->type) {
+      case OBJ_ARC:     func = o_arc_erase_grips;     break;
+      case OBJ_BOX:     func = o_box_erase_grips;     break;
+      case OBJ_BUS:
+      case OBJ_LINE:
+      case OBJ_NET:
+      case OBJ_PIN:     func = o_line_erase_grips;    break;
+      case OBJ_CIRCLE:  func = o_circle_erase_grips;  break;
+      case OBJ_PICTURE: func = o_picture_erase_grips; break;
+  }
+
+  if (func != NULL) {
+    (*func) (w_current, object);
+  }
+}
