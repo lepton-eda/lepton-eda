@@ -240,7 +240,7 @@ static void o_delete_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
  *  \par Function Description
  *
  */
-void o_delete(GSCHEM_TOPLEVEL *w_current)
+void o_delete_selected(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_current = NULL;

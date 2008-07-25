@@ -715,7 +715,7 @@ DEFINE_I_CALLBACK(edit_delete)
 
   if (o_select_return_first_object(w_current)) {
     o_redraw_cleanstates(w_current);	
-    o_delete(w_current);
+    o_delete_selected(w_current);
     /* if you delete the objects you must go into select
      * mode after the delete */
     w_current->inside_action = 0;

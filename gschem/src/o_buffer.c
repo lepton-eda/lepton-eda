@@ -86,7 +86,7 @@ void o_buffer_cut(GSCHEM_TOPLEVEL *w_current, int buf_num)
     o_glist_copy_all_to_glist(toplevel, s_current,
                               object_buffer[buf_num], SELECTION_FLAG);
   toplevel->ADDING_SEL = 0;
-  o_delete(w_current);
+  o_delete_selected(w_current);
 }
 
 /*! \todo Finish function documentation!!!

@@ -570,7 +570,7 @@ void o_delete_net(GSCHEM_TOPLEVEL *w_current, OBJECT *obj);
 void o_delete_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *obj);
 void o_delete_complex(GSCHEM_TOPLEVEL *w_current, OBJECT *obj);
 void o_delete_text(GSCHEM_TOPLEVEL *w_current, OBJECT *obj);
-void o_delete(GSCHEM_TOPLEVEL *w_current);
+void o_delete_selected(GSCHEM_TOPLEVEL *w_current);
 /* o_find.c */
 gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int x, int y,
 		       gboolean deselect_afterwards);
