@@ -44,7 +44,6 @@ struct _MultiattribClass {
 struct _Multiattrib {
   GschemDialog parent_instance;
 
-  SELECTION *selection;
   OBJECT *object;
 
   GtkTreeView    *treeview;
@@ -57,8 +56,6 @@ struct _Multiattrib {
   GtkWidget      *frame_add;
 
   GdkColor       value_normal_text_color;   /* Workaround for lameness in GtkTextView */
-
-  gulong selection_changed_id;
 };
 
 
