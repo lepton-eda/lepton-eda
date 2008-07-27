@@ -528,15 +528,18 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
        * so lets be sure to clean up the complex_place_list
        * structure and also clean up the attrib_place_list. */
 
-      /* If it is a move command, then free the complex place list WITHOUT
-         freeing the individual objects. */
+      /* If we're cancelling from a move action, re-wind the
+       * page contents back to their state before we started. */
       if ((w_current->event_state == MOVE) ||
           (w_current->event_state == ENDMOVE)) {
-        g_list_free (toplevel->page_current->complex_place_list);
-      } else {
-        s_delete_object_glist(toplevel,
-                              toplevel->page_current->complex_place_list);
+        o_move_cancel (w_current);
       }
+
+      /* Free the complex place list and its contents. If we were in a
+       * move action, the list (refering to objects on the page) would
+       * already have been cleared in o_move_cancel(), so this is OK. */
+      s_delete_object_glist(toplevel,
+                            toplevel->page_current->complex_place_list);
       toplevel->page_current->complex_place_list = NULL;
 
       s_delete_object_glist (toplevel,

@@ -3541,10 +3541,12 @@ DEFINE_I_CALLBACK(cancel)
     g_object_set_property (G_OBJECT(w_current->cswindow), "hidden", &value);
   }
 
-  if ( (w_current->inside_action) && 
-       (w_current->rotated_inside != 0)) {
-    o_undo_callback(w_current, UNDO_ACTION);	 
-    w_current->rotated_inside = 0;
+  /* If we're cancelling from a move action, re-wind the
+   * page contents back to their state before we started */
+  if (w_current->inside_action &&
+      (w_current->event_state == MOVE ||
+       w_current->event_state == ENDMOVE)) {
+    o_move_cancel (w_current);
   }
 
   /* leave this on for now... but it might have to change */
@@ -3565,18 +3567,11 @@ DEFINE_I_CALLBACK(cancel)
    * structure and also clean up the attrib_place_list.
    * remember these don't remove the head structure */
 
-  /* If it is a move command, then free the complex place list WITHOUT
-     freeing the individual objects. */
-  if ( (w_current->inside_action) && 
-       ((w_current->event_state == ENDCOPY) ||
-	(w_current->event_state == ENDMCOPY)) ) {
-	  s_delete_object_glist(w_current->toplevel,
-				w_current->toplevel->page_current->complex_place_list);
-	  w_current->toplevel->page_current->complex_place_list = NULL;
-	}
-  else {
-    g_list_free(w_current->toplevel->page_current->complex_place_list);
-  }
+  /* Free the complex place list and its contents. If we were in a
+   * move action, the list (refering to objects on the page) would
+   * already have been cleared in o_move_cancel(), so this is OK. */
+  s_delete_object_glist(w_current->toplevel,
+                        w_current->toplevel->page_current->complex_place_list);
   w_current->toplevel->page_current->complex_place_list = NULL;
 
   s_delete_object_glist(w_current->toplevel,

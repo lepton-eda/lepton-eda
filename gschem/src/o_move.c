@@ -252,6 +252,20 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
+void o_move_cancel (GSCHEM_TOPLEVEL *w_current)
+{
+  g_list_free(w_current->toplevel->page_current->complex_place_list);
+  w_current->toplevel->page_current->complex_place_list = NULL;
+  o_undo_callback(w_current, UNDO_ACTION);
+  w_current->rotated_inside = 0;
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
 void o_move_rubbermove(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   o_move_rubbermove_xor (w_current, FALSE);
