@@ -238,6 +238,7 @@ GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
   GList *src, *dest;
   OBJECT *src_object, *dst_object;
   int adding_sel_save;
+  int selected_save;
 
   src = src_list;
   /* Reverse any existing items, as we will prepend, then reverse at the end */
@@ -255,7 +256,9 @@ GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
     src_object = (OBJECT *) src->data;
 
     /* unselect the object before the copy */
-    o_selection_unselect(src_object);
+    selected_save = src_object->selected;
+    if (selected_save)
+      o_selection_unselect(src_object);
 
     if (src_object->type != OBJ_TEXT && src_object->type != OBJ_HEAD) {
       dst_object = o_list_copy_to (toplevel, NULL, src_object, flag, NULL);
@@ -272,7 +275,8 @@ GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
     }
 
     /* reselect it */
-    o_selection_select(src_object, SELECT_COLOR);
+    if (selected_save)
+      o_selection_select(src_object, SELECT_COLOR);
 
     src = g_list_next(src);
   }
@@ -284,7 +288,9 @@ GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
     src_object = (OBJECT *) src->data;
 
     /* unselect the object before the copy */
-    o_selection_unselect(src_object);
+    selected_save = src_object->selected;
+    if (selected_save)
+      o_selection_unselect(src_object);
 
     if (src_object->type == OBJ_TEXT) {
       dst_object = o_list_copy_to (toplevel, NULL, src_object, flag, NULL);
@@ -309,7 +315,8 @@ GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
     }
 
     /* reselect it */
-    o_selection_select(src_object, SELECT_COLOR);
+    if (selected_save)
+      o_selection_select(src_object, SELECT_COLOR);
 
     src = g_list_next(src);
   }
