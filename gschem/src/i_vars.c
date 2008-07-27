@@ -135,7 +135,7 @@ int default_mousepan_gain = 5;
 int default_keyboardpan_gain = 20;
 int default_select_slack_pixels = 4;
 int default_zoom_gain = 20;
-int default_scrollpan_steps = 4;
+int default_scrollpan_steps = 8;
 
 /*! \todo Finish function documentation!!!
  *  \brief

@@ -1679,7 +1679,7 @@ SCM g_rc_scrollpan_steps(SCM steps)
    * but don't allow zero steps as this would cause a division by zero error */
   if (val == 0) {
     fprintf(stderr, _("Invalid number of steps [%d] scrollpan-steps\n"), val);
-    val = 4; /* absolute default */
+    val = 8; /* absolute default */
   }
 
   default_scrollpan_steps = val;
