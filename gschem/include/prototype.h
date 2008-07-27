@@ -283,6 +283,7 @@ SCM g_rc_keyboardpan_gain(SCM mode);
 SCM g_rc_print_command(SCM mode);
 SCM g_rc_select_slack_pixels(SCM pixels);
 SCM g_rc_zoom_gain(SCM gain);
+SCM g_rc_scrollpan_steps(SCM steps);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */

@@ -96,3 +96,4 @@ extern int default_mousepan_gain;
 extern int default_keyboardpan_gain;
 extern int default_select_slack_pixels;
 extern int default_zoom_gain;
+extern int default_scrollpan_steps;

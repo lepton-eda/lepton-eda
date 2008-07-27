@@ -705,6 +705,15 @@
 (scroll-wheel "classic")
 ;(scroll-wheel "gtk")
 
+
+; scrollpan-steps integer
+;
+; Controls the number of scroll pan events required to traverse the viewed
+; schematic area. Larger numbers mean more scroll steps are required to
+; pan across the viewed area and giving finer control over positioning.
+(scrollpan-steps 4)
+;(scrollpan-steps 8)
+
 ; warp-cursor string
 ;
 ; Controls if the cursor is warped (or moved) when you zoom in and out.

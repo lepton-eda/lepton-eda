@@ -1284,14 +1284,16 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
   if (pan_xaxis) {
     adj = gtk_range_get_adjustment(GTK_RANGE(w_current->h_scrollbar));
     gtk_adjustment_set_value(adj, min(adj->value + pan_direction *
-                                        (adj->page_increment / 4),
+                                        (adj->page_increment /
+                                         w_current->scrollpan_steps),
                                       adj->upper - adj->page_size));
   }
 
   if (pan_yaxis) {
     adj = gtk_range_get_adjustment(GTK_RANGE(w_current->v_scrollbar));
     gtk_adjustment_set_value(adj, min(adj->value + pan_direction *
-                                        (adj->page_increment / 4),
+                                        (adj->page_increment /
+                                         w_current->scrollpan_steps),
                                       adj->upper - adj->page_size));
   }
 

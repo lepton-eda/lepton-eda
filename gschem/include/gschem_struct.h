@@ -201,5 +201,6 @@ struct st_gschem_toplevel {
   int keyboardpan_gain;   /* Controls the gain of the keyboard pan */
   int select_slack_pixels; /* Number of pixels around an object we can still select it with */
   int zoom_gain;          /* Percentage increase in size for a zoom-in operation */
+  int scrollpan_steps;    /* Number of scroll pan events required to traverse the viewed area */
 };
 
