@@ -132,6 +132,7 @@ void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
   toplevel->ADDING_SEL = 0;
 
   w_current->event_state = ENDPASTE;
+  w_current->inside_action = 1;
 
   o_buffer_paste_rubberpaste_xor (w_current, buf_num, TRUE);
 }

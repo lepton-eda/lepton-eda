@@ -77,6 +77,11 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
       case(ENDTEXT):
         o_text_rubberattrib_xor (w_current, TRUE);
         break;
+
+      case(ENDPASTE):
+        o_buffer_paste_rubberpaste_xor (w_current, w_current->buffer_number, TRUE);
+        break;
+
       case(STARTDRAWNET):
       case(DRAWNET):
       case(NETCONT):
