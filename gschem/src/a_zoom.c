@@ -78,13 +78,14 @@ void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flag
                                    toplevel->page_current->bottom ) / 2;
   }
 
+  /* NB: w_current->zoom_gain is a percentage increase */
   switch(dir) {
     case(ZOOM_IN):
-    relativ_zoom_factor = 1.5;
+    relativ_zoom_factor = (100.0 + w_current->zoom_gain) / 100.0;
     break;	
 	
     case(ZOOM_OUT):
-    relativ_zoom_factor = 0.6667;
+    relativ_zoom_factor = 100.0 / (100.0 + w_current->zoom_gain);
     break;
 
     case(ZOOM_FULL):

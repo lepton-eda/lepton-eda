@@ -157,6 +157,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "keyboardpan-gain",          1, 0, 0, g_rc_keyboardpan_gain },
   { "print-command",             1, 0, 0, g_rc_print_command },
   { "select-slack-pixels",       1, 0, 0, g_rc_select_slack_pixels },
+  { "zoom-gain",                 1, 0, 0, g_rc_zoom_gain },
 
   /* backup functions */
   { "auto-save-interval",        1, 0, 0, g_rc_auto_save_interval },

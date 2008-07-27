@@ -134,6 +134,7 @@ int default_text_feedback = ONLY_WHEN_READABLE;
 int default_mousepan_gain = 5;
 int default_keyboardpan_gain = 20;
 int default_select_slack_pixels = 4;
+int default_zoom_gain = 50;
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -259,6 +260,7 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
   w_current->keyboardpan_gain = default_keyboardpan_gain;
 
   w_current->select_slack_pixels = default_select_slack_pixels;
+  w_current->zoom_gain = default_zoom_gain;
 
   toplevel->auto_save_interval = default_auto_save_interval;
 }

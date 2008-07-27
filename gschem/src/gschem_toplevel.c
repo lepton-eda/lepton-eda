@@ -208,6 +208,7 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->mousepan_gain = 5;
   w_current->keyboardpan_gain = 10;
   w_current->select_slack_pixels = 4;
+  w_current->zoom_gain = 50;
 
   return w_current;
 }
