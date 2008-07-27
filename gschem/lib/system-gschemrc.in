@@ -202,8 +202,8 @@
 ;    20% increment => x 1.2 original size when zooming in
 ;                  => x 1 / 1.2 x original size when zooming out
 ;
-(zoom-gain 50)
-;(zoom-gain 20)
+(zoom-gain 20)
+;(zoom-gain 50) ; Hard-coded behaviour up to version 1.5.0.20080706
 
 ; fast-mousepan string
 ;

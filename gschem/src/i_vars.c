@@ -134,7 +134,7 @@ int default_text_feedback = ONLY_WHEN_READABLE;
 int default_mousepan_gain = 5;
 int default_keyboardpan_gain = 20;
 int default_select_slack_pixels = 4;
-int default_zoom_gain = 50;
+int default_zoom_gain = 20;
 int default_scrollpan_steps = 4;
 
 /*! \todo Finish function documentation!!!

@@ -1654,7 +1654,7 @@ SCM g_rc_zoom_gain(SCM gain)
    * but don't allow zero gain as this would disable the zoom action */
   if (val == 0) {
     fprintf(stderr, _("Invalid gain [%d] passed to zoom-gain\n"), val);
-    val = 50; /* absolute default */
+    val = 20; /* absolute default */
   }
 
   default_zoom_gain = val;
