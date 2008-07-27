@@ -52,17 +52,14 @@ void o_move_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
     o_erase_selected(w_current);
 
-    o_drawbounding(w_current,
-                   geda_list_get_glist( toplevel->page_current->selection_list ),
-                   x_get_darkcolor(w_current->bb_color), TRUE);
-
     if (w_current->netconn_rubberband) {
       o_move_prep_rubberband(w_current);
-      o_move_stretch_rubberband(w_current);
     }
 
     o_select_move_to_place_list(w_current);
     w_current->inside_action = 1;
+
+    o_move_rubbermove_xor (w_current, TRUE);
   }
 }
 
@@ -148,16 +145,14 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
   diff_x = w_current->second_wx - w_current->first_wx;
   diff_y = w_current->second_wy - w_current->first_wy;
 
+  o_move_rubbermove_xor (w_current, FALSE);
+
   if (w_current->netconn_rubberband)
   {
     o_move_end_rubberband(w_current, diff_x, diff_y,
                           &rubbernet_objects, &rubbernet_other_objects,
                           &rubbernet_connected_objects);
   }
-
-  o_drawbounding(w_current,
-                 geda_list_get_glist( toplevel->page_current->selection_list ),
-                 x_get_darkcolor(w_current->bb_color), FALSE);
 
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
 
@@ -259,11 +254,24 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
  */
 void o_move_rubbermove(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  if (w_current->netconn_rubberband)
-    o_move_stretch_rubberband(w_current);
+  o_move_rubbermove_xor (w_current, FALSE);
+  w_current->second_wx = w_x;
+  w_current->second_wy = w_y;
+  o_move_rubbermove_xor (w_current, TRUE);
+}
 
-  o_complex_rubbercomplex(w_current, w_x, w_y);
 
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_move_rubbermove_xor (GSCHEM_TOPLEVEL *w_current, int drawing)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  o_drawbounding (w_current,
+                  geda_list_get_glist (toplevel->page_current->selection_list),
+                  x_get_darkcolor (w_current->bb_color), drawing);
   if (w_current->netconn_rubberband)
     o_move_stretch_rubberband(w_current);
 }
