@@ -48,7 +48,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel = (TOPLEVEL*)g_new (TOPLEVEL, 1);
 
-  toplevel->current_attribute = NULL;
   toplevel->internal_symbol_name = NULL;
 
   toplevel->RC_list = NULL;

@@ -3554,9 +3554,6 @@ DEFINE_I_CALLBACK(cancel)
      o_redraw_all(w_current); 
   }
 
-  /* also free internal current_attribute */
-  o_attrib_free_current(w_current->toplevel);
-
   w_current->inside_action=0;
 }
 

@@ -390,10 +390,6 @@ struct st_page {
 
 struct st_toplevel {
 
-  /* used by attribute dialog */
-  /* also used by text add dialog */
-  char *current_attribute;		
-
   gchar *internal_symbol_name;     
   /* have to decided on component list stuff */
   /* if it should go in here or not */

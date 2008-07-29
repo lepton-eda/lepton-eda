@@ -619,48 +619,6 @@ o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_pt
   return TRUE;
 }
 
-/*! \brief Free the currently selected attribute.
- *  \par Function Description
- *  Free the currently selected attribute.
- *
- *  \param [in] toplevel  The TOPLEVEL object containing current attribute.
- *
- */
-void o_attrib_free_current(TOPLEVEL *toplevel)
-{
-  g_free(toplevel->current_attribute);
-  toplevel->current_attribute=NULL;
-}
-
-/*! \brief Set an attribute's string.
- *  \par Function Description
- *  Set an attribute's string.
- *
- *  \param [in] toplevel  The TOPLEVEL object that holds the attribute.
- *  \param [in] string     The value to set attribute string to.
- *
- *  \note
- *  The user of this function must g_free the
- *  <B>toplevel->current_attribute</B> string after done using it.
- *  They must also free the input string.
- */
-void o_attrib_set_string(TOPLEVEL *toplevel, char *string)
-{
-  /* need to put an error messages here */
-  if (string == NULL)  {
-    fprintf(stderr, "error! string in set_string was NULL\n");
-    return;
-  }
-
-  if (toplevel->current_attribute != NULL) {
-    g_free(toplevel->current_attribute);
-    toplevel->current_attribute=NULL;
-  }
-
-  toplevel->current_attribute = g_strdup (string);
-	
-  /* be sure to g_free this string somewhere and free the input string */
-}
 
 /*! \brief Set attribute color
  *  \par Function Description

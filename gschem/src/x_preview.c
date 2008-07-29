@@ -485,7 +485,6 @@ preview_dispose (GObject *self)
   if (preview_w_current != NULL) {
     preview_w_current->drawing_area = NULL;
 
-    o_attrib_free_current (preview_w_current->toplevel);
     o_complex_free_filename (preview_w_current->toplevel);
 
     if (preview_w_current->backingstore) {

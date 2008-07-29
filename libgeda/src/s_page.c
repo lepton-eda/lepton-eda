@@ -197,7 +197,6 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   g_free (page);
 
 #if 0 /* don't do this for now hack */ /* this is a per window free */
-  o_attrib_free_current(toplevel);
   o_complex_free_filename(toplevel);
 #endif
 

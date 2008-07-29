@@ -643,7 +643,6 @@ void x_window_close(GSCHEM_TOPLEVEL *w_current)
     last_window = TRUE;
   }
 
-  o_attrib_free_current(toplevel);
   o_complex_free_filename(toplevel);
 
   if (toplevel->major_changed_refdes) {

@@ -537,8 +537,6 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
       s_delete_object_glist(toplevel, toplevel->page_current->place_list);
       toplevel->page_current->place_list = NULL;
 
-      /* also free internal current_attribute */
-      o_attrib_free_current(toplevel);
       w_current->inside_action = 0;
 
       /* touch the select state */
