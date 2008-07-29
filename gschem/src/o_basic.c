@@ -111,6 +111,7 @@ void o_redraw(GSCHEM_TOPLEVEL *w_current, OBJECT *list, gboolean draw_selected)
     if ((o_current->draw_func != NULL) &&
         (o_current->type != OBJ_HEAD)) {
       toplevel->DONT_REDRAW = redraw_state ||
+                              o_current->dont_redraw ||
                               (!draw_selected && o_current->selected);
       (*o_current->draw_func)(w_current, o_current);
     }

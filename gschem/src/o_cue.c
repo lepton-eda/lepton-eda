@@ -49,7 +49,8 @@ void o_cue_redraw_all(GSCHEM_TOPLEVEL *w_current, OBJECT *head, gboolean draw_se
       case(OBJ_NET):
       case(OBJ_BUS):
       case(OBJ_PIN):
-	if (o_current->selected && !draw_selected) {
+	if (o_current->dont_redraw ||
+            (o_current->selected && !draw_selected)) {
 	  w_current->toplevel->DONT_REDRAW = 1 || redraw_state;
 	}
 	else {
@@ -60,7 +61,8 @@ void o_cue_redraw_all(GSCHEM_TOPLEVEL *w_current, OBJECT *head, gboolean draw_se
 
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-	if (o_current->selected && !draw_selected) {
+	if (o_current->dont_redraw ||
+            (o_current->selected && !draw_selected)) {
 	  toplevel->DONT_REDRAW = 1 || redraw_state;
 	}
 	else {
