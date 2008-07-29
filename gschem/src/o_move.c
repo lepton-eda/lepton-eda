@@ -39,6 +39,8 @@
 void o_move_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  STRETCH *st_current;
+
   if (o_select_selected (w_current)) {
 
     /* Save the current state. When rotating the selection when moving,
@@ -54,6 +56,15 @@ void o_move_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
     if (w_current->netconn_rubberband) {
       o_move_prep_rubberband(w_current);
+
+      /* Set the dont_redraw flag on rubberbanded objects.
+       * This ensures that they are not drawn (in their
+       * un-stretched position) during screen updates. */
+      st_current = toplevel->page_current->stretch_head->next;
+      while (st_current != NULL) {
+        st_current->object->dont_redraw = TRUE;
+        st_current = st_current->next;
+      }
     }
 
     o_select_move_to_place_list(w_current);
@@ -123,6 +134,7 @@ void o_move_end_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT * list, int type,
 void o_move_end(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  STRETCH *st_current;
   GList *s_current = NULL;
   OBJECT *object;
   int diff_x, diff_y;
@@ -147,11 +159,18 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
 
   o_move_rubbermove_xor (w_current, FALSE);
 
-  if (w_current->netconn_rubberband)
-  {
+  if (w_current->netconn_rubberband) {
     o_move_end_rubberband(w_current, diff_x, diff_y,
                           &rubbernet_objects, &rubbernet_other_objects,
                           &rubbernet_connected_objects);
+  }
+
+  /* Unset the dont_redraw flag on rubberbanded objects.
+   * We set this above, in o_move_start(). */
+  st_current = toplevel->page_current->stretch_head->next;
+  while (st_current != NULL) {
+    st_current->object->dont_redraw = FALSE;
+    st_current = st_current->next;
   }
 
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
@@ -257,6 +276,16 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
  */
 void o_move_cancel (GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
+  STRETCH *st_current;
+
+  /* Unset the dont_redraw flag on rubberbanded objects.
+   * We set this above, in o_move_start(). */
+  st_current = toplevel->page_current->stretch_head->next;
+  while (st_current != NULL) {
+    st_current->object->dont_redraw = FALSE;
+    st_current = st_current->next;
+  }
   g_list_free(w_current->toplevel->page_current->complex_place_list);
   w_current->toplevel->page_current->complex_place_list = NULL;
   o_undo_callback(w_current, UNDO_ACTION);
