@@ -890,7 +890,6 @@ OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list,
 {
   OBJECT *new_node=NULL;
   OBJECT *temp_list=NULL;
-  OBJECT *temp_parent=NULL;
   TEXT *text;
   char *name = NULL;
   char *value = NULL; 
@@ -971,10 +970,6 @@ OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list,
   /* now start working on the complex */
   temp_list = o_text_add_head();
 
-  temp_parent = toplevel->page_current->object_parent;
-  /* set the addition of attributes to the head node */
-  toplevel->page_current->object_parent = temp_list;
-
   if (visibility == VISIBLE ||
       (visibility == INVISIBLE && toplevel->show_hidden_text)) {
     object_list->text->prim_objs = 
@@ -990,8 +985,6 @@ OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list,
     object_list->text->displayed_height = 0;
     s_delete(toplevel, temp_list);
   }
-
-  toplevel->page_current->object_parent = temp_parent;
 
   /* Update bounding box */
   o_text_recalc( toplevel, object_list );
@@ -1278,7 +1271,6 @@ char *o_text_save(OBJECT *object)
  */
 void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
 {
-  OBJECT *temp_parent;
   char *name = NULL;
   char *value = NULL;
   char *output_string = NULL;
@@ -1321,10 +1313,6 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
 
   o_list_delete_rest(toplevel, o_current->text->prim_objs);
 
-  temp_parent = toplevel->page_current->object_parent;
-  /* set the addition of attributes to the head node */
-  toplevel->page_current->object_parent = o_current->text->prim_objs;
-
   if (o_current->visibility == VISIBLE ||
       (o_current->visibility == INVISIBLE && toplevel->show_hidden_text)) {
 
@@ -1361,7 +1349,6 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
 
   o_text_recalc( toplevel, o_current );
 
-  toplevel->page_current->object_parent = temp_parent;
   g_free(name);
   g_free(value);
   g_free(output_string);
