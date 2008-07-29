@@ -82,7 +82,6 @@ static const char *i_status_string(GSCHEM_TOPLEVEL *w_current)
     case DRAWCOMP:
     case ENDCOMP:
       return _("Component Mode"); /*EK* new */
-    case TEXTENTRY:
     case ENDTEXT:
     case DRAWTEXT:
       return _("Text Mode"); /*EK* new */
@@ -298,7 +297,6 @@ void i_update_toolbar(GSCHEM_TOPLEVEL *w_current)
     case(NONE):
     case(SELECT):
     case(STARTSELECT): 
-    case(TEXTENTRY): 
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
 				   w_current->toolbar_select), TRUE);
       break;

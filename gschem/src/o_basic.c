@@ -574,7 +574,6 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
     case(STARTPASTE):
     case(STARTROUTENET):
     case(STARTSELECT):
-    case(TEXTENTRY):
     case(ZOOMBOXSTART):
       return FALSE;
   }
