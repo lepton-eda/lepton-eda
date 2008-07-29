@@ -244,6 +244,9 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
 
   g_list_free(toplevel->page_current->complex_place_list);
   toplevel->page_current->complex_place_list = NULL;
+
+  s_stretch_remove_most(toplevel, toplevel->page_current->stretch_head);
+  toplevel->page_current->stretch_tail = toplevel->page_current->stretch_head;
 }
 
 
@@ -258,6 +261,9 @@ void o_move_cancel (GSCHEM_TOPLEVEL *w_current)
   w_current->toplevel->page_current->complex_place_list = NULL;
   o_undo_callback(w_current, UNDO_ACTION);
   w_current->rotated_inside = 0;
+
+  s_stretch_remove_most(toplevel, toplevel->page_current->stretch_head);
+  toplevel->page_current->stretch_tail = toplevel->page_current->stretch_head;
 }
 
 
@@ -399,11 +405,6 @@ void o_move_prep_rubberband(GSCHEM_TOPLEVEL *w_current)
   GList *s_current;
   OBJECT *object;
   OBJECT *o_current;
-
-  s_stretch_remove_most(toplevel,
-                        toplevel->page_current->stretch_head);
-  toplevel->page_current->stretch_tail =
-  toplevel->page_current->stretch_head;
 
 #if DEBUG
   printf("\n\n\n");
