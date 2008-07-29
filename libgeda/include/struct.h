@@ -344,8 +344,7 @@ struct st_page {
   OBJECT *object_tail;
   OBJECT *object_parent;
   SELECTION *selection_list; /* new selection mechanism */
-  GList *complex_place_list;
-  GList *attrib_place_list;
+  GList *place_list;
   OBJECT *object_lastplace;
   STRETCH *stretch_head; 
   STRETCH *stretch_tail; 

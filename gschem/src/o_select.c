@@ -438,20 +438,13 @@ o_select_move_to_place_list(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *selection;
-  OBJECT *o_current;
+  GList *selection_copy;
+
+  /* remove the old place list if it exists */
+  s_delete_object_glist(toplevel, toplevel->page_current->place_list);
+  toplevel->page_current->place_list = NULL;
 
   selection = geda_list_get_glist( toplevel->page_current->selection_list );
-
-  if (!selection) {
-    return;
-  }
-
-  while (selection) {
-    o_current = (OBJECT *) selection->data;
-    if (o_current) {
-      toplevel->page_current->complex_place_list = g_list_append(toplevel->page_current->complex_place_list,
-								  o_current);
-    }
-    selection = g_list_next(selection);
-  }
+  selection_copy = g_list_copy( selection );
+  toplevel->page_current->place_list = selection_copy;
 }

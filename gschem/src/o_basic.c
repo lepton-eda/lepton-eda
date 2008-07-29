@@ -79,7 +79,7 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
         break;
 
       case(ENDPASTE):
-        o_buffer_paste_rubberpaste_xor (w_current, w_current->buffer_number, TRUE);
+        o_buffer_paste_rubberpaste_xor (w_current, TRUE);
         break;
 
       case(STARTDRAWNET):
@@ -531,8 +531,7 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
     case(NETCONT):
     case(ZOOMBOXEND):
       /* it is possible to cancel in the middle of a place,
-       * so lets be sure to clean up the complex_place_list
-       * structure and also clean up the attrib_place_list. */
+       * so lets be sure to clean up the place_list structure */
 
       /* If we're cancelling from a move action, re-wind the
        * page contents back to their state before we started. */
@@ -541,16 +540,11 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
         o_move_cancel (w_current);
       }
 
-      /* Free the complex place list and its contents. If we were in a
-       * move action, the list (refering to objects on the page) would
+      /* Free the place list and its contents. If we were in a move
+       * action, the list (refering to objects on the page) would
        * already have been cleared in o_move_cancel(), so this is OK. */
-      s_delete_object_glist(toplevel,
-                            toplevel->page_current->complex_place_list);
-      toplevel->page_current->complex_place_list = NULL;
-
-      s_delete_object_glist (toplevel,
-                             toplevel->page_current->attrib_place_list);
-      toplevel->page_current->attrib_place_list = NULL;
+      s_delete_object_glist(toplevel, toplevel->page_current->place_list);
+      toplevel->page_current->place_list = NULL;
 
       /* also free internal current_attribute */
       o_attrib_free_current(toplevel);

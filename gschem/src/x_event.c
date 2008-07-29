@@ -281,23 +281,19 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
           i_set_state(w_current, STARTDRAWBUS);
         }
         break;
-
       case(ENDCOMP):
-        o_complex_end(w_current, w_x, w_y);
-        o_redraw_single(w_current, toplevel->page_current->
-                        object_tail);
-        if (w_current->continue_component_place) {
-          o_complex_start(w_current, w_x, w_y);
-        } else {
+        o_complex_end(w_current, w_x, w_y, w_current->continue_component_place);
+        if (!w_current->continue_component_place) {
           w_current->inside_action = 0;
           i_set_state(w_current, SELECT);
           i_update_toolbar(w_current);
+        } else {
+          o_complex_rubbercomplex_xor (w_current, TRUE);
         }
         break;
 
       case(ENDPASTE):
-        o_buffer_paste_end(w_current, w_x, w_y,
-                           w_current->buffer_number);
+        o_place_end(w_current, w_x, w_y, FALSE, NULL);
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
@@ -326,17 +322,12 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ENDTEXT):
-        o_text_end(w_current);
-                                /* not sure on this one either... */
-                                /* keep it as well */
+        o_place_end(w_current, w_x, w_y, FALSE, NULL);
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
-                                /* the following happen inside attrib_end */
-                                /* therefore they are commeneted out here */
-                                /* o_redraw_single(object_tail);*/
-                                /* o_redraw_selected(); not sure on this */
         break;
+
 
       case(STARTPAN):
         a_pan(w_current, w_x, w_y);
@@ -549,7 +540,6 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       case(SELECT):
         /* do nothing */
         break;
-
       case(MOVE):
         w_current->event_state = ENDMOVE;
         break;
@@ -561,14 +551,12 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       case(MCOPY):
         w_current->event_state = ENDMCOPY;
         break;
-
       case(GRIPS):
         o_grips_end(w_current),
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         break;
-
       case(ENDMOVE):
         o_move_end(w_current);
         /* having this stay in copy was driving me nuts*/
@@ -586,12 +574,10 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ENDMCOPY):
-        o_copy_end(w_current);
+        o_copy_multiple_end(w_current);
         /* having this stay in copy was driving me nuts*/
         w_current->inside_action = 1;
         /* Keep the state and the inside_action, as the copy has not finished. */
-        w_current->first_wx = w_current->second_wx = w_x;
-        w_current->first_wy = w_current->second_wy = w_y;
         o_complex_rubbercomplex_xor (w_current, TRUE);
         i_set_state(w_current, ENDMCOPY);
         i_update_toolbar(w_current);
@@ -636,7 +622,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         w_current->complex_rotate =
           (w_current->complex_rotate + 90) % 360;
 
-        o_complex_place_rotate(w_current);
+        o_place_rotate(w_current);
 
         /* Run the complex place list changed hook without redrawing */
         /* since all objects are being redrawn afterwards */
@@ -653,7 +639,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         w_current->complex_rotate =
         (w_current->complex_rotate + 90) % 360;
 
-        o_text_place_rotate(w_current);
+        o_place_rotate(w_current);
 
         o_text_rubberattrib_xor (w_current, TRUE);
         return(0);
@@ -671,7 +657,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         toplevel->DONT_REDRAW = 1;
         o_rotate_world_update(w_current, w_current->first_wx,
                                          w_current->first_wy, 90,
-                              toplevel->page_current->complex_place_list );
+                              toplevel->page_current->place_list );
         toplevel->DONT_REDRAW = redraw_state;
         w_current->rotated_inside ++;
         w_current->event_state = prev_state;
@@ -926,7 +912,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     break;
 
     case(ENDPASTE):
-    o_buffer_paste_rubberpaste(w_current, w_current->buffer_number, w_x, w_y);
+    o_buffer_paste_rubberpaste(w_current, w_x, w_y);
     break;
 
     case(DRAWTEXT):

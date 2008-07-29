@@ -261,8 +261,8 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
   g_list_free(rubbernet_other_objects);
   g_list_free(rubbernet_connected_objects);
 
-  g_list_free(toplevel->page_current->complex_place_list);
-  toplevel->page_current->complex_place_list = NULL;
+  g_list_free(toplevel->page_current->place_list);
+  toplevel->page_current->place_list = NULL;
 
   s_stretch_remove_most(toplevel, toplevel->page_current->stretch_head);
   toplevel->page_current->stretch_tail = toplevel->page_current->stretch_head;
@@ -286,8 +286,8 @@ void o_move_cancel (GSCHEM_TOPLEVEL *w_current)
     st_current->object->dont_redraw = FALSE;
     st_current = st_current->next;
   }
-  g_list_free(w_current->toplevel->page_current->complex_place_list);
-  w_current->toplevel->page_current->complex_place_list = NULL;
+  g_list_free(w_current->toplevel->page_current->place_list);
+  w_current->toplevel->page_current->place_list = NULL;
   o_undo_callback(w_current, UNDO_ACTION);
   w_current->rotated_inside = 0;
 
@@ -317,10 +317,7 @@ void o_move_rubbermove(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_move_rubbermove_xor (GSCHEM_TOPLEVEL *w_current, int drawing)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  o_drawbounding (w_current,
-                  geda_list_get_glist (toplevel->page_current->selection_list),
-                  x_get_darkcolor (w_current->bb_color), drawing);
+  o_place_rubberplace_xor (w_current, drawing);
   if (w_current->netconn_rubberband)
     o_move_stretch_rubberband(w_current);
 }

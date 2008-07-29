@@ -149,8 +149,8 @@ x_compselect_callback_response (GtkDialog *dialog,
             /* Fall through */
           case DRAWCOMP:
             s_delete_object_glist(toplevel,
-                                  toplevel->page_current->complex_place_list);
-            toplevel->page_current->complex_place_list = NULL;
+                                  toplevel->page_current->place_list);
+            toplevel->page_current->place_list = NULL;
             break;
 
           default:
@@ -163,8 +163,7 @@ x_compselect_callback_response (GtkDialog *dialog,
           w_current->event_state = SELECT;
         } else {
           /* Otherwise set the new symbol to place */
-          o_complex_set_filename(toplevel, s_clib_symbol_get_name (symbol));
-          w_current->event_state = DRAWCOMP;
+          o_complex_prepare_place(w_current, s_clib_symbol_get_name (symbol));
         }
         break;
       }
@@ -173,7 +172,7 @@ x_compselect_callback_response (GtkDialog *dialog,
         /* Response when clicking on the "hide" button */
 
         /* If there is no component in the complex place list, set the current one */
-        if (toplevel->page_current->complex_place_list == NULL) {
+        if (toplevel->page_current->place_list == NULL) {
           gtk_dialog_response (GTK_DIALOG (compselect),
                                COMPSELECT_RESPONSE_PLACE);
         }

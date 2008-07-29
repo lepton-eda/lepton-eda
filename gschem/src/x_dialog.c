@@ -106,9 +106,8 @@ char generic_textstring[256] = "refdes=R";
  */
 void text_input_dialog_apply(GtkWidget *w, GSCHEM_TOPLEVEL *w_current)
 {
-  int len;
-  TOPLEVEL *toplevel = w_current->toplevel;
-  char *string = NULL;
+  gchar *string = NULL;
+  gchar *tmp = NULL;
   GtkWidget *tientry;
   GtkTextBuffer *textbuffer;
   GtkTextIter start, end;
@@ -119,37 +118,33 @@ void text_input_dialog_apply(GtkWidget *w, GSCHEM_TOPLEVEL *w_current)
   gtk_text_buffer_get_bounds (textbuffer, &start, &end);
   string =  gtk_text_iter_get_text (&start, &end);
 
-  if (string[0] != '\0' ) {
-    gchar *tmp = NULL;
-    len = strlen(string);
-#if DEBUG
-    printf("text was: _%s_ %d\n", string, len);
-#endif
-    switch(w_current->text_caps) {
-      case(LOWER):
-        tmp = g_utf8_strdown (string, -1);
-        break;
+  if (string[0] == '\0' )
+    return;
 
-      case(UPPER):
-        tmp = g_utf8_strup (string, -1);
-        break;
+  switch(w_current->text_caps) {
+    case(LOWER):
+      tmp = g_utf8_strdown (string, -1);
+      break;
 
-      case(BOTH):
-      default:
-        /* do nothing */
-        break;
-    }
+    case(UPPER):
+      tmp = g_utf8_strup (string, -1);
+      break;
 
-    /* select the text, so you can continue immediatly writing the next text */
-    select_all_text_in_textview(GTK_TEXT_VIEW(tientry));
-    gtk_widget_grab_focus(tientry);
-
-    o_attrib_set_string(toplevel, tmp == NULL ? string : tmp);
-    g_free (tmp);
-    toplevel->page_current->CHANGED=1;
-    w_current->event_state = DRAWTEXT;
-    w_current->inside_action = 1;
+    case(BOTH):
+    default:
+      /* do nothing */
+      break;
   }
+
+  /* select the text, so you can continue immediatly writing the next text */
+  select_all_text_in_textview(GTK_TEXT_VIEW(tientry));
+  gtk_widget_grab_focus(tientry);
+
+  w_current->toplevel->page_current->CHANGED=1;
+
+  o_text_prepare_place (w_current, tmp == NULL ? string : tmp);
+  g_free (string);
+  g_free (tmp);
 }
 
 /*! \brief response function for the text entry dialog

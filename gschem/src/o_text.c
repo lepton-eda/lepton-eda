@@ -276,47 +276,30 @@ void o_text_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
  *  \par Function Description
  *
  */
-void o_text_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int temp, i;
-  char *value;
 
-  w_current->first_wx = w_current->second_wx = w_x;
-  w_current->first_wy = w_current->second_wy = w_y;
+  /* Insert the new object into the buffer at world coordinates (0,0).
+   * It will be translated to the mouse coordinates during placement. */
+
+  w_current->first_wx = 0;
+  w_current->first_wy = 0;
 
   w_current->last_drawb_mode = -1;
 
-  /* remove the old attrib list if it exists */
-  s_delete_object_glist(toplevel, toplevel->page_current->attrib_place_list);
-  toplevel->page_current->attrib_place_list = NULL;
-
-  switch(w_current->text_caps) {
-    case(LOWER):
-      value = toplevel->current_attribute;
-      toplevel->current_attribute = g_utf8_strdown (value, -1);
-      g_free (value);
-      break;
-
-    case(UPPER):
-      value = toplevel->current_attribute;
-      toplevel->current_attribute = g_utf8_strup (value, -1);
-      g_free (value);
-      break;
-
-    case(BOTH):
-    default:
-      /* do nothing */
-      break;
-  }
+  /* remove the old place list if it exists */
+  s_delete_object_glist(toplevel, toplevel->page_current->place_list);
+  toplevel->page_current->place_list = NULL;
 
   /* here you need to add OBJ_TEXT when it's done */
-  toplevel->page_current->attrib_place_list =
-    g_list_append(toplevel->page_current->attrib_place_list,
+  toplevel->page_current->place_list =
+    g_list_append(toplevel->page_current->place_list,
                   o_text_add(toplevel, NULL,
                              OBJ_TEXT, w_current->text_color,
-                             w_x, w_y, LOWER_LEFT, 0, /* zero is angle */
-                             toplevel->current_attribute,
+                             0, 0, LOWER_LEFT, 0, /* zero is angle */
+                             text,
                              w_current->text_size,
                              /* has to be visible so you can place it */
                              /* visibility is set when you create the object */
@@ -325,55 +308,23 @@ void o_text_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   if (w_current->complex_rotate) {
     temp = w_current->complex_rotate / 90;
     for (i = 0; i < temp; i++) {
-      o_text_place_rotate(w_current);
+      o_place_rotate(w_current);
     }
   }
 
-  o_text_rubberattrib_xor (w_current, TRUE);
+  w_current->inside_action = 1;
+  i_set_state(w_current, DRAWTEXT);
 }
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
- *  \par Function Description
- *
- */
-void o_text_end(GSCHEM_TOPLEVEL *w_current)
+*  \par Function Description
+*
+*/
+void o_text_start (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-
-  /* erase the old bounding box / outline */
-  o_text_rubberattrib_xor (w_current, FALSE);
-
-  /* here you need to add OBJ_TEXT when it's done */
-  /*! \todo make this VIS and SHOW default configurable */
-  toplevel->page_current->object_tail =
-  o_text_add(toplevel, toplevel->page_current->object_tail,
-             /* type changed from TEXT to TEXT */
-             OBJ_TEXT,
-             w_current->text_color,
-             w_current->second_wx, w_current->second_wy, LOWER_LEFT,
-             w_current->complex_rotate,
-             toplevel->current_attribute,
-             w_current->text_size,
-             VISIBLE, SHOW_NAME_VALUE);
-
-  toplevel->override_color = -1;
-
-  toplevel->page_current->CHANGED=1;
-  o_select_unselect_all( w_current );
-  o_selection_add( toplevel->page_current->selection_list, toplevel->page_current->object_tail );
-
-  /* object_tail is the object that was just added */
-  if (toplevel->page_current->object_tail->draw_func != NULL &&
-      toplevel->page_current->object_tail->type != OBJ_HEAD) {
-    (*toplevel->page_current->object_tail->draw_func)(
-                                                       w_current,
-                                                       toplevel->page_current->object_tail);
-  }
-
-  toplevel->override_color = -1;
-  o_undo_savestate(w_current, UNDO_ALL);
-  i_update_menus(w_current);
+  o_place_start (w_current, w_x, w_y);
 }
 
 
@@ -384,10 +335,7 @@ void o_text_end(GSCHEM_TOPLEVEL *w_current)
  */
 void o_text_rubberattrib(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  o_text_rubberattrib_xor (w_current, FALSE);
-  w_current->second_wx = w_x;
-  w_current->second_wy = w_y;
-  o_text_rubberattrib_xor (w_current, TRUE);
+  o_place_rubberplace (w_current, w_x, w_y);
 }
 
 
@@ -398,9 +346,7 @@ void o_text_rubberattrib(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_text_rubberattrib_xor(GSCHEM_TOPLEVEL *w_current, int drawing)
 {
-  o_drawbounding(w_current,
-                 w_current->toplevel->page_current->attrib_place_list,
-                 x_get_darkcolor(w_current->bb_color), drawing);
+  o_place_rubberplace_xor (w_current, drawing);
 }
 
 
@@ -510,48 +456,4 @@ void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string,
   }
 
   toplevel->page_current->CHANGED = 1;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_text_place_rotate(GSCHEM_TOPLEVEL *w_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current;
-  GList *iter;
-
-  int x_local = -1;
-  int y_local = -1;
-
-  for (iter = toplevel->page_current->attrib_place_list;
-       iter != NULL;
-       iter = g_list_next(iter)) {
-    o_current = iter->data;
-    switch(o_current->type) {	
-      case(OBJ_TEXT):
-        x_local = o_current->text->x;
-        y_local = o_current->text->y;
-        break;
-    }
-  }
-
-  if (x_local == -1) {
-    printf("Could not find text obj in new text placement!\n");
-    return;
-  }
-
-  for (iter = toplevel->page_current->attrib_place_list;
-       iter != NULL;
-       iter = g_list_next(iter)) {
-    o_current = iter->data;
-    switch(o_current->type) {	
-
-      case(OBJ_TEXT):
-        o_text_rotate_world(toplevel, x_local, y_local, 90, o_current);
-        break;
-    }
-  }
 }

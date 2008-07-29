@@ -91,8 +91,7 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   /* net/pin/bus stretch when doing moves */
   page->stretch_head = page->stretch_tail = s_stretch_new_head();
 
-  page->complex_place_list = NULL;
-  page->attrib_place_list = NULL;
+  page->place_list = NULL;
 
   /* do this just to be sure that object tail is truely correct */
   page->object_tail = return_tail(page->object_head);
@@ -170,13 +169,9 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   /* then delete objects of page */
   s_delete_list_fromstart (toplevel, page->object_head);
 
-  /* The complex place list contain a reference to the objects in the page */
-  /* So don't free the objects there. */
-  g_list_free (page->complex_place_list);
-  page->complex_place_list = NULL;
-  /* Free the objects in the attrib place list. */
-  s_delete_object_glist (toplevel, page->attrib_place_list);
-  page->attrib_place_list = NULL;
+  /* Free the objects in the place list. */
+  s_delete_object_glist (toplevel, page->place_list);
+  page->place_list = NULL;
 
 #if DEBUG
   printf("Freeing page: %s\n", page->page_filename);

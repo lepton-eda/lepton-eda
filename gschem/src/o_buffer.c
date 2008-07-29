@@ -106,114 +106,43 @@ void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
     return;
   }
 
-  if (!world_get_object_glist_bounds(toplevel, object_buffer[buf_num],
+  w_current->last_drawb_mode = -1;
+
+  /* remove the old place list if it exists */
+  s_delete_object_glist(toplevel, toplevel->page_current->place_list);
+  toplevel->page_current->place_list = NULL;
+
+  toplevel->ADDING_SEL = 1;
+  toplevel->page_current->place_list =
+    o_glist_copy_all_to_glist(toplevel, object_buffer[buf_num],
+                              toplevel->page_current->place_list,
+                              SELECTION_FLAG);
+
+  if (!world_get_object_glist_bounds (toplevel,
+                                      toplevel->page_current->place_list,
                                      &rleft, &rtop,
                                      &rright, &rbottom)) {
-    /* If the paste buffer doesn't have any objects
+    /* If the place buffer doesn't have any objects
      * to define its any bounds, we drop out here */
     return;
   }
 
-  w_current->first_wx = w_current->second_wx = w_x;
-  w_current->first_wy = w_current->second_wy = w_y;
-  /* store the buffer number for future use */
-  w_current->buffer_number = buf_num;
+  /* Place the objects into the buffer at the mouse origin, (w_x, w_y). */
+
+  w_current->first_wx = w_x;
+  w_current->first_wy = w_y;
 
   /* snap x and y to the grid, pointed out by Martin Benes */
   x = snap_grid(toplevel, rleft);
   y = snap_grid(toplevel, rtop);
 
-  toplevel->ADDING_SEL = 1;
-  o_glist_translate_world(toplevel, -x, -y, object_buffer[buf_num]);
+  o_glist_translate_world (toplevel, w_x - x, w_y - y,
+                           toplevel->page_current->place_list);
   toplevel->ADDING_SEL = 0;
 
-  toplevel->ADDING_SEL = 1;
-  o_glist_translate_world(toplevel, w_x, w_y, object_buffer[buf_num]);
-  toplevel->ADDING_SEL = 0;
-
-  w_current->event_state = ENDPASTE;
   w_current->inside_action = 1;
-
-  o_buffer_paste_rubberpaste_xor (w_current, buf_num, TRUE);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_buffer_paste_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
-                        int buf_num)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int w_diff_x, w_diff_y;
-  OBJECT *o_current;
-  OBJECT *o_saved;
-  SELECTION *temp_list = o_selection_new();
-  PAGE *p_current;
-  GList *connected_objects = NULL;
-
-  if (buf_num < 0 || buf_num > MAX_BUFFERS) {
-    fprintf(stderr, _("Got an invalid buffer_number [o_buffer_paste_end]\n"));
-    return;
-  }
-
-  /* erase old image */
-  o_buffer_paste_rubberpaste_xor (w_current, buf_num, FALSE);
-
-  /* calc and translate objects to their final position */
-  w_diff_x = w_current->second_wx - w_current->first_wx;
-  w_diff_y = w_current->second_wy - w_current->first_wy;
-
-#if DEBUG
-  printf("%d %d\n", w_diff_x, w_diff_y);
-#endif
-
-  toplevel->ADDING_SEL = 1;
-  o_glist_translate_world(toplevel, w_diff_x, w_diff_y,
-                          object_buffer[buf_num]);
-  toplevel->ADDING_SEL = 0;
-
-  o_current = object_buffer[buf_num]->data;
-  p_current = toplevel->page_current;
-
-  o_saved = p_current->object_tail;
-  o_list_copy_all(toplevel, o_current, p_current->object_tail,
-                  NORMAL_FLAG);
-
-  p_current->object_tail = return_tail(p_current->object_head);
-  o_current = o_saved->next;
-
-  /* now add new objects to the selection list */
-  while (o_current != NULL) {
-    o_selection_add( temp_list, o_current );
-    s_conn_update_object(toplevel, o_current);
-    if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
-      connected_objects = s_conn_return_complex_others(
-                                                       connected_objects,
-                                                       o_current);
-    } else {
-      connected_objects = s_conn_return_others(connected_objects,
-                                               o_current);
-    }
-    o_current = o_current->next;
-  }
-
-  o_cue_redraw_all(w_current, o_saved->next, TRUE);
-  o_cue_undraw_list(w_current, connected_objects);
-  o_cue_draw_list(w_current, connected_objects);
-  g_list_free(connected_objects);
-  connected_objects = NULL;
-
-  o_select_unselect_all( w_current );
-  geda_list_add_glist( toplevel->page_current->selection_list, geda_list_get_glist( temp_list ) );
-
-  g_object_unref( temp_list );
-
-  toplevel->page_current->CHANGED = 1;
-  o_redraw(w_current, o_saved->next, TRUE); /* only redraw new objects */
-  o_undo_savestate(w_current, UNDO_ALL);
-  i_update_menus(w_current);
+  i_set_state(w_current, ENDPASTE);
+  o_place_start (w_current, w_x, w_y);
 }
 
 
@@ -222,13 +151,9 @@ void o_buffer_paste_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
  *  \par Function Description
  *
  */
-void o_buffer_paste_rubberpaste (GSCHEM_TOPLEVEL *w_current, int buf_num,
-                                 int w_x, int w_y)
+void o_buffer_paste_rubberpaste (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  o_buffer_paste_rubberpaste_xor (w_current, buf_num, FALSE);
-  w_current->second_wx = w_x;
-  w_current->second_wy = w_y;
-  o_buffer_paste_rubberpaste_xor (w_current, buf_num, TRUE);
+  o_place_rubberplace (w_current, w_x, w_y);
 }
 
 
@@ -237,11 +162,9 @@ void o_buffer_paste_rubberpaste (GSCHEM_TOPLEVEL *w_current, int buf_num,
  *  \par Function Description
  *
  */
-void o_buffer_paste_rubberpaste_xor(GSCHEM_TOPLEVEL *w_current, int buf_num,
-                                    int drawing)
+void o_buffer_paste_rubberpaste_xor(GSCHEM_TOPLEVEL *w_current, int drawing)
 {
-  o_drawbounding(w_current, object_buffer[buf_num],
-                 x_get_darkcolor(w_current->bb_color), drawing);
+  o_place_rubberplace_xor (w_current, drawing);
 }
 
 

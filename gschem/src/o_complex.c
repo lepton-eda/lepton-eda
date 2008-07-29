@@ -65,49 +65,118 @@ void o_complex_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *obje
   o_list_draw_xor( w_current, dx, dy, object->complex->prim_objs);
 }
 
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
  *
  */
-void o_complex_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  OBJECT *temp_parent;
+  OBJECT *temp_list;
+  OBJECT *o_current;
+  OBJECT *o_start;
+  char *buffer;
   int i, temp;
   const CLibSymbol *sym;
   int redraw_state;
 
-  w_current->first_wx = w_current->second_wx = w_x;
-  w_current->first_wy = w_current->second_wy = w_y;
-  w_current->last_drawb_mode = -1;
+  /* remove the old place list if it exists */
+  s_delete_object_glist(toplevel, toplevel->page_current->place_list);
+  toplevel->page_current->place_list = NULL;
 
-  /* make sure list is null first, so that you don't have a mem
-   * leak */
-  toplevel->ADDING_SEL = 1; /* reuse this flag, rename later hack */
-  sym = s_clib_get_symbol_by_name (toplevel->internal_symbol_name);
-  o_complex_add(toplevel, NULL,
-		&(toplevel->page_current->complex_place_list),
-		OBJ_COMPLEX, WHITE, w_x, w_y, 0, 0,
-		sym, toplevel->internal_symbol_name,
-		1, TRUE);
-  toplevel->ADDING_SEL = 0;
+  /* Insert the new object into the buffer at world coordinates (0,0).
+   * It will be translated to the mouse coordinates during placement. */
 
+  w_current->first_wx = 0;
+  w_current->first_wy = 0;
+
+  if (w_current->include_complex) {
+
+    o_start = temp_list = add_head();
+
+    /* Reset the object_parent pointer so attribute
+     * attachment works in this temporary list. */
+    temp_parent = toplevel->page_current->object_parent;
+    toplevel->page_current->object_parent = temp_list;
+
+    toplevel->ADDING_SEL=1;
+    buffer = s_clib_symbol_get_data_by_name (sym_name);
+    temp_list = o_read_buffer (toplevel,
+                               temp_list,
+                               buffer, -1,
+                               sym_name);
+    g_free (buffer);
+    toplevel->ADDING_SEL=0;
+
+    /* Put object_parent back where it should be */
+    toplevel->page_current->object_parent = temp_parent;
+
+    /* Take the added objects, severing them from the HEAD node */
+    o_current = o_start->next;
+    o_current->prev = NULL;
+    o_start->next = NULL;
+
+    /* Delete the HEAD node */
+    s_delete_list_fromstart (toplevel, o_start);
+
+    while (o_current != NULL) {
+      toplevel->page_current->place_list =
+        g_list_prepend (toplevel->page_current->place_list, o_current);
+      o_current = o_current->next;
+    }
+    toplevel->page_current->place_list =
+      g_list_reverse (toplevel->page_current->place_list);
+
+  } else { /* if (w_current->include_complex) {..} else { */
+
+    toplevel->ADDING_SEL = 1; /* reuse this flag, rename later hack */
+    sym = s_clib_get_symbol_by_name (sym_name);
+    o_complex_add(toplevel, NULL,
+                  &(toplevel->page_current->place_list),
+                  OBJ_COMPLEX, WHITE, 0, 0, 0, 0,
+                  sym, sym_name, 1, TRUE);
+    toplevel->ADDING_SEL = 0;
+
+    /* Flag the symbol as embedded if necessary */
+    o_current = (g_list_last (toplevel->page_current->place_list))->data;
+    if (w_current->embed_complex) {
+      o_current->complex_embedded = TRUE;
+    }
+  }
+
+  /* Rotate the place list if we start with any accumulated rotation */
   if (w_current->complex_rotate) {
     temp = w_current->complex_rotate / 90;
     for (i = 0; i < temp; i++) {
-      o_complex_place_rotate(w_current);
+      o_place_rotate(w_current);
     }
   }
 
   /* Run the complex place list changed hook without redrawing */
-  /* since the complex place list is going to be redrawn afterwards */
+  /* since the place list is going to be redrawn afterwards */
   redraw_state = toplevel->DONT_REDRAW;
   toplevel->DONT_REDRAW = 1;
   o_complex_place_changed_run_hook (w_current);
   toplevel->DONT_REDRAW = redraw_state;
 
-  o_complex_rubbercomplex_xor (w_current, TRUE);
+  w_current->inside_action = 1;
+  i_set_state(w_current, DRAWCOMP);
 }
+
+
+/*! \todo Finish function documentation!!!
+*  \brief
+*  \par Function Description
+*
+*/
+void o_complex_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+{
+  o_place_start (w_current, w_x, w_y);
+}
+
 
 /*! \brief Run the complex place list changed hook. 
  *  \par Function Description
@@ -123,8 +192,8 @@ void o_complex_place_changed_run_hook(GSCHEM_TOPLEVEL *w_current) {
 
   /* Run the complex place list changed hook */
   if (scm_hook_empty_p(complex_place_list_changed_hook) == SCM_BOOL_F &&
-      toplevel->page_current->complex_place_list != NULL) {
-    ptr = toplevel->page_current->complex_place_list;
+      toplevel->page_current->place_list != NULL) {
+    ptr = toplevel->page_current->place_list;
     while (ptr) {
       scm_run_hook(complex_place_list_changed_hook, 
 		   scm_cons (g_make_object_smob
@@ -136,197 +205,47 @@ void o_complex_place_changed_run_hook(GSCHEM_TOPLEVEL *w_current) {
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_complex_place_rotate(GSCHEM_TOPLEVEL *w_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current;
-  GList *ptr;
-  int x_local = -1;
-  int y_local = -1;
-
-  ptr = toplevel->page_current->complex_place_list;
-  while(ptr) {
-    o_current = (OBJECT *) ptr->data;
-    switch(o_current->type) {	
-      case(OBJ_COMPLEX):
-        x_local = o_current->complex->x; 
-        y_local = o_current->complex->y;
-        break;
-    }
-    ptr = g_list_next(ptr);
-  }
-
-  if (x_local == -1) {
-    printf(_("Could not find complex in new component placement!\n"));
-    return;
-  }
-
-  ptr = toplevel->page_current->complex_place_list;
-  while(ptr) {
-    o_current = (OBJECT *) ptr->data;
-    switch(o_current->type) {	
-
-      case(OBJ_TEXT):
-        o_text_rotate_world(toplevel, x_local, y_local, 90, o_current);
-        break;
-
-      case(OBJ_COMPLEX):
-        o_complex_rotate_world(toplevel, x_local, y_local, 90, o_current);
-        break;
-
-    }
-    ptr = g_list_next(ptr);
-  }
-
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
  *
  */
-void o_complex_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_complex_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int continue_placing)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  GList *new_objects;
+  GList *iter;
   OBJECT *o_current;
-  OBJECT *o_start;
-  OBJECT *o_temp;
-  char *buffer;
-  int temp, i;
-  GList *connected_objects=NULL;
-  const CLibSymbol *sym;
 
-#if DEBUG
-  printf("place_basename: %s\n",internal_basename);
-  printf("place_clib: %s\n",internal_clib);
-#endif
-
-  w_current->second_wx = w_x;
-  w_current->second_wy = w_y;
-
-  o_complex_rubbercomplex_xor (w_current, FALSE);
+  o_place_end (w_current, w_x, w_y, continue_placing, &new_objects);
 
   if (w_current->include_complex) {
-    buffer = s_clib_symbol_get_data_by_name (toplevel->internal_symbol_name);
-
-    toplevel->ADDING_SEL=1;
-    o_start = toplevel->page_current->object_tail;
-    toplevel->page_current->object_tail =
-      o_read_buffer(toplevel,
-		    toplevel->page_current->object_tail,
-		    buffer, -1,
-		    toplevel->internal_symbol_name);
-    o_start = o_start->next;
-    toplevel->ADDING_SEL=0;
-    
-    o_list_translate_world(toplevel, w_x, w_y, o_start);
-
-    o_temp = o_start;
-    while (o_temp != NULL) {
-      if (o_temp->type == OBJ_NET || o_temp->type == OBJ_PIN ||
-          o_temp->type == OBJ_BUS) {
-        s_conn_update_object(toplevel, o_temp);
-                  
-        connected_objects = s_conn_return_others(connected_objects,
-                                                 o_temp);
-      }
-      o_temp = o_temp->next;
-    }
-    o_cue_undraw_list(w_current, connected_objects);
-    o_cue_draw_list(w_current, connected_objects);
-    g_list_free(connected_objects);
-
-    g_free(buffer);
-
-    o_redraw(w_current, o_start, TRUE);
-    toplevel->page_current->CHANGED = 1;
-    o_undo_savestate(w_current, UNDO_ALL);
-    i_update_menus(w_current);
-    s_delete_object_glist(toplevel, toplevel->page_current->
-                          complex_place_list);
-    toplevel->page_current->complex_place_list = NULL;
+    g_list_free (new_objects);
     return;
   }
 
-  o_temp = toplevel->page_current->object_tail;
-  sym = s_clib_get_symbol_by_name (toplevel->internal_symbol_name);
-  toplevel->page_current->object_tail =
-    o_complex_add(toplevel,
-                  toplevel->page_current->object_tail, NULL,
-                  OBJ_COMPLEX, WHITE, w_x, w_y, w_current->complex_rotate, 0,
-                  sym, toplevel->internal_symbol_name,
-		  1, TRUE);
+  /* Run the add component hook for the new component */
+  for (iter = new_objects;
+       iter != NULL;
+       iter = g_list_next (iter)) {
+    o_current = iter->data;
 
-  /* complex rotate post processing */
-  o_temp = o_temp->next; /* skip over last object */
-  while (o_temp != NULL) {
-    switch(o_temp->type) {
-      case(OBJ_TEXT):
-        temp = w_current->complex_rotate / 90;
-        for (i = 0; i < temp; i++) {
-          o_text_rotate_world(toplevel, w_x, w_y, 90, o_temp);
-        }
-        break;
+    if (scm_hook_empty_p(add_component_hook) == SCM_BOOL_F) {
+      scm_run_hook(add_component_hook,
+                   scm_cons(g_make_attrib_smob_list(w_current, o_current),
+                            SCM_EOL));
     }
-		
-    o_temp = o_temp->next;
+
+    if (scm_hook_empty_p(add_component_object_hook) == SCM_BOOL_F) {
+      scm_run_hook(add_component_object_hook,
+                   scm_cons(g_make_object_smob(w_current->toplevel,
+                                               o_current), SCM_EOL));
+    }
   }
 
-  /* 1 should be define fix everywhere hack */
-  o_current = toplevel->page_current->object_tail;
-
-  if (scm_hook_empty_p(add_component_hook) == SCM_BOOL_F &&
-      o_current != NULL) {
-    scm_run_hook(add_component_hook,
-                 scm_cons(g_make_attrib_smob_list(w_current, o_current),
-                          SCM_EOL));
-  }
-
-  if (scm_hook_empty_p(add_component_object_hook) == SCM_BOOL_F &&
-      o_current != NULL) {
-    scm_run_hook(add_component_object_hook,
-		 scm_cons(g_make_object_smob(toplevel, o_current),
-			  SCM_EOL));
-  }
-
-  /* put code here to deal with emebedded stuff */
-  if (w_current->embed_complex) {
-    o_current->complex_embedded = TRUE;
-  }
-
-  /*! \todo redraw has to happen at the end of all this hack or
-   * maybe not? */
-  s_delete_object_glist(toplevel, toplevel->page_current->
-                        complex_place_list);
-  toplevel->page_current->complex_place_list = NULL;
-
-  /* This doesn't allow anything else to be in the selection
-   * list when you add a component */
-
-  o_select_unselect_list( w_current, toplevel->page_current->selection_list );
-  o_selection_add( toplevel->page_current->selection_list, toplevel->page_current->object_tail);
-  /* the o_redraw_selected is in x_events.c after this call
-   * returns */
-  o_attrib_add_selected(w_current, toplevel->page_current->selection_list,
-                        toplevel->page_current->object_tail);
-
-  s_conn_update_complex(toplevel, o_current->complex->prim_objs);
-  connected_objects = s_conn_return_complex_others(connected_objects,
-                                                   o_current);
-  o_cue_undraw_list(w_current, connected_objects);
-  o_cue_draw_list(w_current, connected_objects);
-  g_list_free(connected_objects);
-  o_cue_draw_single(w_current, toplevel->page_current->object_tail);
-        
-  toplevel->page_current->CHANGED = 1;
-  o_undo_savestate(w_current, UNDO_ALL);
-  i_update_menus(w_current);
+  g_list_free (new_objects);
 }
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -335,10 +254,7 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_complex_rubbercomplex (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  o_complex_rubbercomplex_xor (w_current, FALSE);
-  w_current->second_wx = w_x;
-  w_current->second_wy = w_y;
-  o_complex_rubbercomplex_xor (w_current, TRUE);
+  o_place_rubberplace (w_current, w_x, w_y);
 }
 
 
@@ -349,9 +265,7 @@ void o_complex_rubbercomplex (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_complex_rubbercomplex_xor (GSCHEM_TOPLEVEL *w_current, int drawing)
 {
-  o_drawbounding (w_current,
-                  w_current->toplevel->page_current->complex_place_list,
-                  x_get_darkcolor (w_current->bb_color), drawing);
+  o_place_rubberplace_xor (w_current, drawing);
 }
 
 

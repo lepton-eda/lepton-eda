@@ -3516,6 +3516,7 @@ DEFINE_I_CALLBACK(misc3)
 DEFINE_I_CALLBACK(cancel)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  TOPLEVEL *toplevel = w_current->toplevel;
   GValue value = { 0, };
 
   exit_if_null(w_current);
@@ -3526,11 +3527,6 @@ DEFINE_I_CALLBACK(cancel)
 
     /* Undraw any XOR outline of the place list */
     o_complex_rubbercomplex_xor(w_current, FALSE);
-
-    /* Free the complex place list and its contents */
-    s_delete_object_glist(w_current->toplevel,
-                          w_current->toplevel->page_current->complex_place_list);
-    w_current->toplevel->page_current->complex_place_list = NULL;
 
     /* De-select the lists in the component selector */
     x_compselect_deselect (w_current);
@@ -3549,6 +3545,12 @@ DEFINE_I_CALLBACK(cancel)
     o_move_cancel (w_current);
   }
 
+  /* Free the place list and its contents. If we were in a move
+   * action, the list (refering to objects on the page) would
+   * already have been cleared in o_move_cancel(), so this is OK. */
+  s_delete_object_glist(toplevel, toplevel->page_current->place_list);
+  toplevel->page_current->place_list = NULL;
+
   /* leave this on for now... but it might have to change */
   /* this is problematic since we don't know what the right mode */
   /* (when you cancel inside an action) should be */
@@ -3561,22 +3563,6 @@ DEFINE_I_CALLBACK(cancel)
   if (w_current->inside_action) { 
      o_redraw_all(w_current); 
   }
-
-  /* it is possible to cancel in the middle of a complex place
-   * so lets be sure to clean up the complex_place_list
-   * structure and also clean up the attrib_place_list.
-   * remember these don't remove the head structure */
-
-  /* Free the complex place list and its contents. If we were in a
-   * move action, the list (refering to objects on the page) would
-   * already have been cleared in o_move_cancel(), so this is OK. */
-  s_delete_object_glist(w_current->toplevel,
-                        w_current->toplevel->page_current->complex_place_list);
-  w_current->toplevel->page_current->complex_place_list = NULL;
-
-  s_delete_object_glist(w_current->toplevel,
-                        w_current->toplevel->page_current->attrib_place_list);
-  w_current->toplevel->page_current->attrib_place_list = NULL;
 
   /* also free internal current_attribute */
   o_attrib_free_current(w_current->toplevel);
