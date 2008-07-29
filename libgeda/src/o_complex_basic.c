@@ -782,29 +782,6 @@ char *o_complex_save(OBJECT *object)
  *  \par Function Description
  *
  */
-void o_complex_set_filename(TOPLEVEL *toplevel, const char *basename)
-{
-  o_complex_free_filename (toplevel);
-
-  toplevel->internal_symbol_name = g_strdup (basename);
-} 
-
-/*! \brief
- *  \par Function Description
- *
- */
-void o_complex_free_filename(TOPLEVEL *toplevel)
-{
-  if (toplevel->internal_symbol_name != NULL) {
-    g_free(toplevel->internal_symbol_name);
-    toplevel->internal_symbol_name = NULL;
-  }
-}
-
-/*! \brief
- *  \par Function Description
- *
- */
 void o_complex_translate_world(TOPLEVEL *toplevel, int x1, int y1,
                                OBJECT *object)
 {

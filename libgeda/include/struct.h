@@ -390,7 +390,6 @@ struct st_page {
 
 struct st_toplevel {
 
-  gchar *internal_symbol_name;     
   /* have to decided on component list stuff */
   /* if it should go in here or not */
   /* leave outside for now */

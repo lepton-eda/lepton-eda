@@ -196,10 +196,6 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
 
   g_free (page);
 
-#if 0 /* don't do this for now hack */ /* this is a per window free */
-  o_complex_free_filename(toplevel);
-#endif
-
   if (toplevel->page_current == page) {
     /* page was page_current, page_current must be updated */
     toplevel->page_current = NULL;

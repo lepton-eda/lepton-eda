@@ -195,7 +195,6 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 OBJECT *o_complex_add_embedded(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, int x, int y, int angle, int mirror, const gchar *basename, int selectable);
 void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 void o_complex_set_filename(TOPLEVEL *toplevel, const char *basename);
-void o_complex_free_filename(TOPLEVEL *toplevel);
 void o_complex_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object);
 OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
 OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);

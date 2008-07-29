@@ -48,8 +48,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel = (TOPLEVEL*)g_new (TOPLEVEL, 1);
 
-  toplevel->internal_symbol_name = NULL;
-
   toplevel->RC_list = NULL;
 
   toplevel->series_name        = NULL;
@@ -173,8 +171,6 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
     /* Assume this works */
     g_source_remove (toplevel->auto_save_timeout);
   }
-
-  g_free (toplevel->internal_symbol_name);
 
   g_free (toplevel->series_name);
   g_free (toplevel->untitled_name);

@@ -643,8 +643,6 @@ void x_window_close(GSCHEM_TOPLEVEL *w_current)
     last_window = TRUE;
   }
 
-  o_complex_free_filename(toplevel);
-
   if (toplevel->major_changed_refdes) {
     GList* current = toplevel->major_changed_refdes;
     while (current)
