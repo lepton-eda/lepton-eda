@@ -139,7 +139,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
       case(STARTCOPY):
         if (o_select_selected(w_current)) {
-          w_current->rotated_inside = 0;
           o_copy_start(w_current, w_x, w_y);
           w_current->event_state = COPY;
           w_current->inside_action = 1;
@@ -148,7 +147,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
       case(STARTMCOPY):
         if (o_select_selected(w_current)) {
-          w_current->rotated_inside = 0;
           o_copy_start(w_current, w_x, w_y);
           w_current->event_state = MCOPY;
           w_current->inside_action = 1;
@@ -157,7 +155,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
       case(STARTMOVE):
         if (o_select_selected(w_current)) {
-          w_current->rotated_inside = 0;
           o_move_start(w_current, w_x, w_y);
           w_current->event_state = MOVE;
           w_current->inside_action = 1;
@@ -653,7 +650,6 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
                                          w_current->first_wy, 90,
                               toplevel->page_current->place_list );
         toplevel->DONT_REDRAW = redraw_state;
-        w_current->rotated_inside ++;
         w_current->event_state = prev_state;
 
         o_move_rubbermove_xor (w_current, TRUE);
@@ -825,7 +821,6 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
       break;
     } else {
       /* Start the object movement */
-      w_current->rotated_inside = 0;
       o_move_start(w_current, w_x, w_y);
       w_current->event_state = ENDMOVE;
       w_current->inside_action = 1;

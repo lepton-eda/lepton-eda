@@ -94,8 +94,6 @@ struct st_gschem_toplevel {
   int magnetic_wx, magnetic_wy;         /* Position of the magnetic marker*/
   int distance;
   int inside_action;                    /* Are we doing an action? */
-  int rotated_inside;                   /* Was the selection rotated
-                                           inside an action? */
   int rubber_visible;                   /* Are there any rubber lines on
 					   the screen? */
   int magnetic_visible;                 /* Is the magnetic marker visible */

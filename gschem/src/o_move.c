@@ -289,7 +289,6 @@ void o_move_cancel (GSCHEM_TOPLEVEL *w_current)
   g_list_free(w_current->toplevel->page_current->place_list);
   w_current->toplevel->page_current->place_list = NULL;
   o_undo_callback(w_current, UNDO_ACTION);
-  w_current->rotated_inside = 0;
 
   s_stretch_remove_most(toplevel, toplevel->page_current->stretch_head);
   toplevel->page_current->stretch_tail = toplevel->page_current->stretch_head;
