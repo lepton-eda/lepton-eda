@@ -347,7 +347,8 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
           w_current->event_state == ENDTEXT ||
           w_current->event_state == ENDMOVE ||
           w_current->event_state == ENDCOPY ||
-          w_current->event_state == ENDMCOPY) {
+          w_current->event_state == ENDMCOPY ||
+          w_current->event_state == ENDPASTE ) {
             return(0);
           } else {
             i_callback_cancel(w_current, 0, NULL);
@@ -512,7 +513,6 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int prev_state;
-  int redraw_state;
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
@@ -613,55 +613,37 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
   } else if (event->button == 2) {
 
     if (w_current->inside_action) {
-      if (w_current->event_state == ENDCOMP) {
-        o_place_rubberplace_xor (w_current, FALSE);
+      if (w_current->event_state == ENDCOMP ||
+          w_current->event_state == ENDTEXT ||
+          w_current->event_state == ENDMOVE ||
+          w_current->event_state == ENDCOPY ||
+          w_current->event_state == ENDMCOPY ||
+          w_current->event_state == ENDPASTE ) {
+
+        if (w_current->event_state == ENDMOVE) {
+          o_move_rubbermove_xor (w_current, FALSE);
+        } else {
+          o_place_rubberplace_xor (w_current, FALSE);
+        }
 
         o_place_rotate(w_current);
 
-        /* Run the complex place list changed hook without redrawing */
-        /* since all objects are being redrawn afterwards */
-        prev_state = toplevel->DONT_REDRAW;
-        toplevel->DONT_REDRAW = 1;
-        o_complex_place_changed_run_hook (w_current);
-        toplevel->DONT_REDRAW = prev_state;
+        if (w_current->event_state == ENDCOMP) {
+          /* Run the complex place list changed hook without redrawing */
+          /* since all objects are being redrawn afterwards */
+          prev_state = toplevel->DONT_REDRAW;
+          toplevel->DONT_REDRAW = 1;
+          o_complex_place_changed_run_hook (w_current);
+          toplevel->DONT_REDRAW = prev_state;
+        }
 
-        o_place_rubberplace_xor (w_current, TRUE);
-        return(0);
-      } else if (w_current->event_state == ENDTEXT) {
-        o_place_rubberplace_xor (w_current, FALSE);
-
-        o_place_rotate(w_current);
-
-        o_place_rubberplace_xor (w_current, TRUE);
-        return(0);
-
-      }
-      else if (w_current->event_state == ENDMOVE) {
-        prev_state = w_current->event_state;
-
-        o_move_rubbermove_xor (w_current, FALSE);
-
-        /* Don't allow o_rotate_90 to erase the selection, neither to
-           redraw the objects after rotating */
-        /* skip over head node */
-        redraw_state = toplevel->DONT_REDRAW;
-        toplevel->DONT_REDRAW = 1;
-        o_rotate_world_update(w_current, w_current->first_wx,
-                                         w_current->first_wy, 90,
-                              toplevel->page_current->place_list );
-        toplevel->DONT_REDRAW = redraw_state;
-        w_current->event_state = prev_state;
-
-        o_move_rubbermove_xor (w_current, TRUE);
-
+        if (w_current->event_state == ENDMOVE) {
+          o_move_rubbermove_xor (w_current, TRUE);
+        } else {
+          o_place_rubberplace_xor (w_current, TRUE);
+        }
         return(0);
       }
-      else if ((w_current->event_state == ENDCOPY) ||
-               (w_current->event_state == ENDMCOPY)) {
-        /* Rotating while copying is still not supported, so do nothing */
-        return 0;
-      }
-
     }
 
     switch(w_current->middle_button) {

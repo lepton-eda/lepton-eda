@@ -809,20 +809,15 @@ DEFINE_I_CALLBACK(edit_rotate_90)
 
   exit_if_null(w_current);
 
-  /* Rotating inside a copy action is still not
-     supported. In these cases, do nothing */
-  if ( (w_current->inside_action) &&
-       ((w_current->event_state == ENDCOPY) ||
-        (w_current->event_state == ENDMCOPY)) )
-    {
-      return;
-    }
-
-  /* If inside a move action, send a button 3 released, so rotating 
-     will be handled by x_event.c */
-  if ( (w_current->inside_action) &&
-       ((w_current->event_state == ENDMOVE)) ) 
-    {
+  /* If inside an appropriate action, send a button 2 released,
+   * so rotating will be handled by x_event.c */
+  if ( w_current->inside_action &&
+       (w_current->event_state == ENDCOMP ||
+        w_current->event_state == ENDTEXT ||
+        w_current->event_state == ENDMOVE ||
+        w_current->event_state == ENDCOPY ||
+        w_current->event_state == ENDMCOPY ||
+        w_current->event_state == ENDPASTE )) {
       GdkEvent* event;
 
       event = gdk_event_new(GDK_BUTTON_RELEASE);
@@ -851,23 +846,18 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
 
   exit_if_null(w_current);
 
-  /* Rotating inside a copy action is still not
-     supported. In these cases, do nothing */
-  if ( (w_current->inside_action) &&
-       ((w_current->event_state == ENDCOPY) ||
-        (w_current->event_state == ENDMCOPY)) )
-    {
-      return;
-    }
-
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
     return;
 
-  /* If inside a move action, send a button 3 released, so rotating 
-     will be handled by x_event.c */
-  if ( (w_current->inside_action) &&
-       ((w_current->event_state == ENDMOVE)) ) 
-    {
+  /* If inside an appropriate action, send a button 2 released,
+   * so rotating will be handled by x_event.c */
+  if ( w_current->inside_action &&
+       (w_current->event_state == ENDCOMP ||
+        w_current->event_state == ENDTEXT ||
+        w_current->event_state == ENDMOVE ||
+        w_current->event_state == ENDCOPY ||
+        w_current->event_state == ENDMCOPY ||
+        w_current->event_state == ENDPASTE )) {
       GdkEvent* event;
 
       event = gdk_event_new(GDK_BUTTON_RELEASE);
