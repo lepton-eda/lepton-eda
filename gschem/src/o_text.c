@@ -279,7 +279,6 @@ void o_text_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
 void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int temp, i;
 
   /* Insert the new object into the buffer at world coordinates (0,0).
    * It will be translated to the mouse coordinates during placement. */
@@ -304,13 +303,6 @@ void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text)
                              /* has to be visible so you can place it */
                              /* visibility is set when you create the object */
                              VISIBLE, SHOW_NAME_VALUE));
-
-  if (w_current->complex_rotate) {
-    temp = w_current->complex_rotate / 90;
-    for (i = 0; i < temp; i++) {
-      o_place_rotate(w_current);
-    }
-  }
 
   w_current->inside_action = 1;
   i_set_state(w_current, DRAWTEXT);

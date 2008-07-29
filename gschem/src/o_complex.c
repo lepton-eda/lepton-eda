@@ -79,7 +79,6 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
   OBJECT *o_current;
   OBJECT *o_start;
   char *buffer;
-  int i, temp;
   const CLibSymbol *sym;
   int redraw_state;
 
@@ -144,14 +143,6 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
     o_current = (g_list_last (toplevel->page_current->place_list))->data;
     if (w_current->embed_complex) {
       o_current->complex_embedded = TRUE;
-    }
-  }
-
-  /* Rotate the place list if we start with any accumulated rotation */
-  if (w_current->complex_rotate) {
-    temp = w_current->complex_rotate / 90;
-    for (i = 0; i < temp; i++) {
-      o_place_rotate(w_current);
     }
   }
 

@@ -119,7 +119,6 @@ struct st_gschem_toplevel {
   int ALTKEY;                           /* alt key pressed? */
   int doing_pan;                        /* mouse pan status flag */
   int buffer_number;                    /* current paste buffer in use */
-  int complex_rotate;                   /* Rotation of an object being placed */
   void (*last_callback)();              /* Last i_call* cmd executed */
 
   /* ------------------ */

@@ -619,9 +619,6 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       if (w_current->event_state == ENDCOMP) {
         o_place_rubberplace_xor (w_current, FALSE);
 
-        w_current->complex_rotate =
-          (w_current->complex_rotate + 90) % 360;
-
         o_place_rotate(w_current);
 
         /* Run the complex place list changed hook without redrawing */
@@ -635,9 +632,6 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         return(0);
       } else if (w_current->event_state == ENDTEXT) {
         o_place_rubberplace_xor (w_current, FALSE);
-
-        w_current->complex_rotate =
-        (w_current->complex_rotate + 90) % 360;
 
         o_place_rotate(w_current);
 
@@ -893,14 +887,12 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     break;
 
     case(DRAWCOMP):
-    w_current->complex_rotate = 0; /* reset to known state */
     o_complex_start(w_current, w_x, w_y);
     w_current->event_state = ENDCOMP;
     w_current->inside_action = 1;
     break;
 
     case(DRAWTEXT):
-    w_current->complex_rotate = 0; /* reset to known state */
     o_text_start(w_current, w_x, w_y);
     w_current->event_state = ENDTEXT;
     w_current->inside_action = 1;

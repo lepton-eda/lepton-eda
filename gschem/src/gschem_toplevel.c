@@ -143,7 +143,6 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->ALTKEY     = 0;
   w_current->doing_pan = 0;
   w_current->buffer_number = 0;
-  w_current->complex_rotate = 0;
   w_current->last_callback = NULL;
 
   /* ------------------ */
