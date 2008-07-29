@@ -3526,7 +3526,7 @@ DEFINE_I_CALLBACK(cancel)
     /* user hit escape key when placing components */
 
     /* Undraw any XOR outline of the place list */
-    o_complex_rubbercomplex_xor(w_current, FALSE);
+    o_place_rubberplace_xor(w_current, FALSE);
 
     /* De-select the lists in the component selector */
     x_compselect_deselect (w_current);

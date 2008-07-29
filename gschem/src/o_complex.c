@@ -251,28 +251,6 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int continue_pl
  *  \brief
  *  \par Function Description
  *
- */
-void o_complex_rubbercomplex (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
-{
-  o_place_rubberplace (w_current, w_x, w_y);
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_complex_rubbercomplex_xor (GSCHEM_TOPLEVEL *w_current, int drawing)
-{
-  o_place_rubberplace_xor (w_current, drawing);
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
  *  \note
  *  don't know if this belongs yet
  */

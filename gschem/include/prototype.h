@@ -513,8 +513,6 @@ void o_box_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_buffer_copy(GSCHEM_TOPLEVEL *w_current, int buf_num);
 void o_buffer_cut(GSCHEM_TOPLEVEL *w_current, int buf_num);
 void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int x, int y, int buf_num);
-void o_buffer_paste_rubberpaste(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_buffer_paste_rubberpaste_xor(GSCHEM_TOPLEVEL *w_current, int drawing);
 void o_buffer_init(void);
 void o_buffer_free(GSCHEM_TOPLEVEL *w_current);
 /* o_bus.c */
@@ -547,15 +545,11 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name);
 void o_complex_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_complex_place_changed_run_hook(GSCHEM_TOPLEVEL *w_current);
 void o_complex_end(GSCHEM_TOPLEVEL *w_current, int x, int y, int continue_placing);
-void o_complex_rubbercomplex(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_complex_rubbercomplex_xor(GSCHEM_TOPLEVEL *w_current, int drawing);
 void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset);
 /* o_copy.c */
 void o_copy_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_copy_end(GSCHEM_TOPLEVEL *w_current);
 void o_copy_multiple_end(GSCHEM_TOPLEVEL *w_current);
-void o_copy_rubbercopy(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_copy_rubbercopy_xor(GSCHEM_TOPLEVEL *w_current, int drawing);
 /* o_cue.c */
 void o_cue_redraw_all(GSCHEM_TOPLEVEL *w_current, OBJECT *head, gboolean draw_selected);
 void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichone);
@@ -714,8 +708,6 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text);
 void o_text_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_text_rubberattrib(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_text_rubberattrib_xor(GSCHEM_TOPLEVEL *w_current, int drawing);
 void o_text_edit(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int len, int text_size, int text_alignment);
 void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string, int visibility, int show);

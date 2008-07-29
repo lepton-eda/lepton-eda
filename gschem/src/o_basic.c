@@ -67,19 +67,10 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
 
       case(ENDCOPY):
       case(ENDMCOPY):
-        o_copy_rubbercopy_xor (w_current, TRUE);
-        break;
-
       case(ENDCOMP):
-        o_complex_rubbercomplex_xor (w_current, TRUE);
-        break;
-
       case(ENDTEXT):
-        o_text_rubberattrib_xor (w_current, TRUE);
-        break;
-
       case(ENDPASTE):
-        o_buffer_paste_rubberpaste_xor (w_current, TRUE);
+        o_place_rubberplace_xor (w_current, TRUE);
         break;
 
       case(STARTDRAWNET):

@@ -288,7 +288,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
           i_set_state(w_current, SELECT);
           i_update_toolbar(w_current);
         } else {
-          o_complex_rubbercomplex_xor (w_current, TRUE);
+          o_place_rubberplace_xor (w_current, TRUE);
         }
         break;
 
@@ -578,7 +578,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         /* having this stay in copy was driving me nuts*/
         w_current->inside_action = 1;
         /* Keep the state and the inside_action, as the copy has not finished. */
-        o_complex_rubbercomplex_xor (w_current, TRUE);
+        o_place_rubberplace_xor (w_current, TRUE);
         i_set_state(w_current, ENDMCOPY);
         i_update_toolbar(w_current);
         o_undo_savestate(w_current, UNDO_ALL);
@@ -617,7 +617,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
     if (w_current->inside_action) {
       if (w_current->event_state == ENDCOMP) {
-        o_complex_rubbercomplex_xor (w_current, FALSE);
+        o_place_rubberplace_xor (w_current, FALSE);
 
         w_current->complex_rotate =
           (w_current->complex_rotate + 90) % 360;
@@ -631,24 +631,24 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         o_complex_place_changed_run_hook (w_current);
         toplevel->DONT_REDRAW = prev_state;
 
-        o_complex_rubbercomplex_xor (w_current, TRUE);
+        o_place_rubberplace_xor (w_current, TRUE);
         return(0);
       } else if (w_current->event_state == ENDTEXT) {
-        o_text_rubberattrib_xor (w_current, FALSE);
+        o_place_rubberplace_xor (w_current, FALSE);
 
         w_current->complex_rotate =
         (w_current->complex_rotate + 90) % 360;
 
         o_place_rotate(w_current);
 
-        o_text_rubberattrib_xor (w_current, TRUE);
+        o_place_rubberplace_xor (w_current, TRUE);
         return(0);
 
       }
       else if (w_current->event_state == ENDMOVE) {
         prev_state = w_current->event_state;
 
-        o_complex_rubbercomplex_xor (w_current, FALSE);
+        o_move_rubbermove_xor (w_current, FALSE);
 
         /* Don't allow o_rotate_90 to erase the selection, neither to
            redraw the objects after rotating */
@@ -662,7 +662,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         w_current->rotated_inside ++;
         w_current->event_state = prev_state;
 
-        o_complex_rubbercomplex_xor (w_current, TRUE);
+        o_move_rubbermove_xor (w_current, TRUE);
 
         return(0);
       }
@@ -843,14 +843,6 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
       o_move_rubbermove(w_current, w_x, w_y);
     break;
 
-    case(ENDCOPY):
-    case(COPY):
-    case(ENDMCOPY):
-    case(MCOPY):
-    if (w_current->inside_action)
-      o_copy_rubbercopy(w_current, w_x, w_y);
-    break;
-
     case(ENDLINE):
     if (w_current->inside_action)
       o_line_rubberline(w_current, w_x, w_y);
@@ -907,14 +899,6 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     w_current->inside_action = 1;
     break;
 
-    case(ENDCOMP):
-    o_complex_rubbercomplex(w_current, w_x, w_y);
-    break;
-
-    case(ENDPASTE):
-    o_buffer_paste_rubberpaste(w_current, w_x, w_y);
-    break;
-
     case(DRAWTEXT):
     w_current->complex_rotate = 0; /* reset to known state */
     o_text_start(w_current, w_x, w_y);
@@ -922,8 +906,14 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     w_current->inside_action = 1;
     break;
 
+    case(COPY):
+    case(MCOPY):
+    case(ENDCOPY):
+    case(ENDMCOPY):
+    case(ENDCOMP):
+    case(ENDPASTE):
     case(ENDTEXT):
-    o_text_rubberattrib(w_current, w_x, w_y);
+    o_place_rubberplace(w_current, w_x, w_y);
     break;
 
     case(SBOX):
