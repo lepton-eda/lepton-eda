@@ -376,8 +376,6 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
   /* you need to override them if there are attached ones */
   /* on the main list */
   temp_tail = toplevel->page_current->object_tail;
-  temp_parent = toplevel->page_current->object_parent;
-  toplevel->page_current->object_parent = prim_objs;
   /* reason this works is because it has a head, see add_head above */
 
   /* get the symbol data */
@@ -469,10 +467,14 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 
     /* filename was found */
     loaded_normally = TRUE;
-    
+
+    temp_parent = toplevel->page_current->object_parent;
+    toplevel->page_current->object_parent = prim_objs;
+
     /* add connections till translated */
     o_read_buffer(toplevel, prim_objs, buffer, -1, new_node->complex_basename);
 
+    toplevel->page_current->object_parent = temp_parent;
     g_free (buffer);
     
   }
@@ -550,7 +552,6 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
   }
 
   toplevel->page_current->object_tail = temp_tail;
-  toplevel->page_current->object_parent = temp_parent;
 
   if (use_object_list) {
     object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
