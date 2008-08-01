@@ -131,6 +131,8 @@ void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 
     o_text_draw(w_current, object);
   }
+
+  toplevel->page_current->CHANGED = 1;
 }
 
 /*! \brief Set what part of an attribute is shown.
@@ -154,6 +156,8 @@ void o_attrib_toggle_show_name_value(GSCHEM_TOPLEVEL *w_current,
   object->show_name_value = show_name_value;
   o_text_recreate(toplevel, object);
   o_text_draw(w_current, object);
+
+  toplevel->page_current->CHANGED = 1;
 }
 
 

@@ -3128,7 +3128,6 @@ DEFINE_I_CALLBACK(attributes_show_name)
       o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME);
     }
 
-    toplevel->page_current->CHANGED=1;
     o_undo_savestate (w_current, UNDO_ALL);
   }
 }
@@ -3165,7 +3164,6 @@ DEFINE_I_CALLBACK(attributes_show_value)
       o_attrib_toggle_show_name_value (w_current, object, SHOW_VALUE);
     }
 
-    toplevel->page_current->CHANGED=1;
     o_undo_savestate (w_current, UNDO_ALL);
   }
 }
@@ -3202,7 +3200,6 @@ DEFINE_I_CALLBACK(attributes_show_both)
       o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME_VALUE);
     }
 
-    toplevel->page_current->CHANGED=1;
     o_undo_savestate (w_current, UNDO_ALL);
   }
 }
@@ -3240,7 +3237,6 @@ DEFINE_I_CALLBACK(attributes_visibility_toggle)
       o_attrib_toggle_visibility (w_current, object);
     }
 
-    toplevel->page_current->CHANGED=1;
     o_undo_savestate (w_current, UNDO_ALL);
   }
 }
