@@ -186,10 +186,10 @@ static gboolean clear_keyaccel_string(gpointer data)
 }
 
 #define DEFINE_G_KEYS(name)				\
-SCM g_keys_ ## name(void)				\
+SCM g_keys_ ## name(SCM rest)				\
 {							\
    g_timeout_add(400, clear_keyaccel_string, global_window_current); \
-   i_callback_ ## name(global_window_current, 0, NULL); \
+   i_callback_ ## name(rest, global_window_current, 0, NULL); \
    return SCM_BOOL_T;				\
 }
 

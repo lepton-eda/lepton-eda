@@ -351,7 +351,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
           w_current->event_state == ENDPASTE ) {
             return(0);
           } else {
-            i_callback_cancel(w_current, 0, NULL);
+            i_callback_cancel(SCM_EOL, w_current, 0, NULL);
             return(0);
           }
     }
@@ -494,7 +494,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
           break;
 
         default:
-          i_callback_cancel(w_current, 0, NULL);
+          i_callback_cancel(SCM_EOL, w_current, 0, NULL);
           break;
       }
       i_update_toolbar(w_current);
