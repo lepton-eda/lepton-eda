@@ -344,6 +344,7 @@ void g_register_funcs (void)
   scm_c_define_gsubr ("set-attribute-value!", 2, 0, 0, g_set_attrib_value_x);
   scm_c_define_gsubr ("add-component-at-xy", 7, 0, 0, g_add_component);
   scm_c_define_gsubr ("get-objects-in-page", 1, 0, 0, g_get_objects_in_page);
+  scm_c_define_gsubr ("get-current-page", 0, 0, 0, g_get_current_page);
 
   add_component_hook  = scm_create_hook ("add-component-hook", 1);
   add_component_object_hook  = scm_create_hook ("add-component-object-hook", 

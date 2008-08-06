@@ -770,3 +770,9 @@ SCM g_get_objects_in_page(SCM page_smob) {
 
   return return_list;
 } 
+
+SCM g_get_current_page(void)
+{
+  return (g_make_page_smob(global_window_current->toplevel,
+			   global_window_current->toplevel->page_current));
+}
