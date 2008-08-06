@@ -153,8 +153,7 @@ static void initiate_gschemdoc(const char* documentation,const char *device,
  */
 /* every i_callback functions have the same footprint */
 #define DEFINE_I_CALLBACK(name)				\
-	void i_callback_ ## name(SCM rest,		\
-				 gpointer data,		\
+	void i_callback_ ## name(gpointer data,		\
 			         guint callback_action,	\
 			         GtkWidget *widget)
 
@@ -201,7 +200,7 @@ void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
   exit_if_null(w_current);
   if (!w_current->window) return;
     
-  i_callback_file_new(SCM_EOL, data, 0, NULL);
+  i_callback_file_new(data, 0, NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -258,7 +257,7 @@ void i_callback_toolbar_file_open(GtkWidget* widget, gpointer data)
   exit_if_null(w_current);
   if (!w_current->window) return;
 
-  i_callback_file_open(SCM_EOL, data, 0, NULL);
+  i_callback_file_open(data, 0, NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -320,7 +319,7 @@ void i_callback_toolbar_file_save(GtkWidget* widget, gpointer data)
   exit_if_null(w_current);
   if (!w_current->window) return;
 
-  i_callback_file_save(SCM_EOL, data, 0, NULL);
+  i_callback_file_save(data, 0, NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -449,7 +448,7 @@ int i_callback_close(gpointer data, guint callback_action, GtkWidget *widget)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
-  i_callback_file_close(SCM_EOL, w_current, 0, widget);
+  i_callback_file_close(w_current, 0, widget);
   return(FALSE);
 }
 
@@ -494,7 +493,7 @@ void i_callback_toolbar_edit_undo(GtkWidget* widget, gpointer data)
   exit_if_null(w_current);
   if (!w_current->window) return;
 
-  i_callback_edit_undo(SCM_EOL, data, 0, NULL);
+  i_callback_edit_undo(data, 0, NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -524,7 +523,7 @@ void i_callback_toolbar_edit_redo(GtkWidget* widget, gpointer data)
   exit_if_null(w_current);
   if (!w_current->window) return;
 
-  i_callback_edit_redo(SCM_EOL, data, 0, NULL);
+  i_callback_edit_redo(data, 0, NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -561,9 +560,9 @@ void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
 
   if (GTK_TOGGLE_BUTTON (widget)->active) {
     if (!o_erase_rubber(w_current)) {
-      i_callback_cancel(SCM_EOL, w_current, 0, NULL);
+      i_callback_cancel(w_current, 0, NULL);
     }
-    i_callback_edit_select(SCM_EOL, data, 0, NULL);
+    i_callback_edit_select(data, 0, NULL);
   }
 }
 
@@ -2295,7 +2294,7 @@ void i_callback_toolbar_add_component(GtkWidget* widget, gpointer data)
   exit_if_null(w_current);
   if (!w_current->window) return;
 
-  i_callback_add_component(SCM_EOL, data, 0, NULL);
+  i_callback_add_component(data, 0, NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2404,7 +2403,7 @@ void i_callback_toolbar_add_net(GtkWidget* widget, gpointer data)
   if (!w_current->window) return;
 
   if (GTK_TOGGLE_BUTTON (widget)->active) {
-    i_callback_add_net(SCM_EOL, data, 0, NULL);
+    i_callback_add_net(data, 0, NULL);
   }
 }
 
@@ -2475,7 +2474,7 @@ void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
   if (!w_current->window) return;
 
   if (GTK_TOGGLE_BUTTON (widget)->active) {
-     i_callback_add_bus(SCM_EOL, data, 0, NULL);
+     i_callback_add_bus(data, 0, NULL);
   }
 }
 
@@ -2514,7 +2513,7 @@ void i_callback_toolbar_add_text(GtkWidget* widget, gpointer data)
   exit_if_null(w_current);
   if (!w_current->window) return;
 
-  i_callback_add_text(SCM_EOL, data, 0, NULL);
+  i_callback_add_text(data, 0, NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2638,7 +2637,7 @@ DEFINE_I_CALLBACK(add_picture_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   /* If this function necessary? Yes, if you want the hotkey to work. */
-  i_callback_add_picture(rest, w_current, 0, NULL);
+  i_callback_add_picture(w_current, 0, NULL);
 }
 
 /*! \todo Finish function documentation!!!
