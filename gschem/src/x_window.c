@@ -280,8 +280,13 @@ static GtkWidget *x_window_stock_pixmap(const char *stock, GSCHEM_TOPLEVEL *w_cu
 static void x_window_invoke_macro(GtkEntry *entry, void *userdata)
 {
   GSCHEM_TOPLEVEL *w_current = userdata;
+  SCM interpreter;
 
-  g_scm_c_eval_string_protected(gtk_entry_get_text(entry));
+  interpreter = scm_list_2(scm_from_locale_symbol("invoke-macro"),
+			   scm_from_locale_string(gtk_entry_get_text(entry)));
+
+  g_scm_eval_protected(interpreter, SCM_UNDEFINED);
+
   gtk_widget_hide(w_current->macro_box);
   gtk_widget_grab_focus(w_current->drawing_area);
 }
