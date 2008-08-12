@@ -109,7 +109,7 @@ OBJECT *return_head(OBJECT *tail)
  *  \par Function Description
  *
  */
-OBJECT *s_basic_init_object( char *name ) 
+OBJECT *s_basic_init_object(char const *name)
 {
   OBJECT *new_node;
 
