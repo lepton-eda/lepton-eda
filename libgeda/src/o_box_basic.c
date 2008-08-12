@@ -87,8 +87,7 @@ OBJECT *o_box_add(TOPLEVEL *toplevel, OBJECT *object_list,
   BOX *box;
 
   /* create the object */
-  new_node        = s_basic_init_object("box");
-  new_node->type  = type;
+  new_node        = s_basic_init_object(type, "box");
   new_node->color = color;
 
   box = (BOX *) g_malloc(sizeof(BOX));

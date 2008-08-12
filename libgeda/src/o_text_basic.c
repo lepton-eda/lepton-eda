@@ -72,8 +72,7 @@ OBJECT *o_text_add_head(void)
 {
   OBJECT *new_node=NULL;
 
-  new_node = s_basic_init_object("text_head");
-  new_node->type = OBJ_HEAD;
+  new_node = s_basic_init_object(OBJ_HEAD, "text_head");
 
   /* don't need to do this for head nodes */
   /* ret = s_basic_link_object(new_node, NULL);*/
@@ -899,7 +898,7 @@ OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list,
     return(NULL);
   }
 
-  new_node = s_basic_init_object("text");
+  new_node = s_basic_init_object(type, "text");
   new_node->type = type;
 
   text = (TEXT *) g_malloc(sizeof(TEXT));

@@ -330,7 +330,7 @@ void error_if_called(void);
 void exit_if_null(void *ptr);
 OBJECT *return_tail(OBJECT *head);
 OBJECT *return_head(OBJECT *tail);
-OBJECT *s_basic_init_object(char const *name);
+OBJECT *s_basic_init_object(int type, char const *name);
 OBJECT *s_basic_link_object(OBJECT *new_node, OBJECT *ptr);
 void print_struct_forw(OBJECT *ptr);
 void print_struct_back(OBJECT *ptr);

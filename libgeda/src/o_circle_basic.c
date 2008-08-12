@@ -72,8 +72,7 @@ OBJECT *o_circle_add(TOPLEVEL *toplevel, OBJECT *object_list,
   OBJECT *new_node;	
 
   /* create the object */
-  new_node         = s_basic_init_object("circle");
-  new_node->type   = type;
+  new_node         = s_basic_init_object(type, "circle");
   new_node->color  = color;
   
   new_node->circle = (CIRCLE *) g_malloc(sizeof(CIRCLE));

@@ -109,7 +109,7 @@ OBJECT *return_head(OBJECT *tail)
  *  \par Function Description
  *
  */
-OBJECT *s_basic_init_object(char const *name)
+OBJECT *s_basic_init_object(int type, char const *name)
 {
   OBJECT *new_node;
 
@@ -117,7 +117,7 @@ OBJECT *s_basic_init_object(char const *name)
 
   /* setup sid */
   new_node->sid = global_sid++;
-  new_node->type = -1;
+  new_node->type = type;
 
   /* Setup the name */
   new_node->name = g_strdup_printf("%s.%d", name, new_node->sid);

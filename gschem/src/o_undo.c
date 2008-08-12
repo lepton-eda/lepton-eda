@@ -123,7 +123,7 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
       toplevel->page_current->ops_since_last_backup++;
     }
 
-    object_head = s_basic_init_object("undo_head");
+    object_head = s_basic_init_object(OBJ_HEAD, "undo_head");
 
     o_list_copy_all(toplevel,
                     toplevel->page_current->object_head->next,
@@ -383,8 +383,7 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
 
     s_delete_list_fromstart(toplevel, toplevel->page_current->object_head);
 
-    toplevel->page_current->object_head = s_basic_init_object("object_head");
-    toplevel->page_current->object_head->type = OBJ_HEAD;
+    toplevel->page_current->object_head = s_basic_init_object(OBJ_HEAD, "object_head");
 
     o_list_copy_all(toplevel, u_current->object_head->next,
                     toplevel->page_current->object_head,

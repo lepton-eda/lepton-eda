@@ -212,9 +212,7 @@ OBJECT *add_head(void)
 {
   OBJECT *new_node=NULL;
 
-  new_node = s_basic_init_object("complex_head"); 
-
-  new_node->type = OBJ_HEAD; /* make this of head type hack */
+  new_node = s_basic_init_object(OBJ_HEAD, "complex_head");
 
   /* don't need to do this for head nodes */
   /* ret = (OBJECT *) s_basic_link_object(new_node, NULL);*/
@@ -333,7 +331,7 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
     use_object_list = FALSE;
   }
 
-  new_node = s_basic_init_object("complex");
+  new_node = s_basic_init_object(type, "complex");
   new_node->type = type;
 
   if (clib != NULL) {
@@ -618,7 +616,7 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *toplevel, OBJECT *object_list,
   OBJECT *prim_objs=NULL;
   OBJECT *new_node=NULL;
 
-  new_node = s_basic_init_object("complex");
+  new_node = s_basic_init_object(type, "complex");
   new_node->type = type;
 
   new_node->complex = (COMPLEX *) g_malloc(sizeof(COMPLEX));

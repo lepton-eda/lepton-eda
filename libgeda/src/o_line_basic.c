@@ -69,8 +69,7 @@ OBJECT *o_line_add(TOPLEVEL *toplevel, OBJECT *object_list,
   OBJECT *new_node;
 
   /* create the object */
-  new_node        = s_basic_init_object("line");
-  new_node->type  = type;
+  new_node        = s_basic_init_object(type, "line");
   new_node->color = color;
   
   new_node->line  = (LINE *) g_malloc(sizeof(LINE));

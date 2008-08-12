@@ -82,8 +82,7 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   s_tile_init (toplevel, page);
 
   /* First one to setup head */
-  page->object_head = s_basic_init_object("object_head");
-  page->object_head->type = OBJ_HEAD;
+  page->object_head = s_basic_init_object(OBJ_HEAD, "object_head");
 
   /* new selection mechanism */
   page->selection_list = o_selection_new();

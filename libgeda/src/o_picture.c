@@ -344,8 +344,7 @@ OBJECT *o_picture_add(TOPLEVEL *toplevel, OBJECT *list_tail, GdkPixbuf *pixbuf,
   PICTURE *picture;
 
   /* create the object */
-  new_node        = s_basic_init_object("picture");
-  new_node->type  = type;
+  new_node        = s_basic_init_object(type, "picture");
 
   picture = (PICTURE *) g_malloc(sizeof(PICTURE));
   new_node->picture = picture;
@@ -683,8 +682,7 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
   PICTURE *picture;
 
   /* create the object */
-  new_node        = s_basic_init_object("picture");
-  new_node->type  = object->type;
+  new_node = s_basic_init_object(object->type, "picture");
 
   picture = g_malloc(sizeof(PICTURE));
   new_node->picture = picture;
