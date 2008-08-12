@@ -512,7 +512,6 @@ AC_SUBST(INDENT)
 # Create all the necessary derived files
 AC_CONFIG_FILES([Makefile
                  src/Makefile
-                 scripts/Makefile
                  include/Makefile
                  docs/Makefile
                  data/Makefile

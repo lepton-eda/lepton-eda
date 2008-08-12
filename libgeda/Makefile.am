@@ -1,5 +1,5 @@
 
-SUBDIRS = data docs include intl lib po scheme scripts share src
+SUBDIRS = data docs include intl lib po scheme share src
 
 INTLTOOL_FILES = intltool-extract.in \
                  intltool-merge.in \
