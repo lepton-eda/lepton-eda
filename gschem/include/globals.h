@@ -18,6 +18,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
+#ifndef H_GSCHEM_GLOBALS_H
+#define H_GSCHEM_GLOBALS_H
+
 /* used by various guile functions, set in x_event* functions */
 extern GSCHEM_TOPLEVEL *global_window_current;
 
@@ -96,3 +99,5 @@ extern SCM new_page_hook;
 
 /*EK* used by prototype.h */
 #include "../include/x_states.h"
+
+#endif
