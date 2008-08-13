@@ -410,16 +410,12 @@ s_delete(TOPLEVEL *toplevel, OBJECT *o_current)
     printf("sdel: %d\n", o_current->sid);
 #endif
 
-    if (o_current->next) 
-    o_current->next->prev = o_current->prev;
-    else
-    o_current->next = NULL;
+    if (o_current->next)
+      o_current->next->prev = o_current->prev;
 
-    if (o_current->prev) 
-    o_current->prev->next = o_current->next;
-    else
-    o_current->prev = NULL;
-    
+    if (o_current->prev)
+      o_current->prev->next = o_current->next;
+
     s_delete_object(toplevel, o_current);
   }
 }
