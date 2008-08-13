@@ -423,12 +423,12 @@ void o_list_delete_rest(TOPLEVEL *toplevel, OBJECT *list)
  *  \brief
  *  \par Function Description
  */
-void o_list_translate_world (TOPLEVEL *toplevel, int x, int y, OBJECT *list)
+void o_list_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *list)
 {
   OBJECT *o_current = list;
 
   while ( o_current != NULL ) {
-    o_translate_world (toplevel, x, y, o_current);
+    o_translate_world(toplevel, dx, dy, o_current);
     o_current = o_current->next;
   }
 }
@@ -438,14 +438,14 @@ void o_list_translate_world (TOPLEVEL *toplevel, int x, int y, OBJECT *list)
  *  \brief
  *  \par Function Description
  */
-void o_glist_translate_world (TOPLEVEL *toplevel, int x, int y, GList *list)
+void o_glist_translate_world(TOPLEVEL *toplevel, int dx, int dy, GList *list)
 {
   GList *iter = list;
   OBJECT *o_current;
 
   while ( iter != NULL ) {
     o_current = (OBJECT *)iter->data;
-    o_translate_world (toplevel, x, y, o_current);
+    o_translate_world(toplevel, dx, dy, o_current);
     iter = g_list_next (iter);
   }
 }

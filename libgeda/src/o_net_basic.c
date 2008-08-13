@@ -206,7 +206,7 @@ char *o_net_save(OBJECT *object)
  *
  *
  */
-void o_net_translate_world(TOPLEVEL *toplevel, int x1, int y1,
+void o_net_translate_world(TOPLEVEL *toplevel, int dx, int dy,
 			   OBJECT *object)
 {
   int left, right, top, bottom;
@@ -216,10 +216,10 @@ void o_net_translate_world(TOPLEVEL *toplevel, int x1, int y1,
 
 
   /* Update world coords */
-  object->line->x[0] = object->line->x[0] + x1;
-  object->line->y[0] = object->line->y[0] + y1;
-  object->line->x[1] = object->line->x[1] + x1;
-  object->line->y[1] = object->line->y[1] + y1;
+  object->line->x[0] = object->line->x[0] + dx;
+  object->line->y[0] = object->line->y[0] + dy;
+  object->line->x[1] = object->line->x[1] + dx;
+  object->line->y[1] = object->line->y[1] + dy;
 
   /* Update bounding box */
   world_get_net_bounds(toplevel, object, &left, &top, &right, &bottom);

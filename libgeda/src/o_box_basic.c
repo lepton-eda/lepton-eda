@@ -457,19 +457,19 @@ char *o_box_save(OBJECT *object)
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit.
  *
  *  \param [in]     toplevel  The TOPLEVEL object.
- *  \param [in]     x1         x distance to move.
- *  \param [in]     y1         y distance to move.
+ *  \param [in]     dx         x distance to move.
+ *  \param [in]     dy         y distance to move.
  *  \param [in,out] object     BOX OBJECT to translate.
  */
-void o_box_translate_world(TOPLEVEL *toplevel, int x1, int y1, OBJECT *object)
+void o_box_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
 {
   if (object == NULL) printf("btw NO!\n");
 
   /* Do world coords */
-  object->box->upper_x = object->box->upper_x + x1;
-  object->box->upper_y = object->box->upper_y + y1;
-  object->box->lower_x = object->box->lower_x + x1;
-  object->box->lower_y = object->box->lower_y + y1;     
+  object->box->upper_x = object->box->upper_x + dx;
+  object->box->upper_y = object->box->upper_y + dy;
+  object->box->lower_x = object->box->lower_x + dx;
+  object->box->lower_y = object->box->lower_y + dy;
 
   /* recalc the screen coords and the bounding box */
   o_box_recalc(toplevel, object);

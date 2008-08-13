@@ -382,18 +382,18 @@ char *o_circle_save(OBJECT *object)
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit. 
  *
  *  \param [in]     toplevel  The TOPLEVEL object.
- *  \param [in]     x1         x distance to move.
- *  \param [in]     y1         y distance to move.
+ *  \param [in]     dx         x distance to move.
+ *  \param [in]     dy         y distance to move.
  *  \param [in,out] object     Circle OBJECT to translate.
  */
 void o_circle_translate_world(TOPLEVEL *toplevel,
-			      int x1, int y1, OBJECT *object)
+			      int dx, int dy, OBJECT *object)
 {
   if (object == NULL) printf("ctw NO!\n");
 
   /* Do world coords */
-  object->circle->center_x = object->circle->center_x + x1;
-  object->circle->center_y = object->circle->center_y + y1;
+  object->circle->center_x = object->circle->center_x + dx;
+  object->circle->center_y = object->circle->center_y + dy;
   
   /* recalc the screen coords and the bounding box */
   o_circle_recalc(toplevel, object);

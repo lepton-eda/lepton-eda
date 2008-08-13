@@ -781,7 +781,7 @@ char *o_complex_save(OBJECT *object)
  *  \par Function Description
  *
  */
-void o_complex_translate_world(TOPLEVEL *toplevel, int x1, int y1,
+void o_complex_translate_world(TOPLEVEL *toplevel, int dx, int dy,
                                OBJECT *object)
 {
   int left, right, top, bottom;
@@ -790,10 +790,10 @@ void o_complex_translate_world(TOPLEVEL *toplevel, int x1, int y1,
                     (object->type == OBJ_COMPLEX ||
                      object->type == OBJ_PLACEHOLDER));
 
-  object->complex->x = object->complex->x + x1;
-  object->complex->y = object->complex->y + y1;
+  object->complex->x = object->complex->x + dx;
+  object->complex->y = object->complex->y + dy;
 
-  o_list_translate_world (toplevel, x1, y1, object->complex->prim_objs);
+  o_list_translate_world(toplevel, dx, dy, object->complex->prim_objs);
 
   world_get_object_list_bounds(toplevel, object->complex->prim_objs,
                                &left, &top, &right, &bottom);

@@ -370,22 +370,22 @@ char *o_line_save(OBJECT *object)
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit.
  *
  *  \param [in]     toplevel  The TOPLEVEL object.
- *  \param [in]     x1         x distance to move.
- *  \param [in]     y1         y distance to move.
+ *  \param [in]     dx         x distance to move.
+ *  \param [in]     dy         y distance to move.
  *  \param [in,out] object     Line OBJECT to translate.
  */
 void o_line_translate_world(TOPLEVEL *toplevel,
-			    int x1, int y1, OBJECT *object)
+			    int dx, int dy, OBJECT *object)
 {
   int left, right, top, bottom;
 
   if (object == NULL) printf("ltw NO!\n");
 
   /* Update world coords */
-  object->line->x[0] = object->line->x[0] + x1;
-  object->line->y[0] = object->line->y[0] + y1;
-  object->line->x[1] = object->line->x[1] + x1;
-  object->line->y[1] = object->line->y[1] + y1;
+  object->line->x[0] = object->line->x[0] + dx;
+  object->line->y[0] = object->line->y[0] + dy;
+  object->line->x[1] = object->line->x[1] + dx;
+  object->line->y[1] = object->line->y[1] + dy;
   
   /* Update bounding box */
   world_get_line_bounds(toplevel, object, &left, &top, &right, &bottom);

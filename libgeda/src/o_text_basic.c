@@ -1359,12 +1359,12 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
  *
  */
 void o_text_translate_world(TOPLEVEL *toplevel,
-                            int x1, int y1, OBJECT *o_current)
+                            int dx, int dy, OBJECT *o_current)
 {
-  o_current->text->x = o_current->text->x + x1;
-  o_current->text->y = o_current->text->y + y1;
+  o_current->text->x = o_current->text->x + dx;
+  o_current->text->y = o_current->text->y + dy;
 
-  o_list_translate_world(toplevel, x1, y1, o_current->text->prim_objs);
+  o_list_translate_world(toplevel, dx, dy, o_current->text->prim_objs);
 
   /* Update bounding box */
   o_text_recalc( toplevel, o_current );
