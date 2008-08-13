@@ -320,7 +320,7 @@ void o_rotate_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, i
       case OBJ_PIN:     func = o_pin_rotate_world;        break;
       case OBJ_ARC:     func = o_arc_rotate_world;        break;
       default:
-        g_critical ("o_translate_world: object %p has bad type '%c'\n",
+        g_critical ("o_rotate_world: object %p has bad type '%c'\n",
                     object, object->type);
   }
 
@@ -358,7 +358,7 @@ void o_mirror_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, O
       case OBJ_PIN:     func = o_pin_mirror_world;        break;
       case OBJ_ARC:     func = o_arc_mirror_world;        break;
       default:
-        g_critical ("o_translate_world: object %p has bad type '%c'\n",
+        g_critical ("o_mirror_world: object %p has bad type '%c'\n",
                     object, object->type);
   }
 
