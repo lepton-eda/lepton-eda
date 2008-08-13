@@ -304,10 +304,9 @@ char *o_picture_save(OBJECT *object)
  *  and its lower right corner - <B>x2</B>, <B>y2</B>.
  *  The <B>type</B> parameter must be equal to #OBJ_PICTURE. 
  *
- *  The #OBJECT structure is allocated with the
- *  #s_basic_init_object() function. The structure describing the
- *  picture is allocated and initialized with the parameters given to the
- *  function.
+ *  The #OBJECT structure is allocated with the #s_basic_init_object()
+ *  function. The structure describing the picture is allocated and
+ *  initialized with the parameters given to the function.
  *
  *  The object is added to the end of the list described by the
  *  <B>object_list</B> parameter by the #s_basic_link_object().
@@ -344,7 +343,7 @@ OBJECT *o_picture_add(TOPLEVEL *toplevel, OBJECT *list_tail, GdkPixbuf *pixbuf,
   PICTURE *picture;
 
   /* create the object */
-  new_node        = s_basic_init_object(type, "picture");
+  new_node = s_basic_new_object(type, "picture");
 
   picture = (PICTURE *) g_malloc(sizeof(PICTURE));
   new_node->picture = picture;
@@ -682,7 +681,7 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
   PICTURE *picture;
 
   /* create the object */
-  new_node = s_basic_init_object(object->type, "picture");
+  new_node = s_basic_new_object(object->type, "picture");
 
   picture = g_malloc(sizeof(PICTURE));
   new_node->picture = picture;

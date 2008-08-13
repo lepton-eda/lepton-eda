@@ -53,7 +53,7 @@ OBJECT *o_bus_add(TOPLEVEL *toplevel, OBJECT *object_list,
   int left, right, top, bottom;
   OBJECT *new_node;
 
-  new_node = s_basic_init_object(type, "bus");
+  new_node = s_basic_new_object(type, "bus");
   new_node->color = color;
 
   new_node->line = (LINE *) g_malloc(sizeof(LINE));

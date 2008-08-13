@@ -39,10 +39,9 @@
  *  The <B>color</B> parameter corresponds to the color the box
  *  will be drawn with.
  *
- *  The #OBJECT structure is allocated with the
- *  #s_basic_init_object() function. The structure describing
- *  the line is allocated and initialized with the parameters given
- *  to the function.
+ *  The #OBJECT structure is allocated with the #s_basic_new_object()
+ *  function. The structure describing the line is allocated and
+ *  initialized with the parameters given to the function.
  *
  *  Both the line type and the filling type are set to default
  *  values : solid line type with a width of 0, and no filling.
@@ -69,7 +68,7 @@ OBJECT *o_line_add(TOPLEVEL *toplevel, OBJECT *object_list,
   OBJECT *new_node;
 
   /* create the object */
-  new_node        = s_basic_init_object(type, "line");
+  new_node = s_basic_new_object(type, "line");
   new_node->color = color;
   
   new_node->line  = (LINE *) g_malloc(sizeof(LINE));

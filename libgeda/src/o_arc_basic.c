@@ -66,7 +66,8 @@ OBJECT *o_arc_add(TOPLEVEL *toplevel, OBJECT *object_list,
 
   OBJECT *new_node;
 
-  new_node = s_basic_init_object(type, "arc");
+  new_node = s_basic_new_object(type, "arc");
+
   new_node->color = color;
 
   new_node->arc = (ARC *) g_malloc(sizeof(ARC));

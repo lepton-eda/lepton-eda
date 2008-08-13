@@ -65,7 +65,7 @@ OBJECT *o_net_add(TOPLEVEL *toplevel, OBJECT *object_list, char type,
   int left, right, top, bottom;
   OBJECT *new_node;
 
-  new_node = s_basic_init_object(type, "net");
+  new_node = s_basic_new_object(type, "net");
   new_node->color = color;
 
   new_node->line = (LINE *) g_malloc(sizeof(LINE));

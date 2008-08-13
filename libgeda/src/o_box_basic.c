@@ -58,7 +58,7 @@
  *  its lower right corner - <B>x2</B>, <B>y2</B>.
  *  The <B>type</B> parameter must be equal to <B>OBJ_BOX</B>. The <B>color</B>
  *  corresponds to the color the box will be drawn with.
- *  The <B>OBJECT</B> structure is allocated with the #s_basic_init_object()
+ *  The <B>OBJECT</B> structure is allocated with the #s_basic_new_object()
  *  function. The structure describing the box is allocated and initialized
  *  with the parameters given to the function.
  *
@@ -87,7 +87,7 @@ OBJECT *o_box_add(TOPLEVEL *toplevel, OBJECT *object_list,
   BOX *box;
 
   /* create the object */
-  new_node        = s_basic_init_object(type, "box");
+  new_node = s_basic_new_object(type, "box");
   new_node->color = color;
 
   box = (BOX *) g_malloc(sizeof(BOX));

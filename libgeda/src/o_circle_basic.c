@@ -45,7 +45,7 @@ int dist(int x1, int y1, int x2, int y2)
  *  The <B>type</B> parameter must be equal to <B>OBJ_CIRCLE</B>. The <B>color</B>
  *  corresponds to the color the box will be drawn with.
  *
- *  The <B>OBJECT</B> structure is allocated with the #s_basic_init_object()
+ *  The <B>OBJECT</B> structure is allocated with the #s_basic_new_object()
  *  function. The structure describing the circle is allocated and initialized
  *  with the parameters given to the function.
  *
@@ -72,7 +72,7 @@ OBJECT *o_circle_add(TOPLEVEL *toplevel, OBJECT *object_list,
   OBJECT *new_node;	
 
   /* create the object */
-  new_node         = s_basic_init_object(type, "circle");
+  new_node = s_basic_new_object(type, "circle");
   new_node->color  = color;
   
   new_node->circle = (CIRCLE *) g_malloc(sizeof(CIRCLE));

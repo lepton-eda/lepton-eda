@@ -208,11 +208,11 @@ void world_get_complex_bounds(TOPLEVEL *toplevel, OBJECT *complex,
  *  \par Function Description
  *
  */
-OBJECT *add_head(void)
+OBJECT *add_head()
 {
   OBJECT *new_node=NULL;
 
-  new_node = s_basic_init_object(OBJ_HEAD, "complex_head");
+  new_node = s_basic_new_object(OBJ_HEAD, "complex_head");
 
   /* don't need to do this for head nodes */
   /* ret = (OBJECT *) s_basic_link_object(new_node, NULL);*/
@@ -331,8 +331,7 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
     use_object_list = FALSE;
   }
 
-  new_node = s_basic_init_object(type, "complex");
-  new_node->type = type;
+  new_node = s_basic_new_object(type, "complex");
 
   if (clib != NULL) {
     new_node->complex_basename = g_strdup (s_clib_symbol_get_name (clib));
@@ -616,8 +615,7 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *toplevel, OBJECT *object_list,
   OBJECT *prim_objs=NULL;
   OBJECT *new_node=NULL;
 
-  new_node = s_basic_init_object(type, "complex");
-  new_node->type = type;
+  new_node = s_basic_new_object(type, "complex");
 
   new_node->complex = (COMPLEX *) g_malloc(sizeof(COMPLEX));
   new_node->complex->x = x;

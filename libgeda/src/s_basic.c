@@ -104,17 +104,17 @@ OBJECT *return_head(OBJECT *tail)
   return(ret_struct);	
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Initialize an already-allocated object.
  *  \par Function Description
+ *  Initializes the members of the OBJECT structure.
  *
+ *  \param [in] new_node  A pointer to an allocated OBJECT
+ *  \param [in] type      The object type; one of the OBJ_* constants.
+ *  \param [in] name      A prefix for the object's session-unique name.
+ *  \return A pointer to the initialized object.
  */
-OBJECT *s_basic_init_object(int type, char const *name)
+OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
 {
-  OBJECT *new_node;
-
-  new_node = (OBJECT *) g_malloc(sizeof(OBJECT));	
-
   /* setup sid */
   new_node->sid = global_sid++;
   new_node->type = type;
@@ -187,6 +187,22 @@ OBJECT *s_basic_init_object(int type, char const *name)
 
   return(new_node);
 }
+
+
+/*! \brief Helper to allocate and initialise an object.
+ *
+ *  \par Function Description
+ *  Allocates memory for an OBJECT and then calls s_basic_init_object() on it.
+ *
+ *  \param [in] type      The sub-type of the object to create; one of the OBJ_* constants.
+ *  \param [in] prefix    The name prefix for the session-unique object name.
+ *  \return A pointer to the fully constructed OBJECT.
+ */
+OBJECT *s_basic_new_object(char type, char const *prefix)
+{
+  return s_basic_init_object(g_malloc(sizeof (OBJECT)), type, prefix);
+}
+
 
 OBJECT *s_basic_link_object( OBJECT *new_node, OBJECT *ptr ) 
 {

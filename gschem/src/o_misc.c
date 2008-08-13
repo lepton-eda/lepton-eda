@@ -768,7 +768,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   o_selection_remove( toplevel->page_current->selection_list, o_current);
 
   /* build a temporary list and add a complex to this list */
-  tmp_list = s_basic_init_object(OBJ_HEAD, "update component");
+  tmp_list = s_basic_new_object(OBJ_HEAD, "update component");
   new_complex = o_complex_add (toplevel,
                                tmp_list, NULL,
                                OBJ_COMPLEX,
