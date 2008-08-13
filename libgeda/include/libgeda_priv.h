@@ -10,7 +10,6 @@
 #include "globals.h"
 #include "o_types.h"
 #include "colors.h"
-#include "i_vars.h"
 #include "papersizes.h"
 #include "prototype.h"
 #include "funcs.h"
@@ -19,6 +18,7 @@
 
 /* Private libgeda headers */
 #include "prototype_priv.h"
+#include "i_vars_priv.h"
 
 /* Gettext translation */
 #include "gettext_priv.h"

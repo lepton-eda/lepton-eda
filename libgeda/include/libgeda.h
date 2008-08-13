@@ -34,7 +34,6 @@
 #include <libgeda/funcs.h>
 #include <libgeda/colors.h>
 #include <libgeda/papersizes.h>
-#include <libgeda/i_vars.h>
 #include <libgeda/prototype.h>
 #include <libgeda/geda_list.h>
 
