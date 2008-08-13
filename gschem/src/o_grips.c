@@ -483,15 +483,12 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   OBJECT *object;
   int whichone;
-  /* the x/y variables are currently not used by the start_* functions 
-     set them savely to 0*/
-  int x=0, y=0; 
 
   if (w_current->draw_grips == FALSE) {
     return(FALSE);
   }
 
-  /* search if there is a grip on a selected object at (x,y) */
+  /* search if there is a grip on a selected object at (w_x,w_y) */
   object = o_grips_search_world(w_current, w_x, w_y, &whichone);
 
   if (object == NULL)
@@ -505,22 +502,22 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   switch(object->type) {
     case(OBJ_ARC):
       /* start the modification of a grip on an arc */
-      o_grips_start_arc(w_current, object, x, y, whichone);
+      o_grips_start_arc(w_current, object, w_x, w_y, whichone);
       return(TRUE);
 
     case(OBJ_BOX):
       /* start the modification of a grip on a box */
-      o_grips_start_box(w_current, object, x, y, whichone);
+      o_grips_start_box(w_current, object, w_x, w_y, whichone);
       return(TRUE);
 
     case(OBJ_PICTURE):
       /* start the modification of a grip on a picture */
-      o_grips_start_picture(w_current, object, x, y, whichone);
+      o_grips_start_picture(w_current, object, w_x, w_y, whichone);
       return(TRUE);
 
     case(OBJ_CIRCLE):
       /* start the modification of a grip on a circle */
-      o_grips_start_circle(w_current, object, x, y, whichone);
+      o_grips_start_circle(w_current, object, w_x, w_y, whichone);
       return(TRUE);
 
     case(OBJ_LINE):
@@ -529,7 +526,7 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
     case(OBJ_BUS):
       /* identical for line/net/pin/bus */
       /* start the modification of a grip on a line */
-      o_grips_start_line(w_current, object, x, y, whichone);
+      o_grips_start_line(w_current, object, w_x, w_y, whichone);
       return(TRUE);
 
     default:
