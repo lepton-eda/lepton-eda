@@ -99,7 +99,7 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
  *  This function will free all of the default variables for libgeda.
  *
  */
-void i_vars_freenames()
+void i_vars_libgeda_freenames()
 {
   g_free(default_series_name);
   g_free(default_untitled_name);
