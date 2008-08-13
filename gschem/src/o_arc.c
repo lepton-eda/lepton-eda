@@ -993,9 +993,15 @@ void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int start_angle, int end_angle)
  *
  *  <B>whichone</B> can have one of the following values:
  *  <DL>
- *    <DT>*</DT><DD>ARC_RADIUS
- *    <DT>*</DT><DD>ARC_START_ANGLE
- *    <DT>*</DT><DD>ARC_END_ANGLE
+ *    <DT>ARC_RADIUS</DT>
+ *    <DD>at the center of the arc. This grip is used to modify
+ *        the radius of the arc.
+ *    <DT>ARC_START_ANGLE</DT>
+ *    <DD>at one end of the arc. It corresponds to the starting
+ *        angle of the arc.
+ *    <DT>ARC_END_ANGLE</DT>
+ *    <DD>at the other end of the arc. It corresponds to the
+ *        ending angle of the arc.
  *  </DL>
  */
 void o_arc_rubberarc(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
