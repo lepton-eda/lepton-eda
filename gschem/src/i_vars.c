@@ -30,6 +30,13 @@
 #include <dmalloc.h>
 #endif
 
+/*! \def INIT_STR(w, name, str) */
+#define INIT_STR(w, name, str) {                                        \
+        g_free((w)->name);                                              \
+        (w)->name = g_strdup(((default_ ## name) != NULL) ?             \
+                             (default_ ## name) : (str));               \
+}
+
 int   default_graphic_color = GRAPHIC_COLOR;
 int   default_text_color = TEXT_COLOR;
 int   default_text_size = 10;
@@ -265,4 +272,14 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
   w_current->scrollpan_steps = default_scrollpan_steps;
 
   toplevel->auto_save_interval = default_auto_save_interval;
+}
+
+
+/*! \brief Free default names
+ *  \par Function Description
+ *  This function will free all of the default variables for gschem.
+ *
+ */
+void i_vars_freenames()
+{
 }

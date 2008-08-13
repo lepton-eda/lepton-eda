@@ -455,6 +455,7 @@ void i_callback_options_show_coord_window(gpointer data, guint callback_action, 
 gboolean i_callback_close_wm(GtkWidget *widget, GdkEvent *event, gpointer data);
 /* i_vars.c */
 void i_vars_set(GSCHEM_TOPLEVEL *w_current);
+void i_vars_freenames();
 /* o_arc.c */
 void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint radius, gint angle1, gint angle2, gint arc_width, gint length, gint space);

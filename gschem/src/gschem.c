@@ -105,6 +105,7 @@ void gschem_quit(void)
   o_undo_cleanup();
   /* s_stroke_free(); no longer needed */
 
+  i_vars_freenames();
   i_vars_libgeda_freenames();
 
   /* x_window_free_head(); can't do this since it causes a
