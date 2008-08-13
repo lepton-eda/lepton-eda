@@ -655,7 +655,7 @@ void
 x_print_setup (GSCHEM_TOPLEVEL *w_current, char *filename)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  gchar * command = toplevel->print_command;
+  gchar * command = w_current->print_command;
   gint orient = toplevel->print_orientation;
   gint type = toplevel->print_output_type;
   gint paperidx, x, y, result;
@@ -743,8 +743,8 @@ x_print_setup (GSCHEM_TOPLEVEL *w_current, char *filename)
 	  destination = command;
 	  result = f_print_command (toplevel, command);
 	  
-	  g_free (toplevel->print_command);
-	  toplevel->print_command = g_strdup (command);
+	  g_free (w_current->print_command);
+	  w_current->print_command = g_strdup (command);
 	}
       else
 	{

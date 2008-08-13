@@ -509,9 +509,6 @@ struct st_toplevel {
   /* List of attributes to always promote */
   char *always_promote_attributes;
 
-  /* The command to send postscript to when printing */
-  char *print_command;
-
   /* gnetlist specific */
   int net_naming_priority;
   int hierarchy_traversal;

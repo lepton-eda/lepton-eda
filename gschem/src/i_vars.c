@@ -37,6 +37,9 @@
                              (default_ ## name) : (str));               \
 }
 
+/* Absolute default used when default_... strings are NULL */
+#define DEFAULT_PRINT_COMMAND "lpr"
+
 int   default_graphic_color = GRAPHIC_COLOR;
 int   default_text_color = TEXT_COLOR;
 int   default_text_size = 10;
@@ -80,6 +83,7 @@ int   default_stroke_color = STROKE_COLOR;
 int   default_paper_width = 11000; /* letter size */
 int   default_paper_height = 85000;
 int   default_scrollbars_flag = TRUE;
+char *default_print_command = NULL;
 int   default_print_orientation = LANDSCAPE;
 int   default_image_color = FALSE;
 int   default_image_width = 800;
@@ -214,6 +218,8 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
   w_current->log_window      = default_log_window;
   w_current->log_window_type = default_log_window_type;
 
+  INIT_STR(w_current, print_command, DEFAULT_PRINT_COMMAND);
+
   toplevel->print_output_type      = default_print_output_type;
   toplevel->print_output_capstyle  = default_print_output_capstyle;
   toplevel->print_orientation      = default_print_orientation;
@@ -282,4 +288,5 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
  */
 void i_vars_freenames()
 {
+  g_free(default_print_command);
 }

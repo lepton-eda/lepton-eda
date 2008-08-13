@@ -4,6 +4,7 @@ extern int default_text_color;
 extern int default_text_size;
 extern int default_text_caps;
 extern float default_postscript_font_scale;
+extern gchar *default_print_command;
 extern int default_attribute_color;
 extern int default_detachattr_color;
 extern int default_net_color;

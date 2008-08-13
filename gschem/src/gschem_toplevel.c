@@ -209,5 +209,7 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->zoom_gain = 20;
   w_current->scrollpan_steps = 8;
 
+  w_current->print_command = NULL;
+
   return w_current;
 }

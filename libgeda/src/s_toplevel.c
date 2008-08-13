@@ -135,8 +135,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->always_promote_attributes = NULL;
 
-  toplevel->print_command = NULL;
-
   toplevel->net_naming_priority = 0;
   toplevel->hierarchy_traversal = 0;
   toplevel->hierarchy_uref_mangle = 0;
@@ -178,7 +176,6 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
   g_free (toplevel->scheme_directory);
   g_free (toplevel->bitmap_directory);
   g_free (toplevel->bus_ripper_symname);
-  g_free (toplevel->print_command);
   
   /* free all fonts */
   /* if you close a window, then you free the font set... */

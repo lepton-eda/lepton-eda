@@ -201,5 +201,7 @@ struct st_gschem_toplevel {
   int select_slack_pixels; /* Number of pixels around an object we can still select it with */
   int zoom_gain;          /* Percentage increase in size for a zoom-in operation */
   int scrollpan_steps;    /* Number of scroll pan events required to traverse the viewed area */
+
+  char *print_command;    /* The command to send postscript to when printing */
 };
 
