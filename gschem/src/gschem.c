@@ -136,6 +136,7 @@ void main_prog(void *closure, int argc, char *argv[])
   char *geda_data = NULL;
   char *filename;
   gboolean save_grid;
+  SCM scm_tmp;
 
 #ifdef HAVE_GTHREAD
   /* Gschem isn't threaded, but some of GTK's file chooser
@@ -226,8 +227,14 @@ void main_prog(void *closure, int argc, char *argv[])
   /* Now read in RC files. */
   g_rc_parse_gtkrc();
   g_rc_parse(w_current->toplevel, "gschemrc", rc_filename);
-  
-  input_str = g_build_filename (default_scheme_directory, "gschem.scm", NULL);
+
+  /* By this point, libgeda should have setup the Guile load path, so
+   * we can take advantage of that.  */
+  scm_tmp = scm_sys_search_load_path (scm_from_locale_string ("gschem.scm"));
+  if (scm_is_false (scm_tmp)) {
+    s_log_message (_("Couldn't find init scm file [%s]\n"), "gschem.scm");
+  }
+  input_str = scm_to_locale_string (scm_tmp);
   if (g_read_file(input_str) != -1) {
     s_log_message(_("Read init scm file [%s]\n"), input_str);
   } else {
@@ -236,7 +243,8 @@ void main_prog(void *closure, int argc, char *argv[])
     s_log_message(_("Failed to read init scm file [%s]\n"),
                   input_str);
   }
-  g_free(input_str);
+  free (input_str); /* M'allocated by scm_to_locale_string() */
+  scm_remember_upto_here_1 (scm_tmp);
 
   /* Load recent files list. This must be done
    * before calling x_window_setup(). */
