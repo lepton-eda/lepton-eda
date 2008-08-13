@@ -221,9 +221,6 @@ static void show_handler (GtkWidget *widget)
   gchar *group_name;
   GschemDialog *dialog = GSCHEM_DIALOG( widget );
 
-  /* Let GTK show the window */
-  GTK_WIDGET_CLASS (gschem_dialog_parent_class)->show (widget);
-
   group_name = dialog->settings_name;
   if (group_name != NULL) {
 
@@ -234,6 +231,9 @@ static void show_handler (GtkWidget *widget)
                      dialog_geometry, group_name);
     }
   }
+
+  /* Let GTK show the window */
+  GTK_WIDGET_CLASS (gschem_dialog_parent_class)->show (widget);
 }
 
 
