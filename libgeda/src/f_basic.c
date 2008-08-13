@@ -580,24 +580,34 @@ gchar *f_normalize_filename (const gchar *name, GError **error)
  *  \par Function Description
  *  Does readlink() recursively until we find a real filename.
  *
- *  \param [in] filename  The filename to search for.
- *  \param [out]   error  Unused, set to NULL
- *  \return The path to real file on success, NULL otherwise.
+ *  \param [in]     filename  The filename to search for.
+ *  \param [in,out] err       #GError structure for error reporting,
+ *                            or NULL to disable error reporting.
+ *  \return The newly-allocated path to real file on success, NULL
+ *          otherwise.
  *
- *  \note Taken from gedit's source code.
+ *  \note Originally taken from gedit's source code.
  */
-char *follow_symlinks (const gchar *filename, GError **error)
+char *follow_symlinks (const gchar *filename, GError **err)
 {
-  gchar *followed_filename;
-  gint link_count;
-  
-  g_return_val_if_fail (filename != NULL, NULL);
-  
-  g_return_val_if_fail (strlen (filename) + 1 <= MAXPATHLEN, NULL);
-  
+  gchar *followed_filename = NULL;
+  gint link_count = 0;
+  GError *tmp_err = NULL;
+
+  if (filename == NULL) {
+    g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_INVAL,
+                 g_strerror (EINVAL));
+    return NULL;
+  }
+
+  if (strlen (filename) + 1 > MAXPATHLEN) {
+    g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_NAMETOOLONG,
+                 g_strerror (ENAMETOOLONG));
+    return NULL;
+  }
+
   followed_filename = g_strdup (filename);
-  link_count = 0;
-  
+
 #ifdef __MINGW32__
   /* MinGW does not have symlinks */
   return followed_filename;
@@ -605,65 +615,64 @@ char *follow_symlinks (const gchar *filename, GError **error)
 
   while (link_count < MAX_LINK_LEVEL) {
     struct stat st;
-    
-    if (lstat (followed_filename, &st) != 0)
+    gchar *linkname = NULL;
+
+    if (lstat (followed_filename, &st) != 0) {
       /* We could not access the file, so perhaps it does not
        * exist.  Return this as a real name so that we can
        * attempt to create the file.
        */
       return followed_filename;
-    
-    if (S_ISLNK (st.st_mode)) {
-      gint len;
-      gchar linkname[MAXPATHLEN];
-      
-      link_count++;
-      
-      len = readlink (followed_filename, linkname, MAXPATHLEN - 1);
-      
-      if (len == -1) {
-	s_log_message(_("Could not read symbolic link information for %s"), followed_filename);
-	g_free (followed_filename);
-	return NULL;
-      }
-      
-      linkname[len] = '\0';
-      
-      /* If the linkname is not an absolute path name, append
-       * it to the directory name of the followed filename.  E.g.
-       * we may have /foo/bar/baz.lnk -> eek.txt, which really
-       * is /foo/bar/eek.txt.
-       */
-      
-      if (linkname[0] != G_DIR_SEPARATOR) {
-	gchar *slashpos;
-	gchar *tmp;
-	
-	slashpos = strrchr (followed_filename, G_DIR_SEPARATOR);
-	
-	if (slashpos)
-	  *slashpos = '\0';
-	else {
-	  tmp = g_strconcat ("./", followed_filename, NULL);
-	  g_free (followed_filename);
-	  followed_filename = tmp;
-	}
-	
-	tmp = g_build_filename (followed_filename, linkname, NULL);
-	g_free (followed_filename);
-	followed_filename = tmp;
-      } else {
-	g_free (followed_filename);
-	followed_filename = g_strdup (linkname);
-      }
-    } else
+    }
+
+    if (!S_ISLNK (st.st_mode)) {
+      /* It's not a link, so we've found what we're looking for! */
       return followed_filename;
+    }
+
+    link_count++;
+
+    linkname = g_file_read_link (followed_filename, &tmp_err);
+
+    if (linkname == NULL) {
+      g_propagate_error(err, tmp_err);
+      g_free (followed_filename);
+      return NULL;
+    }
+
+    /* If the linkname is not an absolute path name, append
+     * it to the directory name of the followed filename.  E.g.
+     * we may have /foo/bar/baz.lnk -> eek.txt, which really
+     * is /foo/bar/eek.txt.
+     */
+
+    if (!g_path_is_absolute(linkname)) {
+      gchar *slashpos = strrchr (followed_filename, G_DIR_SEPARATOR);
+      gchar *tmp = NULL;
+
+      /*! \bug The old version of this code *appeared* to turn
+       * absolute paths into relative ones for no good reason, so I
+       * changed it and tested it. If it is now broken, it's my
+       * fault. -- PTBB */
+      if (slashpos) {
+        *slashpos = '\0';
+      }
+
+      tmp = g_build_filename (followed_filename, linkname, NULL);
+      g_free (followed_filename);
+      g_free (linkname);
+      followed_filename = tmp;
+    } else {
+      g_free (followed_filename);
+      followed_filename = linkname;
+    }
   }
 
   /* Too many symlinks */
-  
-  s_log_message(_("The file has too many symbolic links."));
-  
+  g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_LOOP,
+               _("%s: %s"), g_strerror (EMLINK), followed_filename);
+  g_free (followed_filename);
   return NULL;
+
 #endif /* __MINGW32__ */
 }
