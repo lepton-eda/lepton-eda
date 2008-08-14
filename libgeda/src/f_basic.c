@@ -648,18 +648,14 @@ char *follow_symlinks (const gchar *filename, GError **err)
 
     if (!g_path_is_absolute(linkname)) {
       gchar *slashpos = strrchr (followed_filename, G_DIR_SEPARATOR);
+      gchar *dirname = NULL;
       gchar *tmp = NULL;
 
-      /*! \bug The old version of this code *appeared* to turn
-       * absolute paths into relative ones for no good reason, so I
-       * changed it and tested it. If it is now broken, it's my
-       * fault. -- PTBB */
-      if (slashpos) {
-        *slashpos = '\0';
-      }
+      dirname = g_path_get_dirname(followed_filename);
 
-      tmp = g_build_filename (followed_filename, linkname, NULL);
+      tmp = g_build_filename (dirname, linkname, NULL);
       g_free (followed_filename);
+      g_free (dirname);
       g_free (linkname);
       followed_filename = tmp;
     } else {
