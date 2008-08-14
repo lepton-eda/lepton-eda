@@ -65,8 +65,8 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  world_get_arc_bounds(toplevel, o_current,
-                       &wleft, &wtop, &wright, &wbottom);
+  world_get_single_object_bounds(toplevel, o_current,
+                                 &wleft, &wtop, &wright, &wbottom);
 
   if ( (toplevel->DONT_REDRAW == 1) ||
        (!visible(toplevel, wleft, wtop, wright, wbottom)) ) {

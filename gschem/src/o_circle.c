@@ -76,8 +76,8 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    * Get read to check for visibility of this line by using it's
    * bounding box
    */
-  world_get_circle_bounds(toplevel, o_current,
-                          &wleft, &wtop, &wright, &wbottom);
+  world_get_single_object_bounds(toplevel, o_current,
+                                 &wleft, &wtop, &wright, &wbottom);
 	
   if ( (toplevel->DONT_REDRAW == 1) ||
        (!visible(toplevel, wleft, wtop, wright, wbottom)) ) {
