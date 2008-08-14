@@ -647,7 +647,6 @@ char *follow_symlinks (const gchar *filename, GError **err)
      */
 
     if (!g_path_is_absolute(linkname)) {
-      gchar *slashpos = strrchr (followed_filename, G_DIR_SEPARATOR);
       gchar *dirname = NULL;
       gchar *tmp = NULL;
 
