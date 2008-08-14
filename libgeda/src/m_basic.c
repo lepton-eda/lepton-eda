@@ -206,7 +206,7 @@ int snap_grid(TOPLEVEL *toplevel, int input)
   int p, m, n;
   int sign, value, snap_grid;
 	
-  if (!toplevel->snap) {
+  if (!toplevel->snap || (toplevel->snap_size <= 0)) {
     return(input);
   }
 
