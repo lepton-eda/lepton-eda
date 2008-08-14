@@ -460,13 +460,13 @@ void o_edit_show_hidden_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list)
         if (o_current->text->prim_objs == NULL) {
           o_text_recreate(toplevel, o_current);
         }
-        o_text_recalc(toplevel, o_current);
+        o_recalc_single_object(toplevel, o_current);
         o_text_draw(w_current, o_current);
       } else {
         /* object is hidden and we are now NOT drawing it, so */
         /* get rid of the extra primitive data */
         o_text_recreate(toplevel, o_current);
-        o_text_recalc(toplevel, o_current);
+        o_recalc_single_object(toplevel, o_current);
         /* unfortunately, you cannot erase the old visible text here */
         /* because o_text_draw will just return */
       }
@@ -474,7 +474,7 @@ void o_edit_show_hidden_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list)
 
     if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
       o_edit_show_hidden_lowlevel(w_current, o_current->complex->prim_objs);
-      o_complex_recalc(toplevel, o_current);
+      o_recalc_single_object(toplevel, o_current);
     }
 
     o_current = o_current->next;
@@ -836,7 +836,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   o_attrib_slot_update(toplevel, o_current);
 
   /* Recalculate the bounds of the object */
-  o_complex_recalc(toplevel, o_current);
+  o_recalc_single_object(toplevel, o_current);
 
   /* reconnect, re-select and redraw */
   s_conn_update_complex (toplevel, o_current->complex->prim_objs);

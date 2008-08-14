@@ -1204,7 +1204,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
           }
 
           net_obj->line->y[found_conn->whichone] -= ripper_size;
-          o_net_recalc(toplevel, net_obj);
+          o_recalc_single_object(toplevel, net_obj);
           rippers[ripper_count].x[0] = 
             net_obj->line->x[found_conn->whichone];
           rippers[ripper_count].y[0] =
@@ -1241,7 +1241,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
           }
           
           net_obj->line->y[found_conn->whichone] += ripper_size;
-          o_net_recalc(toplevel, net_obj);
+          o_recalc_single_object(toplevel, net_obj);
           rippers[ripper_count].x[0] = 
             net_obj->line->x[found_conn->whichone];
           rippers[ripper_count].y[0] =
@@ -1312,7 +1312,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
           }
 
           net_obj->line->x[found_conn->whichone] -= ripper_size;
-          o_net_recalc(toplevel, net_obj);
+          o_recalc_single_object(toplevel, net_obj);
           rippers[ripper_count].x[0] = 
             net_obj->line->x[found_conn->whichone];
           rippers[ripper_count].y[0] =
@@ -1348,7 +1348,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
           }
 
           net_obj->line->x[found_conn->whichone] += ripper_size;
-          o_net_recalc(toplevel, net_obj);
+          o_recalc_single_object(toplevel, net_obj);
           rippers[ripper_count].x[0] = 
             net_obj->line->x[found_conn->whichone];
           rippers[ripper_count].y[0] =

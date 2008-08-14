@@ -550,7 +550,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
           if (o_move_zero_length(object)) {
             o_delete(w_current, object);
           } else {
-            o_net_recalc(toplevel, object);
+            o_recalc_single_object(toplevel, object);
             s_tile_update_object(toplevel, object);
             s_conn_update_object(toplevel, object);
             *connected_objects =
@@ -592,7 +592,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
           if (o_move_zero_length(object)) {
             o_delete(w_current, object);
           } else {
-            o_bus_recalc(toplevel, object);
+            o_recalc_single_object(toplevel, object);
             s_tile_update_object(toplevel, object);
             s_conn_update_object(toplevel, object);
             *connected_objects =
