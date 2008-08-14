@@ -296,6 +296,7 @@ void main_prog(void *closure, int argc, char *argv[])
      * f_open (called by x_window_open_page). This works for Linux and MINGW32.
      */
     x_window_open_page(w_current, filename);
+    g_free (filename);
 
     /* Go to the next argument */
     i++;
