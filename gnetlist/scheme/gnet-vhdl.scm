@@ -418,8 +418,9 @@
 ;;;
 
 (define unique-devices
-  (vhdl:get-unique-devices (map get-device packages))
-)
+  (lambda nil
+    (vhdl:get-unique-devices (map get-device packages))
+))
 
 
 ;;; Signal Declaration
@@ -516,7 +517,7 @@
       ; Due to my taste will the component declarations go first
       ; XXX - Broken until someday
       ; THHE fixed today ;-)
-      (vhdl:write-component-declarations unique-devices p)
+      (vhdl:write-component-declarations (unique-devices) p)
       ; Then comes the signal declatations
       (vhdl:write-signal-declarations p)
     )

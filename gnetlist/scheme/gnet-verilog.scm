@@ -343,102 +343,110 @@
 ;;  return a list of net description objects
 ;;
 
-(define the-nets '())
 
-(define verilog:get-nets 
-  (begin 
-    (for-each 
-     (lambda (netname)
-       ; parse the netname, and see if it is already on the list
-       (let* ((parsed (verilog:net-parse netname))
-	      (listed (assoc (car parsed) the-nets)))
-	 (if listed
-	     (begin ; it is, do some checks, and update the record
-	       ;; extract fields from list
-	       (let* ((list-name       (car listed))
-		      (list-n1         (car (cadr listed)))
-		      (list-n2         (cadr (cadr listed)))
-		      (list-increasing (caddr (cadr listed)))
-		      (list-sure       (cadddr (cadr listed)))
-		      (list-real       (cadddr (cdr (cadr listed))))
-		      
-		      (name            (car parsed))
-		      (n1              (car (cadr parsed)))
-		      (n2              (cadr (cadr parsed)))
-		      (increasing      (caddr (cadr parsed)))
-		      (sure            (cadddr (cadr parsed)))
-		      (real            (cadddr (cdr (cadr parsed))))
+(define verilog:get-nets '())
 
-		      (consistant      (or (and list-increasing increasing)
-					   (and (not list-increasing) 
-						(not increasing))))
-		      
-		     )
 
-		 (cond
-		  ((and list-sure consistant)
-		   (begin
-		     (set-cdr! listed
-			       (verilog:update-record n1 n2
-						      list-n1 list-n2
-						      increasing
-						      #t
-						      real)
-			       )))
-		   ((and list-sure (not sure) (zero? n1) (zero? n2))
-		    '() ;; this is a net without any expression, leave it
-		    )
-		  ((and list-sure (not consistant))
-		   (begin      ;; order is inconsistent
-		     (display 
-		      (string-append "Warning: Net `" real "' has a " 
-				     "bit order that conflicts with "
-				     "the original definition of `"
-				     list-real "', ignoring `"
-				     real "'"
-				     ))
-		     (newline))) 
-		   ((and (not list-sure) sure consistant)
-		    (begin
-		      (set-cdr! listed
-				(verilog:update-record n1 n2
-						       list-n1 list-n2
-						       increasing
-						       #t
-						       real))))
-		    
-		   ((and (not list-sure) sure (not consistant))
-		    (begin
-		      (set-cdr! listed
-				(verilog:update-record n1 n2
-						       list-n2 list-n1
-						       increasing
-						       #t
-						       real))))
-		   ((and (not list-sure) (not sure))
-		    (begin
-		      (set-cdr! listed
-				(verilog:update-record n1 n2
-						       list-n1 list-n2
-						       increasing
-						       #f
-						       real))))
-		   (else
-		    (begin
-		      (display "This should never happen!")
-		      (newline)))
-		   )
-	     )
-	 )
-       (begin ; it is not, just add it to the end
-	 (set! the-nets 
-	       (append the-nets 
-		       (list parsed))))
-       ))
-     )
-     
-    all-unique-nets)
-    the-nets))
+(define verilog:get-nets-once!
+  (lambda nil
+    (define the-nets '())
+    (set! verilog:get-nets
+      (begin
+        (for-each
+         (lambda (netname)
+           ; parse the netname, and see if it is already on the list
+           (let* ((parsed (verilog:net-parse netname))
+                  (listed (assoc (car parsed) the-nets)))
+             (if listed
+                 (begin ; it is, do some checks, and update the record
+                   ;; extract fields from list
+                   (let* ((list-name       (car listed))
+                          (list-n1         (car (cadr listed)))
+                          (list-n2         (cadr (cadr listed)))
+                          (list-increasing (caddr (cadr listed)))
+                          (list-sure       (cadddr (cadr listed)))
+                          (list-real       (cadddr (cdr (cadr listed))))
+
+                          (name            (car parsed))
+                          (n1              (car (cadr parsed)))
+                          (n2              (cadr (cadr parsed)))
+                          (increasing      (caddr (cadr parsed)))
+                          (sure            (cadddr (cadr parsed)))
+                          (real            (cadddr (cdr (cadr parsed))))
+
+                          (consistant      (or (and list-increasing increasing)
+                                               (and (not list-increasing)
+                                                    (not increasing))))
+
+                         )
+
+                     (cond
+                      ((and list-sure consistant)
+                       (begin
+                         (set-cdr! listed
+                                   (verilog:update-record n1 n2
+                                                          list-n1 list-n2
+                                                          increasing
+                                                          #t
+                                                          real)
+                                   )))
+                       ((and list-sure (not sure) (zero? n1) (zero? n2))
+                        '() ;; this is a net without any expression, leave it
+                        )
+                      ((and list-sure (not consistant))
+                       (begin      ;; order is inconsistent
+                         (display
+                          (string-append "Warning: Net `" real "' has a "
+                                         "bit order that conflicts with "
+                                         "the original definition of `"
+                                         list-real "', ignoring `"
+                                         real "'"
+                                         ))
+                         (newline)))
+                       ((and (not list-sure) sure consistant)
+                        (begin
+                          (set-cdr! listed
+                                    (verilog:update-record n1 n2
+                                                           list-n1 list-n2
+                                                           increasing
+                                                           #t
+                                                           real))))
+
+                       ((and (not list-sure) sure (not consistant))
+                        (begin
+                          (set-cdr! listed
+                                    (verilog:update-record n1 n2
+                                                           list-n2 list-n1
+                                                           increasing
+                                                           #t
+                                                           real))))
+                       ((and (not list-sure) (not sure))
+                        (begin
+                          (set-cdr! listed
+                                    (verilog:update-record n1 n2
+                                                           list-n1 list-n2
+                                                           increasing
+                                                           #f
+                                                           real))))
+                       (else
+                        (begin
+                          (display "This should never happen!")
+                          (newline)))
+                       )
+                 )
+             )
+           (begin ; it is not, just add it to the end
+             (set! the-nets
+                   (append the-nets
+                           (list parsed))))
+           ))
+         )
+
+        all-unique-nets)
+      the-nets)
+    )
+    verilog:get-nets
+))
 
 ;; Retrieve the requested net record from the database.
 
@@ -624,6 +632,7 @@
   (lambda (output-filename)
     (let ((port (open-output-file output-filename)))
       (begin
+	(verilog:get-nets-once!)
 	(verilog:write-top-header port)
 	(verilog:write-wires port)
 	(verilog:write-continuous-assigns port)
