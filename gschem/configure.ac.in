@@ -117,7 +117,8 @@ CFLAGS_temp_save="$CFLAGS"
 CFLAGS="$CFLAGS $GUILE_CFLAGS"
 AC_CHECK_DECLS([scm_is_string, scm_is_integer, scm_to_int,
 scm_from_int,  scm_is_true,    scm_is_false,
-scm_from_locale_string, scm_to_locale_string],,,
+scm_from_locale_string, scm_to_locale_string,
+scm_from_locale_symbol],,,
 [#include <libguile.h>])
 CFLAGS="$CFLAGS_temp_save"
 
@@ -144,6 +145,9 @@ AH_VERBATIM(SCM_FROM_LOCALE_STRING, [#if !HAVE_DECL_SCM_FROM_LOCALE_STRING
 #endif])
 AH_VERBATIM(SCM_TO_LOCALE_STRING, [#if !HAVE_DECL_SCM_TO_LOCALE_STRING
 #  define scm_to_locale_string(x)   strdup(SCM_STRING_CHARS(x))
+#endif])
+AH_VERBATIM(SCM_FROM_LOCALE_SYMBOL, [#if !HAVE_DECL_SCM_FROM_LOCALE_SYMBOL
+#  define scm_from_locale_symbol(x)   scm_string_to_symbol (scm_from_locale_string(x))
 #endif])
 
 #
