@@ -1665,6 +1665,7 @@ void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
   char *string;
   char *slotdef;
   int slot;
+  int slot_string;
   int pin_counter;    /* Internal pin counter private to this fcn. */
   char* current_pin;  /* text from slotdef= to be made into pinnumber= */
   char* cptr;         /* char pointer pointing to pinnumbers in slotdef=#:#,#,# string */
@@ -1673,21 +1674,29 @@ void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
   /* For this particular graphic object (component instantiation) */
   /* get the slot number as a string */
   string = o_attrib_search_slot(o_current, &o_slot_attrib);
-	
+
   if (!string) {
-    /* s_log_message("Did not find slot= attribute\n"); */
-    /* not a serious error */
-    return;
+    /* "Did not find slot= attribute", this is true if 
+     *  * there is no slot attribut
+     *  * or the slot attribute was deleted and we have to assume to use the 
+     *    first slot now
+     */
+    slot = 1;
+    slot_string = 0;
   } 
-  slot = atoi(string);
-  g_free(string);
+  else {
+    slot_string = 1;
+    slot = atoi(string);
+    g_free(string);
+  }
   
   /* OK, now that we have the slot number, use it to get the */
   /* corresponding slotdef=#:#,#,# string.  */
   slotdef = o_attrib_search_slotdef(o_current, slot);
   
-  if (!slotdef) {
-    s_log_message(_("Did not find slotdef=#:#,#,#... attribute\n"));
+  if (!slotdef) { 
+    if (slot_string) /* only an error if there's a slot string */
+      s_log_message(_("Did not find slotdef=#:#,#,#... attribute\n"));
     return;
   }
 

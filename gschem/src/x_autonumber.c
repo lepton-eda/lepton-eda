@@ -587,8 +587,6 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
 	/* delete the slot attribute */
 	o_selection_remove (autotext->w_current->toplevel->page_current->selection_list, o_slot);
 	o_delete_text (autotext->w_current, o_slot);
-	/* redraw the slotted object. So that the pinnumbers appear as with slot=1 */
-	/* --> No: should be done by o_delete_text as several dialog use it. */
       }
     }
   }
