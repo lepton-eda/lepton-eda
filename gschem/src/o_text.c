@@ -130,7 +130,8 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   g_return_if_fail (o_current->type == OBJ_TEXT);
   g_return_if_fail (o_current->text != NULL);
 
-  if (o_current->visibility == INVISIBLE && !toplevel->show_hidden_text) {
+  if (toplevel->DONT_REDRAW == 1 ||
+      (o_current->visibility == INVISIBLE && !toplevel->show_hidden_text)) {
     return;
   }
 
