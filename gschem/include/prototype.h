@@ -476,7 +476,7 @@ void o_arc_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection, OBJECT *selected);
 void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_attrib_toggle_show_name_value(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int new_show_name_value);
-OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current, char *text_string, int visibility, int show_name_value, OBJECT *object);
+OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current, const char *text_string, int visibility, int show_name_value, OBJECT *object);
 /* o_basic.c */
 void o_redraw_all(GSCHEM_TOPLEVEL *w_current);
 void o_redraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object_list, gboolean draw_selected);
@@ -704,7 +704,7 @@ void o_select_unselect_all(GSCHEM_TOPLEVEL *w_current);
 void o_select_move_to_place_list(GSCHEM_TOPLEVEL *w_current);
 /* o_slot.c */
 void o_slot_start(GSCHEM_TOPLEVEL *w_current, OBJECT *list);
-void o_slot_end(GSCHEM_TOPLEVEL *w_current, char *string, int len);
+void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len);
 /* o_text.c */
 void o_text_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw_rectangle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
@@ -754,14 +754,14 @@ void text_input_dialog_apply(GtkWidget *w, GSCHEM_TOPLEVEL *w_current);
 void text_input_dialog(GSCHEM_TOPLEVEL *w_current);
 gint change_alignment(GtkWidget *w, GSCHEM_TOPLEVEL *w_current);
 void text_edit_dialog_ok(GtkWidget *w, GSCHEM_TOPLEVEL *w_current);
-void text_edit_dialog(GSCHEM_TOPLEVEL *w_current, char *string, int text_size, int text_alignment);
+void text_edit_dialog(GSCHEM_TOPLEVEL *w_current, const char *string, int text_size, int text_alignment);
 void line_type_dialog(GSCHEM_TOPLEVEL *w_current, GList *objects);
 void fill_type_dialog(GSCHEM_TOPLEVEL *w_current, GList *objects);
 void arc_angle_dialog(GSCHEM_TOPLEVEL *w_current);
 void translate_dialog(GSCHEM_TOPLEVEL *w_current);
 void text_size_dialog(GSCHEM_TOPLEVEL *w_current);
 void snap_size_dialog(GSCHEM_TOPLEVEL *w_current);
-void slot_edit_dialog(GSCHEM_TOPLEVEL *w_current, char *string);
+void slot_edit_dialog(GSCHEM_TOPLEVEL *w_current, const char *string);
 void about_dialog(GSCHEM_TOPLEVEL *w_current);
 void coord_display_update(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void coord_dialog(GSCHEM_TOPLEVEL *w_current, int x, int y);

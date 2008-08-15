@@ -105,7 +105,7 @@ void o_slot_start(GSCHEM_TOPLEVEL *w_current, OBJECT *list)
  *  \par Function Description
  *
  */
-void o_slot_end(GSCHEM_TOPLEVEL *w_current, char *string, int len)
+void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *object;

@@ -169,7 +169,7 @@ void o_attrib_toggle_show_name_value(GSCHEM_TOPLEVEL *w_current,
 /* This function no longer returns NULL, but will always return the new */
 /* text item */
 OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
-			    char *text_string, int visibility, 
+			    const char *text_string, int visibility, 
 			    int show_name_value, OBJECT *object)
 {
   TOPLEVEL *toplevel = w_current->toplevel;

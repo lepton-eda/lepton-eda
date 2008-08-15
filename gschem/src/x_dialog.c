@@ -491,7 +491,7 @@ void text_edit_dialog_response(GtkWidget * widget, gint response, GSCHEM_TOPLEVE
  *  \todo Check why there's no color in the calling parameters
  *  \todo If more than one text element is selected, add an unchanged option
  */
-void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, char *string, int text_size,
+void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_size,
                        int text_alignment)
 {
   GtkWidget *label = NULL;
@@ -1910,7 +1910,7 @@ void slot_edit_dialog_response(GtkWidget *widget, gint response, GSCHEM_TOPLEVEL
  *  \par Function Description
  *  This function creates the slot edit dialog.
  */
-void slot_edit_dialog (GSCHEM_TOPLEVEL *w_current, char *string)
+void slot_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string)
 {
   GtkWidget *label = NULL;
   GtkWidget *textentry;

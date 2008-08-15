@@ -247,10 +247,10 @@ OBJECT *o_text_load_font(TOPLEVEL *toplevel, gunichar needed_char)
  *  \par Function Description
  *
  */
-int o_text_num_lines(char *string) 
+int o_text_num_lines(const char *string) 
 {
   int line_count = 0;
-  gchar *aux;
+  const gchar *aux;
   gunichar current_char;
 
   if (string == NULL) {
@@ -277,7 +277,7 @@ int o_text_num_lines(char *string)
  *
  */
 /* You do not need to divide the size in half here. */
-int o_text_height(char *string, int size) 
+int o_text_height(const char *string, int size) 
 {
   int line_count = 0;
 
@@ -884,7 +884,7 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
  */
 OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		   char type, int color, int x, int y, int alignment,
-		   int angle, char *string, int size, 
+		   int angle, const char *string, int size, 
 		   int visibility, int show_name_value)
 {
   OBJECT *new_node=NULL;
