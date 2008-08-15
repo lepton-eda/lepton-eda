@@ -359,62 +359,57 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
 
   if (object->type != OBJ_NET && object->type != OBJ_PIN &&
       object->type != OBJ_BUS) {
-    fprintf(stderr,
-            _("Got a non line object in o_move_check_endpoint\n"));
+    fprintf(stderr, _("Got a non line object in o_move_check_endpoint\n"));
     return;
   }
 
-  cl_current = object->conn_list;
-  while (cl_current != NULL) {
+  for (cl_current = object->conn_list;
+       cl_current != NULL;
+       cl_current = g_list_next(cl_current)) {
 
     c_current = (CONN *) cl_current->data;
 
-    if (c_current->other_object != NULL) {
+    if (c_current->other_object == NULL)
+      continue;
 
-      /* really make sure that the object is not selected */
-      if (c_current->other_object->saved_color == -1 &&
-          c_current->other_object->selected == FALSE) {
+    /* really make sure that the object is not selected */
+    if (c_current->other_object->saved_color != -1 ||
+        c_current->other_object->selected == TRUE)
+      continue;
 
-        if (c_current->type == CONN_ENDPOINT ||
-            (c_current->type == CONN_MIDPOINT &&
-             c_current->other_whichone != -1)) {
+    if (c_current->type != CONN_ENDPOINT &&
+        (c_current->type != CONN_MIDPOINT ||
+         c_current->other_whichone == -1))
+      continue;
 
-          whichone =
-            o_move_return_whichone(c_current->other_object,
-                                   c_current->x, c_current->y);
+    /* Only attempt to stretch nets and buses */
+    if (c_current->other_object->type != OBJ_NET &&
+        c_current->other_object->type != OBJ_BUS)
+      continue;
+
+    whichone = o_move_return_whichone(c_current->other_object,
+                                      c_current->x,
+                                      c_current->y);
 
 #if DEBUG
-          printf
-            ("FOUND: %s type: %d, whichone: %d, x,y: %d %d\n",
-             c_current->other_object->name, c_current->type,
-             whichone, c_current->x, c_current->y);
+    printf ("FOUND: %s type: %d, whichone: %d, x,y: %d %d\n",
+            c_current->other_object->name, c_current->type,
+            whichone, c_current->x, c_current->y);
+
+    printf("other x,y: %d %d\n", c_current->x, c_current->y);
+    printf("type: %d return: %d real: [ %d %d ]\n",
+           c_current->type, whichone, c_current->whichone,
+           c_current->other_whichone);
 #endif
 
-#if DEBUG
-          printf("other x,y: %d %d\n", c_current->x,
-                 c_current->y);
-          printf("type: %d return: %d real: [ %d %d ]\n",
-                 c_current->type, whichone, c_current->whichone,
-                 c_current->other_whichone);
-#endif
+    if (whichone >= 0 && whichone <= 1) {
+      toplevel->page_current->stretch_tail =
+        s_stretch_add(toplevel->page_current->stretch_head,
+                      c_current->other_object,
+                      c_current, whichone);
 
-          if (whichone >= 0 && whichone <= 1) {
-            toplevel->page_current->stretch_tail =
-              s_stretch_add(toplevel->page_current->
-                            stretch_head,
-                            c_current->other_object,
-                            c_current, whichone);
-            
-            if (c_current->other_object->type == OBJ_NET || 
-                c_current->other_object->type == OBJ_BUS) {
-              o_erase_single(w_current, c_current->other_object);
-            }
-          }
-
-        }
-      }
+      o_erase_single(w_current, c_current->other_object);
     }
-    cl_current = g_list_next(cl_current);
   }
 
 }
