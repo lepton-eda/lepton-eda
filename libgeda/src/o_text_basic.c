@@ -1271,12 +1271,13 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   char *name = NULL;
   char *value = NULL;
+  TEXT *text = o_current->text;
   char *output_string = NULL;
 
-  if (o_attrib_get_name_value(o_current->text->string, &name, &value)) {
+  if (o_attrib_get_name_value (text->string, &name, &value)) {
     switch(o_current->show_name_value) {
       case(SHOW_NAME_VALUE):
-        output_string = g_strdup(o_current->text->string);
+        output_string = g_strdup (text->string);
         break;
 
       case(SHOW_NAME):
@@ -1287,7 +1288,7 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
           /* since improper attributes will never get here */
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
-                  o_current->text->string);
+                  text->string);
           output_string = g_strdup("invalid");
         }
         break;
@@ -1300,49 +1301,48 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
           /* since improper attributes will never get here */
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
-                  o_current->text->string);
+                  text->string);
           output_string = g_strdup("invalid");
         }
         break;
     }
   } else {
-    output_string = g_strdup(o_current->text->string);
+    output_string = g_strdup (text->string);
   }
 
-  o_list_delete_rest(toplevel, o_current->text->prim_objs);
+  o_list_delete_rest (toplevel, text->prim_objs);
 
   if (o_current->visibility == VISIBLE ||
       (o_current->visibility == INVISIBLE && toplevel->show_hidden_text)) {
 
     /* need to create that head node if complex is null */
-    if (o_current->text->prim_objs == NULL) {
-      o_current->text->prim_objs = o_text_add_head();
+    if (text->prim_objs == NULL) {
+      text->prim_objs = o_text_add_head ();
     }
 
-    o_current->text->prim_objs = 
-      o_text_create_string(toplevel,
-                           o_current->text->prim_objs, 
-                           output_string, 
-                           o_current->text->size, 
-                           o_current->color, 
-                           o_current->text->x, 
-                           o_current->text->y,
-                           o_current->text->alignment,
-                           o_current->text->angle); 
+    text->prim_objs = o_text_create_string (toplevel,
+                                            text->prim_objs,
+                                            output_string,
+                                            text->size,
+                                            o_current->color,
+                                            text->x,
+                                            text->y,
+                                            text->alignment,
+                                            text->angle);
 
-    o_complex_set_saved_color_only(o_current->text->prim_objs, 
+    o_complex_set_saved_color_only(text->prim_objs,
                                    o_current->saved_color);
-    o_current->text->displayed_width = o_text_width(toplevel,
-                                                    output_string,
-                                                    o_current->text->size/2);
-    o_current->text->displayed_height = o_text_height(output_string,
-                                                      o_current->text->size);
+    text->displayed_width = o_text_width (toplevel,
+                                          output_string,
+                                          text->size/2);
+    text->displayed_height = o_text_height (output_string,
+                                            text->size);
   } else {
     /* make sure list is truely free */
-    s_delete_list_fromstart(toplevel, o_current->text->prim_objs);
-    o_current->text->prim_objs = NULL;
-    o_current->text->displayed_width = 0;
-    o_current->text->displayed_height = 0;
+    s_delete_list_fromstart (toplevel, text->prim_objs);
+    text->prim_objs = NULL;
+    text->displayed_width = 0;
+    text->displayed_height = 0;
   }
 
   o_text_recalc( toplevel, o_current );
