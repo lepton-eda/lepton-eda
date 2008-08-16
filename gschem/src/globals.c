@@ -51,18 +51,7 @@ int do_logging = TRUE;
 int logging_dest = LOG_WINDOW;
 
 /* these are required by libgeda */
-void (*arc_draw_func)()      = o_arc_draw;
-void (*box_draw_func)()      = o_box_draw;
-void (*picture_draw_func)()  = o_picture_draw;
-void (*circle_draw_func)()   = o_circle_draw;
-void (*complex_draw_func)()  = o_complex_draw;
-void (*line_draw_func)()     = o_line_draw;
-void (*net_draw_func)()      = o_net_draw;
-void (*bus_draw_func)()      = o_bus_draw;
-void (*text_draw_func)()     = o_text_draw;
-void (*pin_draw_func)()      = o_pin_draw;
 void (*select_func)()        = o_select_object; /* NEW SELECTION code */
-int (*load_newer_backup_func)()  = x_fileselect_load_backup;
 
 /* command line options */
 int quiet_mode = FALSE;
