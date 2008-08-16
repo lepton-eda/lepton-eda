@@ -1895,3 +1895,71 @@ gdouble o_text_shortest_distance(TEXT *text, gint x, gint y)
   return shortest_distance;
 }
 
+/*! \brief Set the string displayed by a text object.
+ *  \par Function Description
+ *  Updates the text object with a new text string.
+ *
+ *  \param [in]  toplevel              The TOPLEVEL object.
+ *  \param [in]  obj                   The text object.
+ *  \param [in]  new_string            The new value.
+ */
+void o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj,
+                        const gchar *new_string)
+{
+  if (toplevel == NULL) {
+    g_critical ("o_text_set_string: Received NULL TOPLEVEL structure.");
+    return;
+  }
+  if (obj == NULL) {
+    g_critical ("o_text_set_string: Received NULL OBJECT structure.");
+    return;
+  }
+  if (obj->type != OBJ_TEXT) {
+    g_critical ("o_text_set_string: OBJECT type not OBJ_TEXT.");
+    return;
+  }
+  if (obj->text == NULL) {
+    g_critical ("o_text_set_string: Text object without TEXT structure.");
+    return;
+  }
+  if (new_string == NULL) {
+    g_critical ("o_text_set_string: New string was NULL.");
+    return;
+  }
+
+  g_free (obj->text->string);
+  obj->text->string = g_strdup (new_string);
+}
+
+
+
+/*! \brief Get the string displayed by a text object.
+ *  \par Function Description
+ *  Retrieve the text string from a text object. The returned string
+ *  should be treated as constant.
+ *
+ *  \param [in]  toplevel              The TOPLEVEL object.
+ *  \param [in]  obj                   The text object.
+ *  \return The text object's string, or NULL on failure.
+ */
+const gchar *o_text_get_string (TOPLEVEL *toplevel, OBJECT *obj)
+{
+  if (toplevel == NULL) {
+    g_critical ("o_text_get_string: Received NULL TOPLEVEL structure.");
+    return NULL;
+  }
+  if (obj == NULL) {
+    g_critical ("o_text_get_string: Received NULL OBJECT structure.");
+    return NULL;
+  }
+  if (obj->type != OBJ_TEXT) {
+    g_critical ("o_text_get_string: OBJECT type not OBJ_TEXT.");
+    return NULL;
+  }
+  if (obj->text == NULL) {
+    g_critical ("o_text_get_string: Text object without TEXT structure.");
+    return NULL;
+  }
+
+  return obj->text->string;
+}
