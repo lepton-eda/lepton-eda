@@ -49,7 +49,8 @@ void s_color_init(void)
     colors[i].image_red = -1;
     colors[i].image_green = -1;
     colors[i].image_blue = -1;
-    colors[i].gtk_color = NULL;
+    colors[i].gdk_color = NULL;
+    colors[i].gdk_outline_color = NULL;
     colors[i].image_color = 0;
   }
 

@@ -609,8 +609,8 @@ struct st_color {
   char *ps_color_string;
   int image_red, image_green, image_blue;
 
-  GdkColor *gtk_color;
-  GdkColor *gtk_outline_color;
+  GdkColor *gdk_color;
+  GdkColor *gdk_outline_color;
   int image_color;
 };
 

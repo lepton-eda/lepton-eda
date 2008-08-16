@@ -96,11 +96,11 @@ static void x_color_allocate_all(void)
 
   for (i = 0; i < MAX_COLORS; i++) {
     if (colors[i].color_name) {
-      colors[i].gtk_color = (GdkColor *) 
+      colors[i].gdk_color = (GdkColor *)
         g_malloc(sizeof(GdkColor));
 
       error = gdk_color_parse(colors[i].color_name, 
-                              colors[i].gtk_color);
+                              colors[i].gdk_color);
 
       if (error == FALSE) {
         fprintf(stderr, 
@@ -110,7 +110,7 @@ static void x_color_allocate_all(void)
                 _("Defaulting color to white\n"));
 
         error = gdk_color_parse("white", 
-                                colors[i].gtk_color);
+                                colors[i].gdk_color);
 
         if (error == FALSE) {
           fprintf(stderr, 
@@ -121,7 +121,7 @@ static void x_color_allocate_all(void)
       }
 
 
-      error = gdk_color_alloc(colormap, colors[i].gtk_color);
+      error = gdk_color_alloc(colormap, colors[i].gdk_color);
 
       if (error == FALSE) {
         fprintf(stderr, 
@@ -133,11 +133,11 @@ static void x_color_allocate_all(void)
     }
 
     if (colors[i].outline_color_name) {
-      colors[i].gtk_outline_color = (GdkColor *) 
+      colors[i].gdk_outline_color = (GdkColor *)
         g_malloc(sizeof(GdkColor));
 
       error = gdk_color_parse(colors[i].outline_color_name, 
-                              colors[i].gtk_outline_color);
+                              colors[i].gdk_outline_color);
 
       if (error == FALSE) {
         fprintf(stderr, 
@@ -147,7 +147,7 @@ static void x_color_allocate_all(void)
                 _("Defaulting color to white\n"));
 
         error = gdk_color_parse("white", 
-                                colors[i].gtk_outline_color);
+                                colors[i].gdk_outline_color);
 
         if (error == FALSE) {
           fprintf(stderr, 
@@ -159,17 +159,17 @@ static void x_color_allocate_all(void)
 
       /* Make sure the outline color is correct for non-black backgrounds */
       if (i > 0) {
-	colors[i].gtk_outline_color->red = 
-		colors[i].gtk_outline_color->red ^ colors[0].gtk_color->red;
-	colors[i].gtk_outline_color->green =	
-		 colors[i].gtk_outline_color->green ^ 
-		 	colors[0].gtk_color->green;
-	colors[i].gtk_outline_color->blue =	
-		 colors[i].gtk_outline_color->blue ^ colors[0].gtk_color->blue;
+	colors[i].gdk_outline_color->red =
+		colors[i].gdk_outline_color->red ^ colors[0].gdk_color->red;
+	colors[i].gdk_outline_color->green =
+		 colors[i].gdk_outline_color->green ^
+			colors[0].gdk_color->green;
+	colors[i].gdk_outline_color->blue =
+		 colors[i].gdk_outline_color->blue ^ colors[0].gdk_color->blue;
       }
 
       error = gdk_color_alloc(colormap, 
-                              colors[i].gtk_outline_color);
+                              colors[i].gdk_outline_color);
 
       if (error == FALSE) {
         fprintf(stderr, 
@@ -190,7 +190,7 @@ static void x_color_allocate_all(void)
 GdkColor *x_get_color(int color)
 {
   if (colors[color].color_name) {
-    return(colors[color].gtk_color);
+    return(colors[color].gdk_color);
   } else {
     fprintf(stderr, _("Tried to get an invalid color: %d\n"), color);
     return(&white);
@@ -206,7 +206,7 @@ GdkColor *x_get_color(int color)
 GdkColor *x_get_darkcolor(int color)
 {
   if (colors[color].outline_color_name) {
-    return(colors[color].gtk_outline_color);
+    return(colors[color].gdk_outline_color);
   } else {
     fprintf(stderr, _("Tried to get an invalid color: %d\n"), color);
     return(&white);
