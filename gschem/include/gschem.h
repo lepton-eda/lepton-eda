@@ -5,6 +5,7 @@
 #include <libgeda/libgeda.h>
 
 /* gschem headers */
+#include "gschem_defines.h"
 #include "gschem_struct.h"
 #include "gschem_dialog.h"
 #include "i_vars.h"

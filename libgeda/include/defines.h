@@ -44,10 +44,6 @@
 /* for color mechanism used in gschem */
 #define MAX_COLORS 25
 
-#define ZOOM_OUT 0
-#define ZOOM_IN 1
-#define ZOOM_FULL 2
-
 /* X's obsession with *64 */
 #define FULL_CIRCLE 360*64
 
@@ -77,38 +73,15 @@
 #define CUE_CIRCLE_SMALL_SIZE	30
 #define CUE_CIRCLE_LARGE_SIZE	60
 
-/* For grip size */
-#define GRIP_SIZE1		25 
-#define GRIP_SIZE2		50 
-#define GRIP_SIZE3		80 
-#define SMALL_ZOOMFACTOR1	150 
-#define SMALL_ZOOMFACTOR2	30 
-
-
 /* For text location on component not found graphics */
 #define NOT_FOUND_TEXT_X	100
 #define NOT_FOUND_TEXT_Y	100
-
-/* for bus_ripper_type */
-#define COMP_BUS_RIPPER         0
-#define NET_BUS_RIPPER          1
-
-/* for bus_ripper_rotation */
-#define SYMMETRIC               0
-#define NON_SYMMETRIC           1
 
 #undef max
 #define max(a,b) ((a) > (b) ? (a) : (b))
 
 #undef min
 #define min(a,b) ((a) < (b) ? (a) : (b)) 
-
-#define FREE        1
-#define CONSTRAINED 2
-
-/* for attrib_edit_dialog invocation flag */
-#define FROM_MENU		0
-#define FROM_HOTKEY		1
 
 /* for s_clib_getfilename() */
 #define OPEN_DIR	0
@@ -120,11 +93,6 @@
 #define SLIB_SEARCH_START	0
 #define SLIB_SEARCH_NEXT	1
 #define SLIB_SEARCH_DONE	2
-
-/* for text cap style */
-#define LOWER 0
-#define UPPER 1
-#define BOTH  2 
 
 /* for text alignment */
 /*   2 -- 5 -- 8  */
@@ -149,18 +117,6 @@
 /* multi text line spacing (multipled times character height) */
 #define LINE_SPACING    2.0
 
-/* These modes are for net_endpoint_mode */
-#define NONE		0
-#define FILLEDBOX	1
-#define EMPTYBOX	2
-#define X		3
-
-/* These modes are for net_midpoint_mode */
-/* NONE also applies here */
-#define FILLED	3
-#define EMPTY 	4
-
-
 /* The conn modes for type */
 #define CONN_NULL               0
 #define CONN_ENDPOINT		1
@@ -169,25 +125,6 @@
 /* used by world_tiles to set the size of the array */
 #define MAX_TILES_X		10
 #define MAX_TILES_Y		10
-
-/* These modes are for actionfeedback_mode */
-/* there's a hack in i_keypress.c dealing with the 0 and 1 (has to be these */
-/* values */
-#define OUTLINE         0 
-#define BOUNDINGBOX     1 
-
-
-/* there are modes for text-feedback */
-#define ONLY_WHEN_READABLE	0
-#define ALWAYS			1
-
-/* used in o_undo_callback */
-#define UNDO_ACTION		0
-#define REDO_ACTION		1
-
-/* used for undo_type */
-#define UNDO_DISK		0
-#define UNDO_MEMORY		1
 
 /* used for undo_savestate flag */
 #define UNDO_ALL		0
@@ -211,20 +148,11 @@
 #define HIERARCHY_POSTORDER (1<<1)
 #define HIERARCHY_INNERLOOP (1<<7)
 
-/* selection types */
-/* used in o_select_object */
-#define SINGLE                  0
-#define MULTIPLE                1
-
 #define MILS_PER_INCH		1000 
 
 /* for text_output */
 #define VECTOR_FONTS		0
 #define PS_FONTS		1
-
-/* for grid_mode */
-#define GRID_VARIABLE_MODE	0
-#define GRID_FIXED_MODE		1
 
 /* for print dialog box */
 #define EXTENTS			0
@@ -243,37 +171,6 @@
 /* for type to s_cue_output_all */
 #define POSTSCRIPT		0
 #define PNG			1
-
-/* for log-window keyword */ 
-#define MAP_LATER		0 
-#define MAP_ON_STARTUP		1 
-
-/* for log-window-type */
-#define DECORATED		0 
-#define TRANSIENT		1 
-
-/* for third-mouse */
-#define POPUP_ENABLED		0
-#define MOUSEPAN_ENABLED	1
-
-/* for middle-mouse */
-#define STROKE			0
-#define REPEAT			1
-#define ACTION			2
-#define MID_MOUSEPAN_ENABLED	3
-
-/* for scroll-wheel */
-#define SCROLL_WHEEL_CLASSIC 0
-#define SCROLL_WHEEL_GTK     1
-
-/* for selected_from */
-#define DONTCARE		0
-#define MENU			1
-#define HOTKEY			2	
-
-/* for a_pan_general and a_zoom */
-#define A_PAN_IGNORE_BORDERS 	1
-#define A_PAN_DONT_REDRAW 	2
 
 /* for o_net_orientation */
 #define NEITHER			0
