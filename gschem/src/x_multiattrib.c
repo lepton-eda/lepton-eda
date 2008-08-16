@@ -27,20 +27,13 @@
 #include <string.h>
 #endif
 
-#include <libgeda/libgeda.h>
-
-#include "../include/gschem_struct.h"
-#include "../include/i_vars.h"
-#include "../include/globals.h"
-#include "../include/prototype.h"
+#include "gschem.h"
+#include <gdk/gdkkeysyms.h>
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
 
-#include <gdk/gdkkeysyms.h>
-#include "../include/gschem_dialog.h"
-#include "../include/x_multiattrib.h"
 
 /*! \brief Update the multiattrib editor dialog when the page's
  *         selection changes.

@@ -28,14 +28,7 @@
 #include <string.h>
 #endif
 
-#include <libgeda/libgeda.h>
-
-#include "../include/gschem_struct.h"
-#include "../include/i_vars.h"
-#include "../include/globals.h"
-#include "../include/prototype.h"
-#include "../include/x_dialog.h"
-#include "../include/gschem_dialog.h"
+#include "gschem.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>

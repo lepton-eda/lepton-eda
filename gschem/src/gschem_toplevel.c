@@ -19,10 +19,7 @@
  */
 #include <config.h>
 
-#include <libgeda/libgeda.h>
-
-#include "../include/gschem_struct.h"
-#include "../include/x_states.h"
+#include "gschem.h"
 
 GSCHEM_TOPLEVEL *gschem_toplevel_new ()
 {

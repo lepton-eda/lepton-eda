@@ -29,12 +29,7 @@
 
 #include <glib.h>
 
-#include <libgeda/libgeda.h>
-
-#include "../include/gschem_struct.h"
-#include "../include/globals.h"
-#include "../include/i_vars.h"
-#include "../include/prototype.h"
+#include "gschem.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>

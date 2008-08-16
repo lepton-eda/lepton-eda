@@ -24,11 +24,7 @@
 #endif
 
 
-#include <libgeda/libgeda.h>
-
-#include "../include/gschem_struct.h"
-#include "../include/globals.h"
-#include "../include/prototype.h"
+#include "gschem.h"
 
 #if GLIB_CHECK_VERSION(2,6,0)
 #include <glib/gstdio.h>

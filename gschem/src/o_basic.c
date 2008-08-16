@@ -20,11 +20,7 @@
 #include <config.h>
 #include <stdio.h>
 
-#include <libgeda/libgeda.h>
-
-#include "../include/gschem_struct.h"
-#include "../include/x_states.h"
-#include "../include/prototype.h"
+#include "gschem.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>

@@ -19,17 +19,11 @@
  */
 #include <config.h>
 
+#include "gschem.h"
+
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
-
-#include <libgeda/libgeda.h>
-#include <gtk/gtk.h>
-
-#include "../include/gschem_struct.h"
-#include "../include/globals.h"
-#include "../include/prototype.h"
-#include "../include/x_preview.h"
 
 
 /*! \brief Creates filter for file chooser.

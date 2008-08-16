@@ -27,18 +27,11 @@
 #include <string.h>
 #endif
 
-#include <libgeda/libgeda.h>
-
-#include "../include/gschem_struct.h"
-#include "../include/globals.h"
-#include "../include/prototype.h"
+#include "gschem.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
-
-#include "../include/gschem_dialog.h"
-#include "../include/x_pagesel.h"
 
 
 static void x_pagesel_callback_response (GtkDialog *dialog,

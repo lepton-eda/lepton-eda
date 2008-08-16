@@ -21,11 +21,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#include <libgeda/libgeda.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include "../include/gschem_struct.h"
-#include "../include/globals.h"
-#include "../include/prototype.h"
+#include "gschem.h"
 
 /* This works, but using one macro inside of other doesn't */
 #define GET_PICTURE_WIDTH(w)			\

@@ -32,12 +32,7 @@
 #include <unistd.h>
 #endif
 
-#include <libgeda/libgeda.h>
-
-#include "../include/gschem_struct.h"
-#include "../include/globals.h"
-#include "../include/prototype.h"
-#include "../include/x_dialog.h"
+#include "gschem.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>

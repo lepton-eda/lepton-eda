@@ -7,6 +7,7 @@ noinst_HEADERS = \
 	gettext.h \
 	x_compselect.h \
 	x_log.h x_multiattrib.h x_pagesel.h x_print.h x_preview.h \
+	gschem.h \
 	gschem_dialog.h \
 	gschem_struct.h
 

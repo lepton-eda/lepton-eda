@@ -19,18 +19,14 @@
  */
 #include <config.h>
 
-#include <libgeda/libgeda.h>
+#include "gschem.h"
 
-#include "../include/gschem_struct.h"
-#include "../include/x_states.h"
-#include "../include/prototype.h"
+#ifdef HAS_LIBSTROKE
+#include <stroke.h>
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
-
-#ifdef HAS_LIBSTROKE
-#include <stroke.h>
 
 /*
  * <B>stroke_points</B> is an array of points for the stroke
