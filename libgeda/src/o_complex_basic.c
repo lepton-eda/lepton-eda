@@ -319,7 +319,6 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 {
   OBJECT *new_node=NULL;
   OBJECT *prim_objs=NULL;
-  OBJECT *temp_tail=NULL;
   OBJECT *temp_parent=NULL;
   int save_adding_sel = 0;
   int loaded_normally = FALSE;
@@ -368,15 +367,6 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 	
   /* set the parent field now */
   prim_objs->complex_parent = new_node;
-
-  /* is the bit with the temp and object_tail needed? */
-  /* I don't like this at all hack */
-  /* careful whenever you select, you get a read from disk */
-  /* for the objects, UGG! there foreattribs are being copied */
-  /* you need to override them if there are attached ones */
-  /* on the main list */
-  temp_tail = toplevel->page_current->object_tail;
-  /* reason this works is because it has a head, see add_head above */
 
   /* get the symbol data */
   if (clib != NULL) {
@@ -550,8 +540,6 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
       }
     }
   }
-
-  toplevel->page_current->object_tail = temp_tail;
 
   if (use_object_list) {
     object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
