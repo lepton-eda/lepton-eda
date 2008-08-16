@@ -102,7 +102,7 @@ void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
     return;
   }
 
-  w_current->last_drawb_mode = -1;
+  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* remove the old place list if it exists */
   s_delete_object_glist(toplevel, toplevel->page_current->place_list);

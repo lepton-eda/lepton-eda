@@ -560,7 +560,7 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_grips_start_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                        int x, int y, int whichone)
 {
-  w_current->last_drawb_mode = -1;
+  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* erase the arc before */
   o_erase_single(w_current, o_current);
@@ -604,7 +604,7 @@ void o_grips_start_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 void o_grips_start_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                        int x, int y, int whichone)
 {
-  w_current->last_drawb_mode = -1;
+  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* erase the box before */
   o_erase_single(w_current, o_current);
@@ -670,7 +670,7 @@ void o_grips_start_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                            int x, int y, int whichone)
 {
-  w_current->last_drawb_mode = -1;
+  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* erase the picture before */
   o_erase_single(w_current, o_current);
@@ -739,7 +739,7 @@ void o_grips_start_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                           int x, int y, int whichone)
 {
 
-  w_current->last_drawb_mode = -1;
+  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* erase the circle before */
   o_erase_single(w_current, o_current);
@@ -777,7 +777,7 @@ void o_grips_start_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                         int x, int y, int whichone)
 {
-  w_current->last_drawb_mode = -1;
+  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* erase the line before */
   o_erase_single(w_current, o_current);

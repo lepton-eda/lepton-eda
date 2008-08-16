@@ -283,7 +283,7 @@ void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text)
   w_current->first_wx = 0;
   w_current->first_wy = 0;
 
-  w_current->last_drawb_mode = -1;
+  w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* remove the old place list if it exists */
   s_delete_object_glist(toplevel, toplevel->page_current->place_list);

@@ -42,7 +42,7 @@ void o_move_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
     /* Save the current state. When rotating the selection when moving,
        we have to come back to here */
     o_undo_savestate(w_current, UNDO_ALL);
-    w_current->last_drawb_mode = -1;
+    w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
     w_current->event_state = MOVE;
 
     w_current->first_wx = w_current->second_wx = w_x;

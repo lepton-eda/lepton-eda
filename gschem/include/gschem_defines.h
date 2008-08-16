@@ -69,6 +69,11 @@
 #define OUTLINE         0
 #define BOUNDINGBOX     1
 
+/* This is an additional mode for last_drawb_mode, to indicate there was no
+ * last bounding box drawn. last_drawb_mode also takes actionfeedback_mode
+ * constants, so be sure not to clash with those */
+#define LAST_DRAWB_MODE_NONE -1
+
 /* there are modes for text-feedback */
 #define ONLY_WHEN_READABLE	0
 #define ALWAYS			1
