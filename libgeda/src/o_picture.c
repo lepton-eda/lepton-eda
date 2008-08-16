@@ -30,7 +30,6 @@
 #include <libgen.h>
 #endif
 
-#include <gtk/gtk.h>
 #include <guile/gh.h>
 
 #include <gdk/gdk.h>

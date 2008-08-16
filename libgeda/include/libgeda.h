@@ -20,7 +20,6 @@
 #ifndef LIBGEDA_H
 #define LIBGEDA_H
 
-#include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <glib.h>
 

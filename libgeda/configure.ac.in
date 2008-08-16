@@ -174,61 +174,43 @@ fi
 ############################################################################
 
 ############################################################################
-# Check for gtk+ 2.4 start
-# 
+# Check for pkg-config start
+#
 
 # Check for pkg-config
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
 if test $PKG_CONFIG = no; then
-   AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
+    AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
 fi
 
-PKG_CHECK_MODULES(GTK24, gtk+-2.0 >= 2.4.0, GTK24="yes", no_GTK24="yes")
+#
+# Check for pkg-config end
+############################################################################
 
-# This next bit of code figures out what gtk we need to use.
-if test "$GTK24" = "yes"
+############################################################################
+# Check for glib 2.4 start
+# 
+
+# Search for glib
+PKG_CHECK_MODULES(GLIB24, glib-2.0 >= 2.4.0, GLIB24="yes", no_GLIB24="yes")
+if test "$GLIB24" != "yes"
 then
-
-   AC_DEFINE(HAS_GTK24, 1, [If gtk+ 2.4.x has been installed, define this])
-   GTK_CFLAGS=$GTK24_CFLAGS
-   GTK_LIBS=$GTK24_LIBS
-   GTK_VERSION=`$PKG_CONFIG gtk+-2.0 --modversion`
-
-   # Search for glib
-   PKG_CHECK_MODULES(GLIB24, glib-2.0 >= 2.4.0, GLIB24="yes", no_GLIB24="yes")
-   if test "$GLIB24" != "yes"
-   then
-       AC_MSG_ERROR([Cannot find glib 2.4.x, install it and rerun ./configure.
+    AC_MSG_ERROR([Cannot find glib 2.4.x, install it and rerun ./configure.
 You may find the following error output (if any) useful:
 $GLIB24_PKG_ERRORS
 ])
-   fi
-   GLIB_CFLAGS=$GLIB24_CFLAGS
-   GLIB_LIBS=$GLIB24_LIBS
-   GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
-
-else
-   GTK_VERSION=""
 fi
-
-if test "$GTK_VERSION" = ""
-then
-   AC_MSG_ERROR([Cannot find gtk+ 2.4.x or later, please install gtk+.])
-fi
+GLIB_CFLAGS=$GLIB24_CFLAGS
+GLIB_LIBS=$GLIB24_LIBS
+GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
 
 # 
-# Check for gtk+ 2.4 end
+# Check for glib 2.4 end
 ############################################################################
 
 ############################################################################
 # Check for gdk 2.4 or later
 # 
-
-# Check for pkg-config
-AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
-if test $PKG_CONFIG = no; then
-   AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
-fi
 
 PKG_CHECK_MODULES(GDK, gdk-2.0 >= 2.4.0, GDK="yes", no_GDK="yes")
 
@@ -255,12 +237,6 @@ fi
 ############################################################################
 # Check for gdk-pixbuf 
 # 
-
-# Check for pkg-config
-AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
-if test $PKG_CONFIG = no; then
-   AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
-fi
 
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= 0.15.0, GDK_PIXBUF="yes", no_GDK_PIXBUF="yes")
 
@@ -492,7 +468,7 @@ fi
 #########################################################################
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
-LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GTK_CFLAGS $X_CFLAGS $GDK_PIXBUF_CFLAGS $GDK_CFLAGS"
+LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GLIB_CFLAGS $X_CFLAGS $GDK_PIXBUF_CFLAGS $GDK_CFLAGS"
 LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GLIB_LIBS $DMALLOC_LIBS $GDK_PIXBUF_LIBS $GDK_LIBS"
 LIBTOOL_FLAGS="-version-info $SHARED_LIBRARY_VERSION"
 
@@ -534,9 +510,9 @@ AC_MSG_RESULT([
 ** Configuration summary for $PACKAGE $DOTTED_VERSION.$DATE_VERSION
 
    GLIB library version:             $GLIB_VERSION
-   GTK+ library version:             $GTK_VERSION
-   GUILE library version:            $GUILE_VERSION
+   GDK library version:              $GDK_VERSION
    GDK-PIXBUF (png output):          $GDK_PIXBUF_VERSION
+   GUILE library version:            $GUILE_VERSION
    mingw build:                      $MINGW
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR

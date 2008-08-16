@@ -1,6 +1,7 @@
 /* System headers which libgeda headers rely on */
 #include <glib.h>
-#include <gtk/gtk.h> /* FIXME */
+#include <glib-object.h>
+#include <gdk/gdk.h>
 #include <libguile.h>
 #include "guile_compat_1.6.h"
 
