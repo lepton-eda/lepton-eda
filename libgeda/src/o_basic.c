@@ -435,3 +435,19 @@ gdouble o_shortest_distance(OBJECT *object, gint x, gint y)
   return shortest_distance;
 }
 
+/*! \brief Mark an OBJECT's cached bounds as invalid
+ *  \par Function Description
+ *  Marks the cached bounds of the given OBJECT as having been
+ *  invalidated and in need of an update. They will be recalculated
+ *  next time the OBJECT's bounds are requested (e.g. via
+ *  world_get_single_object_bounds() ).
+ *
+ *  \param [in] toplevel
+ *  \param [in] obj
+ *
+ *  \todo Turn this into a macro?
+ */
+void o_bounds_invalidate(TOPLEVEL *toplevel, OBJECT *obj)
+{
+  obj->w_bounds_valid = FALSE;
+}

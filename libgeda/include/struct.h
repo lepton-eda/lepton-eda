@@ -195,6 +195,7 @@ struct st_object {
   int w_left;				/* in world coords */
   int w_right;
   int w_bottom;
+  gboolean w_bounds_valid;
 
   COMPLEX *complex;
   LINE *line; 

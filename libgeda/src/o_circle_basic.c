@@ -515,7 +515,7 @@ void o_circle_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
   o_current->w_top    = top;
   o_current->w_right  = right;
   o_current->w_bottom = bottom;
-
+  o_current->w_bounds_valid = TRUE;
 }
 
 /*! \brief Get circle bounding rectangle in WORLD coordinates.

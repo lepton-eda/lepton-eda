@@ -74,6 +74,9 @@ OBJECT *o_read_attribs(TOPLEVEL *toplevel,
 		       unsigned int fileformat_ver);
 gchar *o_save_attribs(GList *attribs);
 
+/* o_basic.c */
+void o_bounds_invalidate(TOPLEVEL *toplevel, OBJECT *object);
+
 /* o_box_basic.c */
 OBJECT *o_box_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
 char *o_box_save(OBJECT *object);

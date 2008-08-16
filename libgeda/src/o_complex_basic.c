@@ -54,6 +54,14 @@ int world_get_single_object_bounds(TOPLEVEL *toplevel, OBJECT *o_current,
 {
   if (o_current != NULL) {
     switch(o_current->type) {
+      case(OBJ_TEXT):
+        /* only do bounding boxes for visible or doing show_hidden_text*/
+        /* you might lose some attrs though */
+        if (! (o_current->visibility == VISIBLE ||
+               toplevel->show_hidden_text )) {
+          return 0;
+        }
+        /* This case falls through intentionally */
       case(OBJ_LINE):
       case(OBJ_NET):
       case(OBJ_BUS):
@@ -64,24 +72,17 @@ int world_get_single_object_bounds(TOPLEVEL *toplevel, OBJECT *o_current,
       case(OBJ_ARC):
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
+        if (!o_current->w_bounds_valid) {
+          o_recalc_single_object (toplevel, o_current);
+          if (!o_current->w_bounds_valid) {
+            return 0;
+          }
+        }
         *rleft = o_current->w_left;
         *rtop = o_current->w_top;
         *rright = o_current->w_right;
         *rbottom = o_current->w_bottom;
         return 1;
-
-      case(OBJ_TEXT):
-        /* only do bounding boxes for visible or doing show_hidden_text*/
-        /* you might lose some attrs though */
-        if ( o_current->visibility == VISIBLE ||
-             toplevel->show_hidden_text ) {
-          *rleft = o_current->w_left;
-          *rtop = o_current->w_top;
-          *rright = o_current->w_right;
-          *rbottom = o_current->w_bottom;
-          return 1;
-        }
-        break;
 
       default:
         break;
@@ -664,7 +665,7 @@ void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
   o_current->w_top = top;
   o_current->w_right = right;
   o_current->w_bottom = bottom;
-
+  o_current->w_bounds_valid = TRUE;
 }
 
 /*! \brief
