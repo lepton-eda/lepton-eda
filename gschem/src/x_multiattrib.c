@@ -681,6 +681,7 @@ static void multiattrib_column_set_data_name(GtkTreeViewColumn *tree_column,
 {
   OBJECT *o_attrib;
   gchar *name;
+  Multiattrib *dialog = (Multiattrib *) data;
 
   gtk_tree_model_get (tree_model, iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
@@ -708,6 +709,7 @@ static void multiattrib_column_set_data_value(GtkTreeViewColumn *tree_column,
 {
   OBJECT *o_attrib;
   gchar *value;
+  Multiattrib *dialog = (Multiattrib *) data;
 
   gtk_tree_model_get (tree_model, iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
@@ -1590,7 +1592,7 @@ static void multiattrib_init(Multiattrib *multiattrib)
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
   gtk_tree_view_column_set_cell_data_func (column, renderer,
 					   multiattrib_column_set_data_name,
-					   NULL, NULL);
+					   multiattrib, NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
   /*       - column 2: attribute value */
   renderer = GTK_CELL_RENDERER (
@@ -1615,7 +1617,7 @@ static void multiattrib_init(Multiattrib *multiattrib)
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
   gtk_tree_view_column_set_cell_data_func (column, renderer,
 					   multiattrib_column_set_data_value,
-					   NULL, NULL);
+					   multiattrib, NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
   /*       - column 3: visibility */
   renderer = GTK_CELL_RENDERER (
