@@ -74,9 +74,9 @@ static char *fnameext_remove(const char *fname)
   char *fname_new = NULL;
 
   if(*p == '\0') {
-    fname_new = g_strdup (p);
+    fname_new = g_strdup (fname);
   } else {
-    fname_new = g_strndup (fname_new, p - fname);
+    fname_new = g_strndup (fname, p - fname);
   }
   return fname_new;
 }
