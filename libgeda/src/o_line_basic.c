@@ -376,8 +376,6 @@ char *o_line_save(OBJECT *object)
 void o_line_translate_world(TOPLEVEL *toplevel,
 			    int dx, int dy, OBJECT *object)
 {
-  int left, right, top, bottom;
-
   if (object == NULL) printf("ltw NO!\n");
 
   /* Update world coords */
@@ -387,13 +385,7 @@ void o_line_translate_world(TOPLEVEL *toplevel,
   object->line->y[1] = object->line->y[1] + dy;
   
   /* Update bounding box */
-  world_get_line_bounds(toplevel, object, &left, &top, &right, &bottom);
-  
-  object->w_left   = left;
-  object->w_top    = top;
-  object->w_right  = right;
-  object->w_bottom = bottom;
-    
+  o_line_recalc (toplevel, object);
 }
 
 /*! \brief Rotate Line OBJECT using WORLD coordinates. 

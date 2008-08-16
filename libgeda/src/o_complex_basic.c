@@ -782,8 +782,6 @@ char *o_complex_save(OBJECT *object)
 void o_complex_translate_world(TOPLEVEL *toplevel, int dx, int dy,
                                OBJECT *object)
 {
-  int left, right, top, bottom;
-
   g_return_if_fail (object != NULL &&
                     (object->type == OBJ_COMPLEX ||
                      object->type == OBJ_PLACEHOLDER));
@@ -793,13 +791,7 @@ void o_complex_translate_world(TOPLEVEL *toplevel, int dx, int dy,
 
   o_list_translate_world(toplevel, dx, dy, object->complex->prim_objs);
 
-  world_get_object_list_bounds(toplevel, object->complex->prim_objs,
-                               &left, &top, &right, &bottom);
-
-  object->w_left = left;
-  object->w_top = top;
-  object->w_right = right;
-  object->w_bottom = bottom;
+  o_complex_recalc (toplevel, object);
 }
 
 /*! \brief

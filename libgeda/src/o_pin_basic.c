@@ -48,7 +48,6 @@ OBJECT *o_pin_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		  char type, int color,
 		  int x1, int y1, int x2, int y2, int pin_type, int whichend)
 {
-  int left, right, top, bottom;
   OBJECT *new_node;
 
   new_node = s_basic_new_object(type, "pin");
@@ -62,12 +61,7 @@ OBJECT *o_pin_add(TOPLEVEL *toplevel, OBJECT *object_list,
   new_node->line->y[1] = y2;
   new_node->line_width = PIN_WIDTH;
 
-  world_get_pin_bounds(toplevel, new_node, &left, &top, &right, &bottom);
-	
-  new_node->w_left = left;
-  new_node->w_top = top;
-  new_node->w_right = right;
-  new_node->w_bottom = bottom;	
+  o_pin_recalc (toplevel, new_node);
 
   new_node->draw_func = pin_draw_func;  
   new_node->sel_func = select_func;  
@@ -205,8 +199,6 @@ char *o_pin_save(OBJECT *object)
  */
 void o_pin_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
 {
-  int left, right, top, bottom;
-
   if (object == NULL) printf("ptw NO!\n");
 
 
@@ -217,12 +209,7 @@ void o_pin_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
   object->line->y[1] = object->line->y[1] + dy;
 
   /* Update bounding box */
-  world_get_pin_bounds(toplevel, object, &left, &top, &right, &bottom);
-
-  object->w_left = left;
-  object->w_top = top;
-  object->w_right = right;
-  object->w_bottom = bottom;
+  o_pin_recalc (toplevel, object);
 
   s_tile_update_object(toplevel, object);
 }
@@ -350,17 +337,10 @@ void o_pin_mirror_world(TOPLEVEL *toplevel,
 void o_pin_modify(TOPLEVEL *toplevel, OBJECT *object,
 		  int x, int y, int whichone)
 {
-  int left, right, top, bottom;
-
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
 
-  world_get_pin_bounds(toplevel, object, &left, &top, &right, &bottom);
-	
-  object->w_left = left;
-  object->w_top = top;
-  object->w_right = right;
-  object->w_bottom = bottom;	
+  o_pin_recalc (toplevel, object);
 
   s_tile_update_object(toplevel, object);
 }
