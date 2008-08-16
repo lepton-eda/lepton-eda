@@ -44,22 +44,9 @@
 /* for color mechanism used in gschem */
 #define MAX_COLORS 25
 
-/* for new fileselection dialog box */
-#define MAX_FILES 2048
-#define MAX_DIRS 2048
-
 #define ZOOM_OUT 0
 #define ZOOM_IN 1
 #define ZOOM_FULL 2
-
-#define CONNECTION_NONE         0 /* this one is not used */
-#define CONNECTION_REGULAR      1
-#define CONNECTION_ROUND        2
-
-#if 0 /* Comment this in if you don't have gtk 1.0.4 or greater */
-#define TRUE    1
-#define FALSE   0
-#endif
 
 /* X's obsession with *64 */
 #define FULL_CIRCLE 360*64
@@ -155,9 +142,6 @@
 #define MIDDLE_RIGHT	7
 #define UPPER_RIGHT	8
 
-/* maximum single line length when reading in text strings */
-#define MAX_TEXT_LINE_LENGTH  1024
-
 /* one character string used to calculate tab's width */
 /* Warning: it MUST be a string. */
 #define TAB_CHAR_MODEL "b"
@@ -181,21 +165,6 @@
 #define CONN_NULL               0
 #define CONN_ENDPOINT		1
 #define CONN_MIDPOINT		2
-
-/* The conn whole type */
-#define NO_MIDPOINT		0
-#define HAS_MIDPOINT		1	
-#define HAS_BUS_MIDPOINT	2	
-
-/* The conn modes for visual_cue */
-#define NO_CUE			1	
-#define NET_DANGLING_CUE	2
-#define PIN_DANGLING_CUE	3
-#define BUS_DANGLING_CUE	4
-#define MIDPOINT_CUE		5
-#define BUS_MIDPOINT_CUE	6
-#define INVALID_CUE		7	
-
 
 /* used by world_tiles to set the size of the array */
 #define MAX_TILES_X		10
