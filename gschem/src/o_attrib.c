@@ -52,7 +52,7 @@
 void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
                            OBJECT *selected)
 {
-  ATTRIB *a_current;
+  OBJECT *a_current;
   GList *a_iter;
 
   g_assert( selection != NULL );
@@ -65,14 +65,10 @@ void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
     while (a_iter != NULL) {
       a_current = a_iter->data;
 
-      if (a_current->object) {
-
-        /* make sure object isn't selected already */
-        if (a_current->object->saved_color == -1) {
-          o_selection_add(selection, a_current->object);
-          o_redraw_single(w_current, a_current->object);
-        }
-
+      /* make sure object isn't selected already */
+      if (a_current->saved_color == -1) {
+        o_selection_add(selection, a_current);
+        o_redraw_single(w_current, a_current);
       }
 
       a_iter = g_list_next (a_iter);

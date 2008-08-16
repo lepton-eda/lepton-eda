@@ -64,7 +64,7 @@
  * 2. It gets the position info from o_current's refdes attrib and
  *    calls o_text_add to add pos info and name=value string 
  *    to attrib_graphic.
- * 3. It calls o_attrib_add to wrap attrib_graphic with (ATTRIB )
+ * 3. It calls o_attrib_add to wrap attrib_graphic with (attribute OBJECT )
  *
  *------------------------------------------------------------------ */
 void s_object_add_comp_attrib_to_object(OBJECT *o_current, 
@@ -108,7 +108,7 @@ void s_object_add_net_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
  * 2. It gets the position info from o_current's refdes attrib and
  *    calls o_text_add to add pos info and name=value string 
  *    to attrib_graphic.
- * 3. It calls o_attrib_add to wrap attrib_graphic with (ATTRIB )
+ * 3. It calls o_attrib_add to wrap attrib_graphic with (attribute OBJECT )
  * Question:  Do I really need separate fcns for comps, nets, and 
  * pins???
  *
@@ -147,7 +147,7 @@ void s_object_replace_attrib_in_object(OBJECT *o_current,
 				       gint show_name_value)
 {
   GList *a_iter;
-  ATTRIB *a_current;
+  OBJECT *a_current;
   char *old_attrib_text;
   char *old_attrib_name;
   char *new_attrib_text;
@@ -156,22 +156,22 @@ void s_object_replace_attrib_in_object(OBJECT *o_current,
   a_iter = o_current->attribs;
   while (a_iter != NULL) {
     a_current = a_iter->data;
-    if (a_current->object->type == OBJ_TEXT 
-	&& a_current->object->text != NULL) {  /* found an attribute */
+    if (a_current->type == OBJ_TEXT
+	&& a_current->text != NULL) {  /* found an attribute */
       
       /* may need to check more thoroughly here. . . . */
-      old_attrib_text = g_strdup(a_current->object->text->string);
+      old_attrib_text = g_strdup(a_current->text->string);
       o_attrib_get_name_value(old_attrib_text, &old_attrib_name, NULL);
       
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
 	/* create attrib=value text string & stuff it back into pr_current */
 	new_attrib_text = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-	g_free(a_current->object->text->string);   /* remove old attrib string */
-	a_current->object->text->string = g_strdup(new_attrib_text);   /* insert new attrib string */
+	g_free(a_current->text->string);   /* remove old attrib string */
+	a_current->text->string = g_strdup(new_attrib_text);   /* insert new attrib string */
 	if (visibility != LEAVE_VISIBILITY_ALONE) 
-	  a_current->object->visibility = visibility;
+	  a_current->visibility = visibility;
 	if (show_name_value != LEAVE_NAME_VALUE_ALONE)
-	  a_current->object->show_name_value = show_name_value; 
+	  a_current->show_name_value = show_name_value;
 	g_free(new_attrib_text);
 	g_free(old_attrib_text);
 	g_free(old_attrib_name);
@@ -201,7 +201,7 @@ void s_object_replace_attrib_in_object(OBJECT *o_current,
 void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name) 
 {
   GList *a_iter;
-  ATTRIB *a_current;
+  OBJECT *a_current;
   OBJECT *attribute_object;
   char *old_attrib_text;
   char *old_attrib_name;
@@ -209,11 +209,11 @@ void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name)
   a_iter = o_current->attribs;
   while (a_iter != NULL) {
     a_current = a_iter->data;
-    if (a_current->object->type == OBJ_TEXT 
-	&& a_current->object->text != NULL) {  /* found an attribute */
+    if (a_current->type == OBJ_TEXT
+	&& a_current->text != NULL) {  /* found an attribute */
       
       /* may need to check more thoroughly here. . . . */
-      old_attrib_text = g_strdup(a_current->object->text->string);
+      old_attrib_text = g_strdup(a_current->text->string);
       o_attrib_get_name_value(old_attrib_text, &old_attrib_name, NULL);
       
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
@@ -223,7 +223,7 @@ void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name)
 	printf("In s_object_remove_attrib_in_object, removing attrib with name = %s\n", old_attrib_name);
 #endif
 
-	attribute_object = a_current->object;
+	attribute_object = a_current;
 	s_object_delete_text_object_in_object(pr_current, attribute_object);
 
 	g_free(old_attrib_text);

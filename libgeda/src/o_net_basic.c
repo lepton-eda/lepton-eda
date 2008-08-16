@@ -380,7 +380,7 @@ void o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
   int final1, final2;
   int changed = 0;
   GList *a_iter;
-  ATTRIB *a_current;
+  OBJECT *a_current;
 
 #if DEBUG
   printf("o %d %d %d %d\n", object->line->x[0], object->line->y[0],
@@ -435,7 +435,7 @@ void o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
     a_iter = del_object->attribs;
     while (a_iter != NULL) {
       a_current = a_iter->data;
-      a_current->object->attached_to = object;
+      a_current->attached_to = object;
       a_iter = g_list_next (a_iter);
     }
 

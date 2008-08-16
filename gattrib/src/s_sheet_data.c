@@ -166,7 +166,7 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
   char *attrib_name;
   OBJECT *o_current;
   GList *a_iter;
-  ATTRIB *a_current;
+  OBJECT *a_current;
   
 #ifdef DEBUG
   fflush(stderr);
@@ -198,9 +198,9 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
 	a_iter = o_current->attribs; /* This has a side effect.  Why? */
 	while (a_iter != NULL) {
 	  a_current = a_iter->data;
-	  if (a_current->object->type == OBJ_TEXT 
-	      && a_current->object->text != NULL) {  /* found an attribute */
-	    attrib_text = g_strdup(a_current->object->text->string);
+	  if (a_current->type == OBJ_TEXT
+	      && a_current->text != NULL) {  /* found an attribute */
+	    attrib_text = g_strdup(a_current->text->string);
 	    o_attrib_get_name_value(attrib_text, &attrib_name, NULL);
 
 	      /* Don't include "refdes" or "slot" because they form the row name */
@@ -370,7 +370,7 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
   OBJECT *o_current;
   OBJECT *o_lower_current;
   GList *a_iter;
-  ATTRIB *pin_attrib;
+  OBJECT *pin_attrib;
   
 #ifdef DEBUG
   fflush(stderr);
@@ -405,9 +405,9 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
 	      a_iter = o_lower_current->attribs;
 	      while (a_iter != NULL) {
 		pin_attrib = a_iter->data;
-		if (pin_attrib->object->type == OBJ_TEXT 
-		    && pin_attrib->object->text != NULL) {  /* found an attribute */
-		  attrib_text = g_strdup(pin_attrib->object->text->string);
+		if (pin_attrib->type == OBJ_TEXT
+		    && pin_attrib->text != NULL) {  /* found an attribute */
+		  attrib_text = g_strdup(pin_attrib->text->string);
 		  o_attrib_get_name_value(attrib_text, &attrib_name, &attrib_value);
 		  if ( (strcmp(attrib_name, "pinnumber") != 0) 
 		       && (attrib_value != NULL) ) {  

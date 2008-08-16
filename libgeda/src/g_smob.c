@@ -70,11 +70,10 @@ static int g_print_attrib_smob(SCM attrib_smob, SCM port,
 
   if (attribute &&
       attribute->attribute &&
-      attribute->attribute->object &&
-      attribute->attribute->object->text &&
-      attribute->attribute->object->text->string ) {
+      attribute->attribute->text &&
+      attribute->attribute->text->string ) {
     scm_puts("#<attribute ", port);
-    scm_display (scm_makfrom0str (attribute->attribute->object->text->string),
+    scm_display (scm_makfrom0str (attribute->attribute->text->string),
                  port);
     scm_puts(">", port);
   }
@@ -93,7 +92,7 @@ static int g_print_attrib_smob(SCM attrib_smob, SCM port,
  *  \param [in] curr_attr  The current attribute.
  *  \return SCM
  */
-SCM g_make_attrib_smob(TOPLEVEL *curr_w, ATTRIB *curr_attr)
+SCM g_make_attrib_smob(TOPLEVEL *curr_w, OBJECT *curr_attr)
 {
   struct st_attrib_smob *smob_attribute;
 
@@ -130,10 +129,8 @@ SCM g_get_attrib_name_value(SCM attrib_smob)
 
   if (attribute &&
       attribute->attribute &&
-      attribute->attribute->object &&
-      attribute->attribute->object->text->string ) {
-    o_attrib_get_name_value(attribute->attribute->object->text->string, 
-                            &name, &value );
+      attribute->attribute->text->string ) {
+    o_attrib_get_name_value(attribute->attribute->text->string, &name, &value );
     returned = scm_cons (scm_makfrom0str (name),
                          scm_makfrom0str (value));
     g_free(name);
@@ -176,17 +173,16 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
 
   if (attribute &&
       attribute->attribute &&
-      attribute->attribute->object &&
-      attribute->attribute->object->text &&
-      attribute->attribute->object->text->string ) {
+      attribute->attribute->text &&
+      attribute->attribute->text->string ) {
 
-    o_attrib_get_name_value(attribute->attribute->object->text->string, 
+    o_attrib_get_name_value(attribute->attribute->text->string,
                             &name, NULL);
 
     *new_string = g_strconcat (name, "=", value, NULL);
 		
     *world = attribute->world;
-    *o_attrib = attribute->attribute->object;
+    *o_attrib = attribute->attribute;
 
     g_free(name);
   }
@@ -294,13 +290,12 @@ SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
   toplevel = attribute->world;
   
   SCM_ASSERT ( attribute &&
-	       attribute->attribute &&
-	       attribute->attribute->object &&
-	       attribute->attribute->object->text &&
-	       attribute->attribute->object->text->string,
-	       attrib_smob, SCM_ARG1, "calcule-new-attrib-bounds");
+               attribute->attribute &&
+               attribute->attribute->text &&
+               attribute->attribute->text->string,
+               attrib_smob, SCM_ARG1, "calcule-new-attrib-bounds");
 
-  object = (OBJECT *) attribute->attribute->object;
+  object = (OBJECT *) attribute->attribute;
   
   /* Store the previous values */
   old_alignment = object->text->alignment;
@@ -395,11 +390,11 @@ SCM g_get_attrib_bounds(SCM attrib_smob)
 
   if (attribute &&
       attribute->attribute &&
-      attribute->attribute->object &&
-      attribute->attribute->object->text->string ) {
+      attribute->attribute->text &&
+      attribute->attribute->text->string ) {
 
-    world_get_text_bounds (toplevel, attribute->attribute->object,
-                           &left, &top, &right, &bottom);
+    world_get_text_bounds (toplevel, attribute->attribute, &left,
+                           &top, &right, &bottom);
 
     horizontal = scm_cons (scm_from_int(left), scm_from_int(right));
     vertical = scm_cons (scm_from_int(top), scm_from_int(bottom));
@@ -429,11 +424,10 @@ SCM g_get_attrib_angle(SCM attrib_smob)
 
   SCM_ASSERT ( attribute && 
                attribute->attribute &&
-	       attribute->attribute->object &&
-	       attribute->attribute->object->text,
+               attribute->attribute->text,
                attrib_smob, SCM_ARG1, "get-attribute-angle");
 
-  return scm_from_int(attribute->attribute->object->text->angle);
+  return scm_from_int(attribute->attribute->text->angle);
 }
 
 /*! \brief Free object smob memory.
@@ -518,7 +512,7 @@ SCM g_get_object_attributes(SCM object_smob)
   struct st_object_smob *object;
   SCM returned = SCM_EOL;
   GList *a_iter;
-  ATTRIB *a_current;
+  OBJECT *a_current;
 
   SCM_ASSERT ( SCM_NIMP(object_smob) && 
                ((long) SCM_CAR(object_smob) == object_smob_tag),
@@ -533,7 +527,7 @@ SCM g_get_object_attributes(SCM object_smob)
     a_iter = object->object->attribs;
     while (a_iter != NULL) {
       a_current = a_iter->data;
-      if (a_current->object && a_current->object->text) {
+      if (a_current && a_current->text) {
         returned = scm_cons (g_make_attrib_smob (toplevel, a_current),
                              returned);
       }
@@ -562,7 +556,7 @@ SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
   SCM returned = SCM_EOL;
   gchar *name=NULL, *value=NULL;
   GList *a_iter;
-  ATTRIB *a_current;
+  OBJECT *a_current;
 
   SCM_ASSERT ( SCM_NIMP(object_smob) && 
                ((long) SCM_CAR(object_smob) == object_smob_tag),
@@ -581,9 +575,8 @@ SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
     a_iter = object->object->attribs;
     while (a_iter != NULL) {
       a_current = a_iter->data;
-      if (a_current->object && a_current->object->text) {
-        o_attrib_get_name_value(a_current->object->text->string,
-                                &name, &value );
+      if (a_current && a_current->text) {
+        o_attrib_get_name_value(a_current->text->string, &name, &value );
         if (strcmp(name, attrib_name) == 0)
           returned = scm_cons (scm_makfrom0str (value), returned);
       }

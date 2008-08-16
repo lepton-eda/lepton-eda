@@ -35,7 +35,6 @@ typedef struct st_box BOX;
 typedef struct st_picture PICTURE;
 typedef struct st_text TEXT;
 
-typedef struct st_attrib ATTRIB;
 typedef struct st_object OBJECT;
 typedef struct st_page PAGE;
 typedef struct st_toplevel TOPLEVEL;
@@ -274,10 +273,6 @@ struct st_object {
   OBJECT *next;
 }; 
 
-
-struct st_attrib {
-  OBJECT *object;       /* object attribute is connected to */
-};
 
 struct st_conn {
   OBJECT *other_object;	/* The "other" object connected to this one */
@@ -618,7 +613,7 @@ struct st_color {
 
 struct st_attrib_smob {
   TOPLEVEL *world;   /* We need this when updating schematic */
-  ATTRIB   *attribute;
+  OBJECT   *attribute;
 };
 
 struct st_object_smob {

@@ -46,7 +46,7 @@ void g_rc_parse(TOPLEVEL *toplevel, const gchar* rcname,
 gint g_rc_parse_specified_rc(TOPLEVEL *toplevel, const gchar *rcfilename);
 
 /* g_smob.c */
-SCM g_make_attrib_smob(TOPLEVEL *curr_w, ATTRIB *curr_attr);
+SCM g_make_attrib_smob(TOPLEVEL *curr_w, OBJECT *curr_attr);
 SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value, TOPLEVEL **world, OBJECT **o_attrib, char *new_string[]);
 gboolean g_get_data_from_object_smob(SCM object_smob, TOPLEVEL **toplevel, 
 				     OBJECT **object);
@@ -97,9 +97,9 @@ void o_arc_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery
 void o_arc_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 /* o_attrib.c */
-ATTRIB *o_attrib_search(GList *list, OBJECT *item);
+OBJECT *o_attrib_search(GList *list, OBJECT *item);
 void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item);
-void o_attrib_free(TOPLEVEL *toplevel, ATTRIB *current);
+void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current);
 void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *parent_list, OBJECT *text_object, OBJECT *object);
 void o_attrib_free_all(TOPLEVEL *toplevel, GList *list);
 void o_attrib_print(GList *attributes);

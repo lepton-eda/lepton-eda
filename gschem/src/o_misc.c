@@ -737,7 +737,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *tmp_list, *new_complex;
-  ATTRIB *a_current;
+  OBJECT *a_current;
   GList *a_iter;
   gboolean is_embedded;
   const CLibSymbol *clib;
@@ -797,8 +797,8 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     OBJECT *o_attrib;
     gchar *name;
     char *attrfound;
-    g_assert (a_current->object->type == OBJ_TEXT);
-    o_attrib_get_name_value (o_text_get_string (toplevel, a_current->object),
+    g_assert (a_current->type == OBJ_TEXT);
+    o_attrib_get_name_value (o_text_get_string (toplevel, a_current),
                              &name, NULL);
 
     attrfound = o_attrib_search_name_single(o_current, name, NULL);
@@ -812,7 +812,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
       /* make a copy of the attribute object */
       o_list_copy_to (toplevel, o_current,
-                      a_current->object, NORMAL_FLAG, &o_attrib);
+                      a_current, NORMAL_FLAG, &o_attrib);
       /* add the attribute to old */
       o_attrib_add (toplevel, o_current, o_attrib);
       /* redraw the attribute object */

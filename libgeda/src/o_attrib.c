@@ -55,13 +55,13 @@
  *  \par Function Description
  *  Search for an item in an attribute list.
  *
- *  \param [in] list  ATTRIB pointer to the list to be searched.
+ *  \param [in] list  list to be searched.
  *  \param [in] item  item to be found.
  */
-ATTRIB *o_attrib_search(GList *list, OBJECT *item)
+OBJECT *o_attrib_search(GList *list, OBJECT *item)
 {
   GList *a_iter;
-  ATTRIB *a_current;
+  OBJECT *a_current;
 
   if (item == NULL) {
     return(NULL);
@@ -71,10 +71,8 @@ ATTRIB *o_attrib_search(GList *list, OBJECT *item)
 
   while(a_iter != NULL) {
     a_current = a_iter->data;
-    if (a_current->object != NULL) {
-      if (item->sid == a_current->object->sid) {	
-        return(a_current);	
-      }
+    if (item->sid == a_current->sid) {
+      return(a_current);
     }
 
     a_iter = g_list_next (a_iter);
@@ -94,30 +92,23 @@ ATTRIB *o_attrib_search(GList *list, OBJECT *item)
  */
 void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item)
 {
-  ATTRIB *new = NULL;
-
-  /* create an new st_attrib object */
-  new = (ATTRIB *) g_malloc(sizeof(ATTRIB));
-
-  /* fill item with correct data */
-  new->object = item;
-  new->object->attribute = 1; /* Set the attribute to true, hack define */
+  item->attribute = 1; /* Set the attribute to true, hack define */
   /* Show that that item is an attribute */
-  new->object->color = toplevel->attribute_color;
+  item->color = toplevel->attribute_color;
 
-  if (new->object->type == OBJ_TEXT) {
-    o_complex_set_color(new->object->text->prim_objs,
-                        new->object->color);
-  } else if (new->object->type == OBJ_COMPLEX || 
-             new->object->type == OBJ_PLACEHOLDER) {
-    o_complex_set_color(new->object->complex->prim_objs,
-                        new->object->color);
+  if (item->type == OBJ_TEXT) {
+    o_complex_set_color(item->text->prim_objs,
+                        item->color);
+  } else if (item->type == OBJ_COMPLEX ||
+             item->type == OBJ_PLACEHOLDER) {
+    o_complex_set_color(item->complex->prim_objs,
+                        item->color);
   }
 
   /* Add link from item to attrib listing */
-  new->object->attached_to = object;
+  item->attached_to = object;
 
-  object->attribs = g_list_append (object->attribs, new);
+  object->attribs = g_list_append (object->attribs, item);
 }
 
 /*! \brief Free single item in attribute list.
@@ -125,47 +116,37 @@ void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item)
  *  Free single item in attribute list.
  *
  *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] current    ATTRIB pointer to free.
+ *  \param [in] current   OBJECT pointer to remove attribute-ness from.
  *
  *  \note
  *  this routine is only called from free_all
  */
-void o_attrib_free(TOPLEVEL *toplevel, ATTRIB *current)
+void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current)
 {
-  if (current != NULL) {
+  if (current == NULL)
+    return;
 
-    /* \todo this makes me nervous... very nervous */
-    if (current->object != NULL) {
-      current->object->attribute = 0;	
-      current->object->attached_to=NULL;
-      current->object->color = toplevel->detachedattr_color;
+  /* \todo this makes me nervous... very nervous */
+  current->attribute = 0;
+  current->attached_to=NULL;
+  current->color = toplevel->detachedattr_color;
 
-      if (current->object->type == OBJ_TEXT) {
-        o_complex_set_color(current->object->text->prim_objs, 
-                            current->object->color);
-      } else {
-        printf("Tried to set the color on a complex!\nlibgeda/src/o_attrib_free 1\n");
-      }
+  if (current->type == OBJ_TEXT) {
+    o_complex_set_color(current->text->prim_objs,
+                        current->color);
+  } else {
+    printf("Tried to set the color on a complex!\nlibgeda/src/o_attrib_free 1\n");
+  }
 
-      /* \todo not sure on this */
-      if (current->object->saved_color != -1) {
-        if (current->object->type == OBJ_TEXT) {
-          o_complex_set_saved_color_only(
-                                         current->object->text->prim_objs, 
-                                         toplevel->detachedattr_color);
-        } else {
-          printf("Tried to set the color on a complex!\nlibgeda/src/o_attrib_free 2\n");
-        }
-        current->object->saved_color = toplevel->
-        detachedattr_color;
-      }
+  /* \todo not sure on this */
+  if (current->saved_color != -1) {
+    if (current->type == OBJ_TEXT) {
+      o_complex_set_saved_color_only(current->text->prim_objs,
+                                     toplevel->detachedattr_color);
+    } else {
+      printf("Tried to set the color on a complex!\nlibgeda/src/o_attrib_free 2\n");
     }
-
-    /* \todo were do we detach the object->attached_to? above */
-    current->object=NULL;
-
-    g_free(current);
-
+    current->saved_color = toplevel->detachedattr_color;
   }
 }
 
@@ -191,7 +172,7 @@ void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *parent_list,
 {
   OBJECT *o_current = NULL;
 
-  ATTRIB *found = NULL;
+  OBJECT *found = NULL;
   OBJECT *found2 = NULL; /* object in main list */
 
   o_current = text_object; 
@@ -260,7 +241,7 @@ void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *parent_list,
  */
 void o_attrib_free_all(TOPLEVEL *toplevel, GList *list)
 {
-  ATTRIB *a_current; 
+  OBJECT *a_current;
   GList *a_iter;
 
   a_iter = list;
@@ -281,21 +262,18 @@ void o_attrib_free_all(TOPLEVEL *toplevel, GList *list)
  */
 void o_attrib_print(GList *attributes)
 {
-  ATTRIB *a_current;
+  OBJECT *a_current;
   GList *a_iter;
 
   a_iter = attributes;
 
   while (a_iter != NULL) {
     a_current = a_iter->data;
-    printf("Attribute points to: %s\n", a_current->object->name);
-    if (a_current->object && a_current->object->text) {
-      printf("\tText is: %s\n", a_current->object->text->string);
+    printf("Attribute points to: %s\n", a_current->name);
+    if (a_current->text) {
+      printf("\tText is: %s\n", a_current->text->string);
     }
 
-    if (!a_current->object) {
-      printf("oops found a null attrib object\n");
-    }
     a_iter = g_list_next (a_iter);
   }
 }
@@ -312,27 +290,12 @@ void o_attrib_print(GList *attributes)
  */
 void o_attrib_remove(GList **list, OBJECT *remove)
 {
-  GList *a_iter;
-  ATTRIB *a_current;
-
   g_return_if_fail (remove != NULL);
 
-  a_iter = *list;
-  while (a_iter != NULL) {
-    a_current = a_iter->data;
-    if (a_current->object == remove) {
+  remove->attribute = 0;
+  remove->attached_to = NULL;
 
-      remove->attribute = 0;
-      remove->attached_to = NULL;
-
-      /* Modifying the list we're iterating over is
-       * ok, since we return straight afterward */
-      *list = g_list_remove (*list, a_current);
-      g_free(a_current);
-      return;
-    }
-    a_iter = g_list_next (a_iter);
-  }
+  *list = g_list_remove (*list, remove);
 }
 
 /*! \brief Read attributes from a buffer.
@@ -489,8 +452,7 @@ OBJECT *o_read_attribs(TOPLEVEL *toplevel,
  */
 gchar *o_save_attribs(GList *attribs)
 {
-  ATTRIB *a_current=NULL;
-  OBJECT *o_current=NULL;
+  OBJECT *a_current=NULL;
   GList *a_iter;
   GString *acc;
   gchar *out;
@@ -502,56 +464,54 @@ gchar *o_save_attribs(GList *attribs)
   while ( a_iter != NULL ) {
     a_current = a_iter->data;
 
-    o_current = a_current->object;	
-
-    if (o_current->type != OBJ_HEAD) {
+    if (a_current->type != OBJ_HEAD) {
 
 #if DEBUG
-      printf("type: %d %c  ref: %d %c\n", o_current->type, o_current->type,
+      printf("type: %d %c  ref: %d %c\n", a_current->type, a_current->type,
              OBJ_PIN, OBJ_PIN);
 #endif
       
-      switch (o_current->type) {
+      switch (a_current->type) {
 
         case(OBJ_LINE):
-          out = (char *) o_line_save(o_current);
+          out = (char *) o_line_save(a_current);
           break;
 
         case(OBJ_NET):
-          out = (char *) o_net_save(o_current);
+          out = (char *) o_net_save(a_current);
           break;
 
         case(OBJ_BUS):
-          out = (char *) o_bus_save(o_current);
+          out = (char *) o_bus_save(a_current);
           break;
 
         case(OBJ_BOX):
-          out = (char *) o_box_save(o_current);
+          out = (char *) o_box_save(a_current);
           break;
 		
         case(OBJ_CIRCLE):
-          out = (char *) o_circle_save(o_current);
+          out = (char *) o_circle_save(a_current);
           break;
 
         case(OBJ_COMPLEX):
         case(OBJ_PLACEHOLDER):  /* new type -- SDB 1.20.2005 */
-          out = (char *) o_complex_save(o_current);
+          out = (char *) o_complex_save(a_current);
           break;
 
         case(OBJ_TEXT):
-          out = (char *) o_text_save(o_current);
+          out = (char *) o_text_save(a_current);
           break;
 
         case(OBJ_PIN):
-          out = (char *) o_pin_save(o_current);
+          out = (char *) o_pin_save(a_current);
           break;
 
         case(OBJ_ARC):
-          out = (char *) o_arc_save(o_current);
+          out = (char *) o_arc_save(a_current);
           break;
 
   	case(OBJ_PICTURE):
-	  out = (char *) o_picture_save(o_current); 
+	  out = (char *) o_picture_save(a_current);
 	  break;
 
         default:
@@ -626,12 +586,12 @@ o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_pt
  *  color (attribute_color).
  *
  *  \param [in]     toplevel   The TOPLEVEL object.
- *  \param [in,out] attributes  ATTRIB list to set colors on.
+ *  \param [in,out] attributes  OBJECT list to set colors on.
  *
  */
 void o_attrib_set_color(TOPLEVEL *toplevel, GList *attributes)
 {
-  ATTRIB *a_current;
+  OBJECT *a_current;
   GList *a_iter;
 
   a_iter = attributes;
@@ -639,40 +599,30 @@ void o_attrib_set_color(TOPLEVEL *toplevel, GList *attributes)
   while (a_iter != NULL) {
     a_current = a_iter->data;
 
-    if (a_current->object) {	
-			
-      if (a_current->object->type == OBJ_TEXT &&
-          a_current->object->text->prim_objs) {
+    if (a_current->type == OBJ_TEXT &&
+        a_current->text->prim_objs) {
 
-				/* I'm not terribly happy with this */
-		
-        if (a_current->object->saved_color != -1) {
+      /* I'm not terribly happy with this */
 
-          /* if the object is selected, make */
-          /* sure it it say selected */
-          o_complex_set_color(
-                              a_current->object->text->prim_objs,
-                              SELECT_COLOR);
-          a_current->object->color = 
-            SELECT_COLOR;
+      if (a_current->saved_color != -1) {
 
-          o_complex_set_saved_color_only(
-                                         a_current->object->text->prim_objs,
-                                         toplevel->attribute_color);
-          a_current->object->saved_color = toplevel->
-            attribute_color;
+        /* if the object is selected, make */
+        /* sure it it say selected */
+        o_complex_set_color(a_current->text->prim_objs, SELECT_COLOR);
+        a_current->color = SELECT_COLOR;
 
-        } else {
-          o_complex_set_color(
-                              a_current->object->text->prim_objs,
-                              toplevel->attribute_color);
-          a_current->object->color = 
-            toplevel->attribute_color;
-        }
-      }	
+        o_complex_set_saved_color_only(a_current->text->prim_objs,
+                                       toplevel->attribute_color);
+        a_current->saved_color = toplevel->attribute_color;
 
-      a_iter = g_list_next (a_iter);
+      } else {
+        o_complex_set_color(a_current->text->prim_objs,
+                            toplevel->attribute_color);
+        a_current->color = toplevel->attribute_color;
+      }
     }
+
+    a_iter = g_list_next (a_iter);
   }
 }
 
@@ -698,8 +648,7 @@ void o_attrib_set_color(TOPLEVEL *toplevel, GList *attributes)
 char *o_attrib_search_name(OBJECT *list, char *name, int counter) 
 {
   OBJECT *o_current;
-  ATTRIB *a_current;
-  OBJECT *found;
+  OBJECT *a_current;
   GList *a_iter;
   int val;
   int internal_counter=0;
@@ -714,36 +663,33 @@ char *o_attrib_search_name(OBJECT *list, char *name, int counter)
       a_iter = o_current->attribs;
       while(a_iter != NULL) {
         a_current = a_iter->data;
-        found = a_current->object;
-        if (found != NULL) {
-          if (found->type == OBJ_TEXT) {
-            val = o_attrib_get_name_value(found->text->string, 
-                                          &found_name, &found_value);
+        if (a_current->type == OBJ_TEXT) {
+          val = o_attrib_get_name_value(a_current->text->string,
+                                        &found_name, &found_value);
 
-            if (val) {
-              if (strcmp(name, found_name) == 0) {
-                if (counter != internal_counter) {
-                  internal_counter++;	
-                } else {
-                  return_string = g_strdup (found_value);
-		  g_free(found_name);
-		  g_free(found_value);
-                  return(return_string);
-                }
+          if (val) {
+            if (strcmp(name, found_name) == 0) {
+              if (counter != internal_counter) {
+                internal_counter++;
+              } else {
+                return_string = g_strdup (found_value);
+                g_free(found_name);
+                g_free(found_value);
+                return(return_string);
               }
-	      if (found_name) { g_free(found_name); found_name = NULL; }
-	      if (found_value) { g_free(found_value); found_value = NULL; }
-            }	
-
-#if DEBUG 
-            printf("0 _%s_\n", found->text->string);
-            printf("1 _%s_\n", found_name);
-            printf("2 _%s_\n", found_value);
-#endif
+            }
+            if (found_name) { g_free(found_name); found_name = NULL; }
+            if (found_value) { g_free(found_value); found_value = NULL; }
           }
+
+#if DEBUG
+          printf("0 _%s_\n", a_current->text->string);
+          printf("1 _%s_\n", found_name);
+          printf("2 _%s_\n", found_value);
+#endif
         }
         a_iter = g_list_next (a_iter);
-      }	
+      }
     }
 
     /* search for attributes outside */
@@ -782,12 +728,12 @@ char *o_attrib_search_name(OBJECT *list, char *name, int counter)
  *  Given an OBJECT list (i.e. OBJECTs on schematic page or
  *  inside symbol), search for the attribute called out in
  *  "string".  It iterates over all objects in the OBJECT list
- *  and dives into the attached ATTRIB list for 
+ *  and dives into the attached attribute OBJECT list for
  *  each OBJECT if it finds one.
- *  Inside the ATTRIB list it looks for an attached text 
+ *  Inside the attribute OBJECT list it looks for an attached text
  *  attribute matching "string".  It returns the
  *  pointer to the associated OBJECT if found.  If the attribute
- *  string is not found in the ATTRIB list, then the fcn
+ *  string is not found in the attribute OBJECT list, then the fcn
  *  looks on the OBJECT itself for the attribute.  Then it
  *  iterates to the next OBJECT.
  *
@@ -802,8 +748,7 @@ char *o_attrib_search_name(OBJECT *list, char *name, int counter)
 OBJECT *o_attrib_search_string_list(OBJECT *list, char *string)
 {
   OBJECT *o_current;
-  ATTRIB *a_current;
-  OBJECT *found;
+  OBJECT *a_current;
   GList *a_iter;
 
   o_current = list;
@@ -815,22 +760,19 @@ OBJECT *o_attrib_search_string_list(OBJECT *list, char *string)
 
       while(a_iter != NULL) {
         a_current = a_iter->data;
-        found = a_current->object;
-        if (found != NULL) {
-          if (found->type == OBJ_TEXT) {
+        if (a_current->type == OBJ_TEXT) {
 #if DEBUG
-	    printf("libgeda:o_attrib.c:o_attrib_search_string_list --");
-	    printf("found OBJ_TEXT, string = %s\n", found->text->string);
-#endif 
-            if (strcmp(string, found->text->string) == 0) {
-              return(found);
-            }
-          }	
+    printf("libgeda:o_attrib.c:o_attrib_search_string_list --");
+    printf("found OBJ_TEXT, string = %s\n", found->text->string);
+#endif
+          if (strcmp(string, a_current->text->string) == 0) {
+            return a_current;
+          }
         }
         a_iter = g_list_next (a_iter);
       }
-    }	
-  
+    }
+
     /* search for attributes outside (ie the actual object) */
     if (o_current->type == OBJ_TEXT) {
       if (strcmp(string, o_current->text->string) == 0) {
@@ -898,9 +840,9 @@ char *o_attrib_search_string_partial(OBJECT *object, char *search_for,
  *  \par Function Description
  *  This function will check if the text->string value of
  *  the passed OBJECT matches the <B>search_for</B> parameter.
- *  If not, it then searches the object's ATTRIB list (if 
- *  it has one.)
- *  Only this single OBJECT and its ATTRIB list is
+ *  If not, it then searches the object's attribute list
+ *  (if it has one.)
+ *  Only this single OBJECT and its attribute list is
  *  checked, and other OBJECTs on the page are not checked.
  *  \param [in] object      The OBJECT to compare.
  *  \param [in] search_for  Character string to compare against.  
@@ -910,8 +852,7 @@ char *o_attrib_search_string_partial(OBJECT *object, char *search_for,
 OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for)
 {
   OBJECT *o_current;
-  OBJECT *found;
-  ATTRIB *a_current;
+  OBJECT *a_current;
   GList *a_iter;
 
   o_current = object;
@@ -935,7 +876,7 @@ OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for)
     }
   }
 
-  /* Next check to see if this OBJECT has an ATTRIB list we */
+  /* Next check to see if this OBJECT has an attribute list we */
   /* can search.  If not return NULL.  If so, search it. */
   if (o_current->attribs == NULL) 
     return(NULL);
@@ -943,17 +884,14 @@ OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for)
   a_iter = o_current->attribs;
   while(a_iter != NULL) {
     a_current = a_iter->data;
-    found = a_current->object;
-    if (found != NULL) {
-      if (found->type == OBJ_TEXT) {
-	if(strcmp(found->text->string, search_for) == 0) {
-	    return(found);
-        }
+    if (a_current->type == OBJ_TEXT) {
+      if(strcmp(a_current->text->string, search_for) == 0) {
+        return a_current;
       }
     }
     a_iter = g_list_next (a_iter);
   }
-	
+
   return (NULL);
 } 
 
@@ -967,7 +905,7 @@ OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for)
  *  The value is the primary search key, but name is checked before
  *  an OBJECT is returned to ensure the correct OBJECT has been found.
  *
- *  \param [in] list     The ATTRIB list to search.
+ *  \param [in] list     The attribute OBJECT list to search.
  *  \param [in] value    Character string with value to search for.
  *  \param [in] name     Character string with name to compare.
  *  \param [in] counter  Which occurance to return.
@@ -977,8 +915,7 @@ OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for)
 OBJECT *o_attrib_search_attrib_value(GList *list, char *value, char *name,
 				     int counter) 
 {
-  OBJECT *found;
-  ATTRIB *a_current;
+  OBJECT *a_current;
   GList *a_iter;
   int val;
   int internal_counter=0;
@@ -995,33 +932,30 @@ OBJECT *o_attrib_search_attrib_value(GList *list, char *value, char *name,
 
   while(a_iter != NULL) {
     a_current = a_iter->data;
-    found = a_current->object;
-    if (found != NULL) {
-      if (found->type == OBJ_TEXT) {
-        val = o_attrib_get_name_value(found->text->string, 
-                                      &found_name, &found_value);
+    if (a_current->type == OBJ_TEXT) {
+      val = o_attrib_get_name_value(a_current->text->string,
+                                    &found_name, &found_value);
 
-        if (val) {
+      if (val) {
 #if DEBUG
-          printf("found value: %s\n", found_value);
-          printf("looking for: %s\n", value);
+        printf("found value: %s\n", found_value);
+        printf("looking for: %s\n", value);
 #endif
-          if (strcmp(value, found_value) == 0) {
-            if (counter != internal_counter) {
-              internal_counter++;	
-            } else {
-              if (strstr(found_name, name)) {
-		g_free(found_name);
-		g_free(found_value);
-                return(found);
-              }
+        if (strcmp(value, found_value) == 0) {
+          if (counter != internal_counter) {
+            internal_counter++;
+          } else {
+            if (strstr(found_name, name)) {
+              g_free(found_name);
+              g_free(found_value);
+              return a_current;
             }
           }
-	  if (found_name) { g_free(found_name); found_name = NULL; }
-	  if (found_value) { g_free(found_value); found_value = NULL; }
-        }	
-
+        }
+        if (found_name) { g_free(found_name); found_name = NULL; }
+        if (found_value) { g_free(found_value); found_value = NULL; }
       }
+
     }
     a_iter = g_list_next (a_iter);
   }
@@ -1038,7 +972,7 @@ OBJECT *o_attrib_search_attrib_value(GList *list, char *value, char *name,
  *  Counter is the n'th occurance of the attribute, and starts searching
  *  from zero.  Zero is the first occurance of an attribute.
  *
- *  \param [in] list     ATTRIB list to search.
+ *  \param [in] list     attribute OBJECT list to search.
  *  \param [in] name     Character string with attribute name to search for.
  *  \param [in] counter  Which occurance to return.
  *  \return Character string with attribute value, NULL otherwise.
@@ -1049,8 +983,7 @@ OBJECT *o_attrib_search_attrib_value(GList *list, char *value, char *name,
 char *
 o_attrib_search_attrib_name(GList *list, char *name, int counter)
 {
-  OBJECT *found;
-  ATTRIB *a_current;
+  OBJECT *a_current;
   GList *a_iter;
   int val;
   int internal_counter=0;
@@ -1062,30 +995,27 @@ o_attrib_search_attrib_name(GList *list, char *name, int counter)
 
   while(a_iter != NULL) {
     a_current = a_iter->data;
-    found = a_current->object;
-    if (found != NULL) {
-      if (found->type == OBJ_TEXT) {
-        val = o_attrib_get_name_value(found->text->string, 
-                                      &found_name, &found_value);
+    if (a_current->type == OBJ_TEXT) {
+      val = o_attrib_get_name_value(a_current->text->string,
+                                    &found_name, &found_value);
 
-        if (val) {
+      if (val) {
 #if DEBUG
-          printf("found name: %s\n", found_name);
-          printf("looking for: %s\n", name);
+        printf("found name: %s\n", found_name);
+        printf("looking for: %s\n", name);
 #endif
-          if (strcmp(name, found_name) == 0) {
-            if (counter != internal_counter) {
-              internal_counter++;	
-            } else {
-              return_string = g_strdup (found_value);
-	      g_free(found_name);
-	      g_free(found_value);
-              return(return_string);
-            }
+        if (strcmp(name, found_name) == 0) {
+          if (counter != internal_counter) {
+            internal_counter++;
+          } else {
+            return_string = g_strdup (found_value);
+            g_free(found_name);
+            g_free(found_value);
+            return(return_string);
           }
-	  if (found_name) { g_free(found_name); found_name = NULL; }
-	  if (found_value) { g_free(found_value); found_value = NULL; }
-        }	
+        }
+        if (found_name) { g_free(found_name); found_name = NULL; }
+        if (found_value) { g_free(found_value); found_value = NULL; }
       }
     }
     a_iter = g_list_next (a_iter);
@@ -1173,8 +1103,7 @@ char *o_attrib_search_name_single(OBJECT *object, char *name,
 				  OBJECT **return_found) 
 {
   OBJECT *o_current;
-  ATTRIB *a_current;
-  OBJECT *found;
+  OBJECT *a_current;
   GList *a_iter;
   int val;
   char *found_name = NULL;
@@ -1192,35 +1121,32 @@ char *o_attrib_search_name_single(OBJECT *object, char *name,
 
     while(a_iter != NULL) {
       a_current = a_iter->data;
-      found = a_current->object;
-      if (found != NULL) {
-        if (found->type == OBJ_TEXT) {
-          val = o_attrib_get_name_value(found->text->string, 
-					&found_name, &found_value);
+      if (a_current->type == OBJ_TEXT) {
+        val = o_attrib_get_name_value(a_current->text->string,
+                                      &found_name, &found_value);
 
-          if (val) {
-            if (strcmp(name, found_name) == 0) {
-              return_string = g_strdup (found_value);
-              if (return_found) {
-                *return_found = found;
-              }
-	      g_free(found_name);
-	      g_free(found_value);
-              return(return_string);
+        if (val) {
+          if (strcmp(name, found_name) == 0) {
+            return_string = g_strdup (found_value);
+            if (return_found) {
+              *return_found = a_current;
             }
-	    if (found_name) { g_free(found_name); found_name = NULL; }
-	    if (found_value) { g_free(found_value); found_value = NULL; }
+            g_free(found_name);
+            g_free(found_value);
+            return(return_string);
           }
+          if (found_name) { g_free(found_name); found_name = NULL; }
+          if (found_value) { g_free(found_value); found_value = NULL; }
+        }
 
 #if DEBUG
-          printf("0 _%s_\n", found->text->string);
-          printf("1 _%s_\n", found_name);
-          printf("2 _%s_\n", found_value);
+        printf("0 _%s_\n", found->text->string);
+        printf("1 _%s_\n", found_name);
+        printf("2 _%s_\n", found_value);
 #endif
-        }
       }
       a_iter = g_list_next (a_iter);
-    }	
+    }
   }
   /* search for attributes outside */
 
@@ -1242,7 +1168,7 @@ char *o_attrib_search_name_single(OBJECT *object, char *name,
       }
       if (found_name) { g_free(found_name); found_name = NULL; }
       if (found_value) { g_free(found_value); found_value = NULL; }
-    }	
+    }
   }
 
   if (return_found) {
@@ -1252,7 +1178,7 @@ char *o_attrib_search_name_single(OBJECT *object, char *name,
   g_free(found_name);
   g_free(found_value);
   return (NULL);
-} 
+}
 
 /*! \brief Search for N'th occurance of a named attribute.
  *  \par Function Description
@@ -1273,15 +1199,13 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name,
 					int counter) 
 {
   OBJECT *o_current;
-  ATTRIB *a_current;
-  OBJECT *found=NULL;
+  OBJECT *a_current;
   GList *a_iter;
   int val;
   char *found_name = NULL;
   char *found_value = NULL;
   char *return_string = NULL;
   int internal_counter=0;
-	
 
   o_current = object;
 
@@ -1289,43 +1213,38 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name,
     return(NULL);
   }
 
-  if (o_current->attribs != NULL) {
-    a_iter = o_current->attribs;
+  a_iter = o_current->attribs;
 
-    while(a_iter != NULL) {
-      a_current = a_iter->data;
-      found = a_current->object;
-      if (found != NULL) {
-        if (found->type == OBJ_TEXT) {
-          val = o_attrib_get_name_value(found->text->string, 
-					&found_name, &found_value);
+  while(a_iter != NULL) {
+    a_current = a_iter->data;
+    if (a_current->type == OBJ_TEXT) {
+      val = o_attrib_get_name_value(a_current->text->string,
+                                    &found_name, &found_value);
 
-          if (val) {
-            if (strcmp(name, found_name) == 0) {
-              if (counter != internal_counter) {
-                internal_counter++;
-              } else {
-                return_string = g_strdup (found_value);
-		g_free(found_name);
-		g_free(found_value);
-                return(return_string);
-              }
-            }
-            if (found_name) { g_free(found_name); found_name = NULL; }
-            if (found_value) { g_free(found_value); found_value = NULL; }
+      if (val) {
+        if (strcmp(name, found_name) == 0) {
+          if (counter != internal_counter) {
+            internal_counter++;
+          } else {
+            return_string = g_strdup (found_value);
+            g_free(found_name);
+            g_free(found_value);
+            return(return_string);
           }
-
-#if DEBUG 
-          printf("0 _%s_\n", found->text->string);
-          printf("1 _%s_\n", found_name);
-          printf("2 _%s_\n", found_value);
-#endif
         }
+        if (found_name) { g_free(found_name); found_name = NULL; }
+        if (found_value) { g_free(found_value); found_value = NULL; }
       }
-      a_iter = g_list_next (a_iter);
-    }	
 
+#if DEBUG
+      printf("0 _%s_\n", a_current->text->string);
+      printf("1 _%s_\n", found_name);
+      printf("2 _%s_\n", found_value);
+#endif
+    }
+    a_iter = g_list_next (a_iter);
   }
+
   /* search for attributes outside */
 
   if (o_current->type == OBJ_TEXT) {
@@ -1353,7 +1272,7 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name,
   g_free(found_name);
   g_free(found_value);
   return (NULL);
-} 
+}
 
 /*! \brief Search for slot attribute.
  *  \par Function Description
@@ -1807,8 +1726,7 @@ OBJECT ** o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object)
   OBJECT **found_objects;
   int num_attribs=0;
   int i=0;
-  ATTRIB *a_current;	
-  OBJECT *o_current;
+  OBJECT *a_current;
   OBJECT *object;
   GList *a_iter;
 
@@ -1827,13 +1745,10 @@ OBJECT ** o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object)
   a_iter = object->attribs;
   while(a_iter != NULL) {
     a_current = a_iter->data;
-    if (a_current->object != NULL) {
-      o_current = a_current->object;
-      if (o_current->type == OBJ_TEXT && 
-          o_current->text->string) {
-        found_objects[i] = o_current;
-        i++;
-      }
+    if (a_current->type == OBJ_TEXT &&
+        a_current->text->string) {
+      found_objects[i] = a_current;
+      i++;
     }
     a_iter = g_list_next (a_iter);
   }

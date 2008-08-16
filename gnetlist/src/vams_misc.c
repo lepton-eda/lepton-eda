@@ -41,8 +41,7 @@ vams_get_attribs_list(OBJECT *object, SCM *list, OBJECT **return_found)
 {
   OBJECT *o_current;
   GList *a_iter;
-  ATTRIB *a_current;
-  OBJECT *found;
+  OBJECT *a_current;
   int val;
   char* found_name = NULL;
 
@@ -51,9 +50,8 @@ vams_get_attribs_list(OBJECT *object, SCM *list, OBJECT **return_found)
   a_iter = o_current->attribs;
   while(a_iter != NULL) {
     a_current = a_iter->data;
-    found = a_current->object;
-    if (found != NULL && found->text && found->text->string) {
-      val = o_attrib_get_name_value(found->text->string,
+    if (a_current->text && a_current->text->string) {
+      val = o_attrib_get_name_value(a_current->text->string,
                                     &found_name, NULL);
 
       if (val) {

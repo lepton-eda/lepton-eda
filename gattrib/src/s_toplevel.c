@@ -598,7 +598,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   char *old_attrib_value;
   gchar *refdes;
   GList *a_iter;
-  ATTRIB *a_current;
+  OBJECT *a_current;
   int count = 0;  /* This is to fake out a fcn called later */
   gint row, col;
   gint visibility = 0;
@@ -623,10 +623,10 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   a_iter = o_current->attribs;
   while (a_iter != NULL) {
     a_current = a_iter->data;
-    if (a_current->object->type == OBJ_TEXT
-	&& a_current->object->text != NULL) {  /* found a name=value attribute pair. */
+    if (a_current->type == OBJ_TEXT
+	&& a_current->text != NULL) {  /* found a name=value attribute pair. */
       /* may need to check more thoroughly here. . . . */
-      old_name_value_pair = g_strdup(a_current->object->text->string);
+      old_name_value_pair = g_strdup(a_current->text->string);
 
       /* Else clause is suggestion from Ales */
 #if 1

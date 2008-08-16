@@ -54,7 +54,7 @@ static void custom_world_get_object_list_bounds
  * Principle stolen from o_attrib_return_attribs */
 SCM g_make_attrib_smob_list(GSCHEM_TOPLEVEL *w_current, OBJECT *curr_object)
 {
-  ATTRIB *a_current;      
+  OBJECT *a_current;
   OBJECT *object;
   GList *a_iter;
   SCM smob_list = SCM_EOL;
@@ -73,8 +73,8 @@ SCM g_make_attrib_smob_list(GSCHEM_TOPLEVEL *w_current, OBJECT *curr_object)
   a_iter = object->attribs;
   while(a_iter != NULL) {
     a_current = a_iter->data;
-    if (a_current->object->type == OBJ_TEXT) {
-      if (o_text_get_string (w_current->toplevel, a_current->object)) {
+    if (a_current->type == OBJ_TEXT) {
+      if (o_text_get_string (w_current->toplevel, a_current)) {
         smob_list = scm_cons (g_make_attrib_smob (w_current->toplevel, a_current),
                               smob_list);
       }
@@ -351,9 +351,8 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
   }
 
   if (attribute &&
-      attribute->attribute &&
-      attribute->attribute->object) {
-    object = (OBJECT *) attribute->attribute->object;
+      attribute->attribute) {
+    object = attribute->attribute;
     if (object &&
 	object->text) {
       o_erase_single(w_current, object);
@@ -407,7 +406,7 @@ static void custom_world_get_single_object_bounds
                                         GList *exclude_attrib_list,
 					GList *exclude_obj_type_list) {
     OBJECT *obj_ptr = NULL;
-    ATTRIB *a_current;
+    OBJECT *a_current;
     GList *a_iter;
     int rleft, rright, rbottom, rtop;
     const gchar *text_value; 
@@ -472,11 +471,10 @@ static void custom_world_get_single_object_bounds
 	  a_iter = obj_ptr->attribs;
 	  while (a_iter != NULL) {
       a_current = a_iter->data;
-	    g_assert(a_current->object);
 
-	    if (a_current->object->type == OBJ_TEXT) {
+	    if (a_current->type == OBJ_TEXT) {
 	      custom_world_get_single_object_bounds(toplevel,
-						    a_current->object,
+						    a_current,
 						    &rleft, &rtop, 
 						    &rright, &rbottom,
 						    exclude_attrib_list,

@@ -75,7 +75,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
   OBJECT *attribptr;
   OBJECT *object;
   GList *s_current = NULL;
-  ATTRIB *a_current;
+  OBJECT *a_current;
   GList *a_iter;
   int vis, show;
   int invocation_flag;
@@ -199,11 +199,10 @@ void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
             if (replace) {
               while (a_iter != NULL) {
                 a_current = a_iter->data;
-                const gchar *str = o_text_get_string (toplevel, a_current->object);
+                const gchar *str = o_text_get_string (toplevel, a_current);
                 if (str) {
                   if (!strncmp (str, newtext, strchr (newtext, '=') - newtext)) {
-                    o_text_change(w_current, a_current->object,
-                                  newtext, vis, show);
+                    o_text_change(w_current, a_current, newtext, vis, show);
                     replaced = TRUE;
                     toplevel->page_current->CHANGED = 1;
                   }

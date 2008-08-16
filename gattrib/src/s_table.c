@@ -238,7 +238,7 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
   gchar *attrib_name;
   gchar *attrib_value;
   GList *a_iter;
-  ATTRIB *a_current;
+  OBJECT *a_current;
   gint old_visibility, old_show_name_value;
 
 
@@ -280,13 +280,13 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
         a_iter = o_current->attribs;
         while (a_iter != NULL) {
           a_current = a_iter->data;
-          if (a_current->object->type == OBJ_TEXT
-              && a_current->object->text != NULL) {  /* found an attribute */
+          if (a_current->type == OBJ_TEXT
+              && a_current->text != NULL) {  /* found an attribute */
             /* may need to check more thoroughly here. . . . */
-            attrib_text = g_strdup(a_current->object->text->string);
+            attrib_text = g_strdup(a_current->text->string);
             o_attrib_get_name_value(attrib_text, &attrib_name, &attrib_value);
-	    old_visibility = a_current->object->visibility;
-	    old_show_name_value = a_current->object->show_name_value;
+	    old_visibility = a_current->visibility;
+	    old_show_name_value = a_current->show_name_value;
 
 	    /* Don't include "refdes" or "slot" because they form the row name. */
 	    /* Also don't include "net" per bug found by Steve W.  4.3.2007 -- SDB */
@@ -432,7 +432,7 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
   gchar *attrib_name;
   gchar *attrib_value;
   GList *a_iter;
-  ATTRIB *pin_attrib;
+  OBJECT *pin_attrib;
 
   if (verbose_mode) {
     printf("- Starting internal pin TABLE creation\n");
@@ -475,9 +475,9 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
 	    a_iter = o_lower_current->attribs;
 	    while (a_iter != NULL) {
 	      pin_attrib = a_iter->data;
-	      if (pin_attrib->object->type == OBJ_TEXT
-		  && pin_attrib->object->text != NULL) {  /* found an attribute */
-		attrib_text = g_strdup(pin_attrib->object->text->string);
+	      if (pin_attrib->type == OBJ_TEXT
+		  && pin_attrib->text != NULL) {  /* found an attribute */
+		attrib_text = g_strdup(pin_attrib->text->string);
 		o_attrib_get_name_value(attrib_text, &attrib_name, &attrib_value);
  
 		if ( (strcmp(attrib_name, "pinnumber") != 0) 
