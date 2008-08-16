@@ -41,6 +41,45 @@ void (*text_draw_func)() = NULL;
 #define WINONLY	1
 #define BACKING 2
 
+static void update_disp_string(OBJECT *o)
+{
+  char *name = NULL;
+  char *value = NULL;
+  TEXT *text = o->text;
+
+  g_free (text->disp_string);
+
+  if (o_attrib_get_name_value (text->string, &name, &value)) {
+    switch (o->show_name_value) {
+      case (SHOW_NAME_VALUE):
+        text->disp_string = g_strdup (text->string);
+        break;
+
+      case (SHOW_NAME):
+        if (name[0] != '\0') {
+          text->disp_string = g_strdup (name);
+        } else {
+          g_critical ("Got an improper attribute: %s\n",
+                      text->string);
+          text->disp_string = g_strdup ("invalid");
+        }
+        break;
+
+      case (SHOW_VALUE):
+        if (value[0] != '\0') {
+          text->disp_string = g_strdup(value);
+        } else {
+          g_critical ("Got an improper attribute: %s\n",
+                      text->string);
+          text->disp_string = g_strdup ("invalid");
+        }
+        break;
+    }
+  } else {
+    text->disp_string = g_strdup (text->string);
+  }
+}
+
 /*! \note
  *  font storage and friends are staying global so that all can access
  */
@@ -928,45 +967,7 @@ OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list,
   /* properly */ 
   object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
-  /* fix up actual string here */ 
-  if (o_attrib_get_name_value(string, &name, &value)) {
-
-    switch(show_name_value) {
-      case(SHOW_NAME_VALUE):
-        text->disp_string = g_strdup(string);
-        break;
-
-      case(SHOW_NAME):
-        if (name[0] != '\0') {
-          text->disp_string = g_strdup(name);
-        } else {
-          /* you probably can remove this now... */
-          /* since improper attributes will never get here */
-          fprintf(stderr, 
-                  "Got an improper attribute: %s\n", 
-                  string);
-          text->disp_string = g_strdup("invalid");
-
-        }
-        break;
-
-      case(SHOW_VALUE):
-        if (value[0] != '\0') {
-          text->disp_string = g_strdup (value);
-        } else {
-          /* you probably can remove this now... */
-          /* since improper attributes will never get here */
-          fprintf(stderr, 
-                  "Got an improper attribute: %s\n", 
-                  string);
-          text->disp_string = g_strdup("invalid");
-        }
-        break;
-    }
-  } else {
-    text->disp_string = g_strdup(string);
-  }
-
+  update_disp_string (new_node);
 
   /* now start working on the complex */
   temp_list = o_text_add_head();
@@ -1275,43 +1276,7 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
   char *value = NULL;
   TEXT *text = o_current->text;
 
-  g_free (text->disp_string);
-
-  if (o_attrib_get_name_value (text->string, &name, &value)) {
-    switch(o_current->show_name_value) {
-      case(SHOW_NAME_VALUE):
-        text->disp_string = g_strdup (text->string);
-        break;
-
-      case(SHOW_NAME):
-        if (name[0] != '\0') {
-          text->disp_string = g_strdup(name);
-        } else {
-          /* you probably can remove this now... */
-          /* since improper attributes will never get here */
-          fprintf(stderr, 
-                  "Got an improper attribute: %s\n", 
-                  text->string);
-          text->disp_string = g_strdup ("invalid");
-        }
-        break;
-
-      case(SHOW_VALUE):
-        if (value[0] != '\0') {
-          text->disp_string = g_strdup(value);
-        } else {
-          /* you probably can remove this now... */
-          /* since improper attributes will never get here */
-          fprintf(stderr, 
-                  "Got an improper attribute: %s\n", 
-                  text->string);
-          text->disp_string = g_strdup ("invalid");
-        }
-        break;
-    }
-  } else {
-    text->disp_string = g_strdup (text->string);
-  }
+  update_disp_string (o_current);
 
   o_list_delete_rest (toplevel, text->prim_objs);
 
