@@ -643,7 +643,7 @@ static void multiattrib_action_duplicate_attribute(GSCHEM_TOPLEVEL *w_current,
   OBJECT *o_new;
   
   o_new = o_attrib_add_attrib (w_current,
-                               o_attrib->text->string,
+                               o_text_get_string (w_current->toplevel, o_attrib),
                                o_attrib->visibility,
                                o_attrib->show_name_value,
                                object);
@@ -682,13 +682,17 @@ static void multiattrib_column_set_data_name(GtkTreeViewColumn *tree_column,
   OBJECT *o_attrib;
   gchar *name;
   Multiattrib *dialog = (Multiattrib *) data;
+  const gchar *str = NULL;
 
   gtk_tree_model_get (tree_model, iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
-  
-  o_attrib_get_name_value (o_attrib->text->string, &name, NULL);
+
+  str = o_text_get_string (GSCHEM_DIALOG(dialog)->w_current->toplevel,
+                           o_attrib);
+
+  o_attrib_get_name_value (str, &name, NULL);
   g_object_set (cell,
                 "text", name,
                 NULL);
@@ -710,13 +714,17 @@ static void multiattrib_column_set_data_value(GtkTreeViewColumn *tree_column,
   OBJECT *o_attrib;
   gchar *value;
   Multiattrib *dialog = (Multiattrib *) data;
+  const gchar *str = NULL;
 
   gtk_tree_model_get (tree_model, iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
-  
-  o_attrib_get_name_value (o_attrib->text->string, NULL, &value);
+
+  str = o_text_get_string (GSCHEM_DIALOG(dialog)->w_current->toplevel,
+                           o_attrib);
+
+  o_attrib_get_name_value (str, NULL, &value);
   g_object_set (cell,
                 "text", value,
                 NULL);
@@ -861,7 +869,9 @@ static void multiattrib_callback_edited_name(GtkCellRendererText *cellrendererte
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
 
-  o_attrib_get_name_value (o_attrib->text->string, NULL, &value);
+  o_attrib_get_name_value (o_text_get_string (w_current->toplevel,
+                                              o_attrib),
+                           NULL, &value);
   newtext = g_strdup_printf ("%s=%s", arg2, value);
 
   if (!x_dialog_validate_attribute(GTK_WINDOW(multiattrib), newtext)) {
@@ -909,7 +919,9 @@ static void multiattrib_callback_edited_value(GtkCellRendererText *cell_renderer
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
 
-  o_attrib_get_name_value (o_attrib->text->string, &name, NULL);
+  o_attrib_get_name_value (o_text_get_string (w_current->toplevel,
+                                              o_attrib),
+                           &name, NULL);
   newtext = g_strdup_printf ("%s=%s", name, arg2);
 
   if (!x_dialog_validate_attribute(GTK_WINDOW(multiattrib), newtext)) {

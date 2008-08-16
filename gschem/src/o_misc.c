@@ -48,6 +48,7 @@
 void o_edit(GSCHEM_TOPLEVEL *w_current, GList *list)
 {
   OBJECT *o_current;
+  const gchar *str = NULL;
 
   if (list == NULL) {
     w_current->inside_action = 0;
@@ -77,9 +78,10 @@ void o_edit(GSCHEM_TOPLEVEL *w_current, GList *list)
     picture_change_filename_dialog(w_current);
     break;
     case(OBJ_TEXT):
-    if (o_attrib_get_name_value (o_current->text->string, NULL, NULL) &&
+      str = o_text_get_string (w_current->toplevel, o_current);
+      if (o_attrib_get_name_value (str, NULL, NULL) &&
         /* attribute editor only accept 1-line values for attribute */
-        o_text_num_lines (o_current->text->string) == 1) {
+        o_text_num_lines (str) == 1) {
         attrib_edit_dialog(w_current,o_current, FROM_MENU);
     } else {
       o_text_edit(w_current, o_current);
@@ -610,21 +612,20 @@ int o_edit_find_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list, char *stext,
     }
 
     if (o_current->type == OBJ_TEXT) {
+      const gchar *str = o_text_get_string (toplevel, o_current);
      /* replaced strcmp with strstr to simplify the search */
-      if (strstr(o_current->text->string,stext)) {
+      if (strstr (str,stext)) {
         if (!skiplast) {
           a_zoom(w_current, ZOOM_FULL, DONTCARE, A_PAN_DONT_REDRAW);
           text_screen_height =
-            SCREENabs(toplevel, o_text_height(o_current->text->string,
-                                              o_current->text->size));
+            SCREENabs (toplevel, o_text_height (str, o_current->text->size));
           /* this code will zoom/pan till the text screen height is about */
           /* 50 pixels high, perhaps a future enhancement will be to make */
           /* this number configurable */
           while (text_screen_height < 50) {
             a_zoom(w_current, ZOOM_IN, DONTCARE, A_PAN_DONT_REDRAW);
             text_screen_height =
-              SCREENabs(toplevel, o_text_height(o_current->text->string,
-                                                o_current->text->size));
+              SCREENabs (toplevel, o_text_height (str, o_current->text->size));
           }
           a_pan_general(w_current,
                         o_current->text->x, o_current->text->y,
@@ -672,7 +673,8 @@ void o_edit_hide_specific_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list,
   while (o_current != NULL) {
 
     if (o_current->type == OBJ_TEXT) {
-      if (!strncmp(stext, o_current->text->string, strlen(stext))) {
+      const gchar *str = o_text_get_string (w_current->toplevel, o_current);
+      if (!strncmp (stext, str, strlen (stext))) {
         if (o_current->visibility == VISIBLE) {
           o_current->visibility = INVISIBLE;
 
@@ -708,7 +710,8 @@ void o_edit_show_specific_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list,
   while (o_current != NULL) {
 
     if (o_current->type == OBJ_TEXT) {
-      if (!strncmp(stext, o_current->text->string, strlen(stext))) {
+      const gchar *str = o_text_get_string (w_current->toplevel, o_current);
+      if (!strncmp (stext, str, strlen (stext))) {
         if (o_current->visibility == INVISIBLE) {
           o_current->visibility = VISIBLE;
 
@@ -795,7 +798,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     gchar *name;
     char *attrfound;
     g_assert (a_current->object->type == OBJ_TEXT);
-    o_attrib_get_name_value (a_current->object->text->string,
+    o_attrib_get_name_value (o_text_get_string (toplevel, a_current->object),
                              &name, NULL);
 
     attrfound = o_attrib_search_name_single(o_current, name, NULL);

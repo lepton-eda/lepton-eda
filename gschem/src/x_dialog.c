@@ -2871,7 +2871,9 @@ void find_text_dialog(GSCHEM_TOPLEVEL *w_current)
   remember_page = w_current->toplevel->page_current;
   if ((object = o_select_return_first_object(w_current)) != NULL) {
     if (object->type == OBJ_TEXT) {
-      strncpy(generic_textstring, object->text->string, 256);
+      strncpy (generic_textstring,
+               o_text_get_string (w_current->toplevel, object),
+               256);
     }
   }
 

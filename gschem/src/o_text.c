@@ -327,8 +327,8 @@ void o_text_edit(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   /* you need to check to make sure only one object is selected */
   /* no actually this is okay... not here in o_edit */
   text_edit_dialog(w_current,
-                   o_current->text->string, o_current->text->size,
-                   o_current->text->alignment);
+                   o_text_get_string (w_current->toplevel, o_current),
+                   o_current->text->size, o_current->text->alignment);
 }
 
 /*! \todo Finish function documentation!!!
@@ -353,28 +353,25 @@ void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int len, int text
 
     if (object) {
       if (object->type == OBJ_TEXT) {
+        o_erase_single(w_current, object);
+
+        object->text->size = text_size;
+        object->text->alignment = text_alignment;
+
+        /* probably the text object should be extended to carry a color */
+        /* and we should pass it here with a function parameter (?) */
+        object->saved_color = w_current->edit_color;
 
         /* only change text string if there is only ONE text object selected */
         if (numselect == 1 && string) {
-          g_free(object->text->string);
-          object->text->string = g_strdup (string);
+          o_text_set_string (w_current->toplevel, object, string);
 	  /* handle slot= attribute, it's a special case */
 	  if (g_ascii_strncasecmp (string, "slot=", 5) == 0) {
 	    o_slot_end (w_current, string, strlen (string));
 	  }
         }
-
-        object->text->size = text_size;
-        object->text->alignment = text_alignment;
-		
-        /* probably the text object should be extended to carry a color */
-        /* and we should pass it here with a function parameter (?) */
-        object->saved_color = w_current->edit_color;
-
-        o_erase_single(w_current, object);
         o_text_recreate(toplevel, object);
         o_text_draw(w_current, object);
-
       } 
     }
     
@@ -409,9 +406,8 @@ void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string,
   o_erase_single(w_current, object);
 
   /* second change the real object */
-  g_free(object->text->string);
+  o_text_set_string (toplevel, object, string);
 
-  object->text->string = g_strdup (string);
   object->visibility = visibility;
   object->show_name_value = show;
   o_text_recreate(toplevel, object);

@@ -73,9 +73,8 @@ SCM g_make_attrib_smob_list(GSCHEM_TOPLEVEL *w_current, OBJECT *curr_object)
   a_iter = object->attribs;
   while(a_iter != NULL) {
     a_current = a_iter->data;
-    if (a_current->object->type == OBJ_TEXT && 
-        a_current->object->text) {
-      if (a_current->object->text->string) {
+    if (a_current->object->type == OBJ_TEXT) {
+      if (o_text_get_string (w_current->toplevel, a_current->object)) {
         smob_list = scm_cons (g_make_attrib_smob (w_current->toplevel, a_current),
                               smob_list);
       }
@@ -411,7 +410,7 @@ static void custom_world_get_single_object_bounds
     ATTRIB *a_current;
     GList *a_iter;
     int rleft, rright, rbottom, rtop;
-    char *text_value; 
+    const gchar *text_value; 
     char *name_ptr, aux_ptr[2];
     gboolean include_text;
 
@@ -431,8 +430,8 @@ static void custom_world_get_single_object_bounds
 					    &rleft, &rtop, &rright, &rbottom);
 	    break;
           case (OBJ_TEXT):
-	    if (obj_ptr->text && obj_ptr->text->string) {
-	      text_value = obj_ptr->text->string;
+            text_value = o_text_get_string (toplevel, obj_ptr);
+	    if (text_value) {
 	      if (o_attrib_get_name_value(text_value, &name_ptr, NULL) &&
 		  g_list_find_custom(exclude_attrib_list, name_ptr, (GCompareFunc) &strcmp)) {
 		include_text = FALSE;

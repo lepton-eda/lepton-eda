@@ -199,10 +199,9 @@ void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
             if (replace) {
               while (a_iter != NULL) {
                 a_current = a_iter->data;
-
-                if (a_current->object->text != NULL) {
-                  if (!strncmp(a_current->object->text->string, newtext,
-                               strchr(newtext, '=') - newtext)) {
+                const gchar *str = o_text_get_string (toplevel, a_current->object);
+                if (str) {
+                  if (!strncmp (str, newtext, strchr (newtext, '=') - newtext)) {
                     o_text_change(w_current, a_current->object,
                                   newtext, vis, show);
                     replaced = TRUE;
@@ -491,7 +490,8 @@ void attrib_edit_dialog(GSCHEM_TOPLEVEL *w_current, OBJECT * list, int flag)
 
   /* gschem specific */
   if (list) {
-    o_attrib_get_name_value(list->text->string, &name, &val);
+    o_attrib_get_name_value (o_text_get_string (toplevel, list),
+                             &name, &val);
     attrib = list;
     if (attrib->visibility == VISIBLE) {
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton), TRUE);

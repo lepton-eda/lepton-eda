@@ -328,28 +328,33 @@ void autonumber_clear_database (AUTONUMBER_TEXT *autotext)
 gint autonumber_match(AUTONUMBER_TEXT *autotext, OBJECT *o_current, gint *number)
 {
   gint i, len, isnumbered=1; 
+  const gchar *str = NULL;
 
   len = strlen(autotext->current_searchtext);
   /* first find out whether we can ignore that object */
-  if (o_current->type != OBJ_TEXT  /* text object */
-      || !(strlen(o_current->text->string) - len > 0)
-      || !g_str_has_prefix(o_current->text->string, autotext->current_searchtext))
+  if (o_current->type != OBJ_TEXT)  /* text object */
+    return AUTONUMBER_IGNORE;
+
+  str = o_text_get_string (autotext->w_current->toplevel, o_current);
+
+  if (!(strlen(str) - len > 0)
+      || !g_str_has_prefix(str, autotext->current_searchtext))
     return AUTONUMBER_IGNORE;
 
   /* the string object matches with its leading characters to the searchtext */
   /* now look for the extension, either a number or the "?" */
-  if (g_str_has_suffix (o_current->text->string,"?")) {
+  if (g_str_has_suffix (str,"?")) {
     isnumbered = 0;
     /* There must not be any character between the "?" and the searchtext */
-    if (strlen(o_current->text->string) != len+1)
+    if (strlen(str) != len+1)
       return AUTONUMBER_IGNORE;
   }
   else {
-    if (!isdigit( (int) (o_current->text->string[len]) )) /* has at least one digit */
+    if (!isdigit( (int) (str[len]) )) /* has at least one digit */
       return AUTONUMBER_IGNORE;
     
-    for (i=len+1; o_current->text->string[i]; i++) /* and only digits */
-      if (!isdigit( (int) (o_current->text->string[i]) ))
+    for (i=len+1; str[i]; i++) /* and only digits */
+      if (!isdigit( (int) (str[i]) ))
 	return AUTONUMBER_IGNORE;
   }
   
@@ -363,7 +368,7 @@ gint autonumber_match(AUTONUMBER_TEXT *autotext, OBJECT *o_current, gint *number
   if (isnumbered
       && !(autotext->scope_skip == SCOPE_SELECTED 
 	   && !(o_current->selected)  && autotext->root_page)) {
-    sscanf(&(o_current->text->string[len])," %d", number);
+    sscanf(&(str[len])," %d", number);
     return AUTONUMBER_RESPECT; /* numbered objects which we don't renumber */
   }
   else
@@ -558,11 +563,12 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
 {
   OBJECT *o_parent, *o_slot;
   gchar *slot_str;
+  gchar *str = NULL;
 
   /* replace old text */
-  g_free(o_current->text->string);
-  o_current->text->string = g_strdup_printf("%s?", 
-					    autotext->current_searchtext);
+  str = g_strdup_printf("%s?", autotext->current_searchtext);
+  o_text_set_string (autotext->w_current->toplevel, o_current, str);
+  g_free (str);
 
   /* redraw the text */
   o_erase_single(autotext->w_current, o_current);
@@ -597,6 +603,7 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
 {
   OBJECT *o_parent, *o_slot;
   gchar *slot_str;
+  gchar *str = NULL;
 
   /* add the slot as attribute to the object */
   o_parent = o_current->attached_to;
@@ -605,8 +612,9 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
     if (slot_str != NULL) {
       /* update the slot attribute */
       g_free(slot_str);
-      g_free(o_slot->text->string);
-      o_slot->text->string = g_strdup_printf("slot=%d",slot);
+      slot_str = g_strdup_printf("slot=%d",slot);
+      o_text_set_string (autotext->w_current->toplevel, o_slot, slot_str);
+      g_free (slot_str);
       o_erase_single(autotext->w_current, o_slot);
       o_text_recreate(autotext->w_current->toplevel, o_slot);
       o_text_draw(autotext->w_current, o_slot);
@@ -622,9 +630,10 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
   }
 
   /* replace old text */
-  g_free(o_current->text->string);
-  o_current->text->string = g_strdup_printf("%s%d", autotext->current_searchtext,
-					    number);
+  str = g_strdup_printf("%s%d", autotext->current_searchtext, number);
+  o_text_set_string (autotext->w_current->toplevel, o_current, str);
+  g_free (str);
+
   /* redraw the text */
   o_erase_single(autotext->w_current, o_current);
   o_text_recreate(autotext->w_current->toplevel, o_current);
@@ -701,22 +710,21 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 	  if (autotext->scope_number == SCOPE_HIERARCHY
 	      || autotext->scope_number == SCOPE_PAGE
 	      || ((autotext->scope_number == SCOPE_SELECTED) && (o_current->selected))) {
-	    if (g_str_has_prefix(o_current->text->string, searchtext) == TRUE) {
+            const gchar *str = o_text_get_string (w_current->toplevel, o_current);
+	    if (g_str_has_prefix (str, searchtext)) {
 	      /* the beginnig of the current text matches with the searchtext now */
 	      /* strip of the trailing [0-9?] chars and add it too the searchtext */
-	      for (i = strlen(o_current->text->string)-1;
+	      for (i = strlen (str)-1;
 		   (i >= strlen(searchtext))
-		     && (o_current->text->string[i] == '?'
-			 || isdigit( (int) (o_current->text->string[i]) ));
+		     && (str[i] == '?'
+			 || isdigit( (int) (str[i]) ));
 		   i--)
 		; /* void */
 		
-	      new_searchtext=g_strndup(o_current->text->string, i+1);
+	      new_searchtext = g_strndup (str, i+1);
 	      if (g_list_find_custom(searchtext_list, new_searchtext,
 				     (GCompareFunc) strcmp) == NULL ) {
 		searchtext_list = g_list_append(searchtext_list, new_searchtext);
-		/*printf("autonumber_text: text \"%s\", \"%s\"\n",  */
-		/*       o_current->text->string, new_searchtext);  */
 	      }
 	      else {
 		g_free(new_searchtext);

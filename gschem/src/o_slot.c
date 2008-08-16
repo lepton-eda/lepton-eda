@@ -67,7 +67,8 @@ void o_slot_start(GSCHEM_TOPLEVEL *w_current, OBJECT *list)
              slot_text_object->text->string);
 #endif
       slot_edit_dialog(w_current,
-                       slot_text_object->text->string);
+                       o_text_get_string (w_current->toplevel,
+                                          slot_text_object));
       g_free(slot_value);
     } else {
       /* we didn't find an attached slot=? attribute */
@@ -161,9 +162,7 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
     slot_value = o_attrib_search_slot(object, &slot_text_object);
 
     if (slot_value) {
-      g_free(slot_text_object->text->string);
-
-      slot_text_object->text->string = g_strdup (string);
+      o_text_set_string (toplevel, slot_text_object, string);
 
       temp = slot_text_object;
 

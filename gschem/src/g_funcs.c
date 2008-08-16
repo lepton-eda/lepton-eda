@@ -269,13 +269,11 @@ SCM get_selected_component_attributes(GSCHEM_TOPLEVEL *w_current)
   ht = g_hash_table_new (g_str_hash, g_str_equal);
   for (obj = w_current->toplevel->page_current->object_head; obj != NULL;
        obj = obj->next) {
-    if (obj->selected &&
-        obj->type == OBJ_TEXT &&
-        obj->text->string != NULL) {
+    if (obj->selected && obj->type == OBJ_TEXT) {
+      const gchar *str = o_text_get_string (w_current->toplevel, obj);
+      if (str == NULL) continue;
       /* add text string in the hash table */
-      g_hash_table_insert (ht,
-                           obj->text->string,
-                           obj->text->string);
+      g_hash_table_insert (ht, (gchar *) str, (gchar *) str);
      }
    }
   /* now create a scheme list of the entries in the hash table */
