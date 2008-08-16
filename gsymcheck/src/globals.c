@@ -44,19 +44,7 @@ int do_logging=TRUE;
 int logging_dest=STDOUT_TTY;
 
 /* these are required by libgeda */
-void (*arc_draw_func)() = NULL;
-void (*box_draw_func)() = NULL;
-void (*picture_draw_func)() = NULL;
-void (*circle_draw_func)() = NULL;
-void (*complex_draw_func)() = NULL;
-void (*line_draw_func)() = NULL;
-void (*net_draw_func)() = NULL;
-void (*text_draw_func)() = NULL;
-void (*bus_draw_func)() = NULL;
-void (*pin_draw_func)() = NULL;
-void (*select_func)() = NULL;
 void (*x_log_update_func)() = s_log_update;
-int (*load_newer_backup_func)() = NULL;
 
 /* command line arguments */
 int verbose_mode=FALSE;

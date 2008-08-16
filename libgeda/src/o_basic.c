@@ -33,6 +33,9 @@
 #include <dmalloc.h>
 #endif
 
+/*! Default setting for object selection function. */
+void (*select_func)() = NULL;
+
 /* \todo 
  * Lots of Gross code... needs lots of cleanup
  * mainly readability issues

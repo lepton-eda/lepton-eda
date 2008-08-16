@@ -34,6 +34,9 @@
 #include <dmalloc.h>
 #endif
 
+/*! Default setting for complex draw function. */
+void (*complex_draw_func)() = NULL;
+
 /*! \brief Return the bounds of the given object.
  *  \par Given an object, calculate the bounds coordinates.
  *  \param [in] toplevel The toplevel structure.

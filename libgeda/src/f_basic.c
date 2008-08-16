@@ -45,6 +45,9 @@
 #include <dmalloc.h>
 #endif
 
+/*! Default setting for arc draw function. */
+int (*load_newer_backup_func)() = NULL;
+
 /*! \brief Get the autosave filename for a file
  *  \par Function description
  *  Returns the expected autosave filename for the \a filename passed.

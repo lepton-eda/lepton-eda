@@ -35,6 +35,9 @@
 #include <dmalloc.h>
 #endif
 
+/*! Default setting for text draw function. */
+void (*text_draw_func)() = NULL;
+
 #define WINONLY	1
 #define BACKING 2
 

@@ -48,19 +48,7 @@ int do_logging=TRUE;
 int logging_dest=LOG_WINDOW;
 
 /* these are required by libgeda */
-void (*arc_draw_func)() = NULL;
-void (*box_draw_func)() = NULL;
-void (*picture_draw_func)() = NULL;
-void (*circle_draw_func)() = NULL;
-void (*complex_draw_func)() = NULL;
-void (*line_draw_func)() = NULL;
-void (*net_draw_func)() = NULL;
-void (*bus_draw_func)() = NULL;
-void (*text_draw_func)() = NULL;
-void (*pin_draw_func)() = NULL;
 void (*select_func)() = o_select_dummy;
-void (*x_log_update_func)() = NULL;
-int (*load_newer_backup_func)()  = NULL;
 
 /* this is just a dummy function, so that compoments are saved properly */
 void

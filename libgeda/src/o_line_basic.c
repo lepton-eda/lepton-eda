@@ -28,6 +28,9 @@
 #include <dmalloc.h>
 #endif
 
+/*! Default setting for line draw function. */
+void (*line_draw_func)() = NULL;
+
 /*! \brief Create and add line OBJECT to list.
  *  \par Function Description
  *  This function creates a new object representing a line.

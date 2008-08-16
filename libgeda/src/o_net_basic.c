@@ -28,6 +28,9 @@
 #include <dmalloc.h>
 #endif
 
+/*! Default setting for net draw function. */
+void (*net_draw_func)() = NULL;
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

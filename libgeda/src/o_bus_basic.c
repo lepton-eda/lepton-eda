@@ -31,6 +31,9 @@
 #include <dmalloc.h>
 #endif
 
+/*! Default setting for bus draw function. */
+void (*bus_draw_func)() = NULL;
+
 /* \brief
  * \par Function Description
  *

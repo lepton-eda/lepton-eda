@@ -27,6 +27,9 @@
 #include <dmalloc.h>
 #endif
 
+/*! Default setting for circle draw function. */
+void (*circle_draw_func)() = NULL;
+
 /*! \brief
  *  \par Function Description
  *

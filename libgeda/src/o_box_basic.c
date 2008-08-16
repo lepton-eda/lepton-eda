@@ -49,6 +49,9 @@
 #define GET_BOX_TOP(w)                          \
 		min((w)->start_y, (w)->last_y);
 
+/*! Default setting for draw function. */
+void (*box_draw_func)() = NULL;
+
 /*! \brief Create a BOX and add it to a list.
  *  \par Function Description
  *  This function creates a new object representing a box.

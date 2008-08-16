@@ -40,6 +40,9 @@
 
 #include "libgeda_priv.h"
 
+/*! Default setting for picture draw function. */
+void (*picture_draw_func)() = NULL;
+
 /*! \brief Create picture OBJECT from character string.
  *  \par Function Description
  *  This function will get the description of a picture from the

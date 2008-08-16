@@ -66,7 +66,6 @@ void (*bus_draw_func)()      = o_bus_draw;
 void (*text_draw_func)()     = o_text_draw;
 void (*pin_draw_func)()      = o_pin_draw;
 void (*select_func)()        = o_select_object; /* NEW SELECTION code */
-void (*x_log_update_func)()  = NULL;
 int (*load_newer_backup_func)()  = x_fileselect_load_backup;
 
 /* command line options */

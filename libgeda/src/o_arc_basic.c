@@ -28,6 +28,9 @@
 #include <dmalloc.h>
 #endif
 
+/*! Default setting for arc draw function. */
+void (*arc_draw_func)() = NULL;
+
 /*! \brief
  *  \par Function Description
  *  The function creates a new object of type arc and links it

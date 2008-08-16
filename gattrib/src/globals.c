@@ -41,18 +41,6 @@ int quiet_mode=FALSE;
 /* these are required by libgeda */
 /* I have made most of these NULL because they aren't needed
  * for gattrib -- no drawing is done. */
-void (*arc_draw_func)() = NULL;
-void (*box_draw_func)() = NULL;
-void (*picture_draw_func)() = NULL;
-void (*circle_draw_func)() = NULL;
-void (*complex_draw_func)() = NULL;
-void (*line_draw_func)() = NULL;
-void (*net_draw_func)() = NULL;
-void (*bus_draw_func)() = NULL;
-void (*text_draw_func)() = NULL;
-void (*pin_draw_func)() = NULL;
 void (*select_func)() = s_toplevel_select_object;
-void (*x_log_update_func)() = NULL;
 void (*variable_set_func)() = i_vars_set;
-int (*load_newer_backup_func)() = NULL;
 

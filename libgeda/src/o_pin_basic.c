@@ -28,6 +28,9 @@
 #include <dmalloc.h>
 #endif
 
+/*! Default setting for pin draw function. */
+void (*pin_draw_func)() = NULL;
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
