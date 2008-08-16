@@ -152,6 +152,7 @@ struct st_text {
   int x, y;		/* world origin */
 
   char *string;			/* text stuff */
+  char *disp_string;
   int length;
   int size;
   int alignment;	

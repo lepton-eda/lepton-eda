@@ -894,8 +894,7 @@ OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list,
   OBJECT *temp_list=NULL;
   TEXT *text;
   char *name = NULL;
-  char *value = NULL; 
-  char *output_string = NULL;
+  char *value = NULL;
 
   if (string == NULL) {
     return(NULL);
@@ -906,6 +905,7 @@ OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list,
   text = (TEXT *) g_malloc(sizeof(TEXT));
 
   text->string = g_strdup (string);
+  text->disp_string = NULL; /* We'll fix this up later */
   text->length = strlen(string);
   text->size = size;
   text->alignment = alignment;
@@ -933,38 +933,38 @@ OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list,
 
     switch(show_name_value) {
       case(SHOW_NAME_VALUE):
-        output_string = g_strdup(string);
+        text->disp_string = g_strdup(string);
         break;
 
       case(SHOW_NAME):
         if (name[0] != '\0') {
-          output_string = g_strdup(name);
+          text->disp_string = g_strdup(name);
         } else {
           /* you probably can remove this now... */
           /* since improper attributes will never get here */
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
                   string);
-          output_string = g_strdup("invalid");
+          text->disp_string = g_strdup("invalid");
 
         }
         break;
 
       case(SHOW_VALUE):
         if (value[0] != '\0') {
-          output_string = g_strdup (value);
+          text->disp_string = g_strdup (value);
         } else {
           /* you probably can remove this now... */
           /* since improper attributes will never get here */
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
                   string);
-          output_string = g_strdup("invalid");
+          text->disp_string = g_strdup("invalid");
         }
         break;
     }
   } else {
-    output_string = g_strdup(string);
+    text->disp_string = g_strdup(string);
   }
 
 
@@ -975,11 +975,11 @@ OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list,
       (visibility == INVISIBLE && toplevel->show_hidden_text)) {
     object_list->text->prim_objs = 
       o_text_create_string(toplevel, temp_list,
-                           output_string, size, color,
+                           text->disp_string, size, color,
                            x, y, alignment, angle); 
     object_list->text->displayed_width = o_text_width(toplevel,
-                                                      output_string, size/2);
-    object_list->text->displayed_height = o_text_height(output_string, size);
+                                                      text->disp_string, size/2);
+    object_list->text->displayed_height = o_text_height(text->disp_string, size);
   } else {
     object_list->text->prim_objs = NULL;
     object_list->text->displayed_width = 0;
@@ -992,7 +992,6 @@ OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list,
 
   g_free(name);
   g_free(value);
-  g_free(output_string);
   return(object_list);
 }
 
@@ -1275,42 +1274,43 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
   char *name = NULL;
   char *value = NULL;
   TEXT *text = o_current->text;
-  char *output_string = NULL;
+
+  g_free (text->disp_string);
 
   if (o_attrib_get_name_value (text->string, &name, &value)) {
     switch(o_current->show_name_value) {
       case(SHOW_NAME_VALUE):
-        output_string = g_strdup (text->string);
+        text->disp_string = g_strdup (text->string);
         break;
 
       case(SHOW_NAME):
         if (name[0] != '\0') {
-          output_string = g_strdup(name);
+          text->disp_string = g_strdup(name);
         } else {
           /* you probably can remove this now... */
           /* since improper attributes will never get here */
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
                   text->string);
-          output_string = g_strdup("invalid");
+          text->disp_string = g_strdup ("invalid");
         }
         break;
 
       case(SHOW_VALUE):
         if (value[0] != '\0') {
-          output_string = g_strdup(value);
+          text->disp_string = g_strdup(value);
         } else {
           /* you probably can remove this now... */
           /* since improper attributes will never get here */
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
                   text->string);
-          output_string = g_strdup("invalid");
+          text->disp_string = g_strdup ("invalid");
         }
         break;
     }
   } else {
-    output_string = g_strdup (text->string);
+    text->disp_string = g_strdup (text->string);
   }
 
   o_list_delete_rest (toplevel, text->prim_objs);
@@ -1325,7 +1325,7 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
 
     text->prim_objs = o_text_create_string (toplevel,
                                             text->prim_objs,
-                                            output_string,
+                                            text->disp_string,
                                             text->size,
                                             o_current->color,
                                             text->x,
@@ -1336,9 +1336,9 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
     o_complex_set_saved_color_only(text->prim_objs,
                                    o_current->saved_color);
     text->displayed_width = o_text_width (toplevel,
-                                          output_string,
+                                          text->disp_string,
                                           text->size/2);
-    text->displayed_height = o_text_height (output_string,
+    text->displayed_height = o_text_height (text->disp_string,
                                             text->size);
   } else {
     /* make sure list is truely free */
@@ -1352,7 +1352,6 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
 
   g_free(name);
   g_free(value);
-  g_free(output_string);
 }
 
 /*! \todo Finish function documentation!!!
