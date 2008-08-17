@@ -38,25 +38,29 @@
 		      (current-output-port)
 		      (open-output-file output-filename)))
 	  (attriblist (bom2:parseconfig (open-input-file "attribs"))))
-      (bom2:printlist (cons 'refdes attriblist) port #\:)
+      (bom2:printlist (append (cons 'refdes attriblist) (list "qty")) port #\:)
       (newline port)
-      (bom2:printbom port (bom2:components packages attriblist))
+      (bom2:printbom port (bom2:components packages attriblist) 0)
       (close-output-port port))))
 
 (define bom2:printbom
-  (lambda (port bomlist)
+  (lambda (port bomlist count)
     (if (not (null? bomlist))
       (if (not (null? (caar bomlist)))
         (begin
           (display (caaar bomlist) port)
           (if (not (null? (cdaar bomlist)))
             (write-char #\, port))
-          (bom2:printbom port (cons (cons (cdaar bomlist)(cdar bomlist))(cdr bomlist))))
+          (bom2:printbom port (cons (cons (cdaar bomlist)(cdar bomlist))(cdr bomlist)) (+ count 1))
+        )
         (begin
           (display #\: port)
           (bom2:printlist (cdar bomlist) port #\:)
+          (display #\: port)
+          (display count port)
           (newline port)
-          (bom2:printbom port (cdr bomlist)))))))
+          (bom2:printbom port (cdr bomlist) 0)
+        )))))
 
 (define bom2:printlist
   (lambda (ls port delimiter)
