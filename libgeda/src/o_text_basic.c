@@ -1871,11 +1871,11 @@ gdouble o_text_shortest_distance(TEXT *text, gint x, gint y)
 void o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj,
                         const gchar *new_string)
 {
-  g_return_if_fail (toplevel == NULL);
-  g_return_if_fail (obj == NULL);
-  g_return_if_fail (obj->type != OBJ_TEXT);
-  g_return_if_fail (obj->text == NULL);
-  g_return_if_fail (new_string == NULL);
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (obj != NULL);
+  g_return_if_fail (obj->type == OBJ_TEXT);
+  g_return_if_fail (obj->text != NULL);
+  g_return_if_fail (new_string != NULL);
 
   g_free (obj->text->string);
   obj->text->string = g_strdup (new_string);
@@ -1894,10 +1894,10 @@ void o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj,
  */
 const gchar *o_text_get_string (TOPLEVEL *toplevel, OBJECT *obj)
 {
-  g_return_val_if_fail (toplevel == NULL, NULL);
-  g_return_val_if_fail (obj == NULL, NULL);
-  g_return_val_if_fail (obj->type != OBJ_TEXT, NULL);
-  g_return_val_if_fail (obj->text == NULL, NULL);
+  g_return_val_if_fail (toplevel != NULL, NULL);
+  g_return_val_if_fail (obj != NULL, NULL);
+  g_return_val_if_fail (obj->type == OBJ_TEXT, NULL);
+  g_return_val_if_fail (obj->text != NULL, NULL);
 
   return obj->text->string;
 }
