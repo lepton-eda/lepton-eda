@@ -182,19 +182,6 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
 
 
     switch (object->type) {
-      case (OBJ_NET):
-      case (OBJ_PIN):
-      case (OBJ_BUS):
-      case (OBJ_LINE):
-      case (OBJ_BOX):
-      case (OBJ_PICTURE):
-      case (OBJ_CIRCLE):
-      case (OBJ_ARC):
-      case (OBJ_TEXT):
-        o_move_end_lowlevel(w_current, object, SINGLE, diff_x, diff_y,
-                            &other_objects, &connected_objects);
-        break;
-
       case (OBJ_COMPLEX):
       case (OBJ_PLACEHOLDER):
 
@@ -204,6 +191,9 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
                        scm_cons (g_make_attrib_smob_list
                                  (w_current, object), SCM_EOL));
         }
+
+        /* TODO: Fix so we can just pass the complex to o_move_end_lowlevel,
+         * IE.. by falling through the bottom of this case statement. */
 
         /* this next section of code is from */
         /* o_complex_world_translate_world */
@@ -223,6 +213,11 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
         object->w_right = right;
         object->w_bottom = bottom;
 
+        break;
+
+      default:
+        o_move_end_lowlevel(w_current, object, SINGLE, diff_x, diff_y,
+                            &other_objects, &connected_objects);
         break;
     }
 
