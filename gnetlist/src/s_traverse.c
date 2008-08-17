@@ -153,7 +153,11 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
           s_hierarchy_create_uref(pr_current, temp_uref, hierarchy_tag);
         g_free(temp_uref);
       } else {
-        netlist->component_uref = NULL;
+        if (hierarchy_tag) {
+          netlist->component_uref = g_strdup (hierarchy_tag);
+        } else {
+          netlist->component_uref = NULL;
+        }
       }
       
       if (hierarchy_tag) {
