@@ -251,23 +251,40 @@
 /drawoverbar false def
 /fontsize 0.0 def
 
-% Show a string, with an overbar over it
-% string charshow -
-/charshow {
-    drawoverbar {
-	% draw an overbar for the character
-	gsave
-	fontsize 10.0 div setlinewidth
-	0 fontsize rmoveto  % move to (0,overbarheight) 
-	dup stringwidth pop 0 rlineto % draw line to 
-	stroke
-	grestore
-    } if
-    show
+%string1 string2 append -
+/append {
+    2 copy length exch length add % find new length
+    string dup % string1 string2 string string
+    4 2 roll % string string string1 string2
+    2 index 0 3 index
+    % string string string1 string2 string 0 string1
+    putinterval % string string string1 string2
+    exch length exch putinterval
 } bind def
 
+% If drawoverbar is set, draw a line of the same length as the given string
+% string overbarshowline -
+/overbarshowline {
+    % print overbar if necessary
+    stringwidth pop 0
+    drawoverbar {
+        rlineto
+        gsave stroke grestore
+    } {
+        rmoveto
+    } ifelse
+} bind def
+
+% Draws overbars for the given string, then shows the string itself
+% string overbarshow
 /overbarshow {
-    /drawoverbar false def      % start by not drawing overbars
+    /overbarshowacc () def
+    /overbarshowtxt () def
+
+    gsave
+    fontsize 10.0 div setlinewidth
+    0 fontsize rmoveto  % move to (0,overbarheight)
+
     {				% work through string
 	escaped {
 	    % the last character was the escape
@@ -275,12 +292,21 @@
 	    % is it an _ = 95?
 	    dup 95 eq {
 		pop  % we don't need the character anymore
-		% toggle drawing overbars
+                overbarshowacc overbarshowline
+                % toggle drawing overbars
 		/drawoverbar drawoverbar not def
+
+                % Append the contents off the accumulator to the text
+                % string we're eventually going to show
+                /overbarshowtxt overbarshowtxt overbarshowacc append def
+
+                % clear accumulator
+                /overbarshowacc () def
 	    } {
-		% otherwise render the character 
-		(\\ ) dup 1 4 -1 roll put % draw a \ and the character
-		charshow                      % render the string
+                % add to accumulator
+                (\\ ) dup 1 4 -1 roll put
+                overbarshowacc exch append
+                /overbarshowacc exch def
 	    } ifelse
 	    % and reset the flag
 	    /escaped false def
@@ -291,13 +317,21 @@
 		/escaped true def
 		pop % drop character
 	    } {
-		% no, reset flag and draw character
-		( ) dup 0 4 -1 roll put	% create one character string
-		charshow
+                % add to accumulator
+                ( ) dup 0 4 -1 roll put
+                overbarshowacc exch append
+                /overbarshowacc exch def
 	    } ifelse
 	} ifelse
     } forall
+    % Catch any leftovers
+    overbarshowacc overbarshowline
+    overbarshowtxt overbarshowacc append
+
+    grestore
+    show
 } bind def
+
 % 
 % hcenter rjustify vcenter vjustify spacing [(line1) (line2) ... ] rot x y size text -
 /stringw 0.0 def
@@ -310,6 +344,7 @@
 
 /text {
     gsave	        % save state for later
+    /drawoverbar false def      % start by not drawing overbars
 
     dup /fontsize exch def  % save font size for corrections later
     % do font selection 
