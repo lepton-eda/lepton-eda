@@ -35,11 +35,6 @@
 #include <dmalloc.h>
 #endif
 
-#define WINONLY	1
-#define BACKING 2
-
-/* font storage and friends are staying global so that all can access */
-#define NUM_CHARS 255
 
 /*! \todo Finish function documentation!!!
  *  \brief
