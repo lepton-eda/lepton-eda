@@ -79,7 +79,8 @@ typedef struct
 
 static GList	*pcb_element_list,
 				*element_directory_list,
-				*extra_gnetlist_list;
+				*extra_gnetlist_list,
+				*extra_gnetlist_arg_list;
 
 static gchar	*schematics,
 				*basename;
@@ -169,11 +170,30 @@ run_gnetlist(gchar *pins_file, gchar *net_file, gchar *pcb_file, gchar *basename
 	time_t		mtime;
 	static const gchar *gnetlist = NULL;
 
+        /* Prepend the gnetlist arguments (including the list of schematics)
+         * with those the user has specified with gnetlist-arg directives */
+        if (extra_gnetlist_arg_list != NULL) {
+          int count = 0;
+          gchar **str_array =
+            g_new0 (char *, 2 + g_list_length (extra_gnetlist_arg_list));
+          for (list = extra_gnetlist_arg_list;
+               list != NULL;
+               list = g_list_next(list)) {
+            str_array[count++] = list->data;
+          }
+          str_array[count++] = args;
+          args = g_strjoinv (" ", str_array);
+          g_free (str_array);
+        } else {
+          args = g_strdup (args);
+        }
+
 	/*
 	 * Allow the user to specify a full path or a different name for
 	 * the gnetlist command.  Especially useful if multiple copies
 	 * are installed at once.
 	 */
+
 	if (gnetlist == NULL)
 		gnetlist = g_getenv ("GNETLIST");
 	if (gnetlist == NULL)
@@ -271,6 +291,7 @@ run_gnetlist(gchar *pins_file, gchar *net_file, gchar *pcb_file, gchar *basename
 		if (verbose)
 			printf(SEP_STRING);
 		}
+        g_free (args);
 	}
 
 static gchar *
@@ -1221,6 +1242,9 @@ parse_config(gchar *config, gchar *arg)
 	else if (!strcmp(config, "gnetlist"))
 		extra_gnetlist_list =
 				g_list_append(extra_gnetlist_list, g_strdup(arg));
+	else if (!strcmp(config, "gnetlist-arg"))
+		extra_gnetlist_arg_list =
+				g_list_append(extra_gnetlist_arg_list, g_strdup(arg));
 	else if (!strcmp(config, "empty-footprint"))
 		empty_footprint_name = g_strdup(arg);
 	else
@@ -1334,6 +1358,7 @@ static gchar *usage_string1 =
 "   --gnetlist backend    A convenience run of extra gnetlist -g commands.\n"
 "                         Example:  gnetlist partslist3\n"
 "                         Creates:  myproject.partslist3\n"
+"   --gnetlist-arg arg    Allows additional arguments to be passed to gnetlist.\n"
 " --empty-footprint name  See the project.sample file.\n"
 "\n"
 "options (not recognized in a project file):\n"
