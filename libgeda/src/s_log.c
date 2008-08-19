@@ -49,6 +49,9 @@
 /*! Default setting for log update callback function. */
 void (*x_log_update_func)() = NULL;
 
+/*! Default setting for log enable. */
+int do_logging = 0;
+
 #define CATCH_LOG_LEVELS (G_LOG_LEVEL_MASK ^ \
                           (G_LOG_LEVEL_DEBUG | G_LOG_LEVEL_INFO))
 #define PRINT_LOG_LEVELS (CATCH_LOG_LEVELS ^ \
