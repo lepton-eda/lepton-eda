@@ -50,13 +50,19 @@ int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name)
   STRING_LIST *local_list_item;
   char *local_name;
 
-  local_list_item = name_value_list;
-  while (local_list_item != NULL) {
+  for (local_list_item = name_value_list;
+       local_list_item != NULL;
+       local_list_item = local_list_item->next) {
+
+    if (local_list_item->data == NULL)
+      continue;
+
     o_attrib_get_name_value(local_list_item->data, &local_name, NULL);
     if (strcmp(local_name, name) == 0) {
+      g_free (local_name);
       return TRUE;
     }
-    local_list_item = local_list_item->next;
+    g_free (local_name);
   }
   return FALSE;
 }
