@@ -3676,6 +3676,8 @@ gtk_sheet_real_cell_clear (GtkSheet *sheet, gint row, gint column, gboolean dele
 
     if(GTK_IS_OBJECT(sheet) && G_OBJECT(sheet)->ref_count > 0)
       gtk_signal_emit(GTK_OBJECT(sheet),sheet_signals[CLEAR_CELL], row, column);
+
+    sheet_head->CHANGED = 1;
   }  
 
   if(delete){ 
@@ -3977,6 +3979,8 @@ gtk_sheet_entry_changed(GtkWidget *widget, gpointer data)
  /* Added by Matias Mutchinick */
       gtk_sheet_cell_clear(sheet, row, col);
  }
+
+ sheet_head->CHANGED = 1;
 
  if(sheet->freeze_count == 0)
         GTK_SHEET_UNSET_FLAGS(sheet, GTK_SHEET_IS_FROZEN);
@@ -5879,7 +5883,6 @@ gtk_sheet_key_press(GtkWidget *widget,
       printf("In gtk_sheet_key_press, after switch, found default case.\n");
       printf("  User probably typed letter key or DEL.\n");
 #endif
-      sheet_head->CHANGED = 1;  /* cell has been updated.  */
       if(in_selection) {
 	GTK_SHEET_SET_FLAGS(sheet, GTK_SHEET_IN_SELECTION);
 	if(extend_selection) return TRUE; 

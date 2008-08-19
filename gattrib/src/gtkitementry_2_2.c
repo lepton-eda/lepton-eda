@@ -41,16 +41,6 @@
 
 #include "gtkitementry_2_2.h"
 
-/*------------------------------------------------------------------
- * Gattrib specific includes -- stuff dealing with gattrib data structs.
- * Included here in order to grab sheet_head->CHANGED, which is set
- * when the user puts a new value in a cell.
- *------------------------------------------------------------------*/
-#include <libgeda/libgeda.h>       /* geda library fcns  */
-#include "../include/struct.h"     /* typdef and struct declarations */
-#include "../include/prototype.h"  /* function prototypes */
-#include "../include/globals.h"
-
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
@@ -1191,8 +1181,6 @@ gtk_entry_enter_text (GtkEntry       *entry,
 #ifdef DEBUG
   printf("In gtk_entry_enter_text, inserting text . . . \n");
 #endif
-
-  sheet_head->CHANGED = TRUE;
 
   if (gtk_editable_get_selection_bounds (editable, NULL, NULL))
     gtk_editable_delete_selection (editable);
