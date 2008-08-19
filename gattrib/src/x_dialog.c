@@ -206,27 +206,58 @@ void x_dialog_missing_sym()
 void x_dialog_unsaved_data()
 {
   GtkWidget *dialog;
-  const char *string = "Warning!  You have unsaved data in the spreadsheet!\n"
-                       "Are you sure you want to quit?";
+  gchar *tmp;
+  gchar *str;
 
-  /* Create the dialog */
-  dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
-                                  GTK_MESSAGE_WARNING,
-                                  GTK_BUTTONS_YES_NO,
-                                  string);
+  tmp = "Save the changes before closing?";
+  str = g_strconcat ("<big><b>", tmp, "</b></big>", NULL);
 
-  gtk_window_set_title(GTK_WINDOW(dialog), "Unsaved data.  Really quit?");
+  tmp = "If you don't save, all your changes will be permanently lost.";
+  str = g_strconcat (str, "\n\n", tmp, NULL);
 
-  switch(gtk_dialog_run(GTK_DIALOG(dialog))) {
-    case GTK_RESPONSE_YES:
-      gattrib_quit(0);
-      break;
+  dialog = gtk_message_dialog_new (GTK_WINDOW (window),
+                                   GTK_DIALOG_MODAL |
+                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+                                     GTK_MESSAGE_WARNING,
+                                   GTK_BUTTONS_NONE, NULL);
+  gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG (dialog), str);
+  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                          "Close without saving",    GTK_RESPONSE_NO,
+                          GTK_STOCK_CANCEL,          GTK_RESPONSE_CANCEL,
+                          GTK_STOCK_SAVE,            GTK_RESPONSE_YES,
+                          NULL);
 
-    default:
-      break;
-  }
+#if GTK_CHECK_VERSION (2,6,0)
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
+                                          GTK_RESPONSE_YES,
+                                          GTK_RESPONSE_NO,
+                                          GTK_RESPONSE_CANCEL,
+                                          -1);
+#endif
 
-  gtk_widget_destroy(dialog);
+  switch (gtk_dialog_run (GTK_DIALOG (dialog)))
+    {
+      case GTK_RESPONSE_NO:
+        {
+          gattrib_quit(0);
+          break;
+        }
+      case GTK_RESPONSE_YES:
+        {
+          s_toplevel_gtksheet_to_toplevel();  /* Dumps sheet data into TOPLEVEL */
+          s_page_save_all(pr_current);  /* saves all pages in design */
+          sheet_head->CHANGED = FALSE;
+          gattrib_quit(0);
+          break;
+        }
+      case GTK_RESPONSE_CANCEL:
+      default:
+        {
+          break;
+        }
+      }
+  gtk_widget_destroy (dialog);
   return;
 }
 

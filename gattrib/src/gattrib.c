@@ -77,7 +77,6 @@
 gboolean gattrib_really_quit(void)
 {
   if (sheet_head->CHANGED == TRUE) {
-    printf("User is quitting without saving last changes.\n");
     x_dialog_unsaved_data();
   } else {
     gattrib_quit(0);
