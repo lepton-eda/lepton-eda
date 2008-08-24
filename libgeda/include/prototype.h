@@ -178,7 +178,6 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, GList *o_list,
 			     int *left, int *top, 
 			     int *right, int *bottom);
 OBJECT *add_head(void);
-int o_complex_is_eligible_attribute(TOPLEVEL *toplevel, OBJECT *object, int promote_invisible);
 int o_complex_is_embedded(OBJECT *o_current);
 OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		      GList **object_glist, char type, int color, 

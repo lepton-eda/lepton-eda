@@ -227,10 +227,7 @@ OBJECT *add_head()
  *  \par Function Description
  *
  */
-/* The promote_invisible flag is either TRUE or FALSE */
-/* It controls if invisible text is promoted (TRUE) or not (FALSE) */
-int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object,
-				     int promote_invisible) 
+static int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
 {
   char *name = NULL;
   char *padded_name = NULL;
@@ -239,48 +236,37 @@ int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object,
   g_return_val_if_fail(object != NULL, FALSE);
 
   if (object->type != OBJ_TEXT || object->attribute || object->attached_to)
-  {
     return FALSE; /* not a text item or is already attached */
-  }
 
   /* Make sure text item is an attribute */
   if (!o_attrib_get_name_value (object->text->string, NULL, NULL))
-  {
     return FALSE;  /* not an attribute */
-  }
 
   /* always promote symversion= attribute, even if it is invisible */
   if (strncmp(object->text->string, "symversion=", 11) == 0)
-  {
     return TRUE;
-  }
 
   /* check list against attributes which can be promoted */
   if (toplevel->always_promote_attributes &&
-      (strlen(toplevel->always_promote_attributes) != 0))
-  {
-    if (o_attrib_get_name_value(object->text->string, &name, NULL))
-    {
+      (strlen(toplevel->always_promote_attributes) != 0)) {
+
+    if (o_attrib_get_name_value(object->text->string, &name, NULL)) {
       padded_name = g_strdup_printf(" %s ", name);
-      if (strstr(toplevel->always_promote_attributes, padded_name))
-      {
-	/* Yes the name of the attribute was in the always promote */
-        /* attributes list */
+      if (strstr(toplevel->always_promote_attributes, padded_name)) {
+        /* Name of the attribute was in the always promote attributes list */
         promotableAttribute = TRUE;
       }
-      
+
       g_free(padded_name);
       g_free(name);
       if (promotableAttribute)
-	return TRUE;
+        return TRUE;
     }
   }
 
   /* object is invisible and we do not want to promote invisible text */
-  if (object->visibility == INVISIBLE && promote_invisible == FALSE)
-  {
+  if (object->visibility == INVISIBLE && toplevel->promote_invisible == FALSE)
     return FALSE; /* attribute not eligible for promotion */
-  }
 
   /* yup, attribute can be promoted */
   return TRUE;
@@ -479,9 +465,7 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
       next=tmp->next;
 
       /* valid floating attrib? */
-      if (o_complex_is_eligible_attribute(toplevel, tmp,
-                                          toplevel->promote_invisible))
-      {
+      if (o_complex_is_eligible_attribute(toplevel, tmp)) {
         /* Is attribute promotion called for? (passed in parameter) */
         if (attribute_promotion)
         {
