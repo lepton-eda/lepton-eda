@@ -48,7 +48,6 @@
 
 int   default_init_right = WIDTH_C;
 int   default_init_bottom = HEIGHT_C;
-char *default_series_name = NULL;
 char *default_untitled_name = NULL;
 char *default_font_directory = NULL;
 char *default_scheme_directory = NULL;
@@ -79,7 +78,6 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
 
   /* you cannot free the default* strings here since new windows */
   /* need them */
-  INIT_STR(toplevel, series_name     , DEFAULT_SERIES_NAME     );
   INIT_STR(toplevel, untitled_name   , DEFAULT_UNTITLED_NAME   );
   INIT_STR(toplevel, font_directory  , DEFAULT_FONT_DIRECTORY  );
   INIT_STR(toplevel, scheme_directory, DEFAULT_SCHEME_DIRECTORY);
@@ -98,7 +96,6 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
  */
 void i_vars_libgeda_freenames()
 {
-  g_free(default_series_name);
   g_free(default_untitled_name);
   g_free(default_font_directory);
   g_free(default_scheme_directory);

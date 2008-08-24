@@ -393,7 +393,6 @@ struct st_toplevel {
 
   GList *RC_list;                       /* List of RC files which have been read in. */
 
-  char *series_name;			/* Current series basename */
   char *untitled_name;			/* untitled sch basename */
   char *font_directory; 		/* path of the vector fonts */
   char *scheme_directory; 		/* path of the scheme scripts */

@@ -50,7 +50,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->RC_list = NULL;
 
-  toplevel->series_name        = NULL;
   toplevel->untitled_name      = NULL;
   toplevel->font_directory     = NULL;
   toplevel->scheme_directory   = NULL;
@@ -170,7 +169,6 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
     g_source_remove (toplevel->auto_save_timeout);
   }
 
-  g_free (toplevel->series_name);
   g_free (toplevel->untitled_name);
   g_free (toplevel->font_directory);
   g_free (toplevel->scheme_directory);

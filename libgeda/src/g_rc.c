@@ -739,25 +739,6 @@ SCM g_rc_world_size(SCM width, SCM height, SCM border)
  *  \brief
  *  \par Function Description
  *
- *  \param [in] name
- *  \return SCM_BOOL_T always.
- */
-SCM g_rc_default_series_name(SCM name)
-{
-  SCM_ASSERT (scm_is_string (name), name,
-              SCM_ARG1, "default-series-name");
-
-  g_free(default_series_name);
-
-  default_series_name = g_strdup (SCM_STRING_CHARS (name));
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *
  *  \param [in] name  
  *  \return SCM_BOOL_T always.
  */
