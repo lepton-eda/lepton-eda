@@ -525,15 +525,13 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 	  }
           o_text_translate_world(toplevel, x, y, tmp);
 
-        } else { /* not promoting now, but deal with floating attribs */
+        } else { /* not promoting, hide or delete promotable attribs */
 
           if (toplevel->keep_invisible == TRUE) {
-            /* if we are not promoting invisible attribs, keep them */
-            /* around */
+            /* if we want to keep promotable attributes around, but hidden */
             tmp->visibility = INVISIBLE;
           } else {
-            /* else do the default behavior of deleting the original */
-            /* object */
+            /* else delete the promotable attribute objects */
             s_delete(toplevel, tmp);
           }
 
