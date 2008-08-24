@@ -57,7 +57,7 @@ char *default_always_promote_attributes = NULL;
 
 int   default_attribute_promotion = TRUE;
 int   default_promote_invisible = FALSE;
-int   default_keep_invisible = FALSE;
+int   default_keep_invisible = TRUE;
 
 /*! \brief Initialize variables in TOPLEVEL object
  *  \par Function Description
