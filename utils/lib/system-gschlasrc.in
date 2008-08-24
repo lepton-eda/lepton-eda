@@ -23,12 +23,6 @@
 (define gedadata (getenv "GEDADATA"))
 (define gedadatarc (getenv "GEDADATARC"))
 
-;  default-series-name string
-;  Specify the default series name (of new schematics)
-;  Will probably be changed a runtime
-;
-(default-series-name "untitled")
-
 ; force-boundingbox string
 ;
 ; Controls if the entire bounding box of a symbol is used when figuring out

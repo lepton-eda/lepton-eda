@@ -451,13 +451,6 @@
 (enforce-hierarchy "enabled")
 ;(enforce-hierarchy "disabled")
 
-;  default-series-name string
-;
-;  Specify the default series name (of new schematics)
-;  Will probably be changed a runtime
-;
-(default-series-name "untitled")
-
 ; untitled-name string
 ;
 ; Specify the default untitled basename (usually only used a startup time)

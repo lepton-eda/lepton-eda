@@ -23,12 +23,6 @@
 (define gedadata (getenv "GEDADATA"))
 (define gedadatarc (getenv "GEDADATARC"))
 
-;  default-series-name string
-;  Specify the default series name (of new schematics)
-;  Will probably be changed a runtime
-;
-(default-series-name "untitled")
-
 ; net-naming-priority string
 ;
 ; Specifies which netname has priority if a net is found with two names.
