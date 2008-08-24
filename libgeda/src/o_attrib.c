@@ -538,7 +538,7 @@ gchar *o_save_attribs(GList *attribs)
  *
  *  It returns TRUE if it has been able to parse the string into the
  *  name and value parts of an attribute. Otherwise it returns FALSE,
- *  in that case \a *name_ptr and \a *value_ptr are unset.
+ *  in that case \a *name_ptr and \a *value_ptr are set to NULL.
  *
  *  \a name_ptr and/or \a value_ptr can be NULL.
  *
@@ -556,7 +556,12 @@ gboolean
 o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_ptr)
 {
   gchar *ptr, *prev_char, *next_char;
-  
+
+  if (name_ptr != NULL)
+    *name_ptr = NULL;
+  if (value_ptr != NULL)
+    *value_ptr = NULL;
+
   g_return_val_if_fail (string != NULL, FALSE);
 
   ptr = g_utf8_strchr (string, -1, g_utf8_get_char ("="));
