@@ -337,6 +337,32 @@ GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
   return(dest);
 }
 
+
+/*! \brief Relink OBJECT next and prev pointers to match the passed GList
+ *
+ * \par Function Description
+ * Updates the OBJECT next and prev pointers for OBJECTs in the passed
+ * GList of objects to link in the same order as the passed GList.
+ *
+ * \param [in] o_glist   The GList of OBJECTs.
+ */
+void o_glist_relink_objects (GList *o_glist)
+{
+  GList *iter, *tmp;
+  OBJECT *object;
+
+  for (iter = o_glist; iter != NULL; iter = g_list_next (iter)) {
+    object = iter->data;
+
+    tmp = g_list_previous (iter);
+    object->prev = (tmp == NULL) ? NULL : tmp->data;
+
+    tmp = g_list_next (iter);
+    object->next = (tmp == NULL) ? NULL : tmp->data;
+  }
+}
+
+
 /*! \todo Finish function description!!!
  *  \brief
  *  \par Function Description

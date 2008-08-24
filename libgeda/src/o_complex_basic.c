@@ -324,7 +324,6 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
   int save_adding_sel = 0;
   int loaded_normally = FALSE;
   gboolean use_object_list;
-  GList *glist_ptr;
 
   gchar *buffer;
 
@@ -501,22 +500,8 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 	  else {
 	    if (object_glist) {
 	      *object_glist = g_list_append (*object_glist, tmp);
-	      
-	      glist_ptr = *object_glist;
-	      while (glist_ptr) {
-		if (g_list_previous(glist_ptr) == NULL) {
-		  ((OBJECT *) glist_ptr->data)->prev = NULL;
-		} else {
-		  ((OBJECT *) glist_ptr->data)->prev = g_list_previous (glist_ptr)->data;
-		}
-		if (g_list_next(glist_ptr) == NULL) {
-		  ((OBJECT *) glist_ptr->data)->next = NULL;
-		} else {
-		  ((OBJECT *) glist_ptr->data)->next = g_list_next (glist_ptr)->data;
-		}
-		glist_ptr = g_list_next (glist_ptr);
-	      }
-	      
+              o_glist_relink_objects (*object_glist);
+
 	      o_attrib_attach (toplevel, ((OBJECT *) g_list_last(*object_glist)->data),
 			       tmp, new_node);
 	    } else {
@@ -548,21 +533,8 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
     new_node->complex->prim_objs = prim_objs;
     if (object_glist) {
       *object_glist = g_list_append (*object_glist, new_node);
+      o_glist_relink_objects (*object_glist);
 
-      glist_ptr = *object_glist;
-      while (glist_ptr) {
-	if (g_list_previous (glist_ptr) == NULL) {
-	  ((OBJECT *) glist_ptr->data)->prev = NULL;
-	} else {
-	  ((OBJECT *) glist_ptr->data)->prev = g_list_previous(glist_ptr)->data;
-	}
-	if (g_list_next (glist_ptr) == NULL) {
-	  ((OBJECT *) glist_ptr->data)->next = NULL;
-	} else {
-	  ((OBJECT *) glist_ptr->data)->next = g_list_next(glist_ptr)->data;
-	}
-	glist_ptr = g_list_next(glist_ptr);
-      }
       object_list = (OBJECT *) (g_list_last(*object_glist)->data);
     } else {
       object_list = new_node;
