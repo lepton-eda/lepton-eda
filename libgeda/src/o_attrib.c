@@ -541,6 +541,7 @@ gchar *o_save_attribs(GList *attribs)
  *  in that case \a *name_ptr and \a *value_ptr are set to NULL.
  *
  *  \a name_ptr and/or \a value_ptr can be NULL.
+ *  If not NULL, the caller must g_free these returned strings.
  *
  *  \note
  *  If you get an invalid attribute (improper) with a name and no
