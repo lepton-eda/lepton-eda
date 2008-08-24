@@ -37,7 +37,6 @@
  * Kazu Hirata <kazu@seul.org> on July 16, 1999 - Added these absolute
  * defaults used when default_... is NULL.
  */
-#define DEFAULT_SERIES_NAME      "untitled"
 #define DEFAULT_UNTITLED_NAME    "untitled"
 #define DEFAULT_SCHEME_DIRECTORY "./"
 #define DEFAULT_FONT_DIRECTORY   "../lib/sym/font"

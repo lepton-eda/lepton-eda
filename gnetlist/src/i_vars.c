@@ -35,7 +35,6 @@
 #include <dmalloc.h>
 #endif
 
-#define DEFAULT_SERIES_NAME      "untitled"
 #define DEFAULT_UNTITLED_NAME    "untitled"
 #define DEFAULT_SCHEME_DIRECTORY "./"
 #define DEFAULT_FONT_DIRECTORY   "../lib/sym/font"
