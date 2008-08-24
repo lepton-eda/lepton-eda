@@ -542,6 +542,11 @@ gchar *o_save_attribs(GList *attribs)
  *
  *  \a name_ptr and/or \a value_ptr can be NULL.
  *
+ *  \note
+ *  If you get an invalid attribute (improper) with a name and no
+ *  value, then it is NOT an attribute. Also, there cannot be any
+ *  spaces beside the equals sign
+ *
  *  \param [in]  string     String to split into name/value pair.
  *  \param [out] name_ptr   The return location for the name, or NULL.
  *  \param [out] value_ptr  The return location for the value, or NULL.
@@ -562,7 +567,7 @@ o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_pt
   prev_char = g_utf8_find_prev_char (string, ptr);
   next_char = g_utf8_find_next_char (ptr, NULL);
   if (prev_char == NULL || *prev_char == ' ' ||
-      (next_char != NULL && *next_char == ' ')) {
+      next_char == NULL || *next_char == ' ' || *next_char == '\0' ) {
     return FALSE;
   }
 
@@ -571,7 +576,7 @@ o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_pt
   }
 
   if (value_ptr != NULL) {
-    *value_ptr = g_strdup (next_char != NULL ? next_char : "");
+    *value_ptr = g_strdup (next_char);
   }
 
   return TRUE;
