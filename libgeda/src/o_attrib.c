@@ -561,10 +561,8 @@ o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_pt
 
   prev_char = g_utf8_find_prev_char (string, ptr);
   next_char = g_utf8_find_next_char (ptr, NULL);
-  if ((prev_char == NULL) ||
-      g_unichar_isspace (g_utf8_get_char (prev_char)) ||
-      ((next_char != NULL) &&
-       g_unichar_isspace (g_utf8_get_char (next_char)))) {
+  if (prev_char == NULL || *prev_char == ' ' ||
+      (next_char != NULL && *next_char == ' ')) {
     return FALSE;
   }
 
