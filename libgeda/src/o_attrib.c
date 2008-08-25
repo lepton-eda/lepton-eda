@@ -154,9 +154,9 @@ void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current)
  *  \par Function Description
  *  Attach existing attribute to an object.
  *
- *  \param [in]  toplevel    The TOPLEVEL object.
+ *  \param [in]  toplevel     The TOPLEVEL object.
  *  \param [in]  parent_list  List where actual attribute objects live.
- *  \param [in]  text_object  The attribute to be added.
+ *  \param [in]  attrib       The attribute to be added.
  *  \param [out] object       The object where you want to add item as an attribute.
  *
  *  \par IMPORTANT:
@@ -165,69 +165,53 @@ void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current)
  *  \note
  *  typically parent_list is object_parent (object_head), but it is
  *  overridden in o_complex_add so that it points to head node of the complex
- *  
  */
-void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *parent_list,
-		     OBJECT *text_object, OBJECT *object)
+void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *parent_list,
+                      OBJECT *attrib, OBJECT *object)
 {
-  OBJECT *o_current = NULL;
+  OBJECT *found = NULL; /* object in main list */
 
-  OBJECT *found = NULL;
-  OBJECT *found2 = NULL; /* object in main list */
+  g_return_if_fail (attrib != NULL);
+  g_return_if_fail (object != NULL);
 
-  o_current = text_object; 
-
-  if (object == NULL) {
-    printf("ah.. object was not found in the parent list!\n");
+  /* is the object already part of the list ? */
+  if (o_attrib_search (object->attribs, attrib)) {
+    g_warning ("Attribute [%s] already attached\n", attrib->text->string);
     return;
   }
 
-  /* is the object already part of the list ? */
-  found = o_attrib_search(object->attribs, o_current);
-  if (!found) { /* no it's not, add it to the list */
-		
-    found2 = (OBJECT *) o_list_search(parent_list, o_current);	
+  found = (OBJECT *) o_list_search(parent_list, attrib);
 
-    /* check to see if found2 is not null hack */
-    if (found2) {
-      if (found2->type == OBJ_TEXT) {
-
-        if (found2->attached_to) {
-          fprintf(stderr, "You cannot attach this attribute [%s] to more than one object\n", found2->text->string);
-        } else {
-
-          o_attrib_add(toplevel,
-                       object,
-                       found2);
-
-          o_current->color = toplevel->
-            attribute_color; 
-
-          o_complex_set_color(
-                              o_current->text->prim_objs,
-                              o_current->color);
-
-          if (o_current->saved_color != -1) {
-            o_complex_set_saved_color_only(
-                                           o_current->text->prim_objs, 
-                                           o_current->color);
-            o_current->saved_color = 
-              o_current->color;
-          }
-          /* can't do this here since just selecting something */
-          /* will cause this to be set */
-          /* toplevel->page_current->CHANGED=1;*/
-        }
-      } else {
-        fprintf(stderr, "You cannot attach non text items as attributes!\n");
-      }	
-    }
-  } else {
-    if (o_current->text->string) { 	
-      printf("Attribute [%s] already attached\n", 
-             o_current->text->string);
-    }
+  /* check to see if found is not null hack */
+  if (!found) {
+    g_critical ("o_attrib_attach(): attrib was not found in parent_list\n");
+    return;
   }
+
+  if (found->type != OBJ_TEXT) {
+    g_warning (_("Attempt to attach non text item as an attribute!\n"));
+    return;
+  }
+
+  if (found->attached_to != NULL) {
+    g_warning (_("Attempt to attach attribute [%s] to more than one object\n"),
+                found->text->string);
+    return;
+  }
+
+  o_attrib_add (toplevel, object, found);
+
+  attrib->color = toplevel->attribute_color;
+  o_complex_set_color(attrib->text->prim_objs, attrib->color);
+
+  if (attrib->saved_color != -1) {
+    o_complex_set_saved_color_only (attrib->text->prim_objs, attrib->color);
+    attrib->saved_color = attrib->color;
+  }
+
+  /* can't do this here since just selecting something */
+  /* will cause this to be set */
+  /* toplevel->page_current->CHANGED=1;*/
 }
 
 
