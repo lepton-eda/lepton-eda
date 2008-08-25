@@ -378,13 +378,8 @@ OBJECT *o_list_search(OBJECT *list, OBJECT *current)
 
   o_current = list ;
 
-  if (current == NULL) {
-    return(NULL);
-  }
-
-  if (list == NULL) {
-    return(NULL);
-  }
+  g_return_val_if_fail (current != NULL, NULL);
+  g_return_val_if_fail (list != NULL, NULL);
 
   while(o_current != NULL) {
     /* look for uniq sid */
