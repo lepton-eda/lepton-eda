@@ -7,24 +7,64 @@
 bin_PROGRAMS = gschem
 
 gschem_SOURCES = \
-	a_pan.c a_zoom.c \
-	g_register.c g_hook.c\
-	g_rc.c g_keys.c g_funcs.c \
-	globals.c gschem.c \
-	i_basic.c i_callbacks.c i_vars.c \
-	o_basic.c o_attrib.c o_move.c o_copy.c o_delete.c o_misc.c \
-	o_slot.c o_grips.c \
-	o_arc.c o_box.c o_circle.c o_complex.c o_select.c o_find.c \
-	o_line.c o_net.c o_text.c o_pin.c o_bus.c o_buffer.c o_undo.c \
-	o_picture.c o_place.c \
-	x_autonumber.c x_basic.c x_dialog.c \
-	x_event.c x_grid.c x_log.c x_menus.c x_script.c \
-	x_pagesel.c x_print.c x_window.c x_stroke.c x_image.c x_color.c \
-	x_compselect.c x_fileselect.c x_preview.c x_attribedit.c \
-	x_multiattrib.c \
-	parsecmd.c o_cue.c \
+	a_pan.c \
+	a_zoom.c \
+	g_funcs.c \
+	g_hook.c \
+	g_keys.c \
+	g_rc.c \
+	g_register.c \
+	globals.c \
+	gschem.c \
 	gschem_dialog.c \
-	gschem_toplevel.c
+	gschem_toplevel.c \
+	i_basic.c \
+	i_callbacks.c \
+	i_vars.c \
+	o_arc.c \
+	o_attrib.c \
+	o_basic.c \
+	o_box.c \
+	o_buffer.c \
+	o_bus.c \
+	o_circle.c \
+	o_complex.c \
+	o_copy.c \
+	o_cue.c \
+	o_delete.c \
+	o_find.c \
+	o_grips.c \
+	o_line.c \
+	o_misc.c \
+	o_move.c \
+	o_net.c \
+	o_picture.c \
+	o_pin.c \
+	o_place.c \
+	o_select.c \
+	o_slot.c \
+	o_text.c \
+	o_undo.c \
+	parsecmd.c \
+	x_attribedit.c \
+	x_autonumber.c \
+	x_basic.c \
+	x_color.c \
+	x_compselect.c \
+	x_dialog.c \
+	x_event.c \
+	x_fileselect.c \
+	x_grid.c \
+	x_image.c \
+	x_log.c \
+	x_menus.c \
+	x_multiattrib.c \
+	x_pagesel.c \
+	x_preview.c \
+	x_print.c \
+	x_script.c \
+	x_stroke.c \
+	x_window.c
 
 if CCISGCC
 AM_CFLAGS = -Wall
