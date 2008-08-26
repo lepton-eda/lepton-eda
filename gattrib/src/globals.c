@@ -32,8 +32,6 @@
 #include <dmalloc.h>
 #endif
 
-int do_logging=TRUE;
-
 /* command line arguments */
 int verbose_mode=FALSE;
 int quiet_mode=FALSE;

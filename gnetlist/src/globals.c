@@ -42,7 +42,6 @@ GdkColor white;
 GdkColor black;
 
 int logfile_fd=-1;
-int do_logging=TRUE;
 int logging_dest=LOG_WINDOW;
 
 /* netlist specific variables */

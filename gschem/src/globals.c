@@ -47,7 +47,6 @@ GdkColormap *colormap;
 GdkColor white;
 GdkColor black;
 
-int do_logging = TRUE;
 int logging_dest = LOG_WINDOW;
 
 /* these are required by libgeda */

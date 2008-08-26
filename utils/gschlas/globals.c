@@ -44,7 +44,6 @@ GdkColor black;
 #endif
 
 int logfile_fd=-1;
-int do_logging=TRUE;
 int logging_dest=LOG_WINDOW;
 
 /* these are required by libgeda */

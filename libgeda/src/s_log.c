@@ -50,7 +50,7 @@
 void (*x_log_update_func)() = NULL;
 
 /*! Default setting for log enable. */
-int do_logging = 0;
+int do_logging = TRUE;
 
 #define CATCH_LOG_LEVELS (G_LOG_LEVEL_MASK ^ \
                           (G_LOG_LEVEL_DEBUG | G_LOG_LEVEL_INFO))
