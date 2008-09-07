@@ -140,6 +140,14 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   gchar *backup_filename;
   gchar *real_filename;
 
+  /* We need to temporarily make the page being deleted current because
+   * various functions called below (some indirectly) assume they are
+   * deleting objects from the current page.
+   *
+   * These functions are known to include:
+   *   s_delete_object ()
+   */
+
   /* save page_current and switch to page */
   if (page == toplevel->page_current) {
     tmp = NULL;
