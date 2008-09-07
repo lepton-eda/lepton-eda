@@ -140,9 +140,6 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   gchar *backup_filename;
   gchar *real_filename;
 
-  /* we need to play with page_current because s_delete_list_fromstart() */
-  /* make use of it (see s_tile_remove_object) */
-
   /* save page_current and switch to page */
   if (page == toplevel->page_current) {
     tmp = NULL;
