@@ -136,8 +136,20 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
  */
 void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
 {
+  PAGE *tmp;
   gchar *backup_filename;
   gchar *real_filename;
+
+  /* we need to play with page_current because s_delete_list_fromstart() */
+  /* make use of it (see s_tile_remove_object) */
+
+  /* save page_current and switch to page */
+  if (page == toplevel->page_current) {
+    tmp = NULL;
+  } else {
+    tmp = toplevel->page_current;
+    s_page_goto (toplevel, page);
+  }
 
   /* Get the real filename and file permissions */
   real_filename = follow_symlinks (page->page_filename, NULL);
@@ -195,10 +207,15 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
 
   g_free (page);
 
-  if (toplevel->page_current == page) {
-    /* page was page_current, page_current must be updated */
+  /* restore page_current */
+  if (tmp != NULL) {
+    s_page_goto (toplevel, tmp);
+  } else {
+    /* page was page_current */
     toplevel->page_current = NULL;
+    /* page_current must be updated by calling function */
   }
+
 }
 
 

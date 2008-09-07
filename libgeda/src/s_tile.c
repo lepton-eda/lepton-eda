@@ -281,8 +281,11 @@ void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
  *  \brief
  *  \par Function Description
  *
+ *  \bug
+ *  this is still wrong, p_current needs to be the page the object is on
+ *  doesn't work if the current page isn't where the object lives
  */
-void s_tile_remove_object(OBJECT *object)
+void s_tile_remove_object(TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
   GList *tl_current;
 
@@ -307,7 +310,7 @@ void s_tile_remove_object(OBJECT *object)
  */
 void s_tile_update_object(TOPLEVEL * toplevel, OBJECT * object)
 {
-  s_tile_remove_object(object);
+  s_tile_remove_object(toplevel, toplevel->page_current, object);
   s_tile_add_line_object(toplevel, object);
 }
 
