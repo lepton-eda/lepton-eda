@@ -211,7 +211,7 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
   if (full_filename == NULL) {
     g_set_error (err, G_FILE_ERROR, tmp_err->code,
                  _("Cannot find file %s: %s"),
-                 filename, g_strerror (tmp_err->code));
+                 filename, tmp_err->message);
     g_error_free(tmp_err);
     return 0;
   }
