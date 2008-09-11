@@ -155,22 +155,11 @@ void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current)
  *  Attach existing attribute to an object.
  *
  *  \param [in]  toplevel     The TOPLEVEL object.
- *  \param [in]  parent_list  List where actual attribute objects live.
  *  \param [in]  attrib       The attribute to be added.
  *  \param [out] object       The object where you want to add item as an attribute.
- *
- *  \par IMPORTANT:
- *  Lists first then specific single item.
- *
- *  \note
- *  typically parent_list is object_parent (object_head), but it is
- *  overridden in o_complex_add so that it points to head node of the complex
  */
-void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *parent_list,
-                      OBJECT *attrib, OBJECT *object)
+void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object)
 {
-  OBJECT *found = NULL; /* object in main list */
-
   g_return_if_fail (attrib != NULL);
   g_return_if_fail (object != NULL);
 
@@ -180,26 +169,18 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *parent_list,
     return;
   }
 
-  found = (OBJECT *) o_list_search(parent_list, attrib);
-
-  /* check to see if found is not null hack */
-  if (!found) {
-    g_critical ("o_attrib_attach(): attrib was not found in parent_list\n");
-    return;
-  }
-
-  if (found->type != OBJ_TEXT) {
+  if (attrib->type != OBJ_TEXT) {
     g_warning (_("Attempt to attach non text item as an attribute!\n"));
     return;
   }
 
-  if (found->attached_to != NULL) {
+  if (attrib->attached_to != NULL) {
     g_warning (_("Attempt to attach attribute [%s] to more than one object\n"),
-                found->text->string);
+                attrib->text->string);
     return;
   }
 
-  o_attrib_add (toplevel, object, found);
+  o_attrib_add (toplevel, object, attrib);
 
   attrib->color = toplevel->attribute_color;
   o_complex_set_color(attrib->text->prim_objs, attrib->color);
@@ -401,9 +382,7 @@ OBJECT *o_read_attribs(TOPLEVEL *toplevel,
     }
 
     if (ATTACH) {
-      o_attrib_attach(toplevel,
-                      toplevel->page_current->object_parent,
-                      object_list, object_to_get_attribs);
+      o_attrib_attach(toplevel, object_list, object_to_get_attribs);
       /* check color to set it to the right value */
       if (object_list->color != saved_color) {
         object_list->color = saved_color;

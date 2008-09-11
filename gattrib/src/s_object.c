@@ -326,8 +326,8 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
   /* now attach the attribute to the object (if o_current is not NULL) */
   /* remember that o_current contains the object to get the attribute */
   if (o_current) {
-    o_attrib_attach(pr_current, pr_current->page_current->object_head,
-		    pr_current->page_current->object_tail, o_current);
+    o_attrib_attach (pr_current, pr_current->page_current->object_tail,
+                     o_current);
   }
 
   o_selection_add( pr_current->page_current->selection_list,

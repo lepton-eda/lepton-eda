@@ -252,9 +252,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
   /* now attach the attribute to the object (if o_current is not NULL) */
   /* remember that o_current contains the object to get the attribute */
   if (o_current) {
-    o_attrib_attach(toplevel, toplevel->page_current->object_head,
-                    toplevel->page_current->object_tail,
-                    o_current);
+    o_attrib_attach (toplevel, toplevel->page_current->object_tail, o_current);
   }
 
   o_selection_add( toplevel->page_current->selection_list,

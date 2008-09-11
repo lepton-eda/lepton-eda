@@ -100,7 +100,7 @@ void o_arc_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery
 OBJECT *o_attrib_search(GList *list, OBJECT *item);
 void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item);
 void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current);
-void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *parent_list, OBJECT *attrib, OBJECT *object);
+void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object);
 void o_attrib_free_all(TOPLEVEL *toplevel, GList *list);
 void o_attrib_print(GList *attributes);
 void o_attrib_remove(GList **list, OBJECT *remove);

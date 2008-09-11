@@ -193,8 +193,7 @@ OBJECT *o_list_copy_all(TOPLEVEL *toplevel, OBJECT *src_list_head,
 
       if (src->attached_to /*&& !toplevel->ADDING_SEL*/) {
         if (src->attached_to->copied_to) {
-          o_attrib_attach(toplevel, dest_list_head,
-                          dest, src->attached_to->copied_to);
+          o_attrib_attach(toplevel, dest, src->attached_to->copied_to);
         }
       }
     }
@@ -307,9 +306,8 @@ GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
 
       if (src_object->attached_to /*&& !toplevel->ADDING_SEL*/) {
         if (src_object->attached_to->copied_to) {
-          o_attrib_attach(toplevel,
-                          (OBJECT *)dest->data, /* This param is a hack */
-                          dst_object, src_object->attached_to->copied_to);
+          o_attrib_attach(toplevel, dst_object,
+                          src_object->attached_to->copied_to);
         }
       }
     }

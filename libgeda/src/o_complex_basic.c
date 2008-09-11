@@ -477,21 +477,13 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 
           /* Isolate tmp completely, now that it's removed from list */
           tmp->next=tmp->prev=NULL;
-	  if (use_object_list) {
-	    object_list = (OBJECT *) s_basic_link_object(tmp, object_list);
-	    o_attrib_attach (toplevel, object_list, tmp, new_node);
-	  }
-	  else {
-	    if (object_glist) {
-	      *object_glist = g_list_append (*object_glist, tmp);
-              o_glist_relink_objects (*object_glist);
-
-	      o_attrib_attach (toplevel, ((OBJECT *) g_list_last(*object_glist)->data),
-			       tmp, new_node);
-	    } else {
-	      o_attrib_attach (toplevel, NULL, tmp, new_node);
-	    }
-	  }
+          if (use_object_list) {
+            object_list = (OBJECT *) s_basic_link_object(tmp, object_list);
+          } else if (object_glist) {
+            *object_glist = g_list_append (*object_glist, tmp);
+            o_glist_relink_objects (*object_glist);
+          }
+          o_attrib_attach (toplevel, tmp, new_node);
           o_text_translate_world(toplevel, x, y, tmp);
 
         } else { /* not promoting, hide or delete promotable attribs */

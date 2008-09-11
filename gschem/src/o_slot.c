@@ -200,10 +200,7 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
       /* manually attach attribute */
 
       /* NEWSEL this is okay too, since tail is single obj */
-      o_attrib_attach(toplevel,
-                      toplevel->page_current->object_head,
-                      toplevel->page_current->object_tail,
-                      object);
+      o_attrib_attach (toplevel, toplevel->page_current->object_tail, object);
 
       slot_text_object =
         toplevel->page_current->object_tail;
