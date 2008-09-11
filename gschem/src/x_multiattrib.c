@@ -217,9 +217,10 @@ void x_multiattrib_open (GSCHEM_TOPLEVEL *w_current)
                                 /* GschemDialog */
                                 "settings-name", "multiattrib",
                                 "gschem-toplevel", w_current,
-                                /* GtkWindow */
-                                "transient-for", w_current->main_window,
                                 NULL));
+
+    gtk_window_set_transient_for (GTK_WINDOW(w_current->mawindow),
+                                  GTK_WINDOW(w_current->main_window));
 
     g_signal_connect (w_current->mawindow,
                       "response",
