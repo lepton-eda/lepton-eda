@@ -273,25 +273,21 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
    * the RC file, it's time to read in the file. */
   if (load_backup_file == 1) {
     /* Load the backup file */
-    toplevel->page_current->object_tail = (OBJECT *)
-    o_read(toplevel, toplevel->page_current->object_tail,
-	   backup_filename, err);
+    o_read (toplevel, toplevel->page_current->object_tail,
+            backup_filename, &tmp_err);
   } else {
     /* Load the original file */
-    toplevel->page_current->object_tail = (OBJECT *)
-    o_read(toplevel, toplevel->page_current->object_tail,
-	   full_filename, err);
+    o_read (toplevel, toplevel->page_current->object_tail,
+            full_filename, &tmp_err);
   }
 
-  if (toplevel->page_current->object_tail != NULL) {
+  if (tmp_err == NULL)
     opened = TRUE;
-  } else {
-    /* Failed to open page */
-    opened = FALSE;	 
-  }
+  else
+    g_propagate_error (err, tmp_err);
 
-  toplevel->page_current->object_tail
-    = (OBJECT *) return_tail(toplevel->page_current->object_head);
+  toplevel->page_current->object_tail =
+    return_tail(toplevel->page_current->object_head);
 
   /* make sure you init net_consolide to false (default) in all */
   /* programs */
@@ -302,8 +298,7 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
   if (load_backup_file == 0) {
     /* If it's not the backup file */
     toplevel->page_current->CHANGED=0; /* added 4/7/98 */
-  }
-  else {
+  } else {
     /* We are loading the backup file, so gschem should ask
        the user if save it or not when closing the page. */
     toplevel->page_current->CHANGED=1;
