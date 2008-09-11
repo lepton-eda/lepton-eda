@@ -518,7 +518,6 @@ OBJECT *o_read(TOPLEVEL *toplevel, OBJECT *object_list, char *filename,
   } 
 
   /* Parse file contents */
-  g_assert (buffer != NULL);
   result = o_read_buffer (toplevel, object_list, buffer, size, filename);
   g_free (buffer);
   return result;
