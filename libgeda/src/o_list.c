@@ -262,14 +262,6 @@ GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
     if (src_object->type != OBJ_TEXT && src_object->type != OBJ_HEAD) {
       dst_object = o_list_copy_to (toplevel, NULL, src_object, flag, NULL);
       dst_object->sid = global_sid++;
-      /* Link the OBJECT nodes in the GList to allow attrib attaching */
-      if (dest != NULL) {
-        dst_object->prev = (OBJECT *)dest->data;
-        dst_object->prev->next = dst_object;
-      } else {
-        dst_object->prev = NULL;
-      }
-      dst_object->next = NULL;
       dest = g_list_prepend (dest, dst_object);
     }
 
@@ -294,21 +286,12 @@ GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
     if (src_object->type == OBJ_TEXT) {
       dst_object = o_list_copy_to (toplevel, NULL, src_object, flag, NULL);
       dst_object->sid = global_sid++;
-      /* Link the OBJECT nodes in the GList to allow attrib attaching */
-      if (dest != NULL) {
-        dst_object->prev = (OBJECT *)dest->data;
-        dst_object->prev->next = dst_object;
-      } else {
-        dst_object->prev = NULL;
-      }
-      dst_object->next = NULL;
       dest = g_list_prepend (dest, dst_object);
 
-      if (src_object->attached_to /*&& !toplevel->ADDING_SEL*/) {
-        if (src_object->attached_to->copied_to) {
-          o_attrib_attach(toplevel, dst_object,
-                          src_object->attached_to->copied_to);
-        }
+      if (src_object->attached_to != NULL &&
+          src_object->attached_to->copied_to != NULL) {
+        o_attrib_attach(toplevel, dst_object,
+                        src_object->attached_to->copied_to);
       }
     }
 
@@ -329,6 +312,9 @@ GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
 
   /* Reverse the list to be in the correct order */
   dest = g_list_reverse (dest);
+
+  /* Link the copied objects together for good measure */
+  o_glist_relink_objects (dest);
 
   toplevel->ADDING_SEL = adding_sel_save;
 
