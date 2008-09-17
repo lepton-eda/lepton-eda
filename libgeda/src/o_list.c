@@ -350,34 +350,6 @@ void o_glist_relink_objects (GList *o_glist)
 /*! \todo Finish function description!!!
  *  \brief
  *  \par Function Description
- *  returns entry in the list
- *
- *  \param [in] list
- *  \param [in] current
- *  \return OBJECT pointer.
- */
-OBJECT *o_list_search(OBJECT *list, OBJECT *current)
-{
-  OBJECT *o_current;
-
-  o_current = list ;
-
-  g_return_val_if_fail (current != NULL, NULL);
-  g_return_val_if_fail (list != NULL, NULL);
-
-  while(o_current != NULL) {
-    /* look for uniq sid */
-    if (current->sid == o_current->sid) {
-      return(o_current);
-    }
-    o_current = o_current->next;
-  }
-  return(NULL);
-}
-
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
  *  assuming list is head
  *  head will NOT be deleted
  *
