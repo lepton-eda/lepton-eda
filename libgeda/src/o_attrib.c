@@ -1707,20 +1707,16 @@ char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name)
  *  This function will only look for attached attributes and not
  *  unattached free floating attribs.
  *
- *  \param [in] object_list  OBJECT list to search.
- *  \param [in] sel_object   OBJECT to search for.
- *  \return An array of objects that matched sel_object, NULL otherwise.
+ *  \param [in] object       OBJECT whos attributes to return.
+ *  \return An array of objects that attached to object, NULL otherwise.
  */
-OBJECT ** o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object) 
+OBJECT ** o_attrib_return_attribs(OBJECT *object)
 {
   OBJECT **found_objects;
   int num_attribs=0;
   int i=0;
   OBJECT *a_current;
-  OBJECT *object;
   GList *a_iter;
-
-  object = (OBJECT *) o_list_search(object_list, sel_object);
 
   if (!object || !object->attribs) {
     return(NULL);

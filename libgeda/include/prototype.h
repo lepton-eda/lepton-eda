@@ -125,7 +125,7 @@ char *o_attrib_search_component(OBJECT *object, char *name);
 void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object);
 void o_attrib_slot_copy(TOPLEVEL *toplevel, OBJECT *original, OBJECT *target);
 char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name);
-OBJECT **o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object);
+OBJECT **o_attrib_return_attribs(OBJECT *sel_object);
 void o_attrib_free_returned(OBJECT **found_objects);
 
 /* o_basic.c */

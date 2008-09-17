@@ -50,16 +50,13 @@ static void custom_world_get_object_list_bounds
  *  \par Function Description
  *
  */
-/* Makes a list of all attributes currently connected to curr_object. *
+/* Makes a list of all attributes currently connected to object. *
  * Principle stolen from o_attrib_return_attribs */
-SCM g_make_attrib_smob_list(GSCHEM_TOPLEVEL *w_current, OBJECT *curr_object)
+SCM g_make_attrib_smob_list(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
   OBJECT *a_current;
-  OBJECT *object;
   GList *a_iter;
   SCM smob_list = SCM_EOL;
-
-  object = (OBJECT *) o_list_search(curr_object, curr_object);
 
   if (!object) {
     return(SCM_EOL);   

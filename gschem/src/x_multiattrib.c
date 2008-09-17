@@ -1919,9 +1919,7 @@ void multiattrib_update (Multiattrib *multiattrib)
     return;
 
   /* get list of attributes */
-  object_attribs = o_attrib_return_attribs (
-    GSCHEM_DIALOG (multiattrib)->w_current->toplevel->page_current->object_head,
-    multiattrib->object);
+  object_attribs = o_attrib_return_attribs (multiattrib->object);
   /* populate the store with attributes */
   if (object_attribs) {
     for (i = 0, o_current = object_attribs[i];
