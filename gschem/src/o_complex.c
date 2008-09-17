@@ -70,7 +70,6 @@ void o_complex_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *obje
 void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *temp_parent;
   OBJECT *temp_list;
   OBJECT *o_current;
   OBJECT *o_start;
@@ -92,11 +91,6 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
 
     o_start = temp_list = add_head();
 
-    /* Reset the object_parent pointer so attribute
-     * attachment works in this temporary list. */
-    temp_parent = toplevel->page_current->object_parent;
-    toplevel->page_current->object_parent = temp_list;
-
     toplevel->ADDING_SEL=1;
     buffer = s_clib_symbol_get_data_by_name (sym_name);
     temp_list = o_read_buffer (toplevel,
@@ -105,9 +99,6 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
                                sym_name);
     g_free (buffer);
     toplevel->ADDING_SEL=0;
-
-    /* Put object_parent back where it should be */
-    toplevel->page_current->object_parent = temp_parent;
 
     /* Take the added objects, severing them from the HEAD node */
     o_current = o_start->next;

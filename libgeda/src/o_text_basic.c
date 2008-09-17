@@ -184,7 +184,7 @@ void o_text_print_set(void)
 OBJECT *o_text_load_font(TOPLEVEL *toplevel, gunichar needed_char)
 {
   gchar *temp_string = NULL;
-  OBJECT *temp_parent, *o_font_set;
+  OBJECT *o_font_set;
   int not_found = FALSE;
   gchar *aux_str2;
   GError *err = NULL;
@@ -260,11 +260,6 @@ OBJECT *o_text_load_font(TOPLEVEL *toplevel, gunichar needed_char)
 
     o_font_set->font_text_size = aux_obj->font_text_size;
   }
-	
-
-  temp_parent = toplevel->page_current->object_parent;
-  /* set the addition of attributes to the head node */
-  toplevel->page_current->object_parent = o_font_set->font_prim_objs;
 
   o_font_set->font_prim_objs = o_read(toplevel, o_font_set->font_prim_objs,
 				      temp_string, &err);
@@ -274,8 +269,6 @@ OBJECT *o_text_load_font(TOPLEVEL *toplevel, gunichar needed_char)
                err->message);
     g_error_free (err);
   }
-
-  toplevel->page_current->object_parent = temp_parent;
 
   o_font_set->font_prim_objs = return_head(o_font_set->font_prim_objs);
 

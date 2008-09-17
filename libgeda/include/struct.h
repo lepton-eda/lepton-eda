@@ -339,7 +339,6 @@ struct st_page {
 
   OBJECT *object_head;
   OBJECT *object_tail;
-  OBJECT *object_parent;
   SELECTION *selection_list; /* new selection mechanism */
   GList *place_list;
   OBJECT *object_lastplace;

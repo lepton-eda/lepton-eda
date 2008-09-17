@@ -306,7 +306,6 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 {
   OBJECT *new_node=NULL;
   OBJECT *prim_objs=NULL;
-  OBJECT *temp_parent=NULL;
   int save_adding_sel = 0;
   int loaded_normally = FALSE;
   gboolean use_object_list;
@@ -444,13 +443,9 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
     /* filename was found */
     loaded_normally = TRUE;
 
-    temp_parent = toplevel->page_current->object_parent;
-    toplevel->page_current->object_parent = prim_objs;
-
     /* add connections till translated */
     o_read_buffer(toplevel, prim_objs, buffer, -1, new_node->complex_basename);
 
-    toplevel->page_current->object_parent = temp_parent;
     g_free (buffer);
     
   }

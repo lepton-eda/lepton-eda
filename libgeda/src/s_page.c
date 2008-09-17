@@ -95,11 +95,6 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   /* do this just to be sure that object tail is truely correct */
   page->object_tail = return_tail(page->object_head);
 
-  /* setup parent to point to list */
-  /* this is used for attributes so */
-  /* that we know which list to search */
-  page->object_parent = page->object_head; 
-
   /* init undo struct pointers */
   s_undo_init(page);
   

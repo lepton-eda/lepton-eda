@@ -254,7 +254,6 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
   char objtype;
   OBJECT *object_list_save=NULL;
   OBJECT *temp_tail=NULL;
-  OBJECT *temp_parent=NULL;
   OBJECT *object_before_attr=NULL;
   unsigned int release_ver;
   unsigned int fileformat_ver;
@@ -400,8 +399,6 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
         	object_list = object_list_save->complex->prim_objs;
 				
         	temp_tail = toplevel->page_current->object_tail;
-        	temp_parent = toplevel->page_current->object_parent;
-        	toplevel->page_current->object_parent = object_list;
 
 		embedded_level++;
 	} else {
@@ -420,7 +417,6 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
                  *                   object_list->y, object_list->complex);
 		 */
 	        toplevel->page_current->object_tail = temp_tail;
-	        toplevel->page_current->object_parent = temp_parent;
 
           o_complex_recalc( toplevel, object_list );
 		embedded_level--;
