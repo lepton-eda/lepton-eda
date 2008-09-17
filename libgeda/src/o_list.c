@@ -378,25 +378,6 @@ OBJECT *o_list_search(OBJECT *list, OBJECT *current)
 /*! \todo Finish function description!!!
  *  \brief
  *  \par Function Description
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] list
- *  \param [in] delete
- */
-void o_list_delete(TOPLEVEL *toplevel, OBJECT *list, OBJECT *delete)
-{
-  OBJECT *find;
-
-  find = o_list_search(list, delete);
-
-  if (find != NULL)
-  s_delete(toplevel, find);
-
-}
-
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
  *  assuming list is head
  *  head will NOT be deleted
  *

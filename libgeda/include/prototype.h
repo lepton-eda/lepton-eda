@@ -224,7 +224,6 @@ OBJECT *o_list_copy_all(TOPLEVEL *toplevel, OBJECT *src_list_head, OBJECT *dest_
 GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel, GList *src_list, GList *dest_list, int flag);
 void o_glist_relink_objects (GList *o_glist);
 OBJECT *o_list_search(OBJECT *list, OBJECT *current);
-void o_list_delete(TOPLEVEL *toplevel, OBJECT *list, OBJECT *delete);
 void o_list_delete_rest(TOPLEVEL *toplevel, OBJECT *list);
 void o_list_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *list);
 void o_glist_translate_world(TOPLEVEL *toplevel, int dx, int dy, GList *list);
