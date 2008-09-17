@@ -101,6 +101,7 @@ OBJECT *o_attrib_search(GList *list, OBJECT *item);
 void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item);
 void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current);
 void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object);
+void o_attrib_attach_list(TOPLEVEL *toplevel, GList *attr_list, OBJECT *object);
 void o_attrib_free_all(TOPLEVEL *toplevel, GList *list);
 void o_attrib_print(GList *attributes);
 void o_attrib_remove(GList **list, OBJECT *remove);

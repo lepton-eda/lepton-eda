@@ -196,6 +196,24 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object)
 }
 
 
+/*! \brief Attach list of existing attributes to an object.
+ *  \par Function Description
+ *  Attach list of existing attributes to an object.
+ *
+ *  \param [in]  toplevel   The TOPLEVEL object.
+ *  \param [in]  attr_list  The list of attributes to be added.
+ *  \param [out] object     The object where you want to add item as an attribute.
+ */
+void o_attrib_attach_list (TOPLEVEL *toplevel,
+                           GList *attr_list, OBJECT *object)
+{
+  GList *iter;
+
+  for (iter = attr_list; iter != NULL; iter = g_list_next (iter))
+    o_attrib_attach (toplevel, iter->data, object);
+}
+
+
 /*! \brief Free all attribute items in a list.
  *  \par Function Description
  *  Free all attribute items in a list.
