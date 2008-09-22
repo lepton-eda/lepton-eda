@@ -117,13 +117,27 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
       g_list_reverse (toplevel->page_current->place_list);
 
   } else { /* if (w_current->include_complex) {..} else { */
+    OBJECT *new_object;
+    GList *promoted;
 
     toplevel->ADDING_SEL = 1; /* reuse this flag, rename later hack */
     sym = s_clib_get_symbol_by_name (sym_name);
-    o_complex_add(toplevel, NULL,
-                  &(toplevel->page_current->place_list),
-                  OBJ_COMPLEX, WHITE, 0, 0, 0, 0,
-                  sym, sym_name, 1, TRUE);
+    new_object = o_complex_add (toplevel, NULL, NULL,
+                                OBJ_COMPLEX, WHITE, 0, 0, 0, 0,
+                                sym, sym_name, 1);
+    promoted = o_complex_get_promotable (toplevel, new_object, TRUE);
+
+    /* Attach promoted attributes to the original complex object */
+    o_attrib_attach_list (toplevel, promoted, new_object);
+
+    toplevel->page_current->place_list =
+      g_list_concat (toplevel->page_current->place_list, promoted);
+    toplevel->page_current->place_list =
+      g_list_append (toplevel->page_current->place_list, new_object);
+
+    /* Link the place list OBJECTs together for good measure */
+    o_glist_relink_objects (toplevel->page_current->place_list);
+
     toplevel->ADDING_SEL = 0;
 
     /* Flag the symbol as embedded if necessary */

@@ -291,6 +291,132 @@ int o_complex_is_embedded(OBJECT *o_current)
 
 }
 
+
+/*! \brief Get attributes eligible for promotion from inside a complex
+ *
+ *  \par Function Description
+ *  Returns a GList of OBJECTs which are eligible for promotion from
+ *  within the passed complex OBJECT.
+ *
+ *  If detach is TRUE, the function removes these attribute objects from
+ *  the prim_objs of the complex. It detached, the returned OBJECTs are
+ *  isolated from each other, having their next and prev pointers set to NULL.
+ *
+ *  If detach is FALSE, the OBJECTs are left in place. Their next and prev
+ *  pointers form part of the complex's prim_objs linked list.
+ *
+ *  \param [in]  toplevel The toplevel environment.
+ *  \param [in]  object   The complex object being modified.
+ *  \param [in]  detach   Should the attributes be detached?
+ *  \returns              A linked list of OBJECTs to promote.
+ */
+GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
+{
+  GList *promoted = NULL;
+  OBJECT *tmp, *next;
+
+  if (!toplevel->attribute_promotion) /* controlled through rc file */
+    return NULL;
+
+  for (tmp = object->complex->prim_objs->next; tmp != NULL; tmp = next) {
+    next = tmp->next;
+
+    /* valid floating attrib? */
+    if (!o_complex_is_eligible_attribute(toplevel, tmp))
+      continue;
+
+    if (detach) {
+      /* Remove and isolate tmp from the complex list */
+      if (tmp->next)
+        tmp->next->prev = tmp->prev;
+      if (tmp->prev)
+        tmp->prev->next = tmp->next;
+      tmp->next = tmp->prev = NULL;
+    }
+
+    promoted = g_list_prepend (promoted, tmp);
+  }
+
+  promoted = g_list_reverse (promoted);
+  return promoted;
+}
+
+
+/*! \brief Promote attributes from the passed OBJECT
+ *
+ *  \par Function Description
+ *  Promotes attributes from the passed OBJECT, linking them into the
+ *  OBJECT linked list immediately prior to the passed OBJECT.
+ *
+ *  \param [in]  toplevel The toplevel environment.
+ *  \param [in]  object   The complex object who's attributes are being promtoed.
+ */
+void o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
+{
+  GList *promoted;
+  OBJECT *first_promoted, *last_promoted;
+
+  promoted = o_complex_get_promotable (toplevel, object, TRUE);
+
+  if (promoted == NULL)
+    return;
+
+  /* Link the promoted OBJECTs together */
+  o_glist_relink_objects (promoted);
+
+  first_promoted = promoted->data;
+  last_promoted = g_list_last (promoted)->data;
+
+  /* Insert promoted attributes before the complex in the object list */
+  first_promoted->prev = object->prev;
+  object->prev->next = first_promoted;
+  last_promoted->next = object;
+  object->prev = last_promoted;
+
+  /* Attach promoted attributes to the original complex object */
+  o_attrib_attach_list (toplevel, promoted, object);
+
+  g_list_free (promoted);
+}
+
+
+/*! \brief Delete or hide promotable from the passed OBJECT
+ *
+ *  \par Function Description
+ *  Deletes or hides promotable attributes from the passed OBJECT.
+ *  This is used when loading symbols during the load of a schematic from
+ *  disk. The schematic will already contain local copies of symbol's
+ *  promotable objects, so we delete or hide the symbol's copies.
+ *
+ *  Deletion / hiding is dependant on the setting of
+ *  toplevel->keep_invisible. If true, attributes eligible for
+ *  promotion are kept in memory but flagged as invisible.
+ *
+ *  \param [in]  toplevel The toplevel environment.
+ *  \param [in]  object   The complex object being altered.
+ */
+void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *object)
+{
+  GList *promotable, *iter;
+
+  promotable = o_complex_get_promotable (toplevel, object, FALSE);
+
+  if (promotable == NULL)
+    return;
+
+  for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *a_object = iter->data;
+    if (toplevel->keep_invisible == TRUE) {
+      a_object->visibility = INVISIBLE; /* Hide promotable attributes */
+    } else {
+      s_delete (toplevel, a_object);    /* Delete promotable attributes */
+    }
+  }
+
+  g_list_free (promotable);
+}
+
+
 /* Done */
 /*! \brief
  *  \par Function Description
@@ -301,8 +427,7 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		      int color, int x, int y, int angle,
 		      int mirror, const CLibSymbol *clib,
 		      const gchar *basename,
-		      int selectable,
-		      int attribute_promotion)
+		      int selectable)
 {
   OBJECT *new_node=NULL;
   OBJECT *prim_objs=NULL;
@@ -451,68 +576,6 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
   }
   toplevel->ADDING_SEL = save_adding_sel;
 
-  if (toplevel->attribute_promotion) { /* controlled through rc file */
-
-    OBJECT *tmp,*next;
-
-    for (tmp=prim_objs->next;tmp;tmp=next) {
-
-      next=tmp->next;
-
-      /* valid floating attrib? */
-      if (o_complex_is_eligible_attribute(toplevel, tmp)) {
-        /* Is attribute promotion called for? (passed in parameter) */
-        if (attribute_promotion)
-        {
-          /* remove tmp from the complex list */
-          if (tmp->next)
-            tmp->next->prev=tmp->prev;
-          if (tmp->prev)
-            tmp->prev->next=tmp->next;
-
-          /* Isolate tmp completely, now that it's removed from list */
-          tmp->next=tmp->prev=NULL;
-          if (use_object_list) {
-            object_list = (OBJECT *) s_basic_link_object(tmp, object_list);
-          } else if (object_glist) {
-            *object_glist = g_list_append (*object_glist, tmp);
-            o_glist_relink_objects (*object_glist);
-          }
-          o_attrib_attach (toplevel, tmp, new_node);
-          o_text_translate_world(toplevel, x, y, tmp);
-
-        } else { /* not promoting, hide or delete promotable attribs */
-
-          if (toplevel->keep_invisible == TRUE) {
-            /* if we want to keep promotable attributes around, but hidden */
-            tmp->visibility = INVISIBLE;
-          } else {
-            /* else delete the promotable attribute objects */
-            s_delete(toplevel, tmp);
-          }
-
-        }
-      }
-    }
-  }
-
-  if (use_object_list) {
-    object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
-    object_list->complex->prim_objs = prim_objs;
-  }
-  else {
-    new_node->complex->prim_objs = prim_objs;
-    if (object_glist) {
-      *object_glist = g_list_append (*object_glist, new_node);
-      o_glist_relink_objects (*object_glist);
-
-      object_list = (OBJECT *) (g_list_last(*object_glist)->data);
-    } else {
-      object_list = new_node;
-    }
-    
-  }
-
   /* do not mirror/rotate/translate/connect the primitive objects if the
    * component was not loaded via o_read 
    */
@@ -527,6 +590,18 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
     if (!toplevel->ADDING_SEL) {
      s_conn_update_complex(toplevel, prim_objs);
     }
+  }
+
+  new_node->complex->prim_objs = prim_objs;
+
+  if (use_object_list) {
+    object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
+  } else {
+    if (object_glist) {
+      *object_glist = g_list_append (*object_glist, new_node);
+      o_glist_relink_objects (*object_glist);
+    }
+    object_list = new_node;
   }
 
   if (use_object_list)
@@ -669,7 +744,9 @@ OBJECT *o_complex_read(TOPLEVEL *toplevel, OBJECT *object_list,
                                 WHITE, 
                                 x1, y1, 
                                 angle, mirror, clib,
-                                basename, selectable, FALSE);
+                                basename, selectable);
+    /* Delete or hide attributes eligible for promotion inside the complex */
+     o_complex_remove_promotable_attribs (toplevel, object_list);
   }
 
   return object_list;
@@ -755,12 +832,14 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
 
   clib = s_clib_get_symbol_by_name (o_current->complex_basename);
 
-  new_obj = o_complex_add(toplevel, list_tail, NULL, o_current->type, color,
-                          o_current->complex->x, o_current->complex->y, 
-                          o_current->complex->angle, 
-			  o_current->complex->mirror,
-                          clib, o_current->complex_basename, 
-                          selectable, FALSE); 
+  new_obj = o_complex_add (toplevel, list_tail, NULL, o_current->type, color,
+                           o_current->complex->x, o_current->complex->y,
+                           o_current->complex->angle,
+                           o_current->complex->mirror,
+                           clib, o_current->complex_basename,
+                           selectable);
+  /* Delete or hide attributes eligible for promotion inside the complex */
+   o_complex_remove_promotable_attribs (toplevel, new_obj);
 
   o_attrib_slot_copy(toplevel, o_current, new_obj);
 

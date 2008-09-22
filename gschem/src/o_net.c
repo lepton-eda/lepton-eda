@@ -1080,6 +1080,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
 
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  OBJECT *new_obj;
   int color;
   GList *cl_current = NULL;
   OBJECT *bus_object = NULL;
@@ -1387,17 +1388,17 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
 
         if (rippersym != NULL) {
           toplevel->page_current->object_tail =
-          (OBJECT *) o_complex_add(
-                                   toplevel,
-                                   toplevel->page_current->object_tail,
-				   NULL,
-                                   OBJ_COMPLEX, WHITE,
-                                   rippers[i].x[0], rippers[i].y[0],
-                                   complex_angle, 0,
-                                   rippersym,
-                                   toplevel->bus_ripper_symname, 1, TRUE);
-          
-          o_complex_draw(w_current,toplevel->page_current->object_tail);
+            new_obj = o_complex_add (toplevel,
+                                     toplevel->page_current->object_tail,
+                                     NULL,
+                                     OBJ_COMPLEX, WHITE,
+                                     rippers[i].x[0], rippers[i].y[0],
+                                     complex_angle, 0,
+                                     rippersym,
+                                     toplevel->bus_ripper_symname, 1);
+          o_complex_promote_attribs (toplevel, new_obj);
+
+          o_complex_draw (w_current, new_obj);
         } else {
           s_log_message(_("Bus ripper symbol [%s] was not found in any component library\n"),
                         toplevel->bus_ripper_symname);

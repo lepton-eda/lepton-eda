@@ -716,7 +716,8 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
                     x, y, 
                     angle, mirror,
                     clib, comp_name, 
-                    selectable, TRUE);
+                    selectable);
+  o_complex_promote_attribs (toplevel, new_object);
   
   /* 
    * For now, do not redraw the newly added complex, since this might cause

@@ -180,11 +180,14 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, GList *o_list,
 			     int *right, int *bottom);
 OBJECT *add_head(void);
 int o_complex_is_embedded(OBJECT *o_current);
+GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach);
+void o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object);
+void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *object);
 OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 		      GList **object_glist, char type, int color, 
 		      int x, int y, int angle, int mirror, 
 		      const CLibSymbol *clib_sym, const gchar *basename,
-		      int selectable, int attribute_promotion);
+		      int selectable);
 OBJECT *o_complex_add_embedded(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, int x, int y, int angle, int mirror, const gchar *basename, int selectable);
 void o_complex_set_filename(TOPLEVEL *toplevel, const char *basename);
 void o_complex_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);

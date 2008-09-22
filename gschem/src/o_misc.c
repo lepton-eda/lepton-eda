@@ -777,7 +777,8 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                                o_current->complex->angle,
                                o_current->complex->mirror,
                                clib, o_current->complex_basename,
-                               1, TRUE);
+                               1);
+  o_complex_promote_attribs (toplevel, new_complex);
 
   /* updating the old complex with data from the new one */
   /* first process the prim_objs: */
