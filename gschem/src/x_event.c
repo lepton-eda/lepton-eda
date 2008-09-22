@@ -1198,6 +1198,14 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
     pan_xaxis = !w_current->CONTROLKEY &&  w_current->SHIFTKEY;
   }
 
+  /* If the user has a left/right scroll wheel, always scroll the y-axis */
+  if (event->direction == GDK_SCROLL_LEFT ||
+      event->direction == GDK_SCROLL_RIGHT) {
+    zoom = FALSE;
+    pan_yaxis = FALSE;
+    pan_xaxis = TRUE;
+  }
+
   /* You must have scrollbars enabled if you want to use the scroll wheel to pan */
   if (!w_current->scrollbars_flag) {
     pan_xaxis = FALSE;
