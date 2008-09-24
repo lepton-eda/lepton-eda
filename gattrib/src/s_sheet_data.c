@@ -201,7 +201,7 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
 	  if (a_current->type == OBJ_TEXT
 	      && a_current->text != NULL) {  /* found an attribute */
 	    attrib_text = g_strdup(a_current->text->string);
-	    o_attrib_get_name_value(attrib_text, &attrib_name, NULL);
+	    attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
 
 	      /* Don't include "refdes" or "slot" because they form the row name */
 	      /* Also don't include "net" per bug found by Steve W. -- 4.3.2007, SDB */
@@ -408,7 +408,8 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
 		if (pin_attrib->type == OBJ_TEXT
 		    && pin_attrib->text != NULL) {  /* found an attribute */
 		  attrib_text = g_strdup(pin_attrib->text->string);
-		  o_attrib_get_name_value(attrib_text, &attrib_name, &attrib_value);
+		  attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
+		  attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
 		  if ( (strcmp(attrib_name, "pinnumber") != 0) 
 		       && (attrib_value != NULL) ) {  
 		    /* Don't include "pinnumber" because it is already in other master list.

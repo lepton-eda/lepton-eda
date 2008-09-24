@@ -57,7 +57,7 @@ int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name)
     if (local_list_item->data == NULL)
       continue;
 
-    o_attrib_get_name_value(local_list_item->data, &local_name, NULL);
+    local_name = u_basic_breakup_string(local_list_item->data, '=', 0);
     if (strcmp(local_name, name) == 0) {
       g_free (local_name);
       return TRUE;
