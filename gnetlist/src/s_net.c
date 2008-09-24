@@ -140,7 +140,6 @@ void s_net_print(NET * ptr)
 char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
 				    char *hierarchy_tag)
 {
-    OBJECT *head;
     OBJECT *o_current;
     OBJECT *o_pinnum_object;
     char *pinnum = NULL;
@@ -157,14 +156,12 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
     /* this function only searches the single o_current */
     pinnum = o_attrib_search_name_single(o_current, "pinnumber",
                                          &o_pinnum_object);
-    
-    head = return_head(o_current);
 
 #if DEBUG
     printf("found pinnum: %s\n", pinnum);
 #endif
 
-    scm_uref = g_scm_c_get_uref(pr_current, head->complex_parent);
+    scm_uref = g_scm_c_get_uref(pr_current, o_current->complex_parent);
 
     if (scm_is_string( scm_uref )) {
       temp_uref = scm_to_locale_string( scm_uref );

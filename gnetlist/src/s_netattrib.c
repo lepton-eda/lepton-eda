@@ -340,7 +340,6 @@ char *s_netattrib_return_netname(TOPLEVEL * pr_current, OBJECT * o_current,
 				 char *pinnumber, char *hierarchy_tag)
 {
     char *current_pin;
-    OBJECT *parent;
     char *netname;
     char *temp_netname;
 
@@ -359,11 +358,9 @@ char *s_netattrib_return_netname(TOPLEVEL * pr_current, OBJECT * o_current,
     printf("inside return_netname: %s\n", current_pin);
 #endif
 
-    parent = return_head(o_current);
-    parent = parent->complex_parent;
-
     /* use hierarchy tag here to make this net uniq */
-    temp_netname = s_netattrib_net_search(parent, current_pin);
+    temp_netname = s_netattrib_net_search(o_current->complex_parent,
+                                          current_pin);
 
     netname =
 	s_hierarchy_create_netattrib(pr_current, temp_netname,
