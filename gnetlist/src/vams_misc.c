@@ -94,17 +94,9 @@ vams_get_package_attributes(SCM scm_uref)
 	      if (nl_current->component_uref) {
 		if (strcmp(nl_current->component_uref, uref) == 0) {
 
-			/* first search outside the symbol */
+			/* search outside the symbol (attached attributes only) */
 			return_value = vams_get_attribs_list(
 						    nl_current->object_ptr, &list,NULL);
-
-			if (return_value) {
-				break;
-			}
-
-			/* now search inside the symbol */
-			return_value = vams_get_attribs_list(
-						    nl_current->object_ptr->complex->prim_objs, &list,NULL);
 			break;
 		}
 	      }
