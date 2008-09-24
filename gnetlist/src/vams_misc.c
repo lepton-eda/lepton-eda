@@ -35,10 +35,10 @@
 #include <dmalloc.h>
 #endif
 
-/* be sure caller free's return value */
-char *
-vams_get_attribs_list(OBJECT *object, SCM *list, OBJECT **return_found) 
+SCM
+vams_get_attribs_list (OBJECT *object)
 {
+  SCM list = SCM_EOL;
   OBJECT *o_current;
   GList *a_iter;
   OBJECT *a_current;
@@ -47,6 +47,7 @@ vams_get_attribs_list(OBJECT *object, SCM *list, OBJECT **return_found)
 
   o_current = object;
 
+  /* search outside the symbol (attached attributes only) */
   a_iter = o_current->attribs;
   while(a_iter != NULL) {
     a_current = a_iter->data;
@@ -55,54 +56,41 @@ vams_get_attribs_list(OBJECT *object, SCM *list, OBJECT **return_found)
                                     &found_name, NULL);
 
       if (val) {
-        *list = scm_cons (scm_makfrom0str (found_name), *list);
+        list = scm_cons (scm_makfrom0str (found_name), list);
       }
 
-     g_free(found_name);
-#if DEBUG
-      printf("0 _%s_\n", found->text->string);
-      printf("1 _%s_\n", found_name);
-      printf("2 _%s_\n", found_value);
-#endif
+      g_free (found_name);
     }
     a_iter = g_list_next (a_iter);
   }
 
-  return (NULL);
+  return list;
 }
 
 SCM
 vams_get_package_attributes(SCM scm_uref)
 {
-	SCM list = SCM_EOL;
-	NETLIST *nl_current;
-	char *uref;
-	char *return_value=NULL;
+  NETLIST *nl_current;
+  char *uref;
 
-	SCM_ASSERT(scm_is_string (scm_uref), scm_uref, SCM_ARG1, 
-		   "gnetlist:vams-get-package-attributes");
+  SCM_ASSERT(scm_is_string (scm_uref), scm_uref, SCM_ARG1,
+             "gnetlist:vams-get-package-attributes");
 
-    uref = SCM_STRING_CHARS (scm_uref);
+  uref = SCM_STRING_CHARS (scm_uref);
 
-	/* here is where you make it multi page aware */
-	nl_current = netlist_head;
+  /* here is where you make it multi page aware */
+  nl_current = netlist_head;
 
-	/* search for the first instance */
-	/* through the entire list */
-	while(nl_current != NULL) {
+  /* search for the first instance */
+  /* through the entire list */
+  while(nl_current != NULL) {
 
-	      if (nl_current->component_uref) {
-		if (strcmp(nl_current->component_uref, uref) == 0) {
+    if (nl_current->component_uref &&
+        strcmp(nl_current->component_uref, uref) == 0) {
+      return vams_get_attribs_list (nl_current->object_ptr);
+    }
+    nl_current = nl_current->next;
+  }
 
-			/* search outside the symbol (attached attributes only) */
-			return_value = vams_get_attribs_list(
-						    nl_current->object_ptr, &list,NULL);
-			break;
-		}
-	      }
-	      nl_current = nl_current->next;
-	}
-
-	return(list);
+  return SCM_EOL;
 }
-

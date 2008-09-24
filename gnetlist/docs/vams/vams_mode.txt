@@ -365,8 +365,7 @@ CONTENT:
    VHDL-AMS GENERIC MAP.
  
 
-     char* vams_get_attribs_list 
-	   (OBJECT *object, SCM *list, OBJECT **return_found)
+     SCM vams_get_attribs_list(OBJECT *object)
 
    It exists only for the support of the first function.
 	   
