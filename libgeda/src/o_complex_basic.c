@@ -332,6 +332,7 @@ GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
       if (tmp->prev)
         tmp->prev->next = tmp->next;
       tmp->next = tmp->prev = NULL;
+      tmp->complex_parent = NULL;
     }
 
     promoted = g_list_prepend (promoted, tmp);
@@ -431,6 +432,7 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 {
   OBJECT *new_node=NULL;
   OBJECT *prim_objs=NULL;
+  OBJECT *tmp;
   int save_adding_sel = 0;
   int loaded_normally = FALSE;
   gboolean use_object_list;
@@ -474,9 +476,6 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 
   /* this was at the beginning and p_complex was = to complex */
   prim_objs = (OBJECT *) add_head();
-	
-  /* set the parent field now */
-  prim_objs->complex_parent = new_node;
 
   /* get the symbol data */
   if (clib != NULL) {
@@ -594,6 +593,11 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 
   new_node->complex->prim_objs = prim_objs;
 
+  /* set the parent field now */
+  for (tmp = prim_objs; tmp != NULL; tmp = tmp->next) {
+    tmp->complex_parent = new_node;
+  }
+
   if (use_object_list) {
     object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
   } else {
@@ -622,6 +626,7 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *toplevel, OBJECT *object_list,
 {
   OBJECT *prim_objs=NULL;
   OBJECT *new_node=NULL;
+  OBJECT *tmp;
 
   new_node = s_basic_new_object(type, "complex");
 
@@ -652,9 +657,11 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *toplevel, OBJECT *object_list,
   /* this was at the beginning and p_complex was = to complex */
   prim_objs = (OBJECT *) add_head();
   object_list->complex->prim_objs = prim_objs;
-	
+
   /* set the parent field now */
-  prim_objs->complex_parent = object_list;
+  for (tmp = prim_objs; tmp != NULL; tmp = tmp->next) {
+    tmp->complex_parent = new_node;
+  }
 
   /* don't have to translate/rotate/mirror here at all since the */
   /* object is in place */
@@ -861,6 +868,7 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail,
 {
   OBJECT *new_obj=NULL;
   OBJECT *temp_list;
+  OBJECT *tmp;
   int color;
   int selectable;
 
@@ -893,6 +901,11 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail,
                               NORMAL_FLAG);
 	
   new_obj->complex->prim_objs = return_head(temp_list);
+
+  /* set the parent field now */
+  for (tmp = new_obj->complex->prim_objs; tmp != NULL; tmp = tmp->next) {
+    tmp->complex_parent = new_obj;
+  }
 
   o_complex_recalc(toplevel, new_obj);
 

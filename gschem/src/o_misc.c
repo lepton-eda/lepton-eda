@@ -738,6 +738,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *tmp_list, *new_complex;
   OBJECT *a_current;
+  OBJECT *tmp;
   GList *a_iter;
   gboolean is_embedded;
   const CLibSymbol *clib;
@@ -787,6 +788,12 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                            o_current->complex->prim_objs);
   /*   - put the prim_objs of the new component in the old one */
   o_current->complex->prim_objs = new_complex->complex->prim_objs;
+
+  /* set the parent field now */
+  for (tmp = o_current->complex->prim_objs; tmp != NULL; tmp = tmp->next) {
+    tmp->complex_parent = o_current;
+  }
+
   /*   - reset the new complex prim_objs */
   new_complex->complex->prim_objs = NULL;
 
