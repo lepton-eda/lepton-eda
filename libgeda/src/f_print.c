@@ -46,7 +46,7 @@ static void f_print_unicode_map(FILE * fp, int count, gunichar * table);
 void f_print_set_line_width(FILE *fp, int width)
 {
   if (width > 0) {
-    fprintf(fp, "%d mils setlinewidth\n", width);
+    fprintf(fp, "%d setlinewidth\n", width);
   }
 }
 
