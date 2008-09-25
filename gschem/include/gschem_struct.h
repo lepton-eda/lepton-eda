@@ -100,6 +100,10 @@ struct st_gschem_toplevel {
 					   the screen? */
   int magnetic_visible;                 /* Is the magnetic marker visible */
   int net_direction;                    /* bit field to guess the best net direction */
+  int which_grip;                       /* Which grip is being manipulated.
+                                           Its range of values depends on the
+                                           type of object being manipulated. */
+  OBJECT *which_object;                 /* Object being manipulated */
 
   /* --------------------- */
   /* Gschem internal state */

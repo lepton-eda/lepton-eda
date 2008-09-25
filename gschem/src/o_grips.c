@@ -41,15 +41,6 @@
   (w)->first_wy > (w)->second_wy ? (w)->first_wy  :			\
   (w)->first_wy+abs((w)->second_wx - (w)->first_wx)/(w)->pixbuf_wh_ratio
 
-/*! \brief
- *  This variable holds the identifier of the grip currently under
- *  modification. Its range of values depends on the type of object.
- */
-static int whichone_changing = -1;
-/*! \brief
- *  This variable holds a pointer on the object under modification.
- */
-static OBJECT *object_changing = NULL;
 
 /*! \brief Check if point is inside grip.
  *  \par Function Description
@@ -466,9 +457,9 @@ OBJECT *o_grips_search_line_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  *  have been found under (<B>w_x</B>,<B>w_y</B>). It returns <B>TRUE</B> if a grip
  *  has been found and modification of the object has been started.
  *
- *  If a grip has been found, this function modifies the global variables
- *  <B>whichone_changing</B> and <B>object_changing</B> with respectively the
- *  identifier of the grip and the object it belongs to.
+ *  If a grip has been found, this function modifies the GSCHEM_TOPLEVEL
+ *  variables <B>which_grip</B> and <B>which_object</B> with the identifier
+ *  of the grip and the object it belongs to respectively.
  *
  *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  w_x        Current x coordinate of pointer in screen units.
@@ -490,8 +481,8 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   if (object == NULL)
     return FALSE;
 
-  whichone_changing = whichone;
-  object_changing = object;
+  w_current->which_grip = whichone;
+  w_current->which_object = object;
 
   /* there is one */
   /* depending on its type, start the modification process */
@@ -799,8 +790,8 @@ void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  *  object according to the mouse position in <B>w_x</B> and <B>w_y</B>.
  *  The grip under modification is updated and the temporary object displayed.
  *
- *  The object under modification is <B>object_changing</B> and the grip
- *  concerned is <B>whichone_changing</B>.
+ *  The object under modification is <B>w_current->which_object</B> and
+ *  the grip concerned is <B>w_current->which_grip</B>.
  *
  *  Depending on the object type, a specific function is used.
  *  It erases the temporary object, updates its internal representation,
@@ -814,32 +805,33 @@ void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int unsnapped_wx, int unsnapped_
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int w_x, w_y;
+  int grip = w_current->which_grip;
 
   w_x = snap_grid(toplevel, unsnapped_wx);
   w_y = snap_grid(toplevel, unsnapped_wy);
 
   g_assert( w_current->inside_action != 0 );
-  g_return_if_fail( object_changing != NULL );
+  g_return_if_fail( w_current->which_object != NULL );
 
-  switch(object_changing->type) {
+  switch(w_current->which_object->type) {
     case(OBJ_ARC):
     /* erase, update and draw an arc */
-    o_grips_motion_arc(w_current, unsnapped_wx, unsnapped_wy, whichone_changing);
+    o_grips_motion_arc (w_current, unsnapped_wx, unsnapped_wy, grip);
     break;
 
     case(OBJ_BOX):
     /* erase, update and draw a box */
-    o_grips_motion_box(w_current, w_x, w_y, whichone_changing);
+    o_grips_motion_box (w_current, w_x, w_y, grip);
     break;
 
     case(OBJ_PICTURE):
     /* erase, update and draw a box */
-    o_grips_motion_picture(w_current, w_x, w_y, whichone_changing);
+    o_grips_motion_picture (w_current, w_x, w_y, grip);
     break;
 
     case(OBJ_CIRCLE):
     /* erase, update and draw a circle */
-    o_grips_motion_circle(w_current, w_x, w_y, whichone_changing);
+    o_grips_motion_circle(w_current, w_x, w_y, grip);
     break;
 
     case(OBJ_LINE):
@@ -848,7 +840,7 @@ void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int unsnapped_wx, int unsnapped_
     case(OBJ_BUS):
     /* erase, update and draw a line */
     /* same for net, pin and bus as they share the same internal rep. */
-    o_grips_motion_line(w_current, w_x, w_y, whichone_changing);
+    o_grips_motion_line(w_current, w_x, w_y, grip);
     break;
 
     default:
@@ -982,8 +974,8 @@ void o_grips_motion_line(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int which
  *  The temporary representation of the object is erased, the object is
  *  modified and finally drawn.
  *
- *  The object under modification is <B>object_changing</B> and the grip
- *  concerned is <B>whichone_changing</B>.
+ *  The object under modification is <B>w_current->which_object</B> and
+ *  the grip concerned is <B>w_current->which_grip</B>.
  *
  *  Depending on the object type, a specific function is used. It erases
  *  the temporary object, updates the object and draws the modified object
@@ -994,9 +986,11 @@ void o_grips_motion_line(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int which
 void o_grips_end(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *object=NULL;
+  OBJECT *object;
+  int grip;
 
-  object = object_changing;
+  object = w_current->which_object;
+  grip = w_current->which_grip;
 
   if (!object) {
     /* actually this is an error condition hack */
@@ -1009,42 +1003,42 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
 
     case(OBJ_ARC):
     /* modify an arc object */
-    o_grips_end_arc(w_current, object, whichone_changing);
+    o_grips_end_arc(w_current, object, grip);
     break;
 
     case(OBJ_BOX):
     /* modify a box object */
-    o_grips_end_box(w_current, object, whichone_changing);
+    o_grips_end_box(w_current, object, grip);
     break;
 
     case(OBJ_PICTURE):
     /* modify a picture object */
-    o_grips_end_picture(w_current, object, whichone_changing);
+    o_grips_end_picture(w_current, object, grip);
     break;
 
     case(OBJ_CIRCLE):
     /* modify a circle object */
-    o_grips_end_circle(w_current, object, whichone_changing);
+    o_grips_end_circle(w_current, object, grip);
     break;
 
     case(OBJ_LINE):
     /* modify a line object */
-    o_grips_end_line(w_current, object, whichone_changing);
+    o_grips_end_line(w_current, object, grip);
     break;
 
     case(OBJ_NET):
       /* modify a net object */
-      o_grips_end_net(w_current, object, whichone_changing);
+      o_grips_end_net(w_current, object, grip);
       break;
 
     case(OBJ_PIN):
       /* modify a pin object */
-      o_grips_end_pin(w_current, object, whichone_changing);
+      o_grips_end_pin(w_current, object, grip);
       break;
 
     case(OBJ_BUS):
       /* modify a bus object */
-      o_grips_end_bus(w_current, object, whichone_changing);
+      o_grips_end_bus(w_current, object, grip);
       break;
 
     default:
@@ -1052,8 +1046,8 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
   }
 
   /* reset global variables */
-  whichone_changing = -1;
-  object_changing = NULL;
+  w_current->which_grip = -1;
+  w_current->which_object = NULL;
 
   w_current->rubber_visible = 0;
 
@@ -1310,8 +1304,8 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   other_objects = s_conn_return_others(other_objects, o_current);
 
   s_conn_remove(toplevel, o_current);
-  o_net_modify(toplevel, o_current, 
-	       w_current->second_wx, w_current->second_wy, whichone_changing);
+  o_net_modify (toplevel, o_current, w_current->second_wx,
+                w_current->second_wy, w_current->which_grip);
   s_conn_update_object(toplevel, o_current);
 
   /* get the other connected objects and redraw them */
@@ -1392,8 +1386,8 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   other_objects = s_conn_return_others(other_objects, o_current);
 
   s_conn_remove(toplevel, o_current);
-  o_pin_modify(toplevel, o_current, 
-	       w_current->second_wx, w_current->second_wy, whichone_changing);
+  o_pin_modify (toplevel, o_current, w_current->second_wx,
+                w_current->second_wy, w_current->which_grip);
   s_conn_update_object(toplevel, o_current);
   o_redraw_single(w_current, o_current);
 
@@ -1458,8 +1452,8 @@ void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   other_objects = s_conn_return_others(other_objects, o_current);
   s_conn_remove(toplevel, o_current);
 
-  o_bus_modify(toplevel, o_current, 
-	       w_current->second_wx, w_current->second_wy, whichone_changing);
+  o_bus_modify (toplevel, o_current, w_current->second_wx,
+                w_current->second_wy, w_current->which_grip);
   s_conn_update_object(toplevel, o_current);
   o_redraw_single(w_current, o_current);
 
