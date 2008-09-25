@@ -89,6 +89,10 @@ void o_recalc_single_object(TOPLEVEL *toplevel, OBJECT *o_current)
         o_box_recalc(toplevel, o_current);
         break;
 
+      case(OBJ_PATH):
+        o_path_recalc(toplevel, o_current);
+        break;
+
       case(OBJ_PICTURE):
         o_picture_recalc(toplevel, o_current);
         break;
@@ -281,6 +285,7 @@ void o_translate_world (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object)
       case OBJ_PLACEHOLDER:
       case OBJ_COMPLEX: func = o_complex_translate_world; break;
       case OBJ_TEXT:    func = o_text_translate_world;    break;
+      case OBJ_PATH:    func = o_path_translate_world;    break;
       case OBJ_PIN:     func = o_pin_translate_world;     break;
       case OBJ_ARC:     func = o_arc_translate_world;     break;
       default:
@@ -320,6 +325,7 @@ void o_rotate_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, i
       case OBJ_PLACEHOLDER:
       case OBJ_COMPLEX: func = o_complex_rotate_world;    break;
       case OBJ_TEXT:    func = o_text_rotate_world;       break;
+      case OBJ_PATH:    func = o_path_rotate_world;       break;
       case OBJ_PIN:     func = o_pin_rotate_world;        break;
       case OBJ_ARC:     func = o_arc_rotate_world;        break;
       default:
@@ -358,6 +364,7 @@ void o_mirror_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, O
       case OBJ_PLACEHOLDER:
       case OBJ_COMPLEX: func = o_complex_mirror_world;    break;
       case OBJ_TEXT:    func = o_text_mirror_world;       break;
+      case OBJ_PATH:    func = o_path_mirror_world;       break;
       case OBJ_PIN:     func = o_pin_mirror_world;        break;
       case OBJ_ARC:     func = o_arc_mirror_world;        break;
       default:
@@ -418,6 +425,10 @@ gdouble o_shortest_distance(OBJECT *object, gint x, gint y)
       break;
 
     case(OBJ_HEAD):
+      break;
+
+    case(OBJ_PATH):
+      shortest_distance = o_path_shortest_distance(object, x, y);
       break;
 
     case(OBJ_PICTURE):

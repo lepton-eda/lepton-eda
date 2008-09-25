@@ -314,6 +314,11 @@ void f_print_objects(TOPLEVEL *toplevel, FILE *fp, OBJECT *head,
           break;
 
 
+        case(OBJ_PATH):
+          o_path_print(toplevel, fp, o_current,
+                       origin_x, origin_y);
+          break;
+
         case(OBJ_PIN):
           o_pin_print(toplevel, fp, o_current,
                       origin_x, origin_y);

@@ -598,6 +598,7 @@ void o_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
       case OBJ_PLACEHOLDER:
       case OBJ_COMPLEX: func = o_complex_draw_xor;        break;
       case OBJ_TEXT:    func = o_text_draw_xor;           break;
+      case OBJ_PATH:    func = o_path_draw_xor;           break;
       case OBJ_PIN:     func = o_pin_draw_xor;            break;
       case OBJ_ARC:     func = o_arc_draw_xor;            break;
       default:
@@ -707,6 +708,7 @@ void o_erase_grips (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
       case OBJ_PIN:     func = o_line_erase_grips;    break;
       case OBJ_CIRCLE:  func = o_circle_erase_grips;  break;
       case OBJ_PICTURE: func = o_picture_erase_grips; break;
+      case OBJ_PATH:    func = o_path_erase_grips;    break;
   }
 
   if (func != NULL) {

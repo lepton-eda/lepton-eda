@@ -28,6 +28,7 @@ src/o_line.c
 src/o_misc.c
 src/o_move.c
 src/o_net.c
+src/o_path.c
 src/o_picture.c
 src/o_pin.c
 src/o_select.c

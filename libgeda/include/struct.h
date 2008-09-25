@@ -29,6 +29,8 @@ typedef struct _GedaList GedaPageList;
 /* gschem structures (gschem) */
 typedef struct st_complex COMPLEX;
 typedef struct st_line LINE;
+typedef struct st_path_section PATH_SECTION;
+typedef struct st_path PATH;
 typedef struct st_circle CIRCLE;
 typedef struct st_arc ARC;
 typedef struct st_box BOX;
@@ -95,6 +97,30 @@ struct st_line {
 /* pb20011014 - name the grips */
 #define LINE_END1 0
 #define LINE_END2 1
+
+typedef enum {
+    PATH_MOVETO,
+    PATH_MOVETO_OPEN,
+    PATH_CURVETO,
+    PATH_LINETO,
+    PATH_END
+} PATH_CODE;
+
+struct st_path_section {
+  PATH_CODE code;
+  int x1;
+  int y1;
+  int x2;
+  int y2;
+  int x3;
+  int y3;
+};
+
+struct st_path {
+  PATH_SECTION *sections; /* Bezier path segments  */
+  int num_sections;       /* Number with data      */
+  int num_sections_max;   /* Number allocated      */
+};
 
 struct st_arc {
   int x, y; /* world */
@@ -204,6 +230,7 @@ struct st_object {
   BOX *box;
   TEXT *text;
   PICTURE *picture;
+  PATH *path;
 
   GList *tiles;			/* tiles */
 

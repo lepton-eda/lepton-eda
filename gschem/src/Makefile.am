@@ -38,6 +38,7 @@ gschem_SOURCES = \
 	o_misc.c \
 	o_move.c \
 	o_net.c \
+	o_path.c \
 	o_picture.c \
 	o_pin.c \
 	o_place.c \

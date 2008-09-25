@@ -102,6 +102,10 @@ OBJECT *o_list_copy_to(TOPLEVEL *toplevel, OBJECT *list_head,
       }
       break;
 
+    case(OBJ_PATH):
+      end = (OBJECT *) o_path_copy(toplevel, end, selected);
+      break;
+
     case(OBJ_PIN):
       end = (OBJECT *) o_pin_copy(toplevel, end, selected);
       break;

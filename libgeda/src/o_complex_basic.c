@@ -68,6 +68,7 @@ int world_get_single_object_bounds(TOPLEVEL *toplevel, OBJECT *o_current,
       case(OBJ_BOX):
       case(OBJ_PICTURE):
       case(OBJ_CIRCLE):
+      case(OBJ_PATH):
       case(OBJ_PIN):
       case(OBJ_ARC):
       case(OBJ_COMPLEX):
@@ -934,6 +935,7 @@ void o_complex_set_color(OBJECT *prim_objs, int color)
       case(OBJ_BOX):
       case(OBJ_PICTURE):
       case(OBJ_CIRCLE):
+      case(OBJ_PATH):
       case(OBJ_PIN):
       case(OBJ_ARC):
         o_current->color = color;
@@ -970,6 +972,7 @@ void o_complex_set_color_single(OBJECT *o_current, int color)
     case(OBJ_BOX):
     case(OBJ_PICTURE):
     case(OBJ_CIRCLE):
+    case(OBJ_PATH):
     case(OBJ_PIN):
     case(OBJ_ARC):
     o_current->color = color;
@@ -1008,6 +1011,7 @@ void o_complex_set_color_save(OBJECT *complex, int color)
       case(OBJ_BOX):
       case(OBJ_PICTURE):
       case(OBJ_CIRCLE):
+      case(OBJ_PATH):
       case(OBJ_PIN):
       case(OBJ_ARC):
         o_current->saved_color = o_current->color;
@@ -1054,6 +1058,7 @@ void o_complex_unset_color(OBJECT *complex)
       case(OBJ_BOX):
       case(OBJ_PICTURE):
       case(OBJ_CIRCLE):
+      case(OBJ_PATH):
       case(OBJ_PIN):
       case(OBJ_ARC):
         o_current->color = o_current->saved_color;
@@ -1095,6 +1100,7 @@ void o_complex_unset_color_single(OBJECT *o_current)
     case(OBJ_BOX):
     case(OBJ_PICTURE):
     case(OBJ_CIRCLE):
+    case(OBJ_PATH):
     case(OBJ_PIN):
     case(OBJ_ARC):
     o_current->color = o_current->saved_color;
@@ -1135,6 +1141,7 @@ void o_complex_set_saved_color_only(OBJECT *complex, int color)
       case(OBJ_BOX):
       case(OBJ_PICTURE):
       case(OBJ_CIRCLE):
+      case(OBJ_PATH):
       case(OBJ_PIN):
       case(OBJ_ARC):
         o_current->saved_color = color;

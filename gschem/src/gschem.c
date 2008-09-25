@@ -174,6 +174,7 @@ void main_prog(void *closure, int argc, char *argv[])
   line_draw_func = o_line_draw;
   net_draw_func = o_net_draw;
   picture_draw_func = o_picture_draw;
+  path_draw_func = o_path_draw;
   pin_draw_func = o_pin_draw;
   text_draw_func = o_text_draw;
   load_newer_backup_func = x_fileselect_load_backup;

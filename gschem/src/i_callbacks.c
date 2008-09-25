@@ -1288,7 +1288,8 @@ DEFINE_I_CALLBACK(edit_linetype)
       if (o_current->type == OBJ_LINE   ||
           o_current->type == OBJ_BOX    ||
           o_current->type == OBJ_CIRCLE ||
-          o_current->type == OBJ_ARC) {
+          o_current->type == OBJ_ARC ||
+          o_current->type == OBJ_PATH) {
         objects = g_list_prepend (objects, o_current);
       }
 
@@ -1329,7 +1330,8 @@ DEFINE_I_CALLBACK(edit_filltype)
       OBJECT *o_current = (OBJECT *) s_current->data;
           
       if (o_current->type == OBJ_BOX ||
-          o_current->type == OBJ_CIRCLE) {
+          o_current->type == OBJ_CIRCLE ||
+          o_current->type == OBJ_PATH) {
         objects = g_list_prepend (objects, o_current);
       }
 

@@ -366,6 +366,15 @@ OBJECT *o_read_attribs(TOPLEVEL *toplevel,
                                              object_list);
         break;
 
+      case(OBJ_PATH):
+        line = g_strdup (line);
+        object_list = (OBJECT *) o_path_read(toplevel,
+                                             object_list,
+                                             line, tb,
+                                             release_ver, fileformat_ver);
+        g_free (line);
+        break;
+
       case(OBJ_PIN):
         object_list = (OBJECT *) o_pin_read(toplevel,
                                             object_list, 
@@ -481,6 +490,10 @@ gchar *o_save_attribs(GList *attribs)
 
         case(OBJ_TEXT):
           out = (char *) o_text_save(a_current);
+          break;
+
+        case(OBJ_PATH):
+          out = (char *) o_path_save(a_current);
           break;
 
         case(OBJ_PIN):

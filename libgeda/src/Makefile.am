@@ -36,6 +36,7 @@ libgeda_la_SOURCES = \
 	o_line_basic.c \
 	o_list.c \
 	o_net_basic.c \
+	o_path_basic.c \
 	o_picture.c \
 	o_pin_basic.c \
 	o_selection.c \
@@ -52,6 +53,7 @@ libgeda_la_SOURCES = \
 	s_menu.c \
 	s_page.c \
 	s_papersizes.c \
+	s_path.c \
 	s_slib.c \
 	s_stretch.c \
 	s_textbuffer.c \

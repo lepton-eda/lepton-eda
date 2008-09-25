@@ -153,6 +153,10 @@ gchar *o_save_objects (OBJECT *object_list)
             out = (char *) o_text_save(o_current);
             break;
 
+          case(OBJ_PATH):
+            out = (char *) o_path_save(o_current);
+            break;
+
           case(OBJ_PIN):
             out = (char *) o_pin_save(o_current);
             break;
@@ -348,6 +352,13 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
 					     line, tb,
                                              release_ver, fileformat_ver);
 	g_free(line);
+        break;
+
+      case(OBJ_PATH):
+        line = g_strdup(line);
+        object_list = (OBJECT *) o_path_read(toplevel, object_list, line, tb,
+                                             release_ver, fileformat_ver);
+        g_free (line);
         break;
 
       case(OBJ_PIN):

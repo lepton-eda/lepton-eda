@@ -247,6 +247,14 @@ int o_net_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object);
 void o_net_consolidate(TOPLEVEL *toplevel);
 void o_net_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
+/* o_path_basic.c */
+OBJECT *o_path_add(TOPLEVEL *toplevel, OBJECT *object_list, char type, int color, const char *path_string);
+OBJECT *o_path_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current);
+void o_path_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
+void o_path_translate_world(TOPLEVEL *toplevel, int x, int y, OBJECT *object);
+void o_path_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
+void o_path_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+
 /* o_picture.c */
 OBJECT *o_picture_add(TOPLEVEL *toplevel, OBJECT *list_tail, GdkPixbuf *pixbuf,
                       gchar *file_content, gsize file_length, char *filename,
@@ -427,6 +435,10 @@ void s_papersizes_free(void);
 void s_papersizes_init(void);
 char *s_papersizes_get(int counter);
 void s_papersizes_get_size(char *string, int *width, int *height);
+
+/* s_path.c */
+PATH *s_path_parse (const char *path_str);
+char *s_path_string_from_path (const PATH *path);
 
 /* s_project.c */
 TOPLEVEL *s_toplevel_new (void);

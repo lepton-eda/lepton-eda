@@ -100,6 +100,13 @@ OBJECT *o_grips_search_world(GSCHEM_TOPLEVEL *w_current, int x, int y, int *whic
           if(found != NULL) return found;
           break;
 
+        case(OBJ_PATH):
+          /* check the grips of the path object */
+          found = o_grips_search_path_world(w_current, object,
+                                            x, y, w_size, whichone);
+          if(found != NULL) return found;
+          break;
+
         case(OBJ_PICTURE):
           /* check the grips of the picture object */
           found = o_grips_search_picture_world(w_current, object,
@@ -294,6 +301,76 @@ OBJECT *o_grips_search_box_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                   o_current->box->lower_y, size)) {
     *whichone = BOX_LOWER_LEFT;
     return(o_current);
+  }
+
+  return NULL;
+}
+
+/*! \brief Check if pointer is inside path grip.
+ *  \par Function Description
+ *  This function checks if the pointer event occuring at (<B>x</B>,<B>y</B>)
+ *  is inside one of the grips of the <B>o_current</B> pointed path object.
+ *  If so, the <B>whichone</B> pointed integer is set to the identifier of
+ *  this grip and the returned pointer is a pointer on this object.
+ *  If the point is not inside a grip the function returns a NULL pointer
+ *  and the <B>whichone</B> pointed integer is unset.
+ *
+ *  A path object has four grips : one at each corner of the path.
+ *  The identifiers of each corner are #PICTURE_UPPER_LEFT,
+ *  #PICTURE_UPPER_RIGHT, #PICTURE_LOWER_LEFT and
+ *  #PICTURE_LOWER_RIGHT.
+ *
+ *  The <B>x</B> and <B>y</B> parameters are in world units.
+ *
+ *  The <B>size</B> parameter is half the width (and half the height) of the
+ *  square representing a grip in world units.
+ *
+ *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in]  o_current  Picture OBJECT to check.
+ *  \param [in]  x          Current x coordinate of pointer in world units.
+ *  \param [in]  y          Current y coordinate of pointer in world units.
+ *  \param [in]  size       Half the width of the grip square in world units.
+ *  \param [out] whichone   Which grip point is selected.
+ *  \return Pointer to OBJECT the grip is on, NULL otherwise.
+ */
+OBJECT *o_grips_search_path_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
+                                     int x, int y, int size, int *whichone)
+{
+  PATH_SECTION *section;
+  int i;
+  int grip_no = 0;
+
+  for (i = 0; i <  o_current->path->num_sections; i++) {
+    section = &o_current->path->sections[i];
+
+    switch (section->code) {
+    case PATH_CURVETO:
+      /* inside first control grip ? */
+      if (inside_grip(x, y, section->x1, section->y1, size)) {
+        *whichone = grip_no;
+        return o_current;
+      }
+      grip_no ++;
+      /* inside second control grip ? */
+      if (inside_grip(x, y, section->x2, section->y2, size)) {
+        *whichone = grip_no;
+        return o_current;
+      }
+      grip_no ++;
+      /* Fall through */
+    case PATH_MOVETO:
+    case PATH_MOVETO_OPEN:
+    case PATH_LINETO:
+      /* inside destination control grip ? */
+      if (inside_grip(x, y, section->x3, section->y3, size)) {
+        *whichone = grip_no;
+        return o_current;
+      }
+      grip_no ++;
+      break;
+    case PATH_END:
+      break;
+    }
   }
 
   return NULL;
@@ -497,6 +574,11 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
       o_grips_start_box(w_current, object, w_x, w_y, whichone);
       return(TRUE);
 
+    case(OBJ_PATH):
+      /* start the modification of a grip on a path */
+      o_grips_start_path(w_current, object, w_x, w_y, whichone);
+      return(TRUE);
+
     case(OBJ_PICTURE):
       /* start the modification of a grip on a picture */
       o_grips_start_picture(w_current, object, w_x, w_y, whichone);
@@ -633,6 +715,79 @@ void o_grips_start_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 
   /* draw the first temporary box */
   o_box_rubberbox_xor(w_current);
+  w_current->rubber_visible = 1;
+}
+
+/*! \brief Initialize grip motion process for a path.
+ *  \par Function Description
+ *  This function initializes the grip motion process for a path.
+ *  From the <B>o_current</B> pointed object, it stores into the
+ *  GSCHEM_TOPLEVEL structure the ....
+ *  These variables are used in the grip process.
+ *
+ *  The function first erases the grips.
+ *
+ *  The coordinates of the selected corner are put in
+ *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>).
+ *
+ *  The coordinates of the opposite corner go in
+ *  (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>). They are not
+ *  suppose to change during the action.
+ *
+ *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in]  o_current  Picture OBJECT to check.
+ *  \param [in]  x          (unused)
+ *  \param [in]  y          (unused)
+ *  \param [out] whichone   Which coordinate to check.
+ */
+void o_grips_start_path(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
+                           int x, int y, int whichone)
+{
+  PATH_SECTION *section;
+  int i;
+  int grip_no = 0;
+  int gx = -1;
+  int gy = -1;
+
+  w_current->last_drawb_mode = -1;
+
+  /* erase the path before */
+  o_erase_single(w_current, o_current);
+
+  for (i = 0; i <  o_current->path->num_sections; i++) {
+    section = &o_current->path->sections[i];
+
+    switch (section->code) {
+    case PATH_CURVETO:
+      /* Two control point grips */
+      if (whichone == grip_no++) {
+        gx = section->x1;
+        gy = section->y1;
+      }
+      if (whichone == grip_no++) {
+        gx = section->x2;
+        gy = section->y2;
+      }
+      /* Fall through */
+    case PATH_MOVETO:
+    case PATH_MOVETO_OPEN:
+    case PATH_LINETO:
+      /* Destination point grip */
+      if (whichone == grip_no++) {
+        gx = section->x3;
+        gy = section->y3;
+      }
+      break;
+    case PATH_END:
+      break;
+    }
+  }
+
+  w_current->first_wx = w_current->second_wx = gx;
+  w_current->first_wy = w_current->second_wy = gy;
+
+  /* draw the first temporary path */
+  o_path_rubberpath_xor(w_current);
   w_current->rubber_visible = 1;
 }
 
@@ -824,6 +979,11 @@ void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int unsnapped_wx, int unsnapped_
     o_grips_motion_box (w_current, w_x, w_y, grip);
     break;
 
+    case(OBJ_PATH):
+    /* erase, update and draw a box */
+    o_grips_motion_path(w_current, w_x, w_y, grip);
+    break;
+
     case(OBJ_PICTURE):
     /* erase, update and draw a box */
     o_grips_motion_picture (w_current, w_x, w_y, grip);
@@ -900,6 +1060,31 @@ void o_grips_motion_box(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whicho
 {
   /* erase, update and draw the temporary box */
   o_box_rubberbox(w_current, w_x, w_y);
+}
+
+/*! \brief Modify previously selected path according to mouse position.
+ *  \par Function Description
+ *  This function is the refreshing part of the grip motion process. It is
+ *  called whenever the position of the pointer is changed, therefore
+ *  requiring the GSCHEM_TOPLEVEL variables to be updated.
+ *  Depending on the grip selected and moved, the temporary GSCHEM_TOPLEVEL
+ *  variables are changed according to the current position of the pointer
+ *  and the modifications temporary drawn.
+ *
+ *  This function only makes a call to #o_path_rubberbox() that
+ *  updates the GSCHEM_TOPLEVEL variables, erase the previous temporary
+ *   path and draw the new temporary path.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_x        Current x coordinate of pointer in world units.
+ *  \param [in] w_y        Current y coordinate of pointer in world units.
+ *  \param [in] whichone   Which grip to start motion with.
+ */
+void o_grips_motion_path (GSCHEM_TOPLEVEL *w_current,
+                          int w_x, int w_y, int whichone)
+{
+  /* erase, update and draw the temporary path */
+  o_path_rubberpath(w_current, w_x, w_y);
 }
 
 /*! \brief Modify previously selected picture according to mouse position.
@@ -1009,6 +1194,11 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
     case(OBJ_BOX):
     /* modify a box object */
     o_grips_end_box(w_current, object, grip);
+    break;
+
+    case(OBJ_PATH):
+    /* modify a path object */
+    o_grips_end_path(w_current, object, grip);
     break;
 
     case(OBJ_PICTURE):
@@ -1148,6 +1338,27 @@ void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_box_rubberbox_xor(w_current);
 
   /* draw the modified box */
+  o_redraw_single(w_current, o_current);
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief End process of modifying path object with grip.
+ *  \par Function Description
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] o_current  Picture OBJECT to end modification on.
+ *  \param [in] whichone   Which grip is pointed to.
+ */
+void o_grips_end_path(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
+{
+  /* erase the temporary path */
+  if (w_current->rubber_visible)
+    o_path_rubberpath_xor(w_current);
+
+  o_path_modify (w_current->toplevel, o_current,
+                 w_current->second_wx, w_current->second_wy, whichone);
+
+  /* draw the modified path */
   o_redraw_single(w_current, o_current);
 }
 

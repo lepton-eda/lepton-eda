@@ -18,6 +18,7 @@ src/o_complex_basic.c
 src/o_embed.c
 src/o_line_basic.c
 src/o_net_basic.c
+src/o_path_basic.c
 src/o_picture.c
 src/o_pin_basic.c
 src/o_text_basic.c

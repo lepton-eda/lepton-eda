@@ -142,6 +142,15 @@ void o_net_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, 
 void world_get_net_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 void o_net_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 
+/* o_path_basic.c */
+OBJECT *o_path_read(TOPLEVEL *toplevel, OBJECT *object_list, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver);
+char *o_path_save(OBJECT *object);
+void o_path_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
+gdouble o_path_shortest_distance(OBJECT *object, gint x, gint y);
+void world_get_path_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
+void o_path_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
+
+
 /* o_picture.c */
 OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
 		       const char *first_line,

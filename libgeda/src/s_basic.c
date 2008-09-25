@@ -131,6 +131,7 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
 
   /* Setup line/circle structs */
   new_node->line = NULL;
+  new_node->path = NULL;
   new_node->circle = NULL;
   new_node->arc = NULL;
   new_node->box = NULL;
@@ -334,6 +335,11 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
       s_tile_remove_object(o_current);
     }
     o_current->line = NULL;
+
+    if (o_current->path) {
+      g_free(o_current->path);
+    }
+    o_current->path = NULL;
 
     /*	printf("sdeleting circle\n");*/
     g_free(o_current->circle);

@@ -576,24 +576,28 @@ gboolean o_find_selected_object(GSCHEM_TOPLEVEL *w_current, int x, int y);
 OBJECT *o_grips_search_world(GSCHEM_TOPLEVEL *w_current, int x, int y, int *whichone);
 OBJECT *o_grips_search_arc_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 OBJECT *o_grips_search_box_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
+OBJECT *o_grips_search_path_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 OBJECT *o_grips_search_picture_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 OBJECT *o_grips_search_circle_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 OBJECT *o_grips_search_line_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_grips_start_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_start_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
+void o_grips_start_path(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_start_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_grips_motion_arc(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone);
 void o_grips_motion_box(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone);
+void o_grips_motion_path(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone);
 void o_grips_motion_picture(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone);
 void o_grips_motion_circle(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone);
 void o_grips_motion_line(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone);
 void o_grips_end(GSCHEM_TOPLEVEL *w_current);
 void o_grips_end_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);
+void o_grips_end_path(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 void o_grips_end_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 void o_grips_end_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);
@@ -674,6 +678,17 @@ void o_picture_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
 void o_picture_exchange(GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf, const gchar *filename);
 void picture_change_filename_dialog (GSCHEM_TOPLEVEL *w_current);
 void o_picture_set_pixbuf(GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf, char *filename);
+
+/* o_path.c */
+void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
+void o_path_eraserubber(GSCHEM_TOPLEVEL *w_current);
+void o_path_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
+void o_path_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
+void o_path_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
+void o_path_rubberpath(GSCHEM_TOPLEVEL *w_current, int x, int y);
+void o_path_rubberpath_xor(GSCHEM_TOPLEVEL *w_current);
+void o_path_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
+void o_path_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 
 /* o_pin.c */
 void o_pin_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);

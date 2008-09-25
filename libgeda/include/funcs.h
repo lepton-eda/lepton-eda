@@ -8,6 +8,7 @@ extern void (*net_draw_func)();
 extern void (*bus_draw_func)();
 extern void (*text_draw_func)();
 extern void (*pin_draw_func)();
+extern void (*path_draw_func)();
 extern void (*select_func)();
 extern void (*x_log_update_func)();
 /* load_newer_backup_func is called if an autosave backup file is found
