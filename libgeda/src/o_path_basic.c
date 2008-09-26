@@ -40,7 +40,7 @@ void (*path_draw_func)() = NULL;
  *  The path is described by its two ends - <B>x1</B>,<B>y1</B> and
  *  <B>x2</B>,<B>y2</B>.
  *  The <B>type</B> parameter must be equal to #OBJ_PATH.
- *  The <B>color</B> parameter corresponds to the color the box
+ *  The <B>color</B> parameter corresponds to the color the path
  *  will be drawn with.
  *
  *  The #OBJECT structure is allocated with the
@@ -144,7 +144,8 @@ OBJECT *o_path_copy (TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
 /*! \brief Create path OBJECT from character string.
  *  \par Function Description
  *  This function creates a path OBJECT from the character string
- *  <B>*buf</B> the description of a box. The new box is added to the
+ *  <B>*buf</B> and a number of lines following that describing the
+ *  path, read from <B>*tb</B>. The new path is added to the
  *  list of objects of which <B>*object_list</B> is the last element
  *  before the call.
  *  The function returns a pointer on the new last element, that is
@@ -239,11 +240,9 @@ OBJECT *o_path_read (TOPLEVEL *toplevel, OBJECT *object_list,
 /*! \brief Create a character string representation of a path OBJECT.
  *  \par Function Description
  *  The function formats a string in the buffer <B>*buff</B> to describe
- *  the box object <B>*object</B>.
- *  It follows the post-20000704 release file format that handle the
- *  path type and fill options - filling is irrelevant here.
+ *  the path object <B>*object</B>.
  *
- *  \param [in] object  Line OBJECT to create string from.
+ *  \param [in] object  path OBJECT to create string from.
  *  \return A pointer to the path OBJECT character string.
  *
  *  \note
