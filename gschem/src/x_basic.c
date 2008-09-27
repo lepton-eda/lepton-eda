@@ -49,8 +49,7 @@ void x_repaint_background(GSCHEM_TOPLEVEL *w_current)
                        w_current->gc, TRUE, 0, 0,
                        w_current->win_width,
                        w_current->win_height);
-    o_invalidate_rect(w_current,
-                      0, 0, w_current->win_width, w_current->win_height);
+    o_invalidate_all (w_current);
 
     x_grid_draw(w_current);
 

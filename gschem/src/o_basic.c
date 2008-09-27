@@ -90,8 +90,6 @@ void o_redraw(GSCHEM_TOPLEVEL *w_current, OBJECT *list, gboolean draw_selected)
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current = list;
   int redraw_state = toplevel->DONT_REDRAW;
-  int left, top, bottom, right;
-  int s_left, s_top, s_bottom, s_right;
 
   w_current->inside_redraw = 1;
   while (o_current != NULL) {
@@ -108,12 +106,7 @@ void o_redraw(GSCHEM_TOPLEVEL *w_current, OBJECT *list, gboolean draw_selected)
   w_current->inside_redraw = 0;
   toplevel->DONT_REDRAW = redraw_state;
 
-  if (world_get_object_list_bounds(toplevel, list, &left,  &top,
-                                                   &right, &bottom)) {
-    WORLDtoSCREEN( toplevel, left, top, &s_left, &s_top );
-    WORLDtoSCREEN( toplevel, right, bottom, &s_right, &s_bottom );
-    o_invalidate_rect( w_current, s_left, s_top, s_right, s_bottom );
-  }
+  o_invalidate_list (w_current, list);
 }
 
 /*! \brief Redraw an object on the screen.
@@ -127,8 +120,6 @@ void o_redraw(GSCHEM_TOPLEVEL *w_current, OBJECT *list, gboolean draw_selected)
 void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int left, top, right, bottom;
-  int s_left, s_top, s_right, s_bottom;
 
   if (o_current == NULL)
   return;
@@ -142,12 +133,7 @@ void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     w_current->inside_redraw = 0;
   }
 
-  if (world_get_single_object_bounds(toplevel, o_current, &left,  &top,
-                                                          &right, &bottom)) {
-    WORLDtoSCREEN(toplevel, left, top, &s_left, &s_top);
-    WORLDtoSCREEN(toplevel, right, bottom, &s_right, &s_bottom);
-    o_invalidate_rect (w_current, s_left,  s_bottom, s_right, s_top);
-  }
+  o_invalidate (w_current, o_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -215,8 +201,6 @@ void o_erase_selected(GSCHEM_TOPLEVEL *w_current)
   GList *list;
   GList *iter;
   OBJECT* o_current;
-  int left, top, right, bottom;
-  int s_left, s_top, s_right, s_bottom;
 
   if (w_current->inside_redraw) {
     return;
@@ -234,12 +218,7 @@ void o_erase_selected(GSCHEM_TOPLEVEL *w_current)
     iter = g_list_next( iter );
   }
 
-  if (world_get_object_glist_bounds(toplevel, list, &left,  &top,
-                                                    &right, &bottom)) {
-    WORLDtoSCREEN(toplevel, left, top, &s_left, &s_top);
-    WORLDtoSCREEN(toplevel, right, bottom, &s_right, &s_bottom);
-    o_invalidate_rect (w_current, s_left,  s_bottom, s_right, s_top);
-  }
+  o_invalidate_glist (w_current, list);
 }
 
 /*! \brief Erase a given OBJECT
@@ -260,8 +239,6 @@ void o_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
-  int left, top, right, bottom;
-  int s_left, s_top, s_right, s_bottom;
 
   if (w_current->inside_redraw) {
     return;
@@ -278,12 +255,7 @@ void o_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   }
   toplevel->override_color = -1;
 
-  if (world_get_single_object_bounds(toplevel, o_current, &left,  &top,
-                                                          &right, &bottom)) {
-    WORLDtoSCREEN(toplevel, left, top, &s_left, &s_top);
-    WORLDtoSCREEN(toplevel, right, bottom, &s_right, &s_bottom);
-    o_invalidate_rect (w_current, s_left,  s_bottom, s_right, s_top);
-  }
+  o_invalidate (w_current, o_current);
 }
 
 /*! \todo Finish function documentation!!!
