@@ -324,9 +324,7 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
   int left, top, bottom, right;
   int s_left, s_top, s_bottom, s_right;
 
-  if (o_glist == NULL) {
-    return;
-  }
+  g_return_if_fail (o_glist != NULL);
 
   /* If drawing is true, then don't worry about the previous drawing
    * method and movement constraints, use with the current settings */
