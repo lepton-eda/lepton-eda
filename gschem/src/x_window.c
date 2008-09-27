@@ -579,13 +579,6 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
 
   w_current->window = w_current->drawing_area->window;
 
-  /* draw a black rectangle in drawing area just to make it look nice */
-  /* don't do this now */
-  /* gdk_draw_rectangle(window, main_window->style->black_gc, TRUE, 0, 0,
-   *				win_width, win_height);
-   *
-   */
-
   w_current->backingstore = gdk_pixmap_new(w_current->window,
                                            w_current->drawing_area->allocation.width,
                                            w_current->drawing_area->allocation.height,
