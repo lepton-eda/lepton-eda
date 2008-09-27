@@ -669,8 +669,8 @@ void o_glist_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, GList *list)
  *  \param [in] x2         X coord for corner 2 (SCREEN units)
  *  \param [in] y2         Y coord for corner 2 (SCREEN units)
  */
-void o_invalidate_rect( GSCHEM_TOPLEVEL *w_current,
-                        int x1, int y1, int x2, int y2 )
+void o_invalidate_rect (GSCHEM_TOPLEVEL *w_current,
+                        int x1, int y1, int x2, int y2)
 {
   GdkRectangle rect;
 
@@ -685,6 +685,91 @@ void o_invalidate_rect( GSCHEM_TOPLEVEL *w_current,
   rect.height = 1 + abs( y1 - y2 ) + 2 * INVALIDATE_MARGIN;
   gdk_window_invalidate_rect( w_current->window, &rect, FALSE );
 }
+
+
+/*! \brief Invalidate the whole on-screen area
+ *
+ *  \par Function Description
+ *  This function calls gdk_window_invalidate_rect() with a rect
+ *  of NULL, causing the entire drawing area to be invalidated.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] object     The OBJECT invalidated on screen.
+ */
+void o_invalidate_all (GSCHEM_TOPLEVEL *w_current)
+{
+  gdk_window_invalidate_rect (w_current->window, NULL, FALSE);
+}
+
+
+/*! \brief Invalidate on-screen area for an object
+ *
+ *  \par Function Description
+ *  This function calls o_invalidate_rect() with the bounds of the
+ *  passed OBJECT, converted to screen coordinates.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] object     The OBJECT invalidated on screen.
+ */
+void o_invalidate (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int left, top, bottom, right;
+  int s_left, s_top, s_bottom, s_right;
+  if (world_get_single_object_bounds(toplevel, object, &left,  &top,
+                                                       &right, &bottom)) {
+    WORLDtoSCREEN (toplevel, left, top, &s_left, &s_top);
+    WORLDtoSCREEN (toplevel, right, bottom, &s_right, &s_bottom);
+    o_invalidate_rect (w_current, s_left, s_top, s_right, s_bottom);
+  }
+}
+
+
+/*! \brief Invalidate on-screen area for a list of objects
+ *
+ *  \par Function Description
+ *  This function calls o_invalidate_rect() with the bounds of the
+ *  passed object list, converted to screen coordinates.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] list       The list objects invalidated on screen.
+ */
+void o_invalidate_list (GSCHEM_TOPLEVEL *w_current, OBJECT *list)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int left, top, bottom, right;
+  int s_left, s_top, s_bottom, s_right;
+  if (world_get_object_list_bounds (toplevel, list, &left,  &top,
+                                                    &right, &bottom)) {
+    WORLDtoSCREEN (toplevel, left, top, &s_left, &s_top);
+    WORLDtoSCREEN (toplevel, right, bottom, &s_right, &s_bottom);
+    o_invalidate_rect (w_current, s_left, s_top, s_right, s_bottom);
+  }
+}
+
+
+/*! \brief Invalidate on-screen area for a GList of objects
+ *
+ *  \par Function Description
+ *  This function calls o_invalidate_rect() with the bounds of the
+ *  passed GList, converted to screen coordinates.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] list       The glist objects invalidated on screen.
+ */
+void o_invalidate_glist (GSCHEM_TOPLEVEL *w_current, GList *list)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int left, top, bottom, right;
+  int s_left, s_top, s_bottom, s_right;
+  if (world_get_object_glist_bounds (toplevel, list, &left,  &top,
+                                                     &right, &bottom)) {
+    WORLDtoSCREEN (toplevel, left, top, &s_left, &s_top);
+    WORLDtoSCREEN (toplevel, right, bottom, &s_right, &s_bottom);
+    o_invalidate_rect (w_current, s_left, s_top, s_right, s_bottom);
+  }
+}
+
 
 /*! \brief Erase grip marks on object.
  *  \par Function Description

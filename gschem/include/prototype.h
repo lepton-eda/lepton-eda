@@ -493,6 +493,10 @@ void o_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
 void o_list_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *list);
 void o_glist_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, GList *list);
 void o_invalidate_rect(GSCHEM_TOPLEVEL *w_current, int x1, int y1, int x2, int y2);
+void o_invalidate_all(GSCHEM_TOPLEVEL *w_current);
+void o_invalidate(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
+void o_invalidate_list(GSCHEM_TOPLEVEL *w_current, OBJECT *list);
+void o_invalidate_glist(GSCHEM_TOPLEVEL *w_current, GList *list);
 void o_erase_grips (GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 /* o_box.c */
 void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
