@@ -602,7 +602,9 @@ void o_path_print (TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 
   path_string = g_string_new ("");
 
-  f_print_set_color (fp, o_current->color);
+  if (toplevel->print_color)
+    f_print_set_color (fp, o_current->color);
+
   f_print_set_line_width (fp, line_width);
 
   for (i = 0; i < o_current->path->num_sections; i++) {
