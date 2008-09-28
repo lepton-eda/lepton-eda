@@ -21,8 +21,7 @@
    ;         the object type. However, the attribute_value field should be
    ;         one of the already defined variables: 
    ;         OBJ_LINE, OBJ_BOX, OBJ_PICTURE, OBJ_CIRCLE, OBJ_NET, OBJ_BUS,
-   ;         OBJ_COMPLEX, OBJ_TEXT, OBJ_PIN, OBJ_ARC, OBJ_ROUTE, OBJ_THRU_HOLE,
-   ;         OBJ_PLACEHOLDER
+   ;         OBJ_COMPLEX, OBJ_TEXT, OBJ_PIN, OBJ_ARC, OBJ_PLACEHOLDER
    ;         converted into strings (for example using the function char2str).
    ;
    ;    - the second line defines where and how the attribute will be placed.

@@ -114,8 +114,6 @@ void g_register_libgeda_vars (void)
   scm_c_define("OBJ_TEXT", SCM_MAKE_CHAR((unsigned char) OBJ_TEXT));
   scm_c_define("OBJ_PIN", SCM_MAKE_CHAR((unsigned char) OBJ_PIN));
   scm_c_define("OBJ_ARC", SCM_MAKE_CHAR((unsigned char) OBJ_ARC));
-  scm_c_define("OBJ_ROUTE", SCM_MAKE_CHAR((unsigned char) OBJ_ROUTE));
-  scm_c_define("OBJ_THRU_HOLE", SCM_MAKE_CHAR((unsigned char) OBJ_THRU_HOLE));
   scm_c_define("OBJ_PLACEHOLDER", SCM_MAKE_CHAR((unsigned char) OBJ_PLACEHOLDER));
   
 }
