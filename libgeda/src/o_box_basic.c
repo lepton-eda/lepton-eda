@@ -349,13 +349,13 @@ OBJECT *o_box_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   /* create a new box */
   new_obj = o_box_new(toplevel, type, color, d_x1, d_y1, d_x2, d_y2);
   /* set its line options */
-  o_set_line_options(toplevel, object_list,
-		     box_end, box_type, box_width, 
-		     box_length, box_space);
+  o_set_line_options (toplevel, new_obj,
+                      box_end, box_type, box_width,
+                      box_length, box_space);
   /* set its fill options */
-  o_set_fill_options(toplevel, object_list,
-		     box_filling, fill_width,
-		     pitch1, angle1, pitch2, angle2);
+  o_set_fill_options (toplevel, new_obj,
+                      box_filling, fill_width,
+                      pitch1, angle1, pitch2, angle2);
   /* Add the box to the object list */
   object_list = s_basic_link_object(new_obj, object_list);
   return(object_list);
