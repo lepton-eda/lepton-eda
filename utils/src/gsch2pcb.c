@@ -1384,9 +1384,9 @@ static gchar *usage_string1 =
 static void
 usage()
 	{
-	printf(usage_string0);
+	puts(usage_string0);
 	printf("                         %s\n", default_m4_pcbdir);
-	printf(usage_string1);
+	puts(usage_string1);
 	exit(0);
 	}
 

@@ -471,7 +471,7 @@ static gchar *run_source_command (const gchar *command)
 
   /* forward library command messages */
   if (success && standard_error != NULL)
-    s_log_message (standard_error);
+    s_log_message ("%s", standard_error);
 
   g_free (standard_error);
   

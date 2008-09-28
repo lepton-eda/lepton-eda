@@ -254,7 +254,7 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
       }
       g_string_append (message, _("Gschem usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n"));
       if (toplevel->page_current->load_newer_backup_func == NULL) {
-        g_warning (message->str);
+        g_warning ("%s", message->str);
         g_warning (_("\nRun gschem and correct the situation.\n\n"));
       } else {
         /* Ask the user if load the backup or the original file */
@@ -495,13 +495,13 @@ gchar *f_normalize_filename (const gchar *name, GError **error)
   
   if (name == NULL) {
     g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_INVAL,
-                 g_strerror (EINVAL));
+                 "%s", g_strerror (EINVAL));
     return NULL;
   }
 
   if (*name == '\0') {
     g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_NOENT,
-                 g_strerror (ENOENT));
+                 "%s", g_strerror (ENOENT));
     return NULL;
   }
 
@@ -550,12 +550,12 @@ gchar *f_normalize_filename (const gchar *name, GError **error)
 
       if (!g_file_test (rpath->str, G_FILE_TEST_EXISTS)) {
         g_set_error (error,G_FILE_ERROR, G_FILE_ERROR_NOENT,
-                     g_strerror (ENOENT));
+                     "%s", g_strerror (ENOENT));
         goto error;
       } else if (!g_file_test (rpath->str, G_FILE_TEST_IS_DIR) &&
                  *end != '\0') {
         g_set_error (error,G_FILE_ERROR, G_FILE_ERROR_NOTDIR,
-                     g_strerror (ENOTDIR));
+                     "%s", g_strerror (ENOTDIR));
         goto error;
       }
     }
@@ -594,13 +594,13 @@ char *follow_symlinks (const gchar *filename, GError **err)
 
   if (filename == NULL) {
     g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_INVAL,
-                 g_strerror (EINVAL));
+                 "%s", g_strerror (EINVAL));
     return NULL;
   }
 
   if (strlen (filename) + 1 > MAXPATHLEN) {
     g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_NAMETOOLONG,
-                 g_strerror (ENAMETOOLONG));
+                 "%s", g_strerror (ENAMETOOLONG));
     return NULL;
   }
 

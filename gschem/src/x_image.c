@@ -87,10 +87,10 @@ static void create_size_menu (GtkComboBox *combo)
   char *default_size;
   int i, default_index = 0;
 
-  default_size = g_strdup_printf(X_IMAGE_DEFAULT_SIZE);
+  default_size = g_strdup (X_IMAGE_DEFAULT_SIZE);
   for (i=0; x_image_sizes[i] != NULL;i++) {
     /* Create a new string and add it as an option*/
-    buf = g_strdup_printf(x_image_sizes[i]);
+    buf = g_strdup (x_image_sizes[i]);
     gtk_combo_box_append_text (GTK_COMBO_BOX (combo), buf);
 
     /* Compare with the default size, to get the default index */
@@ -130,7 +130,7 @@ static void create_type_menu(GtkComboBox *combo)
   while (ptr) {
     if (gdk_pixbuf_format_is_writable (ptr->data)) {
       /* Get the format description and add it to the menu */
-      buf = g_strdup_printf(gdk_pixbuf_format_get_description(ptr->data));
+      buf = g_strdup (gdk_pixbuf_format_get_description(ptr->data));
       gtk_combo_box_append_text (GTK_COMBO_BOX (combo), buf);
 
       /* If GTK < 2.6, then add it also to the descriptions list. */
@@ -140,7 +140,7 @@ static void create_type_menu(GtkComboBox *combo)
 #endif
 
       /* Compare the name with "png" and store the index */
-      buf = g_strdup_printf(gdk_pixbuf_format_get_name(ptr->data));
+      buf = g_strdup (gdk_pixbuf_format_get_name(ptr->data));
       if (strcasecmp(buf, X_IMAGE_DEFAULT_TYPE) == 0) {
         default_index = i;
       }
@@ -167,7 +167,7 @@ static void create_type_menu(GtkComboBox *combo)
  *  \note This function is only used in this file.
  */
 static char *x_image_get_type_from_description(char *description) {
-  gchar *descr = g_strdup_printf(description);
+  gchar *descr = g_strdup (description);
   GSList *formats = gdk_pixbuf_get_formats ();
   GSList *ptr;
   gchar *ptr_descr;
@@ -373,7 +373,7 @@ void x_image_lowlevel(GSCHEM_TOPLEVEL *w_current, const char* filename,
       if (!gdk_pixbuf_save(pixbuf, filename, filetype, &gerror, NULL)) {
         s_log_message(_("x_image_lowlevel: Unable to write %s file %s.\n"),
             filetype, filename);
-        s_log_message(gerror->message);
+        s_log_message("%s", gerror->message);
 
         /* Warn the user */
         dialog = gtk_message_dialog_new (GTK_WINDOW(w_current->main_window),

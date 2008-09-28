@@ -126,7 +126,7 @@ SCM g_funcs_log(SCM msg)
   SCM_ASSERT (scm_is_string (msg), msg,
               SCM_ARG1, "gschem-log");
 
-  s_log_message (SCM_STRING_CHARS (msg));
+  s_log_message ("%s", SCM_STRING_CHARS (msg));
 
   return SCM_BOOL_T;
 }
