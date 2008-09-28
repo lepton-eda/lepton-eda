@@ -26,7 +26,7 @@
    (function g_register_libgeda_vars) */
 #define OBJ_HEAD       	-1 
 #define OBJ_LINE        'L'
-#define OBJ_PATH        'p'
+#define OBJ_PATH        'H'
 #define OBJ_BOX         'B'
 #define OBJ_PICTURE     'G'
 #define OBJ_CIRCLE      'V'
