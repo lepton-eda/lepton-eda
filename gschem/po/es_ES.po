@@ -2,13 +2,13 @@
 # Copyright (C) 2005-2006 Carlos Nieves Onega
 # This file is distributed under the same license as the gschem package.
 # Carlos Nieves Ónega <cnieves@iespana.es>, 2005-2008.
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-27 10:39-0500\n"
+"POT-Creation-Date: 2008-09-28 16:56-0400\n"
 "PO-Revision-Date: 2008-01-07 19:04+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/SpainMIME-Version: 1.0\n"
@@ -665,12 +665,12 @@ msgstr "Leído fichero de inicialización scm [%s]\n"
 msgid "Failed to read init scm file [%s]\n"
 msgstr "Fallo al leer fichero de inicialización scm [%s]\n"
 
-#: ../src/gschem.c:321
+#: ../src/gschem.c:322
 #, c-format
 msgid "Scheme directory NOT set!\n"
 msgstr "¡Directorio de Scheme no especificado!\n"
 
-#: ../src/gschem.c:328 ../src/x_script.c:72
+#: ../src/gschem.c:329 ../src/x_script.c:72
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "Ejecutando programa de guile [%s]\n"
@@ -1228,14 +1228,14 @@ msgstr ""
 "o_net_draw_xor_single\n"
 
 #. try to exit gracefully
-#: ../src/o_net.c:770 ../src/o_net.c:807 ../src/o_net.c:878 ../src/o_net.c:914
+#: ../src/o_net.c:797 ../src/o_net.c:834 ../src/o_net.c:905 ../src/o_net.c:941
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 "Se ha intentado añadir más de dos conexiones a bus. Error interno de "
 "gschem.\n"
 
-#: ../src/o_net.c:987
+#: ../src/o_net.c:1014
 #, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
 msgstr "No se ha encontrado el símbolo %s en ninguna librería de componentes\n"
@@ -1391,93 +1391,93 @@ msgstr ""
 "La duplicidad de la propiedad 'slot' puede causar problemas: [nombre del "
 "símbolo=%s, número=%d, slot=%d]\n"
 
-#: ../src/x_autonumber.c:692
+#: ../src/x_autonumber.c:690
 msgid "No searchstring given in autonumber text.\n"
 msgstr "No se ha especificado una cadena de búsqueda para autonumerar texto.\n"
 
-#: ../src/x_autonumber.c:743
+#: ../src/x_autonumber.c:741
 msgid "No '*' or '?' given at the end of the autonumber text.\n"
 msgstr "No se ha especificado '*' o '?' al final del texto a autonumerar.\n"
 
-#: ../src/x_autonumber.c:876
+#: ../src/x_autonumber.c:874
 msgid "Diagonal"
 msgstr "Diagonal"
 
-#: ../src/x_autonumber.c:877
+#: ../src/x_autonumber.c:875
 msgid "Top to bottom"
 msgstr "De arriba hacia abajo"
 
-#: ../src/x_autonumber.c:877
+#: ../src/x_autonumber.c:875
 msgid "Bottom to top"
 msgstr "De abajo hacia arriba"
 
-#: ../src/x_autonumber.c:878
+#: ../src/x_autonumber.c:876
 msgid "Left to right"
 msgstr "De izquierda hacia derecha"
 
-#: ../src/x_autonumber.c:878
+#: ../src/x_autonumber.c:876
 msgid "Right to left"
 msgstr "De derecha hacia izquierda"
 
-#: ../src/x_autonumber.c:879
+#: ../src/x_autonumber.c:877
 msgid "File order"
 msgstr "Orden de archivos:"
 
-#: ../src/x_autonumber.c:1215
+#: ../src/x_autonumber.c:1213
 msgid "Autonumber text"
 msgstr "Autoenumerar texto"
 
 #. scope section
-#: ../src/x_autonumber.c:1241
+#: ../src/x_autonumber.c:1239
 msgid "<b>Scope</b>"
 msgstr "<b>Ámbito</b>"
 
-#: ../src/x_autonumber.c:1263
+#: ../src/x_autonumber.c:1261
 msgid "Search for:"
 msgstr "Buscar:"
 
-#: ../src/x_autonumber.c:1277
+#: ../src/x_autonumber.c:1275
 msgid "Autonumber text in:"
 msgstr "Autoenumerar texto en:"
 
-#: ../src/x_autonumber.c:1284
+#: ../src/x_autonumber.c:1282
 msgid "Skip numbers found in:"
 msgstr "Ignorar números encontrados en:"
 
-#: ../src/x_autonumber.c:1296 ../src/x_autonumber.c:1305
+#: ../src/x_autonumber.c:1294 ../src/x_autonumber.c:1303
 msgid "Selected objects"
 msgstr "Objetos seleccionados"
 
-#: ../src/x_autonumber.c:1297 ../src/x_autonumber.c:1306
+#: ../src/x_autonumber.c:1295 ../src/x_autonumber.c:1304
 msgid "Current page"
 msgstr "Hoja actual"
 
-#: ../src/x_autonumber.c:1298 ../src/x_autonumber.c:1307
+#: ../src/x_autonumber.c:1296 ../src/x_autonumber.c:1305
 msgid "Whole hierarchy"
 msgstr "Jerarquía completa"
 
-#: ../src/x_autonumber.c:1309
+#: ../src/x_autonumber.c:1307
 msgid "Overwrite existing numbers"
 msgstr "Sobreescribir los números existentes"
 
 #. Options section
-#: ../src/x_autonumber.c:1314
+#: ../src/x_autonumber.c:1312
 msgid "<b>Options</b>"
 msgstr "<b>Opciones</b>"
 
-#: ../src/x_autonumber.c:1336
+#: ../src/x_autonumber.c:1334
 msgid "Starting number:"
 msgstr "Número inicial:"
 
-#: ../src/x_autonumber.c:1343
+#: ../src/x_autonumber.c:1341
 msgid "Sort order:"
 msgstr "Método de ordenación:"
 
-#: ../src/x_autonumber.c:1364
+#: ../src/x_autonumber.c:1362
 msgid "Remove numbers"
 msgstr "Borrar los números"
 
-#: ../src/x_autonumber.c:1368
+#: ../src/x_autonumber.c:1366
 msgid "Automatic slotting"
 msgstr "Asignar números de elemento automáticamente"
 

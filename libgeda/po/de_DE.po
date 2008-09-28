@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-27 10:39-0500\n"
+"POT-Creation-Date: 2008-09-28 16:49-0400\n"
 "PO-Revision-Date: 2008-01-07 18:44+0100\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -321,20 +321,21 @@ msgstr "Verwende die Farbe WEISS\n"
 msgid "Found an improper attribute: _%s_\n"
 msgstr "Fehlerhaftes Attribut entdeckt: [%s]\n"
 
-#: ../src/o_attrib.c:1690 ../src/o_attrib.c:1797
+#. only an error if there's a slot string
+#: ../src/o_attrib.c:1699 ../src/o_attrib.c:1806
 msgid "Did not find slotdef=#:#,#,#... attribute\n"
 msgstr "Es wurde kein slotdef=#:#,#,#... Attribut gefunden\n"
 
 #. Didn't find proper slotdef=#:... put warning into log
-#: ../src/o_attrib.c:1696
+#: ../src/o_attrib.c:1705
 msgid "Improper slotdef syntax: missing \":\".\n"
 msgstr "Fehlerhafte slotdef syntax: \":\" fehlt.\n"
 
-#: ../src/o_attrib.c:1711 ../src/o_attrib.c:1816
+#: ../src/o_attrib.c:1720 ../src/o_attrib.c:1825
 msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
 msgstr "Kein korrektes Attribut slotdef=#:#,#,#... gefunden\n"
 
-#: ../src/o_attrib.c:1750 ../src/o_attrib.c:1850
+#: ../src/o_attrib.c:1759 ../src/o_attrib.c:1859
 msgid "component missing pinseq= attribute\n"
 msgstr "pinseq= Attribut fehlt.\n"
 

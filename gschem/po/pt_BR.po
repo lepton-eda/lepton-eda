@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-27 10:39-0500\n"
+"POT-Creation-Date: 2008-09-28 16:56-0400\n"
 "PO-Revision-Date: 2006-07-27 01:34-0300\n"
 "Last-Translator: \n"
 "Language-Team:  <pt@li.org>\n"
@@ -665,12 +665,12 @@ msgstr "Lendo o arquivo scm [%s]\n"
 msgid "Failed to read init scm file [%s]\n"
 msgstr "Falhou ao ler o arquivo scm [%s]\n"
 
-#: ../src/gschem.c:321
+#: ../src/gschem.c:322
 #, c-format
 msgid "Scheme directory NOT set!\n"
 msgstr "Diretório Scheme NÃO ajustado!\n"
 
-#: ../src/gschem.c:328 ../src/x_script.c:72
+#: ../src/gschem.c:329 ../src/x_script.c:72
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "Executando script guile [%s]\n"
@@ -1202,12 +1202,12 @@ msgid "Got an invalid which one in o_net_draw_xor_single\n"
 msgstr ""
 
 #. try to exit gracefully
-#: ../src/o_net.c:770 ../src/o_net.c:807 ../src/o_net.c:878 ../src/o_net.c:914
+#: ../src/o_net.c:797 ../src/o_net.c:834 ../src/o_net.c:905 ../src/o_net.c:941
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 
-#: ../src/o_net.c:987
+#: ../src/o_net.c:1014
 #, fuzzy, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
 msgstr "Não consigo encontrar %s em nenhuma biblioteca\n"
@@ -1362,104 +1362,104 @@ msgid ""
 "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
 msgstr ""
 
-#: ../src/x_autonumber.c:692
+#: ../src/x_autonumber.c:690
 msgid "No searchstring given in autonumber text.\n"
 msgstr ""
 
-#: ../src/x_autonumber.c:743
+#: ../src/x_autonumber.c:741
 msgid "No '*' or '?' given at the end of the autonumber text.\n"
 msgstr ""
 
-#: ../src/x_autonumber.c:876
+#: ../src/x_autonumber.c:874
 #, fuzzy
 msgid "Diagonal"
 msgstr "diagonal"
 
-#: ../src/x_autonumber.c:877
+#: ../src/x_autonumber.c:875
 msgid "Top to bottom"
 msgstr ""
 
-#: ../src/x_autonumber.c:877
+#: ../src/x_autonumber.c:875
 msgid "Bottom to top"
 msgstr ""
 
-#: ../src/x_autonumber.c:878
+#: ../src/x_autonumber.c:876
 #, fuzzy
 msgid "Left to right"
 msgstr "Esq Dir"
 
-#: ../src/x_autonumber.c:878
+#: ../src/x_autonumber.c:876
 msgid "Right to left"
 msgstr ""
 
-#: ../src/x_autonumber.c:879
+#: ../src/x_autonumber.c:877
 #, fuzzy
 msgid "File order"
 msgstr "Ordena em arquivos"
 
-#: ../src/x_autonumber.c:1215
+#: ../src/x_autonumber.c:1213
 msgid "Autonumber text"
 msgstr "Autonumerar texto"
 
 #. scope section
-#: ../src/x_autonumber.c:1241
+#: ../src/x_autonumber.c:1239
 msgid "<b>Scope</b>"
 msgstr ""
 
-#: ../src/x_autonumber.c:1263
+#: ../src/x_autonumber.c:1261
 #, fuzzy
 msgid "Search for:"
 msgstr "foco de procura"
 
-#: ../src/x_autonumber.c:1277
+#: ../src/x_autonumber.c:1275
 #, fuzzy
 msgid "Autonumber text in:"
 msgstr "Autonumerar texto"
 
-#: ../src/x_autonumber.c:1284
+#: ../src/x_autonumber.c:1282
 msgid "Skip numbers found in:"
 msgstr ""
 
-#: ../src/x_autonumber.c:1296 ../src/x_autonumber.c:1305
+#: ../src/x_autonumber.c:1294 ../src/x_autonumber.c:1303
 #, fuzzy
 msgid "Selected objects"
 msgstr "Objetos selecionados"
 
-#: ../src/x_autonumber.c:1297 ../src/x_autonumber.c:1306
+#: ../src/x_autonumber.c:1295 ../src/x_autonumber.c:1304
 #, fuzzy
 msgid "Current page"
 msgstr "Folha corrente"
 
-#: ../src/x_autonumber.c:1298 ../src/x_autonumber.c:1307
+#: ../src/x_autonumber.c:1296 ../src/x_autonumber.c:1305
 #, fuzzy
 msgid "Whole hierarchy"
 msgstr "Hierarquia"
 
-#: ../src/x_autonumber.c:1309
+#: ../src/x_autonumber.c:1307
 msgid "Overwrite existing numbers"
 msgstr ""
 
 #. Options section
-#: ../src/x_autonumber.c:1314
+#: ../src/x_autonumber.c:1312
 #, fuzzy
 msgid "<b>Options</b>"
 msgstr "Opções"
 
-#: ../src/x_autonumber.c:1336
+#: ../src/x_autonumber.c:1334
 #, fuzzy
 msgid "Starting number:"
 msgstr "Número inicial"
 
-#: ../src/x_autonumber.c:1343
+#: ../src/x_autonumber.c:1341
 #, fuzzy
 msgid "Sort order:"
 msgstr "Ordenação"
 
-#: ../src/x_autonumber.c:1364
+#: ../src/x_autonumber.c:1362
 msgid "Remove numbers"
 msgstr ""
 
-#: ../src/x_autonumber.c:1368
+#: ../src/x_autonumber.c:1366
 msgid "Automatic slotting"
 msgstr ""
 

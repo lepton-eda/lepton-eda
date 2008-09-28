@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-27 10:39-0500\n"
+"POT-Creation-Date: 2008-09-28 16:56-0400\n"
 "PO-Revision-Date: 2008-01-06 12:12+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev@moira.seul.org\n"
@@ -652,12 +652,12 @@ msgstr "Lees init scm bestand [%s]\n"
 msgid "Failed to read init scm file [%s]\n"
 msgstr "Fout bij het lezen van het init scm bestand [%s]\n"
 
-#: ../src/gschem.c:321
+#: ../src/gschem.c:322
 #, c-format
 msgid "Scheme directory NOT set!\n"
 msgstr "Scheme bestandenmap is NIET ingesteld!\n"
 
-#: ../src/gschem.c:328 ../src/x_script.c:72
+#: ../src/gschem.c:329 ../src/x_script.c:72
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "Bezig met uitvoeren van guile script [%s]\n"
@@ -1192,13 +1192,13 @@ msgid "Got an invalid which one in o_net_draw_xor_single\n"
 msgstr "Ontving er een die ongeldig is in o_net_draw_xor_single\n"
 
 #. try to exit gracefully
-#: ../src/o_net.c:770 ../src/o_net.c:807 ../src/o_net.c:878 ../src/o_net.c:914
+#: ../src/o_net.c:797 ../src/o_net.c:834 ../src/o_net.c:905 ../src/o_net.c:941
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 "Probeerde meer dan twee busrippers toe te voegen. Interne gschem fout.\n"
 
-#: ../src/o_net.c:987
+#: ../src/o_net.c:1014
 #, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
 msgstr ""
@@ -1353,93 +1353,93 @@ msgid ""
 msgstr ""
 "een dubbel slot kan een probleem geven: [symbolnaam=%s, nummer=%d, slot=%d]\n"
 
-#: ../src/x_autonumber.c:692
+#: ../src/x_autonumber.c:690
 msgid "No searchstring given in autonumber text.\n"
 msgstr "Geen zoektekst gegeven in autonumber text.\n"
 
-#: ../src/x_autonumber.c:743
+#: ../src/x_autonumber.c:741
 msgid "No '*' or '?' given at the end of the autonumber text.\n"
 msgstr "Geen '*' of '?' gegeven aan het einden van de autonummer tekst.\n"
 
-#: ../src/x_autonumber.c:876
+#: ../src/x_autonumber.c:874
 msgid "Diagonal"
 msgstr "Diagonaal"
 
-#: ../src/x_autonumber.c:877
+#: ../src/x_autonumber.c:875
 msgid "Top to bottom"
 msgstr "Van boven naar beneden"
 
-#: ../src/x_autonumber.c:877
+#: ../src/x_autonumber.c:875
 msgid "Bottom to top"
 msgstr "Van beneden naar boven"
 
-#: ../src/x_autonumber.c:878
+#: ../src/x_autonumber.c:876
 msgid "Left to right"
 msgstr "Van links naar rechts"
 
-#: ../src/x_autonumber.c:878
+#: ../src/x_autonumber.c:876
 msgid "Right to left"
 msgstr "Van rechts naar links"
 
-#: ../src/x_autonumber.c:879
+#: ../src/x_autonumber.c:877
 msgid "File order"
 msgstr "Bestand volgorde"
 
-#: ../src/x_autonumber.c:1215
+#: ../src/x_autonumber.c:1213
 msgid "Autonumber text"
 msgstr "Automatisch tekst nummeren"
 
 #. scope section
-#: ../src/x_autonumber.c:1241
+#: ../src/x_autonumber.c:1239
 msgid "<b>Scope</b>"
 msgstr "<b>Omvang</b>"
 
-#: ../src/x_autonumber.c:1263
+#: ../src/x_autonumber.c:1261
 msgid "Search for:"
 msgstr "Zoek naar:"
 
-#: ../src/x_autonumber.c:1277
+#: ../src/x_autonumber.c:1275
 msgid "Autonumber text in:"
 msgstr "Automatisch tekst nummeren in:"
 
-#: ../src/x_autonumber.c:1284
+#: ../src/x_autonumber.c:1282
 msgid "Skip numbers found in:"
 msgstr "Sla nummers over gevonden in:"
 
-#: ../src/x_autonumber.c:1296 ../src/x_autonumber.c:1305
+#: ../src/x_autonumber.c:1294 ../src/x_autonumber.c:1303
 msgid "Selected objects"
 msgstr "Geselecteerde objecten"
 
-#: ../src/x_autonumber.c:1297 ../src/x_autonumber.c:1306
+#: ../src/x_autonumber.c:1295 ../src/x_autonumber.c:1304
 msgid "Current page"
 msgstr "Huidig blad"
 
-#: ../src/x_autonumber.c:1298 ../src/x_autonumber.c:1307
+#: ../src/x_autonumber.c:1296 ../src/x_autonumber.c:1305
 msgid "Whole hierarchy"
 msgstr "Hele hierarchie"
 
-#: ../src/x_autonumber.c:1309
+#: ../src/x_autonumber.c:1307
 msgid "Overwrite existing numbers"
 msgstr "Overschrijven van bestaande nummers"
 
 #. Options section
-#: ../src/x_autonumber.c:1314
+#: ../src/x_autonumber.c:1312
 msgid "<b>Options</b>"
 msgstr "<b>Opties</b>"
 
-#: ../src/x_autonumber.c:1336
+#: ../src/x_autonumber.c:1334
 msgid "Starting number:"
 msgstr "Start nummer:"
 
-#: ../src/x_autonumber.c:1343
+#: ../src/x_autonumber.c:1341
 msgid "Sort order:"
 msgstr "Sorteer volgorde:"
 
-#: ../src/x_autonumber.c:1364
+#: ../src/x_autonumber.c:1362
 msgid "Remove numbers"
 msgstr "Verwijder nummers"
 
-#: ../src/x_autonumber.c:1368
+#: ../src/x_autonumber.c:1366
 msgid "Automatic slotting"
 msgstr "Automatisch slotten"
 

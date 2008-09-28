@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-27 10:39-0500\n"
+"POT-Creation-Date: 2008-09-28 16:49-0400\n"
 "PO-Revision-Date: 2007-12-29 17:03+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -327,21 +327,22 @@ msgstr "Stel de kleur in op WIT \n"
 msgid "Found an improper attribute: _%s_\n"
 msgstr "Ongewenst attribuut gevonden: _%s_\n"
 
-#: ../src/o_attrib.c:1690 ../src/o_attrib.c:1797
+#. only an error if there's a slot string
+#: ../src/o_attrib.c:1699 ../src/o_attrib.c:1806
 msgid "Did not find slotdef=#:#,#,#... attribute\n"
 msgstr "Kan slotdef=#:#,#,#... attribuut niet vinden\n"
 
 # Geen gebruikelijke slotdef=#:... gevonden, doe een waarschuwing in het log
 #. Didn't find proper slotdef=#:... put warning into log
-#: ../src/o_attrib.c:1696
+#: ../src/o_attrib.c:1705
 msgid "Improper slotdef syntax: missing \":\".\n"
 msgstr "Ongewenst slotdef syntax: \":\" ontbreekt.\n"
 
-#: ../src/o_attrib.c:1711 ../src/o_attrib.c:1816
+#: ../src/o_attrib.c:1720 ../src/o_attrib.c:1825
 msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
 msgstr "Kan het gewenste slotdef=#:#,#,#... attribuut niet vinden\n"
 
-#: ../src/o_attrib.c:1750 ../src/o_attrib.c:1850
+#: ../src/o_attrib.c:1759 ../src/o_attrib.c:1859
 msgid "component missing pinseq= attribute\n"
 msgstr "komponent mist het pinseq= attribuut\n"
 
