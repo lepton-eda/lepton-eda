@@ -280,6 +280,34 @@ fi
 ############################################################################
 
 ############################################################################
+# Check for cairo start
+#
+
+AC_ARG_ENABLE(cairo,
+   AC_HELP_STRING([--disable-cairo],
+                  [Disable the use of cairo for rendering]), , enable_cairo=yes)
+
+AM_CONDITIONAL(ENABLE_CAIRO, test "x$enable_cairo" = "xyes")
+
+PKG_CHECK_MODULES(CAIRO, cairo >= 1.2.0, CAIRO="yes", no_CAIRO="yes")
+
+if test "x$enable_cairo" != "xyes"
+then
+   AC_DEFINE(ENABLE_CAIRO, 1, [If cairo rendering is enabled, define this])
+
+   if test "$CAIRO" = "yes"
+   then
+      CAIRO_VERSION=`$PKG_CONFIG cairo --modversion`
+   else
+      AC_MSG_ERROR([Cannot find cairo 1.2.0 or later, please install or configure with --disable-cairo])
+   fi
+fi
+
+#
+# Check for cairo end
+############################################################################
+
+############################################################################
 # Check for libgeda start
 # 
 PKG_CHECK_MODULES(LIBGEDA, libgeda >= $DATE_VERSION, LIBGEDA="yes", 
@@ -598,10 +626,18 @@ expandedGEDARCDIR=`eval "echo $GEDARCDIR"`
 expandedXDGDATADIR=`eval "echo $XDGDATADIR"`
 expandedGEDADOCDIR=`eval "echo $GEDADOCDIR"`
 
+if test "x$enable_cairo" = "xyes"
+then
+  cairo_report=$CAIRO_VERSION
+else
+  cairo_report="[[DISABLED]]"
+fi
+
 AC_MSG_RESULT([
 ** Configuration summary for $PACKAGE $DOTTED_VERSION.$DATE_VERSION:
 
    GTK+ library version:             $GTK_VERSION
+   CAIRO library version:            $cairo_report
    GUILE library version:            $GUILE_VERSION
    libgeda library version:          $LIBGEDA_VERSION
    libstroke library:                $LIBSTROKE

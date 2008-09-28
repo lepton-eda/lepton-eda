@@ -67,6 +67,15 @@ gschem_SOURCES = \
 	x_stroke.c \
 	x_window.c
 
+CAIRO_SRCS =
+
+EXTRA_gschem_SOURCES = \
+	${CAIRO_SRCS}
+
+if ENABLE_CAIRO
+gschem_SOURCES += ${CAIRO_SRCS}
+endif
+
 if CCISGCC
 AM_CFLAGS = -Wall
 endif
