@@ -62,6 +62,7 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
 		       unsigned int release_ver,
 		       unsigned int fileformat_ver)
 {
+  OBJECT *new_obj;
   int x1, y1;
   int width, height, angle;
   gchar mirrored, embedded;
@@ -208,16 +209,18 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
     g_free (temp_filename);
   }
   
-  /* create and add the picture to the list */
+  /* create the picture */
   /* The picture is described by its upper left and lower right corner */
-  object_list = o_picture_add(toplevel, object_list, pixbuf,
-                              file_content, file_length, filename,
-                              (double)height/ width,
-                              type,
-                              x1, y1+height, x1+width, y1,
-                              angle, mirrored, embedded);
+  new_obj = o_picture_new(toplevel, pixbuf,
+                          file_content, file_length, filename,
+                          (double)height/ width,
+                          type,
+                          x1, y1+height, x1+width, y1,
+                          angle, mirrored, embedded);
 
   /* Don't free file_content, it is now owned by the picture object */
+
+  object_list = s_basic_link_object(new_obj, object_list);
 
   return(object_list);
 }
@@ -298,8 +301,7 @@ char *o_picture_save(OBJECT *object)
 /*! \brief Create and add picture OBJECT to list.
  *  \par Function Description
  *  This function creates a new object representing a picture.
- *  This object is added to the end of the list <B>list_tail</B> pointed
- *  object belongs to.
+ *
  *  The picture is described by its upper left corner - <B>x1</B>, <B>y1</B> -
  *  and its lower right corner - <B>x2</B>, <B>y2</B>.
  *  The <B>type</B> parameter must be equal to #OBJ_PICTURE. 
@@ -308,11 +310,7 @@ char *o_picture_save(OBJECT *object)
  *  function. The structure describing the picture is allocated and
  *  initialized with the parameters given to the function.
  *
- *  The object is added to the end of the list described by the
- *  <B>object_list</B> parameter by the #s_basic_link_object().
- *
  *  \param [in]     toplevel      The TOPLEVEL object.
- *  \param [in,out] list_tail     OBJECT list to add line to.
  *  \param [in]     pixbuf        The GdkPixbuf picture to add.
  *                                A copy of this pixbuf is made.
  *  \param [in]     file_content  Raw data of the image file.
@@ -333,7 +331,7 @@ char *o_picture_save(OBJECT *object)
  *  \param [in]     embedded      Whether the embedded flag should be set or not.
  *  \return A pointer to the new end of the object list.
  */
-OBJECT *o_picture_add(TOPLEVEL *toplevel, OBJECT *list_tail, GdkPixbuf *pixbuf,
+OBJECT *o_picture_new(TOPLEVEL *toplevel, GdkPixbuf *pixbuf,
                       gchar *file_content, gsize file_length, char *filename,
                       double ratio, char type,
                       int x1, int y1, int x2, int y2, int angle, char mirrored,
@@ -370,10 +368,7 @@ OBJECT *o_picture_add(TOPLEVEL *toplevel, OBJECT *list_tail, GdkPixbuf *pixbuf,
   /* compute the bounding picture */
   o_picture_recalc(toplevel, new_node);
 
-  /* add the object to the list */
-  list_tail = (OBJECT *) s_basic_link_object(new_node, list_tail);
-
-  return(list_tail);
+  return new_node;
 }
 
 /*! \brief Recalculate picture bounding box.

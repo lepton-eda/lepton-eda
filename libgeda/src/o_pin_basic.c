@@ -47,7 +47,7 @@ void world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *to
  *  \par Function Description
  *
  */
-OBJECT *o_pin_add(TOPLEVEL *toplevel, OBJECT *object_list,
+OBJECT *o_pin_new(TOPLEVEL *toplevel,
 		  char type, int color,
 		  int x1, int y1, int x2, int y2, int pin_type, int whichend)
 {
@@ -72,14 +72,12 @@ OBJECT *o_pin_add(TOPLEVEL *toplevel, OBJECT *object_list,
   new_node->pin_type = pin_type;
   new_node->whichend = whichend;
   
-  object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
-
   if (!toplevel->ADDING_SEL) {
-    s_tile_add_line_object(toplevel, object_list);
-    s_conn_update_object(toplevel, object_list);
+    s_tile_add_line_object(toplevel, new_node);
+    s_conn_update_object(toplevel, new_node);
   }
 
-  return(object_list);
+  return new_node;
 }
 
 /*! \todo Finish function documentation!!!
@@ -112,6 +110,7 @@ void o_pin_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 OBJECT *o_pin_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 		   unsigned int release_ver, unsigned int fileformat_ver)
 {
+  OBJECT *new_obj;
   char type; 
   int x1, y1;
   int x2, y2;
@@ -158,8 +157,11 @@ OBJECT *o_pin_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
     color = toplevel->override_pin_color;
   }
 
-  object_list = o_pin_add(toplevel, object_list, type, color, d_x1, d_y1,
-                          d_x2, d_y2, pin_type, whichend);
+  new_obj = o_pin_new(toplevel, type, color, d_x1, d_y1,
+                      d_x2, d_y2, pin_type, whichend);
+
+  object_list = s_basic_link_object(new_obj, object_list);
+
   return(object_list);
 }
 
@@ -233,10 +235,11 @@ OBJECT *o_pin_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
     color = o_current->saved_color;
   }
 
-  new_obj = o_pin_add(toplevel, list_tail, OBJ_PIN, color,
-                      o_current->line->x[0], o_current->line->y[0],
-                      o_current->line->x[1], o_current->line->y[1],
-                      o_current->pin_type, o_current->whichend);
+  new_obj = o_pin_new (toplevel, OBJ_PIN, color,
+                       o_current->line->x[0], o_current->line->y[0],
+                       o_current->line->x[1], o_current->line->y[1],
+                       o_current->pin_type, o_current->whichend);
+  list_tail = s_basic_link_object (new_obj, list_tail);
 
   new_obj->line->x[0] = o_current->line->x[0];
   new_obj->line->y[0] = o_current->line->y[0];
@@ -245,7 +248,7 @@ OBJECT *o_pin_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
 
   /*	new_obj->attribute = 0;*/
 
-  return(new_obj);
+  return new_obj;
 }
 
 /*! \todo Finish function documentation!!!

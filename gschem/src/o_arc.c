@@ -943,13 +943,14 @@ void o_arc_end1(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int start_angle, int end_angle)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  OBJECT *new_obj;
 
   /* create, initialize and link the new arc object */
+  new_obj = o_arc_new(toplevel, OBJ_ARC, w_current->graphic_color,
+                      w_current->first_wx, w_current->first_wy,
+                      w_current->distance, start_angle, end_angle);
   toplevel->page_current->object_tail =
-    o_arc_add(toplevel, toplevel->page_current->object_tail,
-	      OBJ_ARC, w_current->graphic_color,
-	      w_current->first_wx, w_current->first_wy,
-	      w_current->distance, start_angle, end_angle);
+    s_basic_link_object(new_obj, toplevel->page_current->object_tail);
 
   /* draw the new object */
   o_redraw_single(w_current, toplevel->page_current->object_tail);

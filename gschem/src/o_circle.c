@@ -604,6 +604,7 @@ void o_circle_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_circle_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  OBJECT *new_obj;
 
   g_assert( w_current->inside_action != 0 );
 
@@ -618,12 +619,11 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   }
 
   /* create the object */
+  new_obj = o_circle_new(toplevel, OBJ_CIRCLE, w_current->graphic_color,
+                         w_current->first_wx, w_current->first_wy,
+                         w_current->distance);
   toplevel->page_current->object_tail =
-    o_circle_add(toplevel,
-		 toplevel->page_current->object_tail,
-		 OBJ_CIRCLE, w_current->graphic_color,
-		 w_current->first_wx, w_current->first_wy, 
-		 w_current->distance);
+    s_basic_link_object(new_obj, toplevel->page_current->object_tail);
 
   /* draw it */
   o_redraw_single(w_current, toplevel->page_current->object_tail);

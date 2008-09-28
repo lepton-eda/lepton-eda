@@ -48,7 +48,7 @@ void world_get_bus_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *to
  * \par Function Description
  *
  */
-OBJECT *o_bus_add(TOPLEVEL *toplevel, OBJECT *object_list,
+OBJECT *o_bus_new(TOPLEVEL *toplevel,
 		  char type, int color,
 		  int x1, int y1, int x2, int y2,
 		  int bus_ripper_direction)
@@ -74,15 +74,13 @@ OBJECT *o_bus_add(TOPLEVEL *toplevel, OBJECT *object_list,
   new_node->draw_func = bus_draw_func;  
   new_node->sel_func = select_func;  
 
-  object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
-
-  s_tile_add_line_object(toplevel, object_list);
+  s_tile_add_line_object(toplevel, new_node);
 
   if (!toplevel->ADDING_SEL) {
-    s_conn_update_object(toplevel, object_list);
+    s_conn_update_object(toplevel, new_node);
   }
 
-  return(object_list);
+  return new_node;
 }
 
 /* \brief
@@ -117,6 +115,7 @@ void o_bus_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 OBJECT *o_bus_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 		   unsigned int release_ver, unsigned int fileformat_ver)
 {
+  OBJECT *new_obj;
   char type; 
   int x1, y1;
   int x2, y2;
@@ -159,8 +158,11 @@ OBJECT *o_bus_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
     ripper_dir = 0;
   }
 
-  object_list = o_bus_add(toplevel, object_list, type, color,
-                          d_x1, d_y1, d_x2, d_y2, ripper_dir);
+  new_obj = o_bus_new(toplevel, type, color,
+                      d_x1, d_y1, d_x2, d_y2, ripper_dir);
+
+  object_list = s_basic_link_object(new_obj, object_list);
+
   return(object_list);
 }
 
@@ -231,17 +233,18 @@ OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
   /* still doesn't work... you need to pass in the new values */
   /* or don't update and update later */
   /* I think for now I'll disable the update and manually update */
-  new_obj = o_bus_add(toplevel, list_tail, OBJ_BUS, color,
-                      o_current->line->x[0], o_current->line->y[0],
-                      o_current->line->x[1], o_current->line->y[1],
-                      o_current->bus_ripper_direction);
+  new_obj = o_bus_new (toplevel, OBJ_BUS, color,
+                       o_current->line->x[0], o_current->line->y[0],
+                       o_current->line->x[1], o_current->line->y[1],
+                       o_current->bus_ripper_direction);
+  list_tail = s_basic_link_object (new_obj, list_tail);
 
   new_obj->line->x[0] = o_current->line->x[0];
   new_obj->line->y[0] = o_current->line->y[0];
   new_obj->line->x[1] = o_current->line->x[1];
   new_obj->line->y[1] = o_current->line->y[1];
 
-  return(new_obj);
+  return new_obj;
 }
 
 /* \brief

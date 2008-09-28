@@ -34,8 +34,7 @@ void (*line_draw_func)() = NULL;
 /*! \brief Create and add line OBJECT to list.
  *  \par Function Description
  *  This function creates a new object representing a line.
- *  This object is added to the end of the list <B>object_list</B>
- *  pointed object belongs to.
+ *
  *  The line is described by its two ends - <B>x1</B>,<B>y1</B> and
  *  <B>x2</B>,<B>y2</B>.
  *  The <B>type</B> parameter must be equal to #OBJ_LINE.
@@ -51,11 +50,7 @@ void (*line_draw_func)() = NULL;
  *  It can be changed after with the #o_set_line_options() and
  *  #o_set_fill_options().
  *
- *  The object is added to the end of the list described by the 
- *  <B>object_list</B> parameter by the #s_basic_link_object().
- *
- *  \param [in]     toplevel    The TOPLEVEL object.
- *  \param [in,out] object_list  OBJECT list to add line to.
+ *  \param [in]     toplevel     The TOPLEVEL object.
  *  \param [in]     type         Must be OBJ_LINE.
  *  \param [in]     color        Circle line color.
  *  \param [in]     x1           Upper x coordinate.
@@ -64,7 +59,7 @@ void (*line_draw_func)() = NULL;
  *  \param [in]     y2           Lower y coordinate.
  *  \return A pointer to the new end of the object list.
  */
-OBJECT *o_line_add(TOPLEVEL *toplevel, OBJECT *object_list,
+OBJECT *o_line_new(TOPLEVEL *toplevel,
 		   char type, int color, 
 		   int x1, int y1, int x2, int y2)
 {
@@ -93,10 +88,8 @@ OBJECT *o_line_add(TOPLEVEL *toplevel, OBJECT *object_list,
   
   /* compute bounding box */
   o_line_recalc(toplevel, new_node);
-  
-  object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
-    
-  return(object_list);
+
+  return new_node;
 }
 
 /*! \brief Create a copy of a line.
@@ -122,14 +115,10 @@ OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
     color = o_current->saved_color;
   }
 
-  /*
-   * A new line object is added a the end of the object list with
-   * #o_line_add(). Values for its fields are default and need to
-   * be modified.
-   */
-  new_obj = o_line_add(toplevel, list_tail,
-		       OBJ_LINE, color,
-		       0, 0, 0, 0);
+  /* A new line object is created with #o_line_new().
+   * Values for its fields are default and need to be modified. */
+  new_obj = o_line_new (toplevel, OBJ_LINE, color, 0, 0, 0, 0);
+  list_tail = s_basic_link_object (new_obj, list_tail);
 
   /*
    * The coordinates of the ends of the new line are set with the ones
@@ -161,7 +150,7 @@ OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
   /* new_obj->attribute = 0;*/
 
   /* return the new tail of the object list */
-  return(new_obj);
+  return new_obj;
 }
 
 /*! \brief Modify the description of a line OBJECT.
@@ -239,6 +228,7 @@ void o_line_modify(TOPLEVEL *toplevel, OBJECT *object,
 OBJECT *o_line_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 		    unsigned int release_ver, unsigned int fileformat_ver)
 {
+  OBJECT *new_obj;
   char type; 
   int x1, y1;
   int x2, y2;
@@ -302,15 +292,16 @@ OBJECT *o_line_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
    * type is set according to the values of the fields on the line.
    */
   /* create and add the line to the list */
-  object_list = o_line_add(toplevel, object_list,
-			   type, color, d_x1, d_y1, d_x2, d_y2);
+  new_obj = o_line_new(toplevel, type, color, d_x1, d_y1, d_x2, d_y2);
   /* set its line options */
-  o_set_line_options(toplevel, object_list,
+  o_set_line_options(toplevel, new_obj,
 		     line_end, line_type, line_width, line_length, 
 		     line_space);
   /* filling is irrelevant for line, just set to default */
-  o_set_fill_options(toplevel, object_list,
+  o_set_fill_options(toplevel, new_obj,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
+
+  object_list = s_basic_link_object(new_obj, object_list);
 
   return(object_list);
 }

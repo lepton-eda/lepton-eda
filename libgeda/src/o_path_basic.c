@@ -57,12 +57,11 @@ void (*path_draw_func)() = NULL;
  *  <B>object_list</B> parameter by the #s_basic_link_object().
  *
  *  \param [in]     toplevel     The TOPLEVEL object.
- *  \param [in,out] object_list  OBJECT list to add path to.
  *  \param [in]     type         Must be OBJ_PATH.
  *  \param [in]     color        Circle path color.
  *  \return A pointer to the new end of the object list.
  */
-OBJECT *o_path_add (TOPLEVEL *toplevel, OBJECT *object_list,
+OBJECT *o_path_new (TOPLEVEL *toplevel,
                     char type, int color, const char *path_string)
 {
   OBJECT *new_node;
@@ -85,9 +84,7 @@ OBJECT *o_path_add (TOPLEVEL *toplevel, OBJECT *object_list,
   /* compute bounding box */
   o_path_recalc (toplevel, new_node);
 
-  object_list = (OBJECT *) s_basic_link_object (new_node, object_list);
-
-  return object_list;
+  return new_node;
 }
 
 
@@ -115,13 +112,9 @@ OBJECT *o_path_copy (TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
     color = o_current->saved_color;
   }
 
-  /*
-   * A new path object is added a the end of the object list with
-   * #o_path_add ().
-   */
-
   path_string = s_path_string_from_path (o_current->path);
-  new_obj = o_path_add (toplevel, list_tail, OBJ_PATH, color, path_string);
+  new_obj = o_path_new (toplevel, OBJ_PATH, color, path_string);
+  list_tail = s_basic_link_object (new_obj, list_tail);
   g_free (path_string);
 
   /* copy the path type and filling options */
@@ -170,6 +163,7 @@ OBJECT *o_path_read (TOPLEVEL *toplevel, OBJECT *object_list,
                      const char *first_line, TextBuffer *tb,
                      unsigned int release_ver, unsigned int fileformat_ver)
 {
+  OBJECT *new_obj;
   char type;
   int color;
   int line_width, line_space, line_length;
@@ -222,8 +216,8 @@ OBJECT *o_path_read (TOPLEVEL *toplevel, OBJECT *object_list,
   string = g_string_free (pathstr, FALSE);
   string = remove_last_nl (string);
 
-  /* create and add the path to the list */
-  object_list = o_path_add (toplevel, object_list, type, color, string);
+  /* create a new path */
+  new_obj = o_path_new (toplevel, type, color, string);
   g_free (string);
 
   /* set its line options */
@@ -233,6 +227,8 @@ OBJECT *o_path_read (TOPLEVEL *toplevel, OBJECT *object_list,
   o_set_fill_options (toplevel, object_list,
                       fill_type, fill_width, pitch1, angle1, pitch2, angle2);
 
+  /* Add the path to the object list */
+  object_list = s_basic_link_object(new_obj, object_list);
   return object_list;
 }
 

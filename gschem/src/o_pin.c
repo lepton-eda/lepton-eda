@@ -169,6 +169,7 @@ void o_pin_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  OBJECT *new_obj;
   int color;
   GList *other_objects = NULL;
   OBJECT *o_current, *o_current_pin;
@@ -191,13 +192,12 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
     return;
   }
 
+  new_obj = o_pin_new(toplevel, OBJ_PIN, color,
+                      w_current->first_wx, w_current->first_wy,
+                      w_current->second_wx, w_current->second_wy,
+                      PIN_TYPE_NET, 0);
   toplevel->page_current->object_tail =
-    o_pin_add(toplevel,
-	      toplevel->page_current->object_tail,
-	      OBJ_PIN, color,
-	      w_current->first_wx, w_current->first_wy,
-	      w_current->second_wx, w_current->second_wy,
-	      PIN_TYPE_NET, 0);
+    s_basic_link_object(new_obj, toplevel->page_current->object_tail);
 
   o_current = o_current_pin = toplevel->page_current->object_tail;
 

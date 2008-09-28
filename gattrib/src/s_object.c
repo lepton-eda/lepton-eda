@@ -62,7 +62,7 @@
  * way:
  * 1. It creates an object -- "attrib_graphic" -- and fills it in.
  * 2. It gets the position info from o_current's refdes attrib and
- *    calls o_text_add to add pos info and name=value string 
+ *    calls o_text_new to add pos info and name=value string
  *    to attrib_graphic.
  * 3. It calls o_attrib_add to wrap attrib_graphic with (attribute OBJECT )
  *
@@ -106,7 +106,7 @@ void s_object_add_net_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
  * way:
  * 1. It creates an object -- "attrib_graphic" -- and fills it in.
  * 2. It gets the position info from o_current's refdes attrib and
- *    calls o_text_add to add pos info and name=value string 
+ *    calls o_text_new to add pos info and name=value string
  *    to attrib_graphic.
  * 3. It calls o_attrib_add to wrap attrib_graphic with (attribute OBJECT )
  * Question:  Do I really need separate fcns for comps, nets, and 
@@ -260,6 +260,7 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
   int color;
   int left, right, top, bottom;
   OBJECT *o_current;
+  OBJECT *new_obj;
 
   color = pr_current->detachedattr_color;
 
@@ -308,18 +309,12 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
   printf("     show_name_value = %d \n", show_name_value);
 #endif
 
-  pr_current->page_current->object_tail = o_text_add(pr_current, 
-						    pr_current->page_current->object_tail, 
-						    OBJ_TEXT, 
-						    color, 
-						    world_x, 
-						    world_y, 
-						    LOWER_LEFT, 
-						    0,	/* zero is angle */
-						    text_string, 
-						    DEFAULT_TEXT_SIZE,
-						    visibility,
-						    show_name_value);
+  new_obj = o_text_new (pr_current, OBJ_TEXT, color, world_x, world_y,
+                        LOWER_LEFT, 0, /* zero is angle */
+                        text_string, DEFAULT_TEXT_SIZE,
+                        visibility, show_name_value);
+  pr_current->page_current->object_tail =
+    s_basic_link_object(new_obj, pr_current->page_current->object_tail);
 
   /* now pr_current->page_current->object_tail contains new text item */
 

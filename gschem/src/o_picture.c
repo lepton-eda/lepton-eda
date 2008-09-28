@@ -81,6 +81,7 @@ void o_picture_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_picture_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  OBJECT *new_obj;
   int picture_width, picture_height;
   int picture_left, picture_top;
 
@@ -102,17 +103,15 @@ void o_picture_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   }
 
   /* create the object */
+  new_obj = o_picture_new(toplevel, w_current->current_pixbuf,
+                          NULL, 0, w_current->pixbuf_filename,
+                          w_current->pixbuf_wh_ratio, OBJ_PICTURE,
+                          picture_left, picture_top,
+                          picture_left + picture_width,
+                          picture_top - picture_height,
+                          0, FALSE, FALSE);
   toplevel->page_current->object_tail =
-    o_picture_add(toplevel,
-		  toplevel->page_current->object_tail,
-		  w_current->current_pixbuf,
-		  NULL, 0,
-		  w_current->pixbuf_filename,
-		  w_current->pixbuf_wh_ratio,
-		  OBJ_PICTURE, 
-		  picture_left, picture_top,
-		  picture_left + picture_width, picture_top - picture_height,
-		  0, FALSE, FALSE);
+    s_basic_link_object(new_obj, toplevel->page_current->object_tail);
 
   /* draw it */
   o_redraw_single(w_current, toplevel->page_current->object_tail);

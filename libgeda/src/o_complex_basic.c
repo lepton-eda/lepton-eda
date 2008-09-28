@@ -213,7 +213,7 @@ void world_get_complex_bounds(TOPLEVEL *toplevel, OBJECT *complex,
  *  \par Function Description
  *
  */
-OBJECT *add_head()
+OBJECT *new_head ()
 {
   OBJECT *new_node=NULL;
 
@@ -221,7 +221,7 @@ OBJECT *add_head()
 
   /* don't need to do this for head nodes */
   /* ret = (OBJECT *) s_basic_link_object(new_node, NULL);*/
-  return(new_node);
+  return new_node;
 }
 
 /*! \brief
@@ -424,8 +424,8 @@ void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *object)
  *  \par Function Description
  *
  */
-OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
-		      GList **object_glist, char type,
+OBJECT *o_complex_new(TOPLEVEL *toplevel,
+		      char type,
 		      int color, int x, int y, int angle,
 		      int mirror, const CLibSymbol *clib,
 		      const gchar *basename,
@@ -433,20 +433,15 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
 {
   OBJECT *new_node=NULL;
   OBJECT *prim_objs=NULL;
+  OBJECT *new_prim_obj;
   OBJECT *tmp;
   int save_adding_sel = 0;
   int loaded_normally = FALSE;
-  gboolean use_object_list;
 
   gchar *buffer;
 
-  if (object_list) {
-    use_object_list = TRUE;
-  } else {
-    use_object_list = FALSE;
-  }
-
   new_node = s_basic_new_object(type, "complex");
+  new_node->type = type;
 
   if (clib != NULL) {
     new_node->complex_basename = g_strdup (s_clib_symbol_get_name (clib));
@@ -476,7 +471,7 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
   }
 
   /* this was at the beginning and p_complex was = to complex */
-  prim_objs = (OBJECT *) add_head();
+  prim_objs = new_head ();
 
   /* get the symbol data */
   if (clib != NULL) {
@@ -505,23 +500,26 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
     new_node->type = OBJ_PLACEHOLDER;
 
     /* Mark the origin of the missing component */
-    prim_objs = o_line_add(toplevel, prim_objs, OBJ_LINE,
+    new_prim_obj = o_line_new(toplevel, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
                            x - 50, y, x + 50, y);
-    prim_objs = o_line_add(toplevel, prim_objs, OBJ_LINE,
+    prim_objs = s_basic_link_object(new_prim_obj, prim_objs);
+    new_prim_obj = o_line_new(toplevel, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
                            x, y + 50, x, y - 50); 
+    prim_objs = s_basic_link_object(new_prim_obj, prim_objs);
 
     /* Add some useful text */
     not_found_text = 
       g_strdup_printf (_("Component not found:\n %s"),
 		       new_node->complex_basename);
-    prim_objs = o_text_add(toplevel, prim_objs,
+    new_prim_obj = o_text_new(toplevel,
                            OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
                            x + NOT_FOUND_TEXT_X, 
                            y + NOT_FOUND_TEXT_Y, LOWER_LEFT, 0, 
                            not_found_text, 8,
                            VISIBLE, SHOW_NAME_VALUE);
+    prim_objs = s_basic_link_object(new_prim_obj, prim_objs);
     g_free(not_found_text);
 
     /* figure out where to put the hazard triangle */
@@ -531,36 +529,40 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
     y_offset = bottom - top + 100;  /* 100 is just an additional offset */
 
     /* add hazard triangle */
-    prim_objs = o_line_add(toplevel, prim_objs, OBJ_LINE,
+    new_prim_obj = o_line_new(toplevel, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
                            x + NOT_FOUND_TEXT_X + x_offset, 
                            y + NOT_FOUND_TEXT_Y + y_offset, 
                            x + NOT_FOUND_TEXT_X + x_offset + 600, 
                            y + NOT_FOUND_TEXT_Y + y_offset); 
-    o_set_line_options(toplevel, prim_objs, END_ROUND, TYPE_SOLID,
+    o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
-    prim_objs = o_line_add(toplevel, prim_objs, OBJ_LINE,
+    prim_objs = s_basic_link_object(new_prim_obj, prim_objs);
+    new_prim_obj = o_line_new(toplevel, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
                            x + NOT_FOUND_TEXT_X + x_offset, 
                            y + NOT_FOUND_TEXT_Y + y_offset, 
                            x + NOT_FOUND_TEXT_X + x_offset + 300, 
                            y + NOT_FOUND_TEXT_Y + y_offset + 500); 
-    o_set_line_options(toplevel, prim_objs, END_ROUND, TYPE_SOLID,
+    o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
-    prim_objs = o_line_add(toplevel, prim_objs, OBJ_LINE,
+    prim_objs = s_basic_link_object(new_prim_obj, prim_objs);
+    new_prim_obj = o_line_new(toplevel, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
                            x + NOT_FOUND_TEXT_X + x_offset + 300, 
                            y + NOT_FOUND_TEXT_Y + y_offset + 500, 
                            x + NOT_FOUND_TEXT_X + x_offset + 600, 
                            y + NOT_FOUND_TEXT_Y + y_offset); 
-    o_set_line_options(toplevel, prim_objs, END_ROUND, TYPE_SOLID,
+    o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
-    prim_objs = o_text_add(toplevel, prim_objs,
+    prim_objs = s_basic_link_object(new_prim_obj, prim_objs);
+    new_prim_obj = o_text_new(toplevel,
                            OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
                            x + NOT_FOUND_TEXT_X + x_offset + 270, 
                            y + NOT_FOUND_TEXT_Y + y_offset + 90, 
                            LOWER_LEFT, 0, "!", 18,
                            VISIBLE, SHOW_NAME_VALUE);
+    prim_objs = s_basic_link_object(new_prim_obj, prim_objs);
     prim_objs = save_prim_objs;
 
   } else {
@@ -599,29 +601,16 @@ OBJECT *o_complex_add(TOPLEVEL *toplevel, OBJECT *object_list,
     tmp->complex_parent = new_node;
   }
 
-  if (use_object_list) {
-    object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
-  } else {
-    if (object_glist) {
-      *object_glist = g_list_append (*object_glist, new_node);
-      o_glist_relink_objects (*object_glist);
-    }
-    object_list = new_node;
-  }
+  o_complex_recalc(toplevel, new_node);
 
-  if (use_object_list)
-    o_complex_recalc(toplevel, object_list);
-  else
-    o_complex_recalc(toplevel, new_node);
-
-  return(object_list);
+  return new_node;
 }
 
 /*! \brief
  *  \par Function Description
  *
  */
-OBJECT *o_complex_add_embedded(TOPLEVEL *toplevel, OBJECT *object_list,
+OBJECT *o_complex_new_embedded(TOPLEVEL *toplevel,
 			       char type, int color, int x, int y, int angle, int mirror,
 			       const gchar *basename, int selectable)
 {
@@ -653,11 +642,9 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *toplevel, OBJECT *object_list,
     new_node->sel_func = NULL;
   }
 
-  object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
-
   /* this was at the beginning and p_complex was = to complex */
-  prim_objs = (OBJECT *) add_head();
-  object_list->complex->prim_objs = prim_objs;
+  prim_objs = new_head ();
+  new_node->complex->prim_objs = prim_objs;
 
   /* set the parent field now */
   for (tmp = prim_objs; tmp != NULL; tmp = tmp->next) {
@@ -666,7 +653,7 @@ OBJECT *o_complex_add_embedded(TOPLEVEL *toplevel, OBJECT *object_list,
 
   /* don't have to translate/rotate/mirror here at all since the */
   /* object is in place */
-  return(object_list);
+  return new_node;
 }
 
 /*! \brief
@@ -701,6 +688,7 @@ OBJECT *o_complex_read(TOPLEVEL *toplevel, OBJECT *object_list,
 		       char buf[], unsigned int release_ver,
 		       unsigned int fileformat_ver)
 {
+  OBJECT *new_obj;
   char type; 
   int x1, y1;
   int angle;
@@ -739,23 +727,24 @@ OBJECT *o_complex_read(TOPLEVEL *toplevel, OBJECT *object_list,
   }
   if (strncmp(basename, "EMBEDDED", 8) == 0) {
     
-  object_list = o_complex_add_embedded(toplevel,
-                                       object_list, type, 
-                                       WHITE, x1, y1, angle, mirror,
-                                       basename + 8, 
-                                       selectable);
+    new_obj = o_complex_new_embedded(toplevel, type,
+                                     WHITE, x1, y1, angle, mirror,
+                                     basename + 8,
+                                     selectable);
   } else {
     
     const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
 
-    object_list = o_complex_add(toplevel, object_list, NULL, type,
+    new_obj = o_complex_new(toplevel, type,
                                 WHITE, 
                                 x1, y1, 
                                 angle, mirror, clib,
                                 basename, selectable);
     /* Delete or hide attributes eligible for promotion inside the complex */
-     o_complex_remove_promotable_attribs (toplevel, object_list);
+     o_complex_remove_promotable_attribs (toplevel, new_obj);
   }
+
+  object_list = s_basic_link_object(new_obj, object_list);
 
   return object_list;
 }
@@ -840,12 +829,14 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
 
   clib = s_clib_get_symbol_by_name (o_current->complex_basename);
 
-  new_obj = o_complex_add (toplevel, list_tail, NULL, o_current->type, color,
+  new_obj = o_complex_new (toplevel, o_current->type, color,
                            o_current->complex->x, o_current->complex->y,
                            o_current->complex->angle,
                            o_current->complex->mirror,
                            clib, o_current->complex_basename,
                            selectable);
+  list_tail = s_basic_link_object (new_obj, list_tail);
+
   /* Delete or hide attributes eligible for promotion inside the complex */
    o_complex_remove_promotable_attribs (toplevel, new_obj);
 
@@ -857,7 +848,7 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
    * connected to the new list, probably make an attribute list and
    * fill it with sid's of the attributes */
 
-  return(new_obj);
+  return new_obj;
 }
 
 /*! \brief
@@ -887,13 +878,14 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail,
     selectable = FALSE;	
   }
 
-  new_obj = o_complex_add_embedded(toplevel, list_tail, o_current->type,
-                                   color,
-                                   o_current->complex->x, o_current->complex->y, 
-                                   o_current->complex->angle, 
-                                   o_current->complex->mirror,
-                                   o_current->complex_basename, 
-                                   selectable); 
+  new_obj = o_complex_new_embedded (toplevel, o_current->type, color,
+                                    o_current->complex->x, o_current->complex->y,
+                                    o_current->complex->angle,
+                                    o_current->complex->mirror,
+                                    o_current->complex_basename,
+                                    selectable);
+  list_tail = s_basic_link_object (new_obj, list_tail);
+
   /* deal with stuff that has changed */
 	
   temp_list = o_list_copy_all(toplevel,
@@ -914,7 +906,7 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail,
    * connected to the new list, probably make an attribute list and
    * fill it with sid's of the attributes */
 
-  return(new_obj);
+  return new_obj;
 }
 
 /*! \brief

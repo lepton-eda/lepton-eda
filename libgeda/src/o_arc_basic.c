@@ -33,10 +33,8 @@ void (*arc_draw_func)() = NULL;
 
 /*! \brief
  *  \par Function Description
- *  The function creates a new object of type arc and links it
- *  with the object pointed by parameter object_list. As the
- *  new object is then the last object of the list, its pointer
- *  is returned to update the end of list pointer in the calling function.
+ *  The function creates a new OBJECT of type arc.
+ *
  *  The arc is defined by its center in parameters x and y.
  *  The radius parameter specifies the radius of the arc. The start
  *  angle is given by start_angle and the end angle by end_angle.
@@ -52,7 +50,6 @@ void (*arc_draw_func)() = NULL;
  *  Now fixed for world coordinates.
  *
  *  \param [in] toplevel    The TOPLEVEL object.
- *  \param [in] object_list  
  *  \param [in] type
  *  \param [in] color
  *  \param [in] x
@@ -62,7 +59,7 @@ void (*arc_draw_func)() = NULL;
  *  \param [in] end_angle
  *  \return
  */
-OBJECT *o_arc_add(TOPLEVEL *toplevel, OBJECT *object_list,
+OBJECT *o_arc_new(TOPLEVEL *toplevel,
 		  char type, int color,
 		  int x, int y, int radius, int start_angle, int end_angle)
 {
@@ -112,14 +109,7 @@ OBJECT *o_arc_add(TOPLEVEL *toplevel, OBJECT *object_list,
   new_node->draw_func = arc_draw_func;  
   new_node->sel_func = select_func;
 
-  /* \note
-   * The new object is linked to the object given in parameter object_list
-   * and then returned as a pointer to the calling function.
-   */
-
-  object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
-	
-  return(object_list);
+  return new_node;
 }
 
 /*! \brief 
@@ -151,11 +141,12 @@ OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
     color = o_current->saved_color;
   }
 
-  new_obj = o_arc_add(toplevel, list_tail, OBJ_ARC, color,
-                      o_current->arc->x, o_current->arc->y, 
-                      o_current->arc->width / 2,
-                      o_current->arc->start_angle,
-                      o_current->arc->end_angle);
+  new_obj = o_arc_new (toplevel, OBJ_ARC, color,
+                       o_current->arc->x, o_current->arc->y,
+                       o_current->arc->width / 2,
+                       o_current->arc->start_angle,
+                       o_current->arc->end_angle);
+  list_tail = s_basic_link_object (new_obj, list_tail);
   o_set_line_options(toplevel, new_obj,
                      o_current->line_end, o_current->line_type,
                      o_current->line_width,
@@ -163,7 +154,7 @@ OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
   o_set_fill_options(toplevel, new_obj,
                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
-  return(new_obj);
+  return new_obj;
 }
 
 /*! \brief
@@ -243,7 +234,7 @@ void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  The object is initialized with the functions #o_set_line_options() and #o_set_fill_options().
  *  The second one is only used to put initialize unused values for an arc as an arc can not be filled.
  * 
- *  The arc is allocated initialized and linked with the function #o_arc_add().
+ *  The arc is allocated initialized with the function #o_arc_new().
  * 
  *  A negative or null radius is not allowed.
  *
@@ -257,6 +248,7 @@ void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
 OBJECT *o_arc_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 		   unsigned int release_ver, unsigned int fileformat_ver)
 {
+  OBJECT *new_obj;
   char type; 
   int x1, y1;
   int radius;
@@ -300,14 +292,16 @@ OBJECT *o_arc_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   }
 
   /* Allocation and initialization */
-  object_list = o_arc_add(toplevel, object_list, OBJ_ARC, color,
-                          x1, y1, radius, start_angle, end_angle);
-  o_set_line_options(toplevel, object_list,
+  new_obj = o_arc_new(toplevel, OBJ_ARC, color,
+                      x1, y1, radius, start_angle, end_angle);
+  o_set_line_options(toplevel, new_obj,
                      arc_end, arc_type, arc_width, arc_length,
                      arc_space);
-  o_set_fill_options(toplevel, object_list,
+  o_set_fill_options(toplevel, new_obj,
                      FILLING_HOLLOW, -1, -1, -1,
                      -1, -1);
+
+  object_list = s_basic_link_object(new_obj, object_list);
 
   return(object_list);
 }

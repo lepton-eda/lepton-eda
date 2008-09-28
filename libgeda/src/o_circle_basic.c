@@ -41,8 +41,8 @@ int dist(int x1, int y1, int x2, int y2)
 
 /*! \brief Create and add circle OBJECT to list.
  *  \par Function Description
- *  This function creates a new object representing a circle. This object is
- *  added to the end of the list <B>object_list</B> pointed object belongs to.
+ *  This function creates a new object representing a circle.
+ *
  *  The circle is described by its center (<B>x</B>,<B>y</B>) and its radius
  *  <B>radius</B>.
  *  The <B>type</B> parameter must be equal to <B>OBJ_CIRCLE</B>. The <B>color</B>
@@ -56,11 +56,7 @@ int dist(int x1, int y1, int x2, int y2)
  *  line type with a width of 0, and no filling. It can be changed after
  *  with #o_set_line_options() and #o_set_fill_options().
  *
- *  The object is added to the end of the list described by the
- *  <B>object_list</B> parameter with #s_basic_link_object().
- *
- *  \param [in]     toplevel    The TOPLEVEL object.
- *  \param [in,out] object_list  OBJECT list to add circle to.
+ *  \param [in]     toplevel     The TOPLEVEL object.
  *  \param [in]     type         Must be OBJ_CIRCLE.
  *  \param [in]     color        Circle line color.
  *  \param [in]     x            Center x coordinate.
@@ -68,7 +64,7 @@ int dist(int x1, int y1, int x2, int y2)
  *  \param [in]     radius       Radius of new circle.
  *  \return A pointer to the new end of the object list.
  */
-OBJECT *o_circle_add(TOPLEVEL *toplevel, OBJECT *object_list,
+OBJECT *o_circle_new(TOPLEVEL *toplevel,
 		     char type, int color,
 		     int x, int y, int radius)
 {
@@ -96,11 +92,8 @@ OBJECT *o_circle_add(TOPLEVEL *toplevel, OBJECT *object_list,
   
   /* compute the bounding box coords */
   o_circle_recalc(toplevel, new_node);
-  
-  /* add the object to the list */
-  object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
-  return(object_list);
+  return new_node;
 }
 
 /*! \brief Create a copy of a circle.
@@ -127,16 +120,11 @@ OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
     color = o_current->saved_color;
   }
 
-  /*
-   * A new circle object is added at the end of the object list with
-   * #o_circle_add(). Values for its fields are default and need to be
-   * modified.
-   */
-  /* create and link a new circle object */
-  new_obj = o_circle_add(toplevel, list_tail, OBJ_CIRCLE,
-			 color, 
-			 0, 0, 0);
-  
+  /* A new circle object is created with #o_circle_new().
+   * Values for its fields are default and need to be modified. */
+  new_obj = o_circle_new (toplevel, OBJ_CIRCLE, color, 0, 0, 0);
+  list_tail = s_basic_link_object (new_obj, list_tail);
+
   /*
    * The parameters of the new circle are set with the ones of the original
    * circle. The two circle have the same line type and the same filling
@@ -162,7 +150,7 @@ OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
 
   /*	new_obj->attribute = 0;*/
 
-  return(new_obj);
+  return new_obj;
 }
 
 /*! \brief Modify the description of a circle OBJECT.
@@ -242,6 +230,7 @@ void o_circle_modify(TOPLEVEL *toplevel, OBJECT *object,
 OBJECT *o_circle_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 		      unsigned int release_ver, unsigned int fileformat_ver)
 {
+  OBJECT *new_obj;
   char type; 
   int x1, y1;
   int radius;
@@ -307,13 +296,14 @@ OBJECT *o_circle_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
    * Its filling and line type are set according to the values of the field
    * on the line.
    */
-  object_list = (OBJECT *) o_circle_add(toplevel, object_list,
-					type, color, x1, y1, radius);
-  o_set_line_options(toplevel, object_list,
+  new_obj = o_circle_new(toplevel, type, color, x1, y1, radius);
+  o_set_line_options(toplevel, new_obj,
 		     circle_end, circle_type, circle_width, 
 		     circle_length, circle_space);
-  o_set_fill_options(toplevel, object_list,
+  o_set_fill_options(toplevel, new_obj,
 		     circle_fill, fill_width, pitch1, angle1, pitch2, angle2);
+
+  object_list = s_basic_link_object(new_obj, object_list);
   
   return(object_list);
 }

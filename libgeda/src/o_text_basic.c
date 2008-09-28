@@ -110,7 +110,7 @@ int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
  *  \par Function Description
  *
  */
-OBJECT *o_text_add_head(void)
+OBJECT *o_text_new_head (void)
 {
   OBJECT *new_node=NULL;
 
@@ -118,7 +118,7 @@ OBJECT *o_text_add_head(void)
 
   /* don't need to do this for head nodes */
   /* ret = s_basic_link_object(new_node, NULL);*/
-  return(new_node);
+  return new_node;
 }
 
 /*! \todo Finish function documentation!!!
@@ -237,7 +237,7 @@ OBJECT *o_text_load_font(TOPLEVEL *toplevel, gunichar needed_char)
   o_font_set->font_text_size = 100;
 
   o_font_set->name = g_strdup_printf ("%c", needed_char);
-  o_font_set->font_prim_objs = o_text_add_head();
+  o_font_set->font_prim_objs = o_text_new_head ();
   
   /* Add it to the list and hash table. Some functions will need it */
   g_hash_table_insert (font_loaded,
@@ -423,6 +423,7 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
 {
   OBJECT *temp_tail=NULL;
   OBJECT *temp_list;
+  OBJECT *temp_obj;
   OBJECT *start_of_char;
   int x_offset;
   int y_offset;
@@ -767,9 +768,10 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
 	  /* Now add the overbar (if it is not a zero length overbar) */
 	  if ( (overbar_startx != overbar_endx) ||
 	       (overbar_starty != overbar_endy) ) {
-	    temp_list = o_line_add(toplevel, temp_list, OBJ_LINE, color,
+	    temp_obj = o_line_new(toplevel, OBJ_LINE, color,
 				   overbar_startx, overbar_starty,
 				   overbar_endx, overbar_endy);
+      temp_list = s_basic_link_object(temp_obj, temp_list);
 	  }
 
 	  if (!((c == '\n') && (overbar_started))) {
@@ -896,12 +898,11 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
 /*! \todo Finish function documentation!!!
  *  \brief Creates a text OBJECT and the graphical objects representing it
  *  \par Function Description
- *  Create an OBJECT of type OBJ_TEXT and link it to the end of object_list.
+ *  Create an OBJECT of type OBJ_TEXT.
  *  Also add the OBJECTs forming the graphical representation of the visible
  *  string, to the text OBJECT's prim_objs list.
  *
  *  \param [in]  toplevel              The TOPLEVEL object.
- *  \param [in]  object_list            OBJECT list onto which to add text.
  *  \param [in]  type                   OBJ_TEXT (TODO: why bother)
  *  \param [in]  color                  The color of the text.
  *  \param [in]  x                      World x coord of text.
@@ -917,7 +918,7 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
  *  \note
  *  Caller is responsible for string; this function allocates its own copy.
  */
-OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list,
+OBJECT *o_text_new(TOPLEVEL *toplevel,
 		   char type, int color, int x, int y, int alignment,
 		   int angle, const char *string, int size, 
 		   int visibility, int show_name_value)
@@ -954,39 +955,33 @@ OBJECT *o_text_add(TOPLEVEL *toplevel, OBJECT *object_list,
   new_node->visibility = visibility; 
   new_node->show_name_value = show_name_value;
 
-  /* create the object in the main list */
-  /* object_list points to the object */
-  /* I use it below as a sanity check to make sure it was linked */
-  /* properly */ 
-  object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
-
   update_disp_string (new_node);
 
   /* now start working on the complex */
-  temp_list = o_text_add_head();
+  temp_list = o_text_new_head ();
 
   if (visibility == VISIBLE ||
       (visibility == INVISIBLE && toplevel->show_hidden_text)) {
-    object_list->text->prim_objs = 
+    new_node->text->prim_objs =
       o_text_create_string(toplevel, temp_list,
                            text->disp_string, size, color,
                            x, y, alignment, angle); 
-    object_list->text->displayed_width = o_text_width(toplevel,
-                                                      text->disp_string, size/2);
-    object_list->text->displayed_height = o_text_height(text->disp_string, size);
+    new_node->text->displayed_width = o_text_width(toplevel,
+                                                   text->disp_string, size/2);
+    new_node->text->displayed_height = o_text_height(text->disp_string, size);
   } else {
-    object_list->text->prim_objs = NULL;
-    object_list->text->displayed_width = 0;
-    object_list->text->displayed_height = 0;
+    new_node->text->prim_objs = NULL;
+    new_node->text->displayed_width = 0;
+    new_node->text->displayed_height = 0;
     s_delete(toplevel, temp_list);
   }
 
   /* Update bounding box */
-  o_text_recalc( toplevel, object_list );
+  o_text_recalc( toplevel, new_node );
 
   g_free(name);
   g_free(value);
-  return(object_list);
+  return new_node;
 }
 
 /*! \todo Finish function documentation!!!
@@ -1023,6 +1018,7 @@ OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
 		    unsigned int release_ver,
 		    unsigned int fileformat_ver)
 {
+  OBJECT *new_obj;
   char type; 
   int x, y;
   int color;
@@ -1140,10 +1136,12 @@ OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
     }
   }
   
-  object_list = o_text_add(toplevel, object_list, type, color, x, y,
-                           alignment, angle, string, 
-                           size, visibility, show_name_value);
+  new_obj = o_text_new(toplevel, type, color, x, y,
+                       alignment, angle, string,
+                       size, visibility, show_name_value);
   g_free(string);
+
+  object_list = s_basic_link_object(new_obj, object_list);
 
   return(object_list);
 }
@@ -1279,7 +1277,7 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
 
     /* need to create that head node if complex is null */
     if (text->prim_objs == NULL) {
-      text->prim_objs = o_text_add_head ();
+      text->prim_objs = o_text_new_head ();
     }
 
     text->prim_objs = o_text_create_string (toplevel,
@@ -1346,17 +1344,17 @@ OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
     color = o_current->saved_color;
   }
 
-  new_obj = o_text_add(toplevel, list_tail, OBJ_TEXT,
-                       color, 
-                       o_current->text->x, o_current->text->y, 
-                       o_current->text->alignment, 
-                       o_current->text->angle,
-                       o_current->text->string, 
-                       o_current->text->size, 
-                       o_current->visibility, 
-                       o_current->show_name_value); 
+  new_obj = o_text_new (toplevel, OBJ_TEXT, color,
+                        o_current->text->x, o_current->text->y,
+                        o_current->text->alignment,
+                        o_current->text->angle,
+                        o_current->text->string,
+                        o_current->text->size,
+                        o_current->visibility,
+                        o_current->show_name_value);
+  list_tail = s_basic_link_object (new_obj, list_tail);
 
-  return(new_obj);
+  return new_obj;
 }
 
 /*! \todo Finish function documentation!!!

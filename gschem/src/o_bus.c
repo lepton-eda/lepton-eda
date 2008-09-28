@@ -237,9 +237,9 @@ void o_bus_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  OBJECT *new_obj;
   int color;
   GList *other_objects = NULL;
-  OBJECT *bus_new;
 
   g_assert( w_current->inside_action != 0 );
 
@@ -260,15 +260,13 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
     return FALSE;
   }
 
-  /* create a new bus object and draw it */
-  bus_new = toplevel->page_current->object_tail =
-    o_bus_add(toplevel,
-	      toplevel->page_current->object_tail,
-	      OBJ_BUS, color,
-	      w_current->first_wx, w_current->first_wy, 
-	      w_current->second_wx, w_current->second_wy, 0);
+  new_obj = o_bus_new(toplevel, OBJ_BUS, color,
+                      w_current->first_wx, w_current->first_wy,
+                      w_current->second_wx, w_current->second_wy, 0);
+  toplevel->page_current->object_tail =
+    s_basic_link_object(new_obj, toplevel->page_current->object_tail);
 
-  o_bus_draw(w_current, bus_new);
+  o_bus_draw(w_current, new_obj);
 
   /* connect the new bus to the other busses */
   other_objects = s_conn_return_others(other_objects,

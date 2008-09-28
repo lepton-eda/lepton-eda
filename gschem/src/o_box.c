@@ -902,6 +902,7 @@ void o_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  OBJECT *new_obj;
   int box_width, box_height;
   int box_left, box_top;
 
@@ -931,11 +932,11 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   }
 
   /* create the object */
+  new_obj = o_box_new(toplevel, OBJ_BOX, w_current->graphic_color,
+                      box_left, box_top,
+                      box_left + box_width, box_top - box_height);
   toplevel->page_current->object_tail =
-  o_box_add(toplevel,
-            toplevel->page_current->object_tail,
-            OBJ_BOX, w_current->graphic_color, 
-	    box_left, box_top, box_left + box_width, box_top - box_height);
+    s_basic_link_object(new_obj, toplevel->page_current->object_tail);
 
   /* draw it */
   o_redraw_single(w_current, toplevel->page_current->object_tail);

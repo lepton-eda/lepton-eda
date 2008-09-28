@@ -664,7 +664,7 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   gboolean selectable, mirror;
   gchar *comp_name;
   int x, y, angle;
-  OBJECT *new_object;
+  OBJECT *new_obj;
   const CLibSymbol *clib;
 
   /* Return if scm_comp_name is NULL (an empty list) or scheme's FALSE */
@@ -707,17 +707,10 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 
   clib = s_clib_get_symbol_by_name (comp_name);
 
-  new_object 
-    = page->object_tail 
-    = o_complex_add(toplevel,
-                    page->object_tail, NULL, 
-                    'C', 
-                    WHITE, 
-                    x, y, 
-                    angle, mirror,
-                    clib, comp_name, 
-                    selectable);
-  o_complex_promote_attribs (toplevel, new_object);
+  new_obj = o_complex_new (toplevel, 'C', WHITE, x, y, angle, mirror,
+                           clib, comp_name, selectable);
+  page->object_tail = s_basic_link_object(new_obj, page->object_tail);
+  o_complex_promote_attribs (toplevel, new_obj);
   
   /* 
    * For now, do not redraw the newly added complex, since this might cause

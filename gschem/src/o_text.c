@@ -287,7 +287,7 @@ void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text)
   /* here you need to add OBJ_TEXT when it's done */
   toplevel->page_current->place_list =
     g_list_append(toplevel->page_current->place_list,
-                  o_text_add(toplevel, NULL,
+                  o_text_new(toplevel,
                              OBJ_TEXT, w_current->text_color,
                              0, 0, LOWER_LEFT, 0, /* zero is angle */
                              text,

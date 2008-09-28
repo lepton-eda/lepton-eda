@@ -89,7 +89,7 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
 
   if (w_current->include_complex) {
 
-    o_start = temp_list = add_head();
+    o_start = temp_list = new_head ();
 
     toplevel->ADDING_SEL=1;
     buffer = s_clib_symbol_get_data_by_name (sym_name);
@@ -122,8 +122,7 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
 
     toplevel->ADDING_SEL = 1; /* reuse this flag, rename later hack */
     sym = s_clib_get_symbol_by_name (sym_name);
-    new_object = o_complex_add (toplevel, NULL, NULL,
-                                OBJ_COMPLEX, WHITE, 0, 0, 0, 0,
+    new_object = o_complex_new (toplevel, OBJ_COMPLEX, WHITE, 0, 0, 0, 0,
                                 sym, sym_name, 1);
     promoted = o_complex_get_promotable (toplevel, new_object, TRUE);
 

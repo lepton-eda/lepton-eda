@@ -165,6 +165,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
 			    int show_name_value, OBJECT *object)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  OBJECT *new_obj;
   int world_x = - 1, world_y = -1;
   int color; 
   int left, right, top, bottom;
@@ -236,16 +237,12 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
   }
 
   /* first create text item */
-  toplevel->page_current->object_tail =
-  o_text_add(toplevel, toplevel->page_current->object_tail,
-             OBJ_TEXT, color,
-             world_x,
-             world_y,
-             LOWER_LEFT,
-             0, /* zero is angle */
-             text_string,
-             w_current->text_size,  /* current text size */ 
+  new_obj = o_text_new(toplevel, OBJ_TEXT, color, world_x, world_y,
+             LOWER_LEFT, 0, /* zero is angle */
+             text_string,  w_current->text_size,  /* current text size */
              visibility, show_name_value);
+  toplevel->page_current->object_tail =
+    s_basic_link_object(new_obj, toplevel->page_current->object_tail);
 
   /* now toplevel->page_current->object_tail contains new text item */
 

@@ -782,6 +782,7 @@ void o_line_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_line_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  OBJECT *new_obj;
 
   g_assert( w_current->inside_action != 0 );
 
@@ -796,12 +797,12 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   }
 
   /* create the line object and draw it */
+  new_obj = o_line_new(toplevel, OBJ_LINE,
+                       w_current->graphic_color,
+                       w_current->first_wx, w_current->first_wy,
+                       w_current->second_wx, w_current->second_wy);
   toplevel->page_current->object_tail =
-    o_line_add(toplevel,
-	       toplevel->page_current->object_tail,
-	       OBJ_LINE, w_current->graphic_color, 
-	       w_current->first_wx, w_current->first_wy,
-	       w_current->second_wx, w_current->second_wy);
+    s_basic_link_object(new_obj, toplevel->page_current->object_tail);
 
   o_redraw_single(w_current, toplevel->page_current->object_tail);
   

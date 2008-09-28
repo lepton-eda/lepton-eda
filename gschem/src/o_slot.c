@@ -105,6 +105,7 @@ void o_slot_start(GSCHEM_TOPLEVEL *w_current, OBJECT *list)
 void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  OBJECT *new_obj;
   OBJECT *object;
   OBJECT *temp;
   char *slot_value;
@@ -185,17 +186,12 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
     } else {
       /* here you need to do the add the slot
          attribute since it doesn't exist */
+      new_obj = o_text_new(toplevel, OBJ_TEXT, w_current->text_color,
+                           object->complex->x, object->complex->y,
+                           LOWER_LEFT, 0, /* zero is angle */
+                           string, 10, INVISIBLE, SHOW_NAME_VALUE);
       toplevel->page_current->object_tail =
-        (OBJECT *) o_text_add(
-                              toplevel,
-                              toplevel->page_current->object_tail,
-                              OBJ_TEXT, w_current->text_color,
-                              object->complex->x, object->complex->y,
-                              LOWER_LEFT,
-                              0, /* zero is angle */
-                              string,
-                              10,
-                              INVISIBLE, SHOW_NAME_VALUE);
+        s_basic_link_object(new_obj, toplevel->page_current->object_tail);
 
       /* manually attach attribute */
 

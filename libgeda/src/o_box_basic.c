@@ -52,11 +52,10 @@
 /*! Default setting for draw function. */
 void (*box_draw_func)() = NULL;
 
-/*! \brief Create a BOX and add it to a list.
+/*! \brief Create a BOX OBJECT
  *  \par Function Description
  *  This function creates a new object representing a box.
- *  This object is added to the end of the list <B>object_list</B>
- *  pointed object belongs to.
+ *
  *  The box is described by its upper left corner - <B>x1</B>, <B>y1</B> - and
  *  its lower right corner - <B>x2</B>, <B>y2</B>.
  *  The <B>type</B> parameter must be equal to <B>OBJ_BOX</B>. The <B>color</B>
@@ -69,20 +68,16 @@ void (*box_draw_func)() = NULL;
  *  line type with a width of 0, and no filling. It can be changed after
  *  with the #o_set_line_options() and #o_set_fill_options().
  *
- *  The object is added to the end of the list described by the <B>object_list</B>
- *  parameter by the #s_basic_link_object().
- *
- *  \param [in]     toplevel    The TOPLEVEL object.
- *  \param [in,out] object_list  OBJECT list to add box to.
+ *  \param [in]     toplevel     The TOPLEVEL object.
  *  \param [in]     type         Box type.
  *  \param [in]     color        Box border color.
  *  \param [in]     x1           Upper x coordinate.
  *  \param [in]     y1           Upper y coordinate.
  *  \param [in]     x2           Lower x coordinate.
  *  \param [in]     y2           Lower y coordinate.
- *  \return A new pointer on the end of the <B>object_list</B>
+ *  \return The new OBJECT
  */
-OBJECT *o_box_add(TOPLEVEL *toplevel, OBJECT *object_list,
+OBJECT *o_box_new(TOPLEVEL *toplevel,
 		  char type, int color,
 		  int x1, int y1, int x2, int y2)
 {
@@ -114,10 +109,7 @@ OBJECT *o_box_add(TOPLEVEL *toplevel, OBJECT *object_list,
   /* compute the bounding box */
   o_box_recalc(toplevel, new_node);
 
-  /* add the object to the list */
-  object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
-
-  return(object_list);
+  return new_node;
 }
 
 /*! \brief Copy a box to a list.
@@ -142,16 +134,10 @@ OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
     color = o_current->saved_color;
   }
 
-  /* 
-   * A new box object is added at the end of the object list with
-   * #o_box_add(). Values for its fields are default and need to
-   * be modified.
-   */
-
-  /* create and link a new box object */	
-  new_obj = o_box_add(toplevel, list_tail,
-		      OBJ_BOX, color,
-		      0, 0, 0, 0);
+  /* A new box object is created with #o_box_new().
+   * Values for its fields are default and need to be modified. */
+  new_obj = o_box_new (toplevel, OBJ_BOX, color, 0, 0, 0, 0);
+  list_tail = s_basic_link_object (new_obj, list_tail);
 
   /*
    * The dimensions of the new box are set with the ones of the original box.
@@ -181,7 +167,7 @@ OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
   /* new_obj->attribute = 0;*/
 
   /* return the new tail of the object list */
-  return(new_obj);
+  return new_obj;
 } 
 
 /*! \brief Modify a BOX OBJECT's coordinates.
@@ -284,6 +270,7 @@ void o_box_modify(TOPLEVEL *toplevel, OBJECT *object,
 OBJECT *o_box_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 		   unsigned int release_ver, unsigned int fileformat_ver)
 {
+  OBJECT *new_obj;
   char type; 
   int x1, y1;
   int width, height; 
@@ -363,10 +350,8 @@ OBJECT *o_box_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   d_x2 = x1+width; /* end points of the box */
   d_y2 = y1;
   
-  /* create and add the box to the list */
-  object_list = (OBJECT *) o_box_add(toplevel, object_list,
-				     type, color,
-				     d_x1, d_y1, d_x2, d_y2);
+  /* create a new box */
+  new_obj = o_box_new(toplevel, type, color, d_x1, d_y1, d_x2, d_y2);
   /* set its line options */
   o_set_line_options(toplevel, object_list,
 		     box_end, box_type, box_width, 
@@ -375,6 +360,8 @@ OBJECT *o_box_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   o_set_fill_options(toplevel, object_list,
 		     box_filling, fill_width,
 		     pitch1, angle1, pitch2, angle2);
+  /* Add the box to the object list */
+  object_list = s_basic_link_object(new_obj, object_list);
   return(object_list);
 }
 
