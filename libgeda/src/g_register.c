@@ -115,5 +115,5 @@ void g_register_libgeda_vars (void)
   scm_c_define("OBJ_PIN", SCM_MAKE_CHAR((unsigned char) OBJ_PIN));
   scm_c_define("OBJ_ARC", SCM_MAKE_CHAR((unsigned char) OBJ_ARC));
   scm_c_define("OBJ_PLACEHOLDER", SCM_MAKE_CHAR((unsigned char) OBJ_PLACEHOLDER));
-  
+  scm_c_define("OBJ_PATH", SCM_MAKE_CHAR((unsigned char) OBJ_PATH));
 }
