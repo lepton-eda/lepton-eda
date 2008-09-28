@@ -805,8 +805,7 @@ void o_complex_translate_world(TOPLEVEL *toplevel, int dx, int dy,
  *  \par Function Description
  *
  */
-OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
-		       OBJECT *o_current)
+OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj=NULL;
   int color;
@@ -835,7 +834,6 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
                            o_current->complex->mirror,
                            clib, o_current->complex_basename,
                            selectable);
-  list_tail = s_basic_link_object (new_obj, list_tail);
 
   /* Delete or hide attributes eligible for promotion inside the complex */
    o_complex_remove_promotable_attribs (toplevel, new_obj);
@@ -855,8 +853,7 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
  *  \par Function Description
  *
  */
-OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail,
-				OBJECT *o_current)
+OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj=NULL;
   OBJECT *temp_list;
@@ -884,7 +881,6 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail,
                                     o_current->complex->mirror,
                                     o_current->complex_basename,
                                     selectable);
-  list_tail = s_basic_link_object (new_obj, list_tail);
 
   /* deal with stuff that has changed */
 	

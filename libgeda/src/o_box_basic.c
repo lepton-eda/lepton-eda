@@ -115,15 +115,13 @@ OBJECT *o_box_new(TOPLEVEL *toplevel,
 /*! \brief Copy a box to a list.
  *  \par Function Description
  *  The function #o_box_copy() creates a verbatim copy of the object
- *  pointed by <B>o_current</B> describing a box. The new object is added at
- *  the end of the list, following the <B>list_tail</B> pointed object.
+ *  pointed by <B>o_current</B> describing a box.
  *
  *  \param [in]      toplevel  The TOPLEVEL object.
- *  \param [in,out]  list_tail  OBJECT list to copy to.
  *  \param [in]      o_current  BOX OBJECT to copy.
- *  \return A new pointer on the end of the OBJECT <B>list_tail</B>.
+ *  \return The new OBJECT
  */
-OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
+OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
   int color;
@@ -137,7 +135,6 @@ OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
   /* A new box object is created with #o_box_new().
    * Values for its fields are default and need to be modified. */
   new_obj = o_box_new (toplevel, OBJ_BOX, color, 0, 0, 0, 0);
-  list_tail = s_basic_link_object (new_obj, list_tail);
 
   /*
    * The dimensions of the new box are set with the ones of the original box.
@@ -166,7 +163,6 @@ OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
 
   /* new_obj->attribute = 0;*/
 
-  /* return the new tail of the object list */
   return new_obj;
 } 
 

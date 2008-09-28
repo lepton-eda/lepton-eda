@@ -96,11 +96,10 @@ OBJECT *o_path_new (TOPLEVEL *toplevel,
  *  parameter.
  *
  *  \param [in]  toplevel  The TOPLEVEL object.
- *  \param [out] list_tail  OBJECT list to copy to.
  *  \param [in]  o_current  Line OBJECT to copy.
  *  \return A new pointer to the end of the object list.
  */
-OBJECT *o_path_copy (TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
+OBJECT *o_path_copy (TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
   char *path_string;
@@ -114,7 +113,6 @@ OBJECT *o_path_copy (TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
 
   path_string = s_path_string_from_path (o_current->path);
   new_obj = o_path_new (toplevel, OBJ_PATH, color, path_string);
-  list_tail = s_basic_link_object (new_obj, list_tail);
   g_free (path_string);
 
   /* copy the path type and filling options */

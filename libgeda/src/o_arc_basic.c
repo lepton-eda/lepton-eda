@@ -121,16 +121,11 @@ OBJECT *o_arc_new(TOPLEVEL *toplevel,
  *  The arc, the line options are initialized whereas the fill options are
  *  initialized to passive values - as an arc can not be filled.
  *
- *  The new object is added to the end of the object list given by <B>list_tail</B>.
- *  A pointer on it is returned for update purpose in the calling function.
- *
  *  \param [in] toplevel  The TOPLEVEL object
- *  \param [in] list_tail
  *  \param [in] o_current
- *  \return
+ *  \return The new OBJECT
  */
-OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
-		   OBJECT *o_current)
+OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
   int color;
@@ -146,7 +141,6 @@ OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
                        o_current->arc->width / 2,
                        o_current->arc->start_angle,
                        o_current->arc->end_angle);
-  list_tail = s_basic_link_object (new_obj, list_tail);
   o_set_line_options(toplevel, new_obj,
                      o_current->line_end, o_current->line_type,
                      o_current->line_width,

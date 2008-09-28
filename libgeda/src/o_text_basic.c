@@ -1333,7 +1333,7 @@ void o_text_translate_world(TOPLEVEL *toplevel,
  *  \par Function Description
  *
  */
-OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
+OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
   int color;
@@ -1352,7 +1352,6 @@ OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
                         o_current->text->size,
                         o_current->visibility,
                         o_current->show_name_value);
-  list_tail = s_basic_link_object (new_obj, list_tail);
 
   return new_obj;
 }

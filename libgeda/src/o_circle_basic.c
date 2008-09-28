@@ -99,17 +99,13 @@ OBJECT *o_circle_new(TOPLEVEL *toplevel,
 /*! \brief Create a copy of a circle.
  *  \par Function Description
  *  The function #o_circle_copy() creates a verbatim copy of the object
- *  pointed by <B>o_current</B> describing a circle. The new object is added at
- *  the end of the list, following the <B>list_tail</B> pointed object.
- *
+ *  pointed by <B>o_current</B> describing a circle.
  *
  *  \param [in]  toplevel  The TOPLEVEL object.
- *  \param [out] list_tail  OBJECT list to copy to.
  *  \param [in]  o_current  Circle OBJECT to copy.
- *  \return A new pointer to the end of the object list.
+ *  \return The new OBJECT
  */
-OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
-		      OBJECT *o_current)
+OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
   int color;
@@ -123,7 +119,6 @@ OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
   /* A new circle object is created with #o_circle_new().
    * Values for its fields are default and need to be modified. */
   new_obj = o_circle_new (toplevel, OBJ_CIRCLE, color, 0, 0, 0);
-  list_tail = s_basic_link_object (new_obj, list_tail);
 
   /*
    * The parameters of the new circle are set with the ones of the original

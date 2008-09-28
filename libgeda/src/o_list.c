@@ -51,67 +51,66 @@ extern int global_sid;
 OBJECT *o_list_copy_to(TOPLEVEL *toplevel, OBJECT *list_head,
 		       OBJECT *selected, int flag, OBJECT **return_end)
 {
-  OBJECT *end=NULL;
+  OBJECT *new_obj;
+  OBJECT *end;
 
   /* are we adding a selection or the real object list */
   toplevel->ADDING_SEL = flag;
-
-  end = (OBJECT *) return_tail(list_head);
 
   switch(selected->type) {
 
     case(OBJ_LINE):
       /* do we do anything with the return value) ? */
-      end = (OBJECT *) o_line_copy(toplevel, end, selected);
+      new_obj = o_line_copy (toplevel, selected);
       break;
 
     case(OBJ_NET):
-      end = (OBJECT *) o_net_copy(toplevel, end, selected);
+      new_obj = o_net_copy (toplevel, selected);
       break;
 
     case(OBJ_BUS):
-      end = (OBJECT *) o_bus_copy(toplevel, end, selected);
+      new_obj = o_bus_copy (toplevel, selected);
       break;
 
     case(OBJ_BOX):
-      end = (OBJECT *) o_box_copy(toplevel, end, selected);
+      new_obj = o_box_copy (toplevel, selected);
       break;
 
     case(OBJ_PICTURE):
-      end = (OBJECT *) o_picture_copy(toplevel, end, selected);
+      new_obj = o_picture_copy (toplevel, selected);
       break;
 
     case(OBJ_CIRCLE):
-      end = (OBJECT *) o_circle_copy(toplevel, end, selected);
+      new_obj = o_circle_copy (toplevel, selected);
       break;
 
     case(OBJ_COMPLEX):
     case(OBJ_PLACEHOLDER):
       if (o_complex_is_embedded (selected)) {
-        end = (OBJECT *) o_complex_copy_embedded(toplevel, end, selected);
+        new_obj = o_complex_copy_embedded (toplevel, selected);
       } else {
-        end = (OBJECT *) o_complex_copy(toplevel, end, selected);
+        new_obj = o_complex_copy (toplevel, selected);
       }
       break;
 
     case(OBJ_TEXT):
-      end = (OBJECT *) o_text_copy(toplevel, end, selected);
+      new_obj = o_text_copy (toplevel, selected);
       if (selected->attribute && 
           selected->visibility == INVISIBLE) {
-        end->visibility = INVISIBLE;
+        new_obj->visibility = INVISIBLE;
       }
       break;
 
     case(OBJ_PATH):
-      end = (OBJECT *) o_path_copy(toplevel, end, selected);
+      new_obj = o_path_copy (toplevel, selected);
       break;
 
     case(OBJ_PIN):
-      end = (OBJECT *) o_pin_copy(toplevel, end, selected);
+      new_obj = o_pin_copy (toplevel, selected);
       break;
 
     case(OBJ_ARC):
-      end = (OBJECT *) o_arc_copy(toplevel, end, selected);
+      new_obj = o_arc_copy (toplevel, selected);
       break;
 
     default:
@@ -122,14 +121,17 @@ OBJECT *o_list_copy_to(TOPLEVEL *toplevel, OBJECT *list_head,
 
   /* Store a reference in the copied object to where it was copied.
    * Used to retain associations when copying attributes */
-  selected->copied_to = end;
+  selected->copied_to = new_obj;
+
+  end = return_tail (list_head);
+  end = s_basic_link_object (new_obj, end);
 
   if (list_head == NULL)
     list_head = end;
 
   /* make sure sid is the same! */
   if (selected) {
-    end->sid = selected->sid;
+    new_obj->sid = selected->sid;
   }
 
   /* I don't think this is a good idea at all */

@@ -95,16 +95,13 @@ OBJECT *o_line_new(TOPLEVEL *toplevel,
 /*! \brief Create a copy of a line.
  *  \par Function Description
  *  This function creates a verbatim copy of the
- *  object pointed by <B>o_current</B> describing a line. The new object
- *  is added at the end of the list following the <B>list_tail</B>
- *  parameter.
+ *  object pointed by <B>o_current</B> describing a line.
  *
  *  \param [in]  toplevel  The TOPLEVEL object.
- *  \param [out] list_tail  OBJECT list to copy to.
  *  \param [in]  o_current  Line OBJECT to copy.
- *  \return A new pointer to the end of the object list.
+ *  \return The new OBJECT
  */
-OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
+OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
   int color;
@@ -118,7 +115,6 @@ OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
   /* A new line object is created with #o_line_new().
    * Values for its fields are default and need to be modified. */
   new_obj = o_line_new (toplevel, OBJ_LINE, color, 0, 0, 0, 0);
-  list_tail = s_basic_link_object (new_obj, list_tail);
 
   /*
    * The coordinates of the ends of the new line are set with the ones

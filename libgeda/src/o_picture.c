@@ -661,16 +661,13 @@ void o_picture_translate_world(TOPLEVEL *toplevel,
 /*! \brief Create a copy of a picture.
  *  \par Function Description
  *  This function creates a verbatim copy of the object pointed by
- *  <B>o_current</B> describing a picture. The new object is added at the
- *  end of the list, following the <B>list_tail</B> pointed object.
+ *  <B>o_current</B> describing a picture.
  *
  *  \param [in]  toplevel   The TOPLEVEL object.
- *  \param [out] list_tail  OBJECT list to copy to.
  *  \param [in]  objcet     Picture OBJECT to copy.
- *  \return A new pointer to the end of the object list.
+ *  \return The new OBJECT
  */
-OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
-		       OBJECT *object)
+OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
 {
   OBJECT *new_node;
   PICTURE *picture;
@@ -721,11 +718,7 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *list_tail,
   /* compute the bounding picture */
   o_picture_recalc(toplevel, new_node);
 
-  /* add the object to the list */
-  list_tail = (OBJECT *) s_basic_link_object(new_node, list_tail);
-
-  /* return the new tail of the object list */
-  return(list_tail);
+  return new_node;
 }
 
 

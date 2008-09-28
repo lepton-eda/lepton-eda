@@ -218,7 +218,7 @@ void o_bus_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
  * \par Function Description
  *
  */
-OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
+OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
   int color;
@@ -237,7 +237,6 @@ OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *list_tail, OBJECT *o_current)
                        o_current->line->x[0], o_current->line->y[0],
                        o_current->line->x[1], o_current->line->y[1],
                        o_current->bus_ripper_direction);
-  list_tail = s_basic_link_object (new_obj, list_tail);
 
   new_obj->line->x[0] = o_current->line->x[0];
   new_obj->line->y[0] = o_current->line->y[0];
