@@ -1529,7 +1529,15 @@ void o_text_print_text_string(FILE *fp, char *string, int unicode_count,
           }
       }
     }
-    fprintf(fp, "%c", current_char);
+
+
+    if (current_char == '\t') {
+      /* Output eight spaces instead of the tab character */
+      fprintf(fp, "       ");
+    } else {
+      fprintf(fp, "%c", current_char);
+    }
+
     aux = g_utf8_find_next_char(aux, NULL);
   }
 
