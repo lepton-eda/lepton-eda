@@ -113,6 +113,11 @@ OBJECT *o_list_copy_to(TOPLEVEL *toplevel, OBJECT *list_head,
     case(OBJ_ARC):
       end = (OBJECT *) o_arc_copy(toplevel, end, selected);
       break;
+
+    default:
+      g_critical ("o_list_copy_to: object %p has bad type '%c'\n",
+                  selected, selected->type);
+      return list_head;
   }
 
   /* Store a reference in the copied object to where it was copied.
