@@ -21,10 +21,8 @@
 #include <config.h>
 #include <glib.h>
 
-#if GLIB_CHECK_VERSION(2,6,0)
 #include <glib-object.h>
 #include <glib/gstdio.h>
-#endif
 
 #include "gschem.h"
 #include <gdk/gdkkeysyms.h>
@@ -86,9 +84,6 @@ enum {
 
 static guint gschem_dialog_signals[ LAST_SIGNAL ] = { 0 };
 static GObjectClass *gschem_dialog_parent_class = NULL;
-
-
-#if GLIB_CHECK_VERSION(2,6,0)
 
 static GKeyFile *dialog_geometry = NULL;
 
@@ -259,8 +254,6 @@ static void unmap_handler (GtkWidget *widget)
   GTK_WIDGET_CLASS (gschem_dialog_parent_class)->unmap (widget);
 }
 
-#endif   /* !GLIB_CHECK_VERSION(2,6,0) */
-
 
 /*! \brief GObject finalise handler
  *
@@ -352,8 +345,6 @@ static void gschem_dialog_get_property (GObject *object, guint property_id, GVal
 static void gschem_dialog_class_init (GschemDialogClass *klass)
 {
   GObjectClass     *gobject_class = G_OBJECT_CLASS (klass);
-
-#if GLIB_CHECK_VERSION(2,6,0)
   GtkWidgetClass *gtkwidget_class = GTK_WIDGET_CLASS (klass);
 
   klass->geometry_save         = geometry_save;
@@ -361,7 +352,6 @@ static void gschem_dialog_class_init (GschemDialogClass *klass)
 
   gtkwidget_class->show        = show_handler;
   gtkwidget_class->unmap       = unmap_handler;
-#endif
 
   gobject_class->finalize      = gschem_dialog_finalize;
   gobject_class->set_property  = gschem_dialog_set_property;
@@ -369,7 +359,6 @@ static void gschem_dialog_class_init (GschemDialogClass *klass)
 
   gschem_dialog_parent_class = g_type_class_peek_parent (klass);
 
-#if GLIB_CHECK_VERSION(2,6,0)
   gschem_dialog_signals[ GEOMETRY_SAVE ] =
     g_signal_new ("geometry-save",
                   G_OBJECT_CLASS_TYPE( gobject_class ),
@@ -397,7 +386,6 @@ static void gschem_dialog_class_init (GschemDialogClass *klass)
                   G_TYPE_POINTER,
                   G_TYPE_STRING
                  );
-#endif
 
   g_object_class_install_property (
     gobject_class, PROP_SETTINGS_NAME,

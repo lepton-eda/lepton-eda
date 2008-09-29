@@ -237,13 +237,11 @@ x_fileselect_open (void)
                                         GTK_STOCK_OPEN,   GTK_RESPONSE_ACCEPT,
                                         NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
 					  GTK_RESPONSE_ACCEPT,
 					  GTK_RESPONSE_CANCEL,
 					  -1);
-#endif
   
   g_object_set (dialog,
                 /* GtkFileChooser */
@@ -282,13 +280,11 @@ x_fileselect_save (void)
                                         GTK_STOCK_SAVE,   GTK_RESPONSE_ACCEPT,
                                         NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
 					  GTK_RESPONSE_ACCEPT,
 					  GTK_RESPONSE_CANCEL,
 					  -1);
-#endif
   
   g_object_set (dialog,
                 /* GtkFileChooser */

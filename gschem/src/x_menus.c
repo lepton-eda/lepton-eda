@@ -26,9 +26,7 @@
 
 #include "gschem.h"
 
-#if GLIB_CHECK_VERSION(2,6,0)
 #include <glib/gstdio.h>
-#endif
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -391,23 +389,6 @@ out:
 }
 #endif  /* !GLIB_CHECK_VERSION(2,8,0) */
 
-#if !GLIB_CHECK_VERSION(2,6,0)
-
-/* disable recent files support */
-inline void x_menu_attach_recent_files_submenu(GSCHEM_TOPLEVEL *w_current)
-{
-   GtkWidget *recent_menu_item;
-
-   recent_menu_item = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(
-            w_current->menubar), "File/Recent files");
-   gtk_widget_destroy(recent_menu_item);
-}
-
-inline void recent_files_load() { }
-inline void recent_files_save(gpointer user_data) { }
-inline void recent_files_add(const char *filename) { }
-
-#else
 
 /* The list of recently loaded files. */
 static GList *recent_files = NULL;
@@ -673,5 +654,3 @@ void recent_files_load()
    g_free(file);
    g_key_file_free(kf);
 }
-
-#endif /* GLIB_MINOR_VERSION < 6 */

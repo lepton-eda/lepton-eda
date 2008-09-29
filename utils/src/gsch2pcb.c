@@ -33,10 +33,6 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
-#if !GLIB_CHECK_VERSION(2,0,0)
-#include "glib12-compat.c"
-#endif
-
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif

@@ -1077,7 +1077,6 @@ compselect_get_type ()
   return compselect_type;
 }
 
-#if GLIB_CHECK_VERSION(2,6,0)
 
 /*! \brief GschemDialog "geometry_save" class method handler
  *
@@ -1133,19 +1132,15 @@ compselect_geometry_restore (GschemDialog *dialog, GKeyFile *key_file, gchar *gr
   gtk_notebook_set_current_page (COMPSELECT (dialog)->viewtabs, position);
 }
 
-#endif   /* !GLIB_CHECK_VERSION(2,6,0) */
 
 static void
 compselect_class_init (CompselectClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-
-#if GLIB_CHECK_VERSION(2,6,0)
   GschemDialogClass *gschem_dialog_class = GSCHEM_DIALOG_CLASS (klass);
 
   gschem_dialog_class->geometry_save    = compselect_geometry_save;
   gschem_dialog_class->geometry_restore = compselect_geometry_restore;
-#endif
 
   gobject_class->constructor  = compselect_constructor;
   gobject_class->finalize     = compselect_finalize;
@@ -1288,13 +1283,11 @@ compselect_constructor (GType type,
 			  GTK_STOCK_OK, COMPSELECT_RESPONSE_HIDE,
                           NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(compselect),
 					  COMPSELECT_RESPONSE_HIDE,
 					  GTK_RESPONSE_CLOSE,
 					  -1);
-#endif
 
   /* Initialize the hidden property */
   compselect->hidden = FALSE;

@@ -29,8 +29,6 @@ olib_LDADD = -lm
 gsch2pcb_LDADD = @GSCH2PCB_LDFLAGS@ 
 grenum_LDADD = @GRENUM_LDFLAGS@
 
-EXTRA_DIST = glib12-compat.c
-
 MOSTLYCLEANFILES = *.log *.ps core FILE *~ olib.c
 CLEANFILES = *.log *.ps core FILE *~  olib.c
 DISTCLEANFILES = *.log core FILE *~ prototype.bak olib.c

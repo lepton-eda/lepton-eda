@@ -188,13 +188,11 @@ void text_input_dialog (GSCHEM_TOPLEVEL *w_current)
                                                          GTK_RESPONSE_ACCEPT,
                                                          NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
     gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->tiwindow),
                                             GTK_RESPONSE_ACCEPT,
                                             GTK_RESPONSE_REJECT,
                                             -1);
-#endif
 
     gtk_window_position(GTK_WINDOW (w_current->tiwindow),
                         GTK_WIN_POS_NONE);
@@ -513,13 +511,11 @@ void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_
                                                          GTK_RESPONSE_ACCEPT,
                                                          NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
     gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->tewindow),
                                             GTK_RESPONSE_ACCEPT,
                                             GTK_RESPONSE_REJECT,
                                             -1);
-#endif
 
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->tewindow),
                                     GTK_RESPONSE_ACCEPT);
@@ -878,13 +874,11 @@ void line_type_dialog (GSCHEM_TOPLEVEL *w_current, GList *objects)
                                           GTK_RESPONSE_ACCEPT,
                                           NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
                                           GTK_RESPONSE_ACCEPT,
                                           GTK_RESPONSE_REJECT,
                                           -1);
-#endif
 
   gtk_window_position(GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
 
@@ -1265,13 +1259,11 @@ void fill_type_dialog(GSCHEM_TOPLEVEL *w_current, GList *objects)
                                           GTK_RESPONSE_ACCEPT,
                                           NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
                                           GTK_RESPONSE_ACCEPT,
                                           GTK_RESPONSE_REJECT,
                                           -1);
-#endif
 
   gtk_window_position(GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
 
@@ -1487,13 +1479,11 @@ void arc_angle_dialog (GSCHEM_TOPLEVEL *w_current)
                                                          GTK_RESPONSE_ACCEPT,
                                                          NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
     gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->aawindow),
                                             GTK_RESPONSE_ACCEPT,
                                             GTK_RESPONSE_REJECT,
                                             -1);
-#endif
 
     gtk_window_position(GTK_WINDOW(w_current->aawindow),
                         GTK_WIN_POS_MOUSE);
@@ -1608,13 +1598,11 @@ void translate_dialog (GSCHEM_TOPLEVEL *w_current)
                                                          GTK_RESPONSE_ACCEPT,
                                                          NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
     gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->trwindow),
                                             GTK_RESPONSE_ACCEPT,
                                             GTK_RESPONSE_REJECT,
                                             -1);
-#endif
 
     gtk_window_position(GTK_WINDOW (w_current->trwindow),
                         GTK_WIN_POS_MOUSE);
@@ -1708,13 +1696,11 @@ void text_size_dialog (GSCHEM_TOPLEVEL *w_current)
                                                          GTK_RESPONSE_ACCEPT,
                                                          NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
     gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->tswindow),
                                             GTK_RESPONSE_ACCEPT,
                                             GTK_RESPONSE_REJECT,
                                             -1);
-#endif
 
     gtk_window_position(GTK_WINDOW(w_current->tswindow),
                         GTK_WIN_POS_MOUSE);
@@ -1815,13 +1801,11 @@ void snap_size_dialog (GSCHEM_TOPLEVEL *w_current)
                                                          GTK_RESPONSE_ACCEPT,
                                                          NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
     gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->tswindow),
                                             GTK_RESPONSE_ACCEPT,
                                             GTK_RESPONSE_REJECT,
                                             -1);
-#endif
 
     gtk_window_position(GTK_WINDOW(w_current->tswindow),
                         GTK_WIN_POS_MOUSE);
@@ -1920,13 +1904,11 @@ void slot_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string)
                                                          GTK_RESPONSE_ACCEPT,
                                                          NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
     gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->sewindow),
                                             GTK_RESPONSE_ACCEPT,
                                             GTK_RESPONSE_REJECT,
                                             -1);
-#endif
 
     gtk_window_position(GTK_WINDOW(w_current->sewindow),
                         GTK_WIN_POS_MOUSE);
@@ -2408,13 +2390,11 @@ void color_edit_dialog (GSCHEM_TOPLEVEL *w_current)
                                                          GTK_RESPONSE_ACCEPT,
                                                          NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
     gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->clwindow),
                                             GTK_RESPONSE_ACCEPT,
                                             GTK_RESPONSE_REJECT,
                                             -1);
-#endif
 
     gtk_window_position (GTK_WINDOW (w_current->clwindow),
                          GTK_WIN_POS_MOUSE);
@@ -2742,13 +2722,11 @@ char *generic_filesel_dialog (const char *msg, const char *templ, gint flags)
                                           NULL);
   }
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
                                           GTK_RESPONSE_OK,
                                           GTK_RESPONSE_CANCEL,
                                           -1);
-#endif
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
@@ -2888,13 +2866,11 @@ void find_text_dialog(GSCHEM_TOPLEVEL *w_current)
                                                             GTK_RESPONSE_ACCEPT,
                                                             NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
     gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->tfindwindow),
                                             GTK_RESPONSE_ACCEPT,
                                             GTK_RESPONSE_REJECT,
                                             -1);
-#endif
 
     gtk_window_position(GTK_WINDOW(w_current->tfindwindow),
                         GTK_WIN_POS_MOUSE);
@@ -2995,13 +2971,11 @@ void hide_text_dialog(GSCHEM_TOPLEVEL * w_current)
                                                            GTK_RESPONSE_ACCEPT,
                                                            NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
     gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->thidewindow),
                                             GTK_RESPONSE_ACCEPT,
                                             GTK_RESPONSE_REJECT,
                                             -1);
-#endif
 
     gtk_window_position(GTK_WINDOW(w_current->thidewindow),
                         GTK_WIN_POS_MOUSE);
@@ -3096,13 +3070,11 @@ void show_text_dialog(GSCHEM_TOPLEVEL * w_current)
                                                             GTK_RESPONSE_ACCEPT,
                                                             NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
     gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->tshowwindow),
                                             GTK_RESPONSE_ACCEPT,
                                             GTK_RESPONSE_REJECT,
                                             -1);
-#endif
 
     gtk_window_position(GTK_WINDOW(w_current->tshowwindow),
                         GTK_WIN_POS_MOUSE);
@@ -3730,14 +3702,12 @@ close_confirmation_dialog_constructor (GType type,
                           GTK_STOCK_SAVE,             GTK_RESPONSE_YES,
                           NULL);
 
-#if GTK_CHECK_VERSION (2,6,0)
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
                                           GTK_RESPONSE_YES,
                                           GTK_RESPONSE_NO,
                                           GTK_RESPONSE_CANCEL,
                                           -1);
-#endif
 
   /* all done, let's show the contents of the dialog */
   gtk_widget_show_all (hbox);
