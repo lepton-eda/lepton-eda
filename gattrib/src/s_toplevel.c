@@ -67,7 +67,7 @@ int s_toplevel_read_page(char *filename)
 
   /* If an error occurred, print message */
   if (err != NULL) {
-    g_warning (err->message);
+    g_warning ("%s", err->message);
     g_error_free (err);
   }
 

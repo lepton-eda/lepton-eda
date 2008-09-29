@@ -176,7 +176,7 @@ void x_dialog_missing_sym()
   dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
                                   GTK_MESSAGE_WARNING,
                                   GTK_BUTTONS_NONE,
-                                  string);
+                                  "%s", string);
 
   gtk_dialog_add_buttons(GTK_DIALOG(dialog), 
                   GTK_STOCK_QUIT, GTK_RESPONSE_REJECT,
@@ -277,7 +277,7 @@ void x_dialog_unimplemented_feature()
   dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
                                   GTK_MESSAGE_INFO,
                                   GTK_BUTTONS_OK,
-                                  string);
+                                  "%s", string);
 
   gtk_window_set_title(GTK_WINDOW(dialog), "Unimplemented feature!");
 
@@ -302,7 +302,7 @@ void x_dialog_fatal_error(gchar *string, gint return_code)
   dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
                                   GTK_MESSAGE_ERROR,
                                   GTK_BUTTONS_OK,
-                                  string);
+                                  "%s", string);
 
   gtk_window_set_title(GTK_WINDOW(dialog), "Fatal error");
 
