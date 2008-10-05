@@ -308,6 +308,24 @@ SCM g_rc_net_direction_mode(SCM mode)
  *  \par Function Description
  *
  */
+SCM g_rc_net_selection_mode(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {0, "disabled"},
+    {2, "enabled_net"},
+    {3, "enabled_all"}
+  };
+
+  RETURN_G_RC_MODE("net-selection-mode",
+		   default_net_selection_mode,
+		   3);
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
 SCM g_rc_net_style(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

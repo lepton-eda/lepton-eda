@@ -17,6 +17,7 @@ extern int default_override_pin_color;
 extern int default_net_endpoint_mode;
 extern int default_net_midpoint_mode;
 extern int default_net_direction_mode;
+extern int default_net_selection_mode;
 extern int default_junction_color;
 extern int default_pin_color;
 extern int default_line_style;

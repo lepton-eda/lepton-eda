@@ -53,6 +53,7 @@ int   default_override_pin_color = -1;
 int   default_net_endpoint_mode = FILLEDBOX;
 int   default_net_midpoint_mode = FILLED;
 int   default_net_direction_mode = TRUE;
+int   default_net_selection_mode = 0;
 int   default_pin_color = PIN_COLOR;
 int   default_pin_style = THICK;
 int   default_net_style = THICK;
@@ -186,6 +187,8 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
   w_current->net_endpoint_mode  = default_net_endpoint_mode;
   w_current->net_midpoint_mode  = default_net_midpoint_mode;
   w_current->net_direction_mode = default_net_direction_mode;
+  w_current->net_selection_mode = default_net_selection_mode;
+
   toplevel->override_net_color = default_override_net_color;
 
   toplevel->junction_color = default_junction_color;

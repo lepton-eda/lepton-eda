@@ -121,6 +121,17 @@
 (net-direction-mode "enabled")
 ;(net-direction-mode "disabled")
 
+;  net-selection-mode string
+;
+; Controls how many net segments are selected when you click at a net
+; If one of the enabled items is used, the selection state will toggle 
+; through all selection states. The mode defines the maximum search depth
+; for the net selection mode
+;
+;(net-selection-mode "disabled")
+(net-selection-mode "enabled_net")
+;(net-selection-mode "enabled_all")
+
 ;  net-consolidate string
 ;
 ;  Controls if the net consolidation code is used when schematics are read

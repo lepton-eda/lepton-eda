@@ -77,6 +77,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "net-endpoint-mode",         1, 0, 0, g_rc_net_endpoint_mode },
   { "net-midpoint-mode",         1, 0, 0, g_rc_net_midpoint_mode },
   { "net-direction-mode",        1, 0, 0, g_rc_net_direction_mode },
+  { "net-selection-mode",        1, 0, 0, g_rc_net_selection_mode },
   { "net-style",                 1, 0, 0, g_rc_net_style },
   { "bus-style",                 1, 0, 0, g_rc_bus_style },
   { "pin-style",                 1, 0, 0, g_rc_pin_style },
