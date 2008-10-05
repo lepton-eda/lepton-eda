@@ -32,6 +32,9 @@
 
 #include <math.h>
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 
 #include "gschem.h"
 
@@ -361,6 +364,97 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
     o_select_unselect_list( w_current, toplevel->page_current->selection_list );
   }
   i_update_menus(w_current);
+}
+
+/*! \brief Select all nets connected to the current net
+ *  \par Depending on the state of the w_current->net_selection_mode variable
+ *   and the net_selection_state of the current net this function will either
+ *   select the single net, all directly connected nets or all nets connected
+ *   with netname labels.
+ *  \param [in] w_current  GSCHEM_TOPLEVEL struct.
+ *  \param [in] o_net      Pointer to a single net object
+ */
+void o_select_connected_nets(GSCHEM_TOPLEVEL *w_current, OBJECT* o_net)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  GList *iter1;
+  OBJECT *o_current;
+  int count=0;
+  gchar* netname;
+
+  GList *netstack = NULL;
+  GList *netnamestack = NULL;
+  GList *netnameiter;
+
+  g_assert(o_net->type == OBJ_NET);
+
+  if (!o_net->selected) {
+    w_current->net_selection_state = 1;
+  }
+
+  /* the current net is the startpoint for the stack */
+  netstack = g_list_prepend(netstack, o_net);
+
+  count = 0; 
+  while (1) {
+    netnameiter = g_list_last(netnamestack);
+    for (iter1 = g_list_last(netstack);
+	 iter1 != NULL; 
+	 iter1 = g_list_previous(iter1), count++) {
+      o_current = iter1->data;
+      if (o_current->type == OBJ_NET && 
+	  (!o_current->selected || count == 0)) {
+	(*o_current->sel_func)(w_current, o_current, SINGLE, count);
+	if (w_current->net_selection_state > 1) {
+	  /* collect nets */
+	  netstack = g_list_concat(s_conn_return_others(NULL, o_current), netstack);
+	}
+	if (w_current->net_selection_state > 2) {
+	  /* collect netnames */
+	  netname = o_attrib_search_attrib_name(o_current->attribs, "netname", 0);
+	  if (netname != NULL) {
+	    if (g_list_find_custom(netnamestack, netname, (GCompareFunc) strcmp) == NULL) {
+	      netnamestack = g_list_append(netnamestack, netname);
+	    }
+	    else {
+	      g_free(netname);
+	    }
+	  }
+	}
+      }
+    }
+    g_list_free(netstack);
+    netstack = NULL;
+
+    if (netnameiter == g_list_last(netnamestack))
+      break; /* no new netnames in the stack --> finished */
+
+    /* get all the nets of the stacked netnames */
+    for (o_current =  toplevel->page_current->object_head->next;
+	 o_current != NULL;
+	 o_current = o_current->next) {
+      if (o_current->type == OBJ_TEXT
+	  && o_current->attached_to != NULL) {
+	if (o_current->attached_to->type == OBJ_NET) {
+	  netname = o_attrib_search_attrib_name(o_current->attached_to->attribs, "netname", 0);
+	  if (netname != NULL) {
+	    if (g_list_find_custom(netnamestack, netname, (GCompareFunc) strcmp) != NULL) {
+	      netstack = g_list_prepend(netstack, o_current->attached_to);
+	    }
+	    g_free(netname);
+	  }
+	}
+      }
+    }
+  }
+
+  w_current->net_selection_state += 1;
+  if (w_current->net_selection_state > w_current->net_selection_mode)
+    w_current->net_selection_state = 1;
+
+  for (iter1 = netnamestack; iter1 != NULL; iter1 = g_list_next(iter1))
+    g_free(iter1->data);
+  g_list_free(netnamestack);
 }
 
 /* This is a wrapper for o_selection_return_first_object */

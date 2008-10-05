@@ -43,6 +43,11 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
 
   w_slack = WORLDabs( toplevel, w_current->select_slack_pixels );
 
+  /* Decide whether to iterate over all object or start at the last
+     found object. If there is more than one object below the
+     (w_x/w_y) position, this will select the next object below the
+     position point. You can change the selected object by clicking
+     at the same place multiple times. */
   if (toplevel->page_current->object_lastplace == NULL) {
     o_current = toplevel->page_current->object_head;
   } else {
@@ -61,9 +66,14 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
 	   (o_current->visibility == INVISIBLE &&
 	    toplevel->show_hidden_text))) {
 	if (change_selection) {
-	  (*o_current->sel_func)(
-				 w_current, o_current, 
-				 SINGLE, 0); /* 0 is count */
+	  /* FIXME: should this switch be moved to o_select_object()? (Werner) */
+	  if (o_current->type == OBJ_NET && w_current->net_selection_mode) {
+	    o_select_connected_nets(w_current, o_current);
+	  }
+	  else {
+	    (*o_current->sel_func)(w_current, o_current, 
+				   SINGLE, 0); /* 0 is count */
+	  }
 	}
 	object_found = TRUE;
 	toplevel->page_current-> object_lastplace =
@@ -95,8 +105,13 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
            (o_current->visibility == INVISIBLE &&
             toplevel->show_hidden_text))) {
 	if (change_selection) {
-	  /* 0 is count */
-	  (*o_current->sel_func)(w_current, o_current, SINGLE, 0);
+	  /* FIXME: should this switch be moved to o_select_object()? (Werner) */
+	  if (o_current->type == OBJ_NET && w_current->net_selection_mode) {
+	    o_select_connected_nets(w_current, o_current);
+	  }
+	  else {
+	    (*o_current->sel_func)(w_current, o_current, SINGLE, 0); /* 0 is count */
+	  }
 	}
 	toplevel->page_current->object_lastplace = o_current;
  	object_found = TRUE;
