@@ -1888,7 +1888,7 @@ attribute_object(int x, int y, unsigned int color, unsigned int  size,
     snprintf(tmpName, MAX_TEXTLEN, "netname");
     snprintf(tmpValue, MAX_TEXTLEN, "NC");
 #else
-    snprintf(tmpName, "netname");
+    sprintf(tmpName, "netname");
     sprintf(tmpValue, "NC");
 #endif
     show_name_value = 1;
