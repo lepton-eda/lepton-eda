@@ -225,6 +225,7 @@ x_fileselect_open(GSCHEM_TOPLEVEL *w_current)
 void
 x_fileselect_save (GSCHEM_TOPLEVEL *w_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   GtkWidget *dialog;
 
   dialog = gtk_file_chooser_dialog_new (_("Save as..."),
@@ -254,14 +255,14 @@ x_fileselect_save (GSCHEM_TOPLEVEL *w_current)
   /* add file filters to dialog */
   x_fileselect_setup_filechooser_filters (GTK_FILE_CHOOSER (dialog));
   /* set the current filename or directory name if new document */
-  if ((w_current->toplevel->page_current->page_filename != NULL) 
-      && g_file_test (w_current->toplevel->page_current->page_filename, G_FILE_TEST_EXISTS)) {
+  if ((toplevel->page_current->page_filename != NULL) &&
+      g_file_test (toplevel->page_current->page_filename,
+                   G_FILE_TEST_EXISTS)) {
     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
-				   w_current->toplevel->page_current->page_filename);
-  }
-  else {
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER (dialog),
-				      "untitled.sch");
+                                   toplevel->page_current->page_filename);
+  } else {
+    gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog),
+                                       "untitled.sch");
   }
 
   gtk_dialog_set_default_response(GTK_DIALOG(dialog),
