@@ -95,10 +95,6 @@ OBJECT *o_list_copy_to(TOPLEVEL *toplevel, OBJECT *list_head,
 
     case(OBJ_TEXT):
       new_obj = o_text_copy (toplevel, selected);
-      if (selected->attribute && 
-          selected->visibility == INVISIBLE) {
-        new_obj->visibility = INVISIBLE;
-      }
       break;
 
     case(OBJ_PATH):
