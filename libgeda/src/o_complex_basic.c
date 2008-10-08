@@ -293,6 +293,38 @@ int o_complex_is_embedded(OBJECT *o_current)
 }
 
 
+/*! \brief Get a list of all toplevel attributes of and object list
+ *
+ *  \par Function Description
+ *  Returns a GList of all attribute OBJECTs
+ *
+ *  \param [in]  toplevel The toplevel environment.
+ *  \param [in]  o_head   The head of the object list
+ *  \returns              A GList of attribute OBJECTs
+ */
+GList *o_complex_get_toplevel_attribs (TOPLEVEL *toplevel, OBJECT *o_head)
+{
+  OBJECT *o_current;
+  GList *o_list = NULL;
+
+  for (o_current = o_head;
+       o_current != NULL;
+       o_current = o_current->next) {
+
+    if (o_current->type == OBJ_TEXT &&
+        o_current->attached_to == NULL &&
+        o_attrib_get_name_value (o_current->text->string, NULL, NULL)) {
+
+      o_list = g_list_prepend (o_list, o_current);
+    }
+  }
+
+  o_list = g_list_reverse (o_list);
+
+  return o_list;
+}
+
+
 /*! \brief Get attributes eligible for promotion from inside a complex
  *
  *  \par Function Description

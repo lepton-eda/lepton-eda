@@ -180,6 +180,7 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, GList *o_list,
 			     int *right, int *bottom);
 OBJECT *new_head(void);
 int o_complex_is_embedded(OBJECT *o_current);
+GList *o_complex_get_toplevel_attribs (TOPLEVEL *toplevel, OBJECT *o_head);
 GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach);
 void o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object);
 void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *object);
