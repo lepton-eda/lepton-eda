@@ -109,27 +109,27 @@ gchar *o_save_objects (OBJECT *object_list)
         switch (o_current->type) {
 
           case(OBJ_LINE):
-            out = (char *) o_line_save(o_current);
+            out = o_line_save(o_current);
             break;
 	
           case(OBJ_NET):
-            out = (char *) o_net_save(o_current);
+            out = o_net_save(o_current);
             break;
 
           case(OBJ_BUS):
-            out = (char *) o_bus_save(o_current);
+            out = o_bus_save(o_current);
             break;
 	
           case(OBJ_BOX):
-            out = (char *) o_box_save(o_current);
+            out = o_box_save(o_current);
             break;
 			
           case(OBJ_CIRCLE):
-            out = (char *) o_circle_save(o_current);
+            out = o_circle_save(o_current);
             break;
 
           case(OBJ_COMPLEX):
-            out = (char *) o_complex_save(o_current);
+            out = o_complex_save(o_current);
             g_string_append_printf(acc, "%s\n", out);
             already_wrote = TRUE;
 	    g_free(out); /* need to free here because of the above flag */
@@ -146,28 +146,28 @@ gchar *o_save_objects (OBJECT *object_list)
             break;
 
           case(OBJ_PLACEHOLDER):  /* new type by SDB 1.20.2005 */
-            out = (char *) o_complex_save(o_current);
+            out = o_complex_save(o_current);
             break;
 
           case(OBJ_TEXT):
-            out = (char *) o_text_save(o_current);
+            out = o_text_save(o_current);
             break;
 
           case(OBJ_PATH):
-            out = (char *) o_path_save(o_current);
+            out = o_path_save(o_current);
             break;
 
           case(OBJ_PIN):
-            out = (char *) o_pin_save(o_current);
+            out = o_pin_save(o_current);
             break;
 	
           case(OBJ_ARC):
-            out = (char *) o_arc_save(o_current);
+            out = o_arc_save(o_current);
             break;
 
-  	  case(OBJ_PICTURE):
-	    out = (char *) o_picture_save(o_current); 
-	    break;
+          case(OBJ_PICTURE):
+            out = o_picture_save(o_current);
+            break;
 
           default:
             /*! \todo Maybe we can continue instead of just failing
