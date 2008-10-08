@@ -176,7 +176,6 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
   new_node->attribs = NULL;
   new_node->attached_to = NULL;
   new_node->copied_to = NULL;
-  new_node->attribute = 0; 
   new_node->show_name_value = SHOW_NAME_VALUE;
   new_node->visibility = VISIBLE;
 
@@ -314,11 +313,8 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   if (o_current != NULL) {
     s_conn_remove(toplevel, o_current);
-	
-    /* second half of if is odd that we need it? hack */
-    /* need to do this early so we can do the printfs */
-    if (o_current->attached_to != NULL && o_current->attribute == 1) {
 
+    if (o_current->attached_to != NULL) {
       /* do the actual remove */
       o_attrib_remove(&o_current->attached_to->attribs, o_current);
     }

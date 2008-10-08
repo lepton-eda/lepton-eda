@@ -102,102 +102,100 @@ gchar *o_save_objects (OBJECT *object_list)
 
   while ( o_current != NULL ) {
 
-    if (o_current->type != OBJ_HEAD) {
+    if (o_current->type != OBJ_HEAD &&
+        o_current->attached_to == NULL) {
 
-      if (o_current->attribute == 0) {
+      switch (o_current->type) {
 
-        switch (o_current->type) {
+        case(OBJ_LINE):
+          out = o_line_save(o_current);
+          break;
 
-          case(OBJ_LINE):
-            out = o_line_save(o_current);
-            break;
-	
-          case(OBJ_NET):
-            out = o_net_save(o_current);
-            break;
+        case(OBJ_NET):
+          out = o_net_save(o_current);
+          break;
 
-          case(OBJ_BUS):
-            out = o_bus_save(o_current);
-            break;
-	
-          case(OBJ_BOX):
-            out = o_box_save(o_current);
-            break;
-			
-          case(OBJ_CIRCLE):
-            out = o_circle_save(o_current);
-            break;
+        case(OBJ_BUS):
+          out = o_bus_save(o_current);
+          break;
 
-          case(OBJ_COMPLEX):
-            out = o_complex_save(o_current);
-            g_string_append_printf(acc, "%s\n", out);
-            already_wrote = TRUE;
-	    g_free(out); /* need to free here because of the above flag */
+        case(OBJ_BOX):
+          out = o_box_save(o_current);
+          break;
 
-            if (o_complex_is_embedded(o_current)) {
-              g_string_append(acc, "[\n");
-	      
-              out = o_save_objects(o_current->complex->prim_objs);
-              g_string_append (acc, out);
-              g_free(out);
+        case(OBJ_CIRCLE):
+          out = o_circle_save(o_current);
+          break;
 
-              g_string_append(acc, "]\n");
-            }
-            break;
-
-          case(OBJ_PLACEHOLDER):  /* new type by SDB 1.20.2005 */
-            out = o_complex_save(o_current);
-            break;
-
-          case(OBJ_TEXT):
-            out = o_text_save(o_current);
-            break;
-
-          case(OBJ_PATH):
-            out = o_path_save(o_current);
-            break;
-
-          case(OBJ_PIN):
-            out = o_pin_save(o_current);
-            break;
-	
-          case(OBJ_ARC):
-            out = o_arc_save(o_current);
-            break;
-
-          case(OBJ_PICTURE):
-            out = o_picture_save(o_current);
-            break;
-
-          default:
-            /*! \todo Maybe we can continue instead of just failing
-             *  completely? In any case, failing gracefully is better
-             *  than killing the program, which is what this used to
-             *  do... */
-            g_critical (_("o_save_objects: object %p has unknown type '%c'\n"),
-                        o_current, o_current->type);
-            /* Dump string built so far */
-            g_string_free (acc, TRUE);
-            return NULL;
-        }
-
-        /* output the line */
-        if (!already_wrote) {
+        case(OBJ_COMPLEX):
+          out = o_complex_save(o_current);
           g_string_append_printf(acc, "%s\n", out);
-	  g_free(out);
-        } else {
-          already_wrote = FALSE;
-        }
+          already_wrote = TRUE;
+          g_free(out); /* need to free here because of the above flag */
 
-        /* save any attributes */
-        if (o_current->attribs != NULL) {
-          out = o_save_attribs(o_current->attribs);
-          g_string_append(acc, out);
-          g_free (out);
-        }
+          if (o_complex_is_embedded(o_current)) {
+            g_string_append(acc, "[\n");
 
+            out = o_save_objects(o_current->complex->prim_objs);
+            g_string_append (acc, out);
+            g_free(out);
+
+            g_string_append(acc, "]\n");
+          }
+          break;
+
+        case(OBJ_PLACEHOLDER):  /* new type by SDB 1.20.2005 */
+          out = o_complex_save(o_current);
+          break;
+
+        case(OBJ_TEXT):
+          out = o_text_save(o_current);
+          break;
+
+        case(OBJ_PATH):
+          out = o_path_save(o_current);
+          break;
+
+        case(OBJ_PIN):
+          out = o_pin_save(o_current);
+          break;
+
+        case(OBJ_ARC):
+          out = o_arc_save(o_current);
+          break;
+
+        case(OBJ_PICTURE):
+          out = o_picture_save(o_current);
+          break;
+
+        default:
+          /*! \todo Maybe we can continue instead of just failing
+           *  completely? In any case, failing gracefully is better
+           *  than killing the program, which is what this used to
+           *  do... */
+          g_critical (_("o_save_objects: object %p has unknown type '%c'\n"),
+                      o_current, o_current->type);
+          /* Dump string built so far */
+          g_string_free (acc, TRUE);
+          return NULL;
       }
-    } 
+
+      /* output the line */
+      if (!already_wrote) {
+        g_string_append_printf(acc, "%s\n", out);
+        g_free(out);
+      } else {
+        already_wrote = FALSE;
+      }
+
+      /* save any attributes */
+      if (o_current->attribs != NULL) {
+        out = o_save_attribs(o_current->attribs);
+        g_string_append(acc, out);
+        g_free (out);
+      }
+
+    }
     o_current = o_current->next;
   }
 

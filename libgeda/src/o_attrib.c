@@ -92,7 +92,6 @@ OBJECT *o_attrib_search(GList *list, OBJECT *item)
  */
 void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item)
 {
-  item->attribute = 1; /* Set the attribute to true, hack define */
   /* Show that that item is an attribute */
   item->color = toplevel->attribute_color;
 
@@ -127,7 +126,6 @@ void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current)
     return;
 
   /* \todo this makes me nervous... very nervous */
-  current->attribute = 0;
   current->attached_to=NULL;
   current->color = toplevel->detachedattr_color;
 
@@ -275,7 +273,6 @@ void o_attrib_remove(GList **list, OBJECT *remove)
 {
   g_return_if_fail (remove != NULL);
 
-  remove->attribute = 0;
   remove->attached_to = NULL;
 
   *list = g_list_remove (*list, remove);

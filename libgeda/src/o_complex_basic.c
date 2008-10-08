@@ -236,7 +236,7 @@ static int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
 
   g_return_val_if_fail(object != NULL, FALSE);
 
-  if (object->type != OBJ_TEXT || object->attribute || object->attached_to)
+  if (object->type != OBJ_TEXT || object->attached_to)
     return FALSE; /* not a text item or is already attached */
 
   /* Make sure text item is an attribute */

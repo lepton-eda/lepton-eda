@@ -291,7 +291,6 @@ struct st_object {
   int pin_type;    /* for pins only, either NET or BUS */
 
   GList *attribs;       /* attribute stuff */
-  int attribute;
   int show_name_value;
   int visibility;
   OBJECT *attached_to;  /* when object is an attribute */
