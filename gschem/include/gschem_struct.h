@@ -172,6 +172,8 @@ struct st_gschem_toplevel {
 
   /* controls if after doing a place the same component can be placed again */
   int continue_component_place;
+  GList *component_select_attrlist; /* holds a list of attribute names that are displayed in the 
+				       component select dialog */
 
   int undo_levels;        /* number of undo levels stored on disk */
   int undo_control;       /* sets if undo is enabled or not */

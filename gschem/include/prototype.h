@@ -227,6 +227,7 @@ SCM g_rc_scrollbar_update(SCM mode);
 SCM g_rc_object_clipping(SCM mode);
 SCM g_rc_logging(SCM mode);
 SCM g_rc_embed_components(SCM mode);
+SCM g_rc_component_dialog_attributes(SCM stringlist);
 SCM g_rc_text_size(SCM size);
 SCM g_rc_text_caps_style(SCM mode);
 SCM g_rc_postscript_font_scale(SCM scale);

@@ -90,6 +90,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "scrollbar-update",          1, 0, 0, g_rc_scrollbar_update },
   { "object-clipping",           1, 0, 0, g_rc_object_clipping },
   { "embed-components",          1, 0, 0, g_rc_embed_components },
+  { "component-dialog-attributes",1, 0, 0, g_rc_component_dialog_attributes },
   { "logging",                   1, 0, 0, g_rc_logging },
   { "text-size",                 1, 0, 0, g_rc_text_size },
   { "snap-size",                 1, 0, 0, g_rc_snap_size },

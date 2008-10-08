@@ -105,6 +105,7 @@ int   default_text_origin_marker = TRUE;
 int   default_fast_mousepan = TRUE;
 int   default_raise_dialog_boxes = FALSE;
 int   default_continue_component_place = TRUE;
+GList *default_component_select_attrlist = NULL;
 int   default_undo_levels = 20;
 int   default_undo_control = TRUE;
 int   default_undo_type = UNDO_DISK;
@@ -240,6 +241,7 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
   w_current->fast_mousepan      = default_fast_mousepan;
   w_current->raise_dialog_boxes = default_raise_dialog_boxes;
   w_current->continue_component_place = default_continue_component_place;
+  w_current->component_select_attrlist = default_component_select_attrlist;
   w_current->undo_levels = default_undo_levels;
   w_current->undo_control = default_undo_control;
   w_current->undo_type = default_undo_type;
