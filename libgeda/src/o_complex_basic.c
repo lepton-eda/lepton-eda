@@ -234,15 +234,6 @@ static int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
   char *padded_name = NULL;
   int promotableAttribute = FALSE;
 
-  g_return_val_if_fail(object != NULL, FALSE);
-
-  if (object->type != OBJ_TEXT || object->attached_to)
-    return FALSE; /* not a text item or is already attached */
-
-  /* Make sure text item is an attribute */
-  if (!o_attrib_get_name_value (object->text->string, NULL, NULL))
-    return FALSE;  /* not an attribute */
-
   /* always promote symversion= attribute, even if it is invisible */
   if (strncmp(object->text->string, "symversion=", 11) == 0)
     return TRUE;
@@ -346,20 +337,25 @@ GList *o_complex_get_toplevel_attribs (TOPLEVEL *toplevel, OBJECT *o_head)
 GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
 {
   GList *promoted = NULL;
-  OBJECT *tmp, *next;
+  GList *attribs;
+  GList *iter;
+  OBJECT *tmp;
 
   if (!toplevel->attribute_promotion) /* controlled through rc file */
     return NULL;
 
-  for (tmp = object->complex->prim_objs->next; tmp != NULL; tmp = next) {
-    next = tmp->next;
+  attribs = o_complex_get_toplevel_attribs (toplevel,
+                                            object->complex->prim_objs);
 
-    /* valid floating attrib? */
+  for (iter = attribs; iter != NULL; iter = g_list_next (iter)) {
+    tmp = iter->data;
+
+    /* Is it an attribute we want to promote? */
     if (!o_complex_is_eligible_attribute(toplevel, tmp))
       continue;
 
     if (detach) {
-      /* Remove and isolate tmp from the complex list */
+      /* Remove and isolate it from the complex list */
       if (tmp->next)
         tmp->next->prev = tmp->prev;
       if (tmp->prev)
