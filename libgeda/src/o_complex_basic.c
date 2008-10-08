@@ -367,6 +367,8 @@ GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
     promoted = g_list_prepend (promoted, tmp);
   }
 
+  g_list_free (attribs);
+
   promoted = g_list_reverse (promoted);
   return promoted;
 }
