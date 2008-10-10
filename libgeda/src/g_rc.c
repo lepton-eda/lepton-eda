@@ -1013,17 +1013,37 @@ SCM g_rc_keep_invisible(SCM mode)
  *  \brief
  *  \par Function Description
  *
- *  \param [in] scmsymname  
+ *  \param [in] attrlist
  *  \return SCM_BOOL_T always.
  */
-SCM g_rc_always_promote_attributes(SCM scmsymname)
+SCM g_rc_always_promote_attributes(SCM attrlist)
 {
-  SCM_ASSERT (scm_is_string (scmsymname), scmsymname,
-              SCM_ARG1, "always-promote-attributes");
+  GList *list=NULL;
+  int length, i;
+  gchar *attr;
 
-  g_free(default_always_promote_attributes);
-  default_always_promote_attributes = 
-    g_strdup_printf(" %s ", SCM_STRING_CHARS (scmsymname));
+  if (scm_is_string (attrlist)) {
+    printf("xxx\n");
+    g_free(default_always_promote_attributes);
+    default_always_promote_attributes = 
+      g_strdup_printf(" %s ", SCM_STRING_CHARS (attrlist));
+    s_log_message(_("WARNING: using a string for 'always-promote-attributes'"
+		    " is deprecated\n"));
+  } else {
+    printf("yyy\n");
+    SCM_ASSERT(scm_list_p(attrlist), attrlist, SCM_ARG1, "always-promote-attributes");
+    length = scm_ilength(attrlist);
+    /* convert the scm list into a GList */
+    for (i=0; i < length; i++) {
+      SCM_ASSERT(scm_is_string(scm_list_ref(attrlist, scm_from_int(i))), 
+		 scm_list_ref(attrlist, scm_from_int(i)), SCM_ARG1, 
+		 "always-promote-attribute: list element is not a string");
+      attr = g_strdup(SCM_STRING_CHARS(scm_list_ref(attrlist, scm_from_int(i))));
+      list = g_list_prepend(list, attr);
+      printf("g_rc_always_promote_attributes: %s\n", attr);
+    }
+    
+  }
 
   return SCM_BOOL_T;
 }

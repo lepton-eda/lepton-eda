@@ -91,6 +91,7 @@
 ; their visibility.
 ;
 (always-promote-attributes "footprint device value model-name")
+(always-promote-attributes '("footprint" "device" "value" "model-name"))
 
 ;
 ; End of attribute promotion keywords
