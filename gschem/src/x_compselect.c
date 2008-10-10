@@ -463,6 +463,74 @@ tree_row_activated (GtkTreeView       *tree_view,
     gtk_tree_view_expand_row (tree_view, path, FALSE);
 }
 
+/*! \brief GCompareFunc to sort an text object list by the object strings
+ */
+gint
+sort_object_text(OBJECT *a, OBJECT *b)
+{
+  return strcmp(a->text->string, b->text->string);
+}
+
+/*! \brief Update the model of the attributes treeview
+ *  \par Function Description
+ *  This function takes the toplevel attributes from the preview widget and 
+ *  puts them into the model of the <b>attrtreeview</b> widget.
+ *  \param [in] compselect       The dialog compselect
+ *  \param [in] preview_toplevel The toplevel of the preview widget
+ */
+void
+update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
+{
+  GtkListStore *model;
+  GtkTreeIter iter;
+  GList *listiter, *o_iter, *o_attrlist, *filter_list;
+  gchar *name, *value;
+  OBJECT *o_current;
+
+  model = (GtkListStore*) gtk_tree_view_get_model(compselect->attrtreeview);
+  gtk_list_store_clear(model);
+
+  if (preview_toplevel->page_current == NULL) {
+    return;
+  }
+
+  o_attrlist = o_complex_get_toplevel_attribs (preview_toplevel,
+					       preview_toplevel->page_current->object_head);
+
+  filter_list = GSCHEM_DIALOG (compselect)->w_current->component_select_attrlist;
+
+  if (filter_list != NULL 
+      && strcmp(filter_list->data, "*") == 0) {
+    /* display all attributes in alphabetical order */
+    o_attrlist = g_list_sort(o_attrlist, (GCompareFunc) sort_object_text);
+    for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next(o_iter)) {
+      o_current = o_iter->data;
+      o_attrib_get_name_value(o_current->text->string, &name, &value);
+      gtk_list_store_append(model, &iter);
+      gtk_list_store_set(model, &iter, 0, name, 1, value, -1);
+      g_free(name);
+      g_free(value);
+    }
+  } else {
+    /* display only attribute that are in the filter list */
+    for (listiter = filter_list;
+	 listiter != NULL;
+	 listiter = g_list_next(listiter)) {
+      for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next(o_iter)) {
+	o_current = o_iter->data;
+	if (o_attrib_get_name_value(o_current->text->string, &name, &value)) {
+	  if (strcmp(name, listiter->data) == 0) {
+	    gtk_list_store_append(model, &iter);
+	    gtk_list_store_set(model, &iter, 0, name, 1, value, -1);
+	  }
+	  g_free(name);
+	  g_free(value);
+	}
+      }
+    }
+  }
+  g_list_free(o_attrlist);
+}
 
 /*! \brief Handles changes in the treeview selection.
  *  \par Function Description
@@ -509,6 +577,11 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
                 "buffer", buffer,
                 "active", (buffer != NULL),
                 NULL);
+
+  /* update the attributes with the toplevel of the preview widget*/
+  if (compselect->attrtreeview != NULL)
+    update_attributes_model (compselect, 
+			     compselect->preview->preview_w_current->toplevel);
 
   /* signal a component has been selected to parent of dialog */
   g_signal_emit_by_name (compselect,
@@ -1023,6 +1096,62 @@ create_lib_treeview (Compselect *compselect)
   return vbox;
 }
 
+/*! \brief Creates the treeview widget for the attributes
+ */
+static GtkWidget*
+create_attributes_treeview (Compselect *compselect) 
+{
+  GtkWidget *attrtreeview, *scrolled_win;
+  GtkListStore *model;
+  GtkCellRenderer *renderer;
+  GtkTreeViewColumn *column;
+
+  model = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+
+  attrtreeview = GTK_WIDGET (g_object_new (GTK_TYPE_TREE_VIEW,
+					   /* GtkTreeView */
+					   "model",      model,
+					   "headers-visible", TRUE,
+					   "rules-hint", TRUE,
+					   NULL));
+
+  /* two columns for name and value of the attributes */
+  renderer = GTK_CELL_RENDERER( g_object_new( GTK_TYPE_CELL_RENDERER_TEXT,
+					      "editable", FALSE,
+					      NULL));
+
+  column = GTK_TREE_VIEW_COLUMN( g_object_new( GTK_TYPE_TREE_VIEW_COLUMN,
+					       "title", _("Name"),
+					       "resizable", TRUE,
+					       NULL));
+  gtk_tree_view_column_pack_start(column, renderer, TRUE);
+  gtk_tree_view_column_add_attribute(column, renderer, "text", 0);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (attrtreeview), column);
+
+  column = GTK_TREE_VIEW_COLUMN( g_object_new( GTK_TYPE_TREE_VIEW_COLUMN,
+					       "title", _("Value"),
+					       "resizable", TRUE,
+					       NULL));
+  gtk_tree_view_column_pack_start(column, renderer, TRUE);
+  gtk_tree_view_column_add_attribute(column, renderer, "text", 1);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (attrtreeview), column);
+
+  scrolled_win = GTK_WIDGET (g_object_new (GTK_TYPE_SCROLLED_WINDOW,
+					   /* GtkContainer */
+					   "border-width", 5,
+					   /* GtkScrolledWindow */
+					   "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
+					   "vscrollbar-policy", GTK_POLICY_ALWAYS,
+					   "shadow-type",       GTK_SHADOW_ETCHED_IN,
+					   NULL));
+
+  gtk_container_add(GTK_CONTAINER (scrolled_win), attrtreeview);
+
+  compselect->attrtreeview = GTK_TREE_VIEW(attrtreeview);
+  
+  return scrolled_win;
+}
+
 /*! \brief Create the combo box for behaviors.
  *  \par Function Description
  *  This function creates and returns a <B>GtkComboBox</B> for
@@ -1181,7 +1310,7 @@ compselect_constructor (GType type,
   GObject *object;
   Compselect *compselect;
 
-  GtkWidget *hpaned, *notebook;
+  GtkWidget *hpaned, *vpaned, *notebook, *attributes;
   GtkWidget *libview, *inuseview;
   GtkWidget *preview, *combobox;
   GtkWidget *alignment, *frame;
@@ -1206,6 +1335,12 @@ compselect_constructor (GType type,
   g_object_set (GTK_DIALOG (compselect)->vbox,
                 "homogeneous", FALSE,
                 NULL);
+
+  /* vertical pane containing selection/preview and attributes */
+  vpaned = GTK_WIDGET (g_object_new (GTK_TYPE_VPANED,
+                                    /* GtkContainer */
+                                    "border-width", 5,
+                                     NULL));
 
   /* horizontal pane containing selection and preview */
   hpaned = GTK_WIDGET (g_object_new (GTK_TYPE_HPANED,
@@ -1258,10 +1393,21 @@ compselect_constructor (GType type,
 
   gtk_paned_pack2 (GTK_PANED (hpaned), frame, FALSE, FALSE);
 
+  gtk_paned_pack1 (GTK_PANED (vpaned), hpaned, FALSE, FALSE);
+
+  /* only create the attribute treeview if there are elements in the 
+     component_select_attrlist */
+  if (GSCHEM_DIALOG (compselect)->w_current->component_select_attrlist == NULL) {
+    compselect->attrtreeview = NULL;
+  } else {
+    attributes = create_attributes_treeview(compselect);
+    gtk_paned_pack2 (GTK_PANED (vpaned), attributes, FALSE, FALSE);
+  }
+
   /* add the hpaned to the dialog vbox */
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (compselect)->vbox), hpaned,
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (compselect)->vbox), vpaned,
                       TRUE, TRUE, 0);
-  gtk_widget_show_all (hpaned);
+  gtk_widget_show_all (vpaned);
   
 
   /* -- behavior combo box -- */
