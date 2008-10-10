@@ -231,25 +231,21 @@ OBJECT *new_head ()
 static int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
 {
   char *name = NULL;
-  char *padded_name = NULL;
   int promotableAttribute = FALSE;
 
   /* always promote symversion= attribute, even if it is invisible */
   if (strncmp(object->text->string, "symversion=", 11) == 0)
     return TRUE;
-
+  
   /* check list against attributes which can be promoted */
-  if (toplevel->always_promote_attributes &&
-      (strlen(toplevel->always_promote_attributes) != 0)) {
-
+  if (toplevel->always_promote_attributes != NULL) {
     if (o_attrib_get_name_value(object->text->string, &name, NULL)) {
-      padded_name = g_strdup_printf(" %s ", name);
-      if (strstr(toplevel->always_promote_attributes, padded_name)) {
+      if (g_list_find_custom(toplevel->always_promote_attributes,
+			     name, (GCompareFunc) strcmp) != NULL) {
         /* Name of the attribute was in the always promote attributes list */
         promotableAttribute = TRUE;
       }
 
-      g_free(padded_name);
       g_free(name);
       if (promotableAttribute)
         return TRUE;

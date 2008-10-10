@@ -88,9 +88,10 @@
 ; always-promote-attributes
 ;
 ; Set the list of attributes that are always promoted regardless of
-; their visibility.
+; their visibility. The list should be a scm list of strings. The
+; space separated attribute names are deprecated.
 ;
-(always-promote-attributes "footprint device value model-name")
+;(always-promote-attributes "footprint device value model-name")
 (always-promote-attributes '("footprint" "device" "value" "model-name"))
 
 ;

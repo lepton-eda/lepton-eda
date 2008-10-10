@@ -546,7 +546,7 @@ struct st_toplevel {
   int print_vector_threshold;
 
   /* List of attributes to always promote */
-  char *always_promote_attributes;
+  GList *always_promote_attributes;
 
   /* gnetlist specific */
   int net_naming_priority;

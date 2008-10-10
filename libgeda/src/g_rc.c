@@ -1021,16 +1021,24 @@ SCM g_rc_always_promote_attributes(SCM attrlist)
   GList *list=NULL;
   int length, i;
   gchar *attr;
+  gchar **attr2;
+
+  g_list_foreach(default_always_promote_attributes, (GFunc)g_free, NULL);
+  g_list_free(default_always_promote_attributes);
 
   if (scm_is_string (attrlist)) {
-    printf("xxx\n");
-    g_free(default_always_promote_attributes);
-    default_always_promote_attributes = 
-      g_strdup_printf(" %s ", SCM_STRING_CHARS (attrlist));
     s_log_message(_("WARNING: using a string for 'always-promote-attributes'"
-		    " is deprecated\n"));
+		    " is deprecated. Use a list of strings instead\n"));
+
+    /* convert the space separated strings into a GList */
+    attr2 = g_strsplit(SCM_STRING_CHARS (attrlist)," ", 0);
+    for (i=0; attr2[i] != NULL; i++) {
+      if (strlen(attr2[i]) > 0) {
+	list = g_list_prepend(list, g_strdup(attr2[i]));
+      }
+    }
+    g_strfreev(attr2);
   } else {
-    printf("yyy\n");
     SCM_ASSERT(scm_list_p(attrlist), attrlist, SCM_ARG1, "always-promote-attributes");
     length = scm_ilength(attrlist);
     /* convert the scm list into a GList */
@@ -1040,10 +1048,10 @@ SCM g_rc_always_promote_attributes(SCM attrlist)
 		 "always-promote-attribute: list element is not a string");
       attr = g_strdup(SCM_STRING_CHARS(scm_list_ref(attrlist, scm_from_int(i))));
       list = g_list_prepend(list, attr);
-      printf("g_rc_always_promote_attributes: %s\n", attr);
     }
-    
   }
+
+  default_always_promote_attributes = g_list_reverse(list);
 
   return SCM_BOOL_T;
 }
