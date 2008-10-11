@@ -24,4 +24,12 @@ intltool-extract
 intltool-merge
 intltool-update
 *~
+*#
 TAGS
+GPATH
+GRTAGS
+GSYMS
+GTAGS
+HTML
+gschem.log
+

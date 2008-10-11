@@ -27,3 +27,12 @@ intltool-merge.in
 intltool-update
 intltool-update.in
 *~
+*#
+TAGS
+GPATH
+GRTAGS
+GSYMS
+GTAGS
+HTML
+gschem.log
+

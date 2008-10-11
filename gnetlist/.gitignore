@@ -15,5 +15,13 @@ depcomp
 install-sh
 missing
 mkinstalldirs
-
 *~
+*#
+TAGS
+GPATH
+GRTAGS
+GSYMS
+GTAGS
+HTML
+gschem.log
+gnetlist.log
