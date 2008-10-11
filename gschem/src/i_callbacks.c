@@ -2916,6 +2916,13 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
       s_log_message(_("Searching for symbol [%s]\n"), 
 		    object->complex_basename);
       sym = s_clib_get_symbol_by_name (object->complex_basename);
+      if (sym == NULL)
+	return;
+      if (s_clib_symbol_get_filename(sym) == NULL) {
+	s_log_message(_("Symbol is not a real file."
+			" Symbol cannot be loaded.\n"));
+	return;
+      }
       s_hierarchy_down_symbol(w_current->toplevel, sym,
 			      w_current->toplevel->page_current);
       /* s_hierarchy_down_symbol() will not zoom the loaded page */
