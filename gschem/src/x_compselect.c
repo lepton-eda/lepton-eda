@@ -465,7 +465,7 @@ tree_row_activated (GtkTreeView       *tree_view,
 
 /*! \brief GCompareFunc to sort an text object list by the object strings
  */
-gint
+static gint
 sort_object_text(OBJECT *a, OBJECT *b)
 {
   return strcmp(a->text->string, b->text->string);
@@ -1229,6 +1229,9 @@ compselect_geometry_save (GschemDialog *dialog, GKeyFile *key_file, gchar *group
   position = gtk_paned_get_position (GTK_PANED (COMPSELECT (dialog)->hpaned));
   g_key_file_set_integer (key_file, group_name, "hpaned", position );
 
+  position = gtk_paned_get_position (GTK_PANED (COMPSELECT (dialog)->vpaned));
+  g_key_file_set_integer (key_file, group_name, "vpaned", position );
+
   position = gtk_notebook_get_current_page (COMPSELECT (dialog)->viewtabs);
   g_key_file_set_integer (key_file, group_name, "source-tab", position );
 }
@@ -1256,6 +1259,10 @@ compselect_geometry_restore (GschemDialog *dialog, GKeyFile *key_file, gchar *gr
   position = g_key_file_get_integer (key_file, group_name, "hpaned", NULL);
   if (position != 0)
     gtk_paned_set_position (GTK_PANED (COMPSELECT (dialog)->hpaned), position);
+
+  position = g_key_file_get_integer (key_file, group_name, "vpaned", NULL);
+  if (position != 0)
+    gtk_paned_set_position (GTK_PANED (COMPSELECT (dialog)->vpaned), position);
 
   position = g_key_file_get_integer (key_file, group_name, "source-tab", NULL);
   gtk_notebook_set_current_page (COMPSELECT (dialog)->viewtabs, position);
@@ -1341,6 +1348,7 @@ compselect_constructor (GType type,
                                     /* GtkContainer */
                                     "border-width", 5,
                                      NULL));
+  compselect->vpaned = vpaned;
 
   /* horizontal pane containing selection and preview */
   hpaned = GTK_WIDGET (g_object_new (GTK_TYPE_HPANED,
