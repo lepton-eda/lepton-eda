@@ -8,7 +8,7 @@
  *  |___/
  *
  *  created by Alfred Reibenschuh <alfredreibenschuh@gmx.net>,
- *  under the ``GNU Library General Public License´´ (see below).
+ *  under the "GNU Library General Public License" (see below).
  *
  ***********************************************************************
  *
