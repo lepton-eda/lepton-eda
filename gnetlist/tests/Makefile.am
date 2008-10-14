@@ -9,8 +9,10 @@ EXTRA_DIST = runtest.sh \
              powersupply.bae powersupply.geda powersupply.maxascii \
              powersupply.pads powersupply.protelII powersupply.sch \
              powersupply.tango singlenet.PCB singlenet.geda singlenet.pads \
+	     powersupply.liquidpcb \
              singlenet.pcbpins \
              singlenet.protelII singlenet.sch stack_1.geda amp.spice-sdb \
+	     singlenet.liquidpcb \
 	     darlington.spice-sdb skt.switcap test.ana multiequal.sch \
 	     multiequal.spice-sdb gnetlistrc.vhdl
 
@@ -54,6 +56,10 @@ tests:
 	$(SRCDIR)/runtest.sh $(SRCDIR)/singlenet.sch protelII \
 		$(BUILDDIR) $(SRCDIR)
 
+# singlenet liquidpcb
+	$(SRCDIR)/runtest.sh $(SRCDIR)/singlenet.sch liquidpcb \
+		$(BUILDDIR) $(SRCDIR)
+
 # powersupply PCB
 	$(SRCDIR)/runtest.sh $(SRCDIR)/powersupply.sch PCB \
 		$(BUILDDIR) $(SRCDIR)
@@ -84,6 +90,10 @@ tests:
 
 # powersupply tango
 	$(SRCDIR)/runtest.sh $(SRCDIR)/powersupply.sch tango \
+		$(BUILDDIR) $(SRCDIR)
+
+# powersupply liquidpcb
+	$(SRCDIR)/runtest.sh $(SRCDIR)/powersupply.sch liquidpcb \
 		$(BUILDDIR) $(SRCDIR)
 
 # multiple equals in attributes SPICE-SDB 

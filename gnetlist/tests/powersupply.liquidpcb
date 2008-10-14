@@ -1,0 +1,57 @@
+<LiquidPCB>
+	<netlist name="Main netlist">
+		<net name="ten">
+			<netnode component="U2" pin=1 />
+			<netnode component="R1" pin=2 />
+			<netnode component="C3" pin=1 />
+			<netnode component="R2" pin=1 />
+		</net>
+		<net name="eleven">
+			<netnode component="U2" pin=2 />
+			<netnode component="C4" pin=1 />
+			<netnode component="R2" pin=2 />
+		</net>
+		<net name="GND">
+			<netnode component="CONN1" pin=3 />
+		</net>
+		<net name="one">
+			<netnode component="S1" pin=1 />
+			<netnode component="CONN1" pin=1 />
+		</net>
+		<net name="five">
+			<netnode component="CONN1" pin=2 />
+			<netnode component="T1" pin=2 />
+		</net>
+		<net name="three">
+			<netnode component="T1" pin=1 />
+			<netnode component="F1" pin=2 />
+		</net>
+		<net name="two">
+			<netnode component="S1" pin=2 />
+			<netnode component="F1" pin=1 />
+		</net>
+		<net name="six">
+			<netnode component="T1" pin=3 />
+			<netnode component="U1" pin=4 />
+		</net>
+		<net name="seven">
+			<netnode component="T1" pin=4 />
+			<netnode component="U1" pin=3 />
+		</net>
+		<net name="nine">
+			<netnode component="C4" pin=2 />
+			<netnode component="C3" pin=2 />
+			<netnode component="R1" pin=3 />
+			<netnode component="R1" pin=1 />
+			<netnode component="C2" pin=2 />
+			<netnode component="C1" pin=2 />
+			<netnode component="U1" pin=2 />
+		</net>
+		<net name="eight">
+			<netnode component="U2" pin=3 />
+			<netnode component="C2" pin=1 />
+			<netnode component="C1" pin=1 />
+			<netnode component="U1" pin=1 />
+		</net>
+	</netlist>
+</LiquidPCB>
