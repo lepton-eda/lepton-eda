@@ -301,15 +301,26 @@ struct st_object {
 }; 
 
 
+/*! \brief Structure for connections between OBJECTs
+ *
+ * The st_conn structure contains a single connection
+ * to another object.
+ * The connection system in s_conn.c uses this struct
+ */
 struct st_conn {
-  OBJECT *other_object;	/* The "other" object connected to this one */
-  int type;		/* Always in reference to how the "other" */
-				/* object is connected to the current one */
-  int x, y;		/* x, y coord of the connection */
-  int whichone;		/* which endpoint of the current object */
-				/* caused this connection */
-  int other_whichone;	/* which endpoint of the "other" object */
-				/* caused this connection */
+  /*! \brief The "other" object connected to this one */
+  OBJECT *other_object;
+  /*! \brief type of connection. Always in reference to how the "other"
+    object is connected to the current one */
+  int type;
+  /*! \brief x coord of the connection position */
+  int x;
+  /*! \brief y coord of the connection position */
+  int y;		
+  /*! \brief which endpoint of the current object caused this connection */
+  int whichone;
+  /*! \brief which endpoint of the "other" object caused this connection */
+  int other_whichone;
 };
 
 /* this structure is used in gschem to add rippers when drawing nets */

@@ -31,10 +31,30 @@
 #include <dmalloc.h>
 #endif
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \file s_conn.c
+ *  \brief The connection system
+ *  
+ *  The connection system stores and tracks the connections between
+ *  connected <b>OBJECTS</b>. The connected OBJECTS are either
+ *  <b>pins</b>, <b>nets</b> and <b>busses</b>.
+ *  
+ *  Each connection object with the type <b>st_conn</b> represents a
+ *  single unidirectional relation to another object.
+ *  
+ *  The following figure with two nets and a pin shows the relations
+ *  between connections and OBJECTS:
+ *  
+ *  \image html s_conn_overview.png
+ *  \image latex s_conn_overview.png "Connection overview" width=14cm
+ */
+
+
+/*! \brief create a new connection object
  *  \par Function Description
- *
+ *  create a single st_conn object and initialize it with the 
+ *  given parameters.
+ *  
+ *  \return The new connection object
  */
 CONN *s_conn_return_new(OBJECT * other_object, int type, int x, int y,
 			int whichone, int other_whichone)
@@ -57,10 +77,12 @@ CONN *s_conn_return_new(OBJECT * other_object, int type, int x, int y,
   return (new_conn);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief check if a connection is uniq in a list
  *  \par Function Description
- *
+ *  This function checks if there's no identical connection
+ *  in the list of connections.
+ *  \param conn_list list of connection objects
+ *  \param input_conn single connection object.
  *  \return TRUE if the CONN structure is unique, FALSE otherwise.
  */
 int s_conn_uniq(GList * conn_list, CONN * input_conn)
@@ -84,10 +106,14 @@ int s_conn_uniq(GList * conn_list, CONN * input_conn)
   return (TRUE);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief remove a object from the connection list of another object
  *  \par Function Description
- *
+ *  This function removes the OBJECT <b>to_remove</b> from the connection
+ *  list of the OBJECT <b>other_object</b>.
+ *  \param toplevel (currently not used)
+ *  \param other_object OBJECT from that the to_remove OBJECT needs to be removed
+ *  \param to_remove OBJECT to remove
+ *  \return TRUE if a connection has been deleted, FALSE otherwise
  */
 int s_conn_remove_other(TOPLEVEL * toplevel, OBJECT * other_object,
 			OBJECT * to_remove)
@@ -132,10 +158,12 @@ int s_conn_remove_other(TOPLEVEL * toplevel, OBJECT * other_object,
     return (FALSE);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief remove an OBJECT from the connection system
  *  \par Function Description
- *
+ *  This function removes all connections from and to the OBJECT
+ *  <b>to_remove</b>.
+ *  \param toplevel (currently not used)
+ *  \param to_remove OBJECT to unconnected from all other objects
  */
 void s_conn_remove(TOPLEVEL * toplevel, OBJECT * to_remove)
 {
@@ -185,9 +213,13 @@ void s_conn_remove(TOPLEVEL * toplevel, OBJECT * to_remove)
 #endif
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief remove a complex OBJECT from the connection system
  *  \par Function Description
+ *  This function removes all connections from and to the underlying 
+ *  OBJECTS of the given complex OBJECT
+ *  <b>to_remove</b>.
+ *  \param toplevel (currently not used)
+ *  \param to_remove OBJECT to unconnected from all other objects
  *
  */
 void s_conn_remove_complex(TOPLEVEL * toplevel, OBJECT * to_remove)
@@ -213,10 +245,14 @@ void s_conn_remove_complex(TOPLEVEL * toplevel, OBJECT * to_remove)
   
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Checks if a point is a midpoint of an OBJECT
  *  \par Function Description
- *
+ *  Checks if the point (<b>x</b>,<b>y</b>) is on the OBJECT
+ *  and between it's endpoints.
+ *  \return TRUE if the point is a midpoint of the OBJECT. FALSE 
+ *  if the point is not a midpoinit or if the OBJECT is not a 
+ *  NET a PIN or a BUS or if the OBJECT 
+ *  has neither horizontal nor vertical orientation. 
  */
 OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y)
 {
@@ -263,10 +299,14 @@ OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y)
   return(NULL);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief add an OBJECT to the connection system
  *  \par Function Description
- *
+ *  This function searches for all geometrical conections of the OBJECT
+ *  <b>object</b> to all other connectable objects. It adds connections
+ *  to the object and from all other
+ *  objects to this one.
+ *  \param toplevel (currently not used)
+ *  \param object OBJECT to add into the connection system
  */
 void s_conn_update_object(TOPLEVEL * toplevel, OBJECT * object)
 {
@@ -668,10 +708,12 @@ void s_conn_update_object(TOPLEVEL * toplevel, OBJECT * object)
 #endif
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief add an complex OBJECT to the connection system
  *  \par Function Description
- *
+ *  This function adds all underlying OBJECTs of a complex OBJECT
+ *  <b>complex</b> into the connection system.
+ *  \param toplevel (currently not used)
+ *  \param object complex OBJECT to add into the connection system
  */
 void s_conn_update_complex(TOPLEVEL * toplevel, OBJECT * complex)
 {
@@ -692,10 +734,10 @@ void s_conn_update_complex(TOPLEVEL * toplevel, OBJECT * complex)
 
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief print all connections of a connection list
  *  \par Function Description
- *
+ *  This is a debugging function to print a List of connections.
+ *  \param conn_list GList of connection objects
  */
 void s_conn_print(GList * conn_list)
 {
@@ -753,10 +795,15 @@ int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list)
   return FALSE;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief get a list of all objects connected to this one
  *  \par Function Description
- *
+ *  This function gets all other_object from the connection
+ *  list of the current object. If an <b>input_list</b> is given, the other
+ *  objects are appended to that list. If the input list is <b>NULL</b>, a new
+ *  list is returned
+ *  \param input_list GList of OBJECT's or NULL
+ *  \param object OBJECT to get other OBJECTs from
+ *  \return A GList of objects
  *  \warning
  *  Caller must g_list_free returned GList pointer.
  *  Do not free individual data items in list.
@@ -784,10 +831,16 @@ GList *s_conn_return_others(GList *input_list, OBJECT *object)
   return(return_list);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief get a list of all objects connected to this complex one
  *  \par Function Description
- *
+ *  This function gets all other_object from the connection
+ *  list of all underlying OBJECTs of the given complex OBJECT.
+ *  If an <b>input_list</b> is given, the other
+ *  objects are appended to that list. If the input list is <b>NULL</b>, a new
+ *  list is returned
+ *  \param input_list GList of OBJECT's or NULL
+ *  \param object complex OBJECT to get other objects from
+ *  \return A GList of objects
  *  \warning
  *  Caller must g_list_free returned GList pointer.
  *  Do not free individual data items in list.
