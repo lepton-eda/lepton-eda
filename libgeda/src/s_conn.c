@@ -45,7 +45,7 @@
  *  between connections and OBJECTS:
  *  
  *  \image html s_conn_overview.png
- *  \image latex s_conn_overview.png "Connection overview" width=14cm
+ *  \image latex s_conn_overview.pdf "Connection overview" width=14cm
  */
 
 

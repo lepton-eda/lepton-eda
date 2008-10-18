@@ -32,10 +32,28 @@
 #include <dmalloc.h>
 #endif
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \file s_tile.c
+ *  \brief Splits a page into tiles
  *
+ *  With the <b>tiles</b> a page (st_page) is splitted into several smaller areas.
+ *  The number of tiles is defined by <b>MAX_TILES_X</b> and <b>MAX_TILES_Y</b>.
+ *  
+ *  Each <b>TILE</b> (st_tile) can contain zero to many <b>OBJECTS</b> 
+ *  (st_object) and each OBJECT can be in one or more TILES.
+ * 
+ *  The usage of tiles makes it easier to find geometrical connections between
+ *  the line objects (OBJ_NET, OBJ_PIN, OBJ_BUS).
+ *  
+ *  \image html s_tile_overview.png
+ *  \image latex s_tile_overview.pdf "Tile overview" width=14cm
+ */
+
+/*! \brief initialize the array of tiles
+ *  \par Function Description
+ *  This function splits the page size into tiles and initializes
+ *  every tile.
+ *  \param toplevel TOPLEVEL structure
+ *  \param p_current The page that gets the tiles.
  */
 void s_tile_init(TOPLEVEL * toplevel, PAGE * p_current)
 {
@@ -82,10 +100,14 @@ void s_tile_init(TOPLEVEL * toplevel, PAGE * p_current)
 #endif
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief add a line object to the tiles
  *  \par Function Description
- *
+ *  This function takes a single line object and adds it to
+ *  every tile that is touched by the line. 
+ *  It also adds all tiles that are touched by the object to 
+ *  the objects tile list.
+ *  \param toplevel The TOPLEVEL structure
+ *  \param object The line OBJECT to add
  */
 void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
 {
@@ -277,10 +299,11 @@ void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief remove an object from the tiles
  *  \par Function Description
- *
+ *  This function remose an object from all tiles that are refered by the object.
+ *  It also removes the object from each tile that contained the object.
+ *  \param object The object to remove
  */
 void s_tile_remove_object(OBJECT *object)
 {
@@ -300,10 +323,12 @@ void s_tile_remove_object(OBJECT *object)
   object->tiles = NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief update the tile informations of an object
  *  \par Function Description
- *
+ *  This function updates the tile informations of an object.
+ *  This function can be used if an object has been moved on the page
+ *  \param toplevel The TOPLEVEL structure
+ *  \param object The OBJECT to update
  */
 void s_tile_update_object(TOPLEVEL * toplevel, OBJECT * object)
 {
@@ -316,7 +341,7 @@ void s_tile_update_object(TOPLEVEL * toplevel, OBJECT * object)
  *  \par Function Description
  *  This functions collects all object lists of the tiles that are touched
  *  by the given rectangle (x1,y1), (x2,y2).
- *  Note: The caller has to g_list_free() the returned list.
+ *  \note The caller has to g_list_free() the returned list.
  */
 GList* s_tile_get_objectlists(TOPLEVEL *toplevel, int world_x1, int world_y1,
 			      int world_x2, int world_y2)
@@ -364,10 +389,10 @@ GList* s_tile_get_objectlists(TOPLEVEL *toplevel, int world_x1, int world_y1,
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief print all objects for each tile
  *  \par Function Description
- *
+ *  Debugging function to print all object names that are inside
+ *  the tiles.
  */
 void s_tile_print(TOPLEVEL * toplevel)
 {
@@ -397,10 +422,10 @@ void s_tile_print(TOPLEVEL * toplevel)
 
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief free all tiles
  *  \par Function Description
- *
+ *  This function frees all tiles from the given page.
+ *  \param p_current The PAGE where the tiles are removed.
  */
 void s_tile_free_all(PAGE * p_current)
 {

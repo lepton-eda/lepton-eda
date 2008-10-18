@@ -364,6 +364,13 @@ struct st_undo {
   UNDO *next;
 };
 
+
+/*! \brief structure to split a page into tiles
+ *  
+ *  This structure is used to track objects that are inside
+ *  a smaller TILE of o a page.
+ *  See s_tile.c for further informations.
+ */
 struct st_tile {
   GList *objects;
 
