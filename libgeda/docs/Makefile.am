@@ -9,6 +9,8 @@ all:
 doxygen: libgeda.dox
 	@echo 'Creating doxygen documentation for libgeda...'
 if BUILDDOC
+	-cd images && $(MAKE)
+	-cd ..
 	$(DOXYGEN) libgeda.dox
 	-cd latex && $(MAKE)
 	-cd ..
