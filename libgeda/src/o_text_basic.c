@@ -75,6 +75,9 @@ static void update_disp_string(OBJECT *o)
         }
         break;
     }
+    /* free the strings allocated by o_attrib_get_name_value */
+    g_free(name);
+    g_free(value);
   } else {
     text->disp_string = g_strdup (text->string);
   }

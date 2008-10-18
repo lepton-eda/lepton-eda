@@ -290,6 +290,7 @@ static void free_symbol (gpointer data, gpointer user_data)
       g_free (symbol->name);
       symbol->name = NULL;
     }
+    g_free(symbol);
   }
 }
 
