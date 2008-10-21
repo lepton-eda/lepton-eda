@@ -326,7 +326,7 @@ void main_prog(void *closure, int argc, char *argv[])
     if (guile_proc) {
         /* check size here hack */
         sprintf(input_str, "(%s \"%s\")", guile_proc, output_filename);
-        scm_c_eval_string (input_str);
+        g_scm_c_eval_string_protected (input_str);
         /* gh_eval_str_with_stack_saving_handler (input_str); */
     } else if (interactive_mode) {
         scm_c_eval_string ("(set-repl-prompt! \"gnetlist> \")");
