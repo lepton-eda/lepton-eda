@@ -31,16 +31,16 @@
 /*! Default setting for net draw function. */
 void (*net_draw_func)() = NULL;
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief calculate and return the boundaries of a net object
  *  \par Function Description
+ *  This function calculates the object boudaries of a net \a object.
  *
  *  \param [in]  toplevel  The TOPLEVEL object.
- *  \param [in]  line
- *  \param [out] left
- *  \param [out] top
- *  \param [out] right
- *  \param [out] bottom
+ *  \param [in]  object    a net object
+ *  \param [out] left      the left world coord
+ *  \param [out] top       the top world coord
+ *  \param [out] right     the right world coord
+ *  \param [out] bottom    the bottom world coord
  */
 void world_get_net_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
                           int *top, int *right, int *bottom)
@@ -48,18 +48,18 @@ void world_get_net_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
   world_get_line_bounds( toplevel, object, left, top, right, bottom );
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief create a new net object
  *  \par Function Description
- *
+ *  This function creates and returns a new net object.
+ *  
  *  \param [in]     toplevel    The TOPLEVEL object.
- *  \param [in]     type
- *  \param [in]     color
- *  \param [in]     x1
- *  \param [in]     y1
- *  \param [in]     x2
- *  \param [in]     y2
- *  \return OBJECT *
+ *  \param [in]     type        The OBJECT type (usually OBJ_NET)
+ *  \param [in]     color       The color of the net
+ *  \param [in]     x1          x-coord of the first point
+ *  \param [in]     y1          y-coord of the first point
+ *  \param [in]     x2          x-coord of the second point
+ *  \param [in]     y2          y-coord of the second point
+ *  \return A new net OBJECT
  */
 OBJECT *o_net_new(TOPLEVEL *toplevel, char type,
 		  int color, int x1, int y1, int x2, int y2)
@@ -91,10 +91,12 @@ OBJECT *o_net_new(TOPLEVEL *toplevel, char type,
   return new_node;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief recalc the visual properties of a net object
  *  \par Function Description
- *
+ *  This function updates the visual coords of the \a o_current object.
+ *  
+ *  \param [in]     toplevel    The TOPLEVEL object.
+ *  \param [in]     o_current   a net object.
  *
  */
 void o_net_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
@@ -119,10 +121,18 @@ void o_net_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
   o_current->w_bounds_valid = TRUE;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief read a net object from a char buffer
  *  \par Function Description
- *
+ *  This function reads a net object from the buffer \a buf.
+ *  If the netobject was read successfully, a new net object is
+ *  allocated and appended to the \a object_list.
+ *  
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] object_list  list of OBJECTS to append a new net
+ *  \param [in] buf          a text buffer (usually a line of a schematic file)
+ *  \param [in] release_ver  The release number gEDA
+ *  \param [in] fileformat_ver a integer value of the file format
+ *  \return The object list
  *
  */
 OBJECT *o_net_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
@@ -165,11 +175,13 @@ OBJECT *o_net_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   return (object_list);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Create a string representation of the net object
  *  \par Function Description
+ *  This function takes a net \a object and return a string
+ *  according to the file format definition.
  *
- *
+ *  \param [in] object  a net OBJECT
+ *  \return the string representation of the net OBJECT
  */
 char *o_net_save(OBJECT *object)
 {
@@ -193,18 +205,21 @@ char *o_net_save(OBJECT *object)
   return (buf);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief move a net object
  *  \par Function Description
+ *  This function changes the position of a net \a object.
  *
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] dx           The x-distance to move the object
+ *  \param [in] dy           The y-distance to move the object
+ *  \param [in] object       The net OBJECT to be moved
  *
  */
 void o_net_translate_world(TOPLEVEL *toplevel, int dx, int dy,
 			   OBJECT *object)
 {
   if (object == NULL)
-  printf("ntw NO!\n");
-
+    printf("ntw NO!\n");
 
   /* Update world coords */
   object->line->x[0] = object->line->x[0] + dx;
@@ -218,11 +233,13 @@ void o_net_translate_world(TOPLEVEL *toplevel, int dx, int dy,
   s_tile_update_object(toplevel, object);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief create a copy of a net object
  *  \par Function Description
+ *  This function creates a copy of the net object \a o_current.
  *
- *
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] o_current    The object that is copied
+ *  \return a new net object
  */
 OBJECT *o_net_copy(TOPLEVEL *toplevel,  OBJECT *o_current)
 {
@@ -251,11 +268,16 @@ OBJECT *o_net_copy(TOPLEVEL *toplevel,  OBJECT *o_current)
   return new_obj;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief postscript print command for a net object
  *  \par Function Description
- *
- *
+ *  This function writes the postscript command of the net object \a o_current
+ *  into the FILE \a fp points to.
+ *  
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] fp           pointer to a FILE structure
+ *  \param [in] o_current    The OBJECT to print
+ *  \param [in] origin_x     x-coord of the postscript origin
+ *  \param [in] origin_y     y-coord of the postscript origin
  */
 void o_net_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 		 int origin_x, int origin_y)
@@ -293,11 +315,17 @@ void o_net_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief rotate a net object around a centerpoint
  *  \par Function Description
- *
- *
+ *  This function rotates a net \a object around the point
+ *  (\a world_centerx, \a world_centery).
+ *  
+ *  \param [in] toplevel      The TOPLEVEL object
+ *  \param [in] world_centerx x-coord of the rotation center
+ *  \param [in] world_centery y-coord of the rotation center
+ *  \param [in] angle         The angle to rotat the net object
+ *  \param [in] object        The net object
+ *  \note only steps of 90 degrees are allowed for the \a angle
  */
 void o_net_rotate_world(TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, int angle,
@@ -306,7 +334,7 @@ void o_net_rotate_world(TOPLEVEL *toplevel,
   int newx, newy;
 
   if (angle == 0)
-  return;
+    return;
 
   /* translate object to origin */
   o_net_translate_world(toplevel, -world_centerx, -world_centery,
@@ -327,11 +355,15 @@ void o_net_rotate_world(TOPLEVEL *toplevel,
   o_net_translate_world(toplevel, world_centerx, world_centery, object);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief mirror a net object horizontaly at a centerpoint
  *  \par Function Description
- *
- *
+ *  This function mirrors a net \a object horizontaly at the point
+ *  (\a world_centerx, \a world_centery).
+ *  
+ *  \param [in] toplevel      The TOPLEVEL object
+ *  \param [in] world_centerx x-coord of the mirror position
+ *  \param [in] world_centery y-coord of the mirror position
+ *  \param [in] object        The net object
  */
 void o_net_mirror_world(TOPLEVEL *toplevel, int world_centerx,
 			int world_centery, OBJECT *object)
@@ -347,6 +379,13 @@ void o_net_mirror_world(TOPLEVEL *toplevel, int world_centerx,
   o_net_translate_world(toplevel, world_centerx, world_centery, object);
 }
 
+/*! \brief calculate the orientation of a net object
+ *  \par Function Description
+ *  This function calculates the orientation of a net object.
+ *
+ *  \param [in] object   The net object
+ *  \return The orientation: HORIZONTAL, VERTICAL or NEITHER
+ */
 int o_net_orientation(OBJECT *object)
 {
     if (object->line->y[0] == object->line->y[1]) {
@@ -361,13 +400,19 @@ int o_net_orientation(OBJECT *object)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief merge two net object
  *  \par Function Description
+ *  This function does the actual work of making one net segment out of two
+ *  connected segments. The first net segment is extended to the lenght of 
+ *  both objects.
+ *  The second object (\a del_object) is the object that should be deleted.
+ *  
+ *  \param [in] object     A net object to extend
+ *  \param [in] del_object A net object to be merged into \a object
+ *  \param [in] orient     The orientation of both net objects
  *
- * this function does the actual work of making one net segment out of two
- * connected segments
- * The second object (del_object) is the object that should be deleted
+ *  \note The first net \a object gets the attributes of the second net 
+ *  \a del_object if the two nets are merged together.
  */
 void o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
 				int orient)
@@ -442,12 +487,16 @@ void o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Check if there's a midpoint connection at (x,y)
  *  \par Function Description
- *
- * check to see if this connection also causes a midpoint
- * if so, return false, else return true
+ *  This function checks if the \a object is connected to another net
+ *  between it's endpoints. Net segment's only can be merged if there
+ *  is no midpoint connection.
+ *  
+ *  \param object  a net OBJECT to check
+ *  \param x       x-coord of the connection location
+ *  \param y       y-coord of the connection location
+ *  \return TRUE if there's no midpoint connection, else return FALSE
  */
 int o_net_consolidate_nomidpoint(OBJECT *object, int x, int y)
 {
@@ -474,10 +523,14 @@ int o_net_consolidate_nomidpoint(OBJECT *object, int x, int y)
   return(TRUE);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief try to consolidate a net object
  *  \par Function Description
- *
+ *  This function tries to consolidate a net with any other object
+ *  that is connected to the current \a object.
+ *  
+ *  \param toplevel   The TOPLEVEL object
+ *  \param object     The object to consolidate
+ *  \return 0 if no consolidation was possible, -1 otherwise
  *
  */
 int o_net_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
@@ -555,10 +608,12 @@ int o_net_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
   return(0);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief consolidate all net objects
  *  \par Function Description
+ *  This function consolidates all net objects until no more consolidations
+ *  are posible.
  *
+ *  \param toplevel  The TOPLEVEL object
  *
  */
 void o_net_consolidate(TOPLEVEL *toplevel)
@@ -583,10 +638,17 @@ void o_net_consolidate(TOPLEVEL *toplevel)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief modify one point of a net object
  *  \par Function Description
- *
+ *  This function modifies one point of a net \a object. The point
+ *  is specified by the \a whichone variable and the new coordinate
+ *  is (\a x, \a y).
+ *  
+ *  \param toplevel   The TOPLEVEL object
+ *  \param object     The net OBJECT to modify
+ *  \param x          new x-coord of the net point
+ *  \param y          new y-coord of the net point
+ *  \param whichone   net point to modify
  *
  */
 void o_net_modify(TOPLEVEL *toplevel, OBJECT *object,

@@ -422,10 +422,13 @@ void s_tile_print(TOPLEVEL * toplevel)
 
 }
 
-/*! \brief free all tiles
+/*! \brief free all object links from the tiles
  *  \par Function Description
- *  This function frees all tiles from the given page.
- *  \param p_current The PAGE where the tiles are removed.
+ *  This function removes all objects from the tiles of the given \a page.
+ *
+ *  \param [in] p_current The PAGE to clean up the tiles
+ *  \note In theory, calling this function is not required. If all objects
+ *  have been removed from a page, all object lists of the tiles should be empty.
  */
 void s_tile_free_all(PAGE * p_current)
 {
