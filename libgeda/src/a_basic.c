@@ -17,6 +17,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/*! \file a_basic.c
+ *  \brief basic libgeda read and write functions
+ */
 #include <config.h>
 
 #include <stdio.h>
@@ -29,9 +33,6 @@
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
-
-/*! \brief Current version string */
-#define VERSION_20020825 20020825
 
 /*! \brief Get the file header string.
  *  \par Function Description
