@@ -46,9 +46,6 @@ void s_color_init(void)
     colors[i].color_name = NULL; 
     colors[i].outline_color_name = NULL; 
     colors[i].ps_color_string = NULL; 
-    colors[i].image_red = -1;
-    colors[i].image_green = -1;
-    colors[i].image_blue = -1;
     colors[i].gdk_color = NULL;
     colors[i].gdk_outline_color = NULL;
   }
@@ -63,8 +60,7 @@ void s_color_init(void)
 /* you are allowed to call this function with the same color index again and */
 /* and again, last call is the final color request */
 int s_color_request(int color_index, char *color_name,
-		    char *outline_color_name, char *ps_color_string, 
-		    int image_red, int image_green, int image_blue)
+		    char *outline_color_name, char *ps_color_string)
 {
 
 #if 0
@@ -95,10 +91,6 @@ int s_color_request(int color_index, char *color_name,
   } else {
     colors[color_index].ps_color_string = NULL;
   }
-
-  colors[color_index].image_red = image_red;
-  colors[color_index].image_green = image_green;
-  colors[color_index].image_blue = image_blue;
   return(0);
 }
 
@@ -115,9 +107,6 @@ void s_color_destroy_all(void)
     g_free(colors[i].color_name);
     g_free(colors[i].outline_color_name);
     g_free(colors[i].ps_color_string);
-    colors[i].image_red = -1;
-    colors[i].image_green = -1;
-    colors[i].image_blue = -1;
     /* free the colors */
   }
 }

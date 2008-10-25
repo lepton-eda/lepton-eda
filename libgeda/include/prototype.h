@@ -360,7 +360,7 @@ gchar *s_clib_symbol_get_data_by_name (const gchar *name);
 GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel);
 
 /* s_color.c */
-int s_color_request(int color_index, char *color_name, char *outline_color_name, char *ps_color_string, int image_red, int image_green, int image_blue);
+int s_color_request(int color_index, char *color_name, char *outline_color_name, char *ps_color_string);
 void s_color_destroy_all(void);
 
 /* s_conn.c */

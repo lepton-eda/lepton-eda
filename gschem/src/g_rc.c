@@ -102,17 +102,14 @@ SCM g_rc_gschem_version(SCM version)
  *
  */
 static SCM g_rc_color_general(SCM index, SCM color, SCM outline_color, 
-			      SCM ps_color, SCM ir, SCM ig, SCM ib,
-			      const char *rc_name, int *color_var)
+			      SCM ps_color, const char *rc_name,
+                              int *color_var)
 {
   int status;
   int color_index;
   char *color_name;
   char *outline_color_name;
   char *ps_color_string;
-  int image_red;
-  int image_green;
-  int image_blue;
   SCM ret;
 
   SCM_ASSERT (scm_is_integer (index),   index, SCM_ARG1, rc_name);
@@ -121,26 +118,18 @@ static SCM g_rc_color_general(SCM index, SCM color, SCM outline_color,
               outline_color, SCM_ARG3, rc_name);
   SCM_ASSERT (scm_is_string (ps_color), ps_color,
               SCM_ARG4, rc_name);
-  SCM_ASSERT (scm_is_integer (ir), ir, SCM_ARG5, rc_name);
-  SCM_ASSERT (scm_is_integer (ig), ig, SCM_ARG6, rc_name);
-  SCM_ASSERT (scm_is_integer (ib), ib, SCM_ARG7, rc_name);
 
   color_index        = scm_to_int (index);
   color_name         = SCM_STRING_CHARS (color);
   outline_color_name = SCM_STRING_CHARS (outline_color);
   ps_color_string    = SCM_STRING_CHARS (ps_color);
-  image_red          = scm_to_int (ir);
-  image_green        = scm_to_int (ig);
-  image_blue         = scm_to_int (ib);
   
   status = s_color_request (color_index, color_name, outline_color_name,
-                            ps_color_string, 
-                            image_red, image_green, image_blue);
+                            ps_color_string);
 
 #if DEBUG
-  printf("%d %s %s %s %d %d %d\n", color_index, color_name, 
-         outline_color_name, ps_color_string,
-         image_red, image_green, image_blue);
+  printf("%d %s %s %s\n", color_index, color_name, 
+         outline_color_name, ps_color_string);
 #endif
 
   /* invalid color? */
@@ -159,11 +148,10 @@ static SCM g_rc_color_general(SCM index, SCM color, SCM outline_color,
 }
 
 #define DEFINE_G_RC_COLOR(func, rc, var)                         \
-SCM func(SCM index, SCM color, SCM outline_color, SCM ps_color,  \
-         SCM ir, SCM ig, SCM ib)                                 \
+SCM func(SCM index, SCM color, SCM outline_color, SCM ps_color)  \
 {                                                                \
   return g_rc_color_general(index, color, outline_color,         \
-                            ps_color, ir, ig, ib, (rc), &(var)); \
+                            ps_color, (rc), &(var));             \
 }
 
 DEFINE_G_RC_COLOR(g_rc_override_net_color,
