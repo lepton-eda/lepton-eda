@@ -17,6 +17,10 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+/*! \file defines.h
+ *  \brief global libgeda definitions
+ */
+
 #ifndef _DEFINES_H_INCL
 #define _DEFINES_H_INCL
 

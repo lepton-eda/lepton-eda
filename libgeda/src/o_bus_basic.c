@@ -1,7 +1,3 @@
-/*! \todo No comments found in o_bus_basic.nw
- *        Finish file comments.
- */
-
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
  * Copyright (C) 1998-2007 Ales Hvezda
@@ -21,6 +17,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/*! \file o_bus_basic.c 
+ *  \brief functions for the bus object
+ */
+
 #include <config.h>
 #include <stdio.h>
 #include <math.h>
@@ -34,9 +35,16 @@
 /*! Default setting for bus draw function. */
 void (*bus_draw_func)() = NULL;
 
-/* \brief
- * \par Function Description
+/*! \brief calculate and return the boundaries of a bus object
+ *  \par Function Description
+ *  This function calculates the object boudaries of a bus \a object.
  *
+ *  \param [in]  toplevel  The TOPLEVEL object.
+ *  \param [in]  object    a bus object
+ *  \param [out] left      the left world coord
+ *  \param [out] top       the top world coord
+ *  \param [out] right     the right world coord
+ *  \param [out] bottom    the bottom world coord
  */
 void world_get_bus_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top,
 			  int *right, int *bottom)
@@ -44,9 +52,19 @@ void world_get_bus_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *to
   world_get_line_bounds( toplevel, object, left, top, right, bottom );
 }
 
-/* \brief
- * \par Function Description
- *
+/*! \brief create a new bus object
+ *  \par Function Description
+ *  This function creates and returns a new bus object.
+ *  
+ *  \param [in]     toplevel    The TOPLEVEL object.
+ *  \param [in]     type        The OBJECT type (usually OBJ_BUS)
+ *  \param [in]     color       The color of the bus
+ *  \param [in]     x1          x-coord of the first point
+ *  \param [in]     y1          y-coord of the first point
+ *  \param [in]     x2          x-coord of the second point
+ *  \param [in]     y2          y-coord of the second point
+ *  \param [in]  bus_ripper_direction direction of the bus rippers
+ *  \return A new bus OBJECT
  */
 OBJECT *o_bus_new(TOPLEVEL *toplevel,
 		  char type, int color,
@@ -83,9 +101,12 @@ OBJECT *o_bus_new(TOPLEVEL *toplevel,
   return new_node;
 }
 
-/* \brief
- * \par Function Description
- *
+/*! \brief recalc the visual properties of a bus object
+ *  \par Function Description
+ *  This function updates the visual coords of the \a o_current object.
+ *  
+ *  \param [in]     toplevel    The TOPLEVEL object.
+ *  \param [in]     o_current   a bus object.
  */
 void o_bus_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 {
@@ -108,9 +129,18 @@ void o_bus_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
   o_current->w_bounds_valid = TRUE;
 }
 
-/* \brief
- * \par Function Description
- *
+/*! \brief read a bus object from a char buffer
+ *  \par Function Description
+ *  This function reads a bus object from the buffer \a buf.
+ *  If the bus object was read successfully, a new bus object is
+ *  allocated and appended to the \a object_list.
+ *  
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] object_list  list of OBJECTS to append a new bus
+ *  \param [in] buf          a text buffer (usually a line of a schematic file)
+ *  \param [in] release_ver  The release number gEDA
+ *  \param [in] fileformat_ver a integer value of the file format
+ *  \return The object list
  */
 OBJECT *o_bus_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 		   unsigned int release_ver, unsigned int fileformat_ver)
@@ -166,9 +196,13 @@ OBJECT *o_bus_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   return(object_list);
 }
 
-/* \brief
- * \par Function Description
+/*! \brief Create a string representation of the bus object
+ *  \par Function Description
+ *  This function takes a bus \a object and return a string
+ *  according to the file format definition.
  *
+ *  \param [in] object  a bus OBJECT
+ *  \return the string representation of the bus OBJECT
  */
 char *o_bus_save(OBJECT *object)
 {
@@ -193,9 +227,14 @@ char *o_bus_save(OBJECT *object)
   return(buf);
 }
        
-/* \brief
- * \par Function Description
+/*! \brief move a bus object
+ *  \par Function Description
+ *  This function changes the position of a bus \a object.
  *
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] dx           The x-distance to move the object
+ *  \param [in] dy           The y-distance to move the object
+ *  \param [in] object       The bus OBJECT to be moved
  */
 void o_bus_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
 {
@@ -214,9 +253,13 @@ void o_bus_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
   s_tile_update_object(toplevel, object);
 }
 
-/* \brief
- * \par Function Description
+/*! \brief create a copy of a bus object
+ *  \par Function Description
+ *  This function creates a copy of the bus object \a o_current.
  *
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] o_current    The object that is copied
+ *  \return a new bus object
  */
 OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
@@ -246,11 +289,17 @@ OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   return new_obj;
 }
 
-/* \brief
- * \par Function Description
- *
+/*! \brief postscript print command for a bus object
+ *  \par Function Description
+ *  This function writes the postscript command of the bus object \a o_current
+ *  into the FILE \a fp points to.
+ *  
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] fp           pointer to a FILE structure
+ *  \param [in] o_current    The OBJECT to print
+ *  \param [in] origin_x     x-coord of the postscript origin
+ *  \param [in] origin_y     y-coord of the postscript origin
  */
-/* need to make this bus specific */
 void o_bus_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 		 int origin_x, int origin_y)
 {
@@ -289,9 +338,17 @@ void o_bus_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 }
 
 
-/* \brief
- * \par Function Description
- *
+/*! \brief rotate a bus object around a centerpoint
+ *  \par Function Description
+ *  This function rotates a bus \a object around the point
+ *  (\a world_centerx, \a world_centery).
+ *  
+ *  \param [in] toplevel      The TOPLEVEL object
+ *  \param [in] world_centerx x-coord of the rotation center
+ *  \param [in] world_centery y-coord of the rotation center
+ *  \param [in] angle         The angle to rotat the bus object
+ *  \param [in] object        The bus object
+ *  \note only steps of 90 degrees are allowed for the \a angle
  */
 void o_bus_rotate_world(TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, int angle,
@@ -320,9 +377,15 @@ void o_bus_rotate_world(TOPLEVEL *toplevel,
   o_bus_translate_world(toplevel, world_centerx, world_centery, object);
 }
 
-/* \brief
- * \par Function Description
- *
+/*! \brief mirror a bus object horizontaly at a centerpoint
+ *  \par Function Description
+ *  This function mirrors a bus \a object horizontaly at the point
+ *  (\a world_centerx, \a world_centery).
+ *  
+ *  \param [in] toplevel      The TOPLEVEL object
+ *  \param [in] world_centerx x-coord of the mirror position
+ *  \param [in] world_centery y-coord of the mirror position
+ *  \param [in] object        The bus object
  */
 void o_bus_mirror_world(TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, OBJECT *object)
@@ -337,9 +400,12 @@ void o_bus_mirror_world(TOPLEVEL *toplevel,
   o_bus_translate_world(toplevel, world_centerx, world_centery, object);
 }
 
-/* \brief
- * \par Function Description
+/*! \brief calculate the orientation of a bus object
+ *  \par Function Description
+ *  This function calculates the orientation of a bus object.
  *
+ *  \param [in] object   The bus object
+ *  \return The orientation: HORIZONTAL, VERTICAL or NEITHER
  */
 int o_bus_orientation(OBJECT *object)
 {
@@ -357,12 +423,12 @@ int o_bus_orientation(OBJECT *object)
 
 /* \brief
  * \par Function Description
+ * This function does the actual work of making one bus segment out of two
+ * connected segments.
+ * The second object (del_object) is the object that should be deleted.
  *
+ * \todo This function is currently not used. Check it before using it
  */
-/* this function does the actual work of making one net segment out of two */
-/* connected segments */
-/* The second object (del_object) is the object that should be deleted */
-/* needs to be bus specific */
 void o_bus_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
 				int orient) 
 {
@@ -444,8 +510,8 @@ void o_bus_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
 /* \brief
  * \par Function Description
  *
+ * \todo Not Implemented Yet
  */
-/* needs to be bus specific */
 int o_bus_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
 {
 
@@ -455,15 +521,24 @@ int o_bus_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
 /* \brief
  * \par Function Description
  *
+ * \todo Not Implemented Yet 
  */
 void o_bus_consolidate(TOPLEVEL *toplevel)
 {
 
 }
 
-/* \brief
- * \par Function Description
- *
+/*! \brief modify one point of a bus object
+ *  \par Function Description
+ *  This function modifies one point of a bus \a object. The point
+ *  is specified by the \a whichone variable and the new coordinate
+ *  is (\a x, \a y).
+ *  
+ *  \param toplevel   The TOPLEVEL object
+ *  \param object     The bus OBJECT to modify
+ *  \param x          new x-coord of the bus point
+ *  \param y          new y-coord of the bus point
+ *  \param whichone   bus point to modify
  */
 void o_bus_modify(TOPLEVEL *toplevel, OBJECT *object,
 		  int x, int y, int whichone)

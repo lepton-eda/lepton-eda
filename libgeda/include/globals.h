@@ -17,6 +17,10 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+/*! \file globals.h
+ *  \brief global libgeda variables
+ */
+
 #ifndef _GLOBALS_H_INCL
 #define _GLOBALS_H_INCL
 

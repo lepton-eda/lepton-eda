@@ -17,6 +17,10 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+/*! \file colors.h
+ *  \brief define some constants for the colors
+ */
+
 #ifndef _COLORS_H_INCL
 #define _COLORS_H_INCL
 
