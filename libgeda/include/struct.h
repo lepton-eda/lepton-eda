@@ -650,7 +650,6 @@ struct st_color {
 
   GdkColor *gdk_color;
   GdkColor *gdk_outline_color;
-  int image_color;
 };
 
 

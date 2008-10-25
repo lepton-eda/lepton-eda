@@ -51,7 +51,6 @@ void s_color_init(void)
     colors[i].image_blue = -1;
     colors[i].gdk_color = NULL;
     colors[i].gdk_outline_color = NULL;
-    colors[i].image_color = 0;
   }
 
 }
@@ -119,7 +118,6 @@ void s_color_destroy_all(void)
     colors[i].image_red = -1;
     colors[i].image_green = -1;
     colors[i].image_blue = -1;
-    colors[i].image_color = 0;
     /* free the colors */
   }
 }
@@ -136,42 +134,4 @@ char *s_color_ps_string(int color)
   } else {
     return(NULL);
   }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-int s_color_image_int(int color)
-{
-  if (colors[color].image_color != -1) {
-    return(colors[color].image_color);
-  } else {
-    return(0);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-int s_color_get_name(int index, char *string)
-{
-  if (index > MAX_COLORS) {
-    return(FALSE);
-  }
-
-  /* only if these two variables are not null is the color settable */
-  if (colors[index].color_name && colors[index].outline_color_name) {
-    if (string) {
-      strcpy(string, colors[index].color_name);
-    }
-    return(TRUE);
-  }
-
-  string[0] = '\0';
-  /* didn't find a color, but there still might be more */
-  return(-1);
 }

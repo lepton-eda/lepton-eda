@@ -362,8 +362,6 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel);
 /* s_color.c */
 int s_color_request(int color_index, char *color_name, char *outline_color_name, char *ps_color_string, int image_red, int image_green, int image_blue);
 void s_color_destroy_all(void);
-int s_color_image_int(int color);
-int s_color_get_name(int index, char *string);
 
 /* s_conn.c */
 CONN *s_conn_return_new(OBJECT *other_object, int type, int x, int y, int whichone, int other_whichone);
