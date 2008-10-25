@@ -28,13 +28,23 @@
 #include <dmalloc.h>
 #endif
 
+/*! \file o_pin_basic.c
+ *  \brief functions for the pin object
+ */
+
 /*! Default setting for pin draw function. */
 void (*pin_draw_func)() = NULL;
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief calculate and return the boundaries of a pin object
  *  \par Function Description
+ *  This function calculates the object boudaries of a pin \a object.
  *
+ *  \param [in]  toplevel  The TOPLEVEL object.
+ *  \param [in]  object    a pin object
+ *  \param [out] left      the left world coord
+ *  \param [out] top       the top world coord
+ *  \param [out] right     the right world coord
+ *  \param [out] bottom    the bottom world coord
  */
 void world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top,
 			  int *right, int *bottom)
@@ -42,10 +52,20 @@ void world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *to
   world_get_line_bounds( toplevel, object, left, top, right, bottom );
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief create a new pin object
  *  \par Function Description
- *
+ *  This function creates and returns a new pin object.
+ *  
+ *  \param [in]     toplevel    The TOPLEVEL object.
+ *  \param [in]     type        The OBJECT type (usually OBJ_PIN)
+ *  \param [in]     color       The color of the pin
+ *  \param [in]     x1          x-coord of the first point
+ *  \param [in]     y1          y-coord of the first point
+ *  \param [in]     x2          x-coord of the second point
+ *  \param [in]     y2          y-coord of the second point
+ *  \param [in]     pin_type    type of pin (PIN_TYPE_NET or PIN_TYPE_BUS)
+ *  \param [in]     whichend    The connectable end of the pin
+ *  \return A new pin OBJECT
  */
 OBJECT *o_pin_new(TOPLEVEL *toplevel,
 		  char type, int color,
@@ -80,9 +100,12 @@ OBJECT *o_pin_new(TOPLEVEL *toplevel,
   return new_node;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief recalc the visual properties of a pin object
  *  \par Function Description
+ *  This function updates the visual coords of the \a o_current object.
+ *  
+ *  \param [in]     toplevel    The TOPLEVEL object.
+ *  \param [in]     o_current   a pin object.
  *
  */
 void o_pin_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
@@ -102,10 +125,18 @@ void o_pin_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
   o_current->w_bounds_valid = TRUE;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief read a pin object from a char buffer
  *  \par Function Description
- *
+ *  This function reads a pin object from the buffer \a buf.
+ *  If the pin object was read successfully, a new pin object is
+ *  allocated and appended to the \a object_list.
+ *  
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] object_list  list of OBJECTS to append a new pin
+ *  \param [in] buf          a text buffer (usually a line of a schematic file)
+ *  \param [in] release_ver  The release number gEDA
+ *  \param [in] fileformat_ver a integer value of the file format
+ *  \return The object list
  */
 OBJECT *o_pin_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 		   unsigned int release_ver, unsigned int fileformat_ver)
@@ -165,10 +196,13 @@ OBJECT *o_pin_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   return(object_list);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Create a string representation of the pin object
  *  \par Function Description
+ *  This function takes a pin \a object and return a string
+ *  according to the file format definition.
  *
+ *  \param [in] object  a pin OBJECT
+ *  \return the string representation of the pin OBJECT
  */
 char *o_pin_save(OBJECT *object)
 {
@@ -197,10 +231,14 @@ char *o_pin_save(OBJECT *object)
   return(buf);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief move a pin object
  *  \par Function Description
+ *  This function changes the position of a pin \a object.
  *
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] dx           The x-distance to move the object
+ *  \param [in] dy           The y-distance to move the object
+ *  \param [in] object       The pin OBJECT to be moved
  */
 void o_pin_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
 {
@@ -219,10 +257,13 @@ void o_pin_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
   s_tile_update_object(toplevel, object);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief create a copy of a pin object
  *  \par Function Description
+ *  This function creates a copy of the pin object \a o_current.
  *
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] o_current    The object that is copied
+ *  \return a new pin object
  */
 OBJECT *o_pin_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
@@ -250,10 +291,16 @@ OBJECT *o_pin_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   return new_obj;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief postscript print command for a pin object
  *  \par Function Description
- *
+ *  This function writes the postscript command of the pin object \a o_current
+ *  into the FILE \a fp points to.
+ *  
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] fp           pointer to a FILE structure
+ *  \param [in] o_current    The OBJECT to print
+ *  \param [in] origin_x     x-coord of the postscript origin
+ *  \param [in] origin_y     y-coord of the postscript origin
  */
 void o_pin_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 		 int origin_x, int origin_y)
@@ -284,10 +331,17 @@ void o_pin_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief rotate a pin object around a centerpoint
  *  \par Function Description
- *
+ *  This function rotates a pin \a object around the point
+ *  (\a world_centerx, \a world_centery).
+ *  
+ *  \param [in] toplevel      The TOPLEVEL object
+ *  \param [in] world_centerx x-coord of the rotation center
+ *  \param [in] world_centery y-coord of the rotation center
+ *  \param [in] angle         The angle to rotat the pin object
+ *  \param [in] object        The pin object
+ *  \note only steps of 90 degrees are allowed for the \a angle
  */
 void o_pin_rotate_world(TOPLEVEL *toplevel, int world_centerx,
 			int world_centery, int angle,
@@ -296,7 +350,7 @@ void o_pin_rotate_world(TOPLEVEL *toplevel, int world_centerx,
   int newx, newy;
 	
   if (angle == 0)
-  return;
+    return;
 
   /* translate object to origin */
   o_pin_translate_world(toplevel, -world_centerx, -world_centery, object);
@@ -316,10 +370,15 @@ void o_pin_rotate_world(TOPLEVEL *toplevel, int world_centerx,
   o_pin_translate_world(toplevel, world_centerx, world_centery, object);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief mirror a pin object horizontaly at a centerpoint
  *  \par Function Description
- *
+ *  This function mirrors a pin \a object horizontaly at the point
+ *  (\a world_centerx, \a world_centery).
+ *  
+ *  \param [in] toplevel      The TOPLEVEL object
+ *  \param [in] world_centerx x-coord of the mirror position
+ *  \param [in] world_centery y-coord of the mirror position
+ *  \param [in] object        The pin object
  */
 void o_pin_mirror_world(TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, OBJECT *object)
@@ -334,9 +393,17 @@ void o_pin_mirror_world(TOPLEVEL *toplevel,
   o_pin_translate_world(toplevel, world_centerx, world_centery, object);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief modify one point of a pin object
  *  \par Function Description
+ *  This function modifies one point of a pin \a object. The point
+ *  is specified by the \a whichone variable and the new coordinate
+ *  is (\a x, \a y).
+ *  
+ *  \param toplevel   The TOPLEVEL object
+ *  \param object     The pin OBJECT to modify
+ *  \param x          new x-coord of the pin point
+ *  \param y          new y-coord of the pin point
+ *  \param whichone   pin point to modify
  *
  */
 void o_pin_modify(TOPLEVEL *toplevel, OBJECT *object,
@@ -350,9 +417,18 @@ void o_pin_modify(TOPLEVEL *toplevel, OBJECT *object,
   s_tile_update_object(toplevel, object);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief guess the whichend of pins of object list
  *  \par Function Description
+ *  This function determines the whichend of the pins in the \a object_list.
+ *  In older libgeda file format versions there was no information about the 
+ *  active end of pins.
+ *  This function calculates the bounding box of all pins in the object list.
+ *  The side of the pins that are closer to the boundary of the box are
+ *  set as active ends of the pins.
+ *  
+ *  \param toplevel    The TOPLEVEL object
+ *  \param object_list list of OBJECTs
+ *  \param num_pins    pin count in the object list
  *
  */
 void o_pin_update_whichend(TOPLEVEL *toplevel,

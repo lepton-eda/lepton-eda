@@ -28,6 +28,10 @@
 #include <dmalloc.h>
 #endif
 
+/*! \file o_net_basic.c 
+ *  \brief functions for the net object
+ */
+
 /*! Default setting for net draw function. */
 void (*net_draw_func)() = NULL;
 
