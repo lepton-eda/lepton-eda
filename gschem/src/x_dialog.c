@@ -71,11 +71,6 @@ struct fill_type_data {
   GList *objects;
 };
 
-struct color_set_data_st {
-  GSCHEM_TOPLEVEL *w_current;
-  int index;
-};
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -401,7 +396,7 @@ static GtkWidget *create_menu_alignment (GSCHEM_TOPLEVEL *w_current)
 }
 
 /* we reuse the color menu so we need to declare it */
-static GtkWidget *create_color_menu(GSCHEM_TOPLEVEL * w_current, int * select_index);
+static GtkWidget *create_color_menu(GSCHEM_TOPLEVEL * w_current);
 
 /*! \brief Apply the settings from the text property dialog
  *  \par Function Description
@@ -498,7 +493,6 @@ void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_
   GtkTextBuffer *textbuffer;
   char *text_size_string;
   int num_selected=0;
-  int select_index=0;
 
   if (!w_current->tewindow) {
     w_current->tewindow = gschem_dialog_new_with_buttons(_("Edit Text Properties"),
@@ -586,10 +580,7 @@ void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_
     gtk_misc_set_alignment(GTK_MISC(label),0,0);
     gtk_table_attach(GTK_TABLE(table), label, 0,1,0,1, GTK_FILL,0,0,0);
 
-    optionmenu = gtk_option_menu_new();
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
-                             create_color_menu(w_current, &select_index));
-    gtk_option_menu_set_history(GTK_OPTION_MENU(optionmenu), select_index);
+    optionmenu = create_color_menu (w_current);
     gtk_table_attach_defaults(GTK_TABLE(table), optionmenu, 1,2,0,1);
 
     label = gtk_label_new(_("Size:"));
@@ -2143,19 +2134,6 @@ void coord_dialog (GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  \brief
  *  \par Function Description
  *
- */
-gint color_set(GtkWidget *w, gpointer data)
-{
-  struct color_set_data_st *color_set_data = (struct color_set_data_st *)data;
-
-  color_set_data->w_current->edit_color = color_set_data->index;
-  return(0);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
  *  \warning
  *  Caller must g_free returned character string.
  *
@@ -2225,83 +2203,125 @@ char *index2functionstring(int index)
   return(string);
 }
 
-/*! \brief Create a OptionMenu with the gschem colors.
+/*! \brief Cell layout data function for color combobox.
  *  \par Function Description
- *  This Function creates a GtkOptionMenu with the color list.
- *  It selects the color of the first selected object.
+ *  Cell layout data function to support color swatches in the color
+ *  combobox.
+ *
+ *  \param data the current #GSCHEM_TOPLEVEL pointer.
  */
-static GtkWidget *create_color_menu (GSCHEM_TOPLEVEL * w_current, int * select_index)
+static void
+color_menu_swatch_layout_data (GtkCellLayout *layout,
+                               GtkCellRenderer *cell,
+                               GtkTreeModel *model,
+                               GtkTreeIter *iter,
+                               gpointer data)
 {
-  GtkWidget *menu;
-  GtkWidget *menuitem;
-  GSList *group;
-  int index=0;
-  char *buf;
-  char *menu_string;
-  char *temp=NULL;
-  struct color_set_data_st *color_set_data;
+  /* GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) data; */
+  GValue v = {0, };
+  gint idx;
 
-  /* first lets see if we have a selected object, if so select its color */
-  int select_col = -1;
-  int item_index = 0;
-  OBJECT *object = NULL;
+  /* Get the index of the color on this row */
+  gtk_tree_model_get_value (model, iter, 1, &v);
+  idx = g_value_get_int (&v);
 
-  menu = gtk_menu_new ();
-  group = NULL;
+  /* Set the cell's background color */
+  g_object_set (cell, "background-gdk", x_get_color (idx), NULL);
+}
 
-  if ((object = o_select_return_first_object (w_current)) != NULL) {
-    select_col = object->saved_color;
-  }else /*fprintf(stderr, "no object selected\n")*/;
+/*! \brief Handle color combobox selection change event.
+ *  \par Function Description
+ *  Update application state to reflect color combobox selection
+ *  changes.
+ *
+ *  \param data the current #GSCHEM_TOPLEVEL pointer.
+ */
+static void
+color_menu_change_selection (GtkWidget *widget,
+                             gpointer data)
+{
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) data;
+  GtkComboBox *cbox = GTK_COMBO_BOX (widget);
+  gint idx;
+  GtkTreeIter iter;
+  GValue v = {0, };
 
-  for (index=0; index < MAX_COLORS;index++) {
-
-    if ((buf=x_color_get_name(index)) != NULL) {
-      temp = index2functionstring(index);
-      menu_string = g_strdup_printf("%d | %s | %s", index, temp, buf);
-      g_free(temp);
-      temp = NULL;
-      g_free(buf);
-      buf = NULL;
-      menuitem = gtk_radio_menu_item_new_with_label (group,
-                                                     menu_string);
-      g_free(menu_string);
-      menu_string = NULL;
-
-      group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(
-                                                            menuitem));
-
-      gtk_menu_append (GTK_MENU (menu), menuitem);
-
-      color_set_data = g_new0 (struct color_set_data_st, 1);
-      color_set_data->w_current = w_current;
-      color_set_data->index = index;
-
-      g_signal_connect_data (GTK_OBJECT (menuitem),
-                             "activate",
-                             G_CALLBACK (color_set),
-                             color_set_data,
-                             (GClosureNotify) g_free,
-                             0 /* GConnectFlags */);
-
-      if (select_col == -1){
-        /* set the default to the current color */
-        if (index == w_current->edit_color) {
-          gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
-          /*fprintf(stderr, "checking item %d\n", index); */
-          *select_index = item_index;
-        }
-      }else{
-        if (index == select_col){
-          gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
-          /* fprintf(stderr, "checking selected item %d\n", index); */
-          *select_index = item_index;
-        }
-      }
-      gtk_widget_show(menuitem);
-      item_index++;
-    }
+  if (!gtk_combo_box_get_active_iter (cbox, &iter)) {
+    return; /* No color selected */
   }
-  return menu;
+  gtk_tree_model_get_value (gtk_combo_box_get_model (cbox),
+                            &iter, 1, &v);
+  idx = g_value_get_int (&v);
+
+  /* Stash the selected color in the GSCHEM_TOPLEVEL.
+   * FIXME this is ugly. */
+  w_current->edit_color = idx;
+}
+
+/*! \brief Create a ComboBox with the gschem colors.
+ *  \par Function Description
+ *  Creates a #GtkComboBox with the color list and swatches showing
+ *  each of the available colors.
+ *
+ *  The backing #GtkTreeModel is a #GtkListStore with two columns, the
+ *  first holding the user-friendly name of the color, and the other
+ *  the color map index.
+ *
+ *  \param [in] w_current    The current gschem context.
+ */
+static GtkWidget *
+create_color_menu (GSCHEM_TOPLEVEL *w_current)
+{
+  GtkListStore *store;
+  GtkComboBox *cbox;
+  GtkCellLayout *layout;
+  GtkCellRenderer *text_cell;
+  GtkCellRenderer *color_cell;
+
+  gint i;
+  gchar *str;
+  GtkTreeIter iter;
+
+  /* The columns are: name of color, index of color. */
+  store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+  cbox = GTK_COMBO_BOX (gtk_combo_box_new_with_model (GTK_TREE_MODEL (store)));
+  layout = GTK_CELL_LAYOUT (cbox); /* For convenience */
+
+  /* Renders the name of the color */
+  text_cell = GTK_CELL_RENDERER (gtk_cell_renderer_text_new());
+  gtk_cell_layout_pack_start (layout, text_cell, TRUE);
+  gtk_cell_layout_add_attribute (layout, text_cell, "text", 0);
+
+  /* Renders the color swatch. Since this won't contain text, set a
+   * minimum width. */
+  color_cell = GTK_CELL_RENDERER (gtk_cell_renderer_text_new());
+  g_object_set (color_cell, "width", 25, NULL);
+  gtk_cell_layout_pack_start (layout, color_cell, FALSE);
+  gtk_cell_layout_set_cell_data_func (layout, color_cell,
+                                      color_menu_swatch_layout_data,
+                                      (gpointer) w_current,
+                                      NULL);
+
+  /* Populate the list */
+  for (i = 0; i < MAX_COLORS; i++) {
+    /* Skip 'invalid' colors. FIXME this is ugly. */
+    gchar *buf = x_color_get_name(i);
+    if (buf == NULL) continue;
+    g_free (buf);
+
+    str = index2functionstring (i);
+    gtk_list_store_append (store, &iter);
+    gtk_list_store_set (store, &iter, 0, str, 1, i, -1);
+    if (i == w_current->edit_color)
+      gtk_combo_box_set_active_iter (cbox, &iter);
+  }
+
+  g_signal_connect (cbox,
+                    "changed",
+                    GTK_SIGNAL_FUNC (color_menu_change_selection),
+                    w_current);
+
+  return GTK_WIDGET (cbox);
 }
 
 /*! \brief Apply a color change to selected objects
@@ -2379,7 +2399,6 @@ void color_edit_dialog (GSCHEM_TOPLEVEL *w_current)
   GtkWidget *optionmenu;
   GtkWidget *label;
   GtkWidget *vbox;
-  int select_index = 0;
 
   if (!w_current->clwindow) {
     w_current->clwindow = gschem_dialog_new_with_buttons(_("Color Edit"),
@@ -2417,10 +2436,7 @@ void color_edit_dialog (GSCHEM_TOPLEVEL *w_current)
     gtk_misc_set_alignment(GTK_MISC(label),0,0);
     gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
-    optionmenu = gtk_option_menu_new ();
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
-                             create_color_menu (w_current, &select_index));
-    gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), select_index);
+    optionmenu = create_color_menu (w_current);
     gtk_box_pack_start(GTK_BOX(vbox),
                        optionmenu, FALSE, FALSE, 0);
     gtk_widget_show_all(w_current->clwindow);
