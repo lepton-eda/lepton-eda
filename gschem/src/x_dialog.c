@@ -2196,6 +2196,7 @@ char *index2functionstring(int index)
       break;
     case(JUNCTION_COLOR):
       string = g_strdup (_("Net junction"));
+      break;
     default:
       string = g_strdup (_("Unknown"));
       break;
