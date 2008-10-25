@@ -708,7 +708,7 @@
 			      (get-point-of-bound "min-y" new-attrib-bounds))))
 		      )
 		(set-attribute-text-properties! attribute
-						"" ; keep previous color
+						-1 ; keep previous color
 						-1 ; keep previous size
 						new-alignment
 						new-angle

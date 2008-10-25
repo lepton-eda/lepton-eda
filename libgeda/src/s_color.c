@@ -175,28 +175,3 @@ int s_color_get_name(int index, char *string)
   /* didn't find a color, but there still might be more */
   return(-1);
 }
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \return The index of the given color name, -1 if index was not found.
- */
-int s_color_get_index(char *string)
-{
-  int index;
-
-  if (string == NULL) {
-    return(-1);
-  }
-
-  for (index = 0; index < MAX_COLORS; index++) {
-    if (strcasecmp(string, colors[index].color_name) == 0) {
-      return (index); 
-    }
-  }
-
-  /* If the color was not found, return -1 */
-  return (-1);
-
-}

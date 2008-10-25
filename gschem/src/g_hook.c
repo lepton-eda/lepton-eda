@@ -247,7 +247,7 @@ SCM g_get_pin_ends(SCM object)
  */
 /*
  * Sets several text properties of the given <B>attribute smob</B>:
-  - <B>colorname</B>: The colorname of the text, or "" to keep previous color.
+  - <B>coloridx</B>: The index of the text color, or -1 to keep previous color.
   - <B>size</B>: Size (numeric) of the text, or -1 to keep the previous size.
   - <B>alignment</B>: String with the alignment of the text. Possible values are:
     * ""           : Keep the previous alignment.
@@ -263,7 +263,7 @@ SCM g_get_pin_ends(SCM object)
   - <B>rotation</B>: Angle of the text, or -1 to keep previous angle.
   - <B>x</B>, <B>y</B>: Coords of the text.
  */
-SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
+SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_coloridx,
 				 SCM scm_size, SCM scm_alignment,
 				 SCM scm_rotation, SCM scm_x, SCM scm_y)
 {
@@ -273,15 +273,14 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
   GSCHEM_TOPLEVEL *w_current = global_window_current;
   TOPLEVEL *toplevel = w_current->toplevel;
 
-  char *colorname=NULL;
-  int color=0;
+  int color = -1;
   int size = -1;
   char *alignment_string;
   int alignment = -2;
   int rotation = 0;
   int x = -1, y = -1;
 
-  SCM_ASSERT (scm_is_string(scm_colorname), scm_colorname,
+  SCM_ASSERT (scm_is_integer(scm_coloridx), scm_coloridx,
 	      SCM_ARG2, "set-attribute-text-properties!");
   SCM_ASSERT ( scm_is_integer(scm_size),
                scm_size, SCM_ARG3, "set-attribute-text-properties!");
@@ -294,16 +293,11 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname,
   SCM_ASSERT ( scm_is_integer(scm_y),
                scm_y, SCM_ARG7, "set-attribute-text-properties!");
 
-  colorname = SCM_STRING_CHARS(scm_colorname);
+  color = scm_to_int(scm_coloridx);
 
-  if (colorname && strlen(colorname) != 0) {
-    SCM_ASSERT ( (color = s_color_get_index(colorname)) != -1,
-		 scm_colorname, SCM_ARG2, "set-attribute-text-properties!");
-  }
-  else {
-    color = -1;
-  }
-  
+  SCM_ASSERT ((color < -1 || color >= MAX_COLORS),
+              scm_coloridx, SCM_ARG2, "set-attribute-text-properties!");
+
   size = scm_to_int(scm_size);
   rotation = scm_to_int(scm_rotation);
   x = scm_to_int(scm_x);
