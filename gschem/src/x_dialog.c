@@ -2166,58 +2166,60 @@ char *index2functionstring(int index)
 
   switch(index) {
     case(BACKGROUND_COLOR):
-      string = g_strdup ("background");
+      string = g_strdup (_("Background"));
       break;
     case(PIN_COLOR):
-      string = g_strdup ("pin");
+      string = g_strdup (_("Pin"));
       break;
     case(NET_ENDPOINT_COLOR):
-      string = g_strdup ("net endpoint");
+      string = g_strdup (_("Net endpoint"));
       break;
     case(GRAPHIC_COLOR):
-      string = g_strdup ("graphic");
+      string = g_strdup (_("Graphic"));
       break;
     case(NET_COLOR):
-      string = g_strdup ("net");
+      string = g_strdup (_("Net"));
       break;
     case(ATTRIBUTE_COLOR):
-      string = g_strdup ("attribute");
+      string = g_strdup (_("Attribute"));
       break;
     case(LOGIC_BUBBLE_COLOR):
-      string = g_strdup ("logic bubble");
+      string = g_strdup (_("Logic bubble"));
       break;
     case(GRID_COLOR):
-      string = g_strdup ("grid point");
+      string = g_strdup (_("Grid point"));
       break;
     case(DETACHED_ATTRIBUTE_COLOR):
-      string = g_strdup ("detached attribute");
+      string = g_strdup (_("Detached attribute"));
       break;
     case(TEXT_COLOR):
-      string = g_strdup ("text");
+      string = g_strdup (_("Text"));
       break;
     case(BUS_COLOR):
-      string = g_strdup ("bus");
+      string = g_strdup (_("Bus"));
       break;
     case(SELECT_COLOR):
-      string = g_strdup ("select");
+      string = g_strdup (_("Selection"));
       break;
     case(BOUNDINGBOX_COLOR):
-      string = g_strdup ("bounding box");
+      string = g_strdup (_("Bounding box"));
       break;
     case(ZOOM_BOX_COLOR):
-      string = g_strdup ("zoom box");
+      string = g_strdup (_("Zoom box"));
       break;
     case(STROKE_COLOR):
-      string = g_strdup ("stroke");
+      string = g_strdup (_("Stroke"));
       break;
     case(LOCK_COLOR):
-      string = g_strdup ("lock");
+      string = g_strdup (_("Lock"));
       break;
     case(OUTPUT_BACKGROUND_COLOR):
-      string = g_strdup ("output background");
+      string = g_strdup (_("Output background"));
       break;
+    case(JUNCTION_COLOR):
+      string = g_strdup (_("Net junction"));
     default:
-      string = g_strdup ("unknown");
+      string = g_strdup (_("Unknown"));
       break;
   }
   return(string);
