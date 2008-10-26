@@ -1302,11 +1302,12 @@ void o_box_print_hatch(TOPLEVEL *toplevel, FILE *fp,
 		       int angle2, int pitch2,
 		       int origin_x, int origin_y)
 {
-  int x3, y3, x4, y4;
-  double cos_a_, sin_a_;
-  double x0, y0, r;
-  double x1, y1, x2, y2;
-  double amin, amax, a[4], min1, min2, max1, max2;
+  BOX box;
+  gint index;
+  GArray *lines;
+
+  g_return_if_fail(toplevel != NULL);
+  g_return_if_fail(fp != NULL);
 
   if (toplevel->print_color) {
     f_print_set_color(fp, color);
@@ -1315,114 +1316,25 @@ void o_box_print_hatch(TOPLEVEL *toplevel, FILE *fp,
   /* Avoid printing line widths too small */
   if (fill_width <= 1) fill_width = 2;
 
-  /* The cosinus and sinus of <B>angle1</B> are computed once and reused later. */
-  cos_a_ = cos(((double) angle1) * M_PI/180);
-  sin_a_ = sin(((double) angle1) * M_PI/180);
+  lines = g_array_new(FALSE, FALSE, sizeof(LINE));
 
-  /*! \note
-   *  The function considers the smallest circle around the box. Its radius
-   *  is given by the following relation. Its center is given by the point
-   *  at the middle of the box horizontally and vertically (intersection of
-   *  its two diagonals).
-   */
-  r = sqrt((double) (pow(width, 2) + pow(height, 2))) / 2;
+  box.upper_x = x;
+  box.upper_y = y;
+  box.lower_x = x + width;
+  box.lower_y = y - height;    /* Hmmm... */
 
-  /*
-   *  When drawing a line in a circle there is two intersections. With the
-   *  previously described circle, these intersections are out of the box.
-   *  They can be easily calculated, the first by resolution of an equation
-   *  and the second one by symetry in relation to the vertical axis going
-   *  through the center of the circle.
-   *
-   *  These two points are then rotated of angle <B>angle1</B> using the matrix
-   *  previously mentioned.
-   */
-  y0 = 0;
-  while(y0 < r) {
-    x0 = pow(r, 2) - pow(y0, 2);
-    x0 = sqrt(x0);
+  m_hatch_box(&box, angle1, pitch1, lines);
 
-    x1 = (x0*cos_a_ - y0*sin_a_);
-    y1 = (x0*sin_a_ + y0*cos_a_);
-    x2 = ((-x0)*cos_a_ - y0*sin_a_);
-    y2 = ((-x0)*sin_a_ + y0*cos_a_);
-  
-    /*
-     * It now parametrizes the segment : first intersection is given the
-     * value of 0 and the second is given the value of 1. The four values for
-     * each intersection of the segment and the four sides (vertical or
-     * horizontal) of the box are given by the following relations :
-     */                                                             
-    if((int) (x2 - x1) != 0) {
-      a[0] = ((-width/2) - x1) / (x2 - x1);
-      a[1] = ((width/2)  - x1) / (x2 - x1);
-    } else {
-      a[0] = 0; a[1] = 1;
-    }
-    
-    if((int) (y2 - y1) != 0) {
-      a[2] = ((-height/2) - y1) / (y2 - y1);
-      a[3] = ((height/2)  - y1) / (y2 - y1);
-    } else {
-      a[2] = 0; a[3] = 1;
-    }
+  for(index=0; index<lines->len; index++) {
+    LINE *line = &g_array_index(lines, LINE, index);
 
-    /*
-     * It now has to check which of these four values are for intersections
-     * with the sides of the box (some values may be for intersections out of
-     * the box). This is made by a min/max function.
-     */
-    if(a[0] < a[1]) {
-      min1 = a[0]; max1 = a[1];
-    } else {
-      min1 = a[1]; max1 = a[0];
-    }
-    
-    if(a[2] < a[3]) {
-      min2 = a[2]; max2 = a[3];
-    } else {
-      min2 = a[3]; max2 = a[2];
-    }
-    
-    amin = (min1 < min2) ? min2 : min1;
-    amin = (amin < 0) ? 0 : amin;
-    
-    amax = (max1 < max2) ? max1 : max2;
-    amax = (amax < 1) ? amax : 1;
-
-    /*
-     * If the segment really go through the box it prints the line. It also
-     * takes the opportunity of the symetry in the box in relation to its
-     * center to print the second line at the same time.
-     *
-     * If there is no intersection of the segment with any of the sides, then
-     * there is no need to continue : there would be no more segment in the
-     * box to print.
-     */
-    if((amax > amin) && (amax != 1) && (amin != 0)) {
-      /* There is intersection between the line and the box edges */
-      x3 = (int) (x1 + amin*(x2 - x1));
-      y3 = (int) (y1 + amin*(y2 - y1));
-      
-      x4 = (int) (x1 + amax*(x2 - x1));
-      y4 = (int) (y1 + amax*(y2 - y1));
-      
-      fprintf(fp,"%d %d %d %d %d line\n",
-	      x3 + (x + width/2), y3 + (y - height/2),
-	      x4 + (x + width/2), y4 + (y - height/2),
-	      fill_width);
-      
-      fprintf(fp,"%d %d %d %d %d line\n",
-	      -x3 + (x + width/2), -y3 + (y - height/2),
-	      -x4 + (x + width/2), -y4 + (y - height/2),
-	      fill_width);
-      
-    } else {
-      break;
-    }
-    
-    y0 = y0 + pitch1;
+    fprintf(fp,"%d %d %d %d %d line\n",
+            line->x[0], line->y[0],
+            line->x[1], line->y[1],
+            fill_width);
   }
+
+  g_array_free(lines, TRUE);
 }
 
 /*! \brief Calculates the distance between the given point and the closest

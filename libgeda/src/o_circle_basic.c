@@ -1059,65 +1059,38 @@ void o_circle_print_hatch(TOPLEVEL *toplevel, FILE *fp,
 			  int angle2, int pitch2,
 			  int origin_x, int origin_y)
 {
-  double x0, y0, x1, y1, x2, y2;
-  double cos_a_, sin_a_;
+  CIRCLE circle;
+  gint index;
+  GArray *lines;
+
+  g_return_if_fail(toplevel != NULL);
+  g_return_if_fail(fp != NULL);
 
   if (toplevel->print_color) {
     f_print_set_color(fp, color);
   }
 
-  /* 
-   * The values of the cosinus and sinus of the angle
-   * <B>angle1</B> are calculated for future usage (repetitive).
-   */
-  cos_a_ = cos(((double) angle1) * M_PI/180);
-  sin_a_ = sin(((double) angle1) * M_PI/180);
+  /* Avoid printing line widths too small */
+  if (fill_width <= 1) fill_width = 2;
 
-  /*
-   * When printing a line in a circle there is two intersections.
-   * It looks for the coordinates of one of these points when the
-   * line is horizontal. The second one can be easily obtained by
-   * symmetry in relation to the vertical axis going through the
-   * centre of the circle.
-   *
-   * These two points are therefore rotated of angle <B>angle1</B>
-   * using the elements previously computed.
-   *
-   * The corresponding line can be printed providing that the
-   * coordinates are rounded.
-   *
-   * These operations are repeated for every horizontal line that
-   * can fit in the upper half of the circle (using and incrementing
-   * the variable #y0).
-   */
-  y0 = 0;
-  while(y0 < (double) radius) {
-    x0 = pow((double) radius, 2) - pow(y0, 2);
-    x0 = sqrt(x0);
+  lines = g_array_new(FALSE, FALSE, sizeof(LINE));
 
-    x1 = (x0*cos_a_ - y0*sin_a_) + x;
-    y1 = y + (x0*sin_a_ + y0*cos_a_);
-    x2 = ((-x0)*cos_a_ - y0*sin_a_) + x;
-    y2 = y + ((-x0)*sin_a_ + y0*cos_a_);
+  circle.center_x = x;
+  circle.center_y = y;
+  circle.radius   = radius;
 
-    fprintf(fp, "%d %d %d %d %d line\n",
-	    (int) x1, (int) y1, (int) x2, (int) y2, fill_width);
+  m_hatch_circle(&circle, angle1, pitch1, lines);
 
-    /*
-     * The function uses the symetry in relation to the centre of the
-     * circle. It avoid repetitive computation for the second half of
-     * the surface of the circle.
-     */
-    x1 = x + (x0*cos_a_ - (-y0)*sin_a_);
-    y1 = y + (x0*sin_a_ + (-y0)*cos_a_);
-    x2 = x + ((-x0)*cos_a_ - (-y0)*sin_a_);
-    y2 = y + ((-x0)*sin_a_ + (-y0)*cos_a_);
-    
-    fprintf(fp, "%d %d %d %d %d line\n",
-	    (int) x1, (int) y1, (int) x2, (int) y2, fill_width);
-    
-    y0 = y0 + pitch1;
+  for(index=0; index<lines->len; index++) {
+    LINE *line = &g_array_index(lines, LINE, index);
+
+    fprintf(fp,"%d %d %d %d %d line\n",
+            line->x[0], line->y[0],
+            line->x[1], line->y[1],
+            fill_width);
   }
+
+  g_array_free(lines, TRUE);
 }
 
 /*! \brief Calculates the distance between the given point and the closest
