@@ -17,6 +17,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/*! \file o_box_basic.c
+ *  \brief functions for the box object
+ */
+
 #include <config.h>
 #include <math.h>
 #include <stdio.h>
@@ -26,28 +31,6 @@
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
-
-/* Kazu on July 16, 1999 - Added these macros to simplify the code */
-/*! \brief Returns the box width.
- *  Returns the box width.
- */
-#define GET_BOX_WIDTH(w)                        \
-        abs((w)->last_x - (w)->start_x)
-/*! \brief Returns the box height.
- *  Returns the box height.
- */
-#define GET_BOX_HEIGHT(w)                       \
-	        abs((w)->last_y - (w)->start_y)
-/*! \brief Returns the box left coordinate.
- *  Returns the box left coordinate.
- */
-#define GET_BOX_LEFT(w)                         \
-	        min((w)->start_x, (w)->last_x);
-/*! \brief Returns the box left coordinate.
- *  Returns the box left coordinate.
- */
-#define GET_BOX_TOP(w)                          \
-		min((w)->start_y, (w)->last_y);
 
 /*! Default setting for draw function. */
 void (*box_draw_func)() = NULL;
@@ -1340,10 +1323,10 @@ void o_box_print_hatch(TOPLEVEL *toplevel, FILE *fp,
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter of the box.
  *
- *  \param [in] object The object, where object->box != NULL.
+ *  \param [in] box  The box of an OBJECT (object->box != NULL).
  *  \param [in] x The x coordinate of the given point.
  *  \param [in] y The y coordinate of the given point.
- *  \return The shortest distance from the object to the point.  With an 
+ *  \return The shortest distance from the object to the point. With an 
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 gdouble o_box_shortest_distance(BOX *box, gint x, gint y)
