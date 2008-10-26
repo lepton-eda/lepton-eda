@@ -2288,11 +2288,6 @@ create_color_menu (GSCHEM_TOPLEVEL *w_current)
   cbox = GTK_COMBO_BOX (gtk_combo_box_new_with_model (GTK_TREE_MODEL (store)));
   layout = GTK_CELL_LAYOUT (cbox); /* For convenience */
 
-  /* Renders the name of the color */
-  text_cell = GTK_CELL_RENDERER (gtk_cell_renderer_text_new());
-  gtk_cell_layout_pack_start (layout, text_cell, TRUE);
-  gtk_cell_layout_add_attribute (layout, text_cell, "text", 0);
-
   /* Renders the color swatch. Since this won't contain text, set a
    * minimum width. */
   color_cell = GTK_CELL_RENDERER (gtk_cell_renderer_text_new());
@@ -2302,6 +2297,12 @@ create_color_menu (GSCHEM_TOPLEVEL *w_current)
                                       color_menu_swatch_layout_data,
                                       (gpointer) w_current,
                                       NULL);
+
+  /* Renders the name of the color */
+  text_cell = GTK_CELL_RENDERER (gtk_cell_renderer_text_new());
+  g_object_set (text_cell, "xpad", 5, NULL);
+  gtk_cell_layout_pack_start (layout, text_cell, TRUE);
+  gtk_cell_layout_add_attribute (layout, text_cell, "text", 0);
 
   /* Populate the list */
   for (i = 0; i < MAX_COLORS; i++) {
