@@ -2281,7 +2281,12 @@ create_color_menu (GSCHEM_TOPLEVEL *w_current)
 
   gint i;
   gchar *str;
+  OBJECT *obj;
   GtkTreeIter iter;
+
+  obj = o_select_return_first_object (w_current);
+  if (obj != NULL)
+    w_current->edit_color = obj->saved_color;
 
   /* The columns are: name of color, index of color. */
   store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
