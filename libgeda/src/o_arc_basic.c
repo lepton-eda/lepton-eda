@@ -17,6 +17,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/*! \file o_arc_basic.c
+ *  \brief functions for the arc object
+ */
+
 #include <config.h>
 
 #include <stdio.h>
@@ -1232,10 +1237,10 @@ void o_arc_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter of the arc.
  *
- *  \param [in] object The object, where object->arc != NULL.
+ *  \param [in] arc the arc of the OBJECT
  *  \param [in] x The x coordinate of the given point.
  *  \param [in] y The y coordinate of the given point.
- *  \return The shortest distance from the object to the point.  With an
+ *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 gdouble o_arc_shortest_distance(ARC *arc, gint x, gint y)
@@ -1291,7 +1296,7 @@ gdouble o_arc_shortest_distance(ARC *arc, gint x, gint y)
 
 /*! \brief Determines if a point lies within the sweep of the arc.
  *
- *  \param [in] object The object, where object->arc != NULL.
+ *  \param [in] arc The arc of object
  *  \param [in] x The x coordinate of the given point.
  *  \param [in] y The y coordinate of the given point.
  *  \return TRUE if the point lies within the sweep of the arc.

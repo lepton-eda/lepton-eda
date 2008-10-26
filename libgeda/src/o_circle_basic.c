@@ -17,6 +17,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/*! \file o_circle_basic.c
+ *  \brief functions for the circle object
+ */
+
 #include <config.h>
 #include <stdio.h>
 #include <math.h>
@@ -30,9 +35,17 @@
 /*! Default setting for circle draw function. */
 void (*circle_draw_func)() = NULL;
 
-/*! \brief
+/*! \brief calculate the distance between two points
  *  \par Function Description
- *
+ *  This function calculates the distance between two points.
+ *  The two points are defined by the (\a x1, \a y1) and (\a x2, \a y2)
+ *  parameters.
+ *  \param [in]  x1  x-value of the first point
+ *  \param [in]  y1  y-value of the first point
+ *  \param [in]  x2  x-value of the second point
+ *  \param [in]  y2  y-value of the second point
+ *  \return the distance
+ *  \todo Move this function to a different place
  */
 int dist(int x1, int y1, int x2, int y2)
 {
@@ -1096,7 +1109,7 @@ void o_circle_print_hatch(TOPLEVEL *toplevel, FILE *fp,
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter of the circle.
  *
- *  \param [in] object The object, where object->circle != NULL.
+ *  \param [in] circle The circle of the OBJECT
  *  \param [in] x The x coordinate of the given point.
  *  \param [in] y The y coordinate of the given point.
  *  \return The shortest distance from the object to the point.  With an

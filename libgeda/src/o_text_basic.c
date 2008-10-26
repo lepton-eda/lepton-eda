@@ -1825,7 +1825,7 @@ void o_text_mirror_world(TOPLEVEL *toplevel,
  *  This function will calculate the distance to the text regardless
  *  if the text is visible or not.
  *
- *  \param [in] object The object, where object->text != NULL.
+ *  \param [in] text  the text of the OBJECT
  *  \param [in] x The x coordinate of the given point.
  *  \param [in] y The y coordinate of the given point.
  *  \return The shortest distance from the object to the point. If the

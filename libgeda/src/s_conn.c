@@ -713,7 +713,7 @@ void s_conn_update_object(TOPLEVEL * toplevel, OBJECT * object)
  *  This function adds all underlying OBJECTs of a complex OBJECT
  *  <b>complex</b> into the connection system.
  *  \param toplevel (currently not used)
- *  \param object complex OBJECT to add into the connection system
+ *  \param complex complex OBJECT to add into the connection system
  */
 void s_conn_update_complex(TOPLEVEL * toplevel, OBJECT * complex)
 {

@@ -87,6 +87,7 @@ void f_print_set_color(FILE *fp, int color)
  *  \param [in] fp            The postscript document to write to.
  *  \param [in] paper_size_x  The width of the document on paper in inches.
  *  \param [in] paper_size_y  The height of the document on paper in inches.
+ *  \param [in] eps           whether to create a eps of a ps document
  *  \return 0 on success, -1 on failure.
  */
 int f_print_header(TOPLEVEL *toplevel, FILE *fp,

@@ -17,6 +17,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/*! \file o_basic.c
+ *  \brief functions for the basic object type
+ *  
+ *  This file contains the code used to handle OBJECTs (st_object).
+ *  \todo improve doc, draw some design images.
+ *  \todo 
+ *  Lots of Gross code... needs lots of cleanup
+ *  mainly readability issues
+ */
+
 #include <config.h>
 
 #include <stdio.h>
@@ -36,10 +47,6 @@
 /*! Default setting for object selection function. */
 void (*select_func)() = NULL;
 
-/* \todo 
- * Lots of Gross code... needs lots of cleanup
- * mainly readability issues
- */
 
 /*! \brief Check if point is inside a region
  *  \par Function Description
@@ -267,7 +274,7 @@ void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current,
  *
  *  \param [in] toplevel The toplevel environment.
  *  \param [in] dx       Amount to horizontally translate object
- *  \param [in] dx       Amount to vertically translate object
+ *  \param [in] dy       Amount to vertically translate object
  *  \param [in] object   The object to translate.
  */
 void o_translate_world (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object)

@@ -17,6 +17,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/*! \file o_picture.c
+ *  \brief functions for the picture object
+ */
+
 #include <config.h>
 
 #include <stdio.h>
@@ -664,7 +669,7 @@ void o_picture_translate_world(TOPLEVEL *toplevel,
  *  <B>o_current</B> describing a picture.
  *
  *  \param [in]  toplevel   The TOPLEVEL object.
- *  \param [in]  objcet     Picture OBJECT to copy.
+ *  \param [in]  object     Picture OBJECT to copy.
  *  \return The new OBJECT
  */
 OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
@@ -882,8 +887,6 @@ void o_picture_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
    
   g_free(rgb_data);
   g_free(mask_data);
-
-	
 }
 
 
@@ -1027,10 +1030,10 @@ GdkPixbuf *o_picture_pixbuf_from_buffer (gchar *file_content,
  *
  *  Interrior points within the picture return a distance of zero.
  *
- *  \param [in] object The object, where object->picture != NULL.
+ *  \param [in] picture the picture of the OBJECT
  *  \param [in] x The x coordinate of the given point.
  *  \param [in] y The y coordinate of the given point.
- *  \return The shortest distance from the object to the point.  With an
+ *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 gdouble o_picture_shortest_distance(PICTURE *picture, gint x, gint y)

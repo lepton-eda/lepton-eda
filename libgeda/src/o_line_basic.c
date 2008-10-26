@@ -17,6 +17,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/*! \file o_line_basic.c
+ *  \brief functions for the line object
+ */
+
 #include <config.h>
 
 #include <stdio.h>
@@ -170,9 +175,6 @@ OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *    <DT>*</DT><DD>LINE_END1
  *    <DT>*</DT><DD>LINE_END2
  *  </DL>
- *
- *  \par Author's note
- *  pb20011009 - modified
  */
 void o_line_modify(TOPLEVEL *toplevel, OBJECT *object,
 		   int x, int y, int whichone)
@@ -398,7 +400,7 @@ void o_line_rotate_world(TOPLEVEL *toplevel,
   int newx, newy;
 	
   if (angle == 0) 
-  return;
+    return;
 
   /* angle must be positive */
   if(angle < 0) angle = -angle;
@@ -493,7 +495,7 @@ void o_line_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  in <B>*line</B> in world units.
  *
  *  \param [in]  toplevel  The TOPLEVEL object.
- *  \param [in]  OBJECT     Line OBJECT to read coordinates from.
+ *  \param [in]  object     Line OBJECT to read coordinates from.
  *  \param [out] left       Left line coordinate in WORLD units.
  *  \param [out] top        Top line coordinate in WORLD units.
  *  \param [out] right      Right line coordinate in WORLD units.
@@ -1192,11 +1194,12 @@ int o_line_visible(TOPLEVEL *toplevel, LINE *line,
   return(visible);
 }
 
-/*! \brief
+/*! \brief calculate the lenght of a line object
  *  \par Function Description
+ *  This function calculates the length of a line object
  *
- *  \param [in] object
- *  \return double
+ *  \param [in] object  a line OBJECT
+ *  \return The length of the line
  */
 double o_line_length(OBJECT *object)
 {
@@ -1222,10 +1225,10 @@ double o_line_length(OBJECT *object)
  *  end point, this function returns the distance from the given point to the
  *  closest end point.
  *
- *  \param [in] object The object, where object->line != NULL.
+ *  \param [in] line  The line of an OBJECT
  *  \param [in] x The x coordinate of the given point.
  *  \param [in] y The y coordinate of the given point.
- *  \return The shortest distance from the object to the point.  With an
+ *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 gdouble o_line_shortest_distance(LINE *line, gint x, gint y)

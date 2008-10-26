@@ -17,6 +17,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/*! \file o_attrib.c
+ *  \brief utility functions for attributes
+ *  
+ *  Attributes are normal text objects. An attribute is a text object
+ *  that has a text string that is delimited by an equal "=" character.
+ *  The part before the equal character is called <b>name</b> the
+ *  part of the string behind the equal character is called <b>value</b>
+ *
+ *  Attributes are can be attached to OBJECTs (st_object).
+ * 
+ *  \note
+ *  Be sure in o_copy o_move o_delete you maintain the attributes
+ *  delete is a bare, because you will have to unattach the other end
+ *  and in o_save o_read as well
+ *  and in o_select when selecting objects, select the attributes
+ */
+
 #include <config.h>
 
 #include <stdio.h>
@@ -34,29 +52,13 @@
 /*! Basic string splitting delimiters */
 #define DELIMITERS ",; "
 
-/*! \note
- *  No special type for attributes
- *  You can only edit text attributes
- *
- *  be sure in o_copy o_move o_delete you maintain the attributes
- *  delete is a bare, because you will have to unattach the other end
- *  and in o_save o_read as well
- *  and in o_select when selecting objects, select the attributes
- *
- *  \todo there needs to be a modifier (in struct.h, such as a flag) which
- *        signifies that this is an attribute (really? why?) 
- *
- *  \note
- *  return pointer from attrib_list
- */
-
-
 /*! \brief Search for an item in an attribute list.
  *  \par Function Description
  *  Search for an item in an attribute list.
  *
  *  \param [in] list  list to be searched.
  *  \param [in] item  item to be found.
+ *  \return the object item if it is found, NULL otherwise
  */
 OBJECT *o_attrib_search(GList *list, OBJECT *item)
 {
@@ -86,7 +88,7 @@ OBJECT *o_attrib_search(GList *list, OBJECT *item)
  *  Add an attribute to an existing attribute list.
  *
  *  \param [in]  toplevel   The TOPLEVEL object.
- *  \param [in]  list_head  The OBJECT we're adding the attribute to.
+ *  \param [in]  object     The OBJECT we're adding the attribute to.
  *  \param [in]  item       The item you want to add as an attribute.
  *  \return The new head of the attributes list.
  */
@@ -432,7 +434,6 @@ OBJECT *o_read_attribs(TOPLEVEL *toplevel,
  *  Saves a list of attributes int a buffer in libgeda, including the
  *  attribute list start and end markers.
  *
- *  \param [in] fp       FILE pointer to write attributes to.
  *  \param [in] attribs  attributes to write.
  *  \todo
  *  this should be trimmed down to only save attributes which are text items

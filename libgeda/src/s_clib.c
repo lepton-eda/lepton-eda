@@ -441,7 +441,7 @@ static void cache_find_oldest (gpointer key,
  *
  *  \todo This is probably generally useful.
  *
- *  \param argv Command string to execute.
+ *  \param command  Command string to execute.
  *  \return The program's output, or \b NULL on failure.
  */
 static gchar *run_source_command (const gchar *command)

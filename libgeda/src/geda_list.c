@@ -18,6 +18,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
+/*! \file geda_list.c
+ *  \brief list derived from GList with GObject properties
+ *
+ *  This GedaList with the GObject properties can use the signaling
+ *  mechanisms of GObject now. 
+ */
 
 #include <config.h>
 
@@ -62,7 +68,7 @@ static void geda_list_instance_init( GTypeInstance *instance, gpointer g_class )
  *  Just before the GedaList GObject is finalized, free our
  *  allocated data, and then chain up to the parent's finalize handler.
  *
- *  \param [in] widget  The GObject being finalized.
+ *  \param [in] object  The GObject being finalized.
  */
 static void geda_list_finalize( GObject *object )
 {
@@ -79,7 +85,8 @@ static void geda_list_finalize( GObject *object )
  *  GType class initialiser for GedaList. We override our parents
  *  virtual class methods as needed and register our GObject signals.
  *
- *  \param [in]  klass       The GedaList we are initialising
+ *  \param [in]  g_class       The GedaList we are initialising
+ *  \param [in]  g_class_data  (unused)
  */
 static void geda_list_class_init( gpointer g_class, gpointer g_class_data )
 {
