@@ -17,6 +17,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/*! \file o_complex_basic.c
+ *  \brief Functions for complex objects
+ *
+ *  Complex objects are collections of primary objects.
+ */
+
 #include <config.h>
 
 #include <stdio.h>
@@ -137,8 +144,8 @@ world_get_object_list_bounds(TOPLEVEL *toplevel, OBJECT *complex,
 
 /*! \brief Return the bounds of the given GList of objects.
  *  \par Given a list of objects, calcule the bounds coordinates.
- *  \param [in] toplevel The toplevel structure.
- *  \param [in] complex   The list of objects to look the bounds for.
+ *  \param [in]  toplevel The TOPLEVEL structure.
+ *  \param [in]  head   The list of objects to look the bounds for.
  *  \param [out] left   pointer to the left coordinate of the object.
  *  \param [out] top    pointer to the top coordinate of the object.
  *  \param [out] right  pointer to the right coordinate of the object.
@@ -157,7 +164,7 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, GList *head,
 
   s_current = head;
 
-  // Find the first object with bounds, and set the bounds variables, then expand as necessary
+  /* Find the first object with bounds, and set the bounds variables, then expand as necessary */
   while ( s_current != NULL ) {
     o_current = (OBJECT *) s_current->data;
     g_assert (o_current != NULL);
@@ -209,9 +216,12 @@ void world_get_complex_bounds(TOPLEVEL *toplevel, OBJECT *complex,
 
 }
 
-/*! \brief
+/*! \brief create a new head object
  *  \par Function Description
- *
+ *  This function creates a <b>complex_head</b> OBJECT. This OBJECT
+ *  is just a special empty object. This object is never modified.
+ *  
+ *  \return new head OBJECT
  */
 OBJECT *new_head ()
 {
@@ -219,14 +229,18 @@ OBJECT *new_head ()
 
   new_node = s_basic_new_object(OBJ_HEAD, "complex_head");
 
-  /* don't need to do this for head nodes */
-  /* ret = (OBJECT *) s_basic_link_object(new_node, NULL);*/
   return new_node;
 }
 
-/*! \brief
+/*! \brief check whether an object is a attributes
  *  \par Function Description
+ *  This function checks if an object should be promoted.
+ *  An attribute object is promotable if it's promoted by default, or the user
+ *  has configered it to promote an attribute.
  *
+ *  \param [in] toplevel  The TOPLEVEL object
+ *  \param [in] object    The attribute object to check
+ *  \return TRUE if the object is a eligible attribute, FALSE otherwise
  */
 static int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
 {
@@ -260,23 +274,25 @@ static int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
   return TRUE;
 }
 
-/*! \brief
+/*! \brief get the embedded state of an complex object
  *  \par Function Description
+ *  Checks and returns the status of the complex object.
  *
+ *  \param o_current  The object to check
+ *  \return 1 if embedded, 0 otherwise
  */
 int o_complex_is_embedded(OBJECT *o_current)
 {
   g_return_val_if_fail(o_current != NULL, 0);
 
   if(o_current->complex == NULL)
-  return 0;
+    return 0;
 
   if (o_current->complex_embedded) {
     return 1;
   } else {
     return 0;
   }
-
 }
 
 
@@ -632,9 +648,20 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
   return new_node;
 }
 
-/*! \brief
+/*! \brief create a new embedded object
  *  \par Function Description
+ *  This function creates a new embedded object.
  *
+ *  \param [in]  toplevel  The TOPLEVEL object
+ *  \param [in]  type      The type of the object (usually OBJ_COMLEX)
+ *  \param [in]  color     The color of the object
+ *  \param [in]  x         The x location of the complex object
+ *  \param [in]  y         The y location of the complex object
+ *  \param [in]  angle     The rotation angle
+ *  \param [in]  mirror    The mirror status
+ *  \param [in]  basename  The basic name the embedded was created of
+ *  \param [in]  selectable whether the object can be selected with the mouse
+ *  \return a new complex object
  */
 OBJECT *o_complex_new_embedded(TOPLEVEL *toplevel,
 			       char type, int color, int x, int y, int angle, int mirror,
@@ -682,9 +709,12 @@ OBJECT *o_complex_new_embedded(TOPLEVEL *toplevel,
   return new_node;
 }
 
-/*! \brief
+/*! \brief update the visual boundaries of the complex object
  *  \par Function Description
+ *  This function updates the boundaries of the object \a o_current.
  *
+ *  \param [in]  toplevel  The TOPLEVEL object
+ *  \param [in]  o_current The OBJECT to update
  */
 void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 {
@@ -705,8 +735,18 @@ void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
   o_current->w_bounds_valid = TRUE;
 }
 
-/*! \brief
+/*! \brief read a complex object from a char buffer
  *  \par Function Description
+ *  This function reads a complex object from the buffer \a buf.
+ *  If the complex object was read successfully, a new object is
+ *  allocated and appended to the \a object_list.
+ *  
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] object_list  list of OBJECTS to append a new net
+ *  \param [in] buf          a text buffer (usually a line of a schematic file)
+ *  \param [in] release_ver  The release number gEDA
+ *  \param [in] fileformat_ver a integer value of the file format
+ *  \return The object list
  *
  *  \todo Don't use fixed-length string for symbol basename
  */
@@ -775,9 +815,13 @@ OBJECT *o_complex_read(TOPLEVEL *toplevel, OBJECT *object_list,
   return object_list;
 }
 
-/*! \brief
+/*! \brief Create a string representation of the complex object
  *  \par Function Description
+ *  This function takes a complex \a object and return a string
+ *  according to the file format definition.
  *
+ *  \param [in] object  a complex OBJECT
+ *  \return the string representation of the complex OBJECT
  */
 char *o_complex_save(OBJECT *object)
 {
@@ -808,9 +852,14 @@ char *o_complex_save(OBJECT *object)
   return(buf);
 }
 
-/*! \brief
+/*! \brief move a complex object
  *  \par Function Description
+ *  This function changes the position of a complex \a object.
  *
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] dx           The x-distance to move the object
+ *  \param [in] dy           The y-distance to move the object
+ *  \param [in] object       The complex OBJECT to be moved
  */
 void o_complex_translate_world(TOPLEVEL *toplevel, int dx, int dy,
                                OBJECT *object)
@@ -827,9 +876,13 @@ void o_complex_translate_world(TOPLEVEL *toplevel, int dx, int dy,
   o_complex_recalc (toplevel, object);
 }
 
-/*! \brief
+/*! \brief create a copy of a complex object
  *  \par Function Description
+ *  This function creates a copy of the complex object \a o_current.
  *
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] o_current    The object that is copied
+ *  \return a new complex object
  */
 OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
@@ -875,9 +928,13 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   return new_obj;
 }
 
-/*! \brief
+/*! \brief create a copy of a embedded complex object
  *  \par Function Description
+ *  This function creates a copy of an embedded complex object \a o_current.
  *
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] o_current    The object that is copied
+ *  \return a new complex object
  */
 OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *o_current)
 {
@@ -931,9 +988,14 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *o_current)
   return new_obj;
 }
 
-/*! \brief
+/*! \brief Change the color of a object list
  *  \par Function Description
+ *  This function changes the the color of a object list
  *
+ *  \param [in] prim_objs  The head object
+ *  \param [in] color      The new color
+ *
+ *  \note This function is mainly used to change the color of text objects
  */
 void o_complex_set_color(OBJECT *prim_objs, int color)
 {
@@ -971,9 +1033,12 @@ void o_complex_set_color(OBJECT *prim_objs, int color)
   }
 }
 
-/*! \brief
+/*! \brief Change the color of a complex object
  *  \par Function Description
+ *  This function changes the color of a complex object \a o_current.
  *
+ *  \param [in] o_current  The OBJECT to change
+ *  \param [in] color      The new color
  */
 void o_complex_set_color_single(OBJECT *o_current, int color)
 {
@@ -1007,7 +1072,8 @@ void o_complex_set_color_single(OBJECT *o_current, int color)
   }
 }
 
-/*! \brief
+/*! \todo Finish function documentation!!!
+ *  \brief
  *  \par Function Description
  *
  */
@@ -1054,7 +1120,8 @@ void o_complex_set_color_save(OBJECT *complex, int color)
   }
 }
 
-/*! \brief
+/*! \todo Finish function documentation!!!
+ *  \brief
  *  \par Function Description
  *
  */
@@ -1099,7 +1166,8 @@ void o_complex_unset_color(OBJECT *complex)
   }
 }
 
-/*! \brief
+/*! \todo Finish function documentation!!!
+ *  \brief
  *  \par Function Description
  *
  */
@@ -1137,7 +1205,8 @@ void o_complex_unset_color_single(OBJECT *o_current)
   }
 }
 
-/*! \brief
+/*! \todo Finish function documentation!!!
+ *  \brief
  *  \par Function Description
  *
  */
@@ -1177,12 +1246,14 @@ void o_complex_set_saved_color_only(OBJECT *complex, int color)
   }
 }
 
-/*! \brief
+/*! \brief get the nth pin of a object list
  *  \par Function Description
- *
+ *  Search the nth pin the object list \a o_list and return it.
+ *  
+ *  \param o_list   the object list to search through
+ *  \param counter  specifies the nth pin
+ *  \return the counter'th pin object, NULL if there is no more pin
  */
-/* returns the counter'th pin in o_list */
-/* NULL if there is no more pins */
 OBJECT *o_complex_return_nth_pin(OBJECT *o_list, int counter)
 {
   OBJECT *o_current;
@@ -1286,11 +1357,15 @@ void o_complex_mirror_world(TOPLEVEL *toplevel,
 }
 
 
-/*! \brief
+/*! \brief search the pin with a given pin number
  *  \par Function Description
- *
+ *  This function searches a pin object inside the complex \a object.
+ *  The pin name is a character string \a pin.
+
+ *  \param  object  The complex object
+ *  \param  pin     The pin number (string) to find
+ *  \return a pin object if found, NULL otherwise
  */
-/* pass in top level object */
 OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin) 
 {
   OBJECT *o_current=NULL;
@@ -1332,10 +1407,9 @@ OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin)
  *  component object), this fcn iterates through the prim_objs
  *  list counting the number of pins it finds.
  *
- *  \param [in] pointer to complex object
+ *  \param [in] object pointer to complex object
  *  \return integer number of pins counted.
  */
-/* pass in top level object */
 int o_complex_count_pins(OBJECT *object) 
 {
   OBJECT *o_current=NULL;
@@ -1367,11 +1441,17 @@ int o_complex_count_pins(OBJECT *object)
   return(pin_counter);
 }
 
-/*! \brief
+/*! \brief check the symversion of a complex object
  *  \par Function Description
- *
+ *  This function compares the symversion of a symbol with it's 
+ *  earlier saved symversion in a schematic.
+ *  Major symversion changes are added to the toplevel object 
+ *  (toplevel->major_changed_refdes), minor changes are reported
+ *  to the messaging system.
+ *  
+ *  \param toplevel  The TOPLEVEL object
+ *  \param object    The complex OBJECT
  */
-/* pass in top level object */
 void
 o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
 {
@@ -1545,7 +1625,7 @@ done:
 /*! \brief Calculates the distance between the given point and the closest
  * point on an object within the complex object.
  *
- *  \param [in] object The object, where object->complex != NULL.
+ *  \param [in] complex The complex of the OBJECT
  *  \param [in] x The x coordinate of the given point.
  *  \param [in] y The y coordinate of the given point.
  *  \return The shortest distance from the object to the point. If the
