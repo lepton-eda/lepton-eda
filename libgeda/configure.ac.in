@@ -94,12 +94,39 @@ IT_PROG_INTLTOOL(0.35.0)
 #########################################################################
 
 ############################################################################
+# Check for pkg-config start
+#
+
+# Check for pkg-config
+AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+if test $PKG_CONFIG = no; then
+    AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
+fi
+
+#
+# Check for pkg-config end
+############################################################################
+
+############################################################################
 # Check for guile start
 #
 
-# Find about the installed guile
-AC_GEDA_MACRO_CHECK([GUILE_FLAGS], [guile.m4])
-GUILE_FLAGS
+PKG_CHECK_MODULES(GUILE, guile-1.8, GUILE_PC="yes", no_GUILE_PC="yes")
+
+if test "$GUILE_PC" = "yes" 
+then
+
+   GUILE_LDFLAGS=$GUILE_LIBS
+   GUILE_VERSION=`$PKG_CONFIG guile-1.8 --modversion`
+
+else
+
+   # Find about the installed guile
+   AC_GEDA_MACRO_CHECK([GUILE_FLAGS], [guile.m4])
+   GUILE_FLAGS
+   GUILE_VERSION=`$GUILE_CONFIG info guileversion`
+
+fi
 
 # Check Guile version
 guile_need_major=1
@@ -107,7 +134,6 @@ guile_need_minor=6
 guile_need_version="$guile_need_major[].$guile_need_minor.0"
 
 AC_MSG_CHECKING([Guile version >= $guile_need_version])
-GUILE_VERSION=`$GUILE_CONFIG info guileversion`
 
 guile_major=`echo "$GUILE_VERSION" | sed 's/\([[^.]][[^.]]*\).*/\1/'`
 guile_minor=`echo "$GUILE_VERSION" | sed 's/[[^.]][[^.]]*.\([[^.]][[^.]]*\).*/\1/'`
@@ -171,20 +197,6 @@ fi
 
 # 
 # Check for X11 end
-############################################################################
-
-############################################################################
-# Check for pkg-config start
-#
-
-# Check for pkg-config
-AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
-if test $PKG_CONFIG = no; then
-    AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
-fi
-
-#
-# Check for pkg-config end
 ############################################################################
 
 ############################################################################

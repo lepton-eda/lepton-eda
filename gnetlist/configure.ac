@@ -139,7 +139,27 @@ fi
 
 ############################################################################
 # Check for guile start
-GUILE_FLAGS
+
+# Check for pkg-config
+AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+if test $PKG_CONFIG = no; then
+   AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
+fi
+
+PKG_CHECK_MODULES(GUILE, guile-1.8, GUILE_PC="yes", no_GUILE_PC="yes")
+
+if test "$GUILE_PC" = "yes" 
+then
+
+   GUILE_VERSION=`$PKG_CONFIG guile-1.8 --modversion`
+
+else
+
+   # Find about the installed guile
+   GUILE_FLAGS
+   GUILE_VERSION=`$GUILE_CONFIG info guileversion`
+
+fi
 
 # Check Guile version
 guile_need_major=1
@@ -147,7 +167,6 @@ guile_need_minor=6
 guile_need_version="$guile_need_major[].$guile_need_minor.0"
 
 AC_MSG_CHECKING([Guile version >= $guile_need_version])
-GUILE_VERSION=`$GUILE_CONFIG info guileversion`
 
 guile_major=`echo "$GUILE_VERSION" | sed 's/\([[^.]][[^.]]*\).*/\1/'`
 guile_minor=`echo "$GUILE_VERSION" | sed 's/[[^.]][[^.]]*.\([[^.]][[^.]]*\).*/\1/'`
@@ -213,12 +232,6 @@ AC_CHECK_LIB(dl, dlopen, DL_LIB="-ldl", DL_LIB="")
 ############################################################################
 # Check for gtk+ 2.4 start
 # 
-
-# Check for pkg-config
-AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
-if test $PKG_CONFIG = no; then
-   AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
-fi
 
 PKG_CHECK_MODULES(GTK24, gtk+-2.0 >= 2.4.0, GTK24="yes", no_GTK24="yes")
 
