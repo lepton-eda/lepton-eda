@@ -1111,7 +1111,7 @@ create_attributes_treeview (Compselect *compselect)
   attrtreeview = GTK_WIDGET (g_object_new (GTK_TYPE_TREE_VIEW,
 					   /* GtkTreeView */
 					   "model",      model,
-					   "headers-visible", TRUE,
+					   "headers-visible", FALSE,
 					   "rules-hint", TRUE,
 					   NULL));
 
@@ -1141,7 +1141,7 @@ create_attributes_treeview (Compselect *compselect)
 					   "border-width", 5,
 					   /* GtkScrolledWindow */
 					   "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
-					   "vscrollbar-policy", GTK_POLICY_ALWAYS,
+					   "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
 					   "shadow-type",       GTK_SHADOW_ETCHED_IN,
 					   NULL));
 
@@ -1343,7 +1343,7 @@ compselect_constructor (GType type,
                 "homogeneous", FALSE,
                 NULL);
 
-  /* vertical pane containing selection/preview and attributes */
+  /* vertical pane containing preview and attributes */
   vpaned = GTK_WIDGET (g_object_new (GTK_TYPE_VPANED,
                                     /* GtkContainer */
                                     "border-width", 5,
@@ -1377,14 +1377,11 @@ compselect_constructor (GType type,
   /* -- preview area -- */
   frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
                                     /* GtkFrame */
-                                    "label",        _("Preview"),
+                                    "label", _("Preview"),
                                     NULL));
   alignment = GTK_WIDGET (g_object_new (GTK_TYPE_ALIGNMENT,
                                         /* GtkAlignment */
-                                        "left-padding",   5,
-                                        "right-padding",  5,
-                                        "top-padding",    5,
-                                        "bottom-padding", 5,
+                                        "border-width", 5,
                                         "xscale",         1.0,
                                         "yscale",         1.0,
                                         "xalign",         0.5,
@@ -1399,23 +1396,28 @@ compselect_constructor (GType type,
   /* set preview of compselect */
   compselect->preview = PREVIEW (preview);
 
-  gtk_paned_pack2 (GTK_PANED (hpaned), frame, FALSE, FALSE);
-
-  gtk_paned_pack1 (GTK_PANED (vpaned), hpaned, FALSE, FALSE);
+  gtk_paned_pack1 (GTK_PANED (vpaned), frame, FALSE, FALSE);
 
   /* only create the attribute treeview if there are elements in the 
      component_select_attrlist */
   if (GSCHEM_DIALOG (compselect)->w_current->component_select_attrlist == NULL) {
     compselect->attrtreeview = NULL;
   } else {
+    frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
+                                      /* GtkFrame */
+                                      "label", _("Attributes"),
+                                      NULL));
     attributes = create_attributes_treeview(compselect);
-    gtk_paned_pack2 (GTK_PANED (vpaned), attributes, FALSE, FALSE);
+    gtk_paned_pack2 (GTK_PANED (vpaned), frame, FALSE, FALSE);
+    gtk_container_add (GTK_CONTAINER (frame), attributes);
   }
 
+  gtk_paned_pack2 (GTK_PANED (hpaned), vpaned, FALSE, FALSE);
+
   /* add the hpaned to the dialog vbox */
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (compselect)->vbox), vpaned,
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (compselect)->vbox), hpaned,
                       TRUE, TRUE, 0);
-  gtk_widget_show_all (vpaned);
+  gtk_widget_show_all (hpaned);
   
 
   /* -- behavior combo box -- */
