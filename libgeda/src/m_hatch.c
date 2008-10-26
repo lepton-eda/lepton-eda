@@ -115,12 +115,12 @@ static gint compare_status(gconstpointer a, gconstpointer b)
 void m_hatch_box(BOX *box, gint angle, gint pitch, GArray *lines)
 {
   GArray *corners;
-  POINT point;
+  sPOINT point;
 
   g_return_if_fail(box!=NULL);
   g_return_if_fail(lines!=NULL);
 
-  corners = g_array_sized_new(FALSE, FALSE, sizeof(POINT), 4);
+  corners = g_array_sized_new(FALSE, FALSE, sizeof(sPOINT), 4);
 
   point.x = box->upper_x;
   point.y = box->upper_y;
@@ -220,7 +220,7 @@ void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
   g_return_if_fail(lines!=NULL);
 
   events = g_array_new(FALSE, FALSE, sizeof(SWEEP_EVENT));
-  points2 = g_array_sized_new(FALSE, FALSE, sizeof(POINT), points->len);
+  points2 = g_array_sized_new(FALSE, FALSE, sizeof(sPOINT), points->len);
   status = g_array_new(FALSE, FALSE, sizeof(SWEEP_STATUS));
 
   m_transform_init(&transform);
@@ -234,9 +234,9 @@ void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
   /* build list of sweep events */
   if ( points2->len > 1 ) {
     gint index;
-    POINT *p0 = &g_array_index(points2, POINT, points2->len-1);
+    sPOINT *p0 = &g_array_index(points2, sPOINT, points2->len-1);
     for (index=0; index<points2->len; index++) {
-      POINT *p1 = &g_array_index(points2, POINT, index);
+      sPOINT *p1 = &g_array_index(points2, sPOINT, index);
       if ( p0->y != p1->y ) {
         SWEEP_EVENT event;
         event.y0 = min(p0->y, p1->y);
@@ -252,7 +252,7 @@ void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
   /* sort sweep events in ascending order by starting y coordinate */
   g_array_sort(events, compare_events);
 
-  m_bounds_of_points(&bounds, (POINT*)points2->data, points2->len);
+  m_bounds_of_points(&bounds, (sPOINT*)points2->data, points2->len);
   sweep_y = calculate_initial_sweep(10 * pitch, bounds.min_y, bounds.max_y);
 
   while ( events->len > 0 || status->len > 0 ) {

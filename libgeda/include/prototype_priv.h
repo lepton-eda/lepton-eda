@@ -53,7 +53,7 @@ SCM g_get_page_filename(SCM page_smob);
 
 /* m_bounds.c */
 void m_bounds_init(BOUNDS *bounds);
-void m_bounds_of_points(BOUNDS *bounds, POINT points[], gint count);
+void m_bounds_of_points(BOUNDS *bounds, sPOINT points[], gint count);
 
 /* m_hatch.c */
 void m_hatch_box(BOX *box, gint angle, gint pitch, GArray *lines);

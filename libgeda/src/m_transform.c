@@ -139,7 +139,7 @@ void m_transform_point(TRANSFORM *transform, gint *x, gint *y)
 /** \brief Transforms a polyline or polygon
  *
  *  \param transform [in] The transform function.
- *  \param line [inout] The GArray of POINT to transform.
+ *  \param line [inout] The GArray of sPOINT to transform.
  */
 void m_transform_points(TRANSFORM *transform, GArray *points)
 {
@@ -149,7 +149,7 @@ void m_transform_points(TRANSFORM *transform, GArray *points)
   g_return_if_fail(points!=NULL);
 
   for (index=0; index<points->len; index++) {
-    POINT *point = &g_array_index(points, POINT, index);
+    sPOINT *point = &g_array_index(points, sPOINT, index);
     m_transform_point(transform, &(point->x), &(point->y));
   }
 }

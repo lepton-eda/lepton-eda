@@ -361,8 +361,6 @@ int on_snap(int val)
 
 /*! \brief */
 typedef struct st_halfspace HALFSPACE;
-/*! \brief */
-typedef struct st_point sPOINT;
 
 /*! \brief */
 struct st_halfspace {

@@ -44,7 +44,7 @@ void m_bounds_init(BOUNDS *bounds)
  *  zero, this parameter must not be NULL.
  *  \param count [in] The number of points in the set.
  */
-void m_bounds_of_points(BOUNDS *bounds, POINT points[], gint count)
+void m_bounds_of_points(BOUNDS *bounds, sPOINT points[], gint count)
 {
   gint index;
 
