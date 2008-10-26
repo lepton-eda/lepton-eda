@@ -36,6 +36,8 @@ typedef struct st_arc ARC;
 typedef struct st_box BOX;
 typedef struct st_picture PICTURE;
 typedef struct st_text TEXT;
+typedef struct st_point POINT;
+typedef struct st_transform TRANSFORM;
 
 typedef struct st_object OBJECT;
 typedef struct st_page PAGE;
@@ -43,6 +45,7 @@ typedef struct st_toplevel TOPLEVEL;
 typedef struct st_color COLOR;
 typedef struct st_undo UNDO;
 typedef struct st_tile TILE;
+typedef struct st_bounds BOUNDS;
 
 typedef struct st_conn CONN;
 typedef struct st_bus_ripper BUS_RIPPER;
@@ -92,6 +95,11 @@ struct st_line {
   int x[2];
   int y[2];
 
+};
+
+struct st_point {
+  gint x;
+  gint y;
 };
 
 /* pb20011014 - name the grips */
@@ -340,6 +348,22 @@ struct st_stretch
 
   STRETCH *prev;
   STRETCH *next;
+};
+
+struct st_bounds {
+  gint min_x;
+  gint min_y;
+  gint max_x;
+  gint max_y;
+};
+
+/** A structure to store a 2D affine transform.
+ *
+ *  The transforms get stored in a 3x3 matrix. Code assumes the bottom row to
+ *  remain constant at [0 0 1].
+ */
+struct st_transform {
+  gdouble m[2][3];    /* m[row][column] */
 };
 
 struct st_undo {

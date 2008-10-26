@@ -51,6 +51,27 @@ SCM g_get_line_width(SCM object_smob);
 void g_init_page_smob(void);
 SCM g_get_page_filename(SCM page_smob);
 
+/* m_bounds.c */
+void m_bounds_init(BOUNDS *bounds);
+void m_bounds_of_points(BOUNDS *bounds, POINT points[], gint count);
+
+/* m_hatch.c */
+void m_hatch_box(BOX *box, gint angle, gint pitch, GArray *lines);
+void m_hatch_circle(CIRCLE *circle, gint angle, gint pitch, GArray *lines);
+void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines);
+
+/* m_transform.c */
+void m_transform_combine(TRANSFORM *result, TRANSFORM *a, TRANSFORM *b );
+void m_transform_init(TRANSFORM *transform);
+void m_transform_invert(TRANSFORM *transform, TRANSFORM *inverse);
+void m_transform_line(TRANSFORM *transform, LINE *line );
+void m_transform_lines(TRANSFORM *transform, GArray *lines);
+void m_transform_point(TRANSFORM *transform, gint *x, gint *y);
+void m_transform_points(TRANSFORM *transform, GArray *points);
+void m_transform_rotate(TRANSFORM *transform, gdouble angle);
+void m_transform_scale(TRANSFORM *transform, gdouble factor);
+void m_transform_translate(TRANSFORM *transform, gdouble dx, gdouble dy);
+
 /* o_arc_basic.c */
 OBJECT *o_arc_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
 char *o_arc_save(OBJECT *object);

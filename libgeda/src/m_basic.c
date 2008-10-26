@@ -372,11 +372,6 @@ struct st_halfspace {
   int bottom; 
 };
 
-/*! \brief */
-struct st_point {
-	int x, y;
-};
-
 /* \note 
  * encode_halfspace and clip are part of the cohen-sutherland clipping
  * algorithm.  They are used to determine if an object is visible or not 

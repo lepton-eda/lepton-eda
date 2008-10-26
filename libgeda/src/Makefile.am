@@ -25,6 +25,9 @@ libgeda_la_SOURCES = \
 	i_vars.c \
 	libgeda.c \
 	m_basic.c \
+        m_bounds.c \
+        m_hatch.c \
+        m_transform.c \
 	o_arc_basic.c \
 	o_attrib.c \
 	o_basic.c \
