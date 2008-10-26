@@ -119,7 +119,9 @@ int f_print_header(TOPLEVEL *toplevel, FILE *fp,
   fprintf(fp, "%%%%Creator: gEDA gschem %s\n"
 	  "%%%%CreationDate: %s"
 	  "%%%%Title: %s\n"
+#ifdef HAVE_GETLOGIN
 	  "%%%%Author: %s\n"
+#endif
 	  "%%%%BoundingBox: %d %d %d %d\n"
 	  "%%%%Orientation: %s\n"
 	  "%%%%Pages: 1\n"
@@ -128,7 +130,9 @@ int f_print_header(TOPLEVEL *toplevel, FILE *fp,
 	  DATE_VERSION,
 	  ctime(&current_time),
 	  toplevel->page_current->page_filename,
+#ifdef HAVE_GETLOGIN
 	  getlogin(),
+#endif
 	  llx, lly, urx, ury,
 	  ((toplevel->print_orientation == LANDSCAPE)
 	   ? "Landscape" : "Portrait")

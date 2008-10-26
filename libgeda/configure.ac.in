@@ -328,7 +328,7 @@ AC_C_CONST
 
 # Checks for library functions.
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS(strstr chown)
+AC_CHECK_FUNCS(strstr chown getlogin)
 
 # 
 # Checks for header files end
