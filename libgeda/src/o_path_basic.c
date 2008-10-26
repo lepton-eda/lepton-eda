@@ -32,6 +32,18 @@
 /*! Default setting for path draw function. */
 void (*path_draw_func)() = NULL;
 
+
+typedef void (*DRAW_FUNC) (TOPLEVEL *toplevel, FILE *fp, PATH *path,
+                           int line_width, int length, int space,
+                           int origin_x, int origin_y);
+
+
+typedef void (*FILL_FUNC) (TOPLEVEL *toplevel, FILE *fp, PATH *path,
+                           int fill_width,
+                           int angle1, int pitch1, int angle2, int pitch2,
+                           int origin_x, int origin_y);
+
+
 /*! \brief Create and add path OBJECT to list.
  *  \par Function Description
  *  This function creates a new object representing a path.
@@ -568,47 +580,34 @@ void world_get_path_bounds (TOPLEVEL *toplevel, OBJECT *object,
 }
 
 
-/*! \brief Print path to Postscript document.
+/*! \brief Print a solid PATH to Postscript document.
  *  \par Function Description
- *  This function prints the path described by the <B>o_current</B>
- *  parameter to a Postscript document.
- *  The Postscript document is described by the <B>fp</B> file pointer.
+ *  This function prints the outline of a path when a solid line type is
+ *  required. The postscript file is defined by the file pointer <B>fp</B>.
+ *  The parameters <B>length</B> and <B>space</B> are ignored.
  *
- *  Parameters of the path are extracted from object pointed by
- *  <B>o_current</B>.
+ *  All dimensions are in mils.
  *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] fp         FILE pointer to Postscript document.
- *  \param [in] o_current  Line OBJECT to write to document.
- *  \param [in] origin_x   Page x coordinate to place path OBJECT.
- *  \param [in] origin_y   Page y coordinate to place path OBJECT.
+ *  \param [in] toplevel   The TOPLEVEL object.
+ *  \param [in] fp          FILE pointer to Postscript document.
+ *  \param [in] x           Upper x coordinate of PATH.
+ *  \param [in] y           Upper y coordinate of PATH.
+ *  \param [in] width       Width of PATH.
+ *  \param [in] height      Height of PATH.
+ *  \param [in] line_width  PATH Line width.
+ *  \param [in] length      Dashed line length.
+ *  \param [in] space       Amount of space between dashes.
+ *  \param [in] origin_x    Page x coordinate to place PATH OBJECT.
+ *  \param [in] origin_y    Page y coordinate to place PATH OBJECT.
  */
-void o_path_print (TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
-                   int origin_x, int origin_y)
+static void o_path_print_solid (TOPLEVEL *toplevel, FILE *fp, PATH *path,
+                                int line_width, int length, int space,
+                                int origin_x, int origin_y)
 {
-  PATH_SECTION *section;
-  GString *path_string;
-  int line_width;
   int i;
 
-  line_width = o_current->line_width;
-  if (line_width <=2) {
-    if (toplevel->line_style == THICK) {
-      line_width = LINE_WIDTH;
-    } else {
-      line_width = 2;
-    }
-  }
-
-  path_string = g_string_new ("");
-
-  if (toplevel->print_color)
-    f_print_set_color (fp, o_current->color);
-
-  f_print_set_line_width (fp, line_width);
-
-  for (i = 0; i < o_current->path->num_sections; i++) {
-    section = &o_current->path->sections[i];
+  for (i = 0; i < path->num_sections; i++) {
+    PATH_SECTION *section = &path->sections[i];
 
     if (i > 0)
       fprintf (fp, " ");
@@ -637,10 +636,390 @@ void o_path_print (TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
     }
   }
 
-  if (o_current->fill_type == FILLING_HOLLOW) {
-    fprintf (fp, "stroke\n");
-  } else {
-    fprintf (fp, "gsave fill grestore stroke\n");
+  fprintf (fp, "stroke\n");
+}
+
+
+/*! \brief Print a dotted PATH to Postscript document.
+ *  \par Function Description
+ *  This function prints the outline of a path when a dotted line type is
+ *  required. The postscript file is defined by the file pointer <B>fp</B>.
+ *  The parameter <B>length</B> is ignored.
+ *
+ *  All dimensions are in mils.
+ *
+ *  \param [in] toplevel   The TOPLEVEL object
+ *  \param [in] fp          FILE pointer to Postscript document
+ *  \param [in] path        The PATH object to print
+ *  \param [in] line_width  PATH Line width
+ *  \param [in] length      Dashed line length
+ *  \param [in] space       Amount of space between dashes
+ *  \param [in] origin_x    Page x coordinate to place PATH OBJECT
+ *  \param [in] origin_y    Page y coordinate to place PATH OBJECT
+ */
+static void o_path_print_dotted (TOPLEVEL *toplevel, FILE *fp, PATH *path,
+                                 int line_width, int length, int space,
+                                 int origin_x, int origin_y)
+{
+  o_path_print_solid (toplevel, fp, path, line_width,
+                      length, space, origin_x, origin_y);
+}
+
+
+/*! \brief Print a dashed PATH to Postscript document.
+ *  \par Function Description
+ *  This function prints the outline of a path when a dashed line type is
+ *  required. The postscript file is defined by the file pointer <B>fp</B>.
+ *
+ *  All dimensions are in mils.
+ *
+ *  \param [in] toplevel    The TOPLEVEL object.
+ *  \param [in] fp          FILE pointer to Postscript document.
+ *  \param [in] path        The PATH object to print.
+ *  \param [in] line_width  PATH Line width.
+ *  \param [in] length      Dashed line length.
+ *  \param [in] space       Amount of space between dashes.
+ *  \param [in] origin_x    Page x coordinate to place PATH OBJECT.
+ *  \param [in] origin_y    Page y coordinate to place PATH OBJECT.
+ */
+static void o_path_print_dashed (TOPLEVEL *toplevel, FILE *fp, PATH *path,
+                                 int line_width, int length, int space,
+                                 int origin_x, int origin_y)
+{
+  o_path_print_solid (toplevel, fp, path, line_width,
+                      length, space, origin_x, origin_y);
+}
+
+
+/*! \brief Print centered line type PATH to Postscript document.
+ *  \par Function Description
+ *  This function prints the outline of a path when a centered line type is
+ *  required. The postscript file is defined by the file pointer <B>fp</B>.
+ *
+ *  All dimensions are in mils.
+ *
+ *  \param [in] toplevel    The TOPLEVEL object
+ *  \param [in] fp          FILE pointer to Postscript document
+ *  \param [in] path        The PATH object to print
+ *  \param [in] line_width  PATH Line width
+ *  \param [in] length      Dashed line length
+ *  \param [in] space       Amount of space between dashes
+ *  \param [in] origin_x    Page x coordinate to place PATH OBJECT
+ *  \param [in] origin_y    Page y coordinate to place PATH OBJECT
+ */
+static void o_path_print_center (TOPLEVEL *toplevel, FILE *fp, PATH *path,
+                                 int line_width, int length,
+                                 int space, int origin_x, int origin_y)
+{
+  o_path_print_solid (toplevel, fp, path, line_width,
+                      length, space, origin_x, origin_y);
+}
+
+
+/*! \brief Print phantom line type PATH to Postscript document.
+ *  \par Function Description
+ *  This function prints the outline of a path when a phantom line type is
+ *  required. The postscript file is defined by the file pointer <B>fp</B>.
+ *
+ *  All dimensions are in mils.
+ *
+ *  \param [in] toplevel    The TOPLEVEL object
+ *  \param [in] fp          FILE pointer to Postscript document
+ *  \param [in] path        The PATH object to print
+ *  \param [in] line_width  PATH Line width
+ *  \param [in] length      Dashed line length
+ *  \param [in] space       Amount of space between dashes
+ *  \param [in] origin_x    Page x coordinate to place PATH OBJECT
+ *  \param [in] origin_y    Page y coordinate to place PATH OBJECT
+ */
+static void o_path_print_phantom (TOPLEVEL *toplevel, FILE *fp, PATH *path,
+                                  int line_width, int length,
+                                  int space, int origin_x, int origin_y)
+{
+  o_path_print_solid (toplevel, fp, path, line_width,
+                      length, space, origin_x, origin_y);
+}
+
+
+/*! \brief Print a solid pattern PATH to Postscript document.
+ *  \par Function Description
+ *  The function prints a filled path with a solid pattern. No outline is
+ *  printed. The postscript file is defined by the file pointer <B>fp</B>.
+ *  <B>fill_width</B>, <B>angle1</B> and <B>pitch1</B>, <B>angle2</B> and <B>pitch2</B>
+ *  parameters are ignored in this functions but kept for compatibility
+ *  with other fill functions.
+ *
+ *  All dimensions are in mils.
+ *
+ *  \param [in] toplevel    The TOPLEVEL object
+ *  \param [in] fp          FILE pointer to Postscript document
+ *  \param [in] path        The PATH object to print
+ *  \param [in] fill_width  PATH fill width (unused)
+ *  \param [in] angle1      (unused)
+ *  \param [in] pitch1      (unused)
+ *  \param [in] angle2      (unused)
+ *  \param [in] pitch2      (unused)
+ *  \param [in] origin_x    Page x coordinate to place PATH OBJECT
+ *  \param [in] origin_y    Page y coordinate to place PATH OBJECT
+ */
+static void o_path_print_filled (TOPLEVEL *toplevel, FILE *fp, PATH *path,
+                                 int fill_width,
+                                 int angle1, int pitch1, int angle2, int pitch2,
+                                 int origin_x, int origin_y)
+{
+  int i;
+
+  for (i = 0; i < path->num_sections; i++) {
+    PATH_SECTION *section = &path->sections[i];
+
+    if (i > 0)
+      fprintf (fp, " ");
+
+    switch (section->code) {
+      case PATH_MOVETO:
+        fprintf (fp, "closepath ");
+        /* Fall through */
+      case PATH_MOVETO_OPEN:
+        fprintf (fp, "%i %i moveto",
+                     section->x3 - origin_x, section->y3 - origin_y);
+        break;
+      case PATH_CURVETO:
+        fprintf (fp, "%i %i %i %i %i %i curveto",
+                     section->x1 - origin_x, section->y1 - origin_y,
+                     section->x2 - origin_x, section->y2 - origin_y,
+                     section->x3 - origin_x, section->y3 - origin_y);
+        break;
+      case PATH_LINETO:
+        fprintf (fp, "%i %i lineto",
+                     section->x3 - origin_x, section->y3 - origin_y);
+        break;
+      case PATH_END:
+        fprintf (fp, "closepath ");
+        break;
+    }
+  }
+
+  fprintf (fp, "fill\n");
+}
+
+
+/*! \brief Print a hatch pattern PATH to Postscript document.
+ *  \par Function Description
+ *  The function prints a hatched path. No outline is printed.
+ *  The postscript file is defined by the file pointer <B>fp</B>.
+ *  <B>fill_width</B>, <B>angle1</B>, <B>pitch1</B> parameters define the way the path
+ *  has to be hatched.
+ *  <B>angle2</B> and <B>pitch2</B> parameters are unused but kept for compatibility
+ *  with other fill functions.
+ *
+ *  Negative or zero values for <B>pitch1</B> are not allowed.
+ *
+ *  All dimensions are in mils.
+ *
+ *  \param [in] toplevel    The TOPLEVEL object
+ *  \param [in] fp          FILE pointer to Postscript document
+ *  \param [in] path        The PATH object to print
+ *  \param [in] fill_width  PATH fill width
+ *  \param [in] angle1      Angle of hatch pattern
+ *  \param [in] pitch1      Pitch of hatch pattern
+ *  \param [in] angle2      (unused)
+ *  \param [in] pitch2      (unused)
+ *  \param [in] origin_x    Page x coordinate to place PATH OBJECT
+ *  \param [in] origin_y    Page y coordinate to place PATH OBJECT
+ */
+static void o_path_print_hatch (TOPLEVEL *toplevel, FILE *fp, PATH *path,
+                                int fill_width,
+                                int angle1, int pitch1, int angle2, int pitch2,
+                                int origin_x, int origin_y)
+{
+  /* Not implemented */
+}
+
+
+/*! \brief Print a mesh pattern PATH to Postscript document.
+ *  \par Function Description
+ *  This function prints a meshed path. No outline is printed.
+ *  The postscript file is defined by the file pointer <B>fp</B>.
+ *
+ *  Negative or zero values for <B>pitch1</B> and/or <B>pitch2</B> are
+ *  not allowed.
+ *
+ *  All dimensions are in mils.
+ *
+ *  \param [in] toplevel    The TOPLEVEL object
+ *  \param [in] fp          FILE pointer to Postscript document
+ *  \param [in] path        The PATH object to print
+ *  \param [in] fill_width  PATH fill width
+ *  \param [in] angle1      1st angle for mesh pattern
+ *  \param [in] pitch1      1st pitch for mesh pattern
+ *  \param [in] angle2      2nd angle for mesh pattern
+ *  \param [in] pitch2      2nd pitch for mesh pattern
+ *  \param [in] origin_x    Page x coordinate to place PATH OBJECT
+ *  \param [in] origin_y    Page y coordinate to place PATH OBJECT
+ */
+static void o_path_print_mesh (TOPLEVEL *toplevel, FILE *fp, PATH *path,
+                               int fill_width,
+                               int angle1, int pitch1, int angle2, int pitch2,
+                               int origin_x, int origin_y)
+{
+  o_path_print_hatch (toplevel, fp, path, fill_width,
+                      angle1, pitch1, -1, -1, origin_x, origin_y);
+
+  o_path_print_hatch (toplevel, fp, path, fill_width,
+                      angle2, pitch2, -1, -1, origin_x, origin_y);
+}
+
+
+/*! \brief Print PATH to Postscript document.
+ *  \par Function Description
+ *  This function prints the path described by the <B>o_current</B>
+ *  parameter to a Postscript document.
+ *  The Postscript document is descibed by the file pointer <B>fp</B>.
+ *
+ *  \param [in] toplevel  The TOPLEVEL object.
+ *  \param [in] fp         FILE pointer to Postscript document.
+ *  \param [in] o_current  PATH OBJECT to write to document.
+ *  \param [in] origin_x   Page x coordinate to place PATH OBJECT.
+ *  \param [in] origin_y   Page y coordinate to place PATH OBJECT.
+ */
+void o_path_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
+                  int origin_x, int origin_y)
+{
+  int color;
+  int line_width, length, space;
+  int fill_width, angle1, pitch1, angle2, pitch2;
+  DRAW_FUNC outl_func = NULL;
+  FILL_FUNC fill_func = NULL;
+
+  color  = o_current->color;
+
+  /*! \note
+   *  Depending on the type of the line for this particular path, the
+   *  appropriate function is chosen among #o_path_print_solid(),
+   *  #o_path_print_dotted(), #o_path_print_dashed(),
+   *  #o_path_print_center() and #o_path_print_phantom().
+   *
+   *  The needed parameters for each of these type is extracted from the
+   *  <B>o_current</B> object. Depending on the type, unused parameters are
+   *  set to -1.
+   *
+   *  In the eventuality of a length and/or space null, the line is printed
+   *  solid to avoid and endless loop produced by other functions in such a
+   *  case.
+   */
+  line_width = o_current->line_width;
+
+  if (line_width <= 2) {
+    if (toplevel->line_style == THICK) {
+      line_width = LINE_WIDTH;
+    } else {
+      line_width=2;
+    }
+  }
+  length = o_current->line_length;
+  space  = o_current->line_space;
+
+  switch(o_current->line_type) {
+    case TYPE_SOLID:
+      length = -1; space  = -1;
+      outl_func = o_path_print_solid;
+      break;
+
+    case TYPE_DOTTED:
+      length = -1;
+      outl_func = o_path_print_dotted;
+      break;
+
+    case TYPE_DASHED:
+      outl_func = o_path_print_dashed;
+      break;
+
+    case TYPE_CENTER:
+      outl_func = o_path_print_center;
+      break;
+
+    case TYPE_PHANTOM:
+      outl_func = o_path_print_phantom;
+      break;
+
+    case TYPE_ERASE:
+      /* Unused for now, print it solid */
+      length = -1; space  = -1;
+      outl_func = o_path_print_solid;
+      break;
+  }
+
+  if((length == 0) || (space == 0)) {
+    length = -1; space  = -1;
+    outl_func = o_path_print_solid;
+  }
+
+  if (toplevel->print_color)
+    f_print_set_color (fp, o_current->color);
+
+  f_print_set_line_width (fp, line_width);
+
+  (*outl_func) (toplevel, fp, o_current->path, line_width,
+                length, space, origin_x, origin_y);
+
+  /*! \note
+   *  If the filling type of the path is not <B>HOLLOW</B>, the appropriate
+   *  function is chosen among #o_path_print_filled(), #o_path_print_mesh()
+   *  and #o_path_print_hatch(). The corresponding parameters are extracted
+   *  from the <B>o_current</B> object and corrected afterward.
+   *
+   *  The case where <B>pitch1</B> and <B>pitch2</B> are null or negative is
+   *  avoided as it leads to an endless loop in most of the called functions.
+   *  In such a case, the path is printed filled. Unused parameters for each of
+   *  these functions are set to -1 or any passive value.
+   */
+  if(o_current->fill_type != FILLING_HOLLOW) {
+    fill_width = o_current->fill_width;
+    angle1     = o_current->fill_angle1;
+    pitch1     = o_current->fill_pitch1;
+    angle2     = o_current->fill_angle2;
+    pitch2     = o_current->fill_pitch2;
+
+    switch(o_current->fill_type) {
+      case FILLING_FILL:
+        angle1 = -1; pitch1 = 1;
+        angle2 = -1; pitch2 = 1;
+        fill_width = -1;
+        fill_func = o_path_print_filled;
+        break;
+
+      case FILLING_MESH:
+        fill_func = o_path_print_mesh;
+        break;
+
+      case FILLING_HATCH:
+        angle2 = -1; pitch2 = 1;
+        fill_func = o_path_print_hatch;
+        break;
+
+      case FILLING_VOID:
+        /* Unused for now, print it filled */
+        angle1 = -1; pitch1 = 1;
+        angle2 = -1; pitch2 = 1;
+        fill_width = -1;
+        fill_func = o_path_print_filled;
+        break;
+
+      case FILLING_HOLLOW:
+        /* nop */
+        break;
+
+    }
+
+    if((pitch1 <= 0) || (pitch2 <= 0)) {
+      angle1 = -1; pitch1 = 1;
+      angle2 = -1; pitch2 = 1;
+      fill_func = o_path_print_filled;
+    }
+
+    (*fill_func) (toplevel, fp,
+                  o_current->path, fill_width,
+                  angle1, pitch1, angle2, pitch2, origin_x, origin_y);
   }
 }
 
