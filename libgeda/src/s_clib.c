@@ -123,7 +123,14 @@
 #include <dmalloc.h>
 #endif
 
+#ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
+#else
+#define WIFSIGNALED(x) 0
+#define WTERMSIG(x)    0
+#define WIFEXITED(x)   1
+#define WEXITSTATUS(x) 0
+#endif
 
 #include <time.h>
 
