@@ -937,10 +937,12 @@ void o_arc_end1(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  A new object is created and linked to the object list.
  *
  *  \param [in] w_current    The GSCHEM_TOPLEVEL object.
+ *  \param [in] radius       Radius of the arc
  *  \param [in] start_angle  Start of angle in degrees.
  *  \param [in] end_angle    End of angle in degrees.
  */
-void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int start_angle, int end_angle)
+void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int radius, 
+		int start_angle, int end_angle)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *new_obj;
@@ -948,7 +950,7 @@ void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int start_angle, int end_angle)
   /* create, initialize and link the new arc object */
   new_obj = o_arc_new(toplevel, OBJ_ARC, w_current->graphic_color,
                       w_current->first_wx, w_current->first_wy,
-                      w_current->distance, start_angle, end_angle);
+                      radius, start_angle, end_angle);
   toplevel->page_current->object_tail =
     s_basic_link_object(new_obj, toplevel->page_current->object_tail);
 

@@ -469,7 +469,7 @@ void o_arc_eraserubber(GSCHEM_TOPLEVEL *w_current);
 void o_arc_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_arc_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_arc_end1(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int start_angle, int end_angle);
+void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int radius, int start_angle, int end_angle);
 void o_arc_rubberarc(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone);
 void o_arc_rubberarc_xor(GSCHEM_TOPLEVEL *w_current);
 void o_arc_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);

@@ -1424,7 +1424,7 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
                                GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *spinentry;
-  gint start_angle, sweep_angle;
+  gint radius, start_angle, sweep_angle;
 
   switch (response) {
   case GTK_RESPONSE_REJECT:
@@ -1432,12 +1432,14 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
     /* void */
     break;
   case GTK_RESPONSE_ACCEPT:
+    spinentry = g_object_get_data(G_OBJECT(w_current->aawindow),"radius");
+    radius = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spinentry));
     spinentry = g_object_get_data(G_OBJECT(w_current->aawindow),"spin_start");
     start_angle = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spinentry));
     spinentry = g_object_get_data(G_OBJECT(w_current->aawindow),"spin_sweep");
     sweep_angle = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spinentry));
 
-    o_arc_end4(w_current, start_angle, sweep_angle);
+    o_arc_end4(w_current, radius, start_angle, sweep_angle);
     break;
   default:
     printf("arc_angle_dialog_response(): strange signal %d\n",response);
@@ -1445,7 +1447,6 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
 
   gtk_widget_destroy(w_current->aawindow);
   w_current->aawindow = NULL;
-  w_current->event_state = DRAWARC;
 }
 
 /*! \brief Creates the arc angle dialog
@@ -1457,7 +1458,7 @@ void arc_angle_dialog (GSCHEM_TOPLEVEL *w_current)
   GtkWidget *label = NULL;
   GtkWidget *vbox;
   GtkWidget *alignment, *table;
-  GtkWidget *spin_start, *spin_sweep;
+  GtkWidget *radius, *spin_start, *spin_sweep;
 
   if (!w_current->aawindow) {
     w_current->aawindow = gschem_dialog_new_with_buttons(_("Arc Params"),
@@ -1495,31 +1496,40 @@ void arc_angle_dialog (GSCHEM_TOPLEVEL *w_current)
                               0 /*DIALOG_INDENTATION */, 0);
     gtk_box_pack_start(GTK_BOX(vbox), alignment, FALSE, FALSE, 0);
 
-    table = gtk_table_new (2, 2, FALSE);
+    table = gtk_table_new (2, 3, FALSE);
     gtk_table_set_row_spacings(GTK_TABLE(table), DIALOG_V_SPACING);
     gtk_table_set_col_spacings(GTK_TABLE(table), DIALOG_H_SPACING);
     gtk_container_add(GTK_CONTAINER(alignment), table);
 
-    label = gtk_label_new (_("Start Angle:"));
+    label = gtk_label_new (_("Arc Radius:"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
     gtk_table_attach(GTK_TABLE(table), label, 0,1,0,1, GTK_FILL,0,0,0);
 
-    spin_start = gtk_spin_button_new_with_range(-360,360,1);
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_start),0);
-    gtk_widget_grab_focus(spin_start);
-    gtk_entry_set_activates_default(GTK_ENTRY(spin_start), TRUE);
-    gtk_table_attach_defaults(GTK_TABLE(table), spin_start, 1,2,0,1);
+    radius = gtk_spin_button_new_with_range(1, 100000, 100);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(radius), w_current->distance);
+    gtk_widget_grab_focus(radius);
+    gtk_entry_set_activates_default(GTK_ENTRY(radius), TRUE);
+    gtk_table_attach_defaults(GTK_TABLE(table), radius, 1,2,0,1);
 
-    label = gtk_label_new(_("Degrees of Sweep:"));
+    label = gtk_label_new (_("Start Angle:"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
     gtk_table_attach(GTK_TABLE(table), label, 0,1,1,2, GTK_FILL,0,0,0);
 
+    spin_start = gtk_spin_button_new_with_range(-360,360,1);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_start),0);
+    gtk_entry_set_activates_default(GTK_ENTRY(spin_start), TRUE);
+    gtk_table_attach_defaults(GTK_TABLE(table), spin_start, 1,2,1,2);
+
+    label = gtk_label_new(_("Degrees of Sweep:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
+    gtk_table_attach(GTK_TABLE(table), label, 0,1,2,3, GTK_FILL,0,0,0);
+
     spin_sweep = gtk_spin_button_new_with_range(-360,360,1);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_sweep), 90);
-    gtk_widget_grab_focus(spin_sweep);
     gtk_entry_set_activates_default(GTK_ENTRY(spin_sweep), TRUE);
-    gtk_table_attach_defaults(GTK_TABLE(table), spin_sweep, 1,2,1,2);
+    gtk_table_attach_defaults(GTK_TABLE(table), spin_sweep, 1,2,2,3);
 
+    GLADE_HOOKUP_OBJECT(w_current->aawindow, radius, "radius");
     GLADE_HOOKUP_OBJECT(w_current->aawindow, spin_start,"spin_start");
     GLADE_HOOKUP_OBJECT(w_current->aawindow, spin_sweep,"spin_sweep");
     gtk_widget_show_all (w_current->aawindow);
