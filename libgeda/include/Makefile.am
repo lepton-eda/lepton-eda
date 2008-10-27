@@ -11,7 +11,8 @@ noinst_HEADERS = \
 	prototype_priv.h \
 	gettext_priv.h \
 	guile_compat_1.6.h \
-	i_vars_priv.h
+	i_vars_priv.h \
+	struct_priv.h
 
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~

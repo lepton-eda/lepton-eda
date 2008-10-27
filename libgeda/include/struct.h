@@ -36,7 +36,6 @@ typedef struct st_arc ARC;
 typedef struct st_box BOX;
 typedef struct st_picture PICTURE;
 typedef struct st_text TEXT;
-typedef struct st_point sPOINT;
 typedef struct st_transform TRANSFORM;
 
 typedef struct st_object OBJECT;
@@ -95,11 +94,6 @@ struct st_line {
   int x[2];
   int y[2];
 
-};
-
-struct st_point {
-  gint x;
-  gint y;
 };
 
 /* pb20011014 - name the grips */
