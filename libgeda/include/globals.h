@@ -56,10 +56,6 @@ extern char rc_filename[256]; /* size is hack */
 extern int do_logging;
 extern int logging_dest;
 
-/* colors which are used in o_image */
-extern int image_black;
-extern int image_white;
-
 /* Size of a tab in characters */
 extern int tab_in_chars;
 
