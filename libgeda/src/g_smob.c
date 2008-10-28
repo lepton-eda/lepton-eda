@@ -545,7 +545,7 @@ SCM g_get_object_attributes(SCM object_smob)
  *  its attribute name is the given name, in a given object smob.
  *
  *  \param [in] object_smob  The object smob to get attributes from.
- *  \param [in] attrib_name  The name of the attribute you want the value.
+ *  \param [in] scm_attrib_name  The name of the attribute you want the value.
  *  \return A list of attribute values.
  */
 SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)

@@ -42,8 +42,7 @@
 
 static gint global_pid = 0;
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief create a new page object
  *  \par Function Description
  *  Creates a new page and add it to <B>toplevel</B>'s list of pages.
  *
@@ -118,8 +117,7 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   return page;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief delete a page and it's contents
  *  \par Function Description
  *  Deletes a single page <B>page</B> from <B>toplevel</B>'s list of pages.
  *
@@ -219,11 +217,12 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief Deletes the list of pages of <B>toplevel</B>.
+/*! \brief Deletes the list of pages of <B>toplevel</B>.
  *  \par Function Description
  *  Deletes the list of pages of <B>toplevel</B>.
  *  This function should only be called when you are finishing up.
+ *
+ *  \param toplevel  The TOPLEVEL object.
  */
 void s_page_delete_list(TOPLEVEL *toplevel)
 {
@@ -245,11 +244,12 @@ void s_page_delete_list(TOPLEVEL *toplevel)
   toplevel->page_current = NULL;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief Changes the current page in <B>toplevel</B> to be <B>p_new</B>.
+/*! \brief changes the current page in toplevel
  *  \par Function Description
- *  Changes the current page in <B>toplevel</B> to be <B>p_new</B>.
+ *  Changes the current page in \a toplevel to the page \a p_new.
  *
+ *  \param toplevel  The TOPLEVEL object
+ *  \param p_new     The PAGE to go to
  */
 void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new) 
 {
@@ -266,11 +266,13 @@ void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new)
 
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief Search for pages by filename.
+/*! \brief Search for pages by filename.
  *  \par Function Description
- *  Searches in <B>toplevel</B>'s list of pages for a page with a filename
- *  equal to <B>filename</B>.
+ *  Searches in \a toplevel's list of pages for a page with a filename
+ *  equal to \a filename.
+ *
+ *  \param toplevel  The TOPLEVEL object
+ *  \param filename  The filename string to search for
  *  
  *  \return PAGE pointer to a matching page, NULL otherwise.
  */
@@ -296,7 +298,7 @@ PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename)
  *  the list of pages starting at \a page_list, or NULL if there is no
  *  such page.
  *
- *  \param [in] page_list The list of page to search the page in.
+ *  \param [in] list      The list of page to search the page in.
  *  \param [in] pid       The ID of the page to find.
  *  \returns A pointer on the page found or NULL if not found.
  */
@@ -338,8 +340,7 @@ void s_page_print_all (TOPLEVEL *toplevel)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief Saves all the pages of a TOPLEVEL object.
+/*! \brief Saves all the pages of a TOPLEVEL object.
  *  \par Function Description
  *  Saves all the pages in the <B>toplevel</B> parameter.
  *
@@ -388,8 +389,7 @@ gint s_page_save_all (TOPLEVEL *toplevel)
   return status;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief Check if CHANGED flag is set for any page in list.
+/*! \brief Check if CHANGED flag is set for any page in list.
  *  \par Function Description
  *  This function checks the CHANGED flag for all pages in the <B>list</B>
  *  object.
@@ -417,9 +417,9 @@ gboolean s_page_check_changed (GedaPageList *list)
 
 /*! \brief Reset the CHANGED flag of all pages.
  *  \par Function Description
- *  This function resets the CHANGED flag of each page following <B>head</B>.
+ *  This function resets the CHANGED flag of each page following \a head.
  *
- *  \param [in,out] head  PAGE list to set CHANGED flags in.
+ *  \param [in,out] list  PAGE list to set CHANGED flags in.
  */
 void s_page_clear_changed (GedaPageList *list)
 {

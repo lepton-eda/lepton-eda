@@ -27,8 +27,8 @@
  *
  *  \param result [out] The resulting transformation.  If either operand is
  *  NULL, the contents of the result remain unaltered.
- *  \param transform0 [in] The first operand.
- *  \param transform1 [in] The second operand.
+ *  \param a [in] The second operand.
+ *  \param b [in] The second operand.
  */
 void m_transform_combine(TRANSFORM *result, TRANSFORM *a, TRANSFORM *b )
 {
@@ -99,7 +99,7 @@ void m_transform_line(TRANSFORM *transform, LINE *line)
 /** \brief Transforms multiple line segments
  *
  *  \param transform [in] The transform function.
- *  \param line [inout] The GArray of LINE to transform.
+ *  \param lines [inout] The GArray of LINE to transform.
  */
 void m_transform_lines(TRANSFORM *transform, GArray *lines)
 {
@@ -139,7 +139,7 @@ void m_transform_point(TRANSFORM *transform, gint *x, gint *y)
 /** \brief Transforms a polyline or polygon
  *
  *  \param transform [in] The transform function.
- *  \param line [inout] The GArray of sPOINT to transform.
+ *  \param points [inout] The GArray of sPOINT to transform.
  */
 void m_transform_points(TRANSFORM *transform, GArray *points)
 {

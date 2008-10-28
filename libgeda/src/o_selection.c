@@ -99,7 +99,7 @@ void o_selection_print_all(const SELECTION *selection)
 /*! \brief Selects the given object.
  *  \par Sets the select flag, saves the color, and then selects the 
  *  given object
- *  \param [in] o_selected Object to select.
+ *  \param [in] object Object to select.
  *  \param [in] color color of the selected object.
  */
 void o_selection_select(OBJECT *object, int color)

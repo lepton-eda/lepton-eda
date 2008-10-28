@@ -17,6 +17,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/*! \file o_embed.c
+ *  \brief functions to embed and unembed symbols
+ */
+
 #include <config.h>
 
 #include <stdio.h>
@@ -30,10 +35,14 @@
 #endif
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief embed an object into a schematic
  *  \par Function Description
- * 
+ *  This functions embeds an object \a o_current into a
+ *  libgeda. Currently complex objects are just marked to
+ *  be embedded later. Picture objects are embedded immediatly.
+ *
+ *  \param toplevel  The TOPLEVEL object
+ *  \param o_current The OBJECT to embed
  */
 void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
 {
@@ -63,10 +72,14 @@ void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief unembed an object from a schematic
  *  \par Function Description
- * 
+ *  This functions unembeds an object \a o_current from a
+ *  libgeda structure. Complex objects are just marked to
+ *  be not embedded. Picture objects are unembeded immediatly.
+ *
+ *  \param toplevel  The TOPLEVEL object
+ *  \param o_current The OBJECT to unembed
  */
 void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current)
 {

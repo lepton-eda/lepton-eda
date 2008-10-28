@@ -66,7 +66,7 @@ static gint calculate_initial_sweep(gint pitch, gint min_y, gint max_y)
  *  and behavior are consistant with GCompareFunc.
  *
  *  \param a [in] The first sweep event.
- *  \param a [in] The second sweep event.
+ *  \param b [in] The second sweep event.
  *  \return A negative value if the first is less than the second, zero if the
  *  first equals the second, and a positive value if the first is greater than
  *  the second.
@@ -85,7 +85,7 @@ static gint compare_events(gconstpointer a, gconstpointer b)
  *  and behavior are consistant with GCompareFunc.
  *
  *  \param a [in] The first sweep status.
- *  \param a [in] The second sweep status.
+ *  \param b [in] The second sweep status.
  *  \return A negative value if the first is less than the second, zero if the
  *  first equals the second, and a positive value if the first is greater than
  *  the second.

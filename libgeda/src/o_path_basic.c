@@ -62,7 +62,7 @@ typedef void (*FILL_FUNC) (TOPLEVEL *toplevel, FILE *fp, PATH *path,
  *
  *  Both the path type and the filling type are set to default
  *  values : solid path type with a width of 0, and no filling.
- *  It can be changed after with the #o_set_path_options() and
+ *  It can be changed after with the #o_set_line_options() and
  *  #o_set_fill_options().
  *
  *  The object is added to the end of the list described by the
@@ -70,7 +70,8 @@ typedef void (*FILL_FUNC) (TOPLEVEL *toplevel, FILE *fp, PATH *path,
  *
  *  \param [in]     toplevel     The TOPLEVEL object.
  *  \param [in]     type         Must be OBJ_PATH.
- *  \param [in]     color        Circle path color.
+ *  \param [in]     color        The path color.
+ *  \param [in]     path_string  The string representation of the path
  *  \return A pointer to the new end of the object list.
  */
 OBJECT *o_path_new (TOPLEVEL *toplevel,
@@ -524,7 +525,7 @@ void o_path_recalc (TOPLEVEL *toplevel, OBJECT *o_current)
  *        the convex hull of the curve control and end-points.
  *
  *  \param [in]  toplevel  The TOPLEVEL object.
- *  \param [in]  OBJECT     Line OBJECT to read coordinates from.
+ *  \param [in]  object     Line OBJECT to read coordinates from.
  *  \param [out] left       Left path coordinate in WORLD units.
  *  \param [out] top        Top path coordinate in WORLD units.
  *  \param [out] right      Right path coordinate in WORLD units.
@@ -590,10 +591,7 @@ void world_get_path_bounds (TOPLEVEL *toplevel, OBJECT *object,
  *
  *  \param [in] toplevel   The TOPLEVEL object.
  *  \param [in] fp          FILE pointer to Postscript document.
- *  \param [in] x           Upper x coordinate of PATH.
- *  \param [in] y           Upper y coordinate of PATH.
- *  \param [in] width       Width of PATH.
- *  \param [in] height      Height of PATH.
+ *  \param [in] path        The PATH object ot print
  *  \param [in] line_width  PATH Line width.
  *  \param [in] length      Dashed line length.
  *  \param [in] space       Amount of space between dashes.

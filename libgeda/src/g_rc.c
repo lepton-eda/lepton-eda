@@ -442,7 +442,8 @@ SCM g_rc_component_library(SCM path, SCM name)
  *  function, which can be used in the rc files to add a command to
  *  the component library.
  *
- *  \param [in] command Command to add.
+ *  \param [in] listcmd command to get a list of symbols
+ *  \param [in] getcmd  command to get a symbol from the library
  *  \param [in] name    Optional descriptive name for component source.
  *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
  */
