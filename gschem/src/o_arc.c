@@ -924,8 +924,7 @@ void o_arc_end1(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 #endif
 
   /* open a dialog to input the start and end angle */
-  arc_angle_dialog(w_current);
-  
+  arc_angle_dialog(w_current, NULL);
 }
 
 /*! \brief Ends the process of arc input.

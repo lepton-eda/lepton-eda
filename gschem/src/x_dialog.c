@@ -1425,6 +1425,7 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
 {
   GtkWidget *spinentry;
   gint radius, start_angle, sweep_angle;
+  OBJECT *arc_object = NULL;
 
   switch (response) {
   case GTK_RESPONSE_REJECT:
@@ -1438,8 +1439,17 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
     start_angle = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spinentry));
     spinentry = g_object_get_data(G_OBJECT(w_current->aawindow),"spin_sweep");
     sweep_angle = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spinentry));
+    arc_object = (OBJECT*) g_object_get_data(G_OBJECT(w_current->aawindow),"arc_object");
 
-    o_arc_end4(w_current, radius, start_angle, sweep_angle);
+    if (arc_object != NULL) {
+      o_erase_selected(w_current);
+      o_arc_modify(w_current->toplevel, arc_object, radius, 0, ARC_RADIUS);
+      o_arc_modify(w_current->toplevel, arc_object, start_angle, 0, ARC_START_ANGLE);
+      o_arc_modify(w_current->toplevel, arc_object, sweep_angle, 0, ARC_END_ANGLE);
+      o_draw_selected(w_current);
+    } else {
+      o_arc_end4(w_current, radius, start_angle, sweep_angle);
+    }
     break;
   default:
     printf("arc_angle_dialog_response(): strange signal %d\n",response);
@@ -1451,9 +1461,15 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
 
 /*! \brief Creates the arc angle dialog
  *  \par Function Description
- *  This function create the arc angle dialog.
+ *  This function creates the arc angle dialog. Depending on the 
+ *  \a arc_object the entries are filled with the arc OBJECT properties
+ *  or with some standard values.
+ *
+ *  \param [in] w_current   The GSCHEM_TOPLEVEL object
+ *  \param [in] arc_object  an arc OBJECT if used to modify an arc
+ *                          or NULL to create a new arc.
  */
-void arc_angle_dialog (GSCHEM_TOPLEVEL *w_current)
+void arc_angle_dialog (GSCHEM_TOPLEVEL *w_current, OBJECT *arc_object)
 {
   GtkWidget *label = NULL;
   GtkWidget *vbox;
@@ -1506,8 +1522,6 @@ void arc_angle_dialog (GSCHEM_TOPLEVEL *w_current)
     gtk_table_attach(GTK_TABLE(table), label, 0,1,0,1, GTK_FILL,0,0,0);
 
     radius = gtk_spin_button_new_with_range(1, 100000, 100);
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(radius), w_current->distance);
-    gtk_widget_grab_focus(radius);
     gtk_entry_set_activates_default(GTK_ENTRY(radius), TRUE);
     gtk_table_attach_defaults(GTK_TABLE(table), radius, 1,2,0,1);
 
@@ -1516,7 +1530,6 @@ void arc_angle_dialog (GSCHEM_TOPLEVEL *w_current)
     gtk_table_attach(GTK_TABLE(table), label, 0,1,1,2, GTK_FILL,0,0,0);
 
     spin_start = gtk_spin_button_new_with_range(-360,360,1);
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_start),0);
     gtk_entry_set_activates_default(GTK_ENTRY(spin_start), TRUE);
     gtk_table_attach_defaults(GTK_TABLE(table), spin_start, 1,2,1,2);
 
@@ -1525,19 +1538,37 @@ void arc_angle_dialog (GSCHEM_TOPLEVEL *w_current)
     gtk_table_attach(GTK_TABLE(table), label, 0,1,2,3, GTK_FILL,0,0,0);
 
     spin_sweep = gtk_spin_button_new_with_range(-360,360,1);
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_sweep), 90);
     gtk_entry_set_activates_default(GTK_ENTRY(spin_sweep), TRUE);
     gtk_table_attach_defaults(GTK_TABLE(table), spin_sweep, 1,2,2,3);
 
     GLADE_HOOKUP_OBJECT(w_current->aawindow, radius, "radius");
     GLADE_HOOKUP_OBJECT(w_current->aawindow, spin_start,"spin_start");
     GLADE_HOOKUP_OBJECT(w_current->aawindow, spin_sweep,"spin_sweep");
+    g_object_set_data(G_OBJECT(w_current->aawindow), "arc_object", arc_object);
     gtk_widget_show_all (w_current->aawindow);
   }
 
   else {  /* dialog already created */
     gtk_window_present (GTK_WINDOW(w_current->aawindow));
+    radius = g_object_get_data(G_OBJECT(w_current->aawindow),"radius");
+    spin_start = g_object_get_data(G_OBJECT(w_current->aawindow),"spin_start");
+    spin_sweep = g_object_get_data(G_OBJECT(w_current->aawindow),"spin_sweep");
   }
+
+  if (arc_object == NULL) {
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(radius), w_current->distance);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_start),0);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_sweep), 90);
+  } else {
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(radius), 
+			      arc_object->arc->width / 2);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_start),
+			      arc_object->arc->start_angle);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_sweep),
+			      arc_object->arc->end_angle);
+  }
+
+  gtk_widget_grab_focus(radius);
 }
 
 /***************** End of Arc dialog box *****************************/

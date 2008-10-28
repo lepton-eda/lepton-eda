@@ -77,6 +77,9 @@ void o_edit(GSCHEM_TOPLEVEL *w_current, GList *list)
     case(OBJ_PICTURE):
     picture_change_filename_dialog(w_current);
     break;
+    case(OBJ_ARC):
+    arc_angle_dialog(w_current, o_current);
+    break;
     case(OBJ_TEXT):
       str = o_text_get_string (w_current->toplevel, o_current);
       if (o_attrib_get_name_value (str, NULL, NULL) &&
