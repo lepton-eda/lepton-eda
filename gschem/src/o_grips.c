@@ -539,8 +539,8 @@ OBJECT *o_grips_search_line_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  *  of the grip and the object it belongs to respectively.
  *
  *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in]  w_x        Current x coordinate of pointer in screen units.
- *  \param [in]  w_y        Current y coordinate of pointer in screen units.
+ *  \param [in]  w_x        Current x coordinate of pointer in world units.
+ *  \param [in]  w_y        Current y coordinate of pointer in world units.
  *  \return FALSE if an error occurred or no grip was found, TRUE otherwise.
  */
 int o_grips_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
@@ -956,14 +956,9 @@ void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int unsnapped_wx, int unsnapped_wy)
+void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int w_x, w_y;
   int grip = w_current->which_grip;
-
-  w_x = snap_grid(toplevel, unsnapped_wx);
-  w_y = snap_grid(toplevel, unsnapped_wy);
 
   g_assert( w_current->inside_action != 0 );
   g_return_if_fail( w_current->which_object != NULL );
@@ -971,7 +966,7 @@ void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int unsnapped_wx, int unsnapped_
   switch(w_current->which_object->type) {
     case(OBJ_ARC):
     /* erase, update and draw an arc */
-    o_grips_motion_arc (w_current, unsnapped_wx, unsnapped_wy, grip);
+    o_grips_motion_arc (w_current, w_x, w_y, grip);
     break;
 
     case(OBJ_BOX):

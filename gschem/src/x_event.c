@@ -784,7 +784,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     break;
 
     case(GRIPS):
-    o_grips_motion(w_current, unsnapped_wx, unsnapped_wy);
+      o_grips_motion(w_current, w_x, w_y);
     break;
 
     case(STARTSELECT):
