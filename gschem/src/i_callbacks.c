@@ -41,65 +41,6 @@
  *  \par Function Description
  *
  */
-/* Kazu Hirata <kazu@seul.org> on July 25, 1999 - Returns a pointer to
- * the last '.' in the given string. If there is none, the function
- * returns a pointer to the first null character in the string. If you
- * want to change the extention using the return value of the
- * function, you need to do pointer arithmetic, assuming your fname is
- * defined as a constant. :-) Note that, if the only '.' appears as
- * the first character, it is ignored. */
-static const char *fnameext_get(const char* fname)
-{
-  const char *p = strrchr(fname, '.');
-
-  if((p == NULL) || (p == fname)) {
-    p = &fname[strlen(fname)];
-  }
-  return p;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* Kazu Hirata <kazu@seul.org> on July 25, 1999 - The function removes
- * an extention including a '.' if any and returns the new string in a
- * newly allocated memory. If there is no '.' after the first
- * character, then the function simply returns a copy of fname. If
- * memory allocation fails, the function returns NULL. */
-static char *fnameext_remove(const char *fname)
-{
-  const char *p = fnameext_get(fname);
-  char *fname_new = NULL;
-
-  if(*p == '\0') {
-    fname_new = g_strdup (fname);
-  } else {
-    fname_new = g_strndup (fname, p - fname);
-  }
-  return fname_new;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* Kazu Hirata <kazu@seul.org> on July 25, 1999 - The function adds an
- * extention and returns the new string in a newly allocated
- * memory. ext must have '.'  as the first character. If memory
- * allocation fails, the function returns NULL. */
-static char *fnameext_add(const char *fname, const char* ext)
-{
-  return g_strconcat (fname, ext, NULL);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 /* Egil Kvaleberg <egil@kvaleberg.no> on October 7, 2002 - 
  * Initiate the gschemdoc utility to provide the used with as much
  * documentation on the symbol (i.e. component) as we can manage.
@@ -364,26 +305,26 @@ DEFINE_I_CALLBACK(file_save_as)
 DEFINE_I_CALLBACK(file_print)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  char *base=NULL;
+  char *base=NULL, *filename;
   char *ps_filename=NULL;
   
   exit_if_null(w_current);
+  exit_if_null(w_current->toplevel->page_current->page_filename);
+
+  /* shortcut */
+  filename = w_current->toplevel->page_current->page_filename;
 
   /* get the base file name */
-  if (strcmp(fnameext_get(w_current->toplevel->page_current->page_filename),
-             ".sch") == 0) {
-    /* the filename ends with .sch */
-    base = fnameext_remove(w_current->toplevel->page_current->page_filename);
+  if (g_str_has_suffix(filename, ".sch")) {
+    /* the filename ends with ".sch", remove it */
+    base = g_strndup(filename, strlen(filename) - strlen(".sch"));
   } else {
     /* the filename does not end with .sch */
-    base = g_strdup (w_current->toplevel->page_current->page_filename);
-  }
-  if(base == NULL) {
-    /*! \todo do something */
+    base = g_strdup (filename);
   }
 
   /* add ".ps" tp the base filename */
-  ps_filename = fnameext_add(base, ".ps");
+  ps_filename = g_strconcat (base, ".ps", NULL);
   g_free(base);
 
   if (output_filename) {
