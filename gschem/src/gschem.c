@@ -178,6 +178,7 @@ void main_prog(void *closure, int argc, char *argv[])
   pin_draw_func = o_pin_draw;
   text_draw_func = o_text_draw;
   load_newer_backup_func = x_fileselect_load_backup;
+  select_func = o_select_object;
 
   /*! \todo Probably the file name shuold be defined elsewhere */
   /* create log file right away even if logging is enabled */

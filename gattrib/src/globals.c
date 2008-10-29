@@ -39,6 +39,5 @@ int quiet_mode=FALSE;
 /* these are required by libgeda */
 /* I have made most of these NULL because they aren't needed
  * for gattrib -- no drawing is done. */
-void (*select_func)() = s_toplevel_select_object;
 void (*variable_set_func)() = i_vars_set;
 

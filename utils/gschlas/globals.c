@@ -46,9 +46,6 @@ GdkColor black;
 int logfile_fd=-1;
 int logging_dest=LOG_WINDOW;
 
-/* these are required by libgeda */
-void (*select_func)() = o_select_dummy;
-
 /* this is just a dummy function, so that compoments are saved properly */
 void
 o_select_dummy(TOPLEVEL * w_current, OBJECT * o_current,

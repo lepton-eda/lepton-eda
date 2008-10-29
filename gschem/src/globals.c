@@ -49,9 +49,6 @@ GdkColor black;
 
 int logging_dest = LOG_WINDOW;
 
-/* these are required by libgeda */
-void (*select_func)()        = o_select_object; /* NEW SELECTION code */
-
 /* command line options */
 int quiet_mode = FALSE;
 int verbose_mode = FALSE;
