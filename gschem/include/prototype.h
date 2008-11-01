@@ -761,7 +761,7 @@ void x_hscrollbar_update(GSCHEM_TOPLEVEL *w_current);
 void x_vscrollbar_set_ranges(GSCHEM_TOPLEVEL *w_current);
 void x_vscrollbar_update(GSCHEM_TOPLEVEL *w_current);
 void x_scrollbars_update(GSCHEM_TOPLEVEL *w_current);
-void x_basic_warp_cursor(GtkWidget *widget, gint x, gint y, gboolean relative);
+void x_basic_warp_cursor(GtkWidget *widget, gint x, gint y);
 /* x_color.c */
 void x_color_init (void);
 void x_color_free (void);

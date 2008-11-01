@@ -182,7 +182,7 @@ void a_pan(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
    * Not ready for prime time, maybe there is another way to trigger the
    * motion event without changing the cursor position (Werner)
    */
-  /* x_basic_warp_cursor(w_current->drawing_area, x, y, 0); */
+  /* x_basic_warp_cursor(w_current->drawing_area, x, y); */
 }
 
 /*! \todo Finish function documentation!!!

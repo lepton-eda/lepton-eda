@@ -28,10 +28,6 @@
 #include <dmalloc.h>
 #endif
 
-#ifndef __MINGW32__
-#include <gdk/gdkx.h>
-#endif
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -199,10 +195,16 @@ void x_scrollbars_update(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_basic_warp_cursor(GtkWidget* widget, gint x, gint y, gboolean relative)
+void x_basic_warp_cursor (GtkWidget* widget, gint x, gint y)
 {
-#ifndef __MINGW32__
-   XWarpPointer(GDK_WINDOW_XDISPLAY(widget->window), None, 
-                GDK_WINDOW_XWINDOW(widget->window),0,0,0,0,x,y);
-#endif
+  GdkScreen *screen;
+  GdkDisplay *display;
+  int window_x, window_y;
+
+  gdk_window_get_origin (widget->window, &window_x, &window_y);
+
+  screen = gtk_widget_get_screen (widget);
+  display = gdk_screen_get_display (screen);
+
+  gdk_display_warp_pointer (display, screen, window_x + x, window_y + y);
 }

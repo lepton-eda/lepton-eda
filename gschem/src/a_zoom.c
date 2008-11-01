@@ -125,7 +125,7 @@ void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flag
   if (w_current->warp_cursor) {
      WORLDtoSCREEN(toplevel, world_pan_center_x, world_pan_center_y,
 		   &start_x, &start_y);
-     x_basic_warp_cursor(w_current->drawing_area, start_x, start_y, 0);
+     x_basic_warp_cursor (w_current->drawing_area, start_x, start_y);
   }
   else {
     /*! \bug FIXME? trigger a x_event_motion() call without moving the cursor 
@@ -133,7 +133,7 @@ void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flag
      *  Find a way to trigger the x_event_motion() without moving
      *  the mouse cursor (werner) 
      */
-    /* x_basic_warp_cursor(w_current->drawing_area, mouse_x, mouse_y, 0); */
+    /* x_basic_warp_cursor(w_current->drawing_area, mouse_x, mouse_y); */
   }
 }
 
@@ -191,7 +191,7 @@ void a_zoom_extents(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int pan_flags
    *  removed!, it has side effects in the preview of the part dialog 
    *  need to find another way to trigger x_event_motion() (Werner)
    */
-  /* x_basic_warp_cursor(w_current->drawing_area, mouse_x, mouse_y, 0); */
+  /* x_basic_warp_cursor(w_current->drawing_area, mouse_x, mouse_y); */
 
 }
 
