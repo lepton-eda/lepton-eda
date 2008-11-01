@@ -3,7 +3,7 @@
 bin_PROGRAMS = mk_verilog_syms
 
 if CCISGCC
-AM_CFLAGS = -Wall -Werror
+AM_CFLAGS = -Wall
 endif
 
 mk_verilog_syms_SOURCES = \

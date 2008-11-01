@@ -77,7 +77,7 @@ gschem_SOURCES += ${CAIRO_SRCS}
 endif
 
 if CCISGCC
-AM_CFLAGS = -Wall -Werror
+AM_CFLAGS = -Wall
 endif
 
 INCLUDES = -I$(prefix)/include -I$(top_srcdir)/intl -I$(top_srcdir)/include @GSCHEM_CFLAGS@

@@ -3,7 +3,7 @@
 bin_PROGRAMS = gschlas 
 
 if CCISGCC
-AM_CFLAGS = -Wall -Werror
+AM_CFLAGS = -Wall
 endif
 
 # don't forget all *.h files */
