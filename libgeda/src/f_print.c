@@ -160,7 +160,10 @@ int f_print_header(TOPLEVEL *toplevel, FILE *fp,
   do {
     bytes = fread(buf, 1, PROLOG_BUFFER_SIZE, prolog);
     if(ferror(prolog)) break;
-    fwrite(buf, 1, bytes, fp);
+    if (fwrite(buf, 1, bytes, fp) != bytes) {
+      /* An error occurred  with fwrite */
+#warning FIXME: What do we do?
+    }
   } while(!feof(prolog) && !ferror(prolog) && !ferror(fp));
 
   if(ferror(prolog)) {

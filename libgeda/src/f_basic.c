@@ -229,8 +229,10 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
   file_directory = g_dirname (full_filename);
 
   if (file_directory) { 
-    chdir(file_directory);  
-    /*! \bug Probably should do some checking of chdir return values */
+    if (chdir (file_directory)) {
+      /* Error occurred with chdir */
+#warning FIXME: What do we do?
+    }
   }
 
   /* Now open RC and process file */
@@ -315,7 +317,10 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
   /* Reset the directory to the value it had when f_open was
    * called. */
   if (flags & F_OPEN_RESTORE_CWD) {
-    chdir(saved_cwd);
+    if (chdir (saved_cwd)) {
+      /* Error occurred with chdir */
+#warning FIXME: What do we do?
+    }
     g_free(saved_cwd);
   }
 
@@ -452,7 +457,10 @@ int f_save(TOPLEVEL *toplevel, const char *filename)
     /* Restore permissions. */
     chmod (real_filename, st.st_mode);
 #ifdef HAVE_CHOWN
-    chown (real_filename, st.st_uid, st.st_gid);
+    if (chown (real_filename, st.st_uid, st.st_gid)) {
+      /* Error occured with chown */
+#warning FIXME: What do we do?
+    }
 #endif
 
     g_free (real_filename);

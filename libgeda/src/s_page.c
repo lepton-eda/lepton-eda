@@ -258,7 +258,10 @@ void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new)
   toplevel->page_current = p_new;
 
   dirname = g_dirname (p_new->page_filename);
-  chdir (dirname);
+  if (chdir (dirname)) {
+    /* An error occured with chdir */
+#warning FIXME: What do we do?
+  }
   g_free (dirname);
 
 }

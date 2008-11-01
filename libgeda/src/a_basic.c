@@ -223,7 +223,10 @@ int o_save(TOPLEVEL *toplevel, const char *filename)
   }
 
   buffer = o_save_buffer (toplevel);
-  fwrite (buffer, strlen(buffer), 1, fp);
+  if (fwrite (buffer, strlen(buffer), 1, fp) != 1) {
+    /* An error occurred with fwrite */
+#warning FIXME: What do we do?
+  }
   g_free (buffer);
   fclose (fp);
 
