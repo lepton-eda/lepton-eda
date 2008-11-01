@@ -2,6 +2,10 @@
 
 bin_PROGRAMS = mk_verilog_syms
 
+if CCISGCC
+AM_CFLAGS = -Wall -Werror
+endif
+
 mk_verilog_syms_SOURCES = \
 		mk_verilog_syms.c
 

@@ -2,6 +2,10 @@
 
 bin_PROGRAMS = gschlas 
 
+if CCISGCC
+AM_CFLAGS = -Wall -Werror
+endif
+
 # don't forget all *.h files */
 gschlas_SOURCES = \
 		i_vars.c g_rc.c g_register.c globals.c \
