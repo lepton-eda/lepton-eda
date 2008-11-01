@@ -1,5 +1,5 @@
 
-SUBDIRS = src include utils lib scheme examples docs tests
+SUBDIRS = src include lib scheme examples docs tests
 
 EXTRA_DIST = BUGS ChangeLog-1.0 autogen.sh
 

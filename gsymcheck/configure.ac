@@ -309,7 +309,6 @@ AC_CONFIG_FILES([Makefile
 		 scheme/Makefile 
 		 examples/Makefile 
 		 lib/Makefile 
-		 utils/Makefile
 		 docs/Makefile
 		 tests/Makefile
 		 lib/system-gsymcheckrc ])
