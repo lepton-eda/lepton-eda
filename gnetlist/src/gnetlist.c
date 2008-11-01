@@ -246,7 +246,10 @@ void main_prog(void *closure, int argc, char *argv[])
     /* since gnetlist is a command line utility and will deposit its output */
     /* in the current directory.  Having the output go to a different */
     /* directory will confuse the user (confused me, at first). */
-    chdir(cwd);
+    if (chdir (cwd)) {
+      /* Error occured with chdir */
+#warning FIME: What do we do?
+    }
     /* free(cwd); - Defered; see below */
 
     if (argv[argv_index] == NULL) {
@@ -309,7 +312,10 @@ void main_prog(void *closure, int argc, char *argv[])
 
     /* Change back to the directory where we started AGAIN.  This is done */
     /* because the s_traverse functions can change the Current Working Directory. */
-    chdir(cwd);
+    if (chdir (cwd)) {
+      /* Error occured with chdir */
+#warning FIXME: What do we do?
+    }
     g_free(cwd);
 
     /* temporarly reuse input_str */
