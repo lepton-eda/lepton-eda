@@ -4,8 +4,15 @@ bin_PROGRAMS = gsymcheck
 
 # don't forget all *.h files */
 gsymcheck_SOURCES = \
-		g_rc.c g_register.c globals.c gsymcheck.c i_vars.c \
-		parsecmd.c s_check.c s_symstruct.c
+	g_rc.c \
+	g_register.c \
+	globals.c \
+	gsymcheck.c \
+	i_vars.c \
+	parsecmd.c \
+	s_check.c \
+	s_log.c \
+	s_symstruct.c
 
 if CCISGCC
 AM_CFLAGS = -Wall

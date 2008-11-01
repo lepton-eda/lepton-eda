@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
- * gsymcheck - gEDA Symbol Check 
- * Copyright (C) 1998-2007 Ales Hvezda
- * Copyright (C) 1998-2007 gEDA Contributors (see ChangeLog for details)
+ * gsymcheck - gEDA Symbol Check
+ * Copyright (C) 1998-2008 Ales Hvezda
+ * Copyright (C) 1998-2008 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,25 +24,18 @@
 
 #include <libgeda/libgeda.h>
 
-#include "../include/struct.h"
-#include "../include/prototype.h"
+void s_log_update (const gchar *log_domain, GLogLevelFlags log_level,
+                   const gchar *buf)
+{
+  if (buf == NULL)
+    return;
 
+  switch (logging_dest) {
+    case STDOUT_TTY:
+      fputs (buf, stdout);
+      break;
 
-char *rc_filename = NULL; 
-
-/* color stuff */
-GdkColormap *colormap; 
-GdkVisual *visual; 
-
-/* colors */
-GdkColor white;
-GdkColor black;
-
-
-int logfile_fd=-1;
-int logging_dest=STDOUT_TTY;
-
-/* command line arguments */
-int verbose_mode=FALSE;
-int interactive_mode=FALSE;
-int quiet_mode=FALSE;
+    default:
+      break;
+  }
+}

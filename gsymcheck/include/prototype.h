@@ -3,9 +3,6 @@ SCM g_rc_gsymcheck_version(SCM version);
 /* g_register.c */
 void g_register_funcs(void);
 SCM g_quit(void);
-/* globals.c */
-void s_log_update(const gchar *log_domain, GLogLevelFlags log_level,
-                  const gchar *buf);
 /* gsymcheck.c */
 void gsymcheck_quit(void);
 void main_prog(void *closure, int argc, char *argv[]);
@@ -33,6 +30,8 @@ void s_check_connections(OBJECT *object_head, SYMCHECK *s_current);
 void s_check_missing_attribute(OBJECT *object, char *attribute, SYMCHECK *s_current);
 void s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current);
 void s_check_pintype(OBJECT *object_head, SYMCHECK *s_current);
+/* s_log.c */
+void s_log_update (const gchar *log_domain, GLogLevelFlags log_level, const gchar *buf);
 /* s_symstruct.c */
 SYMCHECK *s_symstruct_init(void);
 void s_symstruct_print(SYMCHECK *s_current);
