@@ -15,7 +15,7 @@ gsymcheck_SOURCES = \
 	s_symstruct.c
 
 if CCISGCC
-AM_CFLAGS = -Wall
+AM_CFLAGS = -Wall -Werror
 endif
 
 INCLUDES = -I$(top_srcdir)/include @GSYMCHECK_CFLAGS@

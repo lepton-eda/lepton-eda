@@ -2,7 +2,7 @@
 ## This Makefile.am created for gattrib by SDB 12.13.2003
 
 if CCISGCC
-AM_CFLAGS = -Wall
+AM_CFLAGS = -Wall -Werror
 endif
 
 bin_PROGRAMS = gattrib

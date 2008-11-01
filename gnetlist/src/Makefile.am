@@ -10,7 +10,7 @@ gnetlist_SOURCES = \
 		s_rename.c s_hierarchy.c s_misc.c vams_misc.c
 
 if CCISGCC
-AM_CFLAGS = -Wall
+AM_CFLAGS = -Wall -Werror
 endif
 
 INCLUDES = -I$(top_srcdir)/include @GNETLIST_CFLAGS@

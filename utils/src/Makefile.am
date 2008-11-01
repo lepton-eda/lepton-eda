@@ -4,7 +4,7 @@ bin_PROGRAMS = gmk_sym smash_megafile convert_sym sarlacc_schem olib \
 	       gsch2pcb grenum
 
 if CCISGCC
-AM_CFLAGS = -Wall
+AM_CFLAGS = -Wall -Werror
 endif
 
 # don't forget all *.h files */

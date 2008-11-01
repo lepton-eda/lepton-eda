@@ -6,7 +6,7 @@
 AUTOMAKE_OPTIONS = foreign
 
 if CCISGCC
-AM_CFLAGS = -Wall
+AM_CFLAGS = -Wall -Werror
 endif
 
 # Build a libtool library, libhello.la for installation in libdir.
