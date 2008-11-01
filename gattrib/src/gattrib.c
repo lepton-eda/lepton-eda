@@ -132,6 +132,10 @@ void gattrib_main(void *closure, int argc, char *argv[])
   /* Initialize gEDA stuff */
   libgeda_init();
 
+  /* Ensure object->sel_func can be used to correctly determine object
+   * locking when the project is saved out */
+  select_func = s_toplevel_select_object;
+
   /* Note that argv_index holds index to first non-flag command line option 
    * (that is, to the first file name) */
   argv_index = parse_commandline(argc, argv);

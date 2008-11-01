@@ -63,6 +63,10 @@ main_prog(void *closure, int argc, char *argv[])
 
   libgeda_init();
 
+  /* Ensure object->sel_func can be used to correctly determine object
+   * locking when the project is saved out */
+  select_func = o_select_dummy;
+
   /* create log file right away */
   /* even if logging is enabled */
   logfile = g_build_filename (cwd, "gschlas.log", NULL);
