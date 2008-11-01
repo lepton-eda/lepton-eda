@@ -420,6 +420,7 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   PATH *path = o_current->path;
+  int wleft, wtop, wright, wbottom;
   int line_width, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
   DRAW_FUNC draw_func = NULL;
@@ -429,6 +430,16 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   GdkCapStyle path_end;
 
   if (path == NULL) {
+    return;
+  }
+
+  /* Get read to check for visibility of this line by using it's
+   * bounding box */
+  world_get_single_object_bounds(toplevel, o_current,
+                                 &wleft, &wtop, &wright, &wbottom);
+
+  if ( (toplevel->DONT_REDRAW == 1) ||
+       (!visible(toplevel, wleft, wtop, wright, wbottom)) ) {
     return;
   }
 
