@@ -667,7 +667,7 @@ char *s_path_string_from_path (const PATH *path)
     section = &path->sections[i];
 
     if (i > 0)
-      g_string_append_c (path_string, ' ');
+      g_string_append_c (path_string, '\n');
 
     switch (section->code) {
       case PATH_MOVETO:
