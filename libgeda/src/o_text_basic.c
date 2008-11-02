@@ -57,6 +57,15 @@ GHashTable *font_char_to_file = NULL;
 int tab_in_chars = 8;
 
 
+/*! \brief update the visible part of a string
+ *  \par Function Description
+ *  If a string is an attribute, then it is possible to hide
+ *  the name or the value part of the attribute string.
+ *  This functions updates the text->disp_string according
+ *  to the object->show_name_value settings
+ *  
+ *  \param [in] o  The OBJECT to update
+ */
 static void update_disp_string(OBJECT *o)
 {
   char *name = NULL;
@@ -99,10 +108,16 @@ static void update_disp_string(OBJECT *o)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief calculate and return the boundaries of a text object
  *  \par Function Description
+ *  This function calculates the object boudaries of a text \a object.
  *
+ *  \param [in]  toplevel  The TOPLEVEL object.
+ *  \param [in]  o_current a text object
+ *  \param [out] left      the left world coord
+ *  \param [out] top       the top world coord
+ *  \param [out] right     the right world coord
+ *  \param [out] bottom    the bottom world coord
  */
 int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
                           int *top, int *right, int *bottom)
@@ -111,10 +126,12 @@ int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
                                       left, top, right, bottom);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief create a new text head object
  *  \par Function Description
- *
+ *  This function creates a <b>text_head</b> OBJECT. This OBJECT
+ *  is just a special empty object. This object is never modified.
+ *  
+ *  \return new text head OBJECT
  */
 OBJECT *o_text_new_head (void)
 {
@@ -127,10 +144,10 @@ OBJECT *o_text_new_head (void)
   return new_node;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief initialize the hash tables for the fonts
  *  \par Function Description
- *
+ *  This function initializes the two global hash tables <b>font_loaded</b> 
+ *  and <b>font_char_to_file</b> that are used to store the fonts characters.
  */
 void o_text_init(void)
 {
@@ -156,10 +173,9 @@ void o_text_init(void)
 
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+/*! \brief print informations about some characters
+ *  \note
+ *  This is a debugging function. Do not use it in regular code.
  */
 void o_text_print_set(void)
 {
@@ -182,10 +198,13 @@ void o_text_print_set(void)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief load a font character into an object
  *  \par Function Description
+ *  This function loads a character form a font symbol file.
  *
+ *  \param [in] toplevel    The TOPLEVEL object
+ *  \param [in] needed_char unicode character to load
+ *  return a character OBJECT
  */
 OBJECT *o_text_load_font(TOPLEVEL *toplevel, gunichar needed_char)
 {
@@ -283,10 +302,13 @@ OBJECT *o_text_load_font(TOPLEVEL *toplevel, gunichar needed_char)
   return(o_font_set->font_prim_objs);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief count the lines of a text string
  *  \par Function Description
- *
+ *  This function just counts the number of lines that are
+ *  in the \a string.
+
+ *  \param [in] string  text string to count the lines
+ *  \return the number of lines
  */
 int o_text_num_lines(const char *string) 
 {
@@ -312,12 +334,16 @@ int o_text_num_lines(const char *string)
   return (line_count);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief calculates the height of a text string
  *  \par Function Description
- *
+ *  This function calculates the height of a \a string depending
+ *  on it's text \a size. The number of lines and the spacing
+ *  between the lines are taken into account.
+ * 
+ *  \param [in] string  the text string
+ *  \param [in] size    the text size of the character
+ *  \return the total height of the text string
  */
-/* You do not need to divide the size in half here. */
 int o_text_height(const char *string, int size) 
 {
   int line_count = 0;
@@ -336,13 +362,17 @@ int o_text_height(const char *string, int size)
   return(26*size/2*(1+LINE_SPACING*(line_count-1)));
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief calculate the width of a text
  *  \par Function Description
- *
+ *  This function caluculates the width of a text \a string
+ *  depending on the text \a size and the width of the individual
+ *  characters that are in the text string.
+ *  
+ *  \param [in] toplevel  The TOPLEVEL object
+ *  \param [in] string    The text string
+ *  \param [in] size      The text size
+ *  \return  the total width of the text.
  */
-/* You need to divide the size in half here. */
-/*! \todo FIXME consistancy. */
 int o_text_width(TOPLEVEL *toplevel, char *string, int size)
 {
   int width=0, max_width=0;
@@ -418,10 +448,24 @@ int o_text_width(TOPLEVEL *toplevel, char *string, int size)
   return max_width;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief create a complex text object from a string
  *  \par Function Description
+ *  This function converts the \a string into a list of basic objects.
+ *  All basic objects are appendend to the \a object_list.
+ *  The basic objects are collected from the basic font definition 
+ *  of each character of they are created as lines for the overbar feature.
  *
+ *  \param [in] toplevel    The TOPLEVEL object
+ *  \param [in] object_list The list to append the basic objects
+ *  \param [in] string      The string to create the object list from
+ *  \param [in] size        The size of the text object
+ *  \param [in] color       The color of the text object
+ *  \param [in] x           The x coord of the text object
+ *  \param [in] y           The y coord of the text object
+ *  \param [in] alignment   The alignment of the text object
+ *  \param [in] angle       The angle of the text object (in 90 degree steps)
+ *  
+ *  \return the object list of the primary text objects
  */
 OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
 			     char *string, int size, int color, int x, int y,
@@ -901,8 +945,7 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
   return(object_list);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief Creates a text OBJECT and the graphical objects representing it
+/*! \brief Creates a text OBJECT and the graphical objects representing it
  *  \par Function Description
  *  Create an OBJECT of type OBJ_TEXT.
  *  Also add the OBJECTs forming the graphical representation of the visible
@@ -990,10 +1033,12 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
   return new_node;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief update the visual boundaries of the text object
  *  \par Function Description
+ *  This function updates the boundaries of the object \a o_current.
  *
+ *  \param [in]  toplevel  The TOPLEVEL object
+ *  \param [in]  o_current The OBJECT to update
  */
 void o_text_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 {
@@ -1013,10 +1058,20 @@ void o_text_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
   o_current->w_bounds_valid = TRUE;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief read a text object from a char buffer
  *  \par Function Description
- *
+ *  This function reads a text object from the textbuffer \a tb and 
+ *  the text starting with the line \a firstline.
+ *  If the line object was read successfully, a new object is
+ *  create and appended to the \a object_list.
+ *  
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] object_list  list of OBJECTS to append a new text
+ *  \param [in] first_line   the first line of the text
+ *  \param [in] tb           a text buffer (usually a line of a schematic file)
+ *  \param [in] release_ver  The release number gEDA
+ *  \param [in] fileformat_ver a integer value of the file format
+ *  \return The object list
  */
 OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
 		    const char *first_line,
@@ -1152,10 +1207,14 @@ OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
   return(object_list);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief read and set infos of a font object
  *  \par Function Description
- *
+ *  This function reads the font definition buffer \a buf and sets 
+ *  the width of a character. This function also deals with the special,
+ *  invisible character space and newline.
+ *  
+ *  \param [in] buf  the font definition according to the geda file format
+ *  \todo  Investigate why the TAB character is not defined here.
  */
 void o_text_set_info_font(char buf[])
 {
@@ -1225,10 +1284,13 @@ void o_text_set_info_font(char buf[])
   
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Create a string representation of the text object
  *  \par Function Description
+ *  This function takes a text \a object and return a string
+ *  according to the file format definition.
  *
+ *  \param [in] object  a text OBJECT
+ *  \return the string representation of the text OBJECT
  */
 char *o_text_save(OBJECT *object)
 {
@@ -1263,10 +1325,13 @@ char *o_text_save(OBJECT *object)
   return(buf);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief recreate the graphics of a text object
  *  \par Function Description
+ *  This function updates the underlying primary of the text object 
+ *  \a o_current.
  *
+ *  \param toplevel  The TOPLEVEL object
+ *  \param o_current The text object to update
  */
 void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
 {
@@ -1317,10 +1382,14 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
   g_free(value);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief move a text object
  *  \par Function Description
+ *  This function changes the position of a text object \a o_current.
  *
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] dx           The x-distance to move the object
+ *  \param [in] dy           The y-distance to move the object
+ *  \param [in] o_current    The text OBJECT to be moved
  */
 void o_text_translate_world(TOPLEVEL *toplevel,
                             int dx, int dy, OBJECT *o_current)
@@ -1334,10 +1403,13 @@ void o_text_translate_world(TOPLEVEL *toplevel,
   o_text_recalc( toplevel, o_current );
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief create a copy of a text object
  *  \par Function Description
+ *  This function creates a copy of the text object \a o_current.
  *
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] o_current    The object that is copied
+ *  \return a new text object
  */
 OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
@@ -1362,10 +1434,13 @@ OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   return new_obj;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief delete a font set
  *  \par Function Description
+ *  This is a GHRFunc function that deletes a single font set.
  *
+ *  \param [in] key        The hash key (the font charater)
+ *  \param [in] value      The value of the hash table (the font object)
+ *  \param [in] user_data  Data supplied by the user (the TOPLEVEL object)
  */
 static gboolean delete_font_set (gpointer key, gpointer value,
 				 gpointer user_data)
@@ -1388,10 +1463,10 @@ static gboolean delete_font_set (gpointer key, gpointer value,
   return TRUE;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief free the font hash tables
  *  \par Function Description
- *
+ *  This function destroys the two global font hash tables
+ *  <b>font_loaded</b> and <b>font_char_to_file</b>
  */
 void o_text_freeallfonts(TOPLEVEL *toplevel)
 {
@@ -1496,10 +1571,16 @@ void o_text_print_text_height_full(FILE *fp, char *string, int size)
           size * LINE_SPACING * (num_lines - 1)));
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief write a text string to a postscript file
  *  \par Function Description
+ *  This function writes the single \a string into the postscript file \a fp.
  *
+ *  \param [in] fp           pointer to a FILE structure
+ *  \param [in] string       The string to print
+ *  \param [in] unicode_count Number of items in the unicode table
+ *  \param [in] unicode_table Table of unicode items
+ *  
+ *  \todo investigate whether the TAB character is handled correctly
  */
 void o_text_print_text_string(FILE *fp, char *string, int unicode_count, 
 			      gunichar *unicode_table)
@@ -1550,10 +1631,17 @@ void o_text_print_text_string(FILE *fp, char *string, int unicode_count,
   fprintf(fp,") ");
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief print a text object into a postscript file
  *  \par Function Description
- *
+ *  This function writes the postscript representation of the text object
+ *  \a o_current into the the file \a fp.
+ *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] fp           pointer to a FILE structure
+ *  \param [in] o_current    The OBJECT to print
+ *  \param [in] origin_x     x-coord of the postscript origin
+ *  \param [in] origin_y     y-coord of the postscript origin
+ *  \param [in] unicode_count Number of items in the unicode table
+ *  \param [in] unicode_table Table of unicode items
  */
 void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 		  int origin_x, int origin_y, 
@@ -1707,10 +1795,17 @@ void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief rotate a text object around a centerpoint
  *  \par Function Description
- *
+ *  This function rotates a text \a object around the point
+ *  (\a world_centerx, \a world_centery).
+ *  
+ *  \param [in] toplevel      The TOPLEVEL object
+ *  \param [in] world_centerx x-coord of the rotation center
+ *  \param [in] world_centery y-coord of the rotation center
+ *  \param [in] angle         The angle to rotate the text object
+ *  \param [in] object        The text object
+ *  \note only steps of 90 degrees are allowed for the \a angle
  */
 void o_text_rotate_world(TOPLEVEL *toplevel,
                          int world_centerx, int world_centery,
@@ -1738,10 +1833,15 @@ void o_text_rotate_world(TOPLEVEL *toplevel,
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief mirror a text object horizontaly at a centerpoint
  *  \par Function Description
- *
+ *  This function mirrors a text \a object horizontaly at the point
+ *  (\a world_centerx, \a world_centery).
+ *  
+ *  \param [in] toplevel      The TOPLEVEL object
+ *  \param [in] world_centerx x-coord of the mirror position
+ *  \param [in] world_centery y-coord of the mirror position
+ *  \param [in] object        The text object
  */
 void o_text_mirror_world(TOPLEVEL *toplevel,
 			 int world_centerx, int world_centery,
