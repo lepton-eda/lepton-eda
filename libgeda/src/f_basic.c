@@ -44,6 +44,11 @@
 #include <string.h>
 #endif
 
+# if defined (_WIN32)
+#  define WIN32_LEAN_AND_MEAN
+#  include <windows.h> /* for GetFullPathName */
+# endif
+
 #include "libgeda_priv.h"
 
 #ifdef HAVE_LIBDMALLOC
@@ -497,14 +502,13 @@ int f_save(TOPLEVEL *toplevel, const char *filename)
  */
 gchar *f_normalize_filename (const gchar *name, GError **error)
 {
-#ifdef G_OS_WIN32
-#define ROOT_MARKER_LEN 3
+#if defined (_WIN32)
+    char buf[MAX_PATH];
 #else
-#define ROOT_MARKER_LEN 1
-#endif /* G_OS_WIN32 */   
-  GString *rpath;
-  const char *start, *end;
-  
+    GString *rpath;
+    const char *start, *end;
+#endif
+
   if (name == NULL) {
     g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_INVAL,
                  "%s", g_strerror (EINVAL));
@@ -517,8 +521,31 @@ gchar *f_normalize_filename (const gchar *name, GError **error)
     return NULL;
   }
 
+#if defined (_WIN32)
+  /* Windows method (modified) from libiberty's lrealpath.c, GPL V2+
+   *
+   * We assume we don't have symlinks and just canonicalize to a
+   * Windows absolute path.  GetFullPathName converts ../ and ./ in
+   * relative paths to absolute paths, filling in current drive if
+   * one is not given or using the current directory of a specified
+   * drive (eg, "E:foo"). It also converts all forward slashes to
+   * back slashes.
+   */
+  DWORD len = GetFullPathName (name, MAX_PATH, buf, NULL);
+  if (len == 0 || len > MAX_PATH - 1) {
+    return g_strdup (name);
+  } else {
+    /* The file system is case-preserving but case-insensitive,
+     * canonicalize to lowercase, using the codepage associated
+     * with the process locale.  */
+    CharLowerBuff (buf, len);
+    return g_strdup (buf);
+  }
+#else
+#define ROOT_MARKER_LEN 1
+
   rpath = g_string_sized_new (strlen (name));
-  
+
   /* if relative path, prepend current dir */
   if (!g_path_is_absolute (name)) {
     gchar *cwd = g_get_current_dir ();
@@ -572,18 +599,19 @@ gchar *f_normalize_filename (const gchar *name, GError **error)
       }
     }
   }
-  
+
   if (G_IS_DIR_SEPARATOR (rpath->str[rpath->len - 1]) &&
       rpath->len > ROOT_MARKER_LEN) {
     g_string_set_size (rpath, rpath->len - 1);
   }
-  
+
   return g_string_free (rpath, FALSE);
 
-  error:
+error:
   g_string_free (rpath, TRUE);
   return NULL;
 #undef ROOT_MARKER_LEN
+#endif
 }
 
 /*! \brief Follow symlinks until a real file is found
