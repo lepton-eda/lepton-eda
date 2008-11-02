@@ -17,6 +17,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/*! \file o_text_basic.c
+ *  \brief functions for the text and fonts
+ */
+
 #include <config.h>
 
 #include <stdio.h>
@@ -38,8 +43,19 @@
 /*! Default setting for text draw function. */
 void (*text_draw_func)() = NULL;
 
-#define WINONLY	1
-#define BACKING 2
+/*! \note
+ *  font storage and friends are staying global so that all can access
+ */
+
+/*! Hashtable storing font_character (string) as a key, and pointer to data */
+GHashTable *font_loaded = NULL;
+
+/*! Hashtable storing mapping between character and font definition file */
+GHashTable *font_char_to_file = NULL;
+
+/*! Size of a tab in characters */
+int tab_in_chars = 8;
+
 
 static void update_disp_string(OBJECT *o)
 {
@@ -82,19 +98,6 @@ static void update_disp_string(OBJECT *o)
     text->disp_string = g_strdup (text->string);
   }
 }
-
-/*! \note
- *  font storage and friends are staying global so that all can access
- */
-
-/*! Hashtable storing font_character (string) as a key, and pointer to data */
-GHashTable *font_loaded = NULL;
-
-/*! Hashtable storing mapping between character and font definition file */
-GHashTable *font_char_to_file = NULL;
-
-/*! Size of a tab in characters */
-int tab_in_chars = 8;
 
 /*! \todo Finish function documentation!!!
  *  \brief
