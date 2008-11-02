@@ -200,9 +200,6 @@ OBJECT *o_text_read(TOPLEVEL *toplevel,
 		    unsigned int release_ver,
 		    unsigned int fileformat_ver);
 char *o_text_save(OBJECT *object);
-void o_text_print_text_width(FILE *fp, char *output_string);
-void o_text_print_text_height(FILE *fp, int size);
-void o_text_print_text_height_full(FILE *fp, char *string, int size);
 void o_text_print_text_string(FILE *fp, char *string, int unicode_count, gunichar *unicode_table);
 void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y, int unicode_count, gunichar *unicode_table);
 gdouble o_text_shortest_distance(TEXT *text, gint x, gint y);
