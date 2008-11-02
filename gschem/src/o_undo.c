@@ -37,9 +37,7 @@
 static int undo_file_index=0;
 static int prog_pid=0;
 
-/* TMP environment variable */
-static char* TMP = NULL;
-static int freeTMP = FALSE;
+static char* tmp_path = NULL;
 
 /* this is additional number of levels (or history) at which point the */
 /* undo stack will be trimmed, it's used a safety to prevent running out */ 
@@ -55,13 +53,12 @@ void o_undo_init(void)
 {
   prog_pid = getpid();
 
-  TMP = getenv("TMP");
-  if (!TMP) {
-     TMP = g_strdup ("/tmp");
-     freeTMP = TRUE;
+  tmp_path = g_strdup (getenv("TMP"));
+  if (tmp_path == NULL) {
+     tmp_path = g_strdup ("/tmp");
   }
 #if DEBUG
-  printf("%s\n", TMP);
+  printf("%s\n", tmp_path);
 #endif
 }
 
@@ -101,7 +98,7 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
     }
 
     filename = g_strdup_printf("%s%cgschem.save%d_%d.sch",
-                               TMP, G_DIR_SEPARATOR,
+                               tmp_path, G_DIR_SEPARATOR,
                                prog_pid, undo_file_index++);
 
     /* Changed from f_save to o_save when adding backup copy creation. */
@@ -471,16 +468,14 @@ void o_undo_cleanup(void)
   char *filename;
 
   for (i = 0 ; i < undo_file_index; i++) {
-    filename = g_strdup_printf("%s%cgschem.save%d_%d.sch", TMP,
+    filename = g_strdup_printf("%s%cgschem.save%d_%d.sch", tmp_path,
                                G_DIR_SEPARATOR, prog_pid, i);
     unlink(filename);
     g_free(filename);
   }
 
-  if (freeTMP) {
-    g_free(TMP);
-    TMP = NULL;
-  }
+  g_free(tmp_path);
+  tmp_path = NULL;
 }
 
 /*! \todo Finish function documentation!!!
