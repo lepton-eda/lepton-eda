@@ -25,7 +25,7 @@
 #define _DEFINES_H_INCL
 
 /* Current schematic/symbol file format */
-#define FILEFORMAT_VERSION     1
+#define FILEFORMAT_VERSION     2
 
 /* release version which had file format changes */
 /* New file format changes after 20030921 use the above version */
