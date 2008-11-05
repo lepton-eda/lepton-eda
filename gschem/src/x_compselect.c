@@ -37,7 +37,7 @@
 #endif
 
 #include "gschem.h"
-#include <gdk/gdkkeysyms.h> 
+#include <gdk/gdkkeysyms.h>
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -82,7 +82,7 @@ enum compselect_view {
 static enum compselect_view
 compselect_get_view (Compselect *compselect)
 {
-  switch (gtk_notebook_get_current_page(compselect->viewtabs)) {
+  switch (gtk_notebook_get_current_page (compselect->viewtabs)) {
     case 0: return VIEW_INUSE;  /* In use page */
     case 1: return VIEW_CLIB;   /* Component library page */
     default:
@@ -134,17 +134,17 @@ x_compselect_callback_response (GtkDialog *dialog,
               w_current->include_complex = 1;
               break;
             default:
-              g_assert_not_reached();
+              g_assert_not_reached ();
         }
 
         switch (w_current->event_state) {
           case ENDCOMP:
             /* Undraw the component which was being placed */
-            o_place_rubberplace_xor(w_current, FALSE);
+            o_place_rubberplace_xor (w_current, FALSE);
             /* Fall through */
           case DRAWCOMP:
-            s_delete_object_glist(toplevel,
-                                  toplevel->page_current->place_list);
+            s_delete_object_glist (toplevel,
+                                   toplevel->page_current->place_list);
             toplevel->page_current->place_list = NULL;
             break;
 
@@ -158,7 +158,7 @@ x_compselect_callback_response (GtkDialog *dialog,
           w_current->event_state = SELECT;
         } else {
           /* Otherwise set the new symbol to place */
-          o_complex_prepare_place(w_current, s_clib_symbol_get_name (symbol));
+          o_complex_prepare_place (w_current, s_clib_symbol_get_name (symbol));
         }
         break;
       }
@@ -173,7 +173,7 @@ x_compselect_callback_response (GtkDialog *dialog,
         }
 
         /* Hide the component selector */
-        g_object_set (G_OBJECT(compselect), "hidden", TRUE, NULL);
+        g_object_set (G_OBJECT (compselect), "hidden", TRUE, NULL);
         break;
 
       case GTK_RESPONSE_CLOSE:
@@ -189,8 +189,8 @@ x_compselect_callback_response (GtkDialog *dialog,
           o_redraw_cleanstates (w_current);
 
           /* return to the default state */
-          i_set_state(w_current, SELECT);
-          i_update_toolbar(w_current);
+          i_set_state (w_current, SELECT);
+          i_update_toolbar (w_current);
         }
         break;
 
@@ -199,7 +199,7 @@ x_compselect_callback_response (GtkDialog *dialog,
            can handle the response ID received. */
         break;
   }
-  
+
 }
 
 /*! \brief Opens a component selection dialog.
@@ -228,25 +228,25 @@ x_compselect_open (GSCHEM_TOPLEVEL *w_current)
                       "response",
                       G_CALLBACK (x_compselect_callback_response),
                       w_current);
-    
-    gtk_window_set_transient_for(GTK_WINDOW(w_current->cswindow),
-				 GTK_WINDOW(w_current->main_window));
+
+    gtk_window_set_transient_for (GTK_WINDOW (w_current->cswindow),
+                                  GTK_WINDOW (w_current->main_window));
 
     gtk_widget_show (w_current->cswindow);
-    
-  } else {
-    gtk_window_present (GTK_WINDOW(w_current->cswindow));
-  }
-  gtk_editable_select_region(GTK_EDITABLE(COMPSELECT(w_current->cswindow)->entry_filter), 0, -1);
 
-  /* Set the focus to the filter entry only if it is in the current 
+  } else {
+    gtk_window_present (GTK_WINDOW (w_current->cswindow));
+  }
+  gtk_editable_select_region (GTK_EDITABLE (COMPSELECT (w_current->cswindow)->entry_filter), 0, -1);
+
+  /* Set the focus to the filter entry only if it is in the current
      displayed tab */
-  compselect_notebook = GTK_NOTEBOOK(COMPSELECT(w_current->cswindow)->viewtabs);
-  current_tab = gtk_notebook_get_nth_page(compselect_notebook,
-                                          gtk_notebook_get_current_page(compselect_notebook));
-  entry_filter = GTK_WIDGET(COMPSELECT(w_current->cswindow)->entry_filter);
-  if (gtk_widget_is_ancestor(entry_filter, current_tab)) {
-    gtk_widget_grab_focus (entry_filter); 
+  compselect_notebook = GTK_NOTEBOOK (COMPSELECT (w_current->cswindow)->viewtabs);
+  current_tab = gtk_notebook_get_nth_page (compselect_notebook,
+                                           gtk_notebook_get_current_page (compselect_notebook));
+  entry_filter = GTK_WIDGET (COMPSELECT (w_current->cswindow)->entry_filter);
+  if (gtk_widget_is_ancestor (entry_filter, current_tab)) {
+    gtk_widget_grab_focus (entry_filter);
   }
 }
 
@@ -264,7 +264,7 @@ x_compselect_close (GSCHEM_TOPLEVEL *w_current)
     g_assert (IS_COMPSELECT (w_current->cswindow));
     gtk_widget_destroy (w_current->cswindow);
     w_current->cswindow = NULL;
-  }    
+  }
 }
 
 
@@ -286,7 +286,7 @@ x_compselect_deselect (GSCHEM_TOPLEVEL *w_current)
       gtk_tree_view_get_selection (compselect->libtreeview));
     break;
   default:
-    g_assert_not_reached();
+    g_assert_not_reached ();
   }
 }
 
@@ -393,7 +393,7 @@ lib_model_filter_visible_func (GtkTreeModel *model,
   gboolean ret;
 
   g_assert (IS_COMPSELECT (data));
-  
+
   text = gtk_entry_get_text (compselect->entry_filter);
   if (g_ascii_strcasecmp (text, "") == 0) {
     return TRUE;
@@ -417,15 +417,15 @@ lib_model_filter_visible_func (GtkTreeModel *model,
                         0, &sym,
                         -1);
     compname = s_clib_symbol_get_name (sym);
-    /* Do a case insensitive comparison, converting the strings 
+    /* Do a case insensitive comparison, converting the strings
        to uppercase */
-    compname_upper = g_ascii_strup(compname, -1);
-    text_upper = g_ascii_strup(text, -1);
+    compname_upper = g_ascii_strup (compname, -1);
+    text_upper = g_ascii_strup (text, -1);
     pattern = g_strconcat ("*", text_upper, "*", NULL);
     ret = g_pattern_match_simple (pattern, compname_upper);
-    g_free(compname_upper);
-    g_free(text_upper);
-    g_free(pattern);
+    g_free (compname_upper);
+    g_free (text_upper);
+    g_free (pattern);
   }
 
   return ret;
@@ -466,9 +466,9 @@ tree_row_activated (GtkTreeView       *tree_view,
 /*! \brief GCompareFunc to sort an text object list by the object strings
  */
 static gint
-sort_object_text(OBJECT *a, OBJECT *b)
+sort_object_text (OBJECT *a, OBJECT *b)
 {
-  return strcmp(a->text->string, b->text->string);
+  return strcmp (a->text->string, b->text->string);
 }
 
 enum {
@@ -479,7 +479,7 @@ enum {
 
 /*! \brief Update the model of the attributes treeview
  *  \par Function Description
- *  This function takes the toplevel attributes from the preview widget and 
+ *  This function takes the toplevel attributes from the preview widget and
  *  puts them into the model of the <b>attrtreeview</b> widget.
  *  \param [in] compselect       The dialog compselect
  *  \param [in] preview_toplevel The toplevel of the preview widget
@@ -516,41 +516,41 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
   }
 
   o_attrlist = o_complex_get_toplevel_attribs (preview_toplevel,
-					       preview_toplevel->page_current->object_head);
+                                               preview_toplevel->page_current->object_head);
 
   filter_list = GSCHEM_DIALOG (compselect)->w_current->component_select_attrlist;
 
-  if (filter_list != NULL 
-      && strcmp(filter_list->data, "*") == 0) {
+  if (filter_list != NULL
+      && strcmp (filter_list->data, "*") == 0) {
     /* display all attributes in alphabetical order */
-    o_attrlist = g_list_sort(o_attrlist, (GCompareFunc) sort_object_text);
-    for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next(o_iter)) {
+    o_attrlist = g_list_sort (o_attrlist, (GCompareFunc) sort_object_text);
+    for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next (o_iter)) {
       o_current = o_iter->data;
-      o_attrib_get_name_value(o_current->text->string, &name, &value);
-      gtk_list_store_append(model, &iter);
-      gtk_list_store_set(model, &iter, 0, name, 1, value, -1);
-      g_free(name);
-      g_free(value);
+      o_attrib_get_name_value (o_current->text->string, &name, &value);
+      gtk_list_store_append (model, &iter);
+      gtk_list_store_set (model, &iter, 0, name, 1, value, -1);
+      g_free (name);
+      g_free (value);
     }
   } else {
     /* display only attribute that are in the filter list */
     for (listiter = filter_list;
-	 listiter != NULL;
-	 listiter = g_list_next(listiter)) {
-      for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next(o_iter)) {
-	o_current = o_iter->data;
-	if (o_attrib_get_name_value(o_current->text->string, &name, &value)) {
-	  if (strcmp(name, listiter->data) == 0) {
-	    gtk_list_store_append(model, &iter);
-	    gtk_list_store_set(model, &iter, 0, name, 1, value, -1);
-	  }
-	  g_free(name);
-	  g_free(value);
-	}
+         listiter != NULL;
+         listiter = g_list_next (listiter)) {
+      for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next (o_iter)) {
+        o_current = o_iter->data;
+        if (o_attrib_get_name_value (o_current->text->string, &name, &value)) {
+          if (strcmp (name, listiter->data) == 0) {
+            gtk_list_store_append (model, &iter);
+            gtk_list_store_set (model, &iter, 0, name, 1, value, -1);
+          }
+          g_free (name);
+          g_free (value);
+        }
       }
     }
   }
-  g_list_free(o_attrlist);
+  g_list_free (o_attrlist);
 }
 
 /*! \brief Handles changes in the treeview selection.
@@ -601,8 +601,8 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
 
   /* update the attributes with the toplevel of the preview widget*/
   if (compselect->attrtreeview != NULL)
-    update_attributes_model (compselect, 
-			     compselect->preview->preview_w_current->toplevel);
+    update_attributes_model (compselect,
+                             compselect->preview->preview_w_current->toplevel);
 
   /* signal a component has been selected to parent of dialog */
   g_signal_emit_by_name (compselect,
@@ -632,7 +632,7 @@ compselect_filter_timeout (gpointer data)
 
   /* resets the source id in compselect */
   compselect->filter_timeout = 0;
-  
+
   model = gtk_tree_view_get_model (compselect->libtreeview);
 
   if (model != NULL) {
@@ -665,7 +665,7 @@ compselect_callback_filter_entry_changed (GtkEditable *editable,
   /* turns button off if filter entry is empty */
   /* turns it on otherwise */
   button    = GTK_WIDGET (compselect->button_clear);
-  sensitive = 
+  sensitive =
     (g_ascii_strcasecmp (gtk_entry_get_text (compselect->entry_filter),
                          "") != 0);
   if (GTK_WIDGET_IS_SENSITIVE (button) != sensitive) {
@@ -681,7 +681,7 @@ compselect_callback_filter_entry_changed (GtkEditable *editable,
   compselect->filter_timeout = g_timeout_add (COMPSELECT_FILTER_INTERVAL,
                                               compselect_filter_timeout,
                                               compselect);
- 
+
 }
 
 /*! \brief Handles a click on the clear button.
@@ -703,7 +703,7 @@ compselect_callback_filter_button_clicked (GtkButton *button,
 
   /* clears text in text entry for filter */
   gtk_entry_set_text (compselect->entry_filter, "");
-  
+
 }
 
 /*! \brief Handles changes of behavior.
@@ -772,14 +772,14 @@ create_lib_tree_model (Compselect *compselect)
 {
   GtkTreeStore *store;
   GList *srchead, *srclist;
-  GList *symhead, *symlist; 
+  GList *symhead, *symlist;
 
   store = (GtkTreeStore*)gtk_tree_store_new (1, G_TYPE_POINTER);
-  
+
   /* populate component store */
   srchead = s_clib_get_sources (GSCHEM_DIALOG (compselect)->w_current->sort_component_library != 0);
-  for (srclist = srchead; 
-       srclist != NULL; 
+  for (srclist = srchead;
+       srclist != NULL;
        srclist = g_list_next (srclist)) {
 
     GtkTreeIter iter, iter2;
@@ -788,11 +788,11 @@ create_lib_tree_model (Compselect *compselect)
     gtk_tree_store_set (store, &iter,
                         0, srclist->data,
                         -1);
-    
+
     symhead = s_clib_source_get_symbols ((CLibSource *)srclist->data);
-    for (symlist = symhead; 
-	 symlist != NULL; 
-	 symlist = g_list_next (symlist)) {
+    for (symlist = symhead;
+         symlist != NULL;
+         symlist = g_list_next (symlist)) {
 
       gtk_tree_store_append (store, &iter2, &iter);
       gtk_tree_store_set (store, &iter2,
@@ -810,10 +810,10 @@ create_lib_tree_model (Compselect *compselect)
 /* \brief On-demand refresh of the component library.
  * \par Function Description
  * Requests a rescan of the component library in order to pick up any
- * new signals, and then updates the component selector. 
+ * new signals, and then updates the component selector.
  */
 static void
-compselect_callback_refresh_library (GtkButton *button, gpointer user_data) 
+compselect_callback_refresh_library (GtkButton *button, gpointer user_data)
 {
   Compselect *compselect = COMPSELECT (user_data);
   GtkTreeModel *model;
@@ -935,7 +935,7 @@ create_inuse_treeview (Compselect *compselect)
                     "clicked",
                     G_CALLBACK (compselect_callback_refresh_library),
                     compselect);
-                                     
+
   /* add the refresh button area to the vertical box */
   gtk_box_pack_start (GTK_BOX (vbox), hbox,
                       FALSE, FALSE, 0);
@@ -947,7 +947,7 @@ create_inuse_treeview (Compselect *compselect)
 static GtkWidget *
 create_lib_treeview (Compselect *compselect)
 {
-  GtkWidget *libtreeview, *vbox, *scrolled_win, *label, 
+  GtkWidget *libtreeview, *vbox, *scrolled_win, *label,
     *hbox, *entry, *button;
   GtkTreeModel *child_model, *model;
   GtkTreeSelection *selection;
@@ -970,7 +970,7 @@ create_lib_treeview (Compselect *compselect)
                                        "child-model",  child_model,
                                        "virtual-root", NULL,
                                        NULL);
-  
+
   scrolled_win = GTK_WIDGET (
     g_object_new (GTK_TYPE_SCROLLED_WINDOW,
                   /* GtkContainer */
@@ -1017,7 +1017,7 @@ create_lib_treeview (Compselect *compselect)
                                            lib_treeview_set_cell_data,
                                            NULL, NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (libtreeview), column);
-  
+
   /* add the treeview to the scrolled window */
   gtk_container_add (GTK_CONTAINER (scrolled_win), libtreeview);
   /* set directory/component treeview of compselect */
@@ -1027,7 +1027,7 @@ create_lib_treeview (Compselect *compselect)
   gtk_box_pack_start (GTK_BOX (vbox), scrolled_win,
                       TRUE, TRUE, 0);
 
-  
+
   /* -- filter area -- */
   hbox = GTK_WIDGET (g_object_new (GTK_TYPE_HBOX,
                                           /* GtkBox */
@@ -1045,7 +1045,7 @@ create_lib_treeview (Compselect *compselect)
   /* add the search label to the filter area */
   gtk_box_pack_start (GTK_BOX (hbox), label,
                       FALSE, FALSE, 0);
-  
+
   /* create the text entry for filter in components */
   entry = GTK_WIDGET (g_object_new (GTK_TYPE_ENTRY,
                                     /* GtkEntry */
@@ -1107,7 +1107,7 @@ create_lib_treeview (Compselect *compselect)
                     "clicked",
                     G_CALLBACK (compselect_callback_refresh_library),
                     compselect);
-                                     
+
   /* add the filter area to the vertical box */
   gtk_box_pack_start (GTK_BOX (vbox), hbox,
                       FALSE, FALSE, 0);
@@ -1120,7 +1120,7 @@ create_lib_treeview (Compselect *compselect)
 /*! \brief Creates the treeview widget for the attributes
  */
 static GtkWidget*
-create_attributes_treeview (Compselect *compselect) 
+create_attributes_treeview (Compselect *compselect)
 {
   GtkWidget *attrtreeview, *scrolled_win;
   GtkListStore *model;
@@ -1131,48 +1131,48 @@ create_attributes_treeview (Compselect *compselect)
                               G_TYPE_STRING, G_TYPE_STRING);
 
   attrtreeview = GTK_WIDGET (g_object_new (GTK_TYPE_TREE_VIEW,
-					   /* GtkTreeView */
-					   "model",      model,
-					   "headers-visible", FALSE,
-					   "rules-hint", TRUE,
-					   NULL));
+                                           /* GtkTreeView */
+                                           "model",      model,
+                                           "headers-visible", FALSE,
+                                           "rules-hint", TRUE,
+                                           NULL));
 
   /* two columns for name and value of the attributes */
-  renderer = GTK_CELL_RENDERER( g_object_new( GTK_TYPE_CELL_RENDERER_TEXT,
-					      "editable", FALSE,
-					      NULL));
+  renderer = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
+                                              "editable", FALSE,
+                                              NULL));
 
-  column = GTK_TREE_VIEW_COLUMN( g_object_new( GTK_TYPE_TREE_VIEW_COLUMN,
-					       "title", _("Name"),
-					       "resizable", TRUE,
-					       NULL));
-  gtk_tree_view_column_pack_start(column, renderer, TRUE);
+  column = GTK_TREE_VIEW_COLUMN (g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
+                                               "title", _("Name"),
+                                               "resizable", TRUE,
+                                               NULL));
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
   gtk_tree_view_column_add_attribute (column, renderer, "text",
                                       ATTRIBUTE_COLUMN_NAME);
   gtk_tree_view_append_column (GTK_TREE_VIEW (attrtreeview), column);
 
-  column = GTK_TREE_VIEW_COLUMN( g_object_new( GTK_TYPE_TREE_VIEW_COLUMN,
-					       "title", _("Value"),
-					       "resizable", TRUE,
-					       NULL));
-  gtk_tree_view_column_pack_start(column, renderer, TRUE);
+  column = GTK_TREE_VIEW_COLUMN (g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
+                                               "title", _("Value"),
+                                               "resizable", TRUE,
+                                               NULL));
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
   gtk_tree_view_column_add_attribute (column, renderer, "text",
                                       ATTRIBUTE_COLUMN_VALUE);
   gtk_tree_view_append_column (GTK_TREE_VIEW (attrtreeview), column);
 
   scrolled_win = GTK_WIDGET (g_object_new (GTK_TYPE_SCROLLED_WINDOW,
-					   /* GtkContainer */
-					   "border-width", 5,
-					   /* GtkScrolledWindow */
-					   "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
-					   "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
-					   "shadow-type",       GTK_SHADOW_ETCHED_IN,
-					   NULL));
+                                           /* GtkContainer */
+                                           "border-width", 5,
+                                           /* GtkScrolledWindow */
+                                           "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                                           "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                                           "shadow-type",       GTK_SHADOW_ETCHED_IN,
+                                           NULL));
 
-  gtk_container_add(GTK_CONTAINER (scrolled_win), attrtreeview);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), attrtreeview);
 
-  compselect->attrtreeview = GTK_TREE_VIEW(attrtreeview);
-  
+  compselect->attrtreeview = GTK_TREE_VIEW (attrtreeview);
+
   return scrolled_win;
 }
 
@@ -1200,7 +1200,7 @@ create_behaviors_combo_box (void)
                              _("Include component as individual objects"));
 
   gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), 0);
-  
+
   return combobox;
 }
 
@@ -1208,25 +1208,25 @@ GType
 compselect_get_type ()
 {
   static GType compselect_type = 0;
-  
+
   if (!compselect_type) {
     static const GTypeInfo compselect_info = {
-      sizeof(CompselectClass),
+      sizeof (CompselectClass),
       NULL, /* base_init */
       NULL, /* base_finalize */
       (GClassInitFunc) compselect_class_init,
       NULL, /* class_finalize */
       NULL, /* class_data */
-      sizeof(Compselect),
+      sizeof (Compselect),
       0,    /* n_preallocs */
       NULL  /* instance_init */
     };
-                
+
     compselect_type = g_type_register_static (GSCHEM_TYPE_DIALOG,
                                               "Compselect",
                                               &compselect_info, 0);
   }
-  
+
   return compselect_type;
 }
 
@@ -1251,13 +1251,13 @@ compselect_geometry_save (GschemDialog *dialog, GKeyFile *key_file, gchar *group
     geometry_save (dialog, key_file, group_name);
 
   position = gtk_paned_get_position (GTK_PANED (COMPSELECT (dialog)->hpaned));
-  g_key_file_set_integer (key_file, group_name, "hpaned", position );
+  g_key_file_set_integer (key_file, group_name, "hpaned", position);
 
   position = gtk_paned_get_position (GTK_PANED (COMPSELECT (dialog)->vpaned));
-  g_key_file_set_integer (key_file, group_name, "vpaned", position );
+  g_key_file_set_integer (key_file, group_name, "vpaned", position);
 
   position = gtk_notebook_get_current_page (COMPSELECT (dialog)->viewtabs);
-  g_key_file_set_integer (key_file, group_name, "source-tab", position );
+  g_key_file_set_integer (key_file, group_name, "source-tab", position);
 }
 
 
@@ -1312,9 +1312,9 @@ compselect_class_init (CompselectClass *klass)
   g_object_class_install_property (
     gobject_class, PROP_SYMBOL,
     g_param_spec_pointer ("symbol",
-			  "",
-			  "",
-			  G_PARAM_READABLE));
+                          "",
+                          "",
+                          G_PARAM_READABLE));
   g_object_class_install_property (
     gobject_class, PROP_BEHAVIOR,
     g_param_spec_enum ("behavior",
@@ -1326,11 +1326,11 @@ compselect_class_init (CompselectClass *klass)
   g_object_class_install_property (
     gobject_class, PROP_HIDDEN,
     g_param_spec_boolean ("hidden",
-			  "",
-			  "",
-			  FALSE,
-			  G_PARAM_READWRITE));
-  
+                          "",
+                          "",
+                          FALSE,
+                          G_PARAM_READWRITE));
+
 }
 
 static GObject*
@@ -1377,7 +1377,7 @@ compselect_constructor (GType type,
 
   inuseview = create_inuse_treeview (compselect);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), inuseview,
-                            gtk_label_new (_("In Use")));  
+                            gtk_label_new (_("In Use")));
 
   libview = create_lib_treeview (compselect);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), libview,
@@ -1386,7 +1386,7 @@ compselect_constructor (GType type,
   /* include the vertical box in horizontal box */
   gtk_paned_pack1 (GTK_PANED (hpaned), notebook, TRUE, FALSE);
 
-                     
+
   /* -- preview area -- */
   frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
                                     /* GtkFrame */
@@ -1411,7 +1411,7 @@ compselect_constructor (GType type,
 
   gtk_paned_pack1 (GTK_PANED (vpaned), frame, FALSE, FALSE);
 
-  /* only create the attribute treeview if there are elements in the 
+  /* only create the attribute treeview if there are elements in the
      component_select_attrlist */
   if (GSCHEM_DIALOG (compselect)->w_current->component_select_attrlist == NULL) {
     compselect->attrtreeview = NULL;
@@ -1420,7 +1420,7 @@ compselect_constructor (GType type,
                                       /* GtkFrame */
                                       "label", _("Attributes"),
                                       NULL));
-    attributes = create_attributes_treeview(compselect);
+    attributes = create_attributes_treeview (compselect);
     gtk_paned_pack2 (GTK_PANED (vpaned), frame, FALSE, FALSE);
     gtk_container_add (GTK_CONTAINER (frame), attributes);
   }
@@ -1431,7 +1431,7 @@ compselect_constructor (GType type,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (compselect)->vbox), hpaned,
                       TRUE, TRUE, 0);
   gtk_widget_show_all (hpaned);
-  
+
 
   /* -- behavior combo box -- */
   combobox = create_behaviors_combo_box ();
@@ -1444,19 +1444,19 @@ compselect_constructor (GType type,
   gtk_widget_show_all (combobox);
   /* set behavior combo box of compselect */
   compselect->combobox_behaviors = GTK_COMBO_BOX (combobox);
-  
+
   /* now add buttons in the action area */
   gtk_dialog_add_buttons (GTK_DIALOG (compselect),
                           /*  - close button */
                           GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-			  GTK_STOCK_OK, COMPSELECT_RESPONSE_HIDE,
+                          GTK_STOCK_OK, COMPSELECT_RESPONSE_HIDE,
                           NULL);
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(compselect),
-					  COMPSELECT_RESPONSE_HIDE,
-					  GTK_RESPONSE_CLOSE,
-					  -1);
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (compselect),
+                                          COMPSELECT_RESPONSE_HIDE,
+                                          GTK_RESPONSE_CLOSE,
+                                          -1);
 
   /* Initialize the hidden property */
   compselect->hidden = FALSE;
@@ -1473,7 +1473,7 @@ compselect_finalize (GObject *object)
     g_source_remove (compselect->filter_timeout);
     compselect->filter_timeout = 0;
   }
-  
+
   G_OBJECT_CLASS (compselect_parent_class)->finalize (object);
 }
 
@@ -1485,17 +1485,17 @@ compselect_set_property (GObject *object,
 {
   Compselect *compselect = COMPSELECT (object);
 
-  switch(property_id) {
+  switch (property_id) {
     case PROP_BEHAVIOR:
       gtk_combo_box_set_active (compselect->combobox_behaviors,
                                 g_value_get_enum (value));
       break;
     case PROP_HIDDEN:
-      compselect->hidden = g_value_get_boolean(value);
-      if (compselect->hidden) 
-	gtk_widget_hide(GTK_WIDGET(compselect));
+      compselect->hidden = g_value_get_boolean (value);
+      if (compselect->hidden)
+        gtk_widget_hide (GTK_WIDGET (compselect));
       else
-	gtk_window_present (GTK_WINDOW(compselect));
+        gtk_window_present (GTK_WINDOW (compselect));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1511,12 +1511,12 @@ compselect_get_property (GObject *object,
 {
   Compselect *compselect = COMPSELECT (object);
 
-  switch(property_id) {
-      case PROP_SYMBOL: 
-	{
-	  GtkTreeModel *model;
-	  GtkTreeIter iter, parent;
-	  CLibSymbol *symbol = NULL;
+  switch (property_id) {
+      case PROP_SYMBOL:
+        {
+          GtkTreeModel *model;
+          GtkTreeIter iter, parent;
+          CLibSymbol *symbol = NULL;
 
           switch (compselect_get_view (compselect)) {
           case VIEW_INUSE:
@@ -1537,7 +1537,7 @@ compselect_get_property (GObject *object,
             }
             break;
           default:
-            g_assert_not_reached();
+            g_assert_not_reached ();
           }
 
           g_value_set_pointer (value, symbol);
@@ -1549,7 +1549,7 @@ compselect_get_property (GObject *object,
                             compselect->combobox_behaviors));
         break;
       case PROP_HIDDEN:
-	g_value_set_boolean(value, compselect->hidden);
+        g_value_set_boolean (value, compselect->hidden);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1563,7 +1563,7 @@ GType
 compselect_behavior_get_type (void)
 {
   static GType etype = 0;
-  
+
   if (etype == 0) {
     static const GEnumValue values[] = {
       { COMPSELECT_BEHAVIOR_REFERENCE, "COMPSELECT_BEHAVIOR_REFERENCE", "reference" },
@@ -1571,9 +1571,9 @@ compselect_behavior_get_type (void)
       { COMPSELECT_BEHAVIOR_INCLUDE,   "COMPSELECT_BEHAVIOR_INCLUDE",   "include" },
       { 0, NULL, NULL }
     };
-    
+
     etype = g_enum_register_static ("CompselectBehavior", values);
   }
-  
+
   return etype;
 }
