@@ -1336,10 +1336,7 @@ compselect_constructor (GType type,
                 NULL);
 
   /* vertical pane containing preview and attributes */
-  vpaned = GTK_WIDGET (g_object_new (GTK_TYPE_VPANED,
-                                    /* GtkContainer */
-                                    "border-width", 5,
-                                     NULL));
+  vpaned = GTK_WIDGET (g_object_new (GTK_TYPE_VPANED, NULL));
   compselect->vpaned = vpaned;
 
   /* horizontal pane containing selection and preview */
