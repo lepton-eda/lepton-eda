@@ -489,12 +489,27 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
 {
   GtkListStore *model;
   GtkTreeIter iter;
+  GtkTreeViewColumn *column;
   GList *listiter, *o_iter, *o_attrlist, *filter_list;
   gchar *name, *value;
   OBJECT *o_current;
 
-  model = (GtkListStore*) gtk_tree_view_get_model(compselect->attrtreeview);
-  gtk_list_store_clear(model);
+  model = (GtkListStore*) gtk_tree_view_get_model (compselect->attrtreeview);
+  gtk_list_store_clear (model);
+
+  /* Invalidate the column width for the attribute value column, so
+   * the column is re-sized based on the new data being shown. Symbols
+   * with long values are common, and we don't want having viewed those
+   * forcing a h-scroll-bar on symbols with short valued attributes.
+   *
+   * We might also consider invalidating the attribute name columns,
+   * however that gives an inconsistent column division when swithing
+   * between symbols, which doesn't look nice. For now, assume that
+   * the name column can keep the max width gained whilst previewing.
+   */
+  column = gtk_tree_view_get_column (compselect->attrtreeview,
+                                     ATTRIBUTE_COLUMN_VALUE);
+  gtk_tree_view_column_queue_resize (column);
 
   if (preview_toplevel->page_current == NULL) {
     return;
