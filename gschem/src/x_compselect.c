@@ -1333,7 +1333,6 @@ compselect_constructor (GType type,
                 "title",           _("Select Component..."),
                 "default-height",  300,
                 "default-width",   400,
-                "window-position", GTK_WIN_POS_NONE,
                 NULL);
 
   /* vertical pane containing preview and attributes */
