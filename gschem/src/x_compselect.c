@@ -471,6 +471,12 @@ sort_object_text(OBJECT *a, OBJECT *b)
   return strcmp(a->text->string, b->text->string);
 }
 
+enum {
+  ATTRIBUTE_COLUMN_NAME = 0,
+  ATTRIBUTE_COLUMN_VALUE,
+  NUM_ATTRIBUTE_COLUMNS
+};
+
 /*! \brief Update the model of the attributes treeview
  *  \par Function Description
  *  This function takes the toplevel attributes from the preview widget and 
@@ -1106,7 +1112,8 @@ create_attributes_treeview (Compselect *compselect)
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
 
-  model = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+  model = gtk_list_store_new (NUM_ATTRIBUTE_COLUMNS,
+                              G_TYPE_STRING, G_TYPE_STRING);
 
   attrtreeview = GTK_WIDGET (g_object_new (GTK_TYPE_TREE_VIEW,
 					   /* GtkTreeView */
@@ -1125,7 +1132,8 @@ create_attributes_treeview (Compselect *compselect)
 					       "resizable", TRUE,
 					       NULL));
   gtk_tree_view_column_pack_start(column, renderer, TRUE);
-  gtk_tree_view_column_add_attribute(column, renderer, "text", 0);
+  gtk_tree_view_column_add_attribute (column, renderer, "text",
+                                      ATTRIBUTE_COLUMN_NAME);
   gtk_tree_view_append_column (GTK_TREE_VIEW (attrtreeview), column);
 
   column = GTK_TREE_VIEW_COLUMN( g_object_new( GTK_TYPE_TREE_VIEW_COLUMN,
@@ -1133,7 +1141,8 @@ create_attributes_treeview (Compselect *compselect)
 					       "resizable", TRUE,
 					       NULL));
   gtk_tree_view_column_pack_start(column, renderer, TRUE);
-  gtk_tree_view_column_add_attribute(column, renderer, "text", 1);
+  gtk_tree_view_column_add_attribute (column, renderer, "text",
+                                      ATTRIBUTE_COLUMN_VALUE);
   gtk_tree_view_append_column (GTK_TREE_VIEW (attrtreeview), column);
 
   scrolled_win = GTK_WIDGET (g_object_new (GTK_TYPE_SCROLLED_WINDOW,
