@@ -1093,7 +1093,7 @@ OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
   char* string = NULL;
   GString *textstr;
 
-  if (fileformat_ver == 1) {
+  if (fileformat_ver >= 1) {
     sscanf(first_line, "%c %d %d %d %d %d %d %d %d %d\n", &type, &x, &y, 
            &color, &size,
            &visibility, &show_name_value, 
