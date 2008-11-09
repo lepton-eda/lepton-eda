@@ -485,22 +485,20 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
   int overbar_startx=0, overbar_starty=0;
   int overbar_endx=0, overbar_endy=0;
   int overbar_height_offset = 0;
-  int last_char_width;
-  gboolean overbar_started = FALSE;
   gchar *ptr;
-  gchar aux_string[7];
   OBJECT *o_font_set;
-  gunichar c=0, previous_char = 0, next_char = 0;
-  int escapes_counter = 0;
+  gunichar current_char;
+  gboolean escape = FALSE, overbar_started = FALSE;
+  gboolean finish_overbar, start_overbar, leave_parser = FALSE;
+  gboolean draw_character, draw_tabulator, draw_newline;
 
   temp_list = object_list;
-
 
   /* error condition hack */
   if (string == NULL) {
     return(NULL);
   }
-	
+
   /* now read in the chars */
   temp_tail = toplevel->page_current->object_tail;
 
@@ -532,7 +530,7 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
       x_offset = x;
       y_offset = y;
       break;
-		
+
       case(MIDDLE_LEFT):
       x_offset = x;
       y_offset = y + sign*0.5*text_height;
@@ -592,43 +590,43 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
       x_offset = x;
       y_offset = y;
       break;
-		
+
       case(MIDDLE_LEFT):
       x_offset = x + sign*0.5*text_height;
       y_offset = y;
       break;
-	
+
       case(UPPER_LEFT):
       x_offset = x + sign*text_height;
       y_offset = y;
       break;
-	
+
       case(LOWER_MIDDLE):
       x_offset = x;
       y_offset = y - sign*0.5*text_width;
       break;
-	
+
       case(MIDDLE_MIDDLE):
       x_offset = x + sign*0.5*text_height;
       y_offset = y - sign*0.5*text_width;
       break;
-	
+
       case(UPPER_MIDDLE):
       x_offset = x + sign*text_height;
       y_offset = y - sign*0.5*text_width;
-	
+
       break;
-	
+
       case(LOWER_RIGHT):
       x_offset = x;
       y_offset = y - sign*text_width;
       break;
-	
+
       case(MIDDLE_RIGHT):
       x_offset = x + sign*0.5*text_height;
       y_offset = y - sign*text_width;
       break;
-	
+
       case(UPPER_RIGHT):
       x_offset = x + sign*text_height;
       y_offset = y - sign*text_width;
@@ -662,287 +660,242 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
   line_start_x = x_offset;
   line_start_y = y_offset;
 
+  /* the overbar is 1/4 above the char height. */
+  overbar_height_offset = char_height + char_height/4;
+
   for (ptr = string;
-       ptr != NULL && *ptr != 0;
-       previous_char = 
-	 g_utf8_get_char_validated (ptr, -1),
-	 ptr = g_utf8_find_next_char (ptr, NULL),
-	 next_char = g_utf8_get_char_validated(g_utf8_find_next_char (ptr, NULL),-1)) {
-    /* Keep track of the previous character and its width.
-       They will be used in the overbar and escape characters */
-    /*   - build a char string out of the gunichar previous_char */
-    gint l = g_unichar_to_utf8 (previous_char, aux_string);
-    /*   - end the string */
-    aux_string[l] = '\0';
-    /*   - finally get the width of the previous character */
-    last_char_width = o_text_width(toplevel, aux_string, size/2);
+       ptr != NULL && !leave_parser;
+       ptr = g_utf8_find_next_char (ptr, NULL)) {
 
-    c = g_utf8_get_char_validated (ptr, -1);
+    current_char = g_utf8_get_char_validated (ptr, -1);
 
-    o_font_set = g_hash_table_lookup (font_loaded, GUINT_TO_POINTER (c));
-    if (o_font_set == NULL) {
-      o_text_load_font(toplevel, (gunichar) c);
-      o_font_set = g_hash_table_lookup (font_loaded, GUINT_TO_POINTER (c));
-    }
+    /* reset all actions */
+    finish_overbar = FALSE;
+    start_overbar = FALSE;
+    leave_parser = FALSE;
+    draw_character = FALSE;
+    draw_tabulator = FALSE;
+    draw_newline = FALSE;
 
-    start_of_char = temp_list;
-
-    if (o_font_set->font_prim_objs->next != NULL) {
-      int rel_char_coord;
-      int size_of_tab_in_coord;
-      OBJECT *o_font_set_aux;
-
-      /* Make sure TAB_CHAR_MODEL is loaded before trying to use its text */
-      /* size */
-      o_font_set_aux = g_hash_table_lookup (
-        font_loaded, GUINT_TO_POINTER ((gunichar)TAB_CHAR_MODEL[0]));
-      if (o_font_set_aux == NULL) {
-         o_text_load_font(toplevel, (gunichar) TAB_CHAR_MODEL[0]);
-         o_font_set_aux = g_hash_table_lookup (
-           font_loaded, GUINT_TO_POINTER ((gunichar)TAB_CHAR_MODEL[0]));
-       }
-    
-      /* Get the maximum tab width's in coordinates */
-      size_of_tab_in_coord = tab_in_chars * 
-                 o_text_width(toplevel, TAB_CHAR_MODEL, size/2);
-
-      /* Count escape characters. Notice it includes the current character */
-      if (c == '\\') {
-	escapes_counter++;
+    /* state machine to interpret the string:
+     * there are two independant state variables overbar_started and escape.
+     * The actions are set according to the current character and
+     * the two state variables.
+     */
+    switch (current_char) {
+    case '\0':
+      /* end of the string */
+      if (overbar_started)
+        finish_overbar = TRUE;
+      leave_parser = TRUE;
+      break;
+    case '\\':
+      if (escape == TRUE) {
+        draw_character = TRUE;
+        escape = FALSE;
+      } else {
+        escape = TRUE;
       }
-      
-      /* Ignore escape characters */
-      if ( ((c == '\\') && (previous_char != '\\')) ||
-	   ((c == '\\') && (escapes_counter == 1)) )
-	continue;
-
-      if (c != '\n' && c != '\t') {
-         /* only add the character if it is not a newline, a tab character
-	    a escape character or the overbar delimiter escape sequence.
-	    Add it if it is the escaped escape character */
-	if ( ( (c != '\\') &&
-	       (!(previous_char == '\\' && c == '_')) ) ||
-	     (previous_char == '\\' && c == '\\' && (escapes_counter > 1)) ) {
-	  temp_list = o_list_copy_all(toplevel,
-				      o_font_set->font_prim_objs->next, 
-				      temp_list, NORMAL_FLAG);
-	  if (start_of_char != NULL)
-	    start_of_char = start_of_char->next;
-	  /* does not get here if the character was a newline, tab, or
-	     special character.
-	     This is correct. */ 
-	  o_complex_set_color(start_of_char, color);	
-	  o_scale(toplevel, start_of_char, size/2, size/2);
-	  
-	  /* do this if you want to stack chars */
-	  /* we don't want to do that for now */
-	  /* Rotate and translate the character to its world position */
-	  o_list_rotate_world(toplevel, 0, 0, angle, start_of_char);
-	  o_list_translate_world(toplevel, x_offset, y_offset, start_of_char);
-	  
-	  /* Reset the escapes counter after being processed. Otherwise, 
-	     if the next character is also a backslash, it will
-	     be processed as if were also escaped */
-	  if (previous_char == '\\' && c == '\\') {
-	    escapes_counter = 0;
-	  }
-	} 
-      }
-      
-      /* Now check for special characters */
-      
-      if ( (c == '_' && previous_char == '\\') || 
-	   (c == '\n' && overbar_started) || 
-	   (previous_char == '\n' && overbar_started) ||
-	   (overbar_started && next_char == 0) ) { 
-	/* Found the overbar delimiter sequence 
-	   If the character is the newline and the overbar was started,
-	   then end it and start it again in the next character, after
-	   processing the newline. */
-	overbar_height_offset = char_height + (char_height >> 2);
-	if ( (!overbar_started) ||
-	     (overbar_started && previous_char == '\n') ){
-	  /* Start point of the overbar */
-	  overbar_started = TRUE;
-	  switch (angle) {
-	    case 0:
-	      overbar_startx = x_offset;
-	      overbar_starty = y_offset + overbar_height_offset;
-	      break;
-	    case 90:
-	      overbar_startx = x_offset - overbar_height_offset;
-	      overbar_starty = y_offset;
-	      break;
-	    case 180:
-	      overbar_startx = x_offset;
-	      overbar_starty = y_offset - overbar_height_offset;
-	      break;
-	    case 270:
-	      overbar_startx = x_offset + overbar_height_offset;
-	      overbar_starty = y_offset;
-	      break;
-	    default:
-	      fprintf(stderr, "o_text_create_string: Angle not supported\n");
-	      break;
-	  }
-	} else {
-	  /* Then this is the end point of the overbar */
-	  if (overbar_started && next_char == 0 &&
-	      !(c == '_' && previous_char == '\\')) {
-	    /* Instead of ending in the last character, end the overbar
-	       after the current character (its width is 
-	       size/2*o_font_set->font_text_size */
-	    last_char_width = -size/2*o_font_set->font_text_size;
-	  }
-	  switch (angle) {
-	    case 0:
-	      overbar_endx = x_offset - last_char_width;
-	      overbar_endy = y_offset + overbar_height_offset;
-	      break;
-	    case 90:
-	      overbar_endx = x_offset - overbar_height_offset;
-	      overbar_endy = y_offset - last_char_width;
-	      break;
-	    case 180:
-	      overbar_endx = x_offset + last_char_width;
-	      overbar_endy = y_offset - overbar_height_offset;
-	      break;
-	    case 270:
-	      overbar_endx = x_offset + overbar_height_offset;
-	      overbar_endy = y_offset + last_char_width;
-	      break;
-	    default:
-	      fprintf(stderr, "o_text_create_string: Angle not supported\n");
-	      break;
-	  }
-	  /* Now add the overbar (if it is not a zero length overbar) */
-	  if ( (overbar_startx != overbar_endx) ||
-	       (overbar_starty != overbar_endy) ) {
-	    temp_obj = o_line_new(toplevel, OBJ_LINE, color,
-				   overbar_startx, overbar_starty,
-				   overbar_endx, overbar_endy);
-      temp_list = s_basic_link_object(temp_obj, temp_list);
-	  }
-
-	  if (!((c == '\n') && (overbar_started))) {
-	    /* If it's the newline character, keep the overbar started, since
-	       we have to end this one & start another one in the next line */
-	    overbar_started = FALSE;
-	  }
-	}
-	if (c != '\n')
-	  continue;
-      }
-     
-      /* If the character is a newline or tab, this code will "continue" */
-      switch (c) {
-      case '\n':
-	/* The character is a newline. Calcule the start of the next line */
-        switch (angle) {
-            case 0:
-              x_offset = line_start_x;
-              y_offset = line_start_y - char_height * LINE_SPACING;
-              line_start_x = x_offset;
-              line_start_y = y_offset;
-              continue;	
-              break;
-            case 90:
-              x_offset = line_start_x + char_height * LINE_SPACING;
-              y_offset = line_start_y;
-              line_start_x = x_offset;
-              line_start_y = y_offset;
-              continue;	
-              break;
-            case 180:
-              x_offset = line_start_x;
-              y_offset = line_start_y + char_height * LINE_SPACING;
-              line_start_x = x_offset;
-              line_start_y = y_offset;
-              continue;	
-              break;
-            case 270:
-              x_offset = line_start_x - char_height * LINE_SPACING;
-              y_offset = line_start_y;
-              line_start_x = x_offset;
-              line_start_y = y_offset;
-              continue;	
-              break;
-            default:
-              fprintf(stderr, "o_text_create_string: Angle not supported\n");
-              break;
+      break;
+    case '_':
+      if (escape == TRUE) {
+        escape = FALSE;
+        if (overbar_started == TRUE) {
+          finish_overbar = TRUE;
+          overbar_started = FALSE;
+        } else {
+          start_overbar = TRUE;
+          overbar_started = TRUE;
         }
-          case '\t':
-#if DEBUG
-            printf("Found tab character.\n");
-            printf("Tab size in coord: %i\n", size_of_tab_in_coord);
-            printf("Line start: %i,%i\n", line_start_x, line_start_y);
-            printf("Position: %i, %i\n", x_offset, y_offset);
-#endif
-            switch (angle) {
-                case 0:
-                case 180:
-                  rel_char_coord = x_offset - line_start_x;
-#if DEBUG
-                  printf("Add: %i\n", (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord)));
-#endif
-                  x_offset += (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord));
-                  continue;	
-                  break;
-                case 90:
-                  rel_char_coord = y_offset - line_start_y;
-#if DEBUG
-                  printf("Add: %i\n", (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord)));
-#endif
-                  y_offset += (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord));
-                  continue;	
-                  break;
-                case 270:
-                  rel_char_coord = line_start_y - y_offset;
-#if DEBUG
-                  printf("Add: %i\n", (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord)));
-#endif
-                  y_offset -= (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord));
-                  continue;	
-                  break;
-                default:
-                  fprintf(stderr, "o_text_create_string: Angle not supported\n");
-                  break;
-            }
-      }      
+      } else {
+        draw_character = TRUE;
+      }
+      break;
+    case '\n':
+      draw_newline = TRUE;
+      if (overbar_started == TRUE) {
+        finish_overbar = TRUE;
+        start_overbar = TRUE;
+      }
+      escape = FALSE;
+      break;
+    case '\t':
+      draw_tabulator = TRUE;
+      escape = FALSE;
+      break;
+    default:
+      draw_character = TRUE;
+      escape = FALSE;
     }
 
-    /* Calcule the position of the next character */
-    switch(angle) {
-      case(0):	
-        x_offset = (x_offset) + 
-          size/2*o_font_set->font_text_size;
-        break;
-		
-      case(90):
-        y_offset = (y_offset) + 
-          size/2*o_font_set->font_text_size;
-        break;
+    /* execute all actions set by the state machine
+     * Note: It's important that the three actions
+     * finish_overbar, draw_newline, start_overbar are executed
+     * in exacly that order. It's required to continue overbars
+     * over newlines.
+     */
+    if (draw_character) {
+      /* get the character from the hash table */
+      o_font_set = g_hash_table_lookup (font_loaded,
+                                        GUINT_TO_POINTER (current_char));
+      if (o_font_set == NULL) {
+        o_text_load_font(toplevel, (gunichar) current_char);
+        o_font_set = g_hash_table_lookup (font_loaded,
+                                          GUINT_TO_POINTER (current_char));
+      }
 
+      /* Only add the character if there are primary object.
+         e.g. the space character doesn't have those */
+      if (o_font_set->font_prim_objs->next != NULL) {
+        start_of_char = temp_list;
+        temp_list = o_list_copy_all(toplevel,
+                                    o_font_set->font_prim_objs->next,
+                                    temp_list, NORMAL_FLAG);
+
+        if (start_of_char != NULL)
+          start_of_char = start_of_char->next;
+
+        o_complex_set_color(start_of_char, color);
+        o_scale(toplevel, start_of_char, size/2, size/2);
+
+        /* Rotate and translate the character to its world position */
+        o_list_rotate_world(toplevel, 0, 0, angle, start_of_char);
+        o_list_translate_world(toplevel, x_offset, y_offset, start_of_char);
+      }
+
+      /* Calcule the position of the next character */
+      switch(angle) {
+      case(0):
+        x_offset = (x_offset) + size/2*o_font_set->font_text_size;
+        break;
+      case(90):
+        y_offset = (y_offset) + size/2*o_font_set->font_text_size;
+        break;
       case(180):
-        x_offset = (x_offset) - 
-          size/2*o_font_set->font_text_size;
+        x_offset = (x_offset) - size/2*o_font_set->font_text_size;
         break;
-		
       case(270):
-        y_offset = (y_offset) - 
-          size/2*o_font_set->font_text_size;
+        y_offset = (y_offset) - size/2*o_font_set->font_text_size;
         break;
+      }
+    }
+
+    if (draw_tabulator) {
+      gint size_of_tab_in_coord;
+      gint rel_char_coord;
+      /* Get the maximum tab width's in coordinates */
+      size_of_tab_in_coord = (tab_in_chars *
+                              o_text_width(toplevel, TAB_CHAR_MODEL, size/2));
+
+      switch (angle) {
+      case 0:
+      case 180:
+        rel_char_coord = x_offset - line_start_x;
+        x_offset += (size_of_tab_in_coord -
+                     (rel_char_coord % size_of_tab_in_coord));
+        break;
+      case 90:
+        rel_char_coord = y_offset - line_start_y;
+        y_offset += (size_of_tab_in_coord -
+                     (rel_char_coord % size_of_tab_in_coord));
+        break;
+      case 270:
+        rel_char_coord = line_start_y - y_offset;
+        y_offset -= (size_of_tab_in_coord -
+                     (rel_char_coord % size_of_tab_in_coord));
+        break;
+      default:
+        fprintf(stderr, "o_text_create_string: Angle not supported\n");
+        break;
+      }
+    }
+
+    if (finish_overbar) {
+      switch (angle) {
+      case 0:
+        overbar_endx = x_offset;
+        overbar_endy = y_offset + overbar_height_offset;
+        break;
+      case 90:
+        overbar_endx = x_offset - overbar_height_offset;
+        overbar_endy = y_offset;
+        break;
+      case 180:
+        overbar_endx = x_offset;
+        overbar_endy = y_offset - overbar_height_offset;
+        break;
+      case 270:
+        overbar_endx = x_offset + overbar_height_offset;
+        overbar_endy = y_offset;
+        break;
+      default:
+        fprintf(stderr, "o_text_create_string: Angle not supported\n");
+        break;
+      }
+      /* Now add the overbar (if it is not a zero length overbar) */
+      if ((overbar_startx != overbar_endx)
+          || (overbar_starty != overbar_endy)) {
+        temp_obj = o_line_new(toplevel, OBJ_LINE, color,
+                              overbar_startx, overbar_starty,
+                              overbar_endx, overbar_endy);
+        temp_list = s_basic_link_object(temp_obj, temp_list);
+      }
+    }
+
+    if (draw_newline) {
+      switch (angle) {
+      case 0:
+        x_offset = line_start_x;
+        y_offset = line_start_y - char_height * LINE_SPACING;
+        break;
+      case 90:
+        x_offset = line_start_x + char_height * LINE_SPACING;
+        y_offset = line_start_y;
+        break;
+      case 180:
+        x_offset = line_start_x;
+        y_offset = line_start_y + char_height * LINE_SPACING;
+        break;
+      case 270:
+        x_offset = line_start_x - char_height * LINE_SPACING;
+        y_offset = line_start_y;
+        break;
+      default:
+        fprintf(stderr, "o_text_create_string: Angle not supported\n");
+        break;
+      }
+      line_start_x = x_offset;
+      line_start_y = y_offset;
+    }
+
+    if (start_overbar) {
+      switch (angle) {
+      case 0:
+        overbar_startx = x_offset;
+        overbar_starty = y_offset + overbar_height_offset;
+        break;
+      case 90:
+        overbar_startx = x_offset - overbar_height_offset;
+        overbar_starty = y_offset;
+        break;
+      case 180:
+        overbar_startx = x_offset;
+        overbar_starty = y_offset - overbar_height_offset;
+        break;
+      case 270:
+        overbar_startx = x_offset + overbar_height_offset;
+        overbar_starty = y_offset;
+        break;
+      default:
+        fprintf(stderr, "o_text_create_string: Angle not supported\n");
+        break;
+      }
     }
   }
 
-  /* don't set the head */	
-
   toplevel->page_current->object_tail = temp_tail;
 
-#if DEBUG
-  printf("2 %d %d\n", x_offset, y_offset);
-#endif
-  return(object_list);
+  return object_list;
 }
 
 /*! \brief Creates a text OBJECT and the graphical objects representing it
