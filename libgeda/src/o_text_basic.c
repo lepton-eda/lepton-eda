@@ -20,6 +20,51 @@
 
 /*! \file o_text_basic.c
  *  \brief functions for the text and fonts
+ *
+ *  \par The font definitions 
+ *
+ *  Each letter of the font is defined in a single font symbol file. In
+ *  the font symbol file, the character width is defined in the second
+ *  line. The first line contains the file format version.
+ *
+ *  All remaining lines are basic graphical lines. They build the
+ *  appearance of the character.
+ *
+ *  \image html o_text_font_overview.png
+ *  \image latex o_text_font_overview.pdf "font overview" width=14cm
+ *
+ *  The height of capital characters in the font files is 26. The size
+ *  of small letters is 16. The space below the zero line is used by
+ *  characters like <b>g</b>, <b>p</b> or <b>q</b>. The space above 26
+ *  is used by diacritic marks like accents, breve, circumflex mostly in
+ *  european characters.
+ *
+ *  When loading a font definition the basic line objects are stored in
+ *  <b>OBJECT->font_prim_objs</b> as a list of OBJECTs.
+ *  
+ *  All font objects are stored in the hash table #font_loaded when they 
+ *  are loaded.
+ *
+ *  \par The text definitions
+ *
+ *  The text is stored and printed in several different representations.
+ *
+ *  In the gEDA files the text is just a string. It is stored unmodified 
+ *  in <b>OBJECT->text->string</b>.
+ *
+ *  If the string is an attribute with an equal sign as delimiter between
+ *  an attribute name and an attribute value, then it is possible to
+ *  hide some parts of the text. The still visible part of an attribute
+ *  is stored in <b>OBJECT->text->disp_string</b>.
+ *
+ *  \image html o_text_text_overview.png
+ *  \image latex o_text_text_overview.pdf "text overview" width=14cm
+ *
+ *  To draw the text in gschem, the string is interpreted and converted
+ *  to a list of basic graphical objects. The basic line objects are
+ *  collected from the font character objects.
+ *  All basic graphical objects are stored in
+ *  <b>OBJECT->text->prim_objs</b>.
  */
 
 #include <config.h>
@@ -43,14 +88,16 @@
 /*! Default setting for text draw function. */
 void (*text_draw_func)() = NULL;
 
-/*! \note
- *  font storage and friends are staying global so that all can access
+/*! Hashtable storing font_character (string) as a key, and pointer to data 
+ *  \note
+ *  This table stays global, thus all functions can access it.
  */
-
-/*! Hashtable storing font_character (string) as a key, and pointer to data */
 GHashTable *font_loaded = NULL;
 
-/*! Hashtable storing mapping between character and font definition file */
+/*! Hashtable storing mapping between character and font definition file
+ *  \note
+ *  This table stays global, thus all functions can access it.
+ */
 GHashTable *font_char_to_file = NULL;
 
 /*! Size of a tab in characters */
