@@ -295,7 +295,7 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_coloridx,
 
   color = scm_to_int(scm_coloridx);
 
-  SCM_ASSERT ((color < -1 || color >= MAX_COLORS),
+  SCM_ASSERT (!(color < -1 || color >= MAX_COLORS),
               scm_coloridx, SCM_ARG2, "set-attribute-text-properties!");
 
   size = scm_to_int(scm_size);
