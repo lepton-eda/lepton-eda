@@ -933,11 +933,11 @@ DEFINE_I_CALLBACK(edit_translate)
   i_update_middle_button(w_current,
                          i_callback_edit_translate, _("Translate"));
 
-  if (w_current->toplevel->snap == 0) {
+  if (w_current->toplevel->snap == SNAP_OFF) {
     s_log_message(_("WARNING: Do not translate with snap off!\n"));
     s_log_message(_("WARNING: Turning snap on and continuing "
                   "with translate.\n"));
-    w_current->toplevel->snap = 1;
+    w_current->toplevel->snap = SNAP_GRID;
     i_show_state(w_current, NULL); /* update status on screen */
   }
 
@@ -3394,13 +3394,24 @@ DEFINE_I_CALLBACK(options_snap)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  if (w_current->toplevel->snap) {
-    w_current->toplevel->snap = 0;
+  /* toggle to the next snap state */
+  w_current->toplevel->snap = (w_current->toplevel->snap+1) % SNAP_STATE_COUNT;
+
+  switch (w_current->toplevel->snap) {
+  case SNAP_OFF:
     s_log_message(_("Snap OFF (CAUTION!)\n"));
-  } else {
-    w_current->toplevel->snap = 1;
+    break;
+  case SNAP_GRID:
     s_log_message(_("Snap ON\n"));
+    break;
+  case SNAP_RESNAP:
+    s_log_message(_("Snap back to the grid (CAUTION!)\n"));
+    break;
+  default:
+    g_critical("options_snap: toplevel->snap out of range: %d\n",
+               w_current->toplevel->snap);
   }
+
   i_show_state(w_current, NULL); /* update status on screen */
   i_update_grid_info (w_current);
 }

@@ -2100,7 +2100,6 @@ void coord_display_update(GSCHEM_TOPLEVEL *w_current, int x, int y)
   g_free(string);
 
   SCREENtoWORLD(toplevel, x, y, &world_x, &world_y);
-  /* TODO: Do we want to snap the coordinate display? */
   world_x = snap_grid(toplevel, world_x);
   world_y = snap_grid(toplevel, world_y);
 
