@@ -61,7 +61,7 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->width  = 1;
   toplevel->height = 1;
-  toplevel->snap = 1;
+  toplevel->snap = SNAP_GRID;
 
   toplevel->override_color = -1;
 

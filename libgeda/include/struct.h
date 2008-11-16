@@ -80,20 +80,18 @@ typedef enum { F_OPEN_RC           = 1,
                F_OPEN_RESTORE_CWD  = 4,
 } FOpenFlags;
 
-/* these enum are constant to define :
-   - the end of open line of an object ;
-   - the type of the line of an object ;
-   - the filling of a closed object. */
-/* used in struct st_object (predefined type OBJECT)*/
+/*! \brief line end style for an open line of an object */
 typedef enum {END_NONE, END_SQUARE, END_ROUND} OBJECT_END;
-typedef enum {TYPE_SOLID, TYPE_DOTTED, TYPE_DASHED, TYPE_CENTER, TYPE_PHANTOM, TYPE_ERASE} OBJECT_TYPE;
-typedef enum {FILLING_HOLLOW, FILLING_FILL, FILLING_MESH, FILLING_HATCH, FILLING_VOID} OBJECT_FILLING;
 
+/*! \brief line style of lines, rect, circles, arcs */
+typedef enum {TYPE_SOLID, TYPE_DOTTED, TYPE_DASHED, TYPE_CENTER, TYPE_PHANTOM, TYPE_ERASE} OBJECT_TYPE;
+
+/*! \brief fill style of objects like cirle, rect, path */
+typedef enum {FILLING_HOLLOW, FILLING_FILL, FILLING_MESH, FILLING_HATCH, FILLING_VOID} OBJECT_FILLING;
 
 struct st_line {
   int x[2];
   int y[2];
-
 };
 
 struct st_point {
@@ -438,6 +436,9 @@ struct st_page {
 
 };
 
+/*! \brief different kind of snapping mechanisms used in TOPLEVEL */
+typedef enum {SNAP_OFF, SNAP_GRID, SNAP_RESNAP, SNAP_STATE_COUNT} SNAP_STATE;
+
 struct st_toplevel {
 
   /* have to decided on component list stuff */
@@ -455,7 +456,9 @@ struct st_toplevel {
   int init_top, init_bottom; 
 
   int width, height;			/* height, width of window */
-  int snap;				/* Snap on/off*/
+
+  /*! \brief whether and how to snap to the current grid */
+  SNAP_STATE snap;
 
   int override_color;			/* used in doing selections */
 

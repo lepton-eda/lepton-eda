@@ -206,10 +206,9 @@ int snap_grid(TOPLEVEL *toplevel, int input)
   int p, m, n;
   int sign, value, snap_grid;
 	
-  if (!toplevel->snap || (toplevel->snap_size <= 0)) {
+  if (toplevel->snap == SNAP_OFF || (toplevel->snap_size <= 0)) {
     return(input);
   }
-
 		
   snap_grid = toplevel->snap_size;
 
@@ -342,21 +341,6 @@ void set_window(TOPLEVEL *toplevel, PAGE *page,
   fw0 = page->top;
   fw  = toplevel->height;
   page->to_world_y_constant = (fw1 - fw0) / fw;
-}
-
-
-/*! \brief Checks if a point is snapped.
- *  \par Function Description
- *  This function checks if a point is snapped.
- *
- *  \param [in] val  The point to check.
- *  \return 0 if point (x) is snapped, non-zero otherwise
- *
- *  \note This function is unused for now.
- */
-int on_snap(int val)
-{
-  return( (val / 100)*100 - val);
 }
 
 /*! \brief */

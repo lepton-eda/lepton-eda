@@ -302,21 +302,15 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, char buf[],
   return new_obj;
 }
 
-/*! \brief
+/*! \brief create the string representation of an arc object
  *  \par Function Description
- *  This function formats a string in the buffer <B>*buff</B> to describe
+ *  This function formats a string in the buffer <B>*buf</B> to describe
  *  the arc object <B>*object</B>.
- *  It follows the post-20000704 release file format that handle the
- *  line type and filling options.
  *  A pointer to the new allocated and formated string is returned.
  *  The string must be freed at some point.
  *
  *  \param [in] object
- *  \return
- *
- *  \todo EEK! there is a nasty non-snap bug here!
- *        Basically the center isn't being snapped
- *        in complex objects only it seems...
+ *  \return the string representation of the arc object
  */
 char *o_arc_save(OBJECT *object)
 {

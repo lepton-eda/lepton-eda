@@ -224,8 +224,6 @@ void f_print_footer(FILE *fp)
  *  \param [in] unicode_count  Number of items in unicode table.
  *  \param [in] unicode_table  Table of unicode items.
  *  \return void
- *
- *  \todo  what happens if snap is off? hack deal with this !!!!!!!!
  */
 void f_print_objects (TOPLEVEL *toplevel, FILE *fp, const GList *obj_list,
 		     int start_x, int start_y, float scale, 
