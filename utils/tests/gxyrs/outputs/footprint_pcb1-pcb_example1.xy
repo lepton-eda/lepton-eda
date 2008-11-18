@@ -1,0 +1,43 @@
+# $Id$
+# PcbXY Version 1.0
+# Date: Sat Sep  6 14:29:26 2008 UTC
+# Author: 
+# Title: (unknown) - PCB X-Y
+# RefDes, Description, Value, X, Y, rotation, top/bottom
+# X,Y in mils.  rotation in degrees.
+# --------------------------------------------
+CONN4,footprint,"unknown",2000.00,3650.00,90 ,top   
+R6   ,footprint,"unknown",3225.00,4275.00,180,top   
+R5   ,footprint,"unknown",3225.00,4050.00,180,top   
+R8   ,footprint,"unknown",3225.00,3825.00,0  ,top   
+R7   ,footprint,"unknown",3225.00,3600.00,0  ,top   
+C1   ,footprint,"unknown",950.00 ,3775.00,0  ,bottom
+C14  ,footprint,"unknown",1225.00,3600.00,90 ,bottom
+D6   ,footprint,"unknown",1125.00,3875.00,180,bottom
+C13  ,footprint,"unknown",1615.95,3738.19,180,bottom
+CONN3,footprint,"unknown",2225.00,3600.00,270,top   
+C12  ,footprint,"unknown",1438.19,3834.05,270,bottom
+U2   ,footprint,"unknown",1342.50,4175.00,90 ,top   
+D7   ,footprint,"unknown",1775.00,3350.00,270,bottom
+D5   ,footprint,"unknown",1125.00,3775.00,180,bottom
+R4   ,footprint,"unknown",504.14 ,3527.76,180,bottom
+C15  ,footprint,"unknown",1225.00,3350.00,90 ,bottom
+U1   ,footprint,"unknown",407.50 ,4180.00,90 ,top   
+R9   ,footprint,"1k"     ,1875.00,3350.00,90 ,bottom
+R10  ,footprint,"1k"     ,1550.00,3300.00,0  ,bottom
+U3   ,footprint,"unknown",1075.00,3525.00,270,bottom
+R11  ,footprint,"10k"    ,1375.00,3300.00,180,bottom
+D2   ,footprint,"unknown",500.00 ,3850.00,0  ,top   
+C2   ,footprint,"unknown",925.00 ,3350.00,270,bottom
+R2   ,footprint,"unknown",506.90 ,3751.38,180,bottom
+CONN1,footprint,"unknown",275.00 ,3625.00,0  ,top   
+D4   ,footprint,"unknown",500.00 ,3625.00,0  ,top   
+R1   ,footprint,"unknown",425.00 ,3375.00,90 ,bottom
+C11  ,footprint,"unknown",1336.81,3834.05,90 ,bottom
+CONN2,footprint,"unknown",750.00 ,3625.00,0  ,top   
+S2   ,footprint,"unknown",750.00 ,3850.00,180,top   
+S1   ,footprint,"unknown",275.00 ,3850.00,0  ,top   
+D3   ,footprint,"unknown",750.00 ,3350.00,0  ,top   
+U4   ,footprint,"unknown",1500.00,3525.00,90 ,bottom
+D1   ,footprint,"unknown",275.00 ,3350.00,0  ,top   
+R3   ,footprint,"unknown",600.00 ,3375.00,90 ,bottom

@@ -1,0 +1,37 @@
+Designator Footprint     Mid X      Mid Y      Ref X Ref Y Pad X Pad Y TB Rotation Comment
+
+CONN4      CONNECTOR-3-1 2000mil    3650mil    0mil  0mil  0mil  0mil  T  90.00    unknown
+R6         ACY1000       3225mil    4275mil    0mil  0mil  0mil  0mil  T  180.00   unknown
+R5         ACY1000       3225mil    4050mil    0mil  0mil  0mil  0mil  T  180.00   unknown
+R8         ACY1000       3225mil    3825mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+R7         ACY1000       3225mil    3600mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+C1         1206          950mil     3775mil    0mil  0mil  0mil  0mil  B  0.00     unknown
+C14        1206          1225mil    3600mil    0mil  0mil  0mil  0mil  B  90.00    unknown
+D6         1206          1125mil    3875mil    0mil  0mil  0mil  0mil  B  180.00   unknown
+C13        1206          1615.95mil 3738.19mil 0mil  0mil  0mil  0mil  B  180.00   unknown
+CONN3      CONNECTOR-4-1 2225mil    3600mil    0mil  0mil  0mil  0mil  T  270.00   unknown
+C12        1206          1438.19mil 3834.05mil 0mil  0mil  0mil  0mil  B  270.00   unknown
+U2         TO220         1342.50mil 4175mil    0mil  0mil  0mil  0mil  T  90.00    unknown
+D7         1206          1775mil    3350mil    0mil  0mil  0mil  0mil  B  270.00   unknown
+D5         1206          1125mil    3775mil    0mil  0mil  0mil  0mil  B  180.00   unknown
+R4         1206          504.14mil  3527.76mil 0mil  0mil  0mil  0mil  B  180.00   unknown
+C15        1206          1225mil    3350mil    0mil  0mil  0mil  0mil  B  90.00    unknown
+U1         TO220         407.50mil  4180mil    0mil  0mil  0mil  0mil  T  90.00    unknown
+R9         1206          1875mil    3350mil    0mil  0mil  0mil  0mil  B  90.00    1k     
+R10        1206          1550mil    3300mil    0mil  0mil  0mil  0mil  B  0.00     1k     
+U3         SO8           1075mil    3525mil    0mil  0mil  0mil  0mil  B  270.00   unknown
+R11        1206          1375mil    3300mil    0mil  0mil  0mil  0mil  B  180.00   10k    
+D2         CONNECTOR-2-1 500mil     3850mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+C2         1206          925mil     3350mil    0mil  0mil  0mil  0mil  B  270.00   unknown
+R2         1206          506.90mil  3751.38mil 0mil  0mil  0mil  0mil  B  180.00   unknown
+CONN1      CONNECTOR-2-1 275mil     3625mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+D4         CONNECTOR-2-1 500mil     3625mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+R1         1206          425mil     3375mil    0mil  0mil  0mil  0mil  B  90.00    unknown
+C11        1206          1336.81mil 3834.05mil 0mil  0mil  0mil  0mil  B  90.00    unknown
+CONN2      CONNECTOR-2-1 750mil     3625mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+S2         CONNECTOR-2-1 750mil     3850mil    0mil  0mil  0mil  0mil  T  180.00   unknown
+S1         CONNECTOR-2-1 275mil     3850mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+D3         CONNECTOR-2-1 750mil     3350mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+U4         SO16          1500mil    3525mil    0mil  0mil  0mil  0mil  B  90.00    unknown
+D1         CONNECTOR-2-1 275mil     3350mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+R3         1206          600mil     3375mil    0mil  0mil  0mil  0mil  B  90.00    unknown

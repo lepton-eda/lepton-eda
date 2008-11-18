@@ -1,0 +1,43 @@
+# $Id$
+# PcbXY Version 1.0
+# Date: Sat Sep  6 14:29:26 2008 UTC
+# Author: 
+# Title: (unknown) - PCB X-Y
+# RefDes, Description, Value, X, Y, rotation, top/bottom
+# X,Y in mils.  rotation in degrees.
+# --------------------------------------------
+CONN4,"CONNECTOR-3-1","unknown",2000.00,-9125.000000,90,top
+R6,"ACY1000","unknown",3225.00,-10687.500000,180,top
+R5,"ACY1000","unknown",3225.00,-10125.000000,180,top
+R8,"ACY1000","unknown",3225.00,-9562.500000,0,top
+R7,"ACY1000","unknown",3225.00,-9000.000000,0,top
+C1,"1206","unknown",950.00,-9437.500000,0,bottom
+C14,"1206","unknown",1225.00,-9000.000000,90,bottom
+D6,"1206","unknown",1125.00,-9687.500000,180,bottom
+C13,"1206","unknown",1615.95,-9345.475000,180,bottom
+CONN3,"CONNECTOR-4-1","unknown",2225.00,-9000.000000,270,top
+C12,"1206","unknown",1438.19,-9585.125000,270,bottom
+U2,"TO220","unknown",1342.50,-10437.500000,90,top
+D7,"1206","unknown",1775.00,-8375.000000,270,bottom
+D5,"1206","unknown",1125.00,-9437.500000,180,bottom
+R4,"1206","unknown",504.14,-8819.400000,180,bottom
+C15,"1206","unknown",1225.00,-8375.000000,90,bottom
+U1,"TO220","unknown",407.50,-10450.000000,90,top
+R9,"1206","1k",1875.00,-8375.000000,90,bottom
+R10,"1206","1k",1550.00,-8250.000000,0,bottom
+U3,"SO8","unknown",1075.00,-8812.500000,270,bottom
+R11,"1206","10k",1375.00,-8250.000000,180,bottom
+D2,"CONNECTOR-2-1","unknown",500.00,-9625.000000,0,top
+C2,"1206","unknown",925.00,-8375.000000,270,bottom
+R2,"1206","unknown",506.90,-9378.450000,180,bottom
+CONN1,"CONNECTOR-2-1","unknown",275.00,-9062.500000,0,top
+D4,"CONNECTOR-2-1","unknown",500.00,-9062.500000,0,top
+R1,"1206","unknown",425.00,-8437.500000,90,bottom
+C11,"1206","unknown",1336.81,-9585.125000,90,bottom
+CONN2,"CONNECTOR-2-1","unknown",750.00,-9062.500000,0,top
+S2,"CONNECTOR-2-1","unknown",750.00,-9625.000000,180,top
+S1,"CONNECTOR-2-1","unknown",275.00,-9625.000000,0,top
+D3,"CONNECTOR-2-1","unknown",750.00,-8375.000000,0,top
+U4,"SO16","unknown",1500.00,-8812.500000,90,bottom
+D1,"CONNECTOR-2-1","unknown",275.00,-8375.000000,0,top
+R3,"1206","unknown",600.00,-8437.500000,90,bottom

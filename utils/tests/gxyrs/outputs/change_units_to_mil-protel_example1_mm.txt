@@ -1,0 +1,37 @@
+Designator Footprint Mid X Mid Y Ref X Ref Y Pad X Pad Y TB Rotation Comment
+
+CONN4 CONNECTOR-3-1 2000mil 92.71mm 0mm 0mm 0mm 0mm T 90.00 unknown
+R6 ACY1000 3225mil 108.585mm 0mm 0mm 0mm 0mm T 180.00 unknown
+R5 ACY1000 3225mil 102.87mm 0mm 0mm 0mm 0mm T 180.00 unknown
+R8 ACY1000 3225mil 97.155mm 0mm 0mm 0mm 0mm T 0.00 unknown
+R7 ACY1000 3225mil 91.44mm 0mm 0mm 0mm 0mm T 0.00 unknown
+C1 1206 950mil 95.885mm 0mm 0mm 0mm 0mm B 0.00 unknown
+C14 1206 1225mil 91.44mm 0mm 0mm 0mm 0mm B 90.00 unknown
+D6 1206 1125mil 98.425mm 0mm 0mm 0mm 0mm B 180.00 unknown
+C13 1206 1615.95mil 94.950026mm 0mm 0mm 0mm 0mm B 180.00 unknown
+CONN3 CONNECTOR-4-1 2225mil 91.44mm 0mm 0mm 0mm 0mm T 270.00 unknown
+C12 1206 1438.19mil 97.38487mm 0mm 0mm 0mm 0mm B 270.00 unknown
+U2 TO220 1342.5mil 106.045mm 0mm 0mm 0mm 0mm T 90.00 unknown
+D7 1206 1775mil 85.09mm 0mm 0mm 0mm 0mm B 270.00 unknown
+D5 1206 1125mil 95.885mm 0mm 0mm 0mm 0mm B 180.00 unknown
+R4 1206 504.14mil 89.605104mm 0mm 0mm 0mm 0mm B 180.00 unknown
+C15 1206 1225mil 85.09mm 0mm 0mm 0mm 0mm B 90.00 unknown
+U1 TO220 407.5mil 106.172mm 0mm 0mm 0mm 0mm T 90.00 unknown
+R9 1206 1875mil 85.09mm 0mm 0mm 0mm 0mm B 90.00 1k
+R10 1206 1550mil 83.82mm 0mm 0mm 0mm 0mm B 0.00 1k
+U3 SO8 1075mil 89.535mm 0mm 0mm 0mm 0mm B 270.00 unknown
+R11 1206 1375mil 83.82mm 0mm 0mm 0mm 0mm B 180.00 10k
+D2 CONNECTOR-2-1 500mil 97.79mm 0mm 0mm 0mm 0mm T 0.00 unknown
+C2 1206 925mil 85.09mm 0mm 0mm 0mm 0mm B 270.00 unknown
+R2 1206 506.9mil 95.285052mm 0mm 0mm 0mm 0mm B 180.00 unknown
+CONN1 CONNECTOR-2-1 275mil 92.075mm 0mm 0mm 0mm 0mm T 0.00 unknown
+D4 CONNECTOR-2-1 500mil 92.075mm 0mm 0mm 0mm 0mm T 0.00 unknown
+R1 1206 425mil 85.725mm 0mm 0mm 0mm 0mm B 90.00 unknown
+C11 1206 1336.81mil 97.38487mm 0mm 0mm 0mm 0mm B 90.00 unknown
+CONN2 CONNECTOR-2-1 750mil 92.075mm 0mm 0mm 0mm 0mm T 0.00 unknown
+S2 CONNECTOR-2-1 750mil 97.79mm 0mm 0mm 0mm 0mm T 180.00 unknown
+S1 CONNECTOR-2-1 275mil 97.79mm 0mm 0mm 0mm 0mm T 0.00 unknown
+D3 CONNECTOR-2-1 750mil 85.09mm 0mm 0mm 0mm 0mm T 0.00 unknown
+U4 SO16 1500mil 89.535mm 0mm 0mm 0mm 0mm B 90.00 unknown
+D1 CONNECTOR-2-1 275mil 85.09mm 0mm 0mm 0mm 0mm T 0.00 unknown
+R3 1206 600mil 85.725mm 0mm 0mm 0mm 0mm B 90.00 unknown

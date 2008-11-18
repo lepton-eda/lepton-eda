@@ -485,6 +485,7 @@ AC_CONFIG_FILES([Makefile
                  examples/gmk_sym/Makefile 
                  examples/tragesym/Makefile 
                  examples/gsch2pcb/Makefile 
+		 gxyrs/Makefile
                  include/Makefile 
                  scripts/Makefile 
                  docs/Makefile 
@@ -497,6 +498,9 @@ AC_CONFIG_FILES([Makefile
                  tests/refdes_renum/Makefile
                  tests/refdes_renum/inputs/Makefile
                  tests/refdes_renum/outputs/Makefile
+                 tests/gxyrs/Makefile
+                 tests/gxyrs/inputs/Makefile
+                 tests/gxyrs/outputs/Makefile
 ])
 
 AC_OUTPUT

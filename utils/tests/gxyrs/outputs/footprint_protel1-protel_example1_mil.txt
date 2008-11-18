@@ -1,0 +1,37 @@
+Designator footprint Mid X      Mid Y      Ref X Ref Y Pad X Pad Y TB Rotation Comment
+
+CONN4      footprint 2000mil    3650mil    0mil  0mil  0mil  0mil  T  90.00    unknown
+R6         footprint 3225mil    4275mil    0mil  0mil  0mil  0mil  T  180.00   unknown
+R5         footprint 3225mil    4050mil    0mil  0mil  0mil  0mil  T  180.00   unknown
+R8         footprint 3225mil    3825mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+R7         footprint 3225mil    3600mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+C1         footprint 950mil     3775mil    0mil  0mil  0mil  0mil  B  0.00     unknown
+C14        footprint 1225mil    3600mil    0mil  0mil  0mil  0mil  B  90.00    unknown
+D6         footprint 1125mil    3875mil    0mil  0mil  0mil  0mil  B  180.00   unknown
+C13        footprint 1615.95mil 3738.19mil 0mil  0mil  0mil  0mil  B  180.00   unknown
+CONN3      footprint 2225mil    3600mil    0mil  0mil  0mil  0mil  T  270.00   unknown
+C12        footprint 1438.19mil 3834.05mil 0mil  0mil  0mil  0mil  B  270.00   unknown
+U2         footprint 1342.50mil 4175mil    0mil  0mil  0mil  0mil  T  90.00    unknown
+D7         footprint 1775mil    3350mil    0mil  0mil  0mil  0mil  B  270.00   unknown
+D5         footprint 1125mil    3775mil    0mil  0mil  0mil  0mil  B  180.00   unknown
+R4         footprint 504.14mil  3527.76mil 0mil  0mil  0mil  0mil  B  180.00   unknown
+C15        footprint 1225mil    3350mil    0mil  0mil  0mil  0mil  B  90.00    unknown
+U1         footprint 407.50mil  4180mil    0mil  0mil  0mil  0mil  T  90.00    unknown
+R9         footprint 1875mil    3350mil    0mil  0mil  0mil  0mil  B  90.00    1k     
+R10        footprint 1550mil    3300mil    0mil  0mil  0mil  0mil  B  0.00     1k     
+U3         footprint 1075mil    3525mil    0mil  0mil  0mil  0mil  B  270.00   unknown
+R11        footprint 1375mil    3300mil    0mil  0mil  0mil  0mil  B  180.00   10k    
+D2         footprint 500mil     3850mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+C2         footprint 925mil     3350mil    0mil  0mil  0mil  0mil  B  270.00   unknown
+R2         footprint 506.90mil  3751.38mil 0mil  0mil  0mil  0mil  B  180.00   unknown
+CONN1      footprint 275mil     3625mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+D4         footprint 500mil     3625mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+R1         footprint 425mil     3375mil    0mil  0mil  0mil  0mil  B  90.00    unknown
+C11        footprint 1336.81mil 3834.05mil 0mil  0mil  0mil  0mil  B  90.00    unknown
+CONN2      footprint 750mil     3625mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+S2         footprint 750mil     3850mil    0mil  0mil  0mil  0mil  T  180.00   unknown
+S1         footprint 275mil     3850mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+D3         footprint 750mil     3350mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+U4         footprint 1500mil    3525mil    0mil  0mil  0mil  0mil  B  90.00    unknown
+D1         footprint 275mil     3350mil    0mil  0mil  0mil  0mil  T  0.00     unknown
+R3         footprint 600mil     3375mil    0mil  0mil  0mil  0mil  B  90.00    unknown
