@@ -23,7 +23,7 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
 install_icon_exec = \
-	$(top_srcdir)/icon-theme-installer \
+	$(SHELL) $(top_srcdir)/icon-theme-installer \
 	-t $(theme) \
 	-s $(srcdir) \
 	-d "x$(DESTDIR)" \
