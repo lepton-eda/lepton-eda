@@ -11,13 +11,14 @@ check_SCRIPTS = tests
 
 BUILDDIR=$(top_builddir)/tests/hierarchy
 SRCDIR=$(srcdir)
+GNETLIST=$(top_builddir)/src/gnetlist
 
 tests:
 	rm -f $(BUILDDIR)/new_*
 	( export TESTDIR=$(SRCDIR); \
 	  echo $$TESTDIR; \
 	  cp -f $(SRCDIR)/gnetlistrc.hierarchy $(BUILDDIR)/gnetlistrc; \
-	  gnetlist \
+	  $(GNETLIST) \
 	     -o $(BUILDDIR)/new_hierarchy.geda -g geda \
 	     $(SRCDIR)/top.sch )
 	diff $(SRCDIR)/hierarchy.geda $(BUILDDIR)/new_hierarchy.geda; \
