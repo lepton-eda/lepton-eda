@@ -7,7 +7,9 @@ bin_SCRIPTS = gxyrs
 rcdatadir = @GEDARCDIR@/gxyrs
 rcdata_DATA = gxyrs.pm
 
-EXTRA_DIST = gxyrs.pm
+EXTRA_DIST = \
+	gxyrs.pl \
+	gxyrs.pm
 
 distclean-local:
 	-rm -rf autom4te.cache
