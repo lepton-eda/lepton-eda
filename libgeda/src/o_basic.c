@@ -22,10 +22,24 @@
  *  \brief functions for the basic object type
  *  
  *  This file contains the code used to handle OBJECTs (st_object).
- *  \todo improve doc, draw some design images.
- *  \todo 
- *  Lots of Gross code... needs lots of cleanup
- *  mainly readability issues
+ *  The object is the basic type of all elements stored in schematic
+ *  and symbol files.
+ *
+ *  The object be extended to become concrete objects like a line,
+ *  a pin, text, a circle or a picture. These extentions are substructures
+ *  in the object struct.
+ *  The subobjects are picture (st_picture), path (st_path), arcs (st_arc),
+ *  a line (st_line), box (st_box), circle (st_circle), text (st_text) and
+ *  a complex type (st_complex).
+ *
+ *  Pins, nets and busses are just a kind of a line.
+ *
+ *  The complex object can carry many primary objects. If the complex
+ *  object is a symbol, then the complex symbol contains all the pins,
+ *  the text and the graphics.
+ *  
+ *  \image html o_object_relations.png
+ *  \image latex o_object_relations.pdf "object relations" width=14cm
  */
 
 #include <config.h>
@@ -166,8 +180,6 @@ o_recalc_object_glist(TOPLEVEL *toplevel, GList *object_glist)
    list = g_list_next(list);
   }
 }
-
-
 
 
 /*! \brief Set an #OBJECT's line options.

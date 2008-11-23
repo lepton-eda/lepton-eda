@@ -26,7 +26,12 @@
  *  The part before the equal character is called <b>name</b> the
  *  part of the string behind the equal character is called <b>value</b>
  *
- *  Attributes are can be attached to OBJECTs (st_object).
+ *  Attributes are attached to OBJECTs (st_object). Each attribute has
+ *  a reference to the object it is attached to. Each object that has
+ *  attributes has a list of pionters to its attributes.
+ *  
+ *  \image html o_attrib_overview.png
+ *  \image latex o_attrib_overview.pdf "attribute overview" width=14cm
  * 
  *  \note
  *  Be sure in o_copy o_move o_delete you maintain the attributes

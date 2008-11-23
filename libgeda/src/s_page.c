@@ -17,6 +17,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/*! \file s_page.c
+ *  \brief The page system
+ *
+ *  libgeda can handle multiple schematic or symbol pages. libgeda keeps 
+ *  track of the currently opened pages with a managed _GedaList.
+ *  The currently used page is refered with an extra pointer.
+ *
+ *  Each page carries a list of the objects that are on the page.
+ *  The first and the last element are referenced by the head and tail
+ *  pointers.
+ *
+ *  \image html s_page_overview.png
+ *  \image latex s_page_overview.pdf "page overview" width=14cm
+ */
+
 #include <config.h>
 
 #include <stdio.h>
