@@ -92,7 +92,7 @@ here=`pwd`
 srcdir=${srcdir:-$here}
 srcdir=`cd $srcdir && pwd`
 
-top_srcdir=${top_srcdir:-$here/../../..}
+top_srcdir=${top_srcdir:-$here/../..}
 top_srcdir=`cd $top_srcdir && pwd`
 
 # the perl program
@@ -173,9 +173,9 @@ for t in $all_tests ; do
     #
     
     if test "X$adjust_file" = "X" -o "X$adjust_file" = "X " ; then
-	command="cd ${rundir} && ${PERL} -w ${top_srcdir}/utils/gxyrs/gxyrs $args $files --output $out_file 2> $error_file"
+	command="cd ${rundir} && ${PERL} -w ${top_srcdir}/gxyrs/gxyrs $args $files --output $out_file 2> $error_file"
     else
-	command="cd ${rundir} && ${PERL} -w ${top_srcdir}/utils/gxyrs/gxyrs $args $files --adjust $adjust_file --output $out_file 2> $error_file"
+	command="cd ${rundir} && ${PERL} -w ${top_srcdir}/gxyrs/gxyrs $args $files --adjust $adjust_file --output $out_file 2> $error_file"
     fi
     echo "Running test ${t}"
     echo $command
