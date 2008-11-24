@@ -232,11 +232,15 @@ gint g_rc_parse_system_rc(TOPLEVEL *toplevel, const gchar *rcname)
  */
 gint g_rc_parse_home_rc(TOPLEVEL *toplevel, const gchar *rcname)
 {
-  const gchar *home = g_getenv ("HOME");
+  const gchar *home;
   gint found_rc;
   gchar *tmp;
   char *filename;
   gchar *ok_msg, *err_msg;
+
+  home = g_getenv ("HOME");
+  if (home == NULL)
+     home = g_get_home_dir ();
 
   if (home == NULL) {
     return 0;

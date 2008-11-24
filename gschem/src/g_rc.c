@@ -59,6 +59,8 @@ void g_rc_parse_gtkrc()
   g_free (filename);
   
   home = g_getenv ("HOME");
+  if (home == NULL)
+     home = g_get_home_dir ();
   if (home != NULL) {
     filename = g_build_filename (home, ".gschem-gtkrc", NULL);
     gtk_rc_parse (filename);
