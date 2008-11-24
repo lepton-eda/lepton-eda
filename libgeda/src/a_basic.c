@@ -463,12 +463,11 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
         { 
           fileformat_ver = 0;
 	}
-        
-	if (fileformat_ver < current_fileformat_ver)
-        {
+
+        if (fileformat_ver == 0) {
           s_log_message(_("Read an old format sym/sch file!\n"
                           "Please run g[sym|sch]update on:\n[%s]\n"), name);
-	}
+        }
         break;
 
       default:
