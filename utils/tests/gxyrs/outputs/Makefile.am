@@ -4,8 +4,8 @@
 # dir | sort | awk '{printf("\t%s \\\n", $0)}' |grep -v Makefile >> Makefile.am
 
 EXTRA_DIST= \
-	change_units_already_done_no_title-protel_example1_mil.txt \
-	change_units_already_done_no_title-protel_example1_mil.txt-error \
+	change_units_done_notitle-protel_example1_mil.txt \
+	change_units_done_notitle-protel_example1_mil.txt-error \
 	change_units_already_done-protel_example1_mil.txt \
 	change_units_already_done-protel_example1_mil.txt-error \
 	change_units_bad_column_number1-pcb_example1.xy \
@@ -24,10 +24,10 @@ EXTRA_DIST= \
 	change_units_to_mil-protel_example1_mm.txt-error \
 	change_units_to_mm_2cols-protel_example1_mil.txt \
 	change_units_to_mm_2cols-protel_example1_mil.txt-error \
-	change_units_to_mm_6col_tabulated_no_title-protel_example1_mil.txt \
-	change_units_to_mm_6col_tabulated_no_title-protel_example1_mil.txt-error \
-	change_units_to_mm_6col_tabulated-protel_example1_mil.txt \
-	change_units_to_mm_6col_tabulated-protel_example1_mil.txt-error \
+	change_units_2mm_6col_tab_notit-protel_example1_mil.txt \
+	change_units_2mm_6col_tab_notit-protel_example1_mil.txt-error \
+	change_units_to_mm_6col_tab-protel_example1_mil.txt \
+	change_units_to_mm_6col_tab-protel_example1_mil.txt-error \
 	change_units_to_mm_no_title-protel_example1_mil.txt \
 	change_units_to_mm_no_title-protel_example1_mil.txt-error \
 	change_units_to_mm-protel_example1_mil.txt \
@@ -134,8 +134,8 @@ EXTRA_DIST= \
 	offset_match_negative_offset-pcb_example1.xy-error \
 	offset_match_negative_real_offset-pcb_example1.xy \
 	offset_match_negative_real_offset-pcb_example1.xy-error \
-	offset_match_offset_with_units_but_no_units_in_file-pcb_example1.xy \
-	offset_match_offset_with_units_but_no_units_in_file-pcb_example1.xy-error \
+	offset_match_no_units_in_file-pcb_example1.xy \
+	offset_match_no_units_in_file-pcb_example1.xy-error \
 	offset_match_real_offset-pcb_example1.xy \
 	offset_match_real_offset-pcb_example1.xy-error \
 	offset_negative_column_number-pcb_example1.xy \
@@ -234,8 +234,8 @@ EXTRA_DIST= \
 	translate_bad_column_number2-pcb_example1.xy-error \
 	translate_column_change_all_value_plus_k-pcb_example1.xy \
 	translate_column_change_all_value_plus_k-pcb_example1.xy-error \
-	translate_column_change_R10_value_case_insensitive-pcb_example1.xy \
-	translate_column_change_R10_value_case_insensitive-pcb_example1.xy-error \
+	translate_col_R10_value_case_insensitive-pcb_example1.xy \
+	translate_col_R10_value_case_insensitive-pcb_example1.xy-error \
 	translate_column_change_R10_value-pcb_example1.xy \
 	translate_column_change_R10_value-pcb_example1.xy-error \
 	translate_column_no_match1-pcb_example1.xy \

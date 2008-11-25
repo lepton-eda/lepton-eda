@@ -78,10 +78,10 @@ change_units_bad_column_number2 | pcb_example1.xy | | --eval "return change_col_
 change_units_negative_column_number | pcb_example1.xy | | --eval "return change_col_units 'mm', -4"| 255
 change_units_column_number_too_high | pcb_example1.xy | | --eval "return change_col_units 'mm', 100"| 255
 change_units_no_units | pcb_example1.xy | | --eval "return change_col_units 'mm', 4"| 254
-change_units_to_mm_6col_tabulated | protel_example1_mil.txt | | --tabulate --eval "return change_col_units 'mm', 3, 4, 5, 6, 7, 8"| 254
-change_units_to_mm_6col_tabulated_no_title | protel_example1_mil.txt | | --tabulate --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mm', 3, 4, 5, 6, 7, 8}"| 1
+change_units_to_mm_6col_tab | protel_example1_mil.txt | | --tabulate --eval "return change_col_units 'mm', 3, 4, 5, 6, 7, 8"| 254
+change_units_2mm_6col_tab_notit | protel_example1_mil.txt | | --tabulate --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mm', 3, 4, 5, 6, 7, 8}"| 1
 change_units_already_done | protel_example1_mil.txt | | --eval "return change_col_units 'mil', 3"| 254
-change_units_already_done_no_title | protel_example1_mil.txt | | --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mil', 3}"| 0
+change_units_done_notitle | protel_example1_mil.txt | | --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mil', 3}"| 0
 change_units_units_not_supported | protel_example1_mil.txt | | --eval "return change_col_units 'gallons', 3"| 255
 change_units_to_mm | protel_example1_mil.txt | | --eval "return change_col_units 'mm', 3"| 254
 change_units_to_mm_no_title | protel_example1_mil.txt | | --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mm', 3}"| 1
@@ -102,7 +102,7 @@ offset_check_columns_match | pcb_example1.xy | | --eval "return add_number_to_co
 offset_match_negative_offset | pcb_example1.xy | | --eval "return add_number_to_col 4, -100, 1, 'R[0-9]+'" | 1
 offset_match_real_offset | pcb_example1.xy | | --eval "return add_number_to_col 4, 10.3, 1, 'R[0-9]+'" | 1
 offset_match_negative_real_offset | pcb_example1.xy | | --eval "return add_number_to_col 4, -10.3, 1, 'R[0-9]+'" | 1
-offset_match_offset_with_units_but_no_units_in_file | pcb_example1.xy | | --eval "return add_number_to_col 4, '-10.3mm', 1, 'R[0-9]+'" | 255
+offset_match_no_units_in_file | pcb_example1.xy | | --eval "return add_number_to_col 4, '-10.3mm', 1, 'R[0-9]+'" | 255
 
 # -----------------------------------------
 # Tests for translate_col_val subroutine in gxyrs package.
@@ -113,7 +113,7 @@ translate_negative_column_number | pcb_example1.xy | | --eval "return translate_
 translate_column_number_too_high | pcb_example1.xy | | --eval "return translate_col_val 100, '^.([0-9]+)k.$','sprintf(\"%dK\",$1)', 1, 'R[0-9]+'"| 255
 translate_column_change_all_value_plus_k | pcb_example1.xy | | --eval "return translate_col_val 3, '^.([0-9]+)k.$','sprintf(\"%dK\",\$1)'"| 1
 translate_column_change_R10_value | pcb_example1.xy | | --eval "return translate_col_val 3, '^.([0-9]+)k.$','sprintf(\"%dK\",\$1)', 1, 'R10'"| 1
-translate_column_change_R10_value_case_insensitive | pcb_example1.xy | | --caseinsensitive --eval "return translate_col_val 3, '^.([0-9]+)K.$','sprintf(\"%dkilohms\",\$1)', 1, 'R10'"| 1
+translate_col_R10_value_case_insensitive | pcb_example1.xy | | --caseinsensitive --eval "return translate_col_val 3, '^.([0-9]+)K.$','sprintf(\"%dkilohms\",\$1)', 1, 'R10'"| 1
 translate_column_no_match1 | pcb_example1.xy | | --eval "return translate_col_val 3, '^.([0-9]+)k.$','sprintf(\"%dK\",\$1)', 1, 'R90'"| 0
 translate_column_no_match2 | pcb_example1.xy | | --eval "return translate_col_val 3, '^.([0-9]+)n.$','sprintf(\"%dnF\",\$1)', 1, 'R10'"| 0
 
