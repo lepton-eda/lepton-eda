@@ -27,7 +27,7 @@ regen=no
 usage() {
 cat << EOF
 
-$0 -- Testsuite program for refdes_renum
+$0 -- Testsuite program for gxyrs
 
 Usage
 
