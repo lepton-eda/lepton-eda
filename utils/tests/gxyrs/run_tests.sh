@@ -94,6 +94,8 @@ srcdir=`cd $srcdir && pwd`
 
 top_srcdir=${top_srcdir:-$here/../..}
 top_srcdir=`cd $top_srcdir && pwd`
+top_builddir=${top_builddir:-$here/../..}
+top_builddir=`cd $top_builddir && pwd`
 
 # the perl program
 PERL=${PERL:-perl}
@@ -110,6 +112,13 @@ if test ! -f $TESTLIST ; then
     echo "ERROR: ($0)  Test list $TESTLIST does not exist"
     exit 1
 fi
+
+GXYRS_SCRIPT=${top_builddir}/gxyrs/gxyrs
+if test ! -f $GXYRS_SCRIPT ; then
+    echo "ERROR: ($0)  gxyrs script $GXYRS_SCRIPT does not exist"
+    exit 1
+fi
+
 
 # fail/pass/total counts
 fail=0
@@ -130,6 +139,7 @@ srcdir:     $srcdir
 top_srcdir: $top_srcdir
 INPUT_DIR:  ${INPUT_DIR}
 GOLDEN_DIR: ${GOLDEN_DIR}
+script to test: ${top_srcdir}/gxyrs/gxyrs
 all_tests:
 
 ${all_tests}
@@ -173,9 +183,9 @@ for t in $all_tests ; do
     #
     
     if test "X$adjust_file" = "X" -o "X$adjust_file" = "X " ; then
-	command="cd ${rundir} && ${PERL} -w ${top_srcdir}/gxyrs/gxyrs $args $files --output $out_file 2> $error_file"
+	command="cd ${rundir} && ${PERL} -w ${GXYRS_SCRIPT} $args $files --output $out_file 2> $error_file"
     else
-	command="cd ${rundir} && ${PERL} -w ${top_srcdir}/gxyrs/gxyrs $args $files --adjust $adjust_file --output $out_file 2> $error_file"
+	command="cd ${rundir} && ${PERL} -w ${GXYRS_SCRIPT} $args $files --adjust $adjust_file --output $out_file 2> $error_file"
     fi
     echo "Running test ${t}"
     echo $command
