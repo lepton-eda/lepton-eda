@@ -11,6 +11,8 @@ EXTRA_DIST = \
 	gxyrs.pl \
 	gxyrs.pm
 
+all: gxyrs
+
 distclean-local:
 	-rm -rf autom4te.cache
 
