@@ -1,12 +1,12 @@
 #!/bin/sh
 # ha ha
 
-if [ -z $1 ] ; then
+if [ -z "$1" ] ; then
     echo "usage $0 geda-bom  # output on stdout"
     exit -1
 fi    
-cat $1 | awk '{print toupper($2)" "toupper($3)" "toupper($4)" "toupper($1)}'\
-| sort +0 | awk '\
+cat $1 | /usr/bin/awk '{print toupper($2)" "toupper($3)" "toupper($4)" "toupper($1)}'\
+| sort +0 | /usr/bin/awk '\
 BEGIN {\
 f1="";f2="";f3="";\
 format1="%3d %-19s %-10s %-10s ";\

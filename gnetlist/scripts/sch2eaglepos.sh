@@ -1,17 +1,23 @@
-#!/bin/bash
+#!/bin/sh
 # By Braddock Gaskill (braddock@braddock.com), August 2004.  This
 # software is hereby declared to be in the public domain by Braddock
 # Gaskill, the author.
 FNAME="$1"
 if [ -z "$FNAME" ]; then
-    echo "$0 <inputfile.sch>"
-    echo "This script will read a gschem schematic and attempt to
-    extract the relative positions of the components in the schematic,
-    and generate corresponding MOVE instructions for Eagle.  You will
-    likely have to adjust XOFFSET, YOFFSET, XSCAL, and YSCALE at the
-    top of the script to obtain usable positions."
-    echo "By Braddock Gaskill (braddock@braddock.com), August 2004"
-    exit -1;
+    cat << EOF
+
+$0 <inputfile.sch>
+
+This script will read a gschem schematic and attempt to
+extract the relative positions of the components in the schematic,
+and generate corresponding MOVE instructions for Eagle.  You will
+likely have to adjust XOFFSET, YOFFSET, XSCAL, and YSCALE at the
+top of the script to obtain usable positions.
+
+By Braddock Gaskill (braddock@braddock.com), August 2004
+
+EOF
+    exit -1
 fi
 XOFFSET=40000
 YOFFSET=33000
@@ -24,13 +30,20 @@ tmpdir=/tmp/$$
 mkdir -m 0700 -p $tmpdir
 rc=$?
 if test $rc -ne 0 ; then
-	echo "Failed to create $tmpdir with 0700 permissions.  mkdir returned $rc."
+	cat << EOF
+
+$0: ERROR -- Failed to create $tmpdir with 0700 permissions.  mkdir returned $rc.
+
+Make sure that $tmpdir does not already exist and that you have permissions to 
+create it.
+
+EOF
 	exit 1
 fi
-TMP=${tmpdir}/tmpf
-grep -B1 refdes= "$FNAME" |sed 's/=/ /' | cut -d" " -f2,3 |grep -v '^--' >${TMP}
+tmpf=${tmpdir}/tmpf
+grep -B1 refdes= "$FNAME" |sed 's/=/ /' | cut -d" " -f2,3 |grep -v '^--' >${tmpf}
 
-3<$TMP
+3<$tmpf
 while read -u 3; do
     # the directory on the client to backup
     X=`echo $REPLY | cut -d' ' -f1`

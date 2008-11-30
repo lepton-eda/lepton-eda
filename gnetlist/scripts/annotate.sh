@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 #---------------------------------28/02/2000-----------------------
 #------------------------------------------------------------------
 
-if [ -z $1 ]; then
+if [ -z "$1" ]; then
 	echo "No sch file indicated"
 	echo "usage:"
 	echo "annotate file"
@@ -27,13 +27,29 @@ if [ -z $1 ]; then
 	exit 1
 fi 
 
+# create a secure temp directory
+tmpd=${TMP:-/tmp}/annotate.$$
+mkdir -m 0700 ${tmpd}
+rc=$?
+if test $rc -ne 0 ; then
+	cat << EOF
+
+$0:  ERROR -- failed to securily create ${tmpd}
+Check to make sure that the directory does not already
+exist and that you have sufficient permissions to create it.
+
+mkdir returned $rc.
+
+EOF
+	exit 1
+fi
 
 # Determine the different refdes=?
 
-list=`gawk '/^refdes=[A-Z]+\?/ {
+list=`/usr/bin/awk '/^refdes=[A-Z]+\?/ {
 		A=$1; gsub(/refdes=/,"",A)
 		gsub(/\?/,"",A)
-		print A}' $1 | sort | gawk 'BEGIN {if (NR==1) {A=$1} }{if (A !=$1) print ; A=$1}' - `
+		print A}' $1 | sort | /usr/bin/awk 'BEGIN {if (NR==1) {A=$1} }{if (A !=$1) print ; A=$1}' - `
 
 
 if [ -z "$list" ]; then
@@ -46,47 +62,46 @@ fi
 cp $1 $1.sauv
 
 # Replace the ? by a number 
+sc=${tmpd}/sc.awk
 
 for f in  $list; do 
     # creation du script gawk 1 
-    echo "BEGIN {R=0}" >sc.awk
-    echo "/^refdes=$f[0-9]+/ {B=\$1" >>sc.awk
-    echo "gsub(/refdes=[A-Z]+/,\"\",B)" >>sc.awk
-    echo "if (B>R) {R=B}" >>sc.awk
-    echo "}" >>sc.awk
-    echo "END {printf(\"%d\",R)}" >>sc.awk
+    echo "BEGIN {R=0}" >${sc}
+    echo "/^refdes=$f[0-9]+/ {B=\$1" >>${sc}
+    echo "gsub(/refdes=[A-Z]+/,\"\",B)" >>${sc}
+    echo "if (B>R) {R=B}" >>${sc}
+    echo "}" >>${sc}
+    echo "END {printf(\"%d\",R)}" >>${sc}
     # execution des scripts
     
-    IMAX=`gawk -f sc.awk $1`
+    IMAX=`/usr/bin/awk -f ${sc} $1`
     echo "Numbering of $f will start at $IMAX"
     
     # creation du script gawk 2 
     
-    echo "BEGIN {R=MAX} ">sc.awk
-    echo "{if (match(\$1,/^refdes=$f\?/)!=0) {" >>sc.awk
-    echo "R=R+1" >>sc.awk
-    echo "sub(/\?/,R,\$1)" >>sc.awk
-    echo "print \$1 } " >>sc.awk
-    echo "else {print \$0}}">>sc.awk
+    echo "BEGIN {R=MAX} ">${sc}
+    echo "{if (match(\$1,/^refdes=$f\?/)!=0) {" >>${sc}
+    echo "R=R+1" >>${sc}
+    echo "sub(/\?/,R,\$1)" >>${sc}
+    echo "print \$1 } " >>${sc}
+    echo "else {print \$0}}">>${sc}
     
-    #echo "OK=1" >>sc.awk
-    #echo "LL=NR}" >>sc.awk
-    #echo "{" >>sc.awk
-    #echo "if ((OK==1)&&(NR==LL+1)) {print \$1\" \"\$2\" \"\$3\" \"\$4\" \"\$5\" \"1\" \"\$7\" \"\$8 }" >>sc.awk
-    #echo "if (NR==LL+2) {OK=0} " >>sc.awk
-    #echo "if (OK==0) {print \$0} " >>sc.awk
-    #echo "}" >>sc.awk
+    #echo "OK=1" >>${sc}
+    #echo "LL=NR}" >>${sc}
+    #echo "{" >>${sc}
+    #echo "if ((OK==1)&&(NR==LL+1)) {print \$1\" \"\$2\" \"\$3\" \"\$4\" \"\$5\" \"1\" \"\$7\" \"\$8 }" >>${sc}
+    #echo "if (NR==LL+2) {OK=0} " >>${sc}
+    #echo "if (OK==0) {print \$0} " >>${sc}
+    #echo "}" >>${sc}
     
     #execute the second script
     
-    cat $1 | gawk -v MAX=$IMAX -f sc.awk  - > $1.tmp
+    cat $1 | /usr/bin/awk -v MAX=$IMAX -f ${sc}  - > $1.tmp
     mv $1.tmp $1
     
 done
     
 # clean !
 
-if [ -e sc.awk ]; then
-	rm sc.awk
-fi	
+rm  -fr ${tmpd}
 

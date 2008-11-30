@@ -84,7 +84,9 @@ AC_PROG_CC
 AM_CONDITIONAL(CCISGCC, test "$GCC" = "yes")    
 AC_PROG_CPP
 AC_PROG_MAKE_SET
-AC_PATH_PROGS(AWK, nawk gawk mawk awk, )
+AC_PATH_AWK
+AC_AWK_GSUB([], [AC_MSG_ERROR([We require an awk implementation that provides gsub().  Consider installing gawk.])])
+AC_AWK_TOUPPER([], [AC_MSG_ERROR([We require an awk implementation that provides toupper().  Consider installing gawk.])])
 AC_PATH_PROGS(M4, gm4 m4, m4)
 
 ##############################################################3
@@ -499,8 +501,14 @@ AC_CONFIG_FILES([Makefile
 		 lib/Makefile 
 		 utils/Makefile 
 		 scripts/Makefile
+		 scripts/annotate.sh
+		 scripts/bom_xref.sh
+		 scripts/bompp.sh
 		 scripts/sw2asc 
 		 lib/system-gnetlistrc ])
+AC_CONFIG_COMMANDS([annotate-chmod],[[chmod +x scripts/annotate.sh]],[[]])
+AC_CONFIG_COMMANDS([bom_xref-chmod],[[chmod +x scripts/bom_xref.sh]],[[]])
+AC_CONFIG_COMMANDS([bompp-chmod],[[chmod +x scripts/bompp.sh]],[[]])
 AC_CONFIG_COMMANDS([sw2asc-chmod],[[chmod +x scripts/sw2asc]],[[]])
 
 AC_OUTPUT
