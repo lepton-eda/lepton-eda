@@ -51,7 +51,7 @@ tests:
 	  file_basename=`basename $$file .sch`; \
 	  echo Checking test in $(SRCDIR)/$$file_basename.sch; \
 	  ( export TESTDIR=$(SRCDIR) ; \
-	    gnetlist -g drc2 -o $(BUILDDIR)/new_$$file_basename.drc2 \
+	    $(top_builddir)/src/gnetlist -g drc2 -o $(BUILDDIR)/new_$$file_basename.drc2 \
             $$file ); \
           diff $(SRCDIR)/$$file_basename.drc2 \
                  $(BUILDDIR)/new_$$file_basename.drc2; \
