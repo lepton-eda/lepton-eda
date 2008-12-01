@@ -42,11 +42,14 @@ check_SCRIPTS = tests
 BUILDDIR=$(top_builddir)/tests/drc2
 SRCDIR=$(srcdir)
 
+.PHONY : tests
 tests:
 # cleanup
 	rm -f $(BUILDDIR)/new_*
+	rm -f $(BUILDDIR)/failed.log
 
 # make the tests
+	failed=0; \
 	for file in $(SRCDIR)/*.sch; do \
 	  file_basename=`basename $$file .sch`; \
 	  echo Checking test in $(SRCDIR)/$$file_basename.sch; \
@@ -56,12 +59,18 @@ tests:
           diff $(SRCDIR)/$$file_basename.drc2 \
                  $(BUILDDIR)/new_$$file_basename.drc2; \
           if [ $$? -ne 0 ]; then \
-	     echo "Test in $(SRCDIR)/$$file_basename.sch FAILED!!"; \
-	     exit 1; \
+	     echo "# Test in $(SRCDIR)/$$file_basename.sch FAILED!!" | tee -a $(BUILDDIR)/failed.log ; \
+	     echo "diff $(SRCDIR)/$$file_basename.drc2 $(BUILDDIR)/new_$$file_basename.drc2" >> $(BUILDDIR)/failed.log ; \
+	     failed=`expr $$failed + 1`; \
 	  else \
 	     echo "Test in $(SRCDIR)/$$file_basename.sch PASSED."; \
 	  fi; \
-	done
+	done ; \
+	if test $$failed -ne 0 ; then \
+		echo "FAILED $$failed test(s)" ; \
+		cat $(BUILDDIR)/failed.log ; \
+		exit 1 ; \
+	fi
 
 MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~
 CLEANFILES = new_* core *.log FILE *.ps *~
