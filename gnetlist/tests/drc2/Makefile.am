@@ -4,6 +4,7 @@ EXTRA_DIST = duplicated-refdes.sch duplicated-refdes.drc2 \
 	     duplicated_slot.sch duplicated_slot.drc2 \
 	     gnd-with-nc-directive.sch gnd-with-nc-directive.drc2 \
 	     gnd-without-nc-directive.sch gnd-without-nc-directive.drc2 \
+	     gnetlistrc.drc2 \
 	     net-not-driven.sch net-not-driven.drc2 \
 	     net-not-driven-with-dont-check-if-driven-directive.sch \
 	     net-not-driven-with-dont-check-if-driven-directive.drc2 \
@@ -48,6 +49,12 @@ tests:
 	rm -f $(BUILDDIR)/new_*
 	rm -f $(BUILDDIR)/failed.log
 
+# copy required file(s)
+	sed \
+		-e 's;@scheme_srcdir@;${top_srcdir}/scheme;g' \
+		-e 's;@scheme_builddir@;${top_builddir}/scheme;g' \
+		$(SRCDIR)/gnetlistrc.drc2 > $(BUILDDIR)/gnetlistrc
+
 # make the tests
 	failed=0; \
 	for file in $(SRCDIR)/*.sch; do \
@@ -72,8 +79,8 @@ tests:
 		exit 1 ; \
 	fi
 
-MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~
-CLEANFILES = new_* core *.log FILE *.ps *~
+MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~ gnetlistrc
+CLEANFILES = new_* core *.log FILE *.ps *~ gnetlistrc
 DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = new_* core *.log FILE *.ps *~ Makefile.in configure
 
