@@ -78,16 +78,14 @@ typedef enum { F_OPEN_RC           = 1,
                F_OPEN_RESTORE_CWD  = 4,
 } FOpenFlags;
 
-/* PB : change begin */
-/* PB : these enum are constant to define :
+/* these enum are constant to define :
    - the end of open line of an object ;
    - the type of the line of an object ;
    - the filling of a closed object. */
-/* PB : used in struct st_object (predefined type OBJECT)*/
+/* used in struct st_object (predefined type OBJECT)*/
 typedef enum {END_NONE, END_SQUARE, END_ROUND} OBJECT_END;
 typedef enum {TYPE_SOLID, TYPE_DOTTED, TYPE_DASHED, TYPE_CENTER, TYPE_PHANTOM, TYPE_ERASE} OBJECT_TYPE;
 typedef enum {FILLING_HOLLOW, FILLING_FILL, FILLING_MESH, FILLING_HATCH, FILLING_VOID} OBJECT_FILLING;
-/* PB : change end */
 
 
 struct st_line {
@@ -96,7 +94,6 @@ struct st_line {
 
 };
 
-/* pb20011014 - name the grips */
 #define LINE_END1 0
 #define LINE_END2 1
 
@@ -133,7 +130,7 @@ struct st_arc {
   int start_angle;
   int end_angle;
 };
-/* pb20011014 - name the grips */
+
 #define ARC_CENTER 0
 #define ARC_RADIUS 1
 #define ARC_START_ANGLE 2
@@ -145,7 +142,7 @@ struct st_box {
   int lower_x, lower_y;
 
 };
-/* pb20011014 - name the grips */
+
 #define BOX_UPPER_LEFT 0
 #define BOX_LOWER_RIGHT 1
 #define BOX_UPPER_RIGHT 2
@@ -206,11 +203,8 @@ struct st_complex {
 struct st_circle {
   int center_x, center_y; /* world */
   int radius;
-
-/* pb20011010 - removed : used only in o_circle_draw_xor() and
-   meaning unclear */
 };
-/* pb20011014 - name the grips */
+
 #define CIRCLE_CENTER 0
 #define CIRCLE_RADIUS 1
 
@@ -239,10 +233,9 @@ struct st_object {
   GList *conn_list;			/* List of connections */
   /* to and from this object */
 
-  /* PB : change begin */
-  /* PB : every graphical primitive have more or less the same options. */
-  /* PB : depending on its nature a primitive is concerned with one or more */
-  /* PB : of these fields. If not, value must be ignored. */
+  /* every graphical primitive have more or less the same options. */
+  /* depending on its nature a primitive is concerned with one or more */
+  /* of these fields. If not, value must be ignored. */
   OBJECT_END line_end;
   OBJECT_TYPE line_type;
   int line_width;
@@ -253,7 +246,6 @@ struct st_object {
   int fill_width;
   int fill_angle1, fill_pitch1;
   int fill_angle2, fill_pitch2;
-  /* PB : change end */	
 
   int visited;		/* used in gnetlist for travesal purposes */
 

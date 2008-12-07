@@ -89,9 +89,7 @@ void o_pin_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   printf("drawing pin\n");
 #endif
 
-  if (o_current->draw_grips && w_current->draw_grips == TRUE) {	
-    /* pb20011109 - modified to use the new o_line_[draw|erase]_grips() */
-    /*              reuse the line functions */
+  if (o_current->draw_grips && w_current->draw_grips == TRUE) {
     if (!o_current->selected) {
       /* object is no more selected, erase the grips */
       o_current->draw_grips = FALSE;

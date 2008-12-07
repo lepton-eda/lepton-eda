@@ -43,7 +43,7 @@
 #include <ctype.h>
 #include <math.h>
 
-#include <config.h> /* added by AVH for integration into the gEDA tarball */
+#include <config.h>
 #include <libgeda/colors.h>
 
 #ifdef HAVE_LIBDMALLOC

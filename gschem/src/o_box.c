@@ -273,7 +273,6 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                fill_width, angle1, pitch1, angle2, pitch2);
 
   if ((o_current->draw_grips == TRUE) && (w_current->draw_grips == TRUE)) {
-    /* pb20011003 - modified to use the new o_box_[draw|erase]_grips() */
     if (!o_current->selected) {
       /* object is no more selected, erase the grips */
       o_current->draw_grips = FALSE;
@@ -281,7 +280,7 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     } else {
       /* object is selected, draw the grips on the box */
       o_box_draw_grips(w_current, o_current);
-    } 
+    }
   }
 }
 

@@ -260,9 +260,7 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   printf("drawing circle\n");
 #endif
 
-  if (o_current->draw_grips && w_current->draw_grips == TRUE) {	
-    
-    /* pb20011010 - modified to use the new o_circle_[draw|erase]_grips() */
+  if (o_current->draw_grips && w_current->draw_grips == TRUE) {
     if (!o_current->selected) {
       /* object is no more selected, erase the grips */
       o_current->draw_grips = FALSE;

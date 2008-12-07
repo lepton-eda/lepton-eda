@@ -698,7 +698,7 @@ void o_line_print_dotted(TOPLEVEL *toplevel, FILE *fp,
    * beginnings of the array 
    */
   fprintf(fp,"[");
-  /* PB : is the width relevant for a dot (circle) ? */
+  /* is the width relevant for a dot (circle) ? */
   /* f_print_set_line_width(fp, line_width); */
   
   /*

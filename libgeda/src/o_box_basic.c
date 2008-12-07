@@ -127,13 +127,11 @@ OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *o_current)
    *  #o_box_recalc().
    */
 
-  /* modifying */
-  /* pb20011002 - have to check if o_current is a box object */
   new_obj->box->upper_x = o_current->box->upper_x;
   new_obj->box->upper_y = o_current->box->upper_y;
   new_obj->box->lower_x = o_current->box->lower_x;
   new_obj->box->lower_y = o_current->box->lower_y;
-	
+
   o_set_line_options(toplevel, new_obj, o_current->line_end,
 		     o_current->line_type, o_current->line_width,
 		     o_current->line_length, o_current->line_space);
@@ -172,10 +170,6 @@ OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *    <DT>*</DT><DD>BOX_UPPER_RIGHT
  *    <DT>*</DT><DD>BOX_LOWER_RIGHT
  *  </DL>
- *
- *  \par Author's Note:
- *  pb20011002 - rewritten : old one did not used <B>x</B>, <B>y</B> and
- *                           <B>whichone</B>
  */
 void o_box_modify(TOPLEVEL *toplevel, OBJECT *object,
 		  int x, int y, int whichone)
@@ -818,9 +812,6 @@ void o_box_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
  *  \param [in] space       Amount of space between dashes.
  *  \param [in] origin_x    Page x coordinate to place BOX OBJECT.
  *  \param [in] origin_y    Page y coordinate to place BOX OBJECT.
- *
- *  \par Author's Note
- *   PB : parameter filled removed
  */
 void
 o_box_print_solid(TOPLEVEL *toplevel, FILE *fp,
@@ -887,10 +878,6 @@ o_box_print_solid(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] space       Amount of space between dashes.
  *  \param [in] origin_x    Page x coordinate to place BOX OBJECT.
  *  \param [in] origin_y    Page y coordinate to place BOX OBJECT.
- *
- *  \par Author's Note
- *  PB : parameter filled removed
- *  PB : parameter o_current removed
  */
 void o_box_print_dotted(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y,
@@ -955,10 +942,6 @@ void o_box_print_dotted(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] space       Amount of space between dashes.
  *  \param [in] origin_x    Page x coordinate to place BOX OBJECT.
  *  \param [in] origin_y    Page y coordinate to place BOX OBJECT.
- * 
- *  \par Author's Note
- *  PB : parameter filled removed
- *  PB : parameter o_current removed
  */
 void o_box_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y,
@@ -1024,10 +1007,6 @@ void o_box_print_dashed(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] space       Amount of space between dashes.
  *  \param [in] origin_x    Page x coordinate to place BOX OBJECT.
  *  \param [in] origin_y    Page y coordinate to place BOX OBJECT.
- *
- *  \par Author's note
- * PB : parameter filled removed
- * PB : parameter o_current removed
  */
 void o_box_print_center(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y,
@@ -1092,10 +1071,6 @@ void o_box_print_center(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] space       Amount of space between dashes.
  *  \param [in] origin_x    Page x coordinate to place BOX OBJECT.
  *  \param [in] origin_y    Page y coordinate to place BOX OBJECT.
- *
- *  \par Author's note
- *  PB : parameter filled removed
- *  PB : parameter o_current removed
  */
 void o_box_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 			 int x, int y,

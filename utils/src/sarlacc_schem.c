@@ -87,7 +87,6 @@ int CONV16(char *base,int offset)
 #define ADDR3   0x118
 #define ADDR4   0x145
 
-/* change return type from int to void AVH */
 void remove_spaces(char *src)
 {
 	char *ptr=src;
@@ -141,7 +140,6 @@ unsigned read_string(char *dest, int dest_size, char *src)
     return size;
 }
 
-/* change return type from int to void AVH */
 void read_string_file(int fd,char *dest, int dest_size)
 {
     unsigned char len;

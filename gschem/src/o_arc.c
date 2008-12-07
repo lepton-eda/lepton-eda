@@ -135,8 +135,7 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     break;
 			
   case TYPE_DOTTED:
-    length = -1; /* AVH changed o_arc_draw_dotted to use */
-    /* space parameter only */
+    length = -1; /* o_arc_draw_dotted uses space parameter only */
     draw_func = o_arc_draw_dotted;
     break;
 			
@@ -172,10 +171,8 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                x, y, radius, start_angle, end_angle,
                arc_width, length, space);
 
-  
-  if (o_current->draw_grips && w_current->draw_grips == TRUE) {	
 
-    /* pb29911903 - modified to use the new o_arc_[draw|erase]_grips() */
+  if (o_current->draw_grips && w_current->draw_grips == TRUE) {
     if(!o_current->selected) {
       /* object is no more selected, erase the grips */
       o_current->draw_grips = FALSE;
@@ -184,9 +181,7 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
       /* object is selected, draw the grips on the arc */
       o_arc_draw_grips(w_current, o_current);
     }
-
   }
-
 
 #if DEBUG
   printf("drawing arc\n");
@@ -284,7 +279,7 @@ void o_arc_draw_dotted(GdkWindow *w, GdkGC *gc,
    * possible to distinguish a solid line from a dotted line because of
    * zoom factor. The arc is therefore drawn solid.
    */
-  /* PB inverting angle2 if < 0 and changing angle1 accordingly */
+  /* inverting angle2 if < 0 and changing angle1 accordingly */
   /* the loop test assume that da > 0 */
   if(angle2 < 0) {
     angle1 = angle1 + angle2;
@@ -382,7 +377,7 @@ void o_arc_draw_dashed(GdkWindow *w, GdkGC *gc,
    * a dashed line from a solid line because of current value of zoom.
    */
 
-  /* PB inverting angle2 if < 0 and changing angle1 accordingly */
+  /* inverting angle2 if < 0 and changing angle1 accordingly */
   /* the loop test assume that da > 0 */
   if(angle2 < 0) {
     angle1 = angle1 + angle2;
@@ -489,7 +484,7 @@ void o_arc_draw_center(GdkWindow *w, GdkGC *gc,
    * a dashed line from a solid line because of current value of zoom.
    */
 
-  /* PB inverting angle2 if < 0 and changing angle1 accordingly */
+  /* inverting angle2 if < 0 and changing angle1 accordingly */
   /* the loop test assume that da > 0 */
   if(angle2 < 0) {
     angle1 = angle1 + angle2;
@@ -642,7 +637,7 @@ void o_arc_draw_phantom(GdkWindow *w, GdkGC *gc,
    * a dashed line from a solid line because of current value of zoom.
    */
 
-  /* PB inverting angle2 if < 0 and changing angle1 accordingly */
+  /* inverting angle2 if < 0 and changing angle1 accordingly */
   /* the loop test assume that da > 0 */
   if(angle2 < 0) {
     angle1 = angle1 + angle2;

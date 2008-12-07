@@ -162,19 +162,15 @@ void o_net_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                                GDK_JOIN_MITER);
   }
 
-  if (o_current->draw_grips && w_current->draw_grips == TRUE) {	
-
-	  /* pb20011109 - modified to use the new o_line_[draw|erase]_grips() */
-	  /*              reuse the line functions */
-	  if (!o_current->selected) {
-		  /* object is no more selected, erase the grips */
-		  o_current->draw_grips = FALSE;
-		  o_line_erase_grips(w_current, o_current);
-	  } else {
-		  /* object is selected, draw the grips */
-		  o_line_draw_grips(w_current, o_current);
-	  }
-
+  if (o_current->draw_grips && w_current->draw_grips == TRUE) {
+    if (!o_current->selected) {
+      /* object is no more selected, erase the grips */
+      o_current->draw_grips = FALSE;
+      o_line_erase_grips(w_current, o_current);
+    } else {
+      /* object is selected, draw the grips */
+      o_line_draw_grips(w_current, o_current);
+    }
   }
 }
 

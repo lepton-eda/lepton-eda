@@ -447,9 +447,6 @@ void world_get_picture_bounds(TOPLEVEL *toplevel, OBJECT *object,
  *    <DT>*</DT><DD>PICTURE_UPPER_RIGHT
  *    <DT>*</DT><DD>PICTURE_LOWER_RIGHT
  *  </DL>
- *
- *  \par Author's note
- *  pb20011002 - rewritten : old one did not used x, y and whichone
  */
 void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object,
 		      int x, int y, int whichone)

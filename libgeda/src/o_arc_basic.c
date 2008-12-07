@@ -91,7 +91,7 @@ OBJECT *o_arc_new(TOPLEVEL *toplevel,
   new_node->arc->width  = 2 * radius;
   new_node->arc->height = 2 * radius;
 
-  /* PB : must check the sign of start_angle, end_angle ... */
+  /* must check the sign of start_angle, end_angle ... */
   if(end_angle < 0) {
     start_angle = start_angle + end_angle;
     end_angle = -end_angle;
@@ -470,7 +470,7 @@ void o_arc_mirror_world(TOPLEVEL *toplevel,
 
   /* apply mirror to angles (vertical mirror) */
   object->arc->start_angle = (180 - object->arc->start_angle) % 360;
-  /* pb20011125 - start_angle *MUST* be positive */
+  /* start_angle *MUST* be positive */
   if(object->arc->start_angle < 0) object->arc->start_angle += 360;
   object->arc->end_angle = -object->arc->end_angle;
 	
@@ -739,7 +739,7 @@ void o_arc_print_solid(TOPLEVEL *toplevel, FILE *fp,
     f_print_set_color(fp, color);
   }
 
-  /* PB/AVH inverting angle2 if < 0 and changing angle1 accordingly */
+  /* inverting angle2 if < 0 and changing angle1 accordingly */
   if (angle2 < 0) {
     angle1 = angle1 + angle2;
     angle2 = -angle2;

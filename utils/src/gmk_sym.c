@@ -204,7 +204,7 @@ int main(int argc,char **argv)
       }
   line_nub=-1;
 
-  printf("v 20030525\n"); /* The v character is the version of the file AVH */
+  printf("v 20030525\n"); /* The v character is the version of the file */
 
   while (fgets(LineBuf,sizeof(LineBuf)-1,stream) != NULL)
         {
