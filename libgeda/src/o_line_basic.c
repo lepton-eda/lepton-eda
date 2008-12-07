@@ -223,28 +223,26 @@ void o_line_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new line object.
  */
-OBJECT *o_line_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
-		    unsigned int release_ver, unsigned int fileformat_ver)
+OBJECT *o_line_read (TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
+                     unsigned int release_ver, unsigned int fileformat_ver)
 {
   OBJECT *new_obj;
-  char type; 
+  char type;
   int x1, y1;
   int x2, y2;
-  int d_x1, d_y1;
-  int d_x2, d_y2;
   int line_width, line_space, line_length;
   int line_end;
   int line_type;
   int color;
 
-  if(release_ver <= VERSION_20000704) {
+  if (release_ver <= VERSION_20000704) {
     /*
      * The old geda file format, i.e. releases 20000704 and older, does
      * not handle the line type and the filling - here filling is irrelevant.
      * They are set to default.
      */
-    sscanf(buf, "%c %d %d %d %d %d\n", &type,
-	   &x1, &y1, &x2, &y2, &color);
+    sscanf (buf, "%c %d %d %d %d %d\n", &type,
+            &x1, &y1, &x2, &y2, &color);
 
     line_width = 0;
     line_end   = END_NONE;
@@ -257,16 +255,11 @@ OBJECT *o_line_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
      * list of characters and numbers in plain ASCII on a single line.
      * The meaning of each item is described in the file format documentation.
      */
-    sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d\n", &type,
-	   &x1, &y1, &x2, &y2, &color,
-	   &line_width, &line_end, &line_type, &line_length, &line_space);
+    sscanf (buf, "%c %d %d %d %d %d %d %d %d %d %d\n", &type,
+            &x1, &y1, &x2, &y2, &color,
+            &line_width, &line_end, &line_type, &line_length, &line_space);
   }
-  
-  d_x1 = x1; /* \todo PB : Needed ? */
-  d_y1 = y1; 
-  d_x2 = x2; 
-  d_y2 = y2; 
-    
+
   /*
    * Null length line are not allowed. If such a line is detected a
    * message is issued.
@@ -274,13 +267,13 @@ OBJECT *o_line_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
    * It also checks is the required color is valid.
    */
   if (x1 == x2 && y1 == y2) {
-    s_log_message(_("Found a zero length line [ %c %d %d %d %d %d ]\n"),
-                  type, x1, y1, x2, y2, color);
+    s_log_message (_("Found a zero length line [ %c %d %d %d %d %d ]\n"),
+                   type, x1, y1, x2, y2, color);
   }
-  
+
   if (color < 0 || color > MAX_COLORS) {
-    s_log_message(_("Found an invalid color [ %s ]\n"), buf);
-    s_log_message(_("Setting color to WHITE\n"));
+    s_log_message (_("Found an invalid color [ %s ]\n"), buf);
+    s_log_message (_("Setting color to WHITE\n"));
     color = WHITE;
   }
 
@@ -290,18 +283,18 @@ OBJECT *o_line_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
    * type is set according to the values of the fields on the line.
    */
   /* create and add the line to the list */
-  new_obj = o_line_new(toplevel, type, color, d_x1, d_y1, d_x2, d_y2);
+  new_obj = o_line_new (toplevel, type, color, x1, y1, x2, y2);
   /* set its line options */
-  o_set_line_options(toplevel, new_obj,
-		     line_end, line_type, line_width, line_length, 
-		     line_space);
+  o_set_line_options (toplevel, new_obj,
+                      line_end, line_type, line_width, line_length,
+                      line_space);
   /* filling is irrelevant for line, just set to default */
-  o_set_fill_options(toplevel, new_obj,
-		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
+  o_set_fill_options (toplevel, new_obj,
+                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
-  object_list = s_basic_link_object(new_obj, object_list);
+  object_list = s_basic_link_object (new_obj, object_list);
 
-  return(object_list);
+  return object_list;
 }
 
 /*! \brief Create a character string representation of a line OBJECT.

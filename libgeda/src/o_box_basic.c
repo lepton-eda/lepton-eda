@@ -246,8 +246,8 @@ void o_box_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  \param [in]     fileformat_ver  libgeda file format version number.
  *  \return The BOX OBJECT that was created.
  */
-OBJECT *o_box_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
-		   unsigned int release_ver, unsigned int fileformat_ver)
+OBJECT *o_box_read (TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
+                    unsigned int release_ver, unsigned int fileformat_ver)
 {
   OBJECT *new_obj;
   char type; 
@@ -261,8 +261,8 @@ OBJECT *o_box_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   int box_end;
   int box_type;
   int box_filling;
-  
-  if(release_ver <= VERSION_20000704) {
+
+  if (release_ver <= VERSION_20000704) {
 
   /*! \note
    *  The old geda file format, i.e. releases 20000704 and older, does not
@@ -270,22 +270,22 @@ OBJECT *o_box_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
    *  to default.
    */
 
-    sscanf(buf, "%c %d %d %d %d %d\n",
-	   &type, &x1, &y1, &width, &height, &color);
+    sscanf (buf, "%c %d %d %d %d %d\n",
+            &type, &x1, &y1, &width, &height, &color);
 
     box_width   = 0;
     box_end     = END_NONE;
     box_type    = TYPE_SOLID;
     box_length  = -1;
     box_space   = -1;
-    
-    box_filling = FILLING_HOLLOW;		
+
+    box_filling = FILLING_HOLLOW;
     fill_width  = 0;
     angle1      = -1;
     pitch1      = -1;
     angle2      = -1;
     pitch2      = -1;
-			  
+
   } else {
 
     /*! \note
@@ -293,24 +293,24 @@ OBJECT *o_box_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
      *  characters and numbers in plain ASCII on a single line. The meaning of
      *  each item is described in the file format documentation.
      */
-    sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
-	   &type, &x1, &y1, &width, &height, &color,
-	   &box_width, &box_end, &box_type, &box_length, 
-	   &box_space, &box_filling,
-	   &fill_width, &angle1, &pitch1, &angle2, &pitch2);
+    sscanf (buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
+            &type, &x1, &y1, &width, &height, &color,
+            &box_width, &box_end, &box_type, &box_length,
+            &box_space, &box_filling,
+            &fill_width, &angle1, &pitch1, &angle2, &pitch2);
   }
 
   if (width == 0 || height == 0) {
-    s_log_message(_("Found a zero width/height box [ %c %d %d %d %d %d ]\n"),
-                  type, x1, y1, width, height, color);
+    s_log_message (_("Found a zero width/height box [ %c %d %d %d %d %d ]\n"),
+                   type, x1, y1, width, height, color);
   }
 
   if (color < 0 || color > MAX_COLORS) {
-    s_log_message(_("Found an invalid color [ %s ]\n"), buf);
-    s_log_message(_("Setting color to WHITE\n"));
+    s_log_message (_("Found an invalid color [ %s ]\n"), buf);
+    s_log_message (_("Setting color to WHITE\n"));
     color = WHITE;
   }
-  
+
   /*! \note
    *  A box is internally described by its lower right and upper left corner
    *  whereas the line describe it with the lower left corner and the width
@@ -323,14 +323,14 @@ OBJECT *o_box_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 
   /* upper left corner of the box */
   d_x1 = x1;
-  d_y1 = y1+height; /* move box origin to top left */
-  
+  d_y1 = y1 + height; /* move box origin to top left */
+
   /* lower right corner of the box */
-  d_x2 = x1+width; /* end points of the box */
+  d_x2 = x1 + width;  /* end points of the box */
   d_y2 = y1;
-  
+
   /* create a new box */
-  new_obj = o_box_new(toplevel, type, color, d_x1, d_y1, d_x2, d_y2);
+  new_obj = o_box_new (toplevel, type, color, d_x1, d_y1, d_x2, d_y2);
   /* set its line options */
   o_set_line_options (toplevel, new_obj,
                       box_end, box_type, box_width,
@@ -340,8 +340,8 @@ OBJECT *o_box_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
                       box_filling, fill_width,
                       pitch1, angle1, pitch2, angle2);
   /* Add the box to the object list */
-  object_list = s_basic_link_object(new_obj, object_list);
-  return(object_list);
+  object_list = s_basic_link_object (new_obj, object_list);
+  return object_list;
 }
 
 /*! \brief Create a character string representation of a BOX.
@@ -349,7 +349,7 @@ OBJECT *o_box_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
  *  This function formats a string in the buffer <B>*buff</B> to describe the
  *  box object <B>*object</B>.
  *  It follows the post-20000704 release file format that handle the line type
- *  and fill options. 
+ *  and fill options.
  *
  *  \param [in] object  The BOX OBJECT to create string from.
  *  \return A pointer to the BOX character string.

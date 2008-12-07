@@ -130,7 +130,7 @@ void o_net_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  This function reads a net object from the buffer \a buf.
  *  If the netobject was read successfully, a new net object is
  *  allocated and appended to the \a object_list.
- *  
+ *
  *  \param [in] toplevel     The TOPLEVEL object
  *  \param [in] object_list  list of OBJECTS to append a new net
  *  \param [in] buf          a text buffer (usually a line of a schematic file)
@@ -139,26 +139,20 @@ void o_net_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \return The object list
  *
  */
-OBJECT *o_net_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
-		   unsigned int release_ver, unsigned int fileformat_ver)
+OBJECT *o_net_read (TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
+                    unsigned int release_ver, unsigned int fileformat_ver)
 {
   OBJECT *new_obj;
   char type;
   int x1, y1;
   int x2, y2;
-  int d_x1, d_y1;
-  int d_x2, d_y2;
   int color;
 
-  sscanf(buf, "%c %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color);
-  d_x1 = x1;
-  d_y1 = y1;
-  d_x2 = x2;
-  d_y2 = y2;
+  sscanf (buf, "%c %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color);
 
   if (x1 == x2 && y1 == y2) {
-    s_log_message(_("Found a zero length net [ %c %d %d %d %d %d ]\n"),
-                  type, x1, y1, x2, y2, color);
+    s_log_message (_("Found a zero length net [ %c %d %d %d %d %d ]\n"),
+                   type, x1, y1, x2, y2, color);
   }
 
 
@@ -167,16 +161,16 @@ OBJECT *o_net_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   }
 
   if (color < 0 || color > MAX_COLORS) {
-    s_log_message(_("Found an invalid color [ %s ]\n"), buf);
-    s_log_message(_("Setting color to WHITE\n"));
+    s_log_message (_("Found an invalid color [ %s ]\n"), buf);
+    s_log_message (_("Setting color to WHITE\n"));
     color = WHITE;
   }
 
-  new_obj = o_net_new(toplevel, type, color, d_x1, d_y1, d_x2, d_y2);
+  new_obj = o_net_new (toplevel, type, color, x1, y1, x2, y2);
 
-  object_list = s_basic_link_object(new_obj, object_list);
+  object_list = s_basic_link_object (new_obj, object_list);
 
-  return (object_list);
+  return object_list;
 }
 
 /*! \brief Create a string representation of the net object
