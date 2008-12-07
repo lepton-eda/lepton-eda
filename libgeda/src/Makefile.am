@@ -17,17 +17,17 @@ libgeda_la_SOURCES = \
 	f_basic.c \
 	f_print.c \
 	g_basic.c \
+	gdk-pixbuf-hacks.c \
+	geda_list.c \
 	g_rc.c \
 	g_register.c \
 	g_smob.c \
-	gdk-pixbuf-hacks.c \
-	geda_list.c \
 	i_vars.c \
 	libgeda.c \
 	m_basic.c \
-        m_bounds.c \
-        m_hatch.c \
-        m_transform.c \
+	m_bounds.c \
+	m_hatch.c \
+	m_transform.c \
 	o_arc_basic.c \
 	o_attrib.c \
 	o_basic.c \
