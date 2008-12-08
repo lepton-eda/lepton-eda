@@ -21,12 +21,4 @@
 #ifndef STRUCT_PRIV_H
 #define STRUCT_PRIV_H
 
-
-typedef struct st_point sPOINT;
-
-struct st_point {
-  gint x;
-  gint y;
-};
-
 #endif /* !STRUCT_PRIV_H */
