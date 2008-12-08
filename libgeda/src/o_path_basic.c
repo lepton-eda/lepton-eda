@@ -1025,8 +1025,6 @@ void o_path_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 /*! \brief Calculates the distance between the given point and the closest
  *  point on the given path segment.
  *
- *  \todo Support for bezier path segments.
- *
  *  \param [in] object The path OBJECT
  *  \param [in] x The x coordinate of the given point.
  *  \param [in] y The y coordinate of the given point.
@@ -1035,44 +1033,27 @@ void o_path_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
  */
 gdouble o_path_shortest_distance (OBJECT *object, gint x, gint y)
 {
-  PATH_SECTION *section;
-  LINE line;
+  GArray *points;
   gdouble shortest = G_MAXDOUBLE;
-  int last_x = 0, last_y = 0;
-  int i;
+  gboolean solid;
 
-  for (i = 0; i < object->path->num_sections; i++) {
-    section = &object->path->sections[i];
-    switch (section->code) {
+  points = g_array_new (FALSE, FALSE, sizeof (sPOINT));
 
-      case PATH_CURVETO:
-        /* TODO: Shortest distance to a besier section of the path.
-         *       For now, pretend it is a straight line. */
-        /* Fall through */
-      case PATH_LINETO:
-        line.x[0] = last_x;
-        line.y[0] = last_y;
-        line.x[1] = last_x = section->x3;
-        line.y[1] = last_y = section->y3;
-        shortest = MIN (shortest, o_line_shortest_distance (&line, x, y));
-        break;
+  s_path_to_polygon (object->path, points);
 
-      case PATH_MOVETO:
-      case PATH_MOVETO_OPEN:
-        last_x = section->x3;
-        last_y = section->y3;
-        break;
+  solid = object->fill_type != FILLING_HOLLOW;    /* FIXME */
 
-      case PATH_END:
-        /* Need to consider the line back to the first point in the path */
-        line.x[0] = last_x;
-        line.y[0] = last_y;
-        line.x[1] = last_x = object->path->sections[0].x3;
-        line.y[1] = last_y = object->path->sections[0].y3;
-        shortest = MIN (shortest, o_line_shortest_distance (&line, x, y));
-        break;
-    }
+  if (!solid) {
+    shortest = m_polygon_shortest_distance (points, x, y, FALSE);
+
+  } else if (m_polygon_interior_point (points, x, y)) {
+    shortest = 0;
+
+  } else {
+    shortest = m_polygon_shortest_distance (points, x, y, TRUE);
   }
+
+  g_array_free (points, TRUE);
 
   return shortest;
 }

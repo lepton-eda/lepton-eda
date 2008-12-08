@@ -154,8 +154,36 @@ gboolean m_polygon_interior_point (GArray *points, int x, int y)
  */
 double m_polygon_shortest_distance (GArray *points, int x, int y, gboolean closed)
 {
-  /* TODO Implement */
+  gdouble shortest = G_MAXDOUBLE;
 
-  return G_MAXDOUBLE;
+  if (points->len > 0) {
+    int i = 0;
+    sPOINT point;
+
+    if (closed) {
+      point = g_array_index (points, sPOINT, points->len - 1);
+    } else {
+      point = g_array_index (points, sPOINT, i++);
+    }
+
+    while (i < points->len) {
+      double distance;
+      LINE line;
+
+      line.x[0] = point.x;
+      line.y[0] = point.y;
+
+      point = g_array_index (points, sPOINT, i++);
+
+      line.x[1] = point.x;
+      line.y[1] = point.y;
+
+      distance = o_line_shortest_distance (&line, x, y);
+
+      shortest = min (shortest, distance);
+    }
+  }
+
+  return shortest;
 }
 

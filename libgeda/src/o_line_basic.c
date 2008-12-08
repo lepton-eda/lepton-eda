@@ -1218,6 +1218,9 @@ double o_line_length(OBJECT *object)
  *  end point, this function returns the distance from the given point to the
  *  closest end point.
  *
+ *  If the line represents a single point (the endpoints are the same), this
+ *  function calcualtes the distance to that point.
+ *
  *  \param [in] line  The line of an OBJECT
  *  \param [in] x The x coordinate of the given point.
  *  \param [in] y The y coordinate of the given point.
@@ -1249,23 +1252,30 @@ gdouble o_line_shortest_distance(LINE *line, gint x, gint y)
   ldx = ((double) line->x[1]) - ((double) line->x[0]);
   ldy = ((double) line->y[1]) - ((double) line->y[0]);
 
-  /* calculate parametric value of perpendicular intersection */
-  dx0 = ldx * ( x - lx0 );
-  dy0 = ldy * ( y - ly0 );
+  if (ldx == 0 && ldy == 0) {
+    /* if line is a point, just calculate distance to the point */
+    dx = x - lx0;
+    dy = y - ly0;
 
-  t = (dx0 + dy0) / ((ldx*ldx) + (ldy*ldy));
+  } else {
+    /* calculate parametric value of perpendicular intersection */
+    dx0 = ldx * (x - lx0);
+    dy0 = ldy * (y - ly0);
 
-  /* constrain the parametric value to a point on the line */
-  t = max(t, 0);
-  t = min(t, 1);
+    t = (dx0 + dy0) / (ldx * ldx + ldy * ldy);
 
-  /* calculate closest point on the line */
-  cx = t * ldx + lx0;
-  cy = t * ldy + ly0;
+    /* constrain the parametric value to a point on the line */
+    t = max (t, 0);
+    t = min (t, 1);
 
-  /* calculate distance to closest point */
-  dx = x-cx;
-  dy = y-cy;
+    /* calculate closest point on the line */
+    cx = t * ldx + lx0;
+    cy = t * ldy + ly0;
+
+    /* calculate distance to closest point */
+    dx = x - cx;
+    dy = y - cy;
+  }
 
   shortest_distance = sqrt( (dx*dx) + (dy*dy) );
 
