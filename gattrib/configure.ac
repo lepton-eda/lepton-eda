@@ -86,9 +86,11 @@ esac
 
 if ! test "$MINGW" = "no" -o "$MINGW"x = x; then
    MINGW="yes"
+   MINGW_CFLAGS="-mms-bitfields -mwindows"
 else
    # Unix host
    MINGW="no"
+   MINGW_CFLAGS=
 fi
 
 # 
@@ -433,7 +435,7 @@ AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of this program's package])
 #########################################################################
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
-GATTRIB_CFLAGS="$GTK_CFLAGS $GLIB_CFLAGS $LIBGEDA_CFLAGS $GTHREAD_CFLAGS"
+GATTRIB_CFLAGS="$MINGW_CFLAGS $GTK_CFLAGS $GLIB_CFLAGS $LIBGEDA_CFLAGS $GTHREAD_CFLAGS"
 GATTRIB_LDFLAGS="$GTK_LIBS $GLIB_LIBS $LIBGEDA_LIBS $GTHREAD_LIBS"
 
 # Makefile.in variable substitution

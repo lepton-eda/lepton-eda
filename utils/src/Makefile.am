@@ -16,11 +16,8 @@ olib_SOURCES = olib.l geda_sym_format.h
 gsch2pcb_SOURCES = gsch2pcb.c
 grenum_SOURCES = grenum.c grenum.h
 
-gmk_sym_CFLAGS = @GMK_SYM_CFLAGS@ $(AM_CFLAGS)
-smash_megafile_CFLAGS = @SMASH_MEGAFILE_CFLAGS@ $(AM_CFLAGS)
 convert_sym_CFLAGS = @CONVERT_SYM_CFLAGS@ $(AM_CFLAGS)
 sarlacc_schem_CFLAGS = @SARLACC_SCHEM_CFLAGS@ $(AM_CFLAGS)
-olib_CFLAGS = @OLIB_CFLAGS@ $(AM_CFLAGS)
 gsch2pcb_CFLAGS = @GSCH2PCB_CFLAGS@ $(AM_CFLAGS)
 grenum_CFLAGS = @GRENUM_CFLAGS@ $(AM_CFLAGS)
 
