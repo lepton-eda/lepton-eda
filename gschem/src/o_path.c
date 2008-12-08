@@ -28,6 +28,8 @@
 #include <dmalloc.h>
 #endif
 
+#define NUM_BEZIER_SEGMENTS 100
+
 
 typedef void (*DRAW_FUNC) (GdkDrawable *w, GdkGC *gc, GdkColor *color,
                            GSCHEM_TOPLEVEL *w_current, PATH *path,
@@ -51,9 +53,12 @@ static void path_to_points_modify (GSCHEM_TOPLEVEL *w_current, PATH *path,
   int i;
   int grip_no = 0;
 
-  *points = g_new0 (GdkPoint, path->num_sections);
+  sPOINT point = { 0, 0 };
+  GArray *polygon_points;
+  BEZIER bezier;
 
-  *num_points = 0;
+  polygon_points = g_array_new (FALSE, FALSE, sizeof (sPOINT));
+
 
   for (i = 0; i <  path->num_sections; i++) {
     section = &path->sections[i];
@@ -88,21 +93,38 @@ static void path_to_points_modify (GSCHEM_TOPLEVEL *w_current, PATH *path,
 
     switch (section->code) {
       case PATH_CURVETO:
-        /* Unsupported, just fall through and draw a line */
-        /* Fall through */
+        bezier.x[0] = point.x;
+        bezier.y[0] = point.y;
+        bezier.x[1] = x1;
+        bezier.y[1] = y1;
+        bezier.x[2] = x2;
+        bezier.y[2] = y2;
+        point.x = bezier.x[3] = x3;
+        point.y = bezier.y[3] = y3;
+        m_polygon_append_bezier (polygon_points, &bezier, NUM_BEZIER_SEGMENTS);
+        break;
+
       case PATH_MOVETO_OPEN:
         /* Unsupported, just fall through and draw a line */
         /* Fall through */
+
       case PATH_MOVETO:
       case PATH_LINETO:
-        (*points)[*num_points].x = x3;
-        (*points)[*num_points].y = y3;
-        (*num_points)++;
+        point.x = x3;
+        point.y = y3;
+        m_polygon_append_point (polygon_points, point.x, point.y);
         break;
+
       case PATH_END:
         break;
     }
   }
+
+  /* WARNING:
+   * Relies on the fact that sPOINT and GdkPoint are compatible */
+
+  *num_points = polygon_points->len;
+  *points = (GdkPoint *)g_array_free (polygon_points, FALSE);
 }
 
 
