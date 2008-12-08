@@ -34,7 +34,7 @@ typedef void (*DRAW_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
                            gint arc_width, gint length, gint space );
 
 typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
-                           gint x, gint y, gint radius,
+                           GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
                            gint fill_width, gint angle1, gint pitch1,
                            gint angle2, gint pitch2 );
 
@@ -207,9 +207,9 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   }
 	
   angle1 = o_current->fill_angle1;
-  pitch1 = SCREENabs( toplevel, o_current->fill_pitch1 );
+  pitch1 = o_current->fill_pitch1;
   angle2 = o_current->fill_angle2;
-  pitch2 = SCREENabs( toplevel, o_current->fill_pitch2 );
+  pitch2 = o_current->fill_pitch2;
 	
   switch(o_current->fill_type) {
     case FILLING_HOLLOW:
@@ -252,8 +252,7 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   (*fill_func)(w_current->backingstore, w_current->gc, color,
-               s_x, s_y,
-               radius,
+               w_current, o_current->circle,
                fill_width, angle1, pitch1, angle2, pitch2);
 
 #if DEBUG
@@ -293,12 +292,12 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-void o_circle_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color,
-			  gint x, gint y, gint radius,
-			  gint width,
-			  gint angle1, gint pitch1, gint angle2, gint pitch2)
+void o_circle_fill_hollow (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+                           GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
+                           gint fill_width,
+                           gint angle1, gint pitch1,
+                           gint angle2, gint pitch2)
 {
-  
 }
 
 /*! \brief Fill inside of circle with a solid pattern.
@@ -331,18 +330,25 @@ void o_circle_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-void o_circle_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color,
-			gint x, gint y, gint radius,
-			gint width,
-			gint angle1, gint pitch1, gint angle2, gint pitch2)
+void o_circle_fill_fill (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+                         GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
+                         gint fill_width,
+                         gint angle1, gint pitch1,
+                         gint angle2, gint pitch2)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int s_x, s_y;
+  int radius;
+
   gdk_gc_set_foreground(gc, color);
   gdk_gc_set_line_attributes(gc, 1, GDK_LINE_SOLID,
                              GDK_CAP_BUTT, GDK_JOIN_MITER);
 
-  gdk_draw_arc(w, gc,
-               TRUE, x-radius, y-radius, 2*radius, 2*radius, 0, FULL_CIRCLE);
+  WORLDtoSCREEN (toplevel, circle->center_x, circle->center_y, &s_x, &s_y);
+  radius = SCREENabs (toplevel, circle->radius);
 
+  gdk_draw_arc (w, gc, TRUE, s_x - radius, s_y - radius,
+                2 * radius, 2 * radius, 0, FULL_CIRCLE);
 }
 
 /*! \brief Fill inside of circle with single line pattern.
@@ -378,68 +384,30 @@ void o_circle_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-void o_circle_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color,
-			 gint x, gint y, gint radius,
-			 gint width,
-			 gint angle1, gint pitch1, gint angle2, gint pitch2)
+void o_circle_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+                          GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
+                          gint fill_width,
+                          gint angle1, gint pitch1,
+                          gint angle2, gint pitch2)
 {
-  double x0, y0, x1, y1, x2, y2;
-  double cos_a_, sin_a_;
+  int i;
+  GArray *lines;
 
-  gdk_gc_set_line_attributes(gc, width, GDK_LINE_SOLID,
-                             GDK_CAP_BUTT, GDK_JOIN_MITER);
+  lines = g_array_new (FALSE, FALSE, sizeof (LINE));
 
-  /*
-   * The function use a matrix. Its elements are obtained from the sinus and
-   * cosinus of the angle <B>angle1</B>. It represent the rotation matrix that
-   * when applied to a point, rotate it of <B>angle1</B>.
-   */
-  cos_a_ = cos(((double) angle1) * M_PI/180);
-  sin_a_ = sin(((double) angle1) * M_PI/180);
+  m_hatch_circle (circle, angle1, pitch1, lines);
 
-  /*
-   * When drawing a line in a circle there is two intersections. It looks for
-   * the coordinates of one of these points when the line is horizontal.
-   * The second one can be easily obtained by symmetry in relation to the
-   * vertical axis going through the centre of the circle.
-   *
-   * These two points are then rotated of angle <B>angle1</B> using the
-   * elements of the rotation matrix previously computed.
-   *
-   * The corresponding line can be drawn providing that the coordinates
-   * are rounded.
-   *
-   * These operations are repeated for every horizontal line that can fit
-   * in the upper half of the circle (using and incrementing the variable
-   * <B>y0</B>).
-   */
-  y0 = 0;
-  while(y0 < (double) radius) {
-    x0 = pow((double) radius, 2) - pow(y0, 2);
-    x0 = sqrt(x0);
+  for (i=0; i < lines->len; i++) {
+    int x1, y1, x2, y2;
+    LINE *line = &g_array_index (lines, LINE, i);
 
-    x1 = (x0*cos_a_ - y0*sin_a_) + x;
-    y1 = y - (x0*sin_a_ + y0*cos_a_);
-    x2 = ((-x0)*cos_a_ - y0*sin_a_) + x;
-    y2 = y - ((-x0)*sin_a_ + y0*cos_a_);
-		
-    gdk_draw_line(w, gc,
-                  (int) x1, (int) y1, (int) x2, (int) y2);
-        
-    /*
-     * The function use the symetry in relation to the centre of the circle.
-     * It avoid repetitive computation for the second half of the surface
-     * of the circle.
-     */
-    x1 = (x0*cos_a_ - (-y0)*sin_a_) + x;
-    y1 = y- (x0*sin_a_ + (-y0)*cos_a_);
-    x2 = ((-x0)*cos_a_ - (-y0)*sin_a_) + x;
-    y2 = y- ((-x0)*sin_a_ + (-y0)*cos_a_);
-    
-    gdk_draw_line(w, gc, (int) x1, (int) y1, (int) x2, (int) y2);
-    
-    y0 = y0 + pitch1;
+    WORLDtoSCREEN (w_current->toplevel, line->x[0], line->y[0], &x1, &y1);
+    WORLDtoSCREEN (w_current->toplevel, line->x[1], line->y[1], &x2, &y2);
+    o_line_draw_solid (w, gc, color, GDK_CAP_BUTT,
+                       x1, y1, x2, y2, fill_width, -1, -1);
   }
+
+  g_array_free (lines, TRUE);
 }
 
 /*! \brief Fill inside of circle with mesh pattern.
@@ -472,17 +440,16 @@ void o_circle_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-void o_circle_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color,
-			gint x, gint y, gint radius,
-			gint width,
-			gint angle1, gint pitch1, gint angle2, gint pitch2)
+void o_circle_fill_mesh (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+                         GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
+                         gint fill_width,
+                         gint angle1, gint pitch1,
+                         gint angle2, gint pitch2)
 {
-  o_circle_fill_hatch(w, gc, color,
-                      x, y, radius,
-                      width, angle1, pitch1, -1, -1);
-  o_circle_fill_hatch(w, gc, color,
-                      x, y, radius,
-                      width, angle2, pitch2, -1, -1);
+  o_circle_fill_hatch (w, gc, color, w_current, circle,
+                       fill_width, angle1, pitch1, -1, -1);
+  o_circle_fill_hatch (w, gc, color, w_current, circle,
+                       fill_width, angle2, pitch2, -1, -1);
 	
 }
 

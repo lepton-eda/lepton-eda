@@ -536,10 +536,10 @@ void o_bus_rubberbus_xor(GSCHEM_TOPLEVEL *w_current);
 void o_bus_eraserubber(GSCHEM_TOPLEVEL *w_current);
 /* o_circle.c */
 void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_circle_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint radius, gint width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_circle_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint radius, gint width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_circle_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint radius, gint width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_circle_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint radius, gint width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_circle_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_circle_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_circle_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_circle_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_circle_eraserubber(GSCHEM_TOPLEVEL *w_current);
 void o_circle_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_circle_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
