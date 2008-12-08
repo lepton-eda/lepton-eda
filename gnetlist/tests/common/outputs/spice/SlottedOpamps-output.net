@@ -1,0 +1,3 @@
+* Spice netlister for gnetlist
+U1 samenet_output_c minusin_slot1_pin_b plusin_slot1_pin3_a samenet_output_c minusin_slot2_pin6_b plusin_slot2_pin5_a samenet_output_c minusin_slot3_pin_b plusin_slot3_pin10_a samenet_output_c minusin_slot4_pin13_b plusin_slot4_pin12_a <No valid value attribute found>
+.END
