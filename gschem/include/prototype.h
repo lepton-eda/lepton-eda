@@ -507,10 +507,10 @@ void o_box_draw_dotted(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle c
 void o_box_draw_dashed(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);
 void o_box_draw_center(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);
 void o_box_draw_phantom(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);
-void o_box_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint width, gint height, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_box_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint width, gint height, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_box_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint width, gint height, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_box_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint width, gint height, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_box_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, BOX *box, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_box_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, BOX *box, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_box_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, BOX *box, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_box_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, BOX *box, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_box_eraserubber(GSCHEM_TOPLEVEL *w_current);
 void o_box_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y);

@@ -42,7 +42,7 @@ typedef void (*DRAW_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
                            gint line_width, gint length, gint space );
 
 typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
-                           gint x, gint y, gint width, gint height,
+                           GSCHEM_TOPLEVEL *w_current, BOX *box,
                            gint fill_width, gint angle1, gint pitch1,
                            gint angle2, gint pitch2 );
 
@@ -222,9 +222,9 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   }
 	
   angle1 = o_current->fill_angle1;
-  pitch1 = SCREENabs( toplevel, o_current->fill_pitch1 );
+  pitch1 = o_current->fill_pitch1;
   angle2 = o_current->fill_angle2;
-  pitch2 = SCREENabs( toplevel, o_current->fill_pitch2 );
+  pitch2 = o_current->fill_pitch2;
 	
   switch(o_current->fill_type) {
     case FILLING_HOLLOW:
@@ -267,9 +267,7 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   (*fill_func)(w_current->backingstore, w_current->gc, color,
-               s_upper_x, s_upper_y,
-               abs(s_lower_x - s_upper_x),
-               abs(s_lower_y - s_upper_y),
+               w_current, o_current->box,
                fill_width, angle1, pitch1, angle2, pitch2);
 
   if ((o_current->draw_grips == TRUE) && (w_current->draw_grips == TRUE)) {
@@ -543,14 +541,12 @@ void o_box_draw_phantom(GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-void o_box_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color,
-		       gint x, gint y,
-		       gint width, gint height,
-		       gint fill_width,
-		       gint angle1, gint pitch1,
-		       gint angle2, gint pitch2)
+void o_box_fill_hollow (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+                        GSCHEM_TOPLEVEL *w_current, BOX *box,
+                        gint fill_width,
+                        gint angle1, gint pitch1,
+                        gint angle2, gint pitch2)
 {
-  
 }
 
 /*! \brief Fill inside of box with a solid pattern.
@@ -582,18 +578,25 @@ void o_box_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-void o_box_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color,
-		     gint x, gint y,
-		     gint width, gint height,
-		     gint fill_width,
-		     gint angle1, gint pitch1, gint angle2, gint pitch2)
+void o_box_fill_fill (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+                      GSCHEM_TOPLEVEL *w_current, BOX *box,
+                      gint fill_width,
+                      gint angle1, gint pitch1,
+                      gint angle2, gint pitch2)
 {
-  gdk_gc_set_foreground(gc, color);
-  gdk_gc_set_line_attributes(gc, 1, GDK_LINE_SOLID,
-                             GDK_CAP_BUTT, GDK_JOIN_MITER);
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int s_lower_x, s_lower_y;
+  int s_upper_x, s_upper_y;
 
-  gdk_draw_rectangle(w, gc, TRUE, x, y, width, height);
-	
+  WORLDtoSCREEN (toplevel, box->lower_x, box->lower_y, &s_lower_x, &s_lower_y);
+  WORLDtoSCREEN (toplevel, box->upper_x, box->upper_y, &s_upper_x, &s_upper_y);
+
+  gdk_gc_set_foreground (gc, color);
+  gdk_gc_set_line_attributes (gc, 1, GDK_LINE_SOLID,
+                              GDK_CAP_BUTT, GDK_JOIN_MITER);
+
+  gdk_draw_rectangle (w, gc, TRUE, s_upper_x, s_upper_y,
+                      s_lower_x - s_upper_x, s_lower_y - s_upper_y);
 }
 
 /*! \brief Fill inside of box with single line pattern.
@@ -626,136 +629,32 @@ void o_box_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-void o_box_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color,
-		      gint x, gint y,
-		      gint width, gint height,
-		      gint fill_width,
-		      gint angle1, gint pitch1, gint angle2, gint pitch2)
+void o_box_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+                       GSCHEM_TOPLEVEL *w_current, BOX *box,
+                       gint fill_width,
+                       gint angle1, gint pitch1,
+                       gint angle2, gint pitch2)
 {
-  int x3, y3, x4, y4;
-  double cos_a_, sin_a_;
-  double x0, y0, r;
-  double x1, y1, x2, y2;
-  double amin, amax, a[4], min1, min2, max1, max2;
+  int i;
+  GArray *lines;
 
-  gdk_gc_set_line_attributes(gc, fill_width, GDK_LINE_SOLID,
-                             GDK_CAP_BUTT, GDK_JOIN_MITER);
+  lines = g_array_new (FALSE, FALSE, sizeof (LINE));
 
-  /*
-   * The function uses a matrix. Its elements are obtained from the sinus
-   * and the cosinus of the angle <B>angle1</B>. It represents the rotation
-   * matrix that when applied to a point, rotate it of <B>angle1</B>.
-   */
-  cos_a_ = cos(((double) angle1) * M_PI/180);
-  sin_a_ = sin(((double) angle1) * M_PI/180);
+  m_hatch_box (box, angle1, pitch1, lines);
 
-  /*
-   * The function considers the smallest circle around the box. Its radius
-   * is given by the following relation. Its center is given by the point
-   * a the middle of the box horizontally and vertically (intersection of
-   * its two diagonals.
-   */
-  r = sqrt((double) (pow(width, 2) + pow(height, 2))) / 2;
+  for (i=0; i < lines->len; i++) {
+    int x1, y1, x2, y2;
+    LINE *line = &g_array_index (lines, LINE, i);
 
-  /*
-   * When drawing a line in a circle there is two intersections. With the
-   * previously described circle, these intersections are out of the box.
-   * They can be easily calculated, the first by resolution of an equation
-   * and the second one by symetry in relation to the vertical axis going
-   * through the center of the circle.
-   *
-   * These two points are then rotated of angle <B>angle1</B> using the matrix
-   * previously mentionned.
-   */
-  y0 = 0;
-  while(y0 < r) {
-    x0 = pow(r, 2) - pow(y0, 2);
-    x0 = sqrt(x0);
-    
-    x1 = (x0*cos_a_ - y0*sin_a_);
-    y1 = (x0*sin_a_ + y0*cos_a_);
-    x2 = ((-x0)*cos_a_ - y0*sin_a_);
-    y2 = ((-x0)*sin_a_ + y0*cos_a_);
-    
-    /*
-     * It now parametrizes the segment : first intersection is given
-     * the value of 0 and the second is given the value of 1. The four
-     * values for each intersection of the segment and the four
-     * sides (vertical or horizontal) of the box are given by the
-     * following relations :
-     */
-    if((int) (x2 - x1) != 0) {
-      a[0] = ((-width/2) - x1) / (x2 - x1);
-      a[1] = ((width/2)  - x1) / (x2 - x1);
-    } else {
-      a[0] = 0; a[1] = 1;
-    }
-    
-    if((int) (y2 - y1) != 0) {
-      a[2] = ((-height/2) - y1) / (y2 - y1);
-      a[3] = ((height/2)  - y1) / (y2 - y1);
-    } else {
-      a[2] = 0; a[3] = 1;
-    }
-    /*
-     * It now has to check which of these four values are for
-     * intersections with the sides of the box (some values may be
-     * for intersections out of the box). This is made by a min/max
-     * function.
-     */
-    if(a[0] < a[1]) {
-      min1 = a[0]; max1 = a[1];
-    } else {
-      min1 = a[1]; max1 = a[0];
-    }
-    
-    if(a[2] < a[3]) {
-      min2 = a[2]; max2 = a[3];
-    } else {
-      min2 = a[3]; max2 = a[2];
-    }
-    
-    amin = (min1 < min2) ? min2 : min1;
-    amin = (amin < 0) ? 0 : amin;
-    
-    amax = (max1 < max2) ? max1 : max2;
-    amax = (amax < 1) ? amax : 1;
-    
-    /*
-     * If the segment really go through the box it draws the line.
-     * It also take the opportunity of the symetry in the box in
-     * relation to its center to draw the second line at the same time.
-     *
-     * If there is no intersection of the segment with any of the sides,
-     * then there is no need to continue : there would be no more
-     * segment in the box to draw.
-     */
-    
-    if((amax > amin) && (amax != 1) && (amin != 0)) {
-      /* There is intersection between the line and the box edges */
-      x3 = (int) (x1 + amin*(x2 - x1));
-      y3 = (int) (y1 + amin*(y2 - y1));
-      
-      x4 = (int) (x1 + amax*(x2 - x1));
-      y4 = (int) (y1 + amax*(y2 - y1));
-      
-      gdk_draw_line(w, gc, x3 + (x + width/2),
-		    (y + height/2) - y3, x4 + (x + width/2),
-		    (y + height/2) - y4);
-      
-      gdk_draw_line(w, gc, -x3 + (x + width/2),
-		    +y3 + (y + height/2), -x4 + (x + width/2),
-		    +y4 + (y + height/2));
-      
-    } else {
-      break;
-    }
-    
-    y0 = y0 + pitch1;
-    
+    WORLDtoSCREEN (w_current->toplevel, line->x[0], line->y[0], &x1, &y1);
+    WORLDtoSCREEN (w_current->toplevel, line->x[1], line->y[1], &x2, &y2);
+    o_line_draw_solid (w, gc, color, GDK_CAP_BUTT,
+                       x1, y1, x2, y2, fill_width, -1, -1);
   }
+
+  g_array_free (lines, TRUE);
 }
-  
+
 /*! \brief Fill inside of box with mesh pattern.
  *  \par Function Description
  *  This function fills the inside of the box with a pattern made of two
@@ -783,17 +682,16 @@ void o_box_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-void o_box_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color,
-		     gint x, gint y,
-		     gint width, gint height,
-		     gint fill_width,
-		     gint angle1, gint pitch1,
-		     gint angle2, gint pitch2)
+void o_box_fill_mesh (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+                      GSCHEM_TOPLEVEL *w_current, BOX *box,
+                      gint fill_width,
+                      gint angle1, gint pitch1,
+                      gint angle2, gint pitch2)
 {
-  o_box_fill_hatch(w, gc, color, x, y, width, height,
-		   fill_width, angle1, pitch1, -1, -1);
-  o_box_fill_hatch(w, gc, color, x, y, width, height,
-	  	   fill_width, angle2, pitch2, -1, -1);
+  o_box_fill_hatch (w, gc, color, w_current, box,
+                    fill_width, angle1, pitch1, -1, -1);
+  o_box_fill_hatch (w, gc, color, w_current, box,
+                    fill_width, angle2, pitch2, -1, -1);
 }
 
 
