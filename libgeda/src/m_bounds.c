@@ -20,7 +20,7 @@
 #include <config.h>
 #include <libgeda_priv.h>
 
-/** \brief Initialize a bounds by setting it to empty
+/*! \brief Initialize a bounds by setting it to empty
  *
  *  \param bounds [in] The bounds to set to empty.  This parameter must not
  *  be NULL.
@@ -33,7 +33,7 @@ void m_bounds_init(BOUNDS *bounds)
   bounds->max_y = G_MININT;
 }
 
-/** \brief Calculate the bounds of a set of points
+/*! \brief Calculate the bounds of a set of points
  *
  *  For an empty set of points, this function returns an empty bounds.
  *

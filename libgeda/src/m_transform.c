@@ -21,7 +21,7 @@
 #include <math.h>
 #include <libgeda_priv.h>
 
-/** \brief Combines two transformations
+/*! \brief Combines two transformations
  *
  *  Combines two matricies using matrix multiplication: a*b.
  *
@@ -44,7 +44,7 @@ void m_transform_combine(TRANSFORM *result, TRANSFORM *a, TRANSFORM *b )
   result->m[1][2] = a->m[1][0] * b->m[0][2] + a->m[1][1] * b->m[1][2] + a->m[1][2];
 }
 
-/** \brief Initialize a transform with the identity matrix.
+/*! \brief Initialize a transform with the identity matrix.
  *
  *  \param transform [out] The transform to initialize with the identity matrix.
  */
@@ -60,7 +60,7 @@ void m_transform_init(TRANSFORM *transform)
   transform->m[1][2] = 0;
 }
 
-/** \brief Calculates the inverse transform
+/*! \brief Calculates the inverse transform
  *
  *  \param transform [in] The given matrix
  *  \param inverse [out] The inverse of the given matrix.
@@ -82,7 +82,7 @@ void m_transform_invert(TRANSFORM *transform, TRANSFORM *inverse)
   inverse->m[1][2] = -( transform->m[0][0]*transform->m[1][2] - transform->m[1][0]*transform->m[0][2] ) / d;
 }
 
-/** \brief Transforms a line segment
+/*! \brief Transforms a line segment
  *
  *  \param transform [in] The transform function.
  *  \param line [inout] The line to transform.
@@ -96,7 +96,7 @@ void m_transform_line(TRANSFORM *transform, LINE *line)
   m_transform_point(transform, &(line->x[1]), &(line->y[1]));
 }
 
-/** \brief Transforms multiple line segments
+/*! \brief Transforms multiple line segments
  *
  *  \param transform [in] The transform function.
  *  \param lines [inout] The GArray of LINE to transform.
@@ -114,7 +114,7 @@ void m_transform_lines(TRANSFORM *transform, GArray *lines)
   }
 }
 
-/** \brief Transforms a point
+/*! \brief Transforms a point
  *
  *  \param x [inout] The x coordinate to transform.
  *  \param y [inout] The y coordinate to transform.
@@ -136,7 +136,7 @@ void m_transform_point(TRANSFORM *transform, gint *x, gint *y)
   *y = round(transform->m[1][0] * tx + transform->m[1][1] * ty + transform->m[1][2]);
 }
 
-/** \brief Transforms a polyline or polygon
+/*! \brief Transforms a polyline or polygon
  *
  *  \param transform [in] The transform function.
  *  \param points [inout] The GArray of sPOINT to transform.
@@ -154,7 +154,7 @@ void m_transform_points(TRANSFORM *transform, GArray *points)
   }
 }
 
-/** \brief Adds a rotation to the transformation
+/*! \brief Adds a rotation to the transformation
  *
  *  \param transform [inout] The given matrix
  *  \param angle [in] The angle to rotate
@@ -176,7 +176,7 @@ void m_transform_rotate(TRANSFORM *transform, gdouble angle)
   transform->m[1][1] = temp.m[1][0] * -s + temp.m[1][1] * c;
 }
 
-/** \brief Adds a scaling to the transformation
+/*! \brief Adds a scaling to the transformation
  *
  *  \param transform [inout] The given matrix
  *  \param factor [in] The amount to scale the transform.  This parameter must
@@ -193,7 +193,7 @@ void m_transform_scale(TRANSFORM *transform, gdouble factor)
   transform->m[1][1] *= factor;
 }
 
-/** \brief Adds a translation to the transformation
+/*! \brief Adds a translation to the transformation
  *
  *  \param transform [inout] The given matrix.
  *  \param dx [in] The amount to translate on the x axis.

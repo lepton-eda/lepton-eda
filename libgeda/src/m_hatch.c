@@ -41,7 +41,7 @@ static gint calculate_initial_sweep(gint pitch, gint min_y, gint max_y);
 static gint compare_events(gconstpointer a, gconstpointer b);
 static gint compare_status(gconstpointer a, gconstpointer b);
 
-/** \brief Calculate the initial y cooridinate of the hatch sweep line
+/*! \brief Calculate the initial y cooridinate of the hatch sweep line
  *
  *  This function centers the hatch lines across the extents of the shape being
  *  hatched.  This caclulation provides symmetrical hatch lines inside
@@ -60,7 +60,7 @@ static gint calculate_initial_sweep(gint pitch, gint min_y, gint max_y)
   return min_y + ((delta - ((delta - pitch) / pitch * pitch)) / 2);
 }
 
-/** \brief Compares two sweep events
+/*! \brief Compares two sweep events
  *
  *  Compares two sweep events for ordering the event queue.  The prototype
  *  and behavior are consistant with GCompareFunc.
@@ -79,7 +79,7 @@ static gint compare_events(gconstpointer a, gconstpointer b)
   return (event_a->y0 - event_b->y0);
 }
 
-/** \brief Compares two sweep status structs
+/*! \brief Compares two sweep status structs
  *
  *  Compares two sweep status for ordering the sweep status.  The prototype
  *  and behavior are consistant with GCompareFunc.
@@ -98,7 +98,7 @@ static gint compare_status(gconstpointer a, gconstpointer b)
   return (status_b->x - status_a->x);
 }
 
-/** \brief Calculates line segments to hatch a box shape
+/*! \brief Calculates line segments to hatch a box shape
  *
  *  This function appends new line segments to the lines GArray.  For creating
  *  a hatch pattern, the GArray must be cleared before calling this function.
@@ -143,7 +143,7 @@ void m_hatch_box(BOX *box, gint angle, gint pitch, GArray *lines)
   g_array_free(corners, TRUE);
 }
 
-/** \brief Calculates line segments to hatch a circle.
+/*! \brief Calculates line segments to hatch a circle.
  *
  *  This function appends new line segments to the lines GArray.  For creating
  *  a hatch pattern, the GArray must be cleared before calling this function.
@@ -190,7 +190,7 @@ void m_hatch_circle(CIRCLE *circle, gint angle, gint pitch, GArray *lines)
   }
 }
 
-/** \brief Calculates line segments to hatch an arbitrary polygon.
+/*! \brief Calculates line segments to hatch an arbitrary polygon.
  *
  *  This function appends new line segments to the lines GArray.  For creating
  *  a hatch pattern, the GArray must be cleared before calling this function.
