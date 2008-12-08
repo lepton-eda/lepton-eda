@@ -89,6 +89,8 @@ void PAPERSIZEtoWORLD(int width, int height, int border, int *right, int *bottom
 double round_5_2_1(double unrounded);
 
 /* m_hatch.c */
+void m_hatch_box(BOX *box, gint angle, gint pitch, GArray *lines);
+void m_hatch_circle(CIRCLE *circle, gint angle, gint pitch, GArray *lines);
 void m_hatch_path(PATH *path, gint angle, gint pitch, GArray *lines);
 
 /* m_polygon.c */

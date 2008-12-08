@@ -56,8 +56,6 @@ void m_bounds_init(BOUNDS *bounds);
 void m_bounds_of_points(BOUNDS *bounds, sPOINT points[], gint count);
 
 /* m_hatch.c */
-void m_hatch_box(BOX *box, gint angle, gint pitch, GArray *lines);
-void m_hatch_circle(CIRCLE *circle, gint angle, gint pitch, GArray *lines);
 void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines);
 
 /* m_polygon.c */
