@@ -61,8 +61,6 @@ void m_hatch_circle(CIRCLE *circle, gint angle, gint pitch, GArray *lines);
 void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines);
 
 /* m_polygon.c */
-void m_polygon_append_bezier(GArray *points, BEZIER *bezier, int segments);
-void m_polygon_append_point(GArray *points, int x, int y);
 gboolean m_polygon_interior_point(GArray *points, int x, int y);
 double m_polygon_shortest_distance(GArray *points, int x, int y, gboolean closed);
 
