@@ -370,7 +370,24 @@ static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
                                gint angle1, gint pitch1,
                                gint angle2, gint pitch2)
 {
-  /* Not implemented */
+  int i;
+  GArray *lines;
+
+  lines = g_array_new (FALSE, FALSE, sizeof (LINE));
+
+  m_hatch_path (path, angle1, pitch1, lines);
+
+  for (i=0; i < lines->len; i++) {
+    int x1, y1, x2, y2;
+    LINE *line = &g_array_index (lines, LINE, i);
+
+    WORLDtoSCREEN (w_current->toplevel, line->x[0], line->y[0], &x1, &y1);
+    WORLDtoSCREEN (w_current->toplevel, line->x[1], line->y[1], &x2, &y2);
+    o_line_draw_solid (w, gc, color, GDK_CAP_BUTT,
+                       x1, y1, x2, y2, fill_width, -1, -1);
+  }
+
+  g_array_free (lines, TRUE);
 }
 
 

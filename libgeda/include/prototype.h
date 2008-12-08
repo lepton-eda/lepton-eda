@@ -88,6 +88,9 @@ void rotate_point_90(int x, int y, int angle, int *newx, int *newy);
 void PAPERSIZEtoWORLD(int width, int height, int border, int *right, int *bottom);
 double round_5_2_1(double unrounded);
 
+/* m_hatch.c */
+void m_hatch_path(PATH *path, gint angle, gint pitch, GArray *lines);
+
 /* o_arc_basic.c */
 OBJECT *o_arc_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int radius, int start_angle, int end_angle);
 OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *o_current);
