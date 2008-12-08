@@ -830,7 +830,27 @@ static void o_path_print_hatch (TOPLEVEL *toplevel, FILE *fp, PATH *path,
                                 int angle1, int pitch1, int angle2, int pitch2,
                                 int origin_x, int origin_y)
 {
-  /* Not implemented */
+  int i;
+  GArray *lines;
+
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (fp != NULL);
+
+  /* Avoid printing line widths too small */
+  if (fill_width <= 1) fill_width = 2;
+
+  lines = g_array_new (FALSE, FALSE, sizeof(LINE));
+
+  m_hatch_path (path, angle1, pitch1, lines);
+
+  for (i=0; i < lines->len; i++) {
+    LINE *line = &g_array_index (lines, LINE, i);
+
+    fprintf (fp,"%d %d %d %d %d line\n", line->x[0], line->y[0],
+                                         line->x[1], line->y[1], fill_width);
+  }
+
+  g_array_free (lines, TRUE);
 }
 
 

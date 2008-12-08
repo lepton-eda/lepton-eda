@@ -190,6 +190,35 @@ void m_hatch_circle(CIRCLE *circle, gint angle, gint pitch, GArray *lines)
   }
 }
 
+/*! \brief Calculates line segments to hatch a path.
+ *
+ *  This function appends new line segments to the lines GArray.  For creating
+ *  a hatch pattern, the GArray must be cleared before calling this function.
+ *  For creating cross hatch patterns, this function can be called multiple
+ *  times with a different angle or pitch while passing the same lines GArray.
+ *
+ *  \param path  [in] The path shape to hatch.
+ *  \param angle [in] The angle of the hatch lines with respect to the x axis.
+ *  \param pitch [in] The distance between hatch lines
+ *  \param lines [inout] A GArray of LINE to contain the new hatch line
+ *  segments.  This function appends new line segments to the GArray and leaves
+ *  existing GArray contents unchanged.
+ */
+void m_hatch_path (PATH *path, gint angle, gint pitch, GArray *lines)
+{
+  GArray *points;
+
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (lines != NULL);
+
+  points = g_array_new (FALSE, FALSE, sizeof (sPOINT));
+
+  s_path_to_polygon (path, points);
+  m_hatch_polygon (points, angle, pitch, lines);
+
+  g_array_free (points, TRUE);
+}
+
 /*! \brief Calculates line segments to hatch an arbitrary polygon.
  *
  *  This function appends new line segments to the lines GArray.  For creating
