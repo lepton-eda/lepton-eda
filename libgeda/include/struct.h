@@ -37,6 +37,7 @@ typedef struct st_box BOX;
 typedef struct st_picture PICTURE;
 typedef struct st_text TEXT;
 typedef struct st_transform TRANSFORM;
+typedef struct st_bezier BEZIER;
 
 typedef struct st_object OBJECT;
 typedef struct st_page PAGE;
@@ -135,6 +136,11 @@ struct st_arc {
 #define ARC_RADIUS 1
 #define ARC_START_ANGLE 2
 #define ARC_END_ANGLE 3
+
+struct st_bezier {
+  int x[4];
+  int y[4];
+};
 
 struct st_box {
   /* upper is considered the origin */

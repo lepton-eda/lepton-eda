@@ -43,6 +43,8 @@
 
 #include "libgeda_priv.h"
 
+#define NUM_BEZIER_SEGMENTS 100
+
 
 PATH *s_path_new (void)
 {
@@ -695,4 +697,54 @@ char *s_path_string_from_path (const PATH *path)
   }
 
   return g_string_free (path_string, FALSE);
+}
+
+/*! \brief Converts a path to a polygon
+ *
+ *  \param path [in] The path to convert to a polygon.  This parameter must not
+ *  be NULL.
+ *  \param points [out] An array of the polygon's vertices.  This parameter
+ *  must not be NULL.
+ */
+void s_path_to_polygon (PATH *path, GArray *points)
+{
+  int i;
+  sPOINT point = { 0, 0 };
+
+  if (points->len > 0) {
+    g_array_remove_range (points, 0, points->len - 1);
+  }
+
+  for (i = 0; i < path->num_sections; i++) {
+    BEZIER bezier;
+    PATH_SECTION *section = &path->sections[i];
+
+    switch (section->code) {
+      case PATH_CURVETO:
+        bezier.x[0] = point.x;
+        bezier.y[0] = point.y;
+        bezier.x[1] = section->x1;
+        bezier.y[1] = section->y1;
+        bezier.x[2] = section->x2;
+        bezier.y[2] = section->y2;
+        point.x = bezier.x[3] = section->x3;
+        point.y = bezier.y[3] = section->y3;
+        m_polygon_append_bezier (points, &bezier, NUM_BEZIER_SEGMENTS);
+        break;
+
+      case PATH_MOVETO_OPEN:
+        /* Unsupported, just fall through and draw a line */
+        /* Fall through */
+
+      case PATH_MOVETO:
+      case PATH_LINETO:
+        point.x = section->x3;
+        point.y = section->y3;
+        m_polygon_append_point (points, point.x, point.y);
+        break;
+
+      case PATH_END:
+        break;
+    }
+  }
 }

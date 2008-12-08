@@ -60,6 +60,12 @@ void m_hatch_box(BOX *box, gint angle, gint pitch, GArray *lines);
 void m_hatch_circle(CIRCLE *circle, gint angle, gint pitch, GArray *lines);
 void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines);
 
+/* m_polygon.c */
+void m_polygon_append_bezier(GArray *points, BEZIER *bezier, int segments);
+void m_polygon_append_point(GArray *points, int x, int y);
+gboolean m_polygon_interior_point(GArray *points, int x, int y);
+double m_polygon_shortest_distance(GArray *points, int x, int y, gboolean closed);
+
 /* m_transform.c */
 void m_transform_combine(TRANSFORM *result, TRANSFORM *a, TRANSFORM *b );
 void m_transform_init(TRANSFORM *transform);
@@ -216,6 +222,9 @@ char *s_color_ps_string(int color);
 /* s_encoding.c */
 gchar* s_encoding_base64_encode (gchar* src, guint srclen, guint* dstlenp, gboolean strict);
 gchar* s_encoding_base64_decode (gchar* src, guint srclen, guint* dstlenp);
+
+/* s_path.c */
+void s_path_to_polygon(PATH *path, GArray *points);
 
 /* s_textbuffer.c */
 TextBuffer *s_textbuffer_new (gchar *data, const gint size);
