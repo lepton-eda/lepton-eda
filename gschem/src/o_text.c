@@ -56,8 +56,8 @@ void o_text_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   
   o_redraw(w_current, o_current->text->prim_objs, TRUE);
 
-  world_get_object_list_bounds(toplevel, o_current->text->prim_objs,
-			 &left, &top, &right, &bottom);
+  world_get_object_glist_bounds (toplevel, o_current->text->prim_objs,
+                                 &left, &top, &right, &bottom);
   o_current->w_left   = left;
   o_current->w_top    = top;
   o_current->w_right  = right;
@@ -236,7 +236,7 @@ void o_text_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
   if ((factor < w_current->text_display_zoomfactor) ||
       o_current->text->size >= 12 ||
       w_current->text_feedback == ALWAYS) {
-    o_list_draw_xor(w_current, dx, dy, o_current->text->prim_objs);
+    o_glist_draw_xor (w_current, dx, dy, o_current->text->prim_objs);
   } else {
     /* text is too small so go through and draw a line in
        it's place */

@@ -147,18 +147,18 @@ x_fileselect_load_files (GSList *filenames)
     }
 
     /* Now add all items found to the master lists */
-    s_sheet_data_add_master_comp_list_items(pr_current->page_current->object_head); 
-    s_sheet_data_add_master_comp_attrib_list_items(pr_current->page_current->object_head); 
+    s_sheet_data_add_master_comp_list_items (pr_current->page_current->object_list);
+    s_sheet_data_add_master_comp_attrib_list_items (pr_current->page_current->object_list);
 #if 0
     /* Note that this must be changed.  We need to input the entire project
      * before doing anything with the nets because we need to first
      * determine where they are all connected!   */
-    s_sheet_data_add_master_net_list_items(pr_current->page_current->object_head);    
-    s_sheet_data_add_master_net_attrib_list_items(pr_current->page_current->object_head); 
+    s_sheet_data_add_master_net_list_items (pr_current->page_current->object_list);
+    s_sheet_data_add_master_net_attrib_list_items (pr_current->page_current->object_list);
 #endif
     
-    s_sheet_data_add_master_pin_list_items(pr_current->page_current->object_head);    
-    s_sheet_data_add_master_pin_attrib_list_items(pr_current->page_current->object_head); 
+    s_sheet_data_add_master_pin_list_items (pr_current->page_current->object_list);
+    s_sheet_data_add_master_pin_attrib_list_items (pr_current->page_current->object_list);
   }  	/* end of loop over files     */
   
 
@@ -189,9 +189,9 @@ x_fileselect_load_files (GSList *filenames)
     p_local = (PAGE *)iter->data;
 
     /* only traverse pages which are toplevel */
-    if (p_local->object_head && p_local->page_control == 0) {
+    if (p_local->page_control == 0) {
       /* adds all components from page to comp_table */
-      s_table_add_toplevel_comp_items_to_comp_table(p_local->object_head);
+      s_table_add_toplevel_comp_items_to_comp_table (p_local->object_list);
 #if 0
       /* Note that this must be changed.  We need to input the entire project
        * before doing anything with the nets because we need to first
@@ -202,7 +202,7 @@ x_fileselect_load_files (GSList *filenames)
 #endif
 
       /* adds all pins from page to pin_table */
-      s_table_add_toplevel_pin_items_to_pin_table(p_local->object_head);
+      s_table_add_toplevel_pin_items_to_pin_table (p_local->object_list);
     }
   } /* for loop over pages */
 

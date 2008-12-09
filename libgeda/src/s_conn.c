@@ -225,13 +225,15 @@ void s_conn_remove(TOPLEVEL * toplevel, OBJECT * to_remove)
 void s_conn_remove_complex(TOPLEVEL * toplevel, OBJECT * to_remove)
 {
   OBJECT *o_current;
-  
+  GList *iter;
+
   if (to_remove->type != OBJ_COMPLEX && to_remove->type != OBJ_PLACEHOLDER) {
     return;
   }
 
-  o_current = to_remove->complex->prim_objs;
-  while (o_current != NULL) {
+  iter = to_remove->complex->prim_objs;
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     switch (o_current->type) {
       case (OBJ_NET):
       case (OBJ_PIN):
@@ -240,9 +242,8 @@ void s_conn_remove_complex(TOPLEVEL * toplevel, OBJECT * to_remove)
         break;
 
     }
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
-  
 }
 
 /*! \brief Checks if a point is a midpoint of an OBJECT
@@ -715,12 +716,14 @@ void s_conn_update_object(TOPLEVEL * toplevel, OBJECT * object)
  *  \param toplevel (currently not used)
  *  \param complex complex OBJECT to add into the connection system
  */
-void s_conn_update_complex(TOPLEVEL * toplevel, OBJECT * complex)
+void s_conn_update_complex (TOPLEVEL * toplevel, GList* list)
 {
   OBJECT *o_current;
+  GList *iter;
 
-  o_current = complex;
-  while (o_current != NULL) {
+  iter = list;
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     switch (o_current->type) {
       case (OBJ_PIN):
       case (OBJ_NET):
@@ -729,7 +732,7 @@ void s_conn_update_complex(TOPLEVEL * toplevel, OBJECT * complex)
         break;
 
     }
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
 
 }
@@ -851,6 +854,7 @@ GList *s_conn_return_complex_others(GList *input_list, OBJECT *object)
   CONN *conn;
   GList *cl_current;
   GList *return_list=NULL;
+  GList *iter;
 
   if (object->type != OBJ_COMPLEX && object->type != OBJ_PLACEHOLDER) {
     return(NULL);
@@ -858,8 +862,9 @@ GList *s_conn_return_complex_others(GList *input_list, OBJECT *object)
 
   return_list = input_list;
   
-  o_current = object->complex->prim_objs;
-  while(o_current != NULL) {
+  iter = object->complex->prim_objs;
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     cl_current = o_current->conn_list;
     while (cl_current != NULL) {
 
@@ -871,8 +876,7 @@ GList *s_conn_return_complex_others(GList *input_list, OBJECT *object)
         
       cl_current = g_list_next(cl_current);
     }
-
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
   
   return(return_list);

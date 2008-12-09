@@ -42,17 +42,15 @@ extern int global_sid;
  *  flag is either NORMAL_FLAG or SELECTION_FLAG
  *
  *  \param [in]  toplevel   The TOPLEVEL object.
- *  \param [in]  list_head
  *  \param [in]  selected
  *  \param [in]  flag
  *  \param [out] return_end  
  *  \return OBJECT pointer.
  */
-OBJECT *o_list_copy_to(TOPLEVEL *toplevel, OBJECT *list_head,
-		       OBJECT *selected, int flag, OBJECT **return_end)
+OBJECT *o_object_copy (TOPLEVEL *toplevel,
+                       OBJECT *selected, int flag)
 {
   OBJECT *new_obj;
-  OBJECT *end;
 
   /* are we adding a selection or the real object list */
   toplevel->ADDING_SEL = flag;
@@ -60,7 +58,6 @@ OBJECT *o_list_copy_to(TOPLEVEL *toplevel, OBJECT *list_head,
   switch(selected->type) {
 
     case(OBJ_LINE):
-      /* do we do anything with the return value) ? */
       new_obj = o_line_copy (toplevel, selected);
       break;
 
@@ -112,18 +109,12 @@ OBJECT *o_list_copy_to(TOPLEVEL *toplevel, OBJECT *list_head,
     default:
       g_critical ("o_list_copy_to: object %p has bad type '%c'\n",
                   selected, selected->type);
-      return list_head;
+      return NULL;
   }
 
   /* Store a reference in the copied object to where it was copied.
    * Used to retain associations when copying attributes */
   selected->copied_to = new_obj;
-
-  end = return_tail (list_head);
-  end = s_basic_link_object (new_obj, end);
-
-  if (list_head == NULL)
-    list_head = end;
 
   /* make sure sid is the same! */
   if (selected) {
@@ -132,93 +123,10 @@ OBJECT *o_list_copy_to(TOPLEVEL *toplevel, OBJECT *list_head,
 
   /* I don't think this is a good idea at all */
   /* toplevel->ADDING_SEL = 0; */
-        
-  if (return_end) {
-    *return_end = end;	
-  }
 
-  return(list_head);
+  return new_obj;
 }
 
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *  you need to pass in a head_node for dest_list_head
- *  flag is either NORMAL_FLAG or SELECTION_FLAG
- *
- *  \param [in] toplevel       The TOPLEVEL object.
- *  \param [in] src_list_head   
- *  \param [in] dest_list_head  
- *  \param [in] flag
- *  \return OBJECT pointer.
- */
-OBJECT *o_list_copy_all(TOPLEVEL *toplevel, OBJECT *src_list_head,
-                        OBJECT *dest_list_head, int flag)
-{
-  OBJECT *src;
-  OBJECT *dest;
-  int adding_sel_save;
-
-  src = src_list_head;
-  dest = dest_list_head;
-
-  if (src == NULL || dest == NULL) {
-    return(NULL);
-  }
-
-  /* Save ADDING_SEL as o_list_copy_to() sets it */
-  adding_sel_save = toplevel->ADDING_SEL;
-
-  /* first do all NON text items */
-  while(src != NULL) {
-
-    if (src->type != OBJ_TEXT) {
-      dest->next = o_list_copy_to(toplevel, NULL, src, flag,
-                                  NULL);
-
-      dest->next->prev = dest;
-      dest = dest->next;
-      dest->sid = global_sid++;
-    }
-
-    src = src->next;
-  }
-
-  src = src_list_head;
-  /*dest = dest_list_head; out since we want to add to the end */
-
-  /* then do all text items */
-  while(src != NULL) {
-
-    if (src->type == OBJ_TEXT) {
-      dest->next = o_list_copy_to(toplevel, NULL, src, flag,
-                                  NULL);
-
-      dest->next->prev = dest;
-      dest = dest->next;
-      dest->sid = global_sid++;
-
-      if (src->attached_to /*&& !toplevel->ADDING_SEL*/) {
-        if (src->attached_to->copied_to) {
-          o_attrib_attach(toplevel, dest, src->attached_to->copied_to);
-        }
-      }
-    }
-
-    src = src->next;
-  }
-
-  /* Clean up dangling copied_to pointers */
-  src = src_list_head;
-  while(src != NULL) {
-    src->copied_to = NULL;
-    src = src->next;
-  }
-
-  toplevel->ADDING_SEL = adding_sel_save;
-
-  return(dest);
-}
 
 /*! \todo Finish function description!!!
  *  \brief
@@ -237,9 +145,9 @@ OBJECT *o_list_copy_all(TOPLEVEL *toplevel, OBJECT *src_list_head,
  *  \param [in] flag
  *  \return the dest_list GList with objects appended to it.
  */
-GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
-                                 GList *src_list,
-                                 GList *dest_list, int flag)
+GList *o_glist_copy_all (TOPLEVEL *toplevel,
+                         GList *src_list,
+                         GList *dest_list, int flag)
 {
   GList *src, *dest;
   OBJECT *src_object, *dst_object;
@@ -267,7 +175,7 @@ GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
       o_selection_unselect(src_object);
 
     if (src_object->type != OBJ_TEXT && src_object->type != OBJ_HEAD) {
-      dst_object = o_list_copy_to (toplevel, NULL, src_object, flag, NULL);
+      dst_object = o_object_copy (toplevel, src_object, flag);
       dst_object->sid = global_sid++;
       dest = g_list_prepend (dest, dst_object);
     }
@@ -291,7 +199,7 @@ GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
       o_selection_unselect(src_object);
 
     if (src_object->type == OBJ_TEXT) {
-      dst_object = o_list_copy_to (toplevel, NULL, src_object, flag, NULL);
+      dst_object = o_object_copy (toplevel, src_object, flag);
       dst_object->sid = global_sid++;
       dest = g_list_prepend (dest, dst_object);
 
@@ -320,82 +228,9 @@ GList *o_glist_copy_all_to_glist(TOPLEVEL *toplevel,
   /* Reverse the list to be in the correct order */
   dest = g_list_reverse (dest);
 
-  /* Link the copied objects together for good measure */
-  o_glist_relink_objects (dest);
-
   toplevel->ADDING_SEL = adding_sel_save;
 
   return(dest);
-}
-
-
-/*! \brief Relink OBJECT next and prev pointers to match the passed GList
- *
- * \par Function Description
- * Updates the OBJECT next and prev pointers for OBJECTs in the passed
- * GList of objects to link in the same order as the passed GList.
- *
- * \param [in] o_glist   The GList of OBJECTs.
- */
-void o_glist_relink_objects (GList *o_glist)
-{
-  GList *iter, *tmp;
-  OBJECT *object;
-
-  for (iter = o_glist; iter != NULL; iter = g_list_next (iter)) {
-    object = iter->data;
-
-    tmp = g_list_previous (iter);
-    object->prev = (tmp == NULL) ? NULL : tmp->data;
-
-    tmp = g_list_next (iter);
-    object->next = (tmp == NULL) ? NULL : tmp->data;
-  }
-}
-
-
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *  assuming list is head
- *  head will NOT be deleted
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] list
- */
-void o_list_delete_rest(TOPLEVEL *toplevel, OBJECT *list)
-{
-  OBJECT *o_current=NULL;
-  OBJECT *o_prev=NULL;
-	
-  o_current = (OBJECT *) return_tail(list);
-
-  /* remove list backwards */
-  while(o_current != NULL) {
-    if (o_current->type != OBJ_HEAD) {
-      o_prev = o_current->prev;
-      s_delete(toplevel, o_current);
-      o_current = o_prev;
-    } else {
-      o_current->next = NULL; /* set sel_head->next to be empty */
-      o_current = NULL;
-    }
-  }
-}
-
-
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- */
-void o_list_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *list)
-{
-  OBJECT *o_current = list;
-
-  while ( o_current != NULL ) {
-    o_translate_world(toplevel, dx, dy, o_current);
-    o_current = o_current->next;
-  }
 }
 
 
@@ -416,22 +251,6 @@ void o_glist_translate_world(TOPLEVEL *toplevel, int dx, int dy, GList *list)
 }
 
 
-
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- */
-void o_list_rotate_world (TOPLEVEL *toplevel, int x, int y, int angle, OBJECT *list)
-{
-  OBJECT *o_current = list;
-
-  while ( o_current != NULL ) {
-    o_rotate_world (toplevel, x, y, angle, o_current);
-    o_current = o_current->next;
-  }
-}
-
-
 /*! \todo Finish function description!!!
  *  \brief
  *  \par Function Description
@@ -445,21 +264,6 @@ void o_glist_rotate_world (TOPLEVEL *toplevel, int x, int y, int angle, GList *l
     o_current = (OBJECT *)iter->data;
     o_rotate_world (toplevel, x, y, angle, o_current);
     iter = g_list_next (iter);
-  }
-}
-
-
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- */
-void o_list_mirror_world (TOPLEVEL *toplevel, int x, int y, OBJECT *list)
-{
-  OBJECT *o_current = list;
-
-  while ( o_current != NULL ) {
-    o_mirror_world (toplevel, x, y, o_current);
-    o_current = o_current->next;
   }
 }
 

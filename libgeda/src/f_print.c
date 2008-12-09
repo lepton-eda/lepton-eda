@@ -36,7 +36,7 @@
  */
 GHashTable *unicode_char_to_glyph = NULL;
 
-static int f_print_get_unicode_chars(TOPLEVEL * toplevel, OBJECT * head,
+static int f_print_get_unicode_chars (TOPLEVEL * toplevel, GList *obj_list,
 				     int count, gunichar * table);
 static void f_print_unicode_map(FILE * fp, int count, gunichar * table);
 
@@ -211,7 +211,7 @@ void f_print_footer(FILE *fp)
  *
  *  \param [in] toplevel      The current TOPLEVEL object.
  *  \param [in] fp             The postscript document to print to.
- *  \param [in] head           Container for objects to be printed.
+ *  \param [in] obj_list       List of objects to be printed.
  *  \param [in] start_x        X origin on page to start printing objects.
  *  \param [in] start_y        Y origin on page to start printing objects.
  *  \param [in] scale          Scale factor for object output.
@@ -221,17 +221,18 @@ void f_print_footer(FILE *fp)
  *
  *  \todo  what happens if snap is off? hack deal with this !!!!!!!!
  */
-void f_print_objects(TOPLEVEL *toplevel, FILE *fp, OBJECT *head,
+void f_print_objects (TOPLEVEL *toplevel, FILE *fp, GList *obj_list,
 		     int start_x, int start_y, float scale, 
 		     int unicode_count, gunichar *unicode_table)
 {
   OBJECT *o_current=NULL;
   int origin_x, origin_y;
+  GList *iter;
 	
   origin_x = start_x;
   origin_y = start_y;
 
-  if (head == NULL) {
+  if (obj_list == NULL) {
     return;
   }
 
@@ -246,9 +247,10 @@ void f_print_objects(TOPLEVEL *toplevel, FILE *fp, OBJECT *head,
   origin_x = 0;
   origin_y = 0;
 
-  o_current = head;
+  iter = obj_list;
 
-  while ( o_current != NULL ) {
+  while ( iter != NULL ) {
+    o_current = (OBJECT *)iter->data;
 
     if (o_current->type != OBJ_HEAD) {
 
@@ -353,11 +355,11 @@ void f_print_objects(TOPLEVEL *toplevel, FILE *fp, OBJECT *head,
           break;
       }
 
-    } 
-    o_current = o_current->next;
+    }
+    iter = g_list_next (iter);
   }
 
-  s_cue_output_all(toplevel, head, fp, POSTSCRIPT);
+  s_cue_output_all (toplevel, obj_list, fp, POSTSCRIPT);
   return;
 }
 
@@ -449,15 +451,15 @@ int f_print_stream(TOPLEVEL *toplevel, FILE *fp)
 
   /* Find all the unicode characters */
   unicode_count = f_print_get_unicode_chars(toplevel,
-			 toplevel->page_current->object_head,
+			 toplevel->page_current->object_list,
 			 0, unicode_table);
 
   /*	printf("%d %d\n", toplevel->paper_width, toplevel->paper_height);*/
 
-  world_get_object_list_bounds(toplevel,
-                               toplevel->page_current->object_head,
-                               &origin_x, &origin_y,
-                               &right, &bottom);
+  world_get_object_glist_bounds (toplevel,
+                                 toplevel->page_current->object_list,
+                                 &origin_x, &origin_y,
+                                 &right, &bottom);
 
   /* Calculate scale factor that will make the image fit on the page */
   dx = 0; dy = 0;
@@ -613,9 +615,8 @@ int f_print_stream(TOPLEVEL *toplevel, FILE *fp)
 	  scale, scale);
 
   /* Print the objects */
-  f_print_objects(toplevel, fp,
-		  toplevel->page_current->object_head,
-		  origin_x, origin_y, scale, unicode_count, unicode_table);
+  f_print_objects (toplevel, fp, toplevel->page_current->object_list,
+                   origin_x, origin_y, scale, unicode_count, unicode_table);
 
   f_print_footer(fp);
 
@@ -640,26 +641,24 @@ void f_print_set_type(TOPLEVEL *toplevel, int type)
  *
  *  \param [in,out] toplevel  The output TOPLEVEL element to store converted
  *                             strings in.
- *  \param [in]     head       The object containing strings for conversion.
+ *  \param [in]     obj_list   The object containing strings for conversion.
  *  \param [in]     count      The number of elements in the unicode table.
  *  \param [in]     table      The unicode table.
  *  \return count on success, 0 otherwise.
  */
-static int f_print_get_unicode_chars(TOPLEVEL *toplevel, OBJECT *head,
+static int f_print_get_unicode_chars (TOPLEVEL *toplevel, GList *obj_list,
 				     int count, gunichar *table)
 {
   OBJECT *o_current = NULL;
   gchar *aux;
   gunichar current_char;
   int i, found;
+  GList *iter;
 
-  if (head == NULL) {
-    return(0);
-  }
+  iter = obj_list;
 
-  o_current = head;
-
-  while (o_current != NULL) {
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
 
     if (o_current->type != OBJ_HEAD) {
 
@@ -703,7 +702,7 @@ static int f_print_get_unicode_chars(TOPLEVEL *toplevel, OBJECT *head,
 	break;
       }
     }
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
   return (count);
 }

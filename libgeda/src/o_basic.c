@@ -138,27 +138,7 @@ void o_recalc_single_object(TOPLEVEL *toplevel, OBJECT *o_current)
   }
 }
 
-/*! \brief Recalculate position of a list of objects.
- *  \par Function Description
- *  This function will take a list of objects and recalculate their
- *  positions on the screen.
- *
- *  \param [in]     toplevel    The TOPLEVEL object.
- *  \param [in,out] object_list  OBJECT list to recalculate.
- *
- */
-void
-o_recalc_object_list(TOPLEVEL *toplevel, OBJECT *object_list)
-{
-  OBJECT *o_current;
 
-  o_current = object_list;
-  while (o_current != NULL) {
-    o_recalc_single_object(toplevel, o_current);
-    o_current = o_current->next;
-  }
-}
- 
 /*! \brief Recalculate position of a list (GList) of objects.
  *  \par Function Description
  *  This function will take a list (GList) of objects and recalculate their

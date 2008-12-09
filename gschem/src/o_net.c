@@ -726,9 +726,7 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
       /* conn stuff */
       /* LEAK CHECK 1 */
-      other_objects = s_conn_return_others(other_objects,
-					   toplevel->page_current->
-					   object_tail);
+      other_objects = s_conn_return_others (other_objects, new_net);
 
       if (o_net_add_busrippers(w_current, new_net, other_objects)) {
 	  g_list_free(other_objects);
@@ -793,9 +791,7 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
       /* conn stuff */
       /* LEAK CHECK 2 */
-      other_objects = s_conn_return_others(other_objects,
-					   toplevel->page_current->
-					   object_tail);
+      other_objects = s_conn_return_others (other_objects, new_net);
 
       if (o_net_add_busrippers(w_current, new_net, other_objects)) {
 	  g_list_free(other_objects);
@@ -1384,7 +1380,8 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
                                    rippersym,
                                    toplevel->bus_ripper_symname, 1);
           s_page_append (toplevel->page_current, new_obj);
-          o_complex_promote_attribs (toplevel, new_obj);
+          o_complex_promote_attribs (toplevel, new_obj,
+                                     &toplevel->page_current->object_list);
 
           o_complex_draw (w_current, new_obj);
         } else {

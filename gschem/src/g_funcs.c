@@ -264,11 +264,14 @@ SCM get_selected_component_attributes(GSCHEM_TOPLEVEL *w_current)
   SCM list = SCM_EOL;
   OBJECT *obj;
   GHashTable *ht;
+  GList *iter;
  
   /* build a hash table */
   ht = g_hash_table_new (g_str_hash, g_str_equal);
-  for (obj = w_current->toplevel->page_current->object_head; obj != NULL;
-       obj = obj->next) {
+  for (iter = w_current->toplevel->page_current->object_list;
+       iter != NULL;
+       iter = g_list_next (iter)) {
+    obj = (OBJECT *)iter->data;
     if (obj->selected && obj->type == OBJ_TEXT) {
       const gchar *str = o_text_get_string (w_current->toplevel, obj);
       if (str == NULL) continue;

@@ -142,24 +142,20 @@ void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flag
  *  \par Function Description
  * 
  */
-void a_zoom_extents(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int pan_flags)
+void a_zoom_extents (GSCHEM_TOPLEVEL *w_current, GList *list, int pan_flags)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int lleft, lright, ltop, lbottom;
   double zx, zy, relativ_zoom_factor;
   double world_pan_center_x,world_pan_center_y;
 
-  if (o_current != NULL) {
-    if (o_current->next == NULL) {
-      return;
-    }
-  } else {
+  if (list == NULL) {
     return;
   }
 
-  if ( !world_get_object_list_bounds(toplevel, o_current,
-                                     &lleft, &ltop,
-                                     &lright, &lbottom)) {
+  if (!world_get_object_glist_bounds (toplevel, list,
+                                      &lleft, &ltop,
+                                      &lright, &lbottom)) {
     return;
   }
 

@@ -96,8 +96,8 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   /* Init tile array */
   s_tile_init (toplevel, page);
 
-  /* First one to setup head */
-  page->object_head = s_basic_new_object(OBJ_HEAD, "object_head");
+  /* Init the object list */
+  page->object_list = NULL;
 
   /* new selection mechanism */
   page->selection_list = o_selection_new();
@@ -106,9 +106,6 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   page->stretch_head = page->stretch_tail = s_stretch_new_head();
 
   page->place_list = NULL;
-
-  /* do this just to be sure that object tail is truely correct */
-  page->object_tail = return_tail(page->object_head);
 
   /* init undo struct pointers */
   s_undo_init(page);
@@ -192,7 +189,8 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   g_object_unref( page->selection_list );
 
   /* then delete objects of page */
-  s_delete_list_fromstart (toplevel, page->object_head);
+  s_delete_object_glist (toplevel, page->object_list);
+  page->object_list = NULL;
 
   /* Free the objects in the place list. */
   s_delete_object_glist (toplevel, page->place_list);
@@ -352,7 +350,7 @@ void s_page_print_all (TOPLEVEL *toplevel)
 
     page = (PAGE *)iter->data;
     printf ("FILENAME: %s\n", page->page_filename);
-    print_struct_forw (page->object_head);
+    print_struct_forw (page->object_list);
   }
 }
 
@@ -523,5 +521,5 @@ gint s_page_autosave (TOPLEVEL *toplevel)
  */
 void s_page_append (PAGE *page, OBJECT *object)
 {
-  page->object_tail = s_basic_link_object(object, page->object_tail);
+  page->object_list = g_list_append (page->object_list, object);
 }

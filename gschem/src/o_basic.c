@@ -50,9 +50,12 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
                     ((w_current->event_state == MOVE) ||
                      (w_current->event_state == ENDMOVE) ||
                      (w_current->event_state == GRIPS)));
-  o_redraw(w_current, toplevel->page_current->object_head, draw_selected);
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (toplevel->page_current != NULL);
+  g_warn_if_fail (toplevel->page_current->object_list != NULL);
+  o_redraw (w_current, toplevel->page_current->object_list, draw_selected);
   o_cue_redraw_all(w_current,
-                   toplevel->page_current->object_head, draw_selected);
+                   toplevel->page_current->object_list, draw_selected);
 
   if (w_current->inside_action) {
     switch(w_current->event_state) {
@@ -85,14 +88,17 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_redraw(GSCHEM_TOPLEVEL *w_current, OBJECT *list, gboolean draw_selected)
+void o_redraw (GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_selected)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current = list;
+  OBJECT *o_current;
+  GList *iter;
   int redraw_state = toplevel->DONT_REDRAW;
 
   w_current->inside_redraw = 1;
-  while (o_current != NULL) {
+  iter = object_list;
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     if ((o_current->draw_func != NULL) &&
         (o_current->type != OBJ_HEAD)) {
       toplevel->DONT_REDRAW = redraw_state ||
@@ -101,12 +107,12 @@ void o_redraw(GSCHEM_TOPLEVEL *w_current, OBJECT *list, gboolean draw_selected)
       (*o_current->draw_func)(w_current, o_current);
     }
 
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
   w_current->inside_redraw = 0;
   toplevel->DONT_REDRAW = redraw_state;
 
-  o_invalidate_list (w_current, list);
+  o_invalidate_glist (w_current, object_list);
 }
 
 /*! \brief Redraw an object on the screen.
@@ -586,22 +592,6 @@ void o_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
  *  \par Function Description
  *
  */
-void o_list_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *list)
-{
-  OBJECT *o_current = list;
-
-  while(o_current != NULL) {
-    o_draw_xor(w_current, dx, dy, o_current);
-    o_current = o_current->next;
-  }
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 void o_glist_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, GList *list)
 {
   GList *iter = list;
@@ -688,29 +678,6 @@ void o_invalidate (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   int s_left, s_top, s_bottom, s_right;
   if (world_get_single_object_bounds(toplevel, object, &left,  &top,
                                                        &right, &bottom)) {
-    WORLDtoSCREEN (toplevel, left, top, &s_left, &s_top);
-    WORLDtoSCREEN (toplevel, right, bottom, &s_right, &s_bottom);
-    o_invalidate_rect (w_current, s_left, s_top, s_right, s_bottom);
-  }
-}
-
-
-/*! \brief Invalidate on-screen area for a list of objects
- *
- *  \par Function Description
- *  This function calls o_invalidate_rect() with the bounds of the
- *  passed object list, converted to screen coordinates.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] list       The list objects invalidated on screen.
- */
-void o_invalidate_list (GSCHEM_TOPLEVEL *w_current, OBJECT *list)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int left, top, bottom, right;
-  int s_left, s_top, s_bottom, s_right;
-  if (world_get_object_list_bounds (toplevel, list, &left,  &top,
-                                                    &right, &bottom)) {
     WORLDtoSCREEN (toplevel, left, top, &s_left, &s_top);
     WORLDtoSCREEN (toplevel, right, bottom, &s_right, &s_bottom);
     o_invalidate_rect (w_current, s_left, s_top, s_right, s_bottom);

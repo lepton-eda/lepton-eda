@@ -835,7 +835,7 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   s_page_append (toplevel->page_current, new_obj);
 
   /* draw it */
-  o_redraw_single(w_current, toplevel->page_current->object_tail);
+  o_redraw_single (w_current, new_obj);
   
 #if DEBUG
   printf("coords: %d %d %d %d\n", box_left, box_top, box_width, box_height);

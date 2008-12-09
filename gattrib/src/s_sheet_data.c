@@ -100,9 +100,9 @@ SHEET_DATA *s_sheet_data_new()
  * OBJECT->attribs(->next. . .)->object->text->string
  * 
  *------------------------------------------------------------------*/
-void s_sheet_data_add_master_comp_list_items(OBJECT *start_obj) {
+void s_sheet_data_add_master_comp_list_items (GList *obj_list) {
   char *temp_uref;
-  OBJECT *o_current;
+  GList *iter;
   
 #ifdef DEBUG
   printf("=========== Just entered  s_sheet_data_add_master_comp_list_items!  ==============\n");
@@ -113,8 +113,10 @@ void s_sheet_data_add_master_comp_list_items(OBJECT *start_obj) {
   }
 
   /* -----  Iterate through all objects found on page looking for components  ----- */
-  o_current = start_obj;
-  while (o_current != NULL) {
+  for (iter = obj_list;
+       iter != NULL;
+       iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
 
 #ifdef DEBUG
       printf("In s_sheet_data_add_master_comp_list_items, examining o_current->name = %s\n", o_current->name);
@@ -144,8 +146,7 @@ void s_sheet_data_add_master_comp_list_items(OBJECT *start_obj) {
 	
       } /*  if (o_current->type == OBJ_COMPLEX . . . . .) */
       
-      o_current = o_current->next;  /* iterate to next object on page */
-  }  /*  while o_current != NULL */
+  }
   
   return;
 }
@@ -160,11 +161,10 @@ void s_sheet_data_add_master_comp_list_items(OBJECT *start_obj) {
  * sheet_head->component_list_head->attrib->name;
  *
  *------------------------------------------------------------------*/
-void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
+void s_sheet_data_add_master_comp_attrib_list_items (GList *obj_list) {
   char *attrib_text;
   char *attrib_name;
-  OBJECT *o_current;
-  GList *a_iter;
+  GList *o_iter, *a_iter;
   OBJECT *a_current;
   
 #ifdef DEBUG
@@ -178,8 +178,8 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
   }
 
   /* -----  Iterate through all objects found on page looking for components (OBJ_COMPLEX) ----- */
-  o_current = start_obj;
-  while (o_current != NULL) {
+  for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
+    OBJECT *o_current = o_iter->data;
 
 #ifdef DEBUG
       printf("In s_sheet_data_add_master_comp_attrib_list_items, examining o_current->name = %s\n", o_current->name);
@@ -219,8 +219,7 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
 	
       }   /* if (o_current->type == OBJ_COMPLEX) */
       
-      o_current = o_current->next;
-  }   /* while (o_current != NULL) */
+  }
   
   /* -----  Now sort component list into alphabetical order  ----- */
   
@@ -237,7 +236,7 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
  * attributes.
  *
  *------------------------------------------------------------------*/
-void s_sheet_data_add_master_net_list_items(OBJECT *start_obj) {
+void s_sheet_data_add_master_net_list_items (GList *obj_start) {
   return;
 }
 
@@ -248,7 +247,7 @@ void s_sheet_data_add_master_net_list_items(OBJECT *start_obj) {
  * attributes.
  *
  *------------------------------------------------------------------*/
-void s_sheet_data_add_master_net_attrib_list_items(OBJECT *start_obj) {
+void s_sheet_data_add_master_net_attrib_list_items (GList *obj_start) {
   return;
 }
 
@@ -270,13 +269,12 @@ void s_sheet_data_add_master_net_attrib_list_items(OBJECT *start_obj) {
  * it doesn't return a value.
  *
  *------------------------------------------------------------------*/
-void s_sheet_data_add_master_pin_list_items(OBJECT *start_obj) {
+void s_sheet_data_add_master_pin_list_items (GList *obj_list) {
   char *temp_uref;
   char *temp_pinnumber;
   char *row_label;
-  OBJECT *o_current;
-  OBJECT *o_lower_current;
-  
+  GList *o_iter, *o_lower_iter;
+
 #ifdef DEBUG
   fflush(stderr);
   fflush(stdout);
@@ -288,57 +286,56 @@ void s_sheet_data_add_master_pin_list_items(OBJECT *start_obj) {
   }
 
   /* -----  Iterate through all objects found on page looking for components  ----- */
-  o_current = start_obj;
-  while (o_current != NULL) {
+  for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
+    OBJECT *o_current = o_iter->data;
 
 #ifdef DEBUG
-      printf("In s_sheet_data_add_master_pin_list_items, examining o_current->name = %s\n", o_current->name);
+    printf ("In s_sheet_data_add_master_pin_list_items, examining o_current->name = %s\n", o_current->name);
 #endif
 
-      if (o_current->type == OBJ_COMPLEX) {
-	temp_uref = s_attrib_get_refdes(o_current);
-	if (temp_uref != NULL) {      /* make sure object complex has a refdes  */
-	  
-	  /* -----  Now iterate through lower level objects looking for pins.  ----- */
-	  o_lower_current = o_current->complex->prim_objs;
-	  while (o_lower_current != NULL) {
+    if (o_current->type == OBJ_COMPLEX) {
+      temp_uref = s_attrib_get_refdes (o_current);
+      if (temp_uref != NULL) {      /* make sure object complex has a refdes  */
+
+        /* -----  Now iterate through lower level objects looking for pins.  ----- */
+        for (o_lower_iter = o_current->complex->prim_objs;
+             o_lower_iter != NULL;
+             o_lower_iter = g_list_next (o_lower_iter)) {
+          OBJECT *o_lower_current = o_lower_iter->data;
 #if DEBUG
-	    printf("In s_sheet_data_add_master_pin_list_items, examining object name %s\n", o_lower_current->name);
+          printf ("In s_sheet_data_add_master_pin_list_items, examining object name %s\n", o_lower_current->name);
 #endif
-	    if (o_lower_current->type == OBJ_PIN) {
-	      temp_pinnumber = o_attrib_search_name_single(o_lower_current, "pinnumber", NULL);
-	      
-	      if( temp_pinnumber != NULL) {
-		row_label = g_strconcat(temp_uref, ":", temp_pinnumber, NULL);
-#if DEBUG
-		printf("In s_sheet_data_add_master_pin_list_items, about to add to master pin list row_label = %s\n", row_label);
-#endif
-		s_string_list_add_item(sheet_head->master_pin_list_head, &(sheet_head->pin_count), row_label);
-		
-	      } else {      /* didn't find pinnumber.  Report error to log. */
-		fprintf(stderr, "In s_sheet_data_add_master_pin_list_items, found component pin with no pinnumber.\n");
-#ifdef DEBUG
-		fprintf(stderr, ". . . . refdes = %s.\n", temp_uref);
-#endif
-	      }
-	      g_free(temp_pinnumber);
-	      
-	    }
-	    o_lower_current = o_lower_current->next;
-	  }   /*   while (o_lower_current != NULL)   */
-	  
-	} else {          /* didn't find refdes.  Report error to log. */
-#ifdef DEBUG
-          fprintf(stderr, "In s_sheet_data_add_master_pin_list_items, found component with no refdes.\n");
-          fprintf(stderr, ". . . . complex_basename = %s.\n", o_current->complex_basename);
-#endif
-	}
-	g_free(temp_uref);
+          if (o_lower_current->type == OBJ_PIN) {
+            temp_pinnumber = o_attrib_search_name_single (o_lower_current, "pinnumber", NULL);
 
-      }  /*  if (o_current->type == OBJ_COMPLEX)  */
-      o_current = o_current->next;  
-	
-  }   /*  while o_current != NULL */
+            if (temp_pinnumber != NULL) {
+              row_label = g_strconcat (temp_uref, ":", temp_pinnumber, NULL);
+#if DEBUG
+              printf ("In s_sheet_data_add_master_pin_list_items, about to add to master pin list row_label = %s\n", row_label);
+#endif
+              s_string_list_add_item (sheet_head->master_pin_list_head, &(sheet_head->pin_count), row_label);
+
+            } else {      /* didn't find pinnumber.  Report error to log. */
+              fprintf (stderr, "In s_sheet_data_add_master_pin_list_items, found component pin with no pinnumber.\n");
+#ifdef DEBUG
+              fprintf (stderr, ". . . . refdes = %s.\n", temp_uref);
+#endif
+            }
+            g_free (temp_pinnumber);
+
+          }
+        }
+
+      } else {          /* didn't find refdes.  Report error to log. */
+#ifdef DEBUG
+        fprintf (stderr, "In s_sheet_data_add_master_pin_list_items, found component with no refdes.\n");
+        fprintf (stderr, ". . . . complex_basename = %s.\n", o_current->complex_basename);
+#endif
+      }
+      g_free (temp_uref);
+
+    }  /*  if (o_current->type == OBJ_COMPLEX)  */
+  }
       
   return;
 }
@@ -359,14 +356,12 @@ void s_sheet_data_add_master_pin_list_items(OBJECT *start_obj) {
  *     and stick it in the master pin attrib list.
  *
  *------------------------------------------------------------------*/
-void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
+void s_sheet_data_add_master_pin_attrib_list_items (GList *obj_list) {
   char *temp_uref;
   char *attrib_text;
   char *attrib_name;
   char *attrib_value;
-  OBJECT *o_current;
-  OBJECT *o_lower_current;
-  GList *a_iter;
+  GList *o_iter, *o_lower_iter, *a_iter;
   OBJECT *pin_attrib;
   
 #ifdef DEBUG
@@ -380,8 +375,8 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
   }
 
   /* -----  Iterate through all objects found on page looking for components  ----- */
-  o_current = start_obj;
-  while (o_current != NULL) {
+  for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
+    OBJECT *o_current = o_iter->data;
 
 #ifdef DEBUG
       printf("In s_sheet_data_add_master_pin_attrib_list_items, examining o_current->name = %s\n", o_current->name);
@@ -392,8 +387,10 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
 	if (temp_uref != NULL) {      /* make sure object complex has a refdes  */
 	  
 	  /* -----  Now iterate through lower level objects looking for pins.  ----- */
-	  o_lower_current = o_current->complex->prim_objs;
-	  while (o_lower_current != NULL) {
+          for (o_lower_iter = o_current->complex->prim_objs;
+               o_lower_iter != NULL;
+               o_lower_iter = g_list_next (o_lower_iter)) {
+            OBJECT *o_lower_current = o_lower_iter->data;
 #if DEBUG
 	    printf("In s_sheet_data_add_master_pin_attrib_list_items, examining component refdes =  %s\n", temp_uref);
 #endif
@@ -427,16 +424,13 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
 		a_iter = g_list_next (a_iter);
 	      }   /*   while (pin_attrib != NULL)  */
 	    }
-	    o_lower_current = o_lower_current->next;
-	  }   /*  while (o_lower_current != NULL)   */
+	  }
 
 	  g_free(temp_uref);
 	}  /*  if (temp_uref != NULL )  */
 	
       }  /* if (o_current->type == OBJ_COMPLEX)  */
-      o_current = o_current->next;
-
-  }  /*  while (o_current != NULL)  */
+  }
   return;
 
 }

@@ -286,7 +286,7 @@ void attribute_edit_dialog_response(GtkWidget *w, gint response,
  *  \par Function Description
  *  This function creates the single attribute edit dialog.
  */
-void attrib_edit_dialog(GSCHEM_TOPLEVEL *w_current, OBJECT * list, int flag)
+void attrib_edit_dialog (GSCHEM_TOPLEVEL *w_current, OBJECT *attr_obj, int flag)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GtkWidget *aewindow;
@@ -355,7 +355,7 @@ void attrib_edit_dialog(GSCHEM_TOPLEVEL *w_current, OBJECT * list, int flag)
 				 DIALOG_BORDER_SPACING);
   gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
-  if (list)
+  if (attr_obj)
     label = gtk_label_new(_("<b>Edit Attribute</b>"));
   else
     label = gtk_label_new(_("<b>Add Attribute</b>"));
@@ -486,10 +486,10 @@ void attrib_edit_dialog(GSCHEM_TOPLEVEL *w_current, OBJECT * list, int flag)
   }
 
   /* gschem specific */
-  if (list) {
-    o_attrib_get_name_value (o_text_get_string (toplevel, list),
-                             &name, &val);
-    attrib = list;
+  if (attr_obj) {
+    o_attrib_get_name_value (o_text_get_string (toplevel, attr_obj),
+                            &name, &val);
+    attrib = attr_obj;
     if (attrib->visibility == VISIBLE) {
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton), TRUE);
     } else {

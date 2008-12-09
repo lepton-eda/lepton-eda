@@ -196,7 +196,7 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
                       PIN_TYPE_NET, 0);
   s_page_append (toplevel->page_current, new_obj);
 
-  o_current = o_current_pin = toplevel->page_current->object_tail;
+  o_current = o_current_pin = new_obj;
 
   if (scm_hook_empty_p(add_pin_hook) == SCM_BOOL_F &&
       o_current != NULL) {

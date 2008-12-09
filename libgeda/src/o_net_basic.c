@@ -139,7 +139,7 @@ void o_net_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \return The object list
  *
  */
-OBJECT *o_net_read (TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
+OBJECT *o_net_read (TOPLEVEL *toplevel, char buf[],
                     unsigned int release_ver, unsigned int fileformat_ver)
 {
   OBJECT *new_obj;
@@ -168,9 +168,7 @@ OBJECT *o_net_read (TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 
   new_obj = o_net_new (toplevel, type, color, x1, y1, x2, y2);
 
-  object_list = s_basic_link_object (new_obj, object_list);
-
-  return object_list;
+  return new_obj;
 }
 
 /*! \brief Create a string representation of the net object
@@ -588,12 +586,12 @@ int o_net_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
           }
 
           s_conn_remove(toplevel, other_object);
+          toplevel->page_current->object_list =
+            g_list_remove (toplevel->page_current->object_list, other_object);
           s_delete(toplevel, other_object);
           o_net_recalc(toplevel, object);
           s_tile_update_object(toplevel, object);
           s_conn_update_object(toplevel, object);
-          toplevel->page_current->object_tail =
-            return_tail(toplevel->page_current->object_head);
           return(-1);
         }
       }
@@ -617,21 +615,23 @@ int o_net_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
 void o_net_consolidate(TOPLEVEL *toplevel)
 {
   OBJECT *o_current;
+  GList *iter;
   int status = 0;
 
-  o_current = toplevel->page_current->object_head;
+  iter = toplevel->page_current->object_list;
 
-  while (o_current != NULL) {
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
 
     if (o_current->type == OBJ_NET) {
       status = o_net_consolidate_segments(toplevel, o_current);
     }
 
     if (status == -1) {
-      o_current = toplevel->page_current->object_head;
+      iter = toplevel->page_current->object_list;
       status = 0;
     } else {
-      o_current = o_current->next;
+      iter = g_list_next (iter);
     }
   }
 }

@@ -48,20 +48,16 @@ void (*picture_draw_func)() = NULL;
 /*! \brief Create picture OBJECT from character string.
  *  \par Function Description
  *  This function will get the description of a picture from the
- *  character string <B>*first_line</B>. The new picture is then added
- *  to the list of object of which <B>*object_list</B> is the last
- *  element before the call.  The function returns the new last
- *  element, that is the added picture object.
+ *  character string <B>*first_line</B>.
  *
  *  \param [in]  toplevel       The TOPLEVEL object.
- *  \param [out] object_list     OBJECT list to create picture in.
  *  \param [in]  first_line      Character string with picture description.
  *  \param [in]  tb              Text buffer to load embedded data from.
  *  \param [in]  release_ver     libgeda release version number.
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new picture object.
  */
-OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
+OBJECT *o_picture_read (TOPLEVEL *toplevel,
 		       const char *first_line,
 		       TextBuffer *tb,
 		       unsigned int release_ver,
@@ -225,9 +221,7 @@ OBJECT *o_picture_read(TOPLEVEL *toplevel, OBJECT *object_list,
 
   /* Don't free file_content, it is now owned by the picture object */
 
-  object_list = s_basic_link_object(new_obj, object_list);
-
-  return(object_list);
+  return new_obj;
 }
 
 

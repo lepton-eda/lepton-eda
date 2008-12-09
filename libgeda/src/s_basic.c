@@ -62,47 +62,6 @@ void exit_if_null(void *ptr)
   }	
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* hack rename this to be s_return_tail */
-/* update object_tail or any list of that matter */
-OBJECT *return_tail(OBJECT *head)
-{
-  OBJECT *o_current=NULL;
-  OBJECT *ret_struct=NULL;
-
-  o_current = head;
-  while ( o_current != NULL ) { /* goto end of list */
-    ret_struct = o_current;	
-    o_current = o_current->next;
-  }
-	
-  return(ret_struct);	
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* hack rename this to be s_return_head */
-/* update object_tail or any list of that matter */
-OBJECT *return_head(OBJECT *tail)
-{
-  OBJECT *o_current=NULL;
-  OBJECT *ret_struct=NULL;
-
-  o_current = tail;
-  while ( o_current != NULL ) { /* goto end of list */
-    ret_struct = o_current;	
-    o_current = o_current->prev;
-  }
-	
-  return(ret_struct);	
-}
 
 /*! \brief Initialize an already-allocated object.
  *  \par Function Description
@@ -181,10 +140,6 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
 
   new_node->pin_type = PIN_TYPE_NET;
   new_node->whichend = -1;
-	
-  /* Setup link list stuff */
-  new_node->prev = NULL;
-  new_node->next = NULL;
 
   return(new_node);
 }
@@ -205,41 +160,20 @@ OBJECT *s_basic_new_object(char type, char const *prefix)
 }
 
 
-OBJECT *s_basic_link_object( OBJECT *new_node, OBJECT *ptr ) 
-{
-  /* should never happen, but could */
-  if (new_node == NULL) {
-    fprintf(stderr, "Got a null new_node in link_object\n");
-    return(ptr);
-  }
-
-  if (ptr == NULL) {
-    new_node->prev = NULL; /* setup previous link */
-    return(new_node);
-  } else {
-    new_node->prev = ptr; /* setup previous link */
-    ptr->next = new_node;
-    return(ptr->next);
-  }
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
  *
  */
-void print_struct_forw(OBJECT *ptr)
+void print_struct_forw (GList *list)
 {
   OBJECT *o_current=NULL;
+  GList *iter;
 
-  o_current = ptr;
-
-  if (o_current == NULL) {
-
-    printf("AGGGGGGGGGGG NULLLLL PRINT\n");
-  }
+  iter = list;
   printf("TRYING to PRINT\n");
-  while (o_current != NULL) {
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     printf("Name: %s\n", o_current->name);
     printf("Type: %d\n", o_current->type);
     printf("Sid: %d\n", o_current->sid);
@@ -251,27 +185,7 @@ void print_struct_forw(OBJECT *ptr)
     o_attrib_print (o_current->attribs);
 
     printf("----\n");
-    o_current = o_current->next;
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void print_struct_back(OBJECT *ptr)
-{
-  OBJECT *o_current=NULL;
-
-  o_current = ptr;
-
-  while (o_current != NULL) {
-    printf("Name: %s\n", o_current->name);
-    printf("Type: %d\n", o_current->type);
-    printf("Sid: %d\n", o_current->sid);
-    printf("----\n");
-    o_current = o_current->prev;
+    iter = g_list_next (iter);
   }
 }
 
@@ -371,10 +285,9 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
 
       if (o_current->text->prim_objs) {
 				/*printf("sdeleting text complex\n");*/
-        s_delete_list_fromstart(toplevel,
-                                o_current->text->prim_objs);
+        s_delete_object_glist (toplevel, o_current->text->prim_objs);
+        o_current->text->prim_objs = NULL;
       }
-      o_current->text->prim_objs = NULL;
 
       /*	printf("sdeleting text\n");*/
       g_free(o_current->text);
@@ -394,10 +307,9 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
 
       if (o_current->complex->prim_objs) {
         /* printf("sdeleting complex->primitive_objects\n");*/
-        s_delete_list_fromstart(toplevel,
-                                o_current->complex->prim_objs);
+        s_delete_object_glist (toplevel, o_current->complex->prim_objs);
+        o_current->complex->prim_objs = NULL;
       }
-      o_current->complex->prim_objs = NULL;
 
       g_free(o_current->complex);
       o_current->complex = NULL;
@@ -430,36 +342,7 @@ s_delete(TOPLEVEL *toplevel, OBJECT *o_current)
     printf("sdel: %d\n", o_current->sid);
 #endif
 
-    if (o_current->next)
-      o_current->next->prev = o_current->prev;
-
-    if (o_current->prev)
-      o_current->prev->next = o_current->next;
-
     s_delete_object(toplevel, o_current);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* deletes everything include the head */
-void s_delete_list_fromstart(TOPLEVEL *toplevel, OBJECT *start)
-{
-  OBJECT *temp=NULL; /* literally is a temp */
-  OBJECT *current=NULL; /* ugg... you have both o_current and current? */
-  OBJECT *o_current=NULL; /* hack */
-
-  temp = start;
-  current = return_tail(start);
-
-  /* do the delete backwards */
-  while(current != NULL) {
-    o_current = current->prev;
-    s_delete(toplevel, current);
-    current = o_current;
   }
 }
 
@@ -486,38 +369,6 @@ s_delete_object_glist(TOPLEVEL *toplevel, GList *list)
   g_list_free(list);
 }
 
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *  This function removes one object pointed by parameter <B>object</B> from
- *  a list as far as it does not represents a head. If so the function returns
- *  NULL. If not it returns the pointer on the object, i.e. the same as the
- *  parameter.
- *
- *  This function must be followed by a call to #return_tail() on the
- *  list it belonged to as it can be the last object. Therefore the tail
- *  of the list is modified.
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] object
- *  \return OBJECT *
- */
-OBJECT *s_remove(TOPLEVEL *toplevel, OBJECT *object)
-{
-  if(object->type == OBJ_HEAD)
-  return NULL;
-	
-  if(object->prev != NULL)
-  object->prev->next = object->next;
-  if(object->next != NULL)
-  object->next->prev = object->prev;
-
-  object->next = NULL;
-  object->prev = NULL;
-
-  return object;
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

@@ -142,7 +142,7 @@ void o_bus_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list
  */
-OBJECT *o_bus_read (TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
+OBJECT *o_bus_read (TOPLEVEL *toplevel, char buf[],
                     unsigned int release_ver, unsigned int fileformat_ver)
 {
   OBJECT *new_obj;
@@ -183,9 +183,7 @@ OBJECT *o_bus_read (TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
 
   new_obj = o_bus_new (toplevel, type, color, x1, y1, x2, y2, ripper_dir);
 
-  object_list = s_basic_link_object (new_obj, object_list);
-
-  return object_list;
+  return new_obj;
 }
 
 /*! \brief Create a string representation of the bus object

@@ -40,6 +40,7 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
   OBJECT *o_current=NULL;
   gboolean object_found = FALSE;
   int w_slack;
+  GList *iter = NULL;
 
   w_slack = WORLDabs( toplevel, w_current->select_slack_pixels );
 
@@ -48,14 +49,15 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
      (w_x/w_y) position, this will select the next object below the
      position point. You can change the selected object by clicking
      at the same place multiple times. */
-  if (toplevel->page_current->object_lastplace == NULL) {
-    o_current = toplevel->page_current->object_head;
-  } else {
-    o_current = toplevel->page_current->object_lastplace;
-  }
+  if (toplevel->page_current->object_lastplace != NULL)
+    iter = g_list_find (toplevel->page_current->object_list,
+                        toplevel->page_current->object_lastplace);
+  if (iter == NULL)
+    iter = toplevel->page_current->object_list;
 
   /* do first search */
-  while (o_current != NULL) {
+  while (iter != NULL) {
+    o_current = iter->data;
     if (inside_region(o_current->w_left - w_slack, o_current->w_top - w_slack,
                       o_current->w_right + w_slack, o_current->w_bottom + w_slack,
                       w_x, w_y) &&
@@ -76,13 +78,12 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
 	  }
 	}
 	object_found = TRUE;
-	toplevel->page_current-> object_lastplace =
-	  o_current->next;
+	toplevel->page_current->object_lastplace = o_current;
 	i_update_menus(w_current);
 	return object_found;
       }
     }
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   } 
 
 #if DEBUG
@@ -91,9 +92,10 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
 
   /* now search again since we didn't find anything starting at start
      just in case we started last time at object_lastplace */
-  o_current = toplevel->page_current->object_head;
-  while (o_current != NULL && 
-         o_current != toplevel->page_current->object_lastplace) {
+  iter = toplevel->page_current->object_list;
+  while (iter != NULL &&
+         iter->data != toplevel->page_current->object_lastplace) {
+    o_current = iter->data;
     if (inside_region(o_current->w_left - w_slack, o_current->w_top - w_slack,
                       o_current->w_right + w_slack, o_current->w_bottom + w_slack,
                       w_x, w_y) &&
@@ -120,7 +122,7 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
 	return object_found;
       }
     }
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
 
   /* didn't find anything.... reset lastplace */

@@ -1103,7 +1103,7 @@ DEFINE_I_CALLBACK(edit_show_hidden)
                          i_callback_edit_show_hidden,
                          _("ShowHidden"));
 
-  o_edit_show_hidden(w_current, w_current->toplevel->page_current->object_head);
+  o_edit_show_hidden (w_current, w_current->toplevel->page_current->object_list);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1126,7 +1126,7 @@ DEFINE_I_CALLBACK(edit_make_visible)
                          i_callback_edit_make_visible,
                          _("MakeVisible"));
 
-  o_edit_make_visible(w_current, w_current->toplevel->page_current->object_head);
+  o_edit_make_visible (w_current, w_current->toplevel->page_current->object_list);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1343,7 +1343,7 @@ DEFINE_I_CALLBACK(view_zoom_extents)
   exit_if_null(w_current);
 
   /* scroll bar stuff */
-  a_zoom_extents(w_current, w_current->toplevel->page_current->object_head, 0);
+  a_zoom_extents (w_current, w_current->toplevel->page_current->object_list, 0);
   if (w_current->undo_panzoom) {
     o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
   }
@@ -2775,7 +2775,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
       /* s_hierarchy_down_schematic_single() will not zoom the loaded page */
       if (page_control != -1) {
         a_zoom_extents(w_current,
-                       w_current->toplevel->page_current->object_head,
+                       w_current->toplevel->page_current->object_list,
                        A_PAN_DONT_REDRAW);
         o_undo_savestate(w_current, UNDO_ALL);
       }
@@ -2868,7 +2868,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
 			      w_current->toplevel->page_current);
       /* s_hierarchy_down_symbol() will not zoom the loaded page */
       a_zoom_extents(w_current,
-                     w_current->toplevel->page_current->object_head,
+                     w_current->toplevel->page_current->object_list,
                      A_PAN_DONT_REDRAW);
       o_undo_savestate(w_current, UNDO_ALL);
       x_window_set_current_page(w_current, w_current->toplevel->page_current);

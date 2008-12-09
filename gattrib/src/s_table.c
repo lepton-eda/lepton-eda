@@ -238,14 +238,13 @@ STRING_LIST *s_table_create_attrib_pair(gchar *row_name,
  * attribs and sticks them in the TABLE.
  *
  *------------------------------------------------------------------*/
-void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
-  OBJECT *o_current;
+void s_table_add_toplevel_comp_items_to_comp_table (GList *obj_list) {
   gchar *temp_uref;
   int row, col;
   gchar *attrib_text;
   gchar *attrib_name;
   gchar *attrib_value;
-  GList *a_iter;
+  GList *o_iter, *a_iter;
   OBJECT *a_current;
   gint old_visibility, old_show_name_value;
 
@@ -261,8 +260,8 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
 #endif
 
   /* -----  Iterate through all objects found on page  ----- */
-  o_current = start_obj;
-  while (o_current != NULL) {
+  for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
+    OBJECT *o_current = o_iter->data;
 
 #ifdef DEBUG
       printf("   ---> In s_table_add_toplevel_comp_items_to_comp_table, examining o_current->name = %s\n", o_current->name);
@@ -338,10 +337,7 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
         g_free(temp_uref);
       }  /* if (temp_uref) */
     }    /* if (o_current->type == OBJ_COMPLEX)  */
- 
-    o_current = o_current->next;  /* iterate to next object on page */
- 
-  }  /* while o_current != NULL */
+  }
  
   verbose_done();
  
@@ -439,9 +435,7 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
  * pin attribs and sticks them into the pin table. 
  *
  *------------------------------------------------------------------*/
-void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
-  OBJECT *o_current;
-  OBJECT *o_lower_current;
+void s_table_add_toplevel_pin_items_to_pin_table (GList *obj_list) {
   gchar *temp_uref;
   gchar *pinnumber;
   gchar *row_label;
@@ -449,7 +443,8 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
   gchar *attrib_text;
   gchar *attrib_name;
   gchar *attrib_value;
-  GList *a_iter;
+  GList *o_iter, *a_iter;
+  GList *o_lower_iter;
   OBJECT *pin_attrib;
 
   if (verbose_mode) {
@@ -461,8 +456,8 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
 #endif
 
   /* -----  Iterate through all objects found on page  ----- */
-  o_current = start_obj;
-  while (o_current != NULL) {
+  for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
+    OBJECT *o_current = o_iter->data;
 
 #ifdef DEBUG
       printf("   ---> In s_table_add_toplevel_pin_items_to_pin_table, examining o_current->name = %s\n", o_current->name);
@@ -477,8 +472,10 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
       if (temp_uref) {
 
 	/* -----  Now iterate through lower level objects looking for pins.  ----- */
-	o_lower_current = o_current->complex->prim_objs;
-	while (o_lower_current != NULL) {
+        for (o_lower_iter = o_current->complex->prim_objs;
+             o_lower_iter != NULL;
+             o_lower_iter = g_list_next (o_lower_iter)) {
+          OBJECT *o_lower_current = o_lower_iter->data;
 
 	  if (o_lower_current->type == OBJ_PIN) {
 	    /* -----  Found a pin.  First get its pinnumber.  then get attrib head and loop on attribs.  ----- */
@@ -538,16 +535,13 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
 	    g_free(row_label);
 	  }
 
-	  o_lower_current = o_lower_current->next;
-	}    /*  while (o_lower_current != NULL)  */
+        }
       }
 
       g_free(temp_uref);
     }
 
-    o_current = o_current->next;  /* iterate to next object on page */
-	
-  }  /* while o_current != NULL */
+  }
  
   verbose_done();
 }

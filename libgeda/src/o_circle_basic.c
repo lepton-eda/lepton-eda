@@ -218,8 +218,7 @@ void o_circle_modify(TOPLEVEL *toplevel, OBJECT *object,
 /*! \brief Create circle OBJECT from character string.
  *  \par Function Description
  *  The #o_circle_read() function gets from the character string <B>*buff</B> the
- *  description of a circle. The new circle is then added to the list of
- *  objects of which <B>*object_list</B> is the last element before the call.
+ *  description of a circle.
  *
  *  Depending on <B>*version</B>, the right file format is considered.
  *  Currently two file format revisions are supported :
@@ -229,13 +228,12 @@ void o_circle_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  </DL>
  *
  *  \param [in]  toplevel       The TOPLEVEL object.
- *  \param [out] object_list     OBJECT list to create circle in.
  *  \param [in]  buf             Character string with circle description.
  *  \param [in]  release_ver     libgeda release version number.
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new circle object.
  */
-OBJECT *o_circle_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
+OBJECT *o_circle_read (TOPLEVEL *toplevel, char buf[],
 		      unsigned int release_ver, unsigned int fileformat_ver)
 {
   OBJECT *new_obj;
@@ -311,9 +309,7 @@ OBJECT *o_circle_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   o_set_fill_options(toplevel, new_obj,
 		     circle_fill, fill_width, pitch1, angle1, pitch2, angle2);
 
-  object_list = s_basic_link_object(new_obj, object_list);
-  
-  return(object_list);
+  return new_obj;
 }
 
 /*! \brief Create a character string representation of a circle OBJECT.

@@ -289,25 +289,28 @@ void o_attrib_remove(GList **list, OBJECT *remove)
  *  \par Function Description
  *  Read attributes from a TextBuffer.
  *
- *  \param [in]  toplevel              The TOPLEVEL object.
- *  \param [out] object_to_get_attribs  Storage for attributes.
+ *  \param [in]  toplevel               The TOPLEVEL object.
+ *  \param [out] list                   Storage for attributes.
+ *  \param [in]  object_to_get_attribs  Object which gets these attribs.
  *  \param [in]  tb                     The text buffer to read from.
  *  \param [in]  release_ver            libgeda release version number.
  *  \param [in]  fileformat_ver         file format version number.
- *  \return Pointer to object_to_get_attribs.
+ *  \return GList of attributes read.
  */
-OBJECT *o_read_attribs(TOPLEVEL *toplevel,
-		       OBJECT *object_to_get_attribs,
-   		       TextBuffer *tb,
-		       unsigned int release_ver, unsigned int fileformat_ver)
+GList *o_read_attribs (TOPLEVEL *toplevel,
+                       GList *list,
+                       OBJECT *object_to_get_attribs,
+                       TextBuffer *tb,
+                       unsigned int release_ver, unsigned int fileformat_ver)
 {
-  OBJECT *object_list=NULL;
+  GList *object_list;
+  OBJECT *new_obj;
   char *line = NULL;
   char objtype;
   int ATTACH=FALSE;
   int saved_color = -1;
 
-  object_list = object_to_get_attribs;
+  object_list = g_list_reverse (list);
 
   while (1) {
 
@@ -318,110 +321,79 @@ OBJECT *o_read_attribs(TOPLEVEL *toplevel,
     switch (objtype) {
 
       case(OBJ_LINE):
-        object_list = (OBJECT *) o_line_read(toplevel,
-                                             object_list,
-                                             line, 
-                                             release_ver, fileformat_ver);
+        new_obj = o_line_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
 
 
       case(OBJ_NET):
-        object_list = (OBJECT *) o_net_read(toplevel,
-                                            object_list, 
-                                            line, 
-                                            release_ver, fileformat_ver);
+        new_obj = o_net_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_BUS):
-        object_list = (OBJECT *) o_bus_read(toplevel,
-                                            object_list, 
-                                            line, 
-                                            release_ver, fileformat_ver);
+        new_obj = o_bus_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_BOX):
-        object_list = (OBJECT *) o_box_read(toplevel,
-                                            object_list, 
-                                            line, 
-                                            release_ver, fileformat_ver);
+        new_obj = o_box_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
-		
+
       case(OBJ_CIRCLE):
-        object_list = (OBJECT *) o_circle_read(
-                                               toplevel,
-                                               object_list, 
-                                               line, 
-                                               release_ver, fileformat_ver);
+        new_obj = o_circle_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-			
-        object_list = (OBJECT *) o_complex_read(
-                                                toplevel,
-                                                object_list, 
-                                                line, 
-                                                release_ver, fileformat_ver);
-
-				/* this is necessary because complex may add
-				   attributes which float */
-				/* still needed? */
-        object_list = (OBJECT *) return_tail(
-                                             object_list);
+        new_obj = o_complex_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_PATH):
         line = g_strdup (line);
-        object_list = (OBJECT *) o_path_read(toplevel,
-                                             object_list,
-                                             line, tb,
-                                             release_ver, fileformat_ver);
+        new_obj = o_path_read (toplevel, line, tb, release_ver, fileformat_ver);
         g_free (line);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_PIN):
-        object_list = (OBJECT *) o_pin_read(toplevel,
-                                            object_list, 
-                                            line, 
-                                            release_ver, fileformat_ver);
+        new_obj = o_pin_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_ARC):
-        object_list = (OBJECT *) o_arc_read(toplevel,
-                                            object_list, 
-                                            line, 
-                                            release_ver, fileformat_ver);
+        new_obj = o_arc_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_TEXT):
-	line = g_strdup (line);
-        object_list = (OBJECT *) o_text_read(toplevel,
-                                             object_list, 
-                                             line,
-					     tb,
-                                             release_ver, fileformat_ver);
-	g_free (line);
-        saved_color = object_list->color;
+        line = g_strdup (line);
+        new_obj = o_text_read (toplevel, line, tb, release_ver, fileformat_ver);
+        g_free (line);
+        saved_color = new_obj->color;
+        object_list = g_list_prepend (object_list, new_obj);
         ATTACH=TRUE;
-		
+
         break;
 
       case(ENDATTACH_ATTR): 
+        object_list = g_list_reverse (object_list);
         return(object_list);
-        break;	
+        break;
 
     }
 
     if (ATTACH) {
-      o_attrib_attach(toplevel, object_list, object_to_get_attribs);
+      o_attrib_attach (toplevel, new_obj, object_to_get_attribs);
       /* check color to set it to the right value */
-      if (object_list->color != saved_color) {
-        object_list->color = saved_color;
+      if (new_obj->color != saved_color) {
+        new_obj->color = saved_color;
 
-        if (object_list->type == OBJ_TEXT) {	
-          o_complex_set_color(
-                              object_list->text->prim_objs,
-                              object_list->color);
+        if (new_obj->type == OBJ_TEXT) {
+          o_complex_set_color (new_obj->text->prim_objs, new_obj->color);
         } else {
           printf("Tried to set the color on a complex in libgeda/src/o_read_attribs\n");
         }
@@ -431,6 +403,7 @@ OBJECT *o_read_attribs(TOPLEVEL *toplevel,
       fprintf(stderr, "Tried to attach a non-text item as an attribute\n");
     }
   }
+  object_list = g_list_reverse (object_list);
   return(object_list);
 }
 
@@ -637,13 +610,13 @@ void o_attrib_set_color(TOPLEVEL *toplevel, GList *attributes)
  *  Search for attribute by name.
  *
  *  \warning
- *  The list is the top level list. Do not pass it an object_head list
+ *  The list is the top level list. Do not pass it an object_list list
  *  unless you know what you are doing.
  *  
  *  Counter is the n'th occurance of the attribute, and starts searching
  *  from zero.  Zero is the first occurance of an attribute.
  *
- *  \param [in] list     OBJECT list to search.
+ *  \param [in] list     GList to search.
  *  \param [in] name     Character string with attribute name to search for.
  *  \param [in] counter  Which occurance to return.
  *  \return Character string with attribute value, NULL otherwise.
@@ -651,7 +624,7 @@ void o_attrib_set_color(TOPLEVEL *toplevel, GList *attributes)
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *o_attrib_search_name(OBJECT *list, char *name, int counter) 
+char *o_attrib_search_name (GList *list, char *name, int counter)
 {
   OBJECT *o_current;
   OBJECT *a_current;
@@ -661,10 +634,12 @@ char *o_attrib_search_name(OBJECT *list, char *name, int counter)
   char *found_name = NULL;
   char *found_value = NULL;
   char *return_string = NULL;
+  GList *iter;
 
-  o_current = list;
+  iter = list;
 
-  while(o_current != NULL) {
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     if (o_current->attribs != NULL) {
       a_iter = o_current->attribs;
       while(a_iter != NULL) {
@@ -721,7 +696,7 @@ char *o_attrib_search_name(OBJECT *list, char *name, int counter)
       }	
     }
 
-    o_current=o_current->next;
+    iter = g_list_next (iter);
   }
 	
   g_free(found_name);
@@ -744,22 +719,24 @@ char *o_attrib_search_name(OBJECT *list, char *name, int counter)
  *  iterates to the next OBJECT.
  *
  *  \warning
- *  The list is the top level list. Do not pass it an object_head list
+ *  The list is the top level list. Do not pass it an object_list list
  *  unless you know what you are doing.
  *  
  *  \param [in] list    OBJECT list to search.
  *  \param [in] string  Character string to search for.
  *  \return A matching OBJECT if found, NULL otherwise.
  */
-OBJECT *o_attrib_search_string_list(OBJECT *list, char *string)
+OBJECT *o_attrib_search_string_list (GList *list, char *string)
 {
   OBJECT *o_current;
   OBJECT *a_current;
   GList *a_iter;
+  GList *o_iter;
 
-  o_current = list;
+  o_iter = list;
 
-  while(o_current != NULL) {
+  while (o_iter != NULL) {
+    o_current = o_iter->data;
     /* first search attribute list */
     if (o_current->attribs != NULL) {
       a_iter = o_current->attribs;
@@ -786,7 +763,7 @@ OBJECT *o_attrib_search_string_list(OBJECT *list, char *string)
       }
     }
     
-    o_current=o_current->next;
+    o_iter = g_list_next (o_iter);
   }
 
   return (NULL);
@@ -1036,13 +1013,13 @@ o_attrib_search_attrib_name(GList *list, char *name, int counter)
  *  \par Function Description
  *  This function should only be used to search for TOPLEVEL attributes.
  *  \warning
- *  The list is the top level list. Do not pass it an object_head list
+ *  The list is the top level list. Do not pass it an object_list list
  *  unless you know what you are doing.
  *  
  *  Counter is the n'th occurance of the attribute, and starts searching
  *  from zero.  Zero is the first occurance of an attribute.
  * 
- *  \param [in] list     The OBJECT list to search (TOPLEVEL only).
+ *  \param [in] list     The GList to search (TOPLEVEL only).
  *  \param [in] name     Character string of attribute name to search for.
  *  \param [in] counter  Which occurance to return.
  *  \return Character string with attribute value, NULL otherwise.
@@ -1050,7 +1027,7 @@ o_attrib_search_attrib_name(GList *list, char *name, int counter)
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *o_attrib_search_toplevel(OBJECT *list, char *name, int counter) 
+char *o_attrib_search_toplevel (GList *list, char *name, int counter)
 {
   OBJECT *o_current;
   int val;
@@ -1058,10 +1035,12 @@ char *o_attrib_search_toplevel(OBJECT *list, char *name, int counter)
   char *found_name = NULL;
   char *found_value = NULL;
   char *return_string = NULL;
+  GList *iter;
 
-  o_current = list;
+  iter = list;
 
-  while(o_current != NULL) {
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
 
     /* search for attributes outside */
 
@@ -1084,7 +1063,7 @@ char *o_attrib_search_toplevel(OBJECT *list, char *name, int counter)
       }	
     }
 
-    o_current=o_current->next;
+    iter = g_list_next (iter);
   }
 	
   g_free(found_name);
@@ -1371,11 +1350,11 @@ char *o_attrib_search_default_slot(OBJECT *object)
  *  and a pinnumber, 
  *  search for and return pinseq= attrib (object).
  *
- *  \param [in] list        OBJECT list to search.
+ *  \param [in] list        GList list to search.
  *  \param [in] pin_number  pin number to search for.
  *  \return OBJECT containing pinseq data, NULL otherwise.
  */
-OBJECT *o_attrib_search_pinseq(OBJECT *list, int pin_number)
+OBJECT *o_attrib_search_pinseq (GList *list, int pin_number)
 {
   OBJECT *pinseq_text_object;
   char *search_for;
@@ -1407,19 +1386,21 @@ char *o_attrib_search_slotdef(OBJECT *object, int slotnumber)
   char *return_value=NULL;
   char *search_for=NULL;
   OBJECT *o_current;
+  GList *iter;
 
   search_for = g_strdup_printf ("slotdef=%d:", slotnumber);
 
-  o_current = object->complex->prim_objs;
-  while (o_current != NULL) {
+  iter = object->complex->prim_objs;
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     return_value = o_attrib_search_string_partial(o_current, search_for, 0);
     if (return_value) {
-	break;
+      break;
     }
-    o_current = o_current->next; 
+    iter = g_list_next (iter);
   }
   g_free(search_for);
-  
+
   if (return_value) {
     return(return_value);
   }
@@ -1700,9 +1681,7 @@ char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name)
     p_current = (PAGE *)iter->data;
 
     /* only look for first occurrance of the attribute */
-    ret_value = o_attrib_search_toplevel(
-                                         p_current->object_head,
-                                         name, 0);
+    ret_value = o_attrib_search_toplevel (p_current->object_list, name, 0);
 
     if (ret_value != NULL) {
       return(ret_value);

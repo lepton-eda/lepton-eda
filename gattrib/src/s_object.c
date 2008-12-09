@@ -287,9 +287,9 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
       exit(-1);
     }
   } else {    /* This must be a floating attrib, but what is that !?!?!?!?!  */
-    world_get_object_list_bounds(pr_current,
-                                 pr_current->page_current->object_head,
-                                 &left, &top, &right, &bottom);
+    world_get_object_glist_bounds(pr_current,
+                                  pr_current->page_current->object_list,
+                                  &left, &top, &right, &bottom);
 
     /* this really is the lower left hand corner */
     world_x = left;
@@ -320,17 +320,15 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
   /* now attach the attribute to the object (if o_current is not NULL) */
   /* remember that o_current contains the object to get the attribute */
   if (o_current) {
-    o_attrib_attach (pr_current, pr_current->page_current->object_tail,
-                     o_current);
+    o_attrib_attach (pr_current, new_obj, o_current);
   }
 
-  o_selection_add( pr_current->page_current->selection_list,
-                   pr_current->page_current->object_tail);
+  o_selection_add (pr_current->page_current->selection_list, new_obj);
 
 
   pr_current->page_current->CHANGED = 1;
 
-  return (pr_current->page_current->object_tail);
+  return new_obj;
 }
 
 
@@ -343,15 +341,10 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
  *------------------------------------------------------------------*/
 void s_object_delete_text_object_in_object(TOPLEVEL * pr_current, OBJECT * text_object)
 {
+  pr_current->page_current->object_list =
+    g_list_remove (pr_current->page_current->object_list, text_object);
   s_delete(pr_current, text_object);
   pr_current->page_current->CHANGED = 1;
-
-#if 0
-  /*    What does this do?!?!?  Maybe I don't need it!!!  */
-  pr_current->page_current->object_tail =
-      (OBJECT *) return_tail(pr_current->page_current->object_head);
-#endif 
-
 }
                                                                                                     
 

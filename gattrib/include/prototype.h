@@ -36,12 +36,12 @@ char *s_attrib_get_refdes(OBJECT *object);
 /* ------------- s_sheet_data.c ------------- */
 SHEET_DATA *s_sheet_data_new();
 
-void s_sheet_data_add_master_comp_list_items(OBJECT *start_obj);
-void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj);
-void s_sheet_data_add_master_net_list_items(OBJECT *start_obj);
-void s_sheet_data_add_master_net_attrib_list_items(OBJECT *start_obj);
-void s_sheet_data_add_master_pin_list_items(OBJECT *start_obj);
-void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj);
+void s_sheet_data_add_master_comp_list_items(GList *obj_list);
+void s_sheet_data_add_master_comp_attrib_list_items(GList *obj_list);
+void s_sheet_data_add_master_net_list_items(GList *obj_list);
+void s_sheet_data_add_master_net_attrib_list_items(GList *obj_list);
+void s_sheet_data_add_master_pin_list_items(GList *obj_list);
+void s_sheet_data_add_master_pin_attrib_list_items(GList *obj_list);
 
 void s_sheet_data_gtksheet_to_sheetdata();
 
@@ -73,9 +73,9 @@ STRING_LIST *s_table_create_attrib_pair(gchar *row_name,
 					STRING_LIST *row_list,
 					int num_attribs);
 
-void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj);
-void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj);
-void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj);
+void s_table_add_toplevel_comp_items_to_comp_table(GList *obj_list);
+void s_table_add_toplevel_net_items_to_net_table(GList *obj_list);
+void s_table_add_toplevel_pin_items_to_pin_table(GList *obj_list);
 
 void s_table_gtksheet_to_all_tables();
 void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, 
@@ -90,7 +90,7 @@ void s_toplevel_gtksheet_to_toplevel();
 void s_toplevel_add_new_attrib(gchar *new_attrib_name);
 void s_toplevel_delete_attrib_col();
 void s_toplevel_select_object();
-void s_toplevel_sheetdata_to_toplevel(OBJECT *start_obj);
+void s_toplevel_sheetdata_to_toplevel(GList *obj_list);
 
 STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes);
 void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current, 

@@ -442,16 +442,15 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
  *  \par Function Description
  *
  */
-void o_edit_show_hidden_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list)
+void o_edit_show_hidden_lowlevel (GSCHEM_TOPLEVEL *w_current, GList *o_list)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current = o_list;
+  OBJECT *o_current;
+  GList *iter;
 
-  if (o_current == NULL) {
-    return;
-  }
-
-  while(o_current != NULL) {
+  iter = o_list;
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     if (o_current->type == OBJ_TEXT && o_current->visibility == INVISIBLE) {
 
       /* don't toggle the visibility flag */
@@ -478,7 +477,7 @@ void o_edit_show_hidden_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list)
       o_recalc_single_object(toplevel, o_current);
     }
 
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
 }
 
@@ -487,7 +486,7 @@ void o_edit_show_hidden_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list)
  *  \par Function Description
  *
  */
-void o_edit_show_hidden(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list)
+void o_edit_show_hidden (GSCHEM_TOPLEVEL *w_current, GList *o_list)
 {
   /* this function just shows the hidden text, but doesn't toggle it */
   /* this function does not change the CHANGED bit, no real changes are */
@@ -513,17 +512,16 @@ void o_edit_show_hidden(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list)
  *  \par Function Description
  *
  */
-void o_edit_make_visible(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list)
+void o_edit_make_visible (GSCHEM_TOPLEVEL *w_current, GList *o_list)
 {
   /* this function actually changes the visibility flag */
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current = NULL;
+  OBJECT *o_current;
+  GList *iter;
 
-  if (o_list == NULL)
-  return;
-  o_current = o_list;
-
-  while(o_current != NULL) {
+  iter = o_list;
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
 
     if (o_current->type == OBJ_TEXT) {
       if (o_current->visibility == INVISIBLE) {
@@ -538,7 +536,7 @@ void o_edit_make_visible(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list)
         toplevel->page_current->CHANGED = 1;
       }
     }
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
   o_undo_savestate(w_current, UNDO_ALL);
 
@@ -554,7 +552,7 @@ int skiplast;
  *  \par Function Description
  *
  */
-int o_edit_find_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list, char *stext,
+int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, GList * o_list, char *stext,
                      int descend, int skip)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -566,17 +564,15 @@ int o_edit_find_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list, char *stext,
   int pcount = 0;
   int rv;
   int text_screen_height;
+  GList *iter;
 
-  OBJECT *o_current = NULL;
+  OBJECT *o_current;
 
   skiplast = skip;
-  o_current = o_list;
 
-  if (o_current == NULL) {
-    return 1;
-  }
-
-  while (o_current != NULL) {
+  iter = o_list;
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
 
     if (descend) {
       if (o_current->type == OBJ_COMPLEX) {
@@ -603,7 +599,7 @@ int o_edit_find_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list, char *stext,
             /* o_redraw_all(w_current); */
 
             rv = o_edit_find_text(w_current,
-                                  toplevel->page_current->object_head,
+                                  toplevel->page_current->object_list,
                                   stext, descend, skiplast);
             if (!rv) {
               return 0;
@@ -647,13 +643,13 @@ int o_edit_find_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list, char *stext,
 
       } /* if (strstr(o_current->text->string,stext)) */
     } /* if (o_current->type == OBJ_TEXT) */
-    o_current = o_current->next;
+    iter = g_list_next (iter);
 
-    if (o_current == NULL) {
+    if (iter == NULL) {
       return 1;
     }
   }
-  return (o_current == NULL);
+  return (iter == NULL);
 }
 
 
@@ -662,18 +658,16 @@ int o_edit_find_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list, char *stext,
  *  \par Function Description
  *
  */
-void o_edit_hide_specific_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list,
+void o_edit_hide_specific_text (GSCHEM_TOPLEVEL *w_current, GList * o_list,
                                char *stext)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current = NULL;
+  OBJECT *o_current;
+  GList *iter;
 
-  if (o_list == NULL)
-    return;
-
-  o_current = o_list;
-
-  while (o_current != NULL) {
+  iter = o_list;
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
 
     if (o_current->type == OBJ_TEXT) {
       const gchar *str = o_text_get_string (w_current->toplevel, o_current);
@@ -688,7 +682,7 @@ void o_edit_hide_specific_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list,
         }
       }
     }
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
   o_undo_savestate(w_current, UNDO_ALL);
   o_redraw_all(w_current);
@@ -699,18 +693,16 @@ void o_edit_hide_specific_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list,
  *  \par Function Description
  *
  */
-void o_edit_show_specific_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list,
+void o_edit_show_specific_text (GSCHEM_TOPLEVEL *w_current, GList * o_list,
                                char *stext)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current = NULL;
+  OBJECT *o_current;
+  GList *iter;
 
-  if (o_list == NULL)
-    return;
-
-  o_current = o_list;
-
-  while (o_current != NULL) {
+  iter = o_list;
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
 
     if (o_current->type == OBJ_TEXT) {
       const gchar *str = o_text_get_string (w_current->toplevel, o_current);
@@ -726,7 +718,7 @@ void o_edit_show_specific_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list,
         }
       }
     }
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
   o_undo_savestate(w_current, UNDO_ALL);
 }
@@ -739,10 +731,11 @@ void o_edit_show_specific_text(GSCHEM_TOPLEVEL *w_current, OBJECT * o_list,
 void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *tmp_list, *new_complex;
+  OBJECT *new_complex;
   OBJECT *a_current;
-  OBJECT *tmp;
+  GList *temp_list;
   GList *a_iter;
+  GList *po_iter;
   gboolean is_embedded;
   const CLibSymbol *clib;
 
@@ -770,8 +763,6 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   /* and unselect it */
   o_selection_remove( toplevel->page_current->selection_list, o_current);
 
-  /* build a temporary list and add a complex to this list */
-  tmp_list = s_basic_new_object (OBJ_HEAD, "update component");
   new_complex = o_complex_new (toplevel, OBJ_COMPLEX, WHITE,
                                o_current->complex->x,
                                o_current->complex->y,
@@ -779,19 +770,22 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                                o_current->complex->mirror,
                                clib, o_current->complex_basename,
                                1);
-  tmp_list = s_basic_link_object(new_complex, tmp_list);
-  o_complex_promote_attribs (toplevel, new_complex);
+
+  temp_list = g_list_append (NULL, new_complex);
+  o_complex_promote_attribs (toplevel, new_complex, &temp_list);
 
   /* updating the old complex with data from the new one */
   /* first process the prim_objs: */
   /*   - delete the prim_objs of the old component */
-  s_delete_list_fromstart (toplevel,
-                           o_current->complex->prim_objs);
+  s_delete_object_glist (toplevel, o_current->complex->prim_objs);
   /*   - put the prim_objs of the new component in the old one */
   o_current->complex->prim_objs = new_complex->complex->prim_objs;
 
   /* set the parent field now */
-  for (tmp = o_current->complex->prim_objs; tmp != NULL; tmp = tmp->next) {
+  for (po_iter = o_current->complex->prim_objs;
+       po_iter != NULL;
+       po_iter = g_list_next (po_iter)) {
+    OBJECT *tmp = po_iter->data;
     tmp->complex_parent = o_current;
   }
 
@@ -802,11 +796,13 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   /*   - check each attrib of the new complex */
   a_iter = new_complex->attribs;
   while (a_iter != NULL) {
-    a_current = a_iter->data;
     OBJECT *o_attrib;
     gchar *name;
     char *attrfound;
+
+    a_current = a_iter->data;
     g_assert (a_current->type == OBJ_TEXT);
+
     o_attrib_get_name_value (o_text_get_string (toplevel, a_current),
                              &name, NULL);
 
@@ -820,8 +816,8 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
       /* add new attribute to old component */
 
       /* make a copy of the attribute object */
-      o_list_copy_to (toplevel, o_current,
-                      a_current, NORMAL_FLAG, &o_attrib);
+      o_attrib = o_object_copy (toplevel, a_current, NORMAL_FLAG);
+      s_page_append (toplevel->page_current, o_attrib);
       /* add the attribute to old */
       o_attrib_add (toplevel, o_current, o_attrib);
       /* redraw the attribute object */
@@ -833,12 +829,10 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
       g_free(attrfound);
     }
 
-
     a_iter = g_list_next (a_iter);
   }
 
-  /* finally delete the temp list with the updated complex */
-  s_delete_list_fromstart (toplevel, tmp_list);
+  s_delete_object_glist (toplevel, temp_list);
 
   /* update the pinnumbers to the current slot */
   o_attrib_slot_update(toplevel, o_current);

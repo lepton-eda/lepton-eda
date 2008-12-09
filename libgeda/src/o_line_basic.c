@@ -203,9 +203,8 @@ void o_line_modify(TOPLEVEL *toplevel, OBJECT *object,
 /*! \brief Create line OBJECT from character string.
  *  \par Function Description
  *  This function creates a line OBJECT from the character string
- *  <B>*buf</B> the description of a box. The new box is added to the
- *  list of objects of which <B>*object_list</B> is the last element
- *  before the call.
+ *  <B>*buf</B> the description of a box.
+ *
  *  The function returns a pointer on the new last element, that is
  *  the added line object.
  *
@@ -217,13 +216,12 @@ void o_line_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  </DL>
  *
  *  \param [in]  toplevel       The TOPLEVEL object.
- *  \param [out] object_list     OBJECT list to create line in.
  *  \param [in]  buf             Character string with line description.
  *  \param [in]  release_ver     libgeda release version number.
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new line object.
  */
-OBJECT *o_line_read (TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
+OBJECT *o_line_read (TOPLEVEL *toplevel, char buf[],
                      unsigned int release_ver, unsigned int fileformat_ver)
 {
   OBJECT *new_obj;
@@ -292,9 +290,7 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   o_set_fill_options (toplevel, new_obj,
                       FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
-  object_list = s_basic_link_object (new_obj, object_list);
-
-  return object_list;
+  return new_obj;
 }
 
 /*! \brief Create a character string representation of a line OBJECT.

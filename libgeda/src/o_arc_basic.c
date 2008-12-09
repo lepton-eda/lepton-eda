@@ -221,7 +221,7 @@ void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  \par Function Description
  *  This function reads a formatted text buffer describing an arc
  *  in the gEDA file format and initializes the corresponding object.
- *  This arc is linked to the end of the <B>object_list</B> pointed list.
+ *
  *  Depending on the version of the file format the data extraction is
  *  performed differently : currently pre-20000704 and 20000704 on one
  *  hand and post-20000704 file format version on the other hand are supported.
@@ -238,13 +238,12 @@ void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  A negative or null radius is not allowed.
  *
  *  \param [in] toplevel    The TOPLEVEL object.
- *  \param [in] object_list  
  *  \param [in] buf
  *  \param [in] release_ver
  *  \param [in] fileformat_ver
  *  \return
  */
-OBJECT *o_arc_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
+OBJECT *o_arc_read (TOPLEVEL *toplevel, char buf[],
 		   unsigned int release_ver, unsigned int fileformat_ver)
 {
   OBJECT *new_obj;
@@ -300,9 +299,7 @@ OBJECT *o_arc_read(TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
                      FILLING_HOLLOW, -1, -1, -1,
                      -1, -1);
 
-  object_list = s_basic_link_object(new_obj, object_list);
-
-  return(object_list);
+  return new_obj;
 }
 
 /*! \brief

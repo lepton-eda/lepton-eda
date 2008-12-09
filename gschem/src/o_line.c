@@ -802,7 +802,8 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
                        w_current->second_wx, w_current->second_wy);
   s_page_append (toplevel->page_current, new_obj);
 
-  o_redraw_single(w_current, toplevel->page_current->object_tail);
+  /* draw it */
+  o_redraw_single (w_current, new_obj);
   
   toplevel->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);

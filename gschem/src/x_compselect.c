@@ -515,8 +515,9 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
     return;
   }
 
-  o_attrlist = o_complex_get_toplevel_attribs (preview_toplevel,
-                                               preview_toplevel->page_current->object_head);
+  o_attrlist =
+    o_complex_get_toplevel_attribs (preview_toplevel,
+                                    preview_toplevel->page_current->object_list);
 
   filter_list = GSCHEM_DIALOG (compselect)->w_current->component_select_attrlist;
 

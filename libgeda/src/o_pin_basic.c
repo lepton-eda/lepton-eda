@@ -138,7 +138,7 @@ void o_pin_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list
  */
-OBJECT *o_pin_read (TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
+OBJECT *o_pin_read (TOPLEVEL *toplevel, char buf[],
                     unsigned int release_ver, unsigned int fileformat_ver)
 {
   OBJECT *new_obj;
@@ -184,9 +184,7 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   new_obj = o_pin_new (toplevel, type, color, x1, y1, x2, y2,
                        pin_type, whichend);
 
-  object_list = s_basic_link_object(new_obj, object_list);
-
-  return object_list;
+  return new_obj;
 }
 
 /*! \brief Create a string representation of the pin object
@@ -425,9 +423,10 @@ void o_pin_modify(TOPLEVEL *toplevel, OBJECT *object,
  *
  */
 void o_pin_update_whichend(TOPLEVEL *toplevel,
-			   OBJECT *object_list, int num_pins)
+                           GList *object_list, int num_pins)
 {
   OBJECT *o_current;
+  GList *iter;
   int top, left;
   int right, bottom;
   int d1, d2, d3, d4;
@@ -438,14 +437,15 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
 
   if (object_list && num_pins) {
     if (num_pins == 1 || toplevel->force_boundingbox) {
-      world_get_object_list_bounds(toplevel, object_list,
-                                   &left, &top, &right, &bottom);
+      world_get_object_glist_bounds (toplevel, object_list,
+                                     &left, &top, &right, &bottom);
     } else {
       found = 0;
 
       /* only look at the pins to calculate bounds of the symbol */
-      o_current = object_list;
-      while (o_current != NULL) {
+      iter = object_list;
+      while (iter != NULL) {
+        o_current = (OBJECT *)iter->data;
         if (o_current->type == OBJ_PIN) {
           rleft = o_current->w_left;
           rtop = o_current->w_top;
@@ -465,7 +465,7 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
             found = 1;
           }
         }
-        o_current=o_current->next;
+        iter = g_list_next (iter);
       }
 
     }
@@ -473,8 +473,9 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
     return;
   }
 
-  o_current = object_list;
-  while (o_current != NULL) {
+  iter = object_list;
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     /* Determine which end of the pin is on or nearest the boundary */
     if (o_current->type == OBJ_PIN && o_current->whichend == -1) {
       if (o_current->line->y[0] == o_current->line->y[1]) {
@@ -560,6 +561,6 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
         }
       }
     }
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
 }

@@ -687,13 +687,13 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
   /* Do a zoom extents to get fit all the schematic in the window */
   /* Commented so the image returned will be the same as with libgd */  
   a_zoom_extents (&toplevel,
-		  toplevel.page_current->object_head,
+		  toplevel.page_current->object_list,
 		  A_PAN_DONT_REDRAW);
 
   
   /* See if there are objects */
   
-  aux = toplevel->page_current->object_head;
+  aux = toplevel->page_current->object_list;
   while (aux != NULL) {
     if (aux->type != -1) {
       object_found = 1;
@@ -706,8 +706,8 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
   /* If there are no objects, can't use zoom_extents */
   if (object_found) {
     o_redraw_all (&toplevel); 
-    get_object_list_bounds(&toplevel, 
-			   toplevel.page_current->object_head, 
+    get_object_glist_bounds (&toplevel,
+                             toplevel.page_current->object_list,
 			   &origin_x, &origin_y, 
 			   &right, &bottom);
   }

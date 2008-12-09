@@ -1437,6 +1437,7 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
   GList *symlist = NULL;
   CLibSymbol *sym = NULL;
   const GList *p_iter;
+  const GList *o_iter;
 
   g_return_val_if_fail ((toplevel != NULL), NULL);
 
@@ -1444,7 +1445,10 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
         p_iter != NULL;
         p_iter = g_list_next( p_iter )) {
     page = (PAGE *)p_iter->data;
-    for (o = page->object_head; o != NULL; o = o->next) {
+    for (o_iter = page->object_list;
+         o_iter != NULL;
+         o_iter = g_list_next (o_iter)) {
+      o = (OBJECT *)o_iter->data;
       if (o->type != OBJ_COMPLEX) continue;
       if (o->complex_basename == NULL)  continue;
       

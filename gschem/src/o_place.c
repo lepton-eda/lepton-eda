@@ -52,7 +52,6 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
   TOPLEVEL *toplevel = w_current->toplevel;
   int w_diff_x, w_diff_y;
   OBJECT *o_current;
-  OBJECT *o_saved;
   PAGE *p_current;
   GList *temp_dest_list = NULL;
   GList *connected_objects = NULL;
@@ -70,9 +69,9 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
 
   if (continue_placing) {
     /* Make a copy of the place list if we want to keep it afterwards */
-    temp_dest_list =
-      o_glist_copy_all_to_glist (toplevel, toplevel->page_current->place_list,
-                                           temp_dest_list, SELECTION_FLAG);
+    temp_dest_list = o_glist_copy_all (toplevel,
+                                       toplevel->page_current->place_list,
+                                       temp_dest_list, SELECTION_FLAG);
   } else {
     /* Otherwise just take it */
     temp_dest_list = toplevel->page_current->place_list;
@@ -94,12 +93,10 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
   /* Attach each item back onto the page's object list. Update object
    * connectivity and add the new objects to the selection list.*/
   p_current = toplevel->page_current;
-  o_saved = p_current->object_tail;
 
   for (iter = temp_dest_list; iter != NULL; iter = g_list_next (iter)) {
     o_current = iter->data;
 
-    o_current->next = NULL; /* In case it isn't linked properly */
     s_page_append (p_current, o_current);
 
     o_selection_add (toplevel->page_current->selection_list, o_current);
@@ -115,16 +112,16 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
     }
   }
 
-  g_list_free (temp_dest_list);
-
-  o_cue_redraw_all (w_current, o_saved->next, TRUE);
+  o_cue_redraw_all (w_current, temp_dest_list, TRUE);
   o_cue_undraw_list (w_current, connected_objects);
   o_cue_draw_list (w_current, connected_objects);
   g_list_free (connected_objects);
   connected_objects = NULL;
 
   toplevel->page_current->CHANGED = 1;
-  o_redraw (w_current, o_saved->next, TRUE); /* only redraw new objects */
+  o_redraw (w_current, temp_dest_list, TRUE); /* only redraw new objects */
+  g_list_free (temp_dest_list);
+
   o_undo_savestate (w_current, UNDO_ALL);
   i_update_menus (w_current);
 }

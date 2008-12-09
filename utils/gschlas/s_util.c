@@ -45,18 +45,17 @@
 void
 s_util_embed(TOPLEVEL *pr_current, int embed_mode)
 {
-  GList *iter;
-  PAGE *p_current;
-  OBJECT *o_current;
+  GList *p_iter, *o_iter;
 
-  for ( iter = geda_list_get_glist( pr_current->pages );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
+  for (p_iter = geda_list_get_glist (pr_current->pages);
+       p_iter != NULL;
+       p_iter = g_list_next (p_iter)) {
+    PAGE *p_current = p_iter->data;
 
-    p_current = (PAGE *)iter->data;
-
-    o_current = p_current->object_head;
-    while (o_current != NULL) {
+    for (o_iter = p_current->object_list;
+         o_iter != NULL;
+         o_iter = g_list_next (o_iter)) {
+      OBJECT *o_current = o_iter->data;
 
       if (o_current->type == OBJ_COMPLEX ||
                 o_current->type == OBJ_PICTURE) {
@@ -66,7 +65,6 @@ s_util_embed(TOPLEVEL *pr_current, int embed_mode)
           o_unembed(pr_current, o_current);
         }
       }
-      o_current = o_current->next;
 
     }
   }

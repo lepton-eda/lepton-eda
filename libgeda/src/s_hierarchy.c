@@ -212,6 +212,7 @@ GList *s_hierarchy_traversepages(TOPLEVEL *toplevel,
   char *filename = NULL;
   gint page_control = 0;
   static GList *pages = NULL;
+  GList *iter;
   
   /* init static variables the first time*/
   if (!(flags & HIERARCHY_INNERLOOP)) {
@@ -231,9 +232,10 @@ GList *s_hierarchy_traversepages(TOPLEVEL *toplevel,
   }
 
   /* walk throught the page objects and search for underlaying schematics */
-  for (o_current = p_current->object_head;
-       o_current != NULL ;
-       o_current = o_current->next) {
+  for (iter = p_current->object_list;
+       iter != NULL ;
+       iter = g_list_next (iter)) {
+    o_current = (OBJECT *)iter->data;
 
     /* only complex things like symbols can contain attributes */
     if (o_current->type == OBJ_COMPLEX) {

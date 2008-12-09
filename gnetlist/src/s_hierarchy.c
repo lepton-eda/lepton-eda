@@ -113,7 +113,7 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 		/* can't do the following, don't know why... HACK TODO */
 		/*netlist->hierarchy_tag = u_basic_strdup (netlist->component_uref);*/
 		s_traverse_sheet(pr_current,
-				 pr_current->page_current->object_head,
+				 pr_current->page_current->object_list,
 				 netlist->component_uref);
 
 		verbose_print("^");

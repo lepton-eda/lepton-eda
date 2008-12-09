@@ -84,7 +84,7 @@ UNDO *s_undo_new_head(void)
   u_new = (UNDO *) g_malloc(sizeof(UNDO));
   u_new->type = -1;
   u_new->filename = NULL;
-  u_new->object_head = NULL;
+  u_new->object_list = NULL;
   u_new->left = u_new->right = u_new->top = u_new->bottom = -1;
 
   u_new->page_control = 0;
@@ -111,7 +111,7 @@ void s_undo_destroy_head(UNDO *u_head)
  *  \par Function Description
  *
  */
-UNDO *s_undo_add(UNDO *head, int type, char *filename, OBJECT *object_head,
+UNDO *s_undo_add (UNDO *head, int type, char *filename, GList *object_list,
 		 int left, int top, int right, int bottom, int page_control,
 		 int up)
 {
@@ -122,11 +122,7 @@ UNDO *s_undo_add(UNDO *head, int type, char *filename, OBJECT *object_head,
 
   u_new->filename = g_strdup (filename);
 	
-  if (object_head != NULL) {
-    u_new->object_head = object_head;	
-  } else {
-    u_new->object_head = NULL;	
-  }
+  u_new->object_list = object_list;
 
   u_new->type = type;
 
@@ -168,9 +164,8 @@ void s_undo_print_all( UNDO *head )
 
     if (u_current->filename) printf("%s\n", u_current->filename);
 		
-    if (u_current->object_head) {
-      printf("%s\n", u_current->object_head->name);	
-      print_struct_forw(u_current->object_head);
+    if (u_current->object_list) {
+      print_struct_forw (u_current->object_list);
     }
 		
     printf("\t%d %d %d %d\n", u_current->left, u_current->top,
@@ -200,10 +195,9 @@ void s_undo_destroy_all(TOPLEVEL *toplevel, UNDO *head)
     u_prev = u_current->prev;	
     g_free(u_current->filename);
 		
-    if (u_current->object_head) {
-      s_delete_list_fromstart(toplevel,
-                              u_current->object_head);
-      u_current->object_head = NULL;
+    if (u_current->object_list) {
+      s_delete_object_glist (toplevel, u_current->object_list);
+      u_current->object_list = NULL;
     }
 
     g_free(u_current);
@@ -241,10 +235,9 @@ void s_undo_remove(TOPLEVEL *toplevel, UNDO *head, UNDO *u_tos)
 
       g_free(u_current->filename);	
 
-      if (u_current->object_head) {
-        s_delete_list_fromstart(toplevel,
-                                u_current->object_head);
-        u_current->object_head = NULL;
+      if (u_current->object_list) {
+        s_delete_object_glist (toplevel, u_current->object_list);
+        u_current->object_list = NULL;
       }
 
       g_free(u_current);
@@ -274,10 +267,9 @@ void s_undo_remove_rest(TOPLEVEL *toplevel, UNDO *head)
       g_free(u_current->filename);
     }
 
-    if (u_current->object_head) {
-      s_delete_list_fromstart(toplevel,
-                              u_current->object_head);
-      u_current->object_head = NULL;
+    if (u_current->object_list) {
+      s_delete_object_glist (toplevel, u_current->object_list);
+      u_current->object_list = NULL;
     }
 
     g_free(u_current);
@@ -297,7 +289,7 @@ int s_undo_levels(UNDO *head)
 	
   u_current = head;
   while (u_current != NULL) {
-    if (u_current->filename || u_current->object_head) {
+    if (u_current->filename || u_current->object_list) {
       count++;	
     } 	
 		

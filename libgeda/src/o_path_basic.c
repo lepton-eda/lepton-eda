@@ -149,11 +149,7 @@ OBJECT *o_path_copy (TOPLEVEL *toplevel, OBJECT *o_current)
  *  \par Function Description
  *  This function creates a path OBJECT from the character string
  *  <B>*buf</B> and a number of lines following that describing the
- *  path, read from <B>*tb</B>. The new path is added to the
- *  list of objects of which <B>*object_list</B> is the last element
- *  before the call.
- *  The function returns a pointer on the new last element, that is
- *  the added path object.
+ *  path, read from <B>*tb</B>.
  *
  *  Depending on <B>*version</B>, the correct file format is considered.
  *  Currently two file format revisions are supported :
@@ -163,14 +159,13 @@ OBJECT *o_path_copy (TOPLEVEL *toplevel, OBJECT *o_current)
  *  </DL>
  *
  *  \param [in]  toplevel       The TOPLEVEL object.
- *  \param [out] object_list     OBJECT list to create path in.
  *  \param [in]  first_line      Character string with path description.
  *  \param [in]  tb              Text buffer containing the path string.
  *  \param [in]  release_ver     libgeda release version number.
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new path object.
  */
-OBJECT *o_path_read (TOPLEVEL *toplevel, OBJECT *object_list,
+OBJECT *o_path_read (TOPLEVEL *toplevel,
                      const char *first_line, TextBuffer *tb,
                      unsigned int release_ver, unsigned int fileformat_ver)
 {
@@ -238,9 +233,7 @@ OBJECT *o_path_read (TOPLEVEL *toplevel, OBJECT *object_list,
   o_set_fill_options (toplevel, new_obj,
                       fill_type, fill_width, pitch1, angle1, pitch2, angle2);
 
-  /* Add the path to the object list */
-  object_list = s_basic_link_object(new_obj, object_list);
-  return object_list;
+  return new_obj;
 }
 
 

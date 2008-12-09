@@ -196,7 +196,7 @@ struct st_text {
   int displayed_height;
   int angle;
 
-  OBJECT *prim_objs;
+  GList *prim_objs;
 };
 
 struct st_complex {
@@ -207,7 +207,7 @@ struct st_complex {
   /* in degrees */
   int mirror;
 
-  OBJECT *prim_objs;			/* Primitive objects */
+  GList *prim_objs;			/* Primitive objects */
   /* objects which make up the */
   /* complex */
 };
@@ -291,7 +291,7 @@ struct st_object {
 
 
   int font_text_size;			/* used only with fonts defs */
-  OBJECT *font_prim_objs;			/* used only with fonts defs */
+  GList *font_prim_objs;			/* used only with fonts defs */
 
   int whichend;    /* for pins only, either 0 or 1 */
   int pin_type;    /* for pins only, either NET or BUS */
@@ -302,8 +302,6 @@ struct st_object {
   OBJECT *attached_to;  /* when object is an attribute */
   OBJECT *copied_to;    /* used when copying attributes */
 
-  OBJECT *prev;
-  OBJECT *next;
 }; 
 
 
@@ -369,7 +367,7 @@ struct st_undo {
   /* one of these is used, depending on if you are doing in-memory */
   /* or file based undo state saving */	
   char *filename;
-  OBJECT *object_head;
+  GList *object_list;
 
   /* either UNDO_ALL or UNDO_VIEWPORT_ONLY */
   int type;
@@ -403,11 +401,10 @@ struct st_page {
 
   int pid;
 
-  OBJECT *object_head;
-  OBJECT *object_tail;
+  GList *object_list;
   SELECTION *selection_list; /* new selection mechanism */
   GList *place_list;
-  OBJECT *object_lastplace;
+  OBJECT *object_lastplace; /* the last found item */
   STRETCH *stretch_head; 
   STRETCH *stretch_tail; 
 

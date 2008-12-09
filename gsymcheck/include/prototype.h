@@ -14,22 +14,22 @@ void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);
 /* s_check.c */
 int s_check_all(TOPLEVEL *pr_current);
-int s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head);
+int s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, GList *obj_list);
 gboolean s_check_list_has_item(char **list , char *item);
-void s_check_symbol_structure(OBJECT *object_head, SYMCHECK *s_current);
-void s_check_graphical(OBJECT *o_current, SYMCHECK *s_current);
-void s_check_device(OBJECT *o_current, SYMCHECK *s_current);
-void s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current);
-void s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current);
-void s_check_pin_ongrid(OBJECT *object_head, SYMCHECK *s_current);
-void s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current);
-void s_check_oldpin(OBJECT *object_head, SYMCHECK *s_current);
-void s_check_oldslot(OBJECT *object_head, SYMCHECK *s_current);
-void s_check_nets_buses(OBJECT *object_head, SYMCHECK *s_current);
-void s_check_connections(OBJECT *object_head, SYMCHECK *s_current);
+void s_check_symbol_structure(GList *obj_list, SYMCHECK *s_current);
+void s_check_graphical(GList *obj_list, SYMCHECK *s_current);
+void s_check_device(GList *obj_list, SYMCHECK *s_current);
+void s_check_pinseq(GList *obj_list, SYMCHECK *s_current);
+void s_check_pinnumber(GList *obj_list, SYMCHECK *s_current);
+void s_check_pin_ongrid(GList *obj_list, SYMCHECK *s_current);
+void s_check_slotdef(GList *obj_list, SYMCHECK *s_current);
+void s_check_oldpin(GList *obj_list, SYMCHECK *s_current);
+void s_check_oldslot(GList *obj_list, SYMCHECK *s_current);
+void s_check_nets_buses(GList *obj_list, SYMCHECK *s_current);
+void s_check_connections(GList *obj_list, SYMCHECK *s_current);
 void s_check_missing_attribute(OBJECT *object, char *attribute, SYMCHECK *s_current);
-void s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current);
-void s_check_pintype(OBJECT *object_head, SYMCHECK *s_current);
+void s_check_missing_attributes(GList *obj_list, SYMCHECK *s_current);
+void s_check_pintype(GList *obj_list, SYMCHECK *s_current);
 /* s_log.c */
 void s_log_update (const gchar *log_domain, GLogLevelFlags log_level, const gchar *buf);
 /* s_symstruct.c */

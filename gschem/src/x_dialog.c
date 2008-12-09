@@ -2872,7 +2872,7 @@ void find_text_dialog_response(GtkWidget *w, gint response,
       s_page_goto(toplevel, remember_page);
     }
     done =
-      o_edit_find_text(w_current, remember_page->object_head, string,
+      o_edit_find_text (w_current, remember_page->object_list, string,
                        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
                                                     (checkdescend)),
                        !start_find);
@@ -3000,7 +3000,7 @@ void hide_text_dialog_response(GtkWidget *w, gint response,
 
     strncpy(generic_textstring, string, 256);
     o_edit_hide_specific_text(w_current,
-                              w_current->toplevel->page_current->object_head, string);
+                              w_current->toplevel->page_current->object_list, string);
     break;
   case GTK_RESPONSE_REJECT:
   case GTK_RESPONSE_DELETE_EVENT:
@@ -3099,7 +3099,7 @@ void show_text_dialog_response(GtkWidget *widget, gint response,
 
     strncpy(generic_textstring, string, 256);
     o_edit_show_specific_text(w_current,
-                              w_current->toplevel->page_current->object_head, string);
+                              w_current->toplevel->page_current->object_list, string);
     break;
   case GTK_RESPONSE_REJECT:
   case GTK_RESPONSE_DELETE_EVENT:

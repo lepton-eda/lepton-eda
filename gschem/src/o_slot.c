@@ -37,22 +37,11 @@
  *  \par Function Description
  *
  */
-void o_slot_start(GSCHEM_TOPLEVEL *w_current, OBJECT *list)
+void o_slot_start (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
-  OBJECT *object;
   OBJECT *slot_text_object;
   char *default_slot_value;
   char *slot_value;
-
-  /* shouldn't happen */
-  if (list == NULL) {
-    /* this is an error condition hack */
-    w_current->inside_action = 0;
-    i_set_state(w_current, SELECT);
-    return;
-  }
-
-  object = o_select_return_first_object(w_current);
 
   /* single object for now */
   if (object->type == OBJ_COMPLEX) {
@@ -193,12 +182,9 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
       s_page_append (toplevel->page_current, new_obj);
 
       /* manually attach attribute */
+      o_attrib_attach (toplevel, new_obj, object);
 
-      /* NEWSEL this is okay too, since tail is single obj */
-      o_attrib_attach (toplevel, toplevel->page_current->object_tail, object);
-
-      slot_text_object =
-        toplevel->page_current->object_tail;
+      slot_text_object = new_obj;
     }
 
     o_erase_single(w_current, object);

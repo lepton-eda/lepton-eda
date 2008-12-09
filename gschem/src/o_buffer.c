@@ -49,9 +49,9 @@ void o_buffer_copy(GSCHEM_TOPLEVEL *w_current, int buf_num)
   }
 
   toplevel->ADDING_SEL = 1;
-  object_buffer[buf_num] =
-    o_glist_copy_all_to_glist(toplevel, s_current,
-                              object_buffer[buf_num], SELECTION_FLAG);
+  object_buffer[buf_num] = o_glist_copy_all (toplevel, s_current,
+                                             object_buffer[buf_num],
+                                             SELECTION_FLAG);
   toplevel->ADDING_SEL = 0;
 }
 
@@ -78,9 +78,9 @@ void o_buffer_cut(GSCHEM_TOPLEVEL *w_current, int buf_num)
   }
 
   toplevel->ADDING_SEL = 1;
-  object_buffer[buf_num] =
-    o_glist_copy_all_to_glist(toplevel, s_current,
-                              object_buffer[buf_num], SELECTION_FLAG);
+  object_buffer[buf_num] = o_glist_copy_all (toplevel, s_current,
+                                             object_buffer[buf_num],
+                                             SELECTION_FLAG);
   toplevel->ADDING_SEL = 0;
   o_delete_selected(w_current);
 }
@@ -110,9 +110,9 @@ void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
 
   toplevel->ADDING_SEL = 1;
   toplevel->page_current->place_list =
-    o_glist_copy_all_to_glist(toplevel, object_buffer[buf_num],
-                              toplevel->page_current->place_list,
-                              SELECTION_FLAG);
+    o_glist_copy_all (toplevel, object_buffer[buf_num],
+                      toplevel->page_current->place_list,
+                      SELECTION_FLAG);
 
   if (!world_get_object_glist_bounds (toplevel,
                                       toplevel->page_current->place_list,

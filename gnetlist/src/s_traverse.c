@@ -76,9 +76,9 @@ void s_traverse_start(TOPLEVEL * pr_current)
     p_current = (PAGE *)iter->data;
 
     /* only traverse pages which are toplevel, ie not underneath */
-    if (p_current->object_head && p_current->page_control == 0) {
+    if (p_current->page_control == 0) {
       pr_current->page_current = p_current;
-      s_traverse_sheet(pr_current, p_current->object_head, NULL);
+      s_traverse_sheet (pr_current, p_current->object_list, NULL);
     }
   }
 
@@ -98,23 +98,21 @@ void s_traverse_start(TOPLEVEL * pr_current)
 
 
 void
-s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
-		 char *hierarchy_tag)
+s_traverse_sheet (TOPLEVEL * pr_current, GList *obj_list, char *hierarchy_tag)
 {
-  OBJECT *o_current;
   NETLIST *netlist;
   char *temp;
   SCM scm_uref;
   char *temp_uref;
   gboolean is_graphical=FALSE;
+  GList *iter;
 
   if (verbose_mode) {
     printf("- Starting internal netlist creation\n");
   }
 
-  o_current = start;
-
-  while (o_current != NULL) {
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
 
     netlist = s_netlist_return_tail(netlist_head);
 
@@ -208,8 +206,6 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
 	s_hierarchy_traverse(pr_current, o_current, netlist);
       }
     }
-
-    o_current = o_current->next;
   }
 
   verbose_done();
@@ -220,19 +216,21 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
 {
   CPINLIST *cpinlist_head = NULL;
   CPINLIST *cpins = NULL;
-  OBJECT *o_current = NULL;
   NET *nets_head = NULL;
   NET *nets = NULL;
   char *temp;
   CONN *c_current;
   GList *cl_current;
-
-  o_current = component->complex->prim_objs;
+  GList *iter;
 
   cpinlist_head = cpins = s_cpinlist_add(NULL);
   cpins->plid = -1;
 
-  while (o_current != NULL) {
+  for (iter = component->complex->prim_objs;
+       iter != NULL;
+       iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
+
     if (o_current->type == OBJ_PIN) {
 
       verbose_print("p");
@@ -309,7 +307,7 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
                              hierarchy_tag);
 
             s_traverse_clear_all_visited(pr_current->
-                                         page_current->object_head);
+                                         page_current->object_list);
           }
 
         }
@@ -323,9 +321,7 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
       /* should pass in page_current in top level func */
     }
     s_traverse_clear_all_visited(pr_current->page_current->
-                                 object_head);
-
-    o_current = o_current->next;
+                                 object_list);
   }
 
 
@@ -333,13 +329,12 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
 }
 
 
-void s_traverse_clear_all_visited(OBJECT * object_head)
+void s_traverse_clear_all_visited (GList *obj_list)
 {
-    OBJECT *o_current;
+    GList *iter;
 
-    o_current = object_head;
-
-    while (o_current != NULL) {
+    for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+      OBJECT *o_current = iter->data;
 
 #if DEBUG
 	if (o_current->visited) {
@@ -354,7 +349,6 @@ void s_traverse_clear_all_visited(OBJECT * object_head)
 	    s_traverse_clear_all_visited(o_current->complex->prim_objs);
 	}
 
-	o_current = o_current->next;
     }
 
 }

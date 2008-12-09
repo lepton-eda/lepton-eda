@@ -77,7 +77,7 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   char *filename = NULL;
-  OBJECT *object_head = NULL;
+  GList *object_list = NULL;
   int levels;
   UNDO *u_current;
   UNDO *u_current_next;
@@ -116,11 +116,9 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
       toplevel->page_current->ops_since_last_backup++;
     }
 
-    object_head = s_basic_new_object(OBJ_HEAD, "undo_head");
-
-    o_list_copy_all(toplevel,
-                    toplevel->page_current->object_head->next,
-                    object_head, SELECTION_FLAG);
+    object_list = o_glist_copy_all (toplevel,
+                                    toplevel->page_current->object_list,
+                                    object_list, SELECTION_FLAG);
   }
 
   /* Clear Anything above current */
@@ -138,7 +136,7 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
 
   toplevel->page_current->undo_tos =
   s_undo_add(toplevel->page_current->undo_tos,
-             flag, filename, object_head,
+             flag, filename, object_list,
              toplevel->page_current->left,
              toplevel->page_current->top,
              toplevel->page_current->right,
@@ -198,10 +196,9 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
         g_free(u_current->filename);
       }
 
-      if (u_current->object_head) {
-        s_delete_list_fromstart(toplevel,
-                                u_current->object_head);
-        u_current->object_head = NULL; 
+      if (u_current->object_list) {
+        s_delete_object_glist (toplevel, u_current->object_list);
+        u_current->object_list = NULL;
       }
 
       u_current->next = NULL;
@@ -259,15 +256,15 @@ char *o_undo_find_prev_filename(UNDO *start)
  *  \par Function Description
  *
  */
-OBJECT *o_undo_find_prev_object_head(UNDO *start)
+GList *o_undo_find_prev_object_head (UNDO *start)
 {
   UNDO *u_current;
 
   u_current = start->prev;
 
   while(u_current) {
-    if (u_current->object_head) {
-      return(u_current->object_head);
+    if (u_current->object_list) {
+      return u_current->object_list;
     }
     u_current = u_current->prev;
   }
@@ -330,7 +327,7 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
     if (w_current->undo_type == UNDO_DISK) {
       u_current->filename = o_undo_find_prev_filename(u_current);
     } else {
-      u_current->object_head = o_undo_find_prev_object_head(u_current);
+      u_current->object_list = o_undo_find_prev_object_head (u_current);
     }
   }
 
@@ -350,7 +347,7 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
     s_page_delete (toplevel, toplevel->page_current);
     p_new = s_page_new(toplevel, u_current->filename);
     s_page_goto (toplevel, p_new);
-  } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_head) {
+  } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_list) {
     PAGE *p_new;
     s_page_delete (toplevel, toplevel->page_current);
     p_new = s_page_new (toplevel, save_filename);
@@ -372,17 +369,16 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
     toplevel->page_current->up = u_current->up;
     toplevel->page_current->CHANGED=1;
 
-  } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_head) {
+  } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_list) {
 
-    s_delete_list_fromstart(toplevel, toplevel->page_current->object_head);
+    s_delete_object_glist (toplevel, toplevel->page_current->object_list);
+    toplevel->page_current->object_list = NULL;
 
-    toplevel->page_current->object_head = s_basic_new_object(OBJ_HEAD, "object_head");
+    toplevel->page_current->object_list =
+      o_glist_copy_all (toplevel, u_current->object_list,
+                        toplevel->page_current->object_list,
+                        NORMAL_FLAG);
 
-    o_list_copy_all(toplevel, u_current->object_head->next,
-                    toplevel->page_current->object_head,
-                    NORMAL_FLAG);
-
-    toplevel->page_current->object_tail = return_tail(toplevel->page_current->object_head);
     x_manual_resize(w_current);
     toplevel->page_current->page_control = u_current->page_control;
     toplevel->page_current->up = u_current->up;
@@ -441,11 +437,11 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
     }
   }
 
-  /* don't have to free data here since filename, object_head are */
+  /* don't have to free data here since filename, object_list are */
   /* just pointers to the real data (lower in the stack) */
   if (find_prev_data) {
     u_current->filename = NULL;
-    u_current->object_head = NULL;
+    u_current->object_list = NULL;
   }
 
 #if DEBUG

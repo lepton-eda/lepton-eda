@@ -33,14 +33,16 @@
  *  \par Function Description
  *
  */
-void o_cue_redraw_all(GSCHEM_TOPLEVEL *w_current, OBJECT *head, gboolean draw_selected)
+void o_cue_redraw_all (GSCHEM_TOPLEVEL *w_current, GList *list, gboolean draw_selected)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
+  GList *iter;
   int redraw_state = w_current->toplevel->DONT_REDRAW;
 
-  o_current = head;
-  while(o_current != NULL) {
+  iter = list;
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     switch(o_current->type) {
       case(OBJ_NET):
       case(OBJ_BUS):
@@ -70,7 +72,7 @@ void o_cue_redraw_all(GSCHEM_TOPLEVEL *w_current, OBJECT *head, gboolean draw_se
 
     }
     
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
   toplevel->DONT_REDRAW = redraw_state;
 }
@@ -470,26 +472,29 @@ static void o_cue_undraw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
  */
 void o_cue_undraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
+  GList *iter;
   switch (object->type) {
-      case OBJ_PIN:
-      case OBJ_NET:
-      case OBJ_BUS:
-        o_cue_undraw_lowlevel (w_current, object);
-        break;
-      case OBJ_COMPLEX:
-      case OBJ_PLACEHOLDER:
-      {
-        OBJECT *o_current;
-        for (o_current = object->complex->prim_objs;
-             o_current != NULL;
-             o_current = o_current->next) {
-          if (o_current->type == OBJ_PIN ||
-              o_current->type == OBJ_NET ||
-              o_current->type == OBJ_BUS) {
-            o_cue_undraw_lowlevel (w_current, o_current);
-          }
+    case OBJ_PIN:
+    case OBJ_NET:
+    case OBJ_BUS:
+      o_cue_undraw_lowlevel (w_current, object);
+      break;
+    case OBJ_COMPLEX:
+    case OBJ_PLACEHOLDER:
+    {
+      OBJECT *o_current;
+      iter = object->complex->prim_objs;
+      for (iter = object->complex->prim_objs;
+           iter != NULL;
+           iter = g_list_next (iter)) {
+        o_current = iter->data;
+        if (o_current->type == OBJ_PIN ||
+            o_current->type == OBJ_NET ||
+            o_current->type == OBJ_BUS) {
+          o_cue_undraw_lowlevel (w_current, o_current);
         }
       }
+    }
   }
 
   o_redraw_single(w_current, object);
@@ -535,24 +540,3 @@ void o_cue_undraw_list(GSCHEM_TOPLEVEL *w_current, GList *object_list)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_cue_undraw_objects(GSCHEM_TOPLEVEL *w_current, OBJECT *list)
-{
-  OBJECT *o_current;
-
-  o_current = list;
-  while(o_current != NULL) {
-
-    if (o_current->type == OBJ_PIN || o_current->type == OBJ_NET ||
-        o_current->type == OBJ_BUS) {
-      o_cue_undraw(w_current, o_current);
-    }
-    
-    o_current = o_current->next;
-  }
-
-}

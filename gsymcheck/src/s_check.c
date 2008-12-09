@@ -51,10 +51,10 @@ s_check_all(TOPLEVEL *pr_current)
 
     p_current = (PAGE *)iter->data;
 
-    if (p_current->object_head) {
+    if (p_current->object_list) {
       return_status = return_status +
         s_check_symbol(pr_current, p_current,
-                       p_current->object_head);
+                       p_current->object_list);
       if (!quiet_mode) s_log_message("\n");
     }
   }
@@ -64,7 +64,7 @@ s_check_all(TOPLEVEL *pr_current)
 
 
 int
-s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
+s_check_symbol (TOPLEVEL *pr_current, PAGE *p_current, GList *obj_list)
 {
   SYMCHECK *s_symcheck=NULL;
   int errors=0, warnings=0;
@@ -76,43 +76,43 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
   }
   
   /* overal symbol structure test */
-  s_check_symbol_structure(object_head, s_symcheck);
+  s_check_symbol_structure (obj_list, s_symcheck);
 
   /* check for graphical attribute */
-  s_check_graphical(object_head, s_symcheck);
+  s_check_graphical (obj_list, s_symcheck);
 
   /* check for device attribute */
-  s_check_device(object_head, s_symcheck);
+  s_check_device (obj_list, s_symcheck);
 
   /* check for missing attributes */
-  s_check_missing_attributes(object_head, s_symcheck);
+  s_check_missing_attributes (obj_list, s_symcheck);
   
   /* check for pintype attribute (and multiples) on all pins */
-  s_check_pintype(object_head, s_symcheck);
+  s_check_pintype (obj_list, s_symcheck);
     
   /* check for pinseq attribute (and multiples) on all pins */
-  s_check_pinseq(object_head, s_symcheck);
+  s_check_pinseq (obj_list, s_symcheck);
 
   /* check for pinnumber attribute (and multiples) on all pins */
-  s_check_pinnumber(object_head, s_symcheck);
+  s_check_pinnumber (obj_list, s_symcheck);
 
   /* check for whether all pins are on grid */
-  s_check_pin_ongrid(object_head, s_symcheck);
+  s_check_pin_ongrid (obj_list, s_symcheck);
 
   /* check for slotdef attribute on all pins (if numslots exists) */
-  s_check_slotdef(object_head, s_symcheck);
+  s_check_slotdef (obj_list, s_symcheck);
 
   /* check for old pin#=# attributes */
-  s_check_oldpin(object_head, s_symcheck);
+  s_check_oldpin (obj_list, s_symcheck);
 
   /* check for old pin#=# attributes */
-  s_check_oldslot(object_head, s_symcheck);
+  s_check_oldslot (obj_list, s_symcheck);
 
   /* check for nets or buses within the symbol (completely disallowed) */
-  s_check_nets_buses(object_head, s_symcheck);
+  s_check_nets_buses (obj_list, s_symcheck);
 
   /* check for connections with in a symbol (completely disallowed) */
-  s_check_connections(object_head, s_symcheck);
+  s_check_connections (obj_list, s_symcheck);
 
   /* now report the info/warnings/errors to the user */
   if (!quiet_mode) {
@@ -176,9 +176,9 @@ s_check_list_has_item(char **list , char *item)
 }
 
 void
-s_check_symbol_structure(OBJECT *object_head, SYMCHECK *s_current)
+s_check_symbol_structure (GList *obj_list, SYMCHECK *s_current)
 {
-  OBJECT *o_current;
+  GList *iter;
 
   gchar *message;
   gchar **tokens;
@@ -198,9 +198,8 @@ s_check_symbol_structure(OBJECT *object_head, SYMCHECK *s_current)
 				  NULL};
   /* pin# ?, slot# ? */
   
-  for (o_current = object_head;
-       o_current != NULL;
-       o_current = o_current->next) {
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
 
     if (o_current->type == OBJ_TEXT) {
       tokens = g_strsplit(o_current->text->string,"=", 2);
@@ -251,12 +250,12 @@ s_check_symbol_structure(OBJECT *object_head, SYMCHECK *s_current)
 }
 
 void
-s_check_graphical(OBJECT *o_current, SYMCHECK *s_current)
+s_check_graphical (GList *obj_list, SYMCHECK *s_current)
 {
   char *temp;
   
   /* look for special graphical tag */
-  temp = o_attrib_search_name(o_current, "graphical", 0);
+  temp = o_attrib_search_name (obj_list, "graphical", 0);
 
   if (temp) {
     s_current->graphical_symbol=TRUE;
@@ -265,13 +264,13 @@ s_check_graphical(OBJECT *o_current, SYMCHECK *s_current)
 }
 
 void
-s_check_device(OBJECT *o_current, SYMCHECK *s_current)
+s_check_device (GList *obj_list, SYMCHECK *s_current)
 {
   char *temp;
   char *message;
   
   /* search for device attribute */
-  temp = o_attrib_search_name(o_current, "device", 0);
+  temp = o_attrib_search_name (obj_list, "device", 0);
   if (!temp) {
     /* did not find device= attribute */
     message = g_strdup ("Missing device= attribute\n");
@@ -307,9 +306,8 @@ s_check_device(OBJECT *o_current, SYMCHECK *s_current)
 
 
 void
-s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
+s_check_pinseq (GList *obj_list, SYMCHECK *s_current)
 {
-  OBJECT *o_current;
   char *string;
   int found_first=FALSE;
   int missing_pinseq_attrib_sum=0;
@@ -319,12 +317,12 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
   GList *found_numbers = NULL;
   GList *ptr1 = NULL;
   GList *ptr2 = NULL;
+  GList *iter;
   char *number;
   char *message;
   
-  o_current = object_head;
-  while(o_current != NULL)
-  {
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
     
     if (o_current->type == OBJ_PIN)
     {
@@ -389,8 +387,6 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
       s_current->multiple_pinseq_attrib += multiple_pinseq_attrib_sum;
     }
 
-    
-    o_current = o_current->next;
   }
 
   ptr1 = found_numbers;
@@ -437,9 +433,8 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
 
 
 void
-s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
+s_check_pinnumber (GList *obj_list, SYMCHECK *s_current)
 {
-  OBJECT *o_current;
   char *string;
   int missing_pinnumber_attrib_sum=0;
   int multiple_pinnumber_attrib_sum=0;
@@ -452,12 +447,13 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
   GList *pin_numbers = NULL;
   GList *cur = NULL;
   GList *cur2 = NULL;
+  GList *iter;
   char *message;
   char *net = NULL;
     
   /* collect all net pins */
   for (counter = 0;
-       (net = o_attrib_search_toplevel(object_head, "net", counter)) != NULL;
+       (net = o_attrib_search_toplevel (obj_list, "net", counter)) != NULL;
        counter++) {
     message = g_strdup_printf ("Found net=%s attribute\n", net);
     s_current->info_messages = g_list_append(s_current->info_messages,
@@ -518,8 +514,8 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
   }
 
   /* collect all pin numbers */
-  for (o_current = object_head; o_current != NULL; 
-       o_current = o_current->next) {
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
     
     if (o_current->type == OBJ_PIN) {
       s_current->numpins++;
@@ -625,16 +621,15 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
 }
 
 void
-s_check_pin_ongrid(OBJECT *object_head, SYMCHECK *s_current)
+s_check_pin_ongrid (GList *obj_list, SYMCHECK *s_current)
 {
   int x1, x2, y1, y2;
-  OBJECT *o_current;
+  GList *iter;
   char *message;
 
-  
-  for (o_current = object_head;
-       o_current != NULL;
-       o_current = o_current->next) {
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
+
     if (o_current->type == OBJ_PIN) {
       x1 = o_current->line->x[0];
       y1 = o_current->line->y[0];
@@ -677,7 +672,7 @@ s_check_pin_ongrid(OBJECT *object_head, SYMCHECK *s_current)
 
 
 void
-s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
+s_check_slotdef (GList *obj_list, SYMCHECK *s_current)
 {
   char* value = NULL;
   char* slotdef = NULL;
@@ -700,7 +695,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
   int errors_found = 0;
 
   /* look for numslots to see if this symbol has slotting info */
-  value = o_attrib_search_name(object_head, "numslots", 0);
+  value = o_attrib_search_name (obj_list, "numslots", 0);
 
   if (!value) {
     message = g_strdup ("Did not find numslots= attribute, not checking slotting\n");
@@ -733,7 +728,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
 
   i = 0;
   /* get the slotdef attribute */
-  slotdef = o_attrib_search_name(object_head, "slotdef", 0);
+  slotdef = o_attrib_search_name (obj_list, "slotdef", 0);
   while ((slotdef != NULL) && (!error_parsing))
   {
 
@@ -895,7 +890,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     slotdef = NULL;
    
     i++;
-    slotdef = o_attrib_search_name(object_head, "slotdef", i);
+    slotdef = o_attrib_search_name (obj_list, "slotdef", i);
   }
 
   if (!slotdef && i < s_current->numslots) {
@@ -972,18 +967,17 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
 
 
 void
-s_check_oldpin(OBJECT *object_head, SYMCHECK *s_current)
+s_check_oldpin (GList *obj_list, SYMCHECK *s_current)
 {
-  OBJECT *o_current;
+  GList *iter;
   char *ptr;
   int found_old = FALSE;
   int number_counter = 0;
   char *message;
-  
-  o_current = object_head;
-  while(o_current != NULL)
-  {
-    
+
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
+
     if (o_current->type == OBJ_TEXT)
     {
       if (strstr(o_current->text->string, "pin"))
@@ -1005,17 +999,11 @@ s_check_oldpin(OBJECT *object_head, SYMCHECK *s_current)
         }
 
         if (!ptr)
-        {
-          o_current = o_current->next;
           continue;
-        }
 
         /* found no numbers inbetween pin and = */
         if (number_counter == 0)
-        {
-          o_current = o_current->next;
           continue;
-        }
         
         /* skip over = char */
         ptr++;
@@ -1045,26 +1033,23 @@ s_check_oldpin(OBJECT *object_head, SYMCHECK *s_current)
         }
       }
     }
-
-    o_current = o_current->next;
   }
   
 }
 
 
 void
-s_check_oldslot(OBJECT *object_head, SYMCHECK *s_current)
+s_check_oldslot (GList *obj_list, SYMCHECK *s_current)
 {
-  OBJECT *o_current;
+  GList *iter;
   char *ptr;
   int found_old = FALSE;
   int number_counter = 0;
   char *message;
   
-  o_current = object_head;
-  while(o_current != NULL)
-  {
-    
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
+
     if (o_current->type == OBJ_TEXT)
     {
       if (strstr(o_current->text->string, "slot"))
@@ -1086,17 +1071,11 @@ s_check_oldslot(OBJECT *object_head, SYMCHECK *s_current)
         }
 
         if (!ptr)
-        {
-          o_current = o_current->next;
           continue;
-        }
 
         /* found no numbers inbetween pin and = */
         if (number_counter == 0)
-        {
-          o_current = o_current->next;
           continue;
-        }
         
         /* skip over = char */
         ptr++;
@@ -1125,21 +1104,19 @@ s_check_oldslot(OBJECT *object_head, SYMCHECK *s_current)
         }
       }
     }
-
-    o_current = o_current->next;
   }
 }
 
 
 void
-s_check_nets_buses(OBJECT *object_head, SYMCHECK *s_current)
+s_check_nets_buses (GList *obj_list, SYMCHECK *s_current)
 {
-  OBJECT *o_current;
+  GList *iter;
   char *message;
-  
-  o_current = object_head;
-  while(o_current != NULL)
-  {
+
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
+
     if (o_current->type == OBJ_NET)
     {
       message = 
@@ -1160,20 +1137,17 @@ s_check_nets_buses(OBJECT *object_head, SYMCHECK *s_current)
       s_current->error_count++;
     }
 
-    
-    o_current = o_current->next;
   }
 }
 
 void
-s_check_connections(OBJECT *object_head, SYMCHECK *s_current)
+s_check_connections (GList *obj_list, SYMCHECK *s_current)
 {
-  OBJECT *o_current;
+  GList *iter;
   char *message;
-  
-  o_current = object_head;
-  while(o_current != NULL)
-  {
+
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
 
     if (o_current->conn_list) {
       message = 
@@ -1183,8 +1157,6 @@ s_check_connections(OBJECT *object_head, SYMCHECK *s_current)
       s_current->found_connection++;
       s_current->error_count++;
     }
-    
-    o_current = o_current->next;
   }
 }
 
@@ -1200,8 +1172,7 @@ s_check_missing_attribute(OBJECT *object, char *attribute, SYMCHECK *s_current)
     return;
   }
 
-  string = o_attrib_search_name_single_count(object, attribute,
-                                             counter);
+  string = o_attrib_search_name_single_count (object, attribute, counter);
   if (!string)
   {
     message = g_strdup_printf (
@@ -1238,21 +1209,20 @@ s_check_missing_attribute(OBJECT *object, char *attribute, SYMCHECK *s_current)
     g_free(string);
 
     counter++;
-    string = o_attrib_search_name_single_count(object, attribute,
-                                               counter);
+    string = o_attrib_search_name_single_count (object, attribute, counter);
   }
 
 }
 
 void
-s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current)
+s_check_missing_attributes (GList *obj_list, SYMCHECK *s_current)
 {
-  OBJECT *o_current;
+  GList *iter;
   char *message;
 
-  o_current = object_head;
-  while(o_current != NULL)
-  {
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
+
     if (o_current->type == OBJ_PIN)
     {
       s_check_missing_attribute(o_current, "pinlabel", s_current);
@@ -1280,8 +1250,6 @@ s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current)
       }
 
     }
-    
-    o_current = o_current->next;
   }
 
   if (s_current->found_footprint == 0) {
@@ -1316,9 +1284,9 @@ s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current)
   
 }
 
-void s_check_pintype(OBJECT *object_head, SYMCHECK *s_current)
+void s_check_pintype (GList *obj_list, SYMCHECK *s_current)
 {
-  OBJECT *o_current;
+  GList *iter;
   int counter=0;
   char *pintype;
   char *message;
@@ -1326,10 +1294,9 @@ void s_check_pintype(OBJECT *object_head, SYMCHECK *s_current)
 		      "pas", "tp", "tri", "clk", "pwr",
 		      NULL};
   
-  for (o_current = object_head;
-       o_current != NULL;
-       o_current = o_current->next) {
-    
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
+
     if (o_current->type == OBJ_PIN) {
 
       for (counter = 0;

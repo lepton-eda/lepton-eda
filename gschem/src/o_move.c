@@ -70,56 +70,62 @@ void o_move_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   }
 }
 
-#define SINGLE     0
-#define COMPLEX    1
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+static void o_move_end_lowlevel_glist (GSCHEM_TOPLEVEL *w_current,
+                                       GList *list,
+                                       int diff_x, int diff_y,
+                                       GList** other_objects,
+                                       GList** connected_objects)
+{
+  OBJECT *object;
+  GList *iter;
+
+  iter = list;
+  while (iter != NULL) {
+    object = (OBJECT *)iter->data;
+    o_move_end_lowlevel (w_current, object, diff_x, diff_y,
+                         other_objects, connected_objects);
+    iter = g_list_next (iter);
+  }
+}
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
  *
- *  \note
- *  type can be SINGLE or COMPLEX
- *  which basically controls if this is a single object or a complex
  */
-void o_move_end_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT * list, int type,
-			 int diff_x, int diff_y,
-			 GList** other_objects, GList** connected_objects)
+void o_move_end_lowlevel (GSCHEM_TOPLEVEL *w_current,
+                         OBJECT *object,
+                         int diff_x, int diff_y,
+                         GList** other_objects,
+                         GList** connected_objects)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current;
-  OBJECT *object;
 
-  o_current = list;
-  while (o_current != NULL) {
+  switch (object->type) {
 
-    object = o_current;
-    switch (object->type) {
+    case (OBJ_NET):
+    case (OBJ_BUS):
+    case (OBJ_PIN):
+      /* save the other objects and remove object's connections */
+      *other_objects = s_conn_return_others (*other_objects, object);
+      s_conn_remove (toplevel, object);
 
-      case (OBJ_NET):
-      case (OBJ_BUS):
-      case (OBJ_PIN):
-        /* save the other objects and remove object's connections */
-        *other_objects = s_conn_return_others(*other_objects, object);
-        s_conn_remove(toplevel, object);
+      /* do the actual translation */
+      o_translate_world (toplevel, diff_x, diff_y, object);
+      s_conn_update_object (toplevel, object);
+      *connected_objects = s_conn_return_others (*connected_objects, object);
+      break;
 
-        /* do the actual translation */
-        o_translate_world(toplevel, diff_x, diff_y, object);
-        s_conn_update_object(toplevel, object);
-        *connected_objects = s_conn_return_others(*connected_objects, object);
-        break;
-
-      default:
-        o_translate_world(toplevel, diff_x, diff_y, object);
-        break;
-    }
-
-    if (type == COMPLEX) {
-      o_current = o_current->next;
-    } else {
-      o_current = NULL;
-    }
+    default:
+      o_translate_world (toplevel, diff_x, diff_y, object);
+      break;
   }
-  
 }
 
 /*! \todo Finish function documentation!!!
@@ -200,13 +206,13 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
         object->complex->x = object->complex->x + diff_x;
         object->complex->y = object->complex->y + diff_y;
 
-        o_move_end_lowlevel(w_current, object->complex->prim_objs,
-                            COMPLEX, diff_x, diff_y,
-                            &other_objects, &connected_objects);
+        o_move_end_lowlevel_glist (w_current, object->complex->prim_objs,
+                                   diff_x, diff_y,
+                                   &other_objects, &connected_objects);
 
 
-        world_get_object_list_bounds(toplevel, object->complex->prim_objs,
-			       &left, &top, &right, &bottom);
+        world_get_object_glist_bounds (toplevel, object->complex->prim_objs,
+                                       &left, &top, &right, &bottom);
 
         object->w_left = left;
         object->w_top = top;
@@ -216,7 +222,7 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
         break;
 
       default:
-        o_move_end_lowlevel(w_current, object, SINGLE, diff_x, diff_y,
+        o_move_end_lowlevel (w_current, object, diff_x, diff_y,
                             &other_objects, &connected_objects);
         break;
     }
@@ -416,6 +422,7 @@ void o_move_prep_rubberband(GSCHEM_TOPLEVEL *w_current)
   GList *s_current;
   OBJECT *object;
   OBJECT *o_current;
+  GList *iter;
 
 #if DEBUG
   printf("\n\n\n");
@@ -436,14 +443,15 @@ void o_move_prep_rubberband(GSCHEM_TOPLEVEL *w_current)
 
         case (OBJ_COMPLEX):
         case (OBJ_PLACEHOLDER):
-          o_current = object->complex->prim_objs;
-          while (o_current != NULL) {
+          iter = object->complex->prim_objs;
+          while (iter != NULL) {
+            o_current = (OBJECT *)iter->data;
 
             if (o_current->type == OBJ_PIN) {
               o_move_check_endpoint(w_current, o_current);
             }
 
-            o_current = o_current->next;
+            iter = g_list_next (iter);
           }
 
           break;

@@ -38,8 +38,8 @@ static void custom_world_get_single_object_bounds
                                         GList *exclude_attrib_list,
 					GList *exclude_obj_type_list);
 
-static void custom_world_get_object_list_bounds 
-  (TOPLEVEL *toplevel, OBJECT *o_current,
+static void custom_world_get_object_glist_bounds
+  (TOPLEVEL *toplevel, GList *list,
    int *left, int *top, 
    int *right, int *bottom,
    GList *exclude_attrib_list,
@@ -439,7 +439,7 @@ static void custom_world_get_single_object_bounds
 	    break;
           case (OBJ_COMPLEX):
           case (OBJ_PLACEHOLDER):
-	    custom_world_get_object_list_bounds(toplevel,
+	    custom_world_get_object_glist_bounds (toplevel,
 						o_current->complex->prim_objs, 
 						left, top, right, bottom,
 						exclude_attrib_list,
@@ -482,14 +482,15 @@ static void custom_world_get_single_object_bounds
       }      
 }
 
-static void custom_world_get_object_list_bounds 
-  (TOPLEVEL *toplevel, OBJECT *o_current,
+static void custom_world_get_object_glist_bounds
+  (TOPLEVEL *toplevel, GList *list,
    int *left, int *top, 
    int *right, int *bottom,
    GList *exclude_attrib_list,
    GList *exclude_obj_type_list) {
  
-  OBJECT *obj_ptr=NULL;
+  OBJECT *o_current;
+  GList *iter;
   int rleft, rtop, rright, rbottom;
 	
   *left = rleft = 999999;
@@ -498,10 +499,11 @@ static void custom_world_get_object_list_bounds
   *bottom = rbottom = 0;
 	
 
-  obj_ptr = o_current;
+  iter = list;
 	
-  while ( obj_ptr != NULL ) {
-    custom_world_get_single_object_bounds(toplevel, obj_ptr, &rleft, &rtop,
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
+    custom_world_get_single_object_bounds (toplevel, o_current, &rleft, &rtop,
 					  &rright, &rbottom,
 					  exclude_attrib_list,
 					  exclude_obj_type_list);
@@ -509,9 +511,8 @@ static void custom_world_get_object_list_bounds
     if (rtop < *top) *top = rtop;
     if (rright > *right) *right = rright;
     if (rbottom > *bottom) *bottom = rbottom;
-	
 
-    obj_ptr=obj_ptr->next;
+    iter = g_list_next (iter);
   }
 }
 
@@ -612,6 +613,7 @@ SCM g_get_object_pins (SCM object_smob)
   TOPLEVEL *toplevel=NULL;
   OBJECT *object=NULL;
   OBJECT *prim_obj;
+  GList *iter;
   SCM returned=SCM_EOL;
 
   /* Get toplevel and o_current */
@@ -622,12 +624,13 @@ SCM g_get_object_pins (SCM object_smob)
     return (returned);
   }
   if (object->complex && object->complex->prim_objs) {
-    prim_obj = object->complex->prim_objs;
-    while (prim_obj != NULL) {
+    iter = object->complex->prim_objs;
+    while (iter != NULL) {
+      prim_obj = (OBJECT *)iter->data;
       if (prim_obj->type == OBJ_PIN) {
 	returned = scm_cons (g_make_object_smob(toplevel, prim_obj),returned);
       }
-      prim_obj = prim_obj->next;
+      iter = g_list_next (iter);
     }
   }
   
@@ -704,7 +707,7 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   new_obj = o_complex_new (toplevel, 'C', WHITE, x, y, angle, mirror,
                            clib, comp_name, selectable);
   s_page_append (page, new_obj);
-  o_complex_promote_attribs (toplevel, new_obj);
+  o_complex_promote_attribs (toplevel, new_obj, &page->object_list);
   
   /* 
    * For now, do not redraw the newly added complex, since this might cause
@@ -731,18 +734,20 @@ SCM g_get_objects_in_page(SCM page_smob) {
   TOPLEVEL *toplevel;
   PAGE *page;
   OBJECT *object;
+  GList *iter;
   SCM return_list=SCM_EOL;
 
   /* Get toplevel and the page */
   SCM_ASSERT (g_get_data_from_page_smob (page_smob, &toplevel, &page),
 	      page_smob, SCM_ARG1, "add-component");
 
-  if (page && page->object_head && page->object_head->next) {
-    object = page->object_head->next;
-    while (object) {
+  if (page && page->object_list) {
+    iter = page->object_list;
+    while (iter != NULL) {
+      object = (OBJECT *)iter->data;
       return_list = scm_cons (g_make_object_smob(toplevel, object),
 			      return_list);
-      object = object->next;
+      iter = g_list_next (iter);
     }
   }
 

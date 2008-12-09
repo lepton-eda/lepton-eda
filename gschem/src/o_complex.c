@@ -40,7 +40,6 @@ void o_complex_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   g_return_if_fail (o_current != NULL); 
   g_return_if_fail (o_current->complex != NULL);
-  g_return_if_fail (o_current->complex->prim_objs != NULL);
 
   if (!w_current->toplevel->DONT_REDRAW) {
     o_redraw(w_current, o_current->complex->prim_objs, TRUE);
@@ -58,7 +57,7 @@ void o_complex_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *obje
   g_assert( (object->type == OBJ_COMPLEX ||
              object->type == OBJ_PLACEHOLDER) );
 
-  o_list_draw_xor( w_current, dx, dy, object->complex->prim_objs);
+  o_glist_draw_xor (w_current, dx, dy, object->complex->prim_objs);
 }
 
 
@@ -70,9 +69,8 @@ void o_complex_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *obje
 void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *temp_list;
+  GList *temp_list;
   OBJECT *o_current;
-  OBJECT *o_start;
   char *buffer;
   const CLibSymbol *sym;
   int redraw_state;
@@ -89,7 +87,7 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
 
   if (w_current->include_complex) {
 
-    o_start = temp_list = new_head ();
+    temp_list = NULL;
 
     toplevel->ADDING_SEL=1;
     buffer = s_clib_symbol_get_data_by_name (sym_name);
@@ -100,42 +98,23 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
     g_free (buffer);
     toplevel->ADDING_SEL=0;
 
-    /* Take the added objects, severing them from the HEAD node */
-    o_current = o_start->next;
-    o_current->prev = NULL;
-    o_start->next = NULL;
-
-    /* Delete the HEAD node */
-    s_delete_list_fromstart (toplevel, o_start);
-
-    while (o_current != NULL) {
-      toplevel->page_current->place_list =
-        g_list_prepend (toplevel->page_current->place_list, o_current);
-      o_current = o_current->next;
-    }
+    /* Take the added objects */
     toplevel->page_current->place_list =
-      g_list_reverse (toplevel->page_current->place_list);
+      g_list_concat (toplevel->page_current->place_list, temp_list);
 
   } else { /* if (w_current->include_complex) {..} else { */
     OBJECT *new_object;
-    GList *promoted;
 
     toplevel->ADDING_SEL = 1; /* reuse this flag, rename later hack */
     sym = s_clib_get_symbol_by_name (sym_name);
     new_object = o_complex_new (toplevel, OBJ_COMPLEX, WHITE, 0, 0, 0, 0,
                                 sym, sym_name, 1);
-    promoted = o_complex_get_promotable (toplevel, new_object, TRUE);
 
-    /* Attach promoted attributes to the original complex object */
-    o_attrib_attach_list (toplevel, promoted, new_object);
-
-    toplevel->page_current->place_list =
-      g_list_concat (toplevel->page_current->place_list, promoted);
     toplevel->page_current->place_list =
       g_list_append (toplevel->page_current->place_list, new_object);
 
-    /* Link the place list OBJECTs together for good measure */
-    o_glist_relink_objects (toplevel->page_current->place_list);
+    o_complex_promote_attribs (toplevel, new_object,
+                               &toplevel->page_current->place_list);
 
     toplevel->ADDING_SEL = 0;
 
@@ -250,18 +229,19 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
   TOPLEVEL *toplevel = w_current->toplevel;
   int w_rleft, w_rtop, w_rright, w_rbottom;
   OBJECT *o_current;
+  GList *iter;
   int x, y;
 
   /* first zoom extents */
-  a_zoom_extents(w_current, toplevel->page_current->object_head,
+  a_zoom_extents (w_current, toplevel->page_current->object_list,
                  A_PAN_DONT_REDRAW);
   o_redraw_all(w_current);
 
-  world_get_object_list_bounds(toplevel, toplevel->page_current->object_head,
-                               &w_rleft,
-                               &w_rtop,
-                               &w_rright,
-                               &w_rbottom);
+  world_get_object_glist_bounds (toplevel, toplevel->page_current->object_list,
+                                 &w_rleft,
+                                 &w_rtop,
+                                 &w_rright,
+                                 &w_rbottom);
 
   /*! \todo do we want snap grid here? */
   x = snap_grid( toplevel, w_rleft );
@@ -271,40 +251,42 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
    * the correct sense) were in use . */
   y = snap_grid( toplevel, w_rtop );
 
-  o_current = toplevel->page_current->object_head;
-  while(o_current != NULL) {
+  iter = toplevel->page_current->object_list;
+  while (iter != NULL) {
+    o_current = iter->data;
     if (o_current->type != OBJ_COMPLEX && o_current->type != OBJ_PLACEHOLDER) {
       s_conn_remove(toplevel, o_current);
     } else {
       s_conn_remove_complex(toplevel, o_current);
     }
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
         
   if (offset == 0) {
     s_log_message(_("Translating schematic [%d %d]\n"), -x, -y);
-    o_list_translate_world(toplevel, -x, -y,
-                           toplevel->page_current->object_head);
+    o_glist_translate_world (toplevel, -x, -y,
+                            toplevel->page_current->object_list);
   } else {
     s_log_message(_("Translating schematic [%d %d]\n"),
                   offset, offset);
-    o_list_translate_world(toplevel, offset, offset,
-                           toplevel->page_current->object_head);
+    o_glist_translate_world (toplevel, offset, offset,
+                            toplevel->page_current->object_list);
   }
 
-  o_current = toplevel->page_current->object_head;
-  while(o_current != NULL) {
+  iter = toplevel->page_current->object_list;
+  while (iter != NULL) {
+    o_current = iter->data;
     if (o_current->type != OBJ_COMPLEX && o_current->type != OBJ_PLACEHOLDER) {
       s_conn_update_object(toplevel, o_current);
     } else {
       s_conn_update_complex(toplevel, o_current->complex->prim_objs);
     }
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
 
   /* this is an experimental mod, to be able to translate to all
    * places */
-  a_zoom_extents(w_current, toplevel->page_current->object_head,
+  a_zoom_extents (w_current, toplevel->page_current->object_list,
                  A_PAN_DONT_REDRAW);
   if (!w_current->SHIFTKEY) o_select_unselect_all(w_current);
   o_redraw_all(w_current);

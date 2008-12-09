@@ -9,7 +9,7 @@ void a_pan(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void a_pan_mouse(GSCHEM_TOPLEVEL *w_current, int diff_x, int diff_y);
 /* a_zoom.c */
 void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flags);
-void a_zoom_extents(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int pan_flags);
+void a_zoom_extents(GSCHEM_TOPLEVEL *w_current, GList *list, int pan_flags);
 void a_zoom_box(GSCHEM_TOPLEVEL *w_current, int pan_flags);
 void a_zoom_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -481,7 +481,7 @@ void o_attrib_toggle_show_name_value(GSCHEM_TOPLEVEL *w_current, OBJECT *object,
 OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current, const char *text_string, int visibility, int show_name_value, OBJECT *object);
 /* o_basic.c */
 void o_redraw_all(GSCHEM_TOPLEVEL *w_current);
-void o_redraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object_list, gboolean draw_selected);
+void o_redraw(GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_selected);
 void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_draw_list(GSCHEM_TOPLEVEL *w_current, GList *list);
 void o_draw_selected(GSCHEM_TOPLEVEL *w_current);
@@ -492,12 +492,10 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist, GdkColor *color,
 int o_erase_rubber(GSCHEM_TOPLEVEL *w_current);
 int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current);
 void o_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
-void o_list_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *list);
 void o_glist_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, GList *list);
 void o_invalidate_rect(GSCHEM_TOPLEVEL *w_current, int x1, int y1, int x2, int y2);
 void o_invalidate_all(GSCHEM_TOPLEVEL *w_current);
 void o_invalidate(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
-void o_invalidate_list(GSCHEM_TOPLEVEL *w_current, OBJECT *list);
 void o_invalidate_glist(GSCHEM_TOPLEVEL *w_current, GList *list);
 void o_erase_grips (GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 /* o_box.c */
@@ -561,7 +559,7 @@ void o_copy_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_copy_end(GSCHEM_TOPLEVEL *w_current);
 void o_copy_multiple_end(GSCHEM_TOPLEVEL *w_current);
 /* o_cue.c */
-void o_cue_redraw_all(GSCHEM_TOPLEVEL *w_current, OBJECT *head, gboolean draw_selected);
+void o_cue_redraw_all(GSCHEM_TOPLEVEL *w_current, GList *list, gboolean draw_selected);
 void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichone);
 void o_cue_erase_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichone);
 void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
@@ -570,7 +568,6 @@ void o_cue_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_cue_undraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_cue_draw_list(GSCHEM_TOPLEVEL *w_current, GList *object_list);
 void o_cue_undraw_list(GSCHEM_TOPLEVEL *w_current, GList *object_list);
-void o_cue_undraw_objects(GSCHEM_TOPLEVEL *w_current, OBJECT *list);
 /* o_delete.c */
 void o_delete(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_delete_selected(GSCHEM_TOPLEVEL *w_current);
@@ -634,17 +631,17 @@ void o_lock(GSCHEM_TOPLEVEL *w_current);
 void o_unlock(GSCHEM_TOPLEVEL *w_current);
 void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery, int angle, GList *list);
 void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery, GList *list);
-void o_edit_show_hidden_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list);
-void o_edit_show_hidden(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list);
-void o_edit_make_visible(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list);
-int o_edit_find_text(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list, char *stext, int descend, int skip);
-void o_edit_hide_specific_text(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list, char *stext);
-void o_edit_show_specific_text(GSCHEM_TOPLEVEL *w_current, OBJECT *o_list, char *stext);
+void o_edit_show_hidden_lowlevel(GSCHEM_TOPLEVEL *w_current, GList *o_list);
+void o_edit_show_hidden(GSCHEM_TOPLEVEL *w_current, GList *o_list);
+void o_edit_make_visible(GSCHEM_TOPLEVEL *w_current, GList *o_list);
+int o_edit_find_text(GSCHEM_TOPLEVEL *w_current, GList *o_list, char *stext, int descend, int skip);
+void o_edit_hide_specific_text(GSCHEM_TOPLEVEL *w_current, GList *o_list, char *stext);
+void o_edit_show_specific_text(GSCHEM_TOPLEVEL *w_current, GList *o_list, char *stext);
 void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_autosave_backups(GSCHEM_TOPLEVEL *w_current);
 /* o_move.c */
 void o_move_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_move_end_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *list, int type, int diff_x, int diff_y, GList **other_objects, GList **connected_objects);
+void o_move_end_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int diff_x, int diff_y, GList **other_objects, GList **connected_objects);
 void o_move_end(GSCHEM_TOPLEVEL *w_current);
 void o_move_cancel(GSCHEM_TOPLEVEL *w_current);
 void o_move_rubbermove(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -725,7 +722,7 @@ void o_select_unselect_list(GSCHEM_TOPLEVEL *w_current, SELECTION *selection);
 void o_select_unselect_all(GSCHEM_TOPLEVEL *w_current);
 void o_select_move_to_place_list(GSCHEM_TOPLEVEL *w_current);
 /* o_slot.c */
-void o_slot_start(GSCHEM_TOPLEVEL *w_current, OBJECT *list);
+void o_slot_start(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len);
 /* o_text.c */
 void o_text_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
@@ -741,7 +738,7 @@ void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string, int
 void o_undo_init(void);
 void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag);
 char *o_undo_find_prev_filename(UNDO *start);
-OBJECT *o_undo_find_prev_object_head(UNDO *start);
+GList *o_undo_find_prev_object_head(UNDO *start);
 void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type);
 void o_undo_cleanup(void);
 void o_undo_remove_last_undo(GSCHEM_TOPLEVEL *w_current);
@@ -751,7 +748,7 @@ int parse_commandline(int argc, char *argv[]);
 /* x_attribedit.c */
 gint option_menu_get_history(GtkOptionMenu *option_menu);
 void attrib_edit_dialog_ok(GtkWidget *w, GSCHEM_TOPLEVEL *w_current);
-void attrib_edit_dialog(GSCHEM_TOPLEVEL *w_current, OBJECT *list, int flag);
+void attrib_edit_dialog(GSCHEM_TOPLEVEL *w_current, OBJECT *attr_obj, int flag);
 /* x_autonumber.c */
 void autonumber_text_dialog(GSCHEM_TOPLEVEL *w_current);
 /* x_basic.c */

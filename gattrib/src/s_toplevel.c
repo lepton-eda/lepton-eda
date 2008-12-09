@@ -86,23 +86,23 @@ int s_toplevel_read_page(char *filename)
  */
 void s_toplevel_verify_design(TOPLEVEL *pr_current)
 {
-  GList *iter;
-  OBJECT *o_current;
-  PAGE *p_current;
+  GList *p_iter, *o_iter;
   int missing_sym_flag = 0;
 
-  for ( iter = geda_list_get_glist( pr_current->pages );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
+  for (p_iter = geda_list_get_glist (pr_current->pages);
+       p_iter != NULL;
+       p_iter = g_list_next (p_iter)) {
+    PAGE *p_current = p_iter->data;
 
-    p_current = (PAGE *)iter->data;
-    o_current = p_current->object_head;
-    while (o_current != NULL) {
+    for (o_iter = p_current->object_list;
+         o_iter != NULL;
+         o_iter = g_list_next (o_iter)) {
+      OBJECT *o_current = o_iter->data;
+
       /* --- look for object, and verify that it has a symbol file attached. ---- */
       if (o_current->type == OBJ_PLACEHOLDER) {
         missing_sym_flag = 1;  /* flag to signal that problem exists.  */
       }
-      o_current = o_current->next;
     }
   }
 
@@ -154,8 +154,8 @@ s_toplevel_gtksheet_to_toplevel()
 
     p_current = (PAGE *)iter->data;
     /* only traverse pages which are toplevel */
-    if (p_current->object_head && p_current->page_control == 0) {
-      s_toplevel_sheetdata_to_toplevel(p_current->object_head);    /* adds all objects from page */
+    if (p_current->page_control == 0) {
+      s_toplevel_sheetdata_to_toplevel (p_current->object_list);    /* adds all objects from page */
     }
   }
 
@@ -390,10 +390,9 @@ void s_toplevel_select_object()
  * 3.  Finally find and update pin attribs.
  *------------------------------------------------------------------*/
 void
-s_toplevel_sheetdata_to_toplevel(OBJECT *start_obj)
+s_toplevel_sheetdata_to_toplevel (GList *obj_list)
 {
-  OBJECT *o_current;
-  OBJECT *comp_prim_obj;
+  GList *o_iter, *prim_iter;
   char *temp_uref;
   STRING_LIST *new_comp_attrib_pair_list;
   STRING_LIST *new_pin_attrib_list;
@@ -402,8 +401,8 @@ s_toplevel_sheetdata_to_toplevel(OBJECT *start_obj)
 #ifdef DEBUG
   printf("-----  In s_toplevel_sheetdata_to_toplevel, handling components\n");
 #endif
-  o_current = start_obj;
-  while (o_current != NULL) {
+  for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
+    OBJECT *o_current = o_iter->data;
 
     /* ------- Object is a component.  Handle component attributes. ------- */
     if (o_current->type == OBJ_COMPLEX) {    /* Note that OBJ_COMPLEX = component + attribs */
@@ -438,9 +437,7 @@ s_toplevel_sheetdata_to_toplevel(OBJECT *start_obj)
       }
     }  /* if (o_current->type == OBJ_COMPLEX) */
 
-
-    o_current = o_current->next;
-  }  /* while (o_current != NULL) */
+  }
 
 
 #if 0
@@ -455,8 +452,8 @@ s_toplevel_sheetdata_to_toplevel(OBJECT *start_obj)
 #ifdef DEBUG
 	printf("-----  In s_toplevel_sheetdata_to_toplevel, handling pins\n");
 #endif
-  o_current = start_obj;
-  while (o_current != NULL) {
+  for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
+    OBJECT *o_current = o_iter->data;
 
     /* ------- Object is a complex.  Handle pins by looking ------ */
     /* ------- for all pins attached to a component.        ------ */
@@ -473,21 +470,21 @@ s_toplevel_sheetdata_to_toplevel(OBJECT *start_obj)
       temp_uref =  s_attrib_get_refdes(o_current);
       if ( (temp_uref != NULL) && (o_current->complex->prim_objs) ) {    /* make sure object complex has a refdes  */
 
-	comp_prim_obj = o_current->complex->prim_objs;
-	while (comp_prim_obj != NULL) {
+        for (prim_iter = o_current->complex->prim_objs;
+             prim_iter != NULL;
+             prim_iter = g_list_next (prim_iter)) {
+          OBJECT *comp_prim_obj = prim_iter->data;
+
 	  if (comp_prim_obj->type == OBJ_PIN) { 
 	    new_pin_attrib_list = s_toplevel_get_pin_attribs_in_sheet(temp_uref, comp_prim_obj);
 	    s_toplevel_update_pin_attribs_in_toplevel(temp_uref, comp_prim_obj, new_pin_attrib_list);
 	  }
-	  comp_prim_obj = comp_prim_obj->next;  
-	}    
+        }
       }     /* if(temp_uref  */
       
       g_free(temp_uref);
     }
-    
-    o_current = o_current->next;
-  }  /* while (o_current != NULL) */
+  }
       
   return;
 }

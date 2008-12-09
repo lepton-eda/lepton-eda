@@ -103,7 +103,7 @@ preview_callback_realize (GtkWidget *widget,
   preview_toplevel->DONT_REDRAW = 0;
 
   a_zoom_extents(preview_w_current,
-                 preview_page->object_head,
+                 preview_page->object_list,
                  A_PAN_DONT_REDRAW);
 
   o_redraw_all(preview_w_current);
@@ -220,12 +220,10 @@ preview_update (Preview *preview)
     if (preview->buffer != NULL) {
 
       /* Load the data buffer */
-      preview_toplevel->page_current->object_tail = (OBJECT *) 
+      preview_toplevel->page_current->object_list =
         o_read_buffer (preview_toplevel, 
-                       preview_toplevel->page_current->object_tail, 
+                       preview_toplevel->page_current->object_list,
                        preview->buffer, -1, "Preview Buffer");
-      preview_toplevel->page_current->object_tail = (OBJECT *) 
-        return_tail(preview_toplevel->page_current->object_head); 
 
       /* Is this needed? */
       if (preview_toplevel->net_consolidate == TRUE) {	
@@ -234,10 +232,10 @@ preview_update (Preview *preview)
     }
   }
 
-  if (world_get_object_list_bounds (preview_toplevel,
-                                    preview_toplevel->page_current->object_head,
-                                    &left, &top,
-                                    &right, &bottom)) {
+  if (world_get_object_glist_bounds (preview_toplevel,
+                                     preview_toplevel->page_current->object_list,
+                                     &left, &top,
+                                     &right, &bottom)) {
     /* Clamp the canvas size to the extents of the page being previewed */
     width = right - left;
     height = bottom - top;
@@ -249,7 +247,7 @@ preview_update (Preview *preview)
 
   /* display current page (possibly empty) */
   a_zoom_extents (preview_w_current,
-                  preview_toplevel->page_current->object_head,
+                  preview_toplevel->page_current->object_list,
                   A_PAN_DONT_REDRAW);
   o_redraw_all (preview_w_current);
   
@@ -333,11 +331,10 @@ preview_event_configure (GtkWidget         *widget,
   preview_w_current->toplevel->DONT_REDRAW = save_redraw;
   if (preview_page != NULL) {
     /* If we have an empty page without object, just redraw the background */
-    if (preview_page->object_head == NULL
-	|| preview_page->object_head->next == NULL) {
+    if (preview_page->object_list == NULL) {
       x_repaint_background(preview_w_current);
     } else {
-      a_zoom_extents(preview_w_current, preview_page->object_head, 0);
+      a_zoom_extents (preview_w_current, preview_page->object_list, 0);
     }
   }
   return retval;

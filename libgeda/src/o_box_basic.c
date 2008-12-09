@@ -223,8 +223,7 @@ void o_box_modify(TOPLEVEL *toplevel, OBJECT *object,
 /*! \brief Create a box from a character string.
  *  \par Function Description
  *  This function gets the description of a box from the <B>*buf</B> character
- *  string. The new box is then added to the list of object of which
- *  <B>*object_list</B> is the last element before the call.
+ *  string.
  *
  *  Depending on <B>*version</B>, the correct file format is considered.
  *  Currently two file format revisions are supported :
@@ -234,19 +233,18 @@ void o_box_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  </DL>
  *
  *  \param [in]     toplevel       The TOPLEVEL object.
- *  \param [in,out] object_list     BOX OBJECT list to add new BOX to.
  *  \param [in]     buf             Character string with box description.
  *  \param [in]     release_ver     libgeda release version number.
  *  \param [in]     fileformat_ver  libgeda file format version number.
  *  \return The BOX OBJECT that was created.
  */
-OBJECT *o_box_read (TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
+OBJECT *o_box_read (TOPLEVEL *toplevel, char buf[],
                     unsigned int release_ver, unsigned int fileformat_ver)
 {
   OBJECT *new_obj;
-  char type; 
+  char type;
   int x1, y1;
-  int width, height; 
+  int width, height;
   int d_x1, d_y1;
   int d_x2, d_y2;
   int color;
@@ -333,9 +331,8 @@ OBJECT *o_box_read (TOPLEVEL *toplevel, OBJECT *object_list, char buf[],
   o_set_fill_options (toplevel, new_obj,
                       box_filling, fill_width,
                       pitch1, angle1, pitch2, angle2);
-  /* Add the box to the object list */
-  object_list = s_basic_link_object (new_obj, object_list);
-  return object_list;
+
+  return new_obj;
 }
 
 /*! \brief Create a character string representation of a BOX.

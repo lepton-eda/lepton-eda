@@ -87,13 +87,15 @@ void s_cue_postscript_fillcircle(TOPLEVEL * toplevel, FILE * fp,
  *  \par Function Description
  *
  */
-void s_cue_output_all(TOPLEVEL * toplevel, OBJECT * head, FILE * fp,
-		      int type)
+void s_cue_output_all (TOPLEVEL * toplevel, GList *obj_list, FILE * fp,
+                       int type)
 {
   OBJECT *o_current;
+  GList *iter;
 
-  o_current = head;
-  while (o_current != NULL) {
+  iter = obj_list;
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     switch (o_current->type) {
       case (OBJ_NET):
       case (OBJ_BUS):
@@ -108,8 +110,7 @@ void s_cue_output_all(TOPLEVEL * toplevel, OBJECT * head, FILE * fp,
         break;
 
     }
-
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
 }
 

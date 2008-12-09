@@ -74,7 +74,7 @@ gchar *o_save_buffer (TOPLEVEL *toplevel)
 
   acc = g_string_new (o_file_format_header());
 
-  buffer = o_save_objects (toplevel->page_current->object_head);
+  buffer = o_save_objects (toplevel->page_current->object_list);
   g_string_append (acc, buffer);
   g_free (buffer);
 
@@ -90,18 +90,20 @@ gchar *o_save_buffer (TOPLEVEL *toplevel)
  *  \param [in] object_list  Head of list of objects to save.
  *  \returns a buffer containing schematic data or NULL on failure.
  */
-gchar *o_save_objects (OBJECT *object_list)
+gchar *o_save_objects (GList *object_list)
 {
-  OBJECT *o_current = object_list;
+  OBJECT *o_current;
+  GList *iter;
   gchar *out;
   GString *acc;
   gboolean already_wrote = FALSE;
 
-  g_return_val_if_fail ((object_list != NULL), NULL);
-
   acc = g_string_new("");
 
-  while ( o_current != NULL ) {
+  iter = object_list;
+
+  while ( iter != NULL ) {
+    o_current = (OBJECT *)iter->data;
 
     if (o_current->type != OBJ_HEAD &&
         o_current->attached_to == NULL) {
@@ -195,9 +197,9 @@ gchar *o_save_objects (OBJECT *object_list)
         g_string_append(acc, out);
         g_free (out);
       }
-
     }
-    o_current = o_current->next;
+
+    iter = g_list_next (iter);
   }
 
   return g_string_free (acc, FALSE);
@@ -214,9 +216,9 @@ int o_save(TOPLEVEL *toplevel, const char *filename)
 {
   FILE *fp;
   char *buffer;
-	
+
   fp = fopen(filename, "wb");
-	
+
   if (fp == NULL) {
     s_log_message(_("o_save: Could not open [%s]\n"), filename);
     return 0;
@@ -248,19 +250,19 @@ int o_save(TOPLEVEL *toplevel, const char *filename)
  *  \param [in]     buffer       The memory buffer to read from.
  *  \param [in]     size         The size of the buffer.
  *  \param [in]     name         The name to describe the data with.
- *  \return object_list if successful read, or NULL on error.
+ *  \return GList of objects if successful read, or NULL on error.
  */
-OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
-		      char *buffer, const int size, 
-		      const char *name)
+GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
+                      char *buffer, const int size,
+                      const char *name)
 {
   char *line = NULL;
   TextBuffer *tb = NULL;
 
   char objtype;
-  OBJECT *object_list_save=NULL;
-  OBJECT *temp_tail=NULL;
-  OBJECT *object_before_attr=NULL;
+  GList *object_list_save=NULL;
+  OBJECT *new_obj=NULL;
+  GList *new_obj_list;
   unsigned int release_ver;
   unsigned int fileformat_ver;
   unsigned int current_fileformat_ver;
@@ -277,6 +279,8 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
   g_return_val_if_fail ((buffer != NULL), NULL);
 
   tb = s_textbuffer_new (buffer, size);
+
+  object_list = g_list_reverse (object_list);
 
   while (1) {
 
@@ -302,85 +306,78 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
     switch (objtype) {
 
       case(OBJ_LINE):
-        object_list = (OBJECT *) o_line_read(toplevel, object_list, line,
-	                                     release_ver, fileformat_ver);
+        new_obj = o_line_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
 
 
       case(OBJ_NET):
-        object_list = (OBJECT *) o_net_read(toplevel, object_list, line,
-                                            release_ver, fileformat_ver);
+        new_obj = o_net_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_BUS):
-        object_list = (OBJECT *) o_bus_read(toplevel, object_list, line,
-                                            release_ver, fileformat_ver);
+        new_obj = o_bus_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_BOX):
-        object_list = (OBJECT *) o_box_read(toplevel, object_list, line,
-                                            release_ver, fileformat_ver);
+        new_obj = o_box_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
-		
+
       case(OBJ_PICTURE):
-	line = g_strdup(line);
-        object_list = (OBJECT *) o_picture_read(toplevel, object_list,
-						line, tb,
-						release_ver, fileformat_ver);
-	g_free (line);
+        line = g_strdup (line);
+        new_obj = o_picture_read (toplevel, line, tb, release_ver, fileformat_ver);
+        g_free (line);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
-		
+
       case(OBJ_CIRCLE):
-        object_list = (OBJECT *) o_circle_read(toplevel, object_list, line,
-                                               release_ver, fileformat_ver);
+        new_obj = o_circle_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-        object_list = (OBJECT *) o_complex_read(toplevel, object_list, line,
-                                                release_ver, fileformat_ver);
-
-        /* this is necessary because complex may add attributes which float */
-	/* needed now? */
-        object_list = (OBJECT *) return_tail(object_list);
+        new_obj = o_complex_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
 
         /* last_complex is used for verifying symversion attribute */
-        last_complex = object_list;
+        last_complex = new_obj;
         break;
 
       case(OBJ_TEXT):
-	line = g_strdup(line);
-        object_list = (OBJECT *) o_text_read(toplevel, object_list,
-					     line, tb,
-                                             release_ver, fileformat_ver);
-	g_free(line);
+        line = g_strdup (line);
+        new_obj = o_text_read (toplevel, line, tb, release_ver, fileformat_ver);
+        g_free (line);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_PATH):
         line = g_strdup(line);
-        object_list = (OBJECT *) o_path_read(toplevel, object_list, line, tb,
-                                             release_ver, fileformat_ver);
+        new_obj = o_path_read (toplevel, line, tb, release_ver, fileformat_ver);
         g_free (line);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_PIN):
-        object_list = (OBJECT *) o_pin_read(toplevel, object_list, line,
-                                            release_ver, fileformat_ver);
+        new_obj = o_pin_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
         found_pin++;
         break;
 
       case(OBJ_ARC):
-        object_list = (OBJECT *) o_arc_read(toplevel, object_list, line,
-                                            release_ver, fileformat_ver);
+        new_obj = o_arc_read (toplevel, line, release_ver, fileformat_ver);
+        object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(STARTATTACH_ATTR): 
-        object_before_attr = object_list;
-	/* first is the fp */
-	/* 2nd is the object to get the attributes */ 
-        object_list = (OBJECT *) o_read_attribs(toplevel, object_list,
-						tb,
-                                                release_ver, fileformat_ver);
+        /* first is the fp */
+        /* 2nd is the object to get the attributes */
+        new_obj_list = o_read_attribs (toplevel, NULL, new_obj, tb, release_ver, fileformat_ver);
+        new_obj_list = g_list_reverse (new_obj_list);
+        object_list = g_list_concat (new_obj_list, object_list);
 
         /* by now we have finished reading all the attributes */
         /* did we just finish attaching to a complex object? */
@@ -391,78 +388,76 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
           o_complex_check_symversion(toplevel, last_complex);
           last_complex = NULL;
         }
-        
-	/* slots only apply to complex objects */
-        if (object_before_attr->type == OBJ_COMPLEX || 
-	    object_before_attr->type == OBJ_PLACEHOLDER) {
-          o_attrib_slot_update(toplevel, object_before_attr);
+
+        /* slots only apply to complex objects */
+        if (new_obj->type == OBJ_COMPLEX ||
+            new_obj->type == OBJ_PLACEHOLDER) {
+          o_attrib_slot_update (toplevel, new_obj);
         }
 
-	/* need this? nope */
-	/*object_list = return_tail(object_list);*/
-        object_before_attr = NULL;
+        new_obj = NULL;
         break;
 
-      case(START_EMBEDDED): 
-        
-	if(object_list->type == OBJ_COMPLEX || 
-	   object_list->type == OBJ_PLACEHOLDER) {
+      case(START_EMBEDDED):
+        new_obj = object_list->data;
 
-        	object_list_save = object_list;
-        	object_list = object_list_save->complex->prim_objs;
-				
-        	temp_tail = toplevel->page_current->object_tail;
+        if (new_obj->type == OBJ_COMPLEX ||
+            new_obj->type == OBJ_PLACEHOLDER) {
 
-		embedded_level++;
-	} else {
+          object_list_save = object_list;
+          object_list = new_obj->complex->prim_objs;
+
+          embedded_level++;
+        } else {
           fprintf(stderr, _("Read unexpected embedded "
                             "symbol start marker in [%s] :\n>>\n%s<<\n"),
-                  name, line);
-	}
-       	break;
+                          name, line);
+        }
+        break;
 
-      case(END_EMBEDDED): 
-      	if(embedded_level>0) {
-        	object_list = object_list_save;
-		/* don't do this since objects are already
-		 * stored/read translated 
-	         * o_complex_translate_world(toplevel, object_list->x,
-                 *                   object_list->y, object_list->complex);
-		 */
-	        toplevel->page_current->object_tail = temp_tail;
+      case(END_EMBEDDED):
+        if (embedded_level>0) {
+          /* don't do this since objects are already
+           * stored/read translated
+           * o_complex_translate_world (toplevel, object_list->x,
+           *                            object_list->y, object_list->complex);
+           */
 
-          o_complex_recalc( toplevel, object_list );
-		embedded_level--;
-	} else {
+          new_obj = object_list_save->data;
+          new_obj->complex->prim_objs = object_list;
+          object_list = object_list_save;
+
+          o_recalc_single_object (toplevel, new_obj);
+
+          embedded_level--;
+        } else {
           fprintf(stderr, _("Read unexpected embedded "
                             "symbol end marker in [%s] :\n>>\n%s<<\n"),
-                  name, line);
-	}
-	
+                          name, line);
+        }
         break;
 
       case(ENDATTACH_ATTR):
         /* this case is never hit, since the } is consumed by o_read_attribs */
-        break;	
+        break;
 
-      case(INFO_FONT): 
+      case(INFO_FONT):
         o_text_set_info_font(line);
-        break;	
+        break;
 
       case(COMMENT):
-	/* do nothing */
+        /* do nothing */
         break;
 
       case(VERSION_CHAR):
         itemsread = sscanf(line, "v %u %u\n", &release_ver, &fileformat_ver);
 
-	/* 20030921 was the last version which did not have a fileformat */
-	/* version.  The below latter test should not happen, but it is here */
-	/* just in in case. */
-	if (release_ver <= VERSION_20030921 || itemsread == 1)
-        { 
+        /* 20030921 was the last version which did not have a fileformat */
+        /* version.  The below latter test should not happen, but it is here */
+        /* just in in case. */
+        if (release_ver <= VERSION_20030921 || itemsread == 1) {
           fileformat_ver = 0;
-	}
+        }
 
         if (fileformat_ver == 0) {
           s_log_message(_("Read an old format sym/sch file!\n"
@@ -489,12 +484,14 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
 
   if (found_pin) {
     if (release_ver <= VERSION_20020825) {
-      o_pin_update_whichend(toplevel, return_head(object_list), found_pin);
+      o_pin_update_whichend (toplevel, object_list, found_pin);
     }
   }
 
   tb = s_textbuffer_free(tb);
-  
+
+  object_list = g_list_reverse (object_list);
+
   return(object_list);
 
 }
@@ -510,12 +507,12 @@ OBJECT *o_read_buffer(TOPLEVEL *toplevel, OBJECT *object_list,
  *                               NULL to disable error reporting
  *  \return object_list if successful read, or NULL on error.
  */
-OBJECT *o_read(TOPLEVEL *toplevel, OBJECT *object_list, char *filename,
+GList *o_read (TOPLEVEL *toplevel, GList *object_list, char *filename,
                GError **err)
 {
   char *buffer = NULL;
   size_t size;
-  OBJECT *result = NULL;
+  GList *result;
 
   /* Return NULL if error reporting is enabled and the return location
    * for an error isn't NULL. */
@@ -546,23 +543,25 @@ OBJECT *o_read(TOPLEVEL *toplevel, OBJECT *object_list, char *filename,
  *        stuff
  *        move it to o_complex_scale
  */
-void o_scale(TOPLEVEL *toplevel, OBJECT *list, int x_scale, int y_scale)
+void o_scale (TOPLEVEL *toplevel, GList *list, int x_scale, int y_scale)
 {
   OBJECT *o_current;
+  GList *iter;
 
   /* this is okay if you just hit scale and have nothing selected */
   if (list == NULL) {
     return;
   }
 
-  o_current = list;
-  while (o_current != NULL) {
+  iter = list;
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     switch(o_current->type) {
       case(OBJ_LINE):
         o_line_scale_world(toplevel, x_scale, y_scale, o_current);
         break;
     }
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
 }
 

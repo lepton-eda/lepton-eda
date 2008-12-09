@@ -224,9 +224,9 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
         break;
     }
   } else {
-    world_get_object_list_bounds(toplevel,
-                                 toplevel->page_current->object_head,
-                                 &left, &top, &right, &bottom);
+    world_get_object_glist_bounds (toplevel,
+                                   toplevel->page_current->object_list,
+                                   &left, &top, &right, &bottom);
 	
     /* this really is the lower left hand corner */	
     world_x = left; 
@@ -243,19 +243,16 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
              visibility, show_name_value);
   s_page_append (toplevel->page_current, new_obj);
 
-  /* now toplevel->page_current->object_tail contains new text item */
-
   /* now attach the attribute to the object (if o_current is not NULL) */
   /* remember that o_current contains the object to get the attribute */
   if (o_current) {
-    o_attrib_attach (toplevel, toplevel->page_current->object_tail, o_current);
+    o_attrib_attach (toplevel, new_obj, o_current);
   }
 
-  o_selection_add( toplevel->page_current->selection_list,
-                   toplevel->page_current->object_tail );
+  o_selection_add (toplevel->page_current->selection_list, new_obj);
 
-  o_erase_single(w_current, toplevel->page_current->object_tail);
-  o_text_draw(w_current, toplevel->page_current->object_tail);
+  o_erase_single (w_current, new_obj);
+  o_text_draw (w_current, new_obj);
 
   /* handle slot= attribute, it's a special case */
   if (g_ascii_strncasecmp (text_string, "slot=", 5) == 0) {
@@ -265,13 +262,12 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
   /* Run the add attribute hook */
   if (scm_hook_empty_p(add_attribute_hook) == SCM_BOOL_F &&
       o_current != NULL) {
-	scm_run_hook(add_attribute_hook,
-		     scm_cons(g_make_object_smob(toplevel,
-						 o_current),
-			      SCM_EOL));
-      }
-  
+    scm_run_hook (add_attribute_hook,
+                  scm_cons (g_make_object_smob (toplevel, o_current),
+                            SCM_EOL));
+  }
+
   toplevel->page_current->CHANGED = 1;
 
-  return(toplevel->page_current->object_tail);
+  return new_obj;
 }

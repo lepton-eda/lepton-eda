@@ -169,26 +169,8 @@ static void update_disp_string(OBJECT *o)
 int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
                           int *top, int *right, int *bottom)
 {
-  return world_get_object_list_bounds(toplevel, o_current->text->prim_objs,
-                                      left, top, right, bottom);
-}
-
-/*! \brief create a new text head object
- *  \par Function Description
- *  This function creates a <b>text_head</b> OBJECT. This OBJECT
- *  is just a special empty object. This object is never modified.
- *  
- *  \return new text head OBJECT
- */
-OBJECT *o_text_new_head (void)
-{
-  OBJECT *new_node=NULL;
-
-  new_node = s_basic_new_object(OBJ_HEAD, "text_head");
-
-  /* don't need to do this for head nodes */
-  /* ret = s_basic_link_object(new_node, NULL);*/
-  return new_node;
+  return world_get_object_glist_bounds (toplevel, o_current->text->prim_objs,
+                                        left, top, right, bottom);
 }
 
 /*! \brief initialize the hash tables for the fonts
@@ -227,6 +209,7 @@ void o_text_init(void)
 void o_text_print_set(void)
 {
   OBJECT *o_current, *o_font_set;
+  GList *iter;
   char i;
 	
   for (i = 'A' ; i < 'Z'+1; i++) {
@@ -234,9 +217,10 @@ void o_text_print_set(void)
                                       GUINT_TO_POINTER ((gunichar)i));
     if (o_font_set != NULL) {
       printf("%c: LOADED\n", i);	
-      for (o_current=return_tail(o_font_set->font_prim_objs); o_current; 
-           o_current=o_current->prev) 
+      for (iter=o_font_set->font_prim_objs; iter != NULL;
+           iter = g_list_next (iter))
       {
+        o_current = (OBJECT *)iter->data;
         printf("  %s\n", o_current->name);	
       }
     } else {
@@ -253,7 +237,7 @@ void o_text_print_set(void)
  *  \param [in] needed_char unicode character to load
  *  return a character OBJECT
  */
-OBJECT *o_text_load_font(TOPLEVEL *toplevel, gunichar needed_char)
+GList *o_text_load_font (TOPLEVEL *toplevel, gunichar needed_char)
 {
   gchar *temp_string = NULL;
   OBJECT *o_font_set;
@@ -309,7 +293,7 @@ OBJECT *o_text_load_font(TOPLEVEL *toplevel, gunichar needed_char)
   o_font_set->font_text_size = 100;
 
   o_font_set->name = g_strdup_printf ("%c", needed_char);
-  o_font_set->font_prim_objs = o_text_new_head ();
+  o_font_set->font_prim_objs = NULL;
   
   /* Add it to the list and hash table. Some functions will need it */
   g_hash_table_insert (font_loaded,
@@ -335,14 +319,11 @@ OBJECT *o_text_load_font(TOPLEVEL *toplevel, gunichar needed_char)
 
   o_font_set->font_prim_objs = o_read(toplevel, o_font_set->font_prim_objs,
 				      temp_string, &err);
-  if (o_font_set->font_prim_objs == NULL) {
-    g_assert (err != NULL);
+  if (err != NULL) {
     g_warning ("o_text_basic.c: Failed to read font file: %s\n",
                err->message);
     g_error_free (err);
   }
-
-  o_font_set->font_prim_objs = return_head(o_font_set->font_prim_objs);
 
   g_free(temp_string);
 
@@ -514,14 +495,12 @@ int o_text_width(TOPLEVEL *toplevel, char *string, int size)
  *  
  *  \return the object list of the primary text objects
  */
-OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
-			     char *string, int size, int color, int x, int y,
-			     int alignment, int angle)
+GList *o_text_create_string (TOPLEVEL *toplevel, char *string, int size,
+                             int color, int x, int y, int alignment, int angle)
 {
-  OBJECT *temp_tail=NULL;
-  OBJECT *temp_list;
-  OBJECT *temp_obj;
-  OBJECT *start_of_char;
+  GList *new_obj_list = NULL;
+  GList *start_of_char;
+  OBJECT *new_obj;
   int x_offset;
   int y_offset;
   int text_width;
@@ -539,16 +518,12 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
   gboolean finish_overbar, start_overbar, leave_parser = FALSE;
   gboolean draw_character, draw_tabulator, draw_newline;
 
-  temp_list = object_list;
-
   /* error condition hack */
   if (string == NULL) {
     return(NULL);
   }
 
   /* now read in the chars */
-  temp_tail = toplevel->page_current->object_tail;
-
   text_height = o_text_height(string, size); 
   char_height = o_text_height("a", size);
   text_width = o_text_width(toplevel, string, size/2);
@@ -793,21 +768,20 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
 
       /* Only add the character if there are primary object.
          e.g. the space character doesn't have those */
-      if (o_font_set->font_prim_objs->next != NULL) {
-        start_of_char = temp_list;
-        temp_list = o_list_copy_all(toplevel,
-                                    o_font_set->font_prim_objs->next,
-                                    temp_list, NORMAL_FLAG);
-
-        if (start_of_char != NULL)
-          start_of_char = start_of_char->next;
+      if (o_font_set->font_prim_objs != NULL) {
+        start_of_char = o_glist_copy_all (toplevel,
+                                          o_font_set->font_prim_objs,
+                                          NULL, NORMAL_FLAG);
 
         o_complex_set_color(start_of_char, color);
         o_scale(toplevel, start_of_char, size/2, size/2);
 
         /* Rotate and translate the character to its world position */
-        o_list_rotate_world(toplevel, 0, 0, angle, start_of_char);
-        o_list_translate_world(toplevel, x_offset, y_offset, start_of_char);
+        o_glist_rotate_world (toplevel, 0, 0, angle, start_of_char);
+        o_glist_translate_world (toplevel, x_offset, y_offset, start_of_char);
+
+        /* Add the character to the list of prim_objs*/
+        new_obj_list = g_list_concat (new_obj_list, start_of_char);
       }
 
       /* Calcule the position of the next character */
@@ -882,10 +856,10 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
       /* Now add the overbar (if it is not a zero length overbar) */
       if ((overbar_startx != overbar_endx)
           || (overbar_starty != overbar_endy)) {
-        temp_obj = o_line_new(toplevel, OBJ_LINE, color,
+        new_obj = o_line_new (toplevel, OBJ_LINE, color,
                               overbar_startx, overbar_starty,
                               overbar_endx, overbar_endy);
-        temp_list = s_basic_link_object(temp_obj, temp_list);
+        new_obj_list = g_list_append (new_obj_list, new_obj);
       }
     }
 
@@ -940,9 +914,7 @@ OBJECT *o_text_create_string(TOPLEVEL *toplevel, OBJECT *object_list,
     }
   }
 
-  toplevel->page_current->object_tail = temp_tail;
-
-  return object_list;
+  return new_obj_list;
 }
 
 /*! \brief Creates a text OBJECT and the graphical objects representing it
@@ -973,7 +945,6 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
 		   int visibility, int show_name_value)
 {
   OBJECT *new_node=NULL;
-  OBJECT *temp_list=NULL;
   TEXT *text;
   char *name = NULL;
   char *value = NULL;
@@ -1007,12 +978,11 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
   update_disp_string (new_node);
 
   /* now start working on the complex */
-  temp_list = o_text_new_head ();
 
   if (visibility == VISIBLE ||
       (visibility == INVISIBLE && toplevel->show_hidden_text)) {
     new_node->text->prim_objs =
-      o_text_create_string(toplevel, temp_list,
+      o_text_create_string (toplevel,
                            text->disp_string, size, color,
                            x, y, alignment, angle); 
     new_node->text->displayed_width = o_text_width(toplevel,
@@ -1022,7 +992,6 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
     new_node->text->prim_objs = NULL;
     new_node->text->displayed_width = 0;
     new_node->text->displayed_height = 0;
-    s_delete(toplevel, temp_list);
   }
 
   /* Update bounding box */
@@ -1073,7 +1042,7 @@ void o_text_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list
  */
-OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
+OBJECT *o_text_read (TOPLEVEL *toplevel,
 		    const char *first_line,
 		    TextBuffer *tb,
 		    unsigned int release_ver,
@@ -1202,9 +1171,7 @@ OBJECT *o_text_read(TOPLEVEL *toplevel, OBJECT *object_list,
                        size, visibility, show_name_value);
   g_free(string);
 
-  object_list = s_basic_link_object(new_obj, object_list);
-
-  return(object_list);
+  return new_obj;
 }
 
 /*! \brief read and set infos of a font object
@@ -1341,18 +1308,13 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
 
   update_disp_string (o_current);
 
-  o_list_delete_rest (toplevel, text->prim_objs);
+  s_delete_object_glist (toplevel, text->prim_objs);
+  text->prim_objs = NULL;
 
   if (o_current->visibility == VISIBLE ||
       (o_current->visibility == INVISIBLE && toplevel->show_hidden_text)) {
 
-    /* need to create that head node if complex is null */
-    if (text->prim_objs == NULL) {
-      text->prim_objs = o_text_new_head ();
-    }
-
     text->prim_objs = o_text_create_string (toplevel,
-                                            text->prim_objs,
                                             text->disp_string,
                                             text->size,
                                             o_current->color,
@@ -1370,7 +1332,7 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
                                             text->size);
   } else {
     /* make sure list is truely free */
-    s_delete_list_fromstart (toplevel, text->prim_objs);
+    s_delete_object_glist (toplevel, text->prim_objs);
     text->prim_objs = NULL;
     text->displayed_width = 0;
     text->displayed_height = 0;
@@ -1397,7 +1359,7 @@ void o_text_translate_world(TOPLEVEL *toplevel,
   o_current->text->x = o_current->text->x + dx;
   o_current->text->y = o_current->text->y + dy;
 
-  o_list_translate_world(toplevel, dx, dy, o_current->text->prim_objs);
+  o_glist_translate_world (toplevel, dx, dy, o_current->text->prim_objs);
 
   /* Update bounding box */
   o_text_recalc( toplevel, o_current );
@@ -1450,7 +1412,7 @@ static gboolean delete_font_set (gpointer key, gpointer value,
 
   if (tmp != NULL) {
     if (tmp->font_prim_objs != NULL) {
-      s_delete_list_fromstart (toplevel, tmp->font_prim_objs);
+      s_delete_object_glist (toplevel, tmp->font_prim_objs);
       tmp->font_prim_objs = NULL;
     }
     /* do not use s_delete() as tmp is not fully initialized */
@@ -1852,25 +1814,18 @@ gdouble o_text_shortest_distance(TEXT *text, gint x, gint y)
 {
   gdouble distance;
   gdouble shortest_distance = G_MAXDOUBLE;
-  OBJECT *temp;
+  GList *iter;
 
   if (text == NULL) {
     g_critical("o_text_shortest_distance(): text == NULL\n");
     return G_MAXDOUBLE;
   }
 
-  temp = text->prim_objs;
+  for (iter = text->prim_objs; iter != NULL; iter= g_list_next (iter)) {
+    OBJECT *obj = iter->data;
 
-  if (temp != NULL) {
-    temp = temp->next;
-  }
-
-  while (temp != NULL) {
-    distance = o_shortest_distance(temp, x, y);
-
-    shortest_distance = min(shortest_distance, distance);
-
-    temp = temp->next;
+    distance = o_shortest_distance (obj, x, y);
+    shortest_distance = min (shortest_distance, distance);
   }
 
   return shortest_distance;

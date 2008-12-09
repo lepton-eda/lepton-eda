@@ -284,21 +284,18 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
    * the RC file, it's time to read in the file. */
   if (load_backup_file == 1) {
     /* Load the backup file */
-    o_read (toplevel, toplevel->page_current->object_tail,
-            backup_filename, &tmp_err);
+    toplevel->page_current->object_list = o_read (toplevel, NULL,
+                                                  backup_filename, &tmp_err);
   } else {
     /* Load the original file */
-    o_read (toplevel, toplevel->page_current->object_tail,
-            full_filename, &tmp_err);
+    toplevel->page_current->object_list = o_read (toplevel, NULL,
+                                                  full_filename, &tmp_err);
   }
 
   if (tmp_err == NULL)
     opened = TRUE;
   else
     g_propagate_error (err, tmp_err);
-
-  toplevel->page_current->object_tail =
-    return_tail(toplevel->page_current->object_head);
 
   /* make sure you init net_consolide to false (default) in all */
   /* programs */

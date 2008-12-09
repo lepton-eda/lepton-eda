@@ -330,15 +330,16 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
   int count = 0; /* object count */
   int SHIFTKEY = w_current->SHIFTKEY;
   int left, right, top, bottom;
+  GList *iter;
 	
   left = min(w_current->first_wx, w_current->second_wx);
   right = max(w_current->first_wx, w_current->second_wx);
   top = min(w_current->first_wy, w_current->second_wy);
   bottom = max(w_current->first_wy, w_current->second_wy);
 
-  o_current = toplevel->page_current->object_head;
-
-  while (o_current != NULL) {
+  iter = toplevel->page_current->object_list;
+  while (iter != NULL) {
+    o_current = iter->data;
     /* only select visible objects */
     if (o_current->type != OBJ_HEAD && 
         (o_current->visibility == VISIBLE ||
@@ -353,7 +354,7 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
         count++;
       }
     }
-    o_current = o_current->next;
+    iter = g_list_next (iter);
   }
 
   /* if there were no objects to be found in select box, count will be */
@@ -377,6 +378,7 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
 void o_select_connected_nets(GSCHEM_TOPLEVEL *w_current, OBJECT* o_net)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  GList *o_iter;
   GList *iter1;
   OBJECT *o_current;
   int count=0;
@@ -430,9 +432,10 @@ void o_select_connected_nets(GSCHEM_TOPLEVEL *w_current, OBJECT* o_net)
       break; /* no new netnames in the stack --> finished */
 
     /* get all the nets of the stacked netnames */
-    for (o_current =  toplevel->page_current->object_head->next;
-	 o_current != NULL;
-	 o_current = o_current->next) {
+    for (o_iter =  toplevel->page_current->object_list;
+         o_iter != NULL;
+         o_iter = g_list_next (o_iter)) {
+      o_current = o_iter->data;
       if (o_current->type == OBJ_TEXT
 	  && o_current->attached_to != NULL) {
 	if (o_current->attached_to->type == OBJ_NET) {

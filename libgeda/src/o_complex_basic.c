@@ -99,48 +99,6 @@ int world_get_single_object_bounds(TOPLEVEL *toplevel, OBJECT *o_current,
   return 0;
 }
 
-/*! \brief Return the bounds of the given list of objects.
- *  \par Given a list of objects, calcule the bounds coordinates.
- *  \param [in] toplevel The toplevel structure.
- *  \param [in] complex   The list of objects to look the bounds for.
- *  \param [out] left   pointer to the left coordinate of the object.
- *  \param [out] top    pointer to the top coordinate of the object.
- *  \param [out] right  pointer to the right coordinate of the object.
- *  \param [out] bottom pointer to the bottom coordinate of the object.
- *  \return If any bounds were found for the list of objects
- *  \retval 0 No bounds were found
- *  \retval 1 Bound was found
- */
-int
-world_get_object_list_bounds(TOPLEVEL *toplevel, OBJECT *complex,
-		       int *left, int *top, int *right, int *bottom)
-{
-  OBJECT *o_current=NULL;
-  int rleft, rtop, rright, rbottom;
-  int found = 0;
-
-  o_current = complex;
-
-  // Find the first object with bounds, and set the bounds variables, then expand as necessary
-  while ( o_current != NULL ) {
-    if ( world_get_single_object_bounds( toplevel, o_current, &rleft, &rtop, &rright, &rbottom) ) {
-      if ( found ) {
-        *left = min( *left, rleft );
-        *top = min( *top, rtop );
-        *right = max( *right, rright );
-        *bottom = max( *bottom, rbottom );
-      } else {
-        *left = rleft;
-        *top = rtop;
-        *right = rright;
-        *bottom = rbottom;
-        found = 1;
-      }
-    }
-    o_current = o_current->next;
-  }
-  return found;
-}
 
 /*! \brief Return the bounds of the given GList of objects.
  *  \par Given a list of objects, calcule the bounds coordinates.
@@ -211,25 +169,8 @@ void world_get_complex_bounds(TOPLEVEL *toplevel, OBJECT *complex,
                      complex->type == OBJ_PLACEHOLDER) &&
                     complex->complex != NULL);
 
-  world_get_object_list_bounds (toplevel, complex->complex->prim_objs->next,
-                                left, top, right, bottom);
-
-}
-
-/*! \brief create a new head object
- *  \par Function Description
- *  This function creates a <b>complex_head</b> OBJECT. This OBJECT
- *  is just a special empty object. This object is never modified.
- *  
- *  \return new head OBJECT
- */
-OBJECT *new_head ()
-{
-  OBJECT *new_node=NULL;
-
-  new_node = s_basic_new_object(OBJ_HEAD, "complex_head");
-
-  return new_node;
+  world_get_object_glist_bounds (toplevel, complex->complex->prim_objs,
+                                 left, top, right, bottom);
 }
 
 /*! \brief check whether an object is a attributes
@@ -305,26 +246,26 @@ int o_complex_is_embedded(OBJECT *o_current)
  *  \param [in]  o_head   The head of the object list
  *  \returns              A GList of attribute OBJECTs
  */
-GList *o_complex_get_toplevel_attribs (TOPLEVEL *toplevel, OBJECT *o_head)
+GList *o_complex_get_toplevel_attribs (TOPLEVEL *toplevel, GList *obj_list)
 {
   OBJECT *o_current;
-  GList *o_list = NULL;
+  GList *attr_list = NULL;
+  GList *iter;
 
-  for (o_current = o_head;
-       o_current != NULL;
-       o_current = o_current->next) {
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    o_current = iter->data;
 
     if (o_current->type == OBJ_TEXT &&
         o_current->attached_to == NULL &&
         o_attrib_get_name_value (o_current->text->string, NULL, NULL)) {
 
-      o_list = g_list_prepend (o_list, o_current);
+      attr_list = g_list_prepend (attr_list, o_current);
     }
   }
 
-  o_list = g_list_reverse (o_list);
+  attr_list = g_list_reverse (attr_list);
 
-  return o_list;
+  return attr_list;
 }
 
 
@@ -367,13 +308,9 @@ GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
       continue;
 
     if (detach) {
-      /* Remove and isolate it from the complex list */
-      if (tmp->next)
-        tmp->next->prev = tmp->prev;
-      if (tmp->prev)
-        tmp->prev->next = tmp->next;
-      tmp->next = tmp->prev = NULL;
       tmp->complex_parent = NULL;
+      object->complex->prim_objs =
+        g_list_remove (object->complex->prim_objs, tmp);
     }
 
     promoted = g_list_prepend (promoted, tmp);
@@ -394,33 +331,24 @@ GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
  *
  *  \param [in]  toplevel The toplevel environment.
  *  \param [in]  object   The complex object who's attributes are being promtoed.
+ *  \param [in]  obj_list The object list which recieves the new objects
+ *  \returns The start
  */
-void o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
+void o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object,
+                                GList **obj_list)
 {
-  GList *promoted;
-  OBJECT *first_promoted, *last_promoted;
+  GList *promoted, *last;
 
   promoted = o_complex_get_promotable (toplevel, object, TRUE);
-
-  if (promoted == NULL)
-    return;
-
-  /* Link the promoted OBJECTs together */
-  o_glist_relink_objects (promoted);
-
-  first_promoted = promoted->data;
-  last_promoted = g_list_last (promoted)->data;
-
-  /* Insert promoted attributes before the complex in the object list */
-  first_promoted->prev = object->prev;
-  object->prev->next = first_promoted;
-  last_promoted->next = object;
-  object->prev = last_promoted;
 
   /* Attach promoted attributes to the original complex object */
   o_attrib_attach_list (toplevel, promoted, object);
 
-  g_list_free (promoted);
+  /* Insert the promoted attributes before the tail of the object list */
+  last = g_list_last (*obj_list);
+  *obj_list = g_list_remove_link (*obj_list, last);
+  *obj_list = g_list_concat (*obj_list, promoted);
+  *obj_list = g_list_concat (*obj_list, last);
 }
 
 
@@ -474,16 +402,15 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
 		      int selectable)
 {
   OBJECT *new_node=NULL;
-  OBJECT *prim_objs=NULL;
   OBJECT *new_prim_obj;
-  OBJECT *tmp;
+  GList *prim_objs;
+  GList *iter;
   int save_adding_sel = 0;
   int loaded_normally = FALSE;
 
   gchar *buffer;
 
   new_node = s_basic_new_object(type, "complex");
-  new_node->type = type;
 
   if (clib != NULL) {
     new_node->complex_basename = g_strdup (s_clib_symbol_get_name (clib));
@@ -493,27 +420,23 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
 
 
   new_node->complex_embedded = FALSE;
-
   new_node->color = color;
-	
+
   new_node->complex = (COMPLEX *) g_malloc(sizeof(COMPLEX));
-	
   new_node->complex->angle = angle;
   new_node->complex->mirror = mirror;
-
   new_node->complex->x = x;
   new_node->complex->y = y;
 
-  new_node->draw_func = complex_draw_func;  
+  new_node->draw_func = complex_draw_func;
 
-  if (selectable) { 
+  if (selectable) {
     new_node->sel_func = select_func;
   } else {
     new_node->sel_func = NULL;
   }
 
-  /* this was at the beginning and p_complex was = to complex */
-  prim_objs = new_head ();
+  prim_objs = NULL;
 
   /* get the symbol data */
   if (clib != NULL) {
@@ -525,16 +448,12 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
 
   if (clib == NULL || buffer == NULL) {
 
-    OBJECT *save_prim_objs;
     char *not_found_text = NULL;
     int left, right, top, bottom;
     int x_offset, y_offset;
 
     /* filename was NOT found */
     loaded_normally = FALSE;
-
-    /* save the prim_objs pointer, since the following code modifies it */
-    save_prim_objs = prim_objs;
 
     /* Put placeholder into object list.  Changed by SDB on
      * 1.19.2005 to fix problem that symbols were silently
@@ -545,11 +464,11 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
     new_prim_obj = o_line_new(toplevel, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
                            x - 50, y, x + 50, y);
-    prim_objs = s_basic_link_object(new_prim_obj, prim_objs);
+    prim_objs = g_list_append (prim_objs, new_prim_obj);
     new_prim_obj = o_line_new(toplevel, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
                            x, y + 50, x, y - 50); 
-    prim_objs = s_basic_link_object(new_prim_obj, prim_objs);
+    prim_objs = g_list_append (prim_objs, new_prim_obj);
 
     /* Add some useful text */
     not_found_text = 
@@ -561,13 +480,12 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
                            y + NOT_FOUND_TEXT_Y, LOWER_LEFT, 0, 
                            not_found_text, 8,
                            VISIBLE, SHOW_NAME_VALUE);
-    prim_objs = s_basic_link_object(new_prim_obj, prim_objs);
+    prim_objs = g_list_append (prim_objs, new_prim_obj);
     g_free(not_found_text);
 
     /* figure out where to put the hazard triangle */
-    world_get_text_bounds(toplevel, prim_objs,
-                          &left, &top, &right, &bottom);
-    x_offset = (right - left) / 4;  
+    world_get_text_bounds (toplevel, new_prim_obj, &left, &top, &right, &bottom);
+    x_offset = (right - left) / 4;
     y_offset = bottom - top + 100;  /* 100 is just an additional offset */
 
     /* add hazard triangle */
@@ -579,7 +497,7 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
                            y + NOT_FOUND_TEXT_Y + y_offset); 
     o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
-    prim_objs = s_basic_link_object(new_prim_obj, prim_objs);
+    prim_objs = g_list_append (prim_objs, new_prim_obj);
     new_prim_obj = o_line_new(toplevel, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
                            x + NOT_FOUND_TEXT_X + x_offset, 
@@ -588,7 +506,7 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
                            y + NOT_FOUND_TEXT_Y + y_offset + 500); 
     o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
-    prim_objs = s_basic_link_object(new_prim_obj, prim_objs);
+    prim_objs = g_list_append (prim_objs, new_prim_obj);
     new_prim_obj = o_line_new(toplevel, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
                            x + NOT_FOUND_TEXT_X + x_offset + 300, 
@@ -597,15 +515,14 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
                            y + NOT_FOUND_TEXT_Y + y_offset); 
     o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
-    prim_objs = s_basic_link_object(new_prim_obj, prim_objs);
+    prim_objs = g_list_append (prim_objs, new_prim_obj);
     new_prim_obj = o_text_new(toplevel,
                            OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
                            x + NOT_FOUND_TEXT_X + x_offset + 270, 
                            y + NOT_FOUND_TEXT_Y + y_offset + 90, 
                            LOWER_LEFT, 0, "!", 18,
                            VISIBLE, SHOW_NAME_VALUE);
-    prim_objs = s_basic_link_object(new_prim_obj, prim_objs);
-    prim_objs = save_prim_objs;
+    prim_objs = g_list_append (prim_objs, new_prim_obj);
 
   } else {
 
@@ -613,10 +530,10 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
     loaded_normally = TRUE;
 
     /* add connections till translated */
-    o_read_buffer(toplevel, prim_objs, buffer, -1, new_node->complex_basename);
+    prim_objs = o_read_buffer (toplevel, prim_objs, buffer, -1, new_node->complex_basename);
 
     g_free (buffer);
-    
+
   }
   toplevel->ADDING_SEL = save_adding_sel;
 
@@ -625,11 +542,11 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
    */
   if (loaded_normally == TRUE) {
     if (mirror) {
-      o_list_mirror_world(toplevel, 0, 0, prim_objs);
+      o_glist_mirror_world (toplevel, 0, 0, prim_objs);
     }
 
-    o_list_rotate_world(toplevel, 0, 0, angle, prim_objs);
-    o_list_translate_world(toplevel, x, y, prim_objs);
+    o_glist_rotate_world (toplevel, 0, 0, angle, prim_objs);
+    o_glist_translate_world (toplevel, x, y, prim_objs);
 
     if (!toplevel->ADDING_SEL) {
      s_conn_update_complex(toplevel, prim_objs);
@@ -639,7 +556,8 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
   new_node->complex->prim_objs = prim_objs;
 
   /* set the parent field now */
-  for (tmp = prim_objs; tmp != NULL; tmp = tmp->next) {
+  for (iter = prim_objs; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *tmp = iter->data;
     tmp->complex_parent = new_node;
   }
 
@@ -667,9 +585,7 @@ OBJECT *o_complex_new_embedded(TOPLEVEL *toplevel,
 			       char type, int color, int x, int y, int angle, int mirror,
 			       const gchar *basename, int selectable)
 {
-  OBJECT *prim_objs=NULL;
   OBJECT *new_node=NULL;
-  OBJECT *tmp;
 
   new_node = s_basic_new_object(type, "complex");
 
@@ -695,14 +611,7 @@ OBJECT *o_complex_new_embedded(TOPLEVEL *toplevel,
     new_node->sel_func = NULL;
   }
 
-  /* this was at the beginning and p_complex was = to complex */
-  prim_objs = new_head ();
-  new_node->complex->prim_objs = prim_objs;
-
-  /* set the parent field now */
-  for (tmp = prim_objs; tmp != NULL; tmp = tmp->next) {
-    tmp->complex_parent = new_node;
-  }
+  new_node->complex->prim_objs = NULL;
 
   /* don't have to translate/rotate/mirror here at all since the */
   /* object is in place */
@@ -750,9 +659,9 @@ void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *
  *  \todo Don't use fixed-length string for symbol basename
  */
-OBJECT *o_complex_read(TOPLEVEL *toplevel, OBJECT *object_list,
-		       char buf[], unsigned int release_ver,
-		       unsigned int fileformat_ver)
+OBJECT *o_complex_read (TOPLEVEL *toplevel,
+                        char buf[], unsigned int release_ver,
+                        unsigned int fileformat_ver)
 {
   OBJECT *new_obj;
   char type; 
@@ -810,9 +719,7 @@ OBJECT *o_complex_read(TOPLEVEL *toplevel, OBJECT *object_list,
      o_complex_remove_promotable_attribs (toplevel, new_obj);
   }
 
-  object_list = s_basic_link_object(new_obj, object_list);
-
-  return object_list;
+  return new_obj;
 }
 
 /*! \brief Create a string representation of the complex object
@@ -871,7 +778,7 @@ void o_complex_translate_world(TOPLEVEL *toplevel, int dx, int dy,
   object->complex->x = object->complex->x + dx;
   object->complex->y = object->complex->y + dy;
 
-  o_list_translate_world(toplevel, dx, dy, object->complex->prim_objs);
+  o_glist_translate_world (toplevel, dx, dy, object->complex->prim_objs);
 
   o_complex_recalc (toplevel, object);
 }
@@ -898,12 +805,8 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   } else {
     color = o_current->saved_color;
   }
-	
-  if (o_current->sel_func) {
-    selectable = TRUE;	
-  } else {
-    selectable = FALSE;	
-  }
+
+  selectable = (o_current->sel_func != NULL);
 
   clib = s_clib_get_symbol_by_name (o_current->complex_basename);
 
@@ -939,8 +842,7 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj=NULL;
-  OBJECT *temp_list;
-  OBJECT *tmp;
+  GList *iter;
   int color;
   int selectable;
 
@@ -952,11 +854,7 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *o_current)
     color = o_current->saved_color;
   }
 
-  if (o_current->sel_func) {
-    selectable = TRUE;	
-  } else {
-    selectable = FALSE;	
-  }
+  selectable = (o_current->sel_func != NULL);
 
   new_obj = o_complex_new_embedded (toplevel, o_current->type, color,
                                     o_current->complex->x, o_current->complex->y,
@@ -966,16 +864,14 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *o_current)
                                     selectable);
 
   /* deal with stuff that has changed */
-	
-  temp_list = o_list_copy_all(toplevel,
-                              o_current->complex->prim_objs->next,
-                              new_obj->complex->prim_objs, 
-                              toplevel->ADDING_SEL);
-	
-  new_obj->complex->prim_objs = return_head(temp_list);
+
+  new_obj->complex->prim_objs =
+    o_glist_copy_all (toplevel, o_current->complex->prim_objs,
+                      new_obj->complex->prim_objs, toplevel->ADDING_SEL);
 
   /* set the parent field now */
-  for (tmp = new_obj->complex->prim_objs; tmp != NULL; tmp = tmp->next) {
+  for (iter = new_obj->complex->prim_objs; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *tmp = iter->data;
     tmp->complex_parent = new_obj;
   }
 
@@ -997,13 +893,15 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *o_current)
  *
  *  \note This function is mainly used to change the color of text objects
  */
-void o_complex_set_color(OBJECT *prim_objs, int color)
+void o_complex_set_color (GList *prim_objs, int color)
 {
   OBJECT *o_current=NULL;
+  GList *iter;
 
-  o_current = prim_objs;
+  iter = prim_objs;
 
-  while ( o_current != NULL ) {
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     switch(o_current->type) {
       case(OBJ_LINE):
       case(OBJ_NET):
@@ -1029,7 +927,7 @@ void o_complex_set_color(OBJECT *prim_objs, int color)
         break;
 
     }
-    o_current=o_current->next;
+    iter = g_list_next (iter);
   }
 }
 
@@ -1077,13 +975,15 @@ void o_complex_set_color_single(OBJECT *o_current, int color)
  *  \par Function Description
  *
  */
-void o_complex_set_color_save(OBJECT *complex, int color)
+void o_complex_set_color_save (GList *list, int color)
 {
   OBJECT *o_current=NULL;
+  GList *iter;
 
-  o_current = complex;
+  iter = list;
 
-  while ( o_current != NULL ) {
+  while ( iter != NULL ) {
+    o_current = (OBJECT *)iter->data;
     switch(o_current->type) {
       case(OBJ_LINE):
       case(OBJ_NET):
@@ -1116,7 +1016,7 @@ void o_complex_set_color_save(OBJECT *complex, int color)
         break;
 
     }
-    o_current=o_current->next;
+    iter = g_list_next (iter);
   }
 }
 
@@ -1125,13 +1025,15 @@ void o_complex_set_color_save(OBJECT *complex, int color)
  *  \par Function Description
  *
  */
-void o_complex_unset_color(OBJECT *complex)
+void o_complex_unset_color (GList *list)
 {
   OBJECT *o_current=NULL;
+  GList *iter;
 
-  o_current = complex;
+  iter = list;
 
-  while ( o_current != NULL ) {
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     switch(o_current->type) {
       case(OBJ_LINE):
       case(OBJ_NET):
@@ -1162,7 +1064,7 @@ void o_complex_unset_color(OBJECT *complex)
         break;
 
     }
-    o_current=o_current->next;
+    iter = g_list_next (iter);
   }
 }
 
@@ -1210,13 +1112,15 @@ void o_complex_unset_color_single(OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_complex_set_saved_color_only(OBJECT *complex, int color)
+void o_complex_set_saved_color_only (GList *list, int color)
 {
   OBJECT *o_current=NULL;
+  GList *iter;
 
-  o_current = complex;
+  iter = list;
 
-  while ( o_current != NULL ) {
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     switch(o_current->type) {
       case(OBJ_LINE):
       case(OBJ_NET):
@@ -1242,37 +1146,39 @@ void o_complex_set_saved_color_only(OBJECT *complex, int color)
         break;
 
     }
-    o_current=o_current->next;
+    iter = g_list_next (iter);
   }
 }
 
 /*! \brief get the nth pin of a object list
  *  \par Function Description
- *  Search the nth pin the object list \a o_list and return it.
+ *  Search the nth pin the object list \a list and return it.
  *  
- *  \param o_list   the object list to search through
+ *  \param list     the object list to search through
  *  \param counter  specifies the nth pin
  *  \return the counter'th pin object, NULL if there is no more pin
  */
-OBJECT *o_complex_return_nth_pin(OBJECT *o_list, int counter)
+OBJECT *o_complex_return_nth_pin (GList *list, int counter)
 {
   OBJECT *o_current;
   int internal_counter=0;
-	
-  o_current = o_list;
-	
-  while (o_current != NULL) {
+  GList *iter;
+
+  iter = list;
+
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
     if (o_current->type == OBJ_PIN) {
-			
+
       if (counter == internal_counter) {
         return(o_current);
       } else {
-        internal_counter++;	
+        internal_counter++;
       }
-    }	
-    o_current = o_current->next;
+    }
+    iter = g_list_next (iter);
   }
-	
+
   return(NULL);
 }
 
@@ -1304,7 +1210,7 @@ void o_complex_rotate_world(TOPLEVEL *toplevel,
   o_complex_translate_world(toplevel,
                             -object->complex->x,
                             -object->complex->y, object);
-  o_list_rotate_world(toplevel, 0, 0, angle, object->complex->prim_objs);
+  o_glist_rotate_world (toplevel, 0, 0, angle, object->complex->prim_objs);
 
   object->complex->x = 0;
   object->complex->y = 0;
@@ -1338,7 +1244,7 @@ void o_complex_mirror_world(TOPLEVEL *toplevel,
                             -object->complex->x,
                             -object->complex->y, object);
 
-  o_list_mirror_world( toplevel, 0, 0, object->complex->prim_objs );
+  o_glist_mirror_world (toplevel, 0, 0, object->complex->prim_objs);
 
   switch(object->complex->angle) {
     case(90):
@@ -1368,22 +1274,22 @@ void o_complex_mirror_world(TOPLEVEL *toplevel,
  */
 OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin) 
 {
-  OBJECT *o_current=NULL;
   OBJECT *found;
+  GList *iter;
 
   g_return_val_if_fail(object != NULL, NULL);
   g_return_val_if_fail(((object->type == OBJ_COMPLEX) ||
 			(object->type == OBJ_PLACEHOLDER)) , NULL);
   g_return_val_if_fail(object->complex != NULL, NULL);
 
-
   /* go inside complex objects */
-  o_current = object->complex->prim_objs;
+  for (iter = object->complex->prim_objs;
+       iter != NULL;
+       iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
 
-  while ( o_current != NULL ) {
     switch(o_current->type) {
       case(OBJ_PIN):
-
         /* Search for the pin making sure that */
         /* any found attribute starts with "pinnumber" */
         found = o_attrib_search_attrib_value(o_current->attribs, pin,
@@ -1397,7 +1303,6 @@ OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin)
         }
         break;
     }
-    o_current=o_current->next;
   }
   return(NULL);
 }
@@ -1414,6 +1319,7 @@ int o_complex_count_pins(OBJECT *object)
 {
   OBJECT *o_current=NULL;
   int pin_counter=0;
+  GList *iter;
 
   g_return_val_if_fail(object != NULL, 0);
   g_return_val_if_fail(((object->type == OBJ_COMPLEX) ||
@@ -1427,16 +1333,17 @@ int o_complex_count_pins(OBJECT *object)
    * file (usually, objects from the .sym file).
    * Then iterate over this list looking for pins and
    * counting them. */
-  o_current = object->complex->prim_objs;
+  iter = object->complex->prim_objs;
 
-  while ( o_current != NULL ) {
+  while ( iter != NULL ) {
+    o_current = (OBJECT *)iter->data;
     switch(o_current->type) {
       case(OBJ_PIN):
 
 	pin_counter++;
         break;
     }
-    o_current=o_current->next;
+    iter = g_list_next (iter);
   }
   return(pin_counter);
 }
@@ -1637,25 +1544,18 @@ gdouble o_complex_shortest_distance(COMPLEX *complex, gint x, gint y)
 {
   gdouble distance;
   gdouble shortest_distance = G_MAXDOUBLE;
-  OBJECT *temp;
+  GList *iter;
 
   if (complex == NULL) {
     g_critical("o_complex_shortest_distance(): complex == NULL\n");
     return G_MAXDOUBLE;
   }
 
-  temp = complex->prim_objs;
+  for (iter = complex->prim_objs; iter != NULL; iter= g_list_next (iter)) {
+    OBJECT *obj = iter->data;
 
-  if (temp != NULL) {
-    temp = temp->next;
-  }
-
-  while (temp != NULL) {
-    distance = o_shortest_distance(temp, x, y);
-
-    shortest_distance = min(shortest_distance, distance);
-
-    temp = temp->next;
+    distance = o_shortest_distance (obj, x, y);
+    shortest_distance = min (shortest_distance, distance);
   }
 
   return shortest_distance;
