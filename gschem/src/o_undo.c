@@ -120,7 +120,7 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
 
     o_list_copy_all(toplevel,
                     toplevel->page_current->object_head->next,
-                    object_head, NORMAL_FLAG);
+                    object_head, SELECTION_FLAG);
   }
 
   /* Clear Anything above current */
