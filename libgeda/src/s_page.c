@@ -512,6 +512,15 @@ gint s_page_autosave (TOPLEVEL *toplevel)
   return toplevel->auto_save_interval;
 }
 
+/*! \brief Append an OBJECT to the PAGE
+ *
+ *  \par Function Description
+ *  Links the passed OBJECT to the end of the PAGE's
+ *  linked list of objects.
+ *
+ *  \param [in] page    The PAGE the object is being added to.
+ *  \param [in] object  The OBJECT being added to the page.
+ */
 void s_page_append (PAGE *page, OBJECT *object)
 {
   page->object_tail = s_basic_link_object(object, page->object_tail);
