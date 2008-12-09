@@ -523,3 +523,17 @@ void s_page_append (PAGE *page, OBJECT *object)
 {
   page->object_list = g_list_append (page->object_list, object);
 }
+
+/*! \brief Remove an OBJECT from the PAGE
+ *
+ *  \par Function Description
+ *  Removes the passed OBJECT from the PAGE's
+ *  linked list of objects.
+ *
+ *  \param [in] page    The PAGE the object is being removed from.
+ *  \param [in] object  The OBJECT being removed from the page.
+ */
+void s_page_remove (PAGE *page, OBJECT *object)
+{
+  page->object_list = g_list_remove (page->object_list, object);
+}

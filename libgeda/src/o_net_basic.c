@@ -586,8 +586,7 @@ int o_net_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
           }
 
           s_conn_remove(toplevel, other_object);
-          toplevel->page_current->object_list =
-            g_list_remove (toplevel->page_current->object_list, other_object);
+          s_page_remove (toplevel->page_current, other_object);
           s_delete(toplevel, other_object);
           o_net_recalc(toplevel, object);
           s_tile_update_object(toplevel, object);

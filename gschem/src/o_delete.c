@@ -54,8 +54,7 @@ void o_delete (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   o_erase_single (w_current, object);
   o_erase_grips (w_current, object);
 
-  toplevel->page_current->object_list =
-    g_list_remove (toplevel->page_current->object_list, object);
+  s_page_remove (toplevel->page_current, object);
   s_delete (toplevel, object);
 
   if (do_conn) {

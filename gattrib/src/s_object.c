@@ -341,8 +341,7 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
  *------------------------------------------------------------------*/
 void s_object_delete_text_object_in_object(TOPLEVEL * pr_current, OBJECT * text_object)
 {
-  pr_current->page_current->object_list =
-    g_list_remove (pr_current->page_current->object_list, text_object);
+  s_page_remove (pr_current->page_current, text_object);
   s_delete(pr_current, text_object);
   pr_current->page_current->CHANGED = 1;
 }
