@@ -919,6 +919,8 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail,
 	
   new_obj->complex->prim_objs = return_head(temp_list);
 
+  o_complex_recalc(toplevel, new_obj);
+
   /* here you need to create a list of attributes which need to be 
    * connected to the new list, probably make an attribute list and
    * fill it with sid's of the attributes */
