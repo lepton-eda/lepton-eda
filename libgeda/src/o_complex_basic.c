@@ -915,7 +915,7 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *list_tail,
   temp_list = o_list_copy_all(toplevel,
                               o_current->complex->prim_objs->next,
                               new_obj->complex->prim_objs, 
-                              NORMAL_FLAG);
+                              toplevel->ADDING_SEL);
 	
   new_obj->complex->prim_objs = return_head(temp_list);
 
