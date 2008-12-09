@@ -514,5 +514,5 @@ gint s_page_autosave (TOPLEVEL *toplevel)
 
 void s_page_append (PAGE *page, OBJECT *object)
 {
-  page->object_tail = s_basic_link_object(new_obj, page->object_tail);
+  page->object_tail = s_basic_link_object(object, page->object_tail);
 }
