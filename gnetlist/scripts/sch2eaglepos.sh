@@ -20,8 +20,15 @@ YOFFSET=33000
 XSCALE=9000
 YSCALE=9000
 
-TMP=/tmp/$$
-grep -B1 refdes= "$FNAME" |sed 's/=/ /' | cut -d" " -f2,3 |grep -v '^--' >/tmp/$$
+tmpdir=/tmp/$$
+mkdir -m 0700 -p $tmpdir
+rc=$?
+if test $rc -ne 0 ; then
+	echo "Failed to create $tmpdir with 0700 permissions.  mkdir returned $rc."
+	exit 1
+fi
+TMP=${tmpdir}/tmpf
+grep -B1 refdes= "$FNAME" |sed 's/=/ /' | cut -d" " -f2,3 |grep -v '^--' >${TMP}
 
 3<$TMP
 while read -u 3; do
@@ -34,4 +41,5 @@ while read -u 3; do
     Y=`echo "scale=5; ($Y - $YOFFSET) / $YSCALE" |bc`
     echo "MOVE '$PART' ($X $Y);"
 done
-rm "$TMP"
+rm -fr "${tmpdir}"
+
