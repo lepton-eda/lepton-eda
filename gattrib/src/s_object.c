@@ -313,8 +313,7 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
                         LOWER_LEFT, 0, /* zero is angle */
                         text_string, DEFAULT_TEXT_SIZE,
                         visibility, show_name_value);
-  pr_current->page_current->object_tail =
-    s_basic_link_object(new_obj, pr_current->page_current->object_tail);
+  s_page_append (pr_current->page_current, new_obj);
 
   /* now pr_current->page_current->object_tail contains new text item */
 

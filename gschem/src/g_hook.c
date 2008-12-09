@@ -703,7 +703,7 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 
   new_obj = o_complex_new (toplevel, 'C', WHITE, x, y, angle, mirror,
                            clib, comp_name, selectable);
-  page->object_tail = s_basic_link_object(new_obj, page->object_tail);
+  s_page_append (page, new_obj);
   o_complex_promote_attribs (toplevel, new_obj);
   
   /* 

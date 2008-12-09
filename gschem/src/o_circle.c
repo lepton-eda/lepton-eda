@@ -587,8 +587,7 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   new_obj = o_circle_new(toplevel, OBJ_CIRCLE, w_current->graphic_color,
                          w_current->first_wx, w_current->first_wy,
                          w_current->distance);
-  toplevel->page_current->object_tail =
-    s_basic_link_object(new_obj, toplevel->page_current->object_tail);
+  s_page_append (toplevel->page_current, new_obj);
 
   /* draw it */
   o_redraw_single(w_current, toplevel->page_current->object_tail);

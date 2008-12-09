@@ -722,8 +722,7 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
       new_net = o_net_new(toplevel, OBJ_NET, color,
                           w_current->first_wx, w_current->first_wy,
                           w_current->second_wx, w_current->second_wy);
-      toplevel->page_current->object_tail =
-        s_basic_link_object(new_net, toplevel->page_current->object_tail);
+      s_page_append (toplevel->page_current, new_net);
 
       /* conn stuff */
       /* LEAK CHECK 1 */
@@ -790,8 +789,7 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
       new_net = o_net_new(toplevel, OBJ_NET, color,
                           w_current->second_wx, w_current->second_wy,
                           w_current->third_wx, w_current->third_wy);
-      toplevel->page_current->object_tail =
-        s_basic_link_object(new_net, toplevel->page_current->object_tail);
+      s_page_append (toplevel->page_current, new_net);
 
       /* conn stuff */
       /* LEAK CHECK 2 */
@@ -1376,8 +1374,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
         new_obj = o_net_new(toplevel, OBJ_NET, color,
                   rippers[i].x[0], rippers[i].y[0],
                   rippers[i].x[1], rippers[i].y[1]);
-        toplevel->page_current->object_tail =
-          s_basic_link_object(new_obj, toplevel->page_current->object_tail);
+        s_page_append (toplevel->page_current, new_obj);
       } else {
 
         if (rippersym != NULL) {
@@ -1386,8 +1383,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
                                    complex_angle, 0,
                                    rippersym,
                                    toplevel->bus_ripper_symname, 1);
-          toplevel->page_current->object_tail =
-            s_basic_link_object(new_obj, toplevel->page_current->object_tail);
+          s_page_append (toplevel->page_current, new_obj);
           o_complex_promote_attribs (toplevel, new_obj);
 
           o_complex_draw (w_current, new_obj);

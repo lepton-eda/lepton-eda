@@ -190,8 +190,7 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
                            object->complex->x, object->complex->y,
                            LOWER_LEFT, 0, /* zero is angle */
                            string, 10, INVISIBLE, SHOW_NAME_VALUE);
-      toplevel->page_current->object_tail =
-        s_basic_link_object(new_obj, toplevel->page_current->object_tail);
+      s_page_append (toplevel->page_current, new_obj);
 
       /* manually attach attribute */
 

@@ -100,8 +100,7 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
     o_current = iter->data;
 
     o_current->next = NULL; /* In case it isn't linked properly */
-    p_current->object_tail =
-      s_basic_link_object (o_current, p_current->object_tail);
+    s_page_append (p_current, o_current);
 
     o_selection_add (toplevel->page_current->selection_list, o_current);
 

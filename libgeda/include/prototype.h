@@ -430,6 +430,7 @@ gboolean s_page_check_changed (GedaPageList *list);
 void s_page_clear_changed (GedaPageList *list);
 void s_page_autosave_init(TOPLEVEL *toplevel);
 gint s_page_autosave (TOPLEVEL *toplevel);
+void s_page_append (PAGE *page, OBJECT *object);
 
 /* s_papersizes.c */
 int s_papersizes_add_entry(char *new_papersize, int width, int height);

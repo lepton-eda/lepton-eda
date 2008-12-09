@@ -110,8 +110,7 @@ void o_picture_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
                           picture_left + picture_width,
                           picture_top - picture_height,
                           0, FALSE, FALSE);
-  toplevel->page_current->object_tail =
-    s_basic_link_object(new_obj, toplevel->page_current->object_tail);
+  s_page_append (toplevel->page_current, new_obj);
 
   /* draw it */
   o_redraw_single(w_current, toplevel->page_current->object_tail);

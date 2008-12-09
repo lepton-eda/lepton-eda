@@ -800,8 +800,7 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
                        w_current->graphic_color,
                        w_current->first_wx, w_current->first_wy,
                        w_current->second_wx, w_current->second_wy);
-  toplevel->page_current->object_tail =
-    s_basic_link_object(new_obj, toplevel->page_current->object_tail);
+  s_page_append (toplevel->page_current, new_obj);
 
   o_redraw_single(w_current, toplevel->page_current->object_tail);
   

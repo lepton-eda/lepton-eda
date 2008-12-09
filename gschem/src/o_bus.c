@@ -261,8 +261,7 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   new_obj = o_bus_new(toplevel, OBJ_BUS, color,
                       w_current->first_wx, w_current->first_wy,
                       w_current->second_wx, w_current->second_wy, 0);
-  toplevel->page_current->object_tail =
-    s_basic_link_object(new_obj, toplevel->page_current->object_tail);
+  s_page_append (toplevel->page_current, new_obj);
 
   o_bus_draw(w_current, new_obj);
 

@@ -241,8 +241,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
              LOWER_LEFT, 0, /* zero is angle */
              text_string,  w_current->text_size,  /* current text size */
              visibility, show_name_value);
-  toplevel->page_current->object_tail =
-    s_basic_link_object(new_obj, toplevel->page_current->object_tail);
+  s_page_append (toplevel->page_current, new_obj);
 
   /* now toplevel->page_current->object_tail contains new text item */
 

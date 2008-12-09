@@ -832,8 +832,7 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   new_obj = o_box_new(toplevel, OBJ_BOX, w_current->graphic_color,
                       box_left, box_top,
                       box_left + box_width, box_top - box_height);
-  toplevel->page_current->object_tail =
-    s_basic_link_object(new_obj, toplevel->page_current->object_tail);
+  s_page_append (toplevel->page_current, new_obj);
 
   /* draw it */
   o_redraw_single(w_current, toplevel->page_current->object_tail);
