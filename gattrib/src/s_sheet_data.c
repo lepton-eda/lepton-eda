@@ -120,11 +120,10 @@ void s_sheet_data_add_master_comp_list_items(OBJECT *start_obj) {
       printf("In s_sheet_data_add_master_comp_list_items, examining o_current->name = %s\n", o_current->name);
 #endif
 
-      /*-----  only process if this is a non-graphical comp with attributes ----*/
-      if ( (o_current->type == OBJ_COMPLEX) &&
-	    o_current->attribs && 
-	    !o_attrib_search_component(o_current, "graphical") ) {    
-	
+      /*-----  only process if this is a component with attributes ----*/
+      if (o_current->type == OBJ_COMPLEX &&
+          o_current->attribs != NULL) {
+
 #if DEBUG
 	printf("      In s_sheet_data_add_master_comp_list_items; found component on page\n");
 	printf(". . . . complex_basename = %s.\n", o_current->complex_basename);
@@ -186,12 +185,10 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
       printf("In s_sheet_data_add_master_comp_attrib_list_items, examining o_current->name = %s\n", o_current->name);
 #endif
 
-      /*-----  only process if this is a non-graphical comp with attributes ----*/
-      if ( (o_current->type == OBJ_COMPLEX) &&
-	    o_current->attribs && 
-	    !o_attrib_search_component(o_current, "graphical") ) {    
+      /*-----  only process if this is a component with attributes ----*/
+      if (o_current->type == OBJ_COMPLEX &&
+          o_current->attribs != NULL) {
 
-	
 	verbose_print(" C");
 	
 	/*------ Iterate through all attribs found on component -----*/
@@ -332,8 +329,8 @@ void s_sheet_data_add_master_pin_list_items(OBJECT *start_obj) {
 	  
 	} else {          /* didn't find refdes.  Report error to log. */
 #ifdef DEBUG
-	  fprintf(stderr, "In s_sheet_data_add_master_pin_list_items, found non-graphical component with no refdes.\n");
-	  fprintf(stderr, ". . . . complex_basename = %s.\n", o_current->complex_basename);
+          fprintf(stderr, "In s_sheet_data_add_master_pin_list_items, found component with no refdes.\n");
+          fprintf(stderr, ". . . . complex_basename = %s.\n", o_current->complex_basename);
 #endif
 	}
 	g_free(temp_uref);

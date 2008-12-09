@@ -264,10 +264,9 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
 #endif
 
     /* -----  Now process objects found on page  ----- */
-    if ( (o_current->type == OBJ_COMPLEX) &&
-          o_current->attribs &&
-         !o_attrib_search_component(o_current, "graphical") ) {
-                                                              
+    if (o_current->type == OBJ_COMPLEX &&
+        o_current->attribs != NULL) {
+
       /* ---- Don't process part if it lacks a refdes ----- */
       temp_uref = g_strdup(s_attrib_get_refdes(o_current));
       if (temp_uref) {
@@ -456,10 +455,9 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
 #endif
 
     /* -----  Now process objects found on page  ----- */
-    if ( (o_current->type == OBJ_COMPLEX) &&
-          o_current->attribs &&
-         !o_attrib_search_component(o_current, "graphical") ) {
-                                                              
+    if (o_current->type == OBJ_COMPLEX &&
+        o_current->attribs != NULL) {
+
       /* ---- Don't process part if it lacks a refdes ----- */
       temp_uref = s_attrib_get_refdes(o_current);
       if (temp_uref) {
