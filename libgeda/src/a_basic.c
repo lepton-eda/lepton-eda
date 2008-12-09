@@ -390,8 +390,9 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         }
 
         /* slots only apply to complex objects */
-        if (new_obj->type == OBJ_COMPLEX ||
-            new_obj->type == OBJ_PLACEHOLDER) {
+        if (new_obj != NULL &&
+            (new_obj->type == OBJ_COMPLEX ||
+             new_obj->type == OBJ_PLACEHOLDER)) {
           o_attrib_slot_update (toplevel, new_obj);
         }
 
@@ -401,8 +402,9 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
       case(START_EMBEDDED):
         new_obj = object_list->data;
 
-        if (new_obj->type == OBJ_COMPLEX ||
-            new_obj->type == OBJ_PLACEHOLDER) {
+        if (new_obj != NULL &&
+            (new_obj->type == OBJ_COMPLEX ||
+             new_obj->type == OBJ_PLACEHOLDER)) {
 
           object_list_save = object_list;
           object_list = new_obj->complex->prim_objs;
@@ -468,6 +470,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
       default:
         fprintf(stderr, _("Read garbage in [%s] :\n>>\n%s<<\n"),
                 name, line);
+        new_obj = NULL;
         break;
     }
 
