@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # icon-theme-installer
 # Copyright (C) 2006 Novell, Inc.
@@ -108,7 +108,7 @@ if test ! -x $(echo "$MKINSTALLDIRS_EXEC" | cut -f1 -d' '); then
 	exit 1
 fi
 
-if test ! -x $(echo "$INSTALL_DATA_EXEC" | cut -f1 -d' '); then
+if test ! -x `echo "$INSTALL_DATA_EXEC" | cut -f1 -d' '`; then
 	echo "Cannot find '$INSTALL_DATA_EXEC'; You probably want to pass -x \$(INSTALL_DATA)"
 	exit 1
 fi
