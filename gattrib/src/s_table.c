@@ -209,6 +209,14 @@ STRING_LIST *s_table_create_attrib_pair(gchar *row_name,
   attrib_pair_list = s_string_list_new();
 
   row = s_table_get_index(row_list, row_name);
+  /* Sanity check */
+  if (row == -1) {
+    /* we didn't find the item in the list */
+    fprintf (stderr,
+             "In s_table_create_attrib_pair, we didn't find the row name in the row list!\n");
+    return attrib_pair_list;
+  }
+
   for (col = 0; col < num_attribs; col++) {
     /* pull attrib from table.  If non-null, add it to attrib_pair_list  */
     if ( (table[row][col]).attrib_value != NULL) {
@@ -300,19 +308,27 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
               /* Get row and col where to put this attrib */
               row = s_table_get_index(sheet_head->master_comp_list_head, temp_uref);
               col = s_table_get_index(sheet_head->master_comp_attrib_list_head, attrib_name);
+              /* Sanity check */
+              if (row == -1 || col == -1) {
+                /* we didn't find the item in the table */
+                fprintf (stderr,
+                         "In s_table_add_toplevel_comp_items_to_comp_table, we didn't find either row or col in the lists!\n");
+              } else {
+
 #if DEBUG
-              printf("       In s_table_add_toplevel_comp_items_to_comp_table, about to add row %d, col %d, attrib_value = %s\n",
-                     row, col, attrib_value);
-              printf(" . . . current address of attrib_value cell is [%p]\n", &((sheet_head->component_table)[row][col]).attrib_value);
+                printf("       In s_table_add_toplevel_comp_items_to_comp_table, about to add row %d, col %d, attrib_value = %s\n",
+                       row, col, attrib_value);
+                printf(" . . . current address of attrib_value cell is [%p]\n", &((sheet_head->component_table)[row][col]).attrib_value);
 #endif
-              /* Is there a compelling reason for me to put this into a separate fcn? */
-              ((sheet_head->component_table)[row][col]).row = row;
-              ((sheet_head->component_table)[row][col]).col = col;
-              ((sheet_head->component_table)[row][col]).row_name = g_strdup(temp_uref);
-              ((sheet_head->component_table)[row][col]).col_name = g_strdup(attrib_name);
-              ((sheet_head->component_table)[row][col]).attrib_value = g_strdup(attrib_value);
-              ((sheet_head->component_table)[row][col]).visibility = old_visibility;
-              ((sheet_head->component_table)[row][col]).show_name_value = old_show_name_value;
+                /* Is there a compelling reason for me to put this into a separate fcn? */
+                ((sheet_head->component_table)[row][col]).row = row;
+                ((sheet_head->component_table)[row][col]).col = col;
+                ((sheet_head->component_table)[row][col]).row_name = g_strdup(temp_uref);
+                ((sheet_head->component_table)[row][col]).col_name = g_strdup(attrib_name);
+                ((sheet_head->component_table)[row][col]).attrib_value = g_strdup(attrib_value);
+                ((sheet_head->component_table)[row][col]).visibility = old_visibility;
+                ((sheet_head->component_table)[row][col]).show_name_value = old_show_name_value;
+              }
             }
             g_free(attrib_name);
             g_free(attrib_text);
@@ -493,18 +509,26 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
 		  /* Get row and col where to put this attrib */
 		  row = s_table_get_index(sheet_head->master_pin_list_head, row_label);
 		  col = s_table_get_index(sheet_head->master_pin_attrib_list_head, attrib_name);
+                  /* Sanity check */
+                  if (row == -1 || col == -1) {
+                    /* we didn't find the item in the table */
+                    fprintf (stderr,
+                             "In s_table_add_toplevel_pin_items_to_pin_table, we didn't find either row or col in the lists!\n");
+                  } else {
+
 #if DEBUG
-		  printf("       In s_table_add_toplevel_pin_items_to_pin_table, about to add row %d, col %d, attrib_value = %s\n",
-			 row, col, attrib_value);
-		  printf(" . . . current address of attrib_value cell is [%p]\n", &((sheet_head->component_table)[row][col]).attrib_value);
+                    printf("       In s_table_add_toplevel_pin_items_to_pin_table, about to add row %d, col %d, attrib_value = %s\n",
+                           row, col, attrib_value);
+                    printf(" . . . current address of attrib_value cell is [%p]\n", &((sheet_head->component_table)[row][col]).attrib_value);
 #endif
-		  /* Is there a compelling reason for me to put this into a separate fcn? */
-		  ((sheet_head->pin_table)[row][col]).row = row;
-		  ((sheet_head->pin_table)[row][col]).col = col;
-		  ((sheet_head->pin_table)[row][col]).row_name = g_strdup(row_label);
-		  ((sheet_head->pin_table)[row][col]).col_name = g_strdup(attrib_name);
-		  ((sheet_head->pin_table)[row][col]).attrib_value = g_strdup(attrib_value);
-		}
+                    /* Is there a compelling reason for me to put this into a separate fcn? */
+                    ((sheet_head->pin_table)[row][col]).row = row;
+                    ((sheet_head->pin_table)[row][col]).col = col;
+                    ((sheet_head->pin_table)[row][col]).row_name = g_strdup(row_label);
+                    ((sheet_head->pin_table)[row][col]).col_name = g_strdup(attrib_name);
+                    ((sheet_head->pin_table)[row][col]).attrib_value = g_strdup(attrib_value);
+                  }
+                }
 		g_free(attrib_name);
 		g_free(attrib_text);
 		g_free(attrib_value);
