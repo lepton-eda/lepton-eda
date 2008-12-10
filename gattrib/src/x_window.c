@@ -195,16 +195,16 @@ static const GtkActionEntry actions[] = {
   { "file-open", GTK_STOCK_OPEN, "Open", "<Control>O", "", menu_file_open},
   { "file-save", GTK_STOCK_SAVE, "Save", "<Control>S", "", menu_file_save},
   { "file-export-csv", NULL, "Export CSV", "", "", menu_file_export_csv},
-  { "file-print", GTK_STOCK_PRINT, "Print", "<Control>P", "", x_dialog_unimplemented_feature},
+  /* { "file-print", GTK_STOCK_PRINT, "Print", "<Control>P", "", x_dialog_unimplemented_feature}, */
   { "file-quit", GTK_STOCK_QUIT, "Quit", "<Control>Q", "", G_CALLBACK(gattrib_really_quit)},
 
   /* Edit menu */
   { "edit", NULL, "_Edit"},
   { "edit-add-attrib", NULL, "Add new attrib column", "", "", menu_edit_newattrib},
   { "edit-delete-attrib", NULL, "Delete attrib column", "", "", menu_edit_delattrib},
-  { "edit-find-attrib", GTK_STOCK_FIND, "Find attrib value", "<Control>F", "", x_dialog_unimplemented_feature},
-  { "edit-search-replace-attrib-value", NULL, "Search and replace attrib value", "", "", x_dialog_unimplemented_feature},
-  { "edit-search-for-refdes", NULL, "Search for refdes", "", "", x_dialog_unimplemented_feature},
+  /* { "edit-find-attrib", GTK_STOCK_FIND, "Find attrib value", "<Control>F", "", x_dialog_unimplemented_feature}, */
+  /* { "edit-search-replace-attrib-value", NULL, "Search and replace attrib value", "", "", x_dialog_unimplemented_feature}, */
+  /* { "edit-search-for-refdes", NULL, "Search for refdes", "", "", x_dialog_unimplemented_feature}, */
 
   /* Visibility menu */
   { "visibility", NULL, "_Visibility"},

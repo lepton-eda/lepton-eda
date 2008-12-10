@@ -5,17 +5,17 @@
       <menuitem action="file-save" />
       <menuitem action="file-export-csv" />
       <separator/>
-      <menuitem action="file-print" />
-      <separator/>
+      <!-- < menuitem action="file-print" / > -->
+      <!-- < separator / > -->
       <menuitem action="file-quit" />
     </menu>
 
     <menu action="edit">
       <menuitem action="edit-add-attrib" />
       <menuitem action="edit-delete-attrib" />
-      <menuitem action="edit-find-attrib" />
-      <menuitem action="edit-search-replace-attrib-value" />
-      <menuitem action="edit-search-for-refdes" />
+      <!-- < menuitem action="edit-find-attrib" / > -->
+      <!-- < menuitem action="edit-search-replace-attrib-value" / > -->
+      <!-- < menuitem action="edit-search-for-refdes" / > -->
     </menu>
 
     <menu action="visibility">
