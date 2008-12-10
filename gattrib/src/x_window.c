@@ -322,6 +322,7 @@ x_window_add_items()
 			      sheet_head->comp_attrib_count, sheet_head->master_comp_attrib_list_head);
   }
 
+#ifdef UNIMPLEMENTED_FEATURES
   /* This is not ready.  I need to implement net attributes */
   if (sheet_head->net_count > 0 ) {
     x_gtksheet_add_row_labels(GTK_SHEET(sheets[1]), 
@@ -332,7 +333,7 @@ x_window_add_items()
     x_gtksheet_add_row_labels(GTK_SHEET(sheets[1]), 1, NULL);
     x_gtksheet_add_col_labels(GTK_SHEET(sheets[1]), 1, NULL);
   }  
-
+#endif
 
   if (sheet_head->pin_count > 0 ) {
     x_gtksheet_add_row_labels(GTK_SHEET(sheets[2]), 
@@ -357,6 +358,7 @@ x_window_add_items()
     }
   }
 
+#ifdef UNIMPLEMENTED_FEATURES
   /* ------ Net sheet: put values in the individual cells ------- */
   num_rows = sheet_head->net_count;
   num_cols = sheet_head->net_attrib_count;
@@ -372,6 +374,7 @@ x_window_add_items()
       }
     }
   }
+#endif
 
   /* ------ Pin sheet: put pin attribs in the individual cells ------- */
   num_rows = sheet_head->pin_count;

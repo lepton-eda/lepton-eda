@@ -84,6 +84,7 @@ x_gtksheet_init()
   }
   
 
+#ifdef UNIMPLEMENTED_FEATURES
   /* -----  Nets  ----- */
   if ((sheet_head->net_count > 0) && (sheet_head->net_attrib_count >0)) {
     sheets[1] = (GtkSheet *) gtk_sheet_new(sheet_head->net_count, sheet_head->net_attrib_count, "Nets");
@@ -96,6 +97,7 @@ x_gtksheet_init()
     gtk_sheet_column_button_justify(sheets[1], 0, GTK_JUSTIFY_LEFT);
     gtk_sheet_set_locked(GTK_SHEET(sheets[1]), TRUE);   /* disallow editing of attribs for now */
   }
+#endif
   
 
   /* -----  Pins  ----- */
