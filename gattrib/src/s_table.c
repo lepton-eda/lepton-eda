@@ -594,6 +594,7 @@ void s_table_gtksheet_to_all_tables() {
 		       num_rows, num_cols);
 #endif
 
+#ifdef UNIMPLEMENTED_FEATURES
   /* Finally, handle component pin sheet */
   num_rows = sheet_head->pin_count;
   num_cols = sheet_head->pin_attrib_count;
@@ -606,6 +607,7 @@ void s_table_gtksheet_to_all_tables() {
   s_table_gtksheet_to_table(local_gtk_sheet, master_row_list, 
 		       master_col_list, local_table,
 		       num_rows, num_cols);
+#endif
 
   return;
 }
