@@ -153,9 +153,10 @@ s_toplevel_gtksheet_to_toplevel()
         iter = g_list_next( iter ) ) {
 
     p_current = (PAGE *)iter->data;
+    pr_current->page_current = p_current;
     /* only traverse pages which are toplevel */
     if (p_current->page_control == 0) {
-      s_toplevel_sheetdata_to_toplevel (p_current->object_list);    /* adds all objects from page */
+      s_toplevel_sheetdata_to_toplevel (p_current);    /* adds all objects from page */
     }
   }
 
@@ -390,8 +391,9 @@ void s_toplevel_select_object()
  * 3.  Finally find and update pin attribs.
  *------------------------------------------------------------------*/
 void
-s_toplevel_sheetdata_to_toplevel (GList *obj_list)
+s_toplevel_sheetdata_to_toplevel (PAGE *page)
 {
+  GList *copy_list;
   GList *o_iter, *prim_iter;
   char *temp_uref;
   STRING_LIST *new_comp_attrib_pair_list;
@@ -401,8 +403,22 @@ s_toplevel_sheetdata_to_toplevel (GList *obj_list)
 #ifdef DEBUG
   printf("-----  In s_toplevel_sheetdata_to_toplevel, handling components\n");
 #endif
-  for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
+
+  /* Work from a copy list, as objects can be deleted
+   * from the list during iteration over the list.
+   */
+  copy_list = g_list_copy (page->object_list);
+
+  /* Iterate backwards since attributes are attached after their
+   * parent objects in the list. Attributes can get deleted during
+   * the iteration.
+   */
+  for (o_iter = g_list_last (copy_list);
+       o_iter != NULL;
+       o_iter = g_list_previous (o_iter)) {
     OBJECT *o_current = o_iter->data;
+
+    printf ("Current object is %p\n", o_current);
 
     /* ------- Object is a component.  Handle component attributes. ------- */
     if (o_current->type == OBJ_COMPLEX) {    /* Note that OBJ_COMPLEX = component + attribs */
@@ -439,6 +455,7 @@ s_toplevel_sheetdata_to_toplevel (GList *obj_list)
 
   }
 
+  g_list_free (copy_list);
 
 #if 0
   /* -----  Next deal with all nets on the page.  ----- */
@@ -452,7 +469,13 @@ s_toplevel_sheetdata_to_toplevel (GList *obj_list)
 #ifdef DEBUG
 	printf("-----  In s_toplevel_sheetdata_to_toplevel, handling pins\n");
 #endif
-  for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
+
+  /* Work from a copy list in case objects are
+   * deleted from the list during its iteration.
+   */
+  copy_list = g_list_copy (page->object_list);
+
+  for (o_iter = copy_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     OBJECT *o_current = o_iter->data;
 
     /* ------- Object is a complex.  Handle pins by looking ------ */
@@ -485,7 +508,9 @@ s_toplevel_sheetdata_to_toplevel (GList *obj_list)
       g_free(temp_uref);
     }
   }
-      
+
+  g_list_free (copy_list);
+
   return;
 }
 
