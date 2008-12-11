@@ -74,7 +74,7 @@ gchar *o_save_buffer (TOPLEVEL *toplevel)
 
   acc = g_string_new (o_file_format_header());
 
-  buffer = o_save_objects (toplevel->page_current->object_list);
+  buffer = o_save_objects (toplevel->page_current->object_list, FALSE);
   g_string_append (acc, buffer);
   g_free (buffer);
 
@@ -87,10 +87,16 @@ gchar *o_save_buffer (TOPLEVEL *toplevel)
  *  libgeda format.  User code should not normally call this function;
  *  they should call o_save_buffer() instead.
  *
- *  \param [in] object_list  Head of list of objects to save.
+ *  With save_attribs passed as FALSE, attribute objects are skipped over,
+ *  and saved separately - after the objects they are attached to. When
+ *  we recurse for saving out those attributes, the function must be called
+ *  with save_attribs passed as TRUE.
+ *
+ *  \param [in] object_list   Head of list of objects to save.
+ *  \param [in] save_attribs  Should attribute objects encounterd be saved?
  *  \returns a buffer containing schematic data or NULL on failure.
  */
-gchar *o_save_objects (GList *object_list)
+gchar *o_save_objects (GList *object_list, gboolean save_attribs)
 {
   OBJECT *o_current;
   GList *iter;
@@ -106,7 +112,7 @@ gchar *o_save_objects (GList *object_list)
     o_current = (OBJECT *)iter->data;
 
     if (o_current->type != OBJ_HEAD &&
-        o_current->attached_to == NULL) {
+        (save_attribs || o_current->attached_to == NULL)) {
 
       switch (o_current->type) {
 
@@ -139,7 +145,7 @@ gchar *o_save_objects (GList *object_list)
           if (o_complex_is_embedded(o_current)) {
             g_string_append(acc, "[\n");
 
-            out = o_save_objects(o_current->complex->prim_objs);
+            out = o_save_objects(o_current->complex->prim_objs, FALSE);
             g_string_append (acc, out);
             g_free(out);
 
@@ -193,9 +199,13 @@ gchar *o_save_objects (GList *object_list)
 
       /* save any attributes */
       if (o_current->attribs != NULL) {
-        out = o_save_attribs(o_current->attribs);
-        g_string_append(acc, out);
-        g_free (out);
+        g_string_append (acc, "{\n");
+
+        out = o_save_objects (o_current->attribs, TRUE);
+        g_string_append (acc, out);
+        g_free(out);
+
+        g_string_append (acc, "}\n");
       }
     }
 

@@ -1,5 +1,5 @@
 /* a_basic.c */
-gchar *o_save_objects(GList *object_list);
+gchar *o_save_objects(GList *object_list, gboolean save_attribs);
 
 /* f_print.c */
 void f_print_set_line_width(FILE *fp, int width);
@@ -95,7 +95,6 @@ GList *o_read_attribs(TOPLEVEL *toplevel,
                       TextBuffer *tb,
                       unsigned int release_ver,
                       unsigned int fileformat_ver);
-gchar *o_save_attribs(GList *attribs);
 
 /* o_basic.c */
 void o_bounds_invalidate(TOPLEVEL *toplevel, OBJECT *object);
