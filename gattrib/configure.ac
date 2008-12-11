@@ -190,28 +190,22 @@ AC_CHECK_LIB(dl, dlopen, DL_LIB="-ldl", DL_LIB="")
 
 
 ############################################################################
-##  This is looks for GTK2.4.
+##  This is looks for GTK
 #                                                                                      
-# Search for gtk+ 2.4.x 
-PKG_CHECK_MODULES(GTK24, gtk+-2.0 >= 2.4.0, GTK24="yes", no_GTK24="yes")
+# Search for gtk+ 2.8.x
+PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.8.0, GTK="yes", no_GTK="yes")
 
 # This next bit of code figures out what gtk we need to use.
-if test "$GTK24" = "yes" 
+if test "$GTK" = "yes"
 then
-
-   AC_DEFINE(HAS_GTK24, 1, [If gtk+ 2.4.x has been installed, define this])
-   GTK_CFLAGS=$GTK24_CFLAGS
-   GTK_LIBS=$GTK24_LIBS
    GTK_VERSION=`$PKG_CONFIG gtk+-2.0 --modversion`
 
    # Search for glib
-   PKG_CHECK_MODULES(GLIB24, glib-2.0 >= 2.4.0, GLIB24="yes", no_GLIB24="yes")
-   if test "$GLIB24" != "yes"
+   PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.8.0, GLIB="yes", no_GLIB="yes")
+   if test "$GLIB" != "yes"
    then
-       AC_MSG_ERROR([Cannot find glib 2.4.x, install it and rerun ./configure.])
+       AC_MSG_ERROR([Cannot find glib 2.8.0 or later, please install it and rerun ./configure.])
    fi
-   GLIB_CFLAGS=$GLIB24_CFLAGS
-   GLIB_LIBS=$GLIB24_LIBS
    GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
 
 ##   GTKITEMENTRY_SOURCE=gtkitementry_2_2.c gtkitementry_2_2.h
@@ -227,19 +221,15 @@ else
    GTK_VERSION=""
 fi
 
-                                                                                      
 if test "$GTK_VERSION" = ""
 then
-   AC_MSG_ERROR([Cannot find gtk+ 2.4.x or later, please install gtk+.])
+   AC_MSG_ERROR([Cannot find gtk+ 2.8.0 or later, please install it and rerun ./configure.])
 fi
 
-##  These tell Makefile.am which package to compile
-AM_CONDITIONAL(GTK24_SOURCE, test "$GLIB24" = "yes")
-                                                                                      
 #
-# Check for gtk+ 2.4 end
+# Check for gtk+ end
 ############################################################################
-                                                                                      
+
 
 ############################################################################
 # Check for libgeda start
