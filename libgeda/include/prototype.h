@@ -321,7 +321,6 @@ OBJECT *s_basic_new_object(char type, char const *prefix);
 void print_struct_forw(GList *list);
 void print_struct(OBJECT *ptr);
 void s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current);
-void s_delete(TOPLEVEL *toplevel, OBJECT *o_current);
 void s_delete_object_glist(TOPLEVEL *toplevel, GList *list);
 char *remove_nl(char *string);
 char *remove_last_nl(char *string);

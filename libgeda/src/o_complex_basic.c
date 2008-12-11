@@ -379,9 +379,9 @@ void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *object)
   for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
     OBJECT *a_object = iter->data;
     if (toplevel->keep_invisible == TRUE) {
-      a_object->visibility = INVISIBLE; /* Hide promotable attributes */
+      a_object->visibility = INVISIBLE;     /* Hide promotable attributes */
     } else {
-      s_delete (toplevel, a_object);    /* Delete promotable attributes */
+      s_delete_object (toplevel, a_object); /* Delete promotable attributes */
     }
   }
 

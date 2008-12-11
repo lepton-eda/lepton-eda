@@ -1415,7 +1415,7 @@ static gboolean delete_font_set (gpointer key, gpointer value,
       s_delete_object_glist (toplevel, tmp->font_prim_objs);
       tmp->font_prim_objs = NULL;
     }
-    /* do not use s_delete() as tmp is not fully initialized */
+    /* do not use s_delete_object () as tmp is not fully initialized */
     g_free (tmp->name);
 
     /* Do not free tmp here since it will be freed with the function */

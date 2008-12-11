@@ -331,26 +331,6 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void
-s_delete(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  if (o_current != NULL) {
-
-
-#if DEBUG
-    printf("sdel: %s\n", o_current->name);
-    printf("sdel: %d\n", o_current->sid);
-#endif
-
-    s_delete_object(toplevel, o_current);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 /* deletes everything include the GList */
 void
 s_delete_object_glist(TOPLEVEL *toplevel, GList *list)
