@@ -414,6 +414,7 @@ void s_page_autosave_init(TOPLEVEL *toplevel);
 gint s_page_autosave (TOPLEVEL *toplevel);
 void s_page_append (PAGE *page, OBJECT *object);
 void s_page_remove (PAGE *page, OBJECT *object);
+void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page);
 
 /* s_papersizes.c */
 int s_papersizes_add_entry(char *new_papersize, int width, int height);

@@ -189,8 +189,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   g_object_unref( page->selection_list );
 
   /* then delete objects of page */
-  s_delete_object_glist (toplevel, page->object_list);
-  page->object_list = NULL;
+  s_page_delete_objects (toplevel, page);
 
   /* Free the objects in the place list. */
   s_delete_object_glist (toplevel, page->place_list);
@@ -536,4 +535,18 @@ void s_page_append (PAGE *page, OBJECT *object)
 void s_page_remove (PAGE *page, OBJECT *object)
 {
   page->object_list = g_list_remove (page->object_list, object);
+}
+
+/*! \brief Remove and free all OBJECTs from the PAGE
+ *
+ *  \par Function Description
+ *  Removes and frees all OBJECTs from the PAGE.
+ *
+ *  \param [in] toplevel  The TOPLEVEL object.
+ *  \param [in] page      The PAGE being cleared.
+ */
+void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page)
+{
+  s_delete_object_glist (toplevel, page->object_list);
+  page->object_list = NULL;
 }

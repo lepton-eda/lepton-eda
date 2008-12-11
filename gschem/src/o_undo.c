@@ -371,8 +371,7 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
 
   } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_list) {
 
-    s_delete_object_glist (toplevel, toplevel->page_current->object_list);
-    toplevel->page_current->object_list = NULL;
+    s_page_delete_objects (toplevel, toplevel->page_current);
 
     toplevel->page_current->object_list =
       o_glist_copy_all (toplevel, u_current->object_list,
