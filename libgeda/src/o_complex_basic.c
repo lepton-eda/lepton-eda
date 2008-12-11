@@ -242,9 +242,9 @@ int o_complex_is_embedded(OBJECT *o_current)
  *  \par Function Description
  *  Returns a GList of all attribute OBJECTs
  *
- *  \param [in]  toplevel The toplevel environment.
- *  \param [in]  o_head   The head of the object list
- *  \returns              A GList of attribute OBJECTs
+ *  \param [in]  toplevel  The toplevel environment.
+ *  \param [in]  obj_list  The object list to search for attributes
+ *  \returns               A GList of attribute OBJECTs
  */
 GList *o_complex_get_toplevel_attribs (TOPLEVEL *toplevel, GList *obj_list)
 {
