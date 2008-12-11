@@ -418,8 +418,6 @@ s_toplevel_sheetdata_to_toplevel (PAGE *page)
        o_iter = g_list_previous (o_iter)) {
     OBJECT *o_current = o_iter->data;
 
-    printf ("Current object is %p\n", o_current);
-
     /* ------- Object is a component.  Handle component attributes. ------- */
     if (o_current->type == OBJ_COMPLEX) {    /* Note that OBJ_COMPLEX = component + attribs */
 
@@ -475,7 +473,9 @@ s_toplevel_sheetdata_to_toplevel (PAGE *page)
    */
   copy_list = g_list_copy (page->object_list);
 
-  for (o_iter = copy_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
+  for (o_iter = g_list_last (copy_list);
+       o_iter != NULL;
+       o_iter = g_list_previous (o_iter)) {
     OBJECT *o_current = o_iter->data;
 
     /* ------- Object is a complex.  Handle pins by looking ------ */
