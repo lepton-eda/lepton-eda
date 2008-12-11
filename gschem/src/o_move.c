@@ -114,11 +114,11 @@ void o_move_end_lowlevel (GSCHEM_TOPLEVEL *w_current,
     case (OBJ_PIN):
       /* save the other objects and remove object's connections */
       *other_objects = s_conn_return_others (*other_objects, object);
-      s_conn_remove (object);
+      s_conn_remove (toplevel, object);
 
       /* do the actual translation */
       o_translate_world (toplevel, diff_x, diff_y, object);
-      s_conn_update_object (object);
+      s_conn_update_object (toplevel, object);
       *connected_objects = s_conn_return_others (*connected_objects, object);
       break;
 
@@ -520,7 +520,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
           /* save the other objects and remove object's connections */
           *other_objects =
             s_conn_return_others(*other_objects, object);
-          s_conn_remove (object);
+          s_conn_remove (toplevel, object);
 
           x = object->line->x[whichone];
           y = object->line->y[whichone];
@@ -546,7 +546,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
           } else {
             o_recalc_single_object(toplevel, object);
             s_tile_update_object(toplevel, object);
-            s_conn_update_object (object);
+            s_conn_update_object (toplevel, object);
             *connected_objects =
               s_conn_return_others(*connected_objects, object);
             *objects = g_list_append(*objects, object);
@@ -565,7 +565,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
           /* save the other objects and remove object's connections */
           *other_objects =
             s_conn_return_others(*other_objects, object);
-          s_conn_remove (object);
+          s_conn_remove (toplevel, object);
 
           x = object->line->x[whichone];
           y = object->line->y[whichone];
@@ -588,7 +588,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
           } else {
             o_recalc_single_object(toplevel, object);
             s_tile_update_object(toplevel, object);
-            s_conn_update_object (object);
+            s_conn_update_object (toplevel, object);
             *connected_objects =
               s_conn_return_others(*connected_objects, object);
             *objects = g_list_append(*objects, object);

@@ -226,7 +226,7 @@ void
 s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   if (o_current != NULL) {
-    s_conn_remove (o_current);
+    s_conn_remove (toplevel, o_current);
 
     if (o_current->attached_to != NULL) {
       /* do the actual remove */

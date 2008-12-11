@@ -103,11 +103,11 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
 
     /* Update object connectivity */
     if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
-      s_conn_update_complex (o_current->complex->prim_objs);
+      s_conn_update_complex (toplevel, o_current->complex->prim_objs);
       connected_objects =
         s_conn_return_complex_others (connected_objects, o_current);
     } else {
-      s_conn_update_object (o_current);
+      s_conn_update_object (toplevel, o_current);
       connected_objects = s_conn_return_others (connected_objects, o_current);
     }
   }

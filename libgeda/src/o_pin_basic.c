@@ -94,7 +94,7 @@ OBJECT *o_pin_new(TOPLEVEL *toplevel,
   
   if (!toplevel->ADDING_SEL) {
     s_tile_add_line_object(toplevel, new_node);
-    s_conn_update_object (new_node);
+    s_conn_update_object (toplevel, new_node);
   }
 
   return new_node;

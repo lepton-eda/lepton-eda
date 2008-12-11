@@ -95,7 +95,7 @@ OBJECT *o_bus_new(TOPLEVEL *toplevel,
   s_tile_add_line_object(toplevel, new_node);
 
   if (!toplevel->ADDING_SEL) {
-    s_conn_update_object (new_node);
+    s_conn_update_object (toplevel, new_node);
   }
 
   return new_node;

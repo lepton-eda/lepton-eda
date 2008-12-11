@@ -110,11 +110,13 @@ int s_conn_uniq(GList * conn_list, CONN * input_conn)
  *  \par Function Description
  *  This function removes the OBJECT <b>to_remove</b> from the connection
  *  list of the OBJECT <b>other_object</b>.
+ *  \param toplevel (currently not used)
  *  \param other_object OBJECT from that the to_remove OBJECT needs to be removed
  *  \param to_remove OBJECT to remove
  *  \return TRUE if a connection has been deleted, FALSE otherwise
  */
-int s_conn_remove_other (OBJECT *other_object, OBJECT *to_remove)
+int s_conn_remove_other (TOPLEVEL *toplevel, OBJECT *other_object,
+                         OBJECT *to_remove)
 {
     GList *c_current = NULL;
     CONN *conn = NULL;
@@ -160,9 +162,10 @@ int s_conn_remove_other (OBJECT *other_object, OBJECT *to_remove)
  *  \par Function Description
  *  This function removes all connections from and to the OBJECT
  *  <b>to_remove</b>.
+ *  \param toplevel (currently not used)
  *  \param to_remove OBJECT to unconnected from all other objects
  */
-void s_conn_remove (OBJECT *to_remove)
+void s_conn_remove (TOPLEVEL *toplevel, OBJECT *to_remove)
 {
   GList *c_current;
   CONN *conn;
@@ -182,7 +185,8 @@ void s_conn_remove (OBJECT *to_remove)
 
     /* keep calling this till it returns false (all refs removed) */
     /* there is NO body to this while loop */
-    while (s_conn_remove_other (conn->other_object, to_remove));
+    while (s_conn_remove_other
+           (toplevel, conn->other_object, to_remove));
 
 #if DEBUG
     printf("returned from remove_other\n");
@@ -214,10 +218,11 @@ void s_conn_remove (OBJECT *to_remove)
  *  This function removes all connections from and to the underlying 
  *  OBJECTS of the given complex OBJECT
  *  <b>to_remove</b>.
+ *  \param toplevel (currently not used)
  *  \param to_remove OBJECT to unconnected from all other objects
  *
  */
-void s_conn_remove_complex (OBJECT *to_remove)
+void s_conn_remove_complex (TOPLEVEL *toplevel, OBJECT *to_remove)
 {
   OBJECT *o_current;
   GList *iter;
@@ -233,7 +238,7 @@ void s_conn_remove_complex (OBJECT *to_remove)
       case (OBJ_NET):
       case (OBJ_PIN):
       case (OBJ_BUS):
-        s_conn_remove (o_current);
+        s_conn_remove (toplevel, o_current);
         break;
 
     }
@@ -301,9 +306,10 @@ OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y)
  *  <b>object</b> to all other connectable objects. It adds connections
  *  to the object and from all other
  *  objects to this one.
+ *  \param toplevel (currently not used)
  *  \param object OBJECT to add into the connection system
  */
-void s_conn_update_object (OBJECT * object)
+void s_conn_update_object (TOPLEVEL *toplevel, OBJECT *object)
 {
   TILE *t_current;
   GList *tl_current;
@@ -707,9 +713,10 @@ void s_conn_update_object (OBJECT * object)
  *  \par Function Description
  *  This function adds all underlying OBJECTs of a complex OBJECT
  *  <b>complex</b> into the connection system.
+ *  \param toplevel (currently not used)
  *  \param complex complex OBJECT to add into the connection system
  */
-void s_conn_update_complex (GList* list)
+void s_conn_update_complex (TOPLEVEL *toplevel, GList *list)
 {
   OBJECT *o_current;
   GList *iter;
@@ -721,7 +728,7 @@ void s_conn_update_complex (GList* list)
       case (OBJ_PIN):
       case (OBJ_NET):
       case (OBJ_BUS):
-        s_conn_update_object (o_current);
+        s_conn_update_object (toplevel, o_current);
         break;
 
     }
