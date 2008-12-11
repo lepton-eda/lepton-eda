@@ -549,7 +549,7 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
     o_glist_translate_world (toplevel, x, y, prim_objs);
 
     if (!toplevel->ADDING_SEL) {
-     s_conn_update_complex(toplevel, prim_objs);
+     s_conn_update_complex (prim_objs);
     }
   }
 

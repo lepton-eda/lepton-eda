@@ -255,9 +255,9 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
   while (iter != NULL) {
     o_current = iter->data;
     if (o_current->type != OBJ_COMPLEX && o_current->type != OBJ_PLACEHOLDER) {
-      s_conn_remove(toplevel, o_current);
+      s_conn_remove (o_current);
     } else {
-      s_conn_remove_complex(toplevel, o_current);
+      s_conn_remove_complex (o_current);
     }
     iter = g_list_next (iter);
   }
@@ -277,9 +277,9 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
   while (iter != NULL) {
     o_current = iter->data;
     if (o_current->type != OBJ_COMPLEX && o_current->type != OBJ_PLACEHOLDER) {
-      s_conn_update_object(toplevel, o_current);
+      s_conn_update_object (o_current);
     } else {
-      s_conn_update_complex(toplevel, o_current->complex->prim_objs);
+      s_conn_update_complex (o_current->complex->prim_objs);
     }
     iter = g_list_next (iter);
   }

@@ -218,13 +218,13 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
       case OBJ_PLACEHOLDER:
         other_objects =
           s_conn_return_complex_others(other_objects, o_current);
-        s_conn_remove_complex (toplevel, o_current);
+        s_conn_remove_complex (o_current);
         break;
       case OBJ_NET:
       case OBJ_PIN:
       case OBJ_BUS:
         other_objects = s_conn_return_others(other_objects, o_current);
-        s_conn_remove (toplevel, o_current);
+        s_conn_remove (o_current);
         break;
     }
     o_iter = g_list_next (o_iter);
@@ -242,14 +242,14 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
     switch (o_current->type) {
       case OBJ_COMPLEX:
       case OBJ_PLACEHOLDER:
-        s_conn_update_complex(toplevel, o_current->complex->prim_objs);
+        s_conn_update_complex (o_current->complex->prim_objs);
         connected_objects =
           s_conn_return_complex_others(connected_objects, o_current);
         break;
       case OBJ_NET:
       case OBJ_PIN:
       case OBJ_BUS:
-        s_conn_update_object(toplevel, o_current);
+        s_conn_update_object (o_current);
         connected_objects = s_conn_return_others(connected_objects, o_current);
         break;
     }
@@ -348,13 +348,13 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
       case OBJ_PLACEHOLDER:
         other_objects =
           s_conn_return_complex_others(other_objects, o_current);
-        s_conn_remove_complex (toplevel, o_current);
+        s_conn_remove_complex (o_current);
         break;
       case OBJ_NET:
       case OBJ_PIN:
       case OBJ_BUS:
         other_objects = s_conn_return_others(other_objects, o_current);
-        s_conn_remove (toplevel, o_current);
+        s_conn_remove (o_current);
         break;
     }
     o_iter = g_list_next (o_iter);
@@ -372,14 +372,14 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
     switch (o_current->type) {
       case OBJ_COMPLEX:
       case OBJ_PLACEHOLDER:
-        s_conn_update_complex(toplevel, o_current->complex->prim_objs);
+        s_conn_update_complex (o_current->complex->prim_objs);
         connected_objects =
           s_conn_return_complex_others(connected_objects, o_current);
         break;
       case OBJ_NET:
       case OBJ_PIN:
       case OBJ_BUS:
-        s_conn_update_object(toplevel, o_current);
+        s_conn_update_object (o_current);
         connected_objects = s_conn_return_others(connected_objects, o_current);
         break;
     }
@@ -759,7 +759,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   /* erase the complex object */
   o_erase_single (w_current, o_current);
   /* delete its connections */
-  s_conn_remove_complex (toplevel, o_current);
+  s_conn_remove_complex (o_current);
   /* and unselect it */
   o_selection_remove( toplevel->page_current->selection_list, o_current);
 
@@ -841,7 +841,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   o_recalc_single_object(toplevel, o_current);
 
   /* reconnect, re-select and redraw */
-  s_conn_update_complex (toplevel, o_current->complex->prim_objs);
+  s_conn_update_complex (o_current->complex->prim_objs);
   o_selection_add( toplevel->page_current->selection_list, o_current );
   o_redraw_single (w_current, o_current);
 

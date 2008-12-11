@@ -89,7 +89,7 @@ OBJECT *o_net_new(TOPLEVEL *toplevel, char type,
 
   if (!toplevel->ADDING_SEL) {
     s_tile_add_line_object(toplevel, new_node);
-    s_conn_update_object(toplevel, new_node);
+    s_conn_update_object (new_node);
   }
 
   return new_node;
@@ -585,12 +585,12 @@ int o_net_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
             o_selection_add( toplevel->page_current->selection_list, object );
           }
 
-          s_conn_remove(toplevel, other_object);
+          s_conn_remove (other_object);
           s_page_remove (toplevel->page_current, other_object);
           s_delete(toplevel, other_object);
           o_net_recalc(toplevel, object);
           s_tile_update_object(toplevel, object);
-          s_conn_update_object(toplevel, object);
+          s_conn_update_object (object);
           return(-1);
         }
       }

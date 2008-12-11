@@ -359,12 +359,12 @@ void s_color_destroy_all(void);
 /* s_conn.c */
 CONN *s_conn_return_new(OBJECT *other_object, int type, int x, int y, int whichone, int other_whichone);
 int s_conn_uniq(GList *conn_list, CONN *input_conn);
-int s_conn_remove_other(TOPLEVEL *toplevel, OBJECT *other_object, OBJECT *to_remove);
-void s_conn_remove(TOPLEVEL *toplevel, OBJECT *to_remove);
-void s_conn_remove_complex(TOPLEVEL *toplevel, OBJECT *to_remove);
+int s_conn_remove_other(OBJECT *other_object, OBJECT *to_remove);
+void s_conn_remove(OBJECT *to_remove);
+void s_conn_remove_complex(OBJECT *to_remove);
 OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y);
-void s_conn_update_object(TOPLEVEL *toplevel, OBJECT *object);
-void s_conn_update_complex(TOPLEVEL *toplevel, GList *list);
+void s_conn_update_object(OBJECT *object);
+void s_conn_update_complex(GList *list);
 void s_conn_print(GList *conn_list);
 int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list);
 GList *s_conn_return_others(GList *input_list, OBJECT *object);
