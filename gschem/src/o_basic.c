@@ -69,16 +69,18 @@ void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
       case(ENDCOMP):
       case(ENDTEXT):
       case(ENDPASTE):
-        o_place_rubberplace_xor (w_current, TRUE);
+        /* Redraw the rubberband objects (if they were previously visible) */
+        if (w_current->rubber_visible)
+          o_place_rubberplace_xor (w_current, TRUE);
         break;
 
       case(STARTDRAWNET):
       case(DRAWNET):
       case(NETCONT):
         w_current->magnetic_visible=0;
+        w_current->rubber_visible = 0;
         break;
     }
-    w_current->rubber_visible=0;
   }
 }
 
@@ -469,7 +471,6 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
 
   switch (w_current->event_state) {
     /* all states with something on the dc */
-    case(DRAWCOMP):
     case(ENDCOMP):
       /* De-select the lists in the component selector */
       x_compselect_deselect (w_current);
@@ -530,7 +531,6 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
     case(DRAWARC):
     case(DRAWPICTURE):
     case(DRAWPIN):
-    case(DRAWTEXT):
     case(ENDMIRROR):
     case(ENDPICTURE):
     case(ENDROTATEP):

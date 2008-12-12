@@ -283,6 +283,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
           i_update_toolbar(w_current);
         } else {
           o_place_rubberplace_xor (w_current, TRUE);
+          w_current->rubber_visible = 1;
         }
         break;
 
@@ -573,6 +574,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         w_current->inside_action = 1;
         /* Keep the state and the inside_action, as the copy has not finished. */
         o_place_rubberplace_xor (w_current, TRUE);
+        w_current->rubber_visible = 1;
         i_set_state(w_current, ENDMCOPY);
         i_update_toolbar(w_current);
         o_undo_savestate(w_current, UNDO_ALL);
@@ -858,18 +860,6 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     case(ENDPIN):
     if (w_current->inside_action)
       o_pin_rubberpin(w_current, w_x, w_y);
-    break;
-
-    case(DRAWCOMP):
-    o_complex_start(w_current, w_x, w_y);
-    w_current->event_state = ENDCOMP;
-    w_current->inside_action = 1;
-    break;
-
-    case(DRAWTEXT):
-    o_text_start(w_current, w_x, w_y);
-    w_current->event_state = ENDTEXT;
-    w_current->inside_action = 1;
     break;
 
     case(COPY):

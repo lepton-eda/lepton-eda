@@ -137,20 +137,17 @@ x_compselect_callback_response (GtkDialog *dialog,
               g_assert_not_reached ();
         }
 
-        switch (w_current->event_state) {
-          case ENDCOMP:
-            /* Undraw the component which was being placed */
+        if (w_current->event_state == ENDCOMP) {
+          /* Delete the component which was being placed */
+          if (w_current->rubber_visible)
             o_place_rubberplace_xor (w_current, FALSE);
-            /* Fall through */
-          case DRAWCOMP:
-            s_delete_object_glist (toplevel,
-                                   toplevel->page_current->place_list);
-            toplevel->page_current->place_list = NULL;
-            break;
-
-          default:
-            /* Cancel whatever other action is currently in progress */
-            o_redraw_cleanstates (w_current);
+          w_current->rubber_visible = 0;
+          s_delete_object_glist (toplevel,
+                                 toplevel->page_current->place_list);
+          toplevel->page_current->place_list = NULL;
+        } else {
+          /* Cancel whatever other action is currently in progress */
+          o_redraw_cleanstates (w_current);
         }
 
         if (symbol == NULL) {
@@ -182,8 +179,7 @@ x_compselect_callback_response (GtkDialog *dialog,
         gtk_widget_destroy (GTK_WIDGET (dialog));
         w_current->cswindow = NULL;
 
-        if (w_current->event_state == ENDCOMP ||
-            w_current->event_state == DRAWCOMP) {
+        if (w_current->event_state == ENDCOMP) {
 
           /* Cancel the place operation currently in progress */
           o_redraw_cleanstates (w_current);

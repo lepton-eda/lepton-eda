@@ -160,6 +160,7 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
   diff_y = w_current->second_wy - w_current->first_wy;
 
   o_move_rubbermove_xor (w_current, FALSE);
+  w_current->rubber_visible = 0;
 
   if (w_current->netconn_rubberband) {
     o_move_end_rubberband(w_current, diff_x, diff_y,

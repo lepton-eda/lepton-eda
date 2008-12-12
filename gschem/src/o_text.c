@@ -297,18 +297,7 @@ void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text)
                              VISIBLE, SHOW_NAME_VALUE));
 
   w_current->inside_action = 1;
-  i_set_state(w_current, DRAWTEXT);
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
-*  \par Function Description
-*
-*/
-void o_text_start (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
-{
-  o_place_start (w_current, w_x, w_y);
+  i_set_state (w_current, ENDTEXT);
 }
 
 

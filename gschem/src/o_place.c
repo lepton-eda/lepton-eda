@@ -37,6 +37,7 @@ void o_place_start (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->second_wy = w_y;
 
   o_place_rubberplace_xor (w_current, TRUE);
+  w_current->rubber_visible = 1;
 }
 
 /*! \todo Finish function documentation!!!
@@ -59,6 +60,7 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
 
   /* erase old image */
   o_place_rubberplace_xor (w_current, FALSE);
+  w_current->rubber_visible = 0;
 
   /* Calc final object positions */
   w_current->second_wx = w_x;
@@ -127,10 +129,12 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
  */
 void o_place_rubberplace (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  o_place_rubberplace_xor (w_current, FALSE);
+  if (w_current->rubber_visible)
+    o_place_rubberplace_xor (w_current, FALSE);
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
   o_place_rubberplace_xor (w_current, TRUE);
+  w_current->rubber_visible = 1;
 }
 
 

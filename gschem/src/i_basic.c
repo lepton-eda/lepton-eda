@@ -75,11 +75,9 @@ static const char *i_status_string(GSCHEM_TOPLEVEL *w_current)
     case SBOX:
     case GRIPS:
       return _("Select Mode");
-    case DRAWCOMP:
     case ENDCOMP:
       return _("Component Mode"); /*EK* new */
     case ENDTEXT:
-    case DRAWTEXT:
       return _("Text Mode"); /*EK* new */
     case STARTCOPY:
     case ENDCOPY:
@@ -311,7 +309,6 @@ void i_update_toolbar(GSCHEM_TOPLEVEL *w_current)
 				   w_current->toolbar_bus), TRUE);
       break;
       
-    case(DRAWCOMP): /*! \todo */
     case(DRAWLINE): /*! \todo */
     case(DRAWBOX): /*! \todo */
     case(DRAWPICTURE): /*! \todo */
@@ -334,7 +331,6 @@ void i_update_toolbar(GSCHEM_TOPLEVEL *w_current)
     case(ENDARC): /*! \todo */
     case(ENDPIN): /*! \todo */
     case(ENDCOMP): /*! \todo */
-    case(DRAWTEXT): /*! \todo */
     case(ENDTEXT): /*! \todo */
     case(ENDROTATEP): /*! \todo */
     case(ENDMIRROR): /*! \todo */

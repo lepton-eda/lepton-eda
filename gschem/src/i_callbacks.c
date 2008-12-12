@@ -3479,6 +3479,7 @@ DEFINE_I_CALLBACK(cancel)
 
     /* Undraw any XOR outline of the place list */
     o_place_rubberplace_xor(w_current, FALSE);
+    w_current->rubber_visible = 0;
 
     /* De-select the lists in the component selector */
     x_compselect_deselect (w_current);
