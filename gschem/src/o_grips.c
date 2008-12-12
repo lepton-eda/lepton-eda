@@ -1509,7 +1509,7 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
 
   other_objects = s_conn_return_others(other_objects, o_current);
 
-  s_conn_remove (toplevel, o_current);
+  s_conn_remove_object (toplevel, o_current);
   o_net_modify (toplevel, o_current, w_current->second_wx,
                 w_current->second_wy, w_current->which_grip);
   s_conn_update_object (toplevel, o_current);
@@ -1591,7 +1591,7 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
 
   other_objects = s_conn_return_others(other_objects, o_current);
 
-  s_conn_remove (toplevel, o_current);
+  s_conn_remove_object (toplevel, o_current);
   o_pin_modify (toplevel, o_current, w_current->second_wx,
                 w_current->second_wy, w_current->which_grip);
   s_conn_update_object (toplevel, o_current);
@@ -1656,7 +1656,7 @@ void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_erase_single(w_current, o_current);
 
   other_objects = s_conn_return_others(other_objects, o_current);
-  s_conn_remove (toplevel, o_current);
+  s_conn_remove_object (toplevel, o_current);
 
   o_bus_modify (toplevel, o_current, w_current->second_wx,
                 w_current->second_wy, w_current->which_grip);

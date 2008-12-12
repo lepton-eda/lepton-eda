@@ -158,6 +158,26 @@ int s_conn_remove_other (TOPLEVEL *toplevel, OBJECT *other_object,
     return (FALSE);
 }
 
+/*! \brief removes a GList of OBJECTs from the connection system
+ *
+ *  \par Function Description
+ *  This function removes all connections from and to the OBJECTS
+ *  of the given GList.
+ *
+ *  \param toplevel  (currently not used)
+ *  \param obj_list  GList of OBJECTs to unconnected from all other objects
+ */
+static void s_conn_remove_glist (TOPLEVEL *toplevel, GList *obj_list)
+{
+  OBJECT *o_current;
+  GList *iter;
+
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    o_current = iter->data;
+    s_conn_remove_object (toplevel, o_current);
+  }
+}
+
 /*! \brief remove an OBJECT from the connection system
  *  \par Function Description
  *  This function removes all connections from and to the OBJECT
@@ -165,84 +185,36 @@ int s_conn_remove_other (TOPLEVEL *toplevel, OBJECT *other_object,
  *  \param toplevel (currently not used)
  *  \param to_remove OBJECT to unconnected from all other objects
  */
-void s_conn_remove (TOPLEVEL *toplevel, OBJECT *to_remove)
+void s_conn_remove_object (TOPLEVEL *toplevel, OBJECT *to_remove)
 {
-  GList *c_current;
+  GList *c_iter;
   CONN *conn;
 
-  if (to_remove->type != OBJ_PIN && to_remove->type != OBJ_NET &&
-      to_remove->type != OBJ_BUS) {
-    return;
-  }
+  switch (to_remove->type) {
+    case OBJ_PIN:
+    case OBJ_NET:
+    case OBJ_BUS:
+      for (c_iter = to_remove->conn_list;
+           c_iter != NULL;
+           c_iter = g_list_next (c_iter)) {
+        conn = c_iter->data;
 
-  c_current = to_remove->conn_list;
-  while (c_current != NULL) {
-    conn = (CONN *) c_current->data;
+        /* keep calling this till it returns false (all refs removed) */
+        /* there is NO body to this while loop */
+        while (s_conn_remove_other (toplevel, conn->other_object, to_remove));
 
-#if DEBUG
-    printf("Removing: %s\n", conn->other_object->name);
-#endif
+        c_iter->data = NULL;
+        g_free (conn);
+      }
 
-    /* keep calling this till it returns false (all refs removed) */
-    /* there is NO body to this while loop */
-    while (s_conn_remove_other
-           (toplevel, conn->other_object, to_remove));
+      g_list_free (to_remove->conn_list);
+      to_remove->conn_list = NULL;
+      break;
 
-#if DEBUG
-    printf("returned from remove_other\n");
-    printf("Freeing: %s %d %d\n", conn->other_object->name, conn->x,
-           conn->y);
-#endif
-    c_current->data = NULL;
-    g_free(conn);
-    c_current = g_list_next(c_current);
-  }
-
-#if DEBUG
-  printf("length: %d\n", g_list_length(to_remove->conn_list));
-#endif
-
-  g_list_free(to_remove->conn_list);
-  to_remove->conn_list = NULL; /*! \todo Memory leak? TODO hack */
-
-#if 0 /* this does not work right either */
-  if (to_remove->type == OBJ_BUS)
-  {
-    to_remove->bus_ripper_direction = 0;
-  }
-#endif
-}
-
-/*! \brief remove a complex OBJECT from the connection system
- *  \par Function Description
- *  This function removes all connections from and to the underlying 
- *  OBJECTS of the given complex OBJECT
- *  <b>to_remove</b>.
- *  \param toplevel (currently not used)
- *  \param to_remove OBJECT to unconnected from all other objects
- *
- */
-void s_conn_remove_complex (TOPLEVEL *toplevel, OBJECT *to_remove)
-{
-  OBJECT *o_current;
-  GList *iter;
-
-  if (to_remove->type != OBJ_COMPLEX && to_remove->type != OBJ_PLACEHOLDER) {
-    return;
-  }
-
-  iter = to_remove->complex->prim_objs;
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-    switch (o_current->type) {
-      case (OBJ_NET):
-      case (OBJ_PIN):
-      case (OBJ_BUS):
-        s_conn_remove (toplevel, o_current);
-        break;
-
-    }
-    iter = g_list_next (iter);
+    case OBJ_COMPLEX:
+    case OBJ_PLACEHOLDER:
+      s_conn_remove_glist (toplevel, to_remove->complex->prim_objs);
+      break;
   }
 }
 
@@ -300,7 +272,27 @@ OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y)
   return(NULL);
 }
 
-/*! \brief add an OBJECT to the connection system
+/*! \brief adds a GList of OBJECTs to the connection system
+ *
+ *  \par Function Description
+ *  This function adds all connections from and to the OBJECTS
+ *  of the given GList.
+ *
+ *  \param toplevel  (currently not used)
+ *  \param obj_list  GList of OBJECTs to add into the connection system
+ */
+void s_conn_update_glist (TOPLEVEL *toplevel, GList *obj_list)
+{
+  OBJECT *o_current;
+  GList *iter;
+
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    o_current = iter->data;
+    s_conn_update_object (toplevel, o_current);
+  }
+}
+
+/*! \brief add a line OBJECT to the connection system
  *  \par Function Description
  *  This function searches for all geometrical conections of the OBJECT
  *  <b>object</b> to all other connectable objects. It adds connections
@@ -309,7 +301,7 @@ OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y)
  *  \param toplevel (currently not used)
  *  \param object OBJECT to add into the connection system
  */
-void s_conn_update_object (TOPLEVEL *toplevel, OBJECT *object)
+static void s_conn_update_line_object (TOPLEVEL *toplevel, OBJECT *object)
 {
   TILE *t_current;
   GList *tl_current;
@@ -709,32 +701,30 @@ void s_conn_update_object (TOPLEVEL *toplevel, OBJECT *object)
 #endif
 }
 
-/*! \brief add an complex OBJECT to the connection system
+/*! \brief add an OBJECT to the connection system
+ *
  *  \par Function Description
- *  This function adds all underlying OBJECTs of a complex OBJECT
- *  <b>complex</b> into the connection system.
+ *  This function searches for all geometrical conections of the OBJECT
+ *  <b>object</b> to all other connectable objects. It adds connections
+ *  to the object and from all other objects to this one.
+ *
  *  \param toplevel (currently not used)
- *  \param complex complex OBJECT to add into the connection system
+ *  \param object OBJECT to add into the connection system
  */
-void s_conn_update_complex (TOPLEVEL *toplevel, GList *list)
+void s_conn_update_object (TOPLEVEL *toplevel, OBJECT *object)
 {
-  OBJECT *o_current;
-  GList *iter;
+  switch (object->type) {
+    case OBJ_PIN:
+    case OBJ_NET:
+    case OBJ_BUS:
+      s_conn_update_line_object (toplevel, object);
+      break;
 
-  iter = list;
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-    switch (o_current->type) {
-      case (OBJ_PIN):
-      case (OBJ_NET):
-      case (OBJ_BUS):
-        s_conn_update_object (toplevel, o_current);
-        break;
-
-    }
-    iter = g_list_next (iter);
+    case OBJ_COMPLEX:
+    case OBJ_PLACEHOLDER:
+      s_conn_update_glist (toplevel, object->complex->prim_objs);
+      break;
   }
-
 }
 
 /*! \brief print all connections of a connection list

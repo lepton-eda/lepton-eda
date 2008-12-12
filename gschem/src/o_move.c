@@ -114,7 +114,7 @@ void o_move_end_lowlevel (GSCHEM_TOPLEVEL *w_current,
     case (OBJ_PIN):
       /* save the other objects and remove object's connections */
       *other_objects = s_conn_return_others (*other_objects, object);
-      s_conn_remove (toplevel, object);
+      s_conn_remove_object (toplevel, object);
 
       /* do the actual translation */
       o_translate_world (toplevel, diff_x, diff_y, object);
@@ -520,7 +520,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
           /* save the other objects and remove object's connections */
           *other_objects =
             s_conn_return_others(*other_objects, object);
-          s_conn_remove (toplevel, object);
+          s_conn_remove_object (toplevel, object);
 
           x = object->line->x[whichone];
           y = object->line->y[whichone];
@@ -565,7 +565,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
           /* save the other objects and remove object's connections */
           *other_objects =
             s_conn_return_others(*other_objects, object);
-          s_conn_remove (toplevel, object);
+          s_conn_remove_object (toplevel, object);
 
           x = object->line->x[whichone];
           y = object->line->y[whichone];

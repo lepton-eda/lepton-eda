@@ -547,10 +547,6 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
 
     o_glist_rotate_world (toplevel, 0, 0, angle, prim_objs);
     o_glist_translate_world (toplevel, x, y, prim_objs);
-
-    if (!toplevel->ADDING_SEL) {
-     s_conn_update_complex (toplevel, prim_objs);
-    }
   }
 
   new_node->complex->prim_objs = prim_objs;
@@ -562,6 +558,11 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
   }
 
   o_complex_recalc(toplevel, new_node);
+
+  if (!toplevel->ADDING_SEL) {
+    s_tile_add_object (toplevel, new_node);
+    s_conn_update_object (toplevel, new_node);
+  }
 
   return new_node;
 }
