@@ -109,7 +109,7 @@ void s_tile_init(TOPLEVEL * toplevel, PAGE * p_current)
  *  \param toplevel The TOPLEVEL structure
  *  \param object The line OBJECT to add
  */
-void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
+static void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
 {
   TILE *t_current;
   PAGE *p_current;
@@ -299,6 +299,25 @@ void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
   }
 }
 
+/*! \brief add an object to the tile ssytem
+ *  \par Function Description
+ *  This function takes dispatches the object to the correct
+ *  function, depending on its type.
+ *
+ *  \param toplevel The TOPLEVEL structure
+ *  \param object The line OBJECT to add
+ */
+void s_tile_add_object (TOPLEVEL *toplevel, OBJECT *object)
+{
+  switch (object->type) {
+    case OBJ_NET:
+    case OBJ_PIN:
+    case OBJ_BUS:
+      s_tile_add_line_object (toplevel, object);
+      break;
+  }
+}
+
 /*! \brief remove an object from the tiles
  *  \par Function Description
  *  This function remose an object from all tiles that are refered by the object.
@@ -332,8 +351,8 @@ void s_tile_remove_object(OBJECT *object)
  */
 void s_tile_update_object(TOPLEVEL * toplevel, OBJECT * object)
 {
-  s_tile_remove_object(object);
-  s_tile_add_line_object(toplevel, object);
+  s_tile_remove_object (object);
+  s_tile_add_object (toplevel, object);
 }
 
 
