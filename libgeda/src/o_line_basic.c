@@ -119,7 +119,9 @@ OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 
   /* A new line object is created with #o_line_new().
    * Values for its fields are default and need to be modified. */
-  new_obj = o_line_new (toplevel, OBJ_LINE, color, 0, 0, 0, 0);
+  new_obj = o_line_new (toplevel, OBJ_LINE, color,
+                        o_current->line->x[0], o_current->line->y[0],
+                        o_current->line->x[1], o_current->line->y[1]);
 
   /*
    * The coordinates of the ends of the new line are set with the ones
@@ -130,12 +132,6 @@ OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current)
    * #o_line_recalc().
    */
 
-  /* modify the line ends of the new line */
-  new_obj->line->x[0] = o_current->line->x[0];
-  new_obj->line->y[0] = o_current->line->y[0];
-  new_obj->line->x[1] = o_current->line->x[1];
-  new_obj->line->y[1] = o_current->line->y[1];
-  
   /* copy the line type and filling options */
   o_set_line_options(toplevel, new_obj, o_current->line_end,
 		     o_current->line_type, o_current->line_width,

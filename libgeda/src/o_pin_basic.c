@@ -272,13 +272,6 @@ OBJECT *o_pin_copy(TOPLEVEL *toplevel, OBJECT *o_current)
                        o_current->line->x[1], o_current->line->y[1],
                        o_current->pin_type, o_current->whichend);
 
-  new_obj->line->x[0] = o_current->line->x[0];
-  new_obj->line->y[0] = o_current->line->y[0];
-  new_obj->line->x[1] = o_current->line->x[1];
-  new_obj->line->y[1] = o_current->line->y[1];
-
-  /*	new_obj->attribute = 0;*/
-
   return new_obj;
 }
 
