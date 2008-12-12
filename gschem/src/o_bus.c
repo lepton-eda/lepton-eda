@@ -70,13 +70,11 @@ void o_bus_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if (toplevel->override_color != -1 ) {
     gdk_gc_set_foreground(w_current->gc,
                           x_get_color(toplevel->override_color));
-    gdk_draw_line(w_current->backingstore, w_current->gc,
-                  x1, y1, x2, y2);
+    gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
   } else {
     gdk_gc_set_foreground(w_current->gc,
                           x_get_color(o_current->color));
-    gdk_draw_line(w_current->backingstore, w_current->gc,
-                  x1, y1, x2, y2);
+    gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
   }
 
   /* yes zero is right for the width -> use hardware lines */
@@ -138,9 +136,9 @@ void o_bus_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
 
   WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0] );
   WORLDtoSCREEN(toplevel, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1] );
-  
-  gdk_draw_line(w_current->backingstore, w_current->outline_xor_gc,
-                sx[0], sy[0], sx[1], sy[1]);
+
+  gdk_draw_line (w_current->drawable, w_current->outline_xor_gc,
+                 sx[0], sy[0], sx[1], sy[1]);
 
   /* backing store ? not approriate here */
 
@@ -195,8 +193,8 @@ void o_bus_draw_xor_single(GSCHEM_TOPLEVEL *w_current,
   WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx1, o_current->line->y[0] + dy1, &sx[0], &sy[0]);
   WORLDtoSCREEN(toplevel, o_current->line->x[1] + dx2, o_current->line->y[1] + dy2, &sx[1], &sy[1]);
 
-  gdk_draw_line(w_current->backingstore, w_current->outline_xor_gc,
-                sx[0], sy[0], sx[1], sy[1]);
+  gdk_draw_line (w_current->drawable, w_current->outline_xor_gc,
+                 sx[0], sy[0], sx[1], sy[1]);
   o_invalidate_rect(w_current,
                     sx[0], sy[0], sx[1], sy[1]);
 }
@@ -356,8 +354,7 @@ void o_bus_rubberbus_xor(GSCHEM_TOPLEVEL *w_current)
 
   gdk_gc_set_foreground(w_current->xor_gc, 
 			x_get_darkcolor(w_current->select_color));
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc, 
-		x1, y1, x2, y2);
+  gdk_draw_line (w_current->drawable, w_current->xor_gc, x1, y1, x2, y2);
   o_invalidate_rect(w_current, 
 		    min(x1, x2) - size/2, min(y1, y2) - size/2,
 		    max(x1, x2) + size/2, max(y1, y2) + size/2);

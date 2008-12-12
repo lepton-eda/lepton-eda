@@ -366,10 +366,10 @@ void o_drawbounding(GSCHEM_TOPLEVEL *w_current, GList *o_glist,
   /* XOR draw with the appropriate mode */
   if (w_current->last_drawb_mode == BOUNDINGBOX) {
     gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
-    gdk_draw_rectangle(w_current->backingstore,
-                       w_current->bounding_xor_gc, FALSE,
-                       s_left, s_bottom,
-                       s_right - s_left, s_top - s_bottom);
+    gdk_draw_rectangle (w_current->drawable,
+                        w_current->bounding_xor_gc, FALSE,
+                        s_left, s_bottom,
+                        s_right - s_left, s_top - s_bottom);
   } else {
     o_glist_draw_xor (w_current, diff_x, diff_y, o_glist);
   }

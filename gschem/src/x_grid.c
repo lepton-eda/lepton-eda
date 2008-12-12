@@ -120,18 +120,17 @@ void x_grid_draw(GSCHEM_TOPLEVEL *w_current)
 
           /* get out of loop if more than 1000 points */
           if (count == 5000) {
-            gdk_draw_points(
-                            w_current->backingstore,
-                            w_current->gc, points, count);
+            gdk_draw_points (w_current->drawable,
+                             w_current->gc, points, count);
             count=0;
           }
         }
         else
         {
-          gdk_draw_arc(w_current->backingstore, w_current->gc,
-                       TRUE, x, y,
-                       w_current->grid_dot_size,
-                       w_current->grid_dot_size, 0, FULL_CIRCLE);
+          gdk_draw_arc (w_current->drawable, w_current->gc,
+                        TRUE, x, y,
+                        w_current->grid_dot_size,
+                        w_current->grid_dot_size, 0, FULL_CIRCLE);
         }
       }
     }
@@ -139,8 +138,8 @@ void x_grid_draw(GSCHEM_TOPLEVEL *w_current)
 
   /* now draw all the points in one step */
   if(count != 0) {
-    gdk_draw_points(w_current->backingstore,
-                    w_current->gc, points, count);
+    gdk_draw_points (w_current->drawable,
+                     w_current->gc, points, count);
   }
 
 #if DEBUG
@@ -186,17 +185,17 @@ void x_draw_tiles(GSCHEM_TOPLEVEL *w_current)
       printf("x, y: %d %d\n", screen_x, screen_y);
       printf("w x h: %d %d\n", width, height);
 #endif
-      gdk_draw_rectangle(w_current->backingstore, 
-                         w_current->gc, 
-                         FALSE, screen_x, screen_y,
-                         width, height);
+      gdk_draw_rectangle (w_current->drawable,
+                          w_current->gc,
+                          FALSE, screen_x, screen_y,
+                          width, height);
 
       tempstring = g_strdup_printf("%d %d", i, j);
 
-      gdk_draw_text (w_current->backingstore,
+      gdk_draw_text (w_current->drawable,
                      font,
                      w_current->gc,
-                     screen_x+10, screen_y+10, 
+                     screen_x+10, screen_y+10,
                      tempstring,
                      strlen(tempstring));
       g_free(tempstring);

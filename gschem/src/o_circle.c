@@ -173,12 +173,12 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   WORLDtoSCREEN( toplevel, o_current->circle->center_x, o_current->circle->center_y,
                  &s_x, &s_y );
 	
-  (*draw_func)(w_current->backingstore, w_current->gc, color,
-               circle_end,
-               s_x, s_y,
-               radius,
-               0, FULL_CIRCLE / 64,
-               circle_width, length, space);
+  (*draw_func) (w_current->drawable, w_current->gc, color,
+                circle_end,
+                s_x, s_y,
+                radius,
+                0, FULL_CIRCLE / 64,
+                circle_width, length, space);
 
   /*
    * The values needed for the fill operation are taken from the
@@ -251,9 +251,9 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     fill_func = o_circle_fill_fill;
   }
 
-  (*fill_func)(w_current->backingstore, w_current->gc, color,
-               w_current, o_current->circle,
-               fill_width, angle1, pitch1, angle2, pitch2);
+  (*fill_func) (w_current->drawable, w_current->gc, color,
+                w_current, o_current->circle,
+                fill_width, angle1, pitch1, angle2, pitch2);
 
 #if DEBUG
   printf("drawing circle\n");
@@ -505,16 +505,16 @@ void o_circle_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
                  o_current->circle->center_x - o_current->circle->radius + dx,
                  o_current->circle->center_y + o_current->circle->radius + dy,
                  &x, &y );
-  
+
   /* To draw be sure to setup width height */
   gdk_gc_set_foreground(w_current->outline_xor_gc,
-			x_get_darkcolor(color));
-  gdk_draw_arc(w_current->backingstore, w_current->outline_xor_gc,
-	       FALSE,
-	       x, y,
-	       2 * radius, 2 * radius,
-	       0, FULL_CIRCLE);
-  
+                        x_get_darkcolor(color));
+  gdk_draw_arc (w_current->drawable, w_current->outline_xor_gc,
+                FALSE,
+                x, y,
+                2 * radius, 2 * radius,
+                0, FULL_CIRCLE);
+
   /* backing store ?  not appropriate here */
 }
 
@@ -665,11 +665,11 @@ void o_circle_rubbercircle_xor(GSCHEM_TOPLEVEL *w_current)
   /* draw the circle from the w_current variables */
   gdk_gc_set_foreground(w_current->xor_gc, 
 			x_get_darkcolor(w_current->select_color));
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		cx, cy, cx + radius, cy);
-  gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
-	       cx - radius, cy - radius, 2 * radius, 2* radius,
-	       0, FULL_CIRCLE);
+  gdk_draw_line (w_current->drawable, w_current->xor_gc,
+                 cx, cy, cx + radius, cy);
+  gdk_draw_arc (w_current->drawable, w_current->xor_gc, FALSE,
+                cx - radius, cy - radius, 2 * radius, 2* radius,
+                0, FULL_CIRCLE);
   o_invalidate_rect(w_current, 
 		    cx - radius, cy - radius,
 		    cx + radius, cy + radius);

@@ -88,7 +88,7 @@ preview_callback_realize (GtkWidget *widget,
   preview_w_current->win_width  = preview_toplevel->width;
   preview_w_current->win_height = preview_toplevel->height;
 
-  preview_w_current->backingstore = gdk_pixmap_new (
+  preview_w_current->drawable = gdk_pixmap_new (
     preview_w_current->window,
     preview_w_current->drawing_area->allocation.width,
     preview_w_current->drawing_area->allocation.height, -1);
@@ -127,12 +127,12 @@ preview_callback_expose (GtkWidget *widget,
   Preview *preview = PREVIEW (widget);
   GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
 
-  gdk_draw_pixmap(widget->window,
-                  widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
-                  preview_w_current->backingstore,
-                  event->area.x, event->area.y,
-                  event->area.x, event->area.y,
-                  event->area.width, event->area.height);
+  gdk_draw_pixmap (widget->window,
+                   widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
+                   preview_w_current->drawable,
+                   event->area.x, event->area.y,
+                   event->area.x, event->area.y,
+                   event->area.width, event->area.height);
 
   return FALSE;
 }
@@ -482,8 +482,8 @@ preview_dispose (GObject *self)
   if (preview_w_current != NULL) {
     preview_w_current->drawing_area = NULL;
 
-    if (preview_w_current->backingstore) {
-      gdk_pixmap_unref (preview_w_current->backingstore);
+    if (preview_w_current->drawable) {
+      gdk_pixmap_unref (preview_w_current->drawable);
     }
 
     x_window_free_gc (preview_w_current);

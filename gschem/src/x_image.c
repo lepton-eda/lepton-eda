@@ -655,8 +655,8 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
   size_x = new_w_current.image_width;
   size_y = new_w_current.image_height;
 
-  new_w_current.window = gdk_pixmap_new(w_current->window, size_x, size_y, -1);
-  new_w_current.backingstore = gdk_pixmap_new(w_current->window, size_x, size_y, -1);
+  new_w_current.window = gdk_pixmap_new (w_current->window, size_x, size_y, -1);
+  new_w_current.drawable = gdk_pixmap_new (w_current->window, size_x, size_y, -1);
   new_w_current.grid = 0;
   new_w_current.text_origin_marker = FALSE;
 
@@ -717,10 +717,10 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
   o_redraw_all (&new_w_current);
 
   /* Get the pixbuf */
-  pixbuf=gdk_pixbuf_get_from_drawable(NULL,new_w_current.backingstore, NULL,
-				      origin_x, origin_y, 0, 0,           
-				      right-origin_x, 
-				      bottom-origin_y);
+  pixbuf = gdk_pixbuf_get_from_drawable (NULL,new_w_current.drawable, NULL,
+                                        origin_x, origin_y, 0, 0,
+                                        right-origin_x,
+                                        bottom-origin_y);
 
   if (toplevel.image_color == FALSE)
   {
@@ -730,8 +730,8 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
   if (new_w_current.window != NULL) {
     g_object_unref(new_w_current.window);
   }
-  if (new_w_current.backingstore != NULL) {
-    g_object_unref(new_w_current.backingstore);
+  if (new_w_current.drawable != NULL) {
+    g_object_unref (new_w_current.drawable);
   }
 
   return(pixbuf);

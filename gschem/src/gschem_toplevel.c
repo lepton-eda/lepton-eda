@@ -99,7 +99,7 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   /* Drawing surfaces */
   /* ---------------- */
   w_current->window = NULL;
-  w_current->backingstore = NULL;
+  w_current->drawable = NULL;
   w_current->win_width = 0;
   w_current->win_height = 0;
 

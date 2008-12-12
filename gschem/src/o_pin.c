@@ -64,14 +64,12 @@ void o_pin_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     gdk_gc_set_foreground(w_current->gc,
 			  x_get_color(toplevel->override_color));
     if (toplevel->DONT_REDRAW == 0) {
-      gdk_draw_line(w_current->backingstore, w_current->gc,
-		    x1, y1, x2, y2);
+      gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
     }
   } else {
     if (toplevel->DONT_REDRAW == 0) {
       gdk_gc_set_foreground(w_current->gc, x_get_color(o_current->color));
-      gdk_draw_line(w_current->backingstore, w_current->gc,
-		    x1, y1, x2, y2);
+      gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
     }
   }
 
@@ -137,8 +135,8 @@ void o_pin_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
   WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0]);
   WORLDtoSCREEN(toplevel, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1]);
 
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-                sx[0], sy[0], sx[1], sy[1]);
+  gdk_draw_line (w_current->drawable, w_current->xor_gc,
+                 sx[0], sy[0], sx[1], sy[1]);
 
   if (toplevel->pin_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
@@ -286,7 +284,7 @@ void o_pin_rubberpin_xor(GSCHEM_TOPLEVEL *w_current)
 
   gdk_gc_set_foreground(w_current->xor_gc, 
 			x_get_darkcolor(w_current->select_color));
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc, x1, y1, x2, y2);
+  gdk_draw_line (w_current->drawable, w_current->xor_gc, x1, y1, x2, y2);
   o_invalidate_rect(w_current, 
 		    min(x1, x2) - size/2, min(y1, y2) - size/2,
 		    max(x1, x2) + size/2, max(y1, y2) + size/2);

@@ -191,11 +191,11 @@ void o_path_draw_solid(GdkDrawable *w, GdkGC *gc, GdkColor *color,
 
   if (path->sections[path->num_sections - 1].code == PATH_END) {
     /* Closed path */
-    gdk_draw_polygon (w_current->backingstore, w_current->gc,
+    gdk_draw_polygon (w_current->drawable, w_current->gc,
                       FALSE, points, num_points);
   } else {
     /* Open path */
-    gdk_draw_lines (w_current->backingstore, w_current->gc,
+    gdk_draw_lines (w_current->drawable, w_current->gc,
                     points, num_points);
   }
 
@@ -361,8 +361,8 @@ static void o_path_fill_fill (GdkDrawable *w, GdkGC *gc, GdkColor *color,
     return;
   }
 
-  gdk_draw_polygon(w_current->backingstore, w_current->gc,
-                   TRUE, points, num_points);
+  gdk_draw_polygon (w_current->drawable, w_current->gc,
+                    TRUE, points, num_points);
 
   g_free (points);
 }
@@ -545,7 +545,7 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if((length == 0) || (space == 0))
   draw_func = o_path_draw_solid;
 
-  (*draw_func) (w_current->backingstore, w_current->gc, color, w_current,
+  (*draw_func) (w_current->drawable, w_current->gc, color, w_current,
                 o_current->path, path_end, line_width, length, space);
 
 
@@ -615,7 +615,7 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     fill_func = o_path_fill_fill;
   }
 
-  (*fill_func) (w_current->backingstore, w_current->gc, color,
+  (*fill_func) (w_current->drawable, w_current->gc, color,
                 w_current, path, fill_width, angle1, pitch1, angle2, pitch2);
 
   if (o_current->draw_grips && w_current->draw_grips == TRUE) {
@@ -683,10 +683,10 @@ void o_path_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
 
   /* Stroke only, no fill for XOR */
   if (path->sections[path->num_sections - 1].code == PATH_END)
-    gdk_draw_polygon (w_current->backingstore, w_current->xor_gc,
+    gdk_draw_polygon (w_current->drawable, w_current->xor_gc,
                       FALSE, points, num_points);
   else
-    gdk_draw_lines (w_current->backingstore, w_current->xor_gc,
+    gdk_draw_lines (w_current->drawable, w_current->xor_gc,
                     points, num_points);
 
   g_free (points);
@@ -797,10 +797,10 @@ void o_path_rubberpath_xor(GSCHEM_TOPLEVEL *w_current)
 
   /* Stroke only, no fill for rubberbanding */
   if (path->sections[path->num_sections - 1].code == PATH_END)
-    gdk_draw_polygon (w_current->backingstore, w_current->xor_gc,
+    gdk_draw_polygon (w_current->drawable, w_current->xor_gc,
                       FALSE, points, num_points);
   else
-    gdk_draw_lines (w_current->backingstore, w_current->xor_gc,
+    gdk_draw_lines (w_current->drawable, w_current->xor_gc,
                     points, num_points);
 
   find_points_bounds (points, num_points, &left, &top, &right, &bottom);
@@ -858,9 +858,9 @@ static void o_path_xor_control_lines (GSCHEM_TOPLEVEL *w_current,
     case PATH_CURVETO:
       /* Two control point grips */
       WORLDtoSCREEN (toplevel, section->x1, section->y1, &x, &y);
-      gdk_draw_line (w_current->backingstore, gc, last_x, last_y, x, y);
+      gdk_draw_line (w_current->drawable, gc, last_x, last_y, x, y);
       WORLDtoSCREEN (toplevel, section->x2, section->y2, &x, &y);
-      gdk_draw_line (w_current->backingstore, gc, next_x, next_y, x, y);
+      gdk_draw_line (w_current->drawable, gc, next_x, next_y, x, y);
       /* Fall through */
     case PATH_MOVETO:
     case PATH_MOVETO_OPEN:

@@ -166,10 +166,10 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if((length == 0) || (space == 0))
     draw_func =  o_arc_draw_solid;
 
-  (*draw_func)(w_current->backingstore, w_current->gc, color,
-               arc_end,
-               x, y, radius, start_angle, end_angle,
-               arc_width, length, space);
+  (*draw_func) (w_current->drawable, w_current->gc, color,
+                arc_end,
+                x, y, radius, start_angle, end_angle,
+                arc_width, length, space);
 
 
   if (o_current->draw_grips && w_current->draw_grips == TRUE) {
@@ -845,9 +845,9 @@ void o_arc_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
   gdk_gc_set_foreground(w_current->outline_xor_gc,
 			x_get_darkcolor(color));
   /* better to set the line attributes here ? */
-  gdk_draw_arc(w_current->backingstore, w_current->outline_xor_gc, FALSE,
-	       x, y, width, height,
-	       start_angle * 64, end_angle * 64);
+  gdk_draw_arc (w_current->drawable, w_current->outline_xor_gc, FALSE,
+                x, y, width, height,
+                start_angle * 64, end_angle * 64);
 
   /* backing store? not appropriate here  */
 
@@ -1071,18 +1071,17 @@ void o_arc_rubberarc_xor(GSCHEM_TOPLEVEL *w_current)
 			     GDK_JOIN_MITER);
 
   /* draw the arc from the w_current variables */
-  gdk_draw_arc(w_current->backingstore, w_current->xor_gc, FALSE,
-	       cx - radius, cy - radius,
-	       radius * 2, radius * 2,
-	       w_current->second_wx * 64,
-	       w_current->second_wy * 64);
+  gdk_draw_arc (w_current->drawable, w_current->xor_gc, FALSE,
+                cx - radius, cy - radius,
+                radius * 2, radius * 2,
+                w_current->second_wx * 64,
+                w_current->second_wy * 64);
 
   /* draw the radius segment from the w_current variables */
   rad_angle = ((double) w_current->second_wx) * M_PI / 180;
   x1 = cx + radius*cos(rad_angle);
   y1 = cy - radius*sin(rad_angle);
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		cx, cy, x1, y1);
+  gdk_draw_line (w_current->drawable, w_current->xor_gc, cx, cy, x1, y1);
 
   /* FIXME: This isn't a tight bounding box for now, but the code
    *        to compute a better bounds it complex, and might wait

@@ -96,13 +96,13 @@ void o_text_draw_rectangle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   gdk_gc_set_foreground(w_current->gc, color);
 
   if (toplevel->DONT_REDRAW == 0) {
-    gdk_draw_rectangle( w_current->backingstore,
+    gdk_draw_rectangle (w_current->drawable,
                         w_current->gc,
                         FALSE,
-                        left, 
+                        left,
                         top,
                         right - left,
-                        bottom - top );
+                        bottom - top);
   }
 }
 
@@ -147,25 +147,25 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
       screen_x1 += offset;
       screen_y1 += offset;
       if (toplevel->DONT_REDRAW == 0) {
-	/* Top part of the I */
-	gdk_draw_line(w_current->backingstore, w_current->gc, 
-		      screen_x1,
-		      screen_y1,
-		      screen_x1+small_dist,
-		      screen_y1);
-	/* Middle part of the I */
-	gdk_draw_line(w_current->backingstore, w_current->gc, 
-		      screen_x1+small_dist/2,
-		      screen_y1,
-		      screen_x1+small_dist/2,
-		      screen_y1+small_dist);
-	/* Bottom part of the I */
-	gdk_draw_line(w_current->backingstore, w_current->gc, 
-		      screen_x1,
-		      screen_y1+small_dist,
-		      screen_x1+small_dist,
-		      screen_y1+small_dist);
-      }	
+        /* Top part of the I */
+        gdk_draw_line (w_current->drawable, w_current->gc,
+                       screen_x1,
+                       screen_y1,
+                       screen_x1+small_dist,
+                       screen_y1);
+        /* Middle part of the I */
+        gdk_draw_line (w_current->drawable, w_current->gc,
+                       screen_x1+small_dist/2,
+                       screen_y1,
+                       screen_x1+small_dist/2,
+                       screen_y1+small_dist);
+        /* Bottom part of the I */
+        gdk_draw_line (w_current->drawable, w_current->gc,
+                       screen_x1,
+                       screen_y1+small_dist,
+                       screen_x1+small_dist,
+                       screen_y1+small_dist);
+      }
     }
     
   } else {
@@ -201,17 +201,17 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   if (toplevel->DONT_REDRAW == 0) {
-    gdk_draw_line(w_current->backingstore, w_current->gc, 
-		  screen_x1-small_dist, 
-		  screen_y1+small_dist, 
-		  screen_x1+small_dist, 
-		  screen_y1-small_dist);
-    
-    gdk_draw_line(w_current->backingstore, w_current->gc, 
-		  screen_x1+small_dist, 
-		  screen_y1+small_dist, 
-		  screen_x1-small_dist, 
-		  screen_y1-small_dist);
+    gdk_draw_line (w_current->drawable, w_current->gc,
+                   screen_x1-small_dist,
+                   screen_y1+small_dist,
+                   screen_x1+small_dist,
+                   screen_y1-small_dist);
+
+    gdk_draw_line (w_current->drawable, w_current->gc,
+                   screen_x1+small_dist,
+                   screen_y1+small_dist,
+                   screen_x1-small_dist,
+                   screen_y1-small_dist);
   }
 }
 
@@ -252,13 +252,13 @@ void o_text_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
     gdk_gc_set_foreground(w_current->outline_xor_gc,
                           x_get_darkcolor(color));
 
-    gdk_draw_rectangle( w_current->backingstore,
+    gdk_draw_rectangle (w_current->drawable,
                         w_current->outline_xor_gc,
                         FALSE,
                         left,
                         top,
                         right - left,
-                        bottom - top );
+                        bottom - top);
   }
 }
 

@@ -1773,8 +1773,8 @@ void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int x, int y)
    */
   if (toplevel->DONT_REDRAW == 0) {
     /* draw the grip in backingstore */
-    gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
-                       x - size, y - size, x2size, x2size);
+    gdk_draw_rectangle (w_current->drawable, w_current->gc, FALSE,
+                        x - size, y - size, x2size, x2size);
     o_invalidate_rect(w_current, x - size, y - size, x + size, y + size);
   }
 }

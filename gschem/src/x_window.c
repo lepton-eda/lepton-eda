@@ -578,10 +578,10 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
 
   w_current->window = w_current->drawing_area->window;
 
-  w_current->backingstore = gdk_pixmap_new(w_current->window,
-                                           w_current->drawing_area->allocation.width,
-                                           w_current->drawing_area->allocation.height,
-                                           -1);
+  w_current->drawable = gdk_pixmap_new (w_current->window,
+                                        w_current->drawing_area->allocation.width,
+                                        w_current->drawing_area->allocation.height,
+                                        -1);
   x_window_setup_gc(w_current);
 }
 
@@ -678,8 +678,8 @@ void x_window_close(GSCHEM_TOPLEVEL *w_current)
     o_buffer_free (w_current);
   }
 
-  if (w_current->backingstore) {
-    gdk_pixmap_unref(w_current->backingstore);
+  if (w_current->drawable) {
+    gdk_pixmap_unref (w_current->drawable);
   }
 
   x_window_free_gc(w_current);

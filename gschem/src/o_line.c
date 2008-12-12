@@ -157,8 +157,8 @@ void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if((length == 0) || (space == 0))
   draw_func = o_line_draw_solid;
 
-  (*draw_func)(w_current->backingstore, w_current->gc, color, line_end,
-               x1, y1, x2, y2, line_width, length, space);
+  (*draw_func) (w_current->drawable, w_current->gc, color, line_end,
+                x1, y1, x2, y2, line_width, length, space);
 
   /* reset line width and reset back to default */
   gdk_gc_set_line_attributes(w_current->gc, 0, GDK_LINE_SOLID,
@@ -733,8 +733,8 @@ void o_line_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
   WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0]);
   WORLDtoSCREEN(toplevel, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1]);
 
-  gdk_draw_line(w_current->backingstore, w_current->outline_xor_gc,
-                sx[0], sy[0], sx[1], sy[1]);
+  gdk_draw_line (w_current->drawable, w_current->outline_xor_gc,
+                 sx[0], sy[0], sx[1], sy[1]);
 }
 
 /*! \brief Start process to input a new line.
@@ -892,8 +892,7 @@ void o_line_rubberline_xor(GSCHEM_TOPLEVEL *w_current)
   gdk_gc_set_line_attributes(w_current->xor_gc, 0,
 			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
 			     GDK_JOIN_MITER);
-  gdk_draw_line(w_current->backingstore, w_current->xor_gc,
-		x1, y1, x2, y2);
+  gdk_draw_line (w_current->drawable, w_current->xor_gc, x1, y1, x2, y2);
   o_invalidate_rect(w_current, x1, y1, x2, y2);
 }
 

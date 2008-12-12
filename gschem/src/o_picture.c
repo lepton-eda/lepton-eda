@@ -290,8 +290,8 @@ void o_picture_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
   gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
 			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
 			     GDK_JOIN_MITER);
-  gdk_draw_rectangle(w_current->backingstore, w_current->xor_gc,
-		     FALSE, left, top, width, height);
+  gdk_draw_rectangle (w_current->drawable, w_current->xor_gc,
+                      FALSE, left, top, width, height);
   o_invalidate_rect(w_current, 
 		    left, top, left + width, top + height);
 }
@@ -387,21 +387,21 @@ void o_picture_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     }
 
     if (toplevel->DONT_REDRAW == 0) {
-      gdk_draw_pixbuf(w_current->backingstore, w_current->gc,
-		      o_current->picture->displayed_picture, 
-		      0, 0, s_upper_x, s_upper_y, 
-		      -1, -1, GDK_RGB_DITHER_NONE, 0, 0);
+      gdk_draw_pixbuf (w_current->drawable, w_current->gc,
+                      o_current->picture->displayed_picture,
+                      0, 0, s_upper_x, s_upper_y,
+                      -1, -1, GDK_RGB_DITHER_NONE, 0, 0);
     }
   }
   else {
     if (toplevel->DONT_REDRAW == 0) {
       /* Erase the picture, drawing a rectangle with the background color */
-      gdk_gc_set_foreground(w_current->gc, 
-			    x_get_color(toplevel->background_color));
-      gdk_draw_rectangle(w_current->backingstore, w_current->gc, TRUE, 
-			 s_upper_x, s_upper_y,
-			 abs(s_lower_x -s_upper_x),
-			 abs(s_lower_y - s_upper_y));
+      gdk_gc_set_foreground(w_current->gc,
+                            x_get_color(toplevel->background_color));
+      gdk_draw_rectangle (w_current->drawable, w_current->gc, TRUE,
+                          s_upper_x, s_upper_y,
+                          abs(s_lower_x -s_upper_x),
+                          abs(s_lower_y - s_upper_y));
     }
   }
 
@@ -460,10 +460,10 @@ void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   o_grips_draw(w_current, s_lower_x, s_lower_y);
   
   /* Box surrounding the picture */
-  gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE, 
-		     s_upper_x, s_upper_y,
-		     abs(s_upper_x - s_lower_x),
-		     abs(s_upper_y - s_lower_y));
+  gdk_draw_rectangle (w_current->drawable, w_current->gc, FALSE,
+                      s_upper_x, s_upper_y,
+                      abs(s_upper_x - s_lower_x),
+                      abs(s_upper_y - s_lower_y));
 }
 
 /*! \brief Erase grip marks from box.
@@ -503,10 +503,10 @@ void o_picture_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   o_grips_erase(w_current, s_lower_x, s_lower_y);
   
   /* Box surrounding the picture */
-  gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE, 
-		     s_upper_x, s_upper_y,
-		     abs(s_upper_x - s_lower_x),
-		     abs(s_upper_y - s_lower_y));
+  gdk_draw_rectangle (w_current->drawable, w_current->gc, FALSE,
+                      s_upper_x, s_upper_y,
+                      abs(s_upper_x - s_lower_x),
+                      abs(s_upper_y - s_lower_y));
   
 }
 
@@ -552,12 +552,12 @@ void o_picture_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
   
   gdk_gc_set_foreground(w_current->outline_xor_gc,
                         x_get_darkcolor(color));
-  gdk_draw_rectangle(w_current->backingstore,
-                     w_current->outline_xor_gc, FALSE,
-                     screen_x1,
-                     screen_y1,
-                     abs(screen_x2 - screen_x1),
-                     abs(screen_y2 - screen_y1));
+  gdk_draw_rectangle (w_current->drawable,
+                      w_current->outline_xor_gc, FALSE,
+                      screen_x1,
+                      screen_y1,
+                      abs(screen_x2 - screen_x1),
+                      abs(screen_y2 - screen_y1));
 }
 
 /*! \brief Replace all selected pictures with a new picture

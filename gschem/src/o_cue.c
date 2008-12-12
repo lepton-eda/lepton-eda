@@ -168,12 +168,12 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
         if (count < 1) { /* Didn't find anything connected there */
 	  if (toplevel->DONT_REDRAW == 0) {
 	    o_cue_set_color(w_current, toplevel->net_endpoint_color);
-	    gdk_draw_rectangle(w_current->backingstore,
-			       w_current->gc, TRUE,
-			       screen_x - size,
-			       screen_y - size,
-			       x2size,
-			       x2size);
+	    gdk_draw_rectangle (w_current->drawable,
+                                w_current->gc, TRUE,
+                                screen_x - size,
+                                screen_y - size,
+                                x2size,
+                                x2size);
 	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
 	                                 screen_x + size, screen_y + size);
 	  }
@@ -189,11 +189,11 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
           x2size = 2 * size;
 	  if (toplevel->DONT_REDRAW == 0) {
 	    o_cue_set_color(w_current, toplevel->junction_color);
-	    gdk_draw_arc(w_current->backingstore,
-			 w_current->gc, TRUE,
-                       screen_x - size,
-			 screen_y - size,
-			 x2size, x2size, 0, FULL_CIRCLE);
+            gdk_draw_arc (w_current->drawable,
+                          w_current->gc, TRUE,
+                          screen_x - size,
+                          screen_y - size,
+                          x2size, x2size, 0, FULL_CIRCLE);
 	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
                                    screen_x + size, screen_y + size);
 	  }
@@ -214,31 +214,31 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
 
     /* No need to invalidate the PIN end CUE, as the
      * whole pin region is already invalidated. */
-	  if (toplevel->DONT_REDRAW == 0) {
-	    o_cue_set_color(w_current, toplevel->net_endpoint_color);
-	    if (object->line->y[whichone] == object->line->y[otherone]) {
-	      /* horizontal line */
-	      if (object->line->x[whichone] <= object->line->x[otherone]) {
-		gdk_draw_line(w_current->backingstore, w_current->gc,
-			      screen_x, screen_y, screen_x + size, screen_y);
-	      } else {
-		gdk_draw_line(w_current->backingstore, w_current->gc,
-			      screen_x, screen_y, screen_x - size, screen_y);
-	      }
-	    } else if (object->line->x[0] == object->line->x[1]) {
-	      /* vertical line */
-	      if (object->line->y[whichone] <= object->line->y[otherone]) {
-		gdk_draw_line(w_current->backingstore, w_current->gc,
-			      screen_x, screen_y, screen_x, screen_y - size);
-	      } else {
-		gdk_draw_line(w_current->backingstore, w_current->gc,
-			      screen_x, screen_y, screen_x, screen_y + size);
-	      }
-	    } else {
-	      /* angled line */
-	      /* not supporting rendering of que for angled pin for now. hack */
-	    }
-	  }
+          if (toplevel->DONT_REDRAW == 0) {
+            o_cue_set_color(w_current, toplevel->net_endpoint_color);
+            if (object->line->y[whichone] == object->line->y[otherone]) {
+              /* horizontal line */
+              if (object->line->x[whichone] <= object->line->x[otherone]) {
+                gdk_draw_line (w_current->drawable, w_current->gc,
+                               screen_x, screen_y, screen_x + size, screen_y);
+              } else {
+                gdk_draw_line (w_current->drawable, w_current->gc,
+                               screen_x, screen_y, screen_x - size, screen_y);
+              }
+            } else if (object->line->x[0] == object->line->x[1]) {
+              /* vertical line */
+              if (object->line->y[whichone] <= object->line->y[otherone]) {
+                gdk_draw_line (w_current->drawable, w_current->gc,
+                               screen_x, screen_y, screen_x, screen_y - size);
+              } else {
+                gdk_draw_line (w_current->drawable, w_current->gc,
+                               screen_x, screen_y, screen_x, screen_y + size);
+              }
+            } else {
+              /* angled line */
+              /* not supporting rendering of que for angled pin for now. hack */
+            }
+          }
 
           if (toplevel->pin_style == THICK ) {
             gdk_gc_set_line_attributes(w_current->gc, 0,
@@ -262,11 +262,11 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
 
       if (toplevel->DONT_REDRAW == 0) {
 	o_cue_set_color(w_current, toplevel->junction_color);
-	gdk_draw_arc(w_current->backingstore,
-		     w_current->gc, TRUE,
-		     screen_x - size,
-		     screen_y - size,
-		     x2size, x2size, 0, FULL_CIRCLE);
+        gdk_draw_arc (w_current->drawable,
+                      w_current->gc, TRUE,
+                      screen_x - size,
+                      screen_y - size,
+                      x2size, x2size, 0, FULL_CIRCLE);
 	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
                                    screen_x + size, screen_y + size);
       }
@@ -304,12 +304,12 @@ void o_cue_erase_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whicho
   WORLDtoSCREEN(toplevel, x, y, &screen_x, &screen_y);
   
   if (toplevel->DONT_REDRAW == 0) {
-    gdk_draw_rectangle(w_current->backingstore,
-		       w_current->gc, TRUE,
-		       screen_x - size,
-		       screen_y - size,
-		       x2size,
-		       x2size);
+    gdk_draw_rectangle (w_current->drawable,
+                        w_current->gc, TRUE,
+                        screen_x - size,
+                        screen_y - size,
+                        x2size,
+                        x2size);
 	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
                                    screen_x + size, screen_y + size);
   }
@@ -346,9 +346,9 @@ void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 
         x = conn->x;
         y = conn->y;
-          
+
         WORLDtoSCREEN(toplevel, x, y, &screen_x, &screen_y);
- 
+
         /* draw circle */
         if (conn->other_object &&
             ( (object->type == OBJ_BUS &&
@@ -361,18 +361,17 @@ void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
         }
         x2size = size * 2;
 
-	if (toplevel->DONT_REDRAW == 0) {
-	  gdk_draw_arc(w_current->backingstore,
-		       w_current->gc, TRUE,
-		       screen_x - size,
-		       screen_y - size,
-		       x2size, x2size, 0, FULL_CIRCLE);
-	  o_invalidate_rect(w_current, screen_x - size, screen_y - size,
-                                 screen_x + size, screen_y + size);
-	}
+        if (toplevel->DONT_REDRAW == 0) {
+          gdk_draw_arc (w_current->drawable,
+                        w_current->gc, TRUE,
+                        screen_x - size,
+                        screen_y - size,
+                        x2size, x2size, 0, FULL_CIRCLE);
+          o_invalidate_rect (w_current, screen_x - size, screen_y - size,
+                                        screen_x + size, screen_y + size);
+        }
         break;
     }
-   
 
     cl_current = g_list_next(cl_current);
   }
