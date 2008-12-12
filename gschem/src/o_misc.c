@@ -210,24 +210,11 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
    * connection list. We only _really_ want those objects connected
    * to the selection, not those within in it. The extra redraws
    * don't _really_ hurt though. */
-  o_iter = list;
-  while (o_iter != NULL) {
+  for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
-    switch (o_current->type) {
-      case OBJ_COMPLEX:
-      case OBJ_PLACEHOLDER:
-        other_objects =
-          s_conn_return_complex_others(other_objects, o_current);
-        s_conn_remove_object (toplevel, o_current);
-        break;
-      case OBJ_NET:
-      case OBJ_PIN:
-      case OBJ_BUS:
-        other_objects = s_conn_return_others(other_objects, o_current);
-        s_conn_remove_object (toplevel, o_current);
-        break;
-    }
-    o_iter = g_list_next (o_iter);
+
+    other_objects = s_conn_return_others (other_objects, o_current);
+    s_conn_remove_object (toplevel, o_current);
   }
 
   o_glist_rotate_world( toplevel, centerx, centery, angle, list );
@@ -236,24 +223,11 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
    * connection list. We only _really_ want those objects connected
    * to the selection, not those within in it. The extra redraws dont
    * _really_ hurt though. */
-  o_iter = list;
-  while (o_iter != NULL) {
+  for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
-    switch (o_current->type) {
-      case OBJ_COMPLEX:
-      case OBJ_PLACEHOLDER:
-        s_conn_update_object (toplevel, o_current);
-        connected_objects =
-          s_conn_return_complex_others(connected_objects, o_current);
-        break;
-      case OBJ_NET:
-      case OBJ_PIN:
-      case OBJ_BUS:
-        s_conn_update_object (toplevel, o_current);
-        connected_objects = s_conn_return_others(connected_objects, o_current);
-        break;
-    }
-    o_iter = g_list_next (o_iter);
+
+    s_conn_update_object (toplevel, o_current);
+    connected_objects = s_conn_return_others (connected_objects, o_current);
   }
 
   if (!toplevel->DONT_REDRAW) {
@@ -340,24 +314,11 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
    * connection list. We only _really_ want those objects connected
    * to the selection, not those within in it. The extra redraws
    * don't _really_ hurt though. */
-  o_iter = list;
-  while (o_iter != NULL) {
+  for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
-    switch (o_current->type) {
-      case OBJ_COMPLEX:
-      case OBJ_PLACEHOLDER:
-        other_objects =
-          s_conn_return_complex_others(other_objects, o_current);
-        s_conn_remove_object (toplevel, o_current);
-        break;
-      case OBJ_NET:
-      case OBJ_PIN:
-      case OBJ_BUS:
-        other_objects = s_conn_return_others(other_objects, o_current);
-        s_conn_remove_object (toplevel, o_current);
-        break;
-    }
-    o_iter = g_list_next (o_iter);
+
+    other_objects = s_conn_return_others (other_objects, o_current);
+    s_conn_remove_object (toplevel, o_current);
   }
 
   o_glist_mirror_world( toplevel, centerx, centery, list );
@@ -366,24 +327,11 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
    * connection list. We only _really_ want those objects connected
    * to the selection, not those within in it. The extra redraws dont
    * _really_ hurt though. */
-  o_iter = list;
-  while (o_iter != NULL) {
+  for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
-    switch (o_current->type) {
-      case OBJ_COMPLEX:
-      case OBJ_PLACEHOLDER:
-        s_conn_update_object (toplevel, o_current);
-        connected_objects =
-          s_conn_return_complex_others(connected_objects, o_current);
-        break;
-      case OBJ_NET:
-      case OBJ_PIN:
-      case OBJ_BUS:
-        s_conn_update_object (toplevel, o_current);
-        connected_objects = s_conn_return_others(connected_objects, o_current);
-        break;
-    }
-    o_iter = g_list_next (o_iter);
+
+    s_conn_update_object (toplevel, o_current);
+    connected_objects = s_conn_return_others (connected_objects, o_current);
   }
 
   o_draw_list (w_current, list);

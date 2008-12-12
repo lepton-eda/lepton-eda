@@ -102,14 +102,8 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
     o_selection_add (toplevel->page_current->selection_list, o_current);
 
     /* Update object connectivity */
-    if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
-      s_conn_update_object (toplevel, o_current);
-      connected_objects =
-        s_conn_return_complex_others (connected_objects, o_current);
-    } else {
-      s_conn_update_object (toplevel, o_current);
-      connected_objects = s_conn_return_others (connected_objects, o_current);
-    }
+    s_conn_update_object (toplevel, o_current);
+    connected_objects = s_conn_return_others (connected_objects, o_current);
   }
 
   o_cue_redraw_all (w_current, temp_dest_list, TRUE);

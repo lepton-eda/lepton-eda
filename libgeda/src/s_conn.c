@@ -788,86 +788,78 @@ int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list)
   return FALSE;
 }
 
-/*! \brief get a list of all objects connected to this one
+/*! \brief get a list of all objects connected to a list of OBJECTs.
+ *
  *  \par Function Description
  *  This function gets all other_object from the connection
- *  list of the current object. If an <b>input_list</b> is given, the other
- *  objects are appended to that list. If the input list is <b>NULL</b>, a new
- *  list is returned
- *  \param input_list GList of OBJECT's or NULL
- *  \param object OBJECT to get other OBJECTs from
+ *  list of the OBJECTs in the pased list.
+ *
+ *  \param [in] input_list GList of OBJECT's or NULL
+ *  \param [in] obj_list   The GList of OBJECT to get connections from
  *  \return A GList of objects
+ *
+ *  \warning
+ *  Caller must g_list_free returned GList pointer.
+ *  Do not free individual data items in list.
+ */
+static GList *s_conn_return_glist_others (GList *input_list, GList *obj_list)
+{
+  GList *return_list;
+  GList *iter;
+  OBJECT *o_current;
+
+  return_list = input_list;
+
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    o_current = iter->data;
+    return_list = s_conn_return_others (return_list, o_current);
+  }
+
+  return return_list;
+}
+
+/*! \brief get a list of all objects connected to this one
+ *
+ *  \par Function Description
+ *  This function gets all other_object from the connection list of the current object.
+ *  COMPLEX objects are entered, and their prim_objs processed. If an <b>input_list</b>
+ *  is given, the other objects are appended to that list.
+ *
+ *  \param [in] input_list   GList of OBJECT's
+ *  \param [in] object       OBJECT to get other OBJECTs from
+ *  \return A GList of OBJECTs
+ *
  *  \warning
  *  Caller must g_list_free returned GList pointer.
  *  Do not free individual data items in list.
  */
 GList *s_conn_return_others(GList *input_list, OBJECT *object)
 {
-  CONN *conn;
-  GList *cl_current;
-  GList *return_list=NULL;
+  GList *c_iter;
+  GList *return_list;
 
   return_list = input_list;
-  
-  cl_current = object->conn_list;
-  while (cl_current != NULL) {
 
-    conn = (CONN *) cl_current->data;
-    
-    if (conn->other_object && conn->other_object != object) {
-      return_list = g_list_append(return_list, conn->other_object);
-    }
-        
-    cl_current = g_list_next(cl_current);
-  }
+  switch (object->type) {
+    case OBJ_PIN:
+    case OBJ_NET:
+    case OBJ_BUS:
+      for (c_iter = object->conn_list;
+           c_iter != NULL; c_iter = g_list_next (c_iter)) {
+        CONN *conn = c_iter->data;
 
-  return(return_list);
-}
-
-/*! \brief get a list of all objects connected to this complex one
- *  \par Function Description
- *  This function gets all other_object from the connection
- *  list of all underlying OBJECTs of the given complex OBJECT.
- *  If an <b>input_list</b> is given, the other
- *  objects are appended to that list. If the input list is <b>NULL</b>, a new
- *  list is returned
- *  \param input_list GList of OBJECT's or NULL
- *  \param object complex OBJECT to get other objects from
- *  \return A GList of objects
- *  \warning
- *  Caller must g_list_free returned GList pointer.
- *  Do not free individual data items in list.
- */
-GList *s_conn_return_complex_others(GList *input_list, OBJECT *object)
-{
-  OBJECT *o_current;
-  CONN *conn;
-  GList *cl_current;
-  GList *return_list=NULL;
-  GList *iter;
-
-  if (object->type != OBJ_COMPLEX && object->type != OBJ_PLACEHOLDER) {
-    return(NULL);
-  }
-
-  return_list = input_list;
-  
-  iter = object->complex->prim_objs;
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-    cl_current = o_current->conn_list;
-    while (cl_current != NULL) {
-
-      conn = (CONN *) cl_current->data;
-    
-      if (conn->other_object && conn->other_object != o_current) {
-        return_list = g_list_append(return_list, conn->other_object);
+        if (conn->other_object && conn->other_object != object) {
+          return_list = g_list_append(return_list, conn->other_object);
+        }
       }
-        
-      cl_current = g_list_next(cl_current);
-    }
-    iter = g_list_next (iter);
+      break;
+
+    case OBJ_COMPLEX:
+    case OBJ_PLACEHOLDER:
+      return_list = s_conn_return_glist_others (return_list,
+                                                object->complex->prim_objs);
+      break;
   }
-  
-  return(return_list);
+
+  return return_list;
 }
