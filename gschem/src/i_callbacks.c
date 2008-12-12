@@ -412,8 +412,23 @@ DEFINE_I_CALLBACK(edit_undo)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  w_current->toplevel->DONT_REDRAW = 0;
-  o_undo_callback(w_current, UNDO_ACTION);
+  /* If we're cancelling from a move action, re-wind the
+   * page contents back to their state before we started.
+   *
+   * It "might" be nice to sub-undo rotates / zoom changes
+   * made whilst moving components, but when the undo code
+   * hits s_page_delete(), the place list objects are free'd.
+   * Since they are also contained in the schematic page, a
+   * crash occurs when the page objects are free'd.
+   * */
+  if (w_current->inside_action &&
+      (w_current->event_state == MOVE ||
+       w_current->event_state == ENDMOVE)) {
+    i_callback_cancel (w_current, 0, NULL);
+  } else {
+    w_current->toplevel->DONT_REDRAW = 0;
+    o_undo_callback(w_current, UNDO_ACTION);
+  }
 }
 
 /*! \todo Finish function documentation!!!
