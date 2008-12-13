@@ -658,10 +658,8 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int color;
-  int size;
   int primary_zero_length, secondary_zero_length;
   int found_primary_connection = FALSE;
-  int sx[2], sy[2];
   int save_magnetic, save_wx, save_wy;
 
   GList *other_objects = NULL;
@@ -673,20 +671,10 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
      but I need it for o_net_finish_magnetic */
   save_magnetic = w_current->magnetic_visible;
 
-  gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_darkcolor(w_current->select_color) );
-
   o_net_eraserubber(w_current);
 
   if (save_magnetic)
     o_net_finishmagnetic(w_current);
-
-  if (toplevel->net_style == THICK) {
-    size = SCREENabs(toplevel, NET_WIDTH);
-    gdk_gc_set_line_attributes(w_current->gc, size,
-			       GDK_LINE_SOLID,
-			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
-  }
 
   /* See if either of the nets are zero length.  We'll only add */
   /* the non-zero ones */
@@ -736,20 +724,8 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
       printf("primary:\n"); 
       s_conn_print(new_net->conn_list);
 #endif
-  
-      WORLDtoSCREEN( toplevel, new_net->line->x[0], new_net->line->y[0], &sx[0], &sy[0] );
-      WORLDtoSCREEN( toplevel, new_net->line->x[1], new_net->line->y[1], &sx[1], &sy[1] );
 
-      gdk_gc_set_foreground(w_current->gc, x_get_color(color));
-      gdk_draw_line (w_current->drawable, w_current->gc,
-                     sx[0], sy[0], sx[1], sy[1]);
-      o_invalidate_rect(w_current, sx[0], sy[0], sx[1], sy[1]);
-
-      if (toplevel->net_style == THICK) {
-	  gdk_gc_set_line_attributes(w_current->gc, 0,
-				     GDK_LINE_SOLID,
-				     GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
-      }
+      o_redraw_single (w_current, new_net);
 
       o_cue_undraw_list(w_current, other_objects);
       o_cue_draw_list(w_current, other_objects);
@@ -800,19 +776,7 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
       s_conn_print(new_net->conn_list);
 #endif
 
-      WORLDtoSCREEN( toplevel, new_net->line->x[0], new_net->line->y[0], &sx[0], &sy[0] );
-      WORLDtoSCREEN( toplevel, new_net->line->x[1], new_net->line->y[1], &sx[1], &sy[1] );
-
-      gdk_gc_set_foreground(w_current->gc, x_get_color(color));
-      gdk_draw_line (w_current->drawable, w_current->gc,
-                     sx[0], sy[0], sx[1], sy[1]);
-      o_invalidate_rect(w_current, sx[0], sy[0], sx[1], sy[1]);
-      
-      if (toplevel->net_style == THICK) {
-	  gdk_gc_set_line_attributes(w_current->gc, 0,
-				     GDK_LINE_SOLID,
-				     GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
-      }
+      o_redraw_single (w_current, new_net);
 
       o_cue_undraw_list(w_current, other_objects);
       o_cue_draw_list(w_current, other_objects);
