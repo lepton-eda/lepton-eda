@@ -3420,9 +3420,6 @@ DEFINE_I_CALLBACK(options_show_log_window)
  */
 DEFINE_I_CALLBACK(misc)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  s_tile_print(w_current->toplevel);
 }
 
 /*! \todo Finish function documentation!!!
@@ -3434,14 +3431,6 @@ DEFINE_I_CALLBACK(misc)
  */
 DEFINE_I_CALLBACK(misc2)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  OBJECT *first = o_select_return_first_object(w_current);
-
-  if (first) {
-    /*o_cue_draw_single(w_current, first);*/
-    o_cue_undraw(w_current, first);
-    s_conn_print(first->conn_list);
-  }
 }
 
 /*! \todo Finish function documentation!!!
@@ -3453,7 +3442,6 @@ DEFINE_I_CALLBACK(misc2)
  */
 DEFINE_I_CALLBACK(misc3)
 {
-
 }
 
 /*! \todo Finish function documentation!!!
