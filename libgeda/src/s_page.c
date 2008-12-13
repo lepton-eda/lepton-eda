@@ -550,3 +550,35 @@ void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page)
   s_delete_object_glist (toplevel, page->object_list);
   page->object_list = NULL;
 }
+
+/*! \brief Find the objects in a given region
+ *
+ *  \par Function Description
+ *  Finds the objects which are inside, or intersect
+ *  the passed box shaped region.
+ *
+ *  \param [in] page    The PAGE the object is on.
+ *  \param [in] min_x   The smaller X coordinate of the region.
+ *  \param [in] min_y   The smaller Y coordinate of the region.
+ *  \param [in] max_x   The larger  X coordinate of the region.
+ *  \param [in] max_y   The larger  Y coordinate of the region.
+ *  \return The GList of OBJECTs in the region.
+ */
+GList *s_page_objects_in_region (PAGE *page, int min_x, int min_y,
+                                             int max_x, int max_y)
+{
+  GList *iter;
+  GList *list = NULL;
+
+  for (iter = page->object_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *object = iter->data;
+
+    if (object->w_right >= min_x && object->w_left   <= max_x &&
+        object->w_top   <= max_y && object->w_bottom >= min_y) {
+      list = g_list_prepend (list, object);
+    }
+  }
+
+  list = g_list_reverse (list);
+  return list;
+}
