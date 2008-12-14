@@ -97,7 +97,6 @@ void o_redraw (GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_sel
   GList *iter;
   int redraw_state = toplevel->DONT_REDRAW;
 
-  w_current->inside_redraw = 1;
   iter = object_list;
   while (iter != NULL) {
     o_current = (OBJECT *)iter->data;
@@ -111,7 +110,6 @@ void o_redraw (GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_sel
 
     iter = g_list_next (iter);
   }
-  w_current->inside_redraw = 0;
   toplevel->DONT_REDRAW = redraw_state;
 
   o_invalidate_glist (w_current, object_list);
@@ -136,9 +134,7 @@ void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   return;
 
   if (o_current->draw_func != NULL && o_current->type != OBJ_HEAD) {
-    w_current->inside_redraw = 1;
     (*o_current->draw_func)(w_current, o_current);
-    w_current->inside_redraw = 0;
   }
 
   o_invalidate (w_current, o_current);
@@ -153,10 +149,6 @@ void o_draw_list(GSCHEM_TOPLEVEL *w_current, GList* list)
 {
   OBJECT* o_current;
   GList *l_current;
-
-  if (w_current->inside_redraw) {
-    return;
-  }
 
   l_current = list;
   while (l_current != NULL) {
@@ -181,9 +173,6 @@ void o_draw_selected(GSCHEM_TOPLEVEL *w_current)
   TOPLEVEL *toplevel = w_current->toplevel;
   GList* s_current;
   OBJECT* o_current;
-  if (w_current->inside_redraw) {
-    return;
-  }
 
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
   while (s_current != NULL) {
@@ -209,10 +198,6 @@ void o_erase_selected(GSCHEM_TOPLEVEL *w_current)
   GList *list;
   GList *iter;
   OBJECT* o_current;
-
-  if (w_current->inside_redraw) {
-    return;
-  }
 
   list = iter = geda_list_get_glist( toplevel->page_current->selection_list );
   while (iter != NULL) {
@@ -248,10 +233,6 @@ void o_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
 
-  if (w_current->inside_redraw) {
-    return;
-  }
-
   o_current = object;
 
   toplevel->override_color = toplevel->background_color;
@@ -275,10 +256,6 @@ void o_erase_list(GSCHEM_TOPLEVEL *w_current, GList* list)
 {
   OBJECT *o_current;
   GList *iter;
-
-  if (w_current->inside_redraw) {
-    return;
-  }
 
   iter = list;
   while (iter != NULL) {

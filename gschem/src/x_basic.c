@@ -36,21 +36,17 @@
 void x_repaint_background(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  if (!w_current->inside_redraw) {
-    gdk_gc_set_foreground(
-                          w_current->gc,
-                          x_get_color(toplevel->background_color));
 
-    gdk_draw_rectangle (w_current->drawable,
-                        w_current->gc, TRUE, 0, 0,
-                        w_current->win_width,
-                        w_current->win_height);
-    o_invalidate_all (w_current);
+  gdk_gc_set_foreground (w_current->gc,
+                         x_get_color (toplevel->background_color));
 
-    x_grid_draw(w_current);
+  gdk_draw_rectangle (w_current->drawable,
+                      w_current->gc, TRUE, 0, 0,
+                      w_current->win_width,
+                      w_current->win_height);
+  o_invalidate_all (w_current);
 
-  }
-
+  x_grid_draw (w_current);
 }
 
 /*! \todo Finish function documentation!!!
