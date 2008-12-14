@@ -590,12 +590,6 @@ void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x,
 void o_grips_start_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_grips_motion_arc(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone);
-void o_grips_motion_box(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone);
-void o_grips_motion_path(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone);
-void o_grips_motion_picture(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone);
-void o_grips_motion_circle(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone);
-void o_grips_motion_line(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone);
 void o_grips_end(GSCHEM_TOPLEVEL *w_current);
 void o_grips_end_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);

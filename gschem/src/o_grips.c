@@ -964,188 +964,38 @@ void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   g_return_if_fail( w_current->which_object != NULL );
 
   switch(w_current->which_object->type) {
-    case(OBJ_ARC):
-    /* erase, update and draw an arc */
-    o_grips_motion_arc (w_current, w_x, w_y, grip);
-    break;
+    case OBJ_ARC:
+      o_arc_rubberarc (w_current, w_x, w_y, grip);
+      break;
 
-    case(OBJ_BOX):
-    /* erase, update and draw a box */
-    o_grips_motion_box (w_current, w_x, w_y, grip);
-    break;
+    case OBJ_BOX:
+      o_box_rubberbox (w_current, w_x, w_y);
+      break;
 
-    case(OBJ_PATH):
-    /* erase, update and draw a box */
-    o_grips_motion_path(w_current, w_x, w_y, grip);
-    break;
+    case OBJ_PATH:
+      o_path_rubberpath (w_current, w_x, w_y);
+      break;
 
-    case(OBJ_PICTURE):
-    /* erase, update and draw a box */
-    o_grips_motion_picture (w_current, w_x, w_y, grip);
-    break;
+    case OBJ_PICTURE:
+      o_picture_rubberbox (w_current, w_x, w_y);
+      break;
 
-    case(OBJ_CIRCLE):
-    /* erase, update and draw a circle */
-    o_grips_motion_circle(w_current, w_x, w_y, grip);
-    break;
+    case OBJ_CIRCLE:
+      o_circle_rubbercircle (w_current, w_x, w_y);
+      break;
 
-    case(OBJ_LINE):
-    case(OBJ_NET):
-    case(OBJ_PIN):
-    case(OBJ_BUS):
-    /* erase, update and draw a line */
-    /* same for net, pin and bus as they share the same internal rep. */
-    o_grips_motion_line(w_current, w_x, w_y, grip);
-    break;
+    case OBJ_LINE:
+    case OBJ_NET:
+    case OBJ_PIN:
+    case OBJ_BUS:
+      o_line_rubberline (w_current, w_x, w_y);
+      break;
 
     default:
     return; /* error condition */
   }
 }
 
-/*! \brief Modify previously selected arc according to mouse position.
- *  \par Function Description
- *  This function is the refreshing part of the grip motion process.
- *  It is called whenever the position of the pointer is changed,
- *  therefore requiring the GSCHEM_TOPLEVEL variables to be updated.
- *  Depending on the grip selected and moved, the temporary GSCHEM_TOPLEVEL
- *  variables are changed according to the current position of the pointer.
- *
- *  If the grip at the center of the arc has been moved - modifying the
- *  radius of the arc -, the <B>w_current->distance</B> field is updated.
- *  To increase the radius of the arc, the user must drag the grip to the
- *  right of the center. To decrease the radius of the arc, the user must
- *  drag the grip to the left of the center. Negative radius can not be
- *  obtained.
- *
- *  If one of the end of arc grip has been moved - modifying the arc
- *  describing the arc -, the <B>w_current->second_wx</B> or
- *  <B>w_current->second_wy</B> are updated according to which of the grip
- *  has been selected.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] w_x        Current x coordinate of pointer in world units.
- *  \param [in] w_y        Current y coordinate of pointer in world units.
- *  \param [in] whichone   Which grip to start motion with.
- */
-void o_grips_motion_arc(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
-{
-  o_arc_rubberarc(w_current, w_x, w_y, whichone);
-}
-
-/*! \brief Modify previously selected box according to mouse position.
- *  \par Function Description
- *  This function is the refreshing part of the grip motion process. It is
- *  called whenever the position of the pointer is changed, therefore
- *  requiring the GSCHEM_TOPLEVEL variables to be updated.
- *  Depending on the grip selected and moved, the temporary GSCHEM_TOPLEVEL
- *  variables are changed according to the current position of the pointer
- *  and the modifications temporary drawn.
- *
- *  This function only makes a call to #o_box_rubberbox() that updates
- *  the GSCHEM_TOPLEVEL variables, erase the previous temporary box and draw
- *  the new temporary box.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] w_x        Current x coordinate of pointer in world units.
- *  \param [in] w_y        Current y coordinate of pointer in world units.
- *  \param [in] whichone   Which grip to start motion with.
- */
-void o_grips_motion_box(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
-{
-  /* erase, update and draw the temporary box */
-  o_box_rubberbox(w_current, w_x, w_y);
-}
-
-/*! \brief Modify previously selected path according to mouse position.
- *  \par Function Description
- *  This function is the refreshing part of the grip motion process. It is
- *  called whenever the position of the pointer is changed, therefore
- *  requiring the GSCHEM_TOPLEVEL variables to be updated.
- *  Depending on the grip selected and moved, the temporary GSCHEM_TOPLEVEL
- *  variables are changed according to the current position of the pointer
- *  and the modifications temporary drawn.
- *
- *  This function only makes a call to #o_path_rubberbox() that
- *  updates the GSCHEM_TOPLEVEL variables, erase the previous temporary
- *   path and draw the new temporary path.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] w_x        Current x coordinate of pointer in world units.
- *  \param [in] w_y        Current y coordinate of pointer in world units.
- *  \param [in] whichone   Which grip to start motion with.
- */
-void o_grips_motion_path (GSCHEM_TOPLEVEL *w_current,
-                          int w_x, int w_y, int whichone)
-{
-  /* erase, update and draw the temporary path */
-  o_path_rubberpath(w_current, w_x, w_y);
-}
-
-/*! \brief Modify previously selected picture according to mouse position.
- *  \par Function Description
- *  This function is the refreshing part of the grip motion process. It is
- *  called whenever the position of the pointer is changed, therefore
- *  requiring the GSCHEM_TOPLEVEL variables to be updated.
- *  Depending on the grip selected and moved, the temporary GSCHEM_TOPLEVEL
- *  variables are changed according to the current position of the pointer
- *  and the modifications temporary drawn.
- *
- *  This function only makes a call to #o_picture_rubberbox() that
- *  updates the GSCHEM_TOPLEVEL variables, erase the previous temporary
- *   picture and draw the new temporary picture.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] w_x        Current x coordinate of pointer in world units.
- *  \param [in] w_y        Current y coordinate of pointer in world units.
- *  \param [in] whichone   Which grip to start motion with.
- */
-void o_grips_motion_picture(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
-{
-  /* erase, update and draw the temporary picture */
-  o_picture_rubberbox(w_current, w_x, w_y);
-}
-
-/*! \brief Modify previously selected circle according to mouse position.
- *  \par Function Description
- *  This function is the refreshing part of the grip motion process. It is
- *  called whenever the position of the pointer is changed, therefore
- *  requiring the GSCHEM_TOPLEVEL variables to be updated.
- *  Depending on the grip selected and moved, the temporary GSCHEM_TOPLEVEL
- *  variables are changed according to the current position of the pointer
- *  and the modifications temporary drawn.
- *
- *  This function only makes a call to #o_circle_rubbercircle() that updates
- *  the GSCHEM_TOPLEVEL variables, erase the previous temporary circle and
- *  draw the new temporary circle.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] w_x        Current x coordinate of pointer in world units.
- *  \param [in] w_y        Current y coordinate of pointer in world units.
- *  \param [in] whichone   Which grip to start motion with.
- */
-void o_grips_motion_circle(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
-{
-  /* erase, update and draw the temporary circle */
-  o_circle_rubbercircle(w_current, w_x, w_y);
-}
-
-/*! \brief Modify previously selected line according to mouse position.
- *  \par Function Description
- *  This function is called during the move of the grip to update the
- *  temporary line drawn under the mouse pointer.
- *  The current position of the mouse is in <B>w_x</B> and <B>w_y</B> in world coords.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] w_x        Current x coordinate of pointer in world units.
- *  \param [in] w_y        Current y coordinate of pointer in world units.
- *  \param [in] whichone   Which grip to start motion with.
- */
-void o_grips_motion_line(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
-{
-  /* erase, update and draw the temporary line */
-  o_line_rubberline(w_current, w_x, w_y);
-}
 
 /*! \brief End process of modifying object with grip.
  *  \par Function Description
