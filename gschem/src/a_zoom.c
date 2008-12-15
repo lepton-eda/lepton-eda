@@ -261,7 +261,7 @@ void a_zoom_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  * 
  */
-void a_zoom_box_rubberband(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void a_zoom_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   g_assert( w_current->inside_action != 0 );
 

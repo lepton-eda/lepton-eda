@@ -225,7 +225,7 @@ void o_picture_eraserubber(GSCHEM_TOPLEVEL *w_current)
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_picture_rubberbox(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_picture_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
 #if DEBUG
   printf("o_picture_rubberbox called\n");

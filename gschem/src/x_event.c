@@ -810,32 +810,32 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     case(ENDMOVE):
     case(MOVE):
     if (w_current->inside_action)
-      o_move_rubbermove(w_current, w_x, w_y);
+      o_move_motion (w_current, w_x, w_y);
     break;
 
     case(ENDLINE):
     if (w_current->inside_action)
-      o_line_rubberline(w_current, w_x, w_y);
+      o_line_motion (w_current, w_x, w_y);
     break;
 
     case(ENDBOX):
     if (w_current->inside_action)
-      o_box_rubberbox( w_current, w_x, w_y);
+      o_box_motion ( w_current, w_x, w_y);
     break;
 
     case(ENDPICTURE):
     if (w_current->inside_action)
-      o_picture_rubberbox( w_current, w_x, w_y);
+      o_picture_motion ( w_current, w_x, w_y);
     break;
 
     case(ENDCIRCLE):
     if (w_current->inside_action)
-      o_circle_rubbercircle(w_current, w_x, w_y);
+      o_circle_motion (w_current, w_x, w_y);
     break;
 
     case(ENDARC):
     if (w_current->inside_action)
-      o_arc_rubberarc(w_current, w_x, w_y, ARC_RADIUS);
+      o_arc_motion (w_current, w_x, w_y, ARC_RADIUS);
     break;
 
 
@@ -848,18 +848,18 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     case(DRAWNET):
     case(NETCONT):
     if (w_current->inside_action)
-      o_net_rubbernet(w_current, w_x, w_y);
+      o_net_motion (w_current, w_x, w_y);
     break;
 
     case(DRAWBUS):
     case(BUSCONT):
     if (w_current->inside_action)
-      o_bus_rubberbus(w_current, w_x, w_y);
+      o_bus_motion (w_current, w_x, w_y);
     break;
 
     case(ENDPIN):
     if (w_current->inside_action)
-      o_pin_rubberpin(w_current, w_x, w_y);
+      o_pin_motion (w_current, w_x, w_y);
     break;
 
     case(COPY):
@@ -869,17 +869,17 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     case(ENDCOMP):
     case(ENDPASTE):
     case(ENDTEXT):
-    o_place_rubberplace(w_current, w_x, w_y);
+    o_place_motion (w_current, w_x, w_y);
     break;
 
     case(SBOX):
     if (w_current->inside_action)
-    o_select_box_rubberband(w_current, unsnapped_wx, unsnapped_wy);
+    o_select_box_motion (w_current, unsnapped_wx, unsnapped_wy);
     break;
 
     case(ZOOMBOXEND):
     if (w_current->inside_action)
-      a_zoom_box_rubberband(w_current, unsnapped_wx, unsnapped_wy);
+      a_zoom_box_motion (w_current, unsnapped_wx, unsnapped_wy);
     break;
 
   }

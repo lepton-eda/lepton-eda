@@ -293,7 +293,7 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \param [in] w_x        current x position in world units
  *  \param [in] w_y        current y position in world units
  */
-void o_bus_rubberbus(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_bus_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   int diff_x, diff_y;
 

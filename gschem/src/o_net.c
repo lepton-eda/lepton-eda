@@ -805,7 +805,7 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *  This function draws the rubbernet lines when drawing a net.
  */
-void o_net_rubbernet(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_net_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   int ortho, horizontal, quadrant;
 

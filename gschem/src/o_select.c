@@ -277,7 +277,7 @@ void o_select_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void o_select_box_rubberband(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_select_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   if (w_current->rubber_visible)
     o_select_box_rubberband_xor(w_current);

@@ -965,30 +965,30 @@ void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   switch(w_current->which_object->type) {
     case OBJ_ARC:
-      o_arc_rubberarc (w_current, w_x, w_y, grip);
+      o_arc_motion (w_current, w_x, w_y, grip);
       break;
 
     case OBJ_BOX:
-      o_box_rubberbox (w_current, w_x, w_y);
+      o_box_motion (w_current, w_x, w_y);
       break;
 
     case OBJ_PATH:
-      o_path_rubberpath (w_current, w_x, w_y);
+      o_path_motion (w_current, w_x, w_y);
       break;
 
     case OBJ_PICTURE:
-      o_picture_rubberbox (w_current, w_x, w_y);
+      o_picture_motion (w_current, w_x, w_y);
       break;
 
     case OBJ_CIRCLE:
-      o_circle_rubbercircle (w_current, w_x, w_y);
+      o_circle_motion (w_current, w_x, w_y);
       break;
 
     case OBJ_LINE:
     case OBJ_NET:
     case OBJ_PIN:
     case OBJ_BUS:
-      o_line_rubberline (w_current, w_x, w_y);
+      o_line_motion (w_current, w_x, w_y);
       break;
 
     default:

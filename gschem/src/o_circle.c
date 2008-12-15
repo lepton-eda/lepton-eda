@@ -618,7 +618,7 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_circle_rubbercircle(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_circle_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   int diff_x, diff_y;
 

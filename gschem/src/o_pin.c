@@ -220,7 +220,7 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *
  */
-void o_pin_rubberpin(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_pin_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   g_assert( w_current->inside_action != 0 );
 

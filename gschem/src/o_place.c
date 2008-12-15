@@ -127,7 +127,7 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-void o_place_rubberplace (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_place_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   if (w_current->rubber_visible)
     o_place_rubberplace_xor (w_current, FALSE);

@@ -747,7 +747,7 @@ void o_path_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_path_rubberpath(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_path_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   if (w_current->rubber_visible)
     o_path_rubberpath_xor (w_current);

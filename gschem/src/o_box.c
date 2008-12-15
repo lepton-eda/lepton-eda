@@ -866,7 +866,7 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_box_rubberbox(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
 
   g_assert( w_current->inside_action != 0 );

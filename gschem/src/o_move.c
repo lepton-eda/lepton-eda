@@ -298,7 +298,7 @@ void o_move_cancel (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_move_rubbermove(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_move_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   o_move_rubbermove_xor (w_current, FALSE);
   w_current->second_wx = w_x;

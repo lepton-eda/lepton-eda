@@ -996,7 +996,7 @@ void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int radius,
  *        ending angle of the arc.
  *  </DL>
  */
-void o_arc_rubberarc(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
+void o_arc_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
 {
   int diff_x, diff_y, angle_deg;
 
