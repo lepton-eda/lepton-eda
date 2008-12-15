@@ -100,8 +100,7 @@ void o_redraw (GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_sel
   iter = object_list;
   while (iter != NULL) {
     o_current = (OBJECT *)iter->data;
-    if ((o_current->draw_func != NULL) &&
-        (o_current->type != OBJ_HEAD)) {
+    if (o_current->draw_func != NULL) {
       toplevel->DONT_REDRAW = redraw_state ||
                               o_current->dont_redraw ||
                               (!draw_selected && o_current->selected);
@@ -133,7 +132,7 @@ void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if (toplevel->DONT_REDRAW) /* highly experimental */
   return;
 
-  if (o_current->draw_func != NULL && o_current->type != OBJ_HEAD) {
+  if (o_current->draw_func != NULL) {
     (*o_current->draw_func)(w_current, o_current);
   }
 
@@ -237,8 +236,7 @@ void o_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 
   toplevel->override_color = toplevel->background_color;
   if (o_current != NULL) {
-    if (o_current->draw_func &&
-        o_current->type != OBJ_HEAD) {
+    if (o_current->draw_func) {
       (*o_current->draw_func)(w_current, o_current);
     }
   }
@@ -541,7 +539,6 @@ void o_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
   void (*func) (GSCHEM_TOPLEVEL *, int, int, OBJECT*) = NULL;
 
   switch (object->type) {
-      case OBJ_HEAD:    /* Do nothing for head nodes */   break;
       case OBJ_LINE:    func = o_line_draw_xor;           break;
       case OBJ_NET:     func = o_net_draw_xor;            break;
       case OBJ_BUS:     func = o_bus_draw_xor;            break;

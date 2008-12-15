@@ -174,7 +174,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
     if (selected_save)
       o_selection_unselect(src_object);
 
-    if (src_object->type != OBJ_TEXT && src_object->type != OBJ_HEAD) {
+    if (src_object->type != OBJ_TEXT) {
       dst_object = o_object_copy (toplevel, src_object, flag);
       dst_object->sid = global_sid++;
       dest = g_list_prepend (dest, dst_object);

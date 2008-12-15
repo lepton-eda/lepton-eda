@@ -63,24 +63,20 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
                       w_x, w_y) &&
         o_shortest_distance( o_current, w_x, w_y ) < w_slack ) {
       if (o_current->sel_func != NULL &&
-	  o_current->type != OBJ_HEAD &&
-	  (o_current->visibility == VISIBLE ||
-	   (o_current->visibility == INVISIBLE &&
-	    toplevel->show_hidden_text))) {
-	if (change_selection) {
-	  /* FIXME: should this switch be moved to o_select_object()? (Werner) */
-	  if (o_current->type == OBJ_NET && w_current->net_selection_mode) {
-	    o_select_connected_nets(w_current, o_current);
-	  }
-	  else {
-	    (*o_current->sel_func)(w_current, o_current, 
-				   SINGLE, 0); /* 0 is count */
-	  }
-	}
-	object_found = TRUE;
-	toplevel->page_current->object_lastplace = o_current;
-	i_update_menus(w_current);
-	return object_found;
+          (o_current->visibility == VISIBLE || toplevel->show_hidden_text)) {
+        if (change_selection) {
+          /* FIXME: should this switch be moved to o_select_object()? (Werner) */
+          if (o_current->type == OBJ_NET && w_current->net_selection_mode) {
+            o_select_connected_nets(w_current, o_current);
+          } else {
+            (*o_current->sel_func)(w_current, o_current,
+                                   SINGLE, 0); /* 0 is count */
+          }
+        }
+        object_found = TRUE;
+        toplevel->page_current->object_lastplace = o_current;
+        i_update_menus(w_current);
+        return object_found;
       }
     }
     iter = g_list_next (iter);
@@ -100,26 +96,22 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
                       o_current->w_right + w_slack, o_current->w_bottom + w_slack,
                       w_x, w_y) &&
         o_shortest_distance( o_current, w_x, w_y ) < w_slack ) {
-      
+
       if (o_current->sel_func != NULL &&
-          o_current->type != OBJ_HEAD &&
-          (o_current->visibility == VISIBLE ||
-           (o_current->visibility == INVISIBLE &&
-            toplevel->show_hidden_text))) {
-	if (change_selection) {
-	  /* FIXME: should this switch be moved to o_select_object()? (Werner) */
-	  if (o_current->type == OBJ_NET && w_current->net_selection_mode) {
-	    o_select_connected_nets(w_current, o_current);
-	  }
-	  else {
-	    (*o_current->sel_func)(w_current, o_current, SINGLE, 0); /* 0 is count */
-	  }
-	}
-	toplevel->page_current->object_lastplace = o_current;
- 	object_found = TRUE;
-        
+          (o_current->visibility == VISIBLE || toplevel->show_hidden_text)) {
+        if (change_selection) {
+          /* FIXME: should this switch be moved to o_select_object()? (Werner) */
+          if (o_current->type == OBJ_NET && w_current->net_selection_mode) {
+            o_select_connected_nets(w_current, o_current);
+          } else {
+            (*o_current->sel_func)(w_current, o_current, SINGLE, 0); /* 0 is count */
+          }
+        }
+        toplevel->page_current->object_lastplace = o_current;
+         object_found = TRUE;
+
         i_update_menus(w_current);
-	return object_found;
+        return object_found;
       }
     }
     iter = g_list_next (iter);
@@ -165,20 +157,17 @@ gboolean o_find_selected_object(GSCHEM_TOPLEVEL *w_current,
 #if DEBUG
       printf("o_find_selected_object:\n");
       printf("Object bounds:\n\tL: %i\tR: %i\n\tT: %i\tB: %i.\n",
-	     o_current->w_left, o_current->w_right, o_current->w_top, o_current->w_bottom);
+             o_current->w_left, o_current->w_right, o_current->w_top, o_current->w_bottom);
       printf("Screen pointer at: (%i,%i)\n", screen_x, screen_y);
 #endif
       if (o_current->sel_func != NULL &&
-	  o_current->type != OBJ_HEAD &&
-	  (o_current->visibility == VISIBLE ||
-	   (o_current->visibility == INVISIBLE &&
-	    toplevel->show_hidden_text))) {
-	return TRUE;
+          (o_current->visibility == VISIBLE || toplevel->show_hidden_text)) {
+        return TRUE;
       }
     }
-    
+
     s_current = g_list_next(s_current);
-  } 
+  }
 
   return (FALSE);
 }

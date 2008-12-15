@@ -341,9 +341,7 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
   while (iter != NULL) {
     o_current = iter->data;
     /* only select visible objects */
-    if (o_current->type != OBJ_HEAD && 
-        (o_current->visibility == VISIBLE ||
-        (o_current->visibility == INVISIBLE && toplevel->show_hidden_text))) {
+    if (o_current->visibility == VISIBLE || toplevel->show_hidden_text) {
 
       if ( o_current->w_left   >= left &&
            o_current->w_right  <= right  &&

@@ -274,7 +274,6 @@ void o_translate_world (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object)
   void (*func) (TOPLEVEL*, int, int, OBJECT*) = NULL;
 
   switch (object->type) {
-      case OBJ_HEAD:    /* Do nothing for head nodes */   break;
       case OBJ_LINE:    func = o_line_translate_world;    break;
       case OBJ_NET:     func = o_net_translate_world;     break;
       case OBJ_BUS:     func = o_bus_translate_world;     break;
@@ -314,7 +313,6 @@ void o_rotate_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, i
   void (*func) (TOPLEVEL*, int, int, int, OBJECT*) = NULL;
 
   switch (object->type) {
-      case OBJ_HEAD:    /* Do nothing for head nodes */   break;
       case OBJ_LINE:    func = o_line_rotate_world;       break;
       case OBJ_NET:     func = o_net_rotate_world;        break;
       case OBJ_BUS:     func = o_bus_rotate_world;        break;
@@ -353,7 +351,6 @@ void o_mirror_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, O
   void (*func) (TOPLEVEL*, int, int, OBJECT*) = NULL;
 
   switch (object->type) {
-      case OBJ_HEAD:    /* Do nothing for head nodes */   break;
       case OBJ_LINE:    func = o_line_mirror_world;       break;
       case OBJ_NET:     func = o_net_mirror_world;        break;
       case OBJ_BUS:     func = o_bus_mirror_world;        break;
@@ -421,9 +418,6 @@ gdouble o_shortest_distance(OBJECT *object, gint x, gint y)
     case(OBJ_COMPLEX):
     case(OBJ_PLACEHOLDER):
       shortest_distance = o_complex_shortest_distance(object->complex, x, y);
-      break;
-
-    case(OBJ_HEAD):
       break;
 
     case(OBJ_PATH):

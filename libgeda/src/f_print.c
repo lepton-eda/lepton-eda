@@ -252,109 +252,105 @@ void f_print_objects (TOPLEVEL *toplevel, FILE *fp, GList *obj_list,
   while ( iter != NULL ) {
     o_current = (OBJECT *)iter->data;
 
-    if (o_current->type != OBJ_HEAD) {
+    switch (o_current->type) {
+      case(OBJ_LINE):
+        o_line_print(toplevel, fp, o_current,
+                     origin_x, origin_y);
+        break;
 
-      switch (o_current->type) {
-        case(OBJ_LINE):
-          o_line_print(toplevel, fp, o_current,
+      case(OBJ_NET):
+        o_net_print(toplevel, fp, o_current,
+                    origin_x, origin_y);
+        break;
+
+      case(OBJ_BUS):
+        o_bus_print(toplevel, fp, o_current,
+                    origin_x, origin_y);
+        break;
+
+      case(OBJ_BOX):
+        o_box_print(toplevel, fp, o_current,
+                    origin_x, origin_y);
+        break;
+
+      case(OBJ_CIRCLE):
+        o_circle_print(toplevel, fp, o_current,
                        origin_x, origin_y);
-          break;
-	
-        case(OBJ_NET):
-          o_net_print(toplevel, fp, o_current,
-                      origin_x, origin_y);
-          break;
+        break;
 
-        case(OBJ_BUS):
-          o_bus_print(toplevel, fp, o_current,
-                      origin_x, origin_y);
-          break;
-	
-        case(OBJ_BOX):
-          o_box_print(toplevel, fp, o_current,
-                      origin_x, origin_y);
-          break;
-			
-        case(OBJ_CIRCLE):
-          o_circle_print(toplevel, fp, o_current,
-                         origin_x, origin_y);
-          break;
+      case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER): /* new object -- 1.20.2005 SDB */
+        fprintf(fp, "gsave\n");
 
-        case(OBJ_COMPLEX):
-        case(OBJ_PLACEHOLDER): /* new object -- 1.20.2005 SDB */
+        f_print_objects(toplevel, fp,
+                        o_current->complex->prim_objs,
+                        origin_x, origin_y, scale,
+                        unicode_count, unicode_table);
+        fprintf(fp, "grestore\n");
+        break;
+
+      case(OBJ_TEXT):
+        if (o_current->visibility == VISIBLE) {
+          int vectors = 0;
+
+          /* Look at flags and determine if vector text should
+           * be used for output.
+           */
+          if(toplevel->text_output == VECTOR_FONTS) {
+            vectors = 1;
+          } else if (toplevel->print_vector_threshold > 0 &&
+                     o_text_num_lines (o_current->text->string) >
+                       toplevel->print_vector_threshold) {
+            vectors = 1;
+          }
+
           fprintf(fp, "gsave\n");
 
-          f_print_objects(toplevel, fp,
-                          o_current->complex->prim_objs,
-                          origin_x, origin_y, scale,
-			  unicode_count, unicode_table);
-          fprintf(fp, "grestore\n");
-          break;
-
-        case(OBJ_TEXT):
-          if (o_current->visibility == VISIBLE) {
-	    int vectors = 0;
-
-	    /* Look at flags and determine if vector text should
-	     * be used for output.
-	     */
-	    if(toplevel->text_output == VECTOR_FONTS) {
-	      vectors = 1;
-	    } else if( (toplevel->print_vector_threshold > 0)
-			&& ( o_text_num_lines(o_current->text->string) > 
-			     toplevel->print_vector_threshold)) {
-	      vectors = 1;
-	    }
-            
-            fprintf(fp, "gsave\n");
-			
-            if (vectors)
-            {	
-	      /* Output vectors */
-              f_print_objects(toplevel,
-                              fp, 
-                              o_current->text->
-                              prim_objs,
-                              origin_x, origin_y, 
-                              scale, unicode_count, unicode_table);
-            } else {
-	      /* Output text */
-              o_text_print(toplevel, fp,
-                           o_current,
-                           origin_x, origin_y, unicode_count, unicode_table);
-            }
-
-            fprintf(fp, "grestore\n");
+          if (vectors)
+          {
+      /* Output vectors */
+            f_print_objects(toplevel,
+                            fp,
+                            o_current->text->
+                            prim_objs,
+                            origin_x, origin_y,
+                            scale, unicode_count, unicode_table);
+          } else {
+      /* Output text */
+            o_text_print(toplevel, fp,
+                         o_current,
+                         origin_x, origin_y, unicode_count, unicode_table);
           }
-          break;
+
+          fprintf(fp, "grestore\n");
+        }
+        break;
 
 
-        case(OBJ_PATH):
-          o_path_print(toplevel, fp, o_current,
-                       origin_x, origin_y);
-          break;
+      case(OBJ_PATH):
+        o_path_print(toplevel, fp, o_current,
+                     origin_x, origin_y);
+        break;
 
-        case(OBJ_PIN):
-          o_pin_print(toplevel, fp, o_current,
-                      origin_x, origin_y);
-          break;
-	
-        case(OBJ_ARC):
-          o_arc_print(toplevel, fp, o_current,
-                      origin_x, origin_y);
-          break;
+      case(OBJ_PIN):
+        o_pin_print(toplevel, fp, o_current,
+                    origin_x, origin_y);
+        break;
 
-  	case(OBJ_PICTURE):
-          o_picture_print(toplevel, fp, o_current,
-			  origin_x, origin_y);
-	  break;
+      case(OBJ_ARC):
+        o_arc_print(toplevel, fp, o_current,
+                    origin_x, origin_y);
+        break;
 
-        default:
-          fprintf(stderr, "Error type!\n");
-          exit(-1);
-          break;
-      }
+      case(OBJ_PICTURE):
+        o_picture_print(toplevel, fp, o_current,
+        origin_x, origin_y);
+      break;
 
+      default:
+        fprintf(stderr, "Error type!\n");
+        exit(-1);
+        break;
     }
     iter = g_list_next (iter);
   }
@@ -660,47 +656,44 @@ static int f_print_get_unicode_chars (TOPLEVEL *toplevel, GList *obj_list,
   while (iter != NULL) {
     o_current = (OBJECT *)iter->data;
 
-    if (o_current->type != OBJ_HEAD) {
-
-      switch (o_current->type) {
+    switch (o_current->type) {
 
       case (OBJ_COMPLEX):
-      case (OBJ_PLACEHOLDER):	/* new object -- 1.20.2005 SDB */
+      case (OBJ_PLACEHOLDER):
 
-	count = f_print_get_unicode_chars(toplevel,
+        count = f_print_get_unicode_chars(toplevel,
                                           o_current->complex->prim_objs, 
                                           count, table);
-	break;
+        break;
 
       case (OBJ_TEXT):
-	if (o_current->visibility == VISIBLE) {
+        if (o_current->visibility == VISIBLE) {
 
           aux = o_current->text->string;
           while (aux && ((gunichar) (*aux) != 0)) {
             current_char = g_utf8_get_char_validated(aux, -1);
             if (current_char >= 127) {
-	      found = 0;  
-	      i = 0;
-	      while (i < count) {
-	        if (table[i] == current_char)
-	          found = 1;
-		i++;  
-	      }
+              found = 0;
+              i = 0;
+              while (i < count) {
+                if (table[i] == current_char)
+                  found = 1;
+                i++;
+              }
               if (!found) {
-	        if (count < 128)
-		  table[count++] = current_char;
-	        else 
-	          s_log_message(_("Too many UTF-8 characters, cannot print\n"));
-	      }
-	    }  
+                if (count < 128)
+                  table[count++] = current_char;
+                else
+                  s_log_message(_("Too many UTF-8 characters, cannot print\n"));
+              }
+            }
             aux = g_utf8_find_next_char(aux, NULL);
-	  }
-	}
-	break;
+          }
+        }
+        break;
 
       default:
-	break;
-      }
+        break;
     }
     iter = g_list_next (iter);
   }

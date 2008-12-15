@@ -111,8 +111,7 @@ gchar *o_save_objects (GList *object_list, gboolean save_attribs)
   while ( iter != NULL ) {
     o_current = (OBJECT *)iter->data;
 
-    if (o_current->type != OBJ_HEAD &&
-        (save_attribs || o_current->attached_to == NULL)) {
+    if (save_attribs || o_current->attached_to == NULL) {
 
       switch (o_current->type) {
 
