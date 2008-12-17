@@ -1442,11 +1442,11 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
     arc_object = (OBJECT*) g_object_get_data(G_OBJECT(w_current->aawindow),"arc_object");
 
     if (arc_object != NULL) {
-      o_erase_selected(w_current);
+      o_erase_single (w_current, arc_object);
       o_arc_modify(w_current->toplevel, arc_object, radius, 0, ARC_RADIUS);
       o_arc_modify(w_current->toplevel, arc_object, start_angle, 0, ARC_START_ANGLE);
       o_arc_modify(w_current->toplevel, arc_object, sweep_angle, 0, ARC_END_ANGLE);
-      o_draw_selected(w_current);
+      o_redraw_single (w_current, arc_object);
     } else {
       o_arc_end4(w_current, radius, start_angle, sweep_angle);
     }
