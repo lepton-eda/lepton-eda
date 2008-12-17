@@ -249,7 +249,8 @@
 ; Controls how many pixels around an object can still be clicked as part of
 ; that object.
 ; A larger value gives greater ease in selecting small, or narrow objects.
-(select-slack-pixels 4)
+(select-slack-pixels 10)
+;(select-slack-pixels 4)
 ;(select-slack-pixels 0)
 ;(select-slack-pixels 1)
 
