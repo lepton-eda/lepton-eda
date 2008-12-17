@@ -377,65 +377,42 @@ void o_mirror_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, O
  * point on the given object.
  *
  *  \param [in] object The given object.
- *  \param [in] x The x coordinate of the given point.
- *  \param [in] y The y coordinate of the given point.
+ *  \param [in] x      The x coordinate of the given point.
+ *  \param [in] y      The y coordinate of the given point.
  *  \return The shortest distance from the object to the point. If the
  *  distance cannot be calculated, this function returns a really large
  *  number (G_MAXDOUBLE).  If an error occurs, this function returns
  *  G_MAXDOUBLE.
  */
-gdouble o_shortest_distance(OBJECT *object, gint x, gint y)
+double o_shortest_distance (OBJECT *object, int x, int y)
 {
-  gdouble shortest_distance = G_MAXDOUBLE;
+  double shortest_distance = G_MAXDOUBLE;
+  double (*func) (OBJECT *, int, int) = NULL;
 
-  if (object == NULL) {
-    g_critical("o_shortest_distance(): object == NULL\n");
-    return G_MAXDOUBLE;
-  }
-
+  g_return_val_if_fail (object != NULL, G_MAXDOUBLE);
 
   switch(object->type) {
-
-    case(OBJ_ARC):
-      shortest_distance = o_arc_shortest_distance(object->arc, x, y);
-      break;
-
-    case(OBJ_BOX):
-      shortest_distance = o_box_shortest_distance(object->box, x, y);
-      break;
-
-    case(OBJ_BUS):
-    case(OBJ_LINE):
-    case(OBJ_NET):
-    case(OBJ_PIN):
-      shortest_distance = o_line_shortest_distance(object->line, x, y);
-      break;
-
-    case(OBJ_CIRCLE):
-      shortest_distance = o_circle_shortest_distance(object->circle, x, y);
-      break;
-
-    case(OBJ_COMPLEX):
-    case(OBJ_PLACEHOLDER):
-      shortest_distance = o_complex_shortest_distance(object->complex, x, y);
-      break;
-
-    case(OBJ_PATH):
-      shortest_distance = o_path_shortest_distance(object, x, y);
-      break;
-
-    case(OBJ_PICTURE):
-      shortest_distance = o_picture_shortest_distance(object->picture, x, y);
-      break;
-
-    case(OBJ_TEXT):
-      shortest_distance = o_text_shortest_distance(object->text, x, y);
-      break;
-
+    case OBJ_BUS:
+    case OBJ_NET:
+    case OBJ_PIN:
+    case OBJ_LINE:        func = o_line_shortest_distance;     break;
+    case OBJ_BOX:         func = o_box_shortest_distance;      break;
+    case OBJ_PICTURE:     func = o_picture_shortest_distance;  break;
+    case OBJ_CIRCLE:      func = o_circle_shortest_distance;   break;
+    case OBJ_PLACEHOLDER:
+    case OBJ_COMPLEX:     func = o_complex_shortest_distance;  break;
+    case OBJ_TEXT:        func = o_text_shortest_distance;     break;
+    case OBJ_PATH:        func = o_path_shortest_distance;     break;
+    case OBJ_ARC:         func = o_arc_shortest_distance;      break;
     default:
       g_critical ("o_shortest_distance: object %p has bad type '%c'\n",
                   object, object->type);
   }
+
+  if (func != NULL) {
+    shortest_distance = (*func) (object, x, y);
+  }
+
   return shortest_distance;
 }
 

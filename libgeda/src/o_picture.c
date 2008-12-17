@@ -1021,40 +1021,30 @@ GdkPixbuf *o_picture_pixbuf_from_buffer (gchar *file_content,
  *
  *  Interrior points within the picture return a distance of zero.
  *
- *  \param [in] picture the picture of the OBJECT
- *  \param [in] x The x coordinate of the given point.
- *  \param [in] y The y coordinate of the given point.
+ *  \param [in] object  The picture OBJECT.
+ *  \param [in] x       The x coordinate of the given point.
+ *  \param [in] y       The y coordinate of the given point.
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-gdouble o_picture_shortest_distance(PICTURE *picture, gint x, gint y)
+double o_picture_shortest_distance (OBJECT *object, int x, int y)
 {
-  gdouble dx;
-  gdouble dy;
-  gdouble shortest_distance;
-  gdouble x0;
-  gdouble x1;
-  gdouble y0;
-  gdouble y1;
+  double dx, dy;
+  double x1, y1, x2, y2;
 
-  if (picture == NULL) {
-    g_critical("o_picture_shortest_distance(): picture == NULL\n");
-    return G_MAXDOUBLE;
-  }
+  g_return_val_if_fail (object->picture != NULL, G_MAXDOUBLE);
 
-  x0 = (gdouble) min(picture->upper_x, picture->lower_x);
-  x1 = (gdouble) max(picture->upper_x, picture->lower_x);
-  y0 = (gdouble) min(picture->upper_y, picture->lower_y);
-  y1 = (gdouble) max(picture->upper_y, picture->lower_y);
+  x1 = (double)min (object->picture->upper_x, object->picture->lower_x);
+  y1 = (double)min (object->picture->upper_y, object->picture->lower_y);
+  x2 = (double)max (object->picture->upper_x, object->picture->lower_x);
+  y2 = (double)max (object->picture->upper_y, object->picture->lower_y);
 
-  dx = min(((gdouble) x)-x0, x1-((gdouble) x));
-  dy = min(((gdouble) y)-y0, y1-((gdouble) y));
+  dx = min (((double)x) - x1, x2 - ((double)x));
+  dy = min (((double)y) - y1, y2 - ((double)y));
 
-  dx = min(dx, 0);
-  dy = min(dy, 0);
+  dx = min (dx, 0);
+  dy = min (dy, 0);
 
-  shortest_distance = sqrt((dx*dx) + (dy*dy));
-
-  return shortest_distance;
+  return sqrt ((dx * dx) + (dy * dy));
 }
 

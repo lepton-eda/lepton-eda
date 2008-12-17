@@ -1295,49 +1295,39 @@ void o_box_print_hatch(TOPLEVEL *toplevel, FILE *fp,
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter of the box.
  *
- *  \param [in] box  The box of an OBJECT (object->box != NULL).
- *  \param [in] x The x coordinate of the given point.
- *  \param [in] y The y coordinate of the given point.
+ *  \param [in] object  The box OBJECT.
+ *  \param [in] x       The x coordinate of the given point.
+ *  \param [in] y       The y coordinate of the given point.
  *  \return The shortest distance from the object to the point. With an 
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-gdouble o_box_shortest_distance(BOX *box, gint x, gint y)
+double o_box_shortest_distance (OBJECT *object, int x, int y)
 {
-  gdouble dx;
-  gdouble dy;
-  gdouble shortest_distance;
-  gdouble x0;
-  gdouble x1;
-  gdouble y0;
-  gdouble y1;
+  double shortest_distance;
+  double x1, y1, x2, y2;
+  double dx, dy;
 
-  if (box == NULL) {
-    g_critical("o_box_shortest_distance(): box == NULL\n");
-    return G_MAXDOUBLE;
-  }
+  g_return_val_if_fail (object->box != NULL, G_MAXDOUBLE);
 
-  x0 = (gdouble) min(box->upper_x, box->lower_x);
-  x1 = (gdouble) max(box->upper_x, box->lower_x);
-  y0 = (gdouble) min(box->upper_y, box->lower_y);
-  y1 = (gdouble) max(box->upper_y, box->lower_y);
+  x1 = (double) min (object->box->upper_x, object->box->lower_x);
+  y1 = (double) min (object->box->upper_y, object->box->lower_y);
+  x2 = (double) max (object->box->upper_x, object->box->lower_x);
+  y2 = (double) max (object->box->upper_y, object->box->lower_y);
 
-  dx = min(((gdouble) x)-x0, x1-((gdouble) x));
-  dy = min(((gdouble) y)-y0, y1-((gdouble) y));
+  dx = min (((double)x) - x1, x2 - ((double)x));
+  dy = min (((double)y) - y1, y2 - ((double)y));
 
-  if ( dx < 0 ) {
-    if ( dy < 0 ) {
-      shortest_distance = sqrt((dx*dx) + (dy*dy));
+  if (dx < 0) {
+    if (dy < 0) {
+      shortest_distance = sqrt ((dx * dx) + (dy * dy));
+    } else {
+      shortest_distance = fabs (dx);
     }
-    else {
-      shortest_distance = fabs(dx);
-    }
-  }
-  else {
-    if ( dy < 0 ) {
-      shortest_distance = fabs(dy);
-    }
-    else {
-      shortest_distance = min(dx,dy);
+  } else {
+    if (dy < 0) {
+      shortest_distance = fabs (dy);
+    } else {
+      shortest_distance = min (dx, dy);
     }
   }
 

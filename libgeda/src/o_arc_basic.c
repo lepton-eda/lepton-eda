@@ -1234,58 +1234,54 @@ void o_arc_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter of the arc.
  *
- *  \param [in] arc the arc of the OBJECT
- *  \param [in] x The x coordinate of the given point.
- *  \param [in] y The y coordinate of the given point.
+ *  \param [in] object  The arc OBJECT.
+ *  \param [in] x       The x coordinate of the given point.
+ *  \param [in] y       The y coordinate of the given point.
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-gdouble o_arc_shortest_distance(ARC *arc, gint x, gint y)
+double o_arc_shortest_distance (OBJECT *object, int x, int y)
 {
-  gdouble radius;
-  gdouble shortest_distance;
+  double shortest_distance;
+  double radius;
 
-  if (arc == NULL) {
-    g_critical("o_arc_shortest_distance(): arc == NULL\n");
-    return G_MAXDOUBLE;
-  }
+  g_return_val_if_fail (object->arc != NULL, G_MAXDOUBLE);
 
-  radius = ((gdouble) arc->width) / 2.0;
+  radius = ((double)object->arc->width) / 2.0;
 
-  if ( o_arc_within_sweep(arc, x, y) ) {
-    gdouble distance_to_center;
-    gdouble dx;
-    gdouble dy;
+  if (o_arc_within_sweep (object->arc, x, y)) {
+    double distance_to_center;
+    double dx;
+    double dy;
 
-    dx = ((gdouble) x) - ((gdouble) arc->x);
-    dy = ((gdouble) y) - ((gdouble) arc->y);
+    dx = ((double)x) - ((double)object->arc->x);
+    dy = ((double)y) - ((double)object->arc->y);
 
-    distance_to_center = sqrt((dx*dx) + (dy*dy));
+    distance_to_center = sqrt ((dx * dx) + (dy * dy));
 
-    shortest_distance = fabs(distance_to_center - radius);
-  }
-  else {
-    gdouble angle;
-    gdouble distance_to_end0;
-    gdouble distance_to_end1;
-    gdouble dx;
-    gdouble dy;
+    shortest_distance = fabs (distance_to_center - radius);
 
-    angle = G_PI * ((gdouble) arc->start_angle ) / 180;
+  } else {
+    double angle;
+    double distance_to_end0;
+    double distance_to_end1;
+    double dx, dy;
 
-    dx = ((gdouble) x) - radius*cos(angle) - ((gdouble) arc->x);
-    dy = ((gdouble) y) - radius*sin(angle) - ((gdouble) arc->y);
+    angle = G_PI * ((double)object->arc->start_angle) / 180;
 
-    distance_to_end0 = sqrt((dx*dx) + (dy*dy));
+    dx = ((double)x) - radius * cos (angle) - ((double)object->arc->x);
+    dy = ((double)y) - radius * sin (angle) - ((double)object->arc->y);
 
-    angle += G_PI * ((gdouble) arc->end_angle ) / 180;
+    distance_to_end0 = sqrt ((dx * dx) + (dy * dy));
 
-    dx = ((gdouble) x) - radius*cos(angle) - ((gdouble) arc->x);
-    dy = ((gdouble) y) - radius*sin(angle) - ((gdouble) arc->y);
+    angle += G_PI * ((double)object->arc->end_angle) / 180;
 
-    distance_to_end1 = sqrt((dx*dx) + (dy*dy));
+    dx = ((double)x) - radius * cos (angle) - ((double)object->arc->x);
+    dy = ((double)y) - radius * sin (angle) - ((double)object->arc->y);
 
-    shortest_distance = min(distance_to_end0, distance_to_end1);
+    distance_to_end1 = sqrt ((dx * dx) + (dy * dy));
+
+    shortest_distance = min (distance_to_end0, distance_to_end1);
   }
 
   return shortest_distance;

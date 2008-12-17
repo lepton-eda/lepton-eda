@@ -1802,26 +1802,24 @@ void o_text_mirror_world(TOPLEVEL *toplevel,
  *  This function will calculate the distance to the text regardless
  *  if the text is visible or not.
  *
- *  \param [in] text  the text of the OBJECT
- *  \param [in] x The x coordinate of the given point.
- *  \param [in] y The y coordinate of the given point.
+ *  \param [in] object  The text OBJECT.
+ *  \param [in] x       The x coordinate of the given point.
+ *  \param [in] y       The y coordinate of the given point.
  *  \return The shortest distance from the object to the point. If the
  *  distance cannot be calculated, this function returns a really large
  *  number (G_MAXDOUBLE).  With an invalid parameter, this funciton
  *  returns G_MAXDOUBLE.
  */
-gdouble o_text_shortest_distance(TEXT *text, gint x, gint y)
+double o_text_shortest_distance (OBJECT *object, int x, int y)
 {
-  gdouble distance;
-  gdouble shortest_distance = G_MAXDOUBLE;
+  double shortest_distance = G_MAXDOUBLE;
+  double distance;
   GList *iter;
 
-  if (text == NULL) {
-    g_critical("o_text_shortest_distance(): text == NULL\n");
-    return G_MAXDOUBLE;
-  }
+  g_return_val_if_fail (object->text != NULL, G_MAXDOUBLE);
 
-  for (iter = text->prim_objs; iter != NULL; iter= g_list_next (iter)) {
+  for (iter = object->text->prim_objs;
+       iter != NULL; iter = g_list_next (iter)) {
     OBJECT *obj = iter->data;
 
     distance = o_shortest_distance (obj, x, y);

@@ -1213,36 +1213,27 @@ double o_line_length(OBJECT *object)
  *  If the line represents a single point (the endpoints are the same), this
  *  function calcualtes the distance to that point.
  *
- *  \param [in] line  The line of an OBJECT
- *  \param [in] x The x coordinate of the given point.
- *  \param [in] y The y coordinate of the given point.
+ *  \param [in] object  The line OBJECT.
+ *  \param [in] x       The x coordinate of the given point.
+ *  \param [in] y       The y coordinate of the given point.
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-gdouble o_line_shortest_distance(LINE *line, gint x, gint y)
+double o_line_shortest_distance (OBJECT *object, int x, int y)
 {
-  gdouble cx;
-  gdouble cy;
-  gdouble dx;
-  gdouble dx0;
-  gdouble dy;
-  gdouble dy0;
-  gdouble ldx;
-  gdouble ldy;
-  gdouble lx0;
-  gdouble ly0;
-  gdouble shortest_distance;
-  gdouble t;
+  double cx, cy;
+  double dx, dy;
+  double dx0, dy0;
+  double lx0, ly0;
+  double ldx, ldy;
+  double t;
 
-  if (line == NULL) {
-    g_critical("o_line_shortest_distance(): line == NULL\n");
-    return G_MAXDOUBLE;
-  }
+  g_return_val_if_fail (object->line != NULL, G_MAXDOUBLE);
 
-  lx0 = (double) line->x[0];
-  ly0 = (double) line->y[0];
-  ldx = ((double) line->x[1]) - ((double) line->x[0]);
-  ldy = ((double) line->y[1]) - ((double) line->y[0]);
+  lx0 = (double)object->line->x[0];
+  ly0 = (double)object->line->y[0];
+  ldx = (double)(object->line->x[1] - object->line->x[0]);
+  ldy = (double)(object->line->y[1] - object->line->y[0]);
 
   if (ldx == 0 && ldy == 0) {
     /* if line is a point, just calculate distance to the point */
@@ -1269,8 +1260,6 @@ gdouble o_line_shortest_distance(LINE *line, gint x, gint y)
     dy = y - cy;
   }
 
-  shortest_distance = sqrt( (dx*dx) + (dy*dy) );
-
-  return shortest_distance;
+  return sqrt ((dx * dx) + (dy * dy));
 }
 

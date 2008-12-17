@@ -147,7 +147,7 @@ void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current, OBJECT_FILLING ty
 void o_translate_world (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object);
 void o_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-gdouble o_shortest_distance(OBJECT *object, gint x, gint y);
+double o_shortest_distance(OBJECT *object, int x, int y);
 
 /* o_box_basic.c */
 OBJECT *o_box_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);

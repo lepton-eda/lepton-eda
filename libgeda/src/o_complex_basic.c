@@ -1533,26 +1533,24 @@ done:
 /*! \brief Calculates the distance between the given point and the closest
  * point on an object within the complex object.
  *
- *  \param [in] complex The complex of the OBJECT
- *  \param [in] x The x coordinate of the given point.
- *  \param [in] y The y coordinate of the given point.
+ *  \param [in] object  The complex  OBJECT.
+ *  \param [in] x       The x coordinate of the given point.
+ *  \param [in] y       The y coordinate of the given point.
  *  \return The shortest distance from the object to the point. If the
  *  distance cannot be calculated, this function returns a really large
  *  number (G_MAXDOUBLE).  With an invalid parameter, this function returns
  *  G_MAXDOUBLE.
  */
-gdouble o_complex_shortest_distance(COMPLEX *complex, gint x, gint y)
+double o_complex_shortest_distance (OBJECT *object, int x, int y)
 {
-  gdouble distance;
-  gdouble shortest_distance = G_MAXDOUBLE;
+  double shortest_distance = G_MAXDOUBLE;
+  double distance;
   GList *iter;
 
-  if (complex == NULL) {
-    g_critical("o_complex_shortest_distance(): complex == NULL\n");
-    return G_MAXDOUBLE;
-  }
+  g_return_val_if_fail (object->complex != NULL, G_MAXDOUBLE);
 
-  for (iter = complex->prim_objs; iter != NULL; iter= g_list_next (iter)) {
+  for (iter = object->complex->prim_objs;
+       iter != NULL; iter= g_list_next (iter)) {
     OBJECT *obj = iter->data;
 
     distance = o_shortest_distance (obj, x, y);
