@@ -317,7 +317,7 @@ char *s_attrib_get(int counter);
 void error_if_called(void);
 void exit_if_null(void *ptr);
 OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name);
-OBJECT *s_basic_new_object(char type, char const *prefix);
+OBJECT *s_basic_new_object(int type, char const *prefix);
 void print_struct_forw(GList *list);
 void print_struct(OBJECT *ptr);
 void s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current);

@@ -154,7 +154,7 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
  *  \param [in] prefix    The name prefix for the session-unique object name.
  *  \return A pointer to the fully constructed OBJECT.
  */
-OBJECT *s_basic_new_object(char type, char const *prefix)
+OBJECT *s_basic_new_object(int type, char const *prefix)
 {
   return s_basic_init_object(g_malloc(sizeof (OBJECT)), type, prefix);
 }
