@@ -1812,18 +1812,29 @@ void o_text_mirror_world(TOPLEVEL *toplevel,
  */
 double o_text_shortest_distance (OBJECT *object, int x, int y)
 {
-  double shortest_distance = G_MAXDOUBLE;
-  double distance;
-  GList *iter;
+  double shortest_distance;
+  double dx, dy;
 
   g_return_val_if_fail (object->text != NULL, G_MAXDOUBLE);
 
-  for (iter = object->text->prim_objs;
-       iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *obj = iter->data;
+  dx = min (x - object->w_left, object->w_right - x);
+  dy = min (y - object->w_top, object->w_bottom - y);
 
-    distance = o_shortest_distance (obj, x, y);
-    shortest_distance = min (shortest_distance, distance);
+  dx = min (dx, 0);
+  dy = min (dy, 0);
+
+  if (dx < 0) {
+    if (dy < 0) {
+      shortest_distance = sqrt ((dx * dx) + (dy * dy));
+    } else {
+      shortest_distance = fabs (dx);
+    }
+  } else {
+    if (dy < 0) {
+      shortest_distance = fabs (dy);
+    } else {
+      shortest_distance = min (dx, dy);
+    }
   }
 
   return shortest_distance;
