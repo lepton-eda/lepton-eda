@@ -272,6 +272,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
   GList *object_list_save=NULL;
   OBJECT *new_obj=NULL;
   GList *new_obj_list;
+  GList *iter;
   unsigned int release_ver;
   unsigned int fileformat_ver;
   unsigned int current_fileformat_ver;
@@ -437,6 +438,13 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
           new_obj = object_list_save->data;
           new_obj->complex->prim_objs = object_list;
           object_list = object_list_save;
+
+          /* set the parent field now */
+          for (iter = new_obj->complex->prim_objs;
+               iter != NULL; iter = g_list_next (iter)) {
+            OBJECT *tmp = iter->data;
+            tmp->complex_parent = new_obj;
+          }
 
           o_recalc_single_object (toplevel, new_obj);
 
