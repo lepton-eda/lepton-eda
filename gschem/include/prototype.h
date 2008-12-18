@@ -804,7 +804,7 @@ void x_manual_resize(GSCHEM_TOPLEVEL *w_current);
 void x_event_hschanged(GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current);
 void x_event_vschanged(GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current);
 gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event, GSCHEM_TOPLEVEL *w_current);
-gboolean x_event_key_press(GtkWidget *widget, GdkEventKey *event, GSCHEM_TOPLEVEL *w_current);
+gboolean x_event_key(GtkWidget *widget, GdkEventKey *event, GSCHEM_TOPLEVEL *w_current);
 gint x_event_scroll(GtkWidget *widget, GdkEventScroll *event, GSCHEM_TOPLEVEL *w_current);
 gboolean x_event_get_pointer_position (GSCHEM_TOPLEVEL *w_current, gboolean snapped, gint *wx, gint *wy);
 /* x_compselect.c */

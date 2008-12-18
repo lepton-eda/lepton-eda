@@ -26,6 +26,7 @@
 #endif
 
 #include "gschem.h"
+#include <gdk/gdkkeysyms.h>
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -1128,27 +1129,124 @@ gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
   return(0);
 }
 
+/*! \brief Get a snapped pointer position in world coordinates
+ *
+ *  \par Function Description
+ *  Queries GTK for the mouse location in world coordinates,
+ *  then snaps it to the grid.
+ *
+ * \param [in]  w_current  The GSCHEM_TOPLEVEL object.
+ * \param [out] wx         Return location for the snapped X coordinate.
+ * \param [out] wy         Return location for the snapped Y coordiante.
+ */
+static void get_snapped_pointer (GSCHEM_TOPLEVEL *w_current, int *wx, int *wy)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int sx, sy;
+  int unsnapped_wx, unsnapped_wy;
+
+  gtk_widget_get_pointer (w_current->drawing_area, &sx, &sy);
+  SCREENtoWORLD (toplevel, sx, sy, &unsnapped_wx, &unsnapped_wy);
+  *wx = snap_grid (toplevel, unsnapped_wx);
+  *wy = snap_grid (toplevel, unsnapped_wy);
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
  *
  */
-gboolean x_event_key_press (GtkWidget *widget, GdkEventKey *event,
-                            GSCHEM_TOPLEVEL *w_current)
+gboolean x_event_key (GtkWidget *widget, GdkEventKey *event,
+                      GSCHEM_TOPLEVEL *w_current)
 {
-  int retval;
+  gboolean retval = FALSE;
+  int wx, wy;
+  int alt_key = 0;
+  int shift_key = 0;
+  int control_key = 0;
+  int pressed;
 
-  retval = FALSE;
-
-  exit_if_null(w_current);
   global_window_current = w_current;
 
-  if (event) {
 #if DEBUG
-    printf("x_event_key_pressed: Pressed key %i.\n", event->keyval);
+  printf("x_event_key_pressed: Pressed key %i.\n", event->keyval);
 #endif
-    retval = g_keys_execute(w_current, event->state, event->keyval) ? TRUE : FALSE;
+
+  /* update the state of the modifiers */
+  w_current->ALTKEY     = (event->state & GDK_MOD1_MASK)    ? 1 : 0;
+  w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK)   ? 1 : 0;
+  w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
+
+  pressed = (event->type == GDK_KEY_PRESS) ? 1 : 0;
+
+  switch (event->keyval) {
+    case GDK_Alt_L:
+    case GDK_Alt_R:
+      alt_key = 1;
+      w_current->ALTKEY = pressed;
+      break;
+
+    case GDK_Shift_L:
+    case GDK_Shift_R:
+      shift_key = 1;
+      w_current->SHIFTKEY = pressed;
+      break;
+
+    case GDK_Control_L:
+    case GDK_Control_R:
+      control_key = 1;
+      w_current->CONTROLKEY = pressed;
+      break;
   }
+
+  switch (w_current->event_state) {
+    case ENDLINE:
+      if (control_key) {
+        get_snapped_pointer (w_current, &wx, &wy);
+        o_line_motion (w_current, wx, wy);
+      }
+      break;
+    case STARTDRAWNET:
+      if (control_key) {
+        get_snapped_pointer (w_current, &wx, &wy);
+        o_net_start_magnetic(w_current, wx, wy);
+      }
+      break;
+    case DRAWNET:
+    case NETCONT:
+      if (shift_key || control_key) {
+        get_snapped_pointer (w_current, &wx, &wy);
+        o_net_motion (w_current, wx, wy);
+      }
+      break;
+    case DRAWBUS:
+    case BUSCONT:
+      if (control_key) {
+        get_snapped_pointer (w_current, &wx, &wy);
+        o_bus_motion (w_current, wx, wy);
+      }
+      break;
+    case ENDMOVE:
+      if (control_key) {
+        get_snapped_pointer (w_current, &wx, &wy);
+        o_move_motion (w_current, wx, wy);
+      }
+      break;
+    case ENDCOMP:   /* FIXME: This state shouldn't respond to modifier keys */
+    case ENDPASTE:  /* FIXME: This state shouldn't respond to modifier keys */
+    case ENDTEXT:   /* FIXME: This state shouldn't respond to modifier keys */
+    case ENDCOPY:
+    case ENDMCOPY:
+      if (control_key) {
+        get_snapped_pointer (w_current, &wx, &wy);
+        o_place_motion (w_current, wx, wy);
+      }
+      break;
+  }
+
+  if (pressed)
+    retval = g_keys_execute (w_current, event->state, event->keyval)
+               ? TRUE : FALSE;
 
   return retval;
 }
