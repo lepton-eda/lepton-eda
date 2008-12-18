@@ -1,0 +1,43 @@
+<LiquidPCB>
+	<netlist name="Main netlist">
+		<net name="Vdd1">
+			<netnode component="Rlp" pin=2 />
+			<netnode component="M1" pin=B />
+			<netnode component="M1" pin=S />
+			<netnode component="Vdd" pin=1 />
+			<netnode component="X1" pin=6 />
+		</net>
+		<net name="GND">
+			<netnode component="Cm" pin=2 />
+			<netnode component="Cp" pin=2 />
+			<netnode component="Rlm" pin=2 />
+			<netnode component="Vdd" pin=2 />
+			<netnode component="V1" pin=2 />
+			<netnode component="Rb" pin=1 />
+			<netnode component="X1" pin=7 />
+			<netnode component="X1" pin=2 />
+		</net>
+		<net name="LVH">
+			<netnode component="Rb" pin=2 />
+			<netnode component="M1" pin=D />
+			<netnode component="M1" pin=G />
+			<netnode component="X1" pin=3 />
+		</net>
+		<net name="i">
+			<netnode component="V1" pin=1 />
+			<netnode component="X1" pin=1 />
+		</net>
+		<net name="p">
+			<netnode component="Cp" pin=1 />
+			<netnode component="Rt" pin=1 />
+			<netnode component="Rlp" pin=1 />
+			<netnode component="X1" pin=5 />
+		</net>
+		<net name="m">
+			<netnode component="Cm" pin=1 />
+			<netnode component="Rlm" pin=1 />
+			<netnode component="Rt" pin=2 />
+			<netnode component="X1" pin=4 />
+		</net>
+	</netlist>
+</LiquidPCB>

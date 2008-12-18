@@ -1,0 +1,27 @@
+<LiquidPCB>
+	<netlist name="Main netlist">
+		<net name="unnamed_net1">
+			<netnode component="U300" pin=2 />
+		</net>
+		<net name="netattrib">
+			<netnode component="U200" pin=2 />
+			<netnode component="U100" pin=5 />
+		</net>
+		<net name="GND">
+			<netnode component="U300" pin=7 />
+			<netnode component="U200" pin=7 />
+			<netnode component="U100" pin=7 />
+		</net>
+		<net name="Vcc">
+			<netnode component="U300" pin=14 />
+			<netnode component="U200" pin=14 />
+			<netnode component="U100" pin=14 />
+		</net>
+		<net name="one">
+			<netnode component="F1" pin=1 />
+			<netnode component="U300" pin=1 />
+			<netnode component="U200" pin=1 />
+			<netnode component="U100" pin=3 />
+		</net>
+	</netlist>
+</LiquidPCB>

@@ -1,0 +1,34 @@
+<LiquidPCB>
+	<netlist name="Main netlist">
+		<net name="minusin_slot4_pin13_b">
+			<netnode component="U1" pin=13 />
+		</net>
+		<net name="plusin_slot4_pin12_a">
+			<netnode component="U1" pin=12 />
+		</net>
+		<net name="minusin_slot3_pin_b">
+			<netnode component="U1" pin=9 />
+		</net>
+		<net name="plusin_slot3_pin10_a">
+			<netnode component="U1" pin=10 />
+		</net>
+		<net name="minusin_slot2_pin6_b">
+			<netnode component="U1" pin=6 />
+		</net>
+		<net name="plusin_slot2_pin5_a">
+			<netnode component="U1" pin=5 />
+		</net>
+		<net name="samenet_output_c">
+			<netnode component="U1" pin=14 />
+			<netnode component="U1" pin=8 />
+			<netnode component="U1" pin=7 />
+			<netnode component="U1" pin=1 />
+		</net>
+		<net name="minusin_slot1_pin_b">
+			<netnode component="U1" pin=2 />
+		</net>
+		<net name="plusin_slot1_pin3_a">
+			<netnode component="U1" pin=3 />
+		</net>
+	</netlist>
+</LiquidPCB>
