@@ -579,6 +579,8 @@ SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
         o_attrib_get_name_value(a_current->text->string, &name, &value );
         if (strcmp(name, attrib_name) == 0)
           returned = scm_cons (scm_makfrom0str (value), returned);
+        g_free (name);
+        g_free (value);
       }
       a_iter = g_list_next (a_iter);
     }
