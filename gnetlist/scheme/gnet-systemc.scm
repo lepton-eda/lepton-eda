@@ -563,12 +563,11 @@
 ;;    );
 ;;
 
-;;(define c_p #f)
+(define c_p #f)
 
 (define systemc:components
   (lambda (packages port)
     (begin
-      (define c_p #f)
       (set! c_p #f)
       (display "/* Package instantiations */" port) (newline port)
 
