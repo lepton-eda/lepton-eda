@@ -103,7 +103,7 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   page->selection_list = o_selection_new();
 
   /* net/pin/bus stretch when doing moves */
-  page->stretch_head = page->stretch_tail = s_stretch_new_head();
+  page->stretch_list = NULL;
 
   page->place_list = NULL;
 
@@ -201,7 +201,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
 #endif
   s_tile_free_all (page);
 
-  s_stretch_destroy_all (page->stretch_head);
+  s_stretch_destroy_all (page->stretch_list);
 
   /* free current page undo structs */
   s_undo_free_all (toplevel, page); 

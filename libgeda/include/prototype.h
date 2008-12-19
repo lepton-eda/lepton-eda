@@ -448,15 +448,10 @@ int s_slib_uniq(char *path);
 void s_slib_print_dirs(void);
 
 /* s_stretch.c */
-STRETCH *s_stretch_return_tail(STRETCH *head);
-STRETCH *s_stretch_return_head(STRETCH *tail);
-STRETCH *s_stretch_new_head(void);
-void s_stretch_destroy_head(STRETCH *s_head);
-STRETCH *s_stretch_add(STRETCH *head, OBJECT *object, CONN *connection, int whichone);
-void s_stretch_remove(STRETCH *head, OBJECT *object);
-void s_stretch_remove_most(TOPLEVEL *toplevel, STRETCH *head);
-void s_stretch_print_all(STRETCH *head);
-void s_stretch_destroy_all(STRETCH *head);
+GList *s_stretch_add(GList *list, OBJECT *object, CONN *connection, int whichone);
+GList *s_stretch_remove(GList *list, OBJECT *object);
+void s_stretch_print_all(GList *list);
+void s_stretch_destroy_all(GList *list);
 
 /* s_tile.c */
 void s_tile_init(TOPLEVEL *toplevel, PAGE *p_current);

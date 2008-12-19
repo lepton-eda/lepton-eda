@@ -31,227 +31,97 @@
 #include <dmalloc.h>
 #endif
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-STRETCH *s_stretch_return_tail(STRETCH *head)
-{
-  STRETCH *s_current=NULL;
-  STRETCH *ret_struct=NULL;
-
-  s_current = head;
-  while ( s_current != NULL ) { /* goto end of list */
-    ret_struct = s_current;
-    s_current = s_current->next;
-  }
-
-  return(ret_struct);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
  *
  */
-STRETCH *s_stretch_return_head(STRETCH *tail)
+GList *s_stretch_add (GList *list, OBJECT *object,
+                      CONN *connection, int whichone)
 {
-  STRETCH *s_current=NULL;
-  STRETCH *ret_struct=NULL;
-
-  s_current = tail;
-  while ( s_current != NULL ) { /* goto end of list */
-    ret_struct = s_current;
-    s_current = s_current->prev;
-  }
-
-  return(ret_struct);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-STRETCH *s_stretch_new_head(void)
-{
+  GList *s_iter;
   STRETCH *s_new;
 
-  s_new = (STRETCH *) g_malloc(sizeof(STRETCH));
-
-  s_new->object = NULL;
-  s_new->connection = NULL;
-  s_new->whichone = -1;
-
-  s_new->prev = NULL;
-  s_new->next = NULL;
-
-  return(s_new);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void s_stretch_destroy_head(STRETCH *s_head)
-{
-  g_free(s_head);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/*! \todo also does the needed work to make the object visually selected */
-STRETCH *s_stretch_add(STRETCH *head, OBJECT *object,
-		       CONN *connection, int whichone)
-{
-  STRETCH *tail;
-  STRETCH *s_new;
-  STRETCH *s_current;
-	
-  s_current = head;
-  while (s_current != NULL) {
-    if (s_current->object) {
-      /*printf("%d %d\n", s_current->object->sid, object->sid);*/
-      if (s_current->object->sid == object->sid) {
-				/* printf("already inside\n");*/
-        return(s_stretch_return_tail(head));
-      }
+  /* Check if the object is already in the stretch list */
+  for (s_iter = list; s_iter != NULL; s_iter = g_list_next (s_iter)) {
+    STRETCH *s_current = s_iter->data;
+    if (s_current->object->sid == object->sid) {
+      return list;
     }
-		
-    s_current = s_current->next;
   }
-  /*printf("Adding: %s\n", object->name);*/
 
-  s_new = (STRETCH *) g_malloc(sizeof(STRETCH));
+  s_new = g_malloc (sizeof (STRETCH));
   s_new->object = object;
   s_new->connection = connection;
   s_new->whichone = whichone;
 
-  if (head == NULL) {
-    s_new->prev = NULL; /* setup previous link */
-    s_new->next = NULL;
-    return(s_new);
-  } else {
-    tail = s_stretch_return_tail(head);
-    s_new->prev = tail; /* setup previous link */
-    s_new->next = NULL;
-    tail->next = s_new;
-    return(tail->next);
-  }
+  return g_list_append (list, s_new);
 }
+
+
+/*! \brief Test if a STRETCH structure points at a given OBJECT
+ *
+ *  \brief
+ *  \par Function Description
+ *  Compares if (STRETCH *)a->object == (OBJECT *)b
+ *
+ * \param [in] a  The STRETCH structure
+ * \param [in] b  The OBJECT to test for
+ * \returns 0 if STRETCH *a points to OBJECT *b, otherwise 1.
+ */
+static gint find_object (gconstpointer a, gconstpointer b)
+{
+  return (((STRETCH *)a)->object == (OBJECT *)b) ? 0 : 1;
+}
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
  *
  */
-/*! \note
- *  it's okay to call this with an o_selected which is not necessarily
- *  selected
- */
-void s_stretch_remove(STRETCH *head, OBJECT *object)
+GList *s_stretch_remove (GList *list, OBJECT *object)
 {
-  STRETCH *s_current;
+  GList *item;
 
-  if (object == NULL) {
-    fprintf(stderr, "Got NULL for s_stretch in s_stretch_remove\n");
-    return;
-  }
+  g_return_val_if_fail (object != NULL, list);
 
-  s_current = head;	
+  item = g_list_find_custom (list, object, find_object);
+  g_free (item->data);
 
-  while (s_current != NULL) {
-    if (s_current->object == object) {
-      if (s_current->next)
-        s_current->next->prev = s_current->prev;
-      else
-        s_current->next = NULL;
-
-      if (s_current->prev)
-        s_current->prev->next = s_current->next;
-      else
-        s_current->prev = NULL;
-
-      s_current->object = NULL;
-      s_current->connection = NULL;
-      s_current->whichone = -1;
-
-      g_free(s_current);
-      return;
-    }
-    s_current = s_current->next;
-  }
+  return g_list_delete_link (list, item);
 }
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
  *
  */
-/*! \note removes all but the head node */
-void s_stretch_remove_most(TOPLEVEL *toplevel, STRETCH *head)
+void s_stretch_print_all (GList *list)
 {
-  STRETCH *s_current;
-  STRETCH *s_prev;
-
-  s_current = s_stretch_return_tail(head);
-
-  while (s_current != NULL) {
-    if (s_current->object != NULL) {
-      s_prev = s_current->prev;	
-
-      s_current->object = NULL;
-      s_current->connection = NULL;
-      s_current->whichone = -1;
-	
-      g_free(s_current);
-      s_current = s_prev;
-    } else {
-      break;
-    }
-  }
-
-  /* clear out any dangling pointers */
-  head->next=NULL;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void s_stretch_print_all( STRETCH *head )
-{
-  STRETCH *s_current;
-
-  s_current = head;
+  GList *iter;
 
   printf("START printing stretch ********************\n");
-  while(s_current != NULL) {
+  for (iter = list; iter != NULL; iter = g_list_next (iter)) {
+    STRETCH *s_current = iter->data;
+
     if (s_current->object) {
       printf("Object: %s\n", s_current->object->name);
     } else {
       printf("Object is NULL\n");
     }
 
-    if (s_current->object) {
+    if (s_current->connection) {
       printf("Connection type: %d\n", s_current->connection->type);
     } else {
       printf("Connection is NULL\n");
     }
 
     printf("which one: %d\n", s_current->whichone);
-
-    s_current = s_current->next;
   }
-  printf("DONE printing stretch ********************\n");
-  printf("\n");
-
+  printf("DONE printing stretch ********************\n\n");
 }
 
 /*! \todo Finish function documentation!!!
@@ -259,21 +129,8 @@ void s_stretch_print_all( STRETCH *head )
  *  \par Function Description
  *
  */
-void s_stretch_destroy_all(STRETCH *head) 
+void s_stretch_destroy_all (GList *list)
 {
-  STRETCH *s_current;
-  STRETCH *s_prev;
-
-  s_current = s_stretch_return_tail(head);
-
-  while (s_current != NULL) {
-    s_prev = s_current->prev;	
-
-    s_current->object = NULL;
-    s_current->connection = NULL;
-    s_current->whichone = -1;
-
-    g_free(s_current);
-    s_current = s_prev;
-  }
+  g_list_foreach (list, (GFunc)g_free, NULL);
+  g_list_free (list);
 }

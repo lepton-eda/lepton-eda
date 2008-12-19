@@ -35,7 +35,7 @@
 void o_move_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  STRETCH *st_current;
+  GList *s_iter;
 
   if (o_select_selected (w_current)) {
 
@@ -56,10 +56,10 @@ void o_move_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
       /* Set the dont_redraw flag on rubberbanded objects.
        * This ensures that they are not drawn (in their
        * un-stretched position) during screen updates. */
-      st_current = toplevel->page_current->stretch_head->next;
-      while (st_current != NULL) {
-        st_current->object->dont_redraw = TRUE;
-        st_current = st_current->next;
+      for (s_iter = toplevel->page_current->stretch_list;
+           s_iter != NULL; s_iter = g_list_next (s_iter)) {
+        STRETCH *stretch = s_iter->data;
+        stretch->object->dont_redraw = TRUE;
       }
     }
 
@@ -136,11 +136,11 @@ void o_move_end_lowlevel (GSCHEM_TOPLEVEL *w_current,
 void o_move_end(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  STRETCH *st_current;
   GList *s_current = NULL;
   OBJECT *object;
   int diff_x, diff_y;
   int left, top, right, bottom;
+  GList *s_iter;
   GList *other_objects = NULL;
   GList *connected_objects = NULL;
   GList *rubbernet_objects = NULL; 
@@ -170,10 +170,10 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
 
   /* Unset the dont_redraw flag on rubberbanded objects.
    * We set this above, in o_move_start(). */
-  st_current = toplevel->page_current->stretch_head->next;
-  while (st_current != NULL) {
-    st_current->object->dont_redraw = FALSE;
-    st_current = st_current->next;
+  for (s_iter = toplevel->page_current->stretch_list;
+       s_iter != NULL; s_iter = g_list_next (s_iter)) {
+    STRETCH *stretch = s_iter->data;
+    stretch->object->dont_redraw = FALSE;
   }
 
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
@@ -262,8 +262,8 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
   g_list_free(toplevel->page_current->place_list);
   toplevel->page_current->place_list = NULL;
 
-  s_stretch_remove_most(toplevel, toplevel->page_current->stretch_head);
-  toplevel->page_current->stretch_tail = toplevel->page_current->stretch_head;
+  s_stretch_destroy_all (toplevel->page_current->stretch_list);
+  toplevel->page_current->stretch_list = NULL;
 }
 
 
@@ -275,21 +275,21 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
 void o_move_cancel (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  STRETCH *st_current;
+  GList *s_iter;
 
   /* Unset the dont_redraw flag on rubberbanded objects.
    * We set this above, in o_move_start(). */
-  st_current = toplevel->page_current->stretch_head->next;
-  while (st_current != NULL) {
-    st_current->object->dont_redraw = FALSE;
-    st_current = st_current->next;
+  for (s_iter = toplevel->page_current->stretch_list;
+       s_iter != NULL; s_iter = g_list_next (s_iter)) {
+    STRETCH *stretch = s_iter->data;
+    stretch->object->dont_redraw = FALSE;
   }
   g_list_free(w_current->toplevel->page_current->place_list);
   w_current->toplevel->page_current->place_list = NULL;
   o_undo_callback(w_current, UNDO_ACTION);
 
-  s_stretch_remove_most(toplevel, toplevel->page_current->stretch_head);
-  toplevel->page_current->stretch_tail = toplevel->page_current->stretch_head;
+  s_stretch_destroy_all (toplevel->page_current->stretch_list);
+  toplevel->page_current->stretch_list = NULL;
 }
 
 
@@ -401,10 +401,10 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
 #endif
 
     if (whichone >= 0 && whichone <= 1) {
-      toplevel->page_current->stretch_tail =
-        s_stretch_add(toplevel->page_current->stretch_head,
-                      c_current->other_object,
-                      c_current, whichone);
+      toplevel->page_current->stretch_list =
+        s_stretch_add (toplevel->page_current->stretch_list,
+                       c_current->other_object,
+                       c_current, whichone);
 
       o_erase_single(w_current, c_current->other_object);
     }
@@ -427,7 +427,7 @@ void o_move_prep_rubberband(GSCHEM_TOPLEVEL *w_current)
 
 #if DEBUG
   printf("\n\n\n");
-  s_stretch_print_all(toplevel->page_current->stretch_head);
+  s_stretch_print_all (toplevel->page_current->stretch_list);
   printf("\n\n\n");
 #endif
 
@@ -464,7 +464,7 @@ void o_move_prep_rubberband(GSCHEM_TOPLEVEL *w_current)
 
 #if DEBUG
   printf("\n\n\n\nfinished building scretch list:\n");
-  s_stretch_print_all(toplevel->page_current->stretch_head);
+  s_stretch_print_all (toplevel->page_current->stretch_list);
 #endif
 }
 
@@ -500,106 +500,98 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
 			   GList** other_objects, GList** connected_objects)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  STRETCH *s_current;
-  OBJECT *object;
+  GList *s_iter;
   int x, y;
-  int whichone;
 
-  /* skip over head */
-  s_current = toplevel->page_current->stretch_head->next;
+  for (s_iter = toplevel->page_current->stretch_list;
+       s_iter != NULL; s_iter = g_list_next (s_iter)) {
+    STRETCH *s_current = s_iter->data;
+    OBJECT *object = s_current->object;
+    int whichone = s_current->whichone;
 
-  while (s_current != NULL) {
-    
-    object = s_current->object;
-    if (object) {
-      whichone = s_current->whichone;
+    switch (object->type) {
 
-      switch (object->type) {
-        
-        case (OBJ_NET):
-          
-          /* save the other objects and remove object's connections */
-          *other_objects =
-            s_conn_return_others(*other_objects, object);
-          s_conn_remove_object (toplevel, object);
+      case (OBJ_NET):
 
-          x = object->line->x[whichone];
-          y = object->line->y[whichone];
+        /* save the other objects and remove object's connections */
+        *other_objects =
+          s_conn_return_others(*other_objects, object);
+        s_conn_remove_object (toplevel, object);
+
+        x = object->line->x[whichone];
+        y = object->line->y[whichone];
 
 #if DEBUG
-          printf("OLD: %d, %d\n", x, y);
-          printf("diff: %d, %d\n", world_diff_x, world_diff_y);
+        printf("OLD: %d, %d\n", x, y);
+        printf("diff: %d, %d\n", world_diff_x, world_diff_y);
 #endif
 
-          x = x + world_diff_x;
-          y = y + world_diff_y;
+        x = x + world_diff_x;
+        y = y + world_diff_y;
 
 #if DEBUG
-          printf("NEW: %d, %d\n", x, y);
+        printf("NEW: %d, %d\n", x, y);
 #endif
 
-          object->line->x[whichone] = x;
-          object->line->y[whichone] = y;
+        object->line->x[whichone] = x;
+        object->line->y[whichone] = y;
 
 
-          if (o_move_zero_length(object)) {
-            o_delete(w_current, object);
-          } else {
-            o_recalc_single_object(toplevel, object);
-            s_tile_update_object(toplevel, object);
-            s_conn_update_object (toplevel, object);
-            *connected_objects =
-              s_conn_return_others(*connected_objects, object);
-            *objects = g_list_append(*objects, object);
-          }
+        if (o_move_zero_length(object)) {
+          o_delete(w_current, object);
+        } else {
+          o_recalc_single_object(toplevel, object);
+          s_tile_update_object(toplevel, object);
+          s_conn_update_object (toplevel, object);
+          *connected_objects =
+            s_conn_return_others(*connected_objects, object);
+          *objects = g_list_append(*objects, object);
+        }
 
-          break;
+        break;
 
-        case (OBJ_PIN):
+      case (OBJ_PIN):
 
-          /* not valid to do with pins */
+        /* not valid to do with pins */
 
-          break;
+        break;
 
-        case (OBJ_BUS):
+      case (OBJ_BUS):
 
-          /* save the other objects and remove object's connections */
-          *other_objects =
-            s_conn_return_others(*other_objects, object);
-          s_conn_remove_object (toplevel, object);
+        /* save the other objects and remove object's connections */
+        *other_objects =
+          s_conn_return_others(*other_objects, object);
+        s_conn_remove_object (toplevel, object);
 
-          x = object->line->x[whichone];
-          y = object->line->y[whichone];
+        x = object->line->x[whichone];
+        y = object->line->y[whichone];
 
 #if DEBUG
-          printf("OLD: %d, %d\n", x, y);
-          printf("diff: %d, %d\n", world_diff_x, world_diff_y);
+        printf("OLD: %d, %d\n", x, y);
+        printf("diff: %d, %d\n", world_diff_x, world_diff_y);
 #endif
-          x = x + world_diff_x;
-          y = y + world_diff_y;
+        x = x + world_diff_x;
+        y = y + world_diff_y;
 
 #if DEBUG
-          printf("NEW: %d, %d\n", x, y);
+        printf("NEW: %d, %d\n", x, y);
 #endif
-          object->line->x[whichone] = x;
-          object->line->y[whichone] = y;
+        object->line->x[whichone] = x;
+        object->line->y[whichone] = y;
 
-          if (o_move_zero_length(object)) {
-            o_delete(w_current, object);
-          } else {
-            o_recalc_single_object(toplevel, object);
-            s_tile_update_object(toplevel, object);
-            s_conn_update_object (toplevel, object);
-            *connected_objects =
-              s_conn_return_others(*connected_objects, object);
-            *objects = g_list_append(*objects, object);
-          }
+        if (o_move_zero_length(object)) {
+          o_delete(w_current, object);
+        } else {
+          o_recalc_single_object(toplevel, object);
+          s_tile_update_object(toplevel, object);
+          s_conn_update_object (toplevel, object);
+          *connected_objects =
+            s_conn_return_others(*connected_objects, object);
+          *objects = g_list_append(*objects, object);
+        }
 
-          break;
-      }
+        break;
     }
-    
-    s_current = s_current->next;
   }
 
 #if DEBUG
@@ -619,33 +611,26 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
 void o_move_stretch_rubberband(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  STRETCH *s_current;
-  OBJECT *object;
+  GList *s_iter;
   int diff_x, diff_y;
-  int whichone;
 
   diff_x = w_current->second_wx - w_current->first_wx;
   diff_y = w_current->second_wy - w_current->first_wy;
 
-  /* skip over head */
-  s_current = toplevel->page_current->stretch_head->next;
-  while (s_current != NULL) {
+  for (s_iter = toplevel->page_current->stretch_list;
+       s_iter != NULL; s_iter = g_list_next (s_iter)) {
+    STRETCH *s_current = s_iter->data;
+    OBJECT *object = s_current->object;
+    int whichone = s_current->whichone;
 
-    object = s_current->object;
-    if (object) {
-      whichone = s_current->whichone;
-      switch (object->type) {
-        case (OBJ_NET):
-          o_net_draw_xor_single(w_current,
-                                diff_x, diff_y, whichone, object);
-          break;
+    switch (object->type) {
+      case (OBJ_NET):
+        o_net_draw_xor_single(w_current, diff_x, diff_y, whichone, object);
+        break;
 
-        case (OBJ_BUS):
-          o_bus_draw_xor_single(w_current,
-                                diff_x, diff_y, whichone, object);
-          break;
-      }
+      case (OBJ_BUS):
+        o_bus_draw_xor_single(w_current, diff_x, diff_y, whichone, object);
+        break;
     }
-    s_current = s_current->next;
   }
 }

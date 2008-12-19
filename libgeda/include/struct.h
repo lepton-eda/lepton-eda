@@ -341,9 +341,6 @@ struct st_stretch
   CONN *connection;
 
   int whichone;
-
-  STRETCH *prev;
-  STRETCH *next;
 };
 
 struct st_bounds {
@@ -405,8 +402,7 @@ struct st_page {
   SELECTION *selection_list; /* new selection mechanism */
   GList *place_list;
   OBJECT *object_lastplace; /* the last found item */
-  STRETCH *stretch_head; 
-  STRETCH *stretch_tail; 
+  GList *stretch_list;
 
   char *page_filename; 
   int CHANGED;			/* changed flag */
