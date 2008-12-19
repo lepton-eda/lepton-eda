@@ -494,14 +494,14 @@ int o_move_zero_length(OBJECT * object)
  *  \par Function Description
  *
  */
-void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
-			   int world_diff_y,
-			   GList** objects,
-			   GList** prev_conn_objects, GList** connected_objects)
+void o_move_end_rubberband (GSCHEM_TOPLEVEL *w_current,
+                            int w_dx, int w_dy,
+                            GList** objects,
+                            GList** prev_conn_objects,
+                            GList** connected_objects)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_iter;
-  int x, y;
 
   for (s_iter = toplevel->page_current->stretch_list;
        s_iter != NULL; s_iter = g_list_next (s_iter)) {
@@ -511,96 +511,36 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
 
     switch (object->type) {
 
-      case (OBJ_NET):
+      case OBJ_NET:
+      case OBJ_BUS:
 
         /* save the other objects and remove object's connections */
         *prev_conn_objects =
           s_conn_return_others (*prev_conn_objects, object);
         s_conn_remove_object (toplevel, object);
 
-        x = object->line->x[whichone];
-        y = object->line->y[whichone];
+        object->line->x[whichone] += w_dx;
+        object->line->y[whichone] += w_dy;
 
-#if DEBUG
-        printf("OLD: %d, %d\n", x, y);
-        printf("diff: %d, %d\n", world_diff_x, world_diff_y);
-#endif
-
-        x = x + world_diff_x;
-        y = y + world_diff_y;
-
-#if DEBUG
-        printf("NEW: %d, %d\n", x, y);
-#endif
-
-        object->line->x[whichone] = x;
-        object->line->y[whichone] = y;
-
-
-        if (o_move_zero_length(object)) {
-          o_delete(w_current, object);
-        } else {
-          o_recalc_single_object(toplevel, object);
-          s_tile_update_object(toplevel, object);
-          s_conn_update_object (toplevel, object);
-          *connected_objects =
-            s_conn_return_others(*connected_objects, object);
-          *objects = g_list_append(*objects, object);
+        if (o_move_zero_length (object)) {
+          o_delete (w_current, object);
+          continue;
         }
+
+        o_recalc_single_object (toplevel, object);
+        s_tile_update_object (toplevel, object);
+        s_conn_update_object (toplevel, object);
+        *connected_objects = s_conn_return_others (*connected_objects, object);
+        *objects = g_list_append (*objects, object);
 
         break;
 
-      case (OBJ_PIN):
+      case OBJ_PIN:
 
-        /* not valid to do with pins */
-
-        break;
-
-      case (OBJ_BUS):
-
-        /* save the other objects and remove object's connections */
-        *prev_conn_objects =
-          s_conn_return_others (*prev_conn_objects, object);
-        s_conn_remove_object (toplevel, object);
-
-        x = object->line->x[whichone];
-        y = object->line->y[whichone];
-
-#if DEBUG
-        printf("OLD: %d, %d\n", x, y);
-        printf("diff: %d, %d\n", world_diff_x, world_diff_y);
-#endif
-        x = x + world_diff_x;
-        y = y + world_diff_y;
-
-#if DEBUG
-        printf("NEW: %d, %d\n", x, y);
-#endif
-        object->line->x[whichone] = x;
-        object->line->y[whichone] = y;
-
-        if (o_move_zero_length(object)) {
-          o_delete(w_current, object);
-        } else {
-          o_recalc_single_object(toplevel, object);
-          s_tile_update_object(toplevel, object);
-          s_conn_update_object (toplevel, object);
-          *connected_objects =
-            s_conn_return_others(*connected_objects, object);
-          *objects = g_list_append(*objects, object);
-        }
-
+        /* NOP: not valid to do with pins */
         break;
     }
   }
-
-#if DEBUG
-  /*! \bug FIXME: moved_objects doesn't exist? */
-  /*printf("%d\n", g_list_length(*moved_objects));*/
-  printf("%d\n", g_list_length(*prev_conn_objects));
-  printf("%d\n", g_list_length(*connected_objects));
-#endif
-
 }
 
 /*! \todo Finish function documentation!!!
