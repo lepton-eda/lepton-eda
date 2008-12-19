@@ -38,7 +38,7 @@
 void o_delete (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList *other_objects = NULL;
+  GList *prev_conn_objects = NULL;
   gboolean do_conn;
 
   g_return_if_fail (object != NULL);
@@ -49,7 +49,7 @@ void o_delete (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   
   if (do_conn) {
     o_cue_undraw (w_current, object);
-    other_objects = s_conn_return_others (other_objects, object);
+    prev_conn_objects = s_conn_return_others (prev_conn_objects, object);
   }
   o_erase_single (w_current, object);
   o_erase_grips (w_current, object);
@@ -58,9 +58,9 @@ void o_delete (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   s_delete_object (toplevel, object);
 
   if (do_conn) {
-    o_cue_undraw_list (w_current, other_objects);
-    o_cue_draw_list (w_current, other_objects);
-    g_list_free (other_objects);
+    o_cue_undraw_list (w_current, prev_conn_objects);
+    o_cue_draw_list (w_current, prev_conn_objects);
+    g_list_free (prev_conn_objects);
   }
 
   toplevel->page_current->CHANGED = 1;

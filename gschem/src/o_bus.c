@@ -235,7 +235,7 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *new_obj;
   int color;
-  GList *other_objects = NULL;
+  GList *prev_conn_objects = NULL;
 
   g_assert( w_current->inside_action != 0 );
 
@@ -264,10 +264,10 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   o_bus_draw(w_current, new_obj);
 
   /* connect the new bus to the other busses */
-  other_objects = s_conn_return_others (other_objects, new_obj);
-  o_cue_undraw_list(w_current, other_objects);
-  o_cue_draw_list(w_current, other_objects);
-  g_list_free(other_objects);
+  prev_conn_objects = s_conn_return_others (prev_conn_objects, new_obj);
+  o_cue_undraw_list (w_current, prev_conn_objects);
+  o_cue_draw_list (w_current, prev_conn_objects);
+  g_list_free (prev_conn_objects);
   o_cue_draw_single (w_current, new_obj);
 
   toplevel->page_current->CHANGED=1;

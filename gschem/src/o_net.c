@@ -662,7 +662,7 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   int found_primary_connection = FALSE;
   int save_magnetic, save_wx, save_wy;
 
-  GList *other_objects = NULL;
+  GList *prev_conn_objects = NULL;
   OBJECT *new_net = NULL;
 
   g_assert( w_current->inside_action != 0 );
@@ -712,12 +712,12 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
       /* conn stuff */
       /* LEAK CHECK 1 */
-      other_objects = s_conn_return_others (other_objects, new_net);
+      prev_conn_objects = s_conn_return_others (prev_conn_objects, new_net);
 
-      if (o_net_add_busrippers(w_current, new_net, other_objects)) {
-	  g_list_free(other_objects);
-	  other_objects = NULL;
-	  other_objects = s_conn_return_others(other_objects, new_net);
+      if (o_net_add_busrippers (w_current, new_net, prev_conn_objects)) {
+        g_list_free (prev_conn_objects);
+        prev_conn_objects = NULL;
+        prev_conn_objects = s_conn_return_others (prev_conn_objects, new_net);
       }
 
 #if DEBUG 
@@ -727,12 +727,12 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
       o_redraw_single (w_current, new_net);
 
-      o_cue_undraw_list(w_current, other_objects);
-      o_cue_draw_list(w_current, other_objects);
+      o_cue_undraw_list (w_current, prev_conn_objects);
+      o_cue_draw_list (w_current, prev_conn_objects);
       o_cue_draw_single(w_current, new_net);
 
-      g_list_free(other_objects);
-      other_objects = NULL;
+      g_list_free (prev_conn_objects);
+      prev_conn_objects = NULL;
 
       /* Go off and search for valid connection on this newly created net */
       found_primary_connection = s_conn_net_search(new_net, 1, 
@@ -765,12 +765,12 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
       /* conn stuff */
       /* LEAK CHECK 2 */
-      other_objects = s_conn_return_others (other_objects, new_net);
+      prev_conn_objects = s_conn_return_others (prev_conn_objects, new_net);
 
-      if (o_net_add_busrippers(w_current, new_net, other_objects)) {
-	  g_list_free(other_objects);
-	  other_objects = NULL;
-	  other_objects = s_conn_return_others(other_objects, new_net);
+      if (o_net_add_busrippers (w_current, new_net, prev_conn_objects)) {
+        g_list_free (prev_conn_objects);
+        prev_conn_objects = NULL;
+        prev_conn_objects = s_conn_return_others (prev_conn_objects, new_net);
       }
 #if DEBUG
       s_conn_print(new_net->conn_list);
@@ -778,12 +778,12 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
       o_redraw_single (w_current, new_net);
 
-      o_cue_undraw_list(w_current, other_objects);
-      o_cue_draw_list(w_current, other_objects);
+      o_cue_undraw_list (w_current, prev_conn_objects);
+      o_cue_draw_list (w_current, prev_conn_objects);
       o_cue_draw_single(w_current, new_net);
 
-      g_list_free(other_objects);
-      other_objects = NULL;
+      g_list_free (prev_conn_objects);
+      prev_conn_objects = NULL;
 
       /* you don't want to consolidate nets which are drawn non-ortho */
       if (toplevel->net_consolidate == TRUE && !w_current->CONTROLKEY) {
@@ -1026,7 +1026,7 @@ void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
  *
  */
 int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
-			 GList *other_objects)
+                         GList *prev_conn_objects)
 
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -1051,7 +1051,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
   
   length = o_line_length(net_obj);
 
-  if (!other_objects) {
+  if (!prev_conn_objects) {
     return(FALSE);
   }
   
@@ -1067,7 +1067,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
 
   
   /* check for a bus connection and draw rippers if so */
-  cl_current = other_objects;
+  cl_current = prev_conn_objects;
   while (cl_current != NULL) {
     
     bus_object = (OBJECT *) cl_current->data;

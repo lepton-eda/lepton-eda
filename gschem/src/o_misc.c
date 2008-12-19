@@ -191,7 +191,7 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
   GList *o_iter;
-  GList *other_objects=NULL;
+  GList *prev_conn_objects=NULL;
   GList *connected_objects=NULL;
 
   /* this is okay if you just hit rotate and have nothing selected */
@@ -213,7 +213,7 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
 
-    other_objects = s_conn_return_others (other_objects, o_current);
+    prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current);
     s_conn_remove_object (toplevel, o_current);
   }
 
@@ -232,15 +232,15 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
 
   if (!toplevel->DONT_REDRAW) {
     o_draw_list (w_current, list);
-    o_cue_undraw_list(w_current, other_objects);
-    o_cue_draw_list(w_current, other_objects);
+    o_cue_undraw_list (w_current, prev_conn_objects);
+    o_cue_draw_list (w_current, prev_conn_objects);
     o_cue_undraw_list(w_current, connected_objects);
     o_cue_draw_list(w_current, connected_objects);
     o_cue_draw_list(w_current, list);
   }
 
-  g_list_free (other_objects);
-  other_objects = NULL;
+  g_list_free (prev_conn_objects);
+  prev_conn_objects = NULL;
   g_list_free (connected_objects);
   connected_objects = NULL;
 
@@ -298,7 +298,7 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
   GList *o_iter;
-  GList *other_objects=NULL;
+  GList *prev_conn_objects=NULL;
   GList *connected_objects=NULL;
 
   if (list == NULL) {
@@ -317,7 +317,7 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
 
-    other_objects = s_conn_return_others (other_objects, o_current);
+    prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current);
     s_conn_remove_object (toplevel, o_current);
   }
 
@@ -335,14 +335,14 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
   }
 
   o_draw_list (w_current, list);
-  o_cue_undraw_list(w_current, other_objects);
-  o_cue_draw_list(w_current, other_objects);
+  o_cue_undraw_list (w_current, prev_conn_objects);
+  o_cue_draw_list (w_current, prev_conn_objects);
   o_cue_undraw_list(w_current, connected_objects);
   o_cue_draw_list(w_current, connected_objects);
   o_cue_draw_list(w_current, list);
 
-  g_list_free (other_objects);
-  other_objects = NULL;
+  g_list_free (prev_conn_objects);
+  prev_conn_objects = NULL;
   g_list_free (connected_objects);
   connected_objects = NULL;
 

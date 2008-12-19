@@ -78,7 +78,7 @@ void o_move_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 static void o_move_end_lowlevel_glist (GSCHEM_TOPLEVEL *w_current,
                                        GList *list,
                                        int diff_x, int diff_y,
-                                       GList** other_objects,
+                                       GList** prev_conn_objects,
                                        GList** connected_objects)
 {
   OBJECT *object;
@@ -88,7 +88,7 @@ static void o_move_end_lowlevel_glist (GSCHEM_TOPLEVEL *w_current,
   while (iter != NULL) {
     object = (OBJECT *)iter->data;
     o_move_end_lowlevel (w_current, object, diff_x, diff_y,
-                         other_objects, connected_objects);
+                         prev_conn_objects, connected_objects);
     iter = g_list_next (iter);
   }
 }
@@ -102,7 +102,7 @@ static void o_move_end_lowlevel_glist (GSCHEM_TOPLEVEL *w_current,
 void o_move_end_lowlevel (GSCHEM_TOPLEVEL *w_current,
                          OBJECT *object,
                          int diff_x, int diff_y,
-                         GList** other_objects,
+                         GList** prev_conn_objects,
                          GList** connected_objects)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -113,7 +113,7 @@ void o_move_end_lowlevel (GSCHEM_TOPLEVEL *w_current,
     case (OBJ_BUS):
     case (OBJ_PIN):
       /* save the other objects and remove object's connections */
-      *other_objects = s_conn_return_others (*other_objects, object);
+      *prev_conn_objects = s_conn_return_others (*prev_conn_objects, object);
       s_conn_remove_object (toplevel, object);
 
       /* do the actual translation */
@@ -141,10 +141,10 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
   int diff_x, diff_y;
   int left, top, right, bottom;
   GList *s_iter;
-  GList *other_objects = NULL;
+  GList *prev_conn_objects = NULL;
   GList *connected_objects = NULL;
   GList *rubbernet_objects = NULL; 
-  GList *rubbernet_other_objects = NULL;
+  GList *rubbernet_prev_conn_objects = NULL;
   GList *rubbernet_connected_objects = NULL;
 
   object = o_select_return_first_object(w_current);
@@ -164,7 +164,7 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
 
   if (w_current->netconn_rubberband) {
     o_move_end_rubberband(w_current, diff_x, diff_y,
-                          &rubbernet_objects, &rubbernet_other_objects,
+                          &rubbernet_objects, &rubbernet_prev_conn_objects,
                           &rubbernet_connected_objects);
   }
 
@@ -209,7 +209,7 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
 
         o_move_end_lowlevel_glist (w_current, object->complex->prim_objs,
                                    diff_x, diff_y,
-                                   &other_objects, &connected_objects);
+                                   &prev_conn_objects, &connected_objects);
 
 
         world_get_object_glist_bounds (toplevel, object->complex->prim_objs,
@@ -224,7 +224,7 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
 
       default:
         o_move_end_lowlevel (w_current, object, diff_x, diff_y,
-                            &other_objects, &connected_objects);
+                            &prev_conn_objects, &connected_objects);
         break;
     }
 
@@ -236,8 +236,8 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
 
   /* Draw the objects that were moved (and connected/disconnected objects) */
   o_draw_selected(w_current);
-  o_cue_undraw_list(w_current, other_objects);
-  o_cue_draw_list(w_current, other_objects);
+  o_cue_undraw_list(w_current, prev_conn_objects);
+  o_cue_draw_list(w_current, prev_conn_objects);
   o_cue_undraw_list(w_current, connected_objects);
   o_cue_draw_list(w_current, connected_objects);
 
@@ -245,18 +245,18 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
   o_draw_list(w_current, rubbernet_objects);
   o_cue_undraw_list(w_current, rubbernet_objects);
   o_cue_draw_list(w_current, rubbernet_objects);
-  o_cue_undraw_list(w_current, rubbernet_other_objects);
-  o_cue_draw_list(w_current, rubbernet_other_objects);
+  o_cue_undraw_list(w_current, rubbernet_prev_conn_objects);
+  o_cue_draw_list(w_current, rubbernet_prev_conn_objects);
   o_cue_undraw_list(w_current, rubbernet_connected_objects);
   o_cue_draw_list(w_current, rubbernet_connected_objects);
  
   toplevel->page_current->CHANGED = 1;
   o_undo_savestate(w_current, UNDO_ALL);
 
-  g_list_free(other_objects);
+  g_list_free(prev_conn_objects);
   g_list_free(connected_objects);
   g_list_free(rubbernet_objects);
-  g_list_free(rubbernet_other_objects);
+  g_list_free(rubbernet_prev_conn_objects);
   g_list_free(rubbernet_connected_objects);
 
   g_list_free(toplevel->page_current->place_list);
@@ -497,7 +497,7 @@ int o_move_zero_length(OBJECT * object)
 void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
 			   int world_diff_y,
 			   GList** objects,
-			   GList** other_objects, GList** connected_objects)
+			   GList** prev_conn_objects, GList** connected_objects)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_iter;
@@ -514,8 +514,8 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
       case (OBJ_NET):
 
         /* save the other objects and remove object's connections */
-        *other_objects =
-          s_conn_return_others(*other_objects, object);
+        *prev_conn_objects =
+          s_conn_return_others (*prev_conn_objects, object);
         s_conn_remove_object (toplevel, object);
 
         x = object->line->x[whichone];
@@ -559,8 +559,8 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
       case (OBJ_BUS):
 
         /* save the other objects and remove object's connections */
-        *other_objects =
-          s_conn_return_others(*other_objects, object);
+        *prev_conn_objects =
+          s_conn_return_others (*prev_conn_objects, object);
         s_conn_remove_object (toplevel, object);
 
         x = object->line->x[whichone];
@@ -597,7 +597,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
 #if DEBUG
   /*! \bug FIXME: moved_objects doesn't exist? */
   /*printf("%d\n", g_list_length(*moved_objects));*/
-  printf("%d\n", g_list_length(*other_objects));
+  printf("%d\n", g_list_length(*prev_conn_objects));
   printf("%d\n", g_list_length(*connected_objects));
 #endif
 

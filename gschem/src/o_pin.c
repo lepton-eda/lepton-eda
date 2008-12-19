@@ -167,7 +167,7 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *new_obj;
   int color;
-  GList *other_objects = NULL;
+  GList *prev_conn_objects = NULL;
   OBJECT *o_current, *o_current_pin;
 
   g_assert( w_current->inside_action != 0 );
@@ -204,10 +204,10 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   }
 
   /* look for connected objects */
-  other_objects = s_conn_return_others(other_objects, o_current_pin);
-  o_cue_undraw_list(w_current, other_objects);
-  o_cue_draw_list(w_current, other_objects);
-  g_list_free(other_objects);
+  prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current_pin);
+  o_cue_undraw_list (w_current, prev_conn_objects);
+  o_cue_draw_list (w_current, prev_conn_objects);
+  g_list_free (prev_conn_objects);
   o_cue_draw_single(w_current, o_current_pin); 
   o_pin_draw(w_current, o_current_pin);
 

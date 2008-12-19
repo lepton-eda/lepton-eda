@@ -1338,7 +1338,7 @@ void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichon
 void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList *other_objects = NULL;
+  GList *prev_conn_objects = NULL;
   GList *connected_objects = NULL;
 
   /* erase the temporary line */
@@ -1357,7 +1357,7 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_cue_undraw(w_current, o_current);
   o_erase_single(w_current, o_current);
 
-  other_objects = s_conn_return_others(other_objects, o_current);
+  prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current);
 
   s_conn_remove_object (toplevel, o_current);
   o_net_modify (toplevel, o_current, w_current->second_wx,
@@ -1378,8 +1378,8 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   }
 
   /* draw the object objects */
-  o_cue_undraw_list(w_current, other_objects);
-  o_cue_draw_list(w_current, other_objects);
+  o_cue_undraw_list (w_current, prev_conn_objects);
+  o_cue_draw_list (w_current, prev_conn_objects);
   
   o_redraw_single(w_current, o_current);
   
@@ -1395,8 +1395,8 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   /* finally draw this objects cues */
   o_cue_draw_single(w_current, o_current);
 
-  g_list_free(other_objects);
-  other_objects = NULL;
+  g_list_free (prev_conn_objects);
+  prev_conn_objects = NULL;
   g_list_free(connected_objects);
   connected_objects = NULL;
 }
@@ -1420,7 +1420,7 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
 void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList *other_objects = NULL;
+  GList *prev_conn_objects = NULL;
   GList *connected_objects = NULL;
 
   /* erase the temporary line */
@@ -1439,7 +1439,7 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_cue_undraw(w_current, o_current);
   o_erase_single(w_current, o_current);
 
-  other_objects = s_conn_return_others(other_objects, o_current);
+  prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current);
 
   s_conn_remove_object (toplevel, o_current);
   o_pin_modify (toplevel, o_current, w_current->second_wx,
@@ -1448,8 +1448,8 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_redraw_single(w_current, o_current);
 
   /* redraw the object connections */
-  o_cue_undraw_list(w_current, other_objects);
-  o_cue_draw_list(w_current, other_objects);
+  o_cue_undraw_list (w_current, prev_conn_objects);
+  o_cue_draw_list (w_current, prev_conn_objects);
 
   /* get the other connected objects and redraw them */
   connected_objects = s_conn_return_others(connected_objects,
@@ -1461,8 +1461,8 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_cue_draw_single(w_current, o_current);
 
   /* free the two lists */
-  g_list_free(other_objects);
-  other_objects = NULL;
+  g_list_free (prev_conn_objects);
+  prev_conn_objects = NULL;
   g_list_free(connected_objects);
   connected_objects = NULL;
 }
@@ -1486,7 +1486,7 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
 void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList *other_objects = NULL;
+  GList *prev_conn_objects = NULL;
   GList *connected_objects = NULL;
 
   /* erase the temporary line */
@@ -1505,7 +1505,7 @@ void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_cue_undraw(w_current, o_current);
   o_erase_single(w_current, o_current);
 
-  other_objects = s_conn_return_others(other_objects, o_current);
+  prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current);
   s_conn_remove_object (toplevel, o_current);
 
   o_bus_modify (toplevel, o_current, w_current->second_wx,
@@ -1514,8 +1514,8 @@ void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_redraw_single(w_current, o_current);
 
   /* redraw the connected objects */
-  o_cue_undraw_list(w_current, other_objects);
-  o_cue_draw_list(w_current, other_objects);
+  o_cue_undraw_list (w_current, prev_conn_objects);
+  o_cue_draw_list (w_current, prev_conn_objects);
 
   /* get the other connected objects and redraw them */
   connected_objects = s_conn_return_others(connected_objects,
@@ -1527,8 +1527,8 @@ void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_cue_draw_single(w_current, o_current);
 
   /* free the two lists */
-  g_list_free(other_objects);
-  other_objects = NULL;
+  g_list_free (prev_conn_objects);
+  prev_conn_objects = NULL;
   g_list_free(connected_objects);
   connected_objects = NULL;
 }
