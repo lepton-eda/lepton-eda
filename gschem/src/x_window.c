@@ -596,6 +596,14 @@ void x_window_close(GSCHEM_TOPLEVEL *w_current)
   TOPLEVEL *toplevel = w_current->toplevel;
   gboolean last_window = FALSE;
 
+  /* If we're closing whilst inside a move action, re-wind the
+   * page contents back to their state before we started */
+  if (w_current->inside_action &&
+      (w_current->event_state == MOVE ||
+       w_current->event_state == ENDMOVE)) {
+    o_move_cancel (w_current);
+  }
+
   /* last chance to save possible unsaved pages */
   if (!x_dialog_close_window (w_current)) {
     /* user somehow cancelled the close */
@@ -962,6 +970,14 @@ x_window_close_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
   g_return_if_fail (page     != NULL);
 
   g_assert (page->pid != -1);
+
+  /* If we're closing whilst inside a move action, re-wind the
+   * page contents back to their state before we started */
+  if (w_current->inside_action &&
+      (w_current->event_state == MOVE ||
+       w_current->event_state == ENDMOVE)) {
+    o_move_cancel (w_current);
+  }
 
   if (page == toplevel->page_current) {
     /* as it will delete current page, select new current page */
