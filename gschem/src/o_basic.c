@@ -261,54 +261,6 @@ void o_draw_list(GSCHEM_TOPLEVEL *w_current, GList* list)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_draw_selected(GSCHEM_TOPLEVEL *w_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  GList* s_current;
-  OBJECT* o_current;
-
-  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
-  while (s_current != NULL) {
-    o_current = (OBJECT *) s_current->data;
-
-    if (o_current) {
-      o_redraw_single(w_current, o_current);
-      o_cue_draw_single(w_current, o_current);
-    }
-    s_current=g_list_next(s_current);
-  }
-
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_erase_selected(GSCHEM_TOPLEVEL *w_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  GList *list;
-  GList *iter;
-  OBJECT* o_current;
-
-  list = iter = geda_list_get_glist( toplevel->page_current->selection_list );
-  while (iter != NULL) {
-    o_current = iter->data;
-
-    if (o_current) {
-      o_cue_erase_single(w_current, o_current);
-      o_erase_single(w_current, o_current);
-    }
-
-    iter = g_list_next( iter );
-  }
-}
 
 /*! \brief Erase a given OBJECT
  *
