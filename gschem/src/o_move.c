@@ -286,10 +286,14 @@ void o_move_cancel (GSCHEM_TOPLEVEL *w_current)
   }
   g_list_free(w_current->toplevel->page_current->place_list);
   w_current->toplevel->page_current->place_list = NULL;
-  o_undo_callback(w_current, UNDO_ACTION);
 
   s_stretch_destroy_all (toplevel->page_current->stretch_list);
   toplevel->page_current->stretch_list = NULL;
+
+  w_current->inside_action = 0;
+  i_set_state (w_current, SELECT);
+
+  o_undo_callback(w_current, UNDO_ACTION);
 }
 
 
