@@ -49,13 +49,13 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
      (w_x/w_y) position, this will select the next object below the
      position point. You can change the selected object by clicking
      at the same place multiple times. */
-  if (toplevel->page_current->object_lastplace != NULL)
+  if (toplevel->page_current->object_lastplace != NULL) {
     iter = g_list_find (toplevel->page_current->object_list,
                         toplevel->page_current->object_lastplace);
-  if (iter == NULL)
-    iter = toplevel->page_current->object_list;
+    iter = g_list_next (iter);
+  }
 
-  /* do first search */
+  /* do first search (if we found any objects after the last found object) */
   while (iter != NULL) {
     o_current = iter->data;
     if (inside_region(o_current->w_left - w_slack, o_current->w_top - w_slack,
@@ -86,11 +86,9 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
   printf("SEARCHING AGAIN\n");
 #endif
 
-  /* now search again since we didn't find anything starting at start
-     just in case we started last time at object_lastplace */
-  iter = toplevel->page_current->object_list;
-  while (iter != NULL &&
-         iter->data != toplevel->page_current->object_lastplace) {
+  /* now search from the beginning up until the object_lastplace */
+  for (iter = toplevel->page_current->object_list;
+       iter != NULL; iter = g_list_next (iter)) {
     o_current = iter->data;
     if (inside_region(o_current->w_left - w_slack, o_current->w_top - w_slack,
                       o_current->w_right + w_slack, o_current->w_bottom + w_slack,
@@ -108,13 +106,16 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
           }
         }
         toplevel->page_current->object_lastplace = o_current;
-         object_found = TRUE;
+        object_found = TRUE;
 
         i_update_menus(w_current);
         return object_found;
       }
     }
-    iter = g_list_next (iter);
+
+    /* break once we've inspected up to where we started the first loop */
+    if (o_current == toplevel->page_current->object_lastplace)
+      break;
   }
 
   /* didn't find anything.... reset lastplace */
