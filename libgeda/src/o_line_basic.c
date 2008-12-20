@@ -505,6 +505,25 @@ void world_get_line_bounds(TOPLEVEL *toplevel, OBJECT *object,
   *bottom += halfwidth;
 }
 
+/*! \brief get the position of the first line point
+ *  \par Function Description
+ *  This function gets the position of the first point of a line object.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [out] x       pointer to the x-position
+ *  \param [out] y       pointer to the y-position
+ *  \param [in] object   The object to get the position.
+ *  \return TRUE if successfully determined the position, FALSE otherwise
+ */
+gboolean o_line_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
+                              OBJECT *object)
+{
+  *x = object->line->x[0];
+  *y = object->line->y[0];
+  return TRUE;
+}
+
+
 /*! \brief Print line to Postscript document.
  *  \par Function Description
  *  This function prints the line described by the <B>o_current</B>

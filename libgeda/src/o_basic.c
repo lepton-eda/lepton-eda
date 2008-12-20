@@ -262,6 +262,44 @@ void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current,
 	
 }
 
+/*! \brief get the base position of an object
+ *  \par Function Description
+ *  This function gets the position of an object in world coordinates.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [out] x       pointer to the x-position
+ *  \param [out] y       pointer to the y-position
+ *  \param [in] object   The object to get the position.
+ *  \return TRUE if successfully determined the position, FALSE otherwise
+ */
+gboolean o_get_position (TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object)
+{
+  gboolean (*func) (TOPLEVEL*, int*, int*, OBJECT*) = NULL;
+
+  switch (object->type) {
+      case OBJ_LINE:    func = o_line_get_position;    break;
+      case OBJ_NET:     func = o_net_get_position;     break;
+      case OBJ_BUS:     func = o_bus_get_position;     break;
+      case OBJ_BOX:     func = o_box_get_position;     break;
+      case OBJ_PICTURE: func = o_picture_get_position; break;
+      case OBJ_CIRCLE:  func = o_circle_get_position;  break;
+      case OBJ_PLACEHOLDER:
+      case OBJ_COMPLEX: func = o_complex_get_position; break;
+      case OBJ_TEXT:    func = o_text_get_position;    break;
+      case OBJ_PATH:    func = o_path_get_position;    break;
+      case OBJ_PIN:     func = o_pin_get_position;     break;
+      case OBJ_ARC:     func = o_arc_get_position;     break;
+      default:
+        g_critical ("o_get_position: object %p has bad type '%c'\n",
+                    object, object->type);
+  }
+
+  if (func != NULL) {
+    return (*func) (toplevel, x, y, object);
+  }
+  return FALSE;
+}
+
 
 /*! \brief Translates an object in world coordinates
  *  \par Function Description

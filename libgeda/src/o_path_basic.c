@@ -573,6 +573,26 @@ void world_get_path_bounds (TOPLEVEL *toplevel, OBJECT *object,
   }
 }
 
+/*! \brief get the position of the first path point
+ *  \par Function Description
+ *  This function gets the position of the first point of an path object.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [out] x       pointer to the x-position
+ *  \param [out] y       pointer to the y-position
+ *  \param [in] object   The object to get the position.
+ *  \return TRUE if successfully determined the position, FALSE otherwise
+ */
+gboolean o_path_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
+                              OBJECT *object)
+{
+  if (object->path->num_sections == 0)
+    return FALSE;
+
+  *x = object->path->sections[0].x3;
+  *y = object->path->sections[0].y3;
+  return TRUE;
+}
 
 /*! \brief Print a solid PATH to Postscript document.
  *  \par Function Description

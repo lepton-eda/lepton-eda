@@ -545,6 +545,24 @@ void world_get_circle_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
 
 }
 
+/*! \brief get the position of the center point
+ *  \par Function Description
+ *  This function gets the position of the center point of a circle object.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [out] x       pointer to the x-position
+ *  \param [out] y       pointer to the y-position
+ *  \param [in] object   The object to get the position.
+ *  \return TRUE if successfully determined the position, FALSE otherwise
+ */
+gboolean o_circle_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
+                              OBJECT *object)
+{
+  *x = object->circle->center_x;
+  *y = object->circle->center_y;
+  return TRUE;
+}
+
 /*! \brief Print circle to Postscript document.
  *  \par Function Description
  *  This function prints the circle described by the <B>o_current</B>

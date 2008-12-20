@@ -52,6 +52,24 @@ void world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *to
   world_get_line_bounds( toplevel, object, left, top, right, bottom );
 }
 
+/*! \brief get the position of a whichend of the pin object
+ *  \par Function Description
+ *  This function gets the position of the whichend side of a pin object.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [out] x       pointer to the x-position
+ *  \param [out] y       pointer to the y-position
+ *  \param [in] object   The object to get the position.
+ *  \return TRUE if successfully determined the position, FALSE otherwise
+ */
+gboolean o_pin_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
+                             OBJECT *object)
+{
+  *x = object->line->x[object->whichend];
+  *y = object->line->y[object->whichend];
+  return TRUE;
+}
+
 /*! \brief create a new pin object
  *  \par Function Description
  *  This function creates and returns a new pin object.

@@ -606,6 +606,24 @@ void world_get_box_bounds(TOPLEVEL *toplevel, OBJECT *object,
   *right  += halfwidth;
   *bottom += halfwidth;
 }
+
+/*! \brief get the position of the left bottom point
+ *  \par Function Description
+ *  This function gets the position of the bottom left point of a box object.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [out] x       pointer to the x-position
+ *  \param [out] y       pointer to the y-position
+ *  \param [in] object   The object to get the position.
+ *  \return TRUE if successfully determined the position, FALSE otherwise
+ */
+gboolean o_box_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
+                              OBJECT *object)
+{
+  *x = min(object->box->lower_x, object->box->upper_x);
+  *y = min(object->box->lower_y, object->box->upper_y);
+  return TRUE;
+}
                  
 /*! \brief Print BOX to Postscript document.
  *  \par Function Description

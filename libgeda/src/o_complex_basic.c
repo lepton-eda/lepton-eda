@@ -174,6 +174,24 @@ void world_get_complex_bounds(TOPLEVEL *toplevel, OBJECT *complex,
                                  left, top, right, bottom);
 }
 
+/*! \brief get the position of the complex base point
+ *  \par Function Description
+ *  This function gets the position of the base point of a complex object.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [out] x       pointer to the x-position
+ *  \param [out] y       pointer to the y-position
+ *  \param [in] object   The object to get the position.
+ *  \return TRUE if successfully determined the position, FALSE otherwise
+ */
+gboolean o_complex_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
+                              OBJECT *object)
+{
+  *x = object->complex->x;
+  *y = object->complex->y;
+  return TRUE;
+}
+
 /*! \brief check whether an object is a attributes
  *  \par Function Description
  *  This function checks if an object should be promoted.

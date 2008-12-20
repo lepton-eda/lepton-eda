@@ -418,6 +418,24 @@ void world_get_picture_bounds(TOPLEVEL *toplevel, OBJECT *object,
   *bottom = max(object->picture->upper_y, object->picture->lower_y);
 
 }
+
+/*! \brief get the position of the left bottom point
+ *  \par Function Description
+ *  This function gets the position of the bottom left point of a picture object.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [out] x       pointer to the x-position
+ *  \param [out] y       pointer to the y-position
+ *  \param [in] object   The object to get the position.
+ *  \return TRUE if successfully determined the position, FALSE otherwise
+ */
+gboolean o_picture_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
+                              OBJECT *object)
+{
+  *x = min(object->picture->lower_x, object->picture->upper_x);
+  *y = min(object->picture->lower_y, object->picture->upper_y);
+  return TRUE;
+}
                  
 /*! \brief Modify the description of a picture OBJECT.
  *  \par Function Description

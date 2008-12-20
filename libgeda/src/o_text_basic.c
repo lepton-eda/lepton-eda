@@ -173,6 +173,24 @@ int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
                                         left, top, right, bottom);
 }
 
+/*! \brief get the position of a text object
+ *  \par Function Description
+ *  This function gets the position of the base point of a text object.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [out] x       pointer to the x-position
+ *  \param [out] y       pointer to the y-position
+ *  \param [in] object   The object to get the position.
+ *  \return TRUE if successfully determined the position, FALSE otherwise
+ */
+gboolean o_text_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
+                              OBJECT *object)
+{
+  *x = object->text->x;
+  *y = object->text->y;
+  return TRUE;
+}
+
 /*! \brief initialize the hash tables for the fonts
  *  \par Function Description
  *  This function initializes the two global hash tables <b>font_loaded</b> 

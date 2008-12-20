@@ -35,6 +35,22 @@
 /*! Default setting for net draw function. */
 void (*net_draw_func)() = NULL;
 
+/*! \brief get the position of the first net point
+ *  \par Function Description
+ *  This function gets the position of the first point of a net object.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [out] x       pointer to the x-position
+ *  \param [out] y       pointer to the y-position
+ *  \param [in] object   The object to get the position.
+ *  \return TRUE if successfully determined the position, FALSE otherwise
+ */
+gboolean o_net_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
+                              OBJECT *object)
+{
+  return o_line_get_position(toplevel, x, y, object);
+}
+
 /*! \brief calculate and return the boundaries of a net object
  *  \par Function Description
  *  This function calculates the object boudaries of a net \a object.

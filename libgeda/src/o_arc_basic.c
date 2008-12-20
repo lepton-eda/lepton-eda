@@ -583,6 +583,23 @@ void world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
 
 }
 
+/*! \brief get the position of the center point
+ *  \par Function Description
+ *  This function gets the position of the center point of an arc object.
+ *
+ *  \param [in] toplevel The toplevel environment.
+ *  \param [out] x       pointer to the x-position
+ *  \param [out] y       pointer to the y-position
+ *  \param [in] object   The object to get the position.
+ *  \return TRUE if successfully determined the position, FALSE otherwise
+ */
+gboolean o_arc_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
+                             OBJECT *object)
+{
+  *x = object->arc->x;
+  *y = object->arc->y;
+  return TRUE;
+}
 
 /*! \brief
  *  \par Function Description
