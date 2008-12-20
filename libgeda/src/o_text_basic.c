@@ -1812,7 +1812,6 @@ void o_text_mirror_world(TOPLEVEL *toplevel,
  */
 double o_text_shortest_distance (OBJECT *object, int x, int y)
 {
-  double shortest_distance;
   double dx, dy;
 
   g_return_val_if_fail (object->text != NULL, G_MAXDOUBLE);
@@ -1823,21 +1822,7 @@ double o_text_shortest_distance (OBJECT *object, int x, int y)
   dx = min (dx, 0);
   dy = min (dy, 0);
 
-  if (dx < 0) {
-    if (dy < 0) {
-      shortest_distance = sqrt ((dx * dx) + (dy * dy));
-    } else {
-      shortest_distance = fabs (dx);
-    }
-  } else {
-    if (dy < 0) {
-      shortest_distance = fabs (dy);
-    } else {
-      shortest_distance = min (dx, dy);
-    }
-  }
-
-  return shortest_distance;
+  return sqrt ((dx * dx) + (dy * dy));
 }
 
 /*! \brief Set the string displayed by a text object.
