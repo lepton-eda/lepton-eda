@@ -1105,27 +1105,22 @@ void o_circle_print_hatch(TOPLEVEL *toplevel, FILE *fp,
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter of the circle.
  *
- *  \param [in] object  The circle OBJECT.
- *  \param [in] x       The x coordinate of the given point.
- *  \param [in] y       The y coordinate of the given point.
+ *  \param [in] object       The circle OBJECT.
+ *  \param [in] x            The x coordinate of the given point.
+ *  \param [in] y            The y coordinate of the given point.
+ *  \param [in] force_solid  If true, force treating the object as solid.
  *  \return The shortest distance from the object to the point.  With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double o_circle_shortest_distance (OBJECT *object, int x, int y)
+double o_circle_shortest_distance (OBJECT *object, int x, int y,
+                                   int force_solid)
 {
-  double shortest_distance;
-  double distance_to_center;
-  double dx, dy;
+  int solid;
 
   g_return_val_if_fail (object->circle != NULL, G_MAXDOUBLE);
 
-  dx = ((double)x) - ((double)object->circle->center_x);
-  dy = ((double)y) - ((double)object->circle->center_y);
+  solid = force_solid || object->fill_type != FILLING_HOLLOW;
 
-  distance_to_center = sqrt ((dx * dx) + (dy * dy));
-
-  shortest_distance = fabs (distance_to_center - object->circle->radius);
-
-  return shortest_distance;
+  return m_circle_shortest_distance (object->circle, x, y, solid);
 }
 

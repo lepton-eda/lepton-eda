@@ -748,3 +748,40 @@ void s_path_to_polygon (PATH *path, GArray *points)
     }
   }
 }
+
+
+/*! \brief Calculates the distance between the given point and the closest
+ *  point on the given path segment.
+ *
+ *  \param [in] path    The path.
+ *  \param [in] x       The x coordinate of the given point.
+ *  \param [in] y       The y coordinate of the given point.
+ *  \param [in] solid   TRUE if the path should be treated as solid, FALSE if
+ *  the path should be treated as hollow.
+ *  \return The shortest distance from the path to the point.  With a solid
+ *  shape, this function returns a distance of zero for interior points.  With
+ *  an invalid parameter, this function returns G_MAXDOUBLE.
+ */
+double s_path_shortest_distance (PATH *path, int x, int y, int solid)
+{
+  double shortest_distance = G_MAXDOUBLE;
+  GArray *points;
+
+  points = g_array_new (FALSE, FALSE, sizeof (sPOINT));
+
+  s_path_to_polygon (path, points);
+
+  if (!solid) {
+    shortest_distance = m_polygon_shortest_distance (points, x, y, FALSE);
+
+  } else if (m_polygon_interior_point (points, x, y)) {
+    shortest_distance = 0;
+
+  } else {
+    shortest_distance = m_polygon_shortest_distance (points, x, y, TRUE);
+  }
+
+  g_array_free (points, TRUE);
+
+  return shortest_distance;
+}

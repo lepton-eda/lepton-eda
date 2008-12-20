@@ -26,7 +26,10 @@ libgeda_la_SOURCES = \
 	libgeda.c \
 	m_basic.c \
 	m_bounds.c \
+	m_box.c \
+	m_circle.c \
 	m_hatch.c \
+	m_line.c \
 	m_polygon.c \
 	m_transform.c \
 	o_arc_basic.c \

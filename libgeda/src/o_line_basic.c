@@ -1213,53 +1213,15 @@ double o_line_length(OBJECT *object)
  *  If the line represents a single point (the endpoints are the same), this
  *  function calcualtes the distance to that point.
  *
- *  \param [in] object  The line OBJECT.
- *  \param [in] x       The x coordinate of the given point.
- *  \param [in] y       The y coordinate of the given point.
+ *  \param [in] object       The line OBJECT.
+ *  \param [in] x            The x coordinate of the given point.
+ *  \param [in] y            The y coordinate of the given point.
+ *  \param [in] force_solid  If true, force treating the object as solid.
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double o_line_shortest_distance (OBJECT *object, int x, int y)
+double o_line_shortest_distance (OBJECT *object, int x, int y, int force_solid)
 {
-  double cx, cy;
-  double dx, dy;
-  double dx0, dy0;
-  double lx0, ly0;
-  double ldx, ldy;
-  double t;
-
-  g_return_val_if_fail (object->line != NULL, G_MAXDOUBLE);
-
-  lx0 = (double)object->line->x[0];
-  ly0 = (double)object->line->y[0];
-  ldx = (double)(object->line->x[1] - object->line->x[0]);
-  ldy = (double)(object->line->y[1] - object->line->y[0]);
-
-  if (ldx == 0 && ldy == 0) {
-    /* if line is a point, just calculate distance to the point */
-    dx = x - lx0;
-    dy = y - ly0;
-
-  } else {
-    /* calculate parametric value of perpendicular intersection */
-    dx0 = ldx * (x - lx0);
-    dy0 = ldy * (y - ly0);
-
-    t = (dx0 + dy0) / (ldx * ldx + ldy * ldy);
-
-    /* constrain the parametric value to a point on the line */
-    t = max (t, 0);
-    t = min (t, 1);
-
-    /* calculate closest point on the line */
-    cx = t * ldx + lx0;
-    cy = t * ldy + ly0;
-
-    /* calculate distance to closest point */
-    dx = x - cx;
-    dy = y - cy;
-  }
-
-  return sqrt ((dx * dx) + (dy * dy));
+  return m_line_shortest_distance (object->line, x, y);
 }
 

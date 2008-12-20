@@ -1295,42 +1295,21 @@ void o_box_print_hatch(TOPLEVEL *toplevel, FILE *fp,
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter of the box.
  *
- *  \param [in] object  The box OBJECT.
- *  \param [in] x       The x coordinate of the given point.
- *  \param [in] y       The y coordinate of the given point.
- *  \return The shortest distance from the object to the point. With an 
+ *  \param [in] object       The box OBJECT.
+ *  \param [in] x            The x coordinate of the given point.
+ *  \param [in] y            The y coordinate of the given point.
+ *  \param [in] force_solid  If true, force treating the object as solid.
+ *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double o_box_shortest_distance (OBJECT *object, int x, int y)
+double o_box_shortest_distance (OBJECT *object, int x, int y, int force_solid)
 {
-  double shortest_distance;
-  double x1, y1, x2, y2;
-  double dx, dy;
+  int solid;
 
   g_return_val_if_fail (object->box != NULL, G_MAXDOUBLE);
 
-  x1 = (double) min (object->box->upper_x, object->box->lower_x);
-  y1 = (double) min (object->box->upper_y, object->box->lower_y);
-  x2 = (double) max (object->box->upper_x, object->box->lower_x);
-  y2 = (double) max (object->box->upper_y, object->box->lower_y);
+  solid = force_solid || object->fill_type != FILLING_HOLLOW;
 
-  dx = min (((double)x) - x1, x2 - ((double)x));
-  dy = min (((double)y) - y1, y2 - ((double)y));
-
-  if (dx < 0) {
-    if (dy < 0) {
-      shortest_distance = sqrt ((dx * dx) + (dy * dy));
-    } else {
-      shortest_distance = fabs (dx);
-    }
-  } else {
-    if (dy < 0) {
-      shortest_distance = fabs (dy);
-    } else {
-      shortest_distance = min (dx, dy);
-    }
-  }
-
-  return shortest_distance;
+  return m_box_shortest_distance (object->box, x, y, solid);
 }
 

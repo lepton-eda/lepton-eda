@@ -44,6 +44,7 @@
 /*! Default setting for complex draw function. */
 void (*complex_draw_func)() = NULL;
 
+
 /*! \brief Return the bounds of the given object.
  *  \par Given an object, calculate the bounds coordinates.
  *  \param [in] toplevel The toplevel structure.
@@ -1533,15 +1534,21 @@ done:
 /*! \brief Calculates the distance between the given point and the closest
  * point on an object within the complex object.
  *
- *  \param [in] object  The complex  OBJECT.
- *  \param [in] x       The x coordinate of the given point.
- *  \param [in] y       The y coordinate of the given point.
+ *  \note When querying the distance to our child objects, we always
+ *        force treating them as solid filled.
+ *        We ignore the force_solid argument to this function.
+ *
+ *  \param [in] object       The complex  OBJECT.
+ *  \param [in] x            The x coordinate of the given point.
+ *  \param [in] y            The y coordinate of the given point.
+ *  \param [in] force_solid  If true, force treating the object as solid.
  *  \return The shortest distance from the object to the point. If the
  *  distance cannot be calculated, this function returns a really large
  *  number (G_MAXDOUBLE).  With an invalid parameter, this function returns
  *  G_MAXDOUBLE.
  */
-double o_complex_shortest_distance (OBJECT *object, int x, int y)
+double o_complex_shortest_distance (OBJECT *object, int x, int y,
+                                    int force_solid)
 {
   double shortest_distance = G_MAXDOUBLE;
   double distance;
@@ -1553,10 +1560,9 @@ double o_complex_shortest_distance (OBJECT *object, int x, int y)
        iter != NULL; iter= g_list_next (iter)) {
     OBJECT *obj = iter->data;
 
-    distance = o_shortest_distance (obj, x, y);
+    distance = o_shortest_distance_full (obj, x, y, TRUE);
     shortest_distance = min (shortest_distance, distance);
   }
 
   return shortest_distance;
 }
-

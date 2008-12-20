@@ -61,7 +61,7 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
     if (inside_region(o_current->w_left - w_slack, o_current->w_top - w_slack,
                       o_current->w_right + w_slack, o_current->w_bottom + w_slack,
                       w_x, w_y) &&
-        o_shortest_distance( o_current, w_x, w_y ) < w_slack ) {
+        o_shortest_distance (o_current, w_x, w_y) < w_slack ) {
       if (o_current->sel_func != NULL &&
           (o_current->visibility == VISIBLE || toplevel->show_hidden_text)) {
         if (change_selection) {
@@ -95,7 +95,7 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
     if (inside_region(o_current->w_left - w_slack, o_current->w_top - w_slack,
                       o_current->w_right + w_slack, o_current->w_bottom + w_slack,
                       w_x, w_y) &&
-        o_shortest_distance( o_current, w_x, w_y ) < w_slack ) {
+        o_shortest_distance (o_current, w_x, w_y) < w_slack) {
 
       if (o_current->sel_func != NULL &&
           (o_current->visibility == VISIBLE || toplevel->show_hidden_text)) {

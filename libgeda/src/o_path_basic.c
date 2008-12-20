@@ -1038,36 +1038,19 @@ void o_path_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 /*! \brief Calculates the distance between the given point and the closest
  *  point on the given path segment.
  *
- *  \param [in] object  The path OBJECT.
- *  \param [in] x       The x coordinate of the given point.
- *  \param [in] y       The y coordinate of the given point.
+ *  \param [in] object       The path OBJECT.
+ *  \param [in] x            The x coordinate of the given point.
+ *  \param [in] y            The y coordinate of the given point.
+ *  \param [in] force_solid  If true, force treating the object as solid.
  *  \return The shortest distance from the object to the point.  With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double o_path_shortest_distance (OBJECT *object, int x, int y)
+double o_path_shortest_distance (OBJECT *object, int x, int y, int force_solid)
 {
-  double shortest_distance = G_MAXDOUBLE;
-  GArray *points;
-  gboolean solid;
+  int solid;
 
-  points = g_array_new (FALSE, FALSE, sizeof (sPOINT));
+  solid = force_solid || object->fill_type != FILLING_HOLLOW;
 
-  s_path_to_polygon (object->path, points);
-
-  solid = object->fill_type != FILLING_HOLLOW;    /* FIXME */
-
-  if (!solid) {
-    shortest_distance = m_polygon_shortest_distance (points, x, y, FALSE);
-
-  } else if (m_polygon_interior_point (points, x, y)) {
-    shortest_distance = 0;
-
-  } else {
-    shortest_distance = m_polygon_shortest_distance (points, x, y, TRUE);
-  }
-
-  g_array_free (points, TRUE);
-
-  return shortest_distance;
+  return s_path_shortest_distance (object->path, x, y, solid);
 }
 

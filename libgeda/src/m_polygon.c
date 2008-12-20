@@ -168,10 +168,7 @@ double m_polygon_shortest_distance (GArray *points, int x, int y, gboolean close
 
     while (i < points->len) {
       double distance;
-      OBJECT object;
       LINE line;
-
-      object.line = &line;
 
       line.x[0] = point.x;
       line.y[0] = point.y;
@@ -181,7 +178,7 @@ double m_polygon_shortest_distance (GArray *points, int x, int y, gboolean close
       line.x[1] = point.x;
       line.y[1] = point.y;
 
-      distance = o_line_shortest_distance (&object, x, y);
+      distance = m_line_shortest_distance (&line, x, y);
 
       shortest = min (shortest, distance);
     }

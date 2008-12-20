@@ -1021,13 +1021,15 @@ GdkPixbuf *o_picture_pixbuf_from_buffer (gchar *file_content,
  *
  *  Interrior points within the picture return a distance of zero.
  *
- *  \param [in] object  The picture OBJECT.
- *  \param [in] x       The x coordinate of the given point.
- *  \param [in] y       The y coordinate of the given point.
+ *  \param [in] object       The picture OBJECT.
+ *  \param [in] x            The x coordinate of the given point.
+ *  \param [in] y            The y coordinate of the given point.
+ *  \param [in] force_solid  If true, force treating the object as solid.
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double o_picture_shortest_distance (OBJECT *object, int x, int y)
+double o_picture_shortest_distance (OBJECT *object, int x, int y,
+                                    int force_solid)
 {
   double dx, dy;
   double x1, y1, x2, y2;

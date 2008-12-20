@@ -373,12 +373,13 @@ void o_mirror_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, O
   }
 }
 
+
 /*! \brief Calculates the distance between the given point and the closest
  * point on the given object.
  *
- *  \param [in] object The given object.
- *  \param [in] x      The x coordinate of the given point.
- *  \param [in] y      The y coordinate of the given point.
+ *  \param [in] object       The given object.
+ *  \param [in] x            The x coordinate of the given point.
+ *  \param [in] y            The y coordinate of the given point.
  *  \return The shortest distance from the object to the point. If the
  *  distance cannot be calculated, this function returns a really large
  *  number (G_MAXDOUBLE).  If an error occurs, this function returns
@@ -386,8 +387,25 @@ void o_mirror_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, O
  */
 double o_shortest_distance (OBJECT *object, int x, int y)
 {
+  return o_shortest_distance_full (object, x, y, FALSE);
+}
+
+/*! \brief Calculates the distance between the given point and the closest
+ * point on the given object. Allows forcing objects to solid.
+ *
+ *  \param [in] object       The given object.
+ *  \param [in] x            The x coordinate of the given point.
+ *  \param [in] y            The y coordinate of the given point.
+ *  \param [in] force_solid  If true, force treating the object as solid.
+ *  \return The shortest distance from the object to the point. If the
+ *  distance cannot be calculated, this function returns a really large
+ *  number (G_MAXDOUBLE).  If an error occurs, this function returns
+ *  G_MAXDOUBLE.
+ */
+double o_shortest_distance_full (OBJECT *object, int x, int y, int force_solid)
+{
   double shortest_distance = G_MAXDOUBLE;
-  double (*func) (OBJECT *, int, int) = NULL;
+  double (*func) (OBJECT *, int, int, int) = NULL;
 
   g_return_val_if_fail (object != NULL, G_MAXDOUBLE);
 
@@ -410,7 +428,7 @@ double o_shortest_distance (OBJECT *object, int x, int y)
   }
 
   if (func != NULL) {
-    shortest_distance = (*func) (object, x, y);
+    shortest_distance = (*func) (object, x, y, force_solid);
   }
 
   return shortest_distance;
