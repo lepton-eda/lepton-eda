@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-06 11:05-0400\n"
+"POT-Creation-Date: 2008-12-20 16:08-0500\n"
 "PO-Revision-Date: 2008-12-20 14:05+0000\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -46,17 +46,17 @@ msgstr "gEDA Schema Symbool"
 #. *  completely? In any case, failing gracefully is better
 #. *  than killing the program, which is what this used to
 #. *  do...
-#: ../src/a_basic.c:173
+#: ../src/a_basic.c:184
 #, c-format
 msgid "o_save_objects: object %p has unknown type '%c'\n"
 msgstr "o_save_objects: object %p heeft een onbekend type '%c'\n"
 
-#: ../src/a_basic.c:218
+#: ../src/a_basic.c:232
 #, c-format
 msgid "o_save: Could not open [%s]\n"
 msgstr "o_save: Kan [%s] niet openen\n"
 
-#: ../src/a_basic.c:408
+#: ../src/a_basic.c:424
 #, c-format
 msgid ""
 "Read unexpected embedded symbol start marker in [%s] :\n"
@@ -67,7 +67,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: ../src/a_basic.c:428
+#: ../src/a_basic.c:453
 #, c-format
 msgid ""
 "Read unexpected embedded symbol end marker in [%s] :\n"
@@ -78,7 +78,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: ../src/a_basic.c:460
+#: ../src/a_basic.c:482
 #, c-format
 msgid ""
 "Read an old format sym/sch file!\n"
@@ -89,7 +89,7 @@ msgstr ""
 "Voer g[sym|sch]update uit op:\n"
 "[%s]\n"
 
-#: ../src/a_basic.c:466
+#: ../src/a_basic.c:488
 #, c-format
 msgid ""
 "Read garbage in [%s] :\n"
@@ -100,12 +100,17 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: ../src/f_basic.c:113 ../src/f_basic.c:126
+#: ../src/f_basic.c:126 ../src/f_basic.c:139
 #, c-format
 msgid "Failed to stat [%s]: %s"
 msgstr "Status niet gelukt [%s]: %s"
 
-#: ../src/f_basic.c:244
+#: ../src/f_basic.c:222
+#, fuzzy, c-format
+msgid "Cannot find file %s: %s"
+msgstr "Onbekend bestand: %s\n"
+
+#: ../src/f_basic.c:260
 #, c-format
 msgid ""
 "\n"
@@ -118,11 +123,11 @@ msgstr ""
 " %s.\n"
 "\n"
 
-#: ../src/f_basic.c:246
+#: ../src/f_basic.c:262
 msgid "I could not guess if it is newer, so you have to do it manually.\n"
 msgstr "Ik kan niet raden of het nieuwer is, je moet het dus handmatig doen.\n"
 
-#: ../src/f_basic.c:248
+#: ../src/f_basic.c:264
 msgid ""
 "The backup copy is newer than the schematic, so it seems you should load it "
 "instead of the original file.\n"
@@ -130,7 +135,7 @@ msgstr ""
 "De reservekopie is nieuwer dan het schema, het lijkt erop dat je deze zou "
 "moeten laden in plaats van het orginele bestand.\n"
 
-#: ../src/f_basic.c:250
+#: ../src/f_basic.c:266
 msgid ""
 "Gschem usually makes backup copies automatically, and this situation happens "
 "when it crashed or it was forced to exit abruptly.\n"
@@ -139,7 +144,7 @@ msgstr ""
 "voor wanneer er een crash is of wanneer er een abrupte gedwongen beeindiging "
 "was.\n"
 
-#: ../src/f_basic.c:253
+#: ../src/f_basic.c:269
 msgid ""
 "\n"
 "Run gschem and correct the situation.\n"
@@ -149,74 +154,68 @@ msgstr ""
 "Voer gschem uit en corrigeer de situatie.\n"
 "\n"
 
-#: ../src/f_basic.c:367
+#: ../src/f_basic.c:378
 #, c-format
 msgid "Can't get the real filename of %s."
 msgstr "Kan de werkelijke bestandsnaam van %s niet krijgen."
 
-#: ../src/f_basic.c:387
+#: ../src/f_basic.c:398
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "Kan vorige reservekopie [%s] NIET op lezen-schrijven instellen\n"
 
-#: ../src/f_basic.c:393
+#: ../src/f_basic.c:404
 #, c-format
 msgid "Can't save backup file: %s."
 msgstr "Kan reservekopie niet opslaan: %s."
 
-#: ../src/f_basic.c:403
+#: ../src/f_basic.c:414
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "Kan reservekopie [%s] NIET op alleen-lezen instellen\n"
 
-#: ../src/f_basic.c:538
-#, c-format
-msgid "Could not read symbolic link information for %s"
-msgstr "Kan informatie van symbolische verbinding niet lezen voor %s"
+#: ../src/f_basic.c:703
+#, fuzzy, c-format
+msgid "%s: %s"
+msgstr "%s:%i:%i: %s\n"
 
-# Te veel symlinks
-#. Too many symlinks
-#: ../src/f_basic.c:578
-msgid "The file has too many symbolic links."
-msgstr "Het bestand heeft te veel symbolische verbindingen."
-
-#: ../src/f_print.c:105
+#: ../src/f_print.c:111
 msgid "Unable to get time of day in f_print_header()\n"
 msgstr "Kan geen tijd van de dag krijgen in f_print_header()\n"
 
-#: ../src/f_print.c:143
+#: ../src/f_print.c:153
 #, c-format
 msgid "Unable to open the prolog file `%s' for reading in f_print_header()\n"
 msgstr ""
 "Kan het prolog bestand `%s' niet openen tijdens lezen in f_print_header()\n"
 
-#: ../src/f_print.c:157
+#: ../src/f_print.c:170
 #, c-format
 msgid "Error during reading of the prolog file `%s' in f_print_header()\n"
 msgstr "Fout tijdens het lezen van prolog bestand `%s' in f_print_header()\n"
 
-#: ../src/f_print.c:163
+#: ../src/f_print.c:176
 msgid ""
 "Error during writing of the output postscript file in f_print_header()\n"
 msgstr ""
 "Fout tijdens het schrijven van het postscript uitvoerbestand in "
 "f_print_header()\n"
 
-#: ../src/f_print.c:176
+#: ../src/f_print.c:189
 msgid "Giving up on printing\n"
 msgstr "Geef het afdrukken op\n"
 
-#: ../src/f_print.c:365
+#: ../src/f_print.c:381
 #, c-format
 msgid "Could not open [%s] for printing\n"
 msgstr "Kan [%s] niet openen voor afdrukken\n"
 
-#: ../src/f_print.c:398
+#: ../src/f_print.c:414
 #, c-format
 msgid "Could not execute command [%s] for printing\n"
 msgstr "Kan opdracht [%s] niet uitvoeren voor afdrukken\n"
 
-#: ../src/f_print.c:676
+#: ../src/f_print.c:687
 msgid "Too many UTF-8 characters, cannot print\n"
 msgstr "Te veel UTF-8 karakters, kan niet afdrukken\n"
 
@@ -241,7 +240,7 @@ msgstr "Evaluatie faalt: %s\n"
 msgid "Enable debugging for more detailed information\n"
 msgstr "Schakel foutzoeken in voor meer gedetaileerde informatie\n"
 
-#: ../src/g_basic.c:282
+#: ../src/g_basic.c:284
 #, c-format
 msgid "Could not find [%s] for interpretation\n"
 msgstr "Kan [%s] niet vinden voor interpretatie\n"
@@ -263,32 +262,32 @@ msgstr "Lees system-%s bestand [%%s]\n"
 msgid "Did not find required system-%s file [%%s]\n"
 msgstr "Benodigde system-%s bestand is niet gevonden [%%s]\n"
 
-#: ../src/g_rc.c:256
+#: ../src/g_rc.c:255
 #, c-format
 msgid "Read ~/.gEDA/%s file [%%s]\n"
 msgstr "Lees ~/.gEDA/%s bestand [%%s]\n"
 
-#: ../src/g_rc.c:258
+#: ../src/g_rc.c:257
 #, c-format
 msgid "Did not find optional ~/.gEDA/%s file [%%s]\n"
 msgstr "Kan geen optioneel ~/.gEDA/%s file [%%s] bestand vinden\n"
 
-#: ../src/g_rc.c:292
+#: ../src/g_rc.c:289
 #, c-format
 msgid "Read local %s file [%%s]\n"
 msgstr "Lees plaatselijk %s bestand [%%s]\n"
 
-#: ../src/g_rc.c:294
+#: ../src/g_rc.c:291
 #, c-format
 msgid "Did not find optional local %s file [%%s]\n"
 msgstr "Kan geen optioneel plaatselijk %s bestand [%%s] vinden\n"
 
-#: ../src/g_rc.c:330
+#: ../src/g_rc.c:329
 #, c-format
 msgid "Read specified %s file [%%s]\n"
 msgstr "Lees gespecificeerd %s bestand [%%s]\n"
 
-#: ../src/g_rc.c:332
+#: ../src/g_rc.c:331
 #, c-format
 msgid "Did not find specified %s file [%%s]\n"
 msgstr "Kan geen gespecificeerd %s bestand [%%s] vinden\n"
@@ -297,93 +296,103 @@ msgstr "Kan geen gespecificeerd %s bestand [%%s] vinden\n"
 #. ! \todo these two are basically the
 #. * same. Inefficient!
 #.
-#: ../src/g_rc.c:390
+#: ../src/g_rc.c:389
 #, c-format
 msgid "Could not find any %s file!\n"
 msgstr "Kan geen enkel %s bestand vinden!\n"
 
-#: ../src/o_arc_basic.c:289
+#: ../src/g_rc.c:1035
+msgid ""
+"WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
+"list of strings instead\n"
+msgstr ""
+
+#: ../src/o_arc_basic.c:282
 #, c-format
 msgid "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"
 msgstr "Boog met een straal van nul gevonden [ %c %d, %d, %d, %d, %d, %d ]\n"
 
-#: ../src/o_arc_basic.c:294 ../src/o_box_basic.c:341 ../src/o_bus_basic.c:158
-#: ../src/o_circle_basic.c:296 ../src/o_line_basic.c:293
-#: ../src/o_net_basic.c:167 ../src/o_pin_basic.c:158
-#: ../src/o_text_basic.c:1116
+#: ../src/o_arc_basic.c:287 ../src/o_box_basic.c:301 ../src/o_bus_basic.c:172
+#: ../src/o_circle_basic.c:293 ../src/o_line_basic.c:269
+#: ../src/o_net_basic.c:164 ../src/o_path_basic.c:199 ../src/o_pin_basic.c:175
+#: ../src/o_text_basic.c:1130
 #, c-format
 msgid "Found an invalid color [ %s ]\n"
 msgstr "Ongeldige kleur [ %s ] gevonden\n"
 
-#: ../src/o_arc_basic.c:295 ../src/o_box_basic.c:342 ../src/o_bus_basic.c:159
-#: ../src/o_circle_basic.c:297 ../src/o_line_basic.c:294
-#: ../src/o_net_basic.c:168 ../src/o_pin_basic.c:159
-#: ../src/o_text_basic.c:1117
+#: ../src/o_arc_basic.c:288 ../src/o_box_basic.c:302 ../src/o_bus_basic.c:173
+#: ../src/o_circle_basic.c:294 ../src/o_line_basic.c:270
+#: ../src/o_net_basic.c:165 ../src/o_path_basic.c:200 ../src/o_pin_basic.c:176
+#: ../src/o_text_basic.c:1131
 msgid "Setting color to WHITE\n"
 msgstr "Stel de kleur in op WIT \n"
 
-#: ../src/o_attrib.c:638
+#: ../src/o_attrib.c:178
+msgid "Attempt to attach non text item as an attribute!\n"
+msgstr ""
+
+#: ../src/o_attrib.c:183
 #, c-format
-msgid "Found an improper attribute: _%s_\n"
-msgstr "Ongewenst attribuut gevonden: _%s_\n"
+msgid "Attempt to attach attribute [%s] to more than one object\n"
+msgstr ""
 
 #. only an error if there's a slot string
-#: ../src/o_attrib.c:1699 ../src/o_attrib.c:1806
+#: ../src/o_attrib.c:1410 ../src/o_attrib.c:1510
 msgid "Did not find slotdef=#:#,#,#... attribute\n"
 msgstr "Kan slotdef=#:#,#,#... attribuut niet vinden\n"
 
 # Geen gebruikelijke slotdef=#:... gevonden, doe een waarschuwing in het log
 #. Didn't find proper slotdef=#:... put warning into log
-#: ../src/o_attrib.c:1705
+#: ../src/o_attrib.c:1416
 msgid "Improper slotdef syntax: missing \":\".\n"
 msgstr "Ongewenst slotdef syntax: \":\" ontbreekt.\n"
 
-#: ../src/o_attrib.c:1720 ../src/o_attrib.c:1825
+#: ../src/o_attrib.c:1431 ../src/o_attrib.c:1529
 msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
 msgstr "Kan het gewenste slotdef=#:#,#,#... attribuut niet vinden\n"
 
-#: ../src/o_attrib.c:1759 ../src/o_attrib.c:1859
+#: ../src/o_attrib.c:1463 ../src/o_attrib.c:1558
 msgid "component missing pinseq= attribute\n"
 msgstr "komponent mist het pinseq= attribuut\n"
 
-#: ../src/o_basic.c:189 ../src/o_basic.c:201
+#: ../src/o_basic.c:195 ../src/o_basic.c:207
 msgid "Invalid space specified, setting to 100\n"
 msgstr "Ongeldige ruimte gespecificeerd, ingesteld op 100\n"
 
-#: ../src/o_basic.c:197
+#: ../src/o_basic.c:203
 msgid "Invalid length specified, setting to 100\n"
 msgstr "Ongeldige lengte gespecificeerd, ingesteld op 100\n"
 
-#: ../src/o_box_basic.c:336
+#: ../src/o_box_basic.c:296
 #, c-format
 msgid "Found a zero width/height box [ %c %d %d %d %d %d ]\n"
 msgstr ""
 "Rechthoek met een breedte/hoogte van nul gevonden [ %c %d %d %d %d %d ]\n"
 
-#: ../src/o_bus_basic.c:149
+#: ../src/o_bus_basic.c:163
 #, c-format
 msgid "Found a zero length bus [ %c %d %d %d %d %d ]\n"
 msgstr "Bus met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
 
-#: ../src/o_bus_basic.c:164
+#: ../src/o_bus_basic.c:178
 #, c-format
 msgid "Found an invalid bus ripper direction [ %s ]\n"
 msgstr "Ongeldige bus ripper richting gevonden [ %s ]\n"
 
-#: ../src/o_bus_basic.c:165
+#: ../src/o_bus_basic.c:179
 msgid "Resetting direction to neutral (no direction)\n"
 msgstr "Neutrale richting ingesteld (geen richting)\n"
 
-#: ../src/o_circle_basic.c:206
+#: ../src/o_circle_basic.c:204
 msgid "Null radius circles are not allowed\n"
 msgstr "Cirkels met een radius van nul zijn niet toegestaan\n"
 
-#: ../src/o_circle_basic.c:290
+#: ../src/o_circle_basic.c:287
 #, c-format
 msgid "Found a zero radius circle [ %c %d %d %d %d ]\n"
 msgstr "Een cirkel met een radius van nul gevonden [ %c %d %d %d %d ]\n"
 
-#: ../src/o_complex_basic.c:423
+#: ../src/o_complex_basic.c:476
 #, c-format
 msgid ""
 "Component not found:\n"
@@ -392,13 +401,13 @@ msgstr ""
 "Komponent niet gevonden:\n"
 " %s"
 
-#: ../src/o_complex_basic.c:716
+#: ../src/o_complex_basic.c:690
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
 "Een komponent met een ongeldige rotatie gevonden [ %c %d %d %d %d %d %s ]\n"
 
-#: ../src/o_complex_basic.c:728
+#: ../src/o_complex_basic.c:702
 #, c-format
 msgid ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
@@ -406,7 +415,7 @@ msgstr ""
 "Een komponent met een ongeldige spiegel vlag gevonden [ %c %d %d %d %d %d %"
 "s ]\n"
 
-#: ../src/o_complex_basic.c:1430
+#: ../src/o_complex_basic.c:1403
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -415,7 +424,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan symboolbestand niet doorzoeken symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1434
+#: ../src/o_complex_basic.c:1407
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -424,7 +433,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan symboolbestand niet doorzoeken symversion=\n"
 
-#: ../src/o_complex_basic.c:1450
+#: ../src/o_complex_basic.c:1423
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -433,7 +442,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan bijgevoegd symboolbestand niet doorzoeken symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1475
+#: ../src/o_complex_basic.c:1448
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -444,7 +453,7 @@ msgstr ""
 "\tsymversion=%s bijgevoegd aan bedoelde symbool, maar geen symversion= in "
 "het symbool bestand\n"
 
-#: ../src/o_complex_basic.c:1489
+#: ../src/o_complex_basic.c:1462
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -453,17 +462,17 @@ msgstr ""
 "WAARSCHUWING: Symbool versie fout bij refdes %s (%s):\n"
 "\tSymbool in bibliotheek is nieuwer dan bedoelde symbool\n"
 
-#: ../src/o_complex_basic.c:1517
+#: ../src/o_complex_basic.c:1490
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr "\tGROTE VERSIE VERANDERING (bestand %.3f, bedoeld %.3f, %s)!\n"
 
-#: ../src/o_complex_basic.c:1535
+#: ../src/o_complex_basic.c:1508
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\tKleine versie verandering (bestand %.3f, bedoeld %.3f)!\n"
 
-#: ../src/o_complex_basic.c:1546
+#: ../src/o_complex_basic.c:1519
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -472,14 +481,14 @@ msgstr ""
 "WAARSCHUWING: Symbool versie afwijking bij refdes %s:\n"
 "\tbedoeld symbool is nieuwer dan het symbool in de bibliotheek\n"
 
-#: ../src/o_embed.c:49
+#: ../src/o_embed.c:58
 #, c-format
 msgid "Component [%s] has been embedded\n"
 msgstr "Komponent [%s] is ingevoegd\n"
 
 # symbool niet gevonden in de symbolenbibliotheek: signaleer een fout
 #. symbol not found in the symbol library: signal an error
-#: ../src/o_embed.c:85
+#: ../src/o_embed.c:98
 #, c-format
 msgid ""
 "Could not find component [%s], while trying to unembed. Component is still "
@@ -488,101 +497,101 @@ msgstr ""
 "Kan komponent [%s] niet vinden, tijdens het uitvoegen. Komponent is nog "
 "steeds ingevoegd\n"
 
-#: ../src/o_embed.c:93
+#: ../src/o_embed.c:106
 #, c-format
 msgid "Component [%s] has been successfully unembedded\n"
 msgstr "Komponent [%s] is succesvol uitgevoegd\n"
 
-#: ../src/o_line_basic.c:288
+#: ../src/o_line_basic.c:264
 #, c-format
 msgid "Found a zero length line [ %c %d %d %d %d %d ]\n"
 msgstr "Lijn met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
 
-#: ../src/o_net_basic.c:157
+#: ../src/o_net_basic.c:154
 #, c-format
 msgid "Found a zero length net [ %c %d %d %d %d %d ]\n"
 msgstr "Net met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
 
-#: ../src/o_picture.c:88
+#: ../src/o_picture.c:90
 #, c-format
 msgid "Error reading picture definition line: %s.\n"
 msgstr "Fout bij het lezen van afbeelding definitie regel: %s.\n"
 
-#: ../src/o_picture.c:102
+#: ../src/o_picture.c:104
 #, c-format
 msgid "Found a zero width/height picture [ %c %d %d %d %d ]\n"
 msgstr ""
 "Afbeelding met een breedte/hoogte van nul gevonden [ %c %d %d %d %d ]\n"
 
-#: ../src/o_picture.c:107
+#: ../src/o_picture.c:109
 #, c-format
 msgid "Found a picture with a wrong 'mirrored' parameter: %c.\n"
 msgstr "Afbeelding met een verkeerde 'gespiegelde' parameter gevonden: %c.\n"
 
-#: ../src/o_picture.c:109
+#: ../src/o_picture.c:111
 msgid "Setting mirrored to 0\n"
 msgstr "Spiegelen op 0 ingesteld\n"
 
-#: ../src/o_picture.c:114
+#: ../src/o_picture.c:116
 #, c-format
 msgid "Found a picture with a wrong 'embedded' parameter: %c.\n"
 msgstr "Afbeelding met een verkeerd 'ingevoegde' waarde gevonden: %c.\n"
 
-#: ../src/o_picture.c:116
+#: ../src/o_picture.c:118
 msgid "Setting embedded to 0\n"
 msgstr "Invoegen op 0 ingesteld\n"
 
-#: ../src/o_picture.c:128
+#: ../src/o_picture.c:130
 #, c-format
 msgid "Found an unsupported picture angle [ %d ]\n"
 msgstr "Niet ondersteunde afbeelding hoek [ %d ] gevonden\n"
 
-#: ../src/o_picture.c:129 ../src/o_text_basic.c:1088
+#: ../src/o_picture.c:131 ../src/o_text_basic.c:1102
 msgid "Setting angle to 0\n"
 msgstr "Hoek op 0 ingesteld\n"
 
-#: ../src/o_picture.c:164 ../src/o_picture.c:175 ../src/o_picture.c:942
+#: ../src/o_picture.c:166 ../src/o_picture.c:177 ../src/o_picture.c:919
 #, c-format
 msgid "Failed to load image from embedded data [%s]: %s\n"
 msgstr "Laden van afbeelding uit ingesloten data faalde [%s]: %s\n"
 
-#: ../src/o_picture.c:165
+#: ../src/o_picture.c:167
 msgid "Base64 decoding failed."
 msgstr "Base64 decodering faalde."
 
-#: ../src/o_picture.c:166 ../src/o_picture.c:177 ../src/o_picture.c:944
+#: ../src/o_picture.c:168 ../src/o_picture.c:179 ../src/o_picture.c:921
 msgid "Falling back to file loading. Picture unembedded.\n"
 msgstr "Val terug op het laden van bestand. Afbeelding uitgevoegd.\n"
 
-#: ../src/o_picture.c:188 ../src/o_picture.c:930 ../src/o_picture.c:979
+#: ../src/o_picture.c:190 ../src/o_picture.c:907 ../src/o_picture.c:956
 #, c-format
 msgid "Failed to load image from file [%s]: %s\n"
 msgstr "Laden van afbeelding uit bestand faalde [%s]: %s\n"
 
-#: ../src/o_picture.c:199
+#: ../src/o_picture.c:201
 msgid "Loading warning picture.\n"
 msgstr "Laad de waarschuwing afbeelding.\n"
 
-#: ../src/o_picture.c:205
+#: ../src/o_picture.c:207
 #, c-format
 msgid "Error loading picture from file: %s.\n"
 msgstr "Fout bij het laden van een afbeelding uit een bestand: %s.\n"
 
-#: ../src/o_picture.c:265
+#: ../src/o_picture.c:267
 msgid "ERROR: o_picture_save: unable to encode the picture.\n"
 msgstr "FOUT: o_picture_save: kan de afbeelding niet coderen.\n"
 
-#: ../src/o_picture.c:957
+#: ../src/o_picture.c:934
 #, c-format
 msgid "Picture [%s] has been embedded\n"
 msgstr "Afbeelding [%s] is ingevoegd\n"
 
-#: ../src/o_picture.c:997
+#: ../src/o_picture.c:974
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
 msgstr "Afbeelding [%s] is uitgevoegd\n"
 
-#: ../src/o_pin_basic.c:140
+#: ../src/o_pin_basic.c:162
 msgid ""
 "Found a pin which did not have the whichone field set.\n"
 "Verify and correct manually.\n"
@@ -590,70 +599,70 @@ msgstr ""
 "Pen die geen whichone veld ingesteld heeft gevonden.\n"
 "Verifieer en corigeer handmatig.\n"
 
-#: ../src/o_pin_basic.c:143
+#: ../src/o_pin_basic.c:165
 #, c-format
 msgid "Found an invalid whichend on a pin (reseting to zero): %d\n"
 msgstr "Pen met een ongeldige whichend gevonden (instellen op nul): %d\n"
 
-#: ../src/o_pin_basic.c:154
+#: ../src/o_pin_basic.c:171
 #, c-format
 msgid "Found a zero length pin: [ %s ]\n"
 msgstr "Pen met een lengte van nul gevonden: [ %s ]\n"
 
-#: ../src/o_text_basic.c:181
+#: ../src/o_text_basic.c:278
 #, c-format
 msgid "Could not find character '%s' definition.\n"
 msgstr "Kan karakter '%s' definitie niet vinden.\n"
 
-#: ../src/o_text_basic.c:186
+#: ../src/o_text_basic.c:283
 #, c-format
 msgid "Could not load question font char -- check font-directory keyword\n"
 msgstr ""
 "Kan vraag font karakter niet laden -- controleer font-map sleutelwoord\n"
 
-#: ../src/o_text_basic.c:1074
+#: ../src/o_text_basic.c:1088
 #, c-format
 msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 "Tekst string met een afmeting van nul gevonden [ %c %d %d %d %d %d %d %d %"
 "d ]\n"
 
-#: ../src/o_text_basic.c:1086
+#: ../src/o_text_basic.c:1100
 #, c-format
 msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr "Niet ondersteunde teksthoek gevonden [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: ../src/o_text_basic.c:1108
+#: ../src/o_text_basic.c:1122
 #, c-format
 msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 "Niet ondersteunde tekst uitlijning gevonden [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: ../src/o_text_basic.c:1110
+#: ../src/o_text_basic.c:1124
 msgid "Setting alignment to LOWER_LEFT\n"
 msgstr "Uitlijning op LINKS_ONDER ingesteld\n"
 
-#: ../src/o_text_basic.c:1195
+#: ../src/o_text_basic.c:1213
 #, c-format
 msgid "Failed to validate utf-8 character in font definition: \"%s\".\n"
 msgstr "Valideren van utf-8 karakter in font definitie: \"%s\" faalde.\n"
 
-#: ../src/s_clib.c:456
+#: ../src/s_clib.c:464
 #, c-format
 msgid "Library command failed [%s]: %s\n"
 msgstr "Bibliotheek opdracht faalde [%s]: %s\n"
 
-#: ../src/s_clib.c:461
+#: ../src/s_clib.c:469
 #, c-format
 msgid "Library command failed [%s]: Uncaught signal %i.\n"
 msgstr "Bibliotheek opdracht faalde [%s]: Niet opgevangen signaal %i.\n"
 
-#: ../src/s_clib.c:465
+#: ../src/s_clib.c:473
 #, c-format
 msgid "Library command failed [%s]\n"
 msgstr "Bibliotheek opdracht faalde [%s]\n"
 
-#: ../src/s_clib.c:466
+#: ../src/s_clib.c:474
 #, c-format
 msgid ""
 "Error output was:\n"
@@ -662,34 +671,34 @@ msgstr ""
 "Fout uitvoer was:\n"
 "%s\n"
 
-#: ../src/s_clib.c:552
+#: ../src/s_clib.c:560
 #, c-format
 msgid "Library name [%s] already in use.  Using [%s].\n"
 msgstr "Bibliotheeknaam [%s] is al in gebruik.  Gebruik nu [%s].\n"
 
-#: ../src/s_clib.c:589
+#: ../src/s_clib.c:597
 #, c-format
 msgid "Failed to open directory [%s]: %s\n"
 msgstr "Openen van directory faalde [%s]: %s\n"
 
-#: ../src/s_clib.c:725
+#: ../src/s_clib.c:732
 #, c-format
 msgid "Failed to scan library [%s]: Scheme function returned non-list\n"
 msgstr ""
 "Doorzoeken van bibliotheek [%s] faalde: Scheme functie retourneerde non-"
 "list\n"
 
-#: ../src/s_clib.c:733
+#: ../src/s_clib.c:740
 #, c-format
 msgid "Non-string symbol name while scanning library [%s]\n"
 msgstr ""
 "Niet string symboolnaam tijdens het doorzoeken van de bibliotheek [%s]\n"
 
-#: ../src/s_clib.c:888 ../src/s_clib.c:935
+#: ../src/s_clib.c:895 ../src/s_clib.c:942
 msgid "Cannot add library: name not specified\n"
 msgstr "Kan bibliotheek niet toevoegen: naam niet gespecificeerd\n"
 
-#: ../src/s_clib.c:895
+#: ../src/s_clib.c:902
 #, c-format
 msgid ""
 "Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
@@ -697,31 +706,31 @@ msgstr ""
 "Kan bibliotheek niet toevoegen [%s]: zowel 'list' en 'get' opdrachten moeten "
 "gespecificeerd zijn.\n"
 
-#: ../src/s_clib.c:943
+#: ../src/s_clib.c:950
 #, c-format
 msgid "Cannot add Scheme-library [%s]: callbacks must be closures\n"
 msgstr ""
 "Kan scheme bibliotheek niet toevoegen [%s]: callbacks moeten afsluitingen "
 "zijn\n"
 
-#: ../src/s_clib.c:1070
+#: ../src/s_clib.c:1077
 #, c-format
 msgid "Failed to load symbol from file [%s]: %s\n"
 msgstr "Laden van symbool uit bestand faalde [%s]: %s\n"
 
-#: ../src/s_clib.c:1128
+#: ../src/s_clib.c:1135
 #, c-format
 msgid "Failed to load symbol data [%s] from source [%s]\n"
 msgstr "Laden van symbool gegevens [%s] uit bron [%s] faalde\n"
 
-#: ../src/s_clib.c:1369
+#: ../src/s_clib.c:1376
 #, c-format
 msgid "Component [%s] was not found in the component library\n"
 msgstr "Komponent [%s] is niet in de komponenten bibliotheek gevonden\n"
 
 # Meer dan een symbool
 #. More than one symbol
-#: ../src/s_clib.c:1375
+#: ../src/s_clib.c:1382
 #, c-format
 msgid "More than one component found with name [%s]\n"
 msgstr "Meer dan een komponent gevonden met de naam [%s]\n"
@@ -735,53 +744,61 @@ msgstr ""
 "hierarchie lus gedetecteerd tijdens het bezoeken van pagina:\n"
 "  \"%s\"\n"
 
-#: ../src/s_hierarchy.c:245
+#: ../src/s_hierarchy.c:185
 msgid "There are no schematics above the current one!\n"
 msgstr "Er zijn geen schema's boven de huidige!\n"
 
-#: ../src/s_hierarchy.c:254
-msgid "Cannot find any schematics above the current one!\n"
-msgstr "Kan geen schema's vinden boven de huidige!\n"
-
-#: ../src/s_hierarchy.c:255
-msgid "Maybe toplevel schematic page was closed/discarded?\n"
-msgstr "Misschien is de bovenste schema bladzijde gesloten/weggedaan?\n"
-
-#: ../src/s_hierarchy.c:331
+#: ../src/s_hierarchy.c:266
 #, c-format
 msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
 msgstr "FOUT in s_hierarchy_traverse: schema niet gevonden: %s\n"
 
-#: ../src/s_page.c:163
+#: ../src/s_page.c:169
 #, c-format
 msgid "s_page_delete: Can't get the real filename of %s."
 msgstr "s_page_delete: Kan de echte bestandsnaam van %s niet krijgen."
 
-#: ../src/s_page.c:174
+#: ../src/s_page.c:180
 #, c-format
 msgid "s_page_delete: Unable to delete backup file %s."
 msgstr "s_page_delete: Niet mogelijk om reservekopie %s te verwijderen."
 
-#: ../src/s_page.c:354
+#: ../src/s_page.c:382
 #, c-format
 msgid "Saved [%s]\n"
 msgstr "[%s] opgeslagen\n"
 
-#: ../src/s_page.c:360
+#: ../src/s_page.c:388
 #, c-format
 msgid "Could NOT save [%s]\n"
 msgstr "Kan [%s] NIET opslaan\n"
 
 #. return type
-#: ../src/s_slib.c:188
+#: ../src/s_slib.c:181
 #, c-format
 msgid "Found [%s]\n"
 msgstr "[%s] gevonden\n"
 
-#: ../src/s_slib.c:204
+#: ../src/s_slib.c:191
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "Kan geen [%s] vinden in welke BronBibliotheek dan ook!\n"
+
+#~ msgid "Could not read symbolic link information for %s"
+#~ msgstr "Kan informatie van symbolische verbinding niet lezen voor %s"
+
+# Te veel symlinks
+#~ msgid "The file has too many symbolic links."
+#~ msgstr "Het bestand heeft te veel symbolische verbindingen."
+
+#~ msgid "Found an improper attribute: _%s_\n"
+#~ msgstr "Ongewenst attribuut gevonden: _%s_\n"
+
+#~ msgid "Cannot find any schematics above the current one!\n"
+#~ msgstr "Kan geen schema's vinden boven de huidige!\n"
+
+#~ msgid "Maybe toplevel schematic page was closed/discarded?\n"
+#~ msgstr "Misschien is de bovenste schema bladzijde gesloten/weggedaan?\n"
 
 #~ msgid "Can't get the real filename of %s.\n"
 #~ msgstr "Kan de werkelijke bestandsnaam van %s niet krijgen.\n"
