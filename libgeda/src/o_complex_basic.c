@@ -1552,6 +1552,8 @@ double o_complex_shortest_distance (OBJECT *object, int x, int y,
 {
   double shortest_distance = G_MAXDOUBLE;
   double distance;
+  int found_line_bounds = 0;
+  BOX line_bounds;
   GList *iter;
 
   g_return_val_if_fail (object->complex != NULL, G_MAXDOUBLE);
@@ -1560,7 +1562,33 @@ double o_complex_shortest_distance (OBJECT *object, int x, int y,
        iter != NULL; iter= g_list_next (iter)) {
     OBJECT *obj = iter->data;
 
-    distance = o_shortest_distance_full (obj, x, y, TRUE);
+    /* Collect the bounds of any lines and arcs in the symbol */
+    if ((obj->type == OBJ_LINE || obj->type == OBJ_ARC) &&
+        obj->w_bounds_valid) {
+
+      if (found_line_bounds) {
+        line_bounds.lower_x = min (line_bounds.lower_x, obj->w_left);
+        line_bounds.lower_y = min (line_bounds.lower_y, obj->w_top);
+        line_bounds.upper_x = max (line_bounds.upper_x, obj->w_right);
+        line_bounds.upper_y = max (line_bounds.upper_y, obj->w_bottom);
+      } else {
+        line_bounds.lower_x = obj->w_left;
+        line_bounds.lower_y = obj->w_top;
+        line_bounds.upper_x = obj->w_right;
+        line_bounds.upper_y = obj->w_bottom;
+        found_line_bounds = 1;
+      }
+    } else {
+      distance = o_shortest_distance_full (obj, x, y, TRUE);
+      shortest_distance = min (shortest_distance, distance);
+    }
+
+    if (shortest_distance == 0.0)
+      return shortest_distance;
+  }
+
+  if (found_line_bounds) {
+    distance = m_box_shortest_distance (&line_bounds, x, y, TRUE);
     shortest_distance = min (shortest_distance, distance);
   }
 
