@@ -108,9 +108,8 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
     connected_objects = s_conn_return_others (connected_objects, o_current);
   }
 
-  o_cue_redraw_all (w_current, temp_dest_list, TRUE);
-  o_cue_undraw_list (w_current, connected_objects);
-  o_cue_draw_list (w_current, connected_objects);
+  o_cue_invalidate_glist (w_current, temp_dest_list);
+  o_cue_invalidate_glist (w_current, connected_objects);
   g_list_free (connected_objects);
   connected_objects = NULL;
 

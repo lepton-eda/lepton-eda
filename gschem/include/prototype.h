@@ -550,13 +550,11 @@ void o_copy_multiple_end(GSCHEM_TOPLEVEL *w_current);
 /* o_cue.c */
 void o_cue_redraw_all(GSCHEM_TOPLEVEL *w_current, GList *list, gboolean draw_selected);
 void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichone);
-void o_cue_erase_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichone);
 void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_cue_draw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
-void o_cue_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
-void o_cue_undraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_cue_draw_list(GSCHEM_TOPLEVEL *w_current, GList *object_list);
-void o_cue_undraw_list(GSCHEM_TOPLEVEL *w_current, GList *object_list);
+void o_cue_invalidate(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
+void o_cue_invalidate_glist(GSCHEM_TOPLEVEL *w_current, GList *obj_list);
 /* o_delete.c */
 void o_delete(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_delete_selected(GSCHEM_TOPLEVEL *w_current);

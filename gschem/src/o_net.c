@@ -717,9 +717,8 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
       o_invalidate (w_current, new_net);
 
-      o_cue_undraw_list (w_current, prev_conn_objects);
-      o_cue_draw_list (w_current, prev_conn_objects);
-      o_cue_draw_single(w_current, new_net);
+      o_cue_invalidate_glist (w_current, prev_conn_objects);
+      o_cue_invalidate (w_current, new_net);
 
       g_list_free (prev_conn_objects);
       prev_conn_objects = NULL;
@@ -768,9 +767,8 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
       o_invalidate (w_current, new_net);
 
-      o_cue_undraw_list (w_current, prev_conn_objects);
-      o_cue_draw_list (w_current, prev_conn_objects);
-      o_cue_draw_single(w_current, new_net);
+      o_cue_invalidate_glist (w_current, prev_conn_objects);
+      o_cue_invalidate (w_current, new_net);
 
       g_list_free (prev_conn_objects);
       prev_conn_objects = NULL;

@@ -202,7 +202,7 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
   }
 
   if (!toplevel->DONT_REDRAW) {
-    o_cue_undraw_list (w_current, list);
+    o_cue_invalidate_glist (w_current, list);
     o_invalidate_glist (w_current, list);
   }
 
@@ -232,11 +232,9 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
 
   if (!toplevel->DONT_REDRAW) {
     o_invalidate_glist (w_current, list);
-    o_cue_undraw_list (w_current, prev_conn_objects);
-    o_cue_draw_list (w_current, prev_conn_objects);
-    o_cue_undraw_list(w_current, connected_objects);
-    o_cue_draw_list(w_current, connected_objects);
-    o_cue_draw_list(w_current, list);
+    o_cue_invalidate_glist (w_current, prev_conn_objects);
+    o_cue_invalidate_glist (w_current, connected_objects);
+    o_cue_invalidate_glist (w_current, list);
   }
 
   g_list_free (prev_conn_objects);
@@ -307,7 +305,7 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
     return;
   }
 
-  o_cue_undraw_list (w_current, list);
+  o_cue_invalidate_glist (w_current, list);
   o_invalidate_glist (w_current, list);
 
   /* Find connected objects, removing each object in turn from the
@@ -335,11 +333,9 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
   }
 
   o_invalidate_glist (w_current, list);
-  o_cue_undraw_list (w_current, prev_conn_objects);
-  o_cue_draw_list (w_current, prev_conn_objects);
-  o_cue_undraw_list(w_current, connected_objects);
-  o_cue_draw_list(w_current, connected_objects);
-  o_cue_draw_list(w_current, list);
+  o_cue_invalidate_glist (w_current, prev_conn_objects);
+  o_cue_invalidate_glist (w_current, connected_objects);
+  o_cue_invalidate_glist (w_current, list);
 
   g_list_free (prev_conn_objects);
   prev_conn_objects = NULL;
