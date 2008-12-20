@@ -501,13 +501,16 @@ void o_move_end_rubberband (GSCHEM_TOPLEVEL *w_current,
                             GList** connected_objects)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList *s_iter;
+  GList *s_iter, *s_iter_next;
 
   for (s_iter = toplevel->page_current->stretch_list;
-       s_iter != NULL; s_iter = g_list_next (s_iter)) {
+       s_iter != NULL; s_iter = s_iter_next) {
     STRETCH *s_current = s_iter->data;
     OBJECT *object = s_current->object;
     int whichone = s_current->whichone;
+
+    /* Store this now, since we may delete the current item */
+    s_iter_next = g_list_next (s_iter);
 
     if (object->type == OBJ_NET ||
         object->type == OBJ_BUS) {
@@ -521,6 +524,8 @@ void o_move_end_rubberband (GSCHEM_TOPLEVEL *w_current,
       object->line->y[whichone] += w_dy;
 
       if (o_move_zero_length (object)) {
+        toplevel->page_current->stretch_list =
+          s_stretch_remove (toplevel->page_current->stretch_list, object);
         o_delete (w_current, object);
         continue;
       }
