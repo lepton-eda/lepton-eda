@@ -43,6 +43,9 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
   TOPLEVEL *toplevel = w_current->toplevel;
   gboolean draw_selected = TRUE;
   int redraw_state = toplevel->DONT_REDRAW;
+  int grip_half_size;
+  int cue_half_size;
+  int bloat;
   int i;
   GList *obj_list;
   GList *iter;
@@ -58,6 +61,10 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (toplevel->page_current != NULL);
 
+  grip_half_size = o_grips_size (w_current);
+  cue_half_size = SCREENabs (toplevel, CUE_BOX_SIZE);
+  bloat = MAX (grip_half_size, cue_half_size);
+
   world_rects = g_new (BOX, n_rectangles);
 
   for (i = 0; i < n_rectangles; i++) {
@@ -68,9 +75,9 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
     width = rectangles[i].width;
     height = rectangles[i].height;
 
-    SCREENtoWORLD (toplevel, x, y + height,
+    SCREENtoWORLD (toplevel, x - bloat, y + height + bloat,
                    &world_rects[i].lower_x, &world_rects[i].lower_y);
-    SCREENtoWORLD (toplevel, x + width, y,
+    SCREENtoWORLD (toplevel, x + width + bloat, y - bloat,
                    &world_rects[i].upper_x, &world_rects[i].upper_y);
   }
 
@@ -635,6 +642,9 @@ void o_glist_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, GList *list)
  *  to expand the invalidated region if anti-aliased drawing is ever
  *  used.
  *
+ *  A further, larger margin is added to account for invalidating the
+ *  size occupied by an object's grips.
+ *
  *  If the GSCHEM_TOPLEVEL in question is not rendering to a GDK_WINDOW,
  *  (e.g. image export), this function call is a no-op. A test is used:
  *  GDK_IS_WINDOW(), which should be safe since in either case,
@@ -651,16 +661,23 @@ void o_invalidate_rect (GSCHEM_TOPLEVEL *w_current,
                         int x1, int y1, int x2, int y2)
 {
   GdkRectangle rect;
+  int grip_half_size;
+  int cue_half_size;
+  int bloat;
 
   /* BUG: We get called when rendering an image, and w_current->window
    *      is a GdkPixmap. Ensure we only invalidate GdkWindows. */
   if (!GDK_IS_WINDOW( w_current->window ))
     return;
 
-  rect.x = MIN(x1, x2) - INVALIDATE_MARGIN;
-  rect.y = MIN(y1, y2) - INVALIDATE_MARGIN;
-  rect.width = 1 + abs( x1 - x2 ) + 2 * INVALIDATE_MARGIN;
-  rect.height = 1 + abs( y1 - y2 ) + 2 * INVALIDATE_MARGIN;
+  grip_half_size = o_grips_size (w_current);
+  cue_half_size = SCREENabs (w_current->toplevel, CUE_BOX_SIZE);
+  bloat = MAX (grip_half_size, cue_half_size) + INVALIDATE_MARGIN;
+
+  rect.x = MIN(x1, x2) - bloat;
+  rect.y = MIN(y1, y2) - bloat;
+  rect.width = 1 + abs( x1 - x2 ) + 2 * bloat;
+  rect.height = 1 + abs( y1 - y2 ) + 2 * bloat;
   gdk_window_invalidate_rect( w_current->window, &rect, FALSE );
 }
 
