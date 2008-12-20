@@ -259,7 +259,7 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
                       w_current->second_wx, w_current->second_wy, 0);
   s_page_append (toplevel->page_current, new_obj);
 
-  o_bus_draw(w_current, new_obj);
+  o_redraw_single (w_current, new_obj);
 
   /* connect the new bus to the other busses */
   prev_conn_objects = s_conn_return_others (prev_conn_objects, new_obj);

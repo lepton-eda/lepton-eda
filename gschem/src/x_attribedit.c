@@ -239,7 +239,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
 	new->text->x = wx;
 	new->text->y = wy;
 	o_text_recreate(toplevel, new);
-	o_text_draw(w_current, new);
+	o_redraw_single (w_current, new);
 	toplevel->page_current->CHANGED = 1;
 	o_undo_savestate(w_current, UNDO_ALL);
       }

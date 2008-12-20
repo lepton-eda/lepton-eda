@@ -409,7 +409,7 @@ void o_edit_show_hidden_lowlevel (GSCHEM_TOPLEVEL *w_current, GList *o_list)
           o_text_recreate(toplevel, o_current);
         }
         o_recalc_single_object(toplevel, o_current);
-        o_text_draw(w_current, o_current);
+        o_redraw_single (w_current, o_current);
       } else {
         /* object is hidden and we are now NOT drawing it, so */
         /* get rid of the extra primitive data */
@@ -479,7 +479,7 @@ void o_edit_make_visible (GSCHEM_TOPLEVEL *w_current, GList *o_list)
           o_text_recreate(toplevel, o_current);
         }
 
-        o_text_draw(w_current, o_current);
+        o_redraw_single (w_current, o_current);
 
         toplevel->page_current->CHANGED = 1;
       }
@@ -661,7 +661,7 @@ void o_edit_show_specific_text (GSCHEM_TOPLEVEL *w_current, GList * o_list,
           if (o_current->text->prim_objs == NULL) {
             o_text_recreate(toplevel, o_current);
           }
-          o_text_draw(w_current, o_current);
+          o_redraw_single (w_current, o_current);
           toplevel->page_current->CHANGED = 1;
         }
       }

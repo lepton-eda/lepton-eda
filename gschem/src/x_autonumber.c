@@ -575,7 +575,7 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
   /* redraw the text */
   o_erase_single(autotext->w_current, o_current);
   o_text_recreate(autotext->w_current->toplevel, o_current);
-  o_text_draw(autotext->w_current, o_current);
+  o_redraw_single (autotext->w_current, o_current);
 
   /* remove the slot attribute if slotting is active */
   if (autotext->slotting) {
@@ -619,7 +619,7 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
       g_free (slot_str);
       o_erase_single(autotext->w_current, o_slot);
       o_text_recreate(autotext->w_current->toplevel, o_slot);
-      o_text_draw(autotext->w_current, o_slot);
+      o_redraw_single (autotext->w_current, o_slot);
     }
     else {
       /* create a new attribute and attach it */
@@ -639,7 +639,7 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
   /* redraw the text */
   o_erase_single(autotext->w_current, o_current);
   o_text_recreate(autotext->w_current->toplevel, o_current);
-  o_text_draw(autotext->w_current, o_current);
+  o_redraw_single (autotext->w_current, o_current);
   autotext->w_current->toplevel->page_current->CHANGED = 1;
 }
 

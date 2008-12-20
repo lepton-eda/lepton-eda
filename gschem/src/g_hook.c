@@ -364,7 +364,7 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_coloridx,
       }
       o_text_recreate(toplevel, object);
       if (!toplevel->DONT_REDRAW) {
-	o_text_draw(w_current, object);
+        o_redraw_single (w_current, object);
       }
     }
   }

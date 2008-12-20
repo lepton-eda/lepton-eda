@@ -1312,7 +1312,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
           o_complex_promote_attribs (toplevel, new_obj,
                                      &toplevel->page_current->object_list);
 
-          o_complex_draw (w_current, new_obj);
+          o_redraw_single (w_current, new_obj);
         } else {
           s_log_message(_("Bus ripper symbol [%s] was not found in any component library\n"),
                         toplevel->bus_ripper_symname);

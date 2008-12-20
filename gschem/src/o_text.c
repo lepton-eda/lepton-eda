@@ -355,7 +355,7 @@ void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int len, int text
 	  }
         }
         o_text_recreate(toplevel, object);
-        o_text_draw(w_current, object);
+        o_redraw_single (w_current, object);
       } 
     }
     
@@ -395,7 +395,7 @@ void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string,
   object->visibility = visibility;
   object->show_name_value = show;
   o_text_recreate(toplevel, object);
-  o_text_draw(w_current, object);
+  o_redraw_single (w_current, object);
 
   /* handle slot= attribute, it's a special case */
   if (g_ascii_strncasecmp (string, "slot=", 5) == 0) {

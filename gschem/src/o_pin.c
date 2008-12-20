@@ -209,7 +209,7 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   o_cue_draw_list (w_current, prev_conn_objects);
   g_list_free (prev_conn_objects);
   o_cue_draw_single(w_current, o_current_pin); 
-  o_pin_draw(w_current, o_current_pin);
+  o_redraw_single (w_current, o_current_pin);
 
   toplevel->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);

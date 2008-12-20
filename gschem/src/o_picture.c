@@ -617,7 +617,7 @@ void o_picture_exchange (GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf,
         object->picture->ratio = (double)gdk_pixbuf_get_width(pixbuf) /
                                          gdk_pixbuf_get_height(pixbuf);
         /* Draw new picture */
-        o_picture_draw(w_current, object);
+        o_redraw_single (w_current, object);
       }
     }
     list = g_list_next(list);

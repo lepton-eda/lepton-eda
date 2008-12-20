@@ -103,7 +103,7 @@ void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 
     if (toplevel->show_hidden_text) {
       /* draw text so that little I is drawn */
-      o_text_draw(w_current, object);
+      o_redraw_single (w_current, object);
     }
 
   } else {
@@ -121,7 +121,7 @@ void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
       o_text_recreate(toplevel, object);
     }
 
-    o_text_draw(w_current, object);
+    o_redraw_single (w_current, object);
   }
 
   toplevel->page_current->CHANGED = 1;
@@ -147,7 +147,7 @@ void o_attrib_toggle_show_name_value(GSCHEM_TOPLEVEL *w_current,
   o_erase_single(w_current, object);
   object->show_name_value = show_name_value;
   o_text_recreate(toplevel, object);
-  o_text_draw(w_current, object);
+  o_redraw_single (w_current, object);
 
   toplevel->page_current->CHANGED = 1;
 }
@@ -252,7 +252,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
   o_selection_add (toplevel->page_current->selection_list, new_obj);
 
   o_erase_single (w_current, new_obj);
-  o_text_draw (w_current, new_obj);
+  o_redraw_single (w_current, new_obj);
 
   /* handle slot= attribute, it's a special case */
   if (g_ascii_strncasecmp (text_string, "slot=", 5) == 0) {

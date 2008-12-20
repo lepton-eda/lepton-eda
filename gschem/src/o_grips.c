@@ -1373,7 +1373,7 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
     o_erase_single(w_current, o_current);
     o_cue_undraw(w_current, o_current);
 
-    o_net_draw(w_current, o_current);
+    o_redraw_single (w_current, o_current);
     o_cue_draw_single(w_current, o_current);
   }
 
