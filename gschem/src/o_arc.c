@@ -174,9 +174,7 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
   if (o_current->draw_grips && w_current->draw_grips == TRUE) {
     if(!o_current->selected) {
-      /* object is no more selected, erase the grips */
       o_current->draw_grips = FALSE;
-      o_arc_erase_grips(w_current, o_current);
     } else {
       /* object is selected, draw the grips on the arc */
       o_arc_draw_grips(w_current, o_current);
@@ -1128,50 +1126,5 @@ void o_arc_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
   /* draw the grip at the end_angle end of the arc */
   o_grips_draw(w_current, x2, y2);
-
-}
-
-/*! \brief Erase grip marks from arc.
- *  \par Function Description
- *  This function erases the three grips displayed on the <B>o_current</B>
- *  arc object. These grips are on the center of the arc and on each end
- *  of the arc.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Arc OBJECT to remove grip marks from.
- */
-void o_arc_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int radius, x, y, start_angle, end_angle;
-  int x1, y1, x2, y2;
-
-  if (w_current->draw_grips == FALSE)
-    return;
-
-  /*
-   * The coordinates of the three grips are determined by the parameters
-   * of the arc. The grips are centered at (<B>x</B>,<B>y</B>), (<B>x1</B>,<B>y1</B>)
-   * and (<B>x2</B>,<B>y2</B>).
-   */
-
-  WORLDtoSCREEN( toplevel, o_current->arc->x, o_current->arc->y, &x, &y );
-  radius      = SCREENabs( toplevel, o_current->arc->width / 2 );
-  start_angle = o_current->arc->start_angle;
-  end_angle   = o_current->arc->end_angle;
-
-  x1 = x + radius * cos(((double) start_angle) * M_PI / 180);
-  y1 = y - radius * sin(((double) start_angle) * M_PI / 180);
-  x2 = x + radius * cos(((double) start_angle + end_angle) * M_PI / 180);
-  y2 = y - radius * sin(((double) start_angle + end_angle) * M_PI / 180);
-
-  /* erase the grip at the center */
-  o_grips_erase(w_current,  x,  y);
-
-  /* erase the grip at the start_angle end of the arc */
-  o_grips_erase(w_current, x1, y1);
-
-  /* erase the grip at the end_angle end of the arc */
-  o_grips_erase(w_current, x2, y2);
 
 }

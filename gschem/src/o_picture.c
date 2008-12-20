@@ -406,11 +406,7 @@ void o_picture_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   /* Grip specific stuff */
   if ((o_current->draw_grips == TRUE) && (w_current->draw_grips == TRUE)) {
       if (!o_current->selected) {
-	/* object is no more selected, erase the grips */
 	o_current->draw_grips = FALSE;
-	if (toplevel->DONT_REDRAW == 0) {
-	  o_picture_erase_grips(w_current, o_current); 
-	}
       } else {
 	/* object is selected, draw the grips on the picture */
 	if (toplevel->DONT_REDRAW == 0) {
@@ -462,50 +458,6 @@ void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                       s_upper_x, s_upper_y,
                       abs(s_upper_x - s_lower_x),
                       abs(s_upper_y - s_lower_y));
-}
-
-/*! \brief Erase grip marks from box.
- *  \par Function Description
- *  This function erases the four grips displayed on the <B>*o_current</B>
- *  picture object. These grips are on each of the corner.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Picture OBJECT to erase grip marks from.
- */
-void o_picture_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
-
-#if DEBUG
-  printf("o_picture_erase_grips called\n");
-#endif
-  if (w_current->draw_grips == FALSE)
-	  return;
-
-  WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->upper_y,
-                 &s_upper_x, &s_upper_y );
-  WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->lower_y,
-                 &s_lower_x, &s_lower_y );
-  
-  /* grip on upper left corner (whichone = PICTURE_UPPER_LEFT) */
-  o_grips_erase(w_current, s_upper_x, s_upper_y);
-  
-  /* grip on upper right corner (whichone = PICTURE_UPPER_RIGHT) */
-  o_grips_erase(w_current, s_lower_x, s_upper_y);
-  
-  /* grip on lower left corner (whichone = PICTURE_LOWER_LEFT) */
-  o_grips_erase(w_current, s_upper_x, s_lower_y);
-  
-  /* grip on lower right corner (whichone = PICTURE_LOWER_RIGHT) */
-  o_grips_erase(w_current, s_lower_x, s_lower_y);
-  
-  /* Box surrounding the picture */
-  gdk_draw_rectangle (w_current->drawable, w_current->gc, FALSE,
-                      s_upper_x, s_upper_y,
-                      abs(s_upper_x - s_lower_x),
-                      abs(s_upper_y - s_lower_y));
-  
 }
 
 

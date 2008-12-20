@@ -605,9 +605,7 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
   if (o_current->draw_grips && w_current->draw_grips == TRUE) {
     if (!o_current->selected) {
-      /* object is no more selected, erase the grips */
       o_current->draw_grips = FALSE;
-      o_path_erase_grips(w_current, o_current);
     } else {
       /* object is selected, draw the grips */
       o_path_draw_grips(w_current, o_current);
@@ -899,50 +897,4 @@ void o_path_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
       break;
     }
   }
-}
-
-
-/*! \brief Erase grip marks from path.
- *  \par Function Description
- *  This function erases the grips on the path object <B>o_current</B>.
- *
- *  A path has a grip at each end.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Line OBJECT to erase grip marks from.
- */
-void o_path_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  PATH_SECTION *section;
-  int i;
-  int x, y;
-
-  if (w_current->draw_grips == FALSE)
-    return;
-
-  for (i = 0; i <  o_current->path->num_sections; i++) {
-    section = &o_current->path->sections[i];
-
-    switch (section->code) {
-    case PATH_CURVETO:
-      /* Two control point grips */
-      WORLDtoSCREEN (toplevel, section->x1, section->y1, &x, &y);
-      o_grips_erase (w_current, x, y);
-      WORLDtoSCREEN (toplevel, section->x2, section->y2, &x, &y);
-      o_grips_erase (w_current, x, y);
-      /* Fall through */
-    case PATH_MOVETO:
-    case PATH_MOVETO_OPEN:
-    case PATH_LINETO:
-      /* Destination point grip */
-      WORLDtoSCREEN (toplevel, section->x3, section->y3, &x, &y);
-      o_grips_erase (w_current, x, y);
-      break;
-    case PATH_END:
-      break;
-    }
-  }
-
-  o_path_xor_control_lines (w_current, o_current);
 }

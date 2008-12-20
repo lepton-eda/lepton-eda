@@ -167,9 +167,7 @@ void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
   if (o_current->draw_grips && w_current->draw_grips == TRUE) {
     if (!o_current->selected) {
-      /* object is no more selected, erase the grips */
       o_current->draw_grips = FALSE;
-      o_line_erase_grips(w_current, o_current);
     } else {
       /* object is selected, draw the grips */
       o_line_draw_grips(w_current, o_current);
@@ -920,32 +918,4 @@ void o_line_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   
   /* draw the grip on line end 2 */
   o_grips_draw(w_current, x[LINE_END2], y[LINE_END2]);
-}
-
-/*! \brief Erase grip marks from line.
- *  \par Function Description
- *  This function erases the grips on the line object <B>o_current</B>.
- *
- *  A line has a grip at each end.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Line OBJECT to erase grip marks from.
- */
-void o_line_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int x[2], y[2];
-
-  if (w_current->draw_grips == FALSE)
-    return;
-  
-  WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &x[0], &y[0] );
-  WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &x[1], &y[1] );
-  
-  /* erase the grip on line end 1 */
-  o_grips_erase(w_current, x[LINE_END1], y[LINE_END1]);
-  
-  /* erase the grip on line end 2 */
-  o_grips_erase(w_current, x[LINE_END2], y[LINE_END2]);
-  
 }

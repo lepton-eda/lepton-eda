@@ -473,7 +473,6 @@ void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int radius, int start_angle, int end
 void o_arc_motion(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone);
 void o_arc_rubberarc_xor(GSCHEM_TOPLEVEL *w_current);
 void o_arc_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_arc_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 /* o_attrib.c */
 void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection, OBJECT *selected);
 void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
@@ -491,7 +490,6 @@ void o_invalidate_rect(GSCHEM_TOPLEVEL *w_current, int x1, int y1, int x2, int y
 void o_invalidate_all(GSCHEM_TOPLEVEL *w_current);
 void o_invalidate(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_invalidate_glist(GSCHEM_TOPLEVEL *w_current, GList *list);
-void o_erase_grips (GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 /* o_box.c */
 void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_box_draw_solid(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);
@@ -510,7 +508,6 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_box_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_box_rubberbox_xor(GSCHEM_TOPLEVEL *w_current);
 void o_box_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_box_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 /* o_buffer.c */
 void o_buffer_copy(GSCHEM_TOPLEVEL *w_current, int buf_num);
 void o_buffer_cut(GSCHEM_TOPLEVEL *w_current, int buf_num);
@@ -539,7 +536,6 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_circle_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_circle_rubbercircle_xor(GSCHEM_TOPLEVEL *w_current);
 void o_circle_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_circle_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 /* o_complex.c */
 void o_complex_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_complex_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *complex);
@@ -596,7 +592,6 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
 void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 int o_grips_size(GSCHEM_TOPLEVEL *w_current);
 void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_grips_erase(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_grips_rubbergrip_xor(GSCHEM_TOPLEVEL *w_current);
 /* o_line.c */
 void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
@@ -612,7 +607,6 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_line_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_line_rubberline_xor(GSCHEM_TOPLEVEL *w_current);
 void o_line_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_line_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 /* o_misc.c */
 void o_edit(GSCHEM_TOPLEVEL *w_current, GList *list);
 void o_lock(GSCHEM_TOPLEVEL *w_current);
@@ -664,7 +658,6 @@ void o_picture_eraserubber(GSCHEM_TOPLEVEL *w_current);
 void o_picture_rubberbox_xor(GSCHEM_TOPLEVEL *w_current);
 void o_picture_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_picture_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_picture_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_picture_exchange(GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf, const gchar *filename);
 void picture_change_filename_dialog (GSCHEM_TOPLEVEL *w_current);
@@ -679,7 +672,6 @@ void o_path_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_path_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_path_rubberpath_xor(GSCHEM_TOPLEVEL *w_current);
 void o_path_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_path_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 
 /* o_pin.c */
 void o_pin_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);

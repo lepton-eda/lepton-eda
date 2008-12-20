@@ -1628,29 +1628,6 @@ void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int x, int y)
   }
 }
 
-/*! \brief Erase grip centered at <B>x</B>,<B>y</B>
- *  \par Function Description
- *  This function erases a grip centered at (<B>x</B>,<B>y</B>).
- *  The size of the grip depends on the current zoom factor.
- *
- *  The grip is erased by drawing with the background color over the
- *  visible grip.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Center x screen coordinate for drawing grip.
- *  \param [in] y          Center y screen coordinate for drawing grip.
- */
-void o_grips_erase(GSCHEM_TOPLEVEL *w_current, int x, int y)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  /* set overriding color */
-  toplevel->override_color = toplevel->background_color;
-  /* draw a grip with backgound color : erase grip */
-  o_grips_draw(w_current, x, y);
-  /* return to default */
-  toplevel->override_color = -1;
-}
-
 
 /*! \brief Draw objects being grip maniuplated from GSCHEM_TOPLEVEL object.
  *

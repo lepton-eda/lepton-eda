@@ -272,9 +272,7 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
   if ((o_current->draw_grips == TRUE) && (w_current->draw_grips == TRUE)) {
     if (!o_current->selected) {
-      /* object is no more selected, erase the grips */
       o_current->draw_grips = FALSE;
-      o_box_erase_grips(w_current, o_current);
     } else {
       /* object is selected, draw the grips on the box */
       o_box_draw_grips(w_current, o_current);
@@ -969,39 +967,3 @@ void o_box_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   o_grips_draw(w_current, s_lower_x, s_lower_y);
 
 }
-
-/*! \brief Erase grip marks from box.
- *  \par Function Description
- *  This function erases the four grips displayed on the <B>*o_current</B>
- *  box object. These grips are on each of the corner.
- * 
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Box OBJECT to erase grip marks from.
- */
-void o_box_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
-
-  if (w_current->draw_grips == FALSE)
-	  return;
-  
-  WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->upper_y,
-                 &s_upper_x, &s_upper_y );
-  WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->lower_y,
-                 &s_lower_x, &s_lower_y );
-
-  /* grip on upper left corner (whichone = BOX_UPPER_LEFT) */
-  o_grips_erase(w_current, s_upper_x, s_upper_y);
-
-  /* grip on upper right corner (whichone = BOX_UPPER_RIGHT) */
-  o_grips_erase(w_current, s_lower_x, s_upper_y);
-  
-  /* grip on lower left corner (whichone = BOX_LOWER_LEFT) */
-  o_grips_erase(w_current, s_upper_x, s_lower_y);
-
-  /* grip on lower right corner (whichone = BOX_LOWER_RIGHT) */
-  o_grips_erase(w_current, s_lower_x, s_lower_y);
-
-}
-

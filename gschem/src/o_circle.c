@@ -261,9 +261,7 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
   if (o_current->draw_grips && w_current->draw_grips == TRUE) {
     if (!o_current->selected) {
-      /* object is no more selected, erase the grips */
       o_current->draw_grips = FALSE;
-      o_circle_erase_grips(w_current, o_current);
     } else {
       /* object is selected, draw the grips */
       o_circle_draw_grips(w_current, o_current);
@@ -695,34 +693,5 @@ void o_circle_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   
   /* grip on lower right corner of the square */
   o_grips_draw(w_current, x, y);
-
-}
-
-/*! \brief Erase grip marks from circle.
- *  \par Function Description
- *  The function erases the grips displayed on a circle object.
- *
- *  A circle has a single grip on the lower right corner of the square it
- *  is inscribed in.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Circle OBJECT to erase grip marks from.
- */
-void o_circle_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int x, y;
-
-  if (w_current->draw_grips == FALSE)
-	  return;
-
-  /* coords of the lower right corner of square */
-  WORLDtoSCREEN( toplevel,
-                 o_current->circle->center_x + o_current->circle->radius,
-                 o_current->circle->center_y - o_current->circle->radius,
-                 &x, &y );
-  
-  /* grip on lower right corner of the square */
-  o_grips_erase(w_current, x, y);
 
 }
