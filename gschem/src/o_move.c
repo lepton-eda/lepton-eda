@@ -54,13 +54,14 @@ void o_move_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
     if (w_current->netconn_rubberband) {
       o_move_prep_rubberband(w_current);
 
-      /* Set the dont_redraw flag on rubberbanded objects.
-       * This ensures that they are not drawn (in their
-       * un-stretched position) during screen updates. */
+      /* Set the dont_redraw flag on rubberbanded objects and invalidate them.
+       * This ensures that they are not drawn (in their un-stretched position)
+       * during screen updates. */
       for (s_iter = toplevel->page_current->stretch_list;
            s_iter != NULL; s_iter = g_list_next (s_iter)) {
         STRETCH *stretch = s_iter->data;
         stretch->object->dont_redraw = TRUE;
+        o_invalidate (w_current, stretch->object);
       }
     }
 
@@ -411,8 +412,6 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
         s_stretch_add (toplevel->page_current->stretch_list,
                        c_current->other_object,
                        c_current, whichone);
-
-      o_invalidate (w_current, c_current->other_object);
     }
   }
 
