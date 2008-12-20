@@ -483,9 +483,6 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current, const char *text_string,
 void o_redraw_rects(GSCHEM_TOPLEVEL *w_current, GdkRectangle *rectangles, int n_rectangles);
 void o_redraw(GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_selected);
 void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_draw_list(GSCHEM_TOPLEVEL *w_current, GList *list);
-void o_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
-void o_erase_list(GSCHEM_TOPLEVEL *w_current, GList *list);
 int o_erase_rubber(GSCHEM_TOPLEVEL *w_current);
 int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current);
 void o_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
