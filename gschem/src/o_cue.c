@@ -377,33 +377,3 @@ void o_cue_draw_list(GSCHEM_TOPLEVEL *w_current, GList *object_list)
     ol_current = g_list_next(ol_current);
   }
 }
-
-
-/*! \brief Invalidate the area where an OBJECT's cues would be drawn
- *
- *  \par Function Description
- *  NOP: At present, cue invalidation is accounted for by a bloat applied
- *       when invalidating the world bounds of an object.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL
- *  \param [in] object     The OBJECT whos cues are being invalidated
- */
-void o_cue_invalidate (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
-{
-  /* NOP */
-}
-
-
-/*! \brief Invalidate the area where cues would be drawn for a GList of OBJECTS
- *
- *  \par Function Description
- *  NOP: At present, cue invalidation is accounted for by a bloat applied
- *       when invalidating the world bounds of object lists.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL
- *  \param [in] object     The OBJECT whos cues are being invalidated
- */
-void o_cue_invalidate_glist (GSCHEM_TOPLEVEL *w_current, GList *obj_list)
-{
-  /* NOP */
-}

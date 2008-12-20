@@ -49,7 +49,6 @@ void o_delete (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
     object->type == OBJ_PIN || object->type == OBJ_COMPLEX;
   
   if (do_conn) {
-    o_cue_invalidate (w_current, object);
     prev_conn_objects = s_conn_return_others (prev_conn_objects, object);
 
     /* Check for complex which self-connects, e.g. coincident pins.
@@ -63,7 +62,7 @@ void o_delete (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
           prev_conn_objects = g_list_delete_link (prev_conn_objects, iter);
       }
     }
-    o_cue_invalidate_glist (w_current, prev_conn_objects);
+    o_invalidate_glist (w_current, prev_conn_objects);
     g_list_free (prev_conn_objects);
   }
   o_invalidate (w_current, object);

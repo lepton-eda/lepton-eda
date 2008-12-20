@@ -198,9 +198,8 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   /* look for connected objects */
   prev_conn_objects = s_conn_return_others(prev_conn_objects, o_current_pin);
-  o_cue_invalidate_glist (w_current, prev_conn_objects);
+  o_invalidate_glist (w_current, prev_conn_objects);
   g_list_free (prev_conn_objects);
-  o_cue_invalidate (w_current, o_current_pin);
   o_invalidate (w_current, o_current_pin);
 
   toplevel->page_current->CHANGED=1;

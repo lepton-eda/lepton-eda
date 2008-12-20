@@ -1354,7 +1354,6 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   }
 
   /* remove the old net */
-  o_cue_invalidate (w_current, o_current);
   o_invalidate (w_current, o_current);
 
   prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current);
@@ -1368,17 +1367,10 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   connected_objects = s_conn_return_others(connected_objects,
 					   o_current);
   /* add bus rippers if necessary */
-  if (o_net_add_busrippers(w_current, o_current, connected_objects)) {
-
-    o_invalidate (w_current, o_current);
-    o_cue_invalidate(w_current, o_current);
-
-    o_invalidate (w_current, o_current);
-    o_cue_invalidate(w_current, o_current);
-  }
+  o_net_add_busrippers(w_current, o_current, connected_objects);
 
   /* draw the object objects */
-  o_cue_invalidate_glist (w_current, prev_conn_objects);
+  o_invalidate_glist (w_current, prev_conn_objects);
   
   o_invalidate (w_current, o_current);
   
@@ -1389,9 +1381,7 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   connected_objects = s_conn_return_others(connected_objects,
 					   o_current);
   
-  o_cue_invalidate_glist (w_current, connected_objects);
-  /* finally draw this objects cues */
-  o_cue_invalidate (w_current, o_current);
+  o_invalidate_glist (w_current, connected_objects);
 
   g_list_free (prev_conn_objects);
   prev_conn_objects = NULL;
@@ -1434,7 +1424,6 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   }
 
   /* erase old pin object */
-  o_cue_invalidate (w_current, o_current);
   o_invalidate (w_current, o_current);
 
   prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current);
@@ -1446,15 +1435,12 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_invalidate (w_current, o_current);
 
   /* redraw the object connections */
-  o_cue_invalidate_glist (w_current, prev_conn_objects);
+  o_invalidate_glist (w_current, prev_conn_objects);
 
   /* get the other connected objects and redraw them */
   connected_objects = s_conn_return_others(connected_objects,
 					   o_current);
-  o_cue_invalidate_glist (w_current, connected_objects);
-
-  /* finally draw this objects cues */
-  o_cue_invalidate (w_current, o_current);
+  o_invalidate_glist (w_current, connected_objects);
 
   /* free the two lists */
   g_list_free (prev_conn_objects);
@@ -1498,7 +1484,6 @@ void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   }
 
   /* erase the old bus and it's cues */
-  o_cue_invalidate (w_current, o_current);
   o_invalidate (w_current, o_current);
 
   prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current);
@@ -1510,15 +1495,12 @@ void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_invalidate (w_current, o_current);
 
   /* redraw the connected objects */
-  o_cue_invalidate_glist (w_current, prev_conn_objects);
+  o_invalidate_glist (w_current, prev_conn_objects);
 
   /* get the other connected objects and redraw them */
   connected_objects = s_conn_return_others(connected_objects,
 					   o_current);
-  o_cue_invalidate_glist (w_current, connected_objects);
-
-  /* finally draw this objects cues */
-  o_cue_invalidate (w_current, o_current);
+  o_invalidate_glist (w_current, connected_objects);
 
   /* free the two lists */
   g_list_free (prev_conn_objects);

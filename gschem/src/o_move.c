@@ -239,14 +239,13 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
   /* Draw the objects that were moved (and connected/disconnected objects) */
   o_invalidate_glist (w_current,
     geda_list_get_glist (toplevel->page_current->selection_list));
-  o_cue_invalidate_glist (w_current, prev_conn_objects);
-  o_cue_invalidate_glist (w_current, connected_objects);
+  o_invalidate_glist (w_current, prev_conn_objects);
+  o_invalidate_glist (w_current, connected_objects);
 
   /* Draw the connected nets/buses that were also changed */
   o_invalidate_glist (w_current, rubbernet_objects);
-  o_cue_invalidate_glist (w_current, rubbernet_objects);
-  o_cue_invalidate_glist (w_current, rubbernet_prev_conn_objects);
-  o_cue_invalidate_glist (w_current, rubbernet_connected_objects);
+  o_invalidate_glist (w_current, rubbernet_prev_conn_objects);
+  o_invalidate_glist (w_current, rubbernet_connected_objects);
  
   toplevel->page_current->CHANGED = 1;
   o_undo_savestate(w_current, UNDO_ALL);
