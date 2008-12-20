@@ -35,6 +35,51 @@
 #include <dmalloc.h>
 #endif
 
+/*! Tracks which OBJECTs have been visited so far, and how many times.
+ *
+ * The keys of the table are the OBJECT pointers, and the visit count
+ * is stored directly in the value pointers.
+ */
+static GHashTable *visit_table = NULL;
+
+/*! Trivial function used when clearing #visit_table. */
+static gboolean
+returns_true (gpointer key, gpointer value, gpointer user_data)
+{
+  return TRUE;
+}
+
+/*! Retrieve the current visit count for a particular OBJECT. */
+static inline gint
+is_visited(OBJECT *obj)
+{
+  gpointer val;
+  gpointer orig_key;
+  gboolean exist = g_hash_table_lookup_extended (visit_table,
+                                                 obj,
+                                                 &orig_key,
+                                                 &val);
+  return exist ? GPOINTER_TO_INT(val) : 0;
+}
+
+/*! Increment the current visit count for a particular OBJECT. */
+static inline gint
+visit(OBJECT *obj)
+{
+  gpointer val = GINT_TO_POINTER(is_visited (obj) + 1);
+  g_hash_table_replace (visit_table, obj, val);
+  return GPOINTER_TO_INT (val);
+}
+
+/*! Reset all visit counts. Simply clears the hashtable completely. */
+static inline void
+s_traverse_clear_all_visited (GList *obj_list)
+{
+  g_hash_table_foreach_remove (visit_table,
+                               (GHRFunc) returns_true,
+                               NULL);
+}
+
 void s_traverse_init(void)
 {
     netlist_head = s_netlist_add(NULL);
@@ -62,6 +107,11 @@ void s_traverse_init(void)
 	    ("------------------------------------------------------\n\n");
 
     }
+
+    /* Initialise the hashtable which contains the visit
+       count. N.b. no free functions are required. */
+    visit_table = g_hash_table_new (g_direct_hash,
+                                    g_direct_equal);
 }
 
 void s_traverse_start(TOPLEVEL * pr_current)
@@ -235,7 +285,7 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
 
       verbose_print("p");
 
-      o_current->visited = 1;
+      visit(o_current);
 
       /* add cpin node */
       cpins = s_cpinlist_add(cpins);
@@ -271,7 +321,7 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
           printf("c_current other_object, not NULL\n");
 #endif
 
-          if (!c_current->other_object->visited &&
+          if (!is_visited (c_current->other_object) &&
               c_current->other_object != o_current) {
 
             nets = s_net_add(nets);
@@ -326,31 +376,6 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
 
 
   return (cpinlist_head);
-}
-
-
-void s_traverse_clear_all_visited (GList *obj_list)
-{
-    GList *iter;
-
-    for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-      OBJECT *o_current = iter->data;
-
-#if DEBUG
-	if (o_current->visited) {
-	    printf("%s\n", o_current->name);
-	}
-#endif
-
-	o_current->visited = 0;
-
-	if (o_current->type == OBJ_COMPLEX
-	    && o_current->complex->prim_objs) {
-	    s_traverse_clear_all_visited(o_current->complex->prim_objs);
-	}
-
-    }
-
 }
 
 NET *s_traverse_net(TOPLEVEL * pr_current, OBJECT * previous_object,
@@ -431,10 +456,10 @@ NET *s_traverse_net(TOPLEVEL * pr_current, OBJECT * previous_object,
   /*printf("Found net %s\n", object->name); */
   verbose_print("n");
 
-  object->visited++;
+  visit(object);
 
   /* this is not perfect yet and won't detect a loop... */
-  if (object->visited > 100) {
+  if (is_visited(object) > 100) {
     fprintf(stderr, "Found a possible net/pin infinite connection\n");
     exit(-1);
   }
@@ -452,7 +477,7 @@ NET *s_traverse_net(TOPLEVEL * pr_current, OBJECT * previous_object,
              c_current->other_object->visited);
 #endif
 
-      if (!c_current->other_object->visited &&
+      if (!is_visited(c_current->other_object) &&
           c_current->other_object != o_current &&
           c_current->other_object->type != OBJ_BUS) {
 

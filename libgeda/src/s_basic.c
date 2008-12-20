@@ -102,8 +102,6 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
 
   new_node->conn_list = NULL;
 
-  new_node->visited = 0;
-	
   new_node->complex_basename = NULL;
   new_node->complex_parent = NULL;
 		

@@ -259,8 +259,6 @@ struct st_object {
   int fill_angle1, fill_pitch1;
   int fill_angle2, fill_pitch2;
 
-  int visited;		/* used in gnetlist for travesal purposes */
-
   gboolean complex_embedded;                    /* is embedded component? */
   gchar *complex_basename;              /* Component Library Symbol name */
   OBJECT *complex_parent;		/* Complex parent object pointer */
