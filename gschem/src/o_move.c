@@ -509,36 +509,28 @@ void o_move_end_rubberband (GSCHEM_TOPLEVEL *w_current,
     OBJECT *object = s_current->object;
     int whichone = s_current->whichone;
 
-    switch (object->type) {
+    if (object->type == OBJ_NET ||
+        object->type == OBJ_BUS) {
 
-      case OBJ_NET:
-      case OBJ_BUS:
+      /* save the other objects and remove object's connections */
+      *prev_conn_objects =
+        s_conn_return_others (*prev_conn_objects, object);
+      s_conn_remove_object (toplevel, object);
 
-        /* save the other objects and remove object's connections */
-        *prev_conn_objects =
-          s_conn_return_others (*prev_conn_objects, object);
-        s_conn_remove_object (toplevel, object);
+      object->line->x[whichone] += w_dx;
+      object->line->y[whichone] += w_dy;
 
-        object->line->x[whichone] += w_dx;
-        object->line->y[whichone] += w_dy;
+      if (o_move_zero_length (object)) {
+        o_delete (w_current, object);
+        continue;
+      }
 
-        if (o_move_zero_length (object)) {
-          o_delete (w_current, object);
-          continue;
-        }
+      o_recalc_single_object (toplevel, object);
+      s_tile_update_object (toplevel, object);
+      s_conn_update_object (toplevel, object);
+      *connected_objects = s_conn_return_others (*connected_objects, object);
+      *objects = g_list_append (*objects, object);
 
-        o_recalc_single_object (toplevel, object);
-        s_tile_update_object (toplevel, object);
-        s_conn_update_object (toplevel, object);
-        *connected_objects = s_conn_return_others (*connected_objects, object);
-        *objects = g_list_append (*objects, object);
-
-        break;
-
-      case OBJ_PIN:
-
-        /* NOP: not valid to do with pins */
-        break;
     }
   }
 }
