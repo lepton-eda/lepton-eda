@@ -6,6 +6,7 @@ EXTRA_DIST= \
 	JD_Include-output.net \
 	JD_Include.retcode \
 	JD_nomunge-output.net \
+	JD_nomunge.retcode \
 	JD-output.net \
 	JD.retcode \
 	JD_Sort_nomunge-output.net \

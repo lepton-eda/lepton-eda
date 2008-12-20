@@ -28,7 +28,7 @@ JD | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | |
 JD_Include | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -I
 JD_Sort | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -s
 # Now test non-munged version.
-JD_nomunge | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | | -n
+JD_nomunge | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -n
 JD_Include_nomunge | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -I -n
 JD_Sort_nomunge | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -s -n
 

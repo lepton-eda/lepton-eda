@@ -1,12 +1,12 @@
-refdes:refdes:value:device
-Rb:Rb:5.6k:RESISTOR
-Cp:Cp:20p:CAPACITOR
-Rlm:Rlm:500k:RESISTOR
-Vdd:Vdd:DC 3.3V:VOLTAGE_SOURCE
-Rlp:Rlp:1meg:RESISTOR
-X1:X1:unknown:LVD
-M1:M1:unknown:PMOS_TRANSISTOR
-Rt:Rt:1k:RESISTOR
-A1:A1:unknown:model
-Cm:Cm:20p:CAPACITOR
-V1:V1:pulse 3.3 0 1u 10p 10p 1.25u 2.5u:vpulse
+refdes:refdes:value:device:qty
+Rb:Rb:5.6k:RESISTOR:1
+Cp:Cp:20p:CAPACITOR:1
+Rlm:Rlm:500k:RESISTOR:1
+Vdd:Vdd:DC 3.3V:VOLTAGE_SOURCE:1
+Rlp:Rlp:1meg:RESISTOR:1
+X1:X1:unknown:LVD:1
+M1:M1:unknown:PMOS_TRANSISTOR:1
+Rt:Rt:1k:RESISTOR:1
+A1:A1:unknown:model:1
+Cm:Cm:20p:CAPACITOR:1
+V1:V1:pulse 3.3 0 1u 10p 10p 1.25u 2.5u:vpulse:1
