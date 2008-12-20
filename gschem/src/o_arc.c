@@ -64,10 +64,8 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   world_get_single_object_bounds(toplevel, o_current,
                                  &wleft, &wtop, &wright, &wbottom);
 
-  if ( (toplevel->DONT_REDRAW == 1) ||
-       (!visible(toplevel, wleft, wtop, wright, wbottom)) ) {
+  if (toplevel->DONT_REDRAW == 1)
     return;
-  }
 
   /*
    * As an arc is definetely not a closed shape there is no need to

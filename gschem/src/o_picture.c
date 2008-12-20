@@ -332,10 +332,6 @@ void o_picture_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   world_get_single_object_bounds(toplevel, o_current,
                                  &wleft, &wtop, &wright, &wbottom);
 	
-  if (!visible(toplevel, wleft, wtop, wright, wbottom)) {
-    return;
-  }
-
   WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->upper_y,
                  &s_upper_x, &s_upper_y );
   WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->lower_y,

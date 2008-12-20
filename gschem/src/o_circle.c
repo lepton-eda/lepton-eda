@@ -75,10 +75,8 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   world_get_single_object_bounds(toplevel, o_current,
                                  &wleft, &wtop, &wright, &wbottom);
 	
-  if ( (toplevel->DONT_REDRAW == 1) ||
-       (!visible(toplevel, wleft, wtop, wright, wbottom)) ) {
+  if (toplevel->DONT_REDRAW == 1)
     return;
-  }
 	
 #if DEBUG
   printf("drawing circle\n\n");
