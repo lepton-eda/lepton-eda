@@ -266,7 +266,7 @@ int o_select_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_select_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  o_select_box_rubberband_xor(w_current);
+  o_select_box_invalidate_rubber (w_current);
   w_current->rubber_visible = 0;
 
   o_select_box_search(w_current);
@@ -280,13 +280,31 @@ void o_select_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_select_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   if (w_current->rubber_visible)
-    o_select_box_rubberband_xor(w_current);
+    o_select_box_invalidate_rubber (w_current);
     
   w_current->second_wx = w_x; 
   w_current->second_wy = w_y;
 
-  o_select_box_rubberband_xor(w_current);
+  o_select_box_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ */
+void o_select_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x1, y1, x2, y2;
+
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+
+  o_invalidate_rect (w_current, x1, y1, x2, y1);
+  o_invalidate_rect (w_current, x1, y1, x1, y2);
+  o_invalidate_rect (w_current, x2, y1, x2, y2);
+  o_invalidate_rect (w_current, x1, y2, x2, y2);
 }
 
 /*! \todo Finish function documentation!!!

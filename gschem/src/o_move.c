@@ -301,10 +301,55 @@ void o_move_cancel (GSCHEM_TOPLEVEL *w_current)
  */
 void o_move_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  o_move_rubbermove_xor (w_current, FALSE);
+  o_move_invalidate_rubber (w_current, FALSE);
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
-  o_move_rubbermove_xor (w_current, TRUE);
+  o_move_invalidate_rubber (w_current, TRUE);
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_move_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  GList *s_iter;
+  int dx1, dx2, dy1, dy2;
+  int x1, y1, x2, y2;
+
+  o_place_invalidate_rubber (w_current, drawing);
+  if (w_current->netconn_rubberband) {
+
+    for (s_iter = toplevel->page_current->stretch_list;
+         s_iter != NULL; s_iter = g_list_next (s_iter)) {
+      STRETCH *s_current = s_iter->data;
+      OBJECT *object = s_current->object;
+
+      switch (object->type) {
+        case (OBJ_NET):
+        case (OBJ_BUS):
+          if (s_current->whichone == 0) {
+            dx1 = w_current->second_wx - w_current->first_wx;
+            dy1 = w_current->second_wy - w_current->first_wy;
+            dx2 = dy2 = 0;
+          } else {
+            dx1 = dy1 = 0;
+            dx2 = w_current->second_wx - w_current->first_wx;
+            dy2 = w_current->second_wy - w_current->first_wy;
+          }
+
+          WORLDtoSCREEN (toplevel, object->line->x[0] + dx1,
+                                   object->line->y[0] + dy1, &x1, &y1);
+          WORLDtoSCREEN (toplevel, object->line->x[1] + dx2,
+                                   object->line->y[1] + dy2, &x2, &y2);
+
+          o_invalidate_rect (w_current, x1, y1, x2, y2);
+      }
+    }
+  }
 }
 
 

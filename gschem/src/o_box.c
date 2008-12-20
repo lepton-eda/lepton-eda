@@ -691,13 +691,20 @@ void o_box_fill_mesh (GdkDrawable *w, GdkGC *gc, GdkColor *color,
 /*! \todo Finish function documentation!!!
  *  \brief 
  *  \par Function Description
- * 
- *  \note
- *  used in button cancel code in x_events.c
+ *
  */
-void o_box_eraserubber(GSCHEM_TOPLEVEL *w_current)
+void o_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  o_box_rubberbox_xor(w_current);
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x1, y1, x2, y2;
+
+  WORLDtoSCREEN (toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN (toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+
+  o_invalidate_rect (w_current, x1, y1, x2, y1);
+  o_invalidate_rect (w_current, x1, y1, x1, y2);
+  o_invalidate_rect (w_current, x2, y1, x2, y2);
+  o_invalidate_rect (w_current, x1, y2, x2, y2);
 }
 
 /*! \brief Draw a box described by OBJECT with translation
@@ -770,7 +777,7 @@ void o_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->first_wy = w_current->second_wy = w_y;
 
   /* start to draw the box */
-  o_box_rubberbox_xor(w_current);
+  o_box_invalidate_rubber (w_current);
 }
 
 /*! \brief End the input of a box.
@@ -803,7 +810,7 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->second_wy = w_y;
 
   /* erase the temporary box */
-  o_box_rubberbox_xor(w_current);
+  /* o_box_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
   
   box_width  = GET_BOX_WIDTH (w_current);
@@ -866,7 +873,7 @@ void o_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* erase the previous temporary box if it is visible */
   if (w_current->rubber_visible)
-    o_box_rubberbox_xor(w_current);
+    o_box_invalidate_rubber (w_current);
 
   /*
    * New values are fixed according to the <B>w_x</B> and <B>w_y</B> parameters.
@@ -879,10 +886,8 @@ void o_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->second_wy = w_y;
 
   /* draw the new temporary box */
-  o_box_rubberbox_xor(w_current);
-
+  o_box_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
-  
 }
 
 /*! \brief Draw box from GSCHEM_TOPLEVEL object.

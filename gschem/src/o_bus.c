@@ -237,7 +237,7 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   }
 
   /* erase the rubberbus */
-  o_bus_rubberbus_xor(w_current);
+  /* o_bus_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
 
   /* don't allow zero length bus */
@@ -289,7 +289,7 @@ void o_bus_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   g_assert( w_current->inside_action != 0 );
 
   if (w_current->rubber_visible)
-    o_bus_rubberbus_xor(w_current);
+    o_bus_invalidate_rubber (w_current);
 
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
@@ -306,8 +306,35 @@ void o_bus_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
     }
   }
 
-  o_bus_rubberbus_xor(w_current);
+  o_bus_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_bus_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x1, y1, x2, y2;
+  int min_x, min_y, max_x, max_y;
+  int bloat = 0;
+
+  WORLDtoSCREEN (toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN (toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+
+  if (toplevel->bus_style == THICK ) {
+    bloat = SCREENabs(toplevel, BUS_WIDTH) / 2;
+  }
+
+  min_x = min (x1, x2) - bloat;
+  max_x = max (x1, x2) + bloat;
+  min_y = min (y1, y2) - bloat;
+  max_y = max (y1, y2) + bloat;
+
+  o_invalidate_rect (w_current, min_x, min_y, max_x, max_y);
 }
 
 /*! \brief draw a rubberbus segment in XOR mode
@@ -351,16 +378,4 @@ void o_bus_rubberbus_xor(GSCHEM_TOPLEVEL *w_current)
                                GDK_CAP_NOT_LAST,
                                GDK_JOIN_MITER);
   }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  used in button cancel code in x_events.c
- */
-void o_bus_eraserubber(GSCHEM_TOPLEVEL *w_current)
-{
-  o_bus_rubberbus_xor(w_current);
 }

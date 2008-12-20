@@ -609,16 +609,45 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 
+static void find_points_bounds (GdkPoint *points, int num_points,
+                                int *min_x, int *min_y, int *max_x, int *max_y)
+{
+  int i;
+  int found_bound = FALSE;
+
+  for (i = 0; i < num_points; i++) {
+    *min_x = (found_bound) ? min (*min_x, points[i].x) : points[i].x;
+    *min_y = (found_bound) ? min (*min_y, points[i].y) : points[i].y;
+    *max_x = (found_bound) ? max (*max_x, points[i].x) : points[i].x;
+    *max_y = (found_bound) ? max (*max_y, points[i].y) : points[i].y;
+    found_bound = TRUE;
+  }
+}
+
+
 /*! \todo Finish function documentation
  *  \brief
  *  \par Function Description
- *
- *  \note
- *  used in button cancel code in x_events.c
  */
-void o_path_eraserubber(GSCHEM_TOPLEVEL *w_current)
+void o_path_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  o_path_rubberpath_xor (w_current);
+  PATH *path = w_current->which_object->path;
+  int num_points;
+  GdkPoint *points;
+  int min_x = 0, min_y = 0, max_x = 0, max_y = 0;
+
+  path_to_points_modify (w_current, path, 0, 0,
+                         w_current->second_wx, w_current->second_wy,
+                         w_current->which_grip, &points, &num_points);
+  if (num_points == 0) {
+    g_free (points);
+    return;
+  }
+
+  find_points_bounds (points, num_points, &min_x, &min_y, &max_x, &max_y);
+  g_free (points);
+
+  o_invalidate_rect (w_current, min_x, min_y, max_x, max_y);
 }
 
 
@@ -728,12 +757,12 @@ void o_path_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_path_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   if (w_current->rubber_visible)
-    o_path_rubberpath_xor (w_current);
+    o_path_invalidate_rubber (w_current);
 
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
 
-  o_path_rubberpath_xor (w_current);
+  o_path_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 

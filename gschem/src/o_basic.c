@@ -107,10 +107,13 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
   o_cue_redraw_all (w_current, obj_list, draw_selected);
 
   if (w_current->inside_action) {
+    /* Redraw the rubberband objects (if they were previously visible) */
     switch (w_current->event_state) {
       case MOVE:
       case ENDMOVE:
-        o_move_rubbermove_xor (w_current, TRUE);
+        if (w_current->last_drawb_mode != -1) {
+          o_move_rubbermove_xor (w_current, TRUE);
+        }
         break;
 
       case ENDCOPY:
@@ -118,7 +121,6 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
       case ENDCOMP:
       case ENDTEXT:
       case ENDPASTE:
-        /* Redraw the rubberband objects (if they were previously visible) */
         if (w_current->rubber_visible)
           o_place_rubberplace_xor (w_current, TRUE);
         break;
@@ -244,7 +246,7 @@ void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-int o_erase_rubber(GSCHEM_TOPLEVEL *w_current)
+int o_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   /* return FALSE if it did not erase anything */
 
@@ -256,43 +258,43 @@ int o_erase_rubber(GSCHEM_TOPLEVEL *w_current)
     case(STARTDRAWBUS):
     case(DRAWBUS):
     case(BUSCONT):
-      o_bus_eraserubber(w_current);
+      o_bus_invalidate_rubber (w_current);
     break;
 
     case(STARTDRAWNET):
     case(DRAWNET):
     case(NETCONT):
-      o_net_eraserubber(w_current);
+      o_net_invalidate_rubber (w_current);
     break;
 
     case(DRAWPIN):
     case(ENDPIN):
-      o_pin_eraserubber(w_current);
+      o_pin_invalidate_rubber (w_current);
     break;
 
     case(DRAWLINE):
     case(ENDLINE):
-      o_line_eraserubber(w_current);
+      o_line_invalidate_rubber (w_current);
     break;
 
     case(DRAWBOX):
     case(ENDBOX):
-      o_box_eraserubber(w_current);
+      o_box_invalidate_rubber (w_current);
     break;
 
     case(DRAWPICTURE):
     case(ENDPICTURE):
-      o_picture_eraserubber(w_current);
+      o_picture_invalidate_rubber (w_current);
     break;
 
     case(DRAWCIRCLE):
     case(ENDCIRCLE):
-      o_circle_eraserubber(w_current);
+      o_circle_invalidate_rubber (w_current);
     break;
 
     case(DRAWARC):
     case(ENDARC):
-      o_arc_eraserubber(w_current);
+      o_arc_invalidate_rubber (w_current);
     break;
 
     default:

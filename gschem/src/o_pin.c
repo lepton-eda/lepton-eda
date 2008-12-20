@@ -172,7 +172,7 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   }
 
   /* undraw rubber line */
-  o_pin_rubberpin_xor(w_current);
+  /* o_pin_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
 
   /* don't allow zero length pins */
@@ -217,7 +217,7 @@ void o_pin_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* erase the rubberpin if it is visible */
   if (w_current->rubber_visible)
-    o_pin_rubberpin_xor(w_current);
+    o_pin_invalidate_rubber (w_current);
 
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
@@ -230,20 +230,34 @@ void o_pin_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
     w_current->second_wx = w_current->first_wx;
   }
 
-  o_pin_rubberpin_xor(w_current);
+  o_pin_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
- *  \note
- *  used in o_stretch.c
  */
-void o_pin_eraserubber(GSCHEM_TOPLEVEL *w_current)
+void o_pin_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  o_pin_rubberpin_xor(w_current);
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x1, y1, x2, y2;
+  int min_x, min_y, max_x, max_y;
+  int bloat = 0;
+
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+
+  if (toplevel->net_style == THICK ) {
+    bloat = SCREENabs (toplevel, PIN_WIDTH) / 2;
+  }
+
+  min_x = min (x1, x2) - bloat;
+  max_x = max (x1, x2) + bloat;
+  min_y = min (y1, y2) - bloat;
+  max_y = max (y1, y2) + bloat;
+
+  o_invalidate_rect (w_current, min_x, min_y, max_x, max_y);
 }
 
 

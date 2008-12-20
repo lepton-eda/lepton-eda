@@ -117,7 +117,6 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->magnetic_wy = -1;
   w_current->inside_action = 0;
   w_current->rubber_visible = 0;
-  w_current->magnetic_visible = 0;
   w_current->net_direction = 0;
   w_current->which_grip = -1;
   w_current->which_object = NULL;

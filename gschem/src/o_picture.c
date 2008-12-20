@@ -60,7 +60,7 @@ void o_picture_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->first_wy = w_current->second_wy = w_y;
 
   /* start to draw the box */
-  o_picture_rubberbox_xor(w_current);
+  o_picture_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
@@ -88,7 +88,7 @@ void o_picture_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   g_assert( w_current->inside_action != 0 );
 
   /* erase the temporary picture */
-  o_picture_rubberbox_xor(w_current);
+  /* o_picture_rubberbox_xor(w_current); */
   w_current->rubber_visible = 0;
   
   picture_width  = GET_PICTURE_WIDTH (w_current);
@@ -176,7 +176,7 @@ void picture_selection_dialog (GSCHEM_TOPLEVEL *w_current)
       printf("Picture loaded succesfully.\n");
 #endif
       
-      o_erase_rubber(w_current);
+      o_invalidate_rubber(w_current);
       i_update_middle_button(w_current, i_callback_add_picture, _("Picture"));
       w_current->inside_action = 0;
       
@@ -202,12 +202,21 @@ void picture_selection_dialog (GSCHEM_TOPLEVEL *w_current)
  *  \note
  * used in button cancel code in x_events.c
  */
-void o_picture_eraserubber(GSCHEM_TOPLEVEL *w_current)
+void o_picture_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-#if DEBUG
-  printf("o_picture_eraserubber called\n");
-#endif
-  o_picture_rubberbox_xor(w_current);
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int left, top, width, height;
+
+  WORLDtoSCREEN (toplevel,
+                 GET_PICTURE_LEFT(w_current), GET_PICTURE_TOP(w_current),
+                 &left, &top);
+  width = SCREENabs(toplevel, GET_PICTURE_WIDTH (w_current));
+  height = SCREENabs(toplevel, GET_PICTURE_HEIGHT(w_current));
+
+  o_invalidate_rect (w_current, left, top, left + width, top);
+  o_invalidate_rect (w_current, left, top, left, top + height);
+  o_invalidate_rect (w_current, left + width, top, left + width, top + height);
+  o_invalidate_rect (w_current, left, top + height, left + width, top + height);
 }
 
 /*! \brief Draw temporary picture while dragging edge.
@@ -234,7 +243,7 @@ void o_picture_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* erase the previous temporary box */
   if (w_current->rubber_visible)
-    o_picture_rubberbox_xor(w_current);
+    o_picture_invalidate_rubber (w_current);
 
   /*
    * New values are fixed according to the <B>w_x</B> and <B>w_y</B> parameters. 
@@ -247,7 +256,7 @@ void o_picture_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->second_wy = w_y;
 
   /* draw the new temporary box */
-  o_picture_rubberbox_xor(w_current);
+  o_picture_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
@@ -632,7 +641,7 @@ void picture_change_filename_dialog (GSCHEM_TOPLEVEL *w_current)
       printf("Picture loaded succesfully.\n");
 #endif
 
-      o_erase_rubber(w_current);
+      o_invalidate_rubber(w_current);
       w_current->inside_action = 0;
 
       /* \FIXME Should we set the pixbuf buffer in GSCHEM_TOPLEVEL to store

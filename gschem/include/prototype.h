@@ -14,6 +14,7 @@ void a_zoom_box(GSCHEM_TOPLEVEL *w_current, int pan_flags);
 void a_zoom_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
+void a_zoom_box_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 void a_zoom_box_rubberband_xor(GSCHEM_TOPLEVEL *w_current);
 void correct_aspect(GSCHEM_TOPLEVEL *w_current);
 /* g_funcs.c */
@@ -465,7 +466,7 @@ void o_arc_draw_dotted(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap
 void o_arc_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint radius, gint angle1, gint angle2, gint arc_width, gint length, gint space);
 void o_arc_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint radius, gint angle1, gint angle2, gint arc_width, gint length, gint space);
 void o_arc_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint radius, gint angle1, gint angle2, gint arc_width, gint length, gint space);
-void o_arc_eraserubber(GSCHEM_TOPLEVEL *w_current);
+void o_arc_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_arc_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_arc_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_arc_end1(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -482,7 +483,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current, const char *text_string,
 void o_redraw_rects(GSCHEM_TOPLEVEL *w_current, GdkRectangle *rectangles, int n_rectangles);
 void o_redraw(GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_selected);
 void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-int o_erase_rubber(GSCHEM_TOPLEVEL *w_current);
+int o_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current);
 void o_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
 void o_glist_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, GList *list);
@@ -501,7 +502,7 @@ void o_box_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEV
 void o_box_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, BOX *box, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_box_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, BOX *box, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_box_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, BOX *box, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_box_eraserubber(GSCHEM_TOPLEVEL *w_current);
+void o_box_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_box_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -522,14 +523,14 @@ void o_bus_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 int o_bus_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_bus_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_bus_rubberbus_xor(GSCHEM_TOPLEVEL *w_current);
-void o_bus_eraserubber(GSCHEM_TOPLEVEL *w_current);
+void o_bus_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 /* o_circle.c */
 void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_circle_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_circle_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_circle_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_circle_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_circle_eraserubber(GSCHEM_TOPLEVEL *w_current);
+void o_circle_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_circle_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_circle_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_circle_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -596,7 +597,7 @@ void o_line_draw_dotted(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle ca
 void o_line_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
 void o_line_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
 void o_line_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
-void o_line_eraserubber(GSCHEM_TOPLEVEL *w_current);
+void o_line_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_line_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_line_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_line_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -623,6 +624,7 @@ void o_move_end_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int diff_x,
 void o_move_end(GSCHEM_TOPLEVEL *w_current);
 void o_move_cancel(GSCHEM_TOPLEVEL *w_current);
 void o_move_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
+void o_move_invalidate_rubber(GSCHEM_TOPLEVEL *w_current, int drawing);
 void o_move_rubbermove_xor(GSCHEM_TOPLEVEL *w_current, int drawing);
 int o_move_return_whichone(OBJECT *object, int x, int y);
 void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
@@ -643,14 +645,14 @@ void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_net_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current);
-void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current);
+void o_net_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj, GList *other_objects);
 /* o_picture.c */
 void o_picture_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_picture_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_picture_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void picture_selection_dialog (GSCHEM_TOPLEVEL *w_current);
-void o_picture_eraserubber(GSCHEM_TOPLEVEL *w_current);
+void o_picture_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_picture_rubberbox_xor(GSCHEM_TOPLEVEL *w_current);
 void o_picture_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
@@ -661,7 +663,7 @@ void o_picture_set_pixbuf(GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf, char *f
 
 /* o_path.c */
 void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_path_eraserubber(GSCHEM_TOPLEVEL *w_current);
+void o_path_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_path_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_path_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_path_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -676,11 +678,12 @@ void o_pin_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_pin_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_pin_rubberpin_xor(GSCHEM_TOPLEVEL *w_current);
-void o_pin_eraserubber(GSCHEM_TOPLEVEL *w_current);
+void o_pin_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 /* o_place.c */
 void o_place_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_place_end(GSCHEM_TOPLEVEL *w_current, int x, int y, int continue_placing, GList **ret_new_objects);
 void o_place_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
+void o_place_invalidate_rubber(GSCHEM_TOPLEVEL *w_current, int drawing);
 void o_place_rubberplace_xor(GSCHEM_TOPLEVEL *w_current, int drawing);
 void o_place_rotate(GSCHEM_TOPLEVEL *w_current);
 /* o_select.c */
@@ -689,6 +692,7 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int type, in
 int o_select_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_select_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_select_box_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
+void o_select_box_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_select_box_rubberband_xor(GSCHEM_TOPLEVEL *w_current);
 void o_select_box_search(GSCHEM_TOPLEVEL *w_current);
 void o_select_connected_nets(GSCHEM_TOPLEVEL *w_current, OBJECT* o_current);

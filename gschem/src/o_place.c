@@ -36,7 +36,7 @@ void o_place_start (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
 
-  o_place_rubberplace_xor (w_current, TRUE);
+  o_place_invalidate_rubber (w_current, TRUE);
   w_current->rubber_visible = 1;
 }
 
@@ -59,7 +59,7 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
   GList *iter;
 
   /* erase old image */
-  o_place_rubberplace_xor (w_current, FALSE);
+  /* o_place_invaidate_rubber (w_current, FALSE); */
   w_current->rubber_visible = 0;
 
   /* Calc final object positions */
@@ -128,11 +128,96 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
 void o_place_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   if (w_current->rubber_visible)
-    o_place_rubberplace_xor (w_current, FALSE);
+    o_place_invalidate_rubber (w_current, FALSE);
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
-  o_place_rubberplace_xor (w_current, TRUE);
+  o_place_invalidate_rubber (w_current, TRUE);
   w_current->rubber_visible = 1;
+}
+
+
+/*! \brief XOR draw a bounding box or outline for OBJECT placement
+ *
+ *  \par Function Description
+ *  This function XOR draws either the OBJECTS in the place list
+ *  or a rectangle around their bounding box, depending upon the
+ *  currently selected w_current->actionfeedback_mode. This takes the
+ *  value BOUNDINGBOX or OUTLINE.
+ *
+ * The function applies manhatten mode constraints to the coordinates
+ * before drawing if the CONTROL key is recording as being pressed in
+ * the w_current structure.
+ *
+ * The "drawing" parameter is used to indicate if this drawing should
+ * immediately use the selected feedback mode and positioning constraints.
+ *
+ * With drawing=TRUE, the selected conditions are used immediately,
+ * otherwise the conditions from the last drawing operation are used,
+ * saving the new state for next time.
+ *
+ * This function should be called with drawing=TRUE when starting a
+ * rubberbanding operation and when otherwise refreshing the rubberbanded
+ * outline (e.g. after a screen redraw). For any undraw operation, should
+ * be called with drawing=FALSE, ensuring that the undraw XOR matches the
+ * mode and constraints of the corresponding "draw" operation.
+ *
+ * If any mode / constraint changes are made between a undraw, redraw XOR
+ * pair, the latter (draw) operation must be called with drawing=TRUE. If
+ * no mode / constraint changes were made between the pair, it is not
+ * harmful to call the draw operation with "drawing=FALSE".
+ *
+ *  \param [in] w_current   GSCHEM_TOPLEVEL which we're drawing for.
+ *  \param [in] drawing     Set to FALSE for undraw operations to ensure
+ *                            matching conditions to a previous draw operation.
+ */
+void o_place_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int diff_x, diff_y;
+  int left, top, bottom, right;
+  int s_left, s_top, s_bottom, s_right;
+
+  g_return_if_fail (toplevel->page_current->place_list != NULL);
+
+  /* If drawing is true, then don't worry about the previous drawing
+   * method and movement constraints, use with the current settings */
+  if (drawing) {
+    /* Ensure we set this to flag there is "something" supposed to be
+     * drawn when the invaliate call below causes an expose event. */
+    w_current->last_drawb_mode = w_current->actionfeedback_mode;
+    w_current->drawbounding_action_mode = (w_current->CONTROLKEY)
+                                            ? CONSTRAINED : FREE;
+  }
+
+  /* Calculate delta of X-Y positions from buffer's origin */
+  diff_x = w_current->second_wx - w_current->first_wx;
+  diff_y = w_current->second_wy - w_current->first_wy;
+
+  /* Adjust the coordinates according to the movement constraints */
+
+  /* Need to update the w_current->{first,second}_w{x,y} coords even
+   * though we're only invalidating, because the move rubberband code
+   * (which may execute right after this function) expects these
+   * coordinates to be correct. It then XORs directly onto the screen,
+   * not via an invalidation / redraw.
+   */
+  if (w_current->drawbounding_action_mode == CONSTRAINED) {
+    if (abs (diff_x) >= abs (diff_y)) {
+      w_current->second_wy = w_current->first_wy;
+      diff_y = 0;
+    } else {
+      w_current->second_wx = w_current->first_wx;
+      diff_x = 0;
+    }
+  }
+
+  /* Find the bounds of the drawing to be done */
+  world_get_object_glist_bounds (toplevel, toplevel->page_current->place_list,
+                                 &left, &top, &right, &bottom);
+  WORLDtoSCREEN (toplevel, left + diff_x, top + diff_y, &s_left, &s_top);
+  WORLDtoSCREEN (toplevel, right + diff_x, bottom + diff_y, &s_right, &s_bottom);
+
+  o_invalidate_rect (w_current, s_left, s_top, s_right, s_bottom);
 }
 
 

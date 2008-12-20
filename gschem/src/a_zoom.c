@@ -246,7 +246,7 @@ void a_zoom_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   g_assert( w_current->inside_action != 0 );
 
-  a_zoom_box_rubberband_xor(w_current);
+  a_zoom_box_invalidate_rubber (w_current);
   w_current->rubber_visible = 0;
 
   a_zoom_box(w_current, 0);
@@ -266,15 +266,32 @@ void a_zoom_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   g_assert( w_current->inside_action != 0 );
 
   if (w_current->rubber_visible)
-    a_zoom_box_rubberband_xor(w_current);
+    a_zoom_box_invalidate_rubber (w_current);
 
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
 
-  a_zoom_box_rubberband_xor(w_current);
+  a_zoom_box_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ */
+void a_zoom_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x1, y1, x2, y2;
+
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+
+  o_invalidate_rect (w_current, x1, y1, x2, y1);
+  o_invalidate_rect (w_current, x1, y1, x1, y2);
+  o_invalidate_rect (w_current, x2, y1, x2, y2);
+  o_invalidate_rect (w_current, x1, y2, x2, y2);
+}
 
 /*! \todo Finish function documentation!!!
  *  \brief

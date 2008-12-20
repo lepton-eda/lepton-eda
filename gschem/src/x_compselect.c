@@ -140,7 +140,7 @@ x_compselect_callback_response (GtkDialog *dialog,
         if (w_current->event_state == ENDCOMP) {
           /* Delete the component which was being placed */
           if (w_current->rubber_visible)
-            o_place_rubberplace_xor (w_current, FALSE);
+            o_place_invalidate_rubber (w_current, FALSE);
           w_current->rubber_visible = 0;
           s_delete_object_glist (toplevel,
                                  toplevel->page_current->place_list);

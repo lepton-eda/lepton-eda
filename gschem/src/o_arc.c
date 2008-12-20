@@ -779,9 +779,18 @@ void o_arc_draw_phantom(GdkWindow *w, GdkGC *gc,
  *  \par Function Description
  *
  */
-void o_arc_eraserubber(GSCHEM_TOPLEVEL *w_current)
+void o_arc_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  o_arc_rubberarc_xor(w_current);
+  TOPLEVEL *toplevel = w_current->toplevel;
+
+  int cx, cy, radius;
+
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &cx, &cy);
+  radius = SCREENabs(toplevel, w_current->distance);
+
+  /* FIXME: This isn't a tight bounding box */
+  o_invalidate_rect (w_current, cx - radius, cy - radius,
+                                cx + radius, cy + radius);
 }
 
 /*! \brief Draw an arc described by OBJECT with translation
@@ -873,7 +882,7 @@ void o_arc_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->second_wx = w_current->second_wy = 0;
 
   /* start the rubberbanding process of the radius */
-  o_arc_rubberarc_xor(w_current);
+  o_arc_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
@@ -899,7 +908,7 @@ void o_arc_end1(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   g_assert( w_current->inside_action != 0 );
 
   /* erases the previous temporary radius segment */
-  o_arc_rubberarc_xor(w_current);
+  /* o_arc_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
 
   /* ack! zero length radius */
@@ -995,7 +1004,7 @@ void o_arc_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
 
   /* erase the previous temporary arc */
   if (w_current->rubber_visible)
-    o_arc_rubberarc_xor(w_current);
+    o_arc_invalidate_rubber (w_current);
 
   if(whichone == ARC_RADIUS) {
     /*
@@ -1029,7 +1038,7 @@ void o_arc_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
   }
 	
   /* draw the new temporary arc */
-  o_arc_rubberarc_xor(w_current);
+  o_arc_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 

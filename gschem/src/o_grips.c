@@ -649,7 +649,7 @@ void o_grips_start_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->second_wy = o_current->arc->end_angle;
 
   /* draw the first temporary arc */
-  o_arc_rubberarc_xor(w_current);
+  /* o_arc_invalidate_rubber (w_current); */
   w_current->rubber_visible = 1;
 }
 
@@ -714,7 +714,7 @@ void o_grips_start_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   }
 
   /* draw the first temporary box */
-  o_box_rubberbox_xor(w_current);
+  /* o_box_invalidate_rubber (w_current); */
   w_current->rubber_visible = 1;
 }
 
@@ -787,7 +787,7 @@ void o_grips_start_path(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->first_wy = w_current->second_wy = gy;
 
   /* draw the first temporary path */
-  o_path_rubberpath_xor(w_current);
+  /* o_path_invalidate_rubber (w_current); */
   w_current->rubber_visible = 1;
 }
 
@@ -856,7 +856,7 @@ void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   }
 
   /* draw the first temporary picture */
-  o_picture_rubberbox_xor(w_current);
+  /* o_picture_invalidate_rubber (w_current); */
   w_current->rubber_visible = 1;
 }
 
@@ -896,7 +896,7 @@ void o_grips_start_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->distance = o_current->circle->radius;
 
   /* draw the first temporary circle */
-  o_circle_rubbercircle_xor(w_current);
+  /* o_circle_invalidate_rubber (w_current); */
   w_current->rubber_visible = 1;
 }
 
@@ -935,7 +935,7 @@ void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->first_wy = o_current->line->y[!whichone];
 
   /* draw the first temporary line */
-  o_line_rubberline_xor(w_current);
+  /* o_line_invalidate_rubber (w_current); */
   w_current->rubber_visible = 1;
 }
 
@@ -1116,7 +1116,7 @@ void o_grips_end_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   int arg1, arg2;
 
   /* erase the temporary arc */
-  o_arc_rubberarc_xor(w_current);
+  /* o_arc_invalidate_rubber (w_current); */
 
   /* determination of the parameters to give to o_arc_modify() */
   switch(whichone) {
@@ -1180,7 +1180,7 @@ void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_box_modify(toplevel, o_current, w_current->second_wx, w_current->second_wy, whichone);
 
   /* erase the temporary box */
-  o_box_rubberbox_xor(w_current);
+  /* o_box_invalidate_rubber (w_current); */
 
   /* draw the modified box */
   o_invalidate (w_current, o_current);
@@ -1197,8 +1197,8 @@ void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
 void o_grips_end_path(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 {
   /* erase the temporary path */
-  if (w_current->rubber_visible)
-    o_path_rubberpath_xor(w_current);
+  /* if (w_current->rubber_visible) */
+  /*  o_path_invalidate_rubber (w_current); */
 
   o_path_modify (w_current->toplevel, o_current,
                  w_current->second_wx, w_current->second_wy, whichone);
@@ -1220,7 +1220,7 @@ void o_grips_end_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whic
   TOPLEVEL *toplevel = w_current->toplevel;
 
   /* erase the temporary picture */
-  o_picture_rubberbox_xor(w_current);
+  /* o_picture_invalidate_rubber (w_current); */
 
   /* don't allow zero width/height picturees
    * this ends the picture drawing behavior
@@ -1261,7 +1261,7 @@ void o_grips_end_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int which
   TOPLEVEL *toplevel = w_current->toplevel;
 
   /* erase the temporary circle */
-  o_circle_rubbercircle_xor(w_current);
+  /* o_circle_invalidate_rubber (w_current); */
 
   /* don't allow zero radius circles
    * this ends the circle drawing behavior
@@ -1299,7 +1299,7 @@ void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichon
   TOPLEVEL *toplevel = w_current->toplevel;
 
   /* erase the temporary line */
-  o_line_rubberline_xor(w_current);
+  /* o_line_invalidate_rubber (w_current); */
 
   /* don't allow zero length nets / lines / pins
    * this ends the net drawing behavior
@@ -1342,7 +1342,7 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   GList *connected_objects = NULL;
 
   /* erase the temporary line */
-  o_line_rubberline_xor(w_current);
+  /* o_line_invalidate_rubber (w_current); */
 
   /* don't allow zero length net
    * this ends the net drawing behavior
@@ -1412,7 +1412,7 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   GList *connected_objects = NULL;
 
   /* erase the temporary line */
-  o_line_rubberline_xor(w_current);
+  /* o_line_invalidate_rubber (w_current); */
 
   /* don't allow zero length pin
    * this ends the pin changing behavior
@@ -1472,7 +1472,7 @@ void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   GList *connected_objects = NULL;
 
   /* erase the temporary line */
-  o_line_rubberline_xor(w_current);
+  /* o_line_invalidate_rubber (w_current); */
 
   /* don't allow zero length bus
    * this ends the bus changing behavior

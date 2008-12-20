@@ -452,9 +452,16 @@ void o_circle_fill_mesh (GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \par Function Description
  *
  */
-void o_circle_eraserubber(GSCHEM_TOPLEVEL *w_current)
+void o_circle_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-   o_circle_rubbercircle_xor(w_current);
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int cx, cy, radius;
+
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &cx, &cy);
+  radius = SCREENabs(toplevel, w_current->distance);
+
+  o_invalidate_rect (w_current, cx - radius, cy - radius,
+                                cx + radius, cy + radius);
 }
 
 /*! \brief Draw a circle described by OBJECT with translation
@@ -536,7 +543,7 @@ void o_circle_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->distance = 0;
 
   /* first temporary circle */
-  o_circle_rubbercircle_xor(w_current);
+  o_circle_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
@@ -567,7 +574,7 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   g_assert( w_current->inside_action != 0 );
 
   /* erase the temporary circle */
-  o_circle_rubbercircle_xor(w_current);
+  /* o_circle_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
   
   /* circle with null radius are not allowed */
@@ -619,7 +626,7 @@ void o_circle_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* erase the previous temporary circle if it is visible */
   if (w_current->rubber_visible)
-    o_circle_rubbercircle_xor(w_current);
+    o_circle_invalidate_rubber (w_current);
 
   /*
    * The radius is taken as the biggest distance on the x and y axis between
@@ -630,7 +637,7 @@ void o_circle_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->distance = max(diff_x, diff_y);
 
   /* draw the new temporary circle */
-  o_circle_rubbercircle_xor(w_current);
+  o_circle_invalidate_rubber (w_current);
   w_current->rubber_visible =1;
 }
 

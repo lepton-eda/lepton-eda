@@ -682,13 +682,16 @@ void o_line_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color,
 /*! \todo Finish function documentation
  *  \brief
  *  \par Function Description
- *
- *  \note
- *  used in button cancel code in x_events.c
  */
-void o_line_eraserubber(GSCHEM_TOPLEVEL *w_current)
+void o_line_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  o_line_rubberline_xor(w_current);
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x1, y1, x2, y2;
+
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+
+  o_invalidate_rect (w_current, x1, y1, x2, y2);
 }
 
 /*! \brief Draw a line object after applying translation.
@@ -753,7 +756,7 @@ void o_line_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->first_wy = w_current->second_wy = w_y;
   
   /* draw init xor */
-  o_line_rubberline_xor(w_current);
+  o_line_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
@@ -779,7 +782,8 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   g_assert( w_current->inside_action != 0 );
 
   /* erase xor image */
-  o_line_rubberline_xor(w_current);
+  /* Don't bother.. the real object is invalidated, its in the same place */
+  /* o_line_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
 
   /* don't allow zero length lines */
@@ -830,7 +834,7 @@ void o_line_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
    * erased. If the line was not already displayed it is drawn.
    */
   if (w_current->rubber_visible)
-    o_line_rubberline_xor(w_current);
+    o_line_invalidate_rubber (w_current);
 
   /*
    * The coordinates of the moving end of the line are updated. Its new
@@ -857,7 +861,7 @@ void o_line_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
    * function, if the line was displayed, it has been erased, updated and
    * displayed again.
    */
-  o_line_rubberline_xor(w_current);
+  o_line_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
