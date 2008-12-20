@@ -12,6 +12,7 @@ SUBDIRS= \
        geda \
        gossip \
        gsch2pcb \
+       liquidpcb \
        mathematica \
        maxascii \
        osmond \
