@@ -28,17 +28,72 @@
 #include <dmalloc.h>
 #endif
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+
+/*! \brief Tests a if a given OBJECT was hit at a given set of coordinates
  *
+ *  \par Function Description
+ *  Tests a if a given OBJECT was hit at a given set of coordinates. If so,
+ *  processes selection changes as appropriate for the object and passed
+ *  flag. Saves a pointer to the found object so future find operations
+ *  resume after this object.
+ *
+ *  \param [in] w_current         The GSCHEM_TOPLEVEL object.
+ *  \param [in] object            The OBJECT being hit-tested.
+ *  \param [in] w_x               The X coordinate to test (in world coords).
+ *  \param [in] w_y               The Y coordinate to test (in world coords).
+ *  \param [in] w_slack           The slack applied to the hit-test.
+ *  \param [in] change_selection  Whether to select the found object or not.
+ *  \returns TRUE if the OBJECT was hit, otherwise FALSE.
  */
-gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
-		       gboolean change_selection)
+static gboolean find_single_object (GSCHEM_TOPLEVEL *w_current, OBJECT *object,
+                                    int w_x, int w_y, int w_slack,
+                                    int change_selection)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current=NULL;
-  gboolean object_found = FALSE;
+  if (object->sel_func != NULL &&
+      (object->visibility == VISIBLE || toplevel->show_hidden_text) &&
+      inside_region (object->w_left  - w_slack, object->w_top    - w_slack,
+                     object->w_right + w_slack, object->w_bottom + w_slack,
+                     w_x, w_y) &&
+      o_shortest_distance (object, w_x, w_y) < w_slack) {
+    if (change_selection) {
+      /* FIXME: should this be moved to o_select_object()? (Werner) */
+      if (object->type == OBJ_NET && w_current->net_selection_mode) {
+        o_select_connected_nets (w_current, object);
+      } else {
+        (*object->sel_func) (w_current, object, SINGLE, 0); /* 0 is count */
+      }
+    }
+    toplevel->page_current->object_lastplace = object;
+    i_update_menus (w_current);
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+/*! \brief Find an OBJECT at a given set of coordinates
+ *
+ *  \par Function Description
+ *  Tests for OBJECTS hit at a given set of coordinates. If
+ *  change_selection is TRUE, it updates the page's selection.
+ *
+ *  Find operations resume searching after the last object which was
+ *  found, so multiple find operations at the same point will cycle
+ *  through any objects on top of each other at this location.
+ *
+ *  \param [in] w_current         The GSCHEM_TOPLEVEL object.
+ *  \param [in] object            The OBJECT being hit-tested.
+ *  \param [in] w_x               The X coordinate to test (in world coords).
+ *  \param [in] w_y               The Y coordinate to test (in world coords).
+ *  \param [in] change_selection  Whether to select the found object or not.
+ *  \returns TRUE if the object was hit at the given coordinates,
+ *           otherwise FALSE.
+ */
+gboolean o_find_object (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
+                        gboolean change_selection)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
   int w_slack;
   GList *iter = NULL;
 
@@ -57,62 +112,22 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
 
   /* do first search (if we found any objects after the last found object) */
   while (iter != NULL) {
-    o_current = iter->data;
-    if (inside_region(o_current->w_left - w_slack, o_current->w_top - w_slack,
-                      o_current->w_right + w_slack, o_current->w_bottom + w_slack,
-                      w_x, w_y) &&
-        o_shortest_distance (o_current, w_x, w_y) < w_slack ) {
-      if (o_current->sel_func != NULL &&
-          (o_current->visibility == VISIBLE || toplevel->show_hidden_text)) {
-        if (change_selection) {
-          /* FIXME: should this switch be moved to o_select_object()? (Werner) */
-          if (o_current->type == OBJ_NET && w_current->net_selection_mode) {
-            o_select_connected_nets(w_current, o_current);
-          } else {
-            (*o_current->sel_func)(w_current, o_current,
-                                   SINGLE, 0); /* 0 is count */
-          }
-        }
-        object_found = TRUE;
-        toplevel->page_current->object_lastplace = o_current;
-        i_update_menus(w_current);
-        return object_found;
-      }
+    OBJECT *o_current = iter->data;
+    if (find_single_object (w_current, o_current,
+                            w_x, w_y, w_slack, change_selection)) {
+      return TRUE;
     }
     iter = g_list_next (iter);
-  } 
-
-#if DEBUG
-  printf("SEARCHING AGAIN\n");
-#endif
+  }
 
   /* now search from the beginning up until the object_lastplace */
   for (iter = toplevel->page_current->object_list;
        iter != NULL; iter = g_list_next (iter)) {
-    o_current = iter->data;
-    if (inside_region(o_current->w_left - w_slack, o_current->w_top - w_slack,
-                      o_current->w_right + w_slack, o_current->w_bottom + w_slack,
-                      w_x, w_y) &&
-        o_shortest_distance (o_current, w_x, w_y) < w_slack) {
-
-      if (o_current->sel_func != NULL &&
-          (o_current->visibility == VISIBLE || toplevel->show_hidden_text)) {
-        if (change_selection) {
-          /* FIXME: should this switch be moved to o_select_object()? (Werner) */
-          if (o_current->type == OBJ_NET && w_current->net_selection_mode) {
-            o_select_connected_nets(w_current, o_current);
-          } else {
-            (*o_current->sel_func)(w_current, o_current, SINGLE, 0); /* 0 is count */
-          }
-        }
-        toplevel->page_current->object_lastplace = o_current;
-        object_found = TRUE;
-
-        i_update_menus(w_current);
-        return object_found;
-      }
+    OBJECT *o_current = iter->data;
+    if (find_single_object (w_current, o_current,
+                            w_x, w_y, w_slack, change_selection)) {
+      return TRUE;
     }
-
     /* break once we've inspected up to where we started the first loop */
     if (o_current == toplevel->page_current->object_lastplace)
       break;
@@ -128,8 +143,7 @@ gboolean o_find_object(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
   }
 
   i_update_menus(w_current);
-
-  return (object_found);
+  return FALSE;
 }
 
 /*! \todo Finish function documentation!!!
