@@ -109,11 +109,12 @@ void gnetlist_backends(TOPLEVEL *current)
 void main_prog(void *closure, int argc, char *argv[])
 {
     int i;
-    char input_str[2048];
     int argv_index;
     char *cwd;
     GSList *list_pnt;
     gchar *logfile;
+    gchar *str;
+    gchar *filename;
 
     TOPLEVEL *pr_current;
 
@@ -215,7 +216,6 @@ void main_prog(void *closure, int argc, char *argv[])
 
     i = argv_index;
     while (argv[i] != NULL) {
-      gchar *filename;
       GError *err = NULL;
 
       if (g_path_is_absolute(argv[i])) {
@@ -263,31 +263,27 @@ void main_prog(void *closure, int argc, char *argv[])
     s_page_print_all(pr_current);
 #endif
 
-    /* temporarly reuse input_str */
-    sprintf(input_str, "%s%cgnetlist.scm", pr_current->scheme_directory,
-            G_DIR_SEPARATOR);
-
-    if (g_read_file(input_str) != -1) {
-        s_log_message("Read init scm file [%s]\n", input_str);
+    filename = g_build_filename (pr_current->scheme_directory, "gnetlist.scm", NULL);
+    if (g_read_file (filename) != -1) {
+      s_log_message ("Read init scm file [%s]\n", filename);
     } else {
-        s_log_message("Failed to read init scm file [%s]\n", input_str);
-        fprintf(stderr, "Failed to read init scm file [%s]\n", input_str);
+      s_log_message ("Failed to read init scm file [%s]\n", filename);
+      fprintf (stderr, "Failed to read init scm file [%s]\n", filename);
     }
+    g_free (filename);
 
     if (guile_proc) {
         /* load the appropriate scm file */
-        sprintf(input_str, "%s%cgnet-%s.scm", pr_current->scheme_directory,
-                G_DIR_SEPARATOR, guile_proc);
-
-        if (g_read_file(input_str) != -1) {
-            s_log_message("Read %s scm file [%s]\n", guile_proc,
-                          input_str);
+        str = g_strdup_printf("gnet-%s.scm", guile_proc);
+        filename = g_build_filename (pr_current->scheme_directory, str, NULL);
+        g_free (str);
+        if (g_read_file (filename) != -1) {
+          s_log_message ("Read %s scm file [%s]\n", guile_proc, filename);
         } else {
-            s_log_message("Failed to read %s scm file [%s]\n",
-                          guile_proc, input_str);
-            fprintf(stderr, "Failed to read %s scm file [%s]\n",
-                    guile_proc, input_str);
+          s_log_message ("Failed to read %s scm file [%s]\n", guile_proc, filename);
+          fprintf (stderr, "Failed to read %s scm file [%s]\n", guile_proc, filename);
         }
+        g_free (filename);
 
         /* Load second set of scm files */
         list_pnt = post_backend_list;
@@ -318,21 +314,20 @@ void main_prog(void *closure, int argc, char *argv[])
     }
     g_free(cwd);
 
-    /* temporarly reuse input_str */
-    sprintf(input_str, "%s%cgnetlist-post.scm", pr_current->scheme_directory,
-            G_DIR_SEPARATOR);
-
-    if (g_read_file(input_str) != -1) {
-        s_log_message("Read post traversal scm file [%s]\n", input_str);
+    filename = g_build_filename (pr_current->scheme_directory, "gnetlist-post.scm", NULL);
+    if (g_read_file (filename) != -1) {
+      s_log_message ("Read post traversal scm file [%s]\n", filename);
     } else {
-        s_log_message("Failed to read post traversal scm file [%s]\n", input_str);
-        fprintf(stderr, "Failed to read post traversal scm file [%s]\n", input_str);
+      s_log_message ("Failed to read post traversal scm file [%s]\n", filename);
+      fprintf (stderr, "Failed to read post traversal scm file [%s]\n", filename);
     }
+    g_free (filename);
 
     if (guile_proc) {
         /* check size here hack */
-        sprintf(input_str, "(%s \"%s\")", guile_proc, output_filename);
-        scm_c_eval_string (input_str);
+        str = g_strdup_printf ("(%s \"%s\")", guile_proc, output_filename);
+        scm_c_eval_string (str);
+        g_free (str);
         /* gh_eval_str_with_stack_saving_handler (input_str); */
     } else if (interactive_mode) {
         scm_c_eval_string ("(set-repl-prompt! \"gnetlist> \")");
