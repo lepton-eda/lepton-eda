@@ -603,13 +603,8 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   (*fill_func) (w_current->drawable, w_current->gc, color,
                 w_current, path, fill_width, angle1, pitch1, angle2, pitch2);
 
-  if (o_current->draw_grips && w_current->draw_grips == TRUE) {
-    if (!o_current->selected) {
-      o_current->draw_grips = FALSE;
-    } else {
-      /* object is selected, draw the grips */
-      o_path_draw_grips(w_current, o_current);
-    }
+  if (o_current->selected && w_current->draw_grips) {
+    o_path_draw_grips (w_current, o_current);
   }
 }
 

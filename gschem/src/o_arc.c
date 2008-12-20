@@ -172,13 +172,8 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                 arc_width, length, space);
 
 
-  if (o_current->draw_grips && w_current->draw_grips == TRUE) {
-    if(!o_current->selected) {
-      o_current->draw_grips = FALSE;
-    } else {
-      /* object is selected, draw the grips on the arc */
-      o_arc_draw_grips(w_current, o_current);
-    }
+  if (o_current->selected && w_current->draw_grips == TRUE) {
+    o_arc_draw_grips (w_current, o_current);
   }
 
 #if DEBUG

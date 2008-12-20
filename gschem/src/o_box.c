@@ -270,13 +270,8 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                 w_current, o_current->box,
                 fill_width, angle1, pitch1, angle2, pitch2);
 
-  if ((o_current->draw_grips == TRUE) && (w_current->draw_grips == TRUE)) {
-    if (!o_current->selected) {
-      o_current->draw_grips = FALSE;
-    } else {
-      /* object is selected, draw the grips on the box */
-      o_box_draw_grips(w_current, o_current);
-    }
+  if (o_current->selected && w_current->draw_grips) {
+    o_box_draw_grips (w_current, o_current);
   }
 }
 

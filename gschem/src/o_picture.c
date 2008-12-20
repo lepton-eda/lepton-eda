@@ -404,15 +404,10 @@ void o_picture_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   /* Grip specific stuff */
-  if ((o_current->draw_grips == TRUE) && (w_current->draw_grips == TRUE)) {
-      if (!o_current->selected) {
-	o_current->draw_grips = FALSE;
-      } else {
-	/* object is selected, draw the grips on the picture */
-	if (toplevel->DONT_REDRAW == 0) {
-	  o_picture_draw_grips(w_current, o_current); 
-	}
-      }
+  if (o_current->selected && w_current->draw_grips) {
+    if (toplevel->DONT_REDRAW == 0) {
+      o_picture_draw_grips (w_current, o_current);
+    }
   }
 }
 
