@@ -110,6 +110,7 @@ void o_arc_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery
 OBJECT *o_attrib_search(GList *list, OBJECT *item);
 void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item);
 void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current);
+gboolean o_attrib_is_attached (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object);
 void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object, int set_color);
 void o_attrib_attach_list(TOPLEVEL *toplevel, GList *attr_list, OBJECT *object, int set_color);
 void o_attrib_free_all(TOPLEVEL *toplevel, GList *list);

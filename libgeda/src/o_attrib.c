@@ -142,6 +142,30 @@ void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current)
   }
 }
 
+
+/*! \brief Check whether a attrib is attached to another object
+ *  \par Function Description
+ *  This function checks whether the object \a attrib is attached to 
+ *  the \a object.
+ *
+ *  \param [in]  toplevel   The TOPLEVEL object.
+ *  \param [in]  attrib     The attribute to be checket.
+ *  \param [in]  object     The object where you want to add item as an attribute.
+ *  \return TRUE if attrib is an attribute of object, FALSE otherwise
+ */
+gboolean o_attrib_is_attached (TOPLEVEL *toplevel, 
+                               OBJECT *attrib, OBJECT *object)
+{
+  if (attrib == NULL || object == NULL)
+    return FALSE;
+
+  if (attrib->attached_to == object)
+    return TRUE;
+
+  return FALSE;
+}
+
+
 /*! \brief Attach existing attribute to an object.
  *  \par Function Description
  *  Attach existing attribute to an object.

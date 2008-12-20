@@ -35,4 +35,5 @@ GSYMS
 GTAGS
 HTML
 gschem.log
-
+docs/images/*png
+docs/images/*pdf
