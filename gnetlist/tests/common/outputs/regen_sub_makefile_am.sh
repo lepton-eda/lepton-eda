@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 OUTPUTDIRS=`find . -mindepth 1 -type d`
 
@@ -7,7 +7,7 @@ for DIR in $OUTPUTDIRS; do
   echo -n "EXTRA_DIST=" > $DIR/Makefile.am
   for FILE in $EXTRADIST; do
     BASEFILE=`basename $FILE`
-    echo -n " \\\\\\n\\t$BASEFILE" >> $DIR/Makefile.am
+    echo -n -e " \\\\\\n\\t$BASEFILE" >> $DIR/Makefile.am
   done
   echo >> $DIR/Makefile.am
 done
