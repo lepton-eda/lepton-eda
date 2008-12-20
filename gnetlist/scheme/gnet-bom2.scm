@@ -101,16 +101,22 @@
         (cons (cons (merge (list uref) (caar bomlist) string<? ) (cdar bomlist))(cdr bomlist))
         (cons (car bomlist)(bom2:match? uref attriblist (cdr bomlist)))))))
 
-(define bom2:components
-  (lambda (ls attriblist)
-    (if (null? ls)
-      '()
-      (let ((package (car ls))
-            (bomlist (bom2:components (cdr ls) attriblist))
-            (attribs (bom2:find-attribs (car ls) attriblist)))
-        (if (not (string=? "unknown" (gnetlist:get-package-attribute package "nobom")))
-          bomlist
-          (bom2:match? package attribs bomlist))))))
+(define (bom2:in-bom? package)
+  (string=? "unknown"
+            (gnetlist:get-package-attribute package "nobom")))
+
+(define (bom2:components-impl ls attriblist bomlist)
+  (if (null? ls)
+      bomlist
+      (let* ((package (car ls))
+             (attribs (bom2:find-attribs package attriblist)))
+        (bom2:components-impl (cdr ls) attriblist
+                              (if (bom2:in-bom? package)
+                                  (bom2:match? package attribs bomlist)
+                                  bomlist)))))
+
+(define (bom2:components ls attriblist)
+   (bom2:components-impl ls attriblist '()))
 
 (define bom2:find-attribs
   (lambda (package attriblist)
