@@ -1651,3 +1651,48 @@ void o_grips_erase(GSCHEM_TOPLEVEL *w_current, int x, int y)
   /* return to default */
   toplevel->override_color = -1;
 }
+
+
+/*! \brief Draw objects being grip maniuplated from GSCHEM_TOPLEVEL object.
+ *
+ *  \par Function Description
+ *  This function draws the objects being grip manipulated.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ */
+void o_grips_rubbergrip_xor (GSCHEM_TOPLEVEL *w_current)
+{
+  g_return_if_fail (w_current->which_object != NULL);
+
+  switch(w_current->which_object->type) {
+    case OBJ_ARC:
+      o_arc_rubberarc_xor (w_current);
+      break;
+
+    case OBJ_BOX:
+      o_box_rubberbox_xor (w_current);
+      break;
+
+    case OBJ_PATH:
+      o_path_rubberpath_xor (w_current);
+      break;
+
+    case OBJ_PICTURE:
+      o_picture_rubberbox_xor (w_current);
+      break;
+
+    case OBJ_CIRCLE:
+      o_circle_rubbercircle_xor (w_current);
+      break;
+
+    case OBJ_LINE:
+    case OBJ_NET:
+    case OBJ_PIN:
+    case OBJ_BUS:
+      o_line_rubberline_xor (w_current);
+    break;
+
+    default:
+    return; /* error condition */
+  }
+}

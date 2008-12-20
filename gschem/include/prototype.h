@@ -603,6 +603,7 @@ void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
 int o_grips_size(GSCHEM_TOPLEVEL *w_current);
 void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_grips_erase(GSCHEM_TOPLEVEL *w_current, int x, int y);
+void o_grips_rubbergrip_xor(GSCHEM_TOPLEVEL *w_current);
 /* o_line.c */
 void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_line_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
