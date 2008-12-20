@@ -174,8 +174,6 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
                                 screen_y - size,
                                 x2size,
                                 x2size);
-	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
-	                                 screen_x + size, screen_y + size);
 	  }
         
         } else if (count >= 2) {
@@ -194,8 +192,6 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
                           screen_x - size,
                           screen_y - size,
                           x2size, x2size, 0, FULL_CIRCLE);
-	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
-                                   screen_x + size, screen_y + size);
 	  }
         }
       } else if (object->type == OBJ_PIN) {
@@ -267,8 +263,6 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
                       screen_x - size,
                       screen_y - size,
                       x2size, x2size, 0, FULL_CIRCLE);
-	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
-                                   screen_x + size, screen_y + size);
       }
       break;
 
@@ -278,43 +272,6 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
   
 }
 
-/*! \brief Lowlevel endpoint erase.
- *  \par Function Description
- *  This function erases OBJECT endpoints forceably.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] object     OBJECT to forceably erase endpoint from.
- *  \param [in] whichone   Which endpoint to erase from OBJECT.
- */
-void o_cue_erase_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichone)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int x, y, screen_x, screen_y;
-  int size, x2size;
-  
-  x = object->line->x[whichone];
-  y = object->line->y[whichone];
-
-  size = SCREENabs(toplevel, CUE_BOX_SIZE);
-  x2size = 2 * size;
-
-  gdk_gc_set_foreground(w_current->gc,
-                        x_get_color(toplevel->background_color));
- 
-  WORLDtoSCREEN(toplevel, x, y, &screen_x, &screen_y);
-  
-  if (toplevel->DONT_REDRAW == 0) {
-    gdk_draw_rectangle (w_current->drawable,
-                        w_current->gc, TRUE,
-                        screen_x - size,
-                        screen_y - size,
-                        x2size,
-                        x2size);
-	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
-                                   screen_x + size, screen_y + size);
-  }
-
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -367,8 +324,6 @@ void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
                         screen_x - size,
                         screen_y - size,
                         x2size, x2size, 0, FULL_CIRCLE);
-          o_invalidate_rect (w_current, screen_x - size, screen_y - size,
-                                        screen_x + size, screen_y + size);
         }
         break;
     }
@@ -402,102 +357,6 @@ void o_cue_draw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_cue_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  if (!object) {
-    return;
-  }
-
-  if (object->type != OBJ_NET && object->type != OBJ_PIN &&
-      object->type != OBJ_BUS)
-  {
-    return;
-  }
-
-  if (object->type != OBJ_PIN) {
-    o_cue_erase_lowlevel(w_current, object, 0);
-    o_cue_erase_lowlevel(w_current, object, 1);
-    toplevel->override_color = toplevel->background_color;
-    o_cue_draw_lowlevel_midpoints(w_current, object);
-    toplevel->override_color = -1;
-  } else {
-    o_cue_erase_lowlevel(w_current, object, object->whichend);
-  }
-}
-
-/*! \brief Erase the cues of an object and redraw connected objects.
- *  \par Function Description
- *  This function erases the cues on object \a object. It then redraws
- *  the cues of its connected objects.
- *
- *  \param [in] w_current The GSCHEM_TOPLEVEL object.
- *  \param [in] object    The object to redraw with no cue.
- */
-static void o_cue_undraw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
-{
-  GList *cl_current;
-  CONN *conn;
-
-  o_cue_erase_single(w_current, object);
-
-  cl_current = object->conn_list;
-  while(cl_current != NULL) {
-    conn = (CONN *) cl_current->data;
-
-    if (conn->other_object) {
-      o_redraw_single(w_current, conn->other_object);
-    }
-
-    cl_current = g_list_next(cl_current);
-  }
-}
-
-/*! \brief Hide the cues of an object.
- *  \par Function Description
- *  This function takes an object and redraws it without its cues. It
- *  also manages the redraw of connected objects.
- *
- *  \note
- *  The connections of the object are unchanged by this function.
- *
- *  \param [in] w_current The GSCHEM_TOPLEVEL object.
- *  \param [in] object    The object to redraw with no cue.
- */
-void o_cue_undraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
-{
-  GList *iter;
-  switch (object->type) {
-    case OBJ_PIN:
-    case OBJ_NET:
-    case OBJ_BUS:
-      o_cue_undraw_lowlevel (w_current, object);
-      break;
-    case OBJ_COMPLEX:
-    case OBJ_PLACEHOLDER:
-    {
-      OBJECT *o_current;
-      iter = object->complex->prim_objs;
-      for (iter = object->complex->prim_objs;
-           iter != NULL;
-           iter = g_list_next (iter)) {
-        o_current = iter->data;
-        if (o_current->type == OBJ_PIN ||
-            o_current->type == OBJ_NET ||
-            o_current->type == OBJ_BUS) {
-          o_cue_undraw_lowlevel (w_current, o_current);
-        }
-      }
-    }
-  }
-
-  o_redraw_single(w_current, object);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -518,24 +377,3 @@ void o_cue_draw_list(GSCHEM_TOPLEVEL *w_current, GList *object_list)
     ol_current = g_list_next(ol_current);
   }
 }
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_cue_undraw_list(GSCHEM_TOPLEVEL *w_current, GList *object_list)
-{
-  OBJECT *object;
-  GList *ol_current;
-
-  ol_current = object_list;
-  while(ol_current != NULL) {
-    object = (OBJECT *) ol_current->data;
-
-    o_cue_undraw(w_current, object);
-    
-    ol_current = g_list_next(ol_current);
-  }
-}
-

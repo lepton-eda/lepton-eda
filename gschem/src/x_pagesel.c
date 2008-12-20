@@ -170,7 +170,7 @@ static void pagesel_callback_selection_changed (GtkTreeSelection *selection,
   s_page_goto (w_current->toplevel, page);
   i_set_filename (w_current, w_current->toplevel->page_current->page_filename);
   x_scrollbars_update (w_current);
-  o_redraw_all (w_current);
+  o_invalidate_all (w_current);
 
   /* We would like to use the following call, but since it calls 
    * x_pagesel_update() it would cause an infinite loop.

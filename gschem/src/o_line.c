@@ -165,15 +165,8 @@ void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                              GDK_CAP_NOT_LAST,
                              GDK_JOIN_MITER);
 
-  if (o_current->draw_grips && w_current->draw_grips == TRUE) {
-    if (!o_current->selected) {
-      /* object is no more selected, erase the grips */
-      o_current->draw_grips = FALSE;
-      o_line_erase_grips(w_current, o_current);
-    } else {
-      /* object is selected, draw the grips */
-      o_line_draw_grips(w_current, o_current);
-    }
+  if (o_current->selected && w_current->draw_grips) {
+    o_line_draw_grips (w_current, o_current);
   }
 
 #if DEBUG
@@ -689,13 +682,16 @@ void o_line_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color,
 /*! \todo Finish function documentation
  *  \brief
  *  \par Function Description
- *
- *  \note
- *  used in button cancel code in x_events.c
  */
-void o_line_eraserubber(GSCHEM_TOPLEVEL *w_current)
+void o_line_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  o_line_rubberline_xor(w_current);
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x1, y1, x2, y2;
+
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+
+  o_invalidate_rect (w_current, x1, y1, x2, y2);
 }
 
 /*! \brief Draw a line object after applying translation.
@@ -760,7 +756,7 @@ void o_line_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->first_wy = w_current->second_wy = w_y;
   
   /* draw init xor */
-  o_line_rubberline_xor(w_current);
+  o_line_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
@@ -786,7 +782,8 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   g_assert( w_current->inside_action != 0 );
 
   /* erase xor image */
-  o_line_rubberline_xor(w_current);
+  /* Don't bother.. the real object is invalidated, its in the same place */
+  /* o_line_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
 
   /* don't allow zero length lines */
@@ -803,7 +800,7 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   s_page_append (toplevel->page_current, new_obj);
 
   /* draw it */
-  o_redraw_single (w_current, new_obj);
+  o_invalidate (w_current, new_obj);
   
   toplevel->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);
@@ -837,7 +834,7 @@ void o_line_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
    * erased. If the line was not already displayed it is drawn.
    */
   if (w_current->rubber_visible)
-    o_line_rubberline_xor(w_current);
+    o_line_invalidate_rubber (w_current);
 
   /*
    * The coordinates of the moving end of the line are updated. Its new
@@ -864,7 +861,7 @@ void o_line_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
    * function, if the line was displayed, it has been erased, updated and
    * displayed again.
    */
-  o_line_rubberline_xor(w_current);
+  o_line_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
@@ -893,7 +890,6 @@ void o_line_rubberline_xor(GSCHEM_TOPLEVEL *w_current)
 			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
 			     GDK_JOIN_MITER);
   gdk_draw_line (w_current->drawable, w_current->xor_gc, x1, y1, x2, y2);
-  o_invalidate_rect(w_current, x1, y1, x2, y2);
 }
 
 /*! \brief Draw grip marks on line.
@@ -921,32 +917,4 @@ void o_line_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   
   /* draw the grip on line end 2 */
   o_grips_draw(w_current, x[LINE_END2], y[LINE_END2]);
-}
-
-/*! \brief Erase grip marks from line.
- *  \par Function Description
- *  This function erases the grips on the line object <B>o_current</B>.
- *
- *  A line has a grip at each end.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Line OBJECT to erase grip marks from.
- */
-void o_line_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int x[2], y[2];
-
-  if (w_current->draw_grips == FALSE)
-    return;
-  
-  WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &x[0], &y[0] );
-  WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &x[1], &y[1] );
-  
-  /* erase the grip on line end 1 */
-  o_grips_erase(w_current, x[LINE_END1], y[LINE_END1]);
-  
-  /* erase the grip on line end 2 */
-  o_grips_erase(w_current, x[LINE_END2], y[LINE_END2]);
-  
 }

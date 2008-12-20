@@ -162,7 +162,7 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
   /* redraw */
   if (!(flags & A_PAN_DONT_REDRAW)) {
     x_scrollbars_update(w_current);
-    o_redraw_all(w_current);
+    o_invalidate_all (w_current);
   }
 }
 

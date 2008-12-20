@@ -259,15 +259,8 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   printf("drawing circle\n");
 #endif
 
-  if (o_current->draw_grips && w_current->draw_grips == TRUE) {
-    if (!o_current->selected) {
-      /* object is no more selected, erase the grips */
-      o_current->draw_grips = FALSE;
-      o_circle_erase_grips(w_current, o_current);
-    } else {
-      /* object is selected, draw the grips */
-      o_circle_draw_grips(w_current, o_current);
-    }
+  if (o_current->selected && w_current->draw_grips) {
+    o_circle_draw_grips (w_current, o_current);
   }
 }
 
@@ -459,9 +452,16 @@ void o_circle_fill_mesh (GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \par Function Description
  *
  */
-void o_circle_eraserubber(GSCHEM_TOPLEVEL *w_current)
+void o_circle_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-   o_circle_rubbercircle_xor(w_current);
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int cx, cy, radius;
+
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &cx, &cy);
+  radius = SCREENabs(toplevel, w_current->distance);
+
+  o_invalidate_rect (w_current, cx - radius, cy - radius,
+                                cx + radius, cy + radius);
 }
 
 /*! \brief Draw a circle described by OBJECT with translation
@@ -543,7 +543,7 @@ void o_circle_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->distance = 0;
 
   /* first temporary circle */
-  o_circle_rubbercircle_xor(w_current);
+  o_circle_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
@@ -574,7 +574,7 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   g_assert( w_current->inside_action != 0 );
 
   /* erase the temporary circle */
-  o_circle_rubbercircle_xor(w_current);
+  /* o_circle_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
   
   /* circle with null radius are not allowed */
@@ -590,8 +590,8 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   s_page_append (toplevel->page_current, new_obj);
 
   /* draw it */
-  o_redraw_single (w_current, new_obj);
-  
+  o_invalidate (w_current, new_obj);
+
   toplevel->page_current->CHANGED = 1;
   o_undo_savestate(w_current, UNDO_ALL);
 }
@@ -626,7 +626,7 @@ void o_circle_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* erase the previous temporary circle if it is visible */
   if (w_current->rubber_visible)
-    o_circle_rubbercircle_xor(w_current);
+    o_circle_invalidate_rubber (w_current);
 
   /*
    * The radius is taken as the biggest distance on the x and y axis between
@@ -637,7 +637,7 @@ void o_circle_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->distance = max(diff_x, diff_y);
 
   /* draw the new temporary circle */
-  o_circle_rubbercircle_xor(w_current);
+  o_circle_invalidate_rubber (w_current);
   w_current->rubber_visible =1;
 }
 
@@ -670,9 +670,6 @@ void o_circle_rubbercircle_xor(GSCHEM_TOPLEVEL *w_current)
   gdk_draw_arc (w_current->drawable, w_current->xor_gc, FALSE,
                 cx - radius, cy - radius, 2 * radius, 2* radius,
                 0, FULL_CIRCLE);
-  o_invalidate_rect(w_current, 
-		    cx - radius, cy - radius,
-		    cx + radius, cy + radius);
 }
 
 /*! \brief Draw grip marks on circle.
@@ -698,34 +695,5 @@ void o_circle_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   
   /* grip on lower right corner of the square */
   o_grips_draw(w_current, x, y);
-
-}
-
-/*! \brief Erase grip marks from circle.
- *  \par Function Description
- *  The function erases the grips displayed on a circle object.
- *
- *  A circle has a single grip on the lower right corner of the square it
- *  is inscribed in.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Circle OBJECT to erase grip marks from.
- */
-void o_circle_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int x, y;
-
-  if (w_current->draw_grips == FALSE)
-	  return;
-
-  /* coords of the lower right corner of square */
-  WORLDtoSCREEN( toplevel,
-                 o_current->circle->center_x + o_current->circle->radius,
-                 o_current->circle->center_y - o_current->circle->radius,
-                 &x, &y );
-  
-  /* grip on lower right corner of the square */
-  o_grips_erase(w_current, x, y);
 
 }

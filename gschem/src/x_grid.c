@@ -37,12 +37,13 @@ static GdkPoint points[5000];
  *  \par Function Description
  *
  */
-void x_grid_draw(GSCHEM_TOPLEVEL *w_current)
+void x_grid_draw_region (GSCHEM_TOPLEVEL *w_current,
+                         int x, int y, int width, int height)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int i, j;
-  int x, y;
-  int x_start, y_start;
+  int dot_x, dot_y;
+  int x_start, y_start, x_end, y_end;
   int count = 0;
 
   int incr = 100;
@@ -95,17 +96,18 @@ void x_grid_draw(GSCHEM_TOPLEVEL *w_current)
   gdk_gc_set_foreground(w_current->gc,
                         x_get_color(w_current->grid_color));
 
+  SCREENtoWORLD (toplevel, x - 1, y + height + 1, &x_start, &y_start);
+  SCREENtoWORLD (toplevel, x + width + 1, y - 1, &x_end, &y_end);
+
   /* figure starting grid coordinates, work by taking the start
    * and end coordinates and rounding down to the nearest
    * increment */
-  x_start = (toplevel->page_current->left -
-             (toplevel->page_current->left % incr));
-  y_start = (toplevel->page_current->top -
-             (toplevel->page_current->top  % incr));
+  x_start -= (x_start % incr);
+  y_start -= (y_start % incr);
 
-  for (i = x_start; i < toplevel->page_current->right; i = i + incr) {
-    for(j = y_start; j < toplevel->page_current->bottom; j = j + incr) {
-      WORLDtoSCREEN(toplevel, i,j, &x, &y);
+  for (i = x_start; i <= x_end; i = i + incr) {
+    for(j = y_start; j <= y_end; j = j + incr) {
+      WORLDtoSCREEN(toplevel, i,j, &dot_x, &dot_y);
       if (inside_region(toplevel->page_current->left,
                         toplevel->page_current->top,
                         toplevel->page_current->right,
@@ -114,8 +116,8 @@ void x_grid_draw(GSCHEM_TOPLEVEL *w_current)
 
 	if (w_current->grid_dot_size == 1)
         {
-          points[count].x = x;
-          points[count].y = y;
+          points[count].x = dot_x;
+          points[count].y = dot_y;
           count++;
 
           /* get out of loop if more than 1000 points */
@@ -128,7 +130,7 @@ void x_grid_draw(GSCHEM_TOPLEVEL *w_current)
         else
         {
           gdk_draw_arc (w_current->drawable, w_current->gc,
-                        TRUE, x, y,
+                        TRUE, dot_x, dot_y,
                         w_current->grid_dot_size,
                         w_current->grid_dot_size, 0, FULL_CIRCLE);
         }

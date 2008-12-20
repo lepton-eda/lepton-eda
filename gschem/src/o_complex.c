@@ -224,7 +224,7 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
   /* first zoom extents */
   a_zoom_extents (w_current, toplevel->page_current->object_list,
                  A_PAN_DONT_REDRAW);
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
 
   world_get_object_glist_bounds (toplevel, toplevel->page_current->object_list,
                                  &w_rleft,
@@ -274,7 +274,7 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
   a_zoom_extents (w_current, toplevel->page_current->object_list,
                  A_PAN_DONT_REDRAW);
   if (!w_current->SHIFTKEY) o_select_unselect_all(w_current);
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
   toplevel->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);
   i_update_menus(w_current);

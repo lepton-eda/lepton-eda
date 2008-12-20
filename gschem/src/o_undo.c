@@ -407,7 +407,7 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
   toplevel->DONT_REDRAW = prev_status;
 
   if (!toplevel->DONT_REDRAW) {
-    o_redraw_all(w_current);
+    o_invalidate_all (w_current);
   }
   i_update_menus(w_current);
 

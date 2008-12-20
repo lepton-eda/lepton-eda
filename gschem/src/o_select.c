@@ -232,7 +232,7 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   o_attrib_add_selected(w_current, toplevel->page_current->selection_list, o_current);
 
   /* finally redraw object */
-  o_redraw_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -266,7 +266,7 @@ int o_select_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_select_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  o_select_box_rubberband_xor(w_current);
+  o_select_box_invalidate_rubber (w_current);
   w_current->rubber_visible = 0;
 
   o_select_box_search(w_current);
@@ -280,13 +280,31 @@ void o_select_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_select_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   if (w_current->rubber_visible)
-    o_select_box_rubberband_xor(w_current);
+    o_select_box_invalidate_rubber (w_current);
     
   w_current->second_wx = w_x; 
   w_current->second_wy = w_y;
 
-  o_select_box_rubberband_xor(w_current);
+  o_select_box_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ */
+void o_select_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x1, y1, x2, y2;
+
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+
+  o_invalidate_rect (w_current, x1, y1, x2, y1);
+  o_invalidate_rect (w_current, x1, y1, x1, y2);
+  o_invalidate_rect (w_current, x2, y1, x2, y2);
+  o_invalidate_rect (w_current, x1, y2, x2, y2);
 }
 
 /*! \todo Finish function documentation!!!
@@ -313,9 +331,6 @@ void o_select_box_rubberband_xor(GSCHEM_TOPLEVEL *w_current)
   gdk_draw_rectangle (w_current->drawable, w_current->xor_gc,
                       FALSE,
                       box_left, box_top, box_width, box_height);
-  o_invalidate_rect(w_current, 
-		    box_left, box_top,
-		    box_left + box_width, box_top  + box_height);
 }
 
 /*! \todo Finish function documentation!!!
@@ -498,7 +513,7 @@ void o_select_unselect_list(GSCHEM_TOPLEVEL *w_current, SELECTION *selection)
 
   while ( list != NULL ) {
     o_selection_unselect( (OBJECT *)list->data );
-    o_redraw_single( w_current, (OBJECT *)list->data );
+    o_invalidate (w_current, (OBJECT *)list->data);
    list = g_list_next( list );
   }
 

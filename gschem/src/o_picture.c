@@ -60,7 +60,7 @@ void o_picture_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->first_wy = w_current->second_wy = w_y;
 
   /* start to draw the box */
-  o_picture_rubberbox_xor(w_current);
+  o_picture_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
@@ -88,7 +88,7 @@ void o_picture_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   g_assert( w_current->inside_action != 0 );
 
   /* erase the temporary picture */
-  o_picture_rubberbox_xor(w_current);
+  /* o_picture_rubberbox_xor(w_current); */
   w_current->rubber_visible = 0;
   
   picture_width  = GET_PICTURE_WIDTH (w_current);
@@ -113,8 +113,8 @@ void o_picture_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   s_page_append (toplevel->page_current, new_obj);
 
   /* draw it */
-  o_redraw_single (w_current, new_obj);
-  
+  o_invalidate (w_current, new_obj);
+
   toplevel->page_current->CHANGED = 1;
   o_undo_savestate(w_current, UNDO_ALL);
 }
@@ -176,7 +176,7 @@ void picture_selection_dialog (GSCHEM_TOPLEVEL *w_current)
       printf("Picture loaded succesfully.\n");
 #endif
       
-      o_erase_rubber(w_current);
+      o_invalidate_rubber(w_current);
       i_update_middle_button(w_current, i_callback_add_picture, _("Picture"));
       w_current->inside_action = 0;
       
@@ -202,12 +202,21 @@ void picture_selection_dialog (GSCHEM_TOPLEVEL *w_current)
  *  \note
  * used in button cancel code in x_events.c
  */
-void o_picture_eraserubber(GSCHEM_TOPLEVEL *w_current)
+void o_picture_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-#if DEBUG
-  printf("o_picture_eraserubber called\n");
-#endif
-  o_picture_rubberbox_xor(w_current);
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int left, top, width, height;
+
+  WORLDtoSCREEN (toplevel,
+                 GET_PICTURE_LEFT(w_current), GET_PICTURE_TOP(w_current),
+                 &left, &top);
+  width = SCREENabs(toplevel, GET_PICTURE_WIDTH (w_current));
+  height = SCREENabs(toplevel, GET_PICTURE_HEIGHT(w_current));
+
+  o_invalidate_rect (w_current, left, top, left + width, top);
+  o_invalidate_rect (w_current, left, top, left, top + height);
+  o_invalidate_rect (w_current, left + width, top, left + width, top + height);
+  o_invalidate_rect (w_current, left, top + height, left + width, top + height);
 }
 
 /*! \brief Draw temporary picture while dragging edge.
@@ -234,7 +243,7 @@ void o_picture_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* erase the previous temporary box */
   if (w_current->rubber_visible)
-    o_picture_rubberbox_xor(w_current);
+    o_picture_invalidate_rubber (w_current);
 
   /*
    * New values are fixed according to the <B>w_x</B> and <B>w_y</B> parameters. 
@@ -247,7 +256,7 @@ void o_picture_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->second_wy = w_y;
 
   /* draw the new temporary box */
-  o_picture_rubberbox_xor(w_current);
+  o_picture_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
@@ -292,8 +301,6 @@ void o_picture_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
 			     GDK_JOIN_MITER);
   gdk_draw_rectangle (w_current->drawable, w_current->xor_gc,
                       FALSE, left, top, width, height);
-  o_invalidate_rect(w_current, 
-		    left, top, left + width, top + height);
 }
 
 /*! \brief Draw a picture on the screen.
@@ -406,19 +413,10 @@ void o_picture_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   /* Grip specific stuff */
-  if ((o_current->draw_grips == TRUE) && (w_current->draw_grips == TRUE)) {
-      if (!o_current->selected) {
-	/* object is no more selected, erase the grips */
-	o_current->draw_grips = FALSE;
-	if (toplevel->DONT_REDRAW == 0) {
-	  o_picture_erase_grips(w_current, o_current); 
-	}
-      } else {
-	/* object is selected, draw the grips on the picture */
-	if (toplevel->DONT_REDRAW == 0) {
-	  o_picture_draw_grips(w_current, o_current); 
-	}
-      }
+  if (o_current->selected && w_current->draw_grips) {
+    if (toplevel->DONT_REDRAW == 0) {
+      o_picture_draw_grips (w_current, o_current);
+    }
   }
 }
 
@@ -464,50 +462,6 @@ void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                       s_upper_x, s_upper_y,
                       abs(s_upper_x - s_lower_x),
                       abs(s_upper_y - s_lower_y));
-}
-
-/*! \brief Erase grip marks from box.
- *  \par Function Description
- *  This function erases the four grips displayed on the <B>*o_current</B>
- *  picture object. These grips are on each of the corner.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Picture OBJECT to erase grip marks from.
- */
-void o_picture_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
-
-#if DEBUG
-  printf("o_picture_erase_grips called\n");
-#endif
-  if (w_current->draw_grips == FALSE)
-	  return;
-
-  WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->upper_y,
-                 &s_upper_x, &s_upper_y );
-  WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->lower_y,
-                 &s_lower_x, &s_lower_y );
-  
-  /* grip on upper left corner (whichone = PICTURE_UPPER_LEFT) */
-  o_grips_erase(w_current, s_upper_x, s_upper_y);
-  
-  /* grip on upper right corner (whichone = PICTURE_UPPER_RIGHT) */
-  o_grips_erase(w_current, s_lower_x, s_upper_y);
-  
-  /* grip on lower left corner (whichone = PICTURE_LOWER_LEFT) */
-  o_grips_erase(w_current, s_upper_x, s_lower_y);
-  
-  /* grip on lower right corner (whichone = PICTURE_LOWER_RIGHT) */
-  o_grips_erase(w_current, s_lower_x, s_lower_y);
-  
-  /* Box surrounding the picture */
-  gdk_draw_rectangle (w_current->drawable, w_current->gc, FALSE,
-                      s_upper_x, s_upper_y,
-                      abs(s_upper_x - s_lower_x),
-                      abs(s_upper_y - s_lower_y));
-  
 }
 
 
@@ -590,7 +544,7 @@ void o_picture_exchange (GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf,
       if (object->type == OBJ_PICTURE) {
 
         /* Erase previous picture */
-        o_erase_single(w_current, object);
+        o_invalidate (w_current, object);
 
         g_free(object->picture->filename);
 
@@ -619,7 +573,7 @@ void o_picture_exchange (GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf,
         object->picture->ratio = (double)gdk_pixbuf_get_width(pixbuf) /
                                          gdk_pixbuf_get_height(pixbuf);
         /* Draw new picture */
-        o_picture_draw(w_current, object);
+        o_invalidate (w_current, object);
       }
     }
     list = g_list_next(list);
@@ -687,7 +641,7 @@ void picture_change_filename_dialog (GSCHEM_TOPLEVEL *w_current)
       printf("Picture loaded succesfully.\n");
 #endif
 
-      o_erase_rubber(w_current);
+      o_invalidate_rubber(w_current);
       w_current->inside_action = 0;
 
       /* \FIXME Should we set the pixbuf buffer in GSCHEM_TOPLEVEL to store

@@ -88,17 +88,12 @@ preview_callback_realize (GtkWidget *widget,
   preview_w_current->win_width  = preview_toplevel->width;
   preview_w_current->win_height = preview_toplevel->height;
 
-  preview_w_current->drawable = gdk_pixmap_new (
-    preview_w_current->window,
-    preview_w_current->drawing_area->allocation.width,
-    preview_w_current->drawing_area->allocation.height, -1);
+  preview_w_current->drawable = preview_w_current->window;
 
   x_window_setup_gc (preview_w_current);
 
   preview_page = s_page_new (preview_toplevel, "unknown");
   s_page_goto (preview_toplevel, preview_page);
-
-  x_repaint_background(preview_w_current);
 
   preview_toplevel->DONT_REDRAW = 0;
 
@@ -106,7 +101,7 @@ preview_callback_realize (GtkWidget *widget,
                  preview_page->object_list,
                  A_PAN_DONT_REDRAW);
 
-  o_redraw_all(preview_w_current);
+  o_invalidate_all (preview_w_current);
 
 }
 
@@ -126,13 +121,12 @@ preview_callback_expose (GtkWidget *widget,
 {
   Preview *preview = PREVIEW (widget);
   GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
+  GdkRectangle *rectangles;
+  int n_rectangles;
 
-  gdk_draw_pixmap (widget->window,
-                   widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
-                   preview_w_current->drawable,
-                   event->area.x, event->area.y,
-                   event->area.x, event->area.y,
-                   event->area.width, event->area.height);
+  gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
+  o_redraw_rects (preview_w_current, rectangles, n_rectangles);
+  g_free (rectangles);
 
   return FALSE;
 }
@@ -165,7 +159,7 @@ preview_callback_button_press (GtkWidget *widget,
       case 1: /* left mouse button: zoom in */
         a_zoom (preview_w_current, ZOOM_IN, HOTKEY,
                 A_PAN_DONT_REDRAW);
-        o_redraw_all (preview_w_current);
+        o_invalidate_all (preview_w_current);
         break;
       case 2: /* middle mouse button: pan */
 	if (!x_event_get_pointer_position(preview_w_current, FALSE, &wx, &wy))
@@ -175,7 +169,7 @@ preview_callback_button_press (GtkWidget *widget,
       case 3: /* right mouse button: zoom out */
         a_zoom (preview_w_current, ZOOM_OUT, HOTKEY,
                 A_PAN_DONT_REDRAW);
-        o_redraw_all (preview_w_current);
+        o_invalidate_all (preview_w_current);
         break;
   }
   
@@ -249,7 +243,7 @@ preview_update (Preview *preview)
   a_zoom_extents (preview_w_current,
                   preview_toplevel->page_current->object_list,
                   A_PAN_DONT_REDRAW);
-  o_redraw_all (preview_w_current);
+  o_invalidate_all (preview_w_current);
   
 }
 
@@ -330,12 +324,7 @@ preview_event_configure (GtkWidget         *widget,
   retval = x_event_configure (widget, event, preview_w_current);
   preview_w_current->toplevel->DONT_REDRAW = save_redraw;
   if (preview_page != NULL) {
-    /* If we have an empty page without object, just redraw the background */
-    if (preview_page->object_list == NULL) {
-      x_repaint_background(preview_w_current);
-    } else {
-      a_zoom_extents (preview_w_current, preview_page->object_list, 0);
-    }
+    a_zoom_extents (preview_w_current, preview_page->object_list, 0);
   }
   return retval;
 }
@@ -481,10 +470,6 @@ preview_dispose (GObject *self)
 
   if (preview_w_current != NULL) {
     preview_w_current->drawing_area = NULL;
-
-    if (preview_w_current->drawable) {
-      gdk_pixmap_unref (preview_w_current->drawable);
-    }
 
     x_window_free_gc (preview_w_current);
     

@@ -88,15 +88,8 @@ void o_bus_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   printf("drawing bus\n");
 #endif
 
-  if (o_current->draw_grips && w_current->draw_grips == TRUE) {
-    if (!o_current->selected) {
-      /* object is no more selected, erase the grips */
-      o_current->draw_grips = FALSE;
-      o_line_erase_grips(w_current, o_current);
-    } else {
-      /* object is selected, draw the grips */
-      o_line_draw_grips(w_current, o_current);
-    }
+  if (o_current->selected && w_current->draw_grips) {
+    o_line_draw_grips (w_current, o_current);
   }
 }
 
@@ -195,8 +188,6 @@ void o_bus_draw_xor_single(GSCHEM_TOPLEVEL *w_current,
 
   gdk_draw_line (w_current->drawable, w_current->outline_xor_gc,
                  sx[0], sy[0], sx[1], sy[1]);
-  o_invalidate_rect(w_current,
-                    sx[0], sy[0], sx[1], sy[1]);
 }
 
 /*! \brief set the start point of a new bus
@@ -246,7 +237,7 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   }
 
   /* erase the rubberbus */
-  o_bus_rubberbus_xor(w_current);
+  /* o_bus_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
 
   /* don't allow zero length bus */
@@ -261,14 +252,12 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
                       w_current->second_wx, w_current->second_wy, 0);
   s_page_append (toplevel->page_current, new_obj);
 
-  o_bus_draw(w_current, new_obj);
+  o_invalidate (w_current, new_obj);
 
   /* connect the new bus to the other busses */
   prev_conn_objects = s_conn_return_others (prev_conn_objects, new_obj);
-  o_cue_undraw_list (w_current, prev_conn_objects);
-  o_cue_draw_list (w_current, prev_conn_objects);
+  o_invalidate_glist (w_current, prev_conn_objects);
   g_list_free (prev_conn_objects);
-  o_cue_draw_single (w_current, new_obj);
 
   toplevel->page_current->CHANGED=1;
   w_current->first_wx = w_current->second_wx;
@@ -300,7 +289,7 @@ void o_bus_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   g_assert( w_current->inside_action != 0 );
 
   if (w_current->rubber_visible)
-    o_bus_rubberbus_xor(w_current);
+    o_bus_invalidate_rubber (w_current);
 
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
@@ -317,8 +306,35 @@ void o_bus_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
     }
   }
 
-  o_bus_rubberbus_xor(w_current);
+  o_bus_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_bus_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x1, y1, x2, y2;
+  int min_x, min_y, max_x, max_y;
+  int bloat = 0;
+
+  WORLDtoSCREEN (toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN (toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+
+  if (toplevel->bus_style == THICK ) {
+    bloat = SCREENabs(toplevel, BUS_WIDTH) / 2;
+  }
+
+  min_x = min (x1, x2) - bloat;
+  max_x = max (x1, x2) + bloat;
+  min_y = min (y1, y2) - bloat;
+  max_y = max (y1, y2) + bloat;
+
+  o_invalidate_rect (w_current, min_x, min_y, max_x, max_y);
 }
 
 /*! \brief draw a rubberbus segment in XOR mode
@@ -355,9 +371,6 @@ void o_bus_rubberbus_xor(GSCHEM_TOPLEVEL *w_current)
   gdk_gc_set_foreground(w_current->xor_gc, 
 			x_get_darkcolor(w_current->select_color));
   gdk_draw_line (w_current->drawable, w_current->xor_gc, x1, y1, x2, y2);
-  o_invalidate_rect(w_current, 
-		    min(x1, x2) - size/2, min(y1, y2) - size/2,
-		    max(x1, x2) + size/2, max(y1, y2) + size/2);
 
   if (toplevel->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
@@ -365,16 +378,4 @@ void o_bus_rubberbus_xor(GSCHEM_TOPLEVEL *w_current)
                                GDK_CAP_NOT_LAST,
                                GDK_JOIN_MITER);
   }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  used in button cancel code in x_events.c
- */
-void o_bus_eraserubber(GSCHEM_TOPLEVEL *w_current)
-{
-  o_bus_rubberbus_xor(w_current);
 }

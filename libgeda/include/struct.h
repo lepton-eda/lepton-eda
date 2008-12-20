@@ -280,9 +280,6 @@ struct st_object {
   /* the object's real color */
   /* when the object is locked) */
 
-  int draw_grips;				/* if selected, enables 
-						   drawing of grips */
-
   /* controls which direction bus rippers go */
   /* it is either 0 for un-inited, */
   /* 1 for right, -1 for left (horizontal bus) */

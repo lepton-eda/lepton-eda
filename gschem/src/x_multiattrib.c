@@ -970,14 +970,14 @@ static void multiattrib_callback_toggled_visible(GtkCellRendererToggle *cell_ren
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
-  o_erase_single (w_current, o_attrib);
+  o_invalidate (w_current, o_attrib);
 
   visibility = o_attrib->visibility == VISIBLE ? INVISIBLE : VISIBLE;
 
   /* actually modifies the attribute */
   o_attrib->visibility = visibility;
   o_text_recreate (w_current->toplevel, o_attrib);
-  o_text_draw (w_current, o_attrib);
+  o_invalidate (w_current, o_attrib);
   o_undo_savestate (w_current, UNDO_ALL);
 
   /* request an update of display for this row */
@@ -1012,7 +1012,7 @@ static void multiattrib_callback_toggled_show_name(GtkCellRendererToggle *cell_r
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
-  o_erase_single (w_current, o_attrib);
+  o_invalidate (w_current, o_attrib);
 
   switch (o_attrib->show_name_value) {
       case SHOW_NAME_VALUE: new_snv = SHOW_VALUE;      break;
@@ -1026,7 +1026,7 @@ static void multiattrib_callback_toggled_show_name(GtkCellRendererToggle *cell_r
   /* actually modifies the attribute */
   o_attrib->show_name_value = new_snv;
   o_text_recreate (w_current->toplevel, o_attrib);
-  o_text_draw (w_current, o_attrib);
+  o_invalidate (w_current, o_attrib);
   o_undo_savestate (w_current, UNDO_ALL);
 
   /* request an update of display for this row */
@@ -1061,7 +1061,7 @@ static void multiattrib_callback_toggled_show_value(GtkCellRendererToggle *cell_
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
-  o_erase_single (w_current, o_attrib);
+  o_invalidate (w_current, o_attrib);
 
   switch (o_attrib->show_name_value) {
       case SHOW_NAME_VALUE: new_snv = SHOW_NAME;       break;
@@ -1075,7 +1075,7 @@ static void multiattrib_callback_toggled_show_value(GtkCellRendererToggle *cell_
   /* actually modifies the attribute */
   o_attrib->show_name_value = new_snv;
   o_text_recreate (w_current->toplevel, o_attrib);
-  o_text_draw (w_current, o_attrib);
+  o_invalidate (w_current, o_attrib);
   o_undo_savestate (w_current, UNDO_ALL);
   
   /* request an update of display for this row */

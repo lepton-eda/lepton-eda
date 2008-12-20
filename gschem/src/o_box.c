@@ -270,15 +270,8 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                 w_current, o_current->box,
                 fill_width, angle1, pitch1, angle2, pitch2);
 
-  if ((o_current->draw_grips == TRUE) && (w_current->draw_grips == TRUE)) {
-    if (!o_current->selected) {
-      /* object is no more selected, erase the grips */
-      o_current->draw_grips = FALSE;
-      o_box_erase_grips(w_current, o_current);
-    } else {
-      /* object is selected, draw the grips on the box */
-      o_box_draw_grips(w_current, o_current);
-    }
+  if (o_current->selected && w_current->draw_grips) {
+    o_box_draw_grips (w_current, o_current);
   }
 }
 
@@ -698,13 +691,20 @@ void o_box_fill_mesh (GdkDrawable *w, GdkGC *gc, GdkColor *color,
 /*! \todo Finish function documentation!!!
  *  \brief 
  *  \par Function Description
- * 
- *  \note
- *  used in button cancel code in x_events.c
+ *
  */
-void o_box_eraserubber(GSCHEM_TOPLEVEL *w_current)
+void o_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  o_box_rubberbox_xor(w_current);
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x1, y1, x2, y2;
+
+  WORLDtoSCREEN (toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN (toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+
+  o_invalidate_rect (w_current, x1, y1, x2, y1);
+  o_invalidate_rect (w_current, x1, y1, x1, y2);
+  o_invalidate_rect (w_current, x2, y1, x2, y2);
+  o_invalidate_rect (w_current, x1, y2, x2, y2);
 }
 
 /*! \brief Draw a box described by OBJECT with translation
@@ -777,7 +777,7 @@ void o_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->first_wy = w_current->second_wy = w_y;
 
   /* start to draw the box */
-  o_box_rubberbox_xor(w_current);
+  o_box_invalidate_rubber (w_current);
 }
 
 /*! \brief End the input of a box.
@@ -810,7 +810,7 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->second_wy = w_y;
 
   /* erase the temporary box */
-  o_box_rubberbox_xor(w_current);
+  /* o_box_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
   
   box_width  = GET_BOX_WIDTH (w_current);
@@ -835,8 +835,8 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   s_page_append (toplevel->page_current, new_obj);
 
   /* draw it */
-  o_redraw_single (w_current, new_obj);
-  
+  o_invalidate (w_current, new_obj);
+
 #if DEBUG
   printf("coords: %d %d %d %d\n", box_left, box_top, box_width, box_height);
 #endif
@@ -873,7 +873,7 @@ void o_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* erase the previous temporary box if it is visible */
   if (w_current->rubber_visible)
-    o_box_rubberbox_xor(w_current);
+    o_box_invalidate_rubber (w_current);
 
   /*
    * New values are fixed according to the <B>w_x</B> and <B>w_y</B> parameters.
@@ -886,10 +886,8 @@ void o_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->second_wy = w_y;
 
   /* draw the new temporary box */
-  o_box_rubberbox_xor(w_current);
-
+  o_box_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
-  
 }
 
 /*! \brief Draw box from GSCHEM_TOPLEVEL object.
@@ -930,8 +928,6 @@ void o_box_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
 			     GDK_JOIN_MITER);
   gdk_draw_rectangle (w_current->drawable, w_current->xor_gc,
                       FALSE, box_left, box_top, box_width, box_height);
-  o_invalidate_rect(w_current, box_left, box_top,
-		    box_left + box_width, box_top + box_height);
 }
 
 /*! \brief Draw grip marks on box.
@@ -971,39 +967,3 @@ void o_box_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   o_grips_draw(w_current, s_lower_x, s_lower_y);
 
 }
-
-/*! \brief Erase grip marks from box.
- *  \par Function Description
- *  This function erases the four grips displayed on the <B>*o_current</B>
- *  box object. These grips are on each of the corner.
- * 
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Box OBJECT to erase grip marks from.
- */
-void o_box_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
-
-  if (w_current->draw_grips == FALSE)
-	  return;
-  
-  WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->upper_y,
-                 &s_upper_x, &s_upper_y );
-  WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->lower_y,
-                 &s_lower_x, &s_lower_y );
-
-  /* grip on upper left corner (whichone = BOX_UPPER_LEFT) */
-  o_grips_erase(w_current, s_upper_x, s_upper_y);
-
-  /* grip on upper right corner (whichone = BOX_UPPER_RIGHT) */
-  o_grips_erase(w_current, s_lower_x, s_upper_y);
-  
-  /* grip on lower left corner (whichone = BOX_LOWER_LEFT) */
-  o_grips_erase(w_current, s_upper_x, s_lower_y);
-
-  /* grip on lower right corner (whichone = BOX_LOWER_RIGHT) */
-  o_grips_erase(w_current, s_lower_x, s_lower_y);
-
-}
-

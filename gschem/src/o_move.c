@@ -48,18 +48,20 @@ void o_move_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
     w_current->first_wx = w_current->second_wx = w_x;
     w_current->first_wy = w_current->second_wy = w_y;
 
-    o_erase_selected(w_current);
+    o_invalidate_glist (w_current,
+       geda_list_get_glist (toplevel->page_current->selection_list));
 
     if (w_current->netconn_rubberband) {
       o_move_prep_rubberband(w_current);
 
-      /* Set the dont_redraw flag on rubberbanded objects.
-       * This ensures that they are not drawn (in their
-       * un-stretched position) during screen updates. */
+      /* Set the dont_redraw flag on rubberbanded objects and invalidate them.
+       * This ensures that they are not drawn (in their un-stretched position)
+       * during screen updates. */
       for (s_iter = toplevel->page_current->stretch_list;
            s_iter != NULL; s_iter = g_list_next (s_iter)) {
         STRETCH *stretch = s_iter->data;
         stretch->object->dont_redraw = TRUE;
+        o_invalidate (w_current, stretch->object);
       }
     }
 
@@ -235,20 +237,15 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
   o_undo_remove_last_undo(w_current);
 
   /* Draw the objects that were moved (and connected/disconnected objects) */
-  o_draw_selected(w_current);
-  o_cue_undraw_list(w_current, prev_conn_objects);
-  o_cue_draw_list(w_current, prev_conn_objects);
-  o_cue_undraw_list(w_current, connected_objects);
-  o_cue_draw_list(w_current, connected_objects);
+  o_invalidate_glist (w_current,
+    geda_list_get_glist (toplevel->page_current->selection_list));
+  o_invalidate_glist (w_current, prev_conn_objects);
+  o_invalidate_glist (w_current, connected_objects);
 
   /* Draw the connected nets/buses that were also changed */
-  o_draw_list(w_current, rubbernet_objects);
-  o_cue_undraw_list(w_current, rubbernet_objects);
-  o_cue_draw_list(w_current, rubbernet_objects);
-  o_cue_undraw_list(w_current, rubbernet_prev_conn_objects);
-  o_cue_draw_list(w_current, rubbernet_prev_conn_objects);
-  o_cue_undraw_list(w_current, rubbernet_connected_objects);
-  o_cue_draw_list(w_current, rubbernet_connected_objects);
+  o_invalidate_glist (w_current, rubbernet_objects);
+  o_invalidate_glist (w_current, rubbernet_prev_conn_objects);
+  o_invalidate_glist (w_current, rubbernet_connected_objects);
  
   toplevel->page_current->CHANGED = 1;
   o_undo_savestate(w_current, UNDO_ALL);
@@ -304,10 +301,55 @@ void o_move_cancel (GSCHEM_TOPLEVEL *w_current)
  */
 void o_move_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  o_move_rubbermove_xor (w_current, FALSE);
+  o_move_invalidate_rubber (w_current, FALSE);
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
-  o_move_rubbermove_xor (w_current, TRUE);
+  o_move_invalidate_rubber (w_current, TRUE);
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_move_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  GList *s_iter;
+  int dx1, dx2, dy1, dy2;
+  int x1, y1, x2, y2;
+
+  o_place_invalidate_rubber (w_current, drawing);
+  if (w_current->netconn_rubberband) {
+
+    for (s_iter = toplevel->page_current->stretch_list;
+         s_iter != NULL; s_iter = g_list_next (s_iter)) {
+      STRETCH *s_current = s_iter->data;
+      OBJECT *object = s_current->object;
+
+      switch (object->type) {
+        case (OBJ_NET):
+        case (OBJ_BUS):
+          if (s_current->whichone == 0) {
+            dx1 = w_current->second_wx - w_current->first_wx;
+            dy1 = w_current->second_wy - w_current->first_wy;
+            dx2 = dy2 = 0;
+          } else {
+            dx1 = dy1 = 0;
+            dx2 = w_current->second_wx - w_current->first_wx;
+            dy2 = w_current->second_wy - w_current->first_wy;
+          }
+
+          WORLDtoSCREEN (toplevel, object->line->x[0] + dx1,
+                                   object->line->y[0] + dy1, &x1, &y1);
+          WORLDtoSCREEN (toplevel, object->line->x[1] + dx2,
+                                   object->line->y[1] + dy2, &x2, &y2);
+
+          o_invalidate_rect (w_current, x1, y1, x2, y2);
+      }
+    }
+  }
 }
 
 
@@ -409,8 +451,6 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
         s_stretch_add (toplevel->page_current->stretch_list,
                        c_current->other_object,
                        c_current, whichone);
-
-      o_erase_single(w_current, c_current->other_object);
     }
   }
 

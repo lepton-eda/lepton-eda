@@ -636,7 +636,7 @@ void o_grips_start_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* erase the arc before */
-  o_erase_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 
   /* describe the arc with GSCHEM_TOPLEVEL variables */
   /* center */
@@ -649,7 +649,7 @@ void o_grips_start_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->second_wy = o_current->arc->end_angle;
 
   /* draw the first temporary arc */
-  o_arc_rubberarc_xor(w_current);
+  /* o_arc_invalidate_rubber (w_current); */
   w_current->rubber_visible = 1;
 }
 
@@ -680,7 +680,7 @@ void o_grips_start_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* erase the box before */
-  o_erase_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 
   /* (second_wx, second_wy) is the selected corner */
   /* (first_wx, first_wy) is the opposite corner */
@@ -714,7 +714,7 @@ void o_grips_start_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   }
 
   /* draw the first temporary box */
-  o_box_rubberbox_xor(w_current);
+  /* o_box_invalidate_rubber (w_current); */
   w_current->rubber_visible = 1;
 }
 
@@ -752,7 +752,7 @@ void o_grips_start_path(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->last_drawb_mode = -1;
 
   /* erase the path before */
-  o_erase_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 
   for (i = 0; i <  o_current->path->num_sections; i++) {
     section = &o_current->path->sections[i];
@@ -787,7 +787,7 @@ void o_grips_start_path(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->first_wy = w_current->second_wy = gy;
 
   /* draw the first temporary path */
-  o_path_rubberpath_xor(w_current);
+  /* o_path_invalidate_rubber (w_current); */
   w_current->rubber_visible = 1;
 }
 
@@ -819,7 +819,7 @@ void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* erase the picture before */
-  o_erase_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
   w_current->current_pixbuf = o_current->picture->original_picture;
   w_current->pixbuf_filename = o_current->picture->filename;
   w_current->pixbuf_wh_ratio = o_current->picture->ratio;
@@ -856,7 +856,7 @@ void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   }
 
   /* draw the first temporary picture */
-  o_picture_rubberbox_xor(w_current);
+  /* o_picture_invalidate_rubber (w_current); */
   w_current->rubber_visible = 1;
 }
 
@@ -888,7 +888,7 @@ void o_grips_start_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* erase the circle before */
-  o_erase_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 
   /* store circle center and radius in GSCHEM_TOPLEVEL structure */
   w_current->first_wx = o_current->circle->center_x;
@@ -896,7 +896,7 @@ void o_grips_start_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->distance = o_current->circle->radius;
 
   /* draw the first temporary circle */
-  o_circle_rubbercircle_xor(w_current);
+  /* o_circle_invalidate_rubber (w_current); */
   w_current->rubber_visible = 1;
 }
 
@@ -926,7 +926,7 @@ void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* erase the line before */
-  o_erase_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 
   /* describe the line with GSCHEM_TOPLEVEL variables */
   w_current->second_wx = o_current->line->x[whichone];
@@ -935,7 +935,7 @@ void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   w_current->first_wy = o_current->line->y[!whichone];
 
   /* draw the first temporary line */
-  o_line_rubberline_xor(w_current);
+  /* o_line_invalidate_rubber (w_current); */
   w_current->rubber_visible = 1;
 }
 
@@ -1116,7 +1116,7 @@ void o_grips_end_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   int arg1, arg2;
 
   /* erase the temporary arc */
-  o_arc_rubberarc_xor(w_current);
+  /* o_arc_invalidate_rubber (w_current); */
 
   /* determination of the parameters to give to o_arc_modify() */
   switch(whichone) {
@@ -1149,7 +1149,7 @@ void o_grips_end_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_arc_modify(toplevel, o_current, arg1, arg2, whichone);
 
   /* display the new arc */
-  o_redraw_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 
 }
 
@@ -1173,17 +1173,17 @@ void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
    * this ends the box drawing behavior
    * we want this? hack */
   if ((box_width == 0) && (box_height == 0)) {
-    o_redraw_single(w_current, o_current);
+    o_invalidate (w_current, o_current);
     return;
   }
 
   o_box_modify(toplevel, o_current, w_current->second_wx, w_current->second_wy, whichone);
 
   /* erase the temporary box */
-  o_box_rubberbox_xor(w_current);
+  /* o_box_invalidate_rubber (w_current); */
 
   /* draw the modified box */
-  o_redraw_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1197,14 +1197,14 @@ void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
 void o_grips_end_path(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 {
   /* erase the temporary path */
-  if (w_current->rubber_visible)
-    o_path_rubberpath_xor(w_current);
+  /* if (w_current->rubber_visible) */
+  /*  o_path_invalidate_rubber (w_current); */
 
   o_path_modify (w_current->toplevel, o_current,
                  w_current->second_wx, w_current->second_wy, whichone);
 
   /* draw the modified path */
-  o_redraw_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1220,13 +1220,13 @@ void o_grips_end_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whic
   TOPLEVEL *toplevel = w_current->toplevel;
 
   /* erase the temporary picture */
-  o_picture_rubberbox_xor(w_current);
+  /* o_picture_invalidate_rubber (w_current); */
 
   /* don't allow zero width/height picturees
    * this ends the picture drawing behavior
    * we want this? hack */
   if ((GET_PICTURE_WIDTH(w_current) == 0) || (GET_PICTURE_HEIGHT(w_current) == 0)) {
-    o_redraw_single(w_current, o_current);
+    o_invalidate (w_current, o_current);
     return;
   }
 
@@ -1234,7 +1234,7 @@ void o_grips_end_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whic
 		   w_current->second_wx, w_current->second_wy, whichone);
 
   /* draw the modified picture */
-  o_redraw_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 
   w_current->current_pixbuf = NULL;
   w_current->pixbuf_filename = NULL;
@@ -1261,13 +1261,13 @@ void o_grips_end_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int which
   TOPLEVEL *toplevel = w_current->toplevel;
 
   /* erase the temporary circle */
-  o_circle_rubbercircle_xor(w_current);
+  /* o_circle_invalidate_rubber (w_current); */
 
   /* don't allow zero radius circles
    * this ends the circle drawing behavior
    * we want this? hack */
   if (w_current->distance == 0) {
-    o_redraw_single(w_current, o_current);
+    o_invalidate (w_current, o_current);
     return;
   }
 
@@ -1275,7 +1275,7 @@ void o_grips_end_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int which
   o_circle_modify(toplevel, o_current, w_current->distance, -1, CIRCLE_RADIUS);
 
   /* display the new circle */
-  o_redraw_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 }
 
 /*! \brief End process of modifying line object with grip.
@@ -1299,14 +1299,14 @@ void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichon
   TOPLEVEL *toplevel = w_current->toplevel;
 
   /* erase the temporary line */
-  o_line_rubberline_xor(w_current);
+  /* o_line_invalidate_rubber (w_current); */
 
   /* don't allow zero length nets / lines / pins
    * this ends the net drawing behavior
    * we want this? hack */
   if ((w_current->first_wx == w_current->second_wx) &&
       (w_current->first_wy == w_current->second_wy)) {
-    o_redraw_single(w_current, o_current);
+    o_invalidate (w_current, o_current);
     return;
   }
 
@@ -1315,7 +1315,7 @@ void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichon
 		w_current->second_wx, w_current->second_wy, whichone);
 
   /* display the new line */
-  o_redraw_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 }
 
 
@@ -1342,20 +1342,19 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   GList *connected_objects = NULL;
 
   /* erase the temporary line */
-  o_line_rubberline_xor(w_current);
+  /* o_line_invalidate_rubber (w_current); */
 
   /* don't allow zero length net
    * this ends the net drawing behavior
    * we want this? hack */
   if ((w_current->first_wx == w_current->second_wx) &&
       (w_current->first_wy == w_current->second_wy)) {
-    o_redraw_single(w_current, o_current);
+    o_invalidate (w_current, o_current);
     return;
   }
 
   /* remove the old net */
-  o_cue_undraw(w_current, o_current);
-  o_erase_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 
   prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current);
 
@@ -1368,20 +1367,12 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   connected_objects = s_conn_return_others(connected_objects,
 					   o_current);
   /* add bus rippers if necessary */
-  if (o_net_add_busrippers(w_current, o_current, connected_objects)) {
-
-    o_erase_single(w_current, o_current);
-    o_cue_undraw(w_current, o_current);
-
-    o_net_draw(w_current, o_current);
-    o_cue_draw_single(w_current, o_current);
-  }
+  o_net_add_busrippers(w_current, o_current, connected_objects);
 
   /* draw the object objects */
-  o_cue_undraw_list (w_current, prev_conn_objects);
-  o_cue_draw_list (w_current, prev_conn_objects);
+  o_invalidate_glist (w_current, prev_conn_objects);
   
-  o_redraw_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
   
   g_list_free(connected_objects);
   connected_objects = NULL;
@@ -1390,10 +1381,7 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   connected_objects = s_conn_return_others(connected_objects,
 					   o_current);
   
-  o_cue_undraw_list(w_current, connected_objects);
-  o_cue_draw_list(w_current, connected_objects);
-  /* finally draw this objects cues */
-  o_cue_draw_single(w_current, o_current);
+  o_invalidate_glist (w_current, connected_objects);
 
   g_list_free (prev_conn_objects);
   prev_conn_objects = NULL;
@@ -1424,20 +1412,19 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   GList *connected_objects = NULL;
 
   /* erase the temporary line */
-  o_line_rubberline_xor(w_current);
+  /* o_line_invalidate_rubber (w_current); */
 
   /* don't allow zero length pin
    * this ends the pin changing behavior
    * we want this? hack */
   if ((w_current->first_wx == w_current->second_wx) &&
       (w_current->first_wy == w_current->second_wy)) {
-    o_redraw_single(w_current, o_current);
+    o_invalidate (w_current, o_current);
     return;
   }
 
   /* erase old pin object */
-  o_cue_undraw(w_current, o_current);
-  o_erase_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 
   prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current);
 
@@ -1445,20 +1432,15 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_pin_modify (toplevel, o_current, w_current->second_wx,
                 w_current->second_wy, w_current->which_grip);
   s_conn_update_object (toplevel, o_current);
-  o_redraw_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 
   /* redraw the object connections */
-  o_cue_undraw_list (w_current, prev_conn_objects);
-  o_cue_draw_list (w_current, prev_conn_objects);
+  o_invalidate_glist (w_current, prev_conn_objects);
 
   /* get the other connected objects and redraw them */
   connected_objects = s_conn_return_others(connected_objects,
 					   o_current);
-  o_cue_undraw_list(w_current, connected_objects);
-  o_cue_draw_list(w_current, connected_objects);
-
-  /* finally draw this objects cues */
-  o_cue_draw_single(w_current, o_current);
+  o_invalidate_glist (w_current, connected_objects);
 
   /* free the two lists */
   g_list_free (prev_conn_objects);
@@ -1490,20 +1472,19 @@ void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   GList *connected_objects = NULL;
 
   /* erase the temporary line */
-  o_line_rubberline_xor(w_current);
+  /* o_line_invalidate_rubber (w_current); */
 
   /* don't allow zero length bus
    * this ends the bus changing behavior
    * we want this? hack */
   if ((w_current->first_wx == w_current->second_wx) &&
       (w_current->first_wy == w_current->second_wy)) {
-    o_redraw_single(w_current, o_current);
+    o_invalidate (w_current, o_current);
     return;
   }
 
   /* erase the old bus and it's cues */
-  o_cue_undraw(w_current, o_current);
-  o_erase_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 
   prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current);
   s_conn_remove_object (toplevel, o_current);
@@ -1511,20 +1492,15 @@ void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   o_bus_modify (toplevel, o_current, w_current->second_wx,
                 w_current->second_wy, w_current->which_grip);
   s_conn_update_object (toplevel, o_current);
-  o_redraw_single(w_current, o_current);
+  o_invalidate (w_current, o_current);
 
   /* redraw the connected objects */
-  o_cue_undraw_list (w_current, prev_conn_objects);
-  o_cue_draw_list (w_current, prev_conn_objects);
+  o_invalidate_glist (w_current, prev_conn_objects);
 
   /* get the other connected objects and redraw them */
   connected_objects = s_conn_return_others(connected_objects,
 					   o_current);
-  o_cue_undraw_list(w_current, connected_objects);
-  o_cue_draw_list(w_current, connected_objects);
-
-  /* finally draw this objects cues */
-  o_cue_draw_single(w_current, o_current);
+  o_invalidate_glist (w_current, connected_objects);
 
   /* free the two lists */
   g_list_free (prev_conn_objects);
@@ -1625,31 +1601,7 @@ void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int x, int y)
     /* draw the grip in backingstore */
     gdk_draw_rectangle (w_current->drawable, w_current->gc, FALSE,
                         x - size, y - size, x2size, x2size);
-    o_invalidate_rect(w_current, x - size, y - size, x + size, y + size);
   }
-}
-
-/*! \brief Erase grip centered at <B>x</B>,<B>y</B>
- *  \par Function Description
- *  This function erases a grip centered at (<B>x</B>,<B>y</B>).
- *  The size of the grip depends on the current zoom factor.
- *
- *  The grip is erased by drawing with the background color over the
- *  visible grip.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Center x screen coordinate for drawing grip.
- *  \param [in] y          Center y screen coordinate for drawing grip.
- */
-void o_grips_erase(GSCHEM_TOPLEVEL *w_current, int x, int y)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  /* set overriding color */
-  toplevel->override_color = toplevel->background_color;
-  /* draw a grip with backgound color : erase grip */
-  o_grips_draw(w_current, x, y);
-  /* return to default */
-  toplevel->override_color = -1;
 }
 
 

@@ -50,6 +50,9 @@ static int DOING_STROKE = FALSE;
 gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
                     GSCHEM_TOPLEVEL *w_current)
 {
+  GdkRectangle *rectangles;
+  int n_rectangles;
+
 #if DEBUG
   printf("EXPOSE\n");
 #endif
@@ -58,12 +61,9 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
   /* nasty global variable */
   global_window_current = w_current;
 
-  gdk_draw_pixmap(widget->window,
-                  widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
-                  w_current->drawable,
-                  event->area.x, event->area.y,
-                  event->area.x, event->area.y,
-                  event->area.width, event->area.height);
+  gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
+  o_redraw_rects (w_current, rectangles, n_rectangles);
+  g_free (rectangles);
 
   /* raise the dialog boxes if this feature is enabled */
   if (w_current->raise_dialog_boxes) {
@@ -258,7 +258,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
           o_net_start(w_current, w_current->first_wx, w_current->first_wy);
           w_current->event_state=NETCONT;
         } else { /* cleanup and start a new net */
-          o_net_eraserubber(w_current);
+          o_net_invalidate_rubber (w_current);
           o_net_reset(w_current);
           i_set_state(w_current, STARTDRAWNET);
           w_current->inside_action = 0;
@@ -283,7 +283,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
           i_set_state(w_current, SELECT);
           i_update_toolbar(w_current);
         } else {
-          o_place_rubberplace_xor (w_current, TRUE);
+          o_place_invalidate_rubber (w_current, TRUE);
           w_current->rubber_visible = 1;
         }
         break;
@@ -438,7 +438,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         case(NETCONT):
           w_current->inside_action = 0;
           i_set_state(w_current, STARTDRAWNET);
-          o_net_eraserubber(w_current);
+          o_net_invalidate_rubber (w_current);
           o_net_reset(w_current);
           break;
 
@@ -447,49 +447,49 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         case(BUSCONT):
           w_current->inside_action = 0;
           i_set_state(w_current, STARTDRAWBUS);
-          o_bus_eraserubber(w_current);
+          o_bus_invalidate_rubber (w_current);
           break;
 
         case(DRAWPIN):
         case(ENDPIN):
           w_current->inside_action = 0;
           i_set_state(w_current, DRAWPIN);
-          o_pin_eraserubber(w_current);
+          o_pin_invalidate_rubber (w_current);
           break;
 
         case(DRAWLINE):
         case(ENDLINE):
           w_current->inside_action = 0;
           i_set_state(w_current, DRAWLINE);
-          o_line_eraserubber(w_current);
+          o_line_invalidate_rubber (w_current);
           break;
 
         case(DRAWBOX):
         case(ENDBOX):
           w_current->inside_action = 0;
           i_set_state(w_current, DRAWBOX);
-          o_box_eraserubber(w_current);
+          o_box_invalidate_rubber (w_current);
           break;
 
         case(DRAWPICTURE):
         case(ENDPICTURE):
           w_current->inside_action = 0;
           i_set_state(w_current, DRAWPICTURE);
-          o_picture_eraserubber(w_current);
+          o_picture_invalidate_rubber (w_current);
           break;
 
         case(DRAWCIRCLE):
         case(ENDCIRCLE):
           w_current->inside_action = 0;
           i_set_state(w_current, DRAWCIRCLE);
-          o_circle_eraserubber(w_current);
+          o_circle_invalidate_rubber (w_current);
           break;
 
         case(DRAWARC):
         case(ENDARC):
           w_current->inside_action = 0;
           i_set_state(w_current, DRAWARC);
-          o_arc_eraserubber(w_current);
+          o_arc_invalidate_rubber (w_current);
           break;
 
         default:
@@ -574,7 +574,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         /* having this stay in copy was driving me nuts*/
         w_current->inside_action = 1;
         /* Keep the state and the inside_action, as the copy has not finished. */
-        o_place_rubberplace_xor (w_current, TRUE);
+        o_place_invalidate_rubber (w_current, TRUE);
         w_current->rubber_visible = 1;
         i_set_state(w_current, ENDMCOPY);
         i_update_toolbar(w_current);
@@ -621,10 +621,11 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
           w_current->event_state == ENDPASTE ) {
 
         if (w_current->event_state == ENDMOVE) {
-          o_move_rubbermove_xor (w_current, FALSE);
+          o_move_invalidate_rubber (w_current, FALSE);
         } else {
-          o_place_rubberplace_xor (w_current, FALSE);
+          o_place_invalidate_rubber (w_current, FALSE);
         }
+        w_current->rubber_visible = 0;
 
         o_place_rotate(w_current);
 
@@ -638,10 +639,11 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         }
 
         if (w_current->event_state == ENDMOVE) {
-          o_move_rubbermove_xor (w_current, TRUE);
+          o_move_invalidate_rubber (w_current, TRUE);
         } else {
-          o_place_rubberplace_xor (w_current, TRUE);
+          o_place_invalidate_rubber (w_current, TRUE);
         }
+        w_current->rubber_visible = 1;
         return(0);
       }
     }
@@ -674,7 +676,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
       case(MID_MOUSEPAN_ENABLED):
       w_current->doing_pan=FALSE;
-      o_redraw_all(w_current);
+      o_invalidate_all (w_current);
       if (w_current->undo_panzoom) {
         o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
       }
@@ -690,7 +692,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
   } else if (event->button == 3) {
     if (w_current->doing_pan) { /* just for ending a mouse pan */
       w_current->doing_pan=FALSE;
-      o_redraw_all(w_current);
+      o_invalidate_all (w_current);
 
       if (w_current->undo_panzoom) {
         o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
@@ -937,14 +939,8 @@ x_event_configure (GtkWidget         *widget,
     return FALSE;
   }
 
-  /* update the backingstore of toplevel */
-  if (w_current->drawable != NULL) {
-    gdk_pixmap_unref (w_current->drawable);
-  }
-  w_current->drawable = gdk_pixmap_new (widget->window,
-                                        new_win_width,
-                                        new_win_height,
-                                        -1);
+  w_current->drawable = w_current->window;
+
   /* update the GSCHEM_TOPLEVEL with new size of drawing area */
   w_current->win_width   = toplevel->width  = new_win_width;
   w_current->win_height  = toplevel->height = new_win_height;
@@ -989,7 +985,7 @@ x_event_configure (GtkWidget         *widget,
 
   if (!toplevel->DONT_REDRAW) {
     /* redraw the current page and update UI */
-    o_redraw_all (w_current);
+    o_invalidate_all (w_current);
     x_scrollbars_update (w_current);
   }
 
@@ -1033,9 +1029,6 @@ void x_manual_resize(GSCHEM_TOPLEVEL *w_current)
      printf("w: %d h: %d\n", width, height); */
   printf("aw: %d ah: %d\n", w_current->win_width, w_current->win_height);
 #endif
-
-  /* I'm assuming that the backingstore pixmap is of the right
-   * size */
 }
 
 /*! \todo Finish function documentation!!!
@@ -1069,7 +1062,7 @@ void x_event_hschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
     (current_left - new_left);
 
   if (!toplevel->DONT_REDRAW) {
-    o_redraw_all(w_current);
+    o_invalidate_all (w_current);
   }
 }
 
@@ -1111,7 +1104,7 @@ void x_event_vschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
 #endif
 
   if (!toplevel->DONT_REDRAW) {
-    o_redraw_all(w_current);
+    o_invalidate_all (w_current);
   }
 }
 

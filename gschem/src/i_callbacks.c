@@ -511,7 +511,7 @@ void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
   if (!w_current->window) return;
 
   if (GTK_TOGGLE_BUTTON (widget)->active) {
-    if (!o_erase_rubber(w_current)) {
+    if (!o_invalidate_rubber (w_current)) {
       i_callback_cancel(w_current, 0, NULL);
     }
     i_callback_edit_select(data, 0, NULL);
@@ -991,8 +991,8 @@ DEFINE_I_CALLBACK(edit_embed)
       }
       s_current = g_list_next(s_current);
     }
-    o_draw_list (w_current, geda_list_get_glist (
-                   w_current->toplevel->page_current->selection_list));
+    o_invalidate_glist (w_current, geda_list_get_glist (
+                          w_current->toplevel->page_current->selection_list));
     o_undo_savestate(w_current, UNDO_ALL);
   } else {
     /* nothing selected, go back to select state */
@@ -1032,8 +1032,8 @@ DEFINE_I_CALLBACK(edit_unembed)
       }
       s_current = g_list_next(s_current);
     }
-    o_draw_list (w_current, geda_list_get_glist (
-                   w_current->toplevel->page_current->selection_list));
+    o_invalidate_glist (w_current, geda_list_get_glist (
+                          w_current->toplevel->page_current->selection_list));
     o_undo_savestate(w_current, UNDO_ALL);
   } else {
     /* nothing selected, go back to select state */
@@ -1088,7 +1088,7 @@ DEFINE_I_CALLBACK(edit_update)
     g_list_free(selection_copy);
 
     /* Make sure the display is up to date */
-    o_redraw_all(w_current);
+    o_invalidate_all (w_current);
   } else {
     /* nothing selected, go back to select state */
     o_redraw_cleanstates(w_current);	
@@ -1320,7 +1320,7 @@ DEFINE_I_CALLBACK(view_redraw)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1594,7 +1594,7 @@ DEFINE_I_CALLBACK(view_update_cues)
   i_update_middle_button(w_current,
                          i_callback_view_update_cues, _("Update Cues"));
 
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
 }
 
 /*! \section page-menu Page Menu Callback Functions */
@@ -2299,7 +2299,7 @@ DEFINE_I_CALLBACK(add_net)
   exit_if_null(w_current);
 
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
   o_net_reset(w_current);
 
   /* need to click */
@@ -2326,7 +2326,7 @@ DEFINE_I_CALLBACK(add_net_hotkey)
     return;
 
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
   o_net_reset(w_current);
 
   /* need to click */
@@ -2371,7 +2371,7 @@ DEFINE_I_CALLBACK(add_bus)
   exit_if_null(w_current);
 
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
 
   /* need to click */
   i_update_middle_button(w_current, i_callback_add_bus, _("Bus"));
@@ -2398,7 +2398,7 @@ DEFINE_I_CALLBACK(add_bus_hotkey)
     return;
 
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
 
   /* need to click */
   i_update_middle_button(w_current, i_callback_add_bus_hotkey, _("Bus"));
@@ -2442,7 +2442,7 @@ DEFINE_I_CALLBACK(add_text)
   exit_if_null(w_current);
   
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
 
   w_current->inside_action = 0;
   i_set_state(w_current, SELECT);
@@ -2480,7 +2480,7 @@ DEFINE_I_CALLBACK(add_line)
   exit_if_null(w_current);
 
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
 
   i_update_middle_button(w_current, i_callback_add_line, _("Line"));
   i_set_state(w_current, DRAWLINE);
@@ -2503,7 +2503,7 @@ DEFINE_I_CALLBACK(add_line_hotkey)
     return;
 
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
 
   i_update_middle_button(w_current, i_callback_add_line_hotkey, _("Line"));
 
@@ -2525,7 +2525,7 @@ DEFINE_I_CALLBACK(add_box)
   exit_if_null(w_current);
 
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
 
   i_update_middle_button(w_current, i_callback_add_box, _("Box"));
   w_current->inside_action = 0;
@@ -2548,7 +2548,7 @@ DEFINE_I_CALLBACK(add_box_hotkey)
     return;
 
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
 
   i_update_middle_button(w_current, i_callback_add_box_hotkey, _("Box"));
 
@@ -2570,7 +2570,7 @@ DEFINE_I_CALLBACK(add_picture)
   exit_if_null(w_current);
 
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
 
   w_current->inside_action = 0;
   i_set_state(w_current, SELECT);
@@ -2604,7 +2604,7 @@ DEFINE_I_CALLBACK(add_circle)
   exit_if_null(w_current);
 
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
 
   i_update_middle_button(w_current, i_callback_add_circle, _("Circle"));
   w_current->inside_action = 0;
@@ -2627,7 +2627,7 @@ DEFINE_I_CALLBACK(add_circle_hotkey)
     return;
 
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
 
   i_update_middle_button(w_current, i_callback_add_circle_hotkey,
                          _("Circle"));
@@ -2650,7 +2650,7 @@ DEFINE_I_CALLBACK(add_arc)
   exit_if_null(w_current);
   
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
 
   i_update_middle_button(w_current, i_callback_add_arc, _("Arc"));
   w_current->inside_action = 0;
@@ -2673,7 +2673,7 @@ DEFINE_I_CALLBACK(add_arc_hotkey)
     return;
 
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
 
   i_update_middle_button(w_current, i_callback_add_arc_hotkey, _("Arc"));
 
@@ -2695,7 +2695,7 @@ DEFINE_I_CALLBACK(add_pin)
   exit_if_null(w_current);
 
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
 
   i_update_middle_button(w_current, i_callback_add_pin, _("Pin"));
   w_current->inside_action = 0;
@@ -2718,7 +2718,7 @@ DEFINE_I_CALLBACK(add_pin_hotkey)
     return;
 
   o_redraw_cleanstates(w_current);	
-  o_erase_rubber(w_current);
+  o_invalidate_rubber (w_current);
 
   i_update_middle_button(w_current, i_callback_add_pin_hotkey, _("Pin"));
 
@@ -3269,7 +3269,7 @@ DEFINE_I_CALLBACK(options_scale_up_snap_size)
   w_current->toplevel->page_current->CHANGED=1;  /* maybe remove those two lines */
   o_undo_savestate(w_current, UNDO_ALL);
 
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
 }
 
 /*! \brief Divide by two the snap grid size.
@@ -3288,7 +3288,7 @@ DEFINE_I_CALLBACK(options_scale_down_snap_size)
   w_current->toplevel->page_current->CHANGED=1;  /* maybe remove those two lines */
   o_undo_savestate(w_current, UNDO_ALL);
 
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
 
 }
 
@@ -3334,7 +3334,7 @@ DEFINE_I_CALLBACK(options_grid)
     s_log_message(_("Grid ON\n"));
   }
 
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -3465,8 +3465,8 @@ DEFINE_I_CALLBACK(cancel)
       w_current->cswindow) {
     /* user hit escape key when placing components */
 
-    /* Undraw any XOR outline of the place list */
-    o_place_rubberplace_xor(w_current, FALSE);
+    /* Undraw any outline of the place list */
+    o_place_invalidate_rubber (w_current, FALSE);
     w_current->rubber_visible = 0;
 
     /* De-select the lists in the component selector */
@@ -3502,7 +3502,7 @@ DEFINE_I_CALLBACK(cancel)
   scm_c_eval_string ("(set! current-command-sequence '())");
 
   if (w_current->inside_action) { 
-     o_redraw_all(w_current); 
+     o_invalidate_all (w_current);
   }
 
   w_current->inside_action=0;

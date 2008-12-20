@@ -138,21 +138,6 @@ static void path_to_points (GSCHEM_TOPLEVEL *w_current, PATH *path,
 }
 
 
-static void find_points_bounds (GdkPoint *points, int num_points,
-                                int *min_x, int *min_y, int *max_x, int *max_y)
-{
-  int i;
-  int found_bound = FALSE;
-
-  for (i = 0; i < num_points; i++) {
-    *min_x = (found_bound) ? min (*min_x, points[i].x) : points[i].x;
-    *min_y = (found_bound) ? min (*min_y, points[i].y) : points[i].y;
-    *max_x = (found_bound) ? max (*max_x, points[i].x) : points[i].x;
-    *max_y = (found_bound) ? max (*max_y, points[i].y) : points[i].y;
-    found_bound = TRUE;
-  }
-}
-
 /*! \brief Draw a path with a solid line type.
  *  \par Function Description
  *  This function draws a path with a solid line type. The length and space
@@ -618,15 +603,24 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   (*fill_func) (w_current->drawable, w_current->gc, color,
                 w_current, path, fill_width, angle1, pitch1, angle2, pitch2);
 
-  if (o_current->draw_grips && w_current->draw_grips == TRUE) {
-    if (!o_current->selected) {
-      /* object is no more selected, erase the grips */
-      o_current->draw_grips = FALSE;
-      o_path_erase_grips(w_current, o_current);
-    } else {
-      /* object is selected, draw the grips */
-      o_path_draw_grips(w_current, o_current);
-    }
+  if (o_current->selected && w_current->draw_grips) {
+    o_path_draw_grips (w_current, o_current);
+  }
+}
+
+
+static void find_points_bounds (GdkPoint *points, int num_points,
+                                int *min_x, int *min_y, int *max_x, int *max_y)
+{
+  int i;
+  int found_bound = FALSE;
+
+  for (i = 0; i < num_points; i++) {
+    *min_x = (found_bound) ? min (*min_x, points[i].x) : points[i].x;
+    *min_y = (found_bound) ? min (*min_y, points[i].y) : points[i].y;
+    *max_x = (found_bound) ? max (*max_x, points[i].x) : points[i].x;
+    *max_y = (found_bound) ? max (*max_y, points[i].y) : points[i].y;
+    found_bound = TRUE;
   }
 }
 
@@ -634,13 +628,26 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 /*! \todo Finish function documentation
  *  \brief
  *  \par Function Description
- *
- *  \note
- *  used in button cancel code in x_events.c
  */
-void o_path_eraserubber(GSCHEM_TOPLEVEL *w_current)
+void o_path_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  o_path_rubberpath_xor (w_current);
+  PATH *path = w_current->which_object->path;
+  int num_points;
+  GdkPoint *points;
+  int min_x = 0, min_y = 0, max_x = 0, max_y = 0;
+
+  path_to_points_modify (w_current, path, 0, 0,
+                         w_current->second_wx, w_current->second_wy,
+                         w_current->which_grip, &points, &num_points);
+  if (num_points == 0) {
+    g_free (points);
+    return;
+  }
+
+  find_points_bounds (points, num_points, &min_x, &min_y, &max_x, &max_y);
+  g_free (points);
+
+  o_invalidate_rect (w_current, min_x, min_y, max_x, max_y);
 }
 
 
@@ -750,12 +757,12 @@ void o_path_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_path_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   if (w_current->rubber_visible)
-    o_path_rubberpath_xor (w_current);
+    o_path_invalidate_rubber (w_current);
 
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
 
-  o_path_rubberpath_xor (w_current);
+  o_path_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
@@ -774,7 +781,6 @@ void o_path_rubberpath_xor(GSCHEM_TOPLEVEL *w_current)
   PATH *path;
   int num_points;
   GdkPoint *points;
-  int left = 0, top = 0, right = 0, bottom = 0;
 
   g_return_if_fail (w_current->which_object != NULL);
   g_return_if_fail (w_current->which_object->path != NULL);
@@ -802,9 +808,6 @@ void o_path_rubberpath_xor(GSCHEM_TOPLEVEL *w_current)
   else
     gdk_draw_lines (w_current->drawable, w_current->xor_gc,
                     points, num_points);
-
-  find_points_bounds (points, num_points, &left, &top, &right, &bottom);
-  o_invalidate_rect (w_current, left, top, right, bottom);
 
   g_free (points);
 }
@@ -918,50 +921,4 @@ void o_path_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
       break;
     }
   }
-}
-
-
-/*! \brief Erase grip marks from path.
- *  \par Function Description
- *  This function erases the grips on the path object <B>o_current</B>.
- *
- *  A path has a grip at each end.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Line OBJECT to erase grip marks from.
- */
-void o_path_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  PATH_SECTION *section;
-  int i;
-  int x, y;
-
-  if (w_current->draw_grips == FALSE)
-    return;
-
-  for (i = 0; i <  o_current->path->num_sections; i++) {
-    section = &o_current->path->sections[i];
-
-    switch (section->code) {
-    case PATH_CURVETO:
-      /* Two control point grips */
-      WORLDtoSCREEN (toplevel, section->x1, section->y1, &x, &y);
-      o_grips_erase (w_current, x, y);
-      WORLDtoSCREEN (toplevel, section->x2, section->y2, &x, &y);
-      o_grips_erase (w_current, x, y);
-      /* Fall through */
-    case PATH_MOVETO:
-    case PATH_MOVETO_OPEN:
-    case PATH_LINETO:
-      /* Destination point grip */
-      WORLDtoSCREEN (toplevel, section->x3, section->y3, &x, &y);
-      o_grips_erase (w_current, x, y);
-      break;
-    case PATH_END:
-      break;
-    }
-  }
-
-  o_path_xor_control_lines (w_current, o_current);
 }

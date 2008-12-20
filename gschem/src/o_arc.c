@@ -172,15 +172,8 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                 arc_width, length, space);
 
 
-  if (o_current->draw_grips && w_current->draw_grips == TRUE) {
-    if(!o_current->selected) {
-      /* object is no more selected, erase the grips */
-      o_current->draw_grips = FALSE;
-      o_arc_erase_grips(w_current, o_current);
-    } else {
-      /* object is selected, draw the grips on the arc */
-      o_arc_draw_grips(w_current, o_current);
-    }
+  if (o_current->selected && w_current->draw_grips == TRUE) {
+    o_arc_draw_grips (w_current, o_current);
   }
 
 #if DEBUG
@@ -786,9 +779,18 @@ void o_arc_draw_phantom(GdkWindow *w, GdkGC *gc,
  *  \par Function Description
  *
  */
-void o_arc_eraserubber(GSCHEM_TOPLEVEL *w_current)
+void o_arc_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  o_arc_rubberarc_xor(w_current);
+  TOPLEVEL *toplevel = w_current->toplevel;
+
+  int cx, cy, radius;
+
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &cx, &cy);
+  radius = SCREENabs(toplevel, w_current->distance);
+
+  /* FIXME: This isn't a tight bounding box */
+  o_invalidate_rect (w_current, cx - radius, cy - radius,
+                                cx + radius, cy + radius);
 }
 
 /*! \brief Draw an arc described by OBJECT with translation
@@ -880,7 +882,7 @@ void o_arc_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->second_wx = w_current->second_wy = 0;
 
   /* start the rubberbanding process of the radius */
-  o_arc_rubberarc_xor(w_current);
+  o_arc_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
@@ -906,7 +908,7 @@ void o_arc_end1(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   g_assert( w_current->inside_action != 0 );
 
   /* erases the previous temporary radius segment */
-  o_arc_rubberarc_xor(w_current);
+  /* o_arc_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
 
   /* ack! zero length radius */
@@ -948,7 +950,7 @@ void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int radius,
   s_page_append (toplevel->page_current, new_obj);
 
   /* draw the new object */
-  o_redraw_single (w_current, new_obj);
+  o_invalidate (w_current, new_obj);
 
   w_current->first_wx  = -1;
   w_current->first_wy  = -1;
@@ -1002,7 +1004,7 @@ void o_arc_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
 
   /* erase the previous temporary arc */
   if (w_current->rubber_visible)
-    o_arc_rubberarc_xor(w_current);
+    o_arc_invalidate_rubber (w_current);
 
   if(whichone == ARC_RADIUS) {
     /*
@@ -1036,7 +1038,7 @@ void o_arc_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
   }
 	
   /* draw the new temporary arc */
-  o_arc_rubberarc_xor(w_current);
+  o_arc_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
 
@@ -1082,15 +1084,6 @@ void o_arc_rubberarc_xor(GSCHEM_TOPLEVEL *w_current)
   x1 = cx + radius*cos(rad_angle);
   y1 = cy - radius*sin(rad_angle);
   gdk_draw_line (w_current->drawable, w_current->xor_gc, cx, cy, x1, y1);
-
-  /* FIXME: This isn't a tight bounding box for now, but the code
-   *        to compute a better bounds it complex, and might wait
-   *        until we're considered having real OBJECT data during
-   *        rubberbanding and using world_get_arc_bounds().
-   */
-  o_invalidate_rect(w_current, 
-		    cx - radius, cy - radius,
-		    cx + radius, cy + radius);
 }
 
 /*! \brief Draw grip marks on arc.
@@ -1137,50 +1130,5 @@ void o_arc_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
   /* draw the grip at the end_angle end of the arc */
   o_grips_draw(w_current, x2, y2);
-
-}
-
-/*! \brief Erase grip marks from arc.
- *  \par Function Description
- *  This function erases the three grips displayed on the <B>o_current</B>
- *  arc object. These grips are on the center of the arc and on each end
- *  of the arc.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Arc OBJECT to remove grip marks from.
- */
-void o_arc_erase_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int radius, x, y, start_angle, end_angle;
-  int x1, y1, x2, y2;
-
-  if (w_current->draw_grips == FALSE)
-    return;
-
-  /*
-   * The coordinates of the three grips are determined by the parameters
-   * of the arc. The grips are centered at (<B>x</B>,<B>y</B>), (<B>x1</B>,<B>y1</B>)
-   * and (<B>x2</B>,<B>y2</B>).
-   */
-
-  WORLDtoSCREEN( toplevel, o_current->arc->x, o_current->arc->y, &x, &y );
-  radius      = SCREENabs( toplevel, o_current->arc->width / 2 );
-  start_angle = o_current->arc->start_angle;
-  end_angle   = o_current->arc->end_angle;
-
-  x1 = x + radius * cos(((double) start_angle) * M_PI / 180);
-  y1 = y - radius * sin(((double) start_angle) * M_PI / 180);
-  x2 = x + radius * cos(((double) start_angle + end_angle) * M_PI / 180);
-  y2 = y - radius * sin(((double) start_angle + end_angle) * M_PI / 180);
-
-  /* erase the grip at the center */
-  o_grips_erase(w_current,  x,  y);
-
-  /* erase the grip at the start_angle end of the arc */
-  o_grips_erase(w_current, x1, y1);
-
-  /* erase the grip at the end_angle end of the arc */
-  o_grips_erase(w_current, x2, y2);
 
 }

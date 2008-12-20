@@ -62,7 +62,7 @@ void o_net_reset(GSCHEM_TOPLEVEL *w_current)
   w_current->second_wx = w_current->second_wy = -1;
   w_current->third_wx = w_current->third_wy = -1;
   w_current->magnetic_wx = w_current->magnetic_wy = -1;
-  w_current->magnetic_visible = w_current->rubber_visible = 0;
+  w_current->rubber_visible = 0;
 }
 
 /*! \todo Finish function documentation!!!
@@ -160,15 +160,8 @@ void o_net_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                                GDK_JOIN_MITER);
   }
 
-  if (o_current->draw_grips && w_current->draw_grips == TRUE) {
-    if (!o_current->selected) {
-      /* object is no more selected, erase the grips */
-      o_current->draw_grips = FALSE;
-      o_line_erase_grips(w_current, o_current);
-    } else {
-      /* object is selected, draw the grips */
-      o_line_draw_grips(w_current, o_current);
-    }
+  if (o_current->selected && w_current->draw_grips) {
+    o_line_draw_grips (w_current, o_current);
   }
 }
 
@@ -265,9 +258,6 @@ void o_net_draw_xor_single(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int which
 
   gdk_draw_line (w_current->drawable, w_current->outline_xor_gc,
                  sx[0], sy[0], sx[1], sy[1]);
-  o_invalidate_rect(w_current,
-                    sx[0], sy[0], sx[1], sy[1]);
-
 }
 
 
@@ -598,9 +588,7 @@ void o_net_finishmagnetic(GSCHEM_TOPLEVEL *w_current)
  */
 void o_net_start_magnetic(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  o_net_eraserubber(w_current);
-  /* the dc is completely clean now, reset inside_action. */
-  w_current->inside_action = 0;
+  o_net_invalidate_rubber (w_current);
 
   if (w_current->CONTROLKEY) {
     w_current->magnetic_wx = w_x;
@@ -610,7 +598,9 @@ void o_net_start_magnetic(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
     o_net_find_magnetic(w_current, w_x, w_y);
   }
 
-  o_net_drawrubber(w_current);
+  o_net_invalidate_rubber (w_current);
+  w_current->rubber_visible = 1;
+  w_current->inside_action = 1;
 }
 
 /*! \brief set the start point of a new net
@@ -623,7 +613,7 @@ void o_net_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 
-  if (w_current->magnetic_visible) {
+  if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
     w_current->first_wx = w_current->magnetic_wx;
     w_current->first_wy = w_current->magnetic_wy;
   }
@@ -660,21 +650,19 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   int color;
   int primary_zero_length, secondary_zero_length;
   int found_primary_connection = FALSE;
-  int save_magnetic, save_wx, save_wy;
+  int save_wx, save_wy;
 
   GList *prev_conn_objects = NULL;
   OBJECT *new_net = NULL;
 
   g_assert( w_current->inside_action != 0 );
 
-  /* I've to store that because o_net_eraserubber would delete it
-     but I need it for o_net_finish_magnetic */
-  save_magnetic = w_current->magnetic_visible;
+  o_net_invalidate_rubber (w_current);
 
-  o_net_eraserubber(w_current);
-
-  if (save_magnetic)
+  if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1)
     o_net_finishmagnetic(w_current);
+
+  w_current->rubber_visible = 0;
 
   /* See if either of the nets are zero length.  We'll only add */
   /* the non-zero ones */
@@ -725,11 +713,9 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
       s_conn_print(new_net->conn_list);
 #endif
 
-      o_redraw_single (w_current, new_net);
+      o_invalidate (w_current, new_net);
 
-      o_cue_undraw_list (w_current, prev_conn_objects);
-      o_cue_draw_list (w_current, prev_conn_objects);
-      o_cue_draw_single(w_current, new_net);
+      o_invalidate_glist (w_current, prev_conn_objects);
 
       g_list_free (prev_conn_objects);
       prev_conn_objects = NULL;
@@ -776,11 +762,9 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
       s_conn_print(new_net->conn_list);
 #endif
 
-      o_redraw_single (w_current, new_net);
+      o_invalidate (w_current, new_net);
 
-      o_cue_undraw_list (w_current, prev_conn_objects);
-      o_cue_draw_list (w_current, prev_conn_objects);
-      o_cue_draw_single(w_current, new_net);
+      o_invalidate_glist (w_current, prev_conn_objects);
 
       g_list_free (prev_conn_objects);
       prev_conn_objects = NULL;
@@ -815,7 +799,8 @@ void o_net_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
      if we are using magnetic mode */
   ortho = !w_current->CONTROLKEY || w_current->magneticnet_mode;
 
-  o_net_eraserubber(w_current);
+  if (w_current->rubber_visible)
+    o_net_invalidate_rubber (w_current);
 
   if (w_current->magneticnet_mode) {
     if (w_current->CONTROLKEY) {
@@ -863,7 +848,8 @@ void o_net_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
     }
   }
 
-  o_net_drawrubber(w_current);
+  o_net_invalidate_rubber (w_current);
+  w_current->rubber_visible = 1;
 }
 
 /*! \brief draw rubbernet lines to the gc
@@ -886,8 +872,6 @@ void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
   WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy,
 		&second_x, &second_y);
 
-  w_current->rubber_visible = 1;
-
   if (toplevel->net_style == THICK) {
     size = SCREENabs(toplevel, NET_WIDTH);
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
@@ -901,39 +885,22 @@ void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
 
   if (w_current->magneticnet_mode) {
     if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
-      w_current->magnetic_visible = 1;
-      w_current->inside_action = 1;
       magnetic_halfsize = max(4*size, MAGNETIC_HALFSIZE);
       gdk_draw_arc (w_current->drawable, w_current->xor_gc, FALSE,
                     magnetic_x - magnetic_halfsize,
                     magnetic_y - magnetic_halfsize,
                     2 * magnetic_halfsize, 2 * magnetic_halfsize,
                     0, FULL_CIRCLE);
-      o_invalidate_rect(w_current, 
-			magnetic_x - magnetic_halfsize - size/2,
-			magnetic_y - magnetic_halfsize - size/2,
-			magnetic_x + magnetic_halfsize + size/2,
-			magnetic_y + magnetic_halfsize + size/2);
     }
   }
 
   /* draw primary line */
   gdk_draw_line (w_current->drawable, w_current->xor_gc,
                  first_x, first_y, second_x, second_y);
-  o_invalidate_rect(w_current, 
-		    min(first_x, second_x) - size/2,
-		    min(first_y, second_y) - size/2,
-		    max(first_x, second_x) + size/2,
-		    max(first_y, second_y) + size/2);
 
   /* Draw secondary line */
   gdk_draw_line (w_current->drawable, w_current->xor_gc,
                  second_x, second_y, third_x, third_y);
-  o_invalidate_rect(w_current, 
-		    min(second_x, third_x) - size/2,
-		    min(second_y, third_y) - size/2,
-		    max(second_x, third_x) + size/2,
-		    max(second_y, third_y) + size/2);
 
   if (toplevel->net_style == THICK) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
@@ -947,76 +914,53 @@ void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
  *  \brief
  *  \par Function Description
  *
- *  \note
- *  used in button cancel code in x_events.c
  */
-void o_net_eraserubber(GSCHEM_TOPLEVEL *w_current)
+void o_net_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int size=0, magnetic_halfsize;
+  int size = 0, magnetic_halfsize;
+  int bloat;
   int magnetic_x, magnetic_y;
   int first_x, first_y, third_x, third_y, second_x, second_y;
+  int x1, y1, x2, y2;
 
-  if (! w_current->rubber_visible)
-    return;
-
-  WORLDtoSCREEN(toplevel, w_current->magnetic_wx, w_current->magnetic_wy,
-		&magnetic_x, &magnetic_y);
-  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy,
-		&first_x, &first_y);
-  WORLDtoSCREEN(toplevel, w_current->third_wx, w_current->third_wy,
-		&third_x, &third_y);
-  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy,
-		&second_x, &second_y);
-
-  w_current->rubber_visible = 0;
+  WORLDtoSCREEN (toplevel, w_current->magnetic_wx, w_current->magnetic_wy,
+                 &magnetic_x, &magnetic_y);
+  WORLDtoSCREEN (toplevel, w_current->first_wx, w_current->first_wy,
+                 &first_x, &first_y);
+  WORLDtoSCREEN (toplevel, w_current->third_wx, w_current->third_wy,
+                 &third_x, &third_y);
+  WORLDtoSCREEN (toplevel, w_current->second_wx, w_current->second_wy,
+                 &second_x, &second_y);
 
   if (toplevel->net_style == THICK) {
-    size = SCREENabs(toplevel, NET_WIDTH);
-    gdk_gc_set_line_attributes(w_current->xor_gc, size,
-			       GDK_LINE_SOLID,
-			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
+    size = SCREENabs (toplevel, NET_WIDTH);
   }
-  size = max(size, 0);
+  size = max (size, 0);
+  bloat = size / 2;
 
-  if (w_current->magnetic_visible) {
-    w_current->magnetic_visible = 0;
-    magnetic_halfsize = max(4*size, MAGNETIC_HALFSIZE);
-    gdk_draw_arc (w_current->drawable, w_current->xor_gc, FALSE,
-                 magnetic_x - magnetic_halfsize,
-                 magnetic_y - magnetic_halfsize,
-                 2 * magnetic_halfsize, 2 * magnetic_halfsize,
-                 0, FULL_CIRCLE);
-      o_invalidate_rect(w_current, 
-			magnetic_x - magnetic_halfsize - size/2,
-			magnetic_y - magnetic_halfsize - size/2,
-			magnetic_x + magnetic_halfsize + size/2,
-			magnetic_y + magnetic_halfsize + size/2);
+  if (w_current->magneticnet_mode) {
+    if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
+      magnetic_halfsize = max (4 * size, MAGNETIC_HALFSIZE);
+
+      o_invalidate_rect (w_current, magnetic_x - magnetic_halfsize,
+                                    magnetic_y - magnetic_halfsize,
+                                    magnetic_x + magnetic_halfsize,
+                                    magnetic_y + magnetic_halfsize);
+    }
   }
 
-  /* Erase primary primary rubber net line */
-  gdk_draw_line (w_current->drawable, w_current->xor_gc,
-                 first_x, first_y, second_x, second_y);
-  o_invalidate_rect(w_current, 
-		    min(first_x, second_x) - size/2,
-		    min(first_y, second_y) - size/2,
-		    max(first_x, second_x) + size/2,
-		    max(first_y, second_y) + size/2);
+  x1 = min (first_x, second_x) - bloat;
+  x2 = max (first_x, second_x) + bloat;
+  y1 = min (first_y, second_y) - bloat;
+  y2 = max (first_y, second_y) + bloat;
+  o_invalidate_rect (w_current, x1, y1, x2, y2);
 
-  /* Erase secondary rubber net line */
-  gdk_draw_line (w_current->drawable, w_current->xor_gc,
-                 second_x, second_y, third_x, third_y);
-  o_invalidate_rect(w_current, 
-		    min(second_x, third_x) - size/2,
-		    min(second_y, third_y) - size/2,
-		    max(second_x, third_x) + size/2,
-		    max(second_y, third_y) + size/2);
-
-  if (toplevel->net_style == THICK) {
-    gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-			       GDK_LINE_SOLID,
-			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
-  }
+  x1 = min (second_x, third_x) - bloat;
+  x2 = max (second_x, third_x) + bloat;
+  y1 = min (second_y, third_y) - bloat;
+  y2 = max (second_y, third_y) + bloat;
+  o_invalidate_rect (w_current, x1, y1, x2, y2);
 }
 
 
@@ -1345,7 +1289,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
           o_complex_promote_attribs (toplevel, new_obj,
                                      &toplevel->page_current->object_list);
 
-          o_complex_draw (w_current, new_obj);
+          o_invalidate (w_current, new_obj);
         } else {
           s_log_message(_("Bus ripper symbol [%s] was not found in any component library\n"),
                         toplevel->bus_ripper_symname);

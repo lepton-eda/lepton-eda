@@ -37,51 +37,156 @@
  *  \par Function Description
  *
  */
-void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
+void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
+                     GdkRectangle *rectangles, int n_rectangles)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   gboolean draw_selected = TRUE;
+  int redraw_state = toplevel->DONT_REDRAW;
+  int grip_half_size;
+  int cue_half_size;
+  int bloat;
+  int i;
+  GList *obj_list;
+  GList *iter;
+  BOX *world_rects;
 
   if (!toplevel->DONT_REDRAW) {
-    x_repaint_background(w_current);
+    for (i = 0; i < n_rectangles; i++) {
+      x_repaint_background_region (w_current, rectangles[i].x, rectangles[i].y,
+                                   rectangles[i].width, rectangles[i].height);
+    }
   }
+
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (toplevel->page_current != NULL);
+
+  grip_half_size = o_grips_size (w_current);
+  cue_half_size = SCREENabs (toplevel, CUE_BOX_SIZE);
+  bloat = MAX (grip_half_size, cue_half_size);
+
+  world_rects = g_new (BOX, n_rectangles);
+
+  for (i = 0; i < n_rectangles; i++) {
+    int x, y, width, height;
+
+    x = rectangles[i].x;
+    y = rectangles[i].y;
+    width = rectangles[i].width;
+    height = rectangles[i].height;
+
+    SCREENtoWORLD (toplevel, x - bloat, y + height + bloat,
+                   &world_rects[i].lower_x, &world_rects[i].lower_y);
+    SCREENtoWORLD (toplevel, x + width + bloat, y - bloat,
+                   &world_rects[i].upper_x, &world_rects[i].upper_y);
+  }
+
+  obj_list = s_page_objects_in_regions (toplevel->page_current,
+                                        world_rects, n_rectangles);
+  g_free (world_rects);
 
   draw_selected = !(w_current->inside_action &&
                     ((w_current->event_state == MOVE) ||
                      (w_current->event_state == ENDMOVE) ||
                      (w_current->event_state == GRIPS)));
-  g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (toplevel->page_current != NULL);
-  g_warn_if_fail (toplevel->page_current->object_list != NULL);
-  o_redraw (w_current, toplevel->page_current->object_list, draw_selected);
-  o_cue_redraw_all(w_current,
-                   toplevel->page_current->object_list, draw_selected);
+
+  w_current->inside_redraw = 1;
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
+
+    if (o_current->draw_func != NULL) {
+      toplevel->DONT_REDRAW = redraw_state ||
+                              o_current->dont_redraw ||
+                              (!draw_selected && o_current->selected);
+      (*o_current->draw_func)(w_current, o_current);
+    }
+  }
+  w_current->inside_redraw = 0;
+  toplevel->DONT_REDRAW = redraw_state;
+
+  o_cue_redraw_all (w_current, obj_list, draw_selected);
 
   if (w_current->inside_action) {
-    switch(w_current->event_state) {
-      case(MOVE):
-      case(ENDMOVE):
-        o_move_rubbermove_xor (w_current, TRUE);
+    /* Redraw the rubberband objects (if they were previously visible) */
+    switch (w_current->event_state) {
+      case MOVE:
+      case ENDMOVE:
+        if (w_current->last_drawb_mode != -1) {
+          o_move_rubbermove_xor (w_current, TRUE);
+        }
         break;
 
-      case(ENDCOPY):
-      case(ENDMCOPY):
-      case(ENDCOMP):
-      case(ENDTEXT):
-      case(ENDPASTE):
-        /* Redraw the rubberband objects (if they were previously visible) */
+      case ENDCOPY:
+      case ENDMCOPY:
+      case ENDCOMP:
+      case ENDTEXT:
+      case ENDPASTE:
         if (w_current->rubber_visible)
           o_place_rubberplace_xor (w_current, TRUE);
         break;
 
-      case(STARTDRAWNET):
-      case(DRAWNET):
-      case(NETCONT):
-        w_current->magnetic_visible=0;
-        w_current->rubber_visible = 0;
+      case STARTDRAWNET:
+      case DRAWNET:
+      case NETCONT:
+        if (w_current->rubber_visible)
+          o_net_drawrubber (w_current);
+        break;
+
+      case STARTDRAWBUS:
+      case DRAWBUS:
+      case BUSCONT:
+        if (w_current->rubber_visible)
+          o_bus_rubberbus_xor(w_current);
+        break;
+
+      case GRIPS:
+        if (w_current->rubber_visible)
+          o_grips_rubbergrip_xor (w_current);
+        break;
+
+      case SBOX:
+        if (w_current->rubber_visible)
+          o_select_box_rubberband_xor (w_current);
+        break;
+
+      case ZOOMBOXEND:
+        if (w_current->rubber_visible)
+          a_zoom_box_rubberband_xor (w_current);
+        break;
+
+      case ENDLINE:
+        if (w_current->rubber_visible)
+          o_line_rubberline_xor (w_current);
+        break;
+
+      case ENDBOX:
+        if (w_current->rubber_visible)
+          o_box_rubberbox_xor (w_current);
+        break;
+
+      case ENDPICTURE:
+        if (w_current->rubber_visible)
+          o_picture_rubberbox_xor (w_current);
+        break;
+
+      case ENDCIRCLE:
+        if (w_current->rubber_visible)
+          o_circle_rubbercircle_xor (w_current);
+        break;
+
+      case ENDARC:
+        if (w_current->rubber_visible)
+          o_arc_rubberarc_xor (w_current);
+        break;
+
+      case ENDPIN:
+        if (w_current->rubber_visible)
+          o_pin_rubberpin_xor (w_current);
         break;
     }
   }
+
+  g_list_free (obj_list);
 }
 
 
@@ -110,8 +215,6 @@ void o_redraw (GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_sel
     iter = g_list_next (iter);
   }
   toplevel->DONT_REDRAW = redraw_state;
-
-  o_invalidate_glist (w_current, object_list);
 }
 
 /*! \brief Redraw an object on the screen.
@@ -135,132 +238,6 @@ void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if (o_current->draw_func != NULL) {
     (*o_current->draw_func)(w_current, o_current);
   }
-
-  o_invalidate (w_current, o_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_draw_list(GSCHEM_TOPLEVEL *w_current, GList* list)
-{
-  OBJECT* o_current;
-  GList *l_current;
-
-  l_current = list;
-  while (l_current != NULL) {
-
-    o_current = (OBJECT *) l_current->data;
-
-    if (o_current) {
-      o_redraw_single(w_current, o_current);
-    }
-
-    l_current = g_list_next(l_current);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_draw_selected(GSCHEM_TOPLEVEL *w_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  GList* s_current;
-  OBJECT* o_current;
-
-  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
-  while (s_current != NULL) {
-    o_current = (OBJECT *) s_current->data;
-
-    if (o_current) {
-      o_redraw_single(w_current, o_current);
-      o_cue_draw_single(w_current, o_current);
-    }
-    s_current=g_list_next(s_current);
-  }
-
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_erase_selected(GSCHEM_TOPLEVEL *w_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  GList *list;
-  GList *iter;
-  OBJECT* o_current;
-
-  list = iter = geda_list_get_glist( toplevel->page_current->selection_list );
-  while (iter != NULL) {
-    o_current = iter->data;
-
-    if (o_current) {
-      o_cue_erase_single(w_current, o_current);
-      o_erase_single(w_current, o_current);
-    }
-
-    iter = g_list_next( iter );
-  }
-
-  o_invalidate_glist (w_current, list);
-}
-
-/*! \brief Erase a given OBJECT
- *
- *  \par Function Description
- *  This function erases the passed OBJECT, <B>object</B>.
- *
- *  It makes a call to object's draw function after having set a
- *  color override to the background color. The object is drawn in
- *  the background color, causing it to dissapear.
- *
- *  \bug No redrawing is done of occluded objects, including the grid.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Circle OBJECT to erase.
- */
-void o_erase_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current;
-
-  o_current = object;
-
-  toplevel->override_color = toplevel->background_color;
-  if (o_current != NULL) {
-    if (o_current->draw_func) {
-      (*o_current->draw_func)(w_current, o_current);
-    }
-  }
-  toplevel->override_color = -1;
-
-  o_invalidate (w_current, o_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_erase_list(GSCHEM_TOPLEVEL *w_current, GList* list)
-{
-  OBJECT *o_current;
-  GList *iter;
-
-  iter = list;
-  while (iter != NULL) {
-    o_current = iter->data;
-    o_erase_single(w_current, o_current);
-    iter = g_list_next(iter);
-  }
 }
 
 
@@ -269,7 +246,7 @@ void o_erase_list(GSCHEM_TOPLEVEL *w_current, GList* list)
  *  \par Function Description
  *
  */
-int o_erase_rubber(GSCHEM_TOPLEVEL *w_current)
+int o_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   /* return FALSE if it did not erase anything */
 
@@ -281,43 +258,43 @@ int o_erase_rubber(GSCHEM_TOPLEVEL *w_current)
     case(STARTDRAWBUS):
     case(DRAWBUS):
     case(BUSCONT):
-      o_bus_eraserubber(w_current);
+      o_bus_invalidate_rubber (w_current);
     break;
 
     case(STARTDRAWNET):
     case(DRAWNET):
     case(NETCONT):
-      o_net_eraserubber(w_current);
+      o_net_invalidate_rubber (w_current);
     break;
 
     case(DRAWPIN):
     case(ENDPIN):
-      o_pin_eraserubber(w_current);
+      o_pin_invalidate_rubber (w_current);
     break;
 
     case(DRAWLINE):
     case(ENDLINE):
-      o_line_eraserubber(w_current);
+      o_line_invalidate_rubber (w_current);
     break;
 
     case(DRAWBOX):
     case(ENDBOX):
-      o_box_eraserubber(w_current);
+      o_box_invalidate_rubber (w_current);
     break;
 
     case(DRAWPICTURE):
     case(ENDPICTURE):
-      o_picture_eraserubber(w_current);
+      o_picture_invalidate_rubber (w_current);
     break;
 
     case(DRAWCIRCLE):
     case(ENDCIRCLE):
-      o_circle_eraserubber(w_current);
+      o_circle_invalidate_rubber (w_current);
     break;
 
     case(DRAWARC):
     case(ENDARC):
-      o_arc_eraserubber(w_current);
+      o_arc_invalidate_rubber (w_current);
     break;
 
     default:
@@ -394,7 +371,7 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
       i_set_state(w_current, SELECT);
 
       /* from i_callback_cancel() */
-      o_redraw_all(w_current);
+      o_invalidate_all (w_current);
       return TRUE;
 
     /* all remaining states without dc changes */
@@ -494,6 +471,9 @@ void o_glist_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, GList *list)
  *  to expand the invalidated region if anti-aliased drawing is ever
  *  used.
  *
+ *  A further, larger margin is added to account for invalidating the
+ *  size occupied by an object's grips.
+ *
  *  If the GSCHEM_TOPLEVEL in question is not rendering to a GDK_WINDOW,
  *  (e.g. image export), this function call is a no-op. A test is used:
  *  GDK_IS_WINDOW(), which should be safe since in either case,
@@ -510,16 +490,23 @@ void o_invalidate_rect (GSCHEM_TOPLEVEL *w_current,
                         int x1, int y1, int x2, int y2)
 {
   GdkRectangle rect;
+  int grip_half_size;
+  int cue_half_size;
+  int bloat;
 
   /* BUG: We get called when rendering an image, and w_current->window
    *      is a GdkPixmap. Ensure we only invalidate GdkWindows. */
   if (!GDK_IS_WINDOW( w_current->window ))
     return;
 
-  rect.x = MIN(x1, x2) - INVALIDATE_MARGIN;
-  rect.y = MIN(y1, y2) - INVALIDATE_MARGIN;
-  rect.width = 1 + abs( x1 - x2 ) + 2 * INVALIDATE_MARGIN;
-  rect.height = 1 + abs( y1 - y2 ) + 2 * INVALIDATE_MARGIN;
+  grip_half_size = o_grips_size (w_current);
+  cue_half_size = SCREENabs (w_current->toplevel, CUE_BOX_SIZE);
+  bloat = MAX (grip_half_size, cue_half_size) + INVALIDATE_MARGIN;
+
+  rect.x = MIN(x1, x2) - bloat;
+  rect.y = MIN(y1, y2) - bloat;
+  rect.width = 1 + abs( x1 - x2 ) + 2 * bloat;
+  rect.height = 1 + abs( y1 - y2 ) + 2 * bloat;
   gdk_window_invalidate_rect( w_current->window, &rect, FALSE );
 }
 
@@ -581,36 +568,5 @@ void o_invalidate_glist (GSCHEM_TOPLEVEL *w_current, GList *list)
     WORLDtoSCREEN (toplevel, left, top, &s_left, &s_top);
     WORLDtoSCREEN (toplevel, right, bottom, &s_right, &s_bottom);
     o_invalidate_rect (w_current, s_left, s_top, s_right, s_bottom);
-  }
-}
-
-
-/*! \brief Erase grip marks on object.
- *  \par Function Description
- *  This function erases the grips on the object \a object.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] object     The object of which to erase the grips.
- */
-void o_erase_grips (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
-{
-  void (*func) (GSCHEM_TOPLEVEL*, OBJECT*) = NULL;
-
-  g_return_if_fail (object != NULL);
-
-  switch (object->type) {
-      case OBJ_ARC:     func = o_arc_erase_grips;     break;
-      case OBJ_BOX:     func = o_box_erase_grips;     break;
-      case OBJ_BUS:
-      case OBJ_LINE:
-      case OBJ_NET:
-      case OBJ_PIN:     func = o_line_erase_grips;    break;
-      case OBJ_CIRCLE:  func = o_circle_erase_grips;  break;
-      case OBJ_PICTURE: func = o_picture_erase_grips; break;
-      case OBJ_PATH:    func = o_path_erase_grips;    break;
-  }
-
-  if (func != NULL) {
-    (*func) (w_current, object);
   }
 }

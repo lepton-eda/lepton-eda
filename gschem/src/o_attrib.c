@@ -68,7 +68,7 @@ void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
       /* make sure object isn't selected already */
       if (a_current->saved_color == -1) {
         o_selection_add(selection, a_current);
-        o_redraw_single(w_current, a_current);
+        o_invalidate (w_current, a_current);
       }
 
       a_iter = g_list_next (a_iter);
@@ -96,21 +96,21 @@ void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   if (object->visibility == VISIBLE) {
     /* only erase if we are not showing hidden text */
     if (!toplevel->show_hidden_text) {
-      o_erase_single(w_current, object);
+      o_invalidate (w_current, object);
     }
 
     object->visibility = INVISIBLE;
 
     if (toplevel->show_hidden_text) {
       /* draw text so that little I is drawn */
-      o_text_draw(w_current, object);
+      o_invalidate (w_current, object);
     }
 
   } else {
     /* if we are in the special show hidden mode, then erase text first */
     /* to get rid of the little I */
     if (toplevel->show_hidden_text) {
-      o_erase_single(w_current, object);
+      o_invalidate (w_current, object);
     }
 
     object->visibility = VISIBLE;
@@ -121,7 +121,7 @@ void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
       o_text_recreate(toplevel, object);
     }
 
-    o_text_draw(w_current, object);
+    o_invalidate (w_current, object);
   }
 
   toplevel->page_current->CHANGED = 1;
@@ -144,10 +144,10 @@ void o_attrib_toggle_show_name_value(GSCHEM_TOPLEVEL *w_current,
 
   g_return_if_fail (object != NULL && object->type == OBJ_TEXT);
 
-  o_erase_single(w_current, object);
+  o_invalidate (w_current, object);
   object->show_name_value = show_name_value;
   o_text_recreate(toplevel, object);
-  o_text_draw(w_current, object);
+  o_invalidate (w_current, object);
 
   toplevel->page_current->CHANGED = 1;
 }
@@ -251,8 +251,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
 
   o_selection_add (toplevel->page_current->selection_list, new_obj);
 
-  o_erase_single (w_current, new_obj);
-  o_text_draw (w_current, new_obj);
+  o_invalidate (w_current, new_obj);
 
   /* handle slot= attribute, it's a special case */
   if (g_ascii_strncasecmp (text_string, "slot=", 5) == 0) {

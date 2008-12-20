@@ -424,8 +424,7 @@ void x_image_lowlevel(GSCHEM_TOPLEVEL *w_current, const char* filename,
       save_page_top,
       save_page_bottom);
 
-  /* try to use recalc here... */
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
 
 }
 
@@ -705,16 +704,16 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
   
   /* If there are no objects, can't use zoom_extents */
   if (object_found) {
-    o_redraw_all (&toplevel); 
+    o_invalidate_all (&toplevel);
     get_object_glist_bounds (&toplevel,
                              toplevel.page_current->object_list,
-			   &origin_x, &origin_y, 
-			   &right, &bottom);
+                             &origin_x, &origin_y,
+                             &right, &bottom);
   }
 #endif
   /* ------------------  End optional code ------------------------ */
   
-  o_redraw_all (&new_w_current);
+  o_invalidate_all (&new_w_current);
 
   /* Get the pixbuf */
   pixbuf = gdk_pixbuf_get_from_drawable (NULL,new_w_current.drawable, NULL,
