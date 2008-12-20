@@ -1,14 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# British English translation for gschem.
+# Copyright (C) 2007-2008 Peter Clifton <pcjc2@cam.ac.uk>
+# This file is distributed under the same license as the gschem package.
+# Peter Clifton <pcjc2@cam.ac.uk>, 2007, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: geda-schem\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-06 22:00-0400\n"
-"PO-Revision-Date: 2007-12-25 22:43+0100\n"
+"PO-Revision-Date: 2008-12-20 14:25+0000\n"
 "Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"

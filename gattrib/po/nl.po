@@ -1,5 +1,5 @@
 # Dutch translation for the geda-gattrib package.
-# Copyright (C) 2003-2007 Stuart D. Brorson and the respective original authors (which are listed on the respective files).
+# Copyright (C) 2003-2008 Stuart D. Brorson and the respective original authors (which are listed on the respective files).
 # This file is distributed under the same license as the geda-gattrib package.
 # Bert Timmerman <bert.timmerman@xs4all.nl>, 2007, 2008.
 #
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: geda-gattrib\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-06 22:01-0400\n"
-"PO-Revision-Date: 2008-01-06 13:07+0100\n"
+"PO-Revision-Date: 2008-12-20 14:03+0000\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@moira.seul.org>\n"
 "MIME-Version: 1.0\n"

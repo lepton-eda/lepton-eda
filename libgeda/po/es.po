@@ -1,7 +1,7 @@
 # Spanish/Spain translation of libgeda.
-# Copyright (C) 2007 Carlos Nieves Ónega
+# Copyright (C) 2007-2008 Carlos Nieves Ónega
 # This file is distributed under the same license as the libgeda package.
-# Carlos Nieves Ónega <cnieves@iespana.es>, 2007-2008.
+# Carlos Nieves Ónega <cnieves@iespana.es>, 2007, 2008.
 #
 #
 msgid ""
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-06 11:05-0400\n"
-"PO-Revision-Date: 2008-01-07 20:17+0100\n"
+"PO-Revision-Date: 2008-12-20 14:05+0000\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"

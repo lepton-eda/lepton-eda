@@ -1,6 +1,6 @@
-# translation of de_DE.po to deutsch
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# German translation for gattrib
+# Copyright (C) 2007-2008 Werner Hoch
+# This file is distributed under the same license as the gattrib package.
 #
 # Werner Hoch <werner.ho@gmx.de>, 2007.
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-06 22:01-0400\n"
-"PO-Revision-Date: 2007-12-29 09:14+0100\n"
+"PO-Revision-Date: 2008-12-20 14:37+0000\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"

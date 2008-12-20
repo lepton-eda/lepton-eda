@@ -1,6 +1,6 @@
-# translation of ru.po to Russian
-# This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR Alexandre Pereira Nunes
+# Russian translation for gschem
+# This file is distributed under the same license as the gschem package.
+# Copyright (C) 2003-2008 Andy Shevchenko
 #
 # Andy Shevchenko <andy@smile.org.ua>, 2003, 2006.
 msgid ""

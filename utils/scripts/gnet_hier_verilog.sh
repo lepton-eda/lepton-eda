@@ -1,6 +1,6 @@
 #!/bin/bash
 # gEDA - GPL Electronic Design Automation
-# Copyright (C) 2007 Paul Tan (pt75234 at users.sourceforge.net)
+# Copyright (C) 2007-2008 Paul Tan (pt75234 at users.sourceforge.net)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

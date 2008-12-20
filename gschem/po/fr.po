@@ -1,5 +1,6 @@
 # gEDA/gaf gschem french translation
-# Copyright (C) 2005 Iznogood
+# Copyright (C) 2005-2008 Iznogood
+# Copyright (C) 2006-2008 Patrick Bernaud
 # This file is distributed under the same license as the gEDA/gaf package.
 # Iznogood <iznogood@iznogood-factory.org>, 2005.
 # Patrick Bernaud <b-patrick@wanadoo.fr>, 2006.
@@ -10,7 +11,7 @@ msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-06 22:00-0400\n"
-"PO-Revision-Date: 2007-02-16 14:08+0100\n"
+"PO-Revision-Date: 2008-12-20 14:26+0000\n"
 "Last-Translator: Patrick Bernaud <b-patrick@wanadoo.fr>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"

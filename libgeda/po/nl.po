@@ -1,5 +1,5 @@
 # Dutch translation for the geda-libgeda package.
-# Copyright (C) 1998-2007 Ales Hvezda and the respective original authors (which are listed on the respective files).
+# Copyright (C) 1998-2008 Ales Hvezda and the respective original authors (which are listed on the respective files).
 # This file is distributed under the same license as the geda-libgeda package.
 # Bert Timmerman <bert.timmerman@xs4all.nl>, 2007, 2008
 #
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-06 11:05-0400\n"
-"PO-Revision-Date: 2007-12-29 17:03+0100\n"
+"PO-Revision-Date: 2008-12-20 14:05+0000\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"
