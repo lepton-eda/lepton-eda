@@ -300,10 +300,6 @@ void a_zoom_box_rubberband_xor(GSCHEM_TOPLEVEL *w_current)
 			x_get_darkcolor(w_current->zoom_box_color));
   gdk_draw_rectangle (w_current->drawable, w_current->xor_gc, FALSE,
                       box_left, box_top, box_width, box_height);
-  o_invalidate_rect(w_current, box_left,
-                               box_top,
-                               box_left + box_width,
-		               box_top + box_height);
 }
 
 /*! \todo Finish function documentation!!!

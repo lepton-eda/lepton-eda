@@ -481,6 +481,7 @@ void o_attrib_toggle_show_name_value(GSCHEM_TOPLEVEL *w_current, OBJECT *object,
 OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current, const char *text_string, int visibility, int show_name_value, OBJECT *object);
 /* o_basic.c */
 void o_redraw_all(GSCHEM_TOPLEVEL *w_current);
+void o_redraw_rects(GSCHEM_TOPLEVEL *w_current, GdkRectangle *rectangles, int n_rectangles);
 void o_redraw(GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_selected);
 void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_draw_list(GSCHEM_TOPLEVEL *w_current, GList *list);
@@ -744,7 +745,7 @@ void attrib_edit_dialog(GSCHEM_TOPLEVEL *w_current, OBJECT *attr_obj, int flag);
 /* x_autonumber.c */
 void autonumber_text_dialog(GSCHEM_TOPLEVEL *w_current);
 /* x_basic.c */
-void x_repaint_background(GSCHEM_TOPLEVEL *w_current);
+void x_repaint_background_region(GSCHEM_TOPLEVEL *w_current, int x, int y, int width, int height);
 void x_hscrollbar_set_ranges(GSCHEM_TOPLEVEL *w_current);
 void x_hscrollbar_update(GSCHEM_TOPLEVEL *w_current);
 void x_vscrollbar_set_ranges(GSCHEM_TOPLEVEL *w_current);
@@ -816,7 +817,7 @@ void x_fileselect_open(GSCHEM_TOPLEVEL *w_current);
 void x_fileselect_save(GSCHEM_TOPLEVEL *w_current);
 int x_fileselect_load_backup(TOPLEVEL *toplevel, GString *message);
 /* x_grid.c */
-void x_grid_draw(GSCHEM_TOPLEVEL *w_current);
+void x_grid_draw_region(GSCHEM_TOPLEVEL *w_current, int x, int y, int width, int height);
 void x_draw_tiles(GSCHEM_TOPLEVEL *w_current);
 /* x_image.c */
 void x_image_lowlevel(GSCHEM_TOPLEVEL *w_current, const char* filename,

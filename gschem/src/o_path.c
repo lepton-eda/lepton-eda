@@ -138,21 +138,6 @@ static void path_to_points (GSCHEM_TOPLEVEL *w_current, PATH *path,
 }
 
 
-static void find_points_bounds (GdkPoint *points, int num_points,
-                                int *min_x, int *min_y, int *max_x, int *max_y)
-{
-  int i;
-  int found_bound = FALSE;
-
-  for (i = 0; i < num_points; i++) {
-    *min_x = (found_bound) ? min (*min_x, points[i].x) : points[i].x;
-    *min_y = (found_bound) ? min (*min_y, points[i].y) : points[i].y;
-    *max_x = (found_bound) ? max (*max_x, points[i].x) : points[i].x;
-    *max_y = (found_bound) ? max (*max_y, points[i].y) : points[i].y;
-    found_bound = TRUE;
-  }
-}
-
 /*! \brief Draw a path with a solid line type.
  *  \par Function Description
  *  This function draws a path with a solid line type. The length and space
@@ -774,7 +759,6 @@ void o_path_rubberpath_xor(GSCHEM_TOPLEVEL *w_current)
   PATH *path;
   int num_points;
   GdkPoint *points;
-  int left = 0, top = 0, right = 0, bottom = 0;
 
   g_return_if_fail (w_current->which_object != NULL);
   g_return_if_fail (w_current->which_object->path != NULL);
@@ -802,9 +786,6 @@ void o_path_rubberpath_xor(GSCHEM_TOPLEVEL *w_current)
   else
     gdk_draw_lines (w_current->drawable, w_current->xor_gc,
                     points, num_points);
-
-  find_points_bounds (points, num_points, &left, &top, &right, &bottom);
-  o_invalidate_rect (w_current, left, top, right, bottom);
 
   g_free (points);
 }

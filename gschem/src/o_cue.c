@@ -174,8 +174,6 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
                                 screen_y - size,
                                 x2size,
                                 x2size);
-	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
-	                                 screen_x + size, screen_y + size);
 	  }
         
         } else if (count >= 2) {
@@ -194,8 +192,6 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
                           screen_x - size,
                           screen_y - size,
                           x2size, x2size, 0, FULL_CIRCLE);
-	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
-                                   screen_x + size, screen_y + size);
 	  }
         }
       } else if (object->type == OBJ_PIN) {
@@ -267,8 +263,6 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
                       screen_x - size,
                       screen_y - size,
                       x2size, x2size, 0, FULL_CIRCLE);
-	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
-                                   screen_x + size, screen_y + size);
       }
       break;
 
@@ -310,8 +304,6 @@ void o_cue_erase_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whicho
                         screen_y - size,
                         x2size,
                         x2size);
-	    o_invalidate_rect(w_current, screen_x - size, screen_y - size,
-                                   screen_x + size, screen_y + size);
   }
 
 }
@@ -367,8 +359,6 @@ void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
                         screen_x - size,
                         screen_y - size,
                         x2size, x2size, 0, FULL_CIRCLE);
-          o_invalidate_rect (w_current, screen_x - size, screen_y - size,
-                                        screen_x + size, screen_y + size);
         }
         break;
     }

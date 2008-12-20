@@ -670,9 +670,6 @@ void o_circle_rubbercircle_xor(GSCHEM_TOPLEVEL *w_current)
   gdk_draw_arc (w_current->drawable, w_current->xor_gc, FALSE,
                 cx - radius, cy - radius, 2 * radius, 2* radius,
                 0, FULL_CIRCLE);
-  o_invalidate_rect(w_current, 
-		    cx - radius, cy - radius,
-		    cx + radius, cy + radius);
 }
 
 /*! \brief Draw grip marks on circle.

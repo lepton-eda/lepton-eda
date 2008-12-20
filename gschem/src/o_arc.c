@@ -1082,15 +1082,6 @@ void o_arc_rubberarc_xor(GSCHEM_TOPLEVEL *w_current)
   x1 = cx + radius*cos(rad_angle);
   y1 = cy - radius*sin(rad_angle);
   gdk_draw_line (w_current->drawable, w_current->xor_gc, cx, cy, x1, y1);
-
-  /* FIXME: This isn't a tight bounding box for now, but the code
-   *        to compute a better bounds it complex, and might wait
-   *        until we're considered having real OBJECT data during
-   *        rubberbanding and using world_get_arc_bounds().
-   */
-  o_invalidate_rect(w_current, 
-		    cx - radius, cy - radius,
-		    cx + radius, cy + radius);
 }
 
 /*! \brief Draw grip marks on arc.

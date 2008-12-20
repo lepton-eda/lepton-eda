@@ -33,7 +33,8 @@
  *  \par Function Description
  *
  */
-void x_repaint_background(GSCHEM_TOPLEVEL *w_current)
+void x_repaint_background_region (GSCHEM_TOPLEVEL *w_current,
+                                  int x, int y, int width, int height)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 
@@ -41,12 +42,9 @@ void x_repaint_background(GSCHEM_TOPLEVEL *w_current)
                          x_get_color (toplevel->background_color));
 
   gdk_draw_rectangle (w_current->drawable,
-                      w_current->gc, TRUE, 0, 0,
-                      w_current->win_width,
-                      w_current->win_height);
-  o_invalidate_all (w_current);
+                      w_current->gc, TRUE, x, y, width, height);
 
-  x_grid_draw (w_current);
+  x_grid_draw_region (w_current, x, y, width, height);
 }
 
 /*! \todo Finish function documentation!!!

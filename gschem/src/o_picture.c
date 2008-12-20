@@ -292,8 +292,6 @@ void o_picture_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
 			     GDK_JOIN_MITER);
   gdk_draw_rectangle (w_current->drawable, w_current->xor_gc,
                       FALSE, left, top, width, height);
-  o_invalidate_rect(w_current, 
-		    left, top, left + width, top + height);
 }
 
 /*! \brief Draw a picture on the screen.

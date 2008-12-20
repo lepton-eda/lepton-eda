@@ -893,7 +893,6 @@ void o_line_rubberline_xor(GSCHEM_TOPLEVEL *w_current)
 			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
 			     GDK_JOIN_MITER);
   gdk_draw_line (w_current->drawable, w_current->xor_gc, x1, y1, x2, y2);
-  o_invalidate_rect(w_current, x1, y1, x2, y2);
 }
 
 /*! \brief Draw grip marks on line.

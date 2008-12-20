@@ -930,8 +930,6 @@ void o_box_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
 			     GDK_JOIN_MITER);
   gdk_draw_rectangle (w_current->drawable, w_current->xor_gc,
                       FALSE, box_left, box_top, box_width, box_height);
-  o_invalidate_rect(w_current, box_left, box_top,
-		    box_left + box_width, box_top + box_height);
 }
 
 /*! \brief Draw grip marks on box.

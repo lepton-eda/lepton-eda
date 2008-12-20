@@ -50,6 +50,9 @@ static int DOING_STROKE = FALSE;
 gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
                     GSCHEM_TOPLEVEL *w_current)
 {
+  GdkRectangle *rectangles;
+  int n_rectangles;
+
 #if DEBUG
   printf("EXPOSE\n");
 #endif
@@ -58,12 +61,9 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
   /* nasty global variable */
   global_window_current = w_current;
 
-  gdk_draw_pixmap(widget->window,
-                  widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
-                  w_current->drawable,
-                  event->area.x, event->area.y,
-                  event->area.x, event->area.y,
-                  event->area.width, event->area.height);
+  gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
+  o_redraw_rects (w_current, rectangles, n_rectangles);
+  g_free (rectangles);
 
   /* raise the dialog boxes if this feature is enabled */
   if (w_current->raise_dialog_boxes) {
@@ -937,14 +937,8 @@ x_event_configure (GtkWidget         *widget,
     return FALSE;
   }
 
-  /* update the backingstore of toplevel */
-  if (w_current->drawable != NULL) {
-    gdk_pixmap_unref (w_current->drawable);
-  }
-  w_current->drawable = gdk_pixmap_new (widget->window,
-                                        new_win_width,
-                                        new_win_height,
-                                        -1);
+  w_current->drawable = w_current->window;
+
   /* update the GSCHEM_TOPLEVEL with new size of drawing area */
   w_current->win_width   = toplevel->width  = new_win_width;
   w_current->win_height  = toplevel->height = new_win_height;
@@ -1033,9 +1027,6 @@ void x_manual_resize(GSCHEM_TOPLEVEL *w_current)
      printf("w: %d h: %d\n", width, height); */
   printf("aw: %d ah: %d\n", w_current->win_width, w_current->win_height);
 #endif
-
-  /* I'm assuming that the backingstore pixmap is of the right
-   * size */
 }
 
 /*! \todo Finish function documentation!!!
