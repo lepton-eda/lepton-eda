@@ -242,7 +242,7 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
   o_cue_draw_list(w_current, connected_objects);
 
   /* Draw the connected nets/buses that were also changed */
-  o_draw_list(w_current, rubbernet_objects);
+  o_invalidate_glist (w_current, rubbernet_objects);
   o_cue_undraw_list(w_current, rubbernet_objects);
   o_cue_draw_list(w_current, rubbernet_objects);
   o_cue_undraw_list(w_current, rubbernet_prev_conn_objects);
@@ -410,7 +410,7 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
                        c_current->other_object,
                        c_current, whichone);
 
-      o_erase_single(w_current, c_current->other_object);
+      o_invalidate (w_current, c_current->other_object);
     }
   }
 

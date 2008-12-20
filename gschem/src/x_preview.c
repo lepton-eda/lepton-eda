@@ -101,7 +101,7 @@ preview_callback_realize (GtkWidget *widget,
                  preview_page->object_list,
                  A_PAN_DONT_REDRAW);
 
-  o_redraw_all(preview_w_current);
+  o_invalidate_all (preview_w_current);
 
 }
 
@@ -159,7 +159,7 @@ preview_callback_button_press (GtkWidget *widget,
       case 1: /* left mouse button: zoom in */
         a_zoom (preview_w_current, ZOOM_IN, HOTKEY,
                 A_PAN_DONT_REDRAW);
-        o_redraw_all (preview_w_current);
+        o_invalidate_all (preview_w_current);
         break;
       case 2: /* middle mouse button: pan */
 	if (!x_event_get_pointer_position(preview_w_current, FALSE, &wx, &wy))
@@ -169,7 +169,7 @@ preview_callback_button_press (GtkWidget *widget,
       case 3: /* right mouse button: zoom out */
         a_zoom (preview_w_current, ZOOM_OUT, HOTKEY,
                 A_PAN_DONT_REDRAW);
-        o_redraw_all (preview_w_current);
+        o_invalidate_all (preview_w_current);
         break;
   }
   
@@ -243,7 +243,7 @@ preview_update (Preview *preview)
   a_zoom_extents (preview_w_current,
                   preview_toplevel->page_current->object_list,
                   A_PAN_DONT_REDRAW);
-  o_redraw_all (preview_w_current);
+  o_invalidate_all (preview_w_current);
   
 }
 

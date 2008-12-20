@@ -948,7 +948,7 @@ void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int radius,
   s_page_append (toplevel->page_current, new_obj);
 
   /* draw the new object */
-  o_redraw_single (w_current, new_obj);
+  o_invalidate (w_current, new_obj);
 
   w_current->first_wx  = -1;
   w_current->first_wy  = -1;

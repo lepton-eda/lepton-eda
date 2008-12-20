@@ -115,7 +115,7 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
   connected_objects = NULL;
 
   toplevel->page_current->CHANGED = 1;
-  o_redraw (w_current, temp_dest_list, TRUE); /* only redraw new objects */
+  o_invalidate_glist (w_current, temp_dest_list); /* only redraw new objects */
   g_list_free (temp_dest_list);
 
   o_undo_savestate (w_current, UNDO_ALL);

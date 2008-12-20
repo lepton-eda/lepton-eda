@@ -480,7 +480,6 @@ void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_attrib_toggle_show_name_value(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int new_show_name_value);
 OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current, const char *text_string, int visibility, int show_name_value, OBJECT *object);
 /* o_basic.c */
-void o_redraw_all(GSCHEM_TOPLEVEL *w_current);
 void o_redraw_rects(GSCHEM_TOPLEVEL *w_current, GdkRectangle *rectangles, int n_rectangles);
 void o_redraw(GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_selected);
 void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);

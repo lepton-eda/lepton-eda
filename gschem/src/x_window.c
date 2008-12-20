@@ -865,7 +865,7 @@ x_window_set_current_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
   x_vscrollbar_update (w_current);
   toplevel->DONT_REDRAW = 0;
 
-  o_redraw_all (w_current);
+  o_invalidate_all (w_current);
 }
 
 /*! \brief Saves a page to a file.

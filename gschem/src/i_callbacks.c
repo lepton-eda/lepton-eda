@@ -991,8 +991,8 @@ DEFINE_I_CALLBACK(edit_embed)
       }
       s_current = g_list_next(s_current);
     }
-    o_draw_list (w_current, geda_list_get_glist (
-                   w_current->toplevel->page_current->selection_list));
+    o_invalidate_glist (w_current, geda_list_get_glist (
+                          w_current->toplevel->page_current->selection_list));
     o_undo_savestate(w_current, UNDO_ALL);
   } else {
     /* nothing selected, go back to select state */
@@ -1032,8 +1032,8 @@ DEFINE_I_CALLBACK(edit_unembed)
       }
       s_current = g_list_next(s_current);
     }
-    o_draw_list (w_current, geda_list_get_glist (
-                   w_current->toplevel->page_current->selection_list));
+    o_invalidate_glist (w_current, geda_list_get_glist (
+                          w_current->toplevel->page_current->selection_list));
     o_undo_savestate(w_current, UNDO_ALL);
   } else {
     /* nothing selected, go back to select state */
@@ -1088,7 +1088,7 @@ DEFINE_I_CALLBACK(edit_update)
     g_list_free(selection_copy);
 
     /* Make sure the display is up to date */
-    o_redraw_all(w_current);
+    o_invalidate_all (w_current);
   } else {
     /* nothing selected, go back to select state */
     o_redraw_cleanstates(w_current);	
@@ -1320,7 +1320,7 @@ DEFINE_I_CALLBACK(view_redraw)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
   exit_if_null(w_current);
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1594,7 +1594,7 @@ DEFINE_I_CALLBACK(view_update_cues)
   i_update_middle_button(w_current,
                          i_callback_view_update_cues, _("Update Cues"));
 
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
 }
 
 /*! \section page-menu Page Menu Callback Functions */
@@ -3269,7 +3269,7 @@ DEFINE_I_CALLBACK(options_scale_up_snap_size)
   w_current->toplevel->page_current->CHANGED=1;  /* maybe remove those two lines */
   o_undo_savestate(w_current, UNDO_ALL);
 
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
 }
 
 /*! \brief Divide by two the snap grid size.
@@ -3288,7 +3288,7 @@ DEFINE_I_CALLBACK(options_scale_down_snap_size)
   w_current->toplevel->page_current->CHANGED=1;  /* maybe remove those two lines */
   o_undo_savestate(w_current, UNDO_ALL);
 
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
 
 }
 
@@ -3334,7 +3334,7 @@ DEFINE_I_CALLBACK(options_grid)
     s_log_message(_("Grid ON\n"));
   }
 
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -3502,7 +3502,7 @@ DEFINE_I_CALLBACK(cancel)
   scm_c_eval_string ("(set! current-command-sequence '())");
 
   if (w_current->inside_action) { 
-     o_redraw_all(w_current); 
+     o_invalidate_all (w_current);
   }
 
   w_current->inside_action=0;

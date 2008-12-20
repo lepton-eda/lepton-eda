@@ -760,14 +760,14 @@ static void line_type_dialog_ok(GtkWidget *w, gpointer data)
     space  = atoi (space_str);
 
     /* apply the new line options to object */
-    o_erase_single (w_current, o_current);
+    o_invalidate (w_current, o_current);
     o_set_line_options (toplevel, o_current,
                         o_current->line_end,
                         type,
                         width,
                         length,
                         space);
-    o_redraw_single (w_current, o_current);
+    o_invalidate (w_current, o_current);
 
   } else {
     /* more than one object in the list */
@@ -787,14 +787,14 @@ static void line_type_dialog_ok(GtkWidget *w, gpointer data)
     while (object != NULL) {
       OBJECT *o_current = (OBJECT*)object->data;
 
-      o_erase_single (w_current, o_current);
+      o_invalidate (w_current, o_current);
       o_set_line_options (toplevel, o_current,
                           o_current->line_end,
                           type   == -1 ? o_current->line_type : type,
                           width  == -1 ? o_current->line_width  : width,
                           length == -1 ? o_current->line_length : length,
                           space  == -1 ? o_current->line_space  : space);
-      o_redraw_single (w_current, o_current);
+      o_invalidate (w_current, o_current);
 
       object = g_list_next(object);
     }
@@ -1140,12 +1140,12 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
     pitch2 = atoi (pitch2_str);
 
     /* apply the new line options to object */
-    o_erase_single (w_current, o_current);
+    o_invalidate (w_current, o_current);
     o_set_fill_options(toplevel, o_current,
                        type, width,
                        pitch1, angle1,
                        pitch2, angle2);
-    o_redraw_single (w_current, o_current);
+    o_invalidate (w_current, o_current);
 
   } else {
     /* more than one object in the list */
@@ -1169,7 +1169,7 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
     while (object != NULL) {
       OBJECT *o_current = (OBJECT*)object->data;
 
-      o_erase_single (w_current, o_current);
+      o_invalidate (w_current, o_current);
       o_set_fill_options (toplevel, o_current,
                           type   == -1 ? o_current->fill_type   : type,
                           width  == -1 ? o_current->fill_width  : width,
@@ -1177,7 +1177,7 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
                           angle1 == -1 ? o_current->fill_angle1 : angle1,
                           pitch2 == -1 ? o_current->fill_pitch2 : pitch2,
                           angle2 == -1 ? o_current->fill_angle2 : angle2);
-      o_redraw_single (w_current, o_current);
+      o_invalidate (w_current, o_current);
 
       object = g_list_next(object);
     }
@@ -1442,11 +1442,11 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
     arc_object = (OBJECT*) g_object_get_data(G_OBJECT(w_current->aawindow),"arc_object");
 
     if (arc_object != NULL) {
-      o_erase_single (w_current, arc_object);
+      o_invalidate (w_current, arc_object);
       o_arc_modify(w_current->toplevel, arc_object, radius, 0, ARC_RADIUS);
       o_arc_modify(w_current->toplevel, arc_object, start_angle, 0, ARC_START_ANGLE);
       o_arc_modify(w_current->toplevel, arc_object, sweep_angle, 0, ARC_END_ANGLE);
-      o_redraw_single (w_current, arc_object);
+      o_invalidate (w_current, arc_object);
     } else {
       o_arc_end4(w_current, radius, start_angle, sweep_angle);
     }
@@ -1793,7 +1793,7 @@ void snap_size_dialog_response(GtkWidget *w, gint response,
     size = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spin_size));
 
     w_current->toplevel->snap_size = size;
-    o_redraw_all(w_current);
+    o_invalidate_all (w_current);
     w_current->toplevel->page_current->CHANGED=1;  /* maybe remove those two lines */
     o_undo_savestate(w_current, UNDO_ALL);
     break;
@@ -2877,7 +2877,7 @@ void find_text_dialog_response(GtkWidget *w, gint response,
                                                     (checkdescend)),
                        !start_find);
     if (done) {
-      o_redraw_all(w_current);
+      o_invalidate_all (w_current);
       close = 1;
     }
     start_find = 0;

@@ -203,7 +203,7 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
 
   if (!toplevel->DONT_REDRAW) {
     o_cue_undraw_list (w_current, list);
-    o_erase_list (w_current, list);
+    o_invalidate_glist (w_current, list);
   }
 
   /* Find connected objects, removing each object in turn from the
@@ -231,7 +231,7 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
   }
 
   if (!toplevel->DONT_REDRAW) {
-    o_draw_list (w_current, list);
+    o_invalidate_glist (w_current, list);
     o_cue_undraw_list (w_current, prev_conn_objects);
     o_cue_draw_list (w_current, prev_conn_objects);
     o_cue_undraw_list(w_current, connected_objects);
@@ -308,7 +308,7 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
   }
 
   o_cue_undraw_list (w_current, list);
-  o_erase_list (w_current, list);
+  o_invalidate_glist (w_current, list);
 
   /* Find connected objects, removing each object in turn from the
    * connection list. We only _really_ want those objects connected
@@ -334,7 +334,7 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
     connected_objects = s_conn_return_others (connected_objects, o_current);
   }
 
-  o_draw_list (w_current, list);
+  o_invalidate_glist (w_current, list);
   o_cue_undraw_list (w_current, prev_conn_objects);
   o_cue_draw_list (w_current, prev_conn_objects);
   o_cue_undraw_list(w_current, connected_objects);
@@ -409,7 +409,7 @@ void o_edit_show_hidden_lowlevel (GSCHEM_TOPLEVEL *w_current, GList *o_list)
           o_text_recreate(toplevel, o_current);
         }
         o_recalc_single_object(toplevel, o_current);
-        o_redraw_single (w_current, o_current);
+        o_invalidate (w_current, o_current);
       } else {
         /* object is hidden and we are now NOT drawing it, so */
         /* get rid of the extra primitive data */
@@ -446,7 +446,7 @@ void o_edit_show_hidden (GSCHEM_TOPLEVEL *w_current, GList *o_list)
   i_show_state(w_current, NULL); /* update screen status */
 
   o_edit_show_hidden_lowlevel(w_current, o_list);
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
 
   if (w_current->toplevel->show_hidden_text) {
     s_log_message(_("Hidden text is now visible\n"));
@@ -479,7 +479,7 @@ void o_edit_make_visible (GSCHEM_TOPLEVEL *w_current, GList *o_list)
           o_text_recreate(toplevel, o_current);
         }
 
-        o_redraw_single (w_current, o_current);
+        o_invalidate (w_current, o_current);
 
         toplevel->page_current->CHANGED = 1;
       }
@@ -544,7 +544,7 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, GList * o_list, char *stext,
                                                 parent,
                                                 page_control,
                                                 HIERARCHY_NORMAL_LOAD);
-            /* o_redraw_all(w_current); */
+            /* o_invalidate_all (w_current); */
 
             rv = o_edit_find_text(w_current,
                                   toplevel->page_current->object_list,
@@ -633,7 +633,7 @@ void o_edit_hide_specific_text (GSCHEM_TOPLEVEL *w_current, GList * o_list,
     iter = g_list_next (iter);
   }
   o_undo_savestate(w_current, UNDO_ALL);
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -661,7 +661,7 @@ void o_edit_show_specific_text (GSCHEM_TOPLEVEL *w_current, GList * o_list,
           if (o_current->text->prim_objs == NULL) {
             o_text_recreate(toplevel, o_current);
           }
-          o_redraw_single (w_current, o_current);
+          o_invalidate (w_current, o_current);
           toplevel->page_current->CHANGED = 1;
         }
       }
@@ -704,8 +704,8 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  /* erase the complex object */
-  o_erase_single (w_current, o_current);
+  /* ensure we repaint where the complex object was */
+  o_invalidate (w_current, o_current);
   /* delete its connections */
   s_conn_remove_object (toplevel, o_current);
   /* and unselect it */
@@ -769,7 +769,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
       /* add the attribute to old */
       o_attrib_add (toplevel, o_current, o_attrib);
       /* redraw the attribute object */
-      o_redraw_single (w_current, o_attrib);
+      o_invalidate (w_current, o_attrib);
       /* note: this object is unselected (not added to selection). */
     }
     else
@@ -791,7 +791,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   /* reconnect, re-select and redraw */
   s_conn_update_object (toplevel, o_current);
   o_selection_add( toplevel->page_current->selection_list, o_current );
-  o_redraw_single (w_current, o_current);
+  o_invalidate (w_current, o_current);
 
   /* Re-flag as embedded if necessary */
   o_current->complex_embedded = is_embedded;

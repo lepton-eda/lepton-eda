@@ -113,8 +113,8 @@ void o_picture_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   s_page_append (toplevel->page_current, new_obj);
 
   /* draw it */
-  o_redraw_single (w_current, new_obj);
-  
+  o_invalidate (w_current, new_obj);
+
   toplevel->page_current->CHANGED = 1;
   o_undo_savestate(w_current, UNDO_ALL);
 }
@@ -588,7 +588,7 @@ void o_picture_exchange (GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf,
       if (object->type == OBJ_PICTURE) {
 
         /* Erase previous picture */
-        o_erase_single(w_current, object);
+        o_invalidate (w_current, object);
 
         g_free(object->picture->filename);
 
@@ -617,7 +617,7 @@ void o_picture_exchange (GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf,
         object->picture->ratio = (double)gdk_pixbuf_get_width(pixbuf) /
                                          gdk_pixbuf_get_height(pixbuf);
         /* Draw new picture */
-        o_redraw_single (w_current, object);
+        o_invalidate (w_current, object);
       }
     }
     list = g_list_next(list);

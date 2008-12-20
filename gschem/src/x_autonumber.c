@@ -573,9 +573,9 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
   g_free (str);
 
   /* redraw the text */
-  o_erase_single(autotext->w_current, o_current);
+  o_invalidate (autotext->w_current, o_current);
   o_text_recreate(autotext->w_current->toplevel, o_current);
-  o_redraw_single (autotext->w_current, o_current);
+  o_invalidate (autotext->w_current, o_current);
 
   /* remove the slot attribute if slotting is active */
   if (autotext->slotting) {
@@ -617,9 +617,9 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
       slot_str = g_strdup_printf("slot=%d",slot);
       o_text_set_string (autotext->w_current->toplevel, o_slot, slot_str);
       g_free (slot_str);
-      o_erase_single(autotext->w_current, o_slot);
+      o_invalidate (autotext->w_current, o_slot);
       o_text_recreate(autotext->w_current->toplevel, o_slot);
-      o_redraw_single (autotext->w_current, o_slot);
+      o_invalidate (autotext->w_current, o_slot);
     }
     else {
       /* create a new attribute and attach it */
@@ -637,9 +637,9 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
   g_free (str);
 
   /* redraw the text */
-  o_erase_single(autotext->w_current, o_current);
+  o_invalidate (autotext->w_current, o_current);
   o_text_recreate(autotext->w_current->toplevel, o_current);
-  o_redraw_single (autotext->w_current, o_current);
+  o_invalidate (autotext->w_current, o_current);
   autotext->w_current->toplevel->page_current->CHANGED = 1;
 }
 
@@ -836,7 +836,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   g_list_foreach(searchtext_list, (GFunc) g_free, NULL);
   g_list_free(searchtext_list);
   s_page_goto(w_current->toplevel, pages->data); /* go back to the root page */
-  o_redraw_all(w_current);
+  o_invalidate_all (w_current);
   g_list_free(pages);
   o_undo_savestate(w_current, UNDO_ALL);
 }

@@ -441,7 +441,7 @@ static void o_cue_undraw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
     conn = (CONN *) cl_current->data;
 
     if (conn->other_object) {
-      o_redraw_single(w_current, conn->other_object);
+      o_invalidate (w_current, conn->other_object);
     }
 
     cl_current = g_list_next(cl_current);
@@ -486,7 +486,7 @@ void o_cue_undraw(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
     }
   }
 
-  o_redraw_single(w_current, object);
+  o_invalidate (w_current, object);
 }
 
 /*! \todo Finish function documentation!!!

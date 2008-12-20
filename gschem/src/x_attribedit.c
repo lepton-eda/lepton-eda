@@ -235,11 +235,11 @@ void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
 #endif
       if (invocation_flag == FROM_HOTKEY
 	  && wx != -1 && wy != -1) {
-	o_erase_single(w_current, new);
+	o_invalidate (w_current, new);
 	new->text->x = wx;
 	new->text->y = wy;
 	o_text_recreate(toplevel, new);
-	o_redraw_single (w_current, new);
+	o_invalidate (w_current, new);
 	toplevel->page_current->CHANGED = 1;
 	o_undo_savestate(w_current, UNDO_ALL);
       }

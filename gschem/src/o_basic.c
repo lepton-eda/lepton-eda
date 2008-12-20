@@ -193,59 +193,6 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-void o_redraw_all(GSCHEM_TOPLEVEL *w_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  gboolean draw_selected = TRUE;
-
-  if (!toplevel->DONT_REDRAW) {
-    x_repaint_background(w_current);
-  }
-
-  draw_selected = !(w_current->inside_action &&
-                    ((w_current->event_state == MOVE) ||
-                     (w_current->event_state == ENDMOVE) ||
-                     (w_current->event_state == GRIPS)));
-  g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (toplevel->page_current != NULL);
-  g_warn_if_fail (toplevel->page_current->object_list != NULL);
-  o_redraw (w_current, toplevel->page_current->object_list, draw_selected);
-  o_cue_redraw_all(w_current,
-                   toplevel->page_current->object_list, draw_selected);
-
-  if (w_current->inside_action) {
-    switch(w_current->event_state) {
-      case(MOVE):
-      case(ENDMOVE):
-        o_move_rubbermove_xor (w_current, TRUE);
-        break;
-
-      case(ENDCOPY):
-      case(ENDMCOPY):
-      case(ENDCOMP):
-      case(ENDTEXT):
-      case(ENDPASTE):
-        /* Redraw the rubberband objects (if they were previously visible) */
-        if (w_current->rubber_visible)
-          o_place_rubberplace_xor (w_current, TRUE);
-        break;
-
-      case(STARTDRAWNET):
-      case(DRAWNET):
-      case(NETCONT):
-        w_current->magnetic_visible=0;
-        w_current->rubber_visible = 0;
-        break;
-    }
-  }
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 void o_redraw (GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_selected)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -542,7 +489,7 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
       i_set_state(w_current, SELECT);
 
       /* from i_callback_cancel() */
-      o_redraw_all(w_current);
+      o_invalidate_all (w_current);
       return TRUE;
 
     /* all remaining states without dc changes */

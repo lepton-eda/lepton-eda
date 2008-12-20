@@ -590,8 +590,8 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   s_page_append (toplevel->page_current, new_obj);
 
   /* draw it */
-  o_redraw_single (w_current, new_obj);
-  
+  o_invalidate (w_current, new_obj);
+
   toplevel->page_current->CHANGED = 1;
   o_undo_savestate(w_current, UNDO_ALL);
 }

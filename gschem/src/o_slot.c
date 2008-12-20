@@ -158,7 +158,7 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
 
       if (temp->visibility == VISIBLE ||
           (temp->visibility == INVISIBLE && toplevel->show_hidden_text)) {
-        o_erase_single(w_current,temp);
+        o_invalidate (w_current,temp);
       }
 
       o_text_recreate(toplevel, temp);
@@ -167,7 +167,7 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
        * item */
       if (temp->visibility == VISIBLE ||
           (temp->visibility == INVISIBLE && toplevel->show_hidden_text)) {
-        o_redraw_single(w_current,temp);
+        o_invalidate (w_current,temp);
       }
 
       g_free(slot_value);
@@ -187,10 +187,10 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
       slot_text_object = new_obj;
     }
 
-    o_erase_single(w_current, object);
+    o_invalidate (w_current, object);
     o_attrib_slot_update(toplevel, object);
 
-    o_redraw_single(w_current,object);
+    o_invalidate (w_current,object);
 
     toplevel->page_current->CHANGED = 1;
     g_free(value);

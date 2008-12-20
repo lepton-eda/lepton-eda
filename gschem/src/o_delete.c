@@ -64,8 +64,7 @@ void o_delete (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
       }
     }
   }
-  o_erase_single (w_current, object);
-  o_erase_grips (w_current, object);
+  o_invalidate (w_current, object);
 
   s_page_remove (toplevel->page_current, object);
   s_delete_object (toplevel, object);
