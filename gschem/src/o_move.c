@@ -502,6 +502,19 @@ void o_move_end_rubberband (GSCHEM_TOPLEVEL *w_current,
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_iter, *s_iter_next;
+  GList *iter;
+
+  /* save a list of objects the stretched objects
+     are connected to before we move them. */
+  for (s_iter = toplevel->page_current->stretch_list;
+       s_iter != NULL; s_iter = g_list_next (s_iter)) {
+    OBJECT *object = ((STRETCH *)s_iter->data)->object;
+
+    if (object->type == OBJ_NET ||
+        object->type == OBJ_BUS) {
+      *prev_conn_objects = s_conn_return_others (*prev_conn_objects, object);
+    }
+  }
 
   for (s_iter = toplevel->page_current->stretch_list;
        s_iter != NULL; s_iter = s_iter_next) {
@@ -515,9 +528,7 @@ void o_move_end_rubberband (GSCHEM_TOPLEVEL *w_current,
     if (object->type == OBJ_NET ||
         object->type == OBJ_BUS) {
 
-      /* save the other objects and remove object's connections */
-      *prev_conn_objects =
-        s_conn_return_others (*prev_conn_objects, object);
+      /* remove the object's connections */
       s_conn_remove_object (toplevel, object);
 
       object->line->x[whichone] += w_dx;
@@ -526,6 +537,7 @@ void o_move_end_rubberband (GSCHEM_TOPLEVEL *w_current,
       if (o_move_zero_length (object)) {
         toplevel->page_current->stretch_list =
           s_stretch_remove (toplevel->page_current->stretch_list, object);
+        *prev_conn_objects = g_list_remove_all (*prev_conn_objects, object);
         o_delete (w_current, object);
         continue;
       }
@@ -533,10 +545,15 @@ void o_move_end_rubberband (GSCHEM_TOPLEVEL *w_current,
       o_recalc_single_object (toplevel, object);
       s_tile_update_object (toplevel, object);
       s_conn_update_object (toplevel, object);
-      *connected_objects = s_conn_return_others (*connected_objects, object);
       *objects = g_list_append (*objects, object);
-
     }
+  }
+
+  /* save a list of objects the stretched objects
+     are now connected to after we moved them. */
+  for (iter = *objects; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *object = iter->data;
+    *connected_objects = s_conn_return_others (*connected_objects, object);
   }
 }
 
