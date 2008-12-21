@@ -53,7 +53,6 @@ main_prog(void *closure, int argc, char *argv[])
   int i;
   int argv_index;
   char *cwd;
-  struct stat buf;
   char *logfile;
   
   TOPLEVEL *pr_current;
