@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-21 13:41-0500\n"
-"PO-Revision-Date: 2008-12-20 14:05+0000\n"
+"POT-Creation-Date: 2008-12-20 16:08-0500\n"
+"PO-Revision-Date: 2008-12-21 21:07+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: ../data/libgeda.xml.in.h:1
 msgid "gEDA circuit schematic"
@@ -104,9 +104,9 @@ msgid "Failed to stat [%s]: %s"
 msgstr "No se ha podido determinar [%s]: %s"
 
 #: ../src/f_basic.c:222
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot find file %s: %s"
-msgstr "Archivo desconocido: %s\n"
+msgstr "No se puede encontrar el archivo %s: %s"
 
 #: ../src/f_basic.c:260
 #, c-format
@@ -178,9 +178,9 @@ msgstr ""
 "lectura\n"
 
 #: ../src/f_basic.c:703
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s"
-msgstr "%s:%i:%i: %s\n"
+msgstr "%s: %s"
 
 #: ../src/f_print.c:111
 msgid "Unable to get time of day in f_print_header()\n"
@@ -304,7 +304,7 @@ msgstr "¡No se puede encontrar ningún archivo %s!\n"
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
 "list of strings instead\n"
-msgstr ""
+msgstr "ADVERTENCIA: el uso de la cadena 'always-promote-attributes' está obsoleto. Se recomienda utilizar una lista de cadenas en su lugar\n"
 
 #: ../src/o_arc_basic.c:282
 #, c-format
@@ -329,12 +329,12 @@ msgstr "Seleccionando color BLANCO\n"
 
 #: ../src/o_attrib.c:178
 msgid "Attempt to attach non text item as an attribute!\n"
-msgstr ""
+msgstr "¡Se ha intentado añadir un objeto que no es texto como un attributo!\n"
 
 #: ../src/o_attrib.c:183
 #, c-format
 msgid "Attempt to attach attribute [%s] to more than one object\n"
-msgstr ""
+msgstr "Se ha intentado añadir el attributo [%s] a más de un objeto\n"
 
 #. only an error if there's a slot string
 #: ../src/o_attrib.c:1410 ../src/o_attrib.c:1510

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-21 13:41-0500\n"
-"PO-Revision-Date: 2008-12-20 14:09+0000\n"
+"POT-Creation-Date: 2008-12-21 21:52+0100\n"
+"PO-Revision-Date: 2008-12-21 21:20+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/SpainMIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -613,17 +613,17 @@ msgstr ""
 "slack-pixels\n"
 
 #: ../src/g_rc.c:1694
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid gain [%d] passed to zoom-gain\n"
 msgstr ""
-"Se ha especificado un aumento no válido [%d] a la función mousepan-gain\n"
+"Se ha llamado a la función zoom-gain con un nivel de aumento [%d] no válido\n"
 
 #: ../src/g_rc.c:1719
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid number of steps [%d] scrollpan-steps\n"
 msgstr ""
-"Se ha especificado un número de segundos no válido [%d] a la función auto-"
-"save-interval\n"
+"Se ha llamado a la función scrollpan-steps con un número de pasos no válido "
+"[%d]\n"
 
 #: ../src/gschem.c:189 ../src/gschem.c:200
 #, c-format
@@ -670,9 +670,9 @@ msgid "You must set the GEDADATA environment variable!\n"
 msgstr "¡Debe de especificar la variable de entorno GEDADATA!\n"
 
 #: ../src/gschem.c:245
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't find init scm file [%s]\n"
-msgstr "Fallo al leer fichero de inicialización scm [%s]\n"
+msgstr "No se ha podido encontrar el fichero de inicialización scm [%s]\n"
 
 #: ../src/gschem.c:249
 #, c-format
@@ -718,9 +718,8 @@ msgid "Paste %d Mode"
 msgstr "Modo Pegar %d"
 
 #: ../src/i_basic.c:109
-#, fuzzy
 msgid "Magnetic Net Mode"
-msgstr "Modo Conexión"
+msgstr "Modo Ayuda a la conexión"
 
 #: ../src/i_basic.c:111
 msgid "Net Mode"
@@ -1004,11 +1003,11 @@ msgstr "Buscando símbolo [%s]\n"
 
 #: ../src/i_callbacks.c:2878
 msgid "Symbol is not a real file. Symbol cannot be loaded.\n"
-msgstr ""
+msgstr "El símbolo no es un archivo físico. No se puede cargar el símbolo.\n"
 
 #: ../src/i_callbacks.c:2909
 msgid "Cannot find any schematics above the current one!\n"
-msgstr ""
+msgstr "¡No se ha podido encontrar ningún esquema jerárquico superior!\n"
 
 #: ../src/i_callbacks.c:2972
 msgid ""
@@ -1073,11 +1072,11 @@ msgstr "Goma de borrar ACT\n"
 
 #: ../src/i_callbacks.c:3392
 msgid "magnetic net mode: ON\n"
-msgstr ""
+msgstr "Modo de Ayuda a la conexión: ACTIVADO\n"
 
 #: ../src/i_callbacks.c:3395
 msgid "magnetic net mode: OFF\n"
-msgstr ""
+msgstr "Modo de Ayuda a la conexión: DESACTIVADO\n"
 
 #: ../src/o_arc.c:120
 #, c-format
@@ -1245,10 +1244,14 @@ msgstr ""
 #: ../src/o_net.c:630
 msgid "Warning: Starting net at off grid coordinate\n"
 msgstr ""
+"Advertencia: se ha iniciado la conexión en una coordenada fuera de la "
+"rejilla\n"
 
 #: ../src/o_net.c:692
 msgid "Warning: Ending net at off grid coordinate\n"
 msgstr ""
+"Advertencia: se ha finalizado la conexión en una coordenada fuera de la "
+"rejilla\n"
 
 #. try to exit gracefully
 #: ../src/o_net.c:1080 ../src/o_net.c:1117 ../src/o_net.c:1188
@@ -1265,19 +1268,19 @@ msgid "Bus ripper symbol [%s] was not found in any component library\n"
 msgstr "No se ha encontrado el símbolo %s en ninguna librería de componentes\n"
 
 #: ../src/o_path.c:483
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown end for path (%d)\n"
-msgstr "Final de arco desconocido (%d)\n"
+msgstr "Final de camino desconocido (%d)\n"
 
 #: ../src/o_path.c:524
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type for path !\n"
-msgstr "¡Tipo de arco desconocido!\n"
+msgstr "¡Tipo de camino desconocido!\n"
 
 #: ../src/o_path.c:594
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type for path (fill)!\n"
-msgstr "¡Tipo de relleno de rectángulo desconocido!\n"
+msgstr "¡Tipo de camino (relleno) desconocido!\n"
 
 #: ../src/o_picture.c:166 ../src/o_picture.c:627
 #, c-format
@@ -1781,7 +1784,7 @@ msgstr "Parámetros de arco"
 
 #: ../src/x_dialog.c:1520
 msgid "Arc Radius:"
-msgstr ""
+msgstr "Radio de arco:"
 
 #: ../src/x_dialog.c:1528
 msgid "Start Angle:"
@@ -1862,59 +1865,55 @@ msgstr "Mundo"
 
 #: ../src/x_dialog.c:2188
 msgid "Background"
-msgstr ""
+msgstr "Fondo"
 
 #: ../src/x_dialog.c:2194
 msgid "Net endpoint"
-msgstr ""
+msgstr "Punto final de conexión"
 
 #: ../src/x_dialog.c:2197
 msgid "Graphic"
-msgstr ""
+msgstr "Gráfico"
 
 #: ../src/x_dialog.c:2206
 msgid "Logic bubble"
-msgstr ""
+msgstr "Negación lógica"
 
 #: ../src/x_dialog.c:2209
 msgid "Grid point"
-msgstr ""
+msgstr "Punto de rejilla"
 
 #: ../src/x_dialog.c:2212
-#, fuzzy
 msgid "Detached attribute"
-msgstr "Añadir propiedad"
+msgstr "Desvincular propiedad"
 
 #: ../src/x_dialog.c:2215 ../src/x_window.c:434
 msgid "Text"
 msgstr "Texto"
 
 #: ../src/x_dialog.c:2221
-#, fuzzy
 msgid "Selection"
-msgstr "Seleccionar"
+msgstr "Selección"
 
 #: ../src/x_dialog.c:2224
 msgid "Bounding box"
-msgstr ""
+msgstr "Envolvente"
 
 #: ../src/x_dialog.c:2227
-#, fuzzy
 msgid "Zoom box"
-msgstr "Ampliar"
+msgstr "Ventana de ampliado"
 
 #: ../src/x_dialog.c:2236
 msgid "Output background"
-msgstr ""
+msgstr "Fondo de salida"
 
 #: ../src/x_dialog.c:2239
-#, fuzzy
 msgid "Net junction"
-msgstr "Función"
+msgstr "Unión de conexiones"
 
 #: ../src/x_dialog.c:2242
 msgid "Unknown"
-msgstr ""
+msgstr "Desconocido"
 
 #: ../src/x_dialog.c:2390
 #, c-format
@@ -2108,6 +2107,8 @@ msgstr "Tipo de imagen"
 #: ../src/x_log.c:188
 msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
 msgstr ""
+"** mensaje sin codificación UTF-8 en la ventana de registro. Véase la "
+"ventana de registro de gschem o la salida de errores.\n"
 
 #: ../src/x_log.c:256
 msgid "Status"
