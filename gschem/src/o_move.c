@@ -451,7 +451,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
 			   GList** other_objects, GList** connected_objects)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  STRETCH *s_current;
+  STRETCH *s_current, *s_next;
   OBJECT *object;
   int x, y;
   int whichone;
@@ -461,6 +461,9 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
 
   while (s_current != NULL) {
     
+    /* Store this now, since we may delete the current item */
+    s_next = s_current->next;
+
     object = s_current->object;
     if (object) {
       whichone = s_current->whichone;
@@ -492,9 +495,11 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
           object->line->x[whichone] = x;
           object->line->y[whichone] = y;
 
-
           if (o_move_zero_length(object)) {
             o_delete_net(w_current, object);
+            s_stretch_remove (toplevel->page_current->stretch_head, object);
+            toplevel->page_current->stretch_tail =
+              s_stretch_return_tail (toplevel->page_current->stretch_head);
           } else {
             o_net_recalc(toplevel, object);
             s_tile_update_object(toplevel, object);
@@ -537,6 +542,9 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
 
           if (o_move_zero_length(object)) {
             o_delete_bus(w_current, object);
+            s_stretch_remove (toplevel->page_current->stretch_head, object);
+            toplevel->page_current->stretch_tail =
+              s_stretch_return_tail (toplevel->page_current->stretch_head);
           } else {
             o_bus_recalc(toplevel, object);
             s_tile_update_object(toplevel, object);
@@ -550,7 +558,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
       }
     }
     
-    s_current = s_current->next;
+    s_current = s_next;
   }
 
 #if DEBUG
