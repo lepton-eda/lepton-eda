@@ -10,16 +10,20 @@ README for gEDA/gaf
 - Installation
 
 	- Install all the dependencies (glib, gtk, and guile).
+        - If you are building the repository version, then you will
+    	  need the following packages installed as well: 
+
+          	autoconf, automake, libtool, gettext, intltool, 
+	        cvs, flex, groff, transfig
+
 	- Download all source packages and the toplevel Makefile. 
-        - If you are building the CVS version, then you must also have
-          autoconf, automake, libtool, and gettext installed.
 	- Untar all packages in a directory and place toplevel Makefile 
           in this same directory. 
 	- [OPTIONAL] Edit Makefile changing prefix to a different install 
 		     directory other than the default ($HOME/geda)
 	- Type: make
 	- Follow instructions on setting all the shell variables.
-	- Set shell variables.  *VERY IMPORTANT*
+	- Set shell variables explicitly in your shell.  *VERY IMPORTANT*
 	- Type: make install
  	- Read the release notes for more information and last minute issues.
 	- Read the docs in: ${prefix}/share/doc/geda-doc/gedadocs.html
