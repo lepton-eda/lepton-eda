@@ -617,7 +617,6 @@ AC_SUBST(INDENT)
 
 # Create all the necessary derived files
 AC_CONFIG_FILES([Makefile 
-                m4/Makefile 
                 po/Makefile.in 
                 intl/Makefile 
 		src/Makefile

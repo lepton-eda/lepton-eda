@@ -1,4 +1,4 @@
-SUBDIRS = include lib intl src m4 po scheme bitmap scripts examples \
+SUBDIRS = include lib intl src po scheme bitmap scripts examples \
           tests docs data
 
 INTLTOOL_FILES = intltool-extract.in \
