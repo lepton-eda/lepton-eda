@@ -96,6 +96,7 @@ top_srcdir=${top_srcdir:-$here/../..}
 top_srcdir=`cd $top_srcdir && pwd`
 top_builddir=${top_builddir:-$here/../..}
 top_builddir=`cd $top_builddir && pwd`
+gxyrs_srcdir=`cd $top_srcdir/gxyrs && pwd`
 
 # the perl program
 PERL=${PERL:-perl}
@@ -137,6 +138,7 @@ cat << EOF
 Starting tests in $here
 srcdir:     $srcdir
 top_srcdir: $top_srcdir
+gxyrs srcdir: $gxyrs_srcdir
 INPUT_DIR:  ${INPUT_DIR}
 GOLDEN_DIR: ${GOLDEN_DIR}
 script to test: ${top_srcdir}/gxyrs/gxyrs
@@ -183,9 +185,9 @@ for t in $all_tests ; do
     #
     
     if test "X$adjust_file" = "X" -o "X$adjust_file" = "X " ; then
-	command="cd ${rundir} && ${PERL} -w ${GXYRS_SCRIPT} $args $files --output $out_file 2> $error_file"
+	command="cd ${rundir} && ${PERL} -I${gxyrs_srcdir} -w ${GXYRS_SCRIPT} $args $files --output $out_file 2> $error_file"
     else
-	command="cd ${rundir} && ${PERL} -w ${GXYRS_SCRIPT} $args $files --adjust $adjust_file --output $out_file 2> $error_file"
+	command="cd ${rundir} && ${PERL} -I${gxyrs_srcdir} -w ${GXYRS_SCRIPT} $args $files --adjust $adjust_file --output $out_file 2> $error_file"
     fi
     echo "Running test ${t}"
     echo $command
