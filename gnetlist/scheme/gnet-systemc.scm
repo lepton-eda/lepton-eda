@@ -46,9 +46,9 @@
 ;; match on a systemc identifier like:  netname<type>
 (define systemc-reg (make-regexp
                         (string-append "^(" id-regexp ")[[:space:]]*"
-                                       "\<"
+                                       "<"
                                        "[[:space:]]*(" id-regexp ")[[:space:]]*"
-                                       "\>" )))
+                                       ">" )))
 
 ;; match on a systemc identifier like:  netname
 (define simple-id-reg (make-regexp 
@@ -217,11 +217,11 @@
 	 (simple-id (regexp-exec simple-id-reg netname))
 	 (systemc   (regexp-exec systemc-reg netname)))
 
-      (newline)
-      (display "    systemc:net-parse ")
-      (if systemc (begin (display systemc) (display "->") (display (match:substring systemc 2) )))
-      (if simple-id (display simple-id))
-      (newline)
+;;      (newline)
+;;      (display "    systemc:net-parse ")
+;;      (if systemc (begin (display systemc) (display "->") (display (match:substring systemc 2) )))
+;;      (if simple-id (display simple-id))
+;;      (newline)
 
       ;; check over each expression type, and build the appropriate
       ;; result
@@ -248,7 +248,7 @@
        ;; just a systemc signal?
        (systemc
          (begin 
-            (display "done systemc")(newline)
+;;            (display "done systemc")(newline)
            (list (match:substring systemc 1)
              (list (string->number (match:substring systemc 2))
                (match:substring systemc 2)
@@ -365,109 +365,115 @@
 ;;  return a list of net description objects
 ;;
 
-(define the-nets '())
+(define systemc:get-nets '())
 
-(define systemc:get-nets 
-  (begin 
-    (for-each 
-     (lambda (netname)
-       ; parse the netname, and see if it is already on the list
-       (let* ((parsed (systemc:net-parse netname))
-	      (listed (assoc (car parsed) the-nets)))
+(define systemc:get-nets-once!
+  (lambda nil
+    (define the-nets '())
+    (set! systemc:get-nets
+      (begin
+        (for-each
+          (lambda (netname)
+            ; parse the netname, and see if it is already on the list
+            (let* ((parsed (systemc:net-parse netname))
+                   (listed (assoc (car parsed) the-nets)))
 
-(display  "systemc:get-nets(parsed)-> ")
-(display parsed)(display " (listed)-> ")
-(display listed)
-(newline)
+;;             (display  "systemc:get-nets(parsed)-> ")
+;;             (display parsed)(display " (listed)-> ")
+;;             (display listed)
+;;             (newline)
 
-	 (if listed
-	     (begin ; it is, do some checks, and update the record
-	       ;; extract fields from list
-	       (let* ((list-name       (car listed))
-		      (list-n1         (car (cadr listed)))
-		      (list-n2         (cadr (cadr listed)))
-		      (list-increasing (caddr (cadr listed)))
-		      (list-sure       (cadddr (cadr listed)))
-		      (list-real       (cadddr (cdr (cadr listed))))
-		      
-		      (name            (car parsed))
-		      (n1              (car (cadr parsed)))
-		      (n2              (cadr (cadr parsed)))
-		      (increasing      (caddr (cadr parsed)))
-		      (sure            (cadddr (cadr parsed)))
-		      (real            (cadddr (cdr (cadr parsed))))
+             (if listed
+                 (begin ; it is, do some checks, and update the record
+                   ;; extract fields from list
+                   (let* ((list-name       (car listed))
+                          (list-n1         (car (cadr listed)))
+                          (list-n2         (cadr (cadr listed)))
+                          (list-increasing (caddr (cadr listed)))
+                          (list-sure       (cadddr (cadr listed)))
+                          (list-real       (cadddr (cdr (cadr listed))))
 
-		      (consistant      (or (and list-increasing increasing)
-					   (and (not list-increasing) 
-						(not increasing))))
-		      
-		     )
+                          (name            (car parsed))
+                          (n1              (car (cadr parsed)))
+                          (n2              (cadr (cadr parsed)))
+                          (increasing      (caddr (cadr parsed)))
+                          (sure            (cadddr (cadr parsed)))
+                          (real            (cadddr (cdr (cadr parsed))))
 
-		 (cond
-		  ((and list-sure consistant)
-		   (begin
-		     (set-cdr! listed
-			       (systemc:update-record n1 n2
-						      list-n1 list-n2
-						      increasing
-						      #t
-						      real)
-			       )))
-		   ((and list-sure (not sure) (zero? n1) (zero? n2))
-		    '() ;; this is a net without any expression, leave it
-		    )
-		  ((and list-sure (not consistant))
-		   (begin      ;; order is inconsistent
-		     (display 
-		      (string-append "Warning: Net `" real "' has a " 
-				     "bit order that conflicts with "
-				     "the original definition of `"
-				     list-real "', ignoring `"
-				     real "'"
-				     ))
-		     (newline))) 
-		   ((and (not list-sure) sure consistant)
-		    (begin
-		      (set-cdr! listed
-				(systemc:update-record n1 n2
-						       list-n1 list-n2
-						       increasing
-						       #t
-						       real))))
-		    
-		   ((and (not list-sure) sure (not consistant))
-		    (begin
-		      (set-cdr! listed
-				(systemc:update-record n1 n2
-						       list-n2 list-n1
-						       increasing
-						       #t
-						       real))))
-		   ((and (not list-sure) (not sure))
-		    (begin
-		      (set-cdr! listed
-				(systemc:update-record n1 n2
-						       list-n1 list-n2
-						       increasing
-						       #f
-						       real))))
-		   (else
-		    (begin
-		      (display "This should never happen!")
-		      (newline)))
-		   )
-	     )
-	 )
-       (begin ; it is not, just add it to the end
-	 (set! the-nets 
-	       (append the-nets 
-		       (list parsed))))
-       ))
-(display  "systemc:get-nets(parsed)-> ")
-     )
-     
-    all-unique-nets)
-    the-nets))
+                          (consistant      (or (and list-increasing increasing)
+                                               (and (not list-increasing)
+                                                    (not increasing))))
+
+                         )
+
+                     (cond
+                      ((and list-sure consistant)
+                       (begin
+                         (set-cdr! listed
+                                   (systemc:update-record n1 n2
+                                                          list-n1 list-n2
+                                                          increasing
+                                                          #t
+                                                          real)
+                                   )))
+                       ((and list-sure (not sure) (zero? n1) (zero? n2))
+                        '() ;; this is a net without any expression, leave it
+                        )
+                      ((and list-sure (not consistant))
+                       (begin      ;; order is inconsistent
+                         (display
+                          (string-append "Warning: Net `" real "' has a "
+                                         "bit order that conflicts with "
+                                         "the original definition of `"
+                                         list-real "', ignoring `"
+                                         real "'"
+                                         ))
+                         (newline)))
+                       ((and (not list-sure) sure consistant)
+                        (begin
+                          (set-cdr! listed
+                                    (systemc:update-record n1 n2
+                                                           list-n1 list-n2
+                                                           increasing
+                                                           #t
+                                                           real))))
+
+                       ((and (not list-sure) sure (not consistant))
+                        (begin
+                          (set-cdr! listed
+                                    (systemc:update-record n1 n2
+                                                           list-n2 list-n1
+                                                           increasing
+                                                           #t
+                                                           real))))
+                       ((and (not list-sure) (not sure))
+                        (begin
+                          (set-cdr! listed
+                                    (systemc:update-record n1 n2
+                                                           list-n1 list-n2
+                                                           increasing
+                                                           #f
+                                                           real))))
+                       (else
+                        (begin
+                          (display "This should never happen!")
+                          (newline)))
+                       )
+                 )
+             )
+           (begin ; it is not, just add it to the end
+             (set! the-nets
+                   (append the-nets
+                           (list parsed))))
+           ))
+;;         (display  "systemc:get-nets(parsed)-> ")
+         )
+
+        all-unique-nets)
+      the-nets)
+    )
+    systemc:get-nets
+))
 
 ;;
 ;;  Display wires from the design
@@ -503,8 +509,8 @@
     (newline p)
     (for-each (lambda (wire)          ; print a wire statement for each
     ;;            (let ((name (car wire)) (n1 (car (cadr wire))) (n2 (cadr (cadr wire))) (increasing (caddr (cadr wire)))))
-    (display "/* Wires from the design */")(newline)
-                (display "systemc:write-wires -> ")(display wire)(newline)
+;;    (display "/* Wires from the design */")(newline)
+;;                (display "systemc:write-wires -> ")(display wire)(newline)
 		(display "sc_signal<" p)
                 (display (cadr (cadr wire)) p)        
 		(display "> " p)
@@ -556,11 +562,13 @@
 ;;        ...
 ;;    );
 ;;
+
+(define c_p #f)
+
 (define systemc:components
   (lambda (packages port)
     (begin
-
-      (define c_p #f)
+      (set! c_p #f)
       (display "/* Package instantiations */" port) (newline port)
 
       (for-each (lambda (package)         ; loop on packages
@@ -654,21 +662,24 @@
 ;;
 (define systemc:display-pin
     (lambda (pin positional port)
-      (begin
-	(if positional
-	    (begin    ; output a positional port instanace
-	      (display "  /* " port)
-	      (display (car pin) port)  ; add in name for debugging
-	      (display " */ " port )
-	      (display (cdr pin) port))
-	    (begin    ; else output a named port instance 
-	      (display "." port)
-	      ; Display the escaped version of the identifier
-	      (systemc:display-escaped-identifier (car pin) port)
-	      (display "(" port)
-              (display (match:substring (regexp-exec systemc-reg (cdr pin)) 1) port)
-;;	      (systemc:display-escaped-identifier (cdr pin) port)
-	      (display ")" port))))))
+      (let
+          ((systemc (regexp-exec systemc-reg (cdr pin))))
+          (begin
+            (if positional
+                (begin    ; output a positional port instanace
+                  (display "  /* " port)
+                  (display (car pin) port)  ; add in name for debugging
+                  (display " */ " port )
+                  (display (cdr pin) port))
+                (begin    ; else output a named port instance
+                  (display "." port)
+                  ; Display the escaped version of the identifier
+                  (systemc:display-escaped-identifier (car pin) port)
+                  (display "(" port)
+                  (if systemc
+                    (display (match:substring systemc 1) port)
+                    (systemc:display-escaped-identifier (cdr pin) port))
+                  (display ")" port)))))))
     
 	 
 
@@ -679,10 +690,11 @@
   (lambda (output-filename)
     (let ((port (open-output-file output-filename)))
       (begin
+        (systemc:get-nets-once!)
 	(systemc:write-top-header port)
-        (display "***** start write-wires ********")(newline)
+;;        (display "***** start write-wires ********")(newline)
 	(systemc:write-wires port)
-        (display "***** end write-wires ********")(newline)
+;;        (display "***** end write-wires ********")(newline)
 	(systemc:write-continuous-assigns port)
 	(systemc:components packages port)
 	(systemc:write-bottom-footer port)
