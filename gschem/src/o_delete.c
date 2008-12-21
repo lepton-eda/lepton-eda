@@ -120,11 +120,28 @@ void o_delete_complex(GSCHEM_TOPLEVEL *w_current, OBJECT *obj)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *other_objects = NULL;
+  GList *iter, *iter_next;
 
   o_cue_undraw_complex(w_current, obj);
   o_erase_single(w_current, obj);
 
   other_objects = s_conn_return_complex_others(other_objects, obj);
+
+  /* Check for complex which self-connects, e.g. coincident pins.
+   * Remove any other_objects which are inside the complex.
+   */
+  for (iter = other_objects; iter != NULL; iter = iter_next) {
+    OBJECT *conn_obj = iter->data;
+    OBJECT *prim_obj = obj->complex->prim_objs;
+    iter_next = g_list_next (iter);
+    while (prim_obj != NULL) {
+      if (prim_obj == conn_obj) {
+        other_objects = g_list_delete_link (other_objects, iter);
+        break;
+      }
+      prim_obj = prim_obj->next;
+    }
+  }
 
   o_complex_delete(toplevel, obj);
 
