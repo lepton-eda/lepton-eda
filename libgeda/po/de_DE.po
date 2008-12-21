@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-28 16:49-0400\n"
+"POT-Creation-Date: 2008-12-20 19:12-0500\n"
 "PO-Revision-Date: 2008-01-07 18:44+0100\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -398,7 +398,7 @@ msgstr ""
 "Bauteil mit fehlerhafter Spiegelungsangabe entdeckt [ %c %d %d %d %d %d %"
 "s ]\n"
 
-#: ../src/o_complex_basic.c:1427
+#: ../src/o_complex_basic.c:1429
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -408,7 +408,7 @@ msgstr ""
 "s':\n"
 "\tKonnte das Attribut symversion=%s nicht zerlegen\n"
 
-#: ../src/o_complex_basic.c:1431
+#: ../src/o_complex_basic.c:1433
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -418,7 +418,7 @@ msgstr ""
 "s':\n"
 "\tKonnte das Attribut symversion= nicht zerlegen\n"
 
-#: ../src/o_complex_basic.c:1447
+#: ../src/o_complex_basic.c:1449
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -428,7 +428,7 @@ msgstr ""
 "s':\n"
 "\tKonnte das angehängte Attribut symversion=%s nicht zerlegen\n"
 
-#: ../src/o_complex_basic.c:1472
+#: ../src/o_complex_basic.c:1474
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -440,7 +440,7 @@ msgstr ""
 "\tsymversion=%s existiert bei dem Symbol im Schaltplan, fehlt aber innerhalb "
 "der Schaltsymbol-Datei\n"
 
-#: ../src/o_complex_basic.c:1486
+#: ../src/o_complex_basic.c:1488
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -450,20 +450,20 @@ msgstr ""
 "s):\n"
 "\tDas Symbol in der Bibliothek ist neuer als das Symbol im Schaltplan\n"
 
-#: ../src/o_complex_basic.c:1514
+#: ../src/o_complex_basic.c:1516
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr ""
 "\tGROSSE VERSIONSÄNDERUNG (Symboldatei %.3f, Symbol im Schaltplan %.3f, %"
 "s)!\n"
 
-#: ../src/o_complex_basic.c:1532
+#: ../src/o_complex_basic.c:1534
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr ""
 "\tKleine Versionsänderung (Symboldatei %.3f, Symbol im Schaltplan %.3f)!\n"
 
-#: ../src/o_complex_basic.c:1543
+#: ../src/o_complex_basic.c:1545
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"

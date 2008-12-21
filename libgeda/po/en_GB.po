@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-28 16:49-0400\n"
+"POT-Creation-Date: 2008-12-20 19:12-0500\n"
 "PO-Revision-Date: 2007-12-29 11:21+0100\n"
 "Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -390,7 +390,7 @@ msgid ""
 msgstr ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
 
-#: ../src/o_complex_basic.c:1427
+#: ../src/o_complex_basic.c:1429
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -399,7 +399,7 @@ msgstr ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse symbol file symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1431
+#: ../src/o_complex_basic.c:1433
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -408,7 +408,7 @@ msgstr ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse symbol file symversion=\n"
 
-#: ../src/o_complex_basic.c:1447
+#: ../src/o_complex_basic.c:1449
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -417,7 +417,7 @@ msgstr ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse attached symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1472
+#: ../src/o_complex_basic.c:1474
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -428,7 +428,7 @@ msgstr ""
 "\tsymversion=%s attached to instantiated symbol, but no symversion= inside "
 "symbol file\n"
 
-#: ../src/o_complex_basic.c:1486
+#: ../src/o_complex_basic.c:1488
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -437,17 +437,17 @@ msgstr ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
 "\tSymbol in library is newer than instantiated symbol\n"
 
-#: ../src/o_complex_basic.c:1514
+#: ../src/o_complex_basic.c:1516
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 
-#: ../src/o_complex_basic.c:1532
+#: ../src/o_complex_basic.c:1534
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\tMinor version change (file %.3f, instantiated %.3f)\n"
 
-#: ../src/o_complex_basic.c:1543
+#: ../src/o_complex_basic.c:1545
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-28 16:49-0400\n"
+"POT-Creation-Date: 2008-12-20 19:12-0500\n"
 "PO-Revision-Date: 2008-01-07 20:17+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -408,7 +408,7 @@ msgstr ""
 "Se ha encontrado un componente con un atributo de simetría no válido [ %c %d "
 "%d %d %d %d %s ]\n"
 
-#: ../src/o_complex_basic.c:1427
+#: ../src/o_complex_basic.c:1429
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -417,7 +417,7 @@ msgstr ""
 "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
 "\tNo se ha podido procesar el atributo de versión de archivo symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1431
+#: ../src/o_complex_basic.c:1433
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -426,7 +426,7 @@ msgstr ""
 "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
 "\tNo se ha podido procesar el atributo de versión de archivo symversion=\n"
 
-#: ../src/o_complex_basic.c:1447
+#: ../src/o_complex_basic.c:1449
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -435,7 +435,7 @@ msgstr ""
 "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
 "\tNo se ha podido procesar el atributo añadido symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1472
+#: ../src/o_complex_basic.c:1474
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -447,7 +447,7 @@ msgstr ""
 "\tse ha añadido el atributo symversion=%s a la instancia del símbolo, pero "
 "no hay ningún atributo symversion= dentro del archivo del símbolo\n"
 
-#: ../src/o_complex_basic.c:1486
+#: ../src/o_complex_basic.c:1488
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -458,18 +458,18 @@ msgstr ""
 "\t El símbolo en la librería es más reciente que el instanciado en el "
 "esquema\n"
 
-#: ../src/o_complex_basic.c:1514
+#: ../src/o_complex_basic.c:1516
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr ""
 "\t¡CAMBIO DE VERSIÓN IMPORTANTE (archivo %.3f, instanciado %.3f, %s)!\n"
 
-#: ../src/o_complex_basic.c:1532
+#: ../src/o_complex_basic.c:1534
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\t Cambio menor en la versión (archivo %.3f, instanciado %.3f)\n"
 
-#: ../src/o_complex_basic.c:1543
+#: ../src/o_complex_basic.c:1545
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"

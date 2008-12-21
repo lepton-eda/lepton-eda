@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-28 16:49-0400\n"
+"POT-Creation-Date: 2008-12-20 19:12-0500\n"
 "PO-Revision-Date: 2007-12-29 17:03+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -404,7 +404,7 @@ msgstr ""
 "Een komponent met een ongeldige spiegel vlag gevonden [ %c %d %d %d %d %d %"
 "s ]\n"
 
-#: ../src/o_complex_basic.c:1427
+#: ../src/o_complex_basic.c:1429
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -413,7 +413,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan symboolbestand niet doorzoeken symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1431
+#: ../src/o_complex_basic.c:1433
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -422,7 +422,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan symboolbestand niet doorzoeken symversion=\n"
 
-#: ../src/o_complex_basic.c:1447
+#: ../src/o_complex_basic.c:1449
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -431,7 +431,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan bijgevoegd symboolbestand niet doorzoeken symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1472
+#: ../src/o_complex_basic.c:1474
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -442,7 +442,7 @@ msgstr ""
 "\tsymversion=%s bijgevoegd aan bedoelde symbool, maar geen symversion= in "
 "het symbool bestand\n"
 
-#: ../src/o_complex_basic.c:1486
+#: ../src/o_complex_basic.c:1488
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -451,17 +451,17 @@ msgstr ""
 "WAARSCHUWING: Symbool versie fout bij refdes %s (%s):\n"
 "\tSymbool in bibliotheek is nieuwer dan bedoelde symbool\n"
 
-#: ../src/o_complex_basic.c:1514
+#: ../src/o_complex_basic.c:1516
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr "\tGROTE VERSIE VERANDERING (bestand %.3f, bedoeld %.3f, %s)!\n"
 
-#: ../src/o_complex_basic.c:1532
+#: ../src/o_complex_basic.c:1534
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\tKleine versie verandering (bestand %.3f, bedoeld %.3f)!\n"
 
-#: ../src/o_complex_basic.c:1543
+#: ../src/o_complex_basic.c:1545
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
