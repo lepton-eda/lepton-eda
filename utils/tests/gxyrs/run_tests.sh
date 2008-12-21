@@ -120,6 +120,13 @@ if test ! -f $GXYRS_SCRIPT ; then
     exit 1
 fi
 
+# Check if gxyrs.pm module exists
+eval "${PERL} -I${gxyrs_srcdir} -Mgxyrs -e 1"
+if test $? -ne 0; then
+    echo "ERROR: ($0)  gxyrs module gxyrs.pm does not exist"
+    exit 1
+fi
+
 
 # fail/pass/total counts
 fail=0
