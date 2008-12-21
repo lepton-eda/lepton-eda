@@ -1887,14 +1887,17 @@ static void multiattrib_get_property (GObject *object,
  */
 void multiattrib_update (Multiattrib *multiattrib)
 {
+  TOPLEVEL *toplevel;
   GtkListStore *liststore;
   GtkTreeIter iter;
   OBJECT **object_attribs, *o_current;
   gint i;
   gboolean sensitive;
   GtkStyle *style;
+  gchar *name, *value;
 
   g_assert (GSCHEM_DIALOG (multiattrib)->w_current != NULL);
+  toplevel = GSCHEM_DIALOG (multiattrib)->w_current->toplevel;
 
   /* clear the list of attributes */
   liststore = (GtkListStore*)gtk_tree_view_get_model (multiattrib->treeview);
@@ -1926,6 +1929,16 @@ void multiattrib_update (Multiattrib *multiattrib)
     for (i = 0, o_current = object_attribs[i];
          o_current != NULL;
          i++, o_current = object_attribs[i]) {
+
+      /* Don't add invalid attributes to the list */
+      if (!o_attrib_get_name_value (o_current->text->string, &name, &value)) {
+        g_free (name);
+        g_free (value);
+        continue;
+      }
+      g_free (name);
+      g_free (value);
+
       gtk_list_store_append (liststore, &iter);
       gtk_list_store_set (liststore, &iter,
                           COLUMN_ATTRIBUTE, o_current,
