@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-20 16:08-0500\n"
+"POT-Creation-Date: 2008-12-21 13:41-0500\n"
 "PO-Revision-Date: 2008-12-21 12:20+0100\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -196,7 +196,8 @@ msgid "Error during reading of the prolog file `%s' in f_print_header()\n"
 msgstr "f_print_header(): Fehler beim Lesen der Prologdatei '%s'\n"
 
 #: ../src/f_print.c:176
-msgid "Error during writing of the output postscript file in f_print_header()\n"
+msgid ""
+"Error during writing of the output postscript file in f_print_header()\n"
 msgstr "f_print_header(): Fehler beim Schreiben der Postscript-Datei.\n"
 
 #: ../src/f_print.c:189
@@ -301,8 +302,9 @@ msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
 "list of strings instead\n"
 msgstr ""
-"ACHTUNG: Die Verwendung eines Strings als Variablenwert von 'always-promote-attributes' ist veraltet. Es sollte statdessen "
-"eine Liste von Strings verwendet werden.\n"
+"ACHTUNG: Die Verwendung eines Strings als Variablenwert von 'always-promote-"
+"attributes' ist veraltet. Es sollte statdessen eine Liste von Strings "
+"verwendet werden.\n"
 
 #: ../src/o_arc_basic.c:282
 #, c-format
@@ -331,7 +333,8 @@ msgstr "Es wurde versucht eine Attribut anzubringen, welches kein Text ist!\n"
 #: ../src/o_attrib.c:183
 #, c-format
 msgid "Attempt to attach attribute [%s] to more than one object\n"
-msgstr "Es wurde versucht ein Attribute [%s] an mehr als ein Objekt anzubringen\n"
+msgstr ""
+"Es wurde versucht ein Attribute [%s] an mehr als ein Objekt anzubringen\n"
 
 #. only an error if there's a slot string
 #: ../src/o_attrib.c:1410 ../src/o_attrib.c:1510
@@ -399,11 +402,13 @@ msgstr ""
 #: ../src/o_complex_basic.c:690
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
-msgstr "Bauteil mit fehlerhafter Rotationsangabe entdeckt [ %c %d %d %d %d %d %s ]\n"
+msgstr ""
+"Bauteil mit fehlerhafter Rotationsangabe entdeckt [ %c %d %d %d %d %d %s ]\n"
 
 #: ../src/o_complex_basic.c:702
 #, c-format
-msgid "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
+msgid ""
+"Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
 "Bauteil mit fehlerhafter Spiegelungsangabe entdeckt [ %c %d %d %d %d %d %"
 "s ]\n"
@@ -470,7 +475,8 @@ msgstr ""
 #: ../src/o_complex_basic.c:1508
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
-msgstr "\tKleine Versionsänderung (Symboldatei %.3f, Symbol im Schaltplan %.3f)!\n"
+msgstr ""
+"\tKleine Versionsänderung (Symboldatei %.3f, Symbol im Schaltplan %.3f)!\n"
 
 #: ../src/o_complex_basic.c:1519
 #, c-format
@@ -624,7 +630,8 @@ msgstr ""
 #: ../src/o_text_basic.c:1088
 #, c-format
 msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
-msgstr "Textstring mit der Zeichengröße 0 entdeckt [ %c %d %d %d %d %d %d %d %d ]\n"
+msgstr ""
+"Textstring mit der Zeichengröße 0 entdeckt [ %c %d %d %d %d %d %d %d %d ]\n"
 
 #: ../src/o_text_basic.c:1100
 #, c-format
@@ -705,7 +712,8 @@ msgstr "Kann die Bibliothek nicht hinzufügen. Der Name fehlt\n"
 
 #: ../src/s_clib.c:902
 #, c-format
-msgid "Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
+msgid ""
+"Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
 msgstr ""
 "Kann die Bibliothek [%s] nicht hinzufügen: Beide Befehle ('list' und 'get') "
 "müssen angegeben werden.\n"
@@ -730,7 +738,8 @@ msgstr "Fehler beim Laden der Symboldaten [%s] aus der Quelle [%s]\n"
 #: ../src/s_clib.c:1376
 #, c-format
 msgid "Component [%s] was not found in the component library\n"
-msgstr "Das Bauteil [%s] konnte nicht in der Bauteilbibliothek gefunden werden\n"
+msgstr ""
+"Das Bauteil [%s] konnte nicht in der Bauteilbibliothek gefunden werden\n"
 
 #. More than one symbol
 #: ../src/s_clib.c:1382
@@ -759,7 +768,8 @@ msgstr "ERROR: s_hierarchy_traverse: Schaltplan [%s] wurde nicht gefunden.\n"
 #: ../src/s_page.c:169
 #, c-format
 msgid "s_page_delete: Can't get the real filename of %s."
-msgstr "s_page_delete: Kann den tatsächlichen Dateinamen von [%s] nicht ermitteln."
+msgstr ""
+"s_page_delete: Kann den tatsächlichen Dateinamen von [%s] nicht ermitteln."
 
 #: ../src/s_page.c:180
 #, c-format
@@ -817,4 +827,3 @@ msgstr "Konnte [%s] in keiner Bibliothekenquelle finden\n"
 #~ msgstr ""
 #~ "s_page_delete: Kann den tatsächlichen Dateinamen von [%s] nicht "
 #~ "ermitteln.\n"
-
