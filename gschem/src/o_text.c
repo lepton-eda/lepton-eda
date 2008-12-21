@@ -173,6 +173,10 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 		      screen_y1+small_dist,
 		      screen_x1+small_dist,
 		      screen_y1+small_dist);
+        o_invalidate_rect(w_current, screen_x1,
+                                     screen_y1,
+                                     screen_x1 + small_dist,
+                                     screen_y1 + small_dist);
       }	
     }
     
@@ -220,6 +224,10 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 		  screen_y1+small_dist, 
 		  screen_x1-small_dist, 
 		  screen_y1-small_dist);
+    o_invalidate_rect(w_current, screen_x1 - small_dist,
+                                 screen_y1 - small_dist,
+                                 screen_x1 + small_dist,
+                                 screen_y1 + small_dist);
   }
 }
 
