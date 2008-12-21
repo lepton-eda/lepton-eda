@@ -366,7 +366,13 @@ preview_event_configure (GtkWidget         *widget,
   retval = x_event_configure (widget, event, preview_w_current);
   preview_w_current->toplevel->DONT_REDRAW = save_redraw;
   if (preview_page != NULL) {
-    a_zoom_extents(preview_w_current, preview_page->object_head, 0);
+    /* If we have an empty page without object, just redraw the background */
+    if (preview_page->object_head == NULL
+	|| preview_page->object_head->next == NULL) {
+      x_repaint_background(preview_w_current);
+    } else {
+      a_zoom_extents(preview_w_current, preview_page->object_head, 0);
+    }
   }
   return retval;
 }
