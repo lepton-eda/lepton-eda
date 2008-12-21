@@ -9,5 +9,6 @@ VERSION
 config.charset
 locale.alias
 libgnuintl.h.in
+libintl.rc
 *~
 TAGS
