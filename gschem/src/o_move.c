@@ -455,6 +455,20 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
   OBJECT *object;
   int x, y;
   int whichone;
+  GList *iter;
+
+  /* save a list of objects the stretched objects
+     are connected to before we move them. */
+  for (s_current = toplevel->page_current->stretch_head->next;
+       s_current != NULL; s_current = s_current->next) {
+    object = s_current->object;
+
+    if (object != NULL &&
+        (object->type == OBJ_NET ||
+         object->type == OBJ_BUS)) {
+      *other_objects = s_conn_return_others (*other_objects, object);
+    }
+  }
 
   /* skip over head */
   s_current = toplevel->page_current->stretch_head->next;
@@ -472,9 +486,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
         
         case (OBJ_NET):
           
-          /* save the other objects and remove object's connections */
-          *other_objects =
-            s_conn_return_others(*other_objects, object);
+          /* remove the object's connections */
           s_conn_remove(toplevel, object);
 
           x = object->line->x[whichone];
@@ -500,12 +512,11 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
             s_stretch_remove (toplevel->page_current->stretch_head, object);
             toplevel->page_current->stretch_tail =
               s_stretch_return_tail (toplevel->page_current->stretch_head);
+            *other_objects = g_list_remove_all (*other_objects, object);
           } else {
             o_net_recalc(toplevel, object);
             s_tile_update_object(toplevel, object);
             s_conn_update_object(toplevel, object);
-            *connected_objects =
-              s_conn_return_others(*connected_objects, object);
             *objects = g_list_append(*objects, object);
           }
 
@@ -519,9 +530,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
 
         case (OBJ_BUS):
 
-          /* save the other objects and remove object's connections */
-          *other_objects =
-            s_conn_return_others(*other_objects, object);
+          /* remove the object's connections */
           s_conn_remove(toplevel, object);
 
           x = object->line->x[whichone];
@@ -545,12 +554,11 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
             s_stretch_remove (toplevel->page_current->stretch_head, object);
             toplevel->page_current->stretch_tail =
               s_stretch_return_tail (toplevel->page_current->stretch_head);
+            *other_objects = g_list_remove_all (*other_objects, object);
           } else {
             o_bus_recalc(toplevel, object);
             s_tile_update_object(toplevel, object);
             s_conn_update_object(toplevel, object);
-            *connected_objects =
-              s_conn_return_others(*connected_objects, object);
             *objects = g_list_append(*objects, object);
           }
 
@@ -561,13 +569,19 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x,
     s_current = s_next;
   }
 
+  /* save a list of objects the stretched objects
+     are now connected to after we moved them. */
+  for (iter = *objects; iter != NULL; iter = g_list_next (iter)) {
+    object = iter->data;
+    *connected_objects = s_conn_return_others (*connected_objects, object);
+  }
+
 #if DEBUG
   /*! \bug FIXME: moved_objects doesn't exist? */
   /*printf("%d\n", g_list_length(*moved_objects));*/
   printf("%d\n", g_list_length(*other_objects));
   printf("%d\n", g_list_length(*connected_objects));
 #endif
-
 }
 
 /*! \todo Finish function documentation!!!
