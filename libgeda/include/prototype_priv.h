@@ -214,7 +214,7 @@ void s_clib_init (void);
 
 /* s_color.c */
 void s_color_init(void);
-char *s_color_ps_string(int color);
+gchar *s_color_ps_string(gint color);
 
 /* s_encoding.c */
 gchar* s_encoding_base64_encode (gchar* src, guint srclen, guint* dstlenp, gboolean strict);

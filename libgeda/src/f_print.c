@@ -65,10 +65,8 @@ void f_print_set_line_width(FILE *fp, int width)
  */
 void f_print_set_color(FILE *fp, int color) 
 {
-  char *string;
+  gchar *string;
 
-  /* DO NOT free string... it's a reference to a malloced */
-  /* string, there is *no* memory leak here */
   string = s_color_ps_string(color);
 
   if (string) {
@@ -76,6 +74,8 @@ void f_print_set_color(FILE *fp, int color)
   } else {
     fprintf(fp, "0 0 0 setrgbcolor\n");
   }
+
+  g_free (string);
 }
 
 /*! \brief Prints the header to a postscript document.

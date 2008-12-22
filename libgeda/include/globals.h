@@ -24,35 +24,6 @@
 #ifndef _GLOBALS_H_INCL
 #define _GLOBALS_H_INCL
 
-
-#if 0 /* none of this is needed? */
-/* color stuff */
-extern GdkColormap *colormap; 
-extern GdkVisual *visual; 
-
-/* colors */
-extern GdkColor white;
-extern GdkColor black;
-extern GdkColor red;
-extern GdkColor green;
-extern GdkColor blue;
-extern GdkColor cyan;
-extern GdkColor yellow;
-extern GdkColor grey;
-extern GdkColor grey90;
-extern GdkColor darkgreen;
-extern GdkColor darkred;
-extern GdkColor darkyellow;
-extern GdkColor darkcyan;
-extern GdkColor darkblue;
-extern GdkColor darkgrey; 
-
-/* color structure */
-extern COLOR colors[MAX_COLORS];
-
-extern char rc_filename[256]; /* size is hack */
-#endif
-
 extern int do_logging;
 extern int logging_dest;
 

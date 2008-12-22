@@ -31,24 +31,31 @@
 #include <dmalloc.h>
 #endif
 
-COLOR colors[MAX_COLORS];
+COLOR print_colors[MAX_COLORS];
+COLOR display_colors[MAX_COLORS]; /* FIXME move into gschem */
+COLOR display_outline_colors[MAX_COLORS]; /* FIXME move into gschem */
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Initialise the color maps to B&W
  *  \par Function Description
+ *  Initialises the print & display color maps to display black
+ *  features on a white background, with all colors disabled.
  *
+ *  \todo This should set a sensible default set of colors to be
+ *  enabled.
  */
 void s_color_init(void)
 {
   int i;
+  COLOR white = {0xff, 0xff, 0xff, 0xff, FALSE};
+  COLOR black = {0x00, 0x00, 0x00, 0xff, FALSE};
 
-  for (i = 0; i < MAX_COLORS; i++) {
-    colors[i].color_name = NULL; 
-    colors[i].outline_color_name = NULL; 
-    colors[i].ps_color_string = NULL; 
-    colors[i].gdk_color = NULL;
-    colors[i].gdk_outline_color = NULL;
-    colors[i].enabled = FALSE;
+  print_colors[0] = white;
+  display_colors[0] = white;
+  display_outline_colors[0] = white;
+  for (i = 1; i < MAX_COLORS; i++) {
+    print_colors[i] = black;
+    display_colors[i] = black;
+    display_outline_colors[i] = black;
   }
 
 }
@@ -160,30 +167,38 @@ s_color_request(int color_index, char *color_string,
     return(-1);
   } 
 
-  /* search for the color name see if it's already been alloced */
+  res = s_color_rgba_decode (color_string, &r, &g, &b, &a);
+  if (!res) {
+    g_warning (_("Could not decode color: \"%s\".\n"),
+               color_string);
+  } else {
+    display_colors[color_index].r = r;
+    display_colors[color_index].g = g;
+    display_colors[color_index].b = b;
+    display_colors[color_index].enabled = TRUE;
+  }
 
-  g_free(colors[color_index].color_name);	
-
-  colors[color_index].color_name = g_strdup (color_string);
-  colors[color_index].outline_color_name = g_strdup (outline_color_string);
+  res = s_color_rgba_decode (outline_color_string, &r, &g, &b, &a);
+  if (!res) {
+    g_warning (_("Could not decode color: \"%s\".\n"),
+               outline_color_string);
+  } else {
+    display_outline_colors[color_index].r = r;
+    display_outline_colors[color_index].g = g;
+    display_outline_colors[color_index].b = b;
+    display_outline_colors[color_index].enabled = TRUE;
+  }
 
   res = s_color_rgba_decode (ps_color_string, &r, &g, &b, &a);
   if (!res) {
     g_warning (_("Could not decode color: \"%s\".\n"),
                ps_color_string);
   } else {
-    if (a == 0) {
-      g_free (colors[color_index].ps_color_string);
-      colors[color_index].ps_color_string = NULL;
-    } else {
-      colors[color_index].ps_color_string =
-        g_strdup_printf ("%.3f %.3f %.3f",
-                         (gdouble) r/255.0,
-                         (gdouble) g/255.0,
-                         (gdouble) b/255.0);
-    }
+    print_colors[color_index].r = r;
+    print_colors[color_index].g = g;
+    print_colors[color_index].b = b;
+    print_colors[color_index].enabled = TRUE;
   }
-  colors[color_index].enabled = TRUE;
   return(0);
 }
 
@@ -194,14 +209,7 @@ s_color_request(int color_index, char *color_string,
  */
 void s_color_destroy_all(void)
 {
-  int i;
-
-  for (i = 0; i < MAX_COLORS; i++) {
-    g_free(colors[i].color_name);
-    g_free(colors[i].outline_color_name);
-    g_free(colors[i].ps_color_string);
-    /* free the colors */
-  }
+  /* Don't do anything, for now */
 }
 
 /*! \todo Finish function documentation!!!
@@ -209,11 +217,23 @@ void s_color_destroy_all(void)
  *  \par Function Description
  *
  */
-char *s_color_ps_string(int color)
+gchar *s_color_ps_string(gint color)
 {
-  if (colors[color].ps_color_string) {
-    return(colors[color].ps_color_string);
+  COLOR c;
+
+  if (color >= MAX_COLORS) {
+    g_warning (_("Color index out of range"));
+    return NULL;
+  }
+
+  c = print_colors[color];
+
+  if ((c.a == 0) || !c.enabled) {
+    return NULL;
   } else {
-    return(NULL);
+    return g_strdup_printf ("%.3f %.3f %.3f",
+                            (gdouble) c.r/255.0,
+                            (gdouble) c.g/255.0,
+                            (gdouble) c.b/255.0);
   }
 }

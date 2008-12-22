@@ -31,7 +31,11 @@
 #include <dmalloc.h>
 #endif
 
-extern COLOR colors[MAX_COLORS];
+extern COLOR display_colors[MAX_COLORS];
+extern COLOR display_outline_colors[MAX_COLORS];
+
+static GdkColor* gdk_colors[MAX_COLORS];
+static GdkColor* gdk_outline_colors[MAX_COLORS];
 
 static void x_color_allocate_all(void);
 
@@ -89,82 +93,64 @@ static void x_color_allocate_all(void)
 {
   int error;
   int i;		
-  guint8 r, g, b, a;
+  COLOR c;
 
   for (i = 0; i < MAX_COLORS; i++) {
-    if (!colors[i].enabled) continue;
-    if (colors[i].color_name) {
-      error = s_color_rgba_decode (colors[i].color_name,
-                                   &r, &g, &b, &a);
-      if (!error) {
-        g_warning (_("Could not decode color: \"%s\". "
-                     "Defaulting to white.\n"),
-                   colors[i].color_name);
-      }
 
-      colors[i].gdk_color = (GdkColor *)
+    if (display_colors[i].enabled) {
+      gdk_colors[i] = (GdkColor *)
         g_malloc(sizeof(GdkColor));
+
+      c = display_colors[i];
 
       /* Interpolate 8-bpp colours into 16-bpp GDK color
        * space. N.b. ignore transparency because GDK doesn't
        * understand it. */
-      colors[i].gdk_color->red = r + (r<<8);
-      colors[i].gdk_color->green = g + (g<<8);
-      colors[i].gdk_color->blue = b + (b<<8);
+      gdk_colors[i]->red = c.r + (c.r<<8);
+      gdk_colors[i]->green = c.g + (c.g<<8);
+      gdk_colors[i]->blue = c.b + (c.b<<8);
 
-      error = gdk_color_alloc(colormap, colors[i].gdk_color);
+      error = gdk_color_alloc(colormap, gdk_colors[i]);
 
       if (error == FALSE) {
         g_error (_("Could not allocate display color %i!\n"), i);
       }
-
+    } else {
+      gdk_colors[i] = NULL;
     }
-  }
 
-  for (i = 0; i < MAX_COLORS; i++) {
-    if (colors[i].outline_color_name) {
-      error = s_color_rgba_decode (colors[i].outline_color_name,
-                                   &r, &g, &b, &a);
-      if (!error) {
-        g_warning (_("Could not decode color: \"%s\". "
-                     "Defaulting to white.\n"),
-                   colors[i].outline_color_name);
-      }
-
-      colors[i].gdk_outline_color = (GdkColor *)
+    if (display_outline_colors[i].enabled) {
+      gdk_outline_colors[i] = (GdkColor *)
         g_malloc(sizeof(GdkColor));
+
+      c = display_outline_colors[i];
 
       /* Interpolate 8-bpp colours into 16-bpp GDK color
        * space. N.b. ignore transparency because GDK doesn't
        * understand it. */
-      colors[i].gdk_outline_color->red = r + (r<<8);
-      colors[i].gdk_outline_color->green = g + (g<<8);
-      colors[i].gdk_outline_color->blue = b + (b<<8);
+      gdk_outline_colors[i]->red = c.r + (c.r<<8);
+      gdk_outline_colors[i]->green = c.g + (c.g<<8);
+      gdk_outline_colors[i]->blue = c.b + (c.b<<8);
 
-      error = gdk_color_alloc(colormap, colors[i].gdk_outline_color);
-
-      if (error == FALSE) {
-        g_error (_("Could not allocate color %i!\n"), i);
-      }
-
-      /* Make sure the outline color is correct for non-black backgrounds */
+      /* Make sure the outline color is correct for non-black backgrounds
+       * FIXME: Is this correct?
+       */
       if (i > 0) {
-	colors[i].gdk_outline_color->red =
-		colors[i].gdk_outline_color->red ^ colors[0].gdk_color->red;
-	colors[i].gdk_outline_color->green =
-		 colors[i].gdk_outline_color->green ^
-			colors[0].gdk_color->green;
-	colors[i].gdk_outline_color->blue =
-		 colors[i].gdk_outline_color->blue ^ colors[0].gdk_color->blue;
+        gdk_outline_colors[i]->red =
+          gdk_outline_colors[i]->red ^ gdk_colors[0]->red;
+        gdk_outline_colors[i]->green =
+          gdk_outline_colors[i]->green ^ gdk_colors[0]->green;
+        gdk_outline_colors[i]->blue =
+          gdk_outline_colors[i]->blue ^ gdk_colors[0]->blue;
       }
 
-      error = gdk_color_alloc(colormap, 
-                              colors[i].gdk_outline_color);
+      error = gdk_color_alloc(colormap, gdk_outline_colors[i]);
 
       if (error == FALSE) {
         g_error (_("Could not allocate outline color %i!\n"), i);
       }
-
+    } else {
+      gdk_outline_colors[i] = NULL;
     }
   }
 }
@@ -176,8 +162,8 @@ static void x_color_allocate_all(void)
  */
 GdkColor *x_get_color(int color)
 {
-  if (colors[color].gdk_color) {
-    return(colors[color].gdk_color);
+  if (gdk_colors[color]) {
+    return(gdk_colors[color]);
   } else {
     fprintf(stderr, _("Tried to get an invalid color: %d\n"), color);
     return(&white);
@@ -192,8 +178,8 @@ GdkColor *x_get_color(int color)
  */
 GdkColor *x_get_darkcolor(int color)
 {
-  if (colors[color].gdk_outline_color) {
-    return(colors[color].gdk_outline_color);
+  if (gdk_outline_colors[color] != NULL) {
+    return(gdk_outline_colors[color]);
   } else {
     g_warning (_("Tried to get an invalid outline color: %d\n"), color);
     return(&white);
@@ -208,14 +194,15 @@ GdkColor *x_get_darkcolor(int color)
  */
 gchar *x_color_get_name(int index)
 {
+  COLOR c;
+
   if ((index >= MAX_COLORS) || (index < 0)) {
     return(NULL);
   }
 
-  if (!colors[index].enabled) return NULL;
-
-  if (colors[index].color_name) {
-    return (g_strdup(colors[index].color_name));
+  if (display_colors[index].enabled) {
+    c = display_colors[index];
+    return s_color_rgba_encode (c.r, c.g, c.b, c.a);
   }
 
   /* didn't find a color, but there still might be more */
@@ -225,5 +212,5 @@ gchar *x_color_get_name(int index)
 gboolean
 x_color_display_enabled (int index)
 {
-  return (colors[index].gdk_color != NULL);
+  return (gdk_colors[index] != NULL);
 }

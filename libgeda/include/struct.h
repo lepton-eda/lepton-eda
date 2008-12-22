@@ -653,13 +653,7 @@ struct st_chkerrs{
 
 
 struct st_color {
-  char *color_name;
-  char *outline_color_name;
-  char *ps_color_string;
-
-  GdkColor *gdk_color;
-  GdkColor *gdk_outline_color;
-
+  guint8 r, g, b, a;
   gboolean enabled;
 };
 
