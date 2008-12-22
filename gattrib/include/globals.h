@@ -99,5 +99,14 @@ GtkWidget *label;
 extern int verbose_mode;
 extern int quiet_mode;
 
+/* Used to identify colors */
+#define BLACK           0
+#define WHITE           1
+#define RED             2
+#define GREEN           3
+#define BLUE            4
+#define YELLOW          5
+#define CYAN            6
+#define GREY            7
 
 #endif
