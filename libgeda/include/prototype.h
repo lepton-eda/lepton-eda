@@ -416,8 +416,8 @@ gint s_page_autosave (TOPLEVEL *toplevel);
 void s_page_append (PAGE *page, OBJECT *object);
 void s_page_remove (PAGE *page, OBJECT *object);
 void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page);
-GList *s_page_objects_in_region (PAGE *page, int min_x, int min_y, int max_x, int max_y);
-GList *s_page_objects_in_regions (PAGE *page, BOX *rects, int n_rects);
+GList *s_page_objects_in_region (TOPLEVEL *toplevel, PAGE *page, int min_x, int min_y, int max_x, int max_y);
+GList *s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page, BOX *rects, int n_rects);
 
 /* s_papersizes.c */
 int s_papersizes_add_entry(char *new_papersize, int width, int height);

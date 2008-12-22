@@ -81,7 +81,7 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
                    &world_rects[i].upper_x, &world_rects[i].upper_y);
   }
 
-  obj_list = s_page_objects_in_regions (toplevel->page_current,
+  obj_list = s_page_objects_in_regions (toplevel, toplevel->page_current,
                                         world_rects, n_rectangles);
   g_free (world_rects);
 

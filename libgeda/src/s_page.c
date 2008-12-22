@@ -557,15 +557,16 @@ void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page)
  *  Finds the objects which are inside, or intersect
  *  the passed box shaped region.
  *
- *  \param [in] page    The PAGE the object is on.
- *  \param [in] min_x   The smaller X coordinate of the region.
- *  \param [in] min_y   The smaller Y coordinate of the region.
- *  \param [in] max_x   The larger  X coordinate of the region.
- *  \param [in] max_y   The larger  Y coordinate of the region.
+ *  \param [in] toplevel  The TOPLEVEL object.
+ *  \param [in] page      The PAGE to find objects on.
+ *  \param [in] min_x     The smaller X coordinate of the region.
+ *  \param [in] min_y     The smaller Y coordinate of the region.
+ *  \param [in] max_x     The larger  X coordinate of the region.
+ *  \param [in] max_y     The larger  Y coordinate of the region.
  *  \return The GList of OBJECTs in the region.
  */
-GList *s_page_objects_in_region (PAGE *page, int min_x, int min_y,
-                                             int max_x, int max_y)
+GList *s_page_objects_in_region (TOPLEVEL *toplevel, PAGE *page,
+                                 int min_x, int min_y, int max_x, int max_y)
 {
   BOX rect;
 
@@ -574,7 +575,7 @@ GList *s_page_objects_in_region (PAGE *page, int min_x, int min_y,
   rect.upper_x = max_x;
   rect.upper_y = max_y;
 
-  return s_page_objects_in_regions (page, &rect, 1);
+  return s_page_objects_in_regions (toplevel, page, &rect, 1);
 }
 
 /*! \brief Find the objects in a given region
@@ -583,12 +584,14 @@ GList *s_page_objects_in_region (PAGE *page, int min_x, int min_y,
  *  Finds the objects which are inside, or intersect
  *  the passed box shaped region.
  *
- *  \param [in] page     The PAGE the object is on.
- *  \param [in] rects    The BOX regions to check.
- *  \param [in] n_rects  The number of regions.
+ *  \param [in] toplevel  The TOPLEVEL object.
+ *  \param [in] page      The PAGE to find objects on.
+ *  \param [in] rects     The BOX regions to check.
+ *  \param [in] n_rects   The number of regions.
  *  \return The GList of OBJECTs in the region.
  */
-GList *s_page_objects_in_regions (PAGE *page, BOX *rects, int n_rects)
+GList *s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page,
+                                  BOX *rects, int n_rects)
 {
   GList *iter;
   GList *list = NULL;
