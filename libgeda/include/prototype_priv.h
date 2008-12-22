@@ -222,7 +222,7 @@ gchar* s_encoding_base64_encode (gchar* src, guint srclen, guint* dstlenp, gbool
 gchar* s_encoding_base64_decode (gchar* src, guint srclen, guint* dstlenp);
 
 /* s_path.c */
-void s_path_to_polygon(PATH *path, GArray *points);
+int s_path_to_polygon(PATH *path, GArray *points);
 double s_path_shortest_distance (PATH *path, int x, int y, int solid);
 
 /* s_textbuffer.c */

@@ -705,9 +705,11 @@ char *s_path_string_from_path (const PATH *path)
  *  be NULL.
  *  \param points [out] An array of the polygon's vertices.  This parameter
  *  must not be NULL.
+ *  \return TRUE if the path is closed, FALSE if it is open.
  */
-void s_path_to_polygon (PATH *path, GArray *points)
+int s_path_to_polygon (PATH *path, GArray *points)
 {
+  int closed = FALSE;
   int i;
   sPOINT point = { 0, 0 };
 
@@ -744,9 +746,12 @@ void s_path_to_polygon (PATH *path, GArray *points)
         break;
 
       case PATH_END:
+        closed = TRUE;
         break;
     }
   }
+
+  return closed;
 }
 
 
@@ -765,14 +770,15 @@ void s_path_to_polygon (PATH *path, GArray *points)
 double s_path_shortest_distance (PATH *path, int x, int y, int solid)
 {
   double shortest_distance = G_MAXDOUBLE;
+  int closed;
   GArray *points;
 
   points = g_array_new (FALSE, FALSE, sizeof (sPOINT));
 
-  s_path_to_polygon (path, points);
+  closed = s_path_to_polygon (path, points);
 
   if (!solid) {
-    shortest_distance = m_polygon_shortest_distance (points, x, y, FALSE);
+    shortest_distance = m_polygon_shortest_distance (points, x, y, closed);
 
   } else if (m_polygon_interior_point (points, x, y)) {
     shortest_distance = 0;
