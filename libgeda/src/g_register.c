@@ -72,6 +72,7 @@ static struct gsubr_t libgeda_funcs[] = {
   { "promote-invisible",         1, 0, 0, g_rc_promote_invisible },
   { "keep-invisible",            1, 0, 0, g_rc_keep_invisible },
   { "always-promote-attributes",1, 0, 0, g_rc_always_promote_attributes },
+  { "print-color-map", 0, 1, 0, g_rc_print_color_map },
   { NULL,                       0, 0, 0, NULL } };
 
 /*! \brief Register all libgeda functions with scheme.

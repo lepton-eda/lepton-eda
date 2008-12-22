@@ -289,6 +289,8 @@ SCM g_rc_print_command(SCM mode);
 SCM g_rc_select_slack_pixels(SCM pixels);
 SCM g_rc_zoom_gain(SCM gain);
 SCM g_rc_scrollpan_steps(SCM steps);
+SCM g_rc_display_color_map (SCM scm_map);
+SCM g_rc_display_outline_color_map (SCM scm_map);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */

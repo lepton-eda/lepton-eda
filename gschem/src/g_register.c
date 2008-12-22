@@ -74,6 +74,9 @@ static struct gsubr_t gschem_funcs[] = {
   { "output-color-background",  4, 0, 0, g_rc_output_color_background },
   { "freestyle-color",          4, 0, 0, g_rc_freestyle_color },
 
+  { "display-color-map",        0, 1, 0, g_rc_display_color_map },
+  { "display-outline-color-map", 0, 1, 0, g_rc_display_outline_color_map },
+
   { "net-endpoint-mode",         1, 0, 0, g_rc_net_endpoint_mode },
   { "net-midpoint-mode",         1, 0, 0, g_rc_net_midpoint_mode },
   { "net-direction-mode",        1, 0, 0, g_rc_net_direction_mode },

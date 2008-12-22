@@ -1,219 +1,90 @@
-
-; 
-; Dark background color init file for gschem
+;                                                         -*-Scheme-*-
+;
+; Dark background color map for gschem
 ;
 
 ;  ;'s are comments
-;  keywords are case sensitive (guile feature)
-;  mode strings are case sensitive
-;  colors are not case sensitive 
-;  
-
-;
-; Start of color related keywords
+;  Keywords are case sensitive (Guile feature)
+;  Colors are not case sensitive
 ;
 
-;
-; Color index reference
-;
-; Colors may be specified in #RRGGBB or #RRGGBBAA format. If the alpha
+; Colors may be specified in "#RRGGBB" or "#RRGGBBAA" format. If the alpha
 ; value is not specified, full opacity is assumed.
-; DO NOT change the index value of these colors, unless you understand what
-; you are changing.
-
-; BACKGROUND_COLOR                0
-; PIN_COLOR                       1
-; NET_ENDPOINT_COLOR              2
-; GRAPHIC_COLOR                   3
-; NET_COLOR                       4
-; ATTRIBUTE_COLOR                 5
-; LOGIC_BUBBLE_COLOR              6
-; GRID_COLOR                      7
-; DETACHED_ATTRIBUTE_COLOR        8
-; TEXT_COLOR                      9
-; BUS_COLOR                       10
-; SELECT_COLOR                    11
-; BOUNDINGBOX_COLOR               12
-; ZOOM_BOX_COLOR                  13
-; STROKE_COLOR                    14
-; LOCK_COLOR    	          15
-; OUTPUT_BACKGROUND_COLOR         16
-; Freestyle colors		  17-20
-; JUNCTION_COLOR                  21
 ;
-; OVERRIDE_NET_COLOR              4
-; OVERRIDE_PIN_COLOR              1
-; OVERRIDE_BUS_COLOR              10
+; If a color is #f (not a string; Scheme 'false'), then objects of
+; that color will never be drawn.
 
-;
-; In all of the color modes: 
-; 	the first string is the actual color name
-;	the second string is the outline color name 
-; 	the third string is the postscript color name
-;
+(display-color-map
+ '((background         "#000000")
+   (pin                "#ffffff")
+   (net-endpoint       "#ff0000")
+   (graphic            "#00ff00")
+   (net                "#0000ff")
+   (attribute          "#ffff00")
+   (logic-bubble       "#00ffff")
+   (grid               "#bebebe")
+   (detached-attribute "#ff0000")
+   (text               "#00ff00")
+   (bus                "#00ff00")
+   (select             "#ffa500")
+   (bounding-box       "#ffa500")
+   (zoom-box           "#00ffff")
+   (stroke             "#e5e5e5")
+   (lock               "#bebebe")
+   (output-background  #f)
+   (junction           "#ffff00")
+   (freestyle1         #f)
+   (freestyle2         #f)
+   (freestyle3         #f)
+   (freestyle4         #f)
+   ))
 
+(display-outline-color-map
+ '((background         #f)
+   (pin                "#bebebe")
+   (net-endpoint       "#00cd00")
+   (graphic            "#00cd00")
+   (net                "#0000cd")
+   (attribute          "#cdcd00")
+   (logic-bubble       "#00cdcd")
+   (grid               #f)
+   (detached-attribute "#cd0000")
+   (text               "#00cd00")
+   (bus                "#00cd00")
+   (select             "#ffa500")
+   (bounding-box       "#ffa500")
+   (zoom-box           "#00ffff")
+   (stroke             "#e5e5e5")
+   (lock               "#a9a9a9")
+   (output-background  #f)
+   (junction           "#cdcd00")
+   (freestyle1         #f)
+   (freestyle2         #f)
+   (freestyle3         #f)
+   (freestyle4         #f)
+   ))
 
-
-; background-color index display_color outline_color print_color 
-; Set the default background color.  
-; DO NOT change the value of the index (first number)
-;
-(background-color 0 "#000000" "#ffffff00" "#ffffff00")  	; dark background
-
-; pin-color index display_color outline_color print_color 
-; Set the color of any new pins (does not effect existing pins).
-; To change existing pins use the override-pin-color
-; DO NOT change the value of the index (first number)
-;
-(pin-color 1 "#ffffff" "#bebebe" "#ffffff") 	; dark background
-
-; net-endpoint-color index display_color outline_color print_color 
-; Set the default net endpoint color.  
-; DO NOT change the value of the index (first number)
-;
-(net-endpoint-color 2 "#ff0000" "#00cd00" "#ff0000")	; dark background	
-
-; graphic-color index display_color outline_color print_color 
-; Set the default graphics color.  All new Lines, Boxes, Circles, and Arcs 
-; are effected by this keyword.  Existing graphic objects are not effected 
-; by this keyword.  
-; DO NOT change the value of the index (first number)
-; 
-(graphic-color 3 "#00ff00" "#00cd00" "#00ff00")	; dark background
-
-; net-color index display_color outline_color print_color 
-; Set the color of any new nets (does not effect existing nets).
-; To change existing nets use the override-net-color 
-; DO NOT change the value of the index (first number)
-;
-(net-color 4 "#0000ff" "#0000cd" "#0000ff")		; dark background
-
-; attribute-color index display_color outline_color print_color 
-; Set the color of attributes.  Attributes are any object associated with 
-; another with the 'Attach Attribute' command.  
-; DO NOT change the value of the index (first number)
-;
-(attribute-color 5 "#ffff00" "#cdcd00" "#ffff00") ; dark background
-
-; logic-bubble-color index display_color outline_color print_color 
-; Set the color of logic bubbles / circles.  
-; DO NOT change the value of the index (first number)
-;
-; light background  
-(logic-bubble-color 6 "#00ffff" "#00cdcd" "#00ffff") ; dark background
-
-; grid-color index display_color outline_color print_color 
-; Set the default grid color.  
-; DO NOT change the value of the index (first number)
-;
-(grid-color 7 "#bebebe" "#ffffff00" "#ffffff00")		; dark background
-
-; detached-attribute-color index display_color outline_color print_color 
-; Set the color of detached attributes.  Detached attributes are just 
-; text items which were attributes at one time.  Detached attributes 
-; are created in conjunction with the 'Detach Attribute' command.  
-; DO NOT change the value of the index (first number)
-;
-(detached-attribute-color 8 "#ff0000" "#cd0000" "#ff0000")  ; dark background
-
-; text-color index display_color outline_color print_color 
-; Set the color of any new text (does not effect attributes, see below).
-; Existing graphic objects are not effected by this keyword.  
-; DO NOT change the value of the index (first number)
-;
-(text-color 9 "#00ff00" "#00cd00" "#00ff00")	    ; dark background
-
-; bus-color index display_color outline_color print_color 
-; Set the color of any new buses (does not effect existing buses).
-; To change existing buses use the override-bus-color 
-; DO NOT change the value of the index (first number)
-;
-(bus-color 10 "#00ff00" "#00cd00" "#00ff00")	    ; dark background
-
-; select-color index display_color outline_color print_color 
-; Set the default selection color.  This include the bounding box in window
-; selects and when objects are selected.  
-; DO NOT change the value of the index (first number)
-;
-(select-color 11 "#ffa500" "#ffa500" "#ffffff00")	    ; dark background
-
-; boundingbox-color index display_color outline_color print_color 
-; Set the default bounding box color.  The bounding box color is displayed 
-; whenever you request that actions (move/copy/place) use a bounding box 
-; instead of the default outline.  
-; DO NOT change the value of the index (first number)
-; 
-(boundingbox-color 12 "#ffa500" "#ffa500" "#ffffff00")   ; dark background
-
-; zoom-box-color index display_color outline_color print_color 
-; Set the default zoom box color.  The zoom box color is displayed 
-; whenever you use the zoom window / box option. 
-; DO NOT change the value of the index (first number)
-; 
-(zoom-box-color 13 "#00ffff" "#00ffff" "#ffffff00")	     ; dark background
-
-; stroke-color index display_color outline_color print_color 
-; Set the default stroke color which is displayed when you draw a stroke.
-; Basically this color specifies what the mouse droppings color
-; DO NOT change the value of the index (first number)
-;
-(stroke-color 14 "#e5e5e5" "#e5e5e5" "#ffffff00")	     ; dark background
-
-; lock-color index display_color outline_color print_color 
-; Set the default lock color which is used when you lock an object down
-; DO NOT change the value of the index (first number)
-;
-(lock-color 15 "#bebebe" "#a9a9a9" "#bebebe") ; dark background
-
-; output-color-background index display_color outline_color print_color 
-; Specifies the color of the background of the output (color postscript file)
-; 	- string is one of the valid colors
-; 	- Only used if ouput-color is "enabled" (see above)
-; DO NOT change the value of the index (first number)
-;
-(output-color-background 16 "#000000" "#ffffff00" "#000000")    ; dark background
-
-; override-net-color index display_color outline_color print_color 
-; Override the color of ALL nets
-; New net color will be applied to all nets in any file which is opened and
-; then saved. Comment out if you don't want to override the net color.
-; DO NOT change the value of the index (first number)
-; 
-;(override-net-color 4 "#0000ff" "#0000cd" "#0000ff")
-
-; override-pin-color index display_color outline_color print_color 
-; Override the color of ALL pins
-; New pin color will be applied to all pin in any file which is opened and
-; then saved.  Comment out if you don't want to override the pin color.
-; DO NOT change the value of the index (first number)
-;
-;(override-pin-color 1 "#ffffff" "#bebebe" "#ffffff")
-
-; override-bus-color index display_color outline_color print_color 
-; Override the color of ALL buses
-; New net color will be applied to all buses in any file which is opened and
-; then saved. Comment out if you don't want to override the bus color.
-; DO NOT change the value of the index (first number)
-; 
-;(override-bus-color 10 "#00ff00" "#00cd00" "#00ff00")
-
-; freestyle-color index display_color outline_color print_color 
-; Set a freestyle color which can be used in whatever context you want.
-; However, care should be taken with this facility since users might 
-; change this colors at will.
-;
-;(freestyle-color 17 "#abcdef" "#abcdef" "#abcdef")
-;(freestyle-color 18 "#abcdef" "#abcdef" "#abcdef")
-;(freestyle-color 19 "#abcdef" "#abcdef" "#abcdef")
-;(freestyle-color 20 "#abcdef" "#abcdef" "#abcdef")
-
-; junction-color index display_color outline_color print_color 
-; Set the default junction color.  
-; DO NOT change the value of the index (first number)
-;
-(junction-color 21 "#ffff00" "#cdcd00" "#ffff00")   ; dark background	
-
-;
-; End of color related keywords
-;
-
+(print-color-map
+ '((background         #f)
+   (pin                "#ffffff")
+   (net-endpoint       "#ff0000")
+   (graphic            "#00ff00")
+   (net                "#0000ff")
+   (attribute          "#ffff00")
+   (logic-bubble       "#00ffff")
+   (grid               #f)
+   (detached-attribute "#ff0000")
+   (text               "#00ff00")
+   (bus                "#00ff00")
+   (select             #f)
+   (bounding-box       #f)
+   (zoom-box           #f)
+   (stroke             #f)
+   (lock               #f)
+   (output-background  "#000000")
+   (junction           "#ffff00")
+   (freestyle1         #f)
+   (freestyle2         #f)
+   (freestyle3         #f)
+   (freestyle4         #f)
+   ))

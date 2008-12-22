@@ -1,6 +1,6 @@
 
 scmdatadir = @GEDADATADIR@/scheme
-dist_scmdata_DATA = geda.scm
+dist_scmdata_DATA = geda.scm color-map.scm
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

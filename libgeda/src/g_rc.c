@@ -1060,3 +1060,18 @@ SCM g_rc_always_promote_attributes(SCM attrlist)
 
   return SCM_BOOL_T;
 }
+
+extern COLOR print_colors[MAX_COLORS];
+
+SCM g_rc_print_color_map (SCM scm_map)
+{
+  if (scm_map == SCM_UNDEFINED) {
+    return s_color_map_to_scm (print_colors);
+  }
+
+  SCM_ASSERT (scm_is_true (scm_list_p (scm_map)),
+              scm_map, SCM_ARG1, "print-color-map");
+
+  s_color_map_from_scm (print_colors, scm_map, "print-color-map");
+  return SCM_BOOL_T;
+}

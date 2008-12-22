@@ -357,6 +357,8 @@ gboolean s_color_rgba_decode (const gchar *rgba,
 gchar *s_color_rgba_encode (guint8 r, guint8 g, guint8 b, guint8 a);
 int s_color_request(int color_index, char *color_string, char *outline_color_string, char *ps_color_string);
 void s_color_destroy_all(void);
+SCM s_color_map_to_scm (const COLOR *map);
+void s_color_map_from_scm (COLOR *map, SCM lst, const char *scheme_proc_name);
 
 /* s_conn.c */
 CONN *s_conn_return_new(OBJECT *other_object, int type, int x, int y, int whichone, int other_whichone);
