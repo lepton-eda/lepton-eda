@@ -31,43 +31,23 @@
 #include <dmalloc.h>
 #endif
 
-extern COLOR display_colors[MAX_COLORS];
-extern COLOR display_outline_colors[MAX_COLORS];
+COLOR display_colors[MAX_COLORS];
+COLOR display_outline_colors[MAX_COLORS];
 
 static GdkColor* gdk_colors[MAX_COLORS];
 static GdkColor* gdk_outline_colors[MAX_COLORS];
 
-static void x_color_allocate_all(void);
-
 /*! \brief Initializes the color system for the application.
  *  \par Function Documentation
- *  This function initializes the default \b black and \b white color.
  *
- *  It also allocates the colormap.
+ *  Initialises the color maps to defaults.
  */
 void
 x_color_init (void)
 {
-  gdk_color_parse ("black", &black);
-  if (!gdk_colormap_alloc_color (colormap,
-                                 &black,
-                                 FALSE,
-                                 TRUE)) {
-    fprintf (stderr, _("Could not allocate the color %s!\n"), _("black"));
-    exit (-1);
-  }
-
-  gdk_color_parse ("white", &white);
-  if (!gdk_colormap_alloc_color (colormap,
-                                 &white,
-                                 FALSE,
-                                 TRUE)) {
-    fprintf (stderr, _("Could not allocate the color %s!\n"), _("white"));
-    exit (-1);
-  }
-
-  x_color_allocate_all ();
-
+  /* Initialise default color maps */
+  s_color_map_defaults (display_colors);
+  s_color_map_defaults (display_outline_colors);
 }
 
 /*! \brief Frees memory used by the color system.
@@ -89,11 +69,29 @@ x_color_free (void)
  *  \par Function Documentation
  *
  */
-static void x_color_allocate_all(void)
+void x_color_allocate (void)
 {
   int error;
   int i;		
   COLOR c;
+
+  gdk_color_parse ("black", &black);
+  if (!gdk_colormap_alloc_color (colormap,
+                                 &black,
+                                 FALSE,
+                                 TRUE)) {
+    fprintf (stderr, _("Could not allocate the color %s!\n"), _("black"));
+    exit (-1);
+  }
+
+  gdk_color_parse ("white", &white);
+  if (!gdk_colormap_alloc_color (colormap,
+                                 &white,
+                                 FALSE,
+                                 TRUE)) {
+    fprintf (stderr, _("Could not allocate the color %s!\n"), _("white"));
+    exit (-1);
+  }
 
   for (i = 0; i < MAX_COLORS; i++) {
 

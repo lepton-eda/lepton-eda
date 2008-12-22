@@ -32,30 +32,76 @@
 #endif
 
 COLOR print_colors[MAX_COLORS];
-COLOR display_colors[MAX_COLORS]; /* FIXME move into gschem */
-COLOR display_outline_colors[MAX_COLORS]; /* FIXME move into gschem */
 
-/*! \brief Initialise the color maps to B&W
+#define NOCOLOR {0xff, 0xff, 0xff, 0xff, FALSE}
+#define WHITE   {0xff, 0xff, 0xff, 0xff, TRUE}
+#define GRAY    {0x88, 0x88, 0x88, 0xff, TRUE}
+#define BLACK   {0x00, 0x00, 0x00, 0xff, TRUE}
+#define ENDMAP  {0x00, 0x00, 0x00, 0x00, FALSE}
+
+static COLOR default_colors[] = {
+  WHITE,           /* background         */
+  BLACK,           /* pin                */
+  BLACK,           /* net-endpoint       */
+  BLACK,           /* graphic            */
+  BLACK,           /* net                */
+  BLACK,           /* attribute          */
+  BLACK,           /* logic-bubble       */
+  BLACK,           /* grid               */
+  BLACK,           /* detached-attribute */
+  BLACK,           /* text               */
+  BLACK,           /* bus                */
+  GRAY,            /* select             */
+  GRAY,            /* bounding-box       */
+  GRAY,            /* zoom-box           */
+  GRAY,            /* stroke             */
+  BLACK,           /* lock               */
+  NOCOLOR,         /* output-background  */
+  BLACK,           /* junction           */
+  NOCOLOR,         /* freestyle1         */
+  NOCOLOR,         /* freestyle2         */
+  NOCOLOR,         /* freestyle3         */
+  NOCOLOR,         /* freestyle4         */
+  ENDMAP
+};
+
+/*! \brief Initialises the color subsystem
  *  \par Function Description
- *  Initialises the print & display color maps to display black
- *  features on a white background, with all colors disabled.
- *
- *  \todo This should set a sensible default set of colors to be
- *  enabled.
+ *  At the moment, just initialises the print color map.
  */
-void s_color_init(void)
+void
+s_color_init(void)
+{
+  s_color_map_defaults (print_colors);
+}
+
+/*! \brief Initialise a color map to B&W
+ *  \par Function Description
+ *  Initialises a color map to a simple default: black features on a
+ *  white background, with "special" colors as gray.
+ *
+ *  \warning \a map must be have length of at least #MAX_COLORS.
+ *
+ *  \param map Color map to initialise.
+ */
+void
+s_color_map_defaults (COLOR *map)
 {
   int i;
-  COLOR white = {0xff, 0xff, 0xff, 0xff, FALSE};
-  COLOR black = {0x00, 0x00, 0x00, 0xff, FALSE};
-
-  print_colors[0] = white;
-  display_colors[0] = white;
-  display_outline_colors[0] = white;
-  for (i = 1; i < MAX_COLORS; i++) {
-    print_colors[i] = black;
-    display_colors[i] = black;
-    display_outline_colors[i] = black;
+  gboolean reached_end = FALSE;
+  COLOR c;
+  for (i = 0; i < MAX_COLORS; i++) {
+    if (reached_end) {
+      map[i].enabled = FALSE;
+      continue;
+    }
+    c = default_colors[i];
+    if (c.a == 0) { /* Check for end of default map */
+      reached_end = TRUE;
+      i--;
+      continue;
+    }
+    map[i] = c;
   }
 }
 

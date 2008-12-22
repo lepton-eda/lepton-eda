@@ -721,6 +721,7 @@ void x_basic_warp_cursor(GtkWidget *widget, gint x, gint y);
 /* x_color.c */
 void x_color_init (void);
 void x_color_free (void);
+void x_color_allocate (void);
 GdkColor *x_get_color(int color);
 GdkColor *x_get_darkcolor(int color);
 gchar *x_color_get_name(int index);

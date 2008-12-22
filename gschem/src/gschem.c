@@ -220,6 +220,9 @@ void main_prog(void *closure, int argc, char *argv[])
   /* register guile (scheme) functions */
   g_register_funcs();
 
+  /* initialise color map (need to do this before reading rc files */
+  x_color_init ();
+
   o_undo_init(); 
 
   geda_data = getenv("GEDADATA");
@@ -265,7 +268,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
   /* At end, complete set up of window. */
   colormap = gdk_colormap_get_system ();
-  x_color_init();
+  x_color_allocate();
   x_window_setup (w_current);
 
 #ifdef HAS_LIBSTROKE
