@@ -995,7 +995,7 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
   }
 
   /* Update bounding box */
-  o_text_recalc( toplevel, new_node );
+  new_node->w_bounds_valid = FALSE;
 
   g_free(name);
   g_free(value);
@@ -1338,7 +1338,7 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
     text->displayed_height = 0;
   }
 
-  o_text_recalc( toplevel, o_current );
+  o_current->w_bounds_valid = FALSE;
 
   g_free(name);
   g_free(value);
@@ -1362,7 +1362,7 @@ void o_text_translate_world(TOPLEVEL *toplevel,
   o_glist_translate_world (toplevel, dx, dy, o_current->text->prim_objs);
 
   /* Update bounding box */
-  o_text_recalc( toplevel, o_current );
+  o_current->w_bounds_valid = FALSE;
 }
 
 /*! \brief create a copy of a text object
