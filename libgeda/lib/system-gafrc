@@ -110,5 +110,6 @@
 ; Comment out the first line and comment in the second line for a
 ; black background. The dark background is the original look.
 ;
-(load (build-path geda-rc-path "print-colormap-darkbg")) ; dark background
-;(load (build-path geda-rc-path "print-colormap-lightbg")) ; light background
+(load (build-path geda-rc-path "print-colormap-lightbg")) ; light background
+;(load (build-path geda-rc-path "print-colormap-darkbg")) ; dark background
+
