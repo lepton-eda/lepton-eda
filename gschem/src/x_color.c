@@ -160,11 +160,12 @@ void x_color_allocate (void)
  */
 GdkColor *x_get_color(int color)
 {
-  if (gdk_colors[color]) {
-    return(gdk_colors[color]);
-  } else {
-    fprintf(stderr, _("Tried to get an invalid color: %d\n"), color);
+  if ((color < 0) || (color >= MAX_COLORS)
+      || (gdk_colors[color] == NULL)) {
+    g_warning (_("Tried to get an invalid color: %d\n"), color);
     return(&white);
+  } else {
+    return(gdk_colors[color]);
   }
 }
 
@@ -176,13 +177,13 @@ GdkColor *x_get_color(int color)
  */
 GdkColor *x_get_darkcolor(int color)
 {
-  if (gdk_outline_colors[color] != NULL) {
-    return(gdk_outline_colors[color]);
-  } else {
-    g_warning (_("Tried to get an invalid outline color: %d\n"), color);
+  if ((color < 0) || (color >= MAX_COLORS)
+      || (gdk_outline_colors[color] == NULL)) {
+    g_warning (_("Tried to get an invalid color: %d\n"), color);
     return(&white);
+  } else {
+    return(gdk_outline_colors[color]);
   }
-
 }
 
 /*! \todo Finish function documentation!!!
