@@ -1,0 +1,40 @@
+;                                                         -*-Scheme-*-
+;
+; Dark background color map for printing
+;
+
+;  ;'s are comments
+;  Keywords are case sensitive (Guile feature)
+;  Colors are not case sensitive
+;
+
+; Colors may be specified in "#RRGGBB" or "#RRGGBBAA" format. If the alpha
+; value is not specified, full opacity is assumed.
+;
+; If a color is #f (not a string; Scheme 'false'), then objects of
+; that color will never be drawn.
+
+(print-color-map
+ '((background         #f)
+   (pin                "#ffffff")
+   (net-endpoint       "#ff0000")
+   (graphic            "#00ff00")
+   (net                "#0000ff")
+   (attribute          "#ffff00")
+   (logic-bubble       "#00ffff")
+   (grid               #f)
+   (detached-attribute "#ff0000")
+   (text               "#00ff00")
+   (bus                "#00ff00")
+   (select             #f)
+   (bounding-box       #f)
+   (zoom-box           #f)
+   (stroke             #f)
+   (lock               #f)
+   (output-background  "#000000")
+   (junction           "#ffff00")
+   (freestyle1         #f)
+   (freestyle2         #f)
+   (freestyle3         #f)
+   (freestyle4         #f)
+   ))

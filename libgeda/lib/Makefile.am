@@ -1,6 +1,6 @@
 
 rcdatadir = @GEDARCDIR@
-dist_rcdata_DATA = system-gafrc
+dist_rcdata_DATA = system-gafrc print-colormap-lightbg print-colormap-darkbg
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

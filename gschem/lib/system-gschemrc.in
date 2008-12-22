@@ -29,8 +29,8 @@
 ; Comment out the first line and comment in the second line for a
 ; dark (black) background.  The dark background is the original look. 
 ; 
-(load (build-path geda-rc-path "gschem-darkbg")) ; dark background
-;(load (build-path geda-rc-path "gschem-lightbg")) ; light background
+(load (build-path geda-rc-path "gschem-colormap-darkbg")) ; dark background
+;(load (build-path geda-rc-path "gschem-colormap-lightbg")) ; light background
 
 ;
 ; End of color section

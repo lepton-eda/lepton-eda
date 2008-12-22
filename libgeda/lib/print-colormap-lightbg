@@ -1,0 +1,41 @@
+;                                                         -*-Scheme-*-
+;
+; Light background color map for gschem
+;
+
+;  ;'s are comments
+;  Keywords are case sensitive (guile feature)
+;  Colors are not case sensitive
+;
+
+; Colors may be specified in "#RRGGBB" or "#RRGGBBAA" format. If the alpha
+; value is not specified, full opacity is assumed.
+;
+; If a color is #f (not a string; Scheme 'false'), then objects of
+; that color will never be drawn.
+
+
+(print-color-map
+ '((background         "#ffffff")
+   (pin                "#000000")
+   (net-endpoint       "#ff0000")
+   (graphic            "#008b00")
+   (net                "#0000ff")
+   (attribute          "#000000")
+   (logic-bubble       "#008b8b")
+   (grid               #f)
+   (detached-attribute "#ff0000")
+   (text               "#008b00")
+   (bus                "#00ee00")
+   (select             #f)
+   (bounding-box       #f)
+   (zoom-box           #f)
+   (stroke             #f)
+   (lock               "#666666")
+   (output-background  "#ffffff")
+   (junction           "#a020f0")
+   (freestyle1         #f)
+   (freestyle2         #f)
+   (freestyle3         #f)
+   (freestyle4         #f)
+   ))

@@ -1,8 +1,8 @@
 
 rcdatadir = @GEDARCDIR@
-rcdata_DATA = system-gschemrc gschem-gtkrc gschem-lightbg gschem-darkbg
+rcdata_DATA = system-gschemrc gschem-gtkrc gschem-colormap-lightbg gschem-colormap-darkbg
 
-EXTRA_DIST = system-gschemrc.in gschem-gtkrc gschem-lightbg gschem-darkbg
+EXTRA_DIST = system-gschemrc.in gschem-gtkrc gschem-colormap-lightbg gschem-colormap-darkbg
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
