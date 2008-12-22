@@ -136,35 +136,35 @@ s_color_rgba_decode (const gchar *rgba,
   gint len, i;
   gchar c;
 
+  /* Default to solid white */
+  *r = 0xff; *g = 0xff; *b = 0xff; *a = 0xff;
+
   /* Check that the string is a valid length and starts with a '#' */
   len = strnlen (rgba, 10);
-  if ((len != 9 && len != 7) || rgba[0] != '#') goto rgba_decode_err;
+  if ((len != 9 && len != 7) || rgba[0] != '#')
+    return FALSE;
 
   /* Check we only have [0-9a-fA-F] */
   for (i = 1; i < len; i++) {
     c = rgba[i];
     if ((c < '0' || c > '9')
         && (c < 'a' || c > 'f')
-        && (c < 'A' || c > 'F')) {
-      goto rgba_decode_err;
-    }
+        && (c < 'A' || c > 'F'))
+      return FALSE;
   }
 
   /* Use sscanf to extract values */
   c = sscanf (rgba + 1, "%2hhx%2hhx%2hhx", r, g, b);
-  if (c != 3) goto rgba_decode_err;
+  if (c != 3)
+    return FALSE;
 
   if (len == 9) {
     c = sscanf (rgba + 7, "%2hhx", a);
-  if (c != 1) goto rgba_decode_err;
+    if (c != 1)
+      return FALSE;
   }
 
   return TRUE;
-
- rgba_decode_err:
-  /* Default to solid white */
-  *r = 0xff; *g = 0xff; *b = 0xff; *a = 0xff;
-  return FALSE;
 }
 
 /* \brief Encode a hexadecimal RGB or RGBA color code.
