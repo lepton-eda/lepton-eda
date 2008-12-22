@@ -30,7 +30,7 @@
    (bounding-box       #f)
    (zoom-box           #f)
    (stroke             #f)
-   (lock               #f)
+   (lock               "#bebebe")
    (output-background  "#000000")
    (junction           "#ffff00")
    (freestyle1         #f)
