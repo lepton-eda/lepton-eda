@@ -724,6 +724,8 @@ void x_color_free (void);
 void x_color_allocate (void);
 GdkColor *x_get_color(int color);
 GdkColor *x_get_darkcolor(int color);
+COLOR *x_color_lookup(int color);
+COLOR *x_color_lookup_dark(int color);
 gchar *x_color_get_name(int index);
 gboolean x_color_display_enabled (int index);
 /* x_dialog.c */

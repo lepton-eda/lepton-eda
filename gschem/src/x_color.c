@@ -191,6 +191,40 @@ GdkColor *x_get_darkcolor(int color)
  *  \par Function Documentation
  *
  */
+COLOR *x_color_lookup (int color)
+{
+  if (color < 0 || color >= MAX_COLORS ||
+      !display_colors[color].enabled) {
+    fprintf(stderr, _("Tried to get an invalid color: %d\n"), color);
+    return &display_colors[DEFAULT_COLOR];
+  } else {
+    return &display_colors[color];
+  }
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Documentation
+ *
+ *  \todo this has to change... to the right code
+ */
+COLOR *x_color_lookup_dark (int color)
+{
+  if (color < 0 || color >= MAX_COLORS ||
+      !display_outline_colors[color].enabled) {
+    g_warning (_("Tried to get an invalid outline color: %d\n"), color);
+    return &display_outline_colors[DEFAULT_COLOR];
+  } else {
+    return &display_outline_colors[color];
+  }
+
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Documentation
+ *
+ */
 gchar *x_color_get_name(int index)
 {
   COLOR c;
