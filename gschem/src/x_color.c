@@ -89,69 +89,62 @@ static void x_color_allocate_all(void)
 {
   int error;
   int i;		
+  guint8 r, g, b, a;
 
   for (i = 0; i < MAX_COLORS; i++) {
     if (!colors[i].enabled) continue;
     if (colors[i].color_name) {
+      error = s_color_rgba_decode (colors[i].color_name,
+                                   &r, &g, &b, &a);
+      if (!error) {
+        g_warning (_("Could not decode color: \"%s\". "
+                     "Defaulting to white.\n"),
+                   colors[i].color_name);
+      }
+
       colors[i].gdk_color = (GdkColor *)
         g_malloc(sizeof(GdkColor));
 
-      error = gdk_color_parse(colors[i].color_name, 
-                              colors[i].gdk_color);
-
-      if (error == FALSE) {
-        fprintf(stderr, 
-                _("Could not find the color %s!\n"), 
-                colors[i].color_name);
-        fprintf(stderr, 
-                _("Defaulting color to white\n"));
-
-        error = gdk_color_parse("white", 
-                                colors[i].gdk_color);
-
-        if (error == FALSE) {
-          fprintf(stderr, 
-                  _("Ack! Cannot allocate white!\n"));
-          exit(-1);
-        }
-
-      }
-
+      /* Interpolate 8-bpp colours into 16-bpp GDK color
+       * space. N.b. ignore transparency because GDK doesn't
+       * understand it. */
+      colors[i].gdk_color->red = r + (r<<8);
+      colors[i].gdk_color->green = g + (g<<8);
+      colors[i].gdk_color->blue = b + (b<<8);
 
       error = gdk_color_alloc(colormap, colors[i].gdk_color);
 
       if (error == FALSE) {
-        fprintf(stderr, 
-                _("Could not allocate the color %s!\n"), 
-                colors[i].color_name);
-        exit(-1);
+        g_error (_("Could not allocate display color %i!\n"), i);
       }
 
     }
+  }
 
+  for (i = 0; i < MAX_COLORS; i++) {
     if (colors[i].outline_color_name) {
+      error = s_color_rgba_decode (colors[i].outline_color_name,
+                                   &r, &g, &b, &a);
+      if (!error) {
+        g_warning (_("Could not decode color: \"%s\". "
+                     "Defaulting to white.\n"),
+                   colors[i].outline_color_name);
+      }
+
       colors[i].gdk_outline_color = (GdkColor *)
         g_malloc(sizeof(GdkColor));
 
-      error = gdk_color_parse(colors[i].outline_color_name, 
-                              colors[i].gdk_outline_color);
+      /* Interpolate 8-bpp colours into 16-bpp GDK color
+       * space. N.b. ignore transparency because GDK doesn't
+       * understand it. */
+      colors[i].gdk_outline_color->red = r + (r<<8);
+      colors[i].gdk_outline_color->green = g + (g<<8);
+      colors[i].gdk_outline_color->blue = b + (b<<8);
+
+      error = gdk_color_alloc(colormap, colors[i].gdk_outline_color);
 
       if (error == FALSE) {
-        fprintf(stderr, 
-                _("Could not find the color %s!\n"), 
-                colors[i].outline_color_name);
-        fprintf(stderr, 
-                _("Defaulting color to white\n"));
-
-        error = gdk_color_parse("white", 
-                                colors[i].gdk_outline_color);
-
-        if (error == FALSE) {
-          fprintf(stderr, 
-                  _("Ack! Cannot allocate white!\n"));
-          exit(-1);
-        }
-
+        g_error (_("Could not allocate color %i!\n"), i);
       }
 
       /* Make sure the outline color is correct for non-black backgrounds */
@@ -169,10 +162,7 @@ static void x_color_allocate_all(void)
                               colors[i].gdk_outline_color);
 
       if (error == FALSE) {
-        fprintf(stderr, 
-                _("Could not allocate the color %s!\n"), 
-                colors[i].outline_color_name);
-        exit(-1);
+        g_error (_("Could not allocate outline color %i!\n"), i);
       }
 
     }
@@ -186,7 +176,7 @@ static void x_color_allocate_all(void)
  */
 GdkColor *x_get_color(int color)
 {
-  if (colors[color].color_name) {
+  if (colors[color].gdk_color) {
     return(colors[color].gdk_color);
   } else {
     fprintf(stderr, _("Tried to get an invalid color: %d\n"), color);
@@ -202,10 +192,10 @@ GdkColor *x_get_color(int color)
  */
 GdkColor *x_get_darkcolor(int color)
 {
-  if (colors[color].outline_color_name) {
+  if (colors[color].gdk_outline_color) {
     return(colors[color].gdk_outline_color);
   } else {
-    fprintf(stderr, _("Tried to get an invalid color: %d\n"), color);
+    g_warning (_("Tried to get an invalid outline color: %d\n"), color);
     return(&white);
   }
 

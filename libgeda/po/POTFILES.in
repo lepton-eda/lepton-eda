@@ -23,6 +23,7 @@ src/o_picture.c
 src/o_pin_basic.c
 src/o_text_basic.c
 src/s_clib.c
+src/s_color.c
 src/s_hierarchy.c
 src/s_page.c
 src/s_slib.c

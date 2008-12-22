@@ -352,7 +352,10 @@ gchar *s_clib_symbol_get_data_by_name (const gchar *name);
 GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel);
 
 /* s_color.c */
-int s_color_request(int color_index, char *color_name, char *outline_color_name, char *ps_color_string);
+gboolean s_color_rgba_decode (const gchar *rgba,
+                              guchar *r, guchar *g, guchar *b, guchar *a);
+gchar *s_color_rgba_encode (guint8 r, guint8 g, guint8 b, guint8 a);
+int s_color_request(int color_index, char *color_string, char *outline_color_string, char *ps_color_string);
 void s_color_destroy_all(void);
 
 /* s_conn.c */
