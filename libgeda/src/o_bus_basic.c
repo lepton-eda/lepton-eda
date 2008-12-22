@@ -302,9 +302,7 @@ void o_bus_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 
   cross = offset;
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, o_current->color);
-  }
+  f_print_set_color(toplevel, fp, o_current->color);
 
   bus_width = 2;
   if (toplevel->bus_style == THICK) {

@@ -965,8 +965,7 @@ void o_path_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
     outl_func = o_path_print_solid;
   }
 
-  if (toplevel->print_color)
-    f_print_set_color (fp, o_current->color);
+  f_print_set_color (toplevel, fp, o_current->color);
 
   f_print_set_line_width (fp, line_width);
 

@@ -732,9 +732,7 @@ void o_arc_print_solid(TOPLEVEL *toplevel, FILE *fp,
 		       int arc_width, int length, int space,
 		       int origin_x, int origin_y)
 {
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
 
   /* inverting angle2 if < 0 and changing angle1 accordingly */
   if (angle2 < 0) {
@@ -787,10 +785,7 @@ void o_arc_print_dotted(TOPLEVEL *toplevel, FILE *fp,
 {
   int da, d;
 
-
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
 
   /*! \note
    *  Depending on the radius of the arc, the <B>space</B> parameter is
@@ -874,9 +869,7 @@ void o_arc_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 {
   int da, db, a1, a2, d;
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
   
   /*! \note
    *  Depending on the radius of the arc, the <B>space</B> (resp. <B>length</B>)
@@ -983,9 +976,7 @@ void o_arc_print_center(TOPLEVEL *toplevel, FILE *fp,
 {
   int da, db, a1, a2, d;
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
 
   /*! \note
    *  Depending on the radius of the arc, the <B>space</B> (resp. <B>length</B>)
@@ -1115,9 +1106,7 @@ void o_arc_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 {
   int da, db, a1, a2, d;
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
 
   /*! \note
    *  Depending on the radius of the arc, the <B>space</B> (resp. <B>length</B>)

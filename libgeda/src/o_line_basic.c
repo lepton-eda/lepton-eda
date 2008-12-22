@@ -635,9 +635,7 @@ void o_line_print_solid(TOPLEVEL *toplevel, FILE *fp,
 			int line_width, int length, int space,
 			int origin_x, int origin_y)
 {
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
   
   fprintf(fp,"%d %d %d %d %d line\n",
 	  x1,y1,x2,y2, line_width);
@@ -682,9 +680,7 @@ void o_line_print_dotted(TOPLEVEL *toplevel, FILE *fp,
   double dx1, dy1;
   double xa, ya;
   
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
   
   /* The dotted line command takes an array of dots so print out the
    * beginnings of the array 
@@ -765,9 +761,7 @@ void o_line_print_dashed(TOPLEVEL *toplevel, FILE *fp,
   double dx1, dy1, dx2, dy2;
   double xa, ya, xb, yb;
   
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
   
   /* the dashed line function takes an array of start-finish pairs
    * output the beginnings of the array now
@@ -870,9 +864,7 @@ void o_line_print_center(TOPLEVEL *toplevel, FILE *fp,
   double dx1, dy1, dx2, dy2;
   double xa, ya, xb, yb;
   
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
   
   fprintf(fp, "[");
 
@@ -1004,9 +996,7 @@ void o_line_print_phantom(TOPLEVEL *toplevel, FILE *fp,
   double dx1, dy1, dx2, dy2;
   double xa, ya, xb, yb;
   
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
   
   fprintf(fp,"[");
 

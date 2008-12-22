@@ -965,9 +965,7 @@ void o_circle_print_filled(TOPLEVEL *toplevel, FILE *fp,
 			   int angle2, int pitch2,
 			   int origin_x, int origin_y)
 {
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
 
   fprintf(fp, "%d %d %d dot\n",
 	  x-origin_x, y-origin_y,
@@ -1075,9 +1073,7 @@ void o_circle_print_hatch(TOPLEVEL *toplevel, FILE *fp,
   g_return_if_fail(toplevel != NULL);
   g_return_if_fail(fp != NULL);
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
 
   /* Avoid printing line widths too small */
   if (fill_width <= 1) fill_width = 2;

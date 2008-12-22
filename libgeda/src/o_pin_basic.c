@@ -298,9 +298,7 @@ void o_pin_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
     return;
   }
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, o_current->color);
-  }
+  f_print_set_color(toplevel, fp, o_current->color);
 
   x1 = o_current->line->x[0] - origin_x;
   y1 = o_current->line->y[0] - origin_y;

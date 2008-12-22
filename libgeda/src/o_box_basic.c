@@ -820,9 +820,7 @@ o_box_print_solid(TOPLEVEL *toplevel, FILE *fp,
 {
   int x1, y1;
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
 
   x1 = x;
   y1 = y - height; /* move the origin to 0, 0*/
@@ -885,9 +883,7 @@ void o_box_print_dotted(TOPLEVEL *toplevel, FILE *fp,
 {
   int x1, y1;
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
 
   x1 = x;
   y1 = y - height; /* move the origin to 0, 0*/
@@ -949,9 +945,7 @@ void o_box_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 {
   int x1, y1;
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
 
   
   x1 = x;
@@ -1014,9 +1008,7 @@ void o_box_print_center(TOPLEVEL *toplevel, FILE *fp,
 {
   int x1, y1;
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
 
   x1 = x;
   y1 = y - height; /* move the origin to 0, 0*/
@@ -1078,9 +1070,7 @@ void o_box_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 {
   int x1, y1;
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
 
   x1 = x;
   y1 = y - height; /* move the origin to 0, 0*/
@@ -1150,9 +1140,7 @@ void o_box_print_filled(TOPLEVEL *toplevel, FILE *fp,
 {
   int x1, y1;
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
 
   x1 = x;
   y1 = y-height; /* move the origin to 0, 0*/
@@ -1264,9 +1252,7 @@ void o_box_print_hatch(TOPLEVEL *toplevel, FILE *fp,
   g_return_if_fail(toplevel != NULL);
   g_return_if_fail(fp != NULL);
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, color);
-  }
+  f_print_set_color(toplevel, fp, color);
 
   /* Avoid printing line widths too small */
   if (fill_width <= 1) fill_width = 2;

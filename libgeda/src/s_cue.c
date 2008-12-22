@@ -46,9 +46,7 @@ void s_cue_postscript_fillbox(TOPLEVEL * toplevel, FILE * fp, int x,
   offset = CUE_BOX_SIZE;
   offset2 = offset*2;
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, toplevel->net_endpoint_color);
-  }
+  f_print_set_color(toplevel, fp, toplevel->net_endpoint_color);
 
   fprintf(fp, "%d %d %d %d fbox\n", 
 	   offset2, offset2, x-offset, y-offset);
@@ -70,9 +68,7 @@ void s_cue_postscript_fillcircle(TOPLEVEL * toplevel, FILE * fp,
     offset2 = CUE_CIRCLE_SMALL_SIZE;
   }
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, toplevel->junction_color);
-  }
+  f_print_set_color(toplevel, fp, toplevel->junction_color);
 
   fprintf(fp, "newpath\n");
   fprintf(fp, "%d %d\n", x, y);

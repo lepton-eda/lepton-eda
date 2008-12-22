@@ -288,9 +288,7 @@ void o_net_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 
   cross = offset;
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, o_current->color);
-  }
+  f_print_set_color(toplevel, fp, o_current->color);
 
   net_width = 2;
   if (toplevel->net_style == THICK) {

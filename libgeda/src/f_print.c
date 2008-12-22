@@ -60,12 +60,15 @@ void f_print_set_line_width(FILE *fp, int width)
  *  This function converts the color number passed to a string
  *  and prints it to the postscript document provided.
  *
+ *  \param [in]     toplevel The current #TOPLEVEL structure.
  *  \param [in]     fp     The postscript document to print the color to.
  *  \param [in]     color  Integer color to convert and print.
  */
-void f_print_set_color(FILE *fp, int color) 
+void f_print_set_color(TOPLEVEL *toplevel, FILE *fp, int color) 
 {
   gchar *string;
+
+  if (!toplevel->print_color || (toplevel->last_ps_color == color)) return;
 
   string = s_color_ps_string(color);
 
@@ -76,6 +79,8 @@ void f_print_set_color(FILE *fp, int color)
   }
 
   g_free (string);
+
+  toplevel->last_ps_color = color;
 }
 
 /*! \brief Prints the header to a postscript document.
@@ -586,7 +591,7 @@ int f_print_stream(TOPLEVEL *toplevel, FILE *fp)
   /* Now the output is defined in terms of mils */
   /* Draw a box with the background colour covering the whole page */
   if (toplevel->print_color) {
-    f_print_set_color(fp, toplevel->print_color_background);
+    f_print_set_color(toplevel, fp, toplevel->print_color_background);
     fprintf(fp,"%d %d 0 0 fbox\n",
 	    toplevel->paper_height,
 	    toplevel->paper_width);

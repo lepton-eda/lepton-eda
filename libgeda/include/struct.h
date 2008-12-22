@@ -459,6 +459,8 @@ struct st_toplevel {
 
   int override_color;			/* used in doing selections */
 
+  int last_ps_color;                    /* used in print code */
+
   int DONT_REDRAW;			/* misc flags */
   int ADDING_SEL;
 

@@ -1535,9 +1535,7 @@ void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
     return;
   }
 
-  if (toplevel->print_color) {
-    f_print_set_color(fp, o_current->color);
-  }
+  f_print_set_color(toplevel, fp, o_current->color);
 
 
   if (o_attrib_get_name_value(o_current->text->string, &name, &value)) {
