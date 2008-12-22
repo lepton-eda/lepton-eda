@@ -19,7 +19,7 @@
    (pin                "#000000")
    (net-endpoint       "#ff0000")
    (graphic            "#008b00")
-   (net                "#00008b")
+   (net                "#0000ee")
    (attribute          "#000000")
    (logic-bubble       "#008b8b")
    (grid               "#7f7f7f")
