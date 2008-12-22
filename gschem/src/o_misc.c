@@ -703,7 +703,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   /* and unselect it */
   o_selection_remove( toplevel->page_current->selection_list, o_current);
 
-  new_complex = o_complex_new (toplevel, OBJ_COMPLEX, WHITE,
+  new_complex = o_complex_new (toplevel, OBJ_COMPLEX, DEFAULT_COLOR,
                                o_current->complex->x,
                                o_current->complex->y,
                                o_current->complex->angle,

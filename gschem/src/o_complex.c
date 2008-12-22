@@ -107,8 +107,8 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
 
     toplevel->ADDING_SEL = 1; /* reuse this flag, rename later hack */
     sym = s_clib_get_symbol_by_name (sym_name);
-    new_object = o_complex_new (toplevel, OBJ_COMPLEX, WHITE, 0, 0, 0, 0,
-                                sym, sym_name, 1);
+    new_object = o_complex_new (toplevel, OBJ_COMPLEX, DEFAULT_COLOR,
+                                0, 0, 0, 0, sym, sym_name, 1);
 
     toplevel->page_current->place_list =
       g_list_append (toplevel->page_current->place_list, new_object);

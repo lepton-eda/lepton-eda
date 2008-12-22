@@ -664,12 +664,16 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
 
   if (toplevel.image_color == FALSE)
   {
+    /* FIXME this assumes -- not necessarily correctly! -- that the
+     * color at index 0 in the color map is black, and the color at
+     * index 1 is white! */
+
     /* We are going to be doing black&white (grayscale) output, so change the */
     /* color of all objects to a nice and dark color, say black */
-    toplevel.override_color = BLACK;  
+    toplevel.override_color = 0;
 
     /* also reset the background to white */
-    toplevel.background_color = WHITE;
+    toplevel.background_color = 1;
   }
 
   origin_x = origin_y = 0;

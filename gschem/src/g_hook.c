@@ -704,7 +704,7 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 
   clib = s_clib_get_symbol_by_name (comp_name);
 
-  new_obj = o_complex_new (toplevel, 'C', WHITE, x, y, angle, mirror,
+  new_obj = o_complex_new (toplevel, 'C', DEFAULT_COLOR, x, y, angle, mirror,
                            clib, comp_name, selectable);
   s_page_append (page, new_obj);
   o_complex_promote_attribs (toplevel, new_obj, &page->object_list);

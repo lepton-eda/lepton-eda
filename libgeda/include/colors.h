@@ -51,16 +51,6 @@
 #define OVERRIDE_PIN_COLOR              1
 #define OVERRIDE_BUS_COLOR              10
 
-#define BLACK           0
-#define WHITE           1
-#define RED             2
-#define GREEN           3
-#define BLUE            4
-#define YELLOW          5
-#define CYAN            6
-#define GREY            7
-
-/* Internal colors, please don't use these in schematics */
-#define GREY90          8
+#define DEFAULT_COLOR                   3
 
 #endif

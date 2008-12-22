@@ -1128,8 +1128,8 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
 
   if (color < 0 || color > MAX_COLORS) {
     s_log_message(_("Found an invalid color [ %s ]\n"), first_line);
-    s_log_message(_("Setting color to WHITE\n"));
-    color = WHITE;
+    s_log_message(_("Setting color to default color\n"));
+    color = DEFAULT_COLOR;
   }
 
   g_assert(num_lines && num_lines > 0);

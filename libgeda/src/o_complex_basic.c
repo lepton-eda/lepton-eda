@@ -705,7 +705,7 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
   if (strncmp(basename, "EMBEDDED", 8) == 0) {
     
     new_obj = o_complex_new_embedded(toplevel, type,
-                                     WHITE, x1, y1, angle, mirror,
+                                     DEFAULT_COLOR, x1, y1, angle, mirror,
                                      basename + 8,
                                      selectable);
   } else {
@@ -713,7 +713,7 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
     const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
 
     new_obj = o_complex_new(toplevel, type,
-                                WHITE, 
+                                DEFAULT_COLOR,
                                 x1, y1, 
                                 angle, mirror, clib,
                                 basename, selectable);

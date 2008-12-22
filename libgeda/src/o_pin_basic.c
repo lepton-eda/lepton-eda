@@ -173,8 +173,8 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, char buf[],
 
   if (color < 0 || color > MAX_COLORS) {
     s_log_message (_("Found an invalid color [ %s ]\n"), buf);
-    s_log_message (_("Setting color to WHITE\n"));
-    color = WHITE;
+    s_log_message (_("Setting color to default color\n"));
+    color = DEFAULT_COLOR;
   }
 
   if (toplevel->override_pin_color != -1) {
