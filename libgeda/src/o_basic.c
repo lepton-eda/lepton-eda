@@ -134,6 +134,10 @@ void o_recalc_single_object(TOPLEVEL *toplevel, OBJECT *o_current)
       case(OBJ_ARC):
         o_arc_recalc(toplevel, o_current);
         break;
+
+      case(OBJ_TEXT):
+        o_text_recalc(toplevel, o_current);
+        break;
     }
   }
 }
