@@ -744,6 +744,7 @@ void x_color_free (void);
 GdkColor *x_get_color(int color);
 GdkColor *x_get_darkcolor(int color);
 gchar *x_color_get_name(int index);
+gboolean x_color_display_enabled (int index);
 /* x_dialog.c */
 int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size);
 void select_all_text_in_textview(GtkTextView *textview);

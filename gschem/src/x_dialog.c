@@ -2352,10 +2352,8 @@ create_color_menu (GSCHEM_TOPLEVEL *w_current)
 
   /* Populate the list */
   for (i = 0; i < MAX_COLORS; i++) {
-    /* Skip 'invalid' colors. FIXME this is ugly. */
-    gchar *buf = x_color_get_name(i);
-    if (buf == NULL) continue;
-    g_free (buf);
+    /* Skip 'invalid' colors. */
+    if (!x_color_display_enabled(i)) continue;
 
     str = index2functionstring (i);
     gtk_list_store_append (store, &iter);

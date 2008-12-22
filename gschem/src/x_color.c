@@ -91,6 +91,7 @@ static void x_color_allocate_all(void)
   int i;		
 
   for (i = 0; i < MAX_COLORS; i++) {
+    if (!colors[i].enabled) continue;
     if (colors[i].color_name) {
       colors[i].gdk_color = (GdkColor *)
         g_malloc(sizeof(GdkColor));
@@ -221,11 +222,18 @@ gchar *x_color_get_name(int index)
     return(NULL);
   }
 
-  /* only if these two variables are not null is the color settable */
-  if (colors[index].color_name && colors[index].outline_color_name) {
+  if (!colors[index].enabled) return NULL;
+
+  if (colors[index].color_name) {
     return (g_strdup(colors[index].color_name));
   }
 
   /* didn't find a color, but there still might be more */
   return(NULL);
+}
+
+gboolean
+x_color_display_enabled (int index)
+{
+  return (colors[index].gdk_color != NULL);
 }

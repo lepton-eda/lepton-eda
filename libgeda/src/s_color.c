@@ -48,6 +48,7 @@ void s_color_init(void)
     colors[i].ps_color_string = NULL; 
     colors[i].gdk_color = NULL;
     colors[i].gdk_outline_color = NULL;
+    colors[i].enabled = FALSE;
   }
 
 }
@@ -91,6 +92,7 @@ int s_color_request(int color_index, char *color_name,
   } else {
     colors[color_index].ps_color_string = NULL;
   }
+  colors[color_index].enabled = TRUE;
   return(0);
 }
 
