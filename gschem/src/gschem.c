@@ -96,7 +96,6 @@ void gschem_quit(void)
 #ifdef HAS_LIBSTROKE
   x_stroke_free ();
 #endif /* HAS_LIBSTROKE */
-  s_color_destroy_all();
   o_undo_cleanup();
   /* s_stroke_free(); no longer needed */
 
