@@ -36,12 +36,6 @@
       (load font-def-file)
       (display "Failed to load default font.\n")))
 
-;; The directory containing any extra scheme files to load
-(define geda-confd-path (build-path geda-data-path "gafrc.d"))
-
-;; Execute any scheme files found in the geda-confd-path directory.
-(load-scheme-dir geda-confd-path)
-
 ; Set the name of the postscript prolog file that will be 
 ; pasted into the postscript output after the DSC comments, but
 ; before the main script.
@@ -113,3 +107,11 @@
 (load (build-path geda-rc-path "print-colormap-lightbg")) ; light background
 ;(load (build-path geda-rc-path "print-colormap-darkbg")) ; dark background
 
+
+;;;; Process configuration script directory
+
+;; The directory containing any extra scheme files to load
+(define geda-confd-path (build-path geda-data-path "gafrc.d"))
+
+;; Execute any scheme files found in the geda-confd-path directory.
+(load-scheme-dir geda-confd-path)
