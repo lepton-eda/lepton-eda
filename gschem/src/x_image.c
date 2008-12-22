@@ -629,6 +629,7 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
   int size_x, size_y, s_right, s_left, s_top,s_bottom;
   GSCHEM_TOPLEVEL new_w_current;
   TOPLEVEL toplevel;
+  GdkRectangle rect;
 
   /* Do a copy of the w_current struct and work with it */
   memcpy(&new_w_current, w_current, sizeof(GSCHEM_TOPLEVEL));
@@ -655,7 +656,7 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
   size_y = new_w_current.image_height;
 
   new_w_current.window = gdk_pixmap_new (w_current->window, size_x, size_y, -1);
-  new_w_current.drawable = gdk_pixmap_new (w_current->window, size_x, size_y, -1);
+  new_w_current.drawable = new_w_current.window;
   new_w_current.grid = 0;
   new_w_current.text_origin_marker = FALSE;
 
@@ -708,7 +709,6 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
   
   /* If there are no objects, can't use zoom_extents */
   if (object_found) {
-    o_invalidate_all (&toplevel);
     get_object_glist_bounds (&toplevel,
                              toplevel.page_current->object_list,
                              &origin_x, &origin_y,
@@ -717,7 +717,12 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
 #endif
   /* ------------------  End optional code ------------------------ */
   
-  o_invalidate_all (&new_w_current);
+  rect.x = origin_x;
+  rect.y = origin_y;
+  rect.width = right - origin_x;
+  rect.height = bottom - origin_y;
+
+  o_redraw_rects (&new_w_current, &rect, 1);
 
   /* Get the pixbuf */
   pixbuf = gdk_pixbuf_get_from_drawable (NULL,new_w_current.drawable, NULL,
@@ -732,9 +737,6 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
 
   if (new_w_current.window != NULL) {
     g_object_unref(new_w_current.window);
-  }
-  if (new_w_current.drawable != NULL) {
-    g_object_unref (new_w_current.drawable);
   }
 
   return(pixbuf);
