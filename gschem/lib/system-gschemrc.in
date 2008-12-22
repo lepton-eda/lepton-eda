@@ -25,12 +25,13 @@
 (color-map-make-friendly display-color-map)
 (color-map-make-friendly display-outline-color-map)
 
-; Load up a color scheme has a light (almost white) background
+; Load up a color scheme which has a dark (black) background.
 ; Comment out the first line and comment in the second line for a
-; dark (black) background.  The dark background is the original look. 
-; 
-(load (build-path geda-rc-path "gschem-colormap-lightbg")) ; light background
-;(load (build-path geda-rc-path "gschem-colormap-darkbg")) ; dark background
+; light (almost white) background.  The dark background is the
+; original look.
+;
+(load (build-path geda-rc-path "gschem-colormap-darkbg")) ; dark background
+;(load (build-path geda-rc-path "gschem-colormap-lightbg")) ; light background
 
 ;
 ; End of color section
