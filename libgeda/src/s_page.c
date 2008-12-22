@@ -601,10 +601,14 @@ GList *s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page,
     OBJECT *object = iter->data;
 
     for (i = 0; i < n_rects; i++) {
-      if (object->w_right  >= rects[i].lower_x &&
-          object->w_left   <= rects[i].upper_x &&
-          object->w_top    <= rects[i].upper_y &&
-          object->w_bottom >= rects[i].lower_y) {
+      int left, top, right, bottom;
+
+      if (world_get_single_object_bounds (toplevel, object,
+                                          &left, &top, &right, &bottom) &&
+          right  >= rects[i].lower_x &&
+          left   <= rects[i].upper_x &&
+          top    <= rects[i].upper_y &&
+          bottom >= rects[i].lower_y) {
         list = g_list_prepend (list, object);
         break;
       }
