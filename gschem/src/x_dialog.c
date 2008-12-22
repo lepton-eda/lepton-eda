@@ -801,6 +801,7 @@ static void line_type_dialog_ok(GtkWidget *w, gpointer data)
   }
 
   toplevel->page_current->CHANGED = 1;
+  o_undo_savestate(w_current, UNDO_ALL);
 }
 
 /*! \brief response function for the line type and width dialog
@@ -1183,6 +1184,7 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
     }
   }
   toplevel->page_current->CHANGED = 1;
+  o_undo_savestate(w_current, UNDO_ALL);
 }
 
 /*! \brief response function for the filltype dialog
