@@ -175,14 +175,14 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
     } else {
       /* here you need to do the add the slot
          attribute since it doesn't exist */
-      new_obj = o_text_new(toplevel, OBJ_TEXT, w_current->text_color,
+      new_obj = o_text_new(toplevel, OBJ_TEXT, toplevel->attribute_color,
                            object->complex->x, object->complex->y,
                            LOWER_LEFT, 0, /* zero is angle */
                            string, 10, INVISIBLE, SHOW_NAME_VALUE);
       s_page_append (toplevel->page_current, new_obj);
 
       /* manually attach attribute */
-      o_attrib_attach (toplevel, new_obj, object);
+      o_attrib_attach (toplevel, new_obj, object, FALSE);
 
       slot_text_object = new_obj;
     }

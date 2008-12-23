@@ -3013,8 +3013,9 @@ DEFINE_I_CALLBACK(attributes_attach)
   /* skip over first object */
   s_current = g_list_next(s_current);
   while (s_current != NULL) {
-    if (s_current->data) {
-      o_attrib_attach(w_current->toplevel, s_current->data, first_object);
+    OBJECT *object = s_current->data;
+    if (object != NULL) {
+      o_attrib_attach (w_current->toplevel, object, first_object, TRUE);
       w_current->toplevel->page_current->CHANGED=1;
     }
     s_current = g_list_next(s_current);

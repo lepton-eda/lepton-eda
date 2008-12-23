@@ -343,7 +343,7 @@ void o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object,
   promoted = o_complex_get_promotable (toplevel, object, TRUE);
 
   /* Attach promoted attributes to the original complex object */
-  o_attrib_attach_list (toplevel, promoted, object);
+  o_attrib_attach_list (toplevel, promoted, object, TRUE);
 
   /* Insert the promoted attributes before the tail of the object list */
   last = g_list_last (*obj_list);

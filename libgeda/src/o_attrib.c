@@ -99,21 +99,8 @@ OBJECT *o_attrib_search(GList *list, OBJECT *item)
  */
 void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item)
 {
-  /* Show that that item is an attribute */
-  item->color = toplevel->attribute_color;
-
-  if (item->type == OBJ_TEXT) {
-    o_complex_set_color(item->text->prim_objs,
-                        item->color);
-  } else if (item->type == OBJ_COMPLEX ||
-             item->type == OBJ_PLACEHOLDER) {
-    o_complex_set_color(item->complex->prim_objs,
-                        item->color);
-  }
-
   /* Add link from item to attrib listing */
   item->attached_to = object;
-
   object->attribs = g_list_append (object->attribs, item);
 }
 
@@ -162,8 +149,10 @@ void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current)
  *  \param [in]  toplevel     The TOPLEVEL object.
  *  \param [in]  attrib       The attribute to be added.
  *  \param [out] object       The object where you want to add item as an attribute.
+ *  \param [in]  set_color    Whether or not we should set the new attribute's color.
  */
-void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object)
+void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object,
+                      int set_color)
 {
   g_return_if_fail (attrib != NULL);
   g_return_if_fail (object != NULL);
@@ -187,12 +176,14 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object)
 
   o_attrib_add (toplevel, object, attrib);
 
-  attrib->color = toplevel->attribute_color;
-  o_complex_set_color(attrib->text->prim_objs, attrib->color);
-
-  if (attrib->saved_color != -1) {
-    o_complex_set_saved_color_only (attrib->text->prim_objs, attrib->color);
-    attrib->saved_color = attrib->color;
+  if (set_color) {
+    if (attrib->saved_color == -1) {
+      attrib->color = toplevel->attribute_color;
+      o_complex_set_color (attrib->text->prim_objs, attrib->color);
+    } else {
+      attrib->saved_color = toplevel->attribute_color;
+      o_complex_set_saved_color_only (attrib->text->prim_objs, attrib->saved_color);
+    }
   }
 
   /* can't do this here since just selecting something */
@@ -208,14 +199,15 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object)
  *  \param [in]  toplevel   The TOPLEVEL object.
  *  \param [in]  attr_list  The list of attributes to be added.
  *  \param [out] object     The object where you want to add item as an attribute.
+ *  \param [in]  set_color    Whether or not we should set the new attribute's color.
  */
 void o_attrib_attach_list (TOPLEVEL *toplevel,
-                           GList *attr_list, OBJECT *object)
+                           GList *attr_list, OBJECT *object, int set_color)
 {
   GList *iter;
 
   for (iter = attr_list; iter != NULL; iter = g_list_next (iter))
-    o_attrib_attach (toplevel, iter->data, object);
+    o_attrib_attach (toplevel, iter->data, object, set_color);
 }
 
 
@@ -308,7 +300,6 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
   char *line = NULL;
   char objtype;
   int ATTACH=FALSE;
-  int saved_color = -1;
 
   object_list = g_list_reverse (list);
 
@@ -373,7 +364,6 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
         line = g_strdup (line);
         new_obj = o_text_read (toplevel, line, tb, release_ver, fileformat_ver);
         g_free (line);
-        saved_color = new_obj->color;
         object_list = g_list_prepend (object_list, new_obj);
         ATTACH=TRUE;
 
@@ -387,17 +377,7 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
     }
 
     if (ATTACH) {
-      o_attrib_attach (toplevel, new_obj, object_to_get_attribs);
-      /* check color to set it to the right value */
-      if (new_obj->color != saved_color) {
-        new_obj->color = saved_color;
-
-        if (new_obj->type == OBJ_TEXT) {
-          o_complex_set_color (new_obj->text->prim_objs, new_obj->color);
-        } else {
-          printf("Tried to set the color on a complex in libgeda/src/o_read_attribs\n");
-        }
-      }
+      o_attrib_attach (toplevel, new_obj, object_to_get_attribs, FALSE);
       ATTACH=FALSE;
     } else {
       fprintf(stderr, "Tried to attach a non-text item as an attribute\n");

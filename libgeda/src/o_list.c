@@ -206,7 +206,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
       if (src_object->attached_to != NULL &&
           src_object->attached_to->copied_to != NULL) {
         o_attrib_attach(toplevel, dst_object,
-                        src_object->attached_to->copied_to);
+                        src_object->attached_to->copied_to, FALSE);
       }
     }
 
