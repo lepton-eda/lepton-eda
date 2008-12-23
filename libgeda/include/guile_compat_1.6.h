@@ -39,6 +39,10 @@
 #define scm_car(x) SCM_CAR(x)
 #endif
 
+#if !HAVE_DECL_SCM_CDR
+#define scm_cdr(x) SCM_CDR(x)
+#endif
+
 #if !HAVE_DECL_SCM_CADDR
 #define scm_caddr(x) SCM_CADDR(x)
 #endif

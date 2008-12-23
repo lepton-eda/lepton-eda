@@ -240,7 +240,7 @@ s_color_map_from_scm (COLOR *map, SCM lst, const char *scheme_proc_name)
   SCM curr = lst;
   SCM wrong_type_arg_sym = scm_from_locale_symbol ("wrong-type-arg");
   SCM proc_name = scm_from_locale_string (scheme_proc_name);
-  while (!scm_is_null (curr)) {
+  while (curr != SCM_EOL) {
     int i;
     char *rgba;
     SCM s;
