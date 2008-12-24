@@ -2398,6 +2398,7 @@ void color_edit_dialog_apply(GtkWidget *w, GSCHEM_TOPLEVEL *w_current)
       case(OBJ_NET):
       case(OBJ_BUS):
       case(OBJ_PIN):
+      case(OBJ_PATH):
       case(OBJ_ARC):
         object->saved_color = w_current->edit_color;
         w_current->toplevel->page_current->CHANGED = 1;
