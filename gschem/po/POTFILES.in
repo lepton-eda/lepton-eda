@@ -8,6 +8,7 @@ src/g_rc.c
 src/g_register.c
 src/globals.c
 src/gschem.c
+src/gschem_cairo.c
 src/i_basic.c
 src/i_callbacks.c
 src/i_vars.c

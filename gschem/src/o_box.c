@@ -36,11 +36,6 @@
 #define GET_BOX_TOP(w)				\
         max((w)->first_wy, (w)->second_wy)
 
-typedef void (*DRAW_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
-                           GdkCapStyle cap, gint filled,
-                           gint x, gint y, gint width, gint height,
-                           gint line_width, gint length, gint space );
-
 typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
                            GSCHEM_TOPLEVEL *w_current, BOX *box,
                            gint fill_width, gint angle1, gint pitch1,
@@ -66,9 +61,7 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
   int line_width, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
-  GdkCapStyle box_end;
   GdkColor *color;
-  DRAW_FUNC draw_func = NULL;
   FILL_FUNC fill_func;
 
   if (o_current->box == NULL) {
@@ -129,68 +122,13 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     line_width = 1;
   }
 
-  switch(o_current->line_end) {
-    case END_NONE:   box_end = GDK_CAP_BUTT;       break;
-    case END_SQUARE: box_end = GDK_CAP_PROJECTING; break;
-    case END_ROUND:  box_end = GDK_CAP_ROUND;      break;
-    default: fprintf(stderr, _("Unknown end for box (%d)\n"), o_current->line_end);
-    box_end = GDK_CAP_BUTT;
-    break;
-  }
-	
   length = SCREENabs( toplevel, o_current->line_length );
   space = SCREENabs( toplevel, o_current->line_space );
-	
-  switch(o_current->line_type) {
-    case TYPE_SOLID:
-      length = -1;
-      space = -1;
-      draw_func = o_box_draw_solid;
-      break;
-
-    case TYPE_DOTTED:
-      length = -1; /* ..._draw_dotted only space is used */
-      draw_func = o_box_draw_dotted;
-      break;
-
-    case TYPE_DASHED:
-      draw_func = o_box_draw_dashed;
-      break;
-
-    case TYPE_CENTER:
-      draw_func = o_box_draw_center;
-      break;
-
-    case TYPE_PHANTOM:
-      draw_func = o_box_draw_phantom;
-      break;
-
-    case TYPE_ERASE:
-      break;
-			
-    default:
-      length = -1;
-      space = -1;
-      line_width = 0; /* just to be careful */
-      draw_func = o_box_draw_solid;
-      fprintf(stderr, _("Unknown type for box !\n"));
-      break;
-  }
-
-  if((length == 0) || (space == 0))
-  draw_func = o_box_draw_solid;
 
   WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->upper_y,
                  &s_upper_x, &s_upper_y );
   WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->lower_y,
                  &s_lower_x, &s_lower_y );
-	
-  (*draw_func) (w_current->drawable, w_current->gc, color, box_end,
-                FALSE,
-                s_upper_x, s_upper_y,
-                abs(s_lower_x - s_upper_x),
-                abs(s_lower_y - s_upper_y),
-                line_width, length, space);
 
   /*
    * The values needed for the fill operation are taken from the
@@ -268,249 +206,19 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                 w_current, o_current->box,
                 fill_width, angle1, pitch1, angle2, pitch2);
 
+  gdk_cairo_set_source_color (w_current->cr, color);
+  gschem_cairo_box (w_current->cr, line_width,
+                    s_lower_x, s_lower_y, s_upper_x, s_upper_y);
+
+  if (o_current->fill_type == FILLING_FILL)
+    cairo_fill_preserve (w_current->cr);
+
+  gschem_cairo_stroke (w_current->cr, o_current->line_type,
+                       o_current->line_end, line_width, length, space);
+
   if (o_current->selected && w_current->draw_grips) {
     o_box_draw_grips (w_current, o_current);
   }
-}
-
-/*! \brief Draw a box with a solid line type.
- *  \par Function Description
- *  This function draws a box with a solid line type. The length and space
- *  parameters are not used by this function.
- *
- *  The function uses the functions previously defined in #o_line.c. It is
- *  called four times for each of the side of the box. Therefore note that
- *  the cap parameter is significant here even if it is a box (i.e. a closed
- *  shape).
- *
- *  The box is defined in the same way as it is in GDK : one point and
- *  the width and height of the box.
- *
- *  The unit of <B>x</B>, <B>y</B>, <B>width</B>, <B>height</B>,
- *  <B>line_width</B>, <B>length</B> and <B>space</B> is pixel.
- *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box line color.
- *  \param [in] cap         Box line end cap type (unused).
- *  \param [in] filled      (unused)
- *  \param [in] x           Box upper x.
- *  \param [in] y           Box upper y.
- *  \param [in] width       Box width.
- *  \param [in] height      Box height
- *  \param [in] line_width  Width of line to draw box.
- *  \param [in] length      (unused)
- *  \param [in] space       (unused)
- */
-void o_box_draw_solid(GdkDrawable *w, GdkGC *gc, GdkColor *color,
-		      GdkCapStyle cap, gint filled, gint x, gint y, gint width,
-		      gint height, gint line_width, gint length, gint space)
-{
-  o_line_draw_solid(w, gc, color, cap,
-                    x, y, x + width, y, line_width, length, space);
-  o_line_draw_solid(w, gc, color, cap,
-                    x + width, y, x + width, y + height, line_width, 
-                    length, space);
-  o_line_draw_solid(w, gc, color, cap,
-                    x + width, y + height, x, y + height, line_width, 
-                    length, space);
-  o_line_draw_solid(w, gc, color, cap,
-                    x, y + height, x, y, line_width, length, space);
-}
-
-/*! \brief Draw a box with a dotted line type.
- *  \par Function Description
- *  This function draws a box with a dotted line type. The parameter
- *  <B>space</B> represents the distance between two of the dots. The
- *  parameter <B>length</B> is unused. The diameter of the dots is given by
- *  the width of the line given by <B>width</B>.
- *
- *  The function uses the functions previously defined in #o_line.c. It is
- *  called four times for each of the side of the box.
- *
- *  The box is defined in the same way as it is in GDK : one point and
- *  the width and height of the box.
- *
- *  The unit of <B>x</B>, <B>y</B>, <B>width</B>, <B>height</B>,
- *  <B>line_width</B>, <B>length</B> and <B>space</B> is pixel.
- *
- *  A negative or null value for <B>space</B> leads to an endless loop
- *  in #o_line_draw_dotted().
- *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box line color.
- *  \param [in] cap         Box line end cap type (unused).
- *  \param [in] filled      (unused)
- *  \param [in] x           Box upper x.
- *  \param [in] y           Box upper y.
- *  \param [in] width       Box width.
- *  \param [in] height      Box height
- *  \param [in] line_width  Width of line to draw box.
- *  \param [in] length      (unused)
- *  \param [in] space       Space in pixels between dots.
- */
-
-void o_box_draw_dotted(GdkDrawable *w, GdkGC *gc, GdkColor *color,
-		       GdkCapStyle cap, gint filled, gint x, gint y,
-		       gint width, gint height, gint line_width,
-		       gint length, gint space)
-{
-  o_line_draw_dotted(w, gc, color, cap,
-                     x, y, x + width, y, line_width, length, space);
-  o_line_draw_dotted(w, gc, color, cap,
-                     x + width, y, x + width, y + height, 
-                     line_width, length, space);
-  o_line_draw_dotted(w, gc, color, cap,
-                     x + width, y + height, x, y+height, 
-                     line_width, length, space);
-  o_line_draw_dotted(w, gc, color, cap,
-                     x, y + height, x, y, line_width, length, space);
-	
-}
-
-/*! \brief Draw a box with a dashed line type.
- *  \par Function Description
- *  This function draws a box with a dashed line type. The parameter
- *  <B>space</B> represents the distance between two of the dash. The
- *  parameter <B>length</B> represents the length of a dash.
- *
- *  The function uses the functions previously defined in #o_line.c. It is
- *  called four times for each of the side of the box.
- *
- *  The box is defined in the same way as it is in GDK : one point and
- *  the width and height of the box.
- *
- *  The unit of <B>x</B>, <B>y</B>, <B>width</B>, <B>height</B>,
- *  <B>line_width</B>, <B>length</B> and <B>space</B> is pixel.
- *
- *  A negative or null value for length or space leads to an endless
- *  loop in #o_line_draw_dashed().
- *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box line color.
- *  \param [in] cap         Box line end cap type (unused).
- *  \param [in] filled      (unused)
- *  \param [in] x           Box upper x.
- *  \param [in] y           Box upper y.
- *  \param [in] width       Box width.
- *  \param [in] height      Box height
- *  \param [in] line_width  Width of line to draw box.
- *  \param [in] length      Length of dash in pixels.
- *  \param [in] space       Space between dashes in pixels.
- */
-void o_box_draw_dashed(GdkDrawable *w, GdkGC *gc, GdkColor *color,
-		       GdkCapStyle cap, gint filled, gint x, gint y,
-		       gint width, gint height, gint line_width,
-		       gint length, gint space)
-{
-  o_line_draw_dashed(w, gc, color, cap,
-                     x, y, x + width, y, line_width, length, space);
-  o_line_draw_dashed(w, gc, color, cap,
-                     x + width, y, x + width, y + height, 
-                     line_width, length, space);
-  o_line_draw_dashed(w, gc, color, cap,
-                     x + width, y + height, x, y+height, 
-                     line_width, length, space);
-  o_line_draw_dashed(w, gc, color, cap,
-                     x, y + height, x, y, line_width, length, space);
-}
-
-/*! \brief Draw a box with a centered line type.
- *  \par Function Description
- *  This function draws a box with a centered line type. The parameter
- *  <B>space</B> represents the distance between a dot and the dash. The
- *  parameter <B>length</B> represents the length of a dash.
- *
- *  The function uses the functions previously defined in #o_line.c. It is
- *  called four times for each of the side of the box.
- *
- *  The box is defined in the same way as it is in GDK : one point and the
- *  width and height of the box.
- *
- *  The unit of <B>x</B>, <B>y</B>, <B>width</B>, <B>height</B>,
- *  <B>line_width</B>, <B>length</B> and <B>space</B> is pixel.
- *
- *  A negative or null value for length or space leads to an endless
- *  loop in #o_line_draw_center().
- *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box line color.
- *  \param [in] cap         Box line end cap type (unused).
- *  \param [in] filled      (unused)
- *  \param [in] x           Box upper x.
- *  \param [in] y           Box upper y.
- *  \param [in] width       Box width.
- *  \param [in] height      Box height
- *  \param [in] line_width  Width of line to draw box.
- *  \param [in] length      (unused)?
- *  \param [in] space       (unused)?
- */
-void o_box_draw_center(GdkDrawable *w, GdkGC *gc, GdkColor *color,
-		       GdkCapStyle cap, gint filled, gint x, gint y,
-		       gint width, gint height, gint line_width,
-		       gint length, gint space)
-{
-  o_line_draw_center(w, gc, color, cap,
-                     x, y, x + width, y, line_width, length, space);
-  o_line_draw_center(w, gc, color, cap,
-                     x + width, y, x + width, y + height, 
-                     line_width, length, space);
-  o_line_draw_center(w, gc, color, cap,
-                     x + width, y + height, x, y+height, 
-                     line_width, length, space);
-  o_line_draw_center(w, gc, color, cap,
-                     x, y + height, x, y, line_width, length, space);
-}
-
-/*! \brief Draw a box with a phantom line type.
- *  \par Function Description
- *  This function draws a box with a phantom line type. The parameter
- *  <B>space</B> represents the distance between a dot and a dash.
- *  The parameter <B>length</B> represents the length of a dash.
- *
- *  The function uses the functions previously defined in #o_line.c.
- *  It is called four times for each of the side of the box.
- *
- *  The box is defined in the same way as it is in GDK : one point and the
- *  width and height of the box.
- *
- *  The unit of <B>x</B>, <B>y</B>, <B>width</B>, <B>height</B>,
- *  <B>line_width</B>, <B>length</B> and <B>space</B> is pixel.
- *
- *  A negative or null value for length or space leads to an endless loop
- *  in #o_line_draw_phantom().
- *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box line color.
- *  \param [in] cap         Box line end cap type (unused).
- *  \param [in] filled      (unused)
- *  \param [in] x           Box upper x.
- *  \param [in] y           Box upper y.
- *  \param [in] width       Box width.
- *  \param [in] height      Box height
- *  \param [in] line_width  Width of line to draw box.
- *  \param [in] length      (unused)?
- *  \param [in] space       (unused)?
- */
-void o_box_draw_phantom(GdkDrawable *w, GdkGC *gc, GdkColor *color,
-			GdkCapStyle cap, gint filled, gint x, gint y,
-			gint width, gint height, gint line_width,
-			gint length, gint space)
-{
-  o_line_draw_phantom(w, gc, color, cap,
-                      x, y, x + width, y, line_width, length, space);
-  o_line_draw_phantom(w, gc, color, cap,
-                      x + width, y, x + width, y+height, 
-                      line_width, length, space);
-  o_line_draw_phantom(w, gc, color, cap,
-                      x + width, y + height, x, y+height, 
-                      line_width, length, space);
-  o_line_draw_phantom(w, gc, color, cap,
-                      x, y + height, x, y, line_width, length, space);
 }
 
 /*! \brief Placeholder filling function.
@@ -575,19 +283,7 @@ void o_box_fill_fill (GdkDrawable *w, GdkGC *gc, GdkColor *color,
                       gint angle1, gint pitch1,
                       gint angle2, gint pitch2)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int s_lower_x, s_lower_y;
-  int s_upper_x, s_upper_y;
-
-  WORLDtoSCREEN (toplevel, box->lower_x, box->lower_y, &s_lower_x, &s_lower_y);
-  WORLDtoSCREEN (toplevel, box->upper_x, box->upper_y, &s_upper_x, &s_upper_y);
-
-  gdk_gc_set_foreground (gc, color);
-  gdk_gc_set_line_attributes (gc, 1, GDK_LINE_SOLID,
-                              GDK_CAP_BUTT, GDK_JOIN_MITER);
-
-  gdk_draw_rectangle (w, gc, TRUE, s_upper_x, s_upper_y,
-                      s_lower_x - s_upper_x, s_lower_y - s_upper_y);
+  /* NOP: We'll fill it when we do the stroking */
 }
 
 /*! \brief Fill inside of box with single line pattern.
@@ -629,8 +325,9 @@ void o_box_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
   int i;
   GArray *lines;
 
-  lines = g_array_new (FALSE, FALSE, sizeof (LINE));
+  gdk_cairo_set_source_color (w_current->cr, color);
 
+  lines = g_array_new (FALSE, FALSE, sizeof (LINE));
   m_hatch_box (box, angle1, pitch1, lines);
 
   for (i=0; i < lines->len; i++) {
@@ -639,8 +336,9 @@ void o_box_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
 
     WORLDtoSCREEN (w_current->toplevel, line->x[0], line->y[0], &x1, &y1);
     WORLDtoSCREEN (w_current->toplevel, line->x[1], line->y[1], &x2, &y2);
-    o_line_draw_solid (w, gc, color, GDK_CAP_BUTT,
-                       x1, y1, x2, y2, fill_width, -1, -1);
+    gschem_cairo_line (w_current->cr, END_NONE, fill_width, x1, y1, x2, y2);
+    gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE,
+                                        fill_width, -1, -1);
   }
 
   g_array_free (lines, TRUE);

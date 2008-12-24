@@ -61,6 +61,9 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
   /* nasty global variable */
   global_window_current = w_current;
 
+  if (w_current->cr != NULL) cairo_destroy( w_current->cr );
+  w_current->cr = gdk_cairo_create( widget->window );
+
   gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
   o_redraw_rects (w_current, rectangles, n_rectangles);
   g_free (rectangles);

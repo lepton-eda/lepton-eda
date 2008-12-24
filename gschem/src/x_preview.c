@@ -124,6 +124,9 @@ preview_callback_expose (GtkWidget *widget,
   GdkRectangle *rectangles;
   int n_rectangles;
 
+  if (preview_w_current->cr != NULL) cairo_destroy (preview_w_current->cr);
+  preview_w_current->cr = gdk_cairo_create (widget->window);
+
   gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
   o_redraw_rects (preview_w_current, rectangles, n_rectangles);
   g_free (rectangles);

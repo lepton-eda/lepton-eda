@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <math.h> /* For M_PI */
 
 #include "gschem.h"
 
@@ -84,10 +85,9 @@ void o_cue_redraw_all (GSCHEM_TOPLEVEL *w_current, GList *list, gboolean draw_se
 static void o_cue_set_color(GSCHEM_TOPLEVEL *w_current, int color)
 {
   if (w_current->toplevel->override_color != -1 ) {
-    gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(w_current->toplevel->override_color));
+    gdk_cairo_set_source_color(w_current->cr, x_get_color(w_current->toplevel->override_color));
   } else {
-    gdk_gc_set_foreground(w_current->gc, x_get_color(color));
+    gdk_cairo_set_source_color(w_current->cr, x_get_color(color));
   }
 }
 
@@ -162,20 +162,20 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
   WORLDtoSCREEN(toplevel, x, y, &screen_x, &screen_y);
   
   switch(type) {
-    
+
     case(CONN_ENDPOINT):
       if (object->type == OBJ_NET) { /* only nets have these cues */
         if (count < 1) { /* Didn't find anything connected there */
-	  if (toplevel->DONT_REDRAW == 0) {
-	    o_cue_set_color(w_current, toplevel->net_endpoint_color);
-	    gdk_draw_rectangle (w_current->drawable,
-                                w_current->gc, TRUE,
-                                screen_x - size,
-                                screen_y - size,
-                                x2size,
-                                x2size);
-	  }
-        
+          if (toplevel->DONT_REDRAW == 0) {
+            o_cue_set_color (w_current, toplevel->net_endpoint_color);
+            cairo_move_to (w_current->cr, screen_x - size, screen_y - size);
+            cairo_rel_line_to (w_current->cr, x2size + 1, 0);
+            cairo_rel_line_to (w_current->cr, 0, x2size + 1);
+            cairo_rel_line_to (w_current->cr, -x2size - 1, 0);
+            cairo_close_path (w_current->cr);
+            cairo_fill (w_current->cr);
+          }
+
         } else if (count >= 2) {
           /* draw circle */
 
@@ -185,63 +185,57 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
             size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE) / 2;
           }
           x2size = 2 * size;
-	  if (toplevel->DONT_REDRAW == 0) {
-	    o_cue_set_color(w_current, toplevel->junction_color);
-            gdk_draw_arc (w_current->drawable,
-                          w_current->gc, TRUE,
-                          screen_x - size,
-                          screen_y - size,
-                          x2size, x2size, 0, FULL_CIRCLE);
-	  }
+          if (toplevel->DONT_REDRAW == 0) {
+            o_cue_set_color(w_current, toplevel->junction_color);
+            cairo_arc (w_current->cr, screen_x + 0.5, screen_y + 0.5, size, 0, 2. * M_PI);
+            cairo_fill (w_current->cr);
+
+          }
         }
       } else if (object->type == OBJ_PIN) {
         /* Didn't find anything connected there */
         if (count < 1 && object->whichend == whichone) {
-                  
+
           otherone = !whichone;
 
           pinsize = SCREENabs(toplevel, 10);
           if (toplevel->pin_style == THICK ) {
-            gdk_gc_set_line_attributes(w_current->gc, pinsize,
-                                       GDK_LINE_SOLID,
-                                       GDK_CAP_NOT_LAST,
-                                       GDK_JOIN_MITER);
+            cairo_set_line_width (w_current->cr, pinsize);
+            cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_BUTT);
           }
 
-    /* No need to invalidate the PIN end CUE, as the
-     * whole pin region is already invalidated. */
           if (toplevel->DONT_REDRAW == 0) {
             o_cue_set_color(w_current, toplevel->net_endpoint_color);
             if (object->line->y[whichone] == object->line->y[otherone]) {
               /* horizontal line */
               if (object->line->x[whichone] <= object->line->x[otherone]) {
-                gdk_draw_line (w_current->drawable, w_current->gc,
-                               screen_x, screen_y, screen_x + size, screen_y);
+                gschem_cairo_line (w_current->cr, END_NONE, pinsize,
+                                   screen_x,        screen_y,
+                                   screen_x + size, screen_y);
               } else {
-                gdk_draw_line (w_current->drawable, w_current->gc,
-                               screen_x, screen_y, screen_x - size, screen_y);
+                gschem_cairo_line (w_current->cr, END_NONE, pinsize,
+                                   screen_x,         screen_y,
+                                   screen_x - size, screen_y);
               }
+              cairo_stroke (w_current->cr);
             } else if (object->line->x[0] == object->line->x[1]) {
               /* vertical line */
               if (object->line->y[whichone] <= object->line->y[otherone]) {
-                gdk_draw_line (w_current->drawable, w_current->gc,
-                               screen_x, screen_y, screen_x, screen_y - size);
+                gschem_cairo_line (w_current->cr, END_NONE, pinsize,
+                                   screen_x, screen_y,
+                                   screen_x, screen_y - size);
               } else {
-                gdk_draw_line (w_current->drawable, w_current->gc,
-                               screen_x, screen_y, screen_x, screen_y + size);
+                gschem_cairo_line (w_current->cr, END_NONE, pinsize,
+                                   screen_x, screen_y,
+                                   screen_x, screen_y + size);
               }
+              cairo_stroke (w_current->cr);
             } else {
               /* angled line */
               /* not supporting rendering of que for angled pin for now. hack */
             }
           }
 
-          if (toplevel->pin_style == THICK ) {
-            gdk_gc_set_line_attributes(w_current->gc, 0,
-                                       GDK_LINE_SOLID,
-                                       GDK_CAP_NOT_LAST,
-                                       GDK_JOIN_MITER);
-          }
         }
       }
       break;
@@ -258,11 +252,8 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
 
       if (toplevel->DONT_REDRAW == 0) {
 	o_cue_set_color(w_current, toplevel->junction_color);
-        gdk_draw_arc (w_current->drawable,
-                      w_current->gc, TRUE,
-                      screen_x - size,
-                      screen_y - size,
-                      x2size, x2size, 0, FULL_CIRCLE);
+        cairo_arc (w_current->cr, screen_x + 0.5, screen_y + 0.5, size, 0, 2. * M_PI);
+        cairo_fill (w_current->cr);
       }
       break;
 
@@ -287,11 +278,9 @@ void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   int size, x2size;
 
   if (toplevel->override_color != -1 ) {
-    gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(toplevel->override_color));
+    gdk_cairo_set_source_color(w_current->cr, x_get_color(w_current->toplevel->override_color));
   } else {
-    gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(toplevel->junction_color));
+    gdk_cairo_set_source_color(w_current->cr, x_get_color(w_current->toplevel->junction_color));
   }
   
   cl_current = object->conn_list;
@@ -319,11 +308,8 @@ void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
         x2size = size * 2;
 
         if (toplevel->DONT_REDRAW == 0) {
-          gdk_draw_arc (w_current->drawable,
-                        w_current->gc, TRUE,
-                        screen_x - size,
-                        screen_y - size,
-                        x2size, x2size, 0, FULL_CIRCLE);
+          cairo_arc (w_current->cr, screen_x + 0.5, screen_y + 0.5, size, 0, 2. * M_PI);
+          cairo_fill (w_current->cr);
         }
         break;
     }

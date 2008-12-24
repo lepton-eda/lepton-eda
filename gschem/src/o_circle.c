@@ -28,11 +28,6 @@
 #endif
 
 
-typedef void (*DRAW_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
-                           GdkCapStyle cap, gint x, gint y, gint radius,
-                           gint angle1, gint angle2,
-                           gint arc_width, gint length, gint space );
-
 typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
                            GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
                            gint fill_width, gint angle1, gint pitch1,
@@ -57,11 +52,9 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   int wleft, wright, wtop, wbottom; /* world bounds */
   int s_x, s_y;
   int radius;
-  int circle_width, length, space;
+  int line_width, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
-  GdkCapStyle circle_end;
   GdkColor *color;
-  DRAW_FUNC draw_func = NULL;
   FILL_FUNC fill_func;
 
   if (o_current->circle == NULL) {
@@ -112,71 +105,16 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    * to an endless loop in function called after. If such a case is encountered
    * the circle is drawn as a solid circle independently of its initial type.
    */
-  circle_width = SCREENabs( toplevel, o_current->line_width );
-  if(circle_width <= 0) {
-    circle_width = 1;
+  line_width = SCREENabs( toplevel, o_current->line_width );
+  if (line_width <= 0) {
+    line_width = 1;
   }
 
   length = SCREENabs( toplevel, o_current->line_length );
   space = SCREENabs( toplevel, o_current->line_space );
 
-  switch(o_current->line_end) {
-    case END_NONE:   circle_end = GDK_CAP_BUTT;       break;
-    case END_SQUARE: circle_end = GDK_CAP_PROJECTING; break;
-    case END_ROUND:  circle_end = GDK_CAP_ROUND;      break;
-    default: fprintf(stderr, _("Unknown end for circle\n"));
-      circle_end = GDK_CAP_BUTT;
-      break;
-  }
-
-  switch(o_current->line_type) {
-    case TYPE_SOLID:
-    length = -1;
-    space = -1;
-    draw_func = o_arc_draw_solid;
-    break;
-			
-    case TYPE_DOTTED:
-    length = -1; /* ..._draw_dotted only space used */
-    draw_func = o_arc_draw_dotted;
-    break;
-			
-    case TYPE_DASHED:
-    draw_func = o_arc_draw_dashed;
-    break;
-			
-    case TYPE_CENTER:
-    draw_func = o_arc_draw_center;
-    break;
-			
-    case TYPE_PHANTOM:
-    draw_func = o_arc_draw_phantom;
-    break;
-			
-    case TYPE_ERASE:
-    break;
-			
-    default:
-    length = -1;
-    space = -1;
-    circle_width = 0; /* just to be careful */
-    fprintf(stderr, _("Unknown type for circle!\n"));
-    draw_func = o_arc_draw_solid;			
-    break;
-  }
-
-  if((length == 0) || (space == 0))
-  draw_func = o_arc_draw_solid;
-
   WORLDtoSCREEN( toplevel, o_current->circle->center_x, o_current->circle->center_y,
                  &s_x, &s_y );
-	
-  (*draw_func) (w_current->drawable, w_current->gc, color,
-                circle_end,
-                s_x, s_y,
-                radius,
-                0, FULL_CIRCLE / 64,
-                circle_width, length, space);
 
   /*
    * The values needed for the fill operation are taken from the
@@ -249,9 +187,19 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     fill_func = o_circle_fill_fill;
   }
 
-  (*fill_func) (w_current->drawable, w_current->gc, color,
-                w_current, o_current->circle,
+  (*fill_func) (w_current->drawable, w_current->gc,
+                color, w_current, o_current->circle,
                 fill_width, angle1, pitch1, angle2, pitch2);
+
+  gdk_cairo_set_source_color (w_current->cr, color);
+  cairo_new_sub_path (w_current->cr);
+  cairo_arc (w_current->cr, s_x + 0.5, s_y + 0.5, radius, 0., 2 * M_PI);
+
+  if (o_current->fill_type == FILLING_FILL)
+    cairo_fill_preserve (w_current->cr);
+
+  gschem_cairo_stroke (w_current->cr, o_current->line_type,
+                       o_current->line_end, line_width, length, space);
 
 #if DEBUG
   printf("drawing circle\n");
@@ -327,19 +275,7 @@ void o_circle_fill_fill (GdkDrawable *w, GdkGC *gc, GdkColor *color,
                          gint angle1, gint pitch1,
                          gint angle2, gint pitch2)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int s_x, s_y;
-  int radius;
-
-  gdk_gc_set_foreground(gc, color);
-  gdk_gc_set_line_attributes(gc, 1, GDK_LINE_SOLID,
-                             GDK_CAP_BUTT, GDK_JOIN_MITER);
-
-  WORLDtoSCREEN (toplevel, circle->center_x, circle->center_y, &s_x, &s_y);
-  radius = SCREENabs (toplevel, circle->radius);
-
-  gdk_draw_arc (w, gc, TRUE, s_x - radius, s_y - radius,
-                2 * radius, 2 * radius, 0, FULL_CIRCLE);
+  /* NOP: We'll fill it when we do the stroking */
 }
 
 /*! \brief Fill inside of circle with single line pattern.
@@ -384,8 +320,9 @@ void o_circle_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
   int i;
   GArray *lines;
 
-  lines = g_array_new (FALSE, FALSE, sizeof (LINE));
+  gdk_cairo_set_source_color (w_current->cr, color);
 
+  lines = g_array_new (FALSE, FALSE, sizeof (LINE));
   m_hatch_circle (circle, angle1, pitch1, lines);
 
   for (i=0; i < lines->len; i++) {
@@ -394,8 +331,10 @@ void o_circle_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
 
     WORLDtoSCREEN (w_current->toplevel, line->x[0], line->y[0], &x1, &y1);
     WORLDtoSCREEN (w_current->toplevel, line->x[1], line->y[1], &x2, &y2);
-    o_line_draw_solid (w, gc, color, GDK_CAP_BUTT,
-                       x1, y1, x2, y2, fill_width, -1, -1);
+    gschem_cairo_line (w_current->cr, END_NONE, fill_width, x1, y1, x2, y2);
+    gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE,
+                                        fill_width, -1, -1);
+
   }
 
   g_array_free (lines, TRUE);
