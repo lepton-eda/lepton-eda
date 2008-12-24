@@ -32,7 +32,7 @@
 #define NUM_BEZIER_SEGMENTS 100
 
 
-typedef void (*FILL_FUNC) (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+typedef void (*FILL_FUNC) (GdkDrawable *w, GdkGC *gc, COLOR *color,
                            GSCHEM_TOPLEVEL *w_currentm, PATH *path,
                            gint fill_width,
                            gint angle1, gint pitch1, gint angle2, gint pitch2);
@@ -208,7 +208,7 @@ void o_path_draw_solid(GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-static void o_path_fill_hollow (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+static void o_path_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
                                 GSCHEM_TOPLEVEL *w_current, PATH *path,
                                 gint fill_width,
                                 gint angle1, gint pitch1,
@@ -234,7 +234,7 @@ static void o_path_fill_hollow (GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-static void o_path_fill_fill (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+static void o_path_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
                               GSCHEM_TOPLEVEL *w_current, PATH *path,
                               gint fill_width,
                               gint angle1, gint pitch1,
@@ -262,7 +262,7 @@ static void o_path_fill_fill (GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
                                GSCHEM_TOPLEVEL *w_current, PATH *path,
                                gint fill_width,
                                gint angle1, gint pitch1,
@@ -271,7 +271,7 @@ static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
   int i;
   GArray *lines;
 
-  gdk_cairo_set_source_color (w_current->cr, color);
+  gschem_cairo_set_source_color (w_current->cr, color);
 
   lines = g_array_new (FALSE, FALSE, sizeof (LINE));
   m_hatch_path (path, angle1, pitch1, lines);
@@ -311,7 +311,7 @@ static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-static void o_path_fill_mesh (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+static void o_path_fill_mesh (GdkDrawable *w, GdkGC *gc, COLOR *color,
                               GSCHEM_TOPLEVEL *w_current, PATH *path,
                               gint fill_width,
                               gint angle1, gint pitch1,
@@ -349,7 +349,7 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   double fx2 = 0.0, fy2 = 0.0;
   double fx3 = 0.0, fy3 = 0.0;
 
-  GdkColor *color;
+  COLOR *color;
 
   if (path == NULL) {
     return;
@@ -363,10 +363,11 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if (toplevel->DONT_REDRAW == 1)
     return;
 
-  if (toplevel->override_color != -1 )
-    color = x_get_color(toplevel->override_color);
-  else
-    color = x_get_color(o_current->color);
+  if (toplevel->override_color != -1 ) {
+    color = x_color_lookup (toplevel->override_color);
+  } else {
+    color = x_color_lookup (o_current->color);
+  }
 
   line_width = SCREENabs( toplevel, o_current->line_width );
   if( line_width <= 0) {
@@ -485,7 +486,7 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     }
   }
 
-  gdk_cairo_set_source_color (w_current->cr, color);
+  gschem_cairo_set_source_color (w_current->cr, color);
 
   if (o_current->fill_type == FILLING_FILL)
     cairo_fill_preserve (w_current->cr);

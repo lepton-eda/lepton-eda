@@ -282,6 +282,7 @@ int main(int argc, char *argv[]);
 void gschem_cairo_line(cairo_t *cr, int line_end, int width, int x1, int y1, int x2, int y2);
 void gschem_cairo_box(cairo_t *cr, int width, int x1, int y1, int x2, int y2);
 void gschem_cairo_stroke(cairo_t *cr, int line_type, int line_end, int width, int length, int space);
+void gschem_cairo_set_source_color(cairo_t *cr, COLOR *color);
 /* i_basic.c */
 void i_show_state(GSCHEM_TOPLEVEL *w_current, const char *message);
 void i_set_state(GSCHEM_TOPLEVEL *w_current, enum x_states newstate);
@@ -472,10 +473,10 @@ void o_invalidate(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_invalidate_glist(GSCHEM_TOPLEVEL *w_current, GList *list);
 /* o_box.c */
 void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_box_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, BOX *box, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_box_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, BOX *box, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_box_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, BOX *box, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_box_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, BOX *box, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_box_fill_hollow(GdkDrawable *w, GdkGC *gc, COLOR *color, GSCHEM_TOPLEVEL *w_current, BOX *box, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_box_fill_fill(GdkDrawable *w, GdkGC *gc, COLOR *color, GSCHEM_TOPLEVEL *w_current, BOX *box, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_box_fill_hatch(GdkDrawable *w, GdkGC *gc, COLOR *color, GSCHEM_TOPLEVEL *w_current, BOX *box, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_box_fill_mesh(GdkDrawable *w, GdkGC *gc, COLOR *color, GSCHEM_TOPLEVEL *w_current, BOX *box, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_box_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_box_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -500,10 +501,10 @@ void o_bus_rubberbus_xor(GSCHEM_TOPLEVEL *w_current);
 void o_bus_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 /* o_circle.c */
 void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_circle_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_circle_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_circle_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
-void o_circle_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_circle_fill_hollow(GdkDrawable *w, GdkGC *gc, COLOR *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_circle_fill_fill(GdkDrawable *w, GdkGC *gc, COLOR *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_circle_fill_hatch(GdkDrawable *w, GdkGC *gc, COLOR *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_circle_fill_mesh(GdkDrawable *w, GdkGC *gc, COLOR *color, GSCHEM_TOPLEVEL *w_current, CIRCLE *circle, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_circle_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_circle_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_circle_start(GSCHEM_TOPLEVEL *w_current, int x, int y);

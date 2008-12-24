@@ -85,9 +85,9 @@ void o_cue_redraw_all (GSCHEM_TOPLEVEL *w_current, GList *list, gboolean draw_se
 static void o_cue_set_color(GSCHEM_TOPLEVEL *w_current, int color)
 {
   if (w_current->toplevel->override_color != -1 ) {
-    gdk_cairo_set_source_color(w_current->cr, x_get_color(w_current->toplevel->override_color));
+    gschem_cairo_set_source_color(w_current->cr, x_color_lookup (w_current->toplevel->override_color));
   } else {
-    gdk_cairo_set_source_color(w_current->cr, x_get_color(color));
+    gschem_cairo_set_source_color(w_current->cr, x_color_lookup (color));
   }
 }
 
@@ -278,9 +278,9 @@ void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   int size, x2size;
 
   if (toplevel->override_color != -1 ) {
-    gdk_cairo_set_source_color(w_current->cr, x_get_color(w_current->toplevel->override_color));
+    gschem_cairo_set_source_color(w_current->cr, x_color_lookup (w_current->toplevel->override_color));
   } else {
-    gdk_cairo_set_source_color(w_current->cr, x_get_color(w_current->toplevel->junction_color));
+    gschem_cairo_set_source_color(w_current->cr, x_color_lookup (w_current->toplevel->junction_color));
   }
   
   cl_current = object->conn_list;

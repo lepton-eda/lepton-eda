@@ -47,7 +47,7 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   int wleft, wright, wtop, wbottom;
   int x, y, radius, start_angle, end_angle;
   int line_width;
-  GdkColor *color;
+  COLOR *color;
   int length, space;
 
   if (o_current->arc == NULL) {
@@ -97,9 +97,9 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 #endif
 
   if (toplevel->override_color != -1 )
-    color = x_get_color(toplevel->override_color);
+    color = x_color_lookup (toplevel->override_color);
   else
-    color = x_get_color(o_current->color);
+    color = x_color_lookup (o_current->color);
 
   line_width = SCREENabs( toplevel, o_current->line_width );
   if(line_width <= 0) {
@@ -109,7 +109,7 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   length = SCREENabs( toplevel, o_current->line_length );
   space = SCREENabs( toplevel, o_current->line_space );
 
-  gdk_cairo_set_source_color (w_current->cr, color);
+  gschem_cairo_set_source_color (w_current->cr, color);
   cairo_new_sub_path (w_current->cr);
   if (start_angle > start_angle + end_angle) {
     cairo_arc (w_current->cr, x + 0.5, y + 0.5, radius,

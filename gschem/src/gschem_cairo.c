@@ -183,3 +183,12 @@ void gschem_cairo_stroke (cairo_t *cr, int line_type, int line_end,
 
   cairo_set_dash (cr, NULL, 0, 0.);
 }
+
+
+void gschem_cairo_set_source_color (cairo_t *cr, COLOR *color)
+{
+  cairo_set_source_rgba (cr, (double)color->r / 256.0,
+                             (double)color->g / 256.0,
+                             (double)color->b / 256.0,
+                             (double)color->a / 256.0);
+}

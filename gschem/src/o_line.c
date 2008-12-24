@@ -46,7 +46,7 @@ void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
   int line_width, length, space;
-  GdkColor *color;
+  COLOR *color;
 
   if (o_current->line == NULL) {
     return;
@@ -88,9 +88,9 @@ void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    * Finally the function takes care of the grips.
    */
   if (toplevel->override_color != -1 )
-  color = x_get_color(toplevel->override_color);
+  color = x_color_lookup (toplevel->override_color);
   else
-  color = x_get_color(o_current->color);
+  color = x_color_lookup (o_current->color);
 	
   line_width = SCREENabs( toplevel, o_current->line_width );
   if( line_width <= 0) {
@@ -103,7 +103,7 @@ void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   gschem_cairo_line (w_current->cr, o_current->line_end,
                      line_width, x1, y1, x2, y2);
 
-  gdk_cairo_set_source_color (w_current->cr, color);
+  gschem_cairo_set_source_color (w_current->cr, color);
   gschem_cairo_stroke (w_current->cr, o_current->line_type,
                        o_current->line_end, line_width, length, space);
 

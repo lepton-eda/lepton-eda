@@ -36,7 +36,7 @@
 #define GET_BOX_TOP(w)				\
         max((w)->first_wy, (w)->second_wy)
 
-typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, GdkColor *color,
+typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, COLOR *color,
                            GSCHEM_TOPLEVEL *w_current, BOX *box,
                            gint fill_width, gint angle1, gint pitch1,
                            gint angle2, gint pitch2 );
@@ -61,7 +61,7 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
   int line_width, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
-  GdkColor *color;
+  COLOR *color;
   FILL_FUNC fill_func;
 
   if (o_current->box == NULL) {
@@ -96,9 +96,9 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    * (if any). Finally the function takes care of the grips.
    */
   if (toplevel->override_color != -1 ) {  /* Override */
-    color = x_get_color(toplevel->override_color);
+    color = x_color_lookup (toplevel->override_color);
   } else {
-    color = x_get_color(o_current->color);
+    color = x_color_lookup (o_current->color);
   }
 
   /*
@@ -206,7 +206,7 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                 w_current, o_current->box,
                 fill_width, angle1, pitch1, angle2, pitch2);
 
-  gdk_cairo_set_source_color (w_current->cr, color);
+  gschem_cairo_set_source_color (w_current->cr, color);
   gschem_cairo_box (w_current->cr, line_width,
                     s_lower_x, s_lower_y, s_upper_x, s_upper_y);
 
@@ -240,7 +240,7 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-void o_box_fill_hollow (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+void o_box_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
                         GSCHEM_TOPLEVEL *w_current, BOX *box,
                         gint fill_width,
                         gint angle1, gint pitch1,
@@ -277,7 +277,7 @@ void o_box_fill_hollow (GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-void o_box_fill_fill (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+void o_box_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
                       GSCHEM_TOPLEVEL *w_current, BOX *box,
                       gint fill_width,
                       gint angle1, gint pitch1,
@@ -316,7 +316,7 @@ void o_box_fill_fill (GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-void o_box_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+void o_box_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
                        GSCHEM_TOPLEVEL *w_current, BOX *box,
                        gint fill_width,
                        gint angle1, gint pitch1,
@@ -325,7 +325,7 @@ void o_box_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
   int i;
   GArray *lines;
 
-  gdk_cairo_set_source_color (w_current->cr, color);
+  gschem_cairo_set_source_color (w_current->cr, color);
 
   lines = g_array_new (FALSE, FALSE, sizeof (LINE));
   m_hatch_box (box, angle1, pitch1, lines);
@@ -371,7 +371,7 @@ void o_box_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-void o_box_fill_mesh (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+void o_box_fill_mesh (GdkDrawable *w, GdkGC *gc, COLOR *color,
                       GSCHEM_TOPLEVEL *w_current, BOX *box,
                       gint fill_width,
                       gint angle1, gint pitch1,

@@ -38,7 +38,7 @@ void o_pin_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   TOPLEVEL *toplevel = w_current->toplevel;
   int size;
   int x1, y1, x2, y2; /* screen coords */
-  GdkColor *color;
+  COLOR *color;
 
   if (o_current->line == NULL) {
     return;
@@ -55,9 +55,9 @@ void o_pin_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 #endif
 
   if (toplevel->override_color != -1 ) {
-    color = x_get_color(toplevel->override_color);
+    color = x_color_lookup (toplevel->override_color);
   } else {
-    color = x_get_color(o_current->color);
+    color = x_color_lookup (o_current->color);
   }
 
   if (toplevel->DONT_REDRAW == 0) {
@@ -71,7 +71,7 @@ void o_pin_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     cairo_set_line_width (w_current->cr, size);
     cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_BUTT);
 
-    gdk_cairo_set_source_color (w_current->cr, color);
+    gschem_cairo_set_source_color (w_current->cr, color);
 
     gschem_cairo_line (w_current->cr, END_NONE, size, x1, y1, x2, y2);
     cairo_stroke (w_current->cr);

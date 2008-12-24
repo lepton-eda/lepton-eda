@@ -89,9 +89,9 @@ void o_text_draw_rectangle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   WORLDtoSCREEN( toplevel, o_current->w_right, o_current->w_top, &right, &bottom );
 
   if (toplevel->override_color != -1 ) {  /* Override */
-    color = x_get_color(toplevel->override_color);
+    color = x_get_color (toplevel->override_color);
   } else {
-    color = x_get_color(o_current->color);
+    color = x_get_color (o_current->color);
   }
   gdk_gc_set_foreground(w_current->gc, color);
 

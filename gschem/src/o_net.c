@@ -112,9 +112,9 @@ void o_net_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_SQUARE);
 
   if (toplevel->override_color != -1 ) {
-    gdk_cairo_set_source_color (w_current->cr, x_get_color(toplevel->override_color));
+    gschem_cairo_set_source_color (w_current->cr, x_color_lookup (toplevel->override_color));
   } else {
-    gdk_cairo_set_source_color (w_current->cr, x_get_color(o_current->color));
+    gschem_cairo_set_source_color (w_current->cr, x_color_lookup (o_current->color));
   }
 
   gschem_cairo_line (w_current->cr, END_SQUARE, size, x1, y1, x2, y2);
