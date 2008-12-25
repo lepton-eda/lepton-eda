@@ -111,7 +111,7 @@ struct st_gschem_toplevel {
   int num_untitled;                     /* keep track of untitled wins */
   int event_state;                      /* Current event state */
   int image_width, image_height;        /* h, w of image write */
-  int grid;                             /* Grid on/off*/
+  int grid;                             /* what type of grid to show */
   int min_zoom;                         /* minimum zoom factor */
   int max_zoom;                         /* maximum zoom factor */
   int text_alignment;                   /* current alignment of text */
@@ -176,13 +176,13 @@ struct st_gschem_toplevel {
   int bus_ripper_size;    /* sets size of the bus rippers */
   int bus_ripper_type;    /* sets type of the bus ripper (component or net) */
   int bus_ripper_rotation;  /* sets if the the bus ripper is symmetric or not */
-  int grid_dot_size;      /* sets the grid dot size */
-  int grid_mode;      /* sets the mode of the grid (either variable or fixed) */
   int magneticnet_mode; /* enables/disables the magnetic net mode ON/OFF */
 
   /* sets the mininum number of pixels necessary for the grid to be */
   /* displayed */
-  int grid_fixed_threshold;
+  int dots_grid_fixed_threshold;
+  int dots_grid_dot_size; /* sets the grid dot size */
+  int dots_grid_mode;     /* sets the mode of the dotted grid (either variable or fixed) */
 
   /* sets the offset (in world coordinates) that are added to netname */
   /* attributes when they are attached to vertical or horizontal nets */

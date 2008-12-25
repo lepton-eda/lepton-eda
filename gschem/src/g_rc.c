@@ -1288,21 +1288,21 @@ SCM g_rc_force_boundingbox(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_grid_dot_size(SCM dotsize)
+SCM g_rc_dots_grid_dot_size (SCM dotsize)
 {
   int val;
 
-  SCM_ASSERT (scm_is_integer (dotsize), dotsize, SCM_ARG1, "grid-dot-size");
+  SCM_ASSERT (scm_is_integer (dotsize), dotsize, SCM_ARG1, "dots-grid-dot-size");
   
   val = scm_to_int (dotsize);
 
   if (val <= 0) {
-    fprintf(stderr, _("Invalid dot size [%d] passed to grid-dot-size\n"),
+    fprintf(stderr, _("Invalid dot size [%d] passed to dots-grid-dot-size\n"),
             val);
     val = 1; /* absolute default */
   }
 
-  default_grid_dot_size = val;
+  default_dots_grid_dot_size = val;
 
   return SCM_BOOL_T;
 }
@@ -1312,16 +1312,16 @@ SCM g_rc_grid_dot_size(SCM dotsize)
  *  \par Function Description
  *
  */
-SCM g_rc_grid_mode(SCM mode)
+SCM g_rc_dots_grid_mode (SCM mode)
 {
   static const vstbl_entry mode_table[] = {
-    {GRID_VARIABLE_MODE,  "variable" },
-    {GRID_FIXED_MODE, "fixed"  }
+    {DOTS_GRID_VARIABLE_MODE, "variable" },
+    {DOTS_GRID_FIXED_MODE,    "fixed"  }
   };
 
-  RETURN_G_RC_MODE("grid-mode",
-		   default_grid_mode,
-		   2);
+  RETURN_G_RC_MODE ("dots-grid-mode",
+                    default_dots_grid_mode,
+                    2);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1329,21 +1329,21 @@ SCM g_rc_grid_mode(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_grid_fixed_threshold(SCM spacing)
+SCM g_rc_dots_grid_fixed_threshold (SCM spacing)
 {
   int val;
 
-  SCM_ASSERT (scm_is_integer (spacing), spacing, SCM_ARG1, "grid-fixed-threshold");
+  SCM_ASSERT (scm_is_integer (spacing), spacing, SCM_ARG1, "dots-grid-fixed-threshold");
   
   val = scm_to_int (spacing);
 
   if (val <= 0) {
-    fprintf(stderr, _("Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"),
+    fprintf(stderr, _("Invalid pixel spacing [%d] passed to dots-grid-fixed-threshold\n"),
             val);
     val = 10; /* absolute default */
   }
 
-  default_grid_fixed_threshold = val;
+  default_dots_grid_fixed_threshold = val;
 
   return SCM_BOOL_T;
 }

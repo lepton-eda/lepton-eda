@@ -9,7 +9,7 @@
     (net . 4)
     (attribute . 5)
     (logic-bubble . 6)
-    (grid . 7)
+    (dots-grid . 7)
     (detached-attribute . 8)
     (text . 9)
     (bus . 10)

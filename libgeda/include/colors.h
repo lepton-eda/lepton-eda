@@ -31,7 +31,7 @@
 #define NET_COLOR                       4
 #define ATTRIBUTE_COLOR                 5
 #define LOGIC_BUBBLE_COLOR              6
-#define GRID_COLOR                      7
+#define DOTS_GRID_COLOR                 7
 #define DETACHED_ATTRIBUTE_COLOR        8
 #define TEXT_COLOR                      9
 #define BUS_COLOR                       10

@@ -129,7 +129,7 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->event_state = SELECT;
   w_current->image_width  = 0;
   w_current->image_height = 0;
-  w_current->grid = 1;
+  w_current->grid = GRID_DOTS;
   w_current->min_zoom = 0;
   w_current->max_zoom = 8;
   w_current->text_alignment = 0;
@@ -184,10 +184,10 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->bus_ripper_size = 0;
   w_current->bus_ripper_type = 0;
   w_current->bus_ripper_rotation = 0;
-  w_current->grid_dot_size = 1;
-  w_current->grid_mode = GRID_VARIABLE_MODE;
   w_current->magneticnet_mode = 0;
-  w_current->grid_fixed_threshold = 10;
+  w_current->dots_grid_fixed_threshold = 10;
+  w_current->dots_grid_dot_size = 1;
+  w_current->dots_grid_mode = DOTS_GRID_VARIABLE_MODE;
   w_current->add_attribute_offset = 50;
   w_current->drag_can_move = TRUE;
   w_current->mousepan_gain = 5;

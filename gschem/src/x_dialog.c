@@ -2207,7 +2207,7 @@ char *index2functionstring(int index)
     case(LOGIC_BUBBLE_COLOR):
       string = g_strdup (_("Logic bubble"));
       break;
-    case(GRID_COLOR):
+    case(DOTS_GRID_COLOR):
       string = g_strdup (_("Grid point"));
       break;
     case(DETACHED_ATTRIBUTE_COLOR):

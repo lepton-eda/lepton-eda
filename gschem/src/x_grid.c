@@ -30,70 +30,59 @@
 #include <dmalloc.h>
 #endif
 
-static GdkPoint points[5000];
+#define DOTS_POINTS_ARRAY_SIZE       5000
+#define DOTS_VARIABLE_MODE_SPACING   30
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+
+/*! \brief Draw an area of the screen with a dotted grid pattern
  *
+ *  \par Function Description
+ *  Draws the dotted grid pattern over a given region of the screen.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL.
+ *  \param [in] x          The left screen coordinate for the drawing.
+ *  \param [in] y          The top screen coordinate for the drawing.
+ *  \param [in] width      The width of the region to draw.
+ *  \param [in] height     The height of the region to draw.
  */
-void x_grid_draw_region (GSCHEM_TOPLEVEL *w_current,
-                         int x, int y, int width, int height)
+static void draw_dots_grid_region (GSCHEM_TOPLEVEL *w_current,
+                                   int x, int y, int width, int height)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int i, j;
   int dot_x, dot_y;
   int x_start, y_start, x_end, y_end;
   int count = 0;
+  GdkPoint points[DOTS_POINTS_ARRAY_SIZE];
 
-  int incr = 100;
-  int screen_incr = 0;
+  int incr;
+  int screen_incr;
 
-  if (!w_current->grid) {
-    i_set_grid(w_current, -1);
-    return;
-  }
-
-  if (w_current->grid_mode == GRID_VARIABLE_MODE)
-  {
-    /* In the variable mode around every 30th screenpixel will be grid-point */
+  if (w_current->dots_grid_mode == DOTS_GRID_VARIABLE_MODE) {
+    /* In the variable mode around every (DOTS_VARIABLE_MODE_SPACING)'th
+     * screenpixel will be grid-point. */
     /* adding 0.1 for correct cast*/
-    incr = round_5_2_1(toplevel->page_current->to_world_x_constant *30)+0.1;
+    incr = round_5_2_1 (toplevel->page_current->to_world_x_constant *
+                        DOTS_VARIABLE_MODE_SPACING) + 0.1;
 
-    /*limit grid to snap_size; only a idea of mine, hope you like it (hw) */
+    /* limit minimum grid spacing to grid to snap_size */
     if (incr < toplevel->snap_size) {
       incr = toplevel->snap_size;
     }
-    /* usually this should never happen */
-    if (incr < 1){
-      incr = 1;
-    }
-  }
-  else
-  {
+  } else {
+    /* Fixed size grid in world coorinates */
     incr = toplevel->snap_size;
-    screen_incr = SCREENabs(toplevel, incr);
-    if (screen_incr < w_current->grid_fixed_threshold)
-    {
-      /* don't draw the grid if the screen incr spacing is less than the */
-      /* threshold */
+    screen_incr = SCREENabs (toplevel, incr);
+    if (screen_incr < w_current->dots_grid_fixed_threshold) {
+      /* don't draw the grid if the on-screen spacing is less than the threshold */
       return;
     }
   }
-  
+
   /* update status bar */
-  i_set_grid(w_current, incr);
+  i_set_grid (w_current, incr);
 
-#if DEBUG 
-  printf("---------x_grid_draw\n incr: %d\n",incr);
-
-  printf("x1 %d\n", pix_x(w_current, 100));
-  printf("x2 %d\n", pix_x(w_current, 200));
-  printf("y1 %d\n", pix_y(w_current, 100));
-  printf("y2 %d\n", pix_y(w_current, 200));
-#endif
-
-  gdk_gc_set_foreground(w_current->gc, x_get_color (GRID_COLOR));
+  gdk_gc_set_foreground (w_current->gc, x_get_color (DOTS_GRID_COLOR));
 
   SCREENtoWORLD (toplevel, x - 1, y + height + 1, &x_start, &y_start);
   SCREENtoWORLD (toplevel, x + width + 1, y - 1, &x_end, &y_end);
@@ -106,32 +95,28 @@ void x_grid_draw_region (GSCHEM_TOPLEVEL *w_current,
 
   for (i = x_start; i <= x_end; i = i + incr) {
     for(j = y_start; j <= y_end; j = j + incr) {
-      WORLDtoSCREEN(toplevel, i,j, &dot_x, &dot_y);
-      if (inside_region(toplevel->page_current->left,
-                        toplevel->page_current->top,
-                        toplevel->page_current->right,
-                        toplevel->page_current->bottom,
-                        i, j)) {
+      WORLDtoSCREEN (toplevel, i,j, &dot_x, &dot_y);
+      if (inside_region (toplevel->page_current->left,
+                         toplevel->page_current->top,
+                         toplevel->page_current->right,
+                         toplevel->page_current->bottom, i, j)) {
 
-	if (w_current->grid_dot_size == 1)
-        {
+        if (w_current->dots_grid_dot_size == 1) {
           points[count].x = dot_x;
           points[count].y = dot_y;
           count++;
 
-          /* get out of loop if more than 1000 points */
-          if (count == 5000) {
+          /* get out of loop if we're hit the end of the array */
+          if (count == DOTS_POINTS_ARRAY_SIZE) {
             gdk_draw_points (w_current->drawable,
                              w_current->gc, points, count);
-            count=0;
+            count = 0;
           }
-        }
-        else
-        {
+        } else {
           gdk_draw_arc (w_current->drawable, w_current->gc,
                         TRUE, dot_x, dot_y,
-                        w_current->grid_dot_size,
-                        w_current->grid_dot_size, 0, FULL_CIRCLE);
+                        w_current->dots_grid_dot_size,
+                        w_current->dots_grid_dot_size, 0, FULL_CIRCLE);
         }
       }
     }
@@ -139,14 +124,39 @@ void x_grid_draw_region (GSCHEM_TOPLEVEL *w_current,
 
   /* now draw all the points in one step */
   if(count != 0) {
-    gdk_draw_points (w_current->drawable,
-                     w_current->gc, points, count);
+    gdk_draw_points (w_current->drawable, w_current->gc, points, count);
+  }
+}
+
+
+/*! \brief Draw an area of the screen with the current grid pattern.
+ *
+ *  \par Function Description
+ *  Draws the desired grid pattern over a given region of the screen.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL.
+ *  \param [in] x          The left screen coordinate for the drawing.
+ *  \param [in] y          The top screen coordinate for the drawing.
+ *  \param [in] width      The width of the region to draw.
+ *  \param [in] height     The height of the region to draw.
+ */
+void x_grid_draw_region (GSCHEM_TOPLEVEL *w_current,
+                         int x, int y, int width, int height)
+{
+  switch (w_current->grid) {
+    case GRID_NONE:
+      i_set_grid(w_current, -1);
+      return;
+
+    case GRID_DOTS:
+      draw_dots_grid_region (w_current, x, y, width, height);
+      break;
   }
 
 #if DEBUG
   /* highly temp, just for diag purposes */
   x_draw_tiles(w_current);
-#endif        
+#endif
 }
 
 /*! \todo Finish function documentation!!!

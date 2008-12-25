@@ -111,9 +111,9 @@ int   default_bus_ripper_size = 200;
 int   default_bus_ripper_type = COMP_BUS_RIPPER;
 int   default_bus_ripper_rotation = NON_SYMMETRIC;
 int   default_force_boundingbox = FALSE;
-int   default_grid_dot_size = 1;
-int   default_grid_mode = GRID_VARIABLE_MODE;
-int   default_grid_fixed_threshold = 10;
+int   default_dots_grid_dot_size = 1;
+int   default_dots_grid_mode = DOTS_GRID_VARIABLE_MODE;
+int   default_dots_grid_fixed_threshold = 10;
 int   default_print_vector_threshold = 3;
 int   default_add_attribute_offset = 50;
 
@@ -232,9 +232,11 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
   w_current->bus_ripper_rotation  = default_bus_ripper_rotation;
 
   toplevel->force_boundingbox  = default_force_boundingbox;
-  w_current->grid_dot_size  = default_grid_dot_size;
-  w_current->grid_mode  = default_grid_mode;
-  w_current->grid_fixed_threshold  = default_grid_fixed_threshold;
+
+  w_current->dots_grid_dot_size          = default_dots_grid_dot_size;
+  w_current->dots_grid_mode              = default_dots_grid_mode;
+  w_current->dots_grid_fixed_threshold   = default_dots_grid_fixed_threshold;
+
   toplevel->print_vector_threshold  = default_print_vector_threshold;
   w_current->add_attribute_offset  = default_add_attribute_offset;
 

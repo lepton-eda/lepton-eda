@@ -47,7 +47,7 @@ static COLOR default_colors[] = {
   BLACK,           /*  4: net                */
   BLACK,           /*  5: attribute          */
   BLACK,           /*  6: logic-bubble       */
-  BLACK,           /*  7: grid               */
+  BLACK,           /*  7: dots-grid          */
   BLACK,           /*  8: detached-attribute */
   BLACK,           /*  9: text               */
   BLACK,           /* 10: bus                */
