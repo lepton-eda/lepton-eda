@@ -3327,12 +3327,16 @@ DEFINE_I_CALLBACK(options_grid)
 
   exit_if_null(w_current);
 
-  if (w_current->grid) {
-    w_current->grid = 0;
-    s_log_message(_("Grid OFF\n"));
-  } else {
-    w_current->grid = 1;
-    s_log_message(_("Grid ON\n"));
+  switch (w_current->grid) {
+    case GRID_NONE: w_current->grid = GRID_DOTS; break;
+    case GRID_DOTS: w_current->grid = GRID_MESH; break;
+    case GRID_MESH: w_current->grid = GRID_NONE; break;
+  }
+
+  switch (w_current->grid) {
+    case GRID_NONE: s_log_message (_("Grid OFF\n"));           break;
+    case GRID_DOTS: s_log_message (_("Dot grid selected\n"));  break;
+    case GRID_MESH: s_log_message (_("Mesh grid selected\n")); break;
   }
 
   o_invalidate_all (w_current);

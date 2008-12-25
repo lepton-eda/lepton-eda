@@ -1550,7 +1550,7 @@
 ;;          menu item name      menu action     	menu hotkey action
 ;;
 	'( ("Text Size..."	options-text-size       options-text-size)
-	   ("Toggle Grid On/Off" options-grid       	options-grid)
+	   ("Cycle grid styles"  options-grid           options-grid)
 	   ("Toggle Snap On/Off" options-snap       	options-snap)
 	   ("Snap Grid Spacing..." options-snap-size   	options-snap-size)
     	   ("Scale up Grid Spacing" options-scale-up-snap-size 
