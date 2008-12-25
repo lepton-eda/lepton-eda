@@ -36,6 +36,46 @@
 #define MESH_COARSE_GRID_MULTIPLIER  5
 
 
+/*! \brief Query the spacing in world coordinates at which the dots grid is drawn.
+ *
+ *  \par Function Description
+ *  Returns the world spacing of the rendered grid, taking into account where
+ *  the grid drawing code may drop elelments which are too densly packed for a
+ *  given zoom level.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL.
+ *  \returns The grid spacing in world units of the grid as rendered, or -1
+ *           if there are no items drawn.
+ */
+static int query_dots_grid_spacing (GSCHEM_TOPLEVEL *w_current)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int incr, screen_incr;
+
+  if (w_current->dots_grid_mode == DOTS_GRID_VARIABLE_MODE) {
+    /* In the variable mode around every (DOTS_VARIABLE_MODE_SPACING)'th
+     * screenpixel will be grid-point. */
+    /* adding 0.1 for correct cast*/
+    incr = round_5_2_1 (toplevel->page_current->to_world_x_constant *
+                        DOTS_VARIABLE_MODE_SPACING) + 0.1;
+
+    /* limit minimum grid spacing to grid to snap_size */
+    if (incr < toplevel->snap_size) {
+      incr = toplevel->snap_size;
+    }
+  } else {
+    /* Fixed size grid in world coorinates */
+    incr = toplevel->snap_size;
+    screen_incr = SCREENabs (toplevel, incr);
+    if (screen_incr < w_current->dots_grid_fixed_threshold) {
+      /* No grid drawn if the on-screen spacing is less than the threshold */
+      incr = -1;
+    }
+  }
+  return incr;
+}
+
+
 /*! \brief Draw an area of the screen with a dotted grid pattern
  *
  *  \par Function Description
@@ -57,29 +97,10 @@ static void draw_dots_grid_region (GSCHEM_TOPLEVEL *w_current,
   int count = 0;
   GdkPoint points[DOTS_POINTS_ARRAY_SIZE];
 
-  int incr;
-  int screen_incr;
+  int incr = query_dots_grid_spacing (w_current);
 
-  if (w_current->dots_grid_mode == DOTS_GRID_VARIABLE_MODE) {
-    /* In the variable mode around every (DOTS_VARIABLE_MODE_SPACING)'th
-     * screenpixel will be grid-point. */
-    /* adding 0.1 for correct cast*/
-    incr = round_5_2_1 (toplevel->page_current->to_world_x_constant *
-                        DOTS_VARIABLE_MODE_SPACING) + 0.1;
-
-    /* limit minimum grid spacing to grid to snap_size */
-    if (incr < toplevel->snap_size) {
-      incr = toplevel->snap_size;
-    }
-  } else {
-    /* Fixed size grid in world coorinates */
-    incr = toplevel->snap_size;
-    screen_incr = SCREENabs (toplevel, incr);
-    if (screen_incr < w_current->dots_grid_fixed_threshold) {
-      /* don't draw the grid if the on-screen spacing is less than the threshold */
-      return;
-    }
-  }
+  if (incr == -1)
+    return;
 
   /* update status bar */
   i_set_grid (w_current, incr);
@@ -186,6 +207,40 @@ static void draw_mesh (GSCHEM_TOPLEVEL *w_current, int color,
 }
 
 
+/*! \brief Query the spacing in world coordinates at which the mesh grid is drawn.
+ *
+ *  \par Function Description
+ *  Returns the world spacing of the rendered grid, taking into account where
+ *  the grid drawing code may drop elelments which are too densly packed for a
+ *  given zoom level.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL.
+ *  \returns The grid spacing in world units of the grid as rendered, or -1
+ *           if there are no items drawn.
+ */
+static int query_mesh_grid_spacing (GSCHEM_TOPLEVEL *w_current)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int incr, screen_incr;
+
+  incr = toplevel->snap_size;
+  screen_incr = SCREENabs (toplevel, incr);
+
+  /* We draw a fine grid if its on-screen spacing is large enough */
+  if (screen_incr >= w_current->mesh_grid_display_threshold) {
+    return incr;
+  }
+
+  incr *= MESH_COARSE_GRID_MULTIPLIER;
+  screen_incr = SCREENabs (toplevel, incr);
+
+  /* We draw a coarse grid if its on-screen spacing is large enough */
+  if (screen_incr >= w_current->mesh_grid_display_threshold)
+    return incr;
+
+  return -1;
+}
+
 /*! \brief Draw an area of the screen with a mesh grid pattern
  *
  *  \par Function Description
@@ -264,6 +319,29 @@ void x_grid_draw_region (GSCHEM_TOPLEVEL *w_current,
   x_draw_tiles(w_current);
 #endif
 }
+
+
+/*! \brief Query the spacing in world coordinates at which the grid is drawn.
+ *
+ *  \par Function Description
+ *  Returns the world spacing of the rendered grid, taking into account where
+ *  the grid drawing code may drop elelments which are too densly packed for a
+ *  given zoom level.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL.
+ *  \returns The grid spacing in world units of the grid as rendered, or -1
+ *           if there are no items drawn.
+ */
+int x_grid_query_drawn_spacing (GSCHEM_TOPLEVEL *w_current)
+{
+  switch (w_current->grid) {
+    default:
+    case GRID_NONE: return -1;
+    case GRID_DOTS: return query_dots_grid_spacing (w_current);
+    case GRID_MESH: return query_mesh_grid_spacing (w_current);
+  }
+}
+
 
 /*! \todo Finish function documentation!!!
  *  \brief

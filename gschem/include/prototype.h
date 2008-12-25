@@ -779,6 +779,7 @@ void x_fileselect_save(GSCHEM_TOPLEVEL *w_current);
 int x_fileselect_load_backup(TOPLEVEL *toplevel, GString *message);
 /* x_grid.c */
 void x_grid_draw_region(GSCHEM_TOPLEVEL *w_current, int x, int y, int width, int height);
+int x_grid_query_drawn_spacing(GSCHEM_TOPLEVEL *w_current);
 void x_draw_tiles(GSCHEM_TOPLEVEL *w_current);
 /* x_image.c */
 void x_image_lowlevel(GSCHEM_TOPLEVEL *w_current, const char* filename,
