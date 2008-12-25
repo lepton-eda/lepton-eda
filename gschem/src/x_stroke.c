@@ -128,20 +128,29 @@ gint
 x_stroke_translate_and_execute (GSCHEM_TOPLEVEL *w_current)
 {
   gchar sequence[STROKE_MAX_SEQUENCE];
+  StrokePoint *point;
+  int min_x, min_y, max_x, max_y;
   gint i;
 
   g_assert (stroke_points != NULL);
 
-  /* erase footprint */
-  for (i = 0; i < stroke_points->len; i++) {
-    StrokePoint *point = &g_array_index (stroke_points, StrokePoint, i);
+  if (stroke_points->len == 0)
+    return 0;
 
-    gdk_gc_set_foreground (w_current->gc,
-                           x_get_color (
-                             w_current->toplevel->background_color));
-    gdk_draw_point (w_current->window, w_current->gc,
-                    point->x, point->y);
+  point = &g_array_index (stroke_points, StrokePoint, 0);
+  min_x = max_x = point->x;
+  min_y = max_y = point->y;
+
+  for (i = 1; i < stroke_points->len; i++) {
+    point = &g_array_index (stroke_points, StrokePoint, i);
+    min_x = min (min_x, point->x);
+    min_y = min (min_y, point->y);
+    max_x = max (max_x, point->x);
+    max_y = max (max_y, point->y);
   }
+
+  o_invalidate_rect (w_current, min_x, min_y, max_x + 1, max_y + 1);
+
   /* resets length of array */
   stroke_points->len = 0;
 
