@@ -9,7 +9,7 @@
     (net . 4)
     (attribute . 5)
     (logic-bubble . 6)
-    (grid . 7)
+    (dots-grid . 7)
     (detached-attribute . 8)
     (text . 9)
     (bus . 10)
@@ -24,6 +24,8 @@
     (freestyle3 . 19)
     (freestyle4 . 20)
     (junction . 21)
+    (mesh-grid-major . 22)
+    (mesh-grid-minor . 23)
    ))
 
 ;; Look up the internal system ID for a symbolic color

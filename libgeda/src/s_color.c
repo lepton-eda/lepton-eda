@@ -47,7 +47,7 @@ static COLOR default_colors[] = {
   BLACK,           /*  4: net                */
   BLACK,           /*  5: attribute          */
   BLACK,           /*  6: logic-bubble       */
-  BLACK,           /*  7: grid               */
+  BLACK,           /*  7: dots-grid          */
   BLACK,           /*  8: detached-attribute */
   BLACK,           /*  9: text               */
   BLACK,           /* 10: bus                */
@@ -62,6 +62,8 @@ static COLOR default_colors[] = {
   NOCOLOR,         /* 19: freestyle3         */
   NOCOLOR,         /* 20: freestyle4         */
   BLACK,           /* 21: junction           */
+  GRAY,            /* 22: mesh-grid-major    */
+  NOCOLOR,         /* 23: mesh-grid-minor    */
   ENDMAP
 };
 

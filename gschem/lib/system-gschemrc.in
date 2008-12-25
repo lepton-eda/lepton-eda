@@ -779,37 +779,44 @@
 ;(bus-ripper-size 200)
 ;(bus-ripper-type "net")
 
-; Grid dot size 
+; Dots grid dot size
 ;
-; The grid-dot-size keyword controls the size of the grid dots.  The units
-; are in pixels.  The default (min) value of 1 is the best performing as the
-; grid dot size is rendered as a single point and can be accelerated by 
-; the X server.  Values of 2 and 3 are good values to try if the default 
-; grid dot size is too small for your tastes.  Anything larger than 3 is 
-; probably too large.
+; The dots-grid-dot-size keyword controls the size of the grid dots in the
+; dots grid display. The units are in pixels. The default (min) value of 1
+; is the best performing as the grid dot size is rendered as a single pixel.
+; Values of 2 and 3 are good values to try if the default grid dot size is
+; too small for your tastes. Anything larger than 3 is probably too large.
 ;
-(grid-dot-size 1)
-;(grid-dot-size 2)
-;(grid-dot-size 3)
+(dots-grid-dot-size 1)
+;(dots-grid-dot-size 2)
+;(dots-grid-dot-size 3)
 
-; Grid mode
+; Dots grid mode
 ;
-; The grid-mode keyword controls the mode of the grid, either variable or 
-; fixed.  In the variable mode, the grid spacing changes depending
-; on the zoom factor.  In the fixed mode, the grid always represents
-; 100 units.  You can control the density of the grid using the 
-; grid-fixed-threshold.
-(grid-mode "variable")
-;(grid-mode "fixed")
+; The dots-grid-mode keyword controls the mode of the dotted grid, either
+; variable or fixed. In the variable mode, the grid spacing changes
+; depending on the zoom factor. In the fixed mode, the grid always
+; represents the same number of units as the snap-spacing. You can
+; control the density of the grid using the dots-grid-fixed-threshold.
+(dots-grid-mode "variable")
+;(dots-grid-mode "fixed")
 
-; Grid fixed threshold
+; Dots grid fixed threshold
 ;
-; The grid-fixed-threshold specifies the minimum number of pixels needed
-; for the grid to be displayed.  Using this rc parameter you can control 
-; the density of the displayed grid (smaller numbers will cause the grid
-; to be drawn denser). This mode is only used when grid-mode is fixed.
-; 
-(grid-fixed-threshold 10)
+; The dots-grid-fixed-threshold specifies the minimum number of pixels
+; grid-spacing for the grid to be displayed. Using this parameter you can
+; control thedensity of the displayed grid (smaller numbers will cause the
+; grid to be drawn denser). This mode is only used when grid-mode is fixed.
+;
+(dots-grid-fixed-threshold 10)
+
+; Mesh grid display threshold
+;
+; The mesh-grid-display-threshold specifies the minimum line pitch for a the
+; grid to be displayed. Using this parameter you can control maximum density
+; of the displayed before the minor, then major grid-lines are switched off.
+;
+(mesh-grid-display-threshold 3)
 
 ; force-boundingbox string
 ;
@@ -1543,7 +1550,7 @@
 ;;          menu item name      menu action     	menu hotkey action
 ;;
 	'( ("Text Size..."	options-text-size       options-text-size)
-	   ("Toggle Grid On/Off" options-grid       	options-grid)
+	   ("Cycle grid styles"  options-grid           options-grid)
 	   ("Toggle Snap On/Off" options-snap       	options-snap)
 	   ("Snap Grid Spacing..." options-snap-size   	options-snap-size)
     	   ("Scale up Grid Spacing" options-scale-up-snap-size 

@@ -91,9 +91,14 @@
 #define SINGLE                  0
 #define MULTIPLE                1
 
-/* for grid_mode */
-#define GRID_VARIABLE_MODE	0
-#define GRID_FIXED_MODE		1
+/* for grid */
+#define GRID_NONE               0
+#define GRID_DOTS               1
+#define GRID_MESH               2
+
+/* for dots_grid_mode */
+#define DOTS_GRID_VARIABLE_MODE 0
+#define DOTS_GRID_FIXED_MODE    1
 
 /* for log-window keyword */
 #define MAP_LATER		0

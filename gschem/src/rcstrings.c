@@ -111,7 +111,7 @@ _("Autonumber Text...")
 
 _("Options")
 _("Text Size...")
-_("Toggle Grid On/Off")
+_("Cycle grid styles")
 _("Toggle Snap On/Off")
 _("Snap Grid Spacing...")
 _("Scale up Grid Spacing")
