@@ -167,7 +167,7 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
       if (object->type == OBJ_NET) { /* only nets have these cues */
         if (count < 1) { /* Didn't find anything connected there */
           if (toplevel->DONT_REDRAW == 0) {
-            o_cue_set_color (w_current, toplevel->net_endpoint_color);
+            o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
             cairo_move_to (w_current->cr, screen_x - size, screen_y - size);
             cairo_rel_line_to (w_current->cr, x2size + 1, 0);
             cairo_rel_line_to (w_current->cr, 0, x2size + 1);
@@ -186,7 +186,7 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
           }
           x2size = 2 * size;
           if (toplevel->DONT_REDRAW == 0) {
-            o_cue_set_color(w_current, toplevel->junction_color);
+            o_cue_set_color (w_current, JUNCTION_COLOR);
             cairo_arc (w_current->cr, screen_x + 0.5, screen_y + 0.5, size, 0, 2. * M_PI);
             cairo_fill (w_current->cr);
 
@@ -205,7 +205,7 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
           }
 
           if (toplevel->DONT_REDRAW == 0) {
-            o_cue_set_color(w_current, toplevel->net_endpoint_color);
+            o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
             if (object->line->y[whichone] == object->line->y[otherone]) {
               /* horizontal line */
               if (object->line->x[whichone] <= object->line->x[otherone]) {
@@ -251,7 +251,7 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
       x2size = size * 2;
 
       if (toplevel->DONT_REDRAW == 0) {
-	o_cue_set_color(w_current, toplevel->junction_color);
+        o_cue_set_color (w_current, JUNCTION_COLOR);
         cairo_arc (w_current->cr, screen_x + 0.5, screen_y + 0.5, size, 0, 2. * M_PI);
         cairo_fill (w_current->cr);
       }
@@ -280,7 +280,7 @@ void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   if (toplevel->override_color != -1 ) {
     gschem_cairo_set_source_color(w_current->cr, x_color_lookup (w_current->toplevel->override_color));
   } else {
-    gschem_cairo_set_source_color(w_current->cr, x_color_lookup (w_current->toplevel->junction_color));
+    gschem_cairo_set_source_color(w_current->cr, x_color_lookup (JUNCTION_COLOR));
   }
   
   cl_current = object->conn_list;

@@ -302,9 +302,9 @@ void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int radius,
   OBJECT *new_obj;
 
   /* create, initialize and link the new arc object */
-  new_obj = o_arc_new(toplevel, OBJ_ARC, w_current->graphic_color,
-                      w_current->first_wx, w_current->first_wy,
-                      radius, start_angle, end_angle);
+  new_obj = o_arc_new (toplevel, OBJ_ARC, GRAPHIC_COLOR,
+                       w_current->first_wx, w_current->first_wy,
+                       radius, start_angle, end_angle);
   s_page_append (toplevel->page_current, new_obj);
 
   /* draw the new object */
@@ -424,8 +424,7 @@ void o_arc_rubberarc_xor(GSCHEM_TOPLEVEL *w_current)
   WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &cx, &cy);
   radius = SCREENabs(toplevel, w_current->distance);
   
-  gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_darkcolor(w_current->select_color));
+  gdk_gc_set_foreground (w_current->xor_gc, x_get_darkcolor (SELECT_COLOR));
   gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
 			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
 			     GDK_JOIN_MITER);

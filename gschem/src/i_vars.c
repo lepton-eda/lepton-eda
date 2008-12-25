@@ -36,15 +36,11 @@
 /* Absolute default used when default_... strings are NULL */
 #define DEFAULT_PRINT_COMMAND "lpr"
 
-int   default_graphic_color = GRAPHIC_COLOR;
-int   default_text_color = TEXT_COLOR;
 int   default_text_size = 10;
 int   default_text_caps = LOWER;
 float default_postscript_font_scale = 1.0;
 int   default_attribute_color = ATTRIBUTE_COLOR;
 int   default_detachattr_color = DETACHED_ATTRIBUTE_COLOR;
-int   default_net_color = NET_COLOR;
-int   default_bus_color = BUS_COLOR;
 int   default_net_endpoint_color = NET_ENDPOINT_COLOR;
 int   default_junction_color = JUNCTION_COLOR;
 int   default_override_net_color = -1;
@@ -54,18 +50,11 @@ int   default_net_endpoint_mode = FILLEDBOX;
 int   default_net_midpoint_mode = FILLED;
 int   default_net_direction_mode = TRUE;
 int   default_net_selection_mode = 0;
-int   default_pin_color = PIN_COLOR;
 int   default_pin_style = THICK;
 int   default_net_style = THICK;
 int   default_bus_style = THICK;
 int   default_line_style = THICK;
-int   default_grid_color = GRID_COLOR;
 int   default_background_color = BACKGROUND_COLOR;
-int   default_select_color = SELECT_COLOR;
-int   default_bb_color = BOUNDINGBOX_COLOR;
-int   default_lock_color = LOCK_COLOR;
-int   default_zoom_box_color = ZOOM_BOX_COLOR;
-int   default_logic_bubble_color = LOGIC_BUBBLE_COLOR;
 int   default_actionfeedback_mode = OUTLINE;
 int   default_zoom_with_pan = TRUE;
 int   default_object_clipping = TRUE;
@@ -75,7 +64,6 @@ int   default_embed_complex = FALSE;
 int   default_include_complex = FALSE;
 int   default_text_output = VECTOR_FONTS;
 int   default_snap_size = 100;
-int   default_stroke_color = STROKE_COLOR;
 
 int   default_paper_width = 11000; /* letter size */
 int   default_paper_height = 85000;
@@ -163,28 +151,13 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
 
   logging_dest = default_logging_dest;
 
-  w_current->graphic_color = default_graphic_color;
-  w_current->text_color    = default_text_color;
   w_current->text_size     = default_text_size;
   w_current->text_caps     = default_text_caps;
   toplevel->postscript_font_scale = default_postscript_font_scale;
 
-  toplevel->attribute_color    = default_attribute_color;
-  toplevel->detachedattr_color = default_detachattr_color;
-  w_current->logic_bubble_color = default_logic_bubble_color;
-
-  w_current->grid_color       = default_grid_color;
   toplevel->background_color = default_background_color;
-  w_current->select_color     = default_select_color;
-  w_current->stroke_color     = default_stroke_color;
 
-  w_current->bb_color = default_bb_color;
-  w_current->zoom_box_color = default_zoom_box_color;
-  w_current->lock_color = default_lock_color;
-
-  w_current->net_color          = default_net_color;
   toplevel->net_style          = default_net_style;
-  toplevel->net_endpoint_color = default_net_endpoint_color;
   w_current->net_endpoint_mode  = default_net_endpoint_mode;
   w_current->net_midpoint_mode  = default_net_midpoint_mode;
   w_current->net_direction_mode = default_net_direction_mode;
@@ -192,13 +165,9 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
 
   toplevel->override_net_color = default_override_net_color;
 
-  toplevel->junction_color = default_junction_color;
-
-  w_current->bus_color          = default_bus_color;
   toplevel->bus_style          = default_bus_style;
   toplevel->override_bus_color = default_override_bus_color;
 
-  w_current->pin_color          = default_pin_color;
   toplevel->pin_style          = default_pin_style;
   toplevel->override_pin_color = default_override_pin_color;
 

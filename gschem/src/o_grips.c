@@ -1584,7 +1584,7 @@ void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int x, int y)
     color = x_get_color(toplevel->override_color);
   } else {
     /* use the normal selection color */
-    color = x_get_color(w_current->select_color);
+    color = x_get_color (SELECT_COLOR);
   }
   /* set the color for the grip */
   gdk_gc_set_foreground(w_current->gc, color);

@@ -145,20 +145,6 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   /* ------------------ */
   /* rc/user parameters */
   /* ------------------ */
-  w_current->graphic_color      = 0;
-  w_current->net_color          = 0;
-  w_current->bus_color          = 0;
-  w_current->pin_color          = 0;
-  w_current->text_color         = 0;
-
-  w_current->logic_bubble_color = 0;
-  w_current->zoom_box_color     = 0;
-  w_current->grid_color         = 0;
-  w_current->select_color       = 0;
-  w_current->bb_color           = 0;
-  w_current->lock_color         = 0;
-  w_current->stroke_color       = 0;
-
   w_current->text_caps = 0;
   w_current->text_size = 0;
 

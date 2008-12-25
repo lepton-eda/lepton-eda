@@ -102,8 +102,7 @@ x_stroke_record (GSCHEM_TOPLEVEL *w_current, gint x, gint y)
 
     g_array_append_val (stroke_points, point);
 
-    gdk_gc_set_foreground (w_current->gc,
-                           x_get_color (w_current->stroke_color));
+    gdk_gc_set_foreground (w_current->gc, x_get_color (STROKE_COLOR));
     gdk_draw_point (w_current->window, w_current->gc, x, y);
   }
 

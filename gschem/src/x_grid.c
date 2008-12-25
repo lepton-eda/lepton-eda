@@ -93,8 +93,7 @@ void x_grid_draw_region (GSCHEM_TOPLEVEL *w_current,
   printf("y2 %d\n", pix_y(w_current, 200));
 #endif
 
-  gdk_gc_set_foreground(w_current->gc,
-                        x_get_color(w_current->grid_color));
+  gdk_gc_set_foreground(w_current->gc, x_get_color (GRID_COLOR));
 
   SCREENtoWORLD (toplevel, x - 1, y + height + 1, &x_start, &y_start);
   SCREENtoWORLD (toplevel, x + width + 1, y - 1, &x_end, &y_end);
@@ -166,7 +165,7 @@ void x_draw_tiles(GSCHEM_TOPLEVEL *w_current)
   int width, height;
   char *tempstring;
 
-  gdk_gc_set_foreground(w_current->gc, x_get_color(w_current->lock_color));
+  gdk_gc_set_foreground (w_current->gc, x_get_color (LOCK_COLOR));
 
   font = gdk_fontset_load ("fixed");
   for (j = 0; j < MAX_TILES_Y; j++) {

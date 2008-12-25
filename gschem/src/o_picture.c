@@ -294,8 +294,7 @@ void o_picture_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
 	 picture_left, picture_top, picture_width, picture_height);
 #endif
   /* draw the picture from the previous variables */
-  gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_darkcolor(w_current->select_color)); 
+  gdk_gc_set_foreground (w_current->xor_gc, x_get_darkcolor (SELECT_COLOR));
   gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
 			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
 			     GDK_JOIN_MITER);

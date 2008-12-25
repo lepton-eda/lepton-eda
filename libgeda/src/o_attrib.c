@@ -121,7 +121,7 @@ void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current)
 
   /* \todo this makes me nervous... very nervous */
   current->attached_to=NULL;
-  current->color = toplevel->detachedattr_color;
+  current->color = DETACHED_ATTRIBUTE_COLOR;
 
   if (current->type == OBJ_TEXT) {
     o_complex_set_color(current->text->prim_objs,
@@ -133,12 +133,12 @@ void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current)
   /* \todo not sure on this */
   if (current->saved_color != -1) {
     if (current->type == OBJ_TEXT) {
-      o_complex_set_saved_color_only(current->text->prim_objs,
-                                     toplevel->detachedattr_color);
+      o_complex_set_saved_color_only (current->text->prim_objs,
+                                      DETACHED_ATTRIBUTE_COLOR);
     } else {
       printf("Tried to set the color on a complex!\nlibgeda/src/o_attrib_free 2\n");
     }
-    current->saved_color = toplevel->detachedattr_color;
+    current->saved_color = DETACHED_ATTRIBUTE_COLOR;
   }
 }
 
@@ -178,10 +178,10 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object,
 
   if (set_color) {
     if (attrib->saved_color == -1) {
-      attrib->color = toplevel->attribute_color;
+      attrib->color = ATTRIBUTE_COLOR;
       o_complex_set_color (attrib->text->prim_objs, attrib->color);
     } else {
-      attrib->saved_color = toplevel->attribute_color;
+      attrib->saved_color = ATTRIBUTE_COLOR;
       o_complex_set_saved_color_only (attrib->text->prim_objs, attrib->saved_color);
     }
   }
@@ -477,14 +477,14 @@ void o_attrib_set_color(TOPLEVEL *toplevel, GList *attributes)
         o_complex_set_color(a_current->text->prim_objs, SELECT_COLOR);
         a_current->color = SELECT_COLOR;
 
-        o_complex_set_saved_color_only(a_current->text->prim_objs,
-                                       toplevel->attribute_color);
-        a_current->saved_color = toplevel->attribute_color;
+        o_complex_set_saved_color_only (a_current->text->prim_objs,
+                                        ATTRIBUTE_COLOR);
+        a_current->saved_color = ATTRIBUTE_COLOR;
 
       } else {
-        o_complex_set_color(a_current->text->prim_objs,
-                            toplevel->attribute_color);
-        a_current->color = toplevel->attribute_color;
+        o_complex_set_color (a_current->text->prim_objs,
+                             ATTRIBUTE_COLOR);
+        a_current->color = ATTRIBUTE_COLOR;
       }
     }
 

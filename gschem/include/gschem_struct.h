@@ -128,21 +128,6 @@ struct st_gschem_toplevel {
   /* ------------------ */
   /* rc/user parameters */
   /* ------------------ */
-  int graphic_color;
-  int net_color;
-  int bus_color;
-  int pin_color;
-  int text_color;
-
-  /* not used anywhere yet, but will be */
-  int logic_bubble_color;
-  int zoom_box_color;
-  int grid_color;
-  int select_color;
-  int bb_color;
-  int lock_color;
-  int stroke_color;       /* color of the stroke points */
-
   int text_caps;
   int text_size;
 

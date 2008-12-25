@@ -297,7 +297,8 @@ void o_place_rubberplace_xor (GSCHEM_TOPLEVEL *w_current, int drawing)
     WORLDtoSCREEN(toplevel, left + diff_x, top + diff_y, &s_left, &s_top);
     WORLDtoSCREEN(toplevel, right + diff_x, bottom + diff_y, &s_right, &s_bottom);
 
-    gdk_gc_set_foreground(w_current->bounding_xor_gc, x_get_darkcolor (w_current->bb_color));
+    gdk_gc_set_foreground (w_current->bounding_xor_gc,
+                           x_get_darkcolor (BOUNDINGBOX_COLOR));
     gdk_draw_rectangle (w_current->drawable,
                         w_current->bounding_xor_gc, FALSE,
                         s_left, s_bottom,

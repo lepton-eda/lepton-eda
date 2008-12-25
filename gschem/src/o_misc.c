@@ -119,7 +119,7 @@ void o_lock(GSCHEM_TOPLEVEL *w_current)
       if (object->locked_color == -1) {
         object->sel_func = NULL;
         object->locked_color = object->color;
-        object->color = w_current->lock_color;
+        object->color = LOCK_COLOR;
         w_current->toplevel->page_current->CHANGED=1;
       } else {
         s_log_message(_("Object already locked\n"));

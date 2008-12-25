@@ -313,8 +313,7 @@ void a_zoom_box_rubberband_xor(GSCHEM_TOPLEVEL *w_current)
   box_left   = min(x1, x2);
   box_top    = min(y1, y2);
 
-  gdk_gc_set_foreground(w_current->xor_gc,				
-			x_get_darkcolor(w_current->zoom_box_color));
+  gdk_gc_set_foreground (w_current->xor_gc, x_get_darkcolor (ZOOM_BOX_COLOR));
   gdk_draw_rectangle (w_current->drawable, w_current->xor_gc, FALSE,
                       box_left, box_top, box_width, box_height);
 }

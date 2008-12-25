@@ -661,7 +661,7 @@ void o_path_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 /*! \brief Draw path from GSCHEM_TOPLEVEL object.
  *  \par Function Description
  *  This function draws a path with an exclusive or function over the sheet.
- *  The color of the box is <B>w_current->select_color</B>. The path is
+ *  The color of the box is <B>SELECT_COLOR</B>. The path is
  *  described by the two points (<B>w_current->first_wx</B>,
  *  <B>w_current->first_wy</B>) and (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>).
  *
@@ -687,8 +687,7 @@ void o_path_rubberpath_xor(GSCHEM_TOPLEVEL *w_current)
     return;
   }
 
-  gdk_gc_set_foreground(w_current->xor_gc,
-                        x_get_darkcolor(w_current->select_color));
+  gdk_gc_set_foreground (w_current->xor_gc, x_get_darkcolor (SELECT_COLOR));
   gdk_gc_set_line_attributes(w_current->xor_gc, 0, GDK_LINE_SOLID,
                              GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
 
@@ -734,7 +733,7 @@ static void o_path_xor_control_lines (GSCHEM_TOPLEVEL *w_current,
     gc = w_current->gc;
   } else {
     /* use the normal selection color */
-    color = x_get_darkcolor(w_current->select_color);
+    color = x_get_darkcolor (SELECT_COLOR);
     gc = w_current->outline_xor_gc;
   }
 

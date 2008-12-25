@@ -521,9 +521,9 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   }
 
   /* create the object */
-  new_obj = o_circle_new(toplevel, OBJ_CIRCLE, w_current->graphic_color,
-                         w_current->first_wx, w_current->first_wy,
-                         w_current->distance);
+  new_obj = o_circle_new (toplevel, OBJ_CIRCLE, GRAPHIC_COLOR,
+                          w_current->first_wx, w_current->first_wy,
+                          w_current->distance);
   s_page_append (toplevel->page_current, new_obj);
 
   /* draw it */
@@ -600,8 +600,7 @@ void o_circle_rubbercircle_xor(GSCHEM_TOPLEVEL *w_current)
   radius = SCREENabs(toplevel, w_current->distance);
 
   /* draw the circle from the w_current variables */
-  gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_darkcolor(w_current->select_color));
+  gdk_gc_set_foreground (w_current->xor_gc, x_get_darkcolor (SELECT_COLOR));
   gdk_draw_line (w_current->drawable, w_current->xor_gc,
                  cx, cy, cx + radius, cy);
   gdk_draw_arc (w_current->drawable, w_current->xor_gc, FALSE,

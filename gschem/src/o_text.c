@@ -137,8 +137,7 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                               x_get_color(toplevel->override_color));
       } else {
 
-        gdk_gc_set_foreground(w_current->gc, 
-                              x_get_color(w_current->lock_color));
+        gdk_gc_set_foreground (w_current->gc, x_get_color (LOCK_COLOR));
       }
 
       offset = SCREENabs(toplevel, 10);
@@ -196,8 +195,7 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                           x_get_color(toplevel->override_color));
   } else {
 
-    gdk_gc_set_foreground(w_current->gc, 
-                          x_get_color(w_current->lock_color));
+    gdk_gc_set_foreground (w_current->gc, x_get_color (LOCK_COLOR));
   }
 
   if (toplevel->DONT_REDRAW == 0) {
@@ -287,14 +285,13 @@ void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text)
   /* here you need to add OBJ_TEXT when it's done */
   toplevel->page_current->place_list =
     g_list_append(toplevel->page_current->place_list,
-                  o_text_new(toplevel,
-                             OBJ_TEXT, w_current->text_color,
-                             0, 0, LOWER_LEFT, 0, /* zero is angle */
-                             text,
-                             w_current->text_size,
-                             /* has to be visible so you can place it */
-                             /* visibility is set when you create the object */
-                             VISIBLE, SHOW_NAME_VALUE));
+                  o_text_new (toplevel, OBJ_TEXT, TEXT_COLOR,
+                              0, 0, LOWER_LEFT, 0, /* zero is angle */
+                              text,
+                              w_current->text_size,
+                              /* has to be visible so you can place it */
+                              /* visibility is set when you create the object */
+                              VISIBLE, SHOW_NAME_VALUE));
 
   w_current->inside_action = 1;
   i_set_state (w_current, ENDTEXT);

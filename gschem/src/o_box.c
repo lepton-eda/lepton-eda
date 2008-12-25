@@ -525,9 +525,9 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   }
 
   /* create the object */
-  new_obj = o_box_new(toplevel, OBJ_BOX, w_current->graphic_color,
-                      box_left, box_top,
-                      box_left + box_width, box_top - box_height);
+  new_obj = o_box_new (toplevel, OBJ_BOX, GRAPHIC_COLOR,
+                       box_left, box_top,
+                       box_left + box_width, box_top - box_height);
   s_page_append (toplevel->page_current, new_obj);
 
   /* draw it */
@@ -617,8 +617,7 @@ void o_box_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
   box_top    = min(y1, y2);
   
   /* draw the box from the previous variables */
-  gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_darkcolor(w_current->select_color));
+  gdk_gc_set_foreground (w_current->xor_gc, x_get_darkcolor (SELECT_COLOR));
   gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
 			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
 			     GDK_JOIN_MITER);

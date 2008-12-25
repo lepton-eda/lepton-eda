@@ -78,11 +78,7 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->snap_size = 100;
 
   /* BLOCK SET IN GSCHEM, BUT USED IN LIBGEDA - NEEDS A RETHINK */
-  toplevel->attribute_color    = 0;
-  toplevel->detachedattr_color = 0;
   toplevel->background_color   = 0;
-  toplevel->net_endpoint_color = 0;
-  toplevel->junction_color     = 0;
   toplevel->override_net_color = -1;
   toplevel->override_bus_color = -1;
   toplevel->override_pin_color = -1;

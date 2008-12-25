@@ -171,7 +171,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
   int left, right, top, bottom;
   OBJECT *o_current;
 
-  color = toplevel->detachedattr_color;
+  color = DETACHED_ATTRIBUTE_COLOR;
 
   o_current = object;
 
@@ -183,25 +183,25 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
       case(OBJ_PLACEHOLDER):
         world_x = o_current->complex->x;
         world_y = o_current->complex->y;
-        color = toplevel->attribute_color;
+        color = ATTRIBUTE_COLOR;
         break;
 
       case(OBJ_ARC):
         world_x = o_current->arc->x;
         world_y = o_current->arc->y;
-        color = toplevel->attribute_color;
+        color = ATTRIBUTE_COLOR;
         break;
 
       case(OBJ_CIRCLE):
         world_x = o_current->circle->center_x;
         world_y = o_current->circle->center_y;
-        color = toplevel->attribute_color;
+        color = ATTRIBUTE_COLOR;
         break;
 
       case(OBJ_BOX):
         world_x = o_current->box->upper_x;
         world_y = o_current->box->upper_y;
-        color = toplevel->attribute_color;
+        color = ATTRIBUTE_COLOR;
         break;
 
       case(OBJ_LINE):
@@ -210,7 +210,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
       case(OBJ_BUS):
         world_x = o_current->line->x[0];
         world_y = o_current->line->y[0];
-        color = toplevel->attribute_color;
+        color = ATTRIBUTE_COLOR;
         break;
 
       case(OBJ_TEXT):
@@ -218,7 +218,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
         world_x = o_current->text->x;
         world_y = o_current->text->y;
 			
-        color = toplevel->detachedattr_color;
+        color = DETACHED_ATTRIBUTE_COLOR;
 
 	o_current = NULL;
         break;
@@ -233,7 +233,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
     world_y = top;  
 
     /* printf("%d %d\n", world_x, world_y); */
-    color = toplevel->detachedattr_color;
+    color = DETACHED_ATTRIBUTE_COLOR;
   }
 
   /* first create text item */

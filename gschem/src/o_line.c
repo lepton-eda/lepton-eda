@@ -231,10 +231,9 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   }
 
   /* create the line object and draw it */
-  new_obj = o_line_new(toplevel, OBJ_LINE,
-                       w_current->graphic_color,
-                       w_current->first_wx, w_current->first_wy,
-                       w_current->second_wx, w_current->second_wy);
+  new_obj = o_line_new (toplevel, OBJ_LINE, GRAPHIC_COLOR,
+                        w_current->first_wx, w_current->first_wy,
+                        w_current->second_wx, w_current->second_wy);
   s_page_append (toplevel->page_current, new_obj);
 
   /* draw it */
@@ -306,7 +305,7 @@ void o_line_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 /*! \brief Draw line from GSCHEM_TOPLEVEL object.
  *  \par Function Description
  *  This function draws a line with an exclusive or function over the sheet.
- *  The color of the box is <B>w_current->select_color</B>. The line is
+ *  The color of the box is <B>SELECT_COLOR</B>. The line is
  *  described by the two points (<B>w_current->first_wx</B>,
  *  <B>w_current->first_wy</B>) and (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>).
  *
@@ -322,8 +321,7 @@ void o_line_rubberline_xor(GSCHEM_TOPLEVEL *w_current)
 
   /* draw the circle from the w_current variables */
   /* with xor-function */
-  gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_darkcolor(w_current->select_color));
+  gdk_gc_set_foreground (w_current->xor_gc, x_get_darkcolor (SELECT_COLOR));
   gdk_gc_set_line_attributes(w_current->xor_gc, 0,
 			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
 			     GDK_JOIN_MITER);

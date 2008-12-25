@@ -646,7 +646,7 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   save_wy = w_current->third_wy;
 
   if (toplevel->override_net_color == -1) {
-    color = w_current->net_color;
+    color = NET_COLOR;
   } else {
     color = toplevel->override_net_color;
   }
@@ -844,8 +844,7 @@ void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
   }
   size = max(size, 0);
 
-  gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_darkcolor(w_current->select_color));
+  gdk_gc_set_foreground (w_current->xor_gc, x_get_darkcolor (SELECT_COLOR));
 
   if (w_current->magneticnet_mode) {
     if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
@@ -968,7 +967,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
   }
 
   if (toplevel->override_net_color == -1) {
-    color = w_current->net_color;
+    color = NET_COLOR;
   } else {
     color = toplevel->override_net_color;
   }

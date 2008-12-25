@@ -482,11 +482,7 @@ struct st_toplevel {
   int snap_size;		
 
   /* BLOCK SET IN GSCHEM, BUT USED IN LIBGEDA - NEEDS A RETHINK */
-  int attribute_color;
-  int detachedattr_color;
   int background_color;
-  int net_endpoint_color;
-  int junction_color;
   int override_net_color;
   int override_bus_color;
   int override_pin_color;

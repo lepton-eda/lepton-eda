@@ -262,7 +262,7 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
   OBJECT *o_current;
   OBJECT *new_obj;
 
-  color = pr_current->detachedattr_color;
+  color = DETACHED_ATTRIBUTE_COLOR;
 
   o_current = object;
 
@@ -273,13 +273,13 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
     case (OBJ_COMPLEX):
       world_x = o_current->complex->x;
       world_y = o_current->complex->y;
-      color = pr_current->attribute_color;
+      color = ATTRIBUTE_COLOR;
       break;
 
     case (OBJ_NET):
       world_x = o_current->complex->x;
       world_y = o_current->complex->y;
-      color = pr_current->attribute_color;
+      color = ATTRIBUTE_COLOR;
       break;
 
     default:
@@ -296,7 +296,7 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
     world_y = top;
 
     /* printf("%d %d\n", world_x, world_y); */
-    color = pr_current->detachedattr_color;
+    color = DETACHED_ATTRIBUTE_COLOR;
   }
 
   /* first create text item */

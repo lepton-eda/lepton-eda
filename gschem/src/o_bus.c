@@ -224,7 +224,7 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   g_assert( w_current->inside_action != 0 );
 
   if (toplevel->override_bus_color == -1) {
-    color = w_current->bus_color;
+    color = BUS_COLOR;
   } else {
     color = toplevel->override_bus_color;
   }
@@ -361,8 +361,7 @@ void o_bus_rubberbus_xor(GSCHEM_TOPLEVEL *w_current)
                                GDK_JOIN_MITER);
   }
 
-  gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_darkcolor(w_current->select_color));
+  gdk_gc_set_foreground (w_current->xor_gc, x_get_darkcolor (SELECT_COLOR));
   gdk_draw_line (w_current->drawable, w_current->xor_gc, x1, y1, x2, y2);
 
   if (toplevel->bus_style == THICK ) {
