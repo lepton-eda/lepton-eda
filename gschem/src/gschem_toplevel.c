@@ -129,7 +129,7 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->event_state = SELECT;
   w_current->image_width  = 0;
   w_current->image_height = 0;
-  w_current->grid = GRID_DOTS;
+  w_current->grid = GRID_MESH;
   w_current->min_zoom = 0;
   w_current->max_zoom = 8;
   w_current->text_alignment = 0;
