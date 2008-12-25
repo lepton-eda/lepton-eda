@@ -40,28 +40,28 @@ COLOR print_colors[MAX_COLORS];
 #define ENDMAP  {0x00, 0x00, 0x00, 0x00, FALSE}
 
 static COLOR default_colors[] = {
-  WHITE,           /* background         */
-  BLACK,           /* pin                */
-  BLACK,           /* net-endpoint       */
-  BLACK,           /* graphic            */
-  BLACK,           /* net                */
-  BLACK,           /* attribute          */
-  BLACK,           /* logic-bubble       */
-  BLACK,           /* grid               */
-  BLACK,           /* detached-attribute */
-  BLACK,           /* text               */
-  BLACK,           /* bus                */
-  GRAY,            /* select             */
-  GRAY,            /* bounding-box       */
-  GRAY,            /* zoom-box           */
-  GRAY,            /* stroke             */
-  BLACK,           /* lock               */
-  NOCOLOR,         /* output-background  */
-  BLACK,           /* junction           */
-  NOCOLOR,         /* freestyle1         */
-  NOCOLOR,         /* freestyle2         */
-  NOCOLOR,         /* freestyle3         */
-  NOCOLOR,         /* freestyle4         */
+  WHITE,           /*  0: background         */
+  BLACK,           /*  1: pin                */
+  BLACK,           /*  2: net-endpoint       */
+  BLACK,           /*  3: graphic            */
+  BLACK,           /*  4: net                */
+  BLACK,           /*  5: attribute          */
+  BLACK,           /*  6: logic-bubble       */
+  BLACK,           /*  7: grid               */
+  BLACK,           /*  8: detached-attribute */
+  BLACK,           /*  9: text               */
+  BLACK,           /* 10: bus                */
+  GRAY,            /* 11: select             */
+  GRAY,            /* 12: bounding-box       */
+  GRAY,            /* 13: zoom-box           */
+  GRAY,            /* 14: stroke             */
+  BLACK,           /* 15: lock               */
+  NOCOLOR,         /* 16: output-background  */
+  NOCOLOR,         /* 17: freestyle1         */
+  NOCOLOR,         /* 18: freestyle2         */
+  NOCOLOR,         /* 19: freestyle3         */
+  NOCOLOR,         /* 20: freestyle4         */
+  BLACK,           /* 21: junction           */
   ENDMAP
 };
 

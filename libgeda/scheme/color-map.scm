@@ -19,12 +19,12 @@
     (stroke . 14)
     (lock . 15)
     (output-background . 16)
-    (junction . 21)
-
     (freestyle1 . 17)
     (freestyle2 . 18)
     (freestyle3 . 19)
-    (freestyle4 . 20)))
+    (freestyle4 . 20)
+    (junction . 21)
+   ))
 
 ;; Look up the internal system ID for a symbolic color
 (define (color-map-name-to-index val)
