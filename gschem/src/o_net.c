@@ -99,66 +99,30 @@ void o_net_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   printf("drawing net\n\n");
 #endif
 
+  size = 1;
+
   if (toplevel->net_style == THICK ) {
     size = SCREENabs(toplevel, NET_WIDTH);
 
-    if (size < 0)
-      size=0;
-
-    gdk_gc_set_line_attributes(w_current->gc, size, 
-                               GDK_LINE_SOLID,
-                               GDK_CAP_BUTT,
-                               GDK_JOIN_MITER);
-
-    gdk_gc_set_line_attributes(w_current->bus_gc, size, 
-                               GDK_LINE_SOLID,
-                               GDK_CAP_BUTT,
-                               GDK_JOIN_MITER);
+    if (size < 1)
+      size=1;
   }
+
+  cairo_set_line_width (w_current->cr, size);
+  cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_SQUARE);
 
   if (toplevel->override_color != -1 ) {
-
-    gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(toplevel->override_color));
-
-    gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
+    gschem_cairo_set_source_color (w_current->cr, x_color_lookup (toplevel->override_color));
   } else {
-
-    gdk_gc_set_foreground(w_current->gc,
-                          x_get_color(o_current->color));
-    gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
-
-#if NET_DEBUG
-    /* temp debug only */
-    font = gdk_fontset_load ("10x20");
-    tempstring = g_strdup_printf("%s", o_current->name);
-    gdk_draw_text (w_current->drawable,
-                   font,
-                   w_current->gc,
-                   x1+20, y1+20,
-                   tempstring,
-                   strlen(tempstring));
-    gdk_font_unref(font);
-    g_free(tempstring);
-#endif
+    gschem_cairo_set_source_color (w_current->cr, x_color_lookup (o_current->color));
   }
+
+  gschem_cairo_line (w_current->cr, END_SQUARE, size, x1, y1, x2, y2);
+  cairo_stroke (w_current->cr);
 
 #if DEBUG 
   printf("drew net\n\n");
 #endif
-
-  /* yes zero is right for the width -> use hardware lines */
-  if (toplevel->net_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->gc, 0, 
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-
-    gdk_gc_set_line_attributes(w_current->bus_gc, 0, 
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
 
   if (o_current->selected && w_current->draw_grips) {
     o_line_draw_grips (w_current, o_current);

@@ -38,6 +38,7 @@ void o_pin_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   TOPLEVEL *toplevel = w_current->toplevel;
   int size;
   int x1, y1, x2, y2; /* screen coords */
+  COLOR *color;
 
   if (o_current->line == NULL) {
     return;
@@ -53,35 +54,31 @@ void o_pin_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   printf("drawing pin\n\n");
 #endif
 
-  if (toplevel->pin_style == THICK ) {
-    size = SCREENabs(toplevel, PIN_WIDTH);
-    gdk_gc_set_line_attributes(w_current->gc, size, GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
+  if (toplevel->override_color != -1 ) {
+    color = x_color_lookup (toplevel->override_color);
+  } else {
+    color = x_color_lookup (o_current->color);
   }
 
-  if (toplevel->override_color != -1 ) {
-    gdk_gc_set_foreground(w_current->gc,
-			  x_get_color(toplevel->override_color));
-    if (toplevel->DONT_REDRAW == 0) {
-      gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
+  if (toplevel->DONT_REDRAW == 0) {
+    size = 1;
+    if (toplevel->pin_style == THICK) {
+      size = SCREENabs(toplevel, PIN_WIDTH);
+      if (size < 1)
+        size=1;
     }
-  } else {
-    if (toplevel->DONT_REDRAW == 0) {
-      gdk_gc_set_foreground(w_current->gc, x_get_color(o_current->color));
-      gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
-    }
+
+    cairo_set_line_width (w_current->cr, size);
+    cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_BUTT);
+
+    gschem_cairo_set_source_color (w_current->cr, color);
+
+    gschem_cairo_line (w_current->cr, END_NONE, size, x1, y1, x2, y2);
+    cairo_stroke (w_current->cr);
   }
 
   /* draw the cue directly */
   o_cue_draw_lowlevel(w_current, o_current, o_current->whichend);
-  
-  /* yes zero is right for the width -> use hardware lines */
-  if (toplevel->pin_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->gc, 0, GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
 
 #if DEBUG
   printf("drawing pin\n");

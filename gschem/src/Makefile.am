@@ -67,7 +67,8 @@ gschem_SOURCES = \
 	x_stroke.c \
 	x_window.c
 
-CAIRO_SRCS =
+CAIRO_SRCS = \
+	gschem_cairo.c
 
 EXTRA_gschem_SOURCES = \
 	${CAIRO_SRCS}

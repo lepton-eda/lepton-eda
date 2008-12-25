@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <cairo.h>
 
 #include "gschem.h"
 
@@ -31,15 +32,18 @@
 #define NUM_BEZIER_SEGMENTS 100
 
 
-typedef void (*DRAW_FUNC) (GdkDrawable *w, GdkGC *gc, GdkColor *color,
-                           GSCHEM_TOPLEVEL *w_current, PATH *path,
-                           GdkCapStyle cap,
-                           gint line_width, gint length, gint space);
-
-typedef void (*FILL_FUNC) (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+typedef void (*FILL_FUNC) (GdkDrawable *w, GdkGC *gc, COLOR *color,
                            GSCHEM_TOPLEVEL *w_currentm, PATH *path,
                            gint fill_width,
                            gint angle1, gint pitch1, gint angle2, gint pitch2);
+
+
+static void hint_coordinates (int x, int y, double *fx, double *fy, int width)
+{
+  double offset = ((width % 2) == 0) ? 0 : 0.5;
+  *fx = (double)x + offset;
+  *fy = (double)y + offset;
+}
 
 
 static void path_to_points_modify (GSCHEM_TOPLEVEL *w_current, PATH *path,
@@ -187,103 +191,6 @@ void o_path_draw_solid(GdkDrawable *w, GdkGC *gc, GdkColor *color,
   g_free (points);
 }
 
-/*! \brief Draw a path with a dotted line type.
- *  \par Function Description
- *  This function draws a path with a dotted line type. The parameter
- *  <B>space</B> represents the distance between two of the dots. The
- *  parameter <B>length</B> is unused. The diameter of the dots is given by
- *  the width of the line given by <B>width</B>.
- *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box line color.
- *  \param [in] cap         Box line end cap type (unused).
- *  \param [in] path        The PATH object to draw
- *  \param [in] line_width  Width of line to draw path.
- *  \param [in] length      (unused)
- *  \param [in] space       Space in pixels between dots.
- */
-
-static void o_path_draw_dotted (GdkDrawable *w, GdkGC *gc, GdkColor *color,
-                                GSCHEM_TOPLEVEL *w_current, PATH *path,
-                                GdkCapStyle cap, gint line_width,
-                                gint length, gint space)
-{
-  o_path_draw_solid (w, gc, color, w_current, path, cap,
-                     line_width, length, space);
-}
-
-/*! \brief Draw a path with a dashed line type.
- *  \par Function Description
- *  This function draws a path with a dashed line type. The parameter
- *  <B>space</B> represents the distance between two of the dash. The
- *  parameter <B>length</B> represents the length of a dash.
- *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box line color.
- *  \param [in] cap         Box line end cap type (unused).
- *  \param [in] path        The PATH object to draw
- *  \param [in] line_width  Width of line to draw path.
- *  \param [in] length      Length of dash in pixels.
- *  \param [in] space       Space between dashes in pixels.
- */
-static void o_path_draw_dashed (GdkDrawable *w, GdkGC *gc, GdkColor *color,
-                                GSCHEM_TOPLEVEL *w_current, PATH *path,
-                                GdkCapStyle cap, gint line_width,
-                                gint length, gint space)
-{
-  o_path_draw_solid (w, gc, color, w_current, path, cap,
-                     line_width, length, space);
-}
-
-/*! \brief Draw a path with a centered line type.
- *  \par Function Description
- *  This function draws a path with a centered line type. The parameter
- *  <B>space</B> represents the distance between a dot and the dash. The
- *  parameter <B>length</B> represents the length of a dash.
- *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box line color.
- *  \param [in] cap         Box line end cap type (unused).
- *  \param [in] path        The PATH object to draw
- *  \param [in] line_width  Width of line to draw path.
- *  \param [in] length      (unused)?
- *  \param [in] space       (unused)?
- */
-static void o_path_draw_center (GdkDrawable *w, GdkGC *gc, GdkColor *color,
-                                GSCHEM_TOPLEVEL *w_current, PATH *path,
-                                GdkCapStyle cap, gint line_width,
-                                gint length, gint space)
-{
-  o_path_draw_solid (w, gc, color, w_current, path, cap,
-                     line_width, length, space);
-}
-
-/*! \brief Draw a path with a phantom line type.
- *  \par Function Description
- *  This function draws a path with a phantom line type. The parameter
- *  <B>space</B> represents the distance between a dot and a dash.
- *  The parameter <B>length</B> represents the length of a dash.
- *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box line color.
- *  \param [in] cap         Box line end cap type (unused).
- *  \param [in] path        The PATH object to draw
- *  \param [in] line_width  Width of line to draw path.
- *  \param [in] length      (unused)?
- *  \param [in] space       (unused)?
- */
-static void o_path_draw_phantom (GdkDrawable *w, GdkGC *gc, GdkColor *color,
-                                 GSCHEM_TOPLEVEL *w_current, PATH *path,
-                                 GdkCapStyle cap, gint line_width,
-                                 gint length, gint space)
-{
-  o_path_draw_solid (w, gc, color, w_current, path, cap,
-                     line_width, length, space);
-}
 
 /*! \brief Placeholder filling function.
  *  \par Function Description
@@ -301,7 +208,7 @@ static void o_path_draw_phantom (GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-static void o_path_fill_hollow (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+static void o_path_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
                                 GSCHEM_TOPLEVEL *w_current, PATH *path,
                                 gint fill_width,
                                 gint angle1, gint pitch1,
@@ -327,29 +234,13 @@ static void o_path_fill_hollow (GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-static void o_path_fill_fill (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+static void o_path_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
                               GSCHEM_TOPLEVEL *w_current, PATH *path,
                               gint fill_width,
                               gint angle1, gint pitch1,
                               gint angle2, gint pitch2)
 {
-  GdkPoint *points;
-  int num_points;
-
-  gdk_gc_set_foreground(gc, color);
-  gdk_gc_set_line_attributes(gc, 1, GDK_LINE_SOLID,
-                             GDK_CAP_BUTT, GDK_JOIN_MITER);
-  path_to_points (w_current, path, 0, 0, &points, &num_points);
-
-  if (num_points == 0) {
-    g_free (points);
-    return;
-  }
-
-  gdk_draw_polygon (w_current->drawable, w_current->gc,
-                    TRUE, points, num_points);
-
-  g_free (points);
+  /* NOP: We'll fill it when we do the stroking */
 }
 
 /*! \brief Fill inside of path with single line pattern.
@@ -371,7 +262,7 @@ static void o_path_fill_fill (GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
                                GSCHEM_TOPLEVEL *w_current, PATH *path,
                                gint fill_width,
                                gint angle1, gint pitch1,
@@ -380,8 +271,9 @@ static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
   int i;
   GArray *lines;
 
-  lines = g_array_new (FALSE, FALSE, sizeof (LINE));
+  gschem_cairo_set_source_color (w_current->cr, color);
 
+  lines = g_array_new (FALSE, FALSE, sizeof (LINE));
   m_hatch_path (path, angle1, pitch1, lines);
 
   for (i=0; i < lines->len; i++) {
@@ -390,8 +282,9 @@ static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
 
     WORLDtoSCREEN (w_current->toplevel, line->x[0], line->y[0], &x1, &y1);
     WORLDtoSCREEN (w_current->toplevel, line->x[1], line->y[1], &x2, &y2);
-    o_line_draw_solid (w, gc, color, GDK_CAP_BUTT,
-                       x1, y1, x2, y2, fill_width, -1, -1);
+    gschem_cairo_line (w_current->cr, END_NONE, fill_width, x1, y1, x2, y2);
+    gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE,
+                                        fill_width, -1, -1);
   }
 
   g_array_free (lines, TRUE);
@@ -418,7 +311,7 @@ static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, GdkColor *color,
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-static void o_path_fill_mesh (GdkDrawable *w, GdkGC *gc, GdkColor *color,
+static void o_path_fill_mesh (GdkDrawable *w, GdkGC *gc, COLOR *color,
                               GSCHEM_TOPLEVEL *w_current, PATH *path,
                               gint fill_width,
                               gint angle1, gint pitch1,
@@ -429,6 +322,7 @@ static void o_path_fill_mesh (GdkDrawable *w, GdkGC *gc, GdkColor *color,
   o_path_fill_hatch (w, gc, color, w_current, path,
                      fill_width, angle2, pitch2, -1, -1);
 }
+
 
 /*! \brief Draw a path on screen.
  *  \par Function Description
@@ -447,11 +341,15 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   int wleft, wtop, wright, wbottom;
   int line_width, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
-  DRAW_FUNC draw_func = NULL;
   FILL_FUNC fill_func;
+  PATH_SECTION *section;
+  int i;
+  int x1, y1, x2, y2, x3, y3;
+  double fx1 = 0.0, fy1 = 0.0;
+  double fx2 = 0.0, fy2 = 0.0;
+  double fx3 = 0.0, fy3 = 0.0;
 
-  GdkColor *color;
-  GdkCapStyle path_end;
+  COLOR *color;
 
   if (path == NULL) {
     return;
@@ -465,72 +363,19 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if (toplevel->DONT_REDRAW == 1)
     return;
 
-  if (toplevel->override_color != -1 )
-    color = x_get_color(toplevel->override_color);
-  else
-    color = x_get_color(o_current->color);
+  if (toplevel->override_color != -1 ) {
+    color = x_color_lookup (toplevel->override_color);
+  } else {
+    color = x_color_lookup (o_current->color);
+  }
 
   line_width = SCREENabs( toplevel, o_current->line_width );
   if( line_width <= 0) {
     line_width = 1;
   }
 
-  switch(o_current->line_end) {
-    case END_NONE:   path_end = GDK_CAP_BUTT;       break;
-    case END_SQUARE: path_end = GDK_CAP_PROJECTING; break;
-    case END_ROUND:  path_end = GDK_CAP_ROUND;      break;
-    default:
-      fprintf(stderr, _("Unknown end for path (%d)\n"),
-                      o_current->line_end);
-      path_end = GDK_CAP_BUTT;
-    break;
-  }
-
   length = SCREENabs( toplevel, o_current->line_length );
   space = SCREENabs( toplevel, o_current->line_space );
-
-  switch(o_current->line_type) {
-    case TYPE_SOLID:
-      length = -1;
-      space = -1;
-      draw_func = o_path_draw_solid;
-      break;
-
-    case TYPE_DOTTED:
-      length = -1; /* ..._draw_dotted only space is used */
-      draw_func = o_path_draw_dotted;
-      break;
-
-    case TYPE_DASHED:
-      draw_func = o_path_draw_dashed;
-      break;
-
-    case TYPE_CENTER:
-      draw_func = o_path_draw_center;
-      break;
-
-    case TYPE_PHANTOM:
-      draw_func = o_path_draw_phantom;
-      break;
-
-    case TYPE_ERASE:
-      break;
-
-    default:
-      length = -1;
-      space = -1;
-      line_width = 0; /* just to be careful */
-      draw_func = o_path_draw_solid;
-      fprintf(stderr, _("Unknown type for path !\n"));
-      break;
-  }
-
-  if((length == 0) || (space == 0))
-  draw_func = o_path_draw_solid;
-
-  (*draw_func) (w_current->drawable, w_current->gc, color, w_current,
-                o_current->path, path_end, line_width, length, space);
-
 
   /*
    * The values needed for the fill operation are taken from the
@@ -600,6 +445,54 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
   (*fill_func) (w_current->drawable, w_current->gc, color,
                 w_current, path, fill_width, angle1, pitch1, angle2, pitch2);
+
+  for (i = 0; i <  path->num_sections; i++) {
+    section = &path->sections[i];
+
+    switch (section->code) {
+      case PATH_CURVETO:
+        /* Two control point grips */
+        WORLDtoSCREEN (toplevel, section->x1, section->y1, &x1, &y1);
+        WORLDtoSCREEN (toplevel, section->x2, section->y2, &x2, &y2);
+        hint_coordinates (x1, y1, &fx1, &fy1, line_width);
+        hint_coordinates (x2, y2, &fx2, &fy2, line_width);
+        /* Fall through */
+      case PATH_MOVETO:
+      case PATH_MOVETO_OPEN:
+      case PATH_LINETO:
+        /* Destination point grip */
+        WORLDtoSCREEN (toplevel, section->x3, section->y3, &x3, &y3);
+        hint_coordinates (x3, y3, &fx3, &fy3, line_width);
+      case PATH_END:
+        break;
+    }
+
+    switch (section->code) {
+      case PATH_MOVETO:
+        cairo_close_path (w_current->cr);
+        /* fall-through */
+      case PATH_MOVETO_OPEN:
+        cairo_move_to (w_current->cr, fx3, fy3);
+        break;
+      case PATH_CURVETO:
+        cairo_curve_to (w_current->cr, fx1, fy1, fx2, fy2, fx3, fy3);
+        break;
+      case PATH_LINETO:
+        cairo_line_to (w_current->cr, fx3, fy3);
+        break;
+      case PATH_END:
+        cairo_close_path (w_current->cr);
+        break;
+    }
+  }
+
+  gschem_cairo_set_source_color (w_current->cr, color);
+
+  if (o_current->fill_type == FILLING_FILL)
+    cairo_fill_preserve (w_current->cr);
+
+  gschem_cairo_stroke (w_current->cr, o_current->line_type,
+                       o_current->line_end, line_width, length, space);
 
   if (o_current->selected && w_current->draw_grips) {
     o_path_draw_grips (w_current, o_current);
