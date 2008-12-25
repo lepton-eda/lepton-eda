@@ -33,6 +33,8 @@
 #define DOTS_POINTS_ARRAY_SIZE       5000
 #define DOTS_VARIABLE_MODE_SPACING   30
 
+#define MESH_COARSE_GRID_MULTIPLIER  5
+
 
 /*! \brief Draw an area of the screen with a dotted grid pattern
  *
@@ -129,6 +131,106 @@ static void draw_dots_grid_region (GSCHEM_TOPLEVEL *w_current,
 }
 
 
+/*! \brief Helper function for draw_mesh_grid_regin
+ */
+static void draw_mesh (GSCHEM_TOPLEVEL *w_current, int color,
+                       int x_start, int y_start, int x_end, int y_end,
+                       int incr, int coarse_mult)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int i, j;
+  int x1, y1, x2, y2;
+  int next_coarse_x, next_coarse_y;
+  int coarse_incr = incr * coarse_mult;
+
+  gdk_gc_set_foreground (w_current->gc, x_get_color (color));
+
+  /* figure starting grid coordinates, work by taking the start
+   * and end coordinates and rounding down to the nearest increment */
+  x_start -= (x_start % incr);
+  y_start -= (y_start % incr);
+
+  if (coarse_incr == 0) {
+    next_coarse_x = x_start - 1; /* Ensures we never hit this when looping */
+    next_coarse_y = y_start - 1; /* Ensures we never hit this when looping */
+  } else {
+    next_coarse_x = x_start - (x_start % coarse_incr);
+    next_coarse_y = y_start - (y_start % coarse_incr);
+    if (next_coarse_x < x_start) next_coarse_x += coarse_incr;
+    if (next_coarse_y < y_start) next_coarse_y += coarse_incr;
+  }
+
+  for (j = y_start; j < y_end; j = j + incr) {
+
+    /* Skip lines which will be drawn in the coarser grid */
+    if (j == next_coarse_y) {
+      next_coarse_y += coarse_incr;
+      continue;
+    }
+    WORLDtoSCREEN (toplevel, x_start, j, &x1, &y1);
+    WORLDtoSCREEN (toplevel, x_end,   j, &x2, &y2);
+    gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
+  }
+
+  for (i = x_start; i < x_end; i = i + incr) {
+
+    /* Skip lines which will be drawn in the coarser grid */
+    if (j == next_coarse_y) {
+      next_coarse_y += coarse_incr;
+      continue;
+    }
+    WORLDtoSCREEN (toplevel, i, y_start, &x1, &y1);
+    WORLDtoSCREEN (toplevel, i, y_end,   &x2, &y2);
+    gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
+  }
+}
+
+
+/*! \brief Draw an area of the screen with a mesh grid pattern
+ *
+ *  \par Function Description
+ *  Draws the mesh grid pattern over a given region of the screen.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL.
+ *  \param [in] x          The left screen coordinate for the drawing.
+ *  \param [in] y          The top screen coordinate for the drawing.
+ *  \param [in] width      The width of the region to draw.
+ *  \param [in] height     The height of the region to draw.
+ */
+static void draw_mesh_grid_region (GSCHEM_TOPLEVEL *w_current,
+                                   int x, int y, int width, int height)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int x_start, y_start, x_end, y_end;
+  int incr;
+  int screen_incr;
+
+  incr = toplevel->snap_size;
+  screen_incr = SCREENabs (toplevel, incr);
+
+  /* update status bar */
+  i_set_grid (w_current, incr);
+
+  SCREENtoWORLD (toplevel, x - 1, y + height + 1, &x_start, &y_start);
+  SCREENtoWORLD (toplevel, x + width + 1, y - 1, &x_end, &y_end);
+
+  /* Draw the fine grid if its on-screen spacing is large enough */
+  if (screen_incr >= w_current->mesh_grid_display_threshold) {
+    draw_mesh (w_current, MESH_GRID_MINOR_COLOR, x_start, y_start,
+               x_end, y_end, incr, MESH_COARSE_GRID_MULTIPLIER);
+  }
+
+  incr *= MESH_COARSE_GRID_MULTIPLIER;
+  screen_incr = SCREENabs (toplevel, incr);
+
+  /* Draw the coarse grid if its on-screen spacing is large enough */
+  if (screen_incr >= w_current->mesh_grid_display_threshold) {
+    draw_mesh (w_current, MESH_GRID_MAJOR_COLOR,
+               x_start, y_start, x_end, y_end, incr, 0);
+  }
+}
+
+
 /*! \brief Draw an area of the screen with the current grid pattern.
  *
  *  \par Function Description
@@ -150,6 +252,10 @@ void x_grid_draw_region (GSCHEM_TOPLEVEL *w_current,
 
     case GRID_DOTS:
       draw_dots_grid_region (w_current, x, y, width, height);
+      break;
+
+    case GRID_MESH:
+      draw_mesh_grid_region (w_current, x, y, width, height);
       break;
   }
 

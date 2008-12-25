@@ -810,6 +810,14 @@
 ;
 (dots-grid-fixed-threshold 10)
 
+; Mesh grid display threshold
+;
+; The mesh-grid-display-threshold specifies the minimum line pitch for a the
+; grid to be displayed. Using this parameter you can control maximum density
+; of the displayed before the minor, then major grid-lines are switched off.
+;
+(mesh-grid-display-threshold 3)
+
 ; force-boundingbox string
 ;
 ; Controls if the entire bounding box of a symbol is used when figuring out

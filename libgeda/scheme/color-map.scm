@@ -24,6 +24,8 @@
     (freestyle3 . 19)
     (freestyle4 . 20)
     (junction . 21)
+    (mesh-grid-major . 22)
+    (mesh-grid-minor . 23)
    ))
 
 ;; Look up the internal system ID for a symbolic color

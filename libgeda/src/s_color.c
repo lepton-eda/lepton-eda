@@ -62,6 +62,8 @@ static COLOR default_colors[] = {
   NOCOLOR,         /* 19: freestyle3         */
   NOCOLOR,         /* 20: freestyle4         */
   BLACK,           /* 21: junction           */
+  GRAY,            /* 22: mesh-grid-major    */
+  NOCOLOR,         /* 23: mesh-grid-minor    */
   ENDMAP
 };
 

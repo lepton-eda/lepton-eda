@@ -46,6 +46,8 @@
 #define FREESTYLE3_COLOR         	19     
 #define FREESTYLE4_COLOR         	20     
 #define JUNCTION_COLOR         		21     
+#define MESH_GRID_MAJOR_COLOR           22
+#define MESH_GRID_MINOR_COLOR           23
 
 #define OVERRIDE_NET_COLOR              4
 #define OVERRIDE_PIN_COLOR              1

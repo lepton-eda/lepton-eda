@@ -129,6 +129,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "dots-grid-dot-size",        1, 0, 0, g_rc_dots_grid_dot_size },
   { "dots-grid-mode",            1, 0, 0, g_rc_dots_grid_mode },
   { "dots-grid-fixed-threshold", 1, 0, 0, g_rc_dots_grid_fixed_threshold },
+  { "mesh-grid-display-threshold", 1, 0, 0, g_rc_mesh_grid_display_threshold },
   { "output-vector-threshold",   1, 0, 0, g_rc_output_vector_threshold },
   { "add-attribute-offset",      1, 0, 0, g_rc_add_attribute_offset },
   { "mousepan-gain",             1, 0, 0, g_rc_mousepan_gain },

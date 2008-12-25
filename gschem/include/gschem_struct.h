@@ -184,6 +184,9 @@ struct st_gschem_toplevel {
   int dots_grid_dot_size; /* sets the grid dot size */
   int dots_grid_mode;     /* sets the mode of the dotted grid (either variable or fixed) */
 
+  /* Minimum grid line pitch to display. Applies to major and minor lines. */
+  int mesh_grid_display_threshold;
+
   /* sets the offset (in world coordinates) that are added to netname */
   /* attributes when they are attached to vertical or horizontal nets */
   int add_attribute_offset;
