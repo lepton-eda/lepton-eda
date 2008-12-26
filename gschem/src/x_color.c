@@ -62,10 +62,17 @@ x_color_init (void)
 void
 x_color_free (void)
 {
-  GdkColor *colors[] = { &black, &white };
+  int i;
 
-  gdk_colormap_free_colors (colormap, *colors, 2);
+  gdk_colormap_free_colors (colormap, &black, 1);
+  gdk_colormap_free_colors (colormap, &white, 1);
 
+  for (i = 0; i < MAX_COLORS; i++) {
+    if (display_colors[i].enabled)
+      gdk_colormap_free_colors (colormap, gdk_colors[i], 1);
+    if (display_outline_colors[i].enabled)
+      gdk_colormap_free_colors (colormap, gdk_outline_colors[i], 1);
+  }
 }
 
 /*! \todo Finish function documentation!!!
