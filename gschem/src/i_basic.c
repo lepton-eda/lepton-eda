@@ -517,7 +517,7 @@ void i_set_filename(GSCHEM_TOPLEVEL *w_current, const gchar *string)
  *  \param [in] w_current GSCHEM_TOPLEVEL structure
  *  \param [in] visible_grid Visible grid size
  */
-void i_set_grid(GSCHEM_TOPLEVEL *w_current, int visible_grid)
+void i_update_grid_info (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   gchar *print_string=NULL;
@@ -532,10 +532,15 @@ void i_set_grid(GSCHEM_TOPLEVEL *w_current, int visible_grid)
   else
     snap = g_strdup_printf("%d", toplevel->snap_size);
 
-  if (!w_current->grid)
+  if (w_current->grid == GRID_NONE) {
     grid = g_strdup(_("OFF"));
-  else
-    grid = g_strdup_printf("%d", visible_grid);
+  } else {
+    int visible_grid = x_grid_query_drawn_spacing (w_current);
+    if (visible_grid == -1)
+      grid = g_strdup (_("NONE"));
+    else
+      grid = g_strdup_printf("%d", visible_grid);
+  }
 
   print_string = g_strdup_printf(_("Grid(%s, %s)"), snap, grid);
   gtk_label_set(GTK_LABEL(w_current->grid_label), print_string);

@@ -3270,6 +3270,7 @@ DEFINE_I_CALLBACK(options_scale_up_snap_size)
   w_current->toplevel->page_current->CHANGED=1;  /* maybe remove those two lines */
   o_undo_savestate(w_current, UNDO_ALL);
 
+  i_update_grid_info (w_current);
   o_invalidate_all (w_current);
 }
 
@@ -3289,6 +3290,7 @@ DEFINE_I_CALLBACK(options_scale_down_snap_size)
   w_current->toplevel->page_current->CHANGED=1;  /* maybe remove those two lines */
   o_undo_savestate(w_current, UNDO_ALL);
 
+  i_update_grid_info (w_current);
   o_invalidate_all (w_current);
 
 }
@@ -3339,6 +3341,7 @@ DEFINE_I_CALLBACK(options_grid)
     case GRID_MESH: s_log_message (_("Mesh grid selected\n")); break;
   }
 
+  i_update_grid_info (w_current);
   o_invalidate_all (w_current);
 }
 
@@ -3359,6 +3362,7 @@ DEFINE_I_CALLBACK(options_snap)
     s_log_message(_("Snap ON\n"));
   }
   i_show_state(w_current, NULL); /* update status on screen */
+  i_update_grid_info (w_current);
 }
 
 /*! \todo Finish function documentation!!!

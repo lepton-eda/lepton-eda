@@ -159,6 +159,8 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
              toplevel->page_current->top   ,
              toplevel->page_current->bottom);
 
+  i_update_grid_info (w_current);
+
   /* redraw */
   if (!(flags & A_PAN_DONT_REDRAW)) {
     x_scrollbars_update(w_current);

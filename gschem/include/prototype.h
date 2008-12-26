@@ -292,7 +292,7 @@ void i_update_middle_button(GSCHEM_TOPLEVEL *w_current, void (*func_ptr)(), cons
 void i_update_toolbar(GSCHEM_TOPLEVEL *w_current);
 void i_update_menus(GSCHEM_TOPLEVEL *w_current);
 void i_set_filename(GSCHEM_TOPLEVEL *w_current, const gchar *string);
-void i_set_grid(GSCHEM_TOPLEVEL *w_current, int visible_grid);
+void i_update_grid_info(GSCHEM_TOPLEVEL *w_current);
 /* i_callbacks.c */
 void i_callback_file_new(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_toolbar_file_new(GtkWidget *widget, gpointer data);
