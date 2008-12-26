@@ -1247,7 +1247,8 @@
     ("p" . view-pan-hotkey)
     ("u" . view-update-cues)
     ("o" . view-zoom-out-hotkey)
-    ("i" . view-zoom-in-hotkey)))
+    ("i" . view-zoom-in-hotkey)
+   ))
 
 (define buffer-keymap
   '(("c" . buffer-copy1)
@@ -1480,7 +1481,11 @@
 	   ("Zoom Extents"	view-zoom-extents	view-zoom-extents)
 	   ("Zoom In"		view-zoom-in		view-zoom-in-hotkey)
 	   ("Zoom Out"		view-zoom-out		view-zoom-out-hotkey)
-	   ("Zoom Full"		view-zoom-full		view-zoom-full)))
+	   ("Zoom Full"		view-zoom-full		view-zoom-full)
+	   ("SEPARATOR"         no-action               no-action)
+	   ("Dark color scheme"  view-dark-colors       no-action)
+	   ("Light color scheme" view-light-colors      no-action)
+	 ))
 
 (define page-menu-items 
 ;;

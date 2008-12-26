@@ -1597,6 +1597,40 @@ DEFINE_I_CALLBACK(view_update_cues)
   o_invalidate_all (w_current);
 }
 
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+DEFINE_I_CALLBACK (view_dark_colors)
+{
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+
+  x_color_free ();
+  /* Change the scheme here */
+  g_scm_c_eval_string_protected ("(load (build-path geda-rc-path \"gschem-colormap-darkbg\"))");
+  x_color_allocate ();
+
+  o_invalidate_all (w_current);
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+DEFINE_I_CALLBACK (view_light_colors)
+{
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+
+  x_color_free ();
+  /* Change the scheme here */
+  g_scm_c_eval_string_protected ("(load (build-path geda-rc-path \"gschem-colormap-lightbg\"))");
+  x_color_allocate ();
+
+  o_invalidate_all (w_current);
+}
+
 /*! \section page-menu Page Menu Callback Functions */
 /*! \todo Finish function documentation!!!
  *  \brief

@@ -68,6 +68,8 @@ _("Zoom Extents")
 _("Zoom In")
 _("Zoom Out")
 _("Zoom Full")
+_("Dark color scheme")
+_("Light color scheme")
 
 _("Page")
 _("Manager...")
