@@ -104,7 +104,7 @@ void get_main_menu(GtkWidget ** menubar)
   char *menu_item_keys;
   char *spaces;
   int i, j;
-  int name_len, key_len, pad;
+  int pad;
   int sum, diff, max_size, space_size;
   PangoLayout *layout;
   int name_width, keys_width;
@@ -164,9 +164,6 @@ void get_main_menu(GtkWidget ** menubar)
           menu_item_keys = g_strdup (SCM_STRING_CHARS (scm_keys));
         }      
 
-        name_len = strlen(menu_item_name);
-        key_len = strlen(menu_item_keys);
-
         layout = gtk_widget_create_pango_layout(menu, menu_item_name);
         pango_layout_get_pixel_size(layout, &name_width, NULL);
         g_object_unref(layout);
@@ -186,11 +183,6 @@ void get_main_menu(GtkWidget ** menubar)
         spaces = g_strnfill (pad, ' ');
         buf = g_strdup_printf("%s%s%s", menu_item_name, spaces, menu_item_keys);
 
-#if DEBUG
-        printf("%s :\n %d %d %d = %d\n", buf, name_len, pad, key_len,
-               name_len + pad + key_len);
-#endif
-      
         menu_item = gtk_menu_item_new_with_label(buf);
 	g_free(buf);
         gtk_menu_append(GTK_MENU(menu), menu_item);
