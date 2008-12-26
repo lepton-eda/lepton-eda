@@ -102,9 +102,6 @@ static void draw_dots_grid_region (GSCHEM_TOPLEVEL *w_current,
   if (incr == -1)
     return;
 
-  /* update status bar */
-  i_set_grid (w_current, incr);
-
   gdk_gc_set_foreground (w_current->gc, x_get_color (DOTS_GRID_COLOR));
 
   SCREENtoWORLD (toplevel, x - 1, y + height + 1, &x_start, &y_start);
@@ -263,9 +260,6 @@ static void draw_mesh_grid_region (GSCHEM_TOPLEVEL *w_current,
   incr = toplevel->snap_size;
   screen_incr = SCREENabs (toplevel, incr);
 
-  /* update status bar */
-  i_set_grid (w_current, incr);
-
   SCREENtoWORLD (toplevel, x - 1, y + height + 1, &x_start, &y_start);
   SCREENtoWORLD (toplevel, x + width + 1, y - 1, &x_end, &y_end);
 
@@ -302,7 +296,6 @@ void x_grid_draw_region (GSCHEM_TOPLEVEL *w_current,
 {
   switch (w_current->grid) {
     case GRID_NONE:
-      i_set_grid(w_current, -1);
       return;
 
     case GRID_DOTS:
