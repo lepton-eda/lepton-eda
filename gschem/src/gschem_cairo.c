@@ -187,7 +187,6 @@ void gschem_cairo_stroke (cairo_t *cr, int line_type, int line_end,
 
 void gschem_cairo_set_source_color (cairo_t *cr, COLOR *color)
 {
-  if (((double)color->a / 255.0) != 1.0) printf ("aha, translucent!\n");
   cairo_set_source_rgba (cr, (double)color->r / 255.0,
                              (double)color->g / 255.0,
                              (double)color->b / 255.0,
