@@ -161,8 +161,6 @@ static void draw_mesh (GSCHEM_TOPLEVEL *w_current, int color,
   int next_coarse_x, next_coarse_y;
   int coarse_incr = incr * coarse_mult;
 
-  gdk_gc_set_foreground (w_current->gc, x_get_color (color));
-
   /* figure starting grid coordinates, work by taking the start
    * and end coordinates and rounding down to the nearest increment */
   x_start -= (x_start % incr);
@@ -178,6 +176,12 @@ static void draw_mesh (GSCHEM_TOPLEVEL *w_current, int color,
     if (next_coarse_y < y_start) next_coarse_y += coarse_incr;
   }
 
+  gschem_cairo_set_source_color (w_current->cr, x_color_lookup (color));
+  cairo_set_line_width (w_current->cr, 1.);
+  cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_SQUARE);
+
+  cairo_translate (w_current->cr, 0.5, 0.5);
+
   for (j = y_start; j < y_end; j = j + incr) {
 
     /* Skip lines which will be drawn in the coarser grid */
@@ -187,8 +191,10 @@ static void draw_mesh (GSCHEM_TOPLEVEL *w_current, int color,
     }
     WORLDtoSCREEN (toplevel, x_start, j, &x1, &y1);
     WORLDtoSCREEN (toplevel, x_end,   j, &x2, &y2);
-    gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
+    cairo_move_to (w_current->cr, x1, y1);
+    cairo_line_to (w_current->cr, x2, y2);
   }
+  cairo_stroke (w_current->cr);
 
   for (i = x_start; i < x_end; i = i + incr) {
 
@@ -199,8 +205,12 @@ static void draw_mesh (GSCHEM_TOPLEVEL *w_current, int color,
     }
     WORLDtoSCREEN (toplevel, i, y_start, &x1, &y1);
     WORLDtoSCREEN (toplevel, i, y_end,   &x2, &y2);
-    gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
+    cairo_move_to (w_current->cr, x1, y1);
+    cairo_line_to (w_current->cr, x2, y2);
   }
+  cairo_stroke (w_current->cr);
+
+  cairo_translate (w_current->cr, -0.5, -0.5);
 }
 
 
