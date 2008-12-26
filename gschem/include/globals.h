@@ -27,9 +27,6 @@ extern GSCHEM_TOPLEVEL *global_window_current;
 /* window list */
 extern GList *global_window_list;
 
-/* color stuff */
-extern GdkColormap *colormap; 
-
 /* colors */
 extern GdkColor white;
 extern GdkColor black;

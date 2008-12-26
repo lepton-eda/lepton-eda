@@ -267,7 +267,6 @@ void main_prog(void *closure, int argc, char *argv[])
   x_window_set_default_icon();
 
   /* At end, complete set up of window. */
-  colormap = gdk_colormap_get_system ();
   x_color_allocate();
   x_window_setup (w_current);
 

@@ -40,9 +40,6 @@ char *rc_filename     = NULL;
 char *script_filename = NULL;
 char *output_filename = NULL;
 
-/* color stuff */
-GdkColormap *colormap;
-
 /* colors */
 GdkColor white;
 GdkColor black;

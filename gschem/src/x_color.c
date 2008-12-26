@@ -37,6 +37,8 @@ COLOR display_outline_colors[MAX_COLORS];
 static GdkColor* gdk_colors[MAX_COLORS];
 static GdkColor* gdk_outline_colors[MAX_COLORS];
 
+static GdkColormap *colormap = NULL;
+
 /*! \brief Initializes the color system for the application.
  *  \par Function Documentation
  *
@@ -45,6 +47,8 @@ static GdkColor* gdk_outline_colors[MAX_COLORS];
 void
 x_color_init (void)
 {
+  colormap = gdk_colormap_get_system ();
+
   /* Initialise default color maps */
   s_color_map_defaults (display_colors);
   s_color_map_defaults (display_outline_colors);
