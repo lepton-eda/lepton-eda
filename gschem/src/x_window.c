@@ -123,13 +123,6 @@ void x_window_setup_gc(GSCHEM_TOPLEVEL *w_current)
     fprintf(stderr, _("Couldn't allocate bounding_xor_gc\n"));
     exit(-1);
   }
-
-  w_current->bus_gc = gdk_gc_new(w_current->window);
-
-  if (w_current->bus_gc == NULL) {
-    fprintf(stderr, _("Couldn't allocate bus_gc\n"));
-    exit(-1);
-  }
 }
 
 /*! \todo Finish function documentation!!!
