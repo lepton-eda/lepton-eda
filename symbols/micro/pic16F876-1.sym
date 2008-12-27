@@ -1,4 +1,4 @@
-v 20031231 1
+v 20081221 2
 B 300 0 2500 6000 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 P 200 5600 0 5600 1 0 1
 {
@@ -7,7 +7,7 @@ pinnumber=1
 T 200 5550 5 8 0 1 0 8 1
 pinseq=1
 T 350 5600 9 8 1 1 0 0 1
-pinlabel=MCLR
+pinlabel=\_MCLR\_
 T 350 5600 5 8 0 1 0 2 1
 pintype=in
 }
@@ -51,7 +51,7 @@ pinnumber=5
 T 200 3950 5 8 0 1 0 8 1
 pinseq=5
 T 350 4000 9 8 1 1 0 0 1
-pinlabel=RA5
+pinlabel=RA3
 T 350 4000 5 8 0 1 0 2 1
 pintype=io
 }
@@ -308,7 +308,6 @@ pinlabel=RB7
 T 2750 5600 5 8 0 1 0 8 1
 pintype=io
 }
-L 350 5725 750 5725 3 0 0 0 -1 -1
 T 2600 6100 8 10 1 1 0 0 1
 refdes=U?
 T 300 6250 5 10 0 0 0 0 1
@@ -320,7 +319,7 @@ description=8-bit CMOS FLASH microcontroller
 T 300 6450 5 10 0 0 0 0 1
 numslots=0
 T 300 7050 5 10 0 0 0 0 1
-documentation=http://www.microchip.com/download/lit/pline/picmicro/families/16f87x/30292c.pdf
+documentation=http://ww1.microchip.com/downloads/en/DeviceDoc/39582b.pdf
 T 300 6050 9 10 1 0 0 0 1
 PIC16F876
 V 250 5600 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
