@@ -243,6 +243,15 @@ s_check_symbol_structure (GList *obj_list, SYMCHECK *s_current)
 	    g_list_append(s_current->error_messages, message);
 	  s_current->error_count++;
 	}	  
+      } else { /* object is not an attribute */
+        if (o_current->show_name_value != SHOW_NAME_VALUE) {
+          message = g_strdup_printf ("Found a simple text object with only SHOW_NAME"
+                                     " or SHOW_VALUE set [%s]\n",
+                                     o_current->text->string);
+          s_current->warning_messages =
+            g_list_append(s_current->warning_messages, message);
+          s_current->warning_count++;
+        }
       }
       g_strfreev(tokens);
     }
