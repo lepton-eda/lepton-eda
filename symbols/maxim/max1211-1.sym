@@ -465,5 +465,5 @@ T 3800 5200 5 10 0 0 0 0 1
 description=65Msps, 12-bit IF Sampling ADC
 T 3800 5000 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX1211-MAX1211ETL.pdf
-T 1400 6140 9 10 1 1 0 0 1
+T 1400 6140 9 10 1 0 0 0 1
 MAX1211

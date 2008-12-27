@@ -1,7 +1,7 @@
 v 20041228 1
 T 100 5400 8 10 0 0 0 0 1
 Copyright Mark Salyzyn
-T 2200 4300 9 10 1 1 0 6 1
+T 2200 4300 9 10 1 0 0 6 1
 ATmega8
 T 100 5000 8 10 0 0 0 0 1
 description=Low-power AVR 8-bit Microcontroller

@@ -54,5 +54,5 @@ T 200 1950 5 10 0 0 0 0 1
 numslots=0
 T 200 1350 5 10 0 0 0 0 1
 documentation=http://www.linear.com.cn/pdf/1782fa.pdf
-T 200 900 9 10 1 1 0 0 1
+T 200 900 9 10 1 0 0 0 1
 LT1782

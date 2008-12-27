@@ -172,7 +172,7 @@ T 300 4450 5 10 0 0 0 0 1
 net=OGND:16
 T 300 4650 5 10 0 0 0 0 1
 net=VCCO:17
-T 300 3450 9 10 1 1 0 0 1
+T 300 3450 9 10 1 0 0 0 1
 MAX1011
 T 300 5250 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX1011.pdf

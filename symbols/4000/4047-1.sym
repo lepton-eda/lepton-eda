@@ -151,7 +151,7 @@ T 300 3850 5 10 0 0 0 0 1
 net=VSS:7
 T 300 4050 5 10 0 0 0 0 1
 documentation=http://www.semiconductors.philips.com/acrobat/datasheets/HEF4047B_CNV_3.pdf
-T 300 2850 3 10 1 1 0 0 1
+T 300 2850 3 10 1 0 0 0 1
 4047
 L 1550 1425 1450 1425 3 0 0 0 -1 -1
 L 425 1225 750 1225 3 0 0 0 -1 -1
