@@ -68,7 +68,7 @@ void o_move_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
     o_select_move_to_place_list(w_current);
     w_current->inside_action = 1;
 
-    o_move_draw_rubber (w_current, TRUE);
+    o_move_invalidate_rubber (w_current, TRUE);
   }
 }
 
@@ -161,7 +161,7 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
   diff_x = w_current->second_wx - w_current->first_wx;
   diff_y = w_current->second_wy - w_current->first_wy;
 
-  o_move_draw_rubber (w_current, FALSE);
+  o_move_invalidate_rubber (w_current, FALSE);
   w_current->rubber_visible = 0;
 
   if (w_current->netconn_rubberband) {
