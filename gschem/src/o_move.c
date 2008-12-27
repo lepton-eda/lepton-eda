@@ -623,11 +623,11 @@ void o_move_stretch_rubberband(GSCHEM_TOPLEVEL *w_current)
 
     switch (object->type) {
       case (OBJ_NET):
-        o_net_draw_xor_single(w_current, diff_x, diff_y, whichone, object);
+        o_net_draw_stretch (w_current, diff_x, diff_y, whichone, object);
         break;
 
       case (OBJ_BUS):
-        o_bus_draw_xor_single(w_current, diff_x, diff_y, whichone, object);
+        o_bus_draw_stretch (w_current, diff_x, diff_y, whichone, object);
         break;
     }
   }

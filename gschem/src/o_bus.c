@@ -141,8 +141,8 @@ void o_bus_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
  *  \par Function Description
  *
  */
-void o_bus_draw_xor_single(GSCHEM_TOPLEVEL *w_current,
-			   int dx, int dy, int whichone, OBJECT *o_current)
+void o_bus_draw_stretch (GSCHEM_TOPLEVEL *w_current,
+                         int dx, int dy, int whichone, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int color;
@@ -173,7 +173,7 @@ void o_bus_draw_xor_single(GSCHEM_TOPLEVEL *w_current,
     dx1 = 0;
     dy1 = 0;
   } else {
-    fprintf(stderr, _("Got an invalid which one in o_bus_draw_xor_single\n"));
+    fprintf(stderr, _("Got an invalid which one in o_bus_draw_stretch\n"));
   }
 
   WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx1, o_current->line->y[0] + dy1, &sx[0], &sy[0]);
