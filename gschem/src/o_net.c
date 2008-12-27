@@ -135,7 +135,7 @@ void o_net_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_net_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+void o_net_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int size;

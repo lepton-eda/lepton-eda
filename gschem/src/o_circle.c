@@ -418,7 +418,7 @@ void o_circle_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \todo
  *  add in offsets, get rid of global diffs_x,y
  */
-void o_circle_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+void o_circle_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int x, y, radius;

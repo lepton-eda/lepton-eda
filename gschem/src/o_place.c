@@ -304,8 +304,8 @@ void o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
                         s_left, s_bottom,
                         s_right - s_left, s_top - s_bottom);
   } else {
-    o_glist_draw_xor (w_current, diff_x, diff_y,
-                      toplevel->page_current->place_list);
+    o_glist_draw_place (w_current, diff_x, diff_y,
+                        toplevel->page_current->place_list);
   }
 
   /* Save movement constraints and drawing method for any

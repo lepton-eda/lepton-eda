@@ -52,12 +52,12 @@ void o_complex_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_complex_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
+void o_complex_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
 {
   g_assert( (object->type == OBJ_COMPLEX ||
              object->type == OBJ_PLACEHOLDER) );
 
-  o_glist_draw_xor (w_current, dx, dy, object->complex->prim_objs);
+  o_glist_draw_place (w_current, dx, dy, object->complex->prim_objs);
 }
 
 

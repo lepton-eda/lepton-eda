@@ -414,23 +414,23 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
+void o_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
 {
   void (*func) (GSCHEM_TOPLEVEL *, int, int, OBJECT*) = NULL;
 
   switch (object->type) {
-      case OBJ_LINE:    func = o_line_draw_xor;           break;
-      case OBJ_NET:     func = o_net_draw_xor;            break;
-      case OBJ_BUS:     func = o_bus_draw_xor;            break;
-      case OBJ_BOX:     func = o_box_draw_xor;            break;
-      case OBJ_PICTURE: func = o_picture_draw_xor;        break;
-      case OBJ_CIRCLE:  func = o_circle_draw_xor;         break;
+      case OBJ_LINE:    func = o_line_draw_place;       break;
+      case OBJ_NET:     func = o_net_draw_place;        break;
+      case OBJ_BUS:     func = o_bus_draw_place;        break;
+      case OBJ_BOX:     func = o_box_draw_place;        break;
+      case OBJ_PICTURE: func = o_picture_draw_place;    break;
+      case OBJ_CIRCLE:  func = o_circle_draw_place;     break;
       case OBJ_PLACEHOLDER:
-      case OBJ_COMPLEX: func = o_complex_draw_xor;        break;
-      case OBJ_TEXT:    func = o_text_draw_xor;           break;
-      case OBJ_PATH:    func = o_path_draw_xor;           break;
-      case OBJ_PIN:     func = o_pin_draw_xor;            break;
-      case OBJ_ARC:     func = o_arc_draw_xor;            break;
+      case OBJ_COMPLEX: func = o_complex_draw_place;    break;
+      case OBJ_TEXT:    func = o_text_draw_place;       break;
+      case OBJ_PATH:    func = o_path_draw_place;       break;
+      case OBJ_PIN:     func = o_pin_draw_place;        break;
+      case OBJ_ARC:     func = o_arc_draw_place;        break;
       default:
         g_assert_not_reached ();
   }
@@ -446,12 +446,12 @@ void o_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
  *  \par Function Description
  *
  */
-void o_glist_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, GList *list)
+void o_glist_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, GList *list)
 {
   GList *iter = list;
 
   while (iter != NULL) {
-    o_draw_xor(w_current, dx, dy, (OBJECT *)iter->data);
+    o_draw_place (w_current, dx, dy, (OBJECT *)iter->data);
     iter = g_list_next(iter);
   }
 }

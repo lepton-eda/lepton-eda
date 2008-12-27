@@ -474,7 +474,7 @@ void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  \param [in] dy         Delta y coordinate for picture.
  *  \param [in] o_current  Picture OBJECT to draw.
  */
-void o_picture_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+void o_picture_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int screen_x1, screen_y1;

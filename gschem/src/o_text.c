@@ -225,7 +225,7 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_text_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+void o_text_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int top, bottom, left, right;
@@ -240,7 +240,7 @@ void o_text_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
   if ((factor < w_current->text_display_zoomfactor) ||
       o_current->text->size >= 12 ||
       w_current->text_feedback == ALWAYS) {
-    o_glist_draw_xor (w_current, dx, dy, o_current->text->prim_objs);
+    o_glist_draw_place (w_current, dx, dy, o_current->text->prim_objs);
   } else {
     /* text is too small so go through and draw a line in
        it's place */

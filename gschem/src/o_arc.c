@@ -165,7 +165,7 @@ void o_arc_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \param [in] dy         Delta y coordinate for arc.
  *  \param [in] o_current  Arc OBJECT to draw.
  */
-void o_arc_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+void o_arc_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int x, y, width, height, start_angle, end_angle;

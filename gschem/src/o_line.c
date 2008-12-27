@@ -144,7 +144,7 @@ void o_line_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \param [in] dy         Delta y coordinate for line.
  *  \param [in] o_current  Line OBJECT to draw.
  */
-void o_line_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+void o_line_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int color;
