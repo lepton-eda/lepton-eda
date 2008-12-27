@@ -12,7 +12,7 @@ RC1 Vcoll1 Vcc 3.3K
 Q2 VColl2 Vbase2 Vem2 2N3904 
 C1 1 Vbase1 2.2uF 
 .TEMP 0 25 100
-.INCLUDE /home/sdb/TwoStageAmp/Simulation.cmd
+.INCLUDE ./Simulation.cmd
 .model 2N3904 NPN(IS=1E-14 VAF=100
 +  Bf=300 IKF=0.4 XTB=1.5 BR=4
 +  CJC=4E-12  CJE=8E-12 RB=20 RC=0.1 RE=0.1
