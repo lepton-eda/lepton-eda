@@ -35,6 +35,8 @@
 #include <dmalloc.h>
 #endif
 
+#define MINIMUM_MARK_SMALL_DIST 1
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -180,6 +182,10 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   small_dist = SCREENabs(toplevel, 10);
+
+  /* Switch of mark drawing for non-selected text, and at small sizes */
+  if (!o_current->selected || small_dist < MINIMUM_MARK_SMALL_DIST)
+    return;
 
   WORLDtoSCREEN( toplevel, o_current->text->x, o_current->text->y, &screen_x1, &screen_y1 );
 
