@@ -360,9 +360,34 @@ void o_move_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
  */
 void o_move_draw_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
+  GList *s_iter;
+  int diff_x, diff_y;
+
   o_place_draw_rubber (w_current, drawing);
-  if (w_current->netconn_rubberband)
-    o_move_stretch_rubberband(w_current);
+
+  if (!w_current->netconn_rubberband)
+    return;
+
+  diff_x = w_current->second_wx - w_current->first_wx;
+  diff_y = w_current->second_wy - w_current->first_wy;
+
+  for (s_iter = toplevel->page_current->stretch_list;
+       s_iter != NULL; s_iter = g_list_next (s_iter)) {
+    STRETCH *s_current = s_iter->data;
+    OBJECT *object = s_current->object;
+    int whichone = s_current->whichone;
+
+    switch (object->type) {
+      case (OBJ_NET):
+        o_net_draw_stretch (w_current, diff_x, diff_y, whichone, object);
+        break;
+
+      case (OBJ_BUS):
+        o_bus_draw_stretch (w_current, diff_x, diff_y, whichone, object);
+        break;
+    }
+  }
 }
 
 
@@ -598,37 +623,5 @@ void o_move_end_rubberband (GSCHEM_TOPLEVEL *w_current,
   for (iter = *objects; iter != NULL; iter = g_list_next (iter)) {
     OBJECT *object = iter->data;
     *connected_objects = s_conn_return_others (*connected_objects, object);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_move_stretch_rubberband(GSCHEM_TOPLEVEL *w_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  GList *s_iter;
-  int diff_x, diff_y;
-
-  diff_x = w_current->second_wx - w_current->first_wx;
-  diff_y = w_current->second_wy - w_current->first_wy;
-
-  for (s_iter = toplevel->page_current->stretch_list;
-       s_iter != NULL; s_iter = g_list_next (s_iter)) {
-    STRETCH *s_current = s_iter->data;
-    OBJECT *object = s_current->object;
-    int whichone = s_current->whichone;
-
-    switch (object->type) {
-      case (OBJ_NET):
-        o_net_draw_stretch (w_current, diff_x, diff_y, whichone, object);
-        break;
-
-      case (OBJ_BUS):
-        o_bus_draw_stretch (w_current, diff_x, diff_y, whichone, object);
-        break;
-    }
   }
 }
