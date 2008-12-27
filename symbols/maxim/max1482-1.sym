@@ -1,4 +1,4 @@
-v 20040111 1
+v 20070626 1
 P 300 1400 0 1400 1 0 1
 {
 T 200 1450 5 8 1 1 0 6 1
@@ -87,7 +87,7 @@ pinnumber=3
 T 200 1750 5 8 0 1 0 8 1
 pinseq=3
 T 350 1800 9 8 1 1 0 0 1
-pinlabel=RE
+pinlabel=\_RE\_
 T 350 1800 5 8 0 1 0 2 1
 pintype=in
 }
@@ -107,4 +107,3 @@ T 300 3450 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX1482-MAX1483.pdf
 T 300 2050 9 10 1 0 0 0 1
 MAX1482
-L 350 1925 525 1925 3 0 0 0 -1 -1

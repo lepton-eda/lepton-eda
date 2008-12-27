@@ -1,4 +1,4 @@
-v 20041228 1
+v 20070626 1
 B 300 300 1800 3000 3 0 0 0 -1 -1 0 0 -1 -1 -1 -1
 T 300 3850 5 10 0 0 0 0 1
 device=MAX531
@@ -34,7 +34,7 @@ pinnumber=3
 T 1250 3400 5 8 0 1 0 2 1
 pinseq=3
 T 1200 3250 9 8 1 1 0 5 1
-pinlabel=CLR
+pinlabel=\_CLR\_
 T 1200 3100 5 8 0 1 0 5 1
 pintype=in
 }
@@ -59,7 +59,7 @@ pinnumber=5
 T 200 1450 5 8 0 1 0 8 1
 pinseq=5
 T 350 1500 9 8 1 1 0 0 1
-pinlabel=CS
+pinlabel=\_CS\_
 T 350 1500 5 8 0 1 0 2 1
 pintype=in
 }
@@ -172,5 +172,3 @@ T 300 4650 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX531-MAX539.pdf
 T 300 3350 3 10 1 0 0 0 1
 MAX531
-L 1050 3275 1325 3275 3 0 0 0 -1 -1
-L 350 1625 525 1625 3 0 0 0 -1 -1

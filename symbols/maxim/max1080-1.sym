@@ -1,4 +1,4 @@
-v 20040111 1
+v 20070626 1
 T 300 3750 5 10 0 0 0 0 1
 footprint=TSSOP20
 B 300 0 1500 3300 3 0 0 0 -1 -1 0 0 -1 -1 -1 -1
@@ -115,7 +115,7 @@ pinnumber=10
 T 350 300 5 8 0 1 0 2 1
 pintype=in
 T 350 300 9 8 1 1 0 0 1
-pinlabel=SHDN
+pinlabel=\_SHDN\_
 }
 P 1800 3000 2100 3000 1 0 1
 {
@@ -162,7 +162,7 @@ pinnumber=17
 T 1750 2100 5 8 0 1 0 8 1
 pintype=in
 T 1750 2100 9 8 1 1 0 6 1
-pinlabel=CS
+pinlabel=\_CS\_
 }
 P 1800 1800 2100 1800 1 0 1
 {
@@ -238,5 +238,3 @@ T 300 3950 5 10 0 0 0 0 1
 description=8 channel, serial 10-bit ADC with internal reference
 T 300 3350 3 10 1 0 0 0 1
 MAX1080
-L 350 425 750 425 3 0 0 0 -1 -1
-L 1750 2225 1525 2225 3 0 0 0 -1 -1

@@ -1,4 +1,4 @@
-v 20040111 1
+v 20070626 1
 P 300 1000 0 1000 1 0 1
 {
 T 200 1050 5 8 1 1 0 6 1
@@ -53,7 +53,7 @@ pinnumber=5
 T 200 150 5 8 0 1 0 8 1
 pinseq=5
 T 350 200 9 8 1 1 0 0 1
-pinlabel=SHDN
+pinlabel=\_SHDN\_
 T 350 200 5 8 0 1 0 2 1
 pintype=in
 }
@@ -74,6 +74,5 @@ T 300 2650 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX3120.pdf
 T 300 1250 9 10 1 0 0 0 1
 MAX3120
-L 350 325 750 325 3 0 0 0 -1 -1
 T 300 2850 5 10 0 0 0 0 1
 symversion=1.0

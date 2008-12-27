@@ -1,4 +1,4 @@
-v 20041228 1
+v 20070626 1
 B 300 300 2900 8600 3 0 0 0 -1 -1 0 0 -1 -1 -1 -1
 T 300 10050 5 10 0 0 0 0 1
 footprint=QFP64
@@ -235,7 +235,7 @@ pinnumber=17
 T 200 3650 5 8 0 1 0 8 1
 pinseq=17
 T 350 3700 9 8 1 1 0 0 1
-pinlabel=INT0
+pinlabel=\_INT0\_
 T 350 3700 5 8 0 1 0 2 1
 pintype=in
 }
@@ -246,7 +246,7 @@ pinnumber=18
 T 200 3450 5 8 0 1 0 8 1
 pinseq=18
 T 350 3500 9 8 1 1 0 0 1
-pinlabel=INT1
+pinlabel=\_INT1\_
 T 350 3500 5 8 0 1 0 2 1
 pintype=in
 }
@@ -598,7 +598,7 @@ pinnumber=19
 T 3300 3350 5 8 0 1 0 2 1
 pinseq=19
 T 3150 3400 9 8 1 1 0 6 1
-pinlabel=P3.7/RD
+pinlabel=P3.7/\_RD\_
 T 3150 3400 5 8 0 1 0 8 1
 pintype=io
 }
@@ -609,7 +609,7 @@ pinnumber=20
 T 3300 3150 5 8 0 1 0 2 1
 pinseq=20
 T 3150 3200 9 8 1 1 0 6 1
-pinlabel=P3.6/WR
+pinlabel=P3.6/\_WR\_
 T 3150 3200 5 8 0 1 0 8 1
 pintype=io
 }
@@ -686,7 +686,7 @@ pinnumber=38
 T 3300 1450 5 8 0 1 0 2 1
 pinseq=38
 T 3150 1500 9 8 1 1 0 6 1
-pinlabel=ALE/PROG
+pinlabel=ALE/\_PROG\_
 T 3150 1500 5 8 0 1 0 8 1
 pintype=in
 }
@@ -697,7 +697,7 @@ pinnumber=37
 T 3300 1150 5 8 0 1 0 2 1
 pinseq=37
 T 3150 1200 9 8 1 1 0 6 1
-pinlabel=PSEN
+pinlabel=\_PSEN\_
 T 3150 1200 5 8 0 1 0 8 1
 pintype=in
 }
@@ -708,7 +708,7 @@ pinnumber=57
 T 3300 650 5 8 0 1 0 2 1
 pinseq=57
 T 3150 700 9 8 1 1 0 6 1
-pinlabel=EA/VPP
+pinlabel=\_EA\_/VPP
 T 3150 700 5 8 0 1 0 8 1
 pintype=in
 }
@@ -718,10 +718,3 @@ T 300 9650 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX7651-MAX7652.pdf
 T 1100 4800 9 10 1 0 0 0 1
 MAX7651/2
-L 2750 825 2525 825 3 0 0 0 -1 -1
-L 3125 1325 2725 1325 3 0 0 0 -1 -1
-L 3150 1625 2700 1625 3 0 0 0 -1 -1
-L 2925 3525 3150 3525 3 0 0 0 -1 -1
-L 3150 3325 2900 3325 3 0 0 0 -1 -1
-L 350 3825 675 3825 3 0 0 0 -1 -1
-L 350 3625 625 3625 3 0 0 0 -1 -1

@@ -1,4 +1,4 @@
-v 20041228 1
+v 20070626 1
 B 300 300 1800 3000 3 0 0 0 -1 -1 0 0 -1 -1 -1 -1
 T 300 3750 5 10 0 0 0 0 1
 device=MAX807
@@ -22,7 +22,7 @@ pinnumber=2
 T 200 850 5 8 0 1 0 8 1
 pinseq=2
 T 350 900 9 8 1 1 0 0 1
-pinlabel=PFO
+pinlabel=\_PFO\_
 T 350 900 5 8 0 1 0 2 1
 pintype=out
 }
@@ -66,7 +66,7 @@ pinnumber=6
 T 200 1750 5 8 0 1 0 8 1
 pinseq=6
 T 350 1800 9 8 1 1 0 0 1
-pinlabel=MR
+pinlabel=\_MR\_
 T 350 1800 5 8 0 1 0 2 1
 pintype=in
 }
@@ -77,7 +77,7 @@ pinnumber=7
 T 200 2650 5 8 0 1 0 8 1
 pinseq=7
 T 350 2700 9 8 1 1 0 0 1
-pinlabel=LOW LINE
+pinlabel=\_LOW LINE\_
 T 350 2700 5 8 0 1 0 2 1
 pintype=out
 }
@@ -99,7 +99,7 @@ pinnumber=9
 T 2200 2050 5 8 0 1 0 2 1
 pinseq=9
 T 2050 2100 9 8 1 1 0 6 1
-pinlabel=RESET
+pinlabel=\_RESET\_
 T 2050 2100 5 8 0 1 0 8 1
 pintype=out
 }
@@ -110,7 +110,7 @@ pinnumber=10
 T 200 1450 5 8 0 1 0 8 1
 pinseq=10
 T 350 1500 9 8 1 1 0 0 1
-pinlabel=WDO
+pinlabel=\_WDO\_
 T 350 1500 5 8 0 1 0 2 1
 pintype=out
 }
@@ -121,7 +121,7 @@ pinnumber=11
 T 200 2350 5 8 0 1 0 8 1
 pinseq=11
 T 350 2400 9 8 1 1 0 0 1
-pinlabel=CE OUT
+pinlabel=\_CE\_ OUT
 T 350 2400 5 8 0 1 0 2 1
 pintype=out
 }
@@ -132,7 +132,7 @@ pinnumber=12
 T 200 2050 5 8 0 1 0 8 1
 pinseq=12
 T 350 2100 9 8 1 1 0 0 1
-pinlabel=CE IN
+pinlabel=\_CE\_ IN
 T 350 2100 5 8 0 1 0 2 1
 pintype=in
 }
@@ -180,13 +180,6 @@ pinlabel=OUT
 T 2050 3000 5 8 0 1 0 8 1
 pintype=out
 }
-L 350 2825 1100 2825 3 0 0 0 -1 -1
-L 350 2525 600 2525 3 0 0 0 -1 -1
-L 350 2225 600 2225 3 0 0 0 -1 -1
-L 350 1925 600 1925 3 0 0 0 -1 -1
-L 350 1625 750 1625 3 0 0 0 -1 -1
-L 350 1025 650 1025 3 0 0 0 -1 -1
-L 1500 2225 2050 2225 3 0 0 0 -1 -1
 T 300 4150 5 10 0 0 0 0 1
 footprint=DIP16
 T 300 4350 5 10 0 0 0 0 1

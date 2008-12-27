@@ -1,4 +1,4 @@
-v 20041228 1
+v 20070626 1
 B 300 300 1800 1800 3 0 0 0 -1 -1 0 0 -1 -1 -1 -1
 T 300 2800 5 10 0 0 0 0 1
 device=MAX189
@@ -34,7 +34,7 @@ pinnumber=3
 T 1250 2200 5 8 0 1 0 2 1
 pinseq=3
 T 1200 2050 9 8 1 1 0 5 1
-pinlabel=SHDN
+pinlabel=\_SHDN\_
 T 1200 1900 5 8 0 1 0 5 1
 pintype=in
 }
@@ -79,7 +79,7 @@ pinnumber=7
 T 200 550 5 8 0 1 0 8 1
 pinseq=7
 T 350 600 9 8 1 1 0 0 1
-pinlabel=CS
+pinlabel=\_CS\_
 T 350 600 5 8 0 1 0 2 1
 pintype=in
 }
@@ -106,5 +106,3 @@ T 300 3600 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX187-MAX189.pdf
 T 300 2150 3 10 1 0 0 0 1
 MAX189
-L 975 2075 1400 2075 3 0 0 0 -1 -1
-L 350 725 525 725 3 0 0 0 -1 -1

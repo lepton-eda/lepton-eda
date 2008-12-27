@@ -1,4 +1,4 @@
-v 20040111 1
+v 20070626 1
 B 300 0 2300 3900 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 300 4150 5 10 0 0 0 0 1
 device=ADC0820
@@ -141,7 +141,7 @@ pinnumber=13
 T 200 850 5 8 0 1 0 8 1
 pinseq=13
 T 350 900 9 8 1 1 0 0 1
-pinlabel=CS
+pinlabel=\_CS\_
 T 350 900 5 8 0 1 0 2 1
 pintype=in
 }
@@ -152,7 +152,7 @@ pinnumber=18
 T 2700 450 5 8 0 1 0 2 1
 pinseq=18
 T 2550 500 9 8 1 1 0 6 1
-pinlabel=OFL
+pinlabel=\_OFL\_
 T 2550 500 5 8 0 1 0 8 1
 pintype=out
 }
@@ -163,7 +163,7 @@ pinnumber=6
 T 200 2450 5 8 0 1 0 8 1
 pinseq=6
 T 350 2500 9 8 1 1 0 0 1
-pinlabel=WR/RDY
+pinlabel=\_WR\_/RDY
 T 350 2500 5 8 0 1 0 2 1
 pintype=tri
 }
@@ -175,7 +175,7 @@ pinnumber=8
 T 200 2050 5 8 0 1 0 8 1
 pinseq=8
 T 350 2100 9 8 1 1 0 0 1
-pinlabel=RD
+pinlabel=\_RD\_
 T 350 2100 5 8 0 1 0 2 1
 pintype=in
 }
@@ -187,7 +187,7 @@ pinnumber=9
 T 200 1650 5 8 0 1 0 8 1
 pinseq=9
 T 350 1700 9 8 1 1 0 0 1
-pinlabel=INT
+pinlabel=\_INT\_
 T 350 1700 5 8 0 1 0 2 1
 pintype=out
 }
@@ -208,10 +208,5 @@ T 300 5350 5 10 0 0 0 0 1
 documentation=http://www.national.com/ds.cgi/AD/ADC0820.pdf
 T 300 3950 9 8 1 0 0 0 1
 ADC0820
-L 350 1025 550 1025 3 0 0 0 -1 -1
-L 350 1825 575 1825 3 0 0 0 -1 -1
-L 350 2225 550 2225 3 0 0 0 -1 -1
-L 350 2625 575 2625 3 0 0 0 -1 -1
-L 2550 625 2250 625 3 0 0 0 -1 -1
 V 2650 500 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 V 250 900 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1

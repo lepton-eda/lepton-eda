@@ -1,4 +1,4 @@
-v 20041228 1
+v 20070626 1
 P 300 3800 0 3800 1 0 1
 {
 T 200 3850 5 8 1 1 0 6 1
@@ -94,7 +94,7 @@ pinnumber=8
 T 2400 2150 5 8 0 1 0 2 1
 pinseq=8
 T 2250 2200 9 8 1 1 0 6 1
-pinlabel=LCDON
+pinlabel=\_LCDON\_
 T 2250 2200 5 8 0 1 0 8 1
 pintype=out
 }
@@ -141,7 +141,7 @@ pinnumber=4
 T 200 2550 5 8 0 1 0 8 1
 pinseq=4
 T 350 2600 9 8 1 1 0 0 1
-pinlabel=SHDN
+pinlabel=\_SHDN\_
 T 350 2600 5 8 0 1 0 2 1
 pintype=in
 }
@@ -158,5 +158,3 @@ T 300 4850 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX1620-MAX1621.pdf
 T 300 4050 9 10 1 0 0 0 1
 MAX1620
-L 350 2725 750 2725 3 0 0 0 -1 -1
-L 2250 2325 1700 2325 3 0 0 0 -1 -1

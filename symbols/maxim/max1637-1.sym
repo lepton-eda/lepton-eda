@@ -1,4 +1,4 @@
-v 20041228 1
+v 20070626 1
 P 300 3400 0 3400 1 0 1
 {
 T 200 3450 5 8 1 1 0 6 1
@@ -105,7 +105,7 @@ pinnumber=16
 T 200 150 5 8 0 1 0 8 1
 pinseq=16
 T 350 200 9 8 1 1 0 0 1
-pinlabel=SKIP
+pinlabel=\_SKIP\_
 T 350 200 5 8 0 1 0 2 1
 pintype=in
 }
@@ -130,7 +130,7 @@ pinnumber=6
 T 200 1750 5 8 0 1 0 8 1
 pinseq=6
 T 350 1800 9 8 1 1 0 0 1
-pinlabel=SHDN
+pinlabel=\_SHDN\_
 T 350 1800 5 8 0 1 0 2 1
 pintype=in
 }
@@ -156,5 +156,3 @@ documentation=http://pdfserv.maxim-ic.com/en/ds/MAX1637.pdf
 T 300 3700 9 10 1 0 0 0 1
 MAX1637
 V 250 200 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
-L 350 325 650 325 3 0 0 0 -1 -1
-L 350 1925 750 1925 3 0 0 0 -1 -1

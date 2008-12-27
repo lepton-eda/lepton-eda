@@ -1,4 +1,4 @@
-v 20041228 1
+v 20070626 1
 P 300 5800 0 5800 1 0 1
 {
 T 200 5850 5 8 1 1 0 6 1
@@ -250,7 +250,7 @@ pinnumber=21
 T 200 2550 5 8 0 1 0 8 1
 pinseq=21
 T 350 2600 9 8 1 1 0 0 1
-pinlabel=DTE/DCE
+pinlabel=\_DTE\_/DCE
 T 350 2600 5 8 0 1 0 2 1
 pintype=in
 }
@@ -272,4 +272,3 @@ T 300 7550 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX214.pdf
 T 300 6150 9 8 1 0 0 0 1
 MAX214
-L 350 2725 625 2725 3 0 0 0 -1 -1

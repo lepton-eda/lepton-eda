@@ -1,4 +1,4 @@
-v 20041228 1
+v 20070626 1
 P 0 2300 300 2300 1 0 0
 {
 T 200 2350 5 8 1 1 0 6 1
@@ -129,7 +129,7 @@ pinseq=10
 T 1650 500 5 8 0 1 0 8 1
 pintype=out
 T 1650 500 9 8 1 1 0 6 1
-pinlabel=Invalid
+pinlabel=\_Invalid\_
 }
 P 1800 200 2000 200 1 0 1
 {
@@ -140,7 +140,7 @@ pinseq=9
 T 1650 200 5 8 0 1 0 8 1
 pintype=pas
 T 1650 200 9 8 1 1 0 6 1
-pinlabel=FrcOff
+pinlabel=\_FrcOff\_
 }
 B 300 0 1400 2500 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 P 0 800 300 800 1 0 0
@@ -174,5 +174,3 @@ T 300 3350 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX3224-MAX3245.pdf
 T 300 2550 9 8 1 0 0 0 1
 MAX3226
-L 1650 325 1200 325 3 0 0 0 -1 -1
-L 1650 625 1200 625 3 0 0 0 -1 -1

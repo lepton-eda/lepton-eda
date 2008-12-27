@@ -1,4 +1,4 @@
-v 20041228 1
+v 20070626 1
 B 300 0 800 1600 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 350 1650 8 10 1 1 0 0 1
 refdes=U?
@@ -54,7 +54,7 @@ pinnumber=6
 T 200 150 5 8 0 1 0 8 1
 pinseq=3
 T 350 200 9 8 1 1 0 0 1
-pinlabel=CS
+pinlabel=\_CS\_
 T 350 200 5 8 0 1 0 2 1
 pintype=in
 }
@@ -74,4 +74,3 @@ T 1450 1250 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX667.pdf
 T 1000 100 9 10 1 0 90 0 1
 MAX6674
-L 350 325 525 325 3 0 0 0 -1 -1

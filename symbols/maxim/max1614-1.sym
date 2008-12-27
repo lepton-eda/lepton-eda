@@ -1,4 +1,4 @@
-v 20040111 1
+v 20070626 1
 P 300 1200 0 1200 1 0 1
 {
 T 200 1250 5 8 1 1 0 6 1
@@ -28,7 +28,7 @@ pinnumber=3
 T 2400 1950 5 8 0 1 0 2 1
 pinseq=3
 T 2250 2000 9 8 1 1 0 6 1
-pinlabel=LBO
+pinlabel=\_LBO\_
 T 2250 2000 5 8 0 1 0 8 1
 pintype=out
 }
@@ -64,7 +64,7 @@ pinnumber=2
 T 200 1550 5 8 0 1 0 8 1
 pinseq=2
 T 350 1600 9 8 1 1 0 0 1
-pinlabel=OFF
+pinlabel=\_OFF\_
 T 350 1600 5 8 0 1 0 2 1
 pintype=in
 }
@@ -76,7 +76,7 @@ pinnumber=1
 T 200 1950 5 8 0 1 0 8 1
 pinseq=1
 T 350 2000 9 8 1 1 0 0 1
-pinlabel=ON
+pinlabel=\_ON\_
 T 350 2000 5 8 0 1 0 2 1
 pintype=in
 }
@@ -93,8 +93,5 @@ T 300 3250 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX1614.pdf
 T 300 2250 9 10 1 0 0 0 1
 MAX1614
-L 350 2125 575 2125 3 0 0 0 -1 -1
-L 350 1725 625 1725 3 0 0 0 -1 -1
-L 2250 2125 1900 2125 3 0 0 0 -1 -1
 T 300 3450 5 10 0 0 0 0 1
 symversion=1.0

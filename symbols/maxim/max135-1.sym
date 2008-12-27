@@ -1,4 +1,4 @@
-v 20040111 1
+v 20070626 1
 P 300 5000 0 5000 1 0 1
 {
 T 200 5050 5 8 1 1 0 6 1
@@ -229,7 +229,7 @@ pinnumber=1
 T 2400 1750 5 8 0 1 0 2 1
 pinseq=1
 T 2250 1800 9 8 1 1 0 6 1
-pinlabel=CS
+pinlabel=\_CS\_
 T 2250 1800 5 8 0 1 0 8 1
 pintype=in
 }
@@ -240,7 +240,7 @@ pinnumber=2
 T 2400 1350 5 8 0 1 0 2 1
 pinseq=2
 T 2250 1400 9 8 1 1 0 6 1
-pinlabel=RD
+pinlabel=\_RD\_
 T 2250 1400 5 8 0 1 0 8 1
 pintype=in
 }
@@ -251,7 +251,7 @@ pinnumber=3
 T 2400 950 5 8 0 1 0 2 1
 pinseq=3
 T 2250 1000 9 8 1 1 0 6 1
-pinlabel=WR
+pinlabel=\_WR\_
 T 2250 1000 5 8 0 1 0 8 1
 pintype=in
 }
@@ -276,8 +276,5 @@ T 300 6950 5 10 0 0 0 0 1
 net=V-:16
 T 300 5350 9 10 1 0 0 0 1
 MAX135
-L 2250 1925 2075 1925 3 0 0 0 -1 -1
-L 2250 1525 2075 1525 3 0 0 0 -1 -1
-L 2250 1125 2025 1125 3 0 0 0 -1 -1
 T 300 7150 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX135.pdf

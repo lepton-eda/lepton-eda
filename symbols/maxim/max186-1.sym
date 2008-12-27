@@ -1,4 +1,4 @@
-v 20060906 1
+v 20070626 1
 P 300 5600 0 5600 1 0 1
 {
 T 200 5650 5 8 1 1 0 6 1
@@ -152,7 +152,7 @@ pinnumber=18
 T 200 750 5 8 0 1 0 8 1
 pinseq=18
 T 350 800 9 8 1 1 0 0 1
-pinlabel=CS
+pinlabel=\_CS\_
 T 350 800 5 8 0 1 0 2 1
 pintype=in
 }
@@ -165,7 +165,7 @@ pinnumber=10
 T 200 2350 5 8 0 1 0 8 1
 pinseq=10
 T 350 2400 9 8 1 1 0 0 1
-pinlabel=SHDN
+pinlabel=\_SHDN\_
 T 350 2400 5 8 0 1 0 2 1
 pintype=in
 }
@@ -202,7 +202,5 @@ T 300 7650 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX186-MAX188.pdf
 T 300 5850 9 10 1 0 0 0 1
 MAX186
-L 350 925 525 925 3 0 0 0 -1 -1
-L 350 2525 750 2525 3 0 0 0 -1 -1
 T 300 7850 5 10 0 0 0 0 1
 symversion=1.0
