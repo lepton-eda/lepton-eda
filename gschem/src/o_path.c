@@ -706,14 +706,14 @@ void o_path_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 /*! \brief Draw lines between curve segment end-point and their control point.
  *
  *  \par Function Description
- *  This function XOR draws lines between the end-points and respective
+ *  This function Draws lines between the end-points and respective
  *  control-points of curve segments in the path.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  The path OBJECT.
  */
-static void o_path_xor_control_lines (GSCHEM_TOPLEVEL *w_current,
-                                      OBJECT *o_current)
+static void draw_control_lines (GSCHEM_TOPLEVEL *w_current,
+                                OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int i;
@@ -787,7 +787,7 @@ void o_path_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if (w_current->draw_grips == FALSE)
     return;
 
-  o_path_xor_control_lines (w_current, o_current);
+  draw_control_lines (w_current, o_current);
 
   for (i = 0; i <  o_current->path->num_sections; i++) {
     section = &o_current->path->sections[i];
