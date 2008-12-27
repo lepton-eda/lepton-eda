@@ -298,7 +298,7 @@ void a_zoom_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  * 
  */
-void a_zoom_box_rubberband_xor(GSCHEM_TOPLEVEL *w_current)
+void a_zoom_box_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;

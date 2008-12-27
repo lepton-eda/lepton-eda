@@ -255,7 +255,7 @@ void o_place_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
  *  \param [in] drawing     Set to FALSE for undraw operations to ensure
  *                            matching conditions to a previous draw operation.
  */
-void o_place_rubberplace_xor (GSCHEM_TOPLEVEL *w_current, int drawing)
+void o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;

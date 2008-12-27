@@ -263,7 +263,7 @@ void o_pin_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_pin_rubberpin_xor(GSCHEM_TOPLEVEL *w_current) 
+void o_pin_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;

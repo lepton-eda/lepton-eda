@@ -414,7 +414,7 @@ void o_arc_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
-void o_arc_rubberarc_xor(GSCHEM_TOPLEVEL *w_current)
+void o_arc_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 

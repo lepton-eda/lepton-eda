@@ -341,7 +341,7 @@ void o_bus_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object
  */
-void o_bus_rubberbus_xor(GSCHEM_TOPLEVEL *w_current)
+void o_bus_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2, size=0;

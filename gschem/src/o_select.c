@@ -312,7 +312,7 @@ void o_select_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_select_box_rubberband_xor(GSCHEM_TOPLEVEL *w_current)
+void o_select_box_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int box_width, box_height, box_left, box_top;

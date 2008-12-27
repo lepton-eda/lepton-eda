@@ -112,7 +112,7 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
       case MOVE:
       case ENDMOVE:
         if (w_current->last_drawb_mode != -1) {
-          o_move_rubbermove_xor (w_current, TRUE);
+          o_move_draw_rubber (w_current, TRUE);
         }
         break;
 
@@ -122,66 +122,66 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
       case ENDTEXT:
       case ENDPASTE:
         if (w_current->rubber_visible)
-          o_place_rubberplace_xor (w_current, TRUE);
+          o_place_draw_rubber (w_current, TRUE);
         break;
 
       case STARTDRAWNET:
       case DRAWNET:
       case NETCONT:
         if (w_current->rubber_visible)
-          o_net_drawrubber (w_current);
+          o_net_draw_rubber (w_current);
         break;
 
       case STARTDRAWBUS:
       case DRAWBUS:
       case BUSCONT:
         if (w_current->rubber_visible)
-          o_bus_rubberbus_xor(w_current);
+          o_bus_draw_rubber(w_current);
         break;
 
       case GRIPS:
         if (w_current->rubber_visible)
-          o_grips_rubbergrip_xor (w_current);
+          o_grips_draw_rubber (w_current);
         break;
 
       case SBOX:
         if (w_current->rubber_visible)
-          o_select_box_rubberband_xor (w_current);
+          o_select_box_draw_rubber (w_current);
         break;
 
       case ZOOMBOXEND:
         if (w_current->rubber_visible)
-          a_zoom_box_rubberband_xor (w_current);
+          a_zoom_box_draw_rubber (w_current);
         break;
 
       case ENDLINE:
         if (w_current->rubber_visible)
-          o_line_rubberline_xor (w_current);
+          o_line_draw_rubber (w_current);
         break;
 
       case ENDBOX:
         if (w_current->rubber_visible)
-          o_box_rubberbox_xor (w_current);
+          o_box_draw_rubber (w_current);
         break;
 
       case ENDPICTURE:
         if (w_current->rubber_visible)
-          o_picture_rubberbox_xor (w_current);
+          o_picture_draw_rubber (w_current);
         break;
 
       case ENDCIRCLE:
         if (w_current->rubber_visible)
-          o_circle_rubbercircle_xor (w_current);
+          o_circle_draw_rubber (w_current);
         break;
 
       case ENDARC:
         if (w_current->rubber_visible)
-          o_arc_rubberarc_xor (w_current);
+          o_arc_draw_rubber (w_current);
         break;
 
       case ENDPIN:
         if (w_current->rubber_visible)
-          o_pin_rubberpin_xor (w_current);
+          o_pin_draw_rubber (w_current);
         break;
     }
   }

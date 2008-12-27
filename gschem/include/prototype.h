@@ -15,7 +15,7 @@ void a_zoom_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
-void a_zoom_box_rubberband_xor(GSCHEM_TOPLEVEL *w_current);
+void a_zoom_box_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void correct_aspect(GSCHEM_TOPLEVEL *w_current);
 /* g_funcs.c */
 SCM g_funcs_print(SCM filename);
@@ -457,7 +457,7 @@ void o_arc_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_arc_end1(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int radius, int start_angle, int end_angle);
 void o_arc_motion(GSCHEM_TOPLEVEL *w_current, int x, int y, int whichone);
-void o_arc_rubberarc_xor(GSCHEM_TOPLEVEL *w_current);
+void o_arc_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_arc_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 /* o_attrib.c */
 void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection, OBJECT *selected);
@@ -487,7 +487,7 @@ void o_box_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
 void o_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_box_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_box_rubberbox_xor(GSCHEM_TOPLEVEL *w_current);
+void o_box_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_box_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 /* o_buffer.c */
 void o_buffer_copy(GSCHEM_TOPLEVEL *w_current, int buf_num);
@@ -502,7 +502,7 @@ void o_bus_draw_xor_single(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int which
 void o_bus_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 int o_bus_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_bus_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_bus_rubberbus_xor(GSCHEM_TOPLEVEL *w_current);
+void o_bus_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_bus_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 /* o_circle.c */
 void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
@@ -515,7 +515,7 @@ void o_circle_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
 void o_circle_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_circle_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_circle_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_circle_rubbercircle_xor(GSCHEM_TOPLEVEL *w_current);
+void o_circle_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_circle_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 /* o_complex.c */
 void o_complex_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
@@ -569,7 +569,7 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
 void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 int o_grips_size(GSCHEM_TOPLEVEL *w_current);
 void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_grips_rubbergrip_xor(GSCHEM_TOPLEVEL *w_current);
+void o_grips_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 /* o_line.c */
 void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_line_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
@@ -577,7 +577,7 @@ void o_line_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
 void o_line_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_line_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_line_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_line_rubberline_xor(GSCHEM_TOPLEVEL *w_current);
+void o_line_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_line_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 /* o_misc.c */
 void o_edit(GSCHEM_TOPLEVEL *w_current, GList *list);
@@ -600,7 +600,7 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current);
 void o_move_cancel(GSCHEM_TOPLEVEL *w_current);
 void o_move_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_move_invalidate_rubber(GSCHEM_TOPLEVEL *w_current, int drawing);
-void o_move_rubbermove_xor(GSCHEM_TOPLEVEL *w_current, int drawing);
+void o_move_draw_rubber(GSCHEM_TOPLEVEL *w_current, int drawing);
 int o_move_return_whichone(OBJECT *object, int x, int y);
 void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_move_prep_rubberband(GSCHEM_TOPLEVEL *w_current);
@@ -619,7 +619,7 @@ void o_net_start_magnetic(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_net_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 int o_net_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_net_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current);
+void o_net_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_net_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj, GList *other_objects);
 /* o_picture.c */
@@ -628,7 +628,7 @@ void o_picture_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_picture_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void picture_selection_dialog (GSCHEM_TOPLEVEL *w_current);
 void o_picture_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
-void o_picture_rubberbox_xor(GSCHEM_TOPLEVEL *w_current);
+void o_picture_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_picture_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_picture_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
@@ -643,7 +643,7 @@ void o_path_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curre
 void o_path_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_path_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_path_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_path_rubberpath_xor(GSCHEM_TOPLEVEL *w_current);
+void o_path_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_path_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 
 /* o_pin.c */
@@ -652,14 +652,14 @@ void o_pin_draw_xor(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_curren
 void o_pin_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_pin_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_pin_rubberpin_xor(GSCHEM_TOPLEVEL *w_current);
+void o_pin_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_pin_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 /* o_place.c */
 void o_place_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_place_end(GSCHEM_TOPLEVEL *w_current, int x, int y, int continue_placing, GList **ret_new_objects);
 void o_place_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_place_invalidate_rubber(GSCHEM_TOPLEVEL *w_current, int drawing);
-void o_place_rubberplace_xor(GSCHEM_TOPLEVEL *w_current, int drawing);
+void o_place_draw_rubber(GSCHEM_TOPLEVEL *w_current, int drawing);
 void o_place_rotate(GSCHEM_TOPLEVEL *w_current);
 /* o_select.c */
 void o_select_run_hooks(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int flag);
@@ -668,7 +668,7 @@ int o_select_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_select_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_select_box_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_select_box_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
-void o_select_box_rubberband_xor(GSCHEM_TOPLEVEL *w_current);
+void o_select_box_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_select_box_search(GSCHEM_TOPLEVEL *w_current);
 void o_select_connected_nets(GSCHEM_TOPLEVEL *w_current, OBJECT* o_current);
 OBJECT *o_select_return_first_object(GSCHEM_TOPLEVEL *w_current);

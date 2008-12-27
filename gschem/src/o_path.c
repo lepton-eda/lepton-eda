@@ -667,7 +667,7 @@ void o_path_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
-void o_path_rubberpath_xor(GSCHEM_TOPLEVEL *w_current)
+void o_path_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   PATH *path;
   int num_points;

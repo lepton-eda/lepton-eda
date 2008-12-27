@@ -591,7 +591,7 @@ void o_circle_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
-void o_circle_rubbercircle_xor(GSCHEM_TOPLEVEL *w_current)
+void o_circle_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int cx, cy, radius;

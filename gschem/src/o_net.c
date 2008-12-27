@@ -820,7 +820,7 @@ void o_net_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *  This function draws the rubbernets to the graphic context
  */
-void o_net_drawrubber(GSCHEM_TOPLEVEL *w_current)
+void o_net_draw_rubber(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int size=0, magnetic_halfsize;

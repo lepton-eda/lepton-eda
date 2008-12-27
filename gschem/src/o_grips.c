@@ -1612,36 +1612,36 @@ void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
-void o_grips_rubbergrip_xor (GSCHEM_TOPLEVEL *w_current)
+void o_grips_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   g_return_if_fail (w_current->which_object != NULL);
 
   switch(w_current->which_object->type) {
     case OBJ_ARC:
-      o_arc_rubberarc_xor (w_current);
+      o_arc_draw_rubber (w_current);
       break;
 
     case OBJ_BOX:
-      o_box_rubberbox_xor (w_current);
+      o_box_draw_rubber (w_current);
       break;
 
     case OBJ_PATH:
-      o_path_rubberpath_xor (w_current);
+      o_path_draw_rubber (w_current);
       break;
 
     case OBJ_PICTURE:
-      o_picture_rubberbox_xor (w_current);
+      o_picture_draw_rubber (w_current);
       break;
 
     case OBJ_CIRCLE:
-      o_circle_rubbercircle_xor (w_current);
+      o_circle_draw_rubber (w_current);
       break;
 
     case OBJ_LINE:
     case OBJ_NET:
     case OBJ_PIN:
     case OBJ_BUS:
-      o_line_rubberline_xor (w_current);
+      o_line_draw_rubber (w_current);
     break;
 
     default:

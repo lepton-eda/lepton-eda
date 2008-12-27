@@ -88,7 +88,7 @@ void o_picture_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   g_assert( w_current->inside_action != 0 );
 
   /* erase the temporary picture */
-  /* o_picture_rubberbox_xor(w_current); */
+  /* o_picture_draw_rubber(w_current); */
   w_current->rubber_visible = 0;
   
   picture_width  = GET_PICTURE_WIDTH (w_current);
@@ -273,7 +273,7 @@ void o_picture_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
-void o_picture_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
+void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int left, top, width, height;
@@ -286,7 +286,7 @@ void o_picture_rubberbox_xor(GSCHEM_TOPLEVEL *w_current)
   height = SCREENabs(toplevel, GET_PICTURE_HEIGHT(w_current));
 
 #if DEBUG
-  printf("o_picture_rubberbox_xor called:\n");
+  printf("o_picture_draw_rubber called:\n");
   printf("pixbuf wh ratio: %i\n", w_current->pixbuf_wh_ratio);
   printf("first: %i, %i\n", w_current->first_wx, w_current->first_wy);
   printf("second: %i, %i\n", w_current->second_wx, w_current->second_wy);
