@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 T 1700 4300 8 10 1 1 0 6 1
 refdes=U?
 T 300 4450 5 10 0 0 0 0 1
@@ -16,7 +16,7 @@ pinnumber=2
 T 200 3050 5 8 0 1 0 8 1
 pinseq=1
 T 350 3100 9 8 1 1 0 0 1
-pinlabel=True/Comp
+pinlabel=True/\_Comp\_
 T 350 3100 5 8 0 1 0 2 1
 pintype=in
 }
@@ -38,7 +38,7 @@ pinnumber=7
 T 200 3450 5 8 0 1 0 8 1
 pinseq=3
 T 350 3500 9 8 1 1 0 0 1
-pinlabel=Parallel/Ser
+pinlabel=Parallel/\_Ser\_
 T 350 3500 5 8 0 1 0 2 1
 pintype=in
 }
@@ -49,7 +49,7 @@ pinnumber=3
 T 200 1850 5 8 0 1 0 8 1
 pinseq=4
 T 350 1900 9 8 1 1 0 0 1
-pinlabel=K
+pinlabel=\_K\_
 T 350 1900 5 8 0 1 0 2 1
 pintype=in
 }
@@ -173,8 +173,5 @@ T 300 4850 5 10 0 0 0 0 1
 documentation=http://www.semiconductors.philips.com/acrobat/datasheets/HEF4035B_CNV_3.pdf
 T 300 4250 9 10 1 0 0 0 1
 4035
-L 350 2025 425 2025 3 0 0 0 -1 -1
 L 375 3900 300 3850 3 0 0 0 -1 -1
 L 375 3900 300 3950 3 0 0 0 -1 -1
-L 950 3625 1175 3625 3 0 0 0 -1 -1
-L 725 3225 1100 3225 3 0 0 0 -1 -1

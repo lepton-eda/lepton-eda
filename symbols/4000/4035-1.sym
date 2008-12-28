@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 T 500 2400 8 10 1 1 0 6 1
 refdes=U?
 T 3800 950 5 10 0 0 0 0 1
@@ -16,7 +16,7 @@ pinnumber=2
 T 2750 100 5 8 0 1 0 2 1
 pinseq=1
 T 2700 350 9 8 1 1 0 3 1
-pinlabel=T/C
+pinlabel=T/\_C\_
 T 2700 500 5 8 0 1 0 3 1
 pintype=in
 }
@@ -38,7 +38,7 @@ pinnumber=7
 T 1950 100 5 8 0 1 0 2 1
 pinseq=3
 T 1900 350 9 8 1 1 0 3 1
-pinlabel=P/S
+pinlabel=P/\_S\_
 T 1900 500 5 8 0 1 0 3 1
 pintype=in
 }
@@ -49,7 +49,7 @@ pinnumber=3
 T 1550 100 5 8 0 1 0 2 1
 pinseq=4
 T 1500 350 9 8 1 1 0 3 1
-pinlabel=K
+pinlabel=\_K\_
 T 1500 500 5 8 0 1 0 3 1
 pintype=in
 }
@@ -165,7 +165,6 @@ T 3050 1900 5 8 0 1 0 8 1
 pintype=out
 }
 B 300 300 2800 2000 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
-L 1460 480 1540 480 3 0 0 0 -1 -1
 T 3800 750 5 10 0 0 0 0 1
 description=4-bit universal shift register
 T 3800 1750 5 10 0 0 0 0 1
@@ -174,5 +173,3 @@ T 3800 550 5 10 0 0 0 0 1
 documentation=http://www.semiconductors.philips.com/acrobat/datasheets/HEF4035B_CNV_3.pdf
 T 2600 2450 9 10 1 0 0 0 1
 4035
-L 1950 475 2025 475 3 0 0 0 -1 -1
-L 2725 475 2825 475 3 0 0 0 -1 -1

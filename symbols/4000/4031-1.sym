@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 T 300 2350 8 10 1 1 0 0 1
 refdes=U?
 T 2300 950 5 10 0 0 0 0 1
@@ -16,7 +16,7 @@ pinnumber=10
 T 200 650 5 8 0 1 0 8 1
 pinseq=1
 T 350 700 9 8 1 1 0 0 1
-pinlabel=D1/D2
+pinlabel=\_D1\_/D2
 T 350 700 5 8 0 1 0 2 1
 pintype=in
 }
@@ -84,7 +84,7 @@ pinnumber=7
 T 1700 1450 5 8 0 1 0 2 1
 pinseq=7
 T 1550 1500 9 8 1 1 0 6 1
-pinlabel=Q63
+pinlabel=\_Q63\_
 T 1550 1500 5 8 0 1 0 8 1
 pintype=out
 }
@@ -101,7 +101,6 @@ T 1550 1900 5 8 0 1 0 8 1
 pintype=out
 }
 B 300 300 1300 2000 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
-L 1270 1640 1570 1640 3 0 0 0 -1 -1
 T 2300 750 5 10 0 0 0 0 1
 description=64-stage static shift register
 T 2300 1750 5 10 0 0 0 0 1
@@ -110,6 +109,5 @@ T 300 100 9 10 1 0 0 0 1
 4031
 T 2300 550 5 10 0 0 0 0 1
 comment=Pin 5 may not be connected on all devices
-L 500 825 350 825 3 0 0 0 -1 -1
 T 2300 350 5 10 0 0 0 0 1
 documentation=http://www.semiconductors.philips.com/acrobat/datasheets/HEF4031B_CNV_3.pdf

@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 T 500 4400 8 10 1 1 0 6 1
 refdes=U?
 T 2300 3350 5 10 0 0 0 0 1
@@ -16,7 +16,7 @@ pinnumber=10
 T 200 3050 5 8 0 1 0 8 1
 pinseq=1
 T 350 3100 9 8 1 1 0 0 1
-pinlabel=up/down
+pinlabel=up/\_down\_
 T 350 3100 5 8 0 1 0 2 1
 pintype=in
 }
@@ -71,7 +71,7 @@ pinnumber=1
 T 200 2650 5 8 0 1 0 8 1
 pinseq=6
 T 350 2700 9 8 1 1 0 0 1
-pinlabel=Load/count
+pinlabel=Load/\_count\_
 T 350 2700 5 8 0 1 0 2 1
 pintype=in
 }
@@ -82,7 +82,7 @@ pinnumber=9
 T 200 3450 5 8 0 1 0 8 1
 pinseq=7
 T 350 3500 9 8 1 1 0 0 1
-pinlabel=bin/dec
+pinlabel=bin/\_dec\_
 T 350 3500 5 8 0 1 0 2 1
 pintype=in
 }
@@ -93,7 +93,7 @@ pinnumber=5
 T 200 2250 5 8 0 1 0 8 1
 pinseq=8
 T 350 2300 9 8 1 1 0 0 1
-pinlabel=Carry In
+pinlabel=\_Carry In\_
 T 350 2300 5 8 0 1 0 2 1
 pintype=in
 }
@@ -161,7 +161,7 @@ pinnumber=7
 T 2000 2250 5 8 0 1 0 2 1
 pinseq=14
 T 1850 2300 9 8 1 1 0 6 1
-pinlabel=Carry Out
+pinlabel=\_Carry Out\_
 T 1850 2300 5 8 0 1 0 8 1
 pintype=out
 }
@@ -174,8 +174,3 @@ T 300 50 9 10 1 0 0 0 1
 4029
 V 1950 2300 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 V 250 2300 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
-L 350 2425 900 2425 3 0 0 0 -1 -1
-L 1200 2425 1850 2425 3 0 0 0 -1 -1
-L 625 3625 825 3625 3 0 0 0 -1 -1
-L 575 3225 900 3225 3 0 0 0 -1 -1
-L 775 2825 1125 2825 3 0 0 0 -1 -1
