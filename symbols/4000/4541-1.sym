@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 T 1700 3900 8 10 1 1 0 6 1
 refdes=U?
 T 300 4050 5 10 0 0 0 0 1
@@ -38,11 +38,10 @@ pinnumber=9
 T 200 250 5 8 0 1 0 8 1
 pinseq=3
 T 350 300 9 8 1 1 0 0 1
-pinlabel=Q/Q
+pinlabel=Q/\_Q\_
 T 350 300 5 8 0 1 0 2 1
 pintype=in
 }
-L 550 424 678 424 3 0 0 0 -1 -1
 P 0 700 300 700 1 0 0
 {
 T 200 750 5 8 1 1 0 6 1
@@ -94,7 +93,7 @@ pinnumber=5
 T 200 1450 5 8 0 1 0 8 1
 pinseq=8
 T 350 1500 9 8 1 1 0 0 1
-pinlabel=AR
+pinlabel=\_AR\_
 T 350 1500 5 8 0 1 0 2 1
 pintype=in
 }
@@ -130,4 +129,3 @@ documentation=http://www.semiconductors.philips.com/acrobat/datasheets/HEF4541B_
 T 300 3850 9 10 1 0 0 0 1
 4541
 V 250 1500 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
-L 350 1625 550 1625 3 0 0 0 -1 -1

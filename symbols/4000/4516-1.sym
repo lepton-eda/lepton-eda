@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 T 1700 3900 8 10 1 1 0 6 1
 refdes=U?
 T 300 4050 5 10 0 0 0 0 1
@@ -16,11 +16,10 @@ pinnumber=5
 T 200 1450 5 8 0 1 0 8 1
 pinseq=1
 T 350 1500 9 8 1 1 0 0 1
-pinlabel=CI
+pinlabel=\_CI\_
 T 350 1500 5 8 0 1 0 2 1
 pintype=in
 }
-L 350 1624 498 1624 3 0 0 0 -1 -1
 V 250 1500 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 P 0 1100 300 1100 1 0 0
 {
@@ -29,7 +28,7 @@ pinnumber=10
 T 200 1050 5 8 0 1 0 8 1
 pinseq=2
 T 350 1100 9 8 1 1 0 0 1
-pinlabel=U/D
+pinlabel=U/\_D\_
 T 350 1100 5 8 0 1 0 2 1
 pintype=in
 }
@@ -119,11 +118,10 @@ pinnumber=7
 T 1800 1450 5 8 0 1 0 2 1
 pinseq=10
 T 1650 1500 9 8 1 1 0 6 1
-pinlabel=CO
+pinlabel=\_CO\_
 T 1650 1500 5 8 0 1 0 8 1
 pintype=out
 }
-L 1410 1624 1650 1624 3 0 0 0 -1 -1
 V 1750 1500 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 P 2000 2300 1700 2300 1 0 0
 {
@@ -178,4 +176,3 @@ T 300 5250 5 10 0 0 0 0 1
 documentation=http://www.semiconductors.philips.com/acrobat/datasheets/HEF4516B_CNV_3.pdf
 T 300 3850 9 10 1 0 0 0 1
 4516
-L 525 1225 625 1225 3 0 0 0 -1 -1
