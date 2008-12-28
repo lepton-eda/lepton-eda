@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 T 1600 3500 8 10 1 1 0 6 1
 refdes=U?
 T 300 3650 5 10 0 0 0 0 1
@@ -16,7 +16,7 @@ pinnumber=15
 T 200 250 5 8 0 1 0 8 1
 pinseq=1
 T 350 300 9 8 1 1 0 0 1
-pinlabel=OE2
+pinlabel=\_OE2\_
 T 350 300 5 8 0 1 0 2 1
 pintype=in
 }
@@ -94,7 +94,7 @@ pinnumber=13
 T 1800 650 5 8 0 1 0 2 1
 pinseq=8
 T 1650 700 9 8 1 1 0 6 1
-pinlabel=Y6
+pinlabel=\_Y6\_
 T 1650 700 5 8 0 1 0 8 1
 pintype=tri
 }
@@ -106,7 +106,7 @@ pinnumber=11
 T 1800 1050 5 8 0 1 0 2 1
 pinseq=9
 T 1650 1100 9 8 1 1 0 6 1
-pinlabel=Y5
+pinlabel=\_Y5\_
 T 1650 1100 5 8 0 1 0 8 1
 pintype=tri
 }
@@ -118,7 +118,7 @@ pinnumber=9
 T 1800 1850 5 8 0 1 0 2 1
 pinseq=10
 T 1650 1900 9 8 1 1 0 6 1
-pinlabel=Y4
+pinlabel=\_Y4\_
 T 1650 1900 5 8 0 1 0 8 1
 pintype=tri
 }
@@ -130,7 +130,7 @@ pinnumber=7
 T 1800 2250 5 8 0 1 0 2 1
 pinseq=11
 T 1650 2300 9 8 1 1 0 6 1
-pinlabel=Y3
+pinlabel=\_Y3\_
 T 1650 2300 5 8 0 1 0 8 1
 pintype=tri
 }
@@ -142,7 +142,7 @@ pinnumber=5
 T 1800 2650 5 8 0 1 0 2 1
 pinseq=12
 T 1650 2700 9 8 1 1 0 6 1
-pinlabel=Y2
+pinlabel=\_Y2\_
 T 1650 2700 5 8 0 1 0 8 1
 pintype=tri
 }
@@ -154,7 +154,7 @@ pinnumber=3
 T 1800 3050 5 8 0 1 0 2 1
 pinseq=13
 T 1650 3100 9 8 1 1 0 6 1
-pinlabel=Y1
+pinlabel=\_Y1\_
 T 1650 3100 5 8 0 1 0 8 1
 pintype=tri
 }
@@ -166,7 +166,7 @@ pinnumber=1
 T 200 1450 5 8 0 1 0 8 1
 pinseq=14
 T 350 1500 9 8 1 1 0 0 1
-pinlabel=OE1
+pinlabel=\_OE1\_
 T 350 1500 5 8 0 1 0 2 1
 pintype=in
 }
@@ -178,11 +178,3 @@ T 300 4450 5 10 0 0 0 0 1
 numslots=0
 T 300 3450 9 10 1 0 0 0 1
 4503
-L 350 425 675 425 3 0 0 0 -1 -1
-L 350 1625 625 1625 3 0 0 0 -1 -1
-L 1650 3225 1500 3225 3 0 0 0 -1 -1
-L 1650 2825 1475 2825 3 0 0 0 -1 -1
-L 1650 2425 1475 2425 3 0 0 0 -1 -1
-L 1650 2025 1475 2025 3 0 0 0 -1 -1
-L 1650 1225 1500 1225 3 0 0 0 -1 -1
-L 1650 825 1475 825 3 0 0 0 -1 -1

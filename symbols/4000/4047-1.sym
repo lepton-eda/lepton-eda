@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 V 250 1700 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 V 250 1100 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 P 200 1100 0 1100 1 0 1
@@ -8,7 +8,7 @@ pinnumber=6
 T 200 1050 5 8 0 1 0 8 1
 pinseq=6
 T 350 1100 9 8 1 1 0 0 1
-pinlabel=-TRIG
+pinlabel=-\_TRIG\_
 T 350 1100 5 8 0 1 0 2 1
 pintype=in
 }
@@ -31,7 +31,7 @@ pinnumber=11
 T 1700 1250 5 8 0 1 0 2 1
 pinseq=11
 T 1550 1300 9 8 1 1 0 6 1
-pinlabel=Q
+pinlabel=\_Q\_
 T 1550 1300 5 8 0 1 0 8 1
 pintype=out
 }
@@ -86,7 +86,7 @@ pinnumber=4
 T 200 1650 5 8 0 1 0 8 1
 pinseq=4
 T 350 1700 9 8 1 1 0 0 1
-pinlabel=AST
+pinlabel=\_AST\_
 T 350 1700 5 8 0 1 0 2 1
 pintype=in
 }
@@ -153,6 +153,3 @@ T 300 4050 5 10 0 0 0 0 1
 documentation=http://www.semiconductors.philips.com/acrobat/datasheets/HEF4047B_CNV_3.pdf
 T 300 2850 3 10 1 0 0 0 1
 4047
-L 1550 1425 1450 1425 3 0 0 0 -1 -1
-L 425 1225 750 1225 3 0 0 0 -1 -1
-L 350 1825 650 1825 3 0 0 0 -1 -1

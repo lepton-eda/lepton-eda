@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 T 1700 4300 8 10 1 1 0 6 1
 refdes=U?
 T 300 4450 5 10 0 0 0 0 1
@@ -49,7 +49,7 @@ pinnumber=12
 T 200 1250 5 8 0 1 0 8 1
 pinseq=4
 T 350 1300 9 8 1 1 0 0 1
-pinlabel=Reset
+pinlabel=\_Reset\_
 T 350 1300 5 8 0 1 0 2 1
 pintype=in
 }
@@ -173,4 +173,3 @@ documentation=http://www.semiconductors.philips.com/acrobat/datasheets/HEF4060B_
 T 300 4250 9 10 1 0 0 0 1
 4060
 V 250 1300 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
-L 350 1425 725 1425 3 0 0 0 -1 -1
