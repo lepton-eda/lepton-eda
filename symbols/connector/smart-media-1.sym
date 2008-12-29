@@ -1,4 +1,4 @@
-v 20050820 1
+v 20070626 1
 B 300 200 1500 4400 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 200 4900 5 10 0 0 0 0 1
 device=SmartMedia
@@ -42,7 +42,7 @@ pinnumber=4
 T 200 3150 5 8 0 1 0 8 1
 pinseq=4
 T 350 3200 9 8 1 1 0 0 1
-pinlabel=WE
+pinlabel=\_WE\_
 T 350 3200 5 8 0 1 0 2 1
 pintype=in
 }
@@ -53,7 +53,7 @@ pinnumber=5
 T 200 2750 5 8 0 1 0 8 1
 pinseq=5
 T 350 2800 9 8 1 1 0 0 1
-pinlabel=WP
+pinlabel=\_WP\_
 T 350 2800 5 8 0 1 0 2 1
 pintype=in
 }
@@ -207,7 +207,7 @@ pinnumber=19
 T 1900 3150 5 8 0 1 0 2 1
 pinseq=19
 T 1750 3200 9 8 1 1 0 6 1
-pinlabel=RY/BY
+pinlabel=RY/\_BY\_
 T 1750 3200 5 8 0 1 0 8 1
 pintype=oc
 }
@@ -218,7 +218,7 @@ pinnumber=20
 T 1900 3550 5 8 0 1 0 2 1
 pinseq=20
 T 1750 3600 9 8 1 1 0 6 1
-pinlabel=RE
+pinlabel=\_RE\_
 T 1750 3600 5 8 0 1 0 8 1
 pintype=in
 }
@@ -229,7 +229,7 @@ pinnumber=21
 T 1900 3950 5 8 0 1 0 2 1
 pinseq=21
 T 1750 4000 9 8 1 1 0 6 1
-pinlabel=CE
+pinlabel=\_CE\_
 T 1750 4000 5 8 0 1 0 8 1
 pintype=in
 }
@@ -248,11 +248,6 @@ T 1800 4700 8 10 1 1 0 6 1
 refdes=CONN?
 T 200 5100 5 10 0 0 0 0 1
 footprint=DIP22
-L 1525 3325 1750 3325 3 0 0 0 -1 -1
-L 1525 3725 1725 3725 3 0 0 0 -1 -1
-L 1525 4125 1725 4125 3 0 0 0 -1 -1
-L 350 3325 575 3325 3 0 0 0 -1 -1
-L 350 2925 575 2925 3 0 0 0 -1 -1
 T 200 5300 5 10 0 0 0 0 1
 numslots=0
 T 200 5500 5 10 0 0 0 0 1
