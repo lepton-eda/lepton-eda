@@ -1,4 +1,4 @@
-v 20040710 1
+v 20070626 1
 P 0 2600 300 2600 1 0 0
 {
 T 200 2650 5 8 1 1 0 6 1
@@ -105,7 +105,7 @@ pinnumber=4
 T 200 550 5 8 0 1 0 8 1
 pinseq=10
 T 350 600 9 8 1 1 0 0 1
-pinlabel=BI/RBO
+pinlabel=\_BI/RBO\_
 T 350 600 5 8 0 1 0 2 1
 pintype=io
 }
@@ -128,7 +128,7 @@ pinnumber=5
 T 200 150 5 8 0 1 0 8 1
 pinseq=12
 T 350 200 9 8 1 1 0 0 1
-pinlabel=RBI
+pinlabel=\_RBI\_
 T 350 200 5 8 0 1 0 2 1
 pintype=in
 }
@@ -168,13 +168,10 @@ pinnumber=3
 T 200 950 5 8 0 1 0 8 1
 pinseq=14
 T 350 1000 9 8 1 1 0 0 1
-pinlabel=LT
+pinlabel=\_LT\_
 T 350 1000 5 8 0 1 0 2 1
 pintype=in
 }
-L 350 1125 525 1125 3 0 0 0 -1 -1
-L 350 725 875 725 3 0 0 0 -1 -1
-L 350 325 600 325 3 0 0 0 -1 -1
 V 250 1000 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 300 4350 5 10 0 0 0 0 1
 symversion=1.0

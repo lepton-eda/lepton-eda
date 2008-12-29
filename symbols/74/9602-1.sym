@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 P 0 2100 300 2100 1 0 0
 {
 T 200 2150 5 8 1 1 0 6 1
@@ -29,7 +29,7 @@ pinnumber=3
 T 200 1450 5 8 0 1 0 8 1
 pinseq=3
 T 350 1500 9 8 1 1 0 0 1
-pinlabel=CLR1
+pinlabel=\_CLR1\_
 T 350 1500 5 8 0 1 0 2 1
 pintype=in
 }
@@ -52,7 +52,7 @@ pinnumber=5
 T 200 850 5 8 0 1 0 8 1
 pinseq=5
 T 350 900 9 8 1 1 0 0 1
-pinlabel=TRIG1
+pinlabel=\_TRIG1\_
 T 350 900 5 8 0 1 0 2 1
 pintype=in
 }
@@ -74,7 +74,7 @@ pinnumber=7
 T 200 250 5 8 0 1 0 8 1
 pinseq=7
 T 350 300 9 8 1 1 0 0 1
-pinlabel=Q1
+pinlabel=\_Q1\_
 T 350 300 5 8 0 1 0 2 1
 pintype=out
 }
@@ -107,7 +107,7 @@ pinnumber=13
 T 1800 1450 5 8 0 1 0 2 1
 pinseq=13
 T 1650 1500 9 8 1 1 0 6 1
-pinlabel=CLR2
+pinlabel=\_CLR2\_
 T 1650 1500 5 8 0 1 0 8 1
 pintype=in
 }
@@ -130,7 +130,7 @@ pinnumber=11
 T 1800 850 5 8 0 1 0 2 1
 pinseq=11
 T 1650 900 9 8 1 1 0 6 1
-pinlabel=TRIG2
+pinlabel=\_TRIG2\_
 T 1650 900 5 8 0 1 0 8 1
 pintype=in
 }
@@ -152,7 +152,7 @@ pinnumber=9
 T 1800 250 5 8 0 1 0 2 1
 pinseq=9
 T 1650 300 9 8 1 1 0 6 1
-pinlabel=Q2
+pinlabel=\_Q2\_
 T 1650 300 5 8 0 1 0 8 1
 pintype=out
 }
@@ -176,9 +176,3 @@ T 300 3550 5 10 0 0 0 0 1
 net=GND:8
 T 300 2540 9 10 1 0 0 0 1
 9602
-L 350 1625 675 1625 3 0 0 0 -1 -1
-L 350 1025 725 1025 3 0 0 0 -1 -1
-L 350 425 500 425 3 0 0 0 -1 -1
-L 1450 425 1650 425 3 0 0 0 -1 -1
-L 1650 1025 1225 1025 3 0 0 0 -1 -1
-L 1650 1625 1275 1625 3 0 0 0 -1 -1

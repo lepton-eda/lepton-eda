@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 T 300 4700 5 10 0 0 0 0 1
 footprint=SO20
 T 300 4900 5 10 0 0 0 0 1
@@ -18,7 +18,7 @@ pinnumber=1
 T 200 3250 5 8 0 1 0 8 1
 pinseq=1
 T 350 3300 9 8 1 1 0 0 1
-pinlabel=EN
+pinlabel=\_EN\_
 T 350 3300 5 8 0 1 0 2 1
 pintype=in
 }
@@ -227,7 +227,7 @@ pinnumber=19
 T 2200 3250 5 8 0 1 0 2 1
 pinseq=20
 T 2050 3300 9 8 1 1 0 6 1
-pinlabel=A=B
+pinlabel=\_A=B\_
 T 2050 3300 5 8 0 1 0 8 1
 pintype=tp
 }
@@ -235,8 +235,6 @@ T 300 5100 5 10 0 0 0 0 1
 description=8-bit comparator with totem pole output
 T 1805 3650 3 10 1 0 0 0 1
 74520
-L 350 3425 550 3425 3 0 0 0 -1 -1
-L 1775 3425 2050 3425 3 0 0 0 -1 -1
 V 2150 3300 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 300 5300 5 10 0 0 0 0 1
 numslots=0

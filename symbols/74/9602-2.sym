@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 P 0 1600 300 1600 1 0 0
 {
 T 200 1650 5 8 1 1 0 6 1
@@ -29,7 +29,7 @@ pinnumber=3
 T 200 750 5 8 0 1 0 8 1
 pinseq=3
 T 350 800 9 8 1 1 0 0 1
-pinlabel=CLR
+pinlabel=\_CLR\_
 T 350 800 5 8 0 1 0 2 1
 pintype=in
 }
@@ -52,7 +52,7 @@ pinnumber=5
 T 200 150 5 8 0 1 0 8 1
 pinseq=5
 T 350 200 9 8 1 1 0 0 1
-pinlabel=TRIG
+pinlabel=\_TRIG\_
 T 350 200 5 8 0 1 0 2 1
 pintype=in
 }
@@ -74,7 +74,7 @@ pinnumber=7
 T 1500 650 5 8 0 1 0 2 1
 pinseq=7
 T 1350 700 9 8 1 1 0 6 1
-pinlabel=Q
+pinlabel=\_Q\_
 T 1350 700 5 8 0 1 0 8 1
 pintype=out
 }
@@ -102,6 +102,3 @@ T 1900 400 5 10 0 0 0 0 1
 description=2 retriggerable, resetable monoflops
 T 300 1840 9 10 1 0 0 0 1
 9602
-L 350 925 625 925 3 0 0 0 -1 -1
-L 350 325 675 325 3 0 0 0 -1 -1
-L 1250 825 1350 825 3 0 0 0 -1 -1

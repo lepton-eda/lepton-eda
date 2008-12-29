@@ -1,4 +1,4 @@
-v 20041228 1
+v 20070626 1
 P 0 1400 300 1400 1 0 0
 {
 T 200 1450 5 8 1 1 0 6 1
@@ -28,7 +28,7 @@ pinnumber=1
 T 200 950 5 8 0 1 0 8 1
 pinseq=3
 T 350 1000 9 8 1 1 0 0 1
-pinlabel=CLR
+pinlabel=\_CLR\_
 T 350 1000 5 8 0 1 0 2 1
 pintype=in
 }
@@ -40,7 +40,7 @@ pinnumber=6
 T 1800 950 5 8 0 1 0 2 1
 pinseq=4
 T 1650 1000 9 8 1 1 0 6 1
-pinlabel=Q
+pinlabel=\_Q\_
 T 1650 1000 5 8 0 1 0 8 1
 pintype=out
 }
@@ -51,7 +51,7 @@ pinnumber=4
 T 200 550 5 8 0 1 0 8 1
 pinseq=5
 T 350 600 9 8 1 1 0 0 1
-pinlabel=PRE
+pinlabel=\_PRE\_
 T 350 600 5 8 0 1 0 2 1
 pintype=in
 }
@@ -81,9 +81,6 @@ T 1700 1800 8 10 1 1 0 6 1
 refdes=U?
 T 2100 1800 8 10 0 0 0 0 1
 description=2 D-flip-flops with preset and clear
-L 1550 1125 1650 1125 3 0 0 0 -1 -1
-L 350 1125 625 1125 3 0 0 0 -1 -1
-L 350 725 625 725 3 0 0 0 -1 -1
 L 300 250 375 200 3 0 0 0 -1 -1
 L 375 200 300 150 3 0 0 0 -1 -1
 T 2100 800 8 10 0 0 0 0 1

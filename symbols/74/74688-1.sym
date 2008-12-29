@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 P 0 5400 300 5400 1 0 0
 {
 T 200 5450 5 8 1 1 0 6 1
@@ -95,7 +95,7 @@ pinnumber=1
 T 200 350 5 8 0 1 0 8 1
 pinseq=1
 T 350 400 9 8 1 1 0 0 1
-pinlabel=OE
+pinlabel=\_OE\_
 T 350 400 5 8 0 1 0 2 1
 pintype=in
 }
@@ -198,7 +198,7 @@ pinnumber=19
 T 1800 4950 5 8 0 1 0 2 1
 pinseq=19
 T 1650 5000 9 8 1 1 0 6 1
-pinlabel=P=Q
+pinlabel=\_P=Q\_
 T 1650 5000 5 8 0 1 0 8 1
 pintype=out
 }
@@ -218,7 +218,5 @@ T 300 6850 5 10 0 0 0 0 1
 numslots=0
 T 300 5640 9 10 1 0 0 0 1
 74688
-L 350 525 550 525 3 0 0 0 -1 -1
-L 1650 5125 1375 5125 3 0 0 0 -1 -1
 T 300 7250 5 10 0 0 0 0 1
 documentation=http://www-s.ti.com/sc/ds/sn74hc688.pdf

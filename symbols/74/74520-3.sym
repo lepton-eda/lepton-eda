@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 T 300 4250 5 10 0 0 0 0 1
 footprint=DIP20
 B 300 0 1400 3800 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -14,7 +14,7 @@ pinnumber=1
 T 200 3450 5 8 0 1 0 8 1
 pinseq=1
 T 350 3500 9 8 1 1 0 0 1
-pinlabel=EN
+pinlabel=\_EN\_
 T 350 3500 5 8 0 1 0 2 1
 pintype=in
 }
@@ -201,14 +201,12 @@ pinnumber=19
 T 1800 3450 5 8 0 1 0 2 1
 pinseq=20
 T 1650 3500 9 8 1 1 0 6 1
-pinlabel=A=B
+pinlabel=\_A=B\_
 T 1650 3500 5 8 0 1 0 8 1
 pintype=tp
 }
 T 300 4450 5 10 0 0 0 0 1
 description=8-bit comparator with totem pole output
-L 350 3625 550 3625 3 0 0 0 -1 -1
-L 1375 3625 1650 3625 3 0 0 0 -1 -1
 V 1750 3500 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 300 4650 5 10 0 0 0 0 1
 net=Vcc:20

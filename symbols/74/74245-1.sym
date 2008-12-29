@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 P 0 100 300 100 1 0 0
 {
 T 200 150 5 8 1 1 0 6 1
@@ -106,7 +106,7 @@ pinnumber=19
 T 200 350 5 8 0 1 0 8 1
 pinseq=19
 T 350 400 9 8 1 1 0 0 1
-pinlabel=ENABLE
+pinlabel=\_ENABLE\_
 T 350 400 5 8 0 1 0 2 1
 pintype=in
 }
@@ -215,6 +215,5 @@ T 300 4150 5 10 0 0 0 0 1
 net=GND:10
 T 300 3140 9 10 1 0 0 0 1
 74245
-L 350 525 975 525 3 0 0 0 -1 -1
 T 300 4550 5 10 0 0 0 0 1
 documentation=http://www-s.ti.com/sc/ds/sn74hc245.pdf

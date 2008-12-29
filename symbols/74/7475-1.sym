@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 P 0 1400 300 1400 1 0 0
 {
 T 200 1450 5 8 1 1 0 6 1
@@ -39,7 +39,7 @@ pinnumber=1
 T 1800 950 5 8 0 1 0 2 1
 pinseq=4
 T 1650 1000 9 8 1 1 0 6 1
-pinlabel=Q1
+pinlabel=\_Q1\_
 T 1650 1000 5 8 0 1 0 8 1
 pintype=out
 }
@@ -73,7 +73,7 @@ pinnumber=14
 T 1800 150 5 8 0 1 0 2 1
 pinseq=7
 T 1650 200 9 8 1 1 0 6 1
-pinlabel=Q2
+pinlabel=\_Q2\_
 T 1650 200 5 8 0 1 0 8 1
 pintype=out
 }
@@ -101,7 +101,5 @@ T 300 3550 5 10 0 0 0 0 1
 net=GND:12
 T 300 1740 9 10 1 0 0 0 1
 7475
-L 1500 1125 1650 1125 3 0 0 0 -1 -1
-L 1450 325 1650 325 3 0 0 0 -1 -1
 T 300 3750 5 10 0 0 0 0 1
 documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT75_CNV_2.pdf

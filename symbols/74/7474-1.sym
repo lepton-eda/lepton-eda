@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 L 300 650 375 600 3 0 0 0 -1 -1
 L 375 600 300 550 3 0 0 0 -1 -1
 B 300 300 1000 1600 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -52,7 +52,7 @@ pinnumber=1
 T 850 2000 5 8 0 1 0 2 1
 pinseq=1
 T 800 1850 9 8 1 1 0 5 1
-pinlabel=CLR
+pinlabel=\_CLR\_
 T 800 1750 5 8 0 1 0 5 1
 pintype=in
 }
@@ -63,7 +63,7 @@ pinnumber=4
 T 850 100 5 8 0 1 0 2 1
 pinseq=4
 T 800 350 9 8 1 1 0 3 1
-pinlabel=PRE
+pinlabel=\_PRE\_
 T 800 450 5 8 0 1 0 3 1
 pintype=in
 }
@@ -74,7 +74,7 @@ pinnumber=6
 T 1400 550 5 8 0 1 0 2 1
 pinseq=6
 T 1250 600 9 8 1 1 0 6 1
-pinlabel=Q
+pinlabel=\_Q\_
 T 1250 600 5 8 0 1 0 8 1
 pintype=out
 }
@@ -95,8 +95,5 @@ T 1800 2600 5 10 0 0 0 0 1
 description=2 D-flip-flops with preset and clear
 T 300 250 9 8 1 0 0 2 1
 7474
-L 650 475 950 475 3 0 0 0 -1 -1
-L 675 1875 950 1875 3 0 0 0 -1 -1
-L 1150 725 1250 725 3 0 0 0 -1 -1
 T 1800 3000 5 10 0 0 0 0 1
 documentation=http://www-s.ti.com/sc/ds/sn74hc74.pdf
