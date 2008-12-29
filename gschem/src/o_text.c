@@ -253,11 +253,10 @@ void o_text_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
       color = o_current->color;
     }
 
-    gdk_gc_set_foreground(w_current->outline_xor_gc,
-                          x_get_darkcolor(color));
+    gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (color));
 
     gdk_draw_rectangle (w_current->drawable,
-                        w_current->outline_xor_gc,
+                        w_current->gc,
                         FALSE,
                         left,
                         top,

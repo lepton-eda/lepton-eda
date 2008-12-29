@@ -72,55 +72,10 @@ void x_window_setup (GSCHEM_TOPLEVEL *w_current)
  */
 void x_window_setup_gc(GSCHEM_TOPLEVEL *w_current)
 {
-  GdkGCValues     values;
-  GdkGCValuesMask  values_mask;
-
   w_current->gc = gdk_gc_new(w_current->window);
 
   if (w_current->gc == NULL) {
     fprintf(stderr, _("Couldn't allocate gc\n"));
-    exit(-1);
-  }
-
-  values.foreground = white;
-  values.background = black;
-
-  values.function = GDK_XOR;
-  values_mask = GDK_GC_FOREGROUND | GDK_GC_BACKGROUND | GDK_GC_FUNCTION;
-  w_current->xor_gc = gdk_gc_new_with_values(w_current->window,
-                                             &values, values_mask);
-
-  if (w_current->xor_gc == NULL) {
-    fprintf(stderr, _("Couldn't allocate xor_gc\n"));
-    exit(-1);
-  }
-
-  values.foreground = white;
-  values.background = black;
-
-  values.function = GDK_XOR;
-  values_mask = GDK_GC_FOREGROUND | GDK_GC_BACKGROUND | GDK_GC_FUNCTION;
-  w_current->outline_xor_gc = gdk_gc_new_with_values(w_current->window,
-                                                     &values, values_mask);
-
-  if (w_current->outline_xor_gc == NULL) {
-    fprintf(stderr, _("Couldn't allocate outline_xor_gc\n"));
-    exit(-1);
-  }
-
-  values.foreground = white;
-  values.background = black;
-
-  values.function = GDK_XOR;
-  values.line_style = GDK_LINE_ON_OFF_DASH;
-  values_mask = GDK_GC_FOREGROUND | GDK_GC_BACKGROUND |
-  GDK_GC_LINE_STYLE | GDK_GC_FUNCTION;
-
-  w_current->bounding_xor_gc = gdk_gc_new_with_values(w_current->window,
-                                                      &values, values_mask);
-
-  if (w_current->bounding_xor_gc == NULL) {
-    fprintf(stderr, _("Couldn't allocate bounding_xor_gc\n"));
     exit(-1);
   }
 }
@@ -133,9 +88,6 @@ void x_window_setup_gc(GSCHEM_TOPLEVEL *w_current)
 void x_window_free_gc(GSCHEM_TOPLEVEL *w_current)
 {
   gdk_gc_unref(w_current->gc);
-  gdk_gc_unref(w_current->xor_gc);
-  gdk_gc_unref(w_current->bounding_xor_gc);
-  gdk_gc_unref(w_current->outline_xor_gc);
 }
 
 /*! \todo Finish function documentation!!!

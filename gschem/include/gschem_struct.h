@@ -72,9 +72,6 @@ struct st_gschem_toplevel {
   /* graphics context */
   /* ---------------- */
   GdkGC *gc;
-  GdkGC *xor_gc;
-  GdkGC *outline_xor_gc;
-  GdkGC *bounding_xor_gc;
 
   /* ---------------- */
   /* Drawing surfaces */

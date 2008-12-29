@@ -546,8 +546,7 @@ void o_path_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *  This function is used to draw the path object described by
  *  <B>*o_current</B> after applying a translation on the two directions of
- *  <B>dx</B> and <B>dy</B> in world units. It uses and XOR function to draw the
- *  translated path over the current sheet.
+ *  <B>dx</B> and <B>dy</B> in world units.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] dx         Delta x coordinate for path.
@@ -574,17 +573,16 @@ void o_path_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
     color = o_current->color;
   }
 
-  gdk_gc_set_foreground(w_current->outline_xor_gc,
-                        x_get_darkcolor(color));
-  gdk_gc_set_line_attributes(w_current->xor_gc, 0, GDK_LINE_SOLID,
-                             GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
+  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor(color));
+  gdk_gc_set_line_attributes (w_current->gc, 0, GDK_LINE_SOLID,
+                              GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
 
-  /* Stroke only, no fill for XOR */
+  /* Stroke only, no fill for place drawing */
   if (path->sections[path->num_sections - 1].code == PATH_END)
-    gdk_draw_polygon (w_current->drawable, w_current->xor_gc,
+    gdk_draw_polygon (w_current->drawable, w_current->gc,
                       FALSE, points, num_points);
   else
-    gdk_draw_lines (w_current->drawable, w_current->xor_gc,
+    gdk_draw_lines (w_current->drawable, w_current->gc,
                     points, num_points);
 
   g_free (points);
@@ -598,9 +596,6 @@ void o_path_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
  *  During all the process, the path is internally represented by the two
  *  ends of the path as (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>) and
  *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>).
- *
- *  A temporary path is xor-drawn during the process with the selection color
- *  and changed according to the position of the mouse pointer.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
@@ -687,16 +682,16 @@ void o_path_draw_rubber (GSCHEM_TOPLEVEL *w_current)
     return;
   }
 
-  gdk_gc_set_foreground (w_current->xor_gc, x_get_darkcolor (SELECT_COLOR));
-  gdk_gc_set_line_attributes(w_current->xor_gc, 0, GDK_LINE_SOLID,
-                             GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
+  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (SELECT_COLOR));
+  gdk_gc_set_line_attributes (w_current->gc, 0, GDK_LINE_SOLID,
+                              GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
 
   /* Stroke only, no fill for rubberbanding */
   if (path->sections[path->num_sections - 1].code == PATH_END)
-    gdk_draw_polygon (w_current->drawable, w_current->xor_gc,
+    gdk_draw_polygon (w_current->drawable, w_current->gc,
                       FALSE, points, num_points);
   else
-    gdk_draw_lines (w_current->drawable, w_current->xor_gc,
+    gdk_draw_lines (w_current->drawable, w_current->gc,
                     points, num_points);
 
   g_free (points);
@@ -721,24 +716,18 @@ static void draw_control_lines (GSCHEM_TOPLEVEL *w_current,
   int next_x, next_y;
   int last_x = 0, last_y = 0;
   PATH_SECTION *section;
-  GdkGC *gc;
   GdkColor *color;
-
-  /* If the override color is set, we're erasing, and should paint
-   * solid rather than XOR */
 
   if (toplevel->override_color != -1 ) {
     /* override : use the override_color instead */
     color = x_get_color(toplevel->override_color);
-    gc = w_current->gc;
   } else {
     /* use the normal selection color */
     color = x_get_darkcolor (SELECT_COLOR);
-    gc = w_current->outline_xor_gc;
   }
 
   /* set the color for the grip */
-  gdk_gc_set_foreground (gc, color);
+  gdk_gc_set_foreground (w_current->gc, color);
 
   for (i = 0; i <  o_current->path->num_sections; i++) {
     section = &o_current->path->sections[i];
@@ -751,9 +740,9 @@ static void draw_control_lines (GSCHEM_TOPLEVEL *w_current,
     case PATH_CURVETO:
       /* Two control point grips */
       WORLDtoSCREEN (toplevel, section->x1, section->y1, &x, &y);
-      gdk_draw_line (w_current->drawable, gc, last_x, last_y, x, y);
+      gdk_draw_line (w_current->drawable, w_current->gc, last_x, last_y, x, y);
       WORLDtoSCREEN (toplevel, section->x2, section->y2, &x, &y);
-      gdk_draw_line (w_current->drawable, gc, next_x, next_y, x, y);
+      gdk_draw_line (w_current->drawable, w_current->gc, next_x, next_y, x, y);
       /* Fall through */
     case PATH_MOVETO:
     case PATH_MOVETO_OPEN:

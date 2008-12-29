@@ -136,8 +136,7 @@ void o_line_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *  This function is used to draw the line object described by
  *  <B>*o_current</B> after applying a translation on the two directions of
- *  <B>dx</B> and <B>dy</B> in world units. It uses and XOR function to draw the
- *  translated line over the current sheet.
+ *  <B>dx</B> and <B>dy</B> in world units.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] dx         Delta x coordinate for line.
@@ -161,14 +160,12 @@ void o_line_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
   }
 
   /* changed for dark color stuff */
-  gdk_gc_set_foreground(w_current->outline_xor_gc,
-                        x_get_darkcolor(color));
+  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (color));
   
   WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0]);
   WORLDtoSCREEN(toplevel, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1]);
 
-  gdk_draw_line (w_current->drawable, w_current->outline_xor_gc,
-                 sx[0], sy[0], sx[1], sy[1]);
+  gdk_draw_line (w_current->drawable, w_current->gc, sx[0], sy[0], sx[1], sy[1]);
 }
 
 /*! \brief Start process to input a new line.
@@ -180,7 +177,7 @@ void o_line_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
  *  ends of the line as (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>) and
  *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>).
  *
- *  A temporary line is xor-drawn during the process with the selection color
+ *  A temporary line is drawn during the process with the selection color
  *  and changed according to the position of the mouse pointer.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
@@ -192,8 +189,7 @@ void o_line_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   /* init first_w[x|y], second_w[x|y] to describe line */
   w_current->first_wx = w_current->second_wx = w_x;
   w_current->first_wy = w_current->second_wy = w_y;
-  
-  /* draw init xor */
+
   o_line_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
@@ -219,7 +215,6 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   g_assert( w_current->inside_action != 0 );
 
-  /* erase xor image */
   /* Don't bother.. the real object is invalidated, its in the same place */
   /* o_line_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
@@ -262,14 +257,6 @@ void o_line_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   g_assert( w_current->inside_action != 0 );
 
-  /*
-   * The current temporary line is described by the two points
-   * (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>) and
-   * (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>) as end of the line.
-   *
-   * This line is xor-drawn : if the line was already displayed, it is
-   * erased. If the line was not already displayed it is drawn.
-   */
   if (w_current->rubber_visible)
     o_line_invalidate_rubber (w_current);
 
@@ -292,12 +279,7 @@ void o_line_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
       w_current->second_wx = w_current->first_wx;
     }
   }
-  
-  /*
-   * The updated line is finally again xor-drawn : before the call to this
-   * function, if the line was displayed, it has been erased, updated and
-   * displayed again.
-   */
+
   o_line_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
 }
@@ -320,12 +302,11 @@ void o_line_draw_rubber (GSCHEM_TOPLEVEL *w_current)
   WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
   /* draw the circle from the w_current variables */
-  /* with xor-function */
-  gdk_gc_set_foreground (w_current->xor_gc, x_get_darkcolor (SELECT_COLOR));
-  gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
-			     GDK_JOIN_MITER);
-  gdk_draw_line (w_current->drawable, w_current->xor_gc, x1, y1, x2, y2);
+  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (SELECT_COLOR));
+  gdk_gc_set_line_attributes (w_current->gc, 0,
+                              GDK_LINE_SOLID, GDK_CAP_NOT_LAST,
+                              GDK_JOIN_MITER);
+  gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
 }
 
 /*! \brief Draw grip marks on line.

@@ -228,7 +228,7 @@ void o_picture_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *
  *  The old values are inside the <B>w_current</B> pointed structure. Old
  *  width, height and left and top values are recomputed by the corresponding
- *  macros. The box is then erased by performing a xor-drawing over the box.
+ *  macros.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
@@ -268,9 +268,6 @@ void o_picture_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  <B>w_current->first_wy</B>) and the second corner is at
  *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>.
  *
- *  The box is drawn with a xor-function over the current sheet with the
- *  selection color.
- *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
 void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current)
@@ -294,11 +291,11 @@ void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 	 picture_left, picture_top, picture_width, picture_height);
 #endif
   /* draw the picture from the previous variables */
-  gdk_gc_set_foreground (w_current->xor_gc, x_get_darkcolor (SELECT_COLOR));
-  gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
-			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
-			     GDK_JOIN_MITER);
-  gdk_draw_rectangle (w_current->drawable, w_current->xor_gc,
+  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (SELECT_COLOR));
+  gdk_gc_set_line_attributes (w_current->gc, 0,
+                              GDK_LINE_SOLID, GDK_CAP_NOT_LAST,
+                              GDK_JOIN_MITER);
+  gdk_draw_rectangle (w_current->drawable, w_current->gc,
                       FALSE, left, top, width, height);
 }
 
@@ -463,8 +460,7 @@ void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 /*! \brief Draw a picture described by OBJECT with translation
  *  \par Function Description
  *  This function daws the picture object described by <B>*o_current</B>
- *  translated by the vector (<B>dx</B>,<B>dy</B>) with an xor-function over
- *  the current sheet.
+ *  translated by the vector (<B>dx</B>,<B>dy</B>).
  *  The translation vector is in world unit.
  *
  *  The picture is displayed with the color of the object.
@@ -481,9 +477,6 @@ void o_picture_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o
   int screen_x2, screen_y2;
   int color;
 
-#if DEBUG
-  printf("o_picture_draw_xor called.\n");
-#endif
   if (o_current->picture == NULL) {
     return;
   }
@@ -498,11 +491,10 @@ void o_picture_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o
   } else {
     color = o_current->color;
   }
-  
-  gdk_gc_set_foreground(w_current->outline_xor_gc,
-                        x_get_darkcolor(color));
+
+  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor(color));
   gdk_draw_rectangle (w_current->drawable,
-                      w_current->outline_xor_gc, FALSE,
+                      w_current->gc, FALSE,
                       screen_x1,
                       screen_y1,
                       abs(screen_x2 - screen_x1),

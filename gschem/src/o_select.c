@@ -326,8 +326,8 @@ void o_select_box_draw_rubber (GSCHEM_TOPLEVEL *w_current)
   box_left = min(x1, x2);
   box_top = min(y1, y2);
 
-  gdk_gc_set_foreground(w_current->xor_gc, x_get_darkcolor (SELECT_COLOR));
-  gdk_draw_rectangle (w_current->drawable, w_current->xor_gc,
+  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (SELECT_COLOR));
+  gdk_draw_rectangle (w_current->drawable, w_current->gc,
                       FALSE,
                       box_left, box_top, box_width, box_height);
 }

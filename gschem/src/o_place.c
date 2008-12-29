@@ -136,13 +136,11 @@ void o_place_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 }
 
 
-/*! \brief XOR draw a bounding box or outline for OBJECT placement
+/*! \brief Invalidate bounding box or outline for OBJECT placement
  *
  *  \par Function Description
- *  This function XOR draws either the OBJECTS in the place list
- *  or a rectangle around their bounding box, depending upon the
- *  currently selected w_current->actionfeedback_mode. This takes the
- *  value BOUNDINGBOX or OUTLINE.
+ *  This function invalidates the bounding box where objects would be
+ *  drawn by o_place_draw_rubber()
  *
  * The function applies manhatten mode constraints to the coordinates
  * before drawing if the CONTROL key is recording as being pressed in
@@ -196,10 +194,9 @@ void o_place_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
   /* Adjust the coordinates according to the movement constraints */
 
   /* Need to update the w_current->{first,second}_w{x,y} coords even
-   * though we're only invalidating, because the move rubberband code
+   * though we're only invalidating because the move rubberband code
    * (which may execute right after this function) expects these
-   * coordinates to be correct. It then XORs directly onto the screen,
-   * not via an invalidation / redraw.
+   * coordinates to be correct.
    */
   if (w_current->drawbounding_action_mode == CONSTRAINED) {
     if (abs (diff_x) >= abs (diff_y)) {
@@ -221,10 +218,10 @@ void o_place_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
 }
 
 
-/*! \brief XOR draw a bounding box or outline for OBJECT placement
+/*! \brief Draw a bounding box or outline for OBJECT placement
  *
  *  \par Function Description
- *  This function XOR draws either the OBJECTS in the place list
+ *  This function draws either the OBJECTS in the place list
  *  or a rectangle around their bounding box, depending upon the
  *  currently selected w_current->actionfeedback_mode. This takes the
  *  value BOUNDINGBOX or OUTLINE.
@@ -287,7 +284,7 @@ void o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
     }
   }
 
-  /* XOR draw with the appropriate mode */
+  /* Draw with the appropriate mode */
   if (w_current->last_drawb_mode == BOUNDINGBOX) {
 
     /* Find the bounds of the drawing to be done */
@@ -297,10 +294,9 @@ void o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
     WORLDtoSCREEN(toplevel, left + diff_x, top + diff_y, &s_left, &s_top);
     WORLDtoSCREEN(toplevel, right + diff_x, bottom + diff_y, &s_right, &s_bottom);
 
-    gdk_gc_set_foreground (w_current->bounding_xor_gc,
-                           x_get_darkcolor (BOUNDINGBOX_COLOR));
+    gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (BOUNDINGBOX_COLOR));
     gdk_draw_rectangle (w_current->drawable,
-                        w_current->bounding_xor_gc, FALSE,
+                        w_current->gc, FALSE,
                         s_left, s_bottom,
                         s_right - s_left, s_top - s_bottom);
   } else {

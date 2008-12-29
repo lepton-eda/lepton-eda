@@ -90,9 +90,6 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   /* graphics context stuff */
   /* ---------------------- */
   w_current->gc              = NULL;
-  w_current->xor_gc          = NULL;
-  w_current->outline_xor_gc  = NULL;
-  w_current->bounding_xor_gc = NULL;
 
   /* ---------------- */
   /* Drawing surfaces */

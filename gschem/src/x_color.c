@@ -141,18 +141,6 @@ void x_color_allocate (void)
       gdk_outline_colors[i]->green = c.g + (c.g<<8);
       gdk_outline_colors[i]->blue = c.b + (c.b<<8);
 
-      /* Make sure the outline color is correct for non-black backgrounds
-       * FIXME: Is this correct?
-       */
-      if (i > 0) {
-        gdk_outline_colors[i]->red =
-          gdk_outline_colors[i]->red ^ gdk_colors[0]->red;
-        gdk_outline_colors[i]->green =
-          gdk_outline_colors[i]->green ^ gdk_colors[0]->green;
-        gdk_outline_colors[i]->blue =
-          gdk_outline_colors[i]->blue ^ gdk_colors[0]->blue;
-      }
-
       error = gdk_color_alloc(colormap, gdk_outline_colors[i]);
 
       if (error == FALSE) {

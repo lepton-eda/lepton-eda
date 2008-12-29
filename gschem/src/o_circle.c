@@ -404,8 +404,7 @@ void o_circle_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 /*! \brief Draw a circle described by OBJECT with translation
  *  \par Function Description
  *  This function draws the circle object described by <B>*o_current</B>
- *  translated by the vector (<B>dx</B>,<B>dy</B>) with an xor-function over
- *  the current sheet.
+ *  translated by the vector (<B>dx</B>,<B>dy</B>).
  *  The translation vector is in world unit.
  *
  *  The circle is displayed with the color of the object.
@@ -444,9 +443,8 @@ void o_circle_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_
                  &x, &y );
 
   /* To draw be sure to setup width height */
-  gdk_gc_set_foreground(w_current->outline_xor_gc,
-                        x_get_darkcolor(color));
-  gdk_draw_arc (w_current->drawable, w_current->outline_xor_gc,
+  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (color));
+  gdk_draw_arc (w_current->drawable, w_current->gc,
                 FALSE,
                 x, y,
                 2 * radius, 2 * radius,
@@ -586,8 +584,7 @@ void o_circle_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  <B>w_current->first_wy</B>) and its radius is in <B>w_current->distance</B>.
  *
  *  It draws a horizontal radius segment on the right half of the circle and
- *  the circle with the selection color and an xor-function over the current
- *  sheet..
+ *  the circle with the selection color.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
@@ -600,10 +597,10 @@ void o_circle_draw_rubber (GSCHEM_TOPLEVEL *w_current)
   radius = SCREENabs(toplevel, w_current->distance);
 
   /* draw the circle from the w_current variables */
-  gdk_gc_set_foreground (w_current->xor_gc, x_get_darkcolor (SELECT_COLOR));
-  gdk_draw_line (w_current->drawable, w_current->xor_gc,
+  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (SELECT_COLOR));
+  gdk_draw_line (w_current->drawable, w_current->gc,
                  cx, cy, cx + radius, cy);
-  gdk_draw_arc (w_current->drawable, w_current->xor_gc, FALSE,
+  gdk_draw_arc (w_current->drawable, w_current->gc, FALSE,
                 cx - radius, cy - radius, 2 * radius, 2* radius,
                 0, FULL_CIRCLE);
 }

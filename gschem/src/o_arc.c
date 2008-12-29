@@ -154,8 +154,7 @@ void o_arc_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 /*! \brief Draw an arc described by OBJECT with translation
  *  \par Function Description
  *  This function draws the arc object described by <B>*o_current</B>
- *  translated by the vector (<B>dx</B>,<B>dy</B>) with an xor-function over
- *  the current sheet.
+ *  translated by the vector (<B>dx</B>,<B>dy</B>).
  *  The translation vector is in screen unit.
  *
  *  The arc is displayed with the color of the object.
@@ -202,10 +201,9 @@ void o_arc_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
     color = o_current->color;
   }
 
-  gdk_gc_set_foreground(w_current->outline_xor_gc,
-			x_get_darkcolor(color));
+  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (color));
   /* better to set the line attributes here ? */
-  gdk_draw_arc (w_current->drawable, w_current->outline_xor_gc, FALSE,
+  gdk_draw_arc (w_current->drawable, w_current->gc, FALSE,
                 x, y, width, height,
                 start_angle * 64, end_angle * 64);
 
@@ -409,9 +407,6 @@ void o_arc_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
  *  and the start and end angle are given by <B>w_current->second_wx</B> and
  *  <B>w_current->second_wy</B>.
  *
- *  The arc is drawn with a xor function over the current sheet with the
- *  selection color.
- *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
 void o_arc_draw_rubber (GSCHEM_TOPLEVEL *w_current)
@@ -424,13 +419,13 @@ void o_arc_draw_rubber (GSCHEM_TOPLEVEL *w_current)
   WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &cx, &cy);
   radius = SCREENabs(toplevel, w_current->distance);
   
-  gdk_gc_set_foreground (w_current->xor_gc, x_get_darkcolor (SELECT_COLOR));
-  gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
-			     GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
-			     GDK_JOIN_MITER);
+  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (SELECT_COLOR));
+  gdk_gc_set_line_attributes (w_current->gc, 0,
+                              GDK_LINE_SOLID, GDK_CAP_NOT_LAST,
+                              GDK_JOIN_MITER);
 
   /* draw the arc from the w_current variables */
-  gdk_draw_arc (w_current->drawable, w_current->xor_gc, FALSE,
+  gdk_draw_arc (w_current->drawable, w_current->gc, FALSE,
                 cx - radius, cy - radius,
                 radius * 2, radius * 2,
                 w_current->second_wx * 64,
@@ -440,7 +435,7 @@ void o_arc_draw_rubber (GSCHEM_TOPLEVEL *w_current)
   rad_angle = ((double) w_current->second_wx) * M_PI / 180;
   x1 = cx + radius*cos(rad_angle);
   y1 = cy - radius*sin(rad_angle);
-  gdk_draw_line (w_current->drawable, w_current->xor_gc, cx, cy, x1, y1);
+  gdk_draw_line (w_current->drawable, w_current->gc, cx, cy, x1, y1);
 }
 
 /*! \brief Draw grip marks on arc.

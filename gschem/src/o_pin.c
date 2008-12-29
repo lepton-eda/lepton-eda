@@ -112,27 +112,27 @@ void o_pin_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
     color = o_current->color;
   }
 
-  gdk_gc_set_foreground(w_current->xor_gc, x_get_darkcolor(color));
+  gdk_gc_set_foreground(w_current->gc, x_get_darkcolor (color));
 
   if (toplevel->pin_style == THICK ) {
     size = SCREENabs(toplevel, PIN_WIDTH);
-    gdk_gc_set_line_attributes(w_current->xor_gc, size,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
+    gdk_gc_set_line_attributes (w_current->gc, size,
+                                GDK_LINE_SOLID,
+                                GDK_CAP_NOT_LAST,
+                                GDK_JOIN_MITER);
   }
 
   WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0]);
   WORLDtoSCREEN(toplevel, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1]);
 
-  gdk_draw_line (w_current->drawable, w_current->xor_gc,
+  gdk_draw_line (w_current->drawable, w_current->gc,
                  sx[0], sy[0], sx[1], sy[1]);
 
   if (toplevel->pin_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
+    gdk_gc_set_line_attributes (w_current->gc, 0,
+                                GDK_LINE_SOLID,
+                                GDK_CAP_NOT_LAST,
+                                GDK_JOIN_MITER);
   }
 }
 
@@ -278,19 +278,19 @@ void o_pin_draw_rubber (GSCHEM_TOPLEVEL *w_current)
     if (size < 0)
       size=0;
 
-    gdk_gc_set_line_attributes(w_current->xor_gc, size,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
+    gdk_gc_set_line_attributes (w_current->gc, size,
+                                GDK_LINE_SOLID,
+                                GDK_CAP_NOT_LAST,
+                                GDK_JOIN_MITER);
   }
 
-  gdk_gc_set_foreground (w_current->xor_gc, x_get_darkcolor (SELECT_COLOR));
-  gdk_draw_line (w_current->drawable, w_current->xor_gc, x1, y1, x2, y2);
+  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (SELECT_COLOR));
+  gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
 
   if (toplevel->net_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
+    gdk_gc_set_line_attributes (w_current->gc, 0,
+                                GDK_LINE_SOLID,
+                                GDK_CAP_NOT_LAST,
+                                GDK_JOIN_MITER);
   }
 }

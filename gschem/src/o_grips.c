@@ -903,9 +903,6 @@ void o_grips_start_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 /*! \brief Initialize grip motion process for a line.
  *  This function starts the move of one of the two grips of the line
  *  object <B>o_current</B>.
- *  The line and its grips are first erased. The move of the grips is
- *  materializd with a temporary line in selection color drawn over the
- *  sheet with an xor-function.
  *
  *  During the move of the grip, the line is described by
  *  (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>) and
