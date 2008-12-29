@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 P 0 4600 300 4600 1 0 0
 {
 T 200 4650 5 8 1 1 0 6 1
@@ -39,7 +39,7 @@ pinnumber=6
 T 1800 4150 5 8 0 1 0 2 1
 pinseq=4
 T 1650 4200 9 8 1 1 0 6 1
-pinlabel=Y
+pinlabel=\_Y\_
 T 1650 4200 5 8 0 1 0 8 1
 pintype=out
 }
@@ -150,7 +150,7 @@ pinnumber=7
 T 200 150 5 8 0 1 0 8 1
 pinseq=14
 T 350 200 9 8 1 1 0 0 1
-pinlabel=EN
+pinlabel=\_EN\_
 T 350 200 5 8 0 1 0 2 1
 pintype=in
 }
@@ -172,7 +172,5 @@ T 300 5950 5 10 0 0 0 0 1
 net=GND:8
 T 300 4940 9 10 1 0 0 0 1
 74151
-L 1575 4325 1675 4325 3 0 0 0 -1 -1
-L 350 325 550 325 3 0 0 0 -1 -1
 T 300 6350 5 10 0 0 0 0 1
 documentation=http://www-s.ti.com/sc/ds/sn74hc151.pdf
