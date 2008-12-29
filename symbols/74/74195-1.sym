@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 P 0 3000 300 3000 1 0 0
 {
 T 200 3050 5 8 1 1 0 6 1
@@ -28,7 +28,7 @@ pinnumber=3
 T 200 2550 5 8 0 1 0 8 1
 pinseq=3
 T 350 2600 9 8 1 1 0 0 1
-pinlabel=K
+pinlabel=\_K\_
 T 350 2600 5 8 0 1 0 2 1
 pintype=in
 }
@@ -138,7 +138,7 @@ pinnumber=9
 T 200 550 5 8 0 1 0 8 1
 pinseq=13
 T 350 600 9 8 1 1 0 0 1
-pinlabel=SH/LD
+pinlabel=SH/\_LD\_
 T 350 600 5 8 0 1 0 2 1
 pintype=in
 }
@@ -149,7 +149,7 @@ pinnumber=1
 T 200 150 5 8 0 1 0 8 1
 pinseq=14
 T 350 200 9 8 1 1 0 0 1
-pinlabel=RST
+pinlabel=\_RST\_
 T 350 200 5 8 0 1 0 2 1
 pintype=in
 }
@@ -170,12 +170,9 @@ T 300 4350 5 10 0 0 0 0 1
 net=GND:8
 T 300 3340 9 10 1 0 0 0 1
 74195
-L 350 325 625 325 3 0 0 0 -1 -1
-L 350 2725 425 2725 3 0 0 0 -1 -1
 L 1625 3000 1700 3050 3 0 0 0 -1 -1
 L 1625 3000 1700 2950 3 0 0 0 -1 -1
 V 250 2600 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
-L 625 725 800 725 3 0 0 0 -1 -1
 V 250 200 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 300 4750 5 10 0 0 0 0 1
 documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT195_CNV_2.pdf

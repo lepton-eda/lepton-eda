@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 P 0 3800 300 3800 1 0 0
 {
 T 200 3850 5 8 1 1 0 6 1
@@ -149,7 +149,7 @@ pinnumber=1
 T 200 150 5 8 0 1 0 8 1
 pinseq=14
 T 350 200 9 8 1 1 0 0 1
-pinlabel=RST
+pinlabel=\_RST\_
 T 350 200 5 8 0 1 0 2 1
 pintype=in
 }
@@ -173,6 +173,5 @@ T 300 4140 9 10 1 0 0 0 1
 V 250 200 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 L 375 600 300 650 3 0 0 0 -1 -1
 L 375 600 300 550 3 0 0 0 -1 -1
-L 350 325 625 325 3 0 0 0 -1 -1
 T 300 5550 5 10 0 0 0 0 1
 documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT194_CNV_2.pdf
