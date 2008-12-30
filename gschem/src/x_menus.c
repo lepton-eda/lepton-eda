@@ -162,7 +162,7 @@ void get_main_menu(GtkWidget ** menubar)
         gtk_menu_append(GTK_MENU(menu), menu_item);
       } else { 
         buf = g_strdup_printf("(find-key '%s)", menu_item_hotkey_func);
-        scm_keys = scm_c_eval_string (buf);
+        scm_keys = g_scm_c_eval_string_protected (buf);
 	g_free(buf);
         if (scm_keys == SCM_BOOL_F) {
           menu_item_keys = g_malloc(sizeof(char)*2);

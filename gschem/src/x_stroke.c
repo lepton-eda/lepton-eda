@@ -141,7 +141,7 @@ int x_stroke_search_execute(char *sequence)
 
   guile_string = g_strdup_printf("(eval-stroke \"%s\")", sequence);
 
-  eval = scm_c_eval_string (guile_string);
+  eval = g_scm_c_eval_string_protected (guile_string);
   g_free(guile_string);
 
   return (SCM_FALSEP (eval)) ? 0 : 1;

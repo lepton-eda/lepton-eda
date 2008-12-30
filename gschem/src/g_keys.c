@@ -108,7 +108,7 @@ int g_keys_execute(GSCHEM_TOPLEVEL *w_current, int state, int keyval)
 #if DEBUG 
   printf("_%s_\n", guile_string);
 #endif
-  scm_retval = scm_c_eval_string (guile_string);
+  scm_retval = g_scm_c_eval_string_protected (guile_string);
   g_free(guile_string);
   g_free(modifier);
 
