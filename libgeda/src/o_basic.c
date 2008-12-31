@@ -227,6 +227,41 @@ void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current,
   o_recalc_single_object( toplevel, o_current );
 }
 
+/*! \brief get #OBJECT's line properties.
+ *  \par Function Description
+ *  This function get's the #OBJECT's line options.
+ *  See #OBJECT_END and #OBJECT_TYPE for information on valid
+ *  object end and type values.
+ *
+ *  \param [in]   object    OBJECT to read the properties
+ *  \param [out]  end       An OBJECT_END.
+ *  \param [out]  type      An OBJECT_TYPE.
+ *  \param [out]  width     Line width.
+ *  \param [out]  length    Line length.
+ *  \param [out]  space     Spacing between dashes/dots.
+ *  \return TRUE on succes, FALSE otherwise
+ *
+ */
+gboolean o_get_line_options(OBJECT *object,
+                            OBJECT_END *end, OBJECT_TYPE *type,
+                            int *width, int *length, int *space)
+{
+  if (object->type != OBJ_LINE
+      && object->type != OBJ_ARC
+      && object->type != OBJ_BOX
+      && object->type != OBJ_CIRCLE
+      && object->type != OBJ_PATH)
+    return FALSE;
+
+  *end = object->line_end;
+  *type = object->line_type;
+  *width = object->line_width;
+  *length = object->line_length;
+  *space = object->line_space;
+
+  return TRUE;
+}
+
 /*! \brief Set #OBJECT's fill options.
  *  \par Function Description
  *  This function allows an #OBJECT's fill options to be configured.
@@ -236,10 +271,10 @@ void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current,
  *  \param [in,out]  o_current  OBJECT to be updated.
  *  \param [in]      type       OBJECT_FILLING type.
  *  \param [in]      width      fill width.
- *  \param [in]      pitch1     cross hatch???.
- *  \param [in]      angle1     cross hatch???.
- *  \param [in]      pitch2     cross hatch???.
- *  \param [in]      angle2     cross hatch???.
+ *  \param [in]      pitch1     cross hatch line distance
+ *  \param [in]      angle1     cross hatch angle
+ *  \param [in]      pitch2     cross hatch line distance
+ *  \param [in]      angle2     cross hatch angle
  *
  */
 void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current,
@@ -260,6 +295,41 @@ void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current,
   o_current->fill_pitch2 = pitch2;
   o_current->fill_angle2 = angle2;
 	
+}
+
+/*! \brief get #OBJECT's fill properties.
+ *  \par Function Description
+ *  This function get's the #OBJECT's fill options.
+ *  See #OBJECT_FILLING for information on valid fill types.
+ *
+ *  \param [in]   object    OBJECT to read the properties
+ *  \param [out]  type      OBJECT_FILLING type
+ *  \param [out]  width     fill width.
+ *  \param [out]  pitch1    cross hatch line distance
+ *  \param [out]  angle1    cross hatch angle
+ *  \param [out]  pitch2    cross hatch line distance
+ *  \param [out]  angle2    cross hatch angle
+ *  \return TRUE on succes, FALSE otherwise
+ *
+ */
+gboolean o_get_fill_options(OBJECT *object,
+                            OBJECT_FILLING *type, int *width,
+                            int *pitch1, int *angle1,
+                            int *pitch2, int *angle2)
+{
+  if (object->type != OBJ_BOX
+      && object->type != OBJ_CIRCLE
+      && object->type != OBJ_PATH)
+    return FALSE;
+
+  *type = object->fill_type;
+  *width = object->fill_width;
+  *pitch1 = object->fill_pitch1;
+  *angle1 = object->fill_angle1;
+  *pitch2 = object->fill_pitch2;
+  *angle2 = object->fill_angle2;
+
+  return TRUE;
 }
 
 /*! \brief get the base position of an object
