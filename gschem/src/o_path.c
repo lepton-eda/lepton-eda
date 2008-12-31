@@ -142,56 +142,6 @@ static void path_to_points (GSCHEM_TOPLEVEL *w_current, PATH *path,
 }
 
 
-/*! \brief Draw a path with a solid line type.
- *  \par Function Description
- *  This function draws a path with a solid line type. The length and space
- *  parameters are not used by this function.
- *
- *  \param [in] w           GdkDrawable to draw in
- *  \param [in] gc          GdkGC graphics context to draw on
- *  \param [in] color       Box line color
- *  \param [in] cap         Box line end cap type (unused)
- *  \param [in] path        The PATH object to draw
- *  \param [in] line_width  Width of line to draw path
- *  \param [in] length      (unused)
- *  \param [in] space       (unused)
- */
-void o_path_draw_solid(GdkDrawable *w, GdkGC *gc, GdkColor *color,
-                      GSCHEM_TOPLEVEL *w_current, PATH *path,
-                      GdkCapStyle cap, gint line_width,
-                      gint length, gint space)
-{
-  GdkPoint *points;
-  int num_points;
-
-  path_to_points (w_current, path, 0, 0, &points, &num_points);
-
-  if (num_points == 0) {
-    g_free (points);
-    return;
-  }
-
-
-  gdk_gc_set_foreground(gc, color);
-
-  /* Set the width, end type and join style of the line */
-  gdk_gc_set_line_attributes(gc, line_width, GDK_LINE_SOLID,
-                             cap, GDK_JOIN_MITER);
-
-  if (path->sections[path->num_sections - 1].code == PATH_END) {
-    /* Closed path */
-    gdk_draw_polygon (w_current->drawable, w_current->gc,
-                      FALSE, points, num_points);
-  } else {
-    /* Open path */
-    gdk_draw_lines (w_current->drawable, w_current->gc,
-                    points, num_points);
-  }
-
-  g_free (points);
-}
-
-
 /*! \brief Placeholder filling function.
  *  \par Function Description
  *  This function does nothing. It has the same prototype as all the
