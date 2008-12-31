@@ -22,6 +22,7 @@
 #include <config.h>
 
 #include <cairo.h>
+#include <math.h>
 
 #include "gschem.h"
 
@@ -85,6 +86,22 @@ void gschem_cairo_box (cairo_t *cr, int width,
   cairo_line_to (cr, x1 + offset, y1 + offset);
   cairo_line_to (cr, x2 + offset, y1 + offset);
   cairo_close_path (cr);
+}
+
+
+void gschem_cairo_arc (cairo_t *cr, int width, int x, int y,
+                       int radius, int start_angle, int end_angle)
+{
+  cairo_new_sub_path (cr);
+  if (start_angle > start_angle + end_angle) {
+    cairo_arc (cr, x + 0.5, y + 0.5, radius,
+               -start_angle * (M_PI / 180.),
+               (-start_angle - end_angle) * (M_PI / 180.));
+  } else {
+    cairo_arc_negative (cr, x + 0.5, y + 0.5, radius,
+                        -start_angle * (M_PI / 180.),
+                        (-start_angle - end_angle) * (M_PI / 180.));
+  }
 }
 
 

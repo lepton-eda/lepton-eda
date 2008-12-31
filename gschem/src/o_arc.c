@@ -45,7 +45,7 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int wleft, wright, wtop, wbottom;
-  int x, y, radius, start_angle, end_angle;
+  int x, y, radius;
   int line_width;
   COLOR *color;
   int length, space;
@@ -83,18 +83,6 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    */
   WORLDtoSCREEN( toplevel, o_current->arc->x, o_current->arc->y, &x, &y );
   radius = SCREENabs( toplevel, o_current->arc->width / 2 );
-  start_angle = o_current->arc->start_angle;
-  end_angle   = o_current->arc->end_angle;
-
-#if DEBUG 
-  printf("drawing arc x: %d y: %d sa: %d ea: %d width: %d height: %d\n",
-         x,
-         y, 
-         o_current->arc->start_angle, 
-         o_current->arc->end_angle,
-         radius, 
-         radius);
-#endif
 
   if (toplevel->override_color != -1 )
     color = x_color_lookup (toplevel->override_color);
@@ -109,17 +97,10 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   length = SCREENabs( toplevel, o_current->line_length );
   space = SCREENabs( toplevel, o_current->line_space );
 
+  gschem_cairo_arc (w_current->cr, line_width, x, y, radius,
+                    o_current->arc->start_angle, o_current->arc->end_angle);
+
   gschem_cairo_set_source_color (w_current->cr, color);
-  cairo_new_sub_path (w_current->cr);
-  if (start_angle > start_angle + end_angle) {
-    cairo_arc (w_current->cr, x + 0.5, y + 0.5, radius,
-               -start_angle * (M_PI / 180.),
-               (-start_angle - end_angle) * (M_PI / 180.));
-  } else {
-    cairo_arc_negative (w_current->cr, x + 0.5, y + 0.5, radius,
-                        -start_angle * (M_PI / 180.),
-                        (-start_angle - end_angle) * (M_PI / 180.));
-  }
   gschem_cairo_stroke (w_current->cr, o_current->line_type,
                        o_current->line_end, line_width, length, space);
 
