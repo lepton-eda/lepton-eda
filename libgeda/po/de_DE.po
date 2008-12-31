@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-20 19:12-0500\n"
+"POT-Creation-Date: 2008-12-31 18:35-0500\n"
 "PO-Revision-Date: 2008-01-07 18:44+0100\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -237,7 +237,7 @@ msgstr "Ausführung gescheitert: %s\n"
 msgid "Enable debugging for more detailed information\n"
 msgstr "Aktiviere die Debugausgabe für genaure Informationen\n"
 
-#: ../src/g_basic.c:282
+#: ../src/g_basic.c:284
 #, c-format
 msgid "Could not find [%s] for interpretation\n"
 msgstr "Konnte [%s] für die Auswertung nicht finden\n"
