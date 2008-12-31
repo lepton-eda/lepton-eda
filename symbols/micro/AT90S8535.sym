@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 T 2700 7500 8 10 1 1 0 6 1
 refdes=U?
 T 400 7650 5 10 0 0 0 0 1
@@ -53,7 +53,7 @@ pinnumber=9
 T 850 200 5 8 0 1 0 2 1
 pinseq=4
 T 800 450 9 8 1 1 0 3 1
-pinlabel=Reset
+pinlabel=\_Reset\_
 T 800 600 5 8 0 1 0 3 1
 pintype=in
 }
@@ -186,7 +186,7 @@ pinnumber=5
 T 300 5350 5 8 0 1 0 8 1
 pinseq=16
 T 450 5400 9 8 1 1 0 0 1
-pinlabel=PB4 (SS)
+pinlabel=PB4 (\_SS\_)
 T 450 5400 5 8 0 1 0 2 1
 pintype=tri
 }
@@ -411,8 +411,6 @@ T 2650 7000 5 8 0 1 0 8 1
 pintype=tri
 }
 B 400 400 2300 7000 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
-L 622 565 994 565 3 0 0 0 -1 -1
-L 858 5515 1046 5515 3 0 0 0 -1 -1
 T 400 8850 5 10 0 0 0 0 1
 comment=dont_use this symbol: nonstandard symwidth
 T 400 9050 5 10 0 0 0 0 1
