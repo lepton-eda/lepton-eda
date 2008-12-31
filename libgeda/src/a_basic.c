@@ -96,10 +96,10 @@ gchar *o_save_buffer (TOPLEVEL *toplevel)
  *  \param [in] save_attribs  Should attribute objects encounterd be saved?
  *  \returns a buffer containing schematic data or NULL on failure.
  */
-gchar *o_save_objects (GList *object_list, gboolean save_attribs)
+gchar *o_save_objects (const GList *object_list, gboolean save_attribs)
 {
   OBJECT *o_current;
-  GList *iter;
+  const GList *iter;
   gchar *out;
   GString *acc;
   gboolean already_wrote = FALSE;

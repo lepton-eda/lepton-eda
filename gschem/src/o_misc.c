@@ -382,11 +382,12 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
  *  \par Function Description
  *
  */
-void o_edit_show_hidden_lowlevel (GSCHEM_TOPLEVEL *w_current, GList *o_list)
+void o_edit_show_hidden_lowlevel (GSCHEM_TOPLEVEL *w_current,
+                                  const GList *o_list)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
-  GList *iter;
+  const GList *iter;
 
   iter = o_list;
   while (iter != NULL) {
@@ -426,7 +427,7 @@ void o_edit_show_hidden_lowlevel (GSCHEM_TOPLEVEL *w_current, GList *o_list)
  *  \par Function Description
  *
  */
-void o_edit_show_hidden (GSCHEM_TOPLEVEL *w_current, GList *o_list)
+void o_edit_show_hidden (GSCHEM_TOPLEVEL *w_current, const GList *o_list)
 {
   /* this function just shows the hidden text, but doesn't toggle it */
   /* this function does not change the CHANGED bit, no real changes are */
@@ -452,12 +453,12 @@ void o_edit_show_hidden (GSCHEM_TOPLEVEL *w_current, GList *o_list)
  *  \par Function Description
  *
  */
-void o_edit_make_visible (GSCHEM_TOPLEVEL *w_current, GList *o_list)
+void o_edit_make_visible (GSCHEM_TOPLEVEL *w_current, const GList *o_list)
 {
   /* this function actually changes the visibility flag */
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
-  GList *iter;
+  const GList *iter;
 
   iter = o_list;
   while (iter != NULL) {
@@ -492,8 +493,8 @@ int skiplast;
  *  \par Function Description
  *
  */
-int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, GList * o_list, char *stext,
-                     int descend, int skip)
+int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
+                      char *stext, int descend, int skip)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   char *attrib = NULL;
@@ -504,7 +505,7 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, GList * o_list, char *stext,
   int pcount = 0;
   int rv;
   int text_screen_height;
-  GList *iter;
+  const GList *iter;
 
   OBJECT *o_current;
 
@@ -598,12 +599,13 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, GList * o_list, char *stext,
  *  \par Function Description
  *
  */
-void o_edit_hide_specific_text (GSCHEM_TOPLEVEL *w_current, GList * o_list,
-                               char *stext)
+void o_edit_hide_specific_text (GSCHEM_TOPLEVEL *w_current,
+                                const GList *o_list,
+                                char *stext)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
-  GList *iter;
+  const GList *iter;
 
   iter = o_list;
   while (iter != NULL) {
@@ -633,12 +635,13 @@ void o_edit_hide_specific_text (GSCHEM_TOPLEVEL *w_current, GList * o_list,
  *  \par Function Description
  *
  */
-void o_edit_show_specific_text (GSCHEM_TOPLEVEL *w_current, GList * o_list,
-                               char *stext)
+void o_edit_show_specific_text (GSCHEM_TOPLEVEL *w_current,
+                                const GList *o_list,
+                                char *stext)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
-  GList *iter;
+  const GList *iter;
 
   iter = o_list;
   while (iter != NULL) {

@@ -212,7 +212,7 @@ GList *s_hierarchy_traversepages(TOPLEVEL *toplevel,
   char *filename = NULL;
   gint page_control = 0;
   static GList *pages = NULL;
-  GList *iter;
+  const GList *iter;
   
   /* init static variables the first time*/
   if (!(flags & HIERARCHY_INNERLOOP)) {

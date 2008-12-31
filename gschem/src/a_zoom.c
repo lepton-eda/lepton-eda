@@ -142,7 +142,7 @@ void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flag
  *  \par Function Description
  * 
  */
-void a_zoom_extents (GSCHEM_TOPLEVEL *w_current, GList *list, int pan_flags)
+void a_zoom_extents (GSCHEM_TOPLEVEL *w_current, const GList *list, int pan_flags)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int lleft, lright, ltop, lbottom;

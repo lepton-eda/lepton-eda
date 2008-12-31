@@ -264,7 +264,7 @@ SCM get_selected_component_attributes(GSCHEM_TOPLEVEL *w_current)
   SCM list = SCM_EOL;
   OBJECT *obj;
   GHashTable *ht;
-  GList *iter;
+  const GList *iter;
  
   /* build a hash table */
   ht = g_hash_table_new (g_str_hash, g_str_equal);

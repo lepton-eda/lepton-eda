@@ -218,7 +218,7 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
   TOPLEVEL *toplevel = w_current->toplevel;
   int w_rleft, w_rtop, w_rright, w_rbottom;
   OBJECT *o_current;
-  GList *iter;
+  const GList *iter;
   int x, y;
 
   /* first zoom extents */

@@ -86,7 +86,9 @@ int s_toplevel_read_page(char *filename)
  */
 void s_toplevel_verify_design(TOPLEVEL *pr_current)
 {
-  GList *p_iter, *o_iter;
+  GList *p_iter;
+  const GList *o_iter;
+
   int missing_sym_flag = 0;
 
   for (p_iter = geda_list_get_glist (pr_current->pages);
@@ -407,7 +409,8 @@ s_toplevel_sheetdata_to_toplevel (PAGE *page)
   /* Work from a copy list, as objects can be deleted
    * from the list during iteration over the list.
    */
-  copy_list = g_list_copy (page->object_list);
+  /* NB: g_list_copy doesn't declare its input const, so we cast */
+  copy_list = g_list_copy ((GList *)page->object_list);
 
   /* Iterate backwards since attributes are attached after their
    * parent objects in the list. Attributes can get deleted during
@@ -471,7 +474,8 @@ s_toplevel_sheetdata_to_toplevel (PAGE *page)
   /* Work from a copy list in case objects are
    * deleted from the list during its iteration.
    */
-  copy_list = g_list_copy (page->object_list);
+  /* NB: g_list_copy doesn't declare its input const, so we cast */
+  copy_list = g_list_copy ((GList *)page->object_list);
 
   for (o_iter = g_list_last (copy_list);
        o_iter != NULL;

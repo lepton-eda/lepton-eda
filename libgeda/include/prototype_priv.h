@@ -1,12 +1,12 @@
 /* a_basic.c */
-gchar *o_save_objects(GList *object_list, gboolean save_attribs);
+gchar *o_save_objects(const GList *object_list, gboolean save_attribs);
 
 /* f_print.c */
 void f_print_set_line_width(FILE *fp, int width);
 void f_print_set_color(TOPLEVEL *toplevel, FILE *fp, int color);
 int f_print_header(TOPLEVEL *toplevel, FILE *fp, int paper_size_x, int paper_size_y, int eps);
 void f_print_footer(FILE *fp);
-void f_print_objects(TOPLEVEL *toplevel, FILE *fp, GList *obj_list, int start_x, int start_y, float scale, int unicode_count, gunichar *unicode_table);
+void f_print_objects(TOPLEVEL *toplevel, FILE *fp, const GList *obj_list, int start_x, int start_y, float scale, int unicode_count, gunichar *unicode_table);
 int f_print_initialize_glyph_table(void);
 
 /* g_rc.c */

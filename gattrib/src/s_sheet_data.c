@@ -100,9 +100,9 @@ SHEET_DATA *s_sheet_data_new()
  * OBJECT->attribs(->next. . .)->object->text->string
  * 
  *------------------------------------------------------------------*/
-void s_sheet_data_add_master_comp_list_items (GList *obj_list) {
+void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
   char *temp_uref;
-  GList *iter;
+  const GList *iter;
   
 #ifdef DEBUG
   printf("=========== Just entered  s_sheet_data_add_master_comp_list_items!  ==============\n");
@@ -161,10 +161,11 @@ void s_sheet_data_add_master_comp_list_items (GList *obj_list) {
  * sheet_head->component_list_head->attrib->name;
  *
  *------------------------------------------------------------------*/
-void s_sheet_data_add_master_comp_attrib_list_items (GList *obj_list) {
+void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
   char *attrib_text;
   char *attrib_name;
-  GList *o_iter, *a_iter;
+  const GList *o_iter;
+  GList *a_iter;
   OBJECT *a_current;
   
 #ifdef DEBUG
@@ -236,7 +237,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (GList *obj_list) {
  * attributes.
  *
  *------------------------------------------------------------------*/
-void s_sheet_data_add_master_net_list_items (GList *obj_start) {
+void s_sheet_data_add_master_net_list_items (const GList *obj_start) {
   return;
 }
 
@@ -247,7 +248,7 @@ void s_sheet_data_add_master_net_list_items (GList *obj_start) {
  * attributes.
  *
  *------------------------------------------------------------------*/
-void s_sheet_data_add_master_net_attrib_list_items (GList *obj_start) {
+void s_sheet_data_add_master_net_attrib_list_items (const GList *obj_start) {
   return;
 }
 
@@ -269,11 +270,12 @@ void s_sheet_data_add_master_net_attrib_list_items (GList *obj_start) {
  * it doesn't return a value.
  *
  *------------------------------------------------------------------*/
-void s_sheet_data_add_master_pin_list_items (GList *obj_list) {
+void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
   char *temp_uref;
   char *temp_pinnumber;
   char *row_label;
-  GList *o_iter, *o_lower_iter;
+  const GList *o_iter;
+  GList *o_lower_iter;
 
 #ifdef DEBUG
   fflush(stderr);
@@ -356,12 +358,13 @@ void s_sheet_data_add_master_pin_list_items (GList *obj_list) {
  *     and stick it in the master pin attrib list.
  *
  *------------------------------------------------------------------*/
-void s_sheet_data_add_master_pin_attrib_list_items (GList *obj_list) {
+void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
   char *temp_uref;
   char *attrib_text;
   char *attrib_name;
   char *attrib_value;
-  GList *o_iter, *o_lower_iter, *a_iter;
+  const GList *o_iter;
+  GList *o_lower_iter, *a_iter;
   OBJECT *pin_attrib;
   
 #ifdef DEBUG

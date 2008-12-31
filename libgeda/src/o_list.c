@@ -146,10 +146,11 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
  *  \return the dest_list GList with objects appended to it.
  */
 GList *o_glist_copy_all (TOPLEVEL *toplevel,
-                         GList *src_list,
+                         const GList *src_list,
                          GList *dest_list, int flag)
 {
-  GList *src, *dest;
+  const GList *src;
+  GList *dest;
   OBJECT *src_object, *dst_object;
   int adding_sel_save;
   int selected_save;
@@ -238,9 +239,9 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
  *  \brief
  *  \par Function Description
  */
-void o_glist_translate_world(TOPLEVEL *toplevel, int dx, int dy, GList *list)
+void o_glist_translate_world(TOPLEVEL *toplevel, int dx, int dy, const GList *list)
 {
-  GList *iter = list;
+  const GList *iter = list;
   OBJECT *o_current;
 
   while ( iter != NULL ) {
@@ -255,9 +256,9 @@ void o_glist_translate_world(TOPLEVEL *toplevel, int dx, int dy, GList *list)
  *  \brief
  *  \par Function Description
  */
-void o_glist_rotate_world (TOPLEVEL *toplevel, int x, int y, int angle, GList *list)
+void o_glist_rotate_world (TOPLEVEL *toplevel, int x, int y, int angle, const GList *list)
 {
-  GList *iter = list;
+  const GList *iter = list;
   OBJECT *o_current;
 
   while ( iter != NULL ) {
@@ -272,9 +273,9 @@ void o_glist_rotate_world (TOPLEVEL *toplevel, int x, int y, int angle, GList *l
  *  \brief
  *  \par Function Description
  */
-void o_glist_mirror_world (TOPLEVEL *toplevel, int x, int y, GList *list)
+void o_glist_mirror_world (TOPLEVEL *toplevel, int x, int y, const GList *list)
 {
-  GList *iter = list;
+  const GList *iter = list;
   OBJECT *o_current;
 
   while ( iter != NULL ) {

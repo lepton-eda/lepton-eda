@@ -117,13 +117,13 @@ void o_attrib_print(GList *attributes);
 void o_attrib_remove(GList **list, OBJECT *remove);
 gboolean o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_ptr);
 void o_attrib_set_color(TOPLEVEL *toplevel, GList *attributes);
-char *o_attrib_search_name(GList *list, char *name, int counter);
+char *o_attrib_search_name(const GList *list, char *name, int counter);
 OBJECT *o_attrib_search_string_list(GList *list, char *string);
 char *o_attrib_search_string_partial(OBJECT *object, char *search_for, int counter);
 OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for);
 OBJECT *o_attrib_search_attrib_value(GList *list, char *value, char *name, int counter);
 char *o_attrib_search_attrib_name(GList *list, char *name, int counter);
-char *o_attrib_search_toplevel(GList *list, char *name, int counter);
+char *o_attrib_search_toplevel(const GList *list, char *name, int counter);
 char *o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found);
 char *o_attrib_search_name_single_count(OBJECT *object, char *name, int counter);
 char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found);
@@ -182,11 +182,11 @@ void o_circle_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_cent
 int world_get_single_object_bounds(TOPLEVEL *toplevel, OBJECT *o_current,
 			      int *rleft, int *rtop, 
 			      int *rright, int *rbottom);
-int world_get_object_glist_bounds(TOPLEVEL *toplevel, GList *o_list,
+int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *o_list,
 			     int *left, int *top, 
 			     int *right, int *bottom);
 int o_complex_is_embedded(OBJECT *o_current);
-GList *o_complex_get_toplevel_attribs (TOPLEVEL *toplevel, GList *obj_list);
+GList *o_complex_get_toplevel_attribs (TOPLEVEL *toplevel, const GList *obj_list);
 GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach);
 GList *o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object);
 void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *object);
@@ -226,10 +226,10 @@ double o_line_length(OBJECT *object);
 
 /* o_list.c */
 OBJECT *o_object_copy(TOPLEVEL *toplevel, OBJECT *selected, int flag);
-GList *o_glist_copy_all(TOPLEVEL *toplevel, GList *src_list, GList *dest_list, int flag);
-void o_glist_translate_world(TOPLEVEL *toplevel, int dx, int dy, GList *list);
-void o_glist_rotate_world(TOPLEVEL *toplevel, int x, int y, int angle, GList *list);
-void o_glist_mirror_world(TOPLEVEL *toplevel, int x, int y, GList *list);
+GList *o_glist_copy_all(TOPLEVEL *toplevel, const GList *src_list, GList *dest_list, int flag);
+void o_glist_translate_world(TOPLEVEL *toplevel, int dx, int dy, const GList *list);
+void o_glist_rotate_world(TOPLEVEL *toplevel, int x, int y, int angle, const GList *list);
+void o_glist_mirror_world(TOPLEVEL *toplevel, int x, int y, const GList *list);
 
 /* o_net_basic.c */
 OBJECT *o_net_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
@@ -373,7 +373,7 @@ GList *s_conn_return_others(GList *input_list, OBJECT *object);
 /* s_cue.c */
 void s_cue_postscript_fillbox(TOPLEVEL *toplevel, FILE *fp, int x, int y);
 void s_cue_postscript_fillcircle(TOPLEVEL *toplevel, FILE *fp, int x, int y, int size_flag);
-void s_cue_output_all(TOPLEVEL *toplevel, GList *obj_list, FILE *fp, int type);
+void s_cue_output_all(TOPLEVEL *toplevel, const GList *obj_list, FILE *fp, int type);
 void s_cue_output_lowlevel(TOPLEVEL *toplevel, OBJECT *object, int whichone, FILE *fp, int output_type);
 void s_cue_output_lowlevel_midpoints(TOPLEVEL *toplevel, OBJECT *object, FILE *fp, int output_type);
 void s_cue_output_single(TOPLEVEL *toplevel, OBJECT *object, FILE *fp, int type);

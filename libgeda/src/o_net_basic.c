@@ -607,7 +607,7 @@ int o_net_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
 void o_net_consolidate(TOPLEVEL *toplevel)
 {
   OBJECT *o_current;
-  GList *iter;
+  const GList *iter;
   int status = 0;
 
   iter = toplevel->page_current->object_list;

@@ -83,11 +83,11 @@ void s_cue_postscript_fillcircle(TOPLEVEL * toplevel, FILE * fp,
  *  \par Function Description
  *
  */
-void s_cue_output_all (TOPLEVEL * toplevel, GList *obj_list, FILE * fp,
+void s_cue_output_all (TOPLEVEL * toplevel, const GList *obj_list, FILE * fp,
                        int type)
 {
   OBJECT *o_current;
-  GList *iter;
+  const GList *iter;
 
   iter = obj_list;
   while (iter != NULL) {

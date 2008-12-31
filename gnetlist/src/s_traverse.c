@@ -73,7 +73,7 @@ visit(OBJECT *obj)
 
 /*! Reset all visit counts. Simply clears the hashtable completely. */
 static inline void
-s_traverse_clear_all_visited (GList *obj_list)
+s_traverse_clear_all_visited (const GList *obj_list)
 {
   g_hash_table_foreach_remove (visit_table,
                                (GHRFunc) returns_true,
@@ -148,14 +148,14 @@ void s_traverse_start(TOPLEVEL * pr_current)
 
 
 void
-s_traverse_sheet (TOPLEVEL * pr_current, GList *obj_list, char *hierarchy_tag)
+s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_tag)
 {
   NETLIST *netlist;
   char *temp;
   SCM scm_uref;
   char *temp_uref;
   gboolean is_graphical=FALSE;
-  GList *iter;
+  const GList *iter;
 
   if (verbose_mode) {
     printf("- Starting internal netlist creation\n");

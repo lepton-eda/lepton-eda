@@ -36,8 +36,9 @@
  */
 GHashTable *unicode_char_to_glyph = NULL;
 
-static int f_print_get_unicode_chars (TOPLEVEL * toplevel, GList *obj_list,
-				     int count, gunichar * table);
+static int f_print_get_unicode_chars (TOPLEVEL * toplevel,
+                                      const GList *obj_list,
+                                      int count, gunichar * table);
 static void f_print_unicode_map(FILE * fp, int count, gunichar * table);
 
 /*! \brief Prints the line width in mils to a postscript document.
@@ -226,13 +227,13 @@ void f_print_footer(FILE *fp)
  *
  *  \todo  what happens if snap is off? hack deal with this !!!!!!!!
  */
-void f_print_objects (TOPLEVEL *toplevel, FILE *fp, GList *obj_list,
+void f_print_objects (TOPLEVEL *toplevel, FILE *fp, const GList *obj_list,
 		     int start_x, int start_y, float scale, 
 		     int unicode_count, gunichar *unicode_table)
 {
   OBJECT *o_current=NULL;
   int origin_x, origin_y;
-  GList *iter;
+  const GList *iter;
 	
   origin_x = start_x;
   origin_y = start_y;
@@ -647,14 +648,15 @@ void f_print_set_type(TOPLEVEL *toplevel, int type)
  *  \param [in]     table      The unicode table.
  *  \return count on success, 0 otherwise.
  */
-static int f_print_get_unicode_chars (TOPLEVEL *toplevel, GList *obj_list,
-				     int count, gunichar *table)
+static int f_print_get_unicode_chars (TOPLEVEL *toplevel,
+                                      const GList *obj_list,
+                                      int count, gunichar *table)
 {
   OBJECT *o_current = NULL;
   gchar *aux;
   gunichar current_char;
   int i, found;
-  GList *iter;
+  const GList *iter;
 
   iter = obj_list;
 

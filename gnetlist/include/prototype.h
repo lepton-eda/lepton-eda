@@ -108,7 +108,7 @@ SCM g_get_renamed_nets(SCM scm_level);
 /* s_traverse.c */
 void s_traverse_init(void);
 void s_traverse_start(TOPLEVEL *pr_current);
-void s_traverse_sheet(TOPLEVEL *pr_current, GList *obj_list, char *hierarchy_tag);
+void s_traverse_sheet(TOPLEVEL *pr_current, const GList *obj_list, char *hierarchy_tag);
 CPINLIST *s_traverse_component(TOPLEVEL *pr_current, OBJECT *component, char *hierarchy_tag);
 NET *s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT *object, char *hierarchy_tag);
 /* vams_misc.c */

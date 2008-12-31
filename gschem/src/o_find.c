@@ -95,7 +95,7 @@ gboolean o_find_object (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int w_slack;
-  GList *iter = NULL;
+  const GList *iter = NULL;
 
   w_slack = WORLDabs( toplevel, w_current->select_slack_pixels );
 
@@ -105,7 +105,8 @@ gboolean o_find_object (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
      position point. You can change the selected object by clicking
      at the same place multiple times. */
   if (toplevel->page_current->object_lastplace != NULL) {
-    iter = g_list_find (toplevel->page_current->object_list,
+    /* NB: g_list_find doesn't declare its input const, so we cast */
+    iter = g_list_find ((GList *)toplevel->page_current->object_list,
                         toplevel->page_current->object_lastplace);
     iter = g_list_next (iter);
   }

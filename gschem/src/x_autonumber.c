@@ -392,7 +392,7 @@ void autonumber_get_used(GSCHEM_TOPLEVEL *w_current, AUTONUMBER_TEXT *autotext)
   AUTONUMBER_SLOT *slot;
   GList *slot_item;
   char *numslot_str, *slot_str;
-  GList *iter;
+  const GList *iter;
   
   for (iter = w_current->toplevel->page_current->object_list; iter != NULL;
        iter = g_list_next (iter)) {
@@ -665,7 +665,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   gchar *new_searchtext;
   gint i, number, slot;
   GList *o_list = NULL;
-  GList *iter;
+  const GList *iter;
   
   w_current = autotext->w_current;
   autotext->current_searchtext = NULL;

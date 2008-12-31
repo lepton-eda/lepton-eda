@@ -113,10 +113,10 @@ int world_get_single_object_bounds(TOPLEVEL *toplevel, OBJECT *o_current,
  *  \retval 0 No bounds were found
  *  \retval 1 Bound was found
  */
-int world_get_object_glist_bounds(TOPLEVEL *toplevel, GList *head,
+int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *head,
                                   int *left, int *top, int *right, int *bottom)
 {
-  GList *s_current=NULL;
+  const GList *s_current=NULL;
   OBJECT *o_current=NULL;
   int rleft, rtop, rright, rbottom;
   int found = 0;
@@ -247,11 +247,12 @@ int o_complex_is_embedded(OBJECT *o_current)
  *  \param [in]  obj_list  The object list to search for attributes
  *  \returns               A GList of attribute OBJECTs
  */
-GList *o_complex_get_toplevel_attribs (TOPLEVEL *toplevel, GList *obj_list)
+GList *o_complex_get_toplevel_attribs (TOPLEVEL *toplevel,
+                                       const GList *obj_list)
 {
   OBJECT *o_current;
   GList *attr_list = NULL;
-  GList *iter;
+  const GList *iter;
 
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
     o_current = iter->data;

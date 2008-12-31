@@ -511,7 +511,7 @@ void o_attrib_set_color(TOPLEVEL *toplevel, GList *attributes)
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *o_attrib_search_name (GList *list, char *name, int counter)
+char *o_attrib_search_name (const GList *list, char *name, int counter)
 {
   OBJECT *o_current;
   OBJECT *a_current;
@@ -521,7 +521,7 @@ char *o_attrib_search_name (GList *list, char *name, int counter)
   char *found_name = NULL;
   char *found_value = NULL;
   char *return_string = NULL;
-  GList *iter;
+  const GList *iter;
 
   iter = list;
 
@@ -914,7 +914,7 @@ o_attrib_search_attrib_name(GList *list, char *name, int counter)
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *o_attrib_search_toplevel (GList *list, char *name, int counter)
+char *o_attrib_search_toplevel (const GList *list, char *name, int counter)
 {
   OBJECT *o_current;
   int val;
@@ -922,7 +922,7 @@ char *o_attrib_search_toplevel (GList *list, char *name, int counter)
   char *found_name = NULL;
   char *found_value = NULL;
   char *return_string = NULL;
-  GList *iter;
+  const GList *iter;
 
   iter = list;
 

@@ -344,7 +344,7 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
   int count = 0; /* object count */
   int SHIFTKEY = w_current->SHIFTKEY;
   int left, right, top, bottom;
-  GList *iter;
+  const GList *iter;
 	
   left = min(w_current->first_wx, w_current->second_wx);
   right = max(w_current->first_wx, w_current->second_wx);
@@ -390,7 +390,7 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
 void o_select_connected_nets(GSCHEM_TOPLEVEL *w_current, OBJECT* o_net)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList *o_iter;
+  const GList *o_iter;
   GList *iter1;
   OBJECT *o_current;
   int count=0;

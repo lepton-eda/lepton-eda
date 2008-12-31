@@ -734,7 +734,7 @@ SCM g_get_objects_in_page(SCM page_smob) {
   TOPLEVEL *toplevel;
   PAGE *page;
   OBJECT *object;
-  GList *iter;
+  const GList *iter;
   SCM return_list=SCM_EOL;
 
   /* Get toplevel and the page */

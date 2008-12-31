@@ -238,13 +238,14 @@ STRING_LIST *s_table_create_attrib_pair(gchar *row_name,
  * attribs and sticks them in the TABLE.
  *
  *------------------------------------------------------------------*/
-void s_table_add_toplevel_comp_items_to_comp_table (GList *obj_list) {
+void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
   gchar *temp_uref;
   int row, col;
   gchar *attrib_text;
   gchar *attrib_name;
   gchar *attrib_value;
-  GList *o_iter, *a_iter;
+  const GList *o_iter;
+  GList *a_iter;
   OBJECT *a_current;
   gint old_visibility, old_show_name_value;
 
@@ -435,7 +436,7 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
  * pin attribs and sticks them into the pin table. 
  *
  *------------------------------------------------------------------*/
-void s_table_add_toplevel_pin_items_to_pin_table (GList *obj_list) {
+void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
   gchar *temp_uref;
   gchar *pinnumber;
   gchar *row_label;
@@ -443,7 +444,8 @@ void s_table_add_toplevel_pin_items_to_pin_table (GList *obj_list) {
   gchar *attrib_text;
   gchar *attrib_name;
   gchar *attrib_value;
-  GList *o_iter, *a_iter;
+  const GList *o_iter;
+  GList *a_iter;
   GList *o_lower_iter;
   OBJECT *pin_attrib;
 

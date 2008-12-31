@@ -9,7 +9,7 @@ void a_pan(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void a_pan_mouse(GSCHEM_TOPLEVEL *w_current, int diff_x, int diff_y);
 /* a_zoom.c */
 void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flags);
-void a_zoom_extents(GSCHEM_TOPLEVEL *w_current, GList *list, int pan_flags);
+void a_zoom_extents(GSCHEM_TOPLEVEL *w_current, const GList *list, int pan_flags);
 void a_zoom_box(GSCHEM_TOPLEVEL *w_current, int pan_flags);
 void a_zoom_box_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -585,12 +585,12 @@ void o_lock(GSCHEM_TOPLEVEL *w_current);
 void o_unlock(GSCHEM_TOPLEVEL *w_current);
 void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery, int angle, GList *list);
 void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery, GList *list);
-void o_edit_show_hidden_lowlevel(GSCHEM_TOPLEVEL *w_current, GList *o_list);
-void o_edit_show_hidden(GSCHEM_TOPLEVEL *w_current, GList *o_list);
-void o_edit_make_visible(GSCHEM_TOPLEVEL *w_current, GList *o_list);
-int o_edit_find_text(GSCHEM_TOPLEVEL *w_current, GList *o_list, char *stext, int descend, int skip);
-void o_edit_hide_specific_text(GSCHEM_TOPLEVEL *w_current, GList *o_list, char *stext);
-void o_edit_show_specific_text(GSCHEM_TOPLEVEL *w_current, GList *o_list, char *stext);
+void o_edit_show_hidden_lowlevel(GSCHEM_TOPLEVEL *w_current, const GList *o_list);
+void o_edit_show_hidden(GSCHEM_TOPLEVEL *w_current, const GList *o_list);
+void o_edit_make_visible(GSCHEM_TOPLEVEL *w_current, const GList *o_list);
+int o_edit_find_text(GSCHEM_TOPLEVEL *w_current, const GList *o_list, char *stext, int descend, int skip);
+void o_edit_hide_specific_text(GSCHEM_TOPLEVEL *w_current, const GList *o_list, char *stext);
+void o_edit_show_specific_text(GSCHEM_TOPLEVEL *w_current, const GList *o_list, char *stext);
 void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_autosave_backups(GSCHEM_TOPLEVEL *w_current);
 /* o_move.c */
