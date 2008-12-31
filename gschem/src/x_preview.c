@@ -220,7 +220,7 @@ preview_update (Preview *preview)
       preview_toplevel->page_current->object_list =
         o_read_buffer (preview_toplevel, 
                        preview_toplevel->page_current->object_list,
-                       preview->buffer, -1, "Preview Buffer");
+                       preview->buffer, -1, _("Preview Buffer"));
 
       /* Is this needed? */
       if (preview_toplevel->net_consolidate == TRUE) {	
