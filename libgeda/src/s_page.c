@@ -523,6 +523,20 @@ void s_page_append (PAGE *page, OBJECT *object)
   page->object_list = g_list_append (page->object_list, object);
 }
 
+/*! \brief Append a GList of OBJECTs to the PAGE
+ *
+ *  \par Function Description
+ *  Links the passed OBJECT GList to the end of the PAGE's
+ *  object_list.
+ *
+ *  \param [in] page      The PAGE the objects are being added to.
+ *  \param [in] obj_list  The OBJECT list being added to the page.
+ */
+void s_page_append_list (PAGE *page, GList *obj_list)
+{
+  page->object_list = g_list_concat (page->object_list, obj_list);
+}
+
 /*! \brief Remove an OBJECT from the PAGE
  *
  *  \par Function Description

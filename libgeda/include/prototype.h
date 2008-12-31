@@ -414,6 +414,7 @@ void s_page_clear_changed (GedaPageList *list);
 void s_page_autosave_init(TOPLEVEL *toplevel);
 gint s_page_autosave (TOPLEVEL *toplevel);
 void s_page_append (PAGE *page, OBJECT *object);
+void s_page_append_list (PAGE *page, GList *obj_list);
 void s_page_remove (PAGE *page, OBJECT *object);
 void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page);
 GList *s_page_objects_in_region (TOPLEVEL *toplevel, PAGE *page, int min_x, int min_y, int max_x, int max_y);
