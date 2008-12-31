@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 P 300 7700 0 7700 1 0 1
 {
 T 200 7750 5 8 1 1 0 6 1
@@ -116,7 +116,7 @@ pinnumber=38
 T 200 1250 5 8 0 1 0 8 1
 pinseq=38
 T 350 1300 9 8 1 1 0 0 1
-pinlabel=IRQA
+pinlabel=\_IRQA\_
 T 350 1300 5 8 0 1 0 2 1
 pintype=out
 }
@@ -127,7 +127,7 @@ pinnumber=37
 T 200 850 5 8 0 1 0 8 1
 pinseq=37
 T 350 900 9 8 1 1 0 0 1
-pinlabel=IRQB
+pinlabel=\_IRQB\_
 T 350 900 5 8 0 1 0 2 1
 pintype=out
 }
@@ -372,7 +372,7 @@ pinnumber=23
 T 200 2850 5 8 0 1 0 8 1
 pinseq=23
 T 350 2900 9 8 1 1 0 0 1
-pinlabel=CS2
+pinlabel=\_CS2\_
 T 350 2900 5 8 0 1 0 2 1
 pintype=in
 }
@@ -384,7 +384,7 @@ pinnumber=21
 T 200 2450 5 8 0 1 0 8 1
 pinseq=21
 T 350 2500 9 8 1 1 0 0 1
-pinlabel=R/W
+pinlabel=R/\_W\_
 T 350 2500 5 8 0 1 0 2 1
 pintype=in
 }
@@ -396,7 +396,7 @@ pinnumber=34
 T 200 1650 5 8 0 1 0 8 1
 pinseq=34
 T 350 1700 9 8 1 1 0 0 1
-pinlabel=RESET
+pinlabel=\_RESET\_
 T 350 1700 5 8 0 1 0 2 1
 pintype=in
 }
@@ -442,8 +442,3 @@ T 300 9350 5 10 0 0 0 0 1
 author=Werner Hoch <werner.hoATgmx.de>
 T 300 7950 9 10 1 0 0 0 1
 6821
-L 350 1025 675 1025 3 0 0 0 -1 -1
-L 350 1425 700 1425 3 0 0 0 -1 -1
-L 350 1825 875 1825 3 0 0 0 -1 -1
-L 525 2625 650 2625 3 0 0 0 -1 -1
-L 350 3025 650 3025 3 0 0 0 -1 -1

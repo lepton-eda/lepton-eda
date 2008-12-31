@@ -1,4 +1,4 @@
-v 20050313 1
+v 20070626 1
 B 300 0 2300 2800 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 300 3050 5 10 0 0 0 0 1
 device=ACE1202LN14
@@ -99,7 +99,7 @@ pinseq=9
 T 2550 600 5 8 0 1 0 8 1
 pintype=in
 T 2550 600 9 8 1 1 0 6 1
-pinlabel=RESET
+pinlabel=\_RESET\_
 }
 P 2900 1000 2600 1000 1 0 0
 {
@@ -171,6 +171,5 @@ T 300 4050 5 10 0 0 0 0 1
 net=Vcc:14
 T 300 2850 9 8 1 0 0 0 1
 ACE1202LN14
-L 2550 725 2050 725 3 0 0 0 -1 -1
 T 300 4250 5 10 0 0 0 0 1
 documentation=http://www.fairchildsemi.com/ds/AC/ACE1202.pdf

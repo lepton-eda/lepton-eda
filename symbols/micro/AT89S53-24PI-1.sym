@@ -1,4 +1,4 @@
-v 20041228 1
+v 20070626 1
 B 400 100 1900 6250 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 448 6944 8 10 0 0 0 0 1
 device=AT89S8252-24PC
@@ -53,7 +53,7 @@ pinnumber=5
 T 300 4850 5 8 0 1 0 8 1
 pinseq=5
 T 450 4900 9 8 1 1 0 0 1
-pinlabel=P1.4 (SS)
+pinlabel=P1.4 (\_SS\_)
 T 450 4900 5 8 0 1 0 2 1
 pintype=io
 }
@@ -120,7 +120,7 @@ pinnumber=12
 T 300 2750 5 8 0 1 0 8 1
 pinseq=12
 T 450 2800 9 8 1 1 0 0 1
-pinlabel=P3.2 (Int0)
+pinlabel=P3.2 (\_Int0\_)
 T 450 2800 5 8 0 1 0 2 1
 pintype=io
 }
@@ -132,7 +132,7 @@ pinnumber=13
 T 300 2450 5 8 0 1 0 8 1
 pinseq=13
 T 450 2500 9 8 1 1 0 0 1
-pinlabel=P3.3 (Int1)
+pinlabel=P3.3 (\_Int1\_)
 T 450 2500 5 8 0 1 0 2 1
 pintype=io
 }
@@ -341,7 +341,7 @@ pinnumber=30
 T 2400 3050 5 8 0 1 0 2 1
 pinseq=30
 T 2250 3100 9 8 1 1 0 6 1
-pinlabel=ALE/PROG
+pinlabel=ALE/\_PROG\_
 T 2250 3100 5 8 0 1 0 8 1
 pintype=io
 }
@@ -353,7 +353,7 @@ pinnumber=29
 T 2400 2750 5 8 0 1 0 2 1
 pinseq=29
 T 2250 2800 9 8 1 1 0 6 1
-pinlabel=PSEN
+pinlabel=\_PSEN\_
 T 2250 2800 5 8 0 1 0 8 1
 pintype=out
 }
@@ -365,7 +365,7 @@ pinnumber=16
 T 300 1550 5 8 0 1 0 8 1
 pinseq=16
 T 450 1600 9 8 1 1 0 0 1
-pinlabel=P3.6 (WR)
+pinlabel=P3.6 (\_WR\_)
 T 450 1600 5 8 0 1 0 2 1
 pintype=io
 }
@@ -377,7 +377,7 @@ pinnumber=17
 T 300 1250 5 8 0 1 0 8 1
 pinseq=17
 T 450 1300 9 8 1 1 0 0 1
-pinlabel=P3.7 (RD)
+pinlabel=P3.7 (\_RD\_)
 T 450 1300 5 8 0 1 0 2 1
 pintype=io
 }
@@ -406,14 +406,6 @@ T 450 7150 8 10 0 0 0 0 1
 numslots=0
 T 286 6512 9 10 1 0 0 0 1
 AT89S53-24PI
-L 850 1425 1050 1425 3 0 0 0 -1 -1
-L 875 1725 1100 1725 3 0 0 0 -1 -1
-L 850 2625 1075 2625 3 0 0 0 -1 -1
-L 875 2925 1125 2925 3 0 0 0 -1 -1
-L 850 5025 1050 5025 3 0 0 0 -1 -1
-L 1550 3525 1750 3525 3 0 0 0 -1 -1
-L 2250 3225 1825 3225 3 0 0 0 -1 -1
-L 2250 2925 1850 2925 3 0 0 0 -1 -1
 P 400 3700 100 3700 1 0 1
 {
 T 300 3750 5 8 1 1 0 6 1
@@ -465,7 +457,7 @@ pinnumber=31
 T 2400 3350 5 8 0 1 0 2 1
 pinseq=31
 T 2250 3400 9 8 1 1 0 6 1
-pinlabel=EA / VPP
+pinlabel=\_EA\_ / VPP
 T 2250 3400 5 8 0 1 0 8 1
 pintype=io
 }
