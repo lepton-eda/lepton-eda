@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 P 300 7700 0 7700 1 0 1
 {
 T 200 7750 5 8 1 1 0 6 1
@@ -94,7 +94,7 @@ pinnumber=6
 T 200 4450 5 8 0 1 0 8 1
 pinseq=9
 T 350 4500 9 8 1 1 0 0 1
-pinlabel=B/A SEL
+pinlabel=B/\_A\_ SEL
 T 350 4500 5 8 0 1 0 2 1
 pintype=in
 }
@@ -105,7 +105,7 @@ pinnumber=5
 T 200 4050 5 8 0 1 0 8 1
 pinseq=10
 T 350 4100 9 8 1 1 0 0 1
-pinlabel=C/D SEL
+pinlabel=C/\_D\_ SEL
 T 350 4100 5 8 0 1 0 2 1
 pintype=in
 }
@@ -350,7 +350,7 @@ pinnumber=4
 T 200 3650 5 8 0 1 0 8 1
 pinseq=11
 T 350 3700 9 8 1 1 0 0 1
-pinlabel=CE
+pinlabel=\_CE\_
 T 350 3700 5 8 0 1 0 2 1
 pintype=in
 }
@@ -362,7 +362,7 @@ pinnumber=37
 T 200 3250 5 8 0 1 0 8 1
 pinseq=12
 T 350 3300 9 8 1 1 0 0 1
-pinlabel=M1
+pinlabel=\_M1\_
 T 350 3300 5 8 0 1 0 2 1
 pintype=in
 }
@@ -374,7 +374,7 @@ pinnumber=35
 T 200 2450 5 8 0 1 0 8 1
 pinseq=14
 T 350 2500 9 8 1 1 0 0 1
-pinlabel=RD
+pinlabel=\_RD\_
 T 350 2500 5 8 0 1 0 2 1
 pintype=in
 }
@@ -386,7 +386,7 @@ pinnumber=23
 T 200 1650 5 8 0 1 0 8 1
 pinseq=15
 T 350 1700 9 8 1 1 0 0 1
-pinlabel=INT
+pinlabel=\_INT\_
 T 350 1700 5 8 0 1 0 2 1
 pintype=out
 }
@@ -398,7 +398,7 @@ pinnumber=17
 T 3400 50 5 8 0 1 0 2 1
 pinseq=38
 T 3250 100 9 8 1 1 0 6 1
-pinlabel=B STB
+pinlabel=\_B STB\_
 T 3250 100 5 8 0 1 0 8 1
 pintype=in
 }
@@ -410,7 +410,7 @@ pinnumber=16
 T 3400 4050 5 8 0 1 0 2 1
 pinseq=28
 T 3250 4100 9 8 1 1 0 6 1
-pinlabel=A STB
+pinlabel=\_A STB\_
 T 3250 4100 5 8 0 1 0 8 1
 pintype=in
 }
@@ -436,17 +436,8 @@ pinnumber=36
 T 200 2850 5 8 0 1 0 8 1
 pinseq=13
 T 350 2900 9 8 1 1 0 0 1
-pinlabel=IORQ
+pinlabel=\_IORQ\_
 T 350 2900 5 8 0 1 0 2 1
 pintype=in
 }
 V 250 2900 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
-L 525 4625 625 4625 3 0 0 0 -1 -1
-L 525 4225 625 4225 3 0 0 0 -1 -1
-L 350 3825 550 3825 3 0 0 0 -1 -1
-L 350 3425 500 3425 3 0 0 0 -1 -1
-L 350 3025 700 3025 3 0 0 0 -1 -1
-L 350 2625 550 2625 3 0 0 0 -1 -1
-L 350 1825 575 1825 3 0 0 0 -1 -1
-L 3250 4225 2825 4225 3 0 0 0 -1 -1
-L 3250 225 2800 225 3 0 0 0 -1 -1

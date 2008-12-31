@@ -1,4 +1,4 @@
-v 20031231 1
+v 20070626 1
 P 0 7000 300 7000 1 0 0
 {
 T 200 7050 5 8 1 1 0 6 1
@@ -6,7 +6,7 @@ pinnumber=1
 T 200 6950 5 8 0 1 0 8 1
 pinseq=1
 T 350 7000 9 8 1 1 0 0 1
-pinlabel=MCLR/VPP
+pinlabel=\_MCLR\_/VPP
 T 350 7000 5 8 0 1 0 2 1
 pintype=in
 }
@@ -72,7 +72,7 @@ pinnumber=7
 T 200 4550 5 8 0 1 0 8 1
 pinseq=7
 T 350 4600 9 8 1 1 0 0 1
-pinlabel=RA5/SS/AN4
+pinlabel=RA5/\_SS\_/AN4
 T 350 4600 5 8 0 1 0 2 1
 pintype=io
 }
@@ -83,7 +83,7 @@ pinnumber=8
 T 200 4150 5 8 0 1 0 8 1
 pinseq=8
 T 350 4200 9 8 1 1 0 0 1
-pinlabel=RE0/RD/AN5
+pinlabel=RE0/\_RD\_/AN5
 T 350 4200 5 8 0 1 0 2 1
 pintype=io
 }
@@ -94,7 +94,7 @@ pinnumber=9
 T 200 3750 5 8 0 1 0 8 1
 pinseq=9
 T 350 3800 9 8 1 1 0 0 1
-pinlabel=RE1/WR/AN6
+pinlabel=RE1/\_WR\_/AN6
 T 350 3800 5 8 0 1 0 2 1
 pintype=io
 }
@@ -105,7 +105,7 @@ pinnumber=10
 T 200 3350 5 8 0 1 0 8 1
 pinseq=10
 T 350 3400 9 8 1 1 0 0 1
-pinlabel=RE2/CS/AN7
+pinlabel=RE2/\_CS\_/AN7
 T 350 3400 5 8 0 1 0 2 1
 pintype=io
 }
@@ -395,11 +395,6 @@ pinlabel=RC5/SDO
 T 4150 1400 5 8 0 1 0 8 1
 pintype=io
 }
-L 725 4725 900 4725 3 0 0 0 -1 -1
-L 725 4325 925 4325 3 0 0 0 -1 -1
-L 700 3925 925 3925 3 0 0 0 -1 -1
-L 750 3525 950 3525 3 0 0 0 -1 -1
-L 350 7125 750 7125 3 0 0 0 -1 -1
 B 300 0 3900 7300 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 300 7550 5 10 0 0 0 0 1
 device=PIC16C74A
