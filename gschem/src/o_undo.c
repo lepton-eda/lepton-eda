@@ -117,7 +117,7 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
     }
 
     object_list = o_glist_copy_all (toplevel,
-                                    toplevel->page_current->object_list,
+                                    s_page_objects (toplevel->page_current),
                                     object_list, SELECTION_FLAG);
   }
 
@@ -373,10 +373,9 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
 
     s_page_delete_objects (toplevel, toplevel->page_current);
 
-    toplevel->page_current->object_list =
-      o_glist_copy_all (toplevel, u_current->object_list,
-                        toplevel->page_current->object_list,
-                        NORMAL_FLAG);
+    s_page_append_list (toplevel->page_current,
+                        o_glist_copy_all (toplevel, u_current->object_list,
+                                          NULL, NORMAL_FLAG));
 
     x_manual_resize(w_current);
     toplevel->page_current->page_control = u_current->page_control;

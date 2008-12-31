@@ -52,7 +52,7 @@ s_util_embed(TOPLEVEL *pr_current, int embed_mode)
        p_iter = g_list_next (p_iter)) {
     PAGE *p_current = p_iter->data;
 
-    for (o_iter = p_current->object_list;
+    for (o_iter = s_page_objects (p_current);
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
       OBJECT *o_current = o_iter->data;

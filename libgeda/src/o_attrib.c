@@ -1568,7 +1568,7 @@ char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name)
     p_current = (PAGE *)iter->data;
 
     /* only look for first occurrance of the attribute */
-    ret_value = o_attrib_search_toplevel (p_current->object_list, name, 0);
+    ret_value = o_attrib_search_toplevel (s_page_objects (p_current), name, 0);
 
     if (ret_value != NULL) {
       return(ret_value);

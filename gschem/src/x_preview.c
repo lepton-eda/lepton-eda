@@ -98,7 +98,7 @@ preview_callback_realize (GtkWidget *widget,
   preview_toplevel->DONT_REDRAW = 0;
 
   a_zoom_extents(preview_w_current,
-                 preview_page->object_list,
+                 s_page_objects (preview_page),
                  A_PAN_DONT_REDRAW);
 
   o_invalidate_all (preview_w_current);
@@ -217,10 +217,10 @@ preview_update (Preview *preview)
     if (preview->buffer != NULL) {
 
       /* Load the data buffer */
-      preview_toplevel->page_current->object_list =
-        o_read_buffer (preview_toplevel, 
-                       preview_toplevel->page_current->object_list,
-                       preview->buffer, -1, _("Preview Buffer"));
+      s_page_append_list (preview_toplevel->page_current,
+                          o_read_buffer (preview_toplevel,
+                                         NULL, preview->buffer, -1,
+                                         _("Preview Buffer")));
 
       /* Is this needed? */
       if (preview_toplevel->net_consolidate == TRUE) {	
@@ -230,7 +230,7 @@ preview_update (Preview *preview)
   }
 
   if (world_get_object_glist_bounds (preview_toplevel,
-                                     preview_toplevel->page_current->object_list,
+                                     s_page_objects (preview_toplevel->page_current),
                                      &left, &top,
                                      &right, &bottom)) {
     /* Clamp the canvas size to the extents of the page being previewed */
@@ -244,7 +244,7 @@ preview_update (Preview *preview)
 
   /* display current page (possibly empty) */
   a_zoom_extents (preview_w_current,
-                  preview_toplevel->page_current->object_list,
+                  s_page_objects (preview_toplevel->page_current),
                   A_PAN_DONT_REDRAW);
   o_invalidate_all (preview_w_current);
   
@@ -327,7 +327,7 @@ preview_event_configure (GtkWidget         *widget,
   retval = x_event_configure (widget, event, preview_w_current);
   preview_w_current->toplevel->DONT_REDRAW = save_redraw;
   if (preview_page != NULL) {
-    a_zoom_extents (preview_w_current, preview_page->object_list, 0);
+    a_zoom_extents(preview_w_current, s_page_objects (preview_page), 0);
   }
   return retval;
 }

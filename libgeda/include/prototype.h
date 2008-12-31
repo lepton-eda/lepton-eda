@@ -417,6 +417,7 @@ void s_page_append (PAGE *page, OBJECT *object);
 void s_page_append_list (PAGE *page, GList *obj_list);
 void s_page_remove (PAGE *page, OBJECT *object);
 void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page);
+const GList *s_page_objects (PAGE *page);
 GList *s_page_objects_in_region (TOPLEVEL *toplevel, PAGE *page, int min_x, int min_y, int max_x, int max_y);
 GList *s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page, BOX *rects, int n_rects);
 

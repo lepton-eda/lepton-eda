@@ -232,7 +232,7 @@ GList *s_hierarchy_traversepages(TOPLEVEL *toplevel,
   }
 
   /* walk throught the page objects and search for underlaying schematics */
-  for (iter = p_current->object_list;
+  for (iter = s_page_objects (p_current);
        iter != NULL ;
        iter = g_list_next (iter)) {
     o_current = (OBJECT *)iter->data;

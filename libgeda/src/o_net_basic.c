@@ -610,7 +610,7 @@ void o_net_consolidate(TOPLEVEL *toplevel)
   const GList *iter;
   int status = 0;
 
-  iter = toplevel->page_current->object_list;
+  iter = s_page_objects (toplevel->page_current);
 
   while (iter != NULL) {
     o_current = (OBJECT *)iter->data;
@@ -620,7 +620,7 @@ void o_net_consolidate(TOPLEVEL *toplevel)
     }
 
     if (status == -1) {
-      iter = toplevel->page_current->object_list;
+      iter = s_page_objects (toplevel->page_current);
       status = 0;
     } else {
       iter = g_list_next (iter);

@@ -1445,7 +1445,7 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
         p_iter != NULL;
         p_iter = g_list_next( p_iter )) {
     page = (PAGE *)p_iter->data;
-    for (o_iter = page->object_list;
+    for (o_iter = s_page_objects (page);
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
       o = (OBJECT *)o_iter->data;

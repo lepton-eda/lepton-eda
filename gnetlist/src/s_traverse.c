@@ -128,7 +128,7 @@ void s_traverse_start(TOPLEVEL * pr_current)
     /* only traverse pages which are toplevel, ie not underneath */
     if (p_current->page_control == 0) {
       pr_current->page_current = p_current;
-      s_traverse_sheet (pr_current, p_current->object_list, NULL);
+      s_traverse_sheet (pr_current, s_page_objects (p_current), NULL);
     }
   }
 
@@ -356,8 +356,8 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
                              c_current->other_object,
                              hierarchy_tag);
 
-            s_traverse_clear_all_visited(pr_current->
-                                         page_current->object_list);
+            s_traverse_clear_all_visited (
+              s_page_objects (pr_current->page_current));
           }
 
         }
@@ -370,8 +370,8 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
       /* this is iffy */
       /* should pass in page_current in top level func */
     }
-    s_traverse_clear_all_visited(pr_current->page_current->
-                                 object_list);
+    s_traverse_clear_all_visited (
+      s_page_objects (pr_current->page_current));
   }
 
 

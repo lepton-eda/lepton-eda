@@ -51,10 +51,10 @@ s_check_all(TOPLEVEL *pr_current)
 
     p_current = (PAGE *)iter->data;
 
-    if (p_current->object_list) {
+    if (s_page_objects (p_current)) {
       return_status = return_status +
-        s_check_symbol(pr_current, p_current,
-                       p_current->object_list);
+        s_check_symbol (pr_current, p_current,
+                        s_page_objects (p_current));
       if (!quiet_mode) s_log_message("\n");
     }
   }

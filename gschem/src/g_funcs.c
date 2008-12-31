@@ -268,7 +268,7 @@ SCM get_selected_component_attributes(GSCHEM_TOPLEVEL *w_current)
  
   /* build a hash table */
   ht = g_hash_table_new (g_str_hash, g_str_equal);
-  for (iter = w_current->toplevel->page_current->object_list;
+  for (iter = s_page_objects (w_current->toplevel->page_current);
        iter != NULL;
        iter = g_list_next (iter)) {
     obj = (OBJECT *)iter->data;

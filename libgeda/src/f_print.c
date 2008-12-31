@@ -452,14 +452,15 @@ int f_print_stream(TOPLEVEL *toplevel, FILE *fp)
   f_print_initialize_glyph_table();  /* Fill up unicode map */
 
   /* Find all the unicode characters */
-  unicode_count = f_print_get_unicode_chars(toplevel,
-			 toplevel->page_current->object_list,
-			 0, unicode_table);
+  unicode_count =
+    f_print_get_unicode_chars (toplevel,
+                               s_page_objects (toplevel->page_current),
+                               0, unicode_table);
 
   /*	printf("%d %d\n", toplevel->paper_width, toplevel->paper_height);*/
 
   world_get_object_glist_bounds (toplevel,
-                                 toplevel->page_current->object_list,
+                                 s_page_objects (toplevel->page_current),
                                  &origin_x, &origin_y,
                                  &right, &bottom);
 
@@ -617,7 +618,7 @@ int f_print_stream(TOPLEVEL *toplevel, FILE *fp)
 	  scale, scale);
 
   /* Print the objects */
-  f_print_objects (toplevel, fp, toplevel->page_current->object_list,
+  f_print_objects (toplevel, fp, s_page_objects (toplevel->page_current),
                    origin_x, origin_y, scale, unicode_count, unicode_table);
 
   f_print_footer(fp);

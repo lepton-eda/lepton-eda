@@ -288,7 +288,7 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
     }
   } else {    /* This must be a floating attrib, but what is that !?!?!?!?!  */
     world_get_object_glist_bounds(pr_current,
-                                  pr_current->page_current->object_list,
+                                  s_page_objects (pr_current->page_current),
                                   &left, &top, &right, &bottom);
 
     /* this really is the lower left hand corner */

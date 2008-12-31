@@ -741,8 +741,8 @@ SCM g_get_objects_in_page(SCM page_smob) {
   SCM_ASSERT (g_get_data_from_page_smob (page_smob, &toplevel, &page),
 	      page_smob, SCM_ARG1, "add-component");
 
-  if (page && page->object_list) {
-    iter = page->object_list;
+  if (page && s_page_objects (page)) {
+    iter = s_page_objects (page);
     while (iter != NULL) {
       object = (OBJECT *)iter->data;
       return_list = scm_cons (g_make_object_smob(toplevel, object),

@@ -106,7 +106,7 @@ gboolean o_find_object (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
      at the same place multiple times. */
   if (toplevel->page_current->object_lastplace != NULL) {
     /* NB: g_list_find doesn't declare its input const, so we cast */
-    iter = g_list_find ((GList *)toplevel->page_current->object_list,
+    iter = g_list_find ((GList *)s_page_objects (toplevel->page_current),
                         toplevel->page_current->object_lastplace);
     iter = g_list_next (iter);
   }
@@ -122,7 +122,7 @@ gboolean o_find_object (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
   }
 
   /* now search from the beginning up until the object_lastplace */
-  for (iter = toplevel->page_current->object_list;
+  for (iter = s_page_objects (toplevel->page_current);
        iter != NULL; iter = g_list_next (iter)) {
     OBJECT *o_current = iter->data;
     if (find_single_object (w_current, o_current,

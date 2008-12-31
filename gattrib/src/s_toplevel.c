@@ -96,7 +96,7 @@ void s_toplevel_verify_design(TOPLEVEL *pr_current)
        p_iter = g_list_next (p_iter)) {
     PAGE *p_current = p_iter->data;
 
-    for (o_iter = p_current->object_list;
+    for (o_iter = s_page_objects (p_current);
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
       OBJECT *o_current = o_iter->data;
@@ -410,7 +410,7 @@ s_toplevel_sheetdata_to_toplevel (PAGE *page)
    * from the list during iteration over the list.
    */
   /* NB: g_list_copy doesn't declare its input const, so we cast */
-  copy_list = g_list_copy ((GList *)page->object_list);
+  copy_list = g_list_copy ((GList *)s_page_objects (page));
 
   /* Iterate backwards since attributes are attached after their
    * parent objects in the list. Attributes can get deleted during
@@ -475,7 +475,7 @@ s_toplevel_sheetdata_to_toplevel (PAGE *page)
    * deleted from the list during its iteration.
    */
   /* NB: g_list_copy doesn't declare its input const, so we cast */
-  copy_list = g_list_copy ((GList *)page->object_list);
+  copy_list = g_list_copy ((GList *)s_page_objects (page));
 
   for (o_iter = g_list_last (copy_list);
        o_iter != NULL;

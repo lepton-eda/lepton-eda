@@ -97,7 +97,7 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   s_tile_init (toplevel, page);
 
   /* Init the object list */
-  page->object_list = NULL;
+  page->_object_list = NULL;
 
   /* new selection mechanism */
   page->selection_list = o_selection_new();
@@ -349,7 +349,7 @@ void s_page_print_all (TOPLEVEL *toplevel)
 
     page = (PAGE *)iter->data;
     printf ("FILENAME: %s\n", page->page_filename);
-    print_struct_forw (page->object_list);
+    print_struct_forw (page->_object_list);
   }
 }
 
@@ -520,7 +520,7 @@ gint s_page_autosave (TOPLEVEL *toplevel)
  */
 void s_page_append (PAGE *page, OBJECT *object)
 {
-  page->object_list = g_list_append (page->object_list, object);
+  page->_object_list = g_list_append (page->_object_list, object);
 }
 
 /*! \brief Append a GList of OBJECTs to the PAGE
@@ -534,7 +534,7 @@ void s_page_append (PAGE *page, OBJECT *object)
  */
 void s_page_append_list (PAGE *page, GList *obj_list)
 {
-  page->object_list = g_list_concat (page->object_list, obj_list);
+  page->_object_list = g_list_concat (page->_object_list, obj_list);
 }
 
 /*! \brief Remove an OBJECT from the PAGE
@@ -548,7 +548,7 @@ void s_page_append_list (PAGE *page, GList *obj_list)
  */
 void s_page_remove (PAGE *page, OBJECT *object)
 {
-  page->object_list = g_list_remove (page->object_list, object);
+  page->_object_list = g_list_remove (page->_object_list, object);
 }
 
 /*! \brief Remove and free all OBJECTs from the PAGE
@@ -561,9 +561,27 @@ void s_page_remove (PAGE *page, OBJECT *object)
  */
 void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page)
 {
-  s_delete_object_glist (toplevel, page->object_list);
-  page->object_list = NULL;
+  s_delete_object_glist (toplevel, page->_object_list);
+  page->_object_list = NULL;
 }
+
+
+/*! \brief Return a GList of OBJECTs on the PAGE
+ *
+ *  \par Function Description
+ *  An accessor for the PAGE's GList of objects.
+ *
+ *  NB: This GList is owned by the PAGE, and must not be
+ *      free'd or modified by the caller.
+ *
+ *  \param [in] page      The PAGE to get objects on.
+ *  \returns a const pointer to the PAGE's GList of objects
+ */
+const GList *s_page_objects (PAGE *page)
+{
+  return page->_object_list;
+}
+
 
 /*! \brief Find the objects in a given region
  *
@@ -611,7 +629,7 @@ GList *s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page,
   GList *list = NULL;
   int i;
 
-  for (iter = page->object_list; iter != NULL; iter = g_list_next (iter)) {
+  for (iter = page->_object_list; iter != NULL; iter = g_list_next (iter)) {
     OBJECT *object = iter->data;
 
     for (i = 0; i < n_rects; i++) {

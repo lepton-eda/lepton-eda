@@ -222,15 +222,14 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
   int x, y;
 
   /* first zoom extents */
-  a_zoom_extents (w_current, toplevel->page_current->object_list,
-                 A_PAN_DONT_REDRAW);
+  a_zoom_extents (w_current, s_page_objects (toplevel->page_current),
+                  A_PAN_DONT_REDRAW);
   o_invalidate_all (w_current);
 
-  world_get_object_glist_bounds (toplevel, toplevel->page_current->object_list,
-                                 &w_rleft,
-                                 &w_rtop,
-                                 &w_rright,
-                                 &w_rbottom);
+  world_get_object_glist_bounds (toplevel,
+                                 s_page_objects (toplevel->page_current),
+                                 &w_rleft,  &w_rtop,
+                                 &w_rright, &w_rbottom);
 
   /*! \todo do we want snap grid here? */
   x = snap_grid( toplevel, w_rleft );
@@ -240,7 +239,7 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
    * the correct sense) were in use . */
   y = snap_grid( toplevel, w_rtop );
 
-  iter = toplevel->page_current->object_list;
+  iter = s_page_objects (toplevel->page_current);
   while (iter != NULL) {
     o_current = iter->data;
     s_conn_remove_object (toplevel, o_current);
@@ -250,15 +249,15 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
   if (offset == 0) {
     s_log_message(_("Translating schematic [%d %d]\n"), -x, -y);
     o_glist_translate_world (toplevel, -x, -y,
-                            toplevel->page_current->object_list);
+                             s_page_objects (toplevel->page_current));
   } else {
     s_log_message(_("Translating schematic [%d %d]\n"),
                   offset, offset);
     o_glist_translate_world (toplevel, offset, offset,
-                            toplevel->page_current->object_list);
+                             s_page_objects (toplevel->page_current));
   }
 
-  iter = toplevel->page_current->object_list;
+  iter = s_page_objects (toplevel->page_current);
   while (iter != NULL) {
     o_current = iter->data;
     if (o_current->type != OBJ_COMPLEX && o_current->type != OBJ_PLACEHOLDER) {
@@ -271,7 +270,7 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
 
   /* this is an experimental mod, to be able to translate to all
    * places */
-  a_zoom_extents (w_current, toplevel->page_current->object_list,
+  a_zoom_extents (w_current, s_page_objects (toplevel->page_current),
                  A_PAN_DONT_REDRAW);
   if (!w_current->SHIFTKEY) o_select_unselect_all(w_current);
   o_invalidate_all (w_current);

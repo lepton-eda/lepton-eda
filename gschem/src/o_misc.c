@@ -539,9 +539,9 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
                                                 HIERARCHY_NORMAL_LOAD);
             /* o_invalidate_all (w_current); */
 
-            rv = o_edit_find_text(w_current,
-                                  toplevel->page_current->object_list,
-                                  stext, descend, skiplast);
+            rv = o_edit_find_text (w_current,
+                                   s_page_objects (toplevel->page_current),
+                                   stext, descend, skiplast);
             if (!rv) {
               return 0;
             }

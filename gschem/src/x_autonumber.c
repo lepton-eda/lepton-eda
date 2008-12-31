@@ -394,7 +394,8 @@ void autonumber_get_used(GSCHEM_TOPLEVEL *w_current, AUTONUMBER_TEXT *autotext)
   char *numslot_str, *slot_str;
   const GList *iter;
   
-  for (iter = w_current->toplevel->page_current->object_list; iter != NULL;
+  for (iter = s_page_objects (w_current->toplevel->page_current);
+       iter != NULL;
        iter = g_list_next (iter)) {
     o_current = iter->data;
     if (autonumber_match(autotext, o_current, &number) == AUTONUMBER_RESPECT) {
@@ -707,8 +708,9 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
     for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
       s_page_goto(w_current->toplevel, page_item->data);
       /* iterate over all objects an look for matching searchtext's */
-      for (iter = w_current->toplevel->page_current->object_list; iter != NULL;
-	   iter = g_list_next (iter)) {
+      for (iter = s_page_objects (w_current->toplevel->page_current);
+           iter != NULL;
+           iter = g_list_next (iter)) {
 	o_current = iter->data;
 	if (o_current->type == OBJ_TEXT) {
 	  if (autotext->scope_number == SCOPE_HIERARCHY
@@ -775,8 +777,9 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
       
       /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
       /* 1. get objects to renumber */
-      for (iter = w_current->toplevel->page_current->object_list; iter != NULL;
-	   iter = g_list_next (iter)) {
+      for (iter = s_page_objects (w_current->toplevel->page_current);
+           iter != NULL;
+           iter = g_list_next (iter)) {
         o_current = iter->data;
 	if (autonumber_match(autotext, o_current, &number) == AUTONUMBER_RENUMBER) {
 	  /* put number into the used list */

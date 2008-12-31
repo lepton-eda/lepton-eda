@@ -755,7 +755,7 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
                   scm_cons (g_make_page_smob (toplevel, page), SCM_EOL));
 
   a_zoom_extents (w_current,
-                  toplevel->page_current->object_list,
+                  s_page_objects (toplevel->page_current),
                   A_PAN_DONT_REDRAW);
 
   o_undo_savestate (w_current, UNDO_ALL);

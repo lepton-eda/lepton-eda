@@ -74,7 +74,7 @@ gchar *o_save_buffer (TOPLEVEL *toplevel)
 
   acc = g_string_new (o_file_format_header());
 
-  buffer = o_save_objects (toplevel->page_current->object_list, FALSE);
+  buffer = o_save_objects (s_page_objects (toplevel->page_current), FALSE);
   g_string_append (acc, buffer);
   g_free (buffer);
 

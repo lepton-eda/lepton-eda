@@ -225,7 +225,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
     }
   } else {
     world_get_object_glist_bounds (toplevel,
-                                   toplevel->page_current->object_list,
+                                   s_page_objects (toplevel->page_current),
                                    &left, &top, &right, &bottom);
 	
     /* this really is the lower left hand corner */	

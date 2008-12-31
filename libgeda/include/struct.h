@@ -393,7 +393,7 @@ struct st_page {
 
   int pid;
 
-  GList *object_list;
+  GList *_object_list;
   SELECTION *selection_list; /* new selection mechanism */
   GList *place_list;
   OBJECT *object_lastplace; /* the last found item */
