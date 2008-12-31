@@ -420,12 +420,14 @@ preview_set_property (GObject *object,
         g_free (preview->filename);
         g_free (preview->buffer);
         preview->filename = g_strdup (g_value_get_string (value));
+        preview->buffer = NULL;
         preview_update (preview);
         break;
 
       case PROP_BUFFER:
         g_free (preview->filename);
         g_free (preview->buffer);
+        preview->filename = NULL;
         preview->buffer = g_strdup (g_value_get_string (value));
         preview_update (preview);
         break;
