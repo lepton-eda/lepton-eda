@@ -711,8 +711,8 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                                clib, o_current->complex_basename,
                                1);
 
-  temp_list = g_list_append (NULL, new_complex);
-  o_complex_promote_attribs (toplevel, new_complex, &temp_list);
+  temp_list = o_complex_promote_attribs (toplevel, new_complex);
+  temp_list = g_list_append (temp_list, new_complex);
 
   /* updating the old complex with data from the new one */
   /* first process the prim_objs: */

@@ -111,10 +111,10 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
                                 0, 0, 0, 0, sym, sym_name, 1);
 
     toplevel->page_current->place_list =
+      g_list_concat (toplevel->page_current->place_list,
+        o_complex_promote_attribs (toplevel, new_object));
+    toplevel->page_current->place_list =
       g_list_append (toplevel->page_current->place_list, new_object);
-
-    o_complex_promote_attribs (toplevel, new_object,
-                               &toplevel->page_current->place_list);
 
     toplevel->ADDING_SEL = 0;
 

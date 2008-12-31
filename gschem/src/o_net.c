@@ -1246,9 +1246,9 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
                                    complex_angle, 0,
                                    rippersym,
                                    toplevel->bus_ripper_symname, 1);
+          s_page_append_list (toplevel->page_current,
+                              o_complex_promote_attribs (toplevel, new_obj));
           s_page_append (toplevel->page_current, new_obj);
-          o_complex_promote_attribs (toplevel, new_obj,
-                                     &toplevel->page_current->object_list);
 
           o_invalidate (w_current, new_obj);
         } else {

@@ -188,7 +188,7 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, GList *o_list,
 int o_complex_is_embedded(OBJECT *o_current);
 GList *o_complex_get_toplevel_attribs (TOPLEVEL *toplevel, GList *obj_list);
 GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach);
-void o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object, GList **obj_list);
+GList *o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object);
 void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *object);
 OBJECT *o_complex_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const CLibSymbol *clib_sym, const gchar *basename, int selectable);
 OBJECT *o_complex_new_embedded(TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const gchar *basename, int selectable);

@@ -324,32 +324,26 @@ GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
 }
 
 
-/*! \brief Promote attributes from the passed OBJECT
+/*! \brief Promote attributes from the passed complex OBJECT
  *
  *  \par Function Description
- *  Promotes attributes from the passed OBJECT, linking them into the
- *  OBJECT linked list immediately prior to the passed OBJECT.
+ *  Promotes attributes from the passed complex OBJECT, detaching
+ *  them from inside the object and returning them in a list.
  *
  *  \param [in]  toplevel The toplevel environment.
- *  \param [in]  object   The complex object who's attributes are being promtoed.
- *  \param [in]  obj_list The object list which recieves the new objects
- *  \returns The start
+ *  \param [in]  object   The complex who's attributes are being promoted.
+ *  \return A GList list of promoted attributes.
  */
-void o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object,
-                                GList **obj_list)
+GList *o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
 {
-  GList *promoted, *last;
+  GList *promoted;
 
   promoted = o_complex_get_promotable (toplevel, object, TRUE);
 
   /* Attach promoted attributes to the original complex object */
   o_attrib_attach_list (toplevel, promoted, object, TRUE);
 
-  /* Insert the promoted attributes before the tail of the object list */
-  last = g_list_last (*obj_list);
-  *obj_list = g_list_remove_link (*obj_list, last);
-  *obj_list = g_list_concat (*obj_list, promoted);
-  *obj_list = g_list_concat (*obj_list, last);
+  return promoted;
 }
 
 
