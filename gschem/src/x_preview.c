@@ -417,17 +417,23 @@ preview_set_property (GObject *object,
   
   switch(property_id) {
       case PROP_FILENAME:
+        if (preview->buffer != NULL) {
+          g_free (preview->buffer);
+          preview->buffer = NULL;
+          g_object_notify (object, "buffer");
+        }
         g_free (preview->filename);
-        g_free (preview->buffer);
         preview->filename = g_strdup (g_value_get_string (value));
-        preview->buffer = NULL;
         preview_update (preview);
         break;
 
       case PROP_BUFFER:
-        g_free (preview->filename);
+        if (preview->filename != NULL) {
+          g_free (preview->filename);
+          preview->filename = NULL;
+          g_object_notify (object, "filename");
+        }
         g_free (preview->buffer);
-        preview->filename = NULL;
         preview->buffer = g_strdup (g_value_get_string (value));
         preview_update (preview);
         break;
